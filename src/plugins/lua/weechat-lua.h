@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006-2007 Emmanuel Bouthenot <kolter@openics.org>
- * Copyright (C) 2006-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2006-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -23,6 +23,7 @@
 
 #define weechat_plugin weechat_lua_plugin
 #define LUA_PLUGIN_NAME "lua"
+#define LUA_PLUGIN_PRIORITY 4050
 
 #define LUA_CURRENT_SCRIPT_NAME ((lua_current_script) ? lua_current_script->name : "-")
 

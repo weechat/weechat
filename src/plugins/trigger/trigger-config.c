@@ -1,7 +1,7 @@
 /*
  * trigger-config.c - trigger configuration options (file trigger.conf)
  *
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -43,6 +43,7 @@ struct t_config_option *trigger_config_color_flag_conditions;
 struct t_config_option *trigger_config_color_flag_regex;
 struct t_config_option *trigger_config_color_flag_return_code;
 struct t_config_option *trigger_config_color_flag_post_action;
+struct t_config_option *trigger_config_color_identifier;
 struct t_config_option *trigger_config_color_regex;
 struct t_config_option *trigger_config_color_replace;
 struct t_config_option *trigger_config_color_trigger;
@@ -59,12 +60,16 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
      *       - message is a highlight
      *         OR:
      *       - message is a message in a private buffer
+     *     AND:
+     *   - buffer notify is NOT "none"
      */
     { "beep", "on",
       "print",
       "",
-      "${tg_displayed} && ${tg_tags} !!- ,notify_none, "
-      "&& (${tg_highlight} || ${tg_msg_pv})",
+      "${tg_displayed} "
+      "&& ${tg_tags} !!- ,notify_none, "
+      "&& (${tg_highlight} || ${tg_msg_pv}) "
+      "&& ${buffer.notify} > 0",
       "",
       "/print -beep",
       "ok",
@@ -88,7 +93,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|input_text_display;5000|history_add;5000|irc_command_auth",
       "",
-      "==^("
+      "s==^("
       "(/(msg|m|quote) +(-server +[^ ]+ +)?nickserv +("
       "id|"
       "identify|"
@@ -116,7 +121,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|input_text_display;5000|history_add;5000|irc_command_auth",
       "",
-      "==^(/(msg|m|quote) +(-server +[^ ]+ +)?nickserv +register +)([^ ]+)(.*)"
+      "s==^(/(msg|m|quote) +(-server +[^ ]+ +)?nickserv +register +)([^ ]+)(.*)"
       "==${re:1}${hide:*,${re:4}}${re:5}",
       "",
       "",
@@ -137,7 +142,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|irc_message_auth",
       "",
-      "==^(.*("
+      "s==^(.*("
       "id|"
       "identify|"
       "set +password|"
@@ -162,7 +167,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|input_text_display;5000|history_add",
       "",
-      "==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)"
+      "s==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)"
       "==${re:1}${hide:*,${re:4}}${re:5}"
       "",
       "",
@@ -681,7 +686,8 @@ trigger_config_init ()
     struct t_config_section *ptr_section;
 
     trigger_config_file = weechat_config_new (
-        TRIGGER_CONFIG_NAME, &trigger_config_reload_cb, NULL, NULL);
+        TRIGGER_CONFIG_PRIO_NAME,
+        &trigger_config_reload_cb, NULL, NULL);
     if (!trigger_config_file)
         return 0;
 
@@ -759,6 +765,12 @@ trigger_config_init ()
         "flag_post_action", "color",
         N_("text color for post action flag (in /trigger list)"),
         NULL, 0, 0, "lightblue", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    trigger_config_color_identifier = weechat_config_new_option (
+        trigger_config_file, ptr_section,
+        "identifier", "color",
+        N_("text color for trigger context identifier in monitor buffer"),
+        NULL, 0, 0, "cyan", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     trigger_config_color_regex = weechat_config_new_option (
         trigger_config_file, ptr_section,

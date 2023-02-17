@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -22,8 +22,7 @@
 
 #define weechat_plugin weechat_alias_plugin
 #define ALIAS_PLUGIN_NAME "alias"
-
-#define ALIAS_CONFIG_NAME "alias"
+#define ALIAS_PLUGIN_PRIORITY 11000
 
 struct t_alias
 {
@@ -47,6 +46,7 @@ extern void alias_update_completion (struct t_alias *alias,
                                      const char *completion);
 extern struct t_alias *alias_new (const char *name, const char *command,
                                   const char *completion);
+extern int alias_rename (struct t_alias *alias, const char *new_name);
 extern void alias_free (struct t_alias *alias);
 extern void alias_free_all ();
 extern int alias_add_to_infolist (struct t_infolist *infolist,

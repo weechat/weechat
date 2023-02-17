@@ -60,8 +60,6 @@
 
 | php | php_version | version de l'interpréteur utilisé | -
 
-| python | python2_bin | chemin vers l'interpréteur Python 2.x (*obsolète* depuis la version 2.6, les scripts doivent utiliser seulement Python 3) | -
-
 | python | python_eval | évaluation de code source | code source à exécuter
 
 | python | python_interpreter | nom de l'interpréteur utilisé | -
@@ -127,6 +125,8 @@
 | weechat | totp_validate | valider un mot de passe à usage unique basé sur le temps (TOTP) : 1 si le TOTP est correct, sinon 0 | secret (en base32), mot de passe à usage unique, horodatage (optionnel, heure courante par défaut), nombre de mots de passe avant/après à tester (optionnel, 0 par défaut)
 
 | weechat | uptime | Durée de fonctionnement de WeeChat (format : "jours:hh:mm:ss") | "days" (nombre de jours) ou "seconds" (nombre de secondes) (optionnel)
+
+| weechat | uptime_current | Durée de fonctionnement de WeeChat pour le processus actuel seulement (les mises à jour par la commande /upgrade sont ignorées) (format : "jours:hh:mm:ss") | "days" (nombre de jours) ou "seconds" (nombre de secondes) (optionnel)
 
 | weechat | version | version de WeeChat | -
 

@@ -1,7 +1,7 @@
 /*
  * test-irc-message.cpp - test IRC message functions
  *
- * Copyright (C) 2019-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2019-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,10 +21,11 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include "string.h"
-#include "tests/tests.h"
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-hook.h"
@@ -354,6 +355,16 @@ TEST(IrcMessage, ParseParams)
     POINTERS_EQUAL(NULL, params[1]);
     string_free_split (params);
 
+    /* single parameter with trailing space */
+    params = NULL;
+    num_params = -1;
+    irc_message_parse_params ("param1 ", &params, &num_params);
+    LONGS_EQUAL(1, num_params);
+    CHECK(params);
+    STRCMP_EQUAL("param1", params[0]);
+    POINTERS_EQUAL(NULL, params[1]);
+    string_free_split (params);
+
     /* two parameters */
     params = NULL;
     num_params = -1;
@@ -372,7 +383,7 @@ TEST(IrcMessage, ParseParams)
     LONGS_EQUAL(2, num_params);
     CHECK(params);
     STRCMP_EQUAL("param1", params[0]);
-    STRCMP_EQUAL("param2  ", params[1]);
+    STRCMP_EQUAL("param2", params[1]);
     POINTERS_EQUAL(NULL, params[2]);
     string_free_split (params);
 
@@ -383,7 +394,7 @@ TEST(IrcMessage, ParseParams)
     LONGS_EQUAL(2, num_params);
     CHECK(params);
     STRCMP_EQUAL("param1", params[0]);
-    STRCMP_EQUAL("param2  ", params[1]);
+    STRCMP_EQUAL("param2", params[1]);
     POINTERS_EQUAL(NULL, params[2]);
     string_free_split (params);
 

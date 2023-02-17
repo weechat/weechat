@@ -1,7 +1,7 @@
 /*
  * wee-infolist.c - info lists management
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -366,7 +366,7 @@ infolist_search_var (struct t_infolist *infolist, const char *name)
     for (ptr_var = infolist->ptr_item->vars; ptr_var;
          ptr_var = ptr_var->next_var)
     {
-        if (string_strcasecmp (ptr_var->name, name) == 0)
+        if (strcmp (ptr_var->name, name) == 0)
             return ptr_var;
     }
 
@@ -447,7 +447,7 @@ infolist_integer (struct t_infolist *infolist, const char *var)
     for (ptr_var = infolist->ptr_item->vars; ptr_var;
          ptr_var = ptr_var->next_var)
     {
-        if (string_strcasecmp (ptr_var->name, var) == 0)
+        if (strcmp (ptr_var->name, var) == 0)
         {
             if (ptr_var->type == INFOLIST_INTEGER)
                 return *((int *)ptr_var->value);
@@ -475,7 +475,7 @@ infolist_string (struct t_infolist *infolist, const char *var)
     for (ptr_var = infolist->ptr_item->vars; ptr_var;
          ptr_var = ptr_var->next_var)
     {
-        if (string_strcasecmp (ptr_var->name, var) == 0)
+        if (strcmp (ptr_var->name, var) == 0)
         {
             if (ptr_var->type == INFOLIST_STRING)
                 return (char *)ptr_var->value;
@@ -503,7 +503,7 @@ infolist_pointer (struct t_infolist *infolist, const char *var)
     for (ptr_var = infolist->ptr_item->vars; ptr_var;
          ptr_var = ptr_var->next_var)
     {
-        if (string_strcasecmp (ptr_var->name, var) == 0)
+        if (strcmp (ptr_var->name, var) == 0)
         {
             if (ptr_var->type == INFOLIST_POINTER)
                 return ptr_var->value;
@@ -534,7 +534,7 @@ infolist_buffer (struct t_infolist *infolist, const char *var,
     for (ptr_var = infolist->ptr_item->vars; ptr_var;
          ptr_var = ptr_var->next_var)
     {
-        if (string_strcasecmp (ptr_var->name, var) == 0)
+        if (strcmp (ptr_var->name, var) == 0)
         {
             if (ptr_var->type == INFOLIST_BUFFER)
             {
@@ -565,7 +565,7 @@ infolist_time (struct t_infolist *infolist, const char *var)
     for (ptr_var = infolist->ptr_item->vars; ptr_var;
          ptr_var = ptr_var->next_var)
     {
-        if (string_strcasecmp (ptr_var->name, var) == 0)
+        if (strcmp (ptr_var->name, var) == 0)
         {
             if (ptr_var->type == INFOLIST_TIME)
                 return *((time_t *)ptr_var->value);

@@ -1,7 +1,7 @@
 /*
  * gui-buffer.c - buffer functions (used by all GUI)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -79,6 +79,9 @@ char *gui_buffer_reserved_names[] =
   NULL
 };
 
+int gui_buffer_set_signals = 1;        /* 0 to disable signals sent in      */
+                                       /* function gui_buffer_set           */
+
 char *gui_buffer_type_string[GUI_BUFFER_NUM_TYPES] =
 { "formatted", "free" };
 
@@ -89,7 +92,7 @@ char *gui_buffer_properties_get_integer[] =
 { "number", "layout_number", "layout_number_merge_order", "type", "notify",
   "num_displayed", "active", "hidden", "zoomed", "print_hooks_enabled",
   "day_change", "clear", "filter", "closing", "lines_hidden",
-  "prefix_max_length", "time_for_each_line", "nicklist",
+  "prefix_max_length", "next_line_id", "time_for_each_line", "nicklist",
   "nicklist_case_sensitive", "nicklist_max_length", "nicklist_display_groups",
   "nicklist_count", "nicklist_visible_count",
   "nicklist_groups_count", "nicklist_groups_visible_count",
@@ -103,12 +106,14 @@ char *gui_buffer_properties_get_integer[] =
 };
 char *gui_buffer_properties_get_string[] =
 { "plugin", "name", "full_name", "old_full_name", "short_name", "title",
-  "input", "text_search_input", "highlight_words", "highlight_regex",
-  "highlight_tags_restrict", "highlight_tags", "hotlist_max_level_nicks",
+  "input", "text_search_input", "highlight_words", "highlight_disable_regex",
+  "highlight_regex", "highlight_tags_restrict", "highlight_tags",
+  "hotlist_max_level_nicks",
   NULL
 };
 char *gui_buffer_properties_get_pointer[] =
-{ "plugin", "text_search_regex_compiled", "highlight_regex_compiled",
+{ "plugin", "text_search_regex_compiled", "highlight_disable_regex_compiled",
+  "highlight_regex_compiled",
   NULL
 };
 char *gui_buffer_properties_set[] =
@@ -116,10 +121,11 @@ char *gui_buffer_properties_set[] =
   "clear", "filter", "number", "name", "short_name", "type", "notify", "title",
   "time_for_each_line", "nicklist", "nicklist_case_sensitive",
   "nicklist_display_groups", "highlight_words", "highlight_words_add",
-  "highlight_words_del", "highlight_regex", "highlight_tags_restrict",
-  "highlight_tags", "hotlist_max_level_nicks", "hotlist_max_level_nicks_add",
-  "hotlist_max_level_nicks_del", "input", "input_pos",
-  "input_get_unknown_commands", "input_get_empty", "input_multiline",
+  "highlight_words_del", "highlight_disable_regex", "highlight_regex",
+  "highlight_tags_restrict", "highlight_tags", "hotlist_max_level_nicks",
+  "hotlist_max_level_nicks_add", "hotlist_max_level_nicks_del",
+  "input", "input_pos", "input_get_unknown_commands", "input_get_empty",
+  "input_multiline",
   NULL
 };
 
@@ -127,7 +133,7 @@ char *gui_buffer_properties_set[] =
 /*
  * Searches for buffer type.
  *
- * Returns index of bufffer type found, -1 if not found.
+ * Returns index of buffer type found, -1 if not found.
  */
 
 int
@@ -140,7 +146,7 @@ gui_buffer_search_type (const char *type)
 
     for (i = 0; i < GUI_BUFFER_NUM_TYPES; i++)
     {
-        if (string_strcasecmp (gui_buffer_type_string[i], type) == 0)
+        if (strcmp (gui_buffer_type_string[i], type) == 0)
             return i;
     }
 
@@ -148,7 +154,7 @@ gui_buffer_search_type (const char *type)
 }
 
 /*
- * Searches for buffer notif levely.
+ * Searches for buffer notify level.
  *
  * Returns index of notify level, -1 if not found.
  */
@@ -163,7 +169,7 @@ gui_buffer_search_notify (const char *notify)
 
     for (i = 0; i < GUI_BUFFER_NUM_NOTIFY; i++)
     {
-        if (string_strcasecmp (gui_buffer_notify_string[i], notify) == 0)
+        if (strcmp (gui_buffer_notify_string[i], notify) == 0)
             return i;
     }
 
@@ -190,7 +196,7 @@ gui_buffer_get_plugin_name (struct t_gui_buffer *buffer)
 }
 
 /*
- * Get short name of buffer (of name if short_name is NULL).
+ * Get short name of buffer (or name if short_name is NULL).
  *
  * Note: this function never returns NULL.
  */
@@ -630,25 +636,43 @@ gui_buffer_is_reserved_name (const char *name)
 }
 
 /*
- * Creates a new buffer in current window.
+ * Applies buffer properties (callback of hashtable_map).
+ */
+
+void
+gui_buffer_apply_properties_cb (void *data,
+                                struct t_hashtable *hashtable,
+                                const void *key, const void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+
+    gui_buffer_set ((struct t_gui_buffer *)data,
+                    (const char *)key,
+                    (const char *)value);
+}
+
+/*
+ * Creates a new buffer in current window with some optional properties.
  *
  * Returns pointer to new buffer, NULL if error.
  */
 
 struct t_gui_buffer *
-gui_buffer_new (struct t_weechat_plugin *plugin,
-                const char *name,
-                int (*input_callback)(const void *pointer,
-                                      void *data,
-                                      struct t_gui_buffer *buffer,
-                                      const char *input_data),
-                const void *input_callback_pointer,
-                void *input_callback_data,
-                int (*close_callback)(const void *pointer,
-                                      void *data,
-                                      struct t_gui_buffer *buffer),
-                const void *close_callback_pointer,
-                void *close_callback_data)
+gui_buffer_new_props (struct t_weechat_plugin *plugin,
+                      const char *name,
+                      struct t_hashtable *properties,
+                      int (*input_callback)(const void *pointer,
+                                            void *data,
+                                            struct t_gui_buffer *buffer,
+                                            const char *input_data),
+                      const void *input_callback_pointer,
+                      void *input_callback_data,
+                      int (*close_callback)(const void *pointer,
+                                            void *data,
+                                            struct t_gui_buffer *buffer),
+                      const void *close_callback_pointer,
+                      void *close_callback_data)
 {
     struct t_gui_buffer *new_buffer;
     int first_buffer_creation;
@@ -694,7 +718,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->old_full_name = NULL;
     gui_buffer_build_full_name (new_buffer);
     new_buffer->short_name = NULL;
-    new_buffer->type = GUI_BUFFER_TYPE_FORMATTED;
+    new_buffer->type = GUI_BUFFER_TYPE_DEFAULT;
     new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
     new_buffer->num_displayed = 0;
     new_buffer->active = 1;
@@ -718,6 +742,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->own_lines = gui_line_lines_alloc ();
     new_buffer->mixed_lines = NULL;
     new_buffer->lines = new_buffer->own_lines;
+    new_buffer->next_line_id = 0;
     new_buffer->time_for_each_line = 1;
     new_buffer->chat_refresh_needed = 2;
 
@@ -779,6 +804,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
 
     /* highlight */
     new_buffer->highlight_words = NULL;
+    new_buffer->highlight_disable_regex = NULL;
+    new_buffer->highlight_disable_regex_compiled = NULL;
     new_buffer->highlight_regex = NULL;
     new_buffer->highlight_regex_compiled = NULL;
     new_buffer->highlight_tags_restrict = NULL;
@@ -823,6 +850,10 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     /* assign this buffer to windows of layout */
     gui_layout_window_assign_buffer (new_buffer);
 
+    /* apply properties */
+    if (properties)
+        hashtable_map (properties, &gui_buffer_apply_properties_cb, new_buffer);
+
     if (first_buffer_creation)
     {
         gui_buffer_visited_add (new_buffer);
@@ -837,6 +868,35 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
 }
 
 /*
+ * Creates a new buffer in current window.
+ *
+ * Returns pointer to new buffer, NULL if error.
+ */
+
+struct t_gui_buffer *
+gui_buffer_new (struct t_weechat_plugin *plugin,
+                const char *name,
+                int (*input_callback)(const void *pointer,
+                                      void *data,
+                                      struct t_gui_buffer *buffer,
+                                      const char *input_data),
+                const void *input_callback_pointer,
+                void *input_callback_data,
+                int (*close_callback)(const void *pointer,
+                                      void *data,
+                                      struct t_gui_buffer *buffer),
+                const void *close_callback_pointer,
+                void *close_callback_data)
+{
+    return gui_buffer_new_props (
+        plugin,
+        name,
+        NULL,  /* properties */
+        input_callback, input_callback_pointer, input_callback_data,
+        close_callback, close_callback_pointer, close_callback_data);
+}
+
+/*
  * Input callback for user buffers.
  */
 
@@ -844,14 +904,47 @@ int
 gui_buffer_user_input_cb (const void *pointer, void *data,
                           struct t_gui_buffer *buffer, const char *input_data)
 {
+    char str_signal[1024];
+    int rc;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
 
-    if (string_strcasecmp (input_data, "q") == 0)
-    {
+    snprintf (str_signal, sizeof (str_signal),
+              "buffer_user_input_%s",
+              buffer->name);
+    rc = hook_signal_send (str_signal,
+                           WEECHAT_HOOK_SIGNAL_STRING, (void *)input_data);
+
+    if (rc == WEECHAT_RC_OK_EAT)
+        return WEECHAT_RC_OK;
+
+    if (string_strcmp (input_data, "q") == 0)
         gui_buffer_close (buffer);
-    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Close callback for user buffers.
+ */
+
+int
+gui_buffer_user_close_cb (const void *pointer, void *data,
+                          struct t_gui_buffer *buffer)
+{
+    char str_signal[1024];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    snprintf (str_signal, sizeof (str_signal),
+              "buffer_user_closing_%s",
+              buffer->name);
+    hook_signal_send (str_signal,
+                      WEECHAT_HOOK_SIGNAL_STRING, NULL);
 
     return WEECHAT_RC_OK;
 }
@@ -863,15 +956,32 @@ gui_buffer_user_input_cb (const void *pointer, void *data,
  */
 
 struct t_gui_buffer *
-gui_buffer_new_user (const char *name)
+gui_buffer_new_user (const char *name, enum t_gui_buffer_type buffer_type)
 {
+    struct t_hashtable *properties;
     struct t_gui_buffer *new_buffer;
 
-    new_buffer = gui_buffer_new (NULL, name,
-                                 &gui_buffer_user_input_cb, NULL, NULL,
-                                 NULL, NULL, NULL);
-    if (new_buffer)
-        gui_buffer_set (new_buffer, "localvar_set_type", "user");
+    properties = hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (properties)
+    {
+        if (buffer_type != GUI_BUFFER_TYPE_DEFAULT)
+        {
+            hashtable_set (properties,
+                           "type", gui_buffer_type_string[buffer_type]);
+        }
+        hashtable_set (properties, "localvar_set_type", "user");
+    }
+
+    new_buffer = gui_buffer_new_props (NULL, name, properties,
+                                       &gui_buffer_user_input_cb, NULL, NULL,
+                                       &gui_buffer_user_close_cb, NULL, NULL);
+
+    if (properties)
+        hashtable_free (properties);
 
     return new_buffer;
 }
@@ -1026,6 +1136,8 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
  * List is a comma-separated list of buffers, where exclusion is possible with
  * char '!', and "*" means all buffers.
  *
+ * Comparison is case sensitive.
+ *
  * Examples:
  *   "*"
  *   "*,!*#weechat*"
@@ -1053,7 +1165,7 @@ gui_buffer_match_list (struct t_gui_buffer *buffer, const char *string)
     if (buffers)
     {
         match = string_match_list (buffer->full_name,
-                                   (const char **)buffers, 0);
+                                   (const char **)buffers, 1);
         string_free_split (buffers);
     }
 
@@ -1121,89 +1233,91 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
     if (!buffer || !property)
         return 0;
 
-    if (string_strcasecmp (property, "number") == 0)
+    if (strcmp (property, "number") == 0)
         return buffer->number;
-    else if (string_strcasecmp (property, "layout_number") == 0)
+    else if (strcmp (property, "layout_number") == 0)
         return buffer->layout_number;
-    else if (string_strcasecmp (property, "layout_number_merge_order") == 0)
+    else if (strcmp (property, "layout_number_merge_order") == 0)
         return buffer->layout_number_merge_order;
-    else if (string_strcasecmp (property, "short_name_is_set") == 0)
+    else if (strcmp (property, "short_name_is_set") == 0)
         return (buffer->short_name) ? 1 : 0;
-    else if (string_strcasecmp (property, "type") == 0)
+    else if (strcmp (property, "type") == 0)
         return buffer->type;
-    else if (string_strcasecmp (property, "notify") == 0)
+    else if (strcmp (property, "notify") == 0)
         return buffer->notify;
-    else if (string_strcasecmp (property, "num_displayed") == 0)
+    else if (strcmp (property, "num_displayed") == 0)
         return buffer->num_displayed;
-    else if (string_strcasecmp (property, "active") == 0)
+    else if (strcmp (property, "active") == 0)
         return buffer->active;
-    else if (string_strcasecmp (property, "hidden") == 0)
+    else if (strcmp (property, "hidden") == 0)
         return buffer->hidden;
-    else if (string_strcasecmp (property, "zoomed") == 0)
+    else if (strcmp (property, "zoomed") == 0)
         return buffer->zoomed;
-    else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
+    else if (strcmp (property, "print_hooks_enabled") == 0)
         return buffer->print_hooks_enabled;
-    else if (string_strcasecmp (property, "day_change") == 0)
+    else if (strcmp (property, "day_change") == 0)
         return buffer->day_change;
-    else if (string_strcasecmp (property, "clear") == 0)
+    else if (strcmp (property, "clear") == 0)
         return buffer->clear;
-    else if (string_strcasecmp (property, "filter") == 0)
+    else if (strcmp (property, "filter") == 0)
         return buffer->filter;
-    else if (string_strcasecmp (property, "closing") == 0)
+    else if (strcmp (property, "closing") == 0)
         return buffer->closing;
-    else if (string_strcasecmp (property, "lines_hidden") == 0)
+    else if (strcmp (property, "lines_hidden") == 0)
         return buffer->lines->lines_hidden;
-    else if (string_strcasecmp (property, "prefix_max_length") == 0)
+    else if (strcmp (property, "prefix_max_length") == 0)
         return buffer->lines->prefix_max_length;
-    else if (string_strcasecmp (property, "time_for_each_line") == 0)
+    else if (strcmp (property, "next_line_id") == 0)
+        return buffer->next_line_id;
+    else if (strcmp (property, "time_for_each_line") == 0)
         return buffer->time_for_each_line;
-    else if (string_strcasecmp (property, "nicklist") == 0)
+    else if (strcmp (property, "nicklist") == 0)
         return buffer->nicklist;
-    else if (string_strcasecmp (property, "nicklist_case_sensitive") == 0)
+    else if (strcmp (property, "nicklist_case_sensitive") == 0)
         return buffer->nicklist_case_sensitive;
-    else if (string_strcasecmp (property, "nicklist_max_length") == 0)
+    else if (strcmp (property, "nicklist_max_length") == 0)
         return buffer->nicklist_max_length;
-    else if (string_strcasecmp (property, "nicklist_display_groups") == 0)
+    else if (strcmp (property, "nicklist_display_groups") == 0)
         return buffer->nicklist_display_groups;
-    else if (string_strcasecmp (property, "nicklist_count") == 0)
+    else if (strcmp (property, "nicklist_count") == 0)
         return buffer->nicklist_count;
-    else if (string_strcasecmp (property, "nicklist_visible_count") == 0)
+    else if (strcmp (property, "nicklist_visible_count") == 0)
         return buffer->nicklist_visible_count;
-    else if (string_strcasecmp (property, "nicklist_groups_count") == 0)
+    else if (strcmp (property, "nicklist_groups_count") == 0)
         return buffer->nicklist_groups_count;
-    else if (string_strcasecmp (property, "nicklist_groups_visible_count") == 0)
+    else if (strcmp (property, "nicklist_groups_visible_count") == 0)
         return buffer->nicklist_groups_visible_count;
-    else if (string_strcasecmp (property, "nicklist_nicks_count") == 0)
+    else if (strcmp (property, "nicklist_nicks_count") == 0)
         return buffer->nicklist_nicks_count;
-    else if (string_strcasecmp (property, "nicklist_nicks_visible_count") == 0)
+    else if (strcmp (property, "nicklist_nicks_visible_count") == 0)
         return buffer->nicklist_nicks_visible_count;
-    else if (string_strcasecmp (property, "input") == 0)
+    else if (strcmp (property, "input") == 0)
         return buffer->input;
-    else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
+    else if (strcmp (property, "input_get_unknown_commands") == 0)
         return buffer->input_get_unknown_commands;
-    else if (string_strcasecmp (property, "input_get_empty") == 0)
+    else if (strcmp (property, "input_get_empty") == 0)
         return buffer->input_get_empty;
-    else if (string_strcasecmp (property, "input_multiline") == 0)
+    else if (strcmp (property, "input_multiline") == 0)
         return buffer->input_multiline;
-    else if (string_strcasecmp (property, "input_size") == 0)
+    else if (strcmp (property, "input_size") == 0)
         return buffer->input_buffer_size;
-    else if (string_strcasecmp (property, "input_length") == 0)
+    else if (strcmp (property, "input_length") == 0)
         return buffer->input_buffer_length;
-    else if (string_strcasecmp (property, "input_pos") == 0)
+    else if (strcmp (property, "input_pos") == 0)
         return buffer->input_buffer_pos;
-    else if (string_strcasecmp (property, "input_1st_display") == 0)
+    else if (strcmp (property, "input_1st_display") == 0)
         return buffer->input_buffer_1st_display;
-    else if (string_strcasecmp (property, "num_history") == 0)
+    else if (strcmp (property, "num_history") == 0)
         return buffer->num_history;
-    else if (string_strcasecmp (property, "text_search") == 0)
+    else if (strcmp (property, "text_search") == 0)
         return buffer->text_search;
-    else if (string_strcasecmp (property, "text_search_exact") == 0)
+    else if (strcmp (property, "text_search_exact") == 0)
         return buffer->text_search_exact;
-    else if (string_strcasecmp (property, "text_search_regex") == 0)
+    else if (strcmp (property, "text_search_regex") == 0)
         return buffer->text_search_regex;
-    else if (string_strcasecmp (property, "text_search_where") == 0)
+    else if (strcmp (property, "text_search_where") == 0)
         return buffer->text_search_where;
-    else if (string_strcasecmp (property, "text_search_found") == 0)
+    else if (strcmp (property, "text_search_found") == 0)
         return buffer->text_search_found;
 
     return 0;
@@ -1221,33 +1335,35 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
     if (!buffer || !property)
         return NULL;
 
-    if (string_strcasecmp (property, "plugin") == 0)
+    if (strcmp (property, "plugin") == 0)
         return gui_buffer_get_plugin_name (buffer);
-    else if (string_strcasecmp (property, "name") == 0)
+    else if (strcmp (property, "name") == 0)
         return buffer->name;
-    else if (string_strcasecmp (property, "full_name") == 0)
+    else if (strcmp (property, "full_name") == 0)
         return buffer->full_name;
-    else if (string_strcasecmp (property, "old_full_name") == 0)
+    else if (strcmp (property, "old_full_name") == 0)
         return buffer->old_full_name;
-    else if (string_strcasecmp (property, "short_name") == 0)
+    else if (strcmp (property, "short_name") == 0)
         return gui_buffer_get_short_name (buffer);
-    else if (string_strcasecmp (property, "title") == 0)
+    else if (strcmp (property, "title") == 0)
         return buffer->title;
-    else if (string_strcasecmp (property, "input") == 0)
+    else if (strcmp (property, "input") == 0)
         return buffer->input_buffer;
-    else if (string_strcasecmp (property, "text_search_input") == 0)
+    else if (strcmp (property, "text_search_input") == 0)
         return buffer->text_search_input;
-    else if (string_strcasecmp (property, "highlight_words") == 0)
+    else if (strcmp (property, "highlight_words") == 0)
         return buffer->highlight_words;
-    else if (string_strcasecmp (property, "highlight_regex") == 0)
+    else if (strcmp (property, "highlight_disable_regex") == 0)
+        return buffer->highlight_disable_regex;
+    else if (strcmp (property, "highlight_regex") == 0)
         return buffer->highlight_regex;
-    else if (string_strcasecmp (property, "highlight_tags_restrict") == 0)
+    else if (strcmp (property, "highlight_tags_restrict") == 0)
         return buffer->highlight_tags_restrict;
-    else if (string_strcasecmp (property, "highlight_tags") == 0)
+    else if (strcmp (property, "highlight_tags") == 0)
         return buffer->highlight_tags;
-    else if (string_strcasecmp (property, "hotlist_max_level_nicks") == 0)
+    else if (strcmp (property, "hotlist_max_level_nicks") == 0)
         return hashtable_get_string (buffer->hotlist_max_level_nicks, "keys_values");
-    else if (string_strncasecmp (property, "localvar_", 9) == 0)
+    else if (string_strncmp (property, "localvar_", 9) == 0)
     {
         ptr_value = (const char *)hashtable_get (buffer->local_variables,
                                                  property + 9);
@@ -1268,11 +1384,13 @@ gui_buffer_get_pointer (struct t_gui_buffer *buffer, const char *property)
     if (!buffer || !property)
         return NULL;
 
-    if (string_strcasecmp (property, "plugin") == 0)
+    if (strcmp (property, "plugin") == 0)
         return buffer->plugin;
-    else if (string_strcasecmp (property, "text_search_regex_compiled") == 0)
+    else if (strcmp (property, "text_search_regex_compiled") == 0)
         return buffer->text_search_regex_compiled;
-    else if (string_strcasecmp (property, "highlight_regex_compiled") == 0)
+    else if (strcmp (property, "highlight_disable_regex_compiled") == 0)
+        return buffer->highlight_disable_regex_compiled;
+    else if (strcmp (property, "highlight_regex_compiled") == 0)
         return buffer->highlight_regex_compiled;
 
     return NULL;
@@ -1667,12 +1785,56 @@ gui_buffer_remove_highlight_words (struct t_gui_buffer *buffer,
 }
 
 /*
+ * Sets highlight disable regex for a buffer.
+ */
+
+void
+gui_buffer_set_highlight_disable_regex (struct t_gui_buffer *buffer,
+                                        const char *new_regex)
+{
+    if (!buffer)
+        return;
+
+    if (buffer->highlight_disable_regex)
+    {
+        free (buffer->highlight_disable_regex);
+        buffer->highlight_disable_regex = NULL;
+    }
+    if (buffer->highlight_disable_regex_compiled)
+    {
+        regfree (buffer->highlight_disable_regex_compiled);
+        free (buffer->highlight_disable_regex_compiled);
+        buffer->highlight_disable_regex_compiled = NULL;
+    }
+
+    if (new_regex && new_regex[0])
+    {
+        buffer->highlight_disable_regex = strdup (new_regex);
+        if (buffer->highlight_disable_regex)
+        {
+            buffer->highlight_disable_regex_compiled =
+                malloc (sizeof (*buffer->highlight_disable_regex_compiled));
+            if (buffer->highlight_disable_regex_compiled)
+            {
+                if (string_regcomp (buffer->highlight_disable_regex_compiled,
+                                    buffer->highlight_disable_regex,
+                                    REG_EXTENDED | REG_ICASE) != 0)
+                {
+                    free (buffer->highlight_disable_regex_compiled);
+                    buffer->highlight_disable_regex_compiled = NULL;
+                }
+            }
+        }
+    }
+}
+
+/*
  * Sets highlight regex for a buffer.
  */
 
 void
 gui_buffer_set_highlight_regex (struct t_gui_buffer *buffer,
-                                const char *new_highlight_regex)
+                                const char *new_regex)
 {
     if (!buffer)
         return;
@@ -1689,9 +1851,9 @@ gui_buffer_set_highlight_regex (struct t_gui_buffer *buffer,
         buffer->highlight_regex_compiled = NULL;
     }
 
-    if (new_highlight_regex && new_highlight_regex[0])
+    if (new_regex && new_regex[0])
     {
-        buffer->highlight_regex = strdup (new_highlight_regex);
+        buffer->highlight_regex = strdup (new_regex);
         if (buffer->highlight_regex)
         {
             buffer->highlight_regex_compiled =
@@ -1945,21 +2107,34 @@ gui_buffer_set_input_multiline (struct t_gui_buffer *buffer,
 
 /*
  * Sets unread marker for a buffer.
+ *
+ * If remove_marker == 1, then unread marker is removed, otherwise it's set
+ * after the last line.
  */
 
 void
-gui_buffer_set_unread (struct t_gui_buffer *buffer)
+gui_buffer_set_unread (struct t_gui_buffer *buffer, int remove_marker)
 {
     int refresh;
 
     if (!buffer || (buffer->type != GUI_BUFFER_TYPE_FORMATTED))
         return;
 
-    refresh = ((buffer->lines->last_read_line != NULL)
-               && (buffer->lines->last_read_line != buffer->lines->last_line));
-
-    buffer->lines->last_read_line = buffer->lines->last_line;
-    buffer->lines->first_line_not_read = (buffer->lines->last_read_line) ? 0 : 1;
+    if (remove_marker)
+    {
+        /* remove unread marker */
+        refresh = (buffer->lines->last_read_line != NULL);
+        buffer->lines->last_read_line = NULL;
+        buffer->lines->first_line_not_read = 0;
+    }
+    else
+    {
+        /* set unread marker after last line */
+        refresh = ((buffer->lines->last_read_line != NULL)
+                   && (buffer->lines->last_read_line != buffer->lines->last_line));
+        buffer->lines->last_read_line = buffer->lines->last_line;
+        buffer->lines->first_line_not_read = (buffer->lines->last_read_line) ? 0 : 1;
+    }
 
     if (refresh)
         gui_buffer_ask_chat_refresh (buffer, 2);
@@ -1973,7 +2148,7 @@ void
 gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                 const char *value)
 {
-    int gui_chat_mute_old;
+    int gui_chat_mute_old, remove_marker;
     long number;
     char *error;
     const char *ptr_notify;
@@ -1982,7 +2157,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         return;
 
     /* properties with optional buffer */
-    if (string_strcasecmp (property, "hotlist") == 0)
+    if (strcmp (property, "hotlist") == 0)
     {
         if (strcmp (value, "-") == 0)
             gui_add_hotlist = 0;
@@ -1995,13 +2170,21 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             if (error && !error[0])
             {
                 if (number < 0)
+                {
                     gui_hotlist_remove_buffer (buffer, 0);
+                }
                 else
-                    (void) gui_hotlist_add (buffer, number, NULL);
+                {
+                    (void) gui_hotlist_add (
+                        buffer,
+                        number,
+                        NULL,  /* creation_time */
+                        0);  /* check_conditions */
+                }
             }
         }
     }
-    else if (string_strcasecmp (property, "completion_freeze") == 0)
+    else if (strcmp (property, "completion_freeze") == 0)
     {
         gui_completion_freeze = (strcmp (value, "1") == 0) ? 1 : 0;
     }
@@ -2010,22 +2193,24 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         return;
 
     /* properties that need a buffer */
-    if (string_strcasecmp (property, "unread") == 0)
+    if (strcmp (property, "unread") == 0)
     {
-        gui_buffer_set_unread (buffer);
+        remove_marker = (strcmp (value, "0") == 0);
+        gui_buffer_set_unread (buffer, remove_marker);
     }
-    else if (string_strcasecmp (property, "display") == 0)
+    else if (strcmp (property, "display") == 0)
     {
         /*
          * if it is auto-switch to a buffer, then we don't set read marker,
          * otherwise we reset it (if current buffer is not displayed) after
          * switch
          */
-        gui_window_switch_to_buffer (gui_current_window, buffer,
-                                     (string_strcasecmp (value, "auto") == 0) ?
-                                     0 : 1);
+        gui_window_switch_to_buffer (
+            gui_current_window,
+            buffer,
+            (value && (strcmp (value, "auto") == 0)) ? 0 : 1);
     }
-    else if (string_strcasecmp (property, "hidden") == 0)
+    else if (strcmp (property, "hidden") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
@@ -2037,14 +2222,14 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                 gui_buffer_unhide (buffer);
         }
     }
-    else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
+    else if (strcmp (property, "print_hooks_enabled") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             buffer->print_hooks_enabled = (number) ? 1 : 0;
     }
-    else if (string_strcasecmp (property, "day_change") == 0)
+    else if (strcmp (property, "day_change") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
@@ -2054,14 +2239,14 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             gui_buffer_ask_chat_refresh (buffer, 2);
         }
     }
-    else if (string_strcasecmp (property, "clear") == 0)
+    else if (strcmp (property, "clear") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             buffer->clear = (number) ? 1 : 0;
     }
-    else if (string_strcasecmp (property, "filter") == 0)
+    else if (strcmp (property, "filter") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
@@ -2071,29 +2256,29 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             gui_filter_buffer (buffer, NULL);
         }
     }
-    else if (string_strcasecmp (property, "number") == 0)
+    else if (strcmp (property, "number") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0] && (number >= 1))
             gui_buffer_move_to_number (buffer, number);
     }
-    else if (string_strcasecmp (property, "name") == 0)
+    else if (strcmp (property, "name") == 0)
     {
         gui_buffer_set_name (buffer, value);
     }
-    else if (string_strcasecmp (property, "short_name") == 0)
+    else if (strcmp (property, "short_name") == 0)
     {
         gui_buffer_set_short_name (buffer, value);
     }
-    else if (string_strcasecmp (property, "type") == 0)
+    else if (strcmp (property, "type") == 0)
     {
-        if (string_strcasecmp (value, "formatted") == 0)
+        if (value && (strcmp (value, "formatted") == 0))
             gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FORMATTED);
-        else if (string_strcasecmp (value, "free") == 0)
+        else if (value && (strcmp (value, "free") == 0))
             gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FREE);
     }
-    else if (string_strcasecmp (property, "notify") == 0)
+    else if (strcmp (property, "notify") == 0)
     {
         ptr_notify = NULL;
         error = NULL;
@@ -2119,79 +2304,83 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             gui_chat_mute = gui_chat_mute_old;
         }
     }
-    else if (string_strcasecmp (property, "title") == 0)
+    else if (strcmp (property, "title") == 0)
     {
         gui_buffer_set_title (buffer, value);
     }
-    else if (string_strcasecmp (property, "time_for_each_line") == 0)
+    else if (strcmp (property, "time_for_each_line") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_time_for_each_line (buffer, number);
     }
-    else if (string_strcasecmp (property, "nicklist") == 0)
+    else if (strcmp (property, "nicklist") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist (buffer, number);
     }
-    else if (string_strcasecmp (property, "nicklist_case_sensitive") == 0)
+    else if (strcmp (property, "nicklist_case_sensitive") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist_case_sensitive (buffer, number);
     }
-    else if (string_strcasecmp (property, "nicklist_display_groups") == 0)
+    else if (strcmp (property, "nicklist_display_groups") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist_display_groups (buffer, number);
     }
-    else if (string_strcasecmp (property, "highlight_words") == 0)
+    else if (strcmp (property, "highlight_words") == 0)
     {
         gui_buffer_set_highlight_words (buffer, value);
     }
-    else if (string_strcasecmp (property, "highlight_words_add") == 0)
+    else if (strcmp (property, "highlight_words_add") == 0)
     {
         gui_buffer_add_highlight_words (buffer, value);
     }
-    else if (string_strcasecmp (property, "highlight_words_del") == 0)
+    else if (strcmp (property, "highlight_words_del") == 0)
     {
         gui_buffer_remove_highlight_words (buffer, value);
     }
-    else if (string_strcasecmp (property, "highlight_regex") == 0)
+    else if (strcmp (property, "highlight_disable_regex") == 0)
+    {
+        gui_buffer_set_highlight_disable_regex (buffer, value);
+    }
+    else if (strcmp (property, "highlight_regex") == 0)
     {
         gui_buffer_set_highlight_regex (buffer, value);
     }
-    else if (string_strcasecmp (property, "highlight_tags_restrict") == 0)
+    else if (strcmp (property, "highlight_tags_restrict") == 0)
     {
         gui_buffer_set_highlight_tags_restrict (buffer, value);
     }
-    else if (string_strcasecmp (property, "highlight_tags") == 0)
+    else if (strcmp (property, "highlight_tags") == 0)
     {
         gui_buffer_set_highlight_tags (buffer, value);
     }
-    else if (string_strcasecmp (property, "hotlist_max_level_nicks") == 0)
+    else if (strcmp (property, "hotlist_max_level_nicks") == 0)
     {
         gui_buffer_set_hotlist_max_level_nicks (buffer, value);
     }
-    else if (string_strcasecmp (property, "hotlist_max_level_nicks_add") == 0)
+    else if (strcmp (property, "hotlist_max_level_nicks_add") == 0)
     {
         gui_buffer_add_hotlist_max_level_nicks (buffer, value);
     }
-    else if (string_strcasecmp (property, "hotlist_max_level_nicks_del") == 0)
+    else if (strcmp (property, "hotlist_max_level_nicks_del") == 0)
     {
         gui_buffer_remove_hotlist_max_level_nicks (buffer, value);
     }
-    else if (string_strncasecmp (property, "key_bind_", 9) == 0)
+    else if (strncmp (property, "key_bind_", 9) == 0)
     {
         gui_key_bind (buffer, 0, property + 9, value);
     }
-    else if (string_strncasecmp (property, "key_unbind_", 11) == 0)
+    else if (strncmp (property, "key_unbind_", 11) == 0)
     {
         if (strcmp (property + 11, "*") == 0)
         {
@@ -2201,7 +2390,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         else
             gui_key_unbind (buffer, 0, property + 11);
     }
-    else if (string_strcasecmp (property, "input") == 0)
+    else if (strcmp (property, "input") == 0)
     {
         gui_buffer_undo_snap (buffer);
         gui_input_replace_input (buffer, value);
@@ -2209,40 +2398,40 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                                                     1, /* save undo */
                                                     1); /* stop completion */
     }
-    else if (string_strcasecmp (property, "input_pos") == 0)
+    else if (strcmp (property, "input_pos") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_input_set_pos (buffer, number);
     }
-    else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
+    else if (strcmp (property, "input_get_unknown_commands") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_input_get_unknown_commands (buffer, number);
     }
-    else if (string_strcasecmp (property, "input_get_empty") == 0)
+    else if (strcmp (property, "input_get_empty") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_input_get_empty (buffer, number);
     }
-    else if (string_strcasecmp (property, "input_multiline") == 0)
+    else if (strcmp (property, "input_multiline") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_input_multiline (buffer, number);
     }
-    else if (string_strncasecmp (property, "localvar_set_", 13) == 0)
+    else if (strncmp (property, "localvar_set_", 13) == 0)
     {
         if (value)
             gui_buffer_local_var_add (buffer, property + 13, value);
     }
-    else if (string_strncasecmp (property, "localvar_del_", 13) == 0)
+    else if (strncmp (property, "localvar_del_", 13) == 0)
     {
         gui_buffer_local_var_remove (buffer, property + 13);
     }
@@ -2259,39 +2448,39 @@ gui_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
     if (!buffer || !property)
         return;
 
-    if (string_strcasecmp (property, "close_callback") == 0)
+    if (strcmp (property, "close_callback") == 0)
     {
         buffer->close_callback = pointer;
     }
-    else if (string_strcasecmp (property, "close_callback_pointer") == 0)
+    else if (strcmp (property, "close_callback_pointer") == 0)
     {
         buffer->close_callback_pointer = pointer;
     }
-    else if (string_strcasecmp (property, "close_callback_data") == 0)
+    else if (strcmp (property, "close_callback_data") == 0)
     {
         buffer->close_callback_data = pointer;
     }
-    else if (string_strcasecmp (property, "nickcmp_callback") == 0)
+    else if (strcmp (property, "nickcmp_callback") == 0)
     {
         buffer->nickcmp_callback = pointer;
     }
-    else if (string_strcasecmp (property, "nickcmp_callback_pointer") == 0)
+    else if (strcmp (property, "nickcmp_callback_pointer") == 0)
     {
         buffer->nickcmp_callback_pointer = pointer;
     }
-    else if (string_strcasecmp (property, "nickcmp_callback_data") == 0)
+    else if (strcmp (property, "nickcmp_callback_data") == 0)
     {
         buffer->nickcmp_callback_data = pointer;
     }
-    else if (string_strcasecmp (property, "input_callback") == 0)
+    else if (strcmp (property, "input_callback") == 0)
     {
         buffer->input_callback = pointer;
     }
-    else if (string_strcasecmp (property, "input_callback_pointer") == 0)
+    else if (strcmp (property, "input_callback_pointer") == 0)
     {
         buffer->input_callback_pointer = pointer;
     }
-    else if (string_strcasecmp (property, "input_callback_data") == 0)
+    else if (strcmp (property, "input_callback_data") == 0)
     {
         buffer->input_callback_data = pointer;
     }
@@ -2606,11 +2795,16 @@ gui_buffer_search_by_number_or_name (const char *string)
     long number;
     char *error;
 
+    if (!string)
+        return NULL;
+
     ptr_buffer = NULL;
 
     number = strtol (string, &error, 10);
     if (error && !error[0])
+    {
         ptr_buffer = gui_buffer_search_by_number (number);
+    }
     else
     {
         ptr_buffer = gui_buffer_search_by_full_name (string);
@@ -2963,6 +3157,13 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     }
     if (buffer->highlight_words)
         free (buffer->highlight_words);
+    if (buffer->highlight_disable_regex)
+        free (buffer->highlight_disable_regex);
+    if (buffer->highlight_disable_regex_compiled)
+    {
+        regfree (buffer->highlight_disable_regex_compiled);
+        free (buffer->highlight_disable_regex_compiled);
+    }
     if (buffer->highlight_regex)
         free (buffer->highlight_regex);
     if (buffer->highlight_regex_compiled)
@@ -3171,6 +3372,120 @@ gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
     }
 
     return NULL;
+}
+
+/*
+ * Switches active buffer to next buffer (when many buffers are merged).
+ */
+
+void
+gui_buffer_switch_active_buffer (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_window *window;
+
+    ptr_buffer = gui_buffer_get_next_active_buffer (buffer, 0);
+    if (ptr_buffer)
+    {
+        gui_buffer_set_active_buffer (ptr_buffer);
+        window = gui_window_search_with_buffer (buffer);
+        if (window)
+            gui_window_switch_to_buffer (window, ptr_buffer, 1);
+    }
+}
+
+/*
+ * Switches active buffer to previous buffer (when many buffers are merged).
+ */
+
+void
+gui_buffer_switch_active_buffer_previous (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_window *window;
+
+    ptr_buffer = gui_buffer_get_previous_active_buffer (buffer, 0);
+    if (ptr_buffer)
+    {
+        gui_buffer_set_active_buffer (ptr_buffer);
+        window = gui_window_search_with_buffer (buffer);
+        if (window)
+            gui_window_switch_to_buffer (window, ptr_buffer, 1);
+    }
+}
+
+/*
+ * Zooms on current active merged buffer, or display all merged buffers if zoom
+ * was active.
+ */
+
+void
+gui_buffer_zoom (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *ptr_window;
+    struct t_gui_buffer *ptr_buffer;
+    int buffer_was_zoomed;
+
+    /* do nothing if current buffer is not merged with another buffer */
+    if (gui_buffer_count_merged_buffers (buffer->number) < 2)
+        return;
+
+    buffer_was_zoomed = (buffer->active == 2);
+
+    /* reset scroll in all windows displaying this buffer number */
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
+    {
+        if ((ptr_window->buffer->number == buffer->number)
+            && ptr_window->scroll && ptr_window->scroll->start_line)
+        {
+            gui_window_scroll_bottom (ptr_window);
+        }
+    }
+
+    /* first make buffer active if it is not */
+    if (!buffer->active)
+    {
+        gui_buffer_set_active_buffer (buffer);
+        ptr_window = gui_window_search_with_buffer (buffer);
+        if (ptr_window)
+            gui_window_switch_to_buffer (ptr_window, buffer, 1);
+    }
+
+    /*
+     * toggle active flag between 1 and 2
+     * (1 = active with other merged buffers displayed, 2 = the only active)
+     */
+    if (buffer->active == 1)
+    {
+        buffer->active = 2;
+        buffer->lines = buffer->own_lines;
+    }
+    else if (buffer->active == 2)
+    {
+        buffer->active = 1;
+        buffer->lines = buffer->mixed_lines;
+    }
+
+    /* set "zoomed" in merged buffers */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->number > buffer->number)
+            break;
+        if (ptr_buffer->number == buffer->number)
+        {
+            ptr_buffer->zoomed = (buffer->active == 2) ? 1 : 0;
+        }
+    }
+
+    gui_buffer_compute_num_displayed ();
+
+    gui_buffer_ask_chat_refresh (buffer, 2);
+
+    (void) hook_signal_send ((buffer_was_zoomed) ?
+                             "buffer_unzoomed" : "buffer_zoomed",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -4082,6 +4397,74 @@ gui_buffer_undo_free_all (struct t_gui_buffer *buffer)
 }
 
 /*
+ * Moves buffer input content and undo data to another buffer.
+ */
+
+void
+gui_buffer_input_move_to_buffer (struct t_gui_buffer *from_buffer,
+                                 struct t_gui_buffer *to_buffer)
+{
+    int is_command;
+
+    /*
+     * move of input is allowed if:
+     * - 2 buffers are different
+     * - input_share is not set to "none"
+     * - input buffer in first buffer is not empty
+     */
+    if (!from_buffer || !to_buffer || (from_buffer == to_buffer)
+        || (CONFIG_INTEGER(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_NONE)
+        || !from_buffer->input_buffer || !from_buffer->input_buffer[0])
+        return;
+
+    /*
+     * if input is command and that only text is allowed,
+     * or if input is text and that only command is allowed,
+     * then do nothing
+     */
+    is_command = (string_input_for_buffer (from_buffer->input_buffer) == NULL) ? 1 : 0;
+    if ((is_command && (CONFIG_INTEGER(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_TEXT))
+        || (!is_command && (CONFIG_INTEGER(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_COMMANDS)))
+        return;
+
+    /*
+     * if overwrite is off and that input of target buffer is not empty,
+     * then do nothing
+     */
+    if ((!CONFIG_BOOLEAN(config_look_input_share_overwrite))
+        && to_buffer->input_buffer && to_buffer->input_buffer[0])
+        return;
+
+    /* move input_buffer */
+    if (to_buffer->input_buffer)
+        free (to_buffer->input_buffer);
+    to_buffer->input_buffer = from_buffer->input_buffer;
+    to_buffer->input_buffer_alloc = from_buffer->input_buffer_alloc;
+    to_buffer->input_buffer_size = from_buffer->input_buffer_size;
+    to_buffer->input_buffer_length = from_buffer->input_buffer_length;
+    to_buffer->input_buffer_pos = from_buffer->input_buffer_pos;
+    to_buffer->input_buffer_1st_display = from_buffer->input_buffer_1st_display;
+    gui_buffer_input_buffer_init (from_buffer);
+
+    /* move undo data */
+    gui_buffer_undo_free_all (to_buffer);
+    (to_buffer->input_undo_snap)->data = (from_buffer->input_undo_snap)->data;
+    (to_buffer->input_undo_snap)->pos = (from_buffer->input_undo_snap)->pos;
+    to_buffer->input_undo = from_buffer->input_undo;
+    to_buffer->last_input_undo = from_buffer->last_input_undo;
+    to_buffer->ptr_input_undo = from_buffer->ptr_input_undo;
+    to_buffer->input_undo_count = from_buffer->input_undo_count;
+    (from_buffer->input_undo_snap)->data = NULL;
+    (from_buffer->input_undo_snap)->pos = 0;
+    from_buffer->input_undo = NULL;
+    from_buffer->last_input_undo = NULL;
+    from_buffer->ptr_input_undo = NULL;
+    from_buffer->input_undo_count = 0;
+
+    gui_completion_stop (from_buffer->completion);
+}
+
+/*
  * Searches for a visited buffer in list of visited buffers.
  */
 
@@ -4268,6 +4651,156 @@ gui_buffer_visited_get_index_next ()
 }
 
 /*
+ * Jumps to buffer with activity.
+ */
+
+void
+gui_buffer_jump_smart (struct t_gui_window *window)
+{
+    int scroll_to_bottom;
+
+    if (!window)
+        return;
+
+    scroll_to_bottom = 0;
+
+    if (gui_hotlist)
+    {
+        if (!gui_hotlist_initial_buffer)
+            gui_hotlist_initial_buffer = window->buffer;
+        gui_window_switch_to_buffer (window, gui_hotlist->buffer, 1);
+        gui_hotlist_remove_buffer (window->buffer, 0);
+        scroll_to_bottom = 1;
+    }
+    else
+    {
+        if (gui_hotlist_initial_buffer)
+        {
+            if (CONFIG_BOOLEAN(config_look_jump_smart_back_to_buffer))
+            {
+                gui_window_switch_to_buffer (window,
+                                             gui_hotlist_initial_buffer, 1);
+                scroll_to_bottom = 1;
+            }
+            gui_hotlist_initial_buffer = NULL;
+        }
+        else
+        {
+            gui_hotlist_initial_buffer = NULL;
+        }
+    }
+
+    /*
+     * scroll to bottom if window was scrolled (except if scrolled
+     * beyond the end)
+     */
+    if (scroll_to_bottom
+        && window->scroll
+        && window->scroll->start_line
+        && (window->scroll->start_line_pos >= 0))
+    {
+        gui_window_scroll_bottom (window);
+    }
+}
+
+/*
+ * Jumps to last buffer that is visible (not hidden).
+ */
+
+void
+gui_buffer_jump_last_visible_number (struct t_gui_window *window)
+{
+    struct t_gui_buffer *ptr_buffer;
+    int number;
+
+    if (!window)
+        return;
+
+    /* search last non-hidden buffer */
+    for (ptr_buffer = last_gui_buffer; ptr_buffer;
+         ptr_buffer = ptr_buffer->prev_buffer)
+    {
+        if (!ptr_buffer->hidden)
+            break;
+    }
+
+    number = (ptr_buffer) ?
+        ptr_buffer->number : ((last_gui_buffer) ? last_gui_buffer->number : -1);
+    if (number > 0)
+        gui_buffer_switch_by_number (gui_current_window, number);
+}
+
+/*
+ * Jumps to last buffer displayed (before last jump to a buffer).
+ */
+
+void
+gui_buffer_jump_last_buffer_displayed (struct t_gui_window *window)
+{
+    if (window && gui_buffer_last_displayed)
+    {
+        gui_buffer_switch_by_number (window,
+                                     gui_buffer_last_displayed->number);
+    }
+}
+
+/*
+ * Jumps to a visited buffer by index (called by functions to jump to
+ * previously / next visited buffer).
+ */
+
+void
+gui_buffer_jump_visited_by_index (struct t_gui_window *window, int index)
+{
+    struct t_gui_buffer_visited *ptr_buffer_visited;
+
+    if (!window || (index < 0))
+        return;
+
+    gui_buffers_visited_index = index;
+
+    ptr_buffer_visited =
+        gui_buffer_visited_search_by_number (gui_buffers_visited_index);
+    if (ptr_buffer_visited)
+    {
+        gui_buffers_visited_frozen = 1;
+        gui_buffer_switch_by_number (window,
+                                     ptr_buffer_visited->buffer->number);
+        gui_buffers_visited_frozen = 0;
+    }
+}
+
+/*
+ * Jumps to previously visited buffer (buffer displayed before current one).
+ */
+
+void
+gui_buffer_jump_previously_visited_buffer (struct t_gui_window *window)
+{
+    if (!window)
+        return;
+
+    gui_buffer_jump_visited_by_index (
+        window,
+        gui_buffer_visited_get_index_previous ());
+}
+
+/*
+ * Jumps to next visited buffer (buffer displayed after current one).
+ */
+
+void
+gui_buffer_jump_next_visited_buffer (struct t_gui_window *window)
+{
+    if (!window)
+        return;
+
+    gui_buffer_jump_visited_by_index (
+        window,
+        gui_buffer_visited_get_index_next ());
+}
+
+/*
  * Returns hdata for buffer.
  */
 
@@ -4312,6 +4845,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, own_lines, POINTER, 0, NULL, "lines");
         HDATA_VAR(struct t_gui_buffer, mixed_lines, POINTER, 0, NULL, "lines");
         HDATA_VAR(struct t_gui_buffer, lines, POINTER, 0, NULL, "lines");
+        HDATA_VAR(struct t_gui_buffer, next_line_id, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, time_for_each_line, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, chat_refresh_needed, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nicklist, INTEGER, 0, NULL, NULL);
@@ -4359,6 +4893,8 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, text_search_found, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, text_search_input, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_words, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_disable_regex, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_disable_regex_compiled, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_regex, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_regex_compiled, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_restrict, STRING, 0, NULL, NULL);
@@ -4511,6 +5047,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "prefix_max_length", buffer->lines->prefix_max_length))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "next_line_id", buffer->next_line_id))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "time_for_each_line", buffer->time_for_each_line))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "nicklist_case_sensitive", buffer->nicklist_case_sensitive))
@@ -4570,6 +5108,10 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_string (ptr_item, "text_search_input", buffer->text_search_input))
         return 0;
     if (!infolist_new_var_string (ptr_item, "highlight_words", buffer->highlight_words))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "highlight_disable_regex", buffer->highlight_disable_regex))
+        return 0;
+    if (!infolist_new_var_pointer (ptr_item, "highlight_disable_regex_compiled", buffer->highlight_disable_regex_compiled))
         return 0;
     if (!infolist_new_var_string (ptr_item, "highlight_regex", buffer->highlight_regex))
         return 0;
@@ -4631,8 +5173,9 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
             free (prefix_without_colors);
         if (message_without_colors)
             free (message_without_colors);
-        tags = string_build_with_split_string ((const char **)ptr_line->data->tags_array,
-                                               ",");
+        tags = string_rebuild_split_string ((const char **)ptr_line->data->tags_array,
+                                            ",",
+                                            0, -1);
         log_printf ("  tags: '%s', displayed: %d, highlight: %d",
                     (tags) ? tags : "(none)",
                     ptr_line->data->displayed,
@@ -4736,6 +5279,7 @@ gui_buffer_print_log ()
         log_printf ("  mixed_lines . . . . . . : 0x%lx", ptr_buffer->mixed_lines);
         gui_lines_print_log (ptr_buffer->mixed_lines);
         log_printf ("  lines . . . . . . . . . : 0x%lx", ptr_buffer->lines);
+        log_printf ("  next_line_id. . . . . . : %d",    ptr_buffer->next_line_id);
         log_printf ("  time_for_each_line. . . : %d",    ptr_buffer->time_for_each_line);
         log_printf ("  chat_refresh_needed . . : %d",    ptr_buffer->chat_refresh_needed);
         log_printf ("  nicklist. . . . . . . . : %d",    ptr_buffer->nicklist);
@@ -4779,27 +5323,29 @@ gui_buffer_print_log ()
                         num, ptr_undo, ptr_undo->data, ptr_undo->pos);
             num++;
         }
-        log_printf ("  completion. . . . . . . : 0x%lx", ptr_buffer->completion);
+        log_printf ("  completion. . . . . . . . . . . : 0x%lx", ptr_buffer->completion);
         log_printf ("  history . . . . . . . . : 0x%lx", ptr_buffer->history);
         log_printf ("  last_history. . . . . . : 0x%lx", ptr_buffer->last_history);
         log_printf ("  ptr_history . . . . . . : 0x%lx", ptr_buffer->ptr_history);
         log_printf ("  num_history . . . . . . : %d",    ptr_buffer->num_history);
-        log_printf ("  text_search . . . . . . : %d",    ptr_buffer->text_search);
-        log_printf ("  text_search_exact . . . : %d",    ptr_buffer->text_search_exact);
-        log_printf ("  text_search_regex . . . : %d",    ptr_buffer->text_search_regex);
-        log_printf ("  text_search_regex_compiled: 0x%lx", ptr_buffer->text_search_regex_compiled);
-        log_printf ("  text_search_where . . . : %d",    ptr_buffer->text_search_where);
-        log_printf ("  text_search_found . . . : %d",    ptr_buffer->text_search_found);
-        log_printf ("  text_search_input . . . : '%s'",  ptr_buffer->text_search_input);
-        log_printf ("  highlight_words . . . . : '%s'",  ptr_buffer->highlight_words);
-        log_printf ("  highlight_regex . . . . : '%s'",  ptr_buffer->highlight_regex);
-        log_printf ("  highlight_regex_compiled: 0x%lx", ptr_buffer->highlight_regex_compiled);
-        log_printf ("  highlight_tags_restrict. . . : '%s'",  ptr_buffer->highlight_tags_restrict);
-        log_printf ("  highlight_tags_restrict_count: %d",    ptr_buffer->highlight_tags_restrict_count);
-        log_printf ("  highlight_tags_restrict_array: 0x%lx", ptr_buffer->highlight_tags_restrict_array);
-        log_printf ("  highlight_tags. . . . . : '%s'",  ptr_buffer->highlight_tags);
-        log_printf ("  highlight_tags_count. . : %d",    ptr_buffer->highlight_tags_count);
-        log_printf ("  highlight_tags_array. . : 0x%lx", ptr_buffer->highlight_tags_array);
+        log_printf ("  text_search . . . . . . . . . . : %d",    ptr_buffer->text_search);
+        log_printf ("  text_search_exact . . . . . . . : %d",    ptr_buffer->text_search_exact);
+        log_printf ("  text_search_regex . . . . . . . : %d",    ptr_buffer->text_search_regex);
+        log_printf ("  text_search_regex_compiled. . . : 0x%lx", ptr_buffer->text_search_regex_compiled);
+        log_printf ("  text_search_where . . . . . . . : %d",    ptr_buffer->text_search_where);
+        log_printf ("  text_search_found . . . . . . . : %d",    ptr_buffer->text_search_found);
+        log_printf ("  text_search_input . . . . . . . : '%s'",  ptr_buffer->text_search_input);
+        log_printf ("  highlight_words . . . . . . . . : '%s'",  ptr_buffer->highlight_words);
+        log_printf ("  highlight_disable_regex . . . . : '%s'",  ptr_buffer->highlight_disable_regex);
+        log_printf ("  highlight_disable_regex_compiled: 0x%lx", ptr_buffer->highlight_disable_regex_compiled);
+        log_printf ("  highlight_regex . . . . . . . . : '%s'",  ptr_buffer->highlight_regex);
+        log_printf ("  highlight_regex_compiled. . . . : 0x%lx", ptr_buffer->highlight_regex_compiled);
+        log_printf ("  highlight_tags_restrict . . . . : '%s'",  ptr_buffer->highlight_tags_restrict);
+        log_printf ("  highlight_tags_restrict_count . : %d",    ptr_buffer->highlight_tags_restrict_count);
+        log_printf ("  highlight_tags_restrict_array . : 0x%lx", ptr_buffer->highlight_tags_restrict_array);
+        log_printf ("  highlight_tags. . . . . . . . . : '%s'",  ptr_buffer->highlight_tags);
+        log_printf ("  highlight_tags_count. . . . . . : %d",    ptr_buffer->highlight_tags_count);
+        log_printf ("  highlight_tags_array. . . . . . : 0x%lx", ptr_buffer->highlight_tags_array);
         log_printf ("  hotlist . . . . . . . . : 0x%lx", ptr_buffer->hotlist);
         log_printf ("  hotlist_removed . . . . : 0x%lx", ptr_buffer->hotlist_removed);
         log_printf ("  keys. . . . . . . . . . : 0x%lx", ptr_buffer->keys);
@@ -4849,8 +5395,9 @@ gui_buffer_print_log ()
         while (ptr_line)
         {
             num--;
-            tags = string_build_with_split_string ((const char **)ptr_line->data->tags_array,
-                                                   ",");
+            tags = string_rebuild_split_string ((const char **)ptr_line->data->tags_array,
+                                                ",",
+                                                0, -1);
             log_printf ("       line N-%05d: y:%d, str_time:'%s', tags:'%s', "
                         "displayed:%d, highlight:%d, refresh_needed:%d, "
                         "prefix:'%s'",

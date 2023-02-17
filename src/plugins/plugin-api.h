@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -33,6 +33,9 @@ extern const char *plugin_api_ngettext (const char *single, const char *plural,
 extern int plugin_api_crypto_hash (const void *data, int data_size,
                                    const char *hash_algo,
                                    void *hash, int *hash_size);
+extern int plugin_api_crypto_hash_file (const char *filename,
+                                        const char *hash_algo,
+                                        void *hash, int *hash_size);
 extern int plugin_api_crypto_hash_pbkdf2 (const void *data, int data_size,
                                           const char *hash_algo,
                                           const void *salt, int salt_size,

@@ -1,7 +1,7 @@
 /*
  * plugin-config.c - plugin configuration options (file plugins.conf)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -54,6 +54,9 @@ plugin_config_search (const char *plugin_name, const char *option_name)
     int length;
     char *option_full_name;
     struct t_config_option *ptr_option;
+
+    if (!plugin_name || !option_name)
+        return NULL;
 
     ptr_option = NULL;
 
@@ -111,7 +114,7 @@ plugin_config_set (const char *plugin_name, const char *option_name,
                    const char *value)
 {
     int length, rc;
-    char *option_full_name;
+    char *option_full_name, *option_full_name_lower;
 
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
 
@@ -121,8 +124,12 @@ plugin_config_set (const char *plugin_name, const char *option_name,
     {
         snprintf (option_full_name, length, "%s.%s",
                   plugin_name, option_name);
-        string_tolower (option_full_name);
-        rc = plugin_config_set_internal (option_full_name, value);
+        option_full_name_lower = string_tolower (option_full_name);
+        if (option_full_name_lower)
+        {
+            rc = plugin_config_set_internal (option_full_name_lower, value);
+            free (option_full_name_lower);
+        }
         free (option_full_name);
     }
 
@@ -199,7 +206,7 @@ plugin_config_set_desc (const char *plugin_name, const char *option_name,
                         const char *description)
 {
     int length;
-    char *option_full_name;
+    char *option_full_name, *option_full_name_lower;
 
     length = strlen (plugin_name) + 1 + strlen (option_name) + 1;
     option_full_name = malloc (length);
@@ -207,8 +214,13 @@ plugin_config_set_desc (const char *plugin_name, const char *option_name,
     {
         snprintf (option_full_name, length, "%s.%s",
                   plugin_name, option_name);
-        string_tolower (option_full_name);
-        plugin_config_set_desc_internal (option_full_name, description);
+        option_full_name_lower = string_tolower (option_full_name);
+        if (option_full_name_lower)
+        {
+            plugin_config_set_desc_internal (option_full_name_lower,
+                                             description);
+            free (option_full_name_lower);
+        }
         free (option_full_name);
     }
 }
@@ -347,7 +359,7 @@ plugin_config_delete_desc (const void *pointer, void *data,
 void
 plugin_config_init ()
 {
-    plugin_config_file = config_file_new (NULL, PLUGIN_CONFIG_NAME,
+    plugin_config_file = config_file_new (NULL, PLUGIN_CONFIG_PRIO_NAME,
                                           &plugin_config_reload, NULL, NULL);
     if (plugin_config_file)
     {

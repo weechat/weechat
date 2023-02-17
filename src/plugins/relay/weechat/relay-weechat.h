@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -34,6 +34,7 @@ enum t_relay_weechat_compression
 {
     RELAY_WEECHAT_COMPRESSION_OFF = 0, /* no compression of binary objects  */
     RELAY_WEECHAT_COMPRESSION_ZLIB,    /* zlib compression                  */
+    RELAY_WEECHAT_COMPRESSION_ZSTD,    /* Zstandard compression             */
     /* number of compressions */
     RELAY_WEECHAT_NUM_COMPRESSIONS,
 };
@@ -76,7 +77,8 @@ extern void relay_weechat_alloc_with_infolist (struct t_relay_client *client,
 extern enum t_relay_status relay_weechat_get_initial_status (struct t_relay_client *client);
 extern void relay_weechat_free (struct t_relay_client *client);
 extern int relay_weechat_add_to_infolist (struct t_infolist_item *item,
-                                          struct t_relay_client *client);
+                                          struct t_relay_client *client,
+                                          int force_disconnected_state);
 extern void relay_weechat_print_log (struct t_relay_client *client);
 
 #endif /* WEECHAT_PLUGIN_RELAY_WEECHAT_H */

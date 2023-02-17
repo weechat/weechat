@@ -1,7 +1,7 @@
 /*
  * fset.c - Fast set of WeeChat and plugins options
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -40,7 +40,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Fast set of WeeChat and plugins options"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(2000);
+WEECHAT_PLUGIN_PRIORITY(FSET_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_fset_plugin = NULL;
 
@@ -65,8 +65,7 @@ fset_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcasecmp ((char *)signal_data, FSET_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, FSET_PLUGIN_NAME) == 0))
     {
         weechat_log_printf ("");
         weechat_log_printf ("***** \"%s\" plugin dump *****",

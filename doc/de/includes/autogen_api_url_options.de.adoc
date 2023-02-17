@@ -6,7 +6,7 @@
 // tag::url_options[]
 [width="100%",cols="2,^1,7",options="header"]
 |===
-| Einstellung | Type ^(1)^ | Konstanten ^(2)^
+| Einstellung | Type ^(1)^ | Konstanten ^(2)^
 
 | verbose | long |
 
@@ -48,10 +48,6 @@
 
 | address_scope | long |
 
-| protocols | mask | http, https, ftp, ftps, scp, sftp, telnet, ldap, ldaps, dict, file, tftp, all, imap, imaps, pop3, pop3s, smtp, smtps, rtsp, rtmp, rtmpt, rtmpe, rtmpte, rtmps, rtmpts, gopher, smb, smbs
-
-| redir_protocols | mask | http, https, ftp, ftps, scp, sftp, telnet, ldap, ldaps, dict, file, tftp, all, imap, imaps, pop3, pop3s, smtp, smtps, rtsp, rtmp, rtmpt, rtmpe, rtmpte, rtmps, rtmpts, gopher, smb, smbs
-
 | noproxy | string |
 
 | socks5_gssapi_nec | long |
@@ -82,15 +78,19 @@
 
 | doh_url | string |
 
+| protocols_str | string |
+
+| redir_protocols_str | string |
+
 | netrc | long | ignored, optional, required
 
 | userpwd | string |
 
 | proxyuserpwd | string |
 
-| httpauth | mask | none, basic, digest, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate, gssapi, bearer
+| httpauth | mask | none, basic, digest, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate, gssapi, bearer, aws_sigv4
 
-| proxyauth | mask | none, basic, digest, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate, gssapi, bearer
+| proxyauth | mask | none, basic, digest, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate, gssapi, bearer, aws_sigv4
 
 | netrc_file | string |
 
@@ -108,6 +108,8 @@
 
 | tlsauth_password | string |
 
+| sasl_authzid | string |
+
 | sasl_ir | long |
 
 | xoauth2_bearer | string |
@@ -119,8 +121,6 @@
 | autoreferer | long |
 
 | followlocation | long |
-
-| put | long |
 
 | post | long |
 
@@ -144,7 +144,7 @@
 
 | cookiejar | string |
 
-| http_version | long | none, 1_0, 1_1, 2_0, 2, 2tls, 2_prior_knowledge
+| http_version | long | none, 1_0, 1_1, 2_0, 2, 2tls, 2_prior_knowledge, 3
 
 | cookiesession | long |
 
@@ -182,11 +182,19 @@
 
 | request_target | string |
 
+| http09_allowed | long |
+
+| hsts | string |
+
+| hsts_ctrl | mask | enable, readonlyfile
+
 | mail_from | string |
 
 | mail_rcpt | list |
 
 | mail_auth | string |
+
+| mail_rcpt_alllowfails | long |
 
 | tftp_blksize | long |
 
@@ -205,8 +213,6 @@
 | ftp_use_eprt | long |
 
 | ftp_create_missing_dirs | long |
-
-| ftp_response_timeout | long |
 
 | ftpsslauth | long | default, ssl, tls
 
@@ -237,6 +243,8 @@
 | rtsp_client_cseq | long |
 
 | rtsp_server_cseq | long |
+
+| aws_sigv4 | string |
 
 | crlf | long |
 
@@ -274,6 +282,8 @@
 
 | upload_buffersize | long |
 
+| mime_options | mask | formescape
+
 | timeout | long |
 
 | low_speed_limit | long |
@@ -297,6 +307,8 @@
 | timeout_ms | long |
 
 | connecttimeout_ms | long |
+
+| maxage_conn | long |
 
 | maxconnects | long |
 
@@ -322,6 +334,8 @@
 
 | upkeep_interval_ms | long |
 
+| maxlifetime_conn | long |
+
 | sslcert | string |
 
 | sslversion | long | default, tlsv1, sslv2, sslv3, tlsv1_0, tlsv1_1, tlsv1_2, tlsv1_3, max_default, max_none, max_tlsv1_0, max_tlsv1_1, max_tlsv1_2, max_tlsv1_3
@@ -329,10 +343,6 @@
 | ssl_verifypeer | long |
 
 | cainfo | string |
-
-| random_file | string |
-
-| egdsocket | string |
 
 | ssl_verifyhost | long |
 
@@ -364,11 +374,9 @@
 
 | gssapi_delegation | long | none, policy_flag, flag
 
-| ssl_options | long | allow_beast, no_revoke, no_backends, ok, too_late, unknown_backend
+| ssl_options | long | allow_beast, no_revoke, no_backends, ok, too_late, unknown_backend, no_partialchain, revoke_best_effort, native_ca, auto_client_cert
 
 | ssl_enable_alpn | long |
-
-| ssl_enable_npn | long |
 
 | pinnedpublickey | string |
 
@@ -398,7 +406,7 @@
 
 | proxy_ssl_cipher_list | list |
 
-| proxy_ssl_options | long | allow_beast, no_revoke, no_backends, ok, too_late, unknown_backend
+| proxy_ssl_options | long | allow_beast, no_revoke, no_backends, ok, too_late, unknown_backend, no_partialchain, revoke_best_effort, native_ca, auto_client_cert
 
 | proxy_ssl_verifyhost | long |
 
@@ -414,6 +422,18 @@
 
 | proxy_tls13_ciphers | list |
 
+| proxy_issuercert | string |
+
+| ssl_ec_curves | string |
+
+| doh_ssl_verifyhost | long |
+
+| doh_ssl_verifypeer | long |
+
+| doh_ssl_verifystatus | long |
+
+| ca_cache_timeout | long |
+
 | ssh_auth_types | mask | none, policy_flag, flag
 
 | ssh_public_keyfile | string |
@@ -426,11 +446,17 @@
 
 | ssh_compression | long |
 
+| ssh_host_public_key_sha256 | string |
+
+| telnetoptions | list |
+
+| ws_options | mask | binary, close, cont, offset, ping, pong, raw_mode, text
+
 | new_file_perms | long |
 
 | new_directory_perms | long |
 
-| telnetoptions | list |
+| quick_exit | long |
 
 |===
 // end::url_options[]

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -22,6 +22,8 @@
 #define WEECHAT_CONFIG_FILE_H
 
 #include <stdio.h>
+
+#define CONFIG_PRIORITY_DEFAULT 1000
 
 #define CONFIG_BOOLEAN(option) (*((int *)((option)->value)))
 #define CONFIG_BOOLEAN_DEFAULT(option) (*((int *)((option)->default_value)))
@@ -46,6 +48,8 @@ struct t_config_option;
 struct t_config_file
 {
     struct t_weechat_plugin *plugin;       /* plugin which created this cfg */
+    int priority;                          /* config files are sorted by    */
+                                           /* priority then name            */
     char *name;                            /* name (example: "weechat")     */
     char *filename;                        /* filename (without path)       */
                                            /* (example: "weechat.conf")     */
@@ -165,6 +169,7 @@ struct t_config_option
 extern struct t_config_file *config_files;
 extern struct t_config_file *last_config_file;
 
+extern int config_file_valid (struct t_config_file *config_file);
 extern struct t_config_file *config_file_search (const char *name);
 extern struct t_config_file *config_file_new (struct t_weechat_plugin *plugin,
                                               const char *name,
@@ -173,6 +178,7 @@ extern struct t_config_file *config_file_new (struct t_weechat_plugin *plugin,
                                                                      struct t_config_file *config_file),
                                               const void *callback_reload_pointer,
                                               void *callback_reload_data);
+extern struct t_arraylist *config_file_get_configs_by_priority ();
 extern struct t_config_section *config_file_new_section (struct t_config_file *config_file,
                                                          const char *name,
                                                          int user_can_add_options,
@@ -213,7 +219,7 @@ extern struct t_config_section *config_file_new_section (struct t_config_file *c
                                                          const void *callback_delete_option_pointer,
                                                          void *callback_delete_option_data);
 extern struct t_config_section *config_file_search_section (struct t_config_file *config_file,
-                                                            const char *section_name);
+                                                            const char *name);
 extern struct t_config_option *config_file_new_option (struct t_config_file *config_file,
                                                        struct t_config_section *section,
                                                        const char *name, const char *type,

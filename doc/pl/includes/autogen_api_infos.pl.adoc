@@ -60,8 +60,6 @@
 
 | php | php_version | wersja użytego interpretera | -
 
-| python | python2_bin | ścieżka do interpretera Pythona 2.x (*przestarzałe* od wersji 2.6 skrypty muszą używać tylko Pythona 3) | -
-
 | python | python_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 
 | python | python_interpreter | nazwa użytego interpretera | -
@@ -127,6 +125,8 @@
 | weechat | totp_validate | walidacja haseł jednorazowych (TOTP): 1 jeśli poprawne, w przeciwnym wypadku 0 | sekret (w base32), jednorazowe hasło, czas (opcjonalne, domyślnie używany jest obecny czas), ilość starszych/nowszych haseł do sprawdzenia (opcjonalne, domyślnie 0)
 
 | weechat | uptime | Uptime WeeChat (format: "dni:hh:mm:ss") | "dni" (ilość dni) lub "sekundy" (ilość sekund) (opcjonalne)
+
+| weechat | uptime_current | Czas uruchomienia obecnego procesu WeeChat (aktualizaje za pomocą komendy /upgrade są ignorowane) (format: "dni:hh:mm:ss") | "dni" (ilość dni) lub "sekundy" (ilość sekund) (opcjonalne)
 
 | weechat | version | Wersja WeeChat | -
 

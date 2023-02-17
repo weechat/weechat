@@ -1,7 +1,7 @@
 /*
  * gui-window.c - window functions (used by all GUI)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -771,33 +771,33 @@ gui_window_get_integer (struct t_gui_window *window, const char *property)
     if (!window || !property)
         return 0;
 
-    if (string_strcasecmp (property, "number") == 0)
+    if (strcmp (property, "number") == 0)
         return window->number;
-    if (string_strcasecmp (property, "win_x") == 0)
+    if (strcmp (property, "win_x") == 0)
         return window->win_x;
-    if (string_strcasecmp (property, "win_y") == 0)
+    if (strcmp (property, "win_y") == 0)
         return window->win_y;
-    if (string_strcasecmp (property, "win_width") == 0)
+    if (strcmp (property, "win_width") == 0)
         return window->win_width;
-    if (string_strcasecmp (property, "win_height") == 0)
+    if (strcmp (property, "win_height") == 0)
         return window->win_height;
-    if (string_strcasecmp (property, "win_width_pct") == 0)
+    if (strcmp (property, "win_width_pct") == 0)
         return window->win_width_pct;
-    if (string_strcasecmp (property, "win_height_pct") == 0)
+    if (strcmp (property, "win_height_pct") == 0)
         return window->win_height_pct;
-    if (string_strcasecmp (property, "win_chat_x") == 0)
+    if (strcmp (property, "win_chat_x") == 0)
         return window->win_chat_x;
-    if (string_strcasecmp (property, "win_chat_y") == 0)
+    if (strcmp (property, "win_chat_y") == 0)
         return window->win_chat_y;
-    if (string_strcasecmp (property, "win_chat_width") == 0)
+    if (strcmp (property, "win_chat_width") == 0)
         return window->win_chat_width;
-    if (string_strcasecmp (property, "win_chat_height") == 0)
+    if (strcmp (property, "win_chat_height") == 0)
         return window->win_chat_height;
-    if (string_strcasecmp (property, "first_line_displayed") == 0)
+    if (strcmp (property, "first_line_displayed") == 0)
         return window->scroll->first_line_displayed;
-    if (string_strcasecmp (property, "scrolling") == 0)
+    if (strcmp (property, "scrolling") == 0)
         return window->scroll->scrolling;
-    if (string_strcasecmp (property, "lines_after") == 0)
+    if (strcmp (property, "lines_after") == 0)
         return window->scroll->lines_after;
 
     return 0;
@@ -823,16 +823,16 @@ gui_window_get_string (struct t_gui_window *window, const char *property)
 void *
 gui_window_get_pointer (struct t_gui_window *window, const char *property)
 {
-    if (property)
-    {
-        if (string_strcasecmp (property, "current") == 0)
-            return gui_current_window;
+    if (!property)
+        return NULL;
 
-        if (window)
-        {
-            if (string_strcasecmp (property, "buffer") == 0)
-                return window->buffer;
-        }
+    if (strcmp (property, "current") == 0)
+        return gui_current_window;
+
+    if (window)
+    {
+        if (strcmp (property, "buffer") == 0)
+            return window->buffer;
     }
 
     return NULL;
@@ -1734,7 +1734,7 @@ gui_window_search_end (struct t_gui_window *window)
     if (window->buffer->text_search_input)
     {
         gui_input_insert_string (window->buffer,
-                                 window->buffer->text_search_input, -1);
+                                 window->buffer->text_search_input);
         gui_input_text_changed_modifier_and_signal (window->buffer,
                                                     0, /* save undo */
                                                     1); /* stop completion */

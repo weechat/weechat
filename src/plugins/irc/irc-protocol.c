@@ -1,7 +1,7 @@
 /*
  * irc-protocol.c - implementation of IRC protocol (RFCs 1459/2810/2811/2812/2813)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2014 Shawn Smith <ShawnSmith0828@gmail.com>
  *
@@ -111,21 +111,80 @@ irc_protocol_log_level_for_command (const char *command)
 }
 
 /*
+ * Adds IRC tag key/value in a dynamic string.
+ *
+ * As commas are not allowed in WeeChat tags, they are replaced by semicolons.
+ */
+
+void
+irc_protocol_tags_add_cb (void *data,
+                          struct t_hashtable *hashtable,
+                          const void *key,
+                          const void *value)
+{
+    char **str_tags, *str_temp, *str_temp2;
+
+    /* make C compiler happy */
+    (void) hashtable;
+
+    str_tags = (char **)data;
+
+    if (*str_tags[0])
+        weechat_string_dyn_concat (str_tags, ",", -1);
+
+    weechat_string_dyn_concat (str_tags, "irc_tag_", -1);
+
+    /* key */
+    str_temp = weechat_string_replace ((const char *)key, ",", ";");
+    str_temp2 = weechat_string_replace (str_temp, "_", "-");
+    if (str_temp2)
+        weechat_string_dyn_concat (str_tags, str_temp2, -1);
+    if (str_temp)
+        free (str_temp);
+    if (str_temp2)
+        free (str_temp2);
+    weechat_string_dyn_concat (str_tags, "_", -1);
+
+    /* value */
+    str_temp = weechat_string_replace ((const char *)value, ",", ";");
+    weechat_string_dyn_concat (str_tags, str_temp, -1);
+    if (str_temp)
+        free (str_temp);
+}
+
+/*
  * Builds tags list with IRC command and optional tags and nick.
  */
 
 const char *
-irc_protocol_tags (const char *command, const char *tags, const char *nick,
+irc_protocol_tags (const char *command, struct t_hashtable *irc_msg_tags,
+                   const char *extra_tags, const char *nick,
                    const char *address)
 {
-    static char string[1024];
-    int log_level;
-    char str_log_level[32];
+    static char string[4096];
+    int log_level, is_numeric, has_irc_tags;
+    char str_log_level[32], **str_irc_tags;
 
     str_log_level[0] = '\0';
 
-    if (!command && !tags && !nick)
+    is_numeric = irc_protocol_is_numeric_command (command);
+    has_irc_tags = (irc_msg_tags
+                    && weechat_hashtable_get_integer (irc_msg_tags,
+                                                      "items_count") > 0);
+
+    if (!command && !has_irc_tags && !extra_tags && !nick)
         return NULL;
+
+    if (has_irc_tags)
+    {
+        str_irc_tags = weechat_string_dyn_alloc (256);
+        weechat_hashtable_map (irc_msg_tags, irc_protocol_tags_add_cb,
+                               str_irc_tags);
+    }
+    else
+    {
+        str_irc_tags = NULL;
+    }
 
     if (command && command[0])
     {
@@ -138,16 +197,23 @@ irc_protocol_tags (const char *command, const char *tags, const char *nick,
     }
 
     snprintf (string, sizeof (string),
-              "%s%s%s%s%s%s%s%s%s",
+              "%s%s%s%s%s%s%s%s%s%s%s%s%s",
               (command && command[0]) ? "irc_" : "",
               (command && command[0]) ? command : "",
-              (tags && tags[0]) ? "," : "",
-              (tags && tags[0]) ? tags : "",
+              (is_numeric) ? "," : "",
+              (is_numeric) ? "irc_numeric" : "",
+              (str_irc_tags && *str_irc_tags[0]) ? "," : "",
+              (str_irc_tags && *str_irc_tags[0]) ? *str_irc_tags : "",
+              (extra_tags && extra_tags[0]) ? "," : "",
+              (extra_tags && extra_tags[0]) ? extra_tags : "",
               (nick && nick[0]) ? ",nick_" : "",
               (nick && nick[0]) ? nick : "",
               (address && address[0]) ? ",host_" : "",
               (address && address[0]) ? address : "",
               str_log_level);
+
+    if (str_irc_tags)
+        weechat_string_dyn_free (str_irc_tags, 1);
 
     return string;
 }
@@ -270,40 +336,11 @@ irc_protocol_parse_time (const char *time)
 char *
 irc_protocol_string_params (const char **params, int arg_start, int arg_end)
 {
-    int i, length;
     char *result;
 
-    if (!params || (arg_start < 0) || (arg_end < arg_start))
-        return strdup ("");
-
-    length = 0;
-    for (i = 0; params[i]; i++)
-    {
-        if (i > arg_end)
-            break;
-        if (i >= arg_start)
-            length += strlen (params[i]) + 1;
-    }
-
-    if (length == 0)
-        return strdup ("");
-
-    result = malloc (length + 1);
-    if (!result)
-        return NULL;
-
-    result[0] = '\0';
-
-    for (i = arg_start; params[i]; i++)
-    {
-        if (i > arg_end)
-            break;
-        strcat (result, params[i]);
-        if ((i + 1 <= arg_end) && params[i + 1])
-            strcat (result, " ");
-    }
-
-    return result;
+    result = weechat_string_rebuild_split_string (params, " ",
+                                                  arg_start, arg_end);
+    return (result) ? result : strdup ("");
 }
 
 /*
@@ -311,7 +348,7 @@ irc_protocol_string_params (const char **params, int arg_start, int arg_end)
  *
  * Called by callbacks for commands: FAIL, WARN, NOTE.
  *
- * Commands looks like:
+ * Commands look like:
  *   FAIL * NEED_REGISTRATION :You need to be registered to continue
  *   FAIL ACC REG_INVALID_CALLBACK REGISTER :Email address is not valid
  *   FAIL BOX BOXES_INVALID STACK CLOCKWISE :Given boxes are not supported
@@ -322,6 +359,7 @@ irc_protocol_string_params (const char **params, int arg_start, int arg_end)
 void
 irc_protocol_print_error_warning_msg (struct t_irc_server *server,
                                       time_t date,
+                                      struct t_hashtable *tags,
                                       const char *command,
                                       const char *prefix,
                                       const char *label,
@@ -340,7 +378,7 @@ irc_protocol_print_error_warning_msg (struct t_irc_server *server,
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
         date,
-        irc_protocol_tags (command, NULL, NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s%s%s%s%s[%s%s%s]%s %s",
         (prefix) ? prefix : "",
         (label) ? label : "",
@@ -399,40 +437,68 @@ IRC_PROTOCOL_CALLBACK(account)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        ptr_nick = irc_nick_search (server, ptr_channel, nick);
-        if (ptr_nick)
+        switch (ptr_channel->type)
         {
-            if (!ignored
-                && weechat_config_boolean (irc_config_look_display_account_message))
-            {
-                ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
-                                     && (weechat_config_boolean (irc_config_look_smart_filter_account))) ?
-                    irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
-                smart_filter = (!local_account
-                                && weechat_config_boolean (irc_config_look_smart_filter)
-                                && weechat_config_boolean (irc_config_look_smart_filter_account)
-                                && !ptr_nick_speaking);
+            case IRC_CHANNEL_TYPE_PRIVATE:
+                if (!ignored
+                    && weechat_config_boolean (irc_config_look_display_account_message)
+                    && (irc_server_strcasecmp (server,
+                                               ptr_channel->name, nick) == 0))
+                {
+                    weechat_printf_date_tags (
+                        irc_msgbuffer_get_target_buffer (
+                            server, NULL, command, NULL, ptr_channel->buffer),
+                        date,
+                        irc_protocol_tags (
+                            command,
+                            tags,
+                            NULL,
+                            nick, address),
+                        (pos_account) ? _("%s%s%s%s has identified as %s") : _("%s%s%s%s has unidentified"),
+                        weechat_prefix ("network"),
+                        irc_nick_color_for_msg (server, 1, NULL, nick),
+                        nick,
+                        IRC_COLOR_MESSAGE_ACCOUNT,
+                        (pos_account) ? str_account : NULL);
+                }
+                break;
+            case IRC_CHANNEL_TYPE_CHANNEL:
+                ptr_nick = irc_nick_search (server, ptr_channel, nick);
+                if (ptr_nick)
+                {
+                    if (!ignored
+                        && weechat_config_boolean (irc_config_look_display_account_message))
+                    {
+                        ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
+                                             && (weechat_config_boolean (irc_config_look_smart_filter_account))) ?
+                            irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
+                        smart_filter = (!local_account
+                                        && weechat_config_boolean (irc_config_look_smart_filter)
+                                        && weechat_config_boolean (irc_config_look_smart_filter_account)
+                                        && !ptr_nick_speaking);
 
-                weechat_printf_date_tags (
-                    irc_msgbuffer_get_target_buffer (
-                        server, NULL, command, NULL, ptr_channel->buffer),
-                    date,
-                    irc_protocol_tags (
-                        command,
-                        smart_filter ? "irc_smart_filter" : NULL,
-                        nick, address),
-                    (pos_account) ? _("%s%s%s%s has identified as %s") : _("%s%s%s%s has unidentified"),
-                    weechat_prefix ("network"),
-                    irc_nick_color_for_msg (server, 1, ptr_nick, nick),
-                    nick,
-                    IRC_COLOR_MESSAGE_ACCOUNT,
-                    (pos_account) ? str_account : NULL);
-            }
-
-            if (ptr_nick->account)
-                free (ptr_nick->account);
-            ptr_nick->account = (cap_account_notify && pos_account) ?
-                strdup (pos_account) : NULL;
+                        weechat_printf_date_tags (
+                            irc_msgbuffer_get_target_buffer (
+                                server, NULL, command, NULL, ptr_channel->buffer),
+                            date,
+                            irc_protocol_tags (
+                                command,
+                                tags,
+                                (smart_filter) ? "irc_smart_filter" : NULL,
+                                nick, address),
+                            (pos_account) ? _("%s%s%s%s has identified as %s") : _("%s%s%s%s has unidentified"),
+                            weechat_prefix ("network"),
+                            irc_nick_color_for_msg (server, 1, ptr_nick, nick),
+                            nick,
+                            IRC_COLOR_MESSAGE_ACCOUNT,
+                            (pos_account) ? str_account : NULL);
+                    }
+                    if (ptr_nick->account)
+                        free (ptr_nick->account);
+                    ptr_nick->account = (cap_account_notify && pos_account) ?
+                        strdup (pos_account) : NULL;
+                }
+                break;
         }
     }
 
@@ -504,6 +570,10 @@ IRC_PROTOCOL_CALLBACK(authenticate)
                             weechat_prefix ("error"),
                             IRC_PLUGIN_NAME,
                             sasl_error);
+        }
+        else
+        {
+            server->sasl_mechanism_used = sasl_mechanism;
         }
         irc_server_sendf (server, 0, NULL, "AUTHENTICATE %s", answer);
         free (answer);
@@ -776,7 +846,8 @@ IRC_PROTOCOL_CALLBACK(cap)
 {
     char **caps_supported, **caps_added, **caps_removed;
     char **caps_enabled, *pos_value, *str_name, **str_caps;
-    char str_msg_auth[512], **str_caps_enabled, **str_caps_disabled, *str_params;
+    char str_msg_auth[512], *str_msg_auth_upper, **str_caps_enabled;
+    char **str_caps_disabled, *str_params;
     int arg_caps, num_caps_supported, num_caps_added, num_caps_removed;
     int num_caps_enabled, sasl_to_do, sasl_mechanism;
     int i, j, timeout, last_reply;
@@ -826,8 +897,8 @@ IRC_PROTOCOL_CALLBACK(cap)
                 pos_value = strstr (caps_supported[j], "=");
                 if (pos_value)
                 {
-                    str_name = strndup (caps_supported[j],
-                                        pos_value - caps_supported[j]);
+                    str_name = weechat_strndup (caps_supported[j],
+                                                pos_value - caps_supported[j]);
                     if (str_name)
                     {
                         weechat_hashtable_set (server->cap_ls,
@@ -906,8 +977,8 @@ IRC_PROTOCOL_CALLBACK(cap)
                 pos_value = strstr (caps_enabled[j], "=");
                 if (pos_value)
                 {
-                    str_name = strndup (caps_enabled[j],
-                                        pos_value - caps_enabled[j]);
+                    str_name = weechat_strndup (caps_enabled[j],
+                                                pos_value - caps_enabled[j]);
                     if (str_name)
                     {
                         weechat_hashtable_set (server->cap_list,
@@ -1028,8 +1099,12 @@ IRC_PROTOCOL_CALLBACK(cap)
                 snprintf (str_msg_auth, sizeof (str_msg_auth),
                           "AUTHENTICATE %s",
                           irc_sasl_mechanism_string[sasl_mechanism]);
-                weechat_string_toupper (str_msg_auth);
-                irc_server_sendf (server, 0, NULL, str_msg_auth);
+                str_msg_auth_upper = weechat_string_toupper (str_msg_auth);
+                if (str_msg_auth_upper)
+                {
+                    irc_server_sendf (server, 0, NULL, str_msg_auth_upper);
+                    free (str_msg_auth_upper);
+                }
                 if (server->hook_timer_sasl)
                     weechat_unhook (server->hook_timer_sasl);
                 timeout = IRC_SERVER_OPTION_INTEGER(
@@ -1087,8 +1162,8 @@ IRC_PROTOCOL_CALLBACK(cap)
                 pos_value = strstr (caps_added[j], "=");
                 if (pos_value)
                 {
-                    str_name = strndup (caps_added[j],
-                                        pos_value - caps_added[j]);
+                    str_name = weechat_strndup (caps_added[j],
+                                                pos_value - caps_added[j]);
                     if (str_name)
                     {
                         weechat_hashtable_set (server->cap_ls,
@@ -1147,8 +1222,7 @@ IRC_PROTOCOL_CALLBACK(cap)
 
 /*
  * Callback for the IRC command "CHGHOST": user/host change of a nick (with
- * capability "chghost"):
- * https://ircv3.net/specs/extensions/chghost-3.2.html
+ * capability "chghost"): https://ircv3.net/specs/extensions/chghost
  *
  * Command looks like:
  *   CHGHOST user new.host.goes.here
@@ -1188,40 +1262,69 @@ IRC_PROTOCOL_CALLBACK(chghost)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        ptr_nick = irc_nick_search (server, ptr_channel, nick);
-        if (ptr_nick)
+        switch (ptr_channel->type)
         {
-            if (!ignored)
-            {
-                ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
-                                     && (weechat_config_boolean (irc_config_look_smart_filter_chghost))) ?
-                    irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
-                smart_filter = (!local_chghost
-                                && weechat_config_boolean (irc_config_look_smart_filter)
-                                && weechat_config_boolean (irc_config_look_smart_filter_chghost)
-                                && !ptr_nick_speaking);
+            case IRC_CHANNEL_TYPE_PRIVATE:
+                if (!ignored
+                    && (irc_server_strcasecmp (server,
+                                               ptr_channel->name, nick) == 0))
+                {
+                    weechat_printf_date_tags (
+                        irc_msgbuffer_get_target_buffer (
+                            server, NULL, command, NULL, ptr_channel->buffer),
+                        date,
+                        irc_protocol_tags (command, tags, NULL, nick, address),
+                        _("%s%s%s%s (%s%s%s)%s has changed host to %s%s"),
+                        weechat_prefix ("network"),
+                        irc_nick_color_for_msg (server, 1, NULL, nick),
+                        nick,
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_CHAT_HOST,
+                        (address) ? address : "",
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_MESSAGE_CHGHOST,
+                        IRC_COLOR_CHAT_HOST,
+                        str_host);
+                }
+                break;
+            case IRC_CHANNEL_TYPE_CHANNEL:
+                ptr_nick = irc_nick_search (server, ptr_channel, nick);
+                if (ptr_nick)
+                {
+                    if (!ignored)
+                    {
+                        ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
+                                             && (weechat_config_boolean (irc_config_look_smart_filter_chghost))) ?
+                            irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
+                        smart_filter = (!local_chghost
+                                        && weechat_config_boolean (irc_config_look_smart_filter)
+                                        && weechat_config_boolean (irc_config_look_smart_filter_chghost)
+                                        && !ptr_nick_speaking);
 
-                weechat_printf_date_tags (
-                    irc_msgbuffer_get_target_buffer (
-                        server, NULL, command, NULL, ptr_channel->buffer),
-                    date,
-                    irc_protocol_tags (
-                        command,
-                        smart_filter ? "irc_smart_filter" : NULL,
-                        nick, address),
-                    _("%s%s%s%s (%s%s%s)%s has changed host to %s%s"),
-                    weechat_prefix ("network"),
-                    irc_nick_color_for_msg (server, 1, ptr_nick, nick),
-                    nick,
-                    IRC_COLOR_CHAT_DELIMITERS,
-                    IRC_COLOR_CHAT_HOST,
-                    (address) ? address : "",
-                    IRC_COLOR_CHAT_DELIMITERS,
-                    IRC_COLOR_MESSAGE_CHGHOST,
-                    IRC_COLOR_CHAT_HOST,
-                    str_host);
-            }
-            irc_nick_set_host (ptr_nick, str_host);
+                        weechat_printf_date_tags (
+                            irc_msgbuffer_get_target_buffer (
+                                server, NULL, command, NULL, ptr_channel->buffer),
+                            date,
+                            irc_protocol_tags (
+                                command,
+                                tags,
+                                (smart_filter) ? "irc_smart_filter" : NULL,
+                                nick, address),
+                            _("%s%s%s%s (%s%s%s)%s has changed host to %s%s"),
+                            weechat_prefix ("network"),
+                            irc_nick_color_for_msg (server, 1, ptr_nick, nick),
+                            nick,
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_CHAT_HOST,
+                            (address) ? address : "",
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_MESSAGE_CHGHOST,
+                            IRC_COLOR_CHAT_HOST,
+                            str_host);
+                    }
+                    irc_nick_set_host (ptr_nick, str_host);
+                }
+                break;
         }
     }
 
@@ -1248,7 +1351,7 @@ IRC_PROTOCOL_CALLBACK(error)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
         date,
-        irc_protocol_tags (command, NULL, NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s",
         weechat_prefix ("error"),
         str_error);
@@ -1267,14 +1370,16 @@ IRC_PROTOCOL_CALLBACK(error)
  * command "ERROR").
  *
  * Command looks like:
+ *   401 nick nick2 :No such nick/channel
+ *   402 nick server :No such server
  *   404 nick #channel :Cannot send to channel
  */
 
 IRC_PROTOCOL_CALLBACK(generic_error)
 {
     int arg_error;
-    char *str_error;
-    const char *pos_chan_nick;
+    char *str_error, str_target[512];
+    const char *pos_channel, *pos_nick;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
 
@@ -1283,17 +1388,35 @@ IRC_PROTOCOL_CALLBACK(generic_error)
     arg_error = (irc_server_strcasecmp (server, params[0], server->nick) == 0) ?
         1 : 0;
 
-    pos_chan_nick = NULL;
-    if (params[arg_error + 1]
-        && irc_channel_is_channel (server, params[arg_error]))
-    {
-        pos_chan_nick = params[arg_error];
-        arg_error++;
-    }
-
+    pos_channel = NULL;
     ptr_channel = NULL;
-    if (pos_chan_nick)
-        ptr_channel = irc_channel_search (server, pos_chan_nick);
+    pos_nick = NULL;
+    str_target[0] = '\0';
+
+    if (params[arg_error + 1])
+    {
+        if (irc_channel_is_channel (server, params[arg_error]))
+        {
+            pos_channel = params[arg_error];
+            ptr_channel = irc_channel_search (server, pos_channel);
+            snprintf (str_target, sizeof (str_target),
+                      "%s%s%s: ",
+                      IRC_COLOR_CHAT_CHANNEL,
+                      pos_channel,
+                      IRC_COLOR_RESET);
+            arg_error++;
+        }
+        else if (strcmp (params[arg_error], "*") != 0)
+        {
+            pos_nick = params[arg_error];
+            snprintf (str_target, sizeof (str_target),
+                      "%s%s%s: ",
+                      irc_nick_color_for_msg (server, 1, NULL, pos_nick),
+                      pos_nick,
+                      IRC_COLOR_RESET);
+            arg_error++;
+        }
+    }
 
     ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
 
@@ -1301,21 +1424,15 @@ IRC_PROTOCOL_CALLBACK(generic_error)
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (
-            server, NULL, command,
+            server, pos_nick, command,
             ((strcmp (command, "401") == 0)
              || (strcmp (command, "402") == 0)) ? "whois" : NULL,
             ptr_buffer),
         date,
-        irc_protocol_tags (command, NULL, NULL, NULL),
-        "%s%s%s%s%s%s",
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
+        "%s%s%s",
         weechat_prefix ("network"),
-        (ptr_channel && pos_chan_nick
-         && (irc_server_strcasecmp (server, pos_chan_nick,
-                                    ptr_channel->name) == 0)) ?
-        IRC_COLOR_CHAT_CHANNEL : "",
-        (pos_chan_nick) ? pos_chan_nick : "",
-        IRC_COLOR_RESET,
-        (pos_chan_nick) ? ": " : "",
+        str_target,
         str_error);
 
     if (str_error)
@@ -1340,6 +1457,7 @@ IRC_PROTOCOL_CALLBACK(fail)
     irc_protocol_print_error_warning_msg (
         server,
         date,
+        tags,
         command,
         weechat_prefix ("error"),
         _("Failure:"),
@@ -1376,7 +1494,7 @@ IRC_PROTOCOL_CALLBACK(invite)
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, nick, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, "notify_highlight", nick, address),
+            irc_protocol_tags (command, tags, "notify_highlight", nick, address),
             _("%sYou have been invited to %s%s%s by %s%s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -1393,7 +1511,7 @@ IRC_PROTOCOL_CALLBACK(invite)
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, nick, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, NULL, nick, address),
+            irc_protocol_tags (command, tags, NULL, nick, address),
             _("%s%s%s%s has invited %s%s%s to %s%s%s"),
             weechat_prefix ("network"),
             irc_nick_color_for_msg (server, 1, NULL, nick),
@@ -1547,7 +1665,8 @@ IRC_PROTOCOL_CALLBACK(join)
                                              ptr_channel->buffer),
             date,
             irc_protocol_tags (command,
-                               smart_filter ? "irc_smart_filter" : NULL,
+                               tags,
+                               (smart_filter) ? "irc_smart_filter" : NULL,
                                nick, address),
             _("%s%s%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"),
             weechat_prefix ("join"),
@@ -1627,7 +1746,7 @@ IRC_PROTOCOL_CALLBACK(kick)
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL,
                                              ptr_channel->buffer),
             date,
-            irc_protocol_tags (command, NULL, NULL, address),
+            irc_protocol_tags (command, tags, NULL, NULL, address),
             _("%s%s%s%s has kicked %s%s%s %s(%s%s%s)"),
             weechat_prefix ("quit"),
             irc_nick_color_for_msg (server, 1, ptr_nick, nick),
@@ -1647,7 +1766,7 @@ IRC_PROTOCOL_CALLBACK(kick)
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL,
                                              ptr_channel->buffer),
             date,
-            irc_protocol_tags (command, NULL, NULL, address),
+            irc_protocol_tags (command, tags, NULL, NULL, address),
             _("%s%s%s%s has kicked %s%s%s"),
             weechat_prefix ("quit"),
             irc_nick_color_for_msg (server, 1, ptr_nick, nick),
@@ -1747,7 +1866,7 @@ IRC_PROTOCOL_CALLBACK(kill)
                 irc_msgbuffer_get_target_buffer (server, NULL, command, NULL,
                                                  ptr_channel->buffer),
                 date,
-                irc_protocol_tags (command, NULL, NULL, address),
+                irc_protocol_tags (command, tags, NULL, NULL, address),
                 _("%s%sYou were killed by %s%s%s %s(%s%s%s)"),
                 weechat_prefix ("quit"),
                 IRC_COLOR_MESSAGE_KICK,
@@ -1765,7 +1884,7 @@ IRC_PROTOCOL_CALLBACK(kill)
                 irc_msgbuffer_get_target_buffer (server, NULL, command, NULL,
                                                  ptr_channel->buffer),
                 date,
-                irc_protocol_tags (command, NULL, NULL, address),
+                irc_protocol_tags (command, tags, NULL, NULL, address),
                 _("%s%sYou were killed by %s%s%s"),
                 weechat_prefix ("quit"),
                 IRC_COLOR_MESSAGE_KICK,
@@ -1797,6 +1916,41 @@ IRC_PROTOCOL_CALLBACK(kill)
                 irc_nick_free (server, ptr_channel, ptr_nick_killed);
         }
     }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for an IRC KNOCK reply.
+ *
+ * Commands look like:
+ *   711 nick #channel :Your KNOCK has been delivered.
+ *   712 nick #channel :Too many KNOCKs (channel).
+ *   713 nick #channel :Channel is open.
+ *   714 nick #channel :You are already on that channel.
+ */
+
+IRC_PROTOCOL_CALLBACK(knock_reply)
+{
+    char *str_message;
+
+    IRC_PROTOCOL_MIN_PARAMS(3);
+
+    str_message = irc_protocol_string_params (params, 2, num_params - 1);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (server, params[0], command, NULL, NULL),
+        date,
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
+        "%s%s%s%s: %s",
+        weechat_prefix ("network"),
+        IRC_COLOR_CHAT_CHANNEL,
+        params[1],
+        IRC_COLOR_RESET,
+        str_message);
+
+    if (str_message)
+        free (str_message);
 
     return WEECHAT_RC_OK;
 }
@@ -1842,6 +1996,7 @@ IRC_PROTOCOL_CALLBACK(mode)
                                              ptr_buffer),
             date,
             irc_protocol_tags (command,
+                               tags,
                                (smart_filter && !local_mode) ?
                                "irc_smart_filter" : NULL,
                                NULL, address),
@@ -1866,7 +2021,7 @@ IRC_PROTOCOL_CALLBACK(mode)
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, NULL, NULL, address),
+            irc_protocol_tags (command, tags, NULL, NULL, address),
             _("%sUser mode %s[%s%s%s]%s by %s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -1894,9 +2049,9 @@ IRC_PROTOCOL_CALLBACK(mode)
 
 IRC_PROTOCOL_CALLBACK(nick)
 {
-    struct t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel, *ptr_channel_new_nick;
     struct t_irc_nick *ptr_nick, *ptr_nick_found;
-    char *old_color, str_tags[512], *buffer_name;
+    char *old_color, *new_color, str_tags[512];
     int local_nick, smart_filter;
     struct t_irc_channel_speaking *ptr_nick_speaking;
 
@@ -1930,7 +2085,7 @@ IRC_PROTOCOL_CALLBACK(nick)
         weechat_printf_date_tags (
             server->buffer,
             date,
-            irc_protocol_tags (command, str_tags, NULL, address),
+            irc_protocol_tags (command, tags, str_tags, NULL, address),
             _("%sYou are now known as %s%s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_NICK_SELF,
@@ -1941,35 +2096,73 @@ IRC_PROTOCOL_CALLBACK(nick)
         weechat_buffer_set (NULL, "hotlist", "+");
     }
 
+    ptr_channel_new_nick = irc_channel_search (server, params[0]);
+
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
         switch (ptr_channel->type)
         {
             case IRC_CHANNEL_TYPE_PRIVATE:
-                /* rename private window if this is with "old nick" */
-                if ((irc_server_strcasecmp (server,
-                                            ptr_channel->name, nick) == 0)
-                    && !irc_channel_search (server, params[0]))
+                /*
+                 * rename private buffer if this is with "old nick"
+                 * or if it's with "new nick" but different case
+                 * (only if another buffer for the nick doesn't exist)
+                 */
+                if ((!ptr_channel_new_nick
+                     || (ptr_channel_new_nick == ptr_channel))
+                    && ((irc_server_strcasecmp (server,
+                                                ptr_channel->name, nick) == 0)
+                        || ((irc_server_strcasecmp (server,
+                                                    ptr_channel->name, params[0]) == 0)
+                            && (strcmp (ptr_channel->name, params[0]) != 0))))
                 {
-                    free (ptr_channel->name);
-                    ptr_channel->name = strdup (params[0]);
-                    if (ptr_channel->pv_remote_nick_color)
+                    /* rename private buffer */
+                    irc_channel_pv_rename (server, ptr_channel, params[0]);
+
+                    /* display message */
+                    if (weechat_config_boolean (irc_config_look_display_pv_nick_change))
                     {
-                        free (ptr_channel->pv_remote_nick_color);
-                        ptr_channel->pv_remote_nick_color = NULL;
+                        if (weechat_config_boolean (irc_config_look_color_nicks_in_server_messages))
+                        {
+                            if (weechat_config_boolean (irc_config_look_color_pv_nick_like_channel))
+                            {
+                                old_color = irc_nick_find_color (nick);
+                                new_color = irc_nick_find_color (params[0]);
+                            }
+                            else
+                            {
+                                old_color = strdup (IRC_COLOR_CHAT_NICK_OTHER);
+                                new_color = strdup (IRC_COLOR_CHAT_NICK_OTHER);
+                            }
+                        }
+                        else
+                        {
+                            old_color = strdup (IRC_COLOR_CHAT_NICK);
+                            new_color = strdup (IRC_COLOR_CHAT_NICK);
+                        }
+                        snprintf (str_tags, sizeof (str_tags),
+                                  "irc_nick1_%s,irc_nick2_%s",
+                                  nick,
+                                  params[0]);
+                        weechat_printf_date_tags (
+                            ptr_channel->buffer,
+                            date,
+                            irc_protocol_tags (command, tags, str_tags,
+                                               NULL, address),
+                            _("%s%s%s%s is now known as %s%s%s"),
+                            weechat_prefix ("network"),
+                            old_color,
+                            nick,
+                            IRC_COLOR_RESET,
+                            new_color,
+                            params[0],
+                            IRC_COLOR_RESET);
+                        if (old_color)
+                            free (old_color);
+                        if (new_color)
+                            free (new_color);
                     }
-                    buffer_name = irc_buffer_build_name (server->name,
-                                                         ptr_channel->name);
-                    weechat_buffer_set (ptr_channel->buffer,
-                                        "name", buffer_name);
-                    weechat_buffer_set (ptr_channel->buffer,
-                                        "short_name", ptr_channel->name);
-                    weechat_buffer_set (ptr_channel->buffer,
-                                        "localvar_set_channel",
-                                        ptr_channel->name);
-                    if (buffer_name)
-                        free (buffer_name);
                 }
                 break;
             case IRC_CHANNEL_TYPE_CHANNEL:
@@ -1997,6 +2190,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                         weechat_printf_date_tags (ptr_channel->buffer,
                                                   date,
                                                   irc_protocol_tags (command,
+                                                                     tags,
                                                                      str_tags,
                                                                      NULL,
                                                                      address),
@@ -2029,8 +2223,8 @@ IRC_PROTOCOL_CALLBACK(nick)
                             weechat_printf_date_tags (
                                 ptr_channel->buffer,
                                 date,
-                                irc_protocol_tags (command, str_tags, NULL,
-                                                   address),
+                                irc_protocol_tags (command, tags, str_tags,
+                                                   NULL, address),
                                 _("%s%s%s%s is now known as %s%s%s"),
                                 weechat_prefix ("network"),
                                 weechat_config_boolean (irc_config_look_color_nicks_in_server_messages) ?
@@ -2083,6 +2277,7 @@ IRC_PROTOCOL_CALLBACK(note)
     irc_protocol_print_error_warning_msg (
         server,
         date,
+        tags,
         command,
         weechat_prefix ("network"),
         _("Note:"),
@@ -2135,8 +2330,8 @@ IRC_PROTOCOL_CALLBACK(notice)
 
     if (nick && (pos_args[0] == '\01'))
     {
-        irc_ctcp_display_reply_from_nick (server, date, command, nick, address,
-                                          pos_args);
+        irc_ctcp_display_reply_from_nick (server, date, tags, command, nick,
+                                          address, pos_args);
     }
     else
     {
@@ -2208,6 +2403,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                 (ptr_channel) ? ptr_channel->buffer : server->buffer,
                 date,
                 irc_protocol_tags (command,
+                                   tags,
                                    (is_channel_orig) ?
                                    "notify_message" :
                                    weechat_config_string (irc_config_look_notice_welcome_tags),
@@ -2271,6 +2467,10 @@ IRC_PROTOCOL_CALLBACK(notice)
 
             if (ptr_channel)
             {
+                /* rename buffer if open with nick case not matching */
+                if (strcmp (ptr_channel->name, nick) != 0)
+                    irc_channel_pv_rename (server, ptr_channel, nick);
+
                 if (weechat_config_boolean (irc_config_look_typing_status_nicks))
                 {
                     irc_typing_channel_set_nick (ptr_channel, nick,
@@ -2283,7 +2483,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                 weechat_printf_date_tags (
                     ptr_channel->buffer,
                     date,
-                    irc_protocol_tags (command, "notify_private", nick,
+                    irc_protocol_tags (command, tags, "notify_private", nick,
                                        address),
                     "%s%s%s%s: %s",
                     weechat_prefix ("network"),
@@ -2312,6 +2512,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                         ptr_buffer,
                         date,
                         irc_protocol_tags (command,
+                                           tags,
                                            (notify_private) ? "notify_private" : NULL,
                                            server->nick, address),
                         "%s%s%s%s -> %s%s%s: %s",
@@ -2333,6 +2534,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                         ptr_buffer,
                         date,
                         irc_protocol_tags (command,
+                                           tags,
                                            (notify_private) ? "notify_private" : NULL,
                                            nick, address),
                         "%s%s%s%s",
@@ -2403,6 +2605,7 @@ IRC_PROTOCOL_CALLBACK(part)
                     server, NULL, command, NULL, ptr_channel->buffer),
                 date,
                 irc_protocol_tags (command,
+                                   tags,
                                    (local_part
                                     || (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)
                                     || !weechat_config_boolean (irc_config_look_smart_filter)
@@ -2436,6 +2639,7 @@ IRC_PROTOCOL_CALLBACK(part)
                     server, NULL, command, NULL, ptr_channel->buffer),
                 date,
                 irc_protocol_tags (command,
+                                   tags,
                                    (local_part
                                     || (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)
                                     || !weechat_config_boolean (irc_config_look_smart_filter)
@@ -2591,7 +2795,7 @@ IRC_PROTOCOL_CALLBACK(pong)
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, NULL, NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "PONG%s%s",
             (str_params) ? ": " : "",
             (str_params) ? str_params : "");
@@ -2664,7 +2868,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             /* CTCP to channel */
             if (msg_args[0] == '\01')
             {
-                irc_ctcp_recv (server, date, command, ptr_channel,
+                irc_ctcp_recv (server, date, tags, command, ptr_channel,
                                address, nick, NULL, msg_args, irc_message);
                 goto end;
             }
@@ -2687,7 +2891,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 weechat_printf_date_tags (
                     ptr_channel->buffer,
                     date,
-                    irc_protocol_tags (command, "notify_message", nick,
+                    irc_protocol_tags (command, tags, "notify_message", nick,
                                        address),
                     "%s%s%s%s%s(%s%s%s)%s: %s",
                     weechat_prefix ("network"),
@@ -2716,7 +2920,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 weechat_printf_date_tags (
                     ptr_channel->buffer,
                     date,
-                    irc_protocol_tags (command, str_tags, nick, address),
+                    irc_protocol_tags (command, tags, str_tags, nick, address),
                     "%s%s",
                     irc_nick_as_prefix (server, ptr_nick,
                                         (ptr_nick) ? NULL : nick,
@@ -2743,7 +2947,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         /* CTCP to user */
         if (msg_args[0] == '\01')
         {
-            irc_ctcp_recv (server, date, command, NULL,
+            irc_ctcp_recv (server, date, tags, command, NULL,
                            address, nick, remote_nick, msg_args, irc_message);
             goto end;
         }
@@ -2751,7 +2955,13 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         /* private message received => display it */
         ptr_channel = irc_channel_search (server, remote_nick);
 
-        if (!ptr_channel)
+        if (ptr_channel)
+        {
+            /* rename buffer if open with nick case not matching */
+            if (strcmp (ptr_channel->name, remote_nick) != 0)
+                irc_channel_pv_rename (server, ptr_channel, remote_nick);
+        }
+        else
         {
             ptr_channel = irc_channel_new (server,
                                            IRC_CHANNEL_TYPE_PRIVATE,
@@ -2817,7 +3027,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         weechat_printf_date_tags (
             ptr_channel->buffer,
             date,
-            irc_protocol_tags (command, str_tags, nick, address),
+            irc_protocol_tags (command, tags, str_tags, nick, address),
             "%s%s",
             irc_nick_as_prefix (
                 server, NULL, nick,
@@ -2893,7 +3103,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                     ptr_channel->has_quit_server = 1;
                 }
                 display_host = weechat_config_boolean (irc_config_look_display_host_quit);
-                if (str_quit_msg)
+                if (str_quit_msg && str_quit_msg[0])
                 {
                     weechat_printf_date_tags (
                         irc_msgbuffer_get_target_buffer (
@@ -2901,6 +3111,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                         date,
                         irc_protocol_tags (
                             command,
+                            tags,
                             (local_quit
                              || (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)
                              || !weechat_config_boolean (irc_config_look_smart_filter)
@@ -2933,6 +3144,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                         date,
                         irc_protocol_tags (
                             command,
+                            tags,
                             (local_quit
                              || (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)
                              || !weechat_config_boolean (irc_config_look_smart_filter)
@@ -2980,9 +3192,10 @@ IRC_PROTOCOL_CALLBACK(quit)
 
 IRC_PROTOCOL_CALLBACK(setname)
 {
-    int local_setname;
+    int local_setname, setname_enabled, smart_filter;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_channel_speaking *ptr_nick_speaking;
     char *str_realname, *realname_color;
 
     IRC_PROTOCOL_MIN_PARAMS(1);
@@ -2994,52 +3207,104 @@ IRC_PROTOCOL_CALLBACK(setname)
     if (!str_realname)
         return WEECHAT_RC_ERROR;
 
-    if (weechat_hashtable_has_key (server->cap_list, "setname"))
+    realname_color = irc_color_decode (
+        str_realname,
+        weechat_config_boolean (irc_config_network_colors_receive));
+
+    setname_enabled = (weechat_hashtable_has_key (server->cap_list, "setname"));
+
+    for (ptr_channel = server->channels; ptr_channel;
+            ptr_channel = ptr_channel->next_channel)
     {
-        for (ptr_channel = server->channels; ptr_channel;
-             ptr_channel = ptr_channel->next_channel)
+        switch (ptr_channel->type)
         {
-            ptr_nick = irc_nick_search (server, ptr_channel, nick);
-            if (ptr_nick)
-            {
-                if (ptr_nick->realname)
-                    free (ptr_nick->realname);
-                ptr_nick->realname = strdup (str_realname);
-            }
+            case IRC_CHANNEL_TYPE_PRIVATE:
+                if (!ignored
+                    && !local_setname
+                    && (irc_server_strcasecmp (server,
+                                               ptr_channel->name, nick) == 0))
+                {
+                    weechat_printf_date_tags (
+                        irc_msgbuffer_get_target_buffer (
+                            server, NULL, command, NULL, ptr_channel->buffer),
+                        date,
+                        irc_protocol_tags (command, tags, NULL, NULL, NULL),
+                        _("%s%s%s%s has changed real name to %s\"%s%s%s\"%s"),
+                        weechat_prefix ("network"),
+                        irc_nick_color_for_msg (server, 1, NULL, nick),
+                        nick,
+                        IRC_COLOR_MESSAGE_SETNAME,
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_RESET,
+                        (realname_color) ? realname_color : "",
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_RESET);
+                }
+                break;
+            case IRC_CHANNEL_TYPE_CHANNEL:
+                ptr_nick = irc_nick_search (server, ptr_channel, nick);
+                if (ptr_nick)
+                {
+                    if (!ignored && !local_setname)
+                    {
+                        ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
+                                             && (weechat_config_boolean (irc_config_look_smart_filter_setname))) ?
+                            irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
+                        smart_filter = (!local_setname
+                                        && weechat_config_boolean (irc_config_look_smart_filter)
+                                        && weechat_config_boolean (irc_config_look_smart_filter_setname)
+                                        && !ptr_nick_speaking);
+
+                        weechat_printf_date_tags (
+                            irc_msgbuffer_get_target_buffer (
+                                server, NULL, command, NULL, ptr_channel->buffer),
+                            date,
+                            irc_protocol_tags (
+                                command,
+                                tags,
+                                (smart_filter) ? "irc_smart_filter" : NULL,
+                                NULL,
+                                NULL),
+                            _("%s%s%s%s has changed real name to %s\"%s%s%s\"%s"),
+                            weechat_prefix ("network"),
+                            irc_nick_color_for_msg (server, 1, NULL, nick),
+                            nick,
+                            IRC_COLOR_MESSAGE_SETNAME,
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_RESET,
+                            (realname_color) ? realname_color : "",
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_RESET);
+                    }
+                    if (setname_enabled)
+                    {
+                        if (ptr_nick->realname)
+                            free (ptr_nick->realname);
+                        ptr_nick->realname = strdup (str_realname);
+                    }
+                }
+                break;
         }
     }
 
-    if (!ignored)
+    if (!ignored && local_setname)
     {
-        realname_color = irc_color_decode (
-            str_realname,
-            weechat_config_boolean (irc_config_network_colors_receive));
-        if (local_setname)
-        {
-            weechat_printf_date_tags (
-                irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
-                date,
-                irc_protocol_tags (command, NULL, NULL, NULL),
-                _("%sYour real name has been set to \"%s\""),
-                weechat_prefix ("network"),
-                (realname_color) ? realname_color : "");
-        }
-        else
-        {
-            weechat_printf_date_tags (
-                irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
-                date,
-                irc_protocol_tags (command, NULL, NULL, NULL),
-                _("%sReal name of %s%s%s has been set to \"%s\""),
-                weechat_prefix ("network"),
-                irc_nick_color_for_msg (server, 1, NULL, nick),
-                nick,
-                IRC_COLOR_RESET,
-                (realname_color) ? realname_color : "");
-        }
-        if (realname_color)
-            free (realname_color);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+            date,
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
+            _("%s%sYour real name has been set to %s\"%s%s%s\"%s"),
+            weechat_prefix ("network"),
+            IRC_COLOR_MESSAGE_SETNAME,
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (realname_color) ? realname_color : "",
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET);
     }
+
+    if (realname_color)
+        free (realname_color);
 
     free (str_realname);
 
@@ -3126,7 +3391,7 @@ IRC_PROTOCOL_CALLBACK(server_mode_reason)
     weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s%s%s",
             weechat_prefix ("network"),
             pos_mode,
@@ -3156,19 +3421,17 @@ IRC_PROTOCOL_CALLBACK(numeric)
 
     str_params = irc_protocol_string_params (params, arg_text, num_params - 1);
 
-    if (str_params && str_params[0])
+    if (str_params)
     {
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s",
             weechat_prefix ("network"),
             str_params);
-    }
-
-    if (str_params)
         free (str_params);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -3212,7 +3475,7 @@ IRC_PROTOCOL_CALLBACK(topic)
     if (ptr_channel)
         irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
 
-    if (str_topic)
+    if (str_topic && str_topic[0])
     {
         topic_color = irc_color_decode (
             str_topic,
@@ -3227,7 +3490,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, NULL, ptr_buffer),
                 date,
-                irc_protocol_tags (command, NULL, NULL, address),
+                irc_protocol_tags (command, tags, NULL, NULL, address),
                 _("%s%s%s%s has changed topic for %s%s%s from \"%s%s%s\" to "
                   "\"%s%s%s\""),
                 weechat_prefix ("network"),
@@ -3252,7 +3515,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, NULL, ptr_buffer),
                 date,
-                irc_protocol_tags (command, NULL, NULL, address),
+                irc_protocol_tags (command, tags, NULL, NULL, address),
                 _("%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""),
                 weechat_prefix ("network"),
                 irc_nick_color_for_msg (server, 1, ptr_nick, nick),
@@ -3280,7 +3543,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, NULL, ptr_buffer),
                 date,
-                irc_protocol_tags (command, NULL, NULL, address),
+                irc_protocol_tags (command, tags, NULL, NULL, address),
                 _("%s%s%s%s has unset topic for %s%s%s (old topic: "
                   "\"%s%s%s\")"),
                 weechat_prefix ("network"),
@@ -3302,7 +3565,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, NULL, ptr_buffer),
                 date,
-                irc_protocol_tags (command, NULL, NULL, address),
+                irc_protocol_tags (command, tags, NULL, NULL, address),
                 _("%s%s%s%s has unset topic for %s%s%s"),
                 weechat_prefix ("network"),
                 irc_nick_color_for_msg (server, 1, ptr_nick, nick),
@@ -3315,7 +3578,10 @@ IRC_PROTOCOL_CALLBACK(topic)
     }
 
     if (ptr_channel)
-        irc_channel_set_topic (ptr_channel, str_topic);
+    {
+        irc_channel_set_topic (ptr_channel,
+                               (str_topic && str_topic[0]) ? str_topic : NULL);
+    }
 
     if (str_topic)
         free (str_topic);
@@ -3347,7 +3613,7 @@ IRC_PROTOCOL_CALLBACK(wallops)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, nick, command, NULL, NULL),
         date,
-        irc_protocol_tags (command, "notify_private", nick, address),
+        irc_protocol_tags (command, tags, "notify_private", nick, address),
         _("%sWallops from %s: %s"),
         weechat_prefix ("network"),
         (nick_address[0]) ? nick_address : "?",
@@ -3373,6 +3639,7 @@ IRC_PROTOCOL_CALLBACK(warn)
     irc_protocol_print_error_warning_msg (
         server,
         date,
+        tags,
         command,
         weechat_prefix ("error"),
         _("Warning:"),
@@ -3401,9 +3668,7 @@ IRC_PROTOCOL_CALLBACK(001)
     if (irc_server_strcasecmp (server, server->nick, params[0]) != 0)
         irc_server_set_nick (server, params[0]);
 
-    irc_protocol_cb_numeric (server, date, irc_message,
-                             tags, nick, address, host, command,
-                             ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(numeric);
 
     /* connection to IRC server is OK! */
     server->is_connected = 1;
@@ -3517,15 +3782,13 @@ IRC_PROTOCOL_CALLBACK(001)
 
 IRC_PROTOCOL_CALLBACK(005)
 {
-    char *str_info, *error, *isupport2, *pos_start;
+    char *str_info, *error, *isupport2;
     int i, arg_last, length_isupport, length, casemapping, utf8mapping;
     long value;
 
     IRC_PROTOCOL_MIN_PARAMS(2);
 
-    irc_protocol_cb_numeric (server, date, irc_message,
-                             tags, nick, address, host, command,
-                             ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(numeric);
 
     arg_last = (strstr (irc_message, " :")) ? num_params - 2 : num_params - 1;
 
@@ -3607,7 +3870,6 @@ IRC_PROTOCOL_CALLBACK(005)
     str_info = irc_protocol_string_params (params, 1, arg_last);
     if (str_info && str_info[0])
     {
-        pos_start = NULL;
         length = strlen (str_info);
         if (server->isupport)
         {
@@ -3620,20 +3882,13 @@ IRC_PROTOCOL_CALLBACK(005)
             if (isupport2)
             {
                 server->isupport = isupport2;
-                pos_start = server->isupport + length_isupport;
+                strcat (server->isupport, " ");
+                strcat (server->isupport, str_info);
             }
         }
         else
         {
-            server->isupport = malloc (1 + length + 1);
-            if (server->isupport)
-                pos_start = server->isupport;
-        }
-        if (pos_start)
-        {
-            pos_start[0] = ' ';
-            memcpy (pos_start + 1, str_info, length);
-            pos_start[length + 1] = '\0';
+            server->isupport = strdup (str_info);
         }
     }
     if (str_info)
@@ -3660,7 +3915,7 @@ IRC_PROTOCOL_CALLBACK(008)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, params[0], command, NULL, NULL),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, address),
+        irc_protocol_tags (command, tags, NULL, NULL, address),
         _("%sServer notice mask for %s%s%s: %s"),
         weechat_prefix ("network"),
         irc_nick_color_for_msg (server, 1, NULL, params[0]),
@@ -3692,7 +3947,7 @@ IRC_PROTOCOL_CALLBACK(221)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, params[0], command, NULL, NULL),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, address),
+        irc_protocol_tags (command, tags, NULL, NULL, address),
         _("%sUser mode for %s%s%s is %s[%s%s%s]"),
         weechat_prefix ("network"),
         irc_nick_color_for_msg (server, 1, NULL, params[0]),
@@ -3749,7 +4004,7 @@ IRC_PROTOCOL_CALLBACK(301)
             irc_msgbuffer_get_target_buffer (
                 server, params[1], command, "whois", ptr_buffer),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, address),
+            irc_protocol_tags (command, tags, NULL, NULL, address),
             _("%s%s[%s%s%s]%s is away: %s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -3789,7 +4044,7 @@ IRC_PROTOCOL_CALLBACK(303)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         _("%sUsers online: %s%s"),
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_NICK,
@@ -3821,7 +4076,7 @@ IRC_PROTOCOL_CALLBACK(305)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "unaway", NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s",
             weechat_prefix ("network"),
             str_away_msg);
@@ -3857,7 +4112,7 @@ IRC_PROTOCOL_CALLBACK(306)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "away", NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s",
             weechat_prefix ("network"),
             str_away_msg);
@@ -3877,33 +4132,45 @@ IRC_PROTOCOL_CALLBACK(306)
  * Callback for the whois commands with nick and message.
  *
  * Command looks like:
- *   319 flashy FlashCode :some text here
+ *   319 mynick nick :some text here
+ *
+ * On InspIRCd server (not a whois reply):
+ *   223 mynick :EXEMPT #help
  */
 
 IRC_PROTOCOL_CALLBACK(whois_nick_msg)
 {
     char *str_params;
 
-    IRC_PROTOCOL_MIN_PARAMS(3);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    str_params = irc_protocol_string_params (params, 2, num_params - 1);
-
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (
-            server, params[1], command, "whois", NULL),
-        date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        "%s%s[%s%s%s] %s%s",
-        weechat_prefix ("network"),
-        IRC_COLOR_CHAT_DELIMITERS,
-        irc_nick_color_for_msg (server, 1, NULL, params[1]),
-        params[1],
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
-        str_params);
-
-    if (str_params)
-        free (str_params);
+    if (num_params >= 3)
+    {
+        str_params = irc_protocol_string_params (params, 2, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, params[1], command, "whois", NULL),
+            date,
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
+            "%s%s[%s%s%s] %s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            str_params);
+        if (str_params)
+            free (str_params);
+    }
+    else
+    {
+        /*
+         * not enough parameters: this should not be a whois command so we
+         * display the arguments as-is
+         */
+        IRC_PROTOCOL_RUN_CALLBACK(numeric);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -3912,33 +4179,42 @@ IRC_PROTOCOL_CALLBACK(whois_nick_msg)
  * Callback for the whowas commands with nick and message.
  *
  * Command looks like:
- *   369 flashy FlashCode :some text here
+ *   369 mynick nick :some text here
  */
 
 IRC_PROTOCOL_CALLBACK(whowas_nick_msg)
 {
     char *str_params;
 
-    IRC_PROTOCOL_MIN_PARAMS(3);
+    IRC_PROTOCOL_MIN_PARAMS(2);
 
-    str_params = irc_protocol_string_params (params, 2, num_params - 1);
-
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (
-            server, params[1], command, "whowas", NULL),
-        date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        "%s%s[%s%s%s] %s%s",
-        weechat_prefix ("network"),
-        IRC_COLOR_CHAT_DELIMITERS,
-        irc_nick_color_for_msg (server, 1, NULL, params[1]),
-        params[1],
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
-        str_params);
-
-    if (str_params)
-        free (str_params);
+    if (num_params >= 3)
+    {
+        str_params = irc_protocol_string_params (params, 2, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, params[1], command, "whowas", NULL),
+            date,
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
+            "%s%s[%s%s%s] %s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            str_params);
+        if (str_params)
+            free (str_params);
+    }
+    else
+    {
+        /*
+         * not enough parameters: this should not be a whowas command so we
+         * display the arguments as-is
+         */
+        IRC_PROTOCOL_RUN_CALLBACK(numeric);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -3954,30 +4230,35 @@ IRC_PROTOCOL_CALLBACK(311)
 {
     char *str_realname;
 
-    IRC_PROTOCOL_MIN_PARAMS(6);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    str_realname = irc_protocol_string_params (params, 5, num_params - 1);
-
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (
-            server, params[1], command, "whois", NULL),
-        date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        "%s%s[%s%s%s] (%s%s@%s%s)%s: %s",
-        weechat_prefix ("network"),
-        IRC_COLOR_CHAT_DELIMITERS,
-        irc_nick_color_for_msg (server, 1, NULL, params[1]),
-        params[1],
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_CHAT_HOST,
-        params[2],
-        params[3],
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
-        str_realname);
-
-    if (str_realname)
-        free (str_realname);
+    if (num_params < 6)
+    {
+        IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
+    }
+    else
+    {
+        str_realname = irc_protocol_string_params (params, 5, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, params[1], command, "whois", NULL),
+            date,
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
+            "%s%s[%s%s%s] (%s%s@%s%s)%s: %s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_CHAT_HOST,
+            params[2],
+            params[3],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            str_realname);
+        if (str_realname)
+            free (str_realname);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -3993,30 +4274,35 @@ IRC_PROTOCOL_CALLBACK(312)
 {
     char *str_server;
 
-    IRC_PROTOCOL_MIN_PARAMS(4);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    str_server = irc_protocol_string_params (params, 3, num_params - 1);
-
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (
-            server, params[1], command, "whois", NULL),
-        date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        "%s%s[%s%s%s] %s%s %s(%s%s%s)",
-        weechat_prefix ("network"),
-        IRC_COLOR_CHAT_DELIMITERS,
-        irc_nick_color_for_msg (server, 1, NULL, params[1]),
-        params[1],
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
-        params[2],
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
-        str_server,
-        IRC_COLOR_CHAT_DELIMITERS);
-
-    if (str_server)
-        free (str_server);
+    if (num_params < 4)
+    {
+        IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
+    }
+    else
+    {
+        str_server = irc_protocol_string_params (params, 3, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, params[1], command, "whois", NULL),
+            date,
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
+            "%s%s[%s%s%s] %s%s %s(%s%s%s)",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            params[2],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            str_server,
+            IRC_COLOR_CHAT_DELIMITERS);
+        if (str_server)
+            free (str_server);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -4032,30 +4318,35 @@ IRC_PROTOCOL_CALLBACK(314)
 {
     char *str_realname;
 
-    IRC_PROTOCOL_MIN_PARAMS(6);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    str_realname = irc_protocol_string_params (params, 5, num_params - 1);
-
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (
-            server, params[1], command, "whowas", NULL),
-        date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        _("%s%s[%s%s%s] (%s%s@%s%s)%s was %s"),
-        weechat_prefix ("network"),
-        IRC_COLOR_CHAT_DELIMITERS,
-        irc_nick_color_for_msg (server, 1, NULL, params[1]),
-        params[1],
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_CHAT_HOST,
-        params[2],
-        params[3],
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
-        str_realname);
-
-    if (str_realname)
-        free (str_realname);
+    if (num_params < 6)
+    {
+        IRC_PROTOCOL_RUN_CALLBACK(whowas_nick_msg);
+    }
+    else
+    {
+        str_realname = irc_protocol_string_params (params, 5, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, params[1], command, "whowas", NULL),
+            date,
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
+            _("%s%s[%s%s%s] (%s%s@%s%s)%s was %s"),
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_CHAT_HOST,
+            params[2],
+            params[3],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            str_realname);
+        if (str_realname)
+            free (str_realname);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -4086,7 +4377,7 @@ IRC_PROTOCOL_CALLBACK(315)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "who", NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s]%s %s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -4133,7 +4424,7 @@ IRC_PROTOCOL_CALLBACK(317)
         weechat_printf_date_tags (
             ptr_buffer,
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s]%s idle: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d "
               "%s%s, signon at: %s%s"),
             weechat_prefix ("network"),
@@ -4166,7 +4457,7 @@ IRC_PROTOCOL_CALLBACK(317)
         weechat_printf_date_tags (
             ptr_buffer,
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, "
               "signon at: %s%s"),
             weechat_prefix ("network"),
@@ -4213,7 +4504,7 @@ IRC_PROTOCOL_CALLBACK(321)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "list", NULL),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s%s%s",
         weechat_prefix ("network"),
         params[1],
@@ -4247,7 +4538,7 @@ IRC_PROTOCOL_CALLBACK(322)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "list", NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s%s%s(%s%s%s)%s%s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -4284,7 +4575,7 @@ IRC_PROTOCOL_CALLBACK(323)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, "list", NULL),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s",
         weechat_prefix ("network"),
         str_params);
@@ -4333,7 +4624,7 @@ IRC_PROTOCOL_CALLBACK(324)
                 server, NULL, command, NULL,
                 (ptr_channel) ? ptr_channel->buffer : NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, address),
+            irc_protocol_tags (command, tags, NULL, NULL, address),
             _("%sMode %s%s %s[%s%s%s]"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -4367,53 +4658,60 @@ IRC_PROTOCOL_CALLBACK(327)
     char *str_realname;
     struct t_gui_buffer *ptr_buffer;
 
-    IRC_PROTOCOL_MIN_PARAMS(4);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    str_realname = (num_params > 4) ?
-        irc_protocol_string_params (params, 4, num_params - 1) : NULL;
-
-    ptr_buffer = irc_msgbuffer_get_target_buffer (server, params[1],
-                                                  command, "whois", NULL);
-
-    if (str_realname && str_realname[0])
+    if (num_params < 4)
     {
-        weechat_printf_date_tags (
-            ptr_buffer,
-            date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-            "%s%s[%s%s%s] %s%s %s %s(%s%s%s)",
-            weechat_prefix ("network"),
-            IRC_COLOR_CHAT_DELIMITERS,
-            irc_nick_color_for_msg (server, 1, NULL, params[1]),
-            params[1],
-            IRC_COLOR_CHAT_DELIMITERS,
-            IRC_COLOR_CHAT_HOST,
-            params[2],
-            params[3],
-            IRC_COLOR_CHAT_DELIMITERS,
-            IRC_COLOR_RESET,
-            str_realname,
-            IRC_COLOR_CHAT_DELIMITERS);
+        IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
     }
     else
     {
-        weechat_printf_date_tags (
-            ptr_buffer,
-            date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-            "%s%s[%s%s%s] %s%s %s",
-            weechat_prefix ("network"),
-            IRC_COLOR_CHAT_DELIMITERS,
-            irc_nick_color_for_msg (server, 1, NULL, params[1]),
-            params[1],
-            IRC_COLOR_CHAT_DELIMITERS,
-            IRC_COLOR_CHAT_HOST,
-            params[2],
-            params[3]);
-    }
+        str_realname = (num_params > 4) ?
+            irc_protocol_string_params (params, 4, num_params - 1) : NULL;
 
-    if (str_realname)
-        free (str_realname);
+        ptr_buffer = irc_msgbuffer_get_target_buffer (server, params[1],
+                                                      command, "whois", NULL);
+
+        if (str_realname && str_realname[0])
+        {
+            weechat_printf_date_tags (
+                ptr_buffer,
+                date,
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
+                "%s%s[%s%s%s] %s%s %s %s(%s%s%s)",
+                weechat_prefix ("network"),
+                IRC_COLOR_CHAT_DELIMITERS,
+                irc_nick_color_for_msg (server, 1, NULL, params[1]),
+                params[1],
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_CHAT_HOST,
+                params[2],
+                params[3],
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_RESET,
+                str_realname,
+                IRC_COLOR_CHAT_DELIMITERS);
+        }
+        else
+        {
+            weechat_printf_date_tags (
+                ptr_buffer,
+                date,
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
+                "%s%s[%s%s%s] %s%s %s",
+                weechat_prefix ("network"),
+                IRC_COLOR_CHAT_DELIMITERS,
+                irc_nick_color_for_msg (server, 1, NULL, params[1]),
+                params[1],
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_CHAT_HOST,
+                params[2],
+                params[3]);
+        }
+
+        if (str_realname)
+            free (str_realname);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -4440,7 +4738,7 @@ IRC_PROTOCOL_CALLBACK(328)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, NULL, ptr_channel->buffer),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%sURL for %s%s%s: %s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -4481,7 +4779,7 @@ IRC_PROTOCOL_CALLBACK(329)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, NULL, ptr_channel->buffer),
                 date,
-                irc_protocol_tags (command, "irc_numeric",
+                irc_protocol_tags (command, tags, NULL,
                                    NULL, NULL),
                 /* TRANSLATORS: "%s" after "created on" is a date */
                 _("%sChannel created on %s"),
@@ -4494,7 +4792,7 @@ IRC_PROTOCOL_CALLBACK(329)
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             /* TRANSLATORS: "%s" after "created on" is a date */
             _("%sChannel %s%s%s created on %s"),
             weechat_prefix ("network"),
@@ -4535,7 +4833,7 @@ IRC_PROTOCOL_CALLBACK(330_343)
             irc_msgbuffer_get_target_buffer (
                 server, params[1], command, "whois", NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s] %s%s %s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -4559,7 +4857,7 @@ IRC_PROTOCOL_CALLBACK(330_343)
             irc_msgbuffer_get_target_buffer (
                 server, params[1], command, "whois", ptr_buffer),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s] %s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -4595,7 +4893,7 @@ IRC_PROTOCOL_CALLBACK(331)
         irc_msgbuffer_get_target_buffer (
             server, params[1], command, NULL, ptr_buffer),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         _("%sNo topic set for channel %s%s"),
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_CHANNEL,
@@ -4656,7 +4954,7 @@ IRC_PROTOCOL_CALLBACK(332)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, NULL, ptr_buffer),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%sTopic for %s%s%s is \"%s%s%s\""),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -4721,7 +5019,7 @@ IRC_PROTOCOL_CALLBACK(333)
                     irc_msgbuffer_get_target_buffer (
                         server, NULL, command, NULL, ptr_channel->buffer),
                     date,
-                    irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                    irc_protocol_tags (command, tags, NULL, NULL, NULL),
                     /* TRANSLATORS: "%s" after "on" is a date */
                     _("%sTopic set by %s%s%s%s%s%s%s%s%s on %s"),
                     weechat_prefix ("network"),
@@ -4742,7 +5040,7 @@ IRC_PROTOCOL_CALLBACK(333)
                     irc_msgbuffer_get_target_buffer (
                         server, NULL, command, NULL, ptr_channel->buffer),
                     date,
-                    irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                    irc_protocol_tags (command, tags, NULL, NULL, NULL),
                     /* TRANSLATORS: "%s" after "on" is a date */
                     _("%sTopic set on %s"),
                     weechat_prefix ("network"),
@@ -4758,7 +5056,7 @@ IRC_PROTOCOL_CALLBACK(333)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, NULL, NULL),
                 date,
-                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
                 _("%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"),
                 weechat_prefix ("network"),
@@ -4782,7 +5080,7 @@ IRC_PROTOCOL_CALLBACK(333)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, NULL, NULL),
                 date,
-                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
                 _("%sTopic for %s%s%s set on %s"),
                 weechat_prefix ("network"),
@@ -4804,34 +5102,42 @@ IRC_PROTOCOL_CALLBACK(333)
  *
  * Command looks like:
  *   338 mynick nick host :actually using host
+ *
+ * On Rizon server:
+ *   338 mynick nick :is actually user@host [ip]
  */
 
 IRC_PROTOCOL_CALLBACK(338)
 {
     char *str_text;
 
-    IRC_PROTOCOL_MIN_PARAMS(4);
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    str_text = irc_protocol_string_params (params, 3, num_params - 1);
-
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (
-            server, params[1], command, "whois", NULL),
-        date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        "%s%s[%s%s%s]%s %s %s%s",
-        weechat_prefix ("network"),
-        IRC_COLOR_CHAT_DELIMITERS,
-        irc_nick_color_for_msg (server, 1, NULL, params[1]),
-        params[1],
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
-        str_text,
-        IRC_COLOR_CHAT_HOST,
-        params[2]);
-
-    if (str_text)
-        free (str_text);
+    if (num_params < 4)
+    {
+        IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
+    }
+    else
+    {
+        str_text = irc_protocol_string_params (params, 3, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, params[1], command, "whois", NULL),
+            date,
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
+            "%s%s[%s%s%s]%s %s %s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            str_text,
+            IRC_COLOR_CHAT_HOST,
+            params[2]);
+        if (str_text)
+            free (str_text);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -4851,7 +5157,7 @@ IRC_PROTOCOL_CALLBACK(341)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, params[0], command, NULL, NULL),
         date,
-        irc_protocol_tags (command, "irc_numeric", params[0], address),
+        irc_protocol_tags (command, tags, NULL, params[0], address),
         _("%s%s%s%s has invited %s%s%s to %s%s%s"),
         weechat_prefix ("network"),
         irc_nick_color_for_msg (server, 1, NULL, params[0]),
@@ -4868,10 +5174,13 @@ IRC_PROTOCOL_CALLBACK(341)
 }
 
 /*
- * Callback for the IRC command "344": channel reop.
+ * Callback for the IRC command "344": channel reop or whois geo info.
  *
- * Command looks like:
+ * Command looks like, on IRCnet:
  *   344 mynick #channel nick!user@host
+ *
+ * Command looks like, on UnrealIRCd:
+ *   344 mynick nick FR :is connecting from France
  */
 
 IRC_PROTOCOL_CALLBACK(344)
@@ -4880,22 +5189,29 @@ IRC_PROTOCOL_CALLBACK(344)
 
     IRC_PROTOCOL_MIN_PARAMS(3);
 
-    str_host = irc_protocol_string_params (params, 2, num_params - 1);
-
-    weechat_printf_date_tags (
-        irc_msgbuffer_get_target_buffer (server, NULL, command, "reop", NULL),
-        date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        _("%sChannel reop %s%s%s: %s%s"),
-        weechat_prefix ("network"),
-        IRC_COLOR_CHAT_CHANNEL,
-        params[1],
-        IRC_COLOR_RESET,
-        IRC_COLOR_CHAT_HOST,
-        str_host);
-
-    if (str_host)
-        free (str_host);
+    if (irc_channel_is_channel (server, params[1]))
+    {
+        /* channel reop (IRCnet) */
+        str_host = irc_protocol_string_params (params, 2, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (server, NULL, command, "reop", NULL),
+            date,
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
+            _("%sChannel reop %s%s%s: %s%s"),
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_CHANNEL,
+            params[1],
+            IRC_COLOR_RESET,
+            IRC_COLOR_CHAT_HOST,
+            str_host);
+        if (str_host)
+            free (str_host);
+    }
+    else
+    {
+        /* whois, geo info (UnrealIRCd) */
+        IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -4918,7 +5234,7 @@ IRC_PROTOCOL_CALLBACK(345)
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, NULL, command, "reop", NULL),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s%s%s: %s",
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_CHANNEL,
@@ -4989,7 +5305,7 @@ IRC_PROTOCOL_CALLBACK(346)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "invitelist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
                 _("%s%s[%s%s%s] %s%s%s%s invited by %s on %s"),
                 weechat_prefix ("network"),
@@ -5012,7 +5328,7 @@ IRC_PROTOCOL_CALLBACK(346)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "invitelist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 _("%s%s[%s%s%s] %s%s%s%s invited by %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -5034,7 +5350,7 @@ IRC_PROTOCOL_CALLBACK(346)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "invitelist", ptr_buffer),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s] %s%s%s%s invited"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -5089,7 +5405,7 @@ IRC_PROTOCOL_CALLBACK(347)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "invitelist", ptr_buffer),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s[%s%s%s]%s%s%s",
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_DELIMITERS,
@@ -5162,7 +5478,7 @@ IRC_PROTOCOL_CALLBACK(348)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "exceptionlist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
                 _("%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"),
                 weechat_prefix ("network"),
@@ -5186,7 +5502,7 @@ IRC_PROTOCOL_CALLBACK(348)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "exceptionlist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 _("%s%s[%s%s%s]%s%s exception %s%s%s by %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -5209,7 +5525,7 @@ IRC_PROTOCOL_CALLBACK(348)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "exceptionlist", ptr_buffer),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s]%s%s exception %s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -5264,7 +5580,7 @@ IRC_PROTOCOL_CALLBACK(349)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "exceptionlist", ptr_buffer),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s[%s%s%s]%s%s%s",
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_DELIMITERS,
@@ -5277,6 +5593,67 @@ IRC_PROTOCOL_CALLBACK(349)
 
     if (str_params)
         free (str_params);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC command "312": whois, gateway.
+ *
+ * Command looks like:
+ *   350 mynick nick * * :is connected via the WebIRC gateway
+ *   350 mynick nick real_hostname real_ip :is connected via the WebIRC gateway
+ */
+
+IRC_PROTOCOL_CALLBACK(350)
+{
+    char *str_params, str_host[1024];
+    int has_real_hostmask, has_real_ip;
+
+    IRC_PROTOCOL_MIN_PARAMS(2);
+
+    if (num_params >= 5)
+    {
+        str_host[0] = '\0';
+        has_real_hostmask = (strcmp (params[2], "*") != 0);
+        has_real_ip = (strcmp (params[3], "*") != 0);
+        if (has_real_hostmask || has_real_ip)
+        {
+            snprintf (str_host, sizeof (str_host),
+                      "%s(%s%s%s%s%s%s%s) ",
+                      IRC_COLOR_CHAT_DELIMITERS,
+                      IRC_COLOR_CHAT_HOST,
+                      (has_real_hostmask) ? params[2] : "",
+                      (has_real_hostmask && has_real_ip) ? IRC_COLOR_CHAT_DELIMITERS : "",
+                      (has_real_hostmask && has_real_ip) ? ", " : "",
+                      (has_real_hostmask && has_real_ip) ? IRC_COLOR_CHAT_HOST : "",
+                      (has_real_ip) ? params[3] : "",
+                      IRC_COLOR_CHAT_DELIMITERS);
+        }
+        str_params = irc_protocol_string_params (params, 4, num_params - 1);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, params[1], command, "whois", NULL),
+            date,
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
+            "%s%s[%s%s%s] %s%s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, params[1]),
+            params[1],
+            IRC_COLOR_CHAT_DELIMITERS,
+            str_host,
+            IRC_COLOR_RESET,
+            str_params);
+        if (str_params)
+            free (str_params);
+
+    }
+    else
+    {
+        /* not enough parameters: display with the default whois callback */
+        IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -5304,7 +5681,7 @@ IRC_PROTOCOL_CALLBACK(351)
         weechat_printf_date_tags (
             ptr_buffer,
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s %s (%s)",
             weechat_prefix ("network"),
             params[1],
@@ -5318,7 +5695,7 @@ IRC_PROTOCOL_CALLBACK(351)
         weechat_printf_date_tags (
             ptr_buffer,
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s %s",
             weechat_prefix ("network"),
             params[1],
@@ -5410,7 +5787,7 @@ IRC_PROTOCOL_CALLBACK(352)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "who", NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s] %s%s %s(%s%s@%s%s)%s %s%s%s%s%s(%s%s%s)",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -5582,7 +5959,7 @@ IRC_PROTOCOL_CALLBACK(353)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "names", NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%sNicks %s%s%s: %s[%s%s%s]"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -5636,7 +6013,7 @@ IRC_PROTOCOL_CALLBACK(354)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "who", NULL),
                 date,
-                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 "%s%s[%s%s%s]%s%s%s",
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -5707,7 +6084,7 @@ IRC_PROTOCOL_CALLBACK(354)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "who", NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s[%s%s%s] %s%s %s[%s%s%s] (%s%s@%s%s)%s %s %s %s(%s%s%s)",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -5748,7 +6125,7 @@ IRC_PROTOCOL_CALLBACK(366)
     struct t_irc_channel *ptr_channel;
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
-    int num_nicks, num_op, num_halfop, num_voice, num_normal;
+    int num_nicks, num_ops, num_halfops, num_voiced, num_regular;
     char *str_params, str_count[1024], **str_nicks, *color;
     const char *prefix, *prefix_color, *nickname;
 
@@ -5838,7 +6215,7 @@ IRC_PROTOCOL_CALLBACK(366)
                         ptr_channel->buffer),
                     date,
                     irc_protocol_tags (
-                        command, "irc_numeric", NULL, NULL),
+                        command, tags, NULL, NULL, NULL),
                     _("%sNicks %s%s%s: %s[%s%s]"),
                     weechat_prefix ("network"),
                     IRC_COLOR_CHAT_CHANNEL,
@@ -5852,12 +6229,15 @@ IRC_PROTOCOL_CALLBACK(366)
             }
         }
 
-        /* display number of nicks, ops, halfops & voices on the channel */
+        /*
+         * display the number of total nicks, ops, halfops, voiced and
+         * regular on the channel
+         */
         if (weechat_hashtable_has_key (ptr_channel->join_msg_received, "366")
             || weechat_hashtable_has_key (irc_config_hashtable_display_join_message, "366"))
         {
-            irc_nick_count (server, ptr_channel, &num_nicks, &num_op, &num_halfop,
-                            &num_voice, &num_normal);
+            irc_nick_count (server, ptr_channel, &num_nicks, &num_ops,
+                            &num_halfops, &num_voiced, &num_regular);
             str_nicks = weechat_string_dyn_alloc (1024);
             if (irc_server_get_prefix_mode_index (server, 'o') >= 0)
             {
@@ -5865,9 +6245,9 @@ IRC_PROTOCOL_CALLBACK(366)
                           "%s%s%d%s %s",
                           (*str_nicks[0]) ? ", " : "",
                           IRC_COLOR_CHAT_CHANNEL,
-                          num_op,
+                          num_ops,
                           IRC_COLOR_RESET,
-                          NG_("op", "ops", num_op));
+                          NG_("op", "ops", num_ops));
                 weechat_string_dyn_concat (str_nicks, str_count, -1);
             }
             if (irc_server_get_prefix_mode_index (server, 'h') >= 0)
@@ -5876,9 +6256,9 @@ IRC_PROTOCOL_CALLBACK(366)
                           "%s%s%d%s %s",
                           (*str_nicks[0]) ? ", " : "",
                           IRC_COLOR_CHAT_CHANNEL,
-                          num_halfop,
+                          num_halfops,
                           IRC_COLOR_RESET,
-                          NG_("halfop", "halfops", num_halfop));
+                          NG_("halfop", "halfops", num_halfops));
                 weechat_string_dyn_concat (str_nicks, str_count, -1);
             }
             if (irc_server_get_prefix_mode_index (server, 'v') >= 0)
@@ -5887,25 +6267,25 @@ IRC_PROTOCOL_CALLBACK(366)
                           "%s%s%d%s %s",
                           (*str_nicks[0]) ? ", " : "",
                           IRC_COLOR_CHAT_CHANNEL,
-                          num_voice,
+                          num_voiced,
                           IRC_COLOR_RESET,
-                          NG_("voice", "voices", num_voice));
+                          NG_("voiced", "voiced", num_voiced));
                 weechat_string_dyn_concat (str_nicks, str_count, -1);
             }
             snprintf (
                 str_count, sizeof (str_count),
-                /* TRANSLATORS: number of "normal" nicks on a channel (ie no op/voice), for example: "56 normals" */
-                NG_("%s%s%d%s normal", "%s%s%d%s normals", num_normal),
+                /* TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular" */
+                NG_("%s%s%d%s regular", "%s%s%d%s regular", num_regular),
                 (*str_nicks[0]) ? ", " : "",
                 IRC_COLOR_CHAT_CHANNEL,
-                num_normal,
+                num_regular,
                 IRC_COLOR_RESET);
             weechat_string_dyn_concat (str_nicks, str_count, -1);
             weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "names", ptr_channel->buffer),
                 date,
-                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 _("%sChannel %s%s%s: %s%d%s %s %s(%s%s)"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_CHANNEL,
@@ -5935,7 +6315,7 @@ IRC_PROTOCOL_CALLBACK(366)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "names", NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s%s%s: %s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -6016,7 +6396,7 @@ IRC_PROTOCOL_CALLBACK(367)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "banlist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
                 _("%s%s[%s%s%s] %s%s%s%s banned by %s on %s"),
                 weechat_prefix ("network"),
@@ -6039,7 +6419,7 @@ IRC_PROTOCOL_CALLBACK(367)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "banlist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 _("%s%s[%s%s%s] %s%s%s%s banned by %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -6061,7 +6441,7 @@ IRC_PROTOCOL_CALLBACK(367)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "banlist", ptr_buffer),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s] %s%s%s%s banned"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -6119,7 +6499,7 @@ IRC_PROTOCOL_CALLBACK(368)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "banlist", ptr_buffer),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s[%s%s%s]%s%s%s",
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_DELIMITERS,
@@ -6148,9 +6528,7 @@ IRC_PROTOCOL_CALLBACK(432)
     const char *alternate_nick;
     struct t_gui_buffer *ptr_buffer;
 
-    irc_protocol_cb_generic_error (server, date, irc_message,
-                                   tags, nick, address, host, command,
-                                   ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(generic_error);
 
     if (!server->is_connected)
     {
@@ -6233,10 +6611,7 @@ IRC_PROTOCOL_CALLBACK(433)
     }
     else
     {
-        return irc_protocol_cb_generic_error (server, date, irc_message,
-                                              tags, nick, address, host,
-                                              command, ignored,
-                                              params, num_params);
+        IRC_PROTOCOL_RUN_CALLBACK(generic_error);
     }
 
     return WEECHAT_RC_OK;
@@ -6254,9 +6629,7 @@ IRC_PROTOCOL_CALLBACK(437)
     const char *alternate_nick;
     struct t_gui_buffer *ptr_buffer;
 
-    irc_protocol_cb_generic_error (server, date, irc_message,
-                                   tags, nick, address, host, command,
-                                   ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(generic_error);
 
     if (!server->is_connected)
     {
@@ -6321,7 +6694,7 @@ IRC_PROTOCOL_CALLBACK(438)
         weechat_printf_date_tags (
             ptr_buffer,
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s (%s => %s)",
             weechat_prefix ("network"),
             str_params,
@@ -6335,7 +6708,7 @@ IRC_PROTOCOL_CALLBACK(438)
         weechat_printf_date_tags (
             ptr_buffer,
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s %s",
             weechat_prefix ("network"),
             params[0],
@@ -6360,9 +6733,7 @@ IRC_PROTOCOL_CALLBACK(470)
     char *old_channel_lower, *new_channel_lower, *buffer_name;
     int lines_count;
 
-    irc_protocol_cb_generic_error (server, date, irc_message,
-                                   tags, nick, address, host, command,
-                                   ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(generic_error);
 
     if ((num_params >= 3) && !irc_channel_search (server, params[1]))
     {
@@ -6412,15 +6783,12 @@ IRC_PROTOCOL_CALLBACK(470)
             }
         }
 
-        old_channel_lower = strdup (params[1]);
+        old_channel_lower = weechat_string_tolower (params[1]);
         if (old_channel_lower)
         {
-            weechat_string_tolower (old_channel_lower);
-            new_channel_lower = strdup (params[2]);
+            new_channel_lower = weechat_string_tolower (params[2]);
             if (new_channel_lower)
             {
-                weechat_string_tolower (new_channel_lower);
-
                 if (weechat_hashtable_has_key (server->join_manual,
                                                old_channel_lower))
                 {
@@ -6432,7 +6800,6 @@ IRC_PROTOCOL_CALLBACK(470)
                     weechat_hashtable_remove (server->join_manual,
                                               old_channel_lower);
                 }
-
                 if (weechat_hashtable_has_key (server->join_noswitch,
                                                old_channel_lower))
                 {
@@ -6444,13 +6811,95 @@ IRC_PROTOCOL_CALLBACK(470)
                     weechat_hashtable_remove (server->join_noswitch,
                                               old_channel_lower);
                 }
-
                 free (new_channel_lower);
             }
-
             free (old_channel_lower);
         }
     }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC commands "524", "704", "705", and "706": help reply.
+ *
+ * Commands look like:
+ *   704 mynick topic :First help line of <topic>
+ *   705 mynick topic :The <topic> is blah blah
+ *   705 mynick topic :and this
+ *   705 mynick topic :and that.
+ *   706 mynick topic :End of /HELPOP
+ *
+ * Or:
+ *   524 mynick topic :help not found
+ */
+
+IRC_PROTOCOL_CALLBACK(help)
+{
+    char *str_message;
+
+    IRC_PROTOCOL_MIN_PARAMS(2);
+
+    if (ignored)
+        return WEECHAT_RC_OK;
+
+    str_message = irc_protocol_string_params (params, 2, num_params - 1);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (server, nick, command, NULL, NULL),
+        date,
+        irc_protocol_tags (command, tags, "notify_private", nick, address),
+        "%s%s",
+        weechat_prefix ("network"),
+        str_message);
+
+    if (str_message)
+        free (str_message);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC command "710": has asked for an invite (knock).
+ *
+ * Command looks like:
+ *   710 #channel #channel nick!user@host :has asked for an invite.
+ */
+
+IRC_PROTOCOL_CALLBACK(710)
+{
+    struct t_irc_channel *ptr_channel;
+    const char *nick_address;
+    char *str_message;
+
+    IRC_PROTOCOL_MIN_PARAMS(3);
+
+    if (ignored)
+        return WEECHAT_RC_OK;
+
+    ptr_channel = irc_channel_search (server, params[1]);
+    if (!ptr_channel)
+        return WEECHAT_RC_ERROR;
+
+    nick_address = irc_protocol_nick_address (
+        server, 1, NULL, irc_message_get_nick_from_host (params[2]),
+        irc_message_get_address_from_host (params[2]));
+
+    str_message = irc_protocol_string_params (params, 3, num_params - 1);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (
+            server, NULL, command, NULL, ptr_channel->buffer),
+        date,
+        irc_protocol_tags (command, tags, "notify_message", NULL, NULL),
+        "%s%s %s",
+        weechat_prefix ("network"),
+        (nick_address[0]) ? nick_address : "?",
+        (str_message && str_message[0]) ?
+        str_message : _("has asked for an invite"));
+
+    if (str_message)
+        free (str_message);
 
     return WEECHAT_RC_OK;
 }
@@ -6514,7 +6963,7 @@ IRC_PROTOCOL_CALLBACK(728)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "quietlist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
                 _("%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"),
                 weechat_prefix ("network"),
@@ -6537,7 +6986,7 @@ IRC_PROTOCOL_CALLBACK(728)
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "quietlist", ptr_buffer),
                 date,
-                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                irc_protocol_tags (command, tags, NULL, NULL, NULL),
                 _("%s%s[%s%s%s] %s%s%s%s quieted by %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -6559,7 +7008,7 @@ IRC_PROTOCOL_CALLBACK(728)
             irc_msgbuffer_get_target_buffer (
                 server, NULL, command, "quietlist", ptr_buffer),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             _("%s%s[%s%s%s] %s%s%s%s quieted"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
@@ -6617,7 +7066,7 @@ IRC_PROTOCOL_CALLBACK(729)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "quietlist", ptr_buffer),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s[%s%s%s]%s%s%s",
         weechat_prefix ("network"),
         IRC_COLOR_CHAT_DELIMITERS,
@@ -6750,7 +7199,7 @@ IRC_PROTOCOL_CALLBACK(732)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "monitor", NULL),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s",
         weechat_prefix ("network"),
         (str_nicks) ? str_nicks : "");
@@ -6781,7 +7230,7 @@ IRC_PROTOCOL_CALLBACK(733)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "monitor", NULL),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s",
         weechat_prefix ("network"),
         (str_params) ? str_params : "");
@@ -6812,7 +7261,7 @@ IRC_PROTOCOL_CALLBACK(734)
         irc_msgbuffer_get_target_buffer (
             server, NULL, command, "monitor", NULL),
         date,
-        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
         "%s%s (%s)",
         weechat_prefix ("error"),
         (str_params) ? str_params : "",
@@ -6848,7 +7297,7 @@ IRC_PROTOCOL_CALLBACK(900)
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s %s(%s%s%s)",
             weechat_prefix ("network"),
             str_params,
@@ -6862,7 +7311,7 @@ IRC_PROTOCOL_CALLBACK(900)
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
             date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            irc_protocol_tags (command, tags, NULL, NULL, NULL),
             "%s%s",
             weechat_prefix ("network"),
             str_params);
@@ -6877,37 +7326,23 @@ IRC_PROTOCOL_CALLBACK(900)
 }
 
 /*
- * Callback for the IRC command "901": you are now logged in.
+ * Callback for the IRC command "901": you are now logged out.
  *
  * Command looks like:
- *   901 mynick nick user host :You are now logged in. (id nick, username user, hostname host)
+ *   901 mynick nick!user@host :You are now logged out.
  */
 
 IRC_PROTOCOL_CALLBACK(901)
 {
-    char *str_params;
+    IRC_PROTOCOL_MIN_PARAMS(3);
 
-    IRC_PROTOCOL_MIN_PARAMS(4);
-
-    if (num_params >= 5)
-    {
-        str_params = irc_protocol_string_params (params, 4, num_params - 1);
-        weechat_printf_date_tags (
-            irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
-            date,
-            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-            "%s%s",
-            weechat_prefix ("network"),
-            str_params);
-        if (str_params)
-            free (str_params);
-    }
-    else
-    {
-        irc_protocol_cb_numeric (server, date, irc_message,
-                                 tags, nick, address, host, command,
-                                 ignored, params, num_params);
-    }
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (server, NULL, command, NULL, NULL),
+        date,
+        irc_protocol_tags (command, tags, NULL, NULL, NULL),
+        "%s%s",
+        weechat_prefix ("network"),
+        params[2]);
 
     return WEECHAT_RC_OK;
 }
@@ -6928,9 +7363,9 @@ IRC_PROTOCOL_CALLBACK(sasl_end_ok)
         server->hook_timer_sasl = NULL;
     }
 
-    irc_protocol_cb_numeric (server, date, irc_message,
-                             tags, nick, address, host, command,
-                             ignored, params, num_params);
+    IRC_PROTOCOL_RUN_CALLBACK(numeric);
+
+    server->authentication_method = IRC_SERVER_AUTH_METHOD_SASL;
 
     if (!server->is_connected)
         irc_server_sendf (server, 0, NULL, "CAP END");
@@ -6957,9 +7392,10 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
         server->hook_timer_sasl = NULL;
     }
 
-    irc_protocol_cb_numeric (server, date, irc_message,
-                             tags, nick, address, host, command,
-                             ignored, params, num_params);
+    server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
+    server->sasl_mechanism_used = -1;
+
+    IRC_PROTOCOL_RUN_CALLBACK(numeric);
 
     sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
     if (!server->is_connected
@@ -7069,12 +7505,13 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(338, 1, 0, 338),            /* whois (host)                    */
         IRCB(341, 1, 0, 341),            /* inviting                        */
         IRCB(343, 1, 0, 330_343),        /* is opered as                    */
-        IRCB(344, 1, 0, 344),            /* channel reop                    */
+        IRCB(344, 1, 0, 344),            /* channel reop / whois (geo info) */
         IRCB(345, 1, 0, 345),            /* end of channel reop list        */
         IRCB(346, 1, 0, 346),            /* invite list                     */
         IRCB(347, 1, 0, 347),            /* end of invite list              */
         IRCB(348, 1, 0, 348),            /* channel exception list          */
         IRCB(349, 1, 0, 349),            /* end of channel exception list   */
+        IRCB(350, 1, 0, 350),            /* whois (gateway)                 */
         IRCB(351, 1, 0, 351),            /* server version                  */
         IRCB(352, 1, 0, 352),            /* who                             */
         IRCB(353, 1, 0, 353),            /* list of nicks on channel        */
@@ -7138,7 +7575,16 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(491, 1, 0, generic_error),  /* no O-lines for your host        */
         IRCB(501, 1, 0, generic_error),  /* unknown mode flag               */
         IRCB(502, 1, 0, generic_error),  /* can't chg mode for other users  */
+        IRCB(524, 1, 0, help),           /* HELP/HELPOP (help not found)    */
         IRCB(671, 1, 0, whois_nick_msg), /* whois (secure connection)       */
+        IRCB(704, 1, 0, help),           /* start of HELP/HELPOP            */
+        IRCB(705, 1, 0, help),           /* body of HELP/HELPOP             */
+        IRCB(706, 1, 0, help),           /* end of HELP/HELPOP              */
+        IRCB(710, 1, 0, 710),            /* knock: has asked for an invite  */
+        IRCB(711, 1, 0, knock_reply),    /* knock: has been delivered       */
+        IRCB(712, 1, 0, knock_reply),    /* knock: too many knocks          */
+        IRCB(713, 1, 0, knock_reply),    /* knock: channel is open          */
+        IRCB(714, 1, 0, knock_reply),    /* knock: already on that channel  */
         IRCB(728, 1, 0, 728),            /* quietlist                       */
         IRCB(729, 1, 0, 729),            /* end of quietlist                */
         IRCB(730, 1, 0, 730),            /* monitored nicks online          */
@@ -7147,7 +7593,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(733, 1, 0, 733),            /* end of monitor list             */
         IRCB(734, 1, 0, 734),            /* monitor list is full            */
         IRCB(900, 1, 0, 900),            /* logged in as (SASL)             */
-        IRCB(901, 1, 0, 901),            /* you are now logged in           */
+        IRCB(901, 1, 0, 901),            /* you are now logged out          */
         IRCB(902, 1, 0, sasl_end_fail),  /* SASL auth failed (acc. locked)  */
         IRCB(903, 1, 0, sasl_end_ok),    /* SASL auth successful            */
         IRCB(904, 1, 0, sasl_end_fail),  /* SASL auth failed                */

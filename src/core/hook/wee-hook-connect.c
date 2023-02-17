@@ -1,7 +1,7 @@
 /*
  * wee-hook-connect.c - WeeChat connect hook
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -37,6 +37,27 @@
 #include "../wee-network.h"
 #include "../../plugins/plugin.h"
 
+
+/*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_connect_get_description (struct t_hook *hook)
+{
+    char str_desc[1024];
+
+    snprintf (str_desc, sizeof (str_desc),
+              "socket: %d, address: %s, port: %d, child pid: %d",
+              HOOK_CONNECT(hook, sock),
+              HOOK_CONNECT(hook, address),
+              HOOK_CONNECT(hook, port),
+              HOOK_CONNECT(hook, child_pid));
+
+    return strdup (str_desc);
+}
 
 /*
  * Hooks a connection to a peer (using fork).

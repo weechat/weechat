@@ -117,6 +117,8 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-bar.h
 ./src/gui/gui-bar-item.c
 ./src/gui/gui-bar-item.h
+./src/gui/gui-bar-item-custom.c
+./src/gui/gui-bar-item-custom.h
 ./src/gui/gui-bar-window.c
 ./src/gui/gui-bar-window.h
 ./src/gui/gui-buffer.c
@@ -243,6 +245,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-info.h
 ./src/plugins/irc/irc-input.c
 ./src/plugins/irc/irc-input.h
+./src/plugins/irc/irc-join.c
+./src/plugins/irc/irc-join.h
 ./src/plugins/irc/irc-message.c
 ./src/plugins/irc/irc-message.h
 ./src/plugins/irc/irc-mode.c

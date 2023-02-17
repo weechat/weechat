@@ -1,7 +1,7 @@
 /*
  * irc.c - IRC (Internet Relay Chat) plugin for WeeChat
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -52,13 +52,14 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("IRC (Internet Relay Chat) protocol"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(6000);
+WEECHAT_PLUGIN_PRIORITY(IRC_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_irc_plugin = NULL;
 
 struct t_hook *irc_hook_timer = NULL;
 
-int irc_signal_upgrade_received = 0;   /* signal "upgrade" received ?       */
+int irc_signal_quit_received = 0;      /* signal "quit" received?           */
+int irc_signal_upgrade_received = 0;   /* signal "upgrade" received?        */
 
 
 /*
@@ -76,6 +77,8 @@ irc_signal_quit_cb (const void *pointer, void *data,
     (void) pointer;
     (void) data;
     (void) signal;
+
+    irc_signal_quit_received = 1;
 
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
@@ -109,9 +112,21 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
+    /* only save session and continue? */
+    if (signal_data && (strcmp (signal_data, "save") == 0))
+    {
+        /*
+         * save session with a disconnected state in servers and a scheduled
+         * reconnection
+         */
+        irc_upgrade_save (1);
+        return WEECHAT_RC_OK;
+    }
+
     irc_signal_upgrade_received = 1;
 
     quit = (signal_data && (strcmp (signal_data, "quit") == 0));
+
     ssl_disconnected = 0;
 
     for (ptr_server = irc_servers; ptr_server;
@@ -139,8 +154,10 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
              * after restart
              */
             ptr_server->index_current_address = 0;
-            ptr_server->reconnect_delay = IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY);
-            ptr_server->reconnect_start = time (NULL) - ptr_server->reconnect_delay - 1;
+            ptr_server->reconnect_delay = IRC_SERVER_OPTION_INTEGER(
+                ptr_server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY);
+            ptr_server->reconnect_start = time (NULL) -
+                ptr_server->reconnect_delay - 1;
         }
     }
     if (ssl_disconnected > 0)
@@ -237,7 +254,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* look at arguments */
     for (i = 0; i < argc; i++)
     {
-        if ((weechat_strncasecmp (argv[i], IRC_PLUGIN_NAME, 3) == 0))
+        if ((weechat_strncmp (argv[i], IRC_PLUGIN_NAME, 3) == 0))
         {
             if (!irc_server_alloc_with_url (argv[i]))
             {
@@ -290,7 +307,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     if (irc_signal_upgrade_received)
     {
         irc_config_write (1);
-        irc_upgrade_save ();
+        irc_upgrade_save (0);
     }
     else
     {

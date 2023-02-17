@@ -1,7 +1,7 @@
 /*
  * test-scripts.cpp - test scripting API
  *
- * Copyright (C) 2017-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2017-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,6 +21,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #ifndef HAVE_CONFIG_H
@@ -36,8 +38,6 @@ extern "C"
 #include "src/core/wee-util.h"
 #include "src/plugins/plugin.h"
 }
-
-#include "tests/tests.h"
 
 struct t_hook *api_hook_print = NULL;
 int api_tests_ok = 0;
@@ -89,8 +89,11 @@ TEST_GROUP(Scripts)
                 api_tests_errors++;
             else if (strstr (message, "TESTS END"))
                 api_tests_end++;
-            else if ((message[0] != '>') && (message[0] != ' '))
+            else if ((message[0] != '>') && (message[0] != ' ')
+                     && (strncmp (message, "## ", 3) != 0))
+            {
                 api_tests_other++;
+            }
         }
 
         return WEECHAT_RC_OK;
@@ -132,7 +135,7 @@ TEST(Scripts, API)
         { "ruby",       "rb"  },
         { "lua",        "lua" },
         { "tcl",        "tcl" },
-        { "scm",        "scm" },
+        { "guile",      "scm" },
         { "javascript", "js"  },
         { "php",        "php" },
         { NULL,         NULL  }
@@ -218,7 +221,7 @@ TEST(Scripts, API)
 
         /* load script (run tests) */
         snprintf (str_command, sizeof (str_command),
-                  "/script load -q %s/testapi.%s",
+                  "/script load -q %s/weechat_testapi.%s",
                   path_testapi_output_dir,
                   languages[i][1]);
         run_cmd (str_command);
@@ -228,7 +231,7 @@ TEST(Scripts, API)
 
         /* run tests */
         snprintf (str_command, sizeof (str_command),
-                  "/testapi.%s",
+                  "/weechat_testapi.%s",
                   languages[i][1]);
         run_cmd (str_command);
 
@@ -250,7 +253,7 @@ TEST(Scripts, API)
 
         /* unload script */
         snprintf (str_command, sizeof (str_command),
-                  "/script unload -q testapi.%s",
+                  "/script unload -q weechat_testapi.%s",
                   languages[i][1]);
         run_cmd (str_command);
 

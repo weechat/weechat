@@ -1,7 +1,7 @@
 /*
  * alias.c - alias plugin for WeeChat: command aliases
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -36,7 +36,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Alias commands"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(11000);
+WEECHAT_PLUGIN_PRIORITY(ALIAS_PLUGIN_PRIORITY);
 
 #define ALIAS_IS_ARG_NUMBER(number) ((number >= '1') && (number <= '9'))
 
@@ -84,10 +84,13 @@ alias_search (const char *alias_name)
 {
     struct t_alias *ptr_alias;
 
+    if (!alias_name)
+        return NULL;
+
     for (ptr_alias = alias_list; ptr_alias;
          ptr_alias = ptr_alias->next_alias)
     {
-        if (weechat_strcasecmp (alias_name, ptr_alias->name) == 0)
+        if (strcmp (alias_name, ptr_alias->name) == 0)
             return ptr_alias;
     }
     return NULL;
@@ -442,77 +445,6 @@ alias_cb (const void *pointer, void *data,
 }
 
 /*
- * Frees an alias and remove it from list.
- */
-
-void
-alias_free (struct t_alias *alias)
-{
-    struct t_alias *new_alias_list;
-
-    if (!alias)
-        return;
-
-    /* remove alias from list */
-    if (last_alias == alias)
-        last_alias = alias->prev_alias;
-    if (alias->prev_alias)
-    {
-        (alias->prev_alias)->next_alias = alias->next_alias;
-        new_alias_list = alias_list;
-    }
-    else
-        new_alias_list = alias->next_alias;
-    if (alias->next_alias)
-        (alias->next_alias)->prev_alias = alias->prev_alias;
-
-    /* free data */
-    if (alias->hook)
-        weechat_unhook (alias->hook);
-    if (alias->name)
-        free (alias->name);
-    if (alias->command)
-        free (alias->command);
-    if (alias->completion)
-        free (alias->completion);
-    free (alias);
-
-    alias_list = new_alias_list;
-}
-
-/*
- * Frees all aliases.
- */
-
-void
-alias_free_all ()
-{
-    while (alias_list)
-    {
-        alias_free (alias_list);
-    }
-}
-
-/*
- * Searches for position of alias (to keep aliases sorted by name).
- */
-
-struct t_alias *
-alias_find_pos (const char *name)
-{
-    struct t_alias *ptr_alias;
-
-    for (ptr_alias = alias_list; ptr_alias; ptr_alias = ptr_alias->next_alias)
-    {
-        if (weechat_strcasecmp (name, ptr_alias->name) < 0)
-            return ptr_alias;
-    }
-
-    /* position not found (we will add to the end of list) */
-    return NULL;
-}
-
-/*
  * Hooks command for an alias.
  */
 
@@ -521,6 +453,12 @@ alias_hook_command (struct t_alias *alias)
 {
     char *str_priority_name, *str_completion;
     int length;
+
+    if (alias->hook)
+    {
+        weechat_unhook (alias->hook);
+        alias->hook = NULL;
+    }
 
     /*
      * build string with priority and name: the alias priority is 2000, which
@@ -563,6 +501,164 @@ alias_hook_command (struct t_alias *alias)
 }
 
 /*
+ * Searches for position of alias (to keep aliases sorted by name).
+ */
+
+struct t_alias *
+alias_find_pos (const char *name)
+{
+    struct t_alias *ptr_alias;
+
+    for (ptr_alias = alias_list; ptr_alias; ptr_alias = ptr_alias->next_alias)
+    {
+        if (weechat_strcmp (name, ptr_alias->name) < 0)
+            return ptr_alias;
+    }
+
+    /* position not found (we will add to the end of list) */
+    return NULL;
+}
+
+/*
+ * Inserts alias in list of aliases.
+ */
+
+void
+alias_insert (struct t_alias *alias)
+{
+    struct t_alias *pos_alias;
+
+    if (alias_list)
+    {
+        pos_alias = alias_find_pos (alias->name);
+        if (pos_alias)
+        {
+            /* insert alias into the list (before alias found) */
+            alias->prev_alias = pos_alias->prev_alias;
+            alias->next_alias = pos_alias;
+            if (pos_alias->prev_alias)
+                (pos_alias->prev_alias)->next_alias = alias;
+            else
+                alias_list = alias;
+            pos_alias->prev_alias = alias;
+        }
+        else
+        {
+            /* add alias to end of list */
+            alias->prev_alias = last_alias;
+            alias->next_alias = NULL;
+            last_alias->next_alias = alias;
+            last_alias = alias;
+        }
+    }
+    else
+    {
+        alias->prev_alias = NULL;
+        alias->next_alias = NULL;
+        alias_list = alias;
+        last_alias = alias;
+    }
+}
+
+/*
+ * Removes alias from list of aliases.
+ */
+
+void
+alias_remove_from_list (struct t_alias *alias)
+{
+    if (last_alias == alias)
+        last_alias = alias->prev_alias;
+    if (alias->prev_alias)
+        (alias->prev_alias)->next_alias = alias->next_alias;
+    else
+        alias_list = alias->next_alias;
+    if (alias->next_alias)
+        (alias->next_alias)->prev_alias = alias->prev_alias;
+}
+
+/*
+ * Renames an alias.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+alias_rename (struct t_alias *alias, const char *new_name)
+{
+    struct t_config_option *ptr_option;
+
+    if (!alias || !new_name || !new_name[0] || alias_search (new_name))
+        return 0;
+
+    /* rename options */
+    ptr_option = weechat_config_search_option (
+        alias_config_file,
+        alias_config_section_cmd,
+        alias->name);
+    if (ptr_option)
+        weechat_config_option_rename (ptr_option, new_name);
+    ptr_option = weechat_config_search_option (
+        alias_config_file,
+        alias_config_section_completion,
+        alias->name);
+    if (ptr_option)
+        weechat_config_option_rename (ptr_option, new_name);
+
+    /* rename alias */
+    free (alias->name);
+    alias->name = strdup (new_name);
+
+    /* hook command again */
+    alias_hook_command (alias);
+
+    /* move alias in list (to keep list sorted) */
+    alias_remove_from_list (alias);
+    alias_insert (alias);
+
+    return 1;
+}
+
+/*
+ * Frees an alias and remove it from list.
+ */
+
+void
+alias_free (struct t_alias *alias)
+{
+    if (!alias)
+        return;
+
+    alias_remove_from_list (alias);
+
+    /* free data */
+    if (alias->hook)
+        weechat_unhook (alias->hook);
+    if (alias->name)
+        free (alias->name);
+    if (alias->command)
+        free (alias->command);
+    if (alias->completion)
+        free (alias->completion);
+    free (alias);
+}
+
+/*
+ * Frees all aliases.
+ */
+
+void
+alias_free_all ()
+{
+    while (alias_list)
+    {
+        alias_free (alias_list);
+    }
+}
+
+/*
  * Updates completion for an alias.
  */
 
@@ -574,9 +670,7 @@ alias_update_completion (struct t_alias *alias, const char *completion)
         free (alias->completion);
     alias->completion = (completion) ? strdup (completion) : NULL;
 
-    /* unhook and hook again command, with new completion */
-    weechat_unhook (alias->hook);
-    alias->hook = NULL;
+    /* hook command again, with new completion */
     alias_hook_command (alias);
 }
 
@@ -616,7 +710,7 @@ alias_name_valid (const char *name)
 struct t_alias *
 alias_new (const char *name, const char *command, const char *completion)
 {
-    struct t_alias *new_alias, *ptr_alias, *pos_alias;
+    struct t_alias *new_alias, *ptr_alias;
 
     if (!alias_name_valid (name))
     {
@@ -650,36 +744,7 @@ alias_new (const char *name, const char *command, const char *completion)
 
         alias_hook_command (new_alias);
 
-        if (alias_list)
-        {
-            pos_alias = alias_find_pos (name);
-            if (pos_alias)
-            {
-                /* insert alias into the list (before alias found) */
-                new_alias->prev_alias = pos_alias->prev_alias;
-                new_alias->next_alias = pos_alias;
-                if (pos_alias->prev_alias)
-                    (pos_alias->prev_alias)->next_alias = new_alias;
-                else
-                    alias_list = new_alias;
-                pos_alias->prev_alias = new_alias;
-            }
-            else
-            {
-                /* add alias to end of list */
-                new_alias->prev_alias = last_alias;
-                new_alias->next_alias = NULL;
-                last_alias->next_alias = new_alias;
-                last_alias = new_alias;
-            }
-        }
-        else
-        {
-            new_alias->prev_alias = NULL;
-            new_alias->next_alias = NULL;
-            alias_list = new_alias;
-            last_alias = new_alias;
-        }
+        alias_insert (new_alias);
     }
 
     return new_alias;

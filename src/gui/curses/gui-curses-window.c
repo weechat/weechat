@@ -1,7 +1,7 @@
 /*
  * gui-curses-window.c - window display functions for Curses GUI
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -48,7 +48,6 @@
 #include "../gui-color.h"
 #include "../gui-cursor.h"
 #include "../gui-hotlist.h"
-#include "../gui-input.h"
 #include "../gui-key.h"
 #include "../gui-layout.h"
 #include "../gui-line.h"
@@ -396,6 +395,14 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
 
         if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
         {
+            if (fg & GUI_COLOR_EXTENDED_BLINK_FLAG)
+                gui_window_set_color_style (window, A_BLINK);
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+                gui_window_remove_color_style (window, A_BLINK);
+            if (fg & GUI_COLOR_EXTENDED_DIM_FLAG)
+                gui_window_set_color_style (window, A_DIM);
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+                gui_window_remove_color_style (window, A_DIM);
             if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
                 gui_window_set_color_style (window, A_BOLD);
             else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
@@ -483,6 +490,14 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
     {
         if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
         {
+            if (fg & GUI_COLOR_EXTENDED_BLINK_FLAG)
+                gui_window_set_color_style (window, A_BLINK);
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+                gui_window_remove_color_style (window, A_BLINK);
+            if (fg & GUI_COLOR_EXTENDED_DIM_FLAG)
+                gui_window_set_color_style (window, A_DIM);
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+                gui_window_remove_color_style (window, A_DIM);
             if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
                 gui_window_set_color_style (window, A_BOLD);
             else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
@@ -587,6 +602,10 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
         ptr_attrs = &attrs;
         ptr_pair = &pair;
         wattr_get (window, ptr_attrs, ptr_pair, NULL);
+        if (config_emphasized_attributes & GUI_COLOR_EXTENDED_BLINK_FLAG)
+            attrs ^= A_BLINK;
+        if (config_emphasized_attributes & GUI_COLOR_EXTENDED_DIM_FLAG)
+            attrs ^= A_DIM;
         if (config_emphasized_attributes & GUI_COLOR_EXTENDED_BOLD_FLAG)
             attrs ^= A_BOLD;
         if (config_emphasized_attributes & GUI_COLOR_EXTENDED_REVERSE_FLAG)
@@ -947,6 +966,16 @@ gui_window_string_apply_color_set_attr (unsigned char **string, WINDOW *window)
 
     switch (ptr_string[0])
     {
+        case GUI_COLOR_ATTR_BLINK_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_set_color_style (window, A_BLINK);
+            break;
+        case GUI_COLOR_ATTR_DIM_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_set_color_style (window, A_DIM);
+            break;
         case GUI_COLOR_ATTR_BOLD_CHAR:
             ptr_string++;
             if (window)
@@ -988,6 +1017,16 @@ gui_window_string_apply_color_remove_attr (unsigned char **string, WINDOW *windo
 
     switch (ptr_string[0])
     {
+        case GUI_COLOR_ATTR_BLINK_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_remove_color_style (window, A_BLINK);
+            break;
+        case GUI_COLOR_ATTR_DIM_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_remove_color_style (window, A_DIM);
+            break;
         case GUI_COLOR_ATTR_BOLD_CHAR:
             ptr_string++;
             if (window)
@@ -1325,7 +1364,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         window->buffer->lines->last_read_line = window->buffer->lines->last_line;
     }
 
-    gui_input_move_to_buffer (old_buffer, window->buffer);
+    gui_buffer_input_move_to_buffer (old_buffer, window->buffer);
 
     if (old_buffer != buffer)
     {
@@ -1367,7 +1406,7 @@ gui_window_switch (struct t_gui_window *window)
 
     old_window->refresh_needed = 1;
 
-    gui_input_move_to_buffer (old_window->buffer, window->buffer);
+    gui_buffer_input_move_to_buffer (old_window->buffer, window->buffer);
 
     (void) hook_signal_send ("window_switch",
                              WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
@@ -1381,17 +1420,20 @@ void
 gui_window_page_up (struct t_gui_window *window)
 {
     char scroll[32];
-    int num_lines;
+    int height, num_lines;
 
     if (!gui_init_ok)
         return;
 
-    num_lines = ((window->win_chat_height - 1) *
+    height = (gui_window_bare_display) ?
+        gui_term_lines : window->win_chat_height;
+
+    num_lines = ((height - 1) *
                  CONFIG_INTEGER(config_look_scroll_page_percent)) / 100;
     if (num_lines < 1)
         num_lines = 1;
-    else if (num_lines > window->win_chat_height - 1)
-        num_lines = window->win_chat_height - 1;
+    else if (num_lines > height - 1)
+        num_lines = height - 1;
 
     switch (window->buffer->type)
     {
@@ -1402,7 +1444,7 @@ gui_window_page_up (struct t_gui_window *window)
                                               &window->scroll->start_line_pos,
                                               (window->scroll->start_line) ?
                                               (-1) * (num_lines) :
-                                              (-1) * (num_lines + window->win_chat_height - 1));
+                                              (-1) * (num_lines + height - 1));
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
@@ -1429,18 +1471,21 @@ void
 gui_window_page_down (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
-    int line_pos, num_lines;
+    int height, num_lines, line_pos;
     char scroll[32];
 
     if (!gui_init_ok)
         return;
 
-    num_lines = ((window->win_chat_height - 1) *
+    height = (gui_window_bare_display) ?
+        gui_term_lines : window->win_chat_height;
+
+    num_lines = ((height - 1) *
                  CONFIG_INTEGER(config_look_scroll_page_percent)) / 100;
     if (num_lines < 1)
         num_lines = 1;
-    else if (num_lines > window->win_chat_height - 1)
-        num_lines = window->win_chat_height - 1;
+    else if (num_lines > height - 1)
+        num_lines = height - 1;
 
     switch (window->buffer->type)
     {
@@ -1456,7 +1501,7 @@ gui_window_page_down (struct t_gui_window *window)
                 ptr_line = window->scroll->start_line;
                 line_pos = window->scroll->start_line_pos;
                 gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
-                                              window->win_chat_height);
+                                              height);
                 if (!ptr_line)
                 {
                     window->scroll->start_line = NULL;
@@ -1484,10 +1529,14 @@ gui_window_page_down (struct t_gui_window *window)
 void
 gui_window_scroll_up (struct t_gui_window *window)
 {
+    int height;
     char scroll[32];
 
     if (!gui_init_ok)
         return;
+
+    height = (gui_window_bare_display) ?
+        gui_term_lines : window->win_chat_height;
 
     switch (window->buffer->type)
     {
@@ -1498,8 +1547,8 @@ gui_window_scroll_up (struct t_gui_window *window)
                                               &window->scroll->start_line_pos,
                                               (window->scroll->start_line) ?
                                               (-1) * CONFIG_INTEGER(config_look_scroll_amount) :
-                                              (-1) * ( (window->win_chat_height - 1) +
-                                                       CONFIG_INTEGER(config_look_scroll_amount)));
+                                              (-1) * ((height - 1) +
+                                                      CONFIG_INTEGER(config_look_scroll_amount)));
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
@@ -1526,11 +1575,14 @@ void
 gui_window_scroll_down (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
-    int line_pos;
+    int height, line_pos;
     char scroll[32];
 
     if (!gui_init_ok)
         return;
+
+    height = (gui_window_bare_display) ?
+        gui_term_lines : window->win_chat_height;
 
     switch (window->buffer->type)
     {
@@ -1546,7 +1598,7 @@ gui_window_scroll_down (struct t_gui_window *window)
                 ptr_line = window->scroll->start_line;
                 line_pos = window->scroll->start_line_pos;
                 gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
-                                              window->win_chat_height);
+                                              height);
 
                 if (!ptr_line)
                 {
@@ -1609,10 +1661,14 @@ gui_window_scroll_top (struct t_gui_window *window)
 void
 gui_window_scroll_bottom (struct t_gui_window *window)
 {
+    int height;
     char scroll[32];
 
     if (!gui_init_ok)
         return;
+
+    height = (gui_window_bare_display) ?
+        gui_term_lines : window->win_chat_height;
 
     switch (window->buffer->type)
     {
@@ -1623,10 +1679,9 @@ gui_window_scroll_bottom (struct t_gui_window *window)
             break;
         case GUI_BUFFER_TYPE_FREE:
             window->scroll->start_line = NULL;
-            if (window->buffer->lines->lines_count > window->win_chat_height)
+            if (window->buffer->lines->lines_count > height)
             {
-                snprintf (scroll, sizeof (scroll), "--%d",
-                          window->win_chat_height - 1);
+                snprintf (scroll, sizeof (scroll), "--%d", height - 1);
                 gui_window_scroll (window, scroll);
             }
             else
@@ -2406,7 +2461,8 @@ gui_window_swap (struct t_gui_window *window, int direction)
 /*
  * Called when terminal size is modified.
  *
- * Argument full_refresh == 1 when Ctrl+L is pressed, or if terminal is resized.
+ * Argument full_refresh == 1 when ctrl-l is pressed, or if terminal is
+ * resized.
  */
 
 void
@@ -2418,6 +2474,10 @@ gui_window_refresh_screen (int full_refresh)
         refresh ();
         gui_window_read_terminal_size ();
         refresh ();
+        gui_window_set_title (
+            (CONFIG_STRING(config_look_window_title)
+            && CONFIG_STRING(config_look_window_title)[0]) ?
+            CONFIG_STRING(config_look_window_title) : NULL);
     }
 
     gui_window_refresh_windows ();
@@ -2513,7 +2573,7 @@ gui_window_set_title (const char *title)
         return;
 
     new_title = (title && title[0]) ?
-        eval_expression (title, NULL, NULL, NULL) : strdup ("Terminal");
+        eval_expression (title, NULL, NULL, NULL) : NULL;
     if (!new_title)
         return;
 

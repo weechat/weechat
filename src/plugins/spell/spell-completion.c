@@ -1,7 +1,7 @@
 /*
  * spell-completion.c - completion for spell checker commands
  *
- * Copyright (C) 2013-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2013-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -115,6 +115,9 @@ spell_completion_dicts_cb (const void *pointer, void *data,
         weechat_completion_list_add (completion, dict->name,
                                      0, WEECHAT_LIST_POS_SORT);
     }
+
+    weechat_completion_list_add (completion, "-",
+                                 0, WEECHAT_LIST_POS_BEGINNING);
 
     delete_aspell_dict_info_enumeration (elements);
     delete_aspell_config (config);

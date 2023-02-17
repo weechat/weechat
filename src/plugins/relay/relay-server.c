@@ -1,7 +1,7 @@
 /*
  * relay-server.c - server functions for relay plugin
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -170,6 +170,9 @@ relay_server_search (const char *protocol_and_args)
 {
     struct t_relay_server *ptr_server;
 
+    if (!protocol_and_args)
+        return NULL;
+
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -212,6 +215,9 @@ struct t_relay_server *
 relay_server_search_path (const char *path)
 {
     struct t_relay_server *ptr_server;
+
+    if (!path)
+        return NULL;
 
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)

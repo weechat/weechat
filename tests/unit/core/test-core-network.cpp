@@ -1,7 +1,7 @@
 /*
  * test-core-network.cpp - test network functions
  *
- * Copyright (C) 2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2021-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

@@ -1,7 +1,7 @@
 /*
  * wee-signal.c - signal functions
  *
- * Copyright (C) 2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2021-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -202,14 +202,14 @@ signal_send_to_weechat (int signal_index)
 void
 signal_exec_command (int signal_index, const char *command)
 {
-    char str_signal[32], **commands, **ptr_command, *command_eval;
+    char str_signal[32], *signal_upper, **commands, **ptr_command;
+    char *command_eval;
 
     if (!command || !command[0])
         return;
 
     snprintf (str_signal, sizeof (str_signal),
               "sig%s", signal_list[signal_index].name);
-    string_toupper (str_signal);
 
     commands = string_split_command (command, ';');
     if (commands)
@@ -219,8 +219,12 @@ signal_exec_command (int signal_index, const char *command)
             command_eval = eval_expression (*ptr_command, NULL, NULL, NULL);
             if (command_eval)
             {
+                signal_upper = string_toupper (str_signal);
                 log_printf ("Signal %s received, executing command: \"%s\"",
-                            str_signal, command_eval);
+                            (signal_upper) ? signal_upper : str_signal,
+                            command_eval);
+                if (signal_upper)
+                    free (signal_upper);
                 (void) input_data (gui_buffer_search_main (),
                                    command_eval, NULL);
                 free (command_eval);

@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006-2017 Adam Saponara <as@php.net>
- * Copyright (C) 2017-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2017-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -36,6 +36,8 @@
 
 #define weechat_plugin weechat_php_plugin
 #define PHP_PLUGIN_NAME "php"
+#define PHP_PLUGIN_PRIORITY 4030
+
 #define PHP_WEECHAT_VERSION "0.1"
 
 #define PHP_CURRENT_SCRIPT_NAME ((php_current_script) ? php_current_script->name : "-")

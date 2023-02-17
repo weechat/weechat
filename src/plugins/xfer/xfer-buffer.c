@@ -1,7 +1,7 @@
 /*
  * xfer-buffer.c - display xfer list on xfer buffer
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -273,7 +273,7 @@ xfer_buffer_input_cb (const void *pointer, void *data,
     xfer = xfer_search_by_number (xfer_buffer_selected_line);
 
     /* accept xfer */
-    if (weechat_strcasecmp (input_data, "a") == 0)
+    if (weechat_strcmp (input_data, "a") == 0)
     {
         if (xfer && XFER_IS_RECV(xfer->type)
             && (xfer->status == XFER_STATUS_WAITING))
@@ -282,7 +282,7 @@ xfer_buffer_input_cb (const void *pointer, void *data,
         }
     }
     /* cancel xfer */
-    else if (weechat_strcasecmp (input_data, "c") == 0)
+    else if (weechat_strcmp (input_data, "c") == 0)
     {
         if (xfer && !XFER_HAS_ENDED(xfer->status))
         {
@@ -291,7 +291,7 @@ xfer_buffer_input_cb (const void *pointer, void *data,
         }
     }
     /* purge old xfer */
-    else if (weechat_strcasecmp (input_data, "p") == 0)
+    else if (weechat_strcmp (input_data, "p") == 0)
     {
         ptr_xfer = xfer_list;
         while (ptr_xfer)
@@ -304,12 +304,12 @@ xfer_buffer_input_cb (const void *pointer, void *data,
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
     }
     /* quit xfer buffer (close it) */
-    else if (weechat_strcasecmp (input_data, "q") == 0)
+    else if (weechat_strcmp (input_data, "q") == 0)
     {
         weechat_buffer_close (buffer);
     }
     /* remove xfer */
-    else if (weechat_strcasecmp (input_data, "r") == 0)
+    else if (weechat_strcmp (input_data, "r") == 0)
     {
         if (xfer && XFER_HAS_ENDED(xfer->status))
         {

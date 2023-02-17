@@ -1,7 +1,7 @@
 /*
  * wee-hook-print.c - WeeChat print hook
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -31,9 +31,42 @@
 #include "../wee-infolist.h"
 #include "../wee-log.h"
 #include "../wee-string.h"
+#include "../../gui/gui-buffer.h"
 #include "../../gui/gui-color.h"
 #include "../../gui/gui-line.h"
 
+
+/*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_print_get_description (struct t_hook *hook)
+{
+    char str_desc[1024];
+
+    if (HOOK_PRINT(hook, buffer))
+    {
+        snprintf (str_desc, sizeof (str_desc),
+                  "buffer: %s, message: %s%s%s",
+                  HOOK_PRINT(hook, buffer)->name,
+                  (HOOK_PRINT(hook, message)) ? "\"" : "",
+                  (HOOK_PRINT(hook, message)) ? HOOK_PRINT(hook, message) : "(none)",
+                  (HOOK_PRINT(hook, message)) ? "\"" : "");
+    }
+    else
+    {
+        snprintf (str_desc, sizeof (str_desc),
+                  "message: %s%s%s",
+                  (HOOK_PRINT(hook, message)) ? "\"" : "",
+                  (HOOK_PRINT(hook, message)) ? HOOK_PRINT(hook, message) : "(none)",
+                  (HOOK_PRINT(hook, message)) ? "\"" : "");
+    }
+
+    return strdup (str_desc);
+}
 
 /*
  * Hooks a message printed by WeeChat.
@@ -93,7 +126,7 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
     if (!weechat_hooks[HOOK_TYPE_PRINT])
         return;
 
-    if (!line->data->message || !line->data->message[0])
+    if (!line->data->message)
         return;
 
     prefix_no_color = (line->data->prefix) ?

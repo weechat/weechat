@@ -200,10 +200,17 @@ _command_ オプションに複数のコマンドを含める場合は `;` (セ�
 /set irc.server.libera.autojoin "#channel1,#channel2"
 ----
 
-[TIP]
-オプションの名前と値を補完するには kbd:[Tab] キーを使います。さらに
-kbd:[Shift+Tab] キーを使えば部分的に補完することも可能です
-(これは オプション名などの長い単語を補完する際に役立ちます)。
+// TRANSLATION MISSING
+The `/autojoin` command lets you configure the _autojoin_ option easily
+(see `/help autojoin`).
+
+// TRANSLATION MISSING
+You can also configure WeeChat to automatically update the _autojoin_ option
+when you join or leave channels:
+
+----
+/set irc.server_default.autojoin_dynamic on
+----
 
 サーバオプションの代わりにデフォルトの値を使用する、例えばデフォルトのニックネーム
 (irc.server_default.nicks) を使用する場合:
@@ -218,6 +225,11 @@ kbd:[Shift+Tab] キーを使えば部分的に補完することも可能です
 ----
 /set irc.server.libera.xxx value
 ----
+
+[TIP]
+オプションの名前と値を補完するには kbd:[Tab] キーを使います。さらに
+kbd:[Shift+Tab] キーを使えば部分的に補完することも可能です
+(これは オプション名などの長い単語を補完する際に役立ちます)。
 
 // TRANSLATION MISSING
 [[connect_to_irc_server]]
@@ -376,13 +388,16 @@ WeeChat では多くの外部スクリプト (貢献者の作った)
 
 より詳しい情報を参照するには `/help script` を使ってください。
 
-スクリプトの一覧を参照するには WeeChat から `/script` を実行するか、以下の URL にアクセスしてください:
-https://weechat.org/scripts
+// TRANSLATION MISSING
+A list of scripts is available in WeeChat with `/script` or on
+https://weechat.org/scripts/[this page ^↗^,window=_blank].
 
 [[more_doc]]
 == 詳しいドキュメント情報
 
-FAQ やその他の質問に関するドキュメントはこちらで参照できます:
-https://weechat.org/doc
+// TRANSLATION MISSING
+You can now use WeeChat and read
+https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+for any other questions.
 
 WeeChat をお楽しみください!

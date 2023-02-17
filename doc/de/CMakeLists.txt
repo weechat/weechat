@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -106,18 +106,5 @@ if(ENABLE_DOC)
   )
   add_custom_target(doc-quickstart-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.de.html)
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.de.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
-
-  # tester's guide
-  add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.de.html
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_tester.de.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.de.adoc
-    DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.de.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Building weechat_tester.de.html"
-  )
-  add_custom_target(doc-tester-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.de.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.de.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
 endif()

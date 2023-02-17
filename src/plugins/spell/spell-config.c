@@ -2,7 +2,7 @@
  * spell-config.c - spell checker configuration options (file spell.conf)
  *
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
- * Copyright (C) 2006-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2006-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -255,7 +255,9 @@ spell_config_dict_create_option (const void *pointer, void *data,
                 ptr_option = weechat_config_new_option (
                     config_file, section,
                     option_name, "string",
-                    _("comma separated list of dictionaries to use on this buffer"),
+                    _("comma separated list of dictionaries to use on this "
+                      "buffer (special value \"-\" disables spell checking "
+                      "on this buffer)"),
                     NULL, 0, 0, "", value, 0,
                     NULL, NULL, NULL,
                     &spell_config_dict_change, NULL, NULL,
@@ -439,7 +441,7 @@ spell_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    spell_config_file = weechat_config_new (SPELL_CONFIG_NAME,
+    spell_config_file = weechat_config_new (SPELL_CONFIG_PRIO_NAME,
                                             NULL, NULL, NULL);
     if (!spell_config_file)
         return 0;

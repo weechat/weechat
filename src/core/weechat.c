@@ -17,7 +17,7 @@
  *
  * weechat.c - WeeChat main functions
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -174,7 +174,7 @@ weechat_display_usage ()
           "by colons (in this order: config, data, cache, runtime)\n"
           "                           (environment variable WEECHAT_HOME is "
           "read if this option is not given)\n"
-          "  -t, --temp-dir           create a temporary WeeChat home"
+          "  -t, --temp-dir           create a temporary WeeChat home "
           "directory and delete it on exit\n"
           "                           (incompatible with option \"-d\")\n"
           "  -h, --help               display this help\n"
@@ -391,7 +391,7 @@ weechat_startup_message ()
     {
         string_fprintf (stdout,
                         _("WeeChat is running in headless mode "
-                          "(Ctrl-C to quit)."));
+                          "(ctrl-c to quit)."));
         string_fprintf (stdout, "\n");
     }
 
@@ -433,7 +433,7 @@ weechat_startup_message ()
               "If you are discovering WeeChat, it is recommended to read at "
               "least the quickstart guide, and the user's guide if you have "
               "some time; they explain main WeeChat concepts.\n"
-              "All WeeChat docs are available at: https://weechat.org/doc\n"
+              "All WeeChat docs are available at: https://weechat.org/doc/\n"
               "\n"
               "Moreover, there is inline help with /help on all commands and "
               "options (use Tab key to complete the name).\n"

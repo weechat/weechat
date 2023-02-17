@@ -1,7 +1,7 @@
 /*
  * wee-hook-line.c - WeeChat line hook
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -38,6 +38,26 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_line_get_description (struct t_hook *hook)
+{
+    char str_desc[1024];
+
+    snprintf (str_desc, sizeof (str_desc),
+              "buffer type: %d, %d buffers, %d tags",
+              HOOK_LINE(hook, buffer_type),
+              HOOK_LINE(hook, num_buffers),
+              HOOK_LINE(hook, tags_count));
+
+    return strdup (str_desc);
+}
+
+/*
  * Hooks a line added in a buffer.
  *
  * Returns pointer to new hook, NULL if error.
@@ -51,6 +71,8 @@ hook_line (struct t_weechat_plugin *plugin, const char *buffer_type,
 {
     struct t_hook *new_hook;
     struct t_hook_line *new_hook_line;
+    int priority;
+    const char *ptr_buffer_type;
 
     if (!callback)
         return NULL;
@@ -65,17 +87,19 @@ hook_line (struct t_weechat_plugin *plugin, const char *buffer_type,
         return NULL;
     }
 
-    hook_init_data (new_hook, plugin, HOOK_TYPE_LINE, HOOK_PRIORITY_DEFAULT,
+    string_get_priority_and_name (buffer_type, &priority, &ptr_buffer_type,
+                                  HOOK_PRIORITY_DEFAULT);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_LINE, priority,
                     callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_line;
     new_hook_line->callback = callback;
-    if (!buffer_type || !buffer_type[0])
-        new_hook_line->buffer_type = GUI_BUFFER_TYPE_FORMATTED;
-    else if (strcmp (buffer_type, "*") == 0)
+    if (!ptr_buffer_type || !ptr_buffer_type[0])
+        new_hook_line->buffer_type = GUI_BUFFER_TYPE_DEFAULT;
+    else if (strcmp (ptr_buffer_type, "*") == 0)
         new_hook_line->buffer_type = -1;
     else
-        new_hook_line->buffer_type = gui_buffer_search_type (buffer_type);
+        new_hook_line->buffer_type = gui_buffer_search_type (ptr_buffer_type);
     new_hook_line->buffers = string_split (
         (buffer_name && buffer_name[0]) ? buffer_name : "*",
         ",",
@@ -146,8 +170,8 @@ hook_line_exec (struct t_gui_line *line)
             HASHTABLE_SET_TIME("date_printed", line->data->date_printed);
             HASHTABLE_SET_STR_NOT_NULL("str_time", line->data->str_time);
             HASHTABLE_SET_INT("tags_count", line->data->tags_count);
-            str_tags = string_build_with_split_string (
-                (const char **)line->data->tags_array, ",");
+            str_tags = string_rebuild_split_string (
+                (const char **)line->data->tags_array, ",", 0, -1);
             HASHTABLE_SET_STR_NOT_NULL("tags", str_tags);
             if (str_tags)
                 free (str_tags);

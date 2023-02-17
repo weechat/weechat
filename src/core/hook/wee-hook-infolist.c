@@ -1,7 +1,7 @@
 /*
  * wee-hook-infolist.c - WeeChat infolist hook
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -32,6 +32,18 @@
 #include "../wee-log.h"
 #include "../wee-string.h"
 
+
+/*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_infolist_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_INFOLIST(hook, infolist_name));
+}
 
 /*
  * Hooks an infolist.
@@ -65,7 +77,8 @@ hook_infolist (struct t_weechat_plugin *plugin, const char *infolist_name,
         return NULL;
     }
 
-    hook_get_priority_and_name (infolist_name, &priority, &ptr_infolist_name);
+    string_get_priority_and_name (infolist_name, &priority, &ptr_infolist_name,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_INFOLIST, priority,
                     callback_pointer, callback_data);
 
@@ -110,8 +123,7 @@ hook_infolist_get (struct t_weechat_plugin *plugin, const char *infolist_name,
 
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (string_strcasecmp (HOOK_INFOLIST(ptr_hook, infolist_name),
-                                   infolist_name) == 0))
+            && (strcmp (HOOK_INFOLIST(ptr_hook, infolist_name), infolist_name) == 0))
         {
             ptr_hook->running = 1;
             value = (HOOK_INFOLIST(ptr_hook, callback))

@@ -1,7 +1,7 @@
 /*
  * gui-curses-chat.c - chat display functions for Curses GUI
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -56,11 +56,16 @@
 int
 gui_chat_get_real_width (struct t_gui_window *window)
 {
-    if ((window->win_chat_width > 1)
+    if (CONFIG_BOOLEAN(config_look_chat_space_right)
+        && (window->win_chat_width > 1)
         && (window->win_chat_x + window->win_chat_width < gui_window_get_width ()))
+    {
         return window->win_chat_width - 1;
+    }
     else
+    {
         return window->win_chat_width;
+    }
 }
 
 /*
@@ -292,6 +297,7 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
                             case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
                             case GUI_COLOR_BAR_START_ITEM:
                             case GUI_COLOR_BAR_START_LINE_ITEM:
+                            case GUI_COLOR_BAR_SPACER:
                                 string++;
                                 break;
                         }
@@ -372,8 +378,9 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                            int apply_style_inactive,
                            int nick_offline)
 {
-    char *next_char, *output, utf_char[16], *ptr_char;
-    int x, chars_displayed, display_char, size_on_screen;
+    const char *ptr_char;
+    char *output, utf_char[16], utf_char2[16];
+    int x, chars_displayed, display_char, size_on_screen, reverse_video;
 
     if (!simulate)
     {
@@ -394,18 +401,27 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
         if (!string)
             return chars_displayed;
 
-        next_char = (char *)utf8_next_char (string);
-        if (next_char)
+        utf8_strncpy (utf_char, string, 1);
+        if (utf_char[0])
         {
+            reverse_video = 0;
             ptr_char = utf_char;
-
-            memcpy (utf_char, string, next_char - string);
-            utf_char[next_char - string] = '\0';
-
-            if (!gui_chat_utf_char_valid (utf_char))
-                snprintf (utf_char, sizeof (utf_char), " ");
-            else if (utf_char[0] == '\t')
+            if (utf_char[0] == '\t')
+            {
+                /* expand tabulation with spaces */
                 ptr_char = config_tab_spaces;
+            }
+            else if (((unsigned char)utf_char[0]) < 32)
+            {
+                /*
+                 * display chars < 32 with letter/symbol
+                 * and set reverse video (if not already enabled)
+                 */
+                snprintf (utf_char, sizeof (utf_char), "%c",
+                          'A' + ((unsigned char)utf_char[0]) - 1);
+                reverse_video = (gui_window_current_color_attr & A_REVERSE) ?
+                    0 : 1;
+            }
 
             display_char = (window->buffer->type != GUI_BUFFER_TYPE_FREE)
                 || (x >= window->scroll->start_col);
@@ -416,30 +432,54 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
             {
                 return chars_displayed;
             }
-            if (display_char && (size_on_screen >= 0))
-            {
-                if (!simulate)
-                {
-                    output = string_iconv_from_internal (NULL, ptr_char);
-                    waddstr (GUI_WINDOW_OBJECTS(window)->win_chat,
-                             (output) ? output : ptr_char);
-                    if (output)
-                        free (output);
 
-                    if (gui_window_current_emphasis)
+            if (display_char)
+            {
+                while (ptr_char && ptr_char[0])
+                {
+                    utf8_strncpy (utf_char2, ptr_char, 1);
+                    size_on_screen = utf8_char_size_screen (utf_char2);
+                    if (size_on_screen >= 0)
                     {
-                        gui_window_emphasize (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                              x - window->scroll->start_col,
-                                              window->win_chat_cursor_y,
-                                              size_on_screen);
+                        if (!simulate)
+                        {
+                            output = string_iconv_from_internal (NULL, utf_char2);
+                            if (reverse_video)
+                            {
+                                wattron (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                         A_REVERSE);
+                            }
+                            waddstr (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                     (output) ? output : utf_char2);
+                            if (reverse_video)
+                            {
+                                wattroff (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                          A_REVERSE);
+                            }
+                            if (output)
+                                free (output);
+
+                            if (gui_window_current_emphasis)
+                            {
+                                gui_window_emphasize (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                      x - window->scroll->start_col,
+                                                      window->win_chat_cursor_y,
+                                                      size_on_screen);
+                            }
+                        }
+                        chars_displayed += size_on_screen;
+                        x += size_on_screen;
                     }
+                    ptr_char = utf8_next_char (ptr_char);
                 }
-                chars_displayed += size_on_screen;
             }
-            x += size_on_screen;
+            else
+            {
+                x += size_on_screen;
+            }
         }
 
-        string = next_char;
+        string = utf8_next_char (string);
     }
 
     return chars_displayed;
@@ -1421,7 +1461,10 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     if (line->data->message && line->data->message[0])
     {
         message_with_tags = (gui_chat_display_tags) ?
-            gui_chat_build_string_message_tags (line) : NULL;
+            gui_line_build_string_message_tags (line->data->message,
+                                                line->data->tags_count,
+                                                line->data->tags_array,
+                                                1) : NULL;
         ptr_data = (message_with_tags) ?
             message_with_tags : line->data->message;
         message_with_search = NULL;
@@ -1639,7 +1682,10 @@ void
 gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
                          int y)
 {
-    char *ptr_data, *message_with_search;
+    char *ptr_data, *message_with_tags, *message_with_search;
+
+    message_with_tags = NULL;
+    message_with_search = NULL;
 
     /* reset color & style for a new line */
     gui_chat_reset_style (window, line, 0, 1,
@@ -1653,9 +1699,21 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
 
     gui_chat_clrtoeol (window);
 
-    /* emphasize text (if searching text) */
     ptr_data = line->data->message;
-    message_with_search = NULL;
+
+    /* add tags if debug of tags is enabled */
+    if (gui_chat_display_tags)
+    {
+        message_with_tags = gui_line_build_string_message_tags (
+            ptr_data,
+            line->data->tags_count,
+            line->data->tags_array,
+            1);
+        if (message_with_tags)
+            ptr_data = message_with_tags;
+    }
+
+    /* emphasize text (if searching text) */
     if ((window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
         && (window->buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE)
         && (!window->buffer->text_search_regex
@@ -1678,6 +1736,8 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
         gui_window_clrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
     }
 
+    if (message_with_tags)
+        free (message_with_tags);
     if (message_with_search)
         free (message_with_search);
 }
@@ -1784,6 +1844,13 @@ gui_chat_calculate_line_diff (struct t_gui_window *window,
             /* last line reached => consider we'll display all until the end */
             *line_pos = 0;
         }
+    }
+
+    /* special case for bare display */
+    if (gui_window_bare_display && backward && (*line_pos > 0))
+    {
+        *line = gui_line_get_next_displayed (*line);
+        *line_pos = 0;
     }
 }
 

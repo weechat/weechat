@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,6 +21,7 @@
 #define WEECHAT_PLUGIN_SCRIPT_CONFIG_H
 
 #define SCRIPT_CONFIG_NAME "script"
+#define SCRIPT_CONFIG_PRIO_NAME (TO_STR(SCRIPT_PLUGIN_PRIORITY) "|" SCRIPT_CONFIG_NAME)
 
 struct t_script_repo;
 

@@ -1,7 +1,7 @@
 /*
  * wee-hook-completion.c - WeeChat completion hook
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -35,6 +35,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_completion_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_COMPLETION(hook, completion_item));
+}
+
+/*
  * Hooks a completion.
  *
  * Returns pointer to new hook, NULL if error.
@@ -66,7 +78,9 @@ hook_completion (struct t_weechat_plugin *plugin, const char *completion_item,
         return NULL;
     }
 
-    hook_get_priority_and_name (completion_item, &priority, &ptr_completion_item);
+    string_get_priority_and_name (completion_item,
+                                  &priority, &ptr_completion_item,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_COMPLETION, priority,
                     callback_pointer, callback_data);
 
@@ -118,8 +132,7 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
 
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (string_strcasecmp (HOOK_COMPLETION(ptr_hook, completion_item),
-                                   item) == 0))
+            && (strcmp (HOOK_COMPLETION(ptr_hook, completion_item), item) == 0))
         {
             ptr_hook->running = 1;
             (void) (HOOK_COMPLETION(ptr_hook, callback))

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2021-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -22,6 +22,7 @@
 
 #define weechat_plugin weechat_typing_plugin
 #define TYPING_PLUGIN_NAME "typing"
+#define TYPING_PLUGIN_PRIORITY 8000
 
 struct t_typing
 {

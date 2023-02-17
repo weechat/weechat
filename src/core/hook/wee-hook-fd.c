@@ -1,7 +1,7 @@
 /*
  * wee-hook-fd.c - WeeChat fd hook
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -24,6 +24,7 @@
 #endif
 
 #include <stdlib.h>
+#include <string.h>
 #include <poll.h>
 #include <fcntl.h>
 #include <errno.h>
@@ -38,6 +39,28 @@
 struct pollfd *hook_fd_pollfd = NULL;  /* file descriptors for poll()       */
 int hook_fd_pollfd_count = 0;          /* number of file descriptors        */
 
+
+/*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_fd_get_description (struct t_hook *hook)
+{
+    char str_desc[512];
+
+    snprintf (str_desc, sizeof (str_desc),
+              "%d (flags: 0x%x:%s%s%s)",
+              HOOK_FD(hook, fd),
+              HOOK_FD(hook, flags),
+              (HOOK_FD(hook, flags) & HOOK_FD_FLAG_READ) ? " read" : "",
+              (HOOK_FD(hook, flags) & HOOK_FD_FLAG_WRITE) ? " write" : "",
+              (HOOK_FD(hook, flags) & HOOK_FD_FLAG_EXCEPTION) ? " exception" : "");
+
+    return strdup (str_desc);
+}
 
 /*
  * Searches for a fd hook in list.

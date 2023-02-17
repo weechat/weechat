@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
 # Copyright (C) 2007-2008 Julien Louis <ptitlouis@sysif.net>
 # Copyright (C) 2008-2009 Emmanuel Bouthenot <kolter@openics.org>
 #
@@ -105,7 +105,6 @@ option(ENABLE_SCRIPT        "Enable Script plugin (script manager)"       ON)
 option(ENABLE_SCRIPTS       "Enable script plugins (perl, python, ...)"   ON)
 option(ENABLE_PERL          "Enable Perl scripting language"              ON)
 option(ENABLE_PYTHON        "Enable Python scripting language"            ON)
-option(ENABLE_PYTHON2       "Use Python 2 instead of Python 3"            OFF)
 option(ENABLE_RUBY          "Enable Ruby scripting language"              ON)
 option(ENABLE_LUA           "Enable Lua scripting language"               ON)
 option(ENABLE_TCL           "Enable Tcl scripting language"               ON)
@@ -150,6 +149,8 @@ if(COMMAND cmake_policy)
 endif()
 
 add_definitions(-DHAVE_CONFIG_H)
+
+include(FindPkgConfig)
 
 include(CheckIncludeFiles)
 include(CheckFunctionExists)
@@ -196,7 +197,9 @@ list(APPEND EXTRA_LIBS gnutls)
 
 # Check for zlib
 find_package(ZLIB REQUIRED)
-add_definitions(-DHAVE_ZLIB)
+
+# Check for zstd
+pkg_check_modules(LIBZSTD REQUIRED libzstd)
 
 # Check for iconv
 find_package(Iconv)
@@ -238,13 +241,16 @@ if(ENABLE_TESTS)
   else()
     message(SEND_ERROR "CppUTest not found")
   endif()
+else()
+  enable_testing()
+  add_test(NAME notests COMMAND true)
 endif()
 
 configure_file(config.h.cmake config.h @ONLY)
 
 # set the git version in "config-git.h"
 add_custom_target(version_git ALL
-  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/tools/git-version.sh" "${CMAKE_CURRENT_SOURCE_DIR}" "${VERSION}" "config-git.h"
+  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/tools/set_git_version.sh" "${CMAKE_CURRENT_SOURCE_DIR}" "${VERSION}" "config-git.h"
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2021-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,6 +21,7 @@
 #define WEECHAT_PLUGIN_TYPING_CONFIG_H
 
 #define TYPING_CONFIG_NAME "typing"
+#define TYPING_CONFIG_PRIO_NAME (TO_STR(TYPING_PLUGIN_PRIORITY) "|" TYPING_CONFIG_NAME)
 
 extern struct t_config_option *typing_config_look_delay_purge_paused;
 extern struct t_config_option *typing_config_look_delay_purge_typing;

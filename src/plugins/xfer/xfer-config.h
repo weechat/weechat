@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,6 +21,7 @@
 #define WEECHAT_PLUGIN_XFER_CONFIG_H
 
 #define XFER_CONFIG_NAME "xfer"
+#define XFER_CONFIG_PRIO_NAME (TO_STR(XFER_PLUGIN_PRIORITY) "|" XFER_CONFIG_NAME)
 
 #define XFER_CONFIG_PROGRESS_BAR_MAX_SIZE 256
 

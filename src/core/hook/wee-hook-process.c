@@ -1,7 +1,7 @@
 /*
  * wee-hook-process.c - WeeChat process hook
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -48,6 +48,25 @@ int hook_process_pending = 0;          /* 1 if there are some process to    */
 
 void hook_process_run (struct t_hook *hook_process);
 
+
+/*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_process_get_description (struct t_hook *hook)
+{
+    char str_desc[1024];
+
+    snprintf (str_desc, sizeof (str_desc),
+              "command: \"%s\", child pid: %d",
+              HOOK_PROCESS(hook, command),
+              HOOK_PROCESS(hook, child_pid));
+
+    return strdup (str_desc);
+}
 
 /*
  * Hooks a process (using fork) with options in hashtable.

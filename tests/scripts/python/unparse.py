@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2017-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2017-2023 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ Unparse AST tree to generate scripts in all supported languages
 """
 
 # pylint: disable=too-many-lines,unnecessary-pass,useless-object-inheritance
+# pylint: disable=consider-using-f-string
+# pylint: disable=super-with-arguments
 
 from __future__ import print_function
 import argparse
@@ -30,10 +32,7 @@ import ast
 import inspect
 import os
 import select
-try:
-    from StringIO import StringIO  # python 2
-except ImportError:
-    from io import StringIO  # python 3
+from io import StringIO
 import sys
 
 sys.dont_write_bytecode = True
@@ -74,7 +73,7 @@ class UnparsePython(object):
         }
         self.unaryop = {
             'Invert': '~',
-            'Not': 'not',
+            'Not': 'not ',
             'UAdd': '+',
             'USub': '-',
         }
@@ -140,14 +139,14 @@ class UnparsePython(object):
             result.append(value)
         return result
 
-    def is_bool(self, node):  # pylint: disable=no-self-use
+    @staticmethod
+    def is_bool(node):
         """Check if the node is a boolean."""
         return isinstance(node, ast.Name) and node.id in ('False', 'True')
 
-    def is_number(self, node):  # pylint: disable=no-self-use
+    @staticmethod
+    def is_number(node):
         """Check if the node is a number."""
-        # in python 2, number -1 is Num(n=-1)
-        # in Python 3, number -1 is UnaryOp(op=USub(), operand=Num(n=1))
         return (isinstance(node, ast.Num) or
                 (isinstance(node, ast.UnaryOp) and
                  isinstance(node.op, (ast.UAdd, ast.USub))))
@@ -255,10 +254,23 @@ class UnparsePython(object):
                 self.unindent,
             )
 
+    def _ast_index(self, node):
+        """Add an AST Subscript in output."""
+        # note: deprecated since Python 3.9
+        self.add(node.value)
+
     def _ast_import(self, node):
         """Add an AST Import in output."""
         # ignore import
         pass
+
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            '[',
+            self.make_list(node.elts),
+            ']',
+        )
 
     def _ast_module(self, node):
         """Add an AST Module in output."""
@@ -287,7 +299,16 @@ class UnparsePython(object):
     def _ast_str(self, node):
         """Add an AST Str in output."""
         # note: deprecated since Python 3.8, replaced by ast.Constant
-        self.add(repr(node.s))
+        self._ast_constant(node)
+
+    def _ast_subscript(self, node):
+        """Add an AST Subscript in output."""
+        self.add(
+            node.value,
+            '[',
+            node.slice,
+            ']',
+        )
 
     def _ast_tuple(self, node):
         """Add an AST Tuple in output."""
@@ -301,11 +322,8 @@ class UnparsePython(object):
     def _ast_unaryop(self, node):
         """Add an AST UnaryOp in output."""
         self.add(
-            '(',
             self.unaryop[node.op.__class__.__name__],
-            ' ',
             node.operand,
-            ')',
         )
 
 
@@ -323,7 +341,7 @@ class UnparsePerl(UnparsePython):
         """Add an AST Assign in output."""
         self.add(
             self.fill,
-            (self.prefix, '%' if isinstance(node.value, ast.Dict) else '$'),
+            (self.prefix, '$'),
             [[target, ' = '] for target in node.targets],
             (self.prefix, None),
             node.value,
@@ -465,6 +483,14 @@ class UnparsePerl(UnparsePython):
                 '}',
             )
 
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            '(',
+            self.make_list(node.elts),
+            ')',
+        )
+
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
         pass
@@ -487,6 +513,17 @@ class UnparsePerl(UnparsePython):
         # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s.replace('$', '\\$').replace('@', '\\@'))
 
+    def _ast_subscript(self, node):
+        """Add an AST Subscript in output."""
+        self.add(
+            (self.prefix, '$'),
+            node.value,
+            (self.prefix, None),
+            '->{',
+            node.slice,
+            '}',
+        )
+
 
 class UnparseRuby(UnparsePython):
     """
@@ -505,6 +542,13 @@ class UnparseRuby(UnparsePython):
             '::' if node.attr.startswith('WEECHAT_') else '.',
             node.attr,
         )
+
+    def _ast_constant(self, node):
+        """Add an AST Constant in output."""
+        if isinstance(node.value, str):
+            self.add('"%s"' % node.s.replace('#{', '\\#{'))
+        else:
+            self.add(repr(node.s))
 
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
@@ -556,6 +600,14 @@ class UnparseRuby(UnparsePython):
                 self.fill,
                 'end',
             )
+
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            'Array[',
+            self.make_list(node.elts),
+            ']',
+        )
 
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
@@ -652,6 +704,14 @@ class UnparseLua(UnparsePython):
                 'end',
             )
 
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            '{',
+            self.make_list(node.elts),
+            '}',
+        )
+
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
         pass
@@ -673,14 +733,15 @@ class UnparseTcl(UnparsePython):
 
     def _ast_assign(self, node):
         """Add an AST Assign in output."""
+        exclude_types = (ast.Dict, ast.List, ast.Str, ast.Subscript)
         self.add(
             self.fill,
             'set ',
             node.targets[0],
             ' ',
-            '[' if not isinstance(node.value, ast.Str) else '',
+            '[' if not isinstance(node.value, exclude_types) else '',
             node.value,
-            ']' if not isinstance(node.value, ast.Str) else '',
+            ']' if not isinstance(node.value, exclude_types) else '',
         )
 
     def _ast_attribute(self, node):
@@ -804,6 +865,14 @@ class UnparseTcl(UnparsePython):
                 '}',
             )
 
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            '[',
+            self.make_list(node.elts, sep=' '),
+            ']',
+        )
+
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
         pass
@@ -823,6 +892,18 @@ class UnparseTcl(UnparsePython):
         """Add an AST Str in output."""
         # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s.replace('$', '\\$'))
+
+    def _ast_subscript(self, node):
+        """Add an AST Subscript in output."""
+        self.add(
+            '[dict get ',
+            (self.prefix, '$'),
+            node.value,
+            (self.prefix, None),
+            ' ',
+            node.slice,
+            ']',
+        )
 
 
 class UnparseGuile(UnparsePython):
@@ -996,9 +1077,17 @@ class UnparseGuile(UnparsePython):
             )
         self.add(self.fill, ')')
 
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            '\'(',
+            self.make_list(node.elts, sep=' '),
+            ')',
+        )
+
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
-        pass
+        self.add('#t')
 
     def _ast_return(self, node):
         """Add an AST Return in output."""
@@ -1009,6 +1098,16 @@ class UnparseGuile(UnparsePython):
         """Add an AST Str in output."""
         # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s)
+
+    def _ast_subscript(self, node):
+        """Add an AST Subscript in output."""
+        self.add(
+            '(assoc-ref ',
+            node.value,
+            ' ',
+            node.slice,
+            ')',
+        )
 
 
 class UnparseJavascript(UnparsePython):
@@ -1174,6 +1273,14 @@ class UnparsePhp(UnparsePython):
             '}',
         )
 
+    def _ast_list(self, node):
+        """Add an AST List in output."""
+        self.add(
+            'array(',
+            self.make_list(node.elts),
+            ')',
+        )
+
     def _ast_if(self, node):
         """Add an AST If in output."""
         self.add(
@@ -1225,6 +1332,16 @@ class UnparsePhp(UnparsePython):
         # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s.replace('$', '\\$'))
 
+    def _ast_subscript(self, node):
+        """Add an AST Subscript in output."""
+        self.add(
+            '$',
+            node.value,
+            '[',
+            node.slice,
+            ']',
+        )
+
 
 def get_languages():
     """Return a list of supported languages: ['python', 'perl', ...]."""
@@ -1269,13 +1386,13 @@ def get_stdin():
     """
     Return data from standard input.
 
-    If there is nothing in stdin, wait for data until ctrl-D (EOF)
+    If there is nothing in stdin, wait for data until ctrl-d (EOF)
     is received.
     """
     data = ''
     inr = select.select([sys.stdin], [], [], 0)[0]
     if not inr:
-        print('Enter the code to convert (Enter + ctrl+D to end)')
+        print('Enter the code to convert (Enter + ctrl-d to end)')
     while True:
         inr = select.select([sys.stdin], [], [], 0.1)[0]
         if not inr:

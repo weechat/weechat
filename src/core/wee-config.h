@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -29,6 +29,7 @@
 struct t_gui_buffer;
 
 #define WEECHAT_CONFIG_NAME "weechat"
+#define WEECHAT_CONFIG_PRIO_NAME "110000|weechat"
 
 #define TAB_MAX_WIDTH 64
 
@@ -127,6 +128,7 @@ extern struct t_config_file *weechat_config_file;
 extern struct t_config_section *weechat_config_section_color;
 extern struct t_config_section *weechat_config_section_proxy;
 extern struct t_config_section *weechat_config_section_bar;
+extern struct t_config_section *weechat_config_section_custom_bar_item;
 extern struct t_config_section *weechat_config_section_notify;
 
 extern struct t_config_option *config_startup_command_after_plugins;
@@ -152,6 +154,7 @@ extern struct t_config_option *config_look_buffer_search_regex;
 extern struct t_config_option *config_look_buffer_search_where;
 extern struct t_config_option *config_look_buffer_time_format;
 extern struct t_config_option *config_look_buffer_time_same;
+extern struct t_config_option *config_look_chat_space_right;
 extern struct t_config_option *config_look_color_basic_force_bold;
 extern struct t_config_option *config_look_color_inactive_buffer;
 extern struct t_config_option *config_look_color_inactive_message;
@@ -172,6 +175,7 @@ extern struct t_config_option *config_look_day_change_message_2dates;
 extern struct t_config_option *config_look_eat_newline_glitch;
 extern struct t_config_option *config_look_emphasized_attributes;
 extern struct t_config_option *config_look_highlight;
+extern struct t_config_option *config_look_highlight_disable_regex;
 extern struct t_config_option *config_look_highlight_regex;
 extern struct t_config_option *config_look_highlight_tags;
 extern struct t_config_option *config_look_hotlist_add_conditions;
@@ -342,7 +346,6 @@ extern struct t_config_option *config_network_gnutls_handshake_timeout;
 extern struct t_config_option *config_network_proxy_curl;
 
 extern struct t_config_option *config_plugin_autoload;
-extern struct t_config_option *config_plugin_debug;
 extern struct t_config_option *config_plugin_extension;
 extern struct t_config_option *config_plugin_path;
 extern struct t_config_option *config_plugin_save_config_on_unload;
@@ -357,6 +360,7 @@ extern int config_length_nick_prefix_suffix;
 extern int config_length_prefix_same_nick;
 extern int config_length_prefix_same_nick_middle;
 extern int config_emphasized_attributes;
+extern regex_t *config_highlight_disable_regex;
 extern regex_t *config_highlight_regex;
 extern char ***config_highlight_tags;
 extern int config_num_highlight_tags;

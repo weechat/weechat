@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -22,6 +22,7 @@
 
 #define weechat_plugin weechat_fifo_plugin
 #define FIFO_PLUGIN_NAME "fifo"
+#define FIFO_PLUGIN_PRIORITY 9000
 
 extern struct t_weechat_plugin *weechat_fifo_plugin;
 extern int fifo_quiet;

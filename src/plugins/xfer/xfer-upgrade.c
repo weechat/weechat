@@ -1,7 +1,7 @@
 /*
  * xfer-upgrade.c - save/restore xfer plugin data when upgrading WeeChat
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -147,6 +147,8 @@ xfer_upgrade_load ()
     rc = weechat_upgrade_read (upgrade_file);
 
     weechat_upgrade_close (upgrade_file);
+
+    xfer_buffer_refresh (NULL);
 
     return rc;
 }

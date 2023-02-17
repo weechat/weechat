@@ -1,7 +1,7 @@
 /*
  * wee-eval.c - evaluate expressions with references to internal vars
  *
- * Copyright (C) 2012-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -63,10 +63,10 @@
     }
 
 
-char *logical_ops[EVAL_NUM_LOGICAL_OPS] =
+char *eval_logical_ops[EVAL_NUM_LOGICAL_OPS] =
 { "||", "&&" };
 
-char *comparisons[EVAL_NUM_COMPARISONS] =
+char *eval_comparisons[EVAL_NUM_COMPARISONS] =
 { "=~", "!~",                /* regex */
   "==*", "!!*", "=*", "!*",  /* string match */
   "==-", "!!-", "=-", "!-",  /* includes */
@@ -74,6 +74,16 @@ char *comparisons[EVAL_NUM_COMPARISONS] =
   "<=", "<", ">=", ">",      /* less than, greater than */
 };
 
+char *eval_range_chars[][2] =
+{
+    { "digit",  EVAL_RANGE_DIGIT },
+    { "xdigit", EVAL_RANGE_XDIGIT },
+    { "lower",  EVAL_RANGE_LOWER },
+    { "upper",  EVAL_RANGE_UPPER },
+    { "alpha",  EVAL_RANGE_ALPHA },
+    { "alnum",  EVAL_RANGE_ALNUM },
+    { NULL,     NULL },
+};
 
 char *eval_replace_vars (const char *expr,
                          struct t_eval_context *eval_context);
@@ -274,6 +284,62 @@ eval_string_eval_cond (const char *text, struct t_eval_context *eval_context)
 }
 
 /*
+ * Adds range of chars.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_range_chars (const char *range)
+{
+    int i, char1, char2;
+    const char *ptr_char;
+    char **string, str_char[16], *result;
+
+    string = NULL;
+    result = NULL;
+
+    for (i = 0; eval_range_chars[i][0]; i++)
+    {
+        if (strcmp (range, eval_range_chars[i][0]) == 0)
+            return strdup (eval_range_chars[i][1]);
+    }
+
+    char1 = utf8_char_int (range);
+
+    /* next char must be '-' */
+    ptr_char = utf8_next_char (range);
+    if (!ptr_char || !ptr_char[0] || (ptr_char[0] != '-'))
+        goto end;
+
+    /* next char is the char2 */
+    ptr_char = utf8_next_char (ptr_char);
+    if (!ptr_char || !ptr_char[0])
+        goto end;
+    char2 = utf8_char_int (ptr_char);
+
+    /* output is limited to 1024 chars (not bytes) */
+    if ((char1 > char2) || (char2 - char1  + 1 > 4096))
+        goto end;
+
+    string = string_dyn_alloc (128);
+    if (!string)
+        goto end;
+
+    for (i = char1; i <= char2; i++)
+    {
+        utf8_int_string (i, str_char);
+        string_dyn_concat (string, str_char, -1);
+    }
+
+end:
+    if (string)
+        result = string_dyn_free (string, 0);
+
+    return (result) ? result : strdup ("");
+}
+
+/*
  * Hides chars in a string.
  *
  * Note: result must be freed after use.
@@ -343,7 +409,7 @@ eval_string_cut (const char *text, int screen)
     if (!pos2)
         return strdup ("");
 
-    tmp = strndup (text, pos - text);
+    tmp = string_strndup (text, pos - text);
     if (!tmp)
         return strdup ("");
 
@@ -355,7 +421,7 @@ eval_string_cut (const char *text, int screen)
     }
     free (tmp);
 
-    tmp = strndup (pos + 1, pos2 - pos - 1);
+    tmp = string_strndup (pos + 1, pos2 - pos - 1);
     if (!tmp)
         return strdup ("");
 
@@ -383,7 +449,7 @@ eval_string_repeat (const char *text)
     if (!pos)
         return strdup ("");
 
-    tmp = strndup (text, pos - text);
+    tmp = string_strndup (text, pos - text);
     if (!tmp)
         return strdup ("");
 
@@ -950,7 +1016,7 @@ eval_string_if (const char *text, struct t_eval_context *eval_context)
         (char *)eval_strstr_level (pos + 1, ":",
                                    eval_context, NULL, NULL, 1) : NULL;
     condition = (pos) ?
-        strndup (text, pos - text) : strdup (text);
+        string_strndup (text, pos - text) : strdup (text);
     if (!condition)
         return strdup ("");
     tmp = eval_expression_condition (condition, eval_context);
@@ -966,7 +1032,7 @@ eval_string_if (const char *text, struct t_eval_context *eval_context)
         if (pos)
         {
             tmp = (pos2) ?
-                strndup (pos + 1, pos2 - pos - 1) : strdup (pos + 1);
+                string_strndup (pos + 1, pos2 - pos - 1) : strdup (pos + 1);
             if (tmp)
             {
                 value = eval_replace_vars (tmp, eval_context);
@@ -1018,7 +1084,7 @@ eval_string_random (const char *text)
     if (!pos)
         goto error;
 
-    tmp = strndup (text, pos - text);
+    tmp = string_strndup (text, pos - text);
     if (!tmp)
         goto error;
     min_number = strtoll (tmp, &error, 10);
@@ -1082,7 +1148,7 @@ eval_string_define (const char *text, struct t_eval_context *eval_context)
     if (!pos)
         return;
 
-    name = strndup (text, pos - text);
+    name = string_strndup (text, pos - text);
     if (!name)
         return;
 
@@ -1374,45 +1440,49 @@ end:
 
 /*
  * Replaces variables, which can be, by order of priority:
- *   1. the string itself without evaluation (format: raw:xxx)
- *   2. a variable from hashtable "user_vars" or "extra_vars"
- *   3. a WeeChat home directory, one of: "weechat_config_dir",
- *      "weechat_data_dir", "weechat_cache_dir", "weechat_runtime_dir"
- *   4. a string to evaluate (format: eval:xxx)
- *   5. a condition to evaluate (format: eval_cond:xxx)
- *   6. a string with escaped chars (format: esc:xxx or \xxx)
- *   7. a string with chars to hide (format: hide:char,string)
- *   8. a string with max chars (format: cut:max,suffix,string or
- *      cut:+max,suffix,string) or max chars on screen
- *      (format: cutscr:max,suffix,string or cutscr:+max,suffix,string)
- *   9. a reversed string (format: rev:xxx) or reversed string for screen,
- *      color codes are not reversed (format: revscr:xxx)
- *  10. a repeated string (format: repeat:count,string)
- *  11. length of a string (format: length:xxx) or length of a string on screen
- *      (format: lengthscr:xxx); color codes are ignored
- *  12. split string (format: split:number,separators,flags,xxx
- *      or split:count,separators,flags,xxx
- *      or split:random,separators,flags,xxx)
- *  13. split shell arguments (format: split:number,xxx or split:count,xxx
- *      or split:random,xxx)
- *  14. a regex group captured (format: re:N (0.99) or re:+)
- *  15. a color (format: color:xxx)
- *  16. a modifier (format: modifier:name,data,xxx)
- *  17. an info (format: info:name,arguments)
- *  18. a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
- *      or base_decode:base,xxx)
- *  19. current date/time (format: date or date:xxx)
- *  20. an environment variable (format: env:XXX)
- *  21. a ternary operator (format: if:condition?value_if_true:value_if_false)
- *  22. calculate result of an expression (format: calc:xxx)
- *  23. a random integer number in the range from "min" to "max"
- *      (format: random:min,max)
- *  24. a translated string (format: translate:xxx)
- *  25. an option (format: file.section.option)
- *  26. a buffer local variable
- *  27. a pointer name from hashtable "pointers"
- *  28. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
- *                        or hdata[ptr].var1.var2 or hdata[ptr_name].var1.var2)
+ *  - the string itself without evaluation (format: raw:xxx)
+ *  - a variable from hashtable "user_vars" or "extra_vars"
+ *  - a WeeChat home directory, one of: "weechat_config_dir",
+ *    "weechat_data_dir", "weechat_cache_dir", "weechat_runtime_dir"
+ *  - a string to evaluate (format: eval:xxx)
+ *  - a condition to evaluate (format: eval_cond:xxx)
+ *  - a string with escaped chars (format: esc:xxx or \xxx)
+ *  - a string with a range of chars (format: chars:xxx)
+ *  - a string converted to lower case (format: lower:xxx)
+ *  - a string converted to upper case (format: upper:xxx)
+ *  - a string with chars to hide (format: hide:char,string)
+ *  - a string with max chars (format: cut:max,suffix,string or
+ *    cut:+max,suffix,string) or max chars on screen
+ *    (format: cutscr:max,suffix,string or cutscr:+max,suffix,string)
+ *  - a reversed string (format: rev:xxx) or reversed string for screen,
+ *    color codes are not reversed (format: revscr:xxx)
+ *  - a repeated string (format: repeat:count,string)
+ *  - length of a string (format: length:xxx) or length of a string on screen
+ *    (format: lengthscr:xxx); color codes are ignored
+ *  - split string (format: split:number,separators,flags,xxx
+ *    or split:count,separators,flags,xxx
+ *    or split:random,separators,flags,xxx)
+ *  - split shell arguments (format: split:number,xxx or split:count,xxx
+ *    or split:random,xxx)
+ *  - a regex group captured (format: re:N (0.99) or re:+)
+ *  - a color (format: color:xxx)
+ *  - a modifier (format: modifier:name,data,xxx)
+ *  - an info (format: info:name,arguments)
+ *  - a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
+ *    or base_decode:base,xxx)
+ *  - current date/time (format: date or date:xxx)
+ *  - an environment variable (format: env:XXX)
+ *  - a ternary operator (format: if:condition?value_if_true:value_if_false)
+ *  - calculate result of an expression (format: calc:xxx)
+ *  - a random integer number in the range from "min" to "max"
+ *    (format: random:min,max)
+ *  - a translated string (format: translate:xxx)
+ *  - define a new variable (format: define:name,value)
+ *  - an option (format: file.section.option)
+ *  - a buffer local variable
+ *  - a pointer name from hashtable "pointers"
+ *  - a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *                      or hdata[ptr].var1.var2 or hdata[ptr_name].var1.var2)
  *
  * See /help in WeeChat for examples.
  *
@@ -1435,16 +1505,14 @@ eval_replace_vars_cb (void *data, const char *text)
 
     EVAL_DEBUG_MSG(1, "eval_replace_vars_cb(\"%s\")", text);
 
-    /*
-     * 1. raw text (no evaluation at all)
-     */
+    /* raw text (no evaluation at all) */
     if (strncmp (text, "raw:", 4) == 0)
     {
         value = strdup (text + 4);
         goto end;
     }
 
-    /* 2. variable in hashtable "user_vars" or "extra_vars" */
+    /* variable in hashtable "user_vars" or "extra_vars" */
     ptr_value = hashtable_get (eval_context->user_vars, text);
     if (ptr_value)
     {
@@ -1475,7 +1543,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 3. WeeChat home directory */
+    /* WeeChat home directory */
     if (strcmp (text, "weechat_config_dir") == 0)
     {
         value = strdup (weechat_config_dir);
@@ -1498,8 +1566,8 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 4. force evaluation of string (recursive call)
-     *    --> use with caution: the text must be safe!
+     * force evaluation of string (recursive call)
+     * --> use with caution: the text must be safe!
      */
     if (strncmp (text, "eval:", 5) == 0)
     {
@@ -1508,8 +1576,8 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 5. force evaluation of condition (recursive call)
-     *    --> use with caution: the text must be safe!
+     * force evaluation of condition (recursive call)
+     * --> use with caution: the text must be safe!
      */
     if (strncmp (text, "eval_cond:", 10) == 0)
     {
@@ -1517,7 +1585,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 6. convert escaped chars */
+    /* convert escaped chars */
     if (strncmp (text, "esc:", 4) == 0)
     {
         value = string_convert_escaped_chars (text + 4);
@@ -1529,7 +1597,28 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 7. hide chars: replace all chars by a given char/string */
+    /* range of chars */
+    if (strncmp (text, "chars:", 6) == 0)
+    {
+        value = eval_string_range_chars (text + 6);
+        goto end;
+    }
+
+    /* convert to lower case */
+    if (strncmp (text, "lower:", 6) == 0)
+    {
+        value = string_tolower (text + 6);
+        goto end;
+    }
+
+    /* convert to upper case */
+    if (strncmp (text, "upper:", 6) == 0)
+    {
+        value = string_toupper (text + 6);
+        goto end;
+    }
+
+    /* hide chars: replace all chars by a given char/string */
     if (strncmp (text, "hide:", 5) == 0)
     {
         value = eval_string_hide (text + 5);
@@ -1537,7 +1626,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 8. cut chars:
+     * cut chars:
      *   cut: max number of chars, and add an optional suffix when the
      *        string is cut
      *   cutscr: max number of chars displayed on screen, and add an optional
@@ -1554,7 +1643,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 9. reverse string */
+    /* reverse string */
     if (strncmp (text, "rev:", 4) == 0)
     {
         value = string_reverse (text + 4);
@@ -1566,7 +1655,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 10. repeated string */
+    /* repeated string */
     if (strncmp (text, "repeat:", 7) == 0)
     {
         value = eval_string_repeat (text + 7);
@@ -1574,7 +1663,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 11. length of string:
+     * length of string:
      *   length: number of chars
      *   lengthscr: number of chars displayed on screen
      */
@@ -1593,49 +1682,49 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 12: split string */
+    /* split string */
     if (strncmp (text, "split:", 6) == 0)
     {
         value = eval_string_split (text + 6);
         goto end;
     }
 
-    /* 13: split shell */
+    /* split shell */
     if (strncmp (text, "split_shell:", 12) == 0)
     {
         value = eval_string_split_shell (text + 12);
         goto end;
     }
 
-    /* 14. regex group captured */
+    /* regex group captured */
     if (strncmp (text, "re:", 3) == 0)
     {
         value = eval_string_regex_group (text + 3, eval_context);
         goto end;
     }
 
-    /* 15. color code */
+    /* color code */
     if (strncmp (text, "color:", 6) == 0)
     {
         value = eval_string_color (text + 6);
         goto end;
     }
 
-    /* 16. modifier */
+    /* modifier */
     if (strncmp (text, "modifier:", 9) == 0)
     {
         value = eval_string_modifier (text + 9);
         goto end;
     }
 
-    /* 17. info */
+    /* info */
     if (strncmp (text, "info:", 5) == 0)
     {
         value = eval_string_info (text + 5);
         goto end;
     }
 
-    /* 18. base_encode/base_decode */
+    /* base_encode/base_decode */
     if (strncmp (text, "base_encode:", 12) == 0)
     {
         value = eval_string_base_encode (text + 12);
@@ -1647,14 +1736,14 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 19. current date/time */
+    /* current date/time */
     if ((strncmp (text, "date", 4) == 0) && (!text[4] || (text[4] == ':')))
     {
         value = eval_string_date (text + 4);
         goto end;
     }
 
-    /* 20. environment variable */
+    /* environment variable */
     if (strncmp (text, "env:", 4) == 0)
     {
         ptr_value = getenv (text + 4);
@@ -1662,7 +1751,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 21: ternary operator: if:condition?value_if_true:value_if_false */
+    /* ternary operator: if:condition?value_if_true:value_if_false */
     if (strncmp (text, "if:", 3) == 0)
     {
         value = eval_string_if (text + 3, eval_context);
@@ -1670,7 +1759,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 22. calculate the result of an expression
+     * calculate the result of an expression
      * (with number, operators and parentheses)
      */
     if (strncmp (text, "calc:", 5) == 0)
@@ -1680,7 +1769,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 23. random number
+     * random number
      */
     if (strncmp (text, "random:", 7) == 0)
     {
@@ -1689,7 +1778,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 24. translated text
+     * translated text
      */
     if (strncmp (text, "translate:", 10) == 0)
     {
@@ -1697,7 +1786,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 25. define a variable */
+    /* define a variable */
     if (strncmp (text, "define:", 7) == 0)
     {
         eval_string_define (text + 7, eval_context);
@@ -1705,7 +1794,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 25. option: if found, return this value */
+    /* option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -1748,7 +1837,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 26. local variable in buffer */
+    /* local variable in buffer */
     ptr_buffer = hashtable_get (eval_context->pointers, "buffer");
     if (ptr_buffer)
     {
@@ -1760,7 +1849,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 27. hdata */
+    /* hdata */
     value = eval_string_hdata (text, eval_context);
 
 end:
@@ -1832,7 +1921,7 @@ eval_compare (const char *expr1, int comparison, const char *expr2,
     char *error, *value;
 
     EVAL_DEBUG_MSG(1, "eval_compare(\"%s\", \"%s\", \"%s\")",
-                   expr1, comparisons[comparison], expr2);
+                   expr1, eval_comparisons[comparison], expr2);
 
     rc = 0;
     string_compare = 0;
@@ -2013,7 +2102,7 @@ eval_expression_condition (const char *expr,
      */
     for (logic = 0; logic < EVAL_NUM_LOGICAL_OPS; logic++)
     {
-        pos = eval_strstr_level (expr2, logical_ops[logic], eval_context,
+        pos = eval_strstr_level (expr2, eval_logical_ops[logic], eval_context,
                                  "(", ")", 0);
         if (pos > expr2)
         {
@@ -2040,7 +2129,7 @@ eval_expression_condition (const char *expr,
                 value = strdup ((rc) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
                 goto end;
             }
-            pos += strlen (logical_ops[logic]);
+            pos += strlen (eval_logical_ops[logic]);
             while (pos[0] == ' ')
             {
                 pos++;
@@ -2063,7 +2152,7 @@ eval_expression_condition (const char *expr,
      */
     for (comp = 0; comp < EVAL_NUM_COMPARISONS; comp++)
     {
-        pos = eval_strstr_level (expr2, comparisons[comp], eval_context,
+        pos = eval_strstr_level (expr2, eval_comparisons[comp], eval_context,
                                  "(", ")", 0);
         if (pos >= expr2)
         {
@@ -2082,7 +2171,7 @@ eval_expression_condition (const char *expr,
             }
             if (!sub_expr)
                 goto end;
-            pos += strlen (comparisons[comp]);
+            pos += strlen (eval_comparisons[comp]);
             while (pos[0] == ' ')
             {
                 pos++;

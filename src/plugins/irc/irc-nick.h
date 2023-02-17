@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -87,8 +87,8 @@ extern struct t_irc_nick *irc_nick_search (struct t_irc_server *server,
                                            const char *nickname);
 extern void irc_nick_count (struct t_irc_server *server,
                             struct t_irc_channel *channel, int *total,
-                            int *count_op, int *count_halfop, int *count_voice,
-                            int *count_normal);
+                            int *count_ops, int *count_halfops,
+                            int *count_voiced, int *count_regular);
 extern void irc_nick_set_away (struct t_irc_server *server,
                                struct t_irc_channel *channel,
                                struct t_irc_nick *nick, int is_away);

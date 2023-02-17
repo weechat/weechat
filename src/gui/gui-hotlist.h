@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -58,12 +58,17 @@ extern int gui_add_hotlist;
 
 /* hotlist functions */
 
+extern int gui_hotlist_search_priority (const char *priority);
 extern struct t_gui_hotlist *gui_hotlist_add (struct t_gui_buffer *buffer,
                                               enum t_gui_hotlist_priority priority,
-                                              struct timeval *creation_time);
+                                              struct timeval *creation_time,
+                                              int check_conditions);
 extern void gui_hotlist_restore_buffer (struct t_gui_buffer *buffer);
+extern void gui_hotlist_restore_all_buffers ();
 extern void gui_hotlist_resort ();
 extern void gui_hotlist_clear (int level_mask);
+extern void gui_hotlist_clear_level_string (struct t_gui_buffer *buffer,
+                                            const char *str_level_mask);
 extern void gui_hotlist_remove_buffer (struct t_gui_buffer *buffer,
                                        int force_remove_buffer);
 extern struct t_hdata *gui_hotlist_hdata_hotlist_cb (const void *pointer,

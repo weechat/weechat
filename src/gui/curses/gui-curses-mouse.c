@@ -1,7 +1,7 @@
 /*
  * gui-curses-mouse.c - mouse functions for Curses GUI
  *
- * Copyright (C) 2011-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2011-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -203,8 +203,7 @@ gui_mouse_grab_end (const char *mouse_key)
             snprintf (mouse_key_input, sizeof (mouse_key_input),
                       "%s", mouse_key);
         }
-        gui_input_insert_string (gui_current_window->buffer,
-                                 mouse_key_input, -1);
+        gui_input_insert_string (gui_current_window->buffer, mouse_key_input);
         gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,
                                                     1, /* save undo */
                                                     1); /* stop completion */

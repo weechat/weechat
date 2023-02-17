@@ -1,7 +1,7 @@
 /*
  * relay-weechat.c - WeeChat protocol for relay to client
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -41,7 +41,7 @@
 
 
 char *relay_weechat_compression_string[] = /* strings for compression       */
-{ "off", "zlib" };
+{ "off", "zlib", "zstd" };
 
 
 /*
@@ -56,9 +56,12 @@ relay_weechat_compression_search (const char *compression)
 {
     int i;
 
+    if (!compression)
+        return -1;
+
     for (i = 0; i < RELAY_WEECHAT_NUM_COMPRESSIONS; i++)
     {
-        if (weechat_strcasecmp (relay_weechat_compression_string[i], compression) == 0)
+        if (strcmp (relay_weechat_compression_string[i], compression) == 0)
             return i;
     }
 
@@ -150,6 +153,13 @@ relay_weechat_recv (struct t_relay_client *client, const char *data)
 void
 relay_weechat_close_connection (struct t_relay_client *client)
 {
+    /*
+     * IMPORTANT: if changes are made in this function or sub-functions called,
+     * please also update the function relay_weechat_add_to_infolist:
+     * when the flag force_disconnected_state is set to 1 we simulate
+     * a disconnected state for client in infolist (used on /upgrade -save)
+     */
+
     relay_weechat_unhook_signals (client);
 }
 
@@ -182,7 +192,7 @@ relay_weechat_alloc (struct t_relay_client *client)
     RELAY_WEECHAT_DATA(client, handshake_done) = 0;
     RELAY_WEECHAT_DATA(client, password_ok) = 0;
     RELAY_WEECHAT_DATA(client, totp_ok) = 0;
-    RELAY_WEECHAT_DATA(client, compression) = RELAY_WEECHAT_COMPRESSION_ZLIB;
+    RELAY_WEECHAT_DATA(client, compression) = RELAY_WEECHAT_COMPRESSION_OFF;
     RELAY_WEECHAT_DATA(client, buffers_sync) =
         weechat_hashtable_new (32,
                                WEECHAT_HASHTABLE_STRING,
@@ -328,6 +338,10 @@ relay_weechat_free (struct t_relay_client *client)
 /*
  * Adds client WeeChat data in an infolist.
  *
+ * If force_disconnected_state == 1, the infolist contains the client
+ * in a disconnected state (but the client is unchanged, still connected if it
+ * was).
+ *
  * Returns:
  *   1: OK
  *   0: error
@@ -335,10 +349,14 @@ relay_weechat_free (struct t_relay_client *client)
 
 int
 relay_weechat_add_to_infolist (struct t_infolist_item *item,
-                               struct t_relay_client *client)
+                               struct t_relay_client *client,
+                               int force_disconnected_state)
 {
     if (!item || !client)
         return 0;
+
+    /* parameter not used today, it may be in future */
+    (void) force_disconnected_state;
 
     if (!weechat_infolist_new_var_integer (item, "handshake_done", RELAY_WEECHAT_DATA(client, handshake_done)))
         return 0;

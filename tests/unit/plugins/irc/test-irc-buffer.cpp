@@ -1,7 +1,7 @@
 /*
  * test-irc-buffer.cpp - test IRC buffer functions
  *
- * Copyright (C) 2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2021-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,9 +21,10 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
-#include "tests/tests.h"
 #include "src/plugins/irc/irc-buffer.h"
 }
 

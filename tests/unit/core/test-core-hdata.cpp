@@ -1,7 +1,7 @@
 /*
  * test-core-hdata.cpp - test hdata functions
  *
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

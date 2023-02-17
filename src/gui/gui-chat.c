@@ -1,7 +1,7 @@
 /*
  * gui-chat.c - chat functions (used by all GUI)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -82,11 +82,9 @@ gui_chat_init ()
     }
 
     /* some hsignals */
-    hook_hsignal (NULL, "chat_quote_time_prefix_message",
-                  &gui_chat_hsignal_quote_line_cb, NULL, NULL);
-    hook_hsignal (NULL, "chat_quote_prefix_message",
-                  &gui_chat_hsignal_quote_line_cb, NULL, NULL);
-    hook_hsignal (NULL, "chat_quote_message",
+    hook_hsignal (NULL,
+                  "chat_quote_time_prefix_message;chat_quote_prefix_message;"
+                  "chat_quote_message",
                   &gui_chat_hsignal_quote_line_cb, NULL, NULL);
 }
 
@@ -125,45 +123,6 @@ gui_chat_prefix_build ()
         else
             gui_chat_prefix[i] = strdup (prefix);
     }
-}
-
-/*
- * Checks if an UTF-8 char is valid for screen.
- *
- * Returns:
- *   1: char is valid
- *   0: char is not valid
- */
-
-int
-gui_chat_utf_char_valid (const char *utf_char)
-{
-    /* chars below 32 are not valid (except TAB) */
-    if (((unsigned char)utf_char[0] < 32) && (utf_char[0] != '\t'))
-        return 0;
-
-    /* 146 or 0x7F are not valid */
-    if ((((unsigned char)(utf_char[0]) == 146)
-         || ((unsigned char)(utf_char[0]) == 0x7F))
-        && (!utf_char[1]))
-        return 0;
-
-    /* any other char is valid */
-    return 1;
-}
-
-/*
- * Returns number of char needed on screen to display a char.
- */
-
-int
-gui_chat_char_size_screen (const char *utf_char)
-{
-    /* if char is invalid, it will be displayed as one space on screen */
-    if (!gui_chat_utf_char_valid (utf_char))
-        return 1;
-
-    return utf8_char_size_screen (utf_char);
 }
 
 /*
@@ -207,7 +166,7 @@ gui_chat_strlen_screen (const char *string)
                                             (unsigned char *)string, 0, 0, 0);
         if (string)
         {
-            size_on_screen = gui_chat_char_size_screen (string);
+            size_on_screen = utf8_char_size_screen (string);
             if (size_on_screen > 0)
                 length += size_on_screen;
             string = utf8_next_char (string);
@@ -255,10 +214,13 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
                                             0, 0, 0);
         if (string)
         {
-            size_on_screen = gui_chat_char_size_screen (string);
-            offset_screen -= size_on_screen;
-            if (offset_screen < 0)
-                return string;
+            size_on_screen = utf8_char_size_screen (string);
+            if (size_on_screen > 0)
+            {
+                offset_screen -= size_on_screen;
+                if (offset_screen < 0)
+                    return string;
+            }
             string = utf8_next_char (string);
         }
     }
@@ -296,7 +258,7 @@ gui_chat_string_real_pos (const char *string, int pos, int use_screen_size)
                                                 0, 0, 0);
         if (ptr_string)
         {
-            size_on_screen = gui_chat_char_size_screen (ptr_string);
+            size_on_screen = utf8_char_size_screen (ptr_string);
             if (size_on_screen > 0)
                 pos -= (use_screen_size) ? size_on_screen : 1;
             ptr_string = utf8_next_char (ptr_string);
@@ -378,11 +340,13 @@ gui_chat_get_word_info (struct t_gui_window *window,
                         *word_start_offset = next_char - start_data;
                     leading_spaces = 0;
                     *word_end_offset = next_char2 - start_data - 1;
-                    char_size_screen = gui_chat_char_size_screen (next_char);
-                    (*word_length_with_spaces) += char_size_screen;
+                    char_size_screen = utf8_char_size_screen (next_char);
+                    if (char_size_screen > 0)
+                        (*word_length_with_spaces) += char_size_screen;
                     if (*word_length < 0)
                         *word_length = 0;
-                    (*word_length) += char_size_screen;
+                    if (char_size_screen > 0)
+                        (*word_length) += char_size_screen;
                 }
                 else
                 {
@@ -571,91 +535,6 @@ gui_chat_change_time_format ()
             }
         }
     }
-}
-
-/*
- * Builds a string with prefix and message.
- *
- * Note: result must be freed after use.
- */
-
-char *
-gui_chat_build_string_prefix_message (struct t_gui_line *line)
-{
-    char *string, *string_without_colors;
-    int length;
-
-    length = 0;
-    if (line->data->prefix)
-        length += strlen (line->data->prefix);
-    length++;
-    if (line->data->message)
-        length += strlen (line->data->message);
-    length++;
-
-    string = malloc (length);
-    if (string)
-    {
-        string[0] = '\0';
-        if (line->data->prefix)
-            strcat (string, line->data->prefix);
-        strcat (string, "\t");
-        if (line->data->message)
-            strcat (string, line->data->message);
-    }
-
-    if (string)
-    {
-        string_without_colors = gui_color_decode (string, NULL);
-        if (string_without_colors)
-        {
-            free (string);
-            string = string_without_colors;
-        }
-    }
-
-    return string;
-}
-
-/*
- * Builds a string with message and tags.
- *
- * Note: result must be freed after use.
- */
-
-
-char *
-gui_chat_build_string_message_tags (struct t_gui_line *line)
-{
-    int i, length;
-    char *buf;
-
-    length = 64 + 2;
-    if (line->data->message)
-        length += strlen (line->data->message);
-    for (i = 0; i < line->data->tags_count; i++)
-    {
-        length += strlen (line->data->tags_array[i]) + 1;
-    }
-    length += 2;
-
-    buf = malloc (length);
-    buf[0] = '\0';
-    if (line->data->message)
-        strcat (buf, line->data->message);
-    strcat (buf, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-    strcat (buf, " [");
-    strcat (buf, GUI_COLOR(GUI_COLOR_CHAT_TAGS));
-    for (i = 0; i < line->data->tags_count; i++)
-    {
-        strcat (buf, line->data->tags_array[i]);
-        if (i < line->data->tags_count - 1)
-            strcat (buf, ",");
-    }
-    strcat (buf, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-    strcat (buf, "]");
-
-    return buf;
 }
 
 /*
@@ -1020,9 +899,11 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
  */
 
 void
-gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
+gui_chat_printf_y_date_tags (struct t_gui_buffer *buffer, int y, time_t date,
+                           const char *tags, const char *message, ...)
 {
     struct t_gui_line *ptr_line, *new_line, *new_line_empty;
+    time_t date_printed;
     int i, last_y, num_lines_to_add;
 
     if (gui_init_ok && !gui_chat_buffer_valid (buffer, GUI_BUFFER_TYPE_FREE))
@@ -1041,7 +922,12 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
 
     utf8_normalize (vbuffer, '?');
 
-    new_line = gui_line_new (buffer, y, 0, 0, NULL, NULL, vbuffer);
+    date_printed = time (NULL);
+    if (date <= 0)
+        date = date_printed;
+
+    new_line = gui_line_new (buffer, y, date, date_printed, tags,
+                             NULL, vbuffer);
     if (!new_line)
         goto end;
 
@@ -1092,28 +978,33 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
             free (new_line);
         }
     }
-    else if (gui_init_ok)
+    else
     {
-        /* delete line */
-        last_y = (new_line->data->buffer->own_lines->last_line) ?
-            new_line->data->buffer->own_lines->last_line->data->y : 0;
-        if (y <= last_y)
+        if (gui_init_ok)
         {
-            for (ptr_line = new_line->data->buffer->own_lines->first_line;
-                 ptr_line; ptr_line = ptr_line->next_line)
+            /* delete line */
+            last_y = (new_line->data->buffer->own_lines->last_line) ?
+                new_line->data->buffer->own_lines->last_line->data->y : 0;
+            if (y <= last_y)
             {
-                if (ptr_line->data->y >= y)
-                    break;
-            }
-            if (ptr_line && (ptr_line->data->y == y))
-            {
-                if (ptr_line->next_line)
-                    gui_line_clear (ptr_line);
-                else
-                    gui_line_free (new_line->data->buffer, ptr_line);
-                gui_buffer_ask_chat_refresh (new_line->data->buffer, 2);
+                for (ptr_line = new_line->data->buffer->own_lines->first_line;
+                     ptr_line; ptr_line = ptr_line->next_line)
+                {
+                    if (ptr_line->data->y >= y)
+                        break;
+                }
+                if (ptr_line && (ptr_line->data->y == y))
+                {
+                    if (ptr_line->next_line)
+                        gui_line_clear (ptr_line);
+                    else
+                        gui_line_free (new_line->data->buffer, ptr_line);
+                    gui_buffer_ask_chat_refresh (new_line->data->buffer, 2);
+                }
             }
         }
+        gui_line_free_data (new_line);
+        free (new_line);
     }
 
 end:
@@ -1217,7 +1108,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
                   (ptr_prefix && ptr_prefix[0] && is_nick) ? CONFIG_STRING(config_look_quote_nick_suffix) : "",
                   (ptr_prefix && ptr_prefix[0]) ? " " : "",
                   message);
-        gui_input_insert_string (gui_current_window->buffer, str, -1);
+        gui_input_insert_string (gui_current_window->buffer, str);
         gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,
                                                     1, /* save undo */
                                                     1); /* stop completion */

@@ -1,7 +1,7 @@
 /*
  * wee-config.c - WeeChat configuration options (file weechat.conf)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -50,6 +50,7 @@
 #include "wee-version.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
+#include "../gui/gui-bar-item-custom.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
@@ -70,6 +71,7 @@ struct t_config_section *weechat_config_section_debug = NULL;
 struct t_config_section *weechat_config_section_color = NULL;
 struct t_config_section *weechat_config_section_proxy = NULL;
 struct t_config_section *weechat_config_section_bar = NULL;
+struct t_config_section *weechat_config_section_custom_bar_item = NULL;
 struct t_config_section *weechat_config_section_notify = NULL;
 
 /* config, startup section */
@@ -99,6 +101,7 @@ struct t_config_option *config_look_buffer_search_regex;
 struct t_config_option *config_look_buffer_search_where;
 struct t_config_option *config_look_buffer_time_format;
 struct t_config_option *config_look_buffer_time_same;
+struct t_config_option *config_look_chat_space_right;
 struct t_config_option *config_look_color_basic_force_bold;
 struct t_config_option *config_look_color_inactive_buffer;
 struct t_config_option *config_look_color_inactive_message;
@@ -119,6 +122,7 @@ struct t_config_option *config_look_day_change_message_2dates;
 struct t_config_option *config_look_eat_newline_glitch;
 struct t_config_option *config_look_emphasized_attributes;
 struct t_config_option *config_look_highlight;
+struct t_config_option *config_look_highlight_disable_regex;
 struct t_config_option *config_look_highlight_regex;
 struct t_config_option *config_look_highlight_tags;
 struct t_config_option *config_look_hotlist_add_conditions;
@@ -299,7 +303,6 @@ struct t_config_option *config_network_proxy_curl;
 /* config, plugin section */
 
 struct t_config_option *config_plugin_autoload;
-struct t_config_option *config_plugin_debug;
 struct t_config_option *config_plugin_extension;
 struct t_config_option *config_plugin_path;
 struct t_config_option *config_plugin_save_config_on_unload;
@@ -320,6 +323,7 @@ int config_length_prefix_same_nick_middle = 0;
 struct t_hook *config_day_change_timer = NULL;
 int config_day_change_old_day = -1;
 int config_emphasized_attributes = 0;
+regex_t *config_highlight_disable_regex = NULL;
 regex_t *config_highlight_regex = NULL;
 char ***config_highlight_tags = NULL;
 int config_num_highlight_tags = 0;
@@ -497,7 +501,7 @@ config_set_word_chars (const char *str_word_chars,
                 /* char1 */
                 item = string_strndup (ptr_item, pos - ptr_item);
                 item2 = string_convert_escaped_chars (item);
-                (*word_chars)[i].char1 = utf8_wide_char (item2);
+                (*word_chars)[i].char1 = utf8_char_int (item2);
                 if (item)
                     free (item);
                 if (item2)
@@ -505,7 +509,7 @@ config_set_word_chars (const char *str_word_chars,
                 /* char2 */
                 item = strdup (pos + 1);
                 item2 = string_convert_escaped_chars (item);
-                (*word_chars)[i].char2 = utf8_wide_char (item2);
+                (*word_chars)[i].char2 = utf8_char_int (item2);
                 if (item)
                     free (item);
                 if (item2)
@@ -518,7 +522,7 @@ config_set_word_chars (const char *str_word_chars,
                 if ((*word_chars)[i].wc_class == (wctype_t)0)
                 {
                     item = string_convert_escaped_chars (ptr_item);
-                    (*word_chars)[i].char1 = utf8_wide_char (item);
+                    (*word_chars)[i].char1 = utf8_char_int (item);
                     (*word_chars)[i].char2 = (*word_chars)[i].char1;
                     if (item)
                         free (item);
@@ -909,6 +913,43 @@ config_change_emphasized_attributes (const void *pointer, void *data,
     }
 
     gui_window_ask_refresh (1);
+}
+
+/*
+ * Callback for changes on option "weechat.look.highlight_disable_regex".
+ */
+
+void
+config_change_highlight_disable_regex (const void *pointer, void *data,
+                                       struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (config_highlight_disable_regex)
+    {
+        regfree (config_highlight_disable_regex);
+        free (config_highlight_disable_regex);
+        config_highlight_disable_regex = NULL;
+    }
+
+    if (CONFIG_STRING(config_look_highlight_disable_regex)
+        && CONFIG_STRING(config_look_highlight_disable_regex)[0])
+    {
+        config_highlight_disable_regex = malloc (sizeof (*config_highlight_disable_regex));
+        if (config_highlight_disable_regex)
+        {
+            if (string_regcomp (config_highlight_disable_regex,
+                                CONFIG_STRING(config_look_highlight_disable_regex),
+                                REG_EXTENDED | REG_ICASE) != 0)
+            {
+                free (config_highlight_disable_regex);
+                config_highlight_disable_regex = NULL;
+            }
+        }
+    }
 }
 
 /*
@@ -1436,6 +1477,8 @@ config_weechat_init_after_read ()
         gui_bar_create_default ();
     }
 
+    gui_bar_item_custom_use_temp_items ();
+
     /* if no key was found configuration file, then we use default bindings */
     for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
     {
@@ -1932,6 +1975,86 @@ config_weechat_bar_read_cb (const void *pointer, void *data,
 }
 
 /*
+ * Reads a custom bar item option in WeeChat configuration file.
+ */
+
+int
+config_weechat_custom_bar_item_read_cb (const void *pointer, void *data,
+                                        struct t_config_file *config_file,
+                                        struct t_config_section *section,
+                                        const char *option_name, const char *value)
+{
+    char *pos_option, *item_name;
+    struct t_gui_bar_item_custom *ptr_temp_item;
+    int index_option;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) config_file;
+    (void) section;
+
+    if (!option_name)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    pos_option = strchr (option_name, '.');
+    if (!pos_option)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    item_name = string_strndup (option_name, pos_option - option_name);
+    if (!item_name)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    pos_option++;
+
+    /* search temporary custom bar item */
+    for (ptr_temp_item = gui_temp_custom_bar_items; ptr_temp_item;
+         ptr_temp_item = ptr_temp_item->next_item)
+    {
+        if (strcmp (ptr_temp_item->name, item_name) == 0)
+            break;
+    }
+    if (!ptr_temp_item)
+    {
+        /* create new temporary custom bar item */
+        ptr_temp_item = gui_bar_item_custom_alloc (item_name);
+        if (ptr_temp_item)
+        {
+            /* add new custom bar item at the end */
+            ptr_temp_item->prev_item = last_gui_temp_custom_bar_item;
+            ptr_temp_item->next_item = NULL;
+            if (last_gui_temp_custom_bar_item)
+                last_gui_temp_custom_bar_item->next_item = ptr_temp_item;
+            else
+                gui_temp_custom_bar_items = ptr_temp_item;
+            last_gui_temp_custom_bar_item = ptr_temp_item;
+        }
+    }
+
+    if (ptr_temp_item)
+    {
+        index_option = gui_bar_item_custom_search_option (pos_option);
+        if (index_option >= 0)
+        {
+            gui_bar_item_custom_create_option_temp (ptr_temp_item, index_option,
+                                                    value);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sWarning: unknown option for section \"%s\": "
+                               "%s (value: \"%s\")"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             section->name, option_name, value);
+        }
+    }
+
+    free (item_name);
+
+    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+}
+
+/*
  * Reads a layout option in WeeChat configuration file.
  */
 
@@ -1991,7 +2114,7 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
         gui_layout_add (ptr_layout);
     }
 
-    if (string_strcasecmp (ptr_option_name, "buffer") == 0)
+    if (strcmp (ptr_option_name, "buffer") == 0)
     {
         argv = string_split (value, ";", NULL,
                              WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -2010,7 +2133,7 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
             string_free_split (argv);
         }
     }
-    else if (string_strcasecmp (ptr_option_name, "window") == 0)
+    else if (strcmp (ptr_option_name, "window") == 0)
     {
         argv = string_split (value, ";", NULL,
                              WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -2048,7 +2171,7 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
             string_free_split (argv);
         }
     }
-    else if (string_strcasecmp (ptr_option_name, "current") == 0)
+    else if (strcmp (ptr_option_name, "current") == 0)
     {
         if (config_file_string_to_boolean (value))
             gui_layout_current = ptr_layout;
@@ -2512,7 +2635,7 @@ config_weechat_init_options ()
     char section_name[128];
 
     weechat_config_file = config_file_new (
-        NULL, WEECHAT_CONFIG_NAME, &config_weechat_reload_cb, NULL, NULL);
+        NULL, WEECHAT_CONFIG_PRIO_NAME, &config_weechat_reload_cb, NULL, NULL);
     if (!weechat_config_file)
         return 0;
 
@@ -2763,6 +2886,13 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         &config_change_buffer_time_same, NULL, NULL,
         NULL, NULL, NULL);
+    config_look_chat_space_right = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_space_right", "boolean",
+        N_("keep a space on the right side of chat area if there is a bar "
+           "displayed on the right (for both text and read marker)"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_color_basic_force_bold = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_basic_force_bold", "boolean",
@@ -2936,9 +3066,14 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "emphasized_attributes", "string",
         N_("attributes for emphasized text: one or more attribute chars ("
-           "\"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
-           "underline); if the string is empty, the colors "
-           "weechat.color.emphasized* are used"),
+           "\"%\" for blink, "
+           "\".\" for \"dim\" (half bright), "
+           "\"*\" for bold, "
+           "\"!\" for reverse, "
+           "\"/\" for italic, "
+           "\"_\" for underline); "
+           "if the string is empty, "
+           "the colors weechat.color.emphasized* are used"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL,
         &config_change_emphasized_attributes, NULL, NULL,
@@ -2952,6 +3087,20 @@ config_weechat_init_options ()
            "example: \"test,(?-i)*toto*,flash*\""),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_highlight_disable_regex = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "highlight_disable_regex", "string",
+        N_("POSIX extended regular expression used to prevent any highlight "
+           "from a message: this option has higher priority over other "
+           "highlight options (if the string is found in the message, the "
+           "highlight is disabled and the other options are ignored), "
+           "regular expression is case insensitive (use \"(?-i)\" at beginning "
+           "to make it case sensitive), examples: "
+           "\"<flash.*>\", \"(?-i)<Flash.*>\""),
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_highlight_disable_regex, NULL, NULL,
+        NULL, NULL, NULL);
     config_look_highlight_regex = config_file_new_option (
         weechat_config_file, ptr_section,
         "highlight_regex", "string",
@@ -4561,13 +4710,6 @@ config_weechat_init_options ()
            "\"*,!lua,!tcl\")"),
         NULL, 0, 0, "*", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_plugin_debug = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "debug", "boolean",
-        N_("enable debug messages by default in all plugins (option disabled "
-           "by default, which is highly recommended)"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_extension = config_file_new_option (
         weechat_config_file, ptr_section,
         "extension", "string",
@@ -4665,6 +4807,24 @@ config_weechat_init_options ()
     }
 
     weechat_config_section_bar = ptr_section;
+
+    /* custom bar items */
+    ptr_section = config_file_new_section (
+        weechat_config_file, "custom_bar_item",
+        0, 0,
+        &config_weechat_custom_bar_item_read_cb, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
+        return 0;
+    }
+
+    weechat_config_section_custom_bar_item = ptr_section;
 
     /* layout */
     ptr_section = config_file_new_section (
@@ -4782,6 +4942,8 @@ config_weechat_init ()
                                               &config_day_change_timer_cb,
                                               NULL, NULL);
     }
+    if (!config_highlight_disable_regex)
+        config_change_highlight_disable_regex (NULL, NULL, NULL);
     if (!config_highlight_regex)
         config_change_highlight_regex (NULL, NULL, NULL);
     if (!config_highlight_tags)
@@ -4842,6 +5004,13 @@ void
 config_weechat_free ()
 {
     config_file_free (weechat_config_file);
+
+    if (config_highlight_disable_regex)
+    {
+        regfree (config_highlight_disable_regex);
+        free (config_highlight_disable_regex);
+        config_highlight_disable_regex = NULL;
+    }
 
     if (config_highlight_regex)
     {

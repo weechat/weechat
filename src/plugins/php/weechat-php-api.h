@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006-2017 Adam Saponara <as@php.net>
- * Copyright (C) 2017-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2017-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -59,6 +59,7 @@ PHP_FUNCTION(weechat_string_has_highlight);
 PHP_FUNCTION(weechat_string_has_highlight_regex);
 PHP_FUNCTION(weechat_string_mask_to_regex);
 PHP_FUNCTION(weechat_string_format_size);
+PHP_FUNCTION(weechat_string_parse_size);
 PHP_FUNCTION(weechat_string_color_code_size);
 PHP_FUNCTION(weechat_string_remove_color);
 PHP_FUNCTION(weechat_string_is_command_char);
@@ -126,6 +127,7 @@ PHP_FUNCTION(weechat_color);
 PHP_FUNCTION(weechat_print);
 PHP_FUNCTION(weechat_print_date_tags);
 PHP_FUNCTION(weechat_print_y);
+PHP_FUNCTION(weechat_print_y_date_tags);
 PHP_FUNCTION(weechat_log_print);
 PHP_FUNCTION(weechat_hook_command);
 PHP_FUNCTION(weechat_hook_completion);
@@ -154,6 +156,7 @@ PHP_FUNCTION(weechat_hook_set);
 PHP_FUNCTION(weechat_unhook);
 PHP_FUNCTION(weechat_unhook_all);
 PHP_FUNCTION(weechat_buffer_new);
+PHP_FUNCTION(weechat_buffer_new_props);
 PHP_FUNCTION(weechat_buffer_search);
 PHP_FUNCTION(weechat_buffer_search_main);
 PHP_FUNCTION(weechat_current_buffer);

@@ -1,7 +1,7 @@
 /*
  * gui-focus.c - functions about focus (cursor mode and mouse) (used by all GUI)
  *
- * Copyright (C) 2011-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2011-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -201,7 +201,8 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     {
         str_time = gui_color_decode (((focus_info->chat_line)->data)->str_time, NULL);
         str_prefix = gui_color_decode (((focus_info->chat_line)->data)->prefix, NULL);
-        str_tags = string_build_with_split_string ((const char **)((focus_info->chat_line)->data)->tags_array, ",");
+        str_tags = string_rebuild_split_string (
+            (const char **)((focus_info->chat_line)->data)->tags_array, ",", 0, -1);
         str_message = gui_color_decode (((focus_info->chat_line)->data)->message, NULL);
         nick = gui_line_get_nick_tag (focus_info->chat_line);
         HASHTABLE_SET_POINTER("_chat_line", focus_info->chat_line);

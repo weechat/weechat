@@ -1,7 +1,7 @@
 /*
  * wee-hook-info.c - WeeChat info hook
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -34,6 +34,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_info_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_INFO(hook, info_name));
+}
+
+/*
  * Hooks an info.
  *
  * Returns pointer to new hook, NULL if error.
@@ -64,7 +76,8 @@ hook_info (struct t_weechat_plugin *plugin, const char *info_name,
         return NULL;
     }
 
-    hook_get_priority_and_name (info_name, &priority, &ptr_info_name);
+    string_get_priority_and_name (info_name, &priority, &ptr_info_name,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_INFO, priority,
                     callback_pointer, callback_data);
 
@@ -109,8 +122,7 @@ hook_info_get (struct t_weechat_plugin *plugin, const char *info_name,
 
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (string_strcasecmp (HOOK_INFO(ptr_hook, info_name),
-                                   info_name) == 0))
+            && (strcmp (HOOK_INFO(ptr_hook, info_name), info_name) == 0))
         {
             ptr_hook->running = 1;
             value = (HOOK_INFO(ptr_hook, callback))

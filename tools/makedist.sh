@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -75,3 +75,6 @@ git archive --prefix="${PREFIX}" "${TREEISH}" | bzip2 -c >"${FILE}.bz2"
 
 echo "Building package ${FILE}.xz"
 git archive --prefix="${PREFIX}" "${TREEISH}" | xz -c >"${FILE}.xz"
+
+echo "Building package ${FILE}.zst"
+git archive --prefix="${PREFIX}" "${TREEISH}" | zstd -c -15 >"${FILE}.zst"

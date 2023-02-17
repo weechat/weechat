@@ -1,7 +1,7 @@
 /*
  * wee-hdata.c - direct access to WeeChat data using hashtables
  *
- * Copyright (C) 2011-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2011-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -1207,21 +1207,21 @@ hdata_get_string (struct t_hdata *hdata, const char *property)
     if (!hdata || !property)
         return NULL;
 
-    if (string_strcasecmp (property, "var_keys") == 0)
+    if (strcmp (property, "var_keys") == 0)
         return hashtable_get_string (hdata->hash_var, "keys");
-    else if (string_strcasecmp (property, "var_values") == 0)
+    else if (strcmp (property, "var_values") == 0)
         return hashtable_get_string (hdata->hash_var, "values");
-    else if (string_strcasecmp (property, "var_keys_values") == 0)
+    else if (strcmp (property, "var_keys_values") == 0)
         return hashtable_get_string (hdata->hash_var, "keys_values");
-    else if (string_strcasecmp (property, "var_prev") == 0)
+    else if (strcmp (property, "var_prev") == 0)
         return hdata->var_prev;
-    else if (string_strcasecmp (property, "var_next") == 0)
+    else if (strcmp (property, "var_next") == 0)
         return hdata->var_next;
-    else if (string_strcasecmp (property, "list_keys") == 0)
+    else if (strcmp (property, "list_keys") == 0)
         return hashtable_get_string (hdata->hash_list, "keys");
-    else if (string_strcasecmp (property, "list_values") == 0)
+    else if (strcmp (property, "list_values") == 0)
         return hashtable_get_string (hdata->hash_list, "values");
-    else if (string_strcasecmp (property, "list_keys_values") == 0)
+    else if (strcmp (property, "list_keys_values") == 0)
         return hashtable_get_string (hdata->hash_list, "keys_values");
 
     return NULL;

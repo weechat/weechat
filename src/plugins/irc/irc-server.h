@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -79,6 +79,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_COMMAND,       /* command to run once connected        */
     IRC_SERVER_OPTION_COMMAND_DELAY, /* delay after execution of command     */
     IRC_SERVER_OPTION_AUTOJOIN,      /* channels to automatically join       */
+    IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC, /* auto set autojoin option          */
     IRC_SERVER_OPTION_AUTOREJOIN,    /* auto rejoin channels when kicked     */
     IRC_SERVER_OPTION_AUTOREJOIN_DELAY,     /* delay before auto rejoin      */
     IRC_SERVER_OPTION_CONNECTION_TIMEOUT,   /* timeout for connection        */
@@ -93,6 +94,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH, /* max length of messages        */
     IRC_SERVER_OPTION_CHARSET_MESSAGE,      /* what to decode/encode in msg  */
     IRC_SERVER_OPTION_DEFAULT_CHANTYPES,    /* chantypes if not received     */
+    IRC_SERVER_OPTION_REGISTERED_MODE,      /* mode set on registered user   */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };
@@ -152,6 +154,14 @@ enum t_irc_server_utf8mapping
     IRC_SERVER_NUM_UTF8MAPPING,
 };
 
+/* authentication method */
+enum t_irc_server_auth_method
+{
+    IRC_SERVER_AUTH_METHOD_NONE = 0,
+    IRC_SERVER_AUTH_METHOD_SASL,
+    IRC_SERVER_AUTH_METHOD_OTHER,
+};
+
 /* output queue of messages to server (for sending slowly to server) */
 
 struct t_irc_outqueue
@@ -199,6 +209,8 @@ struct t_irc_server
     char *sasl_scram_auth_message;  /* auth message for SASL SCRAM           */
     char *sasl_temp_username;       /* temp SASL username (set by /auth cmd) */
     char *sasl_temp_password;       /* temp SASL password (set by /auth cmd) */
+    int authentication_method;      /* authentication method used to login   */
+    int sasl_mechanism_used;        /* SASL method used at login time        */
     int is_connected;               /* 1 if WeeChat is connected to server   */
     int ssl_connected;              /* = 1 if connected with SSL             */
     int disconnected;               /* 1 if server has been disconnected     */
@@ -240,7 +252,7 @@ struct t_irc_server
     time_t reconnect_start;         /* this time + delay = reconnect time    */
     time_t command_time;            /* this time + command_delay = time to   */
                                     /* autojoin channels                     */
-    int reconnect_join;             /* 1 if channels opened to rejoin        */
+    int autojoin_done;              /* 1 if autojoin has been done           */
     int disable_autojoin;           /* 1 if user asked to not autojoin chans */
     int is_away;                    /* 1 is user is marked as away           */
     char *away_message;             /* away message, NULL if not away        */
@@ -305,7 +317,6 @@ extern char *irc_server_options[][2];
 
 extern int irc_server_valid (struct t_irc_server *server);
 extern struct t_irc_server *irc_server_search (const char *server_name);
-extern struct t_irc_server *irc_server_casesearch (const char *server_name);
 extern int irc_server_search_option (const char *option_name);
 extern int irc_server_search_casemapping (const char *casemapping);
 extern int irc_server_search_utf8mapping (const char *utf8mapping);
@@ -423,7 +434,8 @@ extern struct t_hdata *irc_server_hdata_server_cb (const void *pointer,
                                                    void *data,
                                                    const char *hdata_name);
 extern int irc_server_add_to_infolist (struct t_infolist *infolist,
-                                       struct t_irc_server *server);
+                                       struct t_irc_server *server,
+                                       int force_disconnected_state);
 extern void irc_server_print_log ();
 
 #endif /* WEECHAT_PLUGIN_IRC_SERVER_H */

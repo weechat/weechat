@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -22,6 +22,7 @@
 
 #define weechat_plugin weechat_buflist_plugin
 #define BUFLIST_PLUGIN_NAME "buflist"
+#define BUFLIST_PLUGIN_PRIORITY 10000
 
 #define BUFLIST_BAR_NAME "buflist"
 

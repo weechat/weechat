@@ -1,7 +1,7 @@
 /*
  * buflist-command.c - buflist command
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -46,31 +46,31 @@ buflist_command_buflist (const void *pointer, void *data,
     if (argc == 1)
         return WEECHAT_RC_OK;
 
-    if (weechat_strcasecmp (argv[1], "enable") == 0)
+    if (weechat_strcmp (argv[1], "enable") == 0)
     {
         weechat_config_option_set (buflist_config_look_enabled, "on", 1);
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "disable") == 0)
+    if (weechat_strcmp (argv[1], "disable") == 0)
     {
         weechat_config_option_set (buflist_config_look_enabled, "off", 1);
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "toggle") == 0)
+    if (weechat_strcmp (argv[1], "toggle") == 0)
     {
         weechat_config_option_set (buflist_config_look_enabled, "toggle", 1);
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "bar") == 0)
+    if (weechat_strcmp (argv[1], "bar") == 0)
     {
         buflist_add_bar ();
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "refresh") == 0)
+    if (weechat_strcmp (argv[1], "refresh") == 0)
     {
         buflist_bar_item_update (0);
         return WEECHAT_RC_OK;
@@ -167,6 +167,8 @@ buflist_command_init ()
            "    - ${hotlist}: the raw hotlist\n"
            "    - ${hotlist_priority}: \"none\", \"low\", \"message\", "
            "\"private\" or \"highlight\"\n"
+           "    - ${hotlist_priority_number}: -1 = none, 0 = low, 1 = message, "
+           "2 = private, 3 = highlight\n"
            "    - ${format_lag}: the lag for an IRC server buffer, empty if "
            "there's no lag (evaluation of option buflist.format.lag)\n"
            "    - ${format_tls_version}: indicator of TLS version for a server "

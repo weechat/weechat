@@ -1,7 +1,7 @@
 /*
  * gui-cursor.c - functions for free movement of cursor (used by all GUI)
  *
- * Copyright (C) 2011-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2011-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -143,7 +143,7 @@ gui_cursor_display_debug_info ()
                   focus_info->chat,
                   focus_info->chat_word);
         gui_input_delete_line (gui_current_window->buffer);
-        gui_input_insert_string (gui_current_window->buffer, str_info, -1);
+        gui_input_insert_string (gui_current_window->buffer, str_info);
         gui_focus_free_info (focus_info);
     }
 }

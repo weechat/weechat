@@ -10,9 +10,6 @@
 :docinfo1:
 
 
-この文書は WeeChat バージョン 0.3.0 以上向けに書かれたものですが、
-最新安定版の WeeChat に対しても利用できます。
-
 翻訳者:
 
 * Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2012-2019
@@ -37,7 +34,9 @@ WeeChat とは関係ありませんよ!)。
 
 WeeChat は非常に軽く、革新的な機能を備えているからです。
 
-WeeChat の機能に関するより詳しい情報: https://weechat.org/about/features
+// TRANSLATION MISSING
+More info on the WeeChat
+https://weechat.org/about/features/[features page ^↗^,window=_blank].
 
 [[compilation_install]]
 == コンパイル / インストール
@@ -45,27 +44,27 @@ WeeChat の機能に関するより詳しい情報: https://weechat.org/about/fe
 [[gui]]
 === WeeChat には多くの GUI があると聞きました。コンパイル/利用方法を教えてください。
 
-いくつかのリモート GUI が利用可能です、以下のリモートインターフェースに関するページを参照してください:
-https://weechat.org/about/interfaces
+// TRANSLATION MISSING
+Some remote GUIs are available, see the
+https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blank].
 
 [[compile_git]]
 === git リポジトリをクローンした後に WeeChat をコンパイルできません。
 
-WeeChat をコンパイルするには link:weechat_user.ja.html#compile_with_cmake[CMake]
-を使うことが推奨されています。
+// TRANSLATION MISSING
+WeeChat must be compiled with CMake.
 
-link:weechat_user.ja.html#compile_with_autotools[autotools] を使って (CMake を使わずに)
-コンパイルする場合、最新の autoconf と automake を使ってください。
+// TRANSLATION MISSING
+Please follow link:weechat_user.en.html#source_package[build instructions ^↗^,window=_blank]
+and ensure all required dependencies are installed.
 
-他には「開発パッケージ」をインストール方法があります。この場合、インストールするのに必要なパッケージの数が減ります。このパッケージは
-git リポジトリからほぼ毎日ビルドされます。このパッケージは厳密には
-git ベースではなく、アップデートをインストールする場合には
-git をクローンする方法よりも不便であることに注意してください。
+// TRANSLATION MISSING
+If you still have issues, please report them to the developers.
 
 [[compile_macos]]
 === どうすれば macOS に WeeChat をインストールできますか?
 
-https://brew.sh/[Homebrew] を使うことをお勧めします、ヘルプを見るには:
+https://brew.sh/[Homebrew ^↗^,window=_blank] を使うことをお勧めします、ヘルプを見るには:
 
 ----
 brew info weechat
@@ -81,9 +80,9 @@ brew install weechat
 === WeeChat を起動しました。でも何をすればいいかわかりません。
 
 ヘルプを見るには、`/help` と入力してください。コマンドに関するヘルプを見るには、`/help command`
-と入力してください。link:weechat_user.ja.html#key_bindings[キー]とlink:weechat_user.ja.html#commands_and_options[コマンド]は文書中で説明されています。
+と入力してください。link:weechat_user.ja.html#key_bindings[キー ^↗^,window=_blank]とlink:weechat_user.ja.html#commands_and_options[コマンド ^↗^,window=_blank]は文書中で説明されています。
 
-新しいユーザはlink:weechat_quickstart.ja.html[クイックスタートガイド]を読むことをお勧めします
+新しいユーザはlink:weechat_quickstart.ja.html[クイックスタートガイド ^↗^,window=_blank]を読むことをお勧めします
 
 [[display]]
 == 表示
@@ -109,7 +108,7 @@ brew install weechat
    rxvt-unicode を推奨)
 ** screen を使っている場合は、UTF-8 モードで起動されていることを確認
    (~/.screenrc に "`defutf8 on`" の記述があるかまたは `screen -U` のようにして起動)。
-* link:weechat_user.ja.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_]
+* link:weechat_user.ja.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^,window=_blank]
   オプションが off であることを確認してください (このオプションは表示上のバグを引き起こす可能性があります)
 
 [NOTE]
@@ -124,10 +123,11 @@ WeeChat は UTF-8 ロケールを推奨します。ISO
 で修正されているはずです (使用中のディストリビューションではまだ提供されていないかもしれません)
 
 次の回避方法を使えば、修正済みの _wcwidth_ 関数を使う事が可能です:
-https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
+https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^,window=_blank].
 
-より詳しい情報を得るにはバグ報告を参照してください:
-https://github.com/weechat/weechat/issues/79
+// TRANSLATION MISSING
+See this https://github.com/weechat/weechat/issues/79[bug report ^↗^,window=_blank]
+for more information.
 
 [[bars_background]]
 === タイトルやステータスバー等の背景色が行末ではなくテキストの最後で終わってしまいます。
@@ -184,17 +184,12 @@ _ウィンドウ_
 [[buffers_list]]
 === どうすれば左側にバッファリストを表示できますか。
 
-WeeChat バージョン 1.8 以上の場合、link:weechat_user.ja.html#buflist_plugin[buflist]
-プラグインがロードされ、デフォルトで有効化されます。
+// TRANSLATION MISSING
+The plugin link:weechat_user.ja.html#buflist[buflist ^↗^,window=_blank]
+is loaded and enabled by default.
 
-バージョン 1.8 よりも古い WeeChat をお使いなら、以下の方法で _buffers.pl_ スクリプトをインストールしてください:
-
-----
-/script install buffers.pl
-----
-
-バッファリストバーのサイズを制限するには以下の方法を使ってください
-(_buffers.pl_ スクリプトを使っているなら、"buflist" を "buffers" に置き換えてください):
+// TRANSLATION MISSING
+To limit size of bar:
 
 ----
 /set weechat.bar.buflist.size_max 15
@@ -211,21 +206,6 @@ _buflist_ バーをスクロールする方法: マウスを有効化してい�
 
 _buflist_ バーをスクロールするデフォルトキーは
 kbd:[F1] (または kbd:[Ctrl+F1])、kbd:[F2] (または kbd:[Ctrl+F2])、kbd:[Alt+F1]、kbd:[Alt+F2] です。
-
-_buffers.pl_
-スクリプトをお使いの場合、ニックネームリストをスクロールするキーと似たキーを割り当てることも可能です。 +
-例えば、kbd:[F1]、kbd:[F2]、kbd:[Alt+F1]、kbd:[Alt+F2] を割り当てるには以下の方法を使います:
-
-----
-/key bind meta-OP /bar scroll buffers * -100%
-/key bind meta-OQ /bar scroll buffers * +100%
-/key bind meta-meta-OP /bar scroll buffers * b
-/key bind meta-meta-OQ /bar scroll buffers * e
-----
-
-[NOTE]
-"meta-OP" と "meta-OQ" キーは端末によって異なります。キーコードを見つけるには
-kbd:[Alt+k] の後にキーを押してください。
 
 // TRANSLATION MISSING
 [[customize_buflist]]
@@ -253,8 +233,8 @@ like `237` for dark gray.
 The buflist plugin provides lot of options that you can customize, please read
 the help on each option.
 
-There's also a wiki page with examples of advanced buflist configuration:
-https://github.com/weechat/weechat/wiki/buflist
+There's also a https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^,window=_blank]
+with examples of advanced buflist configuration.
 
 [[customize_prefix]]
 === どうすればチャットエリア内のニックネームの最大長さを短く、またはニックネーム整列機能を無効化できますか。
@@ -295,7 +275,7 @@ https://github.com/weechat/weechat/wiki/buflist
 および __weechat.color.status_count_*__ オプション (カウンタ) を設定します。 +
 その他のホットリスト関連オプションは __weechat.look.hotlist_*__ オプションを使って変更します。
 
-ホットリストに関する詳しい情報はlink:weechat_user.ja.html#screen_layout[ユーザーズガイド / 画面レイアウト]を参照してください
+ホットリストに関する詳しい情報はlink:weechat_user.ja.html#screen_layout[ユーザーズガイド / 画面レイアウト ^↗^,window=_blank]を参照してください
 
 [[input_bar_size]]
 === コマンドラインの行数を増やすにはどうすればいいですか。
@@ -340,9 +320,9 @@ WeeChat は自動的にデフォルトバー "input" を作成します:
 [[terminal_copy_paste]]
 === どうすればニックネームリストを選択せずにテキストだけをコピー/ペーストできますか。
 
-WeeChat バージョン 1.0 以上の場合、最小限表示を使うことができます
-(デフォルトキー: kbd:[Alt+l] (`L`))。
-最小限表示では現在選択中のウィンドウの内容のみが表示され、フォーマットもされません。
+// TRANSLATION MISSING
+You can use the bare display (default key: kbd:[Alt+l] (`L`)), which shows
+just the contents of the currently selected window, without any formatting.
 
 矩形選択のできる端末を使ってください
 (rxvt-unicode、konsole、gnome-terminal、...)。通常、キーは
@@ -357,7 +337,8 @@ kbd:[Ctrl] + kbd:[Alt] + マウス選択です。
 [[urls]]
 === どうすれば長い (一行以上に渡る) URL をクリックできますか。
 
-WeeChat バージョン 1.0 以上の場合、最小限表示を使うことができます (デフォルトキー: kbd:[Alt+l] (`L`))。
+// TRANSLATION MISSING
+You can use the bare display (default key: kbd:[Alt+l] (`L`)).
 
 URL を簡単にクリックできるようにするには、以下を試してみてください:
 
@@ -367,7 +348,7 @@ URL を簡単にクリックできるようにするには、以下を試して�
 /set weechat.bar.nicklist.position top
 ----
 
-* 複数行に渡る単語の整列を無効化します (WeeChat バージョン 1.7 以上の場合):
+* 複数行に渡る単語の整列を無効化します:
 
 ----
 /set weechat.look.align_multiline_words off
@@ -379,9 +360,9 @@ URL を簡単にクリックできるようにするには、以下を試して�
 /set weechat.look.align_end_of_lines time
 ----
 
-WeeChat バージョン 0.3.6 以上の場合、"eat_newline_glitch"
-オプションを有効化できます。これを有効化すると、表示行の行末に改行文字が入らなくなります
-(url 選択を邪魔しません)。
+// TRANSLATION MISSING
+You can enable option "eat_newline_glitch", so that new line char is not added
+at the end of each line displayed (it will not break URL selection):
 
 ----
 /set weechat.look.eat_newline_glitch on
@@ -432,8 +413,6 @@ In WeeChat, the new value is immediately used:
 [[use_256_colors]]
 === どうすれば WeeChat で 256 色が使えますか。
 
-WeeChat バージョン 0.3.4 以上の場合、256 色がサポートされます。
-
 最初に _TERM_
 環境変数が正しいことを確認してください、お勧めの値は:
 
@@ -452,19 +431,18 @@ term screen-256color
 ----
 
 _TERM_ 変数が間違った値に設定された状態で WeeChat が起動完了している場合は、以下の
-2 つのコマンドを使って変数の値を変更してください (WeeChat バージョン 1.0 以上で利用可):
+2 つのコマンドを使って変数の値を変更してください:
 
 ----
 /set env TERM screen-256color
 /upgrade
 ----
 
-WeeChat バージョン 0.3.4 の場合、新しい色を追加するには `/color` コマンドを使ってください。
+// TRANSLATION MISSING
+You can use any color number in options (optional: you can add color aliases
+with command `/color`).
 
-WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用できます (オプション:
-色の別名を追加するには `/color` コマンドを使ってください)。
-
-色管理に関するより詳しい情報はlink:weechat_user.ja.html#colors[ユーザーズガイド / 色]を参照してください
+色管理に関するより詳しい情報はlink:weechat_user.ja.html#colors[ユーザーズガイド / 色 ^↗^,window=_blank]を参照してください
 
 [[search_text]]
 === どうすればバッファ内の文字列を検索できますか (irssi の /lastlog の様に)。
@@ -472,7 +450,7 @@ WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用で�
 デフォルトのキーは kbd:[Ctrl+r] です (コマンドは: `+/input search_text_here+`)。
 ハイライト部分へのジャンプは: kbd:[Alt+p] / kbd:[Alt+n]
 
-この機能に関するより詳しい情報はlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て]を参照してください
+この機能に関するより詳しい情報はlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て ^↗^,window=_blank]を参照してください
 
 [[terminal_focus]]
 === どうすれば端末にフォーカスが合った時や外れた時にコマンドを実行できますか。
@@ -505,7 +483,7 @@ WeeChat の開始時にコードを送信するには:
 端末のフォーカスが外れた時点でバッファに未読マークをつける例:
 
 ----
-/key bind meta2-O /input set_unread
+/key bind meta2-O /allbuf /buffer set unread
 ----
 
 [[screen_paste]]
@@ -648,7 +626,7 @@ macOS のターミナル.app を使っている場合、設定メニューのキ
 /key bind meta-q /buffer *11
 ----
 
-デフォルトキー割り当てのリストはlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て]を参照してください
+デフォルトキー割り当てのリストはlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て ^↗^,window=_blank]を参照してください
 
 番号 100 以上のバッファにジャンプするには、以下のトリガを定義してください。こうすることでコマンド
 `/123` でバッファ #123 にジャンプできるようになります:
@@ -679,8 +657,6 @@ kbd:[Alt+k] の後にキー を押してください。
 
 [[mouse_not_working]]
 === マウスが少しも動きません。どうすれば良いですか。
-
-マウスのサポートは WeeChat 0.3.6 以上からです。
 
 最初にマウスを有効化してください:
 
@@ -731,13 +707,6 @@ WeeChat でマウスが利用可能な場合、kbd:[Shift]
 macOS をお使いの場合、必ず Homebrew から `openssl`
 をインストールしてください。こうすることでシステムの鍵束に含まれる証明書を使いつつ、CA
 
-// TRANSLATION MISSING
-With WeeChat ≤ 3.1, you can set the path to system certificates:
-
-----
-/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
-----
-
 gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キー
 (デフォルトは 2048) のサイズを小さくすることを試してみてください:
 
@@ -762,8 +731,8 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 [[irc_ssl_handshake_error]]
 === SSL を使うサーバへの接続中に、"TLS handshake failed" というエラーだけが表示されます。どうすれば良いですか。
 
-異なる優先順位文字列を試してみてください
-(WeeChat 0.3.5 以上)、"xxx" はサーバ名に書き換えてください。
+// TRANSLATION MISSING
+You can try a different priority string, replace "xxx" by your server name:
 
 ----
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
@@ -773,22 +742,8 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 === どうすれば SSL を使って libera サーバに接続できますか。
 
 // TRANSLATION MISSING
-With WeeChat ≤ 3.1, set option _weechat.network.gnutls_ca_file_ to file with
-certificates:
-
-----
-/set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
-----
-
-注意: macOS 上で homebrew を使って openssl をインストールした場合には、以下のコマンドを実行してください:
-
-----
-/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
-----
-
-[NOTE]
-設定したファイルが自分のシステムに存在することを確認してください
-(一般に "ca-certificates" パッケージで提供されます)。
+Check that you have certificates installed on your system, this is commonly
+provided by the package "ca-certificates".
 
 サーバポート、SSL を設定の後に接続してください:
 
@@ -834,25 +789,41 @@ SASL を利用する方が良いです。例えば:
 [[edit_autojoin]]
 === どうすれば自動参加オプションにチャンネルを追加/削除できますか。
 
-`/set` コマンドを使って、自動参加チャンネルのリストを編集してください。"libera"
-サーバに対してこれを実行するには以下のようにします:
+// TRANSLATION MISSING
+With WeeChat ≥ 3.5, you can automatically record the channels you manually
+join and part in the "autojoin" server option.
+
+// TRANSLATION MISSING
+For all servers:
 
 ----
-/set irc.server.libera.autojoin [TAB]
+/set irc.server_default.autojoin_dynamic on
 ----
 
-[NOTE]
-kbd:[Tab] キーを使うことで、オプションの名前と値を補完できます
-(もしくは kbd:[Shift+Tab] キーで部分補完、オプション名を補完する際に便利です)。 +
-チャンネルをすべて入力する必要はありません。
-
-もしくは `/fset` コマンドを使うことで、チャンネルのリストを編集できます:
+// TRANSLATION MISSING
+For a single server:
 
 ----
-/fset autojoin
+/set irc.server.libera.autojoin_dynamic on
 ----
 
-専用のスクリプトを使うこともできます:
+// TRANSLATION MISSING
+You can also add the current channel in the "autojoin" server option using the
+`/autojoin` command:
+
+----
+/autojoin add
+----
+
+// TRANSLATION MISSING
+Or another channel:
+
+----
+/autojoin add #test
+----
+
+// TRANSLATION MISSING
+There are also scripts:
 
 ----
 /script search autojoin
@@ -892,14 +863,15 @@ WeeChat
 
 [NOTE]
 ヘルプを見るには `/help filter`、`+/help irc.look.smart_filter+`、link:weechat_user.ja.html#irc_smart_filter_join_part_quit[ユーザーズガイド
-/ 参加/退出/終了メッセージに対するスマートフィルタ] を使ってください。
+/ 参加/退出/終了メッセージに対するスマートフィルタ ^↗^,window=_blank] を使ってください。
 
 [[filter_irc_join_channel_messages]]
 === どうすれば IRC チャンネルに参加した際に表示される一部のメッセージをフィルタできますか。
 
-WeeChat バージョン 0.4.1 以上の場合、_irc.look.display_join_message_
-オプションを使って、チャンネル参加時に表示するメッセージの種類を選択できます
-(より詳しい情報は `+/help irc.look.display_join_message+` を参照)。
+// TRANSLATION MISSING
+You can choose which messages are displayed when joining a channel with the
+option _irc.look.display_join_message_ (see `+/help irc.look.display_join_message+`
+for more info).
 
 メッセージを隠す (ただしバッファに残す) には、タグを使ってメッセージをフィルタしてください
 (たとえばチャンネル作成日時を隠すには _irc_329_ タグを使ってください)。フィルタの書き方に関する情報は
@@ -954,17 +926,14 @@ WeeChat
 /set irc.server_default.away_check_max_nicks 25
 ----
 
-[NOTE]
-WeeChat 0.3.3 以下では、オプション名が _irc.network.away_check_ と
-_irc.network.away_check_max_nicks_ になっています。
-
 [[highlight_notification]]
 === どうすればあるチャンネルで自分が呼ばれたら警告できますか。
 
-WeeChat バージョン 1.0 以上の場合、デフォルトトリガ "beep"
-が設定されています。これはハイライトまたはプライベートメッセージを受け取った際に
-_BEL_ を端末に送信します。このため、端末 (または screen/tmux などのマルチプレクサ)
-を設定して、_BEL_ が発生した際にコマンドを実行させたり音を再生させることができます。
+// TRANSLATION MISSING
+There is a default trigger "beep" which sends a _BEL_ to the terminal on
+a highlight or private message. Thus you can configure your terminal
+(or multiplexer like screen/tmux) to run a command or play a sound when
+a _BEL_ occurs.
 
 もしくは "beep" トリガにコマンドを追加することもできます:
 
@@ -989,9 +958,11 @@ _launcher.pl_ の場合、コマンドの設定が必要です:
 [[disable_highlights_for_specific_nicks]]
 === 特定のニックネームのみハイライトを無効化する方法を教えてください。
 
-WeeChat バージョン 0.3.4 以上の場合、link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add]
-バッファプロパティを使うことで、ニックネーム単位、バッファ単位、バッファグループ単位
-(IRC サーバ単位) でホットリストレベルの最大値を設定できます。
+// TRANSLATION MISSING
+You can use the
+link:weechat_user.ja.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
+buffer property to set the max hotlist level for some nicks, per buffer,
+or per group of buffers (like IRC servers).
 
 ハイライトを無効化するだけなら、このプロパティを 2 に設定してください:
 
@@ -1024,7 +995,7 @@ WeeChat バージョン 0.3.4 以上の場合、link:weechat_user.en.html#max_ho
 [[irc_target_buffer]]
 === どうすればマージされたバッファ内であるコマンドを発行するターゲットバッファを変更できますか。
 
-デフォルトのキーは kbd:[Ctrl+x] です (コマンドは: `+/input switch_active_buffer+`)。
+デフォルトのキーは kbd:[Ctrl+x] です (コマンドは: `+/buffer switch+`)。
 
 [[plugins_scripts]]
 == プラグイン / スクリプト
@@ -1044,10 +1015,9 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 [[install_scripts]]
 === どうすればスクリプトをインストールできますか。スクリプトは他の IRC クライアントと互換性がありますか。
 
-WeeChat バージョン 0.3.9 以上の場合、コマンド `/script`
-を使うことで、スクリプトをインストールしたり管理することができます
-(ヘルプは `/help script` で見ることができます)。それよりも古いバージョンでは
-weeget.py と script.pl を使ってください。
+// TRANSLATION MISSING
+You can use the command `/script` to install and manage scripts (see `/help script`
+for help).
 
 スクリプトは他の IRC クライアントのものと互換性がありません。
 
@@ -1064,7 +1034,7 @@ $ rm ~/.cache/weechat/script/plugins.xml.gz
 
 // TRANSLATION MISSING
 [NOTE]
-With WeeChat ≤ 3.1, the path should be: _~/.weechat/script/plugins.xml.gz_.
+If you are not using the XDG directories, the path could be: _~/.weechat/script/plugins.xml.gz_.
 
 その後、WeeChat からスクリプトリストを更新してください:
 
@@ -1089,6 +1059,15 @@ $ cd ~/.cache/weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
+// TRANSLATION MISSING
+If you're running macOS and the downloaded file has a size of 0 bytes,
+try to set this variable in your shell initialization file or on command line,
+before starting WeeChat:
+
+----
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+----
+
 [[spell_dictionaries]]
 === システムに aspell 辞書をインストールした後、WeeChat を再起動せずにそれを使う方法を教えてください。
 
@@ -1097,10 +1076,6 @@ spell プラグインをリロードしてください:
 ----
 /plugin reload spell
 ----
-
-[NOTE]
-WeeChat バージョン 2.4 以下では "spell" プラグインは "aspell" と呼ばれていたため、コマンドは以下のようになります:
-`/plugin reload aspell`.
 
 [[settings]]
 == 設定
@@ -1187,7 +1162,7 @@ IRC の退出および終了メッセージを無効化します:
 パスフレーズを定義してパスワードなどの保護したいデータの使用時は常にセキュアデータを使います:
 `/help secure` およびセキュアデータを使用したいオプションの `/help` を参照してください
 (セキュアデータを使うことが可能なオプションのヘルプにはこの点が明記されています)。
-link:weechat_user.ja.html#secured_data[ユーザーズガイド / 暗号化データ] を参照してください。
+link:weechat_user.ja.html#secured_data[ユーザーズガイド / 暗号化データ ^↗^,window=_blank] を参照してください。
 
 例:
 
@@ -1210,7 +1185,7 @@ contains your passwords ciphered with your passphrase.
 Some other files may contain sensitive info like passwords (if they are not
 stored in _sec.conf_ with the `/secure` command).
 
-設定ファイルに関する詳しい情報はlink:weechat_user.ja.html#files_and_directories[ユーザーズガイド / ファイルとディレクトリ]を参照してください。
+設定ファイルに関する詳しい情報はlink:weechat_user.ja.html#files_and_directories[ユーザーズガイド / ファイルとディレクトリ ^↗^,window=_blank]を参照してください。
 
 [[development]]
 == 開発
@@ -1218,7 +1193,8 @@ stored in _sec.conf_ with the `/secure` command).
 [[bug_task_patch]]
 === どのようにバグ報告、新機能のリクエスト、パッチ送信すればよいですか。
 
-以下のページを参照してください: https://weechat.org/about/support
+// TRANSLATION MISSING
+See https://weechat.org/about/support/[this page ^↗^,window=_blank].
 
 [[gdb_error_threads]]
 === gdb で WeeChat を実行する場合、スレッドに関するエラーが発生します。
@@ -1255,11 +1231,13 @@ OS で WeeChat をテストすることを歓迎します。
 
 多くの課題があります (テスト、コード、ドキュメント作成、...)。
 
-IRC かメールで連絡を取り、サポートページを確認してください:
-https://weechat.org/about/support
+// TRANSLATION MISSING
+Please contact us via IRC or mail, look at
+https://weechat.org/about/support/[support page ^↗^,window=_blank].
 
 [[donate]]
 === WeeChat 開発者にお金か何かを贈りたいのですが。
 
-開発補助のためお金を贈ることができます。詳しいことは
-https://weechat.org/donate に載っています。
+// TRANSLATION MISSING
+You can give us money to help development.
+Details on https://weechat.org/donate/[donation page ^↗^,window=_blank].

@@ -1,7 +1,7 @@
 /*
  * test-gui-line.cpp - test line functions
  *
- * Copyright (C) 2018-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2018-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -27,10 +27,34 @@ extern "C"
 #include "src/core/wee-config.h"
 #include "src/core/wee-string.h"
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-chat.h"
+#include "src/gui/gui-color.h"
 #include "src/gui/gui-filter.h"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-line.h"
 }
+
+#define WEE_BUILD_STR_PREFIX_MSG(__result, __prefix, __message)         \
+    line = gui_line_new (gui_buffers, -1, 0, 0, "tag1,tag2",            \
+                         __prefix, __message);                          \
+    str = gui_line_build_string_prefix_message (line->data->prefix,     \
+                                                line->data->message);   \
+    STRCMP_EQUAL(__result, str);                                        \
+    free (str);                                                         \
+    gui_line_free_data (line);                                          \
+    free (line);
+
+#define WEE_BUILD_STR_MSG_TAGS(__tags, __message, __colors)             \
+    line = gui_line_new (gui_buffers, -1, 0, 0, __tags,                 \
+                         NULL, __message);                              \
+    str = gui_line_build_string_message_tags (line->data->message,      \
+                                              line->data->tags_count,   \
+                                              line->data->tags_array,   \
+                                              __colors);                \
+    STRCMP_EQUAL(str_result, str);                                      \
+    free (str);                                                         \
+    gui_line_free_data (line);                                          \
+    free (line);
 
 #define WEE_LINE_MATCH_TAGS(__result, __line_tags, __tags)              \
     gui_line_tags_alloc (&line_data, __line_tags);                      \
@@ -159,6 +183,100 @@ TEST(GuiLine, GetPrefixForDisplay)
 TEST(GuiLine, GetAlign)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_line_build_string_prefix_message
+ */
+
+TEST(GuiLine, BuildStringPrefixMessage)
+{
+    struct t_gui_line *line;
+    char *str, str_prefix[256], str_message[256];
+
+    WEE_BUILD_STR_PREFIX_MSG("\tmessage", NULL, "message");
+    WEE_BUILD_STR_PREFIX_MSG("\tmessage", "", "message");
+    WEE_BUILD_STR_PREFIX_MSG("prefix\tmessage", "prefix", "message");
+
+    snprintf (str_prefix, sizeof (str_prefix),
+              "%sblue prefix",
+              gui_color_get_custom ("blue"));
+    snprintf (str_message, sizeof (str_message),
+              "%sred message",
+              gui_color_get_custom ("red"));
+    WEE_BUILD_STR_PREFIX_MSG("blue prefix\tred message", str_prefix, str_message);
+}
+
+/*
+ * Tests functions:
+ *   gui_line_build_string_message_tags
+ */
+
+TEST(GuiLine, BuildStringMessageTags)
+{
+    struct t_gui_line *line;
+    char *str, str_message[256], str_result[256];
+
+    line = gui_line_new (gui_buffers, -1, 0, 0, "tag1,tag2", NULL, "test");
+    POINTERS_EQUAL(NULL,
+                   gui_line_build_string_message_tags (line->data->message,
+                                                       -1,
+                                                       line->data->tags_array,
+                                                       1));
+    POINTERS_EQUAL(NULL,
+                   gui_line_build_string_message_tags (line->data->message,
+                                                       1,
+                                                       NULL,
+                                                       1));
+    gui_line_free_data (line);
+    free (line);
+
+    snprintf (str_result, sizeof (str_result),
+              "message%s [%s%s]",
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+              GUI_COLOR(GUI_COLOR_CHAT_TAGS),
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    WEE_BUILD_STR_MSG_TAGS(NULL, "message", 1);
+
+    snprintf (str_result, sizeof (str_result),
+              "message%s [%s%s]",
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+              GUI_COLOR(GUI_COLOR_CHAT_TAGS),
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    WEE_BUILD_STR_MSG_TAGS("", "message", 1);
+
+    snprintf (str_result, sizeof (str_result),
+              "message%s [%stag1%s]",
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+              GUI_COLOR(GUI_COLOR_CHAT_TAGS),
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    WEE_BUILD_STR_MSG_TAGS("tag1", "message", 1);
+
+    snprintf (str_result, sizeof (str_result),
+              "message%s [%stag1,tag2,tag3%s]",
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+              GUI_COLOR(GUI_COLOR_CHAT_TAGS),
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    WEE_BUILD_STR_MSG_TAGS("tag1,tag2,tag3", "message", 1);
+
+    snprintf (str_message, sizeof (str_message),
+              "message %sin red",
+              gui_color_get_custom ("red"));
+    snprintf (str_result, sizeof (str_result),
+              "message %sin red%s [%stag1,tag2,tag3%s]",
+              gui_color_get_custom ("red"),
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+              GUI_COLOR(GUI_COLOR_CHAT_TAGS),
+              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    WEE_BUILD_STR_MSG_TAGS("tag1,tag2,tag3", str_message, 1);
+
+    snprintf (str_message, sizeof (str_message),
+              "message %sin red",
+              gui_color_get_custom ("red"));
+    snprintf (str_result, sizeof (str_result),
+              "message in red [tag1,tag2,tag3]");
+    WEE_BUILD_STR_MSG_TAGS("tag1,tag2,tag3", str_message, 0);
 }
 
 /*
@@ -726,7 +844,144 @@ TEST(GuiLine, SetHighlight)
 
 TEST(GuiLine, New)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_line *line1, *line2, *line3, *line4;
+    time_t date_printed, date;
+    char *str_time;
+
+    date_printed = time (NULL);
+    date = date_printed - 1;
+    str_time = gui_chat_get_time_string (date);
+
+    POINTERS_EQUAL(NULL,
+                   gui_line_new (NULL, 0, date, date_printed, NULL, NULL, NULL));
+
+    /* create a new test buffer (formatted content) */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    line1 = gui_line_new (buffer, 0, date, date_printed, NULL, NULL, NULL);
+    CHECK(line1);
+    CHECK(line1->data);
+    POINTERS_EQUAL(NULL, line1->prev_line);
+    POINTERS_EQUAL(NULL, line1->next_line);
+    POINTERS_EQUAL(buffer, line1->data->buffer);
+    LONGS_EQUAL(0, line1->data->id);
+    LONGS_EQUAL(-1, line1->data->y);
+    LONGS_EQUAL(date, line1->data->date);
+    LONGS_EQUAL(date_printed, line1->data->date_printed);
+    STRCMP_EQUAL(str_time, line1->data->str_time);
+    LONGS_EQUAL(0, line1->data->tags_count);
+    POINTERS_EQUAL(NULL, line1->data->tags_array);
+    LONGS_EQUAL(1, line1->data->displayed);
+    LONGS_EQUAL(GUI_HOTLIST_LOW, line1->data->notify_level);
+    LONGS_EQUAL(0, line1->data->highlight);
+    LONGS_EQUAL(0, line1->data->refresh_needed);
+    STRCMP_EQUAL("", line1->data->prefix);
+    LONGS_EQUAL(0, line1->data->prefix_length);
+    STRCMP_EQUAL("", line1->data->message);
+    gui_line_add (line1);
+    POINTERS_EQUAL(NULL, line1->prev_line);
+    POINTERS_EQUAL(NULL, line1->next_line);
+
+    line2 = gui_line_new (buffer, 0, date, date_printed, "tag1,tag2,tag3",
+                          "prefix", "message");
+    CHECK(line2);
+    CHECK(line2->data);
+    POINTERS_EQUAL(NULL, line2->prev_line);
+    POINTERS_EQUAL(NULL, line2->next_line);
+    POINTERS_EQUAL(buffer, line2->data->buffer);
+    LONGS_EQUAL(1, line2->data->id);
+    LONGS_EQUAL(-1, line2->data->y);
+    LONGS_EQUAL(date, line2->data->date);
+    LONGS_EQUAL(date_printed, line2->data->date_printed);
+    STRCMP_EQUAL(str_time, line2->data->str_time);
+    LONGS_EQUAL(3, line2->data->tags_count);
+    CHECK(line2->data->tags_array);
+    STRCMP_EQUAL("tag1", line2->data->tags_array[0]);
+    STRCMP_EQUAL("tag2", line2->data->tags_array[1]);
+    STRCMP_EQUAL("tag3", line2->data->tags_array[2]);
+    LONGS_EQUAL(1, line2->data->displayed);
+    LONGS_EQUAL(GUI_HOTLIST_LOW, line2->data->notify_level);
+    LONGS_EQUAL(0, line2->data->highlight);
+    LONGS_EQUAL(0, line2->data->refresh_needed);
+    STRCMP_EQUAL("prefix", line2->data->prefix);
+    LONGS_EQUAL(6, line2->data->prefix_length);
+    STRCMP_EQUAL("message", line2->data->message);
+    gui_line_add (line2);
+    POINTERS_EQUAL(line1, line2->prev_line);
+    POINTERS_EQUAL(NULL, line2->next_line);
+
+    /* simulate next_line_id == INT_MAX and display 2 lines */
+    buffer->next_line_id = INT_MAX;
+    line3 = gui_line_new (buffer, 0, date, date_printed, NULL, NULL, "test");
+    CHECK(line3);
+    LONGS_EQUAL(INT_MAX, line3->data->id);
+    line4 = gui_line_new (buffer, 0, date, date_printed, NULL, NULL, "test");
+    CHECK(line4);
+    LONGS_EQUAL(0, line4->data->id);
+
+    gui_buffer_close (buffer);
+
+    /* create a new test buffer (free content) */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+
+    line1 = gui_line_new (buffer, 0, date, date_printed, NULL, NULL, NULL);
+    CHECK(line1);
+    CHECK(line1->data);
+    POINTERS_EQUAL(NULL, line1->prev_line);
+    POINTERS_EQUAL(NULL, line1->next_line);
+    POINTERS_EQUAL(buffer, line1->data->buffer);
+    LONGS_EQUAL(0, line1->data->id);
+    LONGS_EQUAL(0, line1->data->y);
+    LONGS_EQUAL(date, line1->data->date);
+    LONGS_EQUAL(date_printed, line1->data->date_printed);
+    POINTERS_EQUAL(NULL, line1->data->str_time);
+    LONGS_EQUAL(0, line1->data->tags_count);
+    POINTERS_EQUAL(NULL, line1->data->tags_array);
+    LONGS_EQUAL(1, line1->data->displayed);
+    LONGS_EQUAL(GUI_HOTLIST_LOW, line1->data->notify_level);
+    LONGS_EQUAL(0, line1->data->highlight);
+    LONGS_EQUAL(1, line1->data->refresh_needed);
+    POINTERS_EQUAL(NULL, line1->data->prefix);
+    LONGS_EQUAL(0, line1->data->prefix_length);
+    STRCMP_EQUAL("", line1->data->message);
+    gui_line_add (line1);
+    POINTERS_EQUAL(NULL, line1->prev_line);
+    POINTERS_EQUAL(NULL, line1->next_line);
+
+    line2 = gui_line_new (buffer, 3, date, date_printed, "tag1,tag2,tag3",
+                          NULL, "message");
+    CHECK(line2);
+    CHECK(line2->data);
+    POINTERS_EQUAL(NULL, line2->prev_line);
+    POINTERS_EQUAL(NULL, line2->next_line);
+    POINTERS_EQUAL(buffer, line2->data->buffer);
+    LONGS_EQUAL(3, line2->data->id);
+    LONGS_EQUAL(3, line2->data->y);
+    LONGS_EQUAL(date, line2->data->date);
+    LONGS_EQUAL(date_printed, line2->data->date_printed);
+    POINTERS_EQUAL(NULL, line2->data->str_time);
+    LONGS_EQUAL(3, line2->data->tags_count);
+    CHECK(line2->data->tags_array);
+    STRCMP_EQUAL("tag1", line2->data->tags_array[0]);
+    STRCMP_EQUAL("tag2", line2->data->tags_array[1]);
+    STRCMP_EQUAL("tag3", line2->data->tags_array[2]);
+    LONGS_EQUAL(1, line2->data->displayed);
+    LONGS_EQUAL(GUI_HOTLIST_LOW, line2->data->notify_level);
+    LONGS_EQUAL(0, line2->data->highlight);
+    LONGS_EQUAL(1, line2->data->refresh_needed);
+    POINTERS_EQUAL(NULL, line2->data->prefix);
+    LONGS_EQUAL(0, line2->data->prefix_length);
+    STRCMP_EQUAL("message", line2->data->message);
+    gui_line_add (line2);
+    CHECK(line2->prev_line);
+    POINTERS_EQUAL(NULL, line2->next_line);
+
+    gui_buffer_close (buffer);
+
+    free (str_time);
 }
 
 /*

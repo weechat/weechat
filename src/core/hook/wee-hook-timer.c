@@ -1,7 +1,7 @@
 /*
  * wee-hook-timer.c - WeeChat timer hook
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -24,6 +24,7 @@
 #endif
 
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 #include "../weechat.h"
@@ -36,6 +37,43 @@
 
 time_t hook_last_system_time = 0;      /* used to detect system clock skew  */
 
+
+/*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_timer_get_description (struct t_hook *hook)
+{
+    char str_desc[512];
+    int unit_seconds;
+    long interval;
+
+    unit_seconds = (HOOK_TIMER(hook, interval) % 1000 == 0);
+    interval = (unit_seconds) ?
+        HOOK_TIMER(hook, interval) / 1000 :
+        HOOK_TIMER(hook, interval);
+
+    if (HOOK_TIMER(hook, remaining_calls) > 0)
+    {
+        snprintf (str_desc, sizeof (str_desc),
+                  "%ld%s (%d calls remaining)",
+                  interval,
+                  (unit_seconds) ? "s" : "ms",
+                  HOOK_TIMER(hook, remaining_calls));
+    }
+    else
+    {
+        snprintf (str_desc, sizeof (str_desc),
+                  "%ld%s (no call limit)",
+                  interval,
+                  (unit_seconds) ? "s" : "ms");
+    }
+
+    return strdup (str_desc);
+}
 
 /*
  * Initializes a timer hook.

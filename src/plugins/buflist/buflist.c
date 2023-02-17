@@ -1,7 +1,7 @@
 /*
  * buflist.c - Bar with list of buffers
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -38,7 +38,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Buffers list"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(10000);
+WEECHAT_PLUGIN_PRIORITY(BUFLIST_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_buflist_plugin = NULL;
 
@@ -141,7 +141,7 @@ buflist_buffer_get_irc_pointers (struct t_gui_buffer *buffer,
  * Buffers are sorted so that the active buffer and buffers immediately after
  * this one are first in list, followed by the buffers before the active one.
  * This sort respects the order of next active buffers that can be selected
- * with ctrl-X.
+ * with ctrl-x.
  *
  * For example with such list of merged buffers:
  *

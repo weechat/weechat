@@ -1,7 +1,7 @@
 /*
  * buflist-bar-item.c - bar item for buflist plugin
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -316,6 +316,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     int item_index, num_buffers, is_channel, is_private;
     int i, j, length_max_number, current_buffer, number, prev_number, priority;
     int rc, count, line_number, line_number_current_buffer;
+    int hotlist_priority_number;
 
     /* make C compiler happy */
     (void) data;
@@ -517,6 +518,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         ptr_hotlist_format = weechat_config_string (
             buflist_config_format_hotlist_level_none);
         ptr_hotlist_priority = hotlist_priority_none;
+        hotlist_priority_number = -1;
         if (ptr_hotlist)
         {
             priority = weechat_hdata_integer (buflist_hdata_hotlist,
@@ -526,12 +528,17 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                 ptr_hotlist_format = weechat_config_string (
                     buflist_config_format_hotlist_level[priority]);
                 ptr_hotlist_priority = hotlist_priority[priority];
+                hotlist_priority_number = priority;
             }
         }
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "color_hotlist", ptr_hotlist_format);
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "hotlist_priority", ptr_hotlist_priority);
+        snprintf (str_number, sizeof (str_number),
+                  "%d", hotlist_priority_number);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "hotlist_priority_number", str_number);
         str_hotlist = NULL;
         if (ptr_hotlist)
         {
@@ -567,8 +574,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                                    -1);
                     }
                 }
-                str_hotlist = *hotlist;
-                weechat_string_dyn_free (hotlist, 0);
+                str_hotlist = weechat_string_dyn_free (hotlist, 0);
             }
         }
         weechat_hashtable_set (
@@ -648,15 +654,15 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         line_number++;
     }
 
-    str_buflist = *buflist;
+    str_buflist = weechat_string_dyn_free (buflist, 0);
 
     goto end;
 
 error:
+    weechat_string_dyn_free (buflist, 1);
     str_buflist = NULL;
 
 end:
-    weechat_string_dyn_free (buflist, 0);
     weechat_arraylist_free (buffers);
 
     if ((line_number_current_buffer != old_line_number_current_buffer[item_index])

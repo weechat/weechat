@@ -1,7 +1,7 @@
 /*
  * irc-debug.c - debug functions for IRC plugin
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -45,8 +45,7 @@ irc_debug_signal_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcasecmp ((char *)signal_data, IRC_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, IRC_PLUGIN_NAME) == 0))
     {
         weechat_log_printf ("");
         weechat_log_printf ("***** \"%s\" plugin dump *****",

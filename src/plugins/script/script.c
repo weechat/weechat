@@ -1,7 +1,7 @@
 /*
  * script.c - script manager for WeeChat
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -42,7 +42,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Script manager"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(3000);
+WEECHAT_PLUGIN_PRIORITY(SCRIPT_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_script_plugin = NULL;
 
@@ -67,6 +67,9 @@ script_language_search (const char *language)
 {
     int i;
 
+    if (!language)
+        return -1;
+
     for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
     {
         if (strcmp (script_language[i], language) == 0)
@@ -87,6 +90,9 @@ int
 script_language_search_by_extension (const char *extension)
 {
     int i;
+
+    if (!extension)
+        return -1;
 
     for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
     {
@@ -243,8 +249,7 @@ script_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcasecmp ((char *)signal_data, SCRIPT_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, SCRIPT_PLUGIN_NAME) == 0))
     {
         weechat_log_printf ("");
         weechat_log_printf ("***** \"%s\" plugin dump *****",

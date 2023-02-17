@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
- * Copyright (C) 2006-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2006-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -29,6 +29,7 @@
 
 #define weechat_plugin weechat_spell_plugin
 #define SPELL_PLUGIN_NAME "spell"
+#define SPELL_PLUGIN_PRIORITY 12000
 
 struct t_spell_code
 {

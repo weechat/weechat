@@ -17,8 +17,9 @@
 
 このマニュアルは WeeChat チャットクライアントについて説明しており、WeeChat の一部です。
 
-このマニュアルの最新版は以下のページを参照してください:
-https://weechat.org/doc
+// TRANSLATION MISSING
+Latest version of this document can be found on
+https://weechat.org/doc/[this page ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -66,7 +67,7 @@ WeeChat がクラッシュするため、スクリプトで fork したりスレ
 されています。これが必要な場合には専用 API 関数を使ってください。 +
 どうしてもバックグラウンド実行を避けられない場合には `+hook_process+`
 関数を使ってください。<<hook_process,バックグラウンドプロセスの実行>>の例および
-link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リファレンス]内の
+link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リファレンス ^↗^,window=_blank]内の
 `+hook_process+` 関数の文書を参照してください。
 
 [[languages_specificities]]
@@ -81,7 +82,7 @@ link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リフ
 
 WeeChat defines a `weechat` module which must be imported with `import weechat`. +
 A Python stub for WeeChat API is available in the repository:
-https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
+https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^,window=_blank].
 
 // TRANSLATION MISSING
 [[python_functions]]
@@ -108,44 +109,40 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
 |===
 | API function | Arguments | Examples | Description
 
-| hook_modifier |
-  irc_in_yyy |
-  pass:[irc_in_privmsg] +
-  pass:[irc_in_notice] |
-  A message received in IRC plugin, before it is decoded to UTF-8 (used
+| hook_modifier
+| irc_in_yyy
+| pass:[irc_in_privmsg] +
+  pass:[irc_in_notice]
+| A message received in IRC plugin, before it is decoded to UTF-8 (used
   internally). +
   +
   It is recommended to use modifier `+irc_in2_yyy+` instead, the string received
   is always UTF-8 valid. +
   See function `+hook_modifier+` in the
-  link:weechat_plugin_api.ja.html#_hook_modifier[WeeChat plugin API reference].
+  link:weechat_plugin_api.ja.html#_hook_modifier[WeeChat plugin API reference ^↗^,window=_blank].
 
-| hook_signal |
-  xxx,irc_out_yyy +
-  xxx,irc_outtags_yyy |
-  pass:[*,irc_out_privmsg] +
+| hook_signal
+| xxx,irc_out_yyy +
+  xxx,irc_outtags_yyy
+| pass:[*,irc_out_privmsg] +
   pass:[*,irc_out_notice] +
   pass:[*,irc_outtags_privmsg] +
-  pass:[*,irc_outtags_notice] |
-  A message sent by IRC plugin, after it is encoded to the `encode` charset
+  pass:[*,irc_outtags_notice]
+| A message sent by IRC plugin, after it is encoded to the `encode` charset
   defined by the user (if different from the default `UTF-8`). +
   +
   It is recommended to use signal `+xxx,irc_out1_yyy+` instead, the string received
   is always UTF-8 valid. +
   See function `+hook_signal+` in the
-  link:weechat_plugin_api.ja.html#_hook_signal[WeeChat plugin API reference].
+  link:weechat_plugin_api.ja.html#_hook_signal[WeeChat plugin API reference ^↗^,window=_blank].
 
 | hook_process +
-  hook_process_hashtable |
-  - |
-  - |
-  Output of the command, sent to the callback, can contain invalid UTF-8 data.
+  hook_process_hashtable
+| -
+| -
+| Output of the command, sent to the callback, can contain invalid UTF-8 data.
 
 |===
-
-In Python 2, which is now deprecated and should not be used any more, the
-strings sent to callbacks are always of type `str`, and may contain invalid
-UTF-8 data, in the cases mentioned above.
 
 [[language_perl]]
 ==== Perl
@@ -209,6 +206,23 @@ Functions are called with `+weechat.xxx(arg1, arg2, ...)+`.
 ===== Functions
 
 Functions are called with `+weechat::xxx arg1 arg2 ...+`.
+
+// TRANSLATION MISSING
+[[tcl_null]]
+===== Null values
+
+Since Tcl only has string types, there's no null type to pass as an argument
+when a function accepts null values or to get as an argument in a callback
+function. To overcome this the WeeChat API defines the constant
+`$::weechat::WEECHAT_NULL` which acts as a null value. This constant is defined
+as `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, so it's very unlikely to
+appear unintentionally.
+
+You can pass this constant when a function accepts null as an argument and you
+will get it as the value of an argument in a callback function if the argument
+value is null. To see which functions accept null values and passes null values
+to callbacks, look at the Python prototypes in the
+link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^,window=_blank].
 
 [[language_guile]]
 ==== Guile (Scheme)
@@ -389,7 +403,7 @@ $ ln -s ../script.py
 
 スクリプト API は C 言語プラグイン API とほぼ同じです。API
 に含まれる各関数の詳細 (プロトタイプ、引数、戻り値、例) については
-link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]を参照してください。
+link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス ^↗^,window=_blank]を参照してください。
 
 _プラグイン_ と _スクリプト_ の違いを理解することは重要です:
 _プラグイン_ とはコンパイル済みバイナリファイルで `/plugin` コマンドを使ってロードします、これに対して
@@ -558,25 +572,25 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 == スクリプト API
 
 API に含まれる関数の詳しい情報は
-link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]を参照してください。
+link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス ^↗^,window=_blank]を参照してください。
 
 [[script_api_functions]]
 === 関数
 
 スクリプト API に含まれる関数のリスト:
 
-[width="100%",cols="1,3",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | カテゴリ | 関数
 
-| 一般 |
-  register
+| 一般
+| register
 
-| プラグイン |
-  plugin_get_name
+| プラグイン
+| plugin_get_name
 
-| 設定 |
-  charset_set +
+| 設定
+| charset_set +
   iconv_to_internal +
   iconv_from_internal +
   gettext +
@@ -588,6 +602,7 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   string_has_highlight_regex +
   string_mask_to_regex +
   string_format_size +
+  string_parse_size +
   string_color_code_size +
   string_remove_color +
   string_is_command_char +
@@ -595,13 +610,13 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   string_eval_expression +
   string_eval_path_home
 
-| ディレクトリ操作 |
-  mkdir_home +
+| ディレクトリ操作
+| mkdir_home +
   mkdir +
   mkdir_parents
 
-| ソート済みリスト |
-  list_new +
+| ソート済みリスト
+| list_new +
   list_add +
   list_search +
   list_search_pos +
@@ -617,8 +632,8 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   list_remove_all +
   list_free
 
-| 設定ファイル |
-  config_new +
+| 設定ファイル
+| config_new +
   config_new_section +
   config_search_section +
   config_new_option +
@@ -655,20 +670,21 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   config_set_desc_plugin +
   config_unset_plugin
 
-| キー割り当て |
-  key_bind +
+| キー割り当て
+| key_bind +
   key_unbind
 
-| 表示 |
-  prefix +
+| 表示
+| prefix +
   color +
   print (python では prnt) +
   print_date_tags (python では prnt_date_tags) +
   print_y (python では prnt_y) +
+  print_y_date_tags (python では prnt_y_date_tags) +
   log_print
 
-| フック |
-  hook_command +
+| フック
+| hook_command +
   hook_command_run +
   hook_timer +
   hook_fd +
@@ -693,8 +709,9 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   unhook +
   unhook_all
 
-| バッファ |
-  buffer_new +
+| バッファ
+| buffer_new +
+  buffer_new_props +
   current_buffer +
   buffer_search +
   buffer_search_main +
@@ -709,16 +726,16 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   buffer_string_replace_local_var +
   buffer_match_list
 
-| ウィンドウ |
-  current_window +
+| ウィンドウ
+| current_window +
   window_search_with_buffer +
   window_get_integer +
   window_get_string +
   window_get_pointer +
   window_set_title
 
-| ニックネームリスト |
-  nicklist_add_group +
+| ニックネームリスト
+| nicklist_add_group +
   nicklist_search_group +
   nicklist_add_nick +
   nicklist_search_nick +
@@ -734,8 +751,8 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   nicklist_nick_get_pointer +
   nicklist_nick_set
 
-| バー |
-  bar_item_search +
+| バー
+| bar_item_search +
   bar_item_new +
   bar_item_update +
   bar_item_remove +
@@ -745,24 +762,24 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   bar_update +
   bar_remove
 
-| コマンド |
-  command +
+| コマンド
+| command +
   command_options
 
 // TRANSLATION MISSING
-| completion |
-  completion_new +
+| completion
+| completion_new +
   completion_search +
   completion_get_string +
   completion_list_add +
   completion_free
 
-| インフォ |
-  info_get +
+| インフォ
+| info_get +
   info_get_hashtable
 
-| インフォリスト |
-  infolist_new +
+| インフォリスト
+| infolist_new +
   infolist_new_item +
   infolist_new_var_integer +
   infolist_new_var_string +
@@ -780,8 +797,8 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   infolist_time +
   infolist_free
 
-| hdata |
-  hdata_get +
+| hdata
+| hdata_get +
   hdata_get_var_offset +
   hdata_get_var_type_string +
   hdata_get_var_array_size +
@@ -802,8 +819,8 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   hdata_update +
   hdata_get_string
 
-| アップグレード |
-  upgrade_new +
+| アップグレード
+| upgrade_new +
   upgrade_write_object +
   upgrade_read +
   upgrade_close
@@ -814,19 +831,19 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
 
 スクリプト API に含まれる定数のリスト:
 
-[width="100%",cols="1,3",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | カテゴリ | 定数
 
 // TRANSLATION MISSING
-| リターンコード |
-  `WEECHAT_RC_OK` (integer) +
+| リターンコード
+| `WEECHAT_RC_OK` (integer) +
   `WEECHAT_RC_OK_EAT` (integer) +
   `WEECHAT_RC_ERROR` (integer)
 
 // TRANSLATION MISSING
-| 設定ファイル |
-  `WEECHAT_CONFIG_READ_OK` (integer) +
+| 設定ファイル
+| `WEECHAT_CONFIG_READ_OK` (integer) +
   `WEECHAT_CONFIG_READ_MEMORY_ERROR` (integer) +
   `WEECHAT_CONFIG_READ_FILE_NOT_FOUND` (integer) +
   `WEECHAT_CONFIG_WRITE_OK` (integer) +
@@ -842,26 +859,26 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   `WEECHAT_CONFIG_OPTION_UNSET_ERROR` (integer)
 
 // TRANSLATION MISSING
-| ソート済みリスト |
-  `WEECHAT_LIST_POS_SORT` (string) +
+| ソート済みリスト
+| `WEECHAT_LIST_POS_SORT` (string) +
   `WEECHAT_LIST_POS_BEGINNING` (string) +
   `WEECHAT_LIST_POS_END` (string)
 
 // TRANSLATION MISSING
-| ホットリスト |
-  `WEECHAT_HOTLIST_LOW` (string) +
+| ホットリスト
+| `WEECHAT_HOTLIST_LOW` (string) +
   `WEECHAT_HOTLIST_MESSAGE` (string) +
   `WEECHAT_HOTLIST_PRIVATE` (string) +
   `WEECHAT_HOTLIST_HIGHLIGHT` (string)
 
 // TRANSLATION MISSING
-| プロセスのフック |
-  `WEECHAT_HOOK_PROCESS_RUNNING` (integer) +
+| プロセスのフック
+| `WEECHAT_HOOK_PROCESS_RUNNING` (integer) +
   `WEECHAT_HOOK_PROCESS_ERROR` (integer)
 
 // TRANSLATION MISSING
-| 接続のフック |
-  `WEECHAT_HOOK_CONNECT_OK` (integer) +
+| 接続のフック
+| `WEECHAT_HOOK_CONNECT_OK` (integer) +
   `WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND` (integer) +
   `WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND` (integer) +
   `WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED` (integer) +
@@ -874,8 +891,8 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   `WEECHAT_HOOK_CONNECT_SOCKET_ERROR` (integer)
 
 // TRANSLATION MISSING
-| シグナルのフック |
-  `WEECHAT_HOOK_SIGNAL_STRING` (string) +
+| シグナルのフック
+| `WEECHAT_HOOK_SIGNAL_STRING` (string) +
   `WEECHAT_HOOK_SIGNAL_INT` (string) +
   `WEECHAT_HOOK_SIGNAL_POINTER` (string)
 |===
@@ -885,7 +902,7 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
 
 この章ではいくつかの良くあるタスクを例を交えて紹介します。ここでは
 API の一部の機能を使っています。完全なリファレンスは
-link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]を参照してください。
+link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス ^↗^,window=_blank]を参照してください。
 
 [[buffers]]
 === バッファ
@@ -1078,24 +1095,52 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 バックグラウンドプロセスを実行するには `+hook_process+`
 を使います。コールバックはデータの準備が整った時点で呼び出されます。複数回呼び出されることもあります。
 
-コールバックの最後の呼び出しでは _rc_ が 0
+コールバックの最後の呼び出しでは _return_code_ が 0
 か正の値に設定されています。これはコマンドのリターンコードになります。
 
 例:
 
 [source,python]
 ----
-process_output = ""
-
-def my_process_cb(data, command, rc, out, err):
-    global process_output
-    if out != "":
-        process_output += out
-    if int(rc) >= 0:
-        weechat.prnt("", process_output)
+def my_process_cb(data, command, return_code, out, err):
+    if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+        weechat.prnt("", "Error with command '%s'" % command)
+        return weechat.WEECHAT_RC_OK
+    if return_code >= 0:
+        weechat.prnt("", "return_code = %d" % return_code)
+    if out:
+        weechat.prnt("", "stdout: %s" % out)
+    if err:
+        weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
+----
+
+// TRANSLATION MISSING
+You can also call directly a script function that does something blocking,
+instead of an external command:
+
+[source,python]
+----
+def get_status(data):
+    # do something blocking...
+    # ...
+    return "this is the result"
+
+def my_process_cb(data, command, return_code, out, err):
+    if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+        weechat.prnt("", "Error with command '%s'" % command)
+        return weechat.WEECHAT_RC_OK
+    if return_code >= 0:
+        weechat.prnt("", "return_code = %d" % return_code)
+    if out:
+        weechat.prnt("", "stdout: %s" % out)
+    if err:
+        weechat.prnt("", "stderr: %s" % err)
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_process("func:get_status", 5000, "my_process_cb", "")
 ----
 
 [[url_transfer]]
@@ -1109,17 +1154,18 @@ URL をダウンロードする (または URL にポストする) には、関�
 オプション無しの URL 転送の例: HTML ページの内容はコールバックの
 "out" 引数 (プロセスの標準出力) を通して渡されます。
 
+// TRANSLATION MISSING
 [source,python]
 ----
-# 現在の WeeChat 安定版のバージョンを表示。
-weechat_version = ""
+# Display latest stable version of WeeChat.
+weechat_latest_version = ""
 
-def weechat_process_cb(data, command, rc, out, err):
-    global weechat_version
-    if out != "":
-        weechat_version += out
-    if int(rc) >= 0:
-        weechat.prnt("", "Current WeeChat stable is: %s" % weechat_version)
+def weechat_process_cb(data, command, return_code, out, err):
+    global weechat_latest_version
+    if out:
+        weechat_latest_version += out
+    if return_code >= 0:
+        weechat.prnt("", "Latest WeeChat version: %s" % weechat_latest_version)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("url:https://weechat.org/dev/info/stable/",
@@ -1127,16 +1173,18 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 ----
 
 [TIP]
-WeeChat に関して利用できる情報は全て https://weechat.org/dev/info にあります
+// TRANSLATION MISSING
+All infos available about WeeChat are on
+https://weechat.org/dev/info/[this page ^↗^,window=_blank].
 
 オプション有りの URL 転送の例: 最新の WeeChat 開発パッケージをファイル
 _/tmp/weechat-devel.tar.gz_ にダウンロード:
 
 [source,python]
 ----
-def my_process_cb(data, command, rc, out, err):
-    if int(rc) >= 0:
-        weechat.prnt("", "End of transfer (rc=%s)" % rc)
+def my_process_cb(data, command, return_code, out, err):
+    if return_code >= 0:
+        weechat.prnt("", "End of transfer (return code = %d)" % return_code)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.tar.gz",
@@ -1145,7 +1193,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 ----
 
 URL 転送に関するより詳しい情報と利用可能なオプションは
-link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リファレンス]の
+link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リファレンス ^↗^,window=_blank]の
 `+hook_process+` と `+hook_process_hashtable+` を参照してください。
 
 [[config_options]]
@@ -1309,65 +1357,75 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 [width="100%",cols="3,^2,10,7",options="header"]
 |===
 // TRANSLATION MISSING
-| キー | Since WeeChat ^(1)^ | 説明 | 例
+| キー | Since WeeChat ^(1)^ | 説明 | 例
 
-| tags | 0.4.0 |
-  メッセージに付けられたタグ (空にすることも可) |
-  `+time=2015-06-27T16:40:35.000Z+`
-
-// TRANSLATION MISSING
-| tag_xxx | 3.3 |
-  Unescaped value of tag "xxx" (one key per tag). |
-  `+2015-06-27T16:40:35.000Z+`
-
-| message_without_tags | 0.4.0 |
-  タグを除いたメッセージ (タグが付けられていなければメッセージと同じ) |
-  `+:nick!user@host PRIVMSG #weechat :hello!+`
-
-| nick | 0.3.4 |
-  発信者のニックネーム |
-  `+nick+`
+| tags | 0.4.0
+| メッセージに付けられたタグ (空にすることも可)
+| `+time=2015-06-27T16:40:35.000Z+`
 
 // TRANSLATION MISSING
-| user | 2.7 |
-  The origin user. |
-  `+user+`
+| tag_xxx | 3.3
+| Unescaped value of tag "xxx" (one key per tag).
+| `+2015-06-27T16:40:35.000Z+`
 
-| host | 0.3.4 |
-  発信者のホスト (ニックネームを含む) |
-  `+nick!user@host+`
+| message_without_tags | 0.4.0
+| タグを除いたメッセージ (タグが付けられていなければメッセージと同じ)
+| `+:nick!user@host PRIVMSG #weechat :hello!+`
 
-| command | 0.3.4 |
-  コマンド (_PRIVMSG_、_NOTICE_、...) |
-  `+PRIVMSG+`
+| nick | 0.3.4
+| 発信者のニックネーム
+| `+nick+`
 
-| channel | 0.3.4 |
-  送信先チャンネル |
-  `+#weechat+`
+// TRANSLATION MISSING
+| user | 2.7
+| The origin user.
+| `+user+`
 
-| arguments | 0.3.4 |
-  コマンド引数 (チャンネルを含む) |
-  `+#weechat :hello!+`
+| host | 0.3.4
+| 発信者のホスト (ニックネームを含む)
+| `+nick!user@host+`
 
-| text | 1.3 |
-  テキスト (ユーザメッセージなど) |
-  `+hello!+`
+| command | 0.3.4
+| コマンド (_PRIVMSG_、_NOTICE_、...)
+| `+PRIVMSG+`
 
-| pos_command | 1.3 |
-  メッセージ内における _command_ のインデックス (_command_ が見つからない場合 "-1") |
-  `+47+`
+| channel | 0.3.4
+| 送信先チャンネル
+| `+#weechat+`
 
-| pos_arguments | 1.3 |
-  メッセージ内における _arguments_ のインデックス (_arguments_ が見つからない場合 "-1") |
-  `+55+`
+| arguments | 0.3.4
+| コマンド引数 (チャンネルを含む)
+| `+#weechat :hello!+`
 
-| pos_channel | 1.3 |
-  メッセージ内における _channel_ のインデックス (_channel_ が見つからない場合 "-1") |
-  `+55+`
+| text | 1.3
+| テキスト (ユーザメッセージなど)
+| `+hello!+`
 
-| pos_text | 1.3 |
-  メッセージ内における _text_ のインデックス (_text_ が見つからない場合 "-1") |
-  `+65+`
+// TRANSLATION MISSING
+| paramN | 3.4
+| Command parameter (from 1 to N).
+| `+#weechat+`
+
+// TRANSLATION MISSING
+| num_params | 3.4
+| Number of command parameters.
+| `+2+`
+
+| pos_command | 1.3
+| メッセージ内における _command_ のインデックス (_command_ が見つからない場合 "-1")
+| `+47+`
+
+| pos_arguments | 1.3
+| メッセージ内における _arguments_ のインデックス (_arguments_ が見つからない場合 "-1")
+| `+55+`
+
+| pos_channel | 1.3
+| メッセージ内における _channel_ のインデックス (_channel_ が見つからない場合 "-1")
+| `+55+`
+
+| pos_text | 1.3
+| メッセージ内における _text_ のインデックス (_text_ が見つからない場合 "-1")
+| `+65+`
 |===
 
 // TRANSLATION MISSING
@@ -1392,6 +1450,9 @@ dict = weechat.info_get_hashtable(
 #     "channel": "#weechat",
 #     "arguments": "#weechat :hello!",
 #     "text": "hello!",
+#     "param1": "#weechat",
+#     "param2": "hello!",
+#     "num_params": "2",
 #     "pos_command": "65",
 #     "pos_arguments": "73",
 #     "pos_channel": "73",

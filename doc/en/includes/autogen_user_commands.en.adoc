@@ -123,6 +123,39 @@ Examples:
     /auth user2 ${weechat_config_dir}/ecdsa2.pem
 ----
 
+[[command_irc_autojoin]]
+* `+autojoin+`: configure the "autojoin" server option
+
+----
+/autojoin  add [<channel1> [<channel2>...]]
+           addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]]
+           del [<channel1> [<channel2>...]]
+           apply
+           join
+           sort
+
+    add: add current channel or a list of channels (with optional keys) to the autojoin option; if you are on the channel and the key is not provided, the key is read in the channel
+ addraw: use the IRC raw format (same as /join command): all channels separated by commas, optional keys separated by commas
+    del: delete current channel or a list of channels from the autojoin option
+channel: channel name
+    key: key for the channel
+  apply: set currently joined channels in the autojoin option
+   join: join the channels in the autojoin option
+   sort: sort alphabetically channels in the autojoin option
+
+Examples:
+  /autojoin add
+  /autojoin add #test
+  /autojoin add #chan1 #chan2
+  /allchan /autojoin add
+  /autojoin addraw #chan1,#chan2,#chan3 key1,key2
+  /autojoin del
+  /autojoin del #chan1
+  /autojoin apply
+  /autojoin join
+  /autojoin sort
+----
+
 [[command_irc_ban]]
 * `+ban+`: ban nicks or hosts
 
@@ -146,7 +179,7 @@ Without argument, this command displays the ban list for current channel.
 
    ls: list the capabilities supported by the server
  list: list the capabilities currently enabled
-  req: request a capability
+  req: request a new capability or remove a capability (if starting with "-", for example: "-multi-prefix")
   ack: acknowledge capabilities which require client-side acknowledgement
   end: end the capability negotiation
 
@@ -157,8 +190,14 @@ Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, 
 The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
 
 Examples:
-   /cap
-   /cap req multi-prefix away-notify
+  display supported and enabled capabilities:
+    /cap
+  request capabilities multi-prefix and away-notify:
+    /cap req multi-prefix away-notify
+  request capability extended-join, remove capability multi-prefix:
+    /cap req extended-join -multi-prefix
+  remove capability away-notify:
+    /cap req -away-notify
 ----
 
 [[command_irc_connect]]
@@ -412,6 +451,16 @@ Example:
 
   nick: nick
 reason: reason
+----
+
+[[command_irc_knock]]
+* `+knock+`: send a notice to an invitation-only channel, requesting an invite
+
+----
+/knock  <channel> [<message>]
+
+channel: channel name
+message: message to send
 ----
 
 [[command_irc_links]]
@@ -706,6 +755,12 @@ channel: channel name
 /restart  [<target>]
 
 target: server name
+----
+
+[[command_irc_rules]]
+* `+rules+`: request the server rules
+
+----
 ----
 
 [[command_irc_sajoin]]
@@ -1037,11 +1092,13 @@ target: reply should match this mask
         add <alias> [<command>[;<command>...]]
         addcompletion <completion> <alias> [<command>[;<command>...]]
         del <alias> [<alias>...]
+        rename <alias> <new_alias>
 
          list: list aliases (without argument, this list is displayed)
           add: add an alias
 addcompletion: add an alias with a custom completion
           del: delete an alias
+       rename: rename an alias
    completion: completion for alias: by default completion is done with target command
                note: you can use %%command to use completion of an existing command
         alias: name of alias
@@ -1062,12 +1119,27 @@ Examples:
     /alias add split /window splith
   alias /hello to say "hello" on all channels but not on #weechat:
     /alias add hello /allchan -exclude=#weechat hello
+  rename alias "hello" to "Hello":
+    /alias rename hello Hello
   alias /forcejoin to send IRC command "forcejoin" with completion of /sajoin:
     /alias addcompletion %%sajoin forcejoin /quote forcejoin
 ----
 // end::alias_commands[]
 
 // tag::weechat_commands[]
+[[command_weechat_allbuf]]
+* `+allbuf+`: execute a command on all buffers
+
+----
+/allbuf  <command>
+
+command: command to execute (or text to send to buffer if command does not start with '/')
+
+Examples:
+  set unread marker on all buffers:
+    /allbuf /buffer set unread
+----
+
 [[command_weechat_away]]
 * `+away+`: set or remove away status
 
@@ -1144,6 +1216,8 @@ Examples:
          unmerge [<number>|-all]
          hide [<number>|<name>|-all [<number>|<name>...]]
          unhide [<number>|<name>|-all [<number>|<name>...]]
+         switch [-previous]
+         zoom
          renumber [<number1> [<number2> [<start>]]]
          close [<n1>[-<n2>]|<name>...]
          notify [<level>]
@@ -1152,6 +1226,7 @@ Examples:
          delvar <name>
          set <property> [<value>]
          get <property>
+         jump smart|last_displayed|prev_visited|next_visited
          <number>|-|+|<name>
 
     list: list buffers (without argument, this list is displayed)
@@ -1165,6 +1240,8 @@ Examples:
  unmerge: unmerge buffer from other buffers which have same number
     hide: hide the buffer
   unhide: unhide the buffer
+  switch: switch to next merged buffer (or to previous buffer with "-previous")
+    zoom: zoom on merged buffer
 renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
    close: close buffer (number/range or name is optional)
   notify: display or set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
@@ -1178,6 +1255,11 @@ renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumb
   delvar: delete a local variable from the current buffer
      set: set a property in the current buffer
      get: display a property of current buffer
+    jump: jump to another buffer:
+          smart: next buffer with activity
+          last_displayed: last buffer displayed (before last jump to a buffer)
+          prev_visited: previously visited buffer
+          next_visited: jump to next visited buffer
   number: jump to buffer by number, possible prefix:
           '+': relative jump, add number to current
           '-': relative jump, sub number to current
@@ -1302,32 +1384,40 @@ Examples:
 ----
 /debug  list
         set <plugin> <level>
-        dump [<plugin>]
-        buffer|color|infolists|libs|certs|memory|tags|term|windows
+        dump|hooks [<plugin>]
+        buffer|certs|color|dirs|infolists|libs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
         time <command>
+        unicode <string>
 
      list: list plugins with debug levels
       set: set debug level for plugin
    plugin: name of plugin ("core" for WeeChat core)
     level: debug level for plugin (0 = disable debug)
      dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+    hooks: display infos about hooks (with a plugin: display detailed info about hooks created by the plugin)
    buffer: dump buffer content with hexadecimal values in log file
+    certs: display number of loaded trusted certificate authorities
     color: display infos about current color pairs
    cursor: toggle debug for cursor mode
      dirs: display directories
     hdata: display infos about hdata (with free: remove all hdata in memory)
-    hooks: display infos about hooks
 infolists: display infos about infolists
      libs: display infos about external libraries used
-    certs: display number of loaded trusted certificate authorities
    memory: display infos about memory usage
     mouse: toggle debug for mouse
      tags: display tags for lines
      term: display infos about terminal
   windows: display windows tree
      time: measure time to execute a command or to send text to the current buffer
+  unicode: display information about string and unicode chars (evaluated, see /help eval)
+
+Examples:
+  /debug set irc 1
+  /debug mouse verbose
+  /debug time /filter toggle
+  /debug unicode ${chars:${\u26C0}-${\u26CF}}
 ----
 
 [[command_weechat_eval]]
@@ -1374,33 +1464,36 @@ To force a string comparison, you can add double quotes around each expression, 
   "50" > "100"  ==> 1
 
 Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. the string itself without evaluation (format: "raw:xxx")
-  2. a user-defined variable (format: "name")
-  3. an evaluated sub-string (format: "eval:xxx")
-  4. an evaluated condition (format: "eval_cond:xxx")
-  5. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  6. a string with chars to hide (format: "hide:char,string")
-  7. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
+  - the string itself without evaluation (format: "raw:xxx")
+  - a user-defined variable (format: "name")
+  - an evaluated sub-string (format: "eval:xxx")
+  - an evaluated condition (format: "eval_cond:xxx")
+  - a string with escaped chars (format: "esc:xxx" or "\xxx")
+  - a string with a range of chars (format: "chars:xxx" or "chars:c1-c2" where "xxx" is one of: "digit", "xdigit", "lower", "upper", "alpha", "alnum")
+  - a string converted to lower case (format: "lower:xxx")
+  - a string converted to upper case (format: "upper:xxx")
+  - a string with chars to hide (format: "hide:char,string")
+  - a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
      or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  8. a reversed string (format: "rev:xxx" or "revscr:xxx")
-  9. a repeated string (format: "repeat:count,string")
-  10. length of a string (format: "length:xxx" or "lengthscr:xxx")
-  11. split of a string (format: "split:number,separators,flags,xxx")
-  12. split of shell argmuents (format: "split_shell:number,xxx")
-  13. a color (format: "color:xxx", see "Plugin API reference", function "color")
-  14. a modifier (format: "modifier:name,data,string")
-  15. an info (format: "info:name,arguments", arguments are optional)
-  16. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  17. current date/time (format: "date" or "date:format")
-  18. an environment variable (format: "env:XXX")
-  19. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  20. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  21. a random integer number (format: "random:min,max")
-  22. a translated string (format: "translate:xxx")
-  23. define a user variable (format: "define:name,value")
-  24. an option (format: "file.section.option")
-  25. a local variable in buffer
-  26. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  - a reversed string (format: "rev:xxx" or "revscr:xxx")
+  - a repeated string (format: "repeat:count,string")
+  - length of a string (format: "length:xxx" or "lengthscr:xxx")
+  - split of a string (format: "split:number,separators,flags,xxx")
+  - split of shell argmuents (format: "split_shell:number,xxx")
+  - a color (format: "color:xxx", see "Plugin API reference", function "color")
+  - a modifier (format: "modifier:name,data,string")
+  - an info (format: "info:name,arguments", arguments are optional)
+  - a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
+  - current date/time (format: "date" or "date:format")
+  - an environment variable (format: "env:XXX")
+  - a ternary operator (format: "if:condition?value_if_true:value_if_false")
+  - result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
+  - a random integer number (format: "random:min,max")
+  - a translated string (format: "translate:xxx")
+  - define a user variable (format: "define:name,value")
+  - an option (format: "file.section.option")
+  - a local variable in buffer
+  - a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
@@ -1423,6 +1516,10 @@ Examples (simple strings):
   /eval -n ${window.buffer.full_name}             ==> core.weechat
   /eval -n ${window.buffer.number}                ==> 1
   /eval -n ${\t}                                  ==> <tab>
+  /eval -n ${chars:digit}                         ==> 0123456789
+  /eval -n ${chars:J-T}                           ==> JKLMNOPQRST
+  /eval -n ${lower:TEST}                          ==> test
+  /eval -n ${upper:test}                          ==> TEST
   /eval -n ${hide:-,${relay.network.password}}    ==> --------
   /eval -n ${cut:3,+,test}                        ==> tes+
   /eval -n ${cut:+3,+,test}                       ==> te+
@@ -1468,7 +1565,7 @@ Examples (conditions):
          add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>
          rename <name> <new_name>
          recreate <name>
-         del <name>|-all
+         del <name>|-all [<name>...]
 
       list: list all filters
     enable: enable filters (filters are enabled by default)
@@ -1552,6 +1649,22 @@ clear: clear history
 value: number of history entries to show
 ----
 
+[[command_weechat_hotlist]]
+* `+hotlist+`: manage hotlist
+
+----
+/hotlist  add [low|message|private|highlight]
+          clear [<level>]
+          remove
+          restore [-all]
+
+    add: add current buffer in hotlist (default level: "low", conditions defined in option weechat.look.hotlist_add_conditions are NOT checked)
+  clear: clear hotlist
+  level: "lowest" to clear only lowest level in hotlist, highest" to clear only highest level in hotlist, or level mask: integer which is a combination of 1=join/part, 2=message, 4=private, 8=highlight)
+ remove: remove current buffer from hotlist
+restore: restore latest hotlist removed in the current buffer (or all buffers with -all)
+----
+
 [[command_weechat_input]]
 * `+input+`: functions for command line
 
@@ -1574,6 +1687,7 @@ list of actions:
   delete_previous_char: delete previous char
   delete_next_char: delete next char
   delete_previous_word: delete previous word
+  delete_previous_word_whitespace: delete previous word (until whitespace)
   delete_next_word: delete next word
   delete_beginning_of_line: delete from beginning of line until cursor
   delete_end_of_line: delete from cursor until end of line
@@ -1592,29 +1706,59 @@ list of actions:
   history_next: recall next command in current buffer history
   history_global_previous: recall previous command in global history
   history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist (optional argument: "lowest" to clear only lowest level in hotlist, "highest" to clear only highest level in hotlist, or level mask: integer which is a combination of 1=join/part, 2=message, 4=private, 8=highlight)
-  hotlist_remove_buffer: remove current buffer from hotlist
-  hotlist_restore_buffer: restore latest hotlist removed in the current buffer
-  hotlist_restore_all: restore latest hotlist removed in all buffers
   grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
   grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
   grab_mouse: grab mouse event code
   grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  zoom_merged_buffer: zoom on merged buffer
   insert: insert text in command line (escaped chars are allowed, see /help print)
   send: send text to the buffer
   paste_start: start paste (bracketed paste mode)
   paste_stop: stop paste (bracketed paste mode)
 
 This command is used by key bindings or plugins.
+----
+
+[[command_weechat_item]]
+* `+item+`: manage custom bar items
+
+----
+/item  list
+       add|addreplace <name> "<conditions>" "<content>"
+       rename <name> <new_name>
+       refresh <name> [<name>...]
+       recreate <name>
+       del <name>|-all
+
+      list: list all custom bar items
+       add: add a custom bar item
+addreplace: add or replace an existing custom bar item
+      name: custom bar item name
+conditions: evaluated conditions to display the bar item (for example to display the bar item only in specific buffers)
+   content: content (evaluated, see /help eval)
+    rename: rename a custom bar item
+   refresh: update content of item in all bars where the item is displayed; any item can be refreshed: default/plugin/custom bar items
+  recreate: set input with the command used to edit the custom bar item
+       del: delete a custom bar item
+      -all: delete all custom bar items
+
+Examples:
+  add item with terminal size, displayed only in buffers with number = 1:
+    /item add terminfo "${buffer.number} == 1" "term:${info:term_width}x${info:term_height}"
+  add item with buffer info:
+    /item add bufinfo "" "${buffer.number}:${buffer.name}${if:${buffer.zoomed}?(Z)}"
+  add item with date/time using format "Dec 25, 12:34 +0100", refreshed every minute:
+    /item add datetime "" "${date:%b %d, %H:%M %z}"
+    /trigger add datetime_refresh timer "60000;60" "" "" "/item refresh datetime"
+  add item with number of lines in buffer (displayed/total), refreshed each time a new line is displayed or if filtered lines have changed:
+    /item add lines_count "" "${calc:${buffer.lines.lines_count}-${buffer.lines.lines_hidden}}/${buffer.lines.lines_count} lines"
+    /trigger add lines_count_refresh_print print "" "" "" "/item refresh lines_count"
+    /trigger add lines_count_refresh_signal signal "window_switch;buffer_switch;buffer_lines_hidden;filters_*" "" "" "/item refresh lines_count"
+  force refresh of item "lines_count":
+    /item refresh lines_count
+  recreate item "lines_count" with different conditions or content:
+    /item recreate lines_count
+  delete item "lines_count":
+    /item del lines_count
 ----
 
 [[command_weechat_key]]
@@ -1667,7 +1811,7 @@ Examples:
   restore default binding for key alt-r:
     /key reset meta-r
   key "tab" to stop search in buffer:
-    /key bindctxt search ctrl-I /input search_stop
+    /key bindctxt search ctrl-i /input search_stop
   middle button of mouse on a nick to retrieve info on nick:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
@@ -2039,19 +2183,22 @@ Examples:
 ----
 
 [[command_weechat_upgrade]]
-* `+upgrade+`: reload the WeeChat binary without disconnecting from servers
+* `+upgrade+`: save WeeChat session and reload the WeeChat binary without disconnecting from servers
 
 ----
-/upgrade  [-yes] [<path_to_binary>|-quit]
+/upgrade  [-yes] [<path_to_binary>|-save|-quit]
 
           -yes: required if option "weechat.look.confirm_upgrade" is enabled
 path_to_binary: path to WeeChat binary (default is current binary)
         -dummy: do nothing (option used to prevent accidental completion with "-quit")
+         -save: only save the session, do not quit nor reload WeeChat; the configuration files are not saved (if needed you can use /save before this command)
          -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
 
 This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
 
-Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
+Note: SSL connections are lost during upgrade (except with -save), because the reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
+
+Important: use of option -save can be dangerous, it is recommended to use only /upgrade (or with -quit) for a standard upgrade and a restart; the option -save can be used to save the session regularly and restore it in case of after abnormal exit (power outage, crash, etc.)
 
 Upgrade process has 4 steps:
   1. save session into files for core and plugins (buffers, history, ..)
@@ -2059,14 +2206,18 @@ Upgrade process has 4 steps:
   3. save WeeChat configuration (weechat.conf)
   4. execute new WeeChat binary and reload session.
 
-With option "-quit", the process is slightly different:
+With option "-quit", the process is:
   1. close *ALL* connections (irc, xfer, relay, ...)
   2. save session into files (*.upgrade)
   3. unload all plugins
   4. save WeeChat configuration
   5. quit WeeChat
-Then later you can restore session with command: weechat --upgrade
-IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
+
+With option "-save", the process is:
+  1. save session into files (*.upgrade) with a disconnected state for IRC servers and Relay clients (but no disconnection is made)
+
+With -quit or -save, you can restore the session later with this command: weechat --upgrade
+IMPORTANT: you must restore the session with exactly same configuration (files *.conf) and if possible the same WeeChat version (or a more recent one).
 It is possible to restore WeeChat session on another machine if you copy the content of WeeChat home directories (see /debug dirs).
 ----
 
@@ -2251,6 +2402,7 @@ The following variables can be used in these options:
     - ${format_hotlist}: the formatted hotlist (evaluation of option buflist.format.hotlist)
     - ${hotlist}: the raw hotlist
     - ${hotlist_priority}: "none", "low", "message", "private" or "highlight"
+    - ${hotlist_priority_number}: -1 = none, 0 = low, 1 = message, 2 = private, 3 = highlight
     - ${format_lag}: the lag for an IRC server buffer, empty if there's no lag (evaluation of option buflist.format.lag)
     - ${format_tls_version}: indicator of TLS version for a server buffer, empty for channels (evaluation of option buflist.format.tls_version)
 ----
@@ -2498,7 +2650,7 @@ Keys and input to set options on fset buffer:
                     u:xxx   unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see filters above)
 
 Other keys and input on fset buffer:
-  ctrl+L                    refresh options and whole screen (command: /fset -refresh)
+  ctrl+l                    refresh options and whole screen (command: /fset -refresh)
                     $       refresh options (keep marked options)
                     $$      refresh options (unmark all options)
   alt+p             p       toggle plugin description options (plugins.desc.*)
@@ -2508,7 +2660,7 @@ Other keys and input on fset buffer:
                     w:xxx   export options in file "xxx"
                     w-:xxx  export options in file "xxx" without help
                     w+:xxx  export options in file "xxx" with help
-  ctrl+X            x       switch the format used to display options
+  ctrl+x            x       switch the format used to display options
                     q       close fset buffer
 
 Mouse actions on fset buffer:
@@ -2817,7 +2969,7 @@ protocol.name: protocol and name to relay:
                  - protocol "weechat" (name is not used)
 
 The "irc" protocol allows any IRC client (including WeeChat itself) to connect on the port.
-The "weechat" protocol allows a remote interface to connect on the port, see the list here: https://weechat.org/about/interfaces
+The "weechat" protocol allows a remote interface to connect on the port, see the list here: https://weechat.org/about/interfaces/
 
 Without argument, this command opens buffer with list of relay clients.
 
@@ -2972,7 +3124,7 @@ Examples:
 ----
 /spell  enable|disable|toggle
         listdict
-        setdict <dict>[,<dict>...]
+        setdict -|<dict>[,<dict>...]
         deldict
         addword [<dict>] <word>
 
@@ -2980,7 +3132,7 @@ Examples:
  disable: disable spell checker
   toggle: toggle spell checker
 listdict: show installed dictionaries
- setdict: set dictionary for current buffer (multiple dictionaries can be separated by a comma)
+ setdict: set dictionary for current buffer (multiple dictionaries can be separated by a comma, the special value "-" disables spell checking on current buffer)
  deldict: delete dictionary used on current buffer
  addword: add a word in personal dictionary
 
@@ -3109,6 +3261,8 @@ Examples (you can also look at default triggers with /trigger listdefault):
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
   silently save config each hour:
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
+  silently save WeeChat session at midnight (see /help upgrade):
+    /trigger add session_save signal day_changed "" "" "/mute /upgrade -save"
   open trigger monitor and show only modifiers and triggers whose name starts with "resize":
     /trigger monitor @modifier,resize*
 ----

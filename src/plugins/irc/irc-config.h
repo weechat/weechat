@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,6 +21,7 @@
 #define WEECHAT_PLUGIN_IRC_CONFIG_H
 
 #define IRC_CONFIG_NAME "irc"
+#define IRC_CONFIG_PRIO_NAME (TO_STR(IRC_PLUGIN_PRIORITY) "|" IRC_CONFIG_NAME)
 
 enum t_irc_config_look_server_buffer
 {
@@ -112,6 +113,7 @@ extern struct t_config_option *irc_config_look_display_join_message;
 extern struct t_config_option *irc_config_look_display_old_topic;
 extern struct t_config_option *irc_config_look_display_pv_away_once;
 extern struct t_config_option *irc_config_look_display_pv_back;
+extern struct t_config_option *irc_config_look_display_pv_nick_change;
 extern struct t_config_option *irc_config_look_display_pv_warning_address;
 extern struct t_config_option *irc_config_look_highlight_channel;
 extern struct t_config_option *irc_config_look_highlight_pv;
@@ -150,6 +152,7 @@ extern struct t_config_option *irc_config_look_smart_filter_join_unmask;
 extern struct t_config_option *irc_config_look_smart_filter_mode;
 extern struct t_config_option *irc_config_look_smart_filter_nick;
 extern struct t_config_option *irc_config_look_smart_filter_quit;
+extern struct t_config_option *irc_config_look_smart_filter_setname;
 extern struct t_config_option *irc_config_look_temporary_servers;
 extern struct t_config_option *irc_config_look_topic_strip_colors;
 
@@ -166,6 +169,7 @@ extern struct t_config_option *irc_config_color_message_chghost;
 extern struct t_config_option *irc_config_color_message_join;
 extern struct t_config_option *irc_config_color_message_kick;
 extern struct t_config_option *irc_config_color_message_quit;
+extern struct t_config_option *irc_config_color_message_setname;
 extern struct t_config_option *irc_config_color_mirc_remap;
 extern struct t_config_option *irc_config_color_nick_prefixes;
 extern struct t_config_option *irc_config_color_notice;

@@ -1,7 +1,7 @@
 /*
  * weechat-ruby-api.c - ruby API functions
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2007 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2012 Simon Arlott
  *
@@ -125,7 +125,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
     c_shutdown_func = StringValuePtr (shutdown_func);
     c_charset = StringValuePtr (charset);
 
-    if (plugin_script_search (weechat_ruby_plugin, ruby_scripts, c_name))
+    if (plugin_script_search (ruby_scripts, c_name))
     {
         /* another script already exists with same name */
         weechat_printf (NULL,
@@ -446,6 +446,25 @@ weechat_ruby_api_string_format_size (VALUE class, VALUE size)
     result = weechat_string_format_size (c_size);
 
     API_RETURN_STRING_FREE(result);
+}
+
+static VALUE
+weechat_ruby_api_string_parse_size (VALUE class, VALUE size)
+{
+    char *c_size;
+    unsigned long long value;
+
+    API_INIT_FUNC(1, "string_parse_size", API_RETURN_LONG(0));
+    if (NIL_P (size))
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    Check_Type (size, T_STRING);
+
+    c_size = StringValuePtr (size);
+
+    value = weechat_string_parse_size (c_size);
+
+    API_RETURN_LONG(value);
 }
 
 static VALUE
@@ -1079,7 +1098,7 @@ weechat_ruby_api_config_read_cb (const void *pointer, void *data,
         func_argv[1] = (char *)API_PTR2STR(config_file);
         func_argv[2] = (char *)API_PTR2STR(section);
         func_argv[3] = (option_name) ? (char *)option_name : empty_arg;
-        func_argv[4] = (value) ? (char *)value : empty_arg;
+        func_argv[4] = (value) ? (char *)value : NULL;
 
         rc = (int *) weechat_ruby_exec (script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -1200,7 +1219,7 @@ weechat_ruby_api_config_section_create_option_cb (const void *pointer, void *dat
         func_argv[1] = (char *)API_PTR2STR(config_file);
         func_argv[2] = (char *)API_PTR2STR(section);
         func_argv[3] = (option_name) ? (char *)option_name : empty_arg;
-        func_argv[4] = (value) ? (char *)value : empty_arg;
+        func_argv[4] = (value) ? (char *)value : NULL;
 
         rc = (int *) weechat_ruby_exec (script,
                                         WEECHAT_SCRIPT_EXEC_INT,
@@ -1418,10 +1437,9 @@ weechat_ruby_api_config_option_change_cb (const void *pointer, void *data,
                                           struct t_config_option *option)
 {
     struct t_plugin_script *script;
-    void *func_argv[2];
+    void *func_argv[2], *rc;
     char empty_arg[1] = { '\0' };
     const char *ptr_function, *ptr_data;
-    int *rc;
 
     script = (struct t_plugin_script *)pointer;
     plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
@@ -1431,10 +1449,10 @@ weechat_ruby_api_config_option_change_cb (const void *pointer, void *data,
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (char *)API_PTR2STR(option);
 
-        rc = (int *) weechat_ruby_exec (script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        ptr_function,
-                                        "ss", func_argv);
+        rc = weechat_ruby_exec (script,
+                                WEECHAT_SCRIPT_EXEC_IGNORE,
+                                ptr_function,
+                                "ss", func_argv);
 
         if (rc)
             free (rc);
@@ -1446,10 +1464,9 @@ weechat_ruby_api_config_option_delete_cb (const void *pointer, void *data,
                                           struct t_config_option *option)
 {
     struct t_plugin_script *script;
-    void *func_argv[2];
+    void *func_argv[2], *rc;
     char empty_arg[1] = { '\0' };
     const char *ptr_function, *ptr_data;
-    int *rc;
 
     script = (struct t_plugin_script *)pointer;
     plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
@@ -1459,10 +1476,10 @@ weechat_ruby_api_config_option_delete_cb (const void *pointer, void *data,
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (char *)API_PTR2STR(option);
 
-        rc = (int *) weechat_ruby_exec (script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        ptr_function,
-                                        "ss", func_argv);
+        rc = weechat_ruby_exec (script,
+                                WEECHAT_SCRIPT_EXEC_IGNORE,
+                                ptr_function,
+                                "ss", func_argv);
 
         if (rc)
             free (rc);
@@ -1489,8 +1506,7 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     API_INIT_FUNC(1, "config_new_option", API_RETURN_EMPTY);
     if (NIL_P (config_file) || NIL_P (section) || NIL_P (name) || NIL_P (type)
         || NIL_P (description) || NIL_P (string_values) || NIL_P (min)
-        || NIL_P (max) || NIL_P (default_value) || NIL_P (value)
-        || NIL_P (null_value_allowed) || NIL_P (callbacks))
+        || NIL_P (max) || NIL_P (null_value_allowed) || NIL_P (callbacks))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     Check_Type (config_file, T_STRING);
@@ -1501,8 +1517,10 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     Check_Type (string_values, T_STRING);
     CHECK_INTEGER(min);
     CHECK_INTEGER(max);
-    Check_Type (default_value, T_STRING);
-    Check_Type (value, T_STRING);
+    if (!NIL_P (default_value))
+        Check_Type (default_value, T_STRING);
+    if (!NIL_P (value))
+        Check_Type (value, T_STRING);
     CHECK_INTEGER(null_value_allowed);
     Check_Type (callbacks, T_ARRAY);
 
@@ -1528,8 +1546,8 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     c_string_values = StringValuePtr (string_values);
     c_min = NUM2INT (min);
     c_max = NUM2INT (max);
-    c_default_value = StringValuePtr (default_value);
-    c_value = StringValuePtr (value);
+    c_default_value = NIL_P (default_value) ? NULL : StringValuePtr (default_value);
+    c_value = NIL_P (value) ? NULL : StringValuePtr (value);
     c_null_value_allowed = NUM2INT (null_value_allowed);
     c_function_check_value = StringValuePtr (function_check_value);
     c_data_check_value = StringValuePtr (data_check_value);
@@ -2388,6 +2406,42 @@ weechat_ruby_api_print_y (VALUE class, VALUE buffer, VALUE y, VALUE message)
 }
 
 static VALUE
+weechat_ruby_api_print_y_date_tags (VALUE class, VALUE buffer, VALUE y,
+                                    VALUE date, VALUE tags, VALUE message)
+{
+    char *c_buffer, *c_tags, *c_message;
+    int c_y;
+    time_t c_date;
+
+    API_INIT_FUNC(1, "print_y_date_tags", API_RETURN_ERROR);
+    if (NIL_P (buffer) || NIL_P (y) || NIL_P (date) || NIL_P (tags)
+        || NIL_P (message))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    Check_Type (buffer, T_STRING);
+    CHECK_INTEGER(y);
+    CHECK_INTEGER(date);
+    Check_Type (tags, T_STRING);
+    Check_Type (message, T_STRING);
+
+    c_buffer = StringValuePtr (buffer);
+    c_y = NUM2INT (y);
+    c_date = NUM2ULONG (date);
+    c_tags = StringValuePtr (tags);
+    c_message = StringValuePtr (message);
+
+    plugin_script_api_printf_y_date_tags (weechat_ruby_plugin,
+                                          ruby_current_script,
+                                          API_STR2PTR(c_buffer),
+                                          c_y,
+                                          c_date,
+                                          c_tags,
+                                          "%s", c_message);
+
+    API_RETURN_OK;
+}
+
+static VALUE
 weechat_ruby_api_log_print (VALUE class, VALUE message)
 {
     char *c_message;
@@ -2707,7 +2761,7 @@ weechat_ruby_api_hook_timer_cb (const void *pointer, void *data,
 {
     struct t_plugin_script *script;
     void *func_argv[2];
-    char str_remaining_calls[32], empty_arg[1] = { '\0' };
+    char empty_arg[1] = { '\0' };
     const char *ptr_function, *ptr_data;
     int *rc, ret;
 
@@ -2716,16 +2770,13 @@ weechat_ruby_api_hook_timer_cb (const void *pointer, void *data,
 
     if (ptr_function && ptr_function[0])
     {
-        snprintf (str_remaining_calls, sizeof (str_remaining_calls),
-                  "%d", remaining_calls);
-
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = str_remaining_calls;
+        func_argv[1] = &remaining_calls;
 
         rc = (int *) weechat_ruby_exec (script,
                                         WEECHAT_SCRIPT_EXEC_INT,
                                         ptr_function,
-                                        "ss", func_argv);
+                                        "si", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -2745,7 +2796,8 @@ static VALUE
 weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
                              VALUE max_calls, VALUE function, VALUE data)
 {
-    int c_interval, c_align_second, c_max_calls;
+    long c_interval;
+    int c_align_second, c_max_calls;
     char *c_function, *c_data;
     const char *result;
 
@@ -2760,7 +2812,7 @@ weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
     Check_Type (function, T_STRING);
     Check_Type (data, T_STRING);
 
-    c_interval = NUM2INT (interval);
+    c_interval = NUM2LONG (interval);
     c_align_second = NUM2INT (align_second);
     c_max_calls = NUM2INT (max_calls);
     c_function = StringValuePtr (function);
@@ -3179,7 +3231,7 @@ weechat_ruby_api_hook_print_cb (const void *pointer, void *data,
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (char *)API_PTR2STR(buffer);
         func_argv[2] = timebuffer;
-        func_argv[3] = weechat_string_build_with_split_string (tags, ",");
+        func_argv[3] = weechat_string_rebuild_split_string (tags, ",", 0, -1);
         if (!func_argv[3])
             func_argv[3] = strdup ("");
         func_argv[4] = &displayed;
@@ -4060,6 +4112,58 @@ weechat_ruby_api_buffer_new (VALUE class, VALUE name, VALUE function_input,
                                                        &weechat_ruby_api_buffer_close_cb,
                                                        c_function_close,
                                                        c_data_close));
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
+weechat_ruby_api_buffer_new_props (VALUE class, VALUE name, VALUE properties,
+                                   VALUE function_input,
+                                   VALUE data_input, VALUE function_close,
+                                   VALUE data_close)
+{
+    char *c_name, *c_function_input, *c_data_input, *c_function_close;
+    char *c_data_close;
+    struct t_hashtable *c_properties;
+    const char *result;
+
+    API_INIT_FUNC(1, "buffer_new_props", API_RETURN_EMPTY);
+    if (NIL_P (name) || NIL_P (properties) || NIL_P (function_input)
+        || NIL_P (data_input) || NIL_P (function_close) || NIL_P (data_close))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (name, T_STRING);
+    Check_Type (properties, T_HASH);
+    Check_Type (function_input, T_STRING);
+    Check_Type (data_input, T_STRING);
+    Check_Type (function_close, T_STRING);
+    Check_Type (data_close, T_STRING);
+
+    c_name = StringValuePtr (name);
+    c_properties = weechat_ruby_hash_to_hashtable (properties,
+                                                   WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING);
+    c_function_input = StringValuePtr (function_input);
+    c_data_input = StringValuePtr (data_input);
+    c_function_close = StringValuePtr (function_close);
+    c_data_close = StringValuePtr (data_close);
+
+    result = API_PTR2STR(
+        plugin_script_api_buffer_new_props (
+            weechat_ruby_plugin,
+            ruby_current_script,
+            c_name,
+            c_properties,
+            &weechat_ruby_api_buffer_input_data_cb,
+            c_function_input,
+            c_data_input,
+            &weechat_ruby_api_buffer_close_cb,
+            c_function_close,
+            c_data_close));
+
+    if (c_properties)
+        weechat_hashtable_free (c_properties);
 
     API_RETURN_STRING(result);
 }
@@ -6262,8 +6366,7 @@ weechat_ruby_api_hdata_get_string (VALUE class, VALUE hdata, VALUE property)
     c_hdata = StringValuePtr (hdata);
     c_property = StringValuePtr (property);
 
-    result = weechat_hdata_get_var_type_string (API_STR2PTR(c_hdata),
-                                                c_property);
+    result = weechat_hdata_get_string (API_STR2PTR(c_hdata), c_property);
 
     API_RETURN_STRING(result);
 }
@@ -6276,7 +6379,7 @@ weechat_ruby_api_upgrade_read_cb (const void *pointer, void *data,
 {
     struct t_plugin_script *script;
     void *func_argv[4];
-    char empty_arg[1] = { '\0' }, str_object_id[32];
+    char empty_arg[1] = { '\0' };
     const char *ptr_function, *ptr_data;
     int *rc, ret;
 
@@ -6285,17 +6388,15 @@ weechat_ruby_api_upgrade_read_cb (const void *pointer, void *data,
 
     if (ptr_function && ptr_function[0])
     {
-        snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
-
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (char *)API_PTR2STR(upgrade_file);
-        func_argv[2] = str_object_id;
+        func_argv[2] = &object_id;
         func_argv[3] = (char *)API_PTR2STR(infolist);
 
         rc = (int *) weechat_ruby_exec (script,
                                         WEECHAT_SCRIPT_EXEC_INT,
                                         ptr_function,
-                                        "ssss", func_argv);
+                                        "ssis", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -6473,6 +6574,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(string_has_highlight_regex, 2);
     API_DEF_FUNC(string_mask_to_regex, 1);
     API_DEF_FUNC(string_format_size, 1);
+    API_DEF_FUNC(string_parse_size, 1);
     API_DEF_FUNC(string_color_code_size, 1);
     API_DEF_FUNC(string_remove_color, 2);
     API_DEF_FUNC(string_is_command_char, 1);
@@ -6540,6 +6642,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(print, 2);
     API_DEF_FUNC(print_date_tags, 4);
     API_DEF_FUNC(print_y, 3);
+    API_DEF_FUNC(print_y_date_tags, 5);
     API_DEF_FUNC(log_print, 1);
     API_DEF_FUNC(hook_command, 7);
     API_DEF_FUNC(hook_completion, 4);
@@ -6568,6 +6671,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(unhook, 1);
     API_DEF_FUNC(unhook_all, 0);
     API_DEF_FUNC(buffer_new, 5);
+    API_DEF_FUNC(buffer_new_props, 6);
     API_DEF_FUNC(buffer_search, 2);
     API_DEF_FUNC(buffer_search_main, 0);
     API_DEF_FUNC(current_buffer, 0);

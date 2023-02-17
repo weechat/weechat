@@ -1,7 +1,7 @@
 /*
  * gui-nick.c - nick functions (used by all GUI)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -182,10 +182,9 @@ gui_nick_get_forced_color (const char *nickname)
     if (forced_color)
         return forced_color;
 
-    nick_lower = strdup (nickname);
+    nick_lower = string_tolower (nickname);
     if (nick_lower)
     {
-        string_tolower (nick_lower);
         forced_color = hashtable_get (config_hashtable_nick_color_force,
                                       nick_lower);
         free (nick_lower);

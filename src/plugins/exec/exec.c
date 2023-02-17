@@ -1,7 +1,7 @@
 /*
  * exec.c - execution of external commands in WeeChat
  *
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -37,7 +37,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Execution of external commands in WeeChat"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(14000);
+WEECHAT_PLUGIN_PRIORITY(EXEC_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_exec_plugin = NULL;
 
@@ -65,7 +65,7 @@ exec_search_color (const char *color)
 
     for (i = 0; i < EXEC_NUM_COLORS; i++)
     {
-        if (weechat_strcasecmp (exec_color_string[i], color) == 0)
+        if (strcmp (exec_color_string[i], color) == 0)
             return i;
     }
 
@@ -85,6 +85,9 @@ exec_search_by_id (const char *id)
     struct t_exec_cmd* ptr_exec_cmd;
     char *error;
     long number;
+
+    if (!id)
+        return NULL;
 
     error = NULL;
     number = strtol (id, &error, 10);
@@ -723,8 +726,7 @@ exec_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcasecmp ((char *)signal_data, EXEC_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, EXEC_PLUGIN_NAME) == 0))
     {
         weechat_log_printf ("");
         weechat_log_printf ("***** \"%s\" plugin dump *****",

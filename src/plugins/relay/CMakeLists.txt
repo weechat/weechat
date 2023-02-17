@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -43,12 +43,15 @@ set_target_properties(relay PROPERTIES PREFIX "")
 
 set(LINK_LIBS)
 
-list(APPEND LINK_LIBS ${ZLIB_LIBRARY})
-
 include_directories(${GNUTLS_INCLUDE_PATH})
 list(APPEND LINK_LIBS ${GNUTLS_LIBRARY})
 
 list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
+
+list(APPEND LINK_LIBS ${ZLIB_LIBRARY})
+
+include_directories(${ZSTD_INCLUDE_DIRS})
+list(APPEND LINK_LIBS ${LIBZSTD_LDFLAGS})
 
 target_link_libraries(relay ${LINK_LIBS} coverage_config)
 

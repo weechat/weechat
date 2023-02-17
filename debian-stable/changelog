@@ -1,3 +1,63 @@
+weechat (3.7.1-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 22 Oct 2022 12:55:10 +0000
+
+weechat (3.7-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Tue, 18 Oct 2022 12:44:29 +0000
+
+weechat (3.6-1) unstable; urgency=medium
+
+  * New upstream release
+  * Bump Standards-Version to 4.6.1.0
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 23 Jul 2022 09:56:24 +0000
+
+weechat (3.5-1) unstable; urgency=medium
+
+  * New upstream release
+  * Add build dependency on libzstd-dev
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Thu, 31 Mar 2022 11:36:01 +0000
+
+weechat (3.4.1-1) unstable; urgency=medium
+
+  * New upstream release
+    - Fix a possible man-in-the-middle attack in TLS connection to servers
+  * Update build dependency from libargon2-0-dev to libargon2-dev
+    (libargon2-0-dev is now virtual package) (Closes: #1005703)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Tue, 22 Mar 2022 05:55:14 +0000
+
+weechat (3.4-2) unstable; urgency=medium
+
+  * Remove build dependency on ruby-pygments.rb (no longer required)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 08 Jan 2022 06:00:17 +0000
+
+weechat (3.4-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #1001654, #1001245)
+  * Remove tester's guide from weechat-doc (according to upstream changes)
+  * Refresh ASCII Doctor options patch
+  * Update lintian override on weechat-plugins
+  * Update copyright (new year)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Fri, 07 Jan 2022 23:03:49 +0000
+
+weechat (3.3-1) unstable; urgency=medium
+
+  * New upstream release
+  * Remove patch merged upstream (which command detection in libgcrypt)
+  * Minor updates in debian/copyright
+  * Enable Typing plugin
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Mon, 20 Sep 2021 10:05:56 +0000
+
 weechat (3.2.1-1) unstable; urgency=medium
 
   * New upstream release

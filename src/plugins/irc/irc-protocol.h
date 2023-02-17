@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -35,6 +35,12 @@
                                  int ignored,                           \
                                  const char **params,                   \
                                  int num_params)
+
+#define IRC_PROTOCOL_RUN_CALLBACK(__name)                               \
+    irc_protocol_cb_##__name (server, date, irc_message, tags, nick,    \
+                              address, host, command, ignored, params,  \
+                              num_params)
+
 #define IRCB(__message, __decode_color, __keep_trailing_spaces,         \
              __func_cb)                                                 \
     { #__message,                                                       \
@@ -93,8 +99,11 @@ struct t_irc_protocol_msg
     t_irc_recv_func *recv_function; /* function called when msg is received  */
 };
 
-extern const char *irc_protocol_tags (const char *command, const char *tags,
-                                      const char *nick, const char *address);
+extern const char *irc_protocol_tags (const char *command,
+                                      struct t_hashtable *irc_msg_tags,
+                                      const char *extra_tags,
+                                      const char *nick,
+                                      const char *address);
 extern time_t irc_protocol_parse_time (const char *time);
 extern void irc_protocol_recv_command (struct t_irc_server *server,
                                        const char *irc_message,

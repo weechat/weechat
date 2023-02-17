@@ -1,7 +1,7 @@
 /*
  * wee-hashtable.c - implementation of hashtable
  *
- * Copyright (C) 2010-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2010-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -34,6 +34,7 @@
 #include "wee-list.h"
 #include "wee-log.h"
 #include "wee-string.h"
+#include "wee-utf8.h"
 #include "../plugins/plugin.h"
 
 
@@ -59,7 +60,7 @@ hashtable_get_type (const char *type)
 
     for (i = 0; i < HASHTABLE_NUM_TYPES; i++)
     {
-        if (string_strcasecmp (hashtable_type_string[i], type) == 0)
+        if (strcmp (hashtable_type_string[i], type) == 0)
             return i;
     }
 
@@ -746,13 +747,13 @@ hashtable_get_list_keys (struct t_hashtable *hashtable)
 int
 hashtable_get_integer (struct t_hashtable *hashtable, const char *property)
 {
-    if (hashtable && property)
-    {
-        if (string_strcasecmp (property, "size") == 0)
-            return hashtable->size;
-        else if (string_strcasecmp (property, "items_count") == 0)
-            return hashtable->items_count;
-    }
+    if (!hashtable || !property)
+        return 0;
+
+    if (strcmp (property, "size") == 0)
+        return hashtable->size;
+    else if (strcmp (property, "items_count") == 0)
+        return hashtable->items_count;
 
     return 0;
 }
@@ -1002,23 +1003,23 @@ hashtable_get_keys_values (struct t_hashtable *hashtable,
 const char *
 hashtable_get_string (struct t_hashtable *hashtable, const char *property)
 {
-    if (hashtable && property)
-    {
-        if (string_strcasecmp (property, "type_keys") == 0)
-            return hashtable_type_string[hashtable->type_keys];
-        else if (string_strcasecmp (property, "type_values") == 0)
-            return hashtable_type_string[hashtable->type_values];
-        else if (string_strcasecmp (property, "keys") == 0)
-            return hashtable_get_keys_values (hashtable, 1, 0, 0);
-        else if (string_strcasecmp (property, "keys_sorted") == 0)
-            return hashtable_get_keys_values (hashtable, 1, 1, 0);
-        else if (string_strcasecmp (property, "values") == 0)
-            return hashtable_get_keys_values (hashtable, 0, 0, 1);
-        else if (string_strcasecmp (property, "keys_values") == 0)
-            return hashtable_get_keys_values (hashtable, 1, 0, 1);
-        else if (string_strcasecmp (property, "keys_values_sorted") == 0)
-            return hashtable_get_keys_values (hashtable, 1, 1, 1);
-    }
+    if (!hashtable || !property)
+        return NULL;
+
+    if (strcmp (property, "type_keys") == 0)
+        return hashtable_type_string[hashtable->type_keys];
+    else if (strcmp (property, "type_values") == 0)
+        return hashtable_type_string[hashtable->type_values];
+    else if (strcmp (property, "keys") == 0)
+        return hashtable_get_keys_values (hashtable, 1, 0, 0);
+    else if (strcmp (property, "keys_sorted") == 0)
+        return hashtable_get_keys_values (hashtable, 1, 1, 0);
+    else if (strcmp (property, "values") == 0)
+        return hashtable_get_keys_values (hashtable, 0, 0, 1);
+    else if (strcmp (property, "keys_values") == 0)
+        return hashtable_get_keys_values (hashtable, 1, 0, 1);
+    else if (strcmp (property, "keys_values_sorted") == 0)
+        return hashtable_get_keys_values (hashtable, 1, 1, 1);
 
     return NULL;
 }
@@ -1031,13 +1032,13 @@ void
 hashtable_set_pointer (struct t_hashtable *hashtable, const char *property,
                        void *pointer)
 {
-    if (hashtable && property)
-    {
-        if (string_strcasecmp (property, "callback_free_key") == 0)
-            hashtable->callback_free_key = pointer;
-        else if (string_strcasecmp (property, "callback_free_value") == 0)
-            hashtable->callback_free_value = pointer;
-    }
+    if (!hashtable || !property)
+        return;
+
+    if (strcmp (property, "callback_free_key") == 0)
+        hashtable->callback_free_key = pointer;
+    else if (strcmp (property, "callback_free_value") == 0)
+        hashtable->callback_free_value = pointer;
 }
 
 /*
@@ -1123,8 +1124,8 @@ hashtable_add_from_infolist (struct t_hashtable *hashtable,
                              const char *prefix)
 {
     struct t_infolist_var *ptr_name, *ptr_value;
-    char prefix_name[128], option_value[128];
-    int prefix_length;
+    char prefix_name[1024], option_value[1024];
+    int prefix_length, prefix_length_utf8;
 
     if (!hashtable || !infolist || !infolist->ptr_item || !prefix)
         return 0;
@@ -1135,12 +1136,13 @@ hashtable_add_from_infolist (struct t_hashtable *hashtable,
 
     snprintf (prefix_name, sizeof (prefix_name), "%s_name_", prefix);
     prefix_length = strlen (prefix_name);
+    prefix_length_utf8 = utf8_strlen (prefix_name);
 
     for (ptr_name = infolist->ptr_item->vars; ptr_name;
          ptr_name = ptr_name->next_var)
     {
         if (string_strncasecmp (ptr_name->name, prefix_name,
-                                prefix_length) == 0)
+                                prefix_length_utf8) == 0)
         {
             snprintf (option_value, sizeof (option_value),
                       "%s_value_%s", prefix, ptr_name->name + prefix_length);

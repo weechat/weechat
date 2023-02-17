@@ -1,7 +1,7 @@
 /*
  * relay-client.c - client functions for relay plugin
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -149,6 +149,9 @@ int
 relay_client_status_search (const char *name)
 {
     int i;
+
+    if (!name)
+        return -1;
 
     for (i = 0; i < RELAY_NUM_STATUS; i++)
     {
@@ -365,7 +368,7 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
                     lines[i][length - 1] = '\0';
 
                 /* if websocket is initializing */
-                if (client->websocket == 1)
+                if (client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
                 {
                     if (lines[i][0])
                     {
@@ -392,7 +395,7 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
                                                    handshake,
                                                    strlen (handshake), NULL);
                                 free (handshake);
-                                client->websocket = 2;
+                                client->websocket = RELAY_CLIENT_WEBSOCKET_READY;
                             }
                         }
                         else
@@ -524,7 +527,7 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
          * in case of websocket, we can receive PING from client:
          * trace this PING in raw buffer and answer with a PONG
          */
-        if (client->websocket == 2)
+        if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
         {
             msg_type = (unsigned char)buffer[index];
             if (msg_type == RELAY_CLIENT_MSG_PING)
@@ -623,7 +626,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
                  * (we will check later with "http_headers" if web socket is
                  * valid or not)
                  */
-                client->websocket = 1;
+                client->websocket = RELAY_CLIENT_WEBSOCKET_INITIALIZING;
                 client->http_headers = weechat_hashtable_new (
                     32,
                     WEECHAT_HASHTABLE_STRING,
@@ -634,7 +637,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
 
         client->bytes_recv += num_read;
 
-        if (client->websocket == 2)
+        if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
         {
             /* websocket used, decode message */
             rc = relay_websocket_decode_frame ((unsigned char *)buffer,
@@ -672,7 +675,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
             length_buffer = decoded_length;
         }
 
-        if ((client->websocket == 1)
+        if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
             || (client->recv_data_type == RELAY_CLIENT_DATA_TEXT))
         {
             /* websocket initializing or text data for this client */
@@ -1056,7 +1059,7 @@ relay_client_send (struct t_relay_client *client,
             raw_msg[1] = data;
             raw_size[1] = data_size;
             raw_flags[1] |= RELAY_RAW_FLAG_BINARY;
-            if ((client->websocket == 1)
+            if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
                 || (client->send_data_type == RELAY_CLIENT_DATA_TEXT))
             {
                 raw_size[1]--;
@@ -1075,13 +1078,13 @@ relay_client_send (struct t_relay_client *client,
         if ((msg_type == RELAY_CLIENT_MSG_PING)
             || (msg_type == RELAY_CLIENT_MSG_PONG)
             || (msg_type == RELAY_CLIENT_MSG_CLOSE)
-            || ((client->websocket != 1)
+            || ((client->websocket != RELAY_CLIENT_WEBSOCKET_INITIALIZING)
                 && (client->send_data_type == RELAY_CLIENT_DATA_BINARY)))
         {
             /*
              * set binary flag if we send binary to client
-             * (except if websocket == 1, which means that websocket is
-             * initializing, and then we are sending HTTP data, as text)
+             * (except if websocket is initializing and then we are sending
+             * HTTP data, as text)
              */
             raw_flags[0] |= RELAY_RAW_FLAG_BINARY;
         }
@@ -1093,7 +1096,7 @@ relay_client_send (struct t_relay_client *client,
     }
 
     /* if websocket is initialized, encode data in a websocket frame */
-    if (client->websocket == 2)
+    if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
     {
         switch (msg_type)
         {
@@ -1306,7 +1309,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->ssl = server->ssl;
         new_client->hook_timer_handshake = NULL;
         new_client->gnutls_handshake_ok = 0;
-        new_client->websocket = 0;
+        new_client->websocket = RELAY_CLIENT_WEBSOCKET_NOT_USED;
         new_client->http_headers = NULL;
         new_client->address = strdup ((address && address[0]) ?
                                       address : "local");
@@ -1610,6 +1613,13 @@ relay_client_set_status (struct t_relay_client *client,
 {
     struct t_relay_server *ptr_server;
 
+    /*
+     * IMPORTANT: if changes are made in this function or sub-functions called,
+     * please also update the function relay_client_add_to_infolist:
+     * when the flag force_disconnected_state is set to 1 we simulate
+     * a disconnected state for client in infolist (used on /upgrade -save)
+     */
+
     client->status = status;
 
     if (client->status == RELAY_STATUS_CONNECTED)
@@ -1821,6 +1831,10 @@ relay_client_disconnect_all ()
 /*
  * Adds a client in an infolist.
  *
+ * If force_disconnected_state == 1, the infolist contains the client
+ * in a disconnected state (but the client is unchanged, still connected if it
+ * was).
+ *
  * Returns:
  *   1: OK
  *   0: error
@@ -1828,7 +1842,8 @@ relay_client_disconnect_all ()
 
 int
 relay_client_add_to_infolist (struct t_infolist *infolist,
-                              struct t_relay_client *client)
+                              struct t_relay_client *client,
+                              int force_disconnected_state)
 {
     struct t_infolist_item *ptr_item;
     char value[128];
@@ -1844,23 +1859,45 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "desc", client->desc))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "sock", client->sock))
-        return 0;
+    if (!RELAY_CLIENT_HAS_ENDED(client) && force_disconnected_state)
+    {
+        if (!weechat_infolist_new_var_integer (ptr_item, "sock", -1))
+            return 0;
+        if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer_handshake", NULL))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "gnutls_handshake_ok", 0))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "status", RELAY_STATUS_DISCONNECTED))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "end_time", time (NULL)))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "partial_message", NULL))
+            return 0;
+    }
+    else
+    {
+        if (!weechat_infolist_new_var_integer (ptr_item, "sock", client->sock))
+            return 0;
+        if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer_handshake", client->hook_timer_handshake))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "gnutls_handshake_ok", client->gnutls_handshake_ok))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "status", client->status))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "end_time", client->end_time))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "partial_message", client->partial_message))
+            return 0;
+    }
     if (!weechat_infolist_new_var_integer (ptr_item, "server_port", client->server_port))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ssl", client->ssl))
-        return 0;
-    if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer_handshake", client->hook_timer_handshake))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "gnutls_handshake_ok", client->gnutls_handshake_ok))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "websocket", client->websocket))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "address", client->address))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "real_ip", client->real_ip))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "status", client->status))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "status_string", relay_client_status_string[client->status]))
         return 0;
@@ -1882,8 +1919,6 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "start_time", client->start_time))
         return 0;
-    if (!weechat_infolist_new_var_time (ptr_item, "end_time", client->end_time))
-        return 0;
     if (!weechat_infolist_new_var_pointer (ptr_item, "hook_fd", client->hook_fd))
         return 0;
     if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer_send", client->hook_timer_send))
@@ -1900,16 +1935,16 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "send_data_type", client->send_data_type))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "partial_message", client->partial_message))
-        return 0;
 
     switch (client->protocol)
     {
         case RELAY_PROTOCOL_WEECHAT:
-            relay_weechat_add_to_infolist (ptr_item, client);
+            relay_weechat_add_to_infolist (ptr_item, client,
+                                           force_disconnected_state);
             break;
         case RELAY_PROTOCOL_IRC:
-            relay_irc_add_to_infolist (ptr_item, client);
+            relay_irc_add_to_infolist (ptr_item, client,
+                                       force_disconnected_state);
             break;
         case RELAY_NUM_PROTOCOLS:
             break;

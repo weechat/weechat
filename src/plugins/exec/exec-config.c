@@ -1,7 +1,7 @@
 /*
  * exec-config.c - exec configuration options (file exec.conf)
  *
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -100,7 +100,7 @@ exec_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    exec_config_file = weechat_config_new (EXEC_CONFIG_NAME,
+    exec_config_file = weechat_config_new (EXEC_CONFIG_PRIO_NAME,
                                            &exec_config_reload_cb, NULL, NULL);
     if (!exec_config_file)
         return 0;

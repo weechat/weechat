@@ -223,11 +223,15 @@ in folgender Option erreicht werden:
 /set irc.server.libera.autojoin "#channel1,#channel2"
 ----
 
-[TIP]
-Mittels der kbd:[Tab] Taste kann man sehr einfach Namen und Werte von Optionen
-vervollständigen und mittels kbd:[Shift+Tab] kann eine teilweise Vervollständigung
-durchgeführt werden (was bei langen Wörtern, wie z.B. dem Namen einer Option, nützlich
-sein kann).
+Mit dem `/autojoin` Befehl können die _autojoin_ Optionen einfach konfiguriert werden.
+(siehe `/help autojoin`).
+
+WeeChat kann auch konfigurieren werden, dass die _autojoin_ Optionen automatisch aktualisiert werden
+sobald man Kanäle betritt oder verlässt:
+
+----
+/set irc.server_default.autojoin_dynamic on
+----
 
 Mit dem Befehl `/unset` können Server-Optionen zurückgesetzt werden.
 Ist eine Server-Option zurückgesetzt, _wirkt_ der entsprechende Vorgabewert
@@ -245,6 +249,12 @@ Werte anderer Server-Optionen (`xxx`) können festgelegt werden mit:
 ----
 /set irc.server.libera.xxx Wert
 ----
+
+[TIP]
+Mittels der kbd:[Tab] Taste kann man sehr einfach Namen und Werte von Optionen
+vervollständigen und mittels kbd:[Shift+Tab] kann eine teilweise Vervollständigung
+durchgeführt werden (was bei langen Wörtern, wie z.B. dem Namen einer Option, nützlich
+sein kann).
 
 [[connect_to_irc_server]]
 == Verbinden mit dem IRC-Server
@@ -431,14 +441,14 @@ Zeige eine liste aller verfügbaren Skripten:
 /script
 ----
 
-Auf *weechat.org* von Drittanbietern bereitgestellte Scripten: https://weechat.org/scripts
+Eine Liste von Skripten ist in WeeChat mittels `/script` oder auf
+https://weechat.org/scripts/[this page ^↗^,window=_blank] verfügbar.
 
 [[more_doc]]
 == Weitere Dokumentation
 
-Mit dieser Quickstart-Anleitung wurden dir die wesentlichen
-Bedienungswerkzeuge von WeeChat nähergebracht.
-Für das eingehende Studium aller verfügbaren Funktionalitäten
-sei dir unsere ausführliche FAQ/Dokumentation ans Herz gelegt: https://weechat.org/doc
+WeeChat kann nun verwendet werden und lesen Sie
+https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+falls Sie weitere Fragen haben.
 
 Viel Spass mit WeeChat!

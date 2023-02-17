@@ -1,7 +1,7 @@
 /*
  * irc-config.c - IRC configuration options (file irc.conf)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -34,6 +34,7 @@
 #include "irc-channel.h"
 #include "irc-ctcp.h"
 #include "irc-ignore.h"
+#include "irc-mode.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
@@ -72,6 +73,7 @@ struct t_config_option *irc_config_look_display_join_message;
 struct t_config_option *irc_config_look_display_old_topic;
 struct t_config_option *irc_config_look_display_pv_away_once;
 struct t_config_option *irc_config_look_display_pv_back;
+struct t_config_option *irc_config_look_display_pv_nick_change;
 struct t_config_option *irc_config_look_display_pv_warning_address;
 struct t_config_option *irc_config_look_highlight_channel;
 struct t_config_option *irc_config_look_highlight_pv;
@@ -110,6 +112,7 @@ struct t_config_option *irc_config_look_smart_filter_join_unmask;
 struct t_config_option *irc_config_look_smart_filter_mode;
 struct t_config_option *irc_config_look_smart_filter_nick;
 struct t_config_option *irc_config_look_smart_filter_quit;
+struct t_config_option *irc_config_look_smart_filter_setname;
 struct t_config_option *irc_config_look_temporary_servers;
 struct t_config_option *irc_config_look_topic_strip_colors;
 
@@ -129,6 +132,7 @@ struct t_config_option *irc_config_color_message_chghost;
 struct t_config_option *irc_config_color_message_join;
 struct t_config_option *irc_config_color_message_kick;
 struct t_config_option *irc_config_color_message_quit;
+struct t_config_option *irc_config_color_message_setname;
 struct t_config_option *irc_config_color_mirc_remap;
 struct t_config_option *irc_config_color_nick_prefixes;
 struct t_config_option *irc_config_color_notice;
@@ -997,6 +1001,9 @@ irc_config_server_default_change_cb (const void *pointer, void *data,
                         else
                             irc_server_remove_away (ptr_server);
                         break;
+                    case IRC_SERVER_OPTION_REGISTERED_MODE:
+                        irc_mode_registered_mode_change (ptr_server);
+                        break;
                 }
             }
         }
@@ -1215,6 +1222,20 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
                     return 0;
                 }
                 break;
+            case IRC_SERVER_OPTION_REGISTERED_MODE:
+                if (!value || !value[0])
+                    break;
+                /* Only one character should be accepted */
+                if (value[1])
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: invalid registered mode, must be a single "
+                          "character"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                    return 0;
+                }
+                break;
         }
     }
 
@@ -1266,6 +1287,9 @@ irc_config_server_change_cb (const void *pointer, void *data,
                     break;
                 case IRC_SERVER_OPTION_NOTIFY:
                     irc_notify_new_for_server (ptr_server);
+                    break;
+                case IRC_SERVER_OPTION_REGISTERED_MODE:
+                    irc_mode_registered_mode_change (ptr_server);
                     break;
             }
         }
@@ -2217,6 +2241,24 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "boolean",
+                N_("set automatically the \"autojoin\" option according to "
+                   "the channels you manually join and part with commands "
+                   "/join and /part"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value,
+                callback_check_value_pointer,
+                callback_check_value_data,
+                callback_change,
+                callback_change_pointer,
+                callback_change_data,
+                NULL, NULL, NULL);
+            break;
         case IRC_SERVER_OPTION_AUTOREJOIN:
             new_option = weechat_config_new_option (
                 config_file, section,
@@ -2481,6 +2523,22 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_REGISTERED_MODE:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("mode that is set on registered users (default is \"r\")"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value,
+                callback_check_value_pointer,
+                callback_check_value_data,
+                callback_change,
+                callback_change_pointer,
+                callback_change_data,
+                NULL, NULL, NULL);
+            break;
         case IRC_SERVER_NUM_OPTIONS:
             break;
     }
@@ -2711,7 +2769,7 @@ irc_config_init ()
         WEECHAT_HASHTABLE_STRING,
         NULL, NULL);
 
-    irc_config_file = weechat_config_new (IRC_CONFIG_NAME,
+    irc_config_file = weechat_config_new (IRC_CONFIG_PRIO_NAME,
                                           &irc_config_reload, NULL, NULL);
     if (!irc_config_file)
         return 0;
@@ -2882,6 +2940,12 @@ irc_config_init ()
         "display_pv_back", "boolean",
         N_("display a message in private when user is back (after quit on "
            "server)"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_display_pv_nick_change = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_pv_nick_change", "boolean",
+        N_("display nick change in private"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_display_pv_warning_address = weechat_config_new_option (
@@ -3216,6 +3280,13 @@ irc_config_init ()
         N_("enable smart filter for \"part\" and \"quit\" messages"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_smart_filter_setname = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "smart_filter_setname", "boolean",
+        /* TRANSLATORS: please do not translate "setname" */
+        N_("enable smart filter for \"setname\" messages"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_temporary_servers = weechat_config_new_option (
         irc_config_file, ptr_section,
         "temporary_servers", "boolean",
@@ -3321,7 +3392,8 @@ irc_config_init ()
     irc_config_color_message_chghost = weechat_config_new_option (
         irc_config_file, ptr_section,
         "message_chghost", "color",
-        N_("color for text in chghost messages"),
+        /* TRANSLATORS: please do not translate "chghost" */
+        N_("color for text in \"chghost\" messages"),
         NULL, -1, 0, "brown", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_message_join = weechat_config_new_option (
@@ -3341,6 +3413,13 @@ irc_config_init ()
         "message_quit", "color",
         N_("color for text in part/quit messages"),
         NULL, -1, 0, "red", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_color_message_setname = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "message_setname", "color",
+        /* TRANSLATORS: please do not translate "setname" */
+        N_("color for text in \"setname\" messages"),
+        NULL, -1, 0, "brown", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_mirc_remap = weechat_config_new_option (
         irc_config_file, ptr_section,

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -46,7 +46,7 @@ struct t_gui_bar_window;
 #define A_ITALIC 0
 #endif /* A_ITALIC */
 
-#define A_ALL_ATTR A_BOLD | A_UNDERLINE | A_REVERSE | A_ITALIC
+#define A_ALL_ATTR A_BLINK | A_DIM | A_BOLD | A_UNDERLINE | A_REVERSE | A_ITALIC
 
 #define GUI_WINDOW_OBJECTS(window)                                      \
     ((struct t_gui_window_curses_objects *)(window->gui_objects))
@@ -84,6 +84,7 @@ extern int gui_color_pairs_auto_reset;
 extern int gui_color_pairs_auto_reset_pending;
 extern time_t gui_color_pairs_auto_reset_last;
 extern int gui_color_buffer_refresh_needed;
+extern int gui_window_current_color_attr;
 extern int gui_window_current_emphasis;
 
 /* main functions */

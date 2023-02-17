@@ -1,7 +1,7 @@
 /*
  * weechat-plugin.h - header to compile WeeChat plugins
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20211106-01"
+#define WEECHAT_PLUGIN_API_VERSION "20221224-02"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -248,6 +248,10 @@ struct timeval;
         return WEECHAT_RC_ERROR;                                        \
     }
 
+/* macro to convert integer to string */
+#define TO_STR_HELPER(x) #x
+#define TO_STR(x) TO_STR_HELPER(x)
+
 struct t_weechat_plugin
 {
     /* plugin variables */
@@ -284,11 +288,15 @@ struct t_weechat_plugin
     char *(*iconv_from_internal) (const char *charset, const char *string);
     const char *(*gettext) (const char *string);
     const char *(*ngettext) (const char *single, const char *plural, int count);
-    char *(*strndup) (const char *string, int length);
+    char *(*strndup) (const char *string, int bytes);
     char *(*string_cut) (const char *string, int length, int count_suffix,
                          int screen, const char *cut_suffix);
-    void (*string_tolower) (char *string);
-    void (*string_toupper) (char *string);
+    char *(*string_tolower) (const char *string);
+    char *(*string_toupper) (const char *string);
+    int (*string_charcmp) (const char *string1, const char *string2);
+    int (*string_charcasecmp) (const char *string1, const char *string2);
+    int (*strcmp) (const char *string1, const char *string2);
+    int (*strncmp) (const char *string1, const char *string2, int max);
     int (*strcasecmp) (const char *string1, const char *string2);
     int (*strcasecmp_range) (const char *string1, const char *string2,
                              int range);
@@ -327,16 +335,20 @@ struct t_weechat_plugin
                                    char *(*callback)(void *data,
                                                      const char *text),
                                    void *callback_data);
+    char *(*string_translate_chars) (const char *string, const char *chars1,
+                                     const char *chars2);
     char **(*string_split) (const char *string, const char *separators,
                             const char *strip_items, int flags,
                             int num_items_max, int *num_items);
     char **(*string_split_shell) (const char *string, int *num_items);
     void (*string_free_split) (char **split_string);
-    char *(*string_build_with_split_string) (const char **split_string,
-                                             const char *separator);
+    char *(*string_rebuild_split_string) (const char **split_string,
+                                          const char *separator,
+                                          int index_start, int index_end);
     char **(*string_split_command) (const char *command, char separator);
     void (*string_free_split_command) (char **split_command);
     char *(*string_format_size) (unsigned long long size);
+    unsigned long long (*string_parse_size) (const char *size);
     int (*string_color_code_size) (const char *string);
     char *(*string_remove_color) (const char *string, const char *replacement);
     int (*string_base_encode) (int base, const char *from, int length,
@@ -368,17 +380,18 @@ struct t_weechat_plugin
     int (*utf8_strlen) (const char *string);
     int (*utf8_strnlen) (const char *string, int bytes);
     int (*utf8_strlen_screen) (const char *string);
-    int (*utf8_charcmp) (const char *string1, const char *string2);
-    int (*utf8_charcasecmp) (const char *string1, const char *string2);
     int (*utf8_char_size_screen) (const char *string);
     const char *(*utf8_add_offset) (const char *string, int offset);
     int (*utf8_real_pos) (const char *string, int pos);
     int (*utf8_pos) (const char *string, int real_pos);
     char *(*utf8_strndup) (const char *string, int length);
+    void (*utf8_strncpy) (char *dest, const char *string, int length);
 
     /* crypto */
     int (*crypto_hash) (const void *data, int data_size,
                         const char *hash_algo, void *hash, int *hash_size);
+    int (*crypto_hash_file) (const char *fliename,
+                             const char *hash_algo, void *hash, int *hash_size);
     int (*crypto_hash_pbkdf2) (const void *data, int data_size,
                                const char *hash_algo,
                                const void *salt, int salt_size,
@@ -398,6 +411,8 @@ struct t_weechat_plugin
                            void *callback_data);
     char *(*file_get_content) (const char *filename);
     int (*file_copy) (const char *from, const char *to);
+    int (*file_compress) (const char *from, const char *to,
+                          const char *compressor, int compression_level);
 
     /* util */
     int (*util_timeval_cmp) (struct timeval *tv1, struct timeval *tv2);
@@ -653,8 +668,9 @@ struct t_weechat_plugin
     const char *(*color) (const char *color_name);
     void (*printf_date_tags) (struct t_gui_buffer *buffer, time_t date,
                               const char *tags, const char *message, ...);
-    void (*printf_y) (struct t_gui_buffer *buffer, int y,
-                      const char *message, ...);
+    void (*printf_y_date_tags) (struct t_gui_buffer *buffer, int y,
+                                time_t date, const char *tags,
+                                const char *message, ...);
     void (*log_printf) (const char *message, ...);
 
     /* hooks */
@@ -892,6 +908,20 @@ struct t_weechat_plugin
                                                               struct t_gui_buffer *buffer),
                                         const void *close_callback_pointer,
                                         void *close_callback_data);
+    struct t_gui_buffer *(*buffer_new_props) (struct t_weechat_plugin *plugin,
+                                              const char *name,
+                                              struct t_hashtable *properties,
+                                              int (*input_callback)(const void *pointer,
+                                                                    void *data,
+                                                                    struct t_gui_buffer *buffer,
+                                                                    const char *input_data),
+                                              const void *input_callback_pointer,
+                                              void *input_callback_data,
+                                              int (*close_callback)(const void *pointer,
+                                                                    void *data,
+                                                                    struct t_gui_buffer *buffer),
+                                              const void *close_callback_pointer,
+                                              void *close_callback_data);
     struct t_gui_buffer *(*buffer_search) (const char *plugin, const char *name);
     struct t_gui_buffer *(*buffer_search_main) ();
     void (*buffer_clear) (struct t_gui_buffer *buffer);
@@ -1195,8 +1225,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_gettext(string) (weechat_plugin->gettext)(string)
 #define weechat_ngettext(single,plural,number)                          \
     (weechat_plugin->ngettext)(single, plural, number)
-#define weechat_strndup(__string, __length)                             \
-    (weechat_plugin->strndup)(__string, __length)
+#define weechat_strndup(__string, __bytes)                              \
+    (weechat_plugin->strndup)(__string, __bytes)
 #define weechat_string_cut(__string, __length, __count_suffix,          \
                            __screen, __cut_suffix)                      \
     (weechat_plugin->string_cut)(__string, __length, __count_suffix,    \
@@ -1205,6 +1235,14 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->string_tolower)(__string)
 #define weechat_string_toupper(__string)                                \
     (weechat_plugin->string_toupper)(__string)
+#define weechat_string_charcmp(__string1, __string2)                    \
+    (weechat_plugin->string_charcmp)(__string1, __string2)
+#define weechat_string_charcasecmp(__string1, __string2)                \
+    (weechat_plugin->string_charcasecmp)(__string1, __string2)
+#define weechat_strcmp(__string1, __string2)                            \
+    (weechat_plugin->strcmp)(__string1, __string2)
+#define weechat_strncmp(__string1, __string2, __max)                    \
+    (weechat_plugin->strncmp)(__string1, __string2, __max)
 #define weechat_strcasecmp(__string1, __string2)                        \
     (weechat_plugin->strcasecmp)(__string1, __string2)
 #define weechat_strcasecmp_range(__string1, __string2, __range)         \
@@ -1261,6 +1299,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                            __reference_char,            \
                                            __callback,                  \
                                            __callback_data)
+#define weechat_string_translate_chars(__string, __chars1, __chars2)    \
+    (weechat_plugin->string_translate_chars)(__string, __chars1,        \
+                                             __chars2);
 #define weechat_string_split(__string, __separators, __strip_items,     \
                              __flags, __max, __num_items)               \
     (weechat_plugin->string_split)(__string, __separators,              \
@@ -1270,16 +1311,22 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->string_split_shell)(__string, __num_items)
 #define weechat_string_free_split(__split_string)                       \
     (weechat_plugin->string_free_split)(__split_string)
-#define weechat_string_build_with_split_string(__split_string,          \
-                                               __separator)             \
-    (weechat_plugin->string_build_with_split_string)(__split_string,    \
-                                                     __separator)
+#define weechat_string_rebuild_split_string(__split_string,             \
+                                            __separator,                \
+                                            __index_start,              \
+                                            __index_end)                \
+    (weechat_plugin->string_rebuild_split_string)(__split_string,       \
+                                                  __separator,          \
+                                                  __index_start,        \
+                                                  __index_end)
 #define weechat_string_split_command(__command, __separator)            \
     (weechat_plugin->string_split_command)(__command, __separator)
 #define weechat_string_free_split_command(__split_command)              \
     (weechat_plugin->string_free_split_command)(__split_command)
 #define weechat_string_format_size(__size)                              \
     (weechat_plugin->string_format_size)(__size)
+#define weechat_string_parse_size(__size)                               \
+    (weechat_plugin->string_parse_size)(__size)
 #define weechat_string_color_code_size(__string)                        \
     (weechat_plugin->string_color_code_size)(__string)
 #define weechat_string_remove_color(__string, __replacement)            \
@@ -1332,10 +1379,6 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->utf8_strnlen)(__string, __bytes)
 #define weechat_utf8_strlen_screen(__string)                            \
     (weechat_plugin->utf8_strlen_screen)(__string)
-#define weechat_utf8_charcmp(__string1, __string2)                      \
-    (weechat_plugin->utf8_charcmp)(__string1, __string2)
-#define weechat_utf8_charcasecmp(__string1, __string2)                  \
-    (weechat_plugin->utf8_charcasecmp)(__string1, __string2)
 #define weechat_utf8_char_size_screen(__string)                         \
     (weechat_plugin->utf8_char_size_screen)(__string)
 #define weechat_utf8_add_offset(__string, __offset)                     \
@@ -1346,12 +1389,18 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->utf8_pos)(__string, __real_pos)
 #define weechat_utf8_strndup(__string, __length)                        \
     (weechat_plugin->utf8_strndup)(__string, __length)
+#define weechat_utf8_strncpy(__dest, __string, __length)                \
+    (weechat_plugin->utf8_strncpy)(__dest, __string, __length)
 
 /* crypto */
 #define weechat_crypto_hash(__data, __data_size, __hash_algo,           \
                             __hash, __hash_size)                        \
     (weechat_plugin->crypto_hash)(__data, __data_size, __hash_algo,     \
                                   __hash, __hash_size)
+#define weechat_crypto_hash_file(__filename, __hash_algo, __hash,       \
+                                 __hash_size)                           \
+    (weechat_plugin->crypto_hash_file)(__filename, __hash_algo, __hash, \
+                                       __hash_size)
 #define weechat_crypto_hash_pbkdf2(__data, __data_size, __hash_algo,    \
                                    __salt, __salt_size, __iterations,   \
                                    __hash, __hash_size)                 \
@@ -1386,6 +1435,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->file_get_content)(__filename)
 #define weechat_file_copy(__from, __to)                                 \
     (weechat_plugin->file_copy)(__from, __to)
+#define weechat_file_compress(__from, __to, __compressor,               \
+                              __compression_level)                      \
+    (weechat_plugin->file_compress)(__from, __to, __compressor,         \
+                                    __compression_level)
 
 /* util */
 #define weechat_util_timeval_cmp(__time1, __time2)                      \
@@ -1689,7 +1742,12 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->printf_date_tags)(__buffer, __date, __tags,        \
                                        __message, ##__argz)
 #define weechat_printf_y(__buffer, __y, __message, __argz...)           \
-    (weechat_plugin->printf_y)(__buffer, __y, __message, ##__argz)
+    (weechat_plugin->printf_y_date_tags)(__buffer, __y, 0, NULL,        \
+                                         __message, ##__argz)
+#define weechat_printf_y_date_tags(__buffer, __y, __date, __tags,       \
+                                   __message, __argz...)                \
+    (weechat_plugin->printf_y_date_tags)(__buffer, __y, __date, __tags, \
+                                         __message, ##__argz)
 #define weechat_log_printf(__message, __argz...)                        \
     (weechat_plugin->log_printf)(__message, ##__argz)
 
@@ -1829,19 +1887,38 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->unhook_all)(weechat_plugin, __subplugin)
 
 /* buffers */
-#define weechat_buffer_new(__name, __input_callback,                    \
+#define weechat_buffer_new(__name,                                      \
+                           __input_callback,                            \
                            __input_callback_pointer,                    \
                            __input_callback_data,                       \
                            __close_callback,                            \
                            __close_callback_pointer,                    \
                            __close_callback_data)                       \
-    (weechat_plugin->buffer_new)(weechat_plugin, __name,                \
+    (weechat_plugin->buffer_new)(weechat_plugin,                        \
+                                 __name,                                \
                                  __input_callback,                      \
                                  __input_callback_pointer,              \
                                  __input_callback_data,                 \
                                  __close_callback,                      \
                                  __close_callback_pointer,              \
                                  __close_callback_data)
+#define weechat_buffer_new_props(__name,                                \
+                                 __properties,                          \
+                                 __input_callback,                      \
+                                 __input_callback_pointer,              \
+                                 __input_callback_data,                 \
+                                 __close_callback,                      \
+                                 __close_callback_pointer,              \
+                                 __close_callback_data)                 \
+    (weechat_plugin->buffer_new_props)(weechat_plugin,                  \
+                                       __name,                          \
+                                       __properties,                    \
+                                       __input_callback,                \
+                                       __input_callback_pointer,        \
+                                       __input_callback_data,           \
+                                       __close_callback,                \
+                                       __close_callback_pointer,        \
+                                       __close_callback_data)
 #define weechat_buffer_search(__plugin, __name)                         \
     (weechat_plugin->buffer_search)(__plugin, __name)
 #define weechat_buffer_search_main()                                    \

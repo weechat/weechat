@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2008-2010 Dmitry Kobylin <fnfal@academ.tsc.ru>
- * Copyright (C) 2008-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2008-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -23,6 +23,7 @@
 
 #define weechat_plugin weechat_tcl_plugin
 #define TCL_PLUGIN_NAME "tcl"
+#define TCL_PLUGIN_PRIORITY 4000
 
 #define TCL_CURRENT_SCRIPT_NAME ((tcl_current_script) ? tcl_current_script->name : "-")
 

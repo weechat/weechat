@@ -10,7 +10,7 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2018
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2022
 
 
 [[start]]
@@ -200,10 +200,15 @@ Aby automatycznie wejść na kanały po połączeniu z serwerem:
 /set irc.server.libera.autojoin "#kanał1,#kanał2"
 ----
 
-[TIP]
-Możesz dopełnić nazwę lub wartość opzji za pomocą klawisza kbd:[Tab] oraz
-kbd:[Shift+Tab] dla częściowego dopełnienia (przydatne dla długich nazw jak
-nazwy opcji).
+Komenda `/autojoin` pozwala w łatwy sposów skonfigurować opcję _autojoin_
+(zobacz `/help autojoin`).
+
+Możesz też skonfigurować WeeChat żeby sam aktualizował opcję _autojoin_
+kiedy wchodzisz i opuszczasz kanały:
+
+----
+/set irc.server_default.autojoin_dynamic on
+----
 
 Aby usunąć wartość dla opcji serwera, używając w zamian wartości domyślnej,
 na przykład, aby używać domyślnych nicków (irc.server_default.nicks):
@@ -218,6 +223,11 @@ nazwa opcji):
 ----
 /set irc.server.libera.xxx wartość
 ----
+
+[TIP]
+Możesz dopełnić nazwę lub wartość opzji za pomocą klawisza kbd:[Tab] oraz
+kbd:[Shift+Tab] dla częściowego dopełnienia (przydatne dla długich nazw jak
+nazwy opcji).
 
 [[connect_to_irc_server]]
 == Łączenie z serwerem IRC
@@ -375,13 +385,14 @@ i zainstalować za pomocą komendy `/script`, na przykład:
 
 Więcej informacji można uzyskać wykonując komendę `/help script`.
 
-Listę skryptów dostepnych dla WeeChat można uzyskać wywołując komendę `/script`
-lub pod adresem https://weechat.org/scripts
+Listę skryptów możesz zobaczyć w WeeChat za pomocą polecenia `/script`
+lub https://weechat.org/scripts/[na tej stronie ^↗^,window=_blank].
 
 [[more_doc]]
 == Więcej dokumentacji
 
-Możesz teraz używać WeeChat oraz przeczytać FAQ/dokumentację w razie innych pytań:
-https://weechat.org/doc
+Możesz teraz zacząć używać WeeChat i przeczytać
+https://weechat.org/doc/[FAQ/dokomentacje ^↗^,window=_blank]
+w razie dalszych pytań.
 
 Miłej pracy z WeeChat!

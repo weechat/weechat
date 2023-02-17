@@ -123,6 +123,39 @@ Przykłady:
     /auth user2 ${weechat_config_dir}/ecdsa2.pem
 ----
 
+[[command_irc_autojoin]]
+* `+autojoin+`: konfiguruje opcje serwera "autojoin"
+
+----
+/autojoin  add [<channel1> [<channel2>...]]
+           addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]]
+           del [<channel1> [<channel2>...]]
+           apply
+           join
+           sort
+
+    add: add current channel or a list of channels (with optional keys) to the autojoin option; if you are on the channel and the key is not provided, the key is read in the channel
+ addraw: use the IRC raw format (same as /join command): all channels separated by commas, optional keys separated by commas
+    del: delete current channel or a list of channels from the autojoin option
+channel: channel name
+    key: key for the channel
+  apply: set currently joined channels in the autojoin option
+   join: join the channels in the autojoin option
+   sort: sort alphabetically channels in the autojoin option
+
+Examples:
+  /autojoin add
+  /autojoin add #test
+  /autojoin add #chan1 #chan2
+  /allchan /autojoin add
+  /autojoin addraw #chan1,#chan2,#chan3 key1,key2
+  /autojoin del
+  /autojoin del #chan1
+  /autojoin apply
+  /autojoin join
+  /autojoin sort
+----
+
 [[command_irc_ban]]
 * `+ban+`: banuje nick albo host
 
@@ -157,8 +190,14 @@ Opcje wspierane przez WeeChat to: account-notify, away-notify, cap-notify, chgho
 Opcje automatycznie włączane na serwerach można ustawić za pomocą opcji irc.server_default.capabilities (albo dla konkretnego serwera, opcja irc.server.xxx.capabilities).
 
 Przykłady:
-   /cap
-   /cap req multi-prefix away-notify
+  wyświetla wspierane i włączone możliwości:
+    /cap
+  żąda możliwości multi-prefix i away-notify:
+    /cap req multi-prefix away-notify
+  żąda możliwości extended-join, usuwa multi-prefix:
+    /cap req extended-join -multi-prefix
+  usuwa away-notify:
+    /cap req -away-notify
 ----
 
 [[command_irc_connect]]
@@ -412,6 +451,16 @@ Przykład:
 
   nick: nick
 powód: powód
+----
+
+[[command_irc_knock]]
+* `+knock+`: send a notice to an invitation-only channel, requesting an invite
+
+----
+/knock  <channel> [<message>]
+
+channel: channel name
+message: message to send
 ----
 
 [[command_irc_links]]
@@ -706,6 +755,12 @@ kanał: nazwa kanału
 /restart  [<cel>]
 
 cel: nazwa serwera
+----
+
+[[command_irc_rules]]
+* `+rules+`: request the server rules
+
+----
 ----
 
 [[command_irc_sajoin]]
@@ -1033,40 +1088,57 @@ cel: odpowiedź powinna pasować do maski
 
 ----
 /alias  list [<alias>]
-        add <alias> [<komenda>[;<komenda>...]]
-        addcompletion <dopełnienie> <alias> [<komenda>[;<komenda>...]]
+        add <alias> [<command>[;<command>...]]
+        addcompletion <completion> <alias> [<command>[;<command>...]]
         del <alias> [<alias>...]
+        rename <alias> <new_alias>
 
-         list: lista aliasów (ta lista wyświetlana jest jeśli nie zostanie podany argument)
-          add: dodaje alias
-addcompletion: dodaje alias z niestandardowym dopełnieniem
-          del: usuwa alias
-   completion: dopełnienie dla aliasu: domyślnie dopełnienie wykonuje się z docelową komendą
-            uwaga: można użyć %%komenda w celu użycia dopełnień dla istniejących komend
-     alias: nazwa aliasu
-   komenda: nazwa komendy (wiele komend można oddzielić za pomocą średnika)
+         list: list aliases (without argument, this list is displayed)
+          add: add an alias
+addcompletion: add an alias with a custom completion
+          del: delete an alias
+       rename: rename an alias
+   completion: completion for alias: by default completion is done with target command
+               note: you can use %%command to use completion of an existing command
+        alias: name of alias
+      command: command name with arguments (many commands can be separated by semicolons)
 
-Ważne: dla komend specjalne zmienne są zastępowane odpowiednimi wartościami:
-        $n: argument 'n' (pomiędzy 1 i 9)
-       $-m: argumenty od 1 do 'm'
-       $n-: argumenty od 'n' do ostatniego
-      $n-m: argumenty od 'n' od 'm'
-        $*: wszystkie argumenty
-        $~: ostatni argument
-      $var: gdzie "var" to zmienna lokalna buforu (zobacz /buffer localvar)
-            przykłady: $nick, $channel, $server, $plugin, $name
+Note: in command, special variables are replaced:
+        $n: argument 'n' (between 1 and 9)
+       $-m: arguments from 1 to 'm'
+       $n-: arguments from 'n' to last
+      $n-m: arguments from 'n' to 'm'
+        $*: all arguments
+        $~: last argument
+      $var: where "var" is a local variable of buffer (see /buffer listvar)
+            examples: $nick, $channel, $server, $plugin, $name
 
-Przykłady:
-  alias /split do poziomego podziału okna:
-    /alias split /window splith
-  alias /hello pisze "hello" na wszystkich kanałach poza #weechat:
-    /alias hello /allchan -exclude=#weechat hello
-  alias /forcejoin wysyłający komende IRC "forcejoin" z dopełnieniem dla /sajoin:
-    /alias -completion %%sajoin forcejoin /quote forcejoin
+Examples:
+  alias /split to split window horizontally:
+    /alias add split /window splith
+  alias /hello to say "hello" on all channels but not on #weechat:
+    /alias add hello /allchan -exclude=#weechat hello
+  rename alias "hello" to "Hello":
+    /alias rename hello Hello
+  alias /forcejoin to send IRC command "forcejoin" with completion of /sajoin:
+    /alias addcompletion %%sajoin forcejoin /quote forcejoin
 ----
 // end::alias_commands[]
 
 // tag::weechat_commands[]
+[[command_weechat_allbuf]]
+* `+allbuf+`: wykonuje komendę we wszystkich buforach
+
+----
+/allbuf  <komenda>
+
+komenda: komenda do wykonania (lub tekst do wysłania do bufora jeśli komenda nie zaczyna się od '/')
+
+Przykłady:
+  ustawia znacznik nieprzeczytanych wiadomości we wszystkich buforach:
+    /allbuf /buffer set unread
+----
+
 [[command_weechat_away]]
 * `+away+`: ustawia lub kasuje status nieobecności
 
@@ -1143,6 +1215,8 @@ Przykłady:
          unmerge [<numer>|-all]
          hide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
          unhide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
+         switch [-previous]
+         zoom
          renumber [<numer1> [<numer2> [<start>]]]
          close [<n1>[-<n2>]|<nazwa>...]
          notify <poziom>
@@ -1151,6 +1225,7 @@ Przykłady:
          delvar <nazwa>
          set <właściwość> [<wartość>]
          get <właściwość>
+         jump smart|last_displayed|prev_visited|next_visited
          <numer>|-|+|<nazwa>
 
     list: wyświetla listę buforów (bez podania argumenty wyświetlana jest ta lista)
@@ -1164,6 +1239,8 @@ Przykłady:
  unmerge: odłącza bufor od innych mających taki sam numer
     hide: ukrywa bufor
   unhide: przywraca ukryty bufor
+  switch: przełącza do następnego z połączonych buforów (lub poprzedniego bufora dzięki "-previous")
+    zoom: powiększa połączony bufor
 renumber: zmienia numer bufora (działa tylko, jeśli opcja weechat.look.buffer_auto_renumber jest wyłączona)
    close: zamyka bufor (numer/przedział są opcjonalne)
   notify: ustawia poziom powiadomień dla obecnego bufora: ten poziom określa czy bufor zostanie dodany do hotlisty czy nie:
@@ -1172,11 +1249,16 @@ renumber: zmienia numer bufora (działa tylko, jeśli opcja weechat.look.buffer_
             message: wiadomości od użytkowników + highlighty
                 all: wszystkie wiadomości
               reset: przywraca wartości domyślne (all)
-localvar: wyświetla zmienne lokalne obecnego bufora
+listvar: wyświetla zmienne lokalne obecnego bufora
   setvar: ustawia zmienną lokalną w obecnym buforze
   delvar: kasuje zmienną lokalna z obecnego bufora
      set: ustawia właściwość obecnego bufora
      get: wyświetla właściwości obecnego bufora
+    jump: przeskakuje do innego buforu:
+          smart: następny bufor z aktywnością
+          last_displayed: ostatnio wyświetlany bufor (przed ostatnim przeskoczeniem do bufora)
+          prev_visited: ostatnio odwiedzony bufor
+          next_visited: przeskakuje do następnego odwiedzonego bufora
   numer: przechodzi do bufora o numerze, dostępne prefiksy:
           '+': przejście względne, dodaje numer do obecnego
           '-': przejście względne, odejmuje numer od obecnego
@@ -1301,32 +1383,40 @@ Przykłady:
 ----
 /debug  list
         set <wtyczka> <poziom>
-        dump [<wtyczka>]
-        buffer|color|infolists|libs|certs|memory|tags|term|windows
+        dump|hooks [<wtyczka>]
+        buffer|certs|color|dirs|infolists|libs|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
         time <komenda>
+        unicode <ciąg>
 
      list: wyświetla wtyczki z poziomem debugowania
       set: ustawia poziom debugowania dla wtyczki
    plugin: nazwa wtyczki ("core" dla rdzenia WeeChat)
     poziom: poziom debugowania wtyczki (0 = wyłączony)
      dump: zachowuje zrzut pamięci w pliku z logiem WeeChat (taki sam zrzut jest zapisywany podczas awarii WeeChat)
+    hooks: wyświetla informacje o hookach (z wtyczką: wyświetla szczegółowe informacje o hookach stworzonych przez wtyczkę
    buffer: zrzuca zawartość bufora z wartościami heksadecymalnymi do pliku z logiem
+    certs: wyświetla ilość załadowanych zaufanych centrów certyfikacyjnych
     color: wyświetla informacje na temat obecnych par kolorów
    cursor: przełącza debugowanie dla trybu kursora
      dirs: wyświetla katalogi
     hdata: wyświetla informacje o hdata (z free: usuwa wszystkie hdata z pamięci)
-    hooks: wyświetla informacje o hooks
 infolists: wyświetla informacje o infolistach
      libs: wyświetla informacje o użytych zewnętrznych bibliotekach
-    certs: wyświetla ilość załadowanych zaufanych centrów certyfikacyjnych
    memory: wyświetla informacje o zużyciu pamięci
     mouse: przełącza debugowanie myszy
      tags: wyświetla tagi dla linii
      term: wyświetla informacje o terminalu
   windows: wyświetla drzewo okien
      time: mierzy czas do wykonania komendy lub wysłania tekstu do obecnego bufora
+  unicode: wyświetla informacje o ciągach i znakach unicode (przetwarzane, zobacz /help eval)
+
+Przykłady:
+  /debug set irc 1
+  /debug mouse verbose
+  /debug time /filter toggle
+  /debug unicode ${chars:${\u26C0}-${\u26CF}}
 ----
 
 [[command_weechat_eval]]
@@ -1338,7 +1428,7 @@ infolists: wyświetla informacje o infolistach
 
         -n: wyświetla wynik bez wysyłania go do buforu (tryb debugowania)
         -s: podziel wyrażenie przed przetworzeniem go (wiele komend może być oddzielonych średnikami)
-        -d: wyświetl wyjście debugowe po ewaluacji (drugie -d wyświetli więcej informacji)
+        -d: wyświetl wyjście debugowe po ewaluacji (drugie -d: wyświetli więcej informacji)
         -c: przetwarza jako warunek: użyj operatorów i nawiasów, zwraca wartość logiczną ("0" lub "1")
 wyrażenie: wyrażenie do przetworzenia, zmienne o formacie ${zmienna} są zastępowane (zobacz niżej); wiele komend można oddzielić średnikami
   operator: operator logiczny lub porównania:
@@ -1373,33 +1463,36 @@ W celu wymuszenia porównywania ciągów, należy umieścić każde wyrażenie w
   "50" > "100"  ==> 1
 
 Niektóre zmienne w wyrażeniach są zamieniane, poprzez zastosowanie formatu ${zmienna}, według priorytetu zmienną może być:
-  1. nieprzetworzony ciąg (format: "raw:xxx")
-  2. zmienna zdefiniowana przez użytkownika (format: "name")
-  3. przetworzony ciąg (format: "eval:xxx")
-  4. przetworzony warunek (format: "eval_cond:xxx")
-  5. ciąg z wyescapowanymi znakami (format: "esc:xxx" lub "\xxx")
-  6. ciąg ze znakami do ukrycia (format: "hide:char,string")
-  7. ciąg o maksymalnej długości (format: "cut:max,suffix,string" lub "cut:+max,suffix,string")
+  - nieprzetworzony ciąg (format: "raw:xxx")
+  - zmienna zdefiniowana przez użytkownika (format: "name")
+  - przetworzony ciąg (format: "eval:xxx")
+  - przetworzony warunek (format: "eval_cond:xxx")
+  - ciąg z wyescapowanymi znakami (format: "esc:xxx" lub "\xxx")
+  - ciąg z zakresem znaków (format: "chars:xxx" lub "chars:c1-c2" gdzie "xxx" to jedno z: "digit", "xdigit", "lower", "upper", "alpha", "alnum")
+  - ciąg skonwertowany na małe litery (format: "lower:xxx")
+  - ciąg skonwertowany na wielkie litery (format: "upper:xxx")
+  - ciąg ze znakami do ukrycia (format: "hide:char,string")
+  - ciąg o maksymalnej długości (format: "cut:max,suffix,string" lub "cut:+max,suffix,string")
      lub maksymalna ilość znaków wyświetlanych na ekranie (format: "cutscr:max,suffix,string" lub "cutscr:+max,suffix,string")
-  8. odwrócony ciąg (format: "rev:xxx")
-  9. powtórzony ciąg (format: "repeat:ilość,ciąg")
-  10. długość ciągu (format: "length:xxx" or "lengthscr:xxx")
-  11. podział ciągu (format: "split:number,separators,flags,xxx")
-  12. podział argumentów powłoki (format: "split_shell:number,xxx")
-  13. kolor (format "color:xxx", zobacz „Opis API wtyczek”, funkcja "color")
-  14. modyfikator (format: "modifier:name,data,string")
-  15. informacja (format: "info:nazwa,argumenty", argumenty są opcjonalne)
-  16. ciąg zakodowany/zdekodowany z base 16/32/64 (format: "base_encode:base,xxx" lub "base_decode:base,xxx")
-  17. obecna data/czas (format: "date" lub "date:format")
-  18. zmienna środowiskowa (format: "env:XXX")
-  19. wyrażenie warunkowe (format: "if:warunek?wartość_jeśli_prawda:wartość_jeśli_fałsz")
-  20. wynik wyrażenia z nawiasami i operatorami + - * / // % ** (format: "calc:xxx")
-  21. losowa liczba całkowita (format: "random:min,max")
-  22. przetłumaczony ciąg (format: "translate:xxx")
-  23. definiowanie zmiennej użytkownika (format: "define:nazwa,wartość")
-  24. opcja (format: plik.sekcja.opcja)
-  25. zmienna lokalna w buforze
-  26. nazwa hdatay/zmiennej (wartość jest automatycznie konwertowana na ciąg znaków), domyślnie „window” i „buffer” wskazują na aktualne okno/bufor.
+  - odwrócony ciąg (format: "rev:xxx" lub "revscr:xxx")
+  - powtórzony ciąg (format: "repeat:ilość,ciąg")
+  - długość ciągu (format: "length:xxx" or "lengthscr:xxx")
+  - podział ciągu (format: "split:number,separators,flags,xxx")
+  - podział argumentów powłoki (format: "split_shell:number,xxx")
+  - kolor (format "color:xxx", zobacz „Opis API wtyczek”, funkcja "color")
+  - modyfikator (format: "modifier:name,data,string")
+  - informacja (format: "info:nazwa,argumenty", argumenty są opcjonalne)
+  - ciąg zakodowany/zdekodowany z base 16/32/64 (format: "base_encode:base,xxx" lub "base_decode:base,xxx")
+  - obecna data/czas (format: "date" lub "date:format")
+  - zmienna środowiskowa (format: "env:XXX")
+  - wyrażenie warunkowe (format: "if:warunek?wartość_jeśli_prawda:wartość_jeśli_fałsz")
+  - wynik wyrażenia z nawiasami i operatorami + - * / // % ** (format: "calc:xxx")
+  - losowa liczba całkowita (format: "random:min,max")
+  - przetłumaczony ciąg (format: "translate:xxx")
+  - definiowanie zmiennej użytkownika (format: "define:nazwa,wartość")
+  - opcja (format: plik.sekcja.opcja)
+  - zmienna lokalna w buforze
+  - nazwa hdatay/zmiennej (wartość jest automatycznie konwertowana na ciąg znaków), domyślnie „window” i „buffer” wskazują na aktualne okno/bufor.
 Format dla hdata może być jednym z poniższych:
   hdata.zmienna1.zmienna2...: inicjuje hdata (wskaźnik musi być znany), następnie wypytuje zmienne jedna po drugiej (inne hdata mogą być następne)
   hdata[list].zmienna1.zmienna2...: inicjuje hdata z wykorzystaniem listy, na przykład:
@@ -1422,6 +1515,10 @@ Przykłady (proste ciągi):
   /eval -n ${window.buffer.full_name}            ==> core.weechat
   /eval -n ${window.buffer.number}               ==> 1
   /eval -n ${\t}                                 ==> <tab>
+  /eval -n ${chars:digit}                         ==> 0123456789
+  /eval -n ${chars:J-T}                           ==> JKLMNOPQRST
+  /eval -n ${lower:TEST}                          ==> test
+  /eval -n ${upper:test}                          ==> TEST
   /eval -n ${hide:-,${relay.network.password}}   ==> --------
   /eval -n ${cut:3,+,test}                       ==> tes+
   /eval -n ${cut:+3,+,test}                      ==> te+
@@ -1443,7 +1540,7 @@ Przykłady (proste ciągi):
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
   /eval -n ${translate:Plugin}                   ==> Wtyczka
-  /eval -n ${random:0,10}                         ==> 3
+  /eval -n ${define:len,${calc:5+3}}${len}x${len} ==> 8x8
 
 Przykłady (warunki):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
@@ -1467,7 +1564,7 @@ Przykłady (warunki):
          add|addreplace<nazwa> <bufor>[,<bufor>...] <tagi> <regex>
          rename <nazwa> <nowa_nazwa>
          recreate <nazwa>
-         del <nazwa>|-all
+         del <nazwa>|-all [<nazwa>...]
 
       list: wyświetla wszystkie filtry
     enable: włącza filtry (filtry są domyślnie włączone)
@@ -1551,6 +1648,22 @@ clear: czyści historie
 Wartość: ilość elementów historii do pokazania
 ----
 
+[[command_weechat_hotlist]]
+* `+hotlist+`: zarządzaj hotlistami
+
+----
+/hotlist  add [low|message|private|highlight]
+          clear [<poziom>]
+          remove
+          restore [-all]
+
+    add: dodaje obecny bufor do hotlisty (domyślny poziom: "low", warunki zdefiniowane w opcji weechat.look.hotlist_add_conditions NIE są sprawdzane)
+  clear: czyści hotlistę
+  poziom: "lowest" czyści tylko najniższy poziom w hotliście, "highest" czyści tylko najwyższy poziom w hotliście, lub maska poziomu: liczba całkowita będąca kombinacją 1=join/part, 2=message, 4=private, 8=highlight)
+ remove: usuwa obecny bufor z hotlisty
+restore: przywraca ostatnią usuniętą hostlistę w obecnym buforze (albo wszystkich buforach przez dodanie -all)
+----
+
 [[command_weechat_input]]
 * `+input+`: funkcje linii komend
 
@@ -1564,7 +1677,7 @@ lista akcji:
   search_text_here: szuka testu w obecnej pozycji w buforze
   search_text: szuka tekstu w buforze
   search_switch_case: przełącza na dokładne dopasowanie przy szukaniu
-  search_switch_regex: przełącza typy wyszukiwania ciąg/wyrażenie regularne
+  search_switch_regex: przełącza typy wyszukiwania: ciąg/wyrażenie regularne
   search_switch_where: zmienia miejsce przeszukiwania na wiadomości/przedrostki
   search_previous: szuka poprzednich linii
   search_next: szuka następnych linii
@@ -1573,6 +1686,7 @@ lista akcji:
   delete_previous_char: usuwa poprzedni znak
   delete_next_char: usuwa następny znak
   delete_previous_word: usuwa poprzednie słowo
+  delete_previous_word_whitespace: usuwa poprzednie słowo (do białego znaku)
   delete_next_word: usuwa następne słowo
   delete_beginning_of_line: usuwa od początku linii do kursora
   delete_end_of_line: usuwa od kursora do końca linii
@@ -1591,29 +1705,59 @@ lista akcji:
   history_next: przywołuje następną komendę z historii obecnego bufora
   history_global_previous: przywołuje poprzednią komendę z globalnej historii
   history_global_next: przywołuje następną komendę z globalnej historii
-  jump_smart: przechodzi do następnego bufora z aktywnością
-  jump_last_buffer_displayed: przechodzi do ostatnio wyświetlanego bufora (przed ostatnim przeskoczeniem do bufora)
-  jump_previously_visited_buffer: przeskakuje do poprzedniego bufora
-  jump_next_visited_buffer: przeskakuje to następnego bufora
-  hotlist_clear: czyści hotlistę (opcjonaly argument: "lowest" czyści najniższy poziom na hotliście, "highest" czyści najwyższy poziom na hotliście, albo maska poziomu: liczba będąca kombinacją 1=join/part, 2=wiadomość, 4=prywatny, 8=podświetlenie)
-  hotlist_remove_buffer: usuwa obecny bufor z hotlisty
-  hotlist_restore_buffer: przywraca ostatnią usuniętą hotlistę w obecnym buforze
-  hotlist_restore_all: przywraca ostatnią usuniętą hotlistę we wszystkich buforach
   grab_key: przechwytuje klawisz (opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
   grab_key_command: przechwytuje klawisz z przypisaną komendą (opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
   grab_mouse: przechwytuje kod zdarzenia myszy
   grab_mouse_area: przechwytuje kod zdarzenia myszy z obszarem
-  set_unread: ustawia znacznik nie przeczytania dla wszystkich buforów
-  set_unread_current_buffer: ustawia znacznik nie przeczytania dla obecnego bufora
-  switch_active_buffer: przełącza do następnego połączonego buforu
-  switch_active_buffer_previous: przełącza do poprzedniego połączonego buforu
-  zoom_merged_buffer: zoom na połączony bufor
   insert: wkleja tekst do linii poleceń (dozwolone są wyescapowane znaki, zobacz /help print)
   send: wysyła tekst do bufora
   paste_start: zaczyna wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
   paste_stop: kończy wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
 
 Ta komenda jest używana do przypisywania klawiszy lub przez wtyczki.
+----
+
+[[command_weechat_item]]
+* `+item+`: zarządza niestandardowymi elementami pasków
+
+----
+/item  list
+       add|addreplace <nazwa> "<warunki>" "<zawartość>"
+       rename <nazwa> <nowa_nazwa>
+       refresh <nazwa> [<nazwa>...]
+       recreate <nazwa>
+       del <nazwa>|-all
+
+      list: wyświetla wszystkie niestandardowe elementy paska
+       add: dodaje niestandardowy element paska
+addreplace: dodaje lub zastępuje istniejący niestandardowy element paska
+      name: nazwa niestandardowego elementu paska
+conditions: zewaluowane warunki do wyświetlenia elementu na pasku (na przykład dla wyświetlania elementu tylko w konkretnych buforach)
+   content: zawartość (ewaluowana, zobacz /help eval)
+    rename: zmienia nazwę niestandardowego elementu paska
+   refresh: aktualizue zawartość elementu we wszystkich paskach, gdzie jest on wyświetlany; dowolny element może zostać odświeżony: default/plugin/niestandardowe elementy pasków
+  recreate: kopiuje do wiersza poleceń komendę użytą do edycji niestandardowego elementu paska
+       del: usuwa niestandardowy element paska
+      -all: usuwa wszystkie niestandardowe elementy paska
+
+Przykłady:
+  dodaje element z rozmiarem terminala, wyświetlany tylko w buforach z numerem = 1:
+    /item add terminfo "${buffer.number} == 1" "term:${info:term_width}x${info:term_height}"
+  dodaje element z informacjami o buforze:
+    /item add bufinfo "" "${buffer.number}:${buffer.name}${if:${buffer.zoomed}?(Z)}"
+  dodaje element z datą/czasem w formacie "Dec 25, 12:34 +0100", aktualizowanym co minutę:
+    /item add datetime "" "${date:%b %d, %H:%M %z}"
+    /trigger add datetime_refresh timer "60000;60" "" "" "/item refresh datetime"
+  dodaje element z numerem linii w buforze (wyświetlane/wszystkie), odświeżane za każdym razem jak zostanie wyświetlona nowa linia lub jeśli liczba filtrowanych linii się zmieni:
+    /item add lines_count "" "${calc:${buffer.lines.lines_count}-${buffer.lines.lines_hidden}}/${buffer.lines.lines_count} linii"
+    /trigger add lines_count_refresh_print print "" "" "" "/item refresh lines_count"
+    /trigger add lines_count_refresh_signal signal "window_switch;buffer_switch;buffer_lines_hidden;filters_*" "" "" "/item refresh lines_count"
+  wymusza odświeżenie elementu "lines_count":
+    /item refresh lines_count
+  odtwarza element "lines_count" z innymi warunkami lub zawartością:
+    /item recreate lines_count
+  usuwa element "lines_count":
+    /item del lines_count
 ----
 
 [[command_weechat_key]]
@@ -1630,44 +1774,44 @@ Ta komenda jest używana do przypisywania klawiszy lub przez wtyczki.
       resetall -yes [<kontekst>]
       missing [<kontekst>]
 
-       list: wyświetla wszystkie obecne skróty (bez podanego argumentu, pokazywana jest ta lista)
-listdefault: wyświetla domyślne skróty klawiszowe
-   listdiff: wyświetla różnice pomiędzy obecnymi a domyślnymi skrótami klawiszowymi (dodane, przedefiniowane oraz usunięte)
-    kontekst: nazwa kontekstu ("default" lub "search")
-       bind: przypisuje komendę do klawisza lub wyświetla komendę przypisaną do klawisza
-   bindctxt: przypisuje komendę do klawiszy lub wyświetla taką komendę dla podanego kontekstu
-    komenda: komenda (wiele komend może być oddzielonych średnikiem)
-     unbind: usuwa przypisanie dla klawisza (dla kontekstu "default")
- unbindctxt: usuwa skrót klawiszowy dla podanego kontekstu
-      reset: przywraca domyślne ustawienia dla klawiszy (dla kontekstu "default")
-  resetctxt:przywraca domyślne ustawienia dla klawiszy, dla podanego kontekstu
-   resetall: przywraca przypisania do domyślnych wartości oraz kasuje WSZYSTKIE własne przypisania (używaj ostrożnie!)
-    missing: dodaje brakujące przypisania (korzystając z domyślnych wartości), przydatne po instalacji nowej wersji WeeChat
+       list: list all current keys (without argument, this list is displayed)
+listdefault: list default keys
+   listdiff: list differences between current and default keys (keys added, redefined or deleted)
+    context: name of context ("default" or "search")
+       bind: bind a command to a key or display command bound to key (for context "default")
+   bindctxt: bind a command to a key or display command bound to key, for given context
+    command: command (many commands can be separated by semicolons)
+     unbind: remove a key binding (for context "default")
+ unbindctxt: remove a key binding for given context
+      reset: reset a key to default binding (for context "default")
+  resetctxt: reset a key to default binding, for given context
+   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+    missing: add missing keys (using default bindings), useful after installing new WeeChat version
 
-Podczas przypisania komendy do klawisza, zaleca się użycie alt+k (lub Esc następnie k), następnie wciśnięcie pożądanej kombinacji: umieści to kod klawiszowy w linii poleceń.
+When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
 
-Dla kontekstu "mouse" (możliwe również w kontekście "cursor"), klucz ma postać: "@obszar:klucz" lub "@obszar1>obszar2:klucz", gdzie obszar to:
-          *: dowolny obszar na ekranie
-       chat: obszar rozmowy (dowolny bufor)
-  chat(xxx): obszar rozmowy w buforze o nazwie "xxx" (pełna nazwa włączając w to wtyczkę)
-     bar(*): dowolny pasek
-   bar(xxx): pasek "xxx"
-    item(*): dowolny element paska
-  item(xxx): element paska "xxx"
-Klucz może zaczynać się, lub kończyć '*' aby dopasować wiele zdarzeń myszy.
-Specjalna wartość dla komendy o formacie "hsignal:nazwa" może być użyte dla kontekstu myszy, wyśle to hsignal "nazwa" z aktywną tablica haszy jako argumentem.
-Inna specjalna wartość "-" może zostać użyta do wyłączenia klucza (zostanie on zignorowany podczas szukania kluczy).
+For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
+          *: any area on screen
+       chat: chat area (any buffer)
+  chat(xxx): chat area for buffer with name "xxx" (full name including plugin)
+     bar(*): any bar
+   bar(xxx): bar "xxx"
+    item(*): any bar item
+  item(xxx): bar item "xxx"
+Wildcard "*" is allowed in key to match many mouse events.
+A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
+Another special value "-" can be used to disable key (it will be ignored when looking for keys).
 
-Przykłady:
-  kombinacja alt-t przełączająca wyświetlanie listy nicków:
+Examples:
+  key alt-t to toggle nicklist bar:
     /key bind meta-t /bar toggle nicklist
-  kombinacja alt-r przechodząca do kanału IRC #weechat IRCl:
+  key alt-r to jump to #weechat IRC channel:
     /key bind meta-r /buffer #weechat
-  przywrócenie domyślnego przypisania dla kombinacji alt-r:
+  restore default binding for key alt-r:
     /key reset meta-r
-  przycisk "tab" zatrzyma wyszukiwanie w buforze:
-    /key bindctxt search ctrl-I /input search_stop
-  środkowy przycisk myszy wciśnięty na nicku pozyska o nim informacje:
+  key "tab" to stop search in buffer:
+    /key bindctxt search ctrl-i /input search_stop
+  middle button of mouse on a nick to retrieve info on nick:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
 
@@ -2038,19 +2182,22 @@ Przykłady:
 ----
 
 [[command_weechat_upgrade]]
-* `+upgrade+`: przeładowanie pliku binarnego WeeChat bez rozłączania z serwerami
+* `+upgrade+`: zapisz sesje WeeChat i przeładuj plik binarny WeeChat bez rozłączania z serwerami
 
 ----
-/upgrade  [-yes] [<ścieżka_do_binarki>|-quit]
+/upgrade  [-yes] [<ścieżka_do_binarki>|-save|-quit]
 
           -yes: wymagane, jeśli "weechat.look.confirm_upgrade" jest włączona
 ścieżka_do_binarki: ścieżka do pliku binarnego WeeChat (domyślnie jest to obecny plik)
         -dummy: nic nie rób (opcja użyta w celu zapobiegnięcia przypadkowego dopełnienia za pomocą"-quit")
+         -save: tylko zapisz sesję, nie wyłączaj ani nie przeładowuj WeeChat; pliki konfiguracyjne nie są zapisywane (w razie potrzeby możesz wykonać /save przed tą komendą)
          -quit: zamyka *WSZYSTKIE* połączenia, zapisuje sesję i wyłącza WeeChat, umożliwia to późniejsze przywrócenie (zobacz niżej)
 
 Ta komenda uaktualnia i przeładowuje działającą sesję WeeChat. Nowy plik binarny WeeChat powinien zostać skompilowany lub zainstalowany za pomocą managera pakietów przed uruchomieniem tej komendy.
 
 Uwaga: połączenia SSL są przerywane podczas uaktualniania, ponieważ przeładowanie sesji SSL nie jest obecnie możliwe za pomocą GnuTLS. Po uaktualnieniu nastąpi ponowne ich połączenie.
+
+Ważne: użycie opcji -save może być niebezpieczne, zaleca się używanie samego /upgrade (lub z -quit) dla standardowej aktualizacji i restartu; opcja -save może być używana do regularnego zapisu sesji i przywrócenia jej w razie nieoczekiwanego wyjścia z programu (brak prądu, crash, etc.)
 
 Proces uaktualnienia składa się z 4 kroków:
   1. zapisania sesji do plików dla rdzenia i wtyczek (bufory, historia, ..)
@@ -2058,14 +2205,18 @@ Proces uaktualnienia składa się z 4 kroków:
   3. zapisanie konfiguracji WeeChat (weechat.conf)
   4. uruchomienie nowego pliku binarnego WeeChat i przeładowanie sesji.
 
-Z opcją "-quit", proces przebiega inaczej:
+Z opcją "-quit", proces ten przebiega następująco:
   1. zamknięcie *WSZYSTKICH* połączeń (irc, xfer, relay, ...)
-  2. zapisanie sesji do pliku (*.upgrade)
+  2. zapisanie sesji do plików (*.upgrade)
   3. wyładowanie wszystkich wtyczek
   4. zapisanie konfiguracji WeeChat
   5. wyłączenie WeeChat
-Następnie można przywrócić sesję za pomocą komendy: weechat --upgrade
-WAŻNE: należy przywracać sesję z identyczną konfiguracją (pliki *.conf).
+
+Z opcją "-save", proces to:
+  1. zapisanie sesji do plików (*.upgrade) ze stanem rozłączonym dla serwerów IRC i klientów Relay (nic nie zostaje rozłączone)
+
+Z opcjami -quit oraz -save można przywrócić sesję za pomocą komendy: weechat --upgrade
+WAŻNE: należy przywracać sesję z identyczną konfiguracją (pliki *.conf) oraz w miarę możliwości z tą samą wersją WeeChat (lub nowszą).
 Jest możliwe przywrócenie sesji WeeChat na innej maszynie, jeśli skopiujemy zawartość katalogów domowych WeeChat (zobacz /debug dirs).
 ----
 
@@ -2246,10 +2397,11 @@ Następujące zmienne mogą być użyte w powyższych opcjach:
     - ${nick_prefix}: prefix nicka dla kanału (ustawiany, jeśli opcja buflist.look.nick_prefix jest włączona)
     - ${format_name}: sformatowana nazwa (przetworzona opcja buflist.format.name)
     - ${name}: skrócona nazwa (jeśli ustawiona inaczej zwraca pełną nazwę)
-    - ${color_hotlist}: kolor zależący od najwyższego poziomu hotlisty dla bufora (przetworzona opcja buflist.format.hotlist_xxx,  gdzie xxx to poziom)
+    - ${color_hotlist}: kolor zależący od najwyższego poziomu hotlisty dla bufora (przetworzona opcja buflist.format.hotlist_xxx, gdzie xxx to poziom)
     - ${format_hotlist}: sformatowana hotlista (przetworzenie opcji buflist.format.hotlist)
     - ${hotlist}: niesformatowana hotlista
     - ${hotlist_priority}: "none", "low", "message", "private" lub "highlight"
+    - ${hotlist_priority_number}: -1 = none, 0 = low, 1 = message, 2 = private, 3 = highlight
     - ${format_lag}: opóźnienie buforu serwera IRC, puste jeśli nie ma opóźnienia (przetworzona opcja buflist.format.lag)
     - ${format_tls_version}: wskaźnik wersji TLS w buforze serwera, pusty dla kanałów (wynik przetworzenia opcji buflist.format.tls_version)
 ----
@@ -2396,139 +2548,139 @@ Przykłady:
        -export [-help|-nohelp] <nazwa pliku>
        <filtr>
 
-       -bar: dodaj pomoc dla paska
-   -refresh: odświeża listę opcji, następnie cały ekran (komenda: /window refresh)
-        -up: przesuwa linie do góry o podaną "ilość" linii
-      -down: przesuwa linie w dół o podaną "ilość" linii
-      -left: przewija bufor o "procent" szerokości w lewo
-     -right: przewija bufor o "procent" szerokości w prawo
-        -go: wybierz numer linii, pierwsza linia ma numer 0 ("end" wybiera ostatnią linię)
-    -toggle: zmienia wartość opcji boolowskiej
-       -add: dodaje "wartość" (może być ujemna) do liczb i kolorów, ustawia/dodaje do wartości innych typów (ustawia, jeśli wartość jest ujemna, dodaje jeśli wartość jest pozytywna)
-     -reset: resetuje wartość opcji
-     -unset: kasuje wartość opcji
-       -set: dodaje komendę /set do linii poleceń w celu edycji wartości dla opcji (ustawia kursor na początku wartości)
-    -setnew: dodaje komendę /set do linii poleceń w celu ustawienia wartości dla opcji
-    -append: dodaje komendę /set do linii poleceń w celu dodania wartości do opcji (ustawia kursor na końcu wartości)
-      -mark: przełącza zaznaczenie
-    -format: przełącza na następny dostępny format
-    -export: eksportuje opcje i wartości wyświetlane w pliku (każda linia ma format: "/set nazwa wartość" lub "/unset nazwa")
-      -help: wymusza zapisanie pomocy dla opcji w wyeksportowanym pliku (zobacz /help fset.look.export_help_default)
-    -nohelp: nie zapisuj pomocy dla opcji w wyeksportowanym pliku (zobacz /help fset.look.export_help_default)
-     filtr: ustawia nowy filtr żeby pokazać konkretne opcje (filtr ten może być użyty jako dane wejściowe w buforze fset); dozwolone formaty:
-               *       pokazuje wszystkie opcje (brak filtra)
-               xxx     pokazuje tylko opcje z "xxx" w nazwie
-               f:xxx   pokazuje tylko opcje dla pliku konfiguracyjnego "xxx"
-               t:xxx   pokazuje tylko opcje typu "xxx" (bool/int/str/col)
-               d       pokazuje tylko zmienione opcje
-               d:xxx   pokazuje tylko zmienione opcje z "xxx" w nazwie
-               d=xxx   pokazuje tylko zmienione opcje z wartością zawierającą "xxx"
-               d==xxx  pokazuje tylko zmienione opcje z wartością równą "xxx"
-               h=xxx   pokazuje tylko opcje z "xxx" w opisie (przetłumaczone)
-               he=xxx  pokazuje tylko opcje z "xxx" w opisie (po Angielsku)
-               =xxx    pokazuje tylko opcje z wartością zawierającą "xxx"
-               ==xxx   pokazuje tylko opcje z wartością równą "xxx"
-               c:xxx   pokazuje tylko opcje pasujące do przetworzonego warunku "xxx", używając następujących zmiennych: file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
+       -bar: add the help bar
+   -refresh: refresh list of options, then whole screen (command: /window refresh)
+        -up: move the selected line up by "number" lines
+      -down: move the selected line down by "number" lines
+      -left: scroll the fset buffer by "percent" of width on the left
+     -right: scroll the fset buffer by "percent" of width on the right
+        -go: select a line by number, first line number is 0 ("end" to select the last line)
+    -toggle: toggle the boolean value
+       -add: add "value" (which can be a negative number) for integers and colors, set/append to value for other types (set for a negative value, append for a positive value)
+     -reset: reset the value of option
+     -unset: unset the option
+       -set: add the /set command in input to edit the value of option (move the cursor at the beginning of value)
+    -setnew: add the /set command in input to edit a new value for the option
+    -append: add the /set command to append something in the value of option (move the cursor at the end of value)
+      -mark: toggle mark
+    -format: switch to the next available format
+    -export: export the options and values displayed in a file (each line has format: "/set name value" or "/unset name")
+      -help: force writing of help on options in exported file (see /help fset.look.export_help_default)
+    -nohelp: do not write help on options in exported file (see /help fset.look.export_help_default)
+     filter: set a new filter to see only matching options (this filter can be used as input in fset buffer as well); allowed formats are:
+               *       show all options (no filter)
+               xxx     show only options with "xxx" in name
+               f:xxx   show only configuration file "xxx"
+               t:xxx   show only type "xxx" (bool/int/str/col)
+               d       show only changed options
+               d:xxx   show only changed options with "xxx" in name
+               d=xxx   show only changed options with "xxx" in value
+               d==xxx  show only changed options with exact value "xxx"
+               h=xxx   show only options with "xxx" in description (translated)
+               he=xxx  show only options with "xxx" in description (in English)
+               =xxx    show only options with "xxx" in value
+               ==xxx   show only options with exact value "xxx"
+               c:xxx   show only options matching the evaluated condition "xxx", using following variables: file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
 
-Linie z opcjami są wyświetlane z użyciem przetworzonych ciągów (zobacz /help eval aby poznać format), z tymi opcjami:
-  - fset.format.option1: pierwszy format dla opcji
-  - fset.format.option2: drugi format dla opcji
+The lines with options are displayed using string evaluation (see /help eval for the format), with these options:
+  - fset.format.option1: first format for an option
+  - fset.format.option2: second format for an option
 
-Następujące zmienne mogą zostać użyte w tych opcjach:
-  - dane opcji z kolorem i wyrównane spacjami do prawej:
-    - ${file}: plik konfiguracyjny (na przykład "weechat" lub "irc")
-    - ${section}: sekcja
-    - ${option}: nazwa opcji
-    - ${name}: pełna nazwa opcji (plik.sekcja.opcja)
-    - ${parent_name}: nazwa nadrzędnej opcji
-    - ${type}: typ opcji (przetłumaczony)
-    - ${type_en}: typ opcji (po angielsku)
-    - ${type_short}: skrócony typ (bool/int/str/col)
-    - ${type_tiny}: krótki typ (b/i/s/c)
-    - ${default_value}: domyślna wartość opcji
-    - ${default_value_undef}: "1" jeśli domyślna wartość jest pusta, inaczej "0"
-    - ${value}: wartość opcji
-    - ${value_undef}: "1" jeśli wartość jest pusta, inaczej "0"
-    - ${value_changed}: "1" jeśli wartość różni się od domyślnej, inaczej "0"
-    - ${value2}: wartość opcji, z odziedziczoną wartością jeśli pusta
-    - ${parent_value}: wartość nadrzędnej opcji
-    - ${min}: minimalna wartość
-    - ${max}: maksymalna wartość
-    - ${description}: opis opcji (przetłumaczony)
-    - ${description2}: opis opcji (przetłumaczony), "(brak opisu)" (przetłumaczony) jeśli nie ma opisu
-    - ${description_en}: opis opcji (po angielsku)
-    - ${description_en2}: opis opcji (po angielsku), "(brak opisu)" jeśli nie ma opisu
-    - ${string_values}: dozwolone wartości ciągu dla liczbowych wartości opcji
-    - ${marked}: "1" jeśli opcja jest zaznaczona, inaczej "0"
-    - ${index}: numer opcji na liście
-  - dane opcji, z kolorami ale bez spacji:
-    - te same nazwy poprzedzone podkreśleniem, na przykład: ${_name}, ${_type}, ...
-  - dane opcji, nieprzetworzony format (bez kolorów/spacji):
-    - te same nazwy poprzedzone dwoma podkreśleniami, na przykład: ${__name}, ${__type}, ...
-  - dane opcji, tylko spacje:
-    - te same nazwy poprzedzone "empty_", na przykład: ${empty_name}, ${empty_type}
-  - inne dane:
-    - ${selected_line}: "1" jeśli linia jest zaznaczona, inaczej "0"
-    - ${newline}: dodaje znak nowej linii, dzięki czemu opcja wyświetlana jest w kilku liniach
+The following variables can be used in these options:
+  - option data, with color and padded by spaces on the right:
+    - ${file}: configuration file (for example "weechat" or "irc")
+    - ${section}: section
+    - ${option}: option name
+    - ${name}: full option name (file.section.option)
+    - ${parent_name}: parent option name
+    - ${type}: option type (translated)
+    - ${type_en}: option type (in English)
+    - ${type_short}: short option type (bool/int/str/col)
+    - ${type_tiny}: tiny option type (b/i/s/c)
+    - ${default_value}: option default value
+    - ${default_value_undef}: "1" if default value is null, otherwise "0"
+    - ${value}: option value
+    - ${value_undef}: "1" if value is null, otherwise "0"
+    - ${value_changed}: "1" if value is different from default value, otherwise "0"
+    - ${value2}: option value, with inherited value if null
+    - ${parent_value}: parent option value
+    - ${min}: min value
+    - ${max}: max value
+    - ${description}: option description (translated)
+    - ${description2}: option description (translated), "(no description)" (translated) if there's no description
+    - ${description_en}: option description (in English)
+    - ${description_en2}: option description (in English), "(no description)" if there's no description
+    - ${string_values}: string values allowed for set of an integer option using strings
+    - ${marked}: "1" if option is marked, otherwise "0"
+    - ${index}: index of option in list
+  - option data, with color but no spaces:
+    - same names prefixed by underscore, for example: ${_name}, ${_type}, ...
+  - option data, raw format (no colors/spaces):
+    - same names prefixed by two underscores, for example: ${__name}, ${__type}, ...
+  - option data, only spaces:
+    - same names prefixed with "empty_", for example: ${empty_name}, ${empty_type}
+  - other data:
+    - ${selected_line}: "1" if the line is selected, otherwise "0"
+    - ${newline}: insert a new line at point, so the option is displayed on multiple lines
 
-Klawisze i polecenia do poruszania się w buforze fset:
-  up                        przesuwa linię do góry
-  down                      przesuwa linie w dół
-  pgup                      przesuwa stronę do góry
-  pgdn                      przesuwa stronę w dół
-  alt-home          <<      przenosi do pierwszej linii
-  alt-end           >>      przenosi do ostatniej linii
-  F11               <       przewija w lewo
-  F12               >       przewija w prawo
+Keys and input to move in on fset buffer:
+  up                        move one line up
+  down                      move one line down
+  pgup                      move one page up
+  pgdn                      move one page down
+  alt-home          <<      move to first line
+  alt-end           >>      move to last line
+  F11               <       scroll horizontally on the left
+  F12               >       scroll horizontally on the right
 
-Klawisze i polecenia do ustawiania opcji w buforze fset:
-  alt+space         t       zmiana wartości boolowskiej
-  alt+'-'           -       odejmuje 1 od wartości liczbowej/koloru, ustawia wartości innych typów
-  alt+'+'           +       dodaje 1 od wartości liczbowej/koloru, dodaje do wartości innych typów
-  alt+f, alt+r      r       resetuje wartość
-  alt+f, alt+u      u       kasuje wartość
-  alt+enter         s       ustawia wartość
-  alt+f, alt+n      n       ustawia nową wartość
-  alt+f, alt+a      a       dodaje do wartości
-  alt+','           ,       zaznacza/odznacza opcję
-  shift+up                  przesuwa jedną linię w górę oraz zaznacza/odznacza opcję
-  shift+down                zaznacza/odznacza opcję i przesuwa jedną linię w dół
-                    m:xxx   zaznacza wyświetlane opcje pasujące do filtru "xxx" (dowolny filtr dla opcji lub wartości, zobacz wyżej jak definiować filtry)
-                    u:xxx   odznacza wyświetlane opcje pasujące do filtru "xxx" (dowolny filtr dla opcji lub wartości, zobacz wyżej jak definiować filtry)
+Keys and input to set options on fset buffer:
+  alt+space         t       toggle boolean value
+  alt+'-'           -       subtract 1 from value for integer/color, set value for other types
+  alt+'+'           +       add 1 to value for integer/color, append to value for other types
+  alt+f, alt+r      r       reset value
+  alt+f, alt+u      u       unset value
+  alt+enter         s       set value
+  alt+f, alt+n      n       set new value
+  alt+f, alt+a      a       append to value
+  alt+','           ,       mark/unmark option
+  shift+up                  move one line up and mark/unmark option
+  shift+down                mark/unmark option and move one line down
+                    m:xxx   mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see filters above)
+                    u:xxx   unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see filters above)
 
-Pozostałe skróty klawiszowe i polecenia w buforze fset:
-  ctrl+L                    odświeża opcje i cały ekran (komenda: /fset -refresh)
-                    $       odświeża opcje (pozostawia zaznaczenia)
-                    $$      odświeża opcje (kasuje zaznaczenia)
-  alt+p             p       przełącza opcje opisu wtyczki (plugins.desc.*)
-  alt+v             v       przełącza pasek pomocy
-                    s:x,y   sortuje opcje po wartościach x,y (zobacz /help fset.look.sort)
-                    s:      resetuje sortowanie do domyślnych wartości (zobacz /help fset.look.sort)
-                    w:xxx   eksportuje opcje do pliku "xxx"
-                    w-:xxx  eksportuje opcje do pliku "xxx" bez pomocy
-                    w+:xxx  eksportuje opcje do pliku "xxx" z pomocą
-  ctrl+X            x       przełącza format używany do wyświetlenia opcji
-                    q       zamyka bufor fset
+Other keys and input on fset buffer:
+  ctrl+l                    refresh options and whole screen (command: /fset -refresh)
+                    $       refresh options (keep marked options)
+                    $$      refresh options (unmark all options)
+  alt+p             p       toggle plugin description options (plugins.desc.*)
+  alt+v             v       toggle help bar
+                    s:x,y   sort options by fields x,y (see /help fset.look.sort)
+                    s:      reset sort to its default value (see /help fset.look.sort)
+                    w:xxx   export options in file "xxx"
+                    w-:xxx  export options in file "xxx" without help
+                    w+:xxx  export options in file "xxx" with help
+  ctrl+x            x       switch the format used to display options
+                    q       close fset buffer
 
-Akcje myszy w buforze fset:
-  rolka up/down                                  przesuwa linie w gorę/dół
-  lewy przycisk                                  przesuwa linię w wybrane miejsce
-  prawy przycisk                                 przełącza wartość boolowską (on/off) lub edytuje wartość pola
-  prawy przycisk + przeciągnięcie w lewo/prawo   zwiększa/zmniejsza wartość liczby/koloru, ustawia/dodaje wartości innych typów
-  prawy przycisk + przeciągnięcie w górę/dół     zaznacza/odznacza wiele opcji
+Mouse actions on fset buffer:
+  wheel up/down                   move line up/down
+  left button                     move line here
+  right button                    toggle boolean (on/off) or edit the option value
+  right button + drag left/right  increase/decrease value for integer/color, set/append to value for other types
+  right button + drag up/down     mark/unmark multiple options
 
-Uwaga: jeśli wejście posiada na początku kilka spacji jest traktowane jako filtr bez spacji. Na przykład " q" pokazuje wszystkie opcje z "q" w nazwie "q" zamyka bufor.
+Note: if input has one or more leading spaces, the following text is interpreted as a filter, without the spaces. For example " q" searches all options with "q" inside name while "q" closes the fset buffer.
 
-Przykłady:
-  pokazuje zmienione opcje IRC:
+Examples:
+  show IRC options changed:
     /fset d:irc.*
-  pokazuje wszystkie opcje zawierające w nazwie "nicklist":
+  show all options with "nicklist" in name:
     /fset nicklist
-  pokazuje wszystkie wartości zawierające "red":
+  show all values which contain "red":
     /fset =red
-  pokazuje wszystkie wartości równe "red":
+  show all values which are exactly "red":
     /fset ==red
-  pokazuje wszystkie liczbowe wartości wtyczki irc:
+  show all integer options in irc plugin:
     /fset c:${file} == irc && ${type_en} == integer
 ----
 // end::fset_commands[]
@@ -2816,7 +2968,7 @@ protokół.nazwa: protokół i nazwa do przekazywania:
                  - protokół "weechat" (nazwa nie jest używana)
 
 Protokół "irc" pozwala dowolnemu klientowi IRC (włączając w to WeeChat) połączyć się na ustawionym porcie.
-Protokół "weechat" pozwala na połączenie się zdalnym interfejsem, lista dostępna pod adresem: https://weechat.org/about/interfaces
+Protokół "weechat" pozwala na połączenie się zdalnym interfejsem, lista dostępna pod adresem: https://weechat.org/about/interfaces/
 
 Bez argumentu komenda otwiera bufor z listą klientów.
 
@@ -2971,15 +3123,15 @@ Przykłady:
 ----
 /spell  enable|disable|toggle
         listdict
-        setdict <język>[,<język>...]
+        setdict -|<słownik>[,<słownik>...]
         deldict
-        addword [<język>] <słowo>
+        addword [<słownik>] <słowo>
 
   enable: włącza sprawdzanie pisowni
  disable: wyłącza sprawdzanie pisowni
   toggle: przełącza sprawdzanie pisowni
 listdict: pokazuje zainstalowane słowniki
- setdict: ustawia słownik dla obecnego buforu (kilka słowników może być podanych po przecinku)
+ setdict: ustawia słownik dla obecnego buforu (kilka słowników może być podanych po przecinku, znak specjalny „-” wyłącza sprawdzanie pisowni z obecnym buforze)
  deldict: usuwa słownik używany w obecnym buforze
  addword: dodaje słowo do osobistego słownika
 
@@ -3089,7 +3241,7 @@ post_action: akcja do wykonania po zakończeniu (none (domyślne), disable, dele
         del: usuwa trigger
        -all: wykonaj akcję na wszystkich triggerach
     restore: przywraca trigger(y) z domyślnymi wartościami (działa tylko dla domyślnych triggerów)
-    default: przywraca domyślne triggery
+    default: przywraca domyślne triggery usuwając wszystkie istniejące
     monitor: otwiera bufor monitorowania triggerów, z opcjonalnym filtrem:
      filtr: filtruje uchwyty/triggery do wyświetlenia (uchwyt musi się zaczynać od "@", na przykład "@signal"), wiele filtrów może być oddzielonych przecinkiem; dzika karta "*" jest dozwolona w nazwie każdego triggera
 
@@ -3097,7 +3249,7 @@ Kiedy callback triggera jest wywoływany, wykonywane są następujące akcje, w 
   1. sprawdzenie warunków; jeśli nie są spełnione, wyjście
   2. zastąpienie tekstu za pomocą rozszerzonych wyrażeń regularnych POSIX (jeśli zdefiniowane)
   3. wykonanie komend(y) (jeśli zdefiniowane)
-  4. wyjście z kodem wyjścia (poza modifiers i focus)
+  4. wyjście z kodem wyjścia (poza modifier, line, focus, info and info_hashtable)
   5. wykonanie akcji kończącej
 
 Przykłady (możesz też spojrzeć na domyślne triggery za pomocą /trigger listdefault):
@@ -3108,6 +3260,8 @@ Przykłady (możesz też spojrzeć na domyślne triggery za pomocą /trigger lis
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
   cichy zapis plików konfiguracyjnych co każdą godzinę:
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
+  cichy zapis sesji WeeChat o północy (zobacz /help upgrade):
+    /trigger add session_save signal day_changed "" "" "/mute /upgrade -save"
   otwiera monitor triggerów i pokazuje tylko modifiers i triggery, których nazwa zaczyna się od "resize":
     /trigger monitor @modifier,resize*
 ----

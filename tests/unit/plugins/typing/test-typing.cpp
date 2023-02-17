@@ -1,7 +1,7 @@
 /*
  * test-typing.cpp - test typing functions
  *
- * Copyright (C) 2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2021-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,13 +21,12 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include "src/plugins/typing/typing.h"
 }
-
-#include "tests/tests.h"
-
 
 TEST_GROUP(Typing)
 {

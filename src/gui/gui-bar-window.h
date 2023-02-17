@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -77,7 +77,12 @@ extern void gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_wind
 extern void gui_bar_window_content_build (struct t_gui_bar_window *bar_window,
                                           struct t_gui_window *window);
 extern char *gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
-                                                      struct t_gui_window *window);
+                                                      struct t_gui_window *window,
+                                                      int *num_spacers);
+extern int gui_bar_window_can_use_spacer (struct t_gui_bar_window *bar_window);
+extern int *gui_bar_window_compute_spacers_size (int length_on_screen,
+                                                 int bar_window_width,
+                                                 int num_spacers);
 extern struct t_gui_bar_window *gui_bar_window_search_bar (struct t_gui_window *window,
                                                            struct t_gui_bar *bar);
 extern int gui_bar_window_get_current_size (struct t_gui_bar_window *bar_window);

@@ -1,7 +1,7 @@
 /*
  * irc-tag.c - functions for IRC message tags
  *
- * Copyright (C) 2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2021-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -49,7 +49,7 @@
 char *
 irc_tag_escape_value (const char *string)
 {
-    char **out, *result;
+    char **out;
     unsigned char *ptr_string;
     int length;
 
@@ -98,10 +98,7 @@ irc_tag_escape_value (const char *string)
         }
     }
 
-    result = *out;
-    weechat_string_dyn_free (out, 0);
-
-    return result;
+    return weechat_string_dyn_free (out, 0);
 }
 
 /*
@@ -115,7 +112,7 @@ irc_tag_escape_value (const char *string)
 char *
 irc_tag_unescape_value (const char *string)
 {
-    char **out, *result;
+    char **out;
     unsigned char *ptr_string;
     int length;
 
@@ -182,10 +179,7 @@ irc_tag_unescape_value (const char *string)
         }
     }
 
-    result = *out;
-    weechat_string_dyn_free (out, 0);
-
-    return result;
+    return weechat_string_dyn_free (out, 0);
 }
 
 /*
@@ -217,7 +211,7 @@ irc_tag_modifier_cb (const void *pointer, void *data,
 
 /*
  * Parses tags received in an IRC message and returns the number of tags
- * set in the hasbtable "hashtable" (values are unescaped tag values).
+ * set in the hashtable "hashtable" (values are unescaped tag values).
  *
  * If prefix_key is not NULL, it is used as prefix before the name of keys.
  *

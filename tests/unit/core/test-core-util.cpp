@@ -1,7 +1,7 @@
 /*
  * test-core-util.cpp - test util functions
  *
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -229,19 +229,19 @@ TEST(CoreUtil, ParseDelay)
 
 TEST(CoreUtil, VersionNumber)
 {
-    BYTES_EQUAL(0x00030200, util_version_number ("0.3.2-dev"));
-    BYTES_EQUAL(0x00030200, util_version_number ("0.3.2-rc1"));
-    BYTES_EQUAL(0x00030200, util_version_number ("0.3.2"));
-    BYTES_EQUAL(0x00030101, util_version_number ("0.3.1.1"));
-    BYTES_EQUAL(0x00030100, util_version_number ("0.3.1"));
-    BYTES_EQUAL(0x00030000, util_version_number ("0.3.0"));
-    BYTES_EQUAL(0x01000000, util_version_number ("1.0"));
-    BYTES_EQUAL(0x01000000, util_version_number ("1.0.0"));
-    BYTES_EQUAL(0x01000000, util_version_number ("1.0.0.0"));
-    BYTES_EQUAL(0x01000100, util_version_number ("1.0.1"));
-    BYTES_EQUAL(0x01000200, util_version_number ("1.0.2"));
-    BYTES_EQUAL(0x01010000, util_version_number ("1.1"));
-    BYTES_EQUAL(0x01010100, util_version_number ("1.1.1"));
-    BYTES_EQUAL(0x01010200, util_version_number ("1.1.2"));
-    BYTES_EQUAL(0x01020304, util_version_number ("1.2.3.4"));
+    LONGS_EQUAL(0x00030200, util_version_number ("0.3.2-dev"));
+    LONGS_EQUAL(0x00030200, util_version_number ("0.3.2-rc1"));
+    LONGS_EQUAL(0x00030200, util_version_number ("0.3.2"));
+    LONGS_EQUAL(0x00030101, util_version_number ("0.3.1.1"));
+    LONGS_EQUAL(0x00030100, util_version_number ("0.3.1"));
+    LONGS_EQUAL(0x00030000, util_version_number ("0.3.0"));
+    LONGS_EQUAL(0x01000000, util_version_number ("1.0"));
+    LONGS_EQUAL(0x01000000, util_version_number ("1.0.0"));
+    LONGS_EQUAL(0x01000000, util_version_number ("1.0.0.0"));
+    LONGS_EQUAL(0x01000100, util_version_number ("1.0.1"));
+    LONGS_EQUAL(0x01000200, util_version_number ("1.0.2"));
+    LONGS_EQUAL(0x01010000, util_version_number ("1.1"));
+    LONGS_EQUAL(0x01010100, util_version_number ("1.1.1"));
+    LONGS_EQUAL(0x01010200, util_version_number ("1.1.2"));
+    LONGS_EQUAL(0x01020304, util_version_number ("1.2.3.4"));
 }

@@ -1,7 +1,7 @@
 /*
  * script-api.c - script API functions, used by script plugins
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -326,7 +326,7 @@ plugin_script_api_printf (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * Prints a message with optional date and tags.
+ * Prints a message, with optional date and tags.
  */
 
 void
@@ -371,6 +371,33 @@ plugin_script_api_printf_y (struct t_weechat_plugin *weechat_plugin,
     buf2 = (script && script->charset && script->charset[0]) ?
         weechat_iconv_to_internal (script->charset, vbuffer) : NULL;
     weechat_printf_y (buffer, y, "%s", (buf2) ? buf2 : vbuffer);
+    if (buf2)
+        free (buf2);
+
+    free (vbuffer);
+}
+
+/*
+ * Prints a message on a buffer with free content, with optional date and tags.
+ */
+
+void
+plugin_script_api_printf_y_date_tags (struct t_weechat_plugin *weechat_plugin,
+                                      struct t_plugin_script *script,
+                                      struct t_gui_buffer *buffer, int y,
+                                      time_t date, const char *tags,
+                                      const char *format, ...)
+{
+    char *buf2;
+
+    weechat_va_format (format);
+    if (!vbuffer)
+        return;
+
+    buf2 = (script && script->charset && script->charset[0]) ?
+        weechat_iconv_to_internal (script->charset, vbuffer) : NULL;
+    weechat_printf_y_date_tags (buffer, y, date, tags,
+                                "%s", (buf2) ? buf2 : vbuffer);
     if (buf2)
         free (buf2);
 
@@ -496,7 +523,7 @@ plugin_script_api_hook_command_run (struct t_weechat_plugin *weechat_plugin,
 struct t_hook *
 plugin_script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *script,
-                              int interval, int align_second, int max_calls,
+                              long interval, int align_second, int max_calls,
                               int (*callback)(const void *pointer,
                                               void *data,
                                               int remaining_calls),
@@ -1165,24 +1192,25 @@ plugin_script_api_hook_focus (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * Creates a new buffer.
+ * Creates a new buffer with optional properties.
  */
 
 struct t_gui_buffer *
-plugin_script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
-                              struct t_plugin_script *script,
-                              const char *name,
-                              int (*input_callback)(const void *pointer,
-                                                    void *data,
-                                                    struct t_gui_buffer *buffer,
-                                                    const char *input_data),
-                              const char *function_input,
-                              const char *data_input,
-                              int (*close_callback)(const void *pointer,
-                                                    void *data,
-                                                    struct t_gui_buffer *buffer),
-                              const char *function_close,
-                              const char *data_close)
+plugin_script_api_buffer_new_props (struct t_weechat_plugin *weechat_plugin,
+                                    struct t_plugin_script *script,
+                                    const char *name,
+                                    struct t_hashtable *properties,
+                                    int (*input_callback)(const void *pointer,
+                                                          void *data,
+                                                          struct t_gui_buffer *buffer,
+                                                          const char *input_data),
+                                    const char *function_input,
+                                    const char *data_input,
+                                    int (*close_callback)(const void *pointer,
+                                                          void *data,
+                                                          struct t_gui_buffer *buffer),
+                                    const char *function_close,
+                                    const char *data_close)
 {
     char *function_and_data_input, *function_and_data_close;
     struct t_gui_buffer *new_buffer;
@@ -1195,8 +1223,9 @@ plugin_script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
     function_and_data_close = plugin_script_build_function_and_data (
         function_close, data_close);
 
-    new_buffer = weechat_buffer_new (
+    new_buffer = weechat_buffer_new_props (
         name,
+        properties,
         (function_and_data_input) ? input_callback : NULL,
         script,
         function_and_data_input,
@@ -1227,6 +1256,39 @@ plugin_script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
     }
 
     return new_buffer;
+}
+
+/*
+ * Creates a new buffer.
+ */
+
+struct t_gui_buffer *
+plugin_script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
+                              struct t_plugin_script *script,
+                              const char *name,
+                              int (*input_callback)(const void *pointer,
+                                                    void *data,
+                                                    struct t_gui_buffer *buffer,
+                                                    const char *input_data),
+                              const char *function_input,
+                              const char *data_input,
+                              int (*close_callback)(const void *pointer,
+                                                    void *data,
+                                                    struct t_gui_buffer *buffer),
+                              const char *function_close,
+                              const char *data_close)
+{
+    return plugin_script_api_buffer_new_props (
+        weechat_plugin,
+        script,
+        name,
+        NULL,  /* properties */
+        input_callback,
+        function_input,
+        data_input,
+        close_callback,
+        function_close,
+        data_close);
 }
 
 /*

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -32,10 +32,13 @@ typedef int (t_hook_callback_hsignal)(const void *pointer, void *data,
 struct t_hook_hsignal
 {
     t_hook_callback_hsignal *callback; /* signal callback                   */
-    char *signal;                      /* signal selected (may begin or end */
-                                       /* with "*", "*" == any signal)      */
+    char **signals;                    /* signals selected; each one may    */
+                                       /* begin or end with "*",            */
+                                       /* "*" == any signal                 */
+    int num_signals;                   /* number of signals                 */
 };
 
+extern char *hook_hsignal_get_description (struct t_hook *hook);
 extern struct t_hook *hook_hsignal (struct t_weechat_plugin *plugin,
                                     const char *signal,
                                     t_hook_callback_hsignal *callback,

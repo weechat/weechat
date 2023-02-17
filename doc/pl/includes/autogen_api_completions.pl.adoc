@@ -26,6 +26,8 @@
 
 | irc | irc_channels | kanały na wszystkich serwerach IRC
 
+| irc | irc_channels_autojoin | kanały do automatycznego dołączenia na obecnym serwerze (opcja "autojoin")
+
 | irc | irc_ignores_numbers | numery zdefiniowanych ignorów
 
 | irc | irc_modelist_masks | maski modlisty obecnego kanału IRC; wymagany argument: modelist mode
@@ -92,6 +94,8 @@
 
 | tcl | tcl_script | lista skryptów
 
+| trigger | trigger_add_arguments | argumenty dla komendy dodającej trigger: nazwa triggera, hooki, argumenty hooka, warunki hooka, wyrażenie hooka, kod powrotu hooka, akcja kończąca
+
 | trigger | trigger_hook_arguments | domyślne argumenty dla hooka
 
 | trigger | trigger_hook_command | domyślna komenda dla hooka
@@ -145,6 +149,14 @@
 | weechat | config_options | opcje konfiguracyjne
 
 | weechat | cursor_areas | obszary ("chat" albo nazwa paska) dla wolnego przemieszczania się kursora
+
+| weechat | custom_bar_item_add_arguments | argumenty dla komendy, która dodaje niestandardowy element paska: nazwa elementu, warunki, zawartość
+
+| weechat | custom_bar_item_conditions | warunki dla niestandardowego elementu paska
+
+| weechat | custom_bar_item_contents | zawartość niestandardowego elementu paska
+
+| weechat | custom_bar_items_names | nazwy niestandardowych elementów paska
 
 | weechat | env_value | wartość zmiennej środowiskowej
 

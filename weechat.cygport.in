@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2013-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2013-2023 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -53,7 +53,8 @@ SRC_URI="https://weechat.org/files/src/weechat-${VERSION}.tar.bz2"
 # Build dependencies only
 DEPEND="cmake gettext gettext-devel libgnutls-devel libaspell-devel \
 libcurl-devel libgcrypt-devel libncurses-devel lua perl pkg-config \
-python3-devel ruby tcl-devel libguile2.2-devel php-devel zlib-devel"
+python3-devel ruby tcl-devel libguile2.2-devel php-devel libzstd-devel \
+zlib-devel"
 
 #
 # CMake compilation of WeeChat:

@@ -1,7 +1,7 @@
 /*
  * gui-layout.c - layout functions (used by all GUI)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -54,6 +54,9 @@ struct t_gui_layout *
 gui_layout_search (const char *name)
 {
     struct t_gui_layout *ptr_layout;
+
+    if (!name)
+        return NULL;
 
     for (ptr_layout = gui_layouts; ptr_layout;
          ptr_layout = ptr_layout->next_layout)
@@ -261,7 +264,7 @@ gui_layout_buffer_get_number (struct t_gui_layout *layout,
     *layout_number = 0;
     *layout_number_merge_order = 0;
 
-    if (!layout)
+    if (!layout || !plugin_name || !buffer_name)
         return;
 
     old_number = -1;
@@ -278,8 +281,8 @@ gui_layout_buffer_get_number (struct t_gui_layout *layout,
         else
             merge_order++;
 
-        if ((string_strcasecmp (ptr_layout_buffer->plugin_name, plugin_name) == 0)
-            && (string_strcasecmp (ptr_layout_buffer->buffer_name, buffer_name) == 0))
+        if ((strcmp (ptr_layout_buffer->plugin_name, plugin_name) == 0)
+            && (strcmp (ptr_layout_buffer->buffer_name, buffer_name) == 0))
         {
             *layout_number = ptr_layout_buffer->number;
             *layout_number_merge_order = merge_order;

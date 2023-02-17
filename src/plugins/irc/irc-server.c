@@ -1,7 +1,7 @@
 /*
  * irc-server.c - I/O communication with IRC servers
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2010 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2012 Simon Arlott
  *
@@ -107,6 +107,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "command",              ""                        },
   { "command_delay",        "0"                       },
   { "autojoin",             ""                        },
+  { "autojoin_dynamic",     "off"                     },
   { "autorejoin",           "off"                     },
   { "autorejoin_delay",     "30"                      },
   { "connection_timeout",   "60"                      },
@@ -121,6 +122,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "split_msg_max_length", "512"                     },
   { "charset_message",      "message"                 },
   { "default_chantypes",    "#&"                      },
+  { "registered_mode",      "r"                       },
 };
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
@@ -202,31 +204,6 @@ irc_server_search (const char *server_name)
 }
 
 /*
- * Searches for a server by name (case insensitive).
- *
- * Returns pointer to server found, NULL if not found.
- */
-
-struct t_irc_server *
-irc_server_casesearch (const char *server_name)
-{
-    struct t_irc_server *ptr_server;
-
-    if (!server_name)
-        return NULL;
-
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
-    {
-        if (weechat_strcasecmp (ptr_server->name, server_name) == 0)
-            return ptr_server;
-    }
-
-    /* server not found */
-    return NULL;
-}
-
-/*
  * Searches for a server option name.
  *
  * Returns index of option in array "irc_server_option_string", -1 if not found.
@@ -262,6 +239,9 @@ irc_server_search_casemapping (const char *casemapping)
 {
     int i;
 
+    if (!casemapping)
+        return -1;
+
     for (i = 0; i < IRC_SERVER_NUM_CASEMAPPING; i++)
     {
         if (weechat_strcasecmp (irc_server_casemapping_string[i], casemapping) == 0)
@@ -283,6 +263,9 @@ int
 irc_server_search_utf8mapping (const char *utf8mapping)
 {
     int i;
+
+    if (!utf8mapping)
+        return -1;
 
     for (i = 0; i < IRC_SERVER_NUM_UTF8MAPPING; i++)
     {
@@ -985,40 +968,51 @@ irc_server_get_alternate_nick (struct t_irc_server *server)
 const char *
 irc_server_get_isupport_value (struct t_irc_server *server, const char *feature)
 {
-    char feature2[64], *pos_feature, *pos_equal, *pos_space;
-    int length;
+    const char *ptr_string, *pos_space;
+    int length, length_feature;
     static char value[256];
 
-    if (!server || !server->isupport || !feature)
+    if (!server || !server->isupport || !feature || !feature[0])
         return NULL;
 
-    /* search feature with value */
-    snprintf (feature2, sizeof (feature2), " %s=", feature);
-    pos_feature = strstr (server->isupport, feature2);
-    if (pos_feature)
-    {
-        /* feature found with value, return value */
-        pos_feature++;
-        pos_equal = strchr (pos_feature, '=');
-        pos_space = strchr (pos_feature, ' ');
-        if (pos_space)
-            length = pos_space - pos_equal - 1;
-        else
-            length = strlen (pos_equal) + 1;
-        if (length > (int)sizeof (value) - 1)
-            length = (int)sizeof (value) - 1;
-        memcpy (value, pos_equal + 1, length);
-        value[length] = '\0';
-        return value;
-    }
+    length_feature = strlen (feature);
 
-    /* search feature without value */
-    feature2[strlen (feature2) - 1] = ' ';
-    pos_feature = strstr (server->isupport, feature2);
-    if (pos_feature)
+    ptr_string = server->isupport;
+    while (ptr_string && ptr_string[0])
     {
-        value[0] = '\0';
-        return value;
+        if (strncmp (ptr_string, feature, length_feature) == 0)
+        {
+            switch (ptr_string[length_feature])
+            {
+                case '=':
+                    /* feature found with value, return value */
+                    ptr_string += length_feature + 1;
+                    pos_space = strchr (ptr_string, ' ');
+                    if (pos_space)
+                        length = pos_space - ptr_string;
+                    else
+                        length = strlen (ptr_string);
+                    if (length > (int)sizeof (value) - 1)
+                        length = (int)sizeof (value) - 1;
+                    memcpy (value, ptr_string, length);
+                    value[length] = '\0';
+                    return value;
+                case ' ':
+                case '\0':
+                    /* feature found without value, return empty string */
+                    value[0] = '\0';
+                    return value;
+            }
+        }
+        /* find start of next item */
+        pos_space = strchr (ptr_string, ' ');
+        if (!pos_space)
+            break;
+        ptr_string = pos_space + 1;
+        while (ptr_string[0] == ' ')
+        {
+            ptr_string++;
+        }
     }
 
     /* feature not found in isupport */
@@ -1510,7 +1504,8 @@ irc_server_alloc (const char *name)
     int i, length;
     char *option_name;
 
-    if (irc_server_casesearch (name))
+    /* check if another server exists with this name */
+    if (irc_server_search (name))
         return NULL;
 
     /* alloc memory for new server */
@@ -1561,6 +1556,8 @@ irc_server_alloc (const char *name)
     new_server->sasl_scram_auth_message = NULL;
     new_server->sasl_temp_username = NULL;
     new_server->sasl_temp_password = NULL;
+    new_server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
+    new_server->sasl_mechanism_used = -1;
     new_server->is_connected = 0;
     new_server->ssl_connected = 0;
     new_server->disconnected = 0;
@@ -1603,7 +1600,7 @@ irc_server_alloc (const char *name)
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
-    new_server->reconnect_join = 0;
+    new_server->autojoin_done = 0;
     new_server->disable_autojoin = 0;
     new_server->is_away = 0;
     new_server->away_message = NULL;
@@ -1924,7 +1921,7 @@ irc_server_apply_command_line_options (struct t_irc_server *server,
             }
             if (option_name)
             {
-                if (weechat_strcasecmp (option_name, "temp") == 0)
+                if (weechat_strcmp (option_name, "temp") == 0)
                 {
                     /* temporary server, not saved */
                     server->temp_server = 1;
@@ -1935,7 +1932,7 @@ irc_server_apply_command_line_options (struct t_irc_server *server,
                     if (index_option < 0)
                     {
                         /* look if option is negative, like "-noxxx" */
-                        if (weechat_strncasecmp (argv[i], "-no", 3) == 0)
+                        if (weechat_strncmp (argv[i], "-no", 3) == 0)
                         {
                             free (option_name);
                             option_name = strdup (argv[i] + 3);
@@ -2242,7 +2239,7 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
     int length, index_option;
 
     /* check if another server exists with this name */
-    if (irc_server_casesearch (new_name))
+    if (irc_server_search (new_name))
         return NULL;
 
     new_server = irc_server_alloc (new_name);
@@ -2309,7 +2306,7 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
     struct t_irc_channel *ptr_channel;
 
     /* check if another server exists with this name */
-    if (irc_server_casesearch (new_name))
+    if (irc_server_search (new_name))
         return 0;
 
     /* rename options */
@@ -3819,7 +3816,7 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                 {
                     weechat_printf (
                         ptr_server->buffer,
-                        _("%s%s: lag is high, reconnecting to server %s%s%s"),
+                        _("%s%s: lag is high, disconnecting from server %s%s%s"),
                         weechat_prefix ("network"),
                         IRC_PLUGIN_NAME,
                         IRC_COLOR_CHAT_SERVER,
@@ -3906,6 +3903,13 @@ irc_server_close_connection (struct t_irc_server *server)
 {
     int i;
 
+    /*
+     * IMPORTANT: if changes are made in this function or sub-functions called,
+     * please also update the function irc_server_add_to_infolist:
+     * when the flag force_disconnected_state is set to 1 we simulate
+     * a disconnected state for server in infolist (used on /upgrade -save)
+     */
+
     if (server->hook_timer_connection)
     {
         weechat_unhook (server->hook_timer_connection);
@@ -3974,6 +3978,8 @@ irc_server_close_connection (struct t_irc_server *server)
     weechat_hashtable_remove_all (server->join_noswitch);
 
     /* server is now disconnected */
+    server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
+    server->sasl_mechanism_used = -1;
     server->is_connected = 0;
     server->ssl_connected = 0;
 
@@ -5338,9 +5344,7 @@ irc_server_reconnect (struct t_irc_server *server)
 
     server->reconnect_start = 0;
 
-    if (irc_server_connect (server))
-        server->reconnect_join = 1;
-    else
+    if (!irc_server_connect (server))
         irc_server_reconnect_schedule (server);
 }
 
@@ -5400,6 +5404,13 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
                        int reconnect)
 {
     struct t_irc_channel *ptr_channel;
+
+    /*
+     * IMPORTANT: if changes are made in this function or sub-functions called,
+     * please also update the function irc_server_add_to_infolist:
+     * when the flag force_disconnected_state is set to 1 we simulate
+     * a disconnected state for server in infolist (used on /upgrade -save)
+     */
 
     if (server->is_connected)
     {
@@ -5476,7 +5487,9 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
 
     if (reconnect
         && IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTORECONNECT))
+    {
         irc_server_reconnect_schedule (server);
+    }
     else
     {
         server->reconnect_delay = 0;
@@ -5523,8 +5536,11 @@ irc_server_autojoin_create_buffers (struct t_irc_server *server)
     char *autojoin, *autojoin2, **channels;
     int num_channels, i;
 
-    /* buffers are opened only if no channels are currently opened */
-    if (server->channels)
+    /*
+     * buffers are opened only if auto-join was not already done
+     * and if no channels are currently opened
+     */
+    if (server->autojoin_done || server->channels)
         return;
 
     /* evaluate server option "autojoin" */
@@ -5679,9 +5695,29 @@ irc_server_autojoin_channels (struct t_irc_server *server)
 {
     char *autojoin;
 
-    /* auto-join after disconnection (only rejoins opened channels) */
-    if (!server->disable_autojoin && server->reconnect_join && server->channels)
+    if (server->disable_autojoin)
     {
+        server->disable_autojoin = 0;
+        return;
+    }
+
+    if (!server->autojoin_done && !server->channels)
+    {
+        /* auto-join when connecting to server for first time */
+        autojoin = irc_server_eval_expression (
+            server,
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN));
+        if (autojoin && autojoin[0])
+        {
+            irc_command_join_server (server, autojoin, 0, 0);
+            server->autojoin_done = 1;
+        }
+        if (autojoin)
+            free (autojoin);
+    }
+    else if (server->channels)
+    {
+        /* auto-join after disconnection (only rejoins opened channels) */
         autojoin = irc_server_build_autojoin (server);
         if (autojoin)
         {
@@ -5691,21 +5727,7 @@ irc_server_autojoin_channels (struct t_irc_server *server)
                               autojoin);
             free (autojoin);
         }
-        server->reconnect_join = 0;
     }
-    else
-    {
-        /* auto-join when connecting to server for first time */
-        autojoin = irc_server_eval_expression (
-            server,
-            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN));
-        if (!server->disable_autojoin && autojoin && autojoin[0])
-            irc_command_join_server (server, autojoin, 0, 0);
-        if (autojoin)
-            free (autojoin);
-    }
-
-    server->disable_autojoin = 0;
 }
 
 /*
@@ -6096,6 +6118,8 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_auth_message, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_temp_username, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_temp_password, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, authentication_method, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, sasl_mechanism_used, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, is_connected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, ssl_connected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, disconnected, INTEGER, 0, NULL, NULL);
@@ -6133,7 +6157,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_delay, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_start, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, command_time, TIME, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_join, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, autojoin_done, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, disable_autojoin, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, is_away, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, away_message, STRING, 0, NULL, NULL);
@@ -6172,6 +6196,10 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
 /*
  * Adds a server in an infolist.
  *
+ * If force_disconnected_state == 1, the infolist contains the server
+ * in a disconnected state (but the server is unchanged, still connected if it
+ * was).
+ *
  * Returns:
  *   1: OK
  *   0: error
@@ -6179,9 +6207,13 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
 
 int
 irc_server_add_to_infolist (struct t_infolist *infolist,
-                            struct t_irc_server *server)
+                            struct t_irc_server *server,
+                            int force_disconnected_state)
 {
     struct t_infolist_item *ptr_item;
+    int reconnect_delay, reconnect_start;
+    struct timeval lag_check_time;
+    time_t lag_next_check;
 
     if (!infolist || !server)
         return 0;
@@ -6289,6 +6321,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "autojoin",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN)))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "autojoin_dynamic",
+                                          IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC)))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "autorejoin",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOREJOIN)))
         return 0;
@@ -6323,39 +6358,141 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "fake_server", server->fake_server))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "index_current_address", server->index_current_address))
+    if (server->is_connected && force_disconnected_state)
+    {
+        if (!weechat_infolist_new_var_integer (ptr_item, "index_current_address", 0))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "current_address", NULL))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "current_ip", NULL))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "current_port", 0))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "current_retry", 0))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "sock", -1))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "is_connected", 0))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "ssl_connected", 0))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "disconnected", 1))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "unterminated_message", NULL))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "monitor", 0))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "monitor_time", 0))
+            return 0;
+        reconnect_delay = IRC_SERVER_OPTION_INTEGER(
+            server,
+            IRC_SERVER_OPTION_AUTORECONNECT_DELAY);
+        reconnect_start = time (NULL) - reconnect_delay - 1;
+        if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", reconnect_delay))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "reconnect_start", reconnect_start))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "nick", NULL))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "nick_modes", NULL))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "host", NULL))
+            return 0;
+        /*
+         * note: these hashtables are NOT in the infolist when saving a
+         * disconnected state:
+         *   - cap_ls
+         *   - cap_list
+         */
+        if (!weechat_infolist_new_var_integer (ptr_item, "checking_cap_ls", 0))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "checking_cap_list", 0))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "is_away", 0))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "away_message", NULL))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "away_time", 0))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "lag", 0))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "lag_displayed", -1))
+            return 0;
+        lag_check_time.tv_sec = 0;
+        lag_check_time.tv_usec = 0;
+        lag_next_check = time (NULL) +
+            weechat_config_integer (irc_config_network_lag_check);
+        if (!weechat_infolist_new_var_buffer (ptr_item, "lag_check_time", &lag_check_time, sizeof (lag_check_time)))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "lag_next_check", lag_next_check))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "lag_last_refresh", 0))
+            return 0;
+    }
+    else
+    {
+        if (!weechat_infolist_new_var_integer (ptr_item, "index_current_address", server->index_current_address))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "current_address", server->current_address))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "current_ip", server->current_ip))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "current_port", server->current_port))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "current_retry", server->current_retry))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "sock", server->sock))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "is_connected", server->is_connected))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "ssl_connected", server->ssl_connected))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "disconnected", server->disconnected))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "unterminated_message", server->unterminated_message))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "monitor", server->monitor))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "monitor_time", server->monitor_time))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "reconnect_start", server->reconnect_start))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "nick", server->nick))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "nick_modes", server->nick_modes))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "host", server->host))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "checking_cap_ls", server->checking_cap_ls))
+            return 0;
+        if (!weechat_hashtable_add_to_infolist (server->cap_ls, ptr_item, "cap_ls"))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "checking_cap_list", server->checking_cap_list))
+            return 0;
+        if (!weechat_hashtable_add_to_infolist (server->cap_list, ptr_item, "cap_list"))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "is_away", server->is_away))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "away_message", server->away_message))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "away_time", server->away_time))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "lag", server->lag))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "lag_displayed", server->lag_displayed))
+            return 0;
+        if (!weechat_infolist_new_var_buffer (ptr_item, "lag_check_time", &(server->lag_check_time), sizeof (server->lag_check_time)))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "lag_next_check", server->lag_next_check))
+            return 0;
+        if (!weechat_infolist_new_var_time (ptr_item, "lag_last_refresh", server->lag_last_refresh))
+            return 0;
+    }
+    if (!weechat_infolist_new_var_integer (ptr_item, "authentication_method", server->authentication_method))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "current_address", server->current_address))
-        return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "current_ip", server->current_ip))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "current_port", server->current_port))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "current_retry", server->current_retry))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "sock", server->sock))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "is_connected", server->is_connected))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "ssl_connected", server->ssl_connected))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "disconnected", server->disconnected))
-        return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "unterminated_message", server->unterminated_message))
-        return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "nick", server->nick))
-        return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "nick_modes", server->nick_modes))
-        return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "host", server->host))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "checking_cap_ls", server->checking_cap_ls))
-        return 0;
-    if (!weechat_hashtable_add_to_infolist (server->cap_ls, ptr_item, "cap_ls"))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "checking_cap_list", server->checking_cap_list))
-        return 0;
-    if (!weechat_hashtable_add_to_infolist (server->cap_list, ptr_item, "cap_list"))
+    if (!weechat_infolist_new_var_integer (ptr_item, "sasl_mechanism_used", server->sasl_mechanism_used))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "isupport", server->isupport))
         return 0;
@@ -6381,39 +6518,15 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "chanmodes", server->chanmodes))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "monitor", server->monitor))
-        return 0;
-    if (!weechat_infolist_new_var_time (ptr_item, "monitor_time", server->monitor_time))
-        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "clienttagdeny", server->clienttagdeny))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "typing_allowed", server->typing_allowed))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
-        return 0;
-    if (!weechat_infolist_new_var_time (ptr_item, "reconnect_start", server->reconnect_start))
-        return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "command_time", server->command_time))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_join", server->reconnect_join))
+    if (!weechat_infolist_new_var_integer (ptr_item, "autojoin_done", server->autojoin_done))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "disable_autojoin", server->disable_autojoin))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "is_away", server->is_away))
-        return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "away_message", server->away_message))
-        return 0;
-    if (!weechat_infolist_new_var_time (ptr_item, "away_time", server->away_time))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "lag", server->lag))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "lag_displayed", server->lag_displayed))
-        return 0;
-    if (!weechat_infolist_new_var_buffer (ptr_item, "lag_check_time", &(server->lag_check_time), sizeof (struct timeval)))
-        return 0;
-    if (!weechat_infolist_new_var_time (ptr_item, "lag_next_check", server->lag_next_check))
-        return 0;
-    if (!weechat_infolist_new_var_time (ptr_item, "lag_last_refresh", server->lag_last_refresh))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "last_user_message", server->last_user_message))
         return 0;
@@ -6648,6 +6761,15 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  autojoin. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+        /* autojoin_dynamic */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC]))
+            weechat_log_printf ("  autojoin_dynamic. . . . . : null (%s)",
+                                (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC)) ?
+                                "on" : "off");
+        else
+            weechat_log_printf ("  autojoin_dynamic. . . . . : %s",
+                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC])) ?
+                                "on" : "off");
         /* autorejoin */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN]))
             weechat_log_printf ("  autorejoin. . . . . . . . : null (%s)",
@@ -6746,6 +6868,8 @@ irc_server_print_log ()
         weechat_log_printf ("  sasl_scram_auth_message . : (hidden)");
         weechat_log_printf ("  sasl_temp_username. . . . : '%s'",  ptr_server->sasl_temp_username);
         weechat_log_printf ("  sasl_temp_password. . . . : (hidden)");
+        weechat_log_printf ("  authentication_method . . : %d",    ptr_server->authentication_method);
+        weechat_log_printf ("  sasl_mechanism_used . . . : %d",    ptr_server->sasl_mechanism_used);
         weechat_log_printf ("  is_connected. . . . . . . : %d",    ptr_server->is_connected);
         weechat_log_printf ("  ssl_connected . . . . . . : %d",    ptr_server->ssl_connected);
         weechat_log_printf ("  disconnected. . . . . . . : %d",    ptr_server->disconnected);
@@ -6789,7 +6913,7 @@ irc_server_print_log ()
         weechat_log_printf ("  reconnect_delay . . . . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start . . . . . : %lld",  (long long)ptr_server->reconnect_start);
         weechat_log_printf ("  command_time. . . . . . . : %lld",  (long long)ptr_server->command_time);
-        weechat_log_printf ("  reconnect_join. . . . . . : %d",    ptr_server->reconnect_join);
+        weechat_log_printf ("  autojoin_done . . . . . . : %d",    ptr_server->autojoin_done);
         weechat_log_printf ("  disable_autojoin. . . . . : %d",    ptr_server->disable_autojoin);
         weechat_log_printf ("  is_away . . . . . . . . . : %d",    ptr_server->is_away);
         weechat_log_printf ("  away_message. . . . . . . : '%s'",  ptr_server->away_message);

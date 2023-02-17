@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -23,9 +23,11 @@
 
 #define weechat_plugin weechat_irc_plugin
 #define IRC_PLUGIN_NAME "irc"
+#define IRC_PLUGIN_PRIORITY 6000
 
 extern struct t_weechat_plugin *weechat_irc_plugin;
 
+extern int irc_signal_quit_received;
 extern int irc_signal_upgrade_received;
 
 #endif /* WEECHAT_PLUGIN_IRC_H */

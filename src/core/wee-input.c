@@ -1,7 +1,7 @@
 /*
  * wee-input.c - default input callback for buffers
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -82,6 +82,7 @@ input_exec_command (struct t_gui_buffer *buffer,
 {
     char *command, *command_name, *pos;
     char **old_commands_allowed, **new_commands_allowed;
+    const char *ptr_command_name;
     int rc;
 
     if ((!string) || (!string[0]))
@@ -135,10 +136,12 @@ input_exec_command (struct t_gui_buffer *buffer,
         goto end;
     }
 
+    ptr_command_name = utf8_next_char (command_name);
+
     /* check if command is allowed */
     if (input_commands_allowed
-        && !string_match_list (command_name + 1,
-                               (const char **)input_commands_allowed, 0))
+        && !string_match_list (ptr_command_name,
+                               (const char **)input_commands_allowed, 1))
     {
         if (weechat_debug_core >= 1)
         {
@@ -176,11 +179,7 @@ input_exec_command (struct t_gui_buffer *buffer,
             }
             else
             {
-                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("%sUnknown command \"%s\" "
-                                             "(type /help for help)"),
-                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                           command_name);
+                hook_command_display_error_unknown (ptr_command_name);
                 rc = WEECHAT_RC_ERROR;
             }
             break;
@@ -427,8 +426,8 @@ input_data_delayed (struct t_gui_buffer *buffer, const char *data,
     }
     else if (input_commands_allowed)
     {
-        new_commands_allowed = string_build_with_split_string (
-            (const char **)input_commands_allowed, ",");
+        new_commands_allowed = string_rebuild_split_string (
+            (const char **)input_commands_allowed, ",", 0, -1);
     }
     else
     {

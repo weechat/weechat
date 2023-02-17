@@ -26,6 +26,8 @@
 
 | irc | irc_channels | Kanäle auf allen IRC Servern
 
+| irc | irc_channels_autojoin | Kanäle, die automatisch auf dem aktuellen Server betreten werden (Option "autojoin")
+
 | irc | irc_ignores_numbers | Anzahl für festgelegte Ignorierungen
 
 | irc | irc_modelist_masks | Modelist Maske für aktuellen IRC Kanal; benötigtes Argument: modelist mode
@@ -92,6 +94,8 @@
 
 | tcl | tcl_script | Liste der Skripten
 
+| trigger | trigger_add_arguments | Argumente für den Befehl, der einen Trigger hinzufügt: Name des Triggers, Hooks, Hook-Argumente, Hook-Bedingungen, Hook-Regex, Hook-Befehl, Hook-Rückgabecode, nachfolgende Aktionen
+
 | trigger | trigger_hook_arguments | Standardargumente für einen Hook
 
 | trigger | trigger_hook_command | Standardbefehl für einen Hook
@@ -145,6 +149,14 @@
 | weechat | config_options | Konfigurationsoptionen
 
 | weechat | cursor_areas | Bereiche in denen der Cursor frei bewegt werden kann ("chat" oder Name einer Bar)
+
+| weechat | custom_bar_item_add_arguments | Argumente für den Befehl, der ein benutzerdefiniertes Bar-Item hinzufügt: Elementname, Bedingungen,Inhalt
+
+| weechat | custom_bar_item_conditions | Bedingungen für benutzerdefinierte Bar-Items
+
+| weechat | custom_bar_item_contents | Inhalte für benutzerdefinierte Bar-Items
+
+| weechat | custom_bar_items_names | Namen der benutzerdefinierten Bar-Items
 
 | weechat | env_value | Wert einer Umgebungsvariable
 

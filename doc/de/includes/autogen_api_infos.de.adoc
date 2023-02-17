@@ -60,8 +60,6 @@
 
 | php | php_version | Version des verwendeten Interpreters | -
 
-| python | python2_bin | Pfad zum Python 2.x Interpreter (*veraltet*, seit WeeChat Version 2.6 müssen Skripten Python3 verwenden) | -
-
 | python | python_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 
 | python | python_interpreter | Name des verwendeten Interpreters | -
@@ -127,6 +125,8 @@
 | weechat | totp_validate | validiert ein Time-based One-Time Passwort (TOTP): 1 falls TOTP korrekt ist, ansonsten 0 | geheim (in base32), einmaliges Passwort, Zeitstempel (optional, standardmäßig aktuelle Zeit), Anzahl der zu testenden Passwörtern vorher/nachher (optional, standardmäßig 0)
 
 | weechat | uptime | Laufzeit von WeeChat (Format: "days:hh:mm:ss") | "days" (Anzahl der Tage) oder "seconds" (Anzahl der Sekunden) (optional)
+
+| weechat | uptime_current | WeeChat-Betriebszeit für den aktuellen Prozess (Upgrades mit /upgrade Befehlwerden ignoriert) (Format: "Tage:hh:mm:ss") | "days" (Anzahl der Tage) oder "seconds" (Anzahl der Sekunden) (optional)
 
 | weechat | version | WeeChat-Version | -
 

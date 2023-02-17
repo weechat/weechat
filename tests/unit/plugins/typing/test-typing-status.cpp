@@ -1,7 +1,7 @@
 /*
  * test-typing-status.cpp - test typing status functions
  *
- * Copyright (C) 2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2021-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,15 +21,14 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include "src/core/wee-hashtable.h"
 #include "src/gui/gui-buffer.h"
 #include "src/plugins/typing/typing-status.h"
 }
-
-#include "tests/tests.h"
-
 
 TEST_GROUP(TypingStatus)
 {

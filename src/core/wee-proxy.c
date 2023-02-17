@@ -1,7 +1,7 @@
 /*
  * wee-proxy.c - proxy functions
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -67,7 +67,7 @@ proxy_search_option (const char *option_name)
 
     for (i = 0; i < PROXY_NUM_OPTIONS; i++)
     {
-        if (string_strcasecmp (proxy_option_string[i], option_name) == 0)
+        if (strcmp (proxy_option_string[i], option_name) == 0)
             return i;
     }
 
@@ -91,7 +91,7 @@ proxy_search_type (const char *type)
 
     for (i = 0; i < PROXY_NUM_TYPES; i++)
     {
-        if (string_strcasecmp (proxy_type_string[i], type) == 0)
+        if (strcmp (proxy_type_string[i], type) == 0)
             return i;
     }
 
@@ -203,37 +203,37 @@ proxy_set (struct t_proxy *proxy, const char *property, const char *value)
     if (!proxy || !property || !value)
         return 0;
 
-    if (string_strcasecmp (property, "name") == 0)
+    if (strcmp (property, "name") == 0)
     {
         proxy_set_name (proxy, value);
         return 1;
     }
-    else if (string_strcasecmp (property, "type") == 0)
+    else if (strcmp (property, "type") == 0)
     {
         config_file_option_set (proxy->options[PROXY_OPTION_TYPE], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "ipv6") == 0)
+    else if (strcmp (property, "ipv6") == 0)
     {
         config_file_option_set (proxy->options[PROXY_OPTION_IPV6], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "address") == 0)
+    else if (strcmp (property, "address") == 0)
     {
         config_file_option_set (proxy->options[PROXY_OPTION_ADDRESS], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "port") == 0)
+    else if (strcmp (property, "port") == 0)
     {
         config_file_option_set (proxy->options[PROXY_OPTION_PORT], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "username") == 0)
+    else if (strcmp (property, "username") == 0)
     {
         config_file_option_set (proxy->options[PROXY_OPTION_USERNAME], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "password") == 0)
+    else if (strcmp (property, "password") == 0)
     {
         config_file_option_set (proxy->options[PROXY_OPTION_PASSWORD], value, 1);
         return 1;

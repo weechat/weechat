@@ -1,7 +1,7 @@
 /*
  * plugin.c - WeeChat plugins management (load/unload dynamic C libraries)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -128,7 +128,7 @@ plugin_search (const char *name)
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
-        if (string_strcasecmp (ptr_plugin->name, name) == 0)
+        if (strcmp (ptr_plugin->name, name) == 0)
             return ptr_plugin;
     }
 
@@ -166,14 +166,17 @@ plugin_check_extension_allowed (const char *filename)
     if (!config_plugin_extensions)
         return 1;
 
+    if (!filename)
+        return 0;
+
     length = strlen (filename);
     for (i = 0; i < config_num_plugin_extensions; i++)
     {
         length_ext = strlen (config_plugin_extensions[i]);
         if (length >= length_ext)
         {
-            if (string_strcasecmp (filename + length - length_ext,
-                                   config_plugin_extensions[i]) == 0)
+            if (strcmp (filename + length - length_ext,
+                        config_plugin_extensions[i]) == 0)
             {
                 /* extension allowed */
                 return 1;
@@ -235,8 +238,8 @@ plugin_check_autoload (const char *filename)
             length_ext = strlen (config_plugin_extensions[i]);
             if (length >= length_ext)
             {
-                if (string_strcasecmp (base_name + length - length_ext,
-                                       config_plugin_extensions[i]) == 0)
+                if (strcmp (base_name + length - length_ext,
+                            config_plugin_extensions[i]) == 0)
                 {
                     plugin_name = string_strndup (base_name, length - length_ext);
                     break;
@@ -256,7 +259,7 @@ plugin_check_autoload (const char *filename)
 
     match = string_match_list (plugin_name,
                                (const char **)plugin_autoload_array,
-                               0);
+                               1);
 
     free (plugin_name);
 
@@ -605,6 +608,10 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_cut = &string_cut;
         new_plugin->string_tolower = &string_tolower;
         new_plugin->string_toupper = &string_toupper;
+        new_plugin->string_charcmp = &string_charcmp;
+        new_plugin->string_charcasecmp = &string_charcasecmp;
+        new_plugin->strcmp = &string_strcmp;
+        new_plugin->strncmp = &string_strncmp;
         new_plugin->strcasecmp = &string_strcasecmp;
         new_plugin->strcasecmp_range = &string_strcasecmp_range;
         new_plugin->strncasecmp = &string_strncasecmp;
@@ -626,13 +633,15 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_has_highlight = &string_has_highlight;
         new_plugin->string_has_highlight_regex = &string_has_highlight_regex;
         new_plugin->string_replace_regex = &string_replace_regex;
+        new_plugin->string_translate_chars = &string_translate_chars;
         new_plugin->string_split = &string_split;
         new_plugin->string_split_shell = &string_split_shell;
         new_plugin->string_free_split = &string_free_split;
-        new_plugin->string_build_with_split_string = &string_build_with_split_string;
+        new_plugin->string_rebuild_split_string = &string_rebuild_split_string;
         new_plugin->string_split_command = &string_split_command;
         new_plugin->string_free_split_command = &string_free_split_command;
         new_plugin->string_format_size = &string_format_size;
+        new_plugin->string_parse_size = &string_parse_size;
         new_plugin->string_color_code_size = &gui_color_code_size;
         new_plugin->string_remove_color = &gui_color_decode;
         new_plugin->string_base_encode = &string_base_encode;
@@ -656,15 +665,15 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->utf8_strlen = &utf8_strlen;
         new_plugin->utf8_strnlen = &utf8_strnlen;
         new_plugin->utf8_strlen_screen = &utf8_strlen_screen;
-        new_plugin->utf8_charcmp = &utf8_charcmp;
-        new_plugin->utf8_charcasecmp = &utf8_charcasecmp;
         new_plugin->utf8_char_size_screen = &utf8_char_size_screen;
         new_plugin->utf8_add_offset = &utf8_add_offset;
         new_plugin->utf8_real_pos = &utf8_real_pos;
         new_plugin->utf8_pos = &utf8_pos;
         new_plugin->utf8_strndup = &utf8_strndup;
+        new_plugin->utf8_strncpy = &utf8_strncpy;
 
         new_plugin->crypto_hash = &plugin_api_crypto_hash;
+        new_plugin->crypto_hash_file = &plugin_api_crypto_hash_file;
         new_plugin->crypto_hash_pbkdf2 = &plugin_api_crypto_hash_pbkdf2;
         new_plugin->crypto_hmac = &plugin_api_crypto_hmac;
 
@@ -674,6 +683,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->exec_on_files = &dir_exec_on_files;
         new_plugin->file_get_content = &dir_file_get_content;
         new_plugin->file_copy = &dir_file_copy;
+        new_plugin->file_compress = &dir_file_compress;
 
         new_plugin->util_timeval_cmp = &util_timeval_cmp;
         new_plugin->util_timeval_diff = &util_timeval_diff;
@@ -772,7 +782,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->prefix = &plugin_api_prefix;
         new_plugin->color = &plugin_api_color;
         new_plugin->printf_date_tags = &gui_chat_printf_date_tags;
-        new_plugin->printf_y = &gui_chat_printf_y;
+        new_plugin->printf_y_date_tags = &gui_chat_printf_y_date_tags;
         new_plugin->log_printf = &log_printf;
 
         new_plugin->hook_command = &hook_command;
@@ -804,6 +814,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->unhook_all = &unhook_all_plugin;
 
         new_plugin->buffer_new = &gui_buffer_new;
+        new_plugin->buffer_new_props = &gui_buffer_new_props;
         new_plugin->buffer_search = &gui_buffer_search_by_name;
         new_plugin->buffer_search_main = &gui_buffer_search_main;
         new_plugin->buffer_clear = &gui_buffer_clear;

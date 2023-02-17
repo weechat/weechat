@@ -21,16 +21,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-10-23 14:36+0200\n"
-"PO-Revision-Date: 2021-07-10 16:01+0200\n"
+"POT-Creation-Date: 2023-01-31 18:40+0100\n"
+"PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Poedit-Bookmarks: -1,-1,608,-1,-1,-1,-1,-1,-1,-1\n"
 
 #, fuzzy
@@ -50,8 +50,9 @@ msgid ""
 "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
 "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
 "terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
-"for italic, \"_\" for underline"
+"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
+"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
+"underline"
 msgstr ""
 "название цвета WeeChat (default, black, (dark)gray, white, (light)red, "
 "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), код "
@@ -141,9 +142,30 @@ msgstr ""
 msgid "Constants"
 msgstr ""
 
+msgid "Rank"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "File"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%s игнорирование уже существует\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
+"commands with similar name: %s"
+msgstr "%s сокращение или команда \"%s\" не найдены\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
+"%s"
+msgstr "%s сокращение или команда \"%s\" не найдены\n"
 
 #, c-format
 msgid "%sBad file descriptor (%d) used in hook_fd"
@@ -179,7 +201,7 @@ msgid ""
 "(in this order: config, data, cache, runtime)\n"
 "                           (environment variable WEECHAT_HOME is read if "
 "this option is not given)\n"
-"  -t, --temp-dir           create a temporary WeeChat homedirectory and "
+"  -t, --temp-dir           create a temporary WeeChat home directory and "
 "delete it on exit\n"
 "                           (incompatible with option \"-d\")\n"
 "  -h, --help               display this help\n"
@@ -245,7 +267,7 @@ msgstr ""
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
-msgid "WeeChat is running in headless mode (Ctrl-C to quit)."
+msgid "WeeChat is running in headless mode (ctrl-c to quit)."
 msgstr ""
 
 msgid ""
@@ -254,7 +276,7 @@ msgid ""
 "If you are discovering WeeChat, it is recommended to read at least the "
 "quickstart guide, and the user's guide if you have some time; they explain "
 "main WeeChat concepts.\n"
-"All WeeChat docs are available at: https://weechat.org/doc\n"
+"All WeeChat docs are available at: https://weechat.org/doc/\n"
 "\n"
 "Moreover, there is inline help with /help on all commands and options (use "
 "Tab key to complete the name).\n"
@@ -559,6 +581,54 @@ msgid "Buffer command history:"
 msgstr "показать историю буфера команд"
 
 #, fuzzy
+msgid "Custom bar items:"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "    conditions: %s\"%s%s%s\"%s"
+msgstr "Ники %s%s%s: %s["
+
+#, fuzzy, c-format
+msgid "    content: %s\"%s%s%s\"%s"
+msgstr "%sСервер: %s%s\n"
+
+#, fuzzy
+msgid "No custom bar item defined"
+msgstr "Сокращения не заданы.\n"
+
+#, fuzzy, c-format
+msgid "Custom bar item \"%s\" updated"
+msgstr "Сокращение \"%s\" => \"%s\" создано\n"
+
+#, fuzzy, c-format
+msgid "Custom bar item \"%s\" added"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "%sUnable to add custom bar item \"%s\""
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+
+#, fuzzy, c-format
+msgid "%sCustom bar item \"%s\" not found"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "Custom bar item \"%s\" renamed to \"%s\""
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "%sUnable to rename custom bar item \"%s\" to \"%s\""
+msgstr "%s неизвестный параметр для команды \"%s\"\n"
+
+#, fuzzy
+msgid "All custom bar items have been deleted"
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "Custom bar item \"%s\" deleted"
+msgstr "команда users отключена"
+
+#, fuzzy
 msgid "default command:"
 msgstr "Внутренние команды %s:\n"
 
@@ -711,113 +781,6 @@ msgid "  written by \"%s\", license: %s"
 msgstr "  автор \"%s\", лицензия: %s"
 
 #, fuzzy
-msgid "    commands hooked:"
-msgstr "     обработчики команд:\n"
-
-#, fuzzy
-msgid "    command_run hooked:"
-msgstr "     обработчики команд:\n"
-
-#, fuzzy
-msgid "    timers hooked:"
-msgstr "     обработчики таймера:\n"
-
-#, c-format
-msgid "      %d %s (%d calls remaining)"
-msgstr "      %d %s (%d вызовов осталось)"
-
-#, fuzzy
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "секунда"
-msgstr[1] "секунда"
-msgstr[2] "секунда"
-
-#, fuzzy
-msgid "millisecond"
-msgid_plural "milliseconds"
-msgstr[0] "секунда"
-msgstr[1] "секунда"
-msgstr[2] "секунда"
-
-#, c-format
-msgid "      %d %s (no call limit)"
-msgstr "      %d %s (без ограничений)"
-
-#, fuzzy
-msgid "    fd hooked:"
-msgstr "     обработчики команд:\n"
-
-#, fuzzy, c-format
-msgid "      %d (flags: 0x%x:%s%s%s)"
-msgstr "       %d секунд\n"
-
-msgid " read"
-msgstr " чтение"
-
-msgid " write"
-msgstr " запись"
-
-#, fuzzy
-msgid " exception"
-msgstr "  . описание: %s\n"
-
-#, fuzzy
-msgid "    process hooked:"
-msgstr "     обработчики таймера:\n"
-
-#, fuzzy, c-format
-msgid "      command: '%s', child pid: %d"
-msgstr "       IRC(%s)\n"
-
-#, fuzzy
-msgid "    connect hooked:"
-msgstr "     обработчики команд:\n"
-
-#, c-format
-msgid "      socket: %d, address: %s, port: %d, child pid: %d"
-msgstr "      соккет: %d, адрес: %s, порт: %d, child pid: %d"
-
-#, fuzzy
-msgid "    prints hooked:"
-msgstr "     обработчики таймера:\n"
-
-#, fuzzy, c-format
-msgid "      buffer: %s, message: \"%s\""
-msgstr "       (нет обработчика сообщений)\n"
-
-#, fuzzy
-msgid "(none)"
-msgstr "(неизвестен)"
-
-#, fuzzy, c-format
-msgid "      message: \"%s\""
-msgstr "       (нет обработчика сообщений)\n"
-
-#, fuzzy
-msgid "    signals hooked:"
-msgstr "     обработчики сообщений:\n"
-
-#, fuzzy, c-format
-msgid "      signal: %s"
-msgstr "       IRC(%s)\n"
-
-msgid "(all)"
-msgstr "(все)"
-
-#, fuzzy
-msgid "    configuration options hooked:"
-msgstr "настроить параметры конфигурации"
-
-#, fuzzy
-msgid "    completions hooked:"
-msgstr "     обработчики команд:\n"
-
-#, fuzzy
-msgid "    modifiers hooked:"
-msgstr "     обработчики таймера:\n"
-
-#, fuzzy
 msgid "No plugin found"
 msgstr "Plugin не найден\n"
 
@@ -836,6 +799,10 @@ msgstr "Список сокращений:\n"
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
 msgstr "  %s%s%s: %s, %s/%d (%s), имя пользователя: %s, пароль: %s"
+
+#, fuzzy
+msgid "(none)"
+msgstr "(неизвестен)"
 
 #, fuzzy
 msgid "No proxy defined"
@@ -877,8 +844,8 @@ msgstr "%s неизвестный параметр для команды \"%s\"\
 msgid ""
 "%sYou must confirm /%s command with extra argument \"-yes\" (see /help %s)"
 msgstr ""
-"%sНеобходимо подтвердить команду выхода дополнительным аргументом \"-yes"
-"\" (см. /help quit)"
+"%sНеобходимо подтвердить команду выхода дополнительным аргументом \"-"
+"yes\" (см. /help quit)"
 
 #, fuzzy, c-format
 msgid "Options reloaded from %s"
@@ -1063,6 +1030,14 @@ msgstr "%sСброс всех опций запрещён"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d опция сброшено, %d опций удалено"
 
+#, fuzzy, c-format
+msgid "%sUnable to save WeeChat session (files *.upgrade)"
+msgstr "%s не могу сохранить сессию в файл\n"
+
+#, fuzzy
+msgid "WeeChat session saved (files *.upgrade)"
+msgstr "%s не могу сохранить сессию в файл\n"
+
 #, c-format
 msgid ""
 "%sCan't upgrade: there is one or more background process (hook type "
@@ -1085,10 +1060,6 @@ msgstr "Сокращения не заданы.\n"
 #, fuzzy, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Обновляю WeeChat...\n"
-
-#, fuzzy, c-format
-msgid "%sUnable to save session in file"
-msgstr "%s не могу сохранить сессию в файл\n"
 
 #, fuzzy, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -1149,6 +1120,23 @@ msgid ""
 msgstr ""
 "%s не могу объединить окна, есть другое окно такого-же размера рядом с "
 "текущим.\n"
+
+#, fuzzy
+msgid "execute a command on all buffers"
+msgstr "отправить сообщение на все каналы всех поключенных серверов"
+
+#, fuzzy
+msgid "<command>"
+msgstr "Внутренние команды %s:\n"
+
+msgid ""
+"command: command to execute (or text to send to buffer if command does not "
+"start with '/')\n"
+"\n"
+"Examples:\n"
+"  set unread marker on all buffers:\n"
+"    /allbuf /buffer set unread"
+msgstr ""
 
 #, fuzzy
 msgid "set or remove away status"
@@ -1235,10 +1223,11 @@ msgid ""
 "[<number2>|<name2>] || cycle <number>|<name> [<number>|<name>...] || merge "
 "<number>|<name> || unmerge [<number>|-all] || hide [<number>|<name>|-all "
 "[<number>|<name>...]] || unhide [<number>|<name>|-all [<number>|<name>...]] "
-"|| renumber [<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|"
-"<name>...] || notify [<level>] || listvar [<number>|<name>] || setvar <name> "
-"[<value>] || delvar <name> || set <property> [<value>] || get <property> || "
-"<number>|-|+|<name>"
+"|| switch [-previous] || zoom || renumber [<number1> [<number2> [<start>]]] "
+"|| close [<n1>[-<n2>]|<name>...] || notify [<level>] || listvar [<number>|"
+"<name>] || setvar <name> [<value>] || delvar <name> || set <property> "
+"[<value>] || get <property> || jump smart|last_displayed|prev_visited|"
+"next_visited || <number>|-|+|<name>"
 msgstr ""
 
 #, fuzzy
@@ -1259,6 +1248,9 @@ msgid ""
 " unmerge: unmerge buffer from other buffers which have same number\n"
 "    hide: hide the buffer\n"
 "  unhide: unhide the buffer\n"
+"  switch: switch to next merged buffer (or to previous buffer with \"-"
+"previous\")\n"
+"    zoom: zoom on merged buffer\n"
 "renumber: renumber buffers (works only if option weechat.look."
 "buffer_auto_renumber is off)\n"
 "   close: close buffer (number/range or name is optional)\n"
@@ -1274,6 +1266,12 @@ msgid ""
 "  delvar: delete a local variable from the current buffer\n"
 "     set: set a property in the current buffer\n"
 "     get: display a property of current buffer\n"
+"    jump: jump to another buffer:\n"
+"          smart: next buffer with activity\n"
+"          last_displayed: last buffer displayed (before last jump to a "
+"buffer)\n"
+"          prev_visited: previously visited buffer\n"
+"          next_visited: jump to next visited buffer\n"
 "  number: jump to buffer by number, possible prefix:\n"
 "          '+': relative jump, add number to current\n"
 "          '-': relative jump, sub number to current\n"
@@ -1401,8 +1399,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"  go: move cursor to chat area, a bar (using bar name) or coordinates \"x,y"
-"\"\n"
+"  go: move cursor to chat area, a bar (using bar name) or coordinates \"x,"
+"y\"\n"
 "move: move cursor with direction\n"
 "stop: stop cursor mode\n"
 "\n"
@@ -1440,9 +1438,9 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
-"libs|certs|memory|tags|term|windows || mouse|cursor [verbose] || hdata "
-"[free] || time <command>"
+"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
+"dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
+"hdata [free] || time <command> || unicode <string>"
 msgstr "dump | buffer | windows"
 
 #, fuzzy
@@ -1453,23 +1451,32 @@ msgid ""
 "    level: debug level for plugin (0 = disable debug)\n"
 "     dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
+"    hooks: display infos about hooks (with a plugin: display detailed info "
+"about hooks created by the plugin)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
+"    certs: display number of loaded trusted certificate authorities\n"
 "    color: display infos about current color pairs\n"
 "   cursor: toggle debug for cursor mode\n"
 "     dirs: display directories\n"
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
-"    hooks: display infos about hooks\n"
 "infolists: display infos about infolists\n"
 "     libs: display infos about external libraries used\n"
-"    certs: display number of loaded trusted certificate authorities\n"
 "   memory: display infos about memory usage\n"
 "    mouse: toggle debug for mouse\n"
 "     tags: display tags for lines\n"
 "     term: display infos about terminal\n"
 "  windows: display windows tree\n"
 "     time: measure time to execute a command or to send text to the current "
-"buffer"
+"buffer\n"
+"  unicode: display information about string and unicode chars (evaluated, "
+"see /help eval)\n"
+"\n"
+"Examples:\n"
+"  /debug set irc 1\n"
+"  /debug mouse verbose\n"
+"  /debug time /filter toggle\n"
+"  /debug unicode ${chars:${\\u26C0}-${\\u26CF}}"
 msgstr ""
 "   dump: сохранить дамп памяти в журнал WeeChat (аналогично дампу при крахе "
 "WeeChat)\n"
@@ -1535,41 +1542,45 @@ msgid ""
 "\n"
 "Some variables are replaced in expression, using the format ${variable}, "
 "variable can be, by order of priority:\n"
-"  1. the string itself without evaluation (format: \"raw:xxx\")\n"
-"  2. a user-defined variable (format: \"name\")\n"
-"  3. an evaluated sub-string (format: \"eval:xxx\")\n"
-"  4. an evaluated condition (format: \"eval_cond:xxx\")\n"
-"  5. a string with escaped chars (format: \"esc:xxx\" or \"\\xxx\")\n"
-"  6. a string with chars to hide (format: \"hide:char,string\")\n"
-"  7. a string with max chars (format: \"cut:max,suffix,string\" or \"cut:"
-"+max,suffix,string\")\n"
+"  - the string itself without evaluation (format: \"raw:xxx\")\n"
+"  - a user-defined variable (format: \"name\")\n"
+"  - an evaluated sub-string (format: \"eval:xxx\")\n"
+"  - an evaluated condition (format: \"eval_cond:xxx\")\n"
+"  - a string with escaped chars (format: \"esc:xxx\" or \"\\xxx\")\n"
+"  - a string with a range of chars (format: \"chars:xxx\" or \"chars:c1-c2\" "
+"where \"xxx\" is one of: \"digit\", \"xdigit\", \"lower\", \"upper\", "
+"\"alpha\", \"alnum\")\n"
+"  - a string converted to lower case (format: \"lower:xxx\")\n"
+"  - a string converted to upper case (format: \"upper:xxx\")\n"
+"  - a string with chars to hide (format: \"hide:char,string\")\n"
+"  - a string with max chars (format: \"cut:max,suffix,string\" or \"cut:+max,"
+"suffix,string\")\n"
 "     or max chars displayed on screen (format: \"cutscr:max,suffix,string\" "
 "or \"cutscr:+max,suffix,string\")\n"
-"  8. a reversed string (format: \"rev:xxx\" or \"revscr:xxx\")\n"
-"  9. a repeated string (format: \"repeat:count,string\")\n"
-"  10. length of a string (format: \"length:xxx\" or \"lengthscr:xxx\")\n"
-"  11. split of a string (format: \"split:number,separators,flags,xxx\")\n"
-"  12. split of shell argmuents (format: \"split_shell:number,xxx\")\n"
-"  13. a color (format: \"color:xxx\", see \"Plugin API reference\", function "
+"  - a reversed string (format: \"rev:xxx\" or \"revscr:xxx\")\n"
+"  - a repeated string (format: \"repeat:count,string\")\n"
+"  - length of a string (format: \"length:xxx\" or \"lengthscr:xxx\")\n"
+"  - split of a string (format: \"split:number,separators,flags,xxx\")\n"
+"  - split of shell argmuents (format: \"split_shell:number,xxx\")\n"
+"  - a color (format: \"color:xxx\", see \"Plugin API reference\", function "
 "\"color\")\n"
-"  14. a modifier (format: \"modifier:name,data,string\")\n"
-"  15. an info (format: \"info:name,arguments\", arguments are optional)\n"
-"  16. a base 16/32/64 encoded/decoded string (format: \"base_encode:base,xxx"
-"\" or \"base_decode:base,xxx\")\n"
-"  17. current date/time (format: \"date\" or \"date:format\")\n"
-"  18. an environment variable (format: \"env:XXX\")\n"
-"  19. a ternary operator (format: \"if:condition?value_if_true:value_if_false"
-"\")\n"
-"  20. result of an expression with parentheses and operators + - * / // % ** "
+"  - a modifier (format: \"modifier:name,data,string\")\n"
+"  - an info (format: \"info:name,arguments\", arguments are optional)\n"
+"  - a base 16/32/64 encoded/decoded string (format: \"base_encode:base,xxx\" "
+"or \"base_decode:base,xxx\")\n"
+"  - current date/time (format: \"date\" or \"date:format\")\n"
+"  - an environment variable (format: \"env:XXX\")\n"
+"  - a ternary operator (format: \"if:condition?value_if_true:"
+"value_if_false\")\n"
+"  - result of an expression with parentheses and operators + - * / // % ** "
 "(format: \"calc:xxx\")\n"
-"  21. a random integer number (format: \"random:min,max\")\n"
-"  22. a translated string (format: \"translate:xxx\")\n"
-"  23. define a user variable (format: \"define:name,value\")\n"
-"  24. an option (format: \"file.section.option\")\n"
-"  25. a local variable in buffer\n"
-"  26. a hdata name/variable (the value is automatically converted to "
-"string), by default \"window\" and \"buffer\" point to current window/"
-"buffer.\n"
+"  - a random integer number (format: \"random:min,max\")\n"
+"  - a translated string (format: \"translate:xxx\")\n"
+"  - define a user variable (format: \"define:name,value\")\n"
+"  - an option (format: \"file.section.option\")\n"
+"  - a local variable in buffer\n"
+"  - a hdata name/variable (the value is automatically converted to string), "
+"by default \"window\" and \"buffer\" point to current window/buffer.\n"
 "Format for hdata can be one of following:\n"
 "  hdata.var1.var2...: start with a hdata (pointer must be known), and ask "
 "variables one after one (other hdata can be followed)\n"
@@ -1600,6 +1611,10 @@ msgid ""
 "  /eval -n ${window.buffer.full_name}             ==> core.weechat\n"
 "  /eval -n ${window.buffer.number}                ==> 1\n"
 "  /eval -n ${\\t}                                  ==> <tab>\n"
+"  /eval -n ${chars:digit}                         ==> 0123456789\n"
+"  /eval -n ${chars:J-T}                           ==> JKLMNOPQRST\n"
+"  /eval -n ${lower:TEST}                          ==> test\n"
+"  /eval -n ${upper:test}                          ==> TEST\n"
 "  /eval -n ${hide:-,${relay.network.password}}    ==> --------\n"
 "  /eval -n ${cut:3,+,test}                        ==> tes+\n"
 "  /eval -n ${cut:+3,+,test}                       ==> te+\n"
@@ -1643,7 +1658,7 @@ msgstr ""
 msgid ""
 "list || enable|disable|toggle [<name>|@] || add|addreplace <name> <buffer>[,"
 "<buffer>...] <tags> <regex> || rename <name> <new_name> || recreate <name> "
-"|| del <name>|-all"
+"|| del <name>|-all [<name>...]"
 msgstr ""
 
 msgid ""
@@ -1747,6 +1762,27 @@ msgstr ""
 "значение: количество отображаемых пунктов истории"
 
 #, fuzzy
+msgid "manage hotlist"
+msgstr "управление буферами"
+
+msgid ""
+"add [low|message|private|highlight] || clear [<level>] || remove || restore "
+"[-all]"
+msgstr ""
+
+msgid ""
+"    add: add current buffer in hotlist (default level: \"low\", conditions "
+"defined in option weechat.look.hotlist_add_conditions are NOT checked)\n"
+"  clear: clear hotlist\n"
+"  level: \"lowest\" to clear only lowest level in hotlist, highest\" to "
+"clear only highest level in hotlist, or level mask: integer which is a "
+"combination of 1=join/part, 2=message, 4=private, 8=highlight)\n"
+" remove: remove current buffer from hotlist\n"
+"restore: restore latest hotlist removed in the current buffer (or all "
+"buffers with -all)"
+msgstr ""
+
+#, fuzzy
 msgid "functions for command line"
 msgstr "вставить строку в поле ввода"
 
@@ -1771,6 +1807,7 @@ msgid ""
 "  delete_previous_char: delete previous char\n"
 "  delete_next_char: delete next char\n"
 "  delete_previous_word: delete previous word\n"
+"  delete_previous_word_whitespace: delete previous word (until whitespace)\n"
 "  delete_next_word: delete next word\n"
 "  delete_beginning_of_line: delete from beginning of line until cursor\n"
 "  delete_end_of_line: delete from cursor until end of line\n"
@@ -1789,30 +1826,12 @@ msgid ""
 "  history_next: recall next command in current buffer history\n"
 "  history_global_previous: recall previous command in global history\n"
 "  history_global_next: recall next command in global history\n"
-"  jump_smart: jump to next buffer with activity\n"
-"  jump_last_buffer_displayed: jump to last buffer displayed (before last "
-"jump to a buffer)\n"
-"  jump_previously_visited_buffer: jump to previously visited buffer\n"
-"  jump_next_visited_buffer: jump to next visited buffer\n"
-"  hotlist_clear: clear hotlist (optional argument: \"lowest\" to clear only "
-"lowest level in hotlist, \"highest\" to clear only highest level in hotlist, "
-"or level mask: integer which is a combination of 1=join/part, 2=message, "
-"4=private, 8=highlight)\n"
-"  hotlist_remove_buffer: remove current buffer from hotlist\n"
-"  hotlist_restore_buffer: restore latest hotlist removed in the current "
-"buffer\n"
-"  hotlist_restore_all: restore latest hotlist removed in all buffers\n"
 "  grab_key: grab a key (optional argument: delay for end of grab, default is "
 "500 milliseconds)\n"
 "  grab_key_command: grab a key with its associated command (optional "
 "argument: delay for end of grab, default is 500 milliseconds)\n"
 "  grab_mouse: grab mouse event code\n"
 "  grab_mouse_area: grab mouse event code with area\n"
-"  set_unread: set unread marker for all buffers\n"
-"  set_unread_current_buffer: set unread marker for current buffer\n"
-"  switch_active_buffer: switch to next merged buffer\n"
-"  switch_active_buffer_previous: switch to previous merged buffer\n"
-"  zoom_merged_buffer: zoom on merged buffer\n"
 "  insert: insert text in command line (escaped chars are allowed, see /help "
 "print)\n"
 "  send: send text to the buffer\n"
@@ -1820,6 +1839,66 @@ msgid ""
 "  paste_stop: stop paste (bracketed paste mode)\n"
 "\n"
 "This command is used by key bindings or plugins."
+msgstr ""
+
+#, fuzzy
+msgid "manage custom bar items"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid ""
+"list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
+"<name> <new_name> || refresh <name> [<name>...] || recreate <name> || del "
+"<name>|-all"
+msgstr ""
+"[list [сервер]] | [listfull [сервер]] | [add сервер адрес [-port порт] [-"
+"temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd пароль] [-nicks ник1 ник2 ник3] "
+"[-username имя_пользователя] [-realname реальное_имя] [-command команда] [-"
+"autojoin канал[,канал]] ] | [copy сервер новый_сервер] | [rename сервер "
+"новое_имя] | [keep сервер] | [del сервер]"
+
+msgid ""
+"      list: list all custom bar items\n"
+"       add: add a custom bar item\n"
+"addreplace: add or replace an existing custom bar item\n"
+"      name: custom bar item name\n"
+"conditions: evaluated conditions to display the bar item (for example to "
+"display the bar item only in specific buffers)\n"
+"   content: content (evaluated, see /help eval)\n"
+"    rename: rename a custom bar item\n"
+"   refresh: update content of item in all bars where the item is displayed; "
+"any item can be refreshed: default/plugin/custom bar items\n"
+"  recreate: set input with the command used to edit the custom bar item\n"
+"       del: delete a custom bar item\n"
+"      -all: delete all custom bar items\n"
+"\n"
+"Examples:\n"
+"  add item with terminal size, displayed only in buffers with number = 1:\n"
+"    /item add terminfo \"${buffer.number} == 1\" \"term:${info:term_width}"
+"x${info:term_height}\"\n"
+"  add item with buffer info:\n"
+"    /item add bufinfo \"\" \"${buffer.number}:${buffer.name}${if:${buffer."
+"zoomed}?(Z)}\"\n"
+"  add item with date/time using format \"Dec 25, 12:34 +0100\", refreshed "
+"every minute:\n"
+"    /item add datetime \"\" \"${date:%b %d, %H:%M %z}\"\n"
+"    /trigger add datetime_refresh timer \"60000;60\" \"\" \"\" \"/item "
+"refresh datetime\"\n"
+"  add item with number of lines in buffer (displayed/total), refreshed each "
+"time a new line is displayed or if filtered lines have changed:\n"
+"    /item add lines_count \"\" \"${calc:${buffer.lines.lines_count}-${buffer."
+"lines.lines_hidden}}/${buffer.lines.lines_count} lines\"\n"
+"    /trigger add lines_count_refresh_print print \"\" \"\" \"\" \"/item "
+"refresh lines_count\"\n"
+"    /trigger add lines_count_refresh_signal signal \"window_switch;"
+"buffer_switch;buffer_lines_hidden;filters_*\" \"\" \"\" \"/item refresh "
+"lines_count\"\n"
+"  force refresh of item \"lines_count\":\n"
+"    /item refresh lines_count\n"
+"  recreate item \"lines_count\" with different conditions or content:\n"
+"    /item recreate lines_count\n"
+"  delete item \"lines_count\":\n"
+"    /item del lines_count"
 msgstr ""
 
 msgid "bind/unbind keys"
@@ -1886,7 +1965,7 @@ msgid ""
 "  restore default binding for key alt-r:\n"
 "    /key reset meta-r\n"
 "  key \"tab\" to stop search in buffer:\n"
-"    /key bindctxt search ctrl-I /input search_stop\n"
+"    /key bindctxt search ctrl-i /input search_stop\n"
 "  middle button of mouse on a nick to retrieve info on nick:\n"
 "    /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info "
 "${nick}"
@@ -2046,8 +2125,8 @@ msgid ""
 "              time: hh:mm:ss (example: 04:32:55)\n"
 "     -tags: comma-separated list of tags (see /help filter for a list of "
 "tags most commonly used)\n"
-"      text: text to display (prefix and message must be separated by \"\\t"
-"\", if text starts with \"-\", then add a \"\\\" before)\n"
+"      text: text to display (prefix and message must be separated by "
+"\"\\t\", if text starts with \"-\", then add a \"\\\" before)\n"
 "   -stdout: display text on stdout (escaped chars are interpreted)\n"
 "   -stderr: display text on stderr (escaped chars are interpreted)\n"
 "     -beep: alias of \"-stderr \\a\"\n"
@@ -2228,8 +2307,8 @@ msgid ""
 "  set a passphrase:\n"
 "    /secure passphrase this is my passphrase\n"
 "  use program \"pass\" to read the passphrase on startup:\n"
-"    /set sec.crypt.passphrase_command \"/usr/bin/pass show weechat/passphrase"
-"\"\n"
+"    /set sec.crypt.passphrase_command \"/usr/bin/pass show weechat/"
+"passphrase\"\n"
 "  encrypt libera SASL password:\n"
 "    /secure set libera mypassword\n"
 "    /set irc.server.libera.sasl_password \"${sec.data.libera}\"\n"
@@ -2344,11 +2423,13 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "reload the WeeChat binary without disconnecting from servers"
+msgid ""
+"save WeeChat session and reload the WeeChat binary without disconnecting "
+"from servers"
 msgstr "обновить WeeChat не отключаясь от серверов"
 
 #, fuzzy
-msgid "[-yes] [<path_to_binary>|-quit]"
+msgid "[-yes] [<path_to_binary>|-save|-quit]"
 msgstr "[путь_к_исполняемому_файлу]"
 
 #, fuzzy
@@ -2358,6 +2439,9 @@ msgid ""
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
 "        -dummy: do nothing (option used to prevent accidental completion "
 "with \"-quit\")\n"
+"         -save: only save the session, do not quit nor reload WeeChat; the "
+"configuration files are not saved (if needed you can use /save before this "
+"command)\n"
 "         -quit: close *ALL* connections, save session and quit WeeChat, "
 "which makes possible a delayed restoration (see below)\n"
 "\n"
@@ -2365,9 +2449,14 @@ msgid ""
 "binary must have been compiled or installed with a package manager before "
 "running this command.\n"
 "\n"
-"Note: SSL connections are lost during upgrade, because reload of SSL "
-"sessions is currently not possible with GnuTLS. There is automatic "
-"reconnection after upgrade.\n"
+"Note: SSL connections are lost during upgrade (except with -save), because "
+"the reload of SSL sessions is currently not possible with GnuTLS. There is "
+"automatic reconnection after upgrade.\n"
+"\n"
+"Important: use of option -save can be dangerous, it is recommended to use "
+"only /upgrade (or with -quit) for a standard upgrade and a restart; the "
+"option -save can be used to save the session regularly and restore it in "
+"case of after abnormal exit (power outage, crash, etc.)\n"
 "\n"
 "Upgrade process has 4 steps:\n"
 "  1. save session into files for core and plugins (buffers, history, ..)\n"
@@ -2375,15 +2464,22 @@ msgid ""
 "  3. save WeeChat configuration (weechat.conf)\n"
 "  4. execute new WeeChat binary and reload session.\n"
 "\n"
-"With option \"-quit\", the process is slightly different:\n"
+"With option \"-quit\", the process is:\n"
 "  1. close *ALL* connections (irc, xfer, relay, ...)\n"
 "  2. save session into files (*.upgrade)\n"
 "  3. unload all plugins\n"
 "  4. save WeeChat configuration\n"
 "  5. quit WeeChat\n"
-"Then later you can restore session with command: weechat --upgrade\n"
+"\n"
+"With option \"-save\", the process is:\n"
+"  1. save session into files (*.upgrade) with a disconnected state for IRC "
+"servers and Relay clients (but no disconnection is made)\n"
+"\n"
+"With -quit or -save, you can restore the session later with this command: "
+"weechat --upgrade\n"
 "IMPORTANT: you must restore the session with exactly same configuration "
-"(files *.conf).\n"
+"(files *.conf) and if possible the same WeeChat version (or a more recent "
+"one).\n"
 "It is possible to restore WeeChat session on another machine if you copy the "
 "content of WeeChat home directories (see /debug dirs)."
 msgstr ""
@@ -2647,6 +2743,22 @@ msgid "names of bars"
 msgstr "Список сокращений:\n"
 
 #, fuzzy
+msgid "names of custom bar items"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "conditions for custom bar item"
+msgstr "вставить строку в поле ввода"
+
+msgid "contents for custom bar item"
+msgstr ""
+
+msgid ""
+"arguments for command that adds a custom bar item: item name, conditions, "
+"content"
+msgstr ""
+
+#, fuzzy
 msgid "values for a configuration option"
 msgstr "Не найден параметр\n"
 
@@ -2846,8 +2958,8 @@ msgid ""
 "time format for each line displayed in buffers (see man strftime for date/"
 "time specifiers) (note: content is evaluated, so you can use colors with "
 "format \"${color:xxx}\", see /help eval); for example time using grayscale "
-"(requires support of 256 colors): \"${color:252}%H${color:245}%M"
-"${color:240}%S\""
+"(requires support of 256 colors): "
+"\"${color:252}%H${color:245}%M${color:240}%S\""
 msgstr "отображение маркера даты при смене дня"
 
 #. TRANSLATORS: string "${color:xxx}" must NOT be translated
@@ -2859,6 +2971,11 @@ msgid ""
 "evaluated, so you can use colors with format \"${color:xxx}\", see /help "
 "eval)"
 msgstr "отображение маркера даты при смене дня"
+
+msgid ""
+"keep a space on the right side of chat area if there is a bar displayed on "
+"the right (for both text and read marker)"
+msgstr ""
 
 msgid ""
 "force \"bold\" attribute for light colors and \"darkgray\" in basic colors "
@@ -2934,11 +3051,11 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"if set, /upgrade command must be confirmed with extra argument \"-yes"
-"\" (see /help upgrade)"
+"if set, /upgrade command must be confirmed with extra argument \"-"
+"yes\" (see /help upgrade)"
 msgstr ""
-"%sНеобходимо подтвердить команду выхода дополнительным аргументом \"-yes"
-"\" (см. /help quit)"
+"%sНеобходимо подтвердить команду выхода дополнительным аргументом \"-"
+"yes\" (см. /help quit)"
 
 msgid "display special message when day changes"
 msgstr "отображать специальное сообщение  при смене дня"
@@ -2970,20 +3087,30 @@ msgid ""
 msgstr ""
 
 msgid ""
-"attributes for emphasized text: one or more attribute chars (\"*\" for bold, "
-"\"!\" for reverse, \"/\" for italic, \"_\" for underline); if the string is "
-"empty, the colors weechat.color.emphasized* are used"
+"attributes for emphasized text: one or more attribute chars (\"%\" for "
+"blink, \".\" for \"dim\" (half bright), \"*\" for bold, \"!\" for reverse, "
+"\"/\" for italic, \"_\" for underline); if the string is empty, the colors "
+"weechat.color.emphasized* are used"
 msgstr ""
 
 #, fuzzy
 msgid ""
 "comma separated list of words to highlight; case insensitive comparison (use "
 "\"(?-i)\" at beginning of words to make them case sensitive), words may "
-"begin or end with \"*\" for partial match; example: \"test,(?-i)*toto*,flash*"
-"\""
+"begin or end with \"*\" for partial match; example: \"test,(?-i)*toto*,"
+"flash*\""
 msgstr ""
 "разделённый запятыми список подсвечиваемых слов (регистр учитывается, слова "
 "могут начинаться или кончаться \"*\" для неполного соответствия)"
+
+msgid ""
+"POSIX extended regular expression used to prevent any highlight from a "
+"message: this option has higher priority over other highlight options (if "
+"the string is found in the message, the highlight is disabled and the other "
+"options are ignored), regular expression is case insensitive (use \"(?-i)\" "
+"at beginning to make it case sensitive), examples: \"<flash.*>\", \"(?-"
+"i)<Flash.*>\""
+msgstr ""
 
 msgid ""
 "POSIX extended regular expression used to check if a message has highlight "
@@ -3197,8 +3324,8 @@ msgstr ""
 msgid ""
 "enable terminal \"bracketed paste mode\" (not supported in all terminals/"
 "multiplexers): in this mode, pasted text is bracketed with control sequences "
-"so that WeeChat can differentiate pasted text from typed-in text (\"ESC[200~"
-"\", followed by the pasted text, followed by \"ESC[201~\")"
+"so that WeeChat can differentiate pasted text from typed-in text "
+"(\"ESC[200~\", followed by the pasted text, followed by \"ESC[201~\")"
 msgstr ""
 
 msgid ""
@@ -3824,11 +3951,6 @@ msgstr ""
 "in'ов , \"*\" означает все найденные plug-in'ы (имена могут быть не полными, "
 "например \"perl\" успешно загрузит \"libperl.so\")"
 
-msgid ""
-"enable debug messages by default in all plugins (option disabled by default, "
-"which is highly recommended)"
-msgstr ""
-
 msgid "comma separated list of file name extensions for plugins"
 msgstr ""
 
@@ -3920,6 +4042,19 @@ msgstr ""
 msgid "Directories:"
 msgstr ""
 
+#, c-format
+msgid ""
+"Unicode: \"string\": strlen %s/%s utf8_strlen, gui_chat_strlen %s/%s "
+"wcswidth, utf8_strlen_screen, gui_chat_strlen_screen:"
+msgstr ""
+
+#, c-format
+msgid ""
+"Unicode: \"char\" (hex codepoint, codepoint, UTF-8 sequence): strlen %s/%s "
+"utf8_strlen, gui_chat_strlen %s/%s wcwidth, utf8_char_size_screen, "
+"utf8_strlen_screen, gui_chat_strlen_screen:"
+msgstr ""
+
 #, fuzzy
 msgid "Error: not enough memory\n"
 msgstr "Недостаточно памяти для новой строчки\n"
@@ -3956,10 +4091,6 @@ msgid ""
 "warning: the command \"%s\" is not currently allowed (command: \"%s\", "
 "buffer: \"%s\")"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%sUnknown command \"%s\" (type /help for help)"
-msgstr "%s сокращение или команда \"%s\" не найдены\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -4085,7 +4216,7 @@ msgid ""
 "secured data!)"
 msgstr ""
 
-msgid "(press ctrl-C to exit WeeChat now)"
+msgid "(press ctrl-c to exit WeeChat now)"
 msgstr ""
 
 msgid ""
@@ -4374,13 +4505,13 @@ msgstr ""
 "расположение списка пользователей (top, left, right(по умолчанию), bottom)"
 
 msgid ""
-"bar filling direction (\"horizontal\" (from left to right) or \"vertical"
-"\" (from top to bottom)) when bar position is top or bottom"
+"bar filling direction (\"horizontal\" (from left to right) or "
+"\"vertical\" (from top to bottom)) when bar position is top or bottom"
 msgstr ""
 
 msgid ""
-"bar filling direction (\"horizontal\" (from left to right) or \"vertical"
-"\" (from top to bottom)) when bar position is left or right"
+"bar filling direction (\"horizontal\" (from left to right) or "
+"\"vertical\" (from top to bottom)) when bar position is left or right"
 msgstr ""
 
 msgid ""
@@ -4426,8 +4557,8 @@ msgid "Bar \"%s\" updated"
 msgstr "Сокращение \"%s\" => \"%s\" создано\n"
 
 #, fuzzy, c-format
-msgid "%sPaste %d line? [ctrl-Y] Yes [ctrl-N] No"
-msgid_plural "%sPaste %d lines? [ctrl-Y] Yes [ctrl-N] No"
+msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
+msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
 msgstr[0] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
 msgstr[1] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
 msgstr[2] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
@@ -4440,6 +4571,12 @@ msgid "%s-MORE(%d)-"
 msgstr "-ДАЛЬШЕ-"
 
 msgid "away"
+msgstr ""
+
+msgid "condition(s) to display the bar item (evaluated, see /help eval)"
+msgstr ""
+
+msgid "content of bar item (evaluated, see /help eval)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -4573,13 +4710,22 @@ msgstr "%s адрес \"%s\" не найден\n"
 msgid "Alias \"%s\" removed"
 msgstr "Сокращение \"%s\" удалено\n"
 
+#, fuzzy, c-format
+msgid "%sAlias \"%s\" already exists"
+msgstr "%s игнорирование уже существует\n"
+
+#, fuzzy, c-format
+msgid "Alias \"%s\" has been renamed to \"%s\""
+msgstr "команда users отключена"
+
 #, fuzzy
 msgid "list, add or remove command aliases"
 msgstr "перечислить, добавить или удалить серверы"
 
 msgid ""
 "list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
-"<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...]"
+"<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...] "
+"|| rename <alias> <new_alias>"
 msgstr ""
 
 #, fuzzy, no-c-format
@@ -4588,6 +4734,7 @@ msgid ""
 "          add: add an alias\n"
 "addcompletion: add an alias with a custom completion\n"
 "          del: delete an alias\n"
+"       rename: rename an alias\n"
 "   completion: completion for alias: by default completion is done with "
 "target command\n"
 "               note: you can use %%command to use completion of an existing "
@@ -4612,6 +4759,8 @@ msgid ""
 "    /alias add split /window splith\n"
 "  alias /hello to say \"hello\" on all channels but not on #weechat:\n"
 "    /alias add hello /allchan -exclude=#weechat hello\n"
+"  rename alias \"hello\" to \"Hello\":\n"
+"    /alias rename hello Hello\n"
 "  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
 "sajoin:\n"
 "    /alias addcompletion %%sajoin forcejoin /quote forcejoin"
@@ -4737,6 +4886,8 @@ msgid ""
 "    - ${hotlist}: the raw hotlist\n"
 "    - ${hotlist_priority}: \"none\", \"low\", \"message\", \"private\" or "
 "\"highlight\"\n"
+"    - ${hotlist_priority_number}: -1 = none, 0 = low, 1 = message, 2 = "
+"private, 3 = highlight\n"
 "    - ${format_lag}: the lag for an IRC server buffer, empty if there's no "
 "lag (evaluation of option buflist.format.lag)\n"
 "    - ${format_tls_version}: indicator of TLS version for a server buffer, "
@@ -4769,7 +4920,11 @@ msgid ""
 "=core.weechat) || ${buffer.active}==1)\""
 msgstr ""
 
-msgid "enable buflist"
+msgid ""
+"enable buflist; it is recommended to use this option instead of just hiding "
+"the bar because it also removes some internal hooks that are not needed any "
+"more when the bar is hidden; you can also use the command \"/buflist "
+"toggle\" or use the default key alt+shift+b"
 msgstr ""
 
 msgid ""
@@ -4814,9 +4969,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"number of buflist bar items that can be used; the item names are: \"buflist"
-"\", \"buflist2\", \"buflist3\"; be careful, using more than one bar item "
-"slows down the display of buffers list"
+"number of buflist bar items that can be used; the item names are: "
+"\"buflist\", \"buflist2\", \"buflist3\"; be careful, using more than one bar "
+"item slows down the display of buffers list"
 msgstr ""
 
 msgid ""
@@ -5268,13 +5423,13 @@ msgstr "  . описание: %s\n"
 
 #, c-format
 msgid ""
-"%s%d%s/%s%d%s%s | Filter: %s%s%s | Sort: %s%s%s | Key(input): alt"
-"+space=toggle boolean, alt+'-'(-)=subtract 1 or set, alt+'+'(+)=add 1 or "
+"%s%d%s/%s%d%s%s | Filter: %s%s%s | Sort: %s%s%s | Key(input): "
+"alt+space=toggle boolean, alt+'-'(-)=subtract 1 or set, alt+'+'(+)=add 1 or "
 "append, alt+f,alt+r(r)=reset, alt+f,alt+u(u)=unset, alt+enter(s)=set, alt+f,"
-"alt+n(n)=set new value, alt+f,alt+a(a)=append, alt+','=mark/unmark, shift"
-"+down=mark and move down, shift+up=move up and mark, ($)=refresh, ($"
+"alt+n(n)=set new value, alt+f,alt+a(a)=append, alt+','=mark/unmark, "
+"shift+down=mark and move down, shift+up=move up and mark, ($)=refresh, ($"
 "$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, "
-"alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+X(x)=switch "
+"alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+x(x)=switch "
 "format, (q)=close buffer"
 msgstr ""
 
@@ -5430,7 +5585,7 @@ msgid ""
 "above)\n"
 "\n"
 "Other keys and input on fset buffer:\n"
-"  ctrl+L                    refresh options and whole screen (command: /fset "
+"  ctrl+l                    refresh options and whole screen (command: /fset "
 "-refresh)\n"
 "                    $       refresh options (keep marked options)\n"
 "                    $$      refresh options (unmark all options)\n"
@@ -5444,7 +5599,7 @@ msgid ""
 "                    w:xxx   export options in file \"xxx\"\n"
 "                    w-:xxx  export options in file \"xxx\" without help\n"
 "                    w+:xxx  export options in file \"xxx\" with help\n"
-"  ctrl+X            x       switch the format used to display options\n"
+"  ctrl+x            x       switch the format used to display options\n"
 "                    q       close fset buffer\n"
 "\n"
 "Mouse actions on fset buffer:\n"
@@ -5508,7 +5663,7 @@ msgstr ""
 
 msgid ""
 "number of format used to display options; this is dynamically changed by the "
-"key ctrl-X on the fset buffer"
+"key ctrl-x on the fset buffer"
 msgstr ""
 
 msgid ""
@@ -5568,7 +5723,7 @@ msgid ""
 "to 1 (note: content is evaluated, see /help fset); an empty string uses the "
 "default format (\"${marked} ${name}  ${type}  ${value2}\"), which is without "
 "evaluation of string and then much faster; formats can be switched with key "
-"ctrl+X"
+"ctrl-x"
 msgstr ""
 
 msgid ""
@@ -5576,7 +5731,7 @@ msgid ""
 "to 2 (note: content is evaluated, see /help fset); an empty string uses the "
 "default format (\"${marked} ${name}  ${type}  ${value2}\"), which is without "
 "evaluation of string and then much faster; formats can be switched with key "
-"ctrl+X"
+"ctrl-x"
 msgstr ""
 
 #, fuzzy
@@ -5973,16 +6128,24 @@ msgid "%s%s: SASL is not supported by the server"
 msgstr "%s вы не подключены к серверу\n"
 
 #, fuzzy, c-format
+msgid "%s%s: \"%s\" command can only be executed in a channel buffer"
+msgstr "%s \"%s\" команда может быть выполнена только в буфере канала\n"
+
+#, fuzzy, c-format
+msgid "Autojoin changed from \"%s\" to \"%s\""
+msgstr "%s%s%s сменил тему %s%s%s на:"
+
+#, c-format
+msgid "Autojoin changed from empty value to \"%s\""
+msgstr ""
+
+#, fuzzy, c-format
 msgid "%s: future away: %s"
 msgstr "Планирование статуса на %s%s%s: %s\n"
 
 #, fuzzy, c-format
 msgid "%s: future away removed"
 msgstr "Планирование статуса на %s%s%s удалено.\n"
-
-#, fuzzy, c-format
-msgid "%s%s: \"%s\" command can only be executed in a channel buffer"
-msgstr "%s \"%s\" команда может быть выполнена только в буфере канала\n"
 
 #, fuzzy, c-format
 msgid "%s%s: already connected to server \"%s\"!"
@@ -6008,8 +6171,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: if you want to add a standard server, use the command \"/server add"
-"\" (see /help server); if you really want to add a temporary server (NOT "
+"%s%s: if you want to add a standard server, use the command \"/server "
+"add\" (see /help server); if you really want to add a temporary server (NOT "
 "SAVED), turn on the option irc.look.temporary_servers"
 msgstr ""
 
@@ -6030,6 +6193,15 @@ msgstr "%s \"%s\" команда может быть выполнена толь
 #, fuzzy, c-format
 msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr "%s DCC: не могу установить неблокирующий режим для сокета\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create DCC"
+msgstr "%s не могу создать сервер\n"
+
+#, c-format
+msgid ""
+"%s%s: unable to create DCC, please check that the \"xfer\" plugin is loaded"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: not connected to server \"%s\"!"
@@ -6171,6 +6343,13 @@ msgstr "отключен"
 #. TRANSLATORS: "fake IRC server"
 msgid " (fake)"
 msgstr ""
+
+#, fuzzy
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "секунда"
+msgstr[1] "секунда"
+msgstr[2] "секунда"
 
 #, fuzzy
 msgid "minute"
@@ -6411,6 +6590,43 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "configure the \"autojoin\" server option"
+msgstr "Не найден параметр\n"
+
+msgid ""
+"add [<channel1> [<channel2>...]] || addraw <channel1>[,<channel2>...] "
+"[<key1>[,<key2>...]] || del [<channel1> [<channel2>...]] || apply || join || "
+"sort"
+msgstr ""
+
+msgid ""
+"    add: add current channel or a list of channels (with optional keys) to "
+"the autojoin option; if you are on the channel and the key is not provided, "
+"the key is read in the channel\n"
+" addraw: use the IRC raw format (same as /join command): all channels "
+"separated by commas, optional keys separated by commas\n"
+"    del: delete current channel or a list of channels from the autojoin "
+"option\n"
+"channel: channel name\n"
+"    key: key for the channel\n"
+"  apply: set currently joined channels in the autojoin option\n"
+"   join: join the channels in the autojoin option\n"
+"   sort: sort alphabetically channels in the autojoin option\n"
+"\n"
+"Examples:\n"
+"  /autojoin add\n"
+"  /autojoin add #test\n"
+"  /autojoin add #chan1 #chan2\n"
+"  /allchan /autojoin add\n"
+"  /autojoin addraw #chan1,#chan2,#chan3 key1,key2\n"
+"  /autojoin del\n"
+"  /autojoin del #chan1\n"
+"  /autojoin apply\n"
+"  /autojoin join\n"
+"  /autojoin sort"
+msgstr ""
+
+#, fuzzy
 msgid "ban nicks or hosts"
 msgstr "банит ник или хост"
 
@@ -6438,7 +6654,8 @@ msgstr ""
 msgid ""
 "   ls: list the capabilities supported by the server\n"
 " list: list the capabilities currently enabled\n"
-"  req: request a capability\n"
+"  req: request a new capability or remove a capability (if starting with \"-"
+"\", for example: \"-multi-prefix\")\n"
 "  ack: acknowledge capabilities which require client-side acknowledgement\n"
 "  end: end the capability negotiation\n"
 "\n"
@@ -6453,8 +6670,14 @@ msgid ""
 "capabilities).\n"
 "\n"
 "Examples:\n"
-"   /cap\n"
-"   /cap req multi-prefix away-notify"
+"  display supported and enabled capabilities:\n"
+"    /cap\n"
+"  request capabilities multi-prefix and away-notify:\n"
+"    /cap req multi-prefix away-notify\n"
+"  request capability extended-join, remove capability multi-prefix:\n"
+"    /cap req extended-join -multi-prefix\n"
+"  remove capability away-notify:\n"
+"    /cap req -away-notify"
 msgstr ""
 
 #, fuzzy
@@ -6772,6 +6995,21 @@ msgid ""
 msgstr ""
 "  ник: приглашаемый ник\n"
 "канал: целевой канал"
+
+msgid "send a notice to an invitation-only channel, requesting an invite"
+msgstr ""
+
+#, fuzzy
+msgid "<channel> [<message>]"
+msgstr "[-all] [сообщение]"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"message: message to send"
+msgstr ""
+"канал: название канала\n"
+" ключ: ключ для входа на канал"
 
 #, fuzzy
 msgid "list all server names which are known by the server answering the query"
@@ -7147,6 +7385,11 @@ msgid "tell the server to restart itself"
 msgstr "перезагрузить сервер"
 
 #, fuzzy
+#| msgid "reconnect to server(s)"
+msgid "request the server rules"
+msgstr "переподключиться к серверу(-ам)"
+
+#, fuzzy
 msgid "force a user to join channel(s)"
 msgstr "принудительно удалить пользователя с канала"
 
@@ -7260,9 +7503,9 @@ msgid ""
 "sent (message sent), modified (message modified by a modifier), redirected "
 "(message redirected)\n"
 "            m:xxx   show only IRC command \"xxx\"\n"
-"            c:xxx   show only messages matching the evaluated condition \"xxx"
-"\", using following variables: output of function irc_message_parse (like "
-"nick, command, channel, text, etc., see function info_get_hashtable in "
+"            c:xxx   show only messages matching the evaluated condition "
+"\"xxx\", using following variables: output of function irc_message_parse "
+"(like nick, command, channel, text, etc., see function info_get_hashtable in "
 "plugin API reference for the list of all variables), date (format: \"yyyy-mm-"
 "dd hh:mm:ss\"), server, recv, sent, modified, redirected\n"
 "\n"
@@ -7619,6 +7862,10 @@ msgstr "список ников на канале"
 msgid "channels on all IRC servers"
 msgstr "Список каналов, на которые заходить при соединении с сервером"
 
+msgid ""
+"channels automatically joined on the current server (option \"autojoin\")"
+msgstr ""
+
 #, fuzzy
 msgid "privates on all IRC servers"
 msgstr "Список каналов, на которые заходить при соединении с сервером"
@@ -7668,6 +7915,10 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 msgid ""
 "%s%s: invalid length for split, it must be either 0 or any integer between "
 "128 and 4096"
+msgstr ""
+
+#, c-format
+msgid "%s%s: invalid registered mode, must be a single character"
 msgstr ""
 
 #, c-format
@@ -7879,8 +8130,8 @@ msgstr ""
 #, fuzzy
 msgid ""
 "user mode(s) to set after connection to server and before executing command "
-"and the auto-join of channels; examples: \"+R\" (to set mode \"R\"), \"+R-i"
-"\" (to set mode \"R\" and remove \"i\"); see /help mode for the complete "
+"and the auto-join of channels; examples: \"+R\" (to set mode \"R\"), \"+R-"
+"i\" (to set mode \"R\" and remove \"i\"); see /help mode for the complete "
 "mode syntax (note: content is evaluated, see /help eval; server options are "
 "evaluated with ${irc_server.xxx} and ${server} is replaced by the server "
 "name)"
@@ -7924,9 +8175,14 @@ msgid ""
 msgstr ""
 
 msgid ""
+"set automatically the \"autojoin\" option according to the channels you "
+"manually join and part with commands /join and /part"
+msgstr ""
+
+msgid ""
 "automatically rejoin channels after kick; you can define a buffer local "
-"variable on a channel to override this value (name of variable: \"autorejoin"
-"\", value: \"on\" or \"off\")"
+"variable on a channel to override this value (name of variable: "
+"\"autorejoin\", value: \"on\" or \"off\")"
 msgstr ""
 
 #, fuzzy
@@ -8018,6 +8274,9 @@ msgstr ""
 msgid ""
 "channel type prefixes to use if the server does not send them in message 005 "
 "(default is \"#&\")"
+msgstr ""
+
+msgid "mode that is set on registered users (default is \"r\")"
 msgstr ""
 
 #, fuzzy, c-format
@@ -8121,6 +8380,10 @@ msgstr "отображать уведомление об отсутствии е
 msgid "display a message in private when user is back (after quit on server)"
 msgstr ""
 
+#, fuzzy
+msgid "display nick change in private"
+msgstr "цвет ника собеседника в окне привата"
+
 msgid ""
 "display a warning in private buffer if the address of remote nick has "
 "changed; this option is disabled by default because servers like bitlbee are "
@@ -8134,8 +8397,8 @@ msgid ""
 "sensitive; special variables $nick, $channel and $server are replaced by "
 "their values), these words are added to buffer property \"highlight_words\" "
 "only when buffer is created (it does not affect current buffers), an empty "
-"string disables default highlight on nick, examples: \"$nick\", \"(?-i)$nick"
-"\""
+"string disables default highlight on nick, examples: \"$nick\", \"(?-"
+"i)$nick\""
 msgstr ""
 
 msgid ""
@@ -8144,8 +8407,8 @@ msgid ""
 "sensitive; special variables $nick, $channel and $server are replaced by "
 "their values), these words are added to buffer property \"highlight_words\" "
 "only when buffer is created (it does not affect current buffers), an empty "
-"string disables default highlight on nick, examples: \"$nick\", \"(?-i)$nick"
-"\""
+"string disables default highlight on nick, examples: \"$nick\", \"(?-"
+"i)$nick\""
 msgstr ""
 
 msgid ""
@@ -8154,8 +8417,8 @@ msgid ""
 "sensitive; special variables $nick, $channel and $server are replaced by "
 "their values), these words are added to buffer property \"highlight_words\" "
 "only when buffer is created (it does not affect current buffers), an empty "
-"string disables default highlight on nick, examples: \"$nick\", \"(?-i)$nick"
-"\""
+"string disables default highlight on nick, examples: \"$nick\", \"(?-"
+"i)$nick\""
 msgstr ""
 
 msgid ""
@@ -8345,6 +8608,11 @@ msgstr "цвет  текущего окна с сообщениями"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr ""
 
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+msgid "enable smart filter for \"setname\" messages"
+msgstr "цвет  текущего окна с сообщениями"
+
 msgid "enable automatic addition of temporary servers with command /connect"
 msgstr ""
 
@@ -8387,8 +8655,9 @@ msgstr "строка, вставляемая после автодополнен
 msgid "color for text in account messages"
 msgstr "цвет  текущего окна с сообщениями"
 
+#. TRANSLATORS: please do not translate "chghost"
 #, fuzzy
-msgid "color for text in chghost messages"
+msgid "color for text in \"chghost\" messages"
 msgstr "цвет  текущего окна с сообщениями"
 
 #, fuzzy
@@ -8402,6 +8671,11 @@ msgstr "цвет  текущего окна с сообщениями"
 #, fuzzy
 msgid "color for text in part/quit messages"
 msgstr "сообщение о выходе по-умолчанию"
+
+#. TRANSLATORS: please do not translate "setname"
+#, fuzzy
+msgid "color for text in \"setname\" messages"
+msgstr "цвет  текущего окна с сообщениями"
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
 msgid ""
@@ -8455,9 +8729,9 @@ msgstr ""
 msgid ""
 "default ban mask for commands /ban, /unban and /kickban; variables $nick, "
 "$user, $ident and $host are replaced by their values (extracted from \"nick!"
-"user@host\"); $ident is the same as $user if $user does not start with \"~"
-"\", otherwise it is set to \"*\"; this default mask is used only if WeeChat "
-"knows the host for the nick"
+"user@host\"); $ident is the same as $user if $user does not start with "
+"\"~\", otherwise it is set to \"*\"; this default mask is used only if "
+"WeeChat knows the host for the nick"
 msgstr ""
 
 msgid "when off, colors codes are ignored in incoming messages"
@@ -8599,8 +8873,8 @@ msgid "IRC host (like `:nick!name@server.com`)"
 msgstr ""
 
 msgid ""
-"get nick color code (*deprecated* since version 1.5, replaced by \"nick_color"
-"\")"
+"get nick color code (*deprecated* since version 1.5, replaced by "
+"\"nick_color\")"
 msgstr ""
 
 #, fuzzy
@@ -8650,11 +8924,11 @@ msgid ""
 "\"arguments\": arguments (includes channel), \"text\": text (for example "
 "user message), \"param1\" ... \"paramN\": parsed command parameters, "
 "\"num_params\": number of parsed command parameters, \"pos_command\": index "
-"of \"command\" message (\"-1\" if \"command\" was not found), \"pos_arguments"
-"\": index of \"arguments\" message (\"-1\" if \"arguments\" was not found), "
-"\"pos_channel\": index of \"channel\" message (\"-1\" if \"channel\" was not "
-"found), \"pos_text\": index of \"text\" message (\"-1\" if \"text\" was not "
-"found)"
+"of \"command\" message (\"-1\" if \"command\" was not found), "
+"\"pos_arguments\": index of \"arguments\" message (\"-1\" if \"arguments\" "
+"was not found), \"pos_channel\": index of \"channel\" message (\"-1\" if "
+"\"channel\" was not found), \"pos_text\": index of \"text\" message (\"-1\" "
+"if \"text\" was not found)"
 msgstr ""
 
 msgid "split an IRC message (to fit in 512 bytes by default)"
@@ -8973,11 +9247,11 @@ msgid "%s%s%s%s%s%s%s%s%s%s has quit"
 msgstr "%s%s %s(%s%s%s)%s вышел"
 
 #, fuzzy, c-format
-msgid "%sYour real name has been set to \"%s\""
-msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+msgid "%s%s%s%s has changed real name to %s\"%s%s%s\"%s"
+msgstr "%s%s%s сменил тему %s%s%s на:"
 
 #, fuzzy, c-format
-msgid "%sReal name of %s%s%s has been set to \"%s\""
+msgid "%s%sYour real name has been set to %s\"%s%s%s\"%s"
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
 #, fuzzy, c-format
@@ -9148,16 +9422,16 @@ msgstr[1] "полуоп"
 msgstr[2] "полуоп"
 
 #, fuzzy
-msgid "voice"
-msgid_plural "voices"
+msgid "voiced"
+msgid_plural "voiced"
 msgstr[0] "войс"
 msgstr[1] "войс"
 msgstr[2] "войс"
 
-#. TRANSLATORS: number of "normal" nicks on a channel (ie no op/voice), for example: "56 normals"
+#. TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular"
 #, c-format
-msgid "%s%s%d%s normal"
-msgid_plural "%s%s%d%s normals"
+msgid "%s%s%d%s regular"
+msgid_plural "%s%s%d%s regular"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
@@ -9210,6 +9484,9 @@ msgstr "%s: ник \"%s\" уже используется, пробую втор
 #, fuzzy, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s: ник \"%s\" уже используется, пробую второй ник \"%s\"\n"
+
+msgid "has asked for an invite"
+msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
@@ -9385,7 +9662,7 @@ msgid "%s%s: SASL authentication timeout"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: lag is high, reconnecting to server %s%s%s"
+msgid "%s%s: lag is high, disconnecting from server %s%s%s"
 msgstr "%s задержка слишком высокая, отключаюсь от сервера...\n"
 
 #, fuzzy, c-format
@@ -9587,16 +9864,6 @@ msgstr "Отключен от сервера!\n"
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr ""
 
-#, fuzzy
-msgid "Log buffers to files"
-msgstr "перезагрузить конфигурационный файл сервера"
-
-#, c-format
-msgid ""
-"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
-"for this buffer"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "%s%s: not enough memory"
 msgstr "Недостаточно памяти для новой строчки\n"
@@ -9626,6 +9893,16 @@ msgstr "**** Начало log-файла"
 #, fuzzy, c-format
 msgid "%s\t****  End of log  ****"
 msgstr "**** Конец log-файла"
+
+#, fuzzy
+msgid "Log buffers to files"
+msgstr "перезагрузить конфигурационный файл сервера"
+
+#, c-format
+msgid ""
+"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
+"for this buffer"
+msgstr ""
 
 #, fuzzy
 msgid "Logging on buffers:"
@@ -9713,7 +9990,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"automatically save content of buffers to files (unless a buffer disables log)"
+"automatically save content of buffers to files (unless a buffer disables "
+"log); if disabled, logging is disabled on all buffers"
 msgstr ""
 
 msgid ""
@@ -9762,6 +10040,34 @@ msgstr ""
 msgid ""
 "replacement char for special chars in filename built with mask (like "
 "directory delimiter)"
+msgstr ""
+
+msgid ""
+"compression level for rotated log files (with extension \".1\", \".2\", "
+"etc.), if option logger.file.rotation_compression_type is enabled: 1 = low "
+"compression / fast ... 100 = best compression / slow; the value is a "
+"percentage converted to 1-9 for gzip and 1-19 for zstd; the default value is "
+"recommended, it offers a good compromise between compression and speed"
+msgstr ""
+
+msgid ""
+"compression type for rotated log files; if set to \"none\", rotated log "
+"files are not compressed; WARNING: if rotation was enabled with another type "
+"of compression (or no compression), you must first unload the logger plugin, "
+"compress files with the new type (or decompress files), then change the "
+"option in logger.conf, then load the logger plugin"
+msgstr ""
+
+msgid ""
+"when this size is reached, a rotation of log files is performed: the "
+"existing rotated log files are renamed (.1 becomes .2, .2 becomes .3, etc.) "
+"and the current file is renamed with extension .1; an integer number with a "
+"suffix is allowed: b = bytes (default if no unit given), k = kilobytes, m = "
+"megabytes, g = gigabytes, t = terabytes; example: \"2g\" causes a rotation "
+"if the file size is > 2,000,000,000 bytes; if set to \"0\", no rotation is "
+"performed (unlimited log size); WARNING: before changing this option, you "
+"should first set the compression type via option logger.file."
+"rotation_compression_type"
 msgstr ""
 
 msgid "timestamp used in log files (see man strftime for date/time specifiers)"
@@ -10089,6 +10395,11 @@ msgid "WeeChat uptime (format: \"days:hh:mm:ss\")"
 msgstr ""
 
 msgid "\"days\" (number of days) or \"seconds\" (number of seconds) (optional)"
+msgstr ""
+
+msgid ""
+"WeeChat uptime for the current process only (upgrades with /upgrade command "
+"are ignored) (format: \"days:hh:mm:ss\")"
 msgstr ""
 
 msgid "generate a Time-based One-Time Password (TOTP)"
@@ -10448,9 +10759,9 @@ msgstr ""
 
 #, c-format
 msgid ""
-"keep context between two calls to the source code evaluation (option \"eval"
-"\" of script command or info \"%s_eval\"); a hidden script is used to eval "
-"script code; if this option is disabled, this hidden script is unloaded "
+"keep context between two calls to the source code evaluation (option "
+"\"eval\" of script command or info \"%s_eval\"); a hidden script is used to "
+"eval script code; if this option is disabled, this hidden script is unloaded "
 "after each eval: this uses less memory, but is slower"
 msgstr ""
 
@@ -10478,11 +10789,6 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s не могу создать сервер\n"
-
-msgid ""
-"path to Python 2.x interpreter (*deprecated* since version 2.6, scripts must "
-"use Python 3 only)"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: unable to launch global interpreter"
@@ -10725,7 +11031,7 @@ msgid ""
 "The \"irc\" protocol allows any IRC client (including WeeChat itself) to "
 "connect on the port.\n"
 "The \"weechat\" protocol allows a remote interface to connect on the port, "
-"see the list here: https://weechat.org/about/interfaces\n"
+"see the list here: https://weechat.org/about/interfaces/\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients.\n"
 "\n"
@@ -10870,8 +11176,11 @@ msgid ""
 msgstr ""
 
 msgid ""
-"compression level for packets sent to client with WeeChat protocol (0 = "
-"disable compression, 1 = low compression ... 9 = best compression)"
+"compression of messages sent to clients with \"weechat\" protocol: 0 = "
+"disable compression, 1 = low compression / fast ... 100 = best compression / "
+"slow; the value is a percentage converted to 1-9 for zlib and 1-19 for zstd; "
+"the default value is recommended, it offers a good compromise between "
+"compression and speed"
 msgstr ""
 
 msgid ""
@@ -10900,9 +11209,9 @@ msgstr ""
 msgid ""
 "comma separated list of hash algorithms used for password authentication in "
 "weechat protocol, among these values: \"plain\" (password in plain text, not "
-"hashed), \"sha256\", \"sha512\", \"pbkdf2+sha256\", \"pbkdf2+sha512\"), \"*"
-"\" means all algorithms, a name beginning with \"!\" is a negative value to "
-"prevent an algorithm from being used, wildcard \"*\" is allowed in names "
+"hashed), \"sha256\", \"sha512\", \"pbkdf2+sha256\", \"pbkdf2+sha512\"), "
+"\"*\" means all algorithms, a name beginning with \"!\" is a negative value "
+"to prevent an algorithm from being used, wildcard \"*\" is allowed in names "
 "(examples: \"*\", \"pbkdf2*\", \"*,!plain\")"
 msgstr ""
 "разделённый запятыми список автоматически загружаемых при запуске plug-"
@@ -10964,8 +11273,8 @@ msgstr "сообщение о выходе по-умолчанию"
 
 msgid ""
 "comma-separated list of messages tags which are displayed in backlog per IRC "
-"channel (supported tags: \"irc_join\", \"irc_part\", \"irc_quit\", \"irc_nick"
-"\", \"irc_privmsg\"), \"*\" = all supported tags"
+"channel (supported tags: \"irc_join\", \"irc_part\", \"irc_quit\", "
+"\"irc_nick\", \"irc_privmsg\"), \"*\" = all supported tags"
 msgstr ""
 
 msgid ""
@@ -11130,8 +11439,8 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, c-format
 msgid ""
-"%s%s: too few arguments received from client %s%s%s for command \"%s"
-"\" (received: %d arguments, expected: at least %d)"
+"%s%s: too few arguments received from client %s%s%s for command "
+"\"%s\" (received: %d arguments, expected: at least %d)"
 msgstr ""
 
 #, fuzzy
@@ -11712,6 +12021,10 @@ msgstr ""
 msgid "%s dictionaries list:"
 msgstr "конец списка /who"
 
+#, fuzzy
+msgid "spell checking disabled"
+msgstr "Сокращения не заданы.\n"
+
 #, fuzzy, c-format
 msgid "%s: \"%s\" removed"
 msgstr "Сокращение \"%s\" удалено\n"
@@ -11774,7 +12087,7 @@ msgid "spell plugin configuration"
 msgstr "Сохраняю конфигурацию\n"
 
 msgid ""
-"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"enable|disable|toggle || listdict || setdict -|<dict>[,<dict>...] || deldict "
 "|| addword [<dict>] <word>"
 msgstr ""
 
@@ -11784,7 +12097,8 @@ msgid ""
 "  toggle: toggle spell checker\n"
 "listdict: show installed dictionaries\n"
 " setdict: set dictionary for current buffer (multiple dictionaries can be "
-"separated by a comma)\n"
+"separated by a comma, the special value \"-\" disables spell checking on "
+"current buffer)\n"
 " deldict: delete dictionary used on current buffer\n"
 " addword: add a word in personal dictionary\n"
 "\n"
@@ -11809,7 +12123,9 @@ msgstr "Список сокращений:\n"
 msgid "list of installed dictionaries"
 msgstr "настроить параметры конфигурации"
 
-msgid "comma separated list of dictionaries to use on this buffer"
+msgid ""
+"comma separated list of dictionaries to use on this buffer (special value \"-"
+"\" disables spell checking on this buffer)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -11944,8 +12260,14 @@ msgid "creating variable"
 msgstr "  . тип: целочисленный\n"
 
 #, fuzzy, c-format
-msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
+msgid "%s%lu%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
 msgstr "Внутренние команды %s:\n"
+
+#, c-format
+msgid ""
+"%s%lu%s  elapsed: init=%.6fs, conditions=%.6fs, regex=%.6fs, command=%.6fs, "
+"total=%.6fs"
+msgstr ""
 
 #, fuzzy
 msgid "Triggers enabled"
@@ -12010,12 +12332,16 @@ msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%s не могу установить клавишу \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid format for regular expression"
+msgid "%s%s: invalid format for regular expression: \"%s\""
 msgstr "цвет стрелки захода на канал (префикс)"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid regular expression (compilation failed)"
+msgid "%s%s: invalid regular expression (compilation failed): \"%s\""
 msgstr "%s \"%s\" не является регулярным выражением (%s)\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for regular expression: \"%s\""
+msgstr "%s недостаточно памяти для регулярного выражения\n"
 
 #, fuzzy, c-format
 msgid "%s%s: invalid return code: \"%s\""
@@ -12098,12 +12424,12 @@ msgstr ""
 
 msgid ""
 "list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
-"\" [\"<return_code>\" [\"<post_action>\"]]]]]] || addinput [<hook>] || input|"
-"output|recreate <name> || set <name> <option> <value> || rename|copy <name> "
-"<new_name> || enable|disable|toggle [<name>|-all [<name>...]] || restart "
-"<name>|-all [<name>...] || show <name> || del <name>|-all [<name>...] || "
-"restore <name> [<name>...] || default -yes || monitor [<filter>]"
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
+"|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
+"<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
+"all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
+"<name>|-all [<name>...] || restore <name> [<name>...] || default -yes || "
+"monitor [<filter>]"
 msgstr ""
 
 msgid ""
@@ -12144,8 +12470,8 @@ msgid ""
 "   addinput: set input with default arguments to create a trigger\n"
 "      input: set input with the command used to create the trigger\n"
 "     output: send the command to create the trigger on the buffer\n"
-"   recreate: same as \"input\", with option \"addreplace\" instead of \"add"
-"\"\n"
+"   recreate: same as \"input\", with option \"addreplace\" instead of "
+"\"add\"\n"
 "        set: set an option in a trigger\n"
 "     option: name of option: name, hook, arguments, conditions, regex, "
 "command, return_code\n"
@@ -12185,10 +12511,10 @@ msgid ""
 "Examples (you can also look at default triggers with /trigger listdefault):\n"
 "  add text attributes *bold*, _underline_ and /italic/ (only in user "
 "messages):\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
-"\\*([^ ]+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:"
-"underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:"
-"italic}${re:1}${color:-italic}/\"\n"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" "
+"\"==\\*([^ ]+)\\*==*${color:bold}${re:1}${color:-bold}*== "
+"==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/"
+"${color:italic}${re:1}${color:-italic}/\"\n"
 "  hide nicklist bar on small terminals:\n"
 "    /trigger add resize_small signal signal_sigwinch \"${info:term_width} < "
 "100\" \"\" \"/bar hide nicklist\"\n"
@@ -12196,6 +12522,9 @@ msgid ""
 "100\" \"\" \"/bar show nicklist\"\n"
 "  silently save config each hour:\n"
 "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\"\n"
+"  silently save WeeChat session at midnight (see /help upgrade):\n"
+"    /trigger add session_save signal day_changed \"\" \"\" \"/mute /upgrade -"
+"save\"\n"
 "  open trigger monitor and show only modifiers and triggers whose name "
 "starts with \"resize\":\n"
 "    /trigger monitor @modifier,resize*"
@@ -12243,6 +12572,12 @@ msgid "default return codes for hook callback"
 msgstr "цвет текста информационной панели"
 
 msgid "trigger post actions"
+msgstr ""
+
+msgid ""
+"arguments for command that adds a trigger: trigger name, hooks, hook "
+"arguments, hook conditions, hook regex, hook command, hook return code, post "
+"actions"
 msgstr ""
 
 #, c-format
@@ -12323,6 +12658,10 @@ msgstr "цвет ника"
 #, fuzzy
 msgid "text color for post action flag (in /trigger list)"
 msgstr "цвет действий в поле ввода"
+
+#, fuzzy
+msgid "text color for trigger context identifier in monitor buffer"
+msgstr "цвет названия сервера"
 
 #, fuzzy
 msgid "text color for regular expressions"
@@ -12490,14 +12829,6 @@ msgstr "Отправляю запрос на DCC-чат %s%s\n"
 msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr ""
 "DCC: файл %s%s%s (локальное имя файла: %s%s%s) будет продолжен с позиции %u\n"
-
-#, c-format
-msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: missing arguments (%s)"
@@ -12758,6 +13089,14 @@ msgstr "Список сокращений:\n"
 msgid "xfer pointer (optional)"
 msgstr ""
 
+#, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
 msgstr "%s DCC: не могу создать pipe\n"
@@ -12826,26 +13165,14 @@ msgstr "%s DCC: не могу соединиться с отправителем
 
 #, fuzzy
 #~ msgid ""
-#~ "     list: list loaded plugins\n"
-#~ " listfull: list loaded plugins (verbose)\n"
-#~ "     load: load a plugin\n"
-#~ " autoload: autoload plugins in system or user directory\n"
-#~ "   reload: reload a plugin (if no name given, unload all plugins, then "
-#~ "autoload plugins)\n"
-#~ "   unload: unload a plugin (if no name given, unload all plugins)\n"
-#~ " filename: plugin (file) to load\n"
-#~ "     name: a plugin name\n"
-#~ "arguments: arguments given to plugin on load\n"
-#~ "\n"
-#~ "Without argument, this command lists loaded plugins."
+#~ "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+#~ "terminal color number or an alias; attributes are allowed before color "
+#~ "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
+#~ "\"/\" for italic, \"_\" for underline"
 #~ msgstr ""
-#~ "    list: перечислить загруженные pluginы\n"
-#~ "listfull: перечислить загруженные pluginы с дополнительной информацией\n"
-#~ "    load: загрузить plugin\n"
-#~ "autoload: автоматическая загрузка pluginов из системной или "
-#~ "пользовательской директории\n"
-#~ "  reload: перезагрузить plugin (если имя не задано выгружает все pluginы "
-#~ "и загружает автоматически загружаемые)\n"
-#~ "  unload: выгружает один или все pluginы\n"
-#~ "\n"
-#~ "Команда /plugin без аргументов перечисляет загруженные pluginы."
+#~ "название цвета WeeChat (default, black, (dark)gray, white, (light)red, "
+#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), "
+#~ "код или алиас цвета терминала; перед цветом допустимы атрибуты (только "
+#~ "для цвета текста, но не фона): \"*\" жирный, \"!\" инверсия, \"_\" "
+#~ "подчёркивание"

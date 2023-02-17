@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -24,6 +24,7 @@
 
 #define weechat_plugin weechat_trigger_plugin
 #define TRIGGER_PLUGIN_NAME "trigger"
+#define TRIGGER_PLUGIN_PRIORITY 13000
 
 #define TRIGGER_HOOK_DEFAULT_CONDITIONS "${...}"
 #define TRIGGER_HOOK_DEFAULT_REGEX      "/abc/def"
@@ -79,8 +80,17 @@ enum t_trigger_post_action
     TRIGGER_NUM_POST_ACTIONS,
 };
 
+enum t_trigger_regex_command
+{
+    TRIGGER_REGEX_COMMAND_REPLACE = 0,
+    TRIGGER_REGEX_COMMAND_TRANSLATE_CHARS,
+    /* number of regex commands */
+    TRIGGER_NUM_REGEX_COMMANDS,
+};
+
 struct t_trigger_regex
 {
+    enum t_trigger_regex_command command; /* regex command                  */
     char *variable;                    /* the hashtable key used            */
     char *str_regex;                   /* regex to search for replacement   */
     regex_t *regex;                    /* compiled regex                    */
@@ -104,7 +114,7 @@ struct t_trigger
     int hook_running;                  /* 1 if one hook callback is running */
     char *hook_print_buffers;          /* buffers (for hook_print only)     */
 
-    /* regular expressions with their replacement text */
+    /* regular expressions */
     int regex_count;                   /* number of regex                   */
     struct t_trigger_regex *regex;     /* array of regex                    */
 
@@ -124,6 +134,7 @@ extern char *trigger_hook_type_string[];
 extern char *trigger_hook_option_values;
 extern char *trigger_hook_default_arguments[];
 extern char *trigger_hook_default_rc[];
+extern char trigger_regex_command[];
 extern char *trigger_hook_regex_default_var[];
 extern char *trigger_return_code_string[];
 extern int trigger_return_code[];
@@ -137,6 +148,7 @@ extern int trigger_enabled;
 
 extern int trigger_search_option (const char *option_name);
 extern int trigger_search_hook_type (const char *type);
+extern int trigger_search_regex_command (char command);
 extern int trigger_search_return_code (const char *return_code);
 extern int trigger_search_post_action (const char *post_action);
 extern struct t_trigger *trigger_search (const char *name);

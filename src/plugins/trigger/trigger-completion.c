@@ -1,7 +1,7 @@
 /*
  * trigger-completion.c - completion for trigger commands
  *
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -471,6 +471,76 @@ trigger_completion_post_action_cb (const void *pointer, void *data,
     return WEECHAT_RC_OK;
 }
 
+/*
+ * Adds arguments for commands that add a trigger.
+ */
+
+int
+trigger_completion_add_arguments_cb (const void *pointer, void *data,
+                                     const char *completion_item,
+                                     struct t_gui_buffer *buffer,
+                                     struct t_gui_completion *completion)
+{
+    const char *args, *base_word;
+    char **sargv;
+    int sargc, arg_complete;
+
+    args = weechat_completion_get_string (completion, "args");
+    if (!args)
+        return WEECHAT_RC_OK;
+
+    base_word = weechat_completion_get_string (completion, "base_word");
+
+    sargv = weechat_string_split_shell (args, &sargc);
+    if (!sargv)
+        return WEECHAT_RC_OK;
+
+    arg_complete = sargc;
+    if (base_word && base_word[0])
+        arg_complete--;
+
+    switch (arg_complete)
+    {
+        case 1:
+            trigger_completion_triggers_cb (pointer, data, completion_item,
+                                            buffer, completion);
+            break;
+        case 2:
+            trigger_completion_hooks_cb (pointer, data, completion_item,
+                                         buffer, completion);
+            break;
+        case 3:
+            trigger_completion_hook_arguments_cb (pointer, data,
+                                                  completion_item, buffer,
+                                                  completion);
+            break;
+        case 4:
+            trigger_completion_hook_conditions_cb (pointer, data,
+                                                   completion_item, buffer,
+                                                   completion);
+            break;
+        case 5:
+            trigger_completion_hook_regex_cb (pointer, data, completion_item,
+                                              buffer, completion);
+            break;
+        case 6:
+            trigger_completion_hook_command_cb (pointer, data, completion_item,
+                                                buffer, completion);
+            break;
+        case 7:
+            trigger_completion_hook_rc_cb (pointer, data, completion_item,
+                                           buffer, completion);
+            break;
+        case 8:
+            trigger_completion_post_action_cb (pointer, data, completion_item,
+                                               buffer, completion);
+            break;
+    }
+
+    weechat_string_free_split (sargv);
+
+    return WEECHAT_RC_OK;
+}
 
 /*
  * Hooks completions.
@@ -515,4 +585,10 @@ trigger_completion_init ()
     weechat_hook_completion ("trigger_post_action",
                              N_("trigger post actions"),
                              &trigger_completion_post_action_cb, NULL, NULL);
+    weechat_hook_completion ("trigger_add_arguments",
+                             N_("arguments for command that adds a trigger: "
+                                "trigger name, hooks, hook arguments, "
+                                "hook conditions, hook regex, hook command, "
+                                "hook return code, post actions"),
+                             &trigger_completion_add_arguments_cb, NULL, NULL);
 }

@@ -1,7 +1,7 @@
 /*
  * plugin-api.c - extra functions for plugin API
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -125,6 +125,36 @@ plugin_api_crypto_hash (const void *data, int data_size, const char *hash_algo,
         return 0;
 
     return weecrypto_hash (data, data_size, algo, hash, hash_size);
+}
+
+/*
+ * Computes hash of a file using the given algorithm.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+plugin_api_crypto_hash_file (const char *filename, const char *hash_algo,
+                             void *hash, int *hash_size)
+{
+    int algo;
+
+    if (!hash)
+        return 0;
+
+    if (hash_size)
+        *hash_size = 0;
+
+    if (!filename || !filename[0] || !hash_algo)
+        return 0;
+
+    algo = weecrypto_get_hash_algo (hash_algo);
+    if (algo == GCRY_MD_NONE)
+        return 0;
+
+    return weecrypto_hash_file (filename, algo, hash, hash_size);
 }
 
 /*
@@ -321,15 +351,15 @@ plugin_api_prefix (const char *prefix)
     if (!prefix)
         return gui_chat_prefix_empty;
 
-    if (string_strcasecmp (prefix, "error") == 0)
+    if (strcmp (prefix, "error") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_ERROR];
-    if (string_strcasecmp (prefix, "network") == 0)
+    if (strcmp (prefix, "network") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_NETWORK];
-    if (string_strcasecmp (prefix, "action") == 0)
+    if (strcmp (prefix, "action") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_ACTION];
-    if (string_strcasecmp (prefix, "join") == 0)
+    if (strcmp (prefix, "join") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_JOIN];
-    if (string_strcasecmp (prefix, "quit") == 0)
+    if (strcmp (prefix, "quit") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_QUIT];
 
     return gui_chat_prefix_empty;

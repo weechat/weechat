@@ -58,4 +58,4 @@ include::includes/man.fr.adoc[tag=copyright]
 
 == SUPPORT / SIGNALER DES BUGS
 
-Pour de l'aide ou signaler un bug : https://weechat.org/about/support
+Pour de l'aide ou signaler un bug : https://weechat.org/about/support/

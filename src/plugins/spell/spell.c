@@ -2,7 +2,7 @@
  * spell.c - spell checker plugin for WeeChat
  *
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
- * Copyright (C) 2006-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2006-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Nils Görs <weechatter@arcor.de>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -48,7 +48,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Spell checker for input"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(12000);
+WEECHAT_PLUGIN_PRIORITY(SPELL_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_spell_plugin = NULL;
 
@@ -351,8 +351,7 @@ spell_command_authorized (const char *command)
     for (i = 0; i < spell_count_commands_to_check; i++)
     {
         if ((spell_length_commands_to_check[i] == length_command)
-            && (weechat_strcasecmp (command,
-                                    spell_commands_to_check[i]) == 0))
+            && (strcmp (command, spell_commands_to_check[i]) == 0))
         {
             /* command is authorized */
             return 1;
@@ -379,8 +378,10 @@ spell_string_is_url (const char *word)
     for (i = 0; spell_url_prefix[i]; i++)
     {
         if (weechat_strncasecmp (word, spell_url_prefix[i],
-                                 strlen (spell_url_prefix[i])) == 0)
+                                 weechat_utf8_strlen (spell_url_prefix[i])) == 0)
+        {
             return 1;
+        }
     }
 
     /* word is not an URL */
@@ -723,7 +724,7 @@ spell_modifier_cb (const void *pointer, void *data,
     unsigned long value;
     struct t_gui_buffer *buffer;
     struct t_spell_speller_buffer *ptr_speller_buffer;
-    char **result, *str_result, *ptr_string, *ptr_string_orig, *pos_space;
+    char **result, *ptr_string, *ptr_string_orig, *pos_space;
     char *ptr_end, *ptr_end_valid, save_end;
     char *misspelled_word, *old_misspelled_word, *old_suggestions, *suggestions;
     char *word_and_suggestions;
@@ -1050,10 +1051,7 @@ spell_modifier_cb (const void *pointer, void *data,
 
     ptr_speller_buffer->modifier_result = strdup (*result);
 
-    str_result = *result;
-    weechat_string_dyn_free (result, 0);
-
-    return str_result;
+    return weechat_string_dyn_free (result, 0);
 }
 
 /*

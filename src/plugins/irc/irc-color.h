@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -88,6 +88,7 @@
 #define IRC_COLOR_MESSAGE_CHGHOST weechat_color(weechat_config_string(irc_config_color_message_chghost))
 #define IRC_COLOR_MESSAGE_KICK weechat_color(weechat_config_string(irc_config_color_message_kick))
 #define IRC_COLOR_MESSAGE_QUIT weechat_color(weechat_config_string(irc_config_color_message_quit))
+#define IRC_COLOR_MESSAGE_SETNAME weechat_color(weechat_config_string(irc_config_color_message_setname))
 #define IRC_COLOR_REASON_KICK weechat_color(weechat_config_string(irc_config_color_reason_kick))
 #define IRC_COLOR_REASON_QUIT weechat_color(weechat_config_string(irc_config_color_reason_quit))
 #define IRC_COLOR_TOPIC_CURRENT weechat_color(weechat_config_string(irc_config_color_topic_current))

@@ -1,7 +1,7 @@
 /*
  * fset-config.c - Fast Set configuration options (file fset.conf)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -365,7 +365,7 @@ fset_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    fset_config_file = weechat_config_new (FSET_CONFIG_NAME,
+    fset_config_file = weechat_config_new (FSET_CONFIG_PRIO_NAME,
                                            &fset_config_reload, NULL, NULL);
     if (!fset_config_file)
         return 0;
@@ -433,7 +433,7 @@ fset_config_init ()
         fset_config_file, ptr_section,
         "format_number", "integer",
         N_("number of format used to display options; this is dynamically "
-           "changed by the key ctrl-X on the fset buffer"),
+           "changed by the key ctrl-x on the fset buffer"),
         NULL, 1, 2, "1", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_format_number_cb, NULL, NULL,
@@ -566,7 +566,7 @@ fset_config_init ()
            "an empty string uses the default format "
            "(\"${marked} ${name}  ${type}  ${value2}\"), which is without "
            "evaluation of string and then much faster; "
-           "formats can be switched with key ctrl+X"),
+           "formats can be switched with key ctrl-x"),
         NULL, 0, 0,
         "",
         NULL, 0,
@@ -582,7 +582,7 @@ fset_config_init ()
            "an empty string uses the default format "
            "(\"${marked} ${name}  ${type}  ${value2}\"), which is without "
            "evaluation of string and then much faster; "
-           "formats can be switched with key ctrl+X"),
+           "formats can be switched with key ctrl-x"),
         NULL, 0, 0,
         "${marked} ${name}  ${type}  ${value2}${newline}"
         "  ${empty_name}  ${_default_value}${color:darkgray} -- "

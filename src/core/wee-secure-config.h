@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2013-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,6 +21,7 @@
 #define WEECHAT_SECURE_CONFIG_H
 
 #define SECURE_CONFIG_NAME "sec"
+#define SECURE_CONFIG_PRIO_NAME "120000|sec"
 
 extern struct t_config_file *secure_config_file;
 extern struct t_config_section *secure_config_section_pwd;

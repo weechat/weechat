@@ -1,7 +1,7 @@
 /*
  * irc-input.c - input data management for IRC buffers
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -102,7 +102,9 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
                 buffer,
                 0,
                 irc_protocol_tags (
-                    "privmsg", str_tags,
+                    "privmsg",
+                    NULL,
+                    str_tags,
                     (ptr_nick) ? ptr_nick->name : ptr_server->nick,
                     NULL),
                 "%s%s%s%s%s %s",
@@ -119,7 +121,9 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
                 buffer,
                 0,
                 irc_protocol_tags (
-                    "privmsg", str_tags,
+                    "privmsg",
+                    NULL,
+                    str_tags,
                     (ptr_nick) ? ptr_nick->name : ptr_server->nick,
                     NULL),
                 "%s%s",
@@ -202,7 +206,7 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags,
 
     if (buffer == irc_raw_buffer)
     {
-        if (weechat_strcasecmp (input_data, "q") == 0)
+        if (weechat_strcmp (input_data, "q") == 0)
             weechat_buffer_close (buffer);
         else
             irc_raw_filter_options (input_data);

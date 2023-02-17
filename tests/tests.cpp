@@ -1,7 +1,7 @@
 /*
  * tests.cpp - run WeeChat tests
  *
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -54,14 +54,11 @@ extern "C"
 
 #define WEECHAT_TESTS_HOME "./tmp_weechat_test"
 
-/* lib with tests on plugins when autotools is used to compile */
-#define WEECHAT_TESTS_PLUGINS_LIB_DEFAULT                       \
-    "./tests/.libs/lib_weechat_unit_tests_plugins.so.0.0.0"
-
 /* import tests from libs */
 /* core */
 IMPORT_TEST_GROUP(CoreArraylist);
 IMPORT_TEST_GROUP(CoreCalc);
+IMPORT_TEST_GROUP(CoreCommand);
 IMPORT_TEST_GROUP(CoreConfigFile);
 IMPORT_TEST_GROUP(CoreCrypto);
 IMPORT_TEST_GROUP(CoreDir);
@@ -79,7 +76,15 @@ IMPORT_TEST_GROUP(CoreUrl);
 IMPORT_TEST_GROUP(CoreUtf8);
 IMPORT_TEST_GROUP(CoreUtil);
 /* GUI */
+IMPORT_TEST_GROUP(GuiBarItem);
+IMPORT_TEST_GROUP(GuiBarItemCustom);
+IMPORT_TEST_GROUP(GuiBarWindow);
+IMPORT_TEST_GROUP(GuiBuffer);
+IMPORT_TEST_GROUP(GuiChat);
 IMPORT_TEST_GROUP(GuiColor);
+IMPORT_TEST_GROUP(GuiFilter);
+IMPORT_TEST_GROUP(GuiInput);
+IMPORT_TEST_GROUP(GuiKey);
 IMPORT_TEST_GROUP(GuiLine);
 IMPORT_TEST_GROUP(GuiNick);
 /* scripts */
@@ -135,7 +140,7 @@ test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
                   "%s: \"%s%s%s\"",
                   buffer_full_name,
                   (prefix && prefix[0]) ? prefix : "",
-                  (prefix && prefix[0]) ? " " : "",
+                  (prefix && prefix[0] && message && message[0]) ? " " : "",
                   (message && message[0]) ? message : "");
         arraylist_add (recorded_messages, strdup (str_recorded));
     }
@@ -145,7 +150,7 @@ test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     {
         printf ("%s%s%s\n",  /* with color: "\33[34m%s%s%s\33[0m\n" */
                 (prefix && prefix[0]) ? prefix : "",
-                (prefix && prefix[0]) ? " " : "",
+                (prefix && prefix[0] && message && message[0]) ? " " : "",
                 (message && message[0]) ? message : "");
     }
 
@@ -218,22 +223,23 @@ record_stop ()
  * The format of "message" argument is: "prefix message" (prefix and message
  * separated by a space).
  *
- * Returns:
- *   1: message has been displayed
- *   0: message has NOT been displayed
+ * Returns index of message displayed (≥ 0), -1 if message has NOT been
+ * displayed.
  */
 
 int
 record_search (const char *buffer, const char *message)
 {
     char str_message[8192];
+    int index;
 
     snprintf (str_message, sizeof (str_message),
               "%s: \"%s\"",
               buffer, message);
 
-    return (arraylist_search (recorded_messages, str_message,
-                              NULL, NULL) != NULL);
+    arraylist_search (recorded_messages, str_message, &index, NULL);
+
+    return index;
 }
 
 /*
@@ -312,7 +318,6 @@ main (int argc, char *argv[])
 {
     int rc, length, weechat_argc;
     char *weechat_tests_args, *args, **weechat_argv, *tests_plugins_lib;
-    const char *tests_plugins_lib_default = WEECHAT_TESTS_PLUGINS_LIB_DEFAULT;
     const char *ptr_path;
     void *handle;
 
@@ -376,7 +381,14 @@ main (int argc, char *argv[])
     /* load plugins tests */
     tests_plugins_lib = getenv ("WEECHAT_TESTS_PLUGINS_LIB");
     ptr_path = (tests_plugins_lib && tests_plugins_lib[0]) ?
-        tests_plugins_lib : tests_plugins_lib_default;
+        tests_plugins_lib : NULL;
+    if (!ptr_path)
+    {
+        fprintf (stderr,
+                 "ERROR: environment variable WEECHAT_TESTS_PLUGINS_LIB "
+                 "is not defined\n");
+        return 1;
+    }
     printf ("Loading tests on plugins: \"%s\"\n", ptr_path);
     handle = dlopen (ptr_path, RTLD_GLOBAL | RTLD_NOW);
     if (!handle)

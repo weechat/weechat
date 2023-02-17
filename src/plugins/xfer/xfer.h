@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -27,6 +27,7 @@
 
 #define weechat_plugin weechat_xfer_plugin
 #define XFER_PLUGIN_NAME "xfer"
+#define XFER_PLUGIN_PRIORITY 7000
 
 /* xfer types */
 

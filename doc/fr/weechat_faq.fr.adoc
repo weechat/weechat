@@ -10,9 +10,6 @@
 :docinfo1:
 
 
-Ce document est écrit pour les versions de WeeChat ≥ 0.3.0 mais devrait être
-utilisé de préférence avec la dernière version stable de WeeChat.
-
 toc::[]
 
 
@@ -32,8 +29,10 @@ mais elle ne s'applique pas à WeeChat !).
 
 Parce que WeeChat est très léger et apporte des fonctionnalités innovantes.
 
-Plus d'infos sur la page des fonctionnalités WeeChat :
-https://weechat.org/about/features
+Plus d'infos sur la
+https://weechat.org/about/features/[page des fonctionnalités ^↗^,window=_blank]
+WeeChat.
+
 
 [[compilation_install]]
 == Compilation / installation
@@ -41,30 +40,24 @@ https://weechat.org/about/features
 [[gui]]
 === J'ai entendu parler de plusieurs interfaces pour WeeChat. Comment puis-je les compiler/utiliser ?
 
-Des interfaces distantes sont disponibles, voir la page avec les interfaces
-distantes : https://weechat.org/about/interfaces
+Des interfaces distantes sont disponibles, voir la
+https://weechat.org/about/interfaces/[page avec les interfaces distantes ^↗^,window=_blank].
 
 [[compile_git]]
 === Je ne peux pas compiler WeeChat après avoir cloné la base git, pourquoi ?
 
-La méthode recommandée pour compiler WeeChat est d'utiliser
-link:weechat_user.fr.html#compile_with_cmake[CMake].
+WeeChat doit être compilé avec CMake.
 
-Si vous compilez avec les link:weechat_user.fr.html#compile_with_autotools[autotools]
-(et non CMake), vérifiez que vous avez bien la dernière version d'autoconf et
-automake.
+Merci de suivre les link:weechat_user.en.html#source_package[instructions de construction ^↗^,window=_blank]
+et vous assurer que toutes les dépendances obligatoires sont installées.
 
-Une autre façon de faire est de compiler le "paquet devel", qui nécessite moins
-de dépendances. Ce paquet est construit quasiment tous les jours à partir de la
-base git. Notez que ce paquet peut ne pas correspondre exactement à la base
-git et qu'il est moins pratique que de cloner la base git pour installer des
-mises à jour.
+Si vous avez toujours des problèmes, merci de les remonter aux développeurs.
 
 [[compile_macos]]
 === Comment puis-je installer WeeChat sous macOS ?
 
-Il est recommandé d'utiliser https://brew.sh/[Homebrew], vous pouvez avoir de
-l'aide avec :
+Il est recommandé d'utiliser https://brew.sh/[Homebrew ^↗^,window=_blank],
+vous pouvez avoir de l'aide avec :
 
 ----
 brew info weechat
@@ -80,12 +73,12 @@ brew install weechat
 === J'ai lancé WeeChat, mais je suis perdu, que puis-je faire ?
 
 Pour obtenir de l'aide tapez `/help`. Pour de l'aide sur une commande, tapez
-`/help commande`. Les link:weechat_user.fr.html#key_bindings[touches] et
-link:weechat_user.fr.html#commands_and_options[commandes] sont listées dans la
+`/help commande`. Les link:weechat_user.fr.html#key_bindings[touches ^↗^,window=_blank] et
+link:weechat_user.fr.html#commands_and_options[commandes ^↗^,window=_blank] sont listées dans la
 documentation.
 
 Il est recommandé pour les nouveaux utilisateurs de lire le
-link:weechat_quickstart.fr.html[Guide de démarrage rapide].
+link:weechat_quickstart.fr.html[Guide de démarrage rapide ^↗^,window=_blank].
 
 [[display]]
 == Affichage
@@ -117,7 +110,7 @@ attentivement et vérifier *TOUS* les points ci-dessous :
 ** Si vous utilisez screen, vérifiez qu'il est lancé en mode UTF-8
    ("`defutf8 on`" dans ~/.screenrc ou `screen -U` pour lancer screen).
 * Vérifiez que l'option
-  link:weechat_user.fr.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_]
+  link:weechat_user.fr.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^,window=_blank]
   est désactivée (cette option peut causer des problèmes d'affichage).
 
 [NOTE]
@@ -133,10 +126,10 @@ devrait être corrigé dans la glibc 2.22 (peut-être pas encore disponible dans
 votre distribution).
 
 Il y a un moyen de contournement pour utiliser la fonction _wcwidth_ corrigée :
-https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
+https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^,window=_blank].
 
-Voir ce rapport de bug pour plus d'informations :
-https://github.com/weechat/weechat/issues/79
+Voir ce https://github.com/weechat/weechat/issues/79[rapport de bug ^↗^,window=_blank]
+pour plus d'informations.
 
 [[bars_background]]
 === Des barres telles que le titre et le statut ne sont pas remplies, la couleur de fond s'arrête après le texte, pourquoi ?
@@ -194,17 +187,10 @@ fenêtres.
 [[buffers_list]]
 === Comment afficher la liste des tampons sur la gauche ?
 
-Avec WeeChat ≥ 1.8, l'extension link:weechat_user.fr.html#buflist_plugin[buflist]
+L'extension link:weechat_user.fr.html#buflist[buflist ^↗^,window=_blank]
 est chargée et activée par défaut.
 
-Avec une version plus ancienne, vous pouvez installer le script _buffers.pl_ :
-
-----
-/script install buffers.pl
-----
-
-Pour limiter la taille de la barre (remplacez "buflist" par "buffers" si vous
-utilisez le script _buffers.pl_) :
+Pour limiter la taille de la barre :
 
 ----
 /set weechat.bar.buffers.size_max 15
@@ -221,21 +207,6 @@ vous pouvez faire défiler avec la roulette de votre souris.
 
 Les touches par défaut pour faire défiler la barre _buflist_ sont kbd:[F1]
 (ou kbd:[Ctrl+F1]), kbd:[F2] (ou kbd:[Ctrl+F2]), kbd:[Alt+F1] et kbd:[Alt+F2].
-
-Pour le script _buffers.pl_, vous pouvez définir des touches, comme les touches
-déjà existantes pour faire défiler la liste de pseudos. +
-Par exemple pour utiliser kbd:[F1], kbd:[F2], kbd:[Alt+F1] et kbd:[Alt+F2] :
-
-----
-/key bind meta-OP /bar scroll buffers * -100%
-/key bind meta-OQ /bar scroll buffers * +100%
-/key bind meta-meta-OP /bar scroll buffers * b
-/key bind meta-meta-OQ /bar scroll buffers * e
-----
-
-[NOTE]
-Les touches "meta-OP" et "meta-OQ" peuvent être différentes dans votre terminal.
-Pour trouver le code de la touche appuyez sur kbd:[Alt+k] puis la touche.
 
 [[customize_buflist]]
 === Comment puis-je configurer la liste des tampons, comme la couleur du tampon actif ?
@@ -262,8 +233,8 @@ Vous pouvez aussi utiliser une couleur numérique à la place de `red`, comme
 L'extension buflist met à disposition beaucoup d'options que vous pouvez changer,
 merci de lire l'aide sur chaque option.
 
-Il y a aussi une page wiki avec des examples avancés de configuration buflist :
-https://github.com/weechat/weechat/wiki/buflist
+Il y a aussi une https://github.com/weechat/weechat/wiki/buflist[page wiki ^↗^,window=_blank]
+avec des exemples avancés de configuration buflist.
 
 [[customize_prefix]]
 === Comment puis-je réduire la longueur des pseudos ou supprimer l'alignement des pseudos dans la zone de discussion ?
@@ -307,7 +278,7 @@ Ces couleurs peuvent être changées via les options __weechat.color.status_data
 Les autres options pour la "hotlist" peuvent être changées via les options
 __weechat.look.hotlist_*__.
 
-Voir le link:weechat_user.fr.html#screen_layout[Guide utilisateur / Organisation de l'écran]
+Voir le link:weechat_user.fr.html#screen_layout[Guide utilisateur / Organisation de l'écran ^↗^,window=_blank]
 pour plus d'information sur la "hotlist".
 
 [[input_bar_size]]
@@ -354,9 +325,9 @@ barre, WeeChat recréera automatiquement la barre par défaut "input" si l'objet
 [[terminal_copy_paste]]
 === Comment puis-je copier/coller du texte sans coller la liste des pseudos ?
 
-Avec WeeChat ≥ 1.0, vous pouvez utiliser l'affichage dépouillé (touche par
-défaut : kbd:[Alt+l] (`L`)), qui affiche juste le contenu de la fenêtre
-actuellement sélectionnée sans aucun formatage.
+Vous pouvez utiliser l'affichage dépouillé (touche par défaut : kbd:[Alt+l] (`L`)),
+qui affiche juste le contenu de la fenêtre actuellement sélectionnée sans aucun
+formatage.
 
 Vous pouvez utiliser un terminal qui propose la sélection rectangulaire (comme
 rxvt-unicode, konsole, gnome-terminal, etc.). La touche est habituellement
@@ -372,8 +343,7 @@ exemple :
 [[urls]]
 === Comment puis-je cliquer sur les longs URLs (plus d'une ligne) ?
 
-Avec WeeChat ≥ 1.0, vous pouvez utiliser l'affichage dépouillé (touche par
-défaut : kbd:[Alt+l] (`L`)).
+Vous pouvez utiliser l'affichage dépouillé (touche par défaut : kbd:[Alt+l] (`L`)).
 
 Pour rendre le clic d'URL plus facile, vous pouvez :
 
@@ -383,7 +353,7 @@ Pour rendre le clic d'URL plus facile, vous pouvez :
 /set weechat.bar.nicklist.position top
 ----
 
-* désactiver l'alignement pour les mots sur plusieurs lignes (WeeChat ≥ 1.7) :
+* désactiver l'alignement pour les mots sur plusieurs lignes :
 
 ----
 /set weechat.look.align_multiline_words off
@@ -395,9 +365,9 @@ Pour rendre le clic d'URL plus facile, vous pouvez :
 /set weechat.look.align_end_of_lines time
 ----
 
-Avec WeeChat ≥ 0.3.6, vous pouvez activer l'option "eat_newline_glitch", pour
-éviter qu'un caractère de nouvelle ligne soit affiché après chaque ligne (donc
-cela ne cassera pas la sélection d'une URL) :
+Vous pouvez activer l'option "eat_newline_glitch", pour éviter qu'un caractère
+de nouvelle ligne soit affiché après chaque ligne (donc cela ne cassera pas
+la sélection d'une URL) :
 
 ----
 /set weechat.look.eat_newline_glitch on
@@ -445,8 +415,6 @@ Dans WeeChat, la nouvelle valeur est immédiatement utilisée :
 [[use_256_colors]]
 === Comment puis-je utiliser 256 couleurs sous WeeChat ?
 
-Les 256 couleurs sont supportées avec WeeChat ≥ 0.3.4.
-
 Premièrement vérifiez que votre variable d'environnement _TERM_ est correcte,
 les valeurs recommandées sont :
 
@@ -467,22 +435,18 @@ term screen-256color
 ----
 
 Si votre variable _TERM_ a une valeur erronée et que WeeChat est déjà lancé,
-vous pouvez la changer avec ces deux commandes (avec WeeChat ≥ 1.0) :
+vous pouvez la changer avec ces deux commandes :
 
 ----
 /set env TERM screen-256color
 /upgrade
 ----
 
-Pour la version 0.3.4, vous devez utiliser la commande `/color` pour ajouter
-des nouvelles couleurs.
+Vous pouvez utiliser un numéro de couleur dans les options (facultatif : vous
+pouvez ajouter des alias de couleurs avec la commande `/color`).
 
-Pour les versions ≥ 0.3.5, vous pouvez utiliser un numéro de couleur dans les
-options (facultatif : vous pouvez ajouter des alias de couleurs avec la commande
-`/color`).
-
-Merci de lire le link:weechat_user.fr.html#colors[Guide utilisateur / Couleurs] pour
-plus d'information sur la gestion des couleurs.
+Merci de lire le link:weechat_user.fr.html#colors[Guide utilisateur / Couleurs ^↗^,window=_blank]
+pour plus d'information sur la gestion des couleurs.
 
 [[search_text]]
 === Comment puis-je chercher du texte dans le tampon (comme /lastlog dans irssi) ?
@@ -490,7 +454,7 @@ plus d'information sur la gestion des couleurs.
 La touche par défaut est kbd:[Ctrl+r] (la commande est : `+/input search_text_here+`).
 Et sauter aux highlights : kbd:[Alt+p] / kbd:[Alt+n].
 
-Voir le link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut]
+Voir le link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut ^↗^,window=_blank]
 pour plus d'information sur cette fonctionnalité.
 
 [[terminal_focus]]
@@ -525,7 +489,7 @@ les commandes de votre choix) :
 Par exemple pour marquer les tampons comme lus lorsque le terminal perd le focus :
 
 ----
-/key bind meta2-O /input set_unread
+/key bind meta2-O /allbuf /buffer set unread
 ----
 
 [[screen_paste]]
@@ -667,7 +631,7 @@ Vous pouvez définir une touche, par exemple :
 ----
 
 La liste des touches par défaut est dans le
-link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut].
+link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut ^↗^,window=_blank].
 
 Pour sauter vers les tampons ayant un numéro ≥ 100, vous pouvez définir un trigger
 et utiliser les commandes comme `/123` pour sauter au tampon n°123 :
@@ -698,8 +662,6 @@ Pour trouver le code de la touche appuyez sur kbd:[Alt+k] puis la touche.
 
 [[mouse_not_working]]
 === La souris ne fonctionne pas du tout, que puis-je faire ?
-
-La souris est supportée avec WeeChat ≥ 0.3.6.
 
 Premièrement essayez d'activer la souris :
 
@@ -752,12 +714,6 @@ kbd:[Alt] au lieu de kbd:[Shift]).
 Si vous utilisez macOS, vous devez installer `openssl` depuis Homebrew.
 Un fichier CA sera installé avec le le trousseau système.
 
-Avec WeeChat ≤ 3.1, vous pouvez définir le chemin vers les certificats système :
-
-----
-/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
-----
-
 Si vous voyez des erreurs à propos de la poignée de main gnutls ("handshake"),
 vous pouvez utiliser une valeur plus petite pour la clé Diffie-Hellman (par
 défaut 2048) :
@@ -783,8 +739,8 @@ le certificat, vous pouvez spécifier l'empreinte (SHA-512, SHA-256 ou SHA-1) :
 [[irc_ssl_handshake_error]]
 === Lors de la connexion SSL à un serveur, je vois juste une erreur "TLS handshake failed", que puis-je faire ?
 
-Vous pouvez essayer une chaîne de priorité différente (WeeChat ≥ 0.3.5
-seulement), remplacez "xxx" par le nom de votre serveur :
+Vous pouvez essayer une chaîne de priorité différente, remplacez "xxx" par
+le nom de votre serveur :
 
 ----
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
@@ -793,23 +749,8 @@ seulement), remplacez "xxx" par le nom de votre serveur :
 [[irc_ssl_libera]]
 === Comment puis-je me connecter à libera avec SSL ?
 
-Avec WeeChat ≤ 3.1, positionnez l'option _weechat.network.gnutls_ca_file_ avec
-le fichier des certificats :
-
-----
-/set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
-----
-
-Note : si vous êtes sous macOS avec le paquet homebrew openssl installé, vous
-pouvez lancer :
-
-----
-/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
-----
-
-[NOTE]
-Vérifiez que vous avez bien ce fichier (fourni généralement par le paquet
-"ca-certificates").
+Vérifiez que vous avez les certificats installés sur votre système, cela est
+fourni généralement par le paquet "ca-certificates".
 
 Configurez le port du serveur, SSL, puis connectez-vous :
 
@@ -855,26 +796,35 @@ commande et le join des canaux) :
 [[edit_autojoin]]
 === Comment puis-je ajouter/supprimer des canaux de l'option autojoin ?
 
-Vous pouvez utiliser la commande `/set` pour éditer la liste des canaux de
-l'autojoin, par exemple pour le serveur libera :
+Avec WeeChat ≥ 3.5, vous pouvez automatiquement enregistrer les canaux que
+vous rejoignez et quittez manuellement dans l'option "autojoin" du serveur.
+
+Pour tous les serveurs :
 
 ----
-/set irc.server.libera.autojoin [TAB]
+/set irc.server_default.autojoin_dynamic on
 ----
 
-[NOTE]
-Vous pouvez compléter le nom et les valeurs de l'option avec la touche kbd:[Tab]
-(ou kbd:[Shift+Tab] pour une complétion partielle, pratique pour le nom). +
-De cette façon, vous n'avez pas à taper la liste complète des canaux.
-
-Vous pouvez également utiliser la commande `/fset` pour éditer la liste
-des canaux :
+Pour un seul serveur :
 
 ----
-/fset autojoin
+/set irc.server.libera.autojoin_dynamic on
 ----
 
-Une autre solution est d'utiliser un script :
+Vous pouvez aussi ajouter le canal coucant dans l'option "autojoin" du serveur
+avec la commande `/autojoin` :
+
+----
+/autojoin add
+----
+
+Ou un autre canal :
+
+----
+/autojoin add #test
+----
+
+Il y a aussi des scripts :
 
 ----
 /script search autojoin
@@ -918,14 +868,14 @@ Avec un filtre global (pour cacher *tous* les join/part/quit) :
 
 [NOTE]
 Pour l'aide : `/help filter`, `+/help irc.look.smart_filter+` et voir
-link:weechat_user.fr.html#irc_smart_filter_join_part_quit[Guide utilisateur / Filtre intelligent pour les messages join/part/quit].
+link:weechat_user.fr.html#irc_smart_filter_join_part_quit[Guide utilisateur / Filtre intelligent pour les messages join/part/quit ^↗^,window=_blank].
 
 [[filter_irc_join_channel_messages]]
 === Comment puis-je filtrer certains messages affichés quand je rejoins un canal IRC ?
 
-Avec WeeChat ≥ 0.4.1, vous pouvez choisir les messages affichés lorsque
-vous rejoignez un canal avec l'option _irc.look.display_join_message_ (voir
-`+/help irc.look.display_join_message+` pour plus d'informations).
+Vous pouvez choisir les messages affichés lorsque vous rejoignez un canal avec
+l'option _irc.look.display_join_message_ (voir `+/help irc.look.display_join_message+`
+pour plus d'informations).
 
 Pour cacher des messages (mais les garder dans le tampon), vous pouvez les
 filtrer en utilisant l'étiquette (par exemple _irc_329_ pour la date de création
@@ -983,17 +933,13 @@ canaux avec maximum 25 pseudos :
 /set irc.server_default.away_check_max_nicks 25
 ----
 
-[NOTE]
-Pour WeeChat ≤ 0.3.3, les options sont _irc.network.away_check_ et
-_irc.network.away_check_max_nicks_.
-
 [[highlight_notification]]
 === Comment être averti lorsque quelqu'un prononce mon pseudo sur un canal ?
 
-Avec WeeChat ≥ 1.0, il y a un trigger "beep" qui envoie _BEL_ au terminal sur
-un highlight ou un message privé. Par conséquent vous pouvez configurer votre
-terminal (ou multiplexeur comme screen/tmux) pour lancer une commande ou jouer
-un son lorsque le _BEL_ se produit.
+Il y a un trigger "beep" qui envoie _BEL_ au terminal sur un highlight ou
+un message privé. Par conséquent vous pouvez configurer votre terminal
+(ou multiplexeur comme screen/tmux) pour lancer une commande ou jouer un son
+lorsque le _BEL_ se produit.
 
 Ou vous pouvez ajouter une commande dans le trigger "beep" :
 
@@ -1019,8 +965,8 @@ Autres scripts sur ce sujet :
 [[disable_highlights_for_specific_nicks]]
 === Comment puis-je désactiver le highlight pour des pseudos spécifiques ?
 
-Avec WeeChat ≥ 0.3.4 vous pouvez utiliser la propriété de tampon
-link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add]
+Vous pouvez utiliser la propriété de tampon
+link:weechat_user.fr.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
 pour définir le niveau maximum de hotlist pour certains pseudos, par tampon,
 ou groupe de tampons (comme des serveurs IRC).
 
@@ -1057,7 +1003,7 @@ Pour plus d'exemples, voir `+/help buffer_autoset+`.
 === Comment puis-je changer le serveur cible pour les commandes avec des tampons mélangés (comme le tampon avec les serveurs) ?
 
 La touche par défaut est kbd:[Ctrl+x] (la commande est :
-`+/input switch_active_buffer+`).
+`+/buffer switch+`).
 
 [[plugins_scripts]]
 == Extensions / scripts
@@ -1078,9 +1024,8 @@ Vous devez configurer ça :
 [[install_scripts]]
 === Comment puis-je installer des scripts ? Les scripts sont-ils compatibles avec d'autres clients IRC ?
 
-Avec WeeChat ≥ 0.3.9, vous pouvez utiliser la commande `/script` pour installer
-et gérer les scripts (voir `/help script` pour de l'aide). Pour les versions
-plus anciennes il y a weeget.py et script.pl.
+Vous pouvez utiliser la commande `/script` pour installer et gérer les scripts
+(voir `/help script` pour de l'aide).
 
 Les scripts ne sont pas compatibles avec d'autres clients IRC.
 
@@ -1097,7 +1042,8 @@ $ rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
 [NOTE]
-Avec WeeChat ≤ 3.1, le chemin devrait être : _~/.weechat/script/plugins.xml.gz_.
+Si vous n'utilisez pas les répertoires XDG, le chemin pourrait être :
+_~/.weechat/script/plugins.xml.gz_.
 
 Et mettez à jour les scripts à nouveau dans WeeChat :
 
@@ -1123,6 +1069,14 @@ $ cd ~/.cache/weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
+Si vous êtes sous macOS et que le fichier téléchargé a une taille de 0 octet,
+essayez de définir cette variable dans votre fichier d'initialisation du shell
+ou sur la ligne de commande, avant de démarrer WeeChat :
+
+----
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+----
+
 [[spell_dictionaries]]
 === J'ai installé des dictionnaires aspell sur mon système, comment les utiliser sans redémarrer WeeChat ?
 
@@ -1131,10 +1085,6 @@ Vous devez recharger l'extension spell :
 ----
 /plugin reload spell
 ----
-
-[NOTE]
-Avec WeeChat ≤ 2.4, l'extension "spell" s'appelait "aspell", donc la commande est :
-`/plugin reload aspell`.
 
 [[settings]]
 == Réglages
@@ -1227,7 +1177,7 @@ Définissez une phrase de chiffrement et utilisez les données sécurisées part
 où vous le pouvez pour les données sensibles comme les mots de passe : voir
 `/help secure` et `/help` sur les options (si vous pouvez utiliser les données
 sécurisées, cela est mentionné dans l'aide).
-Voir aussi link:weechat_user.fr.html#secured_data[Guide utilisateur / Données sécurisées].
+Voir aussi link:weechat_user.fr.html#secured_data[Guide utilisateur / Données sécurisées ^↗^,window=_blank].
 
 Par exemple :
 
@@ -1250,7 +1200,7 @@ Quelques autres fichiers peuvent contenir des informations sensibles comme
 des mots de passes (s'ils ne sont pas stockés dans _sec.conf_ avec la commande
 `/secure`).
 
-Voir le link:weechat_user.fr.html#files_and_directories[Guide utilisateur / Fichiers et répertoires]
+Voir le link:weechat_user.fr.html#files_and_directories[Guide utilisateur / Fichiers et répertoires ^↗^,window=_blank]
 pour plus d'informations sur les fichiers de configuration.
 
 [[development]]
@@ -1259,7 +1209,7 @@ pour plus d'informations sur les fichiers de configuration.
 [[bug_task_patch]]
 === Comment puis-je reporter un bug, demander une nouvelle fonctionnalité ou envoyer un patch ?
 
-Voir : https://weechat.org/about/support
+Voir https://weechat.org/about/support/[cette page ^↗^,window=_blank].
 
 [[gdb_error_threads]]
 === Quand je lance WeeChat sous gdb, il y a une erreur à propos des threads, que puis-je faire ?
@@ -1296,11 +1246,11 @@ tester WeeChat.
 
 Il y a plusieurs choses à faire (test, code, documentation, etc.)
 
-Merci de prendre contact avec nous par IRC ou mail, consultez la page
-support : https://weechat.org/about/support
+Merci de prendre contact avec nous par IRC ou mail, consultez la
+https://weechat.org/about/support/[page support ^↗^,window=_blank].
 
 [[donate]]
 === Puis-je donner de l'argent ou d'autres choses aux développeurs WeeChat ?
 
 Vous pouvez donner de l'argent pour aider le développement.
-Plus de détails sur https://weechat.org/donate
+Plus de détails sur https://weechat.org/donate/[la page de dons ^↗^,window=_blank].

@@ -77,8 +77,9 @@ Alphabetically:
 * Krzysztof Koroscik (soltys)
 * Kyle Fuller (kylef)
 * Kyle Sabo
-* Leonid Evdokimov
+* Latchezar Tzvetkoff
 * Lázaro A.
+* Leonid Evdokimov
 * Linus Heckemann
 * Maarten de Vries
 * Mantas Mikulėnas (grawity)
@@ -122,6 +123,7 @@ Alphabetically:
 * Rudolf Polzer (divVerent)
 * Ruslan Bekenev
 * Ryan Farley
+* Ryan Qian
 * Ryuunosuke Ayanokouzi
 * scumjr
 * Sergio Durigan Junior
@@ -155,5 +157,4 @@ Alphabetically:
 
 == Contact
 
-See https://weechat.org/files/doc/devel/weechat_user.en.html#support[user's guide]
-or https://weechat.org/about/support
+See the https://weechat.org/about/support/[support page].

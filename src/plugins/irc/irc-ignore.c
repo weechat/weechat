@@ -1,7 +1,7 @@
 /*
  * irc-ignore.c - ignore (nicks/hosts) management for IRC plugin
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -73,6 +73,9 @@ irc_ignore_search (const char *mask, const char *server, const char *channel)
     struct t_irc_ignore *ptr_ignore;
     char any[2] = "*";
 
+    if (!mask)
+        return NULL;
+
     if (!server)
         server = any;
     if (!channel)
@@ -82,7 +85,7 @@ irc_ignore_search (const char *mask, const char *server, const char *channel)
          ptr_ignore = ptr_ignore->next_ignore)
     {
         if ((strcmp (ptr_ignore->mask, mask) == 0)
-            && (weechat_strcasecmp (ptr_ignore->server, server) == 0)
+            && (strcmp (ptr_ignore->server, server) == 0)
             && (weechat_strcasecmp (ptr_ignore->channel, channel) == 0))
         {
             return ptr_ignore;
@@ -177,7 +180,7 @@ irc_ignore_check_server (struct t_irc_ignore *ignore, const char *server)
     if (strcmp (ignore->server, "*") == 0)
         return 1;
 
-    return (weechat_strcasecmp (ignore->server, server) == 0) ? 1 : 0;
+    return (server && (strcmp (ignore->server, server) == 0)) ? 1 : 0;
 }
 
 /*

@@ -1,7 +1,7 @@
 /*
  * test-core-string.cpp - test string functions
  *
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,6 +21,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #ifndef HAVE_CONFIG_H
@@ -31,7 +33,6 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <regex.h>
-#include "tests/tests.h"
 #include "src/core/weechat.h"
 #include "src/core/wee-config.h"
 #include "src/core/wee-string.h"
@@ -126,7 +127,7 @@ TEST_GROUP(CoreString)
  *   string_strndup
  */
 
-TEST(CoreString, Duplicate)
+TEST(CoreString, Strndup)
 {
     const char *str_test = "test";
     char *str;
@@ -141,10 +142,34 @@ TEST(CoreString, Duplicate)
     STRCMP_EQUAL(str, "");
     free (str);
 
+    str = string_strndup (str_test, 1);
+    CHECK(str);
+    CHECK(str != str_test);
+    STRCMP_EQUAL(str, "t");
+    free (str);
+
     str = string_strndup (str_test, 2);
     CHECK(str);
     CHECK(str != str_test);
     STRCMP_EQUAL(str, "te");
+    free (str);
+
+    str = string_strndup (str_test, 3);
+    CHECK(str);
+    CHECK(str != str_test);
+    STRCMP_EQUAL(str, "tes");
+    free (str);
+
+    str = string_strndup (str_test, 4);
+    CHECK(str);
+    CHECK(str != str_test);
+    STRCMP_EQUAL(str, "test");
+    free (str);
+
+    str = string_strndup (str_test, 5);
+    CHECK(str);
+    CHECK(str != str_test);
+    STRCMP_EQUAL(str, "test");
     free (str);
 
     str = string_strndup (str_test, 500);
@@ -157,21 +182,39 @@ TEST(CoreString, Duplicate)
 /*
  * Tests functions:
  *   string_tolower
- *   string_toupper
  */
 
-TEST(CoreString, Case)
+TEST(CoreString, ToLower)
 {
     char *str;
 
-    str = strdup ("ABC");
+    WEE_TEST_STR(NULL, string_tolower (NULL));
 
-    string_tolower (str);
-    STRCMP_EQUAL("abc", str);
-    string_toupper (str);
-    STRCMP_EQUAL("ABC", str);
+    WEE_TEST_STR("", string_tolower (""));
+    WEE_TEST_STR("abcd_é", string_tolower ("ABCD_É"));
+    WEE_TEST_STR("àáâãäåæçèéêëìíîïðñòóôõöøœšùúûüýÿ",
+                 string_tolower ("ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØŒŠÙÚÛÜÝŸ"));
+    WEE_TEST_STR("€", string_tolower ("€"));
+    WEE_TEST_STR("[⛄]", string_tolower ("[⛄]"));
+}
 
-    free (str);
+/*
+ * Tests functions:
+ *   string_toupper
+ */
+
+TEST(CoreString, ToUpper)
+{
+    char *str;
+
+    WEE_TEST_STR(NULL, string_tolower (NULL));
+
+    WEE_TEST_STR("", string_toupper (""));
+    WEE_TEST_STR("ABCD_É", string_toupper ("abcd_é"));
+    WEE_TEST_STR("ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØŒŠÙÚÛÜÝŸ",
+                 string_toupper ("àáâãäåæçèéêëìíîïðñòóôõöøœšùúûüýÿ"));
+    WEE_TEST_STR("€", string_toupper ("€"));
+    WEE_TEST_STR("[⛄]", string_toupper ("[⛄]"));
 }
 
 /*
@@ -181,6 +224,8 @@ TEST(CoreString, Case)
 
 TEST(CoreString, Cut)
 {
+    char suffix[128], string[128];
+
     POINTERS_EQUAL(NULL, string_cut (NULL, 0, 0, 0, NULL));
     STRCMP_EQUAL("", string_cut ("", 0, 0, 0, NULL));
 
@@ -276,6 +321,25 @@ TEST(CoreString, Cut)
     STRCMP_EQUAL("こ", string_cut ("こんにちは世界", 3, 1, 1, NULL));
     STRCMP_EQUAL("こ+", string_cut ("こんにちは世界", 3, 1, 1, "+"));
     STRCMP_EQUAL("こ…", string_cut ("こんにちは世界", 3, 1, 1, "…"));
+
+    /* cut suffix using color and 1 char */
+    snprintf (suffix, sizeof (suffix), "%s+", gui_color_get_custom ("red"));
+    snprintf (string, sizeof (string), "te%s+", gui_color_get_custom ("red"));
+    STRCMP_EQUAL(string, string_cut ("test", 3, 1, 1, suffix));
+
+    /* cut suffix using color and 2 chars */
+    snprintf (suffix, sizeof (suffix), "%s++", gui_color_get_custom ("red"));
+    snprintf (string, sizeof (string), "t%s++", gui_color_get_custom ("red"));
+    STRCMP_EQUAL(string, string_cut ("test", 3, 1, 1, suffix));
+
+    /* cut suffix using color and 3 chars */
+    snprintf (suffix, sizeof (suffix), "%s+++", gui_color_get_custom ("red"));
+    snprintf (string, sizeof (string), "%s+++", gui_color_get_custom ("red"));
+    STRCMP_EQUAL(string, string_cut ("test", 3, 1, 1, suffix));
+
+    /* cut suffix using color and 4 chars */
+    snprintf (suffix, sizeof (suffix), "%s++++", gui_color_get_custom ("red"));
+    STRCMP_EQUAL("", string_cut ("test", 3, 1, 1, suffix));
 }
 
 /*
@@ -393,6 +457,62 @@ TEST(CoreString, Repeat)
 
 /*
  * Tests functions:
+ *   string_charcmp
+ *   string_charcasecmp
+ *   string_charcasecmp_range
+ */
+
+TEST(CoreString, CharComparison)
+{
+    /* case-sensitive comparison */
+    LONGS_EQUAL(0, string_charcmp (NULL, NULL));
+    LONGS_EQUAL(-97, string_charcmp (NULL, "abc"));
+    LONGS_EQUAL(97, string_charcmp ("abc", NULL));
+    LONGS_EQUAL(0, string_charcmp ("axx", "azz"));
+    LONGS_EQUAL(-2, string_charcmp ("A", "C"));
+    LONGS_EQUAL(2, string_charcmp ("C", "A"));
+    LONGS_EQUAL(-32, string_charcmp ("A", "a"));
+    LONGS_EQUAL(-8129, string_charcmp ("ë", "€"));
+    LONGS_EQUAL(235, string_charcmp ("ë", ""));
+    LONGS_EQUAL(-235, string_charcmp ("", "ë"));
+
+    /* case-insensitive comparison */
+    LONGS_EQUAL(0, string_charcasecmp (NULL, NULL));
+    LONGS_EQUAL(-97, string_charcasecmp (NULL, "abc"));
+    LONGS_EQUAL(97, string_charcasecmp ("abc", NULL));
+    LONGS_EQUAL(0, string_charcasecmp ("axx", "azz"));
+    LONGS_EQUAL(-2, string_charcasecmp ("A", "C"));
+    LONGS_EQUAL(2, string_charcasecmp ("C", "A"));
+    LONGS_EQUAL(0, string_charcasecmp ("A", "a"));
+    LONGS_EQUAL(-8129, string_charcasecmp ("ë", "€"));
+
+    /* case-insensitive comparison with a range */
+    LONGS_EQUAL(0, string_charcasecmp_range (NULL, NULL, 30));
+    LONGS_EQUAL(-97, string_charcasecmp_range (NULL, "abc", 30));
+    LONGS_EQUAL(97, string_charcasecmp_range ("abc", NULL, 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("axx", "azz", 30));
+    LONGS_EQUAL(-2, string_charcasecmp_range ("A", "C", 30));
+    LONGS_EQUAL(2, string_charcasecmp_range ("C", "A", 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("A", "a", 30));
+    LONGS_EQUAL(-8129, string_charcasecmp_range ("ë", "€", 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("[", "{", 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("]", "}", 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("\\", "|", 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("^", "~", 30));
+    LONGS_EQUAL(-32, string_charcasecmp_range ("[", "{", 26));
+    LONGS_EQUAL(32, string_charcasecmp_range ("{", "[", 26));
+    LONGS_EQUAL(-32, string_charcasecmp_range ("]", "}", 26));
+    LONGS_EQUAL(32, string_charcasecmp_range ("}", "]", 26));
+    LONGS_EQUAL(-32, string_charcasecmp_range ("\\", "|", 26));
+    LONGS_EQUAL(32, string_charcasecmp_range ("|", "\\", 26));
+    LONGS_EQUAL(-32, string_charcasecmp_range ("^", "~", 26));
+    LONGS_EQUAL(32, string_charcasecmp_range ("~", "^", 26));
+}
+
+/*
+ * Tests functions:
+ *   string_strcmp
+ *   string_strncmp
  *   string_strcasecmp
  *   string_strncasecmp
  *   string_strcasecmp_range
@@ -400,108 +520,175 @@ TEST(CoreString, Repeat)
  *   string_strcmp_ignore_chars
  */
 
-TEST(CoreString, Comparison)
+TEST(CoreString, StringComparison)
 {
+    /* case-sensitive comparison */
+    LONGS_EQUAL(0, string_strcmp (NULL, NULL));
+    LONGS_EQUAL(-97, string_strcmp (NULL, "abc"));
+    LONGS_EQUAL(97, string_strcmp ("abc", NULL));
+    LONGS_EQUAL(-98, string_strcmp ("", "b"));
+    LONGS_EQUAL(98, string_strcmp ("b", ""));
+    LONGS_EQUAL(0, string_strcmp ("abc", "abc"));
+    LONGS_EQUAL(32, string_strcmp ("abc", "ABC"));
+    LONGS_EQUAL(0, string_strcmp ("ABC", "ABC"));
+    LONGS_EQUAL(-3, string_strcmp ("abc", "def"));
+    LONGS_EQUAL(29, string_strcmp ("abc", "DEF"));
+    LONGS_EQUAL(-35, string_strcmp ("ABC", "def"));
+    LONGS_EQUAL(-3, string_strcmp ("ABC", "DEF"));
+    LONGS_EQUAL(3, string_strcmp ("def", "abc"));
+    LONGS_EQUAL(35, string_strcmp ("def", "ABC"));
+    LONGS_EQUAL(-29, string_strcmp ("DEF", "abc"));
+    LONGS_EQUAL(3, string_strcmp ("DEF", "ABC"));
+    LONGS_EQUAL(-9, string_strcmp ("à", "é"));
+    LONGS_EQUAL(32, string_strcmp ("ê", "Ê"));
+
+    /* case-sensitive comparison with max length */
+    LONGS_EQUAL(0, string_strncmp (NULL, NULL, 3));
+    LONGS_EQUAL(-97, string_strncmp (NULL, "abc", 3));
+    LONGS_EQUAL(97, string_strncmp ("abc", NULL, 3));
+    LONGS_EQUAL(-98, string_strncmp ("", "b", 3));
+    LONGS_EQUAL(98, string_strncmp ("b", "", 3));
+    LONGS_EQUAL(0, string_strncmp ("abc", "abc", 3));
+    LONGS_EQUAL(0, string_strncmp ("abcabc", "abcdef", 3));
+    LONGS_EQUAL(-3, string_strncmp ("abcabc", "abcdef", 6));
+    LONGS_EQUAL(32, string_strncmp ("abc", "ABC", 3));
+    LONGS_EQUAL(32, string_strncmp ("abcabc", "ABCDEF", 3));
+    LONGS_EQUAL(32, string_strncmp ("abcabc", "ABCDEF", 6));
+    LONGS_EQUAL(0, string_strncmp ("ABC", "ABC", 3));
+    LONGS_EQUAL(0, string_strncmp ("ABCABC", "ABCDEF", 3));
+    LONGS_EQUAL(-3, string_strncmp ("ABCABC", "ABCDEF", 6));
+    LONGS_EQUAL(-3, string_strncmp ("abc", "def", 3));
+    LONGS_EQUAL(29, string_strncmp ("abc", "DEF", 3));
+    LONGS_EQUAL(-35, string_strncmp ("ABC", "def", 3));
+    LONGS_EQUAL(-3, string_strncmp ("ABC", "DEF", 3));
+    LONGS_EQUAL(3, string_strncmp ("def", "abc", 3));
+    LONGS_EQUAL(35, string_strncmp ("def", "ABC", 3));
+    LONGS_EQUAL(-29, string_strncmp ("DEF", "abc", 3));
+    LONGS_EQUAL(3, string_strncmp ("DEF", "ABC", 3));
+    LONGS_EQUAL(-9, string_strncmp ("à", "é", 1));
+    LONGS_EQUAL(32, string_strncmp ("ê", "Ê", 1));
+
     /* case-insensitive comparison */
     LONGS_EQUAL(0, string_strcasecmp (NULL, NULL));
-    LONGS_EQUAL(-1, string_strcasecmp (NULL, "abc"));
-    LONGS_EQUAL(1, string_strcasecmp ("abc", NULL));
+    LONGS_EQUAL(-97, string_strcasecmp (NULL, "abc"));
+    LONGS_EQUAL(97, string_strcasecmp ("abc", NULL));
+    LONGS_EQUAL(-98, string_strcasecmp ("", "b"));
+    LONGS_EQUAL(98, string_strcasecmp ("b", ""));
     LONGS_EQUAL(0, string_strcasecmp ("abc", "abc"));
     LONGS_EQUAL(0, string_strcasecmp ("abc", "ABC"));
     LONGS_EQUAL(0, string_strcasecmp ("ABC", "ABC"));
-    LONGS_EQUAL(-1, string_strcasecmp ("abc", "def"));
-    LONGS_EQUAL(-1, string_strcasecmp ("abc", "DEF"));
-    LONGS_EQUAL(-1, string_strcasecmp ("ABC", "def"));
-    LONGS_EQUAL(-1, string_strcasecmp ("ABC", "DEF"));
-    LONGS_EQUAL(1, string_strcasecmp ("def", "abc"));
-    LONGS_EQUAL(1, string_strcasecmp ("def", "ABC"));
-    LONGS_EQUAL(1, string_strcasecmp ("DEF", "abc"));
-    LONGS_EQUAL(1, string_strcasecmp ("DEF", "ABC"));
+    LONGS_EQUAL(-3, string_strcasecmp ("abc", "def"));
+    LONGS_EQUAL(-3, string_strcasecmp ("abc", "DEF"));
+    LONGS_EQUAL(-3, string_strcasecmp ("ABC", "def"));
+    LONGS_EQUAL(-3, string_strcasecmp ("ABC", "DEF"));
+    LONGS_EQUAL(3, string_strcasecmp ("def", "abc"));
+    LONGS_EQUAL(3, string_strcasecmp ("def", "ABC"));
+    LONGS_EQUAL(3, string_strcasecmp ("DEF", "abc"));
+    LONGS_EQUAL(3, string_strcasecmp ("DEF", "ABC"));
+    LONGS_EQUAL(-9, string_strcasecmp ("à", "é"));
+    LONGS_EQUAL(0, string_strcasecmp ("ê", "Ê"));
 
     /* case-insensitive comparison with max length */
     LONGS_EQUAL(0, string_strncasecmp (NULL, NULL, 3));
-    LONGS_EQUAL(-1, string_strncasecmp (NULL, "abc", 3));
-    LONGS_EQUAL(1, string_strncasecmp ("abc", NULL, 3));
+    LONGS_EQUAL(-97, string_strncasecmp (NULL, "abc", 3));
+    LONGS_EQUAL(97, string_strncasecmp ("abc", NULL, 3));
+    LONGS_EQUAL(-98, string_strncasecmp ("", "b", 3));
+    LONGS_EQUAL(98, string_strncasecmp ("b", "", 3));
     LONGS_EQUAL(0, string_strncasecmp ("abc", "abc", 3));
     LONGS_EQUAL(0, string_strncasecmp ("abcabc", "abcdef", 3));
-    LONGS_EQUAL(-1, string_strncasecmp ("abcabc", "abcdef", 6));
+    LONGS_EQUAL(-3, string_strncasecmp ("abcabc", "abcdef", 6));
     LONGS_EQUAL(0, string_strncasecmp ("abc", "ABC", 3));
     LONGS_EQUAL(0, string_strncasecmp ("abcabc", "ABCDEF", 3));
-    LONGS_EQUAL(-1, string_strncasecmp ("abcabc", "ABCDEF", 6));
+    LONGS_EQUAL(-3, string_strncasecmp ("abcabc", "ABCDEF", 6));
     LONGS_EQUAL(0, string_strncasecmp ("ABC", "ABC", 3));
     LONGS_EQUAL(0, string_strncasecmp ("ABCABC", "ABCDEF", 3));
-    LONGS_EQUAL(-1, string_strncasecmp ("ABCABC", "ABCDEF", 6));
-    LONGS_EQUAL(-1, string_strncasecmp ("abc", "def", 3));
-    LONGS_EQUAL(-1, string_strncasecmp ("abc", "DEF", 3));
-    LONGS_EQUAL(-1, string_strncasecmp ("ABC", "def", 3));
-    LONGS_EQUAL(-1, string_strncasecmp ("ABC", "DEF", 3));
-    LONGS_EQUAL(1, string_strncasecmp ("def", "abc", 3));
-    LONGS_EQUAL(1, string_strncasecmp ("def", "ABC", 3));
-    LONGS_EQUAL(1, string_strncasecmp ("DEF", "abc", 3));
-    LONGS_EQUAL(1, string_strncasecmp ("DEF", "ABC", 3));
+    LONGS_EQUAL(-3, string_strncasecmp ("ABCABC", "ABCDEF", 6));
+    LONGS_EQUAL(-3, string_strncasecmp ("abc", "def", 3));
+    LONGS_EQUAL(-3, string_strncasecmp ("abc", "DEF", 3));
+    LONGS_EQUAL(-3, string_strncasecmp ("ABC", "def", 3));
+    LONGS_EQUAL(-3, string_strncasecmp ("ABC", "DEF", 3));
+    LONGS_EQUAL(3, string_strncasecmp ("def", "abc", 3));
+    LONGS_EQUAL(3, string_strncasecmp ("def", "ABC", 3));
+    LONGS_EQUAL(3, string_strncasecmp ("DEF", "abc", 3));
+    LONGS_EQUAL(3, string_strncasecmp ("DEF", "ABC", 3));
+    LONGS_EQUAL(-9, string_strncasecmp ("à", "é", 1));
+    LONGS_EQUAL(0, string_strncasecmp ("ê", "Ê", 1));
 
     /* case-insensitive comparison with a range */
     LONGS_EQUAL(0, string_strcasecmp_range (NULL, NULL, 30));
-    LONGS_EQUAL(-1, string_strcasecmp_range (NULL, "abc", 30));
-    LONGS_EQUAL(1, string_strcasecmp_range ("abc", NULL, 30));
-    LONGS_EQUAL(-1, string_strcasecmp_range ("A", "Z", 30));
-    LONGS_EQUAL(1, string_strcasecmp_range ("Z", "A", 30));
+    LONGS_EQUAL(-97, string_strcasecmp_range (NULL, "abc", 30));
+    LONGS_EQUAL(97, string_strcasecmp_range ("abc", NULL, 30));
+    LONGS_EQUAL(-98, string_strcasecmp_range ("", "b", 30));
+    LONGS_EQUAL(98, string_strcasecmp_range ("b", "", 30));
+    LONGS_EQUAL(-2, string_strcasecmp_range ("A", "C", 30));
+    LONGS_EQUAL(2, string_strcasecmp_range ("C", "A", 30));
     LONGS_EQUAL(0, string_strcasecmp_range ("A", "a", 30));
-    LONGS_EQUAL(-1, string_strcasecmp_range ("ë", "€", 30));
+    LONGS_EQUAL(-8129, string_strcasecmp_range ("ë", "€", 30));
     LONGS_EQUAL(0, string_strcasecmp_range ("[", "{", 30));
     LONGS_EQUAL(0, string_strcasecmp_range ("]", "}", 30));
     LONGS_EQUAL(0, string_strcasecmp_range ("\\", "|", 30));
     LONGS_EQUAL(0, string_strcasecmp_range ("^", "~", 30));
-    LONGS_EQUAL(-1, string_strcasecmp_range ("[", "{", 26));
-    LONGS_EQUAL(-1, string_strcasecmp_range ("]", "}", 26));
-    LONGS_EQUAL(-1, string_strcasecmp_range ("\\", "|", 26));
-    LONGS_EQUAL(-1, string_strcasecmp_range ("^", "~", 26));
+    LONGS_EQUAL(-32, string_strcasecmp_range ("[", "{", 26));
+    LONGS_EQUAL(32, string_strcasecmp_range ("{", "[", 26));
+    LONGS_EQUAL(-32, string_strcasecmp_range ("]", "}", 26));
+    LONGS_EQUAL(32, string_strcasecmp_range ("}", "]", 26));
+    LONGS_EQUAL(-32, string_strcasecmp_range ("\\", "|", 26));
+    LONGS_EQUAL(32, string_strcasecmp_range ("|", "\\", 26));
+    LONGS_EQUAL(-32, string_strcasecmp_range ("^", "~", 26));
+    LONGS_EQUAL(32, string_strcasecmp_range ("~", "^", 26));
 
     /* case-insensitive comparison with max length and a range */
     LONGS_EQUAL(0, string_strncasecmp_range (NULL, NULL, 3, 30));
-    LONGS_EQUAL(-1, string_strncasecmp_range (NULL, "abc", 3, 30));
-    LONGS_EQUAL(1, string_strncasecmp_range ("abc", NULL, 3, 30));
-    LONGS_EQUAL(-1, string_strncasecmp_range ("ABC", "ZZZ", 3, 30));
-    LONGS_EQUAL(1, string_strncasecmp_range ("ZZZ", "ABC", 3, 30));
+    LONGS_EQUAL(-97, string_strncasecmp_range (NULL, "abc", 3, 30));
+    LONGS_EQUAL(97, string_strncasecmp_range ("abc", NULL, 3, 30));
+    LONGS_EQUAL(-98, string_strncasecmp_range ("", "b", 3, 30));
+    LONGS_EQUAL(98, string_strncasecmp_range ("b", "", 3, 30));
+    LONGS_EQUAL(-2, string_strncasecmp_range ("ABC", "CCC", 3, 30));
+    LONGS_EQUAL(2, string_strncasecmp_range ("CCC", "ABC", 3, 30));
     LONGS_EQUAL(0, string_strncasecmp_range ("ABC", "abc", 3, 30));
     LONGS_EQUAL(0, string_strncasecmp_range ("ABCABC", "abcdef", 3, 30));
-    LONGS_EQUAL(-1, string_strncasecmp_range ("ABCABC", "abcdef", 6, 30));
-    LONGS_EQUAL(-1, string_strncasecmp_range ("ëëë", "€€€", 3, 30));
+    LONGS_EQUAL(-3, string_strncasecmp_range ("ABCABC", "abcdef", 6, 30));
+    LONGS_EQUAL(-8129, string_strncasecmp_range ("ëëë", "€€€", 3, 30));
     LONGS_EQUAL(0, string_strncasecmp_range ("[[[", "{{{", 3, 30));
     LONGS_EQUAL(0, string_strncasecmp_range ("[[[abc", "{{{def", 3, 30));
-    LONGS_EQUAL(-1, string_strncasecmp_range ("[[[abc", "{{{def", 6, 30));
+    LONGS_EQUAL(-3, string_strncasecmp_range ("[[[abc", "{{{def", 6, 30));
     LONGS_EQUAL(0, string_strncasecmp_range ("]]]", "}}}", 3, 30));
     LONGS_EQUAL(0, string_strncasecmp_range ("]]]abc", "}}}def", 3, 30));
-    LONGS_EQUAL(-1, string_strncasecmp_range ("]]]abc", "}}}def", 6, 30));
+    LONGS_EQUAL(-3, string_strncasecmp_range ("]]]abc", "}}}def", 6, 30));
     LONGS_EQUAL(0, string_strncasecmp_range ("\\\\\\", "|||", 3, 30));
     LONGS_EQUAL(0, string_strncasecmp_range ("\\\\\\abc", "|||def", 3, 30));
-    LONGS_EQUAL(-1, string_strncasecmp_range ("\\\\\\abc", "|||def", 6, 30));
+    LONGS_EQUAL(-3, string_strncasecmp_range ("\\\\\\abc", "|||def", 6, 30));
     LONGS_EQUAL(0, string_strncasecmp_range ("^^^", "~~~", 3, 30));
     LONGS_EQUAL(0, string_strncasecmp_range ("^^^abc", "~~~def", 3, 30));
-    LONGS_EQUAL(-1, string_strncasecmp_range ("^^^abc", "~~~def", 6, 30));
-    LONGS_EQUAL(-1, string_strncasecmp_range ("[[[", "{{{", 3, 26));
-    LONGS_EQUAL(-1, string_strncasecmp_range ("]]]", "}}}", 3, 26));
-    LONGS_EQUAL(-1, string_strncasecmp_range ("\\\\\\", "|||", 3, 26));
-    LONGS_EQUAL(-1, string_strncasecmp_range ("^^^", "~~~", 3, 26));
+    LONGS_EQUAL(-3, string_strncasecmp_range ("^^^abc", "~~~def", 6, 30));
+    LONGS_EQUAL(-32, string_strncasecmp_range ("[[[", "{{{", 3, 26));
+    LONGS_EQUAL(-32, string_strncasecmp_range ("]]]", "}}}", 3, 26));
+    LONGS_EQUAL(-32, string_strncasecmp_range ("\\\\\\", "|||", 3, 26));
+    LONGS_EQUAL(-32, string_strncasecmp_range ("^^^", "~~~", 3, 26));
 
     /* comparison with chars ignored */
     LONGS_EQUAL(0, string_strcmp_ignore_chars (NULL, NULL, "", 0));
-    LONGS_EQUAL(-1, string_strcmp_ignore_chars (NULL, "abc", "", 0));
-    LONGS_EQUAL(1, string_strcmp_ignore_chars ("abc", NULL, "", 0));
-    LONGS_EQUAL(-1, string_strcmp_ignore_chars ("ABC", "ZZZ", "", 0));
-    LONGS_EQUAL(1, string_strcmp_ignore_chars ("ZZZ", "ABC", "", 0));
+    LONGS_EQUAL(-97, string_strcmp_ignore_chars (NULL, "abc", "", 0));
+    LONGS_EQUAL(97, string_strcmp_ignore_chars ("abc", NULL, "", 0));
+    LONGS_EQUAL(-98, string_strcmp_ignore_chars ("", "b", "", 0));
+    LONGS_EQUAL(98, string_strcmp_ignore_chars ("b", "", "", 0));
+    LONGS_EQUAL(-2, string_strcmp_ignore_chars ("ABC", "CCC", "", 0));
+    LONGS_EQUAL(2, string_strcmp_ignore_chars ("CCC", "ABC", "", 0));
     LONGS_EQUAL(0, string_strcmp_ignore_chars ("ABC", "abc", "", 0));
-    LONGS_EQUAL(-1, string_strcmp_ignore_chars ("ABC", "abc", "", 1));
+    LONGS_EQUAL(-32, string_strcmp_ignore_chars ("ABC", "abc", "", 1));
     LONGS_EQUAL(0, string_strcmp_ignore_chars ("abc..abc", "abcabc", ".", 0));
-    LONGS_EQUAL(1, string_strcmp_ignore_chars ("abc..abc", "ABCABC", ".", 1));
+    LONGS_EQUAL(32, string_strcmp_ignore_chars ("abc..abc", "ABCABC", ".", 1));
     LONGS_EQUAL(0, string_strcmp_ignore_chars ("abc..abc", "abc-.-.abc",
                                                ".-", 0));
-    LONGS_EQUAL(1, string_strcmp_ignore_chars ("abc..abc", "ABC-.-.ABC",
-                                               ".-", 1));
+    LONGS_EQUAL(32, string_strcmp_ignore_chars ("abc..abc", "ABC-.-.ABC",
+                                                ".-", 1));
     LONGS_EQUAL(0, string_strcmp_ignore_chars (".abc..abc", "..abcabc", ".", 0));
-    LONGS_EQUAL(1, string_strcmp_ignore_chars (".abc..abc", "..", ".", 0));
-    LONGS_EQUAL(-1, string_strcmp_ignore_chars (".", "..abcabc", ".", 0));
+    LONGS_EQUAL(97, string_strcmp_ignore_chars (".abc..abc", "..", ".", 0));
+    LONGS_EQUAL(-97, string_strcmp_ignore_chars (".", "..abcabc", ".", 0));
     LONGS_EQUAL(0, string_strcmp_ignore_chars (".", ".", ".", 0));
+    LONGS_EQUAL(-2, string_strcmp_ignore_chars ("è", "ê", "", 0));
+    LONGS_EQUAL(-2, string_strcmp_ignore_chars ("è", "Ê", "", 0));
+    LONGS_EQUAL(-2, string_strcmp_ignore_chars ("è", "ê", "", 1));
 }
 
 /*
@@ -892,6 +1079,21 @@ TEST(CoreString, ConvertEscapedChars)
 
 /*
  * Tests functions:
+ *   string_is_whitespace_char
+ */
+
+TEST(CoreString, IsWhitespaceChar)
+{
+    LONGS_EQUAL(0, string_is_whitespace_char (NULL));
+    LONGS_EQUAL(0, string_is_whitespace_char (""));
+    LONGS_EQUAL(0, string_is_whitespace_char ("abc def"));
+
+    LONGS_EQUAL(1, string_is_whitespace_char (" abc def"));
+    LONGS_EQUAL(1, string_is_whitespace_char ("\tabc def"));
+}
+
+/*
+ * Tests functions:
  *   string_is_word_char_highlight
  *   string_is_word_char_input
  */
@@ -1118,6 +1320,43 @@ TEST(CoreString, ReplaceRegex)
 
 /*
  * Tests functions:
+ *   string_translate_chars
+ */
+
+TEST(CoreString, TranslateChars)
+{
+    char *str;
+
+    POINTERS_EQUAL(NULL, string_translate_chars (NULL, NULL, NULL));
+    POINTERS_EQUAL(NULL, string_translate_chars (NULL, "abc", NULL));
+    POINTERS_EQUAL(NULL, string_translate_chars (NULL, "abc", "ABC"));
+    STRCMP_EQUAL("", string_translate_chars ("", "abc", "ABCDEF"));
+    STRCMP_EQUAL("test", string_translate_chars ("test", "abc", "ABCDEF"));
+    WEE_TEST_STR("", string_translate_chars ("", "abc", "ABC"));
+
+    WEE_TEST_STR("tEst", string_translate_chars ("test", "abcdef", "ABCDEF"));
+
+    WEE_TEST_STR("CleAn the BoAt",
+                 string_translate_chars ("clean the boat", "abc", "ABC"));
+
+    WEE_TEST_STR("↑", string_translate_chars ("←", "←↑→↓", "↑→↓←"));
+    WEE_TEST_STR("→", string_translate_chars ("↑", "←↑→↓", "↑→↓←"));
+    WEE_TEST_STR("↓", string_translate_chars ("→", "←↑→↓", "↑→↓←"));
+    WEE_TEST_STR("←", string_translate_chars ("↓", "←↑→↓", "↑→↓←"));
+
+    WEE_TEST_STR("uijt jt b uftu",
+                 string_translate_chars ("this is a test",
+                                         "abcdefghijklmnopqrstuvwxyz",
+                                         "bcdefghijklmnopqrstuvwxyza"));
+
+    WEE_TEST_STR("Uijt jt b uftu",
+                 string_translate_chars ("This is a test",
+                                         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                                         "bcdefghijklmnopqrstuvwxyzaBCDEFGHIJKLMNOPQRSTUVWXYZA"));
+}
+
+/*
+ * Tests functions:
  *   string_replace_with_callback
  */
 
@@ -1178,8 +1417,8 @@ TEST(CoreString, ReplaceWithCallback)
 
 /*
  * Tests functions:
- *    string_split
- *    string_free_split
+ *   string_split
+ *   string_free_split
  */
 
 TEST(CoreString, Split)
@@ -1465,8 +1704,8 @@ TEST(CoreString, Split)
 
 /*
  * Tests functions:
- *    string_split_shared
- *    string_free_split_shared
+ *   string_split_shared
+ *   string_free_split_shared
  */
 
 TEST(CoreString, SplitShared)
@@ -1509,8 +1748,8 @@ TEST(CoreString, SplitShared)
 
 /*
  * Tests functions:
- *    string_split_shell
- *    string_free_split
+ *   string_split_shell
+ *   string_free_split
  */
 
 TEST(CoreString, SplitShell)
@@ -1546,8 +1785,8 @@ TEST(CoreString, SplitShell)
 
 /*
  * Tests functions:
- *    string_split_command
- *    string_free_split_command
+ *   string_split_command
+ *   string_free_split_command
  */
 
 TEST(CoreString, SplitCommand)
@@ -1598,8 +1837,8 @@ TEST(CoreString, SplitCommand)
 
 /*
  * Tests functions:
- *    string_split_tags
- *    string_free_split_tags
+ *   string_split_tags
+ *   string_free_split_tags
  */
 
 TEST(CoreString, SplitTags)
@@ -1659,15 +1898,15 @@ TEST(CoreString, SplitTags)
 
 /*
  * Tests functions:
- *    string_build_with_split_string
+ *   string_rebuild_split_string
  */
 
-TEST(CoreString, SplitBuildWithSplitString)
+TEST(CoreString, RebuildSplitString)
 {
     char **argv, *str;
     int argc, flags;
 
-    str = string_build_with_split_string (NULL, NULL);
+    str = string_rebuild_split_string (NULL, NULL, 0, -1);
     POINTERS_EQUAL(NULL, str);
 
     flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -1675,16 +1914,94 @@ TEST(CoreString, SplitBuildWithSplitString)
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
     argv = string_split (" abc de  fghi ", " ", NULL, flags, 0, &argc);
 
-    str = string_build_with_split_string ((const char **)argv, NULL);
+    /* invalid index_end, which is < index_start */
+    str = string_rebuild_split_string ((const char **)argv, NULL, 1, 0);
+    POINTERS_EQUAL(NULL, str);
+    str = string_rebuild_split_string ((const char **)argv, NULL, 2, 1);
+    POINTERS_EQUAL(NULL, str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 0, -1);
     STRCMP_EQUAL("abcdefghi", str);
     free (str);
 
-    str = string_build_with_split_string ((const char **)argv, "");
+    str = string_rebuild_split_string ((const char **)argv, NULL, 0, 0);
+    STRCMP_EQUAL("abc", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 0, 1);
+    STRCMP_EQUAL("abcde", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 0, 2);
     STRCMP_EQUAL("abcdefghi", str);
     free (str);
 
-    str = string_build_with_split_string ((const char **)argv, ";;");
+    str = string_rebuild_split_string ((const char **)argv, NULL, 0, 3);
+    STRCMP_EQUAL("abcdefghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 1, 1);
+    STRCMP_EQUAL("de", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 1, 2);
+    STRCMP_EQUAL("defghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 1, 3);
+    STRCMP_EQUAL("defghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 2, 2);
+    STRCMP_EQUAL("fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, NULL, 2, 3);
+    STRCMP_EQUAL("fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, "", 0, -1);
+    STRCMP_EQUAL("abcdefghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 0, -1);
     STRCMP_EQUAL("abc;;de;;fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 0, 0);
+    STRCMP_EQUAL("abc", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 0, 1);
+    STRCMP_EQUAL("abc;;de", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 0, 2);
+    STRCMP_EQUAL("abc;;de;;fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 0, 3);
+    STRCMP_EQUAL("abc;;de;;fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 1, 1);
+    STRCMP_EQUAL("de", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 1, 2);
+    STRCMP_EQUAL("de;;fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 1, 3);
+    STRCMP_EQUAL("de;;fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 2, 2);
+    STRCMP_EQUAL("fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, ";;", 2, 3);
+    STRCMP_EQUAL("fghi", str);
     free (str);
 
     string_free_split (argv);
@@ -1692,10 +2009,10 @@ TEST(CoreString, SplitBuildWithSplitString)
 
 /*
  * Tests functions:
- *    string_iconv
- *    string_iconv_to_internal
- *    string_iconv_from_internal
- *    string_fprintf
+ *   string_iconv
+ *   string_iconv_to_internal
+ *   string_iconv_from_internal
+ *   string_fprintf
  */
 
 TEST(CoreString, Iconv)
@@ -1736,7 +2053,7 @@ TEST(CoreString, Iconv)
 
 /*
  * Tests functions:
- *    string_format_size
+ *   string_format_size
  */
 
 TEST(CoreString, FormatSize)
@@ -1773,8 +2090,78 @@ TEST(CoreString, FormatSize)
 
 /*
  * Tests functions:
- *    string_base16_encode
- *    string_base16_decode
+ *   string_parse_size
+ */
+
+TEST(CoreString, ParseSize)
+{
+    CHECK(string_parse_size (NULL) == 0ULL);
+
+    CHECK(string_parse_size ("") == 0ULL);
+    CHECK(string_parse_size ("*") == 0ULL);
+    CHECK(string_parse_size ("b") == 0ULL);
+    CHECK(string_parse_size ("k") == 0ULL);
+    CHECK(string_parse_size ("m") == 0ULL);
+    CHECK(string_parse_size ("g") == 0ULL);
+    CHECK(string_parse_size ("t") == 0ULL);
+    CHECK(string_parse_size ("z") == 0ULL);
+    CHECK(string_parse_size ("0z") == 0ULL);
+
+    CHECK(string_parse_size ("0") == 0ULL);
+    CHECK(string_parse_size ("0b") == 0ULL);
+    CHECK(string_parse_size ("0B") == 0ULL);
+
+    CHECK(string_parse_size ("1") == 1ULL);
+    CHECK(string_parse_size ("1b") == 1ULL);
+    CHECK(string_parse_size ("1B") == 1ULL);
+    CHECK(string_parse_size ("1 b") == 1ULL);
+    CHECK(string_parse_size ("1 B") == 1ULL);
+
+    CHECK(string_parse_size ("2") == 2ULL);
+    CHECK(string_parse_size ("2b") == 2ULL);
+    CHECK(string_parse_size ("2B") == 2ULL);
+
+    CHECK(string_parse_size ("42") == 42ULL);
+    CHECK(string_parse_size ("42b") == 42ULL);
+    CHECK(string_parse_size ("42B") == 42ULL);
+
+    CHECK(string_parse_size ("999") == 999ULL);
+    CHECK(string_parse_size ("999b") == 999ULL);
+    CHECK(string_parse_size ("999B") == 999ULL);
+
+    CHECK(string_parse_size ("1200") == 1200ULL);
+    CHECK(string_parse_size ("1200b") == 1200ULL);
+    CHECK(string_parse_size ("1200B") == 1200ULL);
+
+    CHECK(string_parse_size ("1k") == 1000ULL);
+    CHECK(string_parse_size ("1K") == 1000ULL);
+
+    CHECK(string_parse_size ("12k") == 12000ULL);
+    CHECK(string_parse_size ("12K") == 12000ULL);
+
+    CHECK(string_parse_size ("1m") == 1000000ULL);
+    CHECK(string_parse_size ("1M") == 1000000ULL);
+
+    CHECK(string_parse_size ("30m") == 30000000ULL);
+    CHECK(string_parse_size ("30M") == 30000000ULL);
+
+    CHECK(string_parse_size ("1g") == 1000000000ULL);
+    CHECK(string_parse_size ("1G") == 1000000000ULL);
+
+    CHECK(string_parse_size ("1234m") == 1234000000ULL);
+    CHECK(string_parse_size ("1234m") == 1234000000ULL);
+
+    CHECK(string_parse_size ("15g") == 15000000000ULL);
+    CHECK(string_parse_size ("15G") == 15000000000ULL);
+
+    CHECK(string_parse_size ("8t") == 8000000000000ULL);
+    CHECK(string_parse_size ("8T") == 8000000000000ULL);
+}
+
+/*
+ * Tests functions:
+ *   string_base16_encode
+ *   string_base16_decode
  */
 
 TEST(CoreString, Base16)
@@ -1823,8 +2210,8 @@ TEST(CoreString, Base16)
 
 /*
  * Tests functions:
- *    string_base32_encode
- *    string_base32_decode
+ *   string_base32_encode
+ *   string_base32_decode
  */
 
 TEST(CoreString, Base32)
@@ -1881,8 +2268,8 @@ TEST(CoreString, Base32)
 
 /*
  * Tests functions:
- *    string_base64_encode
- *    string_base64_decode
+ *   string_base64_encode
+ *   string_base64_decode
  */
 
 TEST(CoreString, Base64)
@@ -1956,7 +2343,7 @@ TEST(CoreString, Base64)
 
 /*
  * Tests functions:
- *    string_base_encode
+ *   string_base_encode
  */
 
 TEST(CoreString, BaseEncode)
@@ -1984,7 +2371,7 @@ TEST(CoreString, BaseEncode)
 
 /*
  * Tests functions:
- *    string_base_decode
+ *   string_base_decode
  */
 
 TEST(CoreString, BaseDecode)
@@ -2012,7 +2399,7 @@ TEST(CoreString, BaseDecode)
 
 /*
  * Tests functions:
- *    string_hex_dump
+ *   string_hex_dump
  */
 
 TEST(CoreString, Hex_dump)
@@ -2060,7 +2447,7 @@ TEST(CoreString, Hex_dump)
 
 /*
  * Tests functions:
- *    string_is_command_char
+ *   string_is_command_char
  */
 
 TEST(CoreString, IsCommandChar)
@@ -2092,7 +2479,7 @@ TEST(CoreString, IsCommandChar)
 
 /*
  * Tests functions:
- *    string_input_for_buffer
+ *   string_input_for_buffer
  */
 
 TEST(CoreString, InputForBuffer)
@@ -2155,8 +2542,145 @@ TEST(CoreString, InputForBuffer)
 
 /*
  * Tests functions:
- *    string_shared_get
- *    string_shared_free
+ *   string_get_common_bytes_count
+ */
+
+TEST(CoreString, GetCommonBytesCount)
+{
+    LONGS_EQUAL(0, string_get_common_bytes_count (NULL, NULL));
+    LONGS_EQUAL(0, string_get_common_bytes_count ("", NULL));
+    LONGS_EQUAL(0, string_get_common_bytes_count (NULL, ""));
+    LONGS_EQUAL(0, string_get_common_bytes_count ("", ""));
+
+    LONGS_EQUAL(1, string_get_common_bytes_count ("a", "a"));
+    LONGS_EQUAL(0, string_get_common_bytes_count ("a", "b"));
+
+    LONGS_EQUAL(3, string_get_common_bytes_count ("abc", "abc"));
+
+    LONGS_EQUAL(3, string_get_common_bytes_count ("abcdef", "fac"));
+
+    LONGS_EQUAL(4, string_get_common_bytes_count ("noël", "noïl"));
+}
+
+/*
+ * Tests functions:
+ *   string_levenshtein
+ */
+
+TEST(CoreString, Levenshtein)
+{
+    LONGS_EQUAL(0, string_levenshtein (NULL, NULL, 1));
+    LONGS_EQUAL(0, string_levenshtein ("", "", 1));
+    LONGS_EQUAL(3, string_levenshtein (NULL, "abc", 1));
+    LONGS_EQUAL(3, string_levenshtein ("abc", NULL, 1));
+    LONGS_EQUAL(3, string_levenshtein ("", "abc", 1));
+    LONGS_EQUAL(3, string_levenshtein ("abc", "", 1));
+
+    LONGS_EQUAL(0, string_levenshtein ("abc", "abc", 1));
+    LONGS_EQUAL(1, string_levenshtein ("abc", "ab", 1));
+    LONGS_EQUAL(1, string_levenshtein ("ab", "abc", 1));
+    LONGS_EQUAL(2, string_levenshtein ("abc", "a", 1));
+    LONGS_EQUAL(2, string_levenshtein ("a", "abc", 1));
+    LONGS_EQUAL(3, string_levenshtein ("abc", "", 1));
+    LONGS_EQUAL(3, string_levenshtein ("", "abc", 1));
+
+    LONGS_EQUAL(3, string_levenshtein ("abc", "ABC", 1));
+    LONGS_EQUAL(3, string_levenshtein ("abc", "AB", 1));
+    LONGS_EQUAL(3, string_levenshtein ("ab", "ABC", 1));
+    LONGS_EQUAL(3, string_levenshtein ("abc", "A", 1));
+    LONGS_EQUAL(3, string_levenshtein ("a", "ABC", 1));
+    LONGS_EQUAL(3, string_levenshtein ("abc", "", 1));
+    LONGS_EQUAL(3, string_levenshtein ("", "ABC", 1));
+
+    LONGS_EQUAL(0, string_levenshtein ("abc", "ABC", 0));
+    LONGS_EQUAL(1, string_levenshtein ("abc", "AB", 0));
+    LONGS_EQUAL(1, string_levenshtein ("ab", "ABC", 0));
+    LONGS_EQUAL(2, string_levenshtein ("abc", "A", 0));
+    LONGS_EQUAL(2, string_levenshtein ("a", "ABC", 0));
+    LONGS_EQUAL(3, string_levenshtein ("abc", "", 0));
+    LONGS_EQUAL(3, string_levenshtein ("", "ABC", 0));
+
+    LONGS_EQUAL(2, string_levenshtein ("response", "respond", 1));
+    LONGS_EQUAL(4, string_levenshtein ("response", "resist", 1));
+
+    LONGS_EQUAL(2, string_levenshtein ("response", "responsive", 1));
+
+    /* with UTF-8 chars */
+    LONGS_EQUAL(1, string_levenshtein ("é", "É", 1));
+    LONGS_EQUAL(0, string_levenshtein ("é", "É", 0));
+    LONGS_EQUAL(1, string_levenshtein ("é", "à", 1));
+    LONGS_EQUAL(1, string_levenshtein ("é", "à", 0));
+    LONGS_EQUAL(1, string_levenshtein ("té", "to", 1));
+    LONGS_EQUAL(1, string_levenshtein ("noël", "noel", 1));
+    LONGS_EQUAL(2, string_levenshtein ("bôô", "boo", 1));
+    LONGS_EQUAL(2, string_levenshtein ("界世", "こん", 1));
+}
+
+/*
+ * Tests functions:
+ *   string_get_priority_and_name
+ */
+
+TEST(CoreString, GetPriorityAndName)
+{
+    const char *empty = "";
+    const char *delimiter = "|";
+    const char *name = "test";
+    const char *name_prio_empty = "|test";
+    const char *name_prio = "1234|test";
+    const char *ptr_name;
+    int priority;
+
+    string_get_priority_and_name (NULL, NULL, NULL, 0);
+    string_get_priority_and_name ("test", NULL, NULL, 0);
+
+    /* NULL => (default_priority, NULL) */
+    priority = -1;
+    ptr_name = NULL;
+    string_get_priority_and_name (NULL, &priority, &ptr_name, 500);
+    LONGS_EQUAL(500, priority);
+    POINTERS_EQUAL(NULL, ptr_name);
+
+    /* "" => (default_priority, "") */
+    priority = -1;
+    ptr_name = NULL;
+    string_get_priority_and_name (empty, &priority, &ptr_name, 500);
+    LONGS_EQUAL(500, priority);
+    STRCMP_EQUAL("", ptr_name);
+
+    /* "|" => (0, "") */
+    priority = -1;
+    ptr_name = NULL;
+    string_get_priority_and_name (delimiter, &priority, &ptr_name, 500);
+    LONGS_EQUAL(0, priority);
+    STRCMP_EQUAL("", ptr_name);
+
+    /* "test" => (default_priority, "test") */
+    priority = -1;
+    ptr_name = NULL;
+    string_get_priority_and_name (name, &priority, &ptr_name, 500);
+    LONGS_EQUAL(500, priority);
+    STRCMP_EQUAL("test", ptr_name);
+
+    /* "|test" => (0, "test") */
+    priority = -1;
+    ptr_name = NULL;
+    string_get_priority_and_name (name_prio_empty, &priority, &ptr_name, 500);
+    LONGS_EQUAL(0, priority);
+    STRCMP_EQUAL("test", ptr_name);
+
+    /* "1234|test" => (1234, "test") */
+    priority = -1;
+    ptr_name = NULL;
+    string_get_priority_and_name (name_prio, &priority, &ptr_name, 500);
+    LONGS_EQUAL(1234, priority);
+    STRCMP_EQUAL("test", ptr_name);
+}
+
+/*
+ * Tests functions:
+ *   string_shared_get
+ *   string_shared_free
  */
 
 TEST(CoreString, Shared)
@@ -2199,10 +2723,10 @@ TEST(CoreString, Shared)
 
 /*
  * Tests functions:
- *    string_dyn_alloc
- *    string_dyn_copy
- *    string_dyn_concat
- *    string_dyn_free
+ *   string_dyn_alloc
+ *   string_dyn_copy
+ *   string_dyn_concat
+ *   string_dyn_free
  */
 
 TEST(CoreString, Dyn)
@@ -2346,4 +2870,23 @@ TEST(CoreString, Dyn)
     STRCMP_EQUAL("abcdxxyxyz", str_ptr);
 
     free (str_ptr);
+
+    str_ptr = NULL;
+    str = &str_ptr;
+
+    /* test copy to NULL */
+    LONGS_EQUAL(0, string_dyn_copy (NULL, NULL));
+    LONGS_EQUAL(0, string_dyn_copy (NULL, "a"));
+    LONGS_EQUAL(0, string_dyn_copy (str, NULL));
+    LONGS_EQUAL(0, string_dyn_copy (str, "a"));
+
+    /* test concat to NULL */
+    LONGS_EQUAL(0, string_dyn_concat (NULL, NULL, 1));
+    LONGS_EQUAL(0, string_dyn_concat (NULL, "a", 1));
+    LONGS_EQUAL(0, string_dyn_concat (str, NULL, 1));
+    LONGS_EQUAL(0, string_dyn_concat (str, "a", 1));
+
+    /* test free of NULL */
+    string_dyn_free (NULL, 0);
+    string_dyn_free (str, 0);
 }

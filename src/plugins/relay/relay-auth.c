@@ -1,7 +1,7 @@
 /*
  * relay-auth.c - relay client authentication
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -276,8 +276,9 @@ relay_auth_check_salt (struct t_relay_client *client, const char *salt_hexa)
     return (salt_hexa
             && client->nonce
             && (strlen (salt_hexa) > strlen (client->nonce))
-            && (weechat_strncasecmp (salt_hexa, client->nonce,
-                                     strlen (client->nonce)) == 0)) ? 1 : 0;
+            && (weechat_strncasecmp (
+                    salt_hexa, client->nonce,
+                    weechat_utf8_strlen (client->nonce)) == 0)) ? 1 : 0;
 }
 
 /*

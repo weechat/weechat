@@ -1,7 +1,7 @@
 // tag::plugin_options[]
 Pour une documentation complète sur les options des extensions, merci de
 consulter la documentation des extensions dans le
-https://weechat.org/doc[guide utilisateur de WeeChat].
+https://weechat.org/doc/[guide utilisateur de WeeChat].
 
 Avec l'extension irc, vous pouvez vous connecter à un serveur de manière
 temporaire avec une URL, comme ceci :
@@ -102,7 +102,7 @@ $HOME/.local/share/weechat/weechat.log::
 WeeChat est écrit par Sébastien Helleu et des contributeurs (la liste complète
 est dans le fichier AUTHORS.adoc).
 
-Copyright (C) 2003-2021 {author}
+Copyright (C) 2003-2023 {author}
 
 WeeChat est un logiciel libre ; vous pouvez le redistribuer et/ou le modifier
 sous les termes de la GNU General Public License telle que publiée par la

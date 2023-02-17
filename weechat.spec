@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -23,7 +23,7 @@
 #
 
 %define name weechat
-%define version 3.3
+%define version 3.8
 %define release 1
 
 Name:      %{name}
@@ -82,6 +82,20 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/share/icons/hicolor/512x512/apps/weechat.png
 
 %changelog
+* Sun Jan 08 2023 Sébastien Helleu <flashcode@flashtux.org> 3.8-1
+- Released version 3.8
+* Fri Oct 21 2022 Sébastien Helleu <flashcode@flashtux.org> 3.7.1-1
+- Released version 3.7.1
+* Sun Oct 09 2022 Sébastien Helleu <flashcode@flashtux.org> 3.7-1
+- Released version 3.7
+* Sun Jul 10 2022 Sébastien Helleu <flashcode@flashtux.org> 3.6-1
+- Released version 3.6
+* Sun Mar 27 2022 Sébastien Helleu <flashcode@flashtux.org> 3.5-1
+- Released version 3.5
+* Sun Mar 13 2022 Sébastien Helleu <flashcode@flashtux.org> 3.4.1-1
+- Released version 3.4.1
+* Sat Dec 18 2021 Sébastien Helleu <flashcode@flashtux.org> 3.4-1
+- Released version 3.4
 * Sun Sep 19 2021 Sébastien Helleu <flashcode@flashtux.org> 3.3-1
 - Released version 3.3
 * Sat Sep 04 2021 Sébastien Helleu <flashcode@flashtux.org> 3.2.1-1

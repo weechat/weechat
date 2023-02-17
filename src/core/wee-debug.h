@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -29,12 +29,14 @@ extern void debug_windows_tree ();
 extern void debug_memory ();
 extern void debug_hdata ();
 extern void debug_hooks ();
+extern void debug_hooks_plugin (const char *plugin_name);
 extern void debug_infolists ();
 extern void debug_directories ();
 extern void debug_display_time_elapsed (struct timeval *time1,
                                         struct timeval *time2,
                                         const char *message,
                                         int display);
+extern void debug_unicode (const char *string);
 extern void debug_init ();
 extern void debug_end ();
 

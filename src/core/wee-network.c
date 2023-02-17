@@ -1,7 +1,7 @@
 /*
  * wee-network.c - network functions
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2010 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2010 Gu1ll4um3r0m41n <aeroxteam@gmail.com>
  * Copyright (C) 2012 Simon Arlott
@@ -89,6 +89,27 @@ network_init_gcrypt ()
     gcry_check_version (GCRYPT_VERSION);
     gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
     gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
+}
+
+/*
+ * Allocates credentials structure.
+ */
+
+void
+network_allocate_credentials ()
+{
+    gnutls_certificate_allocate_credentials (&gnutls_xcred);
+#if LIBGNUTLS_VERSION_NUMBER >= 0x02090a /* 2.9.10 */
+    gnutls_certificate_set_verify_function (gnutls_xcred,
+                                            &hook_connect_gnutls_verify_certificates);
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x02090a */
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
+    gnutls_certificate_set_retrieve_function (gnutls_xcred,
+                                              &hook_connect_gnutls_set_certificates);
+#else
+    gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
+                                                     &hook_connect_gnutls_set_certificates);
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
 }
 
 /*
@@ -259,9 +280,7 @@ network_reload_ca_files (int force_display)
                              network_num_certs),
                          network_num_certs);
     }
-
-    gnutls_certificate_allocate_credentials (&gnutls_xcred);
-
+    network_allocate_credentials ();
     network_load_ca_files (force_display);
 }
 
@@ -275,19 +294,8 @@ network_init_gnutls ()
     if (!weechat_no_gnutls)
     {
         gnutls_global_init ();
-        gnutls_certificate_allocate_credentials (&gnutls_xcred);
+        network_allocate_credentials ();
         network_load_ca_files (0);
-#if LIBGNUTLS_VERSION_NUMBER >= 0x02090a /* 2.9.10 */
-        gnutls_certificate_set_verify_function (gnutls_xcred,
-                                                &hook_connect_gnutls_verify_certificates);
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x02090a */
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
-        gnutls_certificate_set_retrieve_function (gnutls_xcred,
-                                                  &hook_connect_gnutls_set_certificates);
-#else
-        gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
-                                                         &hook_connect_gnutls_set_certificates);
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
     }
 
     network_init_gnutls_ok = 1;

@@ -241,6 +241,8 @@ _sasl_scram_salted_pwd_size_   (integer) +
 _sasl_scram_auth_message_   (string) +
 _sasl_temp_username_   (string) +
 _sasl_temp_password_   (string) +
+_authentication_method_   (integer) +
+_sasl_mechanism_used_   (integer) +
 _is_connected_   (integer) +
 _ssl_connected_   (integer) +
 _disconnected_   (integer) +
@@ -278,7 +280,7 @@ _typing_allowed_   (integer) +
 _reconnect_delay_   (integer) +
 _reconnect_start_   (time) +
 _command_time_   (time) +
-_reconnect_join_   (integer) +
+_autojoin_done_   (integer) +
 _disable_autojoin_   (integer) +
 _is_away_   (integer) +
 _away_message_   (string) +
@@ -582,6 +584,7 @@ _title_   (string) +
 _own_lines_   (pointer, hdata: "lines") +
 _mixed_lines_   (pointer, hdata: "lines") +
 _lines_   (pointer, hdata: "lines") +
+_next_line_id_   (integer) +
 _time_for_each_line_   (integer) +
 _chat_refresh_needed_   (integer) +
 _nicklist_   (integer) +
@@ -631,6 +634,8 @@ _text_search_input_   (string) +
 _highlight_words_   (string) +
 _highlight_regex_   (string) +
 _highlight_regex_compiled_   (pointer) +
+_highlight_disable_regex_   (string) +
+_highlight_disable_regex_compiled_   (pointer) +
 _highlight_tags_restrict_   (string) +
 _highlight_tags_restrict_count_   (integer) +
 _highlight_tags_restrict_array_   (pointer, array_size: "highlight_tags_restrict_count") +
@@ -704,6 +709,7 @@ _count_   (integer) +
 _last_config_file_ +
 
 | _plugin_   (pointer, hdata: "plugin") +
+_priority_   (integer) +
 _name_   (string) +
 _filename_   (string) +
 _file_   (pointer) +
@@ -921,6 +927,7 @@ _next_line_   (pointer, hdata: "line") +
 | structure avec les données d'une ligne
 | -
 | _buffer_   (pointer, hdata: "buffer") +
+_id_   (integer) +
 _y_   (integer) +
 _date_   (time) +
 _date_printed_   (time) +

@@ -1,7 +1,7 @@
 /*
  * irc-info.c - info, infolist and hdata hooks for IRC plugin
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -534,7 +534,7 @@ irc_info_infolist_irc_server_cb (const void *pointer, void *data,
     if (obj_pointer)
     {
         /* build list with only one server */
-        if (!irc_server_add_to_infolist (ptr_infolist, obj_pointer))
+        if (!irc_server_add_to_infolist (ptr_infolist, obj_pointer, 0))
         {
             weechat_infolist_free (ptr_infolist);
             return NULL;
@@ -548,9 +548,9 @@ irc_info_infolist_irc_server_cb (const void *pointer, void *data,
              ptr_server = ptr_server->next_server)
         {
             if (!arguments || !arguments[0]
-                || weechat_string_match (ptr_server->name, arguments, 0))
+                || weechat_string_match (ptr_server->name, arguments, 1))
             {
-                if (!irc_server_add_to_infolist (ptr_infolist, ptr_server))
+                if (!irc_server_add_to_infolist (ptr_infolist, ptr_server, 0))
                 {
                     weechat_infolist_free (ptr_infolist);
                     return NULL;
@@ -1063,7 +1063,7 @@ irc_info_infolist_irc_notify_cb (const void *pointer, void *data,
              ptr_server = ptr_server->next_server)
         {
             if (!arguments || !arguments[0]
-                || weechat_string_match (ptr_server->name, arguments, 0))
+                || weechat_string_match (ptr_server->name, arguments, 1))
             {
                 for (ptr_notify = ptr_server->notify_list; ptr_notify;
                      ptr_notify = ptr_notify->next_notify)

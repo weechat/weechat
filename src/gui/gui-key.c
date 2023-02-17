@@ -1,7 +1,7 @@
 /*
  * gui-key.c - keyboard functions (used by all GUI)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -136,9 +136,12 @@ gui_key_search_context (const char *context)
 {
     int i;
 
+    if (!context)
+        return -1;
+
     for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
     {
-        if (string_strcasecmp (gui_key_context_string[i], context) == 0)
+        if (strcmp (gui_key_context_string[i], context) == 0)
             return i;
     }
 
@@ -234,7 +237,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
         /* add expanded key to input buffer */
         if (gui_current_window->buffer->input)
         {
-            gui_input_insert_string (gui_current_window->buffer, expanded_key, -1);
+            gui_input_insert_string (gui_current_window->buffer, expanded_key);
             if (gui_key_grab_command)
             {
                 /* add command bound to key (if found) */
@@ -242,8 +245,8 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
                                           gui_key_combo_buffer);
                 if (ptr_key)
                 {
-                    gui_input_insert_string (gui_current_window->buffer, " ", -1);
-                    gui_input_insert_string (gui_current_window->buffer, ptr_key->command, -1);
+                    gui_input_insert_string (gui_current_window->buffer, " ");
+                    gui_input_insert_string (gui_current_window->buffer, ptr_key->command);
                 }
             }
             gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,
@@ -265,7 +268,11 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
 /*
  * Gets internal code from user key name.
  *
- * For example: returns '\x01'+'R' for "ctrl-R"
+ * Examples:
+ *   "meta-a" => "\x01[a"
+ *   "meta-A" => "\x01[A"
+ *   "ctrl-R" => "\x01" + "r" (lower case enforced for ctrl keys)
+ *   "ctrl-r" => "\x01" + "r"
  *
  * Note: result must be freed after use.
  */
@@ -273,55 +280,72 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
 char *
 gui_key_get_internal_code (const char *key)
 {
-    char *result, *result2;
+    char **result, str_key[2];
+
+    if (!key)
+        return NULL;
 
     if ((key[0] == '@') && strchr (key, ':'))
         return strdup (key);
 
-    result = malloc (strlen (key) + 1);
+    result = string_dyn_alloc (strlen (key) + 1);
     if (!result)
         return NULL;
 
-    result[0] = '\0';
     while (key[0])
     {
         if (strncmp (key, "meta2-", 6) == 0)
         {
-            strcat (result, "\x01[[");
+            if (key[6])
+                string_dyn_concat (result, "\x01[[", -1);
             key += 6;
         }
-        if (strncmp (key, "meta-", 5) == 0)
+        else if (strncmp (key, "meta-", 5) == 0)
         {
-            strcat (result, "\x01[");
+            if (key[5])
+                string_dyn_concat (result, "\x01[", -1);
             key += 5;
         }
         else if (strncmp (key, "ctrl-", 5) == 0)
         {
-            strcat (result, "\x01");
+            if (key[5])
+                string_dyn_concat (result, "\x01", -1);
             key += 5;
+            if (key[0])
+            {
+                /*
+                 * note: the terminal makes no difference between ctrl-x and
+                 * ctrl-shift-x, so for now WeeChat automatically converts any
+                 * ctrl-letter key to lower case: when the user tries to bind
+                 * "ctrl-A", the key "ctrl-a" is actually added
+                 * (lower case is forced for ctrl keys)
+                 */
+                str_key[0] = ((key[0] >= 'A') && (key[0] <= 'Z')) ?
+                    key[0] + ('a' - 'A') : key[0];
+                str_key[1] = '\0';
+                string_dyn_concat (result, str_key, -1);
+                key++;
+            }
         }
         else if (strncmp (key, "space", 5) == 0)
         {
-            strcat (result, " ");
+            string_dyn_concat (result, " ", -1);
             key += 5;
         }
         else
         {
-            strncat (result, key, 1);
+            string_dyn_concat (result, key, 1);
             key++;
         }
     }
 
-    result2 = strdup (result);
-    free (result);
-
-    return result2;
+    return string_dyn_free (result, 0);
 }
 
 /*
  * Gets expanded name from internal key code.
  *
- * For example: return "ctrl-R" for "\x01+R".
+ * For example: return "ctrl-r" for "\x01+r".
  *
  * Note: result must be freed after use.
  */
@@ -329,49 +353,45 @@ gui_key_get_internal_code (const char *key)
 char *
 gui_key_get_expanded_name (const char *key)
 {
-    char *result, *result2;
+    char **result;
 
     if (!key)
         return NULL;
 
-    result = malloc ((strlen (key) * 5) + 1);
+    result = string_dyn_alloc ((strlen (key) * 2) + 1);
     if (!result)
         return NULL;
 
-    result[0] = '\0';
     while (key[0])
     {
         if (strncmp (key, "\x01[[", 3) == 0)
         {
-            strcat (result, "meta2-");
+            string_dyn_concat (result, "meta2-", -1);
             key += 3;
         }
         if (strncmp (key, "\x01[", 2) == 0)
         {
-            strcat (result, "meta-");
+            string_dyn_concat (result, "meta-", -1);
             key += 2;
         }
         else if ((key[0] == '\x01') && (key[1]))
         {
-            strcat (result, "ctrl-");
+            string_dyn_concat (result, "ctrl-", -1);
             key++;
         }
         else if (key[0] == ' ')
         {
-            strcat (result, "space");
+            string_dyn_concat (result, "space", -1);
             key++;
         }
         else
         {
-            strncat (result, key, 1);
+            string_dyn_concat (result, key, 1);
             key++;
         }
     }
 
-    result2 = strdup (result);
-    free (result);
-
-    return result2;
+    return string_dyn_free (result, 0);
 }
 
 /*
@@ -387,7 +407,7 @@ gui_key_find_pos (struct t_gui_key *keys, struct t_gui_key *key)
     {
         if ((key->score < ptr_key->score)
             || ((key->score == ptr_key->score)
-                && (strcmp (key->key, ptr_key->key) < 0)))
+                && (string_strcmp (key->key, ptr_key->key) < 0)))
         {
             return ptr_key;
         }
@@ -645,18 +665,32 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
              const char *command)
 {
     struct t_gui_key *new_key;
-    char *expanded_name;
+    char *internal_code, *expanded_name;
 
     if (!key || !command)
         return NULL;
+
+    internal_code = gui_key_get_internal_code (key);
+    if (!internal_code)
+        return NULL;
+    if (!internal_code[0])
+    {
+        free (internal_code);
+        return NULL;
+    }
+
+    expanded_name = gui_key_get_expanded_name (internal_code);
+    if (!expanded_name)
+    {
+        free (internal_code);
+        return NULL;
+    }
 
     new_key = malloc (sizeof (*new_key));
     if (!new_key)
         return NULL;
 
-    new_key->key = gui_key_get_internal_code (key);
-    if (!new_key->key)
-        new_key->key = strdup (key);
+    new_key->key = internal_code;
     new_key->command = strdup (command);
     gui_key_set_areas (new_key);
     gui_key_set_score (new_key);
@@ -673,25 +707,22 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
                                &gui_keys_count[context], new_key);
     }
 
-    expanded_name = gui_key_get_expanded_name (new_key->key);
-
-    (void) hook_signal_send ("key_bind",
-                             WEECHAT_HOOK_SIGNAL_STRING, expanded_name);
-
     if (gui_key_verbose)
     {
         gui_chat_printf (NULL,
                          _("New key binding (context \"%s\"): "
                            "%s%s => %s%s"),
                          gui_key_context_string[context],
-                         (expanded_name) ? expanded_name : new_key->key,
+                         expanded_name,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT),
                          new_key->command);
     }
 
-    if (expanded_name)
-        free (expanded_name);
+    (void) hook_signal_send ("key_bind",
+                             WEECHAT_HOOK_SIGNAL_STRING, expanded_name);
+
+    free (expanded_name);
 
     return new_key;
 }
@@ -707,6 +738,9 @@ gui_key_search (struct t_gui_key *keys, const char *key)
 {
     struct t_gui_key *ptr_key;
 
+    if (!key || !key[0])
+        return NULL;
+
     for (ptr_key = keys; ptr_key; ptr_key = ptr_key->next_key)
     {
         if (strcmp (ptr_key->key, key) == 0)
@@ -718,50 +752,31 @@ gui_key_search (struct t_gui_key *keys, const char *key)
 }
 
 /*
- * Compares two keys.
- */
-
-int
-gui_key_cmp (const char *key, const char *search, int context)
-{
-    int diff;
-
-    if (context == GUI_KEY_CONTEXT_MOUSE)
-        return (string_match (key, search, 1)) ? 0 : 1;
-
-    while (search[0])
-    {
-        diff = utf8_charcmp (key, search);
-        if (diff != 0)
-            return diff;
-        key = utf8_next_char (key);
-        search = utf8_next_char (search);
-    }
-
-    return 0;
-}
-
-/*
- * Searches for a key (maybe part of string).
+ * Searches for a key (maybe part of string) for context default, search or
+ * cursor (not for mouse).
  *
  * Returns pointer to key found, NULL if not found.
  */
 
 struct t_gui_key *
-gui_key_search_part (struct t_gui_buffer *buffer, int context,
-                     const char *key)
+gui_key_search_part (struct t_gui_buffer *buffer, int context, const char *key)
 {
     struct t_gui_key *ptr_key;
+    int length_key;
+
+    if (!key)
+        return NULL;
+
+    length_key = utf8_strlen (key);
 
     for (ptr_key = (buffer) ? buffer->keys : gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
     {
         if (ptr_key->key
-            && (((context != GUI_KEY_CONTEXT_CURSOR)
-                 && (context != GUI_KEY_CONTEXT_MOUSE))
+            && ((context != GUI_KEY_CONTEXT_CURSOR)
                 || (ptr_key->key[0] != '@')))
         {
-            if (gui_key_cmp (ptr_key->key, key, context) == 0)
+            if (string_strncmp (ptr_key->key, key, length_key) == 0)
                 return ptr_key;
         }
     }
@@ -785,7 +800,7 @@ struct t_gui_key *
 gui_key_bind (struct t_gui_buffer *buffer, int context, const char *key,
               const char *command)
 {
-    if (!key || !command || (string_strcasecmp (key, "meta-") == 0))
+    if (!key || !command)
         return NULL;
 
     gui_key_unbind (buffer, context, key);
@@ -874,15 +889,29 @@ int
 gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
 {
     struct t_gui_key *ptr_key;
-    char *internal_code;
+    char *internal_code, *expanded_name;
+    int rc;
+
+    rc = 0;
 
     internal_code = gui_key_get_internal_code (key);
     if (!internal_code)
         return 0;
+    if (!internal_code[0])
+    {
+        free (internal_code);
+        return 0;
+    }
+
+    expanded_name = gui_key_get_expanded_name (internal_code);
+    if (!expanded_name)
+    {
+        free (internal_code);
+        return 0;
+    }
 
     ptr_key = gui_key_search ((buffer) ? buffer->keys : gui_keys[context],
-                              (internal_code) ? internal_code : key);
-    free (internal_code);
+                              internal_code);
     if (ptr_key)
     {
         if (buffer)
@@ -896,18 +925,22 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
             {
                 gui_chat_printf (NULL,
                                  _("Key \"%s\" unbound (context: \"%s\")"),
-                                 key,
+                                 expanded_name,
                                  gui_key_context_string[context]);
             }
             gui_key_free (&gui_keys[context], &last_gui_key[context],
                           &gui_keys_count[context], ptr_key);
         }
         (void) hook_signal_send ("key_unbind",
-                                 WEECHAT_HOOK_SIGNAL_STRING, (char *)key);
-        return 1;
+                                 WEECHAT_HOOK_SIGNAL_STRING,
+                                 (char *)expanded_name);
+        rc = 1;
     }
 
-    return 0;
+    free (internal_code);
+    free (expanded_name);
+
+    return rc;
 }
 
 /*
@@ -1072,9 +1105,20 @@ gui_key_focus_command (const char *key, int context,
         if (strcmp (ptr_key->command, "-") == 0)
             continue;
 
-        /* ignore key if key for area is not matching */
-        if (gui_key_cmp (key, ptr_key->area_key, context) != 0)
+        /* ignore key if key for area is not matching (context: cursor) */
+        if ((context == GUI_KEY_CONTEXT_CURSOR)
+            && (string_strncmp (key, ptr_key->area_key,
+                                utf8_strlen (ptr_key->area_key)) != 0))
+        {
             continue;
+        }
+
+        /* ignore key if key for area is not matching (context: mouse) */
+        if ((context == GUI_KEY_CONTEXT_MOUSE)
+            && !string_match (key, ptr_key->area_key, 1))
+        {
+            continue;
+        }
 
         /* ignore mouse event if not explicit requested */
         if ((context == GUI_KEY_CONTEXT_MOUSE) &&
@@ -1724,7 +1768,7 @@ gui_key_get_paste_lines ()
 
 /*
  * Checks pasted lines: if more than N lines, then enables paste mode and ask
- * confirmation to user (ctrl-Y=paste, ctrl-N=cancel) (N is option
+ * confirmation to user (ctrl-y=paste, ctrl-n=cancel) (N is option
  * weechat.look.paste_max_lines).
  *
  * Returns:

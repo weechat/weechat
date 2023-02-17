@@ -1,7 +1,7 @@
 /*
  * typing.c - manage typing status of users
  *
- * Copyright (C) 2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2021-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -36,7 +36,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Typing status of users"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(8000);
+WEECHAT_PLUGIN_PRIORITY(TYPING_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_typing_plugin = NULL;
 
@@ -94,7 +94,7 @@ typing_buffer_closing_signal_cb (const void *pointer, void *data,
 }
 
 /*
- * Callback for signal "buffer_closing".
+ * Callback for signal "input_text_changed".
  */
 
 int
@@ -113,7 +113,12 @@ typing_input_text_changed_signal_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) != 0)
+        return WEECHAT_RC_OK;
+
     ptr_buffer = (struct t_gui_buffer *)signal_data;
+    if (!ptr_buffer)
+        return WEECHAT_RC_OK;
 
     /* ignore any change in input if the user is searching text in the buffer */
     text_search = weechat_buffer_get_integer (ptr_buffer, "text_search");

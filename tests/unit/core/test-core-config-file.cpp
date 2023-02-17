@@ -1,7 +1,7 @@
 /*
  * test-core-config-file.cpp - test configuration file functions
  *
- * Copyright (C) 2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2021-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,15 +21,20 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <string.h>
-#include "tests/tests.h"
+#include "src/core/wee-arraylist.h"
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-config.h"
 #include "src/core/wee-secure-config.h"
+#include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
+#include "src/plugins/plugin-config.h"
 
+extern struct t_config_file *config_file_find_pos (const char *name);
 extern char *config_file_option_full_name (struct t_config_option *option);
 extern int config_file_string_boolean_is_valid (const char *text);
 extern const char *config_file_option_escape (const char *name);
@@ -38,6 +43,20 @@ extern const char *config_file_option_escape (const char *name);
 TEST_GROUP(CoreConfigFile)
 {
 };
+
+/*
+ * Tests functions:
+ *   config_file_valid
+ */
+
+TEST(CoreConfigFile, Valid)
+{
+    LONGS_EQUAL(0, config_file_valid (NULL));
+    LONGS_EQUAL(0, config_file_valid ((struct t_config_file *)0x1));
+
+    LONGS_EQUAL(1, config_file_valid (config_file_search ("weechat")));
+    LONGS_EQUAL(1, config_file_valid (config_file_search ("sec")));
+}
 
 /*
  * Tests functions:
@@ -56,10 +75,23 @@ TEST(CoreConfigFile, Search)
 
 /*
  * Tests functions:
- *   config_file_config_find_pos
+ *   config_file_find_pos
  */
 
 TEST(CoreConfigFile, FindPos)
+{
+    POINTERS_EQUAL(NULL, config_file_find_pos (NULL));
+    POINTERS_EQUAL(config_files, config_file_find_pos (""));
+    POINTERS_EQUAL(weechat_config_file->next_config, config_file_find_pos ("weechat2"));
+    POINTERS_EQUAL(config_files, config_file_find_pos ("WEECHAT2"));
+}
+
+/*
+ * Tests functions:
+ *   config_file_config_insert
+ */
+
+TEST(CoreConfigFile, ConfigInsert)
 {
     /* TODO: write tests */
 }
@@ -72,6 +104,52 @@ TEST(CoreConfigFile, FindPos)
 TEST(CoreConfigFile, New)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   config_file_arraylist_cmp_config_cb
+ *   config_file_get_configs_by_priority
+ */
+
+TEST(CoreConfigFile, GetConfigsByPriority)
+{
+    struct t_config_file *ptr_config;
+    struct t_arraylist *all_configs;
+    int config_count;
+
+    /* count number of configuration files */
+    config_count = 0;
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        config_count++;
+    }
+
+    /* get list of configuration files by priority (highest to lowest) */
+    all_configs = config_file_get_configs_by_priority ();
+    CHECK(all_configs);
+
+    /* ensure we have all files in the list (and not more) */
+    LONGS_EQUAL(config_count, arraylist_size (all_configs));
+
+    /* check core configuration files (they have higher priority) */
+    POINTERS_EQUAL(secure_config_file, arraylist_get (all_configs, 0));
+    POINTERS_EQUAL(weechat_config_file, arraylist_get (all_configs, 1));
+    POINTERS_EQUAL(plugin_config_file, arraylist_get (all_configs, 2));
+
+    /* check first plugin configuration file (with highest priority) */
+    ptr_config = (struct t_config_file *)arraylist_get (all_configs, 3);
+    CHECK(ptr_config);
+    STRCMP_EQUAL("charset", ptr_config->name);
+
+    /* check last plugin configuration file (with lowest priority) */
+    ptr_config = (struct t_config_file *)arraylist_get (all_configs,
+                                                        config_count - 1);
+    CHECK(ptr_config);
+    STRCMP_EQUAL("fset", ptr_config->name);
+
+    arraylist_free (all_configs);
 }
 
 /*
@@ -366,18 +444,14 @@ TEST(CoreConfigFile, StringBooleanIsValid)
     LONGS_EQUAL(0, config_file_string_boolean_is_valid ("zzz"));
 
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("on"));
-    LONGS_EQUAL(1, config_file_string_boolean_is_valid ("ON"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("yes"));
-    LONGS_EQUAL(1, config_file_string_boolean_is_valid ("Yes"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("y"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("true"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("t"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("1"));
 
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("off"));
-    LONGS_EQUAL(1, config_file_string_boolean_is_valid ("OFF"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("no"));
-    LONGS_EQUAL(1, config_file_string_boolean_is_valid ("No"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("n"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("false"));
     LONGS_EQUAL(1, config_file_string_boolean_is_valid ("f"));
@@ -396,18 +470,14 @@ TEST(CoreConfigFile, StringToBoolean)
     LONGS_EQUAL(0, config_file_string_to_boolean ("zzz"));
 
     LONGS_EQUAL(1, config_file_string_to_boolean ("on"));
-    LONGS_EQUAL(1, config_file_string_to_boolean ("ON"));
     LONGS_EQUAL(1, config_file_string_to_boolean ("yes"));
-    LONGS_EQUAL(1, config_file_string_to_boolean ("Yes"));
     LONGS_EQUAL(1, config_file_string_to_boolean ("y"));
     LONGS_EQUAL(1, config_file_string_to_boolean ("true"));
     LONGS_EQUAL(1, config_file_string_to_boolean ("t"));
     LONGS_EQUAL(1, config_file_string_to_boolean ("1"));
 
     LONGS_EQUAL(0, config_file_string_to_boolean ("off"));
-    LONGS_EQUAL(0, config_file_string_to_boolean ("OFF"));
     LONGS_EQUAL(0, config_file_string_to_boolean ("no"));
-    LONGS_EQUAL(0, config_file_string_to_boolean ("No"));
     LONGS_EQUAL(0, config_file_string_to_boolean ("n"));
     LONGS_EQUAL(0, config_file_string_to_boolean ("false"));
     LONGS_EQUAL(0, config_file_string_to_boolean ("f"));
@@ -503,6 +573,39 @@ TEST(CoreConfigFile, OptionReset)
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
                 config_file_option_set (config_color_chat, "--3", 1));
     LONGS_EQUAL(5, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "%red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_BLINK_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, ".red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_DIM_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "*red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_BOLD_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "!red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_REVERSE_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "/red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_ITALIC_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "_red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_UNDERLINE_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "|red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_KEEPATTR_FLAG, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (config_color_chat, "%.*!/_|red", 1));
+    LONGS_EQUAL(3
+                | GUI_COLOR_EXTENDED_BLINK_FLAG
+                | GUI_COLOR_EXTENDED_DIM_FLAG
+                | GUI_COLOR_EXTENDED_BOLD_FLAG
+                | GUI_COLOR_EXTENDED_REVERSE_FLAG
+                | GUI_COLOR_EXTENDED_ITALIC_FLAG
+                | GUI_COLOR_EXTENDED_UNDERLINE_FLAG
+                | GUI_COLOR_EXTENDED_KEEPATTR_FLAG,
+                CONFIG_COLOR(config_color_chat));
+
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
                 config_file_option_reset (config_color_chat, 1));
     LONGS_EQUAL(0, CONFIG_COLOR(config_color_chat));

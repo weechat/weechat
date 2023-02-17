@@ -1,7 +1,7 @@
 /*
  * fset-command.c - Fast Set command
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -108,13 +108,13 @@ fset_command_fset (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "-bar") == 0)
+    if (weechat_strcmp (argv[1], "-bar") == 0)
     {
         fset_add_bar ();
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "-refresh") == 0)
+    if (weechat_strcmp (argv[1], "-refresh") == 0)
     {
         fset_option_get_options ();
         fset_buffer_refresh (0);
@@ -122,7 +122,7 @@ fset_command_fset (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "-up") == 0)
+    if (weechat_strcmp (argv[1], "-up") == 0)
     {
         if (fset_buffer)
         {
@@ -143,7 +143,7 @@ fset_command_fset (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "-down") == 0)
+    if (weechat_strcmp (argv[1], "-down") == 0)
     {
         if (fset_buffer)
         {
@@ -164,7 +164,7 @@ fset_command_fset (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "-left") == 0)
+    if (weechat_strcmp (argv[1], "-left") == 0)
     {
         if (fset_buffer)
         {
@@ -188,7 +188,7 @@ fset_command_fset (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "-right") == 0)
+    if (weechat_strcmp (argv[1], "-right") == 0)
     {
         if (fset_buffer)
         {
@@ -212,13 +212,13 @@ fset_command_fset (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "-go") == 0)
+    if (weechat_strcmp (argv[1], "-go") == 0)
     {
         if (fset_buffer)
         {
             if (argc < 3)
                 WEECHAT_COMMAND_ERROR;
-            if (weechat_strcasecmp (argv[2], "end") == 0)
+            if (weechat_strcmp (argv[2], "end") == 0)
                 line = weechat_arraylist_size (fset_options) - 1;
             else
                 line = fset_command_get_int_arg (argc, argv, 2, -1);
@@ -233,7 +233,7 @@ fset_command_fset (const void *pointer, void *data,
 
     if (argv[1][0] == '-')
     {
-        if (weechat_strcasecmp (argv[1], "-toggle") == 0)
+        if (weechat_strcmp (argv[1], "-toggle") == 0)
         {
             if (fset_option_count_marked > 0)
             {
@@ -257,7 +257,7 @@ fset_command_fset (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "-add") == 0)
+        if (weechat_strcmp (argv[1], "-add") == 0)
         {
             value = fset_command_get_int_arg (argc, argv, 2, 0);
             if (value == 0)
@@ -295,7 +295,7 @@ fset_command_fset (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "-reset") == 0)
+        if (weechat_strcmp (argv[1], "-reset") == 0)
         {
             if (fset_option_count_marked > 0)
             {
@@ -319,7 +319,7 @@ fset_command_fset (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "-unset") == 0)
+        if (weechat_strcmp (argv[1], "-unset") == 0)
         {
             if (fset_option_count_marked > 0)
             {
@@ -343,35 +343,35 @@ fset_command_fset (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "-set") == 0)
+        if (weechat_strcmp (argv[1], "-set") == 0)
         {
             fset_command_get_option (&ptr_fset_option, &ptr_option);
             fset_option_set (ptr_fset_option, ptr_option, buffer, 0);
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "-setnew") == 0)
+        if (weechat_strcmp (argv[1], "-setnew") == 0)
         {
             fset_command_get_option (&ptr_fset_option, &ptr_option);
             fset_option_set (ptr_fset_option, ptr_option, buffer, -1);
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "-append") == 0)
+        if (weechat_strcmp (argv[1], "-append") == 0)
         {
             fset_command_get_option (&ptr_fset_option, &ptr_option);
             fset_option_set (ptr_fset_option, ptr_option, buffer, 1);
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "-mark") == 0)
+        if (weechat_strcmp (argv[1], "-mark") == 0)
         {
             fset_command_get_option (&ptr_fset_option, &ptr_option);
             fset_option_toggle_mark (ptr_fset_option, ptr_option);
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "-format") == 0)
+        if (weechat_strcmp (argv[1], "-format") == 0)
         {
             min = weechat_hdata_integer (fset_hdata_config_option,
                                          fset_config_look_format_number,
@@ -388,20 +388,20 @@ fset_command_fset (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "-export") == 0)
+        if (weechat_strcmp (argv[1], "-export") == 0)
         {
             if (argc < 3)
                 WEECHAT_COMMAND_ERROR;
             with_help = weechat_config_boolean (fset_config_look_export_help_default);
             ptr_filename = argv_eol[2];
-            if (weechat_strcasecmp (argv[2], "-help") == 0)
+            if (weechat_strcmp (argv[2], "-help") == 0)
             {
                 with_help = 1;
                 if (argc < 4)
                     WEECHAT_COMMAND_ERROR;
                 ptr_filename = argv_eol[3];
             }
-            else if (weechat_strcasecmp (argv[2], "-nohelp") == 0)
+            else if (weechat_strcmp (argv[2], "-nohelp") == 0)
             {
                 with_help = 0;
                 if (argc < 4)
@@ -483,8 +483,8 @@ fset_command_run_set_cb (const void *pointer, void *data,
      * (we must not catch that in fset!)
      */
     if ((argc > 1)
-        && ((weechat_strcasecmp (argv[1], "diff") == 0)
-            || (weechat_strcasecmp (argv[1], "env") == 0)))
+        && ((weechat_strcmp (argv[1], "diff") == 0)
+            || (weechat_strcmp (argv[1], "env") == 0)))
     {
         goto end;
     }
@@ -745,7 +745,7 @@ fset_command_init ()
            "see filters above)\n"
            "\n"
            "Other keys and input on fset buffer:\n"
-           "  ctrl+L                    refresh options and whole screen "
+           "  ctrl+l                    refresh options and whole screen "
            "(command: /fset -refresh)\n"
            "                    $       refresh options (keep marked options)\n"
            "                    $$      refresh options (unmark all options)\n"
@@ -759,7 +759,7 @@ fset_command_init ()
            "                    w:xxx   export options in file \"xxx\"\n"
            "                    w-:xxx  export options in file \"xxx\" without help\n"
            "                    w+:xxx  export options in file \"xxx\" with help\n"
-           "  ctrl+X            x       switch the format used to display options\n"
+           "  ctrl+x            x       switch the format used to display options\n"
            "                    q       close fset buffer\n"
            "\n"
            "Mouse actions on fset buffer:\n"

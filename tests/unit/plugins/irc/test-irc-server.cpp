@@ -1,7 +1,7 @@
 /*
  * test-irc-server.cpp - test IRC protocol functions
  *
- * Copyright (C) 2020-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2020-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,17 +21,18 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <stdio.h>
+#include <string.h>
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-server.h"
 
 extern char *irc_server_build_autojoin (struct t_irc_server *server);
 }
-
-#include "tests/tests.h"
 
 #define IRC_FAKE_SERVER "fake"
 
@@ -46,7 +47,17 @@ TEST_GROUP(IrcServer)
 
 TEST(IrcServer, Valid)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("server1");
+
+    LONGS_EQUAL(0, irc_server_valid (NULL));
+    LONGS_EQUAL(0, irc_server_valid ((struct t_irc_server *)0x1));
+    LONGS_EQUAL(0, irc_server_valid (server + 1));
+
+    LONGS_EQUAL(1, irc_server_valid (server));
+
+    irc_server_free (server);
 }
 
 /*
@@ -56,17 +67,21 @@ TEST(IrcServer, Valid)
 
 TEST(IrcServer, Search)
 {
-    /* TODO: write tests */
-}
+    struct t_irc_server *server1, *server2;
 
-/*
- * Tests functions:
- *   irc_server_casesearch
- */
+    server1 = irc_server_alloc ("srv1");
+    server2 = irc_server_alloc ("abc");
 
-TEST(IrcServer, CaseSearch)
-{
-    /* TODO: write tests */
+    POINTERS_EQUAL(NULL, irc_server_search (NULL));
+    POINTERS_EQUAL(NULL, irc_server_search ("does_not_exist"));
+    POINTERS_EQUAL(NULL, irc_server_search ("SRV1"));
+    POINTERS_EQUAL(NULL, irc_server_search ("ABC"));
+
+    POINTERS_EQUAL(server1, irc_server_search ("srv1"));
+    POINTERS_EQUAL(server2, irc_server_search ("abc"));
+
+    irc_server_free (server1);
+    irc_server_free (server2);
 }
 
 /*
@@ -236,7 +251,77 @@ TEST(IrcServer, GetAlternateNick)
 
 TEST(IrcServer, GetIsupportValue)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("test_clienttagdeny");
+    CHECK(server);
+
+    if (server->isupport)
+        free (server->isupport);
+    server->isupport = strdup ("");
+
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, NULL));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, ""));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TEST"));
+
+    if (server->isupport)
+        free (server->isupport);
+    server->isupport = strdup ("AWAYLEN=307 BOT=B CASEMAPPING=ascii "
+                               "CHANLIMIT=#:10 EMPTY= INVEX KICKLEN=307 WHOX");
+
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, NULL));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, ""));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "xxx"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "AWAYLE"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "WHO"));
+
+    STRCMP_EQUAL("307", irc_server_get_isupport_value (server, "AWAYLEN"));
+    STRCMP_EQUAL("B", irc_server_get_isupport_value (server, "BOT"));
+    STRCMP_EQUAL("ascii", irc_server_get_isupport_value (server, "CASEMAPPING"));
+    STRCMP_EQUAL("#:10", irc_server_get_isupport_value (server, "CHANLIMIT"));
+    STRCMP_EQUAL("", irc_server_get_isupport_value (server, "EMPTY"));
+    STRCMP_EQUAL("", irc_server_get_isupport_value (server, "INVEX"));
+    STRCMP_EQUAL("307", irc_server_get_isupport_value (server, "KICKLEN"));
+    STRCMP_EQUAL("", irc_server_get_isupport_value (server, "WHOX"));
+
+    if (server->isupport)
+        free (server->isupport);
+    server->isupport = strdup ("TEST SECOND");
+
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "T"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TES"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "EST"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TESTT"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "SEC"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "COND"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "SECONDD"));
+
+    STRCMP_EQUAL("", irc_server_get_isupport_value (server, "TEST"));
+    STRCMP_EQUAL("", irc_server_get_isupport_value (server, "SECOND"));
+
+    if (server->isupport)
+        free (server->isupport);
+    server->isupport = strdup ("TEST=abc");
+
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "T"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TES"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "EST"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TESTT"));
+
+    STRCMP_EQUAL("abc", irc_server_get_isupport_value (server, "TEST"));
+
+    if (server->isupport)
+        free (server->isupport);
+    server->isupport = strdup ("  TEST=abc  ");
+
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "T"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TES"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "EST"));
+    POINTERS_EQUAL(NULL, irc_server_get_isupport_value (server, "TESTT"));
+
+    STRCMP_EQUAL("abc", irc_server_get_isupport_value (server, "TEST"));
+
+    irc_server_free (server);
 }
 
 /*

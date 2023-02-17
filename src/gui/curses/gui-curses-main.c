@@ -1,7 +1,7 @@
 /*
  * gui-curses-main.c - main loop for Curses GUI
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -111,7 +111,7 @@ gui_main_get_password (const char **prompt, char *password, int size)
         /* enter */
         if (ch == '\n')
             break;
-        /* terminal lost or ctrl-C */
+        /* terminal lost or ctrl-c */
         if ((ch == ERR) || (ch == 3))
         {
             password[0] = 3;
@@ -164,7 +164,7 @@ gui_main_init ()
     struct t_gui_bar_window *ptr_bar_win;
     char title[256];
 
-    /* allow Ctrl-C to quit WeeChat in headless mode */
+    /* allow ctrl-c to quit WeeChat in headless mode */
     if (weechat_headless)
         signal_catch (SIGINT, &gui_main_signal_sigint);
 
@@ -409,7 +409,10 @@ gui_main_loop ()
 
     /* catch SIGWINCH signal: redraw screen */
     if (!weechat_headless)
+    {
+        gui_signal_sigwinch_received = 1;
         signal_catch (SIGWINCH, &gui_main_signal_sigwinch);
+    }
 
     /* hook stdin (read keyboard) */
     if (weechat_headless)

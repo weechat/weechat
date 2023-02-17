@@ -1,7 +1,7 @@
 /*
  * trigger-command.c - trigger command
  *
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -491,6 +491,17 @@ trigger_command_build_string (const char *format, ...)
 }
 
 /*
+ * Returns escaped argument for input by adding a backslash before each double
+ * quote.
+ */
+
+char *
+trigger_command_escape_argument (const char *argument)
+{
+    return weechat_string_replace (argument, "\"", "\\\"");
+}
+
+/*
  * Callback for command "/trigger": manage triggers.
  */
 
@@ -502,6 +513,8 @@ trigger_command_trigger (const void *pointer, void *data,
     struct t_trigger *ptr_trigger, *ptr_trigger2;
     struct t_trigger_regex *regex;
     char *value, **sargv, **items, *input, str_pos[16];
+    char *arg_arguments, *arg_conditions, *arg_regex, *arg_command;
+    char *arg_return_code, *arg_post_action;
     int rc, i, j, type, count, index_option, enable, sargc, num_items, add_rc;
     int regex_count, regex_rc;
 
@@ -514,30 +527,30 @@ trigger_command_trigger (const void *pointer, void *data,
 
     /* list all triggers */
     if ((argc == 1)
-        || ((argc == 2) && (weechat_strcasecmp (argv[1], "list") == 0)))
+        || ((argc == 2) && (weechat_strcmp (argv[1], "list") == 0)))
     {
         trigger_command_list (_("List of triggers:"), 0);
         goto end;
     }
 
     /* full list of all triggers */
-    if ((argc == 2) && (weechat_strcasecmp (argv[1], "listfull") == 0))
+    if ((argc == 2) && (weechat_strcmp (argv[1], "listfull") == 0))
     {
         trigger_command_list (_("List of triggers:"), 1);
         goto end;
     }
 
     /* list of default triggers */
-    if ((argc == 2) && (weechat_strcasecmp (argv[1], "listdefault") == 0))
+    if ((argc == 2) && (weechat_strcmp (argv[1], "listdefault") == 0))
     {
         trigger_command_list_default (1);
         goto end;
     }
 
     /* add a trigger */
-    if ((weechat_strcasecmp (argv[1], "add") == 0)
-        || (weechat_strcasecmp (argv[1], "addoff") == 0)
-        || (weechat_strcasecmp (argv[1], "addreplace") == 0))
+    if ((weechat_strcmp (argv[1], "add") == 0)
+        || (weechat_strcmp (argv[1], "addoff") == 0)
+        || (weechat_strcmp (argv[1], "addreplace") == 0))
     {
         sargv = weechat_string_split_shell (argv_eol[2], &sargc);
         if (!sargv || (sargc < 2))
@@ -574,24 +587,28 @@ trigger_command_trigger (const void *pointer, void *data,
                 case -1: /* format error */
                     weechat_printf (NULL,
                                     _("%s%s: invalid format for regular "
-                                      "expression"),
+                                      "expression: \"%s\""),
                                     weechat_prefix ("error"),
-                                    TRIGGER_PLUGIN_NAME);
+                                    TRIGGER_PLUGIN_NAME,
+                                    sargv[4]);
                     goto end;
                     break;
                 case -2: /* regex compilation error */
                     weechat_printf (NULL,
                                     _("%s%s: invalid regular expression "
-                                      "(compilation failed)"),
+                                      "(compilation failed): \"%s\""),
                                     weechat_prefix ("error"),
-                                    TRIGGER_PLUGIN_NAME);
+                                    TRIGGER_PLUGIN_NAME,
+                                    sargv[4]);
                     goto end;
                     break;
                 case -3: /* memory error */
                     weechat_printf (NULL,
-                                    _("%s%s: not enough memory"),
+                                    _("%s%s: not enough memory for regular "
+                                      "expression: \"%s\""),
                                     weechat_prefix ("error"),
-                                    TRIGGER_PLUGIN_NAME);
+                                    TRIGGER_PLUGIN_NAME,
+                                    sargv[4]);
                     goto end;
                     break;
             }
@@ -619,7 +636,7 @@ trigger_command_trigger (const void *pointer, void *data,
         ptr_trigger = trigger_search (sargv[0]);
         if (ptr_trigger)
         {
-            if (weechat_strcasecmp (argv[1], "addreplace") == 0)
+            if (weechat_strcmp (argv[1], "addreplace") == 0)
             {
                 if (ptr_trigger)
                 {
@@ -655,7 +672,7 @@ trigger_command_trigger (const void *pointer, void *data,
         }
         ptr_trigger = trigger_new (
             sargv[0],                      /* name */
-            (weechat_strcasecmp (argv[1], "addoff") == 0) ? "off" : "on",
+            (weechat_strcmp (argv[1], "addoff") == 0) ? "off" : "on",
             sargv[1],                      /* hook */
             (sargc > 2) ? sargv[2] : "",   /* arguments */
             (sargc > 3) ? sargv[3] : "",   /* conditions */
@@ -681,7 +698,7 @@ trigger_command_trigger (const void *pointer, void *data,
     }
 
     /* add trigger command in input (to help trigger creation) */
-    if (weechat_strcasecmp (argv[1], "addinput") == 0)
+    if (weechat_strcmp (argv[1], "addinput") == 0)
     {
         type = TRIGGER_HOOK_SIGNAL;
         if (argc >= 3)
@@ -720,6 +737,8 @@ trigger_command_trigger (const void *pointer, void *data,
             weechat_buffer_set (buffer, "input_pos", "13");
             free (input);
         }
+        if (items)
+            weechat_string_free_split (items);
         goto end;
     }
 
@@ -729,9 +748,9 @@ trigger_command_trigger (const void *pointer, void *data,
      * - output: send the command to the buffer
      * - recreate: same as input, but the trigger is first deleted
      */
-    if ((weechat_strcasecmp (argv[1], "input") == 0)
-        || (weechat_strcasecmp (argv[1], "output") == 0)
-        || (weechat_strcasecmp (argv[1], "recreate") == 0))
+    if ((weechat_strcmp (argv[1], "input") == 0)
+        || (weechat_strcmp (argv[1], "output") == 0)
+        || (weechat_strcmp (argv[1], "recreate") == 0))
     {
         if (argc < 3)
             goto error;
@@ -746,20 +765,45 @@ trigger_command_trigger (const void *pointer, void *data,
             goto end;
         }
         add_rc = trigger_hook_default_rc[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_HOOK])][0];
+        arg_arguments = trigger_command_escape_argument (
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]));
+        arg_conditions = trigger_command_escape_argument (
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]));
+        arg_regex = trigger_command_escape_argument (
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_REGEX]));
+        arg_command = trigger_command_escape_argument (
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]));
+        arg_return_code = trigger_command_escape_argument (
+            (add_rc) ?
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]) : "");
+        arg_post_action = trigger_command_escape_argument (
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION]));
         input = trigger_command_build_string (
             "//trigger %s %s %s \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
-            (weechat_strcasecmp (argv[1], "recreate") == 0) ? "addreplace" : "add",
+            (weechat_strcmp (argv[1], "recreate") == 0) ? "addreplace" : "add",
             ptr_trigger->name,
             weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]),
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]),
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_REGEX]),
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]),
-            (add_rc) ? weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]) : "",
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION]));
+            arg_arguments,
+            arg_conditions,
+            arg_regex,
+            arg_command,
+            arg_return_code,
+            arg_post_action);
+        if (arg_arguments)
+            free (arg_arguments);
+        if (arg_conditions)
+            free (arg_conditions);
+        if (arg_regex)
+            free (arg_regex);
+        if (arg_command)
+            free (arg_command);
+        if (arg_return_code)
+            free (arg_return_code);
+        if (arg_post_action)
+            free (arg_post_action);
         if (input)
         {
-            if (weechat_strcasecmp (argv[1], "output") == 0)
+            if (weechat_strcmp (argv[1], "output") == 0)
             {
                 weechat_command (buffer, input);
             }
@@ -776,7 +820,7 @@ trigger_command_trigger (const void *pointer, void *data,
     }
 
     /* set option in a trigger */
-    if (weechat_strcasecmp (argv[1], "set") == 0)
+    if (weechat_strcmp (argv[1], "set") == 0)
     {
         if (argc < 5)
             goto error;
@@ -795,7 +839,7 @@ trigger_command_trigger (const void *pointer, void *data,
             trigger_command_error_running (ptr_trigger, argv[1]);
             goto end;
         }
-        if (weechat_strcasecmp (argv[3], "name") == 0)
+        if (weechat_strcmp (argv[3], "name") == 0)
         {
             trigger_command_rename (ptr_trigger, argv[4]);
             goto end;
@@ -826,7 +870,7 @@ trigger_command_trigger (const void *pointer, void *data,
     }
 
     /* rename a trigger */
-    if (weechat_strcasecmp (argv[1], "rename") == 0)
+    if (weechat_strcmp (argv[1], "rename") == 0)
     {
         if (argc < 4)
             goto error;
@@ -850,7 +894,7 @@ trigger_command_trigger (const void *pointer, void *data,
     }
 
     /* copy a trigger */
-    if (weechat_strcasecmp (argv[1], "copy") == 0)
+    if (weechat_strcmp (argv[1], "copy") == 0)
     {
         if (argc < 4)
             goto error;
@@ -906,20 +950,20 @@ trigger_command_trigger (const void *pointer, void *data,
     }
 
     /* enable/disable/toggle/restart trigger(s) */
-    if ((weechat_strcasecmp (argv[1], "enable") == 0)
-        || (weechat_strcasecmp (argv[1], "disable") == 0)
-        || (weechat_strcasecmp (argv[1], "toggle") == 0)
-        || (weechat_strcasecmp (argv[1], "restart") == 0))
+    if ((weechat_strcmp (argv[1], "enable") == 0)
+        || (weechat_strcmp (argv[1], "disable") == 0)
+        || (weechat_strcmp (argv[1], "toggle") == 0)
+        || (weechat_strcmp (argv[1], "restart") == 0))
     {
         if (argc < 3)
         {
-            if (weechat_strcasecmp (argv[1], "restart") == 0)
+            if (weechat_strcmp (argv[1], "restart") == 0)
                 goto error;
-            if (weechat_strcasecmp (argv[1], "enable") == 0)
+            if (weechat_strcmp (argv[1], "enable") == 0)
                 weechat_config_option_set (trigger_config_look_enabled, "1", 1);
-            else if (weechat_strcasecmp (argv[1], "disable") == 0)
+            else if (weechat_strcmp (argv[1], "disable") == 0)
                 weechat_config_option_set (trigger_config_look_enabled, "0", 1);
-            else if (weechat_strcasecmp (argv[1], "toggle") == 0)
+            else if (weechat_strcmp (argv[1], "toggle") == 0)
             {
                 weechat_config_option_set (trigger_config_look_enabled,
                                            (trigger_enabled) ? "0" : "1",
@@ -929,13 +973,13 @@ trigger_command_trigger (const void *pointer, void *data,
             goto end;
         }
         enable = -1;
-        if (weechat_strcasecmp (argv[1], "enable") == 0)
+        if (weechat_strcmp (argv[1], "enable") == 0)
             enable = 1;
-        else if (weechat_strcasecmp (argv[1], "disable") == 0)
+        else if (weechat_strcmp (argv[1], "disable") == 0)
             enable = 0;
-        else if (weechat_strcasecmp (argv[1], "restart") == 0)
+        else if (weechat_strcmp (argv[1], "restart") == 0)
             enable = 2;
-        if (weechat_strcasecmp (argv[2], "-all") == 0)
+        if (weechat_strcmp (argv[2], "-all") == 0)
         {
             for (ptr_trigger = triggers; ptr_trigger;
                  ptr_trigger = ptr_trigger->next_trigger)
@@ -964,11 +1008,11 @@ trigger_command_trigger (const void *pointer, void *data,
     }
 
     /* delete trigger(s) */
-    if (weechat_strcasecmp (argv[1], "del") == 0)
+    if (weechat_strcmp (argv[1], "del") == 0)
     {
         if (argc < 3)
             goto error;
-        if (weechat_strcasecmp (argv[2], "-all") == 0)
+        if (weechat_strcmp (argv[2], "-all") == 0)
         {
             count = triggers_count;
             ptr_trigger = triggers;
@@ -1022,7 +1066,7 @@ trigger_command_trigger (const void *pointer, void *data,
     }
 
     /* show detailed info on a trigger */
-    if (weechat_strcasecmp (argv[1], "show") == 0)
+    if (weechat_strcmp (argv[1], "show") == 0)
     {
         if (argc < 3)
             goto error;
@@ -1043,7 +1087,7 @@ trigger_command_trigger (const void *pointer, void *data,
     }
 
     /* restore default trigger(s) */
-    if (weechat_strcasecmp (argv[1], "restore") == 0)
+    if (weechat_strcmp (argv[1], "restore") == 0)
     {
         if (argc < 3)
             goto error;
@@ -1051,11 +1095,8 @@ trigger_command_trigger (const void *pointer, void *data,
         {
             for (j = 0; trigger_config_default_list[j][0]; j++)
             {
-                if (weechat_strcasecmp (trigger_config_default_list[j][0],
-                                        argv[i]) == 0)
-                {
+                if (strcmp (trigger_config_default_list[j][0], argv[i]) == 0)
                     break;
-                }
             }
             if (trigger_config_default_list[j][0])
             {
@@ -1095,9 +1136,9 @@ trigger_command_trigger (const void *pointer, void *data,
     }
 
     /* delete all triggers and restore default ones */
-    if (weechat_strcasecmp (argv[1], "default") == 0)
+    if (weechat_strcmp (argv[1], "default") == 0)
     {
-        if ((argc >= 3) && (weechat_strcasecmp (argv[2], "-yes") == 0))
+        if ((argc >= 3) && (weechat_strcmp (argv[2], "-yes") == 0))
         {
             ptr_trigger = triggers;
             while (ptr_trigger)
@@ -1130,7 +1171,7 @@ trigger_command_trigger (const void *pointer, void *data,
     }
 
     /* open the trigger monitor buffer */
-    if (weechat_strcasecmp (argv[1], "monitor") == 0)
+    if (weechat_strcmp (argv[1], "monitor") == 0)
     {
         trigger_buffer_open ((argc > 2) ? argv_eol[2] : NULL, 1);
         goto end;
@@ -1265,14 +1306,14 @@ trigger_command_init ()
            "\"${info:term_width} >= 100\" \"\" \"/bar show nicklist\"\n"
            "  silently save config each hour:\n"
            "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\"\n"
+           "  silently save WeeChat session at midnight (see /help upgrade):\n"
+           "    /trigger add session_save signal day_changed \"\" \"\" "
+           "\"/mute /upgrade -save\"\n"
            "  open trigger monitor and show only modifiers and triggers whose "
            "name starts with \"resize\":\n"
            "    /trigger monitor @modifier,resize*"),
         "list|listfull|listdefault"
-        " || add|addoff|addreplace %(trigger_names) %(trigger_hooks) "
-        "%(trigger_hook_arguments) %(trigger_hook_conditions) "
-        "%(trigger_hook_regex) %(trigger_hook_command) %(trigger_hook_rc) "
-        "%(trigger_post_action)"
+        " || add|addoff|addreplace %(trigger_add_arguments)|%*"
         " || addinput %(trigger_hooks)"
         " || input|output|recreate %(trigger_names)"
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"

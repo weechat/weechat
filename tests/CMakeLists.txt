@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -26,6 +26,7 @@ include_directories(${CPPUTEST_INCLUDE_DIRS} ${PROJECT_BINARY_DIR} ${PROJECT_SOU
 set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/core/test-core-arraylist.cpp
   unit/core/test-core-calc.cpp
+  unit/core/test-core-command.cpp
   unit/core/test-core-config-file.cpp
   unit/core/test-core-crypto.cpp
   unit/core/test-core-dir.cpp
@@ -42,7 +43,15 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/core/test-core-url.cpp
   unit/core/test-core-utf8.cpp
   unit/core/test-core-util.cpp
+  unit/gui/test-gui-bar-item.cpp
+  unit/gui/test-gui-bar-item-custom.cpp
+  unit/gui/test-gui-bar-window.cpp
+  unit/gui/test-gui-buffer.cpp
+  unit/gui/test-gui-chat.cpp
   unit/gui/test-gui-color.cpp
+  unit/gui/test-gui-filter.cpp
+  unit/gui/test-gui-input.cpp
+  unit/gui/test-gui-key.cpp
   unit/gui/test-gui-line.cpp
   unit/gui/test-gui-nick.cpp
   scripts/test-scripts.cpp
@@ -59,6 +68,7 @@ if(ENABLE_IRC)
     unit/plugins/irc/test-irc-color.cpp
     unit/plugins/irc/test-irc-config.cpp
     unit/plugins/irc/test-irc-ignore.cpp
+    unit/plugins/irc/test-irc-join.cpp
     unit/plugins/irc/test-irc-message.cpp
     unit/plugins/irc/test-irc-mode.cpp
     unit/plugins/irc/test-irc-nick.cpp
@@ -66,6 +76,12 @@ if(ENABLE_IRC)
     unit/plugins/irc/test-irc-sasl.cpp
     unit/plugins/irc/test-irc-server.cpp
     unit/plugins/irc/test-irc-tag.cpp
+  )
+endif()
+
+if(ENABLE_LOGGER)
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/logger/test-logger-backlog.cpp
   )
 endif()
 
@@ -86,6 +102,13 @@ if(ENABLE_TYPING)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     unit/plugins/typing/test-typing.cpp
     unit/plugins/typing/test-typing-status.cpp
+  )
+endif()
+
+if(ENABLE_XFER)
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/xfer/test-xfer-file.cpp
+    unit/plugins/xfer/test-xfer-network.cpp
   )
 endif()
 
@@ -116,6 +139,8 @@ target_link_libraries(tests
   weechat_core
   ${EXTRA_LIBS}
   ${CURL_LIBRARIES}
+  ${ZLIB_LIBRARY}
+  ${LIBZSTD_LDFLAGS}
   ${CPPUTEST_LIBRARIES}
   -rdynamic
 )

@@ -1,7 +1,7 @@
 /*
  * script-info.c - info, infolist and hdata hooks for script plugin
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -71,7 +71,7 @@ script_info_infolist_script_script_cb (const void *pointer, void *data,
         {
             if (!arguments || !arguments[0]
                 || weechat_string_match (ptr_script->name_with_extension,
-                                         arguments, 0))
+                                         arguments, 1))
             {
                 if (!script_repo_add_to_infolist (ptr_infolist, ptr_script))
                 {

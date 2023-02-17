@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -20,6 +20,7 @@
 set(LIB_GUI_COMMON_SRC
   gui-bar.c gui-bar.h
   gui-bar-item.c gui-bar-item.h
+  gui-bar-item-custom.c gui-bar-item-custom.h
   gui-bar-window.c gui-bar-window.h
   gui-buffer.c gui-buffer.h
   gui-chat.c gui-chat.h

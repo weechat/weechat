@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -30,6 +30,9 @@ struct t_gui_line;
 
 #define gui_chat_printf(buffer, argz...)                        \
     gui_chat_printf_date_tags(buffer, 0, NULL, ##argz)
+
+#define gui_chat_printf_y(buffer, y, argz...)                   \
+    gui_chat_printf_y_date_tags(buffer, y, 0, NULL, ##argz)
 
 #define GUI_CHAT_TAG_NO_HIGHLIGHT "no_highlight"
 
@@ -68,7 +71,6 @@ extern int gui_chat_display_tags;
 
 extern void gui_chat_init ();
 extern void gui_chat_prefix_build ();
-extern int gui_chat_utf_char_valid (const char *utf_char);
 extern int gui_chat_strlen (const char *string);
 extern int gui_chat_strlen_screen (const char *string);
 extern const char *gui_chat_string_add_offset (const char *string, int offset);
@@ -85,15 +87,14 @@ extern void gui_chat_get_word_info (struct t_gui_window *window,
 extern char *gui_chat_get_time_string (time_t date);
 extern int gui_chat_get_time_length ();
 extern void gui_chat_change_time_format ();
-extern char *gui_chat_build_string_prefix_message (struct t_gui_line *line);
-extern char *gui_chat_build_string_message_tags (struct t_gui_line *line);
 extern int gui_chat_buffer_valid (struct t_gui_buffer *buffer,
                                   int buffer_type);
 extern void gui_chat_printf_date_tags (struct t_gui_buffer *buffer,
                                        time_t date, const char *tags,
                                        const char *message, ...);
-extern void gui_chat_printf_y (struct t_gui_buffer *buffer, int y,
-                               const char *message, ...);
+extern void gui_chat_printf_y_date_tags (struct t_gui_buffer *buffer, int y,
+                                         time_t date, const char *tags,
+                                         const char *message, ...);
 extern void gui_chat_print_lines_waiting_buffer (FILE *f);
 extern int gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
                                            const char *signal,

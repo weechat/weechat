@@ -12,13 +12,13 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2021
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2022
 
 
 Ten dokument opisuje klienta rozmów WeeChat, który jest częścią WeeChat.
 
-Najnowsza wersja tego dokumentu znajduje się na tej stronie:
-https://weechat.org/doc
+Najnowszą wersję dokumentacji można znaleźć
+https://weechat.org/doc/[tutaj ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -67,7 +67,7 @@ funkcji API, może to prowadzić to awarii WeeChat. +
 Jeśli coś musi zostać wykonane w tle, można użyć funkcji `+hook_process+`.
 Zobacz przykład w rozdziale <<hook_process,Wykonanie procesu w tle>> oraz
 dokumentację do funkcji `+hook_process+` w
-link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat] (Angielski).
+link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat ^↗^,window=_blank] (Angielski).
 
 [[languages_specificities]]
 === Specyfika języków
@@ -80,7 +80,7 @@ link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat] (Angiel
 
 WeeChat definiuje moduł `weechat`, który należy zaimportowac poprzez `import weechat`. +
 Szkielet API WeeChat dla języka Python dostępny jest w repozytorium:
-https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
+https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^,window=_blank].
 
 [[python_functions]]
 ===== Funkcje
@@ -104,38 +104,38 @@ dlatego callback może otrzymać ciąc typu `str` lub `bytes` (lista nie jest pe
 |===
 | Funkcja API | Argumenty | Przykłady | Opis
 
-| hook_modifier |
-  irc_in_yyy |
-  pass:[irc_in_privmsg] +
-  pass:[irc_in_notice] |
-  Wiadomość otrzymana przez wtyczkę IRC, zanim jest zdekodowana do UTF-8
+| hook_modifier
+| irc_in_yyy
+| pass:[irc_in_privmsg] +
+  pass:[irc_in_notice]
+| Wiadomość otrzymana przez wtyczkę IRC, zanim jest zdekodowana do UTF-8
   (używana wewnętrznie) +
   +
   Zalecane jest używanie w zamian modyfikatora `+irc_in2_yyy+`, otrzymany ciąg
   jest zawsze poprawnym UTF-8. +
   Zobacz funkcję `+hook_modifier+` w
-  link:weechat_plugin_api.en.html#_hook_modifier[Opiie API wtyczek WeeChat].
+  link:weechat_plugin_api.en.html#_hook_modifier[Opiie API wtyczek WeeChat ^↗^,window=_blank].
 
-| hook_signal |
-  xxx,irc_out_yyy +
-  xxx,irc_outtags_yyy |
-  pass:[*,irc_out_privmsg] +
+| hook_signal
+| xxx,irc_out_yyy +
+  xxx,irc_outtags_yyy
+| pass:[*,irc_out_privmsg] +
   pass:[*,irc_out_notice] +
   pass:[*,irc_outtags_privmsg] +
-  pass:[*,irc_outtags_notice] |
-  Wiadomość wysłana przez serwer IRC po zakodowaniu na kodowanie `encode`
+  pass:[*,irc_outtags_notice]
+| Wiadomość wysłana przez serwer IRC po zakodowaniu na kodowanie `encode`
   zdefiniowane przez użytkownika (jeśli inne niż `UTF-8`). +
   +
   Zaleca się użycie w zamian sygnału `+xxx,irc_out1_yyy+`,otrzymany ciąg jest
   zawsze poprawnym UTF-8. +
   Zobacz funkcję `+hook_signal+` w
-  link:weechat_plugin_api.en.html#_hook_modifier[Opiie API wtyczek WeeChat].
+  link:weechat_plugin_api.en.html#_hook_modifier[Opiie API wtyczek WeeChat ^↗^,window=_blank].
 
 | hook_process +
-  hook_process_hashtable |
-  - |
-  - |
-  Wynik komendy wysyłany do callbacka, może zawierać niepoprawne dane UTF-8.
+  hook_process_hashtable
+| -
+| -
+| Wynik komendy wysyłany do callbacka, może zawierać niepoprawne dane UTF-8.
 
 |===
 
@@ -199,6 +199,22 @@ Funkcje są wywoływane za pomocą `+weechat.xxx(arg1, arg2, ...)+`.
 ===== Funkcje
 
 Funkcje są wywoływane za pomocą `+weechat::xxx arg1 arg2 ...+`.
+
+[[tcl_null]]
+===== Wartości null
+
+Jako że Tcl wspiera tylko ciągi znaków jako zmienne, nie ma typu null, który można
+by przekazać jako argument dla funkcji akceptującej takie wartości lub otrzymać
+jako argument w funkcji callback. Żeby rozwiązać ten problem API WeeChat definiuje
+stałą `$::weechat::WEECHAT_NULL`, która zachowuje się jak wartość null.
+Stała ta jest zdefiniowana jako `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`,
+jest więc mało prawdopodobne, że pokaże się przypadkowo.
+
+Możesz przekazać tą stałą do funkcji przyjmujących null jako argument i otrzymasz
+tą wartość w funkcji callback jeśli wartość argumentu to null. Aby zobaczyć które
+funlcje akceptują wartości null i przekazują ja do callbacków przejrzyj prototypy
+języka Python w
+link:weechat_plugin_api.en.html[Opisie API wtyczek WeeChat ^↗^,window=_blank].
 
 [[language_guile]]
 ==== Guile (Scheme)
@@ -375,7 +391,7 @@ dowiązanie w katalogu _autoload_.
 == Różnice pomiędzy API dla C
 
 API skryptów jest prawie takie same jak API dla wtyczek pisanych w C.
-Możesz zajrzeć do link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat] (Angielski)
+Możesz zajrzeć do link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat ^↗^,window=_blank] (Angielski)
 po więcej informacji na temat każdej z funkcji API: prototyp, argumenty,
 zwracane wartości, przykłady.
 
@@ -542,25 +558,25 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 == API skryptów
 
 Więcej informacji o funkcjach w API, znajdziesz w
-link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat] (Angielski).
+link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat ^↗^,window=_blank] (Angielski).
 
 [[script_api_functions]]
 === Fukcje
 
 Lista funkcji w API skryptów:
 
-[width="100%",cols="1,3",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | Kategoria | Funkcje
 
-| ogólne |
-  register
+| ogólne
+| register
 
-| wtyczki |
-  plugin_get_name
+| wtyczki
+| plugin_get_name
 
-| ciągi |
-  charset_set +
+| ciągi
+| charset_set +
   iconv_to_internal +
   iconv_from_internal +
   gettext +
@@ -572,6 +588,7 @@ Lista funkcji w API skryptów:
   string_has_highlight_regex +
   string_mask_to_regex +
   string_format_size +
+  string_parse_size +
   string_color_code_size +
   string_remove_color +
   string_is_command_char +
@@ -579,13 +596,13 @@ Lista funkcji w API skryptów:
   string_eval_expression +
   string_eval_path_home
 
-| katalogi |
-  mkdir_home +
+| katalogi
+| mkdir_home +
   mkdir +
   mkdir_parents
 
-| przechowywane listy |
-  list_new +
+| przechowywane listy
+| list_new +
   list_add +
   list_search +
   list_search_pos +
@@ -601,8 +618,8 @@ Lista funkcji w API skryptów:
   list_remove_all +
   list_free
 
-| pliki konfiguracyjne |
-  config_new +
+| pliki konfiguracyjne
+| config_new +
   config_new_section +
   config_search_section +
   config_new_option +
@@ -639,20 +656,21 @@ Lista funkcji w API skryptów:
   config_set_desc_plugin +
   config_unset_plugin
 
-| przypisania klawiszy |
-  key_bind +
+| przypisania klawiszy
+| key_bind +
   key_unbind
 
-| wyświetlanie |
-  prefix +
+| wyświetlanie
+| prefix +
   color +
   print (dla pythona: prnt) +
   print_date_tags (dla pythona: prnt_date_tags) +
   print_y (dla pythona: prnt_y) +
+  print_y_date_tags (dla pythona: prnt_y_date_tags) +
   log_print
 
-| hooks |
-  hook_command +
+| hooks
+| hook_command +
   hook_command_run +
   hook_timer +
   hook_fd +
@@ -677,8 +695,9 @@ Lista funkcji w API skryptów:
   unhook +
   unhook_all
 
-| bufory |
-  buffer_new +
+| bufory
+| buffer_new +
+  buffer_new_props +
   current_buffer +
   buffer_search +
   buffer_search_main +
@@ -693,16 +712,16 @@ Lista funkcji w API skryptów:
   buffer_string_replace_local_var +
   buffer_match_list
 
-| okna |
-  current_window +
+| okna
+| current_window +
   window_search_with_buffer +
   window_get_integer +
   window_get_string +
   window_get_pointer +
   window_set_title
 
-| lista nicków |
-  nicklist_add_group +
+| lista nicków
+| nicklist_add_group +
   nicklist_search_group +
   nicklist_add_nick +
   nicklist_search_nick +
@@ -718,8 +737,8 @@ Lista funkcji w API skryptów:
   nicklist_nick_get_pointer +
   nicklist_nick_set
 
-| paski |
-  bar_item_search +
+| paski
+| bar_item_search +
   bar_item_new +
   bar_item_update +
   bar_item_remove +
@@ -729,23 +748,23 @@ Lista funkcji w API skryptów:
   bar_update +
   bar_remove
 
-| komendy |
-  command +
+| komendy
+| command +
   command_options
 
-| dopełnienia |
-  completion_new +
+| dopełnienia
+| completion_new +
   completion_search +
   completion_get_string +
   completion_list_add +
   completion_free
 
-| informacje |
-  info_get +
+| informacje
+| info_get +
   info_get_hashtable
 
-| infolisty |
-  infolist_new +
+| infolisty
+| infolist_new +
   infolist_new_item +
   infolist_new_var_integer +
   infolist_new_var_string +
@@ -763,8 +782,8 @@ Lista funkcji w API skryptów:
   infolist_time +
   infolist_free
 
-| hdata |
-  hdata_get +
+| hdata
+| hdata_get +
   hdata_get_var_offset +
   hdata_get_var_type_string +
   hdata_get_var_array_size +
@@ -785,8 +804,8 @@ Lista funkcji w API skryptów:
   hdata_update +
   hdata_get_string
 
-| uaktualnienie |
-  upgrade_new +
+| uaktualnienie
+| upgrade_new +
   upgrade_write_object +
   upgrade_read +
   upgrade_close
@@ -797,17 +816,17 @@ Lista funkcji w API skryptów:
 
 Lista stałych w API skryptów:
 
-[width="100%",cols="1,3",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | Kategoria | Stałe
 
-| zwracane kody |
-  `WEECHAT_RC_OK` (liczba całkowita) +
+| zwracane kody
+| `WEECHAT_RC_OK` (liczba całkowita) +
   `WEECHAT_RC_OK_EAT` (liczba całkowita) +
   `WEECHAT_RC_ERROR` (liczba całkowita)
 
-| pliki konfiguracyjne |
-  `WEECHAT_CONFIG_READ_OK` (liczba całkowita) +
+| pliki konfiguracyjne
+| `WEECHAT_CONFIG_READ_OK` (liczba całkowita) +
   `WEECHAT_CONFIG_READ_MEMORY_ERROR` (liczba całkowita) +
   `WEECHAT_CONFIG_READ_FILE_NOT_FOUND` (liczba całkowita) +
   `WEECHAT_CONFIG_WRITE_OK` (liczba całkowita) +
@@ -822,23 +841,23 @@ Lista stałych w API skryptów:
   `WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED` (liczba całkowita) +
   `WEECHAT_CONFIG_OPTION_UNSET_ERROR` (liczba całkowita)
 
-| posortowane listy |
-  `WEECHAT_LIST_POS_SORT` (ciąg) +
+| posortowane listy
+| `WEECHAT_LIST_POS_SORT` (ciąg) +
   `WEECHAT_LIST_POS_BEGINNING` (ciąg) +
   `WEECHAT_LIST_POS_END` (ciąg)
 
-| hotlisty |
-  `WEECHAT_HOTLIST_LOW` (ciąg) +
+| hotlisty
+| `WEECHAT_HOTLIST_LOW` (ciąg) +
   `WEECHAT_HOTLIST_MESSAGE` (ciąg) +
   `WEECHAT_HOTLIST_PRIVATE` (ciąg) +
   `WEECHAT_HOTLIST_HIGHLIGHT` (ciąg)
 
-| hook process |
-  `WEECHAT_HOOK_PROCESS_RUNNING` (liczba całkowita) +
+| hook process
+| `WEECHAT_HOOK_PROCESS_RUNNING` (liczba całkowita) +
   `WEECHAT_HOOK_PROCESS_ERROR` (liczba całkowita)
 
-| hook connect |
-  `WEECHAT_HOOK_CONNECT_OK` (liczba całkowita) +
+| hook connect
+| `WEECHAT_HOOK_CONNECT_OK` (liczba całkowita) +
   `WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND` (liczba całkowita) +
   `WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND` (liczba całkowita) +
   `WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED` (liczba całkowita) +
@@ -850,8 +869,8 @@ Lista stałych w API skryptów:
   `WEECHAT_HOOK_CONNECT_TIMEOUT` (liczba całkowita) +
   `WEECHAT_HOOK_CONNECT_SOCKET_ERROR` (liczba całkowita)
 
-| hook signal |
-  `WEECHAT_HOOK_SIGNAL_STRING` (ciąg) +
+| hook signal
+| `WEECHAT_HOOK_SIGNAL_STRING` (ciąg) +
   `WEECHAT_HOOK_SIGNAL_INT` (ciąg) +
   `WEECHAT_HOOK_SIGNAL_POINTER` (ciąg)
 |===
@@ -861,7 +880,7 @@ Lista stałych w API skryptów:
 
 Ten rozdział przedstawia część częstych zadań z przykładami.
 Użyto tu tylko część rzeczy dostępnych w API, dokładne informacje można znaleźć
-w link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat] (Angielski).
+w link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat ^↗^,window=_blank] (Angielski).
 
 [[buffers]]
 === Bufory
@@ -880,7 +899,7 @@ Przykłady:
 weechat.prnt("", "witaj")
 
 # wyświetl "witaj" w głównym buforze, ale nie zapisuj tego do pliku z logiem
-# (tylko wersje >= 0.3.3)
+# (tylko wersje ≥ 0.3.3)
 weechat.prnt_date_tags("", 0, "no_log", "witaj")
 
 # wyświetl "==>" przed wiadomością "witaj" w obecnym buforze
@@ -1054,24 +1073,51 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 Do wykonywania procesów w tle służy `+hook_process+`. Twoje callbacki zostaną
 wywołane, kiedy dane będą gotowe. Może zostać wywołane wiele razy.
 
-Dla ostatniego wykonania Twojego callbacku _rc_ jest ustawiane na 0, lub wartość
-dodatnią, jest to kod zwracany przez komendę.
+Dla ostatniego wykonania Twojego callbacku _return_code_ jest ustawiane na 0,
+lub wartość dodatnią, jest to kod zwracany przez komendę.
 
 Przykład:
 
 [source,python]
 ----
-process_output = ""
-
-def my_process_cb(data, command, rc, out, err):
-    global process_output
-    if out != "":
-        process_output += out
-    if int(rc) >= 0:
-        weechat.prnt("", process_output)
+def my_process_cb(data, command, return_code, out, err):
+    if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+        weechat.prnt("", "Error with command '%s'" % command)
+        return weechat.WEECHAT_RC_OK
+    if return_code >= 0:
+        weechat.prnt("", "return_code = %d" % return_code)
+    if out:
+        weechat.prnt("", "stdout: %s" % out)
+    if err:
+        weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
+----
+
+Zamiast zewnętrznej komendy możesz też wywołać bezpośrednio funkcję ze skryptu,
+tóra robi coś blokującego:
+
+[source,python]
+----
+def get_status(data):
+    # do something blocking...
+    # ...
+    return "this is the result"
+
+def my_process_cb(data, command, return_code, out, err):
+    if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+        weechat.prnt("", "Error with command '%s'" % command)
+        return weechat.WEECHAT_RC_OK
+    if return_code >= 0:
+        weechat.prnt("", "return_code = %d" % return_code)
+    if out:
+        weechat.prnt("", "stdout: %s" % out)
+    if err:
+        weechat.prnt("", "stderr: %s" % err)
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_process("func:get_status", 5000, "my_process_cb", "")
 ----
 
 [[url_transfer]]
@@ -1087,15 +1133,15 @@ Przykład transferu URL bez opcji: strona HTML jest otrzymywana jako "out"
 
 [source,python]
 ----
-# Wyświetla aktualną stabilną wersję WeeChat.
-weechat_version = ""
+# Wyświetla najnowszą stabilną wersję WeeChat.
+weechat_latest_version = ""
 
-def weechat_process_cb(data, command, rc, out, err):
-    global weechat_version
-    if out != "":
-        weechat_version += out
-    if int(rc) >= 0:
-        weechat.prnt("", "Obecna wersja stabilna WeeChat: %s" % weechat_version)
+def weechat_process_cb(data, command, return_code, out, err):
+    global weechat_latest_version
+    if out:
+        weechat_latest_version += out
+    if return_code >= 0:
+        weechat.prnt("", "Latest WeeChat version: %s" % weechat_latest_version)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("url:https://weechat.org/dev/info/stable/",
@@ -1103,16 +1149,17 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 ----
 
 [TIP]
-Wszystkie informacje o WeeChat dostępne są na stronie https://weechat.org/dev/info
+Wszystkie dostępne informacje można znaleźć na
+https://weechat.org/dev/info/[tej stronie ^↗^,window=_blank].
 
 Przykładowy transfer URL z opcją: pobranie najnowszej wersji rozwojowej WeeChat
 do pliku _/tmp/weechat-devel.tar.gz_:
 
 [source,python]
 ----
-def my_process_cb(data, command, rc, out, err):
-    if int(rc) >= 0:
-        weechat.prnt("", "End of transfer (rc=%s)" % rc)
+def my_process_cb(data, command, return_code, out, err):
+    if return_code >= 0:
+        weechat.prnt("", "End of transfer (return code = %d)" % return_code)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.tar.gz",
@@ -1122,7 +1169,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 
 Więcej informacji o transferach URL i dostępnych opcjach dla funkcji
 `+hook_process+` oraz `+hook_process_hashtable+` można znaleźć w
-link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat] (Angielski).
+link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat ^↗^,window=_blank] (Angielski).
 
 [[config_options]]
 === Konfiguracja / opcje
@@ -1278,63 +1325,71 @@ Wynik jest tabela hashy z następującymi kluczami
 
 [width="100%",cols="3,^2,10,7",options="header"]
 |===
-| Klucz | Od wersji ^(1)^ | Opis | Przykład
+| Klucz | Od wersji ^(1)^ | Opis | Przykład
 
-| tags | 0.4.0 |
-  Tagi w wiadomości (mogą byc puste). |
-  `+time=2015-06-27T16:40:35.000Z+`
+| tags | 0.4.0
+| Tagi w wiadomości (mogą byc puste).
+| `+time=2015-06-27T16:40:35.000Z+`
 
-| tag_xxx | 3.3 |
-  Niewyescapowana wartość tagu "xxx" (jeden klucz per tag). |
-  `+2015-06-27T16:40:35.000Z+`
+| tag_xxx | 3.3
+| Niewyescapowana wartość tagu "xxx" (jeden klucz per tag).
+| `+2015-06-27T16:40:35.000Z+`
 
-| message_without_tags | 0.4.0 |
-  Wiadomość bez tagów (jeśli nie ma tagów jest to to samo co wiadomość). |
-  `+:nick!user@host PRIVMSG #weechat :hello!+`
+| message_without_tags | 0.4.0
+| Wiadomość bez tagów (jeśli nie ma tagów jest to to samo co wiadomość).
+| `+:nick!user@host PRIVMSG #weechat :hello!+`
 
-| nick | 0.3.4 |
-  Nick żródła. |
-  `+nick+`
+| nick | 0.3.4
+| Nick żródła.
+| `+nick+`
 
-| user | 2.7 |
-  Oryginalny użytkownik. |
-  `+user+`
+| user | 2.7
+| Oryginalny użytkownik.
+| `+user+`
 
-| host | 0.3.4 |
-  Host żródła (zawiera nick). |
-  `+nick!user@host+`
+| host | 0.3.4
+| Host żródła (zawiera nick).
+| `+nick!user@host+`
 
-| command | 0.3.4 |
-  Komenda (_PRIVMSG_, _NOTICE_, ...). |
-  `+PRIVMSG+`
+| command | 0.3.4
+| Komenda (_PRIVMSG_, _NOTICE_, ...).
+| `+PRIVMSG+`
 
-| channel | 0.3.4 |
-  Docelowy kanał. |
-  `+#weechat+`
+| channel | 0.3.4
+| Docelowy kanał.
+| `+#weechat+`
 
-| arguments | 0.3.4 |
-  Argumenty komendy (zawierają kanał). |
-  `+#weechat :hello!+`
+| arguments | 0.3.4
+| Argumenty komendy (zawierają kanał).
+| `+#weechat :hello!+`
 
-| text | 1.3 |
-  Tekst (na przykład wiadomość użytkownika). |
-  `+hello!+`
+| text | 1.3
+| Tekst (na przykład wiadomość użytkownika).
+| `+hello!+`
 
-| pos_command | 1.3 |
-  The index of _command_ in message ("-1" if _command_ was not found). |
-  `+47+`
+| paramN | 3.4
+| Parametry komendy (od 1 do N).
+| `+#weechat+`
 
-| pos_arguments | 1.3 |
-  The index of _arguments_ in message ("-1" if _arguments_ was not found). |
-  `+55+`
+| num_params | 3.4
+| Ilość parametrów komendy.
+| `+2+`
 
-| pos_channel | 1.3 |
-  The index of _channel_ in message ("-1" if _channel_ was not found). |
-  `+55+`
+| pos_command | 1.3
+| The index of _command_ in message ("-1" if _command_ was not found).
+| `+47+`
 
-| pos_text | 1.3 |
-  The index of _text_ in message ("-1" if _text_ was not found). |
-  `+65+`
+| pos_arguments | 1.3
+| The index of _arguments_ in message ("-1" if _arguments_ was not found).
+| `+55+`
+
+| pos_channel | 1.3
+| The index of _channel_ in message ("-1" if _channel_ was not found).
+| `+55+`
+
+| pos_text | 1.3
+| The index of _text_ in message ("-1" if _text_ was not found).
+| `+65+`
 |===
 
 [NOTE]
@@ -1358,6 +1413,9 @@ dict = weechat.info_get_hashtable(
 #     "channel": "#weechat",
 #     "arguments": "#weechat :hello!",
 #     "text": "hello!",
+#     "param1": "#weechat",
+#     "param2": "hello!",
+#     "num_params": "2",
 #     "pos_command": "65",
 #     "pos_arguments": "73",
 #     "pos_channel": "73",

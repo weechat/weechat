@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -111,6 +111,9 @@ extern struct t_irc_channel *irc_channel_new (struct t_irc_server *server,
                                               const char *channel_name,
                                               int switch_to_channel,
                                               int auto_switch);
+extern void irc_channel_pv_rename (struct t_irc_server *server,
+                                   struct t_irc_channel *channel,
+                                   const char *new_name);
 extern void irc_channel_add_nicklist_groups (struct t_irc_server *server,
                                              struct t_irc_channel *channel);
 extern void irc_channel_set_buffer_title (struct t_irc_channel *channel);

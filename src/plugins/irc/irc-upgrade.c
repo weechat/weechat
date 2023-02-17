@@ -1,7 +1,7 @@
 /*
  * irc-upgrade.c - save/restore IRC plugin data when upgrading WeeChat
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -52,7 +52,8 @@ struct t_irc_modelist *irc_upgrade_current_modelist = NULL;
  */
 
 int
-irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
+irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
+                           int force_disconnected_state)
 {
     struct t_infolist *infolist;
     struct t_irc_server *ptr_server;
@@ -73,7 +74,8 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
         infolist = weechat_infolist_new ();
         if (!infolist)
             return 0;
-        if (!irc_server_add_to_infolist (infolist, ptr_server))
+        if (!irc_server_add_to_infolist (infolist, ptr_server,
+                                         force_disconnected_state))
         {
             weechat_infolist_free (infolist);
             return 0;
@@ -105,63 +107,66 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
             if (!rc)
                 return 0;
 
-            for (ptr_nick = ptr_channel->nicks; ptr_nick;
-                 ptr_nick = ptr_nick->next_nick)
+            if (!force_disconnected_state)
             {
-                /* save nick */
-                infolist = weechat_infolist_new ();
-                if (!infolist)
-                    return 0;
-                if (!irc_nick_add_to_infolist (infolist, ptr_nick))
+                for (ptr_nick = ptr_channel->nicks; ptr_nick;
+                     ptr_nick = ptr_nick->next_nick)
                 {
-                    weechat_infolist_free (infolist);
-                    return 0;
-                }
-                rc = weechat_upgrade_write_object (upgrade_file,
-                                                   IRC_UPGRADE_TYPE_NICK,
-                                                   infolist);
-                weechat_infolist_free (infolist);
-                if (!rc)
-                    return 0;
-            }
-
-            for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
-                 ptr_modelist = ptr_modelist->next_modelist)
-            {
-                /* save modelist */
-                infolist = weechat_infolist_new ();
-                if (!infolist)
-                    return 0;
-                if (!irc_modelist_add_to_infolist (infolist, ptr_modelist))
-                {
-                    weechat_infolist_free (infolist);
-                    return 0;
-                }
-                rc = weechat_upgrade_write_object (upgrade_file,
-                                                   IRC_UPGRADE_TYPE_MODELIST,
-                                                   infolist);
-                weechat_infolist_free (infolist);
-                if (!rc)
-                    return 0;
-
-                for (ptr_item = ptr_modelist->items; ptr_item;
-                     ptr_item = ptr_item->next_item)
-                {
-                    /* save modelist item */
+                    /* save nick */
                     infolist = weechat_infolist_new ();
                     if (!infolist)
                         return 0;
-                    if (!irc_modelist_item_add_to_infolist (infolist, ptr_item))
+                    if (!irc_nick_add_to_infolist (infolist, ptr_nick))
                     {
                         weechat_infolist_free (infolist);
                         return 0;
                     }
                     rc = weechat_upgrade_write_object (upgrade_file,
-                                                       IRC_UPGRADE_TYPE_MODELIST_ITEM,
+                                                       IRC_UPGRADE_TYPE_NICK,
                                                        infolist);
                     weechat_infolist_free (infolist);
                     if (!rc)
                         return 0;
+                }
+
+                for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
+                     ptr_modelist = ptr_modelist->next_modelist)
+                {
+                    /* save modelist */
+                    infolist = weechat_infolist_new ();
+                    if (!infolist)
+                        return 0;
+                    if (!irc_modelist_add_to_infolist (infolist, ptr_modelist))
+                    {
+                        weechat_infolist_free (infolist);
+                        return 0;
+                    }
+                    rc = weechat_upgrade_write_object (upgrade_file,
+                                                       IRC_UPGRADE_TYPE_MODELIST,
+                                                       infolist);
+                    weechat_infolist_free (infolist);
+                    if (!rc)
+                        return 0;
+
+                    for (ptr_item = ptr_modelist->items; ptr_item;
+                         ptr_item = ptr_item->next_item)
+                    {
+                        /* save modelist item */
+                        infolist = weechat_infolist_new ();
+                        if (!infolist)
+                            return 0;
+                        if (!irc_modelist_item_add_to_infolist (infolist, ptr_item))
+                        {
+                            weechat_infolist_free (infolist);
+                            return 0;
+                        }
+                        rc = weechat_upgrade_write_object (upgrade_file,
+                                                           IRC_UPGRADE_TYPE_MODELIST_ITEM,
+                                                           infolist);
+                        weechat_infolist_free (infolist);
+                        if (!rc)
+                            return 0;
+                    }
                 }
             }
         }
@@ -263,7 +268,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
  */
 
 int
-irc_upgrade_save ()
+irc_upgrade_save (int force_disconnected_state)
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
@@ -273,7 +278,7 @@ irc_upgrade_save ()
     if (!upgrade_file)
         return 0;
 
-    rc = irc_upgrade_save_all_data (upgrade_file);
+    rc = irc_upgrade_save_all_data (upgrade_file, force_disconnected_state);
 
     weechat_upgrade_close (upgrade_file);
 
@@ -410,6 +415,20 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                             &irc_server_recv_cb,
                             irc_upgrade_current_server,
                             NULL);
+                    }
+                    /*
+                     * "authentication_method" and "sasl_mechanism_used" are
+                     * new in WeeChat 3.9
+                     */
+                    if (weechat_infolist_search_var (infolist, "authentication_method"))
+                    {
+                        irc_upgrade_current_server->authentication_method = weechat_infolist_integer (infolist, "authentication_method");
+                        irc_upgrade_current_server->sasl_mechanism_used = weechat_infolist_integer (infolist, "sasl_mechanism_used");
+                    }
+                    else
+                    {
+                        irc_upgrade_current_server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
+                        irc_upgrade_current_server->sasl_mechanism_used = -1;
                     }
                     irc_upgrade_current_server->is_connected = weechat_infolist_integer (infolist, "is_connected");
                     irc_upgrade_current_server->ssl_connected = weechat_infolist_integer (infolist, "ssl_connected");
@@ -584,7 +603,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     irc_upgrade_current_server->reconnect_delay = weechat_infolist_integer (infolist, "reconnect_delay");
                     irc_upgrade_current_server->reconnect_start = weechat_infolist_time (infolist, "reconnect_start");
                     irc_upgrade_current_server->command_time = weechat_infolist_time (infolist, "command_time");
-                    irc_upgrade_current_server->reconnect_join = weechat_infolist_integer (infolist, "reconnect_join");
+                    irc_upgrade_current_server->autojoin_done = weechat_infolist_integer (infolist, "autojoin_done");
                     irc_upgrade_current_server->disable_autojoin = weechat_infolist_integer (infolist, "disable_autojoin");
                     irc_upgrade_current_server->is_away = weechat_infolist_integer (infolist, "is_away");
                     str = weechat_infolist_string (infolist, "away_message");

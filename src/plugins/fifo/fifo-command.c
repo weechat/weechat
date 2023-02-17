@@ -1,7 +1,7 @@
 /*
  * fifo-command.c - fifo command
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -59,21 +59,21 @@ fifo_command_fifo (const void *pointer, void *data,
     }
 
     /* enable pipe */
-    if (weechat_strcasecmp (argv[1], "enable") == 0)
+    if (weechat_strcmp (argv[1], "enable") == 0)
     {
         weechat_config_option_set (fifo_config_file_enabled, "on", 1);
         return WEECHAT_RC_OK;
     }
 
     /* disable pipe */
-    if (weechat_strcasecmp (argv[1], "disable") == 0)
+    if (weechat_strcmp (argv[1], "disable") == 0)
     {
         weechat_config_option_set (fifo_config_file_enabled, "off", 1);
         return WEECHAT_RC_OK;
     }
 
     /* toggle pipe */
-    if (weechat_strcasecmp (argv[1], "toggle") == 0)
+    if (weechat_strcmp (argv[1], "toggle") == 0)
     {
         weechat_config_option_set (
             fifo_config_file_enabled,

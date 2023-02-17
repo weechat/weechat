@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -25,6 +25,7 @@
 
 #define weechat_plugin weechat_exec_plugin
 #define EXEC_PLUGIN_NAME "exec"
+#define EXEC_PLUGIN_PRIORITY 14000
 
 #define EXEC_STDOUT 0
 #define EXEC_STDERR 1

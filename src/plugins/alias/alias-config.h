@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -19,6 +19,9 @@
 
 #ifndef WEECHAT_PLUGIN_ALIAS_CONFIG_H
 #define WEECHAT_PLUGIN_ALIAS_CONFIG_H
+
+#define ALIAS_CONFIG_NAME "alias"
+#define ALIAS_CONFIG_PRIO_NAME (TO_STR(ALIAS_PLUGIN_PRIORITY) "|" ALIAS_CONFIG_NAME)
 
 extern struct t_config_file *alias_config_file;
 extern struct t_config_section *alias_config_section_cmd;

@@ -1,7 +1,7 @@
 /*
  * wee-config-file.c - configuration files/sections/options management
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -35,6 +35,7 @@
 
 #include "weechat.h"
 #include "wee-config-file.h"
+#include "wee-arraylist.h"
 #include "wee-config.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
@@ -60,6 +61,33 @@ void config_file_option_free_data (struct t_config_option *option);
 
 
 /*
+ * Checks if a configuration file pointer is valid.
+ *
+ * Returns:
+ *   1: configuration file exists
+ *   0: configuration file does not exist
+ */
+
+int
+config_file_valid (struct t_config_file *config_file)
+{
+    struct t_config_file *ptr_config;
+
+    if (!config_file)
+        return 0;
+
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        if (ptr_config == config_file)
+            return 1;
+    }
+
+    /* configuration file not found */
+    return 0;
+}
+
+/*
  * Searches for a configuration file.
  */
 
@@ -67,15 +95,19 @@ struct t_config_file *
 config_file_search (const char *name)
 {
     struct t_config_file *ptr_config;
+    int rc;
 
     if (!name)
         return NULL;
 
-    for (ptr_config = config_files; ptr_config;
-         ptr_config = ptr_config->next_config)
+    for (ptr_config = last_config_file; ptr_config;
+         ptr_config = ptr_config->prev_config)
     {
-        if (string_strcasecmp (ptr_config->name, name) == 0)
+        rc = strcmp (ptr_config->name, name);
+        if (rc == 0)
             return ptr_config;
+        else if (rc < 0)
+            break;
     }
 
     /* configuration file not found */
@@ -88,22 +120,67 @@ config_file_search (const char *name)
  */
 
 struct t_config_file *
-config_file_config_find_pos (const char *name)
+config_file_find_pos (const char *name)
 {
     struct t_config_file *ptr_config;
 
-    if (name)
+    if (!name)
+        return NULL;
+
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
     {
-        for (ptr_config = config_files; ptr_config;
-             ptr_config = ptr_config->next_config)
-        {
-            if (string_strcasecmp (name, ptr_config->name) < 0)
-                return ptr_config;
-        }
+        if (string_strcmp (name, ptr_config->name) < 0)
+            return ptr_config;
     }
 
     /* position not found (we will add to the end of list) */
     return NULL;
+}
+
+/*
+ * Inserts a configuration file (keeping files sorted by name).
+ */
+
+void
+config_file_config_insert (struct t_config_file *config_file)
+{
+    struct t_config_file *pos_config;
+
+    if (!config_file)
+        return;
+
+    if (config_files)
+    {
+        pos_config = config_file_find_pos (config_file->name);
+        if (pos_config)
+        {
+            /* insert config into the list (before config found) */
+            config_file->prev_config = pos_config->prev_config;
+            config_file->next_config = pos_config;
+            if (pos_config->prev_config)
+                (pos_config->prev_config)->next_config = config_file;
+            else
+                config_files = config_file;
+            pos_config->prev_config = config_file;
+        }
+        else
+        {
+            /* add config to the end */
+            config_file->prev_config = last_config_file;
+            config_file->next_config = NULL;
+            last_config_file->next_config = config_file;
+            last_config_file = config_file;
+        }
+    }
+    else
+    {
+        /* first config */
+        config_file->prev_config = NULL;
+        config_file->next_config = NULL;
+        config_files = config_file;
+        last_config_file = config_file;
+    }
 }
 
 /*
@@ -121,36 +198,40 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
                  void *callback_reload_data)
 {
     struct t_config_file *new_config_file;
+    const char *ptr_name;
     char *filename;
-    int length;
+    int priority, length;
 
-    if (!name)
+    string_get_priority_and_name (name, &priority, &ptr_name,
+                                  CONFIG_PRIORITY_DEFAULT);
+
+    if (!ptr_name || !ptr_name[0])
         return NULL;
 
     /* two configuration files can not have same name */
-    if (config_file_search (name))
+    if (config_file_search (ptr_name))
         return NULL;
 
     new_config_file = malloc (sizeof (*new_config_file));
     if (new_config_file)
     {
         new_config_file->plugin = plugin;
-        new_config_file->name = strdup (name);
+        new_config_file->priority = priority;
+        new_config_file->name = strdup (ptr_name);
         if (!new_config_file->name)
         {
             free (new_config_file);
             return NULL;
         }
-        length = strlen (name) + 8 + 1;
+        new_config_file->filename = NULL;
+        length = strlen (ptr_name) + 8 + 1;
         filename = malloc (length);
         if (filename)
         {
-            snprintf (filename, length, "%s.conf", name);
+            snprintf (filename, length, "%s.conf", ptr_name);
             new_config_file->filename = strdup (filename);
             free (filename);
         }
-        else
-            new_config_file->filename = strdup (name);
         if (!new_config_file->filename)
         {
             free (new_config_file->name);
@@ -164,16 +245,67 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
         new_config_file->sections = NULL;
         new_config_file->last_section = NULL;
 
-        new_config_file->prev_config = last_config_file;
-        new_config_file->next_config = NULL;
-        if (last_config_file)
-            last_config_file->next_config = new_config_file;
-        else
-            config_files = new_config_file;
-        last_config_file = new_config_file;
+        config_file_config_insert (new_config_file);
     }
 
     return new_config_file;
+}
+
+/*
+ * Compares two configuration files to sort them by priority (highest priority
+ * at beginning of list).
+ *
+ * Returns:
+ *   -1: config1 has higher priority than config2
+ *    1: config1 has same or lower priority than config2
+ */
+
+int
+config_file_arraylist_cmp_config_cb (void *data,
+                                     struct t_arraylist *arraylist,
+                                     void *pointer1, void *pointer2)
+{
+    struct t_config_file *ptr_config1, *ptr_config2;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    ptr_config1 = (struct t_config_file *)pointer1;
+    ptr_config2 = (struct t_config_file *)pointer2;
+
+    return (ptr_config1->priority > ptr_config2->priority) ? -1 : 1;
+}
+
+/*
+ * Returns an arraylist with pointers to configuration files, sorted by
+ * priority (from highest to lowest).
+ */
+
+struct t_arraylist *
+config_file_get_configs_by_priority ()
+{
+    struct t_arraylist *list;
+    struct t_config_file *ptr_config;
+
+    /*
+     * build a list of pointers to configs sorted by priority,
+     * so that configs with high priority are reloaded first
+     */
+    list = arraylist_new (
+        32, 1, 1,
+        &config_file_arraylist_cmp_config_cb, NULL,
+        NULL, NULL);
+    if (!list)
+        return NULL;
+
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        arraylist_add (list, ptr_config);
+    }
+
+    return list;
 }
 
 /*
@@ -187,14 +319,14 @@ config_file_section_find_pos (struct t_config_file *config_file,
 {
     struct t_config_section *ptr_section;
 
-    if (config_file && name)
+    if (!config_file || !name)
+        return NULL;
+
+    for (ptr_section = config_file->sections; ptr_section;
+         ptr_section = ptr_section->next_section)
     {
-        for (ptr_section = config_file->sections; ptr_section;
-             ptr_section = ptr_section->next_section)
-        {
-            if (string_strcasecmp (name, ptr_section->name) < 0)
-                return ptr_section;
-        }
+        if (string_strcmp (name, ptr_section->name) < 0)
+            return ptr_section;
     }
 
     /* position not found (we will add to the end of list) */
@@ -304,17 +436,17 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
 
 struct t_config_section *
 config_file_search_section (struct t_config_file *config_file,
-                            const char *section_name)
+                            const char *name)
 {
     struct t_config_section *ptr_section;
 
-    if (!config_file || !section_name)
+    if (!config_file || !name)
         return NULL;
 
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
-        if (string_strcasecmp (ptr_section->name, section_name) == 0)
+        if (strcmp (ptr_section->name, name) == 0)
             return ptr_section;
     }
 
@@ -361,48 +493,52 @@ config_file_hook_config_exec (struct t_config_option *option)
 {
     char *option_full_name, str_value[256];
 
-    if (option)
-    {
-        option_full_name = config_file_option_full_name (option);
-        if (option_full_name)
-        {
-            if (option->value)
-            {
-                switch (option->type)
-                {
-                    case CONFIG_OPTION_TYPE_BOOLEAN:
-                        hook_config_exec (option_full_name,
-                                          (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
-                                          "on" : "off");
-                        break;
-                    case CONFIG_OPTION_TYPE_INTEGER:
-                        if (option->string_values)
-                            hook_config_exec (option_full_name,
-                                              option->string_values[CONFIG_INTEGER(option)]);
-                        else
-                        {
-                            snprintf (str_value, sizeof (str_value),
-                                      "%d", CONFIG_INTEGER(option));
-                            hook_config_exec (option_full_name, str_value);
-                        }
-                        break;
-                    case CONFIG_OPTION_TYPE_STRING:
-                        hook_config_exec (option_full_name, (char *)option->value);
-                        break;
-                    case CONFIG_OPTION_TYPE_COLOR:
-                        hook_config_exec (option_full_name,
-                                          gui_color_get_name (CONFIG_COLOR(option)));
-                        break;
-                    case CONFIG_NUM_OPTION_TYPES:
-                        break;
-                }
-            }
-            else
-                hook_config_exec (option_full_name, NULL);
+    if (!option)
+        return;
 
-            free (option_full_name);
+    option_full_name = config_file_option_full_name (option);
+    if (!option_full_name)
+        return;
+
+    if (option->value)
+    {
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                hook_config_exec (option_full_name,
+                                  (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
+                                  "on" : "off");
+                break;
+            case CONFIG_OPTION_TYPE_INTEGER:
+                if (option->string_values)
+                {
+                    hook_config_exec (option_full_name,
+                                      option->string_values[CONFIG_INTEGER(option)]);
+                }
+                else
+                {
+                    snprintf (str_value, sizeof (str_value),
+                              "%d", CONFIG_INTEGER(option));
+                    hook_config_exec (option_full_name, str_value);
+                }
+                break;
+            case CONFIG_OPTION_TYPE_STRING:
+                hook_config_exec (option_full_name, (char *)option->value);
+                break;
+            case CONFIG_OPTION_TYPE_COLOR:
+                hook_config_exec (option_full_name,
+                                  gui_color_get_name (CONFIG_COLOR(option)));
+                break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
         }
     }
+    else
+    {
+        hook_config_exec (option_full_name, NULL);
+    }
+
+    free (option_full_name);
 }
 
 /*
@@ -414,19 +550,17 @@ config_file_option_find_pos (struct t_config_section *section, const char *name)
 {
     struct t_config_option *ptr_option;
 
-    if (section && name)
+    if (!section || !name)
+        return NULL;
+
+    for (ptr_option = section->last_option; ptr_option;
+         ptr_option = ptr_option->prev_option)
     {
-        for (ptr_option = section->last_option; ptr_option;
-             ptr_option = ptr_option->prev_option)
-        {
-            if (string_strcasecmp (name, ptr_option->name) >= 0)
-                return ptr_option->next_option;
-        }
-        return section->options;
+        if (string_strcmp (name, ptr_option->name) >= 0)
+            return ptr_option->next_option;
     }
 
-    /* position not found (we will add to the end of list) */
-    return NULL;
+    return section->options;
 }
 
 /*
@@ -558,7 +692,7 @@ config_file_new_option (struct t_config_file *config_file,
     option_name = NULL;
     parent_name = NULL;
 
-    if (!name)
+    if (!name || !type)
         goto error;
 
     pos = strstr (name, " << ");
@@ -581,7 +715,7 @@ config_file_new_option (struct t_config_file *config_file,
     var_type = -1;
     for (i = 0; i < CONFIG_NUM_OPTION_TYPES; i++)
     {
-        if (string_strcasecmp (type, config_option_type_string[i]) == 0)
+        if (strcmp (type, config_option_type_string[i]) == 0)
         {
             var_type = i;
             break;
@@ -668,8 +802,8 @@ config_file_new_option (struct t_config_file *config_file,
                         index_value = 0;
                         for (i = 0; i < argc; i++)
                         {
-                            if (string_strcasecmp (new_option->string_values[i],
-                                                   default_value) == 0)
+                            if (strcmp (new_option->string_values[i],
+                                        default_value) == 0)
                             {
                                 index_value = i;
                                 break;
@@ -685,8 +819,8 @@ config_file_new_option (struct t_config_file *config_file,
                         index_value = 0;
                         for (i = 0; i < argc; i++)
                         {
-                            if (string_strcasecmp (new_option->string_values[i],
-                                                   value) == 0)
+                            if (strcmp (new_option->string_values[i],
+                                        value) == 0)
                             {
                                 index_value = i;
                                 break;
@@ -843,7 +977,7 @@ config_file_search_option (struct t_config_file *config_file,
         for (ptr_option = section->last_option; ptr_option;
              ptr_option = ptr_option->prev_option)
         {
-            rc = string_strcasecmp (ptr_option->name, option_name);
+            rc = strcmp (ptr_option->name, option_name);
             if (rc == 0)
                 return ptr_option;
             else if (rc < 0)
@@ -858,7 +992,7 @@ config_file_search_option (struct t_config_file *config_file,
             for (ptr_option = ptr_section->last_option; ptr_option;
                  ptr_option = ptr_option->prev_option)
             {
-                rc = string_strcasecmp (ptr_option->name, option_name);
+                rc = strcmp (ptr_option->name, option_name);
                 if (rc == 0)
                     return ptr_option;
                 else if (rc < 0)
@@ -900,7 +1034,7 @@ config_file_search_section_option (struct t_config_file *config_file,
         for (ptr_option = section->last_option; ptr_option;
              ptr_option = ptr_option->prev_option)
         {
-            rc = string_strcasecmp (ptr_option->name, option_name);
+            rc = strcmp (ptr_option->name, option_name);
             if (rc == 0)
             {
                 *section_found = section;
@@ -919,7 +1053,7 @@ config_file_search_section_option (struct t_config_file *config_file,
             for (ptr_option = ptr_section->last_option; ptr_option;
                  ptr_option = ptr_option->prev_option)
             {
-                rc = string_strcasecmp (ptr_option->name, option_name);
+                rc = strcmp (ptr_option->name, option_name);
                 if (rc == 0)
                 {
                     *section_found = ptr_section;
@@ -1028,13 +1162,13 @@ config_file_string_boolean_is_valid (const char *text)
 
     for (i = 0; config_boolean_true[i]; i++)
     {
-        if (string_strcasecmp (text, config_boolean_true[i]) == 0)
+        if (strcmp (text, config_boolean_true[i]) == 0)
             return 1;
     }
 
     for (i = 0; config_boolean_false[i]; i++)
     {
-        if (string_strcasecmp (text, config_boolean_false[i]) == 0)
+        if (strcmp (text, config_boolean_false[i]) == 0)
             return 1;
     }
 
@@ -1060,7 +1194,7 @@ config_file_string_to_boolean (const char *text)
 
     for (i = 0; config_boolean_true[i]; i++)
     {
-        if (string_strcasecmp (text, config_boolean_true[i]) == 0)
+        if (strcmp (text, config_boolean_true[i]) == 0)
             return CONFIG_BOOLEAN_TRUE;
     }
 
@@ -1246,7 +1380,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     option->value = malloc (sizeof (int));
                     if (option->value)
                     {
-                        if (string_strcasecmp (value, "toggle") == 0)
+                        if (strcmp (value, "toggle") == 0)
                         {
                             CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_TRUE;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
@@ -1269,7 +1403,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                 }
                 else
                 {
-                    if (string_strcasecmp (value, "toggle") == 0)
+                    if (strcmp (value, "toggle") == 0)
                     {
                         CONFIG_BOOLEAN(option) =
                             (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
@@ -1329,8 +1463,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         {
                             for (i = 0; option->string_values[i]; i++)
                             {
-                                if (string_strcasecmp (option->string_values[i],
-                                                       value) == 0)
+                                if (strcmp (option->string_values[i], value) == 0)
                                 {
                                     value_int = i;
                                     break;
@@ -1479,6 +1612,14 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         }
                         else
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                    }
+                    else
+                    {
+                        if (old_value_was_null)
+                        {
+                            free (option->value);
+                            option->value = NULL;
+                        }
                     }
                 }
                 break;
@@ -1964,17 +2105,17 @@ config_file_option_get_string (struct t_config_option *option,
     if (!option || !property)
         return NULL;
 
-    if (string_strcasecmp (property, "config_name") == 0)
+    if (strcmp (property, "config_name") == 0)
         return option->config_file->name;
-    else if (string_strcasecmp (property, "section_name") == 0)
+    else if (strcmp (property, "section_name") == 0)
         return option->section->name;
-    else if (string_strcasecmp (property, "name") == 0)
+    else if (strcmp (property, "name") == 0)
         return option->name;
-    else if (string_strcasecmp (property, "parent_name") == 0)
+    else if (strcmp (property, "parent_name") == 0)
         return option->parent_name;
-    else if (string_strcasecmp (property, "type") == 0)
+    else if (strcmp (property, "type") == 0)
         return config_option_type_string[option->type];
-    else if (string_strcasecmp (property, "description") == 0)
+    else if (strcmp (property, "description") == 0)
         return option->description;
 
     return NULL;
@@ -1991,31 +2132,31 @@ config_file_option_get_pointer (struct t_config_option *option,
     if (!option || !property)
         return NULL;
 
-    if (string_strcasecmp (property, "config_file") == 0)
+    if (strcmp (property, "config_file") == 0)
         return option->config_file;
-    else if (string_strcasecmp (property, "section") == 0)
+    else if (strcmp (property, "section") == 0)
         return option->section;
-    else if (string_strcasecmp (property, "name") == 0)
+    else if (strcmp (property, "name") == 0)
         return option->name;
-    else if (string_strcasecmp (property, "parent_name") == 0)
+    else if (strcmp (property, "parent_name") == 0)
         return option->parent_name;
-    else if (string_strcasecmp (property, "type") == 0)
+    else if (strcmp (property, "type") == 0)
         return &option->type;
-    else if (string_strcasecmp (property, "description") == 0)
+    else if (strcmp (property, "description") == 0)
         return option->description;
-    else if (string_strcasecmp (property, "string_values") == 0)
+    else if (strcmp (property, "string_values") == 0)
         return option->string_values;
-    else if (string_strcasecmp (property, "min") == 0)
+    else if (strcmp (property, "min") == 0)
         return &option->min;
-    else if (string_strcasecmp (property, "max") == 0)
+    else if (strcmp (property, "max") == 0)
         return &option->max;
-    else if (string_strcasecmp (property, "default_value") == 0)
+    else if (strcmp (property, "default_value") == 0)
         return option->default_value;
-    else if (string_strcasecmp (property, "value") == 0)
+    else if (strcmp (property, "value") == 0)
         return option->value;
-    else if (string_strcasecmp (property, "prev_option") == 0)
+    else if (strcmp (property, "prev_option") == 0)
         return option->prev_option;
-    else if (string_strcasecmp (property, "next_option") == 0)
+    else if (strcmp (property, "next_option") == 0)
         return option->next_option;
 
     return NULL;
@@ -2544,7 +2685,7 @@ config_file_write_internal (struct t_config_file *config_file,
             "#\n"
             "# Use commands like /set or /fset to change settings in WeeChat.\n"
             "#\n"
-            "# For more info, see: https://weechat.org/doc/quickstart\n"
+            "# For more info, see: https://weechat.org/doc/quickstart/\n"
             "#\n",
             version_get_name (),
             config_file->filename))
@@ -2802,7 +2943,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         }
 
                         if (pos[0]
-                            && string_strcasecmp (pos, WEECHAT_CONFIG_OPTION_NULL) != 0)
+                            && strcmp (pos, WEECHAT_CONFIG_OPTION_NULL) != 0)
                         {
                             undefined_value = 0;
                             /* remove simple or double quotes and spaces at the end */
@@ -3225,6 +3366,7 @@ config_file_hdata_config_file_cb (const void *pointer, void *data,
     if (hdata)
     {
         HDATA_VAR(struct t_config_file, plugin, POINTER, 0, NULL, "plugin");
+        HDATA_VAR(struct t_config_file, priority, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, filename, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, file, POINTER, 0, NULL, NULL);
@@ -3359,7 +3501,7 @@ config_file_add_option_to_infolist (struct t_infolist *infolist,
         goto error;
 
     if (option_name && option_name[0]
-        && (!string_match (option_full_name, option_name, 0)))
+        && (!string_match (option_full_name, option_name, 1)))
     {
         goto end;
     }
@@ -3387,8 +3529,8 @@ config_file_add_option_to_infolist (struct t_infolist *infolist,
     {
         goto error;
     }
-    string_values = string_build_with_split_string (
-        (const char **)option->string_values, "|");
+    string_values = string_rebuild_split_string (
+        (const char **)option->string_values, "|", 0, -1);
     if (!infolist_new_var_string (ptr_item, "string_values", string_values))
     {
         if (string_values)
@@ -3538,6 +3680,7 @@ config_file_print_log ()
         log_printf ("  plugin . . . . . . . . : 0x%lx ('%s')",
                     ptr_config_file->plugin,
                     plugin_get_name (ptr_config_file->plugin));
+        log_printf ("  priority . . . . . . . : %d",    ptr_config_file->priority);
         log_printf ("  name . . . . . . . . . : '%s'",  ptr_config_file->name);
         log_printf ("  filename . . . . . . . : '%s'",  ptr_config_file->filename);
         log_printf ("  file . . . . . . . . . : 0x%lx", ptr_config_file->file);

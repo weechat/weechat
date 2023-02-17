@@ -1,7 +1,7 @@
 /*
  * buflist-config.c - buflist configuration options (file buflist.conf)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -323,6 +323,8 @@ buflist_config_change_sort (const void *pointer, void *data,
             free (sort);
     }
 
+    weechat_hashtable_free (hashtable_pointers);
+
     buflist_bar_item_update (0);
 }
 
@@ -467,7 +469,7 @@ buflist_config_init ()
     struct t_config_section *ptr_section;
 
     buflist_config_file = weechat_config_new (
-        BUFLIST_CONFIG_NAME,
+        BUFLIST_CONFIG_PRIO_NAME,
         &buflist_config_reload, NULL, NULL);
     if (!buflist_config_file)
         return 0;
@@ -527,7 +529,11 @@ buflist_config_init ()
     buflist_config_look_enabled = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "enabled", "boolean",
-        N_("enable buflist"),
+        N_("enable buflist; it is recommended to use this option instead of "
+           "just hiding the bar because it also removes some internal hooks "
+           "that are not needed any more when the bar is hidden; you can "
+           "also use the command \"/buflist toggle\" or use the default key "
+           "alt+shift+b"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_enabled, NULL, NULL,

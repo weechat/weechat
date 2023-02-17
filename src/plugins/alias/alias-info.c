@@ -1,7 +1,7 @@
 /*
  * alias-info.c - info and infolist hooks for alias plugin
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -68,7 +68,7 @@ alias_info_infolist_alias_cb (const void *pointer, void *data,
              ptr_alias = ptr_alias->next_alias)
         {
             if (!arguments || !arguments[0]
-                || weechat_string_match (ptr_alias->name, arguments, 0))
+                || weechat_string_match (ptr_alias->name, arguments, 1))
             {
                 if (!alias_add_to_infolist (ptr_infolist, ptr_alias))
                 {

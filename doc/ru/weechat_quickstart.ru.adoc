@@ -214,10 +214,16 @@ are _irc.server.libera.xxx_.
 ----
 
 // TRANSLATION MISSING
-[TIP]
-You can complete name and value of options with the kbd:[Tab] key
-and kbd:[Shift+Tab] for a partial completion (useful for long words like
-the name of option).
+The `/autojoin` command lets you configure the _autojoin_ option easily
+(see `/help autojoin`).
+
+// TRANSLATION MISSING
+You can also configure WeeChat to automatically update the _autojoin_ option
+when you join or leave channels:
+
+----
+/set irc.server_default.autojoin_dynamic on
+----
 
 Для очистки параметра из группы _server_ и установки значения по умолчанию
 используется следующая конструкция, например, для возврата к псевдонимам по
@@ -233,6 +239,12 @@ the name of option).
 ----
 /set irc.server.libera.xxx value
 ----
+
+// TRANSLATION MISSING
+[TIP]
+You can complete name and value of options with the kbd:[Tab] key
+and kbd:[Shift+Tab] for a partial completion (useful for long words like
+the name of option).
 
 // TRANSLATION MISSING
 [[connect_to_irc_server]]
@@ -396,14 +408,16 @@ _foo_):
 
 Для получения дополнительной информации введите команду `/help script`.
 
-Список скриптов, доступных в WeeChat, можно просмотреть, введя команду `/script`, или на сайте:
-https://weechat.org/scripts
+// TRANSLATION MISSING
+A list of scripts is available in WeeChat with `/script` or on
+https://weechat.org/scripts/[this page ^↗^,window=_blank].
 
 [[more_doc]]
 == Документация для дальнейшего чтения
 
-Теперь вы можете пользоваться WeeChat и консультироваться с FAQ/documentation
-по возникающим вопросам:
-https://weechat.org/doc
+// TRANSLATION MISSING
+You can now use WeeChat and read
+https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+for any other questions.
 
 Приятной работы с WeeChat!

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -45,6 +45,8 @@
 #define COLOR_WHITE	7
 
 #define A_NORMAL 0
+#define A_BLINK (1 << (11 + 8))
+#define A_DIM (1 << (12 + 8))
 #define A_BOLD (1 << (13 + 8))
 #define A_UNDERLINE (1 << (9 + 8))
 #define A_REVERSE (1 << (10 + 8))

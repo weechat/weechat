@@ -1,7 +1,7 @@
 /*
  * test-core-eval.cpp - test evaluation functions
  *
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -515,6 +515,35 @@ TEST(CoreEval, EvalExpression)
     /* test escaped chars */
     WEE_CHECK_EVAL("\t", "${\\t}");
     WEE_CHECK_EVAL("\t", "${esc:\t}");
+
+    /* test range of chars */
+    WEE_CHECK_EVAL("0123456789", "${chars:digit}");
+    WEE_CHECK_EVAL("0123456789abcdefABCDEF", "${chars:xdigit}");
+    WEE_CHECK_EVAL("abcdefghijklmnopqrstuvwxyz", "${chars:lower}");
+    WEE_CHECK_EVAL("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "${chars:upper}");
+    WEE_CHECK_EVAL("abcdefghijklmnopqrstuvwxyz"
+                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "${chars:alpha}");
+    WEE_CHECK_EVAL("abcdefghijklmnopqrstuvwxyz"
+                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                   "0123456789", "${chars:alnum}");
+    WEE_CHECK_EVAL("0123456789", "${chars:0-9}");
+    WEE_CHECK_EVAL("abcdefgh", "${chars:a-h}");
+    WEE_CHECK_EVAL("JKLMNOPQRSTUV", "${chars:J-V}");
+    WEE_CHECK_EVAL("é", "${chars:é-é}");
+    WEE_CHECK_EVAL("àáâãäåæçèé", "${chars:à-é}");
+    WEE_CHECK_EVAL("←↑→↓", "${chars:←-↓}");  /* U+2190 - U+2193 */
+    WEE_CHECK_EVAL("▁▂▃▄▅▆▇█▉▊▋▌▍▎▏", "${chars:▁-▏}");  /* U+2581 - U+258F */
+    WEE_CHECK_EVAL("", "${chars:Z-A}");  /* invalid (reverse) */
+
+    /* test case conversion: to lower case */
+    WEE_CHECK_EVAL("", "${lower:}");
+    WEE_CHECK_EVAL("this is a test", "${lower:This is a TEST}");
+    WEE_CHECK_EVAL("testé testé", "${lower:TESTÉ Testé}");
+
+    /* test case conversion: to upper case */
+    WEE_CHECK_EVAL("", "${upper:}");
+    WEE_CHECK_EVAL("THIS IS A TEST", "${upper:This is a TEST}");
+    WEE_CHECK_EVAL("TESTÉ TESTÉ", "${upper:TESTÉ Testé}");
 
     /* test hidden chars */
     WEE_CHECK_EVAL("", "${hide:invalid}");

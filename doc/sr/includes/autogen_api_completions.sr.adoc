@@ -26,6 +26,8 @@
 
 | irc | irc_channels | канали на свим IRC серверима
 
+| irc | irc_channels_autojoin | канали на текућем серверу којима се аутоматски приступа (опција „autojoin”)
+
 | irc | irc_ignores_numbers | бројеви за дефинисана игнорисања
 
 | irc | irc_modelist_masks | modelist маске текућег IRC канала; обавезни аргумент: modelist режим
@@ -92,6 +94,8 @@
 
 | tcl | tcl_script | листа скрипти
 
+| trigger | trigger_add_arguments | аргументи за команду која додаје окидач: име окидача, куке, аргументи куке, услови куке, регуларни израз куке, команда куке, повратни кôд куке, накнадне акције
+
 | trigger | trigger_hook_arguments | подразумевани аргументи за куку
 
 | trigger | trigger_hook_command | подразумевана команда за куку
@@ -145,6 +149,14 @@
 | weechat | config_options | конфигурационе опције
 
 | weechat | cursor_areas | површине („chat” или име траке) за слободно померање курсора
+
+| weechat | custom_bar_item_add_arguments | аргументи за команду која додаје прилагођену ставку траке: име ставке, услови, садржај
+
+| weechat | custom_bar_item_conditions | услови за прилагођену ставку траке
+
+| weechat | custom_bar_item_contents | садржај за прилагођену ставку траке
+
+| weechat | custom_bar_items_names | имена прилагођених ставки траке
 
 | weechat | env_value | вредност променљиве окружења
 

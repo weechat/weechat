@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2017-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2017-2023 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,16 +31,17 @@ It uses the following scripts:
 
 # pylint: disable=wrong-import-order,wrong-import-position
 # pylint: disable=useless-object-inheritance
+# pylint: disable=consider-using-f-string
+# pylint: disable=super-with-arguments
+# pylint: disable=consider-using-with
+# pylint: disable=unspecified-encoding
 
 from __future__ import print_function
 import argparse
 import ast
 from datetime import datetime
 import inspect
-try:
-    from StringIO import StringIO  # python 2
-except ImportError:
-    from io import StringIO  # python 3
+from io import StringIO
 import os
 import sys
 import traceback
@@ -49,7 +50,7 @@ sys.dont_write_bytecode = True
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(SCRIPT_DIR)
-from unparse import (
+from unparse import (  # noqa: E402
     UnparsePython,
     UnparsePerl,
     UnparseRuby,
@@ -94,55 +95,54 @@ class WeechatScript(object):  # pylint: disable=too-many-instance-attributes
         self.output_dir = os.path.realpath(output_dir)
         self.language = language
         self.extension = extension
-        self.script_name = 'testapi.%s' % extension
+        self.script_name = 'weechat_testapi.%s' % extension
         self.script_path = os.path.join(self.output_dir, self.script_name)
         self.comment_char = comment_char
         self.weechat_module = weechat_module
-        self.rename_functions()
-        self.replace_variables()
+        self.update_tree()
 
     def comment(self, string):
         """Get a commented line."""
         return '%s %s' % (self.comment_char, string)
 
-    def rename_functions(self):
-        """Rename some API functions in the tree."""
+    def update_tree(self):
+        """Make changes in AST tree."""
         functions = {
             'prnt': 'print',
             'prnt_date_tags': 'print_date_tags',
             'prnt_y': 'print_y',
+            'prnt_y_date_tags': 'print_y_date_tags',
         }
+        tests_count = 0
         for node in ast.walk(self.tree):
-            if isinstance(node, ast.Call) and \
+            # rename some API functions
+            if self.language != 'python' and \
+                    isinstance(node, ast.Call) and \
                     isinstance(node.func, ast.Attribute) and \
                     node.func.value.id == 'weechat':
                 node.func.attr = functions.get(node.func.attr, node.func.attr)
-
-    def replace_variables(self):
-        """Replace script variables in string values."""
-        variables = {
-            'SCRIPT_SOURCE': self.source_script,
-            'SCRIPT_NAME': self.script_name,
-            'SCRIPT_PATH': self.script_path,
-            'SCRIPT_AUTHOR': 'Sebastien Helleu',
-            'SCRIPT_VERSION': '1.0',
-            'SCRIPT_LICENSE': 'GPL3',
-            'SCRIPT_DESCRIPTION': ('%s scripting API test' %
-                                   self.language.capitalize()),
-            'SCRIPT_LANGUAGE': self.language,
-        }
-        # count the total number of tests
-        tests_count = 0
-        for node in ast.walk(self.tree):
+            # count number of tests
             if isinstance(node, ast.Call) and \
                     isinstance(node.func, ast.Name) and \
                     node.func.id == 'check':
                 tests_count += 1
-        variables['SCRIPT_TESTS'] = str(tests_count)
+
+        # replace script variables in string values
+        variables = {
+            '{SCRIPT_SOURCE}': self.source_script,
+            '{SCRIPT_NAME}': self.script_name,
+            '{SCRIPT_PATH}': self.script_path,
+            '{SCRIPT_AUTHOR}': 'Sebastien Helleu',
+            '{SCRIPT_VERSION}': '1.0',
+            '{SCRIPT_LICENSE}': 'GPL3',
+            '{SCRIPT_DESCRIPTION}': ('%s scripting API test' %
+                                     self.language.capitalize()),
+            '{SCRIPT_LANGUAGE}': self.language,
+            '{SCRIPT_TESTS}': str(tests_count),
+        }
         # replace variables
         for node in ast.walk(self.tree):
-            if isinstance(node, ast.Str) and \
-                    node.s in variables:
+            if isinstance(node, ast.Str) and node.s in variables:
                 node.s = variables[node.s]
 
     def write_header(self, output):
@@ -183,10 +183,6 @@ class WeechatPythonScript(WeechatScript):
         super(WeechatPythonScript, self).__init__(
             UnparsePython, tree, source_script, output_dir, 'python', 'py')
 
-    def rename_functions(self):
-        # nothing to rename in Python
-        pass
-
     def write_header(self, output):
         output.write('# -*- coding: utf-8 -*-\n')
         super(WeechatPythonScript, self).write_header(output)
@@ -219,12 +215,16 @@ class WeechatRubyScript(WeechatScript):
         super(WeechatRubyScript, self).__init__(
             UnparseRuby, tree, source_script, output_dir, 'ruby', 'rb')
 
-    def rename_functions(self):
-        super(WeechatRubyScript, self).rename_functions()
+    def update_tree(self):
+        super(WeechatRubyScript, self).update_tree()
         for node in ast.walk(self.tree):
             if isinstance(node, ast.Attribute) and \
                     node.value.id == 'weechat':
                 node.value.id = 'Weechat'
+            if isinstance(node, ast.Call) \
+                    and isinstance(node.func, ast.Attribute) \
+                    and node.func.attr == 'config_new_option':
+                node.args = node.args[:11] + [ast.List(node.args[11:])]
 
 
 class WeechatLuaScript(WeechatScript):
@@ -259,6 +259,18 @@ class WeechatGuileScript(WeechatScript):
         super(WeechatGuileScript, self).__init__(
             UnparseGuile, tree, source_script, output_dir, 'guile', 'scm',
             comment_char=';')
+
+    def update_tree(self):
+        super(WeechatGuileScript, self).update_tree()
+        functions_with_list = (
+            'config_new_section',
+            'config_new_option',
+        )
+        for node in ast.walk(self.tree):
+            if isinstance(node, ast.Call) \
+                    and isinstance(node.func, ast.Attribute) \
+                    and node.func.attr in functions_with_list:
+                node.args = [ast.Call('list', node.args)]
 
     def write_footer(self, output):
         output.write('\n'

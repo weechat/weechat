@@ -207,10 +207,17 @@ Para unirse automáticamente a canales cuando el servidor se conecte:
 /set irc.server.libera.autojoin "#uncanal,#otrocanal"
 ----
 
-[TIP]
-Puede completar el nombre y el valor de las opciones con la tecla kbd:[Tab]
-y kbd:[Shift+Tab] para un autocompletado parcial (útil para palabras largas como
-el nombre de la opción).
+// TRANSLATION MISSING
+The `/autojoin` command lets you configure the _autojoin_ option easily
+(see `/help autojoin`).
+
+// TRANSLATION MISSING
+You can also configure WeeChat to automatically update the _autojoin_ option
+when you join or leave channels:
+
+----
+/set irc.server_default.autojoin_dynamic on
+----
 
 Para eliminar un valor asignado a una opción de servidor y usar los
 valores predeterminados en su lugar, por ejemplo, usar el nick predeterminado
@@ -226,6 +233,11 @@ donde "xxx" es el nombre de la opción.
 ----
 /set irc.server.libera.xxx valor
 ----
+
+[TIP]
+Puede completar el nombre y el valor de las opciones con la tecla kbd:[Tab]
+y kbd:[Shift+Tab] para un autocompletado parcial (útil para palabras largas como
+el nombre de la opción).
 
 [[connect_to_irc_server]]
 == Conectarse a un servidor IRC
@@ -390,13 +402,16 @@ por ejemplo:
 
 Vea `/help script` para obtener más información.
 
-Hay una lista de scripts disponibles en WeeChat mediante el comando `/script` o en este enlace:
-https://weechat.org/scripts
+// TRANSLATION MISSING
+A list of scripts is available in WeeChat with `/script` or on
+https://weechat.org/scripts/[this page ^↗^,window=_blank].
 
 [[more_doc]]
 == Más documentación
 
-Ahora puede usar WeeChat y leer las FAQ/documentación para cada pregunta
-en: https://weechat.org/doc
+// TRANSLATION MISSING
+You can now use WeeChat and read
+https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+for any other questions.
 
 ¡Disfrute de WeeChat!

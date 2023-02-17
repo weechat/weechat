@@ -1,7 +1,7 @@
 /*
  * wee-string.c - string functions
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -31,8 +31,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <wctype.h>
-#include <regex.h>
 #include <wchar.h>
+#include <regex.h>
 #include <stdint.h>
 #include <gcrypt.h>
 
@@ -63,6 +63,7 @@
 #define HEX2DEC(c) (((c >= 'a') && (c <= 'f')) ? c - 'a' + 10 :         \
                     ((c >= 'A') && (c <= 'F')) ? c - 'A' + 10 :         \
                     c - '0')
+#define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 
 struct t_hashtable *string_hashtable_shared = NULL;
 
@@ -75,22 +76,22 @@ struct t_hashtable *string_hashtable_shared = NULL;
  */
 
 char *
-string_strndup (const char *string, int length)
+string_strndup (const char *string, int bytes)
 {
     char *result;
 
-    if (!string || (length < 0))
+    if (!string || (bytes < 0))
         return NULL;
 
-    if ((int)strlen (string) < length)
+    if ((int)strlen (string) <= bytes)
         return strdup (string);
 
-    result = malloc (length + 1);
+    result = malloc (bytes + 1);
     if (!result)
         return NULL;
 
-    memcpy (result, string, length);
-    result[length] = '\0';
+    memcpy (result, string, bytes);
+    result[bytes] = '\0';
 
     return result;
 }
@@ -134,7 +135,7 @@ string_cut (const char *string, int length, int count_suffix, int screen,
         if (count_suffix)
         {
             if (screen)
-                length -= utf8_strlen_screen (cut_suffix);
+                length -= gui_chat_strlen_screen (cut_suffix);
             else
                 length -= utf8_strlen (cut_suffix);
             if (length < 0)
@@ -308,67 +309,148 @@ string_repeat (const char *string, int count)
 }
 
 /*
- * Converts string to lower case (locale independent).
+ * Converts string to lowercase (locale dependent).
  */
 
-void
-string_tolower (char *string)
+char *
+string_tolower (const char *string)
 {
+    char **result, utf_char[5];
+
+    if (!string)
+        return NULL;
+
+    result = string_dyn_alloc (strlen (string) + 1);
+    if (!result)
+        return NULL;
+
     while (string && string[0])
     {
-        if ((string[0] >= 'A') && (string[0] <= 'Z'))
-            string[0] += ('a' - 'A');
-        string = (char *)utf8_next_char (string);
+        if (!((unsigned char)(string[0]) & 0x80))
+        {
+            /*
+             * optimization for single-byte char: only letters A-Z must be
+             * converted to lowercase; this is faster than calling `towlower`
+             */
+            if ((string[0] >= 'A') && (string[0] <= 'Z'))
+                utf_char[0] = string[0] + ('a' - 'A');
+            else
+                utf_char[0] = string[0];
+            utf_char[1] = '\0';
+            string_dyn_concat (result, utf_char, -1);
+            string++;
+        }
+        else
+        {
+            /* char ≥ 2 bytes, use `towlower` */
+            utf8_int_string (towlower (utf8_char_int (string)), utf_char);
+            string_dyn_concat (result, utf_char, -1);
+            string = (char *)utf8_next_char (string);
+        }
     }
+    return string_dyn_free (result, 0);
 }
 
 /*
- * Converts string to upper case (locale independent).
+ * Converts string to uppercase (locale dependent).
  */
 
-void
-string_toupper (char *string)
+char *
+string_toupper (const char *string)
 {
+    char **result, utf_char[5];
+
+    if (!string)
+        return NULL;
+
+    result = string_dyn_alloc (strlen (string) + 1);
+    if (!result)
+        return NULL;
+
     while (string && string[0])
     {
-        if ((string[0] >= 'a') && (string[0] <= 'z'))
-            string[0] -= ('a' - 'A');
-        string = (char *)utf8_next_char (string);
+        if (!((unsigned char)(string[0]) & 0x80))
+        {
+            /*
+             * optimization for single-byte char: only letters a-z must be
+             * converted to uppercase; this is faster than calling `towupper`
+             */
+            if ((string[0] >= 'a') && (string[0] <= 'z'))
+                utf_char[0] = string[0] - ('a' - 'A');
+            else
+                utf_char[0] = string[0];
+            utf_char[1] = '\0';
+            string_dyn_concat (result, utf_char, -1);
+            string++;
+        }
+        else
+        {
+            /* char ≥ 2 bytes, use `towupper` */
+            utf8_int_string (towupper (utf8_char_int (string)), utf_char);
+            string_dyn_concat (result, utf_char, -1);
+            string = (char *)utf8_next_char (string);
+        }
     }
+    return string_dyn_free (result, 0);
 }
 
 /*
- * Compares two strings (locale and case independent).
+ * Compares two chars (case sensitive).
  *
- * Returns:
- *   -1: string1 < string2
- *    0: string1 == string2
- *    1: string1 > string2
+ * Returns: arithmetic result of subtracting the first UTF-8 char in string2
+ * from the first UTF-8 char in string1:
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
  */
 
 int
-string_strcasecmp (const char *string1, const char *string2)
+string_charcmp (const char *string1, const char *string2)
 {
-    int diff;
-
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
-    while (string1[0] && string2[0])
-    {
-        diff = utf8_charcasecmp (string1, string2);
-        if (diff != 0)
-            return (diff < 0) ? -1 : 1;
-
-        string1 = utf8_next_char (string1);
-        string2 = utf8_next_char (string2);
-    }
-
-    return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
+    return utf8_char_int (string1) - utf8_char_int (string2);
 }
 
 /*
- * Compares two strings (locale and case independent) using a range.
+ * Compares two chars (case insensitive).
+ *
+ * Returns: arithmetic result of subtracting the first UTF-8 char in string2
+ * (converted to lowercase) from the first UTF-8 char in string1 (converted
+ * to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
+ */
+
+int
+string_charcasecmp (const char *string1, const char *string2)
+{
+    wint_t wchar1, wchar2;
+
+    /*
+     * optimization for single-byte chars: only letters A-Z must be converted
+     * to lowercase; this is faster than calling `towlower`
+     */
+    if (string1 && !((unsigned char)(string1[0]) & 0x80)
+        && string2 && !((unsigned char)(string2[0]) & 0x80))
+    {
+        wchar1 = string1[0];
+        if ((wchar1 >= 'A') && (wchar1 <= 'Z'))
+            wchar1 += ('a' - 'A');
+        wchar2 = string2[0];
+        if ((wchar2 >= 'A') && (wchar2 <= 'Z'))
+            wchar2 += ('a' - 'A');
+    }
+    else
+    {
+        wchar1 = towlower (utf8_char_int (string1));
+        wchar2 = towlower (utf8_char_int (string2));
+    }
+
+    return wchar1 - wchar2;
+}
+
+/*
+ * Compares two chars (case insensitive using a range).
  *
  * The range is the number of chars which can be converted from upper to lower
  * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
@@ -379,56 +461,79 @@ string_strcasecmp (const char *string1, const char *string2)
  *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
- * Returns:
- *   -1: string1 < string2
- *    0: string1 == string2
- *    1: string1 > string2
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 (converted to lowercase) from the last compared UTF-8 char in
+ * string1 (converted to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
  */
 
 int
-string_strcasecmp_range (const char *string1, const char *string2, int range)
+string_charcasecmp_range (const char *string1, const char *string2, int range)
+{
+    wchar_t wchar1, wchar2;
+
+    wchar1 = utf8_char_int (string1);
+    if ((wchar1 >= (wchar_t)'A') && (wchar1 < (wchar_t)('A' + range)))
+        wchar1 += ('a' - 'A');
+
+    wchar2 = utf8_char_int (string2);
+    if ((wchar2 >= (wchar_t)'A') && (wchar2 < (wchar_t)('A' + range)))
+        wchar2 += ('a' - 'A');
+
+    return wchar1 - wchar2;
+}
+
+/*
+ * Compares two strings (case sensitive).
+ *
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 from the last compared UTF-8 char in string1:
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
+ */
+
+int
+string_strcmp (const char *string1, const char *string2)
 {
     int diff;
 
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
-    while (string1[0] && string2[0])
+    while (string1 && string1[0] && string2 && string2[0])
     {
-        diff = utf8_charcasecmp_range (string1, string2, range);
+        diff = string_charcmp (string1, string2);
         if (diff != 0)
-            return (diff < 0) ? -1 : 1;
+            return diff;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
     }
 
-    return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
+    return string_charcmp (string1, string2);
 }
 
 /*
- * Compares two strings with max length (locale and case independent).
+ * Compares two strings with max length (case sensitive).
  *
- * Returns:
- *    -1: string1 < string2
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 from the last compared UTF-8 char in string1:
+ *   < 0: string1 < string2
  *     0: string1 == string2
- *     1: string1 > string2
+ *   > 0: string1 > string2
  */
 
 int
-string_strncasecmp (const char *string1, const char *string2, int max)
+string_strncmp (const char *string1, const char *string2, int max)
 {
     int count, diff;
 
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
     count = 0;
-    while ((count < max) && string1[0] && string2[0])
+    while ((count < max) && string1 && string1[0] && string2 && string2[0])
     {
-        diff = utf8_charcasecmp (string1, string2);
+        diff = string_charcmp (string1, string2);
         if (diff != 0)
-            return (diff < 0) ? -1 : 1;
+            return diff;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
@@ -438,12 +543,40 @@ string_strncasecmp (const char *string1, const char *string2, int max)
     if (count >= max)
         return 0;
     else
-        return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
+        return string_charcmp (string1, string2);
 }
 
 /*
- * Compares two strings with max length (locale and case independent) using a
- * range.
+ * Compares two strings (case insensitive).
+ *
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 (converted to lowercase) from the last compared UTF-8 char in
+ * string1 (converted to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
+ */
+
+int
+string_strcasecmp (const char *string1, const char *string2)
+{
+    int diff;
+
+    while (string1 && string1[0] && string2 && string2[0])
+    {
+        diff = string_charcasecmp (string1, string2);
+        if (diff != 0)
+            return diff;
+
+        string1 = utf8_next_char (string1);
+        string2 = utf8_next_char (string2);
+    }
+
+    return string_charcasecmp (string1, string2);
+}
+
+/*
+ * Compares two strings (case insensitive using a range).
  *
  * The range is the number of chars which can be converted from upper to lower
  * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
@@ -454,10 +587,84 @@ string_strncasecmp (const char *string1, const char *string2, int max)
  *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
- * Returns:
- *   -1: string1 < string2
- *    0: string1 == string2
- *    1: string1 > string2
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 (converted to lowercase) from the last compared UTF-8 char in
+ * string1 (converted to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
+ */
+
+int
+string_strcasecmp_range (const char *string1, const char *string2, int range)
+{
+    int diff;
+
+    while (string1 && string1[0] && string2 && string2[0])
+    {
+        diff = string_charcasecmp_range (string1, string2, range);
+        if (diff != 0)
+            return diff;
+
+        string1 = utf8_next_char (string1);
+        string2 = utf8_next_char (string2);
+    }
+
+    return string_charcasecmp_range (string1, string2, range);
+}
+
+/*
+ * Compares two strings with max length (case insensitive).
+ *
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 (converted to lowercase) from the last compared UTF-8 char in
+ * string1 (converted to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
+ */
+
+int
+string_strncasecmp (const char *string1, const char *string2, int max)
+{
+    int count, diff;
+
+    count = 0;
+    while ((count < max) && string1 && string1[0] && string2 && string2[0])
+    {
+        diff = string_charcasecmp (string1, string2);
+        if (diff != 0)
+            return diff;
+
+        string1 = utf8_next_char (string1);
+        string2 = utf8_next_char (string2);
+        count++;
+    }
+
+    if (count >= max)
+        return 0;
+    else
+        return string_charcasecmp (string1, string2);
+}
+
+/*
+ * Compares two strings with max length (case insensitive using a range).
+ *
+ * The range is the number of chars which can be converted from upper to lower
+ * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
+ *
+ * Examples:
+ *   - range = 26: A-Z         ==> a-z
+ *   - range = 29: A-Z [ \ ]   ==> a-z { | }
+ *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
+ *   (ranges 29 and 30 are used by some protocols like IRC)
+ *
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 (converted to lowercase) from the last compared UTF-8 char in
+ * string1 (converted to lowercase):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
  */
 
 int
@@ -466,15 +673,12 @@ string_strncasecmp_range (const char *string1, const char *string2, int max,
 {
     int count, diff;
 
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
     count = 0;
-    while ((count < max) && string1[0] && string2[0])
+    while ((count < max) && string1 && string1[0] && string2 && string2[0])
     {
-        diff = utf8_charcasecmp_range (string1, string2, range);
+        diff = string_charcasecmp_range (string1, string2, range);
         if (diff != 0)
-            return (diff < 0) ? -1 : 1;
+            return diff;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
@@ -484,16 +688,19 @@ string_strncasecmp_range (const char *string1, const char *string2, int max,
     if (count >= max)
         return 0;
     else
-        return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
+        return string_charcasecmp_range (string1, string2, range);
 }
 
 /*
  * Compares two strings, ignoring some chars.
  *
- * Returns:
- *   -1: string1 < string2
- *    0: string1 == string2
- *    1: string1 > string2
+ * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * string2 (converted to lowercase if case_sensitive is set to 0) from the last
+ * compared UTF-8 char in string1 (converted to lowercase if case_sensitive is
+ * set to 0):
+ *   < 0: string1 < string2
+ *     0: string1 == string2
+ *   > 0: string1 > string2
  */
 
 int
@@ -501,9 +708,6 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
                             const char *chars_ignored, int case_sensitive)
 {
     int diff;
-
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
 
     while (string1 && string1[0] && string2 && string2[0])
     {
@@ -518,18 +722,19 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
         }
 
         /* end of one (or both) string(s) ? */
-        if ((!string1 || !string1[0]) && (!string2 || !string2[0]))
-            return 0;
-        if ((!string1 || !string1[0]) && string2 && string2[0])
-            return -1;
-        if (string1 && string1[0] && (!string2 || !string2[0]))
-            return 1;
+        if (!string1 || !string1[0] || !string2 || !string2[0])
+        {
+            return (case_sensitive) ?
+                string_charcmp (string1, string2) :
+                string_charcasecmp (string1, string2);
+        }
 
         /* look at diff */
         diff = (case_sensitive) ?
-            (int)string1[0] - (int)string2[0] : utf8_charcasecmp (string1, string2);
+            string_charcmp (string1, string2) :
+            string_charcasecmp (string1, string2);
         if (diff != 0)
-            return (diff < 0) ? -1 : 1;
+            return diff;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
@@ -544,11 +749,9 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
             string2 = utf8_next_char (string2);
         }
     }
-    if ((!string1 || !string1[0]) && string2 && string2[0])
-        return -1;
-    if (string1 && string1[0] && (!string2 || !string2[0]))
-        return 1;
-    return 0;
+    return (case_sensitive) ?
+        string_charcmp (string1, string2) :
+        string_charcasecmp (string1, string2);
 }
 
 /*
@@ -1073,10 +1276,9 @@ string_convert_escaped_chars (const char *string)
                         {
                             value = (value * 16) + HEX2DEC(ptr_string[i + 1]);
                         }
-                        utf8_int_string (value, utf_char);
+                        length = utf8_int_string (value, utf_char);
                         if (utf_char[0])
                         {
-                            length = strlen (utf_char);
                             memcpy (output + pos_output, utf_char, length);
                             pos_output += length;
                         }
@@ -1110,6 +1312,20 @@ string_convert_escaped_chars (const char *string)
 }
 
 /*
+ * Checks if first char of string is a whitespace (space or tab).
+ *
+ * Returns:
+ *   1: first char is whitespace
+ *   0: first char is not whitespace
+ */
+
+int
+string_is_whitespace_char (const char *string)
+{
+    return (string && ((string[0] == ' ') || string[0] == '\t')) ? 1 : 0;
+}
+
+/*
  * Checks if first char of string is a "word char".
  *
  * The word chars are customizable with options "weechat.look.word_chars_*".
@@ -1127,10 +1343,10 @@ string_is_word_char (const char *string,
     wint_t c;
     int i, match;
 
-    c = utf8_wide_char (string);
-
-    if (c == WEOF)
+    if (!string || !string[0])
         return 0;
+
+    c = utf8_char_int (string);
 
     for (i = 0; i < word_chars_count; i++)
     {
@@ -1889,6 +2105,58 @@ string_replace_regex (const char *string, void *regex, const char *replace,
 }
 
 /*
+ * Translates chars by other ones in a string.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_translate_chars (const char *string,
+                        const char *chars1, const char *chars2)
+{
+    int length, length2, translated;
+    const char *ptr_string, *ptr_chars1, *ptr_chars2;
+    char **result;
+
+    if (!string)
+        return NULL;
+
+    length = (chars1) ? utf8_strlen (chars1) : 0;
+    length2 = (chars2) ? utf8_strlen (chars2) : 0;
+
+    if (!chars1 || !chars2 || (length != length2))
+        return strdup (string);
+
+    result = string_dyn_alloc (strlen (string) + 1);
+    if (!result)
+        return strdup (string);
+
+    ptr_string = string;
+    while (ptr_string && ptr_string[0])
+    {
+        translated = 0;
+        ptr_chars1 = chars1;
+        ptr_chars2 = chars2;
+        while (ptr_chars1 && ptr_chars1[0] && ptr_chars2 && ptr_chars2[0])
+        {
+            if (string_charcmp (ptr_chars1, ptr_string) == 0)
+            {
+                string_dyn_concat (result, ptr_chars2, utf8_char_size (ptr_chars2));
+                translated = 1;
+                break;
+            }
+            ptr_chars1 = utf8_next_char (ptr_chars1);
+            ptr_chars2 = utf8_next_char (ptr_chars2);
+        }
+        if (!translated)
+            string_dyn_concat (result, ptr_string, utf8_char_size (ptr_string));
+        ptr_string = utf8_next_char (ptr_string);
+    }
+
+    return string_dyn_free (result, 0);
+}
+
+/*
  * Splits a string according to separators.
  *
  * This function must not be called directly (call string_split or
@@ -2445,39 +2713,58 @@ string_free_split_shared (char **split_string)
 }
 
 /*
- * Builds a string with a split string.
+ * Rebuilds a split string using a delimiter and optional index of start/end
+ * string.
+ *
+ * If index_end < 0, then all arguments are used until NULL is found.
+ * If NULL is found before index_end, then the build stops there (at NULL).
  *
  * Note: result must be free after use.
  */
 
 char *
-string_build_with_split_string (const char **split_string,
-                                const char *separator)
+string_rebuild_split_string (const char **split_string,
+                             const char *separator,
+                             int index_start, int index_end)
 {
     int i, length, length_separator;
     char *result;
 
-    if (!split_string)
+    if (!split_string || (index_start < 0)
+        || ((index_end >= 0) && (index_end < index_start)))
+    {
         return NULL;
+    }
 
     length = 0;
     length_separator = (separator) ? strlen (separator) : 0;
 
     for (i = 0; split_string[i]; i++)
     {
-        length += strlen (split_string[i]) + length_separator;
+        if ((index_end >= 0) && (i > index_end))
+            break;
+        if (i >= index_start)
+            length += strlen (split_string[i]) + length_separator;
     }
 
-    result = malloc (length + 1);
-    if (result)
-    {
-        result[0] = '\0';
+    if (length == 0)
+        return strdup ("");
 
-        for (i = 0; split_string[i]; i++)
+    result = malloc (length + 1);
+    if (!result)
+        return NULL;
+
+    result[0] = '\0';
+
+    for (i = index_start; split_string[i]; i++)
+    {
+        if ((index_end >= 0) && (i > index_end))
+            break;
+        strcat (result, split_string[i]);
+        if (separator && ((index_end < 0) || (i + 1 <= index_end))
+            && split_string[i + 1])
         {
-            strcat (result, split_string[i]);
-            if (separator && split_string[i + 1])
-                strcat (result, separator);
+            strcat (result, separator);
         }
     }
 
@@ -2943,6 +3230,96 @@ string_format_size (unsigned long long size)
               NG_("byte", "bytes", size_float) : _(unit_name[num_unit]));
 
     return strdup (str_size);
+}
+
+/*
+ * Parses a string with a size and returns the size in bytes.
+ *
+ * The format is "123" or "123x" or "123 x"  where "123" is any positive
+ * integer number and "x" the unit, which can be one of (lower or upper case
+ * are accepted):
+ *
+ *   b  bytes (default if unit is missing)
+ *   k  kilobytes (1k = 1000 bytes)
+ *   m  megabytes (1m = 1000k = 1,000,000 bytes)
+ *   g  gigabytes (1g = 1000m = 1,000,000,000 bytes)
+ *   t  terabytes (1t = 1000g = 1,000,000,000,000 bytes)
+ *
+ * Returns the parsed size, 0 if error.
+ */
+
+unsigned long long
+string_parse_size (const char *size)
+{
+    const char *pos;
+    char *str_number, *error;
+    long long number;
+    unsigned long long result;
+
+    str_number = NULL;
+    result = 0;
+
+    if (!size || !size[0])
+        goto end;
+
+    pos = size;
+    while (isdigit ((unsigned char)pos[0]))
+    {
+        pos++;
+    }
+
+    if (pos == size)
+        goto end;
+
+    str_number = string_strndup (size, pos - size);
+    if (!str_number)
+        goto end;
+
+    number = strtoll (str_number, &error, 10);
+    if (!error || error[0])
+        goto end;
+    if (number < 0)
+        goto end;
+
+    while (pos[0] == ' ')
+    {
+        pos++;
+    }
+
+    if (pos[0] && pos[1])
+        goto end;
+
+    switch (pos[0])
+    {
+        case '\0':
+            result = number;
+            break;
+        case 'b':
+        case 'B':
+            result = number;
+            break;
+        case 'k':
+        case 'K':
+            result = number * 1000ULL;
+            break;
+        case 'm':
+        case 'M':
+            result = number * 1000ULL * 1000ULL;
+            break;
+        case 'g':
+        case 'G':
+            result = number * 1000ULL * 1000ULL * 1000ULL;
+            break;
+        case 't':
+        case 'T':
+            result = number * 1000ULL * 1000ULL * 1000ULL * 1000ULL;
+            break;
+    }
+
+end:
+    if (str_number)
+        free (str_number);
+    return result;
 }
 
 /*
@@ -3514,7 +3891,7 @@ string_is_command_char (const char *string)
 
     while (ptr_command_chars && ptr_command_chars[0])
     {
-        if (utf8_charcmp (ptr_command_chars, string) == 0)
+        if (string_charcmp (ptr_command_chars, string) == 0)
             return 1;
         ptr_command_chars = utf8_next_char (ptr_command_chars);
     }
@@ -3576,11 +3953,92 @@ string_input_for_buffer (const char *string)
         return string;
 
     /* check if first char is doubled: if yes, then it's not a command */
-    if (utf8_charcmp (string, next_char) == 0)
+    if (string_charcmp (string, next_char) == 0)
         return next_char;
 
     /* string is a command */
     return NULL;
+}
+
+/*
+ * Returns the number of bytes in common between two strings (this function
+ * works with bytes and not UTF-8 chars).
+ */
+
+int
+string_get_common_bytes_count (const char *string1, const char *string2)
+{
+    const char *ptr_str1;
+    int found;
+
+    if (!string1 || !string2)
+        return 0;
+
+    found = 0;
+    ptr_str1 = string1;
+    while (ptr_str1[0])
+    {
+        if (strchr (string2, ptr_str1[0]))
+            found++;
+        ptr_str1++;
+    }
+    return found;
+}
+
+/*
+ * Returns the distance between two strings using the Levenshtein algorithm.
+ * See: https://en.wikipedia.org/wiki/Levenshtein_distance
+ */
+
+int
+string_levenshtein (const char *string1, const char *string2,
+                    int case_sensitive)
+{
+    int x, y, length1, length2, last_diag, old_diag;
+    wint_t char1, char2;
+    const char *ptr_str1, *ptr_str2;
+
+    length1 = (string1) ? utf8_strlen (string1) : 0;
+    length2 = (string2) ? utf8_strlen (string2) : 0;
+
+    if (length1 == 0)
+        return length2;
+    if (length2 == 0)
+        return length1;
+
+    int column[length1 + 1];
+
+    for (y = 1; y <= length1; y++)
+    {
+        column[y] = y;
+    }
+
+    ptr_str2 = string2;
+
+    for (x = 1; x <= length2; x++)
+    {
+        char2 = (case_sensitive) ?
+            (wint_t)utf8_char_int (ptr_str2) :
+            towlower (utf8_char_int (ptr_str2));
+        column[0] = x;
+        ptr_str1 = string1;
+        for (y = 1, last_diag = x - 1; y <= length1; y++)
+        {
+            char1 = (case_sensitive) ?
+                (wint_t)utf8_char_int (ptr_str1) :
+                towlower (utf8_char_int (ptr_str1));
+            old_diag = column[y];
+            column[y] = MIN3(
+                column[y] + 1,
+                column[y - 1] + 1,
+                last_diag + ((char1 == char2) ? 0 : 1));
+            last_diag = old_diag;
+            ptr_str1 = utf8_next_char (ptr_str1);
+        }
+        ptr_str2 = utf8_next_char (ptr_str2);
+    }
+
+    return column[length1];
 }
 
 /*
@@ -3751,6 +4209,52 @@ string_replace_with_callback (const char *string,
     }
 
     return result;
+}
+
+/*
+ * Extracts priority and name from a string.
+ *
+ * String can be:
+ *   - a simple name like "test":
+ *       => priority = default_priority, name = "test"
+ *   - a priority + "|" + name, like "500|test":
+ *       => priority = 500, name = "test"
+ */
+
+void
+string_get_priority_and_name (const char *string,
+                              int *priority, const char **name,
+                              int default_priority)
+{
+    char *pos, *str_priority, *error;
+    long number;
+
+    if (priority)
+        *priority = default_priority;
+    if (name)
+        *name = string;
+
+    if (!string)
+        return;
+
+    pos = strchr (string, '|');
+    if (pos)
+    {
+        str_priority = string_strndup (string, pos - string);
+        if (str_priority)
+        {
+            error = NULL;
+            number = strtol (str_priority, &error, 10);
+            if (error && !error[0])
+            {
+                if (priority)
+                    *priority = number;
+                if (name)
+                    *name = pos + 1;
+            }
+            free (str_priority);
+        }
+    }
 }
 
 /*
@@ -3987,7 +4491,6 @@ string_dyn_copy (char **string, const char *new_string)
         if (!string_realloc)
             return 0;
         ptr_string_dyn->string = string_realloc;
-        *string = string_realloc;
         ptr_string_dyn->size_alloc = new_size_alloc;
     }
 
@@ -4053,7 +4556,6 @@ string_dyn_concat (char **string, const char *add, int bytes)
             return 0;
         }
         ptr_string_dyn->string = string_realloc;
-        *string = string_realloc;
         ptr_string_dyn->size_alloc = new_size_alloc;
     }
 
@@ -4074,8 +4576,11 @@ string_dyn_concat (char **string, const char *add, int bytes)
  * string_dyn_alloc or a string pointer modified by string_dyn_concat.
  *
  * If free_string == 1, the string itself is freed in the structure.
- * Otherwise the pointer (*string) remains valid after this call, and
- * the caller must manually free the string with a call to free().
+ *
+ * If free_string == 0, the pointer (*string) remains valid after this call,
+ * and the caller must manually free the string with a call to free().
+ * Be careful, the pointer in *string may change after this call because
+ * the string can be reallocated to its exact size.
  *
  * Returns the pointer to the string if "free_string" is 0 (string
  * pointer is still valid), or NULL if "free_string" is 1 (string
@@ -4086,7 +4591,7 @@ char *
 string_dyn_free (char **string, int free_string)
 {
     struct t_string_dyn *ptr_string_dyn;
-    char *ptr_string;
+    char *ptr_string, *string_realloc;
 
     if (!string || !*string)
         return NULL;
@@ -4100,6 +4605,14 @@ string_dyn_free (char **string, int free_string)
     }
     else
     {
+        /* if needed, realloc the string to its exact size */
+        if (ptr_string_dyn->size_alloc > ptr_string_dyn->size)
+        {
+            string_realloc = realloc (ptr_string_dyn->string,
+                                      ptr_string_dyn->size);
+            if (string_realloc)
+                ptr_string_dyn->string = string_realloc;
+        }
         ptr_string = ptr_string_dyn->string;
     }
 

@@ -194,10 +194,15 @@ To auto-join some channels when connecting to server:
 /set irc.server.libera.autojoin "#channel1,#channel2"
 ----
 
-[TIP]
-You can complete name and value of options with the kbd:[Tab] key
-and kbd:[Shift+Tab] for a partial completion (useful for long words like
-the name of option).
+The `/autojoin` command lets you configure the _autojoin_ option easily
+(see `/help autojoin`).
+
+You can also configure WeeChat to automatically update the _autojoin_ option
+when you join or leave channels:
+
+----
+/set irc.server_default.autojoin_dynamic on
+----
 
 To remove a value of a server option, and use the default value instead,
 for example to use default nicks (irc.server_default.nicks):
@@ -212,6 +217,11 @@ option name):
 ----
 /set irc.server.libera.xxx value
 ----
+
+[TIP]
+You can complete name and value of options with the kbd:[Tab] key
+and kbd:[Shift+Tab] for a partial completion (useful for long words like
+the name of option).
 
 [[connect_to_irc_server]]
 == Connect to IRC server
@@ -370,13 +380,14 @@ for example:
 
 See `/help script` for more info.
 
-A list of scripts is available in WeeChat with `/script` or at this URL:
-https://weechat.org/scripts
+A list of scripts is available in WeeChat with `/script` or on
+https://weechat.org/scripts/[this page ^↗^,window=_blank].
 
 [[more_doc]]
 == More documentation
 
-You can now use WeeChat and read FAQ/documentation for any other questions:
-https://weechat.org/doc
+You can now use WeeChat and read
+https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+for any other questions.
 
 Enjoy using WeeChat!

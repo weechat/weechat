@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -23,6 +23,7 @@
 #include <regex.h>
 
 #define RELAY_CONFIG_NAME "relay"
+#define RELAY_CONFIG_PRIO_NAME (TO_STR(RELAY_PLUGIN_PRIORITY) "|" RELAY_CONFIG_NAME)
 
 extern struct t_config_file *relay_config_file;
 extern struct t_config_section *relay_config_section_port;
@@ -42,7 +43,7 @@ extern struct t_config_option *relay_config_network_allowed_ips;
 extern struct t_config_option *relay_config_network_auth_timeout;
 extern struct t_config_option *relay_config_network_bind_address;
 extern struct t_config_option *relay_config_network_clients_purge_delay;
-extern struct t_config_option *relay_config_network_compression_level;
+extern struct t_config_option *relay_config_network_compression;
 extern struct t_config_option *relay_config_network_ipv6;
 extern struct t_config_option *relay_config_network_max_clients;
 extern struct t_config_option *relay_config_network_nonce_size;

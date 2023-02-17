@@ -1,7 +1,7 @@
 /*
  * gui-line.c - line functions (used by all GUI)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -27,6 +27,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <time.h>
+#include <regex.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
@@ -293,6 +294,10 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 {
     int length_time, length_buffer, length_suffix, prefix_length, prefix_is_nick;
 
+    /* return immediately if buffer has free content (no alignment) */
+    if (buffer->type == GUI_BUFFER_TYPE_FREE)
+        return 0;
+
     /* return immediately if line has no time (not aligned) */
     if (line->data->date == 0)
         return 0;
@@ -370,6 +375,98 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
             && (buffer->lines->prefix_max_length > CONFIG_INTEGER(config_look_prefix_align_max))) ?
            CONFIG_INTEGER(config_look_prefix_align_max) : buffer->lines->prefix_max_length)
         + length_suffix;
+}
+
+/*
+ * Builds a string with prefix and message.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_line_build_string_prefix_message (const char *prefix, const char *message)
+{
+    char **string, *string_without_colors;
+
+    string = string_dyn_alloc (256);
+    if (!string)
+        return NULL;
+
+    if (prefix)
+        string_dyn_concat (string, prefix, -1);
+    string_dyn_concat (string, "\t", -1);
+    if (message)
+        string_dyn_concat (string, message, -1);
+
+    string_without_colors = gui_color_decode (*string, NULL);
+
+    string_dyn_free (string, 1);
+
+    return string_without_colors;
+}
+
+/*
+ * Builds a string with message and tags.
+ *
+ * If colors == 1, keep colors in message and use color for delimiters around
+ * tags.
+ * If colors == 0, strip colors from message and do not use color for
+ * delimiters around tags.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_line_build_string_message_tags (const char *message,
+                                    int tags_count, char **tags_array,
+                                    int colors)
+{
+    int i;
+    char **string, *message_no_colors, *result;
+
+    if ((tags_count < 0) || ((tags_count > 0) && !tags_array))
+        return NULL;
+
+    string = string_dyn_alloc (256);
+    if (!string)
+        return NULL;
+
+    if (message)
+    {
+        if (colors)
+        {
+            string_dyn_concat (string, message, -1);
+        }
+        else
+        {
+            message_no_colors = gui_color_decode (message, NULL);
+            if (message_no_colors)
+            {
+                string_dyn_concat (string, message_no_colors, -1);
+                free (message_no_colors);
+            }
+        }
+    }
+    if (colors)
+        string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS), -1);
+    string_dyn_concat (string, " [", -1);
+    if (colors)
+        string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_TAGS), -1);
+    for (i = 0; i < tags_count; i++)
+    {
+        string_dyn_concat (string, tags_array[i], -1);
+        if (i < tags_count - 1)
+            string_dyn_concat (string, ",", -1);
+    }
+    if (colors)
+        string_dyn_concat (string, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS), -1);
+    string_dyn_concat (string, "]", -1);
+
+    result = strdup (*string);
+
+    string_dyn_free (string, 1);
+
+    return result;
 }
 
 /*
@@ -526,7 +623,18 @@ gui_line_search_text (struct t_gui_buffer *buffer, struct t_gui_line *line)
 
     if (!rc && (buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE))
     {
-        message = gui_color_decode (line->data->message, NULL);
+        if (gui_chat_display_tags)
+        {
+            message = gui_line_build_string_message_tags (
+                line->data->message,
+                line->data->tags_count,
+                line->data->tags_array,
+                0);
+        }
+        else
+        {
+            message = gui_color_decode (line->data->message, NULL);
+        }
         if (message)
         {
             if (buffer->text_search_regex)
@@ -758,9 +866,19 @@ gui_line_get_nick_tag (struct t_gui_line *line)
 int
 gui_line_has_highlight (struct t_gui_line *line)
 {
-    int rc, i, no_highlight, action, length;
+    int rc, rc_regex, i, no_highlight, action, length;
     char *msg_no_color, *ptr_msg_no_color, *highlight_words;
     const char *ptr_nick;
+    regmatch_t regex_match;
+
+    /* remove color codes from line message */
+    msg_no_color = gui_color_decode (line->data->message, NULL);
+    if (!msg_no_color)
+    {
+        rc = 0;
+        goto end;
+    }
+    ptr_msg_no_color = msg_no_color;
 
     /*
      * highlights are disabled on this buffer? (special value "-" means that
@@ -768,7 +886,10 @@ gui_line_has_highlight (struct t_gui_line *line)
      */
     if (line->data->buffer->highlight_words
         && (strcmp (line->data->buffer->highlight_words, "-") == 0))
-        return 0;
+    {
+        rc = 0;
+        goto end;
+    }
 
     /*
      * check if highlight is disabled for line; also check if the line is an
@@ -795,49 +916,10 @@ gui_line_has_highlight (struct t_gui_line *line)
         }
     }
     if (no_highlight)
-        return 0;
-
-    /*
-     * check if highlight is forced by a tag
-     * (with global option "weechat.look.highlight_tags")
-     */
-    if (config_highlight_tags
-        && gui_line_match_tags (line->data,
-                                config_num_highlight_tags,
-                                config_highlight_tags))
     {
-        return 1;
+        rc = 0;
+        goto end;
     }
-
-    /*
-     * check if highlight is forced by a tag
-     * (with buffer property "highlight_tags")
-     */
-    if (line->data->buffer->highlight_tags
-        && gui_line_match_tags (line->data,
-                                line->data->buffer->highlight_tags_count,
-                                line->data->buffer->highlight_tags_array))
-    {
-        return 1;
-    }
-
-    /*
-     * check that line matches highlight tags, if any (if no tag is specified,
-     * then any tag is allowed)
-     */
-    if (line->data->buffer->highlight_tags_restrict_count > 0)
-    {
-        if (!gui_line_match_tags (line->data,
-                                  line->data->buffer->highlight_tags_restrict_count,
-                                  line->data->buffer->highlight_tags_restrict_array))
-            return 0;
-    }
-
-    /* remove color codes from line message */
-    msg_no_color = gui_color_decode (line->data->message, NULL);
-    if (!msg_no_color)
-        return 0;
-    ptr_msg_no_color = msg_no_color;
 
     /*
      * if the line is an action message and that we know the nick, we skip
@@ -861,6 +943,77 @@ gui_line_has_highlight (struct t_gui_line *line)
     }
 
     /*
+     * check if highlight is disabled by a regex
+     * (with global option "weechat.look.highlight_disable_regex")
+     */
+    if (config_highlight_disable_regex)
+    {
+        rc_regex = regexec (config_highlight_disable_regex,
+                            ptr_msg_no_color, 1, &regex_match, 0);
+        if ((rc_regex == 0) && (regex_match.rm_so >= 0) && (regex_match.rm_eo > 0))
+        {
+            rc = 0;
+            goto end;
+        }
+    }
+
+    /*
+     * check if highlight is disabled by a regex
+     * (with buffer property "highlight_disable_regex")
+     */
+    if (line->data->buffer->highlight_disable_regex_compiled)
+    {
+        rc_regex = regexec (line->data->buffer->highlight_disable_regex_compiled,
+                            ptr_msg_no_color, 1, &regex_match, 0);
+        if ((rc_regex == 0) && (regex_match.rm_so >= 0) && (regex_match.rm_eo > 0))
+        {
+            rc = 0;
+            goto end;
+        }
+    }
+
+    /*
+     * check if highlight is forced by a tag
+     * (with global option "weechat.look.highlight_tags")
+     */
+    if (config_highlight_tags
+        && gui_line_match_tags (line->data,
+                                config_num_highlight_tags,
+                                config_highlight_tags))
+    {
+        rc = 1;
+        goto end;
+    }
+
+    /*
+     * check if highlight is forced by a tag
+     * (with buffer property "highlight_tags")
+     */
+    if (line->data->buffer->highlight_tags
+        && gui_line_match_tags (line->data,
+                                line->data->buffer->highlight_tags_count,
+                                line->data->buffer->highlight_tags_array))
+    {
+        rc = 1;
+        goto end;
+    }
+
+    /*
+     * check that line matches highlight tags, if any (if no tag is specified,
+     * then any tag is allowed)
+     */
+    if (line->data->buffer->highlight_tags_restrict_count > 0)
+    {
+        if (!gui_line_match_tags (line->data,
+                                  line->data->buffer->highlight_tags_restrict_count,
+                                  line->data->buffer->highlight_tags_restrict_array))
+        {
+            rc = 0;
+            goto end;
+        }
+    }
+
+    /*
      * there is highlight on line if one of buffer highlight words matches line
      * or one of global highlight words matches line
      */
@@ -871,31 +1024,36 @@ gui_line_has_highlight (struct t_gui_line *line)
                                highlight_words : line->data->buffer->highlight_words);
     if (highlight_words)
         free (highlight_words);
+    if (rc)
+        goto end;
 
-    if (!rc)
-    {
-        highlight_words = gui_buffer_string_replace_local_var (line->data->buffer,
-                                                               CONFIG_STRING(config_look_highlight));
-        rc = string_has_highlight (ptr_msg_no_color,
-                                   (highlight_words) ?
-                                   highlight_words : CONFIG_STRING(config_look_highlight));
-        if (highlight_words)
-            free (highlight_words);
-    }
+    highlight_words = gui_buffer_string_replace_local_var (line->data->buffer,
+                                                           CONFIG_STRING(config_look_highlight));
+    rc = string_has_highlight (ptr_msg_no_color,
+                               (highlight_words) ?
+                               highlight_words : CONFIG_STRING(config_look_highlight));
+    if (highlight_words)
+        free (highlight_words);
+    if (rc)
+        goto end;
 
-    if (!rc && config_highlight_regex)
+    if (config_highlight_regex)
     {
         rc = string_has_highlight_regex_compiled (ptr_msg_no_color,
                                                   config_highlight_regex);
     }
+    if (rc)
+        goto end;
 
-    if (!rc && line->data->buffer->highlight_regex_compiled)
+    if (line->data->buffer->highlight_regex_compiled)
     {
         rc = string_has_highlight_regex_compiled (ptr_msg_no_color,
                                                   line->data->buffer->highlight_regex_compiled);
     }
 
-    free (msg_no_color);
+end:
+    if (msg_no_color)
+        free (msg_no_color);
 
     return rc;
 }
@@ -1285,13 +1443,13 @@ gui_line_set_notify_level (struct t_gui_line *line, int max_notify_level)
 
     for (i = 0; i < line->data->tags_count; i++)
     {
-        if (string_strcasecmp (line->data->tags_array[i], "notify_none") == 0)
+        if (strcmp (line->data->tags_array[i], "notify_none") == 0)
             line->data->notify_level = -1;
-        if (string_strcasecmp (line->data->tags_array[i], "notify_message") == 0)
+        if (strcmp (line->data->tags_array[i], "notify_message") == 0)
             line->data->notify_level = GUI_HOTLIST_MESSAGE;
-        if (string_strcasecmp (line->data->tags_array[i], "notify_private") == 0)
+        if (strcmp (line->data->tags_array[i], "notify_private") == 0)
             line->data->notify_level = GUI_HOTLIST_PRIVATE;
-        if (string_strcasecmp (line->data->tags_array[i], "notify_highlight") == 0)
+        if (strcmp (line->data->tags_array[i], "notify_highlight") == 0)
             line->data->notify_level = GUI_HOTLIST_HIGHLIGHT;
     }
 
@@ -1330,6 +1488,9 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
     struct t_gui_line_data *new_line_data;
     int max_notify_level;
 
+    if (!buffer)
+        return NULL;
+
     /* create new line */
     new_line = malloc (sizeof (*new_line));
     if (!new_line)
@@ -1350,6 +1511,16 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
 
     if (buffer->type == GUI_BUFFER_TYPE_FORMATTED)
     {
+        /*
+         * the line identifier is almost unique: when reaching INT_MAX, it is
+         * reset to 0; it is extremely unlikely all integer are used in the
+         * same buffer, that would mean the buffer has a huge number of lines;
+         * when searching a line id in a buffer, it is recommended to start
+         * from the last line and loop to the first
+         */
+        new_line->data->id = buffer->next_line_id;
+        buffer->next_line_id = (buffer->next_line_id == INT_MAX) ?
+            0 : buffer->next_line_id + 1;
         new_line->data->y = -1;
         new_line->data->date = date;
         new_line->data->date_printed = date_printed;
@@ -1368,12 +1539,12 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
     }
     else
     {
+        new_line->data->id = y;
         new_line->data->y = y;
-        new_line->data->date = 0;
-        new_line->data->date_printed = 0;
+        new_line->data->date = date;
+        new_line->data->date_printed = date_printed;
         new_line->data->str_time = NULL;
-        new_line->data->tags_count = 0;
-        new_line->data->tags_array = NULL;
+        gui_line_tags_alloc (new_line->data, tags);
         new_line->data->refresh_needed = 1;
         new_line->data->prefix = NULL;
         new_line->data->prefix_length = 0;
@@ -1619,11 +1790,15 @@ gui_line_add (struct t_gui_line *line)
         if ((line->data->notify_level >= GUI_HOTLIST_MIN)
             && line->data->highlight)
         {
-            (void) gui_hotlist_add (line->data->buffer,
-                                    GUI_HOTLIST_HIGHLIGHT, NULL);
+            (void) gui_hotlist_add (
+                line->data->buffer,
+                GUI_HOTLIST_HIGHLIGHT,
+                NULL,  /* creation_time */
+                1);  /* check_conditions */
             if (!weechat_upgrading)
             {
-                message_for_signal = gui_chat_build_string_prefix_message (line);
+                message_for_signal = gui_line_build_string_prefix_message (
+                    line->data->prefix, line->data->message);
                 if (message_for_signal)
                 {
                     (void) hook_signal_send ("weechat_highlight",
@@ -1638,7 +1813,8 @@ gui_line_add (struct t_gui_line *line)
             if (!weechat_upgrading
                 && (line->data->notify_level == GUI_HOTLIST_PRIVATE))
             {
-                message_for_signal = gui_chat_build_string_prefix_message (line);
+                message_for_signal = gui_line_build_string_prefix_message (
+                    line->data->prefix, line->data->message);
                 if (message_for_signal)
                 {
                     (void) hook_signal_send ("weechat_pv",
@@ -1649,8 +1825,11 @@ gui_line_add (struct t_gui_line *line)
             }
             if (line->data->notify_level >= GUI_HOTLIST_MIN)
             {
-                (void) gui_hotlist_add (line->data->buffer,
-                                        line->data->notify_level, NULL);
+                (void) gui_hotlist_add (
+                    line->data->buffer,
+                    line->data->notify_level,
+                    NULL,  /* creation_time */
+                    1);  /* check_conditions */
             }
         }
     }
@@ -1787,10 +1966,22 @@ gui_line_add_y (struct t_gui_line *line)
 void
 gui_line_clear (struct t_gui_line *line)
 {
+    line->data->date = 0;
+    line->data->date_printed = 0;
+    if (line->data->str_time)
+    {
+        free (line->data->str_time);
+        line->data->str_time = NULL;
+    }
+    gui_line_tags_free (line->data);
     if (line->data->prefix)
+    {
         string_shared_free (line->data->prefix);
-    line->data->prefix = (char *)string_shared_get ("");
-
+        line->data->prefix = NULL;
+    }
+    line->data->prefix_length = 0;
+    line->data->notify_level = 0;
+    line->data->highlight = 0;
     if (line->data->message)
         free (line->data->message);
     line->data->message = strdup ("");
@@ -2054,6 +2245,7 @@ gui_line_hdata_line_data_cb (const void *pointer, void *data,
     if (hdata)
     {
         HDATA_VAR(struct t_gui_line_data, buffer, POINTER, 0, NULL, "buffer");
+        HDATA_VAR(struct t_gui_line_data, id, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, y, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, date, TIME, 1, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, date_printed, TIME, 1, NULL, NULL);
@@ -2095,6 +2287,8 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
     if (!ptr_item)
         return 0;
 
+    if (!infolist_new_var_integer (ptr_item, "id", line->data->id))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "y", line->data->y))
         return 0;
     if (!infolist_new_var_time (ptr_item, "date", line->data->date))

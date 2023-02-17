@@ -1,7 +1,7 @@
 /*
  * spell-command.c - spell checker commands
  *
- * Copyright (C) 2013-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2013-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -216,6 +216,7 @@ void
 spell_command_set_dict (struct t_gui_buffer *buffer, const char *value)
 {
     char *name;
+    int disabled;
 
     name = spell_build_option_name (buffer);
     if (!name)
@@ -224,8 +225,16 @@ spell_command_set_dict (struct t_gui_buffer *buffer, const char *value)
     if (spell_config_set_dict (name, value) > 0)
     {
         if (value && value[0])
-            weechat_printf (NULL, "%s: \"%s\" => %s",
-                            SPELL_PLUGIN_NAME, name, value);
+        {
+            disabled = (strcmp (value, "-") == 0);
+            weechat_printf (NULL, "%s: \"%s\" => %s%s%s%s",
+                            SPELL_PLUGIN_NAME,
+                            name,
+                            value,
+                            (disabled) ? " (" : "",
+                            (disabled) ? _("spell checking disabled") : "",
+                            (disabled) ? ")" : "");
+        }
         else
             weechat_printf (NULL, _("%s: \"%s\" removed"),
                             SPELL_PLUGIN_NAME, name);
@@ -383,7 +392,7 @@ spell_command_cb (const void *pointer, void *data,
     }
 
     /* enable spell */
-    if (weechat_strcasecmp (argv[1], "enable") == 0)
+    if (weechat_strcmp (argv[1], "enable") == 0)
     {
         weechat_config_option_set (spell_config_check_enabled, "1", 1);
         weechat_printf (NULL, _("Spell checker enabled"));
@@ -391,7 +400,7 @@ spell_command_cb (const void *pointer, void *data,
     }
 
     /* disable spell */
-    if (weechat_strcasecmp (argv[1], "disable") == 0)
+    if (weechat_strcmp (argv[1], "disable") == 0)
     {
         weechat_config_option_set (spell_config_check_enabled, "0", 1);
         weechat_printf (NULL, _("Spell checker disabled"));
@@ -399,7 +408,7 @@ spell_command_cb (const void *pointer, void *data,
     }
 
     /* toggle spell */
-    if (weechat_strcasecmp (argv[1], "toggle") == 0)
+    if (weechat_strcmp (argv[1], "toggle") == 0)
     {
         if (spell_enabled)
         {
@@ -415,14 +424,14 @@ spell_command_cb (const void *pointer, void *data,
     }
 
     /* list of dictionaries */
-    if (weechat_strcasecmp (argv[1], "listdict") == 0)
+    if (weechat_strcmp (argv[1], "listdict") == 0)
     {
         spell_command_speller_list_dicts ();
         return WEECHAT_RC_OK;
     }
 
     /* set dictionary for current buffer */
-    if (weechat_strcasecmp (argv[1], "setdict") == 0)
+    if (weechat_strcmp (argv[1], "setdict") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "setdict");
         dicts = weechat_string_replace (argv_eol[2], " ", "");
@@ -434,14 +443,14 @@ spell_command_cb (const void *pointer, void *data,
     }
 
     /* delete dictionary used on current buffer */
-    if (weechat_strcasecmp (argv[1], "deldict") == 0)
+    if (weechat_strcmp (argv[1], "deldict") == 0)
     {
         spell_command_set_dict (buffer, NULL);
         return WEECHAT_RC_OK;
     }
 
     /* add word to personal dictionary */
-    if (weechat_strcasecmp (argv[1], "addword") == 0)
+    if (weechat_strcmp (argv[1], "addword") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "addword");
         if (argc > 3)
@@ -472,7 +481,7 @@ spell_command_init ()
         N_("spell plugin configuration"),
         N_("enable|disable|toggle"
            " || listdict"
-           " || setdict <dict>[,<dict>...]"
+           " || setdict -|<dict>[,<dict>...]"
            " || deldict"
            " || addword [<dict>] <word>"),
         N_("  enable: enable spell checker\n"
@@ -480,7 +489,8 @@ spell_command_init ()
            "  toggle: toggle spell checker\n"
            "listdict: show installed dictionaries\n"
            " setdict: set dictionary for current buffer (multiple dictionaries "
-           "can be separated by a comma)\n"
+           "can be separated by a comma, the special value \"-\" disables "
+           "spell checking on current buffer)\n"
            " deldict: delete dictionary used on current buffer\n"
            " addword: add a word in personal dictionary\n"
            "\n"

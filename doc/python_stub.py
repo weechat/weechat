@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # Copyright (C) 2019 Simmo Saan <simmo.saan@gmail.com>
-# Copyright (C) 2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2021-2023 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,10 +24,12 @@ This script requires Python 3.6+.
 """
 
 from pathlib import Path
+from textwrap import indent
 
 import re
 
 DOC_DIR = Path(__file__).resolve().parent / "en"
+SRC_DIR = Path(__file__).resolve().parent.parent / "src"
 
 STUB_HEADER = """\
 #
@@ -38,16 +40,16 @@ STUB_HEADER = """\
 from typing import Dict
 """
 
-CONSTANT_RE = r"""\
-  `(?P<constant>WEECHAT_[A-Z0-9_]+)` \((?P<type>(string|integer))\)(?: \+)?\
-"""
+CONSTANT_RE = (
+    r"( |\|) `(?P<constant>WEECHAT_[A-Z0-9_]+)` "
+    r"\((?P<type>(string|integer))\)(?: \+)?"
+)
 
-FUNCTION_RE = r"""\
-\[source,python\]
+FUNCTION_RE = r"""\[source,python\]
 ----
 # prototype
-def (?P<function>\w+)(?P<args>[^)]*)(?P<return>\) -> [^:]+:) \.\.\.\
-"""
+def (?P<function>\w+)(?P<args>[^)]*)(?P<return>\) -> [^:]+:) \.\.\.(?P<example>.*?)
+----"""
 
 
 def print_stub_constants() -> None:
@@ -57,23 +59,39 @@ def print_stub_constants() -> None:
         "string": "str",
     }
     constant_pattern = re.compile(CONSTANT_RE)
-    with open(DOC_DIR / "weechat_scripting.en.adoc") as scripting_file:
+    with open(
+        DOC_DIR / "weechat_scripting.en.adoc", encoding="utf-8"
+    ) as scripting_file, open(
+        SRC_DIR / "plugins" / "weechat-plugin.h", encoding="utf-8"
+    ) as plugin_header_file:
         scripting = scripting_file.read()
+        plugin_header = plugin_header_file.read()
         for match in constant_pattern.finditer(scripting):
-            print(f'{match["constant"]}: {types[match["type"]]}')
+            value_re = rf'^#define {match["constant"]} +(?P<value>[\w"-]+)$'
+            value_match = re.search(value_re, plugin_header, re.MULTILINE)
+            value = f' = {value_match["value"]}' if value_match else ""
+
+            print(f'{match["constant"]}: {types[match["type"]]}{value}')
 
 
 def print_stub_functions() -> None:
     """Print function prototypes, extracted from the Plugin API reference."""
     function_pattern = re.compile(FUNCTION_RE, re.DOTALL)
-    with open(DOC_DIR / "weechat_plugin_api.en.adoc") as api_doc_file:
+    with open(DOC_DIR / "weechat_plugin_api.en.adoc",
+              encoding="utf-8") as api_doc_file:
         api_doc = api_doc_file.read()
         for match in function_pattern.finditer(api_doc):
-            url = f'https://weechat.org/doc/api#_{match["function"]}'
+            url = f'https://weechat.org/doc/api/#_{match["function"]}'
+            example = (
+                f'\n    ::\n\n{indent(match["example"].lstrip(), " " * 8)}'
+                if match["example"]
+                else ""
+            )
             print(
                 f"""\n
 def {match["function"]}{match["args"]}{match["return"]}
-    \"""`{match["function"]} in WeeChat plugin API reference <{url}>`_\"""
+    \"""`{match["function"]} in WeeChat plugin API reference <{url}>`_{example}
+    \"""
     ..."""
             )
 

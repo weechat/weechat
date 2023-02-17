@@ -1,7 +1,7 @@
 /*
  * buflist-mouse.c - mouse actions for buflist
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -269,7 +269,7 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
                     buflist_config_look_mouse_jump_visited_buffer)
                 && (current_buffer_number == number))
             {
-                weechat_command (NULL, "/input jump_previously_visited_buffer");
+                weechat_command (NULL, "/buffer jump prev_visited");
             }
             else
             {
@@ -290,7 +290,7 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
                 buflist_config_look_mouse_jump_visited_buffer)
             && (current_buffer_number == number))
         {
-            weechat_command (NULL, "/input jump_next_visited_buffer");
+            weechat_command (NULL, "/buffer jump next_visited");
         }
     }
     else if (weechat_string_match (ptr_key, "*wheelup", 1))

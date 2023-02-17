@@ -1,7 +1,7 @@
 /*
  * gui-filter.c - filter functions (used by all GUI)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -251,6 +251,9 @@ gui_filter_search_by_name (const char *name)
 {
     struct t_gui_filter *ptr_filter;
 
+    if (!name)
+        return NULL;
+
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
     {
@@ -275,6 +278,77 @@ gui_filter_new_error (const char *name, const char *error)
         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
         (name) ? name : "",
         error);
+}
+
+/*
+ * Searches for position of filter in list (to keep filters sorted by name).
+ */
+
+struct t_gui_filter *
+gui_filter_find_pos (struct t_gui_filter *filter)
+{
+    struct t_gui_filter *ptr_filter;
+
+    for (ptr_filter = gui_filters; ptr_filter;
+         ptr_filter = ptr_filter->next_filter)
+    {
+        if (string_strcmp (filter->name, ptr_filter->name) < 0)
+            return ptr_filter;
+    }
+
+    /* position not found */
+    return NULL;
+}
+
+/*
+ * Adds a filter to the list of filters (sorted by name).
+ */
+
+void
+gui_filter_add_to_list (struct t_gui_filter *filter)
+{
+    struct t_gui_filter *pos_filter;
+
+    pos_filter = gui_filter_find_pos (filter);
+    if (pos_filter)
+    {
+        /* add filter before "pos_filter" */
+        filter->prev_filter = pos_filter->prev_filter;
+        filter->next_filter = pos_filter;
+        if (pos_filter->prev_filter)
+            (pos_filter->prev_filter)->next_filter = filter;
+        else
+            gui_filters = filter;
+        pos_filter->prev_filter = filter;
+    }
+    else
+    {
+        /* add filter to end of list */
+        filter->prev_filter = last_gui_filter;
+        filter->next_filter = NULL;
+        if (last_gui_filter)
+            last_gui_filter->next_filter = filter;
+        else
+            gui_filters = filter;
+        last_gui_filter = filter;
+    }
+}
+
+/*
+ * Removes a filter from list of filters.
+ */
+
+void
+gui_filter_remove_from_list (struct t_gui_filter *filter)
+{
+    if (filter->prev_filter)
+        (filter->prev_filter)->next_filter = filter->next_filter;
+    if (filter->next_filter)
+        (filter->next_filter)->prev_filter = filter->prev_filter;
+    if (gui_filters == filter)
+        gui_filters = filter->next_filter;
+    if (last_gui_filter == filter)
+        last_gui_filter = filter->prev_filter;
 }
 
 /*
@@ -411,14 +485,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
         new_filter->regex_prefix = regex1;
         new_filter->regex_message = regex2;
 
-        /* add filter to filters list */
-        new_filter->prev_filter = last_gui_filter;
-        if (last_gui_filter)
-            last_gui_filter->next_filter = new_filter;
-        else
-            gui_filters = new_filter;
-        last_gui_filter = new_filter;
-        new_filter->next_filter = NULL;
+        gui_filter_add_to_list (new_filter);
 
         (void) hook_signal_send ("filter_added",
                                  WEECHAT_HOOK_SIGNAL_POINTER, new_filter);
@@ -450,6 +517,10 @@ gui_filter_rename (struct t_gui_filter *filter, const char *new_name)
 
     free (filter->name);
     filter->name = strdup (new_name);
+
+    /* resort list of filters */
+    gui_filter_remove_from_list (filter);
+    gui_filter_add_to_list (filter);
 
     return 1;
 }
@@ -491,15 +562,7 @@ gui_filter_free (struct t_gui_filter *filter)
         free (filter->regex_message);
     }
 
-    /* remove filter from filters list */
-    if (filter->prev_filter)
-        (filter->prev_filter)->next_filter = filter->next_filter;
-    if (filter->next_filter)
-        (filter->next_filter)->prev_filter = filter->prev_filter;
-    if (gui_filters == filter)
-        gui_filters = filter->next_filter;
-    if (last_gui_filter == filter)
-        last_gui_filter = filter->prev_filter;
+    gui_filter_remove_from_list (filter);
 
     free (filter);
 
@@ -592,8 +655,9 @@ gui_filter_add_to_infolist (struct t_infolist *infolist,
     for (i = 0; i < filter->tags_count; i++)
     {
         snprintf (option_name, sizeof (option_name), "tag_%05d", i + 1);
-        tags = string_build_with_split_string ((const char **)filter->tags_array[i],
-                                               "+");
+        tags = string_rebuild_split_string ((const char **)filter->tags_array[i],
+                                            "+",
+                                            0, -1);
         if (tags)
         {
             if (!infolist_new_var_string (ptr_item, option_name, tags))

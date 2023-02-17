@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -30,6 +30,9 @@ struct t_infolist;
 struct t_gui_line_data
 {
     struct t_gui_buffer *buffer;       /* pointer to buffer                 */
+    int id;                            /* formatted buffer: (almost) unique */
+                                       /* line id in buffer                 */
+                                       /* free buffer: equals to "y"        */
     int y;                             /* line position (for free buffer)   */
     time_t date;                       /* date/time of line (may be past)   */
     time_t date_printed;               /* date/time when weechat print it   */
@@ -80,6 +83,12 @@ extern void gui_line_get_prefix_for_display (struct t_gui_line *line,
 extern int gui_line_get_align (struct t_gui_buffer *buffer,
                                struct t_gui_line *line,
                                int with_suffix, int first_line);
+extern char *gui_line_build_string_prefix_message (const char *prefix,
+                                                   const char *message);
+extern char *gui_line_build_string_message_tags (const char *message,
+                                                 int tags_count,
+                                                 char **tags_array,
+                                                 int colors);
 extern int gui_line_is_displayed (struct t_gui_line *line);
 extern struct t_gui_line *gui_line_get_first_displayed (struct t_gui_buffer *buffer);
 extern struct t_gui_line *gui_line_get_last_displayed (struct t_gui_buffer *buffer);

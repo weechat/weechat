@@ -1,7 +1,7 @@
 /*
  * fset-option.c - manage options displayed by Fast Set buffer
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -101,6 +101,9 @@ fset_option_search_by_name (const char *name, int *line)
 
     if (line)
         *line = -1;
+
+    if (!name)
+        return NULL;
 
     num_options = weechat_arraylist_size (fset_options);
     for (i = 0; i < num_options; i++)
@@ -570,8 +573,8 @@ fset_option_set_values (struct t_fset_option *fset_option,
     ptr_string_values = weechat_config_option_get_pointer (option, "string_values");
     if (ptr_string_values)
     {
-        fset_option->string_values = weechat_string_build_with_split_string (
-            ptr_string_values, ",");
+        fset_option->string_values = weechat_string_rebuild_split_string (
+            ptr_string_values, ",", 0, -1);
     }
     else
     {

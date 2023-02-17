@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -46,6 +46,7 @@ struct t_hook_print
     int strip_colors;                  /* strip colors in msg for callback? */
 };
 
+extern char *hook_print_get_description (struct t_hook *hook);
 extern struct t_hook *hook_print (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
                                   const char *tags, const char *message,

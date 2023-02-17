@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -37,6 +37,9 @@ struct t_gui_buffer;
 #define HOOK_COMMAND_EXEC_AMBIGUOUS_INCOMPLETE -3
 #define HOOK_COMMAND_EXEC_RUNNING              -4
 
+/* same command found with a different case */
+#define HOOK_COMMAND_SIMILAR_DIFF_CASE_ONLY -99
+
 typedef int (t_hook_callback_command)(const void *pointer, void *data,
                                       struct t_gui_buffer *buffer,
                                       int argc, char **argv, char **argv_eol);
@@ -65,6 +68,14 @@ struct t_hook_command
     char **cplt_template_args_concat;  /* concatenated arguments            */
 };
 
+struct t_hook_command_similar
+{
+    const char *command;               /* pointer to command name           */
+    int relevance;                     /* lower is better: mostly based on  */
+                                       /* Levenshtein distance between cmds */
+};
+
+extern char *hook_command_get_description (struct t_hook *hook);
 extern struct t_hook *hook_command (struct t_weechat_plugin *plugin,
                                     const char *command,
                                     const char *description,
@@ -77,6 +88,7 @@ extern struct t_hook *hook_command (struct t_weechat_plugin *plugin,
 extern int hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                               struct t_weechat_plugin *plugin,
                               const char *string);
+extern void hook_command_display_error_unknown (const char *command);
 extern void hook_command_free_data (struct t_hook *hook);
 extern int hook_command_add_to_infolist (struct t_infolist_item *item,
                                          struct t_hook *hook);

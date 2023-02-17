@@ -12,8 +12,8 @@
 Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.
 
-La dernière version de ce document peut être téléchargée sur cette page :
-https://weechat.org/doc
+La dernière version de ce document peut être téléchargée sur
+https://weechat.org/doc/[cette page ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -33,8 +33,8 @@ Ce manuel documente l'intérieur de WeeChat :
 [[repositories]]
 == Dépôts
 
-Les dépôts de WeeChat sont dans l'organisation "weechat" de GitHub :
-https://github.com/weechat
+Les dépôts de WeeChat sont dans l'organisation
+https://github.com/weechat[weechat ^↗^,window=_blank] de GitHub.
 
 Liste des dépôts :
 
@@ -45,7 +45,7 @@ scripts::
     les scripts _officiels_ soumis sur weechat.org
 
 weechat.org::
-    le code source du site de WeeChat : https://weechat.org/
+    le code source du https://weechat.org/[site de WeeChat ^↗^,window=_blank]
 
 weercd::
     serveur de test IRC
@@ -286,6 +286,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       irc-ignore.c                | Ignore IRC.
 |       irc-info.c                  | Info/infolists/hdata pour IRC.
 |       irc-input.c                 | Entrée de commandes/texte.
+|       irc-join.c                  | Fonctions pour les listes de canaux à rejoindre.
 |       irc-message.c               | Fonctions pour manipuler les messages IRC.
 |       irc-mode.c                  | Fonctions pour les modes de canal/pseudo.
 |       irc-modelist.c              | Listes de modes de canaux IRC (+b, +e, +I, ...).
@@ -298,6 +299,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       irc-sasl.c                  | Authentification SASL avec le serveur IRC.
 |       irc-server.c                | Communication avec le serveur IRC.
 |       irc-tag.c                   | Fonctions pour manipuler les étiquettes de message IRC.
+|       irc-typing.c                | Statut d'écriture.
 |       irc-upgrade.c               | Sauvegarde/restauration des données IRC lors de la mise à jour de WeeChat.
 |    javascript/                    | Extension JavaScript.
 |       weechat-js.cpp              | Fonctions principales pour JavaScript (chargement/déchargement des scripts, exécution de code JavaScript).
@@ -405,6 +407,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       core/                         | Racine des tests unitaires pour le cœur.
 |          test-core-arraylist.cpp    | Tests : listes avec tableau (« arraylists »).
 |          test-core-calc.cpp         | Tests : calcul d'expressions.
+|          test-core-command.cpp      | Tests : commandes.
 |          test-core-config-file.cpp  | Tests : fichiers de configuration.
 |          test-core-crypto.cpp       | Tests : fonctions cryptographiques.
 |          test-core-dir.cpp          | Tests : répertoires/fichiers.
@@ -422,7 +425,13 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-core-utf8.cpp         | Tests : UTF-8.
 |          test-core-util.cpp         | Tests : fonctions utiles.
 |       gui/                          | Racine des tests unitaires pour les interfaces.
+|          test-gui-bar-window.cpp    | Tests : fonctions de fenêtres de barre.
+|          test-gui-buffer.cpp        | Tests : fonctions de tampons.
+|          test-gui-chat.cpp          | Tests : fonctions de discussion.
 |          test-gui-color.cpp         | Tests : couleurs.
+|          test-gui-filter.cpp        | Tests : filtres.
+|          test-gui-input.cpp         | Tests : fonctions d'entrée.
+|          test-gui-key.cpp           | Tests : touches.
 |          test-gui-line.cpp          | Tests : lignes.
 |          test-gui-nick.cpp          | Tests : pseudos.
 |       plugins/                      | Racine des tests unitaires pour les extensions.
@@ -432,12 +441,16 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-irc-color.cpp      | Tests : couleurs IRC.
 |             test-irc-config.cpp     | Tests : configuration IRC.
 |             test-irc-ignore.cpp     | Tests : ignores IRC.
+|             test-irc-join.cpp       | Tests : fonctions de join IRC.
 |             test-irc-message.cpp    | Tests : messages IRC.
 |             test-irc-mode.cpp       | Tests : modes IRC.
 |             test-irc-nick.cpp       | Tests : pseudos IRC.
 |             test-irc-protocol.cpp   | Tests : protocole IRC.
 |             test-irc-sasl.cpp       | Tests : authentification SASL avec le protocole IRC.
 |             test-irc-server.cpp     | Tests : serveur IRC.
+|             test-irc-tag.cpp        | Tests : étiquettes des messages IRC.
+|          logger/                    | Racine des tests unitaires pour l'extension logger.
+|             test-logger-backlog.cpp | Tests : backlog logger.
 |          trigger/                   | Racine des tests unitaires pour l'extension trigger.
 |             test-trigger.cpp        | Tests : triggers.
 |             test-trigger-config.cpp | Tests : configuration trigger.
@@ -446,6 +459,9 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-typing-status.cpp  | Tests : statut d'écriture.
 |          relay/                     | Racine des tests unitaires pour l'extension Relay.
 |             test-relay-auth.cpp     | Tests : authentification des clients.
+|          xfer/                      | Racine des tests unitaires pour l'extension Xfer.
+|             test-xfer-file.cpp      | Tests : fonctions sur les fichiers.
+|             test-xfer-network.cpp   | Tests : fonctions réseau.
 |===
 
 [[documentation_translations]]
@@ -461,14 +477,13 @@ Fichiers de documentation :
 |    docgen.py                                  | Script Python pour construire les fichiers auto-générés dans le répertoire _includes/_ (voir ci-dessous).
 |    XX/                                        | Documentation pour la langue XX (langues : en, fr, de, it, ...).
 |       weechat.1.XX.adoc                       | Page de manuel (`man weechat`).
-|       weechat_dev.XX.adoc                     | link:weechat_dev.fr.html[Guide du développeur] (ce document).
-|       weechat_faq.XX.adoc                     | link:weechat_faq.fr.html[FAQ] (questions fréquemment posées).
-|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.fr.html[Référence API extension].
-|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.fr.html[Guide de démarrage].
-|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.fr.html[Protocole Relay (pour les interfaces distantes)].
-|       weechat_scripting.XX.adoc               | link:weechat_scripting.fr.html[Guide pour scripts].
-|       weechat_tester.XX.adoc                  | link:weechat_tester.fr.html[Guide du testeur].
-|       weechat_user.XX.adoc                    | link:weechat_user.fr.html[Guide utilisateur].
+|       weechat_dev.XX.adoc                     | link:weechat_dev.fr.html[Guide du développeur ^↗^,window=_blank] (ce document).
+|       weechat_faq.XX.adoc                     | link:weechat_faq.fr.html[FAQ ^↗^,window=_blank] (questions fréquemment posées).
+|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.fr.html[Référence API extension ^↗^,window=_blank].
+|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.fr.html[Guide de démarrage ^↗^,window=_blank].
+|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.fr.html[Protocole Relay ^↗^,window=_blank] (pour les interfaces distantes).
+|       weechat_scripting.XX.adoc               | link:weechat_scripting.fr.html[Guide pour scripts ^↗^,window=_blank].
+|       weechat_user.XX.adoc                    | link:weechat_user.fr.html[Guide utilisateur ^↗^,window=_blank].
 |       includes/                               | Fichiers inclus dans la documentation.
 |          autogen_api_completions.XX.adoc      | Fichier auto-généré pour la Référence API extension : complétions (ne *JAMAIS* mettre à jour manuellement !).
 |          autogen_api_hdata.XX.adoc            | Fichier auto-généré pour la Référence API extension : hdata (ne *JAMAIS* mettre à jour manuellement !).
@@ -518,7 +533,7 @@ Exemple en C :
 /*
  * weechat.c - core functions for WeeChat
  *
- * Copyright (C) 2021 Your Name <your@email.com>
+ * Copyright (C) 2023 Your Name <your@email.com>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -742,7 +757,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 [[coding_python_style]]
 === Style Python
 
-Voir https://www.python.org/dev/peps/pep-0008/
+Voir https://www.python.org/dev/peps/pep-0008/[PEP 8 ^↗^,window=_blank].
 
 [[core_internals]]
 == Intérieur du cœur
@@ -906,17 +921,9 @@ Tous les attributs/couleurs sont préfixés par un caractère dans la chaîne, q
 peuvent être :
 
 * _0x19_ : code couleur (suivi par un/des code(s) couleur)
-* _0x1A_ : activer un attribut (suivi par un attribut sur un caractère)
-* _0x1B_ : supprimer un attribut (suivi par un attribut sur un caractère)
+* _0x1A_ : activer un attribut (suivi par un attribut brut sur un caractère)
+* _0x1B_ : supprimer un attribut (suivi par un attribut brut sur un caractère)
 * _0x1C_ : réinitialiser (rien après)
-
-Les attributs autorisés sont (un ou plusieurs caractères) :
-
-* `+*+` : gras
-* `+!+` : vidéo inverse
-* `+/+` : italique
-* `+_+` : souligné
-* `+|+` : garder les attributs
 
 Les couleurs possibles sont :
 
@@ -926,47 +933,61 @@ Les couleurs possibles sont :
 Dans le tableau qui suit, les conventions suivantes sont utilisées :
 
 * `STD` : couleur standard (2 digits)
-* `(A)STD` : couleur standard avec des attributs facultatifs
+* `(ATTR)STD` : couleur standard avec des attributs facultatifs
   (attributs + 2 digits)
 * `EXT` : couleur étendue (`+@+` + 5 digits)
-* `(A)EXT` : couleur étendue avec des attributs facultatifs
+* `(ATTR)EXT` : couleur étendue avec des attributs facultatifs
   (`+@+` + attributs + 5 digits)
-* `ATTR` : un caractère d'attribut (`+*+`, `+!+`, `+/+`, `+_+` ou `+|+`)
+* `(ATTR)` : un ou plusieurs caractères d'attribut :
+** `+%+` : clignotement
+** `+.+` : "dim" (demi-intensité)
+** `+*+` : gras
+** `+!+` : vidéo inverse
+** `+/+` : italique
+** `+_+` : souligné
+** `+|+` : garder les attributs
+* `(a)` : un caractère d'attribut brut :
+** _0x01_ : gras
+** _0x02_ : vidéo inverse
+** _0x03_ : italique
+** _0x04_ : souligné
+** _0x05_ : clignotement
+** _0x06_ : "dim" (demi-intensité)
 
 Toutes les combinaisons sont résumées dans ce tableau :
 
 [width="100%",cols="4,3,2,8",options="header"]
 |===
-| Code                                       | Exemple                      | Aires         | Description
-| [hex]#19# + STD                            | [hex]#19# `+01+`             | chat + barres | Définir les attributs et la couleur en utilisant une option, voir le tableau ci-dessous.
-| [hex]#19# + EXT                            | [hex]#19# `+@00001+`         | chat          | Définir une couleur avec la paire ncurses (utilisé seulement sur le tampon `/color`).
-| [hex]#19# + "F" + (A)STD                   | [hex]#19# `+F*05+`           | chat + barres | Définir la couleur de texte (couleur WeeChat).
-| [hex]#19# + "F" + (A)EXT                   | [hex]#19# `+F@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
-| [hex]#19# + "B" + STD                      | [hex]#19# `+B05+`            | chat + barres | Définir la couleur de fond (couleur WeeChat).
-| [hex]#19# + "B" + EXT                      | [hex]#19# `+B@00124+`        | chat + barres | Définir le couleur de fond (couleur étendue).
-| [hex]#19# + "*" + (A)STD                   | [hex]#19# `+*05+`            | chat + barres | Définir la couleur de texte (couleur WeeChat).
-| [hex]#19# + "*" + (A)EXT                   | [hex]#19# `+*@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
-| [hex]#19# + "*" + (A)STD + "," + STD ^(1)^ | [hex]#19# `+*08,05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
-| [hex]#19# + "*" + (A)STD + "," + EXT ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
-| [hex]#19# + "*" + (A)EXT + "," + STD ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
-| [hex]#19# + "*" + (A)EXT + "," + EXT ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
-| [hex]#19# + "*" + (A)STD + "~" + STD       | [hex]#19# `+*08~05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
-| [hex]#19# + "*" + (A)STD + "~" + EXT       | [hex]#19# `+*01~@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
-| [hex]#19# + "*" + (A)EXT + "~" + STD       | [hex]#19# `+*@00214~05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
-| [hex]#19# + "*" + (A)EXT + "~" + EXT       | [hex]#19# `+*@00214~@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
-| [hex]#19# + "b" + "F"                      | [hex]#19# `+bF+`             | barres        | Définir la couleur de texte de la barre.
-| [hex]#19# + "b" + "D"                      | [hex]#19# `+bD+`             | barres        | Définir la couleur du délimiteur de la barre.
-| [hex]#19# + "b" + "B"                      | [hex]#19# `+bB+`             | barres        | Définir la couleur de fond de la barre.
-| [hex]#19# + "b" + "_"                      | [hex]#19# `+b_+`             | barre input   | Caractère de démarrage dans l'entrée (utilisé seulement dans l'objet "input_text").
-| [hex]#19# + "b" + "-"                      | [hex]#19# `+b-+`             | barre input   | Caractère de démarrage caché dans l'entrée (utilisé seulement dans l'objet "input_text").
-| [hex]#19# + "b" + "#"                      | [hex]#19# `+b#+`             | barre input   | Caractère de déplacement du curseur (utilisé seulement dans l'objet "input_text").
-| [hex]#19# + "b" + "i"                      | [hex]#19# `+bi+`             | barres        | Début d'objet.
-| [hex]#19# + "b" + "l" (lower L)            | [hex]#19# `+bl+`             | barres        | Ligne de démarrage d'objet.
-| [hex]#19# + "E"                            | [hex]#19# `+E+`              | chat + barres | Texte mis en valeur _(WeeChat ≥ 0.4.2)_.
-| [hex]#19# + [hex]#1C#                      | [hex]#19# [hex]#1C#          | chat + barres | Réinitialiser la couleur (garder les attributs).
-| [hex]#1A# + ATTR                           | [hex]#1A# `+*+`              | chat + barres | Activer un attribut.
-| [hex]#1B# + ATTR                           | [hex]#1B# `+*+`              | chat + barres | Supprimer un attribut.
-| [hex]#1C#                                  | [hex]#1C#                    | chat + barres | Réinitialiser les attributs et la couleur.
+| Code                                              | Exemple                      | Aires         | Description
+| [hex]#19# + `STD`                                 | [hex]#19# `+01+`             | chat + barres | Définir les attributs et la couleur en utilisant une option, voir le tableau ci-dessous.
+| [hex]#19# + `EXT`                                 | [hex]#19# `+@00001+`         | chat          | Définir une couleur avec la paire ncurses (utilisé seulement sur le tampon `/color`).
+| [hex]#19# + `F` + `(ATTR)STD`                     | [hex]#19# `+F*05+`           | chat + barres | Définir la couleur de texte (couleur WeeChat).
+| [hex]#19# + `F` + `(ATTR)EXT`                     | [hex]#19# `+F@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
+| [hex]#19# + `B` + `STD`                           | [hex]#19# `+B05+`            | chat + barres | Définir la couleur de fond (couleur WeeChat).
+| [hex]#19# + `B` + `EXT`                           | [hex]#19# `+B@00124+`        | chat + barres | Définir le couleur de fond (couleur étendue).
+| [hex]#19# + `*` + `(ATTR)STD`                     | [hex]#19# `+*05+`            | chat + barres | Définir la couleur de texte (couleur WeeChat).
+| [hex]#19# + `*` + `(ATTR)EXT`                     | [hex]#19# `+*@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
+| [hex]#19# + `*` + `(ATTR)STD` + `,` + `STD` ^(1)^ | [hex]#19# `+*08,05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
+| [hex]#19# + `*` + `(ATTR)STD` + `,` + `EXT` ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
+| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `STD` ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
+| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `EXT` ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
+| [hex]#19# + `*` + `(ATTR)STD` + `~` + `STD`       | [hex]#19# `+*08~05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
+| [hex]#19# + `*` + `(ATTR)STD` + `~` + `EXT`       | [hex]#19# `+*01~@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
+| [hex]#19# + `*` + `(ATTR)EXT` + `~` + `STD`       | [hex]#19# `+*@00214~05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
+| [hex]#19# + `*` + `(ATTR)EXT` + `~` + `EXT`       | [hex]#19# `+*@00214~@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
+| [hex]#19# + `b` + `F`                             | [hex]#19# `+bF+`             | barres        | Définir la couleur de texte de la barre.
+| [hex]#19# + `b` + `D`                             | [hex]#19# `+bD+`             | barres        | Définir la couleur du délimiteur de la barre.
+| [hex]#19# + `b` + `B`                             | [hex]#19# `+bB+`             | barres        | Définir la couleur de fond de la barre.
+| [hex]#19# + `b` + `_`                             | [hex]#19# `+b_+`             | barre input   | Caractère de démarrage dans l'entrée (utilisé seulement dans l'objet "input_text").
+| [hex]#19# + `b` + `-`                             | [hex]#19# `+b-+`             | barre input   | Caractère de démarrage caché dans l'entrée (utilisé seulement dans l'objet "input_text").
+| [hex]#19# + `b` + `#`                             | [hex]#19# `+b#+`             | barre input   | Caractère de déplacement du curseur (utilisé seulement dans l'objet "input_text").
+| [hex]#19# + `b` + `i`                             | [hex]#19# `+bi+`             | barres        | Début d'objet.
+| [hex]#19# + `b` + `l` (lower L)                   | [hex]#19# `+bl+`             | barres        | Ligne de démarrage d'objet.
+| [hex]#19# + `E`                                   | [hex]#19# `+E+`              | chat + barres | Texte mis en valeur _(WeeChat ≥ 0.4.2)_.
+| [hex]#19# + [hex]#1C#                             | [hex]#19# [hex]#1C#          | chat + barres | Réinitialiser la couleur (garder les attributs).
+| [hex]#1A# + `(a)`                                 | [hex]#1A# [hex]#01#          | chat + barres | Activer un attribut.
+| [hex]#1B# + `(a)`                                 | [hex]#1B# [hex]#01#          | chat + barres | Supprimer un attribut.
+| [hex]#1C#                                         | [hex]#1C#                    | chat + barres | Réinitialiser les attributs et la couleur.
 |===
 
 [NOTE]
@@ -1124,7 +1145,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 [[git_repository]]
 === Dépôt Git
 
-Le dépôt Git est à cette URL : https://github.com/weechat/weechat
+Le dépôt Git est sur https://github.com/weechat/weechat[GitHub ^↗^,window=_blank].
 
 Tout patch pour un bug ou une nouvelle fonctionnalité doit être effectué sur la
 branche master, le format préféré étant une "pull request" sur GitHub. Un patch
@@ -1134,16 +1155,97 @@ Le format du message de commit est le suivant (avec fermeture automatique
 du bug GitHub) :
 
 ----
-component: fix a problem (closes #123)
+composant: fix a problem (closes #123)
 ----
 
-Où _component_ est :
+Où _composant_ est :
 
-* pour le cœur WeeChat : _core_ (les fichiers dans le répertoire racine, _po/_
-  et _src/_, sauf _src/plugins/_)
-* fichiers de documentation : _doc_ (fichiers dans le répertoire _doc/_)
-* nom d'une extension : _irc_, _python_, _relay_, ... (fichiers dans le
-  répertoire _src/plugins/_)
+[width="100%",cols="1m,4m,5",options="header"]
+|===
+| Composant | Fichiers | Description
+
+| core
+| AUTHORS.adoc +
+  ChangeLog.adoc +
+  Contributing.adoc +
+  .github/FUNDING.yml +
+  .github/ISSUE_TEMPLATE/* +
+  icons/* +
+  po/* +
+  README.adoc +
+  ReleaseNotes.adoc +
+  src/core/* +
+  src/gui/* +
+  version.sh +
+  weechat.desktop
+| cœur de WeeChat
+
+| build
+| CMakeLists.txt +
+  cmake/* +
+  tools/* +
+  weechat.cygport.in +
+  weechat.spec
+| Construction
+
+| ci
+| .github/workflows/*
+| Intégration continue
+
+| debian
+| debian-devel/* +
+  debian-stable/*
+| Empaquetage Debian
+
+| tests
+| tests/*
+| Tests
+
+| doc
+| doc/*
+| Mises à jour générales sur la documentation, par exemple la construction
+
+| doc/man
+| doc/xx/weechat.1.xx.adoc +
+  doc/xx/weechat-headless.1.xx.adoc
+| Pages de manuel
+
+| doc/faq
+| doc/xx/weechat_faq.xx.adoc
+| Questions fréquemment posées (FAQ)
+
+| doc/quickstart
+| doc/xx/weechat_quickstart.xx.adoc
+| Guide de démarrage rapide
+
+| doc/user
+| doc/xx/weechat_user.xx.adoc
+| Guide utilisateur
+
+| doc/scripting
+| doc/xx/weechat_scripting.xx.adoc
+| Guide pour scripts
+
+| doc/api
+| doc/xx/weechat_plugin_api.xx.adoc
+| Référence extension API
+
+| doc/relay
+| doc/xx/weechat_relay_protocol.xx.adoc
+| Protocole relay
+
+| doc/dev
+| doc/xx/weechat_dev.en.adoc
+| Guide du développeur
+
+| irc +
+  python +
+  relay +
+  …
+| src/plugins/<name>/*
+| Extension
+
+|===
 
 Quelques règles à suivre :
 
@@ -1192,8 +1294,8 @@ $ make translations && make update-po
 Vous pouvez alors éditer les fichiers .po (si vous pouvez traduire dans une
 langue).
 
-Une fois terminé, vous *devez* vérifier votre fichier avec le script
-_msgcheck.py_ (https://github.com/flashcode/msgcheck) :
+Une fois terminé, vous *devez* vérifier votre fichier avec
+https://github.com/flashcode/msgcheck[msgcheck ^↗^,window=_blank] :
 
 ----
 $ msgcheck.py xx.po
@@ -1227,7 +1329,7 @@ _doc/en/_), puis travaillez dessus.
 Les traductions manquantes dans les fichiers sont indiquées par cette chaîne :
 
 ----
-// TRANSLATION MISSING
+// TRANSLATION MISSING
 ----
 
 Vous devez traduire tout le fichier sauf les liens et les mots-clés spéciaux

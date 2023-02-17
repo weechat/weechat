@@ -16,7 +16,8 @@
 
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
-Последња верзија овог документа може да се нађе на следећој страници: https://weechat.org/doc
+Последња верзија овог документа се налази на
+https://weechat.org/doc/[овој страници ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -55,7 +56,7 @@ Almost all examples in this doc are written in Python, but API is the same for o
 
 [IMPORTANT]
 Скрипта *НИКАДА* не сме да се рачва или да креира нити без употребе одговарајуће API функције, то може да сруши програм WeeChat. +
-Ако нешто мора да се извршава у позадини, употребите функцију `+hook_process+`. Погледајте пример у поглављу <<hook_process,Покретање процеса у позадини>> као и документацију функције `+hook_process+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтном приручнику API додатака].
+Ако нешто мора да се извршава у позадини, употребите функцију `+hook_process+`. Погледајте пример у поглављу <<hook_process,Покретање процеса у позадини>> као и документацију функције `+hook_process+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтном приручнику API додатака ^↗^,window=_blank].
 
 [[languages_specificities]]
 === Језичке специфичности
@@ -67,7 +68,7 @@ Almost all examples in this doc are written in Python, but API is the same for o
 ===== Модул
 
 Програм WeeChat дефинише `weechat` модул који мора да се увезе командом `import weechat`. +
-Python стаб за WeeChat API је соступан у репозиторијуму: https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi].
+Python стаб за WeeChat API је соступан у репозиторијуму: https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^,window=_blank].
 
 [[python_functions]]
 ===== Функције
@@ -87,42 +88,40 @@ Python стаб за WeeChat API је соступан у репозиториј
 |===
 | API фунцкија | Аргументи | Примери | Опис
 
-| hook_modifier |
-  irc_in_yyy |
-  pass:[irc_in_privmsg] +
-  pass:[irc_in_notice] |
-  Порука која се прими у IRC додатку, пре него што се декодира у UTF-8 (користи
+| hook_modifier
+| irc_in_yyy
+| pass:[irc_in_privmsg] +
+  pass:[irc_in_notice]
+| Порука која се прими у IRC додатку, пре него што се декодира у UTF-8 (користи
   се интерно). +
   +
   Препоручује се да се уместо ње користи модификатор `+irc_in2_yyy+`, примљени
   стринг је увек валидан UTF-8. +
   Погледајте функцију `+hook_modifier+` у
-  link:weechat_plugin_api.sr.html#_hook_modifier[WeeChat референтном приручнику API додатака].
+  link:weechat_plugin_api.sr.html#_hook_modifier[WeeChat референтном приручнику API додатака ^↗^,window=_blank].
 
-| hook_signal |
-  xxx,irc_out_yyy +
-  xxx,irc_outtags_yyy |
-  pass:[*,irc_out_privmsg] +
+| hook_signal
+| xxx,irc_out_yyy +
+  xxx,irc_outtags_yyy
+| pass:[*,irc_out_privmsg] +
   pass:[*,irc_out_notice] +
   pass:[*,irc_outtags_privmsg] +
-  pass:[*,irc_outtags_notice] |
-  Порука коју шаље IRC додатак, након што се кодира у `encode` скуп карактера
+  pass:[*,irc_outtags_notice]
+| Порука коју шаље IRC додатак, након што се кодира у `encode` скуп карактера
   који је дефинисао корисник (у случају да се разликује од подразумеваног `UTF-8`). +
   +
   Препоручује се да се уместо њега користи сигнал `+xxx,irc_out1_yyy+`, стринг који
   се прима је увек валидан UTF-8. +
   Погледајте функцију `+hook_signal+` у
-  link:weechat_plugin_api.sr.html#_hook_signal[WeeChat референтном приручнику API додатака].
+  link:weechat_plugin_api.sr.html#_hook_signal[WeeChat референтном приручнику API додатака ^↗^,window=_blank].
 
 | hook_process +
-  hook_process_hashtable |
-  - |
-  - |
-  Излаз команде који се шаље функцији повратног позива може да садржи неважеће UTF-8 податке.
+  hook_process_hashtable
+| -
+| -
+| Излаз команде који се шаље функцији повратног позива може да садржи неважеће UTF-8 податке.
 
 |===
-
-У Python 2, који је сад превазиђен и више не би требало да се употребљава, стрингови који се шаљу функцијама повратног позива су увек били типа `str`, и у случајевима који су поменути изнад, могли су да садрже неважеће UTF-8 податке.
 
 [[language_perl]]
 ==== Perl
@@ -147,7 +146,7 @@ Python стаб за WeeChat API је соступан у репозиториј
 
 Услед ограничења језика Ruby (функција може да има максимално 15 аргумената), функција `+Weechat.config_new_option+` прихвата функције повратног позива у низу од 6 стрингова (3 повратна позива + 3 стринга са подацима), тако да позив ове функције изгледа овако:
 
-[source, ruby]
+[source,ruby]
 ----
 Weechat.config_new_option(config, section, "name", "string", "description of option", "", 0, 0,
                           "value", "value", 0, ["check_cb", "", "change_cb", "", "delete_cb", ""])
@@ -155,7 +154,7 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 
 И функција `+Weechat.bar_new+` прима боје у низу од 4 стринга (color_fg, color_delim, color_bg, color_bg_inactive), тако да позив ове функције изгледа овако:
 
-[source, ruby]
+[source,ruby]
 ----
 Weechat.bar_new("name", "off", "0", "window", "", "left", "vertical", "vertical", "0", "0",
                 ["default", "default", "default", "default"], "0", "items")
@@ -176,6 +175,22 @@ Weechat.bar_new("name", "off", "0", "window", "", "left", "vertical", "vertical"
 ===== Функције
 
 Функције се позивају са `+weechat::xxx арг1 арг2 ...+`.
+
+[[tcl_null]]
+===== Null вредности
+
+Пошто Tcl има само стринг типове, не постоји могућност да се проследи аргумент
+null типа када функција прихвата null вредности или да прихвати као аргумент у
+функцији повратног позива. Да би се решио овај проблем WeeChat API дефинише
+константу `$::weechat::WEECHAT_NULL` која има улогу null вредности. Ова константа
+се дефинипе као `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, тако да је
+мала вероватноћа да се појави без намере.
+
+Ову константу можете да проследите када функција као аргумент прихвата null и
+вретиће вам се као вредност аргумента у функцији повратног позива ако је вредност
+аргумента null. Да бисте видели које функције прихватају null вредности и 
+прослеђују null вредности функцијама повратног позива, погледајте Python прототипе
+у link:weechat_plugin_api.en.html[API референтном приручнику WeeChat додатака ^↗^,window=_blank].
 
 [[language_guile]]
 ==== Guile (Scheme)
@@ -214,7 +229,7 @@ Weechat.bar_new("name", "off", "0", "window", "", "left", "vertical", "vertical"
 
 Прототип (Python):
 
-[source, python]
+[source,python]
 ----
 def register(name: str, author: str, version: str, license: str, description: str, shutdown_function: str, charset: str) -> int: ...
 ----
@@ -233,7 +248,7 @@ def register(name: str, author: str, version: str, license: str, description: st
 
 * Python:
 
-[source, python]
+[source,python]
 ----
 import weechat
 
@@ -243,7 +258,7 @@ weechat.prnt("", "Поздрав од python скрипте!")
 
 * Perl:
 
-[source, perl]
+[source,perl]
 ----
 weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Test script", "", "");
 weechat::print("", "Поздрав од perl скрипте!");
@@ -251,7 +266,7 @@ weechat::print("", "Поздрав од perl скрипте!");
 
 * Ruby:
 
-[source, ruby]
+[source,ruby]
 ----
 def weechat_init
   Weechat.register("test_ruby", "FlashCode", "1.0", "GPL3", "Test script", "", "")
@@ -262,7 +277,7 @@ end
 
 * Lua:
 
-[source, lua]
+[source,lua]
 ----
 weechat.register("test_lua", "FlashCode", "1.0", "GPL3", "Test script", "", "")
 weechat.print("", "Поздрав од lua скрипте!")
@@ -270,7 +285,7 @@ weechat.print("", "Поздрав од lua скрипте!")
 
 * Tcl:
 
-[source, tcl]
+[source,tcl]
 ----
 weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Test script" "" ""
 weechat::print "" "Поздрав од tcl скрипте!"
@@ -278,7 +293,7 @@ weechat::print "" "Поздрав од tcl скрипте!"
 
 * Guile (Scheme):
 
-[source, lisp]
+[source,lisp]
 ----
 (weechat:register "test_scheme" "FlashCode" "1.0" "GPL3" "Test script" "" "")
 (weechat:print "" "Поздрав од scheme скрипте!")
@@ -286,7 +301,7 @@ weechat::print "" "Поздрав од tcl скрипте!"
 
 * JavaScript:
 
-[source, javascript]
+[source,javascript]
 ----
 weechat.register("test_js", "FlashCode", "1.0", "GPL3", "Test script", "", "");
 weechat.print("", "Поздрав од javascript скрипте!");
@@ -294,7 +309,7 @@ weechat.print("", "Поздрав од javascript скрипте!");
 
 * PHP:
 
-[source, php]
+[source,php]
 ----
 weechat_register('test_php', 'FlashCode', '1.0', 'GPL3', 'Test script', '', '');
 weechat_print('', 'Поздрав од PHP скрипте!');
@@ -379,7 +394,7 @@ test.py ─────► │ script API │  C API  │ ─────► ║
 
 Дозвољени су празни стрингови или „0x0”. На пример, ако желите да испишете податке у бафер језгра (главни WeeChat бафер), можете урадити следеће:
 
-[source, python]
+[source,python]
 ----
 weechat.prnt("", "здраво!")
 ----
@@ -398,7 +413,7 @@ C функције повратног позива користе „callback_po
 
 * Python:
 
-[source, python]
+[source,python]
 ----
 def timer_cb(data, remaining_calls):
     weechat.prnt("", "timer! data=%s" % data)
@@ -409,7 +424,7 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
 
 * Perl:
 
-[source, perl]
+[source,perl]
 ----
 sub timer_cb {
     my ($data, $remaining_calls) = @_;
@@ -422,7 +437,7 @@ weechat::hook_timer(1000, 0, 1, "timer_cb", "test");
 
 * Ruby:
 
-[source, ruby]
+[source,ruby]
 ----
 def timer_cb(data, remaining_calls)
   Weechat.print("", "timer! data=#{data}");
@@ -434,7 +449,7 @@ Weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 
 * Lua:
 
-[source, lua]
+[source,lua]
 ----
 function timer_cb(data, remaining_calls)
     weechat.print("", "timer! data="..data)
@@ -446,7 +461,7 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
 
 * Tcl:
 
-[source, tcl]
+[source,tcl]
 ----
 proc timer_cb { data remaining_calls } {
     weechat::print {} "timer! data=$data"
@@ -458,7 +473,7 @@ weechat::hook_timer 1000 0 1 timer_cb test
 
 * Guile (Scheme):
 
-[source, lisp]
+[source,lisp]
 ----
 (define (timer_cb data remaining_calls)
   (weechat:print "" (string-append "timer! data=" data))
@@ -470,7 +485,7 @@ weechat::hook_timer 1000 0 1 timer_cb test
 
 * JavaScript:
 
-[source, javascript]
+[source,javascript]
 ----
 function timer_cb(data, remaining_calls) {
     weechat.print("", "timer! data=" + data);
@@ -482,7 +497,7 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 
 * PHP:
 
-[source, php]
+[source,php]
 ----
 $timer_cb = function ($data, $remaining_calls) {
     weechat_print('', 'timer! data=' . $data);
@@ -495,25 +510,25 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 [[script_api]]
 == API скриптовања
 
-За више информација о функцијама које постоје у API, молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat референтни приручник API додатака].
+За више информација о функцијама које постоје у API, молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat референтни приручник API додатака ^↗^,window=_blank].
 
 [[script_api_functions]]
 === Функције
 
 Листа функција у API скриптовања:
 
-[width="100%", cols="1,3", options="header"]
+[width="100%", cols="1,5", options="header"]
 |===
 | Категорија | Функције
 
-| опште |
-  register
+| опште
+| register
 
-| додаци |
-  plugin_get_name
+| додаци
+| plugin_get_name
 
-| стрингови |
-  charset_set +
+| стрингови
+| charset_set +
   iconv_to_internal +
   iconv_from_internal +
   gettext +
@@ -525,6 +540,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   string_has_highlight_regex +
   string_mask_to_regex +
   string_format_size +
+  string_parse_size +
   string_color_code_size +
   string_remove_color +
   string_is_command_char +
@@ -532,13 +548,13 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   string_eval_expression +
   string_eval_path_home
 
-| директоријуми |
-  mkdir_home +
+| директоријуми
+| mkdir_home +
   mkdir +
   mkdir_parents
 
-| сортиране листе |
-  list_new +
+| сортиране листе
+| list_new +
   list_add +
   list_search +
   list_search_pos +
@@ -554,8 +570,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   list_remove_all +
   list_free
 
-| кофнигурациони фајлови |
-  config_new +
+| кофнигурациони фајлови
+| config_new +
   config_new_section +
   config_search_section +
   config_new_option +
@@ -592,20 +608,21 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   config_set_desc_plugin +
   config_unset_plugin
 
-| тастерске пречице |
-  key_bind +
+| тастерске пречице
+| key_bind +
   key_unbind
 
-| приказ |
-  prefix +
+| приказ
+| prefix +
   color +
   print (за python: prnt) +
   print_date_tags (за python: prnt_date_tags) +
   print_y (за python: prnt_y) +
+  print_y_date_tags (за python: prnt_y_date_tags) +
   log_print
 
-| куке |
-  hook_command +
+| куке
+| hook_command +
   hook_command_run +
   hook_timer +
   hook_fd +
@@ -630,8 +647,9 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   unhook +
   unhook_all
 
-| бафери |
-  buffer_new +
+| бафери
+| buffer_new +
+  buffer_new_props +
   current_buffer +
   buffer_search +
   buffer_search_main +
@@ -646,16 +664,16 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   buffer_string_replace_local_var +
   buffer_match_list
 
-| прозори |
-  current_window +
+| прозори
+| current_window +
   window_search_with_buffer +
   window_get_integer +
   window_get_string +
   window_get_pointer +
   window_set_title
 
-| листа надимака |
-  nicklist_add_group +
+| листа надимака
+| nicklist_add_group +
   nicklist_search_group +
   nicklist_add_nick +
   nicklist_search_nick +
@@ -671,8 +689,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   nicklist_nick_get_pointer +
   nicklist_nick_set
 
-| траке |
-  bar_item_search +
+| траке
+| bar_item_search +
   bar_item_new +
   bar_item_update +
   bar_item_remove +
@@ -682,23 +700,23 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   bar_update +
   bar_remove
 
-| команде |
-  command +
+| команде
+| command +
   command_options
 
-| довршавање |
-  completion_new +
+| довршавање
+| completion_new +
   completion_search +
   completion_get_string +
   completion_list_add +
   completion_free
 
-| infos |
-  info_get +
+| infos
+| info_get +
   info_get_hashtable
 
-| infolists |
-  infolist_new +
+| infolists
+| infolist_new +
   infolist_new_item +
   infolist_new_var_integer +
   infolist_new_var_string +
@@ -716,8 +734,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   infolist_time +
   infolist_free
 
-| hdata |
-  hdata_get +
+| hdata
+| hdata_get +
   hdata_get_var_offset +
   hdata_get_var_type_string +
   hdata_get_var_array_size +
@@ -738,8 +756,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   hdata_update +
   hdata_get_string
 
-| ажурирање |
-  upgrade_new +
+| ажурирање
+| upgrade_new +
   upgrade_write_object +
   upgrade_read +
   upgrade_close
@@ -750,17 +768,17 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 
 Листа константи у API скриптовања:
 
-[width="100%", cols="1,3", options="header"]
+[width="100%", cols="1,5", options="header"]
 |===
 | Категорија | Константе
 
-| повратни кодови |
-  `WEECHAT_RC_OK` (цео број) +
+| повратни кодови
+| `WEECHAT_RC_OK` (цео број) +
   `WEECHAT_RC_OK_EAT` (цео број) +
   `WEECHAT_RC_ERROR` (цео број)
 
-| конфигурациони фајлови |
-  `WEECHAT_CONFIG_READ_OK` (цео број) +
+| конфигурациони фајлови
+| `WEECHAT_CONFIG_READ_OK` (цео број) +
   `WEECHAT_CONFIG_READ_MEMORY_ERROR` (цео број) +
   `WEECHAT_CONFIG_READ_FILE_NOT_FOUND` (цео број) +
   `WEECHAT_CONFIG_WRITE_OK` (цео број) +
@@ -775,23 +793,23 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   `WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED` (цео број) +
   `WEECHAT_CONFIG_OPTION_UNSET_ERROR` (цео број)
 
-| сортиране листе |
-  `WEECHAT_LIST_POS_SORT` (стринг) +
+| сортиране листе
+| `WEECHAT_LIST_POS_SORT` (стринг) +
   `WEECHAT_LIST_POS_BEGINNING` (стринг) +
   `WEECHAT_LIST_POS_END` (стринг)
 
-| врућа листа |
-  `WEECHAT_HOTLIST_LOW` (стринг) +
+| врућа листа
+| `WEECHAT_HOTLIST_LOW` (стринг) +
   `WEECHAT_HOTLIST_MESSAGE` (стринг) +
   `WEECHAT_HOTLIST_PRIVATE` (стринг) +
   `WEECHAT_HOTLIST_HIGHLIGHT` (стринг)
 
-| кука process |
-  `WEECHAT_HOOK_PROCESS_RUNNING` (цео број) +
+| кука process
+| `WEECHAT_HOOK_PROCESS_RUNNING` (цео број) +
   `WEECHAT_HOOK_PROCESS_ERROR` (цео број)
 
-| кука connect |
-  `WEECHAT_HOOK_CONNECT_OK` (цео број) +
+| кука connect
+| `WEECHAT_HOOK_CONNECT_OK` (цео број) +
   `WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND` (цео број) +
   `WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND` (цео број) +
   `WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED` (цео број) +
@@ -803,8 +821,8 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   `WEECHAT_HOOK_CONNECT_TIMEOUT` (цео број) +
   `WEECHAT_HOOK_CONNECT_SOCKET_ERROR` (цео број)
 
-| кука signal |
-  `WEECHAT_HOOK_SIGNAL_STRING` (стринг) +
+| кука signal
+| `WEECHAT_HOOK_SIGNAL_STRING` (стринг) +
   `WEECHAT_HOOK_SIGNAL_INT` (стринг) +
   `WEECHAT_HOOK_SIGNAL_POINTER` (стринг)
 |===
@@ -812,7 +830,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 [[common_tasks]]
 == Уобичајени задаци
 
-Ово поглавље приказује неке уобичајене задатке, уз примере. Овде се користе само делимичне ствари из API, за потпуно упутство, погледајте link:weechat_plugin_api.sr.html[WeeChat референтни приручник API додатака].
+Ово поглавље приказује неке уобичајене задатке, уз примере. Овде се користе само делимичне ствари из API, за потпуно упутство, погледајте link:weechat_plugin_api.sr.html[WeeChat референтни приручник API додатака ^↗^,window=_blank].
 
 [[buffers]]
 === Бафери
@@ -824,13 +842,13 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 
 Примери:
 
-[source, python]
+[source,python]
 ----
 # приказ „здраво” у баферу језгра
 weechat.prnt("", "здраво")
 
 # приказ „здраво” у баферу језгра, али без уписа у лог фајл
-# (само у верзијама >= 0.3.3)
+# (само у верзијама ≥ 0.3.3)
 weechat.prnt_date_tags("", 0, "no_log", "здраво")
 
 # приказ префикса „==>” и поруке „здраво” у текућем баферу
@@ -864,7 +882,7 @@ Print функција се назива `prnt` у Python, а `print` у ост�
 
 Примери:
 
-[source, python]
+[source,python]
 ----
 # извршавање команде „/help” у текућем баферу (резултат иде у бафер језгра)
 weechat.command("", "/help")
@@ -883,7 +901,7 @@ weechat.command(buffer, "hello")
 
 Пример:
 
-[source, python]
+[source,python]
 ----
 # функција повратног позива за податке примљене са улаза
 def buffer_input_cb(data, buffer, input_data):
@@ -912,7 +930,7 @@ weechat.buffer_set(buffer, "localvar_set_no_log", "1")
 
 Примери:
 
-[source, python]
+[source,python]
 ----
 buffer = weechat.current_buffer()
 
@@ -923,7 +941,7 @@ short_name = weechat.buffer_get_string(buffer, "short_name")
 
 Могyће је додавање, читање или брисање локалних променњивих у баферу:
 
-[source, python]
+[source,python]
 ----
 # додавање локалне променљиве
 weechat.buffer_set(buffer, "localvar_set_myvar", "my_value")
@@ -951,7 +969,7 @@ weechat.buffer_set(buffer, "localvar_del_myvar", "")
 
 Пример:
 
-[source, python]
+[source,python]
 ----
 def my_command_cb(data, buffer, args):
     # ...
@@ -984,7 +1002,7 @@ hook = weechat.hook_command("мојфилтер", "опис за мојфилт�
 
 Пример:
 
-[source, python]
+[source,python]
 ----
 def timer_cb(data, remaining_calls):
     # ...
@@ -999,23 +1017,50 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 
 Процес можете да покренете у позадини са `+hook_process+`. Ваша функција повратног позива ће се позвати онда када подаци буду спремни. Може да се позива више пута.
 
-У последњем позиву ваше функције повратног позива, _rc_ се поставља на 0 или позитивну вредност, то је повратни кôд команде.
+У последњем позиву ваше функције повратног позива, _return_code_ се поставља на 0 или позитивну вредност, то је повратни кôд команде.
 
 Пример:
 
-[source, python]
+[source,python]
 ----
-process_output = ""
-
-def my_process_cb(data, command, rc, out, err):
-    global process_output
-    if out != "":
-        process_output += out
-    if int(rc) >= 0:
-        weechat.prnt("", process_output)
+def my_process_cb(data, command, return_code, out, err):
+    if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+        weechat.prnt("", "Error with command '%s'" % command)
+        return weechat.WEECHAT_RC_OK
+    if return_code >= 0:
+        weechat.prnt("", "return_code = %d" % return_code)
+    if out:
+        weechat.prnt("", "stdout: %s" % out)
+    if err:
+        weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
+----
+
+Уместо спољне команде, такође можете директно да позовете скрипт функцију
+која ради нешто што блокира:
+
+[source,python]
+----
+def get_status(data):
+    # do something blocking...
+    # ...
+    return "this is the result"
+
+def my_process_cb(data, command, return_code, out, err):
+    if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+        weechat.prnt("", "Error with command '%s'" % command)
+        return weechat.WEECHAT_RC_OK
+    if return_code >= 0:
+        weechat.prnt("", "return_code = %d" % return_code)
+    if out:
+        weechat.prnt("", "stdout: %s" % out)
+    if err:
+        weechat.prnt("", "stderr: %s" % err)
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_process("func:get_status", 5000, "my_process_cb", "")
 ----
 
 [[url_transfer]]
@@ -1027,17 +1072,17 @@ _Ново у верзији 0.3.7._
 
 Пример URL преноса без опције: HTML страница ће се примити као „out” у функцији повратног позива (стандардни излаз процеса):
 
-[source, python]
+[source,python]
 ----
-# Приказ тренутне стабилне верзије програма WeeChat.
-weechat_version = ""
+# Приказује последњу стабилну верзију WeeChat.
+weechat_latest_version = ""
 
-def weechat_process_cb(data, command, rc, out, err):
-    global weechat_version
-    if out != "":
-        weechat_version += out
-    if int(rc) >= 0:
-        weechat.prnt("", "Тренутна стабилна WeeChat верзија је: %s" % weechat_version)
+def weechat_process_cb(data, command, return_code, out, err):
+    global weechat_latest_version
+    if out:
+        weechat_latest_version += out
+    if return_code >= 0:
+        weechat.prnt("", "Последња WeeChat верзија: %s" % weechat_latest_version)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("url:https://weechat.org/dev/info/stable/",
@@ -1045,15 +1090,16 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 ----
 
 [TIP]
-Све доступне информације у вези програма WeeChat се налазе на страници https://weechat.org/dev/info
+Све информације у вези програма WeeChat се налазе на
+https://weechat.org/dev/info/[овој страници ^↗^,window=_blank].
 
 Пример URL преноса са опцијом: преузимање најновијег WeeChat развојног пакета у фајл _/tmp/weechat-devel.tar.gz_:
 
-[source, python]
+[source,python]
 ----
-def my_process_cb(data, command, rc, out, err):
-    if int(rc) >= 0:
-        weechat.prnt("", "Крај преноса (rc=%s)" % rc)
+def my_process_cb(data, command, return_code, out, err):
+    if return_code >= 0:
+        weechat.prnt("", "Крај преноса (return code = %d)" % return_code)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.tar.gz",
@@ -1061,7 +1107,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
                                30 * 1000, "my_process_cb", "")
 ----
 
-За више информација у вези URL преноса, као и за доступне опције, погледајте функције `+hook_process+` и `+hook_process_hashtable+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтни приручник API додатака].
+За више информација у вези URL преноса, као и за доступне опције, погледајте функције `+hook_process+` и `+hook_process_hashtable+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтни приручник API додатака ^↗^,window=_blank].
 
 [[config_options]]
 === Конфигурација / опције
@@ -1073,7 +1119,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 
 Пример:
 
-[source, python]
+[source,python]
 ----
 script_options = {
     "option1": "value1",
@@ -1092,7 +1138,7 @@ for option, default_value in script_options.items():
 
 Пример:
 
-[source, python]
+[source,python]
 ----
 SCRIPT_NAME = "myscript"
 
@@ -1115,7 +1161,7 @@ weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
 
 Фунцкија `+config_get+` враћа показивач на опцију. Затим, у зависности од типа опције, морате да позовете `+config_string+`, `+config_boolean+`, `+config_integer+` или `+config_color+`.
 
-[source, python]
+[source,python]
 ----
 # string
 weechat.prnt("", "вредност опције weechat.look.item_time_format је: %s"
@@ -1154,7 +1200,7 @@ xxx,irc_raw_in_yyy::
 xxx,irc_raw_in2_yyy::
     сигнал који се шаље након обраде поруке, чак и ако се порука игнорише
 
-[source, python]
+[source,python]
 ----
 def join_cb(data, signal, signal_data):
     # сигнал је на пример: „libera,irc_in2_join”
@@ -1182,7 +1228,7 @@ irc_in_xxx::
 irc_in2_xxx::
     модификатор који се шаље након декодирања у скуп карактера, тако да је примљени стринг увек важећи UTF-8 (*препоручује се*)
 
-[source, python]
+[source,python]
 ----
 def modifier_cb(data, modifier, modifier_data, string):
     # у све примљене поруке се додаје име сервера
@@ -1206,69 +1252,77 @@ IRC поруку можете да парсирате са info_hashtable под
 
 [width="100%", cols="3,^2,10,7", options="header"]
 |===
-| Кључ | Од WeeChat ^(1)^ | Опис | Пример
+| Кључ | Од WeeChat ^(1)^ | Опис | Пример
 
-| tags | 0.4.0 |
-  Ознаке у поруци (може бити празно). |
-  `+time=2015-06-27T16:40:35.000Z+`
+| tags | 0.4.0
+| Ознаке у поруци (може бити празно).
+| `+time=2015-06-27T16:40:35.000Z+`
 
-| tag_xxx | 3.3 |
-  Неозначена вредност ознаке "xxx" (један кључ по ознаци). |
-  `+2015-06-27T16:40:35.000Z+`
+| tag_xxx | 3.3
+| Неозначена вредност ознаке "xxx" (један кључ по ознаци).
+| `+2015-06-27T16:40:35.000Z+`
 
-| message_without_tags | 0.4.0 |
-  Порука без ознака (иста као оригинална ако нема ознака у њој). |
-  `+:nick!user@host PRIVMSG #weechat :здраво!+`
+| message_without_tags | 0.4.0
+| Порука без ознака (иста као оригинална ако нема ознака у њој).
+| `+:nick!user@host PRIVMSG #weechat :здраво!+`
 
-| nick | 0.3.4 |
-  Надимак порекла. |
-  `+nick+`
+| nick | 0.3.4
+| Надимак порекла.
+| `+nick+`
 
-| user | 2.7 |
-  Корисник порекла. |
-  `+user+`
+| user | 2.7
+| Корисник порекла.
+| `+user+`
 
-| host | 0.3.4 |
-  Хост порекла (укључујући и надимак). |
-  `+nick!user@host+`
+| host | 0.3.4
+| Хост порекла (укључујући и надимак).
+| `+nick!user@host+`
 
-| command | 0.3.4 |
-  Команда (_PRIVMSG_, _NOTICE_, ...). |
-  `+PRIVMSG+`
+| command | 0.3.4
+| Команда (_PRIVMSG_, _NOTICE_, ...).
+| `+PRIVMSG+`
 
-| channel | 0.3.4 |
-  Циљни канал. |
-  `+#weechat+`
+| channel | 0.3.4
+| Циљни канал.
+| `+#weechat+`
 
-| arguments | 0.3.4 |
-  Аргументи команде (укључујући и канал). |
-  `+#weechat :здраво!+`
+| arguments | 0.3.4
+| Аргументи команде (укључујући и канал).
+| `+#weechat :здраво!+`
 
-| text | 1.3 |
-  Текст (на пример, корисникова порука). |
-  `+здраво!+`
+| text | 1.3
+| Текст (на пример, корисникова порука).
+| `+здраво!+`
 
-| pos_command | 1.3 |
-  Индекс _command_ у поруци („-1” ако се _command_ не пронађе). |
-  `+47+`
+| paramN | 3.4
+| Параметар команде (од 1 до N).
+| `+#weechat+`
 
-| pos_arguments | 1.3 |
-  Индекс _arguments_ у поруци („-1” ако се _arguments_ не пронађе). |
-  `+55+`
+| num_params | 3.4
+| Број параметара команде.
+| `+2+`
 
-| pos_channel | 1.3 |
-  Индекс _channel_ у поруци („-1” ако се _channel_ не пронађе). |
-  `+55+`
+| pos_command | 1.3
+| Индекс _command_ у поруци („-1” ако се _command_ не пронађе).
+| `+47+`
 
-| pos_text | 1.3 |
-  Индекс _text_ у поруци („-1” ако се  _text_ не пронађе). |
-  `+65+`
+| pos_arguments | 1.3
+| Индекс _arguments_ у поруци („-1” ако се _arguments_ не пронађе).
+| `+55+`
+
+| pos_channel | 1.3
+| Индекс _channel_ у поруци („-1” ако се _channel_ не пронађе).
+| `+55+`
+
+| pos_text | 1.3
+| Индекс _text_ у поруци („-1” ако се  _text_ не пронађе).
+| `+65+`
 |===
 
 [NOTE]
 ^(1)^ Овај кључ је уведен у наведеној верзији програма WeeChat
 
-[source, python]
+[source,python]
 ----
 dict = weechat.info_get_hashtable(
     "irc_message_parse",
@@ -1286,6 +1340,9 @@ dict = weechat.info_get_hashtable(
 #     "channel": "#weechat",
 #     "arguments": "#weechat :здраво!",
 #     "text": "hello!",
+#     "param1": "#weechat",
+#     "param2": "hello!",
+#     "num_params": "2",
 #     "pos_command": "65",
 #     "pos_arguments": "73",
 #     "pos_channel": "73",
@@ -1303,7 +1360,7 @@ dict = weechat.info_get_hashtable(
 
 Пример:
 
-[source, python]
+[source,python]
 ----
 version = weechat.info_get("version_number", "") or 0
 if int(version) >= 0x00030200:
@@ -1317,7 +1374,7 @@ else:
 
 Да бисте добили верзију као стринг:
 
-[source, python]
+[source,python]
 ----
 # ово ће да испише на пример „Верзија 0.3.2”
 weechat.prnt("", "Верзија %s" % weechat.info_get("version", ""))
@@ -1326,7 +1383,7 @@ weechat.prnt("", "Верзија %s" % weechat.info_get("version", ""))
 [[infos_other]]
 ==== Остале информације
 
-[source, python]
+[source,python]
 ----
 # WeeChat конфиг директоријум, на пример: „/home/user/.config/weechat”
 weechat.prnt("", "WeeChat конфиг дир: %s" % weechat.info_get("weechat_dir", ""))
@@ -1345,7 +1402,7 @@ weechat.prnt("", "Неактивно је %s секунди" % weechat.info_get(
 
 Пример:
 
-[source, python]
+[source,python]
 ----
 # читање infolist „buffer”, како би се добила листа бафера
 infolist = weechat.infolist_get("buffer", "", "")

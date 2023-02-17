@@ -1,7 +1,7 @@
 /*
  * wee-hook-config.c - WeeChat config hook
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -34,6 +34,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_config_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_CONFIG(hook, option));
+}
+
+/*
  * Hooks a configuration option.
  *
  * Returns pointer to new hook, NULL if error.
@@ -63,7 +75,8 @@ hook_config (struct t_weechat_plugin *plugin, const char *option,
         return NULL;
     }
 
-    hook_get_priority_and_name (option, &priority, &ptr_option);
+    string_get_priority_and_name (option, &priority, &ptr_option,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_CONFIG, priority,
                     callback_pointer, callback_data);
 

@@ -1,7 +1,7 @@
 /*
  * wee-hook-command-run.c - WeeChat command_run hook
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -36,6 +36,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_command_run_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_COMMAND_RUN(hook, command));
+}
+
+/*
  * Hooks a command when it's run by WeeChat.
  *
  * Returns pointer to new hook, NULL if error.
@@ -66,7 +78,8 @@ hook_command_run (struct t_weechat_plugin *plugin,
         return NULL;
     }
 
-    hook_get_priority_and_name (command, &priority, &ptr_command);
+    string_get_priority_and_name (command, &priority, &ptr_command,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_COMMAND_RUN, priority,
                     callback_pointer, callback_data);
 
@@ -90,7 +103,7 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
     struct t_hook *ptr_hook, *next_hook;
     int rc, hook_matching, length;
     char *command2;
-    const char *ptr_command;
+    const char *ptr_string, *ptr_command;
 
     if (!weechat_hooks[HOOK_TYPE_COMMAND_RUN])
         return WEECHAT_RC_OK;
@@ -100,11 +113,12 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
 
     if (command[0] != '/')
     {
-        length = strlen (command) + 1;
+        ptr_string = utf8_next_char (command);
+        length = 1 + strlen (ptr_string) + 1;
         command2 = malloc (length);
         if (command2)
         {
-            snprintf (command2, length, "/%s", command + 1);
+            snprintf (command2, length, "/%s", ptr_string);
             ptr_command = command2;
         }
     }
@@ -120,15 +134,15 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
         {
             hook_matching = string_match (ptr_command,
                                           HOOK_COMMAND_RUN(ptr_hook, command),
-                                          0);
+                                          1);
 
             if (!hook_matching
                 && !strchr (HOOK_COMMAND_RUN(ptr_hook, command), ' '))
             {
                 length = strlen (HOOK_COMMAND_RUN(ptr_hook, command));
-                hook_matching = ((string_strncasecmp (ptr_command,
-                                                      HOOK_COMMAND_RUN(ptr_hook, command),
-                                                      utf8_strlen (HOOK_COMMAND_RUN(ptr_hook, command))) == 0)
+                hook_matching = ((string_strncmp (ptr_command,
+                                                  HOOK_COMMAND_RUN(ptr_hook, command),
+                                                  utf8_strlen (HOOK_COMMAND_RUN(ptr_hook, command))) == 0)
                                  && ((ptr_command[length] == ' ')
                                      || (ptr_command[length] == '\0')));
             }

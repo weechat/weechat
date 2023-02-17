@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,6 +21,7 @@
 #define WEECHAT_PLUGIN_FSET_CONFIG_H
 
 #define FSET_CONFIG_NAME "fset"
+#define FSET_CONFIG_PRIO_NAME (TO_STR(FSET_PLUGIN_PRIORITY) "|" FSET_CONFIG_NAME)
 
 extern struct t_config_file *fset_config_file;
 

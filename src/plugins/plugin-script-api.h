@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -119,6 +119,12 @@ extern void plugin_script_api_printf_y (struct t_weechat_plugin *weechat_plugin,
                                         struct t_plugin_script *script,
                                         struct t_gui_buffer *buffer,
                                         int y, const char *format, ...);
+extern void plugin_script_api_printf_y_date_tags (struct t_weechat_plugin *weechat_plugin,
+                                                  struct t_plugin_script *script,
+                                                  struct t_gui_buffer *buffer,
+                                                  int y, time_t date,
+                                                  const char *tags,
+                                                  const char *format, ...);
 extern void plugin_script_api_log_printf (struct t_weechat_plugin *weechat_plugin,
                                           struct t_plugin_script *script,
                                           const char *format, ...);
@@ -145,7 +151,7 @@ extern struct t_hook *plugin_script_api_hook_command_run (struct t_weechat_plugi
                                                           const char *data);
 extern struct t_hook *plugin_script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
                                                     struct t_plugin_script *script,
-                                                    int interval, int align_second,
+                                                    long interval, int align_second,
                                                     int max_calls,
                                                     int (*callback)(const void *pointer,
                                                                     void *data,
@@ -328,6 +334,21 @@ extern struct t_hook *plugin_script_api_hook_focus (struct t_weechat_plugin *wee
                                                                                     struct t_hashtable *info),
                                                     const char *function,
                                                     const char *data);
+extern struct t_gui_buffer *plugin_script_api_buffer_new_props (struct t_weechat_plugin *weechat_plugin,
+                                                                struct t_plugin_script *script,
+                                                                const char *name,
+                                                                struct t_hashtable *properties,
+                                                                int (*input_callback)(const void *pointer,
+                                                                                      void *data,
+                                                                                      struct t_gui_buffer *buffer,
+                                                                                      const char *input_data),
+                                                                const char *function_input,
+                                                                const char *data_input,
+                                                                int (*close_callback)(const void *pointer,
+                                                                                      void *data,
+                                                                                      struct t_gui_buffer *buffer),
+                                                                const char *function_close,
+                                                                const char *data_close);
 extern struct t_gui_buffer *plugin_script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
                                                           struct t_plugin_script *script,
                                                           const char *name,

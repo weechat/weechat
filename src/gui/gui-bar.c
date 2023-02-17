@@ -1,7 +1,7 @@
 /*
  * gui-bar.c - bar functions (used by all GUI)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -114,7 +114,7 @@ gui_bar_search_option (const char *option_name)
 
     for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
     {
-        if (string_strcasecmp (gui_bar_option_string[i], option_name) == 0)
+        if (strcmp (gui_bar_option_string[i], option_name) == 0)
             return i;
     }
 
@@ -138,7 +138,7 @@ gui_bar_search_type (const char *type)
 
     for (i = 0; i < GUI_BAR_NUM_TYPES; i++)
     {
-        if (string_strcasecmp (gui_bar_type_string[i], type) == 0)
+        if (strcmp (gui_bar_type_string[i], type) == 0)
             return i;
     }
 
@@ -162,7 +162,7 @@ gui_bar_search_position (const char *position)
 
     for (i = 0; i < GUI_BAR_NUM_POSITIONS; i++)
     {
-        if (string_strcasecmp (gui_bar_position_string[i], position) == 0)
+        if (strcmp (gui_bar_position_string[i], position) == 0)
             return i;
     }
 
@@ -316,17 +316,17 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
 
     /* check bar condition(s) */
     conditions = CONFIG_STRING(bar->options[GUI_BAR_OPTION_CONDITIONS]);
-    if (string_strcasecmp (conditions, "active") == 0)
+    if (string_strcmp (conditions, "active") == 0)
     {
         if (gui_current_window && (gui_current_window != window))
             return 0;
     }
-    else if (string_strcasecmp (conditions, "inactive") == 0)
+    else if (string_strcmp (conditions, "inactive") == 0)
     {
         if (!gui_current_window || (gui_current_window == window))
             return 0;
     }
-    else if (string_strcasecmp (conditions, "nicklist") == 0)
+    else if (string_strcmp (conditions, "nicklist") == 0)
     {
         if (window && window->buffer && !window->buffer->nicklist)
             return 0;
@@ -450,7 +450,7 @@ gui_bar_search (const char *name)
 
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        if (string_strcasecmp (ptr_bar->name, name) == 0)
+        if (strcmp (ptr_bar->name, name) == 0)
             return ptr_bar;
     }
 
@@ -470,6 +470,9 @@ gui_bar_search_with_option_name (const char *option_name)
     char *bar_name, *pos_option;
     struct t_gui_bar *ptr_bar;
 
+    if (!option_name)
+        return NULL;
+
     ptr_bar = NULL;
 
     pos_option = strchr (option_name, '.');
@@ -480,7 +483,7 @@ gui_bar_search_with_option_name (const char *option_name)
         {
             for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
             {
-                if (string_strcasecmp (ptr_bar->name, bar_name) == 0)
+                if (strcmp (ptr_bar->name, bar_name) == 0)
                     break;
             }
             free (bar_name);
@@ -1216,76 +1219,76 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
     if (!bar || !property || !value)
         return 0;
 
-    if (string_strcasecmp (property, "name") == 0)
+    if (strcmp (property, "name") == 0)
     {
         gui_bar_set_name (bar, value);
         return 1;
     }
-    else if (string_strcasecmp (property, "hidden") == 0)
+    else if (strcmp (property, "hidden") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_HIDDEN], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "priority") == 0)
+    else if (strcmp (property, "priority") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_PRIORITY], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "conditions") == 0)
+    else if (strcmp (property, "conditions") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_CONDITIONS], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "position") == 0)
+    else if (strcmp (property, "position") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_POSITION], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "filling_top_bottom") == 0)
+    else if (strcmp (property, "filling_top_bottom") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "filling_left_right") == 0)
+    else if (strcmp (property, "filling_left_right") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "size") == 0)
+    else if (strcmp (property, "size") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_SIZE], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "size_max") == 0)
+    else if (strcmp (property, "size_max") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_SIZE_MAX], value, 1);
         return 1;
     }
-    else if (string_strcasecmp (property, "color_fg") == 0)
+    else if (strcmp (property, "color_fg") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_FG], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcasecmp (property, "color_delim") == 0)
+    else if (strcmp (property, "color_delim") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_DELIM], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcasecmp (property, "color_bg") == 0)
+    else if (strcmp (property, "color_bg") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_BG], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcasecmp (property, "color_bg_inactive") == 0)
+    else if (strcmp (property, "color_bg_inactive") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_COLOR_BG_INACTIVE], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcasecmp (property, "separator") == 0)
+    else if (strcmp (property, "separator") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_SEPARATOR],
                                 (strcmp (value, "1") == 0) ? "on" : "off",
@@ -1293,7 +1296,7 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
         gui_bar_refresh (bar);
         return 1;
     }
-    else if (string_strcasecmp (property, "items") == 0)
+    else if (strcmp (property, "items") == 0)
     {
         config_file_option_set (bar->options[GUI_BAR_OPTION_ITEMS], value, 1);
         gui_bar_draw (bar);
@@ -1316,9 +1319,12 @@ gui_bar_default_items (const char *bar_name)
     int i;
     static char empty_items[1] = { '\0' };
 
+    if (!bar_name)
+        return NULL;
+
     for (i = 0; gui_bar_items_default_for_bars[i][0]; i++)
     {
-        if (string_strcasecmp (gui_bar_items_default_for_bars[i][0], bar_name) == 0)
+        if (strcmp (gui_bar_items_default_for_bars[i][0], bar_name) == 0)
             return gui_bar_items_default_for_bars[i][1];
     }
 
@@ -1562,24 +1568,24 @@ gui_bar_alloc (const char *name)
     int i;
 
     new_bar = malloc (sizeof (*new_bar));
-    if (new_bar)
+    if (!new_bar)
+        return NULL;
+
+    new_bar->name = strdup (name);
+    for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
     {
-        new_bar->name = strdup (name);
-        for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
-        {
-            new_bar->options[i] = NULL;
-        }
-        new_bar->items_count = 0;
-        new_bar->items_array = NULL;
-        new_bar->items_buffer = NULL;
-        new_bar->items_prefix = NULL;
-        new_bar->items_name = NULL;
-        new_bar->items_suffix = NULL;
-        new_bar->bar_window = NULL;
-        new_bar->bar_refresh_needed = 0;
-        new_bar->prev_bar = NULL;
-        new_bar->next_bar = NULL;
+        new_bar->options[i] = NULL;
     }
+    new_bar->items_count = 0;
+    new_bar->items_array = NULL;
+    new_bar->items_buffer = NULL;
+    new_bar->items_prefix = NULL;
+    new_bar->items_name = NULL;
+    new_bar->items_suffix = NULL;
+    new_bar->bar_window = NULL;
+    new_bar->bar_refresh_needed = 0;
+    new_bar->prev_bar = NULL;
+    new_bar->next_bar = NULL;
 
     return new_bar;
 }
@@ -2051,10 +2057,13 @@ gui_bar_update (const char *name)
 {
     struct t_gui_bar *ptr_bar;
 
+    if (!name)
+        return;
+
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])
-            && (string_strcasecmp (ptr_bar->name, name) == 0))
+            && (strcmp (ptr_bar->name, name) == 0))
         {
             gui_bar_ask_refresh (ptr_bar);
         }

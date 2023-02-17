@@ -1,7 +1,7 @@
 /*
  * weechat-ruby.c - ruby plugin for WeeChat
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2007 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -61,7 +61,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Support of ruby scripts"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(4001);
+WEECHAT_PLUGIN_PRIORITY(RUBY_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_ruby_plugin = NULL;
 
@@ -480,8 +480,11 @@ weechat_ruby_exec (struct t_plugin_script *script,
         {
             switch (format[i])
             {
-                case 's': /* string */
-                    argv2[i] = rb_str_new2 ((char *)argv[i]);
+                case 's': /* string or null */
+                    if (argv[i])
+                        argv2[i] = rb_str_new2 ((char *)argv[i]);
+                    else
+                        argv2[i] = Qnil;
                     break;
                 case 'i': /* integer */
                     argv2[i] = INT2FIX (*((int *)argv[i]));
@@ -734,10 +737,14 @@ weechat_ruby_load (const char *filename, const char *code)
 void
 weechat_ruby_load_cb (void *data, const char *filename)
 {
+    const char *pos_dot;
+
     /* make C compiler happy */
     (void) data;
 
-    weechat_ruby_load (filename, NULL);
+    pos_dot = strrchr (filename, '.');
+    if (pos_dot && (strcmp (pos_dot, ".rb") == 0))
+        weechat_ruby_load (filename, NULL);
 }
 
 /*
@@ -796,7 +803,7 @@ weechat_ruby_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
 
-    ptr_script = plugin_script_search (weechat_ruby_plugin, ruby_scripts, name);
+    ptr_script = plugin_script_search (ruby_scripts, name);
     if (ptr_script)
     {
         weechat_ruby_unload (ptr_script);
@@ -825,7 +832,7 @@ weechat_ruby_reload_name (const char *name)
     struct t_plugin_script *ptr_script;
     char *filename;
 
-    ptr_script = plugin_script_search (weechat_ruby_plugin, ruby_scripts, name);
+    ptr_script = plugin_script_search (ruby_scripts, name);
     if (ptr_script)
     {
         filename = strdup (ptr_script->filename);
@@ -945,30 +952,30 @@ weechat_ruby_command_cb (const void *pointer, void *data,
     }
     else if (argc == 2)
     {
-        if (weechat_strcasecmp (argv[1], "list") == 0)
+        if (weechat_strcmp (argv[1], "list") == 0)
         {
             plugin_script_display_list (weechat_ruby_plugin, ruby_scripts,
                                         NULL, 0);
         }
-        else if (weechat_strcasecmp (argv[1], "listfull") == 0)
+        else if (weechat_strcmp (argv[1], "listfull") == 0)
         {
             plugin_script_display_list (weechat_ruby_plugin, ruby_scripts,
                                         NULL, 1);
         }
-        else if (weechat_strcasecmp (argv[1], "autoload") == 0)
+        else if (weechat_strcmp (argv[1], "autoload") == 0)
         {
             plugin_script_auto_load (weechat_ruby_plugin, &weechat_ruby_load_cb);
         }
-        else if (weechat_strcasecmp (argv[1], "reload") == 0)
+        else if (weechat_strcmp (argv[1], "reload") == 0)
         {
             weechat_ruby_unload_all ();
             plugin_script_auto_load (weechat_ruby_plugin, &weechat_ruby_load_cb);
         }
-        else if (weechat_strcasecmp (argv[1], "unload") == 0)
+        else if (weechat_strcmp (argv[1], "unload") == 0)
         {
             weechat_ruby_unload_all ();
         }
-        else if (weechat_strcasecmp (argv[1], "version") == 0)
+        else if (weechat_strcmp (argv[1], "version") == 0)
         {
             plugin_script_display_interpreter (weechat_ruby_plugin, 0);
         }
@@ -977,19 +984,19 @@ weechat_ruby_command_cb (const void *pointer, void *data,
     }
     else
     {
-        if (weechat_strcasecmp (argv[1], "list") == 0)
+        if (weechat_strcmp (argv[1], "list") == 0)
         {
             plugin_script_display_list (weechat_ruby_plugin, ruby_scripts,
                                         argv_eol[2], 0);
         }
-        else if (weechat_strcasecmp (argv[1], "listfull") == 0)
+        else if (weechat_strcmp (argv[1], "listfull") == 0)
         {
             plugin_script_display_list (weechat_ruby_plugin, ruby_scripts,
                                         argv_eol[2], 1);
         }
-        else if ((weechat_strcasecmp (argv[1], "load") == 0)
-                 || (weechat_strcasecmp (argv[1], "reload") == 0)
-                 || (weechat_strcasecmp (argv[1], "unload") == 0))
+        else if ((weechat_strcmp (argv[1], "load") == 0)
+                 || (weechat_strcmp (argv[1], "reload") == 0)
+                 || (weechat_strcmp (argv[1], "unload") == 0))
         {
             ptr_name = argv_eol[2];
             if (strncmp (ptr_name, "-q ", 3) == 0)
@@ -1001,7 +1008,7 @@ weechat_ruby_command_cb (const void *pointer, void *data,
                     ptr_name++;
                 }
             }
-            if (weechat_strcasecmp (argv[1], "load") == 0)
+            if (weechat_strcmp (argv[1], "load") == 0)
             {
                 /* load ruby script */
                 path_script = plugin_script_search_path (weechat_ruby_plugin,
@@ -1011,19 +1018,19 @@ weechat_ruby_command_cb (const void *pointer, void *data,
                 if (path_script)
                     free (path_script);
             }
-            else if (weechat_strcasecmp (argv[1], "reload") == 0)
+            else if (weechat_strcmp (argv[1], "reload") == 0)
             {
                 /* reload one ruby script */
                 weechat_ruby_reload_name (ptr_name);
             }
-            else if (weechat_strcasecmp (argv[1], "unload") == 0)
+            else if (weechat_strcmp (argv[1], "unload") == 0)
             {
                 /* unload ruby script */
                 weechat_ruby_unload_name (ptr_name);
             }
             ruby_quiet = 0;
         }
-        else if (weechat_strcasecmp (argv[1], "eval") == 0)
+        else if (weechat_strcmp (argv[1], "eval") == 0)
         {
             send_to_buffer_as_input = 0;
             exec_commands = 0;
@@ -1140,7 +1147,7 @@ weechat_ruby_infolist_cb (const void *pointer, void *data,
     if (!infolist_name || !infolist_name[0])
         return NULL;
 
-    if (weechat_strcasecmp (infolist_name, "ruby_script") == 0)
+    if (strcmp (infolist_name, "ruby_script") == 0)
     {
         return plugin_script_infolist_list_scripts (weechat_ruby_plugin,
                                                     ruby_scripts, obj_pointer,
@@ -1165,8 +1172,7 @@ weechat_ruby_signal_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcasecmp ((char *)signal_data, RUBY_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, RUBY_PLUGIN_NAME) == 0))
     {
         plugin_script_print_log (weechat_ruby_plugin, ruby_scripts);
     }

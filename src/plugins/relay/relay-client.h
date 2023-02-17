@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -49,6 +49,18 @@ enum t_relay_client_data_type
     RELAY_NUM_CLIENT_DATA_TYPES,
 };
 
+/* websocket status */
+
+enum t_relay_client_websocket_status
+{
+    /* 0=not a ws, 1=init ws, 2=ws ready */
+    RELAY_CLIENT_WEBSOCKET_NOT_USED = 0, /* no webseocket or not yet init.  */
+    RELAY_CLIENT_WEBSOCKET_INITIALIZING, /* websocket used, initializing    */
+    RELAY_CLIENT_WEBSOCKET_READY,        /* websocket used, ready           */
+    /* number of websocket status */
+    RELAY_NUM_CLIENT_WEBSOCKET_STATUS,
+};
+
 /* type of message exchanged with the client (used for websockets) */
 
 enum t_relay_client_msg_type
@@ -93,7 +105,7 @@ struct t_relay_client
     gnutls_session_t gnutls_sess;      /* gnutls session (only if SSL used) */
     struct t_hook *hook_timer_handshake; /* timer for doing gnutls handshake*/
     int gnutls_handshake_ok;           /* 1 if handshake was done and OK    */
-    int websocket;                     /* 0=not a ws, 1=init ws, 2=ws ready */
+    enum t_relay_client_websocket_status websocket; /* websocket status     */
     struct t_hashtable *http_headers;  /* HTTP headers for websocket        */
     char *address;                     /* string with IP address            */
     char *real_ip;                     /* real IP (X-Real-IP HTTP header)   */
@@ -153,7 +165,8 @@ extern void relay_client_free_all ();
 extern void relay_client_disconnect (struct t_relay_client *client);
 extern void relay_client_disconnect_all ();
 extern int relay_client_add_to_infolist (struct t_infolist *infolist,
-                                         struct t_relay_client *client);
+                                         struct t_relay_client *client,
+                                         int force_disconnected_state);
 extern void relay_client_print_log ();
 
 #endif /* WEECHAT_PLUGIN_RELAY_CLIENT_H */

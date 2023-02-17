@@ -59,4 +59,4 @@ include::includes/man.de.adoc[tag=copyright]
 
 == SUPPORT / FEHLER MELDEN
 
-für Hilfe oder um einen Fehler zu melden: https://weechat.org/about/support
+für Hilfe oder um einen Fehler zu melden: https://weechat.org/about/support/

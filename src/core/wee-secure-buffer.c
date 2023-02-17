@@ -1,7 +1,7 @@
 /*
  * wee-secure-buffer.c - secured data buffer
  *
- * Copyright (C) 2013-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2013-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -153,10 +153,8 @@ secure_buffer_input_cb (const void *pointer, void *data,
     (void) pointer;
     (void) data;
 
-    if (string_strcasecmp (input_data, "q") == 0)
-    {
+    if (string_strcmp (input_data, "q") == 0)
         gui_buffer_close (buffer);
-    }
 
     return WEECHAT_RC_OK;
 }
@@ -204,20 +202,35 @@ secure_buffer_assign ()
 void
 secure_buffer_open ()
 {
+    struct t_hashtable *properties;
+
     if (!secure_buffer)
     {
-        secure_buffer = gui_buffer_new (NULL, SECURE_BUFFER_NAME,
-                                        &secure_buffer_input_cb, NULL, NULL,
-                                        &secure_buffer_close_cb, NULL, NULL);
-        if (secure_buffer)
+        properties = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+        if (properties)
         {
-            if (!secure_buffer->short_name)
-                secure_buffer->short_name = strdup (SECURE_BUFFER_NAME);
-            gui_buffer_set (secure_buffer, "type", "free");
-            gui_buffer_set (secure_buffer, "localvar_set_no_log", "1");
-            gui_buffer_set (secure_buffer, "key_bind_meta-v", "/secure toggle_values");
+            hashtable_set (properties, "type", "free");
+            hashtable_set (properties, "localvar_set_no_log", "1");
+            hashtable_set (properties,
+                           "key_bind_meta-v", "/secure toggle_values");
         }
+
+        secure_buffer = gui_buffer_new_props (
+            NULL, SECURE_BUFFER_NAME, properties,
+            &secure_buffer_input_cb, NULL, NULL,
+            &secure_buffer_close_cb, NULL, NULL);
+
+        if (secure_buffer && !secure_buffer->short_name)
+            secure_buffer->short_name = strdup (SECURE_BUFFER_NAME);
+
         secure_buffer_display_values = 0;
+
+        if (properties)
+            hashtable_free (properties);
     }
 
     if (!secure_buffer)

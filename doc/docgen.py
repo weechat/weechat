@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (C) 2008-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2008-2023 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,7 +29,8 @@ Documentation generator for WeeChat: build include files with:
 - hdata
 - completions
 - URL options
-- plugins priority.
+- plugins priority
+- config files priority.
 
 Instructions to build config files yourself in WeeChat directories
 (replace "path" with the path to the docgen.py script in WeeChat repository):
@@ -452,6 +453,25 @@ class WeechatDoc():  # pylint: disable=too-few-public-methods
         weechat.infolist_free(infolist)
         return plugins_priority
 
+    @staticmethod
+    def _read_api_config_priority():
+        """
+        Get priority of default configuration files as a dictionary.
+        """
+        config_priority = {}
+        ptr_hdata = weechat.hdata_get('config_file')
+        ptr_config = weechat.hdata_get_list(ptr_hdata, 'config_files')
+        while ptr_config:
+            name = weechat.hdata_string(ptr_hdata, ptr_config, 'name')
+            config_name = f'{name}.conf'
+            priority = weechat.hdata_integer(ptr_hdata, ptr_config, 'priority')
+            if priority in config_priority:
+                config_priority[priority].append(config_name)
+            else:
+                config_priority[priority] = [config_name]
+            ptr_config = weechat.hdata_move(ptr_hdata, ptr_config, 1)
+        return config_priority
+
 
 class AutogenDoc():
     """A class to write auto-generated doc files."""
@@ -487,7 +507,8 @@ class AutogenDoc():
             f'autogen_{name}.{self.locale[:2]}.adoc',
         )
         self.filename_tmp = f'{self.filename}.tmp'
-        self._file = open(self.filename_tmp, 'w')
+        # pylint: disable=consider-using-with
+        self._file = open(self.filename_tmp, 'w', encoding='utf-8')
 
     def write_autogen_files(self, weechat_doc):
         """Write auto-generated files."""
@@ -612,15 +633,21 @@ class AutogenDoc():
                         default_value = ('"%s"' %
                                          default_value.replace('"', '\\"'))
                     elif opt_type == 'color':
-                        values = _('a WeeChat color name (default, black, '
-                                   '(dark)gray, white, (light)red, '
-                                   '(light)green, brown, yellow, (light)blue, '
-                                   '(light)magenta, (light)cyan), a terminal '
-                                   'color number or an alias; attributes are '
-                                   'allowed before color (for text color '
-                                   'only, not background): \"*\" for bold, '
-                                   '\"!\" for reverse, \"/\" for italic, '
-                                   '\"_\" for underline')
+                        values = _(
+                            'a WeeChat color name (default, black, '
+                            '(dark)gray, white, (light)red, '
+                            '(light)green, brown, yellow, (light)blue, '
+                            '(light)magenta, (light)cyan), a terminal '
+                            'color number or an alias; attributes are '
+                            'allowed before color (for text color '
+                            'only, not background): '
+                            '\"%\" for blink, '
+                            '\".\" for \"dim\" (half bright), '
+                            '\"*\" for bold, '
+                            '\"!\" for reverse, '
+                            '\"/\" for italic, '
+                            '\"_\" for underline'
+                        )
                     self.write(f'* [[option_{config}.{section}.{option}]] '
                                f'*{config}.{section}.{option}*')
                     self.write('** %s: pass:none[%s]',
@@ -782,7 +809,7 @@ class AutogenDoc():
         self.write('// tag::url_options[]')
         self.write('[width="100%",cols="2,^1,7",options="header"]')
         self.write('|===')
-        self.write('| %s | %s ^(1)^ | %s ^(2)^\n',
+        self.write('| %s | %s ^(1)^ | %s ^(2)^\n',
                    _('Option'), _('Type'), _('Constants'))
         for option in url_options:
             constants = option['constants']
@@ -798,10 +825,29 @@ class AutogenDoc():
         """Write plugins priority."""
         self.write()
         self.write('// tag::plugins_priority[]')
-        for priority in sorted(plugins_priority, reverse=True):
+        self.write('[width="30%",cols="1,3,2",options="header"]')
+        self.write('|===')
+        self.write('| %s | %s | %s',
+                   _('Rank'), _('Plugin'), _('Priority'))
+        for i, priority in enumerate(sorted(plugins_priority, reverse=True)):
             plugins = ', '.join(sorted(plugins_priority[priority]))
-            self.write('. %s (%s)', escape(plugins), priority)
+            self.write('| %d | %s | %d', i + 1, escape(plugins), priority)
+        self.write('|===')
         self.write('// end::plugins_priority[]')
+
+    def _write_api_config_priority(self, config_priority):
+        """Write configuration files priority."""
+        self.write()
+        self.write('// tag::config_priority[]')
+        self.write('[width="30%",cols="1,3,2",options="header"]')
+        self.write('|===')
+        self.write('| %s | %s | %s',
+                   _('Rank'), _('File'), _('Priority'))
+        for i, priority in enumerate(sorted(config_priority, reverse=True)):
+            configs = ', '.join(sorted(config_priority[priority]))
+            self.write('| %d | %s | %d', i + 1, escape(configs), priority)
+        self.write('|===')
+        self.write('// end::config_priority[]')
 
 
 def docgen_cmd_cb(data, buf, args):

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -33,5 +33,6 @@ extern int irc_mode_channel_set (struct t_irc_server *server,
                                  const char *modes_arguments);
 extern void irc_mode_user_set (struct t_irc_server *server, const char *modes,
                                int reset_modes);
+extern void irc_mode_registered_mode_change (struct t_irc_server *server);
 
 #endif /* WEECHAT_PLUGIN_IRC_MODE_H */

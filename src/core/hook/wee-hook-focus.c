@@ -1,7 +1,7 @@
 /*
  * wee-hook-focus.c - WeeChat focus hook
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -36,6 +36,18 @@
 
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_focus_get_description (struct t_hook *hook)
+{
+    return strdup (HOOK_FOCUS(hook, area));
+}
+
+/*
  * Hooks a focus.
  *
  * Returns pointer to new hook, NULL if error.
@@ -66,7 +78,8 @@ hook_focus (struct t_weechat_plugin *plugin,
         return NULL;
     }
 
-    hook_get_priority_and_name (area, &priority, &ptr_area);
+    string_get_priority_and_name (area, &priority, &ptr_area,
+                                  HOOK_PRIORITY_DEFAULT);
     hook_init_data (new_hook, plugin, HOOK_TYPE_FOCUS, priority,
                     callback_pointer, callback_data);
 

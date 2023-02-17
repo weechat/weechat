@@ -1,7 +1,7 @@
 /*
  * relay.c - network communication between WeeChat and remote client
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -42,7 +42,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Relay WeeChat data to remote application "
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(5000);
+WEECHAT_PLUGIN_PRIORITY(RELAY_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_relay_plugin = NULL;
 
@@ -65,6 +65,9 @@ int
 relay_protocol_search (const char *name)
 {
     int i;
+
+    if (!name)
+        return -1;
 
     for (i = 0; i < RELAY_NUM_PROTOCOLS; i++)
     {
@@ -95,6 +98,14 @@ relay_signal_upgrade_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
     (void) signal_data;
+
+    /* only save session and continue? */
+    if (signal_data && (strcmp (signal_data, "save") == 0))
+    {
+        /* save session with a disconnected state in clients */
+        relay_upgrade_save (1);
+        return WEECHAT_RC_OK;
+    }
 
     relay_signal_upgrade_received = 1;
 
@@ -162,8 +173,7 @@ relay_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcasecmp ((char *)signal_data, RELAY_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, RELAY_PLUGIN_NAME) == 0))
     {
         weechat_log_printf ("");
         weechat_log_printf ("***** \"%s\" plugin dump *****",
@@ -235,7 +245,9 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     relay_config_write ();
 
     if (relay_signal_upgrade_received)
-        relay_upgrade_save ();
+    {
+        relay_upgrade_save (0);
+    }
     else
     {
         relay_raw_message_free_all ();

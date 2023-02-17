@@ -1,7 +1,7 @@
 /*
  * wee-debug.c - debug functions
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -33,6 +33,7 @@
 #include <gcrypt.h>
 #include <curl/curl.h>
 #include <zlib.h>
+#include <zstd.h>
 
 #include <gnutls/gnutls.h>
 
@@ -47,11 +48,13 @@
 #include "wee-log.h"
 #include "wee-proxy.h"
 #include "wee-string.h"
+#include "wee-utf8.h"
 #include "wee-util.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
+#include "../gui/gui-color.h"
 #include "../gui/gui-completion.h"
 #include "../gui/gui-filter.h"
 #include "../gui/gui-hotlist.h"
@@ -134,7 +137,7 @@ debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data || (string_strcasecmp ((char *)signal_data, "core") == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, PLUGIN_CORE) == 0))
         debug_dump (0);
 
     return WEECHAT_RC_OK;
@@ -172,7 +175,7 @@ debug_sigsegv_cb ()
         "***      then issue command: \"bt full\" and send result to developers.\n"
         "***      See the user's guide for more info about enabling the core files\n"
         "***      and reporting crashes:\n"
-        "***      https://weechat.org/doc/stable/user#report_crashes\n"
+        "***      https://weechat.org/doc/stable/user/#report_crashes\n"
         "***\n"
         "***   2. Otherwise send the backtrace (below), only if it is a complete trace.\n"
         "***      Keep the crash log file, just in case developers ask you some info\n"
@@ -433,6 +436,103 @@ debug_hooks ()
 }
 
 /*
+ * Displays info about hooks for a specific plugin.
+ */
+
+void
+debug_hooks_plugin (const char *plugin_name)
+{
+    struct t_weechat_plugin *ptr_plugin;
+    struct t_hook *ptr_hook;
+    char *desc, **result, **result_type, str_type[128];
+    int i, count_total, count_type;
+
+    if (!plugin_name)
+        return;
+
+    if (strcmp (plugin_name, PLUGIN_CORE) == 0)
+    {
+        ptr_plugin = NULL;
+    }
+    else
+    {
+        ptr_plugin = plugin_search (plugin_name);
+        if (!ptr_plugin)
+        {
+            gui_chat_printf (NULL, "%sPlugin \"%s\" not found",
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             plugin_name);
+            return;
+        }
+    }
+
+    result = string_dyn_alloc (1024);
+    if (!result)
+        return;
+
+    result_type = string_dyn_alloc (1024);
+    if (!result_type)
+    {
+        string_dyn_free (result, 1);
+        return;
+    }
+
+    count_total = 0;
+
+    for (i = 0; i < HOOK_NUM_TYPES; i++)
+    {
+        count_type = 0;
+        string_dyn_copy (result_type, NULL);
+
+        for (ptr_hook = weechat_hooks[i]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if (ptr_hook->deleted || (ptr_hook->plugin != ptr_plugin))
+                continue;
+
+            desc = hook_get_description (ptr_hook);
+            if (desc)
+            {
+                string_dyn_concat (result_type, "    ", -1);
+                string_dyn_concat (result_type, desc, -1);
+                string_dyn_concat (result_type, "\n", -1);
+                free (desc);
+            }
+            count_type++;
+        }
+
+        snprintf (str_type, sizeof (str_type),
+                  "  %s (%d)%s\n",
+                  hook_type_string[i],
+                  count_type,
+                  (count_type > 0) ? ":" : "");
+        string_dyn_concat (result, str_type, -1);
+
+        if (count_type > 0)
+            string_dyn_concat (result, *result_type, -1);
+
+        count_total += count_type;
+    }
+
+    if (count_total > 0)
+    {
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL,
+                         "hooks in plugin \"%s\" (%d)%s",
+                         plugin_name,
+                         count_total,
+                         (count_total > 0) ? ":" : "");
+        gui_chat_printf (NULL, *result);
+    }
+    else
+    {
+        gui_chat_printf (NULL, "No hooks in plugin \"%s\"", plugin_name);
+    }
+    string_dyn_free (result, 1);
+    string_dyn_free (result_type, 1);
+}
+
+/*
  * Displays a list of infolists in memory.
  */
 
@@ -580,6 +680,12 @@ debug_libs_cb (const void *pointer, void *data,
     gui_chat_printf (NULL, "    zlib: (?)");
 #endif /* ZLIB_VERSION */
 
+    /* display zstd version */
+    gui_chat_printf (NULL, "    zstd: %d.%d.%d",
+                    ZSTD_VERSION_MAJOR,
+                    ZSTD_VERSION_MINOR,
+                    ZSTD_VERSION_RELEASE);
+
     return WEECHAT_RC_OK;
 }
 
@@ -652,6 +758,143 @@ debug_display_time_elapsed (struct timeval *time1, struct timeval *time2,
         log_printf ("debug: time[%s] -> %lld:%02lld:%02lld.%06lld",
                     (message) ? message : "?",
                     diff_hour, diff_min, diff_sec, diff_usec);
+    }
+}
+
+/*
+ * Display unicode information for a codepoint.
+ */
+
+void
+debug_unicode_char (unsigned int codepoint)
+{
+    char utf8_char[5], hexa[64], *ptr_hexa;
+    int i, size, width;
+
+    utf8_int_string (codepoint, utf8_char);
+    size = strlen (utf8_char);
+    width = wcwidth ((wchar_t)codepoint);
+
+    hexa[0] = '\0';
+    ptr_hexa = hexa;
+    for (i = 0; i < size; i++)
+    {
+        ptr_hexa[0] = '0';
+        ptr_hexa[1] = 'x';
+        ptr_hexa += 2;
+        string_base16_encode (utf8_char + i, 1, ptr_hexa);
+        ptr_hexa += 2;
+        if (i < size - 1)
+        {
+            ptr_hexa[0] = ' ';
+            ptr_hexa++;
+        }
+    }
+    ptr_hexa[0] = '\0';
+
+    gui_chat_printf (NULL,
+                     "\t  \"%s\" (U+%04X, %u, %s): %d %s/%s %d, %d %s/%s "
+                     "%d, %d, %d, %d",
+                     utf8_char,
+                     codepoint,
+                     codepoint,
+                     hexa,
+                     strlen (utf8_char),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     utf8_strlen (utf8_char),
+                     gui_chat_strlen (utf8_char),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     width,
+                     utf8_char_size_screen (utf8_char),
+                     utf8_strlen_screen (utf8_char),
+                     gui_chat_strlen_screen (utf8_char));
+}
+
+/*
+ * Display unicode information for a string.
+ */
+
+void
+debug_unicode_string (const char *string)
+{
+    int num_char, width;
+    wchar_t *wstring;
+
+    num_char = mbstowcs (NULL, string, 0) + 1;
+    wstring = malloc ((num_char + 1) * sizeof (wstring[0]));
+    if (!wstring)
+        return;
+
+    if (mbstowcs (wstring, string, num_char) == (size_t)(-1))
+    {
+        free (wstring);
+        return;
+    }
+
+    width = wcswidth (wstring, num_char);
+
+    gui_chat_printf (NULL,
+                     "\t  \"%s\": %d %s/%s %d, %d %s/%s %d, %d, %d",
+                     string,
+                     strlen (string),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     utf8_strlen (string),
+                     gui_chat_strlen (string),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     width,
+                     utf8_strlen_screen (string),
+                     gui_chat_strlen_screen (string));
+
+    free (wstring);
+}
+
+/*
+ * Display information about all unicode chars of a string.
+ */
+
+void
+debug_unicode (const char *string)
+{
+    const char *ptr_string;
+    if (!string || !string[0])
+        return;
+
+    /* info about string */
+    gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL,
+                     _("Unicode: \"string\": "
+                       "strlen %s/%s "
+                       "utf8_strlen, gui_chat_strlen %s/%s "
+                       "wcswidth, utf8_strlen_screen, "
+                       "gui_chat_strlen_screen:"),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT));
+    debug_unicode_string (string);
+
+    /* info about chars in string */
+    gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL,
+                     _("Unicode: \"char\" "
+                       "(hex codepoint, codepoint, UTF-8 sequence): "
+                       "strlen %s/%s "
+                       "utf8_strlen, gui_chat_strlen %s/%s "
+                       "wcwidth, utf8_char_size_screen, utf8_strlen_screen, "
+                       "gui_chat_strlen_screen:"),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT));
+    ptr_string = string;
+    while (ptr_string && ptr_string[0])
+    {
+        debug_unicode_char (utf8_char_int (ptr_string));
+        ptr_string = utf8_next_char (ptr_string);
     }
 }
 

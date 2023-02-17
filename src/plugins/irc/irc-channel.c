@@ -1,7 +1,7 @@
 /*
  * irc-channel.c - channel and private chat management for IRC plugin
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -194,6 +194,9 @@ irc_channel_search_buffer (struct t_irc_server *server, int channel_type,
     struct t_hdata *hdata_buffer;
     struct t_gui_buffer *ptr_buffer;
     const char *ptr_type, *ptr_server_name, *ptr_channel_name;
+
+    if (!channel_name)
+        return NULL;
 
     hdata_buffer = weechat_hdata_get ("buffer");
     ptr_buffer = weechat_hdata_get_list (hdata_buffer, "gui_buffers");
@@ -399,10 +402,9 @@ irc_channel_create_buffer (struct t_irc_server *server,
         channel_name_lower = NULL;
         if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
         {
-            channel_name_lower = strdup (channel_name);
+            channel_name_lower = weechat_string_tolower (channel_name);
             if (channel_name_lower)
             {
-                weechat_string_tolower (channel_name_lower);
                 manual_join = weechat_hashtable_has_key (server->join_manual,
                                                          channel_name_lower);
                 noswitch = weechat_hashtable_has_key (server->join_noswitch,
@@ -535,6 +537,40 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 
     /* all is OK, return address of new channel */
     return new_channel;
+}
+
+/*
+ * Renames a private buffer.
+ */
+
+void
+irc_channel_pv_rename (struct t_irc_server *server,
+                       struct t_irc_channel *channel,
+                       const char *new_name)
+{
+    char *buffer_name;
+
+    if (!server || !channel || (channel->type != IRC_CHANNEL_TYPE_PRIVATE)
+        || !new_name)
+    {
+        return;
+    }
+
+    free (channel->name);
+    channel->name = strdup (new_name);
+    if (channel->pv_remote_nick_color)
+    {
+        free (channel->pv_remote_nick_color);
+        channel->pv_remote_nick_color = NULL;
+    }
+    buffer_name = irc_buffer_build_name (server->name, channel->name);
+    if (buffer_name)
+    {
+        weechat_buffer_set (channel->buffer, "name", buffer_name);
+        weechat_buffer_set (channel->buffer, "short_name", channel->name);
+        weechat_buffer_set (channel->buffer, "localvar_set_channel", channel->name);
+        free (buffer_name);
+    }
 }
 
 /*
@@ -956,6 +992,9 @@ irc_channel_nick_speaking_time_search (struct t_irc_server *server,
     struct t_irc_channel_speaking *ptr_nick;
     time_t time_limit;
 
+    if (!server || !channel || !nick_name)
+        return NULL;
+
     time_limit = time (NULL) -
         (weechat_config_integer (irc_config_look_smart_filter_delay) * 60);
 
@@ -1176,7 +1215,7 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
                                         const char *nick)
 {
     int i, unmask_delay, length_tags, nick_found, join, account;
-    int chghost, nick_changed, smart_filtered, remove_smart_filter;
+    int chghost, setname, nick_changed, smart_filtered, remove_smart_filter;
     time_t *ptr_time, date_min;
     struct t_hdata *hdata_line, *hdata_line_data;
     struct t_gui_line *own_lines;
@@ -1254,6 +1293,7 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
             join = 0;
             account = 0;
             chghost = 0;
+            setname = 0;
             nick_changed = 0;
             irc_nick1 = NULL;
             irc_nick2 = NULL;
@@ -1271,6 +1311,8 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
                     account = 1;
                 else if (strcmp (tags[i], "irc_chghost") == 0)
                     chghost = 1;
+                else if (strcmp (tags[i], "irc_setname") == 0)
+                    setname = 1;
                 else if (strcmp (tags[i], "irc_nick") == 0)
                     nick_changed = 1;
                 else if (strncmp (tags[i], "irc_nick1_", 10) == 0)
@@ -1294,7 +1336,8 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
                     break;
                 remove_smart_filter = 1;
             }
-            else if (nick_found && (join || account || chghost) && smart_filtered)
+            else if (nick_found && (join || account || chghost || setname)
+                     && smart_filtered)
             {
                 remove_smart_filter = 1;
             }
@@ -1441,6 +1484,7 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
                     0,
                     irc_protocol_tags (
                         "nick_back",
+                        NULL,
                         NULL,
                         (nick) ? nick->name : NULL,
                         (nick) ? nick->host : NULL),

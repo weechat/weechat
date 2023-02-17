@@ -1,6 +1,6 @@
 // tag::plugin_options[]
 Pro kompletní dokumentaci nastavení pluginů a jejich volby podívejte se na
-https://weechat.org/doc[WeeChat user's guide].
+https://weechat.org/doc/[WeeChat user's guide].
 
 S irc pluginem se můžete doččasně připojit na server s URL jako:
 
@@ -99,7 +99,7 @@ $HOME/.local/share/weechat/weechat.log::
 WeeChat je napsán Sébastienem Helleu a přispěvovateli (kompletní seznam je v
 souboru AUTHORS.adoc).
 
-Copyright (C) 2003-2021 {author}
+Copyright (C) 2003-2023 {author}
 
 WeeChat is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

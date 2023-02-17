@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -20,6 +20,13 @@
 #ifndef WEECHAT_PLUGIN_XFER_NETWORK_H
 #define WEECHAT_PLUGIN_XFER_NETWORK_H
 
+#include <sys/socket.h>
+
+extern int xfer_network_resolve_addr (const char *str_address,
+                                      const char *str_port,
+                                      struct sockaddr *addr,
+                                      socklen_t *addr_len,
+                                      int ai_flags);
 extern void xfer_network_write_pipe (struct t_xfer *xfer, int status,
                                      int error);
 extern void xfer_network_connect_init (struct t_xfer *xfer);

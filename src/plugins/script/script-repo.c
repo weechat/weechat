@@ -1,7 +1,7 @@
 /*
  * script-repo.c - download and read repository file (plugins.xml.gz)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -122,6 +122,9 @@ script_repo_search_by_name (const char *name)
 {
     struct t_script_repo *ptr_script;
 
+    if (!name)
+        return NULL;
+
     for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
@@ -143,6 +146,9 @@ struct t_script_repo *
 script_repo_search_by_name_ext (const char *name_with_extension)
 {
     struct t_script_repo *ptr_script;
+
+    if (!name_with_extension)
+        return NULL;
 
     for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
@@ -753,38 +759,15 @@ script_repo_script_is_held (struct t_script_repo *script)
 char *
 script_repo_sha512sum_file (const char *filename)
 {
-    struct stat st;
-    FILE *file;
-    char *data, hash[512 / 8], hash_hexa[((512 / 8) * 2) + 1];
+    char hash[512 / 8], hash_hexa[((512 / 8) * 2) + 1];
     int hash_size;
 
-    if (stat (filename, &st) == -1)
+    if (!weechat_crypto_hash_file (filename, "sha512", hash, &hash_size))
         return NULL;
 
-    data = malloc (st.st_size);
-    if (!data)
-        return NULL;
-
-    file = fopen (filename, "r");
-    if ((int)fread (data, 1, st.st_size, file) < st.st_size)
-    {
-        free (data);
-        fclose (file);
-        return NULL;
-    }
-    fclose (file);
-
-    if (!weechat_crypto_hash (data, st.st_size, "sha512", hash, &hash_size))
-    {
-        free (data);
-        return NULL;
-    }
     weechat_string_base_encode (16, hash, hash_size, hash_hexa);
-    weechat_string_tolower (hash_hexa);
 
-    free (data);
-
-    return strdup (hash_hexa);
+    return weechat_string_tolower (hash_hexa);
 }
 
 /*

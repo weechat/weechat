@@ -1,7 +1,7 @@
 /*
  * logger-buffer.c - logger buffer list management
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -26,11 +26,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <errno.h>
+#include <sys/stat.h>
 
 #include "../weechat-plugin.h"
 #include "logger.h"
 #include "logger-buffer.h"
+#include "logger-config.h"
 
+
+char *logger_buffer_compression_extension[LOGGER_BUFFER_NUM_COMPRESSION_TYPES] =
+{ "", ".gz", ".zst" };
 
 struct t_logger_buffer *logger_buffers = NULL;
 struct t_logger_buffer *last_logger_buffer = NULL;
@@ -96,6 +102,7 @@ logger_buffer_add (struct t_gui_buffer *buffer, int log_level)
         new_logger_buffer->log_level = log_level;
         new_logger_buffer->write_start_info_line = 1;
         new_logger_buffer->flush_needed = 0;
+        new_logger_buffer->compressing = 0;
 
         new_logger_buffer->prev_buffer = last_logger_buffer;
         new_logger_buffer->next_buffer = NULL;
@@ -157,6 +164,687 @@ logger_buffer_search_log_filename (const char *log_filename)
 
     /* logger buffer not found */
     return NULL;
+}
+
+/*
+ * Sets log filename for a logger buffer.
+ */
+
+void
+logger_buffer_set_log_filename (struct t_logger_buffer *logger_buffer)
+{
+    char *log_filename, *pos_last_sep;
+    char *dir_separator;
+    struct t_logger_buffer *ptr_logger_buffer;
+
+    /* get log filename for buffer */
+    log_filename = logger_get_filename (logger_buffer->buffer);
+    if (!log_filename)
+    {
+        weechat_printf_date_tags (NULL, 0, "no_log",
+                                  _("%s%s: not enough memory"),
+                                  weechat_prefix ("error"),
+                                  LOGGER_PLUGIN_NAME);
+        return;
+    }
+
+    /* log file is already used by another buffer? */
+    ptr_logger_buffer = logger_buffer_search_log_filename (log_filename);
+    if (ptr_logger_buffer)
+    {
+        weechat_printf_date_tags (
+            NULL, 0, "no_log",
+            _("%s%s: unable to start logging for buffer "
+              "\"%s\": filename \"%s\" is already used by "
+              "another buffer (check your log settings)"),
+            weechat_prefix ("error"),
+            LOGGER_PLUGIN_NAME,
+            weechat_buffer_get_string (logger_buffer->buffer, "name"),
+            log_filename);
+        free (log_filename);
+        return;
+    }
+
+    /* create directory for path in "log_filename" */
+    dir_separator = weechat_info_get ("dir_separator", "");
+    if (dir_separator)
+    {
+        pos_last_sep = strrchr (log_filename, dir_separator[0]);
+        if (pos_last_sep)
+        {
+            pos_last_sep[0] = '\0';
+            weechat_mkdir_parents (log_filename, 0700);
+            pos_last_sep[0] = dir_separator[0];
+        }
+        free (dir_separator);
+    }
+
+    /* set log filename */
+    logger_buffer->log_filename = log_filename;
+}
+
+/*
+ * Creates a log file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+logger_buffer_create_log_file (struct t_logger_buffer *logger_buffer)
+{
+    char *charset, *message, buf_time[256], buf_beginning[1024];
+    int log_level, rc;
+    time_t seconds;
+    struct tm *date_tmp;
+    struct stat statbuf;
+
+    if (logger_buffer->log_file)
+    {
+        /*
+         * check that the inode has not changed, otherwise that means the file
+         * was deleted, and we must reopen it
+         */
+        rc = stat (logger_buffer->log_filename, &statbuf);
+        if ((rc == 0) && (statbuf.st_ino == logger_buffer->log_file_inode))
+        {
+            /* inode has not changed, we can write in this file */
+            return 1;
+        }
+        fclose (logger_buffer->log_file);
+        logger_buffer->log_file = NULL;
+        logger_buffer->log_file_inode = 0;
+    }
+
+    /* get log level */
+    log_level = logger_get_level_for_buffer (logger_buffer->buffer);
+    if (log_level == 0)
+        return 0;
+
+    /* create directory */
+    if (!logger_create_directory ())
+    {
+        weechat_printf_date_tags (
+            NULL, 0, "no_log",
+            _("%s%s: unable to create directory for logs "
+              "(\"%s\")"),
+            weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
+            weechat_config_string (logger_config_file_path));
+        return 0;
+    }
+    if (!logger_buffer->log_filename)
+        logger_buffer_set_log_filename (logger_buffer);
+    if (!logger_buffer->log_filename)
+        return 0;
+
+    /* create or append to log file */
+    logger_buffer->log_file =
+        fopen (logger_buffer->log_filename, "a");
+    if (!logger_buffer->log_file)
+    {
+        weechat_printf_date_tags (
+            NULL, 0, "no_log",
+            _("%s%s: unable to write log file \"%s\": %s"),
+            weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
+            logger_buffer->log_filename, strerror (errno));
+        return 0;
+    }
+
+    /* get file inode */
+    rc = stat (logger_buffer->log_filename, &statbuf);
+    if (rc != 0)
+    {
+        weechat_printf_date_tags (
+            NULL, 0, "no_log",
+            _("%s%s: unable to get file status of log file \"%s\": %s"),
+            weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
+            logger_buffer->log_filename, strerror (errno));
+        fclose (logger_buffer->log_file);
+        logger_buffer->log_file = NULL;
+        logger_buffer->log_file_inode = 0;
+        return 0;
+    }
+    logger_buffer->log_file_inode = statbuf.st_ino;
+
+    /* write info line */
+    if (weechat_config_boolean (logger_config_file_info_lines)
+        && logger_buffer->write_start_info_line)
+    {
+        buf_time[0] = '\0';
+        seconds = time (NULL);
+        date_tmp = localtime (&seconds);
+        if (date_tmp)
+        {
+            if (strftime (buf_time, sizeof (buf_time) - 1,
+                          weechat_config_string (logger_config_file_time_format),
+                          date_tmp) == 0)
+                buf_time[0] = '\0';
+        }
+        snprintf (buf_beginning, sizeof (buf_beginning),
+                  _("%s\t****  Beginning of log  ****"),
+                  buf_time);
+        charset = weechat_info_get ("charset_terminal", "");
+        message = (charset) ?
+            weechat_iconv_from_internal (charset, buf_beginning) : NULL;
+        fprintf (logger_buffer->log_file,
+                 "%s\n", (message) ? message : buf_beginning);
+        if (charset)
+            free (charset);
+        if (message)
+            free (message);
+        logger_buffer->flush_needed = 1;
+    }
+    logger_buffer->write_start_info_line = 0;
+
+    return 1;
+}
+
+/*
+ * Compresses a log file, in the child process.
+ */
+
+void
+logger_buffer_compress_file (struct t_logger_buffer *logger_buffer)
+{
+    char filename[PATH_MAX], new_filename[PATH_MAX];
+    const char *ptr_extension;
+    int compression_type, compression_level;
+
+    compression_type = weechat_config_integer (
+        logger_config_file_rotation_compression_type);
+    ptr_extension = logger_buffer_compression_extension[compression_type];
+
+    snprintf (filename, sizeof (filename),
+              "%s.1",
+              logger_buffer->log_filename);
+    snprintf (new_filename, sizeof (new_filename),
+              "%s.1%s",
+              logger_buffer->log_filename,
+              ptr_extension);
+
+    compression_level = weechat_config_integer (
+        logger_config_file_rotation_compression_level);
+
+    switch (compression_type)
+    {
+        case LOGGER_BUFFER_COMPRESSION_GZIP:
+            if (weechat_file_compress (filename, new_filename,
+                                       "gzip", compression_level))
+            {
+                unlink (filename);
+            }
+            break;
+        case LOGGER_BUFFER_COMPRESSION_ZSTD:
+            if (weechat_file_compress (filename, new_filename,
+                                       "zstd", compression_level))
+            {
+                unlink (filename);
+            }
+            break;
+        default:
+            break;
+    }
+
+    exit (0);
+}
+
+/*
+ * Compression callback.
+ */
+
+int
+logger_buffer_compress_cb (const void *pointer, void *data,
+                           const char *command, int return_code,
+                           const char *out, const char *err)
+{
+    struct t_logger_buffer *logger_buffer;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) command;
+    (void) return_code;
+    (void) out;
+    (void) err;
+
+    logger_buffer = (struct t_logger_buffer *)pointer;
+    if (!logger_buffer_valid (logger_buffer))
+        return WEECHAT_RC_OK;
+
+    if (return_code == WEECHAT_HOOK_PROCESS_CHILD)
+    {
+        logger_buffer_compress_file (logger_buffer);
+    }
+    else if (return_code >= 0)
+    {
+        logger_buffer->compressing = 0;
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Rotates a log file if needed (rotation enabled and max size reached).
+ *
+ * For example if we have these log files:
+ *
+ *    irc.libera.#test.weechatlog  (current log file)
+ *    irc.libera.#test.weechatlog.1
+ *    irc.libera.#test.weechatlog.2
+ *
+ * The following renames are done in this order:
+ *
+ *    irc.libera.#test.weechatlog.2 -> irc.libera.#test.weechatlog.3
+ *    irc.libera.#test.weechatlog.1 -> irc.libera.#test.weechatlog.2
+ *    irc.libera.#test.weechatlog   -> irc.libera.#test.weechatlog.1
+ *
+ * And in case of compressed log files:
+ *
+ *    irc.libera.#test.weechatlog.2.gz -> irc.libera.#test.weechatlog.3.gz
+ *    irc.libera.#test.weechatlog.1.gz -> irc.libera.#test.weechatlog.2.gz
+ *    irc.libera.#test.weechatlog      -> irc.libera.#test.weechatlog.1
+ *
+ * Then the file irc.libera.#test.weechatlog is created again.
+ */
+
+void
+logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
+{
+    int compression_type, extension_index, found_comp, found_not_comp, i;
+    char filename[PATH_MAX], new_filename[PATH_MAX];
+    const char *ptr_extension;
+    struct stat st;
+
+    /* do not rotate if compression of log file is running */
+    if (logger_buffer->compressing)
+        return;
+
+    /* do not rotate if rotation is disabled */
+    if (logger_config_rotation_size_max == 0)
+        return;
+
+    /* do not rotate if max size is not reached */
+    if (fstat (fileno (logger_buffer->log_file), &st) != 0)
+        return;
+    if (st.st_size <= (long int)logger_config_rotation_size_max)
+        return;
+
+    if (weechat_logger_plugin->debug)
+    {
+        weechat_log_printf ("logger: rotation for log: \"%s\"",
+                            logger_buffer->log_filename);
+    }
+
+    compression_type = weechat_config_integer (
+        logger_config_file_rotation_compression_type);
+    ptr_extension = logger_buffer_compression_extension[compression_type];
+
+    /* find the highest existing extension index */
+    extension_index = 1;
+    while (1)
+    {
+        found_comp = 0;
+        found_not_comp = 0;
+        if (ptr_extension[0])
+        {
+            /* try compressed file */
+            snprintf (filename, sizeof (filename),
+                      "%s.%d%s",
+                      logger_buffer->log_filename,
+                      extension_index,
+                      ptr_extension);
+            found_comp = (access (filename, F_OK) == 0);
+        }
+        if (!found_comp)
+        {
+            /* try non-compressed file */
+            snprintf (filename, sizeof (filename),
+                      "%s.%d",
+                      logger_buffer->log_filename,
+                      extension_index);
+            found_not_comp = (access (filename, F_OK) == 0);
+        }
+        if (!found_comp && !found_not_comp)
+            break;
+
+        extension_index++;
+    }
+    extension_index--;
+
+    /* close current log file */
+    fclose (logger_buffer->log_file);
+    logger_buffer->log_file = NULL;
+    logger_buffer->log_file_inode = 0;
+
+    /*
+     * rename all files with an extension, starting with the higher one
+     *
+     * example with no compression enabled:
+     *   .2" -> ".3" then ".1" -> ".2" then "" -> ".1"
+     *
+     * example with gzip compression:
+     *   ".2.gz" -> ".3.gz" then ".1.gz" -> ".2.gz" then "" -> ".1"
+     */
+    for (i = extension_index; i >= 0; i--)
+    {
+        if (i == 0)
+        {
+            /* rename current log file to ".1" (no compression for now) */
+            snprintf (filename, sizeof (filename),
+                      "%s",
+                      logger_buffer->log_filename);
+            snprintf (new_filename, sizeof (new_filename),
+                      "%s.%d",
+                      logger_buffer->log_filename,
+                      i + 1);
+        }
+        else
+        {
+            /* rename ".N" to ".N+1" */
+            filename[0] = '\0';
+
+            if (ptr_extension[0])
+            {
+                /* try compressed file */
+                snprintf (filename, sizeof (filename),
+                          "%s.%d%s",
+                          logger_buffer->log_filename,
+                          i,
+                          ptr_extension);
+                if (access (filename, F_OK) == 0)
+                {
+                    /* compressed file found, go on */
+                    snprintf (new_filename, sizeof (new_filename),
+                              "%s.%d%s",
+                              logger_buffer->log_filename,
+                              i + 1,
+                              ptr_extension);
+                }
+                else
+                {
+                    filename[0] = '\0';
+                }
+            }
+            if (!filename[0])
+            {
+                /* non-compressed file */
+                snprintf (filename, sizeof (filename),
+                          "%s.%d",
+                          logger_buffer->log_filename,
+                          i);
+                snprintf (new_filename, sizeof (filename),
+                          "%s.%d",
+                          logger_buffer->log_filename,
+                          i + 1);
+            }
+        }
+        if (weechat_logger_plugin->debug)
+        {
+            weechat_log_printf ("logger: renaming \"%s\" to \"%s\"",
+                                filename,
+                                new_filename);
+        }
+        if (rename (filename, new_filename) != 0)
+            break;
+    }
+
+    if (compression_type != LOGGER_BUFFER_COMPRESSION_NONE)
+    {
+        /* compress rotated log file */
+        if (weechat_logger_plugin->debug)
+        {
+            weechat_log_printf ("logger: compressing \"%s.1\" => \"%s.1%s\"",
+                                logger_buffer->log_filename,
+                                logger_buffer->log_filename,
+                                ptr_extension);
+        }
+        logger_buffer->compressing = 1;
+        (void) weechat_hook_process ("func:compress",
+                                     0,
+                                     &logger_buffer_compress_cb,
+                                     logger_buffer,
+                                     NULL);
+    }
+}
+
+/*
+ * Writes a line to log file.
+ */
+
+void
+logger_buffer_write_line (struct t_logger_buffer *logger_buffer,
+                          const char *format, ...)
+{
+    char *charset, *message;
+
+    if (!logger_buffer_create_log_file (logger_buffer))
+        return;
+
+    if (!logger_buffer->log_file)
+        return;
+
+    weechat_va_format (format);
+    if (vbuffer)
+    {
+        charset = weechat_info_get ("charset_terminal", "");
+        message = (charset) ?
+            weechat_iconv_from_internal (charset, vbuffer) : NULL;
+        fprintf (logger_buffer->log_file,
+                 "%s\n", (message) ? message : vbuffer);
+        if (charset)
+            free (charset);
+        if (message)
+            free (message);
+        logger_buffer->flush_needed = 1;
+        if (!logger_hook_timer)
+        {
+            fflush (logger_buffer->log_file);
+            if (weechat_config_boolean (logger_config_file_fsync))
+                fsync (fileno (logger_buffer->log_file));
+            logger_buffer->flush_needed = 0;
+            logger_buffer_rotate (logger_buffer);
+        }
+        free (vbuffer);
+    }
+}
+
+/*
+ * Stops log for a logger buffer.
+ */
+
+void
+logger_buffer_stop (struct t_logger_buffer *logger_buffer, int write_info_line)
+{
+    time_t seconds;
+    struct tm *date_tmp;
+    char buf_time[256];
+
+    if (!logger_buffer)
+        return;
+
+    if (logger_buffer->log_enabled && logger_buffer->log_file)
+    {
+        if (write_info_line && weechat_config_boolean (logger_config_file_info_lines))
+        {
+            buf_time[0] = '\0';
+            seconds = time (NULL);
+            date_tmp = localtime (&seconds);
+            if (date_tmp)
+            {
+                if (strftime (buf_time, sizeof (buf_time) - 1,
+                              weechat_config_string (logger_config_file_time_format),
+                              date_tmp) == 0)
+                    buf_time[0] = '\0';
+            }
+            logger_buffer_write_line (logger_buffer,
+                                      _("%s\t****  End of log  ****"),
+                                      buf_time);
+        }
+    }
+
+    logger_buffer_free (logger_buffer);
+}
+
+/*
+ * Ends log for all buffers.
+ */
+
+void
+logger_buffer_stop_all (int write_info_line)
+{
+    while (logger_buffers)
+    {
+        logger_buffer_stop (logger_buffers, write_info_line);
+    }
+}
+
+/*
+ * Starts logging for a buffer.
+ */
+
+void
+logger_buffer_start (struct t_gui_buffer *buffer, int write_info_line)
+{
+    struct t_logger_buffer *ptr_logger_buffer;
+    int log_level, log_enabled;
+
+    if (!buffer)
+        return;
+
+    log_level = logger_get_level_for_buffer (buffer);
+    log_enabled =  weechat_config_boolean (logger_config_file_auto_log)
+        && (log_level > 0);
+
+    ptr_logger_buffer = logger_buffer_search_buffer (buffer);
+
+    /* logging is disabled for buffer */
+    if (!log_enabled)
+    {
+        /* stop logger if it is active */
+        if (ptr_logger_buffer)
+            logger_buffer_stop (ptr_logger_buffer, 1);
+    }
+    else
+    {
+        /* logging is enabled for buffer */
+        if (ptr_logger_buffer)
+            ptr_logger_buffer->log_level = log_level;
+        else
+        {
+            ptr_logger_buffer = logger_buffer_add (buffer, log_level);
+
+            if (ptr_logger_buffer)
+            {
+                if (ptr_logger_buffer->log_filename)
+                {
+                    if (ptr_logger_buffer->log_file)
+                    {
+                        fclose (ptr_logger_buffer->log_file);
+                        ptr_logger_buffer->log_file = NULL;
+                        ptr_logger_buffer->log_file_inode = 0;
+                    }
+                }
+            }
+        }
+        if (ptr_logger_buffer)
+            ptr_logger_buffer->write_start_info_line = write_info_line;
+    }
+}
+
+/*
+ * Starts logging for all buffers.
+ */
+
+void
+logger_buffer_start_all (int write_info_line)
+{
+    struct t_infolist *ptr_infolist;
+
+    ptr_infolist = weechat_infolist_get ("buffer", NULL, NULL);
+    if (ptr_infolist)
+    {
+        while (weechat_infolist_next (ptr_infolist))
+        {
+            logger_buffer_start (weechat_infolist_pointer (ptr_infolist,
+                                                           "pointer"),
+                                 write_info_line);
+        }
+        weechat_infolist_free (ptr_infolist);
+    }
+}
+
+/*
+ * Flushes all log files.
+ */
+
+void
+logger_buffer_flush ()
+{
+    struct t_logger_buffer *ptr_logger_buffer;
+
+    for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
+         ptr_logger_buffer = ptr_logger_buffer->next_buffer)
+    {
+        if (ptr_logger_buffer->log_file && ptr_logger_buffer->flush_needed)
+        {
+            if (weechat_logger_plugin->debug >= 2)
+            {
+                weechat_printf_date_tags (NULL, 0, "no_log",
+                                          "%s: flush file %s",
+                                          LOGGER_PLUGIN_NAME,
+                                          ptr_logger_buffer->log_filename);
+            }
+            fflush (ptr_logger_buffer->log_file);
+            if (weechat_config_boolean (logger_config_file_fsync))
+                fsync (fileno (ptr_logger_buffer->log_file));
+            ptr_logger_buffer->flush_needed = 0;
+            logger_buffer_rotate (ptr_logger_buffer);
+        }
+    }
+}
+
+/*
+ * Adjusts log filenames for all buffers.
+ *
+ * Filename can change if configuration option is changed, or if day of system
+ * date has changed.
+ */
+
+void
+logger_buffer_adjust_log_filenames ()
+{
+    struct t_infolist *ptr_infolist;
+    struct t_logger_buffer *ptr_logger_buffer;
+    struct t_gui_buffer *ptr_buffer;
+    char *log_filename;
+
+    ptr_infolist = weechat_infolist_get ("buffer", NULL, NULL);
+    if (ptr_infolist)
+    {
+        while (weechat_infolist_next (ptr_infolist))
+        {
+            ptr_buffer = weechat_infolist_pointer (ptr_infolist, "pointer");
+            ptr_logger_buffer = logger_buffer_search_buffer (ptr_buffer);
+            if (ptr_logger_buffer && ptr_logger_buffer->log_filename)
+            {
+                log_filename = logger_get_filename (ptr_logger_buffer->buffer);
+                if (log_filename)
+                {
+                    if (strcmp (log_filename, ptr_logger_buffer->log_filename) != 0)
+                    {
+                        /*
+                         * log filename has changed (probably due to day
+                         * change),then we'll use new filename
+                         */
+                        logger_buffer_stop (ptr_logger_buffer, 1);
+                        logger_buffer_start (ptr_buffer, 1);
+                    }
+                    free (log_filename);
+                }
+            }
+        }
+        weechat_infolist_free (ptr_infolist);
+    }
 }
 
 /*
@@ -244,6 +932,8 @@ logger_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "write_start_info_line", logger_buffer->write_start_info_line))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "flush_needed", logger_buffer->flush_needed))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "compressing", logger_buffer->compressing))
         return 0;
 
     return 1;

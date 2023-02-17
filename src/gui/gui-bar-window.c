@@ -1,7 +1,7 @@
 /*
  * gui-bar-window.c - bar window functions (used by all GUI)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -668,27 +668,52 @@ gui_bar_window_content_get (struct t_gui_bar_window *bar_window,
 }
 
 /*
+ * Checks if the item content is a spacer (bar item "spacer").
+ *
+ * Returns:
+ *    1: item is a spacer
+ *    1: item is not a spacer
+ */
+
+int
+gui_bar_window_item_is_spacer (const char *item)
+{
+    return (item
+            && (item[0] == GUI_COLOR_COLOR_CHAR)
+            && (item[1] == GUI_COLOR_BAR_CHAR)
+            && (item[2] == GUI_COLOR_BAR_SPACER)
+            && !item[3]);
+}
+
+/*
  * Gets content of a bar window, formatted for display, according to filling
  * for bar position.
+ *
+ * The integer variable *num_spacers is set with the number of spacers found
+ * (bar item "spacer").
  *
  * Note: result must be freed after use.
  */
 
 char *
 gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
-                                         struct t_gui_window *window)
+                                         struct t_gui_window *window,
+                                         int *num_spacers)
 {
     enum t_gui_bar_filling filling;
     const char *ptr_content;
-    char *content, *content2, str_reinit_color[32];
+    char **content, str_reinit_color[32];
     char str_reinit_color_space[32], str_reinit_color_space_start_line[32];
     char str_start_item[32];
     char *item_value, *item_value2, ****split_items, **linear_items;
-    int index_content, content_length, i, j, k, sub, index;
+    int i, j, k, sub, index;
     int at_least_one_item, first_sub_item;
-    int length_reinit_color_space, length_start_item, length;
-    int max_length, max_length_screen;
+    int length_reinit_color, length_reinit_color_space, length_start_item;
+    int length, max_length, max_length_screen;
     int total_items, columns, lines;
+    int item_is_spacer;
+
+    *num_spacers = 0;
 
     if (!bar_window
         || !bar_window->items_subcount || !bar_window->items_content
@@ -700,6 +725,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
     snprintf (str_reinit_color, sizeof (str_reinit_color),
               "%c",
               GUI_COLOR_RESET_CHAR);
+    length_reinit_color = strlen (str_reinit_color);
 
     snprintf (str_reinit_color_space, sizeof (str_reinit_color_space),
               "%c ",
@@ -721,10 +747,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
               GUI_COLOR_BAR_START_ITEM);
     length_start_item = strlen (str_start_item);
 
-    content_length = 1;
-    content = malloc (content_length);
-    if (content)
-        content[0] = '\0';
+    content = string_dyn_alloc (256);
     filling = gui_bar_get_filling (bar_window->bar);
     at_least_one_item = 0;
     switch (filling)
@@ -756,72 +779,60 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                             }
                         }
                         else
-                            item_value = NULL;
-
-                        content_length += ((filling == GUI_BAR_FILLING_HORIZONTAL) ? length_start_item : 0) +
-                            length_reinit_color_space +
-                            strlen ((item_value) ? item_value : ptr_content);
-                        content2 = realloc (content, content_length);
-                        if (!content2)
                         {
-                            if (content)
-                                free (content);
-                            return NULL;
+                            item_value = NULL;
                         }
-                        content = content2;
-                        if (at_least_one_item && first_sub_item)
+                        item_is_spacer = gui_bar_window_item_is_spacer (
+                            (item_value) ? item_value : ptr_content);
+                        if (at_least_one_item && first_sub_item
+                            && !item_is_spacer)
                         {
                             /* first sub item: insert space after last item */
                             if (filling == GUI_BAR_FILLING_HORIZONTAL)
-                                strcat (content, str_reinit_color_space);
+                            {
+                                string_dyn_concat (content,
+                                                   str_reinit_color_space,
+                                                   length_reinit_color_space);
+                            }
                             else
-                                strcat (content, "\n");
+                            {
+                                string_dyn_concat (content, "\n", -1);
+                            }
                         }
                         else
                         {
-                            strcat (content, str_reinit_color);
+                            string_dyn_concat (content, str_reinit_color,
+                                               length_reinit_color);
                         }
                         if (filling == GUI_BAR_FILLING_HORIZONTAL)
-                            strcat (content, str_start_item);
-                        strcat (content,
-                                (item_value) ? item_value : ptr_content);
+                        {
+                            string_dyn_concat (content, str_start_item,
+                                               length_start_item);
+                        }
+                        string_dyn_concat (
+                            content,
+                            (item_value) ? item_value : ptr_content,
+                            -1);
                         first_sub_item = 0;
-
                         if (item_value)
                             free (item_value);
-                        at_least_one_item = 1;
+                        if (item_is_spacer)
+                            (*num_spacers)++;
+                        else
+                            at_least_one_item = 1;
                     }
                     else
                     {
                         if (filling == GUI_BAR_FILLING_HORIZONTAL)
                         {
-                            content_length += length_start_item;
-                            content2 = realloc (content, content_length);
-                            if (!content2)
-                            {
-                                if (content)
-                                    free (content);
-                                return NULL;
-                            }
-                            content = content2;
-                            strcat (content, str_start_item);
+                            string_dyn_concat (content, str_start_item,
+                                               length_start_item);
                         }
                     }
                 }
             }
             if (filling == GUI_BAR_FILLING_HORIZONTAL)
-            {
-                content_length += length_start_item;
-                content2 = realloc (content, content_length);
-                if (!content2)
-                {
-                    if (content)
-                        free (content);
-                    return NULL;
-                }
-                content = content2;
-                strcat (content, str_start_item);
-            }
+                string_dyn_concat (content, str_start_item, length_start_item);
             break;
         case GUI_BAR_FILLING_COLUMNS_HORIZONTAL: /* items in columns, with horizontal filling */
         case GUI_BAR_FILLING_COLUMNS_VERTICAL:   /* items in columns, with vertical filling */
@@ -914,21 +925,6 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                 }
 
                 /* build content with lines and columns */
-                content_length = 1 + (lines *
-                                      ((columns *
-                                        (max_length + max_length_screen + length_reinit_color_space)) + 1));
-                content2 = realloc (content, content_length);
-                if (!content2)
-                {
-                    if (content)
-                        free (content);
-                    free (split_items);
-                    free (linear_items);
-                    return NULL;
-                }
-                content = content2;
-                content[0] = '\0';
-                index_content = 0;
                 for (i = 0; i < lines; i++)
                 {
                     for (j = 0; j < columns; j++)
@@ -942,30 +938,27 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                         {
                             for (k = 0; k < max_length_screen; k++)
                             {
-                                content[index_content++] = ' ';
+                                string_dyn_concat (content, " ", -1);
                             }
                         }
                         else
                         {
-                            strcpy (content + index_content, linear_items[index]);
-                            index_content += strlen (linear_items[index]);
+                            string_dyn_concat (content, linear_items[index], -1);
                             length = max_length_screen -
                                 gui_chat_strlen_screen (linear_items[index]);
                             for (k = 0; k < length; k++)
                             {
-                                content[index_content++] = ' ';
+                                string_dyn_concat (content, " ", -1);
                             }
                         }
                         if (j < columns - 1)
                         {
-                            strcpy (content + index_content,
-                                    str_reinit_color_space);
-                            index_content += length_reinit_color_space;
+                            string_dyn_concat (content, str_reinit_color_space,
+                                               length_reinit_color_space);
                         }
                     }
-                    content[index_content++] = '\n';
+                    string_dyn_concat (content, "\n", -1);
                 }
-                content[index_content] = '\0';
 
                 free (linear_items);
             }
@@ -988,13 +981,87 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
             break;
     }
 
-    if (content_length == 1)
+    if (!*content[0])
     {
-        free (content);
-        content = NULL;
+        string_dyn_free (content, 1);
+        return NULL;
     }
 
-    return content;
+    return string_dyn_free (content, 0);
+}
+
+/*
+ * Checks if spacer can be used in the bar according to its position, filling
+ * and size.
+ *
+ * Returns:
+ *   1: spacers can be used
+ *   0: spacers can not be used
+ */
+
+int
+gui_bar_window_can_use_spacer (struct t_gui_bar_window *bar_window)
+{
+    int position, filling, bar_size;
+    int pos_ok, filling_ok, size_ok;
+
+    if (!bar_window)
+        return 0;
+
+    position = CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]);
+    filling = gui_bar_get_filling (bar_window->bar);
+    bar_size = CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE]);
+
+    pos_ok = ((position == GUI_BAR_POSITION_TOP)
+              || (position == GUI_BAR_POSITION_BOTTOM));
+    filling_ok = (filling == GUI_BAR_FILLING_HORIZONTAL);
+    size_ok = (bar_size == 1);
+
+    return pos_ok && filling_ok && size_ok;
+}
+
+/*
+ * Computes size of each spacer in the bar.
+ *
+ * Note: result must be freed after use.
+ */
+
+int *
+gui_bar_window_compute_spacers_size (int length_on_screen,
+                                     int bar_window_width,
+                                     int num_spacers)
+{
+    int *spacers, spacer_size, i;
+
+    if ((length_on_screen < 0) || (bar_window_width < 1) || (num_spacers <= 0))
+        return NULL;
+
+    /* if not enough space for spacers, ignore them all */
+    if (length_on_screen >= bar_window_width)
+        return NULL;
+
+    spacers = malloc (num_spacers * sizeof (spacers[0]));
+    if (!spacers)
+        return NULL;
+
+    spacer_size = (bar_window_width - length_on_screen) / num_spacers;
+
+    for (i = 0; i < num_spacers; i++)
+    {
+        spacers[i] = spacer_size;
+    }
+
+    length_on_screen += num_spacers * spacer_size;
+
+    i = 0;
+    while ((length_on_screen < bar_window_width) && (i < num_spacers))
+    {
+        spacers[i]++;
+        i++;
+        length_on_screen++;
+    }
+
+    return spacers;
 }
 
 /*

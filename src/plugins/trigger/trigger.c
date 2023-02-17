@@ -1,7 +1,7 @@
 /*
  * trigger.c - trigger plugin for WeeChat
  *
- * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <regex.h>
 
 #include "../weechat-plugin.h"
@@ -38,7 +39,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Text replacement and command execution on events 
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(13000);
+WEECHAT_PLUGIN_PRIORITY(TRIGGER_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_trigger_plugin = NULL;
 
@@ -61,6 +62,8 @@ char *trigger_hook_default_rc[TRIGGER_NUM_HOOK_TYPES] =
 { "ok,ok_eat,error", "ok,ok_eat,error", "", "", "ok,error", "ok,error",
   "ok,ok_eat,error", "ok", "ok", "", "", "" };
 
+char trigger_regex_command[TRIGGER_NUM_REGEX_COMMANDS] =
+{ 's', 'y' };
 char *trigger_hook_regex_default_var[TRIGGER_NUM_HOOK_TYPES] =
 { "tg_signal_data", "", "tg_string", "message", "tg_message", "tg_argv_eol1",
   "tg_command", "tg_remaining_calls", "tg_value", "", "tg_info", "" };
@@ -99,7 +102,7 @@ trigger_search_option (const char *option_name)
 
     for (i = 0; i < TRIGGER_NUM_OPTIONS; i++)
     {
-        if (weechat_strcasecmp (trigger_option_string[i], option_name) == 0)
+        if (strcmp (trigger_option_string[i], option_name) == 0)
             return i;
     }
 
@@ -118,13 +121,37 @@ trigger_search_hook_type (const char *type)
 {
     int i;
 
+    if (!type)
+        return -1;
+
     for (i = 0; i < TRIGGER_NUM_HOOK_TYPES; i++)
     {
-        if (weechat_strcasecmp (trigger_hook_type_string[i], type) == 0)
+        if (strcmp (trigger_hook_type_string[i], type) == 0)
             return i;
     }
 
     /* hook type not found */
+    return -1;
+}
+
+/*
+ * Searches for a regex command.
+ *
+ * Returns index of option in enum t_trigger_regex_command, -1 if not found.
+ */
+
+int
+trigger_search_regex_command (char command)
+{
+    int i;
+
+    for (i = 0; i < TRIGGER_NUM_REGEX_COMMANDS; i++)
+    {
+        if (trigger_regex_command[i] == command)
+            return i;
+    }
+
+    /* regex command not found */
     return -1;
 }
 
@@ -139,9 +166,12 @@ trigger_search_return_code (const char *return_code)
 {
     int i;
 
+    if (!return_code)
+        return -1;
+
     for (i = 0; i < TRIGGER_NUM_RETURN_CODES; i++)
     {
-        if (weechat_strcasecmp (trigger_return_code_string[i], return_code) == 0)
+        if (strcmp (trigger_return_code_string[i], return_code) == 0)
             return i;
     }
 
@@ -160,9 +190,12 @@ trigger_search_post_action (const char *post_action)
 {
     int i;
 
+    if (!post_action)
+        return -1;
+
     for (i = 0; i < TRIGGER_NUM_POST_ACTIONS; i++)
     {
-        if (weechat_strcasecmp (trigger_post_action_string[i], post_action) == 0)
+        if (strcmp (trigger_post_action_string[i], post_action) == 0)
             return i;
     }
 
@@ -187,7 +220,7 @@ trigger_search (const char *name)
     for (ptr_trigger = triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
     {
-        if (weechat_strcasecmp (ptr_trigger->name, name) == 0)
+        if (strcmp (ptr_trigger->name, name) == 0)
             return ptr_trigger;
     }
 
@@ -207,6 +240,7 @@ trigger_search_with_option (struct t_config_option *option)
     const char *ptr_name;
     char *pos_option;
     struct t_trigger *ptr_trigger;
+    int num_chars;
 
     if (!option)
         return NULL;
@@ -220,10 +254,12 @@ trigger_search_with_option (struct t_config_option *option)
     if (!pos_option)
         return NULL;
 
+    num_chars = weechat_utf8_pos (ptr_name, pos_option - ptr_name);
+
     for (ptr_trigger = triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
     {
-        if (weechat_strncasecmp (ptr_trigger->name, ptr_name, pos_option - ptr_name) == 0)
+        if (weechat_strncmp (ptr_trigger->name, ptr_name, num_chars) == 0)
             break;
     }
 
@@ -298,34 +334,28 @@ trigger_hook (struct t_trigger *trigger)
         case TRIGGER_HOOK_SIGNAL:
             if (argv && (argc >= 1))
             {
-                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
+                trigger->hooks = malloc (sizeof (trigger->hooks[0]));
                 if (trigger->hooks)
                 {
-                    trigger->hooks_count = argc;
-                    for (i = 0; i < argc; i++)
-                    {
-                        trigger->hooks[i] = weechat_hook_signal (
-                            argv[i],
-                            &trigger_callback_signal_cb,
-                            trigger, NULL);
-                    }
+                    trigger->hooks_count = 1;
+                    trigger->hooks[0] = weechat_hook_signal (
+                        weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+                        &trigger_callback_signal_cb,
+                        trigger, NULL);
                 }
             }
             break;
         case TRIGGER_HOOK_HSIGNAL:
             if (argv && (argc >= 1))
             {
-                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
+                trigger->hooks = malloc (sizeof (trigger->hooks[0]));
                 if (trigger->hooks)
                 {
-                    trigger->hooks_count = argc;
-                    for (i = 0; i < argc; i++)
-                    {
-                        trigger->hooks[i] = weechat_hook_hsignal (
-                            argv[i],
-                            &trigger_callback_hsignal_cb,
-                            trigger, NULL);
-                    }
+                    trigger->hooks_count = 1;
+                    trigger->hooks[0] = weechat_hook_hsignal (
+                        weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+                        &trigger_callback_hsignal_cb,
+                        trigger, NULL);
                 }
             }
             break;
@@ -633,7 +663,7 @@ trigger_regex_split (const char *str_regex,
     const char *ptr_regex, *pos, *pos_replace, *pos_replace_end;
     const char *pos_next_regex;
     char *delimiter, *str_regex_escaped;
-    int rc, index, length_delimiter;
+    int rc, index, length_delimiter, command;
     struct t_trigger_regex *new_regex;
 
     rc = 0;
@@ -663,9 +693,24 @@ trigger_regex_split (const char *str_regex,
             delimiter = NULL;
         }
 
+        /* extract command */
+        if (isalpha ((unsigned char)ptr_regex[0]))
+        {
+            command = trigger_search_regex_command (ptr_regex[0]);
+            if (command < 0)
+                goto format_error;
+            /* skip the command */
+            ptr_regex = weechat_utf8_next_char (ptr_regex);
+        }
+        else
+        {
+            /* default command is "s" (replace regex) */
+            command = TRIGGER_REGEX_COMMAND_REPLACE;
+        }
+
         /* search the delimiter (which can be more than one char) */
         pos = weechat_utf8_next_char (ptr_regex);
-        while (pos[0] && (weechat_utf8_charcmp (ptr_regex, pos) == 0))
+        while (pos[0] && (weechat_string_charcmp (ptr_regex, pos) == 0))
         {
             pos = weechat_utf8_next_char (pos);
         }
@@ -697,6 +742,7 @@ trigger_regex_split (const char *str_regex,
         index = *regex_count - 1;
 
         /* initialize new regex */
+        (*regex)[index].command = command;
         (*regex)[index].variable = NULL;
         (*regex)[index].str_regex = NULL;
         (*regex)[index].regex = NULL;
@@ -708,36 +754,44 @@ trigger_regex_split (const char *str_regex,
                                                      pos_replace - ptr_regex);
         if (!(*regex)[index].str_regex)
             goto memory_error;
-        if (str_regex_escaped)
-            free (str_regex_escaped);
-        str_regex_escaped = weechat_string_convert_escaped_chars ((*regex)[index].str_regex);
-        if (!str_regex_escaped)
-            goto memory_error;
 
-        /* set regex */
-        (*regex)[index].regex = malloc (sizeof (*(*regex)[index].regex));
-        if (!(*regex)[index].regex)
-            goto memory_error;
-        if (weechat_string_regcomp ((*regex)[index].regex,
-                                    str_regex_escaped,
-                                    REG_EXTENDED | REG_ICASE) != 0)
+        /* set regex (command "s" only) */
+        if (command == TRIGGER_REGEX_COMMAND_REPLACE)
         {
-            free ((*regex)[index].regex);
-            (*regex)[index].regex = NULL;
-            goto compile_error;
+            if (str_regex_escaped)
+                free (str_regex_escaped);
+            str_regex_escaped = weechat_string_convert_escaped_chars ((*regex)[index].str_regex);
+            if (!str_regex_escaped)
+                goto memory_error;
+            (*regex)[index].regex = malloc (sizeof (*(*regex)[index].regex));
+            if (!(*regex)[index].regex)
+                goto memory_error;
+            if (weechat_string_regcomp ((*regex)[index].regex,
+                                        str_regex_escaped,
+                                        REG_EXTENDED | REG_ICASE) != 0)
+            {
+                free ((*regex)[index].regex);
+                (*regex)[index].regex = NULL;
+                goto compile_error;
+            }
         }
 
-        /* set replace and replace_eval */
+        /* set replace */
         (*regex)[index].replace = (pos_replace_end) ?
             weechat_strndup (pos_replace + length_delimiter,
                              pos_replace_end - pos_replace - length_delimiter) :
             strdup (pos_replace + length_delimiter);
         if (!(*regex)[index].replace)
             goto memory_error;
-        (*regex)[index].replace_escaped =
-            weechat_string_convert_escaped_chars ((*regex)[index].replace);
-        if (!(*regex)[index].replace_escaped)
-            goto memory_error;
+
+        /* set replace_escaped (command "s" only) */
+        if (command == TRIGGER_REGEX_COMMAND_REPLACE)
+        {
+            (*regex)[index].replace_escaped =
+                weechat_string_convert_escaped_chars ((*regex)[index].replace);
+            if (!(*regex)[index].replace_escaped)
+                goto memory_error;
+        }
 
         if (!pos_replace_end)
             break;
@@ -909,7 +963,7 @@ trigger_find_pos (struct t_trigger *trigger, struct t_trigger *list_triggers)
     for (ptr_trigger = list_triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
     {
-        if (weechat_strcasecmp (trigger->name, ptr_trigger->name) < 0)
+        if (weechat_strcmp (trigger->name, ptr_trigger->name) < 0)
             return ptr_trigger;
     }
 
@@ -1308,8 +1362,7 @@ trigger_debug_dump_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (!signal_data
-        || (weechat_strcasecmp ((char *)signal_data, TRIGGER_PLUGIN_NAME) == 0))
+    if (!signal_data || (strcmp ((char *)signal_data, TRIGGER_PLUGIN_NAME) == 0))
     {
         weechat_log_printf ("");
         weechat_log_printf ("***** \"%s\" plugin dump *****",

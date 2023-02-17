@@ -1,7 +1,7 @@
 /*
  * irc-raw.c - functions for IRC raw data messages
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -133,25 +133,24 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
     else if (strncmp (filter, "s:", 2) == 0)
     {
         /* filter by server name */
-        return (weechat_strcasecmp (raw_message->server->name,
-                                    filter + 2) == 0) ? 1 : 0;
+        return (strcmp (raw_message->server->name, filter + 2) == 0) ? 1 : 0;
     }
     else if (strncmp (filter, "f:", 2) == 0)
     {
         /* filter by message flag */
-        if (weechat_strcasecmp (filter + 2, "recv") == 0)
+        if (strcmp (filter + 2, "recv") == 0)
         {
             return (raw_message->flags & IRC_RAW_FLAG_RECV) ? 1 : 0;
         }
-        else if (weechat_strcasecmp (filter + 2, "sent") == 0)
+        else if (strcmp (filter + 2, "sent") == 0)
         {
             return (raw_message->flags & IRC_RAW_FLAG_SEND) ? 1 : 0;
         }
-        else if (weechat_strcasecmp (filter + 2, "modified") == 0)
+        else if (strcmp (filter + 2, "modified") == 0)
         {
             return (raw_message->flags & IRC_RAW_FLAG_MODIFIED) ? 1 : 0;
         }
-        else if (weechat_strcasecmp (filter + 2, "redirected") == 0)
+        else if (strcmp (filter + 2, "redirected") == 0)
         {
             return (raw_message->flags & IRC_RAW_FLAG_REDIRECT) ? 1 : 0;
         }
@@ -242,6 +241,12 @@ irc_raw_message_print (struct t_irc_raw_message *raw_message)
                     buf2[pos_buf2++] = 'x';
                     buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] / 16];
                     buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] % 16];
+                    pos_buf++;
+                }
+                else if (ptr_buf[pos_buf] == '\\')
+                {
+                    buf2[pos_buf2++] = '\\';
+                    buf2[pos_buf2++] = '\\';
                     pos_buf++;
                 }
                 else
@@ -423,6 +428,7 @@ irc_raw_set_filter (const char *filter)
         free (irc_raw_filter);
     irc_raw_filter = (filter && (strcmp (filter, "*") != 0)) ?
         strdup (filter) : NULL;
+    irc_raw_set_localvar_filter ();
 }
 
 /*

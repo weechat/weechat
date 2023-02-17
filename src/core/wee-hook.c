@@ -1,7 +1,7 @@
 /*
  * wee-hook.c - WeeChat hooks management
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -71,6 +71,16 @@ t_callback_hook *hook_callback_free_data[HOOK_NUM_TYPES] =
   &hook_modifier_free_data, &hook_info_free_data,
   &hook_info_hashtable_free_data, &hook_infolist_free_data,
   &hook_hdata_free_data, &hook_focus_free_data };
+t_callback_hook_get_desc *hook_callback_get_desc[HOOK_NUM_TYPES] =
+{ &hook_command_get_description, &hook_command_run_get_description,
+  &hook_timer_get_description, &hook_fd_get_description,
+  &hook_process_get_description, &hook_connect_get_description,
+  &hook_line_get_description, &hook_print_get_description,
+  &hook_signal_get_description, &hook_hsignal_get_description,
+  &hook_config_get_description, &hook_completion_get_description,
+  &hook_modifier_get_description, &hook_info_get_description,
+  &hook_info_hashtable_get_description, &hook_infolist_get_description,
+  &hook_hdata_get_description, &hook_focus_get_description };
 t_callback_hook_infolist *hook_callback_add_to_infolist[HOOK_NUM_TYPES] =
 { &hook_command_add_to_infolist, &hook_command_run_add_to_infolist,
   &hook_timer_add_to_infolist, &hook_fd_add_to_infolist,
@@ -194,8 +204,8 @@ hook_find_pos (struct t_hook *hook)
         {
             if (!ptr_hook->deleted)
             {
-                rc_cmp = string_strcasecmp (HOOK_COMMAND(hook, command),
-                                            HOOK_COMMAND(ptr_hook, command));
+                rc_cmp = string_strcmp (HOOK_COMMAND(hook, command),
+                                        HOOK_COMMAND(ptr_hook, command));
                 if (rc_cmp < 0)
                     return ptr_hook;
                 if ((rc_cmp == 0) && (hook->priority > ptr_hook->priority))
@@ -331,48 +341,6 @@ hook_remove_deleted ()
 }
 
 /*
- * Extracts priority and name from a string.
- *
- * String can be:
- *   - a simple name like "test":
- *       => priority = 1000 (default), name = "test"
- *   - a priority + "|" + name, like "500|test":
- *       => priority = 500, name = "test"
- */
-
-void
-hook_get_priority_and_name (const char *string,
-                            int *priority, const char **name)
-{
-    char *pos, *str_priority, *error;
-    long number;
-
-    if (priority)
-        *priority = HOOK_PRIORITY_DEFAULT;
-    if (name)
-        *name = string;
-
-    pos = strchr (string, '|');
-    if (pos)
-    {
-        str_priority = string_strndup (string, pos - string);
-        if (str_priority)
-        {
-            error = NULL;
-            number = strtol (str_priority, &error, 10);
-            if (error && !error[0])
-            {
-                if (priority)
-                    *priority = number;
-                if (name)
-                    *name = pos + 1;
-            }
-            free (str_priority);
-        }
-    }
-}
-
-/*
  * Initializes a new hook with default values.
  */
 
@@ -459,6 +427,18 @@ hook_exec_end ()
 }
 
 /*
+ * Returns description of hook.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_get_description (struct t_hook *hook)
+{
+    return (hook_callback_get_desc[hook->type]) (hook);
+}
+
+/*
  * Sets a hook property (string).
  */
 
@@ -474,13 +454,16 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
     if (!hook_valid (hook))
         return;
 
-    if (string_strcasecmp (property, "subplugin") == 0)
+    if (!property)
+        return;
+
+    if (strcmp (property, "subplugin") == 0)
     {
         if (hook->subplugin)
             free (hook->subplugin);
         hook->subplugin = strdup (value);
     }
-    else if (string_strcasecmp (property, "stdin") == 0)
+    else if (strcmp (property, "stdin") == 0)
     {
         if (!hook->deleted
             && (hook->type == HOOK_TYPE_PROCESS)
@@ -492,7 +475,7 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             (void) num_written;
         }
     }
-    else if (string_strcasecmp (property, "stdin_close") == 0)
+    else if (strcmp (property, "stdin_close") == 0)
     {
         if (!hook->deleted
             && (hook->type == HOOK_TYPE_PROCESS)
@@ -503,7 +486,7 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDIN]) = -1;
         }
     }
-    else if (string_strcasecmp (property, "signal") == 0)
+    else if (strcmp (property, "signal") == 0)
     {
         if (!hook->deleted
             && (hook->type == HOOK_TYPE_PROCESS)
@@ -712,7 +695,7 @@ hook_add_to_infolist_type (struct t_infolist *infolist, int type,
             switch (ptr_hook->type)
             {
                 case HOOK_TYPE_COMMAND:
-                    match = string_match (HOOK_COMMAND(ptr_hook, command), arguments, 0);
+                    match = string_match (HOOK_COMMAND(ptr_hook, command), arguments, 1);
                     break;
                 default:
                     break;

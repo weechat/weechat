@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -78,6 +78,7 @@ struct t_hook_connect
     int sock_v6[HOOK_CONNECT_MAX_SOCKETS];  /* IPv6 sockets for connecting  */
 };
 
+extern char *hook_connect_get_description (struct t_hook *hook);
 extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
                                     const char *proxy, const char *address,
                                     int port, int ipv6, int retry,

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (C) 2015-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2015-2023 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -32,9 +32,9 @@
 #     devel-patch  the patch version of devel (e.g. 2 for version 1.4.2)
 #
 
-WEECHAT_STABLE=3.3
-WEECHAT_DEVEL=3.4
-WEECHAT_DEVEL_FULL=3.4-dev
+WEECHAT_STABLE=3.8
+WEECHAT_DEVEL=3.9
+WEECHAT_DEVEL_FULL=3.9-dev
 
 if [ $# -lt 1 ]; then
     echo >&2 "Syntax: $0 stable|devel|devel-full|devel-major|devel-minor|devel-patch"

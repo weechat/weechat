@@ -16,8 +16,9 @@
 
 このマニュアルは WeeChat チャットクライアントについての文書で、これは WeeChat の一部です。
 
-この文書の最新版は以下のページにあります:
-https://weechat.org/doc
+// TRANSLATION MISSING
+Latest version of this document can be found on
+https://weechat.org/doc/[this page ^↗^,window=_blank].
 
 
 [[introduction]]
@@ -37,8 +38,7 @@ WeeChat (Wee Enhanced Environment for Chat)
 [[repositories]]
 == リポジトリ
 
-WeeChat リポジトリは GitHub organization の "weechat" にあります:
-https://github.com/weechat
+WeeChat リポジトリは GitHub organization の https://github.com/weechat[weechat ^↗^,window=_blank] にあります:
 
 リポジトリのリスト:
 
@@ -48,8 +48,9 @@ weechat::
 scripts::
     weechat.org に投稿された _公式_ スクリプト
 
+// TRANSLATION MISSING
 weechat.org::
-    WeeChat ウェブサイトのソースコード: https://weechat.org/
+    source of https://weechat.org/[WeeChat website ^↗^,window=_blank]
 
 weercd::
     IRC テストサーバ
@@ -295,6 +296,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       irc-ignore.c                | IRC 無視
 |       irc-info.c                  | IRC の情報/インフォリスト/hdata
 |       irc-input.c                 | コマンドおよびテキストの入力
+// TRANSLATION MISSING
+|       irc-join.c                  | Functions for list of channels to join.
 |       irc-message.c               | IRC メッセージを操作する関数
 |       irc-mode.c                  | チャンネルおよびニックネームのモードを操作する関数
 |       irc-modelist.c              | IRC チャンネルモードリスト (+b、+e、+I、...).
@@ -308,6 +311,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       irc-server.c                | IRC サーバとの入出力通信
 // TRANSLATION MISSING
 |       irc-tag.c                   | Functions to manipulate IRC message tags.
+// TRANSLATION MISSING
+|       irc-typing.c                | Typing status.
 |       irc-upgrade.c               | WeeChat をアップグレードする際の IRC データの保存およびロード
 |    javascript/                    | JavaScript プラグイン
 |       weechat-js.cpp              | JavaScript の主要関数 (スクリプトのロード/アンロード、JavaScript コードの実行)
@@ -424,6 +429,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |          test-core-calc.cpp         | Tests: calculation of expressions.
 // TRANSLATION MISSING
+|          test-core-command.cpp      | Tests: commands.
+// TRANSLATION MISSING
 |          test-core-config-file.cpp  | Tests: configuration files.
 // TRANSLATION MISSING
 |          test-core-crypto.cpp       | Tests: cryptographic functions.
@@ -446,7 +453,19 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-core-util.cpp         | テスト: ユーティリティ関数
 |       gui/                          | インターフェースの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
+|          test-gui-bar-window.cpp    | Tests: bar window functions.
+// TRANSLATION MISSING
+|          test-gui-buffer.cpp        | Tests: buffer functions.
+// TRANSLATION MISSING
+|          test-gui-chat.cpp          | Tests: chat functions.
+// TRANSLATION MISSING
 |          test-gui-color.cpp         | Tests: colors.
+// TRANSLATION MISSING
+|          test-gui-filter.cpp        | Tests: filters.
+// TRANSLATION MISSING
+|          test-gui-input.cpp         | Tests: input functions.
+// TRANSLATION MISSING
+|          test-gui-key.cpp           | Tests: keys.
 |          test-gui-line.cpp          | テスト: 行
 // TRANSLATION MISSING
 |          test-gui-nick.cpp          | テスト: nicks
@@ -461,6 +480,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |             test-irc-ignore.cpp     | Tests: IRC ignores.
 // TRANSLATION MISSING
+|             test-irc-join.cpp       | Tests: IRC join functions.
+// TRANSLATION MISSING
 |             test-irc-message.cpp    | Tests: IRC messages.
 // TRANSLATION MISSING
 |             test-irc-mode.cpp       | Tests: IRC modes.
@@ -471,6 +492,12 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |             test-irc-sasl.cpp       | Tests: SASL authentication with IRC protocol.
 // TRANSLATION MISSING
 |             test-irc-server.cpp     | Tests: IRC server.
+// TRANSLATION MISSING
+|             test-irc-tag.cpp        | Tests: IRC message tags.
+// TRANSLATION MISSING
+|          logger/                    | Root of unit tests for logger plugin.
+// TRANSLATION MISSING
+|             test-logger-backlog.cpp | Tests: logger backlog.
 // TRANSLATION MISSING
 |          trigger/                   | Root of unit tests for trigger plugin.
 // TRANSLATION MISSING
@@ -487,6 +514,12 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          relay/                     | Root of unit tests for Relay plugin.
 // TRANSLATION MISSING
 |             test-relay-auth.cpp     | Tests: clients authentication.
+// TRANSLATION MISSING
+|          xfer/                      | Root of unit tests for Xfer plugin.
+// TRANSLATION MISSING
+|             test-xfer-file.cpp      | Tests: file functions.
+// TRANSLATION MISSING
+|             test-xfer-network.cpp   | Tests: network functions.
 |===
 
 [[documentation_translations]]
@@ -503,14 +536,13 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    docgen.py                                  | Python script to build auto-generated files in _includes/_ directory (see below).
 |    XX/                                        | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
 |       weechat.1.XX.adoc                       | man ページ (`man weechat`)
-|       weechat_dev.XX.adoc                     | link:weechat_dev.ja.html[開発者リファレンス] (この文書)
-|       weechat_faq.XX.adoc                     | link:weechat_faq.ja.html[FAQ]
-|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.ja.html[プラグイン API リファレンス]
-|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.ja.html[クイックスタートガイド]
-|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.ja.html[リレープロトコル] (リモートインターフェース用)
-|       weechat_scripting.XX.adoc               | link:weechat_scripting.ja.html[スクリプト作成ガイド]
-|       weechat_tester.XX.adoc                  | link:weechat_tester.ja.html[テスターガイド]
-|       weechat_user.XX.adoc                    | link:weechat_user.ja.html[ユーザーズガイド]
+|       weechat_dev.XX.adoc                     | link:weechat_dev.ja.html[開発者リファレンス ^↗^,window=_blank] (この文書)
+|       weechat_faq.XX.adoc                     | link:weechat_faq.ja.html[FAQ ^↗^,window=_blank]
+|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.ja.html[プラグイン API リファレンス ^↗^,window=_blank]
+|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.ja.html[クイックスタートガイド ^↗^,window=_blank]
+|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.ja.html[リレープロトコル ^↗^,window=_blank] (リモートインターフェース用)
+|       weechat_scripting.XX.adoc               | link:weechat_scripting.ja.html[スクリプト作成ガイド ^↗^,window=_blank]
+|       weechat_user.XX.adoc                    | link:weechat_user.ja.html[ユーザーズガイド ^↗^,window=_blank]
 // TRANSLATION MISSING
 |       includes/                               | Files included in documentation.
 |          autogen_api_completions.XX.adoc      | Auto-generated file for Plugin API reference: completions (do *NEVER* update manually!).
@@ -560,7 +592,7 @@ WeeChat とプラグインの翻訳は gettext で行います、ファイルは
 /*
  * weechat.c - core functions for WeeChat
  *
- * Copyright (C) 2021 Your Name <your@email.com>
+ * Copyright (C) 2023 Your Name <your@email.com>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -774,7 +806,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 [[coding_python_style]]
 === Python スタイル
 
-https://www.python.org/dev/peps/pep-0008/ を参照
+https://www.python.org/dev/peps/pep-0008/[PEP 8 ^↗^,window=_blank] を参照
 
 [[core_internals]]
 == コアの構造
@@ -934,17 +966,11 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 文字列にある文字を含め、その後に属性および色を指定します、これは:
 
 * _0x19_: 色コード (これの後に色コード指定)
-* _0x1A_: 属性の設定 (これの後に属性を指定)
-* _0x1B_: 削除属性 (これの後に属性を指定)
+// TRANSLATION MISSING
+* _0x1A_: set attribute (followed by raw attribute on one char)
+// TRANSLATION MISSING
+* _0x1B_: remove attribute (followed by raw attribute on one char)
 * _0x1C_: リセット (これの後には何も付けない)
-
-指定できる属性は (1 文字以上):
-
-* `+*+`: 太字
-* `+!+`: 反転
-* `+/+`: イタリック
-* `+_+`: 下線
-* `+|+`: 属性を保存
 
 指定できる色は:
 
@@ -954,45 +980,69 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 以下の表に使われる組み合わせを示す:
 
 * `STD`: 標準色 (2 桁の番号)
-* `(A)STD`: 任意属性を含めた標準色 (属性 + 2 桁の番号)
+* `(ATTR)STD`: 任意属性を含めた標準色 (属性 + 2 桁の番号)
 * `EXT`: 拡張色 (`+@+` + 5 桁の番号)
-* `(A)EXT`:任意属性を含めた拡張色 (`+@+` + 属性 + 5 桁の番号)
-* `ATTR`: 属性指定の 1 文字 (`+*+`、`+!+`、`+/+`、`+_+`、`+|+`)
+* `(ATTR)EXT`:任意属性を含めた拡張色 (`+@+` + 属性 + 5 桁の番号)
+// TRANSLATION MISSING
+* `(ATTR)`: one or more attribute chars:
+// TRANSLATION MISSING
+** `+%+`: blink
+// TRANSLATION MISSING
+** `+.+`: "dim" (half bright)
+** `+*+`: 太字
+** `+!+`: 反転
+** `+/+`: イタリック
+** `+_+`: 下線
+** `+|+`: 属性を保存
+// TRANSLATION MISSING
+* `(a)`: one raw attribute char:
+// TRANSLATION MISSING
+** _0x01_: bold
+// TRANSLATION MISSING
+** _0x02_: reverse
+// TRANSLATION MISSING
+** _0x03_: italic
+// TRANSLATION MISSING
+** _0x04_: underline
+// TRANSLATION MISSING
+** _0x05_: blink
+// TRANSLATION MISSING
+** _0x06_: "dim" (half bright)
 
 以下の表にすべての組み合わせをまとめています:
 
 [width="100%",cols="4,3,2,8",options="header"]
 |===
-| コード                                     | 例                           | エリア      | 説明
-| [hex]#19# + STD                            | [hex]#19# `+01+`             | chat + bars | オプションを使って属性と色を指定、色コードは以下の表を参照
-| [hex]#19# + EXT                            | [hex]#19# `+@00001+`         | chat        | ncurses ペアを使って色を指定 (`/color` バッファのみ有効)
-| [hex]#19# + "F" + (A)STD                   | [hex]#19# `+F*05+`           | chat + bars | 文字色 (WeeChat 色) を設定
-| [hex]#19# + "F" + (A)EXT                   | [hex]#19# `+F@00214+`        | chat + bars | 文字色 (拡張色) を設定
-| [hex]#19# + "B" + STD                      | [hex]#19# `+B05+`            | chat + bars | 背景色 (WeeChat 色) を設定
-| [hex]#19# + "B" + EXT                      | [hex]#19# `+B@00124+`        | chat + bars | 背景色 (拡張色) を設定
-| [hex]#19# + "*" + (A)STD                   | [hex]#19# `+*05+`            | chat + bars | 文字色(WeeChat 色) を設定
-| [hex]#19# + "*" + (A)EXT                   | [hex]#19# `+*@00214+`        | chat + bars | 文字色 (拡張色) を設定
-| [hex]#19# + "*" + (A)STD + "," + STD ^(1)^ | [hex]#19# `+*08,05+`         | chat + bars | 文字色および背景色 (WeeChat 色) を設定
-| [hex]#19# + "*" + (A)STD + "," + EXT ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + bars | 文字色 (WeeChat 色) と背景色 (拡張色) を設定
-| [hex]#19# + "*" + (A)EXT + "," + STD ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + bars | 文字色 (拡張色) と背景色 (WeeChat 色) を設定
-| [hex]#19# + "*" + (A)EXT + "," + EXT ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + bars | 文字色および背景色 (拡張色) を設定
-| [hex]#19# + "*" + (A)STD + "~" + STD       | [hex]#19# `+*08~05+`         | chat + bars | 文字色および背景色 (WeeChat 色) を設定
-| [hex]#19# + "*" + (A)STD + "~" + EXT       | [hex]#19# `+*01~@00214+`     | chat + bars | 文字色 (WeeChat 色) と背景色 (拡張色) を設定
-| [hex]#19# + "*" + (A)EXT + "~" + STD       | [hex]#19# `+*@00214~05+`     | chat + bars | 文字色 (拡張色) と背景色 (WeeChat 色) を設定
-| [hex]#19# + "*" + (A)EXT + "~" + EXT       | [hex]#19# `+*@00214~@00017+` | chat + bars | 文字色および背景色 (拡張色) を設定
-| [hex]#19# + "b" + "F"                      | [hex]#19# `+bF+`             | bars        | バーの文字色を設定
-| [hex]#19# + "b" + "D"                      | [hex]#19# `+bD+`             | bars        | バーの区切り文字色を設定
-| [hex]#19# + "b" + "B"                      | [hex]#19# `+bB+`             | bars        | バーの背景色を設定
-| [hex]#19# + "b" + "_"                      | [hex]#19# `+b_+`             | input bar   | 文字入力を開始 ("input_text" 要素のみで利用可)
-| [hex]#19# + "b" + "-"                      | [hex]#19# `+b-+`             | input bar   | 隠し文字入力を開始 ("input_text" 要素のみで利用可)
-| [hex]#19# + "b" + "#"                      | [hex]#19# `+b#+`             | input bar   | カーソル文字を移動 ("input_text" 要素のみで利用可)
-| [hex]#19# + "b" + "i"                      | [hex]#19# `+bi+`             | bars        | 要素を開始
-| [hex]#19# + "b" + "l" (小文字の L)         | [hex]#19# `+bl+`             | bars        | 行要素を開始
-| [hex]#19# + "E"                            | [hex]#19# `+E+`              | chat + bars | テキストを強調 _(WeeChat バージョン 0.4.2 以上で利用可)_
-| [hex]#19# + [hex]#1C#                      | [hex]#19# [hex]#1C#          | chat + bars | 色をリセット (属性は保存)
-| [hex]#1A# + ATTR                           | [hex]#1A# `+*+`              | chat + bars | 属性を設定
-| [hex]#1B# + ATTR                           | [hex]#1B# `+*+`              | chat + bars | 属性を削除
-| [hex]#1C#                                  | [hex]#1C#                    | chat + bars | 属性と色をリセット
+| コード                                            | 例                           | エリア      | 説明
+| [hex]#19# + `STD`                                 | [hex]#19# `+01+`             | chat + bars | オプションを使って属性と色を指定、色コードは以下の表を参照
+| [hex]#19# + `EXT`                                 | [hex]#19# `+@00001+`         | chat        | ncurses ペアを使って色を指定 (`/color` バッファのみ有効)
+| [hex]#19# + `F` + `(ATTR)STD`                     | [hex]#19# `+F*05+`           | chat + bars | 文字色 (WeeChat 色) を設定
+| [hex]#19# + `F` + `(ATTR)EXT`                     | [hex]#19# `+F@00214+`        | chat + bars | 文字色 (拡張色) を設定
+| [hex]#19# + `B` + `STD`                           | [hex]#19# `+B05+`            | chat + bars | 背景色 (WeeChat 色) を設定
+| [hex]#19# + `B` + `EXT`                           | [hex]#19# `+B@00124+`        | chat + bars | 背景色 (拡張色) を設定
+| [hex]#19# + `*` + `(ATTR)STD`                     | [hex]#19# `+*05+`            | chat + bars | 文字色(WeeChat 色) を設定
+| [hex]#19# + `*` + `(ATTR)EXT`                     | [hex]#19# `+*@00214+`        | chat + bars | 文字色 (拡張色) を設定
+| [hex]#19# + `*` + `(ATTR)STD` + `,` + `STD` ^(1)^ | [hex]#19# `+*08,05+`         | chat + bars | 文字色および背景色 (WeeChat 色) を設定
+| [hex]#19# + `*` + `(ATTR)STD` + `,` + `EXT` ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + bars | 文字色 (WeeChat 色) と背景色 (拡張色) を設定
+| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `STD` ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + bars | 文字色 (拡張色) と背景色 (WeeChat 色) を設定
+| [hex]#19# + `*` + `(ATTR)EXT` + `,` + `EXT` ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + bars | 文字色および背景色 (拡張色) を設定
+| [hex]#19# + `*` + `(ATTR)STD` + `~` + `STD`       | [hex]#19# `+*08~05+`         | chat + bars | 文字色および背景色 (WeeChat 色) を設定
+| [hex]#19# + `*` + `(ATTR)STD` + `~` + `EXT`       | [hex]#19# `+*01~@00214+`     | chat + bars | 文字色 (WeeChat 色) と背景色 (拡張色) を設定
+| [hex]#19# + `*` + `(ATTR)EXT` + `~` + `STD`       | [hex]#19# `+*@00214~05+`     | chat + bars | 文字色 (拡張色) と背景色 (WeeChat 色) を設定
+| [hex]#19# + `*` + `(ATTR)EXT` + `~` + `EXT`       | [hex]#19# `+*@00214~@00017+` | chat + bars | 文字色および背景色 (拡張色) を設定
+| [hex]#19# + `b` + `F`                             | [hex]#19# `+bF+`             | bars        | バーの文字色を設定
+| [hex]#19# + `b` + `D`                             | [hex]#19# `+bD+`             | bars        | バーの区切り文字色を設定
+| [hex]#19# + `b` + `B`                             | [hex]#19# `+bB+`             | bars        | バーの背景色を設定
+| [hex]#19# + `b` + `_`                             | [hex]#19# `+b_+`             | input bar   | 文字入力を開始 ("input_text" 要素のみで利用可)
+| [hex]#19# + `b` + `-`                             | [hex]#19# `+b-+`             | input bar   | 隠し文字入力を開始 ("input_text" 要素のみで利用可)
+| [hex]#19# + `b` + `#`                             | [hex]#19# `+b#+`             | input bar   | カーソル文字を移動 ("input_text" 要素のみで利用可)
+| [hex]#19# + `b` + `i`                             | [hex]#19# `+bi+`             | bars        | 要素を開始
+| [hex]#19# + `b` + `l` (小文字の L)                | [hex]#19# `+bl+`             | bars        | 行要素を開始
+| [hex]#19# + `E`                                   | [hex]#19# `+E+`              | chat + bars | テキストを強調 _(WeeChat バージョン 0.4.2 以上で利用可)_
+| [hex]#19# + [hex]#1C#                             | [hex]#19# [hex]#1C#          | chat + bars | 色をリセット (属性は保存)
+| [hex]#1A# + `(a)`                                 | [hex]#1A# [hex]#01#          | chat + bars | 属性を設定
+| [hex]#1B# + `(a)`                                 | [hex]#1B# [hex]#01#          | chat + bars | 属性を削除
+| [hex]#1C#                                         | [hex]#1C#                    | chat + bars | 属性と色をリセット
 |===
 
 // TRANSLATION MISSING
@@ -1148,7 +1198,8 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 [[git_repository]]
 === Git リポジトリ
 
-Git リポジトリはこの URL にあります: https://github.com/weechat/weechat
+// TRANSLATION MISSING
+Git repository is on https://github.com/weechat/weechat[GitHub ^↗^,window=_blank].
 
 バグや新機能のパッチは必ず master ブランチに対して適用できるものを作成し、GitHub の pull
 リクエストを使って提出することを推奨します。パッチは電子メールで送信することも可能です
@@ -1163,10 +1214,108 @@ component: fix a problem (closes #123)
 
 _component_ には以下から 1 つ選んで記入してください:
 
-* WeeChat コア: _core_ (ルートディレクトリ、_po/_ ディレクトリ、_src/_
-  ディレクトリに含まれるファイル、ただし _src/plugins/_ 内のファイルを除く)
-* 文書ファイル: _doc_ (_doc/_ ディレクトリに含まれるファイル)
-* プラグインの名前: _irc_、_python_、_relay_、... (_src/plugins/_ ディレクトリに含まれるファイル)
+[width="100%",cols="1m,4m,5",options="header"]
+|===
+// TRANSLATION MISSING
+| Component | Files | Description
+
+| core
+| AUTHORS.adoc +
+  ChangeLog.adoc +
+  Contributing.adoc +
+  .github/FUNDING.yml +
+  .github/ISSUE_TEMPLATE/* +
+  icons/* +
+  po/* +
+  README.adoc +
+  ReleaseNotes.adoc +
+  src/core/* +
+  src/gui/* +
+  version.sh +
+  weechat.desktop |
+// TRANSLATION MISSING
+  WeeChat core
+
+| build
+| CMakeLists.txt +
+  cmake/* +
+  tools/* +
+  weechat.cygport.in +
+  weechat.spec |
+// TRANSLATION MISSING
+  Build
+
+| ci
+| .github/workflows/* |
+// TRANSLATION MISSING
+  Continuous integration
+
+| debian
+| debian-devel/* +
+  debian-stable/* |
+// TRANSLATION MISSING
+  Debian packaging
+
+| tests
+| tests/* |
+// TRANSLATION MISSING
+  Tests
+
+| doc
+| doc/* |
+// TRANSLATION MISSING
+  General doc updates, for example build
+
+| doc/man
+| doc/xx/weechat.1.xx.adoc +
+  doc/xx/weechat-headless.1.xx.adoc |
+// TRANSLATION MISSING
+  Man pages
+
+| doc/faq
+| doc/xx/weechat_faq.xx.adoc |
+// TRANSLATION MISSING
+  Frequently asked questions (FAQ)
+
+| doc/quickstart
+| doc/xx/weechat_quickstart.xx.adoc |
+// TRANSLATION MISSING
+  Quickstart guide
+
+| doc/user
+| doc/xx/weechat_user.xx.adoc |
+// TRANSLATION MISSING
+  User's guide
+
+| doc/scripting
+| doc/xx/weechat_scripting.xx.adoc |
+// TRANSLATION MISSING
+  Scripting guide
+
+| doc/api
+| doc/xx/weechat_plugin_api.xx.adoc |
+// TRANSLATION MISSING
+  Plugin API reference
+
+| doc/relay
+| doc/xx/weechat_relay_protocol.xx.adoc |
+// TRANSLATION MISSING
+  Relay protocol
+
+| doc/dev
+| doc/xx/weechat_dev.en.adoc |
+// TRANSLATION MISSING
+  Developer's guide
+
+| irc +
+  python +
+  relay +
+  …
+| src/plugins/<name>/* |
+// TRANSLATION MISSING
+  Plugin
+
+|===
 
 以下のルールに従ってください:
 
@@ -1214,8 +1363,9 @@ $ make translations && make update-po
 
 その後翻訳できるならば .po ファイルを編集します。
 
-翻訳が完了したら、*必ず* _msgcheck.py_ (https://github.com/flashcode/msgcheck)
-スクリプトを使ってファイルの内容を確認してください:
+// TRANSLATION MISSING
+When done, you *have* to check your file with
+https://github.com/flashcode/msgcheck[msgcheck ^↗^,window=_blank]:
 
 ----
 $ msgcheck.py xx.po
@@ -1250,7 +1400,7 @@ Asciidoc ファイルは _doc/XX/_ ディレクトリにあり、_XX_
 ファイル中の未翻訳部分には以下の文字列で目印が付けられています:
 
 ----
-// TRANSLATION MISSING
+// TRANSLATION MISSING
 ----
 
 メモや警告などを示すリンクおよび特殊キーワードを除く全ての部分を必ず翻訳してください、以下の単語を書き換えるのはやめてください:

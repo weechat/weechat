@@ -1,7 +1,7 @@
 /*
  * gui-nicklist.c - nicklist functions (used by all GUI)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -196,7 +196,7 @@ gui_nicklist_search_group_internal (struct t_gui_buffer *buffer,
     struct t_gui_nick_group *ptr_group;
     const char *ptr_name;
 
-    if (!buffer)
+    if (!buffer || !name)
         return NULL;
 
     if (!from_group)
@@ -241,6 +241,9 @@ gui_nicklist_search_group (struct t_gui_buffer *buffer,
                            const char *name)
 {
     const char *ptr_name;
+
+    if (!buffer || !name)
+        return NULL;
 
     ptr_name = gui_nicklist_get_group_start (name);
 
@@ -386,6 +389,9 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
     struct t_gui_nick_group *ptr_group;
 
     if (!buffer && !from_group)
+        return NULL;
+
+    if (!name)
         return NULL;
 
     if (!from_group && !buffer->nicklist_root)
@@ -832,13 +838,13 @@ gui_nicklist_group_get_integer (struct t_gui_buffer *buffer,
     /* make C compiler happy */
     (void) buffer;
 
-    if (group && property)
-    {
-        if (string_strcasecmp (property, "visible") == 0)
-            return group->visible;
-        else if (string_strcasecmp (property, "level") == 0)
-            return group->level;
-    }
+    if (!group || !property)
+        return 0;
+
+    if (strcmp (property, "visible") == 0)
+        return group->visible;
+    else if (strcmp (property, "level") == 0)
+        return group->level;
 
     return 0;
 }
@@ -855,13 +861,13 @@ gui_nicklist_group_get_string (struct t_gui_buffer *buffer,
     /* make C compiler happy */
     (void) buffer;
 
-    if (group && property)
-    {
-        if (string_strcasecmp (property, "name") == 0)
-            return group->name;
-        else if (string_strcasecmp (property, "color") == 0)
-            return group->color;
-    }
+    if (!group || !property)
+        return NULL;
+
+    if (strcmp (property, "name") == 0)
+        return group->name;
+    else if (strcmp (property, "color") == 0)
+        return group->color;
 
     return NULL;
 }
@@ -878,11 +884,11 @@ gui_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
     /* make C compiler happy */
     (void) buffer;
 
-    if (group && property)
-    {
-        if (string_strcasecmp (property, "parent") == 0)
-            return group->parent;
-    }
+    if (!group || !property)
+        return NULL;
+
+    if (strcmp (property, "parent") == 0)
+        return group->parent;
 
     return NULL;
 }
@@ -905,14 +911,14 @@ gui_nicklist_group_set (struct t_gui_buffer *buffer,
 
     group_changed = 0;
 
-    if (string_strcasecmp (property, "color") == 0)
+    if (strcmp (property, "color") == 0)
     {
         if (group->color)
             string_shared_free (group->color);
         group->color = (value[0]) ? (char *)string_shared_get (value) : NULL;
         group_changed = 1;
     }
-    else if (string_strcasecmp (property, "visible") == 0)
+    else if (strcmp (property, "visible") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
@@ -941,11 +947,11 @@ gui_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
     /* make C compiler happy */
     (void) buffer;
 
-    if (nick && property)
-    {
-        if (string_strcasecmp (property, "visible") == 0)
-            return nick->visible;
-    }
+    if (!nick || !property)
+        return 0;
+
+    if (strcmp (property, "visible") == 0)
+        return nick->visible;
 
     return 0;
 }
@@ -962,17 +968,17 @@ gui_nicklist_nick_get_string (struct t_gui_buffer *buffer,
     /* make C compiler happy */
     (void) buffer;
 
-    if (nick && property)
-    {
-        if (string_strcasecmp (property, "name") == 0)
-            return nick->name;
-        else if (string_strcasecmp (property, "color") == 0)
-            return nick->color;
-        else if (string_strcasecmp (property, "prefix") == 0)
-            return nick->prefix;
-        else if (string_strcasecmp (property, "prefix_color") == 0)
-            return nick->prefix_color;
-    }
+    if (!nick || !property)
+        return NULL;
+
+    if (strcmp (property, "name") == 0)
+        return nick->name;
+    else if (strcmp (property, "color") == 0)
+        return nick->color;
+    else if (strcmp (property, "prefix") == 0)
+        return nick->prefix;
+    else if (strcmp (property, "prefix_color") == 0)
+        return nick->prefix_color;
 
     return NULL;
 }
@@ -989,11 +995,11 @@ gui_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
     /* make C compiler happy */
     (void) buffer;
 
-    if (nick && property)
-    {
-        if (string_strcasecmp (property, "group") == 0)
-            return nick->group;
-    }
+    if (!nick || !property)
+        return NULL;
+
+    if (strcmp (property, "group") == 0)
+        return nick->group;
 
     return NULL;
 }
@@ -1016,28 +1022,28 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
 
     nick_changed = 0;
 
-    if (string_strcasecmp (property, "color") == 0)
+    if (strcmp (property, "color") == 0)
     {
         if (nick->color)
             string_shared_free (nick->color);
         nick->color = (value[0]) ? (char *)string_shared_get (value) : NULL;
         nick_changed = 1;
     }
-    else if (string_strcasecmp (property, "prefix") == 0)
+    else if (strcmp (property, "prefix") == 0)
     {
         if (nick->prefix)
             string_shared_free (nick->prefix);
         nick->prefix = (value[0]) ? (char *)string_shared_get (value) : NULL;
         nick_changed = 1;
     }
-    else if (string_strcasecmp (property, "prefix_color") == 0)
+    else if (strcmp (property, "prefix_color") == 0)
     {
         if (nick->prefix_color)
             string_shared_free (nick->prefix_color);
         nick->prefix_color = (value[0]) ? (char *)string_shared_get (value) : NULL;
         nick_changed = 1;
     }
-    else if (string_strcasecmp (property, "visible") == 0)
+    else if (strcmp (property, "visible") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);

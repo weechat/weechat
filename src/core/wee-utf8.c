@@ -1,7 +1,7 @@
 /*
  * wee-utf8.c - UTF-8 string functions
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -44,7 +44,7 @@ int local_utf8 = 0;
 void
 utf8_init ()
 {
-    local_utf8 = (string_strcasecmp (weechat_local_charset, "UTF-8") == 0);
+    local_utf8 = (string_strcasecmp (weechat_local_charset, "utf-8") == 0);
 }
 
 /*
@@ -199,28 +199,32 @@ utf8_prev_char (const char *string_start, const char *string)
         /* UTF-8, at least 2 bytes */
         string--;
         if (string < string_start)
-            return (char *)string + 1;
+            return string + 1;
         if (((unsigned char)(string[0]) & 0xC0) == 0x80)
         {
             /* UTF-8, at least 3 bytes */
             string--;
             if (string < string_start)
-                return (char *)string + 1;
+                return string + 1;
             if (((unsigned char)(string[0]) & 0xC0) == 0x80)
             {
                 /* UTF-8, 4 bytes */
                 string--;
                 if (string < string_start)
-                    return (char *)string + 1;
-                return (char *)string;
+                    return string + 1;
+                return string;
             }
             else
-                return (char *)string;
+            {
+                return string;
+            }
         }
         else
-            return (char *)string;
+        {
+            return string;
+        }
     }
-    return (char *)string;
+    return string;
 }
 
 /*
@@ -239,31 +243,31 @@ utf8_next_char (const char *string)
     if (((unsigned char)(string[0]) & 0xE0) == 0xC0)
     {
         if (!string[1])
-            return (char *)string + 1;
-        return (char *)string + 2;
+            return string + 1;
+        return string + 2;
     }
     /* UTF-8, 3 bytes: 1110vvvv 10vvvvvv 10vvvvvv */
     else if (((unsigned char)(string[0]) & 0xF0) == 0xE0)
     {
         if (!string[1])
-            return (char *)string + 1;
+            return string + 1;
         if (!string[2])
-            return (char *)string + 2;
-        return (char *)string + 3;
+            return string + 2;
+        return string + 3;
     }
     /* UTF-8, 4 bytes: 11110vvv 10vvvvvv 10vvvvvv 10vvvvvv */
     else if (((unsigned char)(string[0]) & 0xF8) == 0xF0)
     {
         if (!string[1])
-            return (char *)string + 1;
+            return string + 1;
         if (!string[2])
-            return (char *)string + 2;
+            return string + 2;
         if (!string[3])
-            return (char *)string + 3;
-        return (char *)string + 4;
+            return string + 3;
+        return string + 4;
     }
     /* UTF-8, 1 byte: 0vvvvvvv */
-    return (char *)string + 1;
+    return string + 1;
 }
 
 /*
@@ -331,21 +335,32 @@ utf8_char_int (const char *string)
  *
  * In case of error (if unicode value is > 0x1FFFFF), the string is set to an
  * empty string (string[0] == '\0').
+ *
+ * Returns the number of bytes in the UTF-8 char (not counting the final '\0').
  */
 
-void
+int
 utf8_int_string (unsigned int unicode_value, char *string)
 {
+    int num_bytes;
+
+    num_bytes = 0;
+
     if (!string)
-        return;
+        return num_bytes;
 
     string[0] = '\0';
 
-    if (unicode_value <= 0x007F)
+    if (unicode_value == 0)
+    {
+        /* NUL char */
+    }
+    else if (unicode_value <= 0x007F)
     {
         /* UTF-8, 1 byte: 0vvvvvvv */
         string[0] = unicode_value;
         string[1] = '\0';
+        num_bytes = 1;
     }
     else if (unicode_value <= 0x07FF)
     {
@@ -353,6 +368,7 @@ utf8_int_string (unsigned int unicode_value, char *string)
         string[0] = 0xC0 | ((unicode_value >> 6) & 0x1F);
         string[1] = 0x80 | (unicode_value & 0x3F);
         string[2] = '\0';
+        num_bytes = 2;
     }
     else if (unicode_value <= 0xFFFF)
     {
@@ -361,6 +377,7 @@ utf8_int_string (unsigned int unicode_value, char *string)
         string[1] = 0x80 | ((unicode_value >> 6) & 0x3F);
         string[2] = 0x80 | (unicode_value & 0x3F);
         string[3] = '\0';
+        num_bytes = 3;
     }
     else if (unicode_value <= 0x1FFFFF)
     {
@@ -370,50 +387,10 @@ utf8_int_string (unsigned int unicode_value, char *string)
         string[2] = 0x80 | ((unicode_value >> 6) & 0x3F);
         string[3] = 0x80 | (unicode_value & 0x3F);
         string[4] = '\0';
+        num_bytes = 4;
     }
-}
 
-/*
- * Gets wide char from string (first char).
- *
- * Returns the char as "wint_t", WEOF is string was NULL/empty or in case of
- * error.
- */
-
-wint_t
-utf8_wide_char (const char *string)
-{
-    int char_size;
-    wint_t result;
-
-    if (!string || !string[0])
-        return WEOF;
-
-    char_size = utf8_char_size (string);
-    switch (char_size)
-    {
-        case 1:
-            result = (wint_t)string[0];
-            break;
-        case 2:
-            result = ((wint_t)((unsigned char)string[0])) << 8
-                |  ((wint_t)((unsigned char)string[1]));
-            break;
-        case 3:
-            result = ((wint_t)((unsigned char)string[0])) << 16
-                |  ((wint_t)((unsigned char)string[1])) << 8
-                |  ((wint_t)((unsigned char)string[2]));
-            break;
-        case 4:
-            result = ((wint_t)((unsigned char)string[0])) << 24
-                |  ((wint_t)((unsigned char)string[1])) << 16
-                |  ((wint_t)((unsigned char)string[2])) << 8
-                |  ((wint_t)((unsigned char)string[3]));
-            break;
-        default:
-            result = WEOF;
-    }
-    return result;
+    return num_bytes;
 }
 
 /*
@@ -481,175 +458,6 @@ utf8_strnlen (const char *string, int bytes)
 }
 
 /*
- * Gets number of chars needed on screen to display the UTF-8 string.
- *
- * Returns the number of chars (>= 0).
- */
-
-int
-utf8_strlen_screen (const char *string)
-{
-    int length, num_char, add_for_tab;
-    wchar_t *alloc_wstring, *ptr_wstring, wstring[4+2];
-    const char *ptr_string;
-
-    if (!string || !string[0])
-        return 0;
-
-    if (!local_utf8)
-        return utf8_strlen (string);
-
-    alloc_wstring = NULL;
-
-    if (!string[1] || !string[2] || !string[3] || !string[4])
-    {
-        /* optimization for max 4 chars: no malloc */
-        num_char = 4 + 1;
-        ptr_wstring = wstring;
-    }
-    else
-    {
-        num_char = mbstowcs (NULL, string, 0) + 1;
-        alloc_wstring = malloc ((num_char + 1) * sizeof (alloc_wstring[0]));
-        if (!alloc_wstring)
-            return utf8_strlen (string);
-        ptr_wstring = alloc_wstring;
-    }
-
-    if (mbstowcs (ptr_wstring, string, num_char) != (size_t)(-1))
-    {
-        length = wcswidth (ptr_wstring, num_char);
-        /*
-         * if the char is non-printable, wcswidth returns -1
-         * (for example the length of the snowman without snow (U+26C4) == -1)
-         * => in this case, consider the length is 1, to prevent any display bug
-         */
-        if (length < 0)
-            length = 1;
-    }
-    else
-        length = utf8_strlen (string);
-
-    if (alloc_wstring)
-        free (alloc_wstring);
-
-    add_for_tab = CONFIG_INTEGER(config_look_tab_width) - 1;
-    if (add_for_tab > 0)
-    {
-        for (ptr_string = string; ptr_string[0]; ptr_string++)
-        {
-            if (ptr_string[0] == '\t')
-                length += add_for_tab;
-        }
-    }
-
-    return length;
-}
-
-/*
- * Compares two UTF-8 chars (case sensitive).
- *
- * Returns:
- *   -1: string1 < string2
- *    0: string1 == string2
- *    1: string1 > string2
- */
-
-int
-utf8_charcmp (const char *string1, const char *string2)
-{
-    int length1, length2, i, diff;
-
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
-    length1 = utf8_char_size (string1);
-    length2 = utf8_char_size (string2);
-
-    i = 0;
-    while ((i < length1) && (i < length2))
-    {
-        diff = (int)((unsigned char) string1[i]) - (int)((unsigned char) string2[i]);
-        if (diff != 0)
-            return (diff < 0) ? -1 : 1;
-        i++;
-    }
-    /* string1 == string2 ? */
-    if ((i == length1) && (i == length2))
-        return 0;
-    /* string1 < string2 ? */
-    if (i == length1)
-        return 1;
-    /* string1 > string2 */
-    return -1;
-}
-
-/*
- * Compares two UTF-8 chars (case is ignored).
- *
- * Returns:
- *   -1: string1 < string2
- *    0: string1 == string2
- *    1: string1 > string2
- */
-
-int
-utf8_charcasecmp (const char *string1, const char *string2)
-{
-    wint_t wchar1, wchar2;
-
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
-    wchar1 = utf8_wide_char (string1);
-    if ((wchar1 >= 'A') && (wchar1 <= 'Z'))
-        wchar1 += ('a' - 'A');
-
-    wchar2 = utf8_wide_char (string2);
-    if ((wchar2 >= 'A') && (wchar2 <= 'Z'))
-        wchar2 += ('a' - 'A');
-
-    return (wchar1 < wchar2) ? -1 : ((wchar1 == wchar2) ? 0 : 1);
-}
-
-/*
- * Compares two UTF-8 chars (case is ignored) using a range.
- *
- * The range is the number of chars which can be converted from upper to lower
- * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
- *
- * Examples:
- *   - range = 26: A-Z         ==> a-z
- *   - range = 29: A-Z [ \ ]   ==> a-z { | }
- *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
- *   (ranges 29 and 30 are used by some protocols like IRC)
- *
- * Returns:
- *   < 0: char1 < char2
- *     0: char1 == char2
- *   > 0: char1 > char2
- */
-
-int
-utf8_charcasecmp_range (const char *string1, const char *string2, int range)
-{
-    wint_t wchar1, wchar2;
-
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-
-    wchar1 = utf8_wide_char (string1);
-    if ((wchar1 >= (wint_t)'A') && (wchar1 < (wint_t)('A' + range)))
-        wchar1 += ('a' - 'A');
-
-    wchar2 = utf8_wide_char (string2);
-    if ((wchar2 >= (wint_t)'A') && (wchar2 < (wint_t)('A' + range)))
-        wchar2 += ('a' - 'A');
-
-    return (wchar1 < wchar2) ? -1 : ((wchar1 == wchar2) ? 0 : 1);
-}
-
-/*
  * Gets number of chars needed on screen to display the UTF-8 char.
  *
  * Returns the number of chars (>= 0).
@@ -658,20 +466,66 @@ utf8_charcasecmp_range (const char *string1, const char *string2, int range)
 int
 utf8_char_size_screen (const char *string)
 {
-    int char_size;
-    char utf_char[16];
+    wchar_t codepoint;
+
+    if (!string || !string[0])
+        return 0;
+
+    if (string[0] == '\t')
+        return CONFIG_INTEGER(config_look_tab_width);
+
+    /*
+     * chars < 32 are displayed with a letter/symbol and reverse video,
+     * so exactly one column
+     */
+    if (((unsigned char)string[0]) < 32)
+        return 1;
+
+    codepoint = (wchar_t)utf8_char_int (string);
+
+    /*
+     * special chars not displayed (because not handled by WeeChat):
+     *   U+00AD: soft hyphen      (wcwidth == 1)
+     *   U+200B: zero width space (wcwidth == 0)
+     */
+    if ((codepoint == 0x00AD) || (codepoint == 0x200B))
+    {
+        return -1;
+    }
+
+    return wcwidth (codepoint);
+}
+
+/*
+ * Gets number of chars needed on screen to display the UTF-8 string.
+ *
+ * Returns the number of chars (>= 0).
+ */
+
+int
+utf8_strlen_screen (const char *string)
+{
+    int size_screen, size_screen_char;
+    const char *ptr_string;
 
     if (!string)
         return 0;
 
-    char_size = utf8_char_size (string);
-    if (char_size == 0)
-        return 0;
+    if (!local_utf8)
+        return utf8_strlen (string);
 
-    memcpy (utf_char, string, char_size);
-    utf_char[char_size] = '\0';
+    size_screen = 0;
+    ptr_string = string;
+    while (ptr_string && ptr_string[0])
+    {
+        size_screen_char = utf8_char_size_screen (ptr_string);
+        /* count only chars that use at least one column */
+        if (size_screen_char > 0)
+            size_screen += size_screen_char;
+        ptr_string = utf8_next_char (ptr_string);
+    }
 
-    return utf8_strlen_screen (utf_char);
+    return size_screen;
 }
 
 /*
@@ -776,4 +630,31 @@ utf8_strndup (const char *string, int length)
         return strdup (string);
 
     return string_strndup (string, end - string);
+}
+
+/*
+ * Copies max N chars from a string to another and adds null byte at the end.
+ *
+ * Note: the target string "dest" must be long enough.
+ */
+
+void
+utf8_strncpy (char *dest, const char *string, int length)
+{
+    const char *end;
+
+    if (!dest)
+        return;
+
+    dest[0] = '\0';
+
+    if (!string || (length <= 0))
+        return;
+
+    end = utf8_add_offset (string, length);
+    if (!end || (end == string))
+        return;
+
+    memcpy (dest, string, end - string);
+    dest[end - string] = '\0';
 }

@@ -1,7 +1,7 @@
 /*
  * wee-secure-config.c - secured data configuration options (file sec.conf)
  *
- * Copyright (C) 2013-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2013-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -60,7 +60,7 @@ secure_config_get_passphrase_from_user (const char *error)
                   "by WeeChat:");
     prompt[1] = _("(enter just one space to skip the passphrase, but this "
                   "will DISABLE all secured data!)");
-    prompt[2] = _("(press ctrl-C to exit WeeChat now)");
+    prompt[2] = _("(press ctrl-c to exit WeeChat now)");
     prompt[3] = error;
     prompt[4] = NULL;
 
@@ -83,7 +83,7 @@ secure_config_get_passphrase_from_user (const char *error)
             }
             else if (strcmp (passphrase, "\x03") == 0)
             {
-                /* ctrl-C pressed, just exit now */
+                /* ctrl-c pressed, just exit now */
                 exit (1);
             }
             else
@@ -446,7 +446,7 @@ secure_config_init_options ()
 {
     struct t_config_section *ptr_section;
 
-    secure_config_file = config_file_new (NULL, SECURE_CONFIG_NAME,
+    secure_config_file = config_file_new (NULL, SECURE_CONFIG_PRIO_NAME,
                                           &secure_config_reload_cb, NULL, NULL);
     if (!secure_config_file)
         return 0;

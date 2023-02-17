@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -36,6 +36,7 @@ struct t_hook_command_run
     char *command;                     /* name of command (without '/')     */
 };
 
+extern char *hook_command_run_get_description (struct t_hook *hook);
 extern struct t_hook *hook_command_run (struct t_weechat_plugin *plugin,
                                         const char *command,
                                         t_hook_callback_command_run *callback,

@@ -1,7 +1,7 @@
 /*
  * gui-completion.c - word completion according to context (used by all GUI)
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -74,7 +74,7 @@ gui_completion_word_compare_cb (void *data,
     completion_word1 = (struct t_gui_completion_word *)pointer1;
     completion_word2 = (struct t_gui_completion_word *)pointer2;
 
-    return string_strcasecmp (completion_word1->word, completion_word2->word);
+    return string_strcmp (completion_word1->word, completion_word2->word);
 }
 
 /*
@@ -319,9 +319,12 @@ gui_completion_search_command (struct t_weechat_plugin *plugin,
     struct t_hook *ptr_hook, *hook_for_other_plugin, *hook_incomplete_command;
     int length_command, allow_incomplete_commands, count_incomplete_commands;
 
+    if (!command)
+        return NULL;
+
     hook_for_other_plugin = NULL;
     hook_incomplete_command = NULL;
-    length_command = strlen (command);
+    length_command = utf8_strlen (command);
     count_incomplete_commands = 0;
     allow_incomplete_commands = CONFIG_BOOLEAN(config_look_command_incomplete);
 
@@ -332,17 +335,16 @@ gui_completion_search_command (struct t_weechat_plugin *plugin,
             && HOOK_COMMAND(ptr_hook, command)
             && HOOK_COMMAND(ptr_hook, command)[0])
         {
-            if (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
-                                   command) == 0)
+            if (strcmp (HOOK_COMMAND(ptr_hook, command), command) == 0)
             {
                 if (ptr_hook->plugin == plugin)
                     return ptr_hook;
                 hook_for_other_plugin = ptr_hook;
             }
             else if (allow_incomplete_commands
-                     && (string_strncasecmp (HOOK_COMMAND(ptr_hook, command),
-                                             command,
-                                             length_command) == 0))
+                     && (string_strncmp (HOOK_COMMAND(ptr_hook, command),
+                                         command,
+                                         length_command) == 0))
             {
                 hook_incomplete_command = ptr_hook;
                 count_incomplete_commands++;
@@ -478,8 +480,8 @@ gui_completion_list_add (struct t_gui_completion *completion, const char *word,
     if (!completion->base_word || !completion->base_word[0]
         || (nick_completion && (gui_completion_nickncmp (completion->base_word, word,
                                                          utf8_strlen (completion->base_word)) == 0))
-        || (!nick_completion && (string_strncasecmp (completion->base_word, word,
-                                                     utf8_strlen (completion->base_word)) == 0)))
+        || (!nick_completion && (string_strncmp (completion->base_word, word,
+                                                 utf8_strlen (completion->base_word)) == 0)))
     {
         completion_word = malloc (sizeof (*completion_word));
         if (completion_word)
@@ -1034,11 +1036,11 @@ gui_completion_common_prefix_size (struct t_arraylist *list,
             ptr_completion_word =
                 (struct t_gui_completion_word *)(list->data[i]);
             if (!utf_char
-                || (utf8_charcasecmp (utf_char,
-                                      ptr_completion_word->word) == 0))
+                || (string_charcasecmp (utf_char,
+                                        ptr_completion_word->word) == 0))
             {
                 if ((ptr_completion_word->word[ptr_char - ptr_first_item] == '\0')
-                    || (utf8_charcasecmp (
+                    || (string_charcasecmp (
                             ptr_char,
                             ptr_completion_word->word + (ptr_char - ptr_first_item)) != 0))
                 {
@@ -1112,7 +1114,7 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
         {
             ptr_completion_word =
                 (struct t_gui_completion_word *)list_temp->data[index];
-            if (utf8_charcasecmp (utf_char, ptr_completion_word->word) == 0)
+            if (string_charcasecmp (utf_char, ptr_completion_word->word) == 0)
             {
                 arraylist_remove (list_temp, index);
                 items_count++;
@@ -1201,9 +1203,9 @@ gui_completion_complete (struct t_gui_completion *completion)
                                           ptr_completion_word->word,
                                           length) == 0))
             || (!ptr_completion_word->nick_completion
-                && (string_strncasecmp (completion->base_word,
-                                        ptr_completion_word->word,
-                                        length) == 0)))
+                && (string_strncmp (completion->base_word,
+                                    ptr_completion_word->word,
+                                    length) == 0)))
         {
             if ((!completion->word_found) || word_found_seen)
             {
@@ -1236,9 +1238,9 @@ gui_completion_complete (struct t_gui_completion *completion)
                                                       ptr_completion_word2->word,
                                                       length) == 0))
                         || (!ptr_completion_word->nick_completion
-                            && (string_strncasecmp (completion->base_word,
-                                                    ptr_completion_word2->word,
-                                                    length) == 0)))
+                            && (string_strncmp (completion->base_word,
+                                                ptr_completion_word2->word,
+                                                length) == 0)))
                     {
                         other_completion++;
                     }
@@ -1262,7 +1264,6 @@ gui_completion_complete (struct t_gui_completion *completion)
                     completion->word_found_is_nick = 0;
                     completion->add_space = 0;
                     completion->position = -1;
-                    string_tolower (completion->word_found);
 
                     /* alert user of partial completion */
                     if (CONFIG_BOOLEAN(config_completion_partial_completion_alert))
@@ -1497,15 +1498,15 @@ const char *
 gui_completion_get_string (struct t_gui_completion *completion,
                            const char *property)
 {
-    if (completion)
-    {
-        if (string_strcasecmp (property, "base_command") == 0)
-            return completion->base_command;
-        else if (string_strcasecmp (property, "base_word") == 0)
-            return completion->base_word;
-        else if (string_strcasecmp (property, "args") == 0)
-            return completion->args;
-    }
+    if (!completion || !property)
+        return NULL;
+
+    if (strcmp (property, "base_command") == 0)
+        return completion->base_command;
+    else if (strcmp (property, "base_word") == 0)
+        return completion->base_word;
+    else if (strcmp (property, "args") == 0)
+        return completion->args;
 
     return NULL;
 }

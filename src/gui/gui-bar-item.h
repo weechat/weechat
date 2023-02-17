@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -47,12 +47,15 @@ enum t_gui_bar_item_weechat
     GUI_BAR_ITEM_WINDOW_NUMBER,
     GUI_BAR_ITEM_MOUSE_STATUS,
     GUI_BAR_ITEM_AWAY,
+    GUI_BAR_ITEM_SPACER,
     /* number of bar items */
     GUI_BAR_NUM_ITEMS,
 };
 
+struct t_gui_bar;
 struct t_gui_buffer;
 struct t_gui_window;
+struct t_infolist;
 
 struct t_gui_bar_item
 {

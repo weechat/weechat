@@ -1,7 +1,7 @@
 /*
  * gui-curses-color.c - color functions for Curses GUI
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -123,9 +123,12 @@ gui_color_search (const char *color_name)
 {
     int i;
 
+    if (!color_name)
+        return -1;
+
     for (i = 0; gui_weechat_colors[i].string; i++)
     {
-        if (string_strcasecmp (gui_weechat_colors[i].string, color_name) == 0)
+        if (strcmp (gui_weechat_colors[i].string, color_name) == 0)
             return i;
     }
 
@@ -165,6 +168,10 @@ gui_color_get_gui_attrs (int color)
 
     attributes = 0;
 
+    if (color & GUI_COLOR_EXTENDED_BLINK_FLAG)
+        attributes |= A_BLINK;
+    if (color & GUI_COLOR_EXTENDED_DIM_FLAG)
+        attributes |= A_DIM;
     if (color & GUI_COLOR_EXTENDED_BOLD_FLAG)
         attributes |= A_BOLD;
     if (color & GUI_COLOR_EXTENDED_REVERSE_FLAG)
@@ -173,7 +180,6 @@ gui_color_get_gui_attrs (int color)
         attributes |= A_ITALIC;
     if (color & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
         attributes |= A_UNDERLINE;
-
     return attributes;
 }
 
@@ -188,6 +194,10 @@ gui_color_get_extended_flags (int attrs)
 
     flags = 0;
 
+    if (attrs & A_BLINK)
+        flags |= GUI_COLOR_EXTENDED_BLINK_FLAG;
+    if (attrs & A_DIM)
+        flags |= GUI_COLOR_EXTENDED_DIM_FLAG;
     if (attrs & A_BOLD)
         flags |= GUI_COLOR_EXTENDED_BOLD_FLAG;
     if (attrs & A_REVERSE)
@@ -1192,20 +1202,20 @@ gui_color_buffer_input_cb (const void *pointer, void *data,
     (void) pointer;
     (void) data;
 
-    if (string_strcasecmp (input_data, "e") == 0)
+    if (string_strcmp (input_data, "e") == 0)
     {
         gui_color_buffer_extra_info ^= 1;
         gui_color_buffer_display ();
     }
-    else if (string_strcasecmp (input_data, "r") == 0)
+    else if (string_strcmp (input_data, "r") == 0)
     {
         gui_color_buffer_display ();
     }
-    else if (string_strcasecmp (input_data, "q") == 0)
+    else if (string_strcmp (input_data, "q") == 0)
     {
         gui_buffer_close (buffer);
     }
-    else if (string_strcasecmp (input_data, "z") == 0)
+    else if (string_strcmp (input_data, "z") == 0)
     {
         gui_color_reset_pairs ();
     }
@@ -1257,20 +1267,32 @@ gui_color_buffer_assign ()
 void
 gui_color_buffer_open ()
 {
+    struct t_hashtable *properties;
+
     if (!gui_color_buffer)
     {
-        gui_color_buffer = gui_buffer_new (
-            NULL, GUI_COLOR_BUFFER_NAME,
+        properties = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+        if (properties)
+        {
+            hashtable_set (properties, "type", "free");
+            hashtable_set (properties, "localvar_set_no_log", "1");
+            hashtable_set (properties, "key_bind_meta-c", "/color switch");
+        }
+
+        gui_color_buffer = gui_buffer_new_props (
+            NULL, GUI_COLOR_BUFFER_NAME, properties,
             &gui_color_buffer_input_cb, NULL, NULL,
             &gui_color_buffer_close_cb, NULL, NULL);
-        if (gui_color_buffer)
-        {
-            if (!gui_color_buffer->short_name)
-                gui_color_buffer->short_name = strdup (GUI_COLOR_BUFFER_NAME);
-            gui_buffer_set (gui_color_buffer, "type", "free");
-            gui_buffer_set (gui_color_buffer, "localvar_set_no_log", "1");
-            gui_buffer_set (gui_color_buffer, "key_bind_meta-c", "/color switch");
-        }
+
+        if (gui_color_buffer && !gui_color_buffer->short_name)
+            gui_color_buffer->short_name = strdup (GUI_COLOR_BUFFER_NAME);
+
+        if (properties)
+            hashtable_free (properties);
     }
 
     if (!gui_color_buffer)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -29,6 +29,13 @@
 #define EVAL_DEFAULT_SUFFIX "}"
 
 #define EVAL_RECURSION_MAX  32
+
+#define EVAL_RANGE_DIGIT    "0123456789"
+#define EVAL_RANGE_XDIGIT   EVAL_RANGE_DIGIT "abcdefABCDEF"
+#define EVAL_RANGE_LOWER    "abcdefghijklmnopqrstuvwxyz"
+#define EVAL_RANGE_UPPER    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+#define EVAL_RANGE_ALPHA    EVAL_RANGE_LOWER EVAL_RANGE_UPPER
+#define EVAL_RANGE_ALNUM    EVAL_RANGE_ALPHA EVAL_RANGE_DIGIT
 
 struct t_hashtable;
 

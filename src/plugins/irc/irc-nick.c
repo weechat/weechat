@@ -1,7 +1,7 @@
 /*
  * irc-nick.c - nick management for IRC plugin
  *
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -834,37 +834,41 @@ irc_nick_search (struct t_irc_server *server, struct t_irc_channel *channel,
 }
 
 /*
- * Returns number of nicks (total, op, halfop, voice, normal) on a channel.
+ * Returns number of nicks (total, ops, halfops, voiced, regular) on a channel.
  */
 
 void
 irc_nick_count (struct t_irc_server *server, struct t_irc_channel *channel,
-                int *total, int *count_op, int *count_halfop, int *count_voice,
-                int *count_normal)
+                int *total, int *count_ops, int *count_halfops,
+                int *count_voiced, int *count_regular)
 {
     struct t_irc_nick *ptr_nick;
 
     (*total) = 0;
-    (*count_op) = 0;
-    (*count_halfop) = 0;
-    (*count_voice) = 0;
-    (*count_normal) = 0;
+    (*count_ops) = 0;
+    (*count_halfops) = 0;
+    (*count_voiced) = 0;
+    (*count_regular) = 0;
     for (ptr_nick = channel->nicks; ptr_nick;
          ptr_nick = ptr_nick->next_nick)
     {
         (*total)++;
         if (irc_nick_is_op (server, ptr_nick))
-            (*count_op)++;
+        {
+            (*count_ops)++;
+        }
         else
         {
             if (irc_nick_has_prefix_mode (server, ptr_nick, 'h'))
-                (*count_halfop)++;
+            {
+                (*count_halfops)++;
+            }
             else
             {
                 if (irc_nick_has_prefix_mode (server, ptr_nick, 'v'))
-                    (*count_voice)++;
+                    (*count_voiced)++;
                 else
-                    (*count_normal)++;
+                    (*count_regular)++;
             }
         }
     }

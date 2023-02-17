@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
 # Copyright (C) 2008 Julien Louis <ptitlouis@sysif.net>
 # Copyright (C) 2009 Emmanuel Bouthenot <kolter@openics.org>
 #
@@ -87,6 +87,8 @@ endif()
 include_directories(${GNUTLS_INCLUDE_PATH})
 
 include_directories(${CURL_INCLUDE_DIRS})
+
+include_directories(${ZSTD_INCLUDE_DIRS})
 
 include_directories(${CMAKE_BINARY_DIR})
 add_library(weechat_core STATIC ${LIB_CORE_SRC})

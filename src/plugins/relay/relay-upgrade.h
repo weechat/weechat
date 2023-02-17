@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -31,7 +31,7 @@ enum t_relay_upgrade_type
     RELAY_UPGRADE_TYPE_SERVER,
 };
 
-extern int relay_upgrade_save ();
+extern int relay_upgrade_save (int force_disconnected_state);
 extern int relay_upgrade_load ();
 
 #endif /* WEECHAT_PLUGIN_RELAY_UPGRADE_H */
