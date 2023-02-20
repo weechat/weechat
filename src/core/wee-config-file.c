@@ -2808,11 +2808,11 @@ config_file_write (struct t_config_file *config_file)
 int
 config_file_read_internal (struct t_config_file *config_file, int reload)
 {
-    int filename_length, line_number, rc, undefined_value;
-    char *filename;
+    int filename_length, line_number, rc, length;
+    char *filename, *section, *option, *value;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    char line[16384], *ptr_line, *ptr_line2, *pos, *pos2, *ptr_option_name;
+    char line[16384], *ptr_line, *ptr_line2, *pos, *pos2;
 
     if (!config_file)
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
@@ -2862,192 +2862,202 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
     line_number = 0;
     while (!feof (config_file->file))
     {
-        ptr_line = fgets (line, sizeof (line) - 1, config_file->file);
         line_number++;
-        if (ptr_line)
+
+        ptr_line = fgets (line, sizeof (line) - 1, config_file->file);
+        if (!ptr_line)
+            continue;
+
+        /* encode line to internal charset */
+        ptr_line2 = string_iconv_to_internal (NULL, ptr_line);
+        if (ptr_line2)
         {
-            /* encode line to internal charset */
-            ptr_line2 = string_iconv_to_internal (NULL, ptr_line);
-            if (ptr_line2)
-                snprintf (line, sizeof (line), "%s", ptr_line2);
+            snprintf (line, sizeof (line), "%s", ptr_line2);
+            free (ptr_line2);
+        }
 
-            /* skip spaces */
-            while (ptr_line[0] == ' ')
+        /* skip spaces */
+        while (ptr_line[0] == ' ')
+        {
+            ptr_line++;
+        }
+
+        /* remove CR/LF */
+        pos = strchr (ptr_line, '\r');
+        if (pos)
+            pos[0] = '\0';
+        pos = strchr (ptr_line, '\n');
+        if (pos)
+            pos[0] = '\0';
+
+        /* ignore empty line or comment */
+        if (!ptr_line[0] || (ptr_line[0] == '#'))
+            continue;
+
+        /* beginning of section */
+        if ((ptr_line[0] == '[') && !strchr (ptr_line, '='))
+        {
+            pos = strchr (ptr_line, ']');
+            if (!pos)
             {
-                ptr_line++;
+                gui_chat_printf (NULL,
+                                 _("%sWarning: %s, line %d: invalid "
+                                   "syntax, missing \"]\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 filename, line_number);
             }
-
-            /* not a comment and not an empty line */
-            if ((ptr_line[0] != '#') && (ptr_line[0] != '\r')
-                && (ptr_line[0] != '\n'))
+            else
             {
-                /* beginning of section */
-                if ((ptr_line[0] == '[') && !strchr (ptr_line, '='))
+                section = string_strndup (ptr_line + 1, pos - ptr_line - 1);
+                if (section)
                 {
-                    pos = strchr (line, ']');
-                    if (!pos)
+                    ptr_section = config_file_search_section (config_file,
+                                                              section);
+                    if (!ptr_section)
                     {
                         gui_chat_printf (NULL,
-                                         _("%sWarning: %s, line %d: invalid "
-                                           "syntax, missing \"]\""),
+                                         _("%sWarning: %s, line %d: unknown "
+                                           "section identifier (\"%s\")"),
                                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         filename, line_number);
+                                         filename, line_number, section);
+                    }
+                    free (section);
+                }
+            }
+            continue;
+        }
+
+        /* option */
+        option = NULL;
+        value = NULL;
+
+        /* skip escape char */
+        if (ptr_line[0] == '\\')
+            ptr_line++;
+
+        pos = strstr (ptr_line, " =");
+        if (pos)
+        {
+            /* skip spaces before '=' */
+            pos2 = pos - 1;
+            while ((pos2 > ptr_line) && (pos2[0] == ' '))
+            {
+                pos2--;
+            }
+            option = string_strndup (ptr_line, pos2 + 1 - ptr_line);
+            /* skip spaces after '=' */
+            pos += 2;
+            while (pos[0] == ' ')
+            {
+                pos++;
+            }
+            if (strcmp (pos, WEECHAT_CONFIG_OPTION_NULL) != 0)
+            {
+                length = strlen (pos);
+                if (length > 1)
+                {
+                    /* remove simple or double quotes and spaces at the end */
+                    pos2 = pos + length - 1;
+                    while ((pos2 > pos) && (pos2[0] == ' '))
+                    {
+                        pos2--;
+                    }
+                    if (((pos[0] == '\'') && (pos2[0] == '\''))
+                        || ((pos[0] == '"') && (pos2[0] == '"')))
+                    {
+                        value = string_strndup (pos + 1, pos2 - pos - 1);
                     }
                     else
                     {
-                        pos[0] = '\0';
-                        pos = ptr_line + 1;
-                        ptr_section = config_file_search_section (config_file,
-                                                                  pos);
-                        if (!ptr_section)
-                        {
-                            gui_chat_printf (NULL,
-                                             _("%sWarning: %s, line %d: unknown "
-                                               "section identifier "
-                                               "(\"%s\")"),
-                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             filename, line_number, pos);
-                        }
+                        value = string_strndup (pos, pos2 + 1 - pos);
                     }
                 }
                 else
                 {
-                    undefined_value = 1;
-
-                    /* remove CR/LF */
-                    pos = strchr (line, '\r');
-                    if (pos != NULL)
-                        pos[0] = '\0';
-                    pos = strchr (line, '\n');
-                    if (pos != NULL)
-                        pos[0] = '\0';
-
-                    pos = strstr (line, " =");
-                    if (pos)
-                    {
-                        pos[0] = '\0';
-                        pos += 2;
-
-                        /* remove spaces before '=' */
-                        pos2 = pos - 3;
-                        while ((pos2 > line) && (pos2[0] == ' '))
-                        {
-                            pos2[0] = '\0';
-                            pos2--;
-                        }
-
-                        /* skip spaces after '=' */
-                        while (pos[0] && (pos[0] == ' '))
-                        {
-                            pos++;
-                        }
-
-                        if (pos[0]
-                            && strcmp (pos, WEECHAT_CONFIG_OPTION_NULL) != 0)
-                        {
-                            undefined_value = 0;
-                            /* remove simple or double quotes and spaces at the end */
-                            if (strlen (pos) > 1)
-                            {
-                                pos2 = pos + strlen (pos) - 1;
-                                while ((pos2 > pos) && (pos2[0] == ' '))
-                                {
-                                    pos2[0] = '\0';
-                                    pos2--;
-                                }
-                                pos2 = pos + strlen (pos) - 1;
-                                if (((pos[0] == '\'') &&
-                                     (pos2[0] == '\'')) ||
-                                    ((pos[0] == '"') &&
-                                     (pos2[0] == '"')))
-                                {
-                                    pos2[0] = '\0';
-                                    pos++;
-                                }
-                            }
-                        }
-                    }
-
-                    ptr_option_name = (line[0] == '\\') ? line + 1 : line;
-
-                    if (ptr_section && ptr_section->callback_read)
-                    {
-                        ptr_option = NULL;
-                        rc = (ptr_section->callback_read)
-                            (ptr_section->callback_read_pointer,
-                             ptr_section->callback_read_data,
-                             config_file,
-                             ptr_section,
-                             ptr_option_name,
-                             (undefined_value) ? NULL : pos);
-                    }
-                    else
-                    {
-                        rc = WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
-                        ptr_option = config_file_search_option (config_file,
-                                                                ptr_section,
-                                                                ptr_option_name);
-                        if (ptr_option)
-                        {
-                            rc = config_file_option_set (ptr_option,
-                                                         (undefined_value) ?
-                                                         NULL : pos,
-                                                         1);
-                            ptr_option->loaded = 1;
-                        }
-                        else
-                        {
-                            if (ptr_section
-                                && ptr_section->callback_create_option)
-                            {
-                                rc = (int) (ptr_section->callback_create_option) (
-                                    ptr_section->callback_create_option_pointer,
-                                    ptr_section->callback_create_option_data,
-                                    config_file,
-                                    ptr_section,
-                                    ptr_option_name,
-                                    (undefined_value) ? NULL : pos);
-                            }
-                        }
-                    }
-
-                    switch (rc)
-                    {
-                        case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
-                            if (ptr_section)
-                                gui_chat_printf (NULL,
-                                                 _("%sWarning: %s, line %d: "
-                                                   "unknown option for section "
-                                                   "\"%s\": %s"),
-                                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                                 filename, line_number,
-                                                 ptr_section->name,
-                                                 ptr_line2);
-                            else
-                                gui_chat_printf (NULL,
-                                                 _("%sWarning: %s, line %d: "
-                                                   "option outside section: "
-                                                   "%s"),
-                                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                                 filename, line_number,
-                                                 ptr_line2);
-                            break;
-                        case WEECHAT_CONFIG_OPTION_SET_ERROR:
-                            gui_chat_printf (NULL,
-                                             _("%sWarning: %s, line %d: "
-                                               "invalid value for option: "
-                                               "%s"),
-                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             filename, line_number,
-                                             ptr_line2);
-                            break;
-                    }
+                    value = strdup (pos);
                 }
             }
-
-            if (ptr_line2)
-                free (ptr_line2);
         }
+        else
+        {
+            option = strdup (ptr_line);
+        }
+
+        if (ptr_section && ptr_section->callback_read)
+        {
+            ptr_option = NULL;
+            rc = (ptr_section->callback_read)
+                (ptr_section->callback_read_pointer,
+                 ptr_section->callback_read_data,
+                 config_file,
+                 ptr_section,
+                 option,
+                 value);
+        }
+        else
+        {
+            rc = WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
+            ptr_option = config_file_search_option (config_file,
+                                                    ptr_section,
+                                                    option);
+            if (ptr_option)
+            {
+                rc = config_file_option_set (ptr_option, value, 1);
+                ptr_option->loaded = 1;
+            }
+            else
+            {
+                if (ptr_section
+                    && ptr_section->callback_create_option)
+                {
+                    rc = (int) (ptr_section->callback_create_option) (
+                        ptr_section->callback_create_option_pointer,
+                        ptr_section->callback_create_option_data,
+                        config_file,
+                        ptr_section,
+                        option,
+                        value);
+                }
+            }
+        }
+
+        switch (rc)
+        {
+            case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
+                if (ptr_section)
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sWarning: %s, line %d: "
+                                       "unknown option for section \"%s\": %s"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     filename, line_number,
+                                     ptr_section->name,
+                                     line);
+                }
+                else
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sWarning: %s, line %d: "
+                                       "option outside section: %s"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     filename, line_number,
+                                     line);
+                }
+                break;
+            case WEECHAT_CONFIG_OPTION_SET_ERROR:
+                gui_chat_printf (NULL,
+                                 _("%sWarning: %s, line %d: "
+                                   "invalid value for option: %s"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 filename, line_number,
+                                 line);
+                break;
+        }
+
+        if (option)
+            free (option);
+        if (value)
+            free (value);
     }
 
     fclose (config_file->file);
