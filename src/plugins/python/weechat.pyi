@@ -481,6 +481,53 @@ def config_new(name: str, callback_reload: str, callback_reload_data: str) -> st
     ...
 
 
+def config_set_version(config_file: str, version: int, callback_update: str, callback_update_data: str) -> int:
+    """`config_set_version in WeeChat plugin API reference <https://weechat.org/doc/api/#_config_set_version>`_
+    ::
+
+        # example
+        def my_config_update_cb(data: str, config_file: str, version_read: int, data_read: Dict[str, str]) -> Dict[str, str]:
+            # return now if version is already up-to-date
+            if version_read >= 2:
+                return {}
+
+            section = data_read.get("section")
+            option = data_read.get("option")
+
+            # rename section "abc" to "def"
+            if section and not option and section == "abc":
+                data_read["section"] = "def"
+                return data_read
+
+            # limit other changes to section "test"
+            if not section or not option or section != "test":
+                return {}
+
+            # rename option "test1" to "test2"
+            if option == "test1":
+                data_read["option"] = "test2"
+                return data_read
+
+            # set value to "xxx" for option "test"
+            if option == "test":
+                data_read["value"] = "xxx"
+                return data_read
+
+            # set value to NULL for option "test_null"
+            if option == "test_null":
+                data_read["value_null"] = "1"
+                return data_read
+
+            # no changes
+            return {}
+
+        config_file = weechat.config_new("test", "", "")
+        weechat.config_set_version(config_file, 2, "my_config_update_cb", "")
+        weechat.config_read(config_file)
+    """
+    ...
+
+
 def config_new_section(config_file: str, name: str,
                        user_can_add_options: int, user_can_delete_options: int,
                        callback_read: str, callback_read_data: str,

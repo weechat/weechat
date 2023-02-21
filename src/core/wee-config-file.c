@@ -37,6 +37,7 @@
 #include "wee-config-file.h"
 #include "wee-arraylist.h"
 #include "wee-config.h"
+#include "wee-hashtable.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
 #include "wee-infolist.h"
@@ -239,6 +240,10 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
             return NULL;
         }
         new_config_file->file = NULL;
+        new_config_file->version = 1;
+        new_config_file->callback_update = NULL;
+        new_config_file->callback_update_pointer = NULL;
+        new_config_file->callback_update_data = NULL;
         new_config_file->callback_reload = callback_reload;
         new_config_file->callback_reload_pointer = callback_reload_pointer;
         new_config_file->callback_reload_data = callback_reload_data;
@@ -249,6 +254,38 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
     }
 
     return new_config_file;
+}
+
+/*
+ * Sets configuration file version and a callback to update config
+ * sections/options on-the-fly when the config is read.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+config_file_set_version (struct t_config_file *config_file,
+                         int version,
+                         struct t_hashtable *(*callback_update)(const void *pointer,
+                                                                void *data,
+                                                                struct t_config_file *config_file,
+                                                                int version_read,
+                                                                struct t_hashtable *data_read),
+                         const void *callback_update_pointer,
+                         void *callback_update_data)
+{
+    if (version < 1)
+        return 0;
+
+    config_file->version = version;
+
+    config_file->callback_update = callback_update;
+    config_file->callback_update_pointer = callback_update_pointer;
+    config_file->callback_update_data = callback_update_data;
+
+    return 1;
 }
 
 /*
@@ -2693,6 +2730,17 @@ config_file_write_internal (struct t_config_file *config_file,
         goto error;
     }
 
+    /* write config version (if different from 1) */
+    if (config_file->version > 1)
+    {
+        if (!string_fprintf (config_file->file,
+                             "\nconfig_version = %d\n",
+                             config_file->version))
+        {
+            goto error;
+        }
+    }
+
     /* write all sections */
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
@@ -2797,6 +2845,142 @@ config_file_write (struct t_config_file *config_file)
 }
 
 /*
+ * Parses configuration version.
+ *
+ * Returns:
+ *   >= 1: configuration version
+ *     -1: error
+ */
+
+int
+config_file_parse_version (const char *version)
+{
+    long number;
+    char *error;
+
+    number = strtoll (version, &error, 10);
+    if (!error || error[0])
+        return -1;
+
+    return (number < 1) ? -1 : (int)number;
+}
+
+/*
+ * Updates data read from config file: either section or option + value.
+ * The update callback (if defined in config) is called if the config version
+ * read in file is less than to the current config version.
+ *
+ * Parameters "section", "option" and "value" are updated in place: if the
+ * callback gives a new value, they are first freed and allocated again with
+ * the new value (or set to NULL for the value if the callback returns
+ * special key "value_null").
+ *
+ * Section can be updated only if option and value are NULL (ie if we are
+ * reading a section line like "[section]").
+ */
+
+void
+config_file_update_data_read (struct t_config_file *config_file,
+                              const char *section,
+                              const char *option,
+                              const char *value,
+                              char **ret_section,
+                              char **ret_option,
+                              char **ret_value)
+{
+    struct t_hashtable *data_read, *hashtable;
+    const char *ptr_section, *ptr_option, *ptr_value;
+    int value_null;
+
+    /* do nothing if config is already the latest version */
+    if (config_file->version_read >= config_file->version)
+        return;
+
+    /* do nothing if there's no update callback */
+    if (!config_file->callback_update)
+        return;
+
+    value_null = 0;
+
+    data_read = hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (!data_read)
+        return;
+
+    hashtable_set (data_read, "config", config_file->name);
+    if (section)
+        hashtable_set (data_read, "section", section);
+    if (option)
+    {
+        hashtable_set (data_read, "option", option);
+        if (value)
+        {
+            hashtable_set (data_read, "value", value);
+        }
+        else
+        {
+            hashtable_set (data_read, "value_null", "1");
+            value_null = 1;
+        }
+    }
+
+    hashtable = (config_file->callback_update)
+        (config_file->callback_update_pointer,
+         config_file->callback_update_data,
+         config_file,
+         config_file->version_read,
+         data_read);
+
+    if (hashtable)
+    {
+        /* if reading a section line, we can update its name */
+        if (section && !option && ret_section)
+        {
+            ptr_section = hashtable_get (hashtable, "section");
+            if (ptr_section && ptr_section[0])
+            {
+                if (*ret_section)
+                    free (*ret_section);
+                *ret_section = strdup (ptr_section);
+            }
+        }
+
+        /* if reading an option line, we can update its name and value */
+        if (section && option)
+        {
+            /* option name */
+            if (ret_option)
+            {
+                ptr_option = hashtable_get (hashtable, "option");
+                if (ptr_option)
+                {
+                    if (*ret_option)
+                        free (*ret_option);
+                    *ret_option = strdup (ptr_option);
+                }
+            }
+            /* value */
+            if (ret_value)
+            {
+                ptr_value = hashtable_get (hashtable, "value");
+                if (!value_null && hashtable_has_key (hashtable, "value_null"))
+                    ptr_value = NULL;
+                if (*ret_value)
+                    free (*ret_value);
+                *ret_value = (ptr_value) ? strdup (ptr_value) : NULL;
+            }
+        }
+    }
+
+    if (hashtable && (hashtable != data_read))
+        hashtable_free (hashtable);
+    hashtable_free (data_read);
+}
+
+/*
  * Reads a configuration file (this function must not be called directly).
  *
  * Returns:
@@ -2808,7 +2992,7 @@ config_file_write (struct t_config_file *config_file)
 int
 config_file_read_internal (struct t_config_file *config_file, int reload)
 {
-    int filename_length, line_number, rc, length;
+    int filename_length, line_number, rc, length, version;
     char *filename, *section, *option, *value;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
@@ -2816,6 +3000,8 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
 
     if (!config_file)
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
+
+    config_file->version_read = 1;
 
     /* build filename */
     filename_length = strlen (weechat_config_dir) + strlen (DIR_SEPARATOR) +
@@ -2911,6 +3097,9 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                 section = string_strndup (ptr_line + 1, pos - ptr_line - 1);
                 if (section)
                 {
+                    config_file_update_data_read (config_file,
+                                                  section, NULL, NULL,
+                                                  &section, NULL, NULL);
                     ptr_section = config_file_search_section (config_file,
                                                               section);
                     if (!ptr_section)
@@ -2983,7 +3172,46 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
             option = strdup (ptr_line);
         }
 
-        if (ptr_section && ptr_section->callback_read)
+        if (!ptr_section && (strcmp (option, CONFIG_VERSION_OPTION) == 0))
+        {
+            version = config_file_parse_version (pos);
+            if (version < 0)
+            {
+                gui_chat_printf (
+                    NULL,
+                    _("%sWarning: %s, line %d: invalid config "
+                      "version: %s"),
+                    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                    filename, line_number,
+                    line);
+            }
+            else
+            {
+                config_file->version_read = version;
+            }
+            continue;
+        }
+
+        if (!ptr_section)
+        {
+            gui_chat_printf (NULL,
+                             _("%sWarning: %s, line %d: "
+                               "option outside section: %s"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             filename, line_number,
+                             line);
+            continue;
+        }
+
+        config_file_update_data_read (config_file,
+                                      ptr_section->name, option, value,
+                                      NULL, &option, &value);
+
+        /* option has been ignored by the update callback? */
+        if (!option || !option[0])
+            continue;
+
+        if (ptr_section->callback_read)
         {
             ptr_option = NULL;
             rc = (ptr_section->callback_read)
@@ -3007,8 +3235,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
             }
             else
             {
-                if (ptr_section
-                    && ptr_section->callback_create_option)
+                if (ptr_section->callback_create_option)
                 {
                     rc = (int) (ptr_section->callback_create_option) (
                         ptr_section->callback_create_option_pointer,
@@ -3024,25 +3251,13 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
         switch (rc)
         {
             case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
-                if (ptr_section)
-                {
-                    gui_chat_printf (NULL,
-                                     _("%sWarning: %s, line %d: "
-                                       "unknown option for section \"%s\": %s"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     filename, line_number,
-                                     ptr_section->name,
-                                     line);
-                }
-                else
-                {
-                    gui_chat_printf (NULL,
-                                     _("%sWarning: %s, line %d: "
-                                       "option outside section: %s"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     filename, line_number,
-                                     line);
-                }
+                gui_chat_printf (NULL,
+                                 _("%sWarning: %s, line %d: "
+                                   "unknown option for section \"%s\": %s"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 filename, line_number,
+                                 ptr_section->name,
+                                 line);
                 break;
             case WEECHAT_CONFIG_OPTION_SET_ERROR:
                 gui_chat_printf (NULL,
@@ -3315,6 +3530,8 @@ config_file_free (struct t_config_file *config_file)
         (config_file->next_config)->prev_config = config_file->prev_config;
 
     /* free data */
+    if (config_file->callback_update_data)
+        free (config_file->callback_update_data);
     if (config_file->callback_reload_data)
         free (config_file->callback_reload_data);
 
@@ -3380,6 +3597,7 @@ config_file_hdata_config_file_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_config_file, name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, filename, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, file, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_file, version, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, callback_reload, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, callback_reload_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, callback_reload_data, POINTER, 0, NULL, NULL);

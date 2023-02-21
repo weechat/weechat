@@ -85,6 +85,7 @@ PHP_FUNCTION(weechat_list_remove);
 PHP_FUNCTION(weechat_list_remove_all);
 PHP_FUNCTION(weechat_list_free);
 PHP_FUNCTION(weechat_config_new);
+PHP_FUNCTION(weechat_config_set_version);
 PHP_FUNCTION(weechat_config_new_section);
 PHP_FUNCTION(weechat_config_search_section);
 PHP_FUNCTION(weechat_config_new_option);

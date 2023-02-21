@@ -881,6 +881,65 @@ API_FUNC(config_new)
     API_RETURN_STRING(result);
 }
 
+struct t_hashtable *
+weechat_perl_api_config_update_cb (const void *pointer, void *data,
+                                   struct t_config_file *config_file,
+                                   int version_read,
+                                   struct t_hashtable *data_read)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    struct t_hashtable *ret_hashtable;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (char *)API_PTR2STR(config_file);
+        func_argv[2] = &version_read;
+        func_argv[3] = data_read;
+
+        ret_hashtable = weechat_perl_exec (script,
+                                           WEECHAT_SCRIPT_EXEC_HASHTABLE,
+                                           ptr_function,
+                                           "ssih", func_argv);
+
+        return ret_hashtable;
+    }
+
+    return NULL;
+}
+
+API_FUNC(config_set_version)
+{
+    char *config_file, *function, *data;
+    int rc;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "config_set_version", API_RETURN_INT(0));
+    if (items < 4)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    config_file = SvPV_nolen (ST (0));
+    function = SvPV_nolen (ST (2));
+    data = SvPV_nolen (ST (3));
+
+    rc = plugin_script_api_config_set_version (
+        weechat_perl_plugin,
+        perl_current_script,
+        API_STR2PTR(config_file),
+        SvIV (ST (1)), /* version */
+        &weechat_perl_api_config_update_cb,
+        function,
+        data);
+
+    API_RETURN_INT(rc);
+}
+
 int
 weechat_perl_api_config_section_read_cb (const void *pointer, void *data,
                                          struct t_config_file *config_file,
@@ -1088,7 +1147,7 @@ weechat_perl_api_config_section_delete_option_cb (const void *pointer, void *dat
 
 API_FUNC(config_new_section)
 {
-    char *cfg_file, *name, *function_read, *data_read;
+    char *config_file, *name, *function_read, *data_read;
     char *function_write, *data_write, *function_write_default;
     char *data_write_default, *function_create_option, *data_create_option;
     char *function_delete_option, *data_delete_option;
@@ -1100,7 +1159,7 @@ API_FUNC(config_new_section)
     if (items < 14)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    cfg_file = SvPV_nolen (ST (0));
+    config_file = SvPV_nolen (ST (0));
     name = SvPV_nolen (ST (1));
     function_read = SvPV_nolen (ST (4));
     data_read = SvPV_nolen (ST (5));
@@ -1117,7 +1176,7 @@ API_FUNC(config_new_section)
         plugin_script_api_config_new_section (
             weechat_perl_plugin,
             perl_current_script,
-            API_STR2PTR(cfg_file),
+            API_STR2PTR(config_file),
             name,
             SvIV (ST (2)), /* user_can_add_options */
             SvIV (ST (3)), /* user_can_delete_options */
@@ -5400,6 +5459,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(list_remove_all);
     API_DEF_FUNC(list_free);
     API_DEF_FUNC(config_new);
+    API_DEF_FUNC(config_set_version);
     API_DEF_FUNC(config_new_section);
     API_DEF_FUNC(config_search_section);
     API_DEF_FUNC(config_new_option);

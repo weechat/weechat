@@ -6469,6 +6469,188 @@ def my_config_reload_cb(data: str, config_file: str) -> int:
 config_file = weechat.config_new("test", "my_config_reload_cb", "")
 ----
 
+==== config_set_version
+
+_WeeChat ≥ 3.9._
+
+Définir la version du fichier de configuration et une fonction de rappel pour
+la mise à jour des sections/options à la volée lorsque la configuration est lue.
+
+Prototype :
+
+[source,c]
+----
+int config_file_set_version (struct t_config_file *config_file,
+                             int version,
+                             struct t_hashtable *(*callback_update)(const void *pointer,
+                                                                    void *data,
+                                                                    struct t_config_file *config_file,
+                                                                    int version_read,
+                                                                    struct t_hashtable *data_read),
+                             const void *callback_update_pointer,
+                             void *callback_update_data);
+----
+
+Paramètres :
+
+* _config_file_ : pointeur vers le fichier de configuration
+* _version_ : version, doit être ≥ 2
+* _callback_update_ : fonction appelée lorsque le fichier de configuration est
+  lu, pour chaque section et option, si la version lue est inférieure à la
+  version attendue (optionnelle, peut être NULL, voir ci-dessous), paramètres
+  et valeur de retour :
+** _const void *pointer_ : pointeur
+** _void *data_ : pointeur
+** _struct t_config_file *config_file_ : pointeur vers le fichier de configuration
+** _int version_read_ : version lue dans le fichier de configuration (1 par défaut)
+** _struct t_hashtable *data_read_ : table de hachage avec les données lues du
+   fichier de configuration (voir ci-dessous)
+** valeur de retour :
+*** soit le pointeur vers la table de hachage "data_read" (avec la
+   table de hachage complétée), ou un pointeur vers une nouvelle table de
+   hachage (créée par la fonction de rappel, avec clés et valeurs de type
+   "string")
+* _callback_update_pointer_: pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat
+* _callback_update_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  fichier de configuration est libéré
+
+Fonction de rappel de mise à jour :
+
+* La fonction de rappel reçoit une table de hachage avec les données lues du
+  fichier de configuration :
+
+[width="100%",cols="1m,2,8",options="header"]
+|===
+| Clé        | Disponibilité             | Valeur
+| config     | Toujours définie          | Nom du fichier de configuration sans l'extension (par exemple : `weechat`)
+| section    | Toujours définie          | Nom de la section lue
+| option     | Pour une option seulement | Nom de l'option
+| value      | Pour une option seulement | Valeur de l'option (si non NULL)
+| value_null | Pour une option seulement | L'option a une valeur NULL (la valeur est toujours `1`)
+|===
+
+* La fonction de rappel peut mettre à jour la "section" pour une ligne avec une
+  section et "option", "value" et "value_null" pour une ligne avec une option.
+* Si "option" est changée en chaîne vide par la fonction de rappel, la ligne lue
+  dans le fichier de configuration est ignorée.
+* Le champ "value_null" peut être positionné pour forcer une valeur NULL dans
+  l'option.
+
+Valeur de retour :
+
+* 1 si OK, 0 si erreur
+
+Exemple en C :
+
+[source,c]
+----
+struct t_hashtable *
+my_config_update_cb (const void *pointer, void *data,
+                     struct t_config_file *config_file,
+                     int version_read,
+                     struct t_hashtable *data_read)
+{
+    const char *ptr_section, *ptr_option;
+
+    /* retourner maintenant si la version est déjà la dernière */
+    if (version_read >= 2)
+        return NULL;
+
+    ptr_section = hashtable_get (data_read, "section");
+    ptr_option = hashtable_get (data_read, "option");
+
+    /* renommer la section "abc" en "def" */
+    if (ptr_section && !ptr_option && (strcmp (ptr_section, "abc") == 0))
+    {
+        hashtable_set (data_read, "section", "def");
+        return data_read;
+    }
+
+    /* limiter les autres changements à la section "test" */
+    if (!ptr_section || !ptr_option || (strcmp (ptr_section, "test") != 0))
+        return NULL;
+
+    /* renommer l'option "test1" en "test2" */
+    if (strcmp (ptr_option, "test1") == 0)
+    {
+        hashtable_set (data_read, "option", "test2");
+        return data_read;
+    }
+
+    /* définir la valeur à "xxx" pour l'option "test" */
+    if (strcmp (ptr_option, "test") == 0)
+    {
+        hashtable_set (data_read, "value", "xxx");
+        return data_read;
+    }
+
+    /* définir la valeur à NULL pour l'option "test_null" */
+    if (strcmp (ptr_option, "test_null") == 0)
+    {
+        hashtable_set (data_read, "value_null", "1");
+        return data_read;
+    }
+
+    /* aucun changement */
+    return NULL;
+}
+
+struct t_config_file *config_file = weechat_config_new ("test", NULL, NULL, NULL);
+weechat_config_set_version (config_file, 2, &my_config_update_cb, NULL, NULL);
+weechat_config_read (config_file);
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def config_set_version(config_file: str, version: int, callback_update: str, callback_update_data: str) -> int: ...
+
+# exemple
+def my_config_update_cb(data: str, config_file: str, version_read: int, data_read: Dict[str, str]) -> Dict[str, str]:
+    # retourner maintenant si la version est déjà la dernière
+    if version_read >= 2:
+        return {}
+
+    section = data_read.get("section")
+    option = data_read.get("option")
+
+    # renommer la section "abc" en "def"
+    if section and not option and section == "abc":
+        data_read["section"] = "def"
+        return data_read
+
+    # limiter les autres changements à la section "test"
+    if not section or not option or section != "test":
+        return {}
+
+    # renommer l'option "test1" en "test2"
+    if option == "test1":
+        data_read["option"] = "test2"
+        return data_read
+
+    # définir la valeur à "xxx" pour l'option "test"
+    if option == "test":
+        data_read["value"] = "xxx"
+        return data_read
+
+    # définir la valeur à NULL pour l'option "test_null"
+    if option == "test_null":
+        data_read["value_null"] = "1"
+        return data_read
+
+    # aucun changement
+    return {}
+
+config_file = weechat.config_new("test", "", "")
+weechat.config_set_version(config_file, 2, "my_config_update_cb", "")
+weechat.config_read(config_file)
+----
+
 ==== config_new_section
 
 _Mis à jour dans la 1.5._

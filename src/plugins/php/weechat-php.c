@@ -143,6 +143,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_list_remove_all, arginfo_weechat_list_remove_all)
     PHP_FE(weechat_list_free, arginfo_weechat_list_free)
     PHP_FE(weechat_config_new, arginfo_weechat_config_new)
+    PHP_FE(weechat_config_set_version, arginfo_weechat_config_set_version)
     PHP_FE(weechat_config_new_section, arginfo_weechat_config_new_section)
     PHP_FE(weechat_config_search_section, arginfo_weechat_config_search_section)
     PHP_FE(weechat_config_new_option, arginfo_weechat_config_new_option)

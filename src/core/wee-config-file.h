@@ -23,6 +23,8 @@
 
 #include <stdio.h>
 
+#define CONFIG_VERSION_OPTION  "config_version"
+
 #define CONFIG_PRIORITY_DEFAULT 1000
 
 #define CONFIG_BOOLEAN(option) (*((int *)((option)->value)))
@@ -54,7 +56,17 @@ struct t_config_file
     char *filename;                        /* filename (without path)       */
                                            /* (example: "weechat.conf")     */
     FILE *file;                            /* file pointer                  */
-    int (*callback_reload)                 /* callback for reloading file   */
+    int version;                           /* config version (default=1)    */
+    int version_read;                      /* config version read in file   */
+    struct t_hashtable *(*callback_update) /* callback for version update   */
+    (const void *pointer,
+     void *data,
+     struct t_config_file *config_file,
+     int version_read,
+     struct t_hashtable *data_read);
+    const void *callback_update_pointer;   /* pointer sent to callback      */
+    void *callback_update_data;            /* data sent to callback         */
+    int (*callback_reload)                 /* callback for config reload    */
     (const void *pointer,
      void *data,
      struct t_config_file *config_file);
@@ -178,6 +190,15 @@ extern struct t_config_file *config_file_new (struct t_weechat_plugin *plugin,
                                                                      struct t_config_file *config_file),
                                               const void *callback_reload_pointer,
                                               void *callback_reload_data);
+extern int config_file_set_version (struct t_config_file *config_file,
+                                    int version,
+                                    struct t_hashtable *(*callback_update)(const void *pointer,
+                                                                           void *data,
+                                                                           struct t_config_file *config_file,
+                                                                           int version_read,
+                                                                           struct t_hashtable *data_read),
+                                    const void *callback_update_pointer,
+                                    void *callback_update_data);
 extern struct t_arraylist *config_file_get_configs_by_priority ();
 extern struct t_config_section *config_file_new_section (struct t_config_file *config_file,
                                                          const char *name,

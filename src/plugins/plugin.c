@@ -736,6 +736,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hashtable_free = &hashtable_free;
 
         new_plugin->config_new = &config_file_new;
+        new_plugin->config_set_version = &config_file_set_version;
         new_plugin->config_new_section = &config_file_new_section;
         new_plugin->config_search_section = &config_file_search_section;
         new_plugin->config_new_option = &config_file_new_option;

@@ -1080,6 +1080,69 @@ API_FUNC(config_new)
     API_RETURN_STRING(result);
 }
 
+struct t_hashtable *
+weechat_tcl_api_config_update_cb (const void *pointer, void *data,
+                                  struct t_config_file *config_file,
+                                  int version_read,
+                                  struct t_hashtable *data_read)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    struct t_hashtable *ret_hashtable;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (char *)API_PTR2STR(config_file);
+        func_argv[2] = &version_read;
+        func_argv[3] = data_read;
+
+        ret_hashtable = weechat_tcl_exec (script,
+                                          WEECHAT_SCRIPT_EXEC_HASHTABLE,
+                                          ptr_function,
+                                          "ssih", func_argv);
+
+        return ret_hashtable;
+    }
+
+    return NULL;
+}
+
+API_FUNC(config_set_version)
+{
+    Tcl_Obj *objp;
+    char *config_file, *function, *data;
+    int i, rc, version;
+
+    API_INIT_FUNC(1, "config_set_version", API_RETURN_INT(0));
+    if (objc < 5)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    if (Tcl_GetIntFromObj (interp, objv[2], &version) != TCL_OK)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    config_file = Tcl_GetStringFromObj (objv[1], &i);
+    function = Tcl_GetStringFromObj (objv[3], &i);
+    data = Tcl_GetStringFromObj (objv[4], &i);
+
+    rc = plugin_script_api_config_set_version (
+        weechat_tcl_plugin,
+        tcl_current_script,
+        API_STR2PTR(config_file),
+        version,
+        &weechat_tcl_api_config_update_cb,
+        function,
+        data);
+
+    API_RETURN_INT(rc);
+}
+
 int
 weechat_tcl_api_config_section_read_cb (const void *pointer, void *data,
                                         struct t_config_file *config_file,
@@ -1287,7 +1350,7 @@ weechat_tcl_api_config_section_delete_option_cb (const void *pointer, void *data
 API_FUNC(config_new_section)
 {
     Tcl_Obj *objp;
-    char *cfg_file, *name, *function_read, *data_read;
+    char *config_file, *name, *function_read, *data_read;
     char *function_write, *data_write, *function_write_default;
     char *data_write_default, *function_create_option, *data_create_option;
     char *function_delete_option, *data_delete_option;
@@ -1305,7 +1368,7 @@ API_FUNC(config_new_section)
         || (Tcl_GetIntFromObj (interp, objv[4], &can_delete) != TCL_OK))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    cfg_file = Tcl_GetStringFromObj (objv[1], &i);
+    config_file = Tcl_GetStringFromObj (objv[1], &i);
     name = Tcl_GetStringFromObj (objv[2], &i);
     function_read = Tcl_GetStringFromObj (objv[5], &i);
     data_read = Tcl_GetStringFromObj (objv[6], &i);
@@ -1322,7 +1385,7 @@ API_FUNC(config_new_section)
         plugin_script_api_config_new_section (
             weechat_tcl_plugin,
             tcl_current_script,
-            API_STR2PTR(cfg_file),
+            API_STR2PTR(config_file),
             name,
             can_add, /* user_can_add_options */
             can_delete, /* user_can_delete_options */
@@ -5904,6 +5967,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(list_remove_all);
     API_DEF_FUNC(list_free);
     API_DEF_FUNC(config_new);
+    API_DEF_FUNC(config_set_version);
     API_DEF_FUNC(config_new_section);
     API_DEF_FUNC(config_search_section);
     API_DEF_FUNC(config_new_option);

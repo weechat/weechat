@@ -108,6 +108,16 @@ TEST(CoreConfigFile, New)
 
 /*
  * Tests functions:
+ *   config_file_set_version
+ */
+
+TEST(CoreConfigFile, SetVersion)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   config_file_arraylist_cmp_config_cb
  *   config_file_get_configs_by_priority
  */

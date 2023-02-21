@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20221224-02"
+#define WEECHAT_PLUGIN_API_VERSION "20230220-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -529,6 +529,15 @@ struct t_weechat_plugin
                                                                 struct t_config_file *config_file),
                                          const void *callback_reload_pointer,
                                          void *callback_reload_data);
+    int (*config_set_version) (struct t_config_file *config_file,
+                               int version,
+                               struct t_hashtable *(*callback_update)(const void *pointer,
+                                                                      void *data,
+                                                                      struct t_config_file *config_file,
+                                                                      int version_read,
+                                                                      struct t_hashtable *data_read),
+                               const void *callback_update_pointer,
+                               void *callback_update_data);
     struct t_config_section *(*config_new_section) (struct t_config_file *config_file,
                                                     const char *name,
                                                     int user_can_add_options,
@@ -1573,6 +1582,14 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                  __callback_reload,                     \
                                  __callback_reload_pointer,             \
                                  __callback_reload_data)
+#define weechat_config_set_version(__config, __version,                 \
+                                   __callback_update,                   \
+                                   __callback_update_pointer,           \
+                                   __callback_update_data)              \
+    (weechat_plugin->config_set_version)(__config, __version,           \
+                                         __callback_update,             \
+                                         __callback_update_pointer,     \
+                                         __callback_update_data)
 #define weechat_config_new_section(__config, __name,                    \
                                    __user_can_add_options,              \
                                    __user_can_delete_options,           \

@@ -37,6 +37,17 @@ extern struct t_config_file *plugin_script_api_config_new (struct t_weechat_plug
                                                                                   struct t_config_file *config_file),
                                                            const char *function,
                                                            const char *data);
+extern int plugin_script_api_config_set_version (struct t_weechat_plugin *weechat_plugin,
+                                                 struct t_plugin_script *script,
+                                                 struct t_config_file *config_file,
+                                                 int version,
+                                                 struct t_hashtable *(*callback_update)(const void *pointer,
+                                                                                        void *data,
+                                                                                        struct t_config_file *config_file,
+                                                                                        int version_read,
+                                                                                        struct t_hashtable *data_read),
+                                                 const char *function,
+                                                 const char *data);
 extern struct t_config_section *plugin_script_api_config_new_section (struct t_weechat_plugin *weechat_plugin,
                                                                       struct t_plugin_script *script,
                                                                       struct t_config_file *config_file,
