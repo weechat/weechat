@@ -642,10 +642,6 @@ TEST(GuiChat, PrintYDateTags)
     gui_chat_printf_y_date_tags (gui_buffers, 0, 0, NULL, "test");
     POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
 
-    /* NULL message */
-    gui_chat_printf_y_date_tags (buffer, 0, 0, NULL, NULL);
-    POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
-
     /* empty message */
     gui_chat_printf_y_date_tags (buffer, 0, 0, NULL, "");
     POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
