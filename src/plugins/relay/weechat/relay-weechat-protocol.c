@@ -1149,7 +1149,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
                           "line_data:0x%lx",
                           (unsigned long)ptr_line_data);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
-                                             "buffer,date,date_printed,"
+                                             "line,buffer,date,date_printed,"
                                              "displayed,notify_level,"
                                              "highlight,tags_array,prefix,"
                                              "message");

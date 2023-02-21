@@ -29,6 +29,7 @@ struct t_infolist;
 
 struct t_gui_line_data
 {
+    struct t_gui_line *line;           /* pointer to line                   */
     struct t_gui_buffer *buffer;       /* pointer to buffer                 */
     int id;                            /* formatted buffer: (almost) unique */
                                        /* line id in buffer                 */

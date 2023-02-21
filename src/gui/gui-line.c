@@ -1299,6 +1299,7 @@ gui_line_mixed_add (struct t_gui_lines *lines,
     new_line = malloc (sizeof (*new_line));
     if (new_line)
     {
+        line_data->line = new_line;
         new_line->data = line_data;
         gui_line_add_to_list (lines, new_line);
     }
@@ -1506,6 +1507,7 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
     new_line->data = new_line_data;
 
     /* fill data in new line */
+    new_line_data->line = new_line;
     new_line->data->buffer = buffer;
     new_line->data->message = (message) ? strdup (message) : strdup ("");
 
@@ -2244,6 +2246,7 @@ gui_line_hdata_line_data_cb (const void *pointer, void *data,
                        0, 0, &gui_line_hdata_line_data_update_cb, NULL);
     if (hdata)
     {
+        HDATA_VAR(struct t_gui_line_data, line, POINTER, 0, NULL, "line");
         HDATA_VAR(struct t_gui_line_data, buffer, POINTER, 0, NULL, "buffer");
         HDATA_VAR(struct t_gui_line_data, id, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, y, INTEGER, 0, NULL, NULL);
