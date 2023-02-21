@@ -4150,7 +4150,7 @@ COMMAND_CALLBACK(key)
         if (argc == 4)
         {
             ptr_new_key = NULL;
-            internal_code = gui_key_get_internal_code (argv[2]);
+            internal_code = gui_key_get_internal_code (argv[3]);
             if (internal_code)
                 ptr_new_key = gui_key_search (gui_keys[context],
                                               internal_code);
