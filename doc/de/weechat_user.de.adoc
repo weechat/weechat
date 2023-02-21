@@ -632,8 +632,7 @@ verwendet und festgelegt:
 
 [width="100%",cols="1,2m,5",options="header"]
 |===
-// TRANSLATION MISSING
-| Verzeichnis   | Standardwert             | Fallback value if $XDG_XXX is not defined
+| Verzeichnis   | Standardwert             | Ersatzverzeichnis, falls $XDG_XXX nicht definiert wurde
 | Konfiguration | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat`
 | Daten         | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat`
 | Cache         | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat`
