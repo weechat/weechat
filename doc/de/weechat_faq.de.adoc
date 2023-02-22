@@ -661,13 +661,18 @@ genutzt: kbd:[Ctrl+↑] und kbd:[Ctrl+↓]).
 Beispiele:
 
 ----
+/key bind up /input history_global_previous
+/key bind down /input history_global_next
+----
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.8, you must use the raw key code (press kbd:[Alt+k] then key
+to display its code):
+
+----
 /key bind meta2-A /input history_global_previous
 /key bind meta2-B /input history_global_next
 ----
-
-[NOTE]
-Die Tasten "meta2-A" und "meta2-B" können im Hinblick auf das jeweils genutzte Terminal variieren.
-Um die korrekten Tasten zu finden, sollte man mit kbd:[Alt+k] die gewünschte Tastenkombination einfangen.
 
 [[mouse]]
 == Mausunterstützung

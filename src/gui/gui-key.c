@@ -70,6 +70,12 @@ char *gui_key_context_string[GUI_KEY_NUM_CONTEXTS] =
 char *gui_key_focus_string[GUI_KEY_NUM_FOCUS] =
 { "*", "chat", "bar", "item" };
 
+char *gui_key_safe_list[] =
+{ "ctrl-", "meta-", "meta2-", "shift-", "f0", "f1", "f2", "f3", "f4", "f5",
+  "f6", "f7", "f8", "f9", "f10", "f11", "f12", "f13", "f14", "f15", "f16",
+  "f17", "f18", "f19", "f20", "home", "insert", "delete", "end", "pgup",
+  "pgdn", "up", "down", "right", "left", "tab", NULL };
+
 int gui_key_debug = 0;              /* 1 for key debug: display raw codes,  */
                                     /* do not execute associated actions    */
 
@@ -202,11 +208,11 @@ gui_key_grab_init (int grab_command, const char *delay)
  */
 
 int
-gui_key_grab_end_timer_cb (const void *pointer, void *data,
-                           int remaining_calls)
+gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
-    char *expanded_key, *expanded_key2;
+    char *key_name, *key_name_alias, *key_utf8;
     struct t_gui_key *ptr_key;
+    int rc;
 
     /* make C compiler happy */
     (void) pointer;
@@ -214,38 +220,56 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
     (void) remaining_calls;
 
     /* get expanded name (for example: \x01+U => ctrl-u) */
-    expanded_key = gui_key_expand_legacy (gui_key_combo_buffer);
-    if (expanded_key)
+    rc = gui_key_expand (gui_key_combo_buffer, &key_name, &key_name_alias);
+    if (rc && key_name && key_name_alias)
     {
         /*
-         * the expanded_key should be valid UTF-8 at this point,
+         * the key name should be valid UTF-8 at this point,
          * but some mouse codes can return ISO chars (for coordinates),
          * then we will convert them to UTF-8 string
          */
-        if (!utf8_is_valid (expanded_key, -1, NULL))
+        if (!utf8_is_valid (key_name, -1, NULL))
         {
-            expanded_key2 = string_iconv_to_internal ("iso-8859-1",
-                                                      expanded_key);
-            if (expanded_key2)
+            key_utf8 = string_iconv_to_internal ("iso-8859-1", key_name);
+            if (key_utf8)
             {
-                free (expanded_key);
-                expanded_key = expanded_key2;
+                free (key_name);
+                key_name = key_utf8;
             }
             else
             {
                 /* conversion failed, then just replace invalid chars by '?' */
-                utf8_normalize (expanded_key, '?');
+                utf8_normalize (key_name, '?');
+            }
+        }
+        if (!utf8_is_valid (key_name_alias, -1, NULL))
+        {
+            key_utf8 = string_iconv_to_internal ("iso-8859-1", key_name_alias);
+            if (key_utf8)
+            {
+                free (key_name_alias);
+                key_name_alias = key_utf8;
+            }
+            else
+            {
+                /* conversion failed, then just replace invalid chars by '?' */
+                utf8_normalize (key_name_alias, '?');
             }
         }
         /* add expanded key to input buffer */
         if (gui_current_window->buffer->input)
         {
-            gui_input_insert_string (gui_current_window->buffer, expanded_key);
+            gui_input_insert_string (gui_current_window->buffer, key_name_alias);
             if (gui_key_grab_command)
             {
                 /* add command bound to key (if found) */
                 ptr_key = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
-                                          gui_key_combo_buffer);
+                                          key_name);
+                if (!ptr_key)
+                {
+                    ptr_key = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
+                                              key_name_alias);
+                }
                 if (ptr_key)
                 {
                     gui_input_insert_string (gui_current_window->buffer, " ");
@@ -256,7 +280,6 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
                                                         1, /* save undo */
                                                         1); /* stop completion */
         }
-        free (expanded_key);
     }
 
     /* end grab mode */
@@ -271,6 +294,9 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
 /*
  * Gets internal code from user key name.
  *
+ * Note: this function works with legacy keys (WeeChat < 3.9) and should not
+ * be used any more.
+ *
  * Examples:
  *   "ctrl-R" => "\x01" + "r" (lower case enforced for ctrl keys)
  *   "ctrl-r" => "\x01" + "r"
@@ -282,7 +308,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
  */
 
 char *
-gui_key_get_internal_code (const char *key)
+gui_key_legacy_internal_code (const char *key)
 {
     char **result, str_key[2];
 
@@ -362,7 +388,7 @@ gui_key_get_internal_code (const char *key)
  */
 
 char *
-gui_key_expand_legacy (const char *key)
+gui_key_legacy_expand (const char *key)
 {
     char **result;
 
@@ -891,7 +917,7 @@ gui_key_legacy_to_alias (const char *key)
     if ((key[0] == '@') && strchr (key, ':'))
         return strdup (key);
 
-    key_raw = gui_key_get_internal_code (key);
+    key_raw = gui_key_legacy_internal_code (key);
     if (!key_raw)
         return NULL;
 
@@ -1141,8 +1167,10 @@ gui_key_set_score (struct t_gui_key *key)
 int
 gui_key_is_safe (int context, const char *key)
 {
-    char *internal_code;
-    int rc;
+    int i;
+
+    if (!key || !key[0])
+        return 0;
 
     /* "@" is allowed at beginning for cursor/mouse contexts */
     if ((key[0] == '@')
@@ -1152,14 +1180,18 @@ gui_key_is_safe (int context, const char *key)
         return 1;
     }
 
-    /* check that first char is a ctrl or meta code */
-    internal_code = gui_key_get_internal_code (key);
-    if (!internal_code)
-        return 0;
-    rc = (internal_code[0] == '\x01') ? 1 : 0;
-    free (internal_code);
+    for (i = 0; gui_key_safe_list[i]; i++)
+    {
+        if (strncmp (key, gui_key_safe_list[i],
+                     strlen (gui_key_safe_list[i])) == 0)
+        {
+            /* key is safe */
+            return 1;
+        }
+    }
 
-    return rc;
+    /* key is not safe */
+    return 0;
 }
 
 /*
@@ -1176,35 +1208,17 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
              const char *command)
 {
     struct t_gui_key *new_key;
-    char *internal_code, *expanded_name, *key_name;
 
     if (!key || !command)
         return NULL;
-
-    internal_code = gui_key_get_internal_code (key);
-    if (!internal_code)
-        return NULL;
-    if (!internal_code[0])
-    {
-        free (internal_code);
-        return NULL;
-    }
-
-    expanded_name = gui_key_expand_legacy (internal_code);
-    if (!expanded_name)
-    {
-        free (internal_code);
-        return NULL;
-    }
-
-    key_name = gui_key_legacy_to_alias (key);
 
     new_key = malloc (sizeof (*new_key));
     if (!new_key)
         return NULL;
 
-    new_key->key = internal_code;
-    new_key->key_name = key_name;
+    new_key->key = strdup (key);
+    new_key->chunks = string_split (key, ",", NULL, 0, 0,
+                                    &new_key->chunks_count);
     new_key->command = strdup (command);
     gui_key_set_areas (new_key);
     gui_key_set_score (new_key);
@@ -1227,16 +1241,14 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
                          _("New key binding (context \"%s\"): "
                            "%s%s => %s%s"),
                          gui_key_context_string[context],
-                         expanded_name,
+                         new_key->key,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT),
                          new_key->command);
     }
 
     (void) hook_signal_send ("key_bind",
-                             WEECHAT_HOOK_SIGNAL_STRING, expanded_name);
-
-    free (expanded_name);
+                             WEECHAT_HOOK_SIGNAL_STRING, new_key->key);
 
     return new_key;
 }
@@ -1266,22 +1278,57 @@ gui_key_search (struct t_gui_key *keys, const char *key)
 }
 
 /*
+ * Compare chunks with key chunks.
+ *
+ * Returns:
+ *   2: exact match
+ *   1: partial match (key_chunks starts with chunks but is longer)
+ *   0: no match
+ */
+
+int
+gui_key_compare_chunks (const char **chunks, int chunks_count,
+                        const char **key_chunks, int key_chunks_count)
+{
+    int i;
+
+    for (i = 0; i < chunks_count; i++)
+    {
+        if (i >= key_chunks_count)
+            return 0;
+        if (strcmp (chunks[i], key_chunks[i]) != 0)
+            return 0;
+    }
+
+    return (chunks_count == key_chunks_count) ? 2 : 1;
+}
+
+/*
  * Searches for a key (maybe part of string) for context default, search or
  * cursor (not for mouse).
+ *
+ * If exact match is found, *exact_match is set to 1, otherwise to 0.
  *
  * Returns pointer to key found, NULL if not found.
  */
 
 struct t_gui_key *
-gui_key_search_part (struct t_gui_buffer *buffer, int context, const char *key)
+gui_key_search_part (struct t_gui_buffer *buffer, int context,
+                     const char *key, const char *key_alias,
+                     int *exact_match)
 {
     struct t_gui_key *ptr_key;
-    int length_key;
+    char **chunks, **chunks_alias;
+    int rc, chunks_count, chunks_alias_count;
 
-    if (!key)
+    if (!key || !exact_match)
         return NULL;
 
-    length_key = utf8_strlen (key);
+    *exact_match = 0;
+
+    chunks = string_split (key, ",", NULL, 0, 0, &chunks_count);
+    chunks_alias = (key_alias) ?
+        string_split (key_alias, ",", NULL, 0, 0, &chunks_alias_count) : NULL;
 
     for (ptr_key = (buffer) ? buffer->keys : gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
@@ -1290,13 +1337,38 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context, const char *key)
             && ((context != GUI_KEY_CONTEXT_CURSOR)
                 || (ptr_key->key[0] != '@')))
         {
-            if (string_strncmp (ptr_key->key, key, length_key) == 0)
-                return ptr_key;
+            rc = gui_key_compare_chunks ((const char **)chunks,
+                                         chunks_count,
+                                         (const char **)ptr_key->chunks,
+                                         ptr_key->chunks_count);
+            if (rc > 0)
+            {
+                if (rc == 2)
+                    *exact_match = 1;
+                break;
+            }
+            if (chunks_alias)
+            {
+                rc = gui_key_compare_chunks ((const char **)chunks_alias,
+                                             chunks_alias_count,
+                                             (const char **)ptr_key->chunks,
+                                             ptr_key->chunks_count);
+                if (rc > 0)
+                {
+                    if (rc == 2)
+                        *exact_match = 1;
+                    break;
+                }
+            }
         }
     }
 
-    /* key not found */
-    return NULL;
+    if (chunks)
+        string_free_split (chunks);
+    if (chunks_alias)
+        string_free_split (chunks_alias);
+
+    return ptr_key;
 }
 
 /*
@@ -1333,7 +1405,6 @@ gui_key_bind_plugin_hashtable_map_cb (void *data,
 {
     int *user_data;
     struct t_gui_key *ptr_key;
-    char *internal_code;
 
     /* make C compiler happy */
     (void) hashtable;
@@ -1346,16 +1417,11 @@ gui_key_bind_plugin_hashtable_map_cb (void *data,
         if (strcmp (key, "__quiet") == 0)
             return;
 
-        internal_code = gui_key_get_internal_code (key);
-        if (internal_code)
+        ptr_key = gui_key_search (gui_keys[user_data[0]], key);
+        if (!ptr_key)
         {
-            ptr_key = gui_key_search (gui_keys[user_data[0]], internal_code);
-            if (!ptr_key)
-            {
-                if (gui_key_new (NULL, user_data[0], key, value))
-                    user_data[1]++;
-            }
-            free (internal_code);
+            if (gui_key_new (NULL, user_data[0], key, value))
+                user_data[1]++;
         }
     }
 }
@@ -1403,58 +1469,34 @@ int
 gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
 {
     struct t_gui_key *ptr_key;
-    char *internal_code, *expanded_name;
-    int rc;
-
-    rc = 0;
-
-    internal_code = gui_key_get_internal_code (key);
-    if (!internal_code)
-        return 0;
-    if (!internal_code[0])
-    {
-        free (internal_code);
-        return 0;
-    }
-
-    expanded_name = gui_key_expand_legacy (internal_code);
-    if (!expanded_name)
-    {
-        free (internal_code);
-        return 0;
-    }
 
     ptr_key = gui_key_search ((buffer) ? buffer->keys : gui_keys[context],
-                              internal_code);
-    if (ptr_key)
+                              key);
+    if (!ptr_key)
+        return 0;
+
+    if (buffer)
     {
-        if (buffer)
+        gui_key_free (&buffer->keys, &buffer->last_key,
+                      &buffer->keys_count, ptr_key);
+    }
+    else
+    {
+        if (gui_key_verbose)
         {
-            gui_key_free (&buffer->keys, &buffer->last_key,
-                          &buffer->keys_count, ptr_key);
+            gui_chat_printf (NULL,
+                             _("Key \"%s\" unbound (context: \"%s\")"),
+                             key,
+                             gui_key_context_string[context]);
         }
-        else
-        {
-            if (gui_key_verbose)
-            {
-                gui_chat_printf (NULL,
-                                 _("Key \"%s\" unbound (context: \"%s\")"),
-                                 expanded_name,
-                                 gui_key_context_string[context]);
-            }
-            gui_key_free (&gui_keys[context], &last_gui_key[context],
-                          &gui_keys_count[context], ptr_key);
-        }
-        (void) hook_signal_send ("key_unbind",
-                                 WEECHAT_HOOK_SIGNAL_STRING,
-                                 (char *)expanded_name);
-        rc = 1;
+        gui_key_free (&gui_keys[context], &last_gui_key[context],
+                      &gui_keys_count[context], ptr_key);
     }
 
-    free (internal_code);
-    free (expanded_name);
+    (void) hook_signal_send ("key_unbind",
+                             WEECHAT_HOOK_SIGNAL_STRING, (char *)key);
 
-    return rc;
+    return 1;
 }
 
 /*
@@ -1824,14 +1866,14 @@ int
 gui_key_pressed (const char *key_str)
 {
     int i, insert_into_input, context, length, length_key, signal_sent;
-    int rc, rc_expand;
+    int rc, rc_expand, exact_match;
     struct t_gui_key *ptr_key;
     char *pos, signal_name[128], **commands;
-    char *key_name_legacy, *key_name, *key_name_alias;
+    char *key_name, *key_name_alias;
+    const char *ptr_key_name2;
 
     signal_sent = 0;
 
-    key_name_legacy = NULL;
     key_name = NULL;
     key_name_alias = NULL;
 
@@ -1894,12 +1936,13 @@ gui_key_pressed (const char *key_str)
         goto end_no_input;
     }
 
-    key_name_legacy = gui_key_expand_legacy (gui_key_combo_buffer);
     rc_expand = gui_key_expand (gui_key_combo_buffer,
-                                &key_name,
-                                &key_name_alias);
+                                &key_name, &key_name_alias);
 
     ptr_key = NULL;
+    exact_match = 0;
+    ptr_key_name2 = (string_strcmp (key_name, key_name_alias) != 0) ?
+        key_name_alias : NULL;
 
     context = gui_key_get_current_context ();
     switch (context)
@@ -1908,28 +1951,29 @@ gui_key_pressed (const char *key_str)
             /* look for key combo in key table for current buffer */
             ptr_key = gui_key_search_part (gui_current_window->buffer,
                                            GUI_KEY_CONTEXT_DEFAULT,
-                                           gui_key_combo_buffer);
+                                           key_name, ptr_key_name2,
+                                           &exact_match);
             /* if key is not found for buffer, then look in general table */
             if (!ptr_key)
-                ptr_key = gui_key_search_part (NULL,
-                                               GUI_KEY_CONTEXT_DEFAULT,
-                                               gui_key_combo_buffer);
+                ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                               key_name, ptr_key_name2,
+                                               &exact_match);
             break;
         case GUI_KEY_CONTEXT_SEARCH:
-            ptr_key = gui_key_search_part (NULL,
-                                           GUI_KEY_CONTEXT_SEARCH,
-                                           gui_key_combo_buffer);
+            ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_SEARCH,
+                                           key_name, ptr_key_name2,
+                                           &exact_match);
             if (!ptr_key)
             {
-                ptr_key = gui_key_search_part (NULL,
-                                               GUI_KEY_CONTEXT_DEFAULT,
-                                               gui_key_combo_buffer);
+                ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                               key_name, ptr_key_name2,
+                                               &exact_match);
             }
             break;
         case GUI_KEY_CONTEXT_CURSOR:
-            ptr_key = gui_key_search_part (NULL,
-                                           GUI_KEY_CONTEXT_CURSOR,
-                                           gui_key_combo_buffer);
+            ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_CURSOR,
+                                           key_name, ptr_key_name2,
+                                           &exact_match);
             break;
     }
 
@@ -1940,16 +1984,16 @@ gui_key_pressed (const char *key_str)
          * (in this case, gui_key_combo_buffer is kept and we'll wait for
          * the next key)
          */
-        if (strcmp (ptr_key->key, gui_key_combo_buffer) == 0)
+        if (exact_match)
         {
             /* exact combo found => execute command */
             if (gui_key_debug)
             {
                 gui_chat_printf (
                     NULL,
-                    _("debug: \"%s\" -> %s (legacy: %s) -> %s -> \"%s\""),
-                    gui_key_combo_buffer, key_name, key_name_legacy,
-                    key_name_alias, ptr_key->command);
+                    _("debug: \"%s\" -> %s -> %s -> \"%s\""),
+                    gui_key_combo_buffer, key_name, key_name_alias,
+                    ptr_key->command);
                 gui_key_combo_buffer[0] = '\0';
             }
             else
@@ -2019,9 +2063,8 @@ gui_key_pressed (const char *key_str)
         {
             gui_chat_printf (
                 NULL,
-                _("debug: \"%s\" -> %s (legacy: %s) -> %s (no key) -> %s"),
-                gui_key_combo_buffer, key_name, key_name_legacy,
-                key_name_alias,
+                _("debug: \"%s\" -> %s -> %s (no key) -> %s"),
+                gui_key_combo_buffer, key_name, key_name_alias,
                 (insert_into_input) ? _("insert into input") : _("ignored"));
         }
         gui_key_combo_buffer[0] = '\0';
@@ -2042,8 +2085,6 @@ end_no_input:
     rc = 0;
 
 end:
-    if (key_name_legacy)
-        free (key_name_legacy);
     if (key_name)
         free (key_name);
     if (key_name_alias)
@@ -2067,8 +2108,8 @@ gui_key_free (struct t_gui_key **keys, struct t_gui_key **last_key,
     /* free memory */
     if (key->key)
         free (key->key);
-    if (key->key_name)
-        free (key->key_name);
+    if (key->chunks)
+        string_free_split (key->chunks);
     for (i = 0; i < 2; i++)
     {
         if (key->area_name[i])
@@ -2568,7 +2609,6 @@ int
 gui_key_add_to_infolist (struct t_infolist *infolist, struct t_gui_key *key)
 {
     struct t_infolist_item *ptr_item;
-    char *expanded_key;
 
     if (!infolist || !key)
         return 0;
@@ -2577,18 +2617,8 @@ gui_key_add_to_infolist (struct t_infolist *infolist, struct t_gui_key *key)
     if (!ptr_item)
         return 0;
 
-    if (!infolist_new_var_string (ptr_item, "key_internal", key->key))
+    if (!infolist_new_var_string (ptr_item, "key", key->key))
         return 0;
-    expanded_key = gui_key_expand_legacy (key->key);
-    if (expanded_key)
-    {
-        if (!infolist_new_var_string (ptr_item, "key", expanded_key))
-        {
-            free (expanded_key);
-            return 0;
-        }
-        free (expanded_key);
-    }
     if (!infolist_new_var_integer (ptr_item, "area_type1", key->area_type[0]))
         return 0;
     if (!infolist_new_var_string (ptr_item, "area_name1", key->area_name[0]))

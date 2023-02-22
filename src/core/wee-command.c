@@ -3480,14 +3480,6 @@ COMMAND_CALLBACK(input)
         gui_input_undo (buffer);
     else if (string_strcmp (argv[1], "redo") == 0)
         gui_input_redo (buffer);
-    else if (string_strcmp (argv[1], "paste_start") == 0)
-    {
-        /* do nothing here */
-    }
-    else if (string_strcmp (argv[1], "paste_stop") == 0)
-    {
-        /* do nothing here */
-    }
     else
     {
         /*
@@ -3759,25 +3751,10 @@ COMMAND_CALLBACK(item)
 void
 command_key_display (struct t_gui_key *key, struct t_gui_key *default_key)
 {
-    char *expanded_name, str_key_name[1024];
-
-    str_key_name[0] = '\0';
-    if (key->key_name && (strcmp (key->key, key->key_name) != 0))
-    {
-        snprintf (str_key_name, sizeof (str_key_name),
-                  "%s -> %s%s",
-                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                  GUI_COLOR(GUI_COLOR_CHAT),
-                  key->key_name);
-    }
-
-    expanded_name = gui_key_expand_legacy (key->key);
-
     if (default_key)
     {
-        gui_chat_printf (NULL, "  %s%s%s => %s%s  %s(%s%s %s%s)",
-                         (expanded_name) ? expanded_name : key->key,
-                         str_key_name,
+        gui_chat_printf (NULL, "  %s%s => %s%s  %s(%s%s %s%s)",
+                         key->key,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT),
                          key->command,
@@ -3789,16 +3766,12 @@ command_key_display (struct t_gui_key *key, struct t_gui_key *default_key)
     }
     else
     {
-        gui_chat_printf (NULL, "  %s%s%s => %s%s",
-                         (expanded_name) ? expanded_name : key->key,
-                         str_key_name,
+        gui_chat_printf (NULL, "  %s%s => %s%s",
+                         key->key,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT),
                          key->command);
     }
-
-    if (expanded_name)
-        free (expanded_name);
 }
 
 /*
@@ -3919,19 +3892,11 @@ command_key_display_listdiff (int context)
 int
 command_key_reset (int context, const char *key)
 {
-    char *internal_code;
     struct t_gui_key *ptr_key, *ptr_default_key, *ptr_new_key;
     int rc;
 
-    internal_code = gui_key_get_internal_code (key);
-    if (!internal_code)
-        return WEECHAT_RC_ERROR;
-
-    ptr_key = gui_key_search (gui_keys[context],
-                              internal_code);
-    ptr_default_key = gui_key_search (gui_default_keys[context],
-                                      internal_code);
-    free (internal_code);
+    ptr_key = gui_key_search (gui_keys[context], key);
+    ptr_default_key = gui_key_search (gui_default_keys[context], key);
 
     if (ptr_key || ptr_default_key)
     {
@@ -4007,7 +3972,6 @@ command_key_reset (int context, const char *key)
 
 COMMAND_CALLBACK(key)
 {
-    char *internal_code;
     struct t_gui_key *ptr_new_key;
     int old_keys_count, keys_added, i, context, rc;
 
@@ -4078,13 +4042,8 @@ COMMAND_CALLBACK(key)
         /* display a key binding */
         if (argc == 3)
         {
-            ptr_new_key = NULL;
-            internal_code = gui_key_get_internal_code (argv[2]);
-            if (internal_code)
-            {
-                ptr_new_key = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
-                                              internal_code);
-            }
+            ptr_new_key = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
+                                          argv[2]);
             if (ptr_new_key)
             {
                 gui_chat_printf (NULL, "");
@@ -4096,8 +4055,6 @@ COMMAND_CALLBACK(key)
                 gui_chat_printf (NULL,
                                  _("No key found"));
             }
-            if (internal_code)
-                free (internal_code);
             return WEECHAT_RC_OK;
         }
 
@@ -4149,11 +4106,7 @@ COMMAND_CALLBACK(key)
         /* display a key binding */
         if (argc == 4)
         {
-            ptr_new_key = NULL;
-            internal_code = gui_key_get_internal_code (argv[3]);
-            if (internal_code)
-                ptr_new_key = gui_key_search (gui_keys[context],
-                                              internal_code);
+            ptr_new_key = gui_key_search (gui_keys[context], argv[3]);
             if (ptr_new_key)
             {
                 gui_chat_printf (NULL, "");
@@ -4165,8 +4118,6 @@ COMMAND_CALLBACK(key)
                 gui_chat_printf (NULL,
                                  _("No key found"));
             }
-            if (internal_code)
-                free (internal_code);
             return WEECHAT_RC_OK;
         }
 
@@ -8282,8 +8233,6 @@ command_init ()
            "  insert: insert text in command line (escaped chars are allowed, "
            "see /help print)\n"
            "  send: send text to the buffer\n"
-           "  paste_start: start paste (bracketed paste mode)\n"
-           "  paste_stop: stop paste (bracketed paste mode)\n"
            "\n"
            "This command is used by key bindings or plugins."),
         "return || "
@@ -8302,8 +8251,7 @@ command_init ()
         "history_previous || history_next || history_global_previous || "
         "history_global_next || "
         "grab_key || grab_key_command || grab_mouse || grab_mouse_area || "
-        "insert || send || "
-        "paste_start || paste_stop",
+        "insert || send",
         &command_input, NULL, NULL);
     hook_command (
         NULL, "item",
@@ -8433,7 +8381,7 @@ command_init ()
            "  restore default binding for key alt-r:\n"
            "    /key reset meta-r\n"
            "  key \"tab\" to stop search in buffer:\n"
-           "    /key bindctxt search ctrl-i /input search_stop\n"
+           "    /key bindctxt search tab /input search_stop\n"
            "  middle button of mouse on a nick to retrieve info on nick:\n"
            "    /key bindctxt mouse @item(buffer_nicklist):button3 "
            "/msg nickserv info ${nick}"),

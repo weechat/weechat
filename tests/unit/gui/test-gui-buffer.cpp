@@ -462,11 +462,11 @@ TEST(GuiBuffer, NewProps)
     STRCMP_EQUAL("value",
                  (const char *)hashtable_get (buffer->local_variables, "test"));
     CHECK(buffer->keys);
-    STRCMP_EQUAL("\x01[y", buffer->keys->key);
+    STRCMP_EQUAL("meta-y", buffer->keys->key);
     STRCMP_EQUAL("/test_y arg1 arg2", buffer->keys->command);
     POINTERS_EQUAL(NULL, buffer->keys->prev_key);
     CHECK(buffer->keys->next_key);
-    STRCMP_EQUAL("\x01[z", buffer->keys->next_key->key);
+    STRCMP_EQUAL("meta-z", buffer->keys->next_key->key);
     STRCMP_EQUAL("/test_z arg1 arg2", buffer->keys->next_key->command);
     POINTERS_EQUAL(buffer->keys, buffer->keys->next_key->prev_key);
     POINTERS_EQUAL(NULL, buffer->keys->next_key->next_key);

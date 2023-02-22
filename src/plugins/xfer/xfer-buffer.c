@@ -358,8 +358,8 @@ xfer_buffer_open ()
 
         weechat_buffer_set (xfer_buffer, "type", "free");
         weechat_buffer_set (xfer_buffer, "title", _("Xfer list"));
-        weechat_buffer_set (xfer_buffer, "key_bind_meta2-A", "/xfer up");
-        weechat_buffer_set (xfer_buffer, "key_bind_meta2-B", "/xfer down");
+        weechat_buffer_set (xfer_buffer, "key_bind_up", "/xfer up");
+        weechat_buffer_set (xfer_buffer, "key_bind_down", "/xfer down");
         weechat_buffer_set (xfer_buffer, "localvar_set_type", "xfer");
     }
 }

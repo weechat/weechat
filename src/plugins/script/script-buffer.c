@@ -1090,21 +1090,23 @@ script_buffer_set_callbacks ()
 void
 script_buffer_set_keys ()
 {
-    char *keys[][2] = { { "meta-A",  "toggleautoload" },
-                        { "meta-l",  "load"           },
-                        { "meta-u",  "unload"         },
-                        { "meta-L",  "reload"         },
-                        { "meta-i",  "install"        },
-                        { "meta-r",  "remove"         },
-                        { "meta-h",  "hold"           },
-                        { "meta-v",  "show"           },
-                        { "meta-d",  "showdiff"       },
-                        { NULL,     NULL              } };
+    char *keys[][2] = {
+        { "meta-A", "toggleautoload" },
+        { "meta-l", "load"           },
+        { "meta-u", "unload"         },
+        { "meta-L", "reload"         },
+        { "meta-i", "install"        },
+        { "meta-r", "remove"         },
+        { "meta-h", "hold"           },
+        { "meta-v", "show"           },
+        { "meta-d", "showdiff"       },
+        { NULL, NULL },
+    };
     char str_key[64], str_command[64];
     int i;
 
-    weechat_buffer_set (script_buffer, "key_bind_meta2-A", "/script up");
-    weechat_buffer_set (script_buffer, "key_bind_meta2-B", "/script down");
+    weechat_buffer_set (script_buffer, "key_bind_up", "/script up");
+    weechat_buffer_set (script_buffer, "key_bind_down", "/script down");
     for (i = 0; keys[i][0]; i++)
     {
         if (weechat_config_boolean (script_config_look_use_keys))

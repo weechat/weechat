@@ -54,8 +54,9 @@ enum t_gui_key_focus
 
 struct t_gui_key
 {
-    char *key;                      /* raw key (eg: \001w, \001[[1;3D)      */
-    char *key_name;                 /* key name (eg: ctrl-w, meta-left)     */
+    char *key;                      /* key name (eg: ctrl-w, meta-left)     */
+    char **chunks;                  /* key chunks (split on comma)          */
+    int chunks_count;               /* number of chunks                     */
     int area_type[2];               /* type of areas (for cursor/mouse)     */
     char *area_name[2];             /* name of areas (for cursor/mouse)     */
     char *area_key;                 /* key after area (after ":")           */
@@ -90,8 +91,7 @@ extern time_t gui_key_last_activity_time;
 extern void gui_key_init ();
 extern int gui_key_search_context (const char *context);
 extern void gui_key_grab_init (int grab_command, const char *delay);
-extern char *gui_key_get_internal_code (const char *key);
-extern char *gui_key_expand_legacy (const char *key);
+extern char *gui_key_legacy_expand (const char *key);
 extern int gui_key_expand (const char *key,
                            char **key_name, char **key_name_alias);
 extern char *gui_key_legacy_to_alias (const char *key);

@@ -649,13 +649,17 @@ touches par défaut pour l'historique global sont kbd:[Ctrl+↑] et kbd:[Ctrl+�
 Exemple :
 
 ----
+/key bind up /input history_global_previous
+/key bind down /input history_global_next
+----
+
+Avec WeeChat ≤ 3.8, vous devez utiliser le code de touche brut (appuyez sur
+kbd:[Alt+k] puis la touche pour afficher son code) :
+
+----
 /key bind meta2-A /input history_global_previous
 /key bind meta2-B /input history_global_next
 ----
-
-[NOTE]
-Les touches "meta2-A" et "meta2-B" peuvent être différentes dans votre terminal.
-Pour trouver le code de la touche appuyez sur kbd:[Alt+k] puis la touche.
 
 [[mouse]]
 == Souris

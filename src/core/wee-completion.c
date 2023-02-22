@@ -1677,7 +1677,6 @@ completion_list_add_keys_codes_cb (const void *pointer, void *data,
 {
     int i;
     struct t_gui_key *ptr_key;
-    char *expanded_name;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1689,13 +1688,8 @@ completion_list_add_keys_codes_cb (const void *pointer, void *data,
     {
         for (ptr_key = gui_keys[i]; ptr_key; ptr_key = ptr_key->next_key)
         {
-            expanded_name = gui_key_expand_legacy (ptr_key->key);
-            gui_completion_list_add (
-                completion,
-                (expanded_name) ? expanded_name : ptr_key->key,
-                0, WEECHAT_LIST_POS_SORT);
-            if (expanded_name)
-                free (expanded_name);
+            gui_completion_list_add (completion, ptr_key->key,
+                                     0, WEECHAT_LIST_POS_SORT);
         }
     }
 
@@ -1715,7 +1709,6 @@ completion_list_add_keys_codes_for_reset_cb (const void *pointer, void *data,
 {
     int i;
     struct t_gui_key *ptr_key, *ptr_default_key;
-    char *expanded_name;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1732,13 +1725,8 @@ completion_list_add_keys_codes_for_reset_cb (const void *pointer, void *data,
             if (!ptr_default_key
                 || (strcmp (ptr_default_key->command, ptr_key->command) != 0))
             {
-                expanded_name = gui_key_expand_legacy (ptr_key->key);
-                gui_completion_list_add (
-                    completion,
-                    (expanded_name) ? expanded_name : ptr_key->key,
-                    0, WEECHAT_LIST_POS_SORT);
-                if (expanded_name)
-                    free (expanded_name);
+                gui_completion_list_add (completion, ptr_key->key,
+                                         0, WEECHAT_LIST_POS_SORT);
             }
         }
 
@@ -1749,13 +1737,8 @@ completion_list_add_keys_codes_for_reset_cb (const void *pointer, void *data,
             ptr_key = gui_key_search (gui_keys[i], ptr_default_key->key);
             if (!ptr_key)
             {
-                expanded_name = gui_key_expand_legacy (ptr_default_key->key);
-                gui_completion_list_add (
-                    completion,
-                    (expanded_name) ? expanded_name : ptr_default_key->key,
-                    0, WEECHAT_LIST_POS_SORT);
-                if (expanded_name)
-                    free (expanded_name);
+                gui_completion_list_add (completion, ptr_default_key->key,
+                                         0, WEECHAT_LIST_POS_SORT);
             }
         }
     }

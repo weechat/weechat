@@ -257,8 +257,8 @@ relay_buffer_open ()
 
         weechat_buffer_set (relay_buffer, "type", "free");
         weechat_buffer_set (relay_buffer, "title", _("List of clients for relay"));
-        weechat_buffer_set (relay_buffer, "key_bind_meta2-A", "/relay up");
-        weechat_buffer_set (relay_buffer, "key_bind_meta2-B", "/relay down");
+        weechat_buffer_set (relay_buffer, "key_bind_up", "/relay up");
+        weechat_buffer_set (relay_buffer, "key_bind_down", "/relay down");
         weechat_buffer_set (relay_buffer, "localvar_set_type", "relay");
     }
 }

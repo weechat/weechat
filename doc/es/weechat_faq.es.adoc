@@ -644,13 +644,18 @@ global son kbd:[Ctrl+↑] y kbd:[Ctrl+↓]).
 Ejemplo:
 
 ----
+/key bind up /input history_global_previous
+/key bind down /input history_global_next
+----
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.8, you must use the raw key code (press kbd:[Alt+k] then key
+to display its code):
+
+----
 /key bind meta2-A /input history_global_previous
 /key bind meta2-B /input history_global_next
 ----
-
-[NOTE]
-Las telcas "meta2-A" y "meta2-B" pueden ser diferentes en su terminal. Para encontrar el código
-de la tecla pulse kbd:[Alt+k] y después la tecla.
 
 [[mouse]]
 == Ratón

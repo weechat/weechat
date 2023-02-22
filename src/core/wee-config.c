@@ -1493,6 +1493,79 @@ config_weechat_init_after_read ()
 }
 
 /*
+ * Updates options in configuration file while reading the file.
+ */
+
+struct t_hashtable *
+config_weechat_update_cb (const void *pointer, void *data,
+                          struct t_config_file *config_file,
+                          int version_read,
+                          struct t_hashtable *data_read)
+{
+    const char *ptr_section, *ptr_option;
+    char *new_option;
+    int changes;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) config_file;
+
+    /* nothing to do if we're already an up-to-date config file */
+    if (version_read >= WEECHAT_CONFIG_VERSION)
+        return NULL;
+
+    changes = 0;
+
+    if (version_read < 2)
+    {
+        /*
+         * changes in v2:
+         *   - new format for keys (eg: meta2-1;3D -> meta-left)
+         *   - keys removed: "meta2-200~" and "meta2-201~"
+         */
+        ptr_section = hashtable_get (data_read, "section");
+        ptr_option = hashtable_get (data_read, "option");
+        if (ptr_section
+            && ptr_option
+            && ((strcmp (ptr_section, "key") == 0)
+                || (strcmp (ptr_section, "key_search") == 0)
+                || (strcmp (ptr_section, "key_cursor") == 0)
+                || (strcmp (ptr_section, "key_mouse") == 0)))
+        {
+            if ((strcmp (ptr_option, "meta2-200~") == 0)
+                || (strcmp (ptr_option, "meta2-201~") == 0))
+            {
+                gui_chat_printf (NULL,
+                                 _("Legacy key removed: \"%s\""),
+                                 ptr_option);
+                hashtable_set (data_read, "option", "");
+                changes++;
+            }
+            else
+            {
+                new_option = gui_key_legacy_to_alias (ptr_option);
+                if (new_option)
+                {
+                    if (strcmp (ptr_option, new_option) != 0)
+                    {
+                        gui_chat_printf (
+                            NULL,
+                            _("Legacy key converted: \"%s\" => \"%s\""),
+                            ptr_option, new_option);
+                        hashtable_set (data_read, "option", new_option);
+                        changes++;
+                    }
+                    free (new_option);
+                }
+            }
+        }
+    }
+
+    return (changes) ? data_read : NULL;
+}
+
+/*
  * Reloads WeeChat configuration file.
  *
  * Returns:
@@ -2582,8 +2655,8 @@ config_weechat_key_write_cb (const void *pointer, void *data,
                              const char *section_name)
 {
     struct t_gui_key *ptr_key;
-    char *pos, *expanded_name;
-    int rc, context;
+    char *pos;
+    int context;
 
     /* make C compiler happy */
     (void) pointer;
@@ -2602,17 +2675,10 @@ config_weechat_key_write_cb (const void *pointer, void *data,
     }
     for (ptr_key = gui_keys[context]; ptr_key; ptr_key = ptr_key->next_key)
     {
-        expanded_name = gui_key_expand_legacy (ptr_key->key);
-        if (expanded_name)
+        if (!config_file_write_line (config_file, ptr_key->key,
+                                     "\"%s\"", ptr_key->command))
         {
-            rc = config_file_write_line (config_file,
-                                         (expanded_name) ?
-                                         expanded_name : ptr_key->key,
-                                         "\"%s\"",
-                                         ptr_key->command);
-            free (expanded_name);
-            if (!rc)
-                return WEECHAT_CONFIG_WRITE_ERROR;
+            return WEECHAT_CONFIG_WRITE_ERROR;
         }
     }
 
@@ -2638,6 +2704,9 @@ config_weechat_init_options ()
         NULL, WEECHAT_CONFIG_PRIO_NAME, &config_weechat_reload_cb, NULL, NULL);
     if (!weechat_config_file)
         return 0;
+
+    config_file_set_version (weechat_config_file, WEECHAT_CONFIG_VERSION,
+                             &config_weechat_update_cb, NULL, NULL);
 
     /* debug */
     ptr_section = config_file_new_section (

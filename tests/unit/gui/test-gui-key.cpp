@@ -26,6 +26,8 @@
 extern "C"
 {
 #include "src/gui/gui-key.h"
+
+extern char *gui_key_legacy_internal_code (const char *key);
 }
 
 #define WEE_CHECK_EXP_KEY(__rc, __key_name, __key_name_alias, __key)    \
@@ -117,59 +119,59 @@ TEST(GuiKey, GrabEndTimerCb)
 
 /*
  * Tests functions:
- *   gui_key_get_internal_code
+ *   gui_key_legacy_internal_code
  */
 
-TEST(GuiKey, GetInternalCode)
+TEST(GuiKey, LegacyInternalCode)
 {
     char *str;
 
-    WEE_TEST_STR(NULL, gui_key_get_internal_code (NULL));
-    WEE_TEST_STR("", gui_key_get_internal_code (""));
-    WEE_TEST_STR("A", gui_key_get_internal_code ("A"));
-    WEE_TEST_STR("a", gui_key_get_internal_code ("a"));
+    WEE_TEST_STR(NULL, gui_key_legacy_internal_code (NULL));
+    WEE_TEST_STR("", gui_key_legacy_internal_code (""));
+    WEE_TEST_STR("A", gui_key_legacy_internal_code ("A"));
+    WEE_TEST_STR("a", gui_key_legacy_internal_code ("a"));
 
-    WEE_TEST_STR("@chat:t", gui_key_get_internal_code ("@chat:t"));
+    WEE_TEST_STR("@chat:t", gui_key_legacy_internal_code ("@chat:t"));
 
-    WEE_TEST_STR("\001[A", gui_key_get_internal_code ("meta-A"));
-    WEE_TEST_STR("\001[a", gui_key_get_internal_code ("meta-a"));
+    WEE_TEST_STR("\001[A", gui_key_legacy_internal_code ("meta-A"));
+    WEE_TEST_STR("\001[a", gui_key_legacy_internal_code ("meta-a"));
 
-    WEE_TEST_STR("\001[[A", gui_key_get_internal_code ("meta2-A"));
-    WEE_TEST_STR("\001[[a", gui_key_get_internal_code ("meta2-a"));
+    WEE_TEST_STR("\001[[A", gui_key_legacy_internal_code ("meta2-A"));
+    WEE_TEST_STR("\001[[a", gui_key_legacy_internal_code ("meta2-a"));
 
     /* ctrl-letter keys are forced to lower case */
-    WEE_TEST_STR("\001a", gui_key_get_internal_code ("ctrl-A"));
-    WEE_TEST_STR("\001a", gui_key_get_internal_code ("ctrl-a"));
+    WEE_TEST_STR("\001a", gui_key_legacy_internal_code ("ctrl-A"));
+    WEE_TEST_STR("\001a", gui_key_legacy_internal_code ("ctrl-a"));
 
-    WEE_TEST_STR(" ", gui_key_get_internal_code ("space"));
+    WEE_TEST_STR(" ", gui_key_legacy_internal_code ("space"));
 }
 
 /*
  * Tests functions:
- *   gui_key_expand_legacy
+ *   gui_key_legacy_expand
  */
 
 TEST(GuiKey, ExpandLegacy)
 {
     char *str;
 
-    WEE_TEST_STR(NULL, gui_key_expand_legacy (NULL));
-    WEE_TEST_STR("", gui_key_expand_legacy (""));
-    WEE_TEST_STR("A", gui_key_expand_legacy ("A"));
-    WEE_TEST_STR("a", gui_key_expand_legacy ("a"));
+    WEE_TEST_STR(NULL, gui_key_legacy_expand (NULL));
+    WEE_TEST_STR("", gui_key_legacy_expand (""));
+    WEE_TEST_STR("A", gui_key_legacy_expand ("A"));
+    WEE_TEST_STR("a", gui_key_legacy_expand ("a"));
 
-    WEE_TEST_STR("@chat:t", gui_key_expand_legacy ("@chat:t"));
+    WEE_TEST_STR("@chat:t", gui_key_legacy_expand ("@chat:t"));
 
-    WEE_TEST_STR("meta-A", gui_key_expand_legacy ("\001[A"));
-    WEE_TEST_STR("meta-a", gui_key_expand_legacy ("\001[a"));
+    WEE_TEST_STR("meta-A", gui_key_legacy_expand ("\001[A"));
+    WEE_TEST_STR("meta-a", gui_key_legacy_expand ("\001[a"));
 
-    WEE_TEST_STR("meta2-A", gui_key_expand_legacy ("\001[[A"));
-    WEE_TEST_STR("meta2-a", gui_key_expand_legacy ("\001[[a"));
+    WEE_TEST_STR("meta2-A", gui_key_legacy_expand ("\001[[A"));
+    WEE_TEST_STR("meta2-a", gui_key_legacy_expand ("\001[[a"));
 
-    WEE_TEST_STR("ctrl-A", gui_key_expand_legacy ("\001A"));
-    WEE_TEST_STR("ctrl-a", gui_key_expand_legacy ("\001a"));
+    WEE_TEST_STR("ctrl-A", gui_key_legacy_expand ("\001A"));
+    WEE_TEST_STR("ctrl-a", gui_key_legacy_expand ("\001a"));
 
-    WEE_TEST_STR("space", gui_key_expand_legacy (" "));
+    WEE_TEST_STR("space", gui_key_legacy_expand (" "));
 }
 
 /*
@@ -467,6 +469,16 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(1, "meta2-1;7G", "meta-ctrl-pgdn", "\001[[1;7G");
     WEE_CHECK_EXP_KEY(1, "meta2-6;8~", "meta-ctrl-shift-pgdn", "\001[[6;8~");
     WEE_CHECK_EXP_KEY(1, "meta2-1;8G", "meta-ctrl-shift-pgdn", "\001[[1;8G");
+
+    /* f0 */
+    WEE_CHECK_EXP_KEY(1, "meta2-10~", "f0", "\001[[10~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta2-10$", "shift-f0", "\001[[10$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-meta2-10~", "meta-f0", "\001[\001[[10~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-meta2-10$", "meta-shift-f0", "\001[\001[[10$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta2-10^", "ctrl-f0", "\001[[10^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta2-10@", "ctrl-shift-f0", "\001[[10@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-meta2-10^", "meta-ctrl-f0", "\001[\001[[10^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-meta2-10@", "meta-ctrl-shift-f0", "\001[\001[[10@");  /* urxvt */
 
     /* f1 */
     WEE_CHECK_EXP_KEY(1, "meta2-P", "f1", "\001[OP");
@@ -907,7 +919,85 @@ TEST(GuiKey, SetScore)
 
 TEST(GuiKey, IsSafe)
 {
-    /* TODO: write tests */
+    /* NOT safe: NULL or empty string */
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, NULL));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, ""));
+
+    /* NOT safe: simple keys */
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "a"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "A"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "é"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "/"));
+
+    /* NOT safe: "@" in default/search context */
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "@"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_SEARCH, "@"));
+
+    /* NOT safe: partial modifier */
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "ctrl"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "meta"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "meta2"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "shift"));
+
+    /* NOT safe: starts with capital letter (keys are case sensitive) */
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Ctrl-a"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Meta-a"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Meta2-a"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Shift-home"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "F1"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Home"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Insert"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Delete"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "End"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Pgup"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Pgdn"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Up"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Down"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Right"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Left"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Tab"));
+
+    /* safe keys */
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "ctrl-a"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "meta-a"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "meta-A"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "shift-home"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f0"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f1"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f2"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f3"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f4"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f5"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f6"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f7"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f8"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f9"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f10"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f11"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f12"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f13"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f14"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f15"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f16"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f17"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f18"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f19"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "f20"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "home"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "insert"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "delete"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "end"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "pgup"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "pgdn"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "up"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "down"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "right"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "left"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "tab"));
+
+    /* safe keys: "@" in cursor/mouse context */
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_CURSOR, "@"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_MOUSE, "@"));
 }
 
 /*

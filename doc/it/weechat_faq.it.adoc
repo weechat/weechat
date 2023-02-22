@@ -694,13 +694,18 @@ sono kbd:[Ctrl+↑] e kbd:[Ctrl+↓]).
 Esempio:
 
 ----
+/key bind up /input history_global_previous
+/key bind down /input history_global_next
+----
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.8, you must use the raw key code (press kbd:[Alt+k] then key
+to display its code):
+
+----
 /key bind meta2-A /input history_global_previous
 /key bind meta2-B /input history_global_next
 ----
-
-[NOTE]
-I tasti "meta2-A" e "meta2-B" possono essere differenti nel proprio terminale.
-Per trovare il codice tasto digitare kbd:[Alt+k] poi il tast.
 
 [[mouse]]
 == Mouse
