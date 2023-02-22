@@ -906,6 +906,9 @@ gui_chat_printf_y_date_tags (struct t_gui_buffer *buffer, int y, time_t date,
     time_t date_printed;
     int i, last_y, num_lines_to_add;
 
+    if (!message)
+        return;
+
     if (gui_init_ok && !gui_chat_buffer_valid (buffer, GUI_BUFFER_TYPE_FREE))
         return;
 
