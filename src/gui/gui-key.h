@@ -90,7 +90,8 @@ extern time_t gui_key_last_activity_time;
 
 extern void gui_key_init ();
 extern int gui_key_search_context (const char *context);
-extern void gui_key_grab_init (int grab_command, const char *delay);
+extern void gui_key_grab_init (int grab_raw_key, int grab_command,
+                               const char *delay);
 extern char *gui_key_legacy_expand (const char *key);
 extern int gui_key_expand (const char *key,
                            char **key_name, char **key_name_alias);

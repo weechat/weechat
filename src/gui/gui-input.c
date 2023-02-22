@@ -1393,10 +1393,11 @@ gui_input_history_global_next (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_grab_key (struct t_gui_buffer *buffer, int command, const char *delay)
+gui_input_grab_key (struct t_gui_buffer *buffer, int raw_key, int command,
+                    const char *delay)
 {
     if (buffer->input)
-        gui_key_grab_init (command, delay);
+        gui_key_grab_init (raw_key, command, delay);
 }
 
 /*

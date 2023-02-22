@@ -3462,9 +3462,33 @@ COMMAND_CALLBACK(input)
     else if (string_strcmp (argv[1], "history_global_next") == 0)
         gui_input_history_global_next (buffer);
     else if (string_strcmp (argv[1], "grab_key") == 0)
-        gui_input_grab_key (buffer, 0, (argc > 2) ? argv[2] : NULL);
+    {
+        gui_input_grab_key (buffer,
+                            0, /* raw_key */
+                            0, /* command */
+                            (argc > 2) ? argv[2] : NULL);
+    }
+    else if (string_strcmp (argv[1], "grab_raw_key") == 0)
+    {
+        gui_input_grab_key (buffer,
+                            1, /* raw_key */
+                            0, /* command */
+                            (argc > 2) ? argv[2] : NULL);
+    }
     else if (string_strcmp (argv[1], "grab_key_command") == 0)
-        gui_input_grab_key (buffer, 1, (argc > 2) ? argv[2] : NULL);
+    {
+        gui_input_grab_key (buffer,
+                            0, /* raw_key */
+                            1, /* command */
+                            (argc > 2) ? argv[2] : NULL);
+    }
+    else if (string_strcmp (argv[1], "grab_raw_key_command") == 0)
+    {
+        gui_input_grab_key (buffer,
+                            1, /* raw_key */
+                            1, /* command */
+                            (argc > 2) ? argv[2] : NULL);
+    }
     else if (string_strcmp (argv[1], "grab_mouse") == 0)
         gui_input_grab_mouse (buffer, 0);
     else if (string_strcmp (argv[1], "grab_mouse_area") == 0)
@@ -8250,7 +8274,8 @@ command_init ()
         "move_next_char || move_previous_word || move_next_word || "
         "history_previous || history_next || history_global_previous || "
         "history_global_next || "
-        "grab_key || grab_key_command || grab_mouse || grab_mouse_area || "
+        "grab_key || grab_raw_key || grab_raw_key_command || grab_key_command || "
+        "grab_mouse || grab_mouse_area || "
         "insert || send",
         &command_input, NULL, NULL);
     hook_command (
