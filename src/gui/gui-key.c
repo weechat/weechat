@@ -1307,31 +1307,30 @@ gui_key_compare_chunks (const char **chunks, int chunks_count,
 }
 
 /*
- * Searches for a key (maybe part of string) for context default, search or
- * cursor (not for mouse).
+ * Searches key chunks for context default, search or cursor (not for mouse).
+ * It can be part of key chunks or exact match.
  *
- * If exact match is found, *exact_match is set to 1, otherwise to 0.
+ * Parameter "chunks1" is the raw key split into chunks, and "chunks2" is the
+ * key with alias split into chunks (at least one of the chunks must be non
+ * NULL).
  *
  * Returns pointer to key found, NULL if not found.
+ * In case of exact match, *exact_match is set to 1, otherwise 0.
  */
 
 struct t_gui_key *
 gui_key_search_part (struct t_gui_buffer *buffer, int context,
-                     const char *key, const char *key_alias,
+                     const char **chunks1, int chunks1_count,
+                     const char **chunks2, int chunks2_count,
                      int *exact_match)
 {
     struct t_gui_key *ptr_key;
-    char **chunks, **chunks_alias;
-    int rc, chunks_count, chunks_alias_count;
+    int rc;
 
-    if (!key || !exact_match)
+    if ((!chunks1 && !chunks2) || !exact_match)
         return NULL;
 
     *exact_match = 0;
-
-    chunks = string_split (key, ",", NULL, 0, 0, &chunks_count);
-    chunks_alias = (key_alias) ?
-        string_split (key_alias, ",", NULL, 0, 0, &chunks_alias_count) : NULL;
 
     for (ptr_key = (buffer) ? buffer->keys : gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
@@ -1340,20 +1339,23 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
             && ((context != GUI_KEY_CONTEXT_CURSOR)
                 || (ptr_key->key[0] != '@')))
         {
-            rc = gui_key_compare_chunks ((const char **)chunks,
-                                         chunks_count,
-                                         (const char **)ptr_key->chunks,
-                                         ptr_key->chunks_count);
-            if (rc > 0)
+            if (chunks1)
             {
-                if (rc == 2)
-                    *exact_match = 1;
-                break;
+                rc = gui_key_compare_chunks (chunks1,
+                                             chunks1_count,
+                                             (const char **)ptr_key->chunks,
+                                             ptr_key->chunks_count);
+                if (rc > 0)
+                {
+                    if (rc == 2)
+                        *exact_match = 1;
+                    break;
+                }
             }
-            if (chunks_alias)
+            if (chunks2)
             {
-                rc = gui_key_compare_chunks ((const char **)chunks_alias,
-                                             chunks_alias_count,
+                rc = gui_key_compare_chunks (chunks2,
+                                             chunks2_count,
                                              (const char **)ptr_key->chunks,
                                              ptr_key->chunks_count);
                 if (rc > 0)
@@ -1365,11 +1367,6 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
             }
         }
     }
-
-    if (chunks)
-        string_free_split (chunks);
-    if (chunks_alias)
-        string_free_split (chunks_alias);
 
     return ptr_key;
 }
@@ -1869,11 +1866,10 @@ int
 gui_key_pressed (const char *key_str)
 {
     int i, insert_into_input, context, length, length_key, signal_sent;
-    int rc, rc_expand, exact_match;
+    int rc, rc_expand, exact_match, chunks1_count, chunks2_count;
     struct t_gui_key *ptr_key;
     char *pos, signal_name[128], **commands;
-    char *key_name, *key_name_alias;
-    const char *ptr_key_name2;
+    char *key_name, *key_name_alias, **chunks1, **chunks2;
 
     signal_sent = 0;
 
@@ -1944,41 +1940,64 @@ gui_key_pressed (const char *key_str)
 
     ptr_key = NULL;
     exact_match = 0;
-    ptr_key_name2 = (string_strcmp (key_name, key_name_alias) != 0) ?
-        key_name_alias : NULL;
+
+    chunks1 = string_split (key_name, ",", NULL, 0, 0, &chunks1_count);
+    chunks2 = (string_strcmp (key_name, key_name_alias) != 0) ?
+        string_split (key_name_alias, ",", NULL, 0, 0, &chunks2_count) : NULL;
 
     context = gui_key_get_current_context ();
     switch (context)
     {
         case GUI_KEY_CONTEXT_DEFAULT:
             /* look for key combo in key table for current buffer */
-            ptr_key = gui_key_search_part (gui_current_window->buffer,
-                                           GUI_KEY_CONTEXT_DEFAULT,
-                                           key_name, ptr_key_name2,
-                                           &exact_match);
+            ptr_key = gui_key_search_part (
+                gui_current_window->buffer,
+                GUI_KEY_CONTEXT_DEFAULT,
+                (const char **)chunks1, chunks1_count,
+                (const char **)chunks2, chunks2_count,
+                &exact_match);
             /* if key is not found for buffer, then look in general table */
             if (!ptr_key)
-                ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
-                                               key_name, ptr_key_name2,
-                                               &exact_match);
+            {
+                ptr_key = gui_key_search_part (
+                    NULL,
+                    GUI_KEY_CONTEXT_DEFAULT,
+                    (const char **)chunks1, chunks1_count,
+                    (const char **)chunks2, chunks2_count,
+                    &exact_match);
+            }
             break;
         case GUI_KEY_CONTEXT_SEARCH:
-            ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_SEARCH,
-                                           key_name, ptr_key_name2,
-                                           &exact_match);
+            ptr_key = gui_key_search_part (
+                NULL,
+                GUI_KEY_CONTEXT_SEARCH,
+                (const char **)chunks1, chunks1_count,
+                (const char **)chunks2, chunks2_count,
+                &exact_match);
             if (!ptr_key)
             {
-                ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
-                                               key_name, ptr_key_name2,
-                                               &exact_match);
+                ptr_key = gui_key_search_part (
+                    NULL,
+                    GUI_KEY_CONTEXT_DEFAULT,
+                    (const char **)chunks1, chunks1_count,
+                    (const char **)chunks2, chunks2_count,
+                    &exact_match);
             }
             break;
         case GUI_KEY_CONTEXT_CURSOR:
-            ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_CURSOR,
-                                           key_name, ptr_key_name2,
-                                           &exact_match);
+            ptr_key = gui_key_search_part (
+                NULL,
+                GUI_KEY_CONTEXT_CURSOR,
+                (const char **)chunks1, chunks1_count,
+                (const char **)chunks2, chunks2_count,
+                &exact_match);
             break;
     }
+
+    if (chunks1)
+        string_free_split (chunks1);
+    if (chunks2)
+        string_free_split (chunks2);
 
     if (ptr_key)
     {
