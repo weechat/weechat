@@ -110,7 +110,7 @@ jobs:
           /usr/local/bin/python3.11 \
           /usr/local/bin/python3.11-config \
         ;
-        brew install asciidoctor lua ruby
+        brew install asciidoctor guile lua pkg-config ruby
 
     - name: Build
       env:
