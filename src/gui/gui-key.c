@@ -376,65 +376,6 @@ gui_key_legacy_internal_code (const char *key)
 }
 
 /*
- * Gets expanded name from internal key code (legacy function).
- *
- * Examples:
- *   "\001j"            => "ctrl-j"
- *   "\001m"            => "ctrl-m"
- *   "\001r"            => "ctrl-r"
- *   "\001[A"           => "meta-A"
- *   "\001[a"           => "meta-a"
- *   "\001[[1;3D"       => "meta2-1;3D"
- *   "\001[w\001[[1;3A" => "meta-wmeta2-1;3A"
- *
- * Note: result must be freed after use.
- */
-
-char *
-gui_key_legacy_expand (const char *key)
-{
-    char **result;
-
-    if (!key)
-        return NULL;
-
-    result = string_dyn_alloc ((strlen (key) * 2) + 1);
-    if (!result)
-        return NULL;
-
-    while (key[0])
-    {
-        if (strncmp (key, "\x01[[", 3) == 0)
-        {
-            string_dyn_concat (result, "meta2-", -1);
-            key += 3;
-        }
-        if (strncmp (key, "\x01[", 2) == 0)
-        {
-            string_dyn_concat (result, "meta-", -1);
-            key += 2;
-        }
-        else if ((key[0] == '\x01') && (key[1]))
-        {
-            string_dyn_concat (result, "ctrl-", -1);
-            key++;
-        }
-        else if (key[0] == ' ')
-        {
-            string_dyn_concat (result, "space", -1);
-            key++;
-        }
-        else
-        {
-            string_dyn_concat (result, key, 1);
-            key++;
-        }
-    }
-
-    return string_dyn_free (result, 0);
-}
-
-/*
  * Expands raw key code to its name and name using aliases (human readable
  * key name).
  *

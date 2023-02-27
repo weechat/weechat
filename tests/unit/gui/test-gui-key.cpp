@@ -148,34 +148,6 @@ TEST(GuiKey, LegacyInternalCode)
 
 /*
  * Tests functions:
- *   gui_key_legacy_expand
- */
-
-TEST(GuiKey, ExpandLegacy)
-{
-    char *str;
-
-    WEE_TEST_STR(NULL, gui_key_legacy_expand (NULL));
-    WEE_TEST_STR("", gui_key_legacy_expand (""));
-    WEE_TEST_STR("A", gui_key_legacy_expand ("A"));
-    WEE_TEST_STR("a", gui_key_legacy_expand ("a"));
-
-    WEE_TEST_STR("@chat:t", gui_key_legacy_expand ("@chat:t"));
-
-    WEE_TEST_STR("meta-A", gui_key_legacy_expand ("\001[A"));
-    WEE_TEST_STR("meta-a", gui_key_legacy_expand ("\001[a"));
-
-    WEE_TEST_STR("meta2-A", gui_key_legacy_expand ("\001[[A"));
-    WEE_TEST_STR("meta2-a", gui_key_legacy_expand ("\001[[a"));
-
-    WEE_TEST_STR("ctrl-A", gui_key_legacy_expand ("\001A"));
-    WEE_TEST_STR("ctrl-a", gui_key_legacy_expand ("\001a"));
-
-    WEE_TEST_STR("space", gui_key_legacy_expand (" "));
-}
-
-/*
- * Tests functions:
  *   gui_key_expand
  */
 
