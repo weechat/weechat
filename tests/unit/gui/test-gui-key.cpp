@@ -911,6 +911,10 @@ TEST(GuiKey, IsSafe)
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "meta2"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "shift"));
 
+    /* NOT safe: comma / space */
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "comma"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "space"));
+
     /* NOT safe: starts with capital letter (keys are case sensitive) */
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Ctrl-a"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Meta-a"));
@@ -921,6 +925,7 @@ TEST(GuiKey, IsSafe)
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Insert"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Delete"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "End"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Backspace"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Pgup"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Pgdn"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Up"));
@@ -928,6 +933,7 @@ TEST(GuiKey, IsSafe)
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Right"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Left"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Tab"));
+    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Return"));
 
     /* safe keys */
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "ctrl-a"));
@@ -959,6 +965,7 @@ TEST(GuiKey, IsSafe)
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "insert"));
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "delete"));
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "end"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "backspace"));
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "pgup"));
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "pgdn"));
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "up"));
@@ -966,6 +973,7 @@ TEST(GuiKey, IsSafe)
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "right"));
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "left"));
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "tab"));
+    LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "return"));
 
     /* safe keys: "@" in cursor/mouse context */
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_CURSOR, "@"));
