@@ -132,6 +132,7 @@ extern struct t_config_section *weechat_config_section_proxy;
 extern struct t_config_section *weechat_config_section_bar;
 extern struct t_config_section *weechat_config_section_custom_bar_item;
 extern struct t_config_section *weechat_config_section_notify;
+extern struct t_config_section *weechat_config_section_key[];
 
 extern struct t_config_option *config_startup_command_after_plugins;
 extern struct t_config_option *config_startup_command_before_plugins;
@@ -387,6 +388,7 @@ extern void config_weechat_debug_set_all ();
 extern int config_weechat_notify_set (struct t_gui_buffer *buffer,
                                       const char *notify);
 extern void config_get_item_time (char *text_time, int max_length);
+extern int config_weechat_get_key_context (struct t_config_section *section);
 extern int config_weechat_init ();
 extern int config_weechat_read ();
 extern int config_weechat_write ();

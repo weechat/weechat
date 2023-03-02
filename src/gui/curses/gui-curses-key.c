@@ -45,7 +45,8 @@
 #include "../gui-window.h"
 #include "gui-curses.h"
 
-#define BIND(key, command) gui_key_default_bind(context, key, command)
+#define BIND(key, command)                                      \
+    gui_key_default_bind(context, key, command, create_option)
 
 
 /*
@@ -53,21 +54,25 @@
  */
 
 void
-gui_key_default_bind (int context, const char *key, const char *command)
+gui_key_default_bind (int context, const char *key, const char *command,
+                      int create_option)
 {
     struct t_gui_key *ptr_key;
 
     ptr_key = gui_key_search (gui_keys[context], key);
     if (!ptr_key)
-        gui_key_new (NULL, context, key, command);
+        gui_key_new (NULL, context, key, command, create_option);
 }
 
 /*
  * Creates default key bindings for a given context.
+ *
+ * If create_option == 1, config options are created, otherwise keys are just
+ * added to linked list (gui_keys[]).
  */
 
 void
-gui_key_default_bindings (int context)
+gui_key_default_bindings (int context, int create_option)
 {
     int i;
     char key_str[32], command[32];

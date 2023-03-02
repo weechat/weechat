@@ -104,7 +104,7 @@ extern void gui_chat_calculate_line_diff (struct t_gui_window *window,
                                           int *line_pos, int difference);
 
 /* key functions */
-extern void gui_key_default_bindings (int context);
+extern void gui_key_default_bindings (int context, int create_option);
 extern int gui_key_read_cb (const void *pointer, void *data, int fd);
 
 /* window functions */

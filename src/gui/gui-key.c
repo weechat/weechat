@@ -31,6 +31,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-config-file.h"
 #include "../core/wee-eval.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
@@ -112,7 +113,7 @@ time_t gui_key_last_activity_time = 0; /* last activity time (key)          */
 void
 gui_key_init ()
 {
-    int i;
+    int context;
 
     gui_key_combo_buffer[0] = '\0';
     gui_key_grab = 0;
@@ -120,21 +121,21 @@ gui_key_init ()
     gui_key_last_activity_time = time (NULL);
 
     /* create default keys and save them in a separate list */
-    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+    for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
-        gui_keys[i] = NULL;
-        last_gui_key[i] = NULL;
-        gui_default_keys[i] = NULL;
-        last_gui_default_key[i] = NULL;
-        gui_keys_count[i] = 0;
-        gui_default_keys_count[i] = 0;
-        gui_key_default_bindings (i);
-        gui_default_keys[i] = gui_keys[i];
-        last_gui_default_key[i] = last_gui_key[i];
-        gui_default_keys_count[i] = gui_keys_count[i];
-        gui_keys[i] = NULL;
-        last_gui_key[i] = NULL;
-        gui_keys_count[i] = 0;
+        gui_keys[context] = NULL;
+        last_gui_key[context] = NULL;
+        gui_default_keys[context] = NULL;
+        last_gui_default_key[context] = NULL;
+        gui_keys_count[context] = 0;
+        gui_default_keys_count[context] = 0;
+        gui_key_default_bindings (context, 0);
+        gui_default_keys[context] = gui_keys[context];
+        last_gui_default_key[context] = last_gui_key[context];
+        gui_default_keys_count[context] = gui_keys_count[context];
+        gui_keys[context] = NULL;
+        last_gui_key[context] = NULL;
+        gui_keys_count[context] = 0;
     }
 }
 
@@ -879,6 +880,71 @@ gui_key_legacy_to_alias (const char *key)
 }
 
 /*
+ * Amends key: transform upper case ctrl keys to lower case and replace " "
+ * by "space".
+ *
+ * Examples:
+ *   "ctrl-a"   => "ctrl-a"  (unchanged)
+ *   "meta-A"   => "meta-A"  (unchanged)
+ *   'return"   => "return"  (unchanged)
+ *   "ctrl-G"   => "ctrl-g"
+ *   "ctrl-C,b" => "ctrl-c,b"
+ *   " "        => "space"
+ *   "meta- "   => "meta-space"
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_key_amend (const char *key)
+{
+    char **result, str_key[2];
+    const char *ptr_key;
+    int length;
+
+    if (!key)
+        return NULL;
+
+    if ((key[0] == '@') && strchr (key, ':'))
+        return strdup (key);
+
+    result = string_dyn_alloc (strlen (key) + 1);
+    if (!result)
+        return NULL;
+
+    ptr_key = key;
+    while (ptr_key && ptr_key[0])
+    {
+        if (ptr_key[0] == ' ')
+        {
+            string_dyn_concat (result, "space", -1);
+            ptr_key++;
+        }
+        else if (strncmp (ptr_key, "ctrl-", 5) == 0)
+        {
+            string_dyn_concat (result, ptr_key, 5);
+            ptr_key += 5;
+            if (ptr_key[0])
+            {
+                str_key[0] = ((ptr_key[0] >= 'A') && (ptr_key[0] <= 'Z')) ?
+                    ptr_key[0] + ('a' - 'A') : ptr_key[0];
+                str_key[1] = '\0';
+                string_dyn_concat (result, str_key, -1);
+                ptr_key++;
+            }
+        }
+        else
+        {
+            length = utf8_char_size (ptr_key);
+            string_dyn_concat (result, ptr_key, length);
+            ptr_key += length;
+        }
+    }
+
+    return string_dyn_free (result, 0);
+}
+
+/*
  * Searches for position of a key (to keep keys sorted).
  */
 
@@ -1152,29 +1218,128 @@ gui_key_is_safe (int context, const char *key)
 }
 
 /*
+ * Callback for changes on a key option.
+ */
+
+void
+gui_key_option_change_cb (const void *pointer, void *data,
+                          struct t_config_option *option)
+{
+    struct t_gui_key *ptr_key;
+    int context;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    context = config_weechat_get_key_context (option->section);
+    if (context < 0)
+        return;
+
+    ptr_key = gui_key_search (gui_keys[context], option->name);
+    if (!ptr_key)
+        return;
+
+    if (ptr_key->command)
+        free (ptr_key->command);
+    ptr_key->command = strdup (CONFIG_STRING(option));
+}
+
+/*
+ * Creates a new key option.
+ *
+ * Returns pointer to existing or new option.
+ */
+
+struct t_config_option *
+gui_key_new_option (int context, const char *name, const char *value)
+{
+    struct t_config_option *ptr_option;
+    struct t_gui_key *ptr_key;
+    char str_description[1024];
+
+    if (!name || !value)
+        return NULL;
+
+    ptr_option = config_file_search_option (weechat_config_file,
+                                            weechat_config_section_key[context],
+                                            name);
+    if (ptr_option)
+    {
+        config_file_option_set (ptr_option, value, 1);
+    }
+    else
+    {
+        snprintf (str_description, sizeof (str_description),
+                  _("key \"%s\" in context \"%s\""),
+                  name,
+                  gui_key_context_string[context]);
+        ptr_key = gui_key_search (gui_default_keys[context], name);
+        ptr_option = config_file_new_option (
+            weechat_config_file, weechat_config_section_key[context],
+            name, "string",
+            str_description,
+            NULL, 0, 0,
+            (ptr_key) ? ptr_key->command : "",
+            value,
+            0,
+            NULL, NULL, NULL,
+            &gui_key_option_change_cb, NULL, NULL,
+            NULL, NULL, NULL);
+    }
+
+    return ptr_option;
+}
+
+/*
  * Adds a new key in keys list.
  *
  * If buffer is not null, then key is specific to buffer, otherwise it's general
  * key (for most keys).
+ *
+ * If create_option == 1, a config option is created as well.
  *
  * Returns pointer to new key, NULL if error.
  */
 
 struct t_gui_key *
 gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
-             const char *command)
+             const char *command, int create_option)
 {
+    char *key_amended;
+    struct t_config_option *ptr_option;
     struct t_gui_key *new_key;
 
     if (!key || !command)
         return NULL;
 
-    new_key = malloc (sizeof (*new_key));
-    if (!new_key)
+    key_amended = gui_key_amend (key);
+    if (!key_amended)
         return NULL;
 
-    new_key->key = strdup (key);
-    new_key->chunks = string_split (key, ",", NULL, 0, 0,
+    ptr_option = NULL;
+
+    if (!buffer && create_option)
+    {
+        ptr_option = gui_key_new_option (context, key_amended, command);
+        if (!ptr_option)
+        {
+            free (key_amended);
+            return NULL;
+        }
+    }
+
+    new_key = malloc (sizeof (*new_key));
+    if (!new_key)
+    {
+        if (ptr_option)
+            config_file_option_free (ptr_option, 0);
+        free (key_amended);
+        return NULL;
+    }
+
+    new_key->key = key_amended;
+    new_key->chunks = string_split (key_amended, ",", NULL, 0, 0,
                                     &new_key->chunks_count);
     new_key->command = strdup (command);
     gui_key_set_areas (new_key);
@@ -1182,14 +1347,17 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
 
     if (buffer)
     {
-        gui_key_insert_sorted (&buffer->keys, &buffer->last_key,
-                               &buffer->keys_count, new_key);
+        gui_key_insert_sorted (&buffer->keys,
+                               &buffer->last_key,
+                               &buffer->keys_count,
+                               new_key);
     }
     else
     {
         gui_key_insert_sorted (&gui_keys[context],
                                &last_gui_key[context],
-                               &gui_keys_count[context], new_key);
+                               &gui_keys_count[context],
+                               new_key);
     }
 
     if (gui_key_verbose)
@@ -1345,7 +1513,7 @@ gui_key_bind (struct t_gui_buffer *buffer, int context, const char *key,
 
     gui_key_unbind (buffer, context, key);
 
-    return gui_key_new (buffer, context, key, command);
+    return gui_key_new (buffer, context, key, command, 1);
 }
 
 /*
@@ -1374,7 +1542,7 @@ gui_key_bind_plugin_hashtable_map_cb (void *data,
         ptr_key = gui_key_search (gui_keys[user_data[0]], key);
         if (!ptr_key)
         {
-            if (gui_key_new (NULL, user_data[0], key, value))
+            if (gui_key_new (NULL, user_data[0], key, value, 1))
                 user_data[1]++;
         }
     }
@@ -1422,17 +1590,25 @@ gui_key_bind_plugin (const char *context, struct t_hashtable *keys)
 int
 gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
 {
+    char *key_amended;
     struct t_gui_key *ptr_key;
 
-    ptr_key = gui_key_search ((buffer) ? buffer->keys : gui_keys[context],
-                              key);
-    if (!ptr_key)
+    key_amended = gui_key_amend (key);
+    if (!key_amended)
         return 0;
+
+    ptr_key = gui_key_search ((buffer) ? buffer->keys : gui_keys[context],
+                              key_amended);
+    if (!ptr_key)
+    {
+        free (key_amended);
+        return 0;
+    }
 
     if (buffer)
     {
-        gui_key_free (&buffer->keys, &buffer->last_key,
-                      &buffer->keys_count, ptr_key);
+        gui_key_free (-1, &buffer->keys, &buffer->last_key,
+                      &buffer->keys_count, ptr_key, 0);
     }
     else
     {
@@ -1440,15 +1616,17 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
         {
             gui_chat_printf (NULL,
                              _("Key \"%s\" unbound (context: \"%s\")"),
-                             key,
+                             key_amended,
                              gui_key_context_string[context]);
         }
-        gui_key_free (&gui_keys[context], &last_gui_key[context],
-                      &gui_keys_count[context], ptr_key);
+        gui_key_free (context, &gui_keys[context], &last_gui_key[context],
+                      &gui_keys_count[context], ptr_key, 1);
     }
 
     (void) hook_signal_send ("key_unbind",
-                             WEECHAT_HOOK_SIGNAL_STRING, (char *)key);
+                             WEECHAT_HOOK_SIGNAL_STRING, key_amended);
+
+    free (key_amended);
 
     return 1;
 }
@@ -2070,16 +2248,30 @@ end:
 
 /*
  * Deletes a key binding.
+ *
+ * If delete_option == 1, the config option is deleted.
  */
 
 void
-gui_key_free (struct t_gui_key **keys, struct t_gui_key **last_key,
-              int *keys_count, struct t_gui_key *key)
+gui_key_free (int context,
+              struct t_gui_key **keys, struct t_gui_key **last_key,
+              int *keys_count, struct t_gui_key *key, int delete_option)
 {
+    struct t_config_option *ptr_option;
     int i;
 
     if (!key)
         return;
+
+    if (delete_option)
+    {
+        ptr_option = config_file_search_option (
+            weechat_config_file,
+            weechat_config_section_key[context],
+            key->key);
+        if (ptr_option)
+            config_file_option_free (ptr_option, 1);
+    }
 
     /* free memory */
     if (key->key)
@@ -2113,15 +2305,19 @@ gui_key_free (struct t_gui_key **keys, struct t_gui_key **last_key,
 
 /*
  * Deletes all key bindings.
+ *
+ * If delete_option == 1, the config options are deleted.
  */
 
 void
-gui_key_free_all (struct t_gui_key **keys, struct t_gui_key **last_key,
-                       int *keys_count)
+gui_key_free_all (int context, struct t_gui_key **keys,
+                  struct t_gui_key **last_key,
+                  int *keys_count, int delete_option)
 {
     while (*keys)
     {
-        gui_key_free (keys, last_key, keys_count, *keys);
+        gui_key_free (context, keys, last_key, keys_count, *keys,
+                      delete_option);
     }
 }
 
@@ -2501,20 +2697,26 @@ gui_key_paste_cancel ()
 void
 gui_key_end ()
 {
-    int i;
+    int context;
 
     /* free key buffer */
     if (gui_key_buffer)
         free (gui_key_buffer);
 
-    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+    for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
         /* free keys */
-        gui_key_free_all (&gui_keys[i], &last_gui_key[i],
-                          &gui_keys_count[i]);
+        gui_key_free_all (context,
+                          &gui_keys[context],
+                          &last_gui_key[context],
+                          &gui_keys_count[context],
+                          0);
         /* free default keys */
-        gui_key_free_all (&gui_default_keys[i], &last_gui_default_key[i],
-                          &gui_default_keys_count[i]);
+        gui_key_free_all (context,
+                          &gui_default_keys[context],
+                          &last_gui_default_key[context],
+                          &gui_default_keys_count[context],
+                          0);
     }
 }
 
@@ -2527,7 +2729,7 @@ gui_key_hdata_key_cb (const void *pointer, void *data,
                       const char *hdata_name)
 {
     struct t_hdata *hdata;
-    int i;
+    int context;
     char str_list[128];
 
     /* make C compiler happy */
@@ -2546,28 +2748,32 @@ gui_key_hdata_key_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_key, score, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_key, prev_key, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_key, next_key, POINTER, 0, NULL, hdata_name);
-        for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+        for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
         {
             snprintf (str_list, sizeof (str_list),
                       "gui_keys%s%s",
-                      (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
-                      (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : gui_key_context_string[i]);
-            hdata_new_list (hdata, str_list, &gui_keys[i], 0);
+                      (context == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
+                      (context == GUI_KEY_CONTEXT_DEFAULT) ?
+                      "" : gui_key_context_string[context]);
+            hdata_new_list (hdata, str_list, &gui_keys[context], 0);
             snprintf (str_list, sizeof (str_list),
                       "last_gui_key%s%s",
-                      (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
-                      (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : gui_key_context_string[i]);
-            hdata_new_list (hdata, str_list, &last_gui_key[i], 0);
+                      (context == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
+                      (context == GUI_KEY_CONTEXT_DEFAULT) ?
+                      "" : gui_key_context_string[context]);
+            hdata_new_list (hdata, str_list, &last_gui_key[context], 0);
             snprintf (str_list, sizeof (str_list),
                       "gui_default_keys%s%s",
-                      (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
-                      (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : gui_key_context_string[i]);
-            hdata_new_list (hdata, str_list, &gui_default_keys[i], 0);
+                      (context == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
+                      (context == GUI_KEY_CONTEXT_DEFAULT) ?
+                      "" : gui_key_context_string[context]);
+            hdata_new_list (hdata, str_list, &gui_default_keys[context], 0);
             snprintf (str_list, sizeof (str_list),
                       "last_gui_default_key%s%s",
-                      (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
-                      (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : gui_key_context_string[i]);
-            hdata_new_list (hdata, str_list, &last_gui_default_key[i], 0);
+                      (context == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
+                      (context == GUI_KEY_CONTEXT_DEFAULT) ?
+                      "" : gui_key_context_string[context]);
+            hdata_new_list (hdata, str_list, &last_gui_default_key[context], 0);
         }
     }
     return hdata;
@@ -2647,7 +2853,7 @@ void
 gui_key_print_log (struct t_gui_buffer *buffer)
 {
     struct t_gui_key *ptr_key;
-    int i;
+    int context;
 
     if (buffer)
     {
@@ -2662,15 +2868,16 @@ gui_key_print_log (struct t_gui_buffer *buffer)
     }
     else
     {
-        for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+        for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
         {
             log_printf ("");
-            log_printf ("[keys for context: %s]", gui_key_context_string[i]);
-            log_printf ("  keys . . . . . . . . : 0x%lx", gui_keys[i]);
-            log_printf ("  last_key . . . . . . : 0x%lx", last_gui_key[i]);
-            log_printf ("  keys_count . . . . . : %d",    gui_keys_count[i]);
+            log_printf ("[keys for context: %s]", gui_key_context_string[context]);
+            log_printf ("  keys . . . . . . . . : 0x%lx", gui_keys[context]);
+            log_printf ("  last_key . . . . . . : 0x%lx", last_gui_key[context]);
+            log_printf ("  keys_count . . . . . : %d",    gui_keys_count[context]);
 
-            for (ptr_key = gui_keys[i]; ptr_key; ptr_key = ptr_key->next_key)
+            for (ptr_key = gui_keys[context]; ptr_key;
+                 ptr_key = ptr_key->next_key)
             {
                 log_printf ("");
                 gui_key_print_log_key (ptr_key, "");

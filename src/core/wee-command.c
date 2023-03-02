@@ -3812,8 +3812,10 @@ command_key_display_list (const char *message_no_key,
     struct t_gui_key *ptr_key;
 
     if (keys_count == 0)
+    {
         gui_chat_printf (NULL, message_no_key,
                          gui_key_context_string[context]);
+    }
     else
     {
         gui_chat_printf (NULL, "");
@@ -3997,7 +3999,7 @@ command_key_reset (int context, const char *key)
 COMMAND_CALLBACK(key)
 {
     struct t_gui_key *ptr_new_key;
-    int old_keys_count, keys_added, i, context, rc;
+    int old_keys_count, keys_added, context, rc;
 
     /* make C compiler happy */
     (void) pointer;
@@ -4007,17 +4009,20 @@ COMMAND_CALLBACK(key)
     /* display all key bindings (current keys) */
     if ((argc == 1) || (string_strcmp (argv[1], "list") == 0))
     {
-        for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+        for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
         {
             if ((argc < 3)
-                || (string_strcmp (argv[2], gui_key_context_string[i]) == 0))
+                || (string_strcmp (argv[2],
+                                   gui_key_context_string[context]) == 0))
             {
                 command_key_display_list (_("No key binding defined for "
                                             "context \"%s\""),
                                           /* TRANSLATORS: first "%d" is number of keys */
                                           _("%d key bindings for context "
                                             "\"%s\":"),
-                                          i, gui_keys[i], gui_keys_count[i]);
+                                          context,
+                                          gui_keys[context],
+                                          gui_keys_count[context]);
             }
         }
         return WEECHAT_RC_OK;
@@ -4026,12 +4031,13 @@ COMMAND_CALLBACK(key)
     /* display redefined or key bindings added */
     if (string_strcmp (argv[1], "listdiff") == 0)
     {
-        for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+        for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
         {
             if ((argc < 3)
-                || (string_strcmp (argv[2], gui_key_context_string[i]) == 0))
+                || (string_strcmp (argv[2],
+                                   gui_key_context_string[context]) == 0))
             {
-                command_key_display_listdiff (i);
+                command_key_display_listdiff (context);
             }
         }
         return WEECHAT_RC_OK;
@@ -4040,19 +4046,20 @@ COMMAND_CALLBACK(key)
     /* display default key bindings */
     if (string_strcmp (argv[1], "listdefault") == 0)
     {
-        for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+        for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
         {
             if ((argc < 3)
-                || (string_strcmp (argv[2], gui_key_context_string[i]) == 0))
+                || (string_strcmp (argv[2],
+                                   gui_key_context_string[context]) == 0))
             {
                 command_key_display_list (_("No default key binding for "
                                             "context \"%s\""),
                                           /* TRANSLATORS: first "%d" is number of keys */
                                           _("%d default key bindings for "
                                             "context \"%s\":"),
-                                          i,
-                                          gui_default_keys[i],
-                                          gui_default_keys_count[i]);
+                                          context,
+                                          gui_default_keys[context],
+                                          gui_default_keys_count[context]);
             }
         }
         return WEECHAT_RC_OK;
@@ -4258,18 +4265,22 @@ COMMAND_CALLBACK(key)
     {
         if ((argc >= 3) && (string_strcmp (argv[2], "-yes") == 0))
         {
-            for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+            for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
             {
                 if ((argc < 4)
-                    || (string_strcmp (argv[3], gui_key_context_string[i]) == 0))
+                    || (string_strcmp (argv[3],
+                                       gui_key_context_string[context]) == 0))
                 {
-                    gui_key_free_all (&gui_keys[i], &last_gui_key[i],
-                                      &gui_keys_count[i]);
-                    gui_key_default_bindings (i);
+                    gui_key_free_all (context,
+                                      &gui_keys[context],
+                                      &last_gui_key[context],
+                                      &gui_keys_count[context],
+                                      1);
+                    gui_key_default_bindings (context, 1);
                     gui_chat_printf (NULL,
                                      _("Default key bindings restored for "
                                        "context \"%s\""),
-                                     gui_key_context_string[i]);
+                                     gui_key_context_string[context]);
                 }
             }
         }
@@ -4287,22 +4298,23 @@ COMMAND_CALLBACK(key)
     /* add missing keys */
     if (string_strcmp (argv[1], "missing") == 0)
     {
-        for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+        for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
         {
             if ((argc < 3)
-                || (string_strcmp (argv[2], gui_key_context_string[i]) == 0))
+                || (string_strcmp (argv[2],
+                                   gui_key_context_string[context]) == 0))
             {
-                old_keys_count = gui_keys_count[i];
+                old_keys_count = gui_keys_count[context];
                 gui_key_verbose = 1;
-                gui_key_default_bindings (i);
+                gui_key_default_bindings (context, 1);
                 gui_key_verbose = 0;
-                keys_added = (gui_keys_count[i] > old_keys_count) ?
-                    gui_keys_count[i] - old_keys_count : 0;
+                keys_added = (gui_keys_count[context] > old_keys_count) ?
+                    gui_keys_count[context] - old_keys_count : 0;
                 gui_chat_printf (NULL,
                                  NG_("%d new key added", "%d new keys added "
                                      "(context: \"%s\")", keys_added),
                                  keys_added,
-                                 gui_key_context_string[i]);
+                                 gui_key_context_string[context]);
             }
         }
         return WEECHAT_RC_OK;

@@ -99,7 +99,8 @@ extern int gui_key_is_safe (int context, const char *key);
 extern struct t_gui_key *gui_key_new (struct t_gui_buffer *buffer,
                                       int context,
                                       const char *key,
-                                      const char *command);
+                                      const char *command,
+                                      int create_option);
 extern struct t_gui_key *gui_key_search (struct t_gui_key *keys,
                                          const char *key);
 extern struct t_gui_key *gui_key_bind (struct t_gui_buffer *buffer,
@@ -112,13 +113,17 @@ extern int gui_key_unbind (struct t_gui_buffer *buffer, int context,
 extern int gui_key_unbind_plugin (const char *context, const char *key);
 extern int gui_key_focus (const char *key, int context);
 extern int gui_key_pressed (const char *key_str);
-extern void gui_key_free (struct t_gui_key **keys,
+extern void gui_key_free (int context,
+                          struct t_gui_key **keys,
                           struct t_gui_key **last_key,
                           int *keys_count,
-                          struct t_gui_key *key);
-extern void gui_key_free_all (struct t_gui_key **keys,
+                          struct t_gui_key *key,
+                          int delete_option);
+extern void gui_key_free_all (int context,
+                              struct t_gui_key **keys,
                               struct t_gui_key **last_key,
-                              int *keys_count);
+                              int *keys_count,
+                              int delete_option);
 extern void gui_key_buffer_reset ();
 extern void gui_key_buffer_add (unsigned char key);
 extern int gui_key_buffer_search (int start_index, int max_index,
@@ -145,6 +150,6 @@ extern void gui_key_print_log (struct t_gui_buffer *buffer);
 
 /* key functions (GUI dependent) */
 
-extern void gui_key_default_bindings (int context);
+extern void gui_key_default_bindings (int context, int create_option);
 
 #endif /* WEECHAT_GUI_KEY_H */

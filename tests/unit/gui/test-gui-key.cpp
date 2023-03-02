@@ -25,9 +25,24 @@
 
 extern "C"
 {
+#include "src/core/wee-config.h"
+#include "src/core/wee-input.h"
+#include "src/core/wee-string.h"
+#include "src/gui/gui-buffer.h"
 #include "src/gui/gui-key.h"
 
+extern int gui_key_get_current_context ();
 extern char *gui_key_legacy_internal_code (const char *key);
+extern char *gui_key_amend (const char *key);
+extern struct t_config_option *gui_key_new_option (int context,
+                                                   const char *name,
+                                                   const char *value);
+extern int gui_key_compare_chunks (const char **chunks, int chunks_count,
+                                   const char **key_chunks, int key_chunks_count);
+extern struct t_gui_key *gui_key_search_part (struct t_gui_buffer *buffer, int context,
+                                              const char **chunks1, int chunks1_count,
+                                              const char **chunks2, int chunks2_count,
+                                              int *exact_match);
 }
 
 #define WEE_CHECK_EXP_KEY(__rc, __key_name, __key_name_alias, __key)    \
@@ -94,7 +109,19 @@ TEST(GuiKey, SearchContext)
 
 TEST(GuiKey, GetCurrentContext)
 {
-    /* TODO: write tests */
+    LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
+
+    input_data (gui_buffers, "/cursor", NULL);
+    LONGS_EQUAL(GUI_KEY_CONTEXT_CURSOR, gui_key_get_current_context ());
+
+    input_data (gui_buffers, "/cursor stop", NULL);
+    LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
+
+    input_data (gui_buffers, "/input search_text_here", NULL);
+    LONGS_EQUAL(GUI_KEY_CONTEXT_SEARCH, gui_key_get_current_context ());
+
+    input_data (gui_buffers, "/input search_stop", NULL);
+    LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
 }
 
 /*
@@ -836,6 +863,33 @@ TEST(GuiKey, LegacyToAlias)
 
 /*
  * Tests functions:
+ *   gui_key_amend
+ */
+
+TEST(GuiKey, Amend)
+{
+    char *str;
+
+    WEE_TEST_STR(NULL, gui_key_amend (NULL));
+
+    /* no changes */
+    WEE_TEST_STR("", gui_key_amend (""));
+    WEE_TEST_STR("a", gui_key_amend ("a"));
+    WEE_TEST_STR("@chat:button1", gui_key_amend ("@chat:button1"));
+    WEE_TEST_STR("meta-A", gui_key_amend ("meta-A"));
+    WEE_TEST_STR("ctrl-a", gui_key_amend ("ctrl-a"));
+    WEE_TEST_STR("return", gui_key_amend ("return"));
+
+    /* changes */
+    WEE_TEST_STR("ctrl-a", gui_key_amend ("ctrl-A"));
+    WEE_TEST_STR("ctrl-c,b", gui_key_amend ("ctrl-C,b"));
+    WEE_TEST_STR("ctrl-c,ctrl-b,A", gui_key_amend ("ctrl-C,ctrl-B,A"));
+    WEE_TEST_STR("space", gui_key_amend (" "));
+    WEE_TEST_STR("meta-space", gui_key_amend ("meta- "));
+}
+
+/*
+ * Tests functions:
  *   gui_key_find_pos
  */
 
@@ -982,12 +1036,140 @@ TEST(GuiKey, IsSafe)
 
 /*
  * Tests functions:
+ *   gui_key_option_change_cb
+ */
+
+TEST(GuiKey, OptionChangeCb)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_key_new_option
+ */
+
+TEST(GuiKey, NewOption)
+{
+    struct t_config_option *ptr_option;
+    int context;
+
+    POINTERS_EQUAL(NULL, gui_key_new_option (GUI_KEY_CONTEXT_DEFAULT,
+                                             NULL, NULL));
+    POINTERS_EQUAL(NULL, gui_key_new_option (GUI_KEY_CONTEXT_DEFAULT,
+                                             "meta-a,meta-b,meta-c", NULL));
+    POINTERS_EQUAL(NULL, gui_key_new_option (GUI_KEY_CONTEXT_DEFAULT,
+                                             NULL, "/mute"));
+
+    for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
+    {
+        POINTERS_EQUAL(NULL,
+                       config_file_search_option (
+                           weechat_config_file,
+                           weechat_config_section_key[context],
+                           "meta-a,meta-b,meta-c"));
+        ptr_option = gui_key_new_option (context,
+                                         "meta-a,meta-b,meta-c", "/mute");
+        CHECK(ptr_option);
+        POINTERS_EQUAL(ptr_option,
+                       config_file_search_option (
+                           weechat_config_file,
+                           weechat_config_section_key[context],
+                           "meta-a,meta-b,meta-c"));
+        STRCMP_EQUAL("/mute", CONFIG_STRING(ptr_option));
+        config_file_option_free (ptr_option, 0);
+    }
+}
+
+/*
+ * Tests functions:
  *   gui_key_new
  */
 
 TEST(GuiKey, New)
 {
-    /* TODO: write tests */
+    struct t_gui_key *ptr_key;
+
+    POINTERS_EQUAL(NULL, gui_key_new (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                      NULL, NULL, 1));
+    POINTERS_EQUAL(NULL, gui_key_new (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                      "meta-a,meta-b,meta-c", NULL, 1));
+    POINTERS_EQUAL(NULL, gui_key_new (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                      NULL, "/mute", 1));
+
+    ptr_key = gui_key_new (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                           "meta-a,meta-b,meta-c", "/mute", 1);
+    CHECK(ptr_key);
+    STRCMP_EQUAL("meta-a,meta-b,meta-c", ptr_key->key);
+    LONGS_EQUAL(3, ptr_key->chunks_count);
+    STRCMP_EQUAL("meta-a", ptr_key->chunks[0]);
+    STRCMP_EQUAL("meta-b", ptr_key->chunks[1]);
+    STRCMP_EQUAL("meta-c", ptr_key->chunks[2]);
+    LONGS_EQUAL(GUI_KEY_FOCUS_ANY, ptr_key->area_type[0]);
+    LONGS_EQUAL(GUI_KEY_FOCUS_ANY, ptr_key->area_type[1]);
+    POINTERS_EQUAL(NULL, ptr_key->area_key);
+    STRCMP_EQUAL("/mute", ptr_key->command);
+    LONGS_EQUAL(0, ptr_key->score);
+    gui_key_free (GUI_KEY_CONTEXT_DEFAULT,
+                  &gui_keys[GUI_KEY_CONTEXT_DEFAULT],
+                  &last_gui_key[GUI_KEY_CONTEXT_DEFAULT],
+                  &gui_keys_count[GUI_KEY_CONTEXT_DEFAULT],
+                  ptr_key,
+                  1);
+
+    ptr_key = gui_key_new (NULL, GUI_KEY_CONTEXT_CURSOR,
+                           "@chat:z", "/print z", 1);
+    CHECK(ptr_key);
+    STRCMP_EQUAL("@chat:z", ptr_key->key);
+    LONGS_EQUAL(1, ptr_key->chunks_count);
+    STRCMP_EQUAL("@chat:z", ptr_key->chunks[0]);
+    LONGS_EQUAL(GUI_KEY_FOCUS_CHAT, ptr_key->area_type[0]);
+    LONGS_EQUAL(GUI_KEY_FOCUS_ANY, ptr_key->area_type[1]);
+    STRCMP_EQUAL("z", ptr_key->area_key);
+    STRCMP_EQUAL("/print z", ptr_key->command);
+    LONGS_EQUAL(368, ptr_key->score);
+    gui_key_free (GUI_KEY_CONTEXT_CURSOR,
+                  &gui_keys[GUI_KEY_CONTEXT_CURSOR],
+                  &last_gui_key[GUI_KEY_CONTEXT_CURSOR],
+                  &gui_keys_count[GUI_KEY_CONTEXT_CURSOR],
+                  ptr_key,
+                  1);
+
+    ptr_key = gui_key_new (NULL, GUI_KEY_CONTEXT_MOUSE,
+                           "@chat:wheelup", "/print wheelup", 1);
+    CHECK(ptr_key);
+    STRCMP_EQUAL("@chat:wheelup", ptr_key->key);
+    LONGS_EQUAL(1, ptr_key->chunks_count);
+    STRCMP_EQUAL("@chat:wheelup", ptr_key->chunks[0]);
+    LONGS_EQUAL(GUI_KEY_FOCUS_CHAT, ptr_key->area_type[0]);
+    LONGS_EQUAL(GUI_KEY_FOCUS_ANY, ptr_key->area_type[1]);
+    STRCMP_EQUAL("wheelup", ptr_key->area_key);
+    STRCMP_EQUAL("/print wheelup", ptr_key->command);
+    LONGS_EQUAL(368, ptr_key->score);
+    gui_key_free (GUI_KEY_CONTEXT_MOUSE,
+                  &gui_keys[GUI_KEY_CONTEXT_MOUSE],
+                  &last_gui_key[GUI_KEY_CONTEXT_MOUSE],
+                  &gui_keys_count[GUI_KEY_CONTEXT_MOUSE],
+                  ptr_key,
+                  1);
+
+    ptr_key = gui_key_new (NULL, GUI_KEY_CONTEXT_MOUSE,
+                           "@bar(nicklist)>chat:button1", "/print button1", 1);
+    CHECK(ptr_key);
+    STRCMP_EQUAL("@bar(nicklist)>chat:button1", ptr_key->key);
+    LONGS_EQUAL(1, ptr_key->chunks_count);
+    STRCMP_EQUAL("@bar(nicklist)>chat:button1", ptr_key->chunks[0]);
+    LONGS_EQUAL(GUI_KEY_FOCUS_BAR, ptr_key->area_type[0]);
+    LONGS_EQUAL(GUI_KEY_FOCUS_CHAT, ptr_key->area_type[1]);
+    STRCMP_EQUAL("button1", ptr_key->area_key);
+    STRCMP_EQUAL("/print button1", ptr_key->command);
+    LONGS_EQUAL(272, ptr_key->score);
+    gui_key_free (GUI_KEY_CONTEXT_MOUSE,
+                  &gui_keys[GUI_KEY_CONTEXT_MOUSE],
+                  &last_gui_key[GUI_KEY_CONTEXT_MOUSE],
+                  &gui_keys_count[GUI_KEY_CONTEXT_MOUSE],
+                  ptr_key,
+                  1);
 }
 
 /*
@@ -997,7 +1179,79 @@ TEST(GuiKey, New)
 
 TEST(GuiKey, Search)
 {
-    /* TODO: write tests */
+    struct t_gui_key *ptr_key;
+
+    POINTERS_EQUAL(NULL, gui_key_search (NULL, NULL));
+    POINTERS_EQUAL(NULL, gui_key_search (NULL, "meta-a"));
+    POINTERS_EQUAL(NULL,
+                   gui_key_search (
+                       gui_keys[GUI_KEY_CONTEXT_DEFAULT], NULL));
+    POINTERS_EQUAL(NULL,
+                   gui_key_search (
+                       gui_keys[GUI_KEY_CONTEXT_DEFAULT], ""));
+    POINTERS_EQUAL(NULL,
+                   gui_key_search (
+                       gui_keys[GUI_KEY_CONTEXT_DEFAULT], "meta-"));
+    POINTERS_EQUAL(NULL,
+                   gui_key_search (
+                       gui_keys[GUI_KEY_CONTEXT_DEFAULT], "unknown"));
+    POINTERS_EQUAL(NULL,
+                   gui_key_search (
+                       gui_keys[GUI_KEY_CONTEXT_SEARCH], "meta-a"));
+    POINTERS_EQUAL(NULL,
+                   gui_key_search (
+                       gui_keys[GUI_KEY_CONTEXT_CURSOR], "meta-a"));
+    POINTERS_EQUAL(NULL,
+                   gui_key_search (
+                       gui_keys[GUI_KEY_CONTEXT_MOUSE], "meta-a"));
+
+    ptr_key = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT], "meta-a");
+    CHECK(ptr_key);
+    STRCMP_EQUAL("meta-a", ptr_key->key);
+    STRCMP_EQUAL("/buffer jump smart", ptr_key->command);
+
+    ptr_key = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
+                              "meta-w,meta-up");
+    CHECK(ptr_key);
+    STRCMP_EQUAL("meta-w,meta-up", ptr_key->key);
+    STRCMP_EQUAL("/window up", ptr_key->command);
+}
+
+/*
+ * Tests functions:
+ *   gui_key_compare_chunks
+ */
+
+TEST(GuiKey, CompareChunks)
+{
+    struct t_gui_key *ptr_key1, *ptr_key2;
+
+    ptr_key1 = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT], "meta-a");
+    ptr_key2 = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT], "meta-w,meta-down");
+    LONGS_EQUAL(0,
+                gui_key_compare_chunks (
+                    (const char **)ptr_key1->chunks, ptr_key1->chunks_count,
+                    (const char **)ptr_key2->chunks, ptr_key2->chunks_count));
+
+    ptr_key1 = gui_key_new (NULL, GUI_KEY_CONTEXT_DEFAULT, "meta-w", "/mute", 1);
+    ptr_key2 = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT], "meta-w,meta-down");
+    LONGS_EQUAL(1,
+                gui_key_compare_chunks (
+                    (const char **)ptr_key1->chunks, ptr_key1->chunks_count,
+                    (const char **)ptr_key2->chunks, ptr_key2->chunks_count));
+    gui_key_free (GUI_KEY_CONTEXT_MOUSE,
+                  &gui_keys[GUI_KEY_CONTEXT_MOUSE],
+                  &last_gui_key[GUI_KEY_CONTEXT_MOUSE],
+                  &gui_keys_count[GUI_KEY_CONTEXT_MOUSE],
+                  ptr_key1,
+                  1);
+
+    ptr_key1 = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT], "meta-w,meta-down");
+    ptr_key2 = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT], "meta-w,meta-down");
+    LONGS_EQUAL(2,
+                gui_key_compare_chunks (
+                    (const char **)ptr_key1->chunks, ptr_key1->chunks_count,
+                    (const char **)ptr_key2->chunks, ptr_key2->chunks_count));
 }
 
 /*
@@ -1007,7 +1261,63 @@ TEST(GuiKey, Search)
 
 TEST(GuiKey, SearchPart)
 {
-    /* TODO: write tests */
+    struct t_gui_key *new_key, *ptr_key;
+    char **chunks1, **chunks2;
+    int chunks1_count, chunks2_count, exact_match;
+
+    chunks1 = string_split ("meta-a", ",", NULL, 0, 0, &chunks1_count);
+    chunks2 = string_split ("meta-w", ",", NULL, 0, 0, &chunks2_count);
+
+    POINTERS_EQUAL(NULL, gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                              NULL, 0, NULL, 0, NULL));
+    POINTERS_EQUAL(NULL, gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                              (const char **)chunks1, 0,
+                                              NULL, 0,
+                                              NULL));
+    POINTERS_EQUAL(NULL, gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                              NULL, 0,
+                                              (const char **)chunks2, 0,
+                                              NULL));
+    POINTERS_EQUAL(NULL, gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                              (const char **)chunks1, 0,
+                                              (const char **)chunks2, 0,
+                                              NULL));
+
+    exact_match = -1;
+    ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                   (const char **)chunks1, chunks1_count,
+                                   NULL, 0,
+                                   &exact_match);
+    CHECK(ptr_key);
+    STRCMP_EQUAL("meta-a", ptr_key->key);
+    LONGS_EQUAL(1, exact_match);
+
+    exact_match = -1;
+    ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                   NULL, 0,
+                                   (const char **)chunks2, chunks2_count,
+                                   &exact_match);
+    CHECK(ptr_key);
+    STRCMP_EQUAL("meta-w,meta-b", ptr_key->key);
+    LONGS_EQUAL(0, exact_match);
+
+    new_key = gui_key_new (NULL, GUI_KEY_CONTEXT_DEFAULT, "meta-w", "/mute", 1);
+
+    exact_match = -1;
+    ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                   NULL, 0,
+                                   (const char **)chunks2, chunks2_count,
+                                   &exact_match);
+    CHECK(ptr_key);
+    STRCMP_EQUAL("meta-w", ptr_key->key);
+    LONGS_EQUAL(1, exact_match);
+
+    gui_key_free (GUI_KEY_CONTEXT_DEFAULT,
+                  &gui_keys[GUI_KEY_CONTEXT_DEFAULT],
+                  &last_gui_key[GUI_KEY_CONTEXT_DEFAULT],
+                  &gui_keys_count[GUI_KEY_CONTEXT_DEFAULT],
+                  new_key,
+                  1);
 }
 
 /*

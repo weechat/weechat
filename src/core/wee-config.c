@@ -73,6 +73,9 @@ struct t_config_section *weechat_config_section_proxy = NULL;
 struct t_config_section *weechat_config_section_bar = NULL;
 struct t_config_section *weechat_config_section_custom_bar_item = NULL;
 struct t_config_section *weechat_config_section_notify = NULL;
+struct t_config_section *weechat_config_section_key[GUI_KEY_NUM_CONTEXTS] = {
+    NULL, NULL, NULL, NULL,
+};
 
 /* config, startup section */
 
@@ -1454,7 +1457,7 @@ config_day_change_timer_cb (const void *pointer, void *data,
 void
 config_weechat_init_after_read ()
 {
-    int i;
+    int context;
 
     util_setrlimit ();
 
@@ -1480,10 +1483,10 @@ config_weechat_init_after_read ()
     gui_bar_item_custom_use_temp_items ();
 
     /* if no key was found configuration file, then we use default bindings */
-    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+    for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
-        if (!gui_keys[i])
-            gui_key_default_bindings (i);
+        if (!gui_keys[context])
+            gui_key_default_bindings (context, 1);
     }
 
     /* apply filters on all buffers */
@@ -1578,17 +1581,20 @@ int
 config_weechat_reload_cb (const void *pointer, void *data,
                           struct t_config_file *config_file)
 {
-    int i, rc;
+    int context, rc;
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
 
     /* remove all keys */
-    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+    for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
-        gui_key_free_all (&gui_keys[i], &last_gui_key[i],
-                          &gui_keys_count[i]);
+        gui_key_free_all (context,
+                          &gui_keys[context],
+                          &last_gui_key[context],
+                          &gui_keys_count[context],
+                          1);
     }
 
     /* remove all proxies */
@@ -1778,7 +1784,6 @@ config_weechat_palette_change_cb (const void *pointer, void *data,
     /* make C compiler happy */
     (void) pointer;
     (void) data;
-    (void) option;
 
     error = NULL;
     number = (int)strtol (option->name, &error, 10);
@@ -2602,87 +2607,82 @@ config_weechat_filter_write_cb (const void *pointer, void *data,
 }
 
 /*
- * Reads a key option in WeeChat configuration file.
+ * Searches key context with the section pointer.
+ *
+ * Returns key context, -1 if not found.
  */
 
 int
-config_weechat_key_read_cb (const void *pointer, void *data,
-                            struct t_config_file *config_file,
-                            struct t_config_section *section,
-                            const char *option_name, const char *value)
+config_weechat_get_key_context (struct t_config_section *section)
 {
     int context;
-    char *pos;
+
+    for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
+    {
+        if (section == weechat_config_section_key[context])
+            return context;
+    }
+
+    /* this should never happen */
+    return -1;
+}
+
+/*
+ * Callback called when an option is created in one of these sections:
+ *   key
+ *   key_search
+ *   key_cursor
+ *   key_mouse
+ */
+
+int
+config_weechat_key_create_option_cb (const void *pointer, void *data,
+                                     struct t_config_file *config_file,
+                                     struct t_config_section *section,
+                                     const char *option_name,
+                                     const char *value)
+{
+    int context;
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) config_file;
 
-    if (option_name)
-    {
-        context = GUI_KEY_CONTEXT_DEFAULT;
-        pos = strchr (section->name, '_');
-        if (pos)
-        {
-            context = gui_key_search_context (pos + 1);
-            if (context < 0)
-                context = GUI_KEY_CONTEXT_DEFAULT;
-        }
+    if (!value)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 
-        if (value && value[0])
-        {
-            /* bind key (overwrite any binding with same key) */
-            gui_key_bind (NULL, context, option_name, value);
-        }
-        else
-        {
-            /* unbind key if no value given */
-            gui_key_unbind (NULL, context, option_name);
-        }
-    }
+    context = config_weechat_get_key_context (section);
+    gui_key_bind (NULL, context, option_name, value);
 
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 }
 
 /*
- * Writes section "key" in WeeChat configuration file.
+ * Callback called when an option is deleted in one of these sections:
+ *   key
+ *   key_search
+ *   key_cursor
+ *   key_mouse
  */
 
 int
-config_weechat_key_write_cb (const void *pointer, void *data,
-                             struct t_config_file *config_file,
-                             const char *section_name)
+config_weechat_key_delete_option_cb (const void *pointer, void *data,
+                                     struct t_config_file *config_file,
+                                     struct t_config_section *section,
+                                     struct t_config_option *option)
 {
-    struct t_gui_key *ptr_key;
-    char *pos;
     int context;
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
+    (void) config_file;
 
-    if (!config_file_write_line (config_file, section_name, NULL))
-        return WEECHAT_CONFIG_WRITE_ERROR;
+    context = config_weechat_get_key_context (section);
+    gui_key_unbind (NULL, context, option->name);
 
-    context = GUI_KEY_CONTEXT_DEFAULT;
-    pos = strchr (section_name, '_');
-    if (pos)
-    {
-        context = gui_key_search_context (pos + 1);
-        if (context < 0)
-            context = GUI_KEY_CONTEXT_DEFAULT;
-    }
-    for (ptr_key = gui_keys[context]; ptr_key; ptr_key = ptr_key->next_key)
-    {
-        if (!config_file_write_line (config_file, ptr_key->key,
-                                     "\"%s\"", ptr_key->command))
-        {
-            return WEECHAT_CONFIG_WRITE_ERROR;
-        }
-    }
-
-    return WEECHAT_CONFIG_WRITE_OK;
+    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
 
 /*
@@ -2697,7 +2697,7 @@ int
 config_weechat_init_options ()
 {
     struct t_config_section *ptr_section;
-    int i;
+    int context;
     char section_name[128];
 
     weechat_config_file = config_file_new (
@@ -4946,26 +4946,29 @@ config_weechat_init_options ()
     }
 
     /* keys */
-    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+    for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
-        snprintf (section_name, sizeof (section_name),
-                  "key%s%s",
-                  (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
-                  (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : gui_key_context_string[i]);
+        snprintf (
+            section_name, sizeof (section_name),
+            "key%s%s",
+            (context == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
+            (context == GUI_KEY_CONTEXT_DEFAULT) ?
+            "" : gui_key_context_string[context]);
         ptr_section = config_file_new_section (
             weechat_config_file, section_name,
-            0, 0,
-            &config_weechat_key_read_cb, NULL, NULL,
-            &config_weechat_key_write_cb, NULL, NULL,
-            &config_weechat_key_write_cb, NULL, NULL,
+            1, 1,
             NULL, NULL, NULL,
-            NULL, NULL, NULL);
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            &config_weechat_key_create_option_cb, NULL, NULL,
+            &config_weechat_key_delete_option_cb, NULL, NULL);
         if (!ptr_section)
         {
             config_file_free (weechat_config_file);
             weechat_config_file = NULL;
             return 0;
         }
+        weechat_config_section_key[context] = ptr_section;
     }
 
     return 1;

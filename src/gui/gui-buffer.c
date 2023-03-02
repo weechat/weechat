@@ -2384,11 +2384,13 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     {
         if (strcmp (property + 11, "*") == 0)
         {
-            gui_key_free_all (&buffer->keys, &buffer->last_key,
-                              &buffer->keys_count);
+            gui_key_free_all (-1, &buffer->keys, &buffer->last_key,
+                              &buffer->keys_count, 0);
         }
         else
-            gui_key_unbind (buffer, 0, property + 11);
+        {
+            gui_key_unbind (buffer, -1, property + 11);
+        }
     }
     else if (strcmp (property, "input") == 0)
     {
@@ -3128,8 +3130,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     gui_nicklist_remove_group (buffer, buffer->nicklist_root);
     if (buffer->hotlist_max_level_nicks)
         hashtable_free (buffer->hotlist_max_level_nicks);
-    gui_key_free_all (&buffer->keys, &buffer->last_key,
-                      &buffer->keys_count);
+    gui_key_free_all (-1, &buffer->keys, &buffer->last_key,
+                      &buffer->keys_count, 0);
     gui_buffer_local_var_remove_all (buffer);
     hashtable_free (buffer->local_variables);
     if (buffer->plugin_name_for_upgrade)
