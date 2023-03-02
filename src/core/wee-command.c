@@ -8356,7 +8356,7 @@ command_init ()
     hook_command (
         NULL, "key",
         N_("bind/unbind keys"),
-        N_("list|listdefault|listdiff [<context>]"
+        N_("[list|listdefault|listdiff] [<context>]"
            " || bind <key> [<command> [<args>]]"
            " || bindctxt <context> <key> [<command> [<args>]]"
            " || unbind <key>"
