@@ -28,10 +28,13 @@
 #define NCURSES_WIDECHAR 1
 #ifdef HAVE_NCURSESW_CURSES_H
 #include <ncursesw/ncurses.h>
+#include <term.h>
 #elif HAVE_NCURSES_H
 #include <ncurses.h>
+#include <term.h>
 #else
 #include <curses.h>
+#include <term.h>
 #endif /* HAVE_NCURSESW_CURSES_H */
 #endif /* WEECHAT_HEADLESS */
 
