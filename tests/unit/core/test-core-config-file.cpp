@@ -40,8 +40,78 @@ extern int config_file_string_boolean_is_valid (const char *text);
 extern const char *config_file_option_escape (const char *name);
 }
 
+struct t_config_option *ptr_option_bool = NULL;
+struct t_config_option *ptr_option_int = NULL;
+struct t_config_option *ptr_option_int_str = NULL;
+struct t_config_option *ptr_option_str = NULL;
+struct t_config_option *ptr_option_col = NULL;
+
 TEST_GROUP(CoreConfigFile)
 {
+};
+
+TEST_GROUP(CoreConfigFileWithNewOptions)
+{
+    static int option_str_check_cb (const void *pointer,
+                                    void *data,
+                                    struct t_config_option *option,
+                                    const char *value)
+    {
+        (void) pointer;
+        (void) data;
+        (void) option;
+
+        return ((strcmp (value, "xxx") == 0) || (strcmp (value, "zzz") == 0)) ?
+            0 : 1;
+    }
+
+    void setup ()
+    {
+        ptr_option_bool = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "test_boolean", "boolean", "", NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+        ptr_option_int = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "test_integer", "integer", "", NULL, 0, 123456, "100", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+        ptr_option_int_str = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "test_integer_values", "integer", "", "v1|v2|v3", 0, 0, "v1", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+        ptr_option_str = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "test_string", "string", "", NULL, 0, 0, "value", NULL, 0,
+            &option_str_check_cb, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+        ptr_option_col = config_file_new_option (
+            weechat_config_file, weechat_config_section_color,
+            "test_color", "color", "", NULL, 0, 0, "blue", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+    }
+
+    void teardown ()
+    {
+        config_file_option_free (ptr_option_bool, 0);
+        ptr_option_bool = NULL;
+        config_file_option_free (ptr_option_int, 0);
+        ptr_option_int = NULL;
+        config_file_option_free (ptr_option_int_str, 0);
+        ptr_option_int_str = NULL;
+        config_file_option_free (ptr_option_str, 0);
+        ptr_option_str = NULL;
+        config_file_option_free (ptr_option_col, 0);
+        ptr_option_col = NULL;
+    }
 };
 
 /*
@@ -496,11 +566,11 @@ TEST(CoreConfigFile, StringToBoolean)
 
 /*
  * Tests functions:
- *   config_file_option_reset
  *   config_file_option_set
+ *   config_file_option_reset
  */
 
-TEST(CoreConfigFile, OptionReset)
+TEST(CoreConfigFileWithNewOptions, OptionSetReset)
 {
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_reset (NULL, 1));
@@ -508,104 +578,101 @@ TEST(CoreConfigFile, OptionReset)
                 config_file_option_set (NULL, NULL, 1));
 
     /* boolean */
-    LONGS_EQUAL(0, CONFIG_BOOLEAN(config_look_confirm_quit));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_set (config_look_confirm_quit, "zzz", 1));
+                config_file_option_set (ptr_option_bool, "zzz", 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_look_confirm_quit, "on", 1));
-    LONGS_EQUAL(1, CONFIG_BOOLEAN(config_look_confirm_quit));
+                config_file_option_set (ptr_option_bool, "on", 1));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_look_confirm_quit, "toggle", 1));
-    LONGS_EQUAL(0, CONFIG_BOOLEAN(config_look_confirm_quit));
+                config_file_option_set (ptr_option_bool, "toggle", 1));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_look_confirm_quit, "toggle", 1));
-    LONGS_EQUAL(1, CONFIG_BOOLEAN(config_look_confirm_quit));
+                config_file_option_set (ptr_option_bool, "toggle", 1));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_reset (config_look_confirm_quit, 1));
-    LONGS_EQUAL(0, CONFIG_BOOLEAN(config_look_confirm_quit));
+                config_file_option_reset (ptr_option_bool, 1));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option_bool));
 
     /* integer */
-    LONGS_EQUAL(100, CONFIG_INTEGER(config_look_mouse_timer_delay));
+    LONGS_EQUAL(100, CONFIG_INTEGER(ptr_option_int));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_set (config_look_mouse_timer_delay, "zzz", 1));
+                config_file_option_set (ptr_option_int, "zzz", 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_set (config_look_mouse_timer_delay, "-500", 1));
+                config_file_option_set (ptr_option_int, "-500", 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_set (config_look_mouse_timer_delay, "99999999", 1));
+                config_file_option_set (ptr_option_int, "99999999", 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_look_mouse_timer_delay, "50", 1));
-    LONGS_EQUAL(50, CONFIG_INTEGER(config_look_mouse_timer_delay));
+                config_file_option_set (ptr_option_int, "50", 1));
+    LONGS_EQUAL(50, CONFIG_INTEGER(ptr_option_int));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_look_mouse_timer_delay, "++15", 1));
-    LONGS_EQUAL(65, CONFIG_INTEGER(config_look_mouse_timer_delay));
+                config_file_option_set (ptr_option_int, "++15", 1));
+    LONGS_EQUAL(65, CONFIG_INTEGER(ptr_option_int));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_look_mouse_timer_delay, "--3", 1));
-    LONGS_EQUAL(62, CONFIG_INTEGER(config_look_mouse_timer_delay));
+                config_file_option_set (ptr_option_int, "--3", 1));
+    LONGS_EQUAL(62, CONFIG_INTEGER(ptr_option_int));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_reset (config_look_mouse_timer_delay, 1));
-    LONGS_EQUAL(100, CONFIG_INTEGER(config_look_mouse_timer_delay));
+                config_file_option_reset (ptr_option_int, 1));
+    LONGS_EQUAL(100, CONFIG_INTEGER(ptr_option_int));
 
     /* integer with string values */
-    LONGS_EQUAL(CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE,
-                CONFIG_INTEGER(config_look_align_end_of_lines));
+    LONGS_EQUAL(0, CONFIG_INTEGER(ptr_option_int_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_set (config_look_align_end_of_lines, "zzz", 1));
+                config_file_option_set (ptr_option_int_str, "zzz", 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_look_align_end_of_lines, "time", 1));
-    LONGS_EQUAL(CONFIG_LOOK_ALIGN_END_OF_LINES_TIME,
-                CONFIG_INTEGER(config_look_align_end_of_lines));
+                config_file_option_set (ptr_option_int_str, "v2", 1));
+    LONGS_EQUAL(1, CONFIG_INTEGER(ptr_option_int_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_reset (config_look_align_end_of_lines, 1));
-    LONGS_EQUAL(CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE,
-                CONFIG_INTEGER(config_look_align_end_of_lines));
+                config_file_option_reset (ptr_option_int_str, 1));
+    LONGS_EQUAL(0, CONFIG_INTEGER(ptr_option_int_str));
 
     /* string */
-    STRCMP_EQUAL("-", CONFIG_STRING(config_look_separator_horizontal));
+    STRCMP_EQUAL("value", CONFIG_STRING(ptr_option_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_set (config_look_separator_horizontal, "zzz", 1));
+                config_file_option_set (ptr_option_str, "xxx", 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_look_separator_horizontal, "+", 1));
-    STRCMP_EQUAL("+", CONFIG_STRING(config_look_separator_horizontal));
+                config_file_option_set (ptr_option_str, "test", 1));
+    STRCMP_EQUAL("test", CONFIG_STRING(ptr_option_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_reset (config_look_separator_horizontal, 1));
-    STRCMP_EQUAL("-", CONFIG_STRING(config_look_separator_horizontal));
+                config_file_option_reset (ptr_option_str, 1));
+    STRCMP_EQUAL("value", CONFIG_STRING(ptr_option_str));
 
     /* color */
-    LONGS_EQUAL(0, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(9, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_set (config_color_chat, "zzz", 1));
+                config_file_option_set (ptr_option_col, "zzz", 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_color_chat, "red", 1));
-    LONGS_EQUAL(3, CONFIG_COLOR(config_color_chat));
+                config_file_option_set (ptr_option_col, "red", 1));
+    LONGS_EQUAL(3, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_color_chat, "++5", 1));
-    LONGS_EQUAL(8, CONFIG_COLOR(config_color_chat));
+                config_file_option_set (ptr_option_col, "++5", 1));
+    LONGS_EQUAL(8, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_color_chat, "--3", 1));
-    LONGS_EQUAL(5, CONFIG_COLOR(config_color_chat));
+                config_file_option_set (ptr_option_col, "--3", 1));
+    LONGS_EQUAL(5, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_color_chat, "%red", 1));
-    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_BLINK_FLAG, CONFIG_COLOR(config_color_chat));
+                config_file_option_set (ptr_option_col, "%red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_BLINK_FLAG, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_color_chat, ".red", 1));
-    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_DIM_FLAG, CONFIG_COLOR(config_color_chat));
+                config_file_option_set (ptr_option_col, ".red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_DIM_FLAG, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_color_chat, "*red", 1));
-    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_BOLD_FLAG, CONFIG_COLOR(config_color_chat));
+                config_file_option_set (ptr_option_col, "*red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_BOLD_FLAG, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_color_chat, "!red", 1));
-    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_REVERSE_FLAG, CONFIG_COLOR(config_color_chat));
+                config_file_option_set (ptr_option_col, "!red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_REVERSE_FLAG, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_color_chat, "/red", 1));
-    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_ITALIC_FLAG, CONFIG_COLOR(config_color_chat));
+                config_file_option_set (ptr_option_col, "/red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_ITALIC_FLAG, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_color_chat, "_red", 1));
-    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_UNDERLINE_FLAG, CONFIG_COLOR(config_color_chat));
+                config_file_option_set (ptr_option_col, "_red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_UNDERLINE_FLAG, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_color_chat, "|red", 1));
-    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_KEEPATTR_FLAG, CONFIG_COLOR(config_color_chat));
+                config_file_option_set (ptr_option_col, "|red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_KEEPATTR_FLAG, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_set (config_color_chat, "%.*!/_|red", 1));
+                config_file_option_set (ptr_option_col, "%.*!/_|red", 1));
     LONGS_EQUAL(3
                 | GUI_COLOR_EXTENDED_BLINK_FLAG
                 | GUI_COLOR_EXTENDED_DIM_FLAG
@@ -614,11 +681,10 @@ TEST(CoreConfigFile, OptionReset)
                 | GUI_COLOR_EXTENDED_ITALIC_FLAG
                 | GUI_COLOR_EXTENDED_UNDERLINE_FLAG
                 | GUI_COLOR_EXTENDED_KEEPATTR_FLAG,
-                CONFIG_COLOR(config_color_chat));
-
+                CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_reset (config_color_chat, 1));
-    LONGS_EQUAL(0, CONFIG_COLOR(config_color_chat));
+                config_file_option_reset (ptr_option_col, 1));
+    LONGS_EQUAL(9, CONFIG_COLOR(ptr_option_col));
 }
 
 /*
@@ -626,7 +692,7 @@ TEST(CoreConfigFile, OptionReset)
  *   config_file_option_toggle
  */
 
-TEST(CoreConfigFile, OptionToggle)
+TEST(CoreConfigFileWithNewOptions, OptionToggle)
 {
     const char *value_boolean_ok[] = { "on", NULL };
     const char *values_boolean_ok[] = { "on", "off", NULL };
@@ -634,156 +700,151 @@ TEST(CoreConfigFile, OptionToggle)
     const char *value_integer_ok[] = { "50", NULL };
     const char *values_integer_ok[] = { "75", "92", NULL };
     const char *values_integer_error[] = { "-500", "99999999", NULL };
-    const char *value_integer_str_ok[] = { "time", NULL };
-    const char *values_integer_str_ok[] = { "prefix", "suffix", NULL };
+    const char *value_integer_str_ok[] = { "v2", NULL };
+    const char *values_integer_str_ok[] = { "v2", "v3", NULL };
     const char *values_integer_str_error[] = { "xxx", "zzz", NULL };
     const char *value_string_ok[] = { "+", NULL };
     const char *values_string_ok[] = { "$", "*", NULL };
     const char *values_string_error[] = { "xxx", "zzz", NULL };
     const char *value_color_ok[] = { "red", NULL };
-    const char *values_color_ok[] = { "green", "blue", NULL };
+    const char *values_color_ok[] = { "green", "cyan", NULL };
     const char *values_color_error[] = { "xxx", "zzz", NULL };
 
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_toggle (NULL, NULL, 0, 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_toggle (config_look_confirm_quit, NULL, -1, 1));
+                config_file_option_toggle (ptr_option_bool, NULL, -1, 1));
 
     /* boolean */
-    LONGS_EQUAL(0, CONFIG_BOOLEAN(config_look_confirm_quit));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_toggle (config_look_confirm_quit,
+                config_file_option_toggle (ptr_option_bool,
                                            values_boolean_error, 2, 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_confirm_quit, NULL, 0, 1));
-    LONGS_EQUAL(1, CONFIG_BOOLEAN(config_look_confirm_quit));
+                config_file_option_toggle (ptr_option_bool, NULL, 0, 1));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_confirm_quit, NULL, 0, 1));
-    LONGS_EQUAL(0, CONFIG_BOOLEAN(config_look_confirm_quit));
+                config_file_option_toggle (ptr_option_bool, NULL, 0, 1));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_confirm_quit, value_boolean_ok, 1, 1));
-    LONGS_EQUAL(1, CONFIG_BOOLEAN(config_look_confirm_quit));
+                config_file_option_toggle (ptr_option_bool, value_boolean_ok, 1, 1));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_confirm_quit, value_boolean_ok, 1, 1));
-    LONGS_EQUAL(0, CONFIG_BOOLEAN(config_look_confirm_quit));
+                config_file_option_toggle (ptr_option_bool, value_boolean_ok, 1, 1));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_confirm_quit, values_boolean_ok, 2, 1));
-    LONGS_EQUAL(1, CONFIG_BOOLEAN(config_look_confirm_quit));
+                config_file_option_toggle (ptr_option_bool, values_boolean_ok, 2, 1));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_confirm_quit, values_boolean_ok, 2, 1));
-    LONGS_EQUAL(0, CONFIG_BOOLEAN(config_look_confirm_quit));
+                config_file_option_toggle (ptr_option_bool, values_boolean_ok, 2, 1));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option_bool));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
-                config_file_option_reset (config_look_confirm_quit, 1));
-    LONGS_EQUAL(0, CONFIG_BOOLEAN(config_look_confirm_quit));
+                config_file_option_reset (ptr_option_bool, 1));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(ptr_option_bool));
 
     /* integer */
-    LONGS_EQUAL(100, CONFIG_INTEGER(config_look_mouse_timer_delay));
+    LONGS_EQUAL(100, CONFIG_INTEGER(ptr_option_int));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_toggle (config_look_mouse_timer_delay,
+                config_file_option_toggle (ptr_option_int,
                                            values_integer_error, 2, 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_toggle (config_look_mouse_timer_delay,
+                config_file_option_toggle (ptr_option_int,
                                            NULL, 0, 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_mouse_timer_delay,
+                config_file_option_toggle (ptr_option_int,
                                            value_integer_ok, 1, 1));
-    LONGS_EQUAL(50, CONFIG_INTEGER(config_look_mouse_timer_delay));
+    LONGS_EQUAL(50, CONFIG_INTEGER(ptr_option_int));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_mouse_timer_delay,
+                config_file_option_toggle (ptr_option_int,
                                            value_integer_ok, 1, 1));
-    LONGS_EQUAL(100, CONFIG_INTEGER(config_look_mouse_timer_delay));
+    LONGS_EQUAL(100, CONFIG_INTEGER(ptr_option_int));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_mouse_timer_delay,
+                config_file_option_toggle (ptr_option_int,
                                            values_integer_ok, 2, 1));
-    LONGS_EQUAL(75, CONFIG_INTEGER(config_look_mouse_timer_delay));
+    LONGS_EQUAL(75, CONFIG_INTEGER(ptr_option_int));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_mouse_timer_delay,
+                config_file_option_toggle (ptr_option_int,
                                            values_integer_ok, 2, 1));
-    LONGS_EQUAL(92, CONFIG_INTEGER(config_look_mouse_timer_delay));
+    LONGS_EQUAL(92, CONFIG_INTEGER(ptr_option_int));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_reset (config_look_mouse_timer_delay, 1));
-    LONGS_EQUAL(100, CONFIG_INTEGER(config_look_mouse_timer_delay));
+                config_file_option_reset (ptr_option_int, 1));
+    LONGS_EQUAL(100, CONFIG_INTEGER(ptr_option_int));
 
     /* integer with string values */
-    LONGS_EQUAL(CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE,
-                CONFIG_INTEGER(config_look_align_end_of_lines));
+    LONGS_EQUAL(0, CONFIG_INTEGER(ptr_option_int_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_toggle (config_look_align_end_of_lines,
+                config_file_option_toggle (ptr_option_int_str,
                                            values_integer_str_error, 2, 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_toggle (config_look_align_end_of_lines,
+                config_file_option_toggle (ptr_option_int_str,
                                            NULL, 0, 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_align_end_of_lines,
+                config_file_option_toggle (ptr_option_int_str,
                                            value_integer_str_ok, 1, 1));
-    LONGS_EQUAL(CONFIG_LOOK_ALIGN_END_OF_LINES_TIME,
-                CONFIG_INTEGER(config_look_align_end_of_lines));
+    LONGS_EQUAL(1, CONFIG_INTEGER(ptr_option_int_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_align_end_of_lines,
+                config_file_option_toggle (ptr_option_int_str,
                                            values_integer_str_ok, 2, 1));
-    LONGS_EQUAL(CONFIG_LOOK_ALIGN_END_OF_LINES_PREFIX,
-                CONFIG_INTEGER(config_look_align_end_of_lines));
+    LONGS_EQUAL(2, CONFIG_INTEGER(ptr_option_int_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_align_end_of_lines,
+                config_file_option_toggle (ptr_option_int_str,
                                            values_integer_str_ok, 2, 1));
-    LONGS_EQUAL(CONFIG_LOOK_ALIGN_END_OF_LINES_SUFFIX,
-                CONFIG_INTEGER(config_look_align_end_of_lines));
+    LONGS_EQUAL(1, CONFIG_INTEGER(ptr_option_int_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_reset (config_look_align_end_of_lines, 1));
-    LONGS_EQUAL(CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE,
-                CONFIG_INTEGER(config_look_align_end_of_lines));
+                config_file_option_reset (ptr_option_int_str, 1));
+    LONGS_EQUAL(0, CONFIG_INTEGER(ptr_option_int_str));
 
     /* string */
-    STRCMP_EQUAL("-", CONFIG_STRING(config_look_separator_horizontal));
+    STRCMP_EQUAL("value", CONFIG_STRING(ptr_option_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_toggle (config_look_separator_horizontal,
+                config_file_option_toggle (ptr_option_str,
                                            values_string_error, 2, 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_separator_horizontal,
+                config_file_option_toggle (ptr_option_str,
                                            NULL, 0, 1));
-    STRCMP_EQUAL("", CONFIG_STRING(config_look_separator_horizontal));
+    STRCMP_EQUAL("", CONFIG_STRING(ptr_option_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_separator_horizontal,
+                config_file_option_toggle (ptr_option_str,
                                            NULL, 0, 1));
-    STRCMP_EQUAL("-", CONFIG_STRING(config_look_separator_horizontal));
+    STRCMP_EQUAL("value", CONFIG_STRING(ptr_option_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_separator_horizontal,
+                config_file_option_toggle (ptr_option_str,
                                            value_string_ok, 1, 1));
-    STRCMP_EQUAL("+", CONFIG_STRING(config_look_separator_horizontal));
+    STRCMP_EQUAL("+", CONFIG_STRING(ptr_option_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_separator_horizontal,
+                config_file_option_toggle (ptr_option_str,
                                            values_string_ok, 2, 1));
-    STRCMP_EQUAL("$", CONFIG_STRING(config_look_separator_horizontal));
+    STRCMP_EQUAL("$", CONFIG_STRING(ptr_option_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_look_separator_horizontal,
+                config_file_option_toggle (ptr_option_str,
                                            values_string_ok, 2, 1));
-    STRCMP_EQUAL("*", CONFIG_STRING(config_look_separator_horizontal));
+    STRCMP_EQUAL("*", CONFIG_STRING(ptr_option_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_reset (config_look_separator_horizontal, 1));
-    STRCMP_EQUAL("-", CONFIG_STRING(config_look_separator_horizontal));
+                config_file_option_reset (ptr_option_str, 1));
+    STRCMP_EQUAL("value", CONFIG_STRING(ptr_option_str));
 
     /* color */
-    LONGS_EQUAL(0, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(9, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_toggle (config_color_chat,
+                config_file_option_toggle (ptr_option_col,
                                            values_color_error, 2, 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
-                config_file_option_toggle (config_color_chat, NULL, 0, 1));
+                config_file_option_toggle (ptr_option_col, NULL, 0, 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_color_chat,
+                config_file_option_toggle (ptr_option_col,
                                            value_color_ok, 1, 1));
-    LONGS_EQUAL(3, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(3, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_color_chat,
+                config_file_option_toggle (ptr_option_col,
                                            values_color_ok, 2, 1));
-    LONGS_EQUAL(5, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(5, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_toggle (config_color_chat,
+                config_file_option_toggle (ptr_option_col,
                                            values_color_ok, 2, 1));
-    LONGS_EQUAL(9, CONFIG_COLOR(config_color_chat));
+    LONGS_EQUAL(13, CONFIG_COLOR(ptr_option_col));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
-                config_file_option_reset (config_color_chat, 1));
-    LONGS_EQUAL(0, CONFIG_COLOR(config_color_chat));
+                config_file_option_reset (ptr_option_col, 1));
+    LONGS_EQUAL(9, CONFIG_COLOR(ptr_option_col));
 }
 
 /*
@@ -794,6 +855,117 @@ TEST(CoreConfigFile, OptionToggle)
 TEST(CoreConfigFile, OptionSetNull)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   config_file_option_set_default
+ */
+
+TEST(CoreConfigFileWithNewOptions, OptionSetDefault)
+{
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_default (NULL, NULL, 1));
+
+    /* boolean */
+    LONGS_EQUAL(0, CONFIG_BOOLEAN_DEFAULT(ptr_option_bool));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
+                config_file_option_set_default (ptr_option_bool, NULL, 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_default (ptr_option_bool, "zzz", 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_bool, "on", 1));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN_DEFAULT(ptr_option_bool));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_bool, "toggle", 1));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN_DEFAULT(ptr_option_bool));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_bool, "toggle", 1));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN_DEFAULT(ptr_option_bool));
+
+    /* integer */
+    LONGS_EQUAL(100, CONFIG_INTEGER_DEFAULT(ptr_option_int));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
+                config_file_option_set_default (ptr_option_int, NULL, 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_default (ptr_option_int, "zzz", 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_default (ptr_option_int, "-500", 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_default (ptr_option_int, "99999999", 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_int, "50", 1));
+    LONGS_EQUAL(50, CONFIG_INTEGER_DEFAULT(ptr_option_int));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_int, "++15", 1));
+    LONGS_EQUAL(65, CONFIG_INTEGER_DEFAULT(ptr_option_int));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_int, "--3", 1));
+    LONGS_EQUAL(62, CONFIG_INTEGER_DEFAULT(ptr_option_int));
+
+    /* integer with string values */
+    LONGS_EQUAL(0, CONFIG_INTEGER_DEFAULT(ptr_option_int_str));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
+                config_file_option_set_default (ptr_option_int_str, NULL, 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_default (ptr_option_int_str, "zzz", 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_int_str, "v2", 1));
+    LONGS_EQUAL(1, CONFIG_INTEGER_DEFAULT(ptr_option_int_str));
+
+    /* string */
+    STRCMP_EQUAL("value", CONFIG_STRING_DEFAULT(ptr_option_str));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_default (ptr_option_str, "xxx", 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_str, "test", 1));
+    STRCMP_EQUAL("test", CONFIG_STRING_DEFAULT(ptr_option_str));
+
+    /* color */
+    LONGS_EQUAL(9, CONFIG_COLOR_DEFAULT(ptr_option_col));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_default (ptr_option_col, "zzz", 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_col, "red", 1));
+    LONGS_EQUAL(3, CONFIG_COLOR_DEFAULT(ptr_option_col));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_col, "++5", 1));
+    LONGS_EQUAL(8, CONFIG_COLOR_DEFAULT(ptr_option_col));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_col, "--3", 1));
+    LONGS_EQUAL(5, CONFIG_COLOR_DEFAULT(ptr_option_col));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_col, "%red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_BLINK_FLAG, CONFIG_COLOR_DEFAULT(ptr_option_col));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_col, ".red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_DIM_FLAG, CONFIG_COLOR_DEFAULT(ptr_option_col));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_col, "*red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_BOLD_FLAG, CONFIG_COLOR_DEFAULT(ptr_option_col));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_col, "!red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_REVERSE_FLAG, CONFIG_COLOR_DEFAULT(ptr_option_col));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_col, "/red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_ITALIC_FLAG, CONFIG_COLOR_DEFAULT(ptr_option_col));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_col, "_red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_UNDERLINE_FLAG, CONFIG_COLOR_DEFAULT(ptr_option_col));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_col, "|red", 1));
+    LONGS_EQUAL(3 | GUI_COLOR_EXTENDED_KEEPATTR_FLAG, CONFIG_COLOR_DEFAULT(ptr_option_col));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_col, "%.*!/_|red", 1));
+    LONGS_EQUAL(3
+                | GUI_COLOR_EXTENDED_BLINK_FLAG
+                | GUI_COLOR_EXTENDED_DIM_FLAG
+                | GUI_COLOR_EXTENDED_BOLD_FLAG
+                | GUI_COLOR_EXTENDED_REVERSE_FLAG
+                | GUI_COLOR_EXTENDED_ITALIC_FLAG
+                | GUI_COLOR_EXTENDED_UNDERLINE_FLAG
+                | GUI_COLOR_EXTENDED_KEEPATTR_FLAG,
+                CONFIG_COLOR_DEFAULT(ptr_option_col));
 }
 
 /*

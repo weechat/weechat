@@ -1857,6 +1857,333 @@ config_file_option_set_null (struct t_config_option *option, int run_callback)
 }
 
 /*
+ * Sets the default value for an option.
+ *
+ * Returns:
+ *   WEECHAT_CONFIG_OPTION_SET_OK_CHANGED: OK, default value has been changed
+ *   WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE: OK, default value not changed
+ *   WEECHAT_CONFIG_OPTION_SET_ERROR: error
+ */
+
+int
+config_file_option_set_default (struct t_config_option *option,
+                                const char *value,
+                                int run_callback)
+{
+    int value_int, i, rc, new_value_ok, old_value_was_null, old_value;
+    long number;
+    char *error;
+
+    if (!option)
+        return WEECHAT_CONFIG_OPTION_SET_ERROR;
+
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+
+    if (option->callback_check_value)
+    {
+        if (!(int)(option->callback_check_value) (
+                option->callback_check_value_pointer,
+                option->callback_check_value_data,
+                option,
+                value))
+        {
+            return WEECHAT_CONFIG_OPTION_SET_ERROR;
+        }
+    }
+
+    if (value)
+    {
+        old_value_was_null = (option->default_value == NULL);
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                if (!option->default_value)
+                {
+                    option->default_value = malloc (sizeof (int));
+                    if (option->default_value)
+                    {
+                        if (strcmp (value, "toggle") == 0)
+                        {
+                            CONFIG_BOOLEAN_DEFAULT(option) = CONFIG_BOOLEAN_TRUE;
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                        }
+                        else
+                        {
+                            if (config_file_string_boolean_is_valid (value))
+                            {
+                                value_int = config_file_string_to_boolean (value);
+                                CONFIG_BOOLEAN_DEFAULT(option) = value_int;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            }
+                            else
+                            {
+                                free (option->default_value);
+                                option->default_value = NULL;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (strcmp (value, "toggle") == 0)
+                    {
+                        CONFIG_BOOLEAN_DEFAULT(option) =
+                            (CONFIG_BOOLEAN_DEFAULT(option) == CONFIG_BOOLEAN_TRUE) ?
+                            CONFIG_BOOLEAN_FALSE : CONFIG_BOOLEAN_TRUE;
+                        rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                    }
+                    else
+                    {
+                        if (config_file_string_boolean_is_valid (value))
+                        {
+                            value_int = config_file_string_to_boolean (value);
+                            if (value_int == CONFIG_BOOLEAN_DEFAULT(option))
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                            else
+                            {
+                                CONFIG_BOOLEAN_DEFAULT(option) = value_int;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            }
+                        }
+                    }
+                }
+                break;
+            case CONFIG_OPTION_TYPE_INTEGER:
+                old_value = 0;
+                if (!option->default_value)
+                    option->default_value = malloc (sizeof (int));
+                else
+                    old_value = CONFIG_INTEGER_DEFAULT(option);
+                if (option->default_value)
+                {
+                    if (option->string_values)
+                    {
+                        value_int = -1;
+                        if (strncmp (value, "++", 2) == 0)
+                        {
+                            error = NULL;
+                            number = strtol (value + 2, &error, 10);
+                            if (error && !error[0])
+                            {
+                                number = number % (option->max + 1);
+                                value_int = (old_value + number) %
+                                    (option->max + 1);
+                            }
+                        }
+                        else if (strncmp (value, "--", 2) == 0)
+                        {
+                            error = NULL;
+                            number = strtol (value + 2, &error, 10);
+                            if (error && !error[0])
+                            {
+                                number = number % (option->max + 1);
+                                value_int = (old_value + (option->max + 1) - number) %
+                                    (option->max + 1);
+                            }
+                        }
+                        else
+                        {
+                            for (i = 0; option->string_values[i]; i++)
+                            {
+                                if (strcmp (option->string_values[i], value) == 0)
+                                {
+                                    value_int = i;
+                                    break;
+                                }
+                            }
+                        }
+                        if (value_int >= 0)
+                        {
+                            if (old_value_was_null
+                                || (value_int != old_value))
+                            {
+                                CONFIG_INTEGER_DEFAULT(option) = value_int;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            }
+                            else
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                        }
+                        else
+                        {
+                            if (old_value_was_null)
+                            {
+                                free (option->default_value);
+                                option->default_value = NULL;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        new_value_ok = 0;
+                        if (strncmp (value, "++", 2) == 0)
+                        {
+                            error = NULL;
+                            number = strtol (value + 2, &error, 10);
+                            if (error && !error[0])
+                            {
+                                value_int = old_value + number;
+                                if (value_int <= option->max)
+                                    new_value_ok = 1;
+                            }
+                        }
+                        else if (strncmp (value, "--", 2) == 0)
+                        {
+                            error = NULL;
+                            number = strtol (value + 2, &error, 10);
+                            if (error && !error[0])
+                            {
+                                value_int = old_value - number;
+                                if (value_int >= option->min)
+                                    new_value_ok = 1;
+                            }
+                        }
+                        else
+                        {
+                            error = NULL;
+                            number = strtol (value, &error, 10);
+                            if (error && !error[0])
+                            {
+                                value_int = number;
+                                if ((value_int >= option->min)
+                                    && (value_int <= option->max))
+                                    new_value_ok = 1;
+                            }
+                        }
+                        if (new_value_ok)
+                        {
+                            if (old_value_was_null
+                                || (value_int != old_value))
+                            {
+                                CONFIG_INTEGER_DEFAULT(option) = value_int;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            }
+                            else
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                        }
+                        else
+                        {
+                            if (old_value_was_null)
+                            {
+                                free (option->default_value);
+                                option->default_value = NULL;
+                            }
+                        }
+                    }
+                }
+                break;
+            case CONFIG_OPTION_TYPE_STRING:
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                if (!option->default_value
+                    || (strcmp (CONFIG_STRING_DEFAULT(option), value) != 0))
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                if (option->default_value)
+                {
+                    free (option->default_value);
+                    option->default_value = NULL;
+                }
+                option->default_value = strdup (value);
+                if (!option->default_value)
+                    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+                break;
+            case CONFIG_OPTION_TYPE_COLOR:
+                old_value = 0;
+                if (!option->default_value)
+                    option->default_value = malloc (sizeof (int));
+                else
+                    old_value = CONFIG_COLOR_DEFAULT(option);
+                if (option->default_value)
+                {
+                    value_int = -1;
+                    new_value_ok = 0;
+                    if (strncmp (value, "++", 2) == 0)
+                    {
+                        error = NULL;
+                        number = strtol (value + 2, &error, 10);
+                        if (error && !error[0])
+                        {
+                            if (gui_color_assign_by_diff (&value_int,
+                                                          gui_color_get_name (old_value),
+                                                          number))
+                                new_value_ok = 1;
+                        }
+                    }
+                    else if (strncmp (value, "--", 2) == 0)
+                    {
+                        error = NULL;
+                        number = strtol (value + 2, &error, 10);
+                        if (error && !error[0])
+                        {
+                            if (gui_color_assign_by_diff (&value_int,
+                                                          gui_color_get_name (old_value),
+                                                          -1 * number))
+                                new_value_ok = 1;
+                        }
+                    }
+                    else
+                    {
+                        if (gui_color_assign (&value_int, value))
+                            new_value_ok = 1;
+                    }
+                    if (new_value_ok)
+                    {
+                        if (old_value_was_null
+                            || (value_int != old_value))
+                        {
+                            CONFIG_COLOR_DEFAULT(option) = value_int;
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                        }
+                        else
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                    }
+                    else
+                    {
+                        if (old_value_was_null)
+                        {
+                            free (option->default_value);
+                            option->default_value = NULL;
+                        }
+                    }
+                }
+                break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
+        }
+        if (old_value_was_null && option->default_value)
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+    }
+    else
+    {
+        if (option->null_value_allowed && option->default_value)
+        {
+            free (option->default_value);
+            option->default_value = NULL;
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+        }
+        else
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    }
+
+    /* run callback if asked and value was changed */
+    if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
+        && run_callback && option->callback_change)
+    {
+        (void) (option->callback_change) (
+            option->callback_change_pointer,
+            option->callback_change_data,
+            option);
+    }
+
+    /* run config hook(s) */
+    if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+        && option->config_file && option->section)
+    {
+        config_file_hook_config_exec (option);
+    }
+
+    return rc;
+}
+
+/*
  * Unsets/resets an option.
  *
  * Returns:

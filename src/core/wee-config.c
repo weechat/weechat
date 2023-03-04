@@ -66,13 +66,26 @@
 #include "../plugins/plugin.h"
 
 
+/* weechat config */
 struct t_config_file *weechat_config_file = NULL;
+
+/* sections */
 struct t_config_section *weechat_config_section_debug = NULL;
+struct t_config_section *weechat_config_section_startup = NULL;
+struct t_config_section *weechat_config_section_look = NULL;
+struct t_config_section *weechat_config_section_palette = NULL;
 struct t_config_section *weechat_config_section_color = NULL;
+struct t_config_section *weechat_config_section_completion = NULL;
+struct t_config_section *weechat_config_section_history = NULL;
+struct t_config_section *weechat_config_section_network = NULL;
 struct t_config_section *weechat_config_section_proxy = NULL;
+struct t_config_section *weechat_config_section_plugin = NULL;
+struct t_config_section *weechat_config_section_signal = NULL;
 struct t_config_section *weechat_config_section_bar = NULL;
 struct t_config_section *weechat_config_section_custom_bar_item = NULL;
+struct t_config_section *weechat_config_section_layout = NULL;
 struct t_config_section *weechat_config_section_notify = NULL;
+struct t_config_section *weechat_config_section_filter = NULL;
 struct t_config_section *weechat_config_section_key[GUI_KEY_NUM_CONTEXTS] = {
     NULL, NULL, NULL, NULL,
 };
@@ -2696,7 +2709,6 @@ config_weechat_key_delete_option_cb (const void *pointer, void *data,
 int
 config_weechat_init_options ()
 {
-    struct t_config_section *ptr_section;
     int context;
     char section_name[128];
 
@@ -2709,7 +2721,7 @@ config_weechat_init_options ()
                              &config_weechat_update_cb, NULL, NULL);
 
     /* debug */
-    ptr_section = config_file_new_section (
+    weechat_config_section_debug = config_file_new_section (
         weechat_config_file, "debug",
         1, 1,
         NULL, NULL, NULL,
@@ -2717,24 +2729,23 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         &config_weechat_debug_create_option_cb, NULL, NULL,
         &config_weechat_debug_delete_option_cb, NULL, NULL);
-    if (!ptr_section)
+    if (!weechat_config_section_debug)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
         return 0;
     }
 
-    weechat_config_section_debug = ptr_section;
-
     /* startup */
-    ptr_section = config_file_new_section (weechat_config_file, "startup",
-                                           0, 0,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL);
-    if (!ptr_section)
+    weechat_config_section_startup = config_file_new_section (
+        weechat_config_file, "startup",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!weechat_config_section_startup)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
@@ -2742,7 +2753,7 @@ config_weechat_init_options ()
     }
 
     config_startup_command_after_plugins = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_startup,
         "command_after_plugins", "string",
         N_("command executed when WeeChat starts, after loading plugins; "
            "multiple commands can be separated by semicolons "
@@ -2750,7 +2761,7 @@ config_weechat_init_options ()
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_startup_command_before_plugins = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_startup,
         "command_before_plugins", "string",
         N_("command executed when WeeChat starts, before loading plugins; "
            "multiple commands can be separated by semicolons "
@@ -2758,19 +2769,19 @@ config_weechat_init_options ()
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_startup_display_logo = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_startup,
         "display_logo", "boolean",
         N_("display WeeChat logo at startup"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_startup_display_version = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_startup,
         "display_version", "boolean",
         N_("display WeeChat version at startup"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_startup_sys_rlimit = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_startup,
         "sys_rlimit", "string",
         N_("set resource limits for WeeChat process, format is: "
            "\"res1:limit1,res2:limit2\"; resource name is the end of constant "
@@ -2783,7 +2794,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL);
 
     /* look */
-    ptr_section = config_file_new_section (
+    weechat_config_section_look = config_file_new_section (
         weechat_config_file, "look",
         0, 0,
         NULL, NULL, NULL,
@@ -2791,7 +2802,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
+    if (!weechat_config_section_look)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
@@ -2799,7 +2810,7 @@ config_weechat_init_options ()
     }
 
     config_look_align_end_of_lines = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "align_end_of_lines", "integer",
         N_("alignment for end of lines (all lines after the first): they "
            "are starting under this data (time, buffer, prefix, suffix, "
@@ -2809,7 +2820,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_align_multiline_words = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "align_multiline_words", "boolean",
         N_("alignment for multiline words according to option "
            "weechat.look.align_end_of_lines; if disabled, the multiline words "
@@ -2819,7 +2830,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_bar_more_down = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "bar_more_down", "string",
         N_("string displayed when bar can be scrolled down "
            "(for bars with filling different from \"horizontal\")"),
@@ -2828,7 +2839,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_bar_more_left = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "bar_more_left", "string",
         N_("string displayed when bar can be scrolled to the left "
            "(for bars with filling \"horizontal\")"),
@@ -2837,7 +2848,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_bar_more_right = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "bar_more_right", "string",
         N_("string displayed when bar can be scrolled to the right "
            "(for bars with filling \"horizontal\")"),
@@ -2846,7 +2857,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_bar_more_up = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "bar_more_up", "string",
         N_("string displayed when bar can be scrolled up "
            "(for bars with filling different from \"horizontal\")"),
@@ -2855,13 +2866,13 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_bare_display_exit_on_input = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "bare_display_exit_on_input", "boolean",
         N_("exit the bare display mode on any changes in input"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_bare_display_time_format = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "bare_display_time_format", "string",
         N_("time format in bare display mode (see man strftime for date/time "
            "specifiers)"),
@@ -2870,7 +2881,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_buffer_auto_renumber = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "buffer_auto_renumber", "boolean",
         N_("automatically renumber buffers to have only consecutive numbers "
            "and start with number 1; if disabled, gaps between buffer numbers "
@@ -2880,7 +2891,7 @@ config_weechat_init_options ()
         &config_change_buffer_auto_renumber, NULL, NULL,
         NULL, NULL, NULL);
     config_look_buffer_notify_default = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "buffer_notify_default", "integer",
         N_("default notify level for buffers (used to tell WeeChat if buffer "
            "must be displayed in hotlist or not, according to importance "
@@ -2892,7 +2903,7 @@ config_weechat_init_options ()
         &config_change_buffer_notify_default, NULL, NULL,
         NULL, NULL, NULL);
     config_look_buffer_position = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "buffer_position", "integer",
         N_("position of a new buffer: end = after the end of list (number = "
            "last number + 1) (default), first_gap = at first available "
@@ -2902,27 +2913,27 @@ config_weechat_init_options ()
         "end|first_gap", 0, 0, "end", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_buffer_search_case_sensitive = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "buffer_search_case_sensitive", "boolean",
         N_("default text search in buffer: case sensitive or not"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_buffer_search_force_default = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "buffer_search_force_default", "boolean",
         N_("force default values for text search in buffer (instead of using "
            "values from last search in buffer)"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_buffer_search_regex = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "buffer_search_regex", "boolean",
         N_("default text search in buffer: if enabled, search POSIX extended "
            "regular expression, otherwise search simple string"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_buffer_search_where = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "buffer_search_where", "integer",
         N_("default text search in buffer: in message, prefix, prefix and "
            "message"),
@@ -2930,7 +2941,7 @@ config_weechat_init_options ()
         NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_buffer_time_format = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "buffer_time_format", "string",
         /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
         N_("time format for each line displayed in buffers (see man strftime "
@@ -2943,7 +2954,7 @@ config_weechat_init_options ()
         &config_change_buffer_time_format, NULL, NULL,
         NULL, NULL, NULL);
     config_look_buffer_time_same = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "buffer_time_same", "string",
         /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
         N_("time displayed for a message with same time as previous message: "
@@ -2956,14 +2967,14 @@ config_weechat_init_options ()
         &config_change_buffer_time_same, NULL, NULL,
         NULL, NULL, NULL);
     config_look_chat_space_right = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "chat_space_right", "boolean",
         N_("keep a space on the right side of chat area if there is a bar "
            "displayed on the right (for both text and read marker)"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_color_basic_force_bold = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "color_basic_force_bold", "boolean",
         N_("force \"bold\" attribute for light colors and \"darkgray\" in "
            "basic colors (this option is disabled by default: bold is used "
@@ -2973,7 +2984,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_look_color_inactive_buffer = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "color_inactive_buffer", "boolean",
         N_("use a different color for lines in inactive buffer (when line is "
            "from a merged buffer not selected)"),
@@ -2982,7 +2993,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_color_inactive_message = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "color_inactive_message", "boolean",
         N_("use a different color for inactive message (when window is not "
            "current window, or if line is from a merged buffer not selected)"),
@@ -2991,7 +3002,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_color_inactive_prefix = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "color_inactive_prefix", "boolean",
         N_("use a different color for inactive prefix (when window is not "
            "current window, or if line is from a merged buffer not selected)"),
@@ -3000,7 +3011,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_color_inactive_prefix_buffer = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "color_inactive_prefix_buffer", "boolean",
         N_("use a different color for inactive buffer name in prefix (when "
            "window is not current window, or if line is from a merged buffer "
@@ -3010,7 +3021,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_color_inactive_time = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "color_inactive_time", "boolean",
         N_("use a different color for inactive time (when window is not "
            "current window, or if line is from a merged buffer not selected)"),
@@ -3019,7 +3030,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_color_inactive_window = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "color_inactive_window", "boolean",
         N_("use a different color for lines in inactive window (when window "
            "is not current window)"),
@@ -3028,7 +3039,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_color_nick_offline = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "color_nick_offline", "boolean",
         N_("use a different color for offline nicks (not in nicklist any more)"),
         NULL, 0, 0, "off", NULL, 0,
@@ -3036,7 +3047,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_color_pairs_auto_reset = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "color_pairs_auto_reset", "integer",
         N_("automatically reset table of color pairs when number of available "
            "pairs is lower or equal to this number (-1 = disable automatic "
@@ -3045,7 +3056,7 @@ config_weechat_init_options ()
         NULL, -1, 256, "5", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_color_real_white = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "color_real_white", "boolean",
         N_("if set, uses real white color, disabled by default "
            "for terms with white background (if you never use "
@@ -3057,7 +3068,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_look_command_chars = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "command_chars", "string",
         N_("chars used to determine if input string is a command or not: "
            "input must start with one of these chars; the slash (\"/\") is "
@@ -3065,28 +3076,28 @@ config_weechat_init_options ()
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_command_incomplete = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "command_incomplete", "boolean",
         N_("if set, incomplete and unambiguous commands are allowed, for "
            "example /he for /help"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_confirm_quit = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "confirm_quit", "boolean",
         N_("if set, /quit command must be confirmed with extra argument "
            "\"-yes\" (see /help quit)"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_confirm_upgrade = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "confirm_upgrade", "boolean",
         N_("if set, /upgrade command must be confirmed with extra argument "
            "\"-yes\" (see /help upgrade)"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_day_change = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "day_change", "boolean",
         N_("display special message when day changes"),
         NULL, 0, 0, "on", NULL, 0,
@@ -3094,7 +3105,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_day_change_message_1date = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "day_change_message_1date", "string",
         /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
         N_("message displayed when the day has changed, with one date displayed "
@@ -3106,7 +3117,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_day_change_message_2dates = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "day_change_message_2dates", "string",
         /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
         N_("message displayed when the day has changed, with two dates displayed "
@@ -3120,7 +3131,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_eat_newline_glitch = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "eat_newline_glitch", "boolean",
         N_("if set, the eat_newline_glitch will be set to 0; this is used to "
            "not add new line char at end of each line, and then not break "
@@ -3132,7 +3143,7 @@ config_weechat_init_options ()
         &config_change_eat_newline_glitch, NULL, NULL,
         NULL, NULL, NULL);
     config_look_emphasized_attributes = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "emphasized_attributes", "string",
         N_("attributes for emphasized text: one or more attribute chars ("
            "\"%\" for blink, "
@@ -3148,7 +3159,7 @@ config_weechat_init_options ()
         &config_change_emphasized_attributes, NULL, NULL,
         NULL, NULL, NULL);
     config_look_highlight = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "highlight", "string",
         N_("comma separated list of words to highlight; case insensitive "
            "comparison (use \"(?-i)\" at beginning of words to make them case "
@@ -3157,7 +3168,7 @@ config_weechat_init_options ()
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_highlight_disable_regex = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "highlight_disable_regex", "string",
         N_("POSIX extended regular expression used to prevent any highlight "
            "from a message: this option has higher priority over other "
@@ -3171,7 +3182,7 @@ config_weechat_init_options ()
         &config_change_highlight_disable_regex, NULL, NULL,
         NULL, NULL, NULL);
     config_look_highlight_regex = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "highlight_regex", "string",
         N_("POSIX extended regular expression used to check if a message has "
            "highlight or not, at least one match in string must be surrounded "
@@ -3184,7 +3195,7 @@ config_weechat_init_options ()
         &config_change_highlight_regex, NULL, NULL,
         NULL, NULL, NULL);
     config_look_highlight_tags = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "highlight_tags", "string",
         N_("comma separated list of tags to highlight; case insensitive "
            "comparison; wildcard \"*\" is allowed in each tag; many tags can "
@@ -3197,7 +3208,7 @@ config_weechat_init_options ()
         &config_change_highlight_tags, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_add_conditions = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_add_conditions", "string",
         N_("conditions to add a buffer in hotlist (if notify level is OK for "
            "the buffer); you can use in these conditions: \"window\" (current "
@@ -3214,7 +3225,7 @@ config_weechat_init_options ()
         NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_hotlist_buffer_separator = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_buffer_separator", "string",
         N_("string displayed between buffers in hotlist"),
         NULL, 0, 0, ", ", NULL, 0,
@@ -3222,7 +3233,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_count_max = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_count_max", "integer",
         N_("max number of messages count to display in hotlist for a buffer: "
            "0 = never display messages count, "
@@ -3233,7 +3244,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_count_min_msg = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_count_min_msg", "integer",
         N_("display messages count if number of messages is greater or equal "
            "to this value"),
@@ -3242,7 +3253,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_names_count = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_names_count", "integer",
         N_("max number of names in hotlist (0 = no name displayed, only buffer "
            "numbers)"),
@@ -3251,7 +3262,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_names_length = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_names_length", "integer",
         N_("max length of names in hotlist (0 = no limit)"),
         NULL, 0, 32, "0", NULL, 0,
@@ -3259,7 +3270,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_names_level = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_names_level", "integer",
         N_("level for displaying names in hotlist (combination "
            "of: 1=join/part, 2=message, 4=private, 8=highlight, "
@@ -3269,7 +3280,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_names_merged_buffers = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_names_merged_buffers", "boolean",
         N_("if set, force display of names in hotlist for merged buffers"),
         NULL, 0, 0, "off", NULL, 0,
@@ -3277,7 +3288,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_prefix = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_prefix", "string",
         N_("text displayed at the beginning of the hotlist"),
         NULL, 0, 0, "H: ", NULL, 0,
@@ -3285,7 +3296,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_remove = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_remove", "integer",
         N_("remove buffers in hotlist: buffer = remove buffer by buffer, "
            "merged = remove all visible merged buffers at once"),
@@ -3293,7 +3304,7 @@ config_weechat_init_options ()
         0, 0, "merged", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_hotlist_short_names = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_short_names", "boolean",
         N_("if set, uses short names to display buffer names in hotlist (start "
            "after first \".\" in name)"),
@@ -3302,7 +3313,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_sort = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_sort", "integer",
         N_("sort of hotlist: group_time_*: group by notify level (highlights "
            "first) then sort by time, group_number_*: group by notify level "
@@ -3315,7 +3326,7 @@ config_weechat_init_options ()
         &config_change_hotlist_sort, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_suffix = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_suffix", "string",
         N_("text displayed at the end of the hotlist"),
         NULL, 0, 0, "", NULL, 0,
@@ -3323,7 +3334,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_unique_numbers = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_unique_numbers", "boolean",
         N_("keep only unique numbers in hotlist (this applies only on hotlist "
            "items where name is NOT displayed after number)"),
@@ -3332,20 +3343,20 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_hotlist_update_on_buffer_switch = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "hotlist_update_on_buffer_switch", "boolean",
         N_("update the hotlist when switching buffers"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_input_cursor_scroll = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "input_cursor_scroll", "integer",
         N_("number of chars displayed after end of input line when scrolling "
            "to display end of line"),
         NULL, 0, 100, "20", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_input_share = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "input_share", "integer",
         N_("share commands, text, or both in input for all buffers (there is "
            "still local history for each buffer)"),
@@ -3353,21 +3364,21 @@ config_weechat_init_options ()
         0, 0, "none", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_input_share_overwrite = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "input_share_overwrite", "boolean",
         N_("if set and input is shared, always overwrite input in target "
            "buffer"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_input_undo_max = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "input_undo_max", "integer",
         N_("max number of \"undo\" for command line, by buffer (0 = undo "
            "disabled)"),
         NULL, 0, 65535, "32", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_item_away_message = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "item_away_message", "boolean",
         N_("display server away message in away bar item"),
         NULL, 0, 0, "on", NULL, 0,
@@ -3375,7 +3386,7 @@ config_weechat_init_options ()
         &config_change_item_away, NULL, NULL,
         NULL, NULL, NULL);
     config_look_item_buffer_filter = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "item_buffer_filter", "string",
         N_("string used to show that some lines are filtered in current buffer "
            "(bar item \"buffer_filter\")"),
@@ -3384,7 +3395,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_item_buffer_zoom = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "item_buffer_zoom", "string",
         N_("string used to show zoom on merged buffer "
            "(bar item \"buffer_zoom\")"),
@@ -3393,7 +3404,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_item_mouse_status = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "item_mouse_status", "string",
         N_("string used to show if mouse is enabled "
            "(bar item \"mouse_status\")"),
@@ -3402,7 +3413,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_item_time_format = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "item_time_format", "string",
         N_("time format for \"time\" bar item (see man strftime for date/time "
            "specifiers) (note: content is evaluated, so you can use colors "
@@ -3412,7 +3423,7 @@ config_weechat_init_options ()
         &config_change_item_time_format, NULL, NULL,
         NULL, NULL, NULL);
     config_look_jump_current_to_previous_buffer = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "jump_current_to_previous_buffer", "boolean",
         N_("jump to previous buffer displayed when jumping to current buffer "
            "number with /buffer *N (where N is a buffer number), to easily "
@@ -3420,27 +3431,27 @@ config_weechat_init_options ()
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_jump_previous_buffer_when_closing = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "jump_previous_buffer_when_closing", "boolean",
         N_("jump to previously visited buffer when closing a buffer (if "
            "disabled, then jump to buffer number - 1)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_jump_smart_back_to_buffer = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "jump_smart_back_to_buffer", "boolean",
         N_("jump back to initial buffer after reaching end of hotlist"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_key_bind_safe = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "key_bind_safe", "boolean",
         N_("allow only binding of \"safe\" keys (beginning with a ctrl or meta "
            "code)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_key_grab_delay = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "key_grab_delay", "integer",
         N_("default delay (in milliseconds) to grab a key (using default key "
            "alt-k); this delay can be overridden in the /input command (see "
@@ -3448,7 +3459,7 @@ config_weechat_init_options ()
         NULL, 1, 10000, "800", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_mouse = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "mouse", "boolean",
         N_("enable mouse support"),
         NULL, 0, 0, "off", NULL, 0,
@@ -3456,14 +3467,14 @@ config_weechat_init_options ()
         &config_change_mouse, NULL, NULL,
         NULL, NULL, NULL);
     config_look_mouse_timer_delay = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "mouse_timer_delay", "integer",
         N_("delay (in milliseconds) to grab a mouse event: WeeChat will "
            "wait this delay before processing event"),
         NULL, 1, 10000, "100", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_nick_color_force = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "nick_color_force", "string",
         N_("force color for some nicks: hash computed with nickname "
            "to find color will not be used for these nicks (format is: "
@@ -3476,7 +3487,7 @@ config_weechat_init_options ()
         &config_change_look_nick_color_force, NULL, NULL,
         NULL, NULL, NULL);
     config_look_nick_color_hash = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "nick_color_hash", "integer",
         N_("hash algorithm used to find the color for a nick: djb2 = variant "
            "of djb2 (position of letters matters: anagrams of a nick have "
@@ -3486,7 +3497,7 @@ config_weechat_init_options ()
         "djb2|sum|djb2_32|sum_32", 0, 0, "djb2", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_nick_color_hash_salt = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "nick_color_hash_salt", "string",
         N_("salt for the hash algorithm used to find nick colors "
            "(the nickname is appended to this salt and the hash algorithm "
@@ -3494,7 +3505,7 @@ config_weechat_init_options ()
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_nick_color_stop_chars = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "nick_color_stop_chars", "string",
         N_("chars used to stop in nick when computing color with letters of "
            "nick (at least one char outside this list must be in string before "
@@ -3507,7 +3518,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         NULL, NULL, NULL);
     config_look_nick_prefix = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "nick_prefix", "string",
         N_("text to display before nick in prefix of message, example: \"<\""),
         NULL, 0, 0, "", NULL, 0,
@@ -3515,7 +3526,7 @@ config_weechat_init_options ()
         &config_change_nick_prefix_suffix, NULL, NULL,
         NULL, NULL, NULL);
     config_look_nick_suffix = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "nick_suffix", "string",
         N_("text to display after nick in prefix of message, example: \">\""),
         NULL, 0, 0, "", NULL, 0,
@@ -3523,14 +3534,14 @@ config_weechat_init_options ()
         &config_change_nick_prefix_suffix, NULL, NULL,
         NULL, NULL, NULL);
     config_look_paste_auto_add_newline = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "paste_auto_add_newline", "boolean",
         N_("automatically add a newline at the end of pasted text if there "
            "are at least two lines and if a confirmation is asked"),
            NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_paste_bracketed = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "paste_bracketed", "boolean",
         N_("enable terminal \"bracketed paste mode\" (not supported in all "
            "terminals/multiplexers): in this mode, pasted text is bracketed "
@@ -3542,7 +3553,7 @@ config_weechat_init_options ()
         &config_change_paste_bracketed, NULL, NULL,
         NULL, NULL, NULL);
     config_look_paste_bracketed_timer_delay = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "paste_bracketed_timer_delay", "integer",
         N_("force end of bracketed paste after this delay (in seconds) if the "
            "control sequence for end of bracketed paste (\"ESC[201~\") was not "
@@ -3550,7 +3561,7 @@ config_weechat_init_options ()
         NULL, 1, 60, "10", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_paste_max_lines = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "paste_max_lines", "integer",
         N_("max number of lines for paste without asking user "
            "(-1 = disable this feature); this option is used only if the bar "
@@ -3559,7 +3570,7 @@ config_weechat_init_options ()
         NULL, -1, INT_MAX, "1", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_error", "string",
         /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
         N_("prefix for error messages (note: content is evaluated, so you can "
@@ -3569,7 +3580,7 @@ config_weechat_init_options ()
         &config_change_prefix, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_NETWORK] = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_network", "string",
         /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
         N_("prefix for network messages (note: content is evaluated, so you can "
@@ -3579,7 +3590,7 @@ config_weechat_init_options ()
         &config_change_prefix, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_ACTION] = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_action", "string",
         /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
         N_("prefix for action messages (note: content is evaluated, so you can "
@@ -3589,7 +3600,7 @@ config_weechat_init_options ()
         &config_change_prefix, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_JOIN] = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_join", "string",
         /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
         N_("prefix for join messages (note: content is evaluated, so you can "
@@ -3599,7 +3610,7 @@ config_weechat_init_options ()
         &config_change_prefix, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_QUIT] = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_quit", "string",
         /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
         N_("prefix for quit messages (note: content is evaluated, so you can "
@@ -3609,7 +3620,7 @@ config_weechat_init_options ()
         &config_change_prefix, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix_align = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_align", "integer",
         N_("prefix alignment (none, left, right (default))"),
         "none|left|right", 0, 0, "right", NULL, 0,
@@ -3617,7 +3628,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix_align_max = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_align_max", "integer",
         N_("max size for prefix (0 = no max size)"),
         NULL, 0, 128, "0", NULL, 0,
@@ -3625,7 +3636,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix_align_min = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_align_min", "integer",
         N_("min size for prefix"),
         NULL, 0, 128, "0", NULL, 0,
@@ -3633,7 +3644,7 @@ config_weechat_init_options ()
         &config_change_prefix_align_min, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix_align_more = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_align_more", "string",
         N_("char to display if prefix is truncated (must be exactly one char "
            "on screen)"),
@@ -3642,7 +3653,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix_align_more_after = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_align_more_after", "boolean",
         N_("display the truncature char (by default \"+\") after the text (by "
            "replacing the space that should be displayed here); if disabled, "
@@ -3652,7 +3663,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix_buffer_align = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_buffer_align", "integer",
         N_("prefix alignment for buffer name, when many buffers are merged "
            "with same number (none, left, right (default))"),
@@ -3661,7 +3672,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix_buffer_align_max = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_buffer_align_max", "integer",
         N_("max size for buffer name, when many buffers are merged with same "
            "number (0 = no max size)"),
@@ -3670,7 +3681,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix_buffer_align_more = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_buffer_align_more", "string",
         N_("char to display if buffer name is truncated (when many buffers are "
            "merged with same number) (must be exactly one char on screen)"),
@@ -3679,7 +3690,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL,  NULL);
     config_look_prefix_buffer_align_more_after = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_buffer_align_more_after", "boolean",
         N_("display the truncature char (by default \"+\") after the text (by "
            "replacing the space that should be displayed here); if disabled, "
@@ -3689,7 +3700,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix_same_nick = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_same_nick", "string",
         N_("prefix displayed for a message with same nick as previous "
            "but not next message: use a space \" \" to hide prefix, another "
@@ -3700,7 +3711,7 @@ config_weechat_init_options ()
         &config_change_prefix_same_nick, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix_same_nick_middle = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_same_nick_middle", "string",
         N_("prefix displayed for a message with same nick as previous "
            "and next message: use a space \" \" to hide prefix, another "
@@ -3711,7 +3722,7 @@ config_weechat_init_options ()
         &config_change_prefix_same_nick_middle, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix_suffix = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "prefix_suffix", "string",
         N_("string displayed after prefix"),
         NULL, 0, 0, "|", NULL, 0,
@@ -3719,27 +3730,27 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_quote_nick_prefix = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "quote_nick_prefix", "string",
         N_("text to display before nick when quoting a message (see /help "
            "cursor)"),
         NULL, 0, 0, "<", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_quote_nick_suffix = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "quote_nick_suffix", "string",
         N_("text to display after nick when quoting a message (see /help "
            "cursor)"),
         NULL, 0, 0, ">", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_quote_time_format = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "quote_time_format", "string",
         N_("time format when quoting a message (see /help cursor)"),
         NULL, 0, 0, "%H:%M:%S", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_read_marker = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "read_marker", "integer",
         N_("use a marker (line or char) on buffers to show first unread line"),
         "none|line|char",
@@ -3748,13 +3759,13 @@ config_weechat_init_options ()
         &config_change_read_marker, NULL, NULL,
         NULL, NULL, NULL);
     config_look_read_marker_always_show = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "read_marker_always_show", "boolean",
         N_("always show read marker, even if it is after last buffer line"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_read_marker_string = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "read_marker_string", "string",
         N_("string used to draw read marker line (string is repeated until "
            "end of line)"),
@@ -3763,13 +3774,13 @@ config_weechat_init_options ()
         &config_change_read_marker, NULL, NULL,
         NULL, NULL, NULL);
     config_look_read_marker_update_on_buffer_switch = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "read_marker_update_on_buffer_switch", "boolean",
         N_("update the read marker when switching buffers"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_save_config_on_exit = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "save_config_on_exit", "boolean",
         N_("save configuration file on exit"),
         NULL, 0, 0, "on", NULL, 0,
@@ -3777,7 +3788,7 @@ config_weechat_init_options ()
         &config_change_save_config_on_exit, NULL, NULL,
         NULL, NULL, NULL);
     config_look_save_config_with_fsync = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "save_config_with_fsync", "boolean",
         N_("use fsync to synchronize the configuration file with the storage "
            "device (see man fsync); this is slower but should prevent any "
@@ -3788,7 +3799,7 @@ config_weechat_init_options ()
         &config_change_save_config_on_exit, NULL, NULL,
         NULL, NULL, NULL);
     config_look_save_layout_on_exit = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "save_layout_on_exit", "integer",
         N_("save layout on exit (buffers, windows, or both)"),
         "none|buffers|windows|all", 0, 0, "none", NULL, 0,
@@ -3796,7 +3807,7 @@ config_weechat_init_options ()
         &config_change_save_layout_on_exit, NULL, NULL,
         NULL, NULL, NULL);
     config_look_scroll_amount = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "scroll_amount", "integer",
         N_("how many lines to scroll by with scroll_up and "
            "scroll_down"),
@@ -3805,7 +3816,7 @@ config_weechat_init_options ()
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
     config_look_scroll_bottom_after_switch = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "scroll_bottom_after_switch", "boolean",
         N_("scroll to bottom of window after switch to another buffer (do not "
            "remember scroll position in windows); the scroll is done only for "
@@ -3813,20 +3824,20 @@ config_weechat_init_options ()
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_scroll_page_percent = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "scroll_page_percent", "integer",
         N_("percent of screen to scroll when scrolling one page up or down "
            "(for example 100 means one page, 50 half-page)"),
         NULL, 1, 100, "100", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_search_text_not_found_alert = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "search_text_not_found_alert", "boolean",
         N_("alert user when text sought is not found in buffer"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_separator_horizontal = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "separator_horizontal", "string",
         N_("char used to draw horizontal separators around bars and windows "
            "(empty value will draw a real line with ncurses, but may cause bugs "
@@ -3837,7 +3848,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_separator_vertical = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "separator_vertical", "string",
         N_("char used to draw vertical separators around bars and windows "
            "(empty value will draw a real line with ncurses); "
@@ -3847,7 +3858,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_tab_width = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "tab_width", "integer",
         N_("number of spaces used to display tabs in messages"),
         NULL, 1, TAB_MAX_WIDTH, "1", NULL, 0,
@@ -3855,14 +3866,14 @@ config_weechat_init_options ()
         &config_change_tab_width, NULL, NULL,
         NULL, NULL, NULL);
     config_look_time_format = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "time_format", "string",
         N_("time format for dates converted to strings and displayed in "
            "messages (see man strftime for date/time specifiers)"),
         NULL, 0, 0, "%a, %d %b %Y %T", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_window_auto_zoom = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "window_auto_zoom", "boolean",
         N_("automatically zoom on current window if the terminal becomes too "
            "small to display all windows (use alt-z to unzoom windows when the "
@@ -3870,7 +3881,7 @@ config_weechat_init_options ()
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_window_separator_horizontal = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "window_separator_horizontal", "boolean",
         N_("display an horizontal separator between windows"),
         NULL, 0, 0, "on", NULL, 0,
@@ -3878,7 +3889,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_window_separator_vertical = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "window_separator_vertical", "boolean",
         N_("display a vertical separator between windows"),
         NULL, 0, 0, "on", NULL, 0,
@@ -3886,7 +3897,7 @@ config_weechat_init_options ()
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
     config_look_window_title = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "window_title", "string",
         N_("title for window (terminal for Curses GUI), set on startup; "
            "an empty string will keep title unchanged "
@@ -3897,7 +3908,7 @@ config_weechat_init_options ()
         &config_change_window_title, NULL, NULL,
         NULL, NULL, NULL);
     config_look_word_chars_highlight = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "word_chars_highlight", "string",
         N_("comma-separated list of chars (or range of chars) that are "
            "considered part of words for highlights; "
@@ -3913,7 +3924,7 @@ config_weechat_init_options ()
         &config_change_word_chars_highlight, NULL, NULL,
         NULL, NULL, NULL);
     config_look_word_chars_input = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_look,
         "word_chars_input", "string",
         N_("comma-separated list of chars (or range of chars) that are "
            "considered part of words for command line; "
@@ -3930,7 +3941,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL);
 
     /* palette */
-    ptr_section = config_file_new_section (
+    weechat_config_section_palette = config_file_new_section (
         weechat_config_file, "palette",
         1, 1,
         NULL, NULL, NULL,
@@ -3938,7 +3949,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         &config_weechat_palette_create_option_cb, NULL, NULL,
         &config_weechat_palette_delete_option_cb, NULL, NULL);
-    if (!ptr_section)
+    if (!weechat_config_section_palette)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
@@ -3946,25 +3957,24 @@ config_weechat_init_options ()
     }
 
     /* colors */
-    ptr_section = config_file_new_section (weechat_config_file, "color",
-                                           0, 0,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL);
-    if (!ptr_section)
+    weechat_config_section_color = config_file_new_section (
+        weechat_config_file, "color",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!weechat_config_section_color)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
         return 0;
     }
 
-    weechat_config_section_color = ptr_section;
-
     /* bar colors */
     config_color_bar_more = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "bar_more", "color",
         N_("text color for \"+\" when scrolling bars"),
         NULL, -1, 0, "lightmagenta", NULL, 0,
@@ -3973,7 +3983,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL);
     /* chat area */
     config_color_chat = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat", "color",
         N_("text color for chat"),
         NULL, GUI_COLOR_CHAT, 0, "default", NULL, 0,
@@ -3981,7 +3991,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_bg = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_bg", "color",
         N_("background color for chat"),
         NULL, -1, 0, "default", NULL, 0,
@@ -3989,7 +3999,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_buffer = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_buffer", "color",
         N_("text color for buffer names"),
         NULL, GUI_COLOR_CHAT_BUFFER, 0, "white", NULL, 0,
@@ -3997,7 +4007,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_channel = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_channel", "color",
         N_("text color for channel names"),
         NULL, GUI_COLOR_CHAT_CHANNEL, 0, "white", NULL, 0,
@@ -4005,7 +4015,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_day_change = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_day_change", "color",
         N_("text color for message displayed when the day has changed"),
         NULL, GUI_COLOR_CHAT_DAY_CHANGE, 0, "cyan", NULL, 0,
@@ -4013,7 +4023,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_delimiters = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_delimiters", "color",
         N_("text color for delimiters"),
         NULL, GUI_COLOR_CHAT_DELIMITERS, 0, "green", NULL, 0,
@@ -4021,7 +4031,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_highlight = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_highlight", "color",
         N_("text color for highlighted prefix"),
         NULL, GUI_COLOR_CHAT_HIGHLIGHT, 0, "yellow", NULL, 0,
@@ -4029,7 +4039,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_highlight_bg = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_highlight_bg", "color",
         N_("background color for highlighted prefix"),
         NULL, -1, 0, "magenta", NULL, 0,
@@ -4037,7 +4047,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_host = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_host", "color",
         N_("text color for hostnames"),
         NULL, GUI_COLOR_CHAT_HOST, 0, "cyan", NULL, 0,
@@ -4045,7 +4055,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_inactive_buffer = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_inactive_buffer", "color",
         N_("text color for chat when line is inactive (buffer is merged with "
            "other buffers and is not selected)"),
@@ -4054,7 +4064,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_inactive_window = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_inactive_window", "color",
         N_("text color for chat when window is inactive (not current selected "
            "window)"),
@@ -4063,7 +4073,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_nick = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_nick", "color",
         N_("text color for nicks in chat window: used in some server messages "
            "and as fallback when a nick color is not found; most of times "
@@ -4073,7 +4083,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_nick_colors = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_nick_colors", "string",
         /* TRANSLATORS: please do not translate "lightred:blue" */
         N_("text color for nicks (comma separated list of colors, background "
@@ -4085,7 +4095,7 @@ config_weechat_init_options ()
         &config_change_nick_colors, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_nick_offline = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_nick_offline", "color",
         N_("text color for offline nick (not in nicklist any more); this "
            "color is used only if option weechat.look.color_nick_offline is "
@@ -4095,7 +4105,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_nick_offline_highlight = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_nick_offline_highlight", "color",
         N_("text color for offline nick with highlight; this color is used "
            "only if option weechat.look.color_nick_offline is enabled"),
@@ -4104,7 +4114,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_nick_offline_highlight_bg = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_nick_offline_highlight_bg", "color",
         N_("background color for offline nick with highlight; this color is "
            "used only if option weechat.look.color_nick_offline is enabled"),
@@ -4113,7 +4123,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_nick_other = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_nick_other", "color",
         N_("text color for other nick in private buffer"),
         NULL, GUI_COLOR_CHAT_NICK_OTHER, 0, "cyan", NULL, 0,
@@ -4121,7 +4131,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_nick_prefix = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_nick_prefix", "color",
         N_("color for nick prefix (string displayed before nick in prefix)"),
         NULL, GUI_COLOR_CHAT_NICK_PREFIX, 0, "green", NULL, 0,
@@ -4129,7 +4139,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_nick_self = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_nick_self", "color",
         N_("text color for local nick in chat window"),
         NULL, GUI_COLOR_CHAT_NICK_SELF, 0, "white", NULL, 0,
@@ -4137,7 +4147,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_nick_suffix = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_nick_suffix", "color",
         N_("color for nick suffix (string displayed after nick in prefix)"),
         NULL, GUI_COLOR_CHAT_NICK_SUFFIX, 0, "green", NULL, 0,
@@ -4145,7 +4155,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_prefix_error", "color",
         N_("text color for error prefix"),
         NULL, GUI_COLOR_CHAT_PREFIX_ERROR, 0, "yellow", NULL, 0,
@@ -4153,7 +4163,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_prefix_buffer = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_prefix_buffer", "color",
         N_("text color for buffer name (before prefix, when many buffers are "
            "merged with same number)"),
@@ -4162,7 +4172,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_prefix_buffer_inactive_buffer = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_prefix_buffer_inactive_buffer", "color",
         N_("text color for inactive buffer name (before prefix, when many "
            "buffers are merged with same number and if buffer is not "
@@ -4172,7 +4182,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_prefix[GUI_CHAT_PREFIX_NETWORK] = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_prefix_network", "color",
         N_("text color for network prefix"),
         NULL, GUI_COLOR_CHAT_PREFIX_NETWORK, 0, "magenta", NULL, 0,
@@ -4180,7 +4190,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_prefix[GUI_CHAT_PREFIX_ACTION] = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_prefix_action", "color",
         N_("text color for action prefix"),
         NULL, GUI_COLOR_CHAT_PREFIX_ACTION, 0, "white", NULL, 0,
@@ -4188,7 +4198,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_prefix[GUI_CHAT_PREFIX_JOIN] = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_prefix_join", "color",
         N_("text color for join prefix"),
         NULL, GUI_COLOR_CHAT_PREFIX_JOIN, 0, "lightgreen", NULL, 0,
@@ -4196,7 +4206,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_prefix[GUI_CHAT_PREFIX_QUIT] = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_prefix_quit", "color",
         N_("text color for quit prefix"),
         NULL, GUI_COLOR_CHAT_PREFIX_QUIT, 0, "lightred", NULL, 0,
@@ -4204,7 +4214,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_prefix_more = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_prefix_more", "color",
         N_("text color for \"+\" when prefix is too long"),
         NULL, GUI_COLOR_CHAT_PREFIX_MORE, 0, "lightmagenta", NULL, 0,
@@ -4212,7 +4222,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_prefix_suffix = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_prefix_suffix", "color",
         N_("text color for suffix (after prefix)"),
         NULL, GUI_COLOR_CHAT_PREFIX_SUFFIX, 0, "green", NULL, 0,
@@ -4220,7 +4230,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_read_marker = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_read_marker", "color",
         N_("text color for unread data marker"),
         NULL, GUI_COLOR_CHAT_READ_MARKER, 0, "magenta", NULL, 0,
@@ -4228,7 +4238,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_read_marker_bg = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_read_marker_bg", "color",
         N_("background color for unread data marker"),
         NULL, -1, 0, "default", NULL, 0,
@@ -4236,7 +4246,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_server = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_server", "color",
         N_("text color for server names"),
         NULL, GUI_COLOR_CHAT_SERVER, 0, "brown", NULL, 0,
@@ -4244,7 +4254,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_tags = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_tags", "color",
         N_("text color for tags after messages (displayed with command /debug "
            "tags)"),
@@ -4253,7 +4263,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_text_found = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_text_found", "color",
         N_("text color for marker on lines where text sought is found"),
         NULL, GUI_COLOR_CHAT_TEXT_FOUND, 0, "yellow", NULL, 0,
@@ -4261,7 +4271,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_text_found_bg = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_text_found_bg", "color",
         N_("background color for marker on lines where text sought is found"),
         NULL, -1, 0, "lightmagenta", NULL, 0,
@@ -4269,7 +4279,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_time = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_time", "color",
         N_("text color for time in chat window"),
         NULL, GUI_COLOR_CHAT_TIME, 0, "default", NULL, 0,
@@ -4277,7 +4287,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_time_delimiters = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_time_delimiters", "color",
         N_("text color for time delimiters"),
         NULL, GUI_COLOR_CHAT_TIME_DELIMITERS, 0, "brown", NULL, 0,
@@ -4285,7 +4295,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_value = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_value", "color",
         N_("text color for values"),
         NULL, GUI_COLOR_CHAT_VALUE, 0, "cyan", NULL, 0,
@@ -4293,7 +4303,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_chat_value_null = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "chat_value_null", "color",
         N_("text color for null values (undefined)"),
         NULL, GUI_COLOR_CHAT_VALUE_NULL, 0, "blue", NULL, 0,
@@ -4302,7 +4312,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL);
     /* emphasis (chat/bars) */
     config_color_emphasized = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "emphasized", "color",
         N_("text color for emphasized text (for example when searching text); "
            "this option is used only if option weechat.look.emphasized_attributes "
@@ -4312,7 +4322,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_emphasized_bg = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "emphasized_bg", "color",
         N_("background color for emphasized text (for example when searching "
            "text); used only if option weechat.look.emphasized_attributes is an "
@@ -4323,7 +4333,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL);
     /* input bar */
     config_color_input_actions = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "input_actions", "color",
         N_("text color for actions in input line"),
         NULL, -1, 0, "lightgreen", NULL, 0,
@@ -4331,7 +4341,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_input_text_not_found = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "input_text_not_found", "color",
         N_("text color for unsuccessful text search in input line"),
         NULL, -1, 0, "red", NULL, 0,
@@ -4340,7 +4350,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL);
     /* items */
     config_color_item_away = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "item_away", "color",
         N_("text color for away item"),
         NULL, -1, 0, "yellow", NULL, 0,
@@ -4349,7 +4359,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL);
     /* nicklist bar */
     config_color_nicklist_away = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "nicklist_away", "color",
         N_("text color for away nicknames"),
         NULL, -1, 0, "cyan", NULL, 0,
@@ -4357,7 +4367,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_nicklist_group = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "nicklist_group", "color",
         N_("text color for groups in nicklist"),
         NULL, -1, 0, "green", NULL, 0,
@@ -4366,7 +4376,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL);
     /* general color settings */
     config_color_separator = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "separator", "color",
         N_("color for window separators (when split) and separators beside bars "
            "(like nicklist)"),
@@ -4376,7 +4386,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL);
     /* status bar */
     config_color_status_count_highlight = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_count_highlight", "color",
         N_("text color for count of highlight messages in hotlist (status bar)"),
         NULL, -1, 0, "magenta", NULL, 0,
@@ -4384,7 +4394,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_count_msg = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_count_msg", "color",
         N_("text color for count of messages in hotlist (status bar)"),
         NULL, -1, 0, "brown", NULL, 0,
@@ -4392,7 +4402,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_count_other = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_count_other", "color",
         N_("text color for count of other messages in hotlist (status bar)"),
         NULL, -1, 0, "default", NULL, 0,
@@ -4400,7 +4410,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_count_private = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_count_private", "color",
         N_("text color for count of private messages in hotlist (status bar)"),
         NULL, -1, 0, "green", NULL, 0,
@@ -4408,7 +4418,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_data_highlight = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_data_highlight", "color",
         N_("text color for buffer with highlight (status bar)"),
         NULL, -1, 0, "lightmagenta", NULL, 0,
@@ -4416,7 +4426,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_data_msg = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_data_msg", "color",
         N_("text color for buffer with new messages (status bar)"),
         NULL, -1, 0, "yellow", NULL, 0,
@@ -4424,7 +4434,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_data_other = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_data_other", "color",
         N_("text color for buffer with new data (not messages) "
            "(status bar)"),
@@ -4433,7 +4443,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_data_private = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_data_private", "color",
         N_("text color for buffer with private message (status bar)"),
         NULL, -1, 0, "lightgreen", NULL, 0,
@@ -4441,7 +4451,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_filter = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_filter", "color",
         N_("text color for filter indicator in status bar"),
         NULL, -1, 0, "green", NULL, 0,
@@ -4449,7 +4459,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_more = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_more", "color",
         N_("text color for buffer with new data (status bar)"),
         NULL, -1, 0, "yellow", NULL, 0,
@@ -4457,7 +4467,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_mouse = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_mouse", "color",
         N_("text color for mouse indicator in status bar"),
         NULL, -1, 0, "green", NULL, 0,
@@ -4465,7 +4475,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_name = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_name", "color",
         N_("text color for current buffer name in status bar"),
         NULL, -1, 0, "white", NULL, 0,
@@ -4473,7 +4483,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_name_ssl = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_name_ssl", "color",
         N_("text color for current buffer name in status bar, if data are "
            "secured with a protocol like SSL"),
@@ -4482,7 +4492,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_nicklist_count = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_nicklist_count", "color",
         N_("text color for number of nicks in nicklist (status bar)"),
         NULL, -1, 0, "default", NULL, 0,
@@ -4490,7 +4500,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_number = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_number", "color",
         N_("text color for current buffer number in status bar"),
         NULL, -1, 0, "yellow", NULL, 0,
@@ -4498,7 +4508,7 @@ config_weechat_init_options ()
         &config_change_color, NULL, NULL,
         NULL, NULL, NULL);
     config_color_status_time = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_color,
         "status_time", "color",
         N_("text color for time (status bar)"),
         NULL, -1, 0, "default", NULL, 0,
@@ -4507,14 +4517,15 @@ config_weechat_init_options ()
         NULL, NULL, NULL);
 
     /* completion */
-    ptr_section = config_file_new_section (weechat_config_file, "completion",
-                                           0, 0,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL);
-    if (!ptr_section)
+    weechat_config_section_completion = config_file_new_section (
+        weechat_config_file, "completion",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!weechat_config_section_completion)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
@@ -4522,14 +4533,14 @@ config_weechat_init_options ()
     }
 
     config_completion_base_word_until_cursor = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "base_word_until_cursor", "boolean",
         N_("if enabled, the base word to complete ends at char before cursor; "
            "otherwise the base word ends at first space after cursor"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_command_inline = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "command_inline", "boolean",
         N_("if enabled, the commands inside command line are completed (the "
            "command at beginning of line has higher priority and is used "
@@ -4539,7 +4550,7 @@ config_weechat_init_options ()
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_default_template = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "default_template", "string",
         N_("default completion template (please see documentation for template "
            "codes and values: plugin API reference, function "
@@ -4547,72 +4558,72 @@ config_weechat_init_options ()
         NULL, 0, 0, "%(nicks)|%(irc_channels)", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_nick_add_space = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "nick_add_space", "boolean",
         N_("add space after nick completion (when nick is not first word on "
            "command line)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_nick_case_sensitive = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "nick_case_sensitive", "boolean",
         N_("case sensitive completion for nicks"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_nick_completer = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "nick_completer", "string",
         N_("string inserted after nick completion (when nick is first word on "
            "command line)"),
         NULL, 0, 0, ": ", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_nick_first_only = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "nick_first_only", "boolean",
         N_("complete only with first nick found"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_nick_ignore_chars = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "nick_ignore_chars", "string",
         N_("chars ignored for nick completion"),
         NULL, 0, 0, "[]`_-^", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_partial_completion_alert = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "partial_completion_alert", "boolean",
         N_("send alert (BEL) when a partial completion occurs"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_partial_completion_command = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "partial_completion_command", "boolean",
         N_("partially complete command names (stop when many commands found "
            "begin with same letters)"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_partial_completion_command_arg = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "partial_completion_command_arg", "boolean",
         N_("partially complete command arguments (stop when many arguments "
            "found begin with same prefix)"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_partial_completion_count = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "partial_completion_count", "boolean",
         N_("display count for each partial completion in bar item"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_partial_completion_other = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "partial_completion_other", "boolean",
         N_("partially complete outside commands (stop when many words found "
            "begin with same letters)"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_partial_completion_templates = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_completion,
         "partial_completion_templates", "string",
         N_("comma-separated list of templates for which partial completion is "
            "enabled by default (with Tab key instead of shift-Tab); "
@@ -4624,14 +4635,15 @@ config_weechat_init_options ()
         NULL, NULL, NULL);
 
     /* history */
-    ptr_section = config_file_new_section (weechat_config_file, "history",
-                                           0, 0,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL);
-    if (!ptr_section)
+    weechat_config_section_history = config_file_new_section (
+        weechat_config_file, "history",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!weechat_config_section_history)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
@@ -4639,14 +4651,14 @@ config_weechat_init_options ()
     }
 
     config_history_display_default = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_history,
         "display_default", "integer",
         N_("maximum number of commands to display by default in "
            "history listing (0 = unlimited)"),
         NULL, 0, INT_MAX, "5", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_history_max_buffer_lines_minutes = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_history,
         "max_buffer_lines_minutes", "integer",
         N_("maximum number of minutes in history per buffer "
            "(0 = unlimited); examples: 1440 = one day, 10080 = one week, "
@@ -4655,7 +4667,7 @@ config_weechat_init_options ()
         NULL, 0, INT_MAX, "0", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_history_max_buffer_lines_number = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_history,
         "max_buffer_lines_number", "integer",
         N_("maximum number of lines in history per buffer "
            "(0 = unlimited); use 0 ONLY if option "
@@ -4663,21 +4675,21 @@ config_weechat_init_options ()
         NULL, 0, INT_MAX, "4096", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_history_max_commands = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_history,
         "max_commands", "integer",
         N_("maximum number of user commands in history (0 = "
            "unlimited, NOT RECOMMENDED: no limit in memory usage)"),
         NULL, 0, INT_MAX, "100", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_history_max_visited_buffers = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_history,
         "max_visited_buffers", "integer",
         N_("maximum number of visited buffers to keep in memory"),
         NULL, 0, 1000, "50", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* proxies */
-    ptr_section = config_file_new_section (
+    weechat_config_section_proxy = config_file_new_section (
         weechat_config_file, "proxy",
         0, 0,
         &config_weechat_proxy_read_cb, NULL, NULL,
@@ -4685,24 +4697,23 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
+    if (!weechat_config_section_proxy)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
         return 0;
     }
 
-    weechat_config_section_proxy = ptr_section;
-
     /* network */
-    ptr_section = config_file_new_section (weechat_config_file, "network",
-                                           0, 0,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL);
-    if (!ptr_section)
+    weechat_config_section_network = config_file_new_section (
+        weechat_config_file, "network",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!weechat_config_section_network)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
@@ -4710,14 +4721,14 @@ config_weechat_init_options ()
     }
 
     config_network_connection_timeout = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_network,
         "connection_timeout", "integer",
         N_("timeout (in seconds) for connection to a remote host (made in a "
            "child process)"),
         NULL, 1, INT_MAX, "60", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_network_gnutls_ca_system = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_network,
         "gnutls_ca_system", "boolean",
         N_("load system's default trusted certificate authorities on startup; "
            "this can be turned off to save some memory only if you are not "
@@ -4727,7 +4738,7 @@ config_weechat_init_options ()
         &config_change_network_gnutls_ca, NULL, NULL,
         NULL, NULL, NULL);
     config_network_gnutls_ca_user = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_network,
         "gnutls_ca_user", "string",
         N_("extra file(s) with certificate authorities; multiple files must "
            "be separated by colons "
@@ -4738,13 +4749,13 @@ config_weechat_init_options ()
         &config_change_network_gnutls_ca, NULL, NULL,
         NULL, NULL, NULL);
     config_network_gnutls_handshake_timeout = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_network,
         "gnutls_handshake_timeout", "integer",
         N_("timeout (in seconds) for gnutls handshake"),
         NULL, 1, INT_MAX, "30", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_network_proxy_curl = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_network,
         "proxy_curl", "string",
         N_("name of proxy used for download of URLs with Curl (used to download "
            "list of scripts and in scripts calling function hook_process); the "
@@ -4755,14 +4766,15 @@ config_weechat_init_options ()
         NULL, NULL, NULL);
 
     /* plugin */
-    ptr_section = config_file_new_section (weechat_config_file, "plugin",
-                                           0, 0,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL);
-    if (!ptr_section)
+    weechat_config_section_plugin = config_file_new_section (
+        weechat_config_file, "plugin",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!weechat_config_section_plugin)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
@@ -4770,7 +4782,7 @@ config_weechat_init_options ()
     }
 
     config_plugin_autoload = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_plugin,
         "autoload", "string",
         N_("comma separated list of plugins to load automatically "
            "at startup, \"*\" means all plugins found, a name beginning with "
@@ -4780,7 +4792,7 @@ config_weechat_init_options ()
         NULL, 0, 0, "*", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_extension = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_plugin,
         "extension", "string",
         N_("comma separated list of file name extensions for plugins"),
         NULL, 0, 0, ".so,.dll", NULL, 0,
@@ -4788,7 +4800,7 @@ config_weechat_init_options ()
         &config_change_plugin_extension, NULL, NULL,
         NULL, NULL, NULL);
     config_plugin_path = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_plugin,
         "path", "string",
         N_("path for searching plugins "
            "(path is evaluated, see function string_eval_path_home in "
@@ -4796,21 +4808,22 @@ config_weechat_init_options ()
         NULL, 0, 0, "${weechat_data_dir}/plugins", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_save_config_on_unload = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_plugin,
         "save_config_on_unload", "boolean",
         N_("save configuration files when unloading plugins"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* signal */
-    ptr_section = config_file_new_section (weechat_config_file, "signal",
-                                           0, 0,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL);
-    if (!ptr_section)
+    weechat_config_section_signal = config_file_new_section (
+        weechat_config_file, "signal",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!weechat_config_section_signal)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
@@ -4818,7 +4831,7 @@ config_weechat_init_options ()
     }
 
     config_signal_sighup = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_signal,
         "sighup", "string",
         N_("command to execute when the signal is received, "
            "multiple commands can be separated by semicolons "
@@ -4827,7 +4840,7 @@ config_weechat_init_options ()
         "${if:${info:weechat_headless}?/reload:/quit -yes}", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_signal_sigquit = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_signal,
         "sigquit", "string",
         N_("command to execute when the signal is received, "
            "multiple commands can be separated by semicolons "
@@ -4835,7 +4848,7 @@ config_weechat_init_options ()
         NULL, 0, 0, "/quit -yes", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_signal_sigterm = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_signal,
         "sigterm", "string",
         N_("command to execute when the signal is received, "
            "multiple commands can be separated by semicolons "
@@ -4843,7 +4856,7 @@ config_weechat_init_options ()
         NULL, 0, 0, "/quit -yes", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_signal_sigusr1 = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_signal,
         "sigusr1", "string",
         N_("command to execute when the signal is received, "
            "multiple commands can be separated by semicolons "
@@ -4851,7 +4864,7 @@ config_weechat_init_options ()
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_signal_sigusr2 = config_file_new_option (
-        weechat_config_file, ptr_section,
+        weechat_config_file, weechat_config_section_signal,
         "sigusr2", "string",
         N_("command to execute when the signal is received, "
            "multiple commands can be separated by semicolons "
@@ -4860,7 +4873,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* bars */
-    ptr_section = config_file_new_section (
+    weechat_config_section_bar = config_file_new_section (
         weechat_config_file, "bar",
         0, 0,
         &config_weechat_bar_read_cb, NULL, NULL,
@@ -4868,17 +4881,15 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
+    if (!weechat_config_section_bar)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
         return 0;
     }
 
-    weechat_config_section_bar = ptr_section;
-
     /* custom bar items */
-    ptr_section = config_file_new_section (
+    weechat_config_section_custom_bar_item = config_file_new_section (
         weechat_config_file, "custom_bar_item",
         0, 0,
         &config_weechat_custom_bar_item_read_cb, NULL, NULL,
@@ -4886,17 +4897,15 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
+    if (!weechat_config_section_custom_bar_item)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
         return 0;
     }
 
-    weechat_config_section_custom_bar_item = ptr_section;
-
     /* layout */
-    ptr_section = config_file_new_section (
+    weechat_config_section_layout = config_file_new_section (
         weechat_config_file, "layout",
         0, 0,
         &config_weechat_layout_read_cb, NULL, NULL,
@@ -4904,7 +4913,7 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
+    if (!weechat_config_section_layout)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
@@ -4912,7 +4921,7 @@ config_weechat_init_options ()
     }
 
     /* notify */
-    ptr_section = config_file_new_section (
+    weechat_config_section_notify = config_file_new_section (
         weechat_config_file, "notify",
         1, 1,
         NULL, NULL, NULL,
@@ -4920,17 +4929,15 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         &config_weechat_notify_create_option_cb, NULL, NULL,
         &config_weechat_notify_delete_option_cb, NULL, NULL);
-    if (!ptr_section)
+    if (!weechat_config_section_notify)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
         return 0;
     }
 
-    weechat_config_section_notify = ptr_section;
-
     /* filters */
-    ptr_section = config_file_new_section (
+    weechat_config_section_filter = config_file_new_section (
         weechat_config_file, "filter",
         0, 0,
         &config_weechat_filter_read_cb, NULL, NULL,
@@ -4938,7 +4945,7 @@ config_weechat_init_options ()
         &config_weechat_filter_write_cb, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
+    if (!weechat_config_section_filter)
     {
         config_file_free (weechat_config_file);
         weechat_config_file = NULL;
@@ -4954,7 +4961,7 @@ config_weechat_init_options ()
             (context == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
             (context == GUI_KEY_CONTEXT_DEFAULT) ?
             "" : gui_key_context_string[context]);
-        ptr_section = config_file_new_section (
+        weechat_config_section_key[context] = config_file_new_section (
             weechat_config_file, section_name,
             1, 1,
             NULL, NULL, NULL,
@@ -4962,13 +4969,12 @@ config_weechat_init_options ()
             NULL, NULL, NULL,
             &config_weechat_key_create_option_cb, NULL, NULL,
             &config_weechat_key_delete_option_cb, NULL, NULL);
-        if (!ptr_section)
+        if (!weechat_config_section_key[context])
         {
             config_file_free (weechat_config_file);
             weechat_config_file = NULL;
             return 0;
         }
-        weechat_config_section_key[context] = ptr_section;
     }
 
     return 1;

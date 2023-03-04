@@ -127,11 +127,23 @@ struct t_config_look_word_char_item
 };
 
 extern struct t_config_file *weechat_config_file;
+
+extern struct t_config_section *weechat_config_section_debug;
+extern struct t_config_section *weechat_config_section_startup;
+extern struct t_config_section *weechat_config_section_look;
+extern struct t_config_section *weechat_config_section_palette;
 extern struct t_config_section *weechat_config_section_color;
+extern struct t_config_section *weechat_config_section_completion;
+extern struct t_config_section *weechat_config_section_history;
+extern struct t_config_section *weechat_config_section_network;
 extern struct t_config_section *weechat_config_section_proxy;
+extern struct t_config_section *weechat_config_section_plugin;
+extern struct t_config_section *weechat_config_section_signal;
 extern struct t_config_section *weechat_config_section_bar;
 extern struct t_config_section *weechat_config_section_custom_bar_item;
+extern struct t_config_section *weechat_config_section_layout;
 extern struct t_config_section *weechat_config_section_notify;
+extern struct t_config_section *weechat_config_section_filter;
 extern struct t_config_section *weechat_config_section_key[];
 
 extern struct t_config_option *config_startup_command_after_plugins;

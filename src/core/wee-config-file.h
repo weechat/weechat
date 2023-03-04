@@ -286,6 +286,9 @@ extern int config_file_option_set (struct t_config_option *option,
                                    const char *value, int run_callback);
 extern int config_file_option_set_null (struct t_config_option *option,
                                         int run_callback);
+extern int config_file_option_set_default (struct t_config_option *option,
+                                           const char *value,
+                                           int run_callback);
 extern int config_file_option_toggle (struct t_config_option *option,
                                       const char **values, int num_values,
                                       int run_callback);
