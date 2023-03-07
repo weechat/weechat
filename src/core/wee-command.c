@@ -2008,6 +2008,12 @@ COMMAND_CALLBACK(debug)
         return WEECHAT_RC_OK;
     }
 
+    if (string_strcmp (argv[1], "key") == 0)
+    {
+        gui_key_debug = 1;
+        return WEECHAT_RC_OK;
+    }
+
     if (string_strcmp (argv[1], "libs") == 0)
     {
         gui_chat_printf (NULL, "");
@@ -4317,13 +4323,6 @@ COMMAND_CALLBACK(key)
                                  gui_key_context_string[context]);
             }
         }
-        return WEECHAT_RC_OK;
-    }
-
-    /* enter keyboard debug */
-    if (string_strcmp (argv[1], "debug") == 0)
-    {
-        gui_key_debug = 1;
         return WEECHAT_RC_OK;
     }
 
@@ -7868,6 +7867,8 @@ command_init ()
            "    hdata: display infos about hdata (with free: remove all hdata "
            "in memory)\n"
            "infolists: display infos about infolists\n"
+           "      key: enable keyboard debug: display raw codes, expanded "
+           "key name and associated command ('q' to quit this mode)\n"
            "     libs: display infos about external libraries used\n"
            "   memory: display infos about memory usage\n"
            "    mouse: toggle debug for mouse\n"
@@ -7895,6 +7896,7 @@ command_init ()
         " || hdata free"
         " || hooks %(plugins_names)|" PLUGIN_CORE
         " || infolists"
+        " || key"
         " || libs"
         " || memory"
         " || mouse verbose"
@@ -8364,8 +8366,7 @@ command_init ()
            " || reset <key>"
            " || resetctxt <context> <key>"
            " || resetall -yes [<context>]"
-           " || missing [<context>]"
-           " || debug"),
+           " || missing [<context>]"),
         N_("       list: list all current keys (without argument, this list is "
            "displayed)\n"
            "listdefault: list default keys\n"
@@ -8386,8 +8387,6 @@ command_init ()
            "personal bindings (use carefully!)\n"
            "    missing: add missing keys (using default bindings), useful "
            "after installing new WeeChat version\n"
-           "      debug: enable keyboard debug: display raw codes, expanded "
-           "key name and associated command ('q' to quit this mode)\n"
            "\n"
            "When binding a command to a key, it is recommended to use key alt+k "
            "(or Esc then k), and then press the key to bind: this will insert "
@@ -8432,8 +8431,7 @@ command_init ()
         " || reset %(keys_codes_for_reset)"
         " || resetctxt %(keys_contexts) %(keys_codes_for_reset)"
         " || resetall %- %(keys_contexts)"
-        " || missing %(keys_contexts)"
-        " || debug",
+        " || missing %(keys_contexts)",
         &command_key, NULL, NULL);
     hook_command (
         NULL, "layout",
