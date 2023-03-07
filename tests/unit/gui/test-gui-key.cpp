@@ -851,6 +851,7 @@ TEST(GuiKey, LegacyToAlias)
     WEE_TEST_STR("ctrl-a", gui_key_legacy_to_alias ("ctrl-a"));
     WEE_TEST_STR("return", gui_key_legacy_to_alias ("ctrl-j"));
     WEE_TEST_STR("return", gui_key_legacy_to_alias ("ctrl-m"));
+    WEE_TEST_STR("ctrl-c,b", gui_key_legacy_to_alias ("ctrl-Cb"));
     WEE_TEST_STR("ctrl-c,b", gui_key_legacy_to_alias ("ctrl-cb"));
     WEE_TEST_STR("meta-space", gui_key_legacy_to_alias ("meta-space"));
     WEE_TEST_STR("meta-c,o,m,m,a", gui_key_legacy_to_alias ("meta-comma"));

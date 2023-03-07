@@ -841,7 +841,7 @@ error:
  *   "ctrl-a"           => "ctrl-a"
  *   "ctrl-j"           => "return"
  *   "ctrl-m"           => "ctrl-m"
- *   "ctrl-cb"          => "ctrl-c,b"
+ *   "ctrl-Cb"          => "ctrl-c,b"
  *   "meta-space"       => "meta-space"
  *   "meta-comma"       => "meta-c,o,m,m,a"
  *   "meta-,"           => "meta-comma"
