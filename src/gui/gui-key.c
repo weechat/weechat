@@ -71,14 +71,14 @@ char *gui_key_context_string[GUI_KEY_NUM_CONTEXTS] =
 char *gui_key_focus_string[GUI_KEY_NUM_FOCUS] =
 { "*", "chat", "bar", "item" };
 
-char *gui_key_unsafe_list[] =
-{ "comma", "space", NULL };
+char *gui_key_modifier_list[] =
+{ "ctrl-", "meta-", "meta2-", "shift-", NULL };
 
-char *gui_key_safe_list[] =
-{ "ctrl-", "meta-", "meta2-", "shift-", "f0", "f1", "f2", "f3", "f4", "f5",
-  "f6", "f7", "f8", "f9", "f10", "f11", "f12", "f13", "f14", "f15", "f16",
-  "f17", "f18", "f19", "f20", "home", "insert", "delete", "end", "backspace",
-  "pgup", "pgdn", "up", "down", "right", "left", "tab", "return", NULL };
+char *gui_key_alias_list[] =
+{ "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11",
+  "f12", "f13", "f14", "f15", "f16", "f17", "f18", "f19", "f20",
+  "home", "insert", "delete", "end", "backspace", "pgup", "pgdn",
+  "up", "down", "right", "left", "tab", "return", "comma", "space", NULL };
 
 int gui_key_debug = 0;              /* 1 for key debug: display raw codes,  */
                                     /* do not execute associated actions    */
@@ -1193,20 +1193,26 @@ gui_key_is_safe (int context, const char *key)
         return 1;
     }
 
-    for (i = 0; gui_key_unsafe_list[i]; i++)
+    if (strncmp (key, "comma", 5) == 0)
+        return 0;
+
+    if (strncmp (key, "space", 5) == 0)
+        return 0;
+
+    for (i = 0; gui_key_modifier_list[i]; i++)
     {
-        if (strncmp (key, gui_key_unsafe_list[i],
-                     strlen (gui_key_unsafe_list[i])) == 0)
+        if (strncmp (key, gui_key_modifier_list[i],
+                     strlen (gui_key_modifier_list[i])) == 0)
         {
-            /* key is not safe */
-            return 0;
+            /* key is safe */
+            return 1;
         }
     }
 
-    for (i = 0; gui_key_safe_list[i]; i++)
+    for (i = 0; gui_key_alias_list[i]; i++)
     {
-        if (strncmp (key, gui_key_safe_list[i],
-                     strlen (gui_key_safe_list[i])) == 0)
+        if (strncmp (key, gui_key_alias_list[i],
+                     strlen (gui_key_alias_list[i])) == 0)
         {
             /* key is safe */
             return 1;
