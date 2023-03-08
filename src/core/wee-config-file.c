@@ -3515,6 +3515,17 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
             else
             {
                 config_file->version_read = version;
+                if (config_file->version_read > config_file->version)
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sWarning: %s, version read (%d) is "
+                                       "newer than supported version (%d), "
+                                       "options may be broken!"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     filename,
+                                     config_file->version_read,
+                                     config_file->version);
+                }
             }
             continue;
         }
