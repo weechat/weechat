@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add access to hashtable properties in evaluation of expressions (issue #1888)
   * core: display similar command names when a command is unknown (issue #1877)
   * core: force ctrl keys to lower case when they are added (issue #1875)
   * core, plugins: make many identifiers case sensitive (issue #1872, issue #398, bug #32213)
