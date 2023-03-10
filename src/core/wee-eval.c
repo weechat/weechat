@@ -1168,7 +1168,7 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
                       struct t_eval_context *eval_context)
 {
     char *value, *old_value, *var_name, str_value[128], *pos, *property;
-    const char *ptr_value, *hdata_name, *ptr_var_name, *open_paren;
+    const char *ptr_value, *hdata_name, *ptr_var_name, *pos_open_paren;
     int type, debug_id;
     struct t_hashtable *hashtable;
 
@@ -1264,10 +1264,13 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
                  */
                 hashtable = pointer;
 
-                open_paren = strchr (pos, '(');
-                if (open_paren && open_paren > (pos + 1) && open_paren[1] == ')')
+                pos_open_paren = strchr (pos, '(');
+                if (pos_open_paren
+                    && (pos_open_paren > pos + 1)
+                    && (pos_open_paren[1] == ')'))
                 {
-                    property = string_strndup (pos + 1, open_paren - pos - 1);
+                    property = string_strndup (pos + 1,
+                                               pos_open_paren - pos - 1);
                     ptr_value = hashtable_get_string (hashtable, property);
                     free (property);
                     value = (ptr_value) ? strdup (ptr_value) : NULL;
