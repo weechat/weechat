@@ -950,6 +950,13 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL(str_value, "${window.buffer.local_variables}");
     WEE_CHECK_EVAL("core", "${window.buffer.local_variables.plugin}");
     WEE_CHECK_EVAL("weechat", "${window.buffer.local_variables.name}");
+    WEE_CHECK_EVAL("name,plugin", "${window.buffer.local_variables.keys_sorted()}");
+    WEE_CHECK_EVAL("name:weechat,plugin:core", "${window.buffer.local_variables.keys_values_sorted()}");
+    WEE_CHECK_EVAL("", "${window.buffer.local_variables.nonexisting_func()}");
+    WEE_CHECK_EVAL("", "${window.buffer.local_variables.nonexisting_func(}");
+    WEE_CHECK_EVAL("", "${window.buffer.local_variables.nonexisting_func)}");
+    WEE_CHECK_EVAL("", "${window.buffer.local_variables.keys( )}");
+    WEE_CHECK_EVAL("", "${window.buffer.local_variables.()}");
     hashtable_remove_all (pointers);
 
     /* test with another prefix/suffix */
