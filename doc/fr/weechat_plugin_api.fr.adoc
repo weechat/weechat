@@ -2620,7 +2620,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 _WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8,
-2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8._
+2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 3.9._
 
 Évaluer l'expression et retourner le résultat sous forme de chaîne.
 Les variables spéciales avec le format `+${variable}+` sont étendues (voir le
@@ -3354,7 +3354,9 @@ première étendue à la dernière) :
 | Valeur d'un hdata (les pointeurs `window` et `buffer` sont définis par défaut
   avec la fenêtre et tampon courants), `list` peut être le nom d'une liste
   (exemple : "gui_buffers"), un pointeur (exemple : "0x1234abcd") ou un nom
-  de pointeur (exemple : "mon_pointeur").
+  de pointeur (exemple : "mon_pointeur"). +
+  Lorsque `var1` est une table de hachage, les méthodes `keys()`, `values()`,
+  `keys_sorted()`, `keys_values()` et `keys_values_sorted()` peuvent être appelées.
 | >> `+${buffer[gui_buffers].full_name}+` +
   == `+core.weechat+` +
   +
@@ -3362,7 +3364,13 @@ première étendue à la dernière) :
   == `+core.weechat+` +
   +
   >> `+${window.buffer.number}+` +
-  == `+1+`
+  == `+1+` +
+  +
+  >> `+${buffer.local_variables.keys_values()}+` +
+  == `+plugin:core,name:weechat+` +
+  +
+  >> `+${buffer.local_variables.plugin}+` +
+  == `+core+`
 |===
 
 ==== string_dyn_alloc

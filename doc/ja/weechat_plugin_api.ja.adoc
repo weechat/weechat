@@ -2646,7 +2646,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 // TRANSLATION MISSING
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 3.9._
 
 式を評価して文字列として返す。`+${variable}+`
 という書式で書かれた特殊変数は展開されます (以下の表を参照)。
@@ -3401,7 +3401,9 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 | hdata の値 (`window` と `buffer`
   ポインタはデフォルトで現在のウィンドウ/バッファに設定されます),
   `list` can be a list name (example: "gui_buffers"), a pointer
-  (example: "0x1234abcd") or a pointer name (example: "my_pointer").
+  (example: "0x1234abcd") or a pointer name (example: "my_pointer"). +
+  When `var1` is a hashtable, methods `keys()`, `values()`, `keys_sorted()`,
+  `keys_values()` and `keys_values_sorted()` can be called.
 | >> `+${buffer[gui_buffers].full_name}+` +
   == `+core.weechat+` +
   +
@@ -3409,7 +3411,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   == `+core.weechat+` +
   +
   >> `+${window.buffer.number}+` +
-  == `+1+`
+  == `+1+` +
+  +
+  >> `+${buffer.local_variables.keys_values()}+` +
+  == `+plugin:core,name:weechat+` +
+  +
+  >> `+${buffer.local_variables.plugin}+` +
+  == `+core+`
 |===
 
 ==== string_dyn_alloc

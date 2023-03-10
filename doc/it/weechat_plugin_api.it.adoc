@@ -2725,7 +2725,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 3.9._
 
 Evaluate an expression and return result as a string.
 Special variables with format `+${variable}+` are expanded (see table below).
@@ -3110,7 +3110,6 @@ expanded to last):
   >> `+${\ua9}+` +
   == `+©+`
 
-// TRANSLATION MISSING
 | `+${chars:range}+` | 3.8
 | String with a range of chars, where `range` is one of: +
   - `digit` (`0123456789`) +
@@ -3135,13 +3134,11 @@ expanded to last):
   >> `+${chars:←-↓}+` +
   == `+←↑→↓+`
 
-// TRANSLATION MISSING
 | `+${lower:string}+` | 3.6
 | String converted to lower case.
 | >> `+${lower:TEST}+` +
   == `+test+`
 
-// TRANSLATION MISSING
 | `+${upper:string}+` | 3.6
 | String converted to upper case.
 | >> `+${upper:test}+` +
@@ -3450,7 +3447,9 @@ expanded to last):
   `+${hdata[list].var1.var2...}+` |
 | Hdata value (pointers `window` and `buffer` are set by default with current
   window/buffer), `list` can be a list name (example: "gui_buffers"), a pointer
-  (example: "0x1234abcd") or a pointer name (example: "my_pointer").
+  (example: "0x1234abcd") or a pointer name (example: "my_pointer"). +
+  When `var1` is a hashtable, methods `keys()`, `values()`, `keys_sorted()`,
+  `keys_values()` and `keys_values_sorted()` can be called.
 | >> `+${buffer[gui_buffers].full_name}+` +
   == `+core.weechat+` +
   +
@@ -3458,7 +3457,13 @@ expanded to last):
   == `+core.weechat+` +
   +
   >> `+${window.buffer.number}+` +
-  == `+1+`
+  == `+1+` +
+  +
+  >> `+${buffer.local_variables.keys_values()}+` +
+  == `+plugin:core,name:weechat+` +
+  +
+  >> `+${buffer.local_variables.plugin}+` +
+  == `+core+`
 |===
 
 ==== string_dyn_alloc
