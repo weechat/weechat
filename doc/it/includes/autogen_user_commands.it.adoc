@@ -1502,46 +1502,49 @@ Format for hdata can be one of following:
   hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
     ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
     ${buffer[my_pointer].full_name}: full name of the buffer with this pointer name (can be used in triggers)
+  hdata[pointer].var1.method(): when var1 is a hashtable, methods "keys()", "values()", "keys_sorted()", "keys_values()" and "keys_values_sorted()" can be called
 For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
 Examples (simple strings):
-  /eval -n ${raw:${info:version}}                 ==> ${info:version}
-  /eval -n ${eval_cond:${window.win_width}>100}   ==> 1
-  /eval -n ${info:version}                        ==> 0.4.3
-  /eval -n ${env:HOME}                            ==> /home/user
-  /eval -n ${weechat.look.scroll_amount}          ==> 3
-  /eval -n ${sec.data.password}                   ==> secret
-  /eval -n ${window}                              ==> 0x2549aa0
-  /eval -n ${window.buffer}                       ==> 0x2549320
-  /eval -n ${window.buffer.full_name}             ==> core.weechat
-  /eval -n ${window.buffer.number}                ==> 1
-  /eval -n ${\t}                                  ==> <tab>
-  /eval -n ${chars:digit}                         ==> 0123456789
-  /eval -n ${chars:J-T}                           ==> JKLMNOPQRST
-  /eval -n ${lower:TEST}                          ==> test
-  /eval -n ${upper:test}                          ==> TEST
-  /eval -n ${hide:-,${relay.network.password}}    ==> --------
-  /eval -n ${cut:3,+,test}                        ==> tes+
-  /eval -n ${cut:+3,+,test}                       ==> te+
-  /eval -n ${date:%H:%M:%S}                       ==> 07:46:40
-  /eval -n ${if:${info:term_width}>80?big:small}  ==> big
-  /eval -n ${rev:Hello}                           ==> olleH
-  /eval -n ${repeat:5,-}                          ==> -----
-  /eval -n ${length:test}                         ==> 4
-  /eval -n ${split:1,,,abc,def,ghi}               ==> abc
-  /eval -n ${split:-1,,,abc,def,ghi}              ==> ghi
-  /eval -n ${split:count,,,abc,def,ghi}           ==> 3
-  /eval -n ${split:random,,,abc,def,ghi}          ==> def
-  /eval -n ${split_shell:1,"arg 1" arg2}          ==> arg 1
-  /eval -n ${split_shell:-1,"arg 1" arg2}         ==> arg2
-  /eval -n ${split_shell:count,"arg 1" arg2}      ==> 2
-  /eval -n ${split_shell:random,"arg 1" arg2}     ==> arg2
-  /eval -n ${calc:(5+2)*3}                        ==> 21
-  /eval -n ${random:0,10}                         ==> 3
-  /eval -n ${base_encode:64,test}                 ==> dGVzdA==
-  /eval -n ${base_decode:64,dGVzdA==}             ==> test
-  /eval -n ${translate:Plugin}                    ==> Extension
-  /eval -n ${define:len,${calc:5+3}}${len}x${len} ==> 8x8
+  /eval -n ${raw:${info:version}}                  ==> ${info:version}
+  /eval -n ${eval_cond:${window.win_width}>100}    ==> 1
+  /eval -n ${info:version}                         ==> 0.4.3
+  /eval -n ${env:HOME}                             ==> /home/user
+  /eval -n ${weechat.look.scroll_amount}           ==> 3
+  /eval -n ${sec.data.password}                    ==> secret
+  /eval -n ${window}                               ==> 0x2549aa0
+  /eval -n ${window.buffer}                        ==> 0x2549320
+  /eval -n ${window.buffer.full_name}              ==> core.weechat
+  /eval -n ${window.buffer.number}                 ==> 1
+  /eval -n ${buffer.local_variables.keys_values()} ==> plugin:core,name:weechat
+  /eval -n ${buffer.local_variables.plugin}        ==> core
+  /eval -n ${\t}                                   ==> <tab>
+  /eval -n ${chars:digit}                          ==> 0123456789
+  /eval -n ${chars:J-T}                            ==> JKLMNOPQRST
+  /eval -n ${lower:TEST}                           ==> test
+  /eval -n ${upper:test}                           ==> TEST
+  /eval -n ${hide:-,${relay.network.password}}     ==> --------
+  /eval -n ${cut:3,+,test}                         ==> tes+
+  /eval -n ${cut:+3,+,test}                        ==> te+
+  /eval -n ${date:%H:%M:%S}                        ==> 07:46:40
+  /eval -n ${if:${info:term_width}>80?big:small}   ==> big
+  /eval -n ${rev:Hello}                            ==> olleH
+  /eval -n ${repeat:5,-}                           ==> -----
+  /eval -n ${length:test}                          ==> 4
+  /eval -n ${split:1,,,abc,def,ghi}                ==> abc
+  /eval -n ${split:-1,,,abc,def,ghi}               ==> ghi
+  /eval -n ${split:count,,,abc,def,ghi}            ==> 3
+  /eval -n ${split:random,,,abc,def,ghi}           ==> def
+  /eval -n ${split_shell:1,"arg 1" arg2}           ==> arg 1
+  /eval -n ${split_shell:-1,"arg 1" arg2}          ==> arg2
+  /eval -n ${split_shell:count,"arg 1" arg2}       ==> 2
+  /eval -n ${split_shell:random,"arg 1" arg2}      ==> arg2
+  /eval -n ${calc:(5+2)*3}                         ==> 21
+  /eval -n ${random:0,10}                          ==> 3
+  /eval -n ${base_encode:64,test}                  ==> dGVzdA==
+  /eval -n ${base_decode:64,dGVzdA==}              ==> test
+  /eval -n ${translate:Plugin}                     ==> Extension
+  /eval -n ${define:len,${calc:5+3}}${len}x${len}  ==> 8x8
 
 Examples (conditions):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
