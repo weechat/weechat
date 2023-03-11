@@ -33,7 +33,7 @@ extern "C"
 
 extern int gui_key_get_current_context ();
 extern char *gui_key_legacy_internal_code (const char *key);
-extern char *gui_key_amend (const char *key);
+extern char *gui_key_fix (const char *key);
 extern struct t_config_option *gui_key_new_option (int context,
                                                    const char *name,
                                                    const char *value);
@@ -208,8 +208,8 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[[[");
 
     /* unknown sequence: kept as-is */
-    WEE_CHECK_EXP_KEY(1, "meta2-x", "meta2-x", "\001[[x");
-    WEE_CHECK_EXP_KEY(1, "meta2-é", "meta2-é", "\001[[é");
+    WEE_CHECK_EXP_KEY(1, "meta-[x", "meta-[x", "\001[[x");
+    WEE_CHECK_EXP_KEY(1, "meta-[é", "meta-[é", "\001[[é");
 
     WEE_CHECK_EXP_KEY(1, "A", "A", "A");
     WEE_CHECK_EXP_KEY(1, "a", "a", "a");
@@ -275,558 +275,558 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(1, "meta-meta-meta-z", "meta-meta-meta-z", "\001[\001[\001[z");
     WEE_CHECK_EXP_KEY(1, "meta-meta-meta-_", "meta-meta-meta-_", "\001[\001[\001[_");
 
-    /* alt + key (meta2) */
-    WEE_CHECK_EXP_KEY(1, "meta2-Z", "shift-tab", "\001[[Z");
+    /* sihft-tab */
+    WEE_CHECK_EXP_KEY(1, "meta-[Z", "shift-tab", "\001[[Z");
 
     /* arrows */
-    WEE_CHECK_EXP_KEY(1, "meta2-A", "up", "\001[[A");
-    WEE_CHECK_EXP_KEY(1, "meta2-B", "down", "\001[[B");
-    WEE_CHECK_EXP_KEY(1, "meta2-C", "right", "\001[[C");
-    WEE_CHECK_EXP_KEY(1, "meta2-D", "left", "\001[[D");
+    WEE_CHECK_EXP_KEY(1, "meta-[A", "up", "\001[[A");
+    WEE_CHECK_EXP_KEY(1, "meta-[B", "down", "\001[[B");
+    WEE_CHECK_EXP_KEY(1, "meta-[C", "right", "\001[[C");
+    WEE_CHECK_EXP_KEY(1, "meta-[D", "left", "\001[[D");
 
     /* shift + arrows, modifier = 2: 1 + 1=shift */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;2A", "shift-up", "\001[[1;2A");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;2B", "shift-down", "\001[[1;2B");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;2C", "shift-right", "\001[[1;2C");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;2D", "shift-left", "\001[[1;2D");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;2A", "shift-up", "\001[[1;2A");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;2B", "shift-down", "\001[[1;2B");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;2C", "shift-right", "\001[[1;2C");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;2D", "shift-left", "\001[[1;2D");
 
     /* alt + arrows, modifier = 3: 1 + 2=alt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;3A", "meta-up", "\001[[1;3A");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-A", "meta-up", "\001[\001[[A");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;3B", "meta-down", "\001[[1;3B");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-B", "meta-down", "\001[\001[[B");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;3C", "meta-right", "\001[[1;3C");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-C", "meta-right", "\001[\001[[C");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;3D", "meta-left", "\001[[1;3D");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-D", "meta-left", "\001[\001[[D");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;3A", "meta-up", "\001[[1;3A");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[A", "meta-up", "\001[\001[[A");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;3B", "meta-down", "\001[[1;3B");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[B", "meta-down", "\001[\001[[B");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;3C", "meta-right", "\001[[1;3C");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[C", "meta-right", "\001[\001[[C");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;3D", "meta-left", "\001[[1;3D");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[D", "meta-left", "\001[\001[[D");
 
     /* 2 * alt + arrows, modifier = 3: 1 + 2=alt */
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-1;3A", "meta-meta-up", "\001[\001[[1;3A");
-    WEE_CHECK_EXP_KEY(1, "meta-meta-meta2-A", "meta-meta-up", "\001[\001[\001[[A");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-1;3B", "meta-meta-down", "\001[\001[[1;3B");
-    WEE_CHECK_EXP_KEY(1, "meta-meta-meta2-B", "meta-meta-down", "\001[\001[\001[[B");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-1;3C", "meta-meta-right", "\001[\001[[1;3C");
-    WEE_CHECK_EXP_KEY(1, "meta-meta-meta2-C", "meta-meta-right", "\001[\001[\001[[C");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-1;3D", "meta-meta-left", "\001[\001[[1;3D");
-    WEE_CHECK_EXP_KEY(1, "meta-meta-meta2-D", "meta-meta-left", "\001[\001[\001[[D");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[1;3A", "meta-meta-up", "\001[\001[[1;3A");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-[A", "meta-meta-up", "\001[\001[\001[[A");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[1;3B", "meta-meta-down", "\001[\001[[1;3B");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-[B", "meta-meta-down", "\001[\001[\001[[B");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[1;3C", "meta-meta-right", "\001[\001[[1;3C");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-[C", "meta-meta-right", "\001[\001[\001[[C");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[1;3D", "meta-meta-left", "\001[\001[[1;3D");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-[D", "meta-meta-left", "\001[\001[\001[[D");
 
     /* 3 * alt + arrows, modifier = 3: 1 + 2=alt */
-    WEE_CHECK_EXP_KEY(1, "meta-meta-meta2-1;3A", "meta-meta-meta-up", "\001[\001[\001[[1;3A");
-    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-meta2-A", "meta-meta-meta-up", "\001[\001[\001[\001[[A");
-    WEE_CHECK_EXP_KEY(1, "meta-meta-meta2-1;3B", "meta-meta-meta-down", "\001[\001[\001[[1;3B");
-    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-meta2-B", "meta-meta-meta-down", "\001[\001[\001[\001[[B");
-    WEE_CHECK_EXP_KEY(1, "meta-meta-meta2-1;3C", "meta-meta-meta-right", "\001[\001[\001[[1;3C");
-    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-meta2-C", "meta-meta-meta-right", "\001[\001[\001[\001[[C");
-    WEE_CHECK_EXP_KEY(1, "meta-meta-meta2-1;3D", "meta-meta-meta-left", "\001[\001[\001[[1;3D");
-    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-meta2-D", "meta-meta-meta-left", "\001[\001[\001[\001[[D");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-[1;3A", "meta-meta-meta-up", "\001[\001[\001[[1;3A");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-meta-[A", "meta-meta-meta-up", "\001[\001[\001[\001[[A");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-[1;3B", "meta-meta-meta-down", "\001[\001[\001[[1;3B");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-meta-[B", "meta-meta-meta-down", "\001[\001[\001[\001[[B");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-[1;3C", "meta-meta-meta-right", "\001[\001[\001[[1;3C");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-meta-[C", "meta-meta-meta-right", "\001[\001[\001[\001[[C");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-[1;3D", "meta-meta-meta-left", "\001[\001[\001[[1;3D");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-meta-meta-[D", "meta-meta-meta-left", "\001[\001[\001[\001[[D");
 
     /* alt + shift + arrows, modifier = 4: 1 + 1=shift + 2=alt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;4A", "meta-shift-up", "\001[[1;4A");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;4B", "meta-shift-down", "\001[[1;4B");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;4C", "meta-shift-right", "\001[[1;4C");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;4D", "meta-shift-left", "\001[[1;4D");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;4A", "meta-shift-up", "\001[[1;4A");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;4B", "meta-shift-down", "\001[[1;4B");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;4C", "meta-shift-right", "\001[[1;4C");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;4D", "meta-shift-left", "\001[[1;4D");
 
     /* ctrl + arrows, modifier = 5: 1 + 4=ctrl */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;5A", "ctrl-up", "\001[[1;5A");
-    WEE_CHECK_EXP_KEY(1, "meta2-a", "ctrl-up", "\001[Oa");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;5B", "ctrl-down", "\001[[1;5B");
-    WEE_CHECK_EXP_KEY(1, "meta2-b", "ctrl-down", "\001[Ob");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;5C", "ctrl-right", "\001[[1;5C");
-    WEE_CHECK_EXP_KEY(1, "meta2-c", "ctrl-right", "\001[Oc");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;5D", "ctrl-left", "\001[[1;5D");
-    WEE_CHECK_EXP_KEY(1, "meta2-d", "ctrl-left", "\001[Od");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;5A", "ctrl-up", "\001[[1;5A");
+    WEE_CHECK_EXP_KEY(1, "meta-Oa", "ctrl-up", "\001[Oa");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;5B", "ctrl-down", "\001[[1;5B");
+    WEE_CHECK_EXP_KEY(1, "meta-Ob", "ctrl-down", "\001[Ob");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;5C", "ctrl-right", "\001[[1;5C");
+    WEE_CHECK_EXP_KEY(1, "meta-Oc", "ctrl-right", "\001[Oc");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;5D", "ctrl-left", "\001[[1;5D");
+    WEE_CHECK_EXP_KEY(1, "meta-Od", "ctrl-left", "\001[Od");  /* urxvt */
 
     /* ctrl + shift + arrows, modifier = 6: 1 + 1=shift + 4=ctrl */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;6A", "ctrl-shift-up", "\001[[1;6A");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;6B", "ctrl-shift-down", "\001[[1;6B");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;6C", "ctrl-shift-right", "\001[[1;6C");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;6D", "ctrl-shift-left", "\001[[1;6D");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;6A", "ctrl-shift-up", "\001[[1;6A");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;6B", "ctrl-shift-down", "\001[[1;6B");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;6C", "ctrl-shift-right", "\001[[1;6C");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;6D", "ctrl-shift-left", "\001[[1;6D");
 
     /* ctrl + alt + arrows, modifier = 7: 1 + 2=alt + 4=ctrl */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;7A", "meta-ctrl-up", "\001[[1;7A");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;7B", "meta-ctrl-down", "\001[[1;7B");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;7C", "meta-ctrl-right", "\001[[1;7C");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;7D", "meta-ctrl-left", "\001[[1;7D");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;7A", "meta-ctrl-up", "\001[[1;7A");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;7B", "meta-ctrl-down", "\001[[1;7B");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;7C", "meta-ctrl-right", "\001[[1;7C");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;7D", "meta-ctrl-left", "\001[[1;7D");
 
     /* ctrl + alt + arrows, modifier = 8: 1 + 1=shift + 2=alt + 4=ctrl */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;8A", "meta-ctrl-shift-up", "\001[[1;8A");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;8B", "meta-ctrl-shift-down", "\001[[1;8B");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;8C", "meta-ctrl-shift-right", "\001[[1;8C");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;8D", "meta-ctrl-shift-left", "\001[[1;8D");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;8A", "meta-ctrl-shift-up", "\001[[1;8A");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;8B", "meta-ctrl-shift-down", "\001[[1;8B");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;8C", "meta-ctrl-shift-right", "\001[[1;8C");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;8D", "meta-ctrl-shift-left", "\001[[1;8D");
 
     /* home */
-    WEE_CHECK_EXP_KEY(1, "meta2-H", "home", "\001[[H");
-    WEE_CHECK_EXP_KEY(1, "meta2-1~", "home", "\001[[1~");
-    WEE_CHECK_EXP_KEY(1, "meta2-7~", "home", "\001[[7~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;2H", "shift-home", "\001[[1;2H");
-    WEE_CHECK_EXP_KEY(1, "meta2-7$", "shift-home", "\001[[7$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;3H", "meta-home", "\001[[1;3H");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-7~", "meta-home", "\001[\001[[7~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;4H", "meta-shift-home", "\001[[1;4H");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-7$", "meta-shift-home", "\001[\001[[7$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;5H", "ctrl-home", "\001[[1;5H");
-    WEE_CHECK_EXP_KEY(1, "meta2-7^", "ctrl-home", "\001[[7^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;6H", "ctrl-shift-home", "\001[[1;6H");
-    WEE_CHECK_EXP_KEY(1, "meta2-7@", "ctrl-shift-home", "\001[[7@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;7H", "meta-ctrl-home", "\001[[1;7H");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-7^", "meta-ctrl-home", "\001[\001[[7^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;8H", "meta-ctrl-shift-home", "\001[[1;8H");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-7@", "meta-ctrl-shift-home", "\001[\001[[7@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[H", "home", "\001[[H");
+    WEE_CHECK_EXP_KEY(1, "meta-[1~", "home", "\001[[1~");
+    WEE_CHECK_EXP_KEY(1, "meta-[7~", "home", "\001[[7~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;2H", "shift-home", "\001[[1;2H");
+    WEE_CHECK_EXP_KEY(1, "meta-[7$", "shift-home", "\001[[7$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;3H", "meta-home", "\001[[1;3H");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[7~", "meta-home", "\001[\001[[7~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;4H", "meta-shift-home", "\001[[1;4H");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[7$", "meta-shift-home", "\001[\001[[7$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;5H", "ctrl-home", "\001[[1;5H");
+    WEE_CHECK_EXP_KEY(1, "meta-[7^", "ctrl-home", "\001[[7^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;6H", "ctrl-shift-home", "\001[[1;6H");
+    WEE_CHECK_EXP_KEY(1, "meta-[7@", "ctrl-shift-home", "\001[[7@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;7H", "meta-ctrl-home", "\001[[1;7H");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[7^", "meta-ctrl-home", "\001[\001[[7^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;8H", "meta-ctrl-shift-home", "\001[[1;8H");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[7@", "meta-ctrl-shift-home", "\001[\001[[7@");  /* urxvt */
 
     /* end */
-    WEE_CHECK_EXP_KEY(1, "meta2-F", "end", "\001[[F");
-    WEE_CHECK_EXP_KEY(1, "meta2-4~", "end", "\001[[4~");
-    WEE_CHECK_EXP_KEY(1, "meta2-8~", "end", "\001[[8~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;2F", "shift-end", "\001[[1;2F");
-    WEE_CHECK_EXP_KEY(1, "meta2-4;2~", "shift-end", "\001[[4;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-8;2~", "shift-end", "\001[[8;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;3F", "meta-end", "\001[[1;3F");
-    WEE_CHECK_EXP_KEY(1, "meta2-4;3~", "meta-end", "\001[[4;3~");
-    WEE_CHECK_EXP_KEY(1, "meta2-8;3~", "meta-end", "\001[[8;3~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;4F", "meta-shift-end", "\001[[1;4F");
-    WEE_CHECK_EXP_KEY(1, "meta2-4;4~", "meta-shift-end", "\001[[4;4~");
-    WEE_CHECK_EXP_KEY(1, "meta2-8;4~", "meta-shift-end", "\001[[8;4~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;5F", "ctrl-end", "\001[[1;5F");
-    WEE_CHECK_EXP_KEY(1, "meta2-4;5~", "ctrl-end", "\001[[4;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-8;5~", "ctrl-end", "\001[[8;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;6F", "ctrl-shift-end", "\001[[1;6F");
-    WEE_CHECK_EXP_KEY(1, "meta2-4;6~", "ctrl-shift-end", "\001[[4;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-8;6~", "ctrl-shift-end", "\001[[8;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;7F", "meta-ctrl-end", "\001[[1;7F");
-    WEE_CHECK_EXP_KEY(1, "meta2-4;7~", "meta-ctrl-end", "\001[[4;7~");
-    WEE_CHECK_EXP_KEY(1, "meta2-8;7~", "meta-ctrl-end", "\001[[8;7~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;8F", "meta-ctrl-shift-end", "\001[[1;8F");
-    WEE_CHECK_EXP_KEY(1, "meta2-4;8~", "meta-ctrl-shift-end", "\001[[4;8~");
-    WEE_CHECK_EXP_KEY(1, "meta2-8;8~", "meta-ctrl-shift-end", "\001[[8;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-[F", "end", "\001[[F");
+    WEE_CHECK_EXP_KEY(1, "meta-[4~", "end", "\001[[4~");
+    WEE_CHECK_EXP_KEY(1, "meta-[8~", "end", "\001[[8~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;2F", "shift-end", "\001[[1;2F");
+    WEE_CHECK_EXP_KEY(1, "meta-[4;2~", "shift-end", "\001[[4;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[8;2~", "shift-end", "\001[[8;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;3F", "meta-end", "\001[[1;3F");
+    WEE_CHECK_EXP_KEY(1, "meta-[4;3~", "meta-end", "\001[[4;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-[8;3~", "meta-end", "\001[[8;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;4F", "meta-shift-end", "\001[[1;4F");
+    WEE_CHECK_EXP_KEY(1, "meta-[4;4~", "meta-shift-end", "\001[[4;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-[8;4~", "meta-shift-end", "\001[[8;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;5F", "ctrl-end", "\001[[1;5F");
+    WEE_CHECK_EXP_KEY(1, "meta-[4;5~", "ctrl-end", "\001[[4;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[8;5~", "ctrl-end", "\001[[8;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;6F", "ctrl-shift-end", "\001[[1;6F");
+    WEE_CHECK_EXP_KEY(1, "meta-[4;6~", "ctrl-shift-end", "\001[[4;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[8;6~", "ctrl-shift-end", "\001[[8;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;7F", "meta-ctrl-end", "\001[[1;7F");
+    WEE_CHECK_EXP_KEY(1, "meta-[4;7~", "meta-ctrl-end", "\001[[4;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-[8;7~", "meta-ctrl-end", "\001[[8;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;8F", "meta-ctrl-shift-end", "\001[[1;8F");
+    WEE_CHECK_EXP_KEY(1, "meta-[4;8~", "meta-ctrl-shift-end", "\001[[4;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-[8;8~", "meta-ctrl-shift-end", "\001[[8;8~");
 
     /* insert */
-    WEE_CHECK_EXP_KEY(1, "meta2-2~", "insert", "\001[[2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-2;2~", "shift-insert", "\001[[2;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-2$", "shift-insert", "\001[[2$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-2;3~", "meta-insert", "\001[[2;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-2~", "meta-insert", "\001[\001[[2~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-2;4~", "meta-shift-insert", "\001[[2;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-2$", "meta-shift-insert", "\001[\001[[2$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-2;5~", "ctrl-insert", "\001[[2;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-2^", "ctrl-insert", "\001[[2^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-2;6~", "ctrl-shift-insert", "\001[[2;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-2@", "ctrl-shift-insert", "\001[[2@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-2;7~", "meta-ctrl-insert", "\001[[2;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-2^", "meta-ctrl-insert", "\001[\001[[2^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-2;8~", "meta-ctrl-shift-insert", "\001[[2;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-2@", "meta-ctrl-shift-insert", "\001[\001[[2@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[2~", "insert", "\001[[2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[2;2~", "shift-insert", "\001[[2;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[2$", "shift-insert", "\001[[2$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[2;3~", "meta-insert", "\001[[2;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[2~", "meta-insert", "\001[\001[[2~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[2;4~", "meta-shift-insert", "\001[[2;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[2$", "meta-shift-insert", "\001[\001[[2$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[2;5~", "ctrl-insert", "\001[[2;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[2^", "ctrl-insert", "\001[[2^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[2;6~", "ctrl-shift-insert", "\001[[2;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[2@", "ctrl-shift-insert", "\001[[2@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[2;7~", "meta-ctrl-insert", "\001[[2;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[2^", "meta-ctrl-insert", "\001[\001[[2^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[2;8~", "meta-ctrl-shift-insert", "\001[[2;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[2@", "meta-ctrl-shift-insert", "\001[\001[[2@");  /* urxvt */
 
     /* delete */
-    WEE_CHECK_EXP_KEY(1, "meta2-3~", "delete", "\001[[3~");
-    WEE_CHECK_EXP_KEY(1, "meta2-3;2~", "shift-delete", "\001[[3;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-3$", "shift-delete", "\001[[3$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-3;3~", "meta-delete", "\001[[3;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-3~", "meta-delete", "\001[\001[[3~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-3;4~", "meta-shift-delete", "\001[[3;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-3$", "meta-shift-delete", "\001[\001[[3$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-3;5~", "ctrl-delete", "\001[[3;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-3^", "ctrl-delete", "\001[[3^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-3;6~", "ctrl-shift-delete", "\001[[3;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-3@", "ctrl-shift-delete", "\001[[3@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-3;7~", "meta-ctrl-delete", "\001[[3;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-3^", "meta-ctrl-delete", "\001[\001[[3^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-3;8~", "meta-ctrl-shift-delete", "\001[[3;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-3@", "meta-ctrl-shift-delete", "\001[\001[[3@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[3~", "delete", "\001[[3~");
+    WEE_CHECK_EXP_KEY(1, "meta-[3;2~", "shift-delete", "\001[[3;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[3$", "shift-delete", "\001[[3$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[3;3~", "meta-delete", "\001[[3;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[3~", "meta-delete", "\001[\001[[3~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[3;4~", "meta-shift-delete", "\001[[3;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[3$", "meta-shift-delete", "\001[\001[[3$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[3;5~", "ctrl-delete", "\001[[3;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[3^", "ctrl-delete", "\001[[3^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[3;6~", "ctrl-shift-delete", "\001[[3;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[3@", "ctrl-shift-delete", "\001[[3@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[3;7~", "meta-ctrl-delete", "\001[[3;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[3^", "meta-ctrl-delete", "\001[\001[[3^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[3;8~", "meta-ctrl-shift-delete", "\001[[3;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[3@", "meta-ctrl-shift-delete", "\001[\001[[3@");  /* urxvt */
 
     /* pgup */
-    WEE_CHECK_EXP_KEY(1, "meta2-5~", "pgup", "\001[[5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-I", "pgup", "\001[[I");
-    WEE_CHECK_EXP_KEY(1, "meta2-5;2~", "shift-pgup", "\001[[5;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;2I", "shift-pgup", "\001[[1;2I");
-    WEE_CHECK_EXP_KEY(1, "meta2-5;3~", "meta-pgup", "\001[[5;3~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;3I", "meta-pgup", "\001[[1;3I");
-    WEE_CHECK_EXP_KEY(1, "meta2-5;4~", "meta-shift-pgup", "\001[[5;4~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;4I", "meta-shift-pgup", "\001[[1;4I");
-    WEE_CHECK_EXP_KEY(1, "meta2-5;5~", "ctrl-pgup", "\001[[5;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;5I", "ctrl-pgup", "\001[[1;5I");
-    WEE_CHECK_EXP_KEY(1, "meta2-5;6~", "ctrl-shift-pgup", "\001[[5;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;6I", "ctrl-shift-pgup", "\001[[1;6I");
-    WEE_CHECK_EXP_KEY(1, "meta2-5;7~", "meta-ctrl-pgup", "\001[[5;7~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;7I", "meta-ctrl-pgup", "\001[[1;7I");
-    WEE_CHECK_EXP_KEY(1, "meta2-5;8~", "meta-ctrl-shift-pgup", "\001[[5;8~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;8I", "meta-ctrl-shift-pgup", "\001[[1;8I");
+    WEE_CHECK_EXP_KEY(1, "meta-[5~", "pgup", "\001[[5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[I", "pgup", "\001[[I");
+    WEE_CHECK_EXP_KEY(1, "meta-[5;2~", "shift-pgup", "\001[[5;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;2I", "shift-pgup", "\001[[1;2I");
+    WEE_CHECK_EXP_KEY(1, "meta-[5;3~", "meta-pgup", "\001[[5;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;3I", "meta-pgup", "\001[[1;3I");
+    WEE_CHECK_EXP_KEY(1, "meta-[5;4~", "meta-shift-pgup", "\001[[5;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;4I", "meta-shift-pgup", "\001[[1;4I");
+    WEE_CHECK_EXP_KEY(1, "meta-[5;5~", "ctrl-pgup", "\001[[5;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;5I", "ctrl-pgup", "\001[[1;5I");
+    WEE_CHECK_EXP_KEY(1, "meta-[5;6~", "ctrl-shift-pgup", "\001[[5;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;6I", "ctrl-shift-pgup", "\001[[1;6I");
+    WEE_CHECK_EXP_KEY(1, "meta-[5;7~", "meta-ctrl-pgup", "\001[[5;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;7I", "meta-ctrl-pgup", "\001[[1;7I");
+    WEE_CHECK_EXP_KEY(1, "meta-[5;8~", "meta-ctrl-shift-pgup", "\001[[5;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;8I", "meta-ctrl-shift-pgup", "\001[[1;8I");
 
     /* pgdn */
-    WEE_CHECK_EXP_KEY(1, "meta2-6~", "pgdn", "\001[[6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-G", "pgdn", "\001[[G");
-    WEE_CHECK_EXP_KEY(1, "meta2-6;2~", "shift-pgdn", "\001[[6;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;2G", "shift-pgdn", "\001[[1;2G");
-    WEE_CHECK_EXP_KEY(1, "meta2-6;3~", "meta-pgdn", "\001[[6;3~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;3G", "meta-pgdn", "\001[[1;3G");
-    WEE_CHECK_EXP_KEY(1, "meta2-6;4~", "meta-shift-pgdn", "\001[[6;4~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;4G", "meta-shift-pgdn", "\001[[1;4G");
-    WEE_CHECK_EXP_KEY(1, "meta2-6;5~", "ctrl-pgdn", "\001[[6;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;5G", "ctrl-pgdn", "\001[[1;5G");
-    WEE_CHECK_EXP_KEY(1, "meta2-6;6~", "ctrl-shift-pgdn", "\001[[6;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;6G", "ctrl-shift-pgdn", "\001[[1;6G");
-    WEE_CHECK_EXP_KEY(1, "meta2-6;7~", "meta-ctrl-pgdn", "\001[[6;7~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;7G", "meta-ctrl-pgdn", "\001[[1;7G");
-    WEE_CHECK_EXP_KEY(1, "meta2-6;8~", "meta-ctrl-shift-pgdn", "\001[[6;8~");
-    WEE_CHECK_EXP_KEY(1, "meta2-1;8G", "meta-ctrl-shift-pgdn", "\001[[1;8G");
+    WEE_CHECK_EXP_KEY(1, "meta-[6~", "pgdn", "\001[[6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[G", "pgdn", "\001[[G");
+    WEE_CHECK_EXP_KEY(1, "meta-[6;2~", "shift-pgdn", "\001[[6;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;2G", "shift-pgdn", "\001[[1;2G");
+    WEE_CHECK_EXP_KEY(1, "meta-[6;3~", "meta-pgdn", "\001[[6;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;3G", "meta-pgdn", "\001[[1;3G");
+    WEE_CHECK_EXP_KEY(1, "meta-[6;4~", "meta-shift-pgdn", "\001[[6;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;4G", "meta-shift-pgdn", "\001[[1;4G");
+    WEE_CHECK_EXP_KEY(1, "meta-[6;5~", "ctrl-pgdn", "\001[[6;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;5G", "ctrl-pgdn", "\001[[1;5G");
+    WEE_CHECK_EXP_KEY(1, "meta-[6;6~", "ctrl-shift-pgdn", "\001[[6;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;6G", "ctrl-shift-pgdn", "\001[[1;6G");
+    WEE_CHECK_EXP_KEY(1, "meta-[6;7~", "meta-ctrl-pgdn", "\001[[6;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;7G", "meta-ctrl-pgdn", "\001[[1;7G");
+    WEE_CHECK_EXP_KEY(1, "meta-[6;8~", "meta-ctrl-shift-pgdn", "\001[[6;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-[1;8G", "meta-ctrl-shift-pgdn", "\001[[1;8G");
 
     /* f0 */
-    WEE_CHECK_EXP_KEY(1, "meta2-10~", "f0", "\001[[10~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-10$", "shift-f0", "\001[[10$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-10~", "meta-f0", "\001[\001[[10~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-10$", "meta-shift-f0", "\001[\001[[10$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-10^", "ctrl-f0", "\001[[10^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-10@", "ctrl-shift-f0", "\001[[10@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-10^", "meta-ctrl-f0", "\001[\001[[10^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-10@", "meta-ctrl-shift-f0", "\001[\001[[10@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[10~", "f0", "\001[[10~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[10$", "shift-f0", "\001[[10$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[10~", "meta-f0", "\001[\001[[10~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[10$", "meta-shift-f0", "\001[\001[[10$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[10^", "ctrl-f0", "\001[[10^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[10@", "ctrl-shift-f0", "\001[[10@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[10^", "meta-ctrl-f0", "\001[\001[[10^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[10@", "meta-ctrl-shift-f0", "\001[\001[[10@");  /* urxvt */
 
     /* f1 */
-    WEE_CHECK_EXP_KEY(1, "meta2-P", "f1", "\001[OP");
-    WEE_CHECK_EXP_KEY(1, "meta2-11~", "f1", "\001[[11~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-[A", "f1", "\001[[[A");  /* Linux console */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;2P", "shift-f1", "\001[[1;2P");
-    WEE_CHECK_EXP_KEY(1, "meta2-11$", "shift-f1", "\001[[11$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;3P", "meta-f1", "\001[[1;3P");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-11~", "meta-f1", "\001[\001[[11~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;4P", "meta-shift-f1", "\001[[1;4P");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-11$", "meta-shift-f1", "\001[\001[[11$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;5P", "ctrl-f1", "\001[[1;5P");
-    WEE_CHECK_EXP_KEY(1, "meta2-11^", "ctrl-f1", "\001[[11^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;6P", "ctrl-shift-f1", "\001[[1;6P");
-    WEE_CHECK_EXP_KEY(1, "meta2-11@", "ctrl-shift-f1", "\001[[11@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;7P", "meta-ctrl-f1", "\001[[1;7P");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-11^", "meta-ctrl-f1", "\001[\001[[11^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;8P", "meta-ctrl-shift-f1", "\001[[1;8P");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-11@", "meta-ctrl-shift-f1", "\001[\001[[11@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-OP", "f1", "\001[OP");
+    WEE_CHECK_EXP_KEY(1, "meta-[11~", "f1", "\001[[11~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[[A", "f1", "\001[[[A");  /* Linux console */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;2P", "shift-f1", "\001[[1;2P");
+    WEE_CHECK_EXP_KEY(1, "meta-[11$", "shift-f1", "\001[[11$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;3P", "meta-f1", "\001[[1;3P");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[11~", "meta-f1", "\001[\001[[11~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;4P", "meta-shift-f1", "\001[[1;4P");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[11$", "meta-shift-f1", "\001[\001[[11$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;5P", "ctrl-f1", "\001[[1;5P");
+    WEE_CHECK_EXP_KEY(1, "meta-[11^", "ctrl-f1", "\001[[11^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;6P", "ctrl-shift-f1", "\001[[1;6P");
+    WEE_CHECK_EXP_KEY(1, "meta-[11@", "ctrl-shift-f1", "\001[[11@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;7P", "meta-ctrl-f1", "\001[[1;7P");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[11^", "meta-ctrl-f1", "\001[\001[[11^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;8P", "meta-ctrl-shift-f1", "\001[[1;8P");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[11@", "meta-ctrl-shift-f1", "\001[\001[[11@");  /* urxvt */
 
     /* f2 */
-    WEE_CHECK_EXP_KEY(1, "meta2-Q", "f2", "\001[OQ");
-    WEE_CHECK_EXP_KEY(1, "meta2-12~", "f2", "\001[[12~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-[B", "f2", "\001[[[B");  /* Linux console */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;2Q", "shift-f2", "\001[[1;2Q");
-    WEE_CHECK_EXP_KEY(1, "meta2-12$", "shift-f2", "\001[[12$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;3Q", "meta-f2", "\001[[1;3Q");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-12~", "meta-f2", "\001[\001[[12~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;4Q", "meta-shift-f2", "\001[[1;4Q");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-12$", "meta-shift-f2", "\001[\001[[12$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;5Q", "ctrl-f2", "\001[[1;5Q");
-    WEE_CHECK_EXP_KEY(1, "meta2-12^", "ctrl-f2", "\001[[12^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;6Q", "ctrl-shift-f2", "\001[[1;6Q");
-    WEE_CHECK_EXP_KEY(1, "meta2-12@", "ctrl-shift-f2", "\001[[12@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;7Q", "meta-ctrl-f2", "\001[[1;7Q");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-12^", "meta-ctrl-f2", "\001[\001[[12^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;8Q", "meta-ctrl-shift-f2", "\001[[1;8Q");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-12@", "meta-ctrl-shift-f2", "\001[\001[[12@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-OQ", "f2", "\001[OQ");
+    WEE_CHECK_EXP_KEY(1, "meta-[12~", "f2", "\001[[12~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[[B", "f2", "\001[[[B");  /* Linux console */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;2Q", "shift-f2", "\001[[1;2Q");
+    WEE_CHECK_EXP_KEY(1, "meta-[12$", "shift-f2", "\001[[12$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;3Q", "meta-f2", "\001[[1;3Q");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[12~", "meta-f2", "\001[\001[[12~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;4Q", "meta-shift-f2", "\001[[1;4Q");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[12$", "meta-shift-f2", "\001[\001[[12$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;5Q", "ctrl-f2", "\001[[1;5Q");
+    WEE_CHECK_EXP_KEY(1, "meta-[12^", "ctrl-f2", "\001[[12^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;6Q", "ctrl-shift-f2", "\001[[1;6Q");
+    WEE_CHECK_EXP_KEY(1, "meta-[12@", "ctrl-shift-f2", "\001[[12@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;7Q", "meta-ctrl-f2", "\001[[1;7Q");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[12^", "meta-ctrl-f2", "\001[\001[[12^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;8Q", "meta-ctrl-shift-f2", "\001[[1;8Q");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[12@", "meta-ctrl-shift-f2", "\001[\001[[12@");  /* urxvt */
 
     /* f3 */
-    WEE_CHECK_EXP_KEY(1, "meta2-R", "f3", "\001[OR");
-    WEE_CHECK_EXP_KEY(1, "meta2-13~", "f3", "\001[[13~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-[C", "f3", "\001[[[C");  /* Linux console */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;2R", "shift-f3", "\001[[1;2R");
-    WEE_CHECK_EXP_KEY(1, "meta2-13$", "shift-f3", "\001[[13$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;3R", "meta-f3", "\001[[1;3R");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-13~", "meta-f3", "\001[\001[[13~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;4R", "meta-shift-f3", "\001[[1;4R");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-13$", "meta-shift-f3", "\001[\001[[13$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;5R", "ctrl-f3", "\001[[1;5R");
-    WEE_CHECK_EXP_KEY(1, "meta2-13^", "ctrl-f3", "\001[[13^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;6R", "ctrl-shift-f3", "\001[[1;6R");
-    WEE_CHECK_EXP_KEY(1, "meta2-13@", "ctrl-shift-f3", "\001[[13@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;7R", "meta-ctrl-f3", "\001[[1;7R");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-13^", "meta-ctrl-f3", "\001[\001[[13^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;8R", "meta-ctrl-shift-f3", "\001[[1;8R");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-13@", "meta-ctrl-shift-f3", "\001[\001[[13@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-OR", "f3", "\001[OR");
+    WEE_CHECK_EXP_KEY(1, "meta-[13~", "f3", "\001[[13~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[[C", "f3", "\001[[[C");  /* Linux console */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;2R", "shift-f3", "\001[[1;2R");
+    WEE_CHECK_EXP_KEY(1, "meta-[13$", "shift-f3", "\001[[13$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;3R", "meta-f3", "\001[[1;3R");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[13~", "meta-f3", "\001[\001[[13~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;4R", "meta-shift-f3", "\001[[1;4R");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[13$", "meta-shift-f3", "\001[\001[[13$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;5R", "ctrl-f3", "\001[[1;5R");
+    WEE_CHECK_EXP_KEY(1, "meta-[13^", "ctrl-f3", "\001[[13^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;6R", "ctrl-shift-f3", "\001[[1;6R");
+    WEE_CHECK_EXP_KEY(1, "meta-[13@", "ctrl-shift-f3", "\001[[13@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;7R", "meta-ctrl-f3", "\001[[1;7R");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[13^", "meta-ctrl-f3", "\001[\001[[13^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;8R", "meta-ctrl-shift-f3", "\001[[1;8R");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[13@", "meta-ctrl-shift-f3", "\001[\001[[13@");  /* urxvt */
 
     /* f4 */
-    WEE_CHECK_EXP_KEY(1, "meta2-S", "f4", "\001[OS");
-    WEE_CHECK_EXP_KEY(1, "meta2-14~", "f4", "\001[[14~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-[D", "f4", "\001[[[D");  /* Linux console */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;2S", "shift-f4", "\001[[1;2S");
-    WEE_CHECK_EXP_KEY(1, "meta2-14$", "shift-f4", "\001[[14$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;3S", "meta-f4", "\001[[1;3S");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-14~", "meta-f4", "\001[\001[[14~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;4S", "meta-shift-f4", "\001[[1;4S");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-14$", "meta-shift-f4", "\001[\001[[14$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;5S", "ctrl-f4", "\001[[1;5S");
-    WEE_CHECK_EXP_KEY(1, "meta2-14^", "ctrl-f4", "\001[[14^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;6S", "ctrl-shift-f4", "\001[[1;6S");
-    WEE_CHECK_EXP_KEY(1, "meta2-14@", "ctrl-shift-f4", "\001[[14@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;7S", "meta-ctrl-f4", "\001[[1;7S");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-14^", "meta-ctrl-f4", "\001[\001[[14^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-1;8S", "meta-ctrl-shift-f4", "\001[[1;8S");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-14@", "meta-ctrl-shift-f4", "\001[\001[[14@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-OS", "f4", "\001[OS");
+    WEE_CHECK_EXP_KEY(1, "meta-[14~", "f4", "\001[[14~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[[D", "f4", "\001[[[D");  /* Linux console */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;2S", "shift-f4", "\001[[1;2S");
+    WEE_CHECK_EXP_KEY(1, "meta-[14$", "shift-f4", "\001[[14$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;3S", "meta-f4", "\001[[1;3S");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[14~", "meta-f4", "\001[\001[[14~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;4S", "meta-shift-f4", "\001[[1;4S");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[14$", "meta-shift-f4", "\001[\001[[14$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;5S", "ctrl-f4", "\001[[1;5S");
+    WEE_CHECK_EXP_KEY(1, "meta-[14^", "ctrl-f4", "\001[[14^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;6S", "ctrl-shift-f4", "\001[[1;6S");
+    WEE_CHECK_EXP_KEY(1, "meta-[14@", "ctrl-shift-f4", "\001[[14@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;7S", "meta-ctrl-f4", "\001[[1;7S");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[14^", "meta-ctrl-f4", "\001[\001[[14^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[1;8S", "meta-ctrl-shift-f4", "\001[[1;8S");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[14@", "meta-ctrl-shift-f4", "\001[\001[[14@");  /* urxvt */
 
     /* f5 */
-    WEE_CHECK_EXP_KEY(1, "meta2-15~", "f5", "\001[[15~");
-    WEE_CHECK_EXP_KEY(1, "meta2-[E", "f5", "\001[[[E");  /* Linux console */
-    WEE_CHECK_EXP_KEY(1, "meta2-15;2~", "shift-f5", "\001[[15;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-15$", "shift-f5", "\001[[15$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-15;3~", "meta-f5", "\001[[15;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-15~", "meta-f5", "\001[\001[[15~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-15;4~", "meta-shift-f5", "\001[[15;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-15$", "meta-shift-f5", "\001[\001[[15$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-15;5~", "ctrl-f5", "\001[[15;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-15^", "ctrl-f5", "\001[[15^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-15;6~", "ctrl-shift-f5", "\001[[15;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-15@", "ctrl-shift-f5", "\001[[15@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-15;7~", "meta-ctrl-f5", "\001[[15;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-15^", "meta-ctrl-f5", "\001[\001[[15^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-15;8~", "meta-ctrl-shift-f5", "\001[[15;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-15@", "meta-ctrl-shift-f5", "\001[\001[[15@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[15~", "f5", "\001[[15~");
+    WEE_CHECK_EXP_KEY(1, "meta-[[E", "f5", "\001[[[E");  /* Linux console */
+    WEE_CHECK_EXP_KEY(1, "meta-[15;2~", "shift-f5", "\001[[15;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[15$", "shift-f5", "\001[[15$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[15;3~", "meta-f5", "\001[[15;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[15~", "meta-f5", "\001[\001[[15~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[15;4~", "meta-shift-f5", "\001[[15;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[15$", "meta-shift-f5", "\001[\001[[15$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[15;5~", "ctrl-f5", "\001[[15;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[15^", "ctrl-f5", "\001[[15^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[15;6~", "ctrl-shift-f5", "\001[[15;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[15@", "ctrl-shift-f5", "\001[[15@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[15;7~", "meta-ctrl-f5", "\001[[15;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[15^", "meta-ctrl-f5", "\001[\001[[15^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[15;8~", "meta-ctrl-shift-f5", "\001[[15;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[15@", "meta-ctrl-shift-f5", "\001[\001[[15@");  /* urxvt */
 
     /* f6 */
-    WEE_CHECK_EXP_KEY(1, "meta2-17~", "f6", "\001[[17~");
-    WEE_CHECK_EXP_KEY(1, "meta2-17;2~", "shift-f6", "\001[[17;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-17$", "shift-f6", "\001[[17$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-17;3~", "meta-f6", "\001[[17;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-17~", "meta-f6", "\001[\001[[17~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-17;4~", "meta-shift-f6", "\001[[17;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-17$", "meta-shift-f6", "\001[\001[[17$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-17;5~", "ctrl-f6", "\001[[17;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-17^", "ctrl-f6", "\001[[17^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-17;6~", "ctrl-shift-f6", "\001[[17;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-17@", "ctrl-shift-f6", "\001[[17@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-17;7~", "meta-ctrl-f6", "\001[[17;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-17^", "meta-ctrl-f6", "\001[\001[[17^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-17;8~", "meta-ctrl-shift-f6", "\001[[17;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-17@", "meta-ctrl-shift-f6", "\001[\001[[17@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[17~", "f6", "\001[[17~");
+    WEE_CHECK_EXP_KEY(1, "meta-[17;2~", "shift-f6", "\001[[17;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[17$", "shift-f6", "\001[[17$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[17;3~", "meta-f6", "\001[[17;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[17~", "meta-f6", "\001[\001[[17~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[17;4~", "meta-shift-f6", "\001[[17;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[17$", "meta-shift-f6", "\001[\001[[17$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[17;5~", "ctrl-f6", "\001[[17;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[17^", "ctrl-f6", "\001[[17^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[17;6~", "ctrl-shift-f6", "\001[[17;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[17@", "ctrl-shift-f6", "\001[[17@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[17;7~", "meta-ctrl-f6", "\001[[17;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[17^", "meta-ctrl-f6", "\001[\001[[17^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[17;8~", "meta-ctrl-shift-f6", "\001[[17;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[17@", "meta-ctrl-shift-f6", "\001[\001[[17@");  /* urxvt */
 
     /* f7 */
-    WEE_CHECK_EXP_KEY(1, "meta2-18~", "f7", "\001[[18~");
-    WEE_CHECK_EXP_KEY(1, "meta2-18;2~", "shift-f7", "\001[[18;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-18$", "shift-f7", "\001[[18$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-18;3~", "meta-f7", "\001[[18;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-18~", "meta-f7", "\001[\001[[18~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-18;4~", "meta-shift-f7", "\001[[18;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-18$", "meta-shift-f7", "\001[\001[[18$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-18;5~", "ctrl-f7", "\001[[18;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-18^", "ctrl-f7", "\001[[18^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-18;6~", "ctrl-shift-f7", "\001[[18;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-18@", "ctrl-shift-f7", "\001[[18@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-18;7~", "meta-ctrl-f7", "\001[[18;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-18^", "meta-ctrl-f7", "\001[\001[[18^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-18;8~", "meta-ctrl-shift-f7", "\001[[18;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-18@", "meta-ctrl-shift-f7", "\001[\001[[18@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[18~", "f7", "\001[[18~");
+    WEE_CHECK_EXP_KEY(1, "meta-[18;2~", "shift-f7", "\001[[18;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[18$", "shift-f7", "\001[[18$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[18;3~", "meta-f7", "\001[[18;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[18~", "meta-f7", "\001[\001[[18~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[18;4~", "meta-shift-f7", "\001[[18;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[18$", "meta-shift-f7", "\001[\001[[18$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[18;5~", "ctrl-f7", "\001[[18;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[18^", "ctrl-f7", "\001[[18^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[18;6~", "ctrl-shift-f7", "\001[[18;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[18@", "ctrl-shift-f7", "\001[[18@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[18;7~", "meta-ctrl-f7", "\001[[18;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[18^", "meta-ctrl-f7", "\001[\001[[18^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[18;8~", "meta-ctrl-shift-f7", "\001[[18;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[18@", "meta-ctrl-shift-f7", "\001[\001[[18@");  /* urxvt */
 
     /* f8 */
-    WEE_CHECK_EXP_KEY(1, "meta2-19~", "f8", "\001[[19~");
-    WEE_CHECK_EXP_KEY(1, "meta2-19;2~", "shift-f8", "\001[[19;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-19$", "shift-f8", "\001[[19$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-19;3~", "meta-f8", "\001[[19;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-19~", "meta-f8", "\001[\001[[19~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-19;4~", "meta-shift-f8", "\001[[19;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-19$", "meta-shift-f8", "\001[\001[[19$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-19;5~", "ctrl-f8", "\001[[19;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-19^", "ctrl-f8", "\001[[19^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-19;6~", "ctrl-shift-f8", "\001[[19;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-19@", "ctrl-shift-f8", "\001[[19@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-19;7~", "meta-ctrl-f8", "\001[[19;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-19^", "meta-ctrl-f8", "\001[\001[[19^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-19;8~", "meta-ctrl-shift-f8", "\001[[19;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-19@", "meta-ctrl-shift-f8", "\001[\001[[19@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[19~", "f8", "\001[[19~");
+    WEE_CHECK_EXP_KEY(1, "meta-[19;2~", "shift-f8", "\001[[19;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[19$", "shift-f8", "\001[[19$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[19;3~", "meta-f8", "\001[[19;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[19~", "meta-f8", "\001[\001[[19~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[19;4~", "meta-shift-f8", "\001[[19;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[19$", "meta-shift-f8", "\001[\001[[19$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[19;5~", "ctrl-f8", "\001[[19;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[19^", "ctrl-f8", "\001[[19^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[19;6~", "ctrl-shift-f8", "\001[[19;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[19@", "ctrl-shift-f8", "\001[[19@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[19;7~", "meta-ctrl-f8", "\001[[19;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[19^", "meta-ctrl-f8", "\001[\001[[19^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[19;8~", "meta-ctrl-shift-f8", "\001[[19;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[19@", "meta-ctrl-shift-f8", "\001[\001[[19@");  /* urxvt */
 
     /* f9 */
-    WEE_CHECK_EXP_KEY(1, "meta2-20~", "f9", "\001[[20~");
-    WEE_CHECK_EXP_KEY(1, "meta2-20;2~", "shift-f9", "\001[[20;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-20$", "shift-f9", "\001[[20$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-20;3~", "meta-f9", "\001[[20;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-20~", "meta-f9", "\001[\001[[20~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-20;4~", "meta-shift-f9", "\001[[20;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-20$", "meta-shift-f9", "\001[\001[[20$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-20;5~", "ctrl-f9", "\001[[20;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-20^", "ctrl-f9", "\001[[20^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-20;6~", "ctrl-shift-f9", "\001[[20;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-20@", "ctrl-shift-f9", "\001[[20@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-20;7~", "meta-ctrl-f9", "\001[[20;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-20^", "meta-ctrl-f9", "\001[\001[[20^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-20;8~", "meta-ctrl-shift-f9", "\001[[20;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-20@", "meta-ctrl-shift-f9", "\001[\001[[20@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[20~", "f9", "\001[[20~");
+    WEE_CHECK_EXP_KEY(1, "meta-[20;2~", "shift-f9", "\001[[20;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[20$", "shift-f9", "\001[[20$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[20;3~", "meta-f9", "\001[[20;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[20~", "meta-f9", "\001[\001[[20~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[20;4~", "meta-shift-f9", "\001[[20;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[20$", "meta-shift-f9", "\001[\001[[20$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[20;5~", "ctrl-f9", "\001[[20;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[20^", "ctrl-f9", "\001[[20^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[20;6~", "ctrl-shift-f9", "\001[[20;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[20@", "ctrl-shift-f9", "\001[[20@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[20;7~", "meta-ctrl-f9", "\001[[20;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[20^", "meta-ctrl-f9", "\001[\001[[20^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[20;8~", "meta-ctrl-shift-f9", "\001[[20;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[20@", "meta-ctrl-shift-f9", "\001[\001[[20@");  /* urxvt */
 
     /* f10 */
-    WEE_CHECK_EXP_KEY(1, "meta2-21~", "f10", "\001[[21~");
-    WEE_CHECK_EXP_KEY(1, "meta2-21;2~", "shift-f10", "\001[[21;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-21$", "shift-f10", "\001[[21$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-21;3~", "meta-f10", "\001[[21;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-21~", "meta-f10", "\001[\001[[21~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-21;4~", "meta-shift-f10", "\001[[21;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-21$", "meta-shift-f10", "\001[\001[[21$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-21;5~", "ctrl-f10", "\001[[21;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-21^", "ctrl-f10", "\001[[21^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-21;6~", "ctrl-shift-f10", "\001[[21;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-21@", "ctrl-shift-f10", "\001[[21@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-21;7~", "meta-ctrl-f10", "\001[[21;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-21^", "meta-ctrl-f10", "\001[\001[[21^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-21;8~", "meta-ctrl-shift-f10", "\001[[21;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-21@", "meta-ctrl-shift-f10", "\001[\001[[21@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[21~", "f10", "\001[[21~");
+    WEE_CHECK_EXP_KEY(1, "meta-[21;2~", "shift-f10", "\001[[21;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[21$", "shift-f10", "\001[[21$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[21;3~", "meta-f10", "\001[[21;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[21~", "meta-f10", "\001[\001[[21~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[21;4~", "meta-shift-f10", "\001[[21;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[21$", "meta-shift-f10", "\001[\001[[21$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[21;5~", "ctrl-f10", "\001[[21;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[21^", "ctrl-f10", "\001[[21^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[21;6~", "ctrl-shift-f10", "\001[[21;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[21@", "ctrl-shift-f10", "\001[[21@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[21;7~", "meta-ctrl-f10", "\001[[21;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[21^", "meta-ctrl-f10", "\001[\001[[21^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[21;8~", "meta-ctrl-shift-f10", "\001[[21;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[21@", "meta-ctrl-shift-f10", "\001[\001[[21@");  /* urxvt */
 
     /* f11 */
-    WEE_CHECK_EXP_KEY(1, "meta2-23~", "f11", "\001[[23~");
-    WEE_CHECK_EXP_KEY(1, "meta2-23;2~", "shift-f11", "\001[[23;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-23$", "shift-f11", "\001[[23$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-23;3~", "meta-f11", "\001[[23;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-23~", "meta-f11", "\001[\001[[23~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-23;4~", "meta-shift-f11", "\001[[23;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-23$", "meta-shift-f11", "\001[\001[[23$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-23;5~", "ctrl-f11", "\001[[23;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-23^", "ctrl-f11", "\001[[23^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-23;6~", "ctrl-shift-f11", "\001[[23;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-23@", "ctrl-shift-f11", "\001[[23@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-23;7~", "meta-ctrl-f11", "\001[[23;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-23^", "meta-ctrl-f11", "\001[\001[[23^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-23;8~", "meta-ctrl-shift-f11", "\001[[23;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-23@", "meta-ctrl-shift-f11", "\001[\001[[23@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[23~", "f11", "\001[[23~");
+    WEE_CHECK_EXP_KEY(1, "meta-[23;2~", "shift-f11", "\001[[23;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[23$", "shift-f11", "\001[[23$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[23;3~", "meta-f11", "\001[[23;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[23~", "meta-f11", "\001[\001[[23~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[23;4~", "meta-shift-f11", "\001[[23;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[23$", "meta-shift-f11", "\001[\001[[23$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[23;5~", "ctrl-f11", "\001[[23;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[23^", "ctrl-f11", "\001[[23^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[23;6~", "ctrl-shift-f11", "\001[[23;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[23@", "ctrl-shift-f11", "\001[[23@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[23;7~", "meta-ctrl-f11", "\001[[23;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[23^", "meta-ctrl-f11", "\001[\001[[23^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[23;8~", "meta-ctrl-shift-f11", "\001[[23;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[23@", "meta-ctrl-shift-f11", "\001[\001[[23@");  /* urxvt */
 
     /* f12 */
-    WEE_CHECK_EXP_KEY(1, "meta2-24~", "f12", "\001[[24~");
-    WEE_CHECK_EXP_KEY(1, "meta2-24;2~", "shift-f12", "\001[[24;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-24$", "shift-f12", "\001[[24$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-24;3~", "meta-f12", "\001[[24;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-24~", "meta-f12", "\001[\001[[24~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-24;4~", "meta-shift-f12", "\001[[24;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-24$", "meta-shift-f12", "\001[\001[[24$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-24;5~", "ctrl-f12", "\001[[24;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-24^", "ctrl-f12", "\001[[24^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-24;6~", "ctrl-shift-f12", "\001[[24;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-24@", "ctrl-shift-f12", "\001[[24@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-24;7~", "meta-ctrl-f12", "\001[[24;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-24^", "meta-ctrl-f12", "\001[\001[[24^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-24;8~", "meta-ctrl-shift-f12", "\001[[24;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-24@", "meta-ctrl-shift-f12", "\001[\001[[24@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[24~", "f12", "\001[[24~");
+    WEE_CHECK_EXP_KEY(1, "meta-[24;2~", "shift-f12", "\001[[24;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[24$", "shift-f12", "\001[[24$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[24;3~", "meta-f12", "\001[[24;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[24~", "meta-f12", "\001[\001[[24~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[24;4~", "meta-shift-f12", "\001[[24;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[24$", "meta-shift-f12", "\001[\001[[24$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[24;5~", "ctrl-f12", "\001[[24;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[24^", "ctrl-f12", "\001[[24^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[24;6~", "ctrl-shift-f12", "\001[[24;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[24@", "ctrl-shift-f12", "\001[[24@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[24;7~", "meta-ctrl-f12", "\001[[24;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[24^", "meta-ctrl-f12", "\001[\001[[24^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[24;8~", "meta-ctrl-shift-f12", "\001[[24;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[24@", "meta-ctrl-shift-f12", "\001[\001[[24@");  /* urxvt */
 
     /* f13 */
-    WEE_CHECK_EXP_KEY(1, "meta2-25~", "f13", "\001[[25~");
-    WEE_CHECK_EXP_KEY(1, "meta2-25;2~", "shift-f13", "\001[[25;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-25$", "shift-f13", "\001[[25$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-25;3~", "meta-f13", "\001[[25;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-25~", "meta-f13", "\001[\001[[25~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-25;4~", "meta-shift-f13", "\001[[25;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-25$", "meta-shift-f13", "\001[\001[[25$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-25;5~", "ctrl-f13", "\001[[25;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-25^", "ctrl-f13", "\001[[25^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-25;6~", "ctrl-shift-f13", "\001[[25;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-25@", "ctrl-shift-f13", "\001[[25@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-25;7~", "meta-ctrl-f13", "\001[[25;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-25^", "meta-ctrl-f13", "\001[\001[[25^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-25;8~", "meta-ctrl-shift-f13", "\001[[25;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-25@", "meta-ctrl-shift-f13", "\001[\001[[25@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[25~", "f13", "\001[[25~");
+    WEE_CHECK_EXP_KEY(1, "meta-[25;2~", "shift-f13", "\001[[25;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[25$", "shift-f13", "\001[[25$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[25;3~", "meta-f13", "\001[[25;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[25~", "meta-f13", "\001[\001[[25~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[25;4~", "meta-shift-f13", "\001[[25;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[25$", "meta-shift-f13", "\001[\001[[25$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[25;5~", "ctrl-f13", "\001[[25;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[25^", "ctrl-f13", "\001[[25^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[25;6~", "ctrl-shift-f13", "\001[[25;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[25@", "ctrl-shift-f13", "\001[[25@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[25;7~", "meta-ctrl-f13", "\001[[25;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[25^", "meta-ctrl-f13", "\001[\001[[25^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[25;8~", "meta-ctrl-shift-f13", "\001[[25;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[25@", "meta-ctrl-shift-f13", "\001[\001[[25@");  /* urxvt */
 
     /* f14 */
-    WEE_CHECK_EXP_KEY(1, "meta2-26~", "f14", "\001[[26~");
-    WEE_CHECK_EXP_KEY(1, "meta2-26;2~", "shift-f14", "\001[[26;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-26$", "shift-f14", "\001[[26$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-26;3~", "meta-f14", "\001[[26;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-26~", "meta-f14", "\001[\001[[26~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-26;4~", "meta-shift-f14", "\001[[26;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-26$", "meta-shift-f14", "\001[\001[[26$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-26;5~", "ctrl-f14", "\001[[26;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-26^", "ctrl-f14", "\001[[26^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-26;6~", "ctrl-shift-f14", "\001[[26;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-26@", "ctrl-shift-f14", "\001[[26@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-26;7~", "meta-ctrl-f14", "\001[[26;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-26^", "meta-ctrl-f14", "\001[\001[[26^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-26;8~", "meta-ctrl-shift-f14", "\001[[26;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-26@", "meta-ctrl-shift-f14", "\001[\001[[26@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[26~", "f14", "\001[[26~");
+    WEE_CHECK_EXP_KEY(1, "meta-[26;2~", "shift-f14", "\001[[26;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[26$", "shift-f14", "\001[[26$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[26;3~", "meta-f14", "\001[[26;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[26~", "meta-f14", "\001[\001[[26~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[26;4~", "meta-shift-f14", "\001[[26;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[26$", "meta-shift-f14", "\001[\001[[26$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[26;5~", "ctrl-f14", "\001[[26;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[26^", "ctrl-f14", "\001[[26^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[26;6~", "ctrl-shift-f14", "\001[[26;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[26@", "ctrl-shift-f14", "\001[[26@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[26;7~", "meta-ctrl-f14", "\001[[26;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[26^", "meta-ctrl-f14", "\001[\001[[26^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[26;8~", "meta-ctrl-shift-f14", "\001[[26;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[26@", "meta-ctrl-shift-f14", "\001[\001[[26@");  /* urxvt */
 
     /* f15 */
-    WEE_CHECK_EXP_KEY(1, "meta2-28~", "f15", "\001[[28~");
-    WEE_CHECK_EXP_KEY(1, "meta2-28;2~", "shift-f15", "\001[[28;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-28$", "shift-f15", "\001[[28$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-28;3~", "meta-f15", "\001[[28;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-28~", "meta-f15", "\001[\001[[28~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-28;4~", "meta-shift-f15", "\001[[28;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-28$", "meta-shift-f15", "\001[\001[[28$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-28;5~", "ctrl-f15", "\001[[28;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-28^", "ctrl-f15", "\001[[28^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-28;6~", "ctrl-shift-f15", "\001[[28;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-28@", "ctrl-shift-f15", "\001[[28@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-28;7~", "meta-ctrl-f15", "\001[[28;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-28^", "meta-ctrl-f15", "\001[\001[[28^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-28;8~", "meta-ctrl-shift-f15", "\001[[28;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-28@", "meta-ctrl-shift-f15", "\001[\001[[28@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[28~", "f15", "\001[[28~");
+    WEE_CHECK_EXP_KEY(1, "meta-[28;2~", "shift-f15", "\001[[28;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[28$", "shift-f15", "\001[[28$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[28;3~", "meta-f15", "\001[[28;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[28~", "meta-f15", "\001[\001[[28~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[28;4~", "meta-shift-f15", "\001[[28;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[28$", "meta-shift-f15", "\001[\001[[28$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[28;5~", "ctrl-f15", "\001[[28;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[28^", "ctrl-f15", "\001[[28^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[28;6~", "ctrl-shift-f15", "\001[[28;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[28@", "ctrl-shift-f15", "\001[[28@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[28;7~", "meta-ctrl-f15", "\001[[28;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[28^", "meta-ctrl-f15", "\001[\001[[28^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[28;8~", "meta-ctrl-shift-f15", "\001[[28;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[28@", "meta-ctrl-shift-f15", "\001[\001[[28@");  /* urxvt */
 
     /* f16 */
-    WEE_CHECK_EXP_KEY(1, "meta2-29~", "f16", "\001[[29~");
-    WEE_CHECK_EXP_KEY(1, "meta2-29;2~", "shift-f16", "\001[[29;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-29$", "shift-f16", "\001[[29$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-29;3~", "meta-f16", "\001[[29;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-29~", "meta-f16", "\001[\001[[29~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-29;4~", "meta-shift-f16", "\001[[29;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-29$", "meta-shift-f16", "\001[\001[[29$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-29;5~", "ctrl-f16", "\001[[29;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-29^", "ctrl-f16", "\001[[29^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-29;6~", "ctrl-shift-f16", "\001[[29;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-29@", "ctrl-shift-f16", "\001[[29@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-29;7~", "meta-ctrl-f16", "\001[[29;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-29^", "meta-ctrl-f16", "\001[\001[[29^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-29;8~", "meta-ctrl-shift-f16", "\001[[29;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-29@", "meta-ctrl-shift-f16", "\001[\001[[29@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[29~", "f16", "\001[[29~");
+    WEE_CHECK_EXP_KEY(1, "meta-[29;2~", "shift-f16", "\001[[29;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[29$", "shift-f16", "\001[[29$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[29;3~", "meta-f16", "\001[[29;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[29~", "meta-f16", "\001[\001[[29~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[29;4~", "meta-shift-f16", "\001[[29;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[29$", "meta-shift-f16", "\001[\001[[29$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[29;5~", "ctrl-f16", "\001[[29;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[29^", "ctrl-f16", "\001[[29^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[29;6~", "ctrl-shift-f16", "\001[[29;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[29@", "ctrl-shift-f16", "\001[[29@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[29;7~", "meta-ctrl-f16", "\001[[29;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[29^", "meta-ctrl-f16", "\001[\001[[29^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[29;8~", "meta-ctrl-shift-f16", "\001[[29;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[29@", "meta-ctrl-shift-f16", "\001[\001[[29@");  /* urxvt */
 
     /* f17 */
-    WEE_CHECK_EXP_KEY(1, "meta2-31~", "f17", "\001[[31~");
-    WEE_CHECK_EXP_KEY(1, "meta2-31;2~", "shift-f17", "\001[[31;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-31$", "shift-f17", "\001[[31$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-31;3~", "meta-f17", "\001[[31;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-31~", "meta-f17", "\001[\001[[31~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-31;4~", "meta-shift-f17", "\001[[31;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-31$", "meta-shift-f17", "\001[\001[[31$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-31;5~", "ctrl-f17", "\001[[31;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-31^", "ctrl-f17", "\001[[31^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-31;6~", "ctrl-shift-f17", "\001[[31;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-31@", "ctrl-shift-f17", "\001[[31@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-31;7~", "meta-ctrl-f17", "\001[[31;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-31^", "meta-ctrl-f17", "\001[\001[[31^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-31;8~", "meta-ctrl-shift-f17", "\001[[31;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-31@", "meta-ctrl-shift-f17", "\001[\001[[31@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[31~", "f17", "\001[[31~");
+    WEE_CHECK_EXP_KEY(1, "meta-[31;2~", "shift-f17", "\001[[31;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[31$", "shift-f17", "\001[[31$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[31;3~", "meta-f17", "\001[[31;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[31~", "meta-f17", "\001[\001[[31~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[31;4~", "meta-shift-f17", "\001[[31;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[31$", "meta-shift-f17", "\001[\001[[31$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[31;5~", "ctrl-f17", "\001[[31;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[31^", "ctrl-f17", "\001[[31^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[31;6~", "ctrl-shift-f17", "\001[[31;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[31@", "ctrl-shift-f17", "\001[[31@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[31;7~", "meta-ctrl-f17", "\001[[31;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[31^", "meta-ctrl-f17", "\001[\001[[31^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[31;8~", "meta-ctrl-shift-f17", "\001[[31;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[31@", "meta-ctrl-shift-f17", "\001[\001[[31@");  /* urxvt */
 
     /* f18 */
-    WEE_CHECK_EXP_KEY(1, "meta2-32~", "f18", "\001[[32~");
-    WEE_CHECK_EXP_KEY(1, "meta2-32;2~", "shift-f18", "\001[[32;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-32$", "shift-f18", "\001[[32$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-32;3~", "meta-f18", "\001[[32;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-32~", "meta-f18", "\001[\001[[32~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-32;4~", "meta-shift-f18", "\001[[32;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-32$", "meta-shift-f18", "\001[\001[[32$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-32;5~", "ctrl-f18", "\001[[32;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-32^", "ctrl-f18", "\001[[32^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-32;6~", "ctrl-shift-f18", "\001[[32;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-32@", "ctrl-shift-f18", "\001[[32@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-32;7~", "meta-ctrl-f18", "\001[[32;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-32^", "meta-ctrl-f18", "\001[\001[[32^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-32;8~", "meta-ctrl-shift-f18", "\001[[32;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-32@", "meta-ctrl-shift-f18", "\001[\001[[32@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[32~", "f18", "\001[[32~");
+    WEE_CHECK_EXP_KEY(1, "meta-[32;2~", "shift-f18", "\001[[32;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[32$", "shift-f18", "\001[[32$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[32;3~", "meta-f18", "\001[[32;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[32~", "meta-f18", "\001[\001[[32~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[32;4~", "meta-shift-f18", "\001[[32;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[32$", "meta-shift-f18", "\001[\001[[32$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[32;5~", "ctrl-f18", "\001[[32;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[32^", "ctrl-f18", "\001[[32^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[32;6~", "ctrl-shift-f18", "\001[[32;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[32@", "ctrl-shift-f18", "\001[[32@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[32;7~", "meta-ctrl-f18", "\001[[32;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[32^", "meta-ctrl-f18", "\001[\001[[32^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[32;8~", "meta-ctrl-shift-f18", "\001[[32;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[32@", "meta-ctrl-shift-f18", "\001[\001[[32@");  /* urxvt */
 
     /* f19 */
-    WEE_CHECK_EXP_KEY(1, "meta2-33~", "f19", "\001[[33~");
-    WEE_CHECK_EXP_KEY(1, "meta2-33;2~", "shift-f19", "\001[[33;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-33$", "shift-f19", "\001[[33$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-33;3~", "meta-f19", "\001[[33;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-33~", "meta-f19", "\001[\001[[33~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-33;4~", "meta-shift-f19", "\001[[33;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-33$", "meta-shift-f19", "\001[\001[[33$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-33;5~", "ctrl-f19", "\001[[33;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-33^", "ctrl-f19", "\001[[33^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-33;6~", "ctrl-shift-f19", "\001[[33;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-33@", "ctrl-shift-f19", "\001[[33@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-33;7~", "meta-ctrl-f19", "\001[[33;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-33^", "meta-ctrl-f19", "\001[\001[[33^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-33;8~", "meta-ctrl-shift-f19", "\001[[33;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-33@", "meta-ctrl-shift-f19", "\001[\001[[33@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[33~", "f19", "\001[[33~");
+    WEE_CHECK_EXP_KEY(1, "meta-[33;2~", "shift-f19", "\001[[33;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[33$", "shift-f19", "\001[[33$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[33;3~", "meta-f19", "\001[[33;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[33~", "meta-f19", "\001[\001[[33~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[33;4~", "meta-shift-f19", "\001[[33;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[33$", "meta-shift-f19", "\001[\001[[33$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[33;5~", "ctrl-f19", "\001[[33;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[33^", "ctrl-f19", "\001[[33^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[33;6~", "ctrl-shift-f19", "\001[[33;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[33@", "ctrl-shift-f19", "\001[[33@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[33;7~", "meta-ctrl-f19", "\001[[33;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[33^", "meta-ctrl-f19", "\001[\001[[33^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[33;8~", "meta-ctrl-shift-f19", "\001[[33;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[33@", "meta-ctrl-shift-f19", "\001[\001[[33@");  /* urxvt */
 
     /* f20 */
-    WEE_CHECK_EXP_KEY(1, "meta2-34~", "f20", "\001[[34~");
-    WEE_CHECK_EXP_KEY(1, "meta2-34;2~", "shift-f20", "\001[[34;2~");
-    WEE_CHECK_EXP_KEY(1, "meta2-34$", "shift-f20", "\001[[34$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-34;3~", "meta-f20", "\001[[34;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-34~", "meta-f20", "\001[\001[[34~");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-34;4~", "meta-shift-f20", "\001[[34;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-34$", "meta-shift-f20", "\001[\001[[34$");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-34;5~", "ctrl-f20", "\001[[34;5~");
-    WEE_CHECK_EXP_KEY(1, "meta2-34^", "ctrl-f20", "\001[[34^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-34;6~", "ctrl-shift-f20", "\001[[34;6~");
-    WEE_CHECK_EXP_KEY(1, "meta2-34@", "ctrl-shift-f20", "\001[[34@");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-34;7~", "meta-ctrl-f20", "\001[[34;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-34^", "meta-ctrl-f20", "\001[\001[[34^");  /* urxvt */
-    WEE_CHECK_EXP_KEY(1, "meta2-34;8~", "meta-ctrl-shift-f20", "\001[[34;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-meta2-34@", "meta-ctrl-shift-f20", "\001[\001[[34@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[34~", "f20", "\001[[34~");
+    WEE_CHECK_EXP_KEY(1, "meta-[34;2~", "shift-f20", "\001[[34;2~");
+    WEE_CHECK_EXP_KEY(1, "meta-[34$", "shift-f20", "\001[[34$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[34;3~", "meta-f20", "\001[[34;3~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[34~", "meta-f20", "\001[\001[[34~");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[34;4~", "meta-shift-f20", "\001[[34;4~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[34$", "meta-shift-f20", "\001[\001[[34$");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[34;5~", "ctrl-f20", "\001[[34;5~");
+    WEE_CHECK_EXP_KEY(1, "meta-[34^", "ctrl-f20", "\001[[34^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[34;6~", "ctrl-shift-f20", "\001[[34;6~");
+    WEE_CHECK_EXP_KEY(1, "meta-[34@", "ctrl-shift-f20", "\001[[34@");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[34;7~", "meta-ctrl-f20", "\001[[34;7~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[34^", "meta-ctrl-f20", "\001[\001[[34^");  /* urxvt */
+    WEE_CHECK_EXP_KEY(1, "meta-[34;8~", "meta-ctrl-shift-f20", "\001[[34;8~");
+    WEE_CHECK_EXP_KEY(1, "meta-meta-[34@", "meta-ctrl-shift-f20", "\001[\001[[34@");  /* urxvt */
 }
 
 /*
@@ -864,29 +864,29 @@ TEST(GuiKey, LegacyToAlias)
 
 /*
  * Tests functions:
- *   gui_key_amend
+ *   gui_key_fix
  */
 
-TEST(GuiKey, Amend)
+TEST(GuiKey, Fix)
 {
     char *str;
 
-    WEE_TEST_STR(NULL, gui_key_amend (NULL));
+    WEE_TEST_STR(NULL, gui_key_fix (NULL));
 
     /* no changes */
-    WEE_TEST_STR("", gui_key_amend (""));
-    WEE_TEST_STR("a", gui_key_amend ("a"));
-    WEE_TEST_STR("@chat:button1", gui_key_amend ("@chat:button1"));
-    WEE_TEST_STR("meta-A", gui_key_amend ("meta-A"));
-    WEE_TEST_STR("ctrl-a", gui_key_amend ("ctrl-a"));
-    WEE_TEST_STR("return", gui_key_amend ("return"));
+    WEE_TEST_STR("", gui_key_fix (""));
+    WEE_TEST_STR("a", gui_key_fix ("a"));
+    WEE_TEST_STR("@chat:button1", gui_key_fix ("@chat:button1"));
+    WEE_TEST_STR("meta-A", gui_key_fix ("meta-A"));
+    WEE_TEST_STR("ctrl-a", gui_key_fix ("ctrl-a"));
+    WEE_TEST_STR("return", gui_key_fix ("return"));
 
     /* changes */
-    WEE_TEST_STR("ctrl-a", gui_key_amend ("ctrl-A"));
-    WEE_TEST_STR("ctrl-c,b", gui_key_amend ("ctrl-C,b"));
-    WEE_TEST_STR("ctrl-c,ctrl-b,A", gui_key_amend ("ctrl-C,ctrl-B,A"));
-    WEE_TEST_STR("space", gui_key_amend (" "));
-    WEE_TEST_STR("meta-space", gui_key_amend ("meta- "));
+    WEE_TEST_STR("ctrl-a", gui_key_fix ("ctrl-A"));
+    WEE_TEST_STR("ctrl-c,b", gui_key_fix ("ctrl-C,b"));
+    WEE_TEST_STR("ctrl-c,ctrl-b,A", gui_key_fix ("ctrl-C,ctrl-B,A"));
+    WEE_TEST_STR("space", gui_key_fix (" "));
+    WEE_TEST_STR("meta-space", gui_key_fix ("meta- "));
 }
 
 /*
@@ -963,7 +963,6 @@ TEST(GuiKey, IsSafe)
     /* NOT safe: partial modifier */
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "ctrl"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "meta"));
-    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "meta2"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "shift"));
 
     /* NOT safe: comma / space */
@@ -973,7 +972,6 @@ TEST(GuiKey, IsSafe)
     /* NOT safe: starts with capital letter (keys are case sensitive) */
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Ctrl-a"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Meta-a"));
-    LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Meta2-a"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Shift-home"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "F1"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Home"));

@@ -72,7 +72,7 @@ char *gui_key_focus_string[GUI_KEY_NUM_FOCUS] =
 { "*", "chat", "bar", "item" };
 
 char *gui_key_modifier_list[] =
-{ "ctrl-", "meta-", "meta2-", "shift-", NULL };
+{ "ctrl-", "meta-", "shift-", NULL };
 
 char *gui_key_alias_list[] =
 { "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11",
@@ -441,6 +441,8 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
         if (*str_dyn_key_alias[0])
             string_dyn_concat (str_dyn_key_alias, ",", -1);
 
+        str_raw[0] = '\0';
+
         while (string_strncmp (key, "\x01[\x01", 3) == 0)
         {
             /* key: meta + meta-something: increase meta and skip it */
@@ -450,16 +452,19 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
 
         if (string_strncmp (key, "\x01[[O", 4) == 0)
         {
+            snprintf (str_raw, sizeof (str_raw), "meta-[O");
             meta2 = 1;
             key += 4;
         }
         else if (string_strncmp (key, "\x01[O", 3) == 0)
         {
+            snprintf (str_raw, sizeof (str_raw), "meta-O");
             meta2 = 1;
             key += 3;
         }
         else if (string_strncmp (key, "\x01[[", 3) == 0)
         {
+            snprintf (str_raw, sizeof (str_raw), "meta-[");
             meta2 = 1;
             key += 3;
         }
@@ -703,8 +708,8 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
             }
 
             length = key - ptr_key_meta2;
-            snprintf (str_raw, sizeof (str_raw), "meta2-");
-            memcpy (str_raw + 6, ptr_key_meta2, length);
+            //snprintf (str_raw, sizeof (str_raw), "meta2-");
+            memcpy (str_raw + strlen (str_raw), ptr_key_meta2, length);
             str_raw[6 + length] = '\0';
 
             if (!str_alias[0])
@@ -880,8 +885,10 @@ gui_key_legacy_to_alias (const char *key)
 }
 
 /*
- * Amends key: transform upper case ctrl keys to lower case and replace " "
- * by "space".
+ * Attempts to fix key:
+ *   - transform upper case ctrl keys to lower case
+ *   - replace " " by "space"
+ *   - replace "meta2-" by "meta-[".
  *
  * Examples:
  *   "ctrl-a"   => "ctrl-a"  (unchanged)
@@ -891,12 +898,13 @@ gui_key_legacy_to_alias (const char *key)
  *   "ctrl-C,b" => "ctrl-c,b"
  *   " "        => "space"
  *   "meta- "   => "meta-space"
+ *   "meta2-A"  => "meta-[A"
  *
  * Note: result must be freed after use.
  */
 
 char *
-gui_key_amend (const char *key)
+gui_key_fix (const char *key)
 {
     char **result, str_key[2];
     const char *ptr_key;
@@ -932,6 +940,11 @@ gui_key_amend (const char *key)
                 string_dyn_concat (result, str_key, -1);
                 ptr_key++;
             }
+        }
+        else if (strncmp (ptr_key, "meta2-", 6) == 0)
+        {
+            string_dyn_concat (result, "meta-[", -1);
+            ptr_key += 6;
         }
         else
         {
@@ -1312,11 +1325,11 @@ struct t_gui_key *
 gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
              const char *command, int create_option)
 {
-    char *key_amended;
+    char *key_fixed;
     struct t_config_option *ptr_option;
     struct t_gui_key *new_key;
 
-    key_amended = NULL;
+    key_fixed = NULL;
     ptr_option = NULL;
 
     if (!key || !command)
@@ -1335,15 +1348,15 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
         return NULL;
     }
 
-    key_amended = gui_key_amend (key);
-    if (!key_amended)
+    key_fixed = gui_key_fix (key);
+    if (!key_fixed)
         goto error;
 
     ptr_option = NULL;
 
     if (!buffer && create_option)
     {
-        ptr_option = gui_key_new_option (context, key_amended, command);
+        ptr_option = gui_key_new_option (context, key_fixed, command);
         if (!ptr_option)
             goto error;
     }
@@ -1352,8 +1365,8 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
     if (!new_key)
         goto error;
 
-    new_key->key = key_amended;
-    new_key->chunks = string_split (key_amended, ",", NULL, 0, 0,
+    new_key->key = key_fixed;
+    new_key->chunks = string_split (key_fixed, ",", NULL, 0, 0,
                                     &new_key->chunks_count);
     new_key->command = strdup (command);
     gui_key_set_areas (new_key);
@@ -1401,8 +1414,8 @@ error:
                          key,
                          gui_key_context_string[context]);
     }
-    if (key_amended)
-        free (key_amended);
+    if (key_fixed)
+        free (key_fixed);
     if (ptr_option)
         config_file_option_free (ptr_option, 0);
     return NULL;
@@ -1632,18 +1645,18 @@ gui_key_bind_plugin (const char *context, struct t_hashtable *keys)
 int
 gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
 {
-    char *key_amended;
+    char *key_fixed;
     struct t_gui_key *ptr_key;
 
-    key_amended = gui_key_amend (key);
-    if (!key_amended)
+    key_fixed = gui_key_fix (key);
+    if (!key_fixed)
         return 0;
 
     ptr_key = gui_key_search ((buffer) ? buffer->keys : gui_keys[context],
-                              key_amended);
+                              key_fixed);
     if (!ptr_key)
     {
-        free (key_amended);
+        free (key_fixed);
         return 0;
     }
 
@@ -1658,7 +1671,7 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
         {
             gui_chat_printf (NULL,
                              _("Key \"%s\" unbound (context: \"%s\")"),
-                             key_amended,
+                             key_fixed,
                              gui_key_context_string[context]);
         }
         gui_key_free (context, &gui_keys[context], &last_gui_key[context],
@@ -1666,9 +1679,9 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
     }
 
     (void) hook_signal_send ("key_unbind",
-                             WEECHAT_HOOK_SIGNAL_STRING, key_amended);
+                             WEECHAT_HOOK_SIGNAL_STRING, key_fixed);
 
-    free (key_amended);
+    free (key_fixed);
 
     return 1;
 }
