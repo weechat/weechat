@@ -478,6 +478,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
             weechat_hashtable_set (keys,
                                    default_keys[i][0], default_keys[i][1]);
         }
+        weechat_hashtable_set (keys, "__quiet", "1");
         weechat_key_bind ("default", keys);
 
         /* default mouse actions */
