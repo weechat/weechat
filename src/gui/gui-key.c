@@ -1547,26 +1547,22 @@ gui_key_bind_plugin_hashtable_map_cb (void *data,
             return;
 
         ptr_key = gui_key_search (gui_keys[user_data[0]], key);
-        if (ptr_key)
+        if (!ptr_key)
         {
-            /*
-             * adjust default value (command) of key option in config, so that
-             * fset buffer shows the key as modified only if the user actually
-             * changed the command bound to the key
-             */
-            ptr_option = config_file_search_option (
-                weechat_config_file,
-                weechat_config_section_key[user_data[0]],
-                key);
-            if (ptr_option)
-                config_file_option_set_default (ptr_option, value, 1);
-        }
-        else
-        {
-            /* create key */
             if (gui_key_new (NULL, user_data[0], key, value, 1))
                 user_data[1]++;
         }
+        /*
+         * adjust default value (command) of key option in config, so that
+         * fset buffer shows the key as modified only if the user actually
+         * changed the command bound to the key
+         */
+        ptr_option = config_file_search_option (
+            weechat_config_file,
+            weechat_config_section_key[user_data[0]],
+            key);
+        if (ptr_option)
+            config_file_option_set_default (ptr_option, value, 1);
     }
 }
 
