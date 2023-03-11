@@ -2378,7 +2378,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (strncmp (property, "key_bind_", 9) == 0)
     {
-        gui_key_bind (buffer, 0, property + 9, value);
+        (void) gui_key_bind (buffer, 0, property + 9, value);
     }
     else if (strncmp (property, "key_unbind_", 11) == 0)
     {

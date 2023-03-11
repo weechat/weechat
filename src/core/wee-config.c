@@ -2666,7 +2666,7 @@ config_weechat_key_create_option_cb (const void *pointer, void *data,
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 
     context = config_weechat_get_key_context (section);
-    gui_key_bind (NULL, context, option_name, value);
+    (void) gui_key_bind (NULL, context, option_name, value);
 
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 }

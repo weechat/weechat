@@ -1316,12 +1316,28 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
     struct t_config_option *ptr_option;
     struct t_gui_key *new_key;
 
+    key_amended = NULL;
+    ptr_option = NULL;
+
     if (!key || !command)
+        goto error;
+
+    if ((context == GUI_KEY_CONTEXT_MOUSE) && (key[0] != '@'))
+    {
+        if (gui_key_verbose)
+        {
+            gui_chat_printf (NULL,
+                             _("%sInvalid key for mouse context \"%s\": it "
+                               "must start with \"@area\" (see /help key)"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             key);
+        }
         return NULL;
+    }
 
     key_amended = gui_key_amend (key);
     if (!key_amended)
-        return NULL;
+        goto error;
 
     ptr_option = NULL;
 
@@ -1329,20 +1345,12 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
     {
         ptr_option = gui_key_new_option (context, key_amended, command);
         if (!ptr_option)
-        {
-            free (key_amended);
-            return NULL;
-        }
+            goto error;
     }
 
     new_key = malloc (sizeof (*new_key));
     if (!new_key)
-    {
-        if (ptr_option)
-            config_file_option_free (ptr_option, 0);
-        free (key_amended);
-        return NULL;
-    }
+        goto error;
 
     new_key->key = key_amended;
     new_key->chunks = string_split (key_amended, ",", NULL, 0, 0,
@@ -1382,6 +1390,22 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
                              WEECHAT_HOOK_SIGNAL_STRING, new_key->key);
 
     return new_key;
+
+error:
+    if (gui_key_verbose)
+    {
+        gui_chat_printf (NULL,
+                         _("%sUnable to bind key \"%s\" in context \"%s\" "
+                           "(see /help key)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         key,
+                         gui_key_context_string[context]);
+    }
+    if (key_amended)
+        free (key_amended);
+    if (ptr_option)
+        config_file_option_free (ptr_option, 0);
+    return NULL;
 }
 
 /*
