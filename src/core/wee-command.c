@@ -8327,8 +8327,7 @@ command_init ()
            " || resetctxt <context> <key>"
            " || resetall -yes [<context>]"
            " || missing [<context>]"),
-        N_("       list: list all current keys (without argument, this list is "
-           "displayed)\n"
+        N_("       list: list all current keys\n"
            "listdefault: list default keys\n"
            "   listdiff: list differences between current and default keys "
            "(keys added, redefined or deleted)\n"
