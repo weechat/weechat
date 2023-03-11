@@ -72,7 +72,7 @@ char *gui_key_focus_string[GUI_KEY_NUM_FOCUS] =
 { "*", "chat", "bar", "item" };
 
 char *gui_key_modifier_list[] =
-{ "ctrl-", "meta-", "shift-", NULL };
+{ "meta-", "ctrl-", "shift-", NULL };
 
 char *gui_key_alias_list[] =
 { "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11",
