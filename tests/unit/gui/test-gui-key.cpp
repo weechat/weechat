@@ -35,6 +35,7 @@ extern int gui_key_get_current_context ();
 extern char *gui_key_legacy_internal_code (const char *key);
 extern char *gui_key_fix (const char *key);
 extern int gui_key_is_safe (int context, const char *key);
+extern int gui_key_seems_valid (int context, const char *key);
 extern struct t_config_option *gui_key_new_option (int context,
                                                    const char *name,
                                                    const char *value);
@@ -1032,6 +1033,44 @@ TEST(GuiKey, IsSafe)
     /* safe keys: "@" in cursor/mouse context */
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_CURSOR, "@"));
     LONGS_EQUAL(1, gui_key_is_safe (GUI_KEY_CONTEXT_MOUSE, "@"));
+}
+
+/*
+ * Tests functions:
+ *   gui_key_chunk_seems_valid
+ *   gui_key_seems_valid
+ */
+
+TEST(GuiKey, SeemsValid)
+{
+    /* invalid: NULL or empty string */
+    LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, NULL));
+    LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, ""));
+
+    /* raw codes: considered not valid */
+    LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-[A"));
+
+    /* invalid keys: missing comma */
+    LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "ab"));
+    LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "@a"));
+    LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "homeZ"));
+    LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-cb"));
+    LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-updown"));
+    LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "@chat:button1"));
+
+    /* valid keys */
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "a"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "A"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "é"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "/"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-a"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-ctrl-a"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-c,b"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-w,meta-up"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "ctrl-left"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "ctrl-u"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_CURSOR, "@chat:q"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_MOUSE, "@chat:button1"));
 }
 
 /*

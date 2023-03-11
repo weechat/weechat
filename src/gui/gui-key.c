@@ -1237,6 +1237,125 @@ gui_key_is_safe (int context, const char *key)
 }
 
 /*
+ * Checks if the key chunk seems valid.
+ *
+ * Example of valid key chunk:
+ *   "meta-a"
+ *   "meta-c"
+ *   "meta-up"
+ *   "ctrl-left"
+ *   "ctrl-u"
+ *
+ * Example of raw codes or invalid keys:
+ *   "meta-[A"  (raw code)
+ *   "ctrl-cb"  (invalid: missing comma)
+ *
+ * Returns:
+ *   1: key chunk seems valid
+ *   0: key chunk seems either invalid or a raw code
+ */
+
+int
+gui_key_chunk_seems_valid (const char *chunk)
+{
+    int i, found, length;
+
+    if (!chunk || !chunk[0])
+        return 0;
+
+    /* skip modifiers */
+    found = 1;
+    while (found)
+    {
+        found = 0;
+        for (i = 0; gui_key_modifier_list[i]; i++)
+        {
+            length = strlen (gui_key_modifier_list[i]);
+            if (strncmp (chunk, gui_key_modifier_list[i], length) == 0)
+            {
+                chunk += length;
+                found = 1;
+                break;
+            }
+        }
+    }
+
+    /* check if it's an alias */
+    found = 0;
+    for (i = 0; gui_key_alias_list[i]; i++)
+    {
+        length = strlen (gui_key_alias_list[i]);
+        if (strncmp (chunk, gui_key_alias_list[i], length) == 0)
+        {
+            chunk += length;
+            found = 1;
+            break;
+        }
+    }
+    if (!found)
+        chunk = utf8_next_char (chunk);
+
+    if (chunk[0])
+        return 0;
+
+    return 1;
+}
+
+/*
+ * Checks if the key seems valid: not a raw code, and no comma is missing.
+ *
+ * Example of valid keys:
+ *   "meta-a"
+ *   "meta-c,b"
+ *   "meta-w,meta-up"
+ *   "ctrl-left"
+ *   "ctrl-u"
+ *
+ * Example of raw codes or invalid keys:
+ *   "meta-[A"  (raw code)
+ *   "ctrl-cb"  (invalid: missing comma)
+ *
+ * Returns:
+ *   1: key seems valid
+ *   0: key seems either invalid or a raw code
+ */
+
+int
+gui_key_seems_valid (int context, const char *key)
+{
+    char **chunks;
+    int i, rc, chunks_count;
+
+    if (!key || !key[0])
+        return 0;
+
+    /* "@" is allowed at beginning for cursor/mouse contexts */
+    if ((key[0] == '@')
+        && ((context == GUI_KEY_CONTEXT_CURSOR)
+            || (context == GUI_KEY_CONTEXT_MOUSE)))
+    {
+        return 1;
+    }
+
+    chunks = string_split (key, ",", NULL, 0, 0, &chunks_count);
+    if (!chunks)
+        return 0;
+
+    rc = 1;
+    for (i = 0; i < chunks_count; i++)
+    {
+        if (!gui_key_chunk_seems_valid (chunks[i]))
+        {
+            rc = 0;
+            break;
+        }
+    }
+
+    string_free_split (chunks);
+    return rc;
+}
+
+/*
  * Callback for changes on a key option.
  */
 
@@ -1574,6 +1693,15 @@ gui_key_bind (struct t_gui_buffer *buffer, int context, const char *key,
                     key);
             }
             return NULL;
+        }
+        if (!gui_key_seems_valid (context, key))
+        {
+            gui_chat_printf (
+                NULL,
+                _("%sWarning: key \"%s\" seems either a raw code or invalid, "
+                  "it may not work (see /help key)"),
+                gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                key);
         }
     }
 
