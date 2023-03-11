@@ -34,6 +34,7 @@ extern "C"
 extern int gui_key_get_current_context ();
 extern char *gui_key_legacy_internal_code (const char *key);
 extern char *gui_key_fix (const char *key);
+extern int gui_key_is_safe (int context, const char *key);
 extern struct t_config_option *gui_key_new_option (int context,
                                                    const char *name,
                                                    const char *value);

@@ -333,6 +333,7 @@ struct t_config_option *config_signal_sigusr2;
 
 /* other */
 
+int config_loading = 0;
 int config_length_nick_prefix_suffix = 0;
 int config_length_prefix_same_nick = 0;
 int config_length_prefix_same_nick_middle = 0;
@@ -1627,7 +1628,9 @@ config_weechat_reload_cb (const void *pointer, void *data,
     /* remove all filters */
     gui_filter_free_all ();
 
+    config_loading = 1;
     rc = config_file_reload (config_file);
+    config_loading = 0;
 
     config_weechat_init_after_read ();
 
@@ -2666,7 +2669,19 @@ config_weechat_key_create_option_cb (const void *pointer, void *data,
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 
     context = config_weechat_get_key_context (section);
-    (void) gui_key_bind (NULL, context, option_name, value);
+
+    if (config_loading)
+    {
+        /* don't check key when loading config */
+        (void) gui_key_bind (NULL, context, option_name, value, 0);
+    }
+    else
+    {
+        /* enable verbose and check key if option is manually created */
+        gui_key_verbose = 1;
+        (void) gui_key_bind (NULL, context, option_name, value, 1);
+        gui_key_verbose = 0;
+    }
 
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 }
@@ -5052,7 +5067,9 @@ config_weechat_read ()
 {
     int rc;
 
+    config_loading = 1;
     rc = config_file_read (weechat_config_file);
+    config_loading = 0;
 
     config_weechat_init_after_read ();
 

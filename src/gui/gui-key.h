@@ -95,7 +95,6 @@ extern void gui_key_grab_init (int grab_raw_key, int grab_command,
 extern int gui_key_expand (const char *key,
                            char **key_name, char **key_name_alias);
 extern char *gui_key_legacy_to_alias (const char *key);
-extern int gui_key_is_safe (int context, const char *key);
 extern struct t_gui_key *gui_key_new (struct t_gui_buffer *buffer,
                                       int context,
                                       const char *key,
@@ -106,7 +105,8 @@ extern struct t_gui_key *gui_key_search (struct t_gui_key *keys,
 extern struct t_gui_key *gui_key_bind (struct t_gui_buffer *buffer,
                                        int context,
                                        const char *key,
-                                       const char *command);
+                                       const char *command,
+                                       int check_key);
 extern int gui_key_bind_plugin (const char *context, struct t_hashtable *keys);
 extern int gui_key_unbind (struct t_gui_buffer *buffer, int context,
                            const char *key);

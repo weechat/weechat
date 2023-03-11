@@ -1542,6 +1542,8 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
  * If buffer is not null, then key is specific to buffer otherwise it's general
  * key (for most keys).
  *
+ * If check_key == 1, the key is checked before being added.
+ *
  * If key already exists, it is removed then added again with new value.
  *
  * Returns pointer to new key, NULL if error.
@@ -1549,10 +1551,31 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
 
 struct t_gui_key *
 gui_key_bind (struct t_gui_buffer *buffer, int context, const char *key,
-              const char *command)
+              const char *command, int check_key)
 {
     if (!key || !command)
         return NULL;
+
+    if (check_key)
+    {
+        if (CONFIG_BOOLEAN(config_look_key_bind_safe)
+            && (context != GUI_KEY_CONTEXT_MOUSE)
+            && !gui_key_is_safe (context, key))
+        {
+            if (gui_key_verbose)
+            {
+                gui_chat_printf (
+                    NULL,
+                    _("%sIt is not safe to bind key \"%s\" because it does "
+                      "not start with a ctrl or meta code (tip: use alt-k to "
+                      "find key codes); if you want to bind this key anyway, "
+                      "turn off option weechat.look.key_bind_safe"),
+                    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                    key);
+            }
+            return NULL;
+        }
+    }
 
     gui_key_unbind (buffer, context, key);
 

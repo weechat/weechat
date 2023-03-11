@@ -3918,33 +3918,6 @@ command_key_display_listdiff (int context)
 }
 
 /*
- * Binds a key in the given context.
- */
-
-void
-command_key_bind (int context, const char *key, const char *command)
-{
-    if (CONFIG_BOOLEAN(config_look_key_bind_safe)
-        && (context != GUI_KEY_CONTEXT_MOUSE)
-        && !gui_key_is_safe (context, key))
-    {
-        gui_chat_printf (NULL,
-                         _("%sIt is not safe to bind key \"%s\" because "
-                           "it does not start with a ctrl or meta code "
-                           "(tip: use alt-k to find key codes); if you "
-                           "want to bind this key anyway, turn off option "
-                           "weechat.look.key_bind_safe"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         key);
-        return;
-    }
-
-    gui_key_verbose = 1;
-    (void) gui_key_bind (NULL, context, key, command);
-    gui_key_verbose = 0;
-}
-
-/*
  * Resets a key in the given context.
  */
 
@@ -3964,8 +3937,8 @@ command_key_reset (int context, const char *key)
             if (strcmp (ptr_key->command, ptr_default_key->command) != 0)
             {
                 gui_key_verbose = 1;
-                (void) gui_key_bind (NULL, context, key,
-                                     ptr_default_key->command);
+                (void) gui_key_bind (NULL, context,
+                                     key, ptr_default_key->command, 1);
                 gui_key_verbose = 0;
             }
             else
@@ -3995,7 +3968,8 @@ command_key_reset (int context, const char *key)
         {
             /* no key, but default key exists */
             gui_key_verbose = 1;
-            (void) gui_key_bind (NULL, context, key, ptr_default_key->command);
+            (void) gui_key_bind (NULL, context,
+                                 key, ptr_default_key->command, 1);
             gui_key_verbose = 0;
         }
     }
@@ -4105,7 +4079,10 @@ COMMAND_CALLBACK(key)
             return WEECHAT_RC_OK;
         }
 
-        command_key_bind (GUI_KEY_CONTEXT_DEFAULT, argv[2], argv_eol[3]);
+        gui_key_verbose = 1;
+        (void) gui_key_bind (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                             argv[2], argv_eol[3], 1);
+        gui_key_verbose = 0;
 
         return WEECHAT_RC_OK;
     }
@@ -4144,7 +4121,9 @@ COMMAND_CALLBACK(key)
             return WEECHAT_RC_OK;
         }
 
-        command_key_bind (context, argv[3], argv_eol[4]);
+        gui_key_verbose = 1;
+        gui_key_bind (NULL, context, argv[3], argv_eol[4], 1);
+        gui_key_verbose = 0;
 
         return WEECHAT_RC_OK;
     }
@@ -6417,8 +6396,6 @@ COMMAND_CALLBACK(set)
                                             _("Option changed: ") :
                                             _("Option created: "));
             }
-            else
-                gui_chat_printf (NULL, _("Option changed"));
             break;
     }
 
