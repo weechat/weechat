@@ -2193,6 +2193,55 @@ end:
 }
 
 /*
+ * Prints a key in debug mode:
+ *   - raw combo (eg: "^[[A")
+ *   - key name (eg: "meta-[A")
+ *   - key name with alias (eg: "up")
+ *   - command bound to key or message "no key binding"
+ */
+
+void
+gui_key_debug_print_key (const char *combo, const char *key_name,
+                         const char *key_name_alias, const char *command)
+{
+    char *combo2, str_command[4096];
+
+    if (command)
+    {
+        snprintf (str_command, sizeof (str_command),
+                  "-> %s\"%s%s%s\"",
+                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                  GUI_COLOR(GUI_COLOR_CHAT),
+                  command,
+                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    }
+    else
+    {
+        snprintf (str_command, sizeof (str_command),
+                  " %s[%s%s%s]",
+                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                  GUI_COLOR(GUI_COLOR_CHAT),
+                  _("no key binding"),
+                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    }
+
+    combo2 = string_replace (combo, "\x01", "^");
+    gui_chat_printf (
+        NULL,
+        "%s %s\"%s%s%s\"%s -> %s -> %s %s",
+        _("debug:"),
+        GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+        GUI_COLOR(GUI_COLOR_CHAT),
+        combo2,
+        GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+        GUI_COLOR(GUI_COLOR_CHAT),
+        key_name,
+        key_name_alias,
+        str_command);
+    free (combo2);
+}
+
+/*
  * Processes a new key pressed.
  *
  * Returns:
@@ -2206,7 +2255,7 @@ gui_key_pressed (const char *key_str)
     int i, insert_into_input, context, length, length_key, signal_sent;
     int rc, rc_expand, exact_match, chunks1_count, chunks2_count;
     struct t_gui_key *ptr_key;
-    char *pos, signal_name[128], **commands, *combo;
+    char *pos, signal_name[128], **commands;
     char *key_name, *key_name_alias, **chunks1, **chunks2;
 
     signal_sent = 0;
@@ -2349,19 +2398,10 @@ gui_key_pressed (const char *key_str)
             /* exact combo found => execute command */
             if (gui_key_debug)
             {
-                combo = string_replace (gui_key_combo_buffer, "\x01", "^");
-                gui_chat_printf (
-                    NULL,
-                    _("debug: %s\"%s%s%s\"%s -> %s -> %s -> \"%s\""),
-                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                    GUI_COLOR(GUI_COLOR_CHAT),
-                    combo,
-                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                    GUI_COLOR(GUI_COLOR_CHAT),
-                    key_name,
-                    key_name_alias,
-                    ptr_key->command);
-                free (combo);
+                gui_key_debug_print_key (gui_key_combo_buffer,
+                                         key_name,
+                                         key_name_alias,
+                                         ptr_key->command);
                 gui_key_combo_buffer[0] = '\0';
             }
             else
@@ -2429,19 +2469,10 @@ gui_key_pressed (const char *key_str)
         /* key is complete */
         if (gui_key_debug)
         {
-            combo = string_replace (gui_key_combo_buffer, "\x01", "^");
-            gui_chat_printf (
-                NULL,
-                _("debug: %s\"%s%s%s\"%s -> %s -> %s (no key) -> %s"),
-                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                GUI_COLOR(GUI_COLOR_CHAT),
-                combo,
-                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                GUI_COLOR(GUI_COLOR_CHAT),
-                key_name,
-                key_name_alias,
-                (insert_into_input) ? _("insert into input") : _("ignored"));
-            free (combo);
+            gui_key_debug_print_key (gui_key_combo_buffer,
+                                     key_name,
+                                     key_name_alias,
+                                     NULL);
         }
         gui_key_combo_buffer[0] = '\0';
     }

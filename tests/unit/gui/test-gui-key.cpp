@@ -1441,6 +1441,16 @@ TEST(GuiKey, Focus)
 
 /*
  * Tests functions:
+ *   gui_key_debug_print_key
+ */
+
+TEST(GuiKey, DebugPrintKey)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   gui_key_pressed
  */
 
