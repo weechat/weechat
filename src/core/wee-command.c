@@ -8331,7 +8331,7 @@ command_init ()
            "Modifiers allowed (in this order when multiple are used):\n"
            "  meta-  (alt key)\n"
            "  ctrl-  (control key)\n"
-           "  shift-  (shift key)\n"
+           "  shift-  (shift key, can only be used with key names below)\n"
            "\n"
            "Key names allowed: f0 to f20, home, insert, delete, end, "
            "backspace, pgup, pgdn, up, down, right, left, tab, return, comma, "
