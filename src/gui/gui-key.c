@@ -2206,7 +2206,7 @@ gui_key_pressed (const char *key_str)
     int i, insert_into_input, context, length, length_key, signal_sent;
     int rc, rc_expand, exact_match, chunks1_count, chunks2_count;
     struct t_gui_key *ptr_key;
-    char *pos, signal_name[128], **commands;
+    char *pos, signal_name[128], **commands, *combo;
     char *key_name, *key_name_alias, **chunks1, **chunks2;
 
     signal_sent = 0;
@@ -2349,11 +2349,19 @@ gui_key_pressed (const char *key_str)
             /* exact combo found => execute command */
             if (gui_key_debug)
             {
+                combo = string_replace (gui_key_combo_buffer, "\x01", "^");
                 gui_chat_printf (
                     NULL,
-                    _("debug: \"%s\" -> %s -> %s -> \"%s\""),
-                    gui_key_combo_buffer, key_name, key_name_alias,
+                    _("debug: %s\"%s%s%s\"%s -> %s -> %s -> \"%s\""),
+                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                    GUI_COLOR(GUI_COLOR_CHAT),
+                    combo,
+                    GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                    GUI_COLOR(GUI_COLOR_CHAT),
+                    key_name,
+                    key_name_alias,
                     ptr_key->command);
+                free (combo);
                 gui_key_combo_buffer[0] = '\0';
             }
             else
@@ -2421,11 +2429,19 @@ gui_key_pressed (const char *key_str)
         /* key is complete */
         if (gui_key_debug)
         {
+            combo = string_replace (gui_key_combo_buffer, "\x01", "^");
             gui_chat_printf (
                 NULL,
-                _("debug: \"%s\" -> %s -> %s (no key) -> %s"),
-                gui_key_combo_buffer, key_name, key_name_alias,
+                _("debug: %s\"%s%s%s\"%s -> %s -> %s (no key) -> %s"),
+                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                GUI_COLOR(GUI_COLOR_CHAT),
+                combo,
+                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                GUI_COLOR(GUI_COLOR_CHAT),
+                key_name,
+                key_name_alias,
                 (insert_into_input) ? _("insert into input") : _("ignored"));
+            free (combo);
         }
         gui_key_combo_buffer[0] = '\0';
     }
