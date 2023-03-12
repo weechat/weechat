@@ -1027,7 +1027,7 @@ weeurl_search_constant (struct t_url_constant *constants, const char *name)
 {
     int i;
 
-    if (!name)
+    if (!constants || !name)
         return -1;
 
     for (i = 0; constants[i].name; i++)
@@ -1055,6 +1055,9 @@ weeurl_get_mask_value (struct t_url_constant *constants,
     char **items, *item;
     int num_items, i, index;
     long mask;
+
+    if (!constants || !string_mask)
+        return 0;
 
     mask = 0;
 
