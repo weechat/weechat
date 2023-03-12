@@ -1032,7 +1032,7 @@ weeurl_search_constant (struct t_url_constant *constants, const char *name)
 
     for (i = 0; constants[i].name; i++)
     {
-        if (strcmp (constants[i].name, name) == 0)
+        if (string_strcasecmp (constants[i].name, name) == 0)
         {
             return i;
         }
@@ -1101,7 +1101,7 @@ weeurl_search_option (const char *name)
 
     for (i = 0; url_options[i].name; i++)
     {
-        if (strcmp (url_options[i].name, name) == 0)
+        if (string_strcasecmp (url_options[i].name, name) == 0)
         {
             return i;
         }
