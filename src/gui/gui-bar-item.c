@@ -878,7 +878,8 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
     if (gui_key_debug)
     {
         snprintf (str_key_debug, sizeof (str_key_debug),
-                  _("keyboard debug ('q' to quit debug mode)%s"),
+                  "%s%s",
+                  _("keyboard debug ('q' to quit debug mode)"),
                   str_cursor);
         return strdup (str_key_debug);
     }
