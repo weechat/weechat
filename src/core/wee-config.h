@@ -241,6 +241,7 @@ extern struct t_config_option *config_look_read_marker_string;
 extern struct t_config_option *config_look_read_marker_update_on_buffer_switch;
 extern struct t_config_option *config_look_save_config_on_exit;
 extern struct t_config_option *config_look_save_config_with_fsync;
+extern struct t_config_option *config_look_save_config_changed_only;
 extern struct t_config_option *config_look_save_layout_on_exit;
 extern struct t_config_option *config_look_scroll_amount;
 extern struct t_config_option *config_look_scroll_bottom_after_switch;
