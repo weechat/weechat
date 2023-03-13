@@ -321,6 +321,7 @@ gui_key_flush (int paste)
         }
         else if (key == 127)
         {
+            insert_ok = 0;
             key_str[0] = '\x01';
             key_str[1] = '?';
             key_str[2] = '\0';
