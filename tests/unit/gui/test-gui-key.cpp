@@ -1304,6 +1304,7 @@ TEST(GuiKey, SearchPart)
     char **chunks1, **chunks2;
     int chunks1_count, chunks2_count, exact_match;
 
+    /* keys meta-a and meta-w */
     chunks1 = string_split ("meta-a", ",", NULL, 0, 0, &chunks1_count);
     chunks2 = string_split ("meta-w", ",", NULL, 0, 0, &chunks2_count);
 
@@ -1340,7 +1341,8 @@ TEST(GuiKey, SearchPart)
     STRCMP_EQUAL("meta-w,meta-b", ptr_key->key);
     LONGS_EQUAL(0, exact_match);
 
-    new_key = gui_key_new (NULL, GUI_KEY_CONTEXT_DEFAULT, "meta-w", "/mute", 1);
+    new_key = gui_key_new (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                           "meta-w", "/print meta-w", 1);
 
     exact_match = -1;
     ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
@@ -1349,6 +1351,7 @@ TEST(GuiKey, SearchPart)
                                    &exact_match);
     CHECK(ptr_key);
     STRCMP_EQUAL("meta-w", ptr_key->key);
+    STRCMP_EQUAL("/print meta-w", ptr_key->command);
     LONGS_EQUAL(1, exact_match);
 
     gui_key_free (GUI_KEY_CONTEXT_DEFAULT,
@@ -1357,6 +1360,92 @@ TEST(GuiKey, SearchPart)
                   &gui_keys_count[GUI_KEY_CONTEXT_DEFAULT],
                   new_key,
                   1);
+
+    string_free_split (chunks1);
+    string_free_split (chunks2);
+
+    /* keys ctrl-h and backspace */
+    chunks1 = string_split ("ctrl-h", ",", NULL, 0, 0, &chunks1_count);
+    chunks2 = string_split ("backspace", ",", NULL, 0, 0, &chunks2_count);
+
+    exact_match = -1;
+    ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                   (const char **)chunks1, chunks1_count,
+                                   (const char **)chunks2, chunks2_count,
+                                   &exact_match);
+    CHECK(ptr_key);
+    STRCMP_EQUAL("backspace", ptr_key->key);
+    STRCMP_EQUAL("/input delete_previous_char", ptr_key->command);
+    LONGS_EQUAL(1, exact_match);
+
+    new_key = gui_key_new (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                           "ctrl-h", "/print ctrl-h", 1);
+
+    exact_match = -1;
+    ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                   (const char **)chunks1, chunks1_count,
+                                   (const char **)chunks2, chunks2_count,
+                                   &exact_match);
+    CHECK(ptr_key);
+    STRCMP_EQUAL("ctrl-h", ptr_key->key);
+    STRCMP_EQUAL("/print ctrl-h", ptr_key->command);
+    LONGS_EQUAL(1, exact_match);
+
+    gui_key_free (GUI_KEY_CONTEXT_DEFAULT,
+                  &gui_keys[GUI_KEY_CONTEXT_DEFAULT],
+                  &last_gui_key[GUI_KEY_CONTEXT_DEFAULT],
+                  &gui_keys_count[GUI_KEY_CONTEXT_DEFAULT],
+                  new_key,
+                  1);
+
+    new_key = gui_key_new (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                           "ctrl-h,j", "/print ctrl-h,j", 1);
+
+    exact_match = -1;
+    ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                   (const char **)chunks1, chunks1_count,
+                                   (const char **)chunks2, chunks2_count,
+                                   &exact_match);
+    CHECK(ptr_key);
+    STRCMP_EQUAL("ctrl-h,j", ptr_key->key);
+    STRCMP_EQUAL("/print ctrl-h,j", ptr_key->command);
+    LONGS_EQUAL(0, exact_match);
+
+    string_free_split (chunks1);
+    chunks1 = string_split ("ctrl-h,j", ",", NULL, 0, 0, &chunks1_count);
+
+    exact_match = -1;
+    ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                   (const char **)chunks1, chunks1_count,
+                                   (const char **)chunks2, chunks2_count,
+                                   &exact_match);
+    CHECK(ptr_key);
+    STRCMP_EQUAL("ctrl-h,j", ptr_key->key);
+    STRCMP_EQUAL("/print ctrl-h,j", ptr_key->command);
+    LONGS_EQUAL(1, exact_match);
+
+    string_free_split (chunks1);
+    chunks1 = string_split ("ctrl-q,j", ",", NULL, 0, 0, &chunks1_count);
+
+    exact_match = -1;
+    ptr_key = gui_key_search_part (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                   (const char **)chunks1, chunks1_count,
+                                   (const char **)chunks2, chunks2_count,
+                                   &exact_match);
+    CHECK(ptr_key);
+    STRCMP_EQUAL("backspace", ptr_key->key);
+    STRCMP_EQUAL("/input delete_previous_char", ptr_key->command);
+    LONGS_EQUAL(1, exact_match);
+
+    gui_key_free (GUI_KEY_CONTEXT_DEFAULT,
+                  &gui_keys[GUI_KEY_CONTEXT_DEFAULT],
+                  &last_gui_key[GUI_KEY_CONTEXT_DEFAULT],
+                  &gui_keys_count[GUI_KEY_CONTEXT_DEFAULT],
+                  new_key,
+                  1);
+
+    string_free_split (chunks1);
+    string_free_split (chunks2);
 }
 
 /*

@@ -1608,13 +1608,16 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
                      const char **chunks2, int chunks2_count,
                      int *exact_match)
 {
-    struct t_gui_key *ptr_key;
-    int rc;
+    struct t_gui_key *ptr_key, *key1_found, *key2_found;
+    int rc, rc1, rc2;
 
     if ((!chunks1 && !chunks2) || !exact_match)
         return NULL;
 
-    *exact_match = 0;
+    key1_found = NULL;
+    key2_found = NULL;
+    rc1 = 0;
+    rc2 = 0;
 
     for (ptr_key = (buffer) ? buffer->keys : gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
@@ -1629,11 +1632,13 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
                                              chunks1_count,
                                              (const char **)ptr_key->chunks,
                                              ptr_key->chunks_count);
-                if (rc > 0)
+                if (rc > rc1)
                 {
+                    rc1 = rc;
+                    key1_found = ptr_key;
+                    /* exit immediately if raw key is an exact match */
                     if (rc == 2)
-                        *exact_match = 1;
-                    break;
+                        break;
                 }
             }
             if (chunks2)
@@ -1642,17 +1647,23 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
                                              chunks2_count,
                                              (const char **)ptr_key->chunks,
                                              ptr_key->chunks_count);
-                if (rc > 0)
+                if (rc > rc2)
                 {
-                    if (rc == 2)
-                        *exact_match = 1;
-                    break;
+                    rc2 = rc;
+                    key2_found = ptr_key;
                 }
             }
         }
     }
 
-    return ptr_key;
+    if (key1_found)
+    {
+        *exact_match = (rc1 == 2) ? 1 : 0;
+        return key1_found;
+    }
+
+    *exact_match = (rc2 == 2) ? 1 : 0;
+    return key2_found;
 }
 
 /*
