@@ -28,6 +28,7 @@
 #include "../../../core/weechat.h"
 #include "../../gui-main.h"
 #include "../gui-curses.h"
+#include "../gui-curses-main.h"
 
 
 /*

@@ -17,20 +17,11 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_GUI_CURSES_H
-#define WEECHAT_GUI_CURSES_H
+#ifndef WEECHAT_GUI_CURSES_CHAT_H
+#define WEECHAT_GUI_CURSES_CHAT_H
 
-#ifdef WEECHAT_HEADLESS
-#include "ncurses-fake.h"
-#else
-#define NCURSES_WIDECHAR 1
-#ifdef HAVE_NCURSESW_CURSES_H
-#include <ncursesw/ncurses.h>
-#elif HAVE_NCURSES_H
-#include <ncurses.h>
-#else
-#include <curses.h>
-#endif /* HAVE_NCURSESW_CURSES_H */
-#endif /* WEECHAT_HEADLESS */
+extern void gui_chat_calculate_line_diff (struct t_gui_window *window,
+                                          struct t_gui_line **line,
+                                          int *line_pos, int difference);
 
-#endif /* WEECHAT_GUI_CURSES_H */
+#endif /* WEECHAT_GUI_CURSES_CHAT_H */

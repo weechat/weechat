@@ -41,6 +41,7 @@
 #include "../gui-chat.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
+#include "gui-curses-color.h"
 
 
 #define GUI_COLOR_TIMER_TERM_COLORS 10

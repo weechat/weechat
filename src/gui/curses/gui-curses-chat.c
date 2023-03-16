@@ -44,6 +44,8 @@
 #include "../gui-main.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
+#include "gui-curses-main.h"
+#include "gui-curses-window.h"
 
 
 /*

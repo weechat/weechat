@@ -55,6 +55,10 @@
 #include "../gui-mouse.h"
 #include "../gui-nicklist.h"
 #include "gui-curses.h"
+#include "gui-curses-chat.h"
+#include "gui-curses-color.h"
+#include "gui-curses-main.h"
+#include "gui-curses-window.h"
 
 
 #define GUI_WINDOW_MAX_SAVED_STYLES 32

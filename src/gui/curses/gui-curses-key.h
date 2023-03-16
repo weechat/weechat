@@ -17,20 +17,9 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_GUI_CURSES_H
-#define WEECHAT_GUI_CURSES_H
+#ifndef WEECHAT_GUI_CURSES_KEY_H
+#define WEECHAT_GUI_CURSES_KEY_H
 
-#ifdef WEECHAT_HEADLESS
-#include "ncurses-fake.h"
-#else
-#define NCURSES_WIDECHAR 1
-#ifdef HAVE_NCURSESW_CURSES_H
-#include <ncursesw/ncurses.h>
-#elif HAVE_NCURSES_H
-#include <ncurses.h>
-#else
-#include <curses.h>
-#endif /* HAVE_NCURSESW_CURSES_H */
-#endif /* WEECHAT_HEADLESS */
+extern int gui_key_read_cb (const void *pointer, void *data, int fd);
 
-#endif /* WEECHAT_GUI_CURSES_H */
+#endif /* WEECHAT_GUI_CURSES_KEY_H */

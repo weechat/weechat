@@ -58,6 +58,9 @@
 #include "../gui-nicklist.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
+#include "gui-curses-color.h"
+#include "gui-curses-key.h"
+#include "gui-curses-window.h"
 
 
 volatile sig_atomic_t gui_signal_sigwinch_received = 0;  /* sigwinch signal */

@@ -43,12 +43,8 @@
 #include "../gui-key.h"
 #include "../gui-mouse.h"
 #include "../gui-window.h"
+#include "gui-curses-mouse.h"
 
-
-#define MOUSE_CODE_BUTTON(code) ((code >= 32) && (code < 64))
-#define MOUSE_CODE_MOTION(code) ((code >= 64) && (code < 96))
-#define MOUSE_CODE_END(code)    ((code == '#') || (code == '3')         \
-                                 || (code == '+') || (code == ';'))
 
 char *gui_mouse_wheel_codes[][2] =
 { { "`",  "wheelup"            },
@@ -60,6 +56,7 @@ char *gui_mouse_wheel_codes[][2] =
   { "i",  "alt-wheeldown"      },
   { "y",  "ctrl-alt-wheeldown" },
   { NULL, NULL                 } };
+
 char *gui_mouse_button_codes[][2] =
 { { " ",  "button1"            },
   { "\"", "button2"            },
