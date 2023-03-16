@@ -1244,7 +1244,7 @@ fset_option_toggle_mark (struct t_fset_option *fset_option,
     fset_option->marked ^= 1;
     fset_option_count_marked += (fset_option->marked) ? 1 : -1;
 
-    fset_buffer_display_option (fset_option);
+    (void) fset_buffer_display_option (fset_option);
 }
 
 /*
@@ -1273,14 +1273,14 @@ fset_option_mark_options_matching_filter (const char *filter, int mark)
                 {
                     ptr_fset_option->marked = 1;
                     fset_option_count_marked++;
-                    fset_buffer_display_option (ptr_fset_option);
+                    (void) fset_buffer_display_option (ptr_fset_option);
                     set_title = 1;
                 }
                 else if (mark_old && !mark)
                 {
                     ptr_fset_option->marked = 0;
                     fset_option_count_marked--;
-                    fset_buffer_display_option (ptr_fset_option);
+                    (void) fset_buffer_display_option (ptr_fset_option);
                     set_title = 1;
                 }
             }
@@ -1313,7 +1313,7 @@ fset_option_unmark_all ()
             ptr_fset_option->marked = 0;
             if (marked)
             {
-                fset_buffer_display_option (ptr_fset_option);
+                (void) fset_buffer_display_option (ptr_fset_option);
                 set_title = 1;
             }
         }
@@ -1418,28 +1418,38 @@ fset_option_config_changed (const char *option_name)
 {
     struct t_fset_option *ptr_fset_option, *new_fset_option;
     struct t_config_option *ptr_option;
-    int full_refresh, line, num_options;
+    int option_removed, option_added, line, num_options;
+    char *old_name_selected;
 
     if (!fset_buffer)
         return;
 
-    full_refresh = 0;
+    option_removed = 0;
+    option_added = 0;
+
+    ptr_fset_option = weechat_arraylist_get (fset_options,
+                                             fset_buffer_selected_line);
+    old_name_selected = (ptr_fset_option) ?
+        strdup (ptr_fset_option->name) : NULL;
 
     ptr_fset_option = (option_name) ?
         fset_option_search_by_name (option_name, &line) : NULL;
     ptr_option = (option_name) ? weechat_config_get (option_name) : NULL;
+
 
     if (ptr_fset_option)
     {
         if (ptr_option)
         {
             fset_option_set_values (ptr_fset_option, ptr_option);
-            fset_buffer_display_option (ptr_fset_option);
+            (void) fset_buffer_display_option (ptr_fset_option);
         }
         else
         {
             /* option removed: get options and refresh the whole buffer */
-            full_refresh = 1;
+            option_removed = 1;
+            if (ptr_fset_option->index < fset_buffer_selected_line)
+                fset_buffer_selected_line--;
         }
     }
     else if (ptr_option)
@@ -1448,15 +1458,30 @@ fset_option_config_changed (const char *option_name)
         if (fset_option_match_filter (new_fset_option, fset_option_filter))
         {
             /* option added: get options and refresh the whole buffer */
-            full_refresh = 1;
+            option_added = 1;
         }
         fset_option_free (new_fset_option);
     }
 
-    if (full_refresh)
+    if (option_removed || option_added)
     {
         fset_option_get_options ();
-        fset_buffer_refresh (1);
+        /*
+         * in case of option added, we move to the next one if is was the
+         * selected one
+         */
+        if (option_added && old_name_selected)
+        {
+            ptr_fset_option = weechat_arraylist_get (
+                fset_options, fset_buffer_selected_line + 1);
+            if (ptr_fset_option
+                && (strcmp (old_name_selected, ptr_fset_option->name) == 0))
+            {
+                fset_buffer_selected_line++;
+            }
+        }
+        fset_buffer_refresh (0);
+        fset_buffer_check_line_outside_window ();
     }
     else
     {
@@ -1477,6 +1502,9 @@ fset_option_config_changed (const char *option_name)
         fset_option_set_max_length_fields_all ();
         fset_buffer_refresh (0);
     }
+
+    if (old_name_selected)
+        free (old_name_selected);
 }
 
 /*

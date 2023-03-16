@@ -157,20 +157,25 @@ fset_buffer_fills_field (char *field, char *field_spaces,
 
 /*
  * Displays a line with an fset option using an evaluated format.
+ *
+ * Returns the index of last line displayed in buffer (this depends on the
+ * format number used), -1 if no option was displayed.
  */
 
-void
+int
 fset_buffer_display_option_eval (struct t_fset_option *fset_option)
 {
     char *line, str_color_line[128], **lines;
     char *str_field, *str_field2;
     char str_color_value[128], str_color_quotes[128], str_number[64];
-    int length, length_field, selected_line, y, i, num_lines;
+    int length, length_field, selected_line, y, y_max, i, num_lines;
     int default_value_undef, value_undef, value_changed;
     int add_quotes, add_quotes_parent, format_number;
 
     if (!fset_option)
-        return;
+        return -1;
+
+    y_max = -1;
 
     length_field = 4096;
     length = (fset_option->value) ?
@@ -184,12 +189,12 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
 
     str_field = malloc (length_field);
     if (!str_field)
-        return;
+        return -1;
     str_field2 = malloc (length_field);
     if (!str_field2)
     {
         free (str_field);
-        return;
+        return -1;
     }
 
     selected_line = (fset_option->index == fset_buffer_selected_line) ? 1 : 0;
@@ -797,6 +802,7 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
                     "%s%s",
                     (str_color_line[0]) ? weechat_color (str_color_line) : "",
                     lines[i]);
+                y_max = y;
                 y++;
             }
             weechat_string_free_split (lines);
@@ -806,20 +812,28 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
 
     free (str_field);
     free (str_field2);
+
+    return y_max;
 }
 
 /*
  * Displays a line with an fset option using a predefined format
  * (much faster because there is no eval).
+ *
+ * Returns the index of last line displayed in buffer (this depends on the
+ * format number used), -1 if no option was displayed.
  */
 
-void
+int
 fset_buffer_display_option_predefined_format (struct t_fset_option *fset_option)
 {
     int selected_line, value_undef, value_changed, format_number;
     int add_quotes, add_quotes_parent, length_value;
     char str_marked[128], str_name[4096], str_type[128], *str_value;
     char str_color_line[128], str_color_value[128], str_color_quotes[128];
+
+    if (!fset_option)
+        return -1;
 
     selected_line = (fset_option->index == fset_buffer_selected_line) ? 1 : 0;
     value_undef = (fset_option->value == NULL) ? 1 : 0;
@@ -969,13 +983,18 @@ fset_buffer_display_option_predefined_format (struct t_fset_option *fset_option)
 
     if (str_value)
         free (str_value);
+
+    return fset_option->index;
 }
 
 /*
  * Displays a line with an fset option.
+ *
+ * Returns the index of last line displayed in buffer (this depends on the
+ * format number used), -1 if no option was displayed.
  */
 
-void
+int
 fset_buffer_display_option (struct t_fset_option *fset_option)
 {
     int format_number;
@@ -985,9 +1004,39 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
     ptr_format = weechat_config_string (fset_config_format_option[format_number - 1]);
 
     if (ptr_format && ptr_format[0])
-        fset_buffer_display_option_eval (fset_option);
+        return fset_buffer_display_option_eval (fset_option);
     else
-        fset_buffer_display_option_predefined_format (fset_option);
+        return fset_buffer_display_option_predefined_format (fset_option);
+}
+
+/*
+ * Returns the last line index (y) for a buffer with free content,
+ * -1 if buffer is empty.
+ */
+
+int
+fset_buffer_get_last_y (struct t_gui_buffer *buffer)
+{
+    struct t_hdata *hdata_buffer, *hdata_lines, *hdata_line, *hdata_line_data;
+    void *own_lines, *last_line, *line_data;
+
+    hdata_buffer = weechat_hdata_get ("buffer");
+    own_lines = weechat_hdata_pointer (hdata_buffer, buffer, "own_lines");
+    if (!own_lines)
+        return -1;
+
+    hdata_lines = weechat_hdata_get ("lines");
+    last_line = weechat_hdata_pointer (hdata_lines, own_lines, "last_line");
+    if (!last_line)
+        return -1;
+
+    hdata_line = weechat_hdata_get ("line");
+    line_data = weechat_hdata_pointer (hdata_line, last_line, "data");
+    if (!line_data)
+        return -1;
+
+    hdata_line_data = weechat_hdata_get ("line_data");
+    return weechat_hdata_integer (hdata_line_data, line_data, "y");
 }
 
 /*
@@ -997,7 +1046,7 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
 void
 fset_buffer_refresh (int clear)
 {
-    int num_options, i;
+    int num_options, i, y, y_max_displayed, last_y;
     struct t_fset_option *ptr_fset_option;
 
     if (!fset_buffer)
@@ -1006,13 +1055,29 @@ fset_buffer_refresh (int clear)
     num_options = weechat_arraylist_size (fset_options);
 
     if (clear)
+    {
         weechat_buffer_clear (fset_buffer);
+        fset_buffer_selected_line = 0;
+    }
+
+    y_max_displayed = -1;
 
     for (i = 0; i < num_options; i++)
     {
         ptr_fset_option = weechat_arraylist_get (fset_options, i);
         if (ptr_fset_option)
-            fset_buffer_display_option (ptr_fset_option);
+        {
+            y = fset_buffer_display_option (ptr_fset_option);
+            if (y > y_max_displayed)
+                y_max_displayed = y;
+        }
+    }
+
+    /* remove lines displayed after the last one just displayed */
+    last_y = fset_buffer_get_last_y (fset_buffer);
+    for (y = last_y; y > y_max_displayed; y--)
+    {
+        weechat_printf_y (fset_buffer, y, "");
     }
 
     fset_buffer_set_title ();
@@ -1035,10 +1100,10 @@ fset_buffer_set_current_line (int line)
 
         if (old_line != fset_buffer_selected_line)
         {
-            fset_buffer_display_option (
+            (void) fset_buffer_display_option (
                 weechat_arraylist_get (fset_options, old_line));
         }
-        fset_buffer_display_option (
+        (void) fset_buffer_display_option (
             weechat_arraylist_get (fset_options, fset_buffer_selected_line));
 
         fset_buffer_set_title ();
