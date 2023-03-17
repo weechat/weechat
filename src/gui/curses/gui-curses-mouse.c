@@ -50,11 +50,11 @@ char *gui_mouse_wheel_codes[][2] =
 { { "`",  "wheelup"            },
   { "p",  "ctrl-wheelup"       },
   { "h",  "alt-wheelup"        },
-  { "x",  "ctrl-alt-wheelup"   },
+  { "x",  "alt-ctrl-wheelup"   },
   { "a",  "wheeldown"          },
   { "q",  "ctrl-wheeldown"     },
   { "i",  "alt-wheeldown"      },
-  { "y",  "ctrl-alt-wheeldown" },
+  { "y",  "alt-ctrl-wheeldown" },
   { NULL, NULL                 } };
 
 char *gui_mouse_button_codes[][2] =
@@ -73,7 +73,7 @@ char *gui_mouse_button_codes[][2] =
   { "(",  "alt-button1"        },
   { "*",  "alt-button2"        },
   { ")",  "alt-button3"        },
-  { "8",  "ctrl-alt-button1"   },
+  { "8",  "alt-ctrl-button1"   },
   { NULL, NULL                 } };
 
 

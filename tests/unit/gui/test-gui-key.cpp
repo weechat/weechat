@@ -866,6 +866,7 @@ TEST(GuiKey, LegacyToAlias)
 
 /*
  * Tests functions:
+ *   gui_key_fix_mouse
  *   gui_key_fix
  */
 
@@ -882,6 +883,10 @@ TEST(GuiKey, Fix)
     WEE_TEST_STR("meta-A", gui_key_fix ("meta-A"));
     WEE_TEST_STR("ctrl-a", gui_key_fix ("ctrl-a"));
     WEE_TEST_STR("return", gui_key_fix ("return"));
+    WEE_TEST_STR("@chat:wheelup", gui_key_fix ("@chat:wheelup"));
+    WEE_TEST_STR("@chat:alt-wheelup", gui_key_fix ("@chat:alt-wheelup"));
+    WEE_TEST_STR("@chat:ctrl-wheelup", gui_key_fix ("@chat:ctrl-wheelup"));
+    WEE_TEST_STR("@chat:alt-ctrl-wheelup", gui_key_fix ("@chat:alt-ctrl-wheelup"));
 
     /* changes */
     WEE_TEST_STR("ctrl-a", gui_key_fix ("ctrl-A"));
@@ -889,6 +894,8 @@ TEST(GuiKey, Fix)
     WEE_TEST_STR("ctrl-c,ctrl-b,A", gui_key_fix ("ctrl-C,ctrl-B,A"));
     WEE_TEST_STR("space", gui_key_fix (" "));
     WEE_TEST_STR("meta-space", gui_key_fix ("meta- "));
+    WEE_TEST_STR("meta-[A", gui_key_fix ("meta2-A"));
+    WEE_TEST_STR("@chat:alt-ctrl-wheelup", gui_key_fix ("@chat:ctrl-alt-wheelup"));
 }
 
 /*

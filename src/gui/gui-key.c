@@ -885,20 +885,65 @@ gui_key_legacy_to_alias (const char *key)
 }
 
 /*
- * Attempts to fix key:
- *   - transform upper case ctrl keys to lower case
- *   - replace " " by "space"
- *   - replace "meta2-" by "meta-[".
+ * Attempts to fix a key in mouse context (starting with "@area:"):
+ *   - transform "ctrl-alt-" to "alt-ctrl-"
  *
- * Examples:
- *   "ctrl-a"   => "ctrl-a"  (unchanged)
- *   "meta-A"   => "meta-A"  (unchanged)
- *   'return"   => "return"  (unchanged)
- *   "ctrl-G"   => "ctrl-g"
- *   "ctrl-C,b" => "ctrl-c,b"
- *   " "        => "space"
- *   "meta- "   => "meta-space"
- *   "meta2-A"  => "meta-[A"
+ * Example:
+ *   "@chat:ctrl-alt-button1" => "@chat:meta-ctrl-wheelup"
+ */
+
+char *
+gui_key_fix_mouse (const char *key)
+{
+    const char *pos;
+    char **result;
+
+    if (!key)
+        return NULL;
+
+    if (key[0] != '@')
+        return strdup (key);
+
+    pos = strchr (key, ':');
+    if (!pos)
+        return strdup (key);
+    pos++;
+
+    result = string_dyn_alloc (strlen (key) + 1);
+    if (!result)
+        return NULL;
+
+    string_dyn_concat (result, key, pos - key);
+
+    if (strncmp (pos, "ctrl-alt-", 9) == 0)
+    {
+        string_dyn_concat (result, "alt-ctrl-", -1);
+        pos += 9;
+    }
+    string_dyn_concat (result, pos, -1);
+
+    return string_dyn_free (result, 0);
+}
+
+/*
+ * Attempts to fix key:
+ *   - transform upper case ctrl keys to lower case ("ctrl-A" -> "ctrl-a")
+ *   - replace " " by "space"
+ *   - replace "meta2-" by "meta-["
+ *   - replace "ctrl-alt-" by "alt-ctrl-" (for mouse).
+ *
+ * Examples of valid keys, unchanged:
+ *   "ctrl-a"
+ *   "meta-A"
+ *   "return"
+ *
+ * Examples of keys fixed by this function:
+ *   "ctrl-A"                 => "ctrl-a"
+ *   "ctrl-C,b"               => "ctrl-c,b"
+ *   " "                      => "space"
+ *   "meta- "                 => "meta-space"
+ *   "meta2-A"                => "meta-[A"
+ *   "@chat:ctrl-alt-button1" => "@chat:alt-ctrl-wheelup"
  *
  * Note: result must be freed after use.
  */
@@ -914,7 +959,7 @@ gui_key_fix (const char *key)
         return NULL;
 
     if ((key[0] == '@') && strchr (key, ':'))
-        return strdup (key);
+        return gui_key_fix_mouse (key);
 
     result = string_dyn_alloc (strlen (key) + 1);
     if (!result)
