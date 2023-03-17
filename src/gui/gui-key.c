@@ -85,7 +85,7 @@ int gui_key_debug = 0;              /* 1 for key debug: display raw codes,  */
 
 int gui_key_verbose = 0;            /* 1 to see some messages               */
 
-char gui_key_combo_buffer[1024];    /* buffer used for combos               */
+char gui_key_combo[1024];           /* buffer used for combos               */
 int gui_key_grab = 0;               /* 1 if grab mode enabled (alt-k)       */
 int gui_key_grab_raw = 0;           /* grab raw key code?                   */
 int gui_key_grab_count = 0;         /* number of keys pressed in grab mode  */
@@ -115,7 +115,7 @@ gui_key_init ()
 {
     int context;
 
-    gui_key_combo_buffer[0] = '\0';
+    gui_key_combo[0] = '\0';
     gui_key_grab = 0;
     gui_key_grab_count = 0;
     gui_key_last_activity_time = time (NULL);
@@ -227,7 +227,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
     (void) remaining_calls;
 
     /* get expanded name (for example: \x01+U => ctrl-u) */
-    rc = gui_key_expand (gui_key_combo_buffer, &key_name, &key_name_alias);
+    rc = gui_key_expand (gui_key_combo, &key_name, &key_name_alias);
     if (rc && key_name && key_name_alias)
     {
         /*
@@ -293,7 +293,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
     gui_key_grab = 0;
     gui_key_grab_count = 0;
     gui_key_grab_command = 0;
-    gui_key_combo_buffer[0] = '\0';
+    gui_key_combo[0] = '\0';
 
     return WEECHAT_RC_OK;
 }
@@ -2251,16 +2251,20 @@ end:
 /*
  * Prints a key in debug mode:
  *   - raw combo (eg: "^[[A")
- *   - key name (eg: "meta-[A")
- *   - key name with alias (eg: "up")
- *   - command bound to key or message "no key binding"
+ *   - for keyboard:
+ *     - key name (eg: "meta-[A")
+ *     - key name with alias (eg: "up")
+ *     - command bound to key or message "no key binding"
+ *   - for mouse:
+ *     - "mouse"
  */
 
 void
 gui_key_debug_print_key (const char *combo, const char *key_name,
-                         const char *key_name_alias, const char *command)
+                         const char *key_name_alias, const char *command,
+                         int mouse)
 {
-    char *combo2, str_command[4096];
+    char *combo2, *ptr_combo2, str_command[4096];
 
     if (command)
     {
@@ -2281,19 +2285,45 @@ gui_key_debug_print_key (const char *combo, const char *key_name,
                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
     }
 
-    combo2 = string_replace (combo, "\x01", "^");
-    gui_chat_printf (
-        NULL,
-        "%s %s\"%s%s%s\"%s -> %s -> %s %s",
-        _("debug:"),
-        GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-        GUI_COLOR(GUI_COLOR_CHAT),
-        combo2,
-        GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-        GUI_COLOR(GUI_COLOR_CHAT),
-        key_name,
-        key_name_alias,
-        str_command);
+    combo2 = strdup (combo);
+    for (ptr_combo2 = combo2; ptr_combo2[0]; ptr_combo2++)
+    {
+        if ((ptr_combo2[0] == '\x01') || (ptr_combo2[0] == '\x1B'))
+            ptr_combo2[0] = '^';
+    }
+
+    if (mouse)
+    {
+        gui_chat_printf (
+            NULL,
+            "%s %s\"%s%s%s\"%s  %s[%s%s%s]",
+            _("debug:"),
+            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+            GUI_COLOR(GUI_COLOR_CHAT),
+            combo2,
+            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+            GUI_COLOR(GUI_COLOR_CHAT),
+            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+            GUI_COLOR(GUI_COLOR_CHAT),
+            _("mouse"),
+            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    }
+    else
+    {
+        gui_chat_printf (
+            NULL,
+            "%s %s\"%s%s%s\"%s -> %s -> %s %s",
+            _("debug:"),
+            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+            GUI_COLOR(GUI_COLOR_CHAT),
+            combo2,
+            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+            GUI_COLOR(GUI_COLOR_CHAT),
+            key_name,
+            key_name_alias,
+            str_command);
+    }
+
     free (combo2);
 }
 
@@ -2320,21 +2350,20 @@ gui_key_pressed (const char *key_str)
     key_name_alias = NULL;
 
     /* add key to buffer */
-    insert_into_input = (gui_key_combo_buffer[0] == '\0');
-    length = strlen (gui_key_combo_buffer);
+    insert_into_input = (gui_key_combo[0] == '\0');
+    length = strlen (gui_key_combo);
     length_key = strlen (key_str);
-    if (length + length_key + 1 <= (int)sizeof (gui_key_combo_buffer))
-        strcat (gui_key_combo_buffer, key_str);
+    if (length + length_key + 1 <= (int)sizeof (gui_key_combo))
+        strcat (gui_key_combo, key_str);
 
-    if (gui_key_debug)
+    if (gui_key_debug
+        && !gui_mouse_event_pending
+        && (strcmp (gui_key_combo, "q") == 0))
     {
-        if (strcmp (gui_key_combo_buffer, "q") == 0)
-        {
-            gui_key_debug = 0;
-            gui_key_combo_buffer[0] = '\0';
-            gui_bar_item_update ("input_text");
-            goto end_no_input;
-        }
+        gui_key_debug = 0;
+        gui_key_combo[0] = '\0';
+        gui_bar_item_update ("input_text");
+        goto end_no_input;
     }
 
     /* if we are in "show mode", increase counter and return */
@@ -2352,34 +2381,27 @@ gui_key_pressed (const char *key_str)
     /* mouse event pending */
     if (gui_mouse_event_pending)
     {
-        if (gui_key_debug)
+        pos = strstr (gui_key_combo, "\x1B[M");
+        if (pos)
         {
-            gui_key_combo_buffer[0] = '\0';
-        }
-        else
-        {
-            pos = strstr (gui_key_combo_buffer, "\x1B[M");
-            if (pos)
-            {
-                pos[0] = '\0';
-                if (!gui_window_bare_display)
-                    gui_mouse_event_end ();
-                gui_mouse_event_init ();
-            }
-        }
-        goto end_no_input;
-    }
-
-    if (strstr (gui_key_combo_buffer, "\x01[[M"))
-    {
-        gui_key_combo_buffer[0] = '\0';
-        if (!gui_key_debug)
+            pos[0] = '\0';
+            if (!gui_window_bare_display)
+                gui_mouse_event_end ();
             gui_mouse_event_init ();
+        }
         goto end_no_input;
     }
 
-    rc_expand = gui_key_expand (gui_key_combo_buffer,
-                                &key_name, &key_name_alias);
+    if (strstr (gui_key_combo, "\x01[[M"))
+    {
+        if (gui_key_debug)
+            gui_key_debug_print_key (gui_key_combo, NULL, NULL, NULL, 1);
+        gui_key_combo[0] = '\0';
+        gui_mouse_event_init ();
+        goto end_no_input;
+    }
+
+    rc_expand = gui_key_expand (gui_key_combo, &key_name, &key_name_alias);
 
     ptr_key = NULL;
     exact_match = 0;
@@ -2446,7 +2468,7 @@ gui_key_pressed (const char *key_str)
     {
         /*
          * key is found, but it can be partial match
-         * (in this case, gui_key_combo_buffer is kept and we'll wait for
+         * (in this case, gui_key_combo is kept and we'll wait for
          * the next key)
          */
         if (exact_match)
@@ -2454,11 +2476,9 @@ gui_key_pressed (const char *key_str)
             /* exact combo found => execute command */
             if (gui_key_debug)
             {
-                gui_key_debug_print_key (gui_key_combo_buffer,
-                                         key_name,
-                                         key_name_alias,
-                                         ptr_key->command);
-                gui_key_combo_buffer[0] = '\0';
+                gui_key_debug_print_key (gui_key_combo, key_name,
+                                         key_name_alias, ptr_key->command, 0);
+                gui_key_combo[0] = '\0';
             }
             else
             {
@@ -2466,8 +2486,8 @@ gui_key_pressed (const char *key_str)
                           "key_combo_%s", gui_key_context_string[context]);
                 rc = hook_signal_send (signal_name,
                                        WEECHAT_HOOK_SIGNAL_STRING,
-                                       gui_key_combo_buffer);
-                gui_key_combo_buffer[0] = '\0';
+                                       gui_key_combo);
+                gui_key_combo[0] = '\0';
                 if ((rc != WEECHAT_RC_OK_EAT) && ptr_key->command)
                 {
                     commands = string_split_command (ptr_key->command, ';');
@@ -2495,14 +2515,14 @@ gui_key_pressed (const char *key_str)
                       "key_combo_%s", gui_key_context_string[context]);
             if (hook_signal_send (signal_name,
                                   WEECHAT_HOOK_SIGNAL_STRING,
-                                  gui_key_combo_buffer) == WEECHAT_RC_OK_EAT)
+                                  gui_key_combo) == WEECHAT_RC_OK_EAT)
             {
-                gui_key_combo_buffer[0] = '\0';
+                gui_key_combo[0] = '\0';
                 goto end_no_input;
             }
-            if (gui_key_focus (gui_key_combo_buffer, GUI_KEY_CONTEXT_CURSOR))
+            if (gui_key_focus (gui_key_combo, GUI_KEY_CONTEXT_CURSOR))
             {
-                gui_key_combo_buffer[0] = '\0';
+                gui_key_combo[0] = '\0';
                 goto end_no_input;
             }
         }
@@ -2512,9 +2532,9 @@ gui_key_pressed (const char *key_str)
                       "key_combo_%s", gui_key_context_string[context]);
             if (hook_signal_send (signal_name,
                                        WEECHAT_HOOK_SIGNAL_STRING,
-                                       gui_key_combo_buffer) == WEECHAT_RC_OK_EAT)
+                                       gui_key_combo) == WEECHAT_RC_OK_EAT)
             {
-                gui_key_combo_buffer[0] = '\0';
+                gui_key_combo[0] = '\0';
                 goto end_no_input;
             }
         }
@@ -2525,12 +2545,10 @@ gui_key_pressed (const char *key_str)
         /* key is complete */
         if (gui_key_debug)
         {
-            gui_key_debug_print_key (gui_key_combo_buffer,
-                                     key_name,
-                                     key_name_alias,
-                                     NULL);
+            gui_key_debug_print_key (gui_key_combo, key_name, key_name_alias,
+                                     NULL, 0);
         }
-        gui_key_combo_buffer[0] = '\0';
+        gui_key_combo[0] = '\0';
     }
 
     /* in debug mode, don't insert anything in input */

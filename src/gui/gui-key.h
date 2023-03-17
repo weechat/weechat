@@ -77,7 +77,7 @@ extern int gui_default_keys_count[GUI_KEY_NUM_CONTEXTS];
 extern char *gui_key_context_string[GUI_KEY_NUM_CONTEXTS];
 extern int gui_key_debug;
 extern int gui_key_verbose;
-extern char gui_key_combo_buffer[];
+extern char gui_key_combo[];
 extern int gui_key_grab;
 extern int gui_key_grab_count;
 extern int *gui_key_buffer;
@@ -112,6 +112,9 @@ extern int gui_key_unbind (struct t_gui_buffer *buffer, int context,
                            const char *key);
 extern int gui_key_unbind_plugin (const char *context, const char *key);
 extern int gui_key_focus (const char *key, int context);
+extern void gui_key_debug_print_key (const char *combo, const char *key_name,
+                                     const char *key_name_alias,
+                                     const char *command, int mouse);
 extern int gui_key_pressed (const char *key_str);
 extern void gui_key_free (int context,
                           struct t_gui_key **keys,

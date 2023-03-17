@@ -436,6 +436,9 @@ gui_mouse_event_end ()
     const char *mouse_key;
     int bare_event;
 
+    if (gui_key_debug)
+        gui_key_debug_print_key (gui_key_combo, NULL, NULL, NULL, 1);
+
     gui_mouse_event_pending = 0;
 
     /* end mouse event timer */
@@ -446,7 +449,7 @@ gui_mouse_event_end ()
     }
 
     /* get key from mouse code */
-    mouse_key = gui_mouse_event_code2key (gui_key_combo_buffer);
+    mouse_key = gui_mouse_event_code2key (gui_key_combo);
     if (mouse_key && mouse_key[0])
     {
         bare_event = string_match (mouse_key, "*-event-*", 1);
@@ -455,7 +458,7 @@ gui_mouse_event_end ()
             if (!bare_event)
                 gui_mouse_grab_end (mouse_key);
         }
-        else
+        else if (!gui_key_debug)
         {
             /* execute command (if found) */
             (void) gui_key_focus (mouse_key,
@@ -465,5 +468,5 @@ gui_mouse_event_end ()
             gui_mouse_event_reset ();
     }
 
-    gui_key_combo_buffer[0] = '\0';
+    gui_key_combo[0] = '\0';
 }
