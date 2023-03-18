@@ -648,7 +648,8 @@ class AutogenDoc():
                             '\"/\" for italic, '
                             '\"_\" for underline'
                         )
-                    self.write(f'* [[option_{config}.{section}.{option}]] '
+                    option_esc = option.replace(',', '_')
+                    self.write(f'* [[option_{config}.{section}.{option_esc}]] '
                                f'*{config}.{section}.{option}*')
                     self.write('** %s: pass:none[%s]',
                                _('description'), desc.replace(']', '\\]'))
