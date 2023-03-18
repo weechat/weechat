@@ -418,7 +418,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     }
                     /*
                      * "authentication_method" and "sasl_mechanism_used" are
-                     * new in WeeChat 3.9
+                     * new in WeeChat 4.0.0
                      */
                     if (weechat_infolist_search_var (infolist, "authentication_method"))
                     {

@@ -17,10 +17,10 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
-[[v3.9]]
-== Version 3.9 (under dev)
+[[v4.0.0]]
+== Version 4.0.0 (under dev)
 
-[[v3.9_key_bindings_improvements]]
+[[v4.0.0_key_bindings_improvements]]
 === Key bindings improvements
 
 The format of key bindings has changed to be more user-friendly, and this is
@@ -40,7 +40,7 @@ Overview of new features:
 See https://specs.weechat.org/specs/2023-002-key-bindings-improvements.html[Key bindings improvements specification]
 for more information.
 
-[[v3.9_new_key_format]]
+[[v4.0.0_new_key_format]]
 ==== New key format
 
 Aliases are now used for keys, like `f1`, `home`, `return`, etc. +
@@ -65,7 +65,7 @@ A warning is displayed when a raw key or invalid key is added. +
 For example `meta-[A` (which should be `up`) or `ctrl-ca` (missing comma, it
 should be `ctrl-c,a`).
 
-[[v3.9_grab_raw_key]]
+[[v4.0.0_grab_raw_key]]
 ==== Grab raw key and command
 
 New key kbd:[Alt+K] (upper case) is added to grab raw key and its command.
@@ -83,7 +83,7 @@ they can still be used and bound, but this is not recommended. +
 They should be used only in case of problem with the new aliases or with your
 terminal.
 
-[[v3.9_ctrl_keys_lower_case]]
+[[v4.0.0_ctrl_keys_lower_case]]
 ==== Control keys as lower case
 
 Keys using the kbd:[Ctrl] key and a letter are now automatically converted to
@@ -106,7 +106,7 @@ New key binding (context "default"): ctrl-q => /print test
 With older releases, upper case was mandatory and lower case letter for control
 keys were not working at all.
 
-[[v3.9_case_sensitive_identifiers]]
+[[v4.0.0_case_sensitive_identifiers]]
 === Case sensitive identifiers
 
 Many identifiers are made case sensitive, including among others:
@@ -165,7 +165,7 @@ The default aliases can be converted to lower case with the following commands:
 /alias rename WW ww
 ----
 
-[[v3.9_remove_autotools]]
+[[v4.0.0_remove_autotools]]
 === Remove build with autotools
 
 The autotools support for build of WeeChat has been removed. +

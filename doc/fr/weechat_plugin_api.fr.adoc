@@ -2620,7 +2620,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 _WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8,
-2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 3.9._
+2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0._
 
 Évaluer l'expression et retourner le résultat sous forme de chaîne.
 Les variables spéciales avec le format `+${variable}+` sont étendues (voir le
@@ -6368,7 +6368,7 @@ Fonctions pour les fichiers de configuration.
 
 ==== config_new
 
-_Mis à jour dans la 1.5, 3.9._
+_Mis à jour dans la 1.5, 4.0.0._
 
 Créer un nouveau fichier de configuration.
 
@@ -6471,7 +6471,7 @@ config_file = weechat.config_new("test", "my_config_reload_cb", "")
 
 ==== config_set_version
 
-_WeeChat ≥ 3.9._
+_WeeChat ≥ 4.0.0._
 
 Définir la version du fichier de configuration et une fonction de rappel pour
 la mise à jour des sections/options à la volée lorsque la configuration est lue.
@@ -14585,7 +14585,7 @@ str = weechat.buffer_string_replace_local_var(my_buffer, "test avec $toto")
 
 ==== buffer_match_list
 
-_WeeChat ≥ 0.3.5, mis à jour dans la 3.9._
+_WeeChat ≥ 0.3.5, mis à jour dans la 4.0.0._
 
 Vérifier si le tampon correspond à la liste de tampons.
 
@@ -14605,7 +14605,7 @@ Paramètres :
 ** le caractère joker `+*+` est autorisé dans le nom
 
 [NOTE]
-Depuis la version 3.9, la comparaison des noms de tampons est sensible à la casse.
+Depuis la version 4.0.0, la comparaison des noms de tampons est sensible à la casse.
 
 Valeur de retour :
 

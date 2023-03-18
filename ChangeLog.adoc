@@ -15,8 +15,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
-[[v3.9]]
-== Version 3.9 (under dev)
+[[v4.0.0]]
+== Version 4.0.0 (under dev)
 
 New features::
 

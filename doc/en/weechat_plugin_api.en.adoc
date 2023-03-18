@@ -2574,7 +2574,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 3.9._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0._
 
 Evaluate an expression and return result as a string.
 Special variables with format `+${variable}+` are expanded (see table below).
@@ -6271,7 +6271,7 @@ Functions for configuration files.
 
 ==== config_new
 
-_Updated in 1.5, 3.9._
+_Updated in 1.5, 4.0.0._
 
 Create a new configuration file.
 
@@ -6368,7 +6368,7 @@ config_file = weechat.config_new("test", "my_config_reload_cb", "")
 
 ==== config_set_version
 
-_WeeChat ≥ 3.9._
+_WeeChat ≥ 4.0.0._
 
 Set configuration file version and a callback to update config sections/options
 on-the-fly when the config is read.
@@ -14266,7 +14266,7 @@ str = weechat.buffer_string_replace_local_var(my_buffer, "test with $toto")
 
 ==== buffer_match_list
 
-_WeeChat ≥ 0.3.5, updated in 3.9._
+_WeeChat ≥ 0.3.5, updated in 4.0.0._
 
 Check if buffer matches a list of buffers.
 
@@ -14286,7 +14286,7 @@ Arguments:
 ** wildcard `+*+` is allowed in name
 
 [NOTE]
-Since version 3.9, comparison of buffer names is case sensitive.
+Since version 4.0.0, comparison of buffer names is case sensitive.
 
 Return value:
 

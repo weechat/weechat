@@ -2486,7 +2486,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6 и 3.8, 3.9._
+_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6 и 3.8, 4.0.0._
 
 Израчунава израз и враћа вредност као стринг. Специјалне променљиве у формату `+${променљива}+` се развијају (погледајте табелу испод).
 
@@ -6115,7 +6115,7 @@ weechat_hashtable_free (hashtable);
 
 ==== config_new
 
-_Ажурирано у верзији 1.5, 3.9._
+_Ажурирано у верзији 1.5, 4.0.0._
 
 Креира нови конфигурациони фајл.
 
@@ -6202,7 +6202,7 @@ config_file = weechat.config_new("test", "my_config_reload_cb", "")
 // TRANSLATION MISSING
 ==== config_set_version
 
-_WeeChat ≥ 3.9._
+_WeeChat ≥ 4.0.0._
 
 Set configuration file version and a callback to update config sections/options
 on-the-fly when the config is read.
@@ -13783,7 +13783,7 @@ str = weechat.buffer_string_replace_local_var(my_buffer, "тест са $toto")
 
 ==== buffer_match_list
 
-_WeeChat ≥ 0.3.5, ажурирано у верзији 3.9._
+_WeeChat ≥ 0.3.5, ажурирано у верзији 4.0.0._
 
 Проверава да ли се бафер подудара са листом бафера.
 
@@ -13803,7 +13803,7 @@ int weechat_buffer_match_list (struct t_gui_buffer *buffer, const char *string);
 ** у имену је дозвољен џокер `+*+`
 
 [NOTE]
-Од верзије 3.9, поређење имена бафера прави разлику у величини слова.
+Од верзије 4.0.0, поређење имена бафера прави разлику у величини слова.
 
 Повратна вредност:
 

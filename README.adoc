@@ -43,6 +43,10 @@ WeeChat can be installed using your favorite package manager (recommended) or by
 
 For detailed instructions, please check the https://weechat.org/doc/user/#install[WeeChat user's guide].
 
+== Semantic versioning
+
+WeeChat is following a "practical" semantic versioning, see file link:Contributing.adoc#semantic-versioning[Contributing.adoc].
+
 == Copyright
 
 Copyright (C) 2003-2023 Sébastien Helleu <flashcode@flashtux.org>
