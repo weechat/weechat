@@ -20,6 +20,8 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v4.0.0]]
 == Version 4.0.0 (under dev)
 
+This is a major version that includes breaking changes described below.
+
 [[v4.0.0_key_bindings_improvements]]
 === Key bindings improvements
 
