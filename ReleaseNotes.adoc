@@ -20,8 +20,71 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.9]]
 == Version 3.9 (under dev)
 
+[[v3.9_key_bindings_improvements]]
+=== Key bindings improvements
+
+The format of key bindings has changed to be more user-friendly, and this is
+a breaking change: legacy keys are automatically converted, but some triggers,
+plugins or scripts might need manual changes.
+
+Overview of new features:
+
+- use of alias for keys (`meta-left` instead of `meta2-1;3D`)
+- use comma to separate keys in combos (`meta-w,meta-up` instead of
+  `meta-wmeta-meta2-A`)
+- control keys are converted to lower keys (`ctrl-a` instead of `ctrl-A`)
+- keys are normal options, so they are shown and can be updated with `/set`
+  and `/fset` commands
+- command `/key` without arguments opens the fset buffer with all keys
+
+See https://specs.weechat.org/specs/2023-002-key-bindings-improvements.html[Key bindings improvements specification]
+for more information.
+
+[[v3.9_new_key_format]]
+==== New key format
+
+Aliases are now used for keys, like `f1`, `home`, `return`, etc. +
+In addition, a comma is now required between different keys, for example `ctrl-cb`
+is not valid any more and must be replaced by `ctrl-c,b`.
+
+The keys in weechat.conf are automatically converted from legacy format on first
+run or upgrade with a legacy configuration file.
+
+For keys bound in external plugins or scripts, WeeChat tries to convert them
+on-the-fly to stay compatible, but this can not work in all cases (this is a
+breaking change).
+
+The following fixes are done on keys when they are defined:
+
+- transform upper case ctrl keys to lower case
+- replace space char by `space`
+- replace `meta2-` by `meta-[` (modifier `meta2-` doesn't exist any more)
+- mouse modifiers are now in this order: `alt-` then `ctrl-`.
+
+A warning is displayed when a raw key or invalid key is added. +
+For example `meta-[A` (which should be `up`) or `ctrl-ca` (missing comma, it
+should be `ctrl-c,a`).
+
+[[v3.9_grab_raw_key]]
+==== Grab raw key and command
+
+New key kbd:[Alt+K] (upper case) is added to grab raw key and its command.
+
+Most of times this command is not needed, and the existing key kbd:[Alt+k]
+(lower case) is preferred, as it returns the key using the new aliases.
+
+For example:
+
+- key kbd:[Alt+k] then up arrow displays: `up /input history_previous`
+- key kbd:[Alt+K] then up arrow displays: `meta-[A`
+
+Raw keys have higher priority than key with alias (they are looked first);
+they can still be used and bound, but this is not recommended. +
+They should be used only in case of problem with the new aliases or with your
+terminal.
+
 [[v3.9_ctrl_keys_lower_case]]
-=== Control keys as lower case
+==== Control keys as lower case
 
 Keys using the kbd:[Ctrl] key and a letter are now automatically converted to
 lower case. +
