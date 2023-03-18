@@ -1404,6 +1404,7 @@ extension : nom de l'extension ("core" pour le cœur de WeeChat)
      dirs : afficher les répertoires
     hdata : afficher des infos sur les hdata (avec free : supprimer tous les hdata en mémoire)
 infolists : afficher des infos sur les infolists
+      key : activer le debug pour le clavier et la souris : afficher les codes bruts, le nom étendu et la commande associée ('q' pour quitter ce mode)
      libs : afficher des infos sur les bibliothèques externes utilisées
    memory : afficher des infos sur l'utilisation de la mémoire
     mouse : activer/désactiver le debug pour la souris
@@ -1715,8 +1716,6 @@ liste des actions :
   grab_mouse_area : capturer un évènement de la souris avec la zone
   insert : insérer du texte dans la ligne de commande (les caractères échappés sont autorisés, voir /help print)
   send : envoyer du texte au tampon
-  paste_start : début de collage (mode "bracketed paste")
-  paste_stop : fin de collage (mode "bracketed paste")
 
 Cette commande est utilisée par les associations de touches ou les extensions.
 ----
@@ -1768,7 +1767,7 @@ Exemples :
 * `+key+`: associer/libérer des touches
 
 ----
-/key  list|listdefault|listdiff [<contexte>]
+/key  [list|listdefault|listdiff] [<contexte>]
       bind <touche> [<commande> [<args>]]
       bindctxt <contexte> <touche> [<commande> [<args>]]
       unbind <touche>
@@ -1794,6 +1793,15 @@ listdefault : afficher les touches par défaut
 
 Lors de l'association d'une commande à une touche, il est recommandé d'utiliser la touche alt+k (ou Échap puis k), et puis de presser la touche à associer : cela insère le code de la touche dans la ligne de commande.
 
+Modificateurs autorisés (dans cet ordre lorsque plusieurs sont utilisés) :
+  meta-  (touche alt)
+  ctrl-  (touche control)
+  shift-  (touche shift, peut être utilisé seulement avec les noms de touches ci-dessous)
+
+Noms de touches autorisés : f0 à f20, home, insert, delete, end, backspace, pgup, pgdn, up, down, right, left, tab, return, comma, space.
+
+La virgule est utilisée pour séparer plusieurs touches.
+
 Pour le contexte "mouse" (possible aussi pour le contexte "cursor"), la touche a le format : "@zone:touche" ou "@zone1>zone2:touche" où la zone peut être :
           * : n'importe quelle zone à l'écran
        chat : la zone de discussion (n'importe quel tampon)
@@ -1807,12 +1815,12 @@ Une valeur spéciale pour la commande avec le format "hsignal:nom" peut être ut
 Une autre valeur spéciale "-" peut être utilisée pour désactiver la touche (elle sera ignorée lors de la recherche de touches).
 
 Exemples :
-  touche alt-t pour activer/désactiver la liste des pseudos :
-    /key bind meta-t /bar toggle nicklist
   touche alt-r pour aller sur le canal IRC #weechat :
     /key bind meta-r /buffer #weechat
-  restaure l'association par défaut pour la touche alt-r :
+  restaurer l'association par défaut pour la touche alt-r :
     /key reset meta-r
+  touche meta-v puis f1 pour lancer /help :
+    /key bind meta-v,f1 /help
   touche "tab" pour arrêter la recherche dans le tampon :
     /key bindctxt search ctrl-i /input search_stop
   bouton du milieu de la souris sur un pseudo pour récupérer les infos sur le pseudo :

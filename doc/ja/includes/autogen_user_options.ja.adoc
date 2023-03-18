@@ -3004,6 +3004,1662 @@
 ** 値: 0 .. 1000
 ** デフォルト値: `+50+`
 
+* [[option_weechat.key.backspace]] *weechat.key.backspace*
+** 説明: pass:none[touche "backspace" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input delete_previous_char"+`
+
+* [[option_weechat.key.ctrl-_]] *weechat.key.ctrl-_*
+** 説明: pass:none[touche "ctrl-_" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input undo"+`
+
+* [[option_weechat.key.ctrl-a]] *weechat.key.ctrl-a*
+** 説明: pass:none[touche "ctrl-a" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input move_beginning_of_line"+`
+
+* [[option_weechat.key.ctrl-b]] *weechat.key.ctrl-b*
+** 説明: pass:none[touche "ctrl-b" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input move_previous_char"+`
+
+* [[option_weechat.key.ctrl-c__]] *weechat.key.ctrl-c,_*
+** 説明: pass:none[touche "ctrl-c,_" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input insert \x1F"+`
+
+* [[option_weechat.key.ctrl-c_b]] *weechat.key.ctrl-c,b*
+** 説明: pass:none[touche "ctrl-c,b" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input insert \x02"+`
+
+* [[option_weechat.key.ctrl-c_c]] *weechat.key.ctrl-c,c*
+** 説明: pass:none[touche "ctrl-c,c" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input insert \x03"+`
+
+* [[option_weechat.key.ctrl-c_i]] *weechat.key.ctrl-c,i*
+** 説明: pass:none[touche "ctrl-c,i" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input insert \x1D"+`
+
+* [[option_weechat.key.ctrl-c_o]] *weechat.key.ctrl-c,o*
+** 説明: pass:none[touche "ctrl-c,o" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input insert \x0F"+`
+
+* [[option_weechat.key.ctrl-c_v]] *weechat.key.ctrl-c,v*
+** 説明: pass:none[touche "ctrl-c,v" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input insert \x16"+`
+
+* [[option_weechat.key.ctrl-d]] *weechat.key.ctrl-d*
+** 説明: pass:none[touche "ctrl-d" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input delete_next_char"+`
+
+* [[option_weechat.key.ctrl-down]] *weechat.key.ctrl-down*
+** 説明: pass:none[touche "ctrl-down" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input history_global_next"+`
+
+* [[option_weechat.key.ctrl-e]] *weechat.key.ctrl-e*
+** 説明: pass:none[touche "ctrl-e" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input move_end_of_line"+`
+
+* [[option_weechat.key.ctrl-f]] *weechat.key.ctrl-f*
+** 説明: pass:none[touche "ctrl-f" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input move_next_char"+`
+
+* [[option_weechat.key.ctrl-f1]] *weechat.key.ctrl-f1*
+** 説明: pass:none[touche "ctrl-f1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll buflist * -100%"+`
+
+* [[option_weechat.key.ctrl-f11]] *weechat.key.ctrl-f11*
+** 説明: pass:none[touche "ctrl-f11" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll nicklist * -100%"+`
+
+* [[option_weechat.key.ctrl-f12]] *weechat.key.ctrl-f12*
+** 説明: pass:none[touche "ctrl-f12" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll nicklist * +100%"+`
+
+* [[option_weechat.key.ctrl-f2]] *weechat.key.ctrl-f2*
+** 説明: pass:none[touche "ctrl-f2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll buflist * +100%"+`
+
+* [[option_weechat.key.ctrl-k]] *weechat.key.ctrl-k*
+** 説明: pass:none[touche "ctrl-k" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input delete_end_of_line"+`
+
+* [[option_weechat.key.ctrl-l]] *weechat.key.ctrl-l*
+** 説明: pass:none[touche "ctrl-l" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window refresh"+`
+
+* [[option_weechat.key.ctrl-left]] *weechat.key.ctrl-left*
+** 説明: pass:none[touche "ctrl-left" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input move_previous_word"+`
+
+* [[option_weechat.key.ctrl-n]] *weechat.key.ctrl-n*
+** 説明: pass:none[touche "ctrl-n" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer +1"+`
+
+* [[option_weechat.key.ctrl-p]] *weechat.key.ctrl-p*
+** 説明: pass:none[touche "ctrl-p" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer -1"+`
+
+* [[option_weechat.key.ctrl-r]] *weechat.key.ctrl-r*
+** 説明: pass:none[touche "ctrl-r" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input search_text_here"+`
+
+* [[option_weechat.key.ctrl-right]] *weechat.key.ctrl-right*
+** 説明: pass:none[touche "ctrl-right" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input move_next_word"+`
+
+* [[option_weechat.key.ctrl-s_ctrl-u]] *weechat.key.ctrl-s,ctrl-u*
+** 説明: pass:none[touche "ctrl-s,ctrl-u" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/allbuf /buffer set unread"+`
+
+* [[option_weechat.key.ctrl-t]] *weechat.key.ctrl-t*
+** 説明: pass:none[touche "ctrl-t" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input transpose_chars"+`
+
+* [[option_weechat.key.ctrl-u]] *weechat.key.ctrl-u*
+** 説明: pass:none[touche "ctrl-u" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input delete_beginning_of_line"+`
+
+* [[option_weechat.key.ctrl-up]] *weechat.key.ctrl-up*
+** 説明: pass:none[touche "ctrl-up" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input history_global_previous"+`
+
+* [[option_weechat.key.ctrl-w]] *weechat.key.ctrl-w*
+** 説明: pass:none[touche "ctrl-w" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input delete_previous_word_whitespace"+`
+
+* [[option_weechat.key.ctrl-x]] *weechat.key.ctrl-x*
+** 説明: pass:none[touche "ctrl-x" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer switch"+`
+
+* [[option_weechat.key.ctrl-y]] *weechat.key.ctrl-y*
+** 説明: pass:none[touche "ctrl-y" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input clipboard_paste"+`
+
+* [[option_weechat.key.delete]] *weechat.key.delete*
+** 説明: pass:none[touche "delete" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input delete_next_char"+`
+
+* [[option_weechat.key.down]] *weechat.key.down*
+** 説明: pass:none[touche "down" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input history_next"+`
+
+* [[option_weechat.key.end]] *weechat.key.end*
+** 説明: pass:none[touche "end" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input move_end_of_line"+`
+
+* [[option_weechat.key.f1]] *weechat.key.f1*
+** 説明: pass:none[touche "f1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll buflist * -100%"+`
+
+* [[option_weechat.key.f10]] *weechat.key.f10*
+** 説明: pass:none[touche "f10" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll title * +30%"+`
+
+* [[option_weechat.key.f11]] *weechat.key.f11*
+** 説明: pass:none[touche "f11" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll nicklist * -100%"+`
+
+* [[option_weechat.key.f12]] *weechat.key.f12*
+** 説明: pass:none[touche "f12" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll nicklist * +100%"+`
+
+* [[option_weechat.key.f2]] *weechat.key.f2*
+** 説明: pass:none[touche "f2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll buflist * +100%"+`
+
+* [[option_weechat.key.f5]] *weechat.key.f5*
+** 説明: pass:none[touche "f5" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer -1"+`
+
+* [[option_weechat.key.f6]] *weechat.key.f6*
+** 説明: pass:none[touche "f6" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer +1"+`
+
+* [[option_weechat.key.f7]] *weechat.key.f7*
+** 説明: pass:none[touche "f7" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window -1"+`
+
+* [[option_weechat.key.f8]] *weechat.key.f8*
+** 説明: pass:none[touche "f8" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window +1"+`
+
+* [[option_weechat.key.f9]] *weechat.key.f9*
+** 説明: pass:none[touche "f9" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll title * -30%"+`
+
+* [[option_weechat.key.home]] *weechat.key.home*
+** 説明: pass:none[touche "home" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input move_beginning_of_line"+`
+
+* [[option_weechat.key.left]] *weechat.key.left*
+** 説明: pass:none[touche "left" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input move_previous_char"+`
+
+* [[option_weechat.key.meta--]] *weechat.key.meta--*
+** 説明: pass:none[touche "meta--" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/filter toggle @"+`
+
+* [[option_weechat.key.meta-/]] *weechat.key.meta-/*
+** 説明: pass:none[touche "meta-/" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer jump last_displayed"+`
+
+* [[option_weechat.key.meta-0]] *weechat.key.meta-0*
+** 説明: pass:none[touche "meta-0" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *10"+`
+
+* [[option_weechat.key.meta-1]] *weechat.key.meta-1*
+** 説明: pass:none[touche "meta-1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *1"+`
+
+* [[option_weechat.key.meta-2]] *weechat.key.meta-2*
+** 説明: pass:none[touche "meta-2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *2"+`
+
+* [[option_weechat.key.meta-3]] *weechat.key.meta-3*
+** 説明: pass:none[touche "meta-3" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *3"+`
+
+* [[option_weechat.key.meta-4]] *weechat.key.meta-4*
+** 説明: pass:none[touche "meta-4" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *4"+`
+
+* [[option_weechat.key.meta-5]] *weechat.key.meta-5*
+** 説明: pass:none[touche "meta-5" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *5"+`
+
+* [[option_weechat.key.meta-6]] *weechat.key.meta-6*
+** 説明: pass:none[touche "meta-6" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *6"+`
+
+* [[option_weechat.key.meta-7]] *weechat.key.meta-7*
+** 説明: pass:none[touche "meta-7" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *7"+`
+
+* [[option_weechat.key.meta-8]] *weechat.key.meta-8*
+** 説明: pass:none[touche "meta-8" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *8"+`
+
+* [[option_weechat.key.meta-9]] *weechat.key.meta-9*
+** 説明: pass:none[touche "meta-9" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *9"+`
+
+* [[option_weechat.key.meta-<]] *weechat.key.meta-<*
+** 説明: pass:none[touche "meta-<" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer jump prev_visited"+`
+
+* [[option_weechat.key.meta-=]] *weechat.key.meta-=*
+** 説明: pass:none[touche "meta-=" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/filter toggle"+`
+
+* [[option_weechat.key.meta->]] *weechat.key.meta->*
+** 説明: pass:none[touche "meta->" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer jump next_visited"+`
+
+* [[option_weechat.key.meta-B]] *weechat.key.meta-B*
+** 説明: pass:none[touche "meta-B" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buflist toggle"+`
+
+* [[option_weechat.key.meta-K]] *weechat.key.meta-K*
+** 説明: pass:none[touche "meta-K" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input grab_raw_key_command"+`
+
+* [[option_weechat.key.meta-N]] *weechat.key.meta-N*
+** 説明: pass:none[touche "meta-N" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar toggle nicklist"+`
+
+* [[option_weechat.key.meta-_]] *weechat.key.meta-_*
+** 説明: pass:none[touche "meta-_" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input redo"+`
+
+* [[option_weechat.key.meta-a]] *weechat.key.meta-a*
+** 説明: pass:none[touche "meta-a" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer jump smart"+`
+
+* [[option_weechat.key.meta-b]] *weechat.key.meta-b*
+** 説明: pass:none[touche "meta-b" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input move_previous_word"+`
+
+* [[option_weechat.key.meta-backspace]] *weechat.key.meta-backspace*
+** 説明: pass:none[touche "meta-backspace" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input delete_previous_word"+`
+
+* [[option_weechat.key.meta-d]] *weechat.key.meta-d*
+** 説明: pass:none[touche "meta-d" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input delete_next_word"+`
+
+* [[option_weechat.key.meta-down]] *weechat.key.meta-down*
+** 説明: pass:none[touche "meta-down" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer +1"+`
+
+* [[option_weechat.key.meta-end]] *weechat.key.meta-end*
+** 説明: pass:none[touche "meta-end" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window scroll_bottom"+`
+
+* [[option_weechat.key.meta-f]] *weechat.key.meta-f*
+** 説明: pass:none[touche "meta-f" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input move_next_word"+`
+
+* [[option_weechat.key.meta-f1]] *weechat.key.meta-f1*
+** 説明: pass:none[touche "meta-f1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll buflist * b"+`
+
+* [[option_weechat.key.meta-f11]] *weechat.key.meta-f11*
+** 説明: pass:none[touche "meta-f11" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll nicklist * b"+`
+
+* [[option_weechat.key.meta-f12]] *weechat.key.meta-f12*
+** 説明: pass:none[touche "meta-f12" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll nicklist * e"+`
+
+* [[option_weechat.key.meta-f2]] *weechat.key.meta-f2*
+** 説明: pass:none[touche "meta-f2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll buflist * e"+`
+
+* [[option_weechat.key.meta-h_meta-R]] *weechat.key.meta-h,meta-R*
+** 説明: pass:none[touche "meta-h,meta-R" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/hotlist restore -all"+`
+
+* [[option_weechat.key.meta-h_meta-c]] *weechat.key.meta-h,meta-c*
+** 説明: pass:none[touche "meta-h,meta-c" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/hotlist clear"+`
+
+* [[option_weechat.key.meta-h_meta-m]] *weechat.key.meta-h,meta-m*
+** 説明: pass:none[touche "meta-h,meta-m" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/hotlist remove"+`
+
+* [[option_weechat.key.meta-h_meta-r]] *weechat.key.meta-h,meta-r*
+** 説明: pass:none[touche "meta-h,meta-r" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/hotlist restore"+`
+
+* [[option_weechat.key.meta-home]] *weechat.key.meta-home*
+** 説明: pass:none[touche "meta-home" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window scroll_top"+`
+
+* [[option_weechat.key.meta-j_0_1]] *weechat.key.meta-j,0,1*
+** 説明: pass:none[touche "meta-j,0,1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *1"+`
+
+* [[option_weechat.key.meta-j_0_2]] *weechat.key.meta-j,0,2*
+** 説明: pass:none[touche "meta-j,0,2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *2"+`
+
+* [[option_weechat.key.meta-j_0_3]] *weechat.key.meta-j,0,3*
+** 説明: pass:none[touche "meta-j,0,3" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *3"+`
+
+* [[option_weechat.key.meta-j_0_4]] *weechat.key.meta-j,0,4*
+** 説明: pass:none[touche "meta-j,0,4" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *4"+`
+
+* [[option_weechat.key.meta-j_0_5]] *weechat.key.meta-j,0,5*
+** 説明: pass:none[touche "meta-j,0,5" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *5"+`
+
+* [[option_weechat.key.meta-j_0_6]] *weechat.key.meta-j,0,6*
+** 説明: pass:none[touche "meta-j,0,6" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *6"+`
+
+* [[option_weechat.key.meta-j_0_7]] *weechat.key.meta-j,0,7*
+** 説明: pass:none[touche "meta-j,0,7" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *7"+`
+
+* [[option_weechat.key.meta-j_0_8]] *weechat.key.meta-j,0,8*
+** 説明: pass:none[touche "meta-j,0,8" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *8"+`
+
+* [[option_weechat.key.meta-j_0_9]] *weechat.key.meta-j,0,9*
+** 説明: pass:none[touche "meta-j,0,9" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *9"+`
+
+* [[option_weechat.key.meta-j_1_0]] *weechat.key.meta-j,1,0*
+** 説明: pass:none[touche "meta-j,1,0" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *10"+`
+
+* [[option_weechat.key.meta-j_1_1]] *weechat.key.meta-j,1,1*
+** 説明: pass:none[touche "meta-j,1,1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *11"+`
+
+* [[option_weechat.key.meta-j_1_2]] *weechat.key.meta-j,1,2*
+** 説明: pass:none[touche "meta-j,1,2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *12"+`
+
+* [[option_weechat.key.meta-j_1_3]] *weechat.key.meta-j,1,3*
+** 説明: pass:none[touche "meta-j,1,3" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *13"+`
+
+* [[option_weechat.key.meta-j_1_4]] *weechat.key.meta-j,1,4*
+** 説明: pass:none[touche "meta-j,1,4" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *14"+`
+
+* [[option_weechat.key.meta-j_1_5]] *weechat.key.meta-j,1,5*
+** 説明: pass:none[touche "meta-j,1,5" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *15"+`
+
+* [[option_weechat.key.meta-j_1_6]] *weechat.key.meta-j,1,6*
+** 説明: pass:none[touche "meta-j,1,6" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *16"+`
+
+* [[option_weechat.key.meta-j_1_7]] *weechat.key.meta-j,1,7*
+** 説明: pass:none[touche "meta-j,1,7" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *17"+`
+
+* [[option_weechat.key.meta-j_1_8]] *weechat.key.meta-j,1,8*
+** 説明: pass:none[touche "meta-j,1,8" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *18"+`
+
+* [[option_weechat.key.meta-j_1_9]] *weechat.key.meta-j,1,9*
+** 説明: pass:none[touche "meta-j,1,9" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *19"+`
+
+* [[option_weechat.key.meta-j_2_0]] *weechat.key.meta-j,2,0*
+** 説明: pass:none[touche "meta-j,2,0" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *20"+`
+
+* [[option_weechat.key.meta-j_2_1]] *weechat.key.meta-j,2,1*
+** 説明: pass:none[touche "meta-j,2,1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *21"+`
+
+* [[option_weechat.key.meta-j_2_2]] *weechat.key.meta-j,2,2*
+** 説明: pass:none[touche "meta-j,2,2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *22"+`
+
+* [[option_weechat.key.meta-j_2_3]] *weechat.key.meta-j,2,3*
+** 説明: pass:none[touche "meta-j,2,3" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *23"+`
+
+* [[option_weechat.key.meta-j_2_4]] *weechat.key.meta-j,2,4*
+** 説明: pass:none[touche "meta-j,2,4" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *24"+`
+
+* [[option_weechat.key.meta-j_2_5]] *weechat.key.meta-j,2,5*
+** 説明: pass:none[touche "meta-j,2,5" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *25"+`
+
+* [[option_weechat.key.meta-j_2_6]] *weechat.key.meta-j,2,6*
+** 説明: pass:none[touche "meta-j,2,6" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *26"+`
+
+* [[option_weechat.key.meta-j_2_7]] *weechat.key.meta-j,2,7*
+** 説明: pass:none[touche "meta-j,2,7" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *27"+`
+
+* [[option_weechat.key.meta-j_2_8]] *weechat.key.meta-j,2,8*
+** 説明: pass:none[touche "meta-j,2,8" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *28"+`
+
+* [[option_weechat.key.meta-j_2_9]] *weechat.key.meta-j,2,9*
+** 説明: pass:none[touche "meta-j,2,9" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *29"+`
+
+* [[option_weechat.key.meta-j_3_0]] *weechat.key.meta-j,3,0*
+** 説明: pass:none[touche "meta-j,3,0" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *30"+`
+
+* [[option_weechat.key.meta-j_3_1]] *weechat.key.meta-j,3,1*
+** 説明: pass:none[touche "meta-j,3,1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *31"+`
+
+* [[option_weechat.key.meta-j_3_2]] *weechat.key.meta-j,3,2*
+** 説明: pass:none[touche "meta-j,3,2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *32"+`
+
+* [[option_weechat.key.meta-j_3_3]] *weechat.key.meta-j,3,3*
+** 説明: pass:none[touche "meta-j,3,3" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *33"+`
+
+* [[option_weechat.key.meta-j_3_4]] *weechat.key.meta-j,3,4*
+** 説明: pass:none[touche "meta-j,3,4" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *34"+`
+
+* [[option_weechat.key.meta-j_3_5]] *weechat.key.meta-j,3,5*
+** 説明: pass:none[touche "meta-j,3,5" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *35"+`
+
+* [[option_weechat.key.meta-j_3_6]] *weechat.key.meta-j,3,6*
+** 説明: pass:none[touche "meta-j,3,6" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *36"+`
+
+* [[option_weechat.key.meta-j_3_7]] *weechat.key.meta-j,3,7*
+** 説明: pass:none[touche "meta-j,3,7" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *37"+`
+
+* [[option_weechat.key.meta-j_3_8]] *weechat.key.meta-j,3,8*
+** 説明: pass:none[touche "meta-j,3,8" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *38"+`
+
+* [[option_weechat.key.meta-j_3_9]] *weechat.key.meta-j,3,9*
+** 説明: pass:none[touche "meta-j,3,9" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *39"+`
+
+* [[option_weechat.key.meta-j_4_0]] *weechat.key.meta-j,4,0*
+** 説明: pass:none[touche "meta-j,4,0" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *40"+`
+
+* [[option_weechat.key.meta-j_4_1]] *weechat.key.meta-j,4,1*
+** 説明: pass:none[touche "meta-j,4,1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *41"+`
+
+* [[option_weechat.key.meta-j_4_2]] *weechat.key.meta-j,4,2*
+** 説明: pass:none[touche "meta-j,4,2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *42"+`
+
+* [[option_weechat.key.meta-j_4_3]] *weechat.key.meta-j,4,3*
+** 説明: pass:none[touche "meta-j,4,3" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *43"+`
+
+* [[option_weechat.key.meta-j_4_4]] *weechat.key.meta-j,4,4*
+** 説明: pass:none[touche "meta-j,4,4" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *44"+`
+
+* [[option_weechat.key.meta-j_4_5]] *weechat.key.meta-j,4,5*
+** 説明: pass:none[touche "meta-j,4,5" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *45"+`
+
+* [[option_weechat.key.meta-j_4_6]] *weechat.key.meta-j,4,6*
+** 説明: pass:none[touche "meta-j,4,6" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *46"+`
+
+* [[option_weechat.key.meta-j_4_7]] *weechat.key.meta-j,4,7*
+** 説明: pass:none[touche "meta-j,4,7" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *47"+`
+
+* [[option_weechat.key.meta-j_4_8]] *weechat.key.meta-j,4,8*
+** 説明: pass:none[touche "meta-j,4,8" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *48"+`
+
+* [[option_weechat.key.meta-j_4_9]] *weechat.key.meta-j,4,9*
+** 説明: pass:none[touche "meta-j,4,9" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *49"+`
+
+* [[option_weechat.key.meta-j_5_0]] *weechat.key.meta-j,5,0*
+** 説明: pass:none[touche "meta-j,5,0" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *50"+`
+
+* [[option_weechat.key.meta-j_5_1]] *weechat.key.meta-j,5,1*
+** 説明: pass:none[touche "meta-j,5,1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *51"+`
+
+* [[option_weechat.key.meta-j_5_2]] *weechat.key.meta-j,5,2*
+** 説明: pass:none[touche "meta-j,5,2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *52"+`
+
+* [[option_weechat.key.meta-j_5_3]] *weechat.key.meta-j,5,3*
+** 説明: pass:none[touche "meta-j,5,3" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *53"+`
+
+* [[option_weechat.key.meta-j_5_4]] *weechat.key.meta-j,5,4*
+** 説明: pass:none[touche "meta-j,5,4" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *54"+`
+
+* [[option_weechat.key.meta-j_5_5]] *weechat.key.meta-j,5,5*
+** 説明: pass:none[touche "meta-j,5,5" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *55"+`
+
+* [[option_weechat.key.meta-j_5_6]] *weechat.key.meta-j,5,6*
+** 説明: pass:none[touche "meta-j,5,6" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *56"+`
+
+* [[option_weechat.key.meta-j_5_7]] *weechat.key.meta-j,5,7*
+** 説明: pass:none[touche "meta-j,5,7" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *57"+`
+
+* [[option_weechat.key.meta-j_5_8]] *weechat.key.meta-j,5,8*
+** 説明: pass:none[touche "meta-j,5,8" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *58"+`
+
+* [[option_weechat.key.meta-j_5_9]] *weechat.key.meta-j,5,9*
+** 説明: pass:none[touche "meta-j,5,9" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *59"+`
+
+* [[option_weechat.key.meta-j_6_0]] *weechat.key.meta-j,6,0*
+** 説明: pass:none[touche "meta-j,6,0" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *60"+`
+
+* [[option_weechat.key.meta-j_6_1]] *weechat.key.meta-j,6,1*
+** 説明: pass:none[touche "meta-j,6,1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *61"+`
+
+* [[option_weechat.key.meta-j_6_2]] *weechat.key.meta-j,6,2*
+** 説明: pass:none[touche "meta-j,6,2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *62"+`
+
+* [[option_weechat.key.meta-j_6_3]] *weechat.key.meta-j,6,3*
+** 説明: pass:none[touche "meta-j,6,3" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *63"+`
+
+* [[option_weechat.key.meta-j_6_4]] *weechat.key.meta-j,6,4*
+** 説明: pass:none[touche "meta-j,6,4" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *64"+`
+
+* [[option_weechat.key.meta-j_6_5]] *weechat.key.meta-j,6,5*
+** 説明: pass:none[touche "meta-j,6,5" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *65"+`
+
+* [[option_weechat.key.meta-j_6_6]] *weechat.key.meta-j,6,6*
+** 説明: pass:none[touche "meta-j,6,6" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *66"+`
+
+* [[option_weechat.key.meta-j_6_7]] *weechat.key.meta-j,6,7*
+** 説明: pass:none[touche "meta-j,6,7" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *67"+`
+
+* [[option_weechat.key.meta-j_6_8]] *weechat.key.meta-j,6,8*
+** 説明: pass:none[touche "meta-j,6,8" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *68"+`
+
+* [[option_weechat.key.meta-j_6_9]] *weechat.key.meta-j,6,9*
+** 説明: pass:none[touche "meta-j,6,9" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *69"+`
+
+* [[option_weechat.key.meta-j_7_0]] *weechat.key.meta-j,7,0*
+** 説明: pass:none[touche "meta-j,7,0" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *70"+`
+
+* [[option_weechat.key.meta-j_7_1]] *weechat.key.meta-j,7,1*
+** 説明: pass:none[touche "meta-j,7,1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *71"+`
+
+* [[option_weechat.key.meta-j_7_2]] *weechat.key.meta-j,7,2*
+** 説明: pass:none[touche "meta-j,7,2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *72"+`
+
+* [[option_weechat.key.meta-j_7_3]] *weechat.key.meta-j,7,3*
+** 説明: pass:none[touche "meta-j,7,3" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *73"+`
+
+* [[option_weechat.key.meta-j_7_4]] *weechat.key.meta-j,7,4*
+** 説明: pass:none[touche "meta-j,7,4" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *74"+`
+
+* [[option_weechat.key.meta-j_7_5]] *weechat.key.meta-j,7,5*
+** 説明: pass:none[touche "meta-j,7,5" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *75"+`
+
+* [[option_weechat.key.meta-j_7_6]] *weechat.key.meta-j,7,6*
+** 説明: pass:none[touche "meta-j,7,6" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *76"+`
+
+* [[option_weechat.key.meta-j_7_7]] *weechat.key.meta-j,7,7*
+** 説明: pass:none[touche "meta-j,7,7" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *77"+`
+
+* [[option_weechat.key.meta-j_7_8]] *weechat.key.meta-j,7,8*
+** 説明: pass:none[touche "meta-j,7,8" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *78"+`
+
+* [[option_weechat.key.meta-j_7_9]] *weechat.key.meta-j,7,9*
+** 説明: pass:none[touche "meta-j,7,9" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *79"+`
+
+* [[option_weechat.key.meta-j_8_0]] *weechat.key.meta-j,8,0*
+** 説明: pass:none[touche "meta-j,8,0" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *80"+`
+
+* [[option_weechat.key.meta-j_8_1]] *weechat.key.meta-j,8,1*
+** 説明: pass:none[touche "meta-j,8,1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *81"+`
+
+* [[option_weechat.key.meta-j_8_2]] *weechat.key.meta-j,8,2*
+** 説明: pass:none[touche "meta-j,8,2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *82"+`
+
+* [[option_weechat.key.meta-j_8_3]] *weechat.key.meta-j,8,3*
+** 説明: pass:none[touche "meta-j,8,3" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *83"+`
+
+* [[option_weechat.key.meta-j_8_4]] *weechat.key.meta-j,8,4*
+** 説明: pass:none[touche "meta-j,8,4" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *84"+`
+
+* [[option_weechat.key.meta-j_8_5]] *weechat.key.meta-j,8,5*
+** 説明: pass:none[touche "meta-j,8,5" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *85"+`
+
+* [[option_weechat.key.meta-j_8_6]] *weechat.key.meta-j,8,6*
+** 説明: pass:none[touche "meta-j,8,6" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *86"+`
+
+* [[option_weechat.key.meta-j_8_7]] *weechat.key.meta-j,8,7*
+** 説明: pass:none[touche "meta-j,8,7" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *87"+`
+
+* [[option_weechat.key.meta-j_8_8]] *weechat.key.meta-j,8,8*
+** 説明: pass:none[touche "meta-j,8,8" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *88"+`
+
+* [[option_weechat.key.meta-j_8_9]] *weechat.key.meta-j,8,9*
+** 説明: pass:none[touche "meta-j,8,9" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *89"+`
+
+* [[option_weechat.key.meta-j_9_0]] *weechat.key.meta-j,9,0*
+** 説明: pass:none[touche "meta-j,9,0" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *90"+`
+
+* [[option_weechat.key.meta-j_9_1]] *weechat.key.meta-j,9,1*
+** 説明: pass:none[touche "meta-j,9,1" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *91"+`
+
+* [[option_weechat.key.meta-j_9_2]] *weechat.key.meta-j,9,2*
+** 説明: pass:none[touche "meta-j,9,2" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *92"+`
+
+* [[option_weechat.key.meta-j_9_3]] *weechat.key.meta-j,9,3*
+** 説明: pass:none[touche "meta-j,9,3" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *93"+`
+
+* [[option_weechat.key.meta-j_9_4]] *weechat.key.meta-j,9,4*
+** 説明: pass:none[touche "meta-j,9,4" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *94"+`
+
+* [[option_weechat.key.meta-j_9_5]] *weechat.key.meta-j,9,5*
+** 説明: pass:none[touche "meta-j,9,5" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *95"+`
+
+* [[option_weechat.key.meta-j_9_6]] *weechat.key.meta-j,9,6*
+** 説明: pass:none[touche "meta-j,9,6" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *96"+`
+
+* [[option_weechat.key.meta-j_9_7]] *weechat.key.meta-j,9,7*
+** 説明: pass:none[touche "meta-j,9,7" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *97"+`
+
+* [[option_weechat.key.meta-j_9_8]] *weechat.key.meta-j,9,8*
+** 説明: pass:none[touche "meta-j,9,8" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *98"+`
+
+* [[option_weechat.key.meta-j_9_9]] *weechat.key.meta-j,9,9*
+** 説明: pass:none[touche "meta-j,9,9" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer *99"+`
+
+* [[option_weechat.key.meta-j_meta-f]] *weechat.key.meta-j,meta-f*
+** 説明: pass:none[touche "meta-j,meta-f" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer -"+`
+
+* [[option_weechat.key.meta-j_meta-l]] *weechat.key.meta-j,meta-l*
+** 説明: pass:none[touche "meta-j,meta-l" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer +"+`
+
+* [[option_weechat.key.meta-j_meta-r]] *weechat.key.meta-j,meta-r*
+** 説明: pass:none[touche "meta-j,meta-r" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/server raw"+`
+
+* [[option_weechat.key.meta-j_meta-s]] *weechat.key.meta-j,meta-s*
+** 説明: pass:none[touche "meta-j,meta-s" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/server jump"+`
+
+* [[option_weechat.key.meta-k]] *weechat.key.meta-k*
+** 説明: pass:none[touche "meta-k" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input grab_key_command"+`
+
+* [[option_weechat.key.meta-l]] *weechat.key.meta-l*
+** 説明: pass:none[touche "meta-l" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window bare"+`
+
+* [[option_weechat.key.meta-left]] *weechat.key.meta-left*
+** 説明: pass:none[touche "meta-left" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer -1"+`
+
+* [[option_weechat.key.meta-m]] *weechat.key.meta-m*
+** 説明: pass:none[touche "meta-m" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/mute mouse toggle"+`
+
+* [[option_weechat.key.meta-n]] *weechat.key.meta-n*
+** 説明: pass:none[touche "meta-n" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window scroll_next_highlight"+`
+
+* [[option_weechat.key.meta-p]] *weechat.key.meta-p*
+** 説明: pass:none[touche "meta-p" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window scroll_previous_highlight"+`
+
+* [[option_weechat.key.meta-pgdn]] *weechat.key.meta-pgdn*
+** 説明: pass:none[touche "meta-pgdn" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window scroll_down"+`
+
+* [[option_weechat.key.meta-pgup]] *weechat.key.meta-pgup*
+** 説明: pass:none[touche "meta-pgup" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window scroll_up"+`
+
+* [[option_weechat.key.meta-r]] *weechat.key.meta-r*
+** 説明: pass:none[touche "meta-r" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input delete_line"+`
+
+* [[option_weechat.key.meta-return]] *weechat.key.meta-return*
+** 説明: pass:none[touche "meta-return" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input insert \n"+`
+
+* [[option_weechat.key.meta-right]] *weechat.key.meta-right*
+** 説明: pass:none[touche "meta-right" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer +1"+`
+
+* [[option_weechat.key.meta-s]] *weechat.key.meta-s*
+** 説明: pass:none[touche "meta-s" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/mute spell toggle"+`
+
+* [[option_weechat.key.meta-u]] *weechat.key.meta-u*
+** 説明: pass:none[touche "meta-u" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window scroll_unread"+`
+
+* [[option_weechat.key.meta-up]] *weechat.key.meta-up*
+** 説明: pass:none[touche "meta-up" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer -1"+`
+
+* [[option_weechat.key.meta-w_meta-b]] *weechat.key.meta-w,meta-b*
+** 説明: pass:none[touche "meta-w,meta-b" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window balance"+`
+
+* [[option_weechat.key.meta-w_meta-down]] *weechat.key.meta-w,meta-down*
+** 説明: pass:none[touche "meta-w,meta-down" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window down"+`
+
+* [[option_weechat.key.meta-w_meta-left]] *weechat.key.meta-w,meta-left*
+** 説明: pass:none[touche "meta-w,meta-left" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window left"+`
+
+* [[option_weechat.key.meta-w_meta-right]] *weechat.key.meta-w,meta-right*
+** 説明: pass:none[touche "meta-w,meta-right" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window right"+`
+
+* [[option_weechat.key.meta-w_meta-s]] *weechat.key.meta-w,meta-s*
+** 説明: pass:none[touche "meta-w,meta-s" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window swap"+`
+
+* [[option_weechat.key.meta-w_meta-up]] *weechat.key.meta-w,meta-up*
+** 説明: pass:none[touche "meta-w,meta-up" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window up"+`
+
+* [[option_weechat.key.meta-x]] *weechat.key.meta-x*
+** 説明: pass:none[touche "meta-x" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/buffer zoom"+`
+
+* [[option_weechat.key.meta-z]] *weechat.key.meta-z*
+** 説明: pass:none[touche "meta-z" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window zoom"+`
+
+* [[option_weechat.key.pgdn]] *weechat.key.pgdn*
+** 説明: pass:none[touche "pgdn" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window page_down"+`
+
+* [[option_weechat.key.pgup]] *weechat.key.pgup*
+** 説明: pass:none[touche "pgup" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window page_up"+`
+
+* [[option_weechat.key.return]] *weechat.key.return*
+** 説明: pass:none[touche "return" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input return"+`
+
+* [[option_weechat.key.right]] *weechat.key.right*
+** 説明: pass:none[touche "right" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input move_next_char"+`
+
+* [[option_weechat.key.shift-tab]] *weechat.key.shift-tab*
+** 説明: pass:none[touche "shift-tab" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input complete_previous"+`
+
+* [[option_weechat.key.tab]] *weechat.key.tab*
+** 説明: pass:none[touche "tab" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input complete_next"+`
+
+* [[option_weechat.key.up]] *weechat.key.up*
+** 説明: pass:none[touche "up" dans le contexte "default"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input history_previous"+`
+
+* [[option_weechat.key_cursor.@chat:Q]] *weechat.key_cursor.@chat:Q*
+** 説明: pass:none[touche "@chat:Q" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"hsignal:chat_quote_time_prefix_message;/cursor stop"+`
+
+* [[option_weechat.key_cursor.@chat:m]] *weechat.key_cursor.@chat:m*
+** 説明: pass:none[touche "@chat:m" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"hsignal:chat_quote_message;/cursor stop"+`
+
+* [[option_weechat.key_cursor.@chat:q]] *weechat.key_cursor.@chat:q*
+** 説明: pass:none[touche "@chat:q" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"hsignal:chat_quote_prefix_message;/cursor stop"+`
+
+* [[option_weechat.key_cursor.@item(buffer_nicklist):K]] *weechat.key_cursor.@item(buffer_nicklist):K*
+** 説明: pass:none[touche "@item(buffer_nicklist):K" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/kickban ${nick}"+`
+
+* [[option_weechat.key_cursor.@item(buffer_nicklist):b]] *weechat.key_cursor.@item(buffer_nicklist):b*
+** 説明: pass:none[touche "@item(buffer_nicklist):b" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/ban ${nick}"+`
+
+* [[option_weechat.key_cursor.@item(buffer_nicklist):k]] *weechat.key_cursor.@item(buffer_nicklist):k*
+** 説明: pass:none[touche "@item(buffer_nicklist):k" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/kick ${nick}"+`
+
+* [[option_weechat.key_cursor.@item(buffer_nicklist):q]] *weechat.key_cursor.@item(buffer_nicklist):q*
+** 説明: pass:none[touche "@item(buffer_nicklist):q" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/query ${nick};/cursor stop"+`
+
+* [[option_weechat.key_cursor.@item(buffer_nicklist):w]] *weechat.key_cursor.@item(buffer_nicklist):w*
+** 説明: pass:none[touche "@item(buffer_nicklist):w" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/whois ${nick}"+`
+
+* [[option_weechat.key_cursor.down]] *weechat.key_cursor.down*
+** 説明: pass:none[touche "down" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/cursor move down"+`
+
+* [[option_weechat.key_cursor.left]] *weechat.key_cursor.left*
+** 説明: pass:none[touche "left" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/cursor move left"+`
+
+* [[option_weechat.key_cursor.meta-down]] *weechat.key_cursor.meta-down*
+** 説明: pass:none[touche "meta-down" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/cursor move area_down"+`
+
+* [[option_weechat.key_cursor.meta-left]] *weechat.key_cursor.meta-left*
+** 説明: pass:none[touche "meta-left" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/cursor move area_left"+`
+
+* [[option_weechat.key_cursor.meta-right]] *weechat.key_cursor.meta-right*
+** 説明: pass:none[touche "meta-right" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/cursor move area_right"+`
+
+* [[option_weechat.key_cursor.meta-up]] *weechat.key_cursor.meta-up*
+** 説明: pass:none[touche "meta-up" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/cursor move area_up"+`
+
+* [[option_weechat.key_cursor.return]] *weechat.key_cursor.return*
+** 説明: pass:none[touche "return" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/cursor stop"+`
+
+* [[option_weechat.key_cursor.right]] *weechat.key_cursor.right*
+** 説明: pass:none[touche "right" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/cursor move right"+`
+
+* [[option_weechat.key_cursor.up]] *weechat.key_cursor.up*
+** 説明: pass:none[touche "up" dans le contexte "cursor"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/cursor move up"+`
+
+* [[option_weechat.key_mouse.@*:button3]] *weechat.key_mouse.@*:button3*
+** 説明: pass:none[touche "@*:button3" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/cursor go ${_x},${_y}"+`
+
+* [[option_weechat.key_mouse.@bar(buflist):ctrl-wheeldown]] *weechat.key_mouse.@bar(buflist):ctrl-wheeldown*
+** 説明: pass:none[touche "@bar(buflist):ctrl-wheeldown" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@bar(buflist):ctrl-wheelup]] *weechat.key_mouse.@bar(buflist):ctrl-wheelup*
+** 説明: pass:none[touche "@bar(buflist):ctrl-wheelup" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@bar(input):button2]] *weechat.key_mouse.@bar(input):button2*
+** 説明: pass:none[touche "@bar(input):button2" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input grab_mouse_area"+`
+
+* [[option_weechat.key_mouse.@bar(nicklist):button1-gesture-down]] *weechat.key_mouse.@bar(nicklist):button1-gesture-down*
+** 説明: pass:none[touche "@bar(nicklist):button1-gesture-down" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll nicklist ${_window_number} +100%"+`
+
+* [[option_weechat.key_mouse.@bar(nicklist):button1-gesture-down-long]] *weechat.key_mouse.@bar(nicklist):button1-gesture-down-long*
+** 説明: pass:none[touche "@bar(nicklist):button1-gesture-down-long" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll nicklist ${_window_number} e"+`
+
+* [[option_weechat.key_mouse.@bar(nicklist):button1-gesture-up]] *weechat.key_mouse.@bar(nicklist):button1-gesture-up*
+** 説明: pass:none[touche "@bar(nicklist):button1-gesture-up" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll nicklist ${_window_number} -100%"+`
+
+* [[option_weechat.key_mouse.@bar(nicklist):button1-gesture-up-long]] *weechat.key_mouse.@bar(nicklist):button1-gesture-up-long*
+** 説明: pass:none[touche "@bar(nicklist):button1-gesture-up-long" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll nicklist ${_window_number} b"+`
+
+* [[option_weechat.key_mouse.@bar:wheeldown]] *weechat.key_mouse.@bar:wheeldown*
+** 説明: pass:none[touche "@bar:wheeldown" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll ${_bar_name} ${_window_number} +20%"+`
+
+* [[option_weechat.key_mouse.@bar:wheelup]] *weechat.key_mouse.@bar:wheelup*
+** 説明: pass:none[touche "@bar:wheelup" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/bar scroll ${_bar_name} ${_window_number} -20%"+`
+
+* [[option_weechat.key_mouse.@chat(fset.fset):button1]] *weechat.key_mouse.@chat(fset.fset):button1*
+** 説明: pass:none[touche "@chat(fset.fset):button1" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/fset -go ${_chat_line_y}"+`
+
+* [[option_weechat.key_mouse.@chat(fset.fset):button2*]] *weechat.key_mouse.@chat(fset.fset):button2**
+** 説明: pass:none[touche "@chat(fset.fset):button2*" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"hsignal:fset_mouse"+`
+
+* [[option_weechat.key_mouse.@chat(fset.fset):wheeldown]] *weechat.key_mouse.@chat(fset.fset):wheeldown*
+** 説明: pass:none[touche "@chat(fset.fset):wheeldown" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/fset -down 5"+`
+
+* [[option_weechat.key_mouse.@chat(fset.fset):wheelup]] *weechat.key_mouse.@chat(fset.fset):wheelup*
+** 説明: pass:none[touche "@chat(fset.fset):wheelup" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/fset -up 5"+`
+
+* [[option_weechat.key_mouse.@chat(script.scripts):button1]] *weechat.key_mouse.@chat(script.scripts):button1*
+** 説明: pass:none[touche "@chat(script.scripts):button1" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/script go ${_chat_line_y}"+`
+
+* [[option_weechat.key_mouse.@chat(script.scripts):button2]] *weechat.key_mouse.@chat(script.scripts):button2*
+** 説明: pass:none[touche "@chat(script.scripts):button2" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}"+`
+
+* [[option_weechat.key_mouse.@chat(script.scripts):wheeldown]] *weechat.key_mouse.@chat(script.scripts):wheeldown*
+** 説明: pass:none[touche "@chat(script.scripts):wheeldown" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/script down 5"+`
+
+* [[option_weechat.key_mouse.@chat(script.scripts):wheelup]] *weechat.key_mouse.@chat(script.scripts):wheelup*
+** 説明: pass:none[touche "@chat(script.scripts):wheelup" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/script up 5"+`
+
+* [[option_weechat.key_mouse.@chat:button1]] *weechat.key_mouse.@chat:button1*
+** 説明: pass:none[touche "@chat:button1" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number}"+`
+
+* [[option_weechat.key_mouse.@chat:button1-gesture-left]] *weechat.key_mouse.@chat:button1-gesture-left*
+** 説明: pass:none[touche "@chat:button1-gesture-left" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/buffer -1"+`
+
+* [[option_weechat.key_mouse.@chat:button1-gesture-left-long]] *weechat.key_mouse.@chat:button1-gesture-left-long*
+** 説明: pass:none[touche "@chat:button1-gesture-left-long" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/buffer 1"+`
+
+* [[option_weechat.key_mouse.@chat:button1-gesture-right]] *weechat.key_mouse.@chat:button1-gesture-right*
+** 説明: pass:none[touche "@chat:button1-gesture-right" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/buffer +1"+`
+
+* [[option_weechat.key_mouse.@chat:button1-gesture-right-long]] *weechat.key_mouse.@chat:button1-gesture-right-long*
+** 説明: pass:none[touche "@chat:button1-gesture-right-long" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/buffer +"+`
+
+* [[option_weechat.key_mouse.@chat:ctrl-wheeldown]] *weechat.key_mouse.@chat:ctrl-wheeldown*
+** 説明: pass:none[touche "@chat:ctrl-wheeldown" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window scroll_horiz -window ${_window_number} +10%"+`
+
+* [[option_weechat.key_mouse.@chat:ctrl-wheelup]] *weechat.key_mouse.@chat:ctrl-wheelup*
+** 説明: pass:none[touche "@chat:ctrl-wheelup" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window scroll_horiz -window ${_window_number} -10%"+`
+
+* [[option_weechat.key_mouse.@chat:wheeldown]] *weechat.key_mouse.@chat:wheeldown*
+** 説明: pass:none[touche "@chat:wheeldown" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window scroll_down -window ${_window_number}"+`
+
+* [[option_weechat.key_mouse.@chat:wheelup]] *weechat.key_mouse.@chat:wheelup*
+** 説明: pass:none[touche "@chat:wheelup" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window scroll_up -window ${_window_number}"+`
+
+* [[option_weechat.key_mouse.@item(buffer_nicklist):button1]] *weechat.key_mouse.@item(buffer_nicklist):button1*
+** 説明: pass:none[touche "@item(buffer_nicklist):button1" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/query ${nick}"+`
+
+* [[option_weechat.key_mouse.@item(buffer_nicklist):button1-gesture-left]] *weechat.key_mouse.@item(buffer_nicklist):button1-gesture-left*
+** 説明: pass:none[touche "@item(buffer_nicklist):button1-gesture-left" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/kick ${nick}"+`
+
+* [[option_weechat.key_mouse.@item(buffer_nicklist):button1-gesture-left-long]] *weechat.key_mouse.@item(buffer_nicklist):button1-gesture-left-long*
+** 説明: pass:none[touche "@item(buffer_nicklist):button1-gesture-left-long" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/kickban ${nick}"+`
+
+* [[option_weechat.key_mouse.@item(buffer_nicklist):button2]] *weechat.key_mouse.@item(buffer_nicklist):button2*
+** 説明: pass:none[touche "@item(buffer_nicklist):button2" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/whois ${nick}"+`
+
+* [[option_weechat.key_mouse.@item(buffer_nicklist):button2-gesture-left]] *weechat.key_mouse.@item(buffer_nicklist):button2-gesture-left*
+** 説明: pass:none[touche "@item(buffer_nicklist):button2-gesture-left" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/window ${_window_number};/ban ${nick}"+`
+
+* [[option_weechat.key_mouse.@item(buflist):button1*]] *weechat.key_mouse.@item(buflist):button1**
+** 説明: pass:none[touche "@item(buflist):button1*" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@item(buflist):button2*]] *weechat.key_mouse.@item(buflist):button2**
+** 説明: pass:none[touche "@item(buflist):button2*" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@item(buflist2):button1*]] *weechat.key_mouse.@item(buflist2):button1**
+** 説明: pass:none[touche "@item(buflist2):button1*" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@item(buflist2):button2*]] *weechat.key_mouse.@item(buflist2):button2**
+** 説明: pass:none[touche "@item(buflist2):button2*" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@item(buflist3):button1*]] *weechat.key_mouse.@item(buflist3):button1**
+** 説明: pass:none[touche "@item(buflist3):button1*" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@item(buflist3):button2*]] *weechat.key_mouse.@item(buflist3):button2**
+** 説明: pass:none[touche "@item(buflist3):button2*" dans le contexte "mouse"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_search.ctrl-q]] *weechat.key_search.ctrl-q*
+** 説明: pass:none[touche "ctrl-q" dans le contexte "search"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input search_stop"+`
+
+* [[option_weechat.key_search.ctrl-r]] *weechat.key_search.ctrl-r*
+** 説明: pass:none[touche "ctrl-r" dans le contexte "search"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input search_switch_regex"+`
+
+* [[option_weechat.key_search.down]] *weechat.key_search.down*
+** 説明: pass:none[touche "down" dans le contexte "search"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input search_next"+`
+
+* [[option_weechat.key_search.meta-c]] *weechat.key_search.meta-c*
+** 説明: pass:none[touche "meta-c" dans le contexte "search"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input search_switch_case"+`
+
+* [[option_weechat.key_search.return]] *weechat.key_search.return*
+** 説明: pass:none[touche "return" dans le contexte "search"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input search_stop_here"+`
+
+* [[option_weechat.key_search.tab]] *weechat.key_search.tab*
+** 説明: pass:none[touche "tab" dans le contexte "search"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input search_switch_where"+`
+
+* [[option_weechat.key_search.up]] *weechat.key_search.up*
+** 説明: pass:none[touche "up" dans le contexte "search"]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"/input search_previous"+`
+
 * [[option_weechat.look.align_end_of_lines]] *weechat.look.align_end_of_lines*
 ** 説明: pass:none[行末の調節 (2 行以上になる行): このデータ (time、buffer、prefix、suffix、message (デフォルト)) の下から始められる]
 ** タイプ: 整数

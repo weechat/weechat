@@ -713,6 +713,7 @@ _priority_   (integer) +
 _name_   (string) +
 _filename_   (string) +
 _file_   (pointer) +
+_version_   (integer) +
 _callback_reload_   (pointer) +
 _callback_reload_pointer_   (pointer) +
 _callback_reload_data_   (pointer) +

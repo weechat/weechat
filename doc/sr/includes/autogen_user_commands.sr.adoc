@@ -1391,29 +1391,30 @@ stop: зауставља режим померања курсора
         time <команда>
         unicode <стринг>
 
-     list: исписује додатке са дибаг нивоима
-      set: поставља дибаг ниво за додатак
-  додатак: име додатка („core” за WeeChat језгро)
-     ниво: дибаг ниво за додатак (0 = искључује дибаг)
-     dump: чува садржај меморије у WeeChat лог фајл (исти садржај се записује када се програм WeeChat сруши)
-    hooks: исписује инфо о кукама (са додатком: приказује детаљне информације о кукама које креира додатак)
-   buffer: уписује у лог фајл садржај бафера као хексадецималне вредности
-    certs: приказује број учитаних ауторитета сертификата којима се верује
-    color: приказује инфо о тренутним паровима боја
-   cursor: пребацује дибаг за режим померања курсора
-     dirs: исписује директоријуме
-    hdata: исписује инфо о hdata (са free: уклања све hdata из меморије)
-infolists: исписује инфо о инфолистама
-     libs: исписује инфо о коришћеним спољним библиотекама
-   memory: исписује инфо о употреби меморије
-    mouse: пребацује дибаг за миша
-     tags: исписује ознаке за линије
-     term: исписује инфо о терминалу
-  windows: исписује стабло прозора
-     time: мери време извршавања команде или слања текста текућем баферу
-  unicode: приказује информације о стрингу и уникод карактерима (израчунато, погледајте/help eval)
+     list: list plugins with debug levels
+      set: set debug level for plugin
+   plugin: name of plugin ("core" for WeeChat core)
+    level: debug level for plugin (0 = disable debug)
+     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+    hooks: display infos about hooks (with a plugin: display detailed info about hooks created by the plugin)
+   buffer: dump buffer content with hexadecimal values in log file
+    certs: display number of loaded trusted certificate authorities
+    color: display infos about current color pairs
+   cursor: toggle debug for cursor mode
+     dirs: display directories
+    hdata: display infos about hdata (with free: remove all hdata in memory)
+infolists: display infos about infolists
+      key: enable keyboard and mouse debug: display raw codes, expanded key name and associated command ('q' to quit this mode)
+     libs: display infos about external libraries used
+   memory: display infos about memory usage
+    mouse: toggle debug for mouse
+     tags: display tags for lines
+     term: display infos about terminal
+  windows: display windows tree
+     time: measure time to execute a command or to send text to the current buffer
+  unicode: display information about string and unicode chars (evaluated, see /help eval)
 
-Примери:
+Examples:
   /debug set irc 1
   /debug mouse verbose
   /debug time /filter toggle
@@ -1674,51 +1675,49 @@ restore: restore latest hotlist removed in the current buffer (or all buffers wi
 ----
 /input  <акција> [<аргументи>]
 
-листа акција:
-  return: симулира притисак на тастер „ентер”
-  complete_next: довршава реч са наредним довршавањем
-  complete_previous: довршава реч са претходним довршавањем
-  search_text_here: претражује текст у баферу почевши од текуће позиције
-  search_text: претражује текст у баферу
-  search_switch_case: укључује употребу тачне величине слова код претраге
-  search_switch_regex: мења тип претраге: стринг/регуларни израз
-  search_switch_where: укључује претрагу у порукама/префиксима
-  search_previous: претрага у претходној линији
-  search_next: претрага у наредној линији
-  search_stop_here: зауставља претрагу на текућој позицији
-  search_stop: зауставља претрагу
-  delete_previous_char: брише претходни карактер
-  delete_next_char: брише наредни карактер
-  delete_previous_word: брише претходну реч
-  delete_previous_word_whitespace: брише претходну реч (до празног простора)
-  delete_next_word: брише наредну реч
-  delete_beginning_of_line: брише од почетка линије до позиције курсора
-  delete_end_of_line: брише од позиције курсора до краја линије
-  delete_line: брише комплетну линију
-  clipboard_paste: налепљује из интерног клипборда
-  transpose_chars: транспонује два карактера (замењују места)
-  undo: поништава последњу акцију командне линије
-  redo: обнавља последње поништену акцију команде линије
-  move_beginning_of_line: помера курсор на почетак линије
-  move_end_of_line: помера курсор на крај линије
-  move_previous_char: помера курсор на претходни карактер
-  move_next_char: помера курсор на наредни карактер
-  move_previous_word: помера курсор на претходну реч
-  move_next_word: помера курсор на наредну реч
-  history_previous: позива претходну команду из историје команди текућег бафера
-  history_next: позива наредну команду из историје команди текућег бафера
-  history_global_previous: позива претходну команду из глобалне историје команди
-  history_global_next: позива наредну команду из глобалне историје команди
-  grab_key: преузима тастер (необавезни аргумент: кашњење за крај преузимања, подразумевано је 500 милисекунди)
-  grab_key_command: преузима тастер са својом придруженом командом (необавезни аргумент: кашњење за крај преузимања, подразумевано је 500 милисекунди)
-  grab_mouse: преузима кôд догађаја миша
-  grab_mouse_area: преузима кôд догађаја миша заједно са површином
-  insert: умеће текст у командну линију (дозвољени су означени карактери, погледајте /help print)
-  send: шаље текст баферу
-  paste_start: започиње налепљивање (режим ограђеног налепљивања)
-  paste_stop: зауставља налепљивање (режим ограђеног налепљивања)
+list of actions:
+  return: simulate key "enter"
+  complete_next: complete word with next completion
+  complete_previous: complete word with previous completion
+  search_text_here: search text in buffer at current position
+  search_text: search text in buffer
+  search_switch_case: switch exact case for search
+  search_switch_regex: switch search type: string/regular expression
+  search_switch_where: switch search in messages/prefixes
+  search_previous: search previous line
+  search_next: search next line
+  search_stop_here: stop search at current position
+  search_stop: stop search
+  delete_previous_char: delete previous char
+  delete_next_char: delete next char
+  delete_previous_word: delete previous word
+  delete_previous_word_whitespace: delete previous word (until whitespace)
+  delete_next_word: delete next word
+  delete_beginning_of_line: delete from beginning of line until cursor
+  delete_end_of_line: delete from cursor until end of line
+  delete_line: delete entire line
+  clipboard_paste: paste from the internal clipboard
+  transpose_chars: transpose two chars
+  undo: undo last command line action
+  redo: redo last command line action
+  move_beginning_of_line: move cursor to beginning of line
+  move_end_of_line: move cursor to end of line
+  move_previous_char: move cursor to previous char
+  move_next_char: move cursor to next char
+  move_previous_word: move cursor to previous word
+  move_next_word: move cursor to next word
+  history_previous: recall previous command in current buffer history
+  history_next: recall next command in current buffer history
+  history_global_previous: recall previous command in global history
+  history_global_next: recall next command in global history
+  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_mouse: grab mouse event code
+  grab_mouse_area: grab mouse event code with area
+  insert: insert text in command line (escaped chars are allowed, see /help print)
+  send: send text to the buffer
 
-Ову команду користе тастерске пречице или додаци.
+This command is used by key bindings or plugins.
 ----
 
 [[command_weechat_item]]
@@ -1768,54 +1767,63 @@ addreplace: додаје или мења постојећу прилагођен
 * `+key+`: везивање/развезивање тастера
 
 ----
-/key  list|listdefault|listdiff [<контекст>]
-      bind <тастер> [<команда> [<арг>]]
-      bindctxt <контекст> <тастер> [<команда> [<арг>]]
-      unbind <тастер>
-      unbindctxt <контекст> <тастер>
-      reset <тастер>
-      resetctxt <контекст> <тастер>
-      resetall -yes [<контекст>]
-      missing [<контекст>]
+/key  [list|listdefault|listdiff] [<context>]
+      bind <key> [<command> [<args>]]
+      bindctxt <context> <key> [<command> [<args>]]
+      unbind <key>
+      unbindctxt <context> <key>
+      reset <key>
+      resetctxt <context> <key>
+      resetall -yes [<context>]
+      missing [<context>]
 
-       list: исписује све текуће тастере (без аргумената, приказује се ова листа)
-listdefault: исписује подразумеване тастере
-   listdiff: исписује разлике између тренутних и подразумеваних тастера (додати, редефинисани или обрисани тастери)
-   контекст: име контекста („default” или „search”)
-       bind: везује команду за тастер или приказује команду која је везана за тастер (за контекст „default”)
-   bindctxt: везује команду за тастер или приказује команду која је везана за тастер, за дати контекст
-    команда: команда (више команди може да се раздвоји са тачка зарезима)
-     unbind: уклања везивање тастера (за контекст „default”)
- unbindctxt: уклања везивање тастера за дати контекст
-      reset: ресетује тастер на подразумевано везивање (за контекст „default”)
-  resetctxt: ресетује тастер на подразумевано везивање, за дати контекст
-   resetall: обнавља везивања на подразумеване вредности и брише СВА лична везивања (употребљавајте опрезно!)
-    missing: додаје недостајуће тастере (користећи подразумевана везивања), корисно након инсталације нове верзије програма WeeChat
+       list: list all current keys
+listdefault: list default keys
+   listdiff: list differences between current and default keys (keys added, redefined or deleted)
+    context: name of context ("default" or "search")
+       bind: bind a command to a key or display command bound to key (for context "default")
+   bindctxt: bind a command to a key or display command bound to key, for given context
+    command: command (many commands can be separated by semicolons)
+     unbind: remove a key binding (for context "default")
+ unbindctxt: remove a key binding for given context
+      reset: reset a key to default binding (for context "default")
+  resetctxt: reset a key to default binding, for given context
+   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+    missing: add missing keys (using default bindings), useful after installing new WeeChat version
 
-Када се команда везује за тастер, препоручује се да се користи тастер alt+k (или Esc па онда k), па да се онда притисне тастер који желите да вежете: ово ће у командну линију да убаци кôд тастера.
+When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key name in command line.
 
-За контекст „mouse” (такође могуће и у контексту „cursor”), тастер има следећи формат: „@површина:тастер” или „@површина1>површина2:тастер” где површина може бити:
-          *: било која површина на екрану
-       chat: простор за разговор (било који бафер)
-  chat(xxx): простор за разговор у баферу под именом „xxx” (пуно име укључујући и додатак)
-     bar(*): било која трака
-   bar(xxx): трака „xxx”
-    item(*): било која ставка траке
-  item(xxx): ставка траке „xxx”
-У тастеру се дозвољава употреба џокера „*” који се подудара са више догађаја миша.
-У контексту миша може да се користи специјална вредност за команду у формату „hsignal:име”, она ће послати hsignal „име” са фокус хеш табелом као аргументом.
-Још једна специјална вредност је „-” и она може да се користи за искључивање тастера (тастер ће се игнорисати приликом претраге тастера).
+Modifiers allowed (in this order when multiple are used):
+  meta-  (alt key)
+  ctrl-  (control key)
+  shift-  (shift key, can only be used with key names below)
 
-Примери:
-  тастер alt-t за преклапање видљивости траке са надимцима:
-    /key bind meta-t /bar toggle nicklist
-  тастер alt-r за скок на #weechat IRC канал:
+Key names allowed: f0 to f20, home, insert, delete, end, backspace, pgup, pgdn, up, down, right, left, tab, return, comma, space.
+
+Combo of keys must be separated by a comma.
+
+For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
+          *: any area on screen
+       chat: chat area (any buffer)
+  chat(xxx): chat area for buffer with name "xxx" (full name including plugin)
+     bar(*): any bar
+   bar(xxx): bar "xxx"
+    item(*): any bar item
+  item(xxx): bar item "xxx"
+Wildcard "*" is allowed in key to match many mouse events.
+A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
+Another special value "-" can be used to disable key (it will be ignored when looking for keys).
+
+Examples:
+  key alt-r to jump to #weechat IRC channel:
     /key bind meta-r /buffer #weechat
-  обнављање подразумеваног везивања за тастер alt-r:
+  restore default binding for key alt-r:
     /key reset meta-r
-  тастер „tab” за заустављање претраге у баферу:
-    /key bindctxt search ctrl-i /input search_stop
-  средњи тастер миша над надимком приказује информације о надимку:
+  key meta-v then f1 to run /help:
+    /key bind meta-v,f1 /help
+  key "tab" to stop search in buffer:
+    /key bindctxt search tab /input search_stop
+  middle button of mouse on a nick to retrieve info on nick:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
 

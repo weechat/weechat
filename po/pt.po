@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-10 20:50+0100\n"
+"POT-Creation-Date: 2023-03-18 09:18+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -661,10 +661,6 @@ msgstr ""
 "Nenhuma associação de teclas adicionada, redefinida ou removida do contexto "
 "\"%s\""
 
-#, fuzzy, c-format
-msgid "%sUnable to bind key \"%s\""
-msgstr "%sErro: não foi possível associar a tecla \"%s\""
-
 #, c-format
 msgid "Key \"%s\" has already default value"
 msgstr "A tecla \"%s\" já tem valor predefinido"
@@ -700,17 +696,6 @@ msgstr "Tecla:"
 
 msgid "No key found"
 msgstr "Nenhum tecla encontrada"
-
-#, fuzzy, c-format
-msgid ""
-"%sIt is not safe to bind key \"%s\" because it does not start with a ctrl or "
-"meta code (tip: use alt-k to find key codes); if you want to bind this key "
-"anyway, turn off option weechat.look.key_bind_safe"
-msgstr ""
-"%sErro: não é seguro associar a tecla \"%s\" porque não começa por um código "
-"ctrl ou meta (sugestão: use alt-k para descobrir os códigos das teclas); se "
-"pretende mesmo associar esta tecla, desative a opção weechat.look."
-"key_bind_safe"
 
 #, fuzzy, c-format
 msgid "%sContext \"%s\" not found"
@@ -999,9 +984,6 @@ msgstr "Opção alterada: "
 
 msgid "Option created: "
 msgstr "Opção criada: "
-
-msgid "Option changed"
-msgstr "Opção alterada"
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
@@ -1637,6 +1619,8 @@ msgid ""
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
 "infolists: display infos about infolists\n"
+"      key: enable keyboard and mouse debug: display raw codes, expanded key "
+"name and associated command ('q' to quit this mode)\n"
 "     libs: display infos about external libraries used\n"
 "   memory: display infos about memory usage\n"
 "    mouse: toggle debug for mouse\n"
@@ -2260,8 +2244,6 @@ msgid ""
 "  insert: insert text in command line (escaped chars are allowed, see /help "
 "print)\n"
 "  send: send text to the buffer\n"
-"  paste_start: start paste (bracketed paste mode)\n"
-"  paste_stop: stop paste (bracketed paste mode)\n"
 "\n"
 "This command is used by key bindings or plugins."
 msgstr ""
@@ -2392,11 +2374,17 @@ msgstr ""
 msgid "bind/unbind keys"
 msgstr "associar/libertar teclas"
 
+#, fuzzy
+#| msgid ""
+#| "list|listdefault|listdiff [<context>] || bind <key> [<command> [<args>]] "
+#| "|| bindctxt <context> <key> [<command> [<args>]] || unbind <key> || "
+#| "unbindctxt <context> <key> || reset <key> || resetctxt <context> <key> || "
+#| "resetall -yes [<context>] || missing [<context>]"
 msgid ""
-"list|listdefault|listdiff [<context>] || bind <key> [<command> [<args>]] || "
-"bindctxt <context> <key> [<command> [<args>]] || unbind <key> || unbindctxt "
-"<context> <key> || reset <key> || resetctxt <context> <key> || resetall -yes "
-"[<context>] || missing [<context>]"
+"[list|listdefault|listdiff] [<context>] || bind <key> [<command> [<args>]] "
+"|| bindctxt <context> <key> [<command> [<args>]] || unbind <key> || "
+"unbindctxt <context> <key> || reset <key> || resetctxt <context> <key> || "
+"resetall -yes [<context>] || missing [<context>]"
 msgstr ""
 "list|listdefault|listdiff [<contexto>] || bind <tecla> [<comando> "
 "[<argumentos>]] || bindctxt <contexto> <tecla> [<comando> [<argumentos>]] || "
@@ -2460,8 +2448,7 @@ msgstr ""
 #| "    /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info "
 #| "${nick}"
 msgid ""
-"       list: list all current keys (without argument, this list is "
-"displayed)\n"
+"       list: list all current keys\n"
 "listdefault: list default keys\n"
 "   listdiff: list differences between current and default keys (keys added, "
 "redefined or deleted)\n"
@@ -2481,8 +2468,18 @@ msgid ""
 "installing new WeeChat version\n"
 "\n"
 "When binding a command to a key, it is recommended to use key alt+k (or Esc "
-"then k), and then press the key to bind: this will insert key code in "
+"then k), and then press the key to bind: this will insert key name in "
 "command line.\n"
+"\n"
+"Modifiers allowed (in this order when multiple are used):\n"
+"  meta-  (alt key)\n"
+"  ctrl-  (control key)\n"
+"  shift-  (shift key, can only be used with key names below)\n"
+"\n"
+"Key names allowed: f0 to f20, home, insert, delete, end, backspace, pgup, "
+"pgdn, up, down, right, left, tab, return, comma, space.\n"
+"\n"
+"Combo of keys must be separated by a comma.\n"
 "\n"
 "For context \"mouse\" (possible in context \"cursor\" too), key has format: "
 "\"@area:key\" or \"@area1>area2:key\" where area can be:\n"
@@ -2502,14 +2499,14 @@ msgid ""
 "when looking for keys).\n"
 "\n"
 "Examples:\n"
-"  key alt-t to toggle nicklist bar:\n"
-"    /key bind meta-t /bar toggle nicklist\n"
 "  key alt-r to jump to #weechat IRC channel:\n"
 "    /key bind meta-r /buffer #weechat\n"
 "  restore default binding for key alt-r:\n"
 "    /key reset meta-r\n"
+"  key meta-v then f1 to run /help:\n"
+"    /key bind meta-v,f1 /help\n"
 "  key \"tab\" to stop search in buffer:\n"
-"    /key bindctxt search ctrl-i /input search_stop\n"
+"    /key bindctxt search tab /input search_stop\n"
 "  middle button of mouse on a nick to retrieve info on nick:\n"
 "    /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info "
 "${nick}"
@@ -3780,6 +3777,14 @@ msgid ""
 "%sWarning: proxy \"%s\" does not exist (you can add it with command /proxy)"
 msgstr ""
 "%sAviso: o proxy \"%s\" não existe (pode adicioná-lo pelo comando /proxy)"
+
+#, c-format
+msgid "Legacy key removed: \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Legacy key converted: \"%s\" => \"%s\""
+msgstr ""
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "nível de depuração do plugin (\"core\" para o core WeeChat)"
@@ -5225,13 +5230,24 @@ msgstr "%sAviso: %s, linha %d: sintaxe inválida, falta ']'"
 msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr "%sAviso: %s, linha %d: identificador de secção desconhecido (\"%s\")"
 
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: invalid value for option: %s"
+msgid "%sWarning: %s, line %d: invalid config version: %s"
+msgstr "%sAviso: %s, linha %d: valor inválido na opção: %s"
+
 #, c-format
-msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
-msgstr "%sAviso: %s, linha %d: opção desconhecida na secção \"%s\": %s"
+msgid ""
+"%sWarning: %s, version read (%d) is newer than supported version (%d), "
+"options may be broken!"
+msgstr ""
 
 #, c-format
 msgid "%sWarning: %s, line %d: option outside section: %s"
 msgstr "%sAviso: %s, linha %d: opção fora de secção: %s"
+
+#, c-format
+msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
+msgstr "%sAviso: %s, linha %d: opção desconhecida na secção \"%s\": %s"
 
 #, c-format
 msgid "%sWarning: %s, line %d: invalid value for option: %s"
@@ -5815,6 +5831,9 @@ msgstr[1] "%sColar %d linhas ? [ctrl-Y] Sim [ctrl-N] Não"
 msgid "Search"
 msgstr "Procurar"
 
+msgid "keyboard and mouse debug ('q' to quit debug mode)"
+msgstr ""
+
 #, c-format
 msgid "%s-MORE(%d)-"
 msgstr "%s-MAIS(%d)-"
@@ -5887,9 +5906,41 @@ msgstr "expressão regular inválida (%s)"
 msgid "not enough memory"
 msgstr "memória insuficiente"
 
+#, fuzzy, c-format
+#| msgid "Key \"%s\" unbound (context: \"%s\")"
+msgid "key \"%s\" in context \"%s\""
+msgstr "Tecla \"%s\" removida (contexto: \"%s\")"
+
+#, c-format
+msgid ""
+"%sInvalid key for mouse context \"%s\": it must start with \"@area\" (see /"
+"help key)"
+msgstr ""
+
 #, c-format
 msgid "New key binding (context \"%s\"): %s%s => %s%s"
 msgstr "Nova tecla (contexto \"%s\"): %s%s => %s%s"
+
+#, fuzzy, c-format
+msgid "%sUnable to bind key \"%s\" in context \"%s\" (see /help key)"
+msgstr "%sErro: não foi possível associar a tecla \"%s\""
+
+#, fuzzy, c-format
+msgid ""
+"%sIt is not safe to bind key \"%s\" because it does not start with a ctrl or "
+"meta code (tip: use alt-k to find key codes); if you want to bind this key "
+"anyway, turn off option weechat.look.key_bind_safe"
+msgstr ""
+"%sErro: não é seguro associar a tecla \"%s\" porque não começa por um código "
+"ctrl ou meta (sugestão: use alt-k para descobrir os códigos das teclas); se "
+"pretende mesmo associar esta tecla, desative a opção weechat.look."
+"key_bind_safe"
+
+#, c-format
+msgid ""
+"%sWarning: key \"%s\" seems either a raw code or invalid, it may not work "
+"(see /help key)"
+msgstr ""
 
 #, c-format
 msgid "Key \"%s\" unbound (context: \"%s\")"
@@ -5909,6 +5960,17 @@ msgstr "A enviar o hsignal: \"%s\""
 #, c-format
 msgid "Executing command: \"%s\" on buffer \"%s\""
 msgstr "A executar o comando: \"%s\" no buffer \"%s\""
+
+#, fuzzy
+#| msgid "list of key bindings"
+msgid "no key binding"
+msgstr "lista de teclas"
+
+msgid "debug:"
+msgstr ""
+
+msgid "mouse"
+msgstr ""
 
 #, c-format
 msgid "Debug enabled for mouse (%s)"
@@ -15356,6 +15418,9 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
+
+#~ msgid "Option changed"
+#~ msgstr "Opção alterada"
 
 #~ msgid ""
 #~ "a WeeChat color name (default, black, (dark)gray, white, (light)red, "

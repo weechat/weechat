@@ -3004,6 +3004,1662 @@
 ** вредности: 0 .. 1000
 ** подразумевана вредност: `+50+`
 
+* [[option_weechat.key.backspace]] *weechat.key.backspace*
+** опис: pass:none[touche "backspace" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input delete_previous_char"+`
+
+* [[option_weechat.key.ctrl-_]] *weechat.key.ctrl-_*
+** опис: pass:none[touche "ctrl-_" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input undo"+`
+
+* [[option_weechat.key.ctrl-a]] *weechat.key.ctrl-a*
+** опис: pass:none[touche "ctrl-a" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input move_beginning_of_line"+`
+
+* [[option_weechat.key.ctrl-b]] *weechat.key.ctrl-b*
+** опис: pass:none[touche "ctrl-b" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input move_previous_char"+`
+
+* [[option_weechat.key.ctrl-c__]] *weechat.key.ctrl-c,_*
+** опис: pass:none[touche "ctrl-c,_" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input insert \x1F"+`
+
+* [[option_weechat.key.ctrl-c_b]] *weechat.key.ctrl-c,b*
+** опис: pass:none[touche "ctrl-c,b" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input insert \x02"+`
+
+* [[option_weechat.key.ctrl-c_c]] *weechat.key.ctrl-c,c*
+** опис: pass:none[touche "ctrl-c,c" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input insert \x03"+`
+
+* [[option_weechat.key.ctrl-c_i]] *weechat.key.ctrl-c,i*
+** опис: pass:none[touche "ctrl-c,i" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input insert \x1D"+`
+
+* [[option_weechat.key.ctrl-c_o]] *weechat.key.ctrl-c,o*
+** опис: pass:none[touche "ctrl-c,o" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input insert \x0F"+`
+
+* [[option_weechat.key.ctrl-c_v]] *weechat.key.ctrl-c,v*
+** опис: pass:none[touche "ctrl-c,v" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input insert \x16"+`
+
+* [[option_weechat.key.ctrl-d]] *weechat.key.ctrl-d*
+** опис: pass:none[touche "ctrl-d" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input delete_next_char"+`
+
+* [[option_weechat.key.ctrl-down]] *weechat.key.ctrl-down*
+** опис: pass:none[touche "ctrl-down" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input history_global_next"+`
+
+* [[option_weechat.key.ctrl-e]] *weechat.key.ctrl-e*
+** опис: pass:none[touche "ctrl-e" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input move_end_of_line"+`
+
+* [[option_weechat.key.ctrl-f]] *weechat.key.ctrl-f*
+** опис: pass:none[touche "ctrl-f" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input move_next_char"+`
+
+* [[option_weechat.key.ctrl-f1]] *weechat.key.ctrl-f1*
+** опис: pass:none[touche "ctrl-f1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll buflist * -100%"+`
+
+* [[option_weechat.key.ctrl-f11]] *weechat.key.ctrl-f11*
+** опис: pass:none[touche "ctrl-f11" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll nicklist * -100%"+`
+
+* [[option_weechat.key.ctrl-f12]] *weechat.key.ctrl-f12*
+** опис: pass:none[touche "ctrl-f12" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll nicklist * +100%"+`
+
+* [[option_weechat.key.ctrl-f2]] *weechat.key.ctrl-f2*
+** опис: pass:none[touche "ctrl-f2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll buflist * +100%"+`
+
+* [[option_weechat.key.ctrl-k]] *weechat.key.ctrl-k*
+** опис: pass:none[touche "ctrl-k" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input delete_end_of_line"+`
+
+* [[option_weechat.key.ctrl-l]] *weechat.key.ctrl-l*
+** опис: pass:none[touche "ctrl-l" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window refresh"+`
+
+* [[option_weechat.key.ctrl-left]] *weechat.key.ctrl-left*
+** опис: pass:none[touche "ctrl-left" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input move_previous_word"+`
+
+* [[option_weechat.key.ctrl-n]] *weechat.key.ctrl-n*
+** опис: pass:none[touche "ctrl-n" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer +1"+`
+
+* [[option_weechat.key.ctrl-p]] *weechat.key.ctrl-p*
+** опис: pass:none[touche "ctrl-p" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer -1"+`
+
+* [[option_weechat.key.ctrl-r]] *weechat.key.ctrl-r*
+** опис: pass:none[touche "ctrl-r" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input search_text_here"+`
+
+* [[option_weechat.key.ctrl-right]] *weechat.key.ctrl-right*
+** опис: pass:none[touche "ctrl-right" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input move_next_word"+`
+
+* [[option_weechat.key.ctrl-s_ctrl-u]] *weechat.key.ctrl-s,ctrl-u*
+** опис: pass:none[touche "ctrl-s,ctrl-u" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/allbuf /buffer set unread"+`
+
+* [[option_weechat.key.ctrl-t]] *weechat.key.ctrl-t*
+** опис: pass:none[touche "ctrl-t" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input transpose_chars"+`
+
+* [[option_weechat.key.ctrl-u]] *weechat.key.ctrl-u*
+** опис: pass:none[touche "ctrl-u" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input delete_beginning_of_line"+`
+
+* [[option_weechat.key.ctrl-up]] *weechat.key.ctrl-up*
+** опис: pass:none[touche "ctrl-up" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input history_global_previous"+`
+
+* [[option_weechat.key.ctrl-w]] *weechat.key.ctrl-w*
+** опис: pass:none[touche "ctrl-w" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input delete_previous_word_whitespace"+`
+
+* [[option_weechat.key.ctrl-x]] *weechat.key.ctrl-x*
+** опис: pass:none[touche "ctrl-x" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer switch"+`
+
+* [[option_weechat.key.ctrl-y]] *weechat.key.ctrl-y*
+** опис: pass:none[touche "ctrl-y" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input clipboard_paste"+`
+
+* [[option_weechat.key.delete]] *weechat.key.delete*
+** опис: pass:none[touche "delete" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input delete_next_char"+`
+
+* [[option_weechat.key.down]] *weechat.key.down*
+** опис: pass:none[touche "down" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input history_next"+`
+
+* [[option_weechat.key.end]] *weechat.key.end*
+** опис: pass:none[touche "end" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input move_end_of_line"+`
+
+* [[option_weechat.key.f1]] *weechat.key.f1*
+** опис: pass:none[touche "f1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll buflist * -100%"+`
+
+* [[option_weechat.key.f10]] *weechat.key.f10*
+** опис: pass:none[touche "f10" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll title * +30%"+`
+
+* [[option_weechat.key.f11]] *weechat.key.f11*
+** опис: pass:none[touche "f11" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll nicklist * -100%"+`
+
+* [[option_weechat.key.f12]] *weechat.key.f12*
+** опис: pass:none[touche "f12" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll nicklist * +100%"+`
+
+* [[option_weechat.key.f2]] *weechat.key.f2*
+** опис: pass:none[touche "f2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll buflist * +100%"+`
+
+* [[option_weechat.key.f5]] *weechat.key.f5*
+** опис: pass:none[touche "f5" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer -1"+`
+
+* [[option_weechat.key.f6]] *weechat.key.f6*
+** опис: pass:none[touche "f6" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer +1"+`
+
+* [[option_weechat.key.f7]] *weechat.key.f7*
+** опис: pass:none[touche "f7" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window -1"+`
+
+* [[option_weechat.key.f8]] *weechat.key.f8*
+** опис: pass:none[touche "f8" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window +1"+`
+
+* [[option_weechat.key.f9]] *weechat.key.f9*
+** опис: pass:none[touche "f9" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll title * -30%"+`
+
+* [[option_weechat.key.home]] *weechat.key.home*
+** опис: pass:none[touche "home" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input move_beginning_of_line"+`
+
+* [[option_weechat.key.left]] *weechat.key.left*
+** опис: pass:none[touche "left" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input move_previous_char"+`
+
+* [[option_weechat.key.meta--]] *weechat.key.meta--*
+** опис: pass:none[touche "meta--" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/filter toggle @"+`
+
+* [[option_weechat.key.meta-/]] *weechat.key.meta-/*
+** опис: pass:none[touche "meta-/" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer jump last_displayed"+`
+
+* [[option_weechat.key.meta-0]] *weechat.key.meta-0*
+** опис: pass:none[touche "meta-0" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *10"+`
+
+* [[option_weechat.key.meta-1]] *weechat.key.meta-1*
+** опис: pass:none[touche "meta-1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *1"+`
+
+* [[option_weechat.key.meta-2]] *weechat.key.meta-2*
+** опис: pass:none[touche "meta-2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *2"+`
+
+* [[option_weechat.key.meta-3]] *weechat.key.meta-3*
+** опис: pass:none[touche "meta-3" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *3"+`
+
+* [[option_weechat.key.meta-4]] *weechat.key.meta-4*
+** опис: pass:none[touche "meta-4" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *4"+`
+
+* [[option_weechat.key.meta-5]] *weechat.key.meta-5*
+** опис: pass:none[touche "meta-5" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *5"+`
+
+* [[option_weechat.key.meta-6]] *weechat.key.meta-6*
+** опис: pass:none[touche "meta-6" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *6"+`
+
+* [[option_weechat.key.meta-7]] *weechat.key.meta-7*
+** опис: pass:none[touche "meta-7" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *7"+`
+
+* [[option_weechat.key.meta-8]] *weechat.key.meta-8*
+** опис: pass:none[touche "meta-8" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *8"+`
+
+* [[option_weechat.key.meta-9]] *weechat.key.meta-9*
+** опис: pass:none[touche "meta-9" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *9"+`
+
+* [[option_weechat.key.meta-<]] *weechat.key.meta-<*
+** опис: pass:none[touche "meta-<" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer jump prev_visited"+`
+
+* [[option_weechat.key.meta-=]] *weechat.key.meta-=*
+** опис: pass:none[touche "meta-=" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/filter toggle"+`
+
+* [[option_weechat.key.meta->]] *weechat.key.meta->*
+** опис: pass:none[touche "meta->" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer jump next_visited"+`
+
+* [[option_weechat.key.meta-B]] *weechat.key.meta-B*
+** опис: pass:none[touche "meta-B" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buflist toggle"+`
+
+* [[option_weechat.key.meta-K]] *weechat.key.meta-K*
+** опис: pass:none[touche "meta-K" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input grab_raw_key_command"+`
+
+* [[option_weechat.key.meta-N]] *weechat.key.meta-N*
+** опис: pass:none[touche "meta-N" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar toggle nicklist"+`
+
+* [[option_weechat.key.meta-_]] *weechat.key.meta-_*
+** опис: pass:none[touche "meta-_" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input redo"+`
+
+* [[option_weechat.key.meta-a]] *weechat.key.meta-a*
+** опис: pass:none[touche "meta-a" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer jump smart"+`
+
+* [[option_weechat.key.meta-b]] *weechat.key.meta-b*
+** опис: pass:none[touche "meta-b" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input move_previous_word"+`
+
+* [[option_weechat.key.meta-backspace]] *weechat.key.meta-backspace*
+** опис: pass:none[touche "meta-backspace" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input delete_previous_word"+`
+
+* [[option_weechat.key.meta-d]] *weechat.key.meta-d*
+** опис: pass:none[touche "meta-d" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input delete_next_word"+`
+
+* [[option_weechat.key.meta-down]] *weechat.key.meta-down*
+** опис: pass:none[touche "meta-down" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer +1"+`
+
+* [[option_weechat.key.meta-end]] *weechat.key.meta-end*
+** опис: pass:none[touche "meta-end" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window scroll_bottom"+`
+
+* [[option_weechat.key.meta-f]] *weechat.key.meta-f*
+** опис: pass:none[touche "meta-f" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input move_next_word"+`
+
+* [[option_weechat.key.meta-f1]] *weechat.key.meta-f1*
+** опис: pass:none[touche "meta-f1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll buflist * b"+`
+
+* [[option_weechat.key.meta-f11]] *weechat.key.meta-f11*
+** опис: pass:none[touche "meta-f11" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll nicklist * b"+`
+
+* [[option_weechat.key.meta-f12]] *weechat.key.meta-f12*
+** опис: pass:none[touche "meta-f12" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll nicklist * e"+`
+
+* [[option_weechat.key.meta-f2]] *weechat.key.meta-f2*
+** опис: pass:none[touche "meta-f2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll buflist * e"+`
+
+* [[option_weechat.key.meta-h_meta-R]] *weechat.key.meta-h,meta-R*
+** опис: pass:none[touche "meta-h,meta-R" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/hotlist restore -all"+`
+
+* [[option_weechat.key.meta-h_meta-c]] *weechat.key.meta-h,meta-c*
+** опис: pass:none[touche "meta-h,meta-c" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/hotlist clear"+`
+
+* [[option_weechat.key.meta-h_meta-m]] *weechat.key.meta-h,meta-m*
+** опис: pass:none[touche "meta-h,meta-m" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/hotlist remove"+`
+
+* [[option_weechat.key.meta-h_meta-r]] *weechat.key.meta-h,meta-r*
+** опис: pass:none[touche "meta-h,meta-r" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/hotlist restore"+`
+
+* [[option_weechat.key.meta-home]] *weechat.key.meta-home*
+** опис: pass:none[touche "meta-home" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window scroll_top"+`
+
+* [[option_weechat.key.meta-j_0_1]] *weechat.key.meta-j,0,1*
+** опис: pass:none[touche "meta-j,0,1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *1"+`
+
+* [[option_weechat.key.meta-j_0_2]] *weechat.key.meta-j,0,2*
+** опис: pass:none[touche "meta-j,0,2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *2"+`
+
+* [[option_weechat.key.meta-j_0_3]] *weechat.key.meta-j,0,3*
+** опис: pass:none[touche "meta-j,0,3" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *3"+`
+
+* [[option_weechat.key.meta-j_0_4]] *weechat.key.meta-j,0,4*
+** опис: pass:none[touche "meta-j,0,4" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *4"+`
+
+* [[option_weechat.key.meta-j_0_5]] *weechat.key.meta-j,0,5*
+** опис: pass:none[touche "meta-j,0,5" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *5"+`
+
+* [[option_weechat.key.meta-j_0_6]] *weechat.key.meta-j,0,6*
+** опис: pass:none[touche "meta-j,0,6" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *6"+`
+
+* [[option_weechat.key.meta-j_0_7]] *weechat.key.meta-j,0,7*
+** опис: pass:none[touche "meta-j,0,7" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *7"+`
+
+* [[option_weechat.key.meta-j_0_8]] *weechat.key.meta-j,0,8*
+** опис: pass:none[touche "meta-j,0,8" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *8"+`
+
+* [[option_weechat.key.meta-j_0_9]] *weechat.key.meta-j,0,9*
+** опис: pass:none[touche "meta-j,0,9" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *9"+`
+
+* [[option_weechat.key.meta-j_1_0]] *weechat.key.meta-j,1,0*
+** опис: pass:none[touche "meta-j,1,0" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *10"+`
+
+* [[option_weechat.key.meta-j_1_1]] *weechat.key.meta-j,1,1*
+** опис: pass:none[touche "meta-j,1,1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *11"+`
+
+* [[option_weechat.key.meta-j_1_2]] *weechat.key.meta-j,1,2*
+** опис: pass:none[touche "meta-j,1,2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *12"+`
+
+* [[option_weechat.key.meta-j_1_3]] *weechat.key.meta-j,1,3*
+** опис: pass:none[touche "meta-j,1,3" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *13"+`
+
+* [[option_weechat.key.meta-j_1_4]] *weechat.key.meta-j,1,4*
+** опис: pass:none[touche "meta-j,1,4" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *14"+`
+
+* [[option_weechat.key.meta-j_1_5]] *weechat.key.meta-j,1,5*
+** опис: pass:none[touche "meta-j,1,5" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *15"+`
+
+* [[option_weechat.key.meta-j_1_6]] *weechat.key.meta-j,1,6*
+** опис: pass:none[touche "meta-j,1,6" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *16"+`
+
+* [[option_weechat.key.meta-j_1_7]] *weechat.key.meta-j,1,7*
+** опис: pass:none[touche "meta-j,1,7" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *17"+`
+
+* [[option_weechat.key.meta-j_1_8]] *weechat.key.meta-j,1,8*
+** опис: pass:none[touche "meta-j,1,8" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *18"+`
+
+* [[option_weechat.key.meta-j_1_9]] *weechat.key.meta-j,1,9*
+** опис: pass:none[touche "meta-j,1,9" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *19"+`
+
+* [[option_weechat.key.meta-j_2_0]] *weechat.key.meta-j,2,0*
+** опис: pass:none[touche "meta-j,2,0" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *20"+`
+
+* [[option_weechat.key.meta-j_2_1]] *weechat.key.meta-j,2,1*
+** опис: pass:none[touche "meta-j,2,1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *21"+`
+
+* [[option_weechat.key.meta-j_2_2]] *weechat.key.meta-j,2,2*
+** опис: pass:none[touche "meta-j,2,2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *22"+`
+
+* [[option_weechat.key.meta-j_2_3]] *weechat.key.meta-j,2,3*
+** опис: pass:none[touche "meta-j,2,3" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *23"+`
+
+* [[option_weechat.key.meta-j_2_4]] *weechat.key.meta-j,2,4*
+** опис: pass:none[touche "meta-j,2,4" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *24"+`
+
+* [[option_weechat.key.meta-j_2_5]] *weechat.key.meta-j,2,5*
+** опис: pass:none[touche "meta-j,2,5" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *25"+`
+
+* [[option_weechat.key.meta-j_2_6]] *weechat.key.meta-j,2,6*
+** опис: pass:none[touche "meta-j,2,6" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *26"+`
+
+* [[option_weechat.key.meta-j_2_7]] *weechat.key.meta-j,2,7*
+** опис: pass:none[touche "meta-j,2,7" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *27"+`
+
+* [[option_weechat.key.meta-j_2_8]] *weechat.key.meta-j,2,8*
+** опис: pass:none[touche "meta-j,2,8" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *28"+`
+
+* [[option_weechat.key.meta-j_2_9]] *weechat.key.meta-j,2,9*
+** опис: pass:none[touche "meta-j,2,9" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *29"+`
+
+* [[option_weechat.key.meta-j_3_0]] *weechat.key.meta-j,3,0*
+** опис: pass:none[touche "meta-j,3,0" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *30"+`
+
+* [[option_weechat.key.meta-j_3_1]] *weechat.key.meta-j,3,1*
+** опис: pass:none[touche "meta-j,3,1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *31"+`
+
+* [[option_weechat.key.meta-j_3_2]] *weechat.key.meta-j,3,2*
+** опис: pass:none[touche "meta-j,3,2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *32"+`
+
+* [[option_weechat.key.meta-j_3_3]] *weechat.key.meta-j,3,3*
+** опис: pass:none[touche "meta-j,3,3" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *33"+`
+
+* [[option_weechat.key.meta-j_3_4]] *weechat.key.meta-j,3,4*
+** опис: pass:none[touche "meta-j,3,4" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *34"+`
+
+* [[option_weechat.key.meta-j_3_5]] *weechat.key.meta-j,3,5*
+** опис: pass:none[touche "meta-j,3,5" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *35"+`
+
+* [[option_weechat.key.meta-j_3_6]] *weechat.key.meta-j,3,6*
+** опис: pass:none[touche "meta-j,3,6" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *36"+`
+
+* [[option_weechat.key.meta-j_3_7]] *weechat.key.meta-j,3,7*
+** опис: pass:none[touche "meta-j,3,7" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *37"+`
+
+* [[option_weechat.key.meta-j_3_8]] *weechat.key.meta-j,3,8*
+** опис: pass:none[touche "meta-j,3,8" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *38"+`
+
+* [[option_weechat.key.meta-j_3_9]] *weechat.key.meta-j,3,9*
+** опис: pass:none[touche "meta-j,3,9" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *39"+`
+
+* [[option_weechat.key.meta-j_4_0]] *weechat.key.meta-j,4,0*
+** опис: pass:none[touche "meta-j,4,0" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *40"+`
+
+* [[option_weechat.key.meta-j_4_1]] *weechat.key.meta-j,4,1*
+** опис: pass:none[touche "meta-j,4,1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *41"+`
+
+* [[option_weechat.key.meta-j_4_2]] *weechat.key.meta-j,4,2*
+** опис: pass:none[touche "meta-j,4,2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *42"+`
+
+* [[option_weechat.key.meta-j_4_3]] *weechat.key.meta-j,4,3*
+** опис: pass:none[touche "meta-j,4,3" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *43"+`
+
+* [[option_weechat.key.meta-j_4_4]] *weechat.key.meta-j,4,4*
+** опис: pass:none[touche "meta-j,4,4" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *44"+`
+
+* [[option_weechat.key.meta-j_4_5]] *weechat.key.meta-j,4,5*
+** опис: pass:none[touche "meta-j,4,5" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *45"+`
+
+* [[option_weechat.key.meta-j_4_6]] *weechat.key.meta-j,4,6*
+** опис: pass:none[touche "meta-j,4,6" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *46"+`
+
+* [[option_weechat.key.meta-j_4_7]] *weechat.key.meta-j,4,7*
+** опис: pass:none[touche "meta-j,4,7" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *47"+`
+
+* [[option_weechat.key.meta-j_4_8]] *weechat.key.meta-j,4,8*
+** опис: pass:none[touche "meta-j,4,8" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *48"+`
+
+* [[option_weechat.key.meta-j_4_9]] *weechat.key.meta-j,4,9*
+** опис: pass:none[touche "meta-j,4,9" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *49"+`
+
+* [[option_weechat.key.meta-j_5_0]] *weechat.key.meta-j,5,0*
+** опис: pass:none[touche "meta-j,5,0" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *50"+`
+
+* [[option_weechat.key.meta-j_5_1]] *weechat.key.meta-j,5,1*
+** опис: pass:none[touche "meta-j,5,1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *51"+`
+
+* [[option_weechat.key.meta-j_5_2]] *weechat.key.meta-j,5,2*
+** опис: pass:none[touche "meta-j,5,2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *52"+`
+
+* [[option_weechat.key.meta-j_5_3]] *weechat.key.meta-j,5,3*
+** опис: pass:none[touche "meta-j,5,3" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *53"+`
+
+* [[option_weechat.key.meta-j_5_4]] *weechat.key.meta-j,5,4*
+** опис: pass:none[touche "meta-j,5,4" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *54"+`
+
+* [[option_weechat.key.meta-j_5_5]] *weechat.key.meta-j,5,5*
+** опис: pass:none[touche "meta-j,5,5" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *55"+`
+
+* [[option_weechat.key.meta-j_5_6]] *weechat.key.meta-j,5,6*
+** опис: pass:none[touche "meta-j,5,6" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *56"+`
+
+* [[option_weechat.key.meta-j_5_7]] *weechat.key.meta-j,5,7*
+** опис: pass:none[touche "meta-j,5,7" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *57"+`
+
+* [[option_weechat.key.meta-j_5_8]] *weechat.key.meta-j,5,8*
+** опис: pass:none[touche "meta-j,5,8" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *58"+`
+
+* [[option_weechat.key.meta-j_5_9]] *weechat.key.meta-j,5,9*
+** опис: pass:none[touche "meta-j,5,9" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *59"+`
+
+* [[option_weechat.key.meta-j_6_0]] *weechat.key.meta-j,6,0*
+** опис: pass:none[touche "meta-j,6,0" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *60"+`
+
+* [[option_weechat.key.meta-j_6_1]] *weechat.key.meta-j,6,1*
+** опис: pass:none[touche "meta-j,6,1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *61"+`
+
+* [[option_weechat.key.meta-j_6_2]] *weechat.key.meta-j,6,2*
+** опис: pass:none[touche "meta-j,6,2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *62"+`
+
+* [[option_weechat.key.meta-j_6_3]] *weechat.key.meta-j,6,3*
+** опис: pass:none[touche "meta-j,6,3" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *63"+`
+
+* [[option_weechat.key.meta-j_6_4]] *weechat.key.meta-j,6,4*
+** опис: pass:none[touche "meta-j,6,4" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *64"+`
+
+* [[option_weechat.key.meta-j_6_5]] *weechat.key.meta-j,6,5*
+** опис: pass:none[touche "meta-j,6,5" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *65"+`
+
+* [[option_weechat.key.meta-j_6_6]] *weechat.key.meta-j,6,6*
+** опис: pass:none[touche "meta-j,6,6" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *66"+`
+
+* [[option_weechat.key.meta-j_6_7]] *weechat.key.meta-j,6,7*
+** опис: pass:none[touche "meta-j,6,7" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *67"+`
+
+* [[option_weechat.key.meta-j_6_8]] *weechat.key.meta-j,6,8*
+** опис: pass:none[touche "meta-j,6,8" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *68"+`
+
+* [[option_weechat.key.meta-j_6_9]] *weechat.key.meta-j,6,9*
+** опис: pass:none[touche "meta-j,6,9" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *69"+`
+
+* [[option_weechat.key.meta-j_7_0]] *weechat.key.meta-j,7,0*
+** опис: pass:none[touche "meta-j,7,0" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *70"+`
+
+* [[option_weechat.key.meta-j_7_1]] *weechat.key.meta-j,7,1*
+** опис: pass:none[touche "meta-j,7,1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *71"+`
+
+* [[option_weechat.key.meta-j_7_2]] *weechat.key.meta-j,7,2*
+** опис: pass:none[touche "meta-j,7,2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *72"+`
+
+* [[option_weechat.key.meta-j_7_3]] *weechat.key.meta-j,7,3*
+** опис: pass:none[touche "meta-j,7,3" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *73"+`
+
+* [[option_weechat.key.meta-j_7_4]] *weechat.key.meta-j,7,4*
+** опис: pass:none[touche "meta-j,7,4" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *74"+`
+
+* [[option_weechat.key.meta-j_7_5]] *weechat.key.meta-j,7,5*
+** опис: pass:none[touche "meta-j,7,5" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *75"+`
+
+* [[option_weechat.key.meta-j_7_6]] *weechat.key.meta-j,7,6*
+** опис: pass:none[touche "meta-j,7,6" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *76"+`
+
+* [[option_weechat.key.meta-j_7_7]] *weechat.key.meta-j,7,7*
+** опис: pass:none[touche "meta-j,7,7" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *77"+`
+
+* [[option_weechat.key.meta-j_7_8]] *weechat.key.meta-j,7,8*
+** опис: pass:none[touche "meta-j,7,8" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *78"+`
+
+* [[option_weechat.key.meta-j_7_9]] *weechat.key.meta-j,7,9*
+** опис: pass:none[touche "meta-j,7,9" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *79"+`
+
+* [[option_weechat.key.meta-j_8_0]] *weechat.key.meta-j,8,0*
+** опис: pass:none[touche "meta-j,8,0" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *80"+`
+
+* [[option_weechat.key.meta-j_8_1]] *weechat.key.meta-j,8,1*
+** опис: pass:none[touche "meta-j,8,1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *81"+`
+
+* [[option_weechat.key.meta-j_8_2]] *weechat.key.meta-j,8,2*
+** опис: pass:none[touche "meta-j,8,2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *82"+`
+
+* [[option_weechat.key.meta-j_8_3]] *weechat.key.meta-j,8,3*
+** опис: pass:none[touche "meta-j,8,3" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *83"+`
+
+* [[option_weechat.key.meta-j_8_4]] *weechat.key.meta-j,8,4*
+** опис: pass:none[touche "meta-j,8,4" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *84"+`
+
+* [[option_weechat.key.meta-j_8_5]] *weechat.key.meta-j,8,5*
+** опис: pass:none[touche "meta-j,8,5" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *85"+`
+
+* [[option_weechat.key.meta-j_8_6]] *weechat.key.meta-j,8,6*
+** опис: pass:none[touche "meta-j,8,6" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *86"+`
+
+* [[option_weechat.key.meta-j_8_7]] *weechat.key.meta-j,8,7*
+** опис: pass:none[touche "meta-j,8,7" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *87"+`
+
+* [[option_weechat.key.meta-j_8_8]] *weechat.key.meta-j,8,8*
+** опис: pass:none[touche "meta-j,8,8" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *88"+`
+
+* [[option_weechat.key.meta-j_8_9]] *weechat.key.meta-j,8,9*
+** опис: pass:none[touche "meta-j,8,9" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *89"+`
+
+* [[option_weechat.key.meta-j_9_0]] *weechat.key.meta-j,9,0*
+** опис: pass:none[touche "meta-j,9,0" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *90"+`
+
+* [[option_weechat.key.meta-j_9_1]] *weechat.key.meta-j,9,1*
+** опис: pass:none[touche "meta-j,9,1" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *91"+`
+
+* [[option_weechat.key.meta-j_9_2]] *weechat.key.meta-j,9,2*
+** опис: pass:none[touche "meta-j,9,2" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *92"+`
+
+* [[option_weechat.key.meta-j_9_3]] *weechat.key.meta-j,9,3*
+** опис: pass:none[touche "meta-j,9,3" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *93"+`
+
+* [[option_weechat.key.meta-j_9_4]] *weechat.key.meta-j,9,4*
+** опис: pass:none[touche "meta-j,9,4" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *94"+`
+
+* [[option_weechat.key.meta-j_9_5]] *weechat.key.meta-j,9,5*
+** опис: pass:none[touche "meta-j,9,5" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *95"+`
+
+* [[option_weechat.key.meta-j_9_6]] *weechat.key.meta-j,9,6*
+** опис: pass:none[touche "meta-j,9,6" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *96"+`
+
+* [[option_weechat.key.meta-j_9_7]] *weechat.key.meta-j,9,7*
+** опис: pass:none[touche "meta-j,9,7" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *97"+`
+
+* [[option_weechat.key.meta-j_9_8]] *weechat.key.meta-j,9,8*
+** опис: pass:none[touche "meta-j,9,8" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *98"+`
+
+* [[option_weechat.key.meta-j_9_9]] *weechat.key.meta-j,9,9*
+** опис: pass:none[touche "meta-j,9,9" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer *99"+`
+
+* [[option_weechat.key.meta-j_meta-f]] *weechat.key.meta-j,meta-f*
+** опис: pass:none[touche "meta-j,meta-f" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer -"+`
+
+* [[option_weechat.key.meta-j_meta-l]] *weechat.key.meta-j,meta-l*
+** опис: pass:none[touche "meta-j,meta-l" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer +"+`
+
+* [[option_weechat.key.meta-j_meta-r]] *weechat.key.meta-j,meta-r*
+** опис: pass:none[touche "meta-j,meta-r" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/server raw"+`
+
+* [[option_weechat.key.meta-j_meta-s]] *weechat.key.meta-j,meta-s*
+** опис: pass:none[touche "meta-j,meta-s" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/server jump"+`
+
+* [[option_weechat.key.meta-k]] *weechat.key.meta-k*
+** опис: pass:none[touche "meta-k" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input grab_key_command"+`
+
+* [[option_weechat.key.meta-l]] *weechat.key.meta-l*
+** опис: pass:none[touche "meta-l" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window bare"+`
+
+* [[option_weechat.key.meta-left]] *weechat.key.meta-left*
+** опис: pass:none[touche "meta-left" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer -1"+`
+
+* [[option_weechat.key.meta-m]] *weechat.key.meta-m*
+** опис: pass:none[touche "meta-m" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/mute mouse toggle"+`
+
+* [[option_weechat.key.meta-n]] *weechat.key.meta-n*
+** опис: pass:none[touche "meta-n" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window scroll_next_highlight"+`
+
+* [[option_weechat.key.meta-p]] *weechat.key.meta-p*
+** опис: pass:none[touche "meta-p" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window scroll_previous_highlight"+`
+
+* [[option_weechat.key.meta-pgdn]] *weechat.key.meta-pgdn*
+** опис: pass:none[touche "meta-pgdn" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window scroll_down"+`
+
+* [[option_weechat.key.meta-pgup]] *weechat.key.meta-pgup*
+** опис: pass:none[touche "meta-pgup" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window scroll_up"+`
+
+* [[option_weechat.key.meta-r]] *weechat.key.meta-r*
+** опис: pass:none[touche "meta-r" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input delete_line"+`
+
+* [[option_weechat.key.meta-return]] *weechat.key.meta-return*
+** опис: pass:none[touche "meta-return" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input insert \n"+`
+
+* [[option_weechat.key.meta-right]] *weechat.key.meta-right*
+** опис: pass:none[touche "meta-right" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer +1"+`
+
+* [[option_weechat.key.meta-s]] *weechat.key.meta-s*
+** опис: pass:none[touche "meta-s" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/mute spell toggle"+`
+
+* [[option_weechat.key.meta-u]] *weechat.key.meta-u*
+** опис: pass:none[touche "meta-u" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window scroll_unread"+`
+
+* [[option_weechat.key.meta-up]] *weechat.key.meta-up*
+** опис: pass:none[touche "meta-up" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer -1"+`
+
+* [[option_weechat.key.meta-w_meta-b]] *weechat.key.meta-w,meta-b*
+** опис: pass:none[touche "meta-w,meta-b" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window balance"+`
+
+* [[option_weechat.key.meta-w_meta-down]] *weechat.key.meta-w,meta-down*
+** опис: pass:none[touche "meta-w,meta-down" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window down"+`
+
+* [[option_weechat.key.meta-w_meta-left]] *weechat.key.meta-w,meta-left*
+** опис: pass:none[touche "meta-w,meta-left" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window left"+`
+
+* [[option_weechat.key.meta-w_meta-right]] *weechat.key.meta-w,meta-right*
+** опис: pass:none[touche "meta-w,meta-right" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window right"+`
+
+* [[option_weechat.key.meta-w_meta-s]] *weechat.key.meta-w,meta-s*
+** опис: pass:none[touche "meta-w,meta-s" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window swap"+`
+
+* [[option_weechat.key.meta-w_meta-up]] *weechat.key.meta-w,meta-up*
+** опис: pass:none[touche "meta-w,meta-up" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window up"+`
+
+* [[option_weechat.key.meta-x]] *weechat.key.meta-x*
+** опис: pass:none[touche "meta-x" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/buffer zoom"+`
+
+* [[option_weechat.key.meta-z]] *weechat.key.meta-z*
+** опис: pass:none[touche "meta-z" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window zoom"+`
+
+* [[option_weechat.key.pgdn]] *weechat.key.pgdn*
+** опис: pass:none[touche "pgdn" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window page_down"+`
+
+* [[option_weechat.key.pgup]] *weechat.key.pgup*
+** опис: pass:none[touche "pgup" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window page_up"+`
+
+* [[option_weechat.key.return]] *weechat.key.return*
+** опис: pass:none[touche "return" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input return"+`
+
+* [[option_weechat.key.right]] *weechat.key.right*
+** опис: pass:none[touche "right" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input move_next_char"+`
+
+* [[option_weechat.key.shift-tab]] *weechat.key.shift-tab*
+** опис: pass:none[touche "shift-tab" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input complete_previous"+`
+
+* [[option_weechat.key.tab]] *weechat.key.tab*
+** опис: pass:none[touche "tab" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input complete_next"+`
+
+* [[option_weechat.key.up]] *weechat.key.up*
+** опис: pass:none[touche "up" dans le contexte "default"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input history_previous"+`
+
+* [[option_weechat.key_cursor.@chat:Q]] *weechat.key_cursor.@chat:Q*
+** опис: pass:none[touche "@chat:Q" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"hsignal:chat_quote_time_prefix_message;/cursor stop"+`
+
+* [[option_weechat.key_cursor.@chat:m]] *weechat.key_cursor.@chat:m*
+** опис: pass:none[touche "@chat:m" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"hsignal:chat_quote_message;/cursor stop"+`
+
+* [[option_weechat.key_cursor.@chat:q]] *weechat.key_cursor.@chat:q*
+** опис: pass:none[touche "@chat:q" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"hsignal:chat_quote_prefix_message;/cursor stop"+`
+
+* [[option_weechat.key_cursor.@item(buffer_nicklist):K]] *weechat.key_cursor.@item(buffer_nicklist):K*
+** опис: pass:none[touche "@item(buffer_nicklist):K" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/kickban ${nick}"+`
+
+* [[option_weechat.key_cursor.@item(buffer_nicklist):b]] *weechat.key_cursor.@item(buffer_nicklist):b*
+** опис: pass:none[touche "@item(buffer_nicklist):b" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/ban ${nick}"+`
+
+* [[option_weechat.key_cursor.@item(buffer_nicklist):k]] *weechat.key_cursor.@item(buffer_nicklist):k*
+** опис: pass:none[touche "@item(buffer_nicklist):k" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/kick ${nick}"+`
+
+* [[option_weechat.key_cursor.@item(buffer_nicklist):q]] *weechat.key_cursor.@item(buffer_nicklist):q*
+** опис: pass:none[touche "@item(buffer_nicklist):q" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/query ${nick};/cursor stop"+`
+
+* [[option_weechat.key_cursor.@item(buffer_nicklist):w]] *weechat.key_cursor.@item(buffer_nicklist):w*
+** опис: pass:none[touche "@item(buffer_nicklist):w" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/whois ${nick}"+`
+
+* [[option_weechat.key_cursor.down]] *weechat.key_cursor.down*
+** опис: pass:none[touche "down" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/cursor move down"+`
+
+* [[option_weechat.key_cursor.left]] *weechat.key_cursor.left*
+** опис: pass:none[touche "left" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/cursor move left"+`
+
+* [[option_weechat.key_cursor.meta-down]] *weechat.key_cursor.meta-down*
+** опис: pass:none[touche "meta-down" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/cursor move area_down"+`
+
+* [[option_weechat.key_cursor.meta-left]] *weechat.key_cursor.meta-left*
+** опис: pass:none[touche "meta-left" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/cursor move area_left"+`
+
+* [[option_weechat.key_cursor.meta-right]] *weechat.key_cursor.meta-right*
+** опис: pass:none[touche "meta-right" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/cursor move area_right"+`
+
+* [[option_weechat.key_cursor.meta-up]] *weechat.key_cursor.meta-up*
+** опис: pass:none[touche "meta-up" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/cursor move area_up"+`
+
+* [[option_weechat.key_cursor.return]] *weechat.key_cursor.return*
+** опис: pass:none[touche "return" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/cursor stop"+`
+
+* [[option_weechat.key_cursor.right]] *weechat.key_cursor.right*
+** опис: pass:none[touche "right" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/cursor move right"+`
+
+* [[option_weechat.key_cursor.up]] *weechat.key_cursor.up*
+** опис: pass:none[touche "up" dans le contexte "cursor"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/cursor move up"+`
+
+* [[option_weechat.key_mouse.@*:button3]] *weechat.key_mouse.@*:button3*
+** опис: pass:none[touche "@*:button3" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/cursor go ${_x},${_y}"+`
+
+* [[option_weechat.key_mouse.@bar(buflist):ctrl-wheeldown]] *weechat.key_mouse.@bar(buflist):ctrl-wheeldown*
+** опис: pass:none[touche "@bar(buflist):ctrl-wheeldown" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@bar(buflist):ctrl-wheelup]] *weechat.key_mouse.@bar(buflist):ctrl-wheelup*
+** опис: pass:none[touche "@bar(buflist):ctrl-wheelup" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@bar(input):button2]] *weechat.key_mouse.@bar(input):button2*
+** опис: pass:none[touche "@bar(input):button2" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input grab_mouse_area"+`
+
+* [[option_weechat.key_mouse.@bar(nicklist):button1-gesture-down]] *weechat.key_mouse.@bar(nicklist):button1-gesture-down*
+** опис: pass:none[touche "@bar(nicklist):button1-gesture-down" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll nicklist ${_window_number} +100%"+`
+
+* [[option_weechat.key_mouse.@bar(nicklist):button1-gesture-down-long]] *weechat.key_mouse.@bar(nicklist):button1-gesture-down-long*
+** опис: pass:none[touche "@bar(nicklist):button1-gesture-down-long" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll nicklist ${_window_number} e"+`
+
+* [[option_weechat.key_mouse.@bar(nicklist):button1-gesture-up]] *weechat.key_mouse.@bar(nicklist):button1-gesture-up*
+** опис: pass:none[touche "@bar(nicklist):button1-gesture-up" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll nicklist ${_window_number} -100%"+`
+
+* [[option_weechat.key_mouse.@bar(nicklist):button1-gesture-up-long]] *weechat.key_mouse.@bar(nicklist):button1-gesture-up-long*
+** опис: pass:none[touche "@bar(nicklist):button1-gesture-up-long" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll nicklist ${_window_number} b"+`
+
+* [[option_weechat.key_mouse.@bar:wheeldown]] *weechat.key_mouse.@bar:wheeldown*
+** опис: pass:none[touche "@bar:wheeldown" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll ${_bar_name} ${_window_number} +20%"+`
+
+* [[option_weechat.key_mouse.@bar:wheelup]] *weechat.key_mouse.@bar:wheelup*
+** опис: pass:none[touche "@bar:wheelup" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/bar scroll ${_bar_name} ${_window_number} -20%"+`
+
+* [[option_weechat.key_mouse.@chat(fset.fset):button1]] *weechat.key_mouse.@chat(fset.fset):button1*
+** опис: pass:none[touche "@chat(fset.fset):button1" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/fset -go ${_chat_line_y}"+`
+
+* [[option_weechat.key_mouse.@chat(fset.fset):button2*]] *weechat.key_mouse.@chat(fset.fset):button2**
+** опис: pass:none[touche "@chat(fset.fset):button2*" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"hsignal:fset_mouse"+`
+
+* [[option_weechat.key_mouse.@chat(fset.fset):wheeldown]] *weechat.key_mouse.@chat(fset.fset):wheeldown*
+** опис: pass:none[touche "@chat(fset.fset):wheeldown" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/fset -down 5"+`
+
+* [[option_weechat.key_mouse.@chat(fset.fset):wheelup]] *weechat.key_mouse.@chat(fset.fset):wheelup*
+** опис: pass:none[touche "@chat(fset.fset):wheelup" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/fset -up 5"+`
+
+* [[option_weechat.key_mouse.@chat(script.scripts):button1]] *weechat.key_mouse.@chat(script.scripts):button1*
+** опис: pass:none[touche "@chat(script.scripts):button1" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/script go ${_chat_line_y}"+`
+
+* [[option_weechat.key_mouse.@chat(script.scripts):button2]] *weechat.key_mouse.@chat(script.scripts):button2*
+** опис: pass:none[touche "@chat(script.scripts):button2" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}"+`
+
+* [[option_weechat.key_mouse.@chat(script.scripts):wheeldown]] *weechat.key_mouse.@chat(script.scripts):wheeldown*
+** опис: pass:none[touche "@chat(script.scripts):wheeldown" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/script down 5"+`
+
+* [[option_weechat.key_mouse.@chat(script.scripts):wheelup]] *weechat.key_mouse.@chat(script.scripts):wheelup*
+** опис: pass:none[touche "@chat(script.scripts):wheelup" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/script up 5"+`
+
+* [[option_weechat.key_mouse.@chat:button1]] *weechat.key_mouse.@chat:button1*
+** опис: pass:none[touche "@chat:button1" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number}"+`
+
+* [[option_weechat.key_mouse.@chat:button1-gesture-left]] *weechat.key_mouse.@chat:button1-gesture-left*
+** опис: pass:none[touche "@chat:button1-gesture-left" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/buffer -1"+`
+
+* [[option_weechat.key_mouse.@chat:button1-gesture-left-long]] *weechat.key_mouse.@chat:button1-gesture-left-long*
+** опис: pass:none[touche "@chat:button1-gesture-left-long" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/buffer 1"+`
+
+* [[option_weechat.key_mouse.@chat:button1-gesture-right]] *weechat.key_mouse.@chat:button1-gesture-right*
+** опис: pass:none[touche "@chat:button1-gesture-right" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/buffer +1"+`
+
+* [[option_weechat.key_mouse.@chat:button1-gesture-right-long]] *weechat.key_mouse.@chat:button1-gesture-right-long*
+** опис: pass:none[touche "@chat:button1-gesture-right-long" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/buffer +"+`
+
+* [[option_weechat.key_mouse.@chat:ctrl-wheeldown]] *weechat.key_mouse.@chat:ctrl-wheeldown*
+** опис: pass:none[touche "@chat:ctrl-wheeldown" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window scroll_horiz -window ${_window_number} +10%"+`
+
+* [[option_weechat.key_mouse.@chat:ctrl-wheelup]] *weechat.key_mouse.@chat:ctrl-wheelup*
+** опис: pass:none[touche "@chat:ctrl-wheelup" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window scroll_horiz -window ${_window_number} -10%"+`
+
+* [[option_weechat.key_mouse.@chat:wheeldown]] *weechat.key_mouse.@chat:wheeldown*
+** опис: pass:none[touche "@chat:wheeldown" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window scroll_down -window ${_window_number}"+`
+
+* [[option_weechat.key_mouse.@chat:wheelup]] *weechat.key_mouse.@chat:wheelup*
+** опис: pass:none[touche "@chat:wheelup" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window scroll_up -window ${_window_number}"+`
+
+* [[option_weechat.key_mouse.@item(buffer_nicklist):button1]] *weechat.key_mouse.@item(buffer_nicklist):button1*
+** опис: pass:none[touche "@item(buffer_nicklist):button1" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/query ${nick}"+`
+
+* [[option_weechat.key_mouse.@item(buffer_nicklist):button1-gesture-left]] *weechat.key_mouse.@item(buffer_nicklist):button1-gesture-left*
+** опис: pass:none[touche "@item(buffer_nicklist):button1-gesture-left" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/kick ${nick}"+`
+
+* [[option_weechat.key_mouse.@item(buffer_nicklist):button1-gesture-left-long]] *weechat.key_mouse.@item(buffer_nicklist):button1-gesture-left-long*
+** опис: pass:none[touche "@item(buffer_nicklist):button1-gesture-left-long" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/kickban ${nick}"+`
+
+* [[option_weechat.key_mouse.@item(buffer_nicklist):button2]] *weechat.key_mouse.@item(buffer_nicklist):button2*
+** опис: pass:none[touche "@item(buffer_nicklist):button2" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/whois ${nick}"+`
+
+* [[option_weechat.key_mouse.@item(buffer_nicklist):button2-gesture-left]] *weechat.key_mouse.@item(buffer_nicklist):button2-gesture-left*
+** опис: pass:none[touche "@item(buffer_nicklist):button2-gesture-left" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/window ${_window_number};/ban ${nick}"+`
+
+* [[option_weechat.key_mouse.@item(buflist):button1*]] *weechat.key_mouse.@item(buflist):button1**
+** опис: pass:none[touche "@item(buflist):button1*" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@item(buflist):button2*]] *weechat.key_mouse.@item(buflist):button2**
+** опис: pass:none[touche "@item(buflist):button2*" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@item(buflist2):button1*]] *weechat.key_mouse.@item(buflist2):button1**
+** опис: pass:none[touche "@item(buflist2):button1*" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@item(buflist2):button2*]] *weechat.key_mouse.@item(buflist2):button2**
+** опис: pass:none[touche "@item(buflist2):button2*" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@item(buflist3):button1*]] *weechat.key_mouse.@item(buflist3):button1**
+** опис: pass:none[touche "@item(buflist3):button1*" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_mouse.@item(buflist3):button2*]] *weechat.key_mouse.@item(buflist3):button2**
+** опис: pass:none[touche "@item(buflist3):button2*" dans le contexte "mouse"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"hsignal:buflist_mouse"+`
+
+* [[option_weechat.key_search.ctrl-q]] *weechat.key_search.ctrl-q*
+** опис: pass:none[touche "ctrl-q" dans le contexte "search"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input search_stop"+`
+
+* [[option_weechat.key_search.ctrl-r]] *weechat.key_search.ctrl-r*
+** опис: pass:none[touche "ctrl-r" dans le contexte "search"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input search_switch_regex"+`
+
+* [[option_weechat.key_search.down]] *weechat.key_search.down*
+** опис: pass:none[touche "down" dans le contexte "search"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input search_next"+`
+
+* [[option_weechat.key_search.meta-c]] *weechat.key_search.meta-c*
+** опис: pass:none[touche "meta-c" dans le contexte "search"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input search_switch_case"+`
+
+* [[option_weechat.key_search.return]] *weechat.key_search.return*
+** опис: pass:none[touche "return" dans le contexte "search"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input search_stop_here"+`
+
+* [[option_weechat.key_search.tab]] *weechat.key_search.tab*
+** опис: pass:none[touche "tab" dans le contexte "search"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input search_switch_where"+`
+
+* [[option_weechat.key_search.up]] *weechat.key_search.up*
+** опис: pass:none[touche "up" dans le contexte "search"]
+** тип: стринг
+** вредности: било који стринг
+** подразумевана вредност: `+"/input search_previous"+`
+
 * [[option_weechat.look.align_end_of_lines]] *weechat.look.align_end_of_lines*
 ** опис: pass:none[поравнање за крајеве линија (све линије након прве): оне почињу испод ових података (време, бафер, префикс, суфикс, порука (подразумевано))]
 ** тип: целобројна

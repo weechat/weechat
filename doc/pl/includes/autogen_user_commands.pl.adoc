@@ -1390,29 +1390,30 @@ Przykłady:
         time <komenda>
         unicode <ciąg>
 
-     list: wyświetla wtyczki z poziomem debugowania
-      set: ustawia poziom debugowania dla wtyczki
-   plugin: nazwa wtyczki ("core" dla rdzenia WeeChat)
-    poziom: poziom debugowania wtyczki (0 = wyłączony)
-     dump: zachowuje zrzut pamięci w pliku z logiem WeeChat (taki sam zrzut jest zapisywany podczas awarii WeeChat)
-    hooks: wyświetla informacje o hookach (z wtyczką: wyświetla szczegółowe informacje o hookach stworzonych przez wtyczkę
-   buffer: zrzuca zawartość bufora z wartościami heksadecymalnymi do pliku z logiem
-    certs: wyświetla ilość załadowanych zaufanych centrów certyfikacyjnych
-    color: wyświetla informacje na temat obecnych par kolorów
-   cursor: przełącza debugowanie dla trybu kursora
-     dirs: wyświetla katalogi
-    hdata: wyświetla informacje o hdata (z free: usuwa wszystkie hdata z pamięci)
-infolists: wyświetla informacje o infolistach
-     libs: wyświetla informacje o użytych zewnętrznych bibliotekach
-   memory: wyświetla informacje o zużyciu pamięci
-    mouse: przełącza debugowanie myszy
-     tags: wyświetla tagi dla linii
-     term: wyświetla informacje o terminalu
-  windows: wyświetla drzewo okien
-     time: mierzy czas do wykonania komendy lub wysłania tekstu do obecnego bufora
-  unicode: wyświetla informacje o ciągach i znakach unicode (przetwarzane, zobacz /help eval)
+     list: list plugins with debug levels
+      set: set debug level for plugin
+   plugin: name of plugin ("core" for WeeChat core)
+    level: debug level for plugin (0 = disable debug)
+     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+    hooks: display infos about hooks (with a plugin: display detailed info about hooks created by the plugin)
+   buffer: dump buffer content with hexadecimal values in log file
+    certs: display number of loaded trusted certificate authorities
+    color: display infos about current color pairs
+   cursor: toggle debug for cursor mode
+     dirs: display directories
+    hdata: display infos about hdata (with free: remove all hdata in memory)
+infolists: display infos about infolists
+      key: enable keyboard and mouse debug: display raw codes, expanded key name and associated command ('q' to quit this mode)
+     libs: display infos about external libraries used
+   memory: display infos about memory usage
+    mouse: toggle debug for mouse
+     tags: display tags for lines
+     term: display infos about terminal
+  windows: display windows tree
+     time: measure time to execute a command or to send text to the current buffer
+  unicode: display information about string and unicode chars (evaluated, see /help eval)
 
-Przykłady:
+Examples:
   /debug set irc 1
   /debug mouse verbose
   /debug time /filter toggle
@@ -1673,51 +1674,49 @@ restore: przywraca ostatnią usuniętą hostlistę w obecnym buforze (albo wszys
 ----
 /input  <akcja> [<argumenty>]
 
-lista akcji:
-  return: symuluje klawisz "enter"
-  complete_next: dopełnia słowo następnym dopełnieniem
-  complete_previous: dopełnia słowo poprzednim dopełnieniem
-  search_text_here: szuka testu w obecnej pozycji w buforze
-  search_text: szuka tekstu w buforze
-  search_switch_case: przełącza na dokładne dopasowanie przy szukaniu
-  search_switch_regex: przełącza typy wyszukiwania: ciąg/wyrażenie regularne
-  search_switch_where: zmienia miejsce przeszukiwania na wiadomości/przedrostki
-  search_previous: szuka poprzednich linii
-  search_next: szuka następnych linii
-  search_stop_here: zatrzymuje wyszukiwanie na obecnej pozycji
-  search_stop: zatrzymuje wyszukiwanie
-  delete_previous_char: usuwa poprzedni znak
-  delete_next_char: usuwa następny znak
-  delete_previous_word: usuwa poprzednie słowo
-  delete_previous_word_whitespace: usuwa poprzednie słowo (do białego znaku)
-  delete_next_word: usuwa następne słowo
-  delete_beginning_of_line: usuwa od początku linii do kursora
-  delete_end_of_line: usuwa od kursora do końca linii
-  delete_line: usuwa cała linię
-  clipboard_paste: wkleja ze schowka
-  transpose_chars: zamienia dwa znaki
-  undo: cofa ostatnia akcję w linii poleceń
-  redo: ponownie wykonuje cofniętą akcję w linii poleceń
-  move_beginning_of_line: przesuwa kursor na początek linii
-  move_end_of_line: przesuwa kursor na koniec linii
-  move_previous_char: przesuwa kursor do poprzedniego znaku
-  move_next_char: przesuwa kursor do następnego znaku
-  move_previous_word: przesuwa kursor do poprzedniego słowa
-  move_next_word: przesuwa kursor do następnego słowa
-  history_previous: przywołuje poprzednia komendę z historii obecnego bufora
-  history_next: przywołuje następną komendę z historii obecnego bufora
-  history_global_previous: przywołuje poprzednią komendę z globalnej historii
-  history_global_next: przywołuje następną komendę z globalnej historii
-  grab_key: przechwytuje klawisz (opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
-  grab_key_command: przechwytuje klawisz z przypisaną komendą (opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
-  grab_mouse: przechwytuje kod zdarzenia myszy
-  grab_mouse_area: przechwytuje kod zdarzenia myszy z obszarem
-  insert: wkleja tekst do linii poleceń (dozwolone są wyescapowane znaki, zobacz /help print)
-  send: wysyła tekst do bufora
-  paste_start: zaczyna wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
-  paste_stop: kończy wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
+list of actions:
+  return: simulate key "enter"
+  complete_next: complete word with next completion
+  complete_previous: complete word with previous completion
+  search_text_here: search text in buffer at current position
+  search_text: search text in buffer
+  search_switch_case: switch exact case for search
+  search_switch_regex: switch search type: string/regular expression
+  search_switch_where: switch search in messages/prefixes
+  search_previous: search previous line
+  search_next: search next line
+  search_stop_here: stop search at current position
+  search_stop: stop search
+  delete_previous_char: delete previous char
+  delete_next_char: delete next char
+  delete_previous_word: delete previous word
+  delete_previous_word_whitespace: delete previous word (until whitespace)
+  delete_next_word: delete next word
+  delete_beginning_of_line: delete from beginning of line until cursor
+  delete_end_of_line: delete from cursor until end of line
+  delete_line: delete entire line
+  clipboard_paste: paste from the internal clipboard
+  transpose_chars: transpose two chars
+  undo: undo last command line action
+  redo: redo last command line action
+  move_beginning_of_line: move cursor to beginning of line
+  move_end_of_line: move cursor to end of line
+  move_previous_char: move cursor to previous char
+  move_next_char: move cursor to next char
+  move_previous_word: move cursor to previous word
+  move_next_word: move cursor to next word
+  history_previous: recall previous command in current buffer history
+  history_next: recall next command in current buffer history
+  history_global_previous: recall previous command in global history
+  history_global_next: recall next command in global history
+  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_mouse: grab mouse event code
+  grab_mouse_area: grab mouse event code with area
+  insert: insert text in command line (escaped chars are allowed, see /help print)
+  send: send text to the buffer
 
-Ta komenda jest używana do przypisywania klawiszy lub przez wtyczki.
+This command is used by key bindings or plugins.
 ----
 
 [[command_weechat_item]]
@@ -1767,17 +1766,17 @@ Przykłady:
 * `+key+`: dodaj/usuń przypisanie klawiszy
 
 ----
-/key  list|listdefault|listdiff [<kontekst>]
-      bind <klawisz> [<komenda> [<argumenty>]]
-      bindctxt <kontekst> <klawisz> [<komenda> [<argumenty>]]
-      unbind <klawisz>
-      unbindctxt <kontekst> <klawisz>
-      reset <klawisz>
-      resetctxt <kontekst> <klawisz>
-      resetall -yes [<kontekst>]
-      missing [<kontekst>]
+/key  [list|listdefault|listdiff] [<context>]
+      bind <key> [<command> [<args>]]
+      bindctxt <context> <key> [<command> [<args>]]
+      unbind <key>
+      unbindctxt <context> <key>
+      reset <key>
+      resetctxt <context> <key>
+      resetall -yes [<context>]
+      missing [<context>]
 
-       list: list all current keys (without argument, this list is displayed)
+       list: list all current keys
 listdefault: list default keys
    listdiff: list differences between current and default keys (keys added, redefined or deleted)
     context: name of context ("default" or "search")
@@ -1791,7 +1790,16 @@ listdefault: list default keys
    resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
     missing: add missing keys (using default bindings), useful after installing new WeeChat version
 
-When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
+When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key name in command line.
+
+Modifiers allowed (in this order when multiple are used):
+  meta-  (alt key)
+  ctrl-  (control key)
+  shift-  (shift key, can only be used with key names below)
+
+Key names allowed: f0 to f20, home, insert, delete, end, backspace, pgup, pgdn, up, down, right, left, tab, return, comma, space.
+
+Combo of keys must be separated by a comma.
 
 For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
           *: any area on screen
@@ -1806,14 +1814,14 @@ A special value for command with format "hsignal:name" can be used for context m
 Another special value "-" can be used to disable key (it will be ignored when looking for keys).
 
 Examples:
-  key alt-t to toggle nicklist bar:
-    /key bind meta-t /bar toggle nicklist
   key alt-r to jump to #weechat IRC channel:
     /key bind meta-r /buffer #weechat
   restore default binding for key alt-r:
     /key reset meta-r
+  key meta-v then f1 to run /help:
+    /key bind meta-v,f1 /help
   key "tab" to stop search in buffer:
-    /key bindctxt search ctrl-i /input search_stop
+    /key bindctxt search tab /input search_stop
   middle button of mouse on a nick to retrieve info on nick:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
