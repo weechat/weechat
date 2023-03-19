@@ -1163,44 +1163,44 @@ message: Abwesenheitsnachricht (ohne Angabe einer Nachricht wird der Abwesenheit
       hide|show|toggle <name>
       scroll <name> <window> <scroll_value>
 
-         list: list all bars
-     listfull: list all bars (verbose)
-    listitems: list all bar items
-          add: add a new bar
-         name: name of bar (must be unique)
-         type:   root: outside windows,
-               window: inside windows, with optional conditions (see below)
-   conditions: the conditions to display the bar:
-                 active: on active window
-               inactive: on inactive windows
-               nicklist: on windows with nicklist
-               other condition: see /help weechat.bar.xxx.conditions and /help eval
-               without conditions, the bar is always displayed
-     position: bottom, top, left or right
-         size: size of bar (in chars)
-    separator: 1 for using separator (line), 0 or nothing means no separator
-    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
-      default: create a default bar (all default bars if no bar name is given)
-       rename: rename a bar
-          del: delete a bar (or all bars with -all)
-          set: set a value for a bar property
-       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
-        value: new value for option
-         hide: hide a bar
-         show: show an hidden bar
-       toggle: hide/show a bar
-       scroll: scroll bar
-       window: window number (use '*' for current window or for root bars)
- scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to scroll by % of width/height, otherwise value is number of chars)
+         list: zeigt alle Infobars an
+     listfull: zeigt eine detaillierte Liste aller Infobars an (ausführlich)
+    listitems: zeigt alle Items an, die in den Infobars genutzt werden
+          add: füge eine neue Infobar hinzu
+         name: Name der Infobar (muss einmalig sein)
+         type:   root: außerhalb eines Fensters,
+               window: innerhalb eines Fensters, mit optionalen Bedingungen (siehe unten)
+   conditions: Bedingungen für eine Infobar:
+                 active: in einem aktiven Fenster
+               inactive: in einem inaktiven Fenster
+               nicklist: in Fenstern mit einer Benutzerliste
+               weitere mögliche Bedingungen: siehe /help weechat.bar.xxx.conditions und /help eval
+               ohne Angabe von Bedingungen wird die Infobar immer angezeigt
+     position: bottom (unten), top (oben), left (links) oder right (rechts)
+         size: Größe der Infobar (in Zeichen)
+    separator: 1 um eine Trennlinien zu zeichnen, bei 0 oder ohne eine Angabe, wird keine Trennlinien gezeichnet
+    item1,...: Items die in der Infobar genutzt werden sollen (Items können durch Kommata oder Leerzeichen getrennt werden ("+" (verbindet Items))
+      default: erstellt standardisierte Infobars
+       rename: Bar umbenennen
+          del: entfernt eine Infobar (alle Infobars können mit dem Argument "-all" entfernt werden).
+          set: setzt einen Wert für Infobar
+       option: Option, die verändert werden soll (für eine Liste aller möglichen Optionen bitte folgenden Befehl nutzen: /set weechat.bar.<barname>.*)
+        value: neuer Wert für Option
+         hide: Infobar wird ausgeblendet
+         show: zeigt eine ausgeblendete Infobar an
+       toggle: zeigt/versteckt eine Infobar
+       scroll: scrollt Infobar hoch/runter
+       window: Nummer des Fensters (nutze '*' für aktuelles Fenster oder für die Root-Bars)
+ scroll_value: Werte für Scroll-Funktion: 'x' oder 'y' (optional), gefolgt von '+', '-', 'b' (Beginn) oder 'e' (Ende), Wert (für +/-), und optional % (zum scrollen der Breite/Höhe in %, ansonsten wird dieser Wert als Anzahl der Zeichen interpretiert um die gescrollt werden soll)
 
-Examples:
-  create a bar with time, buffer number + name, and completion:
+Beispiele:
+  erstellt eine Infobar mit den Items: time, buffer number + name, und Vervollständigung:
     /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  hide a bar:
-    /bar hide mybar
-  scroll nicklist 10 lines down on current buffer:
+  versteckt die Infobar (meinebar):
+    /bar hide meinebar
+  scrollt die Benutzerliste im aktuellen Buffer um 10 Zeilen nach unten:
     /bar scroll nicklist * y+10
-  scroll to end of nicklist on current buffer:
+  scrollt zum Ende der Nicklist im aktuellen Buffer:
     /bar scroll nicklist * ye
 ----
 
@@ -1393,30 +1393,30 @@ Beispiele:
         time <command>
         unicode <string>
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-    hooks: display infos about hooks (with a plugin: display detailed info about hooks created by the plugin)
-   buffer: dump buffer content with hexadecimal values in log file
-    certs: display number of loaded trusted certificate authorities
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-infolists: display infos about infolists
-      key: enable keyboard and mouse debug: display raw codes, expanded key name and associated command ('q' to quit this mode)
-     libs: display infos about external libraries used
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
-     time: measure time to execute a command or to send text to the current buffer
-  unicode: display information about string and unicode chars (evaluated, see /help eval)
+     list: zeigt alle Erweiterungen mit Debuglevel an
+      set: setzt den Level der Protokollierung für eine Erweiterung
+   plugin: Name der Erweiterung ("core" für den WeeChat Kern)
+    level: Debuglevel der Erweiterung (0 = deaktiviert Debug)
+     dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei einem Programmabsturz)
+    hooks: zeigt die aktiven Hooks an (bei einer Erweiterung: detaillierte Informationen über Hooks werden angezeigt, die von der Erweiterung erstellt wurden)
+   buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die Protokolldatei
+    certs: gibt die Anzahl geladener vertrauenswürdiger Zertifizierungsstellen aus
+    color: zeigt Informationen über die aktuellen Farbpaarungen an
+   cursor: schaltet den debug-Modus für den Cursor-Modus ein/aus
+     dirs: Verzeichnisse werden angezeigt
+    hdata: zeigt Informationen zu hdata an (mittels free werden alle hdata Informationen aus dem Speicher entfernt)
+infolists: zeigt Information über die Infolists an
+      key: Tastatur- und Maus-Debug-Modus aktivieren: Rohwerte, erweiterten Tastennamen und zugehörigen Befehl anzeigen ('q' zum Verlassen dieses Modus)
+     libs: zeigt an welche externen Bibliotheken verwendet werden
+   memory: gibt Informationen über den genutzten Speicher aus
+    mouse: schaltet den debug-Modus für den Maus-Modus ein/aus
+     tags: zeigt für jede einzelne Zeile die dazugehörigen Schlagwörter an
+     term: zeigt Informationen über das Terminal an
+  windows: zeigt die Fensterstruktur an
+     time: misst die Zeit um einen Befehl auszuführen oder um einen Text in den aktuellen Buffer zu senden
+  unicode: Zeigt Informationen über Unicode-Zeichen in Zeichenkette an (evaluiert, siehe /help eval)
 
-Examples:
+Beispiele:
   /debug set irc 1
   /debug mouse verbose
   /debug time /filter toggle
@@ -1430,85 +1430,85 @@ Examples:
 /eval  [-n|-s] [-d] <expression>
        [-n] [-d [-d]] -c <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -s: split expression before evaluating it (many commands can be separated by semicolons)
-        -d: display debug output after evaluation (with two -d: more verbose debug)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&   boolean "and"
-                ||   boolean "or"
-            - comparison operators:
-                ==   equal
-                !=   not equal
-                <=   less or equal
-                <    less
-                >=   greater or equal
-                >    greater
-                =~   is matching POSIX extended regex
-                !~   is NOT matching POSIX extended regex
-                ==*  is matching mask, case sensitive (wildcard "*" is allowed)
-                !!*  is NOT matching mask, case sensitive (wildcard "*" is allowed)
-                =*   is matching mask, case insensitive (wildcard "*" is allowed)
-                !*   is NOT matching mask, case insensitive (wildcard "*" is allowed)
-                ==-  is included, case sensitive
-                !!-  is NOT included, case sensitive
-                =-   is included, case insensitive
-                !-   is NOT included, case insensitive
+        -n: gibt das Ergebnis aus, ohne dass dieses in den Buffer gesendet wird (debug Modus)
+        -s: teilt Ausdrücke, bevor sie evaluiert werden (mehrere Befehle können durch Semikolon getrennt werden)
+        -d: eine Debug-Ausgabe nach Auswertung anzeigen (Nutzung von zwei -d: ausführliche Debug-Ausgabe)
+        -c: Auswertung als Bedingung: nutzt Operatoren und runde Klammern, Rückgabewert als Boolean-Wert ("0" oder "1")
+expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${variable} werden ersetzt (siehe unten); mehrere Befehle werden durch ein Semikolon voneinander getrennt
+  operator: ein logischer oder vergleichender Operand:
+            - logische Operanden:
+                &&  boolean "und"
+                ||  boolean "oder"
+            - vergleichende Operanden:
+                ==  gleich
+                !=  ungleich
+                <=  kleiner oder gleich
+                <   kleiner
+                >=  größer oder gleich
+                >   größer
+                =~  stimmt mit regulärem POSIX Ausdruck überein
+                !~  stimmt NICHT mit regulärem POSIX Ausdruck überein
+                ==*  stimmt mit Maske überein (Platzhalter "*" ist erlaubt)
+                !!*  stimmt mit Maske NICHT überein (Platzhalter "*" ist erlaubt)
+                =*   stimmt mit Maske überein, Groß- und Kleinschreibung wird nicht beachtet (Platzhalter "*" ist erlaubt)
+                !*   stimmt mit Maske NICHT überein, Groß- und Kleinschreibung wird nicht beachtet (Platzhalter "*" ist erlaubt)
+                ==-  ist enthalten, Groß- und Kleinschreibung wird beachtet
+                !!-  ist NICHT enthalten, Groß- und Kleinschreibung wird beachtet
+                =-   ist enthalten, Groß- und Kleinschreibung wird nicht beachtet
+                !-   ist NICHT enthalten, Groß- und Kleinschreibung wird nicht beachtet
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
-  - integer (examples: 5, -7)
-  - floating point number (examples: 5.2, -7.5, 2.83e-2)
-  - hexadecimal number (examples: 0xA3, -0xA3)
-To force a string comparison, you can add double quotes around each expression, for example:
+Ein Ausdruck gilt als "wahr" sofern das Ergebnis weder NULL, nicht leer und von "0" abweichend ist.
+Für einen Vergleich werden Fließkommazahlen genutzt, insofern es sich bei beiden Ausdrücken um gültige Zahlen handelt, folgende Formate werden unterstützt:
+  - Integer (Beispiele: 5, -7)
+  - Fließkommazahl (Beispiele: 5.2, -7.5, 2.83e-2)
+  - hexadezimale Zahl (Beispiele: 0xA3, -0xA3)
+Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrücke in Anführungszeichen gesetzt werden, zum Beispiel:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  - the string itself without evaluation (format: "raw:xxx")
-  - a user-defined variable (format: "name")
-  - an evaluated sub-string (format: "eval:xxx")
-  - an evaluated condition (format: "eval_cond:xxx")
-  - a string with escaped chars (format: "esc:xxx" or "\xxx")
-  - a string with a range of chars (format: "chars:xxx" or "chars:c1-c2" where "xxx" is one of: "digit", "xdigit", "lower", "upper", "alpha", "alnum")
-  - a string converted to lower case (format: "lower:xxx")
-  - a string converted to upper case (format: "upper:xxx")
-  - a string with chars to hide (format: "hide:char,string")
-  - a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
-     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  - a reversed string (format: "rev:xxx" or "revscr:xxx")
-  - a repeated string (format: "repeat:count,string")
-  - length of a string (format: "length:xxx" or "lengthscr:xxx")
-  - split of a string (format: "split:number,separators,flags,xxx")
-  - split of shell argmuents (format: "split_shell:number,xxx")
-  - a color (format: "color:xxx", see "Plugin API reference", function "color")
-  - a modifier (format: "modifier:name,data,string")
-  - an info (format: "info:name,arguments", arguments are optional)
-  - a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  - current date/time (format: "date" or "date:format")
-  - an environment variable (format: "env:XXX")
-  - a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  - result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  - a random integer number (format: "random:min,max")
-  - a translated string (format: "translate:xxx")
-  - define a user variable (format: "define:name,value")
-  - an option (format: "file.section.option")
-  - a local variable in buffer
-  - a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list/pointer/pointer name, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
-    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
-    ${buffer[my_pointer].full_name}: full name of the buffer with this pointer name (can be used in triggers)
-  hdata[pointer].var1.method(): when var1 is a hashtable, methods "keys()", "values()", "keys_sorted()", "keys_values()" and "keys_values_sorted()" can be called
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Einige Variablen werden im Ausdruck mittels der Formatierung ${variable} ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:
+  - die Zeichenfolge selbst ohne Auswertung (Format: "raw:xxx")
+  - eine benutzerdefinierte Variable (Format: "name")
+  - eine evaluierte Teilzeichenkette (Format: "eval:xxx")
+  - eine evaluierte Bedingung (Format: "eval_cond:xxx")
+  - eine Zeichenkette mit Escapesequenzen (Format: "esc:xxx" oder "\xxx")
+  - eine Zeichenfolge mit einer Reihe von Zeichen (Format: "chars:xxx" oder "chars:c1-c2" wobei "xxx" von folgenden Typ sein muss: "digit", "xdigit", "lower", "upper", "alpha", "alnum")
+  - eine Zeichenfolge, die in Kleinbuchstaben umgewandelt wird (Format: "lower:xxx")
+  - eine Zeichenfolge, die in Großbuchstaben umgewandelt wird (Format: "upper:xxx")
+  - Zeichen, die in einer Zeichenkette nicht dargestellt werden sollen (Format: "hide:Zeichen,Zeichenkette")
+  - eine Zeichenkette mit einer maximalen Anzahl an Zeichen (Format: "cut:max,suffix,string" oder "cut:+max,suffix,string")
+     oder maximale Anzahl an Zeichen die auf dem Bildschirm angezeigt werden sollen (Format: "cutscr:Max,Suffix,Zeichenkette oder "cutscr:+Max,Suffix,Zeichenkette")
+  - eine Zeichenkette umkehren (Format: "rev:xxx" oder "revscr:xxx")
+  - eine Zeichenkette wiederholen (Format: "repeat:Anzahl,Zeichenkette")
+  - Länge einer Zeichenkette (Format: "length:xxx" oder "lengthscr:xxx")
+  - Aufteilen einer Zeichenkette (Format: "split:Anzahl,Trennzeichen,Flags,xxx")
+  - Aufteilen von Shell-Argumenten (Format: "split_shell:Anzahl,xxx")
+  - eine Farbe (Format: "color:xxx", siehe "Anleitung für API Erweiterung", Funktion "color")
+  - zum modifizieren (Format: "modifier:name,data,string")
+  - eine Info (Format: "info:Name,Argumente", Argumente sind optional)
+  - eine Basis 16/32/64 kodierte / dekodierte Zeichenfolge (Format: "base_encode:base,xxx" oder "base_decode:base,xxx")
+  - aktuelles Datum/Uhrzeit (Format: "date" oder "date:format")
+  - eine Umgebungsvariable (Format: "env:XXX")
+  - ein Dreifachoperand (Format: "if:Bedingung?Wert_falls_wahr:Wert_falls_unwahr")
+  - Ergebnis eines Ausdrucks mit Klammern und Operatoren + - * / // % ** (Format: "calc:xxx")
+  - eine zufällige ganze Zahl (Format: "random:min,max")
+  - eine übersetzte Zeichenkette (Format: "translate:xxx")
+  - eine Benutzervariable definieren (Format: "define:Name,Wert")
+  - eine Option (Format: "file.section.option")
+  - eine lokale Variable eines Buffers
+  - ein(e) hdata - Name/Variable (der Wert wird automatisch in eine Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
+Das Format für hdata kann wie folgt aufgebaut sein:
+  hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
+  hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
+    ${buffer[gui_buffers].full_name}: der vollständige Name des ersten Buffers, in der verknüpften Liste aller Buffer
+    ${plugin[weechat_plugins].name}: Name der ersten Erweiterung, in der verknüpften Liste aller Erweiterungen
+  hdata[pointer].var1.var2...: startet hdata mittels einem Pointer, zum Beispiel:
+    ${buffer[0x1234abcd].full_name}: vollständiger Name eines Buffers und des dazugehörigen Pointers (kann in triggern benutzt werden)
+    ${buffer[my_pointer].full_name}: vollständiger Name des Buffers mit dem entsprechenden Pointernamen (kann in Triggern verwendet werden)
+  hdata[pointer].var1.method(): Wenn var1 eine Hashtabelle ist, können die Methoden „keys()“, „values()“, „keys_sorted()“, „keys_values()“ und „keys_values_sorted()“ aufgerufen werden
+Die vorhandenen Namen für hdata und Variablen sind in der "Anleitung für API Erweiterung", Bereich "weechat_hdata_get". beschrieben
 
-Examples (simple strings):
+Beispiele (einfache Zeichenketten):
   /eval -n ${raw:${info:version}}                  ==> ${info:version}
   /eval -n ${eval_cond:${window.win_width}>100}    ==> 1
   /eval -n ${info:version}                         ==> 0.4.3
@@ -1549,7 +1549,7 @@ Examples (simple strings):
   /eval -n ${translate:Plugin}                     ==> Extension
   /eval -n ${define:len,${calc:5+3}}${len}x${len}  ==> 8x8
 
-Examples (conditions):
+Beispiele (Bedingungen):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
   /eval -n -c ${window.win_width} > 100   ==> 1
   /eval -n -c (8 > 12) || (5 > 2)         ==> 1
@@ -1677,49 +1677,49 @@ restore: stellt die letzte Hotlist wieder her, die im aktuellen Buffer entfernt 
 ----
 /input  <action> [<arguments>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text_here: search text in buffer at current position
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_switch_regex: switch search type: string/regular expression
-  search_switch_where: switch search in messages/prefixes
-  search_previous: search previous line
-  search_next: search next line
-  search_stop_here: stop search at current position
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_previous_word_whitespace: delete previous word (until whitespace)
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from the internal clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  insert: insert text in command line (escaped chars are allowed, see /help print)
-  send: send text to the buffer
+Auflistung der möglichen Aktionen:
+  return: simuliert die "enter" Taste
+  complete_next: vervollständigt Wort mit nächster Komplettierung
+  complete_previous: vervollständigt Word mit vorheriger Komplettierung
+  search_text_here: Textsuche ab aktueller Position
+  search_text: Textsuche im Buffer
+  search_switch_case: schaltet Groß-/Kleinschreibung ein und aus
+  search_switch_regex: Wechsel des Suchmodus: einfache Textsuche/reguläre Ausdrücke
+  search_switch_where: wechselt Suche in Nachricht/Präfix
+  search_previous: sucht vorheriger Zeile
+  search_next: sucht nächste Zeile
+  search_stop_here: beendet Suche ab aktueller Position
+  search_stop: suche beenden
+  delete_previous_char: entfernt vorheriges Zeichen
+  delete_next_char: entfernt nächstes Zeichen
+  delete_previous_word: entfernt vorheriges Wort
+  delete_previous_word_whitespace: vorheriges Wort löschen (bis zum Leerzeichen)
+  delete_next_word: entfernt nächstes Wort
+  delete_beginning_of_line: entfernt alle Zeichen ab Zeilenanfang bis zum Cursor
+  delete_end_of_line: entfernt alle Zeichen ab Cursor bis zum Ende der Zeile
+  delete_line: löscht die komplette Eingabezeile
+  clipboard_paste: fügt Zeichenkette aus der internen Zwischenablage ein
+  transpose_chars: Zeichen austauschen
+  undo: letzten Befehl in der Eingabezeile rückgängig machen
+  redo: letzten Befehl in der Eingabezeile wiederherstellen
+  move_beginning_of_line: springt an den Anfang der Eingabezeile
+  move_end_of_line: springt ans Ende der Eingabezeile
+  move_previous_char: setzt den Cursor eine Position nach links
+  move_next_char: setzt den Cursor eine Position nach rechts
+  move_previous_word: springt zum Anfang des vorherigen Wortes, in der Eingabezeile
+  move_next_word: springt zum Anfang des nächsten Wortes, in der Eingabezeile
+  history_previous: ruft vorherigen Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: rückwärts suchen)
+  history_next: ruft nächsten Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: vorwärts suchen)
+  history_global_previous: ruft vorherigen Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer)
+  history_global_next: ruft nächsten Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer)
+  grab_key: fängt eine Taste (optionales Argument: Verzögerung um eine Taste einzufangen. Standard sind 500 Millisekunden)
+  grab_key_command: zeigt den Tastencode (inklusive des eingebundenen Befehls) einer Tastenkombination an und fügt ihn in die Befehlszeile ein (optionales Argument: Verzögerung um eine Taste einzufangen. Standard sind 500 Millisekunden)
+  grab_mouse: fängt den Code einer Maus Aktivität
+  grab_mouse_area: fängt den Code einer Maus Aktivität mit entsprechendem Bereich
+  insert: fügt einen Text in die Eingabezeile ein (Escapesequenzen sind möglich, siehe /help print)
+  send: schickt Text an einen Buffer
 
-This command is used by key bindings or plugins.
+Dieser Befehl wird sinnvollerweise mittels Tastenbelegungen oder Erweiterungen genutzt.
 ----
 
 [[command_weechat_item]]
@@ -1779,53 +1779,53 @@ Beispiele:
       resetall -yes [<context>]
       missing [<context>]
 
-       list: list all current keys
-listdefault: list default keys
-   listdiff: list differences between current and default keys (keys added, redefined or deleted)
-    context: name of context ("default" or "search")
-       bind: bind a command to a key or display command bound to key (for context "default")
-   bindctxt: bind a command to a key or display command bound to key, for given context
-    command: command (many commands can be separated by semicolons)
-     unbind: remove a key binding (for context "default")
- unbindctxt: remove a key binding for given context
-      reset: reset a key to default binding (for context "default")
-  resetctxt: reset a key to default binding, for given context
-   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
-    missing: add missing keys (using default bindings), useful after installing new WeeChat version
+       list: zeigt die aktuelle Tastenbelegungen an (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
+listdefault: zeigt die Standardeinstellung der Tastenbelegung an
+   listdiff: zeigt die Unterschiede zwischen der aktuell genutzten Tastaturbelegung und der Standardbelegung an (hinzugefügte/verändert/gelöschte Tastenbelegungen)
+    context: Name des Kontextes ("default" oder "search")
+       bind: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl auf eine Taste gelegt wurde (für Kontext "default")
+   bindctxt: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl auf eine Taste gelegt wurde, dies trifft für Kontext definierte Tasten zu
+    command: Befehl (mehrere Befehle werden durch ein Semikolon getrennt)
+     unbind: hebt eine Tastenbelegung auf (für Kontext "default")
+ unbindctxt: hebt eine Tastenbelegung für den angegebenen Kontext auf
+      reset: die Tastenbelegung wird für die ausgewählte Taste auf die Standardeinstellung zurück gesetzt (für Kontext "default")
+  resetctxt: die Tastenbelegung wird für die ausgewählte Taste auf die Standardeinstellung zurück gesetzt, dies trifft für den ausgewählten Kontext zu
+   resetall: die Tastenbelegung wird auf die Standardeinstellungen zurück gesetzt. Dies löscht ALLE persönlichen Tastenbelegungen (Vorsicht!)
+    missing: fügt fehlende Tastenbelegungen hinzu (dazu wird die Standardbelegung genutzt). Dies kann sinnvoll sein wenn man auf eine neue WeeChat Version umgestiegen ist
 
-When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key name in command line.
+Falls ein Befehl einer Taste zugeordnet werden soll ist es ratsam zuerst mit der Tastenkombination alt+k (oder Esc + k) einen Fangmodus zu aktivieren um damit die zu belegende Taste zu ermitteln. Durch diesen Schritt wird der benötigte Tasten-Code in die Befehlszeile übernommen.
 
-Modifiers allowed (in this order when multiple are used):
-  meta-  (alt key)
-  ctrl-  (control key)
-  shift-  (shift key, can only be used with key names below)
+Zulässige Modifikatortasten (in dieser Reihenfolge, wenn mehrere verwendet werden):
+meta- (Alt-Taste)
+Strg- (Steuertaste)
+Shift- (Umschalttaste, kann nur mit Tastennamen unten verwendet werden)
 
-Key names allowed: f0 to f20, home, insert, delete, end, backspace, pgup, pgdn, up, down, right, left, tab, return, comma, space.
+Zulässige Tastennamen: f0 bis f20, Pos1, Einfügen, Löschen, Ende, Rücktaste, Bild auf, Bild ab, hoch, runter, rechts, links, Tab, Return, Komma, Leerzeichen.
 
-Combo of keys must be separated by a comma.
+Tastenkombinationen müssen durch ein Komma getrennt werden.
 
-For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
-          *: any area on screen
-       chat: chat area (any buffer)
-  chat(xxx): chat area for buffer with name "xxx" (full name including plugin)
-     bar(*): any bar
-   bar(xxx): bar "xxx"
-    item(*): any bar item
-  item(xxx): bar item "xxx"
-Wildcard "*" is allowed in key to match many mouse events.
-A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
-Another special value "-" can be used to disable key (it will be ignored when looking for keys).
+Für Kontext "mouse" (Kontext "cursor" ist auch möglich), hat der zu verwendende Schlüssel folgendes Format: "@area:Schlüssel" oder "@area1>area2:Schlüssel". "area" kann folgende Werte habe:
+          *: jedweder Bereich des Bildschirms
+       chat: Chatbereich (für jeden Buffer)
+  chat(xxx): Chatbereich für einen Buffer mit dem Namen "xxx" (vollständiger Name mit Erweiterung. Beispiel: chat(perl.iset):)
+     bar(*): beliebige Bar
+   bar(xxx): Bar mit dem Namen "xxx"
+    item(*): beliebiges Bar-Item
+  item(xxx): Bar-Item mit Namen "xxx"
+Der Platzhalter "*" kann verwendet werden um mehrere unterschiedliche Mausereignisse auszuwählen.
+Für den Kontext "mouse" kann ein besonderer Übergabewert für den zu nutzenden Befehl verwendet werden, "hsignal:name". Dieses sendet das hsignal "name" und als Inhalt ein Hashtable als Argument.
+Ein weiterer Übergabewert ist "-" und kann genutzt werden um einen Schlüssel zu deaktivieren (der Schlüssel wird bei der Durchführung übersprungen).
 
-Examples:
-  key alt-r to jump to #weechat IRC channel:
+Beispiele:
+  Mit der Tastenkombination "alt-t" wird die Nicklist-Bar an-und aus geschaltet:
+    /key bind meta-t /bar toggle nicklist
+  Mit der Tastenkombination "alt-r" wird direkt zum IRC #weechat Buffer gewechselt:
     /key bind meta-r /buffer #weechat
-  restore default binding for key alt-r:
+  Die Tastenkombination "alt-r" wird auf die Standardfunktion zurückgesetzt:
     /key reset meta-r
-  key meta-v then f1 to run /help:
-    /key bind meta-v,f1 /help
-  key "tab" to stop search in buffer:
-    /key bindctxt search tab /input search_stop
-  middle button of mouse on a nick to retrieve info on nick:
+  "Tab"-Taste nutzen um im Kontext "search" die Suche innerhalb eines Buffers zu beenden:
+    /key bindctxt search ctrl-i /input search_stop
+  Auswahl eines Nicknamens mittels mittlerer Maustaste zeigt zusätzliche Informationen zu dem Nick an:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
 
@@ -2057,20 +2057,20 @@ Beispiel:
 ----
 
 [[command_weechat_reset]]
-* `+reset+`: reset config options
+* `+reset+`: Konfigurationsoptionen zurücksetzen
 
 ----
 /reset  <option>
         -mask <option>
 
-option: name of an option
- -mask: use a mask in option (wildcard "*" is allowed to mass-reset options, use carefully!)
+option: Name einer Option
+ -mask: nutzt eine Maske um Optionen auszuwählen (Platzhalter "*" kann verwendet werden um viele Optionen in einem Arbeitsschritt zurückzusetzen. Nutzen Sie diese Funktion mit äußerster Sorgfalt!)
 
-Examples:
-  reset one option:
-    /reset weechat.look.item_time_format
-  reset all color options:
-    /reset -mask weechat.color.*
+Beispiele:
+  Eine Einstellung zurücksetzen:
+    /unset weechat.look.item_time_format
+  Alle Farbeinstellungen zurücksetzen:
+    /unset -mask weechat.color.*
 ----
 
 [[command_weechat_save]]
