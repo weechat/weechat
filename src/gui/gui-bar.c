@@ -1311,18 +1311,12 @@ struct t_config_option *
 gui_bar_create_option (const char *bar_name, int index_option, const char *value)
 {
     struct t_config_option *ptr_option;
-    int length;
-    char *option_name;
+    char option_name[4096];
 
     ptr_option = NULL;
 
-    length = strlen (bar_name) + 1 +
-        strlen (gui_bar_option_string[index_option]) + 1;
-    option_name = malloc (length);
-    if (!option_name)
-        return NULL;
-
-    snprintf (option_name, length, "%s.%s",
+    snprintf (option_name, sizeof (option_name),
+              "%s.%s",
               bar_name, gui_bar_option_string[index_option]);
 
     switch (index_option)
@@ -1498,8 +1492,6 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
         case GUI_BAR_NUM_OPTIONS:
             break;
     }
-
-    free (option_name);
 
     return ptr_option;
 }
