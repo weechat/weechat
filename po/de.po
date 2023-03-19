@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-18 09:18+0100\n"
+"POT-Creation-Date: 2023-03-19 07:53+0100\n"
 "PO-Revision-Date: 2023-02-01 11:05+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
@@ -877,6 +877,23 @@ msgstr "Unbekannte Konfigurationsdatei \"%s\""
 msgid "%sInvalid number: \"%s\""
 msgstr "%sUngültige Nummer: \"%s\""
 
+#, fuzzy, c-format
+#| msgid "%sFailed to set option \"%s\""
+msgid "%sFailed to reset option \"%s\""
+msgstr "%sEinstellung \"%s\" konnte nicht gesetzt werden"
+
+msgid "Option reset: "
+msgstr "Einstellung wieder hergestellt: "
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr "%sDas Zurücksetzen aller Einstellungen ist nicht zulässig"
+
+#, fuzzy, c-format
+#| msgid "Option reset: "
+msgid "%d option(s) reset"
+msgstr "Einstellung wieder hergestellt: "
+
 #, c-format
 msgid "Options saved to %s"
 msgstr "Einstellungen unter %s gesichert"
@@ -1020,16 +1037,9 @@ msgstr "Einstellung erstellt: "
 msgid "%sFailed to unset option \"%s\""
 msgstr "%sEinstellung \"%s\" konnte nicht zurück gesetzt werden"
 
-msgid "Option reset: "
-msgstr "Einstellung wieder hergestellt: "
-
 #, c-format
 msgid "Option removed: %s"
 msgstr "Einstellung gelöscht: %s"
-
-#, c-format
-msgid "%sReset of all options is not allowed"
-msgstr "%sDas Zurücksetzen aller Einstellungen ist nicht zulässig"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
@@ -3423,6 +3433,54 @@ msgstr ""
 "  scrolle zwei Seiten hoch:\n"
 "    /repeat 2 /window page_up"
 
+#, fuzzy
+#| msgid "unset/reset config options"
+msgid "reset config options"
+msgstr "Konfigurationsparameter freigeben/zurücksetzen"
+
+msgid "<option> || -mask <option>"
+msgstr "<option> || -mask <option>"
+
+#, fuzzy
+#| msgid ""
+#| "option: name of an option\n"
+#| " -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+#| "options, use carefully!)\n"
+#| "\n"
+#| "According to option, it's reset (for standard options) or removed (for "
+#| "optional settings, like server values).\n"
+#| "\n"
+#| "Examples:\n"
+#| "  reset one option:\n"
+#| "    /unset weechat.look.item_time_format\n"
+#| "  reset all color options:\n"
+#| "    /unset -mask weechat.color.*"
+msgid ""
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
+"\n"
+"Examples:\n"
+"  reset one option:\n"
+"    /reset weechat.look.item_time_format\n"
+"  reset all color options:\n"
+"    /reset -mask weechat.color.*"
+msgstr ""
+"option: Name einer Option\n"
+" -mask: nutzt eine Maske um Optionen auszuwählen (Platzhalter \"*\" kann "
+"verwendet werden um viele Optionen in einem Arbeitsschritt zurückzusetzen. "
+"Nutzen Sie diese Funktion mit äußerster Sorgfalt!)\n"
+"\n"
+"Gemäß der jeweiligen Einstellung wird diese zurückgesetzt (bei "
+"Standardeinstellungen) oder komplett entfernt (bei optionalen Einstellungen, "
+"zum Beispiel die Server-Einstellungen).\n"
+"\n"
+"Beispiele:\n"
+"  Eine Einstellung zurücksetzen:\n"
+"    /unset weechat.look.item_time_format\n"
+"  Alle Farbeinstellungen zurücksetzen:\n"
+"    /unset -mask weechat.color.*"
+
 msgid "save configuration files to disk"
 msgstr "Konfiguration abspeichern"
 
@@ -3700,9 +3758,6 @@ msgstr ""
 
 msgid "unset/reset config options"
 msgstr "Konfigurationsparameter freigeben/zurücksetzen"
-
-msgid "<option> || -mask <option>"
-msgstr "<option> || -mask <option>"
 
 msgid ""
 "option: name of an option\n"

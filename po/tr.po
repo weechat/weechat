@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-18 09:18+0100\n"
+"POT-Creation-Date: 2023-03-19 07:53+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -848,6 +848,23 @@ msgstr "Bilinmeyen yapılandırma dosyası \"%s\""
 msgid "%sInvalid number: \"%s\""
 msgstr "%sGeçersiz numara: \"%s\""
 
+#, fuzzy, c-format
+#| msgid "%sFailed to set option \"%s\""
+msgid "%sFailed to reset option \"%s\""
+msgstr "%s\"%s\" seçeneği ayarlanamadı"
+
+msgid "Option reset: "
+msgstr "Seçenek sıfırlandı: "
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr "%sTüm seçeneklerin sıfırlanmasına izin verilmiyor"
+
+#, fuzzy, c-format
+#| msgid "Option reset: "
+msgid "%d option(s) reset"
+msgstr "Seçenek sıfırlandı: "
+
 #, c-format
 msgid "Options saved to %s"
 msgstr "Seçenekler %s konumuna kaydedildi"
@@ -989,16 +1006,9 @@ msgstr "Seçenek oluşturuldu: "
 msgid "%sFailed to unset option \"%s\""
 msgstr "%s\"%s\" seçeneği kaldırılamadı"
 
-msgid "Option reset: "
-msgstr "Seçenek sıfırlandı: "
-
 #, c-format
 msgid "Option removed: %s"
 msgstr "Seçenek kaldırıldı: %s"
-
-#, c-format
-msgid "%sReset of all options is not allowed"
-msgstr "%sTüm seçeneklerin sıfırlanmasına izin verilmiyor"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
@@ -3348,6 +3358,52 @@ msgstr ""
 "  iki sayfa yukarı kaydır:\n"
 "    /repeat 2 /window page_up"
 
+#, fuzzy
+#| msgid "unset/reset config options"
+msgid "reset config options"
+msgstr "yapılandırma seçeneklerini geri al/sıfırla"
+
+msgid "<option> || -mask <option>"
+msgstr "<seçenek> || -mask <seçenek>"
+
+#, fuzzy
+#| msgid ""
+#| "option: name of an option\n"
+#| " -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+#| "options, use carefully!)\n"
+#| "\n"
+#| "According to option, it's reset (for standard options) or removed (for "
+#| "optional settings, like server values).\n"
+#| "\n"
+#| "Examples:\n"
+#| "  reset one option:\n"
+#| "    /unset weechat.look.item_time_format\n"
+#| "  reset all color options:\n"
+#| "    /unset -mask weechat.color.*"
+msgid ""
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
+"\n"
+"Examples:\n"
+"  reset one option:\n"
+"    /reset weechat.look.item_time_format\n"
+"  reset all color options:\n"
+"    /reset -mask weechat.color.*"
+msgstr ""
+"seçenek: bir seçeneğin adı\n"
+"  -mask: bu seçenekte bir maske kullanın (seçenekleri toptan sıfırlamak için "
+"\"*\" jokerine izin verilir, dikkatli kullanın!)\n"
+"\n"
+"Seçeneğe göre, sıfırlanır (standart seçenekler için) veya kaldırılır (sunucu "
+"değerleri gibi isteğe bağlı ayarlar için).\n"
+"\n"
+"Örnekler:\n"
+"  bir seçeneği sıfırla:\n"
+"    /unset weechat.look.item_time_format\n"
+"  tüm renk seçeneklerini sıfırla:\n"
+"    /unset -mask weechat.color.*"
+
 msgid "save configuration files to disk"
 msgstr "yapılandırma dosyalarını diske kaydet"
 
@@ -3610,9 +3666,6 @@ msgstr ""
 
 msgid "unset/reset config options"
 msgstr "yapılandırma seçeneklerini geri al/sıfırla"
-
-msgid "<option> || -mask <option>"
-msgstr "<seçenek> || -mask <seçenek>"
 
 msgid ""
 "option: name of an option\n"

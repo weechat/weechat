@@ -2054,6 +2054,23 @@ Beispiel:
     /repeat 2 /window page_up
 ----
 
+[[command_weechat_reset]]
+* `+reset+`: reset config options
+
+----
+/reset  <option>
+        -mask <option>
+
+option: name of an option
+ -mask: use a mask in option (wildcard "*" is allowed to mass-reset options, use carefully!)
+
+Examples:
+  reset one option:
+    /reset weechat.look.item_time_format
+  reset all color options:
+    /reset -mask weechat.color.*
+----
+
 [[command_weechat_save]]
 * `+save+`: Konfiguration abspeichern
 

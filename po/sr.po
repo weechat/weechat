@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-18 09:18+0100\n"
+"POT-Creation-Date: 2023-03-19 07:53+0100\n"
 "PO-Revision-Date: 2023-02-01 14:25+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -848,6 +848,23 @@ msgstr "Непознати конфигурациони фајл „%s”"
 msgid "%sInvalid number: \"%s\""
 msgstr "%sНеважећи број: „%s”"
 
+#, fuzzy, c-format
+#| msgid "%sFailed to set option \"%s\""
+msgid "%sFailed to reset option \"%s\""
+msgstr "%sНије успело постављање опције „%s”"
+
+msgid "Option reset: "
+msgstr "Ресетована опција: "
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr "%sНије дозвољено ресетовање свих опција"
+
+#, fuzzy, c-format
+#| msgid "Option reset: "
+msgid "%d option(s) reset"
+msgstr "Ресетована опција: "
+
 #, c-format
 msgid "Options saved to %s"
 msgstr "Опције су сачуване у %s"
@@ -993,16 +1010,9 @@ msgstr "Креирана опција: "
 msgid "%sFailed to unset option \"%s\""
 msgstr "%sНије успело уклањање опције „%s”"
 
-msgid "Option reset: "
-msgstr "Ресетована опција: "
-
 #, c-format
 msgid "Option removed: %s"
 msgstr "Опција је уклоњена: %s"
-
-#, c-format
-msgid "%sReset of all options is not allowed"
-msgstr "%sНије дозвољено ресетовање свих опција"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
@@ -3302,6 +3312,52 @@ msgstr ""
 "  скролује 2 странице навише:\n"
 "    /repeat 2 /window page_up"
 
+#, fuzzy
+#| msgid "unset/reset config options"
+msgid "reset config options"
+msgstr "уклањање/ресетовање конфиг опција"
+
+msgid "<option> || -mask <option>"
+msgstr "<опција> || -mask <опција>"
+
+#, fuzzy
+#| msgid ""
+#| "option: name of an option\n"
+#| " -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+#| "options, use carefully!)\n"
+#| "\n"
+#| "According to option, it's reset (for standard options) or removed (for "
+#| "optional settings, like server values).\n"
+#| "\n"
+#| "Examples:\n"
+#| "  reset one option:\n"
+#| "    /unset weechat.look.item_time_format\n"
+#| "  reset all color options:\n"
+#| "    /unset -mask weechat.color.*"
+msgid ""
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
+"\n"
+"Examples:\n"
+"  reset one option:\n"
+"    /reset weechat.look.item_time_format\n"
+"  reset all color options:\n"
+"    /reset -mask weechat.color.*"
+msgstr ""
+"опција: име опције\n"
+" -mask: користи маску у опцији (дозвољен је џокер „*” за масовно ресетовање "
+"опција, користите га опрезно!)\n"
+"\n"
+"Зависно од опције, она се ресетује (за стандардне опције) или уклања (за "
+"необавезна подешавања, као што су серверске вредности).\n"
+"\n"
+"Примери:\n"
+"  ресетовање једне опције:\n"
+"    /unset weechat.look.item_time_format\n"
+"  ресетовање свих опција боја:\n"
+"    /unset -mask weechat.color.*"
+
 msgid "save configuration files to disk"
 msgstr "чување конфигурације на диск"
 
@@ -3568,9 +3624,6 @@ msgstr ""
 
 msgid "unset/reset config options"
 msgstr "уклањање/ресетовање конфиг опција"
-
-msgid "<option> || -mask <option>"
-msgstr "<опција> || -mask <опција>"
 
 msgid ""
 "option: name of an option\n"

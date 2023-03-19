@@ -391,6 +391,16 @@ TEST(CoreCommand, Repeat)
 
 /*
  * Tests functions:
+ *   command_reset
+ */
+
+TEST(CoreCommand, Reset)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   command_save
  */
 

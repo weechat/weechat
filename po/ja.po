@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-18 09:18+0100\n"
+"POT-Creation-Date: 2023-03-19 07:53+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -867,6 +867,22 @@ msgstr "設定ファイル \"%s\" が見つかりません"
 msgid "%sInvalid number: \"%s\""
 msgstr "%s%s: 別名が間違っています: \"%s\""
 
+#, fuzzy, c-format
+msgid "%sFailed to reset option \"%s\""
+msgstr "%sオプション \"%s\" の無効化に失敗しました"
+
+msgid "Option reset: "
+msgstr "リセットされたオプション: "
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr "%s全てのオプションをリセットすることは出来ません"
+
+#, fuzzy, c-format
+#| msgid "Option reset: "
+msgid "%d option(s) reset"
+msgstr "リセットされたオプション: "
+
 #, c-format
 msgid "Options saved to %s"
 msgstr "%s にオプションを保存しました"
@@ -999,16 +1015,9 @@ msgstr "作成されたオプション: "
 msgid "%sFailed to unset option \"%s\""
 msgstr "%sオプション \"%s\" の無効化に失敗しました"
 
-msgid "Option reset: "
-msgstr "リセットされたオプション: "
-
 #, c-format
 msgid "Option removed: %s"
 msgstr "削除されたオプション: %s"
-
-#, c-format
-msgid "%sReset of all options is not allowed"
-msgstr "%s全てのオプションをリセットすることは出来ません"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
@@ -3007,6 +3016,52 @@ msgstr ""
 "  2 ページ分上方向にスクロール:\n"
 "    /repeat 2 /window page_up"
 
+#, fuzzy
+#| msgid "unset/reset config options"
+msgid "reset config options"
+msgstr "オプションのアンセット/リセット"
+
+msgid "<option> || -mask <option>"
+msgstr "<option> || -mask <option>"
+
+#, fuzzy
+#| msgid ""
+#| "option: name of an option\n"
+#| " -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+#| "options, use carefully!)\n"
+#| "\n"
+#| "According to option, it's reset (for standard options) or removed (for "
+#| "optional settings, like server values).\n"
+#| "\n"
+#| "Examples:\n"
+#| "  reset one option:\n"
+#| "    /unset weechat.look.item_time_format\n"
+#| "  reset all color options:\n"
+#| "    /unset -mask weechat.color.*"
+msgid ""
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
+"\n"
+"Examples:\n"
+"  reset one option:\n"
+"    /reset weechat.look.item_time_format\n"
+"  reset all color options:\n"
+"    /reset -mask weechat.color.*"
+msgstr ""
+"option: オプションの名前\n"
+" -mask: オプション内でマスクを使う (大量のオプションをリセットするにはワイル"
+"ドカード \"*\" を使ってください、使用に注意!)\n"
+"\n"
+"オプションの種類によって (一般的なオプションを) リセットまたは (サーバなどの"
+"任意な設定を) 削除が行われます。\n"
+"\n"
+"例:\n"
+"  オプションのリセット:\n"
+"    /unset weechat.look.item_time_format\n"
+"  全ての色関連オプションをリセット:\n"
+"    /unset -mask weechat.color.*"
+
 msgid "save configuration files to disk"
 msgstr "設定をファイルに保存"
 
@@ -3244,9 +3299,6 @@ msgstr ""
 
 msgid "unset/reset config options"
 msgstr "オプションのアンセット/リセット"
-
-msgid "<option> || -mask <option>"
-msgstr "<option> || -mask <option>"
 
 msgid ""
 "option: name of an option\n"

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-18 09:18+0100\n"
+"POT-Creation-Date: 2023-03-19 07:53+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -899,6 +899,23 @@ msgstr "Archivo de configuración \"%s\" desconocido"
 msgid "%sInvalid number: \"%s\""
 msgstr "%sNúmero inválido: \"%s\""
 
+#, fuzzy, c-format
+#| msgid "%sFailed to set option \"%s\""
+msgid "%sFailed to reset option \"%s\""
+msgstr "%sNo se pudo configurar la opción \"%s\""
+
+msgid "Option reset: "
+msgstr "Opción reiniciada: "
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr "%sNo esta permitido reiniciar todas las opciones"
+
+#, fuzzy, c-format
+#| msgid "Option reset: "
+msgid "%d option(s) reset"
+msgstr "Opción reiniciada: "
+
 #, c-format
 msgid "Options saved to %s"
 msgstr "Opciones guardadas en %s"
@@ -1040,16 +1057,9 @@ msgstr "Opción creada: "
 msgid "%sFailed to unset option \"%s\""
 msgstr "%sNo se pudo deshacer la opción \"%s\""
 
-msgid "Option reset: "
-msgstr "Opción reiniciada: "
-
 #, c-format
 msgid "Option removed: %s"
 msgstr "Opción removida: %s"
-
-#, c-format
-msgid "%sReset of all options is not allowed"
-msgstr "%sNo esta permitido reiniciar todas las opciones"
 
 # better way of handling plurals?
 #, c-format
@@ -2939,6 +2949,38 @@ msgstr ""
 "  desplazarse 2 páginas arriba:\n"
 "    /repeat 2 /window page_up"
 
+#, fuzzy
+#| msgid "unset/reset config options"
+msgid "reset config options"
+msgstr "deshacer/reiniciar opciones de configuración"
+
+msgid "<option> || -mask <option>"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
+"\n"
+"Examples:\n"
+"  reset one option:\n"
+"    /reset weechat.look.item_time_format\n"
+"  reset all color options:\n"
+"    /reset -mask weechat.color.*"
+msgstr ""
+"opción: nombre de la opción (puede empezar o terminar con \"*\" para "
+"reiniciar varias opciones, usar con cuidado!)\n"
+"\n"
+"Según la opción, es reiniciada (para opciones estándar) o removidas (para "
+"configuraciones opcionales, como la configuración de los servidores).\n"
+"\n"
+"Ejemplos:\n"
+"  reiniciar una opción:\n"
+"    /unset weechat.look.item_time_format\n"
+"  reiniciar todas las opciones de colores:\n"
+"    /unset weechat.color.*"
+
 msgid "save configuration files to disk"
 msgstr "guardar archivos de configuración al disco"
 
@@ -3123,9 +3165,6 @@ msgstr ""
 
 msgid "unset/reset config options"
 msgstr "deshacer/reiniciar opciones de configuración"
-
-msgid "<option> || -mask <option>"
-msgstr ""
 
 #, fuzzy
 msgid ""

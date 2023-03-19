@@ -87,6 +87,9 @@
 
 extern char **environ;
 
+void command_set_display_option (struct t_config_option *option,
+                                 const char *message);
+
 
 /*
  * Callback for command "/allbuf": executes a command on all buffers.
@@ -5698,6 +5701,123 @@ COMMAND_CALLBACK(repeat)
 }
 
 /*
+ * Resets one option.
+ */
+
+void
+command_reset_option (struct t_config_option *option,
+                      const char *option_full_name,
+                      int *number_reset)
+{
+    switch (config_file_option_reset (option, 1))
+    {
+        case WEECHAT_CONFIG_OPTION_SET_ERROR:
+            gui_chat_printf (NULL,
+                             _("%sFailed to reset option \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             option_full_name);
+            break;
+        case WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE:
+            break;
+        case WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
+            command_set_display_option (option, _("Option reset: "));
+            if (number_reset)
+                (*number_reset)++;
+            break;
+    }
+}
+
+/*
+ * Callback for command "/reset": resets configuration options.
+ */
+
+COMMAND_CALLBACK(reset)
+{
+    struct t_config_file *ptr_config;
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option, *next_option;
+    const char *ptr_name;
+    char *option_full_name;
+    int mask, length, number_reset;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) buffer;
+
+    COMMAND_MIN_ARGS(2, "");
+
+    mask = 0;
+    ptr_name = argv_eol[1];
+    number_reset = 0;
+
+    if (string_strcmp (argv[1], "-mask") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "-mask");
+        mask = 1;
+        ptr_name = argv_eol[2];
+    }
+
+    if (mask && (strcmp (ptr_name, "*") == 0))
+    {
+        gui_chat_printf (NULL,
+                         _("%sReset of all options is not allowed"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        return WEECHAT_RC_OK;
+    }
+
+    if (mask)
+    {
+        /* reset all options matching the mask */
+        for (ptr_config = config_files; ptr_config;
+             ptr_config = ptr_config->next_config)
+        {
+            for (ptr_section = ptr_config->sections; ptr_section;
+                 ptr_section = ptr_section->next_section)
+            {
+                ptr_option = ptr_section->options;
+                while (ptr_option)
+                {
+                    next_option = ptr_option->next_option;
+
+                    length = strlen (ptr_config->name) + 1
+                        + strlen (ptr_section->name) + 1
+                        + strlen (ptr_option->name) + 1;
+                    option_full_name = malloc (length);
+                    if (option_full_name)
+                    {
+                        snprintf (option_full_name, length, "%s.%s.%s",
+                                  ptr_config->name, ptr_section->name,
+                                  ptr_option->name);
+                        if (string_match (option_full_name, ptr_name, 1))
+                        {
+                            command_reset_option (ptr_option,
+                                                  option_full_name,
+                                                  &number_reset);
+                        }
+                        free (option_full_name);
+                    }
+
+                    ptr_option = next_option;
+                }
+            }
+        }
+    }
+    else
+    {
+        /* reset one option */
+        config_file_search_with_string (ptr_name, NULL, NULL, &ptr_option,
+                                        NULL);
+        if (ptr_option)
+            command_reset_option (ptr_option, ptr_name, &number_reset);
+    }
+
+    gui_chat_printf (NULL, _("%d option(s) reset"), number_reset);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Saves a configuration file to disk.
  */
 
@@ -8646,6 +8766,23 @@ command_init ()
            "    /repeat 2 /window page_up"),
         "%- %(commands:/)",
         &command_repeat, NULL, NULL);
+    hook_command (
+        NULL, "reset",
+        N_("reset config options"),
+        N_("<option>"
+           " || -mask <option>"),
+        N_("option: name of an option\n"
+           " -mask: use a mask in option (wildcard \"*\" is allowed to "
+           "mass-reset options, use carefully!)\n"
+           "\n"
+           "Examples:\n"
+           "  reset one option:\n"
+           "    /reset weechat.look.item_time_format\n"
+           "  reset all color options:\n"
+           "    /reset -mask weechat.color.*"),
+        "%(config_options)"
+        " || -mask %(config_options)",
+        &command_reset, NULL, NULL);
     hook_command (
         NULL, "save",
         N_("save configuration files to disk"),
