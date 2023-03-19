@@ -1157,6 +1157,7 @@ message: message for away (if no message is given, away status is removed)
 /bar  list|listfull|listitems
       add <name> <type>[,<conditions>] <position> <size> <separator> <item1>[,<item2>...]
       default [input|title|status|nicklist]
+      rename <name> <new_name>
       del <name>|-all
       set <name> <option> <value>
       hide|show|toggle <name>
@@ -1180,6 +1181,7 @@ message: message for away (if no message is given, away status is removed)
     separator: 1 for using separator (line), 0 or nothing means no separator
     item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
       default: create a default bar (all default bars if no bar name is given)
+       rename: rename a bar
           del: delete a bar (or all bars with -all)
           set: set a value for a bar property
        option: option to change (for options list, look at /set weechat.bar.<barname>.*)

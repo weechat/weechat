@@ -1155,50 +1155,52 @@ addcompletion: додавање алијаса са кориснички деф�
 
 ----
 /bar  list|listfull|listitems
-      add <име> <тип>[,<услови>] <позиција> <величина> <граничник> <ставка1>[,<ставка2>...]
+      add <name> <type>[,<conditions>] <position> <size> <separator> <item1>[,<item2>...]
       default [input|title|status|nicklist]
-      del <име>|-all
-      set <име> <опција> <вредност>
-      hide|show|toggle <име>
-      scroll <име> <прозор> <скрол_вредн>
+      rename <name> <new_name>
+      del <name>|-all
+      set <name> <option> <value>
+      hide|show|toggle <name>
+      scroll <name> <window> <scroll_value>
 
-         list: приказује све траке
-     listfull: приказује све траке (детаљно)
-    listitems: приказује све ставке траке
-          add: додаје нову траку
-          име: име траке (мора бити јединствено)
-          тип:   root: ван прозора,
-               window: унутар прозора, са необавезним условима (погледајте испод)
-       услови: услови под којима се исписује трака:
-                 active: на активном прозору
-               inactive: на неактивним прозорима
-               nicklist: на прозорима са листом надимака
-               други услов: погледајте /help weechat.bar.xxx.conditions и /help eval
-               без услова, трака се приказује увек
-     позиција: bottom, top, left или right
-     величина: величина траке (у карактерима)
-    граничник: 1 ако желите да се користи граничник (линија), 0 или ништа значи без граничника
-  ставка1,...: ставке за ову траку (ставке могу да се раздвоје зарезом (за размак између ставки) или „+” (слепљене ставке))
-      default: креира се подразумевана трака (све подразумеване траке у случају да није задато име)
-          del: брише траку (или све траке са -all)
-          set: поставља вредност особине траке
-       опција: опција која се мења (за листу опција, погледајте /set weechat.bar.<иметраке>.*)
-     вредност: нова вредност опције
-         hide: скрива траку
-         show: приказује скривену траку
-       toggle: скрива/приказује траку
-       scroll: трака се скролује
-       прозор: број прозора (употребите ’*’ за текући прозор или за root траке)
-  скрол_вредн: вредност за скроловање: ’x’ или ’y’ (необавезно), иза којег следи ’+’, ’-’, ’b’ (beginning - почетак) или ’e’ (end - крај), вредност (за +/-), и необавезно % (за скроловање по проценту ширине/висине, иначе је вредност број карактера)
+         list: list all bars
+     listfull: list all bars (verbose)
+    listitems: list all bar items
+          add: add a new bar
+         name: name of bar (must be unique)
+         type:   root: outside windows,
+               window: inside windows, with optional conditions (see below)
+   conditions: the conditions to display the bar:
+                 active: on active window
+               inactive: on inactive windows
+               nicklist: on windows with nicklist
+               other condition: see /help weechat.bar.xxx.conditions and /help eval
+               without conditions, the bar is always displayed
+     position: bottom, top, left or right
+         size: size of bar (in chars)
+    separator: 1 for using separator (line), 0 or nothing means no separator
+    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
+      default: create a default bar (all default bars if no bar name is given)
+       rename: rename a bar
+          del: delete a bar (or all bars with -all)
+          set: set a value for a bar property
+       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
+        value: new value for option
+         hide: hide a bar
+         show: show an hidden bar
+       toggle: hide/show a bar
+       scroll: scroll bar
+       window: window number (use '*' for current window or for root bars)
+ scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to scroll by % of width/height, otherwise value is number of chars)
 
-Примери:
-  креира траку са временом, бројем бафера + именом, и довршавањем:
+Examples:
+  create a bar with time, buffer number + name, and completion:
     /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  сакрива траку:
+  hide a bar:
     /bar hide mybar
-  скролује листу надимака 10 линија наниже у текућем баферу:
+  scroll nicklist 10 lines down on current buffer:
     /bar scroll nicklist * y+10
-  скролује на крај листе надимака у текућем баферу:
+  scroll to end of nicklist on current buffer:
     /bar scroll nicklist * ye
 ----
 

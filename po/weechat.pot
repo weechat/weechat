@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-19 17:41+0100\n"
+"POT-Creation-Date: 2023-03-19 17:43+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -334,11 +334,19 @@ msgstr ""
 msgid "%sInvalid size \"%s\" for bar \"%s\""
 msgstr ""
 
-msgid "All bars have been deleted"
+#, c-format
+msgid "%sBar \"%s\" not found"
 msgstr ""
 
 #, c-format
-msgid "%sBar \"%s\" not found"
+msgid "%sBar \"%s\" already exists for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "Bar \"%s\" renamed to \"%s\""
+msgstr ""
+
+msgid "All bars have been deleted"
 msgstr ""
 
 #, c-format
@@ -1041,8 +1049,9 @@ msgstr ""
 msgid ""
 "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
 "<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || del <name>|-all || set <name> <option> <value> || hide|show|"
-"toggle <name> || scroll <name> <window> <scroll_value>"
+"nicklist] || rename <name> <new_name> || del <name>|-all || set <name> "
+"<option> <value> || hide|show|toggle <name> || scroll <name> <window> "
+"<scroll_value>"
 msgstr ""
 
 msgid ""
@@ -1068,6 +1077,7 @@ msgid ""
 "between items) or \"+\" (glued items))\n"
 "      default: create a default bar (all default bars if no bar name is "
 "given)\n"
+"       rename: rename a bar\n"
 "          del: delete a bar (or all bars with -all)\n"
 "          set: set a value for a bar property\n"
 "       option: option to change (for options list, look at /set weechat.bar."

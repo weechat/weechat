@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-19 17:41+0100\n"
+"POT-Creation-Date: 2023-03-19 17:43+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -371,13 +371,21 @@ msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 msgid "%sInvalid size \"%s\" for bar \"%s\""
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
-#, fuzzy
-msgid "All bars have been deleted"
-msgstr "a felhasználók le lettek tiltva"
-
 #, fuzzy, c-format
 msgid "%sBar \"%s\" not found"
 msgstr "%s cím \"%s\" nem található\n"
+
+#, fuzzy, c-format
+msgid "%sBar \"%s\" already exists for \"%s\" command"
+msgstr "%s a \"%s\" szerver már létezik a(z) \"%s\" parancshoz\n"
+
+#, fuzzy, c-format
+msgid "Bar \"%s\" renamed to \"%s\""
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy
+msgid "All bars have been deleted"
+msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
 msgid "Bar \"%s\" deleted"
@@ -1138,8 +1146,9 @@ msgstr "pufferek kezelése"
 msgid ""
 "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
 "<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || del <name>|-all || set <name> <option> <value> || hide|show|"
-"toggle <name> || scroll <name> <window> <scroll_value>"
+"nicklist] || rename <name> <new_name> || del <name>|-all || set <name> "
+"<option> <value> || hide|show|toggle <name> || scroll <name> <window> "
+"<scroll_value>"
 msgstr ""
 
 msgid ""
@@ -1165,6 +1174,7 @@ msgid ""
 "between items) or \"+\" (glued items))\n"
 "      default: create a default bar (all default bars if no bar name is "
 "given)\n"
+"       rename: rename a bar\n"
 "          del: delete a bar (or all bars with -all)\n"
 "          set: set a value for a bar property\n"
 "       option: option to change (for options list, look at /set weechat.bar."

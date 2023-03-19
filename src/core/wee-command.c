@@ -227,7 +227,7 @@ COMMAND_CALLBACK(bar)
     int i, type, position, number;
     long value;
     char *error, *str_type, *pos_condition, *name;
-    struct t_gui_bar *ptr_bar;
+    struct t_gui_bar *ptr_bar, *ptr_bar2;
     struct t_gui_bar_item *ptr_item;
     struct t_gui_window *ptr_window;
 
@@ -391,6 +391,34 @@ COMMAND_CALLBACK(bar)
         }
         else
             gui_bar_create_default ();
+        return WEECHAT_RC_OK;
+    }
+
+    /* rename a bar */
+    if (string_strcmp (argv[1], "rename") == 0)
+    {
+        COMMAND_MIN_ARGS(4, "rename");
+        ptr_bar = gui_bar_search (argv[2]);
+        if (!ptr_bar)
+        {
+            gui_chat_printf (NULL,
+                             _("%sBar \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_OK;
+        }
+        ptr_bar2 = gui_bar_search (argv[3]);
+        if (ptr_bar2)
+        {
+            gui_chat_printf (NULL,
+                             _("%sBar \"%s\" already exists for "
+                               "\"%s\" command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[3], "bar rename");
+            return WEECHAT_RC_OK;
+        }
+        gui_bar_set (ptr_bar, "name", argv[3]);
+        gui_chat_printf (NULL, _("Bar \"%s\" renamed to \"%s\""), argv[2], argv[3]);
         return WEECHAT_RC_OK;
     }
 
@@ -7598,6 +7626,7 @@ command_init ()
            " || add <name> <type>[,<conditions>] <position> <size> <separator> "
            "<item1>[,<item2>...]"
            " || default [input|title|status|nicklist]"
+           " || rename <name> <new_name>"
            " || del <name>|-all"
            " || set <name> <option> <value>"
            " || hide|show|toggle <name>"
@@ -7625,6 +7654,7 @@ command_init ()
            "(space between items) or \"+\" (glued items))\n"
            "      default: create a default bar (all default bars if no bar "
            "name is given)\n"
+           "       rename: rename a bar\n"
            "          del: delete a bar (or all bars with -all)\n"
            "          set: set a value for a bar property\n"
            "       option: option to change (for options list, look at /set "
@@ -7656,6 +7686,7 @@ command_init ()
         " || listitems"
         " || add %(bars_names) root|window bottom|top|left|right"
         " || default input|title|status|nicklist|%*"
+        " || rename %(bars_names)"
         " || del %(bars_names)|-all"
         " || set %(bars_names) name|%(bars_options)"
         " || hide %(bars_names)"
