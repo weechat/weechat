@@ -277,6 +277,15 @@ COMMAND_CALLBACK(bar)
     if (string_strcmp (argv[1], "add") == 0)
     {
         COMMAND_MIN_ARGS(8, "add");
+        ptr_bar = gui_bar_search (argv[2]);
+        if (ptr_bar)
+        {
+            gui_chat_printf (NULL,
+                             _("%sBar \"%s\" already exists"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_OK;
+        }
         pos_condition = strchr (argv[3], ',');
         if (pos_condition)
         {

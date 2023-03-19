@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-19 07:53+0100\n"
+"POT-Creation-Date: 2023-03-19 17:41+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -342,6 +342,10 @@ msgstr "  (nem található bővítőmodul)\n"
 #, fuzzy
 msgid "No bar item defined"
 msgstr "Nincs aliasz definiálva.\n"
+
+#, fuzzy, c-format
+msgid "%sBar \"%s\" already exists"
+msgstr "%s az ignore már létezik\n"
 
 #, fuzzy, c-format
 msgid "%sNot enough memory (%s)"

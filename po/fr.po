@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-19 07:53+0100\n"
-"PO-Revision-Date: 2023-03-19 07:57+0100\n"
+"POT-Creation-Date: 2023-03-19 17:41+0100\n"
+"PO-Revision-Date: 2023-03-19 17:41+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -380,6 +380,10 @@ msgstr "  %s (extension : %s)"
 
 msgid "No bar item defined"
 msgstr "Pas d'objet de barre défini"
+
+#, c-format
+msgid "%sBar \"%s\" already exists"
+msgstr "%sLa barre \"%s\" existe déjà"
 
 #, c-format
 msgid "%sNot enough memory (%s)"

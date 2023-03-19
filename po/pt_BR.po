@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-19 07:53+0100\n"
+"POT-Creation-Date: 2023-03-19 17:41+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -372,6 +372,10 @@ msgstr "  %s (plugin: %s)"
 
 msgid "No bar item defined"
 msgstr "Nenhum item da barra definido"
+
+#, fuzzy, c-format
+msgid "%sBar \"%s\" already exists"
+msgstr "%sErro: filtro \"%s\" já existe"
 
 #, fuzzy, c-format
 msgid "%sNot enough memory (%s)"

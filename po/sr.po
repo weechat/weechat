@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-19 07:53+0100\n"
+"POT-Creation-Date: 2023-03-19 17:41+0100\n"
 "PO-Revision-Date: 2023-02-01 14:25+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -378,6 +378,11 @@ msgstr "  %s (додатак: %s)"
 
 msgid "No bar item defined"
 msgstr "Није дефинисана ниједна ставка траке"
+
+#, fuzzy, c-format
+#| msgid "%sAlias \"%s\" already exists"
+msgid "%sBar \"%s\" already exists"
+msgstr "%sАлијас „%s” већ постоји"
 
 #, c-format
 msgid "%sNot enough memory (%s)"

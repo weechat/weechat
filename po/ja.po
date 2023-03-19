@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-19 07:53+0100\n"
+"POT-Creation-Date: 2023-03-19 17:41+0100\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -380,6 +380,11 @@ msgstr "  %s (プラグイン: %s)"
 
 msgid "No bar item defined"
 msgstr "バー要素が定義されていません"
+
+#, fuzzy, c-format
+#| msgid "%s%s: trigger \"%s\" already exists"
+msgid "%sBar \"%s\" already exists"
+msgstr "%s%s: トリガ \"%s\" は既に存在します"
 
 #, c-format
 msgid "%sNot enough memory (%s)"

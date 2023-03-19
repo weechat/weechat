@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-19 07:53+0100\n"
+"POT-Creation-Date: 2023-03-19 17:41+0100\n"
 "PO-Revision-Date: 2023-02-01 11:05+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
@@ -395,6 +395,11 @@ msgstr "  %s (Erweiterung: %s)"
 
 msgid "No bar item defined"
 msgstr "Es wurde kein Bar-Item festgelegt"
+
+#, fuzzy, c-format
+#| msgid "%sAlias \"%s\" already exists"
+msgid "%sBar \"%s\" already exists"
+msgstr "%sAlias \"%s\" existiert bereits"
 
 #, c-format
 msgid "%sNot enough memory (%s)"

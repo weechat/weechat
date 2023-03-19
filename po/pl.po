@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-19 07:53+0100\n"
+"POT-Creation-Date: 2023-03-19 17:41+0100\n"
 "PO-Revision-Date: 2022-12-30 14:10+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -381,6 +381,11 @@ msgstr "  %s (wtyczka: %s)"
 
 msgid "No bar item defined"
 msgstr "Nie zdefiniowano elementów paska"
+
+#, fuzzy, c-format
+#| msgid "%s%s: trigger \"%s\" already exists"
+msgid "%sBar \"%s\" already exists"
+msgstr "%s%s: trigger \"%s\" już istnieje"
 
 #, c-format
 msgid "%sNot enough memory (%s)"
