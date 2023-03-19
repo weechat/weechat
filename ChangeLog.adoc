@@ -40,6 +40,7 @@ Bug fixes::
 
   * core: display a specific error when trying to bind a key without area in mouse context
   * core: fix display of key with command `/key bindctxt <context> <key>`
+  * core: allow any valid boolean value in command `/bar set <name> separator xxx`
   * core: run config hooks only when value or default value is actually changed in set/reset/unset functions
   * core: fix crash in case of NULL message sent to function gui_chat_printf_y_date_tags (issue #1883)
   * core: allow command `/input move_next_word` going to the end of line (issue #1881)

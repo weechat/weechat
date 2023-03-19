@@ -52,7 +52,7 @@ char *gui_bar_option_string[GUI_BAR_NUM_OPTIONS] =
   "filling_left_right", "size", "size_max", "color_fg", "color_delim",
   "color_bg", "color_bg_inactive", "separator", "items" };
 char *gui_bar_option_default[GUI_BAR_NUM_OPTIONS] =
-{ "0", "0", "0", "", "top", "horizontal",
+{ "off", "0", "root", "", "top", "horizontal",
   "vertical", "0", "0", "default", "default",
   "default", "default", "off", "" };
 char *gui_bar_type_string[GUI_BAR_NUM_TYPES] =
@@ -1259,9 +1259,7 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
     }
     else if (strcmp (property, "separator") == 0)
     {
-        config_file_option_set (bar->options[GUI_BAR_OPTION_SEPARATOR],
-                                (strcmp (value, "1") == 0) ? "on" : "off",
-                                1);
+        config_file_option_set (bar->options[GUI_BAR_OPTION_SEPARATOR], value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
@@ -1862,7 +1860,7 @@ gui_bar_create_default_input ()
         {
             /* create input bar */
             if (gui_bar_new (GUI_BAR_DEFAULT_NAME_INPUT,
-                             "0",          /* hidden */
+                             "off",        /* hidden */
                              "1000",       /* priority */
                              "window",     /* type */
                              "",           /* conditions */
@@ -1875,7 +1873,7 @@ gui_bar_create_default_input ()
                              "cyan",       /* color delim */
                              "default",    /* color bg */
                              "default",    /* color bg inactive */
-                             "0",          /* separator */
+                             "off",        /* separator */
                              gui_bar_default_items (GUI_BAR_DEFAULT_NAME_INPUT))) /* items */
             {
                 gui_chat_printf (NULL, _("Bar \"%s\" created"),
@@ -1900,7 +1898,7 @@ gui_bar_create_default_title ()
     {
         /* create title bar */
         if (gui_bar_new (GUI_BAR_DEFAULT_NAME_TITLE,
-                         "0",          /* hidden */
+                         "off",        /* hidden */
                          "500",        /* priority */
                          "window",     /* type */
                          "",           /* conditions */
@@ -1913,7 +1911,7 @@ gui_bar_create_default_title ()
                          "cyan",       /* color delim */
                          "blue",       /* color bg */
                          "darkgray",   /* color bg inactive */
-                         "0",          /* separator */
+                         "off",        /* separator */
                          gui_bar_default_items (GUI_BAR_DEFAULT_NAME_TITLE))) /* items */
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
@@ -1937,7 +1935,7 @@ gui_bar_create_default_status ()
     {
         /* create status bar */
         if (gui_bar_new (GUI_BAR_DEFAULT_NAME_STATUS,
-                         "0",          /* hidden */
+                         "off",        /* hidden */
                          "500",        /* priority */
                          "window",     /* type */
                          "",           /* conditions */
@@ -1950,7 +1948,7 @@ gui_bar_create_default_status ()
                          "cyan",       /* color delim */
                          "blue",       /* color bg */
                          "darkgray",   /* color bg inactive */
-                         "0",          /* separator */
+                         "off",        /* separator */
                          gui_bar_default_items (GUI_BAR_DEFAULT_NAME_STATUS))) /* items */
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
@@ -1974,7 +1972,7 @@ gui_bar_create_default_nicklist ()
     {
         /* create nicklist bar */
         if (gui_bar_new (GUI_BAR_DEFAULT_NAME_NICKLIST,
-                         "0",                /* hidden */
+                         "off",              /* hidden */
                          "200",              /* priority */
                          "window",           /* type */
                          "${nicklist}",      /* conditions */
@@ -1987,7 +1985,7 @@ gui_bar_create_default_nicklist ()
                          "cyan",             /* color delim */
                          "default",          /* color bg */
                          "default",          /* color bg inactive */
-                         "1",                /* separator */
+                         "on",               /* separator */
                          gui_bar_default_items (GUI_BAR_DEFAULT_NAME_NICKLIST))) /* items */
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
