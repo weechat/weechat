@@ -1864,18 +1864,6 @@ config_file_option_set_default (struct t_config_option *option,
 
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
 
-    if (option->callback_check_value)
-    {
-        if (!(int)(option->callback_check_value) (
-                option->callback_check_value_pointer,
-                option->callback_check_value_data,
-                option,
-                value))
-        {
-            return WEECHAT_CONFIG_OPTION_SET_ERROR;
-        }
-    }
-
     if (value)
     {
         old_value_was_null = (option->default_value == NULL);

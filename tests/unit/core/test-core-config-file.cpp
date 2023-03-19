@@ -915,7 +915,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetDefault)
 
     /* string */
     STRCMP_EQUAL("value", CONFIG_STRING_DEFAULT(ptr_option_str));
-    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
                 config_file_option_set_default (ptr_option_str, "xxx", 1));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
                 config_file_option_set_default (ptr_option_str, "test", 1));
