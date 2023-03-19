@@ -7648,7 +7648,7 @@ command_init ()
         " || add %(bars_names) root|window bottom|top|left|right"
         " || default input|title|status|nicklist|%*"
         " || del %(bars_names)|-all"
-        " || set %(bars_names) %(bars_options)"
+        " || set %(bars_names) name|%(bars_options)"
         " || hide %(bars_names)"
         " || show %(bars_names)"
         " || toggle %(bars_names)"
