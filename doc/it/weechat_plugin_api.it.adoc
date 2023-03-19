@@ -16309,7 +16309,7 @@ bar = weechat.bar_search("mybar")
 ==== bar_new
 
 // TRANSLATION MISSING
-_Updated in 2.9._
+_Updated in 2.9, 4.0.0._
 
 Crea una nuova barra.
 
@@ -16391,26 +16391,19 @@ Valore restituito:
 
 * puntatore alla nuova barra, NULL in caso di errore
 
+// TRANSLATION MISSING
+[NOTE]
+Since version 4.0.0, if the bar already exists, WeeChat sets the values received
+as default values for bar options and return the bar pointer instead of NULL.
+
 Esempio in C:
 
 [source,c]
 ----
-struct t_gui_bar *my_bar = weechat_bar_new ("mybar",
-                                            "off",
-                                            "100",
-                                            "window",
-                                            "",
-                                            "top",
-                                            "horizontal",
-                                            "vertical",
-                                            "0",
-                                            "5",
-                                            "default",
-                                            "cyan",
-                                            "blue",
-                                            "darkgray",
-                                            "off",
-                                            "time,buffer_number+buffer_name");
+struct t_gui_bar *my_bar = weechat_bar_new (
+    "mybar", "off", "100", "window", "", "top", "horizontal", "vertical",
+    "0", "5", "default", "cyan", "blue", "darkgray", "off",
+    "time,buffer_number+buffer_name");
 ----
 
 Script (Python):
