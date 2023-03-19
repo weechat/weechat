@@ -16394,7 +16394,7 @@ Valore restituito:
 // TRANSLATION MISSING
 [NOTE]
 Since version 4.0.0, if the bar already exists, WeeChat sets the values received
-as default values for bar options and return the bar pointer instead of NULL.
+as default values for bar options and returns the bar pointer instead of NULL.
 
 Esempio in C:
 
