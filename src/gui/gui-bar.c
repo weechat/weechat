@@ -1156,53 +1156,22 @@ gui_bar_config_change_items (const void *pointer, void *data,
 void
 gui_bar_set_name (struct t_gui_bar *bar, const char *name)
 {
-    int length;
-    char *option_name;
+    char option_name[4096];
+    int i;
 
     if (!name || !name[0])
         return;
 
-    length = strlen (name) + 64;
-    option_name = malloc (length);
-    if (option_name)
+    for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
     {
-        snprintf (option_name, length, "%s.hidden", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_HIDDEN], option_name);
-        snprintf (option_name, length, "%s.priority", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_PRIORITY], option_name);
-        snprintf (option_name, length, "%s.type", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_TYPE], option_name);
-        snprintf (option_name, length, "%s.conditions", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_CONDITIONS], option_name);
-        snprintf (option_name, length, "%s.position", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_POSITION], option_name);
-        snprintf (option_name, length, "%s.filling_top_bottom", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM], option_name);
-        snprintf (option_name, length, "%s.filling_left_right", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT], option_name);
-        snprintf (option_name, length, "%s.size", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_SIZE], option_name);
-        snprintf (option_name, length, "%s.size_max", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_SIZE_MAX], option_name);
-        snprintf (option_name, length, "%s.color_fg", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_COLOR_FG], option_name);
-        snprintf (option_name, length, "%s.color_delim", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_COLOR_DELIM], option_name);
-        snprintf (option_name, length, "%s.color_bg", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_COLOR_BG], option_name);
-        snprintf (option_name, length, "%s.color_bg_inactive", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_COLOR_BG_INACTIVE], option_name);
-        snprintf (option_name, length, "%s.separator", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_SEPARATOR], option_name);
-        snprintf (option_name, length, "%s.items", name);
-        config_file_option_rename (bar->options[GUI_BAR_OPTION_ITEMS], option_name);
-
-        if (bar->name)
-            free (bar->name);
-        bar->name = strdup (name);
-
-        free (option_name);
+        snprintf (option_name, sizeof (option_name),
+                  "%s.%s", name, gui_bar_option_string[i]);
+        config_file_option_rename (bar->options[i], option_name);
     }
+
+    if (bar->name)
+        free (bar->name);
+    bar->name = strdup (name);
 }
 
 /*
