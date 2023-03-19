@@ -1764,9 +1764,10 @@ gui_bar_use_temp_bars ()
         {
             if (!ptr_temp_bar->options[i])
             {
-                ptr_temp_bar->options[i] = gui_bar_create_option (ptr_temp_bar->name,
-                                                                  i,
-                                                                  gui_bar_option_default[i]);
+                ptr_temp_bar->options[i] = gui_bar_create_option (
+                    ptr_temp_bar->name,
+                    i,
+                    gui_bar_option_default[i]);
             }
             if (ptr_temp_bar->options[i])
                 num_options_ok++;
@@ -1774,22 +1775,23 @@ gui_bar_use_temp_bars ()
 
         if (num_options_ok == GUI_BAR_NUM_OPTIONS)
         {
-            gui_bar_new_with_options (ptr_temp_bar->name,
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_HIDDEN],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_PRIORITY],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_TYPE],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_CONDITIONS],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_POSITION],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_SIZE],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_SIZE_MAX],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_COLOR_FG],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_COLOR_DELIM],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_COLOR_BG],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_COLOR_BG_INACTIVE],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_SEPARATOR],
-                                      ptr_temp_bar->options[GUI_BAR_OPTION_ITEMS]);
+            gui_bar_new_with_options (
+                ptr_temp_bar->name,
+                ptr_temp_bar->options[GUI_BAR_OPTION_HIDDEN],
+                ptr_temp_bar->options[GUI_BAR_OPTION_PRIORITY],
+                ptr_temp_bar->options[GUI_BAR_OPTION_TYPE],
+                ptr_temp_bar->options[GUI_BAR_OPTION_CONDITIONS],
+                ptr_temp_bar->options[GUI_BAR_OPTION_POSITION],
+                ptr_temp_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM],
+                ptr_temp_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT],
+                ptr_temp_bar->options[GUI_BAR_OPTION_SIZE],
+                ptr_temp_bar->options[GUI_BAR_OPTION_SIZE_MAX],
+                ptr_temp_bar->options[GUI_BAR_OPTION_COLOR_FG],
+                ptr_temp_bar->options[GUI_BAR_OPTION_COLOR_DELIM],
+                ptr_temp_bar->options[GUI_BAR_OPTION_COLOR_BG],
+                ptr_temp_bar->options[GUI_BAR_OPTION_COLOR_BG_INACTIVE],
+                ptr_temp_bar->options[GUI_BAR_OPTION_SEPARATOR],
+                ptr_temp_bar->options[GUI_BAR_OPTION_ITEMS]);
         }
         else
         {
