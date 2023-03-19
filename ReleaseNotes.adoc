@@ -173,6 +173,17 @@ The default aliases can be converted to lower case with the following commands:
 The autotools support for build of WeeChat has been removed. +
 WeeChat must now be built with CMake.
 
+[[v4.0.0_bar_new]]
+=== Function bar_new
+
+When the bar name already exists, the API function
+link:https://weechat.org/doc/plugin/#_bar_new[bar_new] returns the pointer to
+the bar (instead of NULL) and sets the default value for all options with the
+values received. +
+If you don't want to set default values in an existing bar, it is recommended
+to first check if the bar exists with the API function
+link:https://weechat.org/doc/plugin/#_bar_search[bar_search].
+
 [[v3.8]]
 == Version 3.8 (2023-01-08)
 
