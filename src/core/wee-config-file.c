@@ -530,7 +530,7 @@ config_file_hook_config_exec (struct t_config_option *option)
 {
     char *option_full_name, str_value[256];
 
-    if (!option)
+    if (!option || !option->config_file || !option->section)
         return;
 
     option_full_name = config_file_option_full_name (option);
@@ -966,11 +966,7 @@ config_file_new_option (struct t_config_file *config_file,
             new_option->next_option = NULL;
         }
 
-        /* run config hook(s) */
-        if (new_option->config_file && new_option->section)
-        {
-            config_file_hook_config_exec (new_option);
-        }
+        config_file_hook_config_exec (new_option);
     }
 
     goto end;
@@ -1353,19 +1349,16 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
         }
     }
 
-    if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
-        && run_callback && option->callback_change)
+    /* run callback and config hook(s) if value was changed */
+    if (rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
     {
-        (void) (option->callback_change) (
-            option->callback_change_pointer,
-            option->callback_change_data,
-            option);
-    }
-
-    /* run config hook(s) */
-    if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
-        && option->config_file && option->section)
-    {
+        if (run_callback && option->callback_change)
+        {
+            (void) (option->callback_change) (
+                option->callback_change_pointer,
+                option->callback_change_data,
+                option);
+        }
         config_file_hook_config_exec (option);
     }
 
@@ -1678,20 +1671,16 @@ config_file_option_set (struct t_config_option *option, const char *value,
             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
 
-    /* run callback if asked and value was changed */
-    if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
-        && run_callback && option->callback_change)
+    /* run callback and config hook(s) if value was changed */
+    if (rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
     {
-        (void) (option->callback_change) (
-            option->callback_change_pointer,
-            option->callback_change_data,
-            option);
-    }
-
-    /* run config hook(s) */
-    if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
-        && option->config_file && option->section)
-    {
+        if (run_callback && option->callback_change)
+        {
+            (void) (option->callback_change) (
+                option->callback_change_pointer,
+                option->callback_change_data,
+                option);
+        }
         config_file_hook_config_exec (option);
     }
 
@@ -1836,20 +1825,16 @@ config_file_option_set_null (struct t_config_option *option, int run_callback)
         }
     }
 
-    /* run callback if asked and value was changed */
-    if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
-        && run_callback && option->callback_change)
+    /* run callback and config hook(s) if value was changed */
+    if (rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
     {
-        (void) (option->callback_change) (
-            option->callback_change_pointer,
-            option->callback_change_data,
-            option);
-    }
-
-    /* run config hook(s) */
-    if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
-        && option->config_file && option->section)
-    {
+        if (run_callback && option->callback_change)
+        {
+            (void) (option->callback_change) (
+                option->callback_change_pointer,
+                option->callback_change_data,
+                option);
+        }
         config_file_hook_config_exec (option);
     }
 
@@ -2163,20 +2148,16 @@ config_file_option_set_default (struct t_config_option *option,
             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
 
-    /* run callback if asked and value was changed */
-    if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
-        && run_callback && option->callback_change)
+    /* run callback and config hook(s) if default value was changed */
+    if (rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
     {
-        (void) (option->callback_change) (
-            option->callback_change_pointer,
-            option->callback_change_data,
-            option);
-    }
-
-    /* run config hook(s) */
-    if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
-        && option->config_file && option->section)
-    {
+        if (run_callback && option->callback_change)
+        {
+            (void) (option->callback_change) (
+                option->callback_change_pointer,
+                option->callback_change_data,
+                option);
+        }
         config_file_hook_config_exec (option);
     }
 
