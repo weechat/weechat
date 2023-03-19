@@ -5737,8 +5737,8 @@ COMMAND_CALLBACK(reset)
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option, *next_option;
     const char *ptr_name;
-    char *option_full_name;
-    int mask, length, number_reset;
+    char option_full_name[4096];
+    int mask, number_reset;
 
     /* make C compiler happy */
     (void) pointer;
@@ -5780,22 +5780,15 @@ COMMAND_CALLBACK(reset)
                 {
                     next_option = ptr_option->next_option;
 
-                    length = strlen (ptr_config->name) + 1
-                        + strlen (ptr_section->name) + 1
-                        + strlen (ptr_option->name) + 1;
-                    option_full_name = malloc (length);
-                    if (option_full_name)
+                    snprintf (option_full_name, sizeof (option_full_name),
+                              "%s.%s.%s",
+                              ptr_config->name, ptr_section->name,
+                              ptr_option->name);
+                    if (string_match (option_full_name, ptr_name, 1))
                     {
-                        snprintf (option_full_name, length, "%s.%s.%s",
-                                  ptr_config->name, ptr_section->name,
-                                  ptr_option->name);
-                        if (string_match (option_full_name, ptr_name, 1))
-                        {
-                            command_reset_option (ptr_option,
-                                                  option_full_name,
-                                                  &number_reset);
-                        }
-                        free (option_full_name);
+                        command_reset_option (ptr_option,
+                                              option_full_name,
+                                              &number_reset);
                     }
 
                     ptr_option = next_option;
@@ -6648,8 +6641,8 @@ COMMAND_CALLBACK(unset)
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option, *next_option;
     const char *ptr_name;
-    char *option_full_name;
-    int mask, length, number_reset, number_removed;
+    char option_full_name[4096];
+    int mask, number_reset, number_removed;
 
     /* make C compiler happy */
     (void) pointer;
@@ -6692,23 +6685,16 @@ COMMAND_CALLBACK(unset)
                 {
                     next_option = ptr_option->next_option;
 
-                    length = strlen (ptr_config->name) + 1
-                        + strlen (ptr_section->name) + 1
-                        + strlen (ptr_option->name) + 1;
-                    option_full_name = malloc (length);
-                    if (option_full_name)
+                    snprintf (option_full_name, sizeof (option_full_name),
+                              "%s.%s.%s",
+                              ptr_config->name, ptr_section->name,
+                              ptr_option->name);
+                    if (string_match (option_full_name, ptr_name, 1))
                     {
-                        snprintf (option_full_name, length, "%s.%s.%s",
-                                  ptr_config->name, ptr_section->name,
-                                  ptr_option->name);
-                        if (string_match (option_full_name, ptr_name, 1))
-                        {
-                            command_unset_option (ptr_option,
-                                                  option_full_name,
-                                                  &number_reset,
-                                                  &number_removed);
-                        }
-                        free (option_full_name);
+                        command_unset_option (ptr_option,
+                                              option_full_name,
+                                              &number_reset,
+                                              &number_removed);
                     }
 
                     ptr_option = next_option;
