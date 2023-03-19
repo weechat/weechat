@@ -3865,7 +3865,7 @@ command_key_display_listdiff (int context)
                          _("%d key bindings added or redefined for "
                            "context \"%s\":"),
                          count_added,
-                         _(gui_key_context_string[context]));
+                         gui_key_context_string[context]);
         for (ptr_key = gui_keys[context]; ptr_key; ptr_key = ptr_key->next_key)
         {
             ptr_default_key = gui_key_search (gui_default_keys[context],
@@ -3894,7 +3894,7 @@ command_key_display_listdiff (int context)
                          /* TRANSLATORS: first "%d" is number of keys */
                          _("%d key bindings deleted for context \"%s\":"),
                          count_deleted,
-                         _(gui_key_context_string[context]));
+                         gui_key_context_string[context]);
         for (ptr_default_key = gui_default_keys[context]; ptr_default_key;
              ptr_default_key = ptr_default_key->next_key)
         {
@@ -3913,7 +3913,7 @@ command_key_display_listdiff (int context)
         gui_chat_printf (NULL,
                          _("No key binding added, redefined or removed "
                            "for context \"%s\""),
-                         _(gui_key_context_string[context]));
+                         gui_key_context_string[context]);
     }
 }
 
