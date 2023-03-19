@@ -1875,7 +1875,7 @@ gui_bar_create_default_input ()
                              "cyan",       /* color delim */
                              "default",    /* color bg */
                              "default",    /* color bg inactive */
-                             "0",          /* separators */
+                             "0",          /* separator */
                              gui_bar_default_items (GUI_BAR_DEFAULT_NAME_INPUT))) /* items */
             {
                 gui_chat_printf (NULL, _("Bar \"%s\" created"),
@@ -1913,7 +1913,7 @@ gui_bar_create_default_title ()
                          "cyan",       /* color delim */
                          "blue",       /* color bg */
                          "darkgray",   /* color bg inactive */
-                         "0",          /* separators */
+                         "0",          /* separator */
                          gui_bar_default_items (GUI_BAR_DEFAULT_NAME_TITLE))) /* items */
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
@@ -1950,7 +1950,7 @@ gui_bar_create_default_status ()
                          "cyan",       /* color delim */
                          "blue",       /* color bg */
                          "darkgray",   /* color bg inactive */
-                         "0",          /* separators */
+                         "0",          /* separator */
                          gui_bar_default_items (GUI_BAR_DEFAULT_NAME_STATUS))) /* items */
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
@@ -1987,7 +1987,7 @@ gui_bar_create_default_nicklist ()
                          "cyan",             /* color delim */
                          "default",          /* color bg */
                          "default",          /* color bg inactive */
-                         "1",                /* separators */
+                         "1",                /* separator */
                          gui_bar_default_items (GUI_BAR_DEFAULT_NAME_NICKLIST))) /* items */
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
