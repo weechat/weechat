@@ -2108,36 +2108,120 @@ gui_buffer_set_input_multiline (struct t_gui_buffer *buffer,
 /*
  * Sets unread marker for a buffer.
  *
- * If remove_marker == 1, then unread marker is removed, otherwise it's set
- * after the last line.
+ * Argument is a string that can be:
+ *   - empty string or NULL: set unread marker after the last line
+ *   - "0": remove unread marker from buffer
+ *   - "-N" or "+N" (N = integer): move the read marker
+ *     (negative number: to older line, positive number: to newer line)
+ *   - "N" (N = integer but not 0): mark N latest messages as unread
  */
 
 void
-gui_buffer_set_unread (struct t_gui_buffer *buffer, int remove_marker)
+gui_buffer_set_unread (struct t_gui_buffer *buffer, const char *argument)
 {
-    int refresh;
+    struct t_gui_line *old_last_read_line;
+    int i, old_first_line_not_read;
+    long number;
+    char *error;
 
     if (!buffer || (buffer->type != GUI_BUFFER_TYPE_FORMATTED))
         return;
 
-    if (remove_marker)
-    {
-        /* remove unread marker */
-        refresh = (buffer->lines->last_read_line != NULL);
-        buffer->lines->last_read_line = NULL;
-        buffer->lines->first_line_not_read = 0;
-    }
-    else
+    old_last_read_line = buffer->lines->last_read_line;
+    old_first_line_not_read = buffer->lines->first_line_not_read;
+
+    if (!argument || !argument[0])
     {
         /* set unread marker after last line */
-        refresh = ((buffer->lines->last_read_line != NULL)
-                   && (buffer->lines->last_read_line != buffer->lines->last_line));
         buffer->lines->last_read_line = buffer->lines->last_line;
         buffer->lines->first_line_not_read = (buffer->lines->last_read_line) ? 0 : 1;
     }
+    else if (strcmp (argument, "0") == 0)
+    {
+        /* remove unread marker */
+        buffer->lines->last_read_line = NULL;
+        buffer->lines->first_line_not_read = 0;
+    }
+    else if (argument[0] == '-')
+    {
+        /* move the unread marker N lines towards the first line */
+        number = strtol (argument, &error, 10);
+        if (error && !error[0] && (number < 0))
+        {
+            for (i = 0; i > number; i--)
+            {
+                if (!buffer->lines->last_read_line)
+                {
+                    if (!buffer->lines->last_line
+                        || buffer->lines->first_line_not_read)
+                    {
+                        break;
+                    }
+                    buffer->lines->last_read_line = buffer->lines->last_line;
+                }
+                if (!buffer->lines->last_read_line->prev_line)
+                {
+                    buffer->lines->last_read_line = NULL;
+                    buffer->lines->first_line_not_read = 1;
+                    break;
+                }
+                buffer->lines->last_read_line = buffer->lines->last_read_line->prev_line;
+            }
+        }
+    }
+    else if (argument[0] == '+')
+    {
+        /* move the unread marker N lines towards the last line */
+        number = strtol (argument, &error, 10);
+        if (error && !error[0] && (number > 0))
+        {
+            for (i = 0; i < number; i++)
+            {
+                if (!buffer->lines->last_read_line)
+                {
+                    if (!buffer->lines->first_line
+                        || !buffer->lines->first_line_not_read)
+                    {
+                        break;
+                    }
+                    buffer->lines->last_read_line = buffer->lines->first_line;
+                    buffer->lines->first_line_not_read = 0;
+                    continue;
+                }
+                buffer->lines->last_read_line = buffer->lines->last_read_line->next_line;
+                if (!buffer->lines->last_read_line)
+                    break;
+            }
+        }
+    }
+    else
+    {
+        /* move the unread marker N lines from the end towards the first line */
+        number = strtol (argument, &error, 10);
+        if (error && !error[0] && (number > 0))
+        {
+            buffer->lines->last_read_line = buffer->lines->last_line;
+            buffer->lines->first_line_not_read = 0;
+            for (i = 0; i < number; i++)
+            {
+                if (!buffer->lines->last_read_line)
+                    break;
+                if (!buffer->lines->last_read_line->prev_line)
+                {
+                    buffer->lines->last_read_line = NULL;
+                    buffer->lines->first_line_not_read = 1;
+                    break;
+                }
+                buffer->lines->last_read_line = buffer->lines->last_read_line->prev_line;
+            }
+        }
+    }
 
-    if (refresh)
+    if ((old_last_read_line != buffer->lines->last_read_line
+         || old_first_line_not_read != buffer->lines->first_line_not_read))
+    {
         gui_buffer_ask_chat_refresh (buffer, 2);
+    }
 }
 
 /*
@@ -2148,7 +2232,7 @@ void
 gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                 const char *value)
 {
-    int gui_chat_mute_old, remove_marker;
+    int gui_chat_mute_old;
     long number;
     char *error;
     const char *ptr_notify;
@@ -2195,8 +2279,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     /* properties that need a buffer */
     if (strcmp (property, "unread") == 0)
     {
-        remove_marker = (strcmp (value, "0") == 0);
-        gui_buffer_set_unread (buffer, remove_marker);
+        gui_buffer_set_unread (buffer, value);
     }
     else if (strcmp (property, "display") == 0)
     {

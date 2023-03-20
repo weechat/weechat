@@ -14283,10 +14283,12 @@ Propriétés :
   "1" : ne pas arrêter la complétion lorsque la ligne de commande est mise à
   jour (option globale, le pointeur vers le tampon n'est pas utilisé).
 
-| unread | | chaîne vide ou "0"
-| chaîne vide : définit le marqueur de données non lues après la dernière ligne
-  du tampon +
-  "0" : supprime le marqueur de données non lues du tampon.
+| unread | | chaîne vide, "0", "+N", "-N" ou "N" (N est un entier)
+| chaîne vide : définir le marqueur de données non lues après la dernière ligne du tampon +
+  "0" : supprimer le marqueur de données non lues du tampon +
+  "N" : déplacer le marqueur de données non lues de N lignes depuis la fin vers la première ligne du tampon +
+  "-N" : déplacer le marqueur de données non lues de N lignes vers la première ligne du tampon +
+  "+N" : déplacer le marqueur de données non lues de N lignes vers la dernière ligne du tampon.
 
 | display | | "1" ou "auto"
 | "1" : basculer vers ce tampon dans la fenêtre active +

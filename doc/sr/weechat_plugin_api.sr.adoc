@@ -13496,9 +13496,13 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   "1": довршавање се не зауставља када се ажурира командна линија
   (глобално подешавање, не користи се показивач на бафер).
 
-| unread | | празан стринг или "0"
+// TRANSLATION MISSING
+| unread | | empty string, "0", "+N", "-N" or "N" (N is integer)
 | празан стринг: поставља ознаку непрочитано након последње линије бафера +
-  "0": уклања ознаку непрочитано из бафера.
+  "0": уклања ознаку непрочитано из бафера +
+  "N": move the unread marker N lines from the end towards the first line of buffer +
+  "-N": move the unread marker N lines towards the first line of buffer +
+  "+N": move the unread marker N lines towards the last line of buffer.
 
 | display | | "1" или "auto"
 | "1": прелазак на овај бафер у текућем прозору +

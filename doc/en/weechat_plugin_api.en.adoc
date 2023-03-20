@@ -13977,9 +13977,12 @@ Properties:
   "1": do not stop completion when command line is updated
   (global setting, buffer pointer is not used).
 
-| unread | | empty string or "0"
+| unread | | empty string, "0", "+N", "-N" or "N" (N is integer)
 | empty string: set unread marker after last line of buffer +
-  "0": remove unread marker from buffer.
+  "0": remove unread marker from buffer +
+  "N": move the unread marker N lines from the end towards the first line of buffer +
+  "-N": move the unread marker N lines towards the first line of buffer +
+  "+N": move the unread marker N lines towards the last line of buffer.
 
 | display | | "1" or "auto"
 | "1": switch to this buffer in current window +

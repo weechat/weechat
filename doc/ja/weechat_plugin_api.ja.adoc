@@ -14132,9 +14132,12 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   (グローバル設定、バッファへのポインタは使われない)
 
 // TRANSLATION MISSING
-| unread | | empty string or "0"
+| unread | | empty string, "0", "+N", "-N" or "N" (N is integer)
 | empty string: set unread marker after last line of buffer +
-  "0": remove unread marker from buffer.
+  "0": remove unread marker from buffer +
+  "N": move the unread marker N lines from the end towards the first line of buffer +
+  "-N": move the unread marker N lines towards the first line of buffer +
+  "+N": move the unread marker N lines towards the last line of buffer.
 
 | display | | "1" または "auto"
 | "1": 指定したバッファを現在のウィンドウに表示 +
