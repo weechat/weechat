@@ -1039,16 +1039,6 @@ TEST(GuiBuffer, SearchByNumberOrName)
 
 /*
  * Tests functions:
- *   gui_buffer_search_by_layout_number
- */
-
-TEST(GuiBuffer, SearchByLayoutNumber)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_buffer_search_range
  */
 

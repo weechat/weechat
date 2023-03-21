@@ -2901,30 +2901,6 @@ gui_buffer_search_by_number_or_name (const char *string)
 }
 
 /*
- * Searches for a buffer by layout number.
- */
-
-struct t_gui_buffer *
-gui_buffer_search_by_layout_number (int layout_number,
-                                    int layout_number_merge_order)
-{
-    struct t_gui_buffer *ptr_buffer;
-
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if ((ptr_buffer->layout_number == layout_number)
-            && (ptr_buffer->layout_number_merge_order == layout_number_merge_order))
-        {
-            return ptr_buffer;
-        }
-    }
-
-    /* buffer not found */
-    return NULL;
-}
-
-/*
  * Searches a range of buffer between "number1" and  "number2" (both are
  * included in the range).
  *
