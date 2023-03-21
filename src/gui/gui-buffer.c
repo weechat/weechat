@@ -2979,44 +2979,6 @@ gui_buffer_count_merged_buffers (int number)
 }
 
 /*
- * Checks if a buffer is scrolled.
- *
- * Returns:
- *   1: all windows displaying buffer are scrolled (user doesn't see end of
- *      buffer)
- *   0: at least one window displaying buffer is NOT scrolled
- */
-
-int
-gui_buffer_is_scrolled (struct t_gui_buffer *buffer)
-{
-    struct t_gui_window *ptr_win;
-    int buffer_found;
-
-    if (!buffer)
-        return 0;
-
-    buffer_found = 0;
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-    {
-        if (ptr_win->buffer == buffer)
-        {
-            buffer_found = 1;
-            /* buffer found and not scrolled, exit immediately */
-            if (!ptr_win->scroll->scrolling)
-                return 0;
-        }
-    }
-
-    /* buffer found, and all windows were scrolled */
-    if (buffer_found)
-        return 1;
-
-    /* buffer not found */
-    return 0;
-}
-
-/*
  * Clears content of buffer.
  */
 

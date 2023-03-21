@@ -1059,16 +1059,6 @@ TEST(GuiBuffer, CountMergedBuffers)
 
 /*
  * Tests functions:
- *   gui_buffer_is_scrolled
- */
-
-TEST(GuiBuffer, IsScrolled)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_buffer_clear
  */
 
