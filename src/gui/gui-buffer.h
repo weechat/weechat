@@ -268,7 +268,6 @@ extern void gui_buffer_local_var_add (struct t_gui_buffer *buffer,
 extern void gui_buffer_local_var_remove (struct t_gui_buffer *buffer,
                                          const char *name);
 extern void gui_buffer_notify_set_all ();
-extern void gui_buffer_input_buffer_init (struct t_gui_buffer *buffer);
 extern int gui_buffer_is_reserved_name (const char *name);
 extern struct t_gui_buffer *gui_buffer_new_props (struct t_weechat_plugin *plugin,
                                                   const char *name,
@@ -353,10 +352,6 @@ extern void gui_buffer_close (struct t_gui_buffer *buffer);
 extern void gui_buffer_switch_by_number (struct t_gui_window *window,
                                          int number);
 extern void gui_buffer_set_active_buffer (struct t_gui_buffer *buffer);
-extern struct t_gui_buffer *gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer,
-                                                               int allow_hidden_buffer);
-extern struct t_gui_buffer *gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
-                                                                   int allow_hidden_buffer);
 extern void gui_buffer_switch_active_buffer (struct t_gui_buffer *buffer);
 extern void gui_buffer_switch_active_buffer_previous (struct t_gui_buffer *buffer);
 extern void gui_buffer_zoom (struct t_gui_buffer *buffer);
@@ -380,12 +375,7 @@ extern void gui_buffer_undo_free (struct t_gui_buffer *buffer,
 extern void gui_buffer_undo_free_all (struct t_gui_buffer *buffer);
 extern void gui_buffer_input_move_to_buffer (struct t_gui_buffer *from_buffer,
                                              struct t_gui_buffer *to_buffer);
-extern struct t_gui_buffer_visited *gui_buffer_visited_search_by_number (int number);
-extern void gui_buffer_visited_remove (struct t_gui_buffer_visited *buffer_visited);
-extern void gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer_visited *gui_buffer_visited_add (struct t_gui_buffer *buffer);
-extern int gui_buffer_visited_get_index_previous ();
-extern int gui_buffer_visited_get_index_next ();
 extern void gui_buffer_jump_smart (struct t_gui_window *window);
 extern void gui_buffer_jump_last_visible_number (struct t_gui_window *window);
 extern void gui_buffer_jump_last_buffer_displayed (struct t_gui_window *window);

@@ -3017,6 +3017,278 @@ gui_buffer_clear_all ()
 }
 
 /*
+ * Gets next active buffer (when many buffers are merged).
+ *
+ * If "allow_hidden_buffer" == 1, an hidden buffer can be returned.
+ * Otherwise an hidden buffer is never returned (if all other merged buffers are
+ * hidden, then NULL is returned).
+ */
+
+struct t_gui_buffer *
+gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer,
+                                   int allow_hidden_buffer)
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    if (!buffer)
+        return NULL;
+
+    /* search after buffer */
+    for (ptr_buffer = buffer->next_buffer; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->number != buffer->number)
+            break;
+        if (allow_hidden_buffer || !ptr_buffer->hidden)
+            return ptr_buffer;
+    }
+
+    /* search before buffer */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer == buffer)
+            break;
+        if ((ptr_buffer->number == buffer->number)
+            && (allow_hidden_buffer || !ptr_buffer->hidden))
+        {
+            return ptr_buffer;
+        }
+    }
+
+    return NULL;
+}
+
+/*
+ * Gets previous active buffer (when many buffers are merged).
+ *
+ * If "allow_hidden_buffer" == 1, an hidden buffer can be returned.
+ * Otherwise an hidden buffer is never returned (if all other merged buffers are
+ * hidden, then NULL is returned).
+ */
+
+struct t_gui_buffer *
+gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
+                                       int allow_hidden_buffer)
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    if (!buffer)
+        return NULL;
+
+    /* search before buffer */
+    for (ptr_buffer = buffer->prev_buffer; ptr_buffer;
+         ptr_buffer = ptr_buffer->prev_buffer)
+    {
+        if (ptr_buffer->number != buffer->number)
+            break;
+        if (allow_hidden_buffer || !ptr_buffer->hidden)
+            return ptr_buffer;
+    }
+
+    /* search after buffer */
+    for (ptr_buffer = last_gui_buffer; ptr_buffer;
+         ptr_buffer = ptr_buffer->prev_buffer)
+    {
+        if (ptr_buffer == buffer)
+            break;
+        if ((ptr_buffer->number == buffer->number)
+            && (allow_hidden_buffer || !ptr_buffer->hidden))
+        {
+            return ptr_buffer;
+        }
+    }
+
+    return NULL;
+}
+
+/*
+ * Gets index for previously visited buffer.
+ *
+ * Returns -1 if there's no previously buffer in history, starting from current
+ * index.
+ */
+
+int
+gui_buffer_visited_get_index_previous ()
+{
+    if ((gui_buffers_visited_count < 2) || (gui_buffers_visited_index == 0))
+        return -1;
+
+    if (gui_buffers_visited_index < 0)
+        return gui_buffers_visited_count - 2;
+    else
+        return gui_buffers_visited_index - 1;
+}
+
+/*
+ * Gets index for next visited buffer.
+ *
+ * Returns -1 if there's no next buffer in history, starting from current index.
+ */
+
+int
+gui_buffer_visited_get_index_next ()
+{
+    if ((gui_buffers_visited_count < 2)
+        || (gui_buffers_visited_index < 0)
+        || (gui_buffers_visited_index >= gui_buffers_visited_count - 1))
+        return -1;
+
+    return gui_buffers_visited_index + 1;
+}
+
+/*
+ * Searches for a visited buffer in list of visited buffers.
+ */
+
+struct t_gui_buffer_visited *
+gui_buffer_visited_search (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer_visited *ptr_buffer_visited;
+
+    if (!buffer)
+        return NULL;
+
+    for (ptr_buffer_visited = gui_buffers_visited; ptr_buffer_visited;
+         ptr_buffer_visited = ptr_buffer_visited->next_buffer)
+    {
+        if (ptr_buffer_visited->buffer == buffer)
+            return ptr_buffer_visited;
+    }
+
+    /* visited buffer not found */
+    return NULL;
+}
+
+/*
+ * Searches for a visited buffer in list of visited buffers (by number).
+ */
+
+struct t_gui_buffer_visited *
+gui_buffer_visited_search_by_number (int number)
+{
+    struct t_gui_buffer_visited *ptr_buffer_visited;
+    int i;
+
+    if ((number < 0) || (number >= gui_buffers_visited_count))
+        return NULL;
+
+    i = 0;
+    for (ptr_buffer_visited = gui_buffers_visited; ptr_buffer_visited;
+         ptr_buffer_visited = ptr_buffer_visited->next_buffer)
+    {
+        if (i == number)
+            return ptr_buffer_visited;
+        i++;
+    }
+
+    /* visited buffer not found (should never be reached) */
+    return NULL;
+}
+
+/*
+ * Removes a visited buffer from list of visited buffers.
+ */
+
+void
+gui_buffer_visited_remove (struct t_gui_buffer_visited *buffer_visited)
+{
+    if (!buffer_visited)
+        return;
+
+    /* remove visited buffer from list */
+    if (buffer_visited->prev_buffer)
+        (buffer_visited->prev_buffer)->next_buffer = buffer_visited->next_buffer;
+    if (buffer_visited->next_buffer)
+        (buffer_visited->next_buffer)->prev_buffer = buffer_visited->prev_buffer;
+    if (gui_buffers_visited == buffer_visited)
+        gui_buffers_visited = buffer_visited->next_buffer;
+    if (last_gui_buffer_visited == buffer_visited)
+        last_gui_buffer_visited = buffer_visited->prev_buffer;
+
+    free (buffer_visited);
+
+    if (gui_buffers_visited_count > 0)
+        gui_buffers_visited_count--;
+
+    if (gui_buffers_visited_index >= gui_buffers_visited_count)
+        gui_buffers_visited_index = -1;
+}
+
+/*
+ * Removes a visited buffer from list of visited buffers.
+ */
+
+void
+gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer_visited *buffer_visited;
+
+    if (!buffer)
+        return;
+
+    buffer_visited = gui_buffer_visited_search (buffer);
+    if (buffer_visited)
+        gui_buffer_visited_remove (buffer_visited);
+}
+
+/*
+ * Removes all visited buffers from list.
+ */
+
+void
+gui_buffer_visited_remove_all ()
+{
+    while (gui_buffers_visited)
+    {
+        gui_buffer_visited_remove (gui_buffers_visited);
+    }
+}
+
+/*
+ * Adds a visited buffer to list of visited buffers.
+ */
+
+struct t_gui_buffer_visited *
+gui_buffer_visited_add (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer_visited *new_buffer_visited;
+
+    if (!buffer)
+        return NULL;
+
+    new_buffer_visited = gui_buffer_visited_search (buffer);
+    if (new_buffer_visited)
+        gui_buffer_visited_remove (new_buffer_visited);
+
+    /* remove old buffer(s) visited if list is too long */
+    while (gui_buffers_visited_count > CONFIG_INTEGER(config_history_max_visited_buffers))
+    {
+        gui_buffer_visited_remove (gui_buffers_visited);
+    }
+
+    new_buffer_visited = malloc (sizeof (*new_buffer_visited));
+    if (new_buffer_visited)
+    {
+        new_buffer_visited->buffer = buffer;
+
+        new_buffer_visited->prev_buffer = last_gui_buffer_visited;
+        new_buffer_visited->next_buffer = NULL;
+        if (last_gui_buffer_visited)
+            last_gui_buffer_visited->next_buffer = new_buffer_visited;
+        else
+            gui_buffers_visited = new_buffer_visited;
+        last_gui_buffer_visited = new_buffer_visited;
+
+        gui_buffers_visited_count++;
+        gui_buffers_visited_index = -1;
+    }
+
+    return new_buffer_visited;
+}
+
+/*
  * Closes a buffer.
  */
 
@@ -3309,92 +3581,6 @@ gui_buffer_set_active_buffer (struct t_gui_buffer *buffer)
             }
         }
     }
-}
-
-/*
- * Gets next active buffer (when many buffers are merged).
- *
- * If "allow_hidden_buffer" == 1, an hidden buffer can be returned.
- * Otherwise an hidden buffer is never returned (if all other merged buffers are
- * hidden, then NULL is returned).
- */
-
-struct t_gui_buffer *
-gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer,
-                                   int allow_hidden_buffer)
-{
-    struct t_gui_buffer *ptr_buffer;
-
-    if (!buffer)
-        return NULL;
-
-    /* search after buffer */
-    for (ptr_buffer = buffer->next_buffer; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->number != buffer->number)
-            break;
-        if (allow_hidden_buffer || !ptr_buffer->hidden)
-            return ptr_buffer;
-    }
-
-    /* search before buffer */
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer == buffer)
-            break;
-        if ((ptr_buffer->number == buffer->number)
-            && (allow_hidden_buffer || !ptr_buffer->hidden))
-        {
-            return ptr_buffer;
-        }
-    }
-
-    return NULL;
-}
-
-/*
- * Gets previous active buffer (when many buffers are merged).
- *
- * If "allow_hidden_buffer" == 1, an hidden buffer can be returned.
- * Otherwise an hidden buffer is never returned (if all other merged buffers are
- * hidden, then NULL is returned).
- */
-
-struct t_gui_buffer *
-gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
-                                       int allow_hidden_buffer)
-{
-    struct t_gui_buffer *ptr_buffer;
-
-    if (!buffer)
-        return NULL;
-
-    /* search before buffer */
-    for (ptr_buffer = buffer->prev_buffer; ptr_buffer;
-         ptr_buffer = ptr_buffer->prev_buffer)
-    {
-        if (ptr_buffer->number != buffer->number)
-            break;
-        if (allow_hidden_buffer || !ptr_buffer->hidden)
-            return ptr_buffer;
-    }
-
-    /* search after buffer */
-    for (ptr_buffer = last_gui_buffer; ptr_buffer;
-         ptr_buffer = ptr_buffer->prev_buffer)
-    {
-        if (ptr_buffer == buffer)
-            break;
-        if ((ptr_buffer->number == buffer->number)
-            && (allow_hidden_buffer || !ptr_buffer->hidden))
-        {
-            return ptr_buffer;
-        }
-    }
-
-    return NULL;
 }
 
 /*
@@ -4485,192 +4671,6 @@ gui_buffer_input_move_to_buffer (struct t_gui_buffer *from_buffer,
     from_buffer->input_undo_count = 0;
 
     gui_completion_stop (from_buffer->completion);
-}
-
-/*
- * Searches for a visited buffer in list of visited buffers.
- */
-
-struct t_gui_buffer_visited *
-gui_buffer_visited_search (struct t_gui_buffer *buffer)
-{
-    struct t_gui_buffer_visited *ptr_buffer_visited;
-
-    if (!buffer)
-        return NULL;
-
-    for (ptr_buffer_visited = gui_buffers_visited; ptr_buffer_visited;
-         ptr_buffer_visited = ptr_buffer_visited->next_buffer)
-    {
-        if (ptr_buffer_visited->buffer == buffer)
-            return ptr_buffer_visited;
-    }
-
-    /* visited buffer not found */
-    return NULL;
-}
-
-/*
- * Searches for a visited buffer in list of visited buffers (by number).
- */
-
-struct t_gui_buffer_visited *
-gui_buffer_visited_search_by_number (int number)
-{
-    struct t_gui_buffer_visited *ptr_buffer_visited;
-    int i;
-
-    if ((number < 0) || (number >= gui_buffers_visited_count))
-        return NULL;
-
-    i = 0;
-    for (ptr_buffer_visited = gui_buffers_visited; ptr_buffer_visited;
-         ptr_buffer_visited = ptr_buffer_visited->next_buffer)
-    {
-        if (i == number)
-            return ptr_buffer_visited;
-        i++;
-    }
-
-    /* visited buffer not found (should never be reached) */
-    return NULL;
-}
-
-/*
- * Removes a visited buffer from list of visited buffers.
- */
-
-void
-gui_buffer_visited_remove (struct t_gui_buffer_visited *buffer_visited)
-{
-    if (!buffer_visited)
-        return;
-
-    /* remove visited buffer from list */
-    if (buffer_visited->prev_buffer)
-        (buffer_visited->prev_buffer)->next_buffer = buffer_visited->next_buffer;
-    if (buffer_visited->next_buffer)
-        (buffer_visited->next_buffer)->prev_buffer = buffer_visited->prev_buffer;
-    if (gui_buffers_visited == buffer_visited)
-        gui_buffers_visited = buffer_visited->next_buffer;
-    if (last_gui_buffer_visited == buffer_visited)
-        last_gui_buffer_visited = buffer_visited->prev_buffer;
-
-    free (buffer_visited);
-
-    if (gui_buffers_visited_count > 0)
-        gui_buffers_visited_count--;
-
-    if (gui_buffers_visited_index >= gui_buffers_visited_count)
-        gui_buffers_visited_index = -1;
-}
-
-/*
- * Removes a visited buffer from list of visited buffers.
- */
-
-void
-gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer)
-{
-    struct t_gui_buffer_visited *buffer_visited;
-
-    if (!buffer)
-        return;
-
-    buffer_visited = gui_buffer_visited_search (buffer);
-    if (buffer_visited)
-        gui_buffer_visited_remove (buffer_visited);
-}
-
-/*
- * Removes all visited buffers from list.
- */
-
-void
-gui_buffer_visited_remove_all ()
-{
-    while (gui_buffers_visited)
-    {
-        gui_buffer_visited_remove (gui_buffers_visited);
-    }
-}
-
-/*
- * Adds a visited buffer to list of visited buffers.
- */
-
-struct t_gui_buffer_visited *
-gui_buffer_visited_add (struct t_gui_buffer *buffer)
-{
-    struct t_gui_buffer_visited *new_buffer_visited;
-
-    if (!buffer)
-        return NULL;
-
-    new_buffer_visited = gui_buffer_visited_search (buffer);
-    if (new_buffer_visited)
-        gui_buffer_visited_remove (new_buffer_visited);
-
-    /* remove old buffer(s) visited if list is too long */
-    while (gui_buffers_visited_count > CONFIG_INTEGER(config_history_max_visited_buffers))
-    {
-        gui_buffer_visited_remove (gui_buffers_visited);
-    }
-
-    new_buffer_visited = malloc (sizeof (*new_buffer_visited));
-    if (new_buffer_visited)
-    {
-        new_buffer_visited->buffer = buffer;
-
-        new_buffer_visited->prev_buffer = last_gui_buffer_visited;
-        new_buffer_visited->next_buffer = NULL;
-        if (last_gui_buffer_visited)
-            last_gui_buffer_visited->next_buffer = new_buffer_visited;
-        else
-            gui_buffers_visited = new_buffer_visited;
-        last_gui_buffer_visited = new_buffer_visited;
-
-        gui_buffers_visited_count++;
-        gui_buffers_visited_index = -1;
-    }
-
-    return new_buffer_visited;
-}
-
-/*
- * Gets index for previously visited buffer.
- *
- * Returns -1 if there's no previously buffer in history, starting from current
- * index.
- */
-
-int
-gui_buffer_visited_get_index_previous ()
-{
-    if ((gui_buffers_visited_count < 2) || (gui_buffers_visited_index == 0))
-        return -1;
-
-    if (gui_buffers_visited_index < 0)
-        return gui_buffers_visited_count - 2;
-    else
-        return gui_buffers_visited_index - 1;
-}
-
-/*
- * Gets index for next visited buffer.
- *
- * Returns -1 if there's no next buffer in history, starting from current index.
- */
-
-int
-gui_buffer_visited_get_index_next ()
-{
-    if ((gui_buffers_visited_count < 2)
-        || (gui_buffers_visited_index < 0)
-        || (gui_buffers_visited_index >= gui_buffers_visited_count - 1))
-        return -1;
-
-    return gui_buffers_visited_index + 1;
 }
 
 /*

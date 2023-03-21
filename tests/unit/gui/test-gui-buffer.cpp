@@ -1079,6 +1079,106 @@ TEST(GuiBuffer, ClearAll)
 
 /*
  * Tests functions:
+ *   gui_buffer_get_next_active_buffer
+ */
+
+TEST(GuiBuffer, GetNextActiveBuffer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_get_previous_active_buffer
+ */
+
+TEST(GuiBuffer, GetPreviousActiveBuffer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_get_index_previous
+ */
+
+TEST(GuiBuffer, VisitedGetIndexPrevious)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_get_index_next
+ */
+
+TEST(GuiBuffer, VisitedGetIndexNext)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_search
+ */
+
+TEST(GuiBuffer, VisitedSearch)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_search_by_number
+ */
+
+TEST(GuiBuffer, VisitedSearchByNumber)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_remove
+ */
+
+TEST(GuiBuffer, VisitedRemove)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_remove_by_buffer
+ */
+
+TEST(GuiBuffer, VisitedRemoveByBuffer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_remove_all
+ */
+
+TEST(GuiBuffer, VisitedRemoveAll)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_add
+ */
+
+TEST(GuiBuffer, VisitedAdd)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   gui_buffer_close
  */
 
@@ -1103,26 +1203,6 @@ TEST(GuiBuffer, SwitchByNumber)
  */
 
 TEST(GuiBuffer, SetActiveBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_get_next_active_buffer
- */
-
-TEST(GuiBuffer, GetNextActiveBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_get_previous_active_buffer
- */
-
-TEST(GuiBuffer, GetPreviousActiveBuffer)
 {
     /* TODO: write tests */
 }
@@ -1323,86 +1403,6 @@ TEST(GuiBuffer, UndoFreeAll)
  */
 
 TEST(GuiBuffer, InputMoveToBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_search
- */
-
-TEST(GuiBuffer, VisitedSearch)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_search_by_number
- */
-
-TEST(GuiBuffer, VisitedSearchByNumber)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_remove
- */
-
-TEST(GuiBuffer, VisitedRemove)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_remove_by_buffer
- */
-
-TEST(GuiBuffer, VisitedRemoveByBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_remove_all
- */
-
-TEST(GuiBuffer, VisitedRemoveAll)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_add
- */
-
-TEST(GuiBuffer, VisitedAdd)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_get_index_previous
- */
-
-TEST(GuiBuffer, VisitedGetIndexPrevious)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_get_index_next
- */
-
-TEST(GuiBuffer, VisitedGetIndexNext)
 {
     /* TODO: write tests */
 }
