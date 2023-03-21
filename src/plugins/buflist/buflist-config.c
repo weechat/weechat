@@ -786,8 +786,10 @@ buflist_config_init ()
         N_("format for TLS version on an IRC server buffer "
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
-        " ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:"
-        "${if:${tls_version}==TLS1.2?${color:yellow}:${color:red}}}"
+        " ${color:default}(${if:${tls_version}==TLS1.3?${color:"
+        "${irc.color.item_tls_version_ok}}:${if:${tls_version}==TLS1.2?"
+        "${color:${irc.color.item_tls_version_deprecated}}:"
+        "${color:${irc.color.item_tls_version_insecure}}}}"
         "${translate:${tls_version}}${color:default})",
         NULL, 0,
         NULL, NULL, NULL,
