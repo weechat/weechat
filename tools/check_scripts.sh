@@ -24,8 +24,7 @@
 #  - Python scripts: flake8 + pylint + bandit
 #
 
-# exit on any error
-set -e
+set -o errexit
 
 # check git repository
 ROOT_DIR=$(git rev-parse --show-toplevel)

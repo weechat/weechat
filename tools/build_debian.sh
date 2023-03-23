@@ -53,8 +53,7 @@
 #                   (numeric or "auto" for dpkg >= 1.17.10)
 #
 
-# exit on any error
-set -e
+set -o errexit
 
 # default values for options from environment variables
 DEFAULT_PACKAGER_NAME="Sébastien Helleu"

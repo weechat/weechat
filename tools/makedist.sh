@@ -33,8 +33,7 @@
 #             defaults to current directory
 #
 
-# exit on any error
-set -e
+set -o errexit
 
 error ()
 {
