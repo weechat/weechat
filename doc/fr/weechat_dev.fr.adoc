@@ -1184,8 +1184,7 @@ Où _composant_ est :
 | CMakeLists.txt +
   cmake/* +
   tools/* +
-  weechat.cygport.in +
-  weechat.spec
+  weechat.cygport.in
 | Construction
 
 | ci

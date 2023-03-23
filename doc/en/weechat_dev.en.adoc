@@ -1164,8 +1164,7 @@ Where _component_ is one of following:
 | CMakeLists.txt +
   cmake/* +
   tools/* +
-  weechat.cygport.in +
-  weechat.spec
+  weechat.cygport.in
 | Build
 
 | ci

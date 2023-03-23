@@ -62,6 +62,7 @@ Tests::
 Build::
 
   * core: remove build with autotools (issue #1860)
+  * core: remove RPM packaging
 
 [[v3.8]]
 == Version 3.8 (2023-01-08)
