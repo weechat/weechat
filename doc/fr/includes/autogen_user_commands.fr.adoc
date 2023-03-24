@@ -1778,6 +1778,7 @@ Exemples :
       resetctxt <contexte> <touche>
       resetall -yes [<contexte>]
       missing [<contexte>]
+      legacy <touche> [<touche>...]
 
        list : afficher toutes les touches courantes (sans paramètre, cette liste est affichée)
 listdefault : afficher les touches par défaut
@@ -1792,6 +1793,7 @@ listdefault : afficher les touches par défaut
   resetctxt : réinitialiser une touche à son association par défaut pour le contexte donné
    resetall : restaurer les touches aux valeurs par défaut et supprimer TOUTES les touches personnelles (utiliser avec précaution !)
     missing : ajouter les touches manquantes (en utilisant les touches par défaut), pratique après installation d'une nouvelle version de WeeChat
+     legacy : afficher le nouveau nom pour des anciennes touches
 
 Lors de l'association d'une commande à une touche, il est recommandé d'utiliser la touche alt+k (ou Échap puis k), et puis de presser la touche à associer : cela insère le code de la touche dans la ligne de commande.
 

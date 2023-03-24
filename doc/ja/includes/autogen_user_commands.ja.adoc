@@ -1778,6 +1778,7 @@ Examples:
       resetctxt <context> <key>
       resetall -yes [<context>]
       missing [<context>]
+      legacy <key> [<key>...]
 
        list: list all current keys
 listdefault: list default keys
@@ -1792,6 +1793,7 @@ listdefault: list default keys
   resetctxt: reset a key to default binding, for given context
    resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
     missing: add missing keys (using default bindings), useful after installing new WeeChat version
+     legacy: display new name for legacy keys
 
 When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key name in command line.
 

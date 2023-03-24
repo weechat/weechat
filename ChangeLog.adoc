@@ -20,7 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * core: use human readable key bindings, separate keys with comma in combos, remove modifier "meta2-" (issue #1238, task #10317)
+  * core: use human readable key bindings, separate keys with comma in combos, remove modifier "meta2-", add option `legacy` in command `/key` (issue #1238, task #10317)
   * core: make keys normal options, so they are shown and can be updated with `/set` and `/fset` commands (task #12427, task #11783)
   * core: add key kbd:[Alt+K] (upper case) to grab raw key and its command (issue #1238)
   * core: add option `key` in command `/debug` (issue #1238)

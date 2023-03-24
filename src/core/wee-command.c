@@ -4029,7 +4029,8 @@ command_key_reset (int context, const char *key)
 COMMAND_CALLBACK(key)
 {
     struct t_gui_key *ptr_new_key;
-    int old_keys_count, keys_added, context, rc;
+    int i, old_keys_count, keys_added, context, rc;
+    char *key_name;
 
     /* make C compiler happy */
     (void) pointer;
@@ -4301,6 +4302,29 @@ COMMAND_CALLBACK(key)
                                  keys_added,
                                  gui_key_context_string[context]);
             }
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* display new name for legacy keys */
+    if (string_strcmp (argv[1], "legacy") == 0)
+    {
+        for (i = 2; i < argc; i++)
+        {
+            key_name = gui_key_legacy_to_alias (argv[i]);
+            gui_chat_printf (NULL,
+                             "%s\"%s%s%s\"%s => %s\"%s%s%s\"",
+                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             argv[i],
+                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             key_name,
+                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+            if (key_name)
+                free (key_name);
         }
         return WEECHAT_RC_OK;
     }
@@ -8449,7 +8473,8 @@ command_init ()
            " || reset <key>"
            " || resetctxt <context> <key>"
            " || resetall -yes [<context>]"
-           " || missing [<context>]"),
+           " || missing [<context>]"
+           " || legacy <key> [<key>...]"),
         N_("       list: list all current keys\n"
            "listdefault: list default keys\n"
            "   listdiff: list differences between current and default keys "
@@ -8469,6 +8494,7 @@ command_init ()
            "personal bindings (use carefully!)\n"
            "    missing: add missing keys (using default bindings), useful "
            "after installing new WeeChat version\n"
+           "     legacy: display new name for legacy keys\n"
            "\n"
            "When binding a command to a key, it is recommended to use key alt+k "
            "(or Esc then k), and then press the key to bind: this will insert "
@@ -8524,7 +8550,8 @@ command_init ()
         " || reset %(keys_codes_for_reset)"
         " || resetctxt %(keys_contexts) %(keys_codes_for_reset)"
         " || resetall %- %(keys_contexts)"
-        " || missing %(keys_contexts)",
+        " || missing %(keys_contexts)"
+        " || legacy",
         &command_key, NULL, NULL);
     hook_command (
         NULL, "layout",
