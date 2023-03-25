@@ -19,15 +19,15 @@
 #
 
 #
-# Build gzip/bzip2/xz tarballs for WeeChat using git-archive.
+# Build compressed tarballs for WeeChat using git-archive.
 #
 # Syntax:  makedist.sh [<version> [<tree-ish> [<path>]]]
 #
 # Optional arguments:
 #
-#   version   WeeChat version, for example 1.6 or 1.7-dev
+#   version   WeeChat version, for example 4.0.0 or 4.1.0-dev
 #             defaults to current devel version (output of "version.sh devel-full")
-#   tree-ish  git tree-ish, example: v1.6
+#   tree-ish  git tree-ish, example: v4.0.0
 #             defaults to "HEAD"
 #   path      where to put packages
 #             defaults to current directory
@@ -69,11 +69,5 @@ FILE="${OUTPATH}/weechat-${VERSION}.tar"
 echo "Building package ${FILE}.gz"
 git archive --prefix="${PREFIX}" "${TREEISH}" | gzip -c >"${FILE}.gz"
 
-echo "Building package ${FILE}.bz2"
-git archive --prefix="${PREFIX}" "${TREEISH}" | bzip2 -c >"${FILE}.bz2"
-
 echo "Building package ${FILE}.xz"
 git archive --prefix="${PREFIX}" "${TREEISH}" | xz -c >"${FILE}.xz"
-
-echo "Building package ${FILE}.zst"
-git archive --prefix="${PREFIX}" "${TREEISH}" | zstd -c -15 >"${FILE}.zst"
