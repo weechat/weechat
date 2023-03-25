@@ -5128,12 +5128,6 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
-* [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
-** Beschreibung: pass:none[fügt automatisch einen Zeilenumbruch nach dem Einfügen eines Textes hinzu, sofern mindestens zwei Zeilen eingefügt wurden und nach einer Bestätigung gefragt wurde]
-** Typ: boolesch
-** Werte: on, off
-** Standardwert: `+on+`
-
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** Beschreibung: pass:none[aktiviert den "bracketed paste mode" des Terminals (wird nicht durch alle Terminals/Multiplexer unterstützt): Dieser Modus erlaubt das Einfügen von Steuersequenzen die in Klammern gesetzt sind. WeeChat kann dadurch ermitteln ob ein Text eingefügt oder geschrieben wurde ("ESC[200~", gefolgt von dem einzufügenden Text und einem abschließenden "ESC[201~")]
 ** Typ: boolesch
@@ -5150,7 +5144,7 @@
 ** Beschreibung: pass:none[maximale Anzahl an Zeilen die, ohne Rückfrage, eingefügt werden sollen (-1 = deaktiviert die Funktion); diese Option wird nur genutzt wenn das Bar-Item "input_paste" in mindestens einer Bar genutzt wird (Standardmäßig wird es in der "input" Bar verwendet)]
 ** Typ: integer
 ** Werte: -1 .. 2147483647
-** Standardwert: `+1+`
+** Standardwert: `+100+`
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
 ** Beschreibung: pass:none[Präfix, dass bei einer Action-Nachricht genutzt wird (Hinweis: Inhalt wird evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)]

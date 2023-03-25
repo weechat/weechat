@@ -5128,12 +5128,6 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
-* [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
-** description: pass:none[ajouter automatiquement une nouvelle ligne à la fin du texte collé s'il y a au moins deux lignes et si une confirmation est demandée]
-** type: booléen
-** valeurs: on, off
-** valeur par défaut: `+on+`
-
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** description: pass:none[activer le mode du terminal "bracketed paste" (pas supporté par tous les terminaux/multiplexeurs) : dans ce mode, le texte collé est entouré avec des séquences de contrôle de sorte que WeeChat puisse différencier le texte collé du texte tapé ("ESC[200~", suivi par le texte collé, suivi par "ESC[201~")]
 ** type: booléen
@@ -5150,7 +5144,7 @@
 ** description: pass:none[nombre maximum de lignes pour la détection de collage sans demander à l'utilisateur (-1 = désactiver cette fonctionnalité) ; cette option est utilisée seulement si l'objet de barre "input_paste" est utilisé dans au moins une barre (par défaut il est utilisé dans la barre "input")]
 ** type: entier
 ** valeurs: -1 .. 2147483647
-** valeur par défaut: `+1+`
+** valeur par défaut: `+100+`
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
 ** description: pass:none[préfixe pour les messages d'action (note : le contenu est évalué, donc vous pouvez utiliser des couleurs avec le format "${color:xxx}", voir /help eval)]

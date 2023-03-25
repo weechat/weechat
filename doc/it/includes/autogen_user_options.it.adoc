@@ -5128,12 +5128,6 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
 
-* [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
-** descrizione: pass:none[automatically add a newline at the end of pasted text if there are at least two lines and if a confirmation is asked]
-** tipo: bool
-** valori: on, off
-** valore predefinito: `+on+`
-
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** descrizione: pass:none[abilita la modalità "bracketed paste" per il terminale (non supportata da tutti i terminali/multiplexer): in questa modalità, il testo incollato viene racchiuso da sequenze di controllo in modo che WeeChat possa differenziare il testo incollato dal testo digitato ("ESC[200~", seguito dal testo incollato, seguito da "ESC[201~")]
 ** tipo: bool
@@ -5150,7 +5144,7 @@
 ** descrizione: pass:none[max number of lines for paste without asking user (-1 = disable this feature); this option is used only if the bar item "input_paste" is used in at least one bar (by default it is used in "input" bar)]
 ** tipo: intero
 ** valori: -1 .. 2147483647
-** valore predefinito: `+1+`
+** valore predefinito: `+100+`
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
 ** descrizione: pass:none[prefix for action messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]

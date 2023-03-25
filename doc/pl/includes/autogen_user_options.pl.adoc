@@ -5128,12 +5128,6 @@
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
-* [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
-** opis: pass:none[automatyczne dodawanie nowej linii na końcu wklejanego tesktu jeśli wklejane są co najmniej dwie linie i jeśli potwierdzenie jest wmagane]
-** typ: bool
-** wartości: on, off
-** domyślna wartość: `+on+`
-
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** opis: pass:none[włącza tryb terminala "bracketed paste mode" (nie wszystkie terminale/multiplexery ją wspierają): w tym trybie, wklejany tekst jest otoczony sekwencją kontrolna, dzięki czemu WeeChat może odróżnić tekst wklejony od wpisanego ("ESC[200~", wklejony tekst, "ESC[201~")]
 ** typ: bool
@@ -5150,7 +5144,7 @@
 ** opis: pass:none[maksymalna ilość linii do wklejenia bez pytania użytkownika (-1 = wyłącz tą opcję); ta opcja jest używana tylko jesli element "input_paste" jest użyty w przynajmniej jednym pasku (domyślnie używany jest w pasku "input")]
 ** typ: liczba
 ** wartości: -1 .. 2147483647
-** domyślna wartość: `+1+`
+** domyślna wartość: `+100+`
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
 ** opis: pass:none[przedrostek dla wiadomości o akcjach (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval)]

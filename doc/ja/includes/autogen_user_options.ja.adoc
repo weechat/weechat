@@ -5128,12 +5128,6 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
-* [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
-** 説明: pass:none[少なくとも 2 行以上をペースト、確認のための質問に回答した場合に、ペーストしたテキストの末尾に新しい行を自動的に追加する]
-** タイプ: ブール
-** 値: on, off
-** デフォルト値: `+on+`
-
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** 説明: pass:none[端末の「括弧付きペーストモード」を有効化 (一部の端末/マルチプレクサで利用可能): このモードでは、ペーストされたテキストはコントロールシーケンスで括られます。これにより WeeChat はペーストされたテキストとタイプされたテキストを区別する ("ESC[200~"、ペーストされたテキスト、"ESC[201~")]
 ** タイプ: ブール
@@ -5150,7 +5144,7 @@
 ** 説明: pass:none[ユーザへの確認無しにペーストする行数の最大値 (-1 = この機能を無効化); このオプションは少なくとも 1 つ以上のバーでバー要素 "input_paste" が使われている場合のみ使われます (デフォルト状態では "input" バーでバー要素 "input_paste" が使われています)]
 ** タイプ: 整数
 ** 値: -1 .. 2147483647
-** デフォルト値: `+1+`
+** デフォルト値: `+100+`
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
 ** 説明: pass:none[アクションメッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照してください)]
