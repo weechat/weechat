@@ -969,7 +969,8 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
         ptr_input = malloc (length);
         if (ptr_input)
         {
-            snprintf (ptr_input, length, "%s%s", str_start_input, str_cursor);
+            strcpy (ptr_input, str_start_input);
+            strcat (ptr_input, str_cursor);
         }
     }
 
