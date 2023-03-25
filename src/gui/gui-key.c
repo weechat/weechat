@@ -2405,8 +2405,15 @@ gui_key_pressed (const char *key_str)
     exact_match = 0;
 
     chunks1 = string_split (key_name, ",", NULL, 0, 0, &chunks1_count);
-    chunks2 = (string_strcmp (key_name, key_name_alias) != 0) ?
-        string_split (key_name_alias, ",", NULL, 0, 0, &chunks2_count) : NULL;
+    if (string_strcmp (key_name, key_name_alias) != 0)
+    {
+        chunks2 = string_split (key_name_alias, ",", NULL, 0, 0, &chunks2_count);
+    }
+    else
+    {
+        chunks2 = NULL;
+        chunks2_count = 0;
+    }
 
     context = gui_key_get_current_context ();
     switch (context)
