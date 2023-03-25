@@ -182,11 +182,22 @@ If needed, you can reset the option to the new default value after upgrade:
 
 The option `weechat.look.paste_auto_add_newline` has been removed.
 
-[[v4.0.0_remove_autotools]]
-=== Remove build with autotools
+[[v4.0.0_build_packaging]]
+=== Build and packaging
 
 The autotools support for build of WeeChat has been removed. +
 WeeChat must now be built with CMake.
+
+The command `make dist` now builds only `.gz` and `.xz` compressed tarballs. +
+Formats `.bz2` and `.zst` are not built any more.
+
+The file `weechat.spec` used for RPM packaging has been removed. +
+openSUSE has its own here:
+https://build.opensuse.org/package/view_file/server:irc/weechat/weechat.spec?expand=1
+
+The configuration for cpack has been removed. +
+It was used to build binary package of WeeChat, which has never been released
+in this format.
 
 [[v4.0.0_bar_new]]
 === Function bar_new
