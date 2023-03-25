@@ -1657,6 +1657,16 @@ TEST(GuiKey, PasteStart)
 
 /*
  * Tests functions:
+ *   gui_key_paste_finish
+ */
+
+TEST(GuiKey, PasteFinish)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   gui_key_get_paste_lines
  */
 
