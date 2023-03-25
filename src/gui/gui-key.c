@@ -431,7 +431,6 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
     {
         ctrl = 0;
         meta = 0;
-        meta_initial = 0;
         meta2 = 0;
         shift = 0;
 
