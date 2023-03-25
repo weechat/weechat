@@ -167,6 +167,21 @@ The default aliases can be converted to lower case with the following commands:
 /alias rename WW ww
 ----
 
+[[v4.0.0_insert_multiple_pasted_lines]]
+=== Insert of multiple pasted lines in input
+
+By default multiple pasted lines are now inserted in input and not sent immediately.
+
+To enable this feature, the default value of option `weechat.look.paste_max_lines`
+has been changed to `100` (it was `1`). +
+If needed, you can reset the option to the new default value after upgrade:
+
+----
+/reset weechat.look.paste_max_lines
+----
+
+The option `weechat.look.paste_auto_add_newline` has been removed.
+
 [[v4.0.0_remove_autotools]]
 === Remove build with autotools
 

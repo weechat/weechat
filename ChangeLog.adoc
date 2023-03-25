@@ -25,6 +25,7 @@ New features::
   * core: add key kbd:[Alt+K] (upper case) to grab raw key and its command (issue #1238)
   * core: add option `key` in command `/debug` (issue #1238)
   * core: force ctrl keys to lower case when they are added (issue #1875)
+  * core: insert multiple pasted lines in input, instead of sending immediately (issue #1502)
   * core: add command `/reset` to reset options to their default values
   * core: add option `rename` in command `/bar`
   * core: add relative move of read marker with `/buffer set unread [+/-]N` (issue #1895)
