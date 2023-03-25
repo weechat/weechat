@@ -3346,9 +3346,12 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
     {
         line_number++;
 
+        option = NULL;
+        value = NULL;
+
         ptr_line = fgets (line, sizeof (line) - 1, config_file->file);
         if (!ptr_line)
-            continue;
+            goto end_line;
 
         /* encode line to internal charset */
         ptr_line2 = string_iconv_to_internal (NULL, ptr_line);
@@ -3374,7 +3377,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
 
         /* ignore empty line or comment */
         if (!ptr_line[0] || (ptr_line[0] == '#'))
-            continue;
+            goto end_line;
 
         /* beginning of section */
         if ((ptr_line[0] == '[') && !strchr (ptr_line, '='))
@@ -3409,12 +3412,8 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                     free (section);
                 }
             }
-            continue;
+            goto end_line;
         }
-
-        /* option */
-        option = NULL;
-        value = NULL;
 
         /* skip escape char */
         if (ptr_line[0] == '\\')
@@ -3496,7 +3495,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                                      config_file->version);
                 }
             }
-            continue;
+            goto end_line;
         }
 
         if (!ptr_section)
@@ -3507,7 +3506,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              filename, line_number,
                              line);
-            continue;
+            goto end_line;
         }
 
         config_file_update_data_read (config_file,
@@ -3516,7 +3515,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
 
         /* option has been ignored by the update callback? */
         if (!option || !option[0])
-            continue;
+            goto end_line;
 
         if (ptr_section->callback_read)
         {
@@ -3576,6 +3575,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                 break;
         }
 
+    end_line:
         if (option)
             free (option);
         if (value)
