@@ -708,7 +708,6 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
             }
 
             length = key - ptr_key_meta2;
-            //snprintf (str_raw, sizeof (str_raw), "meta2-");
             memcpy (str_raw + strlen (str_raw), ptr_key_meta2, length);
             str_raw[6 + length] = '\0';
 
