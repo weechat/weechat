@@ -295,32 +295,3 @@ endif()
 
 # desktop file
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat.desktop DESTINATION ${DATAROOTDIR}/applications)
-
-# packages
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Fast, light and extensible chat client")
-set(CPACK_PACKAGE_VENDOR "Sébastien Helleu")
-set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.adoc")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
-set(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${VERSION_PATCH})
-
-# binary package
-set(CPACK_GENERATOR "STGZ;TGZ;TBZ2")
-set(CPACK_PACKAGE_FILE_NAME weechat-binary-${VERSION})
-
-# source package
-set(CPACK_SOURCE_GENERATOR "TGZ;TBZ2")
-set(CPACK_SOURCE_PACKAGE_FILE_NAME weechat-${VERSION})
-set(CPACK_SOURCE_IGNORE_FILES
-  "/\\\\.git" "/build/" "/m4/"
-  "/autom4te\\\\.cache/" "/ABOUT-NLS$" "/config\\\\.guess$" "/config\\\\.h$"
-  "/config\\\\.h.in$" "/config\\\\.log$" "/config\\\\.rpath$"
-  "/config\\\\.status$" "/config\\\\.sub$" "/configure$" "/depcomp$"
-  "/install-sh$" "/missing$" "/intl/" "/libtool$" "/\\\\.libs/"
-  "/ltmain\\\\.sh$" "/\\\\.deps/" "/html/" "/html1/" "/Makefile$"
-  "/Makefile\\\\.in$" "stamp" "/po/.*\\\\.header$" "\\\\.gmo$" "~$" "\\\\.o$"
-  "\\\\.lo$" "\\\\.a$" "\\\\.la$" "\\\\.lai$" "\\\\.Plo$" "/weechat$"
-)
-
-include(CPack)
