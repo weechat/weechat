@@ -5056,6 +5056,12 @@
 ** Werte: 0 .. 100
 ** Standardwert: `+20+`
 
+* [[option_weechat.look.input_multiline_lead_linebreak]] *weechat.look.input_multiline_lead_linebreak*
+** Beschreibung: pass:none[start the input text on a new line when the input contains multiple lines, so that the start of the lines align]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
 * [[option_weechat.look.input_share]] *weechat.look.input_share*
 ** Beschreibung: pass:none[diese Einstellung erlaubt es den Inhalt der aktuellen Eingabezeile in andere Buffern zu übernehmen. Dabei kann unterschieden werden, ob ausschließlich Befehle (commands), nur Text (text) oder beides (all) berücksichtigt werden soll (der Befehlsverlauf der einzelnen Buffer bleibt davon unberührt)]
 ** Typ: integer

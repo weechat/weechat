@@ -5056,6 +5056,12 @@
 ** 値: 0 .. 100
 ** デフォルト値: `+20+`
 
+* [[option_weechat.look.input_multiline_lead_linebreak]] *weechat.look.input_multiline_lead_linebreak*
+** 説明: pass:none[start the input text on a new line when the input contains multiple lines, so that the start of the lines align]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
 * [[option_weechat.look.input_share]] *weechat.look.input_share*
 ** 説明: pass:none[全てのバッファでコマンド、テキスト、または両方の入力を共有 (バッファごとのローカル履歴に影響無し)]
 ** タイプ: 整数

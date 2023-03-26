@@ -5056,6 +5056,12 @@
 ** valeurs: 0 .. 100
 ** valeur par défaut: `+20+`
 
+* [[option_weechat.look.input_multiline_lead_linebreak]] *weechat.look.input_multiline_lead_linebreak*
+** description: pass:none[démarrer le texte d'entrée avec une nouvelle ligne lorsque la ligne de commande contient plusieurs lignes, pour aligner le début de chaque ligne]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
 * [[option_weechat.look.input_share]] *weechat.look.input_share*
 ** description: pass:none[partage les commandes, le texte, ou les deux dans la zone de saisie pour tous les tampons (il y a toujours un historique local sur chaque tampon)]
 ** type: entier
