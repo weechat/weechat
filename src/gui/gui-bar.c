@@ -62,6 +62,33 @@ char *gui_bar_position_string[GUI_BAR_NUM_POSITIONS] =
 char *gui_bar_filling_string[GUI_BAR_NUM_FILLING] =
 { "horizontal", "vertical", "columns_horizontal", "columns_vertical" };
 
+/* default bars */
+char *gui_bar_default_name[GUI_BAR_NUM_DEFAULT_BARS] =
+{ "input", "title", "status", "nicklist" };
+char *gui_bar_default_values[GUI_BAR_NUM_DEFAULT_BARS][GUI_BAR_NUM_OPTIONS] =
+{
+    /* input */
+    { "off", "1000", "window", "", "bottom", "horizontal", "vertical",
+      "0", "0", "default", "cyan", "default", "default", "off",
+      "[input_prompt]+(away),[input_search],[input_paste],input_text" },
+    /* title */
+    { "off", "500", "window", "", "top", "horizontal", "vertical",
+      "1", "0", "default", "cyan", "blue", "darkgray", "off",
+      "buffer_title" },
+    /* status */
+    { "off", "500", "window", "", "bottom", "horizontal", "vertical",
+      "1", "0", "default", "cyan", "blue", "darkgray", "off",
+      "[time],[buffer_last_number],[buffer_plugin],buffer_number+:+"
+      "buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+"
+      "buffer_filter,scroll,[lag],[hotlist],[typing],completion" },
+    /* nicklist */
+    { "off", "200", "window", "${nicklist}", "right",
+      "columns_vertical", "vertical",
+      "0", "0", "default", "cyan", "default", "default", "on",
+      "buffer_nicklist" },
+};
+
+
 struct t_gui_bar *gui_bars = NULL;         /* first bar                     */
 struct t_gui_bar *last_gui_bar = NULL;     /* last bar                      */
 
@@ -96,6 +123,30 @@ gui_bar_valid (struct t_gui_bar *bar)
 
     /* bar not found */
     return 0;
+}
+
+/*
+ * Searches for a default bar name.
+ *
+ * Returns index of default bar in enum t_gui_bar_default, -1 if not found.
+ */
+
+int
+gui_bar_search_default_bar (const char *bar_name)
+{
+    int i;
+
+    if (!bar_name)
+        return -1;
+
+    for (i = 0; i < GUI_BAR_NUM_DEFAULT_BARS; i++)
+    {
+        if (strcmp (gui_bar_default_name[i], bar_name) == 0)
+            return i;
+    }
+
+    /* default bar not found */
+    return -1;
 }
 
 /*
@@ -1274,32 +1325,6 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
 }
 
 /*
- * Returns default items for a bar name.
- *
- * Default bars (input, title, status, nicklist) have default items, all other
- * bars have empty default items.
- */
-
-const char *
-gui_bar_default_items (const char *bar_name)
-{
-    int i;
-    static char empty_items[1] = { '\0' };
-
-    if (!bar_name)
-        return NULL;
-
-    for (i = 0; gui_bar_items_default_for_bars[i][0]; i++)
-    {
-        if (strcmp (gui_bar_items_default_for_bars[i][0], bar_name) == 0)
-            return gui_bar_items_default_for_bars[i][1];
-    }
-
-    /* no default items in bar */
-    return empty_items;
-}
-
-/*
  * Creates an option for a bar.
  *
  * Returns pointer to new option, NULL if error.
@@ -1309,14 +1334,19 @@ struct t_config_option *
 gui_bar_create_option (const char *bar_name, int index_option, const char *value)
 {
     struct t_config_option *ptr_option;
-    const char *default_items;
+    const char *default_value;
     char option_name[4096];
+    int index_bar;
 
     ptr_option = NULL;
 
     snprintf (option_name, sizeof (option_name),
               "%s.%s",
               bar_name, gui_bar_option_string[index_option]);
+
+    index_bar = gui_bar_search_default_bar (bar_name);
+    default_value = (index_bar >= 0) ?
+        gui_bar_default_values[index_bar][index_option] : value;
 
     switch (index_option)
     {
@@ -1325,7 +1355,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 weechat_config_file, weechat_config_section_bar,
                 option_name, "boolean",
                 N_("true if bar is hidden, false if it is displayed"),
-                NULL, 0, 0, value, NULL, 0,
+                NULL, 0, 0, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_hidden, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1335,7 +1365,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 weechat_config_file, weechat_config_section_bar,
                 option_name, "integer",
                 N_("bar priority (high number means bar displayed first)"),
-                NULL, 0, INT_MAX, value, NULL, 0,
+                NULL, 0, INT_MAX, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_priority, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1345,7 +1375,8 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 weechat_config_file, weechat_config_section_bar,
                 option_name, "integer",
                 N_("bar type (root, window, window_active, window_inactive)"),
-                "root|window|window_active|window_inactive", 0, 0, value, NULL, 0,
+                "root|window|window_active|window_inactive",
+                0, 0, default_value, value, 0,
                 &gui_bar_config_check_type, NULL, NULL,
                 NULL, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1361,7 +1392,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                    "like: \"${nicklist} && ${info:term_width} > 100\" "
                    "(local variables for expression are ${active}, "
                    "${inactive} and ${nicklist})"),
-                NULL, 0, 0, value, NULL, 0,
+                NULL, 0, 0, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_conditions, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1371,7 +1402,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 weechat_config_file, weechat_config_section_bar,
                 option_name, "integer",
                 N_("bar position (bottom, top, left, right)"),
-                "bottom|top|left|right", 0, 0, value, NULL, 0,
+                "bottom|top|left|right", 0, 0, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_position, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1384,7 +1415,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                    "or \"vertical\" (from top to bottom)) when bar position is "
                    "top or bottom"),
                 "horizontal|vertical|columns_horizontal|columns_vertical",
-                0, 0, value, NULL, 0,
+                0, 0, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_filling, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1397,7 +1428,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                    "or \"vertical\" (from top to bottom)) when bar position is "
                    "left or right"),
                 "horizontal|vertical|columns_horizontal|columns_vertical",
-                0, 0, value, NULL, 0,
+                0, 0, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_filling, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1408,7 +1439,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "integer",
                 N_("bar size in chars (left/right bars) "
                    "or lines (top/bottom bars) (0 = auto size)"),
-                NULL, 0, INT_MAX, value, NULL, 0,
+                NULL, 0, INT_MAX, default_value, value, 0,
                 &gui_bar_config_check_size, NULL, NULL,
                 &gui_bar_config_change_size, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1419,7 +1450,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "integer",
                 N_("max bar size in chars (left/right bars) "
                    "or lines (top/bottom bars) (0 = no limit)"),
-                NULL, 0, INT_MAX, value, NULL, 0,
+                NULL, 0, INT_MAX, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_size_max, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1429,7 +1460,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 weechat_config_file, weechat_config_section_bar,
                 option_name, "color",
                 N_("default text color for bar"),
-                NULL, 0, 0, value, NULL, 0,
+                NULL, 0, 0, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_color, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1439,7 +1470,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 weechat_config_file, weechat_config_section_bar,
                 option_name, "color",
                 N_("default delimiter color for bar"),
-                NULL, 0, 0, value, NULL, 0,
+                NULL, 0, 0, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_color, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1449,7 +1480,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 weechat_config_file, weechat_config_section_bar,
                 option_name, "color",
                 N_("default background color for bar"),
-                NULL, 0, 0, value, NULL, 0,
+                NULL, 0, 0, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_color, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1460,7 +1491,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "color",
                 N_("background color for a bar with type \"window\" which is "
                    "not displayed in the active window"),
-                NULL, 0, 0, value, NULL, 0,
+                NULL, 0, 0, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_color, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1470,13 +1501,12 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 weechat_config_file, weechat_config_section_bar,
                 option_name, "boolean",
                 N_("separator line between bar and other bars/windows"),
-                NULL, 0, 0, value, NULL, 0,
+                NULL, 0, 0, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_separator, NULL, NULL,
                 NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_ITEMS:
-            default_items = gui_bar_default_items (bar_name);
             ptr_option = config_file_new_option (
                 weechat_config_file, weechat_config_section_bar,
                 option_name, "string",
@@ -1484,10 +1514,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                    "between items) or \"+\" (glued items); special syntax "
                    "\"@buffer:item\" can be used to force buffer used when "
                    "displaying the bar item"),
-                NULL, 0, 0,
-                (default_items && default_items[0]) ? default_items : value,
-                value,
-                0,
+                NULL, 0, 0, default_value, value, 0,
                 NULL, NULL, NULL,
                 &gui_bar_config_change_items, NULL, NULL,
                 NULL, NULL, NULL);
@@ -1799,6 +1826,34 @@ gui_bar_new (const char *name, const char *hidden, const char *priority,
 }
 
 /*
+ * Creates a default bar.
+ *
+ * Returns pointer to new bar, NULL if error.
+ */
+
+struct t_gui_bar *
+gui_bar_new_default (enum t_gui_bar_default bar)
+{
+    return gui_bar_new (
+        gui_bar_default_name[bar],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_HIDDEN],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_PRIORITY],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_TYPE],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_CONDITIONS],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_POSITION],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_FILLING_TOP_BOTTOM],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_FILLING_LEFT_RIGHT],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_SIZE],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_SIZE_MAX],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_COLOR_FG],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_COLOR_DELIM],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_COLOR_BG],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_COLOR_BG_INACTIVE],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_SEPARATOR],
+        gui_bar_default_values[bar][GUI_BAR_OPTION_ITEMS]);
+}
+
+/*
  * Uses temporary bars (created by reading configuration file).
  */
 
@@ -1887,7 +1942,7 @@ gui_bar_create_default_input ()
     if (!gui_bar_item_used_in_at_least_one_bar (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT],
                                                 1, 0))
     {
-        ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_INPUT);
+        ptr_bar = gui_bar_search (gui_bar_default_name[GUI_BAR_DEFAULT_INPUT]);
         if (ptr_bar)
         {
             /* add item "input_text" to input bar */
@@ -1905,7 +1960,7 @@ gui_bar_create_default_input ()
                           gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
                 config_file_option_set (ptr_bar->options[GUI_BAR_OPTION_ITEMS], buf, 1);
                 gui_chat_printf (NULL, _("Bar \"%s\" updated"),
-                                 GUI_BAR_DEFAULT_NAME_INPUT);
+                                 gui_bar_default_name[GUI_BAR_DEFAULT_INPUT]);
                 gui_bar_draw (ptr_bar);
                 free (buf);
             }
@@ -1913,25 +1968,10 @@ gui_bar_create_default_input ()
         else
         {
             /* create input bar */
-            if (gui_bar_new (GUI_BAR_DEFAULT_NAME_INPUT,
-                             "off",        /* hidden */
-                             "1000",       /* priority */
-                             "window",     /* type */
-                             "",           /* conditions */
-                             "bottom",     /* position */
-                             "horizontal", /* filling_top_bottom */
-                             "vertical",   /* filling_left_right */
-                             "0",          /* size */
-                             "0",          /* size_max */
-                             "default",    /* color fg */
-                             "cyan",       /* color delim */
-                             "default",    /* color bg */
-                             "default",    /* color bg inactive */
-                             "off",        /* separator */
-                             gui_bar_default_items (GUI_BAR_DEFAULT_NAME_INPUT))) /* items */
+            if (gui_bar_new_default (GUI_BAR_DEFAULT_INPUT))
             {
                 gui_chat_printf (NULL, _("Bar \"%s\" created"),
-                                 GUI_BAR_DEFAULT_NAME_INPUT);
+                                 gui_bar_default_name[GUI_BAR_DEFAULT_INPUT]);
             }
         }
     }
@@ -1947,29 +1987,14 @@ gui_bar_create_default_title ()
     struct t_gui_bar *ptr_bar;
 
     /* search title bar */
-    ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_TITLE);
+    ptr_bar = gui_bar_search (gui_bar_default_name[GUI_BAR_DEFAULT_TITLE]);
     if (!ptr_bar)
     {
         /* create title bar */
-        if (gui_bar_new (GUI_BAR_DEFAULT_NAME_TITLE,
-                         "off",        /* hidden */
-                         "500",        /* priority */
-                         "window",     /* type */
-                         "",           /* conditions */
-                         "top",        /* position */
-                         "horizontal", /* filling_top_bottom */
-                         "vertical"  , /* filling_left_right */
-                         "1",          /* size */
-                         "0",          /* size_max */
-                         "default",    /* color fg */
-                         "cyan",       /* color delim */
-                         "blue",       /* color bg */
-                         "darkgray",   /* color bg inactive */
-                         "off",        /* separator */
-                         gui_bar_default_items (GUI_BAR_DEFAULT_NAME_TITLE))) /* items */
+        if (gui_bar_new_default (GUI_BAR_DEFAULT_TITLE))
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
-                             GUI_BAR_DEFAULT_NAME_TITLE);
+                             gui_bar_default_name[GUI_BAR_DEFAULT_TITLE]);
         }
     }
 }
@@ -1984,29 +2009,14 @@ gui_bar_create_default_status ()
     struct t_gui_bar *ptr_bar;
 
     /* search status bar */
-    ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_STATUS);
+    ptr_bar = gui_bar_search (gui_bar_default_name[GUI_BAR_DEFAULT_STATUS]);
     if (!ptr_bar)
     {
         /* create status bar */
-        if (gui_bar_new (GUI_BAR_DEFAULT_NAME_STATUS,
-                         "off",        /* hidden */
-                         "500",        /* priority */
-                         "window",     /* type */
-                         "",           /* conditions */
-                         "bottom",     /* position */
-                         "horizontal", /* filling_top_bottom */
-                         "vertical",   /* filling_left_right */
-                         "1",          /* size */
-                         "0",          /* size_max */
-                         "default",    /* color fg */
-                         "cyan",       /* color delim */
-                         "blue",       /* color bg */
-                         "darkgray",   /* color bg inactive */
-                         "off",        /* separator */
-                         gui_bar_default_items (GUI_BAR_DEFAULT_NAME_STATUS))) /* items */
+        if (gui_bar_new_default (GUI_BAR_DEFAULT_STATUS))
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
-                             GUI_BAR_DEFAULT_NAME_STATUS);
+                             gui_bar_default_name[GUI_BAR_DEFAULT_STATUS]);
         }
     }
 }
@@ -2021,29 +2031,14 @@ gui_bar_create_default_nicklist ()
     struct t_gui_bar *ptr_bar;
 
     /* search nicklist bar */
-    ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_NICKLIST);
+    ptr_bar = gui_bar_search (gui_bar_default_name[GUI_BAR_DEFAULT_NICKLIST]);
     if (!ptr_bar)
     {
         /* create nicklist bar */
-        if (gui_bar_new (GUI_BAR_DEFAULT_NAME_NICKLIST,
-                         "off",              /* hidden */
-                         "200",              /* priority */
-                         "window",           /* type */
-                         "${nicklist}",      /* conditions */
-                         "right",            /* position */
-                         "columns_vertical", /* filling_top_bottom */
-                         "vertical",         /* filling_left_right */
-                         "0",                /* size */
-                         "0",                /* size_max */
-                         "default",          /* color fg */
-                         "cyan",             /* color delim */
-                         "default",          /* color bg */
-                         "default",          /* color bg inactive */
-                         "on",               /* separator */
-                         gui_bar_default_items (GUI_BAR_DEFAULT_NAME_NICKLIST))) /* items */
+        if (gui_bar_new_default (GUI_BAR_DEFAULT_NICKLIST))
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
-                             GUI_BAR_DEFAULT_NAME_NICKLIST);
+                             gui_bar_default_name[GUI_BAR_DEFAULT_NICKLIST]);
         }
     }
 }
