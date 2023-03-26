@@ -1071,7 +1071,7 @@ gui_input_delete_end_of_input (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes entire line (default key: alt-R).
+ * Deletes current line (default key: alt-r).
  */
 
 void
@@ -1111,7 +1111,7 @@ gui_input_delete_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes entire input (default key: alt-r).
+ * Deletes entire input (default key: alt-R).
  */
 
 void

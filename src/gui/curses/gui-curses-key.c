@@ -96,8 +96,8 @@ gui_key_default_bindings (int context, int create_option)
         BIND("meta-d",            "/input delete_next_word");
         BIND("ctrl-k",            "/input delete_end_of_line");
         BIND("meta-ctrl-k",       "/input delete_end_of_input");
-        BIND("meta-r",            "/input delete_input");
-        BIND("meta-R",            "/input delete_line");
+        BIND("meta-r",            "/input delete_line");
+        BIND("meta-R",            "/input delete_input");
         BIND("ctrl-t",            "/input transpose_chars");
         BIND("ctrl-u",            "/input delete_beginning_of_line");
         BIND("meta-ctrl-u",       "/input delete_beginning_of_input");
