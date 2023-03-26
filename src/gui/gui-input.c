@@ -932,7 +932,8 @@ gui_input_delete_beginning_of_line (struct t_gui_buffer *buffer)
     start = (char *)utf8_add_offset (buffer->input_buffer,
                                      buffer->input_buffer_pos);
 
-    beginning_of_line = (char *)utf8_beginning_of_line (buffer->input_buffer, start);
+    beginning_of_line = (char *)utf8_beginning_of_line (buffer->input_buffer,
+                                                        start);
     if (beginning_of_line == start)
     {
         beginning_of_line = (char *)utf8_prev_char (buffer->input_buffer,
@@ -947,14 +948,14 @@ gui_input_delete_beginning_of_line (struct t_gui_buffer *buffer)
 
     memmove (beginning_of_line, start, strlen (start));
 
-    if (gui_input_optimize_size (
-            buffer,
-            buffer->input_buffer_size - size_deleted,
-            buffer->input_buffer_length - length_deleted))
+    if (gui_input_optimize_size (buffer,
+                                 buffer->input_buffer_size - size_deleted,
+                                 buffer->input_buffer_length - length_deleted))
     {
         buffer->input_buffer[buffer->input_buffer_size] = '\0';
-        buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
-                                             beginning_of_line - buffer->input_buffer);
+        buffer->input_buffer_pos = utf8_pos (
+            buffer->input_buffer,
+            beginning_of_line - buffer->input_buffer);
     }
     gui_input_text_changed_modifier_and_signal (buffer,
                                                 1, /* save undo */
@@ -980,7 +981,7 @@ gui_input_delete_end_of_line (struct t_gui_buffer *buffer)
     start = (char *)utf8_add_offset (buffer->input_buffer,
                                      buffer->input_buffer_pos);
 
-    if (start[0] && start[0] == '\n')
+    if (start[0] && (start[0] == '\n'))
         end_of_line = (char *)utf8_next_char (start);
     else
         end_of_line = start;
@@ -992,10 +993,9 @@ gui_input_delete_end_of_line (struct t_gui_buffer *buffer)
 
     memmove (start, end_of_line, strlen (end_of_line));
 
-    if (gui_input_optimize_size (
-            buffer,
-            buffer->input_buffer_size - size_deleted,
-            buffer->input_buffer_length - length_deleted))
+    if (gui_input_optimize_size (buffer,
+                                 buffer->input_buffer_size - size_deleted,
+                                 buffer->input_buffer_length - length_deleted))
     {
         buffer->input_buffer[buffer->input_buffer_size] = '\0';
         buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
@@ -1087,7 +1087,8 @@ gui_input_delete_line (struct t_gui_buffer *buffer)
     start = (char *)utf8_add_offset (buffer->input_buffer,
                                      buffer->input_buffer_pos);
 
-    beginning_of_line = (char *)utf8_beginning_of_line (buffer->input_buffer, start);
+    beginning_of_line = (char *)utf8_beginning_of_line (buffer->input_buffer,
+                                                        start);
     end_of_line = (char *)utf8_end_of_line (start);
 
     size_deleted = end_of_line - beginning_of_line;
@@ -1095,14 +1096,14 @@ gui_input_delete_line (struct t_gui_buffer *buffer)
 
     memmove (beginning_of_line, end_of_line, strlen (end_of_line));
 
-    if (gui_input_optimize_size (
-            buffer,
-            buffer->input_buffer_size - size_deleted,
-            buffer->input_buffer_length - length_deleted))
+    if (gui_input_optimize_size (buffer,
+                                 buffer->input_buffer_size - size_deleted,
+                                 buffer->input_buffer_length - length_deleted))
     {
         buffer->input_buffer[buffer->input_buffer_size] = '\0';
-        buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
-                                             beginning_of_line - buffer->input_buffer);
+        buffer->input_buffer_pos = utf8_pos (
+            buffer->input_buffer,
+            beginning_of_line - buffer->input_buffer);
     }
 
     gui_input_text_changed_modifier_and_signal (buffer,
@@ -1171,37 +1172,6 @@ gui_input_transpose_chars (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to beginning of input (default key: shift-home).
- */
-
-void
-gui_input_move_beginning_of_input (struct t_gui_buffer *buffer)
-{
-    if (!buffer->input || (buffer->input_buffer_pos <= 0))
-        return;
-
-    buffer->input_buffer_pos = 0;
-    gui_input_text_cursor_moved_signal (buffer);
-}
-
-/*
- * Moves cursor to end of input (default key: shift-end).
- */
-
-void
-gui_input_move_end_of_input (struct t_gui_buffer *buffer)
-{
-    if (!buffer->input
-        || (buffer->input_buffer_pos >= buffer->input_buffer_length))
-    {
-        return;
-    }
-
-    buffer->input_buffer_pos = buffer->input_buffer_length;
-    gui_input_text_cursor_moved_signal (buffer);
-}
-
-/*
  * Moves cursor to beginning of line (default key: home).
  *
  * If cursor is at beginning of line, moves to beginning of previous line.
@@ -1258,13 +1228,45 @@ gui_input_move_end_of_line (struct t_gui_buffer *buffer)
     pos = (char *)utf8_end_of_line (pos);
     if (pos[0])
     {
-        buffer->input_buffer_pos =
-            utf8_pos (buffer->input_buffer,
-                      pos - buffer->input_buffer);
+        buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
+                                             pos - buffer->input_buffer);
     }
     else
+    {
         buffer->input_buffer_pos = buffer->input_buffer_length;
+    }
 
+    gui_input_text_cursor_moved_signal (buffer);
+}
+
+/*
+ * Moves cursor to beginning of input (default key: shift-home).
+ */
+
+void
+gui_input_move_beginning_of_input (struct t_gui_buffer *buffer)
+{
+    if (!buffer->input || (buffer->input_buffer_pos <= 0))
+        return;
+
+    buffer->input_buffer_pos = 0;
+    gui_input_text_cursor_moved_signal (buffer);
+}
+
+/*
+ * Moves cursor to end of input (default key: shift-end).
+ */
+
+void
+gui_input_move_end_of_input (struct t_gui_buffer *buffer)
+{
+    if (!buffer->input
+        || (buffer->input_buffer_pos >= buffer->input_buffer_length))
+    {
+        return;
+    }
+
+    buffer->input_buffer_pos = buffer->input_buffer_length;
     gui_input_text_cursor_moved_signal (buffer);
 }
 
@@ -1406,7 +1408,9 @@ gui_input_move_previous_line (struct t_gui_buffer *buffer)
         pos = (char *)utf8_prev_char (buffer->input_buffer, pos);
         pos = (char *)utf8_beginning_of_line (buffer->input_buffer, pos);
 
-        for (i = 0; pos[0] && pos[0] != '\n' && i < length_from_beginning; i++)
+        for (i = 0;
+             pos[0] && (pos[0] != '\n') && (i < length_from_beginning);
+             i++)
         {
             pos = (char *)utf8_next_char (pos);
         }
@@ -1447,7 +1451,9 @@ gui_input_move_next_line (struct t_gui_buffer *buffer)
     {
         pos = (char *)utf8_next_char (pos);
 
-        for (i = 0; pos[0] && pos[0] != '\n' && i < length_from_beginning; i++)
+        for (i = 0;
+             pos[0] && (pos[0] != '\n') && (i < length_from_beginning);
+             i++)
         {
             pos = (char *)utf8_next_char (pos);
         }
