@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-25 20:45+0100\n"
+"POT-Creation-Date: 2023-03-26 10:57+0200\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9913,6 +9913,34 @@ msgstr "%s: Újracsatlakozás a szerverhez...\n"
 msgid "%s%s: disconnected from server"
 msgstr "Lekapcsolódott a szerverről!\n"
 
+#, fuzzy
+msgid "Support of javascript scripts"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: exception: %s"
+msgstr "%sSzerver: %s%s\n"
+
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr ""
@@ -10140,14 +10168,6 @@ msgid "Support of lua scripts"
 msgstr "Aliaszok listája:\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s nem sikerült a szervert létrehozni\n"
 
@@ -10156,15 +10176,7 @@ msgid "%s%s: unable to load source code"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to execute source code"
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to execute file \"%s\""
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy
@@ -10194,10 +10206,6 @@ msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
 #, fuzzy
 msgid "Support of PHP scripts"
 msgstr "Aliaszok listája:\n"
-
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr ""
 
 msgid "bar"
 msgstr ""
@@ -12733,11 +12741,11 @@ msgstr "szerver nevének színe"
 msgid "text color for disabled trigger name"
 msgstr "szerver nevének színe"
 
-msgid "Typing status of users"
-msgstr ""
-
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
 msgid "Typing:"
+msgstr ""
+
+msgid "Typing status of users"
 msgstr ""
 
 msgid ""

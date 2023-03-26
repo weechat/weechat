@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-25 20:45+0100\n"
+"POT-Creation-Date: 2023-03-26 10:57+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12572,6 +12572,36 @@ msgstr "%s%s: поновно успостављање везе са сервер
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: прекинута је веза са сервером"
 
+#, fuzzy
+#| msgid "Support of lua scripts"
+msgid "Support of javascript scripts"
+msgstr "Подршка за lua скрипте"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: функција „%s” не може да се покрене"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: не може да се креира нови под-интерпретер"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: фајл „%s” не може да се учита"
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: фајл „%s” не може да се изврши"
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sКоманда „/%s eval” још увек није имплеметирана"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: %s"
+msgid "%s%s: exception: %s"
+msgstr "%s%s: грешка: %s"
+
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== Крај старијих уноса (%d линија) =========="
@@ -12879,14 +12909,6 @@ msgid "Support of lua scripts"
 msgstr "Подршка за lua скрипте"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: функција „%s” не може да се покрене"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: не може да се креира нови под-интерпретер"
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: није могуће преусмеравање stdout и stderr"
 
@@ -12895,16 +12917,8 @@ msgid "%s%s: unable to load source code"
 msgstr "%s%s: није успело учитавање изворног кода"
 
 #, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: фајл „%s” не може да се учита"
-
-#, c-format
 msgid "%s%s: unable to execute source code"
 msgstr "%s%s: није успело извршавање изворног кода"
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: фајл „%s” не може да се изврши"
 
 msgid "Support of perl scripts"
 msgstr "Подршка за perl скрипте"
@@ -12931,10 +12945,6 @@ msgstr "%s%s: не може да се иницијализује %s"
 
 msgid "Support of PHP scripts"
 msgstr "Подршка за PHP скрипте"
-
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sКоманда „/%s eval” још увек није имплеметирана"
 
 msgid "bar"
 msgstr "трака"
@@ -15828,12 +15838,12 @@ msgstr "боја текста за име окидача"
 msgid "text color for disabled trigger name"
 msgstr "боја текста за име искљученог окидача"
 
-msgid "Typing status of users"
-msgstr "Статус куцања корисника"
-
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
 msgid "Typing:"
 msgstr "Куцање:"
+
+msgid "Typing status of users"
+msgstr "Статус куцања корисника"
 
 msgid ""
 "number of seconds after paused status has been set: if reached, the typing "

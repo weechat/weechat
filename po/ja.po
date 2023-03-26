@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-25 20:45+0100\n"
+"POT-Creation-Date: 2023-03-26 10:57+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -12078,6 +12078,36 @@ msgstr "%s%s: サーバに再接続中..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: サーバから切断"
 
+#, fuzzy
+#| msgid "Support of lua scripts"
+msgid "Support of javascript scripts"
+msgstr "lua スクリプトサポート"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: 関数 \"%s\" を実行できません"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: 新しい sub-interpreter を作成できません"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: ファイル \"%s\" をロードできません"
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: ファイル \"%s\" を実行できません"
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sコマンド \"/%s eval\" はまだ実装されていません"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: %s"
+msgid "%s%s: exception: %s"
+msgstr "%s%s: エラー: %s"
+
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== バックログの最後 (%d 行) =========="
@@ -12355,14 +12385,6 @@ msgid "Support of lua scripts"
 msgstr "lua スクリプトサポート"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: 関数 \"%s\" を実行できません"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: 新しい sub-interpreter を作成できません"
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: 標準出力と標準エラーをリダイレクトできません"
 
@@ -12371,16 +12393,8 @@ msgid "%s%s: unable to load source code"
 msgstr "%s%s: ソースコードをロードできません"
 
 #, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: ファイル \"%s\" をロードできません"
-
-#, c-format
 msgid "%s%s: unable to execute source code"
 msgstr "%s%s: ソースコードを実行できません"
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: ファイル \"%s\" を実行できません"
 
 msgid "Support of perl scripts"
 msgstr "perl スクリプトサポート"
@@ -12407,10 +12421,6 @@ msgstr "%s%s: %s の初期化に失敗"
 
 msgid "Support of PHP scripts"
 msgstr "PHP スクリプトサポート"
-
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sコマンド \"/%s eval\" はまだ実装されていません"
 
 msgid "bar"
 msgstr "バー"
@@ -15255,11 +15265,11 @@ msgstr "トリガ名に対するテキスト色"
 msgid "text color for disabled trigger name"
 msgstr "無効化されたトリガの名前に対するテキスト色"
 
-msgid "Typing status of users"
-msgstr ""
-
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
 msgid "Typing:"
+msgstr ""
+
+msgid "Typing status of users"
 msgstr ""
 
 msgid ""

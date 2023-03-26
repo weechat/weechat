@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-25 20:45+0100\n"
+"POT-Creation-Date: 2023-03-26 10:57+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12835,6 +12835,36 @@ msgstr "%s%s: Sunucuya yeniden bağlanılıyor..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: Sunucu bağlantısı kesildi"
 
+#, fuzzy
+#| msgid "Support of lua scripts"
+msgid "Support of javascript scripts"
+msgstr "lua betikleri desteği"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: \"%s\" işlevi çalıştırılamıyor"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: Yeni alt yorumcu oluşturulamıyor"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: \"%s\" dosyası yüklenemiyor"
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: \"%s\" dosyası çalıştırılamıyor"
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%s\"/%s eval\" komutu henüz yazılıma eklenmemiş"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: %s"
+msgid "%s%s: exception: %s"
+msgstr "%s%s: Hata: %s"
+
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== Biriken günlük sonu (%d satır) =========="
@@ -13140,14 +13170,6 @@ msgid "Support of lua scripts"
 msgstr "lua betikleri desteği"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: \"%s\" işlevi çalıştırılamıyor"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: Yeni alt yorumcu oluşturulamıyor"
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: stdout ve stderr yeniden yönlendirilemiyor"
 
@@ -13156,16 +13178,8 @@ msgid "%s%s: unable to load source code"
 msgstr "%s%s: Kaynak kod yüklenemiyor"
 
 #, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: \"%s\" dosyası yüklenemiyor"
-
-#, c-format
 msgid "%s%s: unable to execute source code"
 msgstr "%s%s: Kaynak kod çalıştırılamıyor"
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: \"%s\" dosyası çalıştırılamıyor"
 
 msgid "Support of perl scripts"
 msgstr "Perl betik desteği"
@@ -13192,10 +13206,6 @@ msgstr "%s%s: %s dosyası ilklendirilemiyor"
 
 msgid "Support of PHP scripts"
 msgstr "PHP betikleri desteği"
-
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%s\"/%s eval\" komutu henüz yazılıma eklenmemiş"
 
 msgid "bar"
 msgstr "çubuk"
@@ -16177,12 +16187,12 @@ msgstr "tetik adı metin rengi"
 msgid "text color for disabled trigger name"
 msgstr "devre dışı tetik adı metin rengi"
 
-msgid "Typing status of users"
-msgstr "Kullanıcıların metin yazma durumu"
-
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
 msgid "Typing:"
 msgstr "Yazıyor:"
+
+msgid "Typing status of users"
+msgstr "Kullanıcıların metin yazma durumu"
 
 msgid ""
 "number of seconds after paused status has been set: if reached, the typing "

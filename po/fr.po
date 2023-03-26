@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-25 20:45+0100\n"
-"PO-Revision-Date: 2023-03-25 21:13+0100\n"
+"POT-Creation-Date: 2023-03-26 10:57+0200\n"
+"PO-Revision-Date: 2023-03-26 10:58+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -12509,6 +12509,33 @@ msgstr "%s%s : reconnexion au serveur..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s : déconnecté du serveur"
 
+msgid "Support of javascript scripts"
+msgstr "Support des scripts javascript"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s : impossible de lancer la fonction \"%s\""
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s : impossible de créer le sous-interpréteur"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s : impossible de charger le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s : impossible d'exécuter le fichier \"%s\""
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sLa commande \"/%s eval\" n'est pas implémentée"
+
+#, c-format
+msgid "%s%s: exception: %s"
+msgstr "%s%s : exception : %s"
+
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== Fin de l'historique (%d lignes) =========="
@@ -12828,14 +12855,6 @@ msgid "Support of lua scripts"
 msgstr "Support des scripts lua"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s : impossible de lancer la fonction \"%s\""
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s : impossible de créer le sous-interpréteur"
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s : impossible de rediriger stdout et stderr"
 
@@ -12844,16 +12863,8 @@ msgid "%s%s: unable to load source code"
 msgstr "%s%s : impossible de charger le code source"
 
 #, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s : impossible de charger le fichier \"%s\""
-
-#, c-format
 msgid "%s%s: unable to execute source code"
 msgstr "%s%s : impossible d'exécuter le code source"
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s : impossible d'exécuter le fichier \"%s\""
 
 msgid "Support of perl scripts"
 msgstr "Support des scripts perl"
@@ -12880,10 +12891,6 @@ msgstr "%s%s : impossible d'initialiser %s"
 
 msgid "Support of PHP scripts"
 msgstr "Support des scripts PHP"
-
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sLa commande \"/%s eval\" n'est pas implémentée"
 
 msgid "bar"
 msgstr "barre"
@@ -15862,12 +15869,12 @@ msgstr "couleur du texte pour le nom du trigger"
 msgid "text color for disabled trigger name"
 msgstr "couleur du texte pour le nom du trigger désactivé"
 
-msgid "Typing status of users"
-msgstr "Statut d'écriture des utilisateurs"
-
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
 msgid "Typing:"
 msgstr "Écrit :"
+
+msgid "Typing status of users"
+msgstr "Statut d'écriture des utilisateurs"
 
 msgid ""
 "number of seconds after paused status has been set: if reached, the typing "

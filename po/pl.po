@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-25 20:45+0100\n"
+"POT-Creation-Date: 2023-03-26 10:57+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -12880,6 +12880,36 @@ msgstr "%s%s: ponownie łączę się z serwerem..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: rozłączono z serwerem"
 
+#, fuzzy
+#| msgid "Support of lua scripts"
+msgid "Support of javascript scripts"
+msgstr "Wsparcie dla skryptów lua"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: nie można wykonać funkcji \"%s\""
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: nie można stworzyć nowego pod-interpretatora"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: nie można wczytać pliku \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: nie można wykonać pliku \"%s\""
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sKomenda \"/%s eval\" nie jest jeszcze zaimplementowana"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: %s"
+msgid "%s%s: exception: %s"
+msgstr "%s%s: błąd: %s"
+
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== Koniec backloga (%d linii) =========="
@@ -13188,14 +13218,6 @@ msgid "Support of lua scripts"
 msgstr "Wsparcie dla skryptów lua"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: nie można wykonać funkcji \"%s\""
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: nie można stworzyć nowego pod-interpretatora"
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: nie można przekierować standardowego wyjścia i wyjścia błędu"
 
@@ -13204,16 +13226,8 @@ msgid "%s%s: unable to load source code"
 msgstr "%s%s: nie można wczytać kodu źródłowego"
 
 #, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: nie można wczytać pliku \"%s\""
-
-#, c-format
 msgid "%s%s: unable to execute source code"
 msgstr "%s%s: nie można wykonać kodu źródłowego"
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: nie można wykonać pliku \"%s\""
 
 msgid "Support of perl scripts"
 msgstr "Wsparcie dla skryptów perla"
@@ -13240,10 +13254,6 @@ msgstr "%s%s: nie można zainicjować %s"
 
 msgid "Support of PHP scripts"
 msgstr "Wsparcie dla skryptów PHP"
-
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sKomenda \"/%s eval\" nie jest jeszcze zaimplementowana"
 
 msgid "bar"
 msgstr "pasek"
@@ -16154,12 +16164,12 @@ msgstr "kolor tekstu dla nazwy triggera"
 msgid "text color for disabled trigger name"
 msgstr "kolor tekstu dla nazwy wyłączonego triggera"
 
-msgid "Typing status of users"
-msgstr "Status pisania użytkowników"
-
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
 msgid "Typing:"
 msgstr "Typing:"
+
+msgid "Typing status of users"
+msgstr "Status pisania użytkowników"
 
 msgid ""
 "number of seconds after paused status has been set: if reached, the typing "

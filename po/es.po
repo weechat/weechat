@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-25 20:45+0100\n"
+"POT-Creation-Date: 2023-03-26 10:57+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11195,6 +11195,36 @@ msgstr "%s%s: reconectando al servidor..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: desconectado del servidor"
 
+#, fuzzy
+#| msgid "Support of lua scripts"
+msgid "Support of javascript scripts"
+msgstr "Soporte para scripts en lua"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: no es posible ejecutar la función \"%s\""
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: no es posible crear un sub-interprete nuevo"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: no es posible cargar el archivo \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: no es posible ejecutar el archivo \"%s\""
+
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sColor \"%s\" no está definido en la paleta"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: %s"
+msgid "%s%s: exception: %s"
+msgstr "%s%s: error: %s"
+
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== Fin del último registro (%d líneas) =========="
@@ -11475,14 +11505,6 @@ msgid "Support of lua scripts"
 msgstr "Soporte para scripts en lua"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: no es posible ejecutar la función \"%s\""
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: no es posible crear un sub-interprete nuevo"
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: no es posible redirigir stdout y stderr"
 
@@ -11490,16 +11512,8 @@ msgstr "%s%s: no es posible redirigir stdout y stderr"
 msgid "%s%s: unable to load source code"
 msgstr "%s%s: no es posible cargar el archivo \"%s\""
 
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: no es posible cargar el archivo \"%s\""
-
 #, fuzzy, c-format
 msgid "%s%s: unable to execute source code"
-msgstr "%s%s: no es posible ejecutar el archivo \"%s\""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: no es posible ejecutar el archivo \"%s\""
 
 msgid "Support of perl scripts"
@@ -11528,10 +11542,6 @@ msgstr "%s%s: no ha sido posible inicializar %s"
 #, fuzzy
 msgid "Support of PHP scripts"
 msgstr "Soporte para scripts en lua"
-
-#, fuzzy, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sColor \"%s\" no está definido en la paleta"
 
 msgid "bar"
 msgstr "barra"
@@ -14099,11 +14109,11 @@ msgstr "color para los nombres de los servidores"
 msgid "text color for disabled trigger name"
 msgstr "color para los nombres de los servidores"
 
-msgid "Typing status of users"
-msgstr ""
-
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
 msgid "Typing:"
+msgstr ""
+
+msgid "Typing status of users"
 msgstr ""
 
 msgid ""
