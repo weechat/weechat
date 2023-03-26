@@ -1696,18 +1696,25 @@ liste des actions :
   delete_previous_word_whitespace : effacer le mot précédent (jusqu'à un espace)
   delete_next_word : effacer le mot suivant
   delete_beginning_of_line : effacer du début de la ligne jusqu'au curseur
+  delete_beginning_of_input : effacer du début de la ligne de commande jusqu'au curseur
   delete_end_of_line : effacer du curseur jusqu'à la fin de la ligne
-  delete_line : effacer la ligne entière
+  delete_end_of_input : effacer du curseur jusqu'à la fin de la ligne de commande
+  delete_line : effacer la ligne courante
+  delete_input : effacer la ligne de commande entière
   clipboard_paste : coller depuis le presse-papiers interne
   transpose_chars : inverser deux caractères
   undo : défaire la dernière action de la ligne de commande
   redo : refaire la dernière action de la ligne de commande
   move_beginning_of_line : déplacer le curseur au début de la ligne
+  move_beginning_of_input : déplacer le curseur au début de la ligne de commande
   move_end_of_line : déplacer le curseur à la fin de la ligne
+  move_end_of_input : déplacer le curseur à la fin de la ligne de commande
   move_previous_char : déplacer le curseur sur le caractère précédent
   move_next_char : déplacer le curseur sur le caractère suivant
   move_previous_word : déplacer le curseur sur le mot précédent
   move_next_word : déplacer le curseur sur le mot suivant
+  move_previous_line : déplacer le curseur sur la ligne précédente
+  move_next_line : déplacer le curseur sur la ligne suivante
   history_previous : rappeler la commande précédente dans l'historique du tampon courant
   history_next : rappeler la commande suivante dans l'historique du tampon courant
   history_global_previous : rappeler la commande précédente dans l'historique global

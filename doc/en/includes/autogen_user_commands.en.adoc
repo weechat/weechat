@@ -1696,18 +1696,25 @@ list of actions:
   delete_previous_word_whitespace: delete previous word (until whitespace)
   delete_next_word: delete next word
   delete_beginning_of_line: delete from beginning of line until cursor
+  delete_beginning_of_input: delete from beginning of input until cursor
   delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
+  delete_end_of_input: delete from cursor until end of input
+  delete_line: delete current line
+  delete_input: delete entire input
   clipboard_paste: paste from the internal clipboard
   transpose_chars: transpose two chars
   undo: undo last command line action
   redo: redo last command line action
   move_beginning_of_line: move cursor to beginning of line
+  move_beginning_of_input: move cursor to beginning of input
   move_end_of_line: move cursor to end of line
+  move_end_of_input: move cursor to end of input
   move_previous_char: move cursor to previous char
   move_next_char: move cursor to next char
   move_previous_word: move cursor to previous word
   move_next_word: move cursor to next word
+  move_previous_line: move cursor to previous line
+  move_next_line: move cursor to next line
   history_previous: recall previous command in current buffer history
   history_next: recall next command in current buffer history
   history_global_previous: recall previous command in global history

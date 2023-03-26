@@ -3394,6 +3394,12 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"/bar toggle nicklist"+`
 
+* [[option_weechat.key.meta-R]] *weechat.key.meta-R*
+** descrizione: pass:none[touche "meta-R" dans le contexte "default"]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"/input delete_input"+`
+
 * [[option_weechat.key.meta-_]] *weechat.key.meta-_*
 ** descrizione: pass:none[touche "meta-_" dans le contexte "default"]
 ** tipo: stringa
@@ -3417,6 +3423,18 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"/input delete_previous_word"+`
+
+* [[option_weechat.key.meta-ctrl-k]] *weechat.key.meta-ctrl-k*
+** descrizione: pass:none[touche "meta-ctrl-k" dans le contexte "default"]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"/input delete_end_of_input"+`
+
+* [[option_weechat.key.meta-ctrl-u]] *weechat.key.meta-ctrl-u*
+** descrizione: pass:none[touche "meta-ctrl-u" dans le contexte "default"]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"/input delete_beginning_of_input"+`
 
 * [[option_weechat.key.meta-d]] *weechat.key.meta-d*
 ** descrizione: pass:none[touche "meta-d" dans le contexte "default"]
@@ -4270,11 +4288,47 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"/input move_next_char"+`
 
+* [[option_weechat.key.shift-down]] *weechat.key.shift-down*
+** descrizione: pass:none[touche "shift-down" dans le contexte "default"]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"/input move_next_line"+`
+
+* [[option_weechat.key.shift-end]] *weechat.key.shift-end*
+** descrizione: pass:none[touche "shift-end" dans le contexte "default"]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"/input move_end_of_input"+`
+
+* [[option_weechat.key.shift-home]] *weechat.key.shift-home*
+** descrizione: pass:none[touche "shift-home" dans le contexte "default"]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"/input move_beginning_of_input"+`
+
+* [[option_weechat.key.shift-left]] *weechat.key.shift-left*
+** descrizione: pass:none[touche "shift-left" dans le contexte "default"]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"/input move_previous_char"+`
+
+* [[option_weechat.key.shift-right]] *weechat.key.shift-right*
+** descrizione: pass:none[touche "shift-right" dans le contexte "default"]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"/input move_next_char"+`
+
 * [[option_weechat.key.shift-tab]] *weechat.key.shift-tab*
 ** descrizione: pass:none[touche "shift-tab" dans le contexte "default"]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"/input complete_previous"+`
+
+* [[option_weechat.key.shift-up]] *weechat.key.shift-up*
+** descrizione: pass:none[touche "shift-up" dans le contexte "default"]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"/input move_previous_line"+`
 
 * [[option_weechat.key.tab]] *weechat.key.tab*
 ** descrizione: pass:none[touche "tab" dans le contexte "default"]
