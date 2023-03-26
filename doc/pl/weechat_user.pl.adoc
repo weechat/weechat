@@ -1472,17 +1472,29 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 |===
 | Skrót          | Opis | Komenda
 | kbd:[←] +
+  kbd:[Shift+←] +
   kbd:[Ctrl+b]   | Idź do poprzedniego znaku w linii poleceń. | `+/input move_previous_char+`
 | kbd:[→] +
+  kbd:[Shift+→] +
   kbd:[Ctrl+f]   | Idź do następnego znaku w linii poleceń. | `+/input move_next_char+`
+// TRANSLATION MISSING
+| kbd:[Shift+↑]  | Go to previous line. | `+/input move_previous_line+`
+// TRANSLATION MISSING
+| kbd:[Shift+↓]  | Go to next line. | `+/input move_next_line+`
 | kbd:[Ctrl+←] +
   kbd:[Alt+b]    | Idź do poprzedniego słowa w linii poleceń. | `+/input move_previous_word+`
 | kbd:[Ctrl+→] +
   kbd:[Alt+f]    | Idź do następnego słowa w linii poleceń. | `+/input move_next_word+`
+// TRANSLATION MISSING
 | kbd:[Home] +
-  kbd:[Ctrl+a]   | Idź na początek linii poleceń. | `+/input move_beginning_of_line+`
+  kbd:[Ctrl+a]   | Go to the beginning of current line. | `+/input move_beginning_of_line+`
+// TRANSLATION MISSING
+| kbd:[Shift+Home] | Go to the beginning of command line. | `+/input move_beginning_of_input+`
+// TRANSLATION MISSING
 | kbd:[End] +
-  kbd:[Ctrl+e]   | Idź na koniec linii poleceń. | `+/input move_end_of_line+`
+  kbd:[Ctrl+e]   | Go to the end of current line. | `+/input move_end_of_line+`
+// TRANSLATION MISSING
+| kbd:[Shift+End]  | Go to the end of command line. | `+/input move_end_of_input+`
 |===
 
 [[key_bindings_cmdline_editing]]
@@ -1495,9 +1507,15 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
   kbd:[Ctrl+d]        | Usuń następny znak w linii poleceń. | `+/input delete_next_char+`
 | kbd:[Backspace] +
   kbd:[Ctrl+h]        | Usuń poprzedni znak w linii poleceń. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]        | Usuń od znacznika kursora do końca linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_end_of_line+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+k]        | Delete from cursor until end of current line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
+// TRANSLATION MISSING
+| kbd:[Alt+Ctrl+k]    | Delete from cursor until end of command line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_input+`
 | kbd:[Ctrl+t]        | Przestaw znaki. | `+/input transpose_chars+`
-| kbd:[Ctrl+u]        | Usuń od znaku kursora do początku linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_beginning_of_line+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+u]        | Delete from cursor until beginning of current line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
+// TRANSLATION MISSING
+| kbd:[Alt+Ctrl+u]    | Delete from cursor until beginning of command line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_input+`
 | kbd:[Alt+Backspace] | Usuń poprzednie słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_previous_word+`
 | kbd:[Ctrl+w]        | Usuń poprzednie słowo w linii poleceń do białego znaku (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_previous_word_whitespace+`
 | kbd:[Ctrl+y]        | Wkleja zawartość wewnętrznego schowka. | `+/input clipboard_paste+`
@@ -1511,7 +1529,10 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | kbd:[Alt+Enter]     | Wstawia nową linię. | `+/input insert \n+`
 | kbd:[Alt+d]         | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_next_word+`
 | kbd:[Alt+k]         | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń. | `+/input grab_key_command+`
-| kbd:[Alt+r]         | Usuń całą zawartość linii poleceń. | `+/input delete_line+`
+// TRANSLATION MISSING
+| kbd:[Alt+r]         | Delete current line. | `+/input delete_line+`
+// TRANSLATION MISSING
+| kbd:[Alt+R]         | Delete entire command line. | `+/input delete_input+`
 |===
 
 [[key_bindings_cmdline_color_codes]]

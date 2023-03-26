@@ -1457,17 +1457,23 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 |===
 | Key            | Description | Command
 | kbd:[←] +
+  kbd:[Shift+←] +
   kbd:[Ctrl+b]   | Go to previous char in command line. | `+/input move_previous_char+`
 | kbd:[→] +
+  kbd:[Shift+→] +
   kbd:[Ctrl+f]   | Go to next char in command line. | `+/input move_next_char+`
+| kbd:[Shift+↑]  | Go to previous line. | `+/input move_previous_line+`
+| kbd:[Shift+↓]  | Go to next line. | `+/input move_next_line+`
 | kbd:[Ctrl+←] +
   kbd:[Alt+b]    | Go to previous word in command line. | `+/input move_previous_word+`
 | kbd:[Ctrl+→] +
   kbd:[Alt+f]    | Go to next word in command line. | `+/input move_next_word+`
 | kbd:[Home] +
-  kbd:[Ctrl+a]   | Go to the beginning of command line. | `+/input move_beginning_of_line+`
+  kbd:[Ctrl+a]   | Go to the beginning of current line. | `+/input move_beginning_of_line+`
+| kbd:[Shift+Home] | Go to the beginning of command line. | `+/input move_beginning_of_input+`
 | kbd:[End] +
-  kbd:[Ctrl+e]   | Go to the end of command line. | `+/input move_end_of_line+`
+  kbd:[Ctrl+e]   | Go to the end of current line. | `+/input move_end_of_line+`
+| kbd:[Shift+End]  | Go to the end of command line. | `+/input move_end_of_input+`
 |===
 
 [[key_bindings_cmdline_editing]]
@@ -1480,9 +1486,11 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
   kbd:[Ctrl+d]        | Delete next char in command line. | `+/input delete_next_char+`
 | kbd:[Backspace] +
   kbd:[Ctrl+h]        | Delete previous char in command line. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]        | Delete from cursor until end of command line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+k]        | Delete from cursor until end of current line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
+| kbd:[Alt+Ctrl+k]    | Delete from cursor until end of command line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_input+`
 | kbd:[Ctrl+t]        | Transpose chars. | `/input transpose_chars`
-| kbd:[Ctrl+u]        | Delete from cursor until beginning of command line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
+| kbd:[Ctrl+u]        | Delete from cursor until beginning of current line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
+| kbd:[Alt+Ctrl+u]    | Delete from cursor until beginning of command line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_input+`
 | kbd:[Alt+Backspace] | Delete previous word of command line (deleted string is copied to the internal clipboard). | `+/input delete_previous_word+`
 | kbd:[Ctrl+w]        | Delete previous word of command line until whitespace (deleted string is copied to the internal clipboard). | `+/input delete_previous_word_whitespace+`
 | kbd:[Ctrl+y]        | Paste the internal clipboard content. | `+/input clipboard_paste+`
@@ -1496,7 +1504,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+Enter]     | Insert a newline. | `+/input insert \n+`
 | kbd:[Alt+d]         | Delete next word in command line (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
 | kbd:[Alt+k]         | Grab a key and insert its code (and command bound if key exists) in command line. | `+/input grab_key_command+`
-| kbd:[Alt+r]         | Delete entire command line. | `+/input delete_line+`
+| kbd:[Alt+r]         | Delete current line. | `+/input delete_line+`
+| kbd:[Alt+R]         | Delete entire command line. | `+/input delete_input+`
 |===
 
 [[key_bindings_cmdline_color_codes]]

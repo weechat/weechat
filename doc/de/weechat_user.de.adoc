@@ -1473,17 +1473,29 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 |===
 | Taste          | Beschreibung | Befehl
 | kbd:[←] +
+  kbd:[Shift+←] +
   kbd:[Ctrl+b]   | setzt den Cursor eine Position nach links. | `+/input move_previous_char+`
 | kbd:[→] +
+  kbd:[Shift+→] +
   kbd:[Ctrl+f]   | setzt den Cursor eine Position nach rechts. | `+/input move_next_char+`
+// TRANSLATION MISSING
+| kbd:[Shift+↑]  | Go to previous line. | `+/input move_previous_line+`
+// TRANSLATION MISSING
+| kbd:[Shift+↓]  | Go to next line. | `+/input move_next_line+`
 | kbd:[Ctrl+←] +
   kbd:[Alt+b]    | springt in der Befehlszeile zum Anfang des vorherigen Wortes. | `+/input move_previous_word+`
 | kbd:[Ctrl+→] +
   kbd:[Alt+f]    | springt in der Befehlszeile zum Anfang des nächsten Wortes. | `+/input move_next_word+`
+// TRANSLATION MISSING
 | kbd:[Home] +
-  kbd:[Ctrl+a]   | springt zum Anfang der Befehlszeile. | `+/input move_beginning_of_line+`
+  kbd:[Ctrl+a]   | Go to the beginning of current line. | `+/input move_beginning_of_line+`
+// TRANSLATION MISSING
+| kbd:[Shift+Home] | Go to the beginning of command line. | `+/input move_beginning_of_input+`
+// TRANSLATION MISSING
 | kbd:[End] +
-  kbd:[Ctrl+e]   | springt ans Ende der Befehlszeile. | `+/input move_end_of_line+`
+  kbd:[Ctrl+e]   | Go to the end of current line. | `+/input move_end_of_line+`
+// TRANSLATION MISSING
+| kbd:[Shift+End]  | Go to the end of command line. | `+/input move_end_of_input+`
 |===
 
 [[key_bindings_cmdline_editing]]
@@ -1496,9 +1508,15 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
   kbd:[Ctrl+d]        | entfernt in der Befehlszeile das nächste Zeichen. | `+/input delete_next_char+`
 | kbd:[Backspace] +
   kbd:[Ctrl+h]        | entfernt in der Befehlszeile das vorherige Zeichen. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]        | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_end_of_line+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+k]        | Delete from cursor until end of current line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
+// TRANSLATION MISSING
+| kbd:[Alt+Ctrl+k]    | Delete from cursor until end of command line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_input+`
 | kbd:[Ctrl+t]        | Zeichen austauschen. | `+/input transpose_chars+`
-| kbd:[Ctrl+u]        | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_beginning_of_line+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+u]        | Delete from cursor until beginning of current line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
+// TRANSLATION MISSING
+| kbd:[Alt+Ctrl+u]    | Delete from cursor until beginning of command line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_input+`
 | kbd:[Alt+Backspace] | entfernt das Wort links vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_previous_word+`
 | kbd:[Ctrl+w]        | Vorheriges Wort der Befehlszeile löschen bis zum Leerzeichen (gelöschte Zeichenfolge wird in die interne Zwischenablage kopiert). | `+/input delete_previous_word_whitespace+`
 | kbd:[Ctrl+y]        | fügt den Inhalt der internen Zwischenablage ein. | `+/input clipboard_paste+`
@@ -1512,7 +1530,10 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | kbd:[Alt+Enter]     | Zeilenvorschub einfügen. | `+/input insert \n+`
 | kbd:[Alt+d]         | löscht das Wort rechts vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_next_word+`
 | kbd:[Alt+k]         | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein. | `+/input grab_key_command+`
-| kbd:[Alt+r]         | komplette Eingabezeile lösche.n| `+/input delete_line+`
+// TRANSLATION MISSING
+| kbd:[Alt+r]         | Delete current line. | `+/input delete_line+`
+// TRANSLATION MISSING
+| kbd:[Alt+R]         | Delete entire command line. | `+/input delete_input+`
 |===
 
 [[key_bindings_cmdline_color_codes]]

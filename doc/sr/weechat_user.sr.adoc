@@ -1371,17 +1371,27 @@ WeeChat нуди доста подразумеваних тастерских п
 |===
 | Тастер         | Опис | Команда
 | kbd:[←] +
+  kbd:[Shift+←] +
   kbd:[Ctrl+b]   | Одлазак на претходни карактер у командној линији. | `+/input move_previous_char+`
 | kbd:[→] +
+  kbd:[Shift+→] +
   kbd:[Ctrl+f]   | Одлазак на наредни карактер у командној линији. | `+/input move_next_char+`
+// TRANSLATION MISSING
+| kbd:[Shift+↑]  | Go to previous line. | `+/input move_previous_line+`
+// TRANSLATION MISSING
+| kbd:[Shift+↓]  | Go to next line. | `+/input move_next_line+`
 | kbd:[Ctrl+←] +
   kbd:[Alt+b]    | Одлазак на претходну реч у командној линији. | `+/input move_previous_word+`
 | kbd:[Ctrl+→] +
   kbd:[Alt+f]    | Одлазак на наредну реч у командној линији. | `+/input move_next_word+`
+// TRANSLATION MISSING
 | kbd:[Home] +
-  kbd:[Ctrl+a]   | Одлазак на почетак командне линије. | `+/input move_beginning_of_line+`
+  kbd:[Ctrl+a]   | Go to the beginning of current line. | `+/input move_beginning_of_line+`
+| kbd:[Shift+Home] | Go to the beginning of command line. | `+/input move_beginning_of_input+`
+// TRANSLATION MISSING
 | kbd:[End] +
-  kbd:[Ctrl+e]   | Одлазак на крај командне линије. | `+/input move_end_of_line+`
+  kbd:[Ctrl+e]   | Go to the end of current line. | `+/input move_end_of_line+`
+| kbd:[Shift+End]  | Go to the end of command line. | `+/input move_end_of_input+`
 |===
 
 [[key_bindings_cmdline_editing]]
@@ -1394,9 +1404,15 @@ WeeChat нуди доста подразумеваних тастерских п
   kbd:[Ctrl+d]        | Брисање наредног карактера у командној линији. | `+/input delete_next_char+`
 | kbd:[Backspace] +
   kbd:[Ctrl+h]        | Брисање претходног карактера у командној линији. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]        | Брисање од курсора до краја командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_end_of_line+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+k]        | Delete from cursor until end of current line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
+// TRANSLATION MISSING
+| kbd:[Alt+Ctrl+k]    | Delete from cursor until end of command line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_input+`
 | kbd:[Ctrl+t]        | Транспозиција карактера. | `/input transpose_chars`
-| kbd:[Ctrl+u]        | Брисање од курсора до почетка командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_beginning_of_line+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+u]        | Delete from cursor until beginning of current line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
+// TRANSLATION MISSING
+| kbd:[Alt+Ctrl+u]    | Delete from cursor until beginning of command line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_input+`
 | kbd:[Alt+Backspace] | Брисање претходне речи командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_previous_word+`
 | kbd:[Ctrl+w]        | Брисање претходне речи командне линије до празног простора (обрисани стринг се копира у интерни клипборд). | `+/input delete_previous_word_whitespace+`
 | kbd:[Ctrl+y]        | Налепљивање садржаја интерног клипборда. | `+/input clipboard_paste+`
@@ -1410,7 +1426,10 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Alt+Enter]     | Умеће прелом реда. | `+/input insert \n+`
 | kbd:[Alt+d]         | Брисање наредне речи у командној линији (обрисани стринг се копира у интерни клипборд). | `+/input delete_next_word+`
 | kbd:[Alt+k]         | Хвата тастер и умеће његов кôд (и комадну везану за њега, ако постоји таква пречица) у командну линију. | `+/input grab_key_command+`
-| kbd:[Alt+r]         | Брише комплетну командну линију. | `+/input delete_line+`
+// TRANSLATION MISSING
+| kbd:[Alt+r]         | Delete current line. | `+/input delete_line+`
+// TRANSLATION MISSING
+| kbd:[Alt+R]         | Delete entire command line. | `+/input delete_input+`
 |===
 
 [[key_bindings_cmdline_color_codes]]
