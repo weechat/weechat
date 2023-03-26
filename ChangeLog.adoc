@@ -58,7 +58,7 @@ Bug fixes::
 
 Tests::
 
-  * gui: add tests on key functions
+  * gui: add tests on bar and key functions
 
 Build::
 
