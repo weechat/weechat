@@ -109,8 +109,10 @@ gui_key_default_bindings (int context, int create_option)
         BIND("ctrl-e",            "/input move_end_of_line");
         BIND("shift-end",         "/input move_end_of_input");
         BIND("left",              "/input move_previous_char");
+        BIND("shift-left",        "/input move_previous_char");
         BIND("ctrl-b",            "/input move_previous_char");
         BIND("right",             "/input move_next_char");
+        BIND("shift-right",       "/input move_next_char");
         BIND("ctrl-f",            "/input move_next_char");
         BIND("meta-b",            "/input move_previous_word");
         BIND("ctrl-left",         "/input move_previous_word");
