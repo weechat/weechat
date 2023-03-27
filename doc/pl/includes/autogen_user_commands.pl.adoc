@@ -818,7 +818,8 @@ powód: powód
 
 ----
 /server  list|listfull [<nazwa>]
-         add <nazwa> <host>[/<port>] [-temp] [-<opcja>[=<wartość>]] [-no<opcja>]|| copy|rename <nazwa> <nowa_nazwa>
+         add <nazwa> <host>[/<port>] [-temp] [-<opcja>[=<wartość>]] [-no<opcja>]
+         copy|rename <nazwa> <nowa_nazwa>
          reorder <nazwa> [<nazwa>...]
          open <nazwa>|-all [<nazwa>...]
          del|keep <nazwa>
