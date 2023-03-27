@@ -565,7 +565,7 @@ class AutogenDoc():
 
     def _write_user_commands(self, commands):
         """Write commands."""
-        for plugin in commands:
+        for plugin in sorted(commands):
             self.write()
             self.write(f'// tag::{plugin}_commands[]')
             for i, command in enumerate(sorted(commands[plugin])):

@@ -3,6 +3,416 @@
 // DO NOT EDIT BY HAND!
 //
 
+// tag::alias_commands[]
+[[command_alias_alias]]
+* `+alias+`: lister, ajouter ou retirer des alias de commande
+
+----
+/alias  list [<alias>]
+        add <alias> [<commande>[;<commande>...]]
+        addcompletion <complétion> <alias> [<commande>[;<commande>...]]
+        del <alias> [<alias>...]
+        rename <alias> <nouvel_alias>
+
+         list : afficher les alias (sans paramètre, cette liste est affichée)
+          add : ajouter un alias
+addcompletion : ajouter un alias avec une complétion personnalisée
+          del : supprimer un alias
+       rename : renommer un alias
+   complétion : complétion pour l'alias : par défaut la complétion se fait avec la commande cible
+                note : vous pouvez utiliser %%commande pour utiliser la complétion d'une commande existante
+        alias : nom de l'alias
+     commande : nom de la commande avec les paramètres (plusieurs commandes peuvent être séparées par des points-virgules)
+
+Note : dans la commande, les variables spéciales sont remplacées :
+        $n : paramètre 'n' (entre 1 et 9)
+       $-m : paramètres de 1 à 'm'
+       $n- : paramètres de 'n' au dernier
+      $n-m : paramètres de 'n' à 'm'
+        $* : tous les paramètres
+        $~ : le dernier paramètre
+      $var : où "var" est une variable locale du tampon (voir /buffer listvar)
+             exemples : $nick, $channel, $server, $plugin, $name
+
+Exemples :
+  alias /split pour diviser la fenêtre horizontalement :
+    /alias add split /window splith
+  alias /hello pour dire "hello" sur tous les canaux mais pas sur #weechat :
+    /alias add hello /allchan -exclude=#weechat hello
+  renommer l'alias "hello" en "Hello" :
+    /alias rename hello Hello
+  alias /forcejoin pour envoyer la commande IRC "forcejoin" avec la complétion de /sajoin :
+    /alias addcompletion %%sajoin forcejoin /quote forcejoin
+----
+// end::alias_commands[]
+
+// tag::buflist_commands[]
+[[command_buflist_buflist]]
+* `+buflist+`: objet de barre avec la liste des tampons
+
+----
+/buflist  enable|disable|toggle
+          bar
+          refresh
+
+ enable : activer buflist
+disable : désactiver buflist
+ toggle : activer/désactiver buflist
+    bar : ajouter la barre "buflist"
+refresh : forcer le rafraichissement des objets de barre (buflist, buflist2 et buflist3)
+
+Les lignes avec les tampons sont affichées en utilisant l'évaluation de chaînes (voir /help eval pour le format), avec ces options :
+  - buflist.look.display_conditions : conditions pour afficher un tampon dans la liste
+  - buflist.format.buffer : format pour un tampon qui n'est pas le tampon courant
+  - buflist.format.buffer_current: format pour le tampon courant
+
+Les variables suivantes peuvent être utilisées dans ces options :
+  - données de l'objet de barre (voir le hdata "bar_item" dans la doc API pour une liste complète), par exemple :
+    - ${bar_item.name}
+  - données de la fenêtre ("window"), où l'objet de barre est affiché (il n'y a pas de fenêtre pour les barres de type "root", voir le hdata "window" dans la doc API pour une liste complète), par exemple :
+    - ${window.number}
+    - ${window.buffer.full_name}
+  - données du tampon (voir le hdata "buffer" dans la doc API pour une liste complète), par exemple :
+    - ${buffer.number}
+    - ${buffer.name}
+    - ${buffer.full_name}
+    - ${buffer.short_name}
+    - ${buffer.nicklist_nicks_count}
+  - irc_server: données du serveur IRC, défini seulement sur un tampon IRC (voir le hdata "irc_server" dans la doc API)
+  - irc_channel: données du canal IRC, défini seulement sur un tampon de canal IRC (voir le hdata "irc_channel" dans la doc API)
+  - variables additionnelles ajoutées par buflist pour des raisons pratiques :
+    - ${format_buffer} : la valeur évaluée de l'option buflist.format.buffer ; peut être utilisée dans l'option buflist.format.buffer_current pour juste changer la couleur de fond par exemple
+    - ${current_buffer} : un booléen ("0" ou "1"), "1" s'il s'agit du tampon courant ; cela peut être utilisé dans une condition : ${if:${current_buffer}?...:...}
+    - ${merged} : un booléen ("0" ou "1"), "1" si le tampon est mélangé avec au moins un autre tampon ; cela peut être utilisé dans une condition : ${if:${merged}?...:...}
+    - ${format_number} : numéro indenté avec un séparateur (évaluation de l'option buflist.format.number)
+    - ${number} : numéro indenté, par exemple " 1" s'il y a entre 10 et 99 tampons ; pour les tampons mélangés, cette variable est définie avec le numéro pour le premier tampon et des espaces pour les tampons suivants avec le même numéro
+    - ${number2} : numéro indenté, par exemple " 1" s'il y a entre 10 et 99 tampons
+    - ${number_displayed} : "1" si le numéro est affiché, sinon "0"
+    - ${indent} : indentation pour le nom (les tampons de canaux ou privés sont indentés) (évaluation de l'option buflist.format.indent)
+    - ${format_nick_prefix} : le préfixe du pseudo en couleur pour un canal (évaluation de l'option buflist.format.nick_prefix)
+    - ${color_nick_prefix} : la couleur du préfixe du pseudo pour un canal (défini seulement si l'option buflist.look.nick_prefix est activée)
+    - ${nick_prefix} : le préfixe du pseudo pour un canal (défini seulement si l'option buflist.look.nick_prefix est activée)
+    - ${format_name} : le nom formaté (évaluation de l'option buflist.format.name)
+    - ${name} : le nom court (si défini), sinon le nom
+    - ${color_hotlist} : la couleur qui dépend du niveau de hotlist le plus élevé pour le tampon (évaluation de l'option buflist.format.hotlist_xxx où xxx est le niveau)
+    - ${format_hotlist} : la hotlist formatée (évaluation de l'option buflist.format.hotlist)
+    - ${hotlist} : la hotlist brute
+    - ${hotlist_priority} : "none", "low", "message", "private" ou "highlight"
+    - ${hotlist_priority_number} : -1 = none, 0 = low, 1 = message, 2 = private, 3 = highlight
+    - ${format_lag} : le lag pour un tampon de serveur IRC, vide s'il n'y a pas de lag (évaluation de l'option buflist.format.lag)
+    - ${format_tls_version}: indicateur de la version de TLS pour le serveur courant, vide pour les canaux (évaluation de l'option buflist.format.tls_version)
+----
+// end::buflist_commands[]
+
+// tag::charset_commands[]
+[[command_charset_charset]]
+* `+charset+`: changer le charset pour le tampon courant
+
+----
+/charset  decode|encode <charset>
+          reset
+
+ decode : changer le charset de décodage
+ encode : changer le charset d'encodage
+charset : nouveau charset pour le tampon courant
+  reset : réinitialiser les charsets pour le tampon courant
+----
+// end::charset_commands[]
+
+// tag::exec_commands[]
+[[command_exec_exec]]
+* `+exec+`: exécuter des commandes externes
+
+----
+/exec  -list
+       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <nom>] [-l|-o|-oc|-n|-nf] [-oerr] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] |-flush|-noflush] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <délai>] [-name <nom>] [-pipe <commande>] [-hsignal <nom>] <commande>
+       -in <id> <texte>
+       -inclose <id> [<texte>]
+       -signal <id> <signal>
+       -kill <id>
+       -killall
+       -set <id> <propriété> <valeur>
+       -del <id>|-all [<id>...]
+
+    -list : lister les commandes
+      -sh : utiliser le shell pour exécuter la commande, plusieurs commandes peuvent être enchaînées avec des pipes (ATTENTION : utilisez cette option SEULEMENT si tous les paramètres sont fiables, voir l'option -nosh)
+    -nosh : ne pas utiliser le shell pour exécuter la commande (requis si la commande a des données non fiables, par exemple le contenu d'un message d'un autre utilisateur) (par défaut)
+      -bg : lancer le processus en tâche de fond : ne pas afficher la sortie ni le code retour (non compatible avec les options -o/-oc/-n/-nf/-pipe/-hsignal)
+    -nobg : capturer la sortie du processus et afficher le code retour (par défaut)
+   -stdin : créer un tuyau pour envoyer des données sur l'entrée standard du processus (avec /exec -in/-inclose)
+ -nostdin : ne pas créer de tuyau pour l'entrée standard (par défaut)
+  -buffer : afficher/envoyer la sortie de la commande sur ce tampon (si le tampon n'est pas trouvé, un nouveau tampon avec le nom "exec.exec.xxx" est créé)
+       -l : afficher localement la sortie de la commande sur le tampon (par défaut)
+       -o : envoyer la sortie de la commande au tampon sans exécuter les commandes (non compatible avec les options -bg/-pipe/-hsignal)
+      -oc : envoyer la sortie de la commande au tampon et exécuter les commandes (lignes commençant par "/" ou un caractère personnalisé de commande) (non compatible avec les options -bg/-pipe/-hsignal)
+       -n : afficher la sortie de la commande dans un nouveau tampon (non compatible avec les options -bg/-pipe/-hsignal)
+      -nf : afficher la sortie de la commande dans un nouveau tampon avec contenu libre (pas de coupure des mots, pas de limite sur le nombre de lignes) (non compatible avec les options -bg/-pipe/-hsignal)
+    -oerr : envoyer aussi stderr (sortie d'erreur) au tampon (peut être utilisé seulement avec les options -o et -oc)
+      -cl : effacer le nouveau tampon avant d'afficher la sortie
+    -nocl : ajouter au nouveau tampon sans effacer (par défaut)
+      -sw : basculer vers le tampon de sortie (par défaut)
+    -nosw : ne pas basculer vers le tampon de sortie
+      -ln : afficher les numéros de ligne (par défaut dans un nouveau tampon seulement)
+    -noln : ne pas afficher les numéros de ligne
+   -flush : afficher la sortie de la commande en temps réel (par défaut)
+ -noflush : afficher la sortie de la commande une fois qu'elle est terminée
+   -color : action sur les couleurs ANSI dans la sortie :
+               ansi : garder les codes ANSI tels quels
+               auto : convertir les couleurs ANSI en couleurs WeeChat/IRC (par défaut)
+                irc : convertir les couleurs ANSI en couleurs IRC
+            weechat : convertir les couleurs ANSI en couleurs WeeChat
+              strip : supprimer les couleurs ANSI
+      -rc : afficher le code retour (par défaut)
+    -norc : ne pas afficher le code retour
+ -timeout : définir un délai maximum pour la commande (en secondes)
+    -name : définir un nom pour la commande (pour la nommer plus tard avec /exec)
+    -pipe : envoyer la sortie vers une commande WeeChat/extension (ligne par ligne) ; s'il y a des espaces dans la commande/paramètres, entourez les de guillemets ; la variable $line est remplacée par la ligne (par défaut la ligne est ajoutée après la commande, séparée par un espace) (non compatible avec les options -bg/-o/-oc/-n/-nf)
+ -hsignal : envoyer la sortie sous forme de hsignal (pour être utilisé par exemple dans un trigger) (non compatible avec les options -bg/-o/-oc/-n/-nf)
+ commande : la commande à exécuter ; si elle commence par "url:", le shell est désactivé et le contenu de l'URL est téléchargé et envoyé comme sortie
+       id : identifiant de commande : soit le numéro ou le nom (si défini avec "-name xxx")
+      -in : envoyer le texte sur l'entrée standard du processus
+ -inclose : identique à -in, mais l'entrée standard est fermée après (et le texte est facultatif : sans texte, l'entrée standard est juste fermée)
+  -signal : envoyer un signal au processus ; le signal peut être un entier ou l'un de ces noms : hup, int, quit, kill, term, usr1, usr2
+    -kill : alias de "-signal <id> kill"
+ -killall : tuer tous les processus
+     -set : définir une propriété du hook (voir la fonction hook_set dans l'API de référence extension)
+propriété : propriété du hook
+   valeur : nouvelle valeur pour la propriété du hook
+     -del : supprimer la commande terminée
+     -all : supprimer toutes les commandes terminées
+
+Les options par défaut peuvent être définies dans l'option exec.command.default_options.
+
+Exemples :
+  /exec -n ls -l /tmp
+  /exec -sh -n ps xu | grep weechat
+  /exec -n -norc url:https://pastebin.com/raw.php?i=xxxxxxxx
+  /exec -nf -noln links -dump https://weechat.org/files/doc/devel/weechat_user.en.html
+  /exec -o uptime
+  /exec -pipe "/print Durée de fonctionnement de la machine :" uptime
+  /exec -n tail -f /var/log/messages
+  /exec -kill 0
+----
+// end::exec_commands[]
+
+// tag::fifo_commands[]
+[[command_fifo_fifo]]
+* `+fifo+`: configuration de l'extension fifo
+
+----
+/fifo  enable|disable|toggle
+
+ enable : activer le tube FIFO
+disable : désactiver le tube FIFO
+ toggle : activer/désactiver le tube FIFO
+
+Le tube FIFO est utilisé comme contrôle à distance de WeeChat : vous pouvez envoyer des commandes ou du texte au tube FIFO depuis votre shell.
+Par défaut le tube FIFO se nomme weechat_fifo_xxx (où xxx est l'id du processus WeeChat) et situé dans le répertoire "runtime" de WeeChat (voir /debug dirs).
+
+Le format attendu est l'un des suivants :
+  plugin.buffer *texte ou commande ici
+  *texte ou commande ici
+
+Par exemple pour changer votre pseudo sur libera :
+  echo 'irc.server.libera */nick autrepseudo' >/run/user/1000/weechat/weechat_fifo_12345
+
+Merci de lire le guide utilisateur pour plus d'information et des exemples.
+
+Exemples :
+  /fifo toggle
+----
+// end::fifo_commands[]
+
+// tag::fset_commands[]
+[[command_fset_fset]]
+* `+fset+`: définir rapidement des options WeeChat et des extensions
+
+----
+/fset  -bar
+       -refresh
+       -up|-down [<nombre>]
+       -left|-right [<pourcentage>]
+       -go <ligne>|end
+       -toggle
+       -add [<valeur>]
+       -reset
+       -unset
+       -set
+       -setnew
+       -append
+       -mark
+       -format
+       -export [-help|-nohelp] <fichier>
+       <filtre>
+
+       -bar : ajouter la barre d'aide
+   -refresh : rafraîchir la liste des options, puis l'écran entier (commande : /window refresh)
+        -up : déplacer la ligne sélectionnée de "nombre" lignes vers le haut
+      -down : déplacer la ligne sélectionnée de "nombre" lignes vers le bas
+      -left : faire défier le tampon fset de "pourcentage" de largeur vers la gauche
+     -right : faire défier le tampon fset de "pourcentage" de largeur vers la droite
+        -go : sélectionner une ligne par numéro, la première ligne est 0 ("end" pour sélectionner la dernière ligne)
+    -toggle : basculer la valeur booléenne
+       -add : ajouter "valeur" (qui peut être un nombre négatif) pour les entiers et couleurs, définir/ajouter à la valeur pour les autres types (définir pour une valeur négative, ajouter pour un nombre positif)
+     -reset : réinitialiser la valeur de l'option
+     -unset : supprimer/réinitialiser l'option
+       -set : ajouter la commande /set dans l'entrée pour éditer la valeur de l'option (déplacer le curseur au début de la valeur)
+    -setnew : ajouter la commande /set dans l'entrée pour éditer une nouvelle valeur pour l'option
+    -append : ajouter la commande /set pour ajouter quelque chose dans la valeur de l'option (déplacer le curseur à la fin de la valeur)
+      -mark : marquer/démarquer
+    -format : basculer vers le prochain format disponible
+    -export : exporter les options et valeurs affichées dans un fichier (chaque ligne a le format : "/set nom valeur" ou "/unset nom")
+      -help : forcer l'écriture de l'aide sur les options dans le fichier exporté (voir /help fset.look.export_help_default)
+    -nohelp : ne pas écrire l'aide sur les options dans le fichier exporté (voir /help fset.look.export_help_default)
+     filtre : définir un nouveau filtre pour voir seulement les options correspondantes (ce filtre peut aussi être utilisé en entrée du tampon fset) ; les formats autorisés sont :
+               *       afficher toutes les options (pas de filtre)
+               xxx     afficher seulement les options avec "xxx" dans le nom
+               f:xxx   afficher seulement le fichier de configuration "xxx"
+               t:xxx   afficher seulement le type "xxx" (bool/int/str/col)
+               d       afficher seulement les options changées
+               d:xxx   afficher seulement les options changées avec "xxx" dans le nom
+               d=xxx   afficher seulement les options changées avec "xxx" dans la valeur
+               d==xxx  afficher seulement les options changées avec la valeur exacte "xxx"
+               h=xxx   afficher seulement les options avec "xxx" dans la description (traduite)
+               he=xxx  afficher seulement les options avec "xxx" dans la description (en Anglais)
+               =xxx    afficher seulement les options avec "xxx" dans la valeur
+               ==xxx   afficher seulement les options avec la valeur exacte "xxx"
+               c:xxx   afficher seulement les options qui correspondent à la condition évaluée "xxx", en utilisant les variables suivantes : file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
+
+Les lignes avec des options sont affichées en utilisant l'évaluation de chaîne (voir /help eval pour le format), avec ces options :
+  - fset.format.option1 : premier format pour une option
+  - fset.format.option2 : second format pour une option
+
+Les variables suivantes peuvent être utilisées dans ces options :
+  - données de l'option, avec couleur et alignées avec des espaces sur la droite :
+    - ${file} : fichier de configuration (par exemple "weechat" ou "irc")
+    - ${section} : section
+    - ${option} : nom de l'option
+    - ${name} : nom complet de l'option (fichier.section.option)
+    - ${parent_name} : nom de l'option parente
+    - ${type} : type de l'option (traduit)
+    - ${type_en} : type de l'option (en Anglais)
+    - ${type_short} : type court de l'option (bool/int/str/col)
+    - ${type_tiny} : type très court de l'option (b/i/s/c)
+    - ${default_value} : valeur par défaut de l'option
+    - ${default_value_undef} : "1" si la valeur par défaut est null, sinon "0"
+    - ${value} : valeur de l'option
+    - ${value_undef} : "1" si la valer est null, sinon "0"
+    - ${value_changed} : "1" si la valeur est différente de la valeur par défaut, sinon "0"
+    - ${value2} : valeur de l'option, avec la valeur héritée si null
+    - ${parent_value} : valeur de l'option parente
+    - ${min} : valeur minimale
+    - ${max} : valeur maximale
+    - ${description} : description de l'option (traduite)
+    - ${description2} : description de l'option (traduite), "(pas de description)" s'il n'y a pas de description
+    - ${description_en} : description de l'option (en Anglais)
+    - ${description_en2} : description de l'option (en Anglais), "(no description)" s'il n'y a pas de description
+    - ${string_values} : valeurs chaîne autorisées pour définir une option de type entier utilisant des chaînes
+    - ${marked} : "1" si l'option est marquée, sinon "0"
+    - ${index} : index de l'option dans la liste
+  - données de l'option, avec couleur mais sans espaces :
+    - mêmes noms préfixés par un underscore, par exemple : ${_name}, ${_type}, ...
+  - données de l'option, format brut (par de couleurs/espaces) :
+    - mêmes noms préfixés par deux underscores, par exemple : ${__name}, ${__type}, ...
+  - données de l'option, seulement des espaces :
+    - mêmes noms préfixés par "empty_", par exemple : ${empty_name}, ${empty_type}
+  - autres données :
+    - ${selected_line} : "1" si la ligne est sélectionnée, sinon "0"
+    - ${newline} : insérer une nouvelle ligne à cet endroit, pour afficher l'option sur plusieurs lignes
+
+Touches et entrées pour le déplacement dans le tampon fset :
+  haut                      se déplacer d'une ligne vers le haut
+  bas                       se déplacer d'une ligne vers le bas
+  pgup                      se déplacer d'une page vers le haut
+  pgdn                      se déplacer d'une page vers le bas
+  alt-home          <<      se déplacer à la première ligne
+  alt-end           >>      se déplacer à la dernière ligne
+  F11               <       faire défiler horizontalement vers la gauche
+  F12               >       faire défiler horizontalement vers la droite
+
+Touches et entrées pour définir les options sur le tampon fset :
+  alt+espace        t       basculer la valeur booléenne
+  alt+'-'           -       soustraire 1 de la valeur pour un entier/couleur, définir la valeur pour les autres types
+  alt+'+'           +       ajouter 1 à la valeur pour un entier/couleur, ajouter à la valeur pour les autres types
+  alt+f, alt+r      r       réinitialiser la valeur
+  alt+f, alt+u      u       supprimer/réinitialiser la valeur
+  alt+entrée        s       définir la valeur
+  alt+f, alt+n      n       définir une nouvelle valeur
+  alt+f, alt+a      a       ajouter à la valeur
+  alt+','           ,       marquer/démarquer l'option
+  shift+haut                se déplacer d'une ligne vers le haut et marquer/démarquer l'option
+  shift+bas                 marquer/démarquer l'option et se déplacer d'une ligne vers le bas
+                    m:xxx   marquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir les filtres ci-dessus)
+                    u:xxx   démarquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir les filtres ci-dessus)
+
+Autres touches et entrées sur le tampon fset :
+  ctrl+l                    rafraîchir les options et l'écran entier (commande : /fset -refresh)
+                    $       rafraîchir les options (garder les options marquées)
+                    $$      rafraîchir les options (démarquer toutes les options)
+  alt+p             p       activer/désactiver la description des options d'extensions (plugins.desc.*)
+  alt+v             v       activer/désactiver la barre d'aide
+                    s:x,y   trier les options par les champs x,y (voir /help fset.look.sort)
+                    s:      réinitialiser le tri à sa valeur par défaut (voir /help fset.look.sort)
+                    w:xxx   exporter les options dans le fichier "xxx"
+                    w-:xxx  exporter les options dans le fichier "xxx" sans aide
+                    w+:xxx  exporter les options dans le fichier "xxx" avec aide
+  ctrl+x            x       basculer le format utilisé pour afficher les options
+                    q       fermer le tampon fset
+
+Actions de la souris sur le tampon fset :
+  roulette haut/bas                     se déplacer vers le haut/bas
+  bouton gauche                         se déplacer à cette ligne
+  bouton droit                          basculer le booléen (on/off) ou éditer la valeur de l'option
+  bouton droit + glisser gauche/droite  incrémenter/décrémenter la valeur pour un entier/couleur, définir/ajouter à la valeur pour les autres types
+  bouton droit + glisser haut/bas       marquer/démarquer plusieurs options
+
+Note : si l'entrée comporte un ou plusieurs espaces en tête, le texte suivant est interprété comme un filtre, sans les espaces. Par exemple " q" cherche toutes les options avec "q" dans le nom, tandis que "q" ferme le tampon fset.
+
+Exemples :
+  afficher les options IRC changées :
+    /fset d:irc.*
+  afficher les options avec "nicklist" dans le nom :
+    /fset nicklist
+  afficher les valeurs qui contiennent "red" :
+    /fset =red
+  afficher les valeurs qui sont exactement "red" :
+    /fset ==red
+  afficher toutes les options de type "entier" dans l'extension irc :
+    /fset c:${file} == irc && ${type_en} == integer
+----
+// end::fset_commands[]
+
+// tag::guile_commands[]
+[[command_guile_guile]]
+* `+guile+`: lister/charger/décharger des scripts
+
+----
+/guile  list|listfull [<nom>]
+        load [-q] <fichier>
+        autoload
+        reload|unload [-q] [<nom>]
+        eval [-o|-oc] <code>
+        version
+
+    list : lister les scripts chargés
+listfull : lister les scripts chargés (verbeux)
+    load : charger un script
+autoload : charger tous les scripts dans le répertoire "autoload"
+  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
+  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
+ fichier : script (fichier) à charger
+      -q : mode silencieux : ne pas afficher de messages
+     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
+    eval : évaluer le code source et afficher le résultat sur le tampon courant
+      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
+     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
+    code : le code source à évaluer
+ version : afficher la version de l'interpréteur utilisé
+
+Sans paramètre, cette commande liste les scripts chargés.
+----
+// end::guile_commands[]
+
 // tag::irc_commands[]
 [[command_irc_admin]]
 * `+admin+`: trouver les informations sur l'administrateur du serveur
@@ -1083,48 +1493,533 @@ nombre : nombre de réponses à retourner (recherche complète si nombre négat
 ----
 // end::irc_commands[]
 
-// tag::alias_commands[]
-[[command_alias_alias]]
-* `+alias+`: lister, ajouter ou retirer des alias de commande
+// tag::javascript_commands[]
+[[command_javascript_javascript]]
+* `+javascript+`: lister/charger/décharger des scripts
 
 ----
-/alias  list [<alias>]
-        add <alias> [<commande>[;<commande>...]]
-        addcompletion <complétion> <alias> [<commande>[;<commande>...]]
-        del <alias> [<alias>...]
-        rename <alias> <nouvel_alias>
+/javascript  list|listfull [<nom>]
+             load [-q] <fichier>
+             autoload
+             reload|unload [-q] [<nom>]
+             eval [-o|-oc] <code>
+             version
 
-         list : afficher les alias (sans paramètre, cette liste est affichée)
-          add : ajouter un alias
-addcompletion : ajouter un alias avec une complétion personnalisée
-          del : supprimer un alias
-       rename : renommer un alias
-   complétion : complétion pour l'alias : par défaut la complétion se fait avec la commande cible
-                note : vous pouvez utiliser %%commande pour utiliser la complétion d'une commande existante
-        alias : nom de l'alias
-     commande : nom de la commande avec les paramètres (plusieurs commandes peuvent être séparées par des points-virgules)
+    list : lister les scripts chargés
+listfull : lister les scripts chargés (verbeux)
+    load : charger un script
+autoload : charger tous les scripts dans le répertoire "autoload"
+  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
+  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
+ fichier : script (fichier) à charger
+      -q : mode silencieux : ne pas afficher de messages
+     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
+    eval : évaluer le code source et afficher le résultat sur le tampon courant
+      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
+     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
+    code : le code source à évaluer
+ version : afficher la version de l'interpréteur utilisé
 
-Note : dans la commande, les variables spéciales sont remplacées :
-        $n : paramètre 'n' (entre 1 et 9)
-       $-m : paramètres de 1 à 'm'
-       $n- : paramètres de 'n' au dernier
-      $n-m : paramètres de 'n' à 'm'
-        $* : tous les paramètres
-        $~ : le dernier paramètre
-      $var : où "var" est une variable locale du tampon (voir /buffer listvar)
-             exemples : $nick, $channel, $server, $plugin, $name
+Sans paramètre, cette commande liste les scripts chargés.
+----
+// end::javascript_commands[]
+
+// tag::logger_commands[]
+[[command_logger_logger]]
+* `+logger+`: configuration de l'extension logger
+
+----
+/logger  list
+         set <niveau>
+         flush
+         disable
+
+   list : afficher le statut d'enregistrement pour les tampons ouverts
+    set : définir le niveau d'enregistrement pour le tampon courant
+ niveau : niveau pour les messages à enregistrer (0 = pas d'enregistrement, 1 = quelques messages (les plus importants) .. 9 = tous les messages)
+  flush : écrire tous les fichiers de log maintenant
+disable : désactiver l'enregistrement pour le tampon courant (définir le niveau à 0)
+
+Les options "logger.level.*" et "logger.mask.*" peuvent être utilisées pour définir le niveau ou le masque de nom de fichier pour un tampon, ou plusieurs tampons commençant par un nom.
+
+Niveaux de log utilisés par l'extension IRC :
+  1 : message d'utilisateur (canal et privé), notice (serveur et canal)
+  2 : changement de pseudo
+  3 : message du serveur
+  4 : join/part/quit
+  9 : tous les autres messages
 
 Exemples :
-  alias /split pour diviser la fenêtre horizontalement :
-    /alias add split /window splith
-  alias /hello pour dire "hello" sur tous les canaux mais pas sur #weechat :
-    /alias add hello /allchan -exclude=#weechat hello
-  renommer l'alias "hello" en "Hello" :
-    /alias rename hello Hello
-  alias /forcejoin pour envoyer la commande IRC "forcejoin" avec la complétion de /sajoin :
-    /alias addcompletion %%sajoin forcejoin /quote forcejoin
+  définir le niveau d'enregistrement à 5 pour le tampon courant :
+    /logger set 5
+  désactiver l'enregistrement pour le tampon courant :
+    /logger disable
+  définir le niveau à 3 pour les tampons IRC :
+    /set logger.level.irc 3
+  désactiver l'enregistrement pour le tampon principal de WeeChat :
+    /set logger.level.core.weechat 0
+  utiliser un répertoire par serveur IRC et un fichier par canal dedans :
+    /set logger.mask.irc "$server/$channel.weechatlog"
 ----
-// end::alias_commands[]
+// end::logger_commands[]
+
+// tag::lua_commands[]
+[[command_lua_lua]]
+* `+lua+`: lister/charger/décharger des scripts
+
+----
+/lua  list|listfull [<nom>]
+      load [-q] <fichier>
+      autoload
+      reload|unload [-q] [<nom>]
+      eval [-o|-oc] <code>
+      version
+
+    list : lister les scripts chargés
+listfull : lister les scripts chargés (verbeux)
+    load : charger un script
+autoload : charger tous les scripts dans le répertoire "autoload"
+  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
+  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
+ fichier : script (fichier) à charger
+      -q : mode silencieux : ne pas afficher de messages
+     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
+    eval : évaluer le code source et afficher le résultat sur le tampon courant
+      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
+     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
+    code : le code source à évaluer
+ version : afficher la version de l'interpréteur utilisé
+
+Sans paramètre, cette commande liste les scripts chargés.
+----
+// end::lua_commands[]
+
+// tag::perl_commands[]
+[[command_perl_perl]]
+* `+perl+`: lister/charger/décharger des scripts
+
+----
+/perl  list|listfull [<nom>]
+       load [-q] <fichier>
+       autoload
+       reload|unload [-q] [<nom>]
+       eval [-o|-oc] <code>
+       version
+
+    list : lister les scripts chargés
+listfull : lister les scripts chargés (verbeux)
+    load : charger un script
+autoload : charger tous les scripts dans le répertoire "autoload"
+  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
+  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
+ fichier : script (fichier) à charger
+      -q : mode silencieux : ne pas afficher de messages
+     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
+    eval : évaluer le code source et afficher le résultat sur le tampon courant
+      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
+     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
+    code : le code source à évaluer
+ version : afficher la version de l'interpréteur utilisé
+
+Sans paramètre, cette commande liste les scripts chargés.
+----
+// end::perl_commands[]
+
+// tag::php_commands[]
+[[command_php_php]]
+* `+php+`: lister/charger/décharger des scripts
+
+----
+/php  list|listfull [<nom>]
+      load [-q] <fichier>
+      autoload
+      reload|unload [-q] [<nom>]
+      eval [-o|-oc] <code>
+      version
+
+    list : lister les scripts chargés
+listfull : lister les scripts chargés (verbeux)
+    load : charger un script
+autoload : charger tous les scripts dans le répertoire "autoload"
+  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
+  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
+ fichier : script (fichier) à charger
+      -q : mode silencieux : ne pas afficher de messages
+     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
+    eval : évaluer le code source et afficher le résultat sur le tampon courant
+      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
+     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
+    code : le code source à évaluer
+ version : afficher la version de l'interpréteur utilisé
+
+Sans paramètre, cette commande liste les scripts chargés.
+----
+// end::php_commands[]
+
+// tag::python_commands[]
+[[command_python_python]]
+* `+python+`: lister/charger/décharger des scripts
+
+----
+/python  list|listfull [<nom>]
+         load [-q] <fichier>
+         autoload
+         reload|unload [-q] [<nom>]
+         eval [-o|-oc] <code>
+         version
+
+    list : lister les scripts chargés
+listfull : lister les scripts chargés (verbeux)
+    load : charger un script
+autoload : charger tous les scripts dans le répertoire "autoload"
+  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
+  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
+ fichier : script (fichier) à charger
+      -q : mode silencieux : ne pas afficher de messages
+     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
+    eval : évaluer le code source et afficher le résultat sur le tampon courant
+      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
+     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
+    code : le code source à évaluer
+ version : afficher la version de l'interpréteur utilisé
+
+Sans paramètre, cette commande liste les scripts chargés.
+----
+// end::python_commands[]
+
+// tag::relay_commands[]
+[[command_relay_relay]]
+* `+relay+`: contrôle du relai
+
+----
+/relay  list|listfull|listrelay
+        add <nom> <port>|<chemin>
+        del|start|restart|stop <nom>
+        raw
+        sslcertkey
+
+      list : lister les clients pour le relai
+  listfull : lister les clients pour le relai (verbeux)
+ listrelay : lister les relais (nom et port)
+       add : ajouter un relai (écouter sur un port)
+       del : supprimer un relai (les clients restent connectés)
+     start : écouter sur le port
+   restart : fermer le socket serveur et écouter à nouveau sur le port (les clients restent connectés)
+      stop : fermer le socket serveur (les clients restent connectés)
+       nom : nom du relai (voir le format ci-dessous)
+      port : port utilisé pour le relai
+    chemin : chemin utilisé pour le relai (pour un socket de domaine UNIX seulement) ; le chemin est évalué (voir la fonction string_eval_path_home dans la référence API extension)
+       raw : ouvrir le tampon avec les données brutes Relay
+sslcertkey : définir le certificat/clé SSL en utilisant le chemin de l'option relay.network.ssl_cert_key
+
+Le nom du relai est : [ipv4.][ipv6.][ssl.]<protocole.nom> ou unix[.ssl].<protocole.nom>
+         ipv4 : forcer l'utilisation d'IPv4
+         ipv6 : forcer l'utilisation d'IPv6
+          ssl : activer SSL
+         unix : utiliser un socket de domaine UNIX
+protocole.nom : protocole et nom à relayer :
+                  - protocole "irc" : le nom est le serveur à partager (optionnel, si non donné, le nom de serveur doit être envoyé par le client dans la commande "PASS", avec le format : "PASS serveur:motdepasse")
+                  - protocole "weechat" (le nom n'est pas utilisé)
+
+Le protocole "irc" permet à n'importe quel client IRC (incluant WeeChat lui-même) de se connecter sur le port.
+Le protocole "weechat" permet à une interface distante de se connecter sur le port, voir la liste ici : https://weechat.org/about/interfaces/
+
+Sans paramètre, cette commande ouvre le tampon avec la liste des clients pour le relai.
+
+Exemples :
+  proxy irc, pour le serveur "libera" :
+    /relay add irc.libera 8000
+  proxy irc, pour le serveur "libera", avec SSL :
+    /relay add ssl.irc.libera 8001
+  proxy irc, pour tous les serveurs (le client choisira), avec SSL :
+    /relay add ssl.irc 8002
+  protocole weechat :
+    /relay add weechat 9000
+  protocole weechat avec SSL :
+    /relay add ssl.weechat 9001
+  protocole weechat avec SSL, en utilisant seulement IPv4 :
+    /relay add ipv4.ssl.weechat 9001
+  protocole weechat avec SSL, en utilisant seulement IPv6 :
+    /relay add ipv6.ssl.weechat 9001
+  protocole weechat avec SSL, en utilisant IPv4 + IPv6 :
+    /relay add ipv4.ipv6.ssl.weechat 9001
+  protocole weechat avec un socket de domaine UNIX :
+    /relay add unix.weechat ${weechat_runtime_dir}/relay_socket
+----
+// end::relay_commands[]
+
+// tag::ruby_commands[]
+[[command_ruby_ruby]]
+* `+ruby+`: lister/charger/décharger des scripts
+
+----
+/ruby  list|listfull [<nom>]
+       load [-q] <fichier>
+       autoload
+       reload|unload [-q] [<nom>]
+       eval [-o|-oc] <code>
+       version
+
+    list : lister les scripts chargés
+listfull : lister les scripts chargés (verbeux)
+    load : charger un script
+autoload : charger tous les scripts dans le répertoire "autoload"
+  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
+  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
+ fichier : script (fichier) à charger
+      -q : mode silencieux : ne pas afficher de messages
+     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
+    eval : évaluer le code source et afficher le résultat sur le tampon courant
+      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
+     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
+    code : le code source à évaluer
+ version : afficher la version de l'interpréteur utilisé
+
+Sans paramètre, cette commande liste les scripts chargés.
+----
+// end::ruby_commands[]
+
+// tag::script_commands[]
+[[command_script_script]]
+* `+script+`: Gestionnaire de scripts WeeChat
+
+----
+/script  list [-o|-ol|-i|-il]
+         search <texte>
+         show <script>
+         load|unload|reload <script> [<script>...]
+         autoload|noautoload|toggleautoload <script> [<script>...]
+         install|remove|installremove|hold [-q] <script> [<script>...]
+         upgrade
+         update
+
+          list : lister les scripts chargés (tous les langages)
+            -o : envoyer la liste des scripts chargés au tampon (chaîne en anglais)
+           -ol : envoyer la liste des scripts chargés au tampon (chaîne traduite)
+            -i : copier la liste des scripts chargés dans la ligne de commande (pour envoi au tampon) (chaîne en anglais)
+           -il : copier la liste des scripts chargés dans la ligne de commande (pour envoi au tampon) (chaîne traduite)
+        search : chercher des scripts par étiquettes, langage (python, perl, ...), extension de fichier (py, pl, ...) ou texte ; le résultat est affiché sur le tampon des scripts
+          show : afficher des infos détaillées sur le script
+          load : charger un ou plusieurs scripts
+        unload : décharger un ou plusieurs scripts
+        reload : recharger un ou plusieurs scripts
+      autoload : charger automatiquement un ou plusieurs scripts
+    noautoload : ne pas charger automatiquement un ou plusieurs scripts
+toggleautoload : activer/désactiver le chargement automatique
+       install : installer/mettre à jour un ou plusieurs scripts
+        remove : supprimer un ou plusieurs scripts
+ installremove : installer ou supprimer un ou plusieurs scripts, selon l'état courant
+          hold : figer/défiger un ou plusieurs scripts (un script figé ne sera plus mis à jour et ne peut pas être supprimé)
+            -q : mode silencieux : ne pas afficher de messages
+       upgrade : mettre à jour les scripts obsolètes (avec nouvelle version disponible)
+        update : mettre à jour le cache local des scripts
+
+Sans paramètre, cette commande ouvre un tampon avec la liste des scripts.
+
+Sur le tampon des scripts, les statuts pour chaque script sont :
+  * i a H r N
+  | | | | | |
+  | | | | | obsolète (nouvelle version disponible)
+  | | | | chargé
+  | | | figé
+  | | chargé auto
+  | installé
+  script populaire
+
+Dans la sortie de /script list, les statuts pour chaque script sont :
+  * ? i a H N
+  | | | | | |
+  | | | | | obsolète (nouvelle version disponible)
+  | | | | figé
+  | | | chargé auto
+  | | installé
+  | script inconnu (ne peut pas être téléchargé/mis à jour)
+  script populaire
+
+Les touches sur le tampon des scripts :
+  alt+i  installer le script
+  alt+r  supprimer le script
+  alt+l  charger le script
+  alt+L  recharger le script
+  alt+u  décharger le script
+  alt+A  chargement automatique du script
+  alt+h  (dé)figer le script
+  alt+v  voir le script
+
+Entrée autorisée sur le tampon des scripts :
+  i/r/l/L/u/A/h/v  action sur le script (identique aux touches ci-dessus)
+  q                fermer le tampon
+  $                rafraîchir le tampon
+  s:x,y            trier le tampon en utilisant les clés x et y (voir /help script.look.sort)
+  s:               réinitialiser le tri (utiliser le tri par défaut)
+  word(s)          filtrer les scripts : recherche du/des mot(s) dans les scripts (description, étiquettes, ...)
+  *                supprimer le filtre
+
+Actions de la souris sur le tampon des scripts :
+  roulette       faire défiler la liste
+  bouton gauche  sélectionner le script
+  bouton droit   installer/supprimer le script
+
+Exemples :
+  /script search url
+  /script install go.py urlserver.py
+  /script remove go.py
+  /script hold urlserver.py
+  /script reload urlserver
+  /script upgrade
+----
+// end::script_commands[]
+
+// tag::spell_commands[]
+[[command_spell_spell]]
+* `+spell+`: configuration de l'extension spell
+
+----
+/spell  enable|disable|toggle
+        listdict
+        setdict -|<dict>[,<dict>...]
+        deldict
+        addword [<dict>] <mot>
+
+  enable : activer le vérificateur d'orthographe
+ disable : désactiver le vérificateur d'orthographe
+  toggle : activer/désactiver le vérificateur d'orthographe
+listdict : afficher les dictionnaires installés
+ setdict : définir le dictionnaire pour le tampon courant (plusieurs dictionnaires peuvent être séparés par une virgule, la valeur spéciale "-" désactive la vérification orthographique sur le tampon courant)
+ deldict : supprimer le dictionnaire utilisé sur le tampon courant
+ addword : ajouter un mot dans le dictionnaire personnel
+
+Les lignes d'entrée commençant par '/' ne sont pas vérifiées, sauf pour certaines commandes (voir /set spell.check.commands).
+
+Pour activer le vérificateur d'orthographe sur tous les tampons, utilisez l'option "default_dict", par exemple :
+  /set spell.check.default_dict "en"
+  /spell enable
+
+Pour afficher une liste des suggestions dans une barre, utilisez l'objet "spell_suggest".
+
+La touche par défaut pour activer/désactiver le vérificateur d'orthographe est alt-s.
+----
+// end::spell_commands[]
+
+// tag::tcl_commands[]
+[[command_tcl_tcl]]
+* `+tcl+`: lister/charger/décharger des scripts
+
+----
+/tcl  list|listfull [<nom>]
+      load [-q] <fichier>
+      autoload
+      reload|unload [-q] [<nom>]
+      eval [-o|-oc] <code>
+      version
+
+    list : lister les scripts chargés
+listfull : lister les scripts chargés (verbeux)
+    load : charger un script
+autoload : charger tous les scripts dans le répertoire "autoload"
+  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
+  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
+ fichier : script (fichier) à charger
+      -q : mode silencieux : ne pas afficher de messages
+     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
+    eval : évaluer le code source et afficher le résultat sur le tampon courant
+      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
+     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
+    code : le code source à évaluer
+ version : afficher la version de l'interpréteur utilisé
+
+Sans paramètre, cette commande liste les scripts chargés.
+----
+// end::tcl_commands[]
+
+// tag::trigger_commands[]
+[[command_trigger_trigger]]
+* `+trigger+`: gestion des triggers, le couteau Suisse pour WeeChat
+
+----
+/trigger  list|listfull|listdefault
+          add|addoff|addreplace <nom> <hook> ["<paramètres>" ["<conditions>" ["<regex>" ["<commande>" ["<code_retour>" ["action_post"]]]]]]
+          addinput [<hook>]
+          input|output|recreate <nom>
+          set <nom> <option> <valeur>
+          rename|copy <nom> <nouveau_nom>
+          enable|disable|toggle [<nom>|-all [<nom>...]]
+          restart <nom>|-all [<nom>...]
+          show <nom>
+          del <nom>|-all [<nom>...]
+          restore <nom> [<nom>...]
+          default -yes
+          monitor [<filtre>]
+
+       list : lister les triggers (sans paramètre, cette liste est affichée)
+   listfull : lister les triggers avec des informations détaillées pour chaque trigger
+listdefault : lister les triggers par défaut
+        add : ajouter un trigger
+     addoff : ajouter un trigger (désactivé)
+ addreplace : ajouter ou remplacer un trigger existant
+        nom : nom du trigger
+       hook : signal, hsignal, modifier, line, print, command, command_run, timer, config, focus, info, info_hashtable
+ paramètres : paramètres pour le hook, dépendant du hook (séparés par des points-virgules) :
+              signal : nom(s) de signal (obligatoire)
+              hsignal : nom(s) de signal (obligatoire)
+              modifier : nom(s) de modificateur (obligatoire)
+              line : type de tampon ("formatted", "free" ou "*"), liste de masques de tampons, étiquettes
+              print : tampon, étiquettes, message, suppression des couleurs (0/1)
+              command : commande (obligatoire), description, paramètres, description des paramètres, complétion (tous les paramètres sauf la commande sont évalués, "${tg_trigger_name}" est remplacé par le nom du trigger, voir /help eval)
+              command_run : commande(s) (obligatoire)
+              timer : intervalle (obligatoire), alignement sur la seconde, nombre max d'appels
+              config : nom(s) de l'option (obligatoire)
+              focus : nom(s) de la zone (obligatoire)
+              info : nom(s) de l'info (obligatoire)
+              info_hashtable : nom(s) de l'info (obligatoire)
+ conditions : conditions évaluées pour le trigger
+      regex : une ou plusieurs expressions régulières pour remplacer des chaînes dans les variables
+   commande : commande à exécuter (plusieurs commandes peuvent être séparées par ";")
+code_retour : code retour dans la fonction de rappel (ok (par défaut), ok_eat, error)
+action_post : action à effectuer après l'exécution (none (par défaut), disable, delete)
+   addinput : définir la ligne de commande avec les paramètres par défaut pour créer un trigger
+      input : définir la ligne de commande utilisée pour créer le trigger
+     output : envoyer la commande pour créer le trigger sur le tampon
+   recreate : comme "input", avec l'option "addreplace" au lieu de "add"
+        set : définir une option dans un trigger
+     option : nom de l'option : name, hook, arguments, conditions, regex, command, return_code
+              (pour l'aide sur l'option, vous pouvez taper : /help trigger.trigger.<nom>.<option>)
+     valeur : nouvelle valeur pour l'option
+     rename : renommer un trigger
+       copy : copier un trigger
+     enable : activer un/des trigger(s) (sans paramètre : activer les triggers globalement)
+    disable : désactiver un/des trigger(s) (sans paramètre : désactiver les triggers globalement)
+     toggle : activer/désactiver un/des trigger(s) (sans paramètre : activer/désactiver les triggers globalement)
+    restart : redémarrer un/des trigger(s) (recréer les hooks)
+       show : afficher des informations détaillées sur un trigger (avec quelques statistiques)
+        del : supprimer un trigger
+       -all : effectuer l'action sur tous les triggers
+    restore : restaurer un/des trigger(s) avec les valeurs par défaut (fonctionne seulement pour les triggers par défaut)
+    default : restaurer les triggers par défaut
+    monitor : ouvrir le tampon moniteur des triggers
+     filtre : filtrer les hooks/triggers à afficher (un hook doit commencer par "@", par exemple "@signal"), plusieurs filtres peuvent être séparés par des virgules ; le caractère joker "*" est autorisé dans chaque nom de trigger
+
+Lorsqu'une fonction de rappel de trigger est appelée, les actions suivantes sont exécutées, dans cet ordre :
+  1. vérifier les conditions ; si faux, sortir
+  2. remplacer le texte en utilisant une/des expression(s)s régulière(s)s POSIX étendue(s)s (si définie(s) dans le trigger)
+  3. exécuter le(s) commande(s) (si définie(s) dans le trigger)
+  4. sortir avec le code retour (sauf pour les modificateurs, line, focus, info et info_hashtable)
+  5. effectuer l'action "post"
+
+Exemples (vous pouvez aussi regarder les triggers par défaut avec /trigger listdefault) :
+  ajouter des attributs *gras*, _souligné_ et /italique/ (seulement dans les messages d'utilisateurs) :
+    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
+  cacher la barre de pseudos sur les petits terminaux :
+    /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
+    /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
+  sauver silencieusement la configuration chaque heure :
+    /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
+  sauver silencieusement la session WeeChat à minuit (voir /help upgrade) :
+    /trigger add session_save signal day_changed "" "" "/mute /upgrade -save"
+  ouvrir le tampon moniteur des triggers et afficher seulement les modificateurs et les triggers dont le nom commence par "resize" :
+    /trigger monitor @modifier,resize*
+----
+// end::trigger_commands[]
 
 // tag::weechat_commands[]
 [[command_weechat_allbuf]]
@@ -2389,474 +3284,6 @@ Exemples :
 ----
 // end::weechat_commands[]
 
-// tag::buflist_commands[]
-[[command_buflist_buflist]]
-* `+buflist+`: objet de barre avec la liste des tampons
-
-----
-/buflist  enable|disable|toggle
-          bar
-          refresh
-
- enable : activer buflist
-disable : désactiver buflist
- toggle : activer/désactiver buflist
-    bar : ajouter la barre "buflist"
-refresh : forcer le rafraichissement des objets de barre (buflist, buflist2 et buflist3)
-
-Les lignes avec les tampons sont affichées en utilisant l'évaluation de chaînes (voir /help eval pour le format), avec ces options :
-  - buflist.look.display_conditions : conditions pour afficher un tampon dans la liste
-  - buflist.format.buffer : format pour un tampon qui n'est pas le tampon courant
-  - buflist.format.buffer_current: format pour le tampon courant
-
-Les variables suivantes peuvent être utilisées dans ces options :
-  - données de l'objet de barre (voir le hdata "bar_item" dans la doc API pour une liste complète), par exemple :
-    - ${bar_item.name}
-  - données de la fenêtre ("window"), où l'objet de barre est affiché (il n'y a pas de fenêtre pour les barres de type "root", voir le hdata "window" dans la doc API pour une liste complète), par exemple :
-    - ${window.number}
-    - ${window.buffer.full_name}
-  - données du tampon (voir le hdata "buffer" dans la doc API pour une liste complète), par exemple :
-    - ${buffer.number}
-    - ${buffer.name}
-    - ${buffer.full_name}
-    - ${buffer.short_name}
-    - ${buffer.nicklist_nicks_count}
-  - irc_server: données du serveur IRC, défini seulement sur un tampon IRC (voir le hdata "irc_server" dans la doc API)
-  - irc_channel: données du canal IRC, défini seulement sur un tampon de canal IRC (voir le hdata "irc_channel" dans la doc API)
-  - variables additionnelles ajoutées par buflist pour des raisons pratiques :
-    - ${format_buffer} : la valeur évaluée de l'option buflist.format.buffer ; peut être utilisée dans l'option buflist.format.buffer_current pour juste changer la couleur de fond par exemple
-    - ${current_buffer} : un booléen ("0" ou "1"), "1" s'il s'agit du tampon courant ; cela peut être utilisé dans une condition : ${if:${current_buffer}?...:...}
-    - ${merged} : un booléen ("0" ou "1"), "1" si le tampon est mélangé avec au moins un autre tampon ; cela peut être utilisé dans une condition : ${if:${merged}?...:...}
-    - ${format_number} : numéro indenté avec un séparateur (évaluation de l'option buflist.format.number)
-    - ${number} : numéro indenté, par exemple " 1" s'il y a entre 10 et 99 tampons ; pour les tampons mélangés, cette variable est définie avec le numéro pour le premier tampon et des espaces pour les tampons suivants avec le même numéro
-    - ${number2} : numéro indenté, par exemple " 1" s'il y a entre 10 et 99 tampons
-    - ${number_displayed} : "1" si le numéro est affiché, sinon "0"
-    - ${indent} : indentation pour le nom (les tampons de canaux ou privés sont indentés) (évaluation de l'option buflist.format.indent)
-    - ${format_nick_prefix} : le préfixe du pseudo en couleur pour un canal (évaluation de l'option buflist.format.nick_prefix)
-    - ${color_nick_prefix} : la couleur du préfixe du pseudo pour un canal (défini seulement si l'option buflist.look.nick_prefix est activée)
-    - ${nick_prefix} : le préfixe du pseudo pour un canal (défini seulement si l'option buflist.look.nick_prefix est activée)
-    - ${format_name} : le nom formaté (évaluation de l'option buflist.format.name)
-    - ${name} : le nom court (si défini), sinon le nom
-    - ${color_hotlist} : la couleur qui dépend du niveau de hotlist le plus élevé pour le tampon (évaluation de l'option buflist.format.hotlist_xxx où xxx est le niveau)
-    - ${format_hotlist} : la hotlist formatée (évaluation de l'option buflist.format.hotlist)
-    - ${hotlist} : la hotlist brute
-    - ${hotlist_priority} : "none", "low", "message", "private" ou "highlight"
-    - ${hotlist_priority_number} : -1 = none, 0 = low, 1 = message, 2 = private, 3 = highlight
-    - ${format_lag} : le lag pour un tampon de serveur IRC, vide s'il n'y a pas de lag (évaluation de l'option buflist.format.lag)
-    - ${format_tls_version}: indicateur de la version de TLS pour le serveur courant, vide pour les canaux (évaluation de l'option buflist.format.tls_version)
-----
-// end::buflist_commands[]
-
-// tag::charset_commands[]
-[[command_charset_charset]]
-* `+charset+`: changer le charset pour le tampon courant
-
-----
-/charset  decode|encode <charset>
-          reset
-
- decode : changer le charset de décodage
- encode : changer le charset d'encodage
-charset : nouveau charset pour le tampon courant
-  reset : réinitialiser les charsets pour le tampon courant
-----
-// end::charset_commands[]
-
-// tag::exec_commands[]
-[[command_exec_exec]]
-* `+exec+`: exécuter des commandes externes
-
-----
-/exec  -list
-       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <nom>] [-l|-o|-oc|-n|-nf] [-oerr] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] |-flush|-noflush] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <délai>] [-name <nom>] [-pipe <commande>] [-hsignal <nom>] <commande>
-       -in <id> <texte>
-       -inclose <id> [<texte>]
-       -signal <id> <signal>
-       -kill <id>
-       -killall
-       -set <id> <propriété> <valeur>
-       -del <id>|-all [<id>...]
-
-    -list : lister les commandes
-      -sh : utiliser le shell pour exécuter la commande, plusieurs commandes peuvent être enchaînées avec des pipes (ATTENTION : utilisez cette option SEULEMENT si tous les paramètres sont fiables, voir l'option -nosh)
-    -nosh : ne pas utiliser le shell pour exécuter la commande (requis si la commande a des données non fiables, par exemple le contenu d'un message d'un autre utilisateur) (par défaut)
-      -bg : lancer le processus en tâche de fond : ne pas afficher la sortie ni le code retour (non compatible avec les options -o/-oc/-n/-nf/-pipe/-hsignal)
-    -nobg : capturer la sortie du processus et afficher le code retour (par défaut)
-   -stdin : créer un tuyau pour envoyer des données sur l'entrée standard du processus (avec /exec -in/-inclose)
- -nostdin : ne pas créer de tuyau pour l'entrée standard (par défaut)
-  -buffer : afficher/envoyer la sortie de la commande sur ce tampon (si le tampon n'est pas trouvé, un nouveau tampon avec le nom "exec.exec.xxx" est créé)
-       -l : afficher localement la sortie de la commande sur le tampon (par défaut)
-       -o : envoyer la sortie de la commande au tampon sans exécuter les commandes (non compatible avec les options -bg/-pipe/-hsignal)
-      -oc : envoyer la sortie de la commande au tampon et exécuter les commandes (lignes commençant par "/" ou un caractère personnalisé de commande) (non compatible avec les options -bg/-pipe/-hsignal)
-       -n : afficher la sortie de la commande dans un nouveau tampon (non compatible avec les options -bg/-pipe/-hsignal)
-      -nf : afficher la sortie de la commande dans un nouveau tampon avec contenu libre (pas de coupure des mots, pas de limite sur le nombre de lignes) (non compatible avec les options -bg/-pipe/-hsignal)
-    -oerr : envoyer aussi stderr (sortie d'erreur) au tampon (peut être utilisé seulement avec les options -o et -oc)
-      -cl : effacer le nouveau tampon avant d'afficher la sortie
-    -nocl : ajouter au nouveau tampon sans effacer (par défaut)
-      -sw : basculer vers le tampon de sortie (par défaut)
-    -nosw : ne pas basculer vers le tampon de sortie
-      -ln : afficher les numéros de ligne (par défaut dans un nouveau tampon seulement)
-    -noln : ne pas afficher les numéros de ligne
-   -flush : afficher la sortie de la commande en temps réel (par défaut)
- -noflush : afficher la sortie de la commande une fois qu'elle est terminée
-   -color : action sur les couleurs ANSI dans la sortie :
-               ansi : garder les codes ANSI tels quels
-               auto : convertir les couleurs ANSI en couleurs WeeChat/IRC (par défaut)
-                irc : convertir les couleurs ANSI en couleurs IRC
-            weechat : convertir les couleurs ANSI en couleurs WeeChat
-              strip : supprimer les couleurs ANSI
-      -rc : afficher le code retour (par défaut)
-    -norc : ne pas afficher le code retour
- -timeout : définir un délai maximum pour la commande (en secondes)
-    -name : définir un nom pour la commande (pour la nommer plus tard avec /exec)
-    -pipe : envoyer la sortie vers une commande WeeChat/extension (ligne par ligne) ; s'il y a des espaces dans la commande/paramètres, entourez les de guillemets ; la variable $line est remplacée par la ligne (par défaut la ligne est ajoutée après la commande, séparée par un espace) (non compatible avec les options -bg/-o/-oc/-n/-nf)
- -hsignal : envoyer la sortie sous forme de hsignal (pour être utilisé par exemple dans un trigger) (non compatible avec les options -bg/-o/-oc/-n/-nf)
- commande : la commande à exécuter ; si elle commence par "url:", le shell est désactivé et le contenu de l'URL est téléchargé et envoyé comme sortie
-       id : identifiant de commande : soit le numéro ou le nom (si défini avec "-name xxx")
-      -in : envoyer le texte sur l'entrée standard du processus
- -inclose : identique à -in, mais l'entrée standard est fermée après (et le texte est facultatif : sans texte, l'entrée standard est juste fermée)
-  -signal : envoyer un signal au processus ; le signal peut être un entier ou l'un de ces noms : hup, int, quit, kill, term, usr1, usr2
-    -kill : alias de "-signal <id> kill"
- -killall : tuer tous les processus
-     -set : définir une propriété du hook (voir la fonction hook_set dans l'API de référence extension)
-propriété : propriété du hook
-   valeur : nouvelle valeur pour la propriété du hook
-     -del : supprimer la commande terminée
-     -all : supprimer toutes les commandes terminées
-
-Les options par défaut peuvent être définies dans l'option exec.command.default_options.
-
-Exemples :
-  /exec -n ls -l /tmp
-  /exec -sh -n ps xu | grep weechat
-  /exec -n -norc url:https://pastebin.com/raw.php?i=xxxxxxxx
-  /exec -nf -noln links -dump https://weechat.org/files/doc/devel/weechat_user.en.html
-  /exec -o uptime
-  /exec -pipe "/print Durée de fonctionnement de la machine :" uptime
-  /exec -n tail -f /var/log/messages
-  /exec -kill 0
-----
-// end::exec_commands[]
-
-// tag::fifo_commands[]
-[[command_fifo_fifo]]
-* `+fifo+`: configuration de l'extension fifo
-
-----
-/fifo  enable|disable|toggle
-
- enable : activer le tube FIFO
-disable : désactiver le tube FIFO
- toggle : activer/désactiver le tube FIFO
-
-Le tube FIFO est utilisé comme contrôle à distance de WeeChat : vous pouvez envoyer des commandes ou du texte au tube FIFO depuis votre shell.
-Par défaut le tube FIFO se nomme weechat_fifo_xxx (où xxx est l'id du processus WeeChat) et situé dans le répertoire "runtime" de WeeChat (voir /debug dirs).
-
-Le format attendu est l'un des suivants :
-  plugin.buffer *texte ou commande ici
-  *texte ou commande ici
-
-Par exemple pour changer votre pseudo sur libera :
-  echo 'irc.server.libera */nick autrepseudo' >/run/user/1000/weechat/weechat_fifo_12345
-
-Merci de lire le guide utilisateur pour plus d'information et des exemples.
-
-Exemples :
-  /fifo toggle
-----
-// end::fifo_commands[]
-
-// tag::fset_commands[]
-[[command_fset_fset]]
-* `+fset+`: définir rapidement des options WeeChat et des extensions
-
-----
-/fset  -bar
-       -refresh
-       -up|-down [<nombre>]
-       -left|-right [<pourcentage>]
-       -go <ligne>|end
-       -toggle
-       -add [<valeur>]
-       -reset
-       -unset
-       -set
-       -setnew
-       -append
-       -mark
-       -format
-       -export [-help|-nohelp] <fichier>
-       <filtre>
-
-       -bar : ajouter la barre d'aide
-   -refresh : rafraîchir la liste des options, puis l'écran entier (commande : /window refresh)
-        -up : déplacer la ligne sélectionnée de "nombre" lignes vers le haut
-      -down : déplacer la ligne sélectionnée de "nombre" lignes vers le bas
-      -left : faire défier le tampon fset de "pourcentage" de largeur vers la gauche
-     -right : faire défier le tampon fset de "pourcentage" de largeur vers la droite
-        -go : sélectionner une ligne par numéro, la première ligne est 0 ("end" pour sélectionner la dernière ligne)
-    -toggle : basculer la valeur booléenne
-       -add : ajouter "valeur" (qui peut être un nombre négatif) pour les entiers et couleurs, définir/ajouter à la valeur pour les autres types (définir pour une valeur négative, ajouter pour un nombre positif)
-     -reset : réinitialiser la valeur de l'option
-     -unset : supprimer/réinitialiser l'option
-       -set : ajouter la commande /set dans l'entrée pour éditer la valeur de l'option (déplacer le curseur au début de la valeur)
-    -setnew : ajouter la commande /set dans l'entrée pour éditer une nouvelle valeur pour l'option
-    -append : ajouter la commande /set pour ajouter quelque chose dans la valeur de l'option (déplacer le curseur à la fin de la valeur)
-      -mark : marquer/démarquer
-    -format : basculer vers le prochain format disponible
-    -export : exporter les options et valeurs affichées dans un fichier (chaque ligne a le format : "/set nom valeur" ou "/unset nom")
-      -help : forcer l'écriture de l'aide sur les options dans le fichier exporté (voir /help fset.look.export_help_default)
-    -nohelp : ne pas écrire l'aide sur les options dans le fichier exporté (voir /help fset.look.export_help_default)
-     filtre : définir un nouveau filtre pour voir seulement les options correspondantes (ce filtre peut aussi être utilisé en entrée du tampon fset) ; les formats autorisés sont :
-               *       afficher toutes les options (pas de filtre)
-               xxx     afficher seulement les options avec "xxx" dans le nom
-               f:xxx   afficher seulement le fichier de configuration "xxx"
-               t:xxx   afficher seulement le type "xxx" (bool/int/str/col)
-               d       afficher seulement les options changées
-               d:xxx   afficher seulement les options changées avec "xxx" dans le nom
-               d=xxx   afficher seulement les options changées avec "xxx" dans la valeur
-               d==xxx  afficher seulement les options changées avec la valeur exacte "xxx"
-               h=xxx   afficher seulement les options avec "xxx" dans la description (traduite)
-               he=xxx  afficher seulement les options avec "xxx" dans la description (en Anglais)
-               =xxx    afficher seulement les options avec "xxx" dans la valeur
-               ==xxx   afficher seulement les options avec la valeur exacte "xxx"
-               c:xxx   afficher seulement les options qui correspondent à la condition évaluée "xxx", en utilisant les variables suivantes : file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
-
-Les lignes avec des options sont affichées en utilisant l'évaluation de chaîne (voir /help eval pour le format), avec ces options :
-  - fset.format.option1 : premier format pour une option
-  - fset.format.option2 : second format pour une option
-
-Les variables suivantes peuvent être utilisées dans ces options :
-  - données de l'option, avec couleur et alignées avec des espaces sur la droite :
-    - ${file} : fichier de configuration (par exemple "weechat" ou "irc")
-    - ${section} : section
-    - ${option} : nom de l'option
-    - ${name} : nom complet de l'option (fichier.section.option)
-    - ${parent_name} : nom de l'option parente
-    - ${type} : type de l'option (traduit)
-    - ${type_en} : type de l'option (en Anglais)
-    - ${type_short} : type court de l'option (bool/int/str/col)
-    - ${type_tiny} : type très court de l'option (b/i/s/c)
-    - ${default_value} : valeur par défaut de l'option
-    - ${default_value_undef} : "1" si la valeur par défaut est null, sinon "0"
-    - ${value} : valeur de l'option
-    - ${value_undef} : "1" si la valer est null, sinon "0"
-    - ${value_changed} : "1" si la valeur est différente de la valeur par défaut, sinon "0"
-    - ${value2} : valeur de l'option, avec la valeur héritée si null
-    - ${parent_value} : valeur de l'option parente
-    - ${min} : valeur minimale
-    - ${max} : valeur maximale
-    - ${description} : description de l'option (traduite)
-    - ${description2} : description de l'option (traduite), "(pas de description)" s'il n'y a pas de description
-    - ${description_en} : description de l'option (en Anglais)
-    - ${description_en2} : description de l'option (en Anglais), "(no description)" s'il n'y a pas de description
-    - ${string_values} : valeurs chaîne autorisées pour définir une option de type entier utilisant des chaînes
-    - ${marked} : "1" si l'option est marquée, sinon "0"
-    - ${index} : index de l'option dans la liste
-  - données de l'option, avec couleur mais sans espaces :
-    - mêmes noms préfixés par un underscore, par exemple : ${_name}, ${_type}, ...
-  - données de l'option, format brut (par de couleurs/espaces) :
-    - mêmes noms préfixés par deux underscores, par exemple : ${__name}, ${__type}, ...
-  - données de l'option, seulement des espaces :
-    - mêmes noms préfixés par "empty_", par exemple : ${empty_name}, ${empty_type}
-  - autres données :
-    - ${selected_line} : "1" si la ligne est sélectionnée, sinon "0"
-    - ${newline} : insérer une nouvelle ligne à cet endroit, pour afficher l'option sur plusieurs lignes
-
-Touches et entrées pour le déplacement dans le tampon fset :
-  haut                      se déplacer d'une ligne vers le haut
-  bas                       se déplacer d'une ligne vers le bas
-  pgup                      se déplacer d'une page vers le haut
-  pgdn                      se déplacer d'une page vers le bas
-  alt-home          <<      se déplacer à la première ligne
-  alt-end           >>      se déplacer à la dernière ligne
-  F11               <       faire défiler horizontalement vers la gauche
-  F12               >       faire défiler horizontalement vers la droite
-
-Touches et entrées pour définir les options sur le tampon fset :
-  alt+espace        t       basculer la valeur booléenne
-  alt+'-'           -       soustraire 1 de la valeur pour un entier/couleur, définir la valeur pour les autres types
-  alt+'+'           +       ajouter 1 à la valeur pour un entier/couleur, ajouter à la valeur pour les autres types
-  alt+f, alt+r      r       réinitialiser la valeur
-  alt+f, alt+u      u       supprimer/réinitialiser la valeur
-  alt+entrée        s       définir la valeur
-  alt+f, alt+n      n       définir une nouvelle valeur
-  alt+f, alt+a      a       ajouter à la valeur
-  alt+','           ,       marquer/démarquer l'option
-  shift+haut                se déplacer d'une ligne vers le haut et marquer/démarquer l'option
-  shift+bas                 marquer/démarquer l'option et se déplacer d'une ligne vers le bas
-                    m:xxx   marquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir les filtres ci-dessus)
-                    u:xxx   démarquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir les filtres ci-dessus)
-
-Autres touches et entrées sur le tampon fset :
-  ctrl+l                    rafraîchir les options et l'écran entier (commande : /fset -refresh)
-                    $       rafraîchir les options (garder les options marquées)
-                    $$      rafraîchir les options (démarquer toutes les options)
-  alt+p             p       activer/désactiver la description des options d'extensions (plugins.desc.*)
-  alt+v             v       activer/désactiver la barre d'aide
-                    s:x,y   trier les options par les champs x,y (voir /help fset.look.sort)
-                    s:      réinitialiser le tri à sa valeur par défaut (voir /help fset.look.sort)
-                    w:xxx   exporter les options dans le fichier "xxx"
-                    w-:xxx  exporter les options dans le fichier "xxx" sans aide
-                    w+:xxx  exporter les options dans le fichier "xxx" avec aide
-  ctrl+x            x       basculer le format utilisé pour afficher les options
-                    q       fermer le tampon fset
-
-Actions de la souris sur le tampon fset :
-  roulette haut/bas                     se déplacer vers le haut/bas
-  bouton gauche                         se déplacer à cette ligne
-  bouton droit                          basculer le booléen (on/off) ou éditer la valeur de l'option
-  bouton droit + glisser gauche/droite  incrémenter/décrémenter la valeur pour un entier/couleur, définir/ajouter à la valeur pour les autres types
-  bouton droit + glisser haut/bas       marquer/démarquer plusieurs options
-
-Note : si l'entrée comporte un ou plusieurs espaces en tête, le texte suivant est interprété comme un filtre, sans les espaces. Par exemple " q" cherche toutes les options avec "q" dans le nom, tandis que "q" ferme le tampon fset.
-
-Exemples :
-  afficher les options IRC changées :
-    /fset d:irc.*
-  afficher les options avec "nicklist" dans le nom :
-    /fset nicklist
-  afficher les valeurs qui contiennent "red" :
-    /fset =red
-  afficher les valeurs qui sont exactement "red" :
-    /fset ==red
-  afficher toutes les options de type "entier" dans l'extension irc :
-    /fset c:${file} == irc && ${type_en} == integer
-----
-// end::fset_commands[]
-
-// tag::guile_commands[]
-[[command_guile_guile]]
-* `+guile+`: lister/charger/décharger des scripts
-
-----
-/guile  list|listfull [<nom>]
-        load [-q] <fichier>
-        autoload
-        reload|unload [-q] [<nom>]
-        eval [-o|-oc] <code>
-        version
-
-    list : lister les scripts chargés
-listfull : lister les scripts chargés (verbeux)
-    load : charger un script
-autoload : charger tous les scripts dans le répertoire "autoload"
-  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
-  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
- fichier : script (fichier) à charger
-      -q : mode silencieux : ne pas afficher de messages
-     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
-    eval : évaluer le code source et afficher le résultat sur le tampon courant
-      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
-     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
-    code : le code source à évaluer
- version : afficher la version de l'interpréteur utilisé
-
-Sans paramètre, cette commande liste les scripts chargés.
-----
-// end::guile_commands[]
-
-// tag::javascript_commands[]
-[[command_javascript_javascript]]
-* `+javascript+`: lister/charger/décharger des scripts
-
-----
-/javascript  list|listfull [<nom>]
-             load [-q] <fichier>
-             autoload
-             reload|unload [-q] [<nom>]
-             eval [-o|-oc] <code>
-             version
-
-    list : lister les scripts chargés
-listfull : lister les scripts chargés (verbeux)
-    load : charger un script
-autoload : charger tous les scripts dans le répertoire "autoload"
-  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
-  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
- fichier : script (fichier) à charger
-      -q : mode silencieux : ne pas afficher de messages
-     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
-    eval : évaluer le code source et afficher le résultat sur le tampon courant
-      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
-     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
-    code : le code source à évaluer
- version : afficher la version de l'interpréteur utilisé
-
-Sans paramètre, cette commande liste les scripts chargés.
-----
-// end::javascript_commands[]
-
-// tag::logger_commands[]
-[[command_logger_logger]]
-* `+logger+`: configuration de l'extension logger
-
-----
-/logger  list
-         set <niveau>
-         flush
-         disable
-
-   list : afficher le statut d'enregistrement pour les tampons ouverts
-    set : définir le niveau d'enregistrement pour le tampon courant
- niveau : niveau pour les messages à enregistrer (0 = pas d'enregistrement, 1 = quelques messages (les plus importants) .. 9 = tous les messages)
-  flush : écrire tous les fichiers de log maintenant
-disable : désactiver l'enregistrement pour le tampon courant (définir le niveau à 0)
-
-Les options "logger.level.*" et "logger.mask.*" peuvent être utilisées pour définir le niveau ou le masque de nom de fichier pour un tampon, ou plusieurs tampons commençant par un nom.
-
-Niveaux de log utilisés par l'extension IRC :
-  1 : message d'utilisateur (canal et privé), notice (serveur et canal)
-  2 : changement de pseudo
-  3 : message du serveur
-  4 : join/part/quit
-  9 : tous les autres messages
-
-Exemples :
-  définir le niveau d'enregistrement à 5 pour le tampon courant :
-    /logger set 5
-  désactiver l'enregistrement pour le tampon courant :
-    /logger disable
-  définir le niveau à 3 pour les tampons IRC :
-    /set logger.level.irc 3
-  désactiver l'enregistrement pour le tampon principal de WeeChat :
-    /set logger.level.core.weechat 0
-  utiliser un répertoire par serveur IRC et un fichier par canal dedans :
-    /set logger.mask.irc "$server/$channel.weechatlog"
-----
-// end::logger_commands[]
-
-// tag::lua_commands[]
-[[command_lua_lua]]
-* `+lua+`: lister/charger/décharger des scripts
-
-----
-/lua  list|listfull [<nom>]
-      load [-q] <fichier>
-      autoload
-      reload|unload [-q] [<nom>]
-      eval [-o|-oc] <code>
-      version
-
-    list : lister les scripts chargés
-listfull : lister les scripts chargés (verbeux)
-    load : charger un script
-autoload : charger tous les scripts dans le répertoire "autoload"
-  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
-  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
- fichier : script (fichier) à charger
-      -q : mode silencieux : ne pas afficher de messages
-     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
-    eval : évaluer le code source et afficher le résultat sur le tampon courant
-      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
-     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
-    code : le code source à évaluer
- version : afficher la version de l'interpréteur utilisé
-
-Sans paramètre, cette commande liste les scripts chargés.
-----
-// end::lua_commands[]
-
 // tag::xfer_commands[]
 [[command_xfer_me]]
 * `+me+`: envoyer une action CTCP à l'hôte distant
@@ -2879,430 +3306,3 @@ listfull : lister les xfer (verbeux)
 Sans paramètre, cette commande ouvre le tampon avec la liste des xfer.
 ----
 // end::xfer_commands[]
-
-// tag::perl_commands[]
-[[command_perl_perl]]
-* `+perl+`: lister/charger/décharger des scripts
-
-----
-/perl  list|listfull [<nom>]
-       load [-q] <fichier>
-       autoload
-       reload|unload [-q] [<nom>]
-       eval [-o|-oc] <code>
-       version
-
-    list : lister les scripts chargés
-listfull : lister les scripts chargés (verbeux)
-    load : charger un script
-autoload : charger tous les scripts dans le répertoire "autoload"
-  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
-  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
- fichier : script (fichier) à charger
-      -q : mode silencieux : ne pas afficher de messages
-     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
-    eval : évaluer le code source et afficher le résultat sur le tampon courant
-      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
-     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
-    code : le code source à évaluer
- version : afficher la version de l'interpréteur utilisé
-
-Sans paramètre, cette commande liste les scripts chargés.
-----
-// end::perl_commands[]
-
-// tag::php_commands[]
-[[command_php_php]]
-* `+php+`: lister/charger/décharger des scripts
-
-----
-/php  list|listfull [<nom>]
-      load [-q] <fichier>
-      autoload
-      reload|unload [-q] [<nom>]
-      eval [-o|-oc] <code>
-      version
-
-    list : lister les scripts chargés
-listfull : lister les scripts chargés (verbeux)
-    load : charger un script
-autoload : charger tous les scripts dans le répertoire "autoload"
-  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
-  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
- fichier : script (fichier) à charger
-      -q : mode silencieux : ne pas afficher de messages
-     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
-    eval : évaluer le code source et afficher le résultat sur le tampon courant
-      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
-     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
-    code : le code source à évaluer
- version : afficher la version de l'interpréteur utilisé
-
-Sans paramètre, cette commande liste les scripts chargés.
-----
-// end::php_commands[]
-
-// tag::python_commands[]
-[[command_python_python]]
-* `+python+`: lister/charger/décharger des scripts
-
-----
-/python  list|listfull [<nom>]
-         load [-q] <fichier>
-         autoload
-         reload|unload [-q] [<nom>]
-         eval [-o|-oc] <code>
-         version
-
-    list : lister les scripts chargés
-listfull : lister les scripts chargés (verbeux)
-    load : charger un script
-autoload : charger tous les scripts dans le répertoire "autoload"
-  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
-  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
- fichier : script (fichier) à charger
-      -q : mode silencieux : ne pas afficher de messages
-     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
-    eval : évaluer le code source et afficher le résultat sur le tampon courant
-      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
-     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
-    code : le code source à évaluer
- version : afficher la version de l'interpréteur utilisé
-
-Sans paramètre, cette commande liste les scripts chargés.
-----
-// end::python_commands[]
-
-// tag::relay_commands[]
-[[command_relay_relay]]
-* `+relay+`: contrôle du relai
-
-----
-/relay  list|listfull|listrelay
-        add <nom> <port>|<chemin>
-        del|start|restart|stop <nom>
-        raw
-        sslcertkey
-
-      list : lister les clients pour le relai
-  listfull : lister les clients pour le relai (verbeux)
- listrelay : lister les relais (nom et port)
-       add : ajouter un relai (écouter sur un port)
-       del : supprimer un relai (les clients restent connectés)
-     start : écouter sur le port
-   restart : fermer le socket serveur et écouter à nouveau sur le port (les clients restent connectés)
-      stop : fermer le socket serveur (les clients restent connectés)
-       nom : nom du relai (voir le format ci-dessous)
-      port : port utilisé pour le relai
-    chemin : chemin utilisé pour le relai (pour un socket de domaine UNIX seulement) ; le chemin est évalué (voir la fonction string_eval_path_home dans la référence API extension)
-       raw : ouvrir le tampon avec les données brutes Relay
-sslcertkey : définir le certificat/clé SSL en utilisant le chemin de l'option relay.network.ssl_cert_key
-
-Le nom du relai est : [ipv4.][ipv6.][ssl.]<protocole.nom> ou unix[.ssl].<protocole.nom>
-         ipv4 : forcer l'utilisation d'IPv4
-         ipv6 : forcer l'utilisation d'IPv6
-          ssl : activer SSL
-         unix : utiliser un socket de domaine UNIX
-protocole.nom : protocole et nom à relayer :
-                  - protocole "irc" : le nom est le serveur à partager (optionnel, si non donné, le nom de serveur doit être envoyé par le client dans la commande "PASS", avec le format : "PASS serveur:motdepasse")
-                  - protocole "weechat" (le nom n'est pas utilisé)
-
-Le protocole "irc" permet à n'importe quel client IRC (incluant WeeChat lui-même) de se connecter sur le port.
-Le protocole "weechat" permet à une interface distante de se connecter sur le port, voir la liste ici : https://weechat.org/about/interfaces/
-
-Sans paramètre, cette commande ouvre le tampon avec la liste des clients pour le relai.
-
-Exemples :
-  proxy irc, pour le serveur "libera" :
-    /relay add irc.libera 8000
-  proxy irc, pour le serveur "libera", avec SSL :
-    /relay add ssl.irc.libera 8001
-  proxy irc, pour tous les serveurs (le client choisira), avec SSL :
-    /relay add ssl.irc 8002
-  protocole weechat :
-    /relay add weechat 9000
-  protocole weechat avec SSL :
-    /relay add ssl.weechat 9001
-  protocole weechat avec SSL, en utilisant seulement IPv4 :
-    /relay add ipv4.ssl.weechat 9001
-  protocole weechat avec SSL, en utilisant seulement IPv6 :
-    /relay add ipv6.ssl.weechat 9001
-  protocole weechat avec SSL, en utilisant IPv4 + IPv6 :
-    /relay add ipv4.ipv6.ssl.weechat 9001
-  protocole weechat avec un socket de domaine UNIX :
-    /relay add unix.weechat ${weechat_runtime_dir}/relay_socket
-----
-// end::relay_commands[]
-
-// tag::ruby_commands[]
-[[command_ruby_ruby]]
-* `+ruby+`: lister/charger/décharger des scripts
-
-----
-/ruby  list|listfull [<nom>]
-       load [-q] <fichier>
-       autoload
-       reload|unload [-q] [<nom>]
-       eval [-o|-oc] <code>
-       version
-
-    list : lister les scripts chargés
-listfull : lister les scripts chargés (verbeux)
-    load : charger un script
-autoload : charger tous les scripts dans le répertoire "autoload"
-  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
-  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
- fichier : script (fichier) à charger
-      -q : mode silencieux : ne pas afficher de messages
-     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
-    eval : évaluer le code source et afficher le résultat sur le tampon courant
-      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
-     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
-    code : le code source à évaluer
- version : afficher la version de l'interpréteur utilisé
-
-Sans paramètre, cette commande liste les scripts chargés.
-----
-// end::ruby_commands[]
-
-// tag::script_commands[]
-[[command_script_script]]
-* `+script+`: Gestionnaire de scripts WeeChat
-
-----
-/script  list [-o|-ol|-i|-il]
-         search <texte>
-         show <script>
-         load|unload|reload <script> [<script>...]
-         autoload|noautoload|toggleautoload <script> [<script>...]
-         install|remove|installremove|hold [-q] <script> [<script>...]
-         upgrade
-         update
-
-          list : lister les scripts chargés (tous les langages)
-            -o : envoyer la liste des scripts chargés au tampon (chaîne en anglais)
-           -ol : envoyer la liste des scripts chargés au tampon (chaîne traduite)
-            -i : copier la liste des scripts chargés dans la ligne de commande (pour envoi au tampon) (chaîne en anglais)
-           -il : copier la liste des scripts chargés dans la ligne de commande (pour envoi au tampon) (chaîne traduite)
-        search : chercher des scripts par étiquettes, langage (python, perl, ...), extension de fichier (py, pl, ...) ou texte ; le résultat est affiché sur le tampon des scripts
-          show : afficher des infos détaillées sur le script
-          load : charger un ou plusieurs scripts
-        unload : décharger un ou plusieurs scripts
-        reload : recharger un ou plusieurs scripts
-      autoload : charger automatiquement un ou plusieurs scripts
-    noautoload : ne pas charger automatiquement un ou plusieurs scripts
-toggleautoload : activer/désactiver le chargement automatique
-       install : installer/mettre à jour un ou plusieurs scripts
-        remove : supprimer un ou plusieurs scripts
- installremove : installer ou supprimer un ou plusieurs scripts, selon l'état courant
-          hold : figer/défiger un ou plusieurs scripts (un script figé ne sera plus mis à jour et ne peut pas être supprimé)
-            -q : mode silencieux : ne pas afficher de messages
-       upgrade : mettre à jour les scripts obsolètes (avec nouvelle version disponible)
-        update : mettre à jour le cache local des scripts
-
-Sans paramètre, cette commande ouvre un tampon avec la liste des scripts.
-
-Sur le tampon des scripts, les statuts pour chaque script sont :
-  * i a H r N
-  | | | | | |
-  | | | | | obsolète (nouvelle version disponible)
-  | | | | chargé
-  | | | figé
-  | | chargé auto
-  | installé
-  script populaire
-
-Dans la sortie de /script list, les statuts pour chaque script sont :
-  * ? i a H N
-  | | | | | |
-  | | | | | obsolète (nouvelle version disponible)
-  | | | | figé
-  | | | chargé auto
-  | | installé
-  | script inconnu (ne peut pas être téléchargé/mis à jour)
-  script populaire
-
-Les touches sur le tampon des scripts :
-  alt+i  installer le script
-  alt+r  supprimer le script
-  alt+l  charger le script
-  alt+L  recharger le script
-  alt+u  décharger le script
-  alt+A  chargement automatique du script
-  alt+h  (dé)figer le script
-  alt+v  voir le script
-
-Entrée autorisée sur le tampon des scripts :
-  i/r/l/L/u/A/h/v  action sur le script (identique aux touches ci-dessus)
-  q                fermer le tampon
-  $                rafraîchir le tampon
-  s:x,y            trier le tampon en utilisant les clés x et y (voir /help script.look.sort)
-  s:               réinitialiser le tri (utiliser le tri par défaut)
-  word(s)          filtrer les scripts : recherche du/des mot(s) dans les scripts (description, étiquettes, ...)
-  *                supprimer le filtre
-
-Actions de la souris sur le tampon des scripts :
-  roulette       faire défiler la liste
-  bouton gauche  sélectionner le script
-  bouton droit   installer/supprimer le script
-
-Exemples :
-  /script search url
-  /script install go.py urlserver.py
-  /script remove go.py
-  /script hold urlserver.py
-  /script reload urlserver
-  /script upgrade
-----
-// end::script_commands[]
-
-// tag::spell_commands[]
-[[command_spell_spell]]
-* `+spell+`: configuration de l'extension spell
-
-----
-/spell  enable|disable|toggle
-        listdict
-        setdict -|<dict>[,<dict>...]
-        deldict
-        addword [<dict>] <mot>
-
-  enable : activer le vérificateur d'orthographe
- disable : désactiver le vérificateur d'orthographe
-  toggle : activer/désactiver le vérificateur d'orthographe
-listdict : afficher les dictionnaires installés
- setdict : définir le dictionnaire pour le tampon courant (plusieurs dictionnaires peuvent être séparés par une virgule, la valeur spéciale "-" désactive la vérification orthographique sur le tampon courant)
- deldict : supprimer le dictionnaire utilisé sur le tampon courant
- addword : ajouter un mot dans le dictionnaire personnel
-
-Les lignes d'entrée commençant par '/' ne sont pas vérifiées, sauf pour certaines commandes (voir /set spell.check.commands).
-
-Pour activer le vérificateur d'orthographe sur tous les tampons, utilisez l'option "default_dict", par exemple :
-  /set spell.check.default_dict "en"
-  /spell enable
-
-Pour afficher une liste des suggestions dans une barre, utilisez l'objet "spell_suggest".
-
-La touche par défaut pour activer/désactiver le vérificateur d'orthographe est alt-s.
-----
-// end::spell_commands[]
-
-// tag::tcl_commands[]
-[[command_tcl_tcl]]
-* `+tcl+`: lister/charger/décharger des scripts
-
-----
-/tcl  list|listfull [<nom>]
-      load [-q] <fichier>
-      autoload
-      reload|unload [-q] [<nom>]
-      eval [-o|-oc] <code>
-      version
-
-    list : lister les scripts chargés
-listfull : lister les scripts chargés (verbeux)
-    load : charger un script
-autoload : charger tous les scripts dans le répertoire "autoload"
-  reload : recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
-  unload : décharger un script (si pas de nom donné, décharger tous les scripts)
- fichier : script (fichier) à charger
-      -q : mode silencieux : ne pas afficher de messages
-     nom : nom de script (nom utilisé dans l'appel à la fonction "register")
-    eval : évaluer le code source et afficher le résultat sur le tampon courant
-      -o : envoyer le résultat de l'évaluation au tampon sans exécuter les commandes
-     -oc : envoyer le résultat de l'évaluation au tampon et exécuter les commandes
-    code : le code source à évaluer
- version : afficher la version de l'interpréteur utilisé
-
-Sans paramètre, cette commande liste les scripts chargés.
-----
-// end::tcl_commands[]
-
-// tag::trigger_commands[]
-[[command_trigger_trigger]]
-* `+trigger+`: gestion des triggers, le couteau Suisse pour WeeChat
-
-----
-/trigger  list|listfull|listdefault
-          add|addoff|addreplace <nom> <hook> ["<paramètres>" ["<conditions>" ["<regex>" ["<commande>" ["<code_retour>" ["action_post"]]]]]]
-          addinput [<hook>]
-          input|output|recreate <nom>
-          set <nom> <option> <valeur>
-          rename|copy <nom> <nouveau_nom>
-          enable|disable|toggle [<nom>|-all [<nom>...]]
-          restart <nom>|-all [<nom>...]
-          show <nom>
-          del <nom>|-all [<nom>...]
-          restore <nom> [<nom>...]
-          default -yes
-          monitor [<filtre>]
-
-       list : lister les triggers (sans paramètre, cette liste est affichée)
-   listfull : lister les triggers avec des informations détaillées pour chaque trigger
-listdefault : lister les triggers par défaut
-        add : ajouter un trigger
-     addoff : ajouter un trigger (désactivé)
- addreplace : ajouter ou remplacer un trigger existant
-        nom : nom du trigger
-       hook : signal, hsignal, modifier, line, print, command, command_run, timer, config, focus, info, info_hashtable
- paramètres : paramètres pour le hook, dépendant du hook (séparés par des points-virgules) :
-              signal : nom(s) de signal (obligatoire)
-              hsignal : nom(s) de signal (obligatoire)
-              modifier : nom(s) de modificateur (obligatoire)
-              line : type de tampon ("formatted", "free" ou "*"), liste de masques de tampons, étiquettes
-              print : tampon, étiquettes, message, suppression des couleurs (0/1)
-              command : commande (obligatoire), description, paramètres, description des paramètres, complétion (tous les paramètres sauf la commande sont évalués, "${tg_trigger_name}" est remplacé par le nom du trigger, voir /help eval)
-              command_run : commande(s) (obligatoire)
-              timer : intervalle (obligatoire), alignement sur la seconde, nombre max d'appels
-              config : nom(s) de l'option (obligatoire)
-              focus : nom(s) de la zone (obligatoire)
-              info : nom(s) de l'info (obligatoire)
-              info_hashtable : nom(s) de l'info (obligatoire)
- conditions : conditions évaluées pour le trigger
-      regex : une ou plusieurs expressions régulières pour remplacer des chaînes dans les variables
-   commande : commande à exécuter (plusieurs commandes peuvent être séparées par ";")
-code_retour : code retour dans la fonction de rappel (ok (par défaut), ok_eat, error)
-action_post : action à effectuer après l'exécution (none (par défaut), disable, delete)
-   addinput : définir la ligne de commande avec les paramètres par défaut pour créer un trigger
-      input : définir la ligne de commande utilisée pour créer le trigger
-     output : envoyer la commande pour créer le trigger sur le tampon
-   recreate : comme "input", avec l'option "addreplace" au lieu de "add"
-        set : définir une option dans un trigger
-     option : nom de l'option : name, hook, arguments, conditions, regex, command, return_code
-              (pour l'aide sur l'option, vous pouvez taper : /help trigger.trigger.<nom>.<option>)
-     valeur : nouvelle valeur pour l'option
-     rename : renommer un trigger
-       copy : copier un trigger
-     enable : activer un/des trigger(s) (sans paramètre : activer les triggers globalement)
-    disable : désactiver un/des trigger(s) (sans paramètre : désactiver les triggers globalement)
-     toggle : activer/désactiver un/des trigger(s) (sans paramètre : activer/désactiver les triggers globalement)
-    restart : redémarrer un/des trigger(s) (recréer les hooks)
-       show : afficher des informations détaillées sur un trigger (avec quelques statistiques)
-        del : supprimer un trigger
-       -all : effectuer l'action sur tous les triggers
-    restore : restaurer un/des trigger(s) avec les valeurs par défaut (fonctionne seulement pour les triggers par défaut)
-    default : restaurer les triggers par défaut
-    monitor : ouvrir le tampon moniteur des triggers
-     filtre : filtrer les hooks/triggers à afficher (un hook doit commencer par "@", par exemple "@signal"), plusieurs filtres peuvent être séparés par des virgules ; le caractère joker "*" est autorisé dans chaque nom de trigger
-
-Lorsqu'une fonction de rappel de trigger est appelée, les actions suivantes sont exécutées, dans cet ordre :
-  1. vérifier les conditions ; si faux, sortir
-  2. remplacer le texte en utilisant une/des expression(s)s régulière(s)s POSIX étendue(s)s (si définie(s) dans le trigger)
-  3. exécuter le(s) commande(s) (si définie(s) dans le trigger)
-  4. sortir avec le code retour (sauf pour les modificateurs, line, focus, info et info_hashtable)
-  5. effectuer l'action "post"
-
-Exemples (vous pouvez aussi regarder les triggers par défaut avec /trigger listdefault) :
-  ajouter des attributs *gras*, _souligné_ et /italique/ (seulement dans les messages d'utilisateurs) :
-    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
-  cacher la barre de pseudos sur les petits terminaux :
-    /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
-    /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
-  sauver silencieusement la configuration chaque heure :
-    /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
-  sauver silencieusement la session WeeChat à minuit (voir /help upgrade) :
-    /trigger add session_save signal day_changed "" "" "/mute /upgrade -save"
-  ouvrir le tampon moniteur des triggers et afficher seulement les modificateurs et les triggers dont le nom commence par "resize" :
-    /trigger monitor @modifier,resize*
-----
-// end::trigger_commands[]

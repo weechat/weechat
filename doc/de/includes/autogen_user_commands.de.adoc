@@ -3,6 +3,416 @@
 // DO NOT EDIT BY HAND!
 //
 
+// tag::alias_commands[]
+[[command_alias_alias]]
+* `+alias+`: auflisten, hinzufügen oder entfernen von Alternativnamen
+
+----
+/alias  list [<alias>]
+        add <alias> [<command>[;<command>...]]
+        addcompletion <completion> <alias> [<command>[;<command>...]]
+        del <alias> [<alias>...]
+        rename <alias> <new_alias>
+
+         list: listet Alternativbefehle auf (ohne Angabe von Argumenten wird diese Liste dargestellt)
+          add: fügt einen Alternativbefehl hinzu
+addcompletion: fügt einen Alternativbefehl, mit einer benutzerdefinierten Vervollständigung, hinzu
+          del: entfernt einen Alternativbefehl
+       rename: ein Alias umbenennen
+   completion: Vervollständigung für Alternativbefehl: standardmäßig wird die Vervollständigung auf den Zielbefehl angewendet
+               Hinweis: Mit der Variablen "%%command" kann eine Vervollständigung eines vorhandenen Befehls durchgeführt werden
+        alias: Name des Alternativbefehls
+      command: Name des zuzuordnenden Befehls, inklusive Argumenten (mehrere Befehle können durch Semikolon getrennt werden)
+
+Anmerkung: Im Befehl können Variablen genutzt werden, die dann durch den entsprechenden Wert ersetzt werden:
+        $n: Argument 'n' (zwischen 1 und 9)
+       $-m: Argumente von 1 bis 'm'
+       $n-: Argumente von 'n' bis zum letzten Argument
+      $n-m: Argumente von 'n' bis 'm'
+        $*: alle Argumente
+        $~: letztes Argument
+      $var: "var" ist eine lokale Variable für den jeweiligen Buffer (siehe /buffer listvar)
+            Beispiel: $nick, $channel, $server, $plugin, $name
+
+Beispiele:
+  Alternativbefehl "/split" wird anlegt um ein Fenster horizontal zu teilen:
+    /alias add split /window splith
+  Alternativbefehl "/hallo" wird angelegt um in allen Channels, außer im #weechat Channel, den Text "Hallo" auszugeben:
+    /alias add hallo /allchan -exclude=#weechat hallo
+  alias "hallo" nach "Hallo" umbenennen:
+    /alias rename hello Hello
+  Alternativbefehl "/forcejoin" wird angelegt um den IRC Befehl "forcejoin" mit einer Vervollständigung von /sajoin auszuführen:
+    /alias addcompletion %%sajoin forcejoin /quote forcejoin
+----
+// end::alias_commands[]
+
+// tag::buflist_commands[]
+[[command_buflist_buflist]]
+* `+buflist+`: Bar-Item mit der Liste von Buffern
+
+----
+/buflist  enable|disable|toggle
+          bar
+          refresh
+
+ enable: buflist aktivieren
+disable: buflist deaktivieren
+ toggle: buflist umschalten
+    bar: fügt eine "buflist" Bar hinzu
+refresh: erzwingt eine Aktualisierung der Bar-Item (buflist, buflist2 und buflist3)
+
+Jede Zeile die einen Buffer anzeigt wird mittels Zeichenketten-Evaluation dargestellt (siehe /help eval für das Format), dazu werden folgende Optionen genutzt:
+  - buflist.look.display_conditions: Bedingungen um einen Buffer in der Liste darzustellen
+  - buflist.format.buffer: Format für den Buffer, der nicht der aktuell dargestellte Buffer ist
+  - buflist.format.buffer_current: Format für den aktuell dargestellten Buffer
+
+Die folgenden Variablen können in den obigen Optionen genutzt werden:
+  - bar item data (siehe hdata "bar_item" in API Dokumentation für eine vollständige Liste), zum Beispiel:
+    - ${bar_item.name}
+  - window data, wo das Bar-Item dargestellt werden soll (in "root" Bars existieren keine Fenster, siehe hdata "window" in API Dokumentation für eine vollständige Liste), zum Beispiel:
+    - ${window.number}
+    - ${window.buffer.full_name}
+  - buffer data (siehe hdata "buffer" in API Dokumentation für eine vollständige Liste), zum Beispiel:
+    - ${buffer.number}
+    - ${buffer.name}
+    - ${buffer.full_name}
+    - ${buffer.short_name}
+    - ${buffer.nicklist_nicks_count}
+  - irc_server: IRC Serverdaten, ausschließlich genutzt bei einem IRC Buffer (siehe hdata "irc_server" in API Dokumentation)
+  - irc_channel: IRC Kanaldaten, ausschließlich genutzt bei einem IRC Kanal-Buffer (siehe hdata "irc_channel" in API Dokumentation)
+  - zusätzliche Variablen die durch buflist bereitgestellt werden:
+    - ${format_buffer}: der evaluierte Wert der Option buflist.format.buffer; dies kann in der Option buflist.format.buffer_current genutzt werden um zum Beispiel die Hintergrundfarbe zu verändern
+    - ${current_buffer}: ein Boolean ("0" oder "1"), "1" falls es sich um den aktuellen Buffer handelt; dies kann in einer Bedingung verwendet werden: ${if:${current_buffer}?...:...}
+    - ${merged}: ein Boolean ("0" oder "1"), "1" wenn der Buffer mit einem anderen zusammengefügt ist; kann innerhalb einer Bedingung genutzt werden: ${if:${merged}?...:...}
+    - ${format_number}: eingerückte Nummer mit Trennzeichen (evaluiert aus Option buflist.format.number)
+    - ${number}: eingerückte Nummer, zum Beispiel " 1", falls die Anzahl der Buffer zwischen 10 und 99 liegt; bei zusammengefügten Buffern enthält die Variable für den ersten Buffer die entsprechende Nummer, die weiteren Buffer enthalten ein Leerzeichen anstelle der Nummer
+    - ${number2}: eingerückte Nummer, zum Beispiel " 1", falls die Anzahl der Buffer zwischen 10 und 99 liegt
+    - ${number_displayed}: "1" falls Nummer angezeigt wird, ansonsten "0"
+    - ${indent}: Einrückung für Name (Channel und private Buffer werden eingerückt) (evaluiert aus Option buflist.format.indent)
+    - ${format_nick_prefix}: Nick-Präfix mit entsprechender Farbe für einen Channel (evaluiert aus Option buflist.format.nick_prefix)
+    - ${color_nick_prefix}: Farbe für den Nick-Präfix von einem Channel (wird nur genutzt wenn die Option buflist.look.nick_prefix aktiviert ist)
+    - ${nick_prefix}: der Nick-Präfix für einen Channel (wird nur genutzt falls die Option buflist.look.nick_prefix aktiviert ist)
+    - ${format_name}: der formatierte Name (evaluiert aus Option buflist.format.name)
+    - ${name}: der Kurzname (falls einer gesetzt ist), ersatzweise wird auf den Originalnamen zurückgegriffen
+    - ${color_hotlist}: die Farbe mit der höchsten Priorität für den entsprechenden Buffer (evaluiert aus Option buflist.format.hotlist_xxx wobei xxx der entsprechende Level ist)
+    - ${format_hotlist}: die formatierte Hotlist (evaluiert aus Option buflist.format.hotlist)
+    - ${hotlist}: die Hotlist in der Rohform
+    - ${hotlist_priority}: "none", "low", "message", "private" oder "highlight"
+    - ${hotlist_priority_number}: -1 = keine, 0 = niedrig, 1 = Nachricht, 2 = private, 3 = Hervorhebungen
+    - ${format_lag}: die Verzögerung für einen IRC Server-Buffer, ist leer falls es keine Verzögerung gibt (evaluiert aus Option buflist.format.lag)
+    - ${format_tls_version}: Indikator der TLS Version für den Serverbuffer, Channels bleiben unberührt (evaluiert aus Option buflist.format.tls_version)
+----
+// end::buflist_commands[]
+
+// tag::charset_commands[]
+[[command_charset_charset]]
+* `+charset+`: Ändert den Zeichensatz für aktuellen Buffer
+
+----
+/charset  decode|encode <charset>
+          reset
+
+ decode: ändere Zeichensatz zum dekodieren
+ encode: ändere Zeichensatz zum kodieren
+charset: wähle neuen Zeichensatz für aktuellen Buffer
+  reset: setze im aktuellen Buffer den Zeichensatz zurück
+----
+// end::charset_commands[]
+
+// tag::exec_commands[]
+[[command_exec_exec]]
+* `+exec+`: führe externe Befehle aus
+
+----
+/exec  -list
+       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-oc|-n|-nf] [-oerr] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] [-flush|-noflush] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <timeout>] [-name <name>] [-pipe <command>] [-hsignal <name>] <command>
+       -in <id> <text>
+       -inclose <id> [<text>]
+       -signal <id> <signal>
+       -kill <id>
+       -killall
+       -set <id> <property> <value>
+       -del <id>|-all [<id>...]
+
+   -list: zeigt laufende Befehle an
+     -sh: es wird die shell verwendet um Befehle auszuführen, mehrere Befehle können dabei gepiped werden (WARNUNG: Dieses Argument sollte nur verwendet werden, falls alle Argumente unbedenklich sind, siehe Argument -nosh)
+   -nosh: die shell wird nicht verwendet um Befehle auszuführen (wird benötigt, falls der Befehl mit sensiblen Daten hantiert. Zum Beispiel der Inhalt einer Nachricht eines anderen Users)(Standardverhalten)
+     -bg: führt Prozess im Hintergrund aus: es wird weder eine Prozessausgabe noch ein Rückgabewert ausgegeben (nicht kompatibel mit Argumenten -o/-oc/-n/-nf/-pipe/-hsignal)
+   -nobg: gibt Prozessausgabe und Rückgabewert aus (Standardverhalten)
+  -stdin: erstellt eine PIPE um Daten zu dem Prozess zu senden (mittels /exec -in/-inclose)
+-nostdin: es wird keine PIPE für stdin erstellt (Standardverhalten)
+ -buffer: zeigt/sendet Ausgabe des Befehls an diesen Buffer (wird der angegebene Buffer nicht gefunden wird ein neuer Buffer mit dem Namen "exec.exec.xxx" erstellt)
+      -l: gibt die Ausgabe des Befehls lokal im Buffer aus (Standardverhalten)
+      -o: gibt die Ausgabe des Befehls im Buffer aus (nicht kompatibel mit Argumenten -bg/-pipe/-hsignal)
+     -oc: gibt die Ausgabe des Befehls im Buffer aus und führt diesen dann aus (betrifft Zeilen die mit "/" beginnen bzw. das benutzerdefinierte Befehlszeichen verwenden) (nicht kompatibel mit Argumenten -bg/-pipe/-hsignal)
+      -n: gibt die Ausgabe des Befehls in einem neuen Buffer aus (nicht kompatibel mit Argumenten -bg/-pipe/-hsignal)
+     -nf: gibt die Ausgabe des Befehls in einem neuen Buffer, mit einem freien Inhalt, aus (kein Zeilenumbruch, keine Limitierung in der Anzahl der Zeilen), aus (nicht kompatibel mit Argument -bg/-pipe/-hsignal)
+   -oerr: sendet stderr (Fehlerausgabe) an den Buffer (kann nur mit den Optionen -o und -oc verwendet werden)
+     -cl: der neue Buffer wird vor einer Ausgabe gelöscht
+   -nocl: Ausgabe wird an neuen Buffer angehangen, ohne diesen vorher zu löschen (Standardverhalten)
+     -sw: es wird zum Ausgabebuffer gewechselt (Standardverhalten)
+   -nosw: es wird nicht zum Ausgabebuffer gewechselt
+     -ln: legt eine Zeilennummerierung an (Standardverhalten, nur für neue Buffer)
+   -noln: es wird keine Zeilennummerierung angezeigt
+  -flush: die Ausgabe des Befehls findet in Echtzeit statt (Standardwert)
+-noflush: die Ausgabe des Befehls wird am Ende der Ausführung ausgegeben
+  -color: es wird eine der folgenden Aktionen bei ANSI Zeichenkodierungen in der Ausgabe durchgeführt:
+             ansi: ANSI-Kodierung wird beibehalten
+             auto: konvertiert ANSI-Farben nach WeeChat/IRC (Standardverhalten)
+              irc: konvertiert ANSI-Farben nach IRC Farben
+          weechat: konvertiert ANSI-Farben nach WeeChat-Farben
+            strip: ANSI-Farben werden entfernt
+     -rc: der Rückgabewert wird ausgegeben (Standardverhalten)
+   -norc: der Rückgabewert wird unterdrückt
+-timeout: gibt eine Zeitbeschränkung für den auszuführenden Befehl an (in Sekunden)
+   -name: dem Befehl wird ein Name zugewiesen (um den Befehl später mittels /exec zu nutzen)
+   -pipe: sendet die Ausgabe an einen Befehl von WeeChat/Erweiterung (Zeile für Zeile); sollen Leerzeichen im Befehl/Argument verwendet werden, müssen diese mit Anführungszeichen eingeschlossen werden; Variable $line wird durch die entsprechende Zeile ersetzt (standardmäßig wird die Zeile, getrennt durch ein Leerzeichen, dem Befehl nachgestellt (nicht kompatibel mit den Argumenten -bg/-o/-oc/-n/-nf)
+ -hsignal: sendet die Ausgabe als hsignal (um es z.B. mittels /trigger zu verwenden) (nicht kompatibel mit den Argumenten -bg/-o/-oc/-n/-nf)
+ command: Befehl der ausgeführt werden soll; beginnt der Befehl mit "url:", wird die shell deaktiviert und der Inhalt der URL wird heruntergeladen und im Buffer ausgegeben
+      id: identifiziert eindeutig einen Befehl: entweder durch eine Nummer oder einen Namen (sofern ein Name mittels "-name xxx" zugewiesen wurde)
+     -in: sendet Text an die Standardeingabe des Prozesses
+-inclose: wie -in aber stdin wird danach geschlossen (und der Text ist optional: ohne Text wird stdin umgehend geschlossen
+ -signal: schickt ein Signal an den Prozess; das Signal kann entweder ein Integerwert oder eines der folgenden Schlüsselworte sein: hup, int, quit, kill, term, usr1, usr2
+   -kill: Alias für "-signal <id> kill"
+-killall: beendet alle laufenden Prozesse
+    -set: nutzt eine Hook-Fähigkeit (siehe Funktion hook_set in Anleitung für API Erweiterung)
+property: Hook-Fähigkeit
+   value: neuer Wert für Hook-Fähigkeit
+    -del: entfernt einen beendeten Befehl
+    -all: entfernt alle beendeten Befehle
+
+Standardoptionen können in der Einstellung exec.command.default_options bestimmt werden.
+
+Beispiele:
+  /exec -n ls -l /tmp
+  /exec -sh -n ps xu | grep weechat
+  /exec -n -norc url:https://pastebin.com/raw.php?i=xxxxxxxx
+  /exec -nf -noln links -dump https://weechat.org/files/doc/devel/weechat_user.en.html
+  /exec -o uptime
+  /exec -pipe "/print Machine uptime:" uptime
+  /exec -n tail -f /var/log/messages
+  /exec -kill 0
+----
+// end::exec_commands[]
+
+// tag::fifo_commands[]
+[[command_fifo_fifo]]
+* `+fifo+`: Konfiguration für "fifo" Erweiterung
+
+----
+/fifo  enable|disable|toggle
+
+ enable: aktivieren der FIFO pipe
+disable: deaktivieren der FIFO pipe
+ toggle: Status der FIFO pipe umschalten
+
+Die FIFO-Pipe wird als Fernbedienung genutzt, es können Befehle oder Text von der Shell an die FIFO-Pipe geschickt werden
+Standardmäßig heißt die FIFO-Pipe weechat_fifo_xxx (wobei xxx die WeeChat-Prozess-ID ist) und befindet sich im WeeChat-Laufzeitverzeichnis (siehe /debug dirs).
+
+Folgendes Format wird erwartet:
+  plugin.buffer *Text oder Befehl an dieser Stelle
+  *Text oder Befehl an dieser Stelle
+
+Beispiel um den eigenen Nick auf dem Server libera zu ändern:
+  echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+
+Bitte lese die Benutzeranleitung für weitere Informationen und Beispiele.
+
+Beispiele:
+  /fifo toggle
+----
+// end::fifo_commands[]
+
+// tag::fset_commands[]
+[[command_fset_fset]]
+* `+fset+`: Optionen von WeeChat und Erweiterungen schnell anpassen
+
+----
+/fset  -bar
+       -refresh
+       -up|-down [<number>]
+       -left|-right [<percent>]
+       -go <line>|end
+       -toggle
+       -add [<value>]
+       -reset
+       -unset
+       -set
+       -setnew
+       -append
+       -mark
+       -format
+       -export [-help|-nohelp] <filename>
+       <filter>
+
+       -bar: fügt eine Hilfe in einer Bar hinzu
+   -refresh: der Bildschirm wird neu gezeichnet (Befehl: /window refresh)
+        -up: bewegt die ausgewählte Zeile um die Anzahl an Zeilen nach oben
+      -down: bewegt die ausgewählte Zeile um die Anzahl an Zeilen nach unten
+      -left: der fset Buffer wird wird prozentual entsprechend der Fensterbreite nach links verschoben
+     -right: der fset Buffer wird wird prozentual entsprechend der Fensterbreite nach rechts verschoben
+        -go: wählt eine Zeile mit der entsprechenden Nummer aus, die erste Zeile beginnt mit 0 (mit "end" wird die letzte Zeile ausgewählt)
+    -toggle: der Wert einer Variable vom Typ boolean wird umgeschaltet
+       -add: addiert den "Wert" (kann auch eine negative Zahl sein) bei Integer und Farbe, für andere Typen wird die Variable in die Eingabezeile kopiert und der Cursor positioniert (bei negativem Wert wird der Cursor an Beginn der Variable positioniert, bei positivem Wert wird der Cursor an das Ende gesetzt)
+     -reset: löscht den Wert von der Option
+     -unset: Option wird zurückgesetzt
+       -set: der /set Befehl wird in die Eingabezeile kopiert um den Wert der Option zu editieren (der Cursor wird auf den Anfang des Wertes gesetzt)
+    -setnew: der /set Befehl wird in die Eingabezeile kopiert um den Wert add the /set command in input to edit a new value for the option
+    -append: der /set Befehl wird in die Eingabezeile kopiert um einen zusätzlichen Wert einzugeben (der Cursor wird an das Ende der Variable positioniert)
+      -mark: Markierung umschalten
+    -format: es wird zum nächsten verfügbaren Format gewechselt
+    -export: exportiert die Optionen und Werte, welche angezeigt werden, in eine Datei (jede Zeile hat das Format: "/set Name Wert" oder "/unset Name")
+      -help: der Hilfstext für eine Option wird in die exportierte Datei geschrieben (siehe /help fset.look.export_help_default)
+    -nohelp: der Hilfetext für eine Option wird nicht in die exportierte Datei geschrieben (siehe /help fset.look.export_help_default)
+     filter: setzt einen neuen Filter um nur ausgewählte Optionen anzuzeigen (die Filterfunktion kann direkt in der Eingabezeile eingegeben werden); mögliche Formate sind:
+               *       alle Optionen werden angezeigt  (keine Filterung)
+               xxx     zeigt nur Optionen mit "xxx" im Namen
+               f:xxx   zeigt nur Konfigurationsdatei "xxx" an
+               t:xxx   zeigt nur Optionen des entsprechenden Typs, "xxx" (bool/int/str/col)
+               d       zeigt nur Optionen die verändert wurden
+               d:xxx   zeigt nur Optionen die verändert wurden und "xxx" im Namen haben
+               d=xxx   zeigt nur veränderte Optionen, die "xxx" als Wert haben
+               d==xxx  zeigt nur veränderte Optionen die exakt "xxx" als Wert haben
+               h=xxx   zeigt alle Optionen, die den Text "xxx" in der Beschreibung enthalten (in der Übersetzung)
+               he=xxx  zeigt alle Optionen, die den Text "xxx" in der Beschreibung enthalten (in der englischen Beschreibung)
+               =xxx    zeigt nur Optionen mit "xxx" als Wert
+               ==xxx   zeigt nur Optionen die exakt "xxx" als Wert haben
+               c:xxx   zeigt nur Optionen auf die die evaluierte Bedingung "xxx" zutrifft, folgende Variable können verwendet werden: file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
+
+Zeilen werden mittels evaluierten Ausdrücken dargestellt (siehe /help eval für das Format), dazu werden diese Optionen verwendet:
+  - fset.format.option1: erstes Format für eine Option
+  - fset.format.option2: zweites Format für eine Option
+
+Die nachfolgenden Variablen können in den Optionen genutzt werden:
+  - Optionsdaten, mit Farbe und durch Leerzeichen auf der rechten Seite aufgefüllt:
+    - ${file}: Konfigurationsdatei (zum Beispiel "weechat" oder "irc")
+    - ${section}: Sektion
+    - ${option}: Name der Option
+    - ${name}: vollständiger Name der Option (file.section.option)
+    - ${parent_name}: übergeordneter Name der Option
+    - ${type}: Optionstyp (übersetzt)
+    - ${type_en}: Optionstyp (auf englisch)
+    - ${type_short}: Optionstyp Kurzform (bool/int/str/col)
+    - ${type_tiny}: Optionstyp klein (b/i/s/c)
+    - ${default_value}: Standardwert einer Option
+    - ${default_value_undef}: "1" falls Standardwert null ist, andernfalls "0"
+    - ${value}: Optionswert
+    - ${value_undef}: "1" wenn Wert null ist, andernfalls "0"
+    - ${value_changed}: "1" wenn Wert abweichend vom Standardwert ist, andernfalls "0"
+    - ${value2}: Optionswert, mit geerbtem Wert falls null
+    - ${parent_value}: übergeordneter Optionswert
+    - ${min}: minimaler Wert
+    - ${max}: maximaler Wert
+    - ${description}: Beschreibung der Option (übersetzt)
+    - ${description2}: Beschreibung der Option (übersetzt), "(keine Beschreibung)" (übersetzt) falls keine Beschreibung vorhanden
+    - ${description_en}: Beschreibung der Option (in englisch)
+    - ${description_en2}: Beschreibung der Option (in englisch), "(keine Beschreibung)" falls keine Beschreibung vorhanden
+    - ${string_values}: Zeichenketten sind für Integer Optionen erlaubt
+    - ${marked}: "1" wenn Option markiert ist, andernfalls "0"
+    - ${index}: Index der Option in der Liste
+  - Optionsdaten, mit Farbe aber ohne Leerzeichen:
+    - selbe Namen, vorangestellt mit Unterstrich, zum Beispiel: ${_name}, ${_type}, ...
+  - Optionsdaten, Rohformat (keine Farben/Leerzeichen):
+    - selbe Namen, mit zwei vorangestellten Unterstrichen, zum Beispiel: ${__name}, ${__type}, ...
+  - Optionsdaten, nur Leerzeichen:
+    - selbe Namen, mit vorangestelltem "empty_", zum Beispiel: ${empty_name}, ${empty_type}
+  - andere Daten:
+    - ${selected_line}: "1" wenn Zeile ausgewählt ist, andernfalls "0"
+    - ${newline}: fügt einen Zeilenumbruch an diese Position, dadurch wird die Option über mehrere Zeilen angezeigt
+
+Tasten und Eingaben um sich im fset Buffer zu bewegen:
+  hoch                      eine Zeile nach oben
+  runter                    eine Zeile nach unten
+  pgup                      eine Seite nach oben
+  pgdn                      eine Seite nach unten
+  alt-home          <<      springe zur ersten Zeile
+  alt-end           >>      springe zur letzten Zeile
+  F11               <       horizontal nach links scrollen
+  F12               >       horizontal nach rechts scrollen
+
+Tasten und Eingaben um Optionen im fset Buffer zu editieren:
+  alt+space         t       boolean Werte umschalten
+  alt+'-'           -       subtrahiert 1 vom Wert, bei Integer/Farboptionen, bei anderen Typen kann der Wert editiert werden
+  alt+'+'           +       addiert 1 zum Wert, bei Integer/Farboptionen, bei anderen Typen kann der Wert editiert werden
+  alt+f, alt+r      r       Wert resetten
+  alt+f, alt+u      u       Wert zurücksetzen
+  alt+enter         s       Wert setzen
+  alt+f, alt+n      n       ein neuer Wert wird gesetzt, der alte Wert wird gelöscht
+  alt+f, alt+a      a       dem Wert was hinzufügen
+  alt+','           ,       markieren/demarkieren einer Option
+  shift+hoch                eine Zeile nach oben und markiert/demarkiert Option
+  shift+runter              markiert/demarkiert Option und geht eine Zeile nach unten
+                    m:xxx   markiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe Filterung weiter oben)
+                    u:xxx   demarkiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe Filterung weiter oben)
+
+weitere Tasten und Eingaben im fset Buffer:
+  ctrl+l                    der Bildschirm wird neu gezeichnet (Befehl: /fset -refresh)
+                    $       Optionen neu einlesen (markierte Optionen werden beibehalten)
+                    $$      Optionen neu einlesen (Markierungen von Optionen werden dabei gelöscht)
+  alt+p             p       Umschalten der Beschreibung von Erweiterungen (plugins.desc.*)
+  alt+v             v       Hilfe-Bar Ein-/Ausschalten
+                    s:x,y   sortiert Optionen nach Bereichen x,y (siehe /help fset.look.sort)
+                    s:      setzt Sortierung wieder auf Standardwerte (siehe /help fset.look.sort)
+                    w:xxx   exportiert Optionen in Datei "xxx"
+                    w-:xxx  exportiert Optionen in Datei "xxx", ohne Hilfstext
+                    w+:xxx  exportiert Optionen in Datei "xxx", mit Hilfstext
+  ctrl+x            x       umschalten zwischen der Darstellung von Optionen
+                    q       schließt fset Buffer
+
+Mausaktionen im fset Buffer:
+  Mausrad hoch/runter              Zeile hoch/runter
+  linke Maustaste                  Zeile auswählen
+  rechte Maustaste                 boolean umschalten (an/aus) oder editiere den Wert einer Option
+  rechte Maustaste + links/rechts  Integer/Farbwerte werden erhöht/verringert, andere Variabletypen werden in die Eingabezeile kopiert
+  rechte Maustaste + hoch/runter   markieren/demarkieren von mehreren Optionen
+
+Hinweis: Leerzeichen am Anfang der Eingabezeile werden ignoriert und der folgende Text wird als Filter verwendet. Ein Beispiel: "q" schließt den fset Buffer wobei hingegen " q" alle Optionen anzeigt die ein "q" im Namen beinhalten.
+
+Beispiele:
+  zeigt alle IRC Optionen an, die verändert wurden:
+    /fset d:irc.*
+  zeigt alle Optionen die "nicklist" im Namen tragen:
+    /fset nicklist
+  zeigt alle Werte die "red" beinhalten:
+    /fset =red
+  zeigt alle Werte die exakt "red" lauten:
+    /fset ==red
+  zeigt alle Integer-Optionen der IRC-Erweiterung:
+    /fset c:${file} == irc && ${type_en} == integer
+----
+// end::fset_commands[]
+
+// tag::guile_commands[]
+[[command_guile_guile]]
+* `+guile+`: auflisten/installieren/beenden von Skripten
+
+----
+/guile  list|listfull [<name>]
+        load [-q] <filename>
+        autoload
+        reload|unload [-q] [<name>]
+        eval [-o|-oc] <code>
+        version
+
+    list: installierte Skripten werden aufgelistet
+listfull: detaillierte Auflistung aller installierten Skripten
+    load: installiert ein Skript
+autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
+  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
+  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
+filename: Skript (Datei) welches geladen werden soll
+      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
+    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
+    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
+      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
+     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
+    code: Quelltext welcher evaluiert werden soll
+ version: zeigt die Version des verwendeten Interpreters an
+
+Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
+----
+// end::guile_commands[]
+
 // tag::irc_commands[]
 [[command_irc_admin]]
 * `+admin+`: Information über den Server-Administrator abfragen
@@ -1083,48 +1493,533 @@ target: Antwort soll auf diese Suchmaske zutreffen
 ----
 // end::irc_commands[]
 
-// tag::alias_commands[]
-[[command_alias_alias]]
-* `+alias+`: auflisten, hinzufügen oder entfernen von Alternativnamen
+// tag::javascript_commands[]
+[[command_javascript_javascript]]
+* `+javascript+`: auflisten/installieren/beenden von Skripten
 
 ----
-/alias  list [<alias>]
-        add <alias> [<command>[;<command>...]]
-        addcompletion <completion> <alias> [<command>[;<command>...]]
-        del <alias> [<alias>...]
-        rename <alias> <new_alias>
+/javascript  list|listfull [<name>]
+             load [-q] <filename>
+             autoload
+             reload|unload [-q] [<name>]
+             eval [-o|-oc] <code>
+             version
 
-         list: listet Alternativbefehle auf (ohne Angabe von Argumenten wird diese Liste dargestellt)
-          add: fügt einen Alternativbefehl hinzu
-addcompletion: fügt einen Alternativbefehl, mit einer benutzerdefinierten Vervollständigung, hinzu
-          del: entfernt einen Alternativbefehl
-       rename: ein Alias umbenennen
-   completion: Vervollständigung für Alternativbefehl: standardmäßig wird die Vervollständigung auf den Zielbefehl angewendet
-               Hinweis: Mit der Variablen "%%command" kann eine Vervollständigung eines vorhandenen Befehls durchgeführt werden
-        alias: Name des Alternativbefehls
-      command: Name des zuzuordnenden Befehls, inklusive Argumenten (mehrere Befehle können durch Semikolon getrennt werden)
+    list: installierte Skripten werden aufgelistet
+listfull: detaillierte Auflistung aller installierten Skripten
+    load: installiert ein Skript
+autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
+  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
+  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
+filename: Skript (Datei) welches geladen werden soll
+      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
+    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
+    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
+      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
+     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
+    code: Quelltext welcher evaluiert werden soll
+ version: zeigt die Version des verwendeten Interpreters an
 
-Anmerkung: Im Befehl können Variablen genutzt werden, die dann durch den entsprechenden Wert ersetzt werden:
-        $n: Argument 'n' (zwischen 1 und 9)
-       $-m: Argumente von 1 bis 'm'
-       $n-: Argumente von 'n' bis zum letzten Argument
-      $n-m: Argumente von 'n' bis 'm'
-        $*: alle Argumente
-        $~: letztes Argument
-      $var: "var" ist eine lokale Variable für den jeweiligen Buffer (siehe /buffer listvar)
-            Beispiel: $nick, $channel, $server, $plugin, $name
+Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
+----
+// end::javascript_commands[]
+
+// tag::logger_commands[]
+[[command_logger_logger]]
+* `+logger+`: Konfiguration für "logger" Erweiterung (dient zum protokollieren der Buffer)
+
+----
+/logger  list
+         set <level>
+         flush
+         disable
+
+   list: zeigt von allen geöffneten Buffern den Status der Protokollierung an
+    set: legt den Level fest, nach dem der aktuelle Buffer protokolliert werden soll
+  level: legt fest, welche Nachrichten protokolliert werden sollen (0 = nichts protokollieren, 1 = nur die wichtigsten Nachrichten protokollieren .. 9 = alle Nachrichten werden protokolliert)
+  flush: sichert alle Protokolle umgehend
+disable: die Protokollierung wird für den aktuellen Buffer deaktiviert (der Level wird auf 0 gestellt)
+
+Die Einstellungen "logger.level.*" und "logger.mask.*" können genutzt werden um den Level der Protokollierung festzulegen und um eine Maske für einen oder mehrere Buffer zu definieren.
+
+Level der Protokollierung, die die IRC Erweiterung unterstützt:
+  1: Nachrichten von Usern (private und öffentliche Nachrichten), notice (Server und Kanal)
+  2: Wechsel von Nicks (/nick)
+  3: Nachrichten vom Server
+  4: join/part/quit Nachrichten
+  9: alle Nachrichten
 
 Beispiele:
-  Alternativbefehl "/split" wird anlegt um ein Fenster horizontal zu teilen:
-    /alias add split /window splith
-  Alternativbefehl "/hallo" wird angelegt um in allen Channels, außer im #weechat Channel, den Text "Hallo" auszugeben:
-    /alias add hallo /allchan -exclude=#weechat hallo
-  alias "hallo" nach "Hallo" umbenennen:
-    /alias rename hello Hello
-  Alternativbefehl "/forcejoin" wird angelegt um den IRC Befehl "forcejoin" mit einer Vervollständigung von /sajoin auszuführen:
-    /alias addcompletion %%sajoin forcejoin /quote forcejoin
+  Stellt den Level für den aktuellen Buffer auf 5 ein:
+    /logger set 5
+  Die Protokollierung für den aktuellen Buffer wird ausgeschaltet:
+    /logger disable
+  Stellt den Level für alle IRC-Buffer auf 3 ein:
+    /set logger.level.irc 3
+  Die Protokollierung, für den WeeChat Haupt-Buffer, wird deaktiviert:
+    /set logger.level.core.weechat 0
+  Für jeden IRC-Server wird ein separates Verzeichnis erstellt und darin eine eigene Protokoll-Datei, für jeden Kanal:
+    /set logger.mask.irc "$server/$channel.weechatlog"
 ----
-// end::alias_commands[]
+// end::logger_commands[]
+
+// tag::lua_commands[]
+[[command_lua_lua]]
+* `+lua+`: auflisten/installieren/beenden von Skripten
+
+----
+/lua  list|listfull [<name>]
+      load [-q] <filename>
+      autoload
+      reload|unload [-q] [<name>]
+      eval [-o|-oc] <code>
+      version
+
+    list: installierte Skripten werden aufgelistet
+listfull: detaillierte Auflistung aller installierten Skripten
+    load: installiert ein Skript
+autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
+  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
+  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
+filename: Skript (Datei) welches geladen werden soll
+      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
+    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
+    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
+      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
+     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
+    code: Quelltext welcher evaluiert werden soll
+ version: zeigt die Version des verwendeten Interpreters an
+
+Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
+----
+// end::lua_commands[]
+
+// tag::perl_commands[]
+[[command_perl_perl]]
+* `+perl+`: auflisten/installieren/beenden von Skripten
+
+----
+/perl  list|listfull [<name>]
+       load [-q] <filename>
+       autoload
+       reload|unload [-q] [<name>]
+       eval [-o|-oc] <code>
+       version
+
+    list: installierte Skripten werden aufgelistet
+listfull: detaillierte Auflistung aller installierten Skripten
+    load: installiert ein Skript
+autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
+  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
+  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
+filename: Skript (Datei) welches geladen werden soll
+      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
+    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
+    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
+      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
+     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
+    code: Quelltext welcher evaluiert werden soll
+ version: zeigt die Version des verwendeten Interpreters an
+
+Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
+----
+// end::perl_commands[]
+
+// tag::php_commands[]
+[[command_php_php]]
+* `+php+`: auflisten/installieren/beenden von Skripten
+
+----
+/php  list|listfull [<name>]
+      load [-q] <filename>
+      autoload
+      reload|unload [-q] [<name>]
+      eval [-o|-oc] <code>
+      version
+
+    list: installierte Skripten werden aufgelistet
+listfull: detaillierte Auflistung aller installierten Skripten
+    load: installiert ein Skript
+autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
+  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
+  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
+filename: Skript (Datei) welches geladen werden soll
+      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
+    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
+    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
+      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
+     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
+    code: Quelltext welcher evaluiert werden soll
+ version: zeigt die Version des verwendeten Interpreters an
+
+Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
+----
+// end::php_commands[]
+
+// tag::python_commands[]
+[[command_python_python]]
+* `+python+`: auflisten/installieren/beenden von Skripten
+
+----
+/python  list|listfull [<name>]
+         load [-q] <filename>
+         autoload
+         reload|unload [-q] [<name>]
+         eval [-o|-oc] <code>
+         version
+
+    list: installierte Skripten werden aufgelistet
+listfull: detaillierte Auflistung aller installierten Skripten
+    load: installiert ein Skript
+autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
+  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
+  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
+filename: Skript (Datei) welches geladen werden soll
+      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
+    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
+    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
+      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
+     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
+    code: Quelltext welcher evaluiert werden soll
+ version: zeigt die Version des verwendeten Interpreters an
+
+Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
+----
+// end::python_commands[]
+
+// tag::relay_commands[]
+[[command_relay_relay]]
+* `+relay+`: Relay-Kontrolle
+
+----
+/relay  list|listfull|listrelay
+        add <name> <port>|<path>
+        del|start|restart|stop <name>
+        raw
+        sslcertkey
+
+         list: Auflistung der Relay-Clients (nur aktive Relays)
+     listfull: detaillierte Auflistung der Relay-Clients (alle Relays)
+    listrelay: Auflistung der Relays (Name und Port)
+          add: fügt ein Relay, für ein Protokoll + Name, hinzu
+          del: entfernt Relay für ein Protokoll + Name
+        start: lausche am Port
+      restart: beendet den Server Socket und lauscht erneut am Port (Clients bleiben verbunden)
+         stop: schließt den Server Socket (Clients bleiben verbunden)
+         name: Name des Relays (siehe Format weiter unten)
+         port: Port der für Relay genutzt werden soll
+         path: Pfad der für Relay genutzt werden soll (ausschließlich für UNIX Domain Socket); Pfad ist evaluiert (siehe Funktion string_eval_path_home in Erweiterung API Referenz)/n
+          raw: öffnet einen Buffer mit Relay-Rohdaten
+   sslcertkey: setzt SSL Zertifikat/Schlüssel mittels Pfad in Einstellung relay.network.ssl_cert_key
+
+Aufbau des Relay-Namens: [ipv4.][ipv6.][ssl.]<Protokoll.Name> oder unix.[ssl.]<Protokoll.Name>
+         ipv4: erzwingt die Nutzung von IPv4
+         ipv6: erzwingt die Nutzung von IPv6
+          ssl: aktiviert SSL
+         unix: nutzt UNIX Domain Socket
+protocol.name: Protokoll und Name des Relay:
+                 - Protokoll "irc": Name des Servers welcher geteilt werden soll (optional. Falls kein Name angegeben wird, muss der Client einen Namen mit dem Befehl "PASS" übermitteln, das Format ist wie folgt: "PASS Server:Passwort")
+                 - Protokoll "weechat" (es wird kein Name verwendet)
+
+Das "irc" Protokoll dient dazu eine Verbindung zu einem anderen IRC Client (oder zu einem zweiten WeeChat) herzustellen.
+Das "weechat" Protokoll wird von einem Remote-Interface genutzt um eine Verbindung auf dem Port herzustellen. Siehe https://weechat.org/about/interfaces/
+
+Ohne Angabe von Argumenten werden alle Relay-Clients in einem neuen Buffer dargestellt.
+
+Beispiele:
+  IRC Proxy für Server "libera":
+    /relay add irc.libera 8000
+  IRC Proxy, für Server "libera", mit SSL:
+    /relay add ssl.irc.libera 8001
+  IRC Proxy für alle Server (Client wählt aus), mit SSL:
+    /relay add ssl.irc 8002
+  WeeChat Protokoll:
+    /relay add weechat 9000
+  WeeChat Protokoll, mit SSL:
+    /relay add ssl.weechat 9001
+  WeeChat Protokoll, mit SSL, nur IPv4 nutzen:
+    /relay add ipv4.ssl.weechat 9001
+  WeeChat Protokoll, mit SSL, nur IPv6 nutzen:
+    /relay add ipv6.ssl.weechat 9001
+  WeeChat Protokoll, mit SSL, mit IPv4 + IPv6:
+    /relay add ipv4.ipv6.ssl.weechat 9001
+  Weechat Protokoll über UNIX Domain Socket:
+    /relay add unix.weechat ${weechat_runtime_dir}/relay_socket
+----
+// end::relay_commands[]
+
+// tag::ruby_commands[]
+[[command_ruby_ruby]]
+* `+ruby+`: auflisten/installieren/beenden von Skripten
+
+----
+/ruby  list|listfull [<name>]
+       load [-q] <filename>
+       autoload
+       reload|unload [-q] [<name>]
+       eval [-o|-oc] <code>
+       version
+
+    list: installierte Skripten werden aufgelistet
+listfull: detaillierte Auflistung aller installierten Skripten
+    load: installiert ein Skript
+autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
+  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
+  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
+filename: Skript (Datei) welches geladen werden soll
+      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
+    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
+    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
+      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
+     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
+    code: Quelltext welcher evaluiert werden soll
+ version: zeigt die Version des verwendeten Interpreters an
+
+Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
+----
+// end::ruby_commands[]
+
+// tag::script_commands[]
+[[command_script_script]]
+* `+script+`: WeeChat Skriptmanager
+
+----
+/script  list [-o|-ol|-i|-il]
+         search <text>
+         show <script>
+         load|unload|reload <script> [<script>...]
+         autoload|noautoload|toggleautoload <script> [<script>...]
+         install|remove|installremove|hold [-q] <script> [<script>...]
+         upgrade
+         update
+
+          list: gibt alle geladenen Skripten im Buffer aus (unabhängig der Programmiersprache)
+            -o: gibt eine Liste der laufenden Skripten im Buffer aus (Ausgabe in englisch)
+           -ol: gibt eine Liste der laufenden Skripten im Buffer aus (Ausgabe ist übersetzt)
+            -i: eine Liste der laufenden Skripten wird in die Eingabezeile kopiert (um sie dann manuell in einen Buffer zu senden)(Ausgabe in englisch)
+           -il: eine Liste der laufenden Skripten wird in die Eingabezeile kopiert (um sie dann manuell in einen Buffer zu senden)(Ausgabe ist übersetzt)
+        search: sucht Skripten nach Schlagwörtern, Skriptsprache (python, perl, ...), Dateierweiterung (py, pl, ...) oder beliebigem Text. Das Ergebnis wird im Skripten-Buffer dargestellt
+          show: zeigt detailliert Informationen zu einem Skript an
+          load: startet Skript(en)
+        unload: beendet Skript(en)
+        reload: Skript(en) werden neu geladen
+      autoload: das Skript wird in das autoload-Verzeichnis eingebunden
+    noautoload: das Skript wird aus dem autoload-Verzeichnis entfernt
+toggleautoload: autoload für das Skript umschalten
+       install: installiert/aktualisiert Skript(en) (physikalisch, auf dem Datenträger)
+        remove: deinstalliert Skript(en) (physikalisch, vom Datenträger)
+ installremove: installiert oder deinstalliert Skript(en), abhängig davon welcher Status vorliegt
+          hold: halten/freigeben von Skript(en) (ein Skript welches gehalten wird, kann weder aktualisiert noch entfernt werden)
+            -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
+       upgrade: aktualisiert alle veralteten, installierten Skripten (sofern eine neue Version verfügbar ist)
+        update: aktualisiert den lokalen Cache für die Skripten
+
+Ohne Angaben von Argumenten öffnet dieser Befehl einen Buffer, in welchem eine Liste der Skripten dargestellt wird.
+
+Im Skript-Buffer, werden folgende Statusangaben für ein Skript angezeigt:
+  * i a H r N
+  | | | | | |
+  | | | | | obsolete (neue Version verfügbar)
+  | | | | Skript wird ausgeführt (geladen)
+  | | | gehalten
+  | | Skript wird beim Start, von WeeChat, automatisch geladen
+  | Skript ist installiert (wird aber nicht ausgeführt)
+  beliebtes Skript
+
+In der Ausgabe von /script list, wird der Status für ein Skript angegeben:
+  * ? i a H N
+  | | | | | |
+  | | | | | obsolete (neue Version verfügbar)
+  | | | | gehalten
+  | | | Skript wird beim Start, von WeeChat, automatisch geladen
+  | | Skript ist installiert (wird aber nicht ausgeführt)
+  | unbekanntes Skript (dieses Skript kann nicht heruntergeladen/aktualisiert werden)
+  beliebtes Skript
+
+Tastenbefehle die im Skript-Buffer genutzt werden können:
+  alt+i  installiert Skript (physikalisch)
+  alt+r  deinstalliert Skript (physikalisch
+  alt+l  startet ein Skript (Skript wird ausgeführt)
+  alt+L  Skript wird neu gestartet
+  alt+u  beendet ein Skript
+  alt+A  das Skript wird in das autoload-Verzeichnis eingebunden
+  alt+h  Skript wird gehalten bzw. freigegeben
+  alt+v  Skript anzeigen
+
+Befehle die in der Eingabezeile des Skript-Buffers eingegeben werden können:
+  i/r/l/L/u/A/h/v  Aktionen die für ein Skript ausgeführt werden können (siehe Tastenbefehle, weiter oben)
+  q                schließt den Buffer
+  $                Buffer wird aktualisiert
+  s:x,y            Buffer wird nach den Vorgaben x und y sortiert (siehe /help script.look.sort)
+  s:               die Sortierung des Buffers wird zurückgesetzt (Standardwerte werden genutzt)
+  word(s)          Skripten werden gefiltert: sucht nach einem oder mehreren Wörtern in den Skripten (der Beschreibung, in den Schlagwörtern, ...)
+  *                Filter wird zurückgesetzt
+
+Mausbefehle innerhalb des Skripten-Buffer:
+  Mausrad            in der Liste scrollen
+  linke Maustaste    Skript anwählen
+  rechte Maustaste   Skript installieren/entfernen
+
+Beispiele:
+  /script search url
+  /script install go.py urlserver.py
+  /script remove go.py
+  /script hold urlserver.py
+  /script reload urlserver
+  /script upgrade
+----
+// end::script_commands[]
+
+// tag::spell_commands[]
+[[command_spell_spell]]
+* `+spell+`: Konfiguration für spell-Erweiterung
+
+----
+/spell  enable|disable|toggle
+        listdict
+        setdict -|<dict>[,<dict>...]
+        deldict
+        addword [<dict>] <word>
+
+  enable: Rechtschreibprüfung wird aktiviert
+ disable: Rechtschreibprüfung wird deaktiviert
+  toggle: Funktionalität der Rechtschreibprüfung umschalten
+listdict: die, auf dem System, installierten Wörterbücher werden aufgelistet
+ setdict: Wörterbuch für den aktuellen Buffer einstellen (mehrere Wörterbücher müssen durch Kommata getrennt werden (spezieller Wert "-" deaktiviert die Rechtschreibprüfung für den aktuellen Buffer))
+ deldict: Wörterbuch für den aktuellen Buffer entfernen
+ addword: fügt ein Wort in das persönliche Wörterbuch hinzu
+
+Eingaben die mit '/' beginnen werden nicht überprüft, davon ausgenommen sind einige Befehle (siehe /set spell.check.commands).
+
+Um die Rechtschreibprüfung auf allen Buffer anzuwenden sollte die Einstellung "default_dict" genutzt und die Rechtschreibprüfung aktiviert werden:
+  /set spell.check.default_dict "de_DE-neu"
+  /spell enable
+
+Um sich eine Liste von Vorschlägen in einer Bar anzeigen zu lassen nutzt man das Item "spell_suggest".
+
+Die Standardtastaturbelegung zum Umschalten der Rechtschreibprüfung lautet alt-s.
+----
+// end::spell_commands[]
+
+// tag::tcl_commands[]
+[[command_tcl_tcl]]
+* `+tcl+`: auflisten/installieren/beenden von Skripten
+
+----
+/tcl  list|listfull [<name>]
+      load [-q] <filename>
+      autoload
+      reload|unload [-q] [<name>]
+      eval [-o|-oc] <code>
+      version
+
+    list: installierte Skripten werden aufgelistet
+listfull: detaillierte Auflistung aller installierten Skripten
+    load: installiert ein Skript
+autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
+  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
+  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
+filename: Skript (Datei) welches geladen werden soll
+      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
+    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
+    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
+      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
+     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
+    code: Quelltext welcher evaluiert werden soll
+ version: zeigt die Version des verwendeten Interpreters an
+
+Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
+----
+// end::tcl_commands[]
+
+// tag::trigger_commands[]
+[[command_trigger_trigger]]
+* `+trigger+`: verwaltet Trigger, das Schweizer Armeemesser für WeeChat
+
+----
+/trigger  list|listfull|listdefault
+          add|addoff|addreplace <name> <hook> ["<arguments>" ["<conditions>" ["<regex>" ["<command>" ["<return_code>" ["<post_action>"]]]]]]
+          addinput [<hook>]
+          input|output|recreate <name>
+          set <name> <option> <value>
+          rename|copy <name> <new_name>
+          enable|disable|toggle [<name>|-all [<name>...]]
+          restart <name>|-all [<name>...]
+          show <name>
+          del <name>|-all [<name>...]
+          restore <name> [<name>...]
+          default -yes
+          monitor [<filter>]
+
+       list: zeigt eine Liste aller Trigger (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
+   listfull: zeigt eine detaillierte Liste, mit zusätzlichen Informationen, aller Trigger an
+listdefault: zeigt die standardmäßig genutzten Trigger an
+        add: fügt einen Trigger hinzu
+     addoff: fügt einen Trigger hinzu (deaktiviert)
+ addreplace: erzeugt neuen Trigger oder ersetzt einen schon existierenden Trigger
+       name: Name des Trigger
+       hook: signal, hsignal, modifier, line, print, command, command_run, timer, config, focus, info, info_hashtable
+  arguments: Argumente für den Hook, abhängig vom genutzten Hook (getrennt durch Semikolon):
+             signal: Name(en) des signals (erforderlich)
+             hsignal: Name(en) des hsignal (erforderlich)
+             modifier: Name(en) des modifier (erforderlich)
+             line: Buffertyp ("formatted", "free" oder "*"), Liste von Buffermasken, Tags
+             print: Buffer, Tags, Nachricht, Farben entfernen
+             command: Befehl (erforderlich), Beschreibung, Argumente, Beschreibung der Argumente, Vervollständigung (alle Argumente, außer dem Befehl werden ausgewertet, "${tg_trigger_name}" wird durch den Triggernamen ersetzt, siehe /help eval)
+             command_run: Befehl(e) (erforderlich)
+             timer: Intervall (erforderlich), Anpassung an Sekunden (erforderlich), maximale Anzahl an Aufrufen
+             config: Name der Einstellung (erforderlich)
+             focus: Name(n) für sichtbaren Bereich (erforderlich) (z.B. "chat" für Chatbereich)
+             info: Name(n) der Information (erforderlich)
+             info_hashtable: Name(n) der Information (erforderlich)
+ conditions: evaluierte Bedingungen für den Trigger
+      regex: einer oder mehrere reguläre Ausdrücke um Zeichenketten in Variablen zu ersetzen
+    command: Befehl welcher ausgeführt werden soll (mehrere Befehle müssen durch ";" voneinander getrennt werden)
+return_code: Rückgabewert für Callback (ok (standard), ok_eat, error)
+post_action: Aktion welche nach der Abarbeitung des Triggers ausgeführt werden soll (none (Standardwert), disable, delete)
+   addinput: erstellt einen Trigger mit einer standardmäßigen Mustervorlage
+      input: kopiert den kompletten Trigger-Befehl in die Eingabezeile
+     output: schickt den Trigger-Befehl als Text in den Buffer
+   recreate: wie "input", allerdings wird die Einstellung "addreplace" anstelle von "add" genutzt
+        set: definiert, innerhalb eines Triggers, eine Einstellung neu
+     option: Name einer Einstellung: name, hook, arguments, conditions, regex, command, return_code
+             (um Hilfe über eine Einstellung zu erhalten: /help trigger.trigger.<name>.<option>)
+      value: neuer Wert für Einstellung
+     rename: benennt einen Trigger um
+       copy: kopiert einen Trigger
+     enable: aktiviert Trigger (ohne Angabe von Argumenten: aktiviert alle Trigger)
+    disable: deaktiviert Trigger (ohne Angabe von Argumenten: deaktiviert alle Trigger)
+     toggle: de-/aktiviert Trigger (ohne Angabe von Argumenten: de-/aktiviert alle Trigger)
+    restart: startet Trigger neu (Hook(s) werden neu erstellt)
+       show: zeigt detaillierte Informationen zu einem Trigger (inklusive einer kleinen Statistik)
+        del: entfernt einen Trigger
+       -all: führt eine Aktion aus, die alle Trigger betrifft
+    restore: stellt Trigger mit Standardwerten wieder her (funktioniert nur bei vorgegebenen Triggern)
+    default: stellt die standardmäßigen Trigger wieder her
+    monitor: öffnet den Trigger Monitor-Buffer, mit optionaler Filterfunktion:
+     filter: filtert Hooks/Trigger zum Anzeigen (ein Hook muss mit "@" beginnen, zum Beispiel "@signal"), mehrere Filter können durch Kommata voneinander getrennt werden; Platzhalter "*" kann im Namen des Trigger verwendet werden
+
+Wenn ein Trigger-Callback aufgerufen wird, dann wird folgende Befehlskette ausgeführt:
+  1. Überprüfung von Bedingungen; falls unwahr, beenden
+  2. ersetze Text mittels einem oder mehreren erweiterten regulären POSIX Ausdrücken (sofern im Trigger definiert)
+  3. ein oder mehrere Befehle werden ausgeführt (sofern im Trigger definiert)
+  4. Beendigung mit einem Rückgabewert (ausgenommen sind modifiers, line, focus, info und info_hashtable)
+  5. Aktion welche nach der Abarbeitung des Triggers ausgeführt werden soll
+
+Beispiele (die standardmäßig verfügbaren Trigger kann man sich mit "/trigger listdefault" anzeigen lassen):
+  fügt einer Nachricht die Textattribute *fett*, _unterstrichen_ und /kursiv/ hinzu (nur in User-Nachrichten):
+    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
+  verbirgt die Nicklist auf kleineren Terminals:
+    /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
+    /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
+  speichert die Konfiguration jede Stunde ab:
+    /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
+  speichert, ohne Ausgabe von Text, eine Weechat-Sitzung um Mitternach (siehe /help upgrade):
+    /trigger add session_save signal day_changed "" "" "/mute /upgrade -save"
+  öffnet den Trigger Monitor und zeigt ausschließlich modifier und Trigger an, die mit "resize" im Namen beginnen:
+    /trigger monitor @modifier,resize*
+----
+// end::trigger_commands[]
 
 // tag::weechat_commands[]
 [[command_weechat_allbuf]]
@@ -2389,474 +3284,6 @@ Beispiele:
 ----
 // end::weechat_commands[]
 
-// tag::buflist_commands[]
-[[command_buflist_buflist]]
-* `+buflist+`: Bar-Item mit der Liste von Buffern
-
-----
-/buflist  enable|disable|toggle
-          bar
-          refresh
-
- enable: buflist aktivieren
-disable: buflist deaktivieren
- toggle: buflist umschalten
-    bar: fügt eine "buflist" Bar hinzu
-refresh: erzwingt eine Aktualisierung der Bar-Item (buflist, buflist2 und buflist3)
-
-Jede Zeile die einen Buffer anzeigt wird mittels Zeichenketten-Evaluation dargestellt (siehe /help eval für das Format), dazu werden folgende Optionen genutzt:
-  - buflist.look.display_conditions: Bedingungen um einen Buffer in der Liste darzustellen
-  - buflist.format.buffer: Format für den Buffer, der nicht der aktuell dargestellte Buffer ist
-  - buflist.format.buffer_current: Format für den aktuell dargestellten Buffer
-
-Die folgenden Variablen können in den obigen Optionen genutzt werden:
-  - bar item data (siehe hdata "bar_item" in API Dokumentation für eine vollständige Liste), zum Beispiel:
-    - ${bar_item.name}
-  - window data, wo das Bar-Item dargestellt werden soll (in "root" Bars existieren keine Fenster, siehe hdata "window" in API Dokumentation für eine vollständige Liste), zum Beispiel:
-    - ${window.number}
-    - ${window.buffer.full_name}
-  - buffer data (siehe hdata "buffer" in API Dokumentation für eine vollständige Liste), zum Beispiel:
-    - ${buffer.number}
-    - ${buffer.name}
-    - ${buffer.full_name}
-    - ${buffer.short_name}
-    - ${buffer.nicklist_nicks_count}
-  - irc_server: IRC Serverdaten, ausschließlich genutzt bei einem IRC Buffer (siehe hdata "irc_server" in API Dokumentation)
-  - irc_channel: IRC Kanaldaten, ausschließlich genutzt bei einem IRC Kanal-Buffer (siehe hdata "irc_channel" in API Dokumentation)
-  - zusätzliche Variablen die durch buflist bereitgestellt werden:
-    - ${format_buffer}: der evaluierte Wert der Option buflist.format.buffer; dies kann in der Option buflist.format.buffer_current genutzt werden um zum Beispiel die Hintergrundfarbe zu verändern
-    - ${current_buffer}: ein Boolean ("0" oder "1"), "1" falls es sich um den aktuellen Buffer handelt; dies kann in einer Bedingung verwendet werden: ${if:${current_buffer}?...:...}
-    - ${merged}: ein Boolean ("0" oder "1"), "1" wenn der Buffer mit einem anderen zusammengefügt ist; kann innerhalb einer Bedingung genutzt werden: ${if:${merged}?...:...}
-    - ${format_number}: eingerückte Nummer mit Trennzeichen (evaluiert aus Option buflist.format.number)
-    - ${number}: eingerückte Nummer, zum Beispiel " 1", falls die Anzahl der Buffer zwischen 10 und 99 liegt; bei zusammengefügten Buffern enthält die Variable für den ersten Buffer die entsprechende Nummer, die weiteren Buffer enthalten ein Leerzeichen anstelle der Nummer
-    - ${number2}: eingerückte Nummer, zum Beispiel " 1", falls die Anzahl der Buffer zwischen 10 und 99 liegt
-    - ${number_displayed}: "1" falls Nummer angezeigt wird, ansonsten "0"
-    - ${indent}: Einrückung für Name (Channel und private Buffer werden eingerückt) (evaluiert aus Option buflist.format.indent)
-    - ${format_nick_prefix}: Nick-Präfix mit entsprechender Farbe für einen Channel (evaluiert aus Option buflist.format.nick_prefix)
-    - ${color_nick_prefix}: Farbe für den Nick-Präfix von einem Channel (wird nur genutzt wenn die Option buflist.look.nick_prefix aktiviert ist)
-    - ${nick_prefix}: der Nick-Präfix für einen Channel (wird nur genutzt falls die Option buflist.look.nick_prefix aktiviert ist)
-    - ${format_name}: der formatierte Name (evaluiert aus Option buflist.format.name)
-    - ${name}: der Kurzname (falls einer gesetzt ist), ersatzweise wird auf den Originalnamen zurückgegriffen
-    - ${color_hotlist}: die Farbe mit der höchsten Priorität für den entsprechenden Buffer (evaluiert aus Option buflist.format.hotlist_xxx wobei xxx der entsprechende Level ist)
-    - ${format_hotlist}: die formatierte Hotlist (evaluiert aus Option buflist.format.hotlist)
-    - ${hotlist}: die Hotlist in der Rohform
-    - ${hotlist_priority}: "none", "low", "message", "private" oder "highlight"
-    - ${hotlist_priority_number}: -1 = keine, 0 = niedrig, 1 = Nachricht, 2 = private, 3 = Hervorhebungen
-    - ${format_lag}: die Verzögerung für einen IRC Server-Buffer, ist leer falls es keine Verzögerung gibt (evaluiert aus Option buflist.format.lag)
-    - ${format_tls_version}: Indikator der TLS Version für den Serverbuffer, Channels bleiben unberührt (evaluiert aus Option buflist.format.tls_version)
-----
-// end::buflist_commands[]
-
-// tag::charset_commands[]
-[[command_charset_charset]]
-* `+charset+`: Ändert den Zeichensatz für aktuellen Buffer
-
-----
-/charset  decode|encode <charset>
-          reset
-
- decode: ändere Zeichensatz zum dekodieren
- encode: ändere Zeichensatz zum kodieren
-charset: wähle neuen Zeichensatz für aktuellen Buffer
-  reset: setze im aktuellen Buffer den Zeichensatz zurück
-----
-// end::charset_commands[]
-
-// tag::exec_commands[]
-[[command_exec_exec]]
-* `+exec+`: führe externe Befehle aus
-
-----
-/exec  -list
-       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-oc|-n|-nf] [-oerr] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] [-flush|-noflush] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <timeout>] [-name <name>] [-pipe <command>] [-hsignal <name>] <command>
-       -in <id> <text>
-       -inclose <id> [<text>]
-       -signal <id> <signal>
-       -kill <id>
-       -killall
-       -set <id> <property> <value>
-       -del <id>|-all [<id>...]
-
-   -list: zeigt laufende Befehle an
-     -sh: es wird die shell verwendet um Befehle auszuführen, mehrere Befehle können dabei gepiped werden (WARNUNG: Dieses Argument sollte nur verwendet werden, falls alle Argumente unbedenklich sind, siehe Argument -nosh)
-   -nosh: die shell wird nicht verwendet um Befehle auszuführen (wird benötigt, falls der Befehl mit sensiblen Daten hantiert. Zum Beispiel der Inhalt einer Nachricht eines anderen Users)(Standardverhalten)
-     -bg: führt Prozess im Hintergrund aus: es wird weder eine Prozessausgabe noch ein Rückgabewert ausgegeben (nicht kompatibel mit Argumenten -o/-oc/-n/-nf/-pipe/-hsignal)
-   -nobg: gibt Prozessausgabe und Rückgabewert aus (Standardverhalten)
-  -stdin: erstellt eine PIPE um Daten zu dem Prozess zu senden (mittels /exec -in/-inclose)
--nostdin: es wird keine PIPE für stdin erstellt (Standardverhalten)
- -buffer: zeigt/sendet Ausgabe des Befehls an diesen Buffer (wird der angegebene Buffer nicht gefunden wird ein neuer Buffer mit dem Namen "exec.exec.xxx" erstellt)
-      -l: gibt die Ausgabe des Befehls lokal im Buffer aus (Standardverhalten)
-      -o: gibt die Ausgabe des Befehls im Buffer aus (nicht kompatibel mit Argumenten -bg/-pipe/-hsignal)
-     -oc: gibt die Ausgabe des Befehls im Buffer aus und führt diesen dann aus (betrifft Zeilen die mit "/" beginnen bzw. das benutzerdefinierte Befehlszeichen verwenden) (nicht kompatibel mit Argumenten -bg/-pipe/-hsignal)
-      -n: gibt die Ausgabe des Befehls in einem neuen Buffer aus (nicht kompatibel mit Argumenten -bg/-pipe/-hsignal)
-     -nf: gibt die Ausgabe des Befehls in einem neuen Buffer, mit einem freien Inhalt, aus (kein Zeilenumbruch, keine Limitierung in der Anzahl der Zeilen), aus (nicht kompatibel mit Argument -bg/-pipe/-hsignal)
-   -oerr: sendet stderr (Fehlerausgabe) an den Buffer (kann nur mit den Optionen -o und -oc verwendet werden)
-     -cl: der neue Buffer wird vor einer Ausgabe gelöscht
-   -nocl: Ausgabe wird an neuen Buffer angehangen, ohne diesen vorher zu löschen (Standardverhalten)
-     -sw: es wird zum Ausgabebuffer gewechselt (Standardverhalten)
-   -nosw: es wird nicht zum Ausgabebuffer gewechselt
-     -ln: legt eine Zeilennummerierung an (Standardverhalten, nur für neue Buffer)
-   -noln: es wird keine Zeilennummerierung angezeigt
-  -flush: die Ausgabe des Befehls findet in Echtzeit statt (Standardwert)
--noflush: die Ausgabe des Befehls wird am Ende der Ausführung ausgegeben
-  -color: es wird eine der folgenden Aktionen bei ANSI Zeichenkodierungen in der Ausgabe durchgeführt:
-             ansi: ANSI-Kodierung wird beibehalten
-             auto: konvertiert ANSI-Farben nach WeeChat/IRC (Standardverhalten)
-              irc: konvertiert ANSI-Farben nach IRC Farben
-          weechat: konvertiert ANSI-Farben nach WeeChat-Farben
-            strip: ANSI-Farben werden entfernt
-     -rc: der Rückgabewert wird ausgegeben (Standardverhalten)
-   -norc: der Rückgabewert wird unterdrückt
--timeout: gibt eine Zeitbeschränkung für den auszuführenden Befehl an (in Sekunden)
-   -name: dem Befehl wird ein Name zugewiesen (um den Befehl später mittels /exec zu nutzen)
-   -pipe: sendet die Ausgabe an einen Befehl von WeeChat/Erweiterung (Zeile für Zeile); sollen Leerzeichen im Befehl/Argument verwendet werden, müssen diese mit Anführungszeichen eingeschlossen werden; Variable $line wird durch die entsprechende Zeile ersetzt (standardmäßig wird die Zeile, getrennt durch ein Leerzeichen, dem Befehl nachgestellt (nicht kompatibel mit den Argumenten -bg/-o/-oc/-n/-nf)
- -hsignal: sendet die Ausgabe als hsignal (um es z.B. mittels /trigger zu verwenden) (nicht kompatibel mit den Argumenten -bg/-o/-oc/-n/-nf)
- command: Befehl der ausgeführt werden soll; beginnt der Befehl mit "url:", wird die shell deaktiviert und der Inhalt der URL wird heruntergeladen und im Buffer ausgegeben
-      id: identifiziert eindeutig einen Befehl: entweder durch eine Nummer oder einen Namen (sofern ein Name mittels "-name xxx" zugewiesen wurde)
-     -in: sendet Text an die Standardeingabe des Prozesses
--inclose: wie -in aber stdin wird danach geschlossen (und der Text ist optional: ohne Text wird stdin umgehend geschlossen
- -signal: schickt ein Signal an den Prozess; das Signal kann entweder ein Integerwert oder eines der folgenden Schlüsselworte sein: hup, int, quit, kill, term, usr1, usr2
-   -kill: Alias für "-signal <id> kill"
--killall: beendet alle laufenden Prozesse
-    -set: nutzt eine Hook-Fähigkeit (siehe Funktion hook_set in Anleitung für API Erweiterung)
-property: Hook-Fähigkeit
-   value: neuer Wert für Hook-Fähigkeit
-    -del: entfernt einen beendeten Befehl
-    -all: entfernt alle beendeten Befehle
-
-Standardoptionen können in der Einstellung exec.command.default_options bestimmt werden.
-
-Beispiele:
-  /exec -n ls -l /tmp
-  /exec -sh -n ps xu | grep weechat
-  /exec -n -norc url:https://pastebin.com/raw.php?i=xxxxxxxx
-  /exec -nf -noln links -dump https://weechat.org/files/doc/devel/weechat_user.en.html
-  /exec -o uptime
-  /exec -pipe "/print Machine uptime:" uptime
-  /exec -n tail -f /var/log/messages
-  /exec -kill 0
-----
-// end::exec_commands[]
-
-// tag::fifo_commands[]
-[[command_fifo_fifo]]
-* `+fifo+`: Konfiguration für "fifo" Erweiterung
-
-----
-/fifo  enable|disable|toggle
-
- enable: aktivieren der FIFO pipe
-disable: deaktivieren der FIFO pipe
- toggle: Status der FIFO pipe umschalten
-
-Die FIFO-Pipe wird als Fernbedienung genutzt, es können Befehle oder Text von der Shell an die FIFO-Pipe geschickt werden
-Standardmäßig heißt die FIFO-Pipe weechat_fifo_xxx (wobei xxx die WeeChat-Prozess-ID ist) und befindet sich im WeeChat-Laufzeitverzeichnis (siehe /debug dirs).
-
-Folgendes Format wird erwartet:
-  plugin.buffer *Text oder Befehl an dieser Stelle
-  *Text oder Befehl an dieser Stelle
-
-Beispiel um den eigenen Nick auf dem Server libera zu ändern:
-  echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
-
-Bitte lese die Benutzeranleitung für weitere Informationen und Beispiele.
-
-Beispiele:
-  /fifo toggle
-----
-// end::fifo_commands[]
-
-// tag::fset_commands[]
-[[command_fset_fset]]
-* `+fset+`: Optionen von WeeChat und Erweiterungen schnell anpassen
-
-----
-/fset  -bar
-       -refresh
-       -up|-down [<number>]
-       -left|-right [<percent>]
-       -go <line>|end
-       -toggle
-       -add [<value>]
-       -reset
-       -unset
-       -set
-       -setnew
-       -append
-       -mark
-       -format
-       -export [-help|-nohelp] <filename>
-       <filter>
-
-       -bar: fügt eine Hilfe in einer Bar hinzu
-   -refresh: der Bildschirm wird neu gezeichnet (Befehl: /window refresh)
-        -up: bewegt die ausgewählte Zeile um die Anzahl an Zeilen nach oben
-      -down: bewegt die ausgewählte Zeile um die Anzahl an Zeilen nach unten
-      -left: der fset Buffer wird wird prozentual entsprechend der Fensterbreite nach links verschoben
-     -right: der fset Buffer wird wird prozentual entsprechend der Fensterbreite nach rechts verschoben
-        -go: wählt eine Zeile mit der entsprechenden Nummer aus, die erste Zeile beginnt mit 0 (mit "end" wird die letzte Zeile ausgewählt)
-    -toggle: der Wert einer Variable vom Typ boolean wird umgeschaltet
-       -add: addiert den "Wert" (kann auch eine negative Zahl sein) bei Integer und Farbe, für andere Typen wird die Variable in die Eingabezeile kopiert und der Cursor positioniert (bei negativem Wert wird der Cursor an Beginn der Variable positioniert, bei positivem Wert wird der Cursor an das Ende gesetzt)
-     -reset: löscht den Wert von der Option
-     -unset: Option wird zurückgesetzt
-       -set: der /set Befehl wird in die Eingabezeile kopiert um den Wert der Option zu editieren (der Cursor wird auf den Anfang des Wertes gesetzt)
-    -setnew: der /set Befehl wird in die Eingabezeile kopiert um den Wert add the /set command in input to edit a new value for the option
-    -append: der /set Befehl wird in die Eingabezeile kopiert um einen zusätzlichen Wert einzugeben (der Cursor wird an das Ende der Variable positioniert)
-      -mark: Markierung umschalten
-    -format: es wird zum nächsten verfügbaren Format gewechselt
-    -export: exportiert die Optionen und Werte, welche angezeigt werden, in eine Datei (jede Zeile hat das Format: "/set Name Wert" oder "/unset Name")
-      -help: der Hilfstext für eine Option wird in die exportierte Datei geschrieben (siehe /help fset.look.export_help_default)
-    -nohelp: der Hilfetext für eine Option wird nicht in die exportierte Datei geschrieben (siehe /help fset.look.export_help_default)
-     filter: setzt einen neuen Filter um nur ausgewählte Optionen anzuzeigen (die Filterfunktion kann direkt in der Eingabezeile eingegeben werden); mögliche Formate sind:
-               *       alle Optionen werden angezeigt  (keine Filterung)
-               xxx     zeigt nur Optionen mit "xxx" im Namen
-               f:xxx   zeigt nur Konfigurationsdatei "xxx" an
-               t:xxx   zeigt nur Optionen des entsprechenden Typs, "xxx" (bool/int/str/col)
-               d       zeigt nur Optionen die verändert wurden
-               d:xxx   zeigt nur Optionen die verändert wurden und "xxx" im Namen haben
-               d=xxx   zeigt nur veränderte Optionen, die "xxx" als Wert haben
-               d==xxx  zeigt nur veränderte Optionen die exakt "xxx" als Wert haben
-               h=xxx   zeigt alle Optionen, die den Text "xxx" in der Beschreibung enthalten (in der Übersetzung)
-               he=xxx  zeigt alle Optionen, die den Text "xxx" in der Beschreibung enthalten (in der englischen Beschreibung)
-               =xxx    zeigt nur Optionen mit "xxx" als Wert
-               ==xxx   zeigt nur Optionen die exakt "xxx" als Wert haben
-               c:xxx   zeigt nur Optionen auf die die evaluierte Bedingung "xxx" zutrifft, folgende Variable können verwendet werden: file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
-
-Zeilen werden mittels evaluierten Ausdrücken dargestellt (siehe /help eval für das Format), dazu werden diese Optionen verwendet:
-  - fset.format.option1: erstes Format für eine Option
-  - fset.format.option2: zweites Format für eine Option
-
-Die nachfolgenden Variablen können in den Optionen genutzt werden:
-  - Optionsdaten, mit Farbe und durch Leerzeichen auf der rechten Seite aufgefüllt:
-    - ${file}: Konfigurationsdatei (zum Beispiel "weechat" oder "irc")
-    - ${section}: Sektion
-    - ${option}: Name der Option
-    - ${name}: vollständiger Name der Option (file.section.option)
-    - ${parent_name}: übergeordneter Name der Option
-    - ${type}: Optionstyp (übersetzt)
-    - ${type_en}: Optionstyp (auf englisch)
-    - ${type_short}: Optionstyp Kurzform (bool/int/str/col)
-    - ${type_tiny}: Optionstyp klein (b/i/s/c)
-    - ${default_value}: Standardwert einer Option
-    - ${default_value_undef}: "1" falls Standardwert null ist, andernfalls "0"
-    - ${value}: Optionswert
-    - ${value_undef}: "1" wenn Wert null ist, andernfalls "0"
-    - ${value_changed}: "1" wenn Wert abweichend vom Standardwert ist, andernfalls "0"
-    - ${value2}: Optionswert, mit geerbtem Wert falls null
-    - ${parent_value}: übergeordneter Optionswert
-    - ${min}: minimaler Wert
-    - ${max}: maximaler Wert
-    - ${description}: Beschreibung der Option (übersetzt)
-    - ${description2}: Beschreibung der Option (übersetzt), "(keine Beschreibung)" (übersetzt) falls keine Beschreibung vorhanden
-    - ${description_en}: Beschreibung der Option (in englisch)
-    - ${description_en2}: Beschreibung der Option (in englisch), "(keine Beschreibung)" falls keine Beschreibung vorhanden
-    - ${string_values}: Zeichenketten sind für Integer Optionen erlaubt
-    - ${marked}: "1" wenn Option markiert ist, andernfalls "0"
-    - ${index}: Index der Option in der Liste
-  - Optionsdaten, mit Farbe aber ohne Leerzeichen:
-    - selbe Namen, vorangestellt mit Unterstrich, zum Beispiel: ${_name}, ${_type}, ...
-  - Optionsdaten, Rohformat (keine Farben/Leerzeichen):
-    - selbe Namen, mit zwei vorangestellten Unterstrichen, zum Beispiel: ${__name}, ${__type}, ...
-  - Optionsdaten, nur Leerzeichen:
-    - selbe Namen, mit vorangestelltem "empty_", zum Beispiel: ${empty_name}, ${empty_type}
-  - andere Daten:
-    - ${selected_line}: "1" wenn Zeile ausgewählt ist, andernfalls "0"
-    - ${newline}: fügt einen Zeilenumbruch an diese Position, dadurch wird die Option über mehrere Zeilen angezeigt
-
-Tasten und Eingaben um sich im fset Buffer zu bewegen:
-  hoch                      eine Zeile nach oben
-  runter                    eine Zeile nach unten
-  pgup                      eine Seite nach oben
-  pgdn                      eine Seite nach unten
-  alt-home          <<      springe zur ersten Zeile
-  alt-end           >>      springe zur letzten Zeile
-  F11               <       horizontal nach links scrollen
-  F12               >       horizontal nach rechts scrollen
-
-Tasten und Eingaben um Optionen im fset Buffer zu editieren:
-  alt+space         t       boolean Werte umschalten
-  alt+'-'           -       subtrahiert 1 vom Wert, bei Integer/Farboptionen, bei anderen Typen kann der Wert editiert werden
-  alt+'+'           +       addiert 1 zum Wert, bei Integer/Farboptionen, bei anderen Typen kann der Wert editiert werden
-  alt+f, alt+r      r       Wert resetten
-  alt+f, alt+u      u       Wert zurücksetzen
-  alt+enter         s       Wert setzen
-  alt+f, alt+n      n       ein neuer Wert wird gesetzt, der alte Wert wird gelöscht
-  alt+f, alt+a      a       dem Wert was hinzufügen
-  alt+','           ,       markieren/demarkieren einer Option
-  shift+hoch                eine Zeile nach oben und markiert/demarkiert Option
-  shift+runter              markiert/demarkiert Option und geht eine Zeile nach unten
-                    m:xxx   markiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe Filterung weiter oben)
-                    u:xxx   demarkiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe Filterung weiter oben)
-
-weitere Tasten und Eingaben im fset Buffer:
-  ctrl+l                    der Bildschirm wird neu gezeichnet (Befehl: /fset -refresh)
-                    $       Optionen neu einlesen (markierte Optionen werden beibehalten)
-                    $$      Optionen neu einlesen (Markierungen von Optionen werden dabei gelöscht)
-  alt+p             p       Umschalten der Beschreibung von Erweiterungen (plugins.desc.*)
-  alt+v             v       Hilfe-Bar Ein-/Ausschalten
-                    s:x,y   sortiert Optionen nach Bereichen x,y (siehe /help fset.look.sort)
-                    s:      setzt Sortierung wieder auf Standardwerte (siehe /help fset.look.sort)
-                    w:xxx   exportiert Optionen in Datei "xxx"
-                    w-:xxx  exportiert Optionen in Datei "xxx", ohne Hilfstext
-                    w+:xxx  exportiert Optionen in Datei "xxx", mit Hilfstext
-  ctrl+x            x       umschalten zwischen der Darstellung von Optionen
-                    q       schließt fset Buffer
-
-Mausaktionen im fset Buffer:
-  Mausrad hoch/runter              Zeile hoch/runter
-  linke Maustaste                  Zeile auswählen
-  rechte Maustaste                 boolean umschalten (an/aus) oder editiere den Wert einer Option
-  rechte Maustaste + links/rechts  Integer/Farbwerte werden erhöht/verringert, andere Variabletypen werden in die Eingabezeile kopiert
-  rechte Maustaste + hoch/runter   markieren/demarkieren von mehreren Optionen
-
-Hinweis: Leerzeichen am Anfang der Eingabezeile werden ignoriert und der folgende Text wird als Filter verwendet. Ein Beispiel: "q" schließt den fset Buffer wobei hingegen " q" alle Optionen anzeigt die ein "q" im Namen beinhalten.
-
-Beispiele:
-  zeigt alle IRC Optionen an, die verändert wurden:
-    /fset d:irc.*
-  zeigt alle Optionen die "nicklist" im Namen tragen:
-    /fset nicklist
-  zeigt alle Werte die "red" beinhalten:
-    /fset =red
-  zeigt alle Werte die exakt "red" lauten:
-    /fset ==red
-  zeigt alle Integer-Optionen der IRC-Erweiterung:
-    /fset c:${file} == irc && ${type_en} == integer
-----
-// end::fset_commands[]
-
-// tag::guile_commands[]
-[[command_guile_guile]]
-* `+guile+`: auflisten/installieren/beenden von Skripten
-
-----
-/guile  list|listfull [<name>]
-        load [-q] <filename>
-        autoload
-        reload|unload [-q] [<name>]
-        eval [-o|-oc] <code>
-        version
-
-    list: installierte Skripten werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Skripten
-    load: installiert ein Skript
-autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
-  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
-  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
-filename: Skript (Datei) welches geladen werden soll
-      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
-    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
-    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
-      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
-     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
-    code: Quelltext welcher evaluiert werden soll
- version: zeigt die Version des verwendeten Interpreters an
-
-Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
-----
-// end::guile_commands[]
-
-// tag::javascript_commands[]
-[[command_javascript_javascript]]
-* `+javascript+`: auflisten/installieren/beenden von Skripten
-
-----
-/javascript  list|listfull [<name>]
-             load [-q] <filename>
-             autoload
-             reload|unload [-q] [<name>]
-             eval [-o|-oc] <code>
-             version
-
-    list: installierte Skripten werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Skripten
-    load: installiert ein Skript
-autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
-  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
-  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
-filename: Skript (Datei) welches geladen werden soll
-      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
-    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
-    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
-      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
-     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
-    code: Quelltext welcher evaluiert werden soll
- version: zeigt die Version des verwendeten Interpreters an
-
-Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
-----
-// end::javascript_commands[]
-
-// tag::logger_commands[]
-[[command_logger_logger]]
-* `+logger+`: Konfiguration für "logger" Erweiterung (dient zum protokollieren der Buffer)
-
-----
-/logger  list
-         set <level>
-         flush
-         disable
-
-   list: zeigt von allen geöffneten Buffern den Status der Protokollierung an
-    set: legt den Level fest, nach dem der aktuelle Buffer protokolliert werden soll
-  level: legt fest, welche Nachrichten protokolliert werden sollen (0 = nichts protokollieren, 1 = nur die wichtigsten Nachrichten protokollieren .. 9 = alle Nachrichten werden protokolliert)
-  flush: sichert alle Protokolle umgehend
-disable: die Protokollierung wird für den aktuellen Buffer deaktiviert (der Level wird auf 0 gestellt)
-
-Die Einstellungen "logger.level.*" und "logger.mask.*" können genutzt werden um den Level der Protokollierung festzulegen und um eine Maske für einen oder mehrere Buffer zu definieren.
-
-Level der Protokollierung, die die IRC Erweiterung unterstützt:
-  1: Nachrichten von Usern (private und öffentliche Nachrichten), notice (Server und Kanal)
-  2: Wechsel von Nicks (/nick)
-  3: Nachrichten vom Server
-  4: join/part/quit Nachrichten
-  9: alle Nachrichten
-
-Beispiele:
-  Stellt den Level für den aktuellen Buffer auf 5 ein:
-    /logger set 5
-  Die Protokollierung für den aktuellen Buffer wird ausgeschaltet:
-    /logger disable
-  Stellt den Level für alle IRC-Buffer auf 3 ein:
-    /set logger.level.irc 3
-  Die Protokollierung, für den WeeChat Haupt-Buffer, wird deaktiviert:
-    /set logger.level.core.weechat 0
-  Für jeden IRC-Server wird ein separates Verzeichnis erstellt und darin eine eigene Protokoll-Datei, für jeden Kanal:
-    /set logger.mask.irc "$server/$channel.weechatlog"
-----
-// end::logger_commands[]
-
-// tag::lua_commands[]
-[[command_lua_lua]]
-* `+lua+`: auflisten/installieren/beenden von Skripten
-
-----
-/lua  list|listfull [<name>]
-      load [-q] <filename>
-      autoload
-      reload|unload [-q] [<name>]
-      eval [-o|-oc] <code>
-      version
-
-    list: installierte Skripten werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Skripten
-    load: installiert ein Skript
-autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
-  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
-  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
-filename: Skript (Datei) welches geladen werden soll
-      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
-    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
-    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
-      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
-     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
-    code: Quelltext welcher evaluiert werden soll
- version: zeigt die Version des verwendeten Interpreters an
-
-Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
-----
-// end::lua_commands[]
-
 // tag::xfer_commands[]
 [[command_xfer_me]]
 * `+me+`: sendet CTCP Aktion an entfernten Host
@@ -2879,430 +3306,3 @@ listfull: zeigt eine ausführliche Liste der Übertragungen
 Ohne Angabe von Argumenten wird der Buffer mit der Übertragungsliste geöffnet.
 ----
 // end::xfer_commands[]
-
-// tag::perl_commands[]
-[[command_perl_perl]]
-* `+perl+`: auflisten/installieren/beenden von Skripten
-
-----
-/perl  list|listfull [<name>]
-       load [-q] <filename>
-       autoload
-       reload|unload [-q] [<name>]
-       eval [-o|-oc] <code>
-       version
-
-    list: installierte Skripten werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Skripten
-    load: installiert ein Skript
-autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
-  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
-  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
-filename: Skript (Datei) welches geladen werden soll
-      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
-    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
-    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
-      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
-     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
-    code: Quelltext welcher evaluiert werden soll
- version: zeigt die Version des verwendeten Interpreters an
-
-Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
-----
-// end::perl_commands[]
-
-// tag::php_commands[]
-[[command_php_php]]
-* `+php+`: auflisten/installieren/beenden von Skripten
-
-----
-/php  list|listfull [<name>]
-      load [-q] <filename>
-      autoload
-      reload|unload [-q] [<name>]
-      eval [-o|-oc] <code>
-      version
-
-    list: installierte Skripten werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Skripten
-    load: installiert ein Skript
-autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
-  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
-  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
-filename: Skript (Datei) welches geladen werden soll
-      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
-    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
-    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
-      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
-     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
-    code: Quelltext welcher evaluiert werden soll
- version: zeigt die Version des verwendeten Interpreters an
-
-Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
-----
-// end::php_commands[]
-
-// tag::python_commands[]
-[[command_python_python]]
-* `+python+`: auflisten/installieren/beenden von Skripten
-
-----
-/python  list|listfull [<name>]
-         load [-q] <filename>
-         autoload
-         reload|unload [-q] [<name>]
-         eval [-o|-oc] <code>
-         version
-
-    list: installierte Skripten werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Skripten
-    load: installiert ein Skript
-autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
-  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
-  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
-filename: Skript (Datei) welches geladen werden soll
-      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
-    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
-    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
-      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
-     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
-    code: Quelltext welcher evaluiert werden soll
- version: zeigt die Version des verwendeten Interpreters an
-
-Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
-----
-// end::python_commands[]
-
-// tag::relay_commands[]
-[[command_relay_relay]]
-* `+relay+`: Relay-Kontrolle
-
-----
-/relay  list|listfull|listrelay
-        add <name> <port>|<path>
-        del|start|restart|stop <name>
-        raw
-        sslcertkey
-
-         list: Auflistung der Relay-Clients (nur aktive Relays)
-     listfull: detaillierte Auflistung der Relay-Clients (alle Relays)
-    listrelay: Auflistung der Relays (Name und Port)
-          add: fügt ein Relay, für ein Protokoll + Name, hinzu
-          del: entfernt Relay für ein Protokoll + Name
-        start: lausche am Port
-      restart: beendet den Server Socket und lauscht erneut am Port (Clients bleiben verbunden)
-         stop: schließt den Server Socket (Clients bleiben verbunden)
-         name: Name des Relays (siehe Format weiter unten)
-         port: Port der für Relay genutzt werden soll
-         path: Pfad der für Relay genutzt werden soll (ausschließlich für UNIX Domain Socket); Pfad ist evaluiert (siehe Funktion string_eval_path_home in Erweiterung API Referenz)/n
-          raw: öffnet einen Buffer mit Relay-Rohdaten
-   sslcertkey: setzt SSL Zertifikat/Schlüssel mittels Pfad in Einstellung relay.network.ssl_cert_key
-
-Aufbau des Relay-Namens: [ipv4.][ipv6.][ssl.]<Protokoll.Name> oder unix.[ssl.]<Protokoll.Name>
-         ipv4: erzwingt die Nutzung von IPv4
-         ipv6: erzwingt die Nutzung von IPv6
-          ssl: aktiviert SSL
-         unix: nutzt UNIX Domain Socket
-protocol.name: Protokoll und Name des Relay:
-                 - Protokoll "irc": Name des Servers welcher geteilt werden soll (optional. Falls kein Name angegeben wird, muss der Client einen Namen mit dem Befehl "PASS" übermitteln, das Format ist wie folgt: "PASS Server:Passwort")
-                 - Protokoll "weechat" (es wird kein Name verwendet)
-
-Das "irc" Protokoll dient dazu eine Verbindung zu einem anderen IRC Client (oder zu einem zweiten WeeChat) herzustellen.
-Das "weechat" Protokoll wird von einem Remote-Interface genutzt um eine Verbindung auf dem Port herzustellen. Siehe https://weechat.org/about/interfaces/
-
-Ohne Angabe von Argumenten werden alle Relay-Clients in einem neuen Buffer dargestellt.
-
-Beispiele:
-  IRC Proxy für Server "libera":
-    /relay add irc.libera 8000
-  IRC Proxy, für Server "libera", mit SSL:
-    /relay add ssl.irc.libera 8001
-  IRC Proxy für alle Server (Client wählt aus), mit SSL:
-    /relay add ssl.irc 8002
-  WeeChat Protokoll:
-    /relay add weechat 9000
-  WeeChat Protokoll, mit SSL:
-    /relay add ssl.weechat 9001
-  WeeChat Protokoll, mit SSL, nur IPv4 nutzen:
-    /relay add ipv4.ssl.weechat 9001
-  WeeChat Protokoll, mit SSL, nur IPv6 nutzen:
-    /relay add ipv6.ssl.weechat 9001
-  WeeChat Protokoll, mit SSL, mit IPv4 + IPv6:
-    /relay add ipv4.ipv6.ssl.weechat 9001
-  Weechat Protokoll über UNIX Domain Socket:
-    /relay add unix.weechat ${weechat_runtime_dir}/relay_socket
-----
-// end::relay_commands[]
-
-// tag::ruby_commands[]
-[[command_ruby_ruby]]
-* `+ruby+`: auflisten/installieren/beenden von Skripten
-
-----
-/ruby  list|listfull [<name>]
-       load [-q] <filename>
-       autoload
-       reload|unload [-q] [<name>]
-       eval [-o|-oc] <code>
-       version
-
-    list: installierte Skripten werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Skripten
-    load: installiert ein Skript
-autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
-  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
-  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
-filename: Skript (Datei) welches geladen werden soll
-      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
-    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
-    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
-      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
-     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
-    code: Quelltext welcher evaluiert werden soll
- version: zeigt die Version des verwendeten Interpreters an
-
-Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
-----
-// end::ruby_commands[]
-
-// tag::script_commands[]
-[[command_script_script]]
-* `+script+`: WeeChat Skriptmanager
-
-----
-/script  list [-o|-ol|-i|-il]
-         search <text>
-         show <script>
-         load|unload|reload <script> [<script>...]
-         autoload|noautoload|toggleautoload <script> [<script>...]
-         install|remove|installremove|hold [-q] <script> [<script>...]
-         upgrade
-         update
-
-          list: gibt alle geladenen Skripten im Buffer aus (unabhängig der Programmiersprache)
-            -o: gibt eine Liste der laufenden Skripten im Buffer aus (Ausgabe in englisch)
-           -ol: gibt eine Liste der laufenden Skripten im Buffer aus (Ausgabe ist übersetzt)
-            -i: eine Liste der laufenden Skripten wird in die Eingabezeile kopiert (um sie dann manuell in einen Buffer zu senden)(Ausgabe in englisch)
-           -il: eine Liste der laufenden Skripten wird in die Eingabezeile kopiert (um sie dann manuell in einen Buffer zu senden)(Ausgabe ist übersetzt)
-        search: sucht Skripten nach Schlagwörtern, Skriptsprache (python, perl, ...), Dateierweiterung (py, pl, ...) oder beliebigem Text. Das Ergebnis wird im Skripten-Buffer dargestellt
-          show: zeigt detailliert Informationen zu einem Skript an
-          load: startet Skript(en)
-        unload: beendet Skript(en)
-        reload: Skript(en) werden neu geladen
-      autoload: das Skript wird in das autoload-Verzeichnis eingebunden
-    noautoload: das Skript wird aus dem autoload-Verzeichnis entfernt
-toggleautoload: autoload für das Skript umschalten
-       install: installiert/aktualisiert Skript(en) (physikalisch, auf dem Datenträger)
-        remove: deinstalliert Skript(en) (physikalisch, vom Datenträger)
- installremove: installiert oder deinstalliert Skript(en), abhängig davon welcher Status vorliegt
-          hold: halten/freigeben von Skript(en) (ein Skript welches gehalten wird, kann weder aktualisiert noch entfernt werden)
-            -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
-       upgrade: aktualisiert alle veralteten, installierten Skripten (sofern eine neue Version verfügbar ist)
-        update: aktualisiert den lokalen Cache für die Skripten
-
-Ohne Angaben von Argumenten öffnet dieser Befehl einen Buffer, in welchem eine Liste der Skripten dargestellt wird.
-
-Im Skript-Buffer, werden folgende Statusangaben für ein Skript angezeigt:
-  * i a H r N
-  | | | | | |
-  | | | | | obsolete (neue Version verfügbar)
-  | | | | Skript wird ausgeführt (geladen)
-  | | | gehalten
-  | | Skript wird beim Start, von WeeChat, automatisch geladen
-  | Skript ist installiert (wird aber nicht ausgeführt)
-  beliebtes Skript
-
-In der Ausgabe von /script list, wird der Status für ein Skript angegeben:
-  * ? i a H N
-  | | | | | |
-  | | | | | obsolete (neue Version verfügbar)
-  | | | | gehalten
-  | | | Skript wird beim Start, von WeeChat, automatisch geladen
-  | | Skript ist installiert (wird aber nicht ausgeführt)
-  | unbekanntes Skript (dieses Skript kann nicht heruntergeladen/aktualisiert werden)
-  beliebtes Skript
-
-Tastenbefehle die im Skript-Buffer genutzt werden können:
-  alt+i  installiert Skript (physikalisch)
-  alt+r  deinstalliert Skript (physikalisch
-  alt+l  startet ein Skript (Skript wird ausgeführt)
-  alt+L  Skript wird neu gestartet
-  alt+u  beendet ein Skript
-  alt+A  das Skript wird in das autoload-Verzeichnis eingebunden
-  alt+h  Skript wird gehalten bzw. freigegeben
-  alt+v  Skript anzeigen
-
-Befehle die in der Eingabezeile des Skript-Buffers eingegeben werden können:
-  i/r/l/L/u/A/h/v  Aktionen die für ein Skript ausgeführt werden können (siehe Tastenbefehle, weiter oben)
-  q                schließt den Buffer
-  $                Buffer wird aktualisiert
-  s:x,y            Buffer wird nach den Vorgaben x und y sortiert (siehe /help script.look.sort)
-  s:               die Sortierung des Buffers wird zurückgesetzt (Standardwerte werden genutzt)
-  word(s)          Skripten werden gefiltert: sucht nach einem oder mehreren Wörtern in den Skripten (der Beschreibung, in den Schlagwörtern, ...)
-  *                Filter wird zurückgesetzt
-
-Mausbefehle innerhalb des Skripten-Buffer:
-  Mausrad            in der Liste scrollen
-  linke Maustaste    Skript anwählen
-  rechte Maustaste   Skript installieren/entfernen
-
-Beispiele:
-  /script search url
-  /script install go.py urlserver.py
-  /script remove go.py
-  /script hold urlserver.py
-  /script reload urlserver
-  /script upgrade
-----
-// end::script_commands[]
-
-// tag::spell_commands[]
-[[command_spell_spell]]
-* `+spell+`: Konfiguration für spell-Erweiterung
-
-----
-/spell  enable|disable|toggle
-        listdict
-        setdict -|<dict>[,<dict>...]
-        deldict
-        addword [<dict>] <word>
-
-  enable: Rechtschreibprüfung wird aktiviert
- disable: Rechtschreibprüfung wird deaktiviert
-  toggle: Funktionalität der Rechtschreibprüfung umschalten
-listdict: die, auf dem System, installierten Wörterbücher werden aufgelistet
- setdict: Wörterbuch für den aktuellen Buffer einstellen (mehrere Wörterbücher müssen durch Kommata getrennt werden (spezieller Wert "-" deaktiviert die Rechtschreibprüfung für den aktuellen Buffer))
- deldict: Wörterbuch für den aktuellen Buffer entfernen
- addword: fügt ein Wort in das persönliche Wörterbuch hinzu
-
-Eingaben die mit '/' beginnen werden nicht überprüft, davon ausgenommen sind einige Befehle (siehe /set spell.check.commands).
-
-Um die Rechtschreibprüfung auf allen Buffer anzuwenden sollte die Einstellung "default_dict" genutzt und die Rechtschreibprüfung aktiviert werden:
-  /set spell.check.default_dict "de_DE-neu"
-  /spell enable
-
-Um sich eine Liste von Vorschlägen in einer Bar anzeigen zu lassen nutzt man das Item "spell_suggest".
-
-Die Standardtastaturbelegung zum Umschalten der Rechtschreibprüfung lautet alt-s.
-----
-// end::spell_commands[]
-
-// tag::tcl_commands[]
-[[command_tcl_tcl]]
-* `+tcl+`: auflisten/installieren/beenden von Skripten
-
-----
-/tcl  list|listfull [<name>]
-      load [-q] <filename>
-      autoload
-      reload|unload [-q] [<name>]
-      eval [-o|-oc] <code>
-      version
-
-    list: installierte Skripten werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Skripten
-    load: installiert ein Skript
-autoload: startet automatisch alle Skripten aus dem "autoload" Verzeichnis
-  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann werden alle Skripten beendet und erneut gestartet)
-  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle Skripten beendet)
-filename: Skript (Datei) welches geladen werden soll
-      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
-    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
-    eval: evaluiert einen Quelltext und das Ergebnis wird im aktuellen Buffer ausgegeben
-      -o: evaluierter Ergebnis wird im Buffer ausgegeben ohne das Befehle ausgeführt werden
-     -oc: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden ausgeführt
-    code: Quelltext welcher evaluiert werden soll
- version: zeigt die Version des verwendeten Interpreters an
-
-Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
-----
-// end::tcl_commands[]
-
-// tag::trigger_commands[]
-[[command_trigger_trigger]]
-* `+trigger+`: verwaltet Trigger, das Schweizer Armeemesser für WeeChat
-
-----
-/trigger  list|listfull|listdefault
-          add|addoff|addreplace <name> <hook> ["<arguments>" ["<conditions>" ["<regex>" ["<command>" ["<return_code>" ["<post_action>"]]]]]]
-          addinput [<hook>]
-          input|output|recreate <name>
-          set <name> <option> <value>
-          rename|copy <name> <new_name>
-          enable|disable|toggle [<name>|-all [<name>...]]
-          restart <name>|-all [<name>...]
-          show <name>
-          del <name>|-all [<name>...]
-          restore <name> [<name>...]
-          default -yes
-          monitor [<filter>]
-
-       list: zeigt eine Liste aller Trigger (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
-   listfull: zeigt eine detaillierte Liste, mit zusätzlichen Informationen, aller Trigger an
-listdefault: zeigt die standardmäßig genutzten Trigger an
-        add: fügt einen Trigger hinzu
-     addoff: fügt einen Trigger hinzu (deaktiviert)
- addreplace: erzeugt neuen Trigger oder ersetzt einen schon existierenden Trigger
-       name: Name des Trigger
-       hook: signal, hsignal, modifier, line, print, command, command_run, timer, config, focus, info, info_hashtable
-  arguments: Argumente für den Hook, abhängig vom genutzten Hook (getrennt durch Semikolon):
-             signal: Name(en) des signals (erforderlich)
-             hsignal: Name(en) des hsignal (erforderlich)
-             modifier: Name(en) des modifier (erforderlich)
-             line: Buffertyp ("formatted", "free" oder "*"), Liste von Buffermasken, Tags
-             print: Buffer, Tags, Nachricht, Farben entfernen
-             command: Befehl (erforderlich), Beschreibung, Argumente, Beschreibung der Argumente, Vervollständigung (alle Argumente, außer dem Befehl werden ausgewertet, "${tg_trigger_name}" wird durch den Triggernamen ersetzt, siehe /help eval)
-             command_run: Befehl(e) (erforderlich)
-             timer: Intervall (erforderlich), Anpassung an Sekunden (erforderlich), maximale Anzahl an Aufrufen
-             config: Name der Einstellung (erforderlich)
-             focus: Name(n) für sichtbaren Bereich (erforderlich) (z.B. "chat" für Chatbereich)
-             info: Name(n) der Information (erforderlich)
-             info_hashtable: Name(n) der Information (erforderlich)
- conditions: evaluierte Bedingungen für den Trigger
-      regex: einer oder mehrere reguläre Ausdrücke um Zeichenketten in Variablen zu ersetzen
-    command: Befehl welcher ausgeführt werden soll (mehrere Befehle müssen durch ";" voneinander getrennt werden)
-return_code: Rückgabewert für Callback (ok (standard), ok_eat, error)
-post_action: Aktion welche nach der Abarbeitung des Triggers ausgeführt werden soll (none (Standardwert), disable, delete)
-   addinput: erstellt einen Trigger mit einer standardmäßigen Mustervorlage
-      input: kopiert den kompletten Trigger-Befehl in die Eingabezeile
-     output: schickt den Trigger-Befehl als Text in den Buffer
-   recreate: wie "input", allerdings wird die Einstellung "addreplace" anstelle von "add" genutzt
-        set: definiert, innerhalb eines Triggers, eine Einstellung neu
-     option: Name einer Einstellung: name, hook, arguments, conditions, regex, command, return_code
-             (um Hilfe über eine Einstellung zu erhalten: /help trigger.trigger.<name>.<option>)
-      value: neuer Wert für Einstellung
-     rename: benennt einen Trigger um
-       copy: kopiert einen Trigger
-     enable: aktiviert Trigger (ohne Angabe von Argumenten: aktiviert alle Trigger)
-    disable: deaktiviert Trigger (ohne Angabe von Argumenten: deaktiviert alle Trigger)
-     toggle: de-/aktiviert Trigger (ohne Angabe von Argumenten: de-/aktiviert alle Trigger)
-    restart: startet Trigger neu (Hook(s) werden neu erstellt)
-       show: zeigt detaillierte Informationen zu einem Trigger (inklusive einer kleinen Statistik)
-        del: entfernt einen Trigger
-       -all: führt eine Aktion aus, die alle Trigger betrifft
-    restore: stellt Trigger mit Standardwerten wieder her (funktioniert nur bei vorgegebenen Triggern)
-    default: stellt die standardmäßigen Trigger wieder her
-    monitor: öffnet den Trigger Monitor-Buffer, mit optionaler Filterfunktion:
-     filter: filtert Hooks/Trigger zum Anzeigen (ein Hook muss mit "@" beginnen, zum Beispiel "@signal"), mehrere Filter können durch Kommata voneinander getrennt werden; Platzhalter "*" kann im Namen des Trigger verwendet werden
-
-Wenn ein Trigger-Callback aufgerufen wird, dann wird folgende Befehlskette ausgeführt:
-  1. Überprüfung von Bedingungen; falls unwahr, beenden
-  2. ersetze Text mittels einem oder mehreren erweiterten regulären POSIX Ausdrücken (sofern im Trigger definiert)
-  3. ein oder mehrere Befehle werden ausgeführt (sofern im Trigger definiert)
-  4. Beendigung mit einem Rückgabewert (ausgenommen sind modifiers, line, focus, info und info_hashtable)
-  5. Aktion welche nach der Abarbeitung des Triggers ausgeführt werden soll
-
-Beispiele (die standardmäßig verfügbaren Trigger kann man sich mit "/trigger listdefault" anzeigen lassen):
-  fügt einer Nachricht die Textattribute *fett*, _unterstrichen_ und /kursiv/ hinzu (nur in User-Nachrichten):
-    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
-  verbirgt die Nicklist auf kleineren Terminals:
-    /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
-    /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
-  speichert die Konfiguration jede Stunde ab:
-    /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
-  speichert, ohne Ausgabe von Text, eine Weechat-Sitzung um Mitternach (siehe /help upgrade):
-    /trigger add session_save signal day_changed "" "" "/mute /upgrade -save"
-  öffnet den Trigger Monitor und zeigt ausschließlich modifier und Trigger an, die mit "resize" im Namen beginnen:
-    /trigger monitor @modifier,resize*
-----
-// end::trigger_commands[]
