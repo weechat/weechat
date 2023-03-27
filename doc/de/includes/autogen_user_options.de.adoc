@@ -5057,7 +5057,7 @@
 ** Standardwert: `+20+`
 
 * [[option_weechat.look.input_multiline_lead_linebreak]] *weechat.look.input_multiline_lead_linebreak*
-** Beschreibung: pass:none[start the input text on a new line when the input contains multiple lines, so that the start of the lines align]
+** Beschreibung: pass:none[Beginnt den Eingabetext in einer neuen Zeile, wenn die Eingabe über mehrere Zeilen erfolgt, sodass der Anfang der Zeilen ausgerichtet ist]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
