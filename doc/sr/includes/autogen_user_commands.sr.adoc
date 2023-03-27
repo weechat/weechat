@@ -1218,7 +1218,7 @@ Examples:
          unmerge [<број>|-all]
          hide [<број>|<име>|-all [<број>|<име>...]]
          unhide [<број>|<име>|-all [<број>|<име>...]]
-         || switch [-previous]
+         switch [-previous]
          zoom
          renumber [<број1> [<број2> [<старт>]]]
          close [<n1>[-<n2>]|<име>...]
