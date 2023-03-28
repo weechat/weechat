@@ -314,6 +314,9 @@ infolist_new_var_time (struct t_infolist_item *item,
 struct t_infolist_item *
 infolist_next (struct t_infolist *infolist)
 {
+    if (!infolist)
+        return NULL;
+
     if (!infolist->ptr_item)
     {
         infolist->ptr_item = infolist->items;
@@ -332,6 +335,9 @@ infolist_next (struct t_infolist *infolist)
 struct t_infolist_item *
 infolist_prev (struct t_infolist *infolist)
 {
+    if (!infolist)
+        return NULL;
+
     if (!infolist->ptr_item)
     {
         infolist->ptr_item = infolist->last_item;
@@ -348,6 +354,9 @@ infolist_prev (struct t_infolist *infolist)
 void
 infolist_reset_item_cursor (struct t_infolist *infolist)
 {
+    if (!infolist)
+        return;
+
     infolist->ptr_item = NULL;
 }
 
