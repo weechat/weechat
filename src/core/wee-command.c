@@ -2923,6 +2923,27 @@ command_help_list_commands (int verbose)
 }
 
 /*
+ * Returns translated help text for values of a color option.
+ */
+
+const char *
+command_help_option_color_values ()
+{
+    return _("a WeeChat color name (default, black, "
+             "(dark)gray, white, (light)red, (light)green, "
+             "brown, yellow, (light)blue, (light)magenta, "
+             "(light)cyan), a terminal color number or "
+             "an alias; attributes are allowed before "
+             "color (for text color only, not "
+             "background): "
+             "\"%\" for blink, "
+             "\".\" for \"dim\" (half bright), "
+             "\"*\" for bold, "
+             "\"!\" for reverse, "
+             "\"/\" for italic, "
+             "\"_\" for underline");
+}
+/*
  * Callback for command "/help": displays help about commands and options.
  */
 
@@ -3259,19 +3280,7 @@ COMMAND_CALLBACK(help)
                                  _("type"), _("color"));
                 gui_chat_printf (NULL, "  %s: %s",
                                  _("values"),
-                                 _("a WeeChat color name (default, black, "
-                                   "(dark)gray, white, (light)red, (light)green, "
-                                   "brown, yellow, (light)blue, (light)magenta, "
-                                   "(light)cyan), a terminal color number or "
-                                   "an alias; attributes are allowed before "
-                                   "color (for text color only, not "
-                                   "background): "
-                                   "\"%\" for blink, "
-                                   "\".\" for \"dim\" (half bright), "
-                                   "\"*\" for bold, "
-                                   "\"!\" for reverse, "
-                                   "\"/\" for italic, "
-                                   "\"_\" for underline"));
+                                 command_help_option_color_values ());
                 if (ptr_option->default_value)
                 {
                     gui_chat_printf (NULL, "  %s: %s",
