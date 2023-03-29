@@ -613,8 +613,7 @@ doc_gen_user_default_aliases (const char *path, const char *lang)
         "// tag::default_aliases[]\n"
         "[width=\"100%\",cols=\"2m,5m,5\",options=\"header\"]\n"
         "|===\n"
-        "| %s | %s | %s\n"
-        "\n",
+        "| %s | %s | %s\n",
         ESCAPE(_("Alias")),
         ESCAPE(_("Command")),
         ESCAPE(_("Completion")));
@@ -663,8 +662,7 @@ doc_gen_user_irc_colors (const char *path, const char *lang)
         "// tag::irc_colors[]\n"
         "[width=\"50%\",cols=\"^2m,3\",options=\"header\"]\n"
         "|===\n"
-        "| %s | %s\n"
-        "\n",
+        "| %s | %s\n",
         ESCAPE(_("IRC color")),
         ESCAPE(_("WeeChat color")));
 
@@ -738,7 +736,7 @@ doc_gen_api_infos (const char *path, const char *lang)
         "// tag::infos[]\n"
         "[width=\"100%\",cols=\"^1,^2,6,6\",options=\"header\"]\n"
         "|===\n"
-        "| %s | %s | %s | %s\n\n",
+        "| %s | %s | %s | %s\n",
         ESCAPE(_("Plugin")),
         ESCAPE(_("Name")),
         ESCAPE(_("Description")),
@@ -759,7 +757,7 @@ doc_gen_api_infos (const char *path, const char *lang)
         ptr_hook = (struct t_hook *)arraylist_get (list_hooks, i);
         string_fprintf (
             file,
-            "| %s | %s | %s | %s\n\n",
+            "| %s | %s | %s | %s\n",
             ESCAPE(PLUGIN(ptr_hook->plugin)),
             ESCAPE(HOOK_INFO(ptr_hook, info_name)),
             ESCAPE(TRANS(HOOK_INFO(ptr_hook, description))),
@@ -827,7 +825,7 @@ doc_gen_api_infos_hashtable (const char *path, const char *lang)
         "// tag::infos_hashtable[]\n"
         "[width=\"100%\",cols=\"^1,^2,6,6,8\",options=\"header\"]\n"
         "|===\n"
-        "| %s | %s | %s | %s | %s\n\n",
+        "| %s | %s | %s | %s | %s\n",
         ESCAPE(_("Plugin")),
         ESCAPE(_("Name")),
         ESCAPE(_("Description")),
@@ -849,7 +847,7 @@ doc_gen_api_infos_hashtable (const char *path, const char *lang)
         ptr_hook = (struct t_hook *)arraylist_get (list_hooks, i);
         string_fprintf (
             file,
-            "| %s | %s | %s | %s | %s\n\n",
+            "| %s | %s | %s | %s | %s\n",
             ESCAPE(PLUGIN(ptr_hook->plugin)),
             ESCAPE(HOOK_INFO(ptr_hook, info_name)),
             ESCAPE(TRANS(HOOK_INFO_HASHTABLE(ptr_hook, description))),
@@ -918,7 +916,7 @@ doc_gen_api_infolists (const char *path, const char *lang)
         "// tag::infolists[]\n"
         "[width=\"100%\",cols=\"^1,^2,5,5,5\",options=\"header\"]\n"
         "|===\n"
-        "| %s | %s | %s | %s | %s\n\n",
+        "| %s | %s | %s | %s | %s\n",
         ESCAPE(_("Plugin")),
         ESCAPE(_("Name")),
         ESCAPE(_("Description")),
@@ -940,7 +938,7 @@ doc_gen_api_infolists (const char *path, const char *lang)
         ptr_hook = (struct t_hook *)arraylist_get (list_hooks, i);
         string_fprintf (
             file,
-            "| %s | %s | %s | %s | %s\n\n",
+            "| %s | %s | %s | %s | %s\n",
             ESCAPE(PLUGIN(ptr_hook->plugin)),
             ESCAPE(HOOK_INFOLIST(ptr_hook, infolist_name)),
             ESCAPE(TRANS(HOOK_INFOLIST(ptr_hook, description))),
@@ -1163,10 +1161,6 @@ doc_gen_api_hdata_content (FILE *file, struct t_hdata *hdata)
                     }
                 }
             }
-            else
-            {
-                string_fprintf (file, "\n");
-            }
             arraylist_free (list_keys);
             string_free_split (keys);
         }
@@ -1308,7 +1302,7 @@ doc_gen_api_completions (const char *path, const char *lang)
         "// tag::completions[]\n"
         "[width=\"100%\",cols=\"^1,^2,7\",options=\"header\"]\n"
         "|===\n"
-        "| %s | %s | %s\n\n",
+        "| %s | %s | %s\n",
         ESCAPE(_("Plugin")),
         ESCAPE(_("Name")),
         ESCAPE(_("Description")));
@@ -1328,7 +1322,7 @@ doc_gen_api_completions (const char *path, const char *lang)
         ptr_hook = (struct t_hook *)arraylist_get (list_hooks, i);
         string_fprintf (
             file,
-            "| %s | %s | %s\n\n",
+            "| %s | %s | %s\n",
             ESCAPE(PLUGIN(ptr_hook->plugin)),
             ESCAPE(HOOK_COMPLETION(ptr_hook, completion_item)),
             ESCAPE(TRANS(HOOK_COMPLETION(ptr_hook, description))));
@@ -1378,7 +1372,6 @@ doc_gen_api_url_options (const char *path, const char *lang)
         name = string_tolower (url_options[i].name);
         string_fprintf (
             file,
-            "\n"
             "| %s | %s |",
             ESCAPE(name),
             ESCAPE(url_type_string[url_options[i].type]));
@@ -1400,7 +1393,6 @@ doc_gen_api_url_options (const char *path, const char *lang)
     }
 
     string_fprintf (file,
-                    "\n"
                     "|===\n"
                     "// end::url_options[]\n");
 
