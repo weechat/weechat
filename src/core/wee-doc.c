@@ -23,16 +23,19 @@
 #include "config.h"
 #endif
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <libintl.h>
 #include <locale.h>
+#include <gcrypt.h>
 
 #include "weechat.h"
 #include "wee-arraylist.h"
 #include "wee-command.h"
 #include "wee-config-file.h"
+#include "wee-crypto.h"
 #include "wee-dir.h"
 #include "wee-hashtable.h"
 #include "wee-hdata.h"
@@ -89,11 +92,8 @@ doc_gen_open_file (const char *path, const char *doc, const char *name,
     FILE *file;
 
     snprintf (filename, sizeof (filename),
-              "%s%s" "autogen_%s_%s.%s.adoc",
+              "%s%s" "autogen_%s_%s.%s.adoc.temp",
               path, DIR_SEPARATOR, doc, name, lang);
-
-    if (weechat_debug_core >= 1)
-        printf ("Writing: %s\n", filename);
 
     file = fopen (filename, "wb");
     if (!file)
@@ -113,6 +113,54 @@ doc_gen_open_file (const char *path, const char *doc, const char *name,
         "\n");
 
     return file;
+}
+
+/*
+ * Closes the file and renames it without ".temp" suffix, if the target name
+ * does not exist of if it exists with a different (obsolete) content.
+ *
+ * If the target name exists with same content it's kept as-is (so the
+ * timestamp does not change) and the temporary file is just deleted.
+ *
+ * Returns:
+ *    1: target file has been updated
+ *    0: target file unchanged
+ *   -1: error
+ */
+
+int
+doc_gen_close_file (const char *path, const char *doc, const char *name,
+                    const char *lang, FILE *file)
+{
+    char filename_temp[PATH_MAX], filename[PATH_MAX];
+    char hash_temp[512 / 8], hash[512 / 8];
+    int rc_temp, rc;
+
+    fclose (file);
+
+    snprintf (filename_temp, sizeof (filename_temp),
+              "%s%s" "autogen_%s_%s.%s.adoc.temp",
+              path, DIR_SEPARATOR, doc, name, lang);
+
+    snprintf (filename, sizeof (filename),
+              "%s%s" "autogen_%s_%s.%s.adoc",
+              path, DIR_SEPARATOR, doc, name, lang);
+
+    rc_temp = weecrypto_hash_file (filename_temp, GCRY_MD_SHA512,
+                                   &hash_temp, NULL);
+    if (!rc_temp)
+        return -1;
+
+    rc = weecrypto_hash_file (filename, GCRY_MD_SHA512, &hash, NULL);
+
+    if (!rc || (memcmp (hash_temp, hash, sizeof (hash)) != 0))
+    {
+        rename (filename_temp, filename);
+        return 1;
+    }
+
+    unlink (filename_temp);
+    return 0;
 }
 
 /*
@@ -169,8 +217,9 @@ doc_gen_hook_command_cmp_cb (void *data, struct t_arraylist *arraylist,
  * Generates files with commands.
  *
  * Returns:
- *   1: OK
- *   0: error
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
  */
 
 int
@@ -185,7 +234,7 @@ doc_gen_user_commands (const char *path, const char *lang)
 
     file = doc_gen_open_file (path, "user", "commands", lang);
     if (!file)
-        return 0;
+        return -1;
 
     list_hooks = arraylist_new (64, 1, 0,
                                 &doc_gen_hook_command_cmp_cb, NULL,
@@ -306,9 +355,7 @@ doc_gen_user_commands (const char *path, const char *lang)
 
     arraylist_free (list_hooks);
 
-    fclose (file);
-
-    return 1;
+    return doc_gen_close_file (path, "user", "commands", lang, file);
 }
 
 /*
@@ -374,8 +421,9 @@ doc_gen_option_cmp_cb (void *data, struct t_arraylist *arraylist,
  * Generates files with commands.
  *
  * Returns:
- *   1: OK
- *   0: error
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
  */
 
 int
@@ -392,7 +440,7 @@ doc_gen_user_options (const char *path, const char *lang)
 
     file = doc_gen_open_file (path, "user", "options", lang);
     if (!file)
-        return 0;
+        return -1;
 
     list_options = arraylist_new (64, 1, 0,
                                   &doc_gen_option_cmp_cb, NULL,
@@ -537,17 +585,16 @@ doc_gen_user_options (const char *path, const char *lang)
 
     arraylist_free (list_options);
 
-    fclose (file);
-
-    return 1;
+    return doc_gen_close_file (path, "user", "options", lang, file);
 }
 
 /*
  * Generates files with default aliases.
  *
  * Returns:
- *   1: OK
- *   0: error
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
  */
 
 int
@@ -559,7 +606,7 @@ doc_gen_user_default_aliases (const char *path, const char *lang)
 
     file = doc_gen_open_file (path, "user", "default_aliases", lang);
     if (!file)
-        return 0;
+        return -1;
 
     string_fprintf (
         file,
@@ -589,17 +636,16 @@ doc_gen_user_default_aliases (const char *path, const char *lang)
                     "|===\n"
                     "// end::default_aliases[]\n");
 
-    fclose (file);
-
-    return 1;
+    return doc_gen_close_file (path, "user", "default_aliases", lang, file);
 }
 
 /*
  * Generates files with IRC colors.
  *
  * Returns:
- *   1: OK
- *   0: error
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
  */
 
 int
@@ -610,7 +656,7 @@ doc_gen_user_irc_colors (const char *path, const char *lang)
 
     file = doc_gen_open_file (path, "user", "irc_colors", lang);
     if (!file)
-        return 0;
+        return -1;
 
     string_fprintf (
         file,
@@ -637,9 +683,7 @@ doc_gen_user_irc_colors (const char *path, const char *lang)
                     "|===\n"
                     "// end::irc_colors[]\n");
 
-    fclose (file);
-
-    return 1;
+    return doc_gen_close_file (path, "user", "irc_colors", lang, file);
 }
 
 /*
@@ -672,8 +716,9 @@ doc_gen_hook_info_cmp_cb (void *data, struct t_arraylist *arraylist,
  * Generates files with infos.
  *
  * Returns:
- *   1: OK
- *   0: error
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
  */
 
 int
@@ -686,7 +731,7 @@ doc_gen_api_infos (const char *path, const char *lang)
 
     file = doc_gen_open_file (path, "api", "infos", lang);
     if (!file)
-        return 0;
+        return -1;
 
     string_fprintf (
         file,
@@ -727,9 +772,7 @@ doc_gen_api_infos (const char *path, const char *lang)
                     "|===\n"
                     "// end::infos[]\n");
 
-    fclose (file);
-
-    return 1;
+    return doc_gen_close_file (path, "api", "infos", lang, file);
 }
 
 /*
@@ -762,8 +805,9 @@ doc_gen_hook_info_hashtable_cmp_cb (void *data, struct t_arraylist *arraylist,
  * Generates files with infos_hashtable.
  *
  * Returns:
- *   1: OK
- *   0: error
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
  */
 
 int
@@ -776,7 +820,7 @@ doc_gen_api_infos_hashtable (const char *path, const char *lang)
 
     file = doc_gen_open_file (path, "api", "infos_hashtable", lang);
     if (!file)
-        return 0;
+        return -1;
 
     string_fprintf (
         file,
@@ -819,9 +863,7 @@ doc_gen_api_infos_hashtable (const char *path, const char *lang)
                     "|===\n"
                     "// end::infos_hashtable[]\n");
 
-    fclose (file);
-
-    return 1;
+    return doc_gen_close_file (path, "api", "infos_hashtable", lang, file);
 }
 
 /*
@@ -854,8 +896,9 @@ doc_gen_hook_infolist_cmp_cb (void *data, struct t_arraylist *arraylist,
  * Generates files with infolists.
  *
  * Returns:
- *   1: OK
- *   0: error
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
  */
 
 int
@@ -868,7 +911,7 @@ doc_gen_api_infolists (const char *path, const char *lang)
 
     file = doc_gen_open_file (path, "api", "infolists", lang);
     if (!file)
-        return 0;
+        return -1;
 
     string_fprintf (
         file,
@@ -911,9 +954,7 @@ doc_gen_api_infolists (const char *path, const char *lang)
                     "|===\n"
                     "// end::infolists[]\n");
 
-    fclose (file);
-
-    return 1;
+    return doc_gen_close_file (path, "api", "infolists", lang, file);
 }
 
 /*
@@ -1141,8 +1182,9 @@ doc_gen_api_hdata_content (FILE *file, struct t_hdata *hdata)
  * Generates files with hdata.
  *
  * Returns:
- *   1: OK
- *   0: error
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
  */
 
 int
@@ -1157,7 +1199,7 @@ doc_gen_api_hdata (const char *path, const char *lang)
 
     file = doc_gen_open_file (path, "api", "hdata", lang);
     if (!file)
-        return 0;
+        return -1;
 
     string_fprintf (
         file,
@@ -1211,9 +1253,7 @@ doc_gen_api_hdata (const char *path, const char *lang)
                     "|===\n"
                     "// end::hdata[]\n");
 
-    fclose (file);
-
-    return 1;
+    return doc_gen_close_file (path, "api", "hdata", lang, file);
 }
 
 /*
@@ -1246,8 +1286,9 @@ doc_gen_hook_completion_cmp_cb (void *data, struct t_arraylist *arraylist,
  * Generates files with completions.
  *
  * Returns:
- *   1: OK
- *   0: error
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
  */
 
 int
@@ -1260,7 +1301,7 @@ doc_gen_api_completions (const char *path, const char *lang)
 
     file = doc_gen_open_file (path, "api", "completions", lang);
     if (!file)
-        return 0;
+        return -1;
 
     string_fprintf (
         file,
@@ -1299,17 +1340,16 @@ doc_gen_api_completions (const char *path, const char *lang)
                     "|===\n"
                     "// end::completions[]\n");
 
-    fclose (file);
-
-    return 1;
+    return doc_gen_close_file (path, "api", "completions", lang, file);
 }
 
 /*
  * Generates files with URL options.
  *
  * Returns:
- *   1: OK
- *   0: error
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
  */
 
 int
@@ -1321,7 +1361,7 @@ doc_gen_api_url_options (const char *path, const char *lang)
 
     file = doc_gen_open_file (path, "api", "url_options", lang);
     if (!file)
-        return 0;
+        return -1;
 
     string_fprintf (
         file,
@@ -1364,9 +1404,7 @@ doc_gen_api_url_options (const char *path, const char *lang)
                     "|===\n"
                     "// end::url_options[]\n");
 
-    fclose (file);
-
-    return 1;
+    return doc_gen_close_file (path, "api", "url_options", lang, file);
 }
 
 /*
@@ -1397,8 +1435,9 @@ doc_gen_plugin_cmp_cb (void *data, struct t_arraylist *arraylist,
  * Generates files with plugins priority.
  *
  * Returns:
- *   1: OK
- *   0: error
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
  */
 
 int
@@ -1411,7 +1450,7 @@ doc_gen_api_plugins_priority (const char *path, const char *lang)
 
     file = doc_gen_open_file (path, "api", "plugins_priority", lang);
     if (!file)
-        return 0;
+        return -1;
 
     string_fprintf (
         file,
@@ -1451,9 +1490,7 @@ doc_gen_api_plugins_priority (const char *path, const char *lang)
                     "|===\n"
                     "// end::plugins_priority[]\n");
 
-    fclose (file);
-
-    return 1;
+    return doc_gen_close_file (path, "api", "plugins_priority", lang, file);
 }
 
 /*
@@ -1484,8 +1521,9 @@ doc_gen_config_cmp_cb (void *data, struct t_arraylist *arraylist,
  * Generates files with config priority.
  *
  * Returns:
- *   1: OK
- *   0: error
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
  */
 
 int
@@ -1498,7 +1536,7 @@ doc_gen_api_config_priority (const char *path, const char *lang)
 
     file = doc_gen_open_file (path, "api", "config_priority", lang);
     if (!file)
-        return 0;
+        return -1;
 
     string_fprintf (
         file,
@@ -1538,9 +1576,7 @@ doc_gen_api_config_priority (const char *path, const char *lang)
                     "|===\n"
                     "// end::config_priority[]\n");
 
-    fclose (file);
-
-    return 1;
+    return doc_gen_close_file (path, "api", "config_priority", lang, file);
 }
 
 /*
@@ -1622,14 +1658,16 @@ doc_generate (const char *path)
         for (j = 0; doc_gen_functions[j]; j++)
         {
             rc = (int) (doc_gen_functions[j] (path, lang));
-            if (!rc)
+            if (rc < 0)
                 goto end;
-            num_files++;
+            num_files += rc;
         }
     }
 
-    printf ("doc generator: build OK: %d files written in %s\n",
-            num_files, path);
+    if (num_files > 0)
+        printf ("doc generator: OK, %d files updated\n", num_files);
+    else
+        printf ("doc generator: OK, no changes\n");
 
     rc_doc_gen = 1;
 

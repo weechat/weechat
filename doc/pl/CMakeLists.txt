@@ -60,6 +60,10 @@ if(ENABLE_DOC)
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.pl.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.pl.adoc
     doc-autogen
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_commands.pl.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_default_aliases.pl.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_irc_colors.pl.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_options.pl.adoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_user.pl.html"
   )

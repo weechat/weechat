@@ -60,6 +60,10 @@ if(ENABLE_DOC)
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.en.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.en.adoc
     doc-autogen
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_commands.en.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_default_aliases.en.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_irc_colors.en.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_options.en.adoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_user.en.html"
   )
@@ -74,6 +78,14 @@ if(ENABLE_DOC)
     ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.en.adoc
     doc-autogen
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_completions.en.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_config_priority.en.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_hdata.en.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_infolists.en.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_infos.en.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_infos_hashtable.en.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_plugins_priority.en.adoc
+    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_url_options.en.adoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_plugin_api.en.html"
   )
