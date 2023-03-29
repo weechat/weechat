@@ -31,6 +31,7 @@ set(LIB_CORE_SRC
   wee-crypto.c wee-crypto.h
   wee-debug.c wee-debug.h
   wee-dir.c wee-dir.h
+  wee-doc.c wee-doc.h
   wee-eval.c wee-eval.h
   wee-hashtable.c wee-hashtable.h
   wee-hdata.c wee-hdata.h

@@ -63,17 +63,19 @@ if(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
     COMMENT "Generating ${POT_FILE}"
   )
 
-  set(GMO_FILES)
+  set(MO_FILES)
   set(UPDATE_PO_TARGETS)
   foreach(pofile ${PO_FILES})
     get_filename_component(polang ${pofile} NAME_WE)
 
-    # Compile .po files in build directory (to binary .gmo files)
-    set(gmofile ${CMAKE_CURRENT_BINARY_DIR}/${polang}.gmo)
+    # Compile .po files in build directory (to binary .mo files)
+    set(modir "${CMAKE_CURRENT_BINARY_DIR}/${polang}/LC_MESSAGES")
+    file(MAKE_DIRECTORY "${modir}")
+    set(mofile "${modir}/${PROJECT_NAME}.mo")
     add_custom_command(
-      OUTPUT ${gmofile}
+      OUTPUT ${mofile}
       COMMAND ${MSGMERGE_EXECUTABLE} ARGS --quiet -o ${CMAKE_CURRENT_BINARY_DIR}/${pofile} ${CMAKE_CURRENT_SOURCE_DIR}/${pofile} ${POT_FILE_PATH}
-      COMMAND ${MSGFMT_EXECUTABLE} ARGS -o ${gmofile} ${CMAKE_CURRENT_BINARY_DIR}/${pofile}
+      COMMAND ${MSGFMT_EXECUTABLE} ARGS -o ${mofile} ${CMAKE_CURRENT_BINARY_DIR}/${pofile}
       COMMAND ${MSGFMT_EXECUTABLE} ARGS -c --statistics --verbose --output-file=/dev/null ${CMAKE_CURRENT_BINARY_DIR}/${pofile}
       DEPENDS ${POT_FILE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/${pofile}
       COMMENT "Compiling ${polang}.po"
@@ -87,11 +89,11 @@ if(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
     )
     set(UPDATE_PO_TARGETS ${UPDATE_PO_TARGETS} update-${pofile})
 
-    install(FILES ${gmofile} DESTINATION ${LOCALEDIR}/${polang}/LC_MESSAGES RENAME ${PROJECT_NAME}.mo)
-    set(GMO_FILES ${GMO_FILES} ${gmofile})
+    install(FILES ${mofile} DESTINATION ${LOCALEDIR}/${polang}/LC_MESSAGES)
+    set(MO_FILES ${MO_FILES} ${mofile})
   endforeach()
 
-  add_custom_target(translations ALL DEPENDS ${GMO_FILES})
+  add_custom_target(translations ALL DEPENDS ${MO_FILES})
 
   # Update weechat.pot in source directory (if needed)
   add_custom_target(

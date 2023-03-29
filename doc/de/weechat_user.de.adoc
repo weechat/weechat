@@ -989,7 +989,7 @@ um die Farbkodierungen bzw. Attribute zu deaktivieren.
 
 Farbtabelle für kbd:[Ctrl+c], kbd:[c]:
 
-include::includes/autogen_user_irc_colors.de.adoc[tag=irc_colors]
+include::{autogendir}/autogen_user_irc_colors.de.adoc[tag=irc_colors]
 
 [NOTE]
 Um sich alle verfügbaren Farben anzeigen zu lassen, die der Terminal
@@ -1439,7 +1439,7 @@ Eine Standardbar, "buflist", wird beim Programmstart automatisch mit folgendem I
 [[buflist_commands]]
 ==== Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=buflist_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=buflist_commands]
 
 [[buflist_options]]
 ==== Optionen
@@ -1455,7 +1455,7 @@ Sektionen in Datei _buflist.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=buflist_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=buflist_options]
 
 [[key_bindings]]
 == Tastenbelegungen
@@ -1871,7 +1871,7 @@ Beispiel des fset-Buffer, der Optionen anzeigt, die mit `weechat.look` beginnen
 [[fset_commands]]
 ==== Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=fset_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=fset_commands]
 
 [[fset_options]]
 ==== Optionen
@@ -1888,7 +1888,7 @@ Sektionen in Datei _fset.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=fset_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=fset_options]
 
 [[colors]]
 === Farben
@@ -2096,7 +2096,7 @@ einen Blick in die link:weechat_faq.de.html#charset[WeeChat FAQ / Charset ^↗^
 [[charset_commands]]
 ==== Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=charset_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=charset_commands]
 
 [[charset_options]]
 ==== Optionen
@@ -2115,7 +2115,7 @@ Sektionen in Datei _charset.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=charset_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=charset_options]
 
 [[notify_levels]]
 === Benachrichtigungsstufen
@@ -2484,7 +2484,7 @@ gibt es nur eine Rotation für das Protokoll des #weechat-Kanals):
 [[logger_commands]]
 ==== Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=logger_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=logger_commands]
 
 [[logger_options]]
 ==== Optionen
@@ -2503,7 +2503,7 @@ Sektionen in Datei _logger.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=logger_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=logger_options]
 
 [[mouse]]
 === Mausunterstützung
@@ -2717,7 +2717,7 @@ Beispiel der Rechtschreibkorrektur, mit zwei Wörterbüchern (`en,de`):
 [[spell_commands]]
 ==== Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=spell_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=spell_commands]
 
 [[spell_options]]
 ==== Optionen
@@ -2737,7 +2737,7 @@ Sektionen in Datei _spell.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=spell_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=spell_options]
 
 [[bars]]
 === Bars
@@ -3150,12 +3150,12 @@ Groß- und Kleinschreinung unterschieden, der Befehl `/close` führt den Alias `
 
 Liste der standardmäßigen Aliase:
 
-include::includes/autogen_user_default_aliases.de.adoc[tag=default_aliases]
+include::{autogendir}/autogen_user_default_aliases.de.adoc[tag=default_aliases]
 
 [[alias_commands]]
 ==== Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=alias_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=alias_commands]
 
 [[alias_options]]
 ==== Optionen
@@ -3177,7 +3177,7 @@ Sektionen in Datei _alias.conf_:
 [[weechat_commands]]
 ==== WeeChat Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=weechat_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=weechat_commands]
 
 [[sec_options]]
 ==== Optionen für schutzwürdige Daten
@@ -3193,7 +3193,7 @@ Sektionen in Datei _sec.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=sec_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=sec_options]
 
 [[weechat_options]]
 ==== WeeChat Optionen
@@ -3230,7 +3230,7 @@ Sektion in Datei _weechat.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=weechat_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=weechat_options]
 
 [[irc]]
 == IRC
@@ -4190,7 +4190,7 @@ einige Beispiele:
 [[irc_commands]]
 === Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=irc_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=irc_commands]
 
 [[irc_options]]
 === Optionen
@@ -4213,7 +4213,7 @@ Sektionen in Datei _irc.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=irc_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=irc_options]
 
 [[xfer]]
 == Xfer
@@ -4227,7 +4227,7 @@ Mit der xfer Erweiterung kann man:
 [[xfer_commands]]
 === Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=xfer_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=xfer_commands]
 
 [[xfer_options]]
 === Optionen
@@ -4245,7 +4245,7 @@ Sektionen in Datei _xfer.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=xfer_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=xfer_options]
 
 [[typing_notifications]]
 == Schreibbenachrichtigung
@@ -4343,7 +4343,7 @@ Sektionen in Datei _typing.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=typing_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=typing_options]
 
 [[relay]]
 == Relay
@@ -4540,7 +4540,7 @@ einer WeeChat Instanz welche auf "hostname" hört.
 [[relay_commands]]
 === Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=relay_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=relay_commands]
 
 [[relay_options]]
 === Optionen
@@ -4560,7 +4560,7 @@ Sektionen in Datei _relay.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=relay_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=relay_options]
 
 [[external_commands]]
 == externe Befehle
@@ -4572,7 +4572,7 @@ einem Buffer auszugeben.
 [[exec_commands]]
 === Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=exec_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=exec_commands]
 
 [[exec_options]]
 === Optionen
@@ -4588,7 +4588,7 @@ Sektionen in Datei _exec.conf_:
 
 Options:
 
-include::includes/autogen_user_options.de.adoc[tag=exec_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=exec_options]
 
 [[fifo_pipe]]
 == FIFO Pipe
@@ -4637,7 +4637,7 @@ $ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/wee
 [[fifo_commands]]
 === Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=fifo_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=fifo_commands]
 
 [[fifo_options]]
 === Optionen
@@ -4652,7 +4652,7 @@ Sektionen in Datei _fifo.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=fifo_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=fifo_options]
 
 [[trigger]]
 == Trigger
@@ -5433,7 +5433,7 @@ gespeichert wird (es findet keine Ausgabe im Core-Buffer statt).
 [[trigger_commands]]
 === Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=trigger_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=trigger_commands]
 
 [[trigger_options]]
 === Optionen
@@ -5452,7 +5452,7 @@ Sektionen in Datei _trigger.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=trigger_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=trigger_options]
 
 [[extending_weechat]]
 == WeeChat erweitern
@@ -5596,7 +5596,7 @@ mit dem Befehl <<command_script_script,/script>>, anzeigen lassen:
 [[script_commands]]
 ===== Skript Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=script_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=script_commands]
 
 [[script_options]]
 ===== Script Optionen
@@ -5613,7 +5613,7 @@ Sektionen in Datei _script.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=script_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=script_options]
 
 [[scripting_plugins]]
 ==== Skripterweiterung
@@ -5621,42 +5621,37 @@ include::includes/autogen_user_options.de.adoc[tag=script_options]
 [[python_commands]]
 ===== Python Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=python_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=python_commands]
 
 [[perl_commands]]
 ===== Perl Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=perl_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=perl_commands]
 
 [[ruby_commands]]
 ===== Ruby Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=ruby_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=ruby_commands]
 
 [[lua_commands]]
 ===== Lua Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=lua_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=lua_commands]
 
 [[tcl_commands]]
 ===== Tcl Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=tcl_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=tcl_commands]
 
 [[guile_commands]]
 ===== Guile Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=guile_commands]
-
-[[javascript_commands]]
-===== JavaScript Befehle
-
-include::includes/autogen_user_commands.de.adoc[tag=javascript_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=guile_commands]
 
 [[php_commands]]
 ===== PHP Befehle
 
-include::includes/autogen_user_commands.de.adoc[tag=php_commands]
+include::{autogendir}/autogen_user_commands.de.adoc[tag=php_commands]
 
 [[python_options]]
 ===== Python Optionen
@@ -5671,7 +5666,7 @@ Sektionen in Datei _python.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=python_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=python_options]
 
 [[perl_options]]
 ===== Perl Optionen
@@ -5686,7 +5681,7 @@ Sektionen in Datei _perl.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=perl_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=perl_options]
 
 [[ruby_options]]
 ===== Ruby Optionen
@@ -5701,7 +5696,7 @@ Sektionen in Datei _ruby.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=ruby_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=ruby_options]
 
 [[lua_options]]
 ===== Lua Optionen
@@ -5716,7 +5711,7 @@ Sektionen in Datei _lua.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=lua_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=lua_options]
 
 [[tcl_options]]
 ===== Tcl Optionen
@@ -5731,7 +5726,7 @@ Sektionen in Datei _tcl.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=tcl_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=tcl_options]
 
 [[guile_options]]
 ===== Guile Optionen
@@ -5746,22 +5741,7 @@ Sektionen in Datei _guile.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=guile_options]
-
-[[javascript_options]]
-===== Javascript Optionen
-
-Sektionen in Datei _javascript.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sektion | Steuerbefehl           | Beschreibung
-| look    | /set javascript.look.* | Erscheinungsbild.
-|===
-
-Optionen:
-
-include::includes/autogen_user_options.de.adoc[tag=javascript_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=guile_options]
 
 [[php_options]]
 ===== PHP Optionen
@@ -5776,7 +5756,7 @@ Sektionen in Datei _php.conf_:
 
 Optionen:
 
-include::includes/autogen_user_options.de.adoc[tag=php_options]
+include::{autogendir}/autogen_user_options.de.adoc[tag=php_options]
 
 [[support]]
 == Unterstützung

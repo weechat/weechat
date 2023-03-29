@@ -162,7 +162,7 @@ default plugins).
 
 The default WeeChat plugins are initialized in this order:
 
-include::includes/autogen_api_plugins_priority.it.adoc[tag=plugins_priority]
+include::{autogendir}/autogen_api_plugins_priority.it.adoc[tag=plugins_priority]
 
 ==== weechat_plugin_end
 
@@ -6603,7 +6603,7 @@ opzioni (con <<_config_new_option,config_new_option>>).
 // TRANSLATION MISSING
 Priority of default configuration files:
 
-include::includes/autogen_api_config_priority.it.adoc[tag=config_priority]
+include::{autogendir}/autogen_api_config_priority.it.adoc[tag=config_priority]
 
 Esempio in C:
 
@@ -9802,7 +9802,7 @@ Argomenti:
 
 I codici predefiniti per il completamento sono:
 
-include::includes/autogen_api_completions.it.adoc[tag=completions]
+include::{autogendir}/autogen_api_completions.it.adoc[tag=completions]
 
 Codici speciali:
 
@@ -10551,7 +10551,7 @@ available:
 Per il comando "url:..." sono disponibili le seguenti opzioni (consultare
 `+man curl_easy_setopt+` per la descrizione di ogni opzione):
 
-include::includes/autogen_api_url_options.it.adoc[tag=url_options]
+include::{autogendir}/autogen_api_url_options.it.adoc[tag=url_options]
 
 // TRANSLATION MISSING
 [NOTE]
@@ -17037,7 +17037,7 @@ With WeeChat ≥ 2.5, the value returned is an allocated string
 // TRANSLATION MISSING
 Infos:
 
-include::includes/autogen_api_infos.it.adoc[tag=infos]
+include::{autogendir}/autogen_api_infos.it.adoc[tag=infos]
 
 Esempio in C:
 
@@ -17099,7 +17099,7 @@ Valore restituito:
 // TRANSLATION MISSING
 Infos:
 
-include::includes/autogen_api_infos_hashtable.it.adoc[tag=infos_hashtable]
+include::{autogendir}/autogen_api_infos_hashtable.it.adoc[tag=infos_hashtable]
 
 Esempio in C:
 
@@ -17504,7 +17504,7 @@ Valore restituito:
 // TRANSLATION MISSING
 Infolists:
 
-include::includes/autogen_api_infolists.it.adoc[tag=infolists]
+include::{autogendir}/autogen_api_infolists.it.adoc[tag=infolists]
 
 Esempio in C:
 
@@ -18281,7 +18281,7 @@ Valore restituito:
 // TRANSLATION MISSING
 List of hdata:
 
-include::includes/autogen_api_hdata.it.adoc[tag=hdata]
+include::{autogendir}/autogen_api_hdata.it.adoc[tag=hdata]
 
 Esempio in C:
 

@@ -51,8 +51,6 @@ endif()
 
 if(ENABLE_DOC)
 
-  file(GLOB AUTOGEN_USER "${CMAKE_CURRENT_SOURCE_DIR}/includes/autogen_user_*.adoc")
-
   # user's guide
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.pl.html
@@ -61,7 +59,7 @@ if(ENABLE_DOC)
     ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.pl.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.pl.adoc
-    ${AUTOGEN_USER}
+    doc-autogen
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_user.pl.html"
   )

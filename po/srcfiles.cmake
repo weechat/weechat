@@ -1,5 +1,4 @@
 SET(WEECHAT_SOURCES
-./doc/docgen.py
 ./src/core/hook/wee-hook-command.c
 ./src/core/hook/wee-hook-command.h
 ./src/core/hook/wee-hook-command-run.c
@@ -58,6 +57,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-debug.h
 ./src/core/wee-dir.c
 ./src/core/wee-dir.h
+./src/core/wee-doc.c
+./src/core/wee-doc.h
 ./src/core/wee-eval.c
 ./src/core/wee-eval.h
 ./src/core/wee-hashtable.c

@@ -142,7 +142,7 @@ default plugins).
 
 The default WeeChat plugins are initialized in this order:
 
-include::includes/autogen_api_plugins_priority.en.adoc[tag=plugins_priority]
+include::{autogendir}/autogen_api_plugins_priority.en.adoc[tag=plugins_priority]
 
 ==== weechat_plugin_end
 
@@ -6331,7 +6331,7 @@ You should call this function only after adding some sections (with
 
 Priority of default configuration files:
 
-include::includes/autogen_api_config_priority.en.adoc[tag=config_priority]
+include::{autogendir}/autogen_api_config_priority.en.adoc[tag=config_priority]
 
 C example:
 
@@ -9467,7 +9467,7 @@ will complete with following values in command arguments:
 
 Default completion codes are:
 
-include::includes/autogen_api_completions.en.adoc[tag=completions]
+include::{autogendir}/autogen_api_completions.en.adoc[tag=completions]
 
 Special codes:
 
@@ -10177,7 +10177,7 @@ available:
 For command "url:...", following options are available (see
 `+man curl_easy_setopt+` for a description of each option):
 
-include::includes/autogen_api_url_options.en.adoc[tag=url_options]
+include::{autogendir}/autogen_api_url_options.en.adoc[tag=url_options]
 
 [NOTE]
 ^(1)^ For options with type "mask", format is: "value1+value2+value3";
@@ -16304,7 +16304,7 @@ With WeeChat ≥ 2.5, the value returned is an allocated string
 
 Infos:
 
-include::includes/autogen_api_infos.en.adoc[tag=infos]
+include::{autogendir}/autogen_api_infos.en.adoc[tag=infos]
 
 C example:
 
@@ -16364,7 +16364,7 @@ Return value:
 
 Infos:
 
-include::includes/autogen_api_infos_hashtable.en.adoc[tag=infos_hashtable]
+include::{autogendir}/autogen_api_infos_hashtable.en.adoc[tag=infos_hashtable]
 
 C example:
 
@@ -16761,7 +16761,7 @@ Return value:
 
 Infolists:
 
-include::includes/autogen_api_infolists.en.adoc[tag=infolists]
+include::{autogendir}/autogen_api_infolists.en.adoc[tag=infolists]
 
 C example:
 
@@ -17508,7 +17508,7 @@ Return value:
 
 List of hdata:
 
-include::includes/autogen_api_hdata.en.adoc[tag=hdata]
+include::{autogendir}/autogen_api_hdata.en.adoc[tag=hdata]
 
 C example:
 

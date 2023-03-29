@@ -1077,7 +1077,7 @@ terminare l'attributo.
 
 I codici colore per kbd:[Ctrl+c], kbd:[c] sono:
 
-include::includes/autogen_user_irc_colors.it.adoc[tag=irc_colors]
+include::{autogendir}/autogen_user_irc_colors.it.adoc[tag=irc_colors]
 
 // TRANSLATION MISSING
 [NOTE]
@@ -1543,7 +1543,7 @@ A default bar "buflist" is created on startup with this item.
 [[buflist_commands]]
 ==== Comandi
 
-include::includes/autogen_user_commands.it.adoc[tag=buflist_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=buflist_commands]
 
 [[buflist_options]]
 ==== Opzioni
@@ -1562,7 +1562,7 @@ Sections in file _buflist.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=buflist_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=buflist_options]
 
 // TRANSLATION MISSING
 [[key_bindings]]
@@ -2060,7 +2060,7 @@ Example of fset buffer displaying options starting with `weechat.look` :
 [[fset_commands]]
 ==== Comandi
 
-include::includes/autogen_user_commands.it.adoc[tag=fset_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=fset_commands]
 
 [[fset_options]]
 ==== Opzioni
@@ -2080,7 +2080,7 @@ Sections in file _fset.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=fset_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=fset_options]
 
 // TRANSLATION MISSING
 [[colors]]
@@ -2292,7 +2292,7 @@ le link:weechat_faq.it.html#charset[Domande Frequenti di WeeChat / Charset ^↗
 [[charset_commands]]
 ==== Comandi
 
-include::includes/autogen_user_commands.it.adoc[tag=charset_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=charset_commands]
 
 [[charset_options]]
 ==== Opzioni
@@ -2314,7 +2314,7 @@ Sections in file _charset.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=charset_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=charset_options]
 
 [[notify_levels]]
 === Livelli di notifica
@@ -2677,7 +2677,7 @@ there is rotation only for the log of #weechat channel):
 [[logger_commands]]
 ==== Comandi
 
-include::includes/autogen_user_commands.it.adoc[tag=logger_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=logger_commands]
 
 [[logger_options]]
 ==== Opzioni
@@ -2699,7 +2699,7 @@ Sections in file _logger.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=logger_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=logger_options]
 
 [[mouse]]
 === Supporto del mouse
@@ -2916,7 +2916,7 @@ Example of suggestions with English and French dictionaries (`en,fr`):
 [[spell_commands]]
 ==== Comandi
 
-include::includes/autogen_user_commands.it.adoc[tag=spell_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=spell_commands]
 
 [[spell_options]]
 ==== Opzioni
@@ -2939,7 +2939,7 @@ Sections in file _spell.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=spell_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=spell_options]
 
 // TRANSLATION MISSING
 [[bars]]
@@ -3354,12 +3354,12 @@ so for example `/close` runs the alias `/CLOSE`.
 // TRANSLATION MISSING
 List of default aliases:
 
-include::includes/autogen_user_default_aliases.it.adoc[tag=default_aliases]
+include::{autogendir}/autogen_user_default_aliases.it.adoc[tag=default_aliases]
 
 [[alias_commands]]
 ==== Comandi
 
-include::includes/autogen_user_commands.it.adoc[tag=alias_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=alias_commands]
 
 [[alias_options]]
 ==== Options
@@ -3384,7 +3384,7 @@ Sections in file _alias.conf_:
 [[weechat_commands]]
 ==== Comandi di WeeChat
 
-include::includes/autogen_user_commands.it.adoc[tag=weechat_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=weechat_commands]
 
 // TRANSLATION MISSING
 [[sec_options]]
@@ -3404,7 +3404,7 @@ Sections in file _sec.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=sec_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=sec_options]
 
 [[weechat_options]]
 ==== Opzioni di WeeChat
@@ -3446,7 +3446,7 @@ Sections in file _weechat.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=weechat_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=weechat_options]
 
 [[irc]]
 == IRC
@@ -4434,7 +4434,7 @@ Alcuni esempi:
 [[irc_commands]]
 === Comandi
 
-include::includes/autogen_user_commands.it.adoc[tag=irc_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=irc_commands]
 
 [[irc_options]]
 === Opzioni
@@ -4460,7 +4460,7 @@ Sections in file _irc.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=irc_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=irc_options]
 
 [[xfer]]
 == Xfer
@@ -4474,7 +4474,7 @@ Il plugin Xfer fornisce:
 [[xfer_commands]]
 === Comandi
 
-include::includes/autogen_user_commands.it.adoc[tag=xfer_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=xfer_commands]
 
 [[xfer_options]]
 === Opzioni
@@ -4495,7 +4495,7 @@ Sections in file _xfer.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=xfer_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=xfer_options]
 
 // TRANSLATION MISSING
 [[typing_notifications]]
@@ -4589,7 +4589,7 @@ Sections in file _typing.conf_:
 
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=typing_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=typing_options]
 
 [[relay]]
 == Relay
@@ -4788,7 +4788,7 @@ instance running on "hostname".
 [[relay_commands]]
 === Comandi
 
-include::includes/autogen_user_commands.it.adoc[tag=relay_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=relay_commands]
 
 [[relay_options]]
 === Opzioni
@@ -4811,7 +4811,7 @@ Sections in file _relay.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=relay_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=relay_options]
 
 // TRANSLATION MISSING
 [[external_commands]]
@@ -4823,7 +4823,7 @@ display the output locally, or send it to a buffer.
 [[exec_commands]]
 === Comandi
 
-include::includes/autogen_user_commands.it.adoc[tag=exec_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=exec_commands]
 
 [[exec_options]]
 === Opzioni
@@ -4840,7 +4840,7 @@ Sections in file _exec.conf_:
 
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=exec_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=exec_options]
 
 // TRANSLATION MISSING
 [[fifo_pipe]]
@@ -4893,7 +4893,7 @@ $ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/wee
 [[fifo_commands]]
 === Comandi
 
-include::includes/autogen_user_commands.it.adoc[tag=fifo_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=fifo_commands]
 
 [[fifo_options]]
 === Opzioni
@@ -4911,7 +4911,7 @@ Sections in file _fifo.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=fifo_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=fifo_options]
 
 // TRANSLATION MISSING
 [[trigger]]
@@ -5674,7 +5674,7 @@ displayed on core buffer).
 [[trigger_commands]]
 === Comandi
 
-include::includes/autogen_user_commands.it.adoc[tag=trigger_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=trigger_commands]
 
 [[trigger_options]]
 === Opzioni
@@ -5693,7 +5693,7 @@ Sections in file _trigger.conf_:
 
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=trigger_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=trigger_options]
 
 // TRANSLATION MISSING
 [[extending_weechat]]
@@ -5849,7 +5849,7 @@ with the <<command_script_script,/script>> command:
 [[script_commands]]
 ===== Comandi Script
 
-include::includes/autogen_user_commands.it.adoc[tag=script_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=script_commands]
 
 // TRANSLATION MISSING
 [[script_options]]
@@ -5870,7 +5870,7 @@ Sections in file _script.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=script_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=script_options]
 
 // TRANSLATION MISSING
 [[scripting_plugins]]
@@ -5879,42 +5879,37 @@ include::includes/autogen_user_options.it.adoc[tag=script_options]
 [[python_commands]]
 ===== Comandi Python
 
-include::includes/autogen_user_commands.it.adoc[tag=python_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=python_commands]
 
 [[perl_commands]]
 ===== Comandi Perl
 
-include::includes/autogen_user_commands.it.adoc[tag=perl_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=perl_commands]
 
 [[ruby_commands]]
 ===== Comandi Ruby
 
-include::includes/autogen_user_commands.it.adoc[tag=ruby_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=ruby_commands]
 
 [[lua_commands]]
 ===== Comandi Lua
 
-include::includes/autogen_user_commands.it.adoc[tag=lua_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=lua_commands]
 
 [[tcl_commands]]
 ===== Comandi Tcl
 
-include::includes/autogen_user_commands.it.adoc[tag=tcl_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=tcl_commands]
 
 [[guile_commands]]
 ===== Comandi Guile
 
-include::includes/autogen_user_commands.it.adoc[tag=guile_commands]
-
-[[javascript_commands]]
-===== Comandi JavaScript
-
-include::includes/autogen_user_commands.it.adoc[tag=javascript_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=guile_commands]
 
 [[php_commands]]
 ===== Comandi PHP
 
-include::includes/autogen_user_commands.it.adoc[tag=php_commands]
+include::{autogendir}/autogen_user_commands.it.adoc[tag=php_commands]
 
 // TRANSLATION MISSING
 [[python_options]]
@@ -5933,7 +5928,7 @@ Sections in file _python.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=python_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=python_options]
 
 // TRANSLATION MISSING
 [[perl_options]]
@@ -5952,7 +5947,7 @@ Sections in file _perl.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=perl_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=perl_options]
 
 // TRANSLATION MISSING
 [[ruby_options]]
@@ -5971,7 +5966,7 @@ Sections in file _ruby.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=ruby_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=ruby_options]
 
 // TRANSLATION MISSING
 [[lua_options]]
@@ -5990,7 +5985,7 @@ Sections in file _lua.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=lua_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=lua_options]
 
 // TRANSLATION MISSING
 [[tcl_options]]
@@ -6009,7 +6004,7 @@ Sections in file _tcl.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=tcl_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=tcl_options]
 
 // TRANSLATION MISSING
 [[guile_options]]
@@ -6028,26 +6023,7 @@ Sections in file _guile.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=guile_options]
-
-// TRANSLATION MISSING
-[[javascript_options]]
-===== Javascript options
-
-// TRANSLATION MISSING
-Sections in file _javascript.conf_:
-
-// TRANSLATION MISSING
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command        | Description
-| look    | /set javascript.look.* | Look and feel.
-|===
-
-// TRANSLATION MISSING
-Options:
-
-include::includes/autogen_user_options.it.adoc[tag=javascript_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=guile_options]
 
 // TRANSLATION MISSING
 [[php_options]]
@@ -6066,7 +6042,7 @@ Sections in file _php.conf_:
 // TRANSLATION MISSING
 Options:
 
-include::includes/autogen_user_options.it.adoc[tag=php_options]
+include::{autogendir}/autogen_user_options.it.adoc[tag=php_options]
 
 [[support]]
 == Supporto

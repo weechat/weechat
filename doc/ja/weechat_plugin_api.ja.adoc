@@ -152,7 +152,7 @@ the plugin:
 
 WeeChat のデフォルトプラグインは以下の順番で初期化されます:
 
-include::includes/autogen_api_plugins_priority.ja.adoc[tag=plugins_priority]
+include::{autogendir}/autogen_api_plugins_priority.ja.adoc[tag=plugins_priority]
 
 ==== weechat_plugin_end
 
@@ -6413,7 +6413,7 @@ struct t_config_file *weechat_config_new (const char *name,
 // TRANSLATION MISSING
 Priority of default configuration files:
 
-include::includes/autogen_api_config_priority.ja.adoc[tag=config_priority]
+include::{autogendir}/autogen_api_config_priority.ja.adoc[tag=config_priority]
 
 C 言語での使用例:
 
@@ -9560,7 +9560,7 @@ struct t_hook *weechat_hook_command (const char *command,
 
 デフォルトの補完候補コードは:
 
-include::includes/autogen_api_completions.ja.adoc[tag=completions]
+include::{autogendir}/autogen_api_completions.ja.adoc[tag=completions]
 
 特殊コード:
 
@@ -10280,7 +10280,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 "url:..." 型のコマンドでは、以下のコマンドを使うことができます
 (それぞれのオプションについては `+man curl_easy_setopt+` を参照):
 
-include::includes/autogen_api_url_options.ja.adoc[tag=url_options]
+include::{autogendir}/autogen_api_url_options.ja.adoc[tag=url_options]
 
 [NOTE]
 ^(1)^ "mask" タイプのオプションでは、フォーマットは "value1+value2+value3" です。
@@ -16470,7 +16470,7 @@ WeeChat バージョン 2.5 以上の場合、返却される値は確保され�
 
 インフォ:
 
-include::includes/autogen_api_infos.ja.adoc[tag=infos]
+include::{autogendir}/autogen_api_infos.ja.adoc[tag=infos]
 
 C 言語での使用例:
 
@@ -16530,7 +16530,7 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 
 インフォ:
 
-include::includes/autogen_api_infos_hashtable.ja.adoc[tag=infos_hashtable]
+include::{autogendir}/autogen_api_infos_hashtable.ja.adoc[tag=infos_hashtable]
 
 C 言語での使用例:
 
@@ -16928,7 +16928,7 @@ struct t_infolist *weechat_infolist_get (const char *infolist_name,
 
 インフォリスト:
 
-include::includes/autogen_api_infolists.ja.adoc[tag=infolists]
+include::{autogendir}/autogen_api_infolists.ja.adoc[tag=infolists]
 
 C 言語での使用例:
 
@@ -17679,7 +17679,7 @@ struct t_hdata *weechat_hdata_get (const char *hdata_name);
 
 hdata のリスト:
 
-include::includes/autogen_api_hdata.ja.adoc[tag=hdata]
+include::{autogendir}/autogen_api_hdata.ja.adoc[tag=hdata]
 
 C 言語での使用例:
 

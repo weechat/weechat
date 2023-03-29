@@ -1043,7 +1043,7 @@ IRC 等のプラグインでは、以下の色コードと属性を利用でき�
 
 kbd:[Ctrl+c], kbd:[c] 用の色コード:
 
-include::includes/autogen_user_irc_colors.ja.adoc[tag=irc_colors]
+include::{autogendir}/autogen_user_irc_colors.ja.adoc[tag=irc_colors]
 
 [NOTE]
 端末で利用可能なすべての色を表示するには、WeeChat で `/color` を実行した後
@@ -1504,7 +1504,7 @@ Buflist プラグインを使うことで、"buflist" と呼ばれるバー要�
 [[buflist_commands]]
 ==== コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=buflist_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=buflist_commands]
 
 [[buflist_options]]
 ==== オプション
@@ -1520,7 +1520,7 @@ _buflist.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=buflist_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=buflist_options]
 
 // TRANSLATION MISSING
 [[key_bindings]]
@@ -1989,7 +1989,7 @@ Example of fset buffer displaying options starting with `weechat.look` :
 [[fset_commands]]
 ==== コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=fset_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=fset_commands]
 
 [[fset_options]]
 ==== オプション
@@ -2006,7 +2006,7 @@ _fset.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=fset_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=fset_options]
 
 // TRANSLATION MISSING
 [[colors]]
@@ -2209,7 +2209,7 @@ IRC サーバの全てのチャンネルおよびプライベートバッファ�
 [[charset_commands]]
 ==== コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=charset_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=charset_commands]
 
 [[charset_options]]
 ==== オプション
@@ -2228,7 +2228,7 @@ _charset.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=charset_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=charset_options]
 
 [[notify_levels]]
 === 通知レベル
@@ -2582,7 +2582,7 @@ there is rotation only for the log of #weechat channel):
 [[logger_commands]]
 ==== コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=logger_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=logger_commands]
 
 [[logger_options]]
 ==== オプション
@@ -2601,7 +2601,7 @@ _logger.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=logger_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=logger_options]
 
 [[mouse]]
 === マウスサポート
@@ -2807,7 +2807,7 @@ _spell.check.suggestions_ オプションで設定します。
 [[spell_commands]]
 ==== コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=spell_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=spell_commands]
 
 [[spell_options]]
 ==== オプション
@@ -2827,7 +2827,7 @@ _spell.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=spell_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=spell_options]
 
 [[bars]]
 === バー
@@ -3235,12 +3235,12 @@ WeeChat はコマンドの大文字小文字を区別しないので、コマン
 
 デフォルトで定義された別名のリスト:
 
-include::includes/autogen_user_default_aliases.ja.adoc[tag=default_aliases]
+include::{autogendir}/autogen_user_default_aliases.ja.adoc[tag=default_aliases]
 
 [[alias_commands]]
 ==== コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=alias_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=alias_commands]
 
 [[alias_options]]
 ==== オプション
@@ -3262,7 +3262,7 @@ _alias.conf_ ファイル内のセクション:
 [[weechat_commands]]
 ==== WeeChat コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=weechat_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=weechat_commands]
 
 [[sec_options]]
 ==== 保護データのオプション
@@ -3278,7 +3278,7 @@ _sec.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=sec_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=sec_options]
 
 [[weechat_options]]
 ==== WeeChat オプション
@@ -3317,7 +3317,7 @@ _weechat.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=weechat_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=weechat_options]
 
 [[irc]]
 == IRC
@@ -4274,7 +4274,7 @@ weechat::
 [[irc_commands]]
 === コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=irc_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=irc_commands]
 
 [[irc_options]]
 === オプション
@@ -4297,7 +4297,7 @@ _irc.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=irc_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=irc_options]
 
 [[xfer]]
 == Xfer
@@ -4311,7 +4311,7 @@ Xfer プラグインの機能:
 [[xfer_commands]]
 === コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=xfer_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=xfer_commands]
 
 [[xfer_options]]
 === オプション
@@ -4329,7 +4329,7 @@ _xfer.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=xfer_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=xfer_options]
 
 // TRANSLATION MISSING
 [[typing_notifications]]
@@ -4423,7 +4423,7 @@ _typing.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=typing_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=typing_options]
 
 [[relay]]
 == Relay
@@ -4618,7 +4618,7 @@ $ ssh -L 9000:.weechat/relay_socket user@hostname
 [[relay_commands]]
 === コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=relay_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=relay_commands]
 
 [[relay_options]]
 === オプション
@@ -4638,7 +4638,7 @@ _relay.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=relay_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=relay_options]
 
 // TRANSLATION MISSING
 [[external_commands]]
@@ -4650,7 +4650,7 @@ include::includes/autogen_user_options.ja.adoc[tag=relay_options]
 [[exec_commands]]
 === コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=exec_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=exec_commands]
 
 [[exec_options]]
 === オプション
@@ -4666,7 +4666,7 @@ _exec.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=exec_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=exec_options]
 
 // TRANSLATION MISSING
 [[fifo_pipe]]
@@ -4716,7 +4716,7 @@ $ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/wee
 [[fifo_commands]]
 === コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=fifo_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=fifo_commands]
 
 [[fifo_options]]
 === オプション
@@ -4731,7 +4731,7 @@ _fifo.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=fifo_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=fifo_options]
 
 [[trigger]]
 == Trigger
@@ -5508,7 +5508,7 @@ timer フックに対する引数は:
 [[trigger_commands]]
 === コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=trigger_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=trigger_commands]
 
 [[trigger_options]]
 === オプション
@@ -5527,7 +5527,7 @@ _trigger.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=trigger_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=trigger_options]
 
 // TRANSLATION MISSING
 [[extending_weechat]]
@@ -5677,7 +5677,7 @@ with the <<command_script_script,/script>> command:
 [[script_commands]]
 ===== Script コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=script_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=script_commands]
 
 [[script_options]]
 ===== スクリプトオプション
@@ -5694,7 +5694,7 @@ _script.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=script_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=script_options]
 
 // TRANSLATION MISSING
 [[scripting_plugins]]
@@ -5703,42 +5703,37 @@ include::includes/autogen_user_options.ja.adoc[tag=script_options]
 [[python_commands]]
 ===== Python コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=python_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=python_commands]
 
 [[perl_commands]]
 ===== Perl コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=perl_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=perl_commands]
 
 [[ruby_commands]]
 ===== Ruby コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=ruby_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=ruby_commands]
 
 [[lua_commands]]
 ===== Lua コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=lua_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=lua_commands]
 
 [[tcl_commands]]
 ===== Tcl コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=tcl_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=tcl_commands]
 
 [[guile_commands]]
 ===== Guile コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=guile_commands]
-
-[[javascript_commands]]
-===== JavaScript コマンド
-
-include::includes/autogen_user_commands.ja.adoc[tag=javascript_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=guile_commands]
 
 [[php_commands]]
 ===== PHP コマンド
 
-include::includes/autogen_user_commands.ja.adoc[tag=php_commands]
+include::{autogendir}/autogen_user_commands.ja.adoc[tag=php_commands]
 
 [[python_options]]
 ===== Python オプション
@@ -5753,7 +5748,7 @@ _python.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=python_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=python_options]
 
 [[perl_options]]
 ===== Perl オプション
@@ -5768,7 +5763,7 @@ _perl.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=perl_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=perl_options]
 
 [[ruby_options]]
 ===== Ruby オプション
@@ -5783,7 +5778,7 @@ _ruby.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=ruby_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=ruby_options]
 
 [[lua_options]]
 ===== Lua オプション
@@ -5798,7 +5793,7 @@ _lua.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=lua_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=lua_options]
 
 [[tcl_options]]
 ===== Tcl オプション
@@ -5813,7 +5808,7 @@ _tcl.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=tcl_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=tcl_options]
 
 [[guile_options]]
 ===== Guile オプション
@@ -5828,22 +5823,7 @@ _guile.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=guile_options]
-
-[[javascript_options]]
-===== Javascript オプション
-
-_javascript.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド           | 説明
-| look       | /set javascript.look.* | 外観
-|===
-
-オプション:
-
-include::includes/autogen_user_options.ja.adoc[tag=javascript_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=guile_options]
 
 [[php_options]]
 ===== PHP オプション
@@ -5858,7 +5838,7 @@ _php.conf_ ファイル内のセクション:
 
 オプション:
 
-include::includes/autogen_user_options.ja.adoc[tag=php_options]
+include::{autogendir}/autogen_user_options.ja.adoc[tag=php_options]
 
 [[support]]
 == サポート

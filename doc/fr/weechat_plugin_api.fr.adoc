@@ -147,7 +147,7 @@ chargée après toutes les extensions par défaut).
 
 Les extensions par défaut de WeeChat sont initialisées dans cet ordre :
 
-include::includes/autogen_api_plugins_priority.fr.adoc[tag=plugins_priority]
+include::{autogendir}/autogen_api_plugins_priority.fr.adoc[tag=plugins_priority]
 
 ==== weechat_plugin_end
 
@@ -6434,7 +6434,7 @@ Vous ne devriez appeler cette fonction qu'après avoir créé les sections (avec
 
 Priorité des fichiers de configuration par défaut :
 
-include::includes/autogen_api_config_priority.fr.adoc[tag=config_priority]
+include::{autogendir}/autogen_api_config_priority.fr.adoc[tag=config_priority]
 
 Exemple en C :
 
@@ -9630,7 +9630,7 @@ complètera avec les valeurs suivantes dans les paramètres de commande :
 
 Les codes complétions par défaut sont :
 
-include::includes/autogen_api_completions.fr.adoc[tag=completions]
+include::{autogendir}/autogen_api_completions.fr.adoc[tag=completions]
 
 Codes spéciaux :
 
@@ -10370,7 +10370,7 @@ sont disponibles :
 Pour la commande "url:...", les options suivantes sont disponibles (voir
 `+man curl_easy_setopt+` pour une description de chaque option) :
 
-include::includes/autogen_api_url_options.fr.adoc[tag=url_options]
+include::{autogendir}/autogen_api_url_options.fr.adoc[tag=url_options]
 
 [NOTE]
 ^(1)^ Pour les options avec le type "mask", le format est :
@@ -16652,7 +16652,7 @@ Avec WeeChat ≥ 2.5, la valeur retournée est une chaîne allouée
 
 Infos :
 
-include::includes/autogen_api_infos.fr.adoc[tag=infos]
+include::{autogendir}/autogen_api_infos.fr.adoc[tag=infos]
 
 Exemple en C :
 
@@ -16713,7 +16713,7 @@ Valeur de retour :
 
 Infos :
 
-include::includes/autogen_api_infos_hashtable.fr.adoc[tag=infos_hashtable]
+include::{autogendir}/autogen_api_infos_hashtable.fr.adoc[tag=infos_hashtable]
 
 Exemple en C :
 
@@ -17114,7 +17114,7 @@ Valeur de retour :
 
 Infolists :
 
-include::includes/autogen_api_infolists.fr.adoc[tag=infolists]
+include::{autogendir}/autogen_api_infolists.fr.adoc[tag=infolists]
 
 Exemple en C :
 
@@ -17881,7 +17881,7 @@ Valeur de retour :
 
 Liste des hdata :
 
-include::includes/autogen_api_hdata.fr.adoc[tag=hdata]
+include::{autogendir}/autogen_api_hdata.fr.adoc[tag=hdata]
 
 Exemple en C :
 

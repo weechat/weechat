@@ -51,9 +51,6 @@ endif()
 
 if(ENABLE_DOC)
 
-  file(GLOB AUTOGEN_USER "${CMAKE_CURRENT_SOURCE_DIR}/includes/autogen_user_*.adoc")
-  file(GLOB AUTOGEN_PLUGIN "${CMAKE_CURRENT_SOURCE_DIR}/includes/autogen_api_*.adoc")
-
   # user's guide
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.it.html
@@ -62,7 +59,7 @@ if(ENABLE_DOC)
     ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.it.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.it.adoc
-    ${AUTOGEN_USER}
+    doc-autogen
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_user.it.html"
   )
@@ -76,7 +73,7 @@ if(ENABLE_DOC)
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.it.adoc
-    ${AUTOGEN_PLUGIN}
+    doc-autogen
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_plugin_api.it.html"
   )

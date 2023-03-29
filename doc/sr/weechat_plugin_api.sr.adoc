@@ -129,7 +129,7 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 
 Подразумевани додаци програма WeeChat се иницијализују у следећем редоследу:
 
-include::includes/autogen_api_plugins_priority.sr.adoc[tag=plugins_priority]
+include::{autogendir}/autogen_api_plugins_priority.sr.adoc[tag=plugins_priority]
 
 ==== weechat_plugin_end
 
@@ -6164,7 +6164,7 @@ struct t_config_file *weechat_config_new (const char *name,
 
 Приоритет подразумеваних конфигурационих фајлова:
 
-include::includes/autogen_api_config_priority.sr.adoc[tag=config_priority]
+include::{autogendir}/autogen_api_config_priority.sr.adoc[tag=config_priority]
 
 C пример:
 
@@ -9198,7 +9198,7 @@ _completion_ шаблон је листа довршавања за сваки �
 
 Подразумевани кодови довршавања су:
 
-include::includes/autogen_api_completions.sr.adoc[tag=completions]
+include::{autogendir}/autogen_api_completions.sr.adoc[tag=completions]
 
 Специјални кодови:
 
@@ -9853,7 +9853,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 
 За команду „url:...” су доступне следеће опције (за опис сваке опције погледајте `+man curl_easy_setopt+`):
 
-include::includes/autogen_api_url_options.sr.adoc[tag=url_options]
+include::{autogendir}/autogen_api_url_options.sr.adoc[tag=url_options]
 
 [NOTE]
 ^(1)^ За опције типа „mask”, формат је: „вредност1+вредност2+вредност3”; за опције типа „list”, ставке листе морају да се раздвоје преломом линије (`\n`). +
@@ -15779,7 +15779,7 @@ char *weechat_info_get (const char *info_name, const char *arguments);
 
 Информације:
 
-include::includes/autogen_api_infos.sr.adoc[tag=infos]
+include::{autogendir}/autogen_api_infos.sr.adoc[tag=infos]
 
 C пример:
 
@@ -15838,7 +15838,7 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 
 Информације:
 
-include::includes/autogen_api_infos_hashtable.sr.adoc[tag=infos_hashtable]
+include::{autogendir}/autogen_api_infos_hashtable.sr.adoc[tag=infos_hashtable]
 
 C пример:
 
@@ -16227,7 +16227,7 @@ struct t_infolist *weechat_infolist_get (const char *infolist_name,
 
 Инфолисте:
 
-include::includes/autogen_api_infolists.sr.adoc[tag=infolists]
+include::{autogendir}/autogen_api_infolists.sr.adoc[tag=infolists]
 
 C пример:
 
@@ -16952,7 +16952,7 @@ struct t_hdata *weechat_hdata_get (const char *hdata_name);
 
 Листа hdata:
 
-include::includes/autogen_api_hdata.sr.adoc[tag=hdata]
+include::{autogendir}/autogen_api_hdata.sr.adoc[tag=hdata]
 
 C пример:
 

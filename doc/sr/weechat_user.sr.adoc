@@ -914,7 +914,7 @@ WeeChat командна линија (на дну прозора) вам омо
 
 Кодови боја за kbd:[Ctrl+c], kbd:[c] су:
 
-include::includes/autogen_user_irc_colors.sr.adoc[tag=irc_colors]
+include::{autogendir}/autogen_user_irc_colors.sr.adoc[tag=irc_colors]
 
 [NOTE]
 Да бисте у свом терминалу видели све доступне боје, можете да у програму WeeChat извршите `/color` па затим kbd:[Alt+c], или да у терминалу покренете следећу команду: `weechat --colors`.
@@ -1337,7 +1337,7 @@ Buflist додатак приказује листу бафера у ставк�
 [[buflist_commands]]
 ==== Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=buflist_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=buflist_commands]
 
 [[buflist_options]]
 ==== Опције
@@ -1353,7 +1353,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=buflist_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=buflist_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=buflist_options]
 
 [[key_bindings]]
 == Тастерске пречице
@@ -1777,7 +1777,7 @@ Fast Set додатак приказује листу опција у бафер
 [[fset_commands]]
 ==== Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=fset_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=fset_commands]
 
 [[fset_options]]
 ==== Опције
@@ -1794,7 +1794,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=fset_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=fset_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=fset_options]
 
 [[colors]]
 === Боје
@@ -1978,7 +1978,7 @@ link:weechat_faq.sr.html#charset[WeeChat ЧПП / Скуп карактера ^
 [[charset_commands]]
 ==== Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=charset_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=charset_commands]
 
 [[charset_options]]
 ==== Опције
@@ -1997,7 +1997,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=charset_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=charset_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=charset_options]
 
 [[notify_levels]]
 === Нивои обавештавања
@@ -2313,7 +2313,7 @@ https://facebook.github.io/zstd/[zstd ^↗^,window=_blank].
 [[logger_commands]]
 ==== Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=logger_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=logger_commands]
 
 [[logger_options]]
 ==== Опције
@@ -2332,7 +2332,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=logger_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=logger_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=logger_options]
 
 [[mouse]]
 === Подршка за миша
@@ -2518,7 +2518,7 @@ $ aspell config
 [[spell_commands]]
 ==== Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=spell_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=spell_commands]
 
 [[spell_options]]
 ==== Опције
@@ -2538,7 +2538,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=spell_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=spell_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=spell_options]
 
 [[bars]]
 === Траке
@@ -2903,12 +2903,12 @@ libera = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA59533A
 
 Листа подразумеваних алијаса:
 
-include::includes/autogen_user_default_aliases.sr.adoc[tag=default_aliases]
+include::{autogendir}/autogen_user_default_aliases.sr.adoc[tag=default_aliases]
 
 [[alias_commands]]
 ==== Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=alias_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=alias_commands]
 
 [[alias_options]]
 ==== Опције
@@ -2930,7 +2930,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=alias_commands]
 [[weechat_commands]]
 ==== WeeChat команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=weechat_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=weechat_commands]
 
 [[sec_options]]
 ==== Опције за обезбеђене податке
@@ -2946,7 +2946,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=weechat_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=sec_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=sec_options]
 
 [[weechat_options]]
 ==== WeeChat опције
@@ -2983,7 +2983,7 @@ include::includes/autogen_user_options.sr.adoc[tag=sec_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=weechat_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=weechat_options]
 
 [[irc]]
 == IRC
@@ -3890,7 +3890,7 @@ weechat::
 [[irc_commands]]
 === Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=irc_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=irc_commands]
 
 [[irc_options]]
 === Опције
@@ -3913,7 +3913,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=irc_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=irc_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=irc_options]
 
 [[xfer]]
 == Xfer
@@ -3926,7 +3926,7 @@ Xfer додатак вам омогућава:
 [[xfer_commands]]
 === Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=xfer_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=xfer_commands]
 
 [[xfer_options]]
 === Опције
@@ -3944,7 +3944,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=xfer_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=xfer_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=xfer_options]
 
 [[typing_notifications]]
 == Обавештења о куцању
@@ -4037,7 +4037,7 @@ Typing додатак хвата следеће сигнале:
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=typing_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=typing_options]
 
 [[relay]]
 == Релеј
@@ -4201,7 +4201,7 @@ $ ssh -L 9000:.weechat/relay_socket корисник@имехоста
 [[relay_commands]]
 === Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=relay_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=relay_commands]
 
 [[relay_options]]
 === Опције
@@ -4221,7 +4221,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=relay_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=relay_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=relay_options]
 
 [[external_commands]]
 == Спољне команде
@@ -4231,7 +4231,7 @@ include::includes/autogen_user_options.sr.adoc[tag=relay_options]
 [[exec_commands]]
 === Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=exec_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=exec_commands]
 
 [[exec_options]]
 === Опције
@@ -4247,7 +4247,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=exec_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=exec_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=exec_options]
 
 [[fifo_pipe]]
 == FIFO пајп
@@ -4292,7 +4292,7 @@ $ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/wee
 [[fifo_commands]]
 === Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=fifo_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=fifo_commands]
 
 [[fifo_options]]
 === Опције
@@ -4307,7 +4307,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=fifo_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=fifo_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=fifo_options]
 
 [[trigger]]
 == Окидач
@@ -5035,7 +5035,7 @@ URL адресе се приказују зеленом бојом:
 [[trigger_commands]]
 === Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=trigger_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=trigger_commands]
 
 [[trigger_options]]
 === Опције
@@ -5054,7 +5054,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=trigger_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=trigger_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=trigger_options]
 
 [[extending_weechat]]
 == Проширивање програма WeeChat
@@ -5184,7 +5184,7 @@ https://weechat.org/scripts/[овој страници ^↗^,window=_blank].
 [[script_commands]]
 ===== Script команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=script_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=script_commands]
 
 [[script_options]]
 ===== Script опције
@@ -5201,7 +5201,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=script_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=script_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=script_options]
 
 [[scripting_plugins]]
 ==== Скриптинг додаци
@@ -5209,42 +5209,37 @@ include::includes/autogen_user_options.sr.adoc[tag=script_options]
 [[python_commands]]
 ===== Python команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=python_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=python_commands]
 
 [[perl_commands]]
 ===== Perl команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=perl_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=perl_commands]
 
 [[ruby_commands]]
 ===== Ruby команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=ruby_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=ruby_commands]
 
 [[lua_commands]]
 ===== Lua команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=lua_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=lua_commands]
 
 [[tcl_commands]]
 ===== Tcl команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=tcl_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=tcl_commands]
 
 [[guile_commands]]
 ===== Guile команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=guile_commands]
-
-[[javascript_commands]]
-===== JavaScript команде
-
-include::includes/autogen_user_commands.sr.adoc[tag=javascript_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=guile_commands]
 
 [[php_commands]]
 ===== PHP команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=php_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=php_commands]
 
 [[python_options]]
 ===== Python опције
@@ -5259,7 +5254,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=php_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=python_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=python_options]
 
 [[perl_options]]
 ===== Perl опције
@@ -5274,7 +5269,7 @@ include::includes/autogen_user_options.sr.adoc[tag=python_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=perl_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=perl_options]
 
 [[ruby_options]]
 ===== Ruby опције
@@ -5289,7 +5284,7 @@ include::includes/autogen_user_options.sr.adoc[tag=perl_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=ruby_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=ruby_options]
 
 [[lua_options]]
 ===== Lua опције
@@ -5304,7 +5299,7 @@ include::includes/autogen_user_options.sr.adoc[tag=ruby_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=lua_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=lua_options]
 
 [[tcl_options]]
 ===== Tcl опције
@@ -5319,7 +5314,7 @@ include::includes/autogen_user_options.sr.adoc[tag=lua_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=tcl_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=tcl_options]
 
 [[guile_options]]
 ===== Guile опције
@@ -5334,22 +5329,7 @@ include::includes/autogen_user_options.sr.adoc[tag=tcl_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=guile_options]
-
-[[javascript_options]]
-===== Javascript опције
-
-Одељци у фајлу _javascript.conf_:
-
-[width="100%", cols="3m,6m,16", options="header"]
-|===
-| Одељак  | Команда за контролу    | Опис
-| look    | /set javascript.look.* | Изглед и осећај.
-|===
-
-Опције:
-
-include::includes/autogen_user_options.sr.adoc[tag=javascript_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=guile_options]
 
 [[php_options]]
 ===== PHP опције
@@ -5364,7 +5344,7 @@ include::includes/autogen_user_options.sr.adoc[tag=javascript_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=php_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=php_options]
 
 [[support]]
 == Подршка

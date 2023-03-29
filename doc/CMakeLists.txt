@@ -22,7 +22,19 @@ if(ENABLE_MAN OR ENABLE_DOC)
   find_package(Asciidoctor)
   if(ASCIIDOCTOR_FOUND)
     # common asciidoctor arguments
-    set(ASCIIDOCTOR_ARGS --failure-level=WARNING -a experimental -a reproducible -a "prewrap!" -a "webfonts!" -a icons=font -a revnumber="${VERSION}" -a sectanchors -a source-highlighter=pygments -a pygments-style=native)
+    set(ASCIIDOCTOR_ARGS
+      --failure-level=WARNING
+      -a experimental
+      -a reproducible
+      -a "prewrap!"
+      -a "webfonts!"
+      -a icons=font
+      -a revnumber="${VERSION}"
+      -a sectanchors
+      -a source-highlighter=pygments
+      -a pygments-style=native
+      -a autogendir="${CMAKE_CURRENT_BINARY_DIR}/autogen"
+    )
 
     # sed arguments used to replace links in ChangeLog and release notes
     set(SED_LINKS_ARGS
@@ -71,6 +83,20 @@ if(ENABLE_MAN OR ENABLE_DOC)
       COMMENT "Building ReleaseNotes.html"
     )
     add_custom_target(rn DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes.html)
+
+    if(ENABLE_DOC)
+      add_custom_target(doc-autogen ALL
+        COMMAND "${CMAKE_COMMAND}" -E env "WEECHAT_EXTRA_LIBDIR=${PROJECT_BINARY_DIR}/src" "WEECHAT_DOCGEN_LOCALEDIR=${PROJECT_BINARY_DIR}/po" "${CMAKE_BINARY_DIR}/src/gui/curses/headless/weechat-headless" --temp-dir --doc-gen "${CMAKE_CURRENT_BINARY_DIR}/autogen"
+        DEPENDS
+        # the headless binary is required
+        weechat-headless
+        # translations must be compiled
+        translations
+        # all plugins must be loaded during doc generation
+        alias buflist charset exec fifo fset guile irc logger lua perl php python relay ruby script spell tcl trigger typing xfer
+        WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+      )
+    endif()
 
     # man/doc in all languages
     add_subdirectory(cs)
