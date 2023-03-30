@@ -55,10 +55,11 @@ spell_info_info_spell_dict_cb (const void *pointer, void *data,
     if (strncmp (arguments, "0x", 2) == 0)
     {
         rc = sscanf (arguments, "%lx", &value);
-        if ((rc != EOF) && (rc != 0))
+        if ((rc != EOF) && (rc != 0) && value)
         {
             buffer = (struct t_gui_buffer *)value;
-            if (buffer)
+            if (weechat_hdata_check_pointer (weechat_hdata_get ("buffer"),
+                                             NULL, buffer))
             {
                 buffer_full_name = weechat_buffer_get_string (buffer,
                                                               "full_name");
@@ -66,7 +67,9 @@ spell_info_info_spell_dict_cb (const void *pointer, void *data,
         }
     }
     else
+    {
         buffer_full_name = arguments;
+    }
 
     if (buffer_full_name)
         ptr_dict = spell_get_dict_with_buffer_name (buffer_full_name);
