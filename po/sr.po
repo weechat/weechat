@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-26 21:03+0200\n"
+"POT-Creation-Date: 2023-03-30 21:54+0200\n"
 "PO-Revision-Date: 2023-03-27 22:15+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -30,108 +30,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-
-msgid "any string"
-msgstr "било који стринг"
-
-msgid "any char"
-msgstr "било који кар"
-
-msgid "max chars"
-msgstr "макс карактера"
-
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
-"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
-"underline"
-msgstr ""
-"име WeeChat боје (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), број "
-"terminal боје или алијас; испред боје су дозвољени атрибути (само за боју "
-"текста, не и за позадину): „%” за трептање, „.” за „dim” (затамњено) „*” за "
-"подебљано, „!” за обрнуто, „/” за курзив, „_” за подвучено"
-
-msgid "description"
-msgstr "опис"
-
-msgid "type"
-msgstr "тип"
-
-msgid "values"
-msgstr "вредности"
-
-msgid "default value"
-msgstr "подразумевана вредност"
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
-msgstr "дозвољена је недефинисана вредност (null)"
-
-msgid "Alias"
-msgstr "Alias"
-
-msgid "Command"
-msgstr "Команда"
-
-msgid "Completion"
-msgstr "Довршавање"
-
-msgid "IRC color"
-msgstr "IRC боја"
-
-msgid "WeeChat color"
-msgstr "WeeChat боја"
-
-msgid "Plugin"
-msgstr "Додатак"
-
-msgid "Name"
-msgstr "Име"
-
-msgid "Description"
-msgstr "Опис"
-
-msgid "Arguments"
-msgstr "Аргументи"
-
-msgid "Hashtable (input)"
-msgstr "Хеш табела (улаз)"
-
-msgid "Hashtable (output)"
-msgstr "Хеш табела (излаз)"
-
-msgid "Pointer"
-msgstr "Показивач"
-
-msgid "Lists"
-msgstr "Листе"
-
-msgid "Variables"
-msgstr "Променљиве"
-
-msgid "Update allowed:"
-msgstr "Ажурирање дозвољено:"
-
-msgid "Option"
-msgstr "Опција"
-
-msgid "Type"
-msgstr "Тип"
-
-msgid "Constants"
-msgstr "Константе"
-
-msgid "Rank"
-msgstr "Чин"
-
-msgid "Priority"
-msgstr "Приоритет"
-
-msgid "File"
-msgstr "Фајл"
 
 #, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
@@ -180,9 +78,35 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Употреба: %s [опција...] [додатак:опција...]\n"
 
+#, fuzzy
+#| msgid ""
+#| "  -a, --no-connect         disable auto-connect to servers at startup\n"
+#| "  -c, --colors             display default colors in terminal\n"
+#| "  -d, --dir <path>         force a single WeeChat home directory\n"
+#| "                           or 4 different directories separated by colons "
+#| "(in this order: config, data, cache, runtime)\n"
+#| "                           (environment variable WEECHAT_HOME is read if "
+#| "this option is not given)\n"
+#| "  -t, --temp-dir           create a temporary WeeChat home directory and "
+#| "delete it on exit\n"
+#| "                           (incompatible with option \"-d\")\n"
+#| "  -h, --help               display this help\n"
+#| "  -l, --license            display WeeChat license\n"
+#| "  -p, --no-plugin          don't load any plugin at startup\n"
+#| "  -P, --plugins <plugins>  load only these plugins at startup\n"
+#| "                           (see /help weechat.plugin.autoload)\n"
+#| "  -r, --run-command <cmd>  run command(s) after startup;\n"
+#| "                           many commands can be separated by semicolons "
+#| "and are evaluated,\n"
+#| "                           this option can be given multiple times\n"
+#| "  -s, --no-script          don't load any script at startup\n"
+#| "      --upgrade            upgrade WeeChat using session files (see /help "
+#| "upgrade in WeeChat)\n"
+#| "  -v, --version            display WeeChat version\n"
+#| "  plugin:option            option for plugin (see man weechat)\n"
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal\n"
+"  -c, --colors             display default colors in terminal and exit\n"
 "  -d, --dir <path>         force a single WeeChat home directory\n"
 "                           or 4 different directories separated by colons "
 "(in this order: config, data, cache, runtime)\n"
@@ -191,8 +115,8 @@ msgid ""
 "  -t, --temp-dir           create a temporary WeeChat home directory and "
 "delete it on exit\n"
 "                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help\n"
-"  -l, --license            display WeeChat license\n"
+"  -h, --help               display this help and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
 "  -P, --plugins <plugins>  load only these plugins at startup\n"
 "                           (see /help weechat.plugin.autoload)\n"
@@ -203,7 +127,7 @@ msgid ""
 "  -s, --no-script          don't load any script at startup\n"
 "      --upgrade            upgrade WeeChat using session files (see /help "
 "upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version\n"
+"  -v, --version            display WeeChat version and exit\n"
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
 "  -a, --no-connect         спречава аутоматско повезивање са серверима "
@@ -236,6 +160,10 @@ msgstr ""
 
 msgid "Extra options in headless mode:\n"
 msgstr "Додатне опције у режиму без интерфејса:\n"
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
+msgstr ""
 
 msgid ""
 "      --daemon             run WeeChat as a daemon (fork, new process group, "
@@ -583,12 +511,38 @@ msgstr "Обрисани су сви филтери"
 msgid "Filter \"%s\" deleted"
 msgstr "Обрисан је филтер „%s”"
 
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
+"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
+"underline"
+msgstr ""
+"име WeeChat боје (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), број "
+"terminal боје или алијас; испред боје су дозвољени атрибути (само за боју "
+"текста, не и за позадину): „%” за трептање, „.” за „dim” (затамњено) „*” за "
+"подебљано, „!” за обрнуто, „/” за курзив, „_” за подвучено"
+
 #, c-format
 msgid "Option \"%s%s%s\":"
 msgstr "Опција „%s%s%s”:"
 
+msgid "description"
+msgstr "опис"
+
+msgid "type"
+msgstr "тип"
+
 msgid "boolean"
 msgstr "логичка"
+
+msgid "values"
+msgstr "вредности"
+
+msgid "default value"
+msgstr "подразумевана вредност"
 
 msgid "(undefined)"
 msgstr "(недефинисана)"
@@ -602,8 +556,21 @@ msgstr "стринг"
 msgid "integer"
 msgstr "целобројна"
 
+msgid "any string"
+msgstr "било који стринг"
+
+msgid "any char"
+msgstr "било који кар"
+
+msgid "max chars"
+msgstr "макс карактера"
+
 msgid "color"
 msgstr "боја"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr "дозвољена је недефинисана вредност (null)"
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -5804,6 +5771,69 @@ msgstr "Грешка: „%s” није директоријум\n"
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Грешка: не може да се креира директоријум „%s”\n"
+
+msgid "Alias"
+msgstr "Alias"
+
+msgid "Command"
+msgstr "Команда"
+
+msgid "Completion"
+msgstr "Довршавање"
+
+msgid "IRC color"
+msgstr "IRC боја"
+
+msgid "WeeChat color"
+msgstr "WeeChat боја"
+
+msgid "Plugin"
+msgstr "Додатак"
+
+msgid "Name"
+msgstr "Име"
+
+msgid "Description"
+msgstr "Опис"
+
+msgid "Arguments"
+msgstr "Аргументи"
+
+msgid "Hashtable (input)"
+msgstr "Хеш табела (улаз)"
+
+msgid "Hashtable (output)"
+msgstr "Хеш табела (излаз)"
+
+msgid "Pointer"
+msgstr "Показивач"
+
+msgid "Update allowed:"
+msgstr "Ажурирање дозвољено:"
+
+msgid "Lists"
+msgstr "Листе"
+
+msgid "Variables"
+msgstr "Променљиве"
+
+msgid "Option"
+msgstr "Опција"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "Constants"
+msgstr "Константе"
+
+msgid "Rank"
+msgstr "Чин"
+
+msgid "Priority"
+msgstr "Приоритет"
+
+msgid "File"
+msgstr "Фајл"
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"

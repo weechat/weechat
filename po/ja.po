@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-26 21:03+0200\n"
+"POT-Creation-Date: 2023-03-30 21:54+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -30,114 +30,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-msgid "any string"
-msgstr "未制約文字列"
-
-msgid "any char"
-msgstr "未制約文字"
-
-msgid "max chars"
-msgstr "最大文字数"
-
-#, fuzzy
-#| msgid ""
-#| "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-#| "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-#| "terminal color number or an alias; attributes are allowed before color "
-#| "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
-#| "\"/\" for italic, \"_\" for underline"
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
-"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
-"underline"
-msgstr ""
-"WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、"
-"brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはそ"
-"の別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ま"
-"せん): 太字は \"*\"、反転は \"!\"、イタリックは \"/\"、下線は \"_\""
-
-msgid "description"
-msgstr "説明"
-
-msgid "type"
-msgstr "タイプ"
-
-msgid "values"
-msgstr "値"
-
-msgid "default value"
-msgstr "デフォルト値"
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
-msgstr "(null) は設定できません"
-
-msgid "Alias"
-msgstr "別名"
-
-msgid "Command"
-msgstr "コマンド"
-
-msgid "Completion"
-msgstr "補完"
-
-msgid "IRC color"
-msgstr "IRC 色"
-
-msgid "WeeChat color"
-msgstr "WeeChat 色"
-
-msgid "Plugin"
-msgstr "プラグイン"
-
-msgid "Name"
-msgstr "名前"
-
-msgid "Description"
-msgstr "説明"
-
-msgid "Arguments"
-msgstr "引数"
-
-msgid "Hashtable (input)"
-msgstr "ハッシュテーブル (入力)"
-
-msgid "Hashtable (output)"
-msgstr "ハッシュテーブル (出力)"
-
-msgid "Pointer"
-msgstr "ポインタ"
-
-msgid "Lists"
-msgstr "リスト"
-
-msgid "Variables"
-msgstr "変数"
-
-msgid "Update allowed:"
-msgstr "更新可能な変数:"
-
-msgid "Option"
-msgstr "オプション"
-
-msgid "Type"
-msgstr "タイプ"
-
-msgid "Constants"
-msgstr "定数"
-
-msgid "Rank"
-msgstr ""
-
-msgid "Priority"
-msgstr ""
-
-msgid "File"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
@@ -187,7 +79,7 @@ msgstr "使い方: %s [オプション...] [プラグイン:オプション...]\
 #, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal\n"
+"  -c, --colors             display default colors in terminal and exit\n"
 "  -d, --dir <path>         force a single WeeChat home directory\n"
 "                           or 4 different directories separated by colons "
 "(in this order: config, data, cache, runtime)\n"
@@ -196,8 +88,8 @@ msgid ""
 "  -t, --temp-dir           create a temporary WeeChat home directory and "
 "delete it on exit\n"
 "                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help\n"
-"  -l, --license            display WeeChat license\n"
+"  -h, --help               display this help and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
 "  -P, --plugins <plugins>  load only these plugins at startup\n"
 "                           (see /help weechat.plugin.autoload)\n"
@@ -208,7 +100,7 @@ msgid ""
 "  -s, --no-script          don't load any script at startup\n"
 "      --upgrade            upgrade WeeChat using session files (see /help "
 "upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version\n"
+"  -v, --version            display WeeChat version and exit\n"
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
 "  -a, --no-connect         起動時にサーバに自動接続しない\n"
@@ -239,6 +131,10 @@ msgstr ""
 
 msgid "Extra options in headless mode:\n"
 msgstr "ヘッドレスモード用の追加オプション:\n"
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
+msgstr ""
 
 msgid ""
 "      --daemon             run WeeChat as a daemon (fork, new process group, "
@@ -583,12 +479,44 @@ msgstr "全てのフィルタを削除しました"
 msgid "Filter \"%s\" deleted"
 msgstr "フィルタ \"%s\" を削除しました"
 
+#, fuzzy
+#| msgid ""
+#| "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+#| "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+#| "terminal color number or an alias; attributes are allowed before color "
+#| "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
+#| "\"/\" for italic, \"_\" for underline"
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
+"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
+"underline"
+msgstr ""
+"WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、"
+"brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはそ"
+"の別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ま"
+"せん): 太字は \"*\"、反転は \"!\"、イタリックは \"/\"、下線は \"_\""
+
 #, c-format
 msgid "Option \"%s%s%s\":"
 msgstr "オプション \"%s%s%s\":"
 
+msgid "description"
+msgstr "説明"
+
+msgid "type"
+msgstr "タイプ"
+
 msgid "boolean"
 msgstr "ブール"
+
+msgid "values"
+msgstr "値"
+
+msgid "default value"
+msgstr "デフォルト値"
 
 msgid "(undefined)"
 msgstr "(未定義)"
@@ -602,8 +530,21 @@ msgstr "文字列"
 msgid "integer"
 msgstr "整数"
 
+msgid "any string"
+msgstr "未制約文字列"
+
+msgid "any char"
+msgstr "未制約文字"
+
+msgid "max chars"
+msgstr "最大文字数"
+
 msgid "color"
 msgstr "色"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr "(null) は設定できません"
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -5406,6 +5347,69 @@ msgstr "エラー: ホーム (%s) はディレクトリではありません\n"
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "エラー: ディレクトリ \"%s\" の作成に失敗しました\n"
+
+msgid "Alias"
+msgstr "別名"
+
+msgid "Command"
+msgstr "コマンド"
+
+msgid "Completion"
+msgstr "補完"
+
+msgid "IRC color"
+msgstr "IRC 色"
+
+msgid "WeeChat color"
+msgstr "WeeChat 色"
+
+msgid "Plugin"
+msgstr "プラグイン"
+
+msgid "Name"
+msgstr "名前"
+
+msgid "Description"
+msgstr "説明"
+
+msgid "Arguments"
+msgstr "引数"
+
+msgid "Hashtable (input)"
+msgstr "ハッシュテーブル (入力)"
+
+msgid "Hashtable (output)"
+msgstr "ハッシュテーブル (出力)"
+
+msgid "Pointer"
+msgstr "ポインタ"
+
+msgid "Update allowed:"
+msgstr "更新可能な変数:"
+
+msgid "Lists"
+msgstr "リスト"
+
+msgid "Variables"
+msgstr "変数"
+
+msgid "Option"
+msgstr "オプション"
+
+msgid "Type"
+msgstr "タイプ"
+
+msgid "Constants"
+msgstr "定数"
+
+msgid "Rank"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "File"
+msgstr ""
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"

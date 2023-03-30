@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-26 21:03+0200\n"
+"POT-Creation-Date: 2023-03-30 21:54+0200\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -29,119 +29,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-
-#, fuzzy
-msgid "any string"
-msgstr "Várakozás"
-
-#, fuzzy
-msgid "any char"
-msgstr "karakterek felcserélése"
-
-#, fuzzy
-msgid "max chars"
-msgstr "pufferek kezelése"
-
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
-"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
-"underline"
-msgstr ""
-
-#, fuzzy
-msgid "description"
-msgstr "  . leírás : %s\n"
-
-msgid "type"
-msgstr ""
-
-#, fuzzy
-msgid "values"
-msgstr "  . értékek: "
-
-#, fuzzy
-msgid "default value"
-msgstr "  . alapérték: %d\n"
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
-msgstr ""
-
-msgid "Alias"
-msgstr ""
-
-#, fuzzy
-msgid "Command"
-msgstr "%s belső parancsok:\n"
-
-#, fuzzy
-msgid "Completion"
-msgstr "lefordítva:"
-
-#, fuzzy
-msgid "IRC color"
-msgstr "üzenetek színe"
-
-#, fuzzy
-msgid "WeeChat color"
-msgstr "WeeChat Hiba:"
-
-#, fuzzy
-msgid "Plugin"
-msgstr "  (nem található bővítőmodul)\n"
-
-msgid "Name"
-msgstr ""
-
-#, fuzzy
-msgid "Description"
-msgstr "  . leírás : %s\n"
-
-#, fuzzy
-msgid "Arguments"
-msgstr "fogadó típusa [paraméterek]"
-
-msgid "Hashtable (input)"
-msgstr ""
-
-msgid "Hashtable (output)"
-msgstr ""
-
-#, fuzzy
-msgid "Pointer"
-msgstr "perc"
-
-msgid "Lists"
-msgstr ""
-
-#, fuzzy
-msgid "Variables"
-msgstr "  . típus: szám\n"
-
-msgid "Update allowed:"
-msgstr ""
-
-#, fuzzy
-msgid "Option"
-msgstr "[parancs]"
-
-msgid "Type"
-msgstr ""
-
-msgid "Constants"
-msgstr ""
-
-msgid "Rank"
-msgstr ""
-
-msgid "Priority"
-msgstr ""
-
-msgid "File"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
@@ -187,7 +74,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal\n"
+"  -c, --colors             display default colors in terminal and exit\n"
 "  -d, --dir <path>         force a single WeeChat home directory\n"
 "                           or 4 different directories separated by colons "
 "(in this order: config, data, cache, runtime)\n"
@@ -196,8 +83,8 @@ msgid ""
 "  -t, --temp-dir           create a temporary WeeChat home directory and "
 "delete it on exit\n"
 "                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help\n"
-"  -l, --license            display WeeChat license\n"
+"  -h, --help               display this help and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
 "  -P, --plugins <plugins>  load only these plugins at startup\n"
 "                           (see /help weechat.plugin.autoload)\n"
@@ -208,7 +95,7 @@ msgid ""
 "  -s, --no-script          don't load any script at startup\n"
 "      --upgrade            upgrade WeeChat using session files (see /help "
 "upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version\n"
+"  -v, --version            display WeeChat version and exit\n"
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
 "  -a, --no-connect        automatikus csatlakozás a szerverekhez tiltása\n"
@@ -225,6 +112,10 @@ msgstr ""
 "  -w, --weechat-commands  WeeChat parancsok mutatása\n"
 
 msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
 msgstr ""
 
 msgid ""
@@ -547,12 +438,36 @@ msgstr "a felhasználók le lettek tiltva"
 msgid "Filter \"%s\" deleted"
 msgstr "a felhasználók le lettek tiltva"
 
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
+"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
+"underline"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Option \"%s%s%s\":"
 msgstr "Felhasználók a %s%s%s szobában: %s["
 
+#, fuzzy
+msgid "description"
+msgstr "  . leírás : %s\n"
+
+msgid "type"
+msgstr ""
+
 msgid "boolean"
 msgstr ""
+
+#, fuzzy
+msgid "values"
+msgstr "  . értékek: "
+
+#, fuzzy
+msgid "default value"
+msgstr "  . alapérték: %d\n"
 
 #, fuzzy
 msgid "(undefined)"
@@ -570,8 +485,24 @@ msgid "integer"
 msgstr "perc"
 
 #, fuzzy
+msgid "any string"
+msgstr "Várakozás"
+
+#, fuzzy
+msgid "any char"
+msgstr "karakterek felcserélése"
+
+#, fuzzy
+msgid "max chars"
+msgstr "pufferek kezelése"
+
+#, fuzzy
 msgid "color"
 msgstr "üzenetek színe"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -4113,6 +4044,79 @@ msgstr "%s nem sikerült a \"%s\" könyvtárat létrehozni\n"
 #, fuzzy, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s nem sikerült a \"%s\" könyvtárat létrehozni\n"
+
+msgid "Alias"
+msgstr ""
+
+#, fuzzy
+msgid "Command"
+msgstr "%s belső parancsok:\n"
+
+#, fuzzy
+msgid "Completion"
+msgstr "lefordítva:"
+
+#, fuzzy
+msgid "IRC color"
+msgstr "üzenetek színe"
+
+#, fuzzy
+msgid "WeeChat color"
+msgstr "WeeChat Hiba:"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "  (nem található bővítőmodul)\n"
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Description"
+msgstr "  . leírás : %s\n"
+
+#, fuzzy
+msgid "Arguments"
+msgstr "fogadó típusa [paraméterek]"
+
+msgid "Hashtable (input)"
+msgstr ""
+
+msgid "Hashtable (output)"
+msgstr ""
+
+#, fuzzy
+msgid "Pointer"
+msgstr "perc"
+
+msgid "Update allowed:"
+msgstr ""
+
+msgid "Lists"
+msgstr ""
+
+#, fuzzy
+msgid "Variables"
+msgstr "  . típus: szám\n"
+
+#, fuzzy
+msgid "Option"
+msgstr "[parancs]"
+
+msgid "Type"
+msgstr ""
+
+msgid "Constants"
+msgstr ""
+
+msgid "Rank"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "File"
+msgstr ""
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"

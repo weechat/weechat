@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-26 21:03+0200\n"
+"POT-Creation-Date: 2023-03-30 21:54+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -32,124 +32,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Poedit-Bookmarks: -1,-1,608,-1,-1,-1,-1,-1,-1,-1\n"
-
-#, fuzzy
-msgid "any string"
-msgstr "Ожидание"
-
-#, fuzzy
-msgid "any char"
-msgstr "развернуть символы"
-
-#, fuzzy
-msgid "max chars"
-msgstr "управление буферами"
-
-#, fuzzy
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
-"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
-"underline"
-msgstr ""
-"название цвета WeeChat (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), код "
-"или алиас цвета терминала; перед цветом допустимы атрибуты (только для цвета "
-"текста, но не фона): \"*\" жирный, \"!\" инверсия, \"_\" подчёркивание"
-
-#, fuzzy
-msgid "description"
-msgstr "  . описание: %s\n"
-
-msgid "type"
-msgstr "тип"
-
-#, fuzzy
-msgid "values"
-msgstr "  . значения: "
-
-#, fuzzy
-msgid "default value"
-msgstr "  . значение по умолчанию: %d\n"
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
-msgstr "разрешено неопределённое значение (null)"
-
-msgid "Alias"
-msgstr ""
-
-#, fuzzy
-msgid "Command"
-msgstr "Внутренние команды %s:\n"
-
-#, fuzzy
-msgid "Completion"
-msgstr "собран:"
-
-#, fuzzy
-msgid "IRC color"
-msgstr "цвет чата"
-
-#, fuzzy
-msgid "WeeChat color"
-msgstr "Ошибка WeeChat:"
-
-#, fuzzy
-msgid "Plugin"
-msgstr "  (нет pluginа)\n"
-
-msgid "Name"
-msgstr ""
-
-#, fuzzy
-msgid "Description"
-msgstr "  . описание: %s\n"
-
-#, fuzzy
-msgid "Arguments"
-msgstr "адресат тип [аргументы]"
-
-msgid "Hashtable (input)"
-msgstr ""
-
-msgid "Hashtable (output)"
-msgstr ""
-
-#, fuzzy
-msgid "Pointer"
-msgstr "минута"
-
-msgid "Lists"
-msgstr ""
-
-#, fuzzy
-msgid "Variables"
-msgstr "  . тип: целочисленный\n"
-
-msgid "Update allowed:"
-msgstr ""
-
-#, fuzzy
-msgid "Option"
-msgstr "[команда]"
-
-msgid "Type"
-msgstr ""
-
-msgid "Constants"
-msgstr ""
-
-msgid "Rank"
-msgstr ""
-
-msgid "Priority"
-msgstr ""
-
-msgid "File"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
@@ -195,7 +77,7 @@ msgstr "Использование: %s [опция...] [расширение:о�
 #, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal\n"
+"  -c, --colors             display default colors in terminal and exit\n"
 "  -d, --dir <path>         force a single WeeChat home directory\n"
 "                           or 4 different directories separated by colons "
 "(in this order: config, data, cache, runtime)\n"
@@ -204,8 +86,8 @@ msgid ""
 "  -t, --temp-dir           create a temporary WeeChat home directory and "
 "delete it on exit\n"
 "                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help\n"
-"  -l, --license            display WeeChat license\n"
+"  -h, --help               display this help and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
 "  -P, --plugins <plugins>  load only these plugins at startup\n"
 "                           (see /help weechat.plugin.autoload)\n"
@@ -216,7 +98,7 @@ msgid ""
 "  -s, --no-script          don't load any script at startup\n"
 "      --upgrade            upgrade WeeChat using session files (see /help "
 "upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version\n"
+"  -v, --version            display WeeChat version and exit\n"
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
 "  -a, --no-connect        не подключаться автоматически при запуске\n"
@@ -234,6 +116,10 @@ msgstr ""
 "  -w, --weechat-commands  отобразить команды WeeChat\n"
 
 msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
 msgstr ""
 
 msgid ""
@@ -558,12 +444,41 @@ msgstr "команда users отключена"
 msgid "Filter \"%s\" deleted"
 msgstr "команда users отключена"
 
+#, fuzzy
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
+"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
+"underline"
+msgstr ""
+"название цвета WeeChat (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), код "
+"или алиас цвета терминала; перед цветом допустимы атрибуты (только для цвета "
+"текста, но не фона): \"*\" жирный, \"!\" инверсия, \"_\" подчёркивание"
+
 #, fuzzy, c-format
 msgid "Option \"%s%s%s\":"
 msgstr "Ники %s%s%s: %s["
 
+#, fuzzy
+msgid "description"
+msgstr "  . описание: %s\n"
+
+msgid "type"
+msgstr "тип"
+
 msgid "boolean"
 msgstr "boolean"
+
+#, fuzzy
+msgid "values"
+msgstr "  . значения: "
+
+#, fuzzy
+msgid "default value"
+msgstr "  . значение по умолчанию: %d\n"
 
 #, fuzzy
 msgid "(undefined)"
@@ -581,8 +496,24 @@ msgid "integer"
 msgstr "минута"
 
 #, fuzzy
+msgid "any string"
+msgstr "Ожидание"
+
+#, fuzzy
+msgid "any char"
+msgstr "развернуть символы"
+
+#, fuzzy
+msgid "max chars"
+msgstr "управление буферами"
+
+#, fuzzy
 msgid "color"
 msgstr "цвет чата"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr "разрешено неопределённое значение (null)"
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -4141,6 +4072,79 @@ msgstr "%s домашний каталог (%s) не является дирек
 #, fuzzy, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s не могу создать директорию \"%s\"\n"
+
+msgid "Alias"
+msgstr ""
+
+#, fuzzy
+msgid "Command"
+msgstr "Внутренние команды %s:\n"
+
+#, fuzzy
+msgid "Completion"
+msgstr "собран:"
+
+#, fuzzy
+msgid "IRC color"
+msgstr "цвет чата"
+
+#, fuzzy
+msgid "WeeChat color"
+msgstr "Ошибка WeeChat:"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "  (нет pluginа)\n"
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Description"
+msgstr "  . описание: %s\n"
+
+#, fuzzy
+msgid "Arguments"
+msgstr "адресат тип [аргументы]"
+
+msgid "Hashtable (input)"
+msgstr ""
+
+msgid "Hashtable (output)"
+msgstr ""
+
+#, fuzzy
+msgid "Pointer"
+msgstr "минута"
+
+msgid "Update allowed:"
+msgstr ""
+
+msgid "Lists"
+msgstr ""
+
+#, fuzzy
+msgid "Variables"
+msgstr "  . тип: целочисленный\n"
+
+#, fuzzy
+msgid "Option"
+msgstr "[команда]"
+
+msgid "Type"
+msgstr ""
+
+msgid "Constants"
+msgstr ""
+
+msgid "Rank"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "File"
+msgstr ""
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"

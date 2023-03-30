@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-26 21:03+0200\n"
+"POT-Creation-Date: 2023-03-30 21:54+0200\n"
 "PO-Revision-Date: 2023-03-27 12:59+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
@@ -38,109 +38,6 @@ msgstr ""
 "X-Generator: Gtranslator 42.0\n"
 "X-Poedit-Bookmarks: -1,-1,180,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
-
-msgid "any string"
-msgstr "beliebige Zeichenkette"
-
-msgid "any char"
-msgstr "beliebiges Zeichen"
-
-msgid "max chars"
-msgstr "maximale Anzahl an Zeichen"
-
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
-"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
-"underline"
-msgstr ""
-"ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine "
-"Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt "
-"werden (gilt ausschließlich für die Textfarbe und nicht für den "
-"Hintergrund): \"%\" für blinken, \".\" für \"dimmen\" (half hell), \"*\" für "
-"fett, \"!\" für invertiert, \"/\" für kursiv, \"_\" für unterstrichen"
-
-msgid "description"
-msgstr "Beschreibung"
-
-msgid "type"
-msgstr "Typ"
-
-msgid "values"
-msgstr "Werte"
-
-msgid "default value"
-msgstr "Standardwert"
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
-msgstr "undefinierter Wert erlaubt (NULL)"
-
-msgid "Alias"
-msgstr "Alias"
-
-msgid "Command"
-msgstr "Befehl"
-
-msgid "Completion"
-msgstr "Vervollständigung"
-
-msgid "IRC color"
-msgstr "IRC-Farbe"
-
-msgid "WeeChat color"
-msgstr "WeeChat-Farbe"
-
-msgid "Plugin"
-msgstr "Erweiterung"
-
-msgid "Name"
-msgstr "Name"
-
-msgid "Description"
-msgstr "Beschreibung"
-
-msgid "Arguments"
-msgstr "Argumente"
-
-msgid "Hashtable (input)"
-msgstr "Hashtable (Eingabe)"
-
-msgid "Hashtable (output)"
-msgstr "Hashtable (Ausgabe)"
-
-msgid "Pointer"
-msgstr "Pointer"
-
-msgid "Lists"
-msgstr "Listen"
-
-msgid "Variables"
-msgstr "Variablen"
-
-msgid "Update allowed:"
-msgstr "Update erlaubt:"
-
-msgid "Option"
-msgstr "Einstellung"
-
-msgid "Type"
-msgstr "Type"
-
-msgid "Constants"
-msgstr "Konstanten"
-
-msgid "Rank"
-msgstr "Rang"
-
-msgid "Priority"
-msgstr "Priorität"
-
-msgid "File"
-msgstr "Datei"
 
 #, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
@@ -189,9 +86,35 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Aufruf: %s [Option...] [Erweiterung:Option...]\n"
 
+#, fuzzy
+#| msgid ""
+#| "  -a, --no-connect         disable auto-connect to servers at startup\n"
+#| "  -c, --colors             display default colors in terminal\n"
+#| "  -d, --dir <path>         force a single WeeChat home directory\n"
+#| "                           or 4 different directories separated by colons "
+#| "(in this order: config, data, cache, runtime)\n"
+#| "                           (environment variable WEECHAT_HOME is read if "
+#| "this option is not given)\n"
+#| "  -t, --temp-dir           create a temporary WeeChat home directory and "
+#| "delete it on exit\n"
+#| "                           (incompatible with option \"-d\")\n"
+#| "  -h, --help               display this help\n"
+#| "  -l, --license            display WeeChat license\n"
+#| "  -p, --no-plugin          don't load any plugin at startup\n"
+#| "  -P, --plugins <plugins>  load only these plugins at startup\n"
+#| "                           (see /help weechat.plugin.autoload)\n"
+#| "  -r, --run-command <cmd>  run command(s) after startup;\n"
+#| "                           many commands can be separated by semicolons "
+#| "and are evaluated,\n"
+#| "                           this option can be given multiple times\n"
+#| "  -s, --no-script          don't load any script at startup\n"
+#| "      --upgrade            upgrade WeeChat using session files (see /help "
+#| "upgrade in WeeChat)\n"
+#| "  -v, --version            display WeeChat version\n"
+#| "  plugin:option            option for plugin (see man weechat)\n"
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal\n"
+"  -c, --colors             display default colors in terminal and exit\n"
 "  -d, --dir <path>         force a single WeeChat home directory\n"
 "                           or 4 different directories separated by colons "
 "(in this order: config, data, cache, runtime)\n"
@@ -200,8 +123,8 @@ msgid ""
 "  -t, --temp-dir           create a temporary WeeChat home directory and "
 "delete it on exit\n"
 "                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help\n"
-"  -l, --license            display WeeChat license\n"
+"  -h, --help               display this help and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
 "  -P, --plugins <plugins>  load only these plugins at startup\n"
 "                           (see /help weechat.plugin.autoload)\n"
@@ -212,7 +135,7 @@ msgid ""
 "  -s, --no-script          don't load any script at startup\n"
 "      --upgrade            upgrade WeeChat using session files (see /help "
 "upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version\n"
+"  -v, --version            display WeeChat version and exit\n"
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
 "  -a, --no-connect         deaktiviert das automatische Verbinden mit den "
@@ -248,6 +171,10 @@ msgstr ""
 
 msgid "Extra options in headless mode:\n"
 msgstr "Zusätzliche Optionen für den Hintergrundmodus:\n"
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
+msgstr ""
 
 msgid ""
 "      --daemon             run WeeChat as a daemon (fork, new process group, "
@@ -602,12 +529,39 @@ msgstr "Alle Filter wurden gelöscht"
 msgid "Filter \"%s\" deleted"
 msgstr "Filter \"%s\" gelöscht"
 
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
+"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
+"underline"
+msgstr ""
+"ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine "
+"Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt "
+"werden (gilt ausschließlich für die Textfarbe und nicht für den "
+"Hintergrund): \"%\" für blinken, \".\" für \"dimmen\" (half hell), \"*\" für "
+"fett, \"!\" für invertiert, \"/\" für kursiv, \"_\" für unterstrichen"
+
 #, c-format
 msgid "Option \"%s%s%s\":"
 msgstr "Einstellung \"%s%s%s\":"
 
+msgid "description"
+msgstr "Beschreibung"
+
+msgid "type"
+msgstr "Typ"
+
 msgid "boolean"
 msgstr "boolesch"
+
+msgid "values"
+msgstr "Werte"
+
+msgid "default value"
+msgstr "Standardwert"
 
 msgid "(undefined)"
 msgstr "(nicht definiert)"
@@ -621,8 +575,21 @@ msgstr "Zeichenkette"
 msgid "integer"
 msgstr "integer"
 
+msgid "any string"
+msgstr "beliebige Zeichenkette"
+
+msgid "any char"
+msgstr "beliebiges Zeichen"
+
+msgid "max chars"
+msgstr "maximale Anzahl an Zeichen"
+
 msgid "color"
 msgstr "Farbe"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr "undefinierter Wert erlaubt (NULL)"
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -5720,6 +5687,69 @@ msgstr "Fehler: \"%s\" ist kein Verzeichnis\n"
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Fehler: Das Verzeichnis \"%s\" kann nicht anlegt werden\n"
+
+msgid "Alias"
+msgstr "Alias"
+
+msgid "Command"
+msgstr "Befehl"
+
+msgid "Completion"
+msgstr "Vervollständigung"
+
+msgid "IRC color"
+msgstr "IRC-Farbe"
+
+msgid "WeeChat color"
+msgstr "WeeChat-Farbe"
+
+msgid "Plugin"
+msgstr "Erweiterung"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Arguments"
+msgstr "Argumente"
+
+msgid "Hashtable (input)"
+msgstr "Hashtable (Eingabe)"
+
+msgid "Hashtable (output)"
+msgstr "Hashtable (Ausgabe)"
+
+msgid "Pointer"
+msgstr "Pointer"
+
+msgid "Update allowed:"
+msgstr "Update erlaubt:"
+
+msgid "Lists"
+msgstr "Listen"
+
+msgid "Variables"
+msgstr "Variablen"
+
+msgid "Option"
+msgstr "Einstellung"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Constants"
+msgstr "Konstanten"
+
+msgid "Rank"
+msgstr "Rang"
+
+msgid "Priority"
+msgstr "Priorität"
+
+msgid "File"
+msgstr "Datei"
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"

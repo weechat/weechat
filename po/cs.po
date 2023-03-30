@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-26 21:03+0200\n"
+"POT-Creation-Date: 2023-03-30 21:54+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -31,117 +31,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Poedit 2.0.1\n"
-
-msgid "any string"
-msgstr "jakýkoliv řetězec"
-
-msgid "any char"
-msgstr "jakýkoliv znak"
-
-msgid "max chars"
-msgstr "maximálně znaků"
-
-#, fuzzy
-#| msgid ""
-#| "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-#| "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-#| "terminal color number or an alias; attributes are allowed before color "
-#| "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
-#| "\"/\" for italic, \"_\" for underline"
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
-"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
-"underline"
-msgstr ""
-"jméno WeeChat barvy (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), "
-"číslo barvy terminálu nebo alias; před barvou jsou povoleny atributy (pouze "
-"pro barvu textu, ne pro barvu pozadí): \"*\" pro tučné, \"!\" pro obrácené, "
-"\"_\" pro podtržené"
-
-msgid "description"
-msgstr "popis"
-
-msgid "type"
-msgstr "typ"
-
-msgid "values"
-msgstr "hodnoty"
-
-msgid "default value"
-msgstr "výchozí hodnota"
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
-msgstr "povolena nedefinovaná hodnota (null)"
-
-msgid "Alias"
-msgstr ""
-
-#, fuzzy
-msgid "Command"
-msgstr "Příkazy:"
-
-#, fuzzy
-msgid "Completion"
-msgstr "doplnění:"
-
-msgid "IRC color"
-msgstr "IRC barva"
-
-msgid "WeeChat color"
-msgstr "WeeChat barva"
-
-msgid "Plugin"
-msgstr "Plugin"
-
-msgid "Name"
-msgstr "Jméno"
-
-msgid "Description"
-msgstr "Popis"
-
-msgid "Arguments"
-msgstr "Argumenty"
-
-msgid "Hashtable (input)"
-msgstr "Hash tabulka (vstup)"
-
-msgid "Hashtable (output)"
-msgstr "Hash tabulka (výstup)"
-
-msgid "Pointer"
-msgstr "Ukazatel"
-
-msgid "Lists"
-msgstr "Seznamy"
-
-msgid "Variables"
-msgstr "Proměnné"
-
-msgid "Update allowed:"
-msgstr "Aktualizace povolena:"
-
-msgid "Option"
-msgstr "Volba"
-
-msgid "Type"
-msgstr "Typ"
-
-msgid "Constants"
-msgstr "Konstanty"
-
-msgid "Rank"
-msgstr ""
-
-msgid "Priority"
-msgstr ""
-
-msgid "File"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
@@ -188,7 +77,7 @@ msgstr "Použití: %s [volba...] [plugin:volba...]\n"
 #, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal\n"
+"  -c, --colors             display default colors in terminal and exit\n"
 "  -d, --dir <path>         force a single WeeChat home directory\n"
 "                           or 4 different directories separated by colons "
 "(in this order: config, data, cache, runtime)\n"
@@ -197,8 +86,8 @@ msgid ""
 "  -t, --temp-dir           create a temporary WeeChat home directory and "
 "delete it on exit\n"
 "                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help\n"
-"  -l, --license            display WeeChat license\n"
+"  -h, --help               display this help and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
 "  -P, --plugins <plugins>  load only these plugins at startup\n"
 "                           (see /help weechat.plugin.autoload)\n"
@@ -209,7 +98,7 @@ msgid ""
 "  -s, --no-script          don't load any script at startup\n"
 "      --upgrade            upgrade WeeChat using session files (see /help "
 "upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version\n"
+"  -v, --version            display WeeChat version and exit\n"
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
 "  -a, --no-connect\t\t\tvypne automatické připojení k serverům při startu\n"
@@ -230,6 +119,10 @@ msgstr ""
 "  plugin:option\t\t\t\tvolba pro plugin (viz: man weechat)\n"
 
 msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
 msgstr ""
 
 msgid ""
@@ -568,12 +461,45 @@ msgstr "Všechny filtry byly smazány"
 msgid "Filter \"%s\" deleted"
 msgstr "Filtr \"%s\" smazán"
 
+#, fuzzy
+#| msgid ""
+#| "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+#| "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+#| "terminal color number or an alias; attributes are allowed before color "
+#| "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
+#| "\"/\" for italic, \"_\" for underline"
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
+"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
+"underline"
+msgstr ""
+"jméno WeeChat barvy (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), "
+"číslo barvy terminálu nebo alias; před barvou jsou povoleny atributy (pouze "
+"pro barvu textu, ne pro barvu pozadí): \"*\" pro tučné, \"!\" pro obrácené, "
+"\"_\" pro podtržené"
+
 #, c-format
 msgid "Option \"%s%s%s\":"
 msgstr "Volba \"%s%s%s\":"
 
+msgid "description"
+msgstr "popis"
+
+msgid "type"
+msgstr "typ"
+
 msgid "boolean"
 msgstr "boolovský"
+
+msgid "values"
+msgstr "hodnoty"
+
+msgid "default value"
+msgstr "výchozí hodnota"
 
 msgid "(undefined)"
 msgstr "(nedefinováno)"
@@ -587,8 +513,21 @@ msgstr "řetězec"
 msgid "integer"
 msgstr "celé číslo"
 
+msgid "any string"
+msgstr "jakýkoliv řetězec"
+
+msgid "any char"
+msgstr "jakýkoliv znak"
+
+msgid "max chars"
+msgstr "maximálně znaků"
+
 msgid "color"
 msgstr "barva"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr "povolena nedefinovaná hodnota (null)"
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -4545,6 +4484,71 @@ msgstr "Chyba: domovský adresář (%s) není adresářem\n"
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Chyba: nemohu vytvořit adresář \"%s\"\n"
+
+msgid "Alias"
+msgstr ""
+
+#, fuzzy
+msgid "Command"
+msgstr "Příkazy:"
+
+#, fuzzy
+msgid "Completion"
+msgstr "doplnění:"
+
+msgid "IRC color"
+msgstr "IRC barva"
+
+msgid "WeeChat color"
+msgstr "WeeChat barva"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Name"
+msgstr "Jméno"
+
+msgid "Description"
+msgstr "Popis"
+
+msgid "Arguments"
+msgstr "Argumenty"
+
+msgid "Hashtable (input)"
+msgstr "Hash tabulka (vstup)"
+
+msgid "Hashtable (output)"
+msgstr "Hash tabulka (výstup)"
+
+msgid "Pointer"
+msgstr "Ukazatel"
+
+msgid "Update allowed:"
+msgstr "Aktualizace povolena:"
+
+msgid "Lists"
+msgstr "Seznamy"
+
+msgid "Variables"
+msgstr "Proměnné"
+
+msgid "Option"
+msgstr "Volba"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Constants"
+msgstr "Konstanty"
+
+msgid "Rank"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "File"
+msgstr ""
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"

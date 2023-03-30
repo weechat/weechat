@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-26 21:03+0200\n"
+"POT-Creation-Date: 2023-03-30 21:54+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -30,117 +30,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Virtaal 0.7.1\n"
-
-msgid "any string"
-msgstr "qualquer cadeia"
-
-msgid "any char"
-msgstr "qualquer caráter"
-
-msgid "max chars"
-msgstr "carateres max"
-
-#, fuzzy
-#| msgid ""
-#| "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-#| "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-#| "terminal color number or an alias; attributes are allowed before color "
-#| "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
-#| "\"/\" for italic, \"_\" for underline"
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
-"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
-"underline"
-msgstr ""
-"um nome de cor WeeChat (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), um "
-"número de cor do terminal ou um alias; os atribuídos são permitidos antes da "
-"cor (só para a cor do texto, não do fundo): \"*\" para negrito, \"!\" para "
-"invertido, \"/\" para itálico, \"_\" para sublinhado"
-
-msgid "description"
-msgstr "descrição"
-
-msgid "type"
-msgstr "tipo"
-
-msgid "values"
-msgstr "valores"
-
-msgid "default value"
-msgstr "valor predefinido"
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
-msgstr "valor indefinido permitido (null)"
-
-msgid "Alias"
-msgstr ""
-
-#, fuzzy
-msgid "Command"
-msgstr "Comandos:"
-
-#, fuzzy
-msgid "Completion"
-msgstr "completação:"
-
-msgid "IRC color"
-msgstr "Cor IRC"
-
-msgid "WeeChat color"
-msgstr "Cor WeeChat"
-
-msgid "Plugin"
-msgstr "Plugin"
-
-msgid "Name"
-msgstr "Nome"
-
-msgid "Description"
-msgstr "Descrição"
-
-msgid "Arguments"
-msgstr "Argumentos"
-
-msgid "Hashtable (input)"
-msgstr "Tabela hash (entrada)"
-
-msgid "Hashtable (output)"
-msgstr "Tabela hash (saída)"
-
-msgid "Pointer"
-msgstr "Ponteiro"
-
-msgid "Lists"
-msgstr "Listas"
-
-msgid "Variables"
-msgstr "Variáveis"
-
-msgid "Update allowed:"
-msgstr "Atualização permitida:"
-
-msgid "Option"
-msgstr "Opção"
-
-msgid "Type"
-msgstr "Tipo"
-
-msgid "Constants"
-msgstr "Constantes"
-
-msgid "Rank"
-msgstr ""
-
-msgid "Priority"
-msgstr ""
-
-msgid "File"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
@@ -188,7 +77,7 @@ msgstr "Utilização: %s [opção...] [plugin:opção...]\n"
 #, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal\n"
+"  -c, --colors             display default colors in terminal and exit\n"
 "  -d, --dir <path>         force a single WeeChat home directory\n"
 "                           or 4 different directories separated by colons "
 "(in this order: config, data, cache, runtime)\n"
@@ -197,8 +86,8 @@ msgid ""
 "  -t, --temp-dir           create a temporary WeeChat home directory and "
 "delete it on exit\n"
 "                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help\n"
-"  -l, --license            display WeeChat license\n"
+"  -h, --help               display this help and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
 "  -P, --plugins <plugins>  load only these plugins at startup\n"
 "                           (see /help weechat.plugin.autoload)\n"
@@ -209,7 +98,7 @@ msgid ""
 "  -s, --no-script          don't load any script at startup\n"
 "      --upgrade            upgrade WeeChat using session files (see /help "
 "upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version\n"
+"  -v, --version            display WeeChat version and exit\n"
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
 "  -a, --no-connect         desativar conexão automática aos servidores ao "
@@ -232,6 +121,10 @@ msgstr ""
 "  plugin:opção            opção de um plugin (ver man weechat)\n"
 
 msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
 msgstr ""
 
 msgid ""
@@ -569,12 +462,45 @@ msgstr "Todos os filtros foram eliminados"
 msgid "Filter \"%s\" deleted"
 msgstr "Filtro \"%s\" eliminado"
 
+#, fuzzy
+#| msgid ""
+#| "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+#| "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+#| "terminal color number or an alias; attributes are allowed before color "
+#| "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
+#| "\"/\" for italic, \"_\" for underline"
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
+"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
+"underline"
+msgstr ""
+"um nome de cor WeeChat (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), um "
+"número de cor do terminal ou um alias; os atribuídos são permitidos antes da "
+"cor (só para a cor do texto, não do fundo): \"*\" para negrito, \"!\" para "
+"invertido, \"/\" para itálico, \"_\" para sublinhado"
+
 #, c-format
 msgid "Option \"%s%s%s\":"
 msgstr "Opção \"%s%s%s\":"
 
+msgid "description"
+msgstr "descrição"
+
+msgid "type"
+msgstr "tipo"
+
 msgid "boolean"
 msgstr "booleano"
+
+msgid "values"
+msgstr "valores"
+
+msgid "default value"
+msgstr "valor predefinido"
 
 msgid "(undefined)"
 msgstr "(indefinido)"
@@ -588,8 +514,21 @@ msgstr "cadeia"
 msgid "integer"
 msgstr "inteiro"
 
+msgid "any string"
+msgstr "qualquer cadeia"
+
+msgid "any char"
+msgstr "qualquer caráter"
+
+msgid "max chars"
+msgstr "carateres max"
+
 msgid "color"
 msgstr "cor"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr "valor indefinido permitido (null)"
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -5438,6 +5377,71 @@ msgstr "Erro: a base (%s) não é um diretório\n"
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Erro: não é possível criar o diretório \"%s\"\n"
+
+msgid "Alias"
+msgstr ""
+
+#, fuzzy
+msgid "Command"
+msgstr "Comandos:"
+
+#, fuzzy
+msgid "Completion"
+msgstr "completação:"
+
+msgid "IRC color"
+msgstr "Cor IRC"
+
+msgid "WeeChat color"
+msgstr "Cor WeeChat"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "Arguments"
+msgstr "Argumentos"
+
+msgid "Hashtable (input)"
+msgstr "Tabela hash (entrada)"
+
+msgid "Hashtable (output)"
+msgstr "Tabela hash (saída)"
+
+msgid "Pointer"
+msgstr "Ponteiro"
+
+msgid "Update allowed:"
+msgstr "Atualização permitida:"
+
+msgid "Lists"
+msgstr "Listas"
+
+msgid "Variables"
+msgstr "Variáveis"
+
+msgid "Option"
+msgstr "Opção"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Constants"
+msgstr "Constantes"
+
+msgid "Rank"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "File"
+msgstr ""
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
