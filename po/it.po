@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-30 21:54+0200\n"
+"POT-Creation-Date: 2023-03-30 22:09+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11234,6 +11234,13 @@ msgstr ""
 "data e ora usati nei file di log (consultare man strftime per gli "
 "specificatori di data/ora)"
 
+msgid "path to current log filename for the buffer"
+msgstr ""
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
+msgstr ""
+
 msgid "list of logger buffers"
 msgstr "elenco dei buffer logger"
 
@@ -13407,10 +13414,6 @@ msgstr "colore del testo per i messaggi mostrati al cambio di data"
 
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr "elenco separato da virgole di dizionari usati nel buffer"
-
-msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
-msgstr ""
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"

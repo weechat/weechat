@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-30 21:54+0200\n"
+"POT-Creation-Date: 2023-03-30 22:09+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -12391,6 +12391,16 @@ msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
 "ログファイルで使用するタイムスタンプ (日付/時間指定子は strftime の man 参照)"
 
+msgid "path to current log filename for the buffer"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
+msgstr ""
+"バッファポインタ (\"0x12345678\") またはバッファのフルネーム (\"irc.libera."
+"#weechat\")"
+
 msgid "list of logger buffers"
 msgstr "logger バッファのリスト"
 
@@ -14708,13 +14718,6 @@ msgstr "バー要素 \"spell_suggest\" 内の 2 つの単語間の区切り文�
 
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr "バッファで使用中の辞書のコンマ区切りリスト"
-
-#, fuzzy
-msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
-msgstr ""
-"バッファポインタ (\"0x12345678\") またはバッファのフルネーム (\"irc.libera."
-"#weechat\")"
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"

@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-30 21:54+0200\n"
+"POT-Creation-Date: 2023-03-30 22:09+0200\n"
 "PO-Revision-Date: 2023-03-27 12:59+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
@@ -13168,6 +13168,15 @@ msgstr ""
 "Zeitstempel in Protokoll-Datei nutzen (siehe man strftime, welche "
 "Platzhalter für das Datum und die Uhrzeit verwendet werden)"
 
+msgid "path to current log filename for the buffer"
+msgstr ""
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
+msgstr ""
+"Buffer-Pointer (\"0x12345678\") oder der vollständige Buffername (\"irc."
+"libera.#weechat\")"
+
 msgid "list of logger buffers"
 msgstr "Auflistung der protokollierten Buffer"
 
@@ -15624,12 +15633,6 @@ msgid "comma-separated list of dictionaries used in buffer"
 msgstr ""
 "durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer "
 "genutzt werden sollen"
-
-msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
-msgstr ""
-"Buffer-Pointer (\"0x12345678\") oder der vollständige Buffername (\"irc."
-"libera.#weechat\")"
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"

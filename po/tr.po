@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-30 21:54+0200\n"
+"POT-Creation-Date: 2023-03-30 22:09+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13202,6 +13202,15 @@ msgstr ""
 "günlük dosyalarında kullanılan zaman damgası (tarih/zaman belirticileri için "
 "bkz. /man strftime)"
 
+msgid "path to current log filename for the buffer"
+msgstr ""
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
+msgstr ""
+"arabellek işaretçisi (\"0x123456678\") veya arabellek tam adı (\"irc.libera."
+"weechat\")"
+
 msgid "list of logger buffers"
 msgstr "günlükleyici arabelleklerin listesi"
 
@@ -15553,12 +15562,6 @@ msgstr ""
 
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr "arabellekte kullanılan sözlüklerin virgülle ayrılmış listesi"
-
-msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
-msgstr ""
-"arabellek işaretçisi (\"0x123456678\") veya arabellek tam adı (\"irc.libera."
-"weechat\")"
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"

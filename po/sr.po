@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-30 21:54+0200\n"
+"POT-Creation-Date: 2023-03-30 22:09+0200\n"
 "PO-Revision-Date: 2023-03-27 22:15+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12941,6 +12941,14 @@ msgstr ""
 "временска ознака која се користи у лог фајловима (погледајте man strftime за "
 "спецификаторе датума/времена)"
 
+msgid "path to current log filename for the buffer"
+msgstr ""
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
+msgstr ""
+"показивач на бафер („0x12345678”) или пуно име бафера („irc.libera.#weechat”)"
+
 msgid "list of logger buffers"
 msgstr "листа логер бафера"
 
@@ -15295,11 +15303,6 @@ msgstr ""
 
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr "листа речника раздвојених запетама који се користе у баферу"
-
-msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
-msgstr ""
-"показивач на бафер („0x12345678”) или пуно име бафера („irc.libera.#weechat”)"
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"

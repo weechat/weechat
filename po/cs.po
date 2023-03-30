@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-30 21:54+0200\n"
+"POT-Creation-Date: 2023-03-30 22:09+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10775,6 +10775,13 @@ msgstr ""
 "časová známka použita v logovacích souborech (použijte manuálovou stránku "
 "strftime pro spcifikátory data/času)"
 
+msgid "path to current log filename for the buffer"
+msgstr ""
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
+msgstr ""
+
 msgid "list of logger buffers"
 msgstr "seznam logovacích bufferů"
 
@@ -12969,10 +12976,6 @@ msgstr "barva textu pro počet ostatních zpráv v hostlistu (stavový řádek)"
 #, fuzzy
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr "čárkami oddělený seznam slovníků, které použít pro tento buffer"
-
-msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
-msgstr ""
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"

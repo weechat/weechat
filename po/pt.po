@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-30 21:54+0200\n"
+"POT-Creation-Date: 2023-03-30 22:09+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -12186,6 +12186,16 @@ msgstr ""
 "carimbo de data/hora usado nos ficheiros de registo (ver man strftime para "
 "especificadores de data/hora)"
 
+msgid "path to current log filename for the buffer"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
+msgstr ""
+"ponteiro para o buffer (\"0x12345678\") ou o nome completo do buffer (\"irc."
+"libera.#weechat\")"
+
 msgid "list of logger buffers"
 msgstr "lista de logger buffers"
 
@@ -14490,13 +14500,6 @@ msgstr "cor do texto das mensagens apresentadas depois de passar um dia"
 
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr "lista de dicionários separados por vírgula usados no buffer"
-
-#, fuzzy
-msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
-msgstr ""
-"ponteiro para o buffer (\"0x12345678\") ou o nome completo do buffer (\"irc."
-"libera.#weechat\")"
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
