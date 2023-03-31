@@ -275,6 +275,11 @@ CMake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_DOC | `ON`, `OFF` | OFF
 | HTML 文書のコンパイル。
 
+// TRANSLATION MISSING
+| ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
+| Force build of documentation even if some plugins are not compiled
+  (not recommended: docs will be incomplete).
+
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF
 | Enchant と含めた <<spell_checking,Spell プラグイン>>のコンパイル。
 

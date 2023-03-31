@@ -258,6 +258,11 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_DOC | `ON`, `OFF` | OFF
 | erstellt die HTML Dokumentation.
 
+// TRANSLATION MISSING
+| ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
+| Force build of documentation even if some plugins are not compiled
+  (not recommended: docs will be incomplete).
+
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF
 | kompiliert <<spell_checking,Spell Erweiterung>> mittels Enchant.
 

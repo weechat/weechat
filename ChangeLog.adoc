@@ -69,7 +69,7 @@ Build::
   * core: remove RPM packaging
   * core: remove build of .bz2 and .zst files in `make dist`
   * core: remove obsolete cpack config
-  * doc: convert docgen.py to C, remove autogen files from repository, add parameter `--doc-gen`
+  * doc: convert docgen.py to C, remove autogen files from repository, add parameter `--doc-gen` to `weechat-headless` binary, add CMake option `ENABLE_DOC_INCOMPLETE`
 
 [[v3.8]]
 == Version 3.8 (2023-01-08)

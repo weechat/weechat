@@ -1618,9 +1618,10 @@ doc_generate (const char *path)
 
     if (!weechat_plugins)
     {
-        string_fprintf (stderr,
-                        "doc generator: ERROR: plugins are not loaded\n");
-        goto end;
+        string_fprintf (
+            stderr,
+            "doc generator: WARNING: no plugins loaded, docs will be "
+            "incomplete!\n");
     }
 
     if (!dir_mkdir_parents (path, 0755))

@@ -95,38 +95,39 @@ else()
   set(INCLUDEDIR ${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME})
 endif()
 
-option(ENABLE_NCURSES       "Compile the Ncurses interface"            ON)
-option(ENABLE_HEADLESS      "Compile the headless binary"              ON)
-option(ENABLE_NLS           "Enable Native Language Support"           ON)
-option(ENABLE_LARGEFILE     "Enable Large File Support"                ON)
-option(ENABLE_ALIAS         "Enable Alias plugin"                      ON)
-option(ENABLE_BUFLIST       "Enable Buflist plugin"                    ON)
-option(ENABLE_CHARSET       "Enable Charset plugin"                    ON)
-option(ENABLE_EXEC          "Enable Exec plugin"                       ON)
-option(ENABLE_FIFO          "Enable FIFO plugin"                       ON)
-option(ENABLE_FSET          "Enable Fast Set plugin"                   ON)
-option(ENABLE_IRC           "Enable IRC plugin"                        ON)
-option(ENABLE_LOGGER        "Enable Logger plugin"                     ON)
-option(ENABLE_RELAY         "Enable Relay plugin"                      ON)
-option(ENABLE_SCRIPT        "Enable Script plugin (script manager)"    ON)
-option(ENABLE_SCRIPTS       "Enable script plugins (perl, python, …)"  ON)
-option(ENABLE_PERL          "Enable Perl scripting language"           ON)
-option(ENABLE_PYTHON        "Enable Python scripting language"         ON)
-option(ENABLE_RUBY          "Enable Ruby scripting language"           ON)
-option(ENABLE_LUA           "Enable Lua scripting language"            ON)
-option(ENABLE_TCL           "Enable Tcl scripting language"            ON)
-option(ENABLE_GUILE         "Enable Scheme (guile) scripting language" ON)
-option(ENABLE_JAVASCRIPT    "Enable JavaScript scripting language"     OFF)
-option(ENABLE_PHP           "Enable PHP scripting language"            ON)
-option(ENABLE_SPELL         "Enable Spell checker plugin"              ON)
-option(ENABLE_ENCHANT       "Use Enchant lib in Spell checker plugin"  OFF)
-option(ENABLE_TRIGGER       "Enable Trigger plugin"                    ON)
-option(ENABLE_TYPING        "Enable Typing plugin"                     ON)
-option(ENABLE_XFER          "Enable Xfer plugin"                       ON)
-option(ENABLE_MAN           "Enable build of man page"                 OFF)
-option(ENABLE_DOC           "Enable build of documentation"            OFF)
-option(ENABLE_TESTS         "Enable tests"                             OFF)
-option(ENABLE_CODE_COVERAGE "Enable code coverage"                     OFF)
+option(ENABLE_NCURSES        "Compile the Ncurses interface"            ON)
+option(ENABLE_HEADLESS       "Compile the headless binary"              ON)
+option(ENABLE_NLS            "Enable Native Language Support"           ON)
+option(ENABLE_LARGEFILE      "Enable Large File Support"                ON)
+option(ENABLE_ALIAS          "Enable Alias plugin"                      ON)
+option(ENABLE_BUFLIST        "Enable Buflist plugin"                    ON)
+option(ENABLE_CHARSET        "Enable Charset plugin"                    ON)
+option(ENABLE_EXEC           "Enable Exec plugin"                       ON)
+option(ENABLE_FIFO           "Enable FIFO plugin"                       ON)
+option(ENABLE_FSET           "Enable Fast Set plugin"                   ON)
+option(ENABLE_IRC            "Enable IRC plugin"                        ON)
+option(ENABLE_LOGGER         "Enable Logger plugin"                     ON)
+option(ENABLE_RELAY          "Enable Relay plugin"                      ON)
+option(ENABLE_SCRIPT         "Enable Script plugin (script manager)"    ON)
+option(ENABLE_SCRIPTS        "Enable script plugins (perl, python, …)"  ON)
+option(ENABLE_PERL           "Enable Perl scripting language"           ON)
+option(ENABLE_PYTHON         "Enable Python scripting language"         ON)
+option(ENABLE_RUBY           "Enable Ruby scripting language"           ON)
+option(ENABLE_LUA            "Enable Lua scripting language"            ON)
+option(ENABLE_TCL            "Enable Tcl scripting language"            ON)
+option(ENABLE_GUILE          "Enable Scheme (guile) scripting language" ON)
+option(ENABLE_JAVASCRIPT     "Enable JavaScript scripting language"     OFF)
+option(ENABLE_PHP            "Enable PHP scripting language"            ON)
+option(ENABLE_SPELL          "Enable Spell checker plugin"              ON)
+option(ENABLE_ENCHANT        "Use Enchant lib in Spell checker plugin"  OFF)
+option(ENABLE_TRIGGER        "Enable Trigger plugin"                    ON)
+option(ENABLE_TYPING         "Enable Typing plugin"                     ON)
+option(ENABLE_XFER           "Enable Xfer plugin"                       ON)
+option(ENABLE_MAN            "Enable build of man page"                 OFF)
+option(ENABLE_DOC            "Enable build of documentation"            OFF)
+option(ENABLE_DOC_INCOMPLETE "Enable incomplete doc"                    OFF)
+option(ENABLE_TESTS          "Enable tests"                             OFF)
+option(ENABLE_CODE_COVERAGE  "Enable code coverage"                     OFF)
 
 # code coverage
 add_library(coverage_config INTERFACE)
@@ -141,7 +142,8 @@ if(ENABLE_DOC AND NOT ENABLE_HEADLESS)
 endif()
 
 # all plugins (except javascript) are required for documentation
-if(ENABLE_DOC AND (NOT ENABLE_NLS OR NOT ENABLE_ALIAS OR NOT ENABLE_BUFLIST
+if(ENABLE_DOC AND NOT ENABLE_DOC_INCOMPLETE
+    AND (NOT ENABLE_NLS OR NOT ENABLE_ALIAS OR NOT ENABLE_BUFLIST
       OR NOT ENABLE_CHARSET OR NOT ENABLE_EXEC OR NOT ENABLE_FIFO
       OR NOT ENABLE_FSET OR NOT ENABLE_IRC OR NOT ENABLE_LOGGER
       OR NOT ENABLE_RELAY OR NOT ENABLE_SCRIPT OR NOT ENABLE_SCRIPTS
@@ -149,7 +151,12 @@ if(ENABLE_DOC AND (NOT ENABLE_NLS OR NOT ENABLE_ALIAS OR NOT ENABLE_BUFLIST
       OR NOT ENABLE_LUA OR NOT ENABLE_TCL OR NOT ENABLE_GUILE
       OR NOT ENABLE_PHP OR NOT ENABLE_SPELL OR NOT ENABLE_TRIGGER
       OR NOT ENABLE_TYPING OR NOT ENABLE_XFER))
-  message(FATAL_ERROR "All plugins are required to build documentation.")
+  message(
+    FATAL_ERROR
+    " All plugins are required to build documentation.\n"
+    " If you really want to build incomplete docs, enable this option:\n"
+    "   -DENABLE_DOC_INCOMPLETE=ON"
+  )
 endif()
 
 # headless mode is required for tests

@@ -182,18 +182,52 @@ If needed, you can reset the option to the new default value after upgrade:
 
 The option `weechat.look.paste_auto_add_newline` has been removed.
 
-[[v4.0.0_build_packaging]]
-=== Build and packaging
+[[v4.0.0_build]]
+=== Build
+
+[[v4.0.0_build_autotools]]
+==== Autotools
 
 The autotools support for build of WeeChat has been removed. +
 WeeChat must now be built with CMake.
 
+[[v4.0.0_build_doc]]
+==== Documentation
+
+The auto-generated files for documentation are now built with `weechat-headless`,
+after compilation of WeeChat and the plugins (the files are not in repository
+any more). +
+This implies all plugins must be compiled and loaded in order to have complete docs
+(User's guide and Plugin API reference).
+
+If ever you want to disable some plugins and force the build of incomplete docs,
+a new option has been added: `ENABLE_DOC_INCOMPLETE` (`OFF` by default).
+
+For example if you disable PHP plugin but still want docs where PHP options,
+commands, etc. are missing:
+
+----
+cmake .. -DENABLE_PHP=OFF -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON
+----
+
+[[v4.0.0_packaging]]
+=== Packaging
+
+[[v4.0.0_packaging_tarballs]]
+==== Tarballs
+
 The command `make dist` now builds only `.gz` and `.xz` compressed tarballs. +
 Formats `.bz2` and `.zst` are not built any more.
+
+[[v4.0.0_packaging_rpm]]
+==== RPM packaging
 
 The file `weechat.spec` used for RPM packaging has been removed. +
 openSUSE has its own here:
 https://build.opensuse.org/package/view_file/server:irc/weechat/weechat.spec?expand=1
+
+[[v4.0.0_packaging_cpack]]
+==== cpack
 
 The configuration for cpack has been removed. +
 It was used to build binary package of WeeChat, which has never been released

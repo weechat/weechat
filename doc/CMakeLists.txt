@@ -23,7 +23,6 @@ if(ENABLE_MAN OR ENABLE_DOC)
   if(ASCIIDOCTOR_FOUND)
     # common asciidoctor arguments
     set(ASCIIDOCTOR_ARGS
-      --failure-level=WARNING
       -a experimental
       -a reproducible
       -a "prewrap!"

@@ -250,6 +250,10 @@ List of commonly used options:
 | ENABLE_DOC | `ON`, `OFF` | OFF
 | Build HTML documentation.
 
+| ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
+| Force build of documentation even if some plugins are not compiled
+  (not recommended: docs will be incomplete).
+
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF
 | Compile <<spell_checking,Spell plugin>> with Enchant.
 

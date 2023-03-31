@@ -243,6 +243,11 @@ $ make install
 | ENABLE_DOC | `ON`, `OFF` | OFF
 | Изграђује HTML документацију.
 
+// TRANSLATION MISSING
+| ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
+| Force build of documentation even if some plugins are not compiled
+  (not recommended: docs will be incomplete).
+
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF
 | Компајлира <<spell_checking,Spell додатак>> са Enchant.
 

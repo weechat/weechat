@@ -60,15 +60,3 @@ index 428f11ce9..e88f167b8 100644
      libxml2-dev,
      libcurl4-gnutls-dev,
      libgcrypt20-dev,
-diff --git a/doc/CMakeLists.txt b/doc/CMakeLists.txt
-index e3e5f7a85..af39249e4 100644
---- a/doc/CMakeLists.txt
-+++ b/doc/CMakeLists.txt
-@@ -23,7 +23,6 @@ if(ENABLE_MAN OR ENABLE_DOC)
-   if(ASCIIDOCTOR_FOUND)
-     # common asciidoctor arguments
-     set(ASCIIDOCTOR_ARGS
--      --failure-level=WARNING
-       -a experimental
-       -a reproducible
-       -a "prewrap!"

@@ -250,6 +250,10 @@ Liste des options couramment utilisées :
 | ENABLE_DOC | `ON`, `OFF` | OFF
 | Construire la documentation HTML.
 
+| ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
+| Forcer la construction de la documentation même si des extensions ne sont pas
+  compilées (déconseillé : les documentations seront incomplètes).
+
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF
 | Compiler <<spell_checking,l'extension Spell>> avec Enchant.
 
