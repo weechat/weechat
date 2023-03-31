@@ -3865,7 +3865,7 @@ TEST(IrcProtocolWithServer, 432_not_connected)
 
 TEST(IrcProtocolWithServer, 432_connected)
 {
-    SRV_INIT;
+    SRV_INIT_JOIN;
 
     /* not enough parameters */
     RECV(":server 432");
@@ -3873,12 +3873,19 @@ TEST(IrcProtocolWithServer, 432_connected)
     RECV(":server 432 alice");
     CHECK_ERROR_PARAMS("432", 1, 2);
 
-    RECV(":server 432 * alice");
-    CHECK_SRV("-- * alice");
-    RECV(":server 432 * alice error");
-    CHECK_SRV("-- * alice error");
-    RECV(":server 432 * alice :Erroneous Nickname");
-    CHECK_SRV("-- * alice Erroneous Nickname");
+    RECV(":server 432 alice test%+");
+    CHECK_SRV("-- test%+");
+    RECV(":server 432 alice test%+ error");
+    CHECK_SRV("-- test%+: error");
+    RECV(":server 432 alice test%+ :Erroneous Nickname");
+    CHECK_SRV("-- test%+: Erroneous Nickname");
+
+    /*
+     * special case: erroneous nick is a channel: check that the message is
+     * still displayed on the server buffer
+     */
+    RECV(":server 432 alice #test :Erroneous Nickname");
+    CHECK_SRV("-- #test: Erroneous Nickname");
 }
 
 /*
@@ -3908,7 +3915,7 @@ TEST(IrcProtocolWithServer, 433_not_connected)
 
 TEST(IrcProtocolWithServer, 433_connected)
 {
-    SRV_INIT;
+    SRV_INIT_JOIN;
 
     /* not enough parameters */
     RECV(":server 433");
@@ -3916,12 +3923,20 @@ TEST(IrcProtocolWithServer, 433_connected)
     RECV(":server 433 alice");
     CHECK_ERROR_PARAMS("433", 1, 2);
 
-    RECV(":server 433 * alice");
-    CHECK_SRV("-- * alice");
-    RECV(":server 433 * alice error");
-    CHECK_SRV("-- * alice error");
-    RECV(":server 433 * alice :Nickname is already in use.");
-    CHECK_SRV("-- * alice Nickname is already in use.");
+    RECV(":server 433 alice test");
+    CHECK_SRV("-- test");
+    RECV(":server 433 alice test error");
+    CHECK_SRV("-- test: error");
+    RECV(":server 433 alice test :Nickname is already in use.");
+    CHECK_SRV("-- test: Nickname is already in use.");
+
+    /*
+     * special case: nickname already used looks like a channel (it should
+     * never happen in practice): check that the message is still displayed
+     * on the server buffer
+     */
+     RECV(":server 433 alice #test :Nickname is already in use.");
+     CHECK_SRV("-- #test: Nickname is already in use.");
 }
 
 /*

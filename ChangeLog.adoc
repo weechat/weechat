@@ -55,6 +55,7 @@ Bug fixes::
   * buflist: do not display keys added in default context on first load
   * fset: remove scroll to top of fset buffer when options are added or removed (issue #1892)
   * irc: fix join of channels in "autojoin" server option on first connection to server if auto reconnection is performed (issue #1873)
+  * irc: fix target buffer for commands 432/433 (erroneous nickname/nickname already in use) when the nickname looks like a channel
   * spell: check buffer pointer received in info "spell_dict"
   * typing: fix crash when pointer buffer is not received in callback for signal "input_text_changed" (issue #1869)
 

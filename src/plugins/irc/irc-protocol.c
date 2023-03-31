@@ -1395,7 +1395,9 @@ IRC_PROTOCOL_CALLBACK(generic_error)
 
     if (params[arg_error + 1])
     {
-        if (irc_channel_is_channel (server, params[arg_error]))
+        if ((strcmp (command, "432") != 0)
+            && (strcmp (command, "433") != 0)
+            && irc_channel_is_channel (server, params[arg_error]))
         {
             pos_channel = params[arg_error];
             ptr_channel = irc_channel_search (server, pos_channel);
@@ -6519,8 +6521,11 @@ IRC_PROTOCOL_CALLBACK(368)
 /*
  * Callback for the IRC command "432": erroneous nickname.
  *
- * Command looks like:
- *   432 * mynick :Erroneous Nickname
+ * Command looks like (not connected to server):
+ *   432 * nick :Erroneous Nickname
+ *
+ * Command looks like (connected to server):
+ *   432 mynick nick :Erroneous Nickname
  */
 
 IRC_PROTOCOL_CALLBACK(432)
@@ -6568,8 +6573,11 @@ IRC_PROTOCOL_CALLBACK(432)
 /*
  * Callback for the IRC command "433": nickname already in use.
  *
- * Command looks like:
- *   433 * mynick :Nickname is already in use.
+ * Command looks like (not connected to server):
+ *   433 * nick :Nickname is already in use.
+ *
+ * Command looks like (connected to server):
+ *   433 mynick nick :Nickname is already in use.
  */
 
 IRC_PROTOCOL_CALLBACK(433)
