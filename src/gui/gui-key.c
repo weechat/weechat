@@ -390,8 +390,8 @@ gui_key_legacy_internal_code (const char *key)
  *   "\001r"            => 1, "ctrl-r",            "ctrl-r"
  *   "\001[A"           => 1, "meta-A",            "meta-A"
  *   "\001[a"           => 1, "meta-a",            "meta-a"
- *   "\001[[1;3D"       => 1, "meta2-1;3D",        "meta-left"
- *   "\001[w\001[[1;3A" => 1, "meta-w,meta2-1;3A", "meta-w,meta-up"
+ *   "\001[[1;3D"       => 1, "meta-[1;3D",        "meta-left"
+ *   "\001[w\001[[1;3A" => 1, "meta-w,meta-[1;3A", "meta-w,meta-up"
  *
  * Returns:
  *   1: OK
