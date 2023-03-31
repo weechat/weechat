@@ -1519,7 +1519,7 @@ config_weechat_update_cb (const void *pointer, void *data,
                           int version_read,
                           struct t_hashtable *data_read)
 {
-    const char *ptr_section, *ptr_option;
+    const char *ptr_section, *ptr_option, *ptr_value;
     char *new_option;
     int changes;
 
@@ -1543,6 +1543,7 @@ config_weechat_update_cb (const void *pointer, void *data,
          */
         ptr_section = hashtable_get (data_read, "section");
         ptr_option = hashtable_get (data_read, "option");
+        ptr_value = hashtable_get (data_read, "value");
         if (ptr_section
             && ptr_option
             && ((strcmp (ptr_section, "key") == 0)
@@ -1550,8 +1551,21 @@ config_weechat_update_cb (const void *pointer, void *data,
                 || (strcmp (ptr_section, "key_cursor") == 0)
                 || (strcmp (ptr_section, "key_mouse") == 0)))
         {
+            /*
+             * remove some obsolete keys:
+             *   - "meta2-200~": start paste
+             *   - "meta2-201~": end paste
+             *   - "meta2-G": page down (only if bound to "/window page_down")
+             *   - "meta2-I": page up (only if bound to "/window page_up")
+             */
             if ((strcmp (ptr_option, "meta2-200~") == 0)
-                || (strcmp (ptr_option, "meta2-201~") == 0))
+                || (strcmp (ptr_option, "meta2-201~") == 0)
+                || ((strcmp (ptr_option, "meta2-G") == 0)
+                    && ptr_value
+                    && (strcmp (ptr_value, "/window page_down") == 0))
+                || ((strcmp (ptr_option, "meta2-I") == 0)
+                    && ptr_value
+                    && (strcmp (ptr_value, "/window page_up") == 0)))
             {
                 gui_chat_printf (NULL,
                                  _("Legacy key removed: \"%s\""),

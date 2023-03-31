@@ -661,12 +661,8 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
                 }
                 else if (key[0] == 'F')
                     snprintf (str_alias, sizeof (str_alias), "end");
-                else if (key[0] == 'G')
-                    snprintf (str_alias, sizeof (str_alias), "pgdn");
                 else if (key[0] == 'H')
                     snprintf (str_alias, sizeof (str_alias), "home");
-                else if (key[0] == 'I')
-                    snprintf (str_alias, sizeof (str_alias), "pgup");
                 else if (key[0] == 'P')
                     snprintf (str_alias, sizeof (str_alias), "f1");
                 else if (key[0] == 'Q')

@@ -437,39 +437,23 @@ TEST(GuiKey, Expand)
 
     /* pgup */
     WEE_CHECK_EXP_KEY(1, "meta-[5~", "pgup", "\001[[5~");
-    WEE_CHECK_EXP_KEY(1, "meta-[I", "pgup", "\001[[I");
     WEE_CHECK_EXP_KEY(1, "meta-[5;2~", "shift-pgup", "\001[[5;2~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;2I", "shift-pgup", "\001[[1;2I");
     WEE_CHECK_EXP_KEY(1, "meta-[5;3~", "meta-pgup", "\001[[5;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;3I", "meta-pgup", "\001[[1;3I");
     WEE_CHECK_EXP_KEY(1, "meta-[5;4~", "meta-shift-pgup", "\001[[5;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;4I", "meta-shift-pgup", "\001[[1;4I");
     WEE_CHECK_EXP_KEY(1, "meta-[5;5~", "ctrl-pgup", "\001[[5;5~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;5I", "ctrl-pgup", "\001[[1;5I");
     WEE_CHECK_EXP_KEY(1, "meta-[5;6~", "ctrl-shift-pgup", "\001[[5;6~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;6I", "ctrl-shift-pgup", "\001[[1;6I");
     WEE_CHECK_EXP_KEY(1, "meta-[5;7~", "meta-ctrl-pgup", "\001[[5;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;7I", "meta-ctrl-pgup", "\001[[1;7I");
     WEE_CHECK_EXP_KEY(1, "meta-[5;8~", "meta-ctrl-shift-pgup", "\001[[5;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;8I", "meta-ctrl-shift-pgup", "\001[[1;8I");
 
     /* pgdn */
     WEE_CHECK_EXP_KEY(1, "meta-[6~", "pgdn", "\001[[6~");
-    WEE_CHECK_EXP_KEY(1, "meta-[G", "pgdn", "\001[[G");
     WEE_CHECK_EXP_KEY(1, "meta-[6;2~", "shift-pgdn", "\001[[6;2~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;2G", "shift-pgdn", "\001[[1;2G");
     WEE_CHECK_EXP_KEY(1, "meta-[6;3~", "meta-pgdn", "\001[[6;3~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;3G", "meta-pgdn", "\001[[1;3G");
     WEE_CHECK_EXP_KEY(1, "meta-[6;4~", "meta-shift-pgdn", "\001[[6;4~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;4G", "meta-shift-pgdn", "\001[[1;4G");
     WEE_CHECK_EXP_KEY(1, "meta-[6;5~", "ctrl-pgdn", "\001[[6;5~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;5G", "ctrl-pgdn", "\001[[1;5G");
     WEE_CHECK_EXP_KEY(1, "meta-[6;6~", "ctrl-shift-pgdn", "\001[[6;6~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;6G", "ctrl-shift-pgdn", "\001[[1;6G");
     WEE_CHECK_EXP_KEY(1, "meta-[6;7~", "meta-ctrl-pgdn", "\001[[6;7~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;7G", "meta-ctrl-pgdn", "\001[[1;7G");
     WEE_CHECK_EXP_KEY(1, "meta-[6;8~", "meta-ctrl-shift-pgdn", "\001[[6;8~");
-    WEE_CHECK_EXP_KEY(1, "meta-[1;8G", "meta-ctrl-shift-pgdn", "\001[[1;8G");
 
     /* f0 */
     WEE_CHECK_EXP_KEY(1, "meta-[10~", "f0", "\001[[10~");  /* urxvt */
