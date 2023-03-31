@@ -118,7 +118,7 @@ jobs:
         CXX: ${{ matrix.config.cxx }}
       run: |
         mkdir build-tmp && cd build-tmp
-        cmake .. -DENABLE_MAN=ON -DENABLE_DOC=OFF -DENABLE_PHP=OFF
+        cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF
         make VERBOSE=1 -j2
         sudo make install
 
