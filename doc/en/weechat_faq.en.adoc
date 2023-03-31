@@ -465,14 +465,14 @@ And then you bind two keys for the focus (replace the `/print` commands by the
 commands of your choice):
 
 ----
-/key bind meta2-I /print -core focus
-/key bind meta2-O /print -core unfocus
+/key bind meta-[I /print -core focus
+/key bind meta-[O /print -core unfocus
 ----
 
 For example to mark buffers as read when the terminal loses the focus:
 
 ----
-/key bind meta2-O /allbuf /buffer set unread
+/key bind meta-[O /allbuf /buffer set unread
 ----
 
 [[screen_paste]]
