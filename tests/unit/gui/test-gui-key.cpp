@@ -198,7 +198,6 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[");
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[O");
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[[");
-    WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[[O");
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[[1");
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[[12");
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[[123");
@@ -208,6 +207,10 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[[15;");
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[[15;1");
     WEE_CHECK_EXP_KEY(0, NULL, NULL, "\001[[[");
+
+    /* focus/unfocus terminal (xterm) */
+    WEE_CHECK_EXP_KEY(1, "meta-[I", "meta-[I", "\001[[I");
+    WEE_CHECK_EXP_KEY(1, "meta-[O", "meta-[O", "\001[[O");
 
     /* unknown sequence: kept as-is */
     WEE_CHECK_EXP_KEY(1, "meta-[x", "meta-[x", "\001[[x");

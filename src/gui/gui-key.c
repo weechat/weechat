@@ -449,13 +449,7 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
             key += 2;
         }
 
-        if (string_strncmp (key, "\x01[[O", 4) == 0)
-        {
-            snprintf (str_raw, sizeof (str_raw), "meta-[O");
-            meta2 = 1;
-            key += 4;
-        }
-        else if (string_strncmp (key, "\x01[O", 3) == 0)
+        if (string_strncmp (key, "\x01[O", 3) == 0)
         {
             snprintf (str_raw, sizeof (str_raw), "meta-O");
             meta2 = 1;
