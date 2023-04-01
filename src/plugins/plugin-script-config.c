@@ -60,30 +60,27 @@ plugin_script_config_init (struct t_weechat_plugin *weechat_plugin,
                                               NULL, NULL, NULL,
                                               NULL, NULL, NULL,
                                               NULL, NULL, NULL);
-    if (!ptr_section)
+    if (ptr_section)
     {
-        weechat_config_free (*(plugin_data->config_file));
-        *(plugin_data->config_file) = NULL;
-        return 0;
+        *(plugin_data->config_look_check_license) = weechat_config_new_option (
+            *(plugin_data->config_file), ptr_section,
+            "check_license", "boolean",
+            N_("check the license of scripts when they are loaded: if the "
+               "license is different from the plugin license, a warning is "
+               "displayed"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        *(plugin_data->config_look_eval_keep_context) = weechat_config_new_option (
+            *(plugin_data->config_file), ptr_section,
+            "eval_keep_context", "boolean",
+            N_("keep context between two calls to the source code evaluation "
+               "(option \"eval\" of script command or info \"%s_eval\"); "
+               "a hidden script is used to eval script code; "
+               "if this option is disabled, this hidden script is unloaded "
+               "after each eval: this uses less memory, but is slower"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
-
-    *(plugin_data->config_look_check_license) = weechat_config_new_option (
-        *(plugin_data->config_file), ptr_section,
-        "check_license", "boolean",
-        N_("check the license of scripts when they are loaded: if the license "
-           "is different from the plugin license, a warning is displayed"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    *(plugin_data->config_look_eval_keep_context) = weechat_config_new_option (
-        *(plugin_data->config_file), ptr_section,
-        "eval_keep_context", "boolean",
-        N_("keep context between two calls to the source code evaluation "
-           "(option \"eval\" of script command or info \"%s_eval\"); "
-           "a hidden script is used to eval script code; "
-           "if this option is disabled, this hidden script is unloaded after "
-           "each eval: this uses less memory, but is slower"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     return 1;
 }

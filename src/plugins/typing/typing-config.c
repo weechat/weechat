@@ -31,18 +31,20 @@
 
 
 struct t_config_file *typing_config_file = NULL;
-struct t_config_section *typing_config_section_cmd = NULL;
-struct t_config_section *typing_config_section_completion = NULL;
+
+/* sections */
+
+struct t_config_section *typing_config_section_look = NULL;
 
 /* typing config, look section */
 
-struct t_config_option *typing_config_look_delay_purge_paused;
-struct t_config_option *typing_config_look_delay_purge_typing;
-struct t_config_option *typing_config_look_delay_set_paused;
-struct t_config_option *typing_config_look_enabled_nicks;
-struct t_config_option *typing_config_look_enabled_self;
-struct t_config_option *typing_config_look_input_min_chars;
-struct t_config_option *typing_config_look_item_max_length;
+struct t_config_option *typing_config_look_delay_purge_paused = NULL;
+struct t_config_option *typing_config_look_delay_purge_typing = NULL;
+struct t_config_option *typing_config_look_delay_set_paused = NULL;
+struct t_config_option *typing_config_look_enabled_nicks = NULL;
+struct t_config_option *typing_config_look_enabled_self = NULL;
+struct t_config_option *typing_config_look_input_min_chars = NULL;
+struct t_config_option *typing_config_look_item_max_length = NULL;
 
 
 /*
@@ -110,8 +112,6 @@ typing_config_change_item_max_length (const void *pointer, void *data,
 int
 typing_config_init ()
 {
-    struct t_config_section *ptr_section;
-
     typing_config_file = weechat_config_new (
         TYPING_CONFIG_PRIO_NAME,
         &typing_config_reload, NULL, NULL);
@@ -119,73 +119,73 @@ typing_config_init ()
         return 0;
 
     /* look */
-    ptr_section = weechat_config_new_section (typing_config_file, "look",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
+    typing_config_section_look = weechat_config_new_section (
+        typing_config_file, "look",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (typing_config_section_look)
     {
-        weechat_config_free (typing_config_file);
-        typing_config_file = NULL;
-        return 0;
+        typing_config_look_delay_purge_paused = weechat_config_new_option (
+            typing_config_file, typing_config_section_look,
+            "delay_purge_paused", "integer",
+            N_("number of seconds after paused status has been set: if reached, "
+               "the typing status is removed"),
+            NULL, 1, INT_MAX, "30", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        typing_config_look_delay_purge_typing = weechat_config_new_option (
+            typing_config_file, typing_config_section_look,
+            "delay_purge_typing", "integer",
+            N_("number of seconds after typing status has been set: if reached, "
+               "the typing status is removed"),
+            NULL, 1, INT_MAX, "6", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        typing_config_look_delay_set_paused = weechat_config_new_option (
+            typing_config_file, typing_config_section_look,
+            "delay_set_paused", "integer",
+            N_("number of seconds after typing last char: if reached, the "
+               "typing status becomes \"paused\" and no more typing signals "
+               "are sent"),
+            NULL, 1, INT_MAX, "10", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        typing_config_look_enabled_nicks = weechat_config_new_option (
+            typing_config_file, typing_config_section_look,
+            "enabled_nicks", "boolean",
+            N_("typing enabled for other nicks (display typing info for nicks "
+               "typing in the current buffer)"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL,
+            &typing_config_change_enabled, NULL, NULL,
+            NULL, NULL, NULL);
+        typing_config_look_enabled_self = weechat_config_new_option (
+            typing_config_file, typing_config_section_look,
+            "enabled_self", "boolean",
+            N_("typing enabled for self messages (send typing info to other "
+               "users)"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL,
+            &typing_config_change_enabled, NULL, NULL,
+            NULL, NULL, NULL);
+        typing_config_look_input_min_chars = weechat_config_new_option (
+            typing_config_file, typing_config_section_look,
+            "input_min_chars", "integer",
+            N_("min number of chars in message to trigger send of typing "
+               "signals"),
+            NULL, 1, INT_MAX, "4", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        typing_config_look_item_max_length = weechat_config_new_option (
+            typing_config_file, typing_config_section_look,
+            "item_max_length", "integer",
+            N_("max number of chars displayed in the bar item \"typing\" "
+               "(0 = do not truncate content)"),
+            NULL, 0, INT_MAX, "0", NULL, 0,
+            NULL, NULL, NULL,
+            &typing_config_change_item_max_length, NULL, NULL,
+            NULL, NULL, NULL);
     }
-
-    typing_config_look_delay_purge_paused = weechat_config_new_option (
-        typing_config_file, ptr_section,
-        "delay_purge_paused", "integer",
-        N_("number of seconds after paused status has been set: if reached, "
-           "the typing status is removed"),
-        NULL, 1, INT_MAX, "30", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    typing_config_look_delay_purge_typing = weechat_config_new_option (
-        typing_config_file, ptr_section,
-        "delay_purge_typing", "integer",
-        N_("number of seconds after typing status has been set: if reached, "
-           "the typing status is removed"),
-        NULL, 1, INT_MAX, "6", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    typing_config_look_delay_set_paused = weechat_config_new_option (
-        typing_config_file, ptr_section,
-        "delay_set_paused", "integer",
-        N_("number of seconds after typing last char: if reached, the typing "
-           "status becomes \"paused\" and no more typing signals are sent"),
-        NULL, 1, INT_MAX, "10", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    typing_config_look_enabled_nicks = weechat_config_new_option (
-        typing_config_file, ptr_section,
-        "enabled_nicks", "boolean",
-        N_("typing enabled for other nicks (display typing info for nicks "
-           "typing in the current buffer)"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL,
-        &typing_config_change_enabled, NULL, NULL,
-        NULL, NULL, NULL);
-    typing_config_look_enabled_self = weechat_config_new_option (
-        typing_config_file, ptr_section,
-        "enabled_self", "boolean",
-        N_("typing enabled for self messages (send typing info to other users)"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL,
-        &typing_config_change_enabled, NULL, NULL,
-        NULL, NULL, NULL);
-    typing_config_look_input_min_chars = weechat_config_new_option (
-        typing_config_file, ptr_section,
-        "input_min_chars", "integer",
-        N_("min number of chars in message to trigger send of typing signals"),
-        NULL, 1, INT_MAX, "4", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    typing_config_look_item_max_length = weechat_config_new_option (
-        typing_config_file, ptr_section,
-        "item_max_length", "integer",
-        N_("max number of chars displayed in the bar item \"typing\" "
-           "(0 = do not truncate content)"),
-        NULL, 0, INT_MAX, "0", NULL, 0,
-        NULL, NULL, NULL,
-        &typing_config_change_item_max_length, NULL, NULL,
-        NULL, NULL, NULL);
 
     return 1;
 }

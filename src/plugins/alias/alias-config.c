@@ -432,35 +432,31 @@ alias_config_update_cb (const void *pointer, void *data,
 int
 alias_config_init ()
 {
-    struct t_config_section *ptr_section;
-
     alias_config_file = weechat_config_new (ALIAS_CONFIG_PRIO_NAME,
                                             &alias_config_reload, NULL, NULL);
     if (!alias_config_file)
         return 0;
 
-    weechat_config_set_version (alias_config_file, ALIAS_CONFIG_VERSION,
-                                &alias_config_update_cb, NULL, NULL);
+    if (!weechat_config_set_version (alias_config_file, ALIAS_CONFIG_VERSION,
+                                     &alias_config_update_cb, NULL, NULL))
+    {
+        weechat_config_free (alias_config_file);
+        alias_config_file = NULL;
+        return 0;
+    }
 
     /* cmd */
-    ptr_section = weechat_config_new_section (
+    alias_config_section_cmd = weechat_config_new_section (
         alias_config_file, "cmd",
         1, 1,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         &alias_config_cmd_write_default_cb, NULL, NULL,
         &alias_config_cmd_create_option_cb, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (alias_config_file);
-        alias_config_file = NULL;
-        return 0;
-    }
-    alias_config_section_cmd = ptr_section;
+        NULL, NULL, NULL);
 
     /* completion */
-    ptr_section = weechat_config_new_section (
+    alias_config_section_completion = weechat_config_new_section (
         alias_config_file, "completion",
         1, 1,
         NULL, NULL, NULL,
@@ -468,13 +464,6 @@ alias_config_init ()
         &alias_config_completion_write_default_cb, NULL, NULL,
         &alias_config_completion_create_option_cb, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (alias_config_file);
-        alias_config_file = NULL;
-        return 0;
-    }
-    alias_config_section_completion = ptr_section;
 
     return 1;
 }

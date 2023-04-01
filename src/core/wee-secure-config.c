@@ -40,6 +40,9 @@
 
 struct t_config_file *secure_config_file = NULL;
 
+struct t_config_section *secure_config_section_crypt = NULL;
+struct t_config_section *secure_config_section_data = NULL;
+
 struct t_config_option *secure_config_crypt_cipher = NULL;
 struct t_config_option *secure_config_crypt_hash_algo = NULL;
 struct t_config_option *secure_config_crypt_passphrase_command = NULL;
@@ -444,68 +447,64 @@ secure_config_data_write_cb (const void *pointer, void *data,
 int
 secure_config_init_options ()
 {
-    struct t_config_section *ptr_section;
-
     secure_config_file = config_file_new (NULL, SECURE_CONFIG_PRIO_NAME,
                                           &secure_config_reload_cb, NULL, NULL);
     if (!secure_config_file)
         return 0;
 
     /* crypt */
-    ptr_section = config_file_new_section (secure_config_file, "crypt",
-                                           0, 0,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL,
-                                           NULL, NULL, NULL);
-    if (!ptr_section)
-    {
-        config_file_free (secure_config_file);
-        secure_config_file = NULL;
-        return 0;
-    }
-
-    secure_config_crypt_cipher = config_file_new_option (
-        secure_config_file, ptr_section,
-        "cipher", "integer",
-        N_("cipher used to crypt data (the number after algorithm is the size "
-           "of the key in bits)"),
-        "aes128|aes192|aes256", 0, 0, "aes256", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    secure_config_crypt_hash_algo = config_file_new_option (
-        secure_config_file, ptr_section,
-        "hash_algo", "integer",
-        N_("hash algorithm used to check the decrypted data"),
-        "sha224|sha256|sha384|sha512", 0, 0, "sha256", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    secure_config_crypt_passphrase_command = config_file_new_option (
-        secure_config_file, ptr_section,
-        "passphrase_command", "string",
-        N_("read the passphrase from the output of this system command "
-           "(only the first line is used and it must not contain any extra "
-           "character); this option is used only when reading file sec.conf "
-           "and if the environment variable \"WEECHAT_PASSPHRASE\" is not set "
-           "(the environment variable has higher priority); "
-           "example with password-store: "
-           "\"/usr/bin/pass show weechat/passphrase\""),
-        NULL, 0, 0, "", NULL, 0,
+    secure_config_section_crypt = config_file_new_section (
+        secure_config_file, "crypt",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    secure_config_crypt_salt = config_file_new_option (
-        secure_config_file, ptr_section,
-        "salt", "boolean",
-        N_("use salt when generating key used in encryption (recommended for "
-           "maximum security); when enabled, the content of crypted data in "
-           "file sec.conf will be different on each write of the file; if you "
-           "put the file sec.conf in a version control system, then you "
-           "can turn off this option to have always same content in file"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    if (secure_config_section_crypt)
+    {
+        secure_config_crypt_cipher = config_file_new_option (
+            secure_config_file, secure_config_section_crypt,
+            "cipher", "integer",
+            N_("cipher used to crypt data (the number after algorithm is the "
+               "size of the key in bits)"),
+            "aes128|aes192|aes256", 0, 0, "aes256", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        secure_config_crypt_hash_algo = config_file_new_option (
+            secure_config_file, secure_config_section_crypt,
+            "hash_algo", "integer",
+            N_("hash algorithm used to check the decrypted data"),
+            "sha224|sha256|sha384|sha512", 0, 0, "sha256", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        secure_config_crypt_passphrase_command = config_file_new_option (
+            secure_config_file, secure_config_section_crypt,
+            "passphrase_command", "string",
+            N_("read the passphrase from the output of this system command "
+               "(only the first line is used and it must not contain any extra "
+               "character); this option is used only when reading file "
+               "sec.conf and if the environment variable \"WEECHAT_PASSPHRASE\" "
+               "is not set (the environment variable has higher priority); "
+               "example with password-store: "
+               "\"/usr/bin/pass show weechat/passphrase\""),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+        secure_config_crypt_salt = config_file_new_option (
+            secure_config_file, secure_config_section_crypt,
+            "salt", "boolean",
+            N_("use salt when generating key used in encryption (recommended "
+               "for maximum security); when enabled, the content of crypted "
+               "data in file sec.conf will be different on each write of the "
+               "file; if you put the file sec.conf in a version control system, "
+               "then you can turn off this option to have always same content "
+               "in file"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    }
 
     /* data */
-    ptr_section = config_file_new_section (
+    secure_config_section_data = config_file_new_section (
         secure_config_file, "data",
         0, 0,
         &secure_config_data_read_cb, NULL, NULL,
@@ -513,12 +512,6 @@ secure_config_init_options ()
         &secure_config_data_write_cb, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
-    {
-        config_file_free (secure_config_file);
-        secure_config_file = NULL;
-        return 0;
-    }
 
     return 1;
 }

@@ -30,16 +30,21 @@
 
 struct t_config_file *exec_config_file = NULL;
 
+/* sections */
+
+struct t_config_section *exec_config_section_command = NULL;
+struct t_config_section *exec_config_section_color = NULL;
+
 /* exec config, command section */
 
-struct t_config_option *exec_config_command_default_options;
-struct t_config_option *exec_config_command_purge_delay;
-struct t_config_option *exec_config_command_shell;
+struct t_config_option *exec_config_command_default_options = NULL;
+struct t_config_option *exec_config_command_purge_delay = NULL;
+struct t_config_option *exec_config_command_shell = NULL;
 
 /* exec config, color section */
 
-struct t_config_option *exec_config_color_flag_finished;
-struct t_config_option *exec_config_color_flag_running;
+struct t_config_option *exec_config_color_flag_finished = NULL;
+struct t_config_option *exec_config_color_flag_running = NULL;
 
 char **exec_config_cmd_options = NULL;
 int exec_config_cmd_num_options = 0;
@@ -98,84 +103,77 @@ exec_config_reload_cb (const void *pointer, void *data,
 int
 exec_config_init ()
 {
-    struct t_config_section *ptr_section;
-
     exec_config_file = weechat_config_new (EXEC_CONFIG_PRIO_NAME,
                                            &exec_config_reload_cb, NULL, NULL);
     if (!exec_config_file)
         return 0;
 
     /* command */
-    ptr_section = weechat_config_new_section (exec_config_file, "command",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
+    exec_config_section_command = weechat_config_new_section (
+        exec_config_file, "command",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (exec_config_section_command)
     {
-        weechat_config_free (exec_config_file);
-        exec_config_file = NULL;
-        return 0;
+        exec_config_command_default_options = weechat_config_new_option (
+            exec_config_file, exec_config_section_command,
+            "default_options", "string",
+            N_("default options for command /exec (see /help exec); example: "
+               "\"-nosh -bg\" to run all commands in background (no output), "
+               "and without using the shell"),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL,
+            &exec_config_change_command_default_options, NULL, NULL,
+            NULL, NULL, NULL);
+        exec_config_command_purge_delay = weechat_config_new_option (
+            exec_config_file, exec_config_section_command,
+            "purge_delay", "integer",
+            N_("delay for purging finished commands (in seconds, 0 = purge "
+               "commands immediately, -1 = never purge)"),
+            NULL, -1, 36000 * 24 * 30, "0", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        exec_config_command_shell = weechat_config_new_option (
+            exec_config_file, exec_config_section_command,
+            "shell", "string",
+            N_("shell to use with command \"/exec -sh\"; it can be just the "
+               "name of shell if it is in PATH (for example \"bash\") or the "
+               "absolute path to the shell (for example \"/bin/bash\"); if "
+               "value is empty, \"sh\" is used (note: content is evaluated, "
+               "see /help eval)"),
+            NULL, 0, 0, "${env:SHELL}", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
     }
-
-    exec_config_command_default_options = weechat_config_new_option (
-        exec_config_file, ptr_section,
-        "default_options", "string",
-        N_("default options for command /exec (see /help exec); example: "
-           "\"-nosh -bg\" to run all commands in background (no output), and "
-           "without using the shell"),
-        NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL,
-        &exec_config_change_command_default_options, NULL, NULL,
-        NULL, NULL, NULL);
-    exec_config_command_purge_delay = weechat_config_new_option (
-        exec_config_file, ptr_section,
-        "purge_delay", "integer",
-        N_("delay for purging finished commands (in seconds, 0 = purge "
-           "commands immediately, -1 = never purge)"),
-        NULL, -1, 36000 * 24 * 30, "0", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    exec_config_command_shell = weechat_config_new_option (
-        exec_config_file, ptr_section,
-        "shell", "string",
-        N_("shell to use with command \"/exec -sh\"; it can be just the name "
-           "of shell if it is in PATH (for example \"bash\") or the absolute "
-           "path to the shell (for example \"/bin/bash\"); if value is empty, "
-           "\"sh\" is used (note: content is evaluated, see /help eval)"),
-        NULL, 0, 0, "${env:SHELL}", NULL, 0,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL);
 
     /* color */
-    ptr_section = weechat_config_new_section (exec_config_file, "color",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
+    exec_config_section_color = weechat_config_new_section (
+        exec_config_file, "color",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (exec_config_section_color)
     {
-        weechat_config_free (exec_config_file);
-        exec_config_file = NULL;
-        return 0;
+        exec_config_color_flag_finished = weechat_config_new_option (
+            exec_config_file, exec_config_section_color,
+            "flag_finished", "color",
+            N_("text color for a finished command flag in list of commands"),
+            NULL, 0, 0, "lightred", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        exec_config_color_flag_running = weechat_config_new_option (
+            exec_config_file, exec_config_section_color,
+            "flag_running", "color",
+            N_("text color for a running command flag in list of commands"),
+            NULL, 0, 0, "lightgreen", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
-
-    exec_config_color_flag_finished = weechat_config_new_option (
-        exec_config_file, ptr_section,
-        "flag_finished", "color",
-        N_("text color for a finished command flag in list of commands"),
-        NULL, 0, 0, "lightred", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    exec_config_color_flag_running = weechat_config_new_option (
-        exec_config_file, ptr_section,
-        "flag_running", "color",
-        N_("text color for a running command flag in list of commands"),
-        NULL, 0, 0, "lightgreen", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     return 1;
 }

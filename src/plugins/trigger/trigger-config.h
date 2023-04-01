@@ -25,6 +25,9 @@
 #define TRIGGER_CONFIG_SECTION_TRIGGER "trigger"
 
 extern struct t_config_file *trigger_config_file;
+
+extern struct t_config_section *trigger_config_section_look;
+extern struct t_config_section *trigger_config_section_color;
 extern struct t_config_section *trigger_config_section_trigger;
 
 extern struct t_config_option *trigger_config_look_enabled;

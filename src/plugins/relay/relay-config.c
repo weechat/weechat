@@ -40,54 +40,64 @@
 
 
 struct t_config_file *relay_config_file = NULL;
+
+/* sections */
+
+struct t_config_section *relay_config_section_look = NULL;
+struct t_config_section *relay_config_section_color = NULL;
+struct t_config_section *relay_config_section_network = NULL;
+struct t_config_section *relay_config_section_irc = NULL;
+struct t_config_section *relay_config_section_weechat = NULL;
 struct t_config_section *relay_config_section_port = NULL;
 struct t_config_section *relay_config_section_path = NULL;
 
 /* relay config, look section */
 
-struct t_config_option *relay_config_look_auto_open_buffer;
-struct t_config_option *relay_config_look_raw_messages;
+struct t_config_option *relay_config_look_auto_open_buffer = NULL;
+struct t_config_option *relay_config_look_raw_messages = NULL;
 
 /* relay config, color section */
 
-struct t_config_option *relay_config_color_client;
-struct t_config_option *relay_config_color_status[RELAY_NUM_STATUS];
-struct t_config_option *relay_config_color_text;
-struct t_config_option *relay_config_color_text_bg;
-struct t_config_option *relay_config_color_text_selected;
+struct t_config_option *relay_config_color_client = NULL;
+struct t_config_option *relay_config_color_status[RELAY_NUM_STATUS] = {
+    NULL, NULL, NULL, NULL, NULL,
+};
+struct t_config_option *relay_config_color_text = NULL;
+struct t_config_option *relay_config_color_text_bg = NULL;
+struct t_config_option *relay_config_color_text_selected = NULL;
 
 /* relay config, network section */
 
-struct t_config_option *relay_config_network_allow_empty_password;
-struct t_config_option *relay_config_network_allowed_ips;
-struct t_config_option *relay_config_network_auth_timeout;
-struct t_config_option *relay_config_network_bind_address;
-struct t_config_option *relay_config_network_clients_purge_delay;
-struct t_config_option *relay_config_network_compression;
-struct t_config_option *relay_config_network_ipv6;
-struct t_config_option *relay_config_network_max_clients;
-struct t_config_option *relay_config_network_nonce_size;
-struct t_config_option *relay_config_network_password;
-struct t_config_option *relay_config_network_password_hash_algo;
-struct t_config_option *relay_config_network_password_hash_iterations;
-struct t_config_option *relay_config_network_ssl_cert_key;
-struct t_config_option *relay_config_network_ssl_priorities;
-struct t_config_option *relay_config_network_totp_secret;
-struct t_config_option *relay_config_network_totp_window;
-struct t_config_option *relay_config_network_websocket_allowed_origins;
+struct t_config_option *relay_config_network_allow_empty_password = NULL;
+struct t_config_option *relay_config_network_allowed_ips = NULL;
+struct t_config_option *relay_config_network_auth_timeout = NULL;
+struct t_config_option *relay_config_network_bind_address = NULL;
+struct t_config_option *relay_config_network_clients_purge_delay = NULL;
+struct t_config_option *relay_config_network_compression = NULL;
+struct t_config_option *relay_config_network_ipv6 = NULL;
+struct t_config_option *relay_config_network_max_clients = NULL;
+struct t_config_option *relay_config_network_nonce_size = NULL;
+struct t_config_option *relay_config_network_password = NULL;
+struct t_config_option *relay_config_network_password_hash_algo = NULL;
+struct t_config_option *relay_config_network_password_hash_iterations = NULL;
+struct t_config_option *relay_config_network_ssl_cert_key = NULL;
+struct t_config_option *relay_config_network_ssl_priorities = NULL;
+struct t_config_option *relay_config_network_totp_secret = NULL;
+struct t_config_option *relay_config_network_totp_window = NULL;
+struct t_config_option *relay_config_network_websocket_allowed_origins = NULL;
 
 /* relay config, irc section */
 
-struct t_config_option *relay_config_irc_backlog_max_minutes;
-struct t_config_option *relay_config_irc_backlog_max_number;
-struct t_config_option *relay_config_irc_backlog_since_last_disconnect;
-struct t_config_option *relay_config_irc_backlog_since_last_message;
-struct t_config_option *relay_config_irc_backlog_tags;
-struct t_config_option *relay_config_irc_backlog_time_format;
+struct t_config_option *relay_config_irc_backlog_max_minutes = NULL;
+struct t_config_option *relay_config_irc_backlog_max_number = NULL;
+struct t_config_option *relay_config_irc_backlog_since_last_disconnect = NULL;
+struct t_config_option *relay_config_irc_backlog_since_last_message = NULL;
+struct t_config_option *relay_config_irc_backlog_tags = NULL;
+struct t_config_option *relay_config_irc_backlog_time_format = NULL;
 
 /* relay config, weechat section */
 
-struct t_config_option *relay_config_weechat_commands;
+struct t_config_option *relay_config_weechat_commands = NULL;
 
 /* other */
 
@@ -889,411 +899,396 @@ relay_config_reload (const void *pointer, void *data,
 int
 relay_config_init ()
 {
-    struct t_config_section *ptr_section;
-
     relay_config_file = weechat_config_new (RELAY_CONFIG_PRIO_NAME,
                                             &relay_config_reload, NULL, NULL);
     if (!relay_config_file)
         return 0;
 
     /* section look */
-    ptr_section = weechat_config_new_section (relay_config_file, "look",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
+    relay_config_section_look = weechat_config_new_section (
+        relay_config_file, "look",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (relay_config_section_look)
     {
-        weechat_config_free (relay_config_file);
-        relay_config_file = NULL;
-        return 0;
+        relay_config_look_auto_open_buffer = weechat_config_new_option (
+            relay_config_file, relay_config_section_look,
+            "auto_open_buffer", "boolean",
+            N_("auto open relay buffer when a new client is connecting"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_look_raw_messages = weechat_config_new_option (
+            relay_config_file, relay_config_section_look,
+            "raw_messages", "integer",
+            N_("number of raw messages to save in memory when raw data buffer "
+               "is closed (messages will be displayed when opening raw data "
+               "buffer)"),
+            NULL, 0, 65535, "256", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
-
-    relay_config_look_auto_open_buffer = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "auto_open_buffer", "boolean",
-        N_("auto open relay buffer when a new client is connecting"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_look_raw_messages = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "raw_messages", "integer",
-        N_("number of raw messages to save in memory when raw data buffer is "
-           "closed (messages will be displayed when opening raw data buffer)"),
-        NULL, 0, 65535, "256", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* section color */
-    ptr_section = weechat_config_new_section (relay_config_file, "color",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
+    relay_config_section_color = weechat_config_new_section (
+        relay_config_file, "color",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (relay_config_section_color)
     {
-        weechat_config_free (relay_config_file);
-        relay_config_file = NULL;
-        return 0;
+        relay_config_color_client = weechat_config_new_option (
+            relay_config_file, relay_config_section_color,
+            "client", "color",
+            N_("text color for client description"),
+            NULL, 0, 0, "cyan", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_color_status[RELAY_STATUS_CONNECTED] = weechat_config_new_option (
+            relay_config_file, relay_config_section_color,
+            "status_active", "color",
+            N_("text color for \"connected\" status"),
+            NULL, 0, 0, "green", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_refresh_cb, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_color_status[RELAY_STATUS_AUTH_FAILED] = weechat_config_new_option (
+            relay_config_file, relay_config_section_color,
+            "status_auth_failed", "color",
+            N_("text color for \"authentication failed\" status"),
+            NULL, 0, 0, "lightmagenta", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_refresh_cb, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_color_status[RELAY_STATUS_CONNECTING] = weechat_config_new_option (
+            relay_config_file, relay_config_section_color,
+            "status_connecting", "color",
+            N_("text color for \"connecting\" status"),
+            NULL, 0, 0, "white", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_refresh_cb, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_color_status[RELAY_STATUS_DISCONNECTED] = weechat_config_new_option (
+            relay_config_file, relay_config_section_color,
+            "status_disconnected", "color",
+            N_("text color for \"disconnected\" status"),
+            NULL, 0, 0, "lightred", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_refresh_cb, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_color_status[RELAY_STATUS_WAITING_AUTH] = weechat_config_new_option (
+            relay_config_file, relay_config_section_color,
+            "status_waiting_auth", "color",
+            N_("text color for \"waiting authentication\" status"),
+            NULL, 0, 0, "yellow", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_refresh_cb, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_color_text = weechat_config_new_option (
+            relay_config_file, relay_config_section_color,
+            "text", "color",
+            N_("text color in relay buffer"),
+            NULL, 0, 0, "default", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_refresh_cb, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_color_text_bg = weechat_config_new_option (
+            relay_config_file, relay_config_section_color,
+            "text_bg", "color",
+            N_("background color in relay buffer"),
+            NULL, 0, 0, "default", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_refresh_cb, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_color_text_selected = weechat_config_new_option (
+            relay_config_file, relay_config_section_color,
+            "text_selected", "color",
+            N_("text color of selected line in relay buffer"),
+            NULL, 0, 0, "white", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_refresh_cb, NULL, NULL,
+            NULL, NULL, NULL);
     }
-
-    relay_config_color_client = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "client", "color",
-        N_("text color for client description"),
-        NULL, 0, 0, "cyan", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_color_status[RELAY_STATUS_CONNECTED] = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "status_active", "color",
-        N_("text color for \"connected\" status"),
-        NULL, 0, 0, "green", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_refresh_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_color_status[RELAY_STATUS_AUTH_FAILED] = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "status_auth_failed", "color",
-        N_("text color for \"authentication failed\" status"),
-        NULL, 0, 0, "lightmagenta", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_refresh_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_color_status[RELAY_STATUS_CONNECTING] = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "status_connecting", "color",
-        N_("text color for \"connecting\" status"),
-        NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_refresh_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_color_status[RELAY_STATUS_DISCONNECTED] = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "status_disconnected", "color",
-        N_("text color for \"disconnected\" status"),
-        NULL, 0, 0, "lightred", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_refresh_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_color_status[RELAY_STATUS_WAITING_AUTH] = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "status_waiting_auth", "color",
-        N_("text color for \"waiting authentication\" status"),
-        NULL, 0, 0, "yellow", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_refresh_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_color_text = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "text", "color",
-        N_("text color in relay buffer"),
-        NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_refresh_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_color_text_bg = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "text_bg", "color",
-        N_("background color in relay buffer"),
-        NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_refresh_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_color_text_selected = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "text_selected", "color",
-        N_("text color of selected line in relay buffer"),
-        NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_refresh_cb, NULL, NULL,
-        NULL, NULL, NULL);
 
     /* section network */
-    ptr_section = weechat_config_new_section (relay_config_file, "network",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
+    relay_config_section_network = weechat_config_new_section (
+        relay_config_file, "network",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (relay_config_section_network)
     {
-        weechat_config_free (relay_config_file);
-        relay_config_file = NULL;
-        return 0;
+        relay_config_network_allow_empty_password = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "allow_empty_password", "boolean",
+            N_("allow empty password in relay (it should be enabled only for "
+               "tests or local network)"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_network_allowed_ips = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "allowed_ips", "string",
+            N_("POSIX extended regular expression with IPs allowed to use relay "
+               "(case insensitive, use \"(?-i)\" at beginning to make it case "
+               "sensitive), example: "
+               "\"^(123\\.45\\.67\\.89|192\\.160\\..*)$\""),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_change_network_allowed_ips, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_network_auth_timeout = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "auth_timeout", "integer",
+            N_("timeout (in seconds) for client authentication: connection is "
+               "closed if the client is still not authenticated after this "
+               "delay and the client status is set to \"authentication "
+               "failed\" (0 = wait forever)"),
+            NULL, 0, INT_MAX, "60", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_network_bind_address = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "bind_address", "string",
+            N_("address for bind (if empty, connection is possible on all "
+               "interfaces, use \"127.0.0.1\" to allow connections from "
+               "local machine only)"),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_change_network_bind_address_cb, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_network_clients_purge_delay = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "clients_purge_delay", "integer",
+            N_("delay for purging disconnected clients (in minutes, 0 = purge "
+               "clients immediately, -1 = never purge)"),
+            NULL, -1, 60 * 24 * 30, "0", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_network_compression = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "compression", "integer",
+            N_("compression of messages sent to clients with \"weechat\" "
+               "protocol: 0 = disable compression, 1 = low compression / fast "
+               "... 100 = best compression / slow; the value is a percentage "
+               "converted to 1-9 for zlib and 1-19 for zstd; "
+               "the default value is recommended, it offers a good "
+               "compromise between compression and speed"),
+            NULL, 0, 100, "20", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_network_ipv6 = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "ipv6", "boolean",
+            N_("listen on IPv6 socket by default (in addition to IPv4 which is "
+               "default); protocols IPv4 and IPv6 can be forced (individually "
+               "or together) in the protocol name (see /help relay)"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_change_network_ipv6_cb, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_network_max_clients = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "max_clients", "integer",
+            N_("maximum number of clients connecting to a port (0 = no limit)"),
+            NULL, 0, INT_MAX, "5", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_network_nonce_size = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "nonce_size", "integer",
+            N_("size of nonce (in bytes), generated when a client connects; "
+               "the client must use this nonce, concatenated to the client nonce "
+               "and the password when hashing the password in the \"init\" "
+               "command of the weechat protocol"),
+            NULL, 8, 128, "16", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_network_password = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "password", "string",
+            N_("password required by clients to access this relay (empty value "
+               "means no password required, see option "
+               "relay.network.allow_empty_password) (note: content is evaluated, "
+               "see /help eval)"),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_network_password_hash_algo = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "password_hash_algo", "string",
+            N_("comma separated list of hash algorithms used for password "
+               "authentication in weechat protocol, among these values: "
+               "\"plain\" (password in plain text, not hashed), \"sha256\", "
+               "\"sha512\", \"pbkdf2+sha256\", \"pbkdf2+sha512\"), \"*\" means "
+               "all algorithms, a name beginning with \"!\" is a negative "
+               "value to prevent an algorithm from being used, wildcard \"*\" "
+               "is allowed in names (examples: \"*\", \"pbkdf2*\", "
+               "\"*,!plain\")"),
+            NULL, 0, 0, "*", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_change_network_password_hash_algo, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_network_password_hash_iterations = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "password_hash_iterations", "integer",
+            N_("number of iterations asked to the client in weechat protocol "
+               "when a hashed password with algorithm PBKDF2 is used for "
+               "authentication; more iterations is better in term of security "
+               "but is slower to compute; this number should not be too high "
+               "if your CPU is slow"),
+            NULL, 1, 1000000, "100000", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_network_ssl_cert_key = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "ssl_cert_key", "string",
+            N_("file with SSL certificate and private key (for serving clients "
+               "with SSL) "
+               "(path is evaluated, see function string_eval_path_home in "
+               "plugin API reference)"),
+            NULL, 0, 0, "${weechat_config_dir}/ssl/relay.pem", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_change_network_ssl_cert_key, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_network_ssl_priorities = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "ssl_priorities", "string",
+            N_("string with priorities for gnutls (for syntax, see "
+               "documentation of function gnutls_priority_init in gnutls "
+               "manual, common strings are: \"PERFORMANCE\", \"NORMAL\", "
+               "\"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"),
+            NULL, 0, 0, "NORMAL:-VERS-SSL3.0", NULL, 0,
+            &relay_config_check_network_ssl_priorities, NULL, NULL,
+            &relay_config_change_network_ssl_priorities, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_network_totp_secret = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "totp_secret", "string",
+            N_("secret for the generation of the Time-based One-Time Password "
+               "(TOTP), encoded in base32 (only letters and digits from 2 to 7); "
+               "it is used as second factor in weechat protocol, in addition to "
+               "the password, which must not be empty "
+               "(empty value means no TOTP is required) "
+               "(note: content is evaluated, see /help eval)"),
+            NULL, 0, 0, "", NULL, 0,
+            &relay_config_check_network_totp_secret, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_network_totp_window = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "totp_window", "integer",
+            N_("number of Time-based One-Time Passwords to accept before and "
+               "after the current one: "
+               "0 = accept only the current password, "
+               "1 = accept one password before, the current, and one after, "
+               "2 = accept two passwords before, the current, and two after, "
+               "...; a high number reduces the security level "
+               "(0 or 1 are recommended values)"),
+            NULL, 0, 256, "0", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_network_websocket_allowed_origins = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "websocket_allowed_origins", "string",
+            N_("POSIX extended regular expression with origins allowed in "
+               "websockets (case insensitive, use \"(?-i)\" at beginning to "
+               "make it case sensitive), example: "
+               "\"^https?://(www\\.)?example\\.(com|org)\""),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_change_network_websocket_allowed_origins, NULL, NULL,
+            NULL, NULL, NULL);
     }
-
-    relay_config_network_allow_empty_password = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "allow_empty_password", "boolean",
-        N_("allow empty password in relay (it should be enabled only for "
-           "tests or local network)"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_network_allowed_ips = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "allowed_ips", "string",
-        N_("POSIX extended regular expression with IPs allowed to use relay "
-           "(case insensitive, use \"(?-i)\" at beginning to make it case "
-           "sensitive), example: "
-           "\"^(123\\.45\\.67\\.89|192\\.160\\..*)$\""),
-        NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_change_network_allowed_ips, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_network_auth_timeout = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "auth_timeout", "integer",
-        N_("timeout (in seconds) for client authentication: connection is "
-           "closed if the client is still not authenticated after this delay "
-           "and the client status is set to \"authentication failed\" "
-           "(0 = wait forever)"),
-        NULL, 0, INT_MAX, "60", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_network_bind_address = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "bind_address", "string",
-        N_("address for bind (if empty, connection is possible on all "
-           "interfaces, use \"127.0.0.1\" to allow connections from "
-            "local machine only)"),
-        NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_change_network_bind_address_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_network_clients_purge_delay = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "clients_purge_delay", "integer",
-        N_("delay for purging disconnected clients (in minutes, 0 = purge "
-           "clients immediately, -1 = never purge)"),
-        NULL, -1, 60 * 24 * 30, "0", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_network_compression = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "compression", "integer",
-        N_("compression of messages sent to clients with \"weechat\" "
-           "protocol: 0 = disable compression, 1 = low compression / fast "
-           "... 100 = best compression / slow; the value is a percentage "
-           "converted to 1-9 for zlib and 1-19 for zstd; "
-           "the default value is recommended, it offers a good "
-           "compromise between compression and speed"),
-        NULL, 0, 100, "20", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_network_ipv6 = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "ipv6", "boolean",
-        N_("listen on IPv6 socket by default (in addition to IPv4 which is "
-            "default); protocols IPv4 and IPv6 can be forced (individually or "
-           "together) in the protocol name (see /help relay)"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_change_network_ipv6_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_network_max_clients = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "max_clients", "integer",
-        N_("maximum number of clients connecting to a port (0 = no limit)"),
-        NULL, 0, INT_MAX, "5", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_network_nonce_size = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "nonce_size", "integer",
-        N_("size of nonce (in bytes), generated when a client connects; "
-           "the client must use this nonce, concatenated to the client nonce "
-           "and the password when hashing the password in the \"init\" "
-           "command of the weechat protocol"),
-        NULL, 8, 128, "16", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_network_password = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "password", "string",
-        N_("password required by clients to access this relay (empty value "
-           "means no password required, see option "
-           "relay.network.allow_empty_password) (note: content is evaluated, "
-           "see /help eval)"),
-        NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_network_password_hash_algo = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "password_hash_algo", "string",
-        N_("comma separated list of hash algorithms used for password "
-           "authentication in weechat protocol, among these values: \"plain\" "
-           "(password in plain text, not hashed), \"sha256\", \"sha512\", "
-           "\"pbkdf2+sha256\", \"pbkdf2+sha512\"), \"*\" means all algorithms, "
-           "a name beginning with \"!\" is a negative value to prevent an "
-           "algorithm from being used, wildcard \"*\" is allowed in names "
-           "(examples: \"*\", \"pbkdf2*\", \"*,!plain\")"),
-        NULL, 0, 0, "*", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_change_network_password_hash_algo, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_network_password_hash_iterations = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "password_hash_iterations", "integer",
-        N_("number of iterations asked to the client in weechat protocol "
-           "when a hashed password with algorithm PBKDF2 is used for "
-           "authentication; more iterations is better in term of security but "
-           "is slower to compute; this number should not be too high if your "
-           "CPU is slow"),
-        NULL, 1, 1000000, "100000", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_network_ssl_cert_key = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "ssl_cert_key", "string",
-        N_("file with SSL certificate and private key (for serving clients "
-           "with SSL) "
-           "(path is evaluated, see function string_eval_path_home in "
-           "plugin API reference)"),
-        NULL, 0, 0, "${weechat_config_dir}/ssl/relay.pem", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_change_network_ssl_cert_key, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_network_ssl_priorities = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "ssl_priorities", "string",
-        N_("string with priorities for gnutls (for syntax, see "
-           "documentation of function gnutls_priority_init in gnutls "
-           "manual, common strings are: \"PERFORMANCE\", \"NORMAL\", "
-           "\"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"),
-        NULL, 0, 0, "NORMAL:-VERS-SSL3.0", NULL, 0,
-        &relay_config_check_network_ssl_priorities, NULL, NULL,
-        &relay_config_change_network_ssl_priorities, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_network_totp_secret = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "totp_secret", "string",
-        N_("secret for the generation of the Time-based One-Time Password "
-           "(TOTP), encoded in base32 (only letters and digits from 2 to 7); "
-           "it is used as second factor in weechat protocol, in addition to "
-           "the password, which must not be empty "
-           "(empty value means no TOTP is required) "
-           "(note: content is evaluated, see /help eval)"),
-        NULL, 0, 0, "", NULL, 0,
-        &relay_config_check_network_totp_secret, NULL, NULL,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_network_totp_window = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "totp_window", "integer",
-        N_("number of Time-based One-Time Passwords to accept before and "
-           "after the current one: "
-           "0 = accept only the current password, "
-           "1 = accept one password before, the current, and one after, "
-           "2 = accept two passwords before, the current, and two after, "
-           "...; a high number reduces the security level "
-           "(0 or 1 are recommended values)"),
-        NULL, 0, 256, "0", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_network_websocket_allowed_origins = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "websocket_allowed_origins", "string",
-        N_("POSIX extended regular expression with origins allowed in "
-           "websockets (case insensitive, use \"(?-i)\" at beginning to make "
-           "it case sensitive), example: "
-           "\"^https?://(www\\.)?example\\.(com|org)\""),
-        NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_change_network_websocket_allowed_origins, NULL, NULL,
-        NULL, NULL, NULL);
 
     /* section irc */
-    ptr_section = weechat_config_new_section (relay_config_file, "irc",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (relay_config_file);
-        relay_config_file = NULL;
-        return 0;
-    }
-
-    relay_config_irc_backlog_max_minutes = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "backlog_max_minutes", "integer",
-        N_("maximum number of minutes in backlog per IRC channel "
-           "(0 = unlimited, examples: 1440 = one day, 10080 = one week, "
-           "43200 = one month, 525600 = one year)"),
-        NULL, 0, INT_MAX, "0", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_irc_backlog_max_number = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "backlog_max_number", "integer",
-        N_("maximum number of lines in backlog per IRC channel "
-           "(0 = unlimited)"),
-        NULL, 0, INT_MAX, "1024", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_irc_backlog_since_last_disconnect = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "backlog_since_last_disconnect", "boolean",
-        N_("display backlog starting from last client disconnect"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_irc_backlog_since_last_message = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "backlog_since_last_message", "boolean",
-        N_("display backlog starting from your last message"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_irc_backlog_tags = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "backlog_tags", "string",
-        N_("comma-separated list of messages tags which are displayed in "
-           "backlog per IRC channel (supported tags: \"irc_join\", "
-           "\"irc_part\", \"irc_quit\", \"irc_nick\", \"irc_privmsg\"), "
-           "\"*\" = all supported tags"),
-        NULL, 0, 0, "irc_privmsg", NULL, 0,
-        &relay_config_check_irc_backlog_tags, NULL, NULL,
-        &relay_config_change_irc_backlog_tags, NULL, NULL,
+    relay_config_section_irc = weechat_config_new_section (
+        relay_config_file, "irc",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
         NULL, NULL, NULL);
-    relay_config_irc_backlog_time_format = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "backlog_time_format", "string",
-        N_("format for time in backlog messages (see man strftime for format) "
-           "(not used if server capability \"server-time\" was enabled by "
-           "client, because time is sent as irc tag); empty string = disable "
-           "time in backlog messages"),
-        NULL, 0, 0, "[%H:%M] ", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    if (relay_config_section_irc)
+    {
+        relay_config_irc_backlog_max_minutes = weechat_config_new_option (
+            relay_config_file, relay_config_section_irc,
+            "backlog_max_minutes", "integer",
+            N_("maximum number of minutes in backlog per IRC channel "
+               "(0 = unlimited, examples: 1440 = one day, 10080 = one week, "
+               "43200 = one month, 525600 = one year)"),
+            NULL, 0, INT_MAX, "0", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_irc_backlog_max_number = weechat_config_new_option (
+            relay_config_file, relay_config_section_irc,
+            "backlog_max_number", "integer",
+            N_("maximum number of lines in backlog per IRC channel "
+               "(0 = unlimited)"),
+            NULL, 0, INT_MAX, "1024", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_irc_backlog_since_last_disconnect = weechat_config_new_option (
+            relay_config_file, relay_config_section_irc,
+            "backlog_since_last_disconnect", "boolean",
+            N_("display backlog starting from last client disconnect"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_irc_backlog_since_last_message = weechat_config_new_option (
+            relay_config_file, relay_config_section_irc,
+            "backlog_since_last_message", "boolean",
+            N_("display backlog starting from your last message"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_irc_backlog_tags = weechat_config_new_option (
+            relay_config_file, relay_config_section_irc,
+            "backlog_tags", "string",
+            N_("comma-separated list of messages tags which are displayed in "
+               "backlog per IRC channel (supported tags: \"irc_join\", "
+               "\"irc_part\", \"irc_quit\", \"irc_nick\", \"irc_privmsg\"), "
+               "\"*\" = all supported tags"),
+            NULL, 0, 0, "irc_privmsg", NULL, 0,
+            &relay_config_check_irc_backlog_tags, NULL, NULL,
+            &relay_config_change_irc_backlog_tags, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_irc_backlog_time_format = weechat_config_new_option (
+            relay_config_file, relay_config_section_irc,
+            "backlog_time_format", "string",
+            N_("format for time in backlog messages (see man strftime for "
+               "format) (not used if server capability \"server-time\" was "
+               "enabled by client, because time is sent as irc tag); empty "
+               "string = disable time in backlog messages"),
+            NULL, 0, 0, "[%H:%M] ", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    }
 
     /* section weechat */
-    ptr_section = weechat_config_new_section (relay_config_file, "weechat",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (relay_config_file);
-        relay_config_file = NULL;
-        return 0;
-    }
-
-    relay_config_weechat_commands = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "commands", "string",
-        N_("comma-separated list of commands allowed/denied when input "
-           "data (text or command) is received from a client; "
-           "\"*\" means any command, a name beginning with \"!\" is "
-           "a negative value to prevent a command from being executed, "
-           "wildcard \"*\" is allowed in names; this option should be set if "
-           "the relay client is not safe (someone could use it to run "
-           "commands); for example \"*,!exec,!quit\" allows any command "
-           "except /exec and /quit"),
-        NULL, 0, 0, "", NULL, 0,
+    relay_config_section_weechat = weechat_config_new_section (
+        relay_config_file, "weechat",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
+    if (relay_config_section_weechat)
+    {
+        relay_config_weechat_commands = weechat_config_new_option (
+            relay_config_file, relay_config_section_weechat,
+            "commands", "string",
+            N_("comma-separated list of commands allowed/denied when input "
+               "data (text or command) is received from a client; "
+               "\"*\" means any command, a name beginning with \"!\" is "
+               "a negative value to prevent a command from being executed, "
+               "wildcard \"*\" is allowed in names; this option should be set "
+               "if the relay client is not safe (someone could use it to run "
+               "commands); for example \"*,!exec,!quit\" allows any command "
+               "except /exec and /quit"),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+    }
 
     /* section port */
-    ptr_section = weechat_config_new_section (
+    relay_config_section_port = weechat_config_new_section (
         relay_config_file, "port",
         1, 1,
         NULL, NULL, NULL,
@@ -1301,17 +1296,9 @@ relay_config_init ()
         NULL, NULL, NULL,
         &relay_config_create_option_port_path, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (relay_config_file);
-        relay_config_file = NULL;
-        return 0;
-    }
-
-    relay_config_section_port = ptr_section;
 
     /* section path */
-    ptr_section = weechat_config_new_section (
+    relay_config_section_path = weechat_config_new_section (
         relay_config_file, "path",
         1, 1,
         NULL, NULL, NULL,
@@ -1319,14 +1306,6 @@ relay_config_init ()
         NULL, NULL, NULL,
         &relay_config_create_option_port_path, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (relay_config_file);
-        relay_config_file = NULL;
-        return 0;
-    }
-
-    relay_config_section_path = ptr_section;
 
     return 1;
 }

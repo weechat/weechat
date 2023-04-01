@@ -31,33 +31,39 @@
 
 
 struct t_config_file *spell_config_file = NULL;
-struct t_config_section *spell_config_section_dict = NULL;
 
-int spell_config_loading = 0;
+/* sections */
+
+struct t_config_section *spell_config_section_color = NULL;
+struct t_config_section *spell_config_section_check = NULL;
+struct t_config_section *spell_config_section_dict = NULL;
+struct t_config_section *spell_config_section_look = NULL;
+struct t_config_section *spell_config_section_option = NULL;
 
 /* spell config, color section */
 
-struct t_config_option *spell_config_color_misspelled;
-struct t_config_option *spell_config_color_suggestion;
-struct t_config_option *spell_config_color_suggestion_delimiter_dict;
-struct t_config_option *spell_config_color_suggestion_delimiter_word;
+struct t_config_option *spell_config_color_misspelled = NULL;
+struct t_config_option *spell_config_color_suggestion = NULL;
+struct t_config_option *spell_config_color_suggestion_delimiter_dict = NULL;
+struct t_config_option *spell_config_color_suggestion_delimiter_word = NULL;
 
 /* spell config, check section */
 
-struct t_config_option *spell_config_check_commands;
-struct t_config_option *spell_config_check_default_dict;
-struct t_config_option *spell_config_check_during_search;
-struct t_config_option *spell_config_check_enabled;
-struct t_config_option *spell_config_check_real_time;
-struct t_config_option *spell_config_check_suggestions;
-struct t_config_option *spell_config_check_word_min_length;
+struct t_config_option *spell_config_check_commands = NULL;
+struct t_config_option *spell_config_check_default_dict = NULL;
+struct t_config_option *spell_config_check_during_search = NULL;
+struct t_config_option *spell_config_check_enabled = NULL;
+struct t_config_option *spell_config_check_real_time = NULL;
+struct t_config_option *spell_config_check_suggestions = NULL;
+struct t_config_option *spell_config_check_word_min_length = NULL;
 
 /* spell config, look section */
 
-struct t_config_option *spell_config_look_suggestion_delimiter_dict;
-struct t_config_option *spell_config_look_suggestion_delimiter_word;
+struct t_config_option *spell_config_look_suggestion_delimiter_dict = NULL;
+struct t_config_option *spell_config_look_suggestion_delimiter_word = NULL;
 
 
+int spell_config_loading = 0;
 char **spell_commands_to_check = NULL;
 int spell_count_commands_to_check = 0;
 int *spell_length_commands_to_check = NULL;
@@ -439,15 +445,13 @@ spell_config_set_dict (const char *name, const char *value)
 int
 spell_config_init ()
 {
-    struct t_config_section *ptr_section;
-
     spell_config_file = weechat_config_new (SPELL_CONFIG_PRIO_NAME,
                                             NULL, NULL, NULL);
     if (!spell_config_file)
         return 0;
 
     /* color */
-    ptr_section = weechat_config_new_section (
+    spell_config_section_color = weechat_config_new_section (
         spell_config_file, "color",
         0, 0,
         NULL, NULL, NULL,
@@ -455,43 +459,39 @@ spell_config_init ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
+    if (spell_config_section_color)
     {
-        weechat_config_free (spell_config_file);
-        spell_config_file = NULL;
-        return 0;
+        spell_config_color_misspelled = weechat_config_new_option (
+            spell_config_file, spell_config_section_color,
+            "misspelled", "color",
+            N_("text color for misspelled words (input bar)"),
+            NULL, 0, 0, "lightred", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        spell_config_color_suggestion = weechat_config_new_option (
+            spell_config_file, spell_config_section_color,
+            "suggestion", "color",
+            N_("text color for suggestion on a misspelled word in bar item "
+               "\"spell_suggest\""),
+            NULL, 0, 0, "default", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        spell_config_color_suggestion_delimiter_dict = weechat_config_new_option (
+            spell_config_file, spell_config_section_color,
+            "suggestion_delimiter_dict", "color",
+            N_("text color for delimiters displayed between two dictionaries "
+               "in bar item \"spell_suggest\""),
+            NULL, 0, 0, "cyan", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        spell_config_color_suggestion_delimiter_word = weechat_config_new_option (
+            spell_config_file, spell_config_section_color,
+            "suggestion_delimiter_word", "color",
+            N_("text color for delimiters displayed between two words in bar "
+               "item \"spell_suggest\""),
+            NULL, 0, 0, "cyan", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    spell_config_color_misspelled = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "misspelled", "color",
-        N_("text color for misspelled words (input bar)"),
-        NULL, 0, 0, "lightred", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    spell_config_color_suggestion = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "suggestion", "color",
-        N_("text color for suggestion on a misspelled word in bar item "
-           "\"spell_suggest\""),
-        NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    spell_config_color_suggestion_delimiter_dict = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "suggestion_delimiter_dict", "color",
-        N_("text color for delimiters displayed between two dictionaries "
-           "in bar item \"spell_suggest\""),
-        NULL, 0, 0, "cyan", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    spell_config_color_suggestion_delimiter_word = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "suggestion_delimiter_word", "color",
-        N_("text color for delimiters displayed between two words in bar item "
-           "\"spell_suggest\""),
-        NULL, 0, 0, "cyan", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
     /* check */
-    ptr_section = weechat_config_new_section (
+    spell_config_section_check = weechat_config_new_section (
         spell_config_file, "check",
         0, 0,
         NULL, NULL, NULL,
@@ -499,76 +499,72 @@ spell_config_init ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
+    if (spell_config_section_check)
     {
-        weechat_config_free (spell_config_file);
-        spell_config_file = NULL;
-        return 0;
+        spell_config_check_commands = weechat_config_new_option (
+            spell_config_file, spell_config_section_check,
+            "commands", "string",
+            N_("comma separated list of commands for which spell checking is "
+               "enabled (spell checking is disabled for all other commands)"),
+            NULL, 0, 0,
+            "away,command,cycle,kick,kickban,me,msg,notice,part,query,"
+            "quit,topic", NULL, 0,
+            NULL, NULL, NULL,
+            &spell_config_change_commands, NULL, NULL,
+            NULL, NULL, NULL);
+        spell_config_check_default_dict = weechat_config_new_option (
+            spell_config_file, spell_config_section_check,
+            "default_dict", "string",
+            N_("default dictionary (or comma separated list of dictionaries) to "
+               "use when buffer has no dictionary defined (leave blank to "
+               "disable spell checker on buffers for which you didn't "
+               "explicitly enabled it)"),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL,
+            &spell_config_change_default_dict, NULL, NULL,
+            NULL, NULL, NULL);
+        spell_config_check_during_search = weechat_config_new_option (
+            spell_config_file, spell_config_section_check,
+            "during_search", "boolean",
+            N_("check words during text search in buffer"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        spell_config_check_enabled = weechat_config_new_option (
+            spell_config_file, spell_config_section_check,
+            "enabled", "boolean",
+            N_("enable spell checker for command line"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL,
+            &spell_config_change_enabled, NULL, NULL,
+            NULL, NULL, NULL);
+        spell_config_check_real_time = weechat_config_new_option (
+            spell_config_file, spell_config_section_check,
+            "real_time", "boolean",
+            N_("real-time spell checking of words (slower, disabled by default: "
+               "words are checked only if there's delimiter after)"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        spell_config_check_suggestions = weechat_config_new_option (
+            spell_config_file, spell_config_section_check,
+            "suggestions", "integer",
+            N_("number of suggestions to display in bar item \"spell_suggest\" "
+               "for each dictionary set in buffer (-1 = disable suggestions, "
+               "0 = display all possible suggestions in all languages)"),
+            NULL, -1, INT_MAX, "-1", NULL, 0,
+            NULL, NULL, NULL,
+            &spell_config_change_suggestions, NULL, NULL,
+            NULL, NULL, NULL);
+        spell_config_check_word_min_length = weechat_config_new_option (
+            spell_config_file, spell_config_section_check,
+            "word_min_length", "integer",
+            N_("minimum length for a word to be spell checked (use 0 to check "
+               "all words)"),
+            NULL, 0, INT_MAX, "2", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    spell_config_check_commands = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "commands", "string",
-        N_("comma separated list of commands for which spell checking is "
-           "enabled (spell checking is disabled for all other commands)"),
-        NULL, 0, 0,
-        "away,command,cycle,kick,kickban,me,msg,notice,part,query,"
-        "quit,topic", NULL, 0,
-        NULL, NULL, NULL,
-        &spell_config_change_commands, NULL, NULL,
-        NULL, NULL, NULL);
-    spell_config_check_default_dict = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "default_dict", "string",
-        N_("default dictionary (or comma separated list of dictionaries) to "
-           "use when buffer has no dictionary defined (leave blank to disable "
-           "spell checker on buffers for which you didn't explicitly "
-           "enabled it)"),
-        NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL,
-        &spell_config_change_default_dict, NULL, NULL,
-        NULL, NULL, NULL);
-    spell_config_check_during_search = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "during_search", "boolean",
-        N_("check words during text search in buffer"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    spell_config_check_enabled = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "enabled", "boolean",
-        N_("enable spell checker for command line"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL,
-        &spell_config_change_enabled, NULL, NULL,
-        NULL, NULL, NULL);
-    spell_config_check_real_time = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "real_time", "boolean",
-        N_("real-time spell checking of words (slower, disabled by default: "
-           "words are checked only if there's delimiter after)"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    spell_config_check_suggestions = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "suggestions", "integer",
-        N_("number of suggestions to display in bar item \"spell_suggest\" "
-           "for each dictionary set in buffer (-1 = disable suggestions, "
-           "0 = display all possible suggestions in all languages)"),
-        NULL, -1, INT_MAX, "-1", NULL, 0,
-        NULL, NULL, NULL,
-        &spell_config_change_suggestions, NULL, NULL,
-        NULL, NULL, NULL);
-    spell_config_check_word_min_length = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "word_min_length", "integer",
-        N_("minimum length for a word to be spell checked (use 0 to check all "
-           "words)"),
-        NULL, 0, INT_MAX, "2", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
     /* dict */
-    ptr_section = weechat_config_new_section (
+    spell_config_section_dict = weechat_config_new_section (
         spell_config_file, "dict",
         1, 1,
         NULL, NULL, NULL,
@@ -576,17 +572,9 @@ spell_config_init ()
         NULL, NULL, NULL,
         &spell_config_dict_create_option, NULL, NULL,
         &spell_config_dict_delete_option, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (spell_config_file);
-        spell_config_file = NULL;
-        return 0;
-    }
-
-    spell_config_section_dict = ptr_section;
 
     /* look */
-    ptr_section = weechat_config_new_section (
+    spell_config_section_look = weechat_config_new_section (
         spell_config_file, "look",
         0, 0,
         NULL, NULL, NULL,
@@ -594,34 +582,30 @@ spell_config_init ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
+    if (spell_config_section_look)
     {
-        weechat_config_free (spell_config_file);
-        spell_config_file = NULL;
-        return 0;
+        spell_config_look_suggestion_delimiter_dict = weechat_config_new_option (
+            spell_config_file, spell_config_section_look,
+            "suggestion_delimiter_dict", "string",
+            N_("delimiter displayed between two dictionaries in bar item "
+               "\"spell_suggest\""),
+            NULL, 0, 0, " / ", NULL, 0,
+            NULL, NULL, NULL,
+            &spell_config_change_suggestions, NULL, NULL,
+            NULL, NULL, NULL);
+        spell_config_look_suggestion_delimiter_word = weechat_config_new_option (
+            spell_config_file, spell_config_section_look,
+            "suggestion_delimiter_word", "string",
+            N_("delimiter displayed between two words in bar item "
+               "\"spell_suggest\""),
+            NULL, 0, 0, ",", NULL, 0,
+            NULL, NULL, NULL,
+            &spell_config_change_suggestions, NULL, NULL,
+            NULL, NULL, NULL);
     }
 
-    spell_config_look_suggestion_delimiter_dict = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "suggestion_delimiter_dict", "string",
-        N_("delimiter displayed between two dictionaries in bar item "
-           "\"spell_suggest\""),
-        NULL, 0, 0, " / ", NULL, 0,
-        NULL, NULL, NULL,
-        &spell_config_change_suggestions, NULL, NULL,
-        NULL, NULL, NULL);
-    spell_config_look_suggestion_delimiter_word = weechat_config_new_option (
-        spell_config_file, ptr_section,
-        "suggestion_delimiter_word", "string",
-        N_("delimiter displayed between two words in bar item "
-           "\"spell_suggest\""),
-        NULL, 0, 0, ",", NULL, 0,
-        NULL, NULL, NULL,
-        &spell_config_change_suggestions, NULL, NULL,
-        NULL, NULL, NULL);
-
     /* option */
-    ptr_section = weechat_config_new_section (
+    spell_config_section_option = weechat_config_new_section (
         spell_config_file, "option",
         1, 1,
         NULL, NULL, NULL,
@@ -629,12 +613,6 @@ spell_config_init ()
         NULL, NULL, NULL,
         &spell_config_option_create_option, NULL, NULL,
         &spell_config_option_delete_option, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (spell_config_file);
-        spell_config_file = NULL;
-        return 0;
-    }
 
     return 1;
 }
