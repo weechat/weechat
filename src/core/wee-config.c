@@ -1528,7 +1528,7 @@ config_weechat_update_cb (const void *pointer, void *data,
     (void) data;
     (void) config_file;
 
-    /* nothing to do if we're already an up-to-date config file */
+    /* nothing to do if the config file is already up-to-date */
     if (version_read >= WEECHAT_CONFIG_VERSION)
         return NULL;
 

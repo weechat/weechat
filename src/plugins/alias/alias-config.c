@@ -357,6 +357,71 @@ alias_config_completion_create_option_cb (const void *pointer, void *data,
 }
 
 /*
+ * Updates options in configuration file while reading the file.
+ */
+
+struct t_hashtable *
+alias_config_update_cb (const void *pointer, void *data,
+                        struct t_config_file *config_file,
+                        int version_read,
+                        struct t_hashtable *data_read)
+{
+    const char *ptr_section, *ptr_option;
+    char *new_option;
+    int changes;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) config_file;
+
+    /* nothing to do if the config file is already up-to-date */
+    if (version_read >= ALIAS_CONFIG_VERSION)
+        return NULL;
+
+    changes = 0;
+
+    if (version_read < 2)
+    {
+        /*
+         * changes in v2:
+         *   - aliases are in lower case by default
+         *     (default aliases and those created by users are automatically
+         *     converted to lower case)
+         */
+        ptr_section = weechat_hashtable_get (data_read, "section");
+        ptr_option = weechat_hashtable_get (data_read, "option");
+        if (ptr_section
+            && ptr_option
+            && ((strcmp (ptr_section, "cmd") == 0)
+                || (strcmp (ptr_section, "completion") == 0)))
+        {
+            /* convert alias name to lower case */
+            new_option = weechat_string_tolower (ptr_option);
+            if (new_option)
+            {
+                if (strcmp (ptr_option, new_option) != 0)
+                {
+                    if (strcmp (ptr_section, "cmd") == 0)
+                    {
+                        /* display message only for alias, not for completion */
+                        weechat_printf (
+                            NULL,
+                            _("Alias converted to lower case: \"%s\" => \"%s\""),
+                            ptr_option, new_option);
+                    }
+                    weechat_hashtable_set (data_read, "option", new_option);
+                    changes++;
+                }
+                free (new_option);
+            }
+        }
+    }
+
+    return (changes) ? data_read : NULL;
+}
+
+/*
  * Initializes alias configuration file.
  *
  * Returns:
@@ -373,6 +438,9 @@ alias_config_init ()
                                             &alias_config_reload, NULL, NULL);
     if (!alias_config_file)
         return 0;
+
+    weechat_config_set_version (alias_config_file, ALIAS_CONFIG_VERSION,
+                                &alias_config_update_cb, NULL, NULL);
 
     /* cmd */
     ptr_section = weechat_config_new_section (

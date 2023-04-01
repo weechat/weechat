@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-30 22:09+0200\n"
+"POT-Creation-Date: 2023-04-01 11:12+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4894,6 +4894,10 @@ msgstr "Список сокращений:\n"
 #, fuzzy, c-format
 msgid "%s%s: error creating completion for alias \"%s\": alias not found"
 msgstr "%s параметр конфигурации \"%s\" не найден\n"
+
+#, c-format
+msgid "Alias converted to lower case: \"%s\" => \"%s\""
+msgstr ""
 
 #, fuzzy
 msgid "alias pointer (optional)"

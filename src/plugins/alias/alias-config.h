@@ -23,6 +23,8 @@
 #define ALIAS_CONFIG_NAME "alias"
 #define ALIAS_CONFIG_PRIO_NAME (TO_STR(ALIAS_PLUGIN_PRIORITY) "|" ALIAS_CONFIG_NAME)
 
+#define ALIAS_CONFIG_VERSION 2
+
 extern struct t_config_file *alias_config_file;
 extern struct t_config_section *alias_config_section_cmd;
 extern struct t_config_section *alias_config_section_completion;

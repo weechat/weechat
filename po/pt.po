@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-30 22:09+0200\n"
+"POT-Creation-Date: 2023-04-01 11:12+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -6261,6 +6261,10 @@ msgstr "valor do alias"
 #, c-format
 msgid "%s%s: error creating completion for alias \"%s\": alias not found"
 msgstr "%s%s: erro ao criar completação do alias \"%s\": alias não encontrado"
+
+#, c-format
+msgid "Alias converted to lower case: \"%s\" => \"%s\""
+msgstr ""
 
 msgid "alias pointer (optional)"
 msgstr "ponteiro para o alias (opcional)"

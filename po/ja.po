@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-03-30 22:09+0200\n"
+"POT-Creation-Date: 2023-04-01 11:12+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -6215,6 +6215,10 @@ msgstr "別名の値"
 #, c-format
 msgid "%s%s: error creating completion for alias \"%s\": alias not found"
 msgstr "%s%s: 別名 \"%s\" の補完候補作成中にエラー: 別名が見つかりません"
+
+#, c-format
+msgid "Alias converted to lower case: \"%s\" => \"%s\""
+msgstr ""
 
 msgid "alias pointer (optional)"
 msgstr "別名のポインタ (任意)"
