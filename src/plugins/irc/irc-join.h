@@ -47,6 +47,13 @@ extern char *irc_join_remove_channel (struct t_irc_server *server,
                                       const char *channel_name);
 extern void irc_join_remove_channel_from_autojoin (struct t_irc_server *server,
                                                    const char *channel_name);
+extern char *irc_join_rename_channel (struct t_irc_server *server,
+                                      const char *join,
+                                      const char *channel_name,
+                                      const char *new_channel_name);
+extern void irc_join_rename_channel_in_autojoin (struct t_irc_server *server,
+                                                 const char *channel_name,
+                                                 const char *new_channel_name);
 extern void irc_join_save_channels_to_autojoin (struct t_irc_server *server);
 extern char *irc_join_sort_channels (struct t_irc_server *server,
                                      const char *join);

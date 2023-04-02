@@ -78,6 +78,21 @@ extern int irc_join_compare_join_channel (struct t_irc_server *server,
     if (str)                                                            \
         free (str);
 
+#define WEE_CHECK_RENAME_CHANNEL(__result, __join, __channel,           \
+                                 __new_channel)                         \
+    str = irc_join_rename_channel (NULL, __join, __channel,             \
+                                   __new_channel);                      \
+    if (__result == NULL)                                               \
+    {                                                                   \
+        POINTERS_EQUAL(NULL, str);                                      \
+    }                                                                   \
+    else                                                                \
+    {                                                                   \
+        STRCMP_EQUAL(__result, str);                                    \
+    }                                                                   \
+    if (str)                                                            \
+        free (str);
+
 #define WEE_CHECK_SORT_CHANNELS(__result, __join)                       \
     str = irc_join_sort_channels (NULL, __join);                        \
     if (__result == NULL)                                               \
@@ -439,6 +454,49 @@ TEST(IrcJoin, RemoveChannel)
 
 /*
  * Tests functions:
+ *   irc_join_rename_channel
+ */
+
+TEST(IrcJoin, RenameChannel)
+{
+    char *str;
+
+    WEE_CHECK_RENAME_CHANNEL(NULL, NULL, NULL, NULL);
+    WEE_CHECK_RENAME_CHANNEL(NULL, "", NULL, NULL);
+    WEE_CHECK_RENAME_CHANNEL(NULL, "", NULL, NULL);
+    WEE_CHECK_RENAME_CHANNEL(NULL, "", NULL, "");
+    WEE_CHECK_RENAME_CHANNEL(NULL, "", "", NULL);
+    WEE_CHECK_RENAME_CHANNEL(NULL, NULL, "", "");
+    WEE_CHECK_RENAME_CHANNEL("", NULL, "", "#xyz");
+    WEE_CHECK_RENAME_CHANNEL("", NULL, "xyz","");
+
+    WEE_CHECK_RENAME_CHANNEL("", NULL, "#abc", "#xyz");
+    WEE_CHECK_RENAME_CHANNEL("", "", "#abc", "#xyz");
+
+    WEE_CHECK_RENAME_CHANNEL("#abc", "#abc", "#xyz", "#xyz");
+    WEE_CHECK_RENAME_CHANNEL("#xyz", "#abc", "#abc", "#xyz");
+    WEE_CHECK_RENAME_CHANNEL("#xyz,#def", "#abc,#def", "#abc", "#xyz");
+
+    WEE_CHECK_RENAME_CHANNEL("#xyz,#def key_abc",
+                             "#abc,#def key_abc", "#abc", "#xyz");
+    WEE_CHECK_RENAME_CHANNEL("#xyz,#def key_abc,key_def",
+                             "#abc,#def key_abc,key_def", "#abc", "#xyz");
+
+    /* channel not found */
+    WEE_CHECK_RENAME_CHANNEL("#abc,#def key_abc,key_def",
+                             "#abc,#def key_abc,key_def", "#xxx", "#yyy");
+
+    /* same name for the new channel */
+    WEE_CHECK_RENAME_CHANNEL("#abc,#def key_abc,key_def",
+                             "#abc,#def key_abc,key_def", "#abc", "#abc");
+
+    /* new name already exists */
+    WEE_CHECK_RENAME_CHANNEL("#def key_def",
+                             "#abc,#def key_abc,key_def", "#abc", "#def");
+}
+
+/*
+ * Tests functions:
  *   irc_join_sort_channels
  */
 
@@ -465,6 +523,7 @@ TEST(IrcJoin, SortChannels)
  *   irc_join_add_channel_to_autojoin
  *   irc_join_add_channels_to_autojoin
  *   irc_join_remove_channel_from_autojoin
+ *   irc_join_rename_channel_in_autojoin
  */
 
 TEST(IrcJoin, AddRemoveChannelsAutojoin)
@@ -583,6 +642,42 @@ TEST(IrcJoin, AddRemoveChannelsAutojoin)
     irc_join_add_channels_to_autojoin (server, "#GHI");
     STRCMP_EQUAL(
         "#abc,#xyz,#DEF,#GHI key_abc,key_xyz",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    /* rename channel (not found) */
+    irc_join_rename_channel_in_autojoin (server, "#yyy", "#zzz");
+    STRCMP_EQUAL(
+        "#abc,#xyz,#DEF,#GHI key_abc,key_xyz",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    /* rename channel */
+    irc_join_rename_channel_in_autojoin (server, "#abc", "#aabbcc");
+    STRCMP_EQUAL(
+        "#aabbcc,#xyz,#DEF,#GHI key_abc,key_xyz",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    /* rename channel */
+    irc_join_rename_channel_in_autojoin (server, "#aabbcc", "#abc");
+    STRCMP_EQUAL(
+        "#abc,#xyz,#DEF,#GHI key_abc,key_xyz",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    /* rename channel */
+    irc_join_rename_channel_in_autojoin (server, "#DEF", "#def");
+    STRCMP_EQUAL(
+        "#abc,#xyz,#DEF,#GHI key_abc,key_xyz",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    /* rename channel (new channel already exists) */
+    irc_join_rename_channel_in_autojoin (server, "#GHI", "#jkl");
+    STRCMP_EQUAL(
+        "#abc,#xyz,#DEF,#jkl key_abc,key_xyz",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    /* rename channel (new channel already exists) */
+    irc_join_rename_channel_in_autojoin (server, "#abc", "#def");
+    STRCMP_EQUAL(
+        "#xyz,#DEF,#jkl key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
     irc_server_free (server);

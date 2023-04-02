@@ -597,6 +597,123 @@ irc_join_remove_channel_from_autojoin (struct t_irc_server *server,
 }
 
 /*
+ * Renames a channel in a join string: removes the channel then adds it (with
+ * its key, if set).
+ *
+ * Channels with a key are first in list, so for example:
+ *
+ *           join     = "#abc,#def,#ghi key_abc,key_def"
+ *   channel_name     = "#def"
+ *   new_channel_name = "#zzz"
+ *
+ *   => returned value: "#abc,#zzz,#ghi key_abc,key_def"
+ *
+ * If channel_name == new_channel_name (ignoring case), the function does
+ * nothing.
+ *
+ * If channel_name is not in the list, the function does nothing.
+ *
+ * If the new_channel_name is already in the list, the channel_name is just
+ * removed.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_join_rename_channel (struct t_irc_server *server,
+                         const char *join,
+                         const char *channel_name,
+                         const char *new_channel_name)
+{
+    struct t_arraylist *arraylist;
+    struct t_irc_join_channel *ptr_join_chan;
+    char *new_join;
+    int i, to_remove;
+
+    if (!channel_name || !new_channel_name)
+        return NULL;
+
+    if (irc_server_strcasecmp (server, channel_name, new_channel_name) == 0)
+        return (join) ? strdup (join) : NULL;
+
+    arraylist = irc_join_split (server, join, 0);
+    if (!arraylist)
+        return NULL;
+
+    /* check if new channel name is already in the list */
+    to_remove = 0;
+    for (i = 0; i < weechat_arraylist_size (arraylist); i++)
+    {
+        ptr_join_chan = (struct t_irc_join_channel *)weechat_arraylist_get (
+            arraylist, i);
+        if (irc_server_strcasecmp (server, ptr_join_chan->name,
+                                   new_channel_name) == 0)
+        {
+            to_remove = 1;
+            break;
+        }
+    }
+
+    i = 0;
+    while (i < weechat_arraylist_size (arraylist))
+    {
+        ptr_join_chan = (struct t_irc_join_channel *)weechat_arraylist_get (
+            arraylist, i);
+        if (irc_server_strcasecmp (server, ptr_join_chan->name,
+                                   channel_name) == 0)
+        {
+            if (to_remove)
+            {
+                weechat_arraylist_remove (arraylist, i);
+            }
+            else
+            {
+                free (ptr_join_chan->name);
+                ptr_join_chan->name = strdup (new_channel_name);
+                i++;
+            }
+        }
+        else
+        {
+            i++;
+        }
+    }
+
+    new_join = irc_join_build_string (arraylist);
+
+    weechat_arraylist_free (arraylist);
+
+    return new_join;
+}
+
+/*
+ * Renames a channel in a server autojoin option.
+ */
+
+void
+irc_join_rename_channel_in_autojoin (struct t_irc_server *server,
+                                     const char *channel_name,
+                                     const char *new_channel_name)
+{
+    char *new_autojoin;
+
+    if (!channel_name || !new_channel_name)
+        return;
+
+    new_autojoin = irc_join_rename_channel (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN),
+        channel_name,
+        new_channel_name);
+    if (new_autojoin)
+    {
+        weechat_config_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
+                                   new_autojoin, 1);
+        free (new_autojoin);
+    }
+}
+
+/*
  * Saves currently joined channels in the autojoin option of a server.
  */
 

@@ -48,6 +48,7 @@
 #include "irc-config.h"
 #include "irc-ctcp.h"
 #include "irc-ignore.h"
+#include "irc-join.h"
 #include "irc-message.h"
 #include "irc-mode.h"
 #include "irc-modelist.h"
@@ -6788,6 +6789,12 @@ IRC_PROTOCOL_CALLBACK(470)
                 (void) weechat_hook_signal_send ("logger_backlog",
                                                  WEECHAT_HOOK_SIGNAL_POINTER,
                                                  ptr_buffer);
+            }
+            if (IRC_SERVER_OPTION_BOOLEAN(server,
+                                          IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC))
+            {
+                irc_join_rename_channel_in_autojoin (server, params[1],
+                                                     params[2]);
             }
         }
 
