@@ -28,24 +28,27 @@
 
 set -o errexit
 
-unset VERSION
-unset GIT_COMMIT_RC
-unset GIT_TAG_RC
-
 release_error ()
 {
     [ $# -gt 0 ] && echo >&2 "ERROR: $*"
-    [ "${TAG_RC}" = "0" ] && git tag --delete "v${VERSION}"
-    [ "${COMMIT_RC}" = "0" ] && git reset HEAD~1
     exit 1
 }
 
 release_start ()
 {
-    ROOT_DIR=$(git rev-parse --show-toplevel)
-    [ -z "$(git status --porcelain)" ] || release_error "working directory not clean"
-    DATE=$(date +"%Y-%m-%d")
+    ROOT_DIR="$(git rev-parse --show-toplevel)"
+    if [ -n "$(git status --porcelain)" ]; then
+        release_error "working directory not clean"
+    fi
     VERSION=$("${ROOT_DIR}/version.sh" devel)
+    if git rev-parse "v${VERSION}"; then
+        release_error "tag v${VERSION} already exists"
+    fi
+    MSG=$(git log -1 --pretty=%B | tr -d "\n")
+    if [ "${MSG}" = "Version ${VERSION}" ]; then
+        release_error "commit for version already exists"
+    fi
+    DATE=$(date +"%Y-%m-%d")
     BUILD_DIR="${ROOT_DIR}/release/${VERSION}"
     if [ -d "${BUILD_DIR}" ]; then
         release_error "directory ${BUILD_DIR} already exists"
@@ -69,9 +72,7 @@ release_commit_tag ()
 {
     cd "${ROOT_DIR}"
     git commit -m "Version ${VERSION}" version.sh ChangeLog.adoc ReleaseNotes.adoc || release_error "git commit error, release already done?"
-    export GIT_COMMIT_RC=$?
     git tag -a "v${VERSION}" -m "WeeChat ${VERSION}"
-    export GIT_TAG_RC=$?
 }
 
 release_build ()
