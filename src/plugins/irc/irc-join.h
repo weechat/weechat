@@ -32,6 +32,8 @@ extern struct t_arraylist *irc_join_split (struct t_irc_server *server,
                                            const char *join,
                                            int sort);
 extern char *irc_join_build_string (struct t_arraylist *arraylist);
+extern int irc_join_has_channel (struct t_irc_server *server,
+                                 const char *join, const char *channel_name);
 extern char *irc_join_add_channel (struct t_irc_server *server,
                                    const char *join, const char *channel_name,
                                    const char *key);

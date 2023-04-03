@@ -353,6 +353,38 @@ TEST(IrcJoin, SplitBuildString)
 
 /*
  * Tests functions:
+ *   irc_join_has_channel
+ */
+
+TEST(IrcJoin, HasChannel)
+{
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("my_ircd");
+    CHECK(server);
+
+    LONGS_EQUAL(0, irc_join_has_channel (NULL, NULL, NULL));
+    LONGS_EQUAL(0, irc_join_has_channel (server, NULL, NULL));
+    LONGS_EQUAL(0, irc_join_has_channel (server, NULL, ""));
+    LONGS_EQUAL(0, irc_join_has_channel (server, "#abc,#def key_abc", NULL));
+    LONGS_EQUAL(0, irc_join_has_channel (server, "#abc,#def key_abc", ""));
+    LONGS_EQUAL(0, irc_join_has_channel (server, "#abc,#def key_abc", "#zzz"));
+
+    LONGS_EQUAL(1, irc_join_has_channel (NULL, "#abc,#def key_abc", "#abc"));
+    LONGS_EQUAL(1, irc_join_has_channel (NULL, "#abc,#def key_abc", "#ABC"));
+    LONGS_EQUAL(1, irc_join_has_channel (NULL, "#abc,#def key_abc", "#def"));
+    LONGS_EQUAL(1, irc_join_has_channel (NULL, "#abc,#def key_abc", "#DEF"));
+
+    LONGS_EQUAL(1, irc_join_has_channel (server, "#abc,#def key_abc", "#abc"));
+    LONGS_EQUAL(1, irc_join_has_channel (server, "#abc,#def key_abc", "#ABC"));
+    LONGS_EQUAL(1, irc_join_has_channel (server, "#abc,#def key_abc", "#def"));
+    LONGS_EQUAL(1, irc_join_has_channel (server, "#abc,#def key_abc", "#DEF"));
+
+    irc_server_free (server);
+}
+
+/*
+ * Tests functions:
  *   irc_join_add_channel
  */
 

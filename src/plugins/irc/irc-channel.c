@@ -33,6 +33,7 @@
 #include "irc-color.h"
 #include "irc-command.h"
 #include "irc-config.h"
+#include "irc-join.h"
 #include "irc-modelist.h"
 #include "irc-nick.h"
 #include "irc-protocol.h"
@@ -247,7 +248,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
 {
     struct t_gui_buffer *ptr_buffer, *ptr_buffer_for_merge;
     int buffer_created, current_buffer_number, buffer_position;
-    int manual_join, noswitch;
+    int autojoin_join, manual_join, noswitch;
     char str_number[32], *channel_name_lower, *buffer_name;
     const char *short_name, *localvar_channel;
 
@@ -397,6 +398,10 @@ irc_channel_create_buffer (struct t_irc_server *server,
         }
 
         /* switch to new buffer (if needed) */
+        autojoin_join = irc_join_has_channel (
+            server,
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN),
+            channel_name);
         manual_join = 0;
         noswitch = 0;
         channel_name_lower = NULL;
@@ -416,9 +421,12 @@ irc_channel_create_buffer (struct t_irc_server *server,
             if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
             {
                 if (noswitch
+                    || (!manual_join && !autojoin_join)
                     || (manual_join && !weechat_config_boolean (irc_config_look_buffer_switch_join))
-                    || (!manual_join && !weechat_config_boolean (irc_config_look_buffer_switch_autojoin)))
+                    || (autojoin_join && !weechat_config_boolean (irc_config_look_buffer_switch_autojoin)))
+                {
                     switch_to_channel = 0;
+                }
             }
             if (switch_to_channel)
             {

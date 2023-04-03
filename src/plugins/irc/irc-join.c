@@ -380,6 +380,47 @@ end:
 }
 
 /*
+ * Checks if a channel is in a join string.
+ *
+ * Returns:
+ *   1: channel found in join string (case insensitive comparison)
+ *   0: channel NOT found in join string
+ */
+
+int
+irc_join_has_channel (struct t_irc_server *server,
+                      const char *join, const char *channel_name)
+{
+    struct t_arraylist *arraylist;
+    struct t_irc_join_channel *ptr_join_chan;
+    int i, found;
+
+    if (!join || !join[0] || !channel_name || !channel_name[0])
+        return 0;
+
+    arraylist = irc_join_split (server, join, 0);
+    if (!arraylist)
+        return 0;
+
+    found = 0;
+    for (i = 0; i < weechat_arraylist_size (arraylist); i++)
+    {
+        ptr_join_chan = (struct t_irc_join_channel *)weechat_arraylist_get (
+            arraylist, i);
+        if (irc_server_strcasecmp (server, ptr_join_chan->name,
+                                   channel_name) == 0)
+        {
+            found = 1;
+            break;
+        }
+    }
+
+    weechat_arraylist_free (arraylist);
+
+    return found;
+}
+
+/*
  * Adds a channel with optional key to the join string.
  *
  * Channels with a key are first in list, so for example:
@@ -800,9 +841,7 @@ irc_join_sort_autojoin (struct t_irc_server *server)
     if (!ptr_autojoin || !ptr_autojoin[0])
         return;
 
-    new_autojoin = irc_join_sort_channels (
-        server,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN));
+    new_autojoin = irc_join_sort_channels (server, ptr_autojoin);
     if (new_autojoin)
     {
         weechat_config_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
