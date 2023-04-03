@@ -304,7 +304,7 @@ $ make install
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON
 | Компајлира <<scripting_plugins,script додатке>> (Python, Perl, Ruby, Lua, Tcl,
-  Guile, JavaScript, PHP).
+  Guile, PHP).
 
 | ENABLE_SPELL | `ON`, `OFF` | ON
 | Компајлира <<spell_checking,Spell додатак>>.

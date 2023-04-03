@@ -336,7 +336,7 @@ CMake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON
 | すべての<<scripting_plugins,スクリプトプラグイン>>
-  (Python、Perl、Ruby、Lua、Tcl、Guile、JavaScript、PHP) のコンパイル。
+  (Python、Perl、Ruby、Lua、Tcl、Guile、PHP) のコンパイル。
 
 | ENABLE_SPELL | `ON`, `OFF` | ON
 | <<spell_checking,Spell プラグイン>>のコンパイル。

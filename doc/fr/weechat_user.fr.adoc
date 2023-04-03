@@ -310,7 +310,7 @@ Liste des options couramment utilisées :
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON
 | Compiler <<scripting_plugins,les extensions de script>> (Python, Perl, Ruby,
-  Lua, Tcl, Guile, JavaScript, PHP).
+  Lua, Tcl, Guile, PHP).
 
 | ENABLE_SPELL | `ON`, `OFF` | ON
 | Compiler <<spell_checking,l'extension Spell>>.

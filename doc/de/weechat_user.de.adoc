@@ -318,7 +318,7 @@ Liste von häufig verwendeten Optionen:
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON
 | kompiliert <<scripting_plugins,Skripten-Erweiterungen>> (Python, Perl, Ruby,
-  Lua, Tcl, Guile, JavaScript, PHP).
+  Lua, Tcl, Guile, PHP).
 
 | ENABLE_SPELL | `ON`, `OFF` | ON
 | kompiliert <<spell_checking,Spell Erweiterung>>.

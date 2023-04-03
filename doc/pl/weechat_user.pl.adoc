@@ -320,7 +320,7 @@ Lista popularnych opcji:
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON
 | Kompilacja <<scripting_plugins,wtyczek skryptowych>> (Python, Perl, Ruby, Lua,
-  Tcl, Guile, JavaScript, PHP).
+  Tcl, Guile, PHP).
 
 | ENABLE_SPELL | `ON`, `OFF` | ON
 | Kompilacja <<spell_checking,wtyczki spell>>.

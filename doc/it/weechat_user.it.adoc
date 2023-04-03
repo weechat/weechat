@@ -361,7 +361,7 @@ List of commonly used options:
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON
 | Compile <<scripting_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
-  Guile, JavaScript, PHP).
+  Guile, PHP).
 
 | ENABLE_SPELL | `ON`, `OFF` | ON
 | Compile <<spell_checking,Spell plugin>>.
