@@ -84,6 +84,26 @@ if(ENABLE_MAN OR ENABLE_DOC)
     add_custom_target(rn DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes.html)
 
     if(ENABLE_DOC)
+      set(AUTOGEN_FILES "")
+      set(AUTOGEN_LANG de en fr it ja pl sr)
+      foreach(lang ${AUTOGEN_LANG})
+        LIST(APPEND AUTOGEN_FILES
+          # plugin API reference
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_completions.${lang}.adoc"
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_config_priority.${lang}.adoc"
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_hdata.${lang}.adoc"
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_infolists.${lang}.adoc"
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_infos.${lang}.adoc"
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_infos_hashtable.${lang}.adoc"
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_plugins_priority.${lang}.adoc"
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_url_options.${lang}.adoc"
+          # user's guide
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_commands.${lang}.adoc"
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_default_aliases.${lang}.adoc"
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_irc_colors.${lang}.adoc"
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_options.${lang}.adoc"
+        )
+      endforeach()
       add_custom_target(doc-autogen ALL
         COMMAND "${CMAKE_COMMAND}" -E env "WEECHAT_EXTRA_LIBDIR=${PROJECT_BINARY_DIR}/src" "WEECHAT_DOCGEN_LOCALEDIR=${PROJECT_BINARY_DIR}/po" "${CMAKE_BINARY_DIR}/src/gui/curses/headless/weechat-headless" --temp-dir --doc-gen "${CMAKE_CURRENT_BINARY_DIR}/autogen"
         DEPENDS
@@ -93,6 +113,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
         translations
         # all plugins must be loaded during doc generation
         alias buflist charset exec fifo fset guile irc logger lua perl php python relay ruby script spell tcl trigger typing xfer
+        BYPRODUCTS ${AUTOGEN_FILES}
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
       )
     endif()
