@@ -616,49 +616,49 @@ $ printf '\033[?1002l'
 [[irc]]
 == IRC
 
-[[irc_ssl_connection]]
-=== Имам проблеме са повезивањем на сервер преко SSL, шта може да се уради?
+[[irc_tls_connection]]
+=== Имам проблеме са повезивањем на сервер преко TLS, шта може да се уради?
 
 Ако користите macOS, морате инсталирати `openssl` из Homebrew. CA фајл ће се добавити употребом сертификата из системског свежња кључева.
 
 Ако добијате грешке у вези gnutls руковања, можете покушати са мањим Дифи-Хелман кључем (подразумевани је дужине 2048):
 
 ----
-/set irc.server.example.ssl_dhkey_size 1024
+/set irc.server.example.tls_dhkey_size 1024
 ----
 
-Ако видите грешке у вези сертификата, можете да искључите „ssl_verify” (али будите веома опрезни, због овога су везе мање безбедне):
+Ако видите грешке у вези сертификата, можете да искључите „tls_verify” (али будите веома опрезни, због овога су везе мање безбедне):
 
 ----
-/set irc.server.example.ssl_verify off
+/set irc.server.example.tls_verify off
 ----
 
 Ако сервер поседује неважећи сертификат, а знате какав би он требало да буде, можете да наведете отисак (SHA-512, SHA-256 или SHA-1):
 
 ----
-/set irc.server.example.ssl_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
+/set irc.server.example.tls_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
 ----
 
-[[irc_ssl_handshake_error]]
-=== Када се успоставља веза са сервером преко SSL, видим само грешку „TLS handshake failed”, шта да радим?
+[[irc_tls_handshake_error]]
+=== Када се успоставља веза са сервером преко TLS, видим само грешку „TLS handshake failed”, шта да радим?
 
 Можете да покушате са другачијим стрингом приоритета, замените „xxx” са именом вашег сервера:
 
 ----
-/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+/set irc.server.xxx.tls_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
 ----
 
-[[irc_ssl_libera]]
-=== Како да се повежем са libera сервером преко SSL?
+[[irc_tls_libera]]
+=== Како да се повежем са libera сервером преко TLS?
 
 Проверите да су на вашем систему инсталирани сертификати, обично их обезбеђује пакет
 „ca-certificates”.
 
-Поставите порт сервера, SSL, затим се повежите:
+Поставите порт сервера, TLS, затим се повежите:
 
 ----
 /set irc.server.libera.addresses "irc.libera.chat/6697"
-/set irc.server.libera.ssl on
+/set irc.server.libera.tls on
 /connect libera
 ----
 
@@ -896,7 +896,7 @@ link:weechat_user.sr.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 [[scripts_update]]
 === Команда „/script update” не може да чита скрипте, како да то поправим?
 
-Најпре погледајте питање у вези SSL везе у овом ЧПП.
+Најпре погледајте питање у вези TLS везе у овом ЧПП.
 
 Ако још увек не функционише, покушајте ручно да обришете фајл са скриптама (из свог командног окружења):
 
@@ -972,7 +972,7 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 * Користите последњу стабилну верзију (требало би да има мање цурења меморије од старијих верзија).
 * Не учитавајте додатке које заиста и не користите, на пример: buflist, fifo, logger, perl, python, ruby, lua, tcl, guile, javascript, php, spell, xfer (користи се за DCC). Погледајте `/help weechat.plugin.autoload`.
 * Учитавајте само скрипте које су вам заста неопходне.
-* Не учитавајте системске сертификате ако се SSL *НЕ* користи: искључите следећу опцију: _weechat.network.gnutls_ca_system.
+* Не учитавајте системске сертификате ако се TLS *НЕ* користи: искључите следећу опцију: _weechat.network.gnutls_ca_system.
 * Смањите вредност опције _weechat.history.max_buffer_lines_number_ или поставите вредност опције _weechat.history.max_buffer_lines_minutes_.
 * Смањите вредност опције _weechat.history.max_commands_.
 

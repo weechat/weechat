@@ -104,7 +104,7 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
                        void *signal_data)
 {
     struct t_irc_server *ptr_server;
-    int quit, ssl_disconnected;
+    int quit, tls_disconnected;
 
     /* make C compiler happy */
     (void) pointer;
@@ -127,25 +127,25 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
 
     quit = (signal_data && (strcmp (signal_data, "quit") == 0));
 
-    ssl_disconnected = 0;
+    tls_disconnected = 0;
 
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
         /*
-         * FIXME: it's not possible to upgrade with SSL servers connected
+         * FIXME: it's not possible to upgrade with TLS servers connected
          * (GnuTLS library can't reload data after upgrade), so we close
-         * connection for all SSL servers currently connected
+         * connection for all TLS servers currently connected
          */
-        if (ptr_server->is_connected && (ptr_server->ssl_connected || quit))
+        if (ptr_server->is_connected && (ptr_server->tls_connected || quit))
         {
             if (!quit)
             {
-                ssl_disconnected++;
+                tls_disconnected++;
                 weechat_printf (
                     ptr_server->buffer,
                     _("%s%s: disconnecting from server because upgrade can't "
-                      "work for servers connected via SSL"),
+                      "work for servers connected via TLS"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME);
             }
             irc_server_disconnect (ptr_server, 0, 0);
@@ -160,18 +160,18 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
                 ptr_server->reconnect_delay - 1;
         }
     }
-    if (ssl_disconnected > 0)
+    if (tls_disconnected > 0)
     {
         weechat_printf (
             NULL,
             NG_("%s%s: disconnected from %d server "
-                "(SSL connection not supported with upgrade)",
+                "(TLS connection not supported with upgrade)",
                 "%s%s: disconnected from %d servers "
-                "(SSL connection not supported with upgrade)",
-                ssl_disconnected),
+                "(TLS connection not supported with upgrade)",
+                tls_disconnected),
             weechat_prefix ("error"),
             IRC_PLUGIN_NAME,
-            ssl_disconnected);
+            tls_disconnected);
     }
 
     return WEECHAT_RC_OK;

@@ -37,7 +37,7 @@ Le principali caratteristiche:
 
 // TRANSLATION MISSING
 * multi-protocollo (mainly IRC)
-* connessione a server multipli (con SSL, IPv6, proxy)
+* connessione a server multipli (con TLS, IPv6, proxy)
 * piccolo, veloce e leggero
 * personalizzabile ed estensibile con plugin e script
 * conforme alle RFC di IRC
@@ -196,7 +196,7 @@ WeeChat:
 // TRANSLATION MISSING
 | {cpp} compiler (pass:[g++ / clang++]) |          | Build and run tests, plugin JavaScript.
 | gettext                               |          | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
-| ca-certificates                       |          | Certificati per le connessioni SSL.
+| ca-certificates                       |          | Certificati per le connessioni TLS.
 | libaspell-dev / libenchant-dev        |          | Plugin spell.
 | python3-dev                           | ≥ 3.0    | Plugin python.
 | libperl-dev                           |          | Plugin perl.
@@ -809,10 +809,10 @@ This can be done while WeeChat is running.
 === Upgrade command
 
 WeeChat can restart the new binary, in place, using the
-<<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-SSL
+<<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-TLS
 connections are preserved. +
-The SSL connections are lost during upgrade and are restored automatically
-after the upgrade (reload of SSL sessions is currently not possible
+The TLS connections are lost during upgrade and are restored automatically
+after the upgrade (reload of TLS sessions is currently not possible
 with GnuTLS).
 
 The command can also be used if you have to restart the machine, for example
@@ -3432,7 +3432,7 @@ Sections in file _weechat.conf_:
 | history    | /set weechat.history.*                    | History options (commands and buffers).
 | proxy      | <<command_weechat_proxy,/proxy>>          +
                /set weechat.proxy.*                      | Proxy options.
-| network    | /set weechat.network.*                    | Network/SSL options.
+| network    | /set weechat.network.*                    | Network/TLS options.
 // TRANSLATION MISSING
 | plugin     | /set weechat.plugin.*                     | Options on plugins.
 // TRANSLATION MISSING
@@ -3488,10 +3488,10 @@ By default no servers are defined. You can add as many servers as you want with
 the <<command_irc_server,/server>> command.
 
 For example to connect to https://libera.chat/[libera.chat ^↗^,window=_blank]
-with SSL (encrypted trafic):
+with TLS (encrypted trafic):
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 You can tell WeeChat to auto-connect to this server on startup:
@@ -3570,13 +3570,13 @@ irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"
 irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.ssl                   boolean  on
-irc.server.libera.ssl_cert              string   null -> ""
-irc.server.libera.ssl_dhkey_size        integer  null -> 2048
-irc.server.libera.ssl_fingerprint       string   null -> ""
-irc.server.libera.ssl_password          string   null -> ""
-irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.tls                   boolean  on
+irc.server.libera.tls_cert              string   null -> ""
+irc.server.libera.tls_dhkey_size        integer  null -> 2048
+irc.server.libera.tls_fingerprint       string   null -> ""
+irc.server.libera.tls_password          string   null -> ""
+irc.server.libera.tls_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.tls_verify            boolean  null -> on
 irc.server.libera.usermode              string   null -> ""
 irc.server.libera.username              string   null -> "alice"
 ....
@@ -3595,13 +3595,13 @@ value, which is now `on` instead of the default value `off`:
 /unset irc.server.libera.autoconnect
 ----
 
-[[irc_ssl_certificates]]
-==== Certificati SSL
+[[irc_tls_certificates]]
+==== Certificati TLS
 
-Al momento della connessione al server IRC con SSL, WeeChat verifica in
+Al momento della connessione al server IRC con TLS, WeeChat verifica in
 maniera predefinita che la connessione sia completamente fidata.
 
-Esistono alcune opzioni per controllare la connessione SSL:
+Esistono alcune opzioni per controllare la connessione TLS:
 
 // TRANSLATION MISSING
 weechat.network.gnutls_ca_system::
@@ -3611,20 +3611,20 @@ weechat.network.gnutls_ca_system::
 weechat.network.gnutls_ca_user::
     extra file(s) with certificate authorities
 
-irc.server.xxx.ssl_cert::
-    file del certificato SSL usato per identificare automaticamente il proprio
+irc.server.xxx.tls_cert::
+    file del certificato TLS usato per identificare automaticamente il proprio
     nick ad esempio CertFP su oftc (a seguire)
 
-irc.server.xxx.ssl_dhkey_size::
+irc.server.xxx.tls_dhkey_size::
     dimensione della chiave usata durante lo Scambio Chiavi Diffie-Hellman
     (predefinita; 2048)
 
-irc.server.xxx.ssl_verify::
-    verifica che la connessione SSL sia totalmente fidata (opzione attivata
+irc.server.xxx.tls_verify::
+    verifica che la connessione TLS sia totalmente fidata (opzione attivata
     in maniera predefinita)
 
 [NOTE]
-L'opzione "ssl_verify" è attivata per default, in questo modo la verifica è rigorosa
+L'opzione "tls_verify" è attivata per default, in questo modo la verifica è rigorosa
 e potrebbe fallire, anche se funziona senza problemi con versioni precedenti
 la 0.3.1.
 
@@ -3634,8 +3634,8 @@ la 0.3.1.
 * Importare certificati nella shell:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+$ mkdir -p ~/.config/weechat/tls
+$ wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 // TRANSLATION MISSING
@@ -3660,8 +3660,8 @@ E possibile concatenare più certificati nel file CAs.pem.
 * Creare un certificato nella shell:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
+$ mkdir -p ~/.config/weechat/tls
+$ cd ~/.config/weechat/tls
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
@@ -3674,7 +3674,7 @@ which can also be for example `~/.weechat`.
 * In WeeChat, with "oftc" server already added:
 
 ----
-/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
+/set irc.server.oftc.tls_cert "${weechat_config_dir}/tls/nick.pem"
 /connect oftc
 /msg nickserv cert add
 ----
@@ -3970,7 +3970,7 @@ WeeChat supports SASL authentication, using different mechanisms:
 * _scram-sha-512_: SCRAM with SHA-512 digest algorithm
 // TRANSLATION MISSING
 * _ecdsa-nist256p-challenge_: challenge with public/private key
-* _external_: certificato SSL da lato client
+* _external_: certificato TLS da lato client
 
 Le opzioni nel server sono:
 

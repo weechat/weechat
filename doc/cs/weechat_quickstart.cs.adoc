@@ -113,7 +113,7 @@ Použijte příkaz `/plugin` k zobrazení nahraných pluginů, pravděpodobně u
 Můžete přidat irc server příkazem `/server`, například:
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 // TRANSLATION MISSING

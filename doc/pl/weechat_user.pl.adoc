@@ -33,7 +33,7 @@ i lekki, przeznaczony dla wielu systemów operacyjnych.
 Główne cechy to:
 
 * wsparcie dla wielu protokołów (mainly IRC)
-* połączenie z wieloma serwerami (z SSL, IPv6, proxy)
+* połączenie z wieloma serwerami (z TLS, IPv6, proxy)
 * mały, szybki i lekki
 * konfigurowalny i rozszerzalny dzięki wtyczką i skryptom
 * zgodny z RFC dla IRC
@@ -167,7 +167,7 @@ WeeChat:
 | Pakiet ^(1)^                            | Wersja   | Funkcje
 | kompilator {cpp} (pass:[g++ / clang++]) |          | Kompilacja i uruchamianie testów, wtyczka JavaScript.
 | gettext                                 |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski).
-| ca-certificates                         |          | Certyfikaty dla połączeń SSL.
+| ca-certificates                         |          | Certyfikaty dla połączeń TLS.
 | libaspell-dev / libenchant-dev          |          | Wtyczka spell.
 | python3-dev                             | ≥ 3.0    | Wtyczka python.
 | libperl-dev                             |          | Wtyczka perl.
@@ -742,9 +742,9 @@ Można to zrobić podczas działania WeeChat.
 
 WeeChat może zostać ponownie uruchomiony z nowego pliku binarnego bez potrzeby
 jego wyłączania za pomocą komendy <<command_weechat_upgrade,/upgrade>>:
-zawartości buforów i połączenia nie SSL zostają zachowane. +
-Połączenia SSL są przerywane podczas aktualizacji i są automatycznie
-przywracane po jej zakończeniu (przeładowanie sesji SSL jest obecnie
+zawartości buforów i połączenia nie TLS zostają zachowane. +
+Połączenia TLS są przerywane podczas aktualizacji i są automatycznie
+przywracane po jej zakończeniu (przeładowanie sesji TLS jest obecnie
 niemożliwe z użyciem GnuTLS).
 
 Komenda ta może zostać użyta również w momencie restartu maszyny, na przykład
@@ -3197,7 +3197,7 @@ Sekcje w pliku _weechat.conf_:
 | history    | /set weechat.history.*                    | Opcje historii (komend i buforów).
 | proxy      | <<command_weechat_proxy,/proxy>>          +
                /set weechat.proxy.*                      | Opcje proxy.
-| network    | /set weechat.network.*                    | Opcje sieci/SSL.
+| network    | /set weechat.network.*                    | Opcje sieci/TLS.
 | plugin     | /set weechat.plugin.*                     | Opcje wtyczek.
 | signal     | /set weechat.signal.*                     | Opcje sygnałów.
 | bar        | <<command_weechat_bar,/bar>>              +
@@ -3251,10 +3251,10 @@ Domyślnie nie są zdefiniowane żadne serwery. Możesz dodać ich tyle ile chce
 za pomocą polecenia <<command_irc_server,/server>>.
 
 Na przykład w celu połączenia się do https://libera.chat/[libera.chat ^↗^,window=_blank]
-używając SSL (szyfrowane połączenie):
+używając TLS (szyfrowane połączenie):
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 Możesz powiedzieć WeeChat, aby automatycznie łączył się z tym serwerem po
@@ -3335,13 +3335,13 @@ irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"
 irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.ssl                   boolean  on
-irc.server.libera.ssl_cert              string   null -> ""
-irc.server.libera.ssl_dhkey_size        integer  null -> 2048
-irc.server.libera.ssl_fingerprint       string   null -> ""
-irc.server.libera.ssl_password          string   null -> ""
-irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.tls                   boolean  on
+irc.server.libera.tls_cert              string   null -> ""
+irc.server.libera.tls_dhkey_size        integer  null -> 2048
+irc.server.libera.tls_fingerprint       string   null -> ""
+irc.server.libera.tls_password          string   null -> ""
+irc.server.libera.tls_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.tls_verify            boolean  null -> on
 irc.server.libera.usermode              string   null -> ""
 irc.server.libera.username              string   null -> "alice"
 ....
@@ -3361,13 +3361,13 @@ wartości, która teraz ma wartość `on` zamiast domyślnego `off`:
 /unset irc.server.libera.autoconnect
 ----
 
-[[irc_ssl_certificates]]
-==== Certyfikaty SSL
+[[irc_tls_certificates]]
+==== Certyfikaty TLS
 
 Podczas łączenia się z serwerem IRC, WeeChat domyślnie sprawdza czy połączenie
 jest w pełni zaufane.
 
-Niektóre opcje są używane do kontroli połączenia SSL:
+Niektóre opcje są używane do kontroli połączenia TLS:
 
 weechat.network.gnutls_ca_system::
     ładuje domyślne systemowe zaufane urzędy cetyfikujące
@@ -3375,18 +3375,18 @@ weechat.network.gnutls_ca_system::
 weechat.network.gnutls_ca_user::
     dodatkowy plik(i) urzędów certyfikacyjnych
 
-irc.server.xxx.ssl_cert::
-    certyfikat SSL używany do automatycznej identyfikacji twojego nicka (na
+irc.server.xxx.tls_cert::
+    certyfikat TLS używany do automatycznej identyfikacji twojego nicka (na
     przykład CertFP w sieci oftc, zobacz niżej)
 
-irc.server.xxx.ssl_dhkey_size::
+irc.server.xxx.tls_dhkey_size::
     rozmiar klucza użytego podczas wymiany kluczy Diffie-Hellman (domyślnie: 2048)
 
-irc.server.xxx.ssl_verify::
-    sprawdź, że połączenie SSL jest w pełni zaufane (domyślnie włączone)
+irc.server.xxx.tls_verify::
+    sprawdź, że połączenie TLS jest w pełni zaufane (domyślnie włączone)
 
 [NOTE]
-Opcja "ssl_verify" jest domyślnie włączona, weryfikacja jest restrykcyjna i może
+Opcja "tls_verify" jest domyślnie włączona, weryfikacja jest restrykcyjna i może
 się nie powieść, nawet jeśli wszystko było OK w wersjach przed 0.3.1.
 
 [[irc_connect_oftc_with_certificate]]
@@ -3395,8 +3395,8 @@ się nie powieść, nawet jeśli wszystko było OK w wersjach przed 0.3.1.
 * Import certyfikatu w kosoli:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+$ mkdir -p ~/.config/weechat/tls
+$ wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 [NOTE]
@@ -3418,8 +3418,8 @@ Możliwe jest umieszczenie wielu certyfikatów w pliku CAs.pem.
 * Tworzenie certyfikatu w konsoli:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
+$ mkdir -p ~/.config/weechat/tls
+$ cd ~/.config/weechat/tls
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
@@ -3430,7 +3430,7 @@ który może być ustawiony na przykład na `~/.weechat`.
 * W WeeChat z dodanym wcześniej serwerem "oftc":
 
 ----
-/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
+/set irc.server.oftc.tls_cert "${weechat_config_dir}/tls/nick.pem"
 /connect oftc
 /msg nickserv cert add
 ----
@@ -3439,7 +3439,7 @@ Więcej informacji można znaleźć odwiedzając
 https://www.oftc.net/NickServ/CertFP/[tą stronę ^↗^,window=_blank].
 
 [[irc_ircv3_support]]
-==== Wsparcie dla IRCv3 
+==== Wsparcie dla IRCv3
 
 WeeChat wspiera następujące https://ircv3.net/irc/[rozszerzenia IRCv3 ^↗^,window=_blank]:
 
@@ -3719,7 +3719,7 @@ WeeChat wspiera uwierzytelnianie SASL, używając różnych mechanizmów:
 * _scram-sha-256_: SCRAM z użyciem algorytmu SHA-256
 * _scram-sha-512_: SCRAM z użyciem algorytmu SHA-512
 * _ecdsa-nist256p-challenge_: klucz prywatny/publiczny
-* _external_: certyfikat SSL po stronie klienta
+* _external_: certyfikat TLS po stronie klienta
 
 Opcje dla serwerów to:
 
@@ -5222,7 +5222,7 @@ Zmienne ustawiane za pomocą tagów w wiadomościach:
 | tg_tag_prefix_nick | ciąg | Kolor nicka w prefiksie (z tagu "prefix_nick_ccc").
 | tg_tag_host        | ciąg | Nazwa użytkownika i host, format: username@host (z tagu "host_xxx").
 | tg_tag_notify      | ciąg | Poziom powiadomień (_none_, _message_, _private_, _highlight_).
-| tg_tag_irc_xxx     | ciąg | Tag wiadomości IRC (klucz "xxx"). ^(1)^ 
+| tg_tag_irc_xxx     | ciąg | Tag wiadomości IRC (klucz "xxx"). ^(1)^
 | tg_notify          | ciąg | Poziom powiadomień, jeśli różny od _none_.
 | tg_msg_pv          | ciąg | "1" dla prywatnej wiadomości, inaczej "0".
 |===

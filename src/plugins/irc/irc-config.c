@@ -1178,7 +1178,7 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
                     }
                 }
                 break;
-            case IRC_SERVER_OPTION_SSL_PRIORITIES:
+            case IRC_SERVER_OPTION_TLS_PRIORITIES:
                 pos_error = irc_config_check_gnutls_priorities (value);
                 if (pos_error)
                 {
@@ -1749,11 +1749,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_SSL:
+        case IRC_SERVER_OPTION_TLS:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "boolean",
-                N_("use SSL for server communication"),
+                N_("use TLS for server communication"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1765,11 +1765,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_SSL_CERT:
+        case IRC_SERVER_OPTION_TLS_CERT:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("SSL certificate file used to automatically identify your "
+                N_("TLS certificate file used to automatically identify your "
                    "nick "
                    "(path is evaluated, see function string_eval_path_home in "
                    "plugin API reference)"),
@@ -1784,11 +1784,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_SSL_PASSWORD:
+        case IRC_SERVER_OPTION_TLS_PASSWORD:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("password for SSL certificate's private key; "
+                N_("password for TLS certificate's private key; "
                    "only used with gnutls version >= 3.1.0 "
                    "(note: content is evaluated, see /help eval; server "
                    "options are evaluated with ${irc_server.xxx} and "
@@ -1804,7 +1804,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_SSL_PRIORITIES:
+        case IRC_SERVER_OPTION_TLS_PRIORITIES:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
@@ -1823,7 +1823,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_SSL_DHKEY_SIZE:
+        case IRC_SERVER_OPTION_TLS_DHKEY_SIZE:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "integer",
@@ -1840,7 +1840,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_SSL_FINGERPRINT:
+        case IRC_SERVER_OPTION_TLS_FINGERPRINT:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
@@ -1850,7 +1850,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "40 chars for SHA-1 (insecure, not recommended); many "
                    "fingerprints can be separated by commas; if this option "
                    "is set, the other checks on certificates are NOT "
-                   "performed (option \"ssl_verify\") "
+                   "performed (option \"tls_verify\") "
                    "(note: content is evaluated, see /help eval; server "
                    "options are evaluated with ${irc_server.xxx} and "
                    "${server} is replaced by the server name)"),
@@ -1865,11 +1865,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_SSL_VERIFY:
+        case IRC_SERVER_OPTION_TLS_VERIFY:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "boolean",
-                N_("check that the SSL connection is fully trusted"),
+                N_("check that the TLS connection is fully trusted"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1937,7 +1937,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "digest algorithm, "
                    "\"ecdsa-nist256p-challenge\" for key-based "
                    "challenge authentication, "
-                   "\"external\" for authentication using client side SSL "
+                   "\"external\" for authentication using client side TLS "
                    "certificate"),
                 "plain|scram-sha-1|scram-sha-256|scram-sha-512|"
                 "ecdsa-nist256p-challenge|external",
@@ -2780,6 +2780,94 @@ irc_config_server_create_default_options (struct t_config_section *section)
 }
 
 /*
+ * Updates options in configuration file while reading the file.
+ */
+
+struct t_hashtable *
+irc_config_update_cb (const void *pointer, void *data,
+                      struct t_config_file *config_file,
+                      int version_read,
+                      struct t_hashtable *data_read)
+{
+    const char *ptr_section, *ptr_option;
+    char *new_option, *pos_option;
+    int changes;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) config_file;
+
+    /* nothing to do if the config file is already up-to-date */
+    if (version_read >= IRC_CONFIG_VERSION)
+        return NULL;
+
+    changes = 0;
+
+    if (version_read < 2)
+    {
+        /*
+         * changes in v2:
+         *   - options "ssl*" renamed to "tls*"
+         */
+        ptr_section = weechat_hashtable_get (data_read, "section");
+        ptr_option = weechat_hashtable_get (data_read, "option");
+        if (ptr_section
+            && ptr_option
+            && (strcmp (ptr_section, "server_default") == 0))
+        {
+            if (strncmp (ptr_option, "ssl", 3) == 0)
+            {
+                /* convert server_default options starting with "ssl" */
+                new_option = strdup (ptr_option);
+                if (new_option)
+                {
+                    memcpy (new_option, "tls", 3);
+                    weechat_printf (
+                        NULL,
+                        _("IRC option renamed: \"irc.%s.%s\" => \"irc.%s.%s\""),
+                        ptr_section, ptr_option,
+                        ptr_section, new_option);
+                    weechat_hashtable_set (data_read, "option", new_option);
+                    changes++;
+                    free (new_option);
+                }
+            }
+        }
+        else if (ptr_section
+                 && ptr_option
+                 && (strcmp (ptr_section, "server") == 0))
+        {
+            /* convert server options starting with "ssl" */
+            pos_option = strrchr (ptr_option, '.');
+            if (pos_option && (strncmp (pos_option + 1, "ssl", 3) == 0))
+            {
+                new_option = strdup (ptr_option);
+                if (new_option)
+                {
+                    pos_option = strrchr (new_option, '.');
+                    if (pos_option)
+                    {
+                        pos_option++;
+                        memcpy (pos_option, "tls", 3);
+                        weechat_printf (
+                            NULL,
+                            _("IRC option renamed: \"irc.%s.%s\" => \"irc.%s.%s\""),
+                            ptr_section, ptr_option,
+                            ptr_section, new_option);
+                        weechat_hashtable_set (data_read, "option", new_option);
+                        changes++;
+                    }
+                    free (new_option);
+                }
+            }
+        }
+    }
+
+    return (changes) ? data_read : NULL;
+}
+
+/*
  * Initializes IRC configuration file.
  *
  * Returns:
@@ -2810,6 +2898,14 @@ irc_config_init ()
                                           &irc_config_reload, NULL, NULL);
     if (!irc_config_file)
         return 0;
+
+    if (!weechat_config_set_version (irc_config_file, IRC_CONFIG_VERSION,
+                                     &irc_config_update_cb, NULL, NULL))
+    {
+        weechat_config_free (irc_config_file);
+        irc_config_file = NULL;
+        return 0;
+    }
 
     /* look */
     irc_config_section_look = weechat_config_new_section (

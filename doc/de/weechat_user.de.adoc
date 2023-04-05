@@ -33,7 +33,7 @@ schlanker Chat-Client der für unterschiedliche Betriebssysteme entwickelt wird.
 wesentliche Merkmale:
 
 * Unterstützung verschiedener Protokolle (in der Hauptsache das IRC-Protokoll)
-* mehrere Server Verbindungen sind möglich (mittels SSL, IPv6, proxy)
+* mehrere Server Verbindungen sind möglich (mittels TLS, IPv6, proxy)
 * klein, schnell und schlank
 * den eigenen, persönlichen, Bedürfnissen anpassbar und durch Erweiterungen und Skripten in der Funktionalität erweiterbar
 * IRC RFCs konform
@@ -166,7 +166,7 @@ WeeChat optional sind:
 | Paket ^(1)^                           | Version  | Funktionen
 | {cpp} compiler (pass:[g++ / clang++]) |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
 | gettext                               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
-| ca-certificates                       |          | Zertifikate für SSL Verbindungen.
+| ca-certificates                       |          | Zertifikate für TLS Verbindungen.
 | libaspell-dev / libenchant-dev        |          | Spell Erweiterung.
 | python3-dev                           | ≥ 3.0    | Python Erweiterung.
 | libperl-dev                           |          | Perl Erweiterung.
@@ -741,10 +741,10 @@ Diese Installation kann durchgeführt werden, während WeeChat ausgeführt wird.
 === Upgrade Befehl
 
 WeeChat kann die neue Binärdatei mit Hilfe des  <<command_weechat_upgrade,/upgrade>>
-Befehls starten: der Bufferinhalt und nicht-SSL Verbindungen bleiben dabei erhalten. +
-Eine SSL-Verbindung wird während des Upgrades getrennt und wird automatisch,
+Befehls starten: der Bufferinhalt und nicht-TLS Verbindungen bleiben dabei erhalten. +
+Eine TLS-Verbindung wird während des Upgrades getrennt und wird automatisch,
 nach dem Beenden des Upgrades, wiederhergestellt (das aufrechterhalten einer
-SSL-Sitzungen ist derzeit, mit GnuTLS, nicht möglich).
+TLS-Sitzungen ist derzeit, mit GnuTLS, nicht möglich).
 
 Der Befehl kann auch verwendet werden, wenn Sie den Computer neu starten müssen,
 z.B. um den Kernel zu aktualisieren oder WeeChat auf einen anderen Computer zu verschieben:
@@ -3218,7 +3218,7 @@ Sektion in Datei _weechat.conf_:
 | history    | /set weechat.history.*                    | Optionen für Befehlsverlauf (Befehle und Buffer).
 | proxy      | <<command_weechat_proxy,/proxy>>          +
                /set weechat.proxy.*                      | Proxy Optionen.
-| network    | /set weechat.network.*                    | Netzwerk/SSL Optionen.
+| network    | /set weechat.network.*                    | Netzwerk/TLS Optionen.
 | plugin     | /set weechat.plugin.*                     | Optionen für Erweiterungen.
 | signal     | /set weechat.signal.*                     | Optionen für Signale.
 | bar        | <<command_weechat_bar,/bar>>              +
@@ -3270,11 +3270,11 @@ Standardmäßig sind keine Server angelegt. Es gibt keine Begrenzung für die
 Anzahl von Servern. Server können mit dem Befehl <<command_irc_server,/server>>
 angelegt werden.
 
-Um zum Beispiel eine SSL verschlüsselte Verbindung zu
+Um zum Beispiel eine TLS verschlüsselte Verbindung zu
 https://libera.chat/[libera.chat ^↗^,window=_blank] herzustellen:
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 Um WeeChat beim Start direkt mit dem Server zu verbinden:
@@ -3354,13 +3354,13 @@ irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"
 irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.ssl                   boolean  on
-irc.server.libera.ssl_cert              string   null -> ""
-irc.server.libera.ssl_dhkey_size        integer  null -> 2048
-irc.server.libera.ssl_fingerprint       string   null -> ""
-irc.server.libera.ssl_password          string   null -> ""
-irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.tls                   boolean  on
+irc.server.libera.tls_cert              string   null -> ""
+irc.server.libera.tls_dhkey_size        integer  null -> 2048
+irc.server.libera.tls_fingerprint       string   null -> ""
+irc.server.libera.tls_password          string   null -> ""
+irc.server.libera.tls_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.tls_verify            boolean  null -> on
 irc.server.libera.usermode              string   null -> ""
 irc.server.libera.username              string   null -> "alice"
 ....
@@ -3380,13 +3380,13 @@ geerbten Wert verwendet, der jetzt `on` anstelle des Standardwerts `off` ist:
 /unset irc.server.libera.autoconnect
 ----
 
-[[irc_ssl_certificates]]
-==== SSL Zertifikate
+[[irc_tls_certificates]]
+==== TLS Zertifikate
 
-Wenn eine Verbindung mittels SSL zu einem IRC Server hergestellt wird dann überprüft
+Wenn eine Verbindung mittels TLS zu einem IRC Server hergestellt wird dann überprüft
 WeeChat immer ob dieser Verbindung sicher ist.
 
-Einige Optionen dienen dazu eine SSL Verbindung zu nutzen:
+Einige Optionen dienen dazu eine TLS Verbindung zu nutzen:
 
 weechat.network.gnutls_ca_system::
     lädt beim Start die standardmäßigen vertrauenswürdigen Zertifizierungsstellen des Systems
@@ -3394,19 +3394,19 @@ weechat.network.gnutls_ca_system::
 weechat.network.gnutls_ca_user::
     zusätzliche Datei (en) von Zertifizierungsstellen
 
-irc.server.xxx.ssl_cert::
-    Datei mit den SSL Zertifikaten die genutzt werden um automatisch Ihren Nick
+irc.server.xxx.tls_cert::
+    Datei mit den TLS Zertifikaten die genutzt werden um automatisch Ihren Nick
     zu identifizieren (zum Beispiel CertFP auf oftc, siehe unten)
 
-irc.server.xxx.ssl_dhkey_size::
+irc.server.xxx.tls_dhkey_size::
     Größe des Schlüssels der genutzt werden soll beim Schlüsseltausch mittels
     der Diffie-Hellman Methode (Standardwert: 2048)
 
-irc.server.xxx.ssl_verify::
-    überprüft ob der SSL Verbindung uneingeschränkt vertraut werden kann (Standardwert: AN)
+irc.server.xxx.tls_verify::
+    überprüft ob der TLS Verbindung uneingeschränkt vertraut werden kann (Standardwert: AN)
 
 [NOTE]
-Die Option "ssl_verify" ist Vorgabe mäßig immer eingeschaltet. Das gewährleistet dass
+Die Option "tls_verify" ist Vorgabe mäßig immer eingeschaltet. Das gewährleistet dass
 die Verifizierung sehr streng genommen wird und dadurch vielleicht versagt. Auch wenn
 die Verbindung mit einer vorherigen Version (<0.3.1) funktioniert hat.
 
@@ -3416,8 +3416,8 @@ die Verbindung mit einer vorherigen Version (<0.3.1) funktioniert hat.
 * Importieren Sie die Zertifikate in einer Shell:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+$ mkdir -p ~/.config/weechat/tls
+$ wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 [NOTE]
@@ -3439,8 +3439,8 @@ Es ist möglich mehrere Zertifikate in der Datei CAs.pem zu verwenden.
 * Erstellen Sie ein Zertifikat in der Shell:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
+$ mkdir -p ~/.config/weechat/tls
+$ cd ~/.config/weechat/tls
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
@@ -3451,7 +3451,7 @@ das auch beispielsweise `~/.weechat` sein kann.
 * In WeeChat, sofern der Server "oftc" schon hinzufügt wurde:
 
 ----
-/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
+/set irc.server.oftc.tls_cert "${weechat_config_dir}/tls/nick.pem"
 /connect oftc
 /msg nickserv cert add
 ----
@@ -3738,7 +3738,7 @@ WeeChat unterstützt eine SASL Authentifikation, mittels verschiedener Mechanism
 * _scram-sha-256_: SCRAM mit SHA-256 Digest-Algorithmus
 * _scram-sha-512_: SCRAM mit SHA-512 Digest-Algorithmus
 * _ecdsa-nist256p-challenge_: Abgleich von öffentlichem/privatem Schlüssel
-* _external_: SSL Zertifikat welches auf Client Seite vorliegt
+* _external_: TLS Zertifikat welches auf Client Seite vorliegt
 
 Optionen für Server sind:
 

@@ -2317,7 +2317,7 @@ will change).
 
 [NOTE]
 During WeeChat upgrade, the socket remains opened (except if connection uses
-SSL).
+TLS).
 
 [[message_upgrade_ended]]
 ==== _upgrade_ended

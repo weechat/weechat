@@ -110,7 +110,7 @@ devriez voir "irc" et d'autres extensions dans cette liste.
 Vous pouvez ajouter un serveur IRC avec la commande `/server`, par exemple :
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 Dans cette commande, `libera` est le nom interne du serveur utilisé par

@@ -34,7 +34,7 @@ WeeChat (Wee Enhanced Environment for Chat)
 主な特徴:
 
 * マルチプロトコル (主に IRC)
-* 複数のサーバへの接続 (SSL、IPv6、プロキシをサポート)
+* 複数のサーバへの接続 (TLS、IPv6、プロキシをサポート)
 * コンパクト、高速、軽量
 * プラグインとスクリプトでカスタマイズや拡張が可能
 * IRC の RFC に準拠
@@ -180,7 +180,7 @@ WeeChat:
 | パッケージ ^(1)^                        | バージョン  | Features
 | {cpp} コンパイラ (pass:[g++ / clang++]) |             | ビルドとテストの実行、JavaScript プラグイン
 | gettext                                 |             | 国際化 (メッセージの翻訳; ベース言語は英語です)
-| ca-certificates                         |             | SSL 接続に必要な証明書、relay プラグインで SSL サポート
+| ca-certificates                         |             | TLS 接続に必要な証明書、relay プラグインで TLS サポート
 | libaspell-dev / libenchant-dev          |             | spell プラグイン
 | python3-dev                             | 3.0 以上    | python プラグイン
 | libperl-dev                             |             | perl プラグイン
@@ -779,10 +779,10 @@ This can be done while WeeChat is running.
 === Upgrade command
 
 WeeChat can restart the new binary, in place, using the
-<<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-SSL
+<<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-TLS
 connections are preserved. +
-The SSL connections are lost during upgrade and are restored automatically
-after the upgrade (reload of SSL sessions is currently not possible
+The TLS connections are lost during upgrade and are restored automatically
+after the upgrade (reload of TLS sessions is currently not possible
 with GnuTLS).
 
 The command can also be used if you have to restart the machine, for example
@@ -3304,7 +3304,7 @@ _weechat.conf_ ファイル内のセクション:
 | history    | /set weechat.history.*                    | 履歴オプション (コマンドとバッファ)
 | proxy      | <<command_weechat_proxy,/proxy>>          +
                /set weechat.proxy.*                      | プロキシオプション
-| network    | /set weechat.network.*                    | ネットワーク/SSL オプション
+| network    | /set weechat.network.*                    | ネットワーク/TLS オプション
 // TRANSLATION MISSING
 | plugin     | /set weechat.plugin.*                     | Options on plugins.
 // TRANSLATION MISSING
@@ -3359,10 +3359,10 @@ By default no servers are defined. You can add as many servers as you want with
 the <<command_irc_server,/server>> command.
 
 For example to connect to https://libera.chat/[libera.chat ^↗^,window=_blank]
-with SSL (encrypted trafic):
+with TLS (encrypted trafic):
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 You can tell WeeChat to auto-connect to this server on startup:
@@ -3441,13 +3441,13 @@ irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"
 irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.ssl                   boolean  on
-irc.server.libera.ssl_cert              string   null -> ""
-irc.server.libera.ssl_dhkey_size        integer  null -> 2048
-irc.server.libera.ssl_fingerprint       string   null -> ""
-irc.server.libera.ssl_password          string   null -> ""
-irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.tls                   boolean  on
+irc.server.libera.tls_cert              string   null -> ""
+irc.server.libera.tls_dhkey_size        integer  null -> 2048
+irc.server.libera.tls_fingerprint       string   null -> ""
+irc.server.libera.tls_password          string   null -> ""
+irc.server.libera.tls_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.tls_verify            boolean  null -> on
 irc.server.libera.usermode              string   null -> ""
 irc.server.libera.username              string   null -> "alice"
 ....
@@ -3466,13 +3466,13 @@ value, which is now `on` instead of the default value `off`:
 /unset irc.server.libera.autoconnect
 ----
 
-[[irc_ssl_certificates]]
-==== SSL 証明書
+[[irc_tls_certificates]]
+==== TLS 証明書
 
-SSL を使って IRC サーバに接続する場合、WeeChat
+TLS を使って IRC サーバに接続する場合、WeeChat
 はデフォルトで接続が完全に信頼できるものかどうかを確認します。
 
-以下のオプションで SSL 接続を設定します:
+以下のオプションで TLS 接続を設定します:
 
 // TRANSLATION MISSING
 weechat.network.gnutls_ca_system::
@@ -3482,19 +3482,19 @@ weechat.network.gnutls_ca_system::
 weechat.network.gnutls_ca_user::
     extra file(s) with certificate authorities
 
-irc.server.xxx.ssl_cert::
-    自動的にニックネームを確認するために利用される SSL 証明書ファイル (例えば
+irc.server.xxx.tls_cert::
+    自動的にニックネームを確認するために利用される TLS 証明書ファイル (例えば
     oftc サーバにおける CertFP の場合、以下を確認してください)
 
-irc.server.xxx.ssl_dhkey_size::
+irc.server.xxx.tls_dhkey_size::
     Diffie-Hellman キー交換の際に利用される鍵サイズ (デフォルト:
     2048)
 
-irc.server.xxx.ssl_verify::
-    SSL 接続が完全に信頼できることの確認を行う (デフォルトで有効)
+irc.server.xxx.tls_verify::
+    TLS 接続が完全に信頼できることの確認を行う (デフォルトで有効)
 
 [NOTE]
-"ssl_verify" オプションはデフォルトで有効です、したがって厳密な確認が行われ、0.3.1
+"tls_verify" オプションはデフォルトで有効です、したがって厳密な確認が行われ、0.3.1
 より前のバージョンでは信頼性の確認に成功していたものが失敗する場合もあります。
 
 [[irc_connect_oftc_with_certificate]]
@@ -3503,8 +3503,8 @@ irc.server.xxx.ssl_verify::
 * シェルを使って証明書をインポート:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+$ mkdir -p ~/.config/weechat/tls
+$ wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 // TRANSLATION MISSING
@@ -3527,8 +3527,8 @@ CAs.pem ファイル中で複数の証明書を連結することもできます
 * シェルで証明書を作成:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
+$ mkdir -p ~/.config/weechat/tls
+$ cd ~/.config/weechat/tls
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
@@ -3540,7 +3540,7 @@ which can also be for example `~/.weechat`.
 * WeeChat では、"oftc" サーバが既に追加されています:
 
 ----
-/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
+/set irc.server.oftc.tls_cert "${weechat_config_dir}/tls/nick.pem"
 /connect oftc
 /msg nickserv cert add
 ----
@@ -3833,7 +3833,7 @@ WeeChat は SASL 認証をサポートします、以下の認証メカニズム
 // TRANSLATION MISSING
 * _scram-sha-512_: SCRAM with SHA-512 digest algorithm
 * _ecdsa-nist256p-challenge_: 公開鍵/秘密鍵を使うチャレンジ認証
-* _external_: クライアント側 SSL 証明書
+* _external_: クライアント側 TLS 証明書
 
 サーバオプション:
 

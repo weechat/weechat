@@ -431,7 +431,11 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                         irc_upgrade_current_server->sasl_mechanism_used = -1;
                     }
                     irc_upgrade_current_server->is_connected = weechat_infolist_integer (infolist, "is_connected");
-                    irc_upgrade_current_server->ssl_connected = weechat_infolist_integer (infolist, "ssl_connected");
+                    /* "tls_connected" replaces "ssl_connected" in WeeChat 4.0.0 */
+                    if (weechat_infolist_search_var (infolist, "tls_connected"))
+                        irc_upgrade_current_server->tls_connected = weechat_infolist_integer (infolist, "tls_connected");
+                    else
+                        irc_upgrade_current_server->tls_connected = weechat_infolist_integer (infolist, "ssl_connected");
                     irc_upgrade_current_server->disconnected = weechat_infolist_integer (infolist, "disconnected");
                     str = weechat_infolist_string (infolist, "unterminated_message");
                     if (str)

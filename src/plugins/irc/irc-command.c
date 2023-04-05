@@ -5116,65 +5116,65 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                             IRC_COLOR_CHAT_VALUE,
                             (weechat_config_boolean (server->options[IRC_SERVER_OPTION_IPV6])) ?
                             _("on") : _("off"));
-        /* ssl */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL]))
-            weechat_printf (NULL, "  ssl. . . . . . . . . :   (%s)",
-                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)) ?
+        /* tls */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_TLS]))
+            weechat_printf (NULL, "  tls. . . . . . . . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS)) ?
                             _("on") : _("off"));
         else
-            weechat_printf (NULL, "  ssl. . . . . . . . . : %s%s",
+            weechat_printf (NULL, "  tls. . . . . . . . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
-                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_SSL])) ?
+                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_TLS])) ?
                             _("on") : _("off"));
-        /* ssl_cert */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_CERT]))
-            weechat_printf (NULL, "  ssl_cert . . . . . . :   ('%s')",
-                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_CERT));
+        /* tls_cert */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_TLS_CERT]))
+            weechat_printf (NULL, "  tls_cert . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_TLS_CERT));
         else
-            weechat_printf (NULL, "  ssl_cert . . . . . . : %s'%s'",
+            weechat_printf (NULL, "  tls_cert . . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_string (server->options[IRC_SERVER_OPTION_SSL_CERT]));
-        /* ssl_password */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_PASSWORD]))
-            weechat_printf (NULL, "  ssl_password . . . . :   %s",
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_TLS_CERT]));
+        /* tls_password */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_TLS_PASSWORD]))
+            weechat_printf (NULL, "  tls_password . . . . :   %s",
                             _("(hidden)"));
         else
-            weechat_printf (NULL, "  ssl_password . . . . : %s%s",
+            weechat_printf (NULL, "  tls_password . . . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
                             _("(hidden)"));
-        /* ssl_priorities */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_PRIORITIES]))
-            weechat_printf (NULL, "  ssl_priorities . . . :   ('%s')",
-                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES));
+        /* tls_priorities */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_TLS_PRIORITIES]))
+            weechat_printf (NULL, "  tls_priorities . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_TLS_PRIORITIES));
         else
-            weechat_printf (NULL, "  ssl_priorities . . . : %s'%s'",
+            weechat_printf (NULL, "  tls_priorities . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_string (server->options[IRC_SERVER_OPTION_SSL_PRIORITIES]));
-        /* ssl_dhkey_size */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]))
-            weechat_printf (NULL, "  ssl_dhkey_size . . . :   (%d)",
-                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_TLS_PRIORITIES]));
+        /* tls_dhkey_size */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_TLS_DHKEY_SIZE]))
+            weechat_printf (NULL, "  tls_dhkey_size . . . :   (%d)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_TLS_DHKEY_SIZE));
         else
-            weechat_printf (NULL, "  ssl_dhkey_size . . . : %s%d",
+            weechat_printf (NULL, "  tls_dhkey_size . . . : %s%d",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_integer (server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]));
-        /* ssl_fingerprint */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_FINGERPRINT]))
-            weechat_printf (NULL, "  ssl_fingerprint. . . :   ('%s')",
-                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_FINGERPRINT));
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_TLS_DHKEY_SIZE]));
+        /* tls_fingerprint */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT]))
+            weechat_printf (NULL, "  tls_fingerprint. . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_TLS_FINGERPRINT));
         else
-            weechat_printf (NULL, "  ssl_fingerprint. . . : %s'%s'",
+            weechat_printf (NULL, "  tls_fingerprint. . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_string (server->options[IRC_SERVER_OPTION_SSL_FINGERPRINT]));
-        /* ssl_verify */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_VERIFY]))
-            weechat_printf (NULL, "  ssl_verify . . . . . :   (%s)",
-                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL_VERIFY)) ?
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT]));
+        /* tls_verify */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_TLS_VERIFY]))
+            weechat_printf (NULL, "  tls_verify . . . . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS_VERIFY)) ?
                             _("on") : _("off"));
         else
-            weechat_printf (NULL, "  ssl_verify . . . . . : %s%s",
+            weechat_printf (NULL, "  tls_verify . . . . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
-                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_SSL_VERIFY])) ?
+                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_TLS_VERIFY])) ?
                             _("on") : _("off"));
         /* password */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_PASSWORD]))
@@ -6985,7 +6985,7 @@ irc_command_init ()
            "added (NOT SAVED), see /help irc.look.temporary_servers\n"
            "    option: set option for server (for boolean option, value can be "
            "omitted)\n"
-           "  nooption: set boolean option to 'off' (for example: -nossl)\n"
+           "  nooption: set boolean option to 'off' (for example: -notls)\n"
            "      -all: connect to all servers defined in configuration\n"
            "     -auto: connect to servers with autoconnect enabled\n"
            "     -open: connect to all opened servers that are not currently "
@@ -7001,8 +7001,8 @@ irc_command_init ()
            "  /connect libera\n"
            "  /connect irc.oftc.net/6667\n"
            "  /connect irc6.oftc.net/6667 -ipv6\n"
-           "  /connect irc6.oftc.net/6697 -ipv6 -ssl\n"
-           "  /connect my.server.org/6697 -ssl -password=test\n"
+           "  /connect irc6.oftc.net/6697 -ipv6 -tls\n"
+           "  /connect my.server.org/6697 -tls -password=test\n"
            "  /connect irc://nick@irc.oftc.net/#channel\n"
            "  /connect -switch"),
         "%(irc_servers)|-all|-auto|-open|-nojoin|-switch|%*",
@@ -7526,7 +7526,7 @@ irc_command_init ()
            "   -temp: add a temporary server (not saved)\n"
            "  option: set option for server (for boolean option, value can be "
            "omitted)\n"
-           "nooption: set boolean option to 'off' (for example: -nossl)\n"
+           "nooption: set boolean option to 'off' (for example: -notls)\n"
            "    copy: duplicate a server\n"
            "  rename: rename a server\n"
            " reorder: reorder list of servers\n"
@@ -7557,7 +7557,7 @@ irc_command_init ()
            "Examples:\n"
            "  /server listfull\n"
            "  /server add libera irc.libera.chat\n"
-           "  /server add libera irc.libera.chat/6697 -ssl -autoconnect\n"
+           "  /server add libera irc.libera.chat/6697 -tls -autoconnect\n"
            "  /server add chatspike irc.chatspike.net/6667,"
            "irc.duckspike.net/6667\n"
            "  /server copy libera libera-test\n"

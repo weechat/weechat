@@ -123,7 +123,7 @@ Um eine Verbindung zu einem IRC Server herzustellen, wird der
 `/server` Befehl verwendet. Beispiel:
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 In diesem Beispiel ist `libera` der interne, von Weechat genutzte Servername.

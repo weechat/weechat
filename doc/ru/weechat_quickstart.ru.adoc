@@ -121,7 +121,7 @@ For more information about `/fset` command and keys, see `/help fset`.
 Вы можете добавить IRC сервер с помощью команды `/server`, например:
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 // TRANSLATION MISSING

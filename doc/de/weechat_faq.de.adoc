@@ -729,8 +729,8 @@ anstelle der kbd:[Shift]-Taste gedrückt werden).
 [[irc]]
 == IRC
 
-[[irc_ssl_connection]]
-=== Es treten Probleme bei einer Serververbindung mittels SSL auf. Was kann ich tun?
+[[irc_tls_connection]]
+=== Es treten Probleme bei einer Serververbindung mittels TLS auf. Was kann ich tun?
 
 Falls macOS genutzt wird,
 muss mittels Homebrew `openssl` installiert werden.
@@ -741,16 +741,16 @@ dass der gnutls Handshake fehlgeschlagen ist,
 sollte ein kleinerer Diffie-Hellman-Schlüssel verwendet werden (Standardgröße: 2048):
 
 ----
-/set irc.server.example.ssl_dhkey_size 1024
+/set irc.server.example.tls_dhkey_size 1024
 ----
 
 Falls Fehlermeldungen auftreten, die besagen,
 dass das Zertifikat ungültig ist,
-dann kann die "ssl_verify" Überprüfung deaktiviert werden
+dann kann die "tls_verify" Überprüfung deaktiviert werden
 (die Verbindung ist in diesem Fall weniger sicher):
 
 ----
-/set irc.server.example.ssl_verify off
+/set irc.server.example.tls_verify off
 ----
 
 Sollte das Zertifikat für den Server (laut CA) ungültig sein,
@@ -759,30 +759,30 @@ dann kann (ersatzweise) der Fingerabdruck (SHA-512, SHA-256 or SHA-1)
 des Zertifikats von Hand eingetragen werden:
 
 ----
-/set irc.server.example.ssl_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
+/set irc.server.example.tls_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
 ----
 
-[[irc_ssl_handshake_error]]
-=== Bei einem Verbindungsaufbau zum Server via SSL erhalte ich "TLS Handshake fehlgeschlagen". Wie kann ich das beheben?
+[[irc_tls_handshake_error]]
+=== Bei einem Verbindungsaufbau zum Server via TLS erhalte ich "TLS Handshake fehlgeschlagen". Wie kann ich das beheben?
 
 Man sollte versuchen, eine andere Priorität zu nutzen; Im folgenden Beispiel
 muss "xxx" durch den betroffenen Servernamen ersetzt werden:
 
 ----
-/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+/set irc.server.xxx.tls_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
 ----
 
-[[irc_ssl_libera]]
-=== Wie kann ich eine SSL gesicherte Verbindung zum libera Server herstellen?
+[[irc_tls_libera]]
+=== Wie kann ich eine TLS gesicherte Verbindung zum libera Server herstellen?
 
 Überprüfen Sie, ob auf Ihrem System Zertifikate installiert sind. Dies wird häufig
 durch das Paket "ca-certificates" bereitgestellt.
 
-Konfiguration des Servers, Port angeben, SSL aktivieren und Verbindung herstellen:
+Konfiguration des Servers, Port angeben, TLS aktivieren und Verbindung herstellen:
 
 ----
 /set irc.server.libera.addresses "irc.libera.chat/6697"
-/set irc.server.libera.ssl on
+/set irc.server.libera.tls on
 /connect libera
 ----
 
@@ -1075,7 +1075,7 @@ Die Skripten für WeeChat sind mit anderen IRC-Clients nicht kompatibel und vice
 [[scripts_update]]
 === Der Befehl "/script update" liest die Skriptliste nicht ein, wie kann ich das beheben?
 
-Als erstes sollte das Kapitel über SSL Verbindungen in dieser FAQ gelesen werden.
+Als erstes sollte das Kapitel über TLS Verbindungen in dieser FAQ gelesen werden.
 
 Wenn das nicht hilft, sollte die Skriptliste von Hand gelöscht werden. Dazu
 folgenden Befehl in der Shell ausführen:
@@ -1162,7 +1162,7 @@ Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
   Fifo, Logger, Perl, Python, Ruby, Lua, Tcl, Guile, JavaScript, PHP, Spell, Xfer
   (wird für DCC benötigst), siehe `/help weechat.plugin.autoload`.
 * installiere ausschließlich Skripten die Du auch nutzt
-* Laden Sie keine Systemzertifikate, wenn SSL *NICHT* verwendet wird: Deaktivieren Sie diese Option:
+* Laden Sie keine Systemzertifikate, wenn TLS *NICHT* verwendet wird: Deaktivieren Sie diese Option:
   _weechat.network.gnutls_ca_system_.
 * der Wert der Option _weechat.history.max_buffer_lines_number_ sollte möglichst
   niedrig eingestellt werden oder die Option _weechat.history.max_buffer_lines_minutes_

@@ -29,7 +29,7 @@ rapide et léger, conçu pour différents systèmes d'exploitation.
 Ses principales fonctionnalités sont les suivantes :
 
 * multi-protocoles (principalement IRC)
-* connexion multi-serveurs (avec SSL, IPv6, proxy)
+* connexion multi-serveurs (avec TLS, IPv6, proxy)
 * petit, rapide et léger
 * paramétrable et extensible avec des extensions et des scripts
 * conforme aux RFCs IRC
@@ -159,7 +159,7 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 | Paquet ^(1)^                             | Version  | Fonctionnalités
 | compilateur {cpp} (pass:[g++ / clang++]) |          | Construction et lancement des tests, extension JavaScript.
 | gettext                                  |          | Internationalisation (traduction des messages ; la langue de base est l'anglais).
-| ca-certificates                          |          | Certificats pour les connexions SSL.
+| ca-certificates                          |          | Certificats pour les connexions TLS.
 | libaspell-dev / libenchant-dev           |          | Extension spell.
 | python3-dev                              | ≥ 3.0    | Extension python.
 | libperl-dev                              |          | Extension perl.
@@ -743,9 +743,9 @@ Cela peut être fait pendant que WeeChat tourne.
 
 WeeChat peut redémarrer le nouveau binaire avec la commande
 <<command_weechat_upgrade,/upgrade>> : le contenu des tampons et les connexions
-non SSL sont préservées. +
-Les connexions SSL sont perdues pendant la mise à jour et sont automatiquement
-rétablies après la mise à jour (le rechargement des sessions SSL n'est pas
+non TLS sont préservées. +
+Les connexions TLS sont perdues pendant la mise à jour et sont automatiquement
+rétablies après la mise à jour (le rechargement des sessions TLS n'est pas
 possible actuellement avec GnuTLS).
 
 La commande peut aussi être utilisée si vous devez redémarrer la machine, par
@@ -3256,7 +3256,7 @@ Sections dans le fichier _weechat.conf_ :
 | history    | /set weechat.history.*                    | Options d'historique (commandes et tampons).
 | proxy      | <<command_weechat_proxy,/proxy>>          +
                /set weechat.proxy.*                      | Options des proxies.
-| network    | /set weechat.network.*                    | Options réseau/SSL.
+| network    | /set weechat.network.*                    | Options réseau/TLS.
 | plugin     | /set weechat.plugin.*                     | Options sur les extensions.
 | signal     | /set weechat.signal.*                     | Options sur les signaux.
 | bar        | <<command_weechat_bar,/bar>>              +
@@ -3309,11 +3309,11 @@ $ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 Par défaut aucun serveur n'est défini. Vous pouvez ajouter autant de serveurs
 que vous le souhaitez avec la commande <<command_irc_server,/server>>.
 
-Par exemple pour vous connecter à https://libera.chat/[libera.chat ^↗^,window=_blank] avec SSL
+Par exemple pour vous connecter à https://libera.chat/[libera.chat ^↗^,window=_blank] avec TLS
 (communications chiffrées) :
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 Vous pouvez demander à WeeChat de se connecter automatiquement à ce serveur
@@ -3394,13 +3394,13 @@ irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"
 irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.ssl                   boolean  on
-irc.server.libera.ssl_cert              string   null -> ""
-irc.server.libera.ssl_dhkey_size        integer  null -> 2048
-irc.server.libera.ssl_fingerprint       string   null -> ""
-irc.server.libera.ssl_password          string   null -> ""
-irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.tls                   boolean  on
+irc.server.libera.tls_cert              string   null -> ""
+irc.server.libera.tls_dhkey_size        integer  null -> 2048
+irc.server.libera.tls_fingerprint       string   null -> ""
+irc.server.libera.tls_password          string   null -> ""
+irc.server.libera.tls_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.tls_verify            boolean  null -> on
 irc.server.libera.usermode              string   null -> ""
 irc.server.libera.username              string   null -> "alice"
 ....
@@ -3419,13 +3419,13 @@ la valeur héritée, qui est maintenant `on` au lieu de la valeur par défaut `o
 /unset irc.server.libera.autoconnect
 ----
 
-[[irc_ssl_certificates]]
-==== Certificats SSL
+[[irc_tls_certificates]]
+==== Certificats TLS
 
-Lors de la connexion à un serveur IRC avec SSL, WeeChat vérifie par défaut que
+Lors de la connexion à un serveur IRC avec TLS, WeeChat vérifie par défaut que
 la connexion est entièrement de confiance.
 
-Quelques options sont utilisées pour contrôler la connexion SSL :
+Quelques options sont utilisées pour contrôler la connexion TLS :
 
 weechat.network.gnutls_ca_system::
     charger les certificats des autorités de certification système au démarrage
@@ -3433,20 +3433,20 @@ weechat.network.gnutls_ca_system::
 weechat.network.gnutls_ca_user::
     fichier(s) supplémentaire(s) avec des autorités de certification
 
-irc.server.xxx.ssl_cert::
-    fichier de certificat SSL utilisé pour authentifier automatiquement votre
+irc.server.xxx.tls_cert::
+    fichier de certificat TLS utilisé pour authentifier automatiquement votre
     pseudo (par exemple CertFP sur oftc, voir ci-dessous)
 
-irc.server.xxx.ssl_dhkey_size::
+irc.server.xxx.tls_dhkey_size::
     taille de clé utilisée pour l'échange de clé Diffie-Hellman (par défaut :
     2048)
 
-irc.server.xxx.ssl_verify::
-    vérifier que la connexion SSL est entièrement de confiance (activé par
+irc.server.xxx.tls_verify::
+    vérifier que la connexion TLS est entièrement de confiance (activé par
     défaut)
 
 [NOTE]
-L'option "ssl_verify" est activée par défaut, donc la vérification est stricte
+L'option "tls_verify" est activée par défaut, donc la vérification est stricte
 et peut échouer, même si cela pouvait être OK dans les versions inférieures à
 0.3.1.
 
@@ -3456,8 +3456,8 @@ et peut échouer, même si cela pouvait être OK dans les versions inférieures 
 * Importer le certificat sous le shell :
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+$ mkdir -p ~/.config/weechat/tls
+$ wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 [NOTE]
@@ -3479,8 +3479,8 @@ Il est possible de concaténer plusieurs certificats dans le fichier CAs.pem.
 * Créer le certificat sous le shell :
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
+$ mkdir -p ~/.config/weechat/tls
+$ cd ~/.config/weechat/tls
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
@@ -3491,7 +3491,7 @@ config WeeChat qui peut aussi être par exemple `~/.weechat`.
 * Sous WeeChat, avec le serveur "oftc" déjà ajouté :
 
 ----
-/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
+/set irc.server.oftc.tls_cert "${weechat_config_dir}/tls/nick.pem"
 /connect oftc
 /msg nickserv cert add
 ----
@@ -3784,7 +3784,7 @@ mécanismes :
 * _scram-sha-256_ : SCRAM avec algorithme de hachage SHA-256
 * _scram-sha-512_ : SCRAM avec algorithme de hachage SHA-512
 * _ecdsa-nist256p-challenge_ : challenge avec clé publique/privée
-* _external_ : certificat SSL côté client
+* _external_ : certificat TLS côté client
 
 Les options dans le serveur sont :
 

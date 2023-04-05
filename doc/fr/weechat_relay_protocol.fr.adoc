@@ -2346,7 +2346,7 @@ jour, tous les pointeurs changeront).
 
 [NOTE]
 Pendant la mise à jour de WeeChat, le socket reste ouvert (sauf si la connexion
-utilise SSL).
+utilise TLS).
 
 [[message_upgrade_ended]]
 ==== _upgrade_ended

@@ -96,7 +96,7 @@ WeeChat „језгро” се користи само за приказ под
 IRC сервер можете додати командом `/server`, на пример:
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 `freenode` је у овој команди интерно име сервера које користи програм WeeChat: касније ћете моћи да се повежете са њим помоћу `/connect libera`, а опције сервера су _irc.server.libera.xxx_.

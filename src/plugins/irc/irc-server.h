@@ -52,13 +52,13 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_ADDRESSES = 0, /* server addresses (IP/name with port) */
     IRC_SERVER_OPTION_PROXY,         /* proxy used for server (optional)     */
     IRC_SERVER_OPTION_IPV6,          /* use IPv6 protocol                    */
-    IRC_SERVER_OPTION_SSL,           /* SSL protocol                         */
-    IRC_SERVER_OPTION_SSL_CERT,      /* client ssl certificate file          */
-    IRC_SERVER_OPTION_SSL_PASSWORD,   /* client ssl certificate key password */
-    IRC_SERVER_OPTION_SSL_PRIORITIES, /* gnutls priorities                   */
-    IRC_SERVER_OPTION_SSL_DHKEY_SIZE, /* Diffie Hellman key size             */
-    IRC_SERVER_OPTION_SSL_FINGERPRINT, /* SHA1 fingerprint of certificate    */
-    IRC_SERVER_OPTION_SSL_VERIFY,    /* check if the connection is trusted   */
+    IRC_SERVER_OPTION_TLS,           /* TLS protocol                         */
+    IRC_SERVER_OPTION_TLS_CERT,      /* client TLS certificate file          */
+    IRC_SERVER_OPTION_TLS_PASSWORD,   /* client TLS certificate key password */
+    IRC_SERVER_OPTION_TLS_PRIORITIES, /* gnutls priorities                   */
+    IRC_SERVER_OPTION_TLS_DHKEY_SIZE, /* Diffie Hellman key size             */
+    IRC_SERVER_OPTION_TLS_FINGERPRINT, /* SHA1 fingerprint of certificate    */
+    IRC_SERVER_OPTION_TLS_VERIFY,    /* check if the connection is trusted   */
     IRC_SERVER_OPTION_PASSWORD,      /* password for server                  */
     IRC_SERVER_OPTION_CAPABILITIES,  /* client capabilities to enable        */
     IRC_SERVER_OPTION_SASL_MECHANISM,/* mechanism for SASL authentication    */
@@ -121,7 +121,7 @@ enum t_irc_server_option
       : weechat_config_string_default(irc_config_server_default[__index])))
 
 #define IRC_SERVER_DEFAULT_PORT     6667
-#define IRC_SERVER_DEFAULT_PORT_SSL 6697
+#define IRC_SERVER_DEFAULT_PORT_TLS 6697
 #define IRC_SERVER_DEFAULT_NICKS    "weechat1,weechat2,weechat3,weechat4,weechat5"
 
 /* number of queues for sending messages */
@@ -212,11 +212,11 @@ struct t_irc_server
     int authentication_method;      /* authentication method used to login   */
     int sasl_mechanism_used;        /* SASL method used at login time        */
     int is_connected;               /* 1 if WeeChat is connected to server   */
-    int ssl_connected;              /* = 1 if connected with SSL             */
+    int tls_connected;              /* = 1 if connected with TLS             */
     int disconnected;               /* 1 if server has been disconnected     */
-    gnutls_session_t gnutls_sess;   /* gnutls session (only if SSL is used)  */
-    gnutls_x509_crt_t tls_cert;     /* certificate used if ssl_cert is set   */
-    gnutls_x509_privkey_t tls_cert_key; /* key used if ssl_cert is set       */
+    gnutls_session_t gnutls_sess;   /* gnutls session (only if TLS is used)  */
+    gnutls_x509_crt_t tls_cert;     /* certificate used if tls_cert is set   */
+    gnutls_x509_privkey_t tls_cert_key; /* key used if tls_cert is set       */
     char *unterminated_message;     /* beginning of a message in input buf   */
     int nicks_count;                /* number of nicknames                   */
     char **nicks_array;             /* nicknames (after split)               */

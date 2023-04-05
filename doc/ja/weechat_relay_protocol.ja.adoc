@@ -2349,7 +2349,7 @@ _WeeChat バージョン 0.3.8 以上で利用可。_
 
 [NOTE]
 WeeChat のアップグレード中、ソケットは開いたままです
-(ただし SSL を使っている場合は閉じられます)。
+(ただし TLS を使っている場合は閉じられます)。
 
 [[message_upgrade_ended]]
 ==== _upgrade_ended

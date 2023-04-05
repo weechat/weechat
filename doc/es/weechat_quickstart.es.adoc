@@ -115,7 +115,7 @@ seguramente vera irc y otros.
 Puede añadir un servidor IRC mediante el comando `/server`, por ejemplo:
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 En este comando, `libera` es el nombre interno del servidor utilizado por WeeChat:

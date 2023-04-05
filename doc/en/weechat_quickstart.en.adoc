@@ -105,7 +105,7 @@ other plugins in the list.
 You can add an IRC server with the `/server` command, for example:
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 In this command, `libera` is the internal server name used by WeeChat:

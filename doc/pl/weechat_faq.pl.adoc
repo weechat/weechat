@@ -696,8 +696,8 @@ kbd:[Shift]).
 [[irc]]
 == IRC
 
-[[irc_ssl_connection]]
-=== Mam problemy podczas połączenia z serwerem używającym SSL, co mogę zrobić?
+[[irc_tls_connection]]
+=== Mam problemy podczas połączenia z serwerem używającym TLS, co mogę zrobić?
 
 Jeśli używasz Mac macOS, musisz zainstalować `openssl` z Homebrew.
 Plik CA zostanie wygenerowany korzystając z systemowego keychaina.
@@ -706,43 +706,43 @@ Jeśli widzisz błędy gnutls, możesz użyć innej wielkości klucza
 Diffie-Hellman (domyślnie 2048):
 
 ----
-/set irc.server.example.ssl_dhkey_size 1024
+/set irc.server.example.tls_dhkey_size 1024
 ----
 
-Jeśli widzisz błędy związanie z certyfikatami, możesz wyłączyć opcję "ssl_verify"
+Jeśli widzisz błędy związanie z certyfikatami, możesz wyłączyć opcję "tls_verify"
 (należy jednak uważać, ponieważ połączenie będzie mniej bezpieczne):
 
 ----
-/set irc.server.example.ssl_verify off
+/set irc.server.example.tls_verify off
 ----
 
 Jeśli serwer ma niewłaściwy certyfikat i wiesz jaki on powinien być,
 możesz podać sumę kontrolną (SHA-512, SHA-256 lub SHA-1):
 
 ----
-/set irc.server.example.ssl_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
+/set irc.server.example.tls_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
 ----
 
-[[irc_ssl_handshake_error]]
-=== Podczas łączenia się z serwerem poprzez SSL widzę tylko błąd "TLS handshake failed", co mogę zrobić?
+[[irc_tls_handshake_error]]
+=== Podczas łączenia się z serwerem poprzez TLS widzę tylko błąd "TLS handshake failed", co mogę zrobić?
 
 Możesz spróbować innego ciągu priorytetu, zamień "xxx" nazwą serwera:
 
 ----
-/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+/set irc.server.xxx.tls_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
 ----
 
-[[irc_ssl_libera]]
-=== Jak mogę połączyć się z serwerem libera używając SSL?
+[[irc_tls_libera]]
+=== Jak mogę połączyć się z serwerem libera używając TLS?
 
 Sprawdź czy masz zainstalowane cartyfikaty w systemie, zazwyczaj zapewnia je paczka
 o nazwie "ca-certificates".
 
-Ustaw port serwera, SSL, następnie się połącz:
+Ustaw port serwera, TLS, następnie się połącz:
 
 ----
 /set irc.server.libera.addresses "irc.libera.chat/6697"
-/set irc.server.libera.ssl on
+/set irc.server.libera.tls on
 /connect libera
 ----
 
@@ -1008,7 +1008,7 @@ Skrypty nie są kompatybilne z innymi klientami IRC.
 [[scripts_update]]
 === Komenda "/script update" nie może odczytać skryptów, jak to naprawić?
 
-Najpierw zapoznaj się z zagadnieniami dotyczącymi połączeń SSL znajdującymi się
+Najpierw zapoznaj się z zagadnieniami dotyczącymi połączeń TLS znajdującymi się
 w tym dokumencie.
 
 Jeśli to nie pomoże spróbuj ręcznie usunąć plik z listą skryptów (z poziomu powłoki):
@@ -1094,7 +1094,7 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
   ruby, lua, tcl, guile, javascript, php, spell, xfer (używana do DCC).
   Zobacz `/help weechat.plugin.autoload`.
 * ładować tylko naprawdę używane skrypty
-* nie ładuj systemowych certyfikatów jeśli SSL *nie* jest używane: wyłącz tą opcję:
+* nie ładuj systemowych certyfikatów jeśli TLS *nie* jest używane: wyłącz tą opcję:
   _weechat.network.gnutls_ca_system_.
 * zmniejsz wartość dla opcji _weechat.history.max_buffer_lines_number_ lub ustaw
   wartość opcji _weechat.history.max_buffer_lines_minutes_

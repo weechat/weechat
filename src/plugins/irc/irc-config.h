@@ -23,6 +23,8 @@
 #define IRC_CONFIG_NAME "irc"
 #define IRC_CONFIG_PRIO_NAME (TO_STR(IRC_PLUGIN_PRIORITY) "|" IRC_CONFIG_NAME)
 
+#define IRC_CONFIG_VERSION 2
+
 enum t_irc_config_look_server_buffer
 {
     IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITH_CORE = 0,

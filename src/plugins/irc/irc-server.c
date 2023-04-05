@@ -80,13 +80,13 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
 { { "addresses",            ""                        },
   { "proxy",                ""                        },
   { "ipv6",                 "on"                      },
-  { "ssl",                  "off"                     },
-  { "ssl_cert",             ""                        },
-  { "ssl_password",         ""                        },
-  { "ssl_priorities",       "NORMAL:-VERS-SSL3.0"     },
-  { "ssl_dhkey_size",       "2048"                    },
-  { "ssl_fingerprint",      ""                        },
-  { "ssl_verify",           "on"                      },
+  { "tls",                  "off"                     },
+  { "tls_cert",             ""                        },
+  { "tls_password",         ""                        },
+  { "tls_priorities",       "NORMAL:-VERS-SSL3.0"     },
+  { "tls_dhkey_size",       "2048"                    },
+  { "tls_fingerprint",      ""                        },
+  { "tls_verify",           "on"                      },
   { "password",             ""                        },
   { "capabilities",         "*"                       },
   { "sasl_mechanism",       "plain"                   },
@@ -409,7 +409,7 @@ irc_server_eval_fingerprint (struct t_irc_server *server)
     int i, j, rc, algo, length;
 
     ptr_fingerprint = IRC_SERVER_OPTION_STRING(server,
-                                               IRC_SERVER_OPTION_SSL_FINGERPRINT);
+                                               IRC_SERVER_OPTION_TLS_FINGERPRINT);
 
     /* empty fingerprint is just ignored (considered OK) */
     if (!ptr_fingerprint || !ptr_fingerprint[0])
@@ -1215,7 +1215,7 @@ irc_server_set_tls_version (struct t_irc_server *server)
 
     if (server->is_connected)
     {
-        if (server->ssl_connected)
+        if (server->tls_connected)
         {
             if (server->gnutls_sess)
             {
@@ -1567,7 +1567,7 @@ irc_server_alloc (const char *name)
     new_server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
     new_server->sasl_mechanism_used = -1;
     new_server->is_connected = 0;
-    new_server->ssl_connected = 0;
+    new_server->tls_connected = 0;
     new_server->disconnected = 0;
     new_server->gnutls_sess = NULL;
     new_server->tls_cert = NULL;
@@ -1702,12 +1702,12 @@ irc_server_alloc (const char *name)
  * Fields:
  *   - "irc": protocol (mandatory)
  *   - "6": allow use of IPv6 (with fallback on IPv4)
- *   - "s": use SSL
+ *   - "s": use TLS
  *   - "nick": nickname to use on the server
  *   - "pass": password for the server (can be used as nick password on most
  *             servers)
  *   - "server": server address
- *   - "port": port (default is 6667 without SSL and 6697 with SSL)
+ *   - "port": port (default is 6667 without TLS and 6697 with TLS)
  *   - "#chan1": channel to auto-join
  *
  * Returns pointer to new server, NULL if error.
@@ -1720,7 +1720,7 @@ irc_server_alloc_with_url (const char *irc_url)
     char *pos_address, *pos_port, *pos_channel, *pos;
     char *server_address, *server_nicks, *server_autojoin;
     char default_port[16];
-    int ipv6, ssl, length;
+    int ipv6, tls, length;
     struct t_irc_server *ptr_server;
 
     if (!irc_url || !irc_url[0])
@@ -1741,7 +1741,7 @@ irc_server_alloc_with_url (const char *irc_url)
     pos_channel = NULL;
 
     ipv6 = 0;
-    ssl = 0;
+    tls = 0;
     snprintf (default_port, sizeof (default_port),
               "%d", IRC_SERVER_DEFAULT_PORT);
 
@@ -1765,26 +1765,26 @@ irc_server_alloc_with_url (const char *irc_url)
         }
     }
 
-    /* check for SSL / IPv6 */
+    /* check for TLS / IPv6 */
     if (weechat_strcasecmp (irc_url2, "irc6") == 0)
     {
         ipv6 = 1;
     }
     else if (weechat_strcasecmp (irc_url2, "ircs") == 0)
     {
-        ssl = 1;
+        tls = 1;
     }
     else if ((weechat_strcasecmp (irc_url2, "irc6s") == 0)
              || (weechat_strcasecmp (irc_url2, "ircs6") == 0))
     {
         ipv6 = 1;
-        ssl = 1;
+        tls = 1;
     }
 
-    if (ssl)
+    if (tls)
     {
         snprintf (default_port, sizeof (default_port),
-                  "%d", IRC_SERVER_DEFAULT_PORT_SSL);
+                  "%d", IRC_SERVER_DEFAULT_PORT_TLS);
     }
 
     /* search for nick, password, address+port */
@@ -1861,8 +1861,8 @@ irc_server_alloc_with_url (const char *irc_url)
         weechat_config_option_set (ptr_server->options[IRC_SERVER_OPTION_IPV6],
                                    (ipv6) ? "on" : "off",
                                    1);
-        weechat_config_option_set (ptr_server->options[IRC_SERVER_OPTION_SSL],
-                                   (ssl) ? "on" : "off",
+        weechat_config_option_set (ptr_server->options[IRC_SERVER_OPTION_TLS],
+                                   (tls) ? "on" : "off",
                                    1);
         if (pos_nick && pos_nick[0])
         {
@@ -1924,7 +1924,7 @@ irc_server_alloc_with_url (const char *irc_url)
 /*
  * Applies command line options to a server.
  *
- * For example: -ssl -nossl -password=test -proxy=myproxy
+ * For example: -tls -notls -password=test -proxy=myproxy
  */
 
 void
@@ -2558,7 +2558,7 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
         return 0;
     }
 
-    if (server->ssl_connected)
+    if (server->tls_connected)
     {
         if (!server->gnutls_sess)
             return -1;
@@ -2571,7 +2571,7 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
 
     if (rc < 0)
     {
-        if (server->ssl_connected)
+        if (server->tls_connected)
         {
             weechat_printf (
                 server->buffer,
@@ -3541,7 +3541,7 @@ irc_server_recv_cb (const void *pointer, void *data, int fd)
     {
         end_recv = 1;
 
-        if (server->ssl_connected)
+        if (server->tls_connected)
         {
             if (!server->gnutls_sess)
                 return WEECHAT_RC_ERROR;
@@ -3558,7 +3558,7 @@ irc_server_recv_cb (const void *pointer, void *data, int fd)
             buffer[num_read] = '\0';
             irc_server_msgq_add_buffer (server, buffer);
             msgq_flush = 1;  /* the flush will be done after the loop */
-            if (server->ssl_connected
+            if (server->tls_connected
                 && (gnutls_record_check_pending (server->gnutls_sess) > 0))
             {
                 /*
@@ -3570,7 +3570,7 @@ irc_server_recv_cb (const void *pointer, void *data, int fd)
         }
         else
         {
-            if (server->ssl_connected)
+            if (server->tls_connected)
             {
                 if ((num_read == 0)
                     || ((num_read != GNUTLS_E_AGAIN)
@@ -3982,8 +3982,8 @@ irc_server_close_connection (struct t_irc_server *server)
     }
     else
     {
-        /* close SSL connection */
-        if (server->ssl_connected)
+        /* close TLS connection */
+        if (server->tls_connected)
         {
             if (server->sock != -1)
                 gnutls_bye (server->gnutls_sess, GNUTLS_SHUT_WR);
@@ -4027,7 +4027,7 @@ irc_server_close_connection (struct t_irc_server *server)
     server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
     server->sasl_mechanism_used = -1;
     server->is_connected = 0;
-    server->ssl_connected = 0;
+    server->tls_connected = 0;
 
     irc_server_set_tls_version (server);
 }
@@ -4375,17 +4375,17 @@ irc_server_connect_cb (const void *pointer, void *data,
                 weechat_printf (
                     server->buffer,
                     _("%s%s: you should play with option "
-                      "irc.server.%s.ssl_dhkey_size (current value is %d, try "
+                      "irc.server.%s.tls_dhkey_size (current value is %d, try "
                       "a lower value like %d or %d)"),
                     weechat_prefix ("error"),
                     IRC_PLUGIN_NAME,
                     server->name,
                     IRC_SERVER_OPTION_INTEGER (
-                        server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
+                        server, IRC_SERVER_OPTION_TLS_DHKEY_SIZE),
                     IRC_SERVER_OPTION_INTEGER (
-                        server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE) / 2,
+                        server, IRC_SERVER_OPTION_TLS_DHKEY_SIZE) / 2,
                     IRC_SERVER_OPTION_INTEGER (
-                        server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE) / 4);
+                        server, IRC_SERVER_OPTION_TLS_DHKEY_SIZE) / 4);
             }
             irc_server_close_connection (server);
             server->current_retry++;
@@ -4776,7 +4776,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     unsigned int i, cert_list_len, status;
     time_t cert_time;
     char *cert_path, *cert_str, *fingerprint_eval;
-    char *ssl_password;
+    char *tls_password;
     const char *ptr_cert_path, *ptr_fingerprint;
     int rc, ret, fingerprint_match, hostname_match, cert_temp_init;
     struct t_hashtable *options;
@@ -4821,7 +4821,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
 
         /* get fingerprint option in server */
         ptr_fingerprint = IRC_SERVER_OPTION_STRING(server,
-                                                   IRC_SERVER_OPTION_SSL_FINGERPRINT);
+                                                   IRC_SERVER_OPTION_TLS_FINGERPRINT);
         fingerprint_eval = irc_server_eval_fingerprint (server);
         if (!fingerprint_eval)
         {
@@ -4942,7 +4942,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                         server->buffer,
                         _("%sgnutls: certificate fingerprint does NOT match "
                           "(check value of option "
-                          "irc.server.%s.ssl_fingerprint)"),
+                          "irc.server.%s.tls_fingerprint)"),
                         weechat_prefix ("error"), server->name);
                     rc = -1;
                 }
@@ -5012,7 +5012,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     {
         /* using client certificate if it exists */
         ptr_cert_path = IRC_SERVER_OPTION_STRING(server,
-                                                 IRC_SERVER_OPTION_SSL_CERT);
+                                                 IRC_SERVER_OPTION_TLS_CERT);
         if (ptr_cert_path && ptr_cert_path[0])
         {
             options = weechat_hashtable_new (
@@ -5045,10 +5045,10 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                                             GNUTLS_X509_FMT_PEM);
 
                     /* key password */
-                    ssl_password = irc_server_eval_expression (
+                    tls_password = irc_server_eval_expression (
                         server,
                         IRC_SERVER_OPTION_STRING(server,
-                                                 IRC_SERVER_OPTION_SSL_PASSWORD));
+                                                 IRC_SERVER_OPTION_TLS_PASSWORD));
 
                     /* key */
                     gnutls_x509_privkey_init (&server->tls_cert_key);
@@ -5062,7 +5062,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                     ret = gnutls_x509_privkey_import2 (server->tls_cert_key,
                                                        &filedatum,
                                                        GNUTLS_X509_FMT_PEM,
-                                                       ssl_password,
+                                                       tls_password,
                                                        0);
 #else
                     ret = gnutls_x509_privkey_import (server->tls_cert_key,
@@ -5076,7 +5076,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                             server->tls_cert_key,
                             &filedatum,
                             GNUTLS_X509_FMT_PEM,
-                            ssl_password,
+                            tls_password,
                             GNUTLS_PKCS_PLAIN);
                     }
                     if (ret < 0)
@@ -5129,8 +5129,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                         free (cert_str);
                     }
 
-                    if (ssl_password)
-                        free (ssl_password);
+                    if (tls_password)
+                        free (tls_password);
                 }
                 else
                 {
@@ -5147,7 +5147,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
 end:
     /* an error should stop the handshake unless the user doesn't care */
     if ((rc == -1)
-        && (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL_VERIFY) == 0))
+        && (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS_VERIFY) == 0))
     {
         rc = 0;
     }
@@ -5288,8 +5288,8 @@ irc_server_connect (struct t_irc_server *server)
             IRC_PLUGIN_NAME,
             server->current_address,
             server->current_port,
-            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)) ?
-            " (SSL)" : "",
+            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS)) ?
+            " (TLS)" : "",
             str_proxy_type,
             str_proxy_address,
             weechat_config_integer (proxy_port),
@@ -5298,8 +5298,8 @@ irc_server_connect (struct t_irc_server *server)
             _("Connecting to server %s/%d%s via %s proxy %s/%d%s..."),
             server->current_address,
             server->current_port,
-            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)) ?
-            " (SSL)" : "",
+            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS)) ?
+            " (TLS)" : "",
             str_proxy_type,
             str_proxy_address,
             weechat_config_integer (proxy_port),
@@ -5314,16 +5314,16 @@ irc_server_connect (struct t_irc_server *server)
             IRC_PLUGIN_NAME,
             server->current_address,
             server->current_port,
-            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)) ?
-            " (SSL)" : "");
+            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS)) ?
+            " (TLS)" : "");
         weechat_log_printf (
             _("%s%s: connecting to server %s/%d%s..."),
             "",
             IRC_PLUGIN_NAME,
             server->current_address,
             server->current_port,
-            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)) ?
-            " (SSL)" : "");
+            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS)) ?
+            " (TLS)" : "");
     }
 
     /* close connection if opened */
@@ -5336,10 +5336,10 @@ irc_server_connect (struct t_irc_server *server)
         irc_server_autojoin_create_buffers (server);
     }
 
-    /* init SSL if asked and connect */
-    server->ssl_connected = 0;
-    if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL))
-        server->ssl_connected = 1;
+    /* init TLS if asked and connect */
+    server->tls_connected = 0;
+    if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS))
+        server->tls_connected = 1;
     if (!server->fake_server)
     {
         server->hook_connect = weechat_hook_connect (
@@ -5348,10 +5348,10 @@ irc_server_connect (struct t_irc_server *server)
             server->current_port,
             proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
             server->current_retry,
-            (server->ssl_connected) ? &server->gnutls_sess : NULL,
-            (server->ssl_connected) ? &irc_server_gnutls_callback : NULL,
-            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
-            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES),
+            (server->tls_connected) ? &server->gnutls_sess : NULL,
+            (server->tls_connected) ? &irc_server_gnutls_callback : NULL,
+            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_TLS_DHKEY_SIZE),
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_TLS_PRIORITIES),
             IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
             &irc_server_connect_cb,
             server,
@@ -6167,7 +6167,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, authentication_method, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_mechanism_used, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, is_connected, INTEGER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_server, ssl_connected, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, tls_connected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, disconnected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, gnutls_sess, POINTER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, tls_cert, POINTER, 0, NULL, NULL);
@@ -6289,26 +6289,26 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "ipv6",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6)))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "ssl",
-                                           IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)))
+    if (!weechat_infolist_new_var_integer (ptr_item, "tls",
+                                           IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS)))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "ssl_cert",
-                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_CERT)))
+    if (!weechat_infolist_new_var_string (ptr_item, "tls_cert",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_TLS_CERT)))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "ssl_password",
-                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PASSWORD)))
+    if (!weechat_infolist_new_var_string (ptr_item, "tls_password",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_TLS_PASSWORD)))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "ssl_priorities",
-                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES)))
+    if (!weechat_infolist_new_var_string (ptr_item, "tls_priorities",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_TLS_PRIORITIES)))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "ssl_dhkey_size",
-                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE)))
+    if (!weechat_infolist_new_var_integer (ptr_item, "tls_dhkey_size",
+                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_TLS_DHKEY_SIZE)))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "ssl_fingerprint",
-                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_FINGERPRINT)))
+    if (!weechat_infolist_new_var_string (ptr_item, "tls_fingerprint",
+                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_TLS_FINGERPRINT)))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "ssl_verify",
-                                           IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL_VERIFY)))
+    if (!weechat_infolist_new_var_integer (ptr_item, "tls_verify",
+                                           IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS_VERIFY)))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "password",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD)))
@@ -6420,7 +6420,7 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
             return 0;
         if (!weechat_infolist_new_var_integer (ptr_item, "is_connected", 0))
             return 0;
-        if (!weechat_infolist_new_var_integer (ptr_item, "ssl_connected", 0))
+        if (!weechat_infolist_new_var_integer (ptr_item, "tls_connected", 0))
             return 0;
         if (!weechat_infolist_new_var_integer (ptr_item, "disconnected", 1))
             return 0;
@@ -6491,7 +6491,7 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
             return 0;
         if (!weechat_infolist_new_var_integer (ptr_item, "is_connected", server->is_connected))
             return 0;
-        if (!weechat_infolist_new_var_integer (ptr_item, "ssl_connected", server->ssl_connected))
+        if (!weechat_infolist_new_var_integer (ptr_item, "tls_connected", server->tls_connected))
             return 0;
         if (!weechat_infolist_new_var_integer (ptr_item, "disconnected", server->disconnected))
             return 0;
@@ -6623,56 +6623,56 @@ irc_server_print_log ()
             weechat_log_printf ("  ipv6. . . . . . . . . . . : %s",
                                 (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_IPV6])) ?
                                 "on" : "off");
-        /* ssl */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL]))
-            weechat_log_printf ("  ssl . . . . . . . . . . . : null (%s)",
-                                (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_SSL)) ?
+        /* tls */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_TLS]))
+            weechat_log_printf ("  tls . . . . . . . . . . . : null (%s)",
+                                (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_TLS)) ?
                                 "on" : "off");
         else
-            weechat_log_printf ("  ssl . . . . . . . . . . . : %s",
-                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_SSL])) ?
+            weechat_log_printf ("  tls . . . . . . . . . . . : %s",
+                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_TLS])) ?
                                 "on" : "off");
-        /* ssl_cert */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_CERT]))
-            weechat_log_printf ("  ssl_cert. . . . . . . . . : null ('%s')",
-                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SSL_CERT));
+        /* tls_cert */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_TLS_CERT]))
+            weechat_log_printf ("  tls_cert. . . . . . . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_TLS_CERT));
         else
-            weechat_log_printf ("  ssl_cert. . . . . . . . . : '%s'",
-                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_CERT]));
-        /* ssl_password */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_PASSWORD]))
-            weechat_log_printf ("  ssl_password. . . . . . . : null");
+            weechat_log_printf ("  tls_cert. . . . . . . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_TLS_CERT]));
+        /* tls_password */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_TLS_PASSWORD]))
+            weechat_log_printf ("  tls_password. . . . . . . : null");
         else
-            weechat_log_printf ("  ssl_password. . . . . . . : (hidden)");
-        /* ssl_priorities */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_PRIORITIES]))
-            weechat_log_printf ("  ssl_priorities. . . . . . : null ('%s')",
-                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SSL_PRIORITIES));
+            weechat_log_printf ("  tls_password. . . . . . . : (hidden)");
+        /* tls_priorities */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_TLS_PRIORITIES]))
+            weechat_log_printf ("  tls_priorities. . . . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_TLS_PRIORITIES));
         else
-            weechat_log_printf ("  ssl_priorities. . . . . . : '%s'",
-                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_PRIORITIES]));
-        /* ssl_dhkey_size */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]))
-            weechat_log_printf ("  ssl_dhkey_size. . . . . . : null ('%d')",
-                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
+            weechat_log_printf ("  tls_priorities. . . . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_TLS_PRIORITIES]));
+        /* tls_dhkey_size */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_TLS_DHKEY_SIZE]))
+            weechat_log_printf ("  tls_dhkey_size. . . . . . : null ('%d')",
+                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_TLS_DHKEY_SIZE));
         else
-            weechat_log_printf ("  ssl_dhkey_size. . . . . . : '%d'",
-                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]));
-        /* ssl_fingerprint */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_FINGERPRINT]))
-            weechat_log_printf ("  ssl_fingerprint . . . . . : null ('%s')",
-                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SSL_FINGERPRINT));
+            weechat_log_printf ("  tls_dhkey_size. . . . . . : '%d'",
+                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_TLS_DHKEY_SIZE]));
+        /* tls_fingerprint */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT]))
+            weechat_log_printf ("  tls_fingerprint . . . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_TLS_FINGERPRINT));
         else
-            weechat_log_printf ("  ssl_fingerprint . . . . . : '%s'",
-                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_FINGERPRINT]));
-        /* ssl_verify */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_VERIFY]))
-            weechat_log_printf ("  ssl_verify. . . . . . . . : null (%s)",
-                                (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_SSL_VERIFY)) ?
+            weechat_log_printf ("  tls_fingerprint . . . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_TLS_FINGERPRINT]));
+        /* tls_verify */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_TLS_VERIFY]))
+            weechat_log_printf ("  tls_verify. . . . . . . . : null (%s)",
+                                (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_TLS_VERIFY)) ?
                                 "on" : "off");
         else
-            weechat_log_printf ("  ssl_verify. . . . . . . . : %s",
-                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_SSL_VERIFY])) ?
+            weechat_log_printf ("  tls_verify. . . . . . . . : %s",
+                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_TLS_VERIFY])) ?
                                 "on" : "off");
         /* password */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_PASSWORD]))
@@ -6917,7 +6917,7 @@ irc_server_print_log ()
         weechat_log_printf ("  authentication_method . . : %d",    ptr_server->authentication_method);
         weechat_log_printf ("  sasl_mechanism_used . . . : %d",    ptr_server->sasl_mechanism_used);
         weechat_log_printf ("  is_connected. . . . . . . : %d",    ptr_server->is_connected);
-        weechat_log_printf ("  ssl_connected . . . . . . : %d",    ptr_server->ssl_connected);
+        weechat_log_printf ("  tls_connected . . . . . . : %d",    ptr_server->tls_connected);
         weechat_log_printf ("  disconnected. . . . . . . : %d",    ptr_server->disconnected);
         weechat_log_printf ("  gnutls_sess . . . . . . . : 0x%lx", ptr_server->gnutls_sess);
         weechat_log_printf ("  tls_cert. . . . . . . . . : 0x%lx", ptr_server->tls_cert);
