@@ -3706,6 +3706,11 @@ CTCP одговори могу да се прилагоде, или неки CTC
 /set irc.ctcp.version "Користим WeeChat $version, одличан је!"
 ----
 
+// TRANSLATION MISSING
+[NOTE]
+The name of CTCP must be in lower case. That means option _irc.ctcp.VERSION_
+would not work.
+
 Ако желите да блокирате CTCP „VERSION” (да се не пошаље одговор на овај упит), онда поставите празан стринг:
 
 ----

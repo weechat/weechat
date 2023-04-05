@@ -3918,6 +3918,10 @@ For example, to customize reply to CTCP "VERSION", use following command:
 /set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
 ----
 
+[NOTE]
+The name of CTCP must be in lower case. That means option _irc.ctcp.VERSION_
+would not work.
+
 If you want to block CTCP "VERSION" (do not reply to a query), then set empty
 string:
 

@@ -3967,6 +3967,11 @@ pomocą polecenia:
 /set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
 ----
 
+// TRANSLATION MISSING
+[NOTE]
+The name of CTCP must be in lower case. That means option _irc.ctcp.VERSION_
+would not work.
+
 Jeśli chcesz zablokować CTCP "VERSION" (nie odpowiadać na zapytanie), ustaw
 pusty ciąg:
 

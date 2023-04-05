@@ -4227,6 +4227,11 @@ seguente comando:
 /set irc.ctcp.version "Uso WeeChat $version, fico!"
 ----
 
+// TRANSLATION MISSING
+[NOTE]
+The name of CTCP must be in lower case. That means option _irc.ctcp.VERSION_
+would not work.
+
 Se si desidera bloccare CTCP "VERSIONE" (non rispondere ad una query),
 allora basta impostare una stringa vuota:
 

@@ -79,23 +79,36 @@ const char *
 irc_ctcp_get_reply (struct t_irc_server *server, const char *ctcp)
 {
     struct t_config_option *ptr_option;
-    char option_name[512];
+    char option_name[512], *ctcp_lower;
 
-    snprintf (option_name, sizeof (option_name), "%s.%s", server->name, ctcp);
+    ctcp_lower = weechat_string_tolower (ctcp);
+    if (!ctcp_lower)
+        return NULL;
+
+    snprintf (option_name, sizeof (option_name),
+              "%s.%s", server->name, ctcp_lower);
 
     /* search for CTCP in configuration file, for server */
     ptr_option = weechat_config_search_option (irc_config_file,
                                                irc_config_section_ctcp,
                                                option_name);
     if (ptr_option)
+    {
+        free (ctcp_lower);
         return weechat_config_string (ptr_option);
+    }
 
     /* search for CTCP in configuration file */
     ptr_option = weechat_config_search_option (irc_config_file,
                                                irc_config_section_ctcp,
-                                               ctcp);
+                                               ctcp_lower);
     if (ptr_option)
+    {
+        free (ctcp_lower);
         return weechat_config_string (ptr_option);
+    }
+
+    free (ctcp_lower);
 
     /*
      * no CTCP reply found in config, then return default reply, or NULL

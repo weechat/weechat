@@ -4036,6 +4036,10 @@ commande suivante :
 /set irc.ctcp.version "Je suis sous WeeChat $version, ça déchire !"
 ----
 
+[NOTE]
+Le nom du CTCP doit être en minuscules. Cela signifie que l'option
+_irc.ctcp.VERSION_ ne fonctionnerait pas.
+
 Si vous voulez bloquer le CTCP "VERSION" (ne pas répondre à une demande), alors
 affectez une chaîne vide :
 
