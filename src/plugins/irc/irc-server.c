@@ -1699,6 +1699,9 @@ irc_server_alloc_with_url (const char *irc_url)
     int ipv6, ssl, length;
     struct t_irc_server *ptr_server;
 
+    if (!irc_url || !irc_url[0])
+        return NULL;
+
     irc_url2 = strdup (irc_url);
     if (!irc_url2)
         return NULL;
