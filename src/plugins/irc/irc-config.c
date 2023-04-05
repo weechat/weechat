@@ -1471,9 +1471,9 @@ irc_config_ctcp_create_option (const void *pointer, void *data,
 {
     struct t_config_option *ptr_option;
     int rc;
-    const char *default_value;
+    const char *default_value, *pos_name;
+    char *name_lower;
     static char empty_value[1] = { '\0' };
-    const char *pos_name;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1505,6 +1505,20 @@ irc_config_ctcp_create_option (const void *pointer, void *data,
                 default_value = irc_ctcp_get_default_reply (pos_name);
                 if (!default_value)
                     default_value = empty_value;
+
+                name_lower = weechat_string_tolower (pos_name);
+                if (name_lower && (strcmp (pos_name, name_lower) != 0))
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: warning: the CTCP name \"%s\" must be "
+                          "lower case, the option \"irc.ctcp.%s\" will "
+                          "not work"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME, pos_name,
+                        option_name);
+                }
+                if (name_lower)
+                    free (name_lower);
 
                 ptr_option = weechat_config_new_option (
                     config_file, section,

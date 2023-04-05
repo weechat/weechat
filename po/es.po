@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-04-01 11:12+0200\n"
+"POT-Creation-Date: 2023-04-05 20:55+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9150,6 +9150,12 @@ msgstr "buffer donde mostrar los mensajes recibidos desde el servidor IRC"
 #, c-format
 msgid "%s%s: error creating \"%s\" => \"%s\""
 msgstr "%s%s: error al crear \"%s\" => \"%s\""
+
+#, c-format
+msgid ""
+"%s%s: warning: the CTCP name \"%s\" must be lower case, the option \"irc."
+"ctcp.%s\" will not work"
+msgstr ""
 
 msgid ""
 "format for CTCP reply or empty string for blocking CTCP (no reply), "
