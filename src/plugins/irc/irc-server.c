@@ -1726,6 +1726,9 @@ irc_server_alloc_with_url (const char *irc_url)
     if (!irc_url || !irc_url[0])
         return NULL;
 
+    if (weechat_strncasecmp (irc_url, "irc", 3) != 0)
+        return NULL;
+
     irc_url2 = strdup (irc_url);
     if (!irc_url2)
         return NULL;

@@ -534,8 +534,8 @@ TEST(IrcServer, AllocWithUrl)
 
     POINTERS_EQUAL(NULL, irc_server_alloc_with_url (NULL));
     POINTERS_EQUAL(NULL, irc_server_alloc_with_url (""));
-
     POINTERS_EQUAL(NULL, irc_server_alloc_with_url ("test"));
+    POINTERS_EQUAL(NULL, irc_server_alloc_with_url ("test://irc.example.org"));
 
     /* address */
     server = irc_server_alloc_with_url ("irc://irc.example.org");
