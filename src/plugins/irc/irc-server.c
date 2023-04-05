@@ -1217,9 +1217,17 @@ irc_server_set_tls_version (struct t_irc_server *server)
     {
         if (server->ssl_connected)
         {
-            version = gnutls_protocol_get_version (server->gnutls_sess);
-            weechat_buffer_set (server->buffer, "localvar_set_tls_version",
-                                gnutls_protocol_get_name (version));
+            if (server->gnutls_sess)
+            {
+                version = gnutls_protocol_get_version (server->gnutls_sess);
+                weechat_buffer_set (server->buffer, "localvar_set_tls_version",
+                                    gnutls_protocol_get_name (version));
+            }
+            else
+            {
+                weechat_buffer_set (server->buffer, "localvar_set_tls_version",
+                                    "?");
+            }
         }
         else
         {
@@ -1561,6 +1569,9 @@ irc_server_alloc (const char *name)
     new_server->is_connected = 0;
     new_server->ssl_connected = 0;
     new_server->disconnected = 0;
+    new_server->gnutls_sess = NULL;
+    new_server->tls_cert = NULL;
+    new_server->tls_cert_key = NULL;
     new_server->unterminated_message = NULL;
     new_server->nicks_count = 0;
     new_server->nicks_array = NULL;
@@ -2532,9 +2543,15 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
     }
 
     if (server->ssl_connected)
+    {
+        if (!server->gnutls_sess)
+            return -1;
         rc = gnutls_record_send (server->gnutls_sess, buffer, size_buf);
+    }
     else
+    {
         rc = send (server->sock, buffer, size_buf, 0);
+    }
 
     if (rc < 0)
     {
@@ -3480,6 +3497,10 @@ irc_server_msgq_flush ()
 
 /*
  * Receives data from a server.
+ *
+ * Returns:
+ *   WEECHAT_RC_OK: OK
+ *   WEECHAT_RC_ERROR: error
  */
 
 int
@@ -3505,10 +3526,16 @@ irc_server_recv_cb (const void *pointer, void *data, int fd)
         end_recv = 1;
 
         if (server->ssl_connected)
+        {
+            if (!server->gnutls_sess)
+                return WEECHAT_RC_ERROR;
             num_read = gnutls_record_recv (server->gnutls_sess, buffer,
                                            sizeof (buffer) - 2);
+        }
         else
+        {
             num_read = recv (server->sock, buffer, sizeof (buffer) - 2, 0);
+        }
 
         if (num_read > 0)
         {
@@ -6126,9 +6153,9 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, is_connected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, ssl_connected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, disconnected, INTEGER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_server, gnutls_sess, OTHER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_server, tls_cert, OTHER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_server, tls_cert_key, OTHER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, gnutls_sess, POINTER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, tls_cert, POINTER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, tls_cert_key, POINTER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, unterminated_message, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nicks_count, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nicks_array, STRING, 0, "*,nicks_count", NULL);
@@ -6877,6 +6904,8 @@ irc_server_print_log ()
         weechat_log_printf ("  ssl_connected . . . . . . : %d",    ptr_server->ssl_connected);
         weechat_log_printf ("  disconnected. . . . . . . : %d",    ptr_server->disconnected);
         weechat_log_printf ("  gnutls_sess . . . . . . . : 0x%lx", ptr_server->gnutls_sess);
+        weechat_log_printf ("  tls_cert. . . . . . . . . : 0x%lx", ptr_server->tls_cert);
+        weechat_log_printf ("  tls_cert_key. . . . . . . : 0x%lx", ptr_server->tls_cert_key);
         weechat_log_printf ("  unterminated_message. . . : '%s'",  ptr_server->unterminated_message);
         weechat_log_printf ("  nicks_count . . . . . . . : %d",    ptr_server->nicks_count);
         weechat_log_printf ("  nicks_array . . . . . . . : 0x%lx", ptr_server->nicks_array);

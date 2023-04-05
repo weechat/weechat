@@ -569,7 +569,7 @@ def test_hdata():
     check(weechat.hdata_get_var_type_string(hdata_line_data, 'prefix') == 'shared_string')
     check(weechat.hdata_get_var_type_string(hdata_line_data, 'date') == 'time')
     check(weechat.hdata_get_var_type_string(hdata_hotlist, 'creation_time.tv_usec') == 'long')
-    check(weechat.hdata_get_var_type_string(hdata_irc_server, 'gnutls_sess') == 'other')
+    check(weechat.hdata_get_var_type_string(hdata_irc_server, 'sasl_scram_salted_pwd') == 'other')
     # hdata_get_var_array_size
     check(weechat.hdata_get_var_array_size(hdata_buffer, buffer2, 'name') == -1)
     check(weechat.hdata_get_var_array_size(hdata_buffer, buffer2, 'highlight_tags_array') >= 0)

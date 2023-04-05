@@ -551,23 +551,32 @@ irc_bar_item_tls_version (const void *pointer, void *data,
     {
         if (server->ssl_connected)
         {
-            version = gnutls_protocol_get_version (server->gnutls_sess);
-            switch (version)
+            if (server->gnutls_sess)
             {
+                version = gnutls_protocol_get_version (server->gnutls_sess);
+                switch (version)
+                {
 #if LIBGNUTLS_VERSION_NUMBER >= 0x030603 /* 3.6.3 */
-                case GNUTLS_TLS1_3:
-                    color = IRC_COLOR_ITEM_TLS_VERSION_OK;
-                    break;
+                    case GNUTLS_TLS1_3:
+                        color = IRC_COLOR_ITEM_TLS_VERSION_OK;
+                        break;
 #endif
-                case GNUTLS_TLS1_2:
-                    color = IRC_COLOR_ITEM_TLS_VERSION_DEPRECATED;
-                    break;
-                default:
-                    color = IRC_COLOR_ITEM_TLS_VERSION_INSECURE;
+                    case GNUTLS_TLS1_2:
+                        color = IRC_COLOR_ITEM_TLS_VERSION_DEPRECATED;
+                        break;
+                    default:
+                        color = IRC_COLOR_ITEM_TLS_VERSION_INSECURE;
+                }
+                snprintf (buf, sizeof (buf), "%s%s", color,
+                          gnutls_protocol_get_name (version));
+                return strdup (buf);
             }
-            snprintf (buf, sizeof (buf), "%s%s", color,
-                      gnutls_protocol_get_name (version));
-            return strdup (buf);
+            else
+            {
+                snprintf (buf, sizeof (buf),
+                          "%s?", IRC_COLOR_ITEM_TLS_VERSION_INSECURE);
+                return strdup (buf);
+            }
         }
         else
         {
