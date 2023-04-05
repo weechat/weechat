@@ -1826,7 +1826,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
     const char *pos_error;
     pid_t pid;
 
-    /* initialize GnuTLS if SSL asked */
+    /* initialize GnuTLS if TLS asked */
     if (HOOK_CONNECT(hook_connect, gnutls_sess))
     {
         if (gnutls_init (HOOK_CONNECT(hook_connect, gnutls_sess), GNUTLS_CLIENT) != GNUTLS_E_SUCCESS)
