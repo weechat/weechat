@@ -147,11 +147,11 @@ doc_gen_close_file (const char *path, const char *doc, const char *name,
               path, DIR_SEPARATOR, doc, name, lang);
 
     rc_temp = weecrypto_hash_file (filename_temp, GCRY_MD_SHA512,
-                                   &hash_temp, NULL);
+                                   hash_temp, NULL);
     if (!rc_temp)
         return -1;
 
-    rc = weecrypto_hash_file (filename, GCRY_MD_SHA512, &hash, NULL);
+    rc = weecrypto_hash_file (filename, GCRY_MD_SHA512, hash, NULL);
 
     if (!rc || (memcmp (hash_temp, hash, sizeof (hash)) != 0))
     {
