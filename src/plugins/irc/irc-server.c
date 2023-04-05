@@ -1695,7 +1695,20 @@ irc_server_alloc (const char *name)
 }
 
 /*
- * Initializes a server with URL of this form: irc://nick:pass@irc.toto.org:6667
+ * Initializes a server with URL, using this format:
+ *
+ *   irc[6][s]://[[nick][:pass]@]server[:port][/#chan1[,#chan2...]]
+ *
+ * Fields:
+ *   - "irc": protocol (mandatory)
+ *   - "6": allow use of IPv6 (with fallback on IPv4)
+ *   - "s": use SSL
+ *   - "nick": nickname to use on the server
+ *   - "pass": password for the server (can be used as nick password on most
+ *             servers)
+ *   - "server": server address
+ *   - "port": port (default is 6667 without SSL and 6697 with SSL)
+ *   - "#chan1": channel to auto-join
  *
  * Returns pointer to new server, NULL if error.
  */
