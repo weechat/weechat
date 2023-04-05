@@ -1406,6 +1406,7 @@ irc_config_msgbuffer_create_option (const void *pointer, void *data,
                                     const char *option_name, const char *value)
 {
     struct t_config_option *ptr_option;
+    char *name_lower;
     int rc;
 
     /* make C compiler happy */
@@ -1432,6 +1433,20 @@ irc_config_msgbuffer_create_option (const void *pointer, void *data,
         {
             if (value)
             {
+                name_lower = weechat_string_tolower (option_name);
+                if (name_lower && (strcmp (option_name, name_lower) != 0))
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: warning: the command name \"%s\" must be "
+                          "lower case, the option \"irc.msgbuffer.%s\" will "
+                          "not work"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                        option_name, option_name);
+                }
+                if (name_lower)
+                    free (name_lower);
+
                 ptr_option = weechat_config_new_option (
                     config_file, section,
                     option_name, "integer",
