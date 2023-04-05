@@ -31,6 +31,7 @@ New features::
   * core: add relative move of read marker with `/buffer set unread [+/-]N` (issue #1895)
   * core: add access to hashtable properties in evaluation of expressions (issue #1888)
   * core: display similar command names when a command is unknown (issue #1877)
+  * core: rename option weechat.color.status_name_ssl to weechat.color.status_name_tls
   * core, plugins: make many identifiers case sensitive (issue #1872, issue #398, bug #32213)
   * core: add item "mouse_status" in default status bar, change default color to lightgreen
   * api: add function config_set_version (issue #1238)

@@ -282,7 +282,7 @@ struct t_config_option *config_color_status_filter = NULL;
 struct t_config_option *config_color_status_more = NULL;
 struct t_config_option *config_color_status_mouse = NULL;
 struct t_config_option *config_color_status_name = NULL;
-struct t_config_option *config_color_status_name_ssl = NULL;
+struct t_config_option *config_color_status_name_tls = NULL;
 struct t_config_option *config_color_status_nicklist_count = NULL;
 struct t_config_option *config_color_status_number = NULL;
 struct t_config_option *config_color_status_time = NULL;
@@ -4513,11 +4513,11 @@ config_weechat_init_options ()
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
-        config_color_status_name_ssl = config_file_new_option (
+        config_color_status_name_tls = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
-            "status_name_ssl", "color",
+            "status_name_tls", "color",
             N_("text color for current buffer name in status bar, if data are "
-               "secured with a protocol like SSL"),
+               "secured with a protocol like TLS"),
             NULL, -1, 0, "lightgreen", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
@@ -4745,7 +4745,7 @@ config_weechat_init_options ()
             "gnutls_ca_system", "boolean",
             N_("load system's default trusted certificate authorities on startup; "
                "this can be turned off to save some memory only if you are not "
-               "using SSL connections at all"),
+               "using TLS connections at all"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL,
             &config_change_network_gnutls_ca, NULL, NULL,
