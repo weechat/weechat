@@ -90,7 +90,7 @@ relay_signal_upgrade_cb (const void *pointer, void *data,
 {
     struct t_relay_server *ptr_server;
     struct t_relay_client *ptr_client;
-    int quit, ssl_disconnected;
+    int quit, tls_disconnected;
 
     /* make C compiler happy */
     (void) pointer;
@@ -117,24 +117,24 @@ relay_signal_upgrade_cb (const void *pointer, void *data,
     }
 
     quit = (signal_data && (strcmp (signal_data, "quit") == 0));
-    ssl_disconnected = 0;
+    tls_disconnected = 0;
 
     for (ptr_client = relay_clients; ptr_client;
          ptr_client = ptr_client->next_client)
     {
         /*
-         * FIXME: it's not possible to upgrade with SSL clients connected (GnuTLS
+         * FIXME: it's not possible to upgrade with TLS clients connected (GnuTLS
          * lib can't reload data after upgrade), so we close connection for
-         * all SSL clients currently connected
+         * all TLS clients currently connected
          */
-        if ((ptr_client->sock >= 0) && (ptr_client->ssl || quit))
+        if ((ptr_client->sock >= 0) && (ptr_client->tls || quit))
         {
             if (!quit)
             {
-                ssl_disconnected++;
+                tls_disconnected++;
                 weechat_printf (NULL,
                                 _("%s%s: disconnecting from client %s%s%s because "
-                                  "upgrade can't work for clients connected via SSL"),
+                                  "upgrade can't work for clients connected via TLS"),
                                 weechat_prefix ("error"),
                                 RELAY_PLUGIN_NAME,
                                 RELAY_COLOR_CHAT_CLIENT,
@@ -144,15 +144,15 @@ relay_signal_upgrade_cb (const void *pointer, void *data,
             relay_client_set_status (ptr_client, RELAY_STATUS_DISCONNECTED);
         }
     }
-    if (ssl_disconnected > 0)
+    if (tls_disconnected > 0)
     {
         weechat_printf (NULL,
                         /* TRANSLATORS: "%s" after "%d" is "client" or "clients" */
-                        _("%s%s: disconnected from %d %s (SSL connection "
+                        _("%s%s: disconnected from %d %s (TLS connection "
                           "not supported with upgrade)"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        ssl_disconnected,
-                        NG_("client", "clients", ssl_disconnected));
+                        tls_disconnected,
+                        NG_("client", "clients", tls_disconnected));
     }
 
     return WEECHAT_RC_OK;

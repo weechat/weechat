@@ -80,8 +80,8 @@ struct t_config_option *relay_config_network_nonce_size = NULL;
 struct t_config_option *relay_config_network_password = NULL;
 struct t_config_option *relay_config_network_password_hash_algo = NULL;
 struct t_config_option *relay_config_network_password_hash_iterations = NULL;
-struct t_config_option *relay_config_network_ssl_cert_key = NULL;
-struct t_config_option *relay_config_network_ssl_priorities = NULL;
+struct t_config_option *relay_config_network_tls_cert_key = NULL;
+struct t_config_option *relay_config_network_tls_priorities = NULL;
 struct t_config_option *relay_config_network_totp_secret = NULL;
 struct t_config_option *relay_config_network_totp_window = NULL;
 struct t_config_option *relay_config_network_websocket_allowed_origins = NULL;
@@ -244,11 +244,11 @@ relay_config_change_network_ipv6_cb (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on option "relay.network.ssl_cert_key".
+ * Callback for changes on option "relay.network.tls_cert_key".
  */
 
 void
-relay_config_change_network_ssl_cert_key (const void *pointer, void *data,
+relay_config_change_network_tls_cert_key (const void *pointer, void *data,
                                           struct t_config_option *option)
 {
     /* make C compiler happy */
@@ -257,7 +257,7 @@ relay_config_change_network_ssl_cert_key (const void *pointer, void *data,
     (void) option;
 
     if (relay_network_init_ok)
-        relay_network_set_ssl_cert_key (1);
+        relay_network_set_tls_cert_key (1);
 }
 
 /*
@@ -316,7 +316,7 @@ end:
 }
 
 /*
- * Checks if option "relay.network.ssl_priorities" is valid.
+ * Checks if option "relay.network.tls_priorities" is valid.
  *
  * Returns:
  *   1: value is valid
@@ -324,7 +324,7 @@ end:
  */
 
 int
-relay_config_check_network_ssl_priorities (const void *pointer, void *data,
+relay_config_check_network_tls_priorities (const void *pointer, void *data,
                                            struct t_config_option *option,
                                            const char *value)
 {
@@ -359,11 +359,11 @@ relay_config_check_network_ssl_priorities (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on option "relay.network.ssl_priorities".
+ * Callback for changes on option "relay.network.tls_priorities".
  */
 
 void
-relay_config_change_network_ssl_priorities (const void *pointer, void *data,
+relay_config_change_network_tls_priorities (const void *pointer, void *data,
                                             struct t_config_option *option)
 {
     /* make C compiler happy */
@@ -743,7 +743,7 @@ relay_config_create_option_port_path (const void *pointer, void *data,
                                       const char *option_name,
                                       const char *value)
 {
-    int rc, protocol_number, ipv4, ipv6, ssl, unix_socket;
+    int rc, protocol_number, ipv4, ipv6, tls, unix_socket;
     char *error, *protocol, *protocol_args;
     long port;
     struct t_relay_server *ptr_server;
@@ -757,7 +757,7 @@ relay_config_create_option_port_path (const void *pointer, void *data,
     protocol_number = -1;
     port = -1;
 
-    relay_server_get_protocol_args (option_name, &ipv4, &ipv6, &ssl,
+    relay_server_get_protocol_args (option_name, &ipv4, &ipv6, &tls,
                                     &unix_socket, &protocol, &protocol_args);
 
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
@@ -829,7 +829,7 @@ relay_config_create_option_port_path (const void *pointer, void *data,
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         if (relay_server_new (option_name, protocol_number, protocol_args,
-                              port, value, ipv4, ipv6, ssl, unix_socket))
+                              port, value, ipv4, ipv6, tls, unix_socket))
         {
             /* create configuration option */
             if (unix_socket)
@@ -889,6 +889,111 @@ relay_config_reload (const void *pointer, void *data,
 }
 
 /*
+ * Updates options in configuration file while reading the file.
+ */
+
+struct t_hashtable *
+relay_config_update_cb (const void *pointer, void *data,
+                        struct t_config_file *config_file,
+                        int version_read,
+                        struct t_hashtable *data_read)
+{
+    const char *ptr_section, *ptr_option;
+    char *new_option, *pos;
+    int changes;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) config_file;
+
+    /* nothing to do if the config file is already up-to-date */
+    if (version_read >= RELAY_CONFIG_VERSION)
+        return NULL;
+
+    changes = 0;
+
+    if (version_read < 2)
+    {
+        /*
+         * changes in v2:
+         *   - options "ssl*" renamed to "tls*"
+         *   - protocol "ssl" renamed to "tls" in port/path sections
+         */
+        ptr_section = weechat_hashtable_get (data_read, "section");
+        ptr_option = weechat_hashtable_get (data_read, "option");
+        if (ptr_section
+            && ptr_option
+            && (strcmp (ptr_section, "network") == 0))
+        {
+            if (strncmp (ptr_option, "ssl", 3) == 0)
+            {
+                new_option = strdup (ptr_option);
+                if (new_option)
+                {
+                    memcpy (new_option, "tls", 3);
+                    weechat_printf (
+                        NULL,
+                        _("Relay option renamed: \"relay.network.%s\" => "
+                          "\"relay.network.%s\""),
+                        ptr_option, new_option);
+                    weechat_hashtable_set (data_read, "option", new_option);
+                    changes++;
+                    free (new_option);
+                }
+            }
+        }
+        else if (ptr_section
+                 && ptr_option
+                 && ((strcmp (ptr_section, "port") == 0)
+                     || (strcmp (ptr_section, "path") == 0)))
+        {
+            new_option = strdup (ptr_option);
+            if (new_option)
+            {
+                pos = new_option;
+                while (1)
+                {
+                    if (strncmp (pos, "ipv4.", 5) == 0)
+                    {
+                        pos += 5;
+                    }
+                    else if (strncmp (pos, "ipv6.", 5) == 0)
+                    {
+                        pos += 5;
+                    }
+                    else if (strncmp (pos, "ssl.", 4) == 0)
+                    {
+                        memcpy (pos, "tls", 3);
+                        pos += 4;
+                    }
+                    else if (strncmp (pos, "unix.", 5) == 0)
+                    {
+                        pos += 5;
+                    }
+                    else
+                        break;
+                }
+                if (strcmp (ptr_option, new_option) != 0)
+                {
+                    weechat_printf (
+                        NULL,
+                        _("Relay option renamed: "
+                          "\"relay.%s.%s\" => \"relay.%s.%s\""),
+                        ptr_section, ptr_option,
+                        ptr_section, new_option);
+                    weechat_hashtable_set (data_read, "option", new_option);
+                    changes++;
+                }
+                free (new_option);
+            }
+        }
+    }
+
+    return (changes) ? data_read : NULL;
+}
+
+/*
  * Initializes relay configuration file.
  *
  * Returns:
@@ -903,6 +1008,14 @@ relay_config_init ()
                                             &relay_config_reload, NULL, NULL);
     if (!relay_config_file)
         return 0;
+
+    if (!weechat_config_set_version (relay_config_file, RELAY_CONFIG_VERSION,
+                                     &relay_config_update_cb, NULL, NULL))
+    {
+        weechat_config_free (relay_config_file);
+        relay_config_file = NULL;
+        return 0;
+    }
 
     /* section look */
     relay_config_section_look = weechat_config_new_section (
@@ -1139,27 +1252,27 @@ relay_config_init ()
                "if your CPU is slow"),
             NULL, 1, 1000000, "100000", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-        relay_config_network_ssl_cert_key = weechat_config_new_option (
+        relay_config_network_tls_cert_key = weechat_config_new_option (
             relay_config_file, relay_config_section_network,
-            "ssl_cert_key", "string",
-            N_("file with SSL certificate and private key (for serving clients "
-               "with SSL) "
+            "tls_cert_key", "string",
+            N_("file with TLS certificate and private key (for serving clients "
+               "with TLS) "
                "(path is evaluated, see function string_eval_path_home in "
                "plugin API reference)"),
-            NULL, 0, 0, "${weechat_config_dir}/ssl/relay.pem", NULL, 0,
+            NULL, 0, 0, "${weechat_config_dir}/tls/relay.pem", NULL, 0,
             NULL, NULL, NULL,
-            &relay_config_change_network_ssl_cert_key, NULL, NULL,
+            &relay_config_change_network_tls_cert_key, NULL, NULL,
             NULL, NULL, NULL);
-        relay_config_network_ssl_priorities = weechat_config_new_option (
+        relay_config_network_tls_priorities = weechat_config_new_option (
             relay_config_file, relay_config_section_network,
-            "ssl_priorities", "string",
+            "tls_priorities", "string",
             N_("string with priorities for gnutls (for syntax, see "
                "documentation of function gnutls_priority_init in gnutls "
                "manual, common strings are: \"PERFORMANCE\", \"NORMAL\", "
                "\"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"),
             NULL, 0, 0, "NORMAL:-VERS-SSL3.0", NULL, 0,
-            &relay_config_check_network_ssl_priorities, NULL, NULL,
-            &relay_config_change_network_ssl_priorities, NULL, NULL,
+            &relay_config_check_network_tls_priorities, NULL, NULL,
+            &relay_config_change_network_tls_priorities, NULL, NULL,
             NULL, NULL, NULL);
         relay_config_network_totp_secret = weechat_config_new_option (
             relay_config_file, relay_config_section_network,

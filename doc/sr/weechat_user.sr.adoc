@@ -4095,18 +4095,18 @@ TOTP тајна мора да се постави у програму WeeChat и
 /set relay.network.totp_secret "${sec.data.relay_totp}"
 ----
 
-[[relay_ssl]]
-=== SSL
+[[relay_tls]]
+=== TLS
 
-SSL можете да користите креирањем сертификата и приватног кључа и употребом префикса „ssl.” у имену протокола.
+TLS можете да користите креирањем сертификата и приватног кључа и употребом префикса „tls.” у имену протокола.
 
-Подразумевана путања до сертификата/кључа је дефинисана опцијом <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
+Подразумевана путања до сертификата/кључа је дефинисана опцијом <<option_relay.network.tls_cert_key,relay.network.tls_cert_key>>.
 
 Сертификат и приватни кључ можете да креирате следећим командама:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
+$ mkdir -p ~/.config/weechat/tls
+$ cd ~/.config/weechat/tls
 $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----
 
@@ -4116,7 +4116,7 @@ $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out rel
 Ако се програм WeeChat већ извршава, сертификат и приватни кључ можете поново да учитате командом:
 
 ----
-/relay sslcertkey
+/relay tlscertkey
 ----
 
 [[relay_irc_proxy]]
@@ -4132,13 +4132,13 @@ $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out rel
 PASS сервер:лозинка
 ----
 
-Пример: IRC прокси са SSL за било који сервер (клијент ће изабрати):
+Пример: IRC прокси са TLS за било који сервер (клијент ће изабрати):
 
 ----
-/relay add ssl.irc 8000
+/relay add tls.irc 8000
 ----
 
-Пример: IRC прокси без SSL само за сервер „libera”:
+Пример: IRC прокси без TLS само за сервер „libera”:
 
 ----
 /relay add irc.libera 8000

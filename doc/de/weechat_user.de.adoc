@@ -4406,22 +4406,22 @@ sind erlaubt, zum Beispiel:
 /set relay.network.totp_secret "${sec.data.relay_totp}"
 ----
 
-[[relay_ssl]]
-=== SSL
+[[relay_tls]]
+=== TLS
 
-Man kann SSL mittels eines selbst erstellten Zertifikates und eines privaten
-Schlüssels nutzen. Um SSL für die Verbindung zu aktivieren stellt man dem
-Protokollnamen ein "ssl" voran.
+Man kann TLS mittels eines selbst erstellten Zertifikates und eines privaten
+Schlüssels nutzen. Um TLS für die Verbindung zu aktivieren stellt man dem
+Protokollnamen ein "tls" voran.
 
 Der Standardpfad zum Zertifikat/Schlüssel wird durch die Option definiert
-<<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
+<<option_relay.network.tls_cert_key,relay.network.tls_cert_key>>.
 
 Ein Zertifikat und einen privaten Schlüssel kann man mit folgenden Befehlen
 erstellen:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
+$ mkdir -p ~/.config/weechat/tls
+$ cd ~/.config/weechat/tls
 $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----
 
@@ -4433,7 +4433,7 @@ Sollte WeeChat schon gestartet worden sein, kann man das Zertifikat und der priv
 Schlüssel mittels folgendem Befehl nachträglich geladen werden:
 
 ----
-/relay sslcertkey
+/relay tlscertkey
 ----
 
 [[relay_irc_proxy]]
@@ -4453,13 +4453,13 @@ des zu nutzenden Servers mit dem IRC Befehl "PASS" anfordern (siehe folgendes Be
 PASS server:meinPasswort
 ----
 
-Beispiel: IRC Proxy mit SSL für einen beliebigen Server (Client wählt aus):
+Beispiel: IRC Proxy mit TLS für einen beliebigen Server (Client wählt aus):
 
 ----
-/relay add ssl.irc 8000
+/relay add tls.irc 8000
 ----
 
-Beispiel: IRC Proxy ohne SSL und nur für "libera":
+Beispiel: IRC Proxy ohne TLS und nur für "libera":
 
 ----
 /relay add irc.libera 8000

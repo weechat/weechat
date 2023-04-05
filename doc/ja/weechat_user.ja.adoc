@@ -4488,21 +4488,21 @@ TOTP の secret は base32 でエンコードされた文字列
 /set relay.network.totp_secret "${sec.data.relay_totp}"
 ----
 
-[[relay_ssl]]
-=== SSL
+[[relay_tls]]
+=== TLS
 
-証明書と秘密鍵を作り、プロトコル名の最初に "ssl." を付けることで
-SSL 経由でリレーを利用することができます。
+証明書と秘密鍵を作り、プロトコル名の最初に "tls." を付けることで
+TLS 経由でリレーを利用することができます。
 
 // TRANSLATION MISSING
 The default path to certificate/key is defined by option
-<<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
+<<option_relay.network.tls_cert_key,relay.network.tls_cert_key>>.
 
 以下のコマンドを使って証明書と秘密鍵ファイルを作成します:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
+$ mkdir -p ~/.config/weechat/tls
+$ cd ~/.config/weechat/tls
 $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----
 
@@ -4515,7 +4515,7 @@ WeeChat
 が既に起動している場合、以下のコマンドで証明書と秘密鍵をリロードできます:
 
 ----
-/relay sslcertkey
+/relay tlscertkey
 ----
 
 [[relay_irc_proxy]]
@@ -4535,13 +4535,13 @@ IRC の "PASS" コマンドに含めて送信するようにしてください�
 PASS server:mypass
 ----
 
-例: SSL を使い、全てのサーバに対して共通の IRC プロキシを設定 (サーバはクライアントが選択):
+例: TLS を使い、全てのサーバに対して共通の IRC プロキシを設定 (サーバはクライアントが選択):
 
 ----
-/relay add ssl.irc 8000
+/relay add tls.irc 8000
 ----
 
-例: SSL を使わず、内部名 "libera" のサーバに対して IRC プロキシを設定:
+例: TLS を使わず、内部名 "libera" のサーバに対して IRC プロキシを設定:
 
 ----
 /relay add irc.libera 8000

@@ -57,7 +57,7 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
                       weechat_infolist_string (infolist, "name"));
             weechat_completion_list_add (completion, protocol_name,
                                          0, WEECHAT_LIST_POS_SORT);
-            snprintf (protocol_name, sizeof (protocol_name), "ssl.irc.%s",
+            snprintf (protocol_name, sizeof (protocol_name), "tls.irc.%s",
                       weechat_infolist_string (infolist, "name"));
             weechat_completion_list_add (completion, protocol_name,
                                          0, WEECHAT_LIST_POS_SORT);
@@ -66,7 +66,7 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
                       weechat_infolist_string (infolist, "name"));
             weechat_completion_list_add (completion, protocol_name,
                                          0, WEECHAT_LIST_POS_SORT);
-            snprintf (protocol_name, sizeof (protocol_name), "unix.ssl.irc.%s",
+            snprintf (protocol_name, sizeof (protocol_name), "unix.tls.irc.%s",
                       weechat_infolist_string (infolist, "name"));
             weechat_completion_list_add (completion, protocol_name,
                                          0, WEECHAT_LIST_POS_SORT);
@@ -77,13 +77,13 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
     /* TCP socket */
     weechat_completion_list_add (completion, "weechat",
                                  0, WEECHAT_LIST_POS_SORT);
-    weechat_completion_list_add (completion, "ssl.weechat",
+    weechat_completion_list_add (completion, "tls.weechat",
                                  0, WEECHAT_LIST_POS_SORT);
 
     /* UNIX domain socket */
     weechat_completion_list_add (completion, "unix.weechat",
                                  0, WEECHAT_LIST_POS_SORT);
-    weechat_completion_list_add (completion, "unix.ssl.weechat",
+    weechat_completion_list_add (completion, "unix.tls.weechat",
                                  0, WEECHAT_LIST_POS_SORT);
 
     return WEECHAT_RC_OK;

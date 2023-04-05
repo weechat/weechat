@@ -101,8 +101,8 @@ struct t_relay_client
     char *desc;                        /* description, used for display     */
     int sock;                          /* socket for connection             */
     int server_port;                   /* port used for connection          */
-    int ssl;                           /* 1 if SSL is enabled               */
-    gnutls_session_t gnutls_sess;      /* gnutls session (only if SSL used) */
+    int tls;                           /* 1 if TLS is enabled               */
+    gnutls_session_t gnutls_sess;      /* gnutls session (only if TLS used) */
     struct t_hook *hook_timer_handshake; /* timer for doing gnutls handshake*/
     int gnutls_handshake_ok;           /* 1 if handshake was done and OK    */
     enum t_relay_client_websocket_status websocket; /* websocket status     */
@@ -111,7 +111,7 @@ struct t_relay_client
     char *real_ip;                     /* real IP (X-Real-IP HTTP header)   */
     enum t_relay_status status;        /* status (connecting, active,..)    */
     enum t_relay_protocol protocol;    /* protocol (irc,..)                 */
-    char *protocol_string;             /* example: "ipv6.ssl.irc.libera"    */
+    char *protocol_string;             /* example: "ipv6.tls.irc.libera"    */
     char *protocol_args;               /* arguments used for protocol       */
                                        /* example: server for irc protocol  */
     char *nonce;                       /* nonce used in salt of hashed pwd  */

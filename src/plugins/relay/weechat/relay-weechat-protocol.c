@@ -349,7 +349,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
  * Format is:  init arg1=value1,arg2=value2
  *
  * Allowed arguments:
- *   password       plain text password (recommended with SSL only)
+ *   password       plain text password (recommended with TLS only)
  *   password_hash  hashed password, value is: algorithm:[parameters:]hash
  *                  supported algorithms: sha256, sha512 and pbkdf2
  *                  for pbkdf2, parameters are: algorithm, salt, iterations

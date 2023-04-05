@@ -30,7 +30,7 @@
 
 
 int relay_network_init_ok = 0;
-int relay_network_init_ssl_cert_key_ok = 0;
+int relay_network_init_tls_cert_key_ok = 0;
 
 gnutls_certificate_credentials_t relay_gnutls_x509_cred;
 gnutls_priority_t *relay_gnutls_priority_cache = NULL;
@@ -38,14 +38,14 @@ gnutls_dh_params_t *relay_gnutls_dh_params = NULL;
 
 
 /*
- * Sets SSL certificate/key file.
+ * Sets TLS certificate/key file.
  *
  * If verbose == 1, a message is displayed if successful, otherwise a warning
  * (if no cert/key found in file).
  */
 
 void
-relay_network_set_ssl_cert_key (int verbose)
+relay_network_set_tls_cert_key (int verbose)
 {
     char *certkey_path;
     int ret;
@@ -54,7 +54,7 @@ relay_network_set_ssl_cert_key (int verbose)
     gnutls_certificate_free_credentials (relay_gnutls_x509_cred);
     gnutls_certificate_allocate_credentials (&relay_gnutls_x509_cred);
 
-    relay_network_init_ssl_cert_key_ok = 0;
+    relay_network_init_tls_cert_key_ok = 0;
 
     options = weechat_hashtable_new (
         32,
@@ -64,7 +64,7 @@ relay_network_set_ssl_cert_key (int verbose)
     if (options)
         weechat_hashtable_set (options, "directory", "config");
     certkey_path = weechat_string_eval_path_home (
-        weechat_config_string (relay_config_network_ssl_cert_key),
+        weechat_config_string (relay_config_network_tls_cert_key),
         NULL, NULL, options);
     if (options)
         weechat_hashtable_free (options);
@@ -76,11 +76,11 @@ relay_network_set_ssl_cert_key (int verbose)
                                                     GNUTLS_X509_FMT_PEM);
         if (ret >= 0)
         {
-            relay_network_init_ssl_cert_key_ok = 1;
+            relay_network_init_tls_cert_key_ok = 1;
             if (verbose)
             {
                 weechat_printf (NULL,
-                                _("%s: SSL certificate and key have been "
+                                _("%s: TLS certificate and key have been "
                                   "set"),
                                 RELAY_PLUGIN_NAME);
             }
@@ -90,8 +90,8 @@ relay_network_set_ssl_cert_key (int verbose)
             if (verbose)
             {
                 weechat_printf (NULL,
-                                _("%s%s: warning: no SSL certificate/key "
-                                  "found (option relay.network.ssl_cert_key)"),
+                                _("%s%s: warning: no TLS certificate/key "
+                                  "found (option relay.network.tls_cert_key)"),
                                 weechat_prefix ("error"), RELAY_PLUGIN_NAME);
             }
         }
@@ -108,11 +108,11 @@ relay_network_set_priority ()
 {
     if (gnutls_priority_init (relay_gnutls_priority_cache,
                               weechat_config_string (
-                                  relay_config_network_ssl_priorities),
+                                  relay_config_network_tls_priorities),
                               NULL) != GNUTLS_E_SUCCESS)
     {
         weechat_printf (NULL,
-                        _("%s%s: unable to initialize priority for SSL"),
+                        _("%s%s: unable to initialize priority for TLS"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME);
         free (relay_gnutls_priority_cache);
         relay_gnutls_priority_cache = NULL;
@@ -128,7 +128,7 @@ relay_network_init ()
 {
     /* credentials */
     gnutls_certificate_allocate_credentials (&relay_gnutls_x509_cred);
-    relay_network_set_ssl_cert_key (0);
+    relay_network_set_tls_cert_key (0);
 
     /* priority */
     relay_gnutls_priority_cache = malloc (sizeof (*relay_gnutls_priority_cache));
