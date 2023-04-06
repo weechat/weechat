@@ -997,8 +997,18 @@ irc_config_server_default_change_cb (const void *pointer, void *data,
                 switch (index_option)
                 {
                     case IRC_SERVER_OPTION_ADDRESSES:
-                        irc_server_set_addresses (ptr_server,
-                                                  weechat_config_string (option));
+                        irc_server_set_addresses (
+                            ptr_server,
+                            weechat_config_string (option),
+                            IRC_SERVER_OPTION_BOOLEAN(
+                                ptr_server, IRC_SERVER_OPTION_TLS));
+                        break;
+                    case IRC_SERVER_OPTION_TLS:
+                        irc_server_set_addresses (
+                            ptr_server,
+                            IRC_SERVER_OPTION_STRING(
+                                ptr_server, IRC_SERVER_OPTION_ADDRESSES),
+                            weechat_config_boolean (option));
                         break;
                     case IRC_SERVER_OPTION_NICKS:
                         irc_server_set_nicks (ptr_server,
@@ -1006,10 +1016,15 @@ irc_config_server_default_change_cb (const void *pointer, void *data,
                         break;
                     case IRC_SERVER_OPTION_AWAY_CHECK:
                     case IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS:
-                        if (IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
+                        if (IRC_SERVER_OPTION_INTEGER(
+                                ptr_server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
+                        {
                             irc_server_check_away (ptr_server);
+                        }
                         else
+                        {
                             irc_server_remove_away (ptr_server);
+                        }
                         break;
                     case IRC_SERVER_OPTION_REGISTERED_MODE:
                         irc_mode_registered_mode_change (ptr_server);
@@ -1280,7 +1295,17 @@ irc_config_server_change_cb (const void *pointer, void *data,
                     irc_server_set_addresses (
                         ptr_server,
                         IRC_SERVER_OPTION_STRING(ptr_server,
-                                                 IRC_SERVER_OPTION_ADDRESSES));
+                                                 IRC_SERVER_OPTION_ADDRESSES),
+                        IRC_SERVER_OPTION_BOOLEAN(ptr_server,
+                                                  IRC_SERVER_OPTION_TLS));
+                    break;
+                case IRC_SERVER_OPTION_TLS:
+                    irc_server_set_addresses (
+                        ptr_server,
+                        IRC_SERVER_OPTION_STRING(ptr_server,
+                                                 IRC_SERVER_OPTION_ADDRESSES),
+                        IRC_SERVER_OPTION_BOOLEAN(ptr_server,
+                                                  IRC_SERVER_OPTION_TLS));
                     break;
                 case IRC_SERVER_OPTION_NICKS:
                     irc_server_set_nicks (

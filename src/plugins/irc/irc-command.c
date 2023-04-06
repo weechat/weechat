@@ -5549,7 +5549,7 @@ IRC_COMMAND_CALLBACK(server)
 {
     int i, detailed_list, one_server_found, length, count, refresh;
     struct t_irc_server *ptr_server2, *server_found, *new_server;
-    char *server_name, *msg_no_quotes, *message;
+    char *server_name, *msg_no_quotes, *message, *description;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -5647,9 +5647,11 @@ IRC_COMMAND_CALLBACK(server)
             new_server->options[IRC_SERVER_OPTION_ADDRESSES], argv[3], 1);
         irc_server_apply_command_line_options (new_server, argc, argv);
 
+        description = irc_server_get_addresses_ports_tls (new_server);
+
         weechat_printf (
             NULL,
-            _("%s: server added: %s%s%s%s%s"),
+            _("%s: server added: %s%s%s%s%s -> %s"),
             IRC_PLUGIN_NAME,
             IRC_COLOR_CHAT_SERVER,
             new_server->name,
@@ -5657,7 +5659,11 @@ IRC_COMMAND_CALLBACK(server)
             /* TRANSLATORS: "temporary IRC server" */
             (new_server->temp_server) ? _(" (temporary)") : "",
             /* TRANSLATORS: "fake IRC server" */
-            (new_server->fake_server) ? _(" (fake)") : "");
+            (new_server->fake_server) ? _(" (fake)") : "",
+            description);
+
+        if (description)
+            free (description);
 
         /* do not connect to server after adding it */
         /*
@@ -6978,7 +6984,8 @@ irc_command_init ()
         N_("    server: server name, which can be:\n"
            "            - internal server name (added by /server add, "
            "recommended usage)\n"
-           "            - hostname/port or IP/port, port is 6667 by default\n"
+           "            - hostname/port or IP/port, port is 6697 by default "
+           "for TLS, 6667 otherwise\n"
            "            - URL with format: irc[6][s]://[nickname[:password]@]"
            "irc.example.org[:port][/#channel1][,#channel2[...]]\n"
            "            Note: for an address/IP/URL, a temporary server is "
@@ -6999,10 +7006,10 @@ irc_command_init ()
            "\n"
            "Examples:\n"
            "  /connect libera\n"
-           "  /connect irc.oftc.net/6667\n"
-           "  /connect irc6.oftc.net/6667 -ipv6\n"
-           "  /connect irc6.oftc.net/6697 -ipv6 -tls\n"
-           "  /connect my.server.org/6697 -tls -password=test\n"
+           "  /connect irc.oftc.net\n"
+           "  /connect irc.oftc.net/6667 -notls\n"
+           "  /connect irc6.oftc.net/9999 -ipv6\n"
+           "  /connect my.server.org -password=test\n"
            "  /connect irc://nick@irc.oftc.net/#channel\n"
            "  /connect -switch"),
         "%(irc_servers)|-all|-auto|-open|-nojoin|-switch|%*",
@@ -7522,7 +7529,8 @@ irc_command_init ()
            "is used to connect to the server (/connect name) and to set server "
            "options: irc.server.name.xxx\n"
            "hostname: name or IP address of server, with optional port "
-           "(default: 6667), many addresses can be separated by a comma\n"
+           "(default: 6697 for TLS, 6667 otherwise), many addresses can be "
+           "separated by a comma\n"
            "   -temp: add a temporary server (not saved)\n"
            "  option: set option for server (for boolean option, value can be "
            "omitted)\n"
@@ -7557,9 +7565,9 @@ irc_command_init ()
            "Examples:\n"
            "  /server listfull\n"
            "  /server add libera irc.libera.chat\n"
-           "  /server add libera irc.libera.chat/6697 -tls -autoconnect\n"
+           "  /server add libera irc.libera.chat/6667 -notls -autoconnect\n"
            "  /server add chatspike irc.chatspike.net/6667,"
-           "irc.duckspike.net/6667\n"
+           "irc.duckspike.net/6667 -notls\n"
            "  /server copy libera libera-test\n"
            "  /server rename libera-test libera2\n"
            "  /server reorder libera2 libera\n"

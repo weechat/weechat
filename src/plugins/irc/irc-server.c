@@ -80,7 +80,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
 { { "addresses",            ""                        },
   { "proxy",                ""                        },
   { "ipv6",                 "on"                      },
-  { "tls",                  "off"                     },
+  { "tls",                  "on"                      },
   { "tls_cert",             ""                        },
   { "tls_password",         ""                        },
   { "tls_priorities",       "NORMAL:-VERS-SSL3.0"     },
@@ -584,7 +584,55 @@ irc_server_get_name_without_port (const char *name)
 }
 
 /*
+ * Gets a string with addresses and ports and TLS option for the server.
+ *
+ * For example if addresses = "irc.example.org,irc2.example.org/7000" and
+ * "tls" option if on, the result is:
+ *
+ *   "irc.example.org/6697,irc2.example.org/7000 (TLS: enabled)"
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_server_get_addresses_ports_tls (struct t_irc_server *server)
+{
+    char **result, str_port[32], str_tls[256];
+    int i;
+
+    if (!server)
+        return NULL;
+
+    result = weechat_string_dyn_alloc (64);
+    if (!result)
+        return NULL;
+
+    for (i = 0; i < server->addresses_count; i++)
+    {
+        if (i > 0)
+            weechat_string_dyn_concat (result, ", ", -1);
+        weechat_string_dyn_concat (result, server->addresses_array[i], -1);
+        weechat_string_dyn_concat (result, "/", -1);
+        snprintf (str_port, sizeof (str_port), "%d", server->ports_array[i]);
+        weechat_string_dyn_concat (result, str_port, -1);
+    }
+
+    snprintf (str_tls, sizeof (str_tls),
+              " (TLS: %s)",
+              IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS) ?
+              _("enabled") : _("disabled"));
+    weechat_string_dyn_concat (result, str_tls, -1);
+
+    return weechat_string_dyn_free (result, 0);
+}
+
+/*
  * Sets addresses for server.
+ *
+ * The "tls" is the boolean value of option ".tls" in server, used to find the
+ * default port if not specified in the address:
+ *   - 6697 if tls is 1
+ *   - 6667 if tls is 0
  *
  * Returns:
  *   1: addresses have been set (changed)
@@ -592,14 +640,22 @@ irc_server_get_name_without_port (const char *name)
  */
 
 int
-irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
+irc_server_set_addresses (struct t_irc_server *server, const char *addresses,
+                          int tls)
 {
-    int i;
+    int rc, i, default_port;
     char *pos, *error, *addresses_eval;
     const char *ptr_addresses;
     long number;
 
+    if (!server)
+        return 0;
+
+    rc = 1;
     addresses_eval = NULL;
+
+    default_port = (tls) ?
+        IRC_SERVER_DEFAULT_PORT_TLS : IRC_SERVER_DEFAULT_PORT_CLEARTEXT;
 
     ptr_addresses = addresses;
     if (ptr_addresses && (strncmp (ptr_addresses, "fake:", 5) == 0))
@@ -618,8 +674,7 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
         if (server->addresses_eval
             && (strcmp (server->addresses_eval, addresses_eval) == 0))
         {
-            free (addresses_eval);
-            return 0;
+            rc = 0;
         }
     }
 
@@ -649,7 +704,7 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
     /* set new addresses/ports */
     server->addresses_eval = addresses_eval;
     if (!addresses_eval)
-        return 1;
+        return rc;
     server->addresses_array = weechat_string_split (
         addresses_eval,
         ",",
@@ -673,16 +728,16 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
             error = NULL;
             number = strtol (pos, &error, 10);
             server->ports_array[i] = (error && !error[0]) ?
-                number : IRC_SERVER_DEFAULT_PORT;
+                number : default_port;
         }
         else
         {
-            server->ports_array[i] = IRC_SERVER_DEFAULT_PORT;
+            server->ports_array[i] = default_port;
         }
         server->retry_array[i] = 0;
     }
 
-    return 1;
+    return rc;
 }
 
 /*
@@ -696,7 +751,8 @@ irc_server_set_index_current_address (struct t_irc_server *server, int index)
 
     addresses_changed = irc_server_set_addresses (
         server,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_ADDRESSES));
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_ADDRESSES),
+        IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS));
 
     if (addresses_changed)
     {
@@ -1660,6 +1716,10 @@ irc_server_alloc (const char *name)
     /* create options with null value */
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
     {
+        new_server->options[i] = NULL;
+    }
+    for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
+    {
         length = strlen (new_server->name) + 1 +
             strlen (irc_server_options[i][0]) +
             512 +  /* inherited option name (irc.server_default.xxx) */
@@ -1707,7 +1767,7 @@ irc_server_alloc (const char *name)
  *   - "pass": password for the server (can be used as nick password on most
  *             servers)
  *   - "server": server address
- *   - "port": port (default is 6667 without TLS and 6697 with TLS)
+ *   - "port": port (default is 6697 with TLS, 6667 otherwise)
  *   - "#chan1": channel to auto-join
  *
  * Returns pointer to new server, NULL if error.
@@ -1743,7 +1803,7 @@ irc_server_alloc_with_url (const char *irc_url)
     ipv6 = 0;
     tls = 0;
     snprintf (default_port, sizeof (default_port),
-              "%d", IRC_SERVER_DEFAULT_PORT);
+              "%d", IRC_SERVER_DEFAULT_PORT_CLEARTEXT);
 
     pos_server = strstr (irc_url2, "://");
     if (!pos_server || !pos_server[3])

@@ -120,9 +120,10 @@ enum t_irc_server_option
       weechat_config_string(irc_config_server_default[__index])               \
       : weechat_config_string_default(irc_config_server_default[__index])))
 
-#define IRC_SERVER_DEFAULT_PORT     6667
-#define IRC_SERVER_DEFAULT_PORT_TLS 6697
-#define IRC_SERVER_DEFAULT_NICKS    "weechat1,weechat2,weechat3,weechat4,weechat5"
+#define IRC_SERVER_DEFAULT_PORT_CLEARTEXT 6667
+#define IRC_SERVER_DEFAULT_PORT_TLS       6697
+
+#define IRC_SERVER_DEFAULT_NICKS "weechat1,weechat2,weechat3,weechat4,weechat5"
 
 /* number of queues for sending messages */
 #define IRC_SERVER_NUM_OUTQUEUES_PRIO 2
@@ -333,8 +334,9 @@ extern void irc_server_sasl_get_creds (struct t_irc_server *server,
                                        char **key);
 extern int irc_server_sasl_enabled (struct t_irc_server *server);
 extern char *irc_server_get_name_without_port (const char *name);
+extern char *irc_server_get_addresses_ports_tls (struct t_irc_server *server);
 extern int irc_server_set_addresses (struct t_irc_server *server,
-                                     const char *addresses);
+                                     const char *addresses, int tls);
 extern void irc_server_set_nicks (struct t_irc_server *server,
                                   const char *nicks);
 extern void irc_server_set_nick (struct t_irc_server *server,

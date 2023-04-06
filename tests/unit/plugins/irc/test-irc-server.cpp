@@ -177,12 +177,97 @@ TEST(IrcServer, GetNameWithoutPort)
 
 /*
  * Tests functions:
+ *   irc_server_get_addresses_ports_tls
  *   irc_server_set_addresses
  */
 
 TEST(IrcServer, SetAddresses)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    char *str;
+
+    POINTERS_EQUAL(NULL, irc_server_get_addresses_ports_tls (NULL));
+
+    server = irc_server_alloc ("server1");
+
+    config_file_option_set (server->options[IRC_SERVER_OPTION_TLS], "off", 1);
+
+    LONGS_EQUAL(0, irc_server_set_addresses (NULL, NULL, 0));
+    LONGS_EQUAL(0, irc_server_set_addresses (NULL, "irc.example.org", 0));
+
+    LONGS_EQUAL(1, irc_server_set_addresses (server, "fake:irc.fake.org", 0));
+    LONGS_EQUAL(1, server->fake_server);
+    STRCMP_EQUAL("irc.fake.org", server->addresses_eval);
+    LONGS_EQUAL(1, server->addresses_count);
+    STRCMP_EQUAL("irc.fake.org", server->addresses_array[0]);
+    LONGS_EQUAL(6667, server->ports_array[0]);
+    LONGS_EQUAL(0, server->retry_array[0]);
+
+    WEE_TEST_STR("irc.fake.org/6667 (TLS: disabled)",
+                 irc_server_get_addresses_ports_tls (server));
+
+    LONGS_EQUAL(1, irc_server_set_addresses (server, "irc.example.org", 0));
+    LONGS_EQUAL(0, server->fake_server);
+    STRCMP_EQUAL("irc.example.org", server->addresses_eval);
+    LONGS_EQUAL(1, server->addresses_count);
+    STRCMP_EQUAL("irc.example.org", server->addresses_array[0]);
+    LONGS_EQUAL(6667, server->ports_array[0]);
+    LONGS_EQUAL(0, server->retry_array[0]);
+
+    WEE_TEST_STR("irc.example.org/6667 (TLS: disabled)",
+                 irc_server_get_addresses_ports_tls (server));
+
+    LONGS_EQUAL(1,
+                irc_server_set_addresses (
+                    server, "irc.example.org,irc2.example.org/6666", 0));
+    LONGS_EQUAL(0, server->fake_server);
+    STRCMP_EQUAL("irc.example.org,irc2.example.org/6666", server->addresses_eval);
+    LONGS_EQUAL(2, server->addresses_count);
+    STRCMP_EQUAL("irc.example.org", server->addresses_array[0]);
+    STRCMP_EQUAL("irc2.example.org", server->addresses_array[1]);
+    LONGS_EQUAL(6667, server->ports_array[0]);
+    LONGS_EQUAL(6666, server->ports_array[1]);
+    LONGS_EQUAL(0, server->retry_array[0]);
+    LONGS_EQUAL(0, server->retry_array[1]);
+
+    WEE_TEST_STR("irc.example.org/6667, irc2.example.org/6666 (TLS: disabled)",
+                 irc_server_get_addresses_ports_tls (server));
+
+    config_file_option_set (server->options[IRC_SERVER_OPTION_TLS], "on", 1);
+
+    LONGS_EQUAL(1,
+                irc_server_set_addresses (
+                    server, "irc.example.org,irc2.example.org/7000", 1));
+    LONGS_EQUAL(0, server->fake_server);
+    STRCMP_EQUAL("irc.example.org,irc2.example.org/7000", server->addresses_eval);
+    LONGS_EQUAL(2, server->addresses_count);
+    STRCMP_EQUAL("irc.example.org", server->addresses_array[0]);
+    STRCMP_EQUAL("irc2.example.org", server->addresses_array[1]);
+    LONGS_EQUAL(6697, server->ports_array[0]);
+    LONGS_EQUAL(7000, server->ports_array[1]);
+    LONGS_EQUAL(0, server->retry_array[0]);
+    LONGS_EQUAL(0, server->retry_array[1]);
+
+    WEE_TEST_STR("irc.example.org/6697, irc2.example.org/7000 (TLS: enabled)",
+                 irc_server_get_addresses_ports_tls (server));
+
+    LONGS_EQUAL(0,
+                irc_server_set_addresses (
+                    server, "irc.example.org,irc2.example.org/7000", 1));
+    LONGS_EQUAL(0, server->fake_server);
+    STRCMP_EQUAL("irc.example.org,irc2.example.org/7000", server->addresses_eval);
+    LONGS_EQUAL(2, server->addresses_count);
+    STRCMP_EQUAL("irc.example.org", server->addresses_array[0]);
+    STRCMP_EQUAL("irc2.example.org", server->addresses_array[1]);
+    LONGS_EQUAL(6697, server->ports_array[0]);
+    LONGS_EQUAL(7000, server->ports_array[1]);
+    LONGS_EQUAL(0, server->retry_array[0]);
+    LONGS_EQUAL(0, server->retry_array[1]);
+
+    WEE_TEST_STR("irc.example.org/6697, irc2.example.org/7000 (TLS: enabled)",
+                 irc_server_get_addresses_ports_tls (server));
+
+    irc_server_free (server);
 }
 
 /*
