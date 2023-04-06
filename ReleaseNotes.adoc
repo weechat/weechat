@@ -134,6 +134,57 @@ to lower case with a message like this one:
 Alias converted to lower case: "CLOSE" => "close"
 ----
 
+[[v4.0.0_tls]]
+=== TLS options and connections
+
+Options, commands and documentation have been updated to "TLS" instead of "SSL":
+
+* core option:
+** weechat.color.status_name_ssl -> weechat.color.status_name_tls
+* IRC server default options:
+** irc.server_default.ssl -> irc.server_default.tls
+** irc.server_default.ssl_cert -> irc.server_default.tls_cert
+** irc.server_default.ssl_dhkey_size -> irc.server_default.tls_dhkey_size
+** irc.server_default.ssl_fingerprint -> irc.server_default.tls_fingerprint
+** irc.server_default.ssl_password -> irc.server_default.tls_password
+** irc.server_default.ssl_priorities -> irc.server_default.tls_priorities
+** irc.server_default.ssl_verify -> irc.server_default.tls_verify
+* IRC options for a specific server:
+** irc.server.xxx.ssl -> irc.server.xxx.tls
+** irc.server.xxx.ssl_cert -> irc.server.xxx.tls_cert
+** irc.server.xxx.ssl_dhkey_size -> irc.server.xxx.tls_dhkey_size
+** irc.server.xxx.ssl_fingerprint -> irc.server.xxx.tls_fingerprint
+** irc.server.xxx.ssl_password -> irc.server.xxx.tls_password
+** irc.server.xxx.ssl_priorities -> irc.server.xxx.tls_priorities
+** irc.server.xxx.ssl_verify -> irc.server.xxx.tls_verify
+* Relay options:
+** relay.network.ssl_cert_key -> relay.network.tls_cert_key
+** relay.network.ssl_priorities -> relay.network.tls_priorities
+* Relay:
+** protocol `ssl` -> `tls`
+* Relay command:
+** `/relay sslcertkey` -> `/relay tlscertkey`
+
+Default value of option `irc.server_default.tls` is now `on`. +
+Connection to IRC servers is done with TLS and port 6697 by default.
+
+For example to create libera.chat server, using TLS (if option
+`irc.server_default.tls` is `on`) and default port 6697:
+
+----
+/server add libera irc.libera.chat
+
+irc: server added: libera -> irc.libera.chat/6697 (TLS: enabled)
+----
+
+To force non-TLS connection (with default port 6667):
+
+----
+/server add libera irc.libera.chat -notls
+
+irc: server added: libera -> irc.libera.chat/6667 (TLS: disabled)
+----
+
 [[v4.0.0_insert_multiple_pasted_lines]]
 === Insert of multiple pasted lines in input
 
