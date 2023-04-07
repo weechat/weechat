@@ -24,7 +24,7 @@
 # Syntax:
 #   bump_version.sh stable|major|minor|patch
 #
-#     stable       bump to the next stable (`devel` becomes the `stable`)
+#     stable       bump to the next stable (set stable to `devel` value)
 #     major        bump the major version, set minor + patch to 0
 #     minor        bump the minor version, set patch to 0
 #     patch        bump the patch version
