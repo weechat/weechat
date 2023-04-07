@@ -306,7 +306,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       irc-msgbuffer.c             | IRC メッセージを送るバッファ
 |       irc-nick.c                  | IRC ニックネーム
 |       irc-notify.c                | IRC 通知リスト
-|       irc-protocol.c              | IRC プロトコル (RFC 1459/2810/2811/2812/2813)
+|       irc-protocol.c              | IRC プロトコル (RFC 1459/2810/2811/2812/2813/7194)
 |       irc-raw.c                   | IRC 生バッファ
 |       irc-redirect.c              | IRC コマンド出力のリダイレクト
 |       irc-sasl.c                  | IRC サーバに対する SASL 認証

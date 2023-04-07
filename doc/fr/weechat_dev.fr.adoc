@@ -294,7 +294,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       irc-msgbuffer.c             | Tampon cible pour les messages IRC.
 |       irc-nick.c                  | Pseudos IRC.
 |       irc-notify.c                | Listes de notification IRC.
-|       irc-protocol.c              | Protocole IRC (RFCs 1459/2810/2811/2812/2813).
+|       irc-protocol.c              | Protocole IRC (RFCs 1459/2810/2811/2812/2813/7194).
 |       irc-raw.c                   | Tampon des données brutes IRC.
 |       irc-redirect.c              | Redirection de la sortie des commandes IRC.
 |       irc-sasl.c                  | Authentification SASL avec le serveur IRC.

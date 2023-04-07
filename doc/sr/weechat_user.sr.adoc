@@ -38,8 +38,9 @@ WeeChat (Wee Enhanced Environment for Chat) је бесплатни чет кл�
   https://datatracker.ietf.org/doc/html/rfc1459[1459 ^↗^,window=_blank],
   https://datatracker.ietf.org/doc/html/rfc2810[2810 ^↗^,window=_blank],
   https://datatracker.ietf.org/doc/html/rfc2811[2811 ^↗^,window=_blank],
-  https://datatracker.ietf.org/doc/html/rfc2812[2812 ^↗^,window=_blank] и
-  https://datatracker.ietf.org/doc/html/rfc2813[2813 ^↗^,window=_blank]
+  https://datatracker.ietf.org/doc/html/rfc2812[2812 ^↗^,window=_blank],
+  https://datatracker.ietf.org/doc/html/rfc2813[2813 ^↗^,window=_blank] и
+  https://datatracker.ietf.org/doc/html/rfc7194[7194 ^↗^,window=_blank],
 * IRC прокси и релеј за удаљене интерфејсе
 * подржавање различитих платформи (GNU/Linux, *BSD, macOS, Windows и остале)
 * 100% GPL, слободан софтвер

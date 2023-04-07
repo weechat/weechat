@@ -40,8 +40,9 @@ Główne cechy to:
   https://datatracker.ietf.org/doc/html/rfc1459[1459 ^↗^,window=_blank],
   https://datatracker.ietf.org/doc/html/rfc2810[2810 ^↗^,window=_blank],
   https://datatracker.ietf.org/doc/html/rfc2811[2811 ^↗^,window=_blank],
-  https://datatracker.ietf.org/doc/html/rfc2812[2812 ^↗^,window=_blank] i
-  https://datatracker.ietf.org/doc/html/rfc2813[2813 ^↗^,window=_blank]
+  https://datatracker.ietf.org/doc/html/rfc2812[2812 ^↗^,window=_blank],
+  https://datatracker.ietf.org/doc/html/rfc2813[2813 ^↗^,window=_blank] i
+  https://datatracker.ietf.org/doc/html/rfc7194[7194 ^↗^,window=_blank]
 * proxy IRC i pośrednik dla zdalnych interfejsów
 * wielo-platformowy (GNU/Linux, *BSD, macOS, Windows i inne)
 * 100% GPL, darmowe oprogramowanie
