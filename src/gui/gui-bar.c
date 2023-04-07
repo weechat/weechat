@@ -80,7 +80,8 @@ char *gui_bar_default_values[GUI_BAR_NUM_DEFAULT_BARS][GUI_BAR_NUM_OPTIONS] =
       "1", "0", "default", "cyan", "blue", "darkgray", "off",
       "[time],[buffer_last_number],[buffer_plugin],buffer_number+:+"
       "buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+"
-      "buffer_filter,scroll,[lag],[hotlist],[typing],completion" },
+      "buffer_filter,mouse_status,scroll,[lag],[hotlist],[typing],"
+      "completion" },
     /* nicklist */
     { "off", "200", "window", "${nicklist}", "right",
       "columns_vertical", "vertical",

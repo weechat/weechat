@@ -32,6 +32,7 @@ New features::
   * core: add access to hashtable properties in evaluation of expressions (issue #1888)
   * core: display similar command names when a command is unknown (issue #1877)
   * core, plugins: make many identifiers case sensitive (issue #1872, issue #398, bug #32213)
+  * core: add item "mouse_status" in default status bar
   * api: add function config_set_version (issue #1238)
   * alias: use lower case for default aliases, rename all aliases to lower case on upgrade (issue #1872)
   * irc: add command `/rules` (issue #1864)
