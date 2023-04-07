@@ -4501,7 +4501,7 @@ config_weechat_init_options ()
             weechat_config_file, weechat_config_section_color,
             "status_mouse", "color",
             N_("text color for mouse indicator in status bar"),
-            NULL, -1, 0, "green", NULL, 0,
+            NULL, -1, 0, "lightgreen", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
