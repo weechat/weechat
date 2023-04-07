@@ -1510,7 +1510,7 @@ IRC_COMMAND_CALLBACK(ban)
  * Callback for command "/cap": client capability negotiation.
  *
  * Docs on capability negotiation:
- *   https://tools.ietf.org/html/draft-mitchell-irc-capabilities-01
+ *   https://datatracker.ietf.org/doc/html/draft-mitchell-irc-capabilities-01
  *   https://ircv3.net/specs/extensions/capability-negotiation
  */
 
