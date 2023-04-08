@@ -59,6 +59,7 @@ Bug fixes::
   * irc: update autojoin option with redirected channels when autojoin_dynamic is enabled (issue #1898)
   * irc: don't switch to buffer of joined channel if it was not manually joined nor present in server autojoin option
   * irc: fix target buffer for commands 432/433 (erroneous nickname/nickname already in use) when the nickname looks like a channel
+  * lua: fix crash with print when the value to print is not a string (issue #1904, issue #1905)
   * spell: check buffer pointer received in info "spell_dict"
   * typing: fix crash when pointer buffer is not received in callback for signal "input_text_changed" (issue #1869)
 
