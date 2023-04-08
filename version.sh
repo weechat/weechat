@@ -22,14 +22,19 @@
 # Returns current stable or devel version of WeeChat.
 #
 # Syntax:
-#   version.sh stable|devel|devel-full|devel-major|devel-minor|devel-patch
+#   version.sh <name>
 #
-#     stable       the current stable (e.g. 1.3)
-#     devel        the current devel (e.g. 1.4)
-#     devel-full   the full name of devel (e.g. 1.4-dev or 1.4-rc1)
-#     devel-major  the major version of devel (e.g. 1)
-#     devel-minor  the minor version of devel (e.g. 4-dev)
-#     devel-patch  the patch version of devel (e.g. 2 for version 1.4.2)
+#   name is one of:
+#
+#     stable        the current stable (e.g. "4.0.2")
+#     stable-major  the major version of stable ("4" for "4.0.2")
+#     stable-minor  the minor version of stable ("0" for "4.0.2")
+#     stable-patch  the patch version of stable ("2" for "4.0.2")
+#     devel         the current devel (e.g. "4.1.0")
+#     devel-full    the full name of devel (e.g. "4.1.0-dev")
+#     devel-major   the major version of devel ("4" for "4.1.0-dev")
+#     devel-minor   the minor version of devel ("1" for "4.1.0-dev")
+#     devel-patch   the patch version of devel ("0-dev" for "4.1.0-dev")
 #
 
 WEECHAT_STABLE=3.8
@@ -42,12 +47,18 @@ if [ $# -lt 1 ]; then
 fi
 
 case $1 in
-    stable ) echo "$WEECHAT_STABLE" ;;
-    devel ) echo "$WEECHAT_DEVEL" ;;
-    devel-full ) echo "$WEECHAT_DEVEL_FULL" ;;
-    devel-major ) echo "$WEECHAT_DEVEL_FULL" | cut -d'.' -f1 ;;
-    devel-minor ) echo "$WEECHAT_DEVEL_FULL" | cut -d'.' -f2 ;;
-    devel-patch ) echo "$WEECHAT_DEVEL_FULL" | cut -d'.' -f3- ;;
+    # stable
+    stable ) echo "${WEECHAT_STABLE}" ;;
+    stable-major ) echo "${WEECHAT_STABLE}" | cut -d'.' -f1 ;;
+    stable-minor ) echo "${WEECHAT_STABLE}" | cut -d'.' -f2 ;;
+    stable-patch ) echo "${WEECHAT_STABLE}" | cut -d'.' -f3- ;;
+    # devel
+    devel ) echo "${WEECHAT_DEVEL}" ;;
+    devel-full ) echo "${WEECHAT_DEVEL_FULL}" ;;
+    devel-major ) echo "${WEECHAT_DEVEL_FULL}" | cut -d'.' -f1 ;;
+    devel-minor ) echo "${WEECHAT_DEVEL_FULL}" | cut -d'.' -f2 ;;
+    devel-patch ) echo "${WEECHAT_DEVEL_FULL}" | cut -d'.' -f3- ;;
+    # error
     * ) echo >&2 "ERROR: unknown version."
         exit 1 ;;
 esac
