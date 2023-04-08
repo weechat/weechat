@@ -83,7 +83,8 @@ extern void gui_chat_get_word_info (struct t_gui_window *window,
                                     const char *data, int *word_start_offset,
                                     int *word_end_offset,
                                     int *word_length_with_spaces,
-                                    int *word_length);
+                                    int *word_length,
+                                    int *word_is_newlines);
 extern char *gui_chat_get_time_string (time_t date);
 extern int gui_chat_get_time_length ();
 extern void gui_chat_change_time_format ();
