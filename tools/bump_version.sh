@@ -24,10 +24,11 @@
 # Syntax:
 #   bump_version.sh stable|major|minor|patch
 #
-#     stable       bump to the next stable (set stable to `devel` value)
-#     major        bump the major version, set minor + patch to 0
-#     minor        bump the minor version, set patch to 0
-#     patch        bump the patch version
+#     stable       bump to the next stable: set stable and devel to
+#                  `devel` value, with only digits and dots
+#     major        bump the devel major version, set minor + patch to 0
+#     minor        bump the devel minor version, set patch to 0
+#     patch        bump the devel patch version
 #
 
 set -o errexit
