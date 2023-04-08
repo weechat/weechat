@@ -560,16 +560,34 @@ weechat_lua_load (const char *filename, const char *code)
         return NULL;
     }
 
-#ifdef LUA_VERSION_NUM /* LUA_VERSION_NUM is defined only in lua >= 5.1.0 */
-    luaL_openlibs (lua_current_interpreter);
-#else
-    luaopen_base (lua_current_interpreter);
-    luaopen_string (lua_current_interpreter);
-    luaopen_table (lua_current_interpreter);
-    luaopen_math (lua_current_interpreter);
-    luaopen_io (lua_current_interpreter);
-    luaopen_debug (lua_current_interpreter);
-#endif /* LUA_VERSION_NUM */
+    // Lua 5.0.x libraries
+    luaopen_base      (lua_current_interpreter);
+    luaopen_io        (lua_current_interpreter);
+    luaopen_string    (lua_current_interpreter);
+    luaopen_table     (lua_current_interpreter);
+    luaopen_math      (lua_current_interpreter);
+    luaopen_os        (lua_current_interpreter);
+    luaopen_debug     (lua_current_interpreter);
+
+#ifdef LUA_VERSION_NUM
+#if   LUA_VERSION_NUM == 501 // Lua 5.1.x
+    luaopen_package   (lua_current_interpreter);
+#elif LUA_VERSION_NUM == 502 // Lua 5.2.x
+    luaopen_coroutine (lua_current_interpreter);
+    luaopen_package   (lua_current_interpreter);
+    luaopen_bit32 (lua_current_interpreter);
+#elif LUA_VERSION_NUM == 503 // Lua 5.3.x
+    luaopen_coroutine (lua_current_interpreter);
+    luaopen_package   (lua_current_interpreter);
+    luaopen_bit32 (lua_current_interpreter);
+    luaopen_utf8  (lua_current_interpreter);
+#elif LUA_VERSION_NUM == 504 // Lua 5.4.x
+    luaopen_coroutine (lua_current_interpreter);
+    luaopen_package   (lua_current_interpreter);
+    luaopen_utf8  (lua_current_interpreter);
+#endif /* #if LUA_VERSION_NUM */
+#endif /* #ifdef LUA_VERSION_NUM */
+   
 
     weechat_lua_register_lib (lua_current_interpreter, "weechat",
                               weechat_lua_api_funcs,
