@@ -567,7 +567,6 @@ weechat_lua_load (const char *filename, const char *code)
     luaopen_table     (lua_current_interpreter);
     luaopen_math      (lua_current_interpreter);
     luaopen_os        (lua_current_interpreter);
-    luaopen_debug     (lua_current_interpreter);
 
 #ifdef LUA_VERSION_NUM
 #if   LUA_VERSION_NUM == 501 // Lua 5.1.x
