@@ -511,7 +511,7 @@ weechat_lua_load (const char *filename, const char *code)
     FILE *fp;
     char *lua_redirect_output = {
         "function weechat_output_string(str)\n"
-        "    weechat.__output__(str)\n"
+        "    weechat.__output__(tostring(str))\n"
         "end\n"
         "weechat_outputs = {\n"
         "    write = weechat_output_string\n"
