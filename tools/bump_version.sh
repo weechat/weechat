@@ -58,6 +58,5 @@ esac
 
 sed -i \
     -e "s/^\(WEECHAT_STABLE\)=.*/\1=${NEW_STABLE}/" \
-    -e "s/^\(WEECHAT_DEVEL\)=.*/\1=${NEW_DEVEL}/" \
-    -e "s/^\(WEECHAT_DEVEL_FULL\)=.*/\1=${NEW_DEVEL_FULL}/" \
+    -e "s/^\(WEECHAT_DEVEL\)=.*/\1=${NEW_DEVEL_FULL}/" \
     "${ROOT_DIR}/version.sh"
