@@ -141,7 +141,7 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
 {
     int win_x, win_y, coords_x_message;
     char *data_next_line, *str_temp;
-    const char *ptr_data, *word_start, *word_end, *last_space;
+    const char *ptr_data, *word_start, *word_end, *last_whitespace;
 
     *chat = 0;
     *line = NULL;
@@ -227,9 +227,9 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                 free (str_temp);
             }
             *end = gui_color_decode (ptr_data, NULL);
-            if (ptr_data[0] != ' ')
+            if (ptr_data[0] != ' ' && ptr_data[0] != '\n')
             {
-                last_space = NULL;
+                last_whitespace = NULL;
                 word_start = (*line)->data->message;
                 while (word_start && (word_start < ptr_data))
                 {
@@ -238,12 +238,12 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                                                                     0, 0, 0);
                     if (word_start)
                     {
-                        if (word_start[0] == ' ')
-                            last_space = word_start;
+                        if (word_start[0] == ' ' || word_start[0] == '\n')
+                            last_whitespace = word_start;
                         word_start = utf8_next_char (word_start);
                     }
                 }
-                word_start = (last_space) ? last_space + 1 : (*line)->data->message;
+                word_start = (last_whitespace) ? last_whitespace + 1 : (*line)->data->message;
                 word_end = ptr_data;
                 while (word_end && word_end[0])
                 {
@@ -252,7 +252,7 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                                                                   0, 0, 0);
                     if (word_end)
                     {
-                        if (word_end[0] == ' ')
+                        if (word_end[0] == ' ' || word_end[0] == '\n')
                             break;
                         word_end = utf8_next_char (word_end);
                     }

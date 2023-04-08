@@ -34,19 +34,23 @@ extern "C"
 #define WEE_GET_WORD_INFO(__result_word_start_offset,                   \
                           __result_word_end_offset,                     \
                           __result_word_length_with_spaces,             \
-                          __result_word_length, __string)               \
+                          __result_word_length,                         \
+                          __result_word_is_newlines, __string)          \
     word_start_offset = -2;                                             \
     word_end_offset = -2;                                               \
     word_length_with_spaces = -2;                                       \
     word_length = -2;                                                   \
+    word_is_newlines = -2;                                              \
     gui_chat_get_word_info (gui_windows, __string,                      \
                             &word_start_offset, &word_end_offset,       \
-                            &word_length_with_spaces, &word_length);    \
+                            &word_length_with_spaces, &word_length,     \
+                            &word_is_newlines);                         \
     LONGS_EQUAL(__result_word_start_offset, word_start_offset);         \
     LONGS_EQUAL(__result_word_end_offset, word_end_offset);             \
     LONGS_EQUAL(__result_word_length_with_spaces,                       \
                 word_length_with_spaces);                               \
-    LONGS_EQUAL(__result_word_length, word_length);
+    LONGS_EQUAL(__result_word_length, word_length);                     \
+    LONGS_EQUAL(__result_word_is_newlines, word_is_newlines);
 
 TEST_GROUP(GuiChat)
 {
@@ -334,16 +338,19 @@ TEST(GuiChat, StringPos)
 TEST(GuiChat, GetWordInfo)
 {
     int word_start_offset, word_end_offset, word_length_with_spaces;
-    int word_length;
+    int word_length, word_is_newlines;
 
-    WEE_GET_WORD_INFO (0, 0, 0, -1, NULL);
-    WEE_GET_WORD_INFO (0, 0, 0, -1, "");
-    WEE_GET_WORD_INFO (0, 0, 1, 1, "a");
-    WEE_GET_WORD_INFO (0, 2, 3, 3, "abc");
-    WEE_GET_WORD_INFO (2, 4, 5, 3, "  abc");
-    WEE_GET_WORD_INFO (2, 4, 5, 3, "  abc  ");
-    WEE_GET_WORD_INFO (0, 4, 5, 5, "first second");
-    WEE_GET_WORD_INFO (1, 5, 6, 5, " first second");
+    WEE_GET_WORD_INFO (0, 0, 0, -1, 0, NULL);
+    WEE_GET_WORD_INFO (0, 0, 0, -1, 0, "");
+    WEE_GET_WORD_INFO (0, 0, 1, 1, 0, "a");
+    WEE_GET_WORD_INFO (0, 2, 3, 3, 0, "abc");
+    WEE_GET_WORD_INFO (2, 4, 5, 3, 0, "  abc");
+    WEE_GET_WORD_INFO (2, 4, 5, 3, 0, "  abc  ");
+    WEE_GET_WORD_INFO (0, 4, 5, 5, 0, "first second");
+    WEE_GET_WORD_INFO (1, 5, 6, 5, 0, " first second");
+    WEE_GET_WORD_INFO (0, 0, 1, 1, 1, "\nabc");
+    WEE_GET_WORD_INFO (2, 2, 3, 1, 1, "  \nabc");
+    WEE_GET_WORD_INFO (2, 3, 4, 2, 1, "  \n\nabc");
 }
 
 /*

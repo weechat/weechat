@@ -312,7 +312,8 @@ void
 gui_chat_get_word_info (struct t_gui_window *window,
                         const char *data,
                         int *word_start_offset, int *word_end_offset,
-                        int *word_length_with_spaces, int *word_length)
+                        int *word_length_with_spaces, int *word_length,
+                        int *word_is_newlines)
 {
     const char *start_data, *next_char, *next_char2;
     int leading_spaces, char_size_screen;
@@ -321,6 +322,7 @@ gui_chat_get_word_info (struct t_gui_window *window,
     *word_end_offset = 0;
     *word_length_with_spaces = 0;
     *word_length = -1;
+    *word_is_newlines = 0;
 
     start_data = data;
 
@@ -334,8 +336,11 @@ gui_chat_get_word_info (struct t_gui_window *window,
             next_char2 = utf8_next_char (next_char);
             if (next_char2)
             {
-                if (next_char[0] != ' ')
+                if (next_char[0] != ' ' &&
+                    (leading_spaces || (next_char[0] == '\n') == *word_is_newlines))
                 {
+                    if (next_char[0] == '\n')
+                        *word_is_newlines = 1;
                     if (leading_spaces)
                         *word_start_offset = next_char - start_data;
                     leading_spaces = 0;
