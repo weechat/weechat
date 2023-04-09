@@ -251,19 +251,27 @@ weechat_lua_output_flush ()
 }
 
 /*
+ * NOTE: Taken from `luaB_print`
  * Redirection for stdout and stderr.
  */
 
 int
-weechat_lua_output (lua_State *L)
-{
-    const char *msg, *ptr_msg, *ptr_newline;
+weechat_lua_output (lua_State *L) {
+  int n = lua_gettop(L);  /* number of arguments */
+  int i;
+  lua_getglobal(L, "tostring");
+  for (i=1; i<=n; i++) {
+    const char *s;
+    lua_pushvalue(L, -1);  /* function to be called */
+    lua_pushvalue(L, i);   /* value to print */
+    lua_call(L, 1, 1);
+    s = lua_tostring(L, -1);  /* get result */
+    if (s == NULL)
+      return luaL_error(L, "%s must return a string to %s",
+                           "tostring", "print");
+    const char *ptr_msg, *ptr_newline;
 
-    if (lua_gettop (L) < 1)
-        return 0;
-
-    msg = lua_tostring (L, -1);
-    ptr_msg = msg;
+    ptr_msg = s;
     while ((ptr_newline = strchr (ptr_msg, '\n')) != NULL)
     {
         weechat_string_dyn_concat (lua_buffer_output,
@@ -274,7 +282,9 @@ weechat_lua_output (lua_State *L)
     }
     weechat_string_dyn_concat (lua_buffer_output, ptr_msg, -1);
 
-    return 0;
+    lua_pop(L, 1);  /* pop result */
+  }
+  return 0;
 }
 
 /*
@@ -509,19 +519,7 @@ struct t_plugin_script *
 weechat_lua_load (const char *filename, const char *code)
 {
     FILE *fp;
-    char *lua_redirect_output = {
-        "function weechat_output_string(str)\n"
-        "    weechat.__output__(tostring(str))\n"
-        "end\n"
-        "weechat_outputs = {\n"
-        "    write = weechat_output_string\n"
-        "}\n"
-        "io.stdout = weechat_outputs\n"
-        "io.stderr = weechat_outputs\n"
-        "io.write = weechat_output_string\n"
-        "print = weechat_output_string\n"
-    };
-
+   
     fp = NULL;
 
     if (!code)
@@ -560,49 +558,45 @@ weechat_lua_load (const char *filename, const char *code)
         return NULL;
     }
 
-    // Lua 5.0.x libraries
-    luaopen_base      (lua_current_interpreter);
-    luaopen_io        (lua_current_interpreter);
-    luaopen_string    (lua_current_interpreter);
-    luaopen_table     (lua_current_interpreter);
-    luaopen_math      (lua_current_interpreter);
-    luaopen_os        (lua_current_interpreter);
-
-#ifdef LUA_VERSION_NUM
-#if   LUA_VERSION_NUM == 501 // Lua 5.1.x
-    luaopen_package   (lua_current_interpreter);
-#elif LUA_VERSION_NUM == 502 // Lua 5.2.x
-    luaopen_coroutine (lua_current_interpreter);
-    luaopen_package   (lua_current_interpreter);
-    luaopen_bit32 (lua_current_interpreter);
-#elif LUA_VERSION_NUM == 503 // Lua 5.3.x
-    luaopen_coroutine (lua_current_interpreter);
-    luaopen_package   (lua_current_interpreter);
-    luaopen_bit32 (lua_current_interpreter);
-    luaopen_utf8  (lua_current_interpreter);
-#elif LUA_VERSION_NUM == 504 // Lua 5.4.x
-    luaopen_coroutine (lua_current_interpreter);
-    luaopen_package   (lua_current_interpreter);
-    luaopen_utf8  (lua_current_interpreter);
-#endif /* #if LUA_VERSION_NUM */
-#endif /* #ifdef LUA_VERSION_NUM */
-   
+#ifndef LUA_VERSION_NUM
+    luaopen_base  (lua_current_interpreter);
+    luaopen_string(lua_current_interpreter);
+    luaopen_table (lua_current_interpreter);
+    luaopen_math  (lua_current_interpreter);
+    luaopen_io    (lua_current_interpreter);
+    luaopen_debug (lua_current_interpreter);
+#else
+    luaL_openlibs (lua_current_interpreter);
+#endif /* LUA_VERSION_NUM */  
 
     weechat_lua_register_lib (lua_current_interpreter, "weechat",
                               weechat_lua_api_funcs,
                               weechat_lua_api_consts);
 
-#ifdef LUA_VERSION_NUM
-    if (luaL_dostring (lua_current_interpreter, lua_redirect_output) != 0)
-#else
-    if (lua_dostring (lua_current_interpreter, lua_redirect_output) != 0)
-#endif /* LUA_VERSION_NUM */
-    {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s%s: unable to redirect stdout "
-                                         "and stderr"),
-                        weechat_prefix ("error"), LUA_PLUGIN_NAME);
+    // Remove references to stdout and stderr
+    
+    lua_getglobal(lua_current_interpreter, "io");
+    if (lua_istable(lua_current_interpreter, -1)) {
+        // io.{stdout,stderr} = nil
+        lua_pushnil (lua_current_interpreter);
+        lua_setfield(lua_current_interpreter, -2, "stdout");
+        lua_pushnil (lua_current_interpreter);
+        lua_setfield(lua_current_interpreter, -2, "stderr");
+        // io.write = weechat_lua_output [C]
+        lua_pushcfunction(lua_current_interpreter, weechat_lua_output);
+        lua_setfield(lua_current_interpreter, -2, "write");
     }
+    lua_pop(lua_current_interpreter, 1); // remove the `ìo` table|(nil value) from the stack
+    // print = weechat_lua_output [C]
+    lua_pushcfunction(lua_current_interpreter, weechat_lua_output);
+    lua_setglobal(lua_current_interpreter, "print");
+    // debug.debug = nil
+    lua_getglobal (lua_current_interpreter, "debug");
+    if (lua_istable(lua_current_interpreter, -1)) {
+        lua_pushnil   (lua_current_interpreter);
+        lua_setfield  (lua_current_interpreter, -2, "debug");
+    }
+    lua_pop(lua_current_interpreter, 1); // remove the `debug` table|(nil value) from the stack
 
     lua_current_script_filename = filename;
 
