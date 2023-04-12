@@ -5647,19 +5647,15 @@ IRC_COMMAND_CALLBACK(server)
             new_server->options[IRC_SERVER_OPTION_ADDRESSES], argv[3], 1);
         irc_server_apply_command_line_options (new_server, argc, argv);
 
-        description = irc_server_get_addresses_ports_tls (new_server);
+        description = irc_server_get_short_description (new_server);
 
         weechat_printf (
             NULL,
-            _("%s: server added: %s%s%s%s%s -> %s"),
+            _("%s: server added: %s%s%s -> %s"),
             IRC_PLUGIN_NAME,
             IRC_COLOR_CHAT_SERVER,
             new_server->name,
             IRC_COLOR_RESET,
-            /* TRANSLATORS: "temporary IRC server" */
-            (new_server->temp_server) ? _(" (temporary)") : "",
-            /* TRANSLATORS: "fake IRC server" */
-            (new_server->fake_server) ? _(" (fake)") : "",
             description);
 
         if (description)

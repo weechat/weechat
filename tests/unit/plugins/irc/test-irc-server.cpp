@@ -177,7 +177,7 @@ TEST(IrcServer, GetNameWithoutPort)
 
 /*
  * Tests functions:
- *   irc_server_get_addresses_ports_tls
+ *   irc_server_get_short_description
  *   irc_server_set_addresses
  */
 
@@ -186,7 +186,7 @@ TEST(IrcServer, SetAddresses)
     struct t_irc_server *server;
     char *str;
 
-    POINTERS_EQUAL(NULL, irc_server_get_addresses_ports_tls (NULL));
+    POINTERS_EQUAL(NULL, irc_server_get_short_description (NULL));
 
     server = irc_server_alloc ("server1");
 
@@ -203,8 +203,8 @@ TEST(IrcServer, SetAddresses)
     LONGS_EQUAL(6667, server->ports_array[0]);
     LONGS_EQUAL(0, server->retry_array[0]);
 
-    WEE_TEST_STR("irc.fake.org/6667 (TLS: disabled)",
-                 irc_server_get_addresses_ports_tls (server));
+    WEE_TEST_STR("irc.fake.org/6667 (fake, TLS: disabled)",
+                 irc_server_get_short_description (server));
 
     LONGS_EQUAL(1, irc_server_set_addresses (server, "irc.example.org", 0));
     LONGS_EQUAL(0, server->fake_server);
@@ -215,7 +215,7 @@ TEST(IrcServer, SetAddresses)
     LONGS_EQUAL(0, server->retry_array[0]);
 
     WEE_TEST_STR("irc.example.org/6667 (TLS: disabled)",
-                 irc_server_get_addresses_ports_tls (server));
+                 irc_server_get_short_description (server));
 
     LONGS_EQUAL(1,
                 irc_server_set_addresses (
@@ -231,7 +231,7 @@ TEST(IrcServer, SetAddresses)
     LONGS_EQUAL(0, server->retry_array[1]);
 
     WEE_TEST_STR("irc.example.org/6667, irc2.example.org/6666 (TLS: disabled)",
-                 irc_server_get_addresses_ports_tls (server));
+                 irc_server_get_short_description (server));
 
     config_file_option_set (server->options[IRC_SERVER_OPTION_TLS], "on", 1);
 
@@ -249,7 +249,7 @@ TEST(IrcServer, SetAddresses)
     LONGS_EQUAL(0, server->retry_array[1]);
 
     WEE_TEST_STR("irc.example.org/6697, irc2.example.org/7000 (TLS: enabled)",
-                 irc_server_get_addresses_ports_tls (server));
+                 irc_server_get_short_description (server));
 
     LONGS_EQUAL(0,
                 irc_server_set_addresses (
@@ -265,7 +265,13 @@ TEST(IrcServer, SetAddresses)
     LONGS_EQUAL(0, server->retry_array[1]);
 
     WEE_TEST_STR("irc.example.org/6697, irc2.example.org/7000 (TLS: enabled)",
-                 irc_server_get_addresses_ports_tls (server));
+                 irc_server_get_short_description (server));
+
+    server->temp_server = 1;
+
+    WEE_TEST_STR("irc.example.org/6697, irc2.example.org/7000 "
+                 "(temporary, TLS: enabled)",
+                 irc_server_get_short_description (server));
 
     irc_server_free (server);
 }

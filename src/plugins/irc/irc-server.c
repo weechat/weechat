@@ -584,7 +584,11 @@ irc_server_get_name_without_port (const char *name)
 }
 
 /*
- * Gets a string with addresses and ports and TLS option for the server.
+ * Gets a string with description of server, that includes:
+ *   - addresses + ports
+ *   - temporary server?
+ *   - fake server?
+ *   - TLS option (enabled/disabled).
  *
  * For example if addresses = "irc.example.org,irc2.example.org/7000" and
  * "tls" option if on, the result is:
@@ -595,9 +599,9 @@ irc_server_get_name_without_port (const char *name)
  */
 
 char *
-irc_server_get_addresses_ports_tls (struct t_irc_server *server)
+irc_server_get_short_description (struct t_irc_server *server)
 {
-    char **result, str_port[32], str_tls[256];
+    char **result, str_port[32];
     int i;
 
     if (!server)
@@ -617,11 +621,27 @@ irc_server_get_addresses_ports_tls (struct t_irc_server *server)
         weechat_string_dyn_concat (result, str_port, -1);
     }
 
-    snprintf (str_tls, sizeof (str_tls),
-              " (TLS: %s)",
-              IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS) ?
-              _("enabled") : _("disabled"));
-    weechat_string_dyn_concat (result, str_tls, -1);
+    weechat_string_dyn_concat (result, " (", -1);
+    if (server->temp_server)
+    {
+        /* TRANSLATORS: "temporary IRC server" */
+        weechat_string_dyn_concat (result, _("temporary"), -1);
+        weechat_string_dyn_concat (result, ", ", -1);
+    }
+    if (server->fake_server)
+    {
+        /* TRANSLATORS: "fake IRC server" */
+        weechat_string_dyn_concat (result, _("fake"), -1);
+        weechat_string_dyn_concat (result, ", ", -1);
+    }
+    weechat_string_dyn_concat (result, _("TLS:"), -1);
+    weechat_string_dyn_concat (result, " ", -1);
+    weechat_string_dyn_concat (
+        result,
+        IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS) ?
+        _("enabled") : _("disabled"),
+        -1);
+    weechat_string_dyn_concat (result, ")", -1);
 
     return weechat_string_dyn_free (result, 0);
 }

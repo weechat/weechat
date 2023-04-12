@@ -334,7 +334,7 @@ extern void irc_server_sasl_get_creds (struct t_irc_server *server,
                                        char **key);
 extern int irc_server_sasl_enabled (struct t_irc_server *server);
 extern char *irc_server_get_name_without_port (const char *name);
-extern char *irc_server_get_addresses_ports_tls (struct t_irc_server *server);
+extern char *irc_server_get_short_description (struct t_irc_server *server);
 extern int irc_server_set_addresses (struct t_irc_server *server,
                                      const char *addresses, int tls);
 extern void irc_server_set_nicks (struct t_irc_server *server,
