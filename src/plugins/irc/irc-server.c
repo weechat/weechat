@@ -639,7 +639,10 @@ irc_server_get_short_description (struct t_irc_server *server)
     weechat_string_dyn_concat (
         result,
         IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS) ?
-        _("enabled") : _("disabled"),
+        /* TRANSLATORS: "TLS: enabled" */
+        _("enabled") :
+        /* TRANSLATORS: "TLS: disabled" */
+        _("disabled"),
         -1);
     weechat_string_dyn_concat (result, ")", -1);
 
