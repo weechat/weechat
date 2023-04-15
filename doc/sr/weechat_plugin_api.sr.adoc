@@ -4529,6 +4529,8 @@ version_number = weechat_util_version_number ("0.3.8");      /* == 0x00030800 */
 version_number = weechat_util_version_number ("0.3.9-dev");  /* == 0x00030900 */
 version_number = weechat_util_version_number ("0.3.9-rc1");  /* == 0x00030900 */
 version_number = weechat_util_version_number ("0.3.9");      /* == 0x00030900 */
+version_number = weechat_util_version_number ("1.0");        /* == 0x01000000 */
+version_number = weechat_util_version_number ("4.0.0");      /* == 0x04000000 */
 ----
 
 [NOTE]
