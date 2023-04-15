@@ -19,7 +19,7 @@
 #
 
 #
-# Returns current stable or devel version of WeeChat.
+# Bumps WeeChat version in file version.sh.
 #
 # Syntax:
 #   bump_version.sh stable|major|minor|patch
