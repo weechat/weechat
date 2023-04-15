@@ -41,7 +41,7 @@ release_start ()
         release_error "working directory not clean"
     fi
     VERSION=$("${ROOT_DIR}/version.sh" devel)
-    if git rev-parse "v${VERSION}"; then
+    if git rev-parse "v${VERSION}" 2>/dev/null; then
         release_error "tag v${VERSION} already exists"
     fi
     MSG=$(git log -1 --pretty=%B | tr -d "\n")
