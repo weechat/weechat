@@ -42,15 +42,15 @@
 WEECHAT_STABLE="3.8"
 WEECHAT_DEVEL="4.0.0-dev"
 
-STABLE_MAJOR=$(echo "${WEECHAT_STABLE}" | cut -d'.' -f1)
-STABLE_MINOR=$(echo "${WEECHAT_STABLE}" | cut -d'.' -f2)
-STABLE_PATCH=$(echo "${WEECHAT_STABLE}" | cut -d'.' -f3-)
-STABLE_PATCH_DIGITS=$(echo "${WEECHAT_STABLE}" | cut -d'.' -f3- | cut -d'-' -f1)
+STABLE_MAJOR=$(echo "${WEECHAT_STABLE}" | cut -d"." -f1)
+STABLE_MINOR=$(echo "${WEECHAT_STABLE}" | cut -d"." -f2)
+STABLE_PATCH=$(echo "${WEECHAT_STABLE}" | cut -d"." -f3-)
+STABLE_PATCH_DIGITS=$(echo "${WEECHAT_STABLE}" | cut -d"." -f3- | cut -d"-" -f1)
 
-DEVEL_MAJOR=$(echo "${WEECHAT_DEVEL}" | cut -d'.' -f1)
-DEVEL_MINOR=$(echo "${WEECHAT_DEVEL}" | cut -d'.' -f2)
-DEVEL_PATCH=$(echo "${WEECHAT_DEVEL}" | cut -d'.' -f3-)
-DEVEL_PATCH_DIGITS=$(echo "${WEECHAT_DEVEL}" | cut -d'.' -f3- | cut -d'-' -f1)
+DEVEL_MAJOR=$(echo "${WEECHAT_DEVEL}" | cut -d"." -f1)
+DEVEL_MINOR=$(echo "${WEECHAT_DEVEL}" | cut -d"." -f2)
+DEVEL_PATCH=$(echo "${WEECHAT_DEVEL}" | cut -d"." -f3-)
+DEVEL_PATCH_DIGITS=$(echo "${WEECHAT_DEVEL}" | cut -d"." -f3- | cut -d"-" -f1)
 
 if [ $# -lt 1 ]; then
     echo >&2 "Syntax: $0 <name>"
@@ -65,14 +65,14 @@ case $1 in
     stable-major ) echo "${STABLE_MAJOR}" ;;
     stable-minor ) echo "${STABLE_MINOR}" ;;
     stable-patch ) echo "${STABLE_PATCH}" ;;
-    stable-number ) echo "0x$(printf '%02d' ${STABLE_MAJOR})$(printf '%02d' ${STABLE_MINOR})$(printf '%02d' ${STABLE_PATCH_DIGITS})00" ;;
+    stable-number ) echo "0x$(printf "%02d" "${STABLE_MAJOR}")$(printf "%02d" "${STABLE_MINOR}")$(printf "%02d" "${STABLE_PATCH_DIGITS}")00" ;;
     # devel
-    devel ) echo "${WEECHAT_DEVEL}" | cut -d'-' -f1 ;;
+    devel ) echo "${WEECHAT_DEVEL}" | cut -d"-" -f1 ;;
     devel-full ) echo "${WEECHAT_DEVEL}" ;;
     devel-major ) echo "${DEVEL_MAJOR}" ;;
     devel-minor ) echo "${DEVEL_MINOR}" ;;
     devel-patch ) echo "${DEVEL_PATCH}" ;;
-    devel-number ) echo "0x$(printf '%02d' ${DEVEL_MAJOR})$(printf '%02d' ${DEVEL_MINOR})$(printf '%02d' ${DEVEL_PATCH_DIGITS})00" ;;
+    devel-number ) echo "0x$(printf "%02d" "${DEVEL_MAJOR}")$(printf "%02d" "${DEVEL_MINOR}")$(printf "%02d" "${DEVEL_PATCH_DIGITS}")00" ;;
     # error
     * ) echo >&2 "ERROR: unknown version."
         exit 1 ;;
