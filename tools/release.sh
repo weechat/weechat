@@ -81,7 +81,7 @@ release_build ()
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="${BUILD_DIR}/install" \
-        -DWEECHAT_HOME="${BUILD_DIR}/home"\
+        -DWEECHAT_HOME="${BUILD_DIR}/home" \
         -DENABLE_DOC=ON \
         -DENABLE_MAN=ON \
         -DENABLE_TESTS=ON \
@@ -113,7 +113,7 @@ release_test_pkg ()
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="${PKG_BUILD_DIR}/install" \
-        -DWEECHAT_HOME="${PKG_BUILD_DIR}/home"\
+        -DWEECHAT_HOME="${PKG_BUILD_DIR}/home" \
         -DENABLE_DOC=ON \
         -DENABLE_MAN=ON \
         -DENABLE_TESTS=ON \
