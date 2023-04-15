@@ -96,8 +96,10 @@ plugin_api_info_version_number_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    snprintf (version_number, sizeof (version_number), "%d",
-              util_version_number (version_get_version ()));
+    snprintf (
+        version_number, sizeof (version_number), "%d",
+        util_version_number (
+            (arguments && arguments[0]) ? arguments : version_get_version ()));
     return strdup (version_number);
 }
 
@@ -1880,7 +1882,9 @@ plugin_api_info_init ()
                NULL, &plugin_api_info_version_cb, NULL, NULL);
     hook_info (NULL, "version_number",
                N_("WeeChat version (as number)"),
-               NULL, &plugin_api_info_version_number_cb, NULL, NULL);
+               N_("version (optional, by default the version of the running "
+                  "WeeChat is returned)"),
+               &plugin_api_info_version_number_cb, NULL, NULL);
     hook_info (NULL, "version_git",
                N_("WeeChat git version (output of command \"git describe\" "
                   "for a development version only, empty for a stable "

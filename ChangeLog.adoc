@@ -35,6 +35,7 @@ New features::
   * core, plugins: make many identifiers case sensitive (issue #1872, issue #398, bug #32213)
   * core: add item "mouse_status" in default status bar, change default color to lightgreen
   * api: add function config_set_version (issue #1238)
+  * api: add optional argument with version in info "version_number"
   * alias: use lower case for default aliases, rename all aliases to lower case on upgrade (issue #1872)
   * irc: rename "ssl" options to "tls", connect with TLS and port 6697 by default
   * irc: add command `/rules` (issue #1864)
