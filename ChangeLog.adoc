@@ -6,13 +6,8 @@
 :docinfo1:
 
 
-This document lists all changes for each version
-(the latest formatted version of this document can be found
-https://weechat.org/files/changelog/ChangeLog-devel.html[here]).
-
-For a list of important changes that require manual action, please look at
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
-(file _ReleaseNotes.adoc_ in sources).
+This document lists all the changes for each version. +
+For a list of important changes that require manual actions, please look at release notes.
 
 
 [[v4.0.0]]

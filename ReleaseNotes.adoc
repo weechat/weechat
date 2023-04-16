@@ -6,15 +6,9 @@
 :docinfo1:
 
 
-This document lists important changes for each version, that require manual
-actions (the latest formatted version of this document can be found
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[here]). +
-It is recommended to read it when upgrading to a new stable
-version.
-
-For a complete list of changes, please look at
-https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
-(file _ChangeLog.adoc_ in sources).
+This document lists important changes for each version, that require manual actions.
+It is recommended to read it when upgrading to a new stable version. +
+For a complete list of changes, please look at ChangeLog.
 
 
 [[v4.0.0]]
