@@ -769,7 +769,7 @@ $ weechat --upgrade
 ==== Versionshinweise
 
 Nach einem Upgrade wird *dringend empfohlen* die,
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[Versionshinweise ^↗^,window=_blank]
+https://weechat.org/files/doc/weechat/ReleaseNotes-devel.html[Versionshinweise ^↗^,window=_blank]
 zu lesen, denn dort sind wichtige Informationen zu Änderungen enthalten und ob
 eventuell ein manuelles Eingreifen erforderlich sein könnte.
 

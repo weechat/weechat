@@ -758,7 +758,7 @@ $ weechat --upgrade
 ==== Release notes
 
 After an upgrade, it is *strongly recommended* to read the
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes ^↗^,window=_blank]
+https://weechat.org/files/doc/weechat/ReleaseNotes-devel.html[release notes ^↗^,window=_blank]
 which contain important information about breaking changes and some
 manual actions that could be required.
 

@@ -771,7 +771,7 @@ $ weechat --upgrade
 ==== Notes de version
 
 Après une mise à jour, il est *fortement recommandé* de lire les
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[notes de version ^↗^,window=_blank]
+https://weechat.org/files/doc/weechat/ReleaseNotes-devel.html[notes de version ^↗^,window=_blank]
 qui contiennent des informations importantes sur les changements majeurs et
 quelques actions manuelles qui pourraient être nécessaires.
 

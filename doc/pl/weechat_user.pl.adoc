@@ -770,7 +770,7 @@ $ weechat --upgrade
 ==== Informacje o wydaniu
 
 Po aktualizacji *zaleca się* przeczytanie
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[informacji o wydaniu ^↗^,window=_blank],
+https://weechat.org/files/doc/weechat/ReleaseNotes-devel.html[informacji o wydaniu ^↗^,window=_blank],
 które zawierają ważne informacje o przełomowych zmianach i do zrobienia jakie mogą
 być wymagane.
 
