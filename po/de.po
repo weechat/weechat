@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-04-15 11:04+0200\n"
+"POT-Creation-Date: 2023-04-19 14:56+0200\n"
 "PO-Revision-Date: 2023-04-13 20:09+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
@@ -4015,6 +4015,11 @@ msgstr "Veraltete Taste wurde entfernt: \"%s\""
 #, c-format
 msgid "Legacy key converted: \"%s\" => \"%s\""
 msgstr "Veraltete Taste konvertiert:  \"%s\" => \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Alias converted to lower case: \"%s\" => \"%s\""
+msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
+msgstr "Alias in Kleinbuchstaben umgewandelt: \"%s\" => \"%s\""
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "Debug-Level für Erweiterung (\"core\" für den WeeChat Core)"

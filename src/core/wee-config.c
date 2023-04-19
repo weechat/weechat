@@ -1524,8 +1524,27 @@ config_weechat_update_cb (const void *pointer, void *data,
                           struct t_hashtable *data_read)
 {
     const char *ptr_section, *ptr_option, *ptr_value;
+    char *new_commands[][2] = {
+        /* old command, new command */
+        { "/input jump_smart", "/buffer jump smart" },
+        { "/input jump_last_buffer", "/buffer +" },
+        { "/window ${_window_number};/input jump_last_buffer", "/window ${_window_number};/buffer +" },
+        { "/input jump_last_buffer_displayed", "/buffer jump last_displayed" },
+        { "/input jump_previously_visited_buffer", "/buffer jump prev_visited" },
+        { "/input jump_next_visited_buffer", "/buffer jump next_visited" },
+        { "/input hotlist_clear", "/hotlist clear" },
+        { "/input hotlist_remove_buffer", "/hotlist remove" },
+        { "/input hotlist_restore_buffer", "/hotlist restore" },
+        { "/input hotlist_restore_all", "/hotlist restore -all" },
+        { "/input set_unread_current_buffer", "/buffer set unread" },
+        { "/input set_unread", "/allbuf /buffer set unread" },
+        { "/input switch_active_buffer", "/buffer switch" },
+        { "/input switch_active_buffer_previous", "/buffer switch -previous" },
+        { "/input zoom_merged_buffer", "/buffer zoom" },
+        { NULL, NULL },
+    };
     char *new_option;
-    int changes;
+    int changes, i;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1592,6 +1611,21 @@ config_weechat_update_cb (const void *pointer, void *data,
                         changes++;
                     }
                     free (new_option);
+                }
+            }
+            for (i = 0; new_commands[i][0]; i++)
+            {
+                if (ptr_value && (strcmp (ptr_value, new_commands[i][0]) == 0))
+                {
+                    gui_chat_printf (
+                        NULL,
+                        _("Command converted for key \"%s\": \"%s\" => \"%s\""),
+                        hashtable_get (data_read, "option"),
+                        new_commands[i][0],
+                        new_commands[i][1]);
+                    hashtable_set (data_read, "value", new_commands[i][1]);
+                    changes++;
+                    break;
                 }
             }
         }

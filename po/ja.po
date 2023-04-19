@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-04-15 11:04+0200\n"
+"POT-Creation-Date: 2023-04-19 14:56+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -3869,6 +3869,11 @@ msgstr ""
 #, c-format
 msgid "Legacy key converted: \"%s\" => \"%s\""
 msgstr ""
+
+#, fuzzy, c-format
+#| msgid "Command for key: \"%s\""
+msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
+msgstr "キーに対するコマンド: \"%s\""
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "プラグイン (\"core\" は WeeChat コア) のデバッグレベル"
