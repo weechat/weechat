@@ -30,6 +30,7 @@ New features::
   * core, plugins: make many identifiers case sensitive (issue #1872, issue #398, bug #32213)
   * core: add item "mouse_status" in default status bar, change default color to lightgreen
   * core: add "stable-number" and "devel-number" in script version.sh
+  * core: remove deprecated parameters from command `/input`
   * api: add function config_set_version (issue #1238)
   * api: add optional argument with version in info "version_number"
   * alias: use lower case for default aliases, rename all aliases to lower case on upgrade (issue #1872)
