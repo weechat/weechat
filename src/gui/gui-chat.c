@@ -844,6 +844,8 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                            const char *tags, const char *message, ...)
 {
     time_t date_printed;
+    char *pos, *pos_end;
+    int one_line = 0;
 
     if (!message)
         return;
@@ -866,14 +868,37 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     if (date <= 0)
         date = date_printed;
 
-    if (gui_init_ok)
+    pos = vbuffer;
+    while (pos)
     {
-        gui_chat_printf_date_tags_internal (buffer, date, date_printed,
-                                            tags, vbuffer);
-    }
-    else
-    {
-        gui_chat_add_line_waiting_buffer (vbuffer);
+        if (!buffer || !buffer->input_multiline)
+        {
+            /* display until next end of line */
+            pos_end = strchr (pos, '\n');
+            if (pos_end)
+                pos_end[0] = '\0';
+        }
+        else
+        {
+            one_line = 1;
+        }
+
+        if (gui_init_ok)
+        {
+            gui_chat_printf_date_tags_internal (buffer, date, date_printed,
+                                                tags, pos);
+        }
+        else
+        {
+            gui_chat_add_line_waiting_buffer (pos);
+        }
+
+        if (one_line)
+        {
+            break;
+        }
+
+        pos = (pos_end && pos_end[1]) ? pos_end + 1 : NULL;
     }
 
     free (vbuffer);
