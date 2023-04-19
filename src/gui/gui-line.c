@@ -2147,6 +2147,7 @@ gui_line_hdata_line_data_update_cb (void *data,
                                     struct t_hashtable *hashtable)
 {
     const char *value;
+    char *new_value, *pos_newline;
     struct t_gui_line_data *line_data;
     struct t_gui_window *ptr_win;
     int rc, update_coords;
@@ -2205,9 +2206,19 @@ gui_line_hdata_line_data_update_cb (void *data,
     if (hashtable_has_key (hashtable, "message"))
     {
         value = hashtable_get (hashtable, "message");
-        hdata_set (hdata, pointer, "message", value);
+        new_value = (value) ? strdup (value) : NULL;
+        if (new_value && !line_data->buffer->input_multiline)
+        {
+            /* if input_multiline is not set, keep only first line */
+            pos_newline = strchr (new_value, '\n');
+            if (pos_newline)
+                pos_newline[0] = '\0';
+        }
+        hdata_set (hdata, pointer, "message", new_value);
         rc++;
         update_coords = 1;
+        if (new_value)
+            free (new_value);
     }
 
     if (rc > 0)
