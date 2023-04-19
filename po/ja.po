@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-04-19 14:56+0200\n"
+"POT-Creation-Date: 2023-04-20 22:34+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5961,6 +5961,12 @@ msgstr "%sエラー: 同じ名前 (%s) のバッファがあります"
 #, fuzzy, c-format
 msgid "%sMaximum number of buffers is reached (%d)"
 msgstr "%sエラー: バッファ数の最大値に達しました (%d)"
+
+#, c-format
+msgid ""
+"%sBuffer property \"%s\" can not be disabled if buffer contains lines "
+"(buffer: %s)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sIt is only possible to merge buffers with formatted content"

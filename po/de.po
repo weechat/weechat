@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-04-19 14:56+0200\n"
+"POT-Creation-Date: 2023-04-20 22:34+0200\n"
 "PO-Revision-Date: 2023-04-13 20:09+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
@@ -6307,6 +6307,12 @@ msgstr "%sEin Buffer mit dem selben Namen (%s) existiert bereits"
 #, c-format
 msgid "%sMaximum number of buffers is reached (%d)"
 msgstr "%sMaximale Anzahl an Buffern erreicht (%d)"
+
+#, c-format
+msgid ""
+"%sBuffer property \"%s\" can not be disabled if buffer contains lines "
+"(buffer: %s)"
+msgstr ""
 
 #, c-format
 msgid "%sIt is only possible to merge buffers with formatted content"

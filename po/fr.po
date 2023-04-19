@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-04-19 14:56+0200\n"
-"PO-Revision-Date: 2023-04-19 16:34+0200\n"
+"POT-Creation-Date: 2023-04-20 22:34+0200\n"
+"PO-Revision-Date: 2023-04-20 22:35+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -6172,6 +6172,14 @@ msgstr "%sUn tampon avec le même nom (%s) existe déjà"
 #, c-format
 msgid "%sMaximum number of buffers is reached (%d)"
 msgstr "%sLe nombre maximum de tampons est atteint (%d)"
+
+#, c-format
+msgid ""
+"%sBuffer property \"%s\" can not be disabled if buffer contains lines "
+"(buffer: %s)"
+msgstr ""
+"%sLa propriété de tampon \"%s\" ne peut pas être désactivée si le tampon "
+"contient des lignes (tampon : %s)"
 
 #, c-format
 msgid "%sIt is only possible to merge buffers with formatted content"

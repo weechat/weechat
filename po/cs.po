@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-04-19 14:56+0200\n"
+"POT-Creation-Date: 2023-04-20 22:34+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5083,6 +5083,12 @@ msgstr "%sChyba: buffer se stejným jménem (%s) už existuje"
 msgid "%sMaximum number of buffers is reached (%d)"
 msgstr ""
 "maximální počet navštívených bufferů uchovaných v paměti (0 = nekonečně)"
+
+#, c-format
+msgid ""
+"%sBuffer property \"%s\" can not be disabled if buffer contains lines "
+"(buffer: %s)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sIt is only possible to merge buffers with formatted content"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-04-19 14:56+0200\n"
+"POT-Creation-Date: 2023-04-20 22:34+0200\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4628,6 +4628,12 @@ msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\
 msgid "%sMaximum number of buffers is reached (%d)"
 msgstr ""
 "felhasználói parancsok maximális száma az előzményekben (0 = korlátlan)"
+
+#, c-format
+msgid ""
+"%sBuffer property \"%s\" can not be disabled if buffer contains lines "
+"(buffer: %s)"
+msgstr ""
 
 #, c-format
 msgid "%sIt is only possible to merge buffers with formatted content"

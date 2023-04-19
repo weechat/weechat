@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-04-19 14:56+0200\n"
+"POT-Creation-Date: 2023-04-20 22:34+0200\n"
 "PO-Revision-Date: 2023-04-13 20:10+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6402,6 +6402,12 @@ msgstr "%sВећ постоји бафер са истим именом (%s)"
 #, c-format
 msgid "%sMaximum number of buffers is reached (%d)"
 msgstr "%sДостигнут је максималан број бафера (%d)"
+
+#, c-format
+msgid ""
+"%sBuffer property \"%s\" can not be disabled if buffer contains lines "
+"(buffer: %s)"
+msgstr ""
 
 #, c-format
 msgid "%sIt is only possible to merge buffers with formatted content"
