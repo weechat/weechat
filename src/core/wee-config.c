@@ -282,6 +282,7 @@ struct t_config_option *config_color_status_filter = NULL;
 struct t_config_option *config_color_status_more = NULL;
 struct t_config_option *config_color_status_mouse = NULL;
 struct t_config_option *config_color_status_name = NULL;
+struct t_config_option *config_color_status_name_insecure = NULL;
 struct t_config_option *config_color_status_name_tls = NULL;
 struct t_config_option *config_color_status_nicklist_count = NULL;
 struct t_config_option *config_color_status_number = NULL;
@@ -4547,12 +4548,21 @@ config_weechat_init_options ()
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
+        config_color_status_name_insecure = config_file_new_option (
+            weechat_config_file, weechat_config_section_color,
+            "status_name_insecure", "color",
+            N_("text color for current buffer name in status bar, if data are "
+               "exchanged and not secured with a protocol like TLS"),
+            NULL, -1, 0, "lightmagenta", NULL, 0,
+            NULL, NULL, NULL,
+            &config_change_color, NULL, NULL,
+            NULL, NULL, NULL);
         config_color_status_name_tls = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "status_name_tls", "color",
             N_("text color for current buffer name in status bar, if data are "
-               "secured with a protocol like TLS"),
-            NULL, -1, 0, "lightgreen", NULL, 0,
+               "exchanged and secured with a protocol like TLS"),
+            NULL, -1, 0, "white", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);

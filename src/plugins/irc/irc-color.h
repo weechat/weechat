@@ -82,6 +82,7 @@
 #define IRC_COLOR_NOTICE weechat_color(weechat_config_string(irc_config_color_notice))
 #define IRC_COLOR_STATUS_NUMBER weechat_color("status_number")
 #define IRC_COLOR_STATUS_NAME weechat_color("status_name")
+#define IRC_COLOR_STATUS_NAME_INSECURE weechat_color("status_name_insecure")
 #define IRC_COLOR_STATUS_NAME_TLS weechat_color("status_name_tls")
 #define IRC_COLOR_MESSAGE_JOIN weechat_color(weechat_config_string(irc_config_color_message_join))
 #define IRC_COLOR_MESSAGE_ACCOUNT weechat_color(weechat_config_string(irc_config_color_message_account))

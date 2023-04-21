@@ -137,7 +137,7 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
             snprintf (buf_name, sizeof (buf_name), "%s%s[%s%s%s]",
                       _("server"),
                       IRC_COLOR_BAR_DELIM,
-                      (server && server->tls_connected) ? IRC_COLOR_STATUS_NAME_TLS : IRC_COLOR_STATUS_NAME,
+                      (server && server->tls_connected) ? IRC_COLOR_STATUS_NAME_TLS : IRC_COLOR_STATUS_NAME_INSECURE,
                       server->name,
                       IRC_COLOR_BAR_DELIM);
         }
@@ -151,11 +151,11 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
                           "%s%s%s%s%s%s%s%s%s%s",
                           (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
                           (part_from_channel) ? "(" : "",
-                          (server && server->tls_connected) ? IRC_COLOR_STATUS_NAME_TLS : IRC_COLOR_STATUS_NAME,
+                          (server && server->tls_connected) ? IRC_COLOR_STATUS_NAME_TLS : IRC_COLOR_STATUS_NAME_INSECURE,
                           (server && display_server) ? server->name : "",
                           (server && display_server) ? IRC_COLOR_BAR_DELIM : "",
                           (server && display_server) ? "/" : "",
-                          (server && server->tls_connected) ? IRC_COLOR_STATUS_NAME_TLS : IRC_COLOR_STATUS_NAME,
+                          (server && server->tls_connected) ? IRC_COLOR_STATUS_NAME_TLS : IRC_COLOR_STATUS_NAME_INSECURE,
                           (short_name) ? weechat_buffer_get_string (buffer, "short_name") : channel->name,
                           (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
                           (part_from_channel) ? ")" : "");
@@ -190,7 +190,7 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
 
     snprintf (buf, sizeof (buf),
               "%s%s",
-              (server && server->tls_connected) ? IRC_COLOR_STATUS_NAME_TLS : IRC_COLOR_STATUS_NAME,
+              (server && server->tls_connected) ? IRC_COLOR_STATUS_NAME_TLS : IRC_COLOR_STATUS_NAME_INSECURE,
               buf_name);
 
     return strdup (buf);
