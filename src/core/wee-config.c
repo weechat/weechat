@@ -4444,7 +4444,7 @@ config_weechat_init_options ()
             "separator", "color",
             N_("color for window separators (when split) and separators beside "
                "bars (like nicklist)"),
-            NULL, GUI_COLOR_SEPARATOR, 0, "blue", NULL, 0,
+            NULL, GUI_COLOR_SEPARATOR, 0, "236", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
