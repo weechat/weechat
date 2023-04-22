@@ -73,11 +73,11 @@ char *gui_bar_default_values[GUI_BAR_NUM_DEFAULT_BARS][GUI_BAR_NUM_OPTIONS] =
       "[input_prompt]+(away),[input_search],[input_paste],input_text" },
     /* title */
     { "off", "500", "window", "", "top", "horizontal", "vertical",
-      "1", "0", "default", "cyan", "blue", "darkgray", "off",
+      "1", "0", "default", "cyan", "234", "232", "off",
       "buffer_title" },
     /* status */
     { "off", "500", "window", "", "bottom", "horizontal", "vertical",
-      "1", "0", "default", "cyan", "blue", "darkgray", "off",
+      "1", "0", "default", "cyan", "234", "232", "off",
       "[time],[buffer_last_number],[buffer_plugin],buffer_number+:+"
       "buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+"
       "buffer_filter,mouse_status,scroll,[lag],[hotlist],[typing],"
