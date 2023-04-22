@@ -534,7 +534,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "status_autoloaded", "color",
             N_("color for status \"autoloaded\" (\"a\")"),
-            NULL, 0, 0, "cyan", NULL, 0,
+            NULL, 0, 0, "39", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -606,7 +606,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "text_bg_selected", "color",
             N_("background color for selected line in script buffer"),
-            NULL, 0, 0, "red", NULL, 0,
+            NULL, 0, 0, "24", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -614,7 +614,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "text_date", "color",
             N_("text color of dates in script buffer"),
-            NULL, 0, 0, "default", NULL, 0,
+            NULL, 0, 0, "65", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -622,7 +622,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "text_date_selected", "color",
             N_("text color of dates for selected line in script buffer"),
-            NULL, 0, 0, "white", NULL, 0,
+            NULL, 0, 0, "50", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -630,7 +630,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "text_delimiters", "color",
             N_("text color of delimiters in script buffer"),
-            NULL, 0, 0, "default", NULL, 0,
+            NULL, 0, 0, "240", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -638,7 +638,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "text_description", "color",
             N_("text color of description in script buffer"),
-            NULL, 0, 0, "default", NULL, 0,
+            NULL, 0, 0, "249", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -654,7 +654,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "text_extension", "color",
             N_("text color of extension in script buffer"),
-            NULL, 0, 0, "default", NULL, 0,
+            NULL, 0, 0, "242", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -662,7 +662,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "text_extension_selected", "color",
             N_("text color of extension for selected line in script buffer"),
-            NULL, 0, 0, "white", NULL, 0,
+            NULL, 0, 0, "248", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -670,7 +670,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "text_name", "color",
             N_("text color of script name in script buffer"),
-            NULL, 0, 0, "cyan", NULL, 0,
+            NULL, 0, 0, "73", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -678,7 +678,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "text_name_selected", "color",
             N_("text color of script name for selected line in script buffer"),
-            NULL, 0, 0, "lightcyan", NULL, 0,
+            NULL, 0, 0, "51", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -710,7 +710,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "text_version", "color",
             N_("text color of version in script buffer"),
-            NULL, 0, 0, "magenta", NULL, 0,
+            NULL, 0, 0, "100", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -718,7 +718,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "text_version_loaded", "color",
             N_("text color of version loaded in script buffer"),
-            NULL, 0, 0, "default", NULL, 0,
+            NULL, 0, 0, "246", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -734,7 +734,7 @@ script_config_init ()
             script_config_file, script_config_section_color,
             "text_version_selected", "color",
             N_("text color of version for selected line in script buffer"),
-            NULL, 0, 0, "lightmagenta", NULL, 0,
+            NULL, 0, 0, "228", NULL, 0,
             NULL, NULL, NULL,
             &script_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
