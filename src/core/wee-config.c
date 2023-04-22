@@ -4087,7 +4087,7 @@ config_weechat_init_options ()
             weechat_config_file, weechat_config_section_color,
             "chat_delimiters", "color",
             N_("text color for delimiters"),
-            NULL, GUI_COLOR_CHAT_DELIMITERS, 0, "green", NULL, 0,
+            NULL, GUI_COLOR_CHAT_DELIMITERS, 0, "22", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
@@ -4103,7 +4103,7 @@ config_weechat_init_options ()
             weechat_config_file, weechat_config_section_color,
             "chat_highlight_bg", "color",
             N_("background color for highlighted prefix"),
-            NULL, -1, 0, "magenta", NULL, 0,
+            NULL, -1, 0, "124", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
@@ -4129,7 +4129,7 @@ config_weechat_init_options ()
             "chat_inactive_window", "color",
             N_("text color for chat when window is inactive (not current "
                "selected window)"),
-            NULL, GUI_COLOR_CHAT_INACTIVE_WINDOW, 0, "default", NULL, 0,
+            NULL, GUI_COLOR_CHAT_INACTIVE_WINDOW, 0, "240", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
@@ -4151,8 +4151,11 @@ config_weechat_init_options ()
             N_("text color for nicks (comma separated list of colors, "
                "background is allowed with format: \"fg:bg\", for example: "
                "\"lightred:blue\")"),
-            NULL, 0, 0, "cyan,magenta,green,brown,lightblue,default,lightcyan,"
-            "lightmagenta,lightgreen,blue", NULL, 0,
+            NULL, 0, 0,
+            "cyan,magenta,green,brown,lightblue,lightcyan,lightmagenta,"
+            "lightgreen,31,35,38,40,49,63,70,80,92,99,112,126,130,138,142,148,"
+            "160,162,167,169,174,176,178,184,186,210,212,215,248",
+            NULL, 0,
             NULL, NULL, NULL,
             &config_change_nick_colors, NULL, NULL,
             NULL, NULL, NULL);
@@ -4162,7 +4165,7 @@ config_weechat_init_options ()
             N_("text color for offline nick (not in nicklist any more); this "
                "color is used only if option weechat.look.color_nick_offline is "
                "enabled"),
-            NULL, GUI_COLOR_CHAT_NICK_OFFLINE, 0, "default", NULL, 0,
+            NULL, GUI_COLOR_CHAT_NICK_OFFLINE, 0, "242", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
@@ -4180,7 +4183,7 @@ config_weechat_init_options ()
             "chat_nick_offline_highlight_bg", "color",
             N_("background color for offline nick with highlight; this color is "
                "used only if option weechat.look.color_nick_offline is enabled"),
-            NULL, -1, 0, "blue", NULL, 0,
+            NULL, -1, 0, "17", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
@@ -4229,7 +4232,7 @@ config_weechat_init_options ()
             "chat_prefix_buffer", "color",
             N_("text color for buffer name (before prefix, when many buffers "
                "are merged with same number)"),
-            NULL, GUI_COLOR_CHAT_PREFIX_BUFFER, 0, "brown", NULL, 0,
+            NULL, GUI_COLOR_CHAT_PREFIX_BUFFER, 0, "180", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
@@ -4391,7 +4394,7 @@ config_weechat_init_options ()
             N_("background color for emphasized text (for example when searching "
                "text); used only if option weechat.look.emphasized_attributes "
                "is an empty string (default value)"),
-            NULL, -1, 0, "magenta", NULL, 0,
+            NULL, -1, 0, "54", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
@@ -4426,7 +4429,7 @@ config_weechat_init_options ()
             weechat_config_file, weechat_config_section_color,
             "nicklist_away", "color",
             N_("text color for away nicknames"),
-            NULL, -1, 0, "cyan", NULL, 0,
+            NULL, -1, 0, "240", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
