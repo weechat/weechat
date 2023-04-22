@@ -488,7 +488,7 @@ fset_config_init ()
             fset_config_file, fset_config_section_look,
             "use_color_value", "boolean",
             N_("use the color to display value of color options"),
-            NULL, 0, 0, "off", NULL, 0,
+            NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_use_color_value_cb, NULL, NULL,
             NULL, NULL, NULL);
