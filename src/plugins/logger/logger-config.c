@@ -516,14 +516,14 @@ logger_config_init ()
             logger_config_file, logger_config_section_color,
             "backlog_end", "color",
             N_("color for line ending the backlog"),
-            NULL, -1, 0, "default", NULL, 0,
+            NULL, -1, 0, "246", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         logger_config_color_backlog_line = weechat_config_new_option (
             logger_config_file, logger_config_section_color,
             "backlog_line", "color",
             N_("color for backlog lines, used only if the option "
                "logger.file.color_lines is off"),
-            NULL, -1, 0, "default", NULL, 0,
+            NULL, -1, 0, "246", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
