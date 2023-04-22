@@ -3795,7 +3795,7 @@ config_weechat_init_options ()
             weechat_config_file, weechat_config_section_look,
             "prefix_suffix", "string",
             N_("string displayed after prefix"),
-            NULL, 0, 0, "|", NULL, 0,
+            NULL, 0, 0, "│", NULL, 0,
             NULL, NULL, NULL,
             &config_change_buffers, NULL, NULL,
             NULL, NULL, NULL);
@@ -4287,7 +4287,7 @@ config_weechat_init_options ()
             weechat_config_file, weechat_config_section_color,
             "chat_prefix_suffix", "color",
             N_("text color for suffix (after prefix)"),
-            NULL, GUI_COLOR_CHAT_PREFIX_SUFFIX, 0, "green", NULL, 0,
+            NULL, GUI_COLOR_CHAT_PREFIX_SUFFIX, 0, "24", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
