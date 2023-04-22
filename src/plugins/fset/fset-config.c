@@ -63,6 +63,7 @@ struct t_config_option *fset_config_format_option[2] = { NULL, NULL };
 
 /* fset config, color section */
 
+struct t_config_option *fset_config_color_color_name[2] = { NULL, NULL };
 struct t_config_option *fset_config_color_default_value[2] = { NULL, NULL };
 struct t_config_option *fset_config_color_description[2] = { NULL, NULL };
 struct t_config_option *fset_config_color_file[2] = { NULL, NULL };
@@ -602,6 +603,24 @@ fset_config_init ()
         NULL, NULL, NULL);
     if (fset_config_section_color)
     {
+        fset_config_color_color_name[0] = weechat_config_new_option (
+            fset_config_file, fset_config_section_color,
+            "color_name", "color",
+            N_("color for color name when option fset.look.use_color_value is "
+               "enabled"),
+            NULL, 0, 0, "246", NULL, 0,
+            NULL, NULL, NULL,
+            &fset_config_change_color_cb, NULL, NULL,
+            NULL, NULL, NULL);
+        fset_config_color_color_name[1] = weechat_config_new_option (
+            fset_config_file, fset_config_section_color,
+            "color_name_selected", "color",
+            N_("color for color name on the selected line when option "
+               "fset.look.use_color_value is enabled"),
+            NULL, 0, 0, "default", NULL, 0,
+            NULL, NULL, NULL,
+            &fset_config_change_color_cb, NULL, NULL,
+            NULL, NULL, NULL);
         fset_config_color_default_value[0] = weechat_config_new_option (
             fset_config_file, fset_config_section_color,
             "default_value", "color",

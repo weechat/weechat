@@ -167,7 +167,8 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
 {
     char *line, str_color_line[128], **lines;
     char *str_field, *str_field2;
-    char str_color_value[128], str_color_quotes[128], str_number[64];
+    char str_color_value[128], str_color_quotes[128], str_color_name[512];
+    char str_number[64];
     int length, length_field, selected_line, y, y_max, i, num_lines;
     int default_value_undef, value_undef, value_changed;
     int add_quotes, add_quotes_parent, format_number;
@@ -389,18 +390,37 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
                       (default_value_undef) ?
                       fset_config_color_value_undef[selected_line] :
                       fset_config_color_default_value[selected_line])));
+    str_color_name[0] = '\0';
+    if ((fset_option->type == FSET_OPTION_TYPE_COLOR)
+        && weechat_config_boolean (fset_config_look_use_color_value)
+        && fset_option->default_value)
+    {
+        snprintf (str_color_name, sizeof (str_color_name),
+                  " %s(%s%s%s)",
+                  weechat_color (
+                      weechat_config_string (
+                          fset_config_color_quotes[selected_line])),
+                  weechat_color (
+                      weechat_config_string (
+                          fset_config_color_color_name[selected_line])),
+                  fset_option->default_value,
+                  weechat_color (
+                      weechat_config_string (
+                          fset_config_color_quotes[selected_line])));
+    }
     snprintf (str_field, length_field,
               "%s", (fset_option->default_value) ? fset_option->default_value : FSET_OPTION_VALUE_NULL);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "__default_value", str_field);
     snprintf (str_field, length_field,
-              "%s%s%s%s%s%s",
+              "%s%s%s%s%s%s%s",
               (add_quotes) ? weechat_color (weechat_config_string (fset_config_color_quotes[selected_line])) : "",
               (add_quotes) ? "\"" : "",
               str_color_value,
               (fset_option->default_value) ? fset_option->default_value : FSET_OPTION_VALUE_NULL,
               (add_quotes) ? weechat_color (weechat_config_string (fset_config_color_quotes[selected_line])) : "",
-              (add_quotes) ? "\"" : "");
+              (add_quotes) ? "\"" : "",
+              str_color_name);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_default_value", str_field);
     fset_buffer_fills_field (str_field, str_field2, length_field,
@@ -418,6 +438,11 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
         snprintf (str_color_value, sizeof (str_color_value),
                   "%s",
                   weechat_color (fset_option->value));
+        snprintf (str_color_quotes, sizeof (str_color_quotes),
+                  "%s",
+                  weechat_color (
+                      weechat_config_string (
+                          fset_config_color_quotes[selected_line])));
     }
     else if (value_undef)
     {
@@ -458,18 +483,36 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
                       weechat_config_string (
                           fset_config_color_quotes[selected_line])));
     }
+    str_color_name[0] = '\0';
+    if ((fset_option->type == FSET_OPTION_TYPE_COLOR)
+        && weechat_config_boolean (fset_config_look_use_color_value))
+    {
+        snprintf (str_color_name, sizeof (str_color_name),
+                  " %s(%s%s%s)",
+                  weechat_color (
+                      weechat_config_string (
+                          fset_config_color_quotes[selected_line])),
+                  weechat_color (
+                      weechat_config_string (
+                          fset_config_color_color_name[selected_line])),
+                  fset_option->value,
+                  weechat_color (
+                      weechat_config_string (
+                          fset_config_color_quotes[selected_line])));
+    }
     snprintf (str_field, length_field,
               "%s", (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "__value", str_field);
     snprintf (str_field, length_field,
-              "%s%s%s%s%s%s",
+              "%s%s%s%s%s%s%s",
               (add_quotes) ? str_color_quotes : "",
               (add_quotes) ? "\"" : "",
               str_color_value,
               (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
               (add_quotes) ? str_color_quotes : "",
-              (add_quotes) ? "\"" : "");
+              (add_quotes) ? "\"" : "",
+              str_color_name);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_value", str_field);
     fset_buffer_fills_field (str_field, str_field2, length_field,
@@ -490,7 +533,7 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                "__value2", str_field);
         snprintf (str_field, length_field,
-                  "%s%s%s%s%s%s%s -> %s%s%s%s%s%s",
+                  "%s%s%s%s%s%s%s -> %s%s%s%s%s%s%s",
                   (add_quotes) ? str_color_quotes : "",
                   (add_quotes) ? "\"" : "",
                   str_color_value,
@@ -503,7 +546,8 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
                   weechat_color (weechat_config_string (fset_config_color_parent_value[selected_line])),
                   (fset_option->parent_value) ? fset_option->parent_value : FSET_OPTION_VALUE_NULL,
                   (add_quotes_parent) ? weechat_color (weechat_config_string (fset_config_color_quotes[selected_line])) : "",
-                  (add_quotes_parent) ? "\"" : "");
+                  (add_quotes_parent) ? "\"" : "",
+                  str_color_name);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                "_value2", str_field);
         fset_buffer_fills_field (str_field, str_field2, length_field,
@@ -521,13 +565,14 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                "__value2", str_field);
         snprintf (str_field, length_field,
-              "%s%s%s%s%s%s",
-              (add_quotes) ? str_color_quotes : "",
-              (add_quotes) ? "\"" : "",
-              str_color_value,
-              (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
-              (add_quotes) ? str_color_quotes : "",
-              (add_quotes) ? "\"" : "");
+                  "%s%s%s%s%s%s%s",
+                  (add_quotes) ? str_color_quotes : "",
+                  (add_quotes) ? "\"" : "",
+                  str_color_value,
+                  (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
+                  (add_quotes) ? str_color_quotes : "",
+                  (add_quotes) ? "\"" : "",
+                  str_color_name);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                "_value2", str_field);
         fset_buffer_fills_field (str_field, str_field2, length_field,
@@ -831,6 +876,7 @@ fset_buffer_display_option_predefined_format (struct t_fset_option *fset_option)
     int add_quotes, add_quotes_parent, length_value;
     char str_marked[128], str_name[4096], str_type[128], *str_value;
     char str_color_line[128], str_color_value[128], str_color_quotes[128];
+    char str_color_name[512];
 
     if (!fset_option)
         return -1;
@@ -883,6 +929,11 @@ fset_buffer_display_option_predefined_format (struct t_fset_option *fset_option)
         snprintf (str_color_value, sizeof (str_color_value),
                   "%s",
                   weechat_color (fset_option->value));
+        snprintf (str_color_quotes, sizeof (str_color_quotes),
+                  "%s",
+                  weechat_color (
+                      weechat_config_string (
+                          fset_config_color_quotes[selected_line])));
     }
     else if (value_undef)
     {
@@ -923,6 +974,20 @@ fset_buffer_display_option_predefined_format (struct t_fset_option *fset_option)
                       weechat_config_string (
                           fset_config_color_quotes[selected_line])));
     }
+    str_color_name[0] = '\0';
+    if ((fset_option->type == FSET_OPTION_TYPE_COLOR)
+        && weechat_config_boolean (fset_config_look_use_color_value)
+        && fset_option->value)
+    {
+        snprintf (str_color_name, sizeof (str_color_name),
+                  " %s(%s%s%s)",
+                  str_color_quotes,
+                  weechat_color (
+                      weechat_config_string (
+                          fset_config_color_color_name[selected_line])),
+                  fset_option->value,
+                  str_color_quotes);
+    }
     length_value = (fset_option->value) ?
         strlen (fset_option->value) + 256 : 4096;
     str_value = malloc (length_value);
@@ -932,7 +997,7 @@ fset_buffer_display_option_predefined_format (struct t_fset_option *fset_option)
         {
             add_quotes_parent = (fset_option->parent_value && (fset_option->type == FSET_OPTION_TYPE_STRING)) ? 1 : 0;
             snprintf (str_value, length_value,
-                      "%s%s%s%s%s%s%s -> %s%s%s%s%s%s",
+                      "%s%s%s%s%s%s%s -> %s%s%s%s%s%s%s",
                       (add_quotes) ? str_color_quotes : "",
                       (add_quotes) ? "\"" : "",
                       str_color_value,
@@ -945,18 +1010,20 @@ fset_buffer_display_option_predefined_format (struct t_fset_option *fset_option)
                       weechat_color (weechat_config_string (fset_config_color_parent_value[selected_line])),
                       (fset_option->parent_value) ? fset_option->parent_value : FSET_OPTION_VALUE_NULL,
                       (add_quotes_parent) ? weechat_color (weechat_config_string (fset_config_color_quotes[selected_line])) : "",
-                      (add_quotes_parent) ? "\"" : "");
+                      (add_quotes_parent) ? "\"" : "",
+                      str_color_name);
         }
         else
         {
             snprintf (str_value, length_value,
-                      "%s%s%s%s%s%s",
+                      "%s%s%s%s%s%s%s",
                       (add_quotes) ? str_color_quotes : "",
                       (add_quotes) ? "\"" : "",
                       str_color_value,
                       (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
                       (add_quotes) ? str_color_quotes : "",
-                      (add_quotes) ? "\"" : "");
+                      (add_quotes) ? "\"" : "",
+                      str_color_name);
         }
     }
 
