@@ -582,7 +582,7 @@ fset_config_init ()
                "formats can be switched with key ctrl-x"),
             NULL, 0, 0,
             "${marked} ${name}  ${type}  ${value2}${newline}"
-            "  ${empty_name}  ${_default_value}${color:darkgray} -- "
+            "  ${empty_name}  ${_default_value}${color:244} -- "
             "${min}..${max}${newline}"
             "  ${empty_name}  ${description}",
             NULL, 0,
@@ -622,7 +622,7 @@ fset_config_init ()
             fset_config_file, fset_config_section_color,
             "description", "color",
             N_("color for description"),
-            NULL, 0, 0, "default", NULL, 0,
+            NULL, 0, 0, "242", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -630,7 +630,7 @@ fset_config_init ()
             fset_config_file, fset_config_section_color,
             "description_selected", "color",
             N_("color for description on the selected line"),
-            NULL, 0, 0, "white", NULL, 0,
+            NULL, 0, 0, "default", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -727,7 +727,7 @@ fset_config_init ()
             "line_marked_bg1", "color",
             N_("background color for a marked line "
                "(used with the first format, see option fset.format.option1)"),
-            NULL, 0, 0, "default", NULL, 0,
+            NULL, 0, 0, "17", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -736,7 +736,7 @@ fset_config_init ()
             "line_marked_bg2", "color",
             N_("background color for a marked line "
                "(used with the second format, see option fset.format.option2)"),
-            NULL, 0, 0, "default", NULL, 0,
+            NULL, 0, 0, "17", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -745,7 +745,7 @@ fset_config_init ()
             "line_selected_bg1", "color",
             N_("background color for the selected line "
                "(used with the first format, see option fset.format.option1)"),
-            NULL, 0, 0, "blue", NULL, 0,
+            NULL, 0, 0, "24", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -754,7 +754,7 @@ fset_config_init ()
             "line_selected_bg2", "color",
             N_("background color for the selected line "
                "(used with the second format, see option fset.format.option2)"),
-            NULL, 0, 0, "red", NULL, 0,
+            NULL, 0, 0, "24", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -818,7 +818,7 @@ fset_config_init ()
             fset_config_file, fset_config_section_color,
             "name_changed", "color",
             N_("color for name if value is changed"),
-            NULL, 0, 0, "brown", NULL, 0,
+            NULL, 0, 0, "185", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -1028,7 +1028,7 @@ fset_config_init ()
             fset_config_file, fset_config_section_color,
             "type", "color",
             N_("color for type"),
-            NULL, 0, 0, "green", NULL, 0,
+            NULL, 0, 0, "138", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -1036,7 +1036,7 @@ fset_config_init ()
             fset_config_file, fset_config_section_color,
             "type_selected", "color",
             N_("color for type on the selected line"),
-            NULL, 0, 0, "lightgreen", NULL, 0,
+            NULL, 0, 0, "216", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -1061,7 +1061,7 @@ fset_config_init ()
             fset_config_file, fset_config_section_color,
             "value", "color",
             N_("color for value"),
-            NULL, 0, 0, "cyan", NULL, 0,
+            NULL, 0, 0, "38", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -1069,7 +1069,7 @@ fset_config_init ()
             fset_config_file, fset_config_section_color,
             "value_changed", "color",
             N_("color for value changed (different from default)"),
-            NULL, 0, 0, "brown", NULL, 0,
+            NULL, 0, 0, "185", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
@@ -1086,7 +1086,7 @@ fset_config_init ()
             fset_config_file, fset_config_section_color,
             "value_selected", "color",
             N_("color for value on the selected line"),
-            NULL, 0, 0, "lightcyan", NULL, 0,
+            NULL, 0, 0, "80", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
