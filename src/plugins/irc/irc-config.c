@@ -3624,7 +3624,7 @@ irc_config_init ()
             irc_config_file, irc_config_section_color,
             "reason_quit", "color",
             N_("color for reason in part/quit messages"),
-            NULL, -1, 0, "default", NULL, 0,
+            NULL, -1, 0, "244", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_color_topic_current = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
@@ -3637,13 +3637,13 @@ irc_config_init ()
             irc_config_file, irc_config_section_color,
             "topic_new", "color",
             N_("color for new channel topic (when topic is changed)"),
-            NULL, -1, 0, "white", NULL, 0,
+            NULL, -1, 0, "36", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_color_topic_old = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
             "topic_old", "color",
             N_("color for old channel topic (when topic is changed)"),
-            NULL, -1, 0, "default", NULL, 0,
+            NULL, -1, 0, "244", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
