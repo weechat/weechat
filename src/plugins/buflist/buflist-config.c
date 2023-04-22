@@ -665,7 +665,7 @@ buflist_config_init ()
             "buffer_current", "string",
             N_("format for the line with current buffer "
                "(note: content is evaluated, see /help buflist)"),
-            NULL, 0, 0, "${color:,blue}${format_buffer}", NULL, 0,
+            NULL, 0, 0, "${color:,17}${format_buffer}", NULL, 0,
             NULL, NULL, NULL,
             &buflist_config_change_format, NULL, NULL,
             NULL, NULL, NULL);
