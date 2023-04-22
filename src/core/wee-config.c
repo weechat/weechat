@@ -3087,7 +3087,7 @@ config_weechat_init_options ()
             N_("use a different color for inactive time (when window is not "
                "current window, or if line is from a merged buffer not "
                "selected)"),
-            NULL, 0, 0, "off", NULL, 0,
+            NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL,
             &config_change_buffers, NULL, NULL,
             NULL, NULL, NULL);
