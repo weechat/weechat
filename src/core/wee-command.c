@@ -3574,7 +3574,57 @@ COMMAND_CALLBACK(input)
     else if (string_strcmp (argv[1], "redo") == 0)
         gui_input_redo (buffer);
     else
-        COMMAND_ERROR;
+    {
+        /*
+         * deprecated options kept for compatibility
+         * (they may be removed in future)
+         */
+
+        /* since WeeChat 3.8: "/buffer jump smart" */
+        if (string_strcmp (argv[1], "jump_smart") == 0)
+            gui_buffer_jump_smart (gui_current_window);
+        /* since WeeChat 1.0: "/buffer +" */
+        else if (string_strcmp (argv[1], "jump_last_buffer") == 0)
+            gui_buffer_jump_last_visible_number (gui_current_window);
+        /* since WeeChat 3.8: "/buffer jump last_displayed" */
+        else if (string_strcmp (argv[1], "jump_last_buffer_displayed") == 0)
+            gui_buffer_jump_last_buffer_displayed (gui_current_window);
+        /* since WeeChat 3.8: "/buffer jump prev_visited" */
+        else if (string_strcmp (argv[1], "jump_previously_visited_buffer") == 0)
+            gui_buffer_jump_previously_visited_buffer (gui_current_window);
+        /* since WeeChat 3.8: "/buffer jump next_visited" */
+        else if (string_strcmp (argv[1], "jump_next_visited_buffer") == 0)
+            gui_buffer_jump_next_visited_buffer (gui_current_window);
+        /* since WeeChat 3.8: "/hotlist clear" */
+        else if (string_strcmp (argv[1], "hotlist_clear") == 0)
+            gui_hotlist_clear_level_string (buffer, (argc > 2) ? argv[2] : NULL);
+        /* since WeeChat 3.8: "/hotlist remove" */
+        else if (string_strcmp (argv[1], "hotlist_remove_buffer") == 0)
+            gui_hotlist_remove_buffer (buffer, 1);
+        /* since WeeChat 3.8: "/hotlist restore" */
+        else if (string_strcmp (argv[1], "hotlist_restore_buffer") == 0)
+            gui_hotlist_restore_buffer (buffer);
+        /* since WeeChat 3.8: "/hotlist restore -all" */
+        else if (string_strcmp (argv[1], "hotlist_restore_all") == 0)
+            gui_hotlist_restore_all_buffers ();
+        /* since WeeChat 3.8: "/buffer set unread" */
+        else if (string_strcmp (argv[1], "set_unread_current_buffer") == 0)
+            (void) input_data (buffer, "/buffer set unread", NULL);
+        /* since WeeChat 3.8: "/allbuf /buffer set unread" */
+        else if (string_strcmp (argv[1], "set_unread") == 0)
+            (void) input_data (buffer, "/allbuf /buffer set unread", NULL);
+        /* since WeeChat 3.8: "/buffer switch" */
+        else if (string_strcmp (argv[1], "switch_active_buffer") == 0)
+            gui_buffer_switch_active_buffer (buffer);
+        /* since WeeChat 3.8: "/buffer switch previous" */
+        else if (string_strcmp (argv[1], "switch_active_buffer_previous") == 0)
+            gui_buffer_switch_active_buffer_previous (buffer);
+        /* since WeeChat 3.8: "/buffer zoom" */
+        else if (string_strcmp (argv[1], "zoom_merged_buffer") == 0)
+            gui_buffer_zoom (buffer);
+        else
+            COMMAND_ERROR;
+    }
 
     return WEECHAT_RC_OK;
 }
