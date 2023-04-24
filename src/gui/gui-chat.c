@@ -84,7 +84,7 @@ gui_chat_init ()
     /* some hsignals */
     hook_hsignal (NULL,
                   "chat_quote_time_prefix_message;chat_quote_prefix_message;"
-                  "chat_quote_message",
+                  "chat_quote_message;chat_quote_focused_line",
                   &gui_chat_hsignal_quote_line_cb, NULL, NULL);
 }
 
@@ -1104,7 +1104,9 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
             ptr_prefix++;
         }
     }
-    message = hashtable_get (hashtable, "_chat_line_message");
+
+    message = (strstr (signal, "focused_line")) ?
+        hashtable_get (hashtable, "_chat_focused_line") : hashtable_get (hashtable, "_chat_line_message");
 
     if (!message)
         return WEECHAT_RC_OK;

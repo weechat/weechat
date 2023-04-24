@@ -1719,6 +1719,8 @@ Ces touches sont utilisées dans le contexte "cursor" (mouvement libre du curseu
 | kbd:[Alt+←]    | -                 | Déplacer le curseur vers la zone sur la gauche. | `+/cursor move area_left+`
 | kbd:[Alt+→]    | -                 | Déplacer le curseur vers la zone sur la droite. | `+/cursor move area_right+`
 | kbd:[m]        | chat              | Citer le message. | `+hsignal:chat_quote_message;/cursor stop+`
+// TRANSLATION MISSING
+| kbd:[l]        | chat              | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
 | kbd:[q]        | chat              | Citer le préfixe + le message. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
 | kbd:[Q]        | chat              | Citer l'heure + le préfixe + le message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
 | kbd:[b]        | liste des pseudos | Bannir le pseudo. | `+/window ${_window_number};/ban ${nick}+`

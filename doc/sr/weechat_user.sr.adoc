@@ -1606,6 +1606,8 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Alt+←]    | -              | Помера курсор једну површину у лево. | `+/cursor move area_left+`
 | kbd:[Alt+→]    | -              | Помера курсор једну површину у десно. | `+/cursor move area_right+`
 | kbd:[m]        | чет            | Цитирање поруке. | `+hsignal:chat_quote_message;/cursor stop+`
+// TRANSLATION MISSING
+| kbd:[l]        | чет            | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
 | kbd:[q]        | чет            | Цитирање префикса + поруке. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
 | kbd:[Q]        | чет            | Quote time + prefix + message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
 | kbd:[b]        | листа надимака | Забрањује надимак. | `+/window ${_window_number};/ban ${nick}+`

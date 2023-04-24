@@ -1682,6 +1682,7 @@ These keys are used in context "cursor" (free movement of cursor on screen).
 | kbd:[Alt+←]    | -        | Move cursor one area left. | `+/cursor move area_left+`
 | kbd:[Alt+→]    | -        | Move cursor one area right. | `+/cursor move area_right+`
 | kbd:[m]        | chat     | Quote message. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[l]        | chat     | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
 | kbd:[q]        | chat     | Quote prefix + message. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
 | kbd:[Q]        | chat     | Quote time + prefix + message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
 | kbd:[b]        | nicklist | Ban nick. | `+/window ${_window_number};/ban ${nick}+`

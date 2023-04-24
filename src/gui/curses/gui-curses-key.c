@@ -229,6 +229,7 @@ gui_key_default_bindings (int context, int create_option)
         BIND("meta-right","/cursor move area_right");
         /* chat */
         BIND("@chat:m", "hsignal:chat_quote_message;/cursor stop");
+        BIND("@chat:l", "hsignal:chat_quote_focused_line;/cursor stop");
         BIND("@chat:q", "hsignal:chat_quote_prefix_message;/cursor stop");
         BIND("@chat:Q", "hsignal:chat_quote_time_prefix_message;/cursor stop");
         /* nicklist */

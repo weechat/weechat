@@ -1798,6 +1798,8 @@ kbd:[Ctrl+r] が押された状態) でのみ有効です。
 | kbd:[Alt+←]    | -                 | カーソルを左のエリアに移動 | `+/cursor move area_left+`
 | kbd:[Alt+→]    | -                 | カーソルを右のエリアに移動 | `+/cursor move area_right+`
 | kbd:[m]        | チャット          | メッセージを引用 | `+hsignal:chat_quote_message;/cursor stop+`
+// TRANSLATION MISSING
+| kbd:[l]        | チャット          | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
 | kbd:[q]        | チャット          | プレフィックスとメッセージを引用 | `+hsignal:chat_quote_prefix_message;/cursor stop+`
 | kbd:[Q]        | チャット          | 時間、プレフィックス、メッセージを引用 | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
 | kbd:[b]        | ニックネームリスト| ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`

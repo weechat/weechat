@@ -1855,6 +1855,8 @@ sullo schermo.
 | kbd:[Alt+←]    | -          | Sposta il cursore nell'area a sinistra. | `+/cursor move area_left+`
 | kbd:[Alt+→]    | -          | Sposta il cursore nell'area a destra. | `+/cursor move area_right+`
 | kbd:[m]        | chat       | Cita messaggio. | `+hsignal:chat_quote_message;/cursor stop+`
+// TRANSLATION MISSING
+| kbd:[l]        | chat       | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
 | kbd:[q]        | chat       | Cita prefisso + messaggio. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
 | kbd:[Q]        | chat       | Cita ora + prefisso + messaggio. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
 | kbd:[b]        | lista nick | Ban di un nick. | `+/window ${_window_number};/ban ${nick}+`

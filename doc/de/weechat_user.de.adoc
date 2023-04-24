@@ -1698,6 +1698,8 @@ Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bild
 | kbd:[Alt+←]    | -             | bewegt Cursor einen Bereich nach links. | `+/cursor move area_left+`
 | kbd:[Alt+→]    | -             | bewegt Cursor einen Bereich nach rechts. | `+/cursor move area_right+`
 | kbd:[m]        | Chat          | quotet Nachricht. | `+hsignal:chat_quote_message;/cursor stop+`
+// TRANSLATION MISSING
+| kbd:[l]        | Chat          | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
 | kbd:[q]        | Chat          | quotet prefix + Nachricht. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
 | kbd:[Q]        | Chat          | quotet Uhrzeit + prefix + Nachricht. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
 | kbd:[b]        | Benutzerliste | verbannt nick (Ban). | `+/window ${_window_number};/ban ${nick}+`

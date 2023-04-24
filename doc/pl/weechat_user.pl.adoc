@@ -1711,6 +1711,8 @@ ekranie).
 | kbd:[Alt+←]    | -        | Przesuń kursor obszar w lewo. | `+/cursor move area_left+`
 | kbd:[Alt+→]    | -        | Przesuń kursor obszar w prawo. | `+/cursor move area_right+`
 | kbd:[m]        | chat     | Cytuj wiadomość. | `+hsignal:chat_quote_message;/cursor stop+`
+// TRANSLATION MISSING
+| kbd:[l]        | chat     | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
 | kbd:[q]        | chat     | Cytuj prefiks i wiadomość. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
 | kbd:[Q]        | chat     | Cytuj czas, prefiks i wiadomość. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
 | kbd:[b]        | nicklist | Zbanuj osobę. | `+/window ${_window_number};/ban ${nick}+`
