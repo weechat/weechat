@@ -4430,6 +4430,33 @@ TEST(IrcProtocolWithServer, 734)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_742 (mode cannot be set)
+ */
+
+TEST(IrcProtocolWithServer, 742)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 742");
+    CHECK_ERROR_PARAMS("742", 0, 2);
+    RECV(":server 742 alice");
+    CHECK_ERROR_PARAMS("742", 1, 2);
+
+    RECV(":server 742 alice #test");
+    CHECK_SRV("-- #test");
+    RECV(":server 742 alice #test n nstlk :MODE cannot be set due to channel "
+         "having an active MLOCK restriction policy");
+    CHECK_CHAN("-- #test: n nstlk MODE cannot be set due to channel having "
+               "an active MLOCK restriction policy");
+    RECV(":server 742 alice #test2 n nstlk :MODE cannot be set due to channel "
+         "having an active MLOCK restriction policy");
+    CHECK_SRV("-- #test2: n nstlk MODE cannot be set due to channel having "
+               "an active MLOCK restriction policy");
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_900 (logged in as (SASL))
  */
 

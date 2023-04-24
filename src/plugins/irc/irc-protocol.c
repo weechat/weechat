@@ -7608,6 +7608,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(732, 1, 0, 732),            /* list of monitored nicks         */
         IRCB(733, 1, 0, 733),            /* end of monitor list             */
         IRCB(734, 1, 0, 734),            /* monitor list is full            */
+        IRCB(742, 1, 0, generic_error),  /* mode cannot be set              */
         IRCB(900, 1, 0, 900),            /* logged in as (SASL)             */
         IRCB(901, 1, 0, 901),            /* you are now logged out          */
         IRCB(902, 1, 0, sasl_end_fail),  /* SASL auth failed (acc. locked)  */
