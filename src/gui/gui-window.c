@@ -136,17 +136,20 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                               struct t_gui_line **line,
                               int *line_x,
                               char **word,
+                              char **focused_line,
                               char **beginning,
                               char **end)
 {
     int win_x, win_y, coords_x_message;
     char *data_next_line, *str_temp;
-    const char *ptr_data, *word_start, *word_end, *last_whitespace;
+    const char *ptr_data, *line_start, *line_end, *word_start, *word_end;
+    const char *last_newline, *last_whitespace;
 
     *chat = 0;
     *line = NULL;
     *line_x = -1;
     *word = NULL;
+    *focused_line = NULL;
     *beginning = NULL;
     *end = NULL;
 
@@ -227,8 +230,9 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                 free (str_temp);
             }
             *end = gui_color_decode (ptr_data, NULL);
-            if (ptr_data[0] != ' ' && ptr_data[0] != '\n')
+            if (ptr_data[0] != '\n')
             {
+                last_newline = NULL;
                 last_whitespace = NULL;
                 word_start = (*line)->data->message;
                 while (word_start && (word_start < ptr_data))
@@ -238,31 +242,48 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                                                                     0, 0, 0);
                     if (word_start)
                     {
+                        if (word_start[0] == '\n')
+                            last_newline = word_start;
                         if (word_start[0] == ' ' || word_start[0] == '\n')
                             last_whitespace = word_start;
                         word_start = utf8_next_char (word_start);
                     }
                 }
+                line_start = (last_newline) ? last_newline + 1 : (*line)->data->message;
                 word_start = (last_whitespace) ? last_whitespace + 1 : (*line)->data->message;
-                word_end = ptr_data;
-                while (word_end && word_end[0])
+                line_end = ptr_data;
+                word_end = NULL;
+                while (line_end && line_end[0])
                 {
-                    word_end = (char *)gui_chat_string_next_char (NULL, NULL,
-                                                                  (unsigned char *)word_end,
+                    line_end = (char *)gui_chat_string_next_char (NULL, NULL,
+                                                                  (unsigned char *)line_end,
                                                                   0, 0, 0);
-                    if (word_end)
+                    if (line_end)
                     {
-                        if (word_end[0] == ' ' || word_end[0] == '\n')
+                        if (!word_end && line_end[0] == ' ')
+                            word_end = line_end;
+                        if (line_end[0] == '\n')
                             break;
-                        word_end = utf8_next_char (word_end);
+                        line_end = utf8_next_char (line_end);
                     }
                 }
-                if (word_start && word_end)
+                if (!word_end && line_end)
+                    word_end = line_end;
+                if (ptr_data[0] != ' ' && word_start && word_end)
                 {
                     str_temp = string_strndup (word_start, word_end - word_start);
                     if (str_temp)
                     {
                         *word = gui_color_decode (str_temp, NULL);
+                        free (str_temp);
+                    }
+                }
+                if (line_start && line_end)
+                {
+                    str_temp = string_strndup (line_start, line_end - line_start);
+                    if (str_temp)
+                    {
+                        *focused_line = gui_color_decode (str_temp, NULL);
                         free (str_temp);
                     }
                 }
