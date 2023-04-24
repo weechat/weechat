@@ -7550,6 +7550,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(412, 1, 0, generic_error),  /* no text to send                 */
         IRCB(413, 1, 0, generic_error),  /* no toplevel                     */
         IRCB(414, 1, 0, generic_error),  /* wilcard in toplevel domain      */
+        IRCB(415, 1, 0, generic_error),  /* cannot send message to channel  */
         IRCB(421, 1, 0, generic_error),  /* unknown command                 */
         IRCB(422, 1, 0, generic_error),  /* MOTD is missing                 */
         IRCB(423, 1, 0, generic_error),  /* no administrative info          */

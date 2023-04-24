@@ -3832,6 +3832,29 @@ TEST(IrcProtocolWithServer, 404)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_415 (cannot send to channel)
+ */
+
+TEST(IrcProtocolWithServer, 415)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 415");
+    CHECK_ERROR_PARAMS("415", 0, 2);
+    RECV(":server 415 alice");
+    CHECK_ERROR_PARAMS("415", 1, 2);
+
+    RECV(":server 415 alice #test");
+    CHECK_SRV("-- #test");
+    RECV(":server 415 alice #test :Cannot send message to channel (+R)");
+    CHECK_CHAN("-- #test: Cannot send message to channel (+R)");
+    RECV(":server 415 alice #test2 :Cannot send message to channel (+R)");
+    CHECK_SRV("-- #test2: Cannot send message to channel (+R)");
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_432 (erroneous nickname, not connected)
  */
 
