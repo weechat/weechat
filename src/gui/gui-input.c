@@ -317,7 +317,7 @@ gui_input_clipboard_paste (struct t_gui_buffer *buffer)
 }
 
 /*
- * Terminates line:
+ * Sends data to buffer:
  *   - saves text in history
  *   - stops completion
  *   - frees all undos
@@ -326,9 +326,26 @@ gui_input_clipboard_paste (struct t_gui_buffer *buffer)
  */
 
 void
+gui_input_send_data_to_buffer (struct t_gui_buffer *buffer, char *data)
+{
+    gui_history_add (buffer, data);
+    gui_buffer_undo_free_all (buffer);
+    buffer->ptr_history = NULL;
+    gui_history_ptr = NULL;
+    gui_input_text_changed_modifier_and_signal (buffer,
+                                                0, /* save undo */
+                                                1); /* stop completion */
+    (void) input_data (buffer, data, NULL);
+}
+
+/*
+ * Sends current input to buffer.
+ */
+
+void
 gui_input_return (struct t_gui_buffer *buffer)
 {
-    char *command;
+    char *data;
 
     if (CONFIG_BOOLEAN(config_look_bare_display_exit_on_input)
         && gui_window_bare_display)
@@ -340,24 +357,49 @@ gui_input_return (struct t_gui_buffer *buffer)
         && (buffer->input_get_empty || (buffer->input_buffer_size > 0)))
     {
         buffer->input_buffer[buffer->input_buffer_size] = '\0';
-        command = strdup (buffer->input_buffer);
-        if (command)
+        data = strdup (buffer->input_buffer);
+        if (gui_input_optimize_size (buffer, 0, 0))
         {
-            gui_history_add (buffer, buffer->input_buffer);
-            if (gui_input_optimize_size (buffer, 0, 0))
+            buffer->input_buffer[0] = '\0';
+            buffer->input_buffer_pos = 0;
+            buffer->input_buffer_1st_display = 0;
+        }
+        if (data)
+        {
+            gui_input_send_data_to_buffer (buffer, data);
+            free (data);
+        }
+    }
+}
+
+/*
+ * Splits input on newlines then sends each line to buffer.
+ */
+
+void
+gui_input_split_return (struct t_gui_buffer *buffer)
+{
+    char **lines;
+    int i, num_lines;
+
+    if (buffer->input
+        && (buffer->input_get_empty || (buffer->input_buffer_size > 0)))
+    {
+        buffer->input_buffer[buffer->input_buffer_size] = '\0';
+        lines = string_split (buffer->input_buffer, "\n", NULL, 0, 0, &num_lines);
+        if (gui_input_optimize_size (buffer, 0, 0))
+        {
+            buffer->input_buffer[0] = '\0';
+            buffer->input_buffer_pos = 0;
+            buffer->input_buffer_1st_display = 0;
+        }
+        if (lines)
+        {
+            for (i = 0; i < num_lines; i++)
             {
-                buffer->input_buffer[0] = '\0';
-                buffer->input_buffer_pos = 0;
-                buffer->input_buffer_1st_display = 0;
+                gui_input_send_data_to_buffer (buffer, lines[i]);
             }
-            gui_buffer_undo_free_all (buffer);
-            buffer->ptr_history = NULL;
-            gui_history_ptr = NULL;
-            gui_input_text_changed_modifier_and_signal (buffer,
-                                                        0, /* save undo */
-                                                        1); /* stop completion */
-            (void) input_data (buffer, command, NULL);
-            free (command);
+            string_free_split (lines);
         }
     }
 }

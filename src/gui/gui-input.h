@@ -39,6 +39,7 @@ extern void gui_input_insert_string (struct t_gui_buffer *buffer,
                                      const char *string);
 extern void gui_input_clipboard_paste (struct t_gui_buffer *buffer);
 extern void gui_input_return (struct t_gui_buffer *buffer);
+extern void gui_input_split_return (struct t_gui_buffer *buffer);
 extern void gui_input_complete_next (struct t_gui_buffer *buffer);
 extern void gui_input_complete_previous (struct t_gui_buffer *buffer);
 extern void gui_input_search_text_here (struct t_gui_buffer *buffer);

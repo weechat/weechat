@@ -3456,6 +3456,8 @@ COMMAND_CALLBACK(input)
         gui_input_clipboard_paste (buffer);
     else if (string_strcmp (argv[1], "return") == 0)
         gui_input_return (buffer);
+    else if (string_strcmp (argv[1], "split_return") == 0)
+        gui_input_split_return (buffer);
     else if (string_strcmp (argv[1], "complete_next") == 0)
         gui_input_complete_next (buffer);
     else if (string_strcmp (argv[1], "complete_previous") == 0)
@@ -8356,6 +8358,8 @@ command_init ()
         N_("<action> [<arguments>]"),
         N_("list of actions:\n"
            "  return: simulate key \"enter\"\n"
+           "  split_return: split input on newlines then simulate key \"enter\" "
+           "for each line\n"
            "  complete_next: complete word with next completion\n"
            "  complete_previous: complete word with previous completion\n"
            "  search_text_here: search text in buffer at current position\n"
@@ -8411,7 +8415,7 @@ command_init ()
            "  send: send text to the buffer\n"
            "\n"
            "This command is used by key bindings or plugins."),
-        "return || "
+        "return || split_return || "
         "complete_next || complete_previous || search_text_here || "
         "search_text || search_switch_case || search_switch_regex || "
         "search_switch_where || search_previous || search_next || "
