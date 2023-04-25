@@ -13290,6 +13290,9 @@ valeurs sont de type "string") :
 | _chat_line_message | Message de la ligne.
 | "Hello world!" | ""
 
+| _chat_focused_line | Ligne à la position (x,y) _(WeeChat ≥ 4.0.0)_.
+| "Hello world!" | ""
+
 | _chat_word | Mot à la position (x,y).
 | "Hello" | ""
 

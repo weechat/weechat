@@ -13142,6 +13142,10 @@ info を使う前にエリアが一致していることを確認して下さい
 | _chat_line_message | 行のメッセージ部分
 | "Hello world!" | ""
 
+// TRANSLATION MISSING
+| _chat_focused_line | Line at (x,y) _(WeeChat ≥ 4.0.0)_.
+| "Hello world!" | ""
+
 | _chat_word | (x,y) の位置にある単語
 | "Hello" | ""
 
