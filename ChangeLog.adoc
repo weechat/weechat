@@ -34,7 +34,6 @@ New features::
   * core, plugins: make many identifiers case sensitive (issue #1872, issue #398, bug #32213)
   * core: add item "mouse_status" in default status bar, change default color to lightgreen
   * core: add "stable-number" and "devel-number" in script version.sh
-  * core: fix update of terminal title in some terminals like suckless terminal (stterm) (issue #1882)
   * api: add function config_set_version (issue #1238)
   * api: add optional argument with version in info "version_number"
   * alias: use lower case for default aliases, rename all aliases to lower case on upgrade (issue #1872)
@@ -57,6 +56,7 @@ Bug fixes::
   * core: allow command `/input move_next_word` going to the end of line (issue #1881)
   * core: ignore incomplete ctrl/meta/meta2 codes in keys
   * core: fix display glitch in command errors when a wide char is set in option weechat.look.command_chars (issue #1871)
+  * core: fix update of terminal title in some terminals like suckless terminal (stterm) (issue #1882)
   * api: readjust string size in function string_dyn_free when string is not freed
   * buflist: do not display keys added in default context on first load
   * fset: remove scroll to top of fset buffer when options are added or removed (issue #1892)
