@@ -30,6 +30,7 @@
 #include <ruby/version.h>
 #endif
 
+#include <signal.h>
 #include <stdarg.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -1440,6 +1441,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     ruby_quiet = 0;
 
     ruby_cleanup (0);
+    signal (SIGCHLD, SIG_DFL);
 
     /* free some data */
     if (ruby_action_install_list)
