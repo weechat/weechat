@@ -507,6 +507,9 @@ gui_chat_display_prefix_suffix (struct t_gui_window *window,
 
     chars_displayed = 0;
 
+    if ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height))
+        return chars_displayed;
+
     /* insert spaces for aligning text under time/nick */
     length_align = gui_line_get_align (window->buffer, line, 0, 0);
 
