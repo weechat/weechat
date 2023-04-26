@@ -163,8 +163,6 @@ void
 gui_main_init ()
 {
     struct t_gui_buffer *ptr_buffer;
-    struct t_gui_bar *ptr_bar;
-    struct t_gui_bar_window *ptr_bar_win;
     char title[256];
 
     /* allow ctrl-c to quit WeeChat in headless mode */
@@ -238,24 +236,8 @@ gui_main_init ()
             }
         }
 
-        /*
-         * create bar windows for root bars (they were read from config,
-         * but no window was created, GUI was not initialized)
-         */
-        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-        {
-            if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
-                && (!ptr_bar->bar_window))
-            {
-                gui_bar_window_new (ptr_bar, NULL);
-            }
-        }
-        for (ptr_bar_win = gui_windows->bar_windows;
-             ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
-        {
-            gui_bar_window_calculate_pos_size (ptr_bar_win, gui_windows);
-            gui_bar_window_create_win (ptr_bar_win);
-        }
+        /* switch to buffer */
+        gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 0);
     }
 
     if (CONFIG_BOOLEAN(config_look_mouse))

@@ -57,6 +57,7 @@ Bug fixes::
   * core: ignore incomplete ctrl/meta/meta2 codes in keys
   * core: fix display glitch in command errors when a wide char is set in option weechat.look.command_chars (issue #1871)
   * core: fix update of terminal title in some terminals like suckless terminal (stterm) (issue #1882)
+  * core: fix infinite loop on startup when running some gui commands before the switch to core buffer is performed (issue #1917)
   * api: readjust string size in function string_dyn_free when string is not freed
   * buflist: do not display keys added in default context on first load
   * fset: remove scroll to top of fset buffer when options are added or removed (issue #1892)
