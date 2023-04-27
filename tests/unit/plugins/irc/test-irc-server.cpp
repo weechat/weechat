@@ -734,7 +734,7 @@ TEST(IrcServer, AllocWithUrl)
     LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
     POINTERS_EQUAL(NULL,
                    CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
-    STRCMP_EQUAL("alice,alice1,alice2,alice3,alice4",
+    STRCMP_EQUAL("alice,alice2,alice3,alice4,alice5",
                  CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
     POINTERS_EQUAL(NULL,
                    CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
@@ -750,7 +750,7 @@ TEST(IrcServer, AllocWithUrl)
     LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
     STRCMP_EQUAL("secret",
                  CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
-    STRCMP_EQUAL("alice,alice1,alice2,alice3,alice4",
+    STRCMP_EQUAL("alice,alice2,alice3,alice4,alice5",
                  CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
     POINTERS_EQUAL(NULL,
                    CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
@@ -767,7 +767,7 @@ TEST(IrcServer, AllocWithUrl)
     LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
     STRCMP_EQUAL("secret",
                  CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
-    STRCMP_EQUAL("alice,alice1,alice2,alice3,alice4",
+    STRCMP_EQUAL("alice,alice2,alice3,alice4,alice5",
                  CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
     STRCMP_EQUAL("#test1,#test2",
                  CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));

@@ -43,6 +43,7 @@
 #include <netinet/in.h>
 #include <arpa/nameser.h>
 #include <resolv.h>
+#include <pwd.h>
 
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
@@ -98,9 +99,11 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "autoconnect",          "off"                     },
   { "autoreconnect",        "on"                      },
   { "autoreconnect_delay",  "10"                      },
-  { "nicks",                ""                        },
+  { "nicks",
+    "${username},${username}2,${username}3,"
+    "${username}4,${username}5"                       },
   { "nicks_alternate",      "on"                      },
-  { "username",             ""                        },
+  { "username",             "${username}"             },
   { "realname",             ""                        },
   { "local_hostname",       ""                        },
   { "usermode",             ""                        },
@@ -361,6 +364,7 @@ irc_server_eval_expression (struct t_irc_server *server, const char *string)
 {
     struct t_hashtable *pointers, *extra_vars;
     char *value;
+    struct passwd *my_passwd;
 
     pointers = weechat_hashtable_new (
         32,
@@ -380,6 +384,11 @@ irc_server_eval_expression (struct t_irc_server *server, const char *string)
         if (extra_vars)
             weechat_hashtable_set (extra_vars, "server", server->name);
     }
+
+    if ((my_passwd = getpwuid (geteuid ())) != NULL)
+        weechat_hashtable_set (extra_vars, "username", my_passwd->pw_name);
+    else
+        weechat_hashtable_set (extra_vars, "username", "weechat");
 
     value = weechat_string_eval_expression (string,
                                             pointers, extra_vars, NULL);
@@ -1954,7 +1963,7 @@ irc_server_alloc_with_url (const char *irc_url)
             if (server_nicks)
             {
                 snprintf (server_nicks, length,
-                          "%s,%s1,%s2,%s3,%s4",
+                          "%s,%s2,%s3,%s4,%s5",
                           pos_nick, pos_nick, pos_nick, pos_nick, pos_nick);
                 weechat_config_option_set (
                     ptr_server->options[IRC_SERVER_OPTION_NICKS],

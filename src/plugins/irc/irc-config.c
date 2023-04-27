@@ -25,7 +25,6 @@
 #include <string.h>
 #include <time.h>
 #include <limits.h>
-#include <pwd.h>
 
 #include "../weechat-plugin.h"
 #include "irc.h"
@@ -2128,9 +2127,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "string",
                 N_("nicknames to use on server (separated by comma) "
-                   "(note: content is evaluated, see /help eval; server "
-                   "options are evaluated with ${irc_server.xxx} and "
-                   "${server} is replaced by the server name)"),
+                   "(note: content is evaluated, see /help eval; ${username} "
+                   "is replaced by system username (fallback to \"weechat\" "
+                   "if not found), server options are evaluated with "
+                   "${irc_server.xxx} and ${server} is replaced by the "
+                   "server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -2167,9 +2168,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "string",
                 N_("user name to use on server "
-                   "(note: content is evaluated, see /help eval; server "
-                   "options are evaluated with ${irc_server.xxx} and "
-                   "${server} is replaced by the server name)"),
+                   "(note: content is evaluated, see /help eval; ${username} "
+                   "is replaced by system username (fallback to \"weechat\" "
+                   "if not found), server options are evaluated with "
+                   "${irc_server.xxx} and ${server} is replaced by the "
+                   "server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -2731,62 +2734,17 @@ irc_config_server_write_cb (const void *pointer, void *data,
 void
 irc_config_server_create_default_options (struct t_config_section *section)
 {
-    int i, length;
-    char *nicks, *username, *realname, *default_value;
-    struct passwd *my_passwd;
-
-    nicks = NULL;
-    username = NULL;
-    realname = strdup ("");
-
-    /* Get the user's name from /etc/passwd */
-    if ((my_passwd = getpwuid (geteuid ())) != NULL)
-    {
-        length = (strlen (my_passwd->pw_name) + 4) * 5;
-        nicks = malloc (length);
-        if (nicks)
-        {
-            snprintf (nicks, length, "%s,%s1,%s2,%s3,%s4",
-                      my_passwd->pw_name,
-                      my_passwd->pw_name,
-                      my_passwd->pw_name,
-                      my_passwd->pw_name,
-                      my_passwd->pw_name);
-        }
-        username = strdup (my_passwd->pw_name);
-    }
-    else
-    {
-        /* default values if /etc/passwd can't be read */
-        nicks = strdup (IRC_SERVER_DEFAULT_NICKS);
-        username = strdup ("weechat");
-    }
+    int i;
 
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
     {
-        default_value = NULL;
-        switch (i)
-        {
-            case IRC_SERVER_OPTION_NICKS:
-                default_value = nicks;
-                break;
-            case IRC_SERVER_OPTION_USERNAME:
-                default_value = username;
-                break;
-            case IRC_SERVER_OPTION_REALNAME:
-                default_value = realname;
-                break;
-        }
-        if (!default_value)
-            default_value = irc_server_options[i][1];
-
         irc_config_server_default[i] = irc_config_server_new_option (
             irc_config_file,
             section,
             i,
             irc_server_options[i][0],
             irc_server_options[i][1],
-            default_value,
+            irc_server_options[i][1],
             0,
             &irc_config_server_check_value_cb,
             irc_server_options[i][0],
@@ -2795,13 +2753,6 @@ irc_config_server_create_default_options (struct t_config_section *section)
             irc_server_options[i][0],
             NULL);
     }
-
-    if (nicks)
-        free (nicks);
-    if (username)
-        free (username);
-    if (realname)
-        free (realname);
 }
 
 /*

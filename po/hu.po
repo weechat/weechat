@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-04-26 21:09+0200\n"
+"POT-Creation-Date: 2023-04-27 22:53+0200\n"
 "PO-Revision-Date: 2022-10-15 22:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8217,8 +8217,9 @@ msgstr "két újracsatlakozási próba közti szünet (másodpercben)"
 #, fuzzy
 msgid ""
 "nicknames to use on server (separated by comma) (note: content is evaluated, "
-"see /help eval; server options are evaluated with ${irc_server.xxx} and "
-"${server} is replaced by the server name)"
+"see /help eval; ${username} is replaced by system username (fallback to "
+"\"weechat\" if not found), server options are evaluated with ${irc_server."
+"xxx} and ${server} is replaced by the server name)"
 msgstr "felhasználónév az IRC szerveren"
 
 msgid ""
@@ -8231,12 +8232,10 @@ msgstr ""
 #, fuzzy
 msgid ""
 "user name to use on server (note: content is evaluated, see /help eval; "
-"server options are evaluated with ${irc_server.xxx} and ${server} is "
+"${username} is replaced by system username (fallback to \"weechat\" if not "
+"found), server options are evaluated with ${irc_server.xxx} and ${server} is "
 "replaced by the server name)"
-msgstr ""
-"     szoba: a szoba, ahol a felhasználó tartózkodik\n"
-"       név: a kirúgandó neve\n"
-"megjegyzés: megjegyzés a kirúgáshoz"
+msgstr "felhasználónév az IRC szerveren"
 
 #, fuzzy
 msgid ""
@@ -13338,6 +13337,16 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "user name to use on server (note: content is evaluated, see /help eval; "
+#~ "server options are evaluated with ${irc_server.xxx} and ${server} is "
+#~ "replaced by the server name)"
+#~ msgstr ""
+#~ "     szoba: a szoba, ahol a felhasználó tartózkodik\n"
+#~ "       név: a kirúgandó neve\n"
+#~ "megjegyzés: megjegyzés a kirúgáshoz"
 
 #, fuzzy
 #~ msgid "Option changed"
