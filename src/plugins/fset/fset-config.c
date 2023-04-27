@@ -1105,7 +1105,7 @@ fset_config_init ()
             fset_config_file, fset_config_section_color,
             "value_selected", "color",
             N_("color for value on the selected line"),
-            NULL, 0, 0, "80", NULL, 0,
+            NULL, 0, 0, "159", NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_color_cb, NULL, NULL,
             NULL, NULL, NULL);
