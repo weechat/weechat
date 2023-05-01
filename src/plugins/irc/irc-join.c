@@ -59,7 +59,7 @@ irc_join_compare_join_channel (struct t_irc_server *server,
 }
 
 /*
- * Compares two join channels (no sort, keyed channels first).
+ * Compares two join channels: no sort, keyed channels first.
  */
 
 int
@@ -97,12 +97,12 @@ irc_join_compare_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Compares two join channels (alphabetic sort, keyed channels first).
+ * Compares two join channels: alphabetic sort, keyed channels first.
  */
 
 int
-irc_join_compare_sort_cb (void *data, struct t_arraylist *arraylist,
-                          void *pointer1, void *pointer2)
+irc_join_compare_sort_alpha_cb (void *data, struct t_arraylist *arraylist,
+                                void *pointer1, void *pointer2)
 {
     struct t_irc_server *server;
     struct t_irc_join_channel *ptr_join_chan1, *ptr_join_chan2;
@@ -131,6 +131,59 @@ irc_join_compare_sort_cb (void *data, struct t_arraylist *arraylist,
     if (!ptr_join_chan1->key && ptr_join_chan2->key)
         return 1;
 
+    return rc;
+}
+
+/*
+ * Compares two join channels: buffer sort, then alphabetic,
+ * keyed channels first.
+ */
+
+int
+irc_join_compare_sort_buffer_cb (void *data, struct t_arraylist *arraylist,
+                                 void *pointer1, void *pointer2)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *ptr_channel1, *ptr_channel2;
+    struct t_irc_join_channel *ptr_join_chan1, *ptr_join_chan2;
+    int rc, buffer_num1, buffer_num2;
+
+    /* make C compiler happy */
+    (void) arraylist;
+
+    server = (struct t_irc_server *)data;
+
+    ptr_join_chan1 = (struct t_irc_join_channel *)pointer1;
+    ptr_join_chan2 = (struct t_irc_join_channel *)pointer2;
+
+    /*
+     * if channel is the same, always consider it's the same, even if the key
+     * is different
+     */
+    rc = irc_server_strcasecmp (server, ptr_join_chan1->name,
+                                ptr_join_chan2->name);
+    if (rc == 0)
+        return 0;
+
+    /* channels with a key are first in list */
+    if (ptr_join_chan1->key && !ptr_join_chan2->key)
+        return -1;
+    if (!ptr_join_chan1->key && ptr_join_chan2->key)
+        return 1;
+
+    /* search buffer number for each channel */
+    ptr_channel1 = irc_channel_search (server, ptr_join_chan1->name);
+    buffer_num1 = (ptr_channel1 && ptr_channel1->buffer) ?
+        weechat_buffer_get_integer (ptr_channel1->buffer, "number") : INT_MAX;
+    ptr_channel2 = irc_channel_search (server, ptr_join_chan2->name);
+    buffer_num2 = (ptr_channel2 && ptr_channel2->buffer) ?
+        weechat_buffer_get_integer (ptr_channel2->buffer, "number") : INT_MAX;
+    if (buffer_num1 < buffer_num2)
+        return -1;
+    if (buffer_num1 > buffer_num2)
+        return 1;
+
+    /* same buffer number: fallback on alphabetic sort */
     return rc;
 }
 
@@ -242,19 +295,22 @@ irc_join_arraylist_add (struct t_arraylist *arraylist,
  *
  *   #channel1,#channel2,#channel3 key1,key2
  *
- * If sort == 1, channels are sorted alphabetically, otherwise in the order
- * they are received.
- * In all cases, keyed channels are first in list.
+ * Parameter sort can be (in all cases, keyed channels are first in list):
+ *   IRC_JOIN_SORT_DISABLED: no sort
+ *   IRC_JOIN_SORT_ALPHA: alphabetic sort
+ *   IRC_JOIN_SORT_BUFFER: sort by buffer number, then alphabetic
  */
 
 struct t_arraylist *
-irc_join_split (struct t_irc_server *server, const char *join, int sort)
+irc_join_split (struct t_irc_server *server, const char *join,
+                enum t_irc_join_sort sort)
 {
     struct t_arraylist *arraylist;
     char **items, **channels, **keys;
     int count_items, count_channels, count_keys, i;
     const char *ptr_channels, *ptr_keys;
     struct t_irc_join_channel *new_channel;
+    void *sort_cb;
 
     arraylist = NULL;
     items = NULL;
@@ -292,12 +348,22 @@ irc_join_split (struct t_irc_server *server, const char *join, int sort)
                                      0, &count_keys);
     }
 
-    arraylist = weechat_arraylist_new (
-        16, 1, 0,
-        (sort) ? &irc_join_compare_sort_cb : &irc_join_compare_cb,
-        server,
-        &irc_join_free_cb,
-        NULL);
+    switch (sort)
+    {
+        case IRC_JOIN_SORT_ALPHA:
+            sort_cb = &irc_join_compare_sort_alpha_cb;
+            break;
+        case IRC_JOIN_SORT_BUFFER:
+            sort_cb = &irc_join_compare_sort_buffer_cb;
+            break;
+        default:
+            sort_cb = &irc_join_compare_cb;
+            break;
+    }
+
+    arraylist = weechat_arraylist_new (16, 1, 0,
+                                       sort_cb, server,
+                                       &irc_join_free_cb, NULL);
     if (!arraylist)
         goto end;
 
@@ -807,12 +873,13 @@ irc_join_save_channels_to_autojoin (struct t_irc_server *server)
  */
 
 char *
-irc_join_sort_channels (struct t_irc_server *server, const char *join)
+irc_join_sort_channels (struct t_irc_server *server, const char *join,
+                        enum t_irc_join_sort sort)
 {
     struct t_arraylist *arraylist;
     char *new_join;
 
-    arraylist = irc_join_split (server, join, 1);
+    arraylist = irc_join_split (server, join, sort);
     if (!arraylist)
         return NULL;
 
@@ -828,7 +895,7 @@ irc_join_sort_channels (struct t_irc_server *server, const char *join)
  */
 
 void
-irc_join_sort_autojoin (struct t_irc_server *server)
+irc_join_sort_autojoin (struct t_irc_server *server, enum t_irc_join_sort sort)
 {
     const char *ptr_autojoin;
     char *new_autojoin;
@@ -841,7 +908,7 @@ irc_join_sort_autojoin (struct t_irc_server *server)
     if (!ptr_autojoin || !ptr_autojoin[0])
         return;
 
-    new_autojoin = irc_join_sort_channels (server, ptr_autojoin);
+    new_autojoin = irc_join_sort_channels (server, ptr_autojoin, sort);
     if (new_autojoin)
     {
         weechat_config_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],

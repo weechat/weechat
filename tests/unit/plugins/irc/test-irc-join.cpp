@@ -94,7 +94,7 @@ extern int irc_join_compare_join_channel (struct t_irc_server *server,
         free (str);
 
 #define WEE_CHECK_SORT_CHANNELS(__result, __join)                       \
-    str = irc_join_sort_channels (NULL, __join);                        \
+    str = irc_join_sort_channels (NULL, __join, IRC_JOIN_SORT_ALPHA);   \
     if (__result == NULL)                                               \
     {                                                                   \
         POINTERS_EQUAL(NULL, str);                                      \
@@ -166,9 +166,10 @@ TEST(IrcJoin, SplitBuildString)
     struct t_arraylist *arraylist;
     struct t_irc_join_channel **channels;
     struct t_irc_server *server;
+    struct t_irc_channel *ptr_channel;
     char *autojoin;
 
-    arraylist = irc_join_split (NULL, NULL, 0);
+    arraylist = irc_join_split (NULL, NULL, IRC_JOIN_SORT_DISABLED);
     CHECK(arraylist);
     LONGS_EQUAL(0, arraylist->size);
     autojoin = irc_join_build_string (arraylist);
@@ -180,7 +181,7 @@ TEST(IrcJoin, SplitBuildString)
     STRCMP_EQUAL("", autojoin);
     free (autojoin);
 
-    arraylist = irc_join_split (NULL, "", 0);
+    arraylist = irc_join_split (NULL, "", IRC_JOIN_SORT_DISABLED);
     CHECK(arraylist);
     LONGS_EQUAL(0, arraylist->size);
     autojoin = irc_join_build_string (arraylist);
@@ -189,7 +190,8 @@ TEST(IrcJoin, SplitBuildString)
     arraylist_free (arraylist);
 
     /* 1 channel, 2 keys (the second is ignored) */
-    arraylist = irc_join_split (NULL, "#xyz key_xyz,key_abc", 0);
+    arraylist = irc_join_split (NULL, "#xyz key_xyz,key_abc",
+                                IRC_JOIN_SORT_DISABLED);
     CHECK(arraylist);
     LONGS_EQUAL(1, arraylist->size);
     channels = (struct t_irc_join_channel **)arraylist->data;
@@ -202,7 +204,7 @@ TEST(IrcJoin, SplitBuildString)
     arraylist_free (arraylist);
 
     /* 1 channel */
-    arraylist = irc_join_split (NULL, "#xyz", 0);
+    arraylist = irc_join_split (NULL, "#xyz", IRC_JOIN_SORT_DISABLED);
     CHECK(arraylist);
     LONGS_EQUAL(1, arraylist->size);
     channels = (struct t_irc_join_channel **)arraylist->data;
@@ -215,7 +217,7 @@ TEST(IrcJoin, SplitBuildString)
     arraylist_free (arraylist);
 
     /* 2 channels */
-    arraylist = irc_join_split (NULL, "#xyz,#abc", 0);
+    arraylist = irc_join_split (NULL, "#xyz,#abc", IRC_JOIN_SORT_DISABLED);
     CHECK(arraylist);
     LONGS_EQUAL(2, arraylist->size);
     channels = (struct t_irc_join_channel **)arraylist->data;
@@ -230,7 +232,8 @@ TEST(IrcJoin, SplitBuildString)
     arraylist_free (arraylist);
 
     /* 2 channels, 2 keys */
-    arraylist = irc_join_split (NULL, "#xyz,#abc key_xyz,key_abc", 0);
+    arraylist = irc_join_split (NULL, "#xyz,#abc key_xyz,key_abc",
+                                IRC_JOIN_SORT_DISABLED);
     CHECK(arraylist);
     LONGS_EQUAL(2, arraylist->size);
     channels = (struct t_irc_join_channel **)arraylist->data;
@@ -245,7 +248,8 @@ TEST(IrcJoin, SplitBuildString)
     arraylist_free (arraylist);
 
     /* 3 channels, 2 keys */
-    arraylist = irc_join_split (NULL, "#xyz,#abc,#def key_xyz,key_abc", 0);
+    arraylist = irc_join_split (NULL, "#xyz,#abc,#def key_xyz,key_abc",
+                                IRC_JOIN_SORT_DISABLED);
     CHECK(arraylist);
     LONGS_EQUAL(3, arraylist->size);
     channels = (struct t_irc_join_channel **)arraylist->data;
@@ -262,7 +266,7 @@ TEST(IrcJoin, SplitBuildString)
     arraylist_free (arraylist);
 
     /* duplicated channel */
-    arraylist = irc_join_split (NULL, "#xyz,#XYZ", 0);
+    arraylist = irc_join_split (NULL, "#xyz,#XYZ", IRC_JOIN_SORT_DISABLED);
     CHECK(arraylist);
     LONGS_EQUAL(1, arraylist->size);
     channels = (struct t_irc_join_channel **)arraylist->data;
@@ -275,7 +279,7 @@ TEST(IrcJoin, SplitBuildString)
     arraylist_free (arraylist);
 
     /* duplicated channel */
-    arraylist = irc_join_split (NULL, "#abc,#def,#abc", 0);
+    arraylist = irc_join_split (NULL, "#abc,#def,#abc", IRC_JOIN_SORT_DISABLED);
     CHECK(arraylist);
     LONGS_EQUAL(2, arraylist->size);
     channels = (struct t_irc_join_channel **)arraylist->data;
@@ -294,7 +298,8 @@ TEST(IrcJoin, SplitBuildString)
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
     server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
-    arraylist = irc_join_split (server, "#chan[a]^,#CHAN{A}~", 0);
+    arraylist = irc_join_split (server, "#chan[a]^,#CHAN{A}~",
+                                IRC_JOIN_SORT_DISABLED);
     CHECK(arraylist);
     LONGS_EQUAL(1, arraylist->size);
     channels = (struct t_irc_join_channel **)arraylist->data;
@@ -311,7 +316,8 @@ TEST(IrcJoin, SplitBuildString)
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
     server->casemapping = IRC_SERVER_CASEMAPPING_STRICT_RFC1459;
-    arraylist = irc_join_split (server, "#chan[a]^,#CHAN{A}~", 0);
+    arraylist = irc_join_split (server, "#chan[a]^,#CHAN{A}~",
+                                IRC_JOIN_SORT_DISABLED);
     CHECK(arraylist);
     LONGS_EQUAL(2, arraylist->size);
     channels = (struct t_irc_join_channel **)arraylist->data;
@@ -326,12 +332,13 @@ TEST(IrcJoin, SplitBuildString)
     arraylist_free (arraylist);
     irc_server_free (server);
 
-    /* server with casemapping RFC1459, sort channels */
+    /* server with casemapping RFC1459, sort channels alphabetically */
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
     server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
     arraylist = irc_join_split (
-        server, "#xyz,#def,#abc,#chan[a]^,#CHAN{A}~ key_xyz", 1);
+        server, "#xyz,#def,#abc,#chan[a]^,#CHAN{A}~ key_xyz",
+        IRC_JOIN_SORT_ALPHA);
     CHECK(arraylist);
     LONGS_EQUAL(4, arraylist->size);
     channels = (struct t_irc_join_channel **)arraylist->data;
@@ -348,6 +355,43 @@ TEST(IrcJoin, SplitBuildString)
     STRCMP_EQUAL("#xyz,#abc,#CHAN{A}~,#def key_xyz", autojoin);
     free (autojoin);
     arraylist_free (arraylist);
+    irc_server_free (server);
+
+    /* server with casemapping RFC1459, sort channels by buffer number */
+    server = irc_server_alloc ("my_ircd");
+    CHECK(server);
+    server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
+    irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#CHAN{A}~", 0, 0);
+    irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#def", 0, 0);
+    irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#abc", 0, 0);
+    irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#xyz", 0, 0);
+    arraylist = irc_join_split (
+        server, "#xyz,#abc,#def,#chan[a]^,#zzz,#CHAN{A}~ key_xyz",
+        IRC_JOIN_SORT_BUFFER);
+    CHECK(arraylist);
+    LONGS_EQUAL(5, arraylist->size);
+    channels = (struct t_irc_join_channel **)arraylist->data;
+    CHECK(channels[0]);
+    STRCMP_EQUAL("#xyz", channels[0]->name);
+    STRCMP_EQUAL("key_xyz", channels[0]->key);
+    STRCMP_EQUAL("#CHAN{A}~", channels[1]->name);
+    POINTERS_EQUAL(NULL, channels[1]->key);
+    STRCMP_EQUAL("#def", channels[2]->name);
+    POINTERS_EQUAL(NULL, channels[2]->key);
+    STRCMP_EQUAL("#abc", channels[3]->name);
+    POINTERS_EQUAL(NULL, channels[3]->key);
+    STRCMP_EQUAL("#zzz", channels[4]->name);
+    POINTERS_EQUAL(NULL, channels[4]->key);
+    autojoin = irc_join_build_string (arraylist);
+    STRCMP_EQUAL("#xyz,#CHAN{A}~,#def,#abc,#zzz key_xyz", autojoin);
+    free (autojoin);
+    arraylist_free (arraylist);
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->buffer)
+            gui_buffer_close (ptr_channel->buffer);
+    }
     irc_server_free (server);
 }
 
@@ -765,7 +809,7 @@ TEST(IrcJoin, SortAutojoinChannels)
     STRCMP_EQUAL("#zzz,#xyz,#ghi,#def,#ABC key_zzz,key_xyz",
                  CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
-    irc_join_sort_autojoin (server);
+    irc_join_sort_autojoin (server, IRC_JOIN_SORT_ALPHA);
     STRCMP_EQUAL("#xyz,#zzz,#ABC,#def,#ghi key_xyz,key_zzz",
                  CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 

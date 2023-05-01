@@ -20,17 +20,26 @@
 #ifndef WEECHAT_PLUGIN_IRC_JOIN_H
 #define WEECHAT_PLUGIN_IRC_JOIN_H
 
+enum t_irc_join_sort
+{
+    IRC_JOIN_SORT_DISABLED = 0,        /* no sort                           */
+    IRC_JOIN_SORT_ALPHA,               /* alphabetic sort                   */
+    IRC_JOIN_SORT_BUFFER,              /* sort by buffer number, then alpha */
+    /* number of sort methods */
+    IRC_JOIN_NUM_SORT,
+};
+
 struct t_irc_server;
 
 struct t_irc_join_channel
 {
-    char *name;                             /* channel name                 */
-    char *key;                              /* channel key                  */
+    char *name;                        /* channel name                      */
+    char *key;                         /* channel key                       */
 };
 
 extern struct t_arraylist *irc_join_split (struct t_irc_server *server,
                                            const char *join,
-                                           int sort);
+                                           enum t_irc_join_sort sort);
 extern char *irc_join_build_string (struct t_arraylist *arraylist);
 extern int irc_join_has_channel (struct t_irc_server *server,
                                  const char *join, const char *channel_name);
@@ -58,7 +67,9 @@ extern void irc_join_rename_channel_in_autojoin (struct t_irc_server *server,
                                                  const char *new_channel_name);
 extern void irc_join_save_channels_to_autojoin (struct t_irc_server *server);
 extern char *irc_join_sort_channels (struct t_irc_server *server,
-                                     const char *join);
-extern void irc_join_sort_autojoin (struct t_irc_server *server);
+                                     const char *join,
+                                     enum t_irc_join_sort sort);
+extern void irc_join_sort_autojoin (struct t_irc_server *server,
+                                    enum t_irc_join_sort sort);
 
 #endif /* WEECHAT_PLUGIN_IRC_JOIN_H */

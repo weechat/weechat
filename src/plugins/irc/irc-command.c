@@ -910,6 +910,7 @@ IRC_COMMAND_CALLBACK(autojoin)
     struct t_irc_channel *ptr_channel2;
     const char *ptr_autojoin;
     char *old_autojoin, *autojoin;
+    enum t_irc_join_sort sort;
     int i;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
@@ -1025,7 +1026,9 @@ IRC_COMMAND_CALLBACK(autojoin)
     /* sort channels */
     if (weechat_strcmp (argv[1], "sort") == 0)
     {
-        irc_join_sort_autojoin (ptr_server);
+        sort = ((argc > 2) && (weechat_strcmp (argv[2], "buffer") == 0)) ?
+            IRC_JOIN_SORT_BUFFER : IRC_JOIN_SORT_ALPHA;
+        irc_join_sort_autojoin (ptr_server, sort);
         goto end;
     }
 
@@ -6889,7 +6892,7 @@ irc_command_init ()
            " || del [<channel1> [<channel2>...]]"
            " || apply"
            " || join"
-           " || sort"),
+           " || sort [buffer]"),
         N_("    add: add current channel or a list of channels (with optional "
            "keys) to the autojoin option; if you are on the channel and the "
            "key is not provided, the key is read in the channel\n"
@@ -6902,6 +6905,7 @@ irc_command_init ()
            "  apply: set currently joined channels in the autojoin option\n"
            "   join: join the channels in the autojoin option\n"
            "   sort: sort alphabetically channels in the autojoin option\n"
+           " buffer: sort channels by order of buffers in the autojoin option\n"
            "\n"
            "Examples:\n"
            "  /autojoin add\n"
@@ -6913,13 +6917,14 @@ irc_command_init ()
            "  /autojoin del #chan1\n"
            "  /autojoin apply\n"
            "  /autojoin join\n"
-           "  /autojoin sort"),
+           "  /autojoin sort\n"
+           "  /autojoin sort buffer"),
         "add %(irc_channels)|%*"
         " || addraw %(irc_channels) %-"
         " || del %(irc_channels_autojoin)|%*"
         " || apply"
         " || join"
-        " || sort",
+        " || sort buffer",
         &irc_command_autojoin, NULL, NULL);
     weechat_hook_command_run ("/away", &irc_command_run_away, NULL, NULL);
     weechat_hook_command (
