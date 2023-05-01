@@ -1574,7 +1574,7 @@ gui_line_hook_update (struct t_gui_line *line,
     struct t_gui_buffer *ptr_buffer;
     unsigned long value_pointer;
     long value;
-    char *error;
+    char *error, *new_message, *pos_newline;
     int rc, tags_updated, notify_level_updated, highlight_updated;
     int max_notify_level;
 
@@ -1717,9 +1717,19 @@ gui_line_hook_update (struct t_gui_line *line,
     ptr_value2 = hashtable_get (hashtable2, "message");
     if (ptr_value2 && (!ptr_value || (strcmp (ptr_value, ptr_value2) != 0)))
     {
+        new_message = strdup (ptr_value2);
+        if (new_message && !line->data->buffer->input_multiline)
+        {
+            /* if input_multiline is not set, keep only first line */
+            pos_newline = strchr (new_message, '\n');
+            if (pos_newline)
+                pos_newline[0] = '\0';
+        }
         if (line->data->message)
             free (line->data->message);
-        line->data->message = (ptr_value2) ? strdup (ptr_value2) : NULL;
+        line->data->message = (new_message) ? strdup (new_message) : NULL;
+        if (new_message)
+            free (new_message);
     }
 
     max_notify_level = gui_line_get_max_notify_level (line);
