@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-01 20:20+0200\n"
+"POT-Creation-Date: 2023-05-01 21:44+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -14714,6 +14714,14 @@ msgstr "Acionadores ativado"
 
 msgid "Triggers disabled"
 msgstr "Acionadores desativados"
+
+#, fuzzy, c-format
+msgid "  %s%s%s: %s%s%s%s%s%s%s"
+msgstr "%sNicks %s%s%s: %s[%s%s%s]"
+
+#, fuzzy, c-format
+msgid "  %s%s%s: %s%s%s%s%s%s%s%s%s%s%s%s%s"
+msgstr "%sNicks %s%s%s: %s[%s%s%s]"
 
 msgid "No trigger defined"
 msgstr "Nenhum acionador definido"

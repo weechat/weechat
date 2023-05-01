@@ -71,7 +71,7 @@ trigger_command_display_trigger_internal (const char *name,
     {
         weechat_printf_date_tags (
             NULL, 0, "no_trigger",
-            "  %s%s%s: %s%s%s%s%s%s%s",
+            _("  %s%s%s: %s%s%s%s%s%s%s"),
             weechat_color ((enabled) ? "chat_status_enabled" : "chat_status_disabled"),
             name,
             weechat_color ("reset"),
@@ -214,7 +214,7 @@ trigger_command_display_trigger_internal (const char *name,
         }
         weechat_printf_date_tags (
             NULL, 0, "no_trigger",
-            "  %s%s%s: %s%s%s%s%s%s%s%s%s%s%s%s%s",
+            _("  %s%s%s: %s%s%s%s%s%s%s%s%s%s%s%s%s"),
             weechat_color ((enabled) ? "chat_status_enabled": "chat_status_disabled"),
             name,
             weechat_color ("reset"),

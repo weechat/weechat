@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-01 20:20+0200\n"
+"POT-Creation-Date: 2023-05-01 21:44+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -14953,6 +14953,16 @@ msgstr "トリガが有効化されました"
 
 msgid "Triggers disabled"
 msgstr "トリガが無効化されました"
+
+#, fuzzy, c-format
+#| msgid "%s%s%s: %s %s[%s%s]%s"
+msgid "  %s%s%s: %s%s%s%s%s%s%s"
+msgstr "%s%s%s: %s %s[%s%s]%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s%s: %s %s[%s%s]%s"
+msgid "  %s%s%s: %s%s%s%s%s%s%s%s%s%s%s%s%s"
+msgstr "%s%s%s: %s %s[%s%s]%s"
 
 msgid "No trigger defined"
 msgstr "トリガは定義されていません"
