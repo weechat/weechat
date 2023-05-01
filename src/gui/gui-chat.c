@@ -590,7 +590,7 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
 {
     int display_time, length_data, length_str;
     char *ptr_msg, *pos_prefix, *pos_tab;
-    char *modifier_data, *string, *new_string;
+    char *modifier_data, *string, *new_string, *pos_newline;
     struct t_gui_line *new_line;
 
     new_line = NULL;
@@ -688,6 +688,14 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
             }
             else if (strcmp (string, new_string) != 0)
             {
+                if (!buffer->input_multiline)
+                {
+                    /* if input_multiline is not set, keep only first line */
+                    pos_newline = strchr (new_string, '\n');
+                    if (pos_newline)
+                        pos_newline[0] = '\0';
+                }
+
                 /* use new message if there are changes */
                 display_time = 1;
                 pos_prefix = NULL;
