@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2023-05-01 21:44+0200\n"
-"PO-Revision-Date: 2023-05-01 20:23+0200\n"
+"PO-Revision-Date: 2023-05-01 22:01+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -445,10 +445,9 @@ msgstr "Fehler"
 msgid "%sError in expression to evaluate"
 msgstr "%sFehler im Ausdruck, der verarbeitet werden soll"
 
-#, fuzzy, c-format
-#| msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
+#, c-format
 msgid "  %s%s%s: buffer: %s%s%s / tags: %s / regex: %s"
-msgstr "  %s[%s%s%s]%s Buffer: %s%s%s / Schlagwörter: %s / regex: %s %s"
+msgstr "  %s%s%s: Buffer: %s%s%s / Tags: %s / Regex: %s"
 
 msgid "Message filtering enabled"
 msgstr "Filterung von Nachrichten ist aktiviert"
@@ -5207,15 +5206,11 @@ msgstr "Hintergrundfarbe für das Lesezeichen"
 msgid "text color for server names"
 msgstr "Textfarbe für den Namen des Servers"
 
-#, fuzzy
-#| msgid "text color for \"failed\" status"
 msgid "text color for \"disabled\" status"
-msgstr "Textfarbe für Status: \"fehlgeschlagen\""
+msgstr "Textfarbe für den Status \"deaktiviert\""
 
-#, fuzzy
-#| msgid "text color for \"failed\" status"
 msgid "text color for \"enabled\" status"
-msgstr "Textfarbe für Status: \"fehlgeschlagen\""
+msgstr "Textfarbe für den Status \"aktiviert\""
 
 msgid "text color for tags after messages (displayed with command /debug tags)"
 msgstr ""
@@ -15800,15 +15795,13 @@ msgstr "Trigger aktiviert"
 msgid "Triggers disabled"
 msgstr "Trigger deaktiviert"
 
-#, fuzzy, c-format
-#| msgid "%s%s%s: %s %s[%s%s]%s"
+#, c-format
 msgid "  %s%s%s: %s%s%s%s%s%s%s"
-msgstr "%s%s%s: %s %s[%s%s]%s"
+msgstr "  %s%s%s: %s%s%s%s%s%s%s"
 
-#, fuzzy, c-format
-#| msgid "%s%s%s: %s %s[%s%s]%s"
+#, c-format
 msgid "  %s%s%s: %s%s%s%s%s%s%s%s%s%s%s%s%s"
-msgstr "%s%s%s: %s %s[%s%s]%s"
+msgstr "  %s%s%s: %s%s%s%s%s%s%s%s%s%s%s%s%s"
 
 msgid "No trigger defined"
 msgstr "Kein Trigger definiert"
