@@ -124,7 +124,7 @@ COMMAND_CALLBACK(allbuf)
     {
         ptr_buffer = (struct t_gui_buffer *)arraylist_get (all_buffers, i);
         if (gui_buffer_valid (ptr_buffer))
-            (void) input_data (ptr_buffer, argv_eol[1], NULL);
+            (void) input_data (ptr_buffer, argv_eol[1], NULL, 0);
     }
 
     arraylist_free (all_buffers);
@@ -1603,7 +1603,7 @@ COMMAND_CALLBACK(color)
     if (string_strcmp (argv[1], "-o") == 0)
     {
         gui_color_info_term_colors (str_color, sizeof (str_color));
-        (void) input_data (buffer, str_color, NULL);
+        (void) input_data (buffer, str_color, NULL, 0);
         return WEECHAT_RC_OK;
     }
 
@@ -2131,7 +2131,7 @@ COMMAND_CALLBACK(debug)
     {
         COMMAND_MIN_ARGS(3, "time");
         gettimeofday (&time_start, NULL);
-        (void) input_data (buffer, argv_eol[2], NULL);
+        (void) input_data (buffer, argv_eol[2], NULL, 0);
         gettimeofday (&time_end, NULL);
         debug_display_time_elapsed (&time_start, &time_end, argv_eol[2], 1);
         return WEECHAT_RC_OK;
@@ -2319,7 +2319,7 @@ COMMAND_CALLBACK(eval)
                                                   options);
                         if (result)
                         {
-                            (void) input_data (buffer, result, NULL);
+                            (void) input_data (buffer, result, NULL, 0);
                             free (result);
                         }
                         else
@@ -2342,7 +2342,7 @@ COMMAND_CALLBACK(eval)
                 result = eval_expression (ptr_args, pointers, NULL, options);
                 if (result)
                 {
-                    (void) input_data (buffer, result, NULL);
+                    (void) input_data (buffer, result, NULL, 0);
                     free (result);
                 }
                 else
@@ -3569,7 +3569,7 @@ COMMAND_CALLBACK(input)
             gui_input_insert (buffer, argv_eol[2]);
     }
     else if (string_strcmp (argv[1], "send") == 0)
-        (void) input_data (buffer, argv_eol[2], NULL);
+        (void) input_data (buffer, argv_eol[2], NULL, 0);
     else if (string_strcmp (argv[1], "undo") == 0)
         gui_input_undo (buffer);
     else if (string_strcmp (argv[1], "redo") == 0)
@@ -3610,10 +3610,10 @@ COMMAND_CALLBACK(input)
             gui_hotlist_restore_all_buffers ();
         /* since WeeChat 3.8: "/buffer set unread" */
         else if (string_strcmp (argv[1], "set_unread_current_buffer") == 0)
-            (void) input_data (buffer, "/buffer set unread", NULL);
+            (void) input_data (buffer, "/buffer set unread", NULL, 0);
         /* since WeeChat 3.8: "/allbuf /buffer set unread" */
         else if (string_strcmp (argv[1], "set_unread") == 0)
-            (void) input_data (buffer, "/allbuf /buffer set unread", NULL);
+            (void) input_data (buffer, "/allbuf /buffer set unread", NULL, 0);
         /* since WeeChat 3.8: "/buffer switch" */
         else if (string_strcmp (argv[1], "switch_active_buffer") == 0)
             gui_buffer_switch_active_buffer (buffer);
@@ -4952,7 +4952,7 @@ command_plugin_list_input (struct t_gui_buffer *buffer,
 
     if (send_to_buffer)
     {
-        (void) input_data (buffer, *buf, NULL);
+        (void) input_data (buffer, *buf, NULL, 0);
     }
     else
     {
@@ -5691,7 +5691,7 @@ command_repeat_timer_cb (const void *pointer, void *data, int remaining_calls)
         /* search buffer, fallback to core buffer if not found */
         ptr_buffer = gui_buffer_search_by_full_name (repeat_args[0]);
         if (ptr_buffer)
-            (void) input_data (ptr_buffer, repeat_args[1], repeat_args[2]);
+            (void) input_data (ptr_buffer, repeat_args[1], repeat_args[2], 0);
     }
 
     if (remaining_calls == 0)
@@ -5747,7 +5747,7 @@ COMMAND_CALLBACK(repeat)
     }
 
     /* first execute command now */
-    (void) input_data (buffer, argv_eol[arg_count + 1], NULL);
+    (void) input_data (buffer, argv_eol[arg_count + 1], NULL, 0);
 
     /* repeat execution of command */
     if (count > 1)
@@ -5757,7 +5757,7 @@ COMMAND_CALLBACK(repeat)
             /* execute command multiple times now */
             for (i = 0; i < count - 1; i++)
             {
-                (void) input_data (buffer, argv_eol[arg_count + 1], NULL);
+                (void) input_data (buffer, argv_eol[arg_count + 1], NULL, 0);
             }
         }
         else
@@ -7038,7 +7038,7 @@ COMMAND_CALLBACK(uptime)
                   minutes,
                   seconds,
                   str_first_start);
-        (void) input_data (buffer, string, NULL);
+        (void) input_data (buffer, string, NULL, 0);
     }
     else if ((argc >= 2) && (string_strcmp (argv[1], "-ol") == 0))
     {
@@ -7051,7 +7051,7 @@ COMMAND_CALLBACK(uptime)
                   minutes,
                   seconds,
                   util_get_time_string (&weechat_first_start_time));
-        (void) input_data (buffer, string, NULL);
+        (void) input_data (buffer, string, NULL, 0);
     }
     else
     {
@@ -7130,7 +7130,7 @@ command_version_display (struct t_gui_buffer *buffer,
                       _("compiled on"),
                       version_get_compilation_date (),
                       version_get_compilation_time ());
-            (void) input_data (buffer, string, NULL);
+            (void) input_data (buffer, string, NULL, 0);
             if (weechat_upgrade_count > 0)
             {
                 snprintf (string, sizeof (string),
@@ -7140,7 +7140,7 @@ command_version_display (struct t_gui_buffer *buffer,
                           NG_("time", "times", weechat_upgrade_count),
                           str_first_start,
                           str_last_start);
-                (void) input_data (buffer, string, NULL);
+                (void) input_data (buffer, string, NULL, 0);
             }
         }
         else
@@ -7151,7 +7151,7 @@ command_version_display (struct t_gui_buffer *buffer,
                       "compiled on",
                       version_get_compilation_date (),
                       version_get_compilation_time ());
-            (void) input_data (buffer, string, NULL);
+            (void) input_data (buffer, string, NULL, 0);
             if (weechat_upgrade_count > 0)
             {
                 snprintf (string, sizeof (string),
@@ -7160,7 +7160,7 @@ command_version_display (struct t_gui_buffer *buffer,
                           (weechat_upgrade_count > 1) ? "times" : "time",
                           str_first_start,
                           str_last_start);
-                (void) input_data (buffer, string, NULL);
+                (void) input_data (buffer, string, NULL, 0);
             }
         }
     }
@@ -7239,7 +7239,7 @@ COMMAND_CALLBACK(wait)
     if (delay < 1)
         COMMAND_ERROR;
 
-    if (input_data_delayed (buffer, argv_eol[2], NULL, delay) != WEECHAT_RC_OK)
+    if (input_data_delayed (buffer, argv_eol[2], NULL, 0, delay) != WEECHAT_RC_OK)
         COMMAND_ERROR;
 
     return WEECHAT_RC_OK;
@@ -9296,7 +9296,7 @@ command_exec_list (const char *command_list)
             if (command_eval)
             {
                 (void) input_data (gui_buffer_search_main (),
-                                   command_eval, NULL);
+                                   command_eval, NULL, 0);
                 free (command_eval);
             }
         }

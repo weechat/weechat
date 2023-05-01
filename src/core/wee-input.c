@@ -236,6 +236,9 @@ end:
 /*
  * Sends data to a buffer's callback.
  *
+ * If split_newline = 1 and if buffer input_multiline = 0, the string
+ * is split on "\n" and multiple commands can then be executed.
+ *
  * Returns:
  *   WEECHAT_RC_OK: data properly sent (or command executed successfully)
  *   WEECHAT_RC_ERROR: error
@@ -243,7 +246,7 @@ end:
 
 int
 input_data (struct t_gui_buffer *buffer, const char *data,
-            const char *commands_allowed)
+            const char *commands_allowed, int split_newline)
 {
     char *pos, *buf, str_buffer[128], *new_data, *buffer_full_name;
     const char *ptr_data, *ptr_data_for_buffer;
@@ -336,7 +339,7 @@ input_data (struct t_gui_buffer *buffer, const char *data,
         if (pos)
         {
             pos[0] = '\n';
-            ptr_data = pos + 1;
+            ptr_data = (split_newline) ? pos + 1 : NULL;
         }
         else
             ptr_data = NULL;
@@ -377,10 +380,16 @@ input_data_timer_cb (const void *pointer, void *data, int remaining_calls)
     {
         ptr_buffer = gui_buffer_search_by_full_name (timer_args[0]);
         if (ptr_buffer)
-            (void) input_data (ptr_buffer, timer_args[1], timer_args[2]);
+        {
+            (void) input_data (
+                ptr_buffer,
+                timer_args[1],
+                timer_args[2],
+                (string_strcmp (timer_args[3], "1") == 0) ? 1 : 0);
+        }
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < 4; i++)
     {
         if (timer_args[i])
             free (timer_args[i]);
@@ -403,14 +412,15 @@ input_data_timer_cb (const void *pointer, void *data, int remaining_calls)
 
 int
 input_data_delayed (struct t_gui_buffer *buffer, const char *data,
-                    const char *commands_allowed, long delay)
+                    const char *commands_allowed, int split_newline,
+                    long delay)
 {
     char **timer_args, *new_commands_allowed;
 
     if (delay < 1)
-        return input_data (buffer, data, commands_allowed);
+        return input_data (buffer, data, commands_allowed, split_newline);
 
-    timer_args = malloc (3 * sizeof (*timer_args));
+    timer_args = malloc (4 * sizeof (*timer_args));
     if (!timer_args)
     {
         gui_chat_printf (NULL,
@@ -437,6 +447,7 @@ input_data_delayed (struct t_gui_buffer *buffer, const char *data,
     timer_args[0] = strdup (buffer->full_name);
     timer_args[1] = strdup (data);
     timer_args[2] = new_commands_allowed;
+    timer_args[3] = strdup ((split_newline) ? "1" : "0");
 
     /* schedule command, execute it after "delay" milliseconds */
     hook_timer (NULL,

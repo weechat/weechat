@@ -113,16 +113,16 @@ TEST(GuiKey, GetCurrentContext)
 {
     LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
 
-    input_data (gui_buffers, "/cursor", NULL);
+    input_data (gui_buffers, "/cursor", NULL, 0);
     LONGS_EQUAL(GUI_KEY_CONTEXT_CURSOR, gui_key_get_current_context ());
 
-    input_data (gui_buffers, "/cursor stop", NULL);
+    input_data (gui_buffers, "/cursor stop", NULL, 0);
     LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
 
-    input_data (gui_buffers, "/input search_text_here", NULL);
+    input_data (gui_buffers, "/input search_text_here", NULL, 0);
     LONGS_EQUAL(GUI_KEY_CONTEXT_SEARCH, gui_key_get_current_context ());
 
-    input_data (gui_buffers, "/input search_stop", NULL);
+    input_data (gui_buffers, "/input search_stop", NULL, 0);
     LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
 }
 

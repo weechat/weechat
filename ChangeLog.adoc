@@ -36,6 +36,7 @@ New features::
   * core: add item "mouse_status" in default status bar, change default color to lightgreen
   * core, trigger: add options weechat.color.chat_status_disabled and weechat.color.chat_status_enabled, remove options trigger.color.trigger and trigger.color.trigger_disabled, add enabled/disabled status color in output of `/filter list` (issue #1820)
   * api: add function config_set_version (issue #1238)
+  * api: don't split on newline by default in functions `command` and `command_options` when `input_multiline` is set to 0
   * api: add optional argument with version in info "version_number"
   * alias: use lower case for default aliases, rename all aliases to lower case on upgrade (issue #1872)
   * irc: rename "ssl" options to "tls", connect with TLS and port 6697 by default

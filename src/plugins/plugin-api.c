@@ -395,15 +395,16 @@ plugin_api_command_options (struct t_weechat_plugin *plugin,
                             struct t_hashtable *options)
 {
     char *command2, *error;
-    const char *ptr_commands_allowed, *ptr_delay;
+    const char *ptr_commands_allowed, *ptr_delay, *ptr_split_newline;
     long delay;
-    int rc;
+    int rc, split_newline;
 
     if (!plugin || !command)
         return WEECHAT_RC_ERROR;
 
     ptr_commands_allowed = NULL;
     delay = 0;
+    split_newline = 0;
 
     if (options)
     {
@@ -416,6 +417,12 @@ plugin_api_command_options (struct t_weechat_plugin *plugin,
             if (!error || error[0])
                 delay = 0;
         }
+        ptr_split_newline = hashtable_get (options, "split_newline");
+        if (ptr_split_newline)
+        {
+            split_newline = (string_strcmp (ptr_split_newline, "1") == 0) ?
+                1 : 0;
+        }
     }
 
     command2 = string_iconv_to_internal (plugin->charset, command);
@@ -423,6 +430,7 @@ plugin_api_command_options (struct t_weechat_plugin *plugin,
     rc = input_data_delayed ((buffer) ? buffer : gui_current_window->buffer,
                              (command2) ? command2 : command,
                              ptr_commands_allowed,
+                             split_newline,
                              delay);
 
     if (command2)
