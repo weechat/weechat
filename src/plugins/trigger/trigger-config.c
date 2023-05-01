@@ -780,18 +780,6 @@ trigger_config_init ()
             N_("text color for replacement text (for regular expressions)"),
             NULL, 0, 0, "cyan", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-        trigger_config_color_trigger = weechat_config_new_option (
-            trigger_config_file, trigger_config_section_color,
-            "trigger", "color",
-            N_("text color for trigger name"),
-            NULL, 0, 0, "green", NULL, 0,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-        trigger_config_color_trigger_disabled = weechat_config_new_option (
-            trigger_config_file, trigger_config_section_color,
-            "trigger_disabled", "color",
-            N_("text color for disabled trigger name"),
-            NULL, 0, 0, "red", NULL, 0,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
     /* trigger */

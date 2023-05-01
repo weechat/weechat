@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-01 20:10+0200\n"
-"PO-Revision-Date: 2023-03-25 21:13+0100\n"
+"POT-Creation-Date: 2023-05-01 20:13+0200\n"
+"PO-Revision-Date: 2023-05-01 20:15+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -15220,12 +15220,6 @@ msgstr "cor do texto para expressões regulares"
 msgid "text color for replacement text (for regular expressions)"
 msgstr "cor do texto substituto (para expressões regulares)"
 
-msgid "text color for trigger name"
-msgstr "cor do texto para o nome do acionador"
-
-msgid "text color for disabled trigger name"
-msgstr "cor do texto para o nome de acionador desativado"
-
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
 msgid "Typing:"
 msgstr ""
@@ -15714,14 +15708,3 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
-
-#, fuzzy
-#~ msgid ""
-#~ "user name to use on server (note: content is evaluated, see /help eval; "
-#~ "server options are evaluated with ${irc_server.xxx} and ${server} is "
-#~ "replaced by the server name)"
-#~ msgstr ""
-#~ "mensagem de expulsão predefinida usada pelos comandos \"/kick\" e \"/"
-#~ "kickban\" (nota: conteúdo é avaliado, ver /help eval; as variáveis "
-#~ "especiais ${nick}, ${channel} e ${server} são substituídas pelos "
-#~ "respetivos valores)"

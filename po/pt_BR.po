@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-01 20:10+0200\n"
-"PO-Revision-Date: 2023-03-25 21:13+0100\n"
+"POT-Creation-Date: 2023-05-01 20:13+0200\n"
+"PO-Revision-Date: 2023-05-01 20:15+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -13450,14 +13450,6 @@ msgstr "cor do texto para o prefixo de erro"
 
 msgid "text color for replacement text (for regular expressions)"
 msgstr ""
-
-#, fuzzy
-msgid "text color for trigger name"
-msgstr "cor do texto para nomes de servidor"
-
-#, fuzzy
-msgid "text color for disabled trigger name"
-msgstr "cor do texto para nomes de servidor"
 
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
 msgid "Typing:"

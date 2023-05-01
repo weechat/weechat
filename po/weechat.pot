@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-01 20:10+0200\n"
+"POT-Creation-Date: 2023-05-01 20:13+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11663,12 +11663,6 @@ msgid "text color for regular expressions"
 msgstr ""
 
 msgid "text color for replacement text (for regular expressions)"
-msgstr ""
-
-msgid "text color for trigger name"
-msgstr ""
-
-msgid "text color for disabled trigger name"
 msgstr ""
 
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
