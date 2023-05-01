@@ -2382,21 +2382,20 @@ COMMAND_CALLBACK(eval)
 void
 command_filter_display (struct t_gui_filter *filter)
 {
-    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                               _("  %s[%s%s%s]%s buffer: %s%s%s "
-                                 "/ tags: %s / regex: %s %s"),
-                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                               GUI_COLOR(GUI_COLOR_CHAT),
-                               filter->name,
-                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                               GUI_COLOR(GUI_COLOR_CHAT),
-                               GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                               filter->buffer_name,
-                               GUI_COLOR(GUI_COLOR_CHAT),
-                               filter->tags,
-                               filter->regex,
-                               (filter->enabled) ?
-                               "" : _("(disabled)"));
+    gui_chat_printf_date_tags (
+        NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+        _("  %s%s%s: buffer: %s%s%s "
+          "/ tags: %s / regex: %s"),
+        GUI_COLOR(
+            (filter->enabled) ?
+            GUI_COLOR_CHAT_STATUS_ENABLED : GUI_COLOR_CHAT_STATUS_DISABLED),
+        filter->name,
+        GUI_COLOR(GUI_COLOR_CHAT),
+        GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+        filter->buffer_name,
+        GUI_COLOR(GUI_COLOR_CHAT),
+        filter->tags,
+        filter->regex);
 }
 
 /*

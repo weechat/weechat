@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-01 20:13+0200\n"
-"PO-Revision-Date: 2023-05-01 20:15+0200\n"
+"POT-Creation-Date: 2023-05-01 20:20+0200\n"
+"PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -456,12 +456,10 @@ msgstr "error"
 msgid "%sError in expression to evaluate"
 msgstr "%sError en la expresión a evaluar"
 
-#, c-format
-msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
+#, fuzzy, c-format
+#| msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
+msgid "  %s%s%s: buffer: %s%s%s / tags: %s / regex: %s"
 msgstr "  %s[%s%s%s]%s buffer: %s%s%s / etiquetas: %s / expresión: %s %s"
-
-msgid "(disabled)"
-msgstr "(desactivado)"
 
 msgid "Message filtering enabled"
 msgstr "Filtro de mensajes activado"
