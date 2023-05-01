@@ -34,6 +34,7 @@ New features::
   * core: rename option weechat.color.status_name_ssl to weechat.color.status_name_tls
   * core, plugins: make many identifiers case sensitive (issue #1872, issue #398, bug #32213)
   * core: add item "mouse_status" in default status bar, change default color to lightgreen
+  * core: add options weechat.color.chat_status_disabled and weechat.color.chat_status_enabled (issue #1820)
   * api: add function config_set_version (issue #1238)
   * api: add optional argument with version in info "version_number"
   * alias: use lower case for default aliases, rename all aliases to lower case on upgrade (issue #1872)

@@ -302,6 +302,8 @@ extern struct t_config_option *config_color_chat_prefix_suffix;
 extern struct t_config_option *config_color_chat_read_marker;
 extern struct t_config_option *config_color_chat_read_marker_bg;
 extern struct t_config_option *config_color_chat_server;
+extern struct t_config_option *config_color_chat_status_disabled;
+extern struct t_config_option *config_color_chat_status_enabled;
 extern struct t_config_option *config_color_chat_tags;
 extern struct t_config_option *config_color_chat_text_found;
 extern struct t_config_option *config_color_chat_text_found_bg;

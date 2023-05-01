@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-01 17:48+0200\n"
+"POT-Creation-Date: 2023-05-01 20:10+0200\n"
 "PO-Revision-Date: 2023-03-25 21:13+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -4952,6 +4952,16 @@ msgstr "未読データマーカーの背景色"
 
 msgid "text color for server names"
 msgstr "サーバ名のテキスト色"
+
+#, fuzzy
+#| msgid "text color for \"failed\" status"
+msgid "text color for \"disabled\" status"
+msgstr "\"失敗\" 状態のテキスト色"
+
+#, fuzzy
+#| msgid "text color for \"failed\" status"
+msgid "text color for \"enabled\" status"
+msgstr "\"失敗\" 状態のテキスト色"
 
 msgid "text color for tags after messages (displayed with command /debug tags)"
 msgstr "メッセージの後ろのタグのテキスト色 (/debug tags コマンドで表示)"

@@ -255,6 +255,8 @@ struct t_config_option *config_color_chat_prefix_suffix = NULL;
 struct t_config_option *config_color_chat_read_marker = NULL;
 struct t_config_option *config_color_chat_read_marker_bg = NULL;
 struct t_config_option *config_color_chat_server = NULL;
+struct t_config_option *config_color_chat_status_disabled = NULL;
+struct t_config_option *config_color_chat_status_enabled = NULL;
 struct t_config_option *config_color_chat_tags = NULL;
 struct t_config_option *config_color_chat_text_found = NULL;
 struct t_config_option *config_color_chat_text_found_bg = NULL;
@@ -4315,6 +4317,22 @@ config_weechat_init_options ()
             "chat_server", "color",
             N_("text color for server names"),
             NULL, GUI_COLOR_CHAT_SERVER, 0, "brown", NULL, 0,
+            NULL, NULL, NULL,
+            &config_change_color, NULL, NULL,
+            NULL, NULL, NULL);
+        config_color_chat_status_disabled = config_file_new_option (
+            weechat_config_file, weechat_config_section_color,
+            "chat_status_disabled", "color",
+            N_("text color for \"disabled\" status"),
+            NULL, GUI_COLOR_CHAT_STATUS_DISABLED, 0, "red", NULL, 0,
+            NULL, NULL, NULL,
+            &config_change_color, NULL, NULL,
+            NULL, NULL, NULL);
+        config_color_chat_status_enabled = config_file_new_option (
+            weechat_config_file, weechat_config_section_color,
+            "chat_status_enabled", "color",
+            N_("text color for \"enabled\" status"),
+            NULL, GUI_COLOR_CHAT_STATUS_ENABLED, 0, "green", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);

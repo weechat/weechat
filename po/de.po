@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-01 17:48+0200\n"
+"POT-Creation-Date: 2023-05-01 20:10+0200\n"
 "PO-Revision-Date: 2023-05-01 18:10+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechatter@arcor.de>\n"
@@ -5208,6 +5208,16 @@ msgstr "Hintergrundfarbe für das Lesezeichen"
 
 msgid "text color for server names"
 msgstr "Textfarbe für den Namen des Servers"
+
+#, fuzzy
+#| msgid "text color for \"failed\" status"
+msgid "text color for \"disabled\" status"
+msgstr "Textfarbe für Status: \"fehlgeschlagen\""
+
+#, fuzzy
+#| msgid "text color for \"failed\" status"
+msgid "text color for \"enabled\" status"
+msgstr "Textfarbe für Status: \"fehlgeschlagen\""
 
 msgid "text color for tags after messages (displayed with command /debug tags)"
 msgstr ""

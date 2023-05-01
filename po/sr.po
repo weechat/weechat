@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-01 17:48+0200\n"
+"POT-Creation-Date: 2023-05-01 20:10+0200\n"
 "PO-Revision-Date: 2023-04-13 20:10+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5346,6 +5346,16 @@ msgstr "боја позадине за маркер непрочитаних п�
 
 msgid "text color for server names"
 msgstr "боја текста за имена сервера"
+
+#, fuzzy
+#| msgid "text color for \"failed\" status"
+msgid "text color for \"disabled\" status"
+msgstr "боја текста за „није успео” статус"
+
+#, fuzzy
+#| msgid "text color for \"failed\" status"
+msgid "text color for \"enabled\" status"
+msgstr "боја текста за „није успео” статус"
 
 msgid "text color for tags after messages (displayed with command /debug tags)"
 msgstr "боја текста за ознаке након порука (приказаних командом /debug tags)"
