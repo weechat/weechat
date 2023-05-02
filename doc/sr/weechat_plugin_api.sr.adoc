@@ -3186,9 +3186,8 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 | Hdata вредност (показивачи `window` и `buffer` се подразумевано постављају на текући
   прозор/бафер), `листа` може бити име листе (пример: „gui_buffers”), показивач
   (пример: „0x1234abcd”) или име показивача (пример: „my_pointer”). +
-// TRANSLATION MISSING
-  When `var1` is a hashtable, methods `keys()`, `values()`, `keys_sorted()`,
-  `keys_values()` and `keys_values_sorted()` can be called.
+  Када је `var1` хеш табела, могу да се позову методе `keys()`, `values()`, `keys_sorted()`,
+  `keys_values()` и `keys_values_sorted()`.
 | >> `+${buffer[gui_buffers].full_name}+` +
   == `+core.weechat+` +
   +
@@ -6201,13 +6200,12 @@ def my_config_reload_cb(data: str, config_file: str) -> int:
 config_file = weechat.config_new("test", "my_config_reload_cb", "")
 ----
 
-// TRANSLATION MISSING
 ==== config_set_version
 
 _WeeChat ≥ 4.0.0._
 
-Set configuration file version and a callback to update config sections/options
-on-the-fly when the config is read.
+Поставља верзију конфигурационог фајла и функцију повратног позива за ажурирање конфигурационих
+одељака/опција у лету, док се чита конфигурација.
 
 Прототип:
 
@@ -12562,9 +12560,8 @@ struct t_hook *weechat_hook_focus (const char *area,
 | _chat_line_message | Порука линије.
 | "Hello world!" | ""
 
-// TRANSLATION MISSING
-| _chat_focused_line | Line at (x,y) _(WeeChat ≥ 4.0.0)_.
-| "Hello world!" | ""
+| _chat_focused_line | Линија на (x,y) _(WeeChat ≥ 4.0.0)_.
+| "Здраво свима!" | ""
 
 | _chat_word | Реч на (x,y).
 | "Здраво" | ""
@@ -13502,13 +13499,12 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   "1": довршавање се не зауставља када се ажурира командна линија
   (глобално подешавање, не користи се показивач на бафер).
 
-// TRANSLATION MISSING
-| unread | | empty string, "0", "+N", "-N" or "N" (N is integer)
+| unread | | празан стринг, "0", "+N", "-N" или "N" (N је цео број)
 | празан стринг: поставља ознаку непрочитано након последње линије бафера +
   "0": уклања ознаку непрочитано из бафера +
-  "N": move the unread marker N lines from the end towards the first line of buffer +
-  "-N": move the unread marker N lines towards the first line of buffer +
-  "+N": move the unread marker N lines towards the last line of buffer.
+  "N": помера ознаку непрочитано N линија од краја према првој линији бафера +
+  "-N": помера ознаку непрочитано N линија према првој линији бафера +
+  "+N": помера ознаку непрочитано N линија према последњој линији бафера.
 
 | display | | "1" или "auto"
 | "1": прелазак на овај бафер у текућем прозору +
@@ -15186,10 +15182,9 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 
 * показивач на нову траку, NULL у случају грешке
 
-// TRANSLATION MISSING
 [NOTE]
-Since version 4.0.0, if the bar already exists, WeeChat sets the values received
-as default values for bar options and returns the bar pointer instead of NULL.
+Почевши од верзије 4.0.0, ако трака већ постоји, WeeChat примљене вредности као
+подразумеване вредности опција траке и уместо NULL враћа показивач на траку.
 
 C пример:
 
