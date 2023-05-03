@@ -99,7 +99,8 @@ struct t_irc_protocol_msg
     t_irc_recv_func *recv_function; /* function called when msg is received  */
 };
 
-extern const char *irc_protocol_tags (const char *command,
+extern const char *irc_protocol_tags (struct t_irc_server *server,
+                                      const char *command,
                                       struct t_hashtable *irc_msg_tags,
                                       const char *extra_tags,
                                       const char *nick,
@@ -108,6 +109,7 @@ extern time_t irc_protocol_parse_time (const char *time);
 extern void irc_protocol_recv_command (struct t_irc_server *server,
                                        const char *irc_message,
                                        const char *msg_command,
-                                       const char *msg_channel);
+                                       const char *msg_channel,
+                                       int ignore_batch_tag);
 
 #endif /* WEECHAT_PLUGIN_IRC_PROTOCOL_H */

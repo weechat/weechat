@@ -1491,6 +1491,7 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
                     ptr_channel->buffer,
                     0,
                     irc_protocol_tags (
+                        server,
                         "nick_back",
                         NULL,
                         NULL,

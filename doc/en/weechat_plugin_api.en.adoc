@@ -12337,6 +12337,12 @@ List of modifiers used by WeeChat and plugins:
 |===
 | Modifier | Min WeeChat | Modifier data | String | Output
 
+| [[hook_modifier_irc_batch]] irc_batch | 4.0.0
+| Server name + "," + batch type + "," + batch parameters
+| Content of multiple messages, separated by a newline char ("\n").
+| New content of messages (number can be different), an empty string discards
+  all messages in the batch.
+
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
 | Server name
 | Content of message received from IRC server (before charset decoding). +

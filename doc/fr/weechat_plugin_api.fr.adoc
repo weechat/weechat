@@ -12600,6 +12600,12 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
 |===
 | Modificateur | WeeChat mini | Données du modificateur | Chaîne | Sortie
 
+| [[hook_modifier_irc_batch]] irc_batch | 4.0.0
+| Nom de serveur + "," + type de batch + "," + paramètres du batch
+| Contenu de plusieurs messages, séparés par un caractère de retour chariot ("\n").
+| Nouveau contenu des messages (le nombre peut être différent), une chaîne vide
+  annule tous les messages du batch.
+
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
 | Nom de serveur
 | Contenu du message reçu du serveur IRC (avant décodage du jeu de caractères). +

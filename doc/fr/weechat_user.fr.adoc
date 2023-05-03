@@ -3510,6 +3510,7 @@ WeeChat supporte les https://ircv3.net/irc/[extensions IRCv3 ^↗^,window=_blan
 * <<irc_ircv3_account_notify,account-notify>>
 * <<irc_ircv3_account_tag,account-tag>>
 * <<irc_ircv3_away_notify,away-notify>>
+* <<irc_ircv3_batch,batch>>
 * <<irc_ircv3_cap_notify,cap-notify>>
 * <<irc_ircv3_chghost,chghost>>
 * <<irc_ircv3_extended_join,extended-join>>
@@ -3594,6 +3595,17 @@ les options suivantes :
 * <<option_irc.server_default.away_check,irc.server_default.away_check>>
 * <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
 * <<option_weechat.look.item_away_message,weechat.look.item_away_message>>
+
+[[irc_ircv3_batch]]
+===== batch
+
+Spécification : https://ircv3.net/specs/extensions/batch[batch ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à envoyer des évènements "batch" (regroupement
+de plusieurs messages qui sont liés).
+
+Pour l'instant, WeeChat stocke seulement ces messages reçus dans un "batch"
+et les traite plus tard comme d'habitude, lorsque le "batch" prend fin.
 
 [[irc_ircv3_cap_notify]]
 ===== cap-notify

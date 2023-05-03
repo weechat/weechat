@@ -52,6 +52,7 @@
 #include "irc.h"
 #include "irc-server.h"
 #include "irc-bar-item.h"
+#include "irc-batch.h"
 #include "irc-buffer.h"
 #include "irc-channel.h"
 #include "irc-color.h"
@@ -1740,6 +1741,8 @@ irc_server_alloc (const char *name)
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_TIME,
         NULL, NULL);
+    new_server->batches = NULL;
+    new_server->last_batch = NULL;
     new_server->buffer = NULL;
     new_server->buffer_as_string = NULL;
     new_server->channels = NULL;
@@ -2218,6 +2221,7 @@ irc_server_free_data (struct t_irc_server *server)
     irc_redirect_free_all (server);
     irc_notify_free_all (server);
     irc_channel_free_all (server);
+    irc_batch_free_all (server);
 
     /* free hashtables */
     weechat_hashtable_free (server->join_manual);
@@ -3552,7 +3556,8 @@ irc_server_msgq_flush ()
                                         irc_recv_msgq->server,
                                         ptr_msg2,
                                         command,
-                                        channel);
+                                        channel,
+                                        0);  /* ignore_batch_tag */
                                 }
                             }
 
@@ -3855,6 +3860,7 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
     struct t_irc_redirect *ptr_redirect, *ptr_next_redirect;
+    struct t_irc_batch *ptr_batch, *ptr_next_batch;
     time_t current_time;
     static struct timeval tv;
     int away_check, refresh_lag;
@@ -4024,6 +4030,17 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                                                NULL);
                     }
                 }
+                ptr_batch = ptr_server->batches;
+                while (ptr_batch)
+                {
+                    ptr_next_batch = ptr_batch->next_batch;
+                    if (current_time > ptr_batch->start_time + (60 * 60))
+                    {
+                        /* batch expires after 1 hour if end not received */
+                        irc_batch_free (ptr_server, ptr_batch);
+                    }
+                    ptr_batch = ptr_next_batch;
+                }
                 ptr_server->last_data_purge = current_time;
             }
         }
@@ -4114,6 +4131,9 @@ irc_server_close_connection (struct t_irc_server *server)
 
     /* remove all keys for joins without switch */
     weechat_hashtable_remove_all (server->join_noswitch);
+
+    /* remove all batched events pending */
+    irc_batch_free_all (server);
 
     /* server is now disconnected */
     server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
@@ -6319,6 +6339,8 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, join_manual, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, join_channel_key, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, join_noswitch, HASHTABLE, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, batches, POINTER, 0, NULL, "irc_batch");
+        WEECHAT_HDATA_VAR(struct t_irc_server, last_batch, POINTER, 0, NULL, "irc_batch");
         WEECHAT_HDATA_VAR(struct t_irc_server, buffer, POINTER, 0, NULL, "buffer");
         WEECHAT_HDATA_VAR(struct t_irc_server, buffer_as_string, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, channels, POINTER, 0, NULL, "irc_channel");
@@ -7088,6 +7110,8 @@ irc_server_print_log ()
         weechat_log_printf ("  join_noswitch . . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->join_noswitch,
                             weechat_hashtable_get_string (ptr_server->join_noswitch, "keys_values"));
+        weechat_log_printf ("  batches . . . . . . . . . : 0x%lx", ptr_server->batches);
+        weechat_log_printf ("  last_batch. . . . . . . . : 0x%lx", ptr_server->last_batch);
         weechat_log_printf ("  buffer. . . . . . . . . . : 0x%lx", ptr_server->buffer);
         weechat_log_printf ("  buffer_as_string. . . . . : 0x%lx", ptr_server->buffer_as_string);
         weechat_log_printf ("  channels. . . . . . . . . : 0x%lx", ptr_server->channels);
@@ -7098,6 +7122,8 @@ irc_server_print_log ()
         irc_redirect_print_log (ptr_server);
 
         irc_notify_print_log (ptr_server);
+
+        irc_batch_print_log (ptr_server);
 
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)

@@ -12465,6 +12465,13 @@ WeeChat とプラグインが使う修飾子のリスト:
 | 修飾子 | Min WeeChat | 修飾子データ | 文字列 | 出力
 
 // TRANSLATION MISSING
+| [[hook_modifier_irc_batch]] irc_batch | 4.0.0
+| Server name + "," + batch type + "," + batch parameters
+| Content of multiple messages, separated by a newline char ("\n").
+| New content of messages (number can be different), an empty string discards
+  all messages in the batch.
+
+// TRANSLATION MISSING
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
 | サーバ名
 | IRC サーバから受信したメッセージの内容 (文字セットをデコードする前) +

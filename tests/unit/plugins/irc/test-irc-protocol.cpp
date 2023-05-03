@@ -35,6 +35,7 @@ extern "C"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
+#include "src/plugins/irc/irc-batch.h"
 #include "src/plugins/irc/irc-ctcp.h"
 #include "src/plugins/irc/irc-protocol.h"
 #include "src/plugins/irc/irc-channel.h"
@@ -65,8 +66,8 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     "USERLEN=16 HOSTLEN=32 CHANNELLEN=50 TOPICLEN=390 DEAF=D "          \
     "CHANTYPES=# CHANMODES=eIbq,k,flj,CFLMPQScgimnprstuz "              \
     "MONITOR=100"
-#define IRC_ALL_CAPS "account-notify,away-notify,cap-notify,chghost,"   \
-    "extended-join,invite-notify,message-tags,multi-prefix,"            \
+#define IRC_ALL_CAPS "account-notify,away-notify,batch,cap-notify,"     \
+    "chghost,extended-join,invite-notify,message-tags,multi-prefix,"    \
     "server-time,setname,userhost-in-names"
 
 #define WEE_CHECK_CAP_TO_ENABLE(__result, __string, __sasl_requested)   \
@@ -261,66 +262,66 @@ TEST(IrcProtocol, Tags)
     hashtable_set (tags_2, "key1", "value1");
     hashtable_set (tags_2, "key_2,comma", "value2,comma");
 
-    POINTERS_EQUAL(NULL, irc_protocol_tags (NULL, NULL, NULL, NULL, NULL));
+    POINTERS_EQUAL(NULL, irc_protocol_tags (NULL, NULL, NULL, NULL, NULL, NULL));
 
     /* command */
     STRCMP_EQUAL("irc_privmsg,log1",
-                 irc_protocol_tags ("privmsg", NULL, NULL, NULL, NULL));
+                 irc_protocol_tags (NULL, "privmsg", NULL, NULL, NULL, NULL));
     STRCMP_EQUAL("irc_join,log4",
-                 irc_protocol_tags ("join", NULL, NULL, NULL, NULL));
+                 irc_protocol_tags (NULL, "join", NULL, NULL, NULL, NULL));
 
     /* command + irc_msg_tags */
     STRCMP_EQUAL("irc_privmsg,log1",
-                 irc_protocol_tags ("privmsg", tags_empty, NULL, NULL, NULL));
+                 irc_protocol_tags (NULL, "privmsg", tags_empty, NULL, NULL, NULL));
     STRCMP_EQUAL("irc_join,log4",
-                 irc_protocol_tags ("join", tags_empty, NULL, NULL, NULL));
+                 irc_protocol_tags (NULL, "join", tags_empty, NULL, NULL, NULL));
     STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,log1",
-                 irc_protocol_tags ("privmsg", tags_1, NULL, NULL, NULL));
+                 irc_protocol_tags (NULL, "privmsg", tags_1, NULL, NULL, NULL));
     STRCMP_EQUAL("irc_join,irc_tag_key1_value1,log4",
-                 irc_protocol_tags ("join", tags_1, NULL, NULL, NULL));
+                 irc_protocol_tags (NULL, "join", tags_1, NULL, NULL, NULL));
     STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,log1",
-                 irc_protocol_tags ("privmsg", tags_2, NULL, NULL, NULL));
+                 irc_protocol_tags (NULL, "privmsg", tags_2, NULL, NULL, NULL));
     STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,log4",
-                 irc_protocol_tags ("join", tags_2, NULL, NULL, NULL));
+                 irc_protocol_tags (NULL, "join", tags_2, NULL, NULL, NULL));
 
     /* command + extra_tags */
     STRCMP_EQUAL("irc_privmsg,log1",
-                 irc_protocol_tags ("privmsg", NULL, "", NULL, NULL));
+                 irc_protocol_tags (NULL, "privmsg", NULL, "", NULL, NULL));
     STRCMP_EQUAL("irc_join,log4",
-                 irc_protocol_tags ("join", NULL, "", NULL, NULL));
+                 irc_protocol_tags (NULL, "join", NULL, "", NULL, NULL));
     STRCMP_EQUAL("irc_privmsg,tag1,tag2,log1",
-                 irc_protocol_tags ("privmsg", NULL, "tag1,tag2", NULL, NULL));
+                 irc_protocol_tags (NULL, "privmsg", NULL, "tag1,tag2", NULL, NULL));
     STRCMP_EQUAL("irc_join,tag1,tag2,log4",
-                 irc_protocol_tags ("join", NULL, "tag1,tag2", NULL, NULL));
+                 irc_protocol_tags (NULL, "join", NULL, "tag1,tag2", NULL, NULL));
 
     /* command + irc_msg_tags + extra_tags + nick */
     STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
                  "tag1,tag2,log1",
-                 irc_protocol_tags ("privmsg", tags_2, "tag1,tag2", "", NULL));
+                 irc_protocol_tags (NULL, "privmsg", tags_2, "tag1,tag2", "", NULL));
     STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
                  "tag1,tag2,log4",
-                 irc_protocol_tags ("join", tags_2, "tag1,tag2", "", NULL));
+                 irc_protocol_tags (NULL, "join", tags_2, "tag1,tag2", "", NULL));
     STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
                  "tag1,tag2,nick_alice,log1",
-                 irc_protocol_tags ("privmsg", tags_2, "tag1,tag2", "alice", NULL));
+                 irc_protocol_tags (NULL, "privmsg", tags_2, "tag1,tag2", "alice", NULL));
     STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
                  "tag1,tag2,nick_bob,log4",
-                 irc_protocol_tags ("join", tags_2, "tag1,tag2", "bob", NULL));
+                 irc_protocol_tags (NULL, "join", tags_2, "tag1,tag2", "bob", NULL));
 
     /* command + irc_msg_tags + extra_tags + nick + address */
     STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
                  "tag1,tag2,nick_alice,log1",
-                 irc_protocol_tags ("privmsg", tags_2, "tag1,tag2", "alice", ""));
+                 irc_protocol_tags (NULL, "privmsg", tags_2, "tag1,tag2", "alice", ""));
     STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
                  "tag1,tag2,nick_bob,log4",
-                 irc_protocol_tags ("join", tags_2, "tag1,tag2", "bob", ""));
+                 irc_protocol_tags (NULL, "join", tags_2, "tag1,tag2", "bob", ""));
     STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
                  "tag1,tag2,nick_alice,host_example.com,log1",
-                 irc_protocol_tags ("privmsg", tags_2, "tag1,tag2", "alice",
+                 irc_protocol_tags (NULL, "privmsg", tags_2, "tag1,tag2", "alice",
                                     "example.com"));
     STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
                  "tag1,tag2,nick_bob,host_example.com,log4",
-                 irc_protocol_tags ("join", tags_2, "tag1,tag2", "bob",
+                 irc_protocol_tags (NULL, "join", tags_2, "tag1,tag2", "bob",
                                     "example.com"));
 
     hashtable_free (tags_empty);
@@ -790,6 +791,132 @@ TEST(IrcProtocolWithServer, away)
     RECV(":alice!user@host AWAY");
     CHECK_NO_MSG;
     LONGS_EQUAL(0, ptr_nick->away);
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_batch
+ */
+
+TEST(IrcProtocolWithServer, batch)
+{
+    struct t_irc_batch *ptr_batch;
+
+    SRV_INIT_JOIN2;
+
+    /* not enough parameters */
+    RECV(":server BATCH");
+    CHECK_ERROR_PARAMS("batch", 0, 1);
+    RECV(":server BATCH +test");
+    CHECK_ERROR_PARSE("batch", ":server BATCH +test");
+
+    /* invalid reference: does not start with '+' or '-' */
+    RECV(":server BATCH zzz type");
+    CHECK_NO_MSG;
+    POINTERS_EQUAL(NULL, ptr_server->batches);
+
+    /* start batch without parameters */
+    RECV(":server BATCH +ref example");
+    CHECK_NO_MSG;
+    ptr_batch = irc_batch_search (ptr_server, "ref");
+    CHECK(ptr_batch);
+    POINTERS_EQUAL(NULL, ptr_batch->parent_ref);
+    STRCMP_EQUAL("example", ptr_batch->type);
+    POINTERS_EQUAL(NULL, ptr_batch->parameters);
+    POINTERS_EQUAL(NULL, ptr_batch->messages);
+    LONGS_EQUAL(0, ptr_batch->end_received);
+    LONGS_EQUAL(0, ptr_batch->messages_processed);
+
+    /* new messages with batch reference */
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :this is a test");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :second test");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :third test");
+    CHECK_NO_MSG;
+
+    /* end batch */
+    RECV(":server BATCH -ref");
+    CHECK_CHAN("bob this is a test");
+    CHECK_CHAN("bob second test");
+    CHECK_CHAN("bob third test");
+    POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref"));
+
+    /* start batch with parameters */
+    RECV(":server BATCH +ref example param1 param2 param3");
+    CHECK_NO_MSG;
+    ptr_batch = irc_batch_search (ptr_server, "ref");
+    CHECK(ptr_batch);
+    POINTERS_EQUAL(NULL, ptr_batch->parent_ref);
+    STRCMP_EQUAL("example", ptr_batch->type);
+    STRCMP_EQUAL("param1 param2 param3", ptr_batch->parameters);
+    POINTERS_EQUAL(NULL, ptr_batch->messages);
+    LONGS_EQUAL(0, ptr_batch->end_received);
+    LONGS_EQUAL(0, ptr_batch->messages_processed);
+
+    /* new messages with batch reference */
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :test 1");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :test 2");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :test 3");
+    CHECK_NO_MSG;
+
+    /* end batch */
+    RECV(":server BATCH -ref");
+    CHECK_CHAN("bob test 1");
+    CHECK_CHAN("bob test 2");
+    CHECK_CHAN("bob test 3");
+    POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref"));
+
+    /* start/end batch without parameters */
+    RECV(":server BATCH +ref example");
+    RECV(":server BATCH -ref");
+    CHECK_NO_MSG;
+    POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref"));
+
+    /* interleaving batches */
+    RECV(":server BATCH +1 example");
+    CHECK_NO_MSG;
+    CHECK(irc_batch_search (ptr_server, "1"));
+    RECV("@batch=1 :bob!user_b@host_b PRIVMSG #test :message 1");
+    CHECK_NO_MSG;
+    RECV(":server BATCH +2 example");
+    CHECK_NO_MSG;
+    CHECK(irc_batch_search (ptr_server, "2"));
+    RECV("@batch=1 :bob!user_b@host_b PRIVMSG #test :message 2");
+    CHECK_NO_MSG;
+    RECV("@batch=2 :bob!user_b@host_b PRIVMSG #test :message 4");
+    CHECK_NO_MSG;
+    RECV("@batch=1 :bob!user_b@host_b PRIVMSG #test :message 3");
+    CHECK_NO_MSG;
+    RECV(":server BATCH -1");
+    CHECK_CHAN("bob message 1");
+    CHECK_CHAN("bob message 2");
+    CHECK_CHAN("bob message 3");
+    POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "1"));
+    RECV("@batch=2 :bob!user_b@host_b PRIVMSG #test :message 5");
+    CHECK_NO_MSG;
+    RECV(":server BATCH -2");
+    CHECK_CHAN("bob message 4");
+    CHECK_CHAN("bob message 5");
+    POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "2"));
+
+    /* nested batch */
+    RECV(":server BATCH +ref1 example1");
+    CHECK_NO_MSG;
+    CHECK(irc_batch_search (ptr_server, "ref1"));
+    RECV("@batch=ref1 :server BATCH +ref2 example2");
+    CHECK_NO_MSG;
+    CHECK(irc_batch_search (ptr_server, "ref2"));
+    RECV("@batch=ref1 :bob!user_b@host_b PRIVMSG #test :test ref1");
+    CHECK_NO_MSG;
+    RECV("@batch=ref2 :bob!user_b@host_b PRIVMSG #test :test ref2");
+    CHECK_NO_MSG;
+    RECV(":server BATCH -ref2");
+    CHECK_NO_MSG;
+    CHECK(irc_batch_search (ptr_server, "ref2"));
+    RECV(":server BATCH -ref1");
+    CHECK_CHAN("bob test ref1");
+    CHECK_CHAN("bob test ref2");
+    POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref1"));
+    POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref2"));
 }
 
 /*

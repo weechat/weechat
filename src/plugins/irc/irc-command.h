@@ -54,10 +54,10 @@ struct t_irc_channel;
     }
 
 /* list of supported capabilities (for completion in command /cap) */
-#define IRC_COMMAND_CAP_SUPPORTED_COMPLETION \
-    "account-notify|away-notify|cap-notify|chghost|extended-join|"      \
-    "invite-notify|message-tags|multi-prefix|server-time|setname|"      \
-    "userhost-in-names"
+#define IRC_COMMAND_CAP_SUPPORTED_COMPLETION                            \
+    "account-notify|away-notify|batch|cap-notify|chghost|"              \
+    "extended-join|invite-notify|message-tags|multi-prefix|"            \
+    "server-time|setname|userhost-in-names"
 
 /* list of supported CTCPs (for completion in command /ctcp) */
 #define IRC_COMMAND_CTCP_SUPPORTED_COMPLETION \

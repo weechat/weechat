@@ -25,6 +25,7 @@
 
 #include "../weechat-plugin.h"
 #include "irc.h"
+#include "irc-batch.h"
 #include "irc-channel.h"
 #include "irc-color.h"
 #include "irc-config.h"
@@ -1294,4 +1295,7 @@ irc_info_init ()
     weechat_hook_hdata (
         "irc_server", N_("irc server"),
         &irc_server_hdata_server_cb, NULL, NULL);
+    weechat_hook_hdata (
+        "irc_batch", N_("irc batch"),
+        &irc_batch_hdata_batch_cb, NULL, NULL);
 }

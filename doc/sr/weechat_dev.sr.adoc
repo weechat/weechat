@@ -276,6 +276,8 @@ WeeChat „језгро” се налази у следећим директо�
 |    irc/                           | IRC (Internet Relay Chat) додатак.
 |       irc.c                       | Основне IRC функције.
 |       irc-bar-item.c              | IRC ставке траке.
+// TRANSLATION MISSING
+|       irc-batch.c                 | IRC batched events.
 |       irc-buffer.c                | IRC бафери.
 |       irc-channel.c               | IRC канали.
 |       irc-color.c                 | IRC боје.
@@ -437,6 +439,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-gui-nick.cpp          | Тестови: надимци.
 |       plugins/                      | Корен unit тестова додатака.
 |          irc/                       | Корен unit тестова IRC додатка.
+// TRANSLATION MISSING
+|             test-irc-batch.cpp      | Tests: IRC batched events.
 |             test-irc-buffer.cpp     | Тестови: IRC бафери.
 |             test-irc-channel.cpp    | Тестови: IRC канали.
 |             test-irc-color.cpp      | Тестови: IRC боје.

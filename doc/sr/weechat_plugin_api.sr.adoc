@@ -11931,6 +11931,13 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 |===
 | Модификатор | Мин WeeChat | Подаци модификатора | Стринг | Излаз
 
+// TRANSLATION MISSING
+| [[hook_modifier_irc_batch]] irc_batch | 4.0.0
+| Server name + "," + batch type + "," + batch parameters
+| Content of multiple messages, separated by a newline char ("\n").
+| New content of messages (number can be different), an empty string discards
+  all messages in the batch.
+
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
 | Име сервера
 | Садржај поруке примљене са IRC сервера (пре декодирања скупа карактера). +

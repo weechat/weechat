@@ -276,6 +276,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    irc/                           | Extension IRC (Internet Relay Chat).
 |       irc.c                       | Fonctions principales IRC.
 |       irc-bar-item.c              | Objets de barre IRC.
+|       irc-batch.c                 | Évènements batch IRC.
 |       irc-buffer.c                | Tampons IRC.
 |       irc-channel.c               | Canaux IRC.
 |       irc-color.c                 | Couleurs IRC.
@@ -437,6 +438,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-gui-nick.cpp          | Tests : pseudos.
 |       plugins/                      | Racine des tests unitaires pour les extensions.
 |          irc/                       | Racine des tests unitaires pour l'extension IRC.
+|             test-irc-batch.cpp      | Tests : évènements batch IRC.
 |             test-irc-buffer.cpp     | Tests : tampons IRC.
 |             test-irc-channel.cpp    | Tests : canaux IRC.
 |             test-irc-color.cpp      | Tests : couleurs IRC.

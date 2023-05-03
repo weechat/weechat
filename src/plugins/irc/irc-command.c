@@ -1078,7 +1078,8 @@ irc_command_me_channel_display (struct t_irc_server *server,
     weechat_printf_date_tags (
         channel->buffer,
         0,
-        irc_protocol_tags ("privmsg",
+        irc_protocol_tags (server,
+                           "privmsg",
                            NULL,
                            "irc_action,self_msg,notify_none,no_highlight",
                            server->nick, NULL),
@@ -1904,7 +1905,8 @@ IRC_COMMAND_CALLBACK(ctcp)
                 irc_msgbuffer_get_target_buffer (
                     ptr_server, ctcp_target, NULL, "ctcp", NULL),
                 0,
-                irc_protocol_tags ("privmsg",
+                irc_protocol_tags (ptr_server,
+                                   "privmsg",
                                    NULL,
                                    "irc_ctcp,self_msg,notify_none,no_highlight",
                                    NULL, NULL),
@@ -3802,6 +3804,7 @@ IRC_COMMAND_CALLBACK(msg)
                             ptr_server->buffer,
                             0,
                             irc_protocol_tags (
+                                ptr_server,
                                 "privmsg",
                                 NULL,
                                 "self_msg,notify_none,no_highlight",
@@ -6953,9 +6956,9 @@ irc_command_init ()
            "Without argument, \"ls\" and \"list\" are sent.\n"
            "\n"
            "Capabilities supported by WeeChat are: "
-           "account-notify, away-notify, cap-notify, chghost, extended-join, "
-           "invite-notify, message-tags, multi-prefix, server-time, setname, "
-           "userhost-in-names.\n"
+           "account-notify, away-notify, batch, cap-notify, chghost, "
+           "extended-join, invite-notify, message-tags, multi-prefix, "
+           "server-time, setname, userhost-in-names.\n"
            "\n"
            "The capabilities to automatically enable on servers can be set "
            "in option irc.server_default.capabilities (or by server in "

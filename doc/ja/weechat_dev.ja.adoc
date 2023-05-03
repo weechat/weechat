@@ -287,6 +287,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    irc/                           | IRC (Internet Relay Chat) プラグイン
 |       irc.c                       | IRC の主要関数
 |       irc-bar-item.c              | IRC バー要素
+// TRANSLATION MISSING
+|       irc-batch.c                 | IRC batched events.
 |       irc-buffer.c                | IRC バッファ
 |       irc-channel.c               | IRC チャンネル
 |       irc-color.c                 | IRC 色
@@ -473,6 +475,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-gui-nick.cpp          | テスト: nicks
 |       plugins/                      | プラグインの単体テストを収める最上位ディレクトリ
 |          irc/                       | IRC プラグインの単体テストを収める最上位ディレクトリ
+// TRANSLATION MISSING
+|             test-irc-batch.cpp      | Tests: IRC batched events.
 // TRANSLATION MISSING
 |             test-irc-buffer.cpp     | Tests: IRC buffers.
 // TRANSLATION MISSING

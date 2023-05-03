@@ -3469,6 +3469,7 @@ WeeChat unterstützt folgende https://ircv3.net/irc/[IRCv3 extensions ^↗^,win
 * <<irc_ircv3_account_notify,account-notify>>
 * <<irc_ircv3_account_tag,account-tag>>
 * <<irc_ircv3_away_notify,away-notify>>
+* <<irc_ircv3_batch,batch>>
 * <<irc_ircv3_cap_notify,cap-notify>>
 * <<irc_ircv3_chghost,chghost>>
 * <<irc_ircv3_extended_join,extended-join>>
@@ -3551,6 +3552,18 @@ einer bestimmten Farbe in der Nickliste dargestellt. Siehe folgende Optionen:
 * <<option_irc.server_default.away_check,irc.server_default.away_check>>
 * <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
 * <<option_weechat.look.item_away_message,weechat.look.item_away_message>>
+
+// TRANSLATION MISSING
+[[irc_ircv3_batch]]
+===== batch
+
+Specification: https://ircv3.net/specs/extensions/batch[batch ^↗^,window=_blank]
+
+This capability allows the server to send batched events (grouping of several
+messages that are related).
+
+For now, WeeChat only stores messages received in a batch and processes as usual
+later, when the batch ends.
 
 [[irc_ircv3_cap_notify]]
 ===== cap-notify

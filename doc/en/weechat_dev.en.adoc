@@ -274,6 +274,7 @@ WeeChat "core" is located in following directories:
 |    irc/                           | IRC (Internet Relay Chat) plugin.
 |       irc.c                       | Main IRC functions.
 |       irc-bar-item.c              | IRC bar items.
+|       irc-batch.c                 | IRC batched events.
 |       irc-buffer.c                | IRC buffers.
 |       irc-channel.c               | IRC channels.
 |       irc-color.c                 | IRC colors.
@@ -435,6 +436,7 @@ WeeChat "core" is located in following directories:
 |          test-gui-nick.cpp          | Tests: nicks.
 |       plugins/                      | Root of unit tests for plugins.
 |          irc/                       | Root of unit tests for IRC plugin.
+|             test-irc-batch.cpp      | Tests: IRC batched events.
 |             test-irc-buffer.cpp     | Tests: IRC buffers.
 |             test-irc-channel.cpp    | Tests: IRC channels.
 |             test-irc-color.cpp      | Tests: IRC colors.
