@@ -3553,17 +3553,16 @@ einer bestimmten Farbe in der Nickliste dargestellt. Siehe folgende Optionen:
 * <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
 * <<option_weechat.look.item_away_message,weechat.look.item_away_message>>
 
-// TRANSLATION MISSING
 [[irc_ircv3_batch]]
 ===== batch
 
-Specification: https://ircv3.net/specs/extensions/batch[batch ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/batch[batch ^↗^,window=_blank]
 
-This capability allows the server to send batched events (grouping of several
-messages that are related).
+Diese Funktion ermöglicht es dem Server, Batch-Ereignisse (Gruppe von mehreren
+Nachrichten, die zusammengehören) zu senden.
 
-For now, WeeChat only stores messages received in a batch and processes as usual
-later, when the batch ends.
+Im Moment speichert WeeChat nur Nachrichten, die in einem Stapel empfangen werden,
+und verarbeitet sie wie gewohnt später, wenn der Stapel endet.
 
 [[irc_ircv3_cap_notify]]
 ===== cap-notify
