@@ -754,7 +754,7 @@ irc_protocol_cap_to_enable (const char *capabilities, int sasl_requested)
                 if (strcmp (caps[i], "*") == 0)
                 {
                     supported_caps = weechat_string_replace (
-                        IRC_COMMAND_CAP_SUPPORTED_COMPLETION,
+                        IRC_COMMAND_CAP_SUPPORTED,
                         "|",
                         ",");
                     if (supported_caps)

@@ -6975,8 +6975,8 @@ irc_command_init ()
            "    /cap req -away-notify"),
         "ls"
         " || list"
-        " || req " IRC_COMMAND_CAP_SUPPORTED_COMPLETION "|%*"
-        " || ack " IRC_COMMAND_CAP_SUPPORTED_COMPLETION "|%*"
+        " || req " IRC_COMMAND_CAP_SUPPORTED "|%*"
+        " || ack " IRC_COMMAND_CAP_SUPPORTED "|%*"
         " || end",
         &irc_command_cap, NULL, NULL);
     weechat_hook_command (

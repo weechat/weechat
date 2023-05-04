@@ -53,8 +53,11 @@ struct t_irc_channel;
         return WEECHAT_RC_OK;                                           \
     }
 
-/* list of supported capabilities (for completion in command /cap) */
-#define IRC_COMMAND_CAP_SUPPORTED_COMPLETION                            \
+/*
+ * list of supported capabilities
+ * (enabled if supported by the server + completion in command /cap)
+ */
+#define IRC_COMMAND_CAP_SUPPORTED                                       \
     "account-notify|away-notify|batch|cap-notify|chghost|"              \
     "extended-join|invite-notify|message-tags|multi-prefix|"            \
     "server-time|setname|userhost-in-names"
