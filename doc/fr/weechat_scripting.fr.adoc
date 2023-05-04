@@ -201,22 +201,23 @@ Les fonctions sont appelées par `+weechat.xxx(arg1, arg2, ...)+`.
 
 Les fonctions sont appelées par `+weechat::xxx arg1 arg2 ...+`.
 
-// TRANSLATION MISSING
 [[tcl_null]]
 ===== Null values
 
-Since Tcl only has string types, there's no null type to pass as an argument
-when a function accepts null values or to get as an argument in a callback
-function. To overcome this the WeeChat API defines the constant
-`$::weechat::WEECHAT_NULL` which acts as a null value. This constant is defined
-as `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, so it's very unlikely to
-appear unintentionally.
+Puisque Tcl n'a que des types "string", il n'y a pas de type "null" à passer
+comme paramètre lorsqu'une fonction accepte des valeurs "null" ou pour recevoir
+comme paramètre dans une fonction de rappel. Pour y remédier, l'API WeeChat
+définit la constante `$::weechat::WEECHAT_NULL` qui agit comme une valeur
+"null". Cette constante est définie avec la valeur
+`\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, donc il est très peu probable
+qu'elle apparaisse involontairement.
 
-You can pass this constant when a function accepts null as an argument and you
-will get it as the value of an argument in a callback function if the argument
-value is null. To see which functions accept null values and passes null values
-to callbacks, look at the Python prototypes in the
-link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^,window=_blank].
+Vous pouvez passer cette constante lorsqu'une fonction accepte "null" comme
+paramètre et vous la recevrez comment valeur d'un paramètre de fonction de rappel
+si la valeur du paramètre est "null". Pour voir quelles fonctions acceptent des
+valeurs "null" et passent des valeurs "null" aux fonctions de rappel, regardez
+les prototypes Python dans la
+link:weechat_plugin_api.fr.html[Référence API extension WeeChat ^↗^,window=_blank].
 
 [[language_guile]]
 ==== Guile (Scheme)
