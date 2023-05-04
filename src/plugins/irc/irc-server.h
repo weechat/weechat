@@ -129,9 +129,9 @@ enum t_irc_server_option
 #define IRC_SERVER_NUM_OUTQUEUES_PRIO 2
 
 /* flags for irc_server_sendf() */
-#define IRC_SERVER_SEND_OUTQ_PRIO_HIGH   (1 << 0)
-#define IRC_SERVER_SEND_OUTQ_PRIO_LOW    (1 << 1)
-#define IRC_SERVER_SEND_RETURN_HASHTABLE (1 << 2)
+#define IRC_SERVER_SEND_OUTQ_PRIO_HIGH (1 << 0)
+#define IRC_SERVER_SEND_OUTQ_PRIO_LOW  (1 << 1)
+#define IRC_SERVER_SEND_RETURN_LIST    (1 << 2)
 
 /* version strings */
 #define IRC_SERVER_VERSION_CAP "302"
@@ -387,7 +387,7 @@ extern int irc_server_send_signal (struct t_irc_server *server,
                                    const char *full_message,
                                    const char *tags);
 extern void irc_server_set_send_default_tags (const char *tags);
-extern struct t_hashtable *irc_server_sendf (struct t_irc_server *server,
+extern struct t_arraylist *irc_server_sendf (struct t_irc_server *server,
                                              int flags,
                                              const char *tags,
                                              const char *format, ...);

@@ -51,6 +51,9 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
     char *pos, *text2, *text_decoded, str_tags[256], *str_color;
     const char *ptr_text;
 
+    if (!buffer || !text)
+        return;
+
     /* if message is an action, force "action" to 1 and extract message */
     if (strncmp (text, "\01ACTION ", 8) == 0)
     {
@@ -155,9 +158,8 @@ void
 irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
                              const char *tags, char *message)
 {
-    int number, action;
-    char hash_key[32], *str_args;
-    struct t_hashtable *hashtable;
+    int i, action, list_size;
+    struct t_arraylist *list_messages;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -171,25 +173,23 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
                         weechat_prefix ("error"), IRC_PLUGIN_NAME);
         return;
     }
-    hashtable = irc_server_sendf (ptr_server,
-                                  flags | IRC_SERVER_SEND_RETURN_HASHTABLE,
-                                  tags,
-                                  "PRIVMSG %s :%s",
-                                  ptr_channel->name, message);
-    if (hashtable)
+    list_messages = irc_server_sendf (ptr_server,
+                                      flags | IRC_SERVER_SEND_RETURN_LIST,
+                                      tags,
+                                      "PRIVMSG %s :%s",
+                                      ptr_channel->name, message);
+    if (list_messages)
     {
         action = (strncmp (message, "\01ACTION ", 8) == 0);
-        number = 1;
-        while (1)
+        list_size = weechat_arraylist_size (list_messages);
+        for (i = 0; i < list_size; i++)
         {
-            snprintf (hash_key, sizeof (hash_key), "args%d", number);
-            str_args = weechat_hashtable_get (hashtable, hash_key);
-            if (!str_args)
-                break;
-            irc_input_user_message_display (buffer, action, str_args);
-            number++;
+            irc_input_user_message_display (
+                buffer,
+                action,
+                (const char *)weechat_arraylist_get (list_messages, i));
         }
-        weechat_hashtable_free (hashtable);
+        weechat_arraylist_free (list_messages);
     }
 }
 

@@ -283,15 +283,15 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                         const char *ctcp,
                         const char *arguments)
 {
-    struct t_hashtable *hashtable;
-    int number;
-    char hash_key[32], *str_args_color, *dup_ctcp, *dup_ctcp_upper, *dup_args;
-    const char *str_args;
+    struct t_arraylist *list_messages;
+    int i, number, list_size;
+    char *msg_color, *dup_ctcp, *dup_ctcp_upper, *dup_args;
+    const char *ptr_message;
 
     dup_ctcp = NULL;
     dup_ctcp_upper = NULL;
     dup_args = NULL;
-    hashtable = NULL;
+    list_messages = NULL;
 
     /*
      * replace any "\01" by a space to prevent any firewall attack via
@@ -316,29 +316,28 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
             goto end;
     }
 
-    hashtable = irc_server_sendf (
+    list_messages = irc_server_sendf (
         server,
-        IRC_SERVER_SEND_OUTQ_PRIO_LOW | IRC_SERVER_SEND_RETURN_HASHTABLE,
+        IRC_SERVER_SEND_OUTQ_PRIO_LOW | IRC_SERVER_SEND_RETURN_LIST,
         NULL,
         "NOTICE %s :\01%s%s%s\01",
         nick,
         dup_ctcp_upper,
         (dup_args) ? " " : "",
         (dup_args) ? dup_args : "");
-    if (!hashtable)
+    if (!list_messages)
         goto end;
 
     if (weechat_config_boolean (irc_config_look_display_ctcp_reply))
     {
-        number = 1;
-        while (1)
+        list_size = weechat_arraylist_size (list_messages);
+        for (i = 0; i < list_size; i++)
         {
-            snprintf (hash_key, sizeof (hash_key), "args%d", number);
-            str_args = weechat_hashtable_get (hashtable, hash_key);
-            if (!str_args)
+            ptr_message = (const char *)weechat_arraylist_get (list_messages, i);
+            if (!ptr_message)
                 break;
-            str_args_color = irc_color_decode (str_args, 1);
-            if (!str_args_color)
+            msg_color = irc_color_decode (ptr_message, 1);
+            if (!msg_color)
                 break;
             weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
@@ -359,10 +358,10 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                 IRC_COLOR_RESET,
                 IRC_COLOR_CHAT_CHANNEL,
                 dup_ctcp_upper,
-                (str_args_color[0]) ? IRC_COLOR_RESET : "",
-                (str_args_color[0]) ? " " : "",
-                str_args_color);
-            free (str_args_color);
+                (msg_color[0]) ? IRC_COLOR_RESET : "",
+                (msg_color[0]) ? " " : "",
+                msg_color);
+            free (msg_color);
             number++;
         }
     }
@@ -374,8 +373,8 @@ end:
         free (dup_ctcp_upper);
     if (dup_args)
         free (dup_args);
-    if (hashtable)
-        weechat_hashtable_free (hashtable);
+    if (list_messages)
+        weechat_arraylist_free (list_messages);
 }
 
 /*

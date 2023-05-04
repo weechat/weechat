@@ -1104,31 +1104,27 @@ irc_command_me_channel (struct t_irc_server *server,
                         struct t_irc_channel *channel,
                         const char *arguments)
 {
-    struct t_hashtable *hashtable;
-    int number;
-    char hash_key[32];
-    const char *str_args;
+    struct t_arraylist *list_messages;
+    int i, list_size;
 
-    hashtable = irc_server_sendf (
+    list_messages = irc_server_sendf (
         server,
-        IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_HASHTABLE,
+        IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_LIST,
         NULL,
         "PRIVMSG %s :\01ACTION %s\01",
         channel->name,
         (arguments && arguments[0]) ? arguments : "");
-    if (hashtable)
+    if (list_messages)
     {
-        number = 1;
-        while (1)
+        list_size = weechat_arraylist_size (list_messages);
+        for (i = 0; i < list_size; i++)
         {
-            snprintf (hash_key, sizeof (hash_key), "args%d", number);
-            str_args = weechat_hashtable_get (hashtable, hash_key);
-            if (!str_args)
-                break;
-            irc_command_me_channel_display (server, channel, str_args);
-            number++;
+            irc_command_me_channel_display (
+                server,
+                channel,
+                (const char *)weechat_arraylist_get (list_messages, i));
         }
-        weechat_hashtable_free (hashtable);
+        weechat_arraylist_free (list_messages);
     }
 }
 
@@ -3931,10 +3927,11 @@ IRC_COMMAND_CALLBACK(nick)
 
 IRC_COMMAND_CALLBACK(notice)
 {
-    char *string, hash_key[32], *str_args;
-    int arg_target, arg_text, number, is_channel;
+    char *string;
+    const char *ptr_message;
+    int i, arg_target, arg_text, is_channel, list_size;
     struct t_irc_channel *ptr_channel;
-    struct t_hashtable *hashtable;
+    struct t_arraylist *list_messages;
 
     IRC_BUFFER_GET_SERVER(buffer);
 
@@ -3967,23 +3964,20 @@ IRC_COMMAND_CALLBACK(notice)
         if (ptr_channel)
             is_channel = 1;
     }
-    hashtable = irc_server_sendf (
+    list_messages = irc_server_sendf (
         ptr_server,
-        IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_HASHTABLE,
+        IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_LIST,
         NULL,
         "NOTICE %s :%s",
         argv[arg_target], argv_eol[arg_text]);
-    if (hashtable)
+    if (list_messages)
     {
-        number = 1;
-        while (1)
+        list_size = weechat_arraylist_size (list_messages);
+        for (i = 0; i < list_size; i++)
         {
-            snprintf (hash_key, sizeof (hash_key), "args%d", number);
-            str_args = weechat_hashtable_get (hashtable, hash_key);
-            if (!str_args)
-                break;
+            ptr_message = (const char *)weechat_arraylist_get (list_messages, i);
             string = irc_color_decode (
-                str_args,
+                ptr_message,
                 weechat_config_boolean (irc_config_network_colors_send));
             weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
@@ -4000,12 +3994,11 @@ IRC_COMMAND_CALLBACK(notice)
                 (is_channel) ? IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_msg (ptr_server, 0, NULL, argv[arg_target]),
                 argv[arg_target],
                 IRC_COLOR_RESET,
-                (string) ? string : str_args);
+                (string) ? string : ptr_message);
             if (string)
                 free (string);
-            number++;
         }
-        weechat_hashtable_free (hashtable);
+        weechat_arraylist_free (list_messages);
     }
 
     return WEECHAT_RC_OK;

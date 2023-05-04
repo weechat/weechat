@@ -3058,24 +3058,41 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
 }
 
 /*
- * Sends a message to IRC server.
- *
- * If flags contains "IRC_SERVER_SEND_RETURN_HASHTABLE", then a hashtable with
- * split of message is returned (see function irc_message_split() in
- * irc-message.c)
- *
- * Note: hashtable must be freed after use.
+ * Callback used to free strings in list of messages returned by
+ * function irc_server_sendf().
  */
 
-struct t_hashtable *
+void
+irc_server_arraylist_free_string_cb (void *data, struct t_arraylist *arraylist,
+                                     void *pointer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    free (pointer);
+}
+
+/*
+ * Sends a message to IRC server.
+ *
+ * If flags contains "IRC_SERVER_SEND_RETURN_LIST", then an arraylist with
+ * the list of messages to display is returned
+ * (see function irc_message_split() in irc-message.c).
+ *
+ * Note: arraylist must be freed after use.
+ */
+
+struct t_arraylist *
 irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
                   const char *format, ...)
 {
-    char hash_key[32], value[32], *nick, *command, *channel, *new_msg;
+    char hash_key[32], *nick, *command, *channel, *new_msg;
     char str_modifier[128];
     const char *str_message, *str_args, *ptr_msg;
-    int number, ret_number;
-    struct t_hashtable *hashtable, *ret_hashtable;
+    int number;
+    struct t_hashtable *hashtable;
+    struct t_arraylist *list_messages;
 
     if (!server)
         return NULL;
@@ -3084,14 +3101,16 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
     if (!vbuffer)
         return NULL;
 
-    ret_hashtable = NULL;
-    ret_number = 1;
-    if (flags & IRC_SERVER_SEND_RETURN_HASHTABLE)
+    if (flags & IRC_SERVER_SEND_RETURN_LIST)
     {
-        ret_hashtable = weechat_hashtable_new (32,
-                                               WEECHAT_HASHTABLE_STRING,
-                                               WEECHAT_HASHTABLE_STRING,
-                                               NULL, NULL);
+        list_messages = weechat_arraylist_new (
+            4, 0, 1,
+            NULL, NULL,
+            &irc_server_arraylist_free_string_cb, NULL);
+    }
+    else
+    {
+        list_messages = NULL;
     }
 
     /* run modifier "irc_out1_xxx" (like "irc_out_xxx", but before split) */
@@ -3151,34 +3170,18 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
                 str_message = weechat_hashtable_get (hashtable, hash_key);
                 if (!str_message)
                     break;
-                snprintf (hash_key, sizeof (hash_key), "args%d", number);
-                str_args = weechat_hashtable_get (hashtable, hash_key);
-
                 if (!irc_server_send_one_msg (server, flags, str_message,
                                               nick, command, channel, tags))
                     break;
 
-                if (ret_hashtable)
+                if (list_messages)
                 {
-                    snprintf (hash_key, sizeof (hash_key),
-                              "msg%d", ret_number);
-                    weechat_hashtable_set (ret_hashtable,
-                                           hash_key, str_message);
+                    snprintf (hash_key, sizeof (hash_key), "args%d", number);
+                    str_args = weechat_hashtable_get (hashtable, hash_key);
                     if (str_args)
-                    {
-                        snprintf (hash_key, sizeof (hash_key),
-                                  "args%d", ret_number);
-                        weechat_hashtable_set (ret_hashtable,
-                                               hash_key, str_args);
-                    }
-                    ret_number++;
+                        weechat_arraylist_add (list_messages, strdup (str_args));
                 }
                 number++;
-            }
-            if (ret_hashtable)
-            {
-                snprintf (value, sizeof (value), "%d", ret_number - 1);
-                weechat_hashtable_set (ret_hashtable, "count", value);
             }
             weechat_hashtable_free (hashtable);
         }
@@ -3194,7 +3197,7 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
         free (new_msg);
     free (vbuffer);
 
-    return ret_hashtable;
+    return list_messages;
 }
 
 /*
