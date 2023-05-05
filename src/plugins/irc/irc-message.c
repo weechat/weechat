@@ -26,6 +26,8 @@
 
 #include "../weechat-plugin.h"
 #include "irc.h"
+#include "irc-message.h"
+#include "irc-batch.h"
 #include "irc-channel.h"
 #include "irc-color.h"
 #include "irc-config.h"
@@ -530,6 +532,112 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
 }
 
 /*
+ * Parses capability value.
+ *
+ * For example for this capability:
+ *   draft/multiline=max-bytes=4096,max-lines=24
+ *
+ * The input value must be: "max-bytes=4096,max-lines=24"
+ * The output is a hashtable with following keys/values (as strings):
+ *
+ *   "max-bytes": "4096"
+ *   "max-lines": "24"
+ *
+ * Note: hashtable must be freed after use.
+ */
+
+struct t_hashtable *
+irc_message_parse_cap_value (const char *value)
+{
+    struct t_hashtable *hashtable;
+    char **items, *key;
+    const char *pos;
+    int i, count_items;
+
+    if (!value)
+        return NULL;
+
+    hashtable = weechat_hashtable_new (32,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL, NULL);
+    if (!hashtable)
+        return NULL;
+
+    items = weechat_string_split (value, ",", NULL, 0, 0, &count_items);
+    if (items)
+    {
+        for (i = 0; i < count_items; i++)
+        {
+            pos = strchr (items[i], '=');
+            if (pos)
+            {
+                key = weechat_strndup (items[i], pos - items[i]);
+                if (key)
+                {
+                    weechat_hashtable_set (hashtable, key, pos + 1);
+                    free (key);
+                }
+            }
+            else
+            {
+                weechat_hashtable_set (hashtable, items[i], NULL);
+            }
+        }
+        weechat_string_free_split (items);
+    }
+
+    return hashtable;
+}
+
+/*
+ * Parses "draft/multiline" cap value and extract:
+ *   - max-bytes: maximum allowed total byte length of multiline batched content
+ *   - max-lines: maximum allowed number of lines in a multiline batch content
+ */
+
+void
+irc_message_parse_cap_multiline_value (struct t_irc_server *server,
+                                       const char *value)
+{
+    struct t_hashtable *values;
+    const char *ptr_value;
+    char *error;
+    long number;
+
+    if (!server)
+        return;
+
+    server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
+    server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
+
+    if (!value)
+        return;
+
+    values = irc_message_parse_cap_value (value);
+    if (!values)
+        return;
+
+    ptr_value = (const char *)weechat_hashtable_get (values, "max-bytes");
+    if (ptr_value)
+    {
+        number = strtol (ptr_value, &error, 10);
+        if (error && !error[0])
+            server->multiline_max_bytes = number;
+    }
+
+    ptr_value = (const char *)weechat_hashtable_get (values, "max-lines");
+    if (ptr_value)
+    {
+        number = strtol (ptr_value, &error, 10);
+        if (error && !error[0])
+            server->multiline_max_lines = number;
+    }
+
+    weechat_hashtable_free (values);
+}
+
+/*
  * Encodes/decodes an IRC message using a charset.
  *
  * Note: result must be freed after use.
@@ -762,12 +870,15 @@ irc_message_replace_vars (struct t_irc_server *server,
  */
 
 void
-irc_message_split_add (struct t_hashtable *hashtable, int number,
+irc_message_split_add (struct t_irc_message_split_context *context,
                        const char *tags, const char *message,
                        const char *arguments)
 {
     char key[32], value[32], *buf;
     int length;
+
+    if (!context)
+        return;
 
     if (message)
     {
@@ -775,11 +886,11 @@ irc_message_split_add (struct t_hashtable *hashtable, int number,
         buf = malloc (length);
         if (buf)
         {
-            snprintf (key, sizeof (key), "msg%d", number);
+            snprintf (key, sizeof (key), "msg%d", context->number);
             snprintf (buf, length, "%s%s",
                       (tags) ? tags : "",
                       message);
-            weechat_hashtable_set (hashtable, key, buf);
+            weechat_hashtable_set (context->hashtable, key, buf);
             if (weechat_irc_plugin->debug >= 2)
             {
                 weechat_printf (NULL,
@@ -787,12 +898,13 @@ irc_message_split_add (struct t_hashtable *hashtable, int number,
                                 key, buf, length - 1);
             }
             free (buf);
+            context->total_bytes += length;
         }
     }
     if (arguments)
     {
-        snprintf (key, sizeof (key), "args%d", number);
-        weechat_hashtable_set (hashtable, key, arguments);
+        snprintf (key, sizeof (key), "args%d", context->number);
+        weechat_hashtable_set (context->hashtable, key, arguments);
         if (weechat_irc_plugin->debug >= 2)
         {
             weechat_printf (NULL,
@@ -800,8 +912,8 @@ irc_message_split_add (struct t_hashtable *hashtable, int number,
                             key, arguments);
         }
     }
-    snprintf (value, sizeof (value), "%d", number);
-    weechat_hashtable_set (hashtable, "count", value);
+    snprintf (value, sizeof (value), "%d", context->number);
+    weechat_hashtable_set (context->hashtable, "count", value);
 }
 
 /*
@@ -837,7 +949,7 @@ irc_message_split_add (struct t_hashtable *hashtable, int number,
  */
 
 int
-irc_message_split_string (struct t_hashtable *hashtable,
+irc_message_split_string (struct t_irc_message_split_context *context,
                           const char *tags,
                           const char *host,
                           const char *command,
@@ -851,7 +963,9 @@ irc_message_split_string (struct t_hashtable *hashtable,
 {
     const char *pos, *pos_max, *pos_next, *pos_last_delim;
     char message[8192], *dup_arguments;
-    int number;
+
+    if (!context)
+        return 0;
 
     max_length -= 2;  /* by default: 512 - 2 = 510 bytes */
     if (max_length_nick_user_host >= 0)
@@ -880,8 +994,6 @@ irc_message_split_string (struct t_hashtable *hashtable,
                         max_length);
     }
 
-    number = 1;
-
     if (!arguments || !arguments[0])
     {
         snprintf (message, sizeof (message), "%s%s%s %s%s%s%s",
@@ -892,7 +1004,8 @@ irc_message_split_string (struct t_hashtable *hashtable,
                   (target && target[0]) ? " " : "",
                   (prefix) ? prefix : "",
                   (suffix) ? suffix : "");
-        irc_message_split_add (hashtable, 1, tags, message, "");
+        irc_message_split_add (context, tags, message, "");
+        (context->number)++;
         return 1;
     }
 
@@ -924,9 +1037,8 @@ irc_message_split_string (struct t_hashtable *hashtable,
                       (prefix) ? prefix : "",
                       dup_arguments,
                       (suffix) ? suffix : "");
-            irc_message_split_add (hashtable, number, tags, message,
-                                   dup_arguments);
-            number++;
+            irc_message_split_add (context, tags, message, dup_arguments);
+            (context->number)++;
             free (dup_arguments);
         }
         arguments = (pos == pos_last_delim) ? pos + 1 : pos;
@@ -945,15 +1057,13 @@ irc_message_split_string (struct t_hashtable *hashtable,
  */
 
 int
-irc_message_split_authenticate (struct t_hashtable *hashtable,
+irc_message_split_authenticate (struct t_irc_message_split_context *context,
                                 const char *tags, const char *host,
                                 const char *command, const char *arguments)
 {
-    int number, length;
+    int length;
     char message[8192], *args;
     const char *ptr_args;
-
-    number = 1;
 
     length = 0;
     ptr_args = arguments;
@@ -972,9 +1082,9 @@ irc_message_split_authenticate (struct t_hashtable *hashtable,
                   (host) ? " " : "",
                   command,
                   args);
-        irc_message_split_add (hashtable, number, tags, message, args);
+        irc_message_split_add (context, tags, message, args);
         free (args);
-        number++;
+        (context->number)++;
         ptr_args += length;
     }
 
@@ -984,8 +1094,8 @@ irc_message_split_authenticate (struct t_hashtable *hashtable,
                   (host) ? host : "",
                   (host) ? " " : "",
                   command);
-        irc_message_split_add (hashtable, number, tags, message, "+");
-        number++;
+        irc_message_split_add (context, tags, message, "+");
+        (context->number)++;
     }
 
     return 1;
@@ -1001,19 +1111,17 @@ irc_message_split_authenticate (struct t_hashtable *hashtable,
  */
 
 int
-irc_message_split_join (struct t_hashtable *hashtable,
+irc_message_split_join (struct t_irc_message_split_context *context,
                         const char *tags, const char *host,
                         const char *arguments,
                         int max_length)
 {
-    int number, channels_count, keys_count, length, length_no_channel;
+    int channels_count, keys_count, length, length_no_channel;
     int length_to_add, index_channel;
     char **channels, **keys, *pos, *str;
     char msg_to_send[16384], keys_to_add[16384];
 
     max_length -= 2;  /* by default: 512 - 2 = 510 bytes */
-
-    number = 1;
 
     channels = NULL;
     channels_count = 0;
@@ -1087,11 +1195,11 @@ irc_message_split_join (struct t_hashtable *hashtable,
         else
         {
             strcat (msg_to_send, keys_to_add);
-            irc_message_split_add (hashtable, number,
+            irc_message_split_add (context,
                                    tags,
                                    msg_to_send,
                                    msg_to_send + length_no_channel + 1);
-            number++;
+            (context->number)++;
             snprintf (msg_to_send, sizeof (msg_to_send), "%s%sJOIN",
                       (host) ? host : "",
                       (host) ? " " : "");
@@ -1103,7 +1211,7 @@ irc_message_split_join (struct t_hashtable *hashtable,
     if (length > length_no_channel)
     {
         strcat (msg_to_send, keys_to_add);
-        irc_message_split_add (hashtable, number,
+        irc_message_split_add (context,
                                tags,
                                msg_to_send,
                                msg_to_send + length_no_channel + 1);
@@ -1118,8 +1226,53 @@ irc_message_split_join (struct t_hashtable *hashtable,
 }
 
 /*
+ * Starts batch for multiline message.
+ */
+
+void
+irc_message_start_batch (struct t_irc_message_split_context *context,
+                         const char *target, const char *batch_ref)
+{
+    char msg_batch[4096], args_batch[4096];
+
+    snprintf (msg_batch, sizeof (msg_batch),
+              "BATCH +%s draft/multiline %s",
+              batch_ref,
+              target);
+    snprintf (args_batch, sizeof (args_batch),
+              "+%s draft/multiline %s",
+              batch_ref,
+              target);
+    irc_message_split_add (context, NULL, msg_batch, args_batch);
+    (context->number)++;
+}
+
+/*
+ * Ends batch for multiline message.
+ */
+
+void
+irc_message_end_batch (struct t_irc_message_split_context *context,
+                       const char *batch_ref)
+{
+    char msg_batch[4096], args_batch[4096];
+
+    snprintf (msg_batch, sizeof (msg_batch),
+              "BATCH -%s",
+              batch_ref);
+    snprintf (args_batch, sizeof (args_batch),
+              "-%s",
+              batch_ref);
+    irc_message_split_add (context, NULL, msg_batch, args_batch);
+    (context->number)++;
+}
+
+/*
  * Splits a PRIVMSG or NOTICE message, taking care of keeping the '\01' char
  * used in CTCP messages.
+ *
+ * If multiline == 1, the message is split on newline chars ('\n') and is sent
+ * using BATCH command (to group messages together).
  *
  * Returns:
  *   1: OK
@@ -1127,16 +1280,24 @@ irc_message_split_join (struct t_hashtable *hashtable,
  */
 
 int
-irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
-                                  const char *tags, const char *host,
-                                  const char *command, const char *target,
+irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
+                                  const char *tags,
+                                  const char *host,
+                                  const char *command,
+                                  const char *target,
                                   const char *arguments,
                                   int max_length_nick_user_host,
-                                  int max_length)
+                                  int max_length,
+                                  int multiline,
+                                  int multiline_max_bytes,
+                                  int multiline_max_lines)
 {
-    char *arguments2, prefix[4096], suffix[2], *pos, saved_char;
+    char prefix[4096], suffix[2], *pos, saved_char, name[256];
+    char tags_multiline[4096], **list_lines, batch_ref[16 + 1];
+    char  **multiline_args;
     const char *ptr_args;
-    int length, rc;
+    int i, length, length_tags, rc, count_lines, batch_lines;
+    int index_multiline_args;
 
     /*
      * message sent looks like:
@@ -1146,41 +1307,122 @@ irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
      *   :nick!user@host.com PRIVMSG #channel :hello world!
      */
 
-    arguments2 = strdup (arguments);
-    if (!arguments2)
-        return 0;
+    rc = 1;
 
-    ptr_args = arguments2;
-
-    /* for CTCP, prefix will be ":\01xxxx " and suffix "\01" */
-    prefix[0] = '\0';
-    suffix[0] = '\0';
-    length = strlen (arguments2);
-    if ((arguments2[0] == '\01')
-        && (arguments2[length - 1] == '\01'))
+    if (multiline)
     {
-        pos = strchr (arguments2, ' ');
-        if (pos)
+        index_multiline_args = 1;
+        multiline_args = weechat_string_dyn_alloc (256);
+        if (!multiline_args)
+            return 0;
+
+        irc_batch_generate_random_ref (batch_ref, sizeof (batch_ref) - 1);
+
+        /* start batch */
+        irc_message_start_batch (context, target, batch_ref);
+
+        /* add messages */
+        list_lines = weechat_string_split (arguments, "\n", NULL, 0, 0,
+                                           &count_lines);
+        if (list_lines)
         {
-            pos++;
-            saved_char = pos[0];
-            pos[0] = '\0';
-            snprintf (prefix, sizeof (prefix), ":%s", arguments2);
-            pos[0] = saved_char;
-            arguments2[length - 1] = '\0';
-            ptr_args = pos;
-            suffix[0] = '\01';
-            suffix[1] = '\0';
+            batch_lines = 0;
+            for (i = 0; i < count_lines; i++)
+            {
+                if (tags && tags[0])
+                {
+                    snprintf (tags_multiline, sizeof (tags_multiline),
+                              "@batch=%s;%s",
+                              batch_ref,
+                              tags + 1);
+                }
+                else
+                {
+                    snprintf (tags_multiline, sizeof (tags_multiline),
+                              "@batch=%s ",
+                              batch_ref);
+                }
+                length_tags = strlen (tags_multiline);
+                rc &= irc_message_split_string (
+                    context, tags_multiline, host, command, target, ":",
+                    list_lines[i], "", ' ', max_length_nick_user_host,
+                    max_length);
+                if (batch_lines > 0)
+                    weechat_string_dyn_concat (multiline_args, "\n", -1);
+                weechat_string_dyn_concat (multiline_args,
+                                           list_lines[i], -1);
+                batch_lines++;
+                if ((i < count_lines - 1)
+                    && ((batch_lines >= multiline_max_lines)
+                        || (context->total_bytes + length_tags
+                            + (int)strlen (list_lines[i + 1]) >= multiline_max_bytes)))
+                {
+                    /* start new batch if we have reached max lines/bytes */
+                    irc_message_end_batch (context, batch_ref);
+                    snprintf (name, sizeof (name),
+                              "multiline_args%d", index_multiline_args);
+                    weechat_hashtable_set (context->hashtable, name,
+                                           *multiline_args);
+                    weechat_string_dyn_copy (multiline_args, NULL);
+                    index_multiline_args++;
+                    irc_batch_generate_random_ref (batch_ref,
+                                                   sizeof (batch_ref) - 1);
+                    context->total_bytes = 0;
+                    irc_message_start_batch (context, target, batch_ref);
+                    batch_lines = 0;
+                }
+            }
+            weechat_string_free_split (list_lines);
+        }
+
+        /* end batch */
+        irc_message_end_batch (context, batch_ref);
+
+        snprintf (name, sizeof (name),
+                  "multiline_args%d", index_multiline_args);
+        weechat_hashtable_set (context->hashtable, name, *multiline_args);
+        weechat_string_dyn_free (multiline_args, 1);
+    }
+    else
+    {
+        list_lines = weechat_string_split (arguments, "\n", NULL, 0, 0,
+                                           &count_lines);
+        if (list_lines)
+        {
+            for (i = 0; i < count_lines; i++)
+            {
+                /* for CTCP, prefix is ":\01xxxx " and suffix "\01" */
+                prefix[0] = '\0';
+                suffix[0] = '\0';
+                ptr_args = list_lines[i];
+                length = strlen (list_lines[i]);
+                if ((list_lines[i][0] == '\01')
+                    && (list_lines[i][length - 1] == '\01'))
+                {
+                    pos = strchr (list_lines[i], ' ');
+                    if (pos)
+                    {
+                        pos++;
+                        saved_char = pos[0];
+                        pos[0] = '\0';
+                        snprintf (prefix, sizeof (prefix), ":%s", list_lines[i]);
+                        pos[0] = saved_char;
+                        list_lines[i][length - 1] = '\0';
+                        ptr_args = pos;
+                        suffix[0] = '\01';
+                        suffix[1] = '\0';
+                    }
+                }
+                if (!prefix[0])
+                    strcpy (prefix, ":");
+                rc = irc_message_split_string (context, tags, host, command, target,
+                                               prefix, ptr_args, suffix,
+                                               ' ', max_length_nick_user_host,
+                                               max_length);
+            }
+            weechat_string_free_split (list_lines);
         }
     }
-    if (!prefix[0])
-        strcpy (prefix, ":");
-
-    rc = irc_message_split_string (hashtable, tags, host, command, target,
-                                   prefix, ptr_args, suffix,
-                                   ' ', max_length_nick_user_host, max_length);
-
-    free (arguments2);
 
     return rc;
 }
@@ -1194,7 +1436,7 @@ irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
  */
 
 int
-irc_message_split_005 (struct t_hashtable *hashtable,
+irc_message_split_005 (struct t_irc_message_split_context *context,
                        const char *tags, const char *host, const char *command,
                        const char *target, const char *arguments,
                        int max_length)
@@ -1218,7 +1460,7 @@ irc_message_split_005 (struct t_hashtable *hashtable,
         pos[0] = '\0';
     }
 
-    return irc_message_split_string (hashtable, tags, host, command, target,
+    return irc_message_split_string (context, tags, host, command, target,
                                      NULL, arguments, suffix, ' ', -1,
                                      max_length);
 }
@@ -1254,11 +1496,16 @@ irc_message_split_005 (struct t_hashtable *hashtable,
 struct t_hashtable *
 irc_message_split (struct t_irc_server *server, const char *message)
 {
-    struct t_hashtable *hashtable;
+    struct t_irc_message_split_context split_context;
     char **argv, **argv_eol, *tags, *host, *command, *arguments, target[4096];
     char *pos, monitor_action[3];
     int split_ok, argc, index_args, max_length_nick, max_length_user;
     int max_length_host, max_length_nick_user_host, split_msg_max_length;
+    int multiline, multiline_max_bytes, multiline_max_lines;
+
+    split_context.hashtable = NULL;
+    split_context.number = 1;
+    split_context.total_bytes = 0;
 
     split_ok = 0;
     tags = NULL;
@@ -1267,22 +1514,23 @@ irc_message_split (struct t_irc_server *server, const char *message)
     arguments = NULL;
     argv = NULL;
     argv_eol = NULL;
+    multiline = 0;
 
     if (server)
     {
         split_msg_max_length = IRC_SERVER_OPTION_INTEGER(
             server, IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH);
-
-        /*
-         * split disabled? use a very high max_length so the message should
-         * never be split
-         */
+        /* if split disabled, use a high max_length to prevent any split */
         if (split_msg_max_length == 0)
             split_msg_max_length = INT_MAX - 16;
+        multiline_max_bytes = server->multiline_max_bytes;
+        multiline_max_lines = server->multiline_max_lines;
     }
     else
     {
-        split_msg_max_length = 512;  /* max length by default */
+        split_msg_max_length = 512;
+        multiline_max_bytes = 0;
+        multiline_max_lines = 0;
     }
 
     /* debug message */
@@ -1292,11 +1540,11 @@ irc_message_split (struct t_irc_server *server, const char *message)
                         message, split_msg_max_length);
     }
 
-    hashtable = weechat_hashtable_new (32,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       NULL, NULL);
-    if (!hashtable)
+    split_context.hashtable = weechat_hashtable_new (32,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     NULL, NULL);
+    if (!split_context.hashtable)
         return NULL;
 
     if (!message || !message[0])
@@ -1342,6 +1590,17 @@ irc_message_split (struct t_irc_server *server, const char *message)
         index_args = 1;
     }
 
+    multiline = (
+        ((weechat_strcasecmp (command, "privmsg") == 0)
+         || (weechat_strcasecmp (command, "notice") == 0))
+        && message
+        && strchr (message, '\n')
+        && (index_args + 1 <= argc - 1)
+        && (weechat_strncmp (argv[index_args + 1], "\01", 1) != 0)
+        && (weechat_strncmp (argv[index_args + 1], ":\01", 2) != 0)
+        && weechat_hashtable_has_key (server->cap_list, "batch")
+        && weechat_hashtable_has_key (server->cap_list, "draft/multiline"));
+
     max_length_nick = (server && (server->nick_max_length > 0)) ?
         server->nick_max_length : 16;
     max_length_user = (server && (server->user_max_length > 0)) ?
@@ -1361,7 +1620,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
     {
         /* AUTHENTICATE UzXAmVffxuzFy77XWBGwABBQAgdinelBrKZaR3wE7nsIETuTVY= */
         split_ok = irc_message_split_authenticate (
-            hashtable, tags, host, command, arguments);
+            &split_context, tags, host, command, arguments);
     }
     else if ((weechat_strcasecmp (command, "ison") == 0)
         || (weechat_strcasecmp (command, "wallops") == 0))
@@ -1371,7 +1630,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
          * WALLOPS :some text here
          */
         split_ok = irc_message_split_string (
-            hashtable, tags, host, command, NULL, ":",
+            &split_context, tags, host, command, NULL, ":",
             (argv_eol[index_args][0] == ':') ?
             argv_eol[index_args] + 1 : argv_eol[index_args],
             NULL, ' ', max_length_nick_user_host, split_msg_max_length);
@@ -1388,14 +1647,14 @@ irc_message_split (struct t_irc_server *server, const char *message)
             snprintf (monitor_action, sizeof (monitor_action),
                       "%c ", argv_eol[index_args][0]);
             split_ok = irc_message_split_string (
-                hashtable, tags, host, command, NULL, monitor_action,
+                &split_context, tags, host, command, NULL, monitor_action,
                 argv_eol[index_args] + 2, NULL, ',', max_length_nick_user_host,
                 split_msg_max_length);
         }
         else
         {
             split_ok = irc_message_split_string (
-                hashtable, tags, host, command, NULL, ":",
+                &split_context, tags, host, command, NULL, ":",
                 (argv_eol[index_args][0] == ':') ?
                 argv_eol[index_args] + 1 : argv_eol[index_args],
                 NULL, ',', max_length_nick_user_host, split_msg_max_length);
@@ -1407,7 +1666,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
         if ((int)strlen (message) > split_msg_max_length - 2)
         {
             /* split join if it's too long */
-            split_ok = irc_message_split_join (hashtable, tags, host,
+            split_ok = irc_message_split_join (&split_context, tags, host,
                                                arguments, split_msg_max_length);
         }
     }
@@ -1421,10 +1680,11 @@ irc_message_split (struct t_irc_server *server, const char *message)
         if (index_args + 1 <= argc - 1)
         {
             split_ok = irc_message_split_privmsg_notice (
-                hashtable, tags, host, command, argv[index_args],
+                &split_context, tags, host, command, argv[index_args],
                 (argv_eol[index_args + 1][0] == ':') ?
                 argv_eol[index_args + 1] + 1 : argv_eol[index_args + 1],
-                max_length_nick_user_host, split_msg_max_length);
+                max_length_nick_user_host, split_msg_max_length,
+                multiline, multiline_max_bytes, multiline_max_lines);
         }
     }
     else if (weechat_strcasecmp (command, "005") == 0)
@@ -1433,7 +1693,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
         if (index_args + 1 <= argc - 1)
         {
             split_ok = irc_message_split_005 (
-                hashtable, tags, host, command, argv[index_args],
+                &split_context, tags, host, command, argv[index_args],
                 (argv_eol[index_args + 1][0] == ':') ?
                 argv_eol[index_args + 1] + 1 : argv_eol[index_args + 1],
                 split_msg_max_length);
@@ -1452,7 +1712,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
                 snprintf (target, sizeof (target), "%s %s",
                           argv[index_args], argv[index_args + 1]);
                 split_ok = irc_message_split_string (
-                    hashtable, tags, host, command, target, ":",
+                    &split_context, tags, host, command, target, ":",
                     (argv_eol[index_args + 2][0] == ':') ?
                     argv_eol[index_args + 2] + 1 : argv_eol[index_args + 2],
                     NULL, ' ', -1, split_msg_max_length);
@@ -1465,7 +1725,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
                               argv[index_args], argv[index_args + 1],
                               argv[index_args + 2]);
                     split_ok = irc_message_split_string (
-                        hashtable, tags, host, command, target, ":",
+                        &split_context, tags, host, command, target, ":",
                         (argv_eol[index_args + 3][0] == ':') ?
                         argv_eol[index_args + 3] + 1 : argv_eol[index_args + 3],
                         NULL, ' ', -1, split_msg_max_length);
@@ -1476,10 +1736,11 @@ irc_message_split (struct t_irc_server *server, const char *message)
 
 end:
     if (!split_ok
-        || (weechat_hashtable_get_integer (hashtable, "items_count") == 0))
+        || (weechat_hashtable_get_integer (split_context.hashtable,
+                                           "items_count") == 0))
     {
-        irc_message_split_add (hashtable,
-                               (message) ? 1 : 0,
+        split_context.number = (message) ? 1 : 0;
+        irc_message_split_add (&split_context,
                                tags,
                                message,
                                arguments);
@@ -1492,5 +1753,5 @@ end:
     if (argv_eol)
         weechat_string_free_split (argv_eol);
 
-    return hashtable;
+    return split_context.hashtable;
 }

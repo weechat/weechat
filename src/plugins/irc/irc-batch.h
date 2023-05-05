@@ -39,6 +39,7 @@ struct t_irc_batch
     struct t_irc_batch *next_batch;     /* link to next batch               */
 };
 
+extern void irc_batch_generate_random_ref (char *string, int size);
 extern struct t_irc_batch *irc_batch_search (struct t_irc_server *server,
                                              const char *reference);
 extern struct t_irc_batch *irc_batch_start_batch (struct t_irc_server *server,
@@ -54,6 +55,11 @@ extern void irc_batch_end_batch (struct t_irc_server *server,
 extern void irc_batch_free (struct t_irc_server *server,
                             struct t_irc_batch *batch);
 extern void irc_batch_free_all (struct t_irc_server *server);
+extern char *irc_batch_modifier_cb (const void *pointer, void *data,
+                                    const char *modifier,
+                                    const char *modifier_data,
+                                    const char *string);
+
 extern struct t_hdata *irc_batch_hdata_batch_cb (const void *pointer,
                                                  void *data,
                                                  const char *hdata_name);

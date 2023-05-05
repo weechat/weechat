@@ -26,6 +26,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-bar-item.h"
+#include "irc-batch.h"
 #include "irc-buffer.h"
 #include "irc-channel.h"
 #include "irc-color.h"
@@ -238,6 +239,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                            &irc_tag_modifier_cb, NULL, NULL);
     weechat_hook_modifier ("irc_tag_unescape_value",
                            &irc_tag_modifier_cb, NULL, NULL);
+    weechat_hook_modifier ("irc_batch",
+                           &irc_batch_modifier_cb, NULL, NULL);
 
     /* hook completions */
     irc_completion_init ();

@@ -126,15 +126,20 @@ enum t_irc_server_option
 #define IRC_SERVER_DEFAULT_NICKS "weechat1,weechat2,weechat3,weechat4,weechat5"
 
 /* number of queues for sending messages */
-#define IRC_SERVER_NUM_OUTQUEUES_PRIO 2
+#define IRC_SERVER_NUM_OUTQUEUES_PRIO 3
 
 /* flags for irc_server_sendf() */
-#define IRC_SERVER_SEND_OUTQ_PRIO_HIGH (1 << 0)
-#define IRC_SERVER_SEND_OUTQ_PRIO_LOW  (1 << 1)
-#define IRC_SERVER_SEND_RETURN_LIST    (1 << 2)
+#define IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE (1 << 0)
+#define IRC_SERVER_SEND_OUTQ_PRIO_HIGH      (1 << 1)
+#define IRC_SERVER_SEND_OUTQ_PRIO_LOW       (1 << 2)
+#define IRC_SERVER_SEND_RETURN_LIST         (1 << 3)
 
 /* version strings */
 #define IRC_SERVER_VERSION_CAP "302"
+
+/* multiline default limits */
+#define IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES 4096
+#define IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES 24
 
 /* casemapping (string comparisons for nicks/channels) */
 enum t_irc_server_casemapping
@@ -232,6 +237,8 @@ struct t_irc_server
     struct t_hashtable *cap_ls;     /* list of supported capabilities        */
     int checking_cap_list;          /* 1 if checking enabled capabilities    */
     struct t_hashtable *cap_list;   /* list of enabled capabilities          */
+    int multiline_max_bytes;        /* max bytes for multiline batch         */
+    int multiline_max_lines;        /* max lines for multiline batch         */
     char *isupport;                 /* copy of message 005 (ISUPPORT)        */
     char *prefix_modes;             /* prefix modes from msg 005 (eg "ohv")  */
     char *prefix_chars;             /* prefix chars from msg 005 (eg "@%+")  */
@@ -267,9 +274,11 @@ struct t_irc_server
     time_t last_user_message;       /* time of last user message (anti flood)*/
     time_t last_away_check;         /* time of last away check on server     */
     time_t last_data_purge;         /* time of last purge (some hashtables)  */
-    struct t_irc_outqueue *outqueue[2];      /* queue for outgoing messages  */
+    struct t_irc_outqueue *outqueue[IRC_SERVER_NUM_OUTQUEUES_PRIO];
+                                             /* queue for outgoing messages  */
                                              /* with 2 priorities (high/low) */
-    struct t_irc_outqueue *last_outqueue[2]; /* last outgoing message        */
+    struct t_irc_outqueue *last_outqueue[IRC_SERVER_NUM_OUTQUEUES_PRIO];
+                                             /* last outgoing message        */
     struct t_irc_redirect *redirects;        /* command redirections         */
     struct t_irc_redirect *last_redirect;    /* last command redirection     */
     struct t_irc_notify *notify_list;        /* list of notify               */

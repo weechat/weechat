@@ -30,7 +30,9 @@
 #include "irc-batch.h"
 #include "irc-message.h"
 #include "irc-protocol.h"
+#include "irc-raw.h"
 #include "irc-server.h"
+#include "irc-tag.h"
 
 
 /*
@@ -56,6 +58,31 @@ irc_batch_search (struct t_irc_server *server, const char *reference)
 
     /* batch not found */
     return NULL;
+}
+
+/*
+ * Generates a random batch reference with `size` chars (the next one is the
+ * final '\0', so the string must be at least size + 1 bytes long).
+ */
+
+void
+irc_batch_generate_random_ref (char *string, int size)
+{
+    const char *chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789";
+
+    int i, length_chars;
+
+    if (!string || (size < 0))
+        return;
+
+    length_chars = strlen (chars);
+    for (i = 0; i < size; i++)
+    {
+        string[i] = chars[rand() % length_chars];
+    }
+    string[size] = '\0';
 }
 
 /*
@@ -199,6 +226,7 @@ irc_batch_process_messages (struct t_irc_server *server,
                             struct t_irc_batch *batch)
 {
     char **list_messages, *command, *channel, modifier_data[1024], *new_messages;
+    char *message;
     int i, count_messages;
 
     if (!batch || !batch->messages)
@@ -229,8 +257,12 @@ irc_batch_process_messages (struct t_irc_server *server,
         {
             for (i = 0; i < count_messages; i++)
             {
+                message = weechat_string_replace (list_messages[i], "\r", "\n");
+                if (!message)
+                    continue;
+
                 irc_message_parse (server,
-                                   list_messages[i],
+                                   message,
                                    NULL,   /* tags */
                                    NULL,   /* message_without_tags */
                                    NULL,   /* nick */
@@ -246,9 +278,15 @@ irc_batch_process_messages (struct t_irc_server *server,
                                    NULL,   /* pos_arguments */
                                    NULL,   /* pos_channel */
                                    NULL);  /* pos_text */
+
+                /* add raw message */
+                irc_raw_print (server, IRC_RAW_FLAG_RECV, message);
+
                 /* call receive callback, ignoring batch tags */
-                irc_protocol_recv_command (server, list_messages[i], command,
-                                           channel, 1);
+                irc_protocol_recv_command (server, message, command, channel, 1);
+
+                if (message)
+                    free (message);
                 if (command)
                     free (command);
                 if (channel)
@@ -315,6 +353,159 @@ irc_batch_end_batch (struct t_irc_server *server, const char *reference)
             irc_batch_free (server, ptr_batch);
         ptr_batch = ptr_next_batch;
     }
+}
+
+/*
+ * Processes multiline batch: convert multiple messages into a single one,
+ * that can include newline chars ("\r" that are converted later to "\n").
+ *
+ * Parameter "target" is the batch target (channel or nick name).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_batch_process_multiline (struct t_irc_server *server,
+                             const char *messages, const char *target)
+{
+    char **result, **list_messages;
+    char *tags, *host, *command, *channel, *text;
+    int i, count_messages;
+    struct t_hashtable *hash_tags;
+
+    result = weechat_string_dyn_alloc (256);
+
+    list_messages = weechat_string_split (messages, "\n", NULL, 0, 0,
+                                          &count_messages);
+    if (!list_messages)
+        goto end;
+
+    hash_tags = weechat_hashtable_new (32,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL, NULL);
+
+    for (i = 0; i < count_messages; i++)
+    {
+        irc_message_parse (server,
+                           list_messages[i],
+                           &tags,
+                           NULL,   /* message_without_tags */
+                           NULL,   /* nick */
+                           NULL,   /* user */
+                           &host,
+                           &command,
+                           &channel,
+                           NULL,   /* arguments */
+                           &text,
+                           NULL,   /* params */
+                           NULL,   /* num_params */
+                           NULL,   /* pos_command */
+                           NULL,   /* pos_arguments */
+                           NULL,   /* pos_channel */
+                           NULL);  /* pos_text */
+        if (host
+            && command
+            && ((strcmp (command, "PRIVMSG") == 0)
+                || (strcmp (command, "NOTICE") == 0))
+            && channel
+            && (strcmp (channel, target) == 0))
+        {
+            if (hash_tags)
+            {
+                weechat_hashtable_remove_all (hash_tags);
+                if (tags && tags[0])
+                    irc_tag_parse (tags, hash_tags, NULL);
+            }
+            if (*result[0])
+            {
+                if (!hash_tags
+                    || !weechat_hashtable_has_key (hash_tags,
+                                                   "draft/multiline-concat"))
+                {
+                    weechat_string_dyn_concat (result, "\r", -1);
+                }
+            }
+            else
+            {
+                if (tags && tags[0])
+                {
+                    weechat_string_dyn_concat (result, "@", -1);
+                    weechat_string_dyn_concat (result, tags, -1);
+                    weechat_string_dyn_concat (result, " ", -1);
+                }
+                weechat_string_dyn_concat (result, ":", -1);
+                weechat_string_dyn_concat (result, host, -1);
+                weechat_string_dyn_concat (result, " ", -1);
+                weechat_string_dyn_concat (result, command, -1);
+                weechat_string_dyn_concat (result, " ", -1);
+                weechat_string_dyn_concat (result, target, -1);
+                weechat_string_dyn_concat (result, " :", -1);
+            }
+            if (text)
+                weechat_string_dyn_concat (result, text, -1);
+        }
+        if (tags)
+            free (tags);
+        if (host)
+            free (host);
+        if (command)
+            free (command);
+        if (channel)
+            free (channel);
+        if (text)
+            free (text);
+    }
+
+end:
+    if (hash_tags)
+        weechat_hashtable_free (hash_tags);
+    if (list_messages)
+        weechat_string_free_split (list_messages);
+
+    return weechat_string_dyn_free (result, 0);
+}
+
+/*
+ * Callback for modifier "irc_batch".
+ */
+
+char *
+irc_batch_modifier_cb (const void *pointer, void *data,
+                       const char *modifier, const char *modifier_data,
+                       const char *string)
+{
+    struct t_irc_server *ptr_server;
+    char **items, *result;
+    int num_items;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) modifier;
+
+    result = NULL;
+
+    if (!modifier_data)
+        return NULL;
+
+    items = weechat_string_split (modifier_data, ",", NULL, 0, 3, &num_items);
+    if (!items)
+        return NULL;
+
+    if (items && (num_items > 1))
+    {
+        ptr_server = irc_server_search (items[0]);
+        if (ptr_server && (num_items > 2)
+            && (strcmp (items[1], "draft/multiline") == 0))
+        {
+            result = irc_batch_process_multiline (ptr_server, string, items[2]);
+        }
+    }
+    if (items)
+        weechat_string_free_split (items);
+
+    return (result) ? result : strdup (string);
 }
 
 /*

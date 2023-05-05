@@ -1681,6 +1681,8 @@ irc_server_alloc (const char *name)
                                                   WEECHAT_HASHTABLE_STRING,
                                                   NULL,
                                                   NULL);
+    new_server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
+    new_server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
     new_server->isupport = NULL;
     new_server->prefix_modes = NULL;
     new_server->prefix_chars = NULL;
@@ -2749,11 +2751,14 @@ irc_server_outqueue_send (struct t_irc_server *server)
     {
         switch (priority)
         {
-            case 0:
+            case 0: /* immediate send */
+                anti_flood = 0;
+                break;
+            case 1: /* high priority */
                 anti_flood = IRC_SERVER_OPTION_INTEGER(
                     server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH);
                 break;
-            default:
+            default: /* low priority */
                 anti_flood = IRC_SERVER_OPTION_INTEGER(
                     server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW);
                 break;
@@ -2950,14 +2955,19 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
 
             /* get queue from flags */
             queue_msg = 0;
-            if (flags & IRC_SERVER_SEND_OUTQ_PRIO_HIGH)
+            if (flags & IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE)
                 queue_msg = 1;
-            else if (flags & IRC_SERVER_SEND_OUTQ_PRIO_LOW)
+            else if (flags & IRC_SERVER_SEND_OUTQ_PRIO_HIGH)
                 queue_msg = 2;
+            else if (flags & IRC_SERVER_SEND_OUTQ_PRIO_LOW)
+                queue_msg = 3;
 
             switch (queue_msg - 1)
             {
                 case 0:
+                    anti_flood = 0;
+                    break;
+                case 1:
                     anti_flood = IRC_SERVER_OPTION_INTEGER(
                         server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH);
                     break;
@@ -3090,7 +3100,7 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
     char hash_key[32], *nick, *command, *channel, *new_msg;
     char str_modifier[128];
     const char *str_message, *str_args, *ptr_msg;
-    int number;
+    int number, multiline;
     struct t_hashtable *hashtable;
     struct t_arraylist *list_messages;
 
@@ -3163,6 +3173,26 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
         hashtable = irc_message_split (server, ptr_msg);
         if (hashtable)
         {
+            multiline = 0;
+            if (weechat_hashtable_has_key (hashtable, "multiline_args1"))
+            {
+                multiline = 1;
+                if (list_messages)
+                {
+                    number = 1;
+                    while (1)
+                    {
+                        snprintf (hash_key, sizeof (hash_key),
+                                  "multiline_args%d", number);
+                        str_args = weechat_hashtable_get (hashtable, hash_key);
+                        if (!str_args)
+                            break;
+                        weechat_arraylist_add (list_messages, strdup (str_args));
+                        number++;
+                    }
+                }
+                flags |= IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE;
+            }
             number = 1;
             while (1)
             {
@@ -3173,8 +3203,7 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
                 if (!irc_server_send_one_msg (server, flags, str_message,
                                               nick, command, channel, tags))
                     break;
-
-                if (list_messages)
+                if (!multiline && list_messages)
                 {
                     snprintf (hash_key, sizeof (hash_key), "args%d", number);
                     str_args = weechat_hashtable_get (hashtable, hash_key);
@@ -5620,6 +5649,8 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     weechat_hashtable_remove_all (server->cap_ls);
     server->checking_cap_list = 0;
     weechat_hashtable_remove_all (server->cap_list);
+    server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
+    server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
     server->is_away = 0;
     server->away_time = 0;
     server->lag = 0;
@@ -6286,6 +6317,8 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, cap_ls, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, checking_cap_list, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, cap_list, HASHTABLE, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, multiline_max_bytes, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, multiline_max_lines, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, isupport, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_modes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_chars, STRING, 0, NULL, NULL);
@@ -6558,6 +6591,12 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
             return 0;
         if (!weechat_infolist_new_var_integer (ptr_item, "checking_cap_list", 0))
             return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "multiline_max_bytes",
+                                               IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "multiline_max_lines",
+                                               IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES))
+            return 0;
         if (!weechat_infolist_new_var_integer (ptr_item, "is_away", 0))
             return 0;
         if (!weechat_infolist_new_var_string (ptr_item, "away_message", NULL))
@@ -6622,6 +6661,10 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         if (!weechat_infolist_new_var_integer (ptr_item, "checking_cap_list", server->checking_cap_list))
             return 0;
         if (!weechat_hashtable_add_to_infolist (server->cap_list, ptr_item, "cap_list"))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "multiline_max_bytes", server->multiline_max_bytes))
+            return 0;
+        if (!weechat_infolist_new_var_integer (ptr_item, "multiline_max_lines", server->multiline_max_lines))
             return 0;
         if (!weechat_infolist_new_var_integer (ptr_item, "is_away", server->is_away))
             return 0;
@@ -7042,6 +7085,8 @@ irc_server_print_log ()
         weechat_log_printf ("  cap_list. . . . . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->cap_list,
                             weechat_hashtable_get_string (ptr_server->cap_list, "keys_values"));
+        weechat_log_printf ("  multiline_max_bytes . . . : %d",    ptr_server->multiline_max_bytes);
+        weechat_log_printf ("  multiline_max_lines . . . : %d",    ptr_server->multiline_max_lines);
         weechat_log_printf ("  isupport. . . . . . . . . : '%s'",  ptr_server->isupport);
         weechat_log_printf ("  prefix_modes. . . . . . . : '%s'",  ptr_server->prefix_modes);
         weechat_log_printf ("  prefix_chars. . . . . . . : '%s'",  ptr_server->prefix_chars);

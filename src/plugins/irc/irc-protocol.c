@@ -966,6 +966,11 @@ IRC_PROTOCOL_CALLBACK(cap)
                     {
                         weechat_hashtable_set (server->cap_ls,
                                                str_name, pos_value + 1);
+                        if (strcmp (str_name, "draft/multiline") == 0)
+                        {
+                            irc_message_parse_cap_multiline_value (
+                                server, pos_value + 1);
+                        }
                         free (str_name);
                     }
                 }

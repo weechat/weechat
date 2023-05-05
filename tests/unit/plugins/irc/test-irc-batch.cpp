@@ -71,6 +71,31 @@ TEST(IrcBatch, Search)
 
 /*
  * Tests functions:
+ *   irc_batch_generate_random_ref
+ */
+
+TEST(IrcBatch, GenerateRandomRef)
+{
+    char str[16 + 1];
+
+    strcpy (str, "ABC");
+    irc_batch_generate_random_ref (NULL, 8);
+    irc_batch_generate_random_ref (str, -1);
+    STRCMP_EQUAL("ABC", str);
+
+    strcpy (str, "ABC");
+    irc_batch_generate_random_ref (str, 0);
+    LONGS_EQUAL(0, strlen (str));
+    str[0] = '\0';
+    irc_batch_generate_random_ref (str, 8);
+    LONGS_EQUAL(8, strlen (str));
+    str[0] = '\0';
+    irc_batch_generate_random_ref (str, 16);
+    LONGS_EQUAL(16, strlen (str));
+}
+
+/*
+ * Tests functions:
  *   irc_batch_add_to_list
  *   irc_batch_start_batch
  *   irc_batch_free
@@ -110,6 +135,7 @@ TEST(IrcBatch, StartBatch)
     STRCMP_EQUAL("params", batch->parameters);
     CHECK(batch->start_time > 0);
     POINTERS_EQUAL(NULL, batch->messages);
+
     LONGS_EQUAL(0, batch->end_received);
     LONGS_EQUAL(0, batch->messages_processed);
     irc_batch_free (server, batch);
@@ -193,6 +219,16 @@ TEST(IrcBatch, ProcessMessages)
  */
 
 TEST(IrcBatch, EndBatch)
+{
+    /* tested in test-irc-protocol.cpp */
+}
+
+/*
+ * Tests functions:
+ *   irc_batch_process_multiline
+ */
+
+TEST(IrcBatch, ProcessMultiline)
 {
     /* tested in test-irc-protocol.cpp */
 }

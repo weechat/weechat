@@ -59,8 +59,8 @@ struct t_irc_channel;
  */
 #define IRC_COMMAND_CAP_SUPPORTED                                       \
     "account-notify|away-notify|batch|cap-notify|chghost|"              \
-    "extended-join|invite-notify|message-tags|multi-prefix|"            \
-    "server-time|setname|userhost-in-names"
+    "draft/multiline|extended-join|invite-notify|message-tags|"         \
+    "multi-prefix|server-time|setname|userhost-in-names"
 
 /* list of supported CTCPs (for completion in command /ctcp) */
 #define IRC_COMMAND_CTCP_SUPPORTED_COMPLETION \

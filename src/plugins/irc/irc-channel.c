@@ -330,6 +330,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
 
     if (buffer_created)
     {
+        weechat_buffer_set (ptr_buffer, "input_multiline", "1");
         if (!weechat_buffer_get_integer (ptr_buffer, "short_name_is_set"))
             weechat_buffer_set (ptr_buffer, "short_name", channel_name);
     }

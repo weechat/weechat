@@ -3512,6 +3512,7 @@ WeeChat supporte les https://ircv3.net/irc/[extensions IRCv3 ^↗^,window=_blan
 * <<irc_ircv3_batch,batch>>
 * <<irc_ircv3_cap_notify,cap-notify>>
 * <<irc_ircv3_chghost,chghost>>
+* <<irc_ircv3_draft/multiline,draft/multiline>>
 * <<irc_ircv3_extended_join,extended-join>>
 * <<irc_ircv3_invite_notify,invite-notify>>
 * <<irc_ircv3_message_tags,message-tags>>
@@ -3639,6 +3640,65 @@ Exemple :
 
 ....
 -- alice (user@example.com) a changé d'hôte pour test.com
+....
+
+[[irc_ircv3_draft_multiline]]
+===== draft/multiline
+
+Spécification : https://ircv3.net/specs/extensions/multiline[multiline ^↗^,window=_blank]
+
+Cette capacité autorise le client et le serveur à envoyer des messages avec
+plusieurs lignes, en utilisant la capacité <<irc_ircv3_batch,batch>>, qui doit
+être activée également.
+
+Il y a des limites en terme d'octets ou nombre de lignes dans un message
+multi-lignes qui sont données dans la capacité envoyée par le serveur,
+par exemple :
+
+....
+CAP alice LS * :draft/multiline=max-bytes=4096,max-lines=24
+....
+
+Cela fixe la limite à 4096 octets et 24 lignes pour un contenu "batch"
+multi-lignes.
+
+Si les limites ne sont pas envoyées par le serveur, celles par défaut dans
+WeeChat sont :
+
+* max octets : 4096
+* max lignes : 24
+
+Seuls les messages standards et ceux envoyés avec la commande
+<<command_irc_notice,/notice>> peuvent être multi-lignes. +
+Les messages ACTION CTCP envoyés par avec la commande <<command_irc_me,/me>>
+ne sont pas affectés par cette capacité. Cela signifie que les actions
+multi-lignes sont envoyées sous forme de plusieurs actions.
+
+[WARNING]
+Comme la spécification est un brouillon (« draft »), elle peut changer et le
+support "multiline" peut être cassé à tout moment dans WeeChat. +
+La capacité est automatiquement activée si le serveur la supporte et peut être
+désactivée avec cette commande :
+`/set irc.server_default.capabilities "*,!draft/multiline"`. +
+Lorsque la capacité est désactivée, un message multi-lignes est envoyé sous
+forme de plusieurs messages, comme s'ils avaient été envoyés séquentiellement
+au serveur.
+
+Exemple de messages IRC envoyés pour un message utilisateur avec deux lignes
+(`ceci est un test` / `sur deux lignes`), envoyé au canal #test :
+
+....
+BATCH +i8Je7M7gquddoyC9 draft/multiline #test
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :ceci est un test
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :sur deux lignes
+BATCH -i8Je7M7gquddoyC9
+....
+
+Affichage du message envoyé dans WeeChat :
+
+....
+19:01:45 alice | ceci est un test
+               | sur deux lignes
 ....
 
 [[irc_ircv3_extended_join]]

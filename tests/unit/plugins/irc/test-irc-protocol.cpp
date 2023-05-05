@@ -67,8 +67,8 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     "CHANTYPES=# CHANMODES=eIbq,k,flj,CFLMPQScgimnprstuz "              \
     "MONITOR=100"
 #define IRC_ALL_CAPS "account-notify,away-notify,batch,cap-notify,"     \
-    "chghost,extended-join,invite-notify,message-tags,multi-prefix,"    \
-    "server-time,setname,userhost-in-names"
+    "chghost,draft/multiline,extended-join,invite-notify,message-tags," \
+    "multi-prefix,server-time,setname,userhost-in-names"
 
 #define WEE_CHECK_CAP_TO_ENABLE(__result, __string, __sasl_requested)   \
     str = irc_protocol_cap_to_enable (__string, __sasl_requested);      \
@@ -804,6 +804,10 @@ TEST(IrcProtocolWithServer, batch)
 
     SRV_INIT_JOIN2;
 
+    /* assume "batch" and "draft/multiline" capabilities are enabled in server */
+    hashtable_set (ptr_server->cap_list, "batch", NULL);
+    hashtable_set (ptr_server->cap_list, "draft/multiline", NULL);
+
     /* not enough parameters */
     RECV(":server BATCH");
     CHECK_ERROR_PARAMS("batch", 0, 1);
@@ -917,6 +921,29 @@ TEST(IrcProtocolWithServer, batch)
     CHECK_CHAN("bob test ref2");
     POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref1"));
     POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref2"));
+
+    /* multiline */
+    RECV(":server BATCH +ref draft/multiline #test");
+    CHECK_NO_MSG;
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 1");
+    CHECK_NO_MSG;
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 2");
+    CHECK_NO_MSG;
+    RECV(":server BATCH -ref");
+    CHECK_CHAN("bob line 1\n"
+               "line 2");
+
+    /* multiline with CTCP */
+    RECV(":server BATCH +ref draft/multiline #test");
+    CHECK_NO_MSG;
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :"
+         "\x01" "ACTION is testing");
+    CHECK_NO_MSG;
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again" "\x01");
+    CHECK_NO_MSG;
+    RECV(":server BATCH -ref");
+    CHECK_CHAN(" * bob is testing\n"
+               "again");
 }
 
 /*

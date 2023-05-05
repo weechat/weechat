@@ -3452,6 +3452,7 @@ WeeChat wspiera następujące https://ircv3.net/irc/[rozszerzenia IRCv3 ^↗^,w
 * <<irc_ircv3_batch,batch>>
 * <<irc_ircv3_cap_notify,cap-notify>>
 * <<irc_ircv3_chghost,chghost>>
+* <<irc_ircv3_draft/multiline,draft/multiline>>
 * <<irc_ircv3_extended_join,extended-join>>
 * <<irc_ircv3_invite_notify,invite-notify>>
 * <<irc_ircv3_message_tags,message-tags>>
@@ -3578,6 +3579,60 @@ Przykłady:
 
 ....
 -- alice (user@example.com) zmienił hosta na test.com
+....
+
+// TRANSLATION MISSING
+[[irc_ircv3_draft_multiline]]
+===== draft/multiline
+
+Specification: https://ircv3.net/specs/extensions/multiline[multiline ^↗^,window=_blank]
+
+This capability allows the client and server to send messages with multiple lines,
+using the <<irc_ircv3_batch,batch>> capability, that must be enabled as well.
+
+There are limits in term of bytes or number of lines in a multiline message
+that are given in the capability sent by the server, for example:
+
+....
+CAP alice LS * :draft/multiline=max-bytes=4096,max-lines=24
+....
+
+This sets a limit of 4096 bytes and 24 lines for a multiline batched content.
+
+If the limits are not given by the server, the default in WeeChat are:
+
+* max bytes: 4096
+* max lines: 24
+
+Only standard messages and those send by the <<command_irc_notice,/notice>>
+command can be multiline. +
+ACTION CTCP messages sent with command <<command_irc_me,/me>> are not affected
+by this capability. That means multiline actions are sent as multiple actions.
+
+[WARNING]
+As the specification is a "draft", it may change and the multiline support can
+possibly break at any time in WeeChat. +
+The capability is automatically enabled if the server supports it and can be
+disabled with this command:
+`/set irc.server_default.capabilities "*,!draft/multiline"`. +
+When the capability is disabled, a multiline message is sent as multiple messages,
+as if they were sent sequentially to the server.
+
+Example of IRC messages sent for a user message with two lines (`this is a test`
+/ `on two lines`), send to channel #test:
+
+....
+BATCH +i8Je7M7gquddoyC9 draft/multiline #test
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :this is a test
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :on two lines
+BATCH -i8Je7M7gquddoyC9
+....
+
+Display of the message sent in WeeChat:
+
+....
+19:01:45 alice | this is a test
+               | on two lines
 ....
 
 [[irc_ircv3_extended_join]]

@@ -20,6 +20,14 @@
 #ifndef WEECHAT_PLUGIN_IRC_MESSAGE_H
 #define WEECHAT_PLUGIN_IRC_MESSAGE_H
 
+struct t_irc_message_split_context
+{
+    struct t_hashtable *hashtable;     /* hashtable with msgs/args/count    */
+    int number;                        /* current msg index (starts to 1)   */
+    long total_bytes;                  /* total bytes of messages split     */
+                                       /* (+ 1 byte between each message)   */
+};
+
 struct t_irc_server;
 struct t_irc_channel;
 
@@ -35,6 +43,9 @@ extern void irc_message_parse (struct t_irc_server *server, const char *message,
                                int *pos_channel, int *pos_text);
 extern struct t_hashtable *irc_message_parse_to_hashtable (struct t_irc_server *server,
                                                            const char *message);
+extern struct t_hashtable *irc_message_parse_cap_value (const char *value);
+extern void irc_message_parse_cap_multiline_value (struct t_irc_server *server,
+                                                   const char *value);
 extern char *irc_message_convert_charset (const char *message,
                                           int pos_start,
                                           const char *modifier,
