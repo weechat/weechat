@@ -2490,6 +2490,7 @@ TEST(CoreString, InputForBuffer)
     POINTERS_EQUAL(NULL, string_input_for_buffer ("/"));
     POINTERS_EQUAL(NULL, string_input_for_buffer ("/abc"));
 
+    /* not commands */
     str = strdup ("");
     STRCMP_EQUAL(str, string_input_for_buffer (str));
     free (str);
@@ -2510,6 +2511,27 @@ TEST(CoreString, InputForBuffer)
     free (str);
     str = strdup ("//abc");
     STRCMP_EQUAL(str + 1, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("/abc/def /ghi");
+    STRCMP_EQUAL(str, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("/abc/def /ghi");
+    STRCMP_EQUAL(str, string_input_for_buffer (str));
+    free (str);
+
+    /* commands */
+    POINTERS_EQUAL(NULL, string_input_for_buffer (NULL));
+    str = strdup ("/");
+    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("/abc");
+    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("/abc /def");
+    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("/abc\n/def");
+    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
     free (str);
 
     /* test with custom command chars */

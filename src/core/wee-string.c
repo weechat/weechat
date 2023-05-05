@@ -3909,7 +3909,7 @@ string_is_command_char (const char *string)
 const char *
 string_input_for_buffer (const char *string)
 {
-    char *pos_slash, *pos_space;
+    char *pos_slash, *pos_space, *pos_newline;
     const char *next_char;
 
     if (!string)
@@ -3925,18 +3925,22 @@ string_input_for_buffer (const char *string)
 
     /*
      * special case if string starts with '/': to allow to paste a path line
-     * "/path/to/file.txt", we check if next '/' is after a space or not
+     * "/path/to/file.txt", we check if next '/' is after a space/newline
+     * or not
      */
     if (string[0] == '/')
     {
         pos_slash = strchr (string + 1, '/');
         pos_space = strchr (string + 1, ' ');
+        pos_newline = strchr (string + 1, '\n');
 
         /*
-         * if there are no other '/' or if '/' is after first space,
+         * if there are no other '/' or if '/' is after first space/newline,
          * then it is a command, and return NULL
          */
-        if (!pos_slash || (pos_space && pos_slash > pos_space))
+        if (!pos_slash
+            || (pos_space && (pos_slash > pos_space))
+            || (pos_newline && (pos_slash > pos_newline)))
             return NULL;
 
         return (string[1] == '/') ? string + 1 : string;
