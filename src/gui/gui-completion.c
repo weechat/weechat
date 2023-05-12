@@ -812,7 +812,7 @@ gui_completion_find_context (struct t_gui_completion *completion,
                              const char *data, int pos)
 {
     int i, size, command_arg, pos_start, pos_end;
-    const char *ptr_command, *ptr_data, *prev_char;
+    const char *ptr_command, *ptr_data, *ptr_space, *ptr_newline, *prev_char;
 
     /* look for context */
     gui_completion_free_data (completion);
@@ -845,12 +845,15 @@ gui_completion_find_context (struct t_gui_completion *completion,
         ptr_data = data;
         while (ptr_data && (ptr_data < data + pos))
         {
-            ptr_data = strchr (ptr_data, ' ');
+            ptr_space = strchr (ptr_data, ' ');
+            ptr_newline = strchr (ptr_data, '\n');
+            ptr_data = (ptr_newline && (!ptr_space || (ptr_newline < ptr_space))) ?
+                ptr_newline : ptr_space;
             if (!ptr_data)
                 break;
             if (ptr_data < data + pos)
             {
-                while ((ptr_data < data + pos) && (ptr_data[0] == ' '))
+                while ((ptr_data < data + pos) && ((ptr_data[0] == ' ') || (ptr_data[0] == '\n')))
                 {
                     ptr_data++;
                 }
@@ -907,10 +910,10 @@ gui_completion_find_context (struct t_gui_completion *completion,
         pos_start = i;
         if (data[i] == ' ')
         {
-            if ((i > 0) && (data[i-1] != ' '))
+            if ((i > 0) && (data[i - 1] != ' ') && (data[i - 1] != '\n'))
             {
                 i--;
-                while ((i >= 0) && (data[i] != ' '))
+                while ((i >= 0) && (data[i] != ' ') && (data[i] != '\n'))
                 {
                     i--;
                 }
@@ -919,7 +922,7 @@ gui_completion_find_context (struct t_gui_completion *completion,
         }
         else
         {
-            while ((i >= 0) && (data[i] != ' '))
+            while ((i >= 0) && (data[i] != ' ') && (data[i] != '\n'))
             {
                 i--;
             }
@@ -934,7 +937,7 @@ gui_completion_find_context (struct t_gui_completion *completion,
         {
             /* base word stops after first space found (on or after cursor) */
             i = pos;
-            while ((i < size) && (data[i] != ' '))
+            while ((i < size) && (data[i] != ' ') && (data[i] != '\n'))
             {
                 i++;
             }

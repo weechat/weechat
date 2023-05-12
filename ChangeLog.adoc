@@ -52,6 +52,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix completion after newline in input (issue #1925)
   * core: display a specific error when trying to bind a key without area in mouse context
   * core: fix display of key with command `/key bindctxt <context> <key>`
   * core: fix default value of bar options (issue #846)
