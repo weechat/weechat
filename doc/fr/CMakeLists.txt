@@ -20,32 +20,32 @@
 if(ENABLE_MAN)
   # man page: weechat
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat.1
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.fr.adoc
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat.1"
+    COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat.1 "${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.fr.adoc"
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.fr.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.fr.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/includes/man.fr.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.fr.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.fr.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes/man.fr.adoc"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     COMMENT "Building weechat.1 (fr)"
   )
-  add_custom_target(doc-man-weechat-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat.1)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.1 DESTINATION ${MANDIR}/fr/man1)
+  add_custom_target(doc-man-weechat-fr ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat.1")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat.1" DESTINATION "${MANDIR}/fr/man1")
 
   if(ENABLE_HEADLESS)
     # man page: weechat-headless
     add_custom_command(
-      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1
-      COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat-headless.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.fr.adoc
+      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1"
+      COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat-headless.1 "${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.fr.adoc"
       DEPENDS
-      ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.fr.adoc
-      ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.fr.adoc
-      ${CMAKE_CURRENT_SOURCE_DIR}/includes/man.fr.adoc
-      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+      "${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.fr.adoc"
+      "${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.fr.adoc"
+      "${CMAKE_CURRENT_SOURCE_DIR}/includes/man.fr.adoc"
+      WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
       COMMENT "Building weechat-headless.1 (fr)"
     )
-    add_custom_target(doc-man-weechat-headless-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1 DESTINATION ${MANDIR}/fr/man1)
+    add_custom_target(doc-man-weechat-headless-fr ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1")
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1" DESTINATION "${MANDIR}/fr/man1")
   endif()
 endif()
 
@@ -53,108 +53,108 @@ if(ENABLE_DOC)
 
   # user's guide
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_user.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.fr.adoc
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html"
+    COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o weechat_user.fr.html "${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.fr.adoc"
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.fr.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.fr.adoc
+    "${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html"
+    "${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.fr.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.fr.adoc"
     doc-autogen
-    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_commands.fr.adoc
-    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_default_aliases.fr.adoc
-    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_irc_colors.fr.adoc
-    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_options.fr.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_commands.fr.adoc"
+    "${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_default_aliases.fr.adoc"
+    "${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_irc_colors.fr.adoc"
+    "${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_user_options.fr.adoc"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     COMMENT "Building weechat_user.fr.html"
   )
-  add_custom_target(doc-user-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-user-fr ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
 
   # plugin API reference
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_plugin_api.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.fr.adoc
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html"
+    COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o weechat_plugin_api.fr.html "${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.fr.adoc"
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.fr.adoc
+    "${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html"
+    "${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.fr.adoc"
     doc-autogen
-    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_completions.fr.adoc
-    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_config_priority.fr.adoc
-    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_hdata.fr.adoc
-    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_infolists.fr.adoc
-    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_infos.fr.adoc
-    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_infos_hashtable.fr.adoc
-    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_plugins_priority.fr.adoc
-    ${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_url_options.fr.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_completions.fr.adoc"
+    "${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_config_priority.fr.adoc"
+    "${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_hdata.fr.adoc"
+    "${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_infolists.fr.adoc"
+    "${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_infos.fr.adoc"
+    "${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_infos_hashtable.fr.adoc"
+    "${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_plugins_priority.fr.adoc"
+    "${CMAKE_CURRENT_BINARY_DIR}/../autogen/autogen_api_url_options.fr.adoc"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     COMMENT "Building weechat_plugin_api.fr.html"
   )
-  add_custom_target(doc-plugin-api-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-plugin-api-fr ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
 
   # scripting guide
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_scripting.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.fr.adoc
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html"
+    COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o weechat_scripting.fr.html "${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.fr.adoc"
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.fr.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html"
+    "${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.fr.adoc"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     COMMENT "Building weechat_scripting.fr.html"
   )
-  add_custom_target(doc-scripting-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-scripting-fr ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
 
   # FAQ
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_faq.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.adoc
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html"
+    COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o weechat_faq.fr.html "${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.adoc"
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html"
+    "${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.adoc"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     COMMENT "Building weechat_faq.fr.html"
   )
-  add_custom_target(doc-faq-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-faq-fr ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
 
   # quickstart
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_quickstart.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.fr.adoc
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html"
+    COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o weechat_quickstart.fr.html "${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.fr.adoc"
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.fr.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html"
+    "${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.fr.adoc"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     COMMENT "Building weechat_quickstart.fr.html"
   )
-  add_custom_target(doc-quickstart-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-quickstart-fr ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
 
   # relay protocol
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.fr.html
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_relay_protocol.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_relay_protocol.fr.adoc
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.fr.html"
+    COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o weechat_relay_protocol.fr.html "${CMAKE_CURRENT_SOURCE_DIR}/weechat_relay_protocol.fr.adoc"
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_relay_protocol.fr.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html"
+    "${CMAKE_CURRENT_SOURCE_DIR}/weechat_relay_protocol.fr.adoc"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     COMMENT "Building weechat_relay_protocol.fr.html"
   )
-  add_custom_target(doc-relay-protocol-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.fr.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.fr.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-relay-protocol-fr ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.fr.html")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.fr.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
 
   # developer's guide
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_dev.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.fr.adoc
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html"
+    COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o weechat_dev.fr.html "${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.fr.adoc"
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.fr.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html"
+    "${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.fr.adoc"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     COMMENT "Building weechat_dev.fr.html"
   )
-  add_custom_target(doc-dev-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-dev-fr ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
 
 endif()

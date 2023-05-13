@@ -64,4 +64,4 @@ endif()
 
 target_link_libraries(irc ${LINK_LIBS} coverage_config)
 
-install(TARGETS irc LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
+install(TARGETS irc LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

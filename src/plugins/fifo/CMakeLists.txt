@@ -27,4 +27,4 @@ set_target_properties(fifo PROPERTIES PREFIX "")
 
 target_link_libraries(fifo coverage_config)
 
-install(TARGETS fifo LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
+install(TARGETS fifo LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

@@ -40,4 +40,4 @@ else()
   endif()
 endif()
 
-install(TARGETS spell LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
+install(TARGETS spell LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

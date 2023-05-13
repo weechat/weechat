@@ -20,32 +20,32 @@
 if(ENABLE_MAN)
   # man page: weechat
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat.1
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.ru.adoc
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat.1"
+    COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat.1 "${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.ru.adoc"
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.ru.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.ru.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/includes/man.ru.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.ru.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.ru.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes/man.ru.adoc"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     COMMENT "Building weechat.1 (ru)"
   )
-  add_custom_target(doc-man-weechat-ru ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat.1)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.1 DESTINATION ${MANDIR}/ru/man1)
+  add_custom_target(doc-man-weechat-ru ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat.1")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat.1" DESTINATION "${MANDIR}/ru/man1")
 
   if(ENABLE_HEADLESS)
     # man page: weechat-headless
     add_custom_command(
-      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1
-      COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat-headless.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.ru.adoc
+      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1"
+      COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat-headless.1 "${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.ru.adoc"
       DEPENDS
-      ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.ru.adoc
-      ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.ru.adoc
-      ${CMAKE_CURRENT_SOURCE_DIR}/includes/man.ru.adoc
-      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+      "${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.ru.adoc"
+      "${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.ru.adoc"
+      "${CMAKE_CURRENT_SOURCE_DIR}/includes/man.ru.adoc"
+      WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
       COMMENT "Building weechat-headless.1 (ru)"
     )
-    add_custom_target(doc-man-weechat-headless-ru ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1 DESTINATION ${MANDIR}/ru/man1)
+    add_custom_target(doc-man-weechat-headless-ru ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1")
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1" DESTINATION "${MANDIR}/ru/man1")
   endif()
 endif()
 
@@ -53,15 +53,15 @@ if(ENABLE_DOC)
 
   # quickstart
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_quickstart.ru.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.ru.adoc
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html"
+    COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o weechat_quickstart.ru.html "${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.ru.adoc"
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.ru.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html"
+    "${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.ru.adoc"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     COMMENT "Building weechat_quickstart.ru.html"
   )
-  add_custom_target(doc-quickstart-ru ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-quickstart-ru ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ru.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
 
 endif()

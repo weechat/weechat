@@ -25,7 +25,7 @@ project(weechat C)
 
 # CMake options
 set(CMAKE_VERBOSE_MAKEFILE OFF)
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 set(CMAKE_SKIP_RPATH ON)
 
 # compiler options
@@ -38,16 +38,16 @@ if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
 endif()
 
 # version
-execute_process(COMMAND ${CMAKE_SOURCE_DIR}/version.sh devel-major OUTPUT_VARIABLE VERSION_MAJOR)
-execute_process(COMMAND ${CMAKE_SOURCE_DIR}/version.sh devel-minor OUTPUT_VARIABLE VERSION_MINOR)
-execute_process(COMMAND ${CMAKE_SOURCE_DIR}/version.sh devel-patch OUTPUT_VARIABLE VERSION_PATCH)
+execute_process(COMMAND "${CMAKE_SOURCE_DIR}/version.sh" devel-major OUTPUT_VARIABLE VERSION_MAJOR)
+execute_process(COMMAND "${CMAKE_SOURCE_DIR}/version.sh" devel-minor OUTPUT_VARIABLE VERSION_MINOR)
+execute_process(COMMAND "${CMAKE_SOURCE_DIR}/version.sh" devel-patch OUTPUT_VARIABLE VERSION_PATCH)
 string(REGEX REPLACE "\n" "" VERSION_MAJOR "${VERSION_MAJOR}")
 string(REGEX REPLACE "\n" "" VERSION_MINOR "${VERSION_MINOR}")
 string(REGEX REPLACE "\n" "" VERSION_PATCH "${VERSION_PATCH}")
 if(VERSION_PATCH STREQUAL "")
-  set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
+  set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
 else()
-  set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+  set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 endif()
 
 # license
@@ -66,33 +66,33 @@ set(PKG_STRING "${PROJECT_NAME} ${VERSION}")
 string(REPLACE "\";\"" "\ " PKG_STRING ${PKG_STRING})
 
 if(NOT DEFINED LIBDIR)
-  set(LIBDIR ${CMAKE_INSTALL_PREFIX}/lib)
+  set(LIBDIR "${CMAKE_INSTALL_PREFIX}/lib")
 endif()
 
 if(NOT DEFINED WEECHAT_LIBDIR)
-  set(WEECHAT_LIBDIR ${LIBDIR}/${PROJECT_NAME})
+  set(WEECHAT_LIBDIR "${LIBDIR}/${PROJECT_NAME}")
 endif()
 
 if(NOT DEFINED DATAROOTDIR)
-  set(DATAROOTDIR ${CMAKE_INSTALL_PREFIX}/share)
+  set(DATAROOTDIR "${CMAKE_INSTALL_PREFIX}/share")
 endif()
 
 if(NOT DEFINED WEECHAT_SHAREDIR)
-  set(WEECHAT_SHAREDIR ${DATAROOTDIR}/weechat)
+  set(WEECHAT_SHAREDIR "${DATAROOTDIR}/weechat")
 endif()
 
 if(NOT DEFINED MANDIR)
-  set(MANDIR ${DATAROOTDIR}/man)
+  set(MANDIR "${DATAROOTDIR}/man")
 endif()
 
 if(NOT DEFINED LOCALEDIR)
-  set(LOCALEDIR ${DATAROOTDIR}/locale)
+  set(LOCALEDIR "${DATAROOTDIR}/locale")
 endif()
 
 if(DEFINED INCLUDEDIR)
-  set(INCLUDEDIR ${INCLUDEDIR}/${PROJECT_NAME})
+  set(INCLUDEDIR "${INCLUDEDIR}/${PROJECT_NAME}")
 else()
-  set(INCLUDEDIR ${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME})
+  set(INCLUDEDIR "${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}")
 endif()
 
 option(ENABLE_NCURSES        "Compile the Ncurses interface"            ON)
@@ -297,7 +297,7 @@ add_custom_target(uninstall
 
 add_custom_target(dist
   "${CMAKE_CURRENT_SOURCE_DIR}/tools/makedist.sh" "${VERSION}" "HEAD" "${CMAKE_CURRENT_BINARY_DIR}"
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
 # pkgconfig file
@@ -306,23 +306,23 @@ set(prefix "${CMAKE_INSTALL_PREFIX}")
 set(exec_prefix "\${prefix}")
 string(REPLACE "${CMAKE_INSTALL_PREFIX}" "\${prefix}" libdir "${LIBDIR}")
 set(includedir "\${prefix}/include")
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/weechat.pc.in ${CMAKE_CURRENT_BINARY_DIR}/weechat.pc @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.pc DESTINATION ${LIBDIR}/pkgconfig)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/weechat.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/weechat.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat.pc" DESTINATION "${LIBDIR}/pkgconfig")
 
 # cygport file (used to build Cygwin packages)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/weechat.cygport.in ${CMAKE_CURRENT_BINARY_DIR}/weechat-${VERSION}-1.cygport @ONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/weechat.cygport.in" "${CMAKE_CURRENT_BINARY_DIR}/weechat-${VERSION}-1.cygport" @ONLY)
 
 # install some files (only on Cygwin)
 if(CYGWIN)
   install(FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/AUTHORS.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/ChangeLog.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Contributing.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/README.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/ReleaseNotes.adoc
-    DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME}
+    "${CMAKE_CURRENT_SOURCE_DIR}/AUTHORS.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/ChangeLog.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Contributing.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/README.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/ReleaseNotes.adoc"
+    DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}"
   )
 endif()
 
 # desktop file
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat.desktop DESTINATION ${DATAROOTDIR}/applications)
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/weechat.desktop" DESTINATION "${DATAROOTDIR}/applications")

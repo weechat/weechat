@@ -47,41 +47,41 @@ if(ENABLE_MAN OR ENABLE_DOC)
 
     # ChangeLog
     add_custom_command(
-      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ChangeLog-links.adoc
-      COMMAND sed ARGS ${SED_LINKS_ARGS} ${CMAKE_CURRENT_SOURCE_DIR}/../ChangeLog.adoc > ${CMAKE_CURRENT_BINARY_DIR}/ChangeLog-links.adoc
+      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/ChangeLog-links.adoc"
+      COMMAND sed ARGS ${SED_LINKS_ARGS} "${CMAKE_CURRENT_SOURCE_DIR}/../ChangeLog.adoc" > "${CMAKE_CURRENT_BINARY_DIR}/ChangeLog-links.adoc"
       DEPENDS
-      ${CMAKE_CURRENT_SOURCE_DIR}/../ChangeLog.adoc
-      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+      "${CMAKE_CURRENT_SOURCE_DIR}/../ChangeLog.adoc"
+      WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     )
     add_custom_command(
-      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ChangeLog.html
-      COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -a docinfodir="${CMAKE_CURRENT_SOURCE_DIR}" -o ChangeLog.html ${CMAKE_CURRENT_BINARY_DIR}/ChangeLog-links.adoc
+      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/ChangeLog.html"
+      COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -a docinfodir="${CMAKE_CURRENT_SOURCE_DIR}" -o ChangeLog.html "${CMAKE_CURRENT_BINARY_DIR}/ChangeLog-links.adoc"
       DEPENDS
-      ${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html
-      ${CMAKE_CURRENT_BINARY_DIR}/ChangeLog-links.adoc
-      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+      "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
+      "${CMAKE_CURRENT_BINARY_DIR}/ChangeLog-links.adoc"
+      WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
       COMMENT "Building ChangeLog.html"
     )
-    add_custom_target(changelog DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ChangeLog.html)
+    add_custom_target(changelog DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/ChangeLog.html")
 
     # Release notes
     add_custom_command(
-      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes-links.adoc
-      COMMAND sed ARGS ${SED_LINKS_ARGS} ${CMAKE_CURRENT_SOURCE_DIR}/../ReleaseNotes.adoc > ${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes-links.adoc
+      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes-links.adoc"
+      COMMAND sed ARGS ${SED_LINKS_ARGS} "${CMAKE_CURRENT_SOURCE_DIR}/../ReleaseNotes.adoc" > "${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes-links.adoc"
       DEPENDS
-      ${CMAKE_CURRENT_SOURCE_DIR}/../ReleaseNotes.adoc
-      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+      "${CMAKE_CURRENT_SOURCE_DIR}/../ReleaseNotes.adoc"
+      WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     )
     add_custom_command(
-      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes.html
-      COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -a docinfodir="${CMAKE_CURRENT_SOURCE_DIR}" -o ReleaseNotes.html ${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes-links.adoc
+      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes.html"
+      COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -a docinfodir="${CMAKE_CURRENT_SOURCE_DIR}" -o ReleaseNotes.html "${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes-links.adoc"
       DEPENDS
-      ${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html
-      ${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes-links.adoc
-      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+      "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
+      "${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes-links.adoc"
+      WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
       COMMENT "Building ReleaseNotes.html"
     )
-    add_custom_target(rn DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes.html)
+    add_custom_target(rn DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/ReleaseNotes.html")
 
     if(ENABLE_DOC)
       set(AUTOGEN_FILES "")

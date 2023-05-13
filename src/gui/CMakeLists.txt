@@ -42,7 +42,7 @@ set(LIB_GUI_COMMON_SRC
   gui-window.c gui-window.h
 )
 
-include_directories(${CMAKE_BINARY_DIR})
+include_directories("${CMAKE_BINARY_DIR}")
 add_library(weechat_gui_common STATIC ${LIB_GUI_COMMON_SRC})
 target_link_libraries(weechat_gui_common coverage_config)
 list(APPEND STATIC_LIBS weechat_gui_common)

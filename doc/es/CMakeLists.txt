@@ -21,28 +21,28 @@ if(ENABLE_DOC)
 
   # FAQ
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.es.html
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_faq.es.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.es.adoc
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.es.html"
+    COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o weechat_faq.es.html "${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.es.adoc"
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.es.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html"
+    "${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.es.adoc"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     COMMENT "Building weechat_faq.es.html"
   )
-  add_custom_target(doc-faq-es ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.es.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.es.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-faq-es ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.es.html")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.es.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
 
   # quickstart
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_quickstart.es.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.adoc
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html"
+    COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o weechat_quickstart.es.html "${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.adoc"
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html"
+    "${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.adoc"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     COMMENT "Building weechat_quickstart.es.html"
   )
-  add_custom_target(doc-quickstart-es ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-quickstart-es ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
 
 endif()
