@@ -496,8 +496,10 @@ irc_batch_modifier_cb (const void *pointer, void *data,
     if (items && (num_items > 1))
     {
         ptr_server = irc_server_search (items[0]);
-        if (ptr_server && (num_items > 2)
-            && (strcmp (items[1], "draft/multiline") == 0))
+        if (ptr_server
+            && (num_items > 2)
+            && (strcmp (items[1], "draft/multiline") == 0)
+            && weechat_hashtable_has_key (ptr_server->cap_list, "draft/multiline"))
         {
             result = irc_batch_process_multiline (ptr_server, string, items[2]);
         }

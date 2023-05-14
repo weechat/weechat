@@ -918,10 +918,8 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
 
     SRV_INIT_JOIN2;
 
-    /* assume "batch" and "draft/multiline" capabilities are enabled in server */
+    /* assume "batch" capability  is enabled in server */
     hashtable_set (ptr_server->cap_list, "batch", NULL);
-    hashtable_set (ptr_server->cap_list, "draft/multiline", NULL);
-    irc_server_buffer_set_input_multiline (ptr_server, 1);
 
     /* not enough parameters */
     RECV(":server BATCH");
@@ -1045,20 +1043,48 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 2");
     CHECK_NO_MSG;
     RECV(":server BATCH -ref");
+    CHECK_CHAN("bob line 1");
+    CHECK_CHAN("bob line 2");
+
+    /* multiline with CTCP */
+    RECV(":server BATCH +ref draft/multiline #test");
+    CHECK_NO_MSG;
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :\01ACTION is testing");
+    CHECK_NO_MSG;
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again\01");
+    CHECK_NO_MSG;
+    RECV(":server BATCH -ref");
+    CHECK_CHAN(" * bob is testing");
+    CHECK_CHAN("bob again\01");
+    RECV(":bob!user_b@host_b PRIVMSG #test :prout\01");
+    CHECK_CHAN("bob prout\01");
+
+    /* assume "draft/multiline" capability is enabled in server */
+    hashtable_set (ptr_server->cap_list, "draft/multiline", NULL);
+    irc_server_buffer_set_input_multiline (ptr_server, 1);
+
+    /* multiline */
+    RECV(":server BATCH +ref draft/multiline #test");
+    CHECK_NO_MSG;
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 1");
+    CHECK_NO_MSG;
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 2");
+    CHECK_NO_MSG;
+    RECV(":server BATCH -ref");
     CHECK_CHAN("bob line 1\n"
                "line 2");
 
     /* multiline with CTCP */
     RECV(":server BATCH +ref draft/multiline #test");
     CHECK_NO_MSG;
-    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :"
-         "\x01" "ACTION is testing");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :\01ACTION is testing");
     CHECK_NO_MSG;
-    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again" "\x01");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again\01");
     CHECK_NO_MSG;
     RECV(":server BATCH -ref");
     CHECK_CHAN(" * bob is testing\n"
                "again");
+
 }
 
 /*
