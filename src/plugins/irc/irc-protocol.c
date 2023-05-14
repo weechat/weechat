@@ -3886,6 +3886,14 @@ IRC_PROTOCOL_CALLBACK(005)
             /* save prefix */
             irc_server_set_prefix_modes_chars (server, params[i] + 7);
         }
+        else if (strncmp (params[i], "LINELEN=", 8) == 0)
+        {
+            /* save max message length */
+            error = NULL;
+            value = strtol (params[i] + 8, &error, 10);
+            if (error && !error[0] && (value > 0))
+                server->msg_max_length = (int)value;
+        }
         else if (strncmp (params[i], "NICKLEN=", 8) == 0)
         {
             /* save max nick length */

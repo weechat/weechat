@@ -62,7 +62,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
 #define IRC_FAKE_SERVER "fake"
 #define IRC_MSG_005 "PREFIX=(ohv)@%+ MAXLIST=bqeI:100 MODES=4 "         \
     "NETWORK=StaticBox STATUSMSG=@+ CALLERID=g "                        \
-    "CASEMAPPING=strict-rfc1459 NICKLEN=30 MAXNICKLEN=31 "              \
+    "CASEMAPPING=strict-rfc1459 LINELEN=4096 NICKLEN=30 MAXNICKLEN=31 " \
     "USERLEN=16 HOSTLEN=32 CHANNELLEN=50 TOPICLEN=390 DEAF=D "          \
     "CHANTYPES=# CHANMODES=eIbq,k,flj,CFLMPQScgimnprstuz "              \
     "MONITOR=100"
@@ -2291,6 +2291,7 @@ TEST(IrcProtocolWithServer, 005_full)
 
     POINTERS_EQUAL(NULL, ptr_server->prefix_modes);
     POINTERS_EQUAL(NULL, ptr_server->prefix_chars);
+    LONGS_EQUAL(0, ptr_server->msg_max_length);
     LONGS_EQUAL(0, ptr_server->nick_max_length);
     LONGS_EQUAL(0, ptr_server->user_max_length);
     LONGS_EQUAL(0, ptr_server->host_max_length);
@@ -2305,6 +2306,7 @@ TEST(IrcProtocolWithServer, 005_full)
 
     STRCMP_EQUAL("ohv", ptr_server->prefix_modes);
     STRCMP_EQUAL("@%+", ptr_server->prefix_chars);
+    LONGS_EQUAL(4096, ptr_server->msg_max_length);
     LONGS_EQUAL(30, ptr_server->nick_max_length);
     LONGS_EQUAL(16, ptr_server->user_max_length);
     LONGS_EQUAL(32, ptr_server->host_max_length);
@@ -2320,6 +2322,7 @@ TEST(IrcProtocolWithServer, 005_full)
 
     STRCMP_EQUAL("ohv", ptr_server->prefix_modes);
     STRCMP_EQUAL("@%+", ptr_server->prefix_chars);
+    LONGS_EQUAL(4096, ptr_server->msg_max_length);
     LONGS_EQUAL(30, ptr_server->nick_max_length);
     LONGS_EQUAL(16, ptr_server->user_max_length);
     LONGS_EQUAL(32, ptr_server->host_max_length);

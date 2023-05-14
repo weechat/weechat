@@ -1518,8 +1518,10 @@ irc_message_split (struct t_irc_server *server, const char *message)
 
     if (server)
     {
-        split_msg_max_length = IRC_SERVER_OPTION_INTEGER(
-            server, IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH);
+        split_msg_max_length = (server->msg_max_length > 0) ?
+            server->msg_max_length :
+            IRC_SERVER_OPTION_INTEGER(
+                server, IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH);
         /* if split disabled, use a high max_length to prevent any split */
         if (split_msg_max_length == 0)
             split_msg_max_length = INT_MAX - 16;

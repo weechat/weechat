@@ -501,6 +501,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                             free (irc_upgrade_current_server->prefix_chars);
                         irc_upgrade_current_server->prefix_chars = strdup (str);
                     }
+                    irc_upgrade_current_server->msg_max_length = weechat_infolist_integer (infolist, "msg_max_length");
                     irc_upgrade_current_server->nick_max_length = weechat_infolist_integer (infolist, "nick_max_length");
                     /* "user_max_length" is new in WeeChat 2.6 */
                     if (weechat_infolist_search_var (infolist, "user_max_length"))
