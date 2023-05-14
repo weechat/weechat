@@ -2102,19 +2102,6 @@ gui_buffer_set_input_multiline (struct t_gui_buffer *buffer,
     if (!buffer)
         return;
 
-    if (buffer->input_multiline
-        && !input_multiline
-        && buffer->own_lines->first_line)
-    {
-        gui_chat_printf (NULL,
-                         _("%sBuffer property \"%s\" can not be disabled "
-                           "if buffer contains lines (buffer: %s)"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         "input_multiline",
-                         buffer->full_name);
-        return;
-    }
-
     buffer->input_multiline = (input_multiline) ? 1 : 0;
 }
 
