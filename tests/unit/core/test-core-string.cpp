@@ -139,43 +139,43 @@ TEST(CoreString, Strndup)
     str = string_strndup (str_test, 0);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, "");
+    STRCMP_EQUAL("", str);
     free (str);
 
     str = string_strndup (str_test, 1);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, "t");
+    STRCMP_EQUAL("t", str);
     free (str);
 
     str = string_strndup (str_test, 2);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, "te");
+    STRCMP_EQUAL("te", str);
     free (str);
 
     str = string_strndup (str_test, 3);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, "tes");
+    STRCMP_EQUAL("tes", str);
     free (str);
 
     str = string_strndup (str_test, 4);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, "test");
+    STRCMP_EQUAL("test", str);
     free (str);
 
     str = string_strndup (str_test, 5);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, "test");
+    STRCMP_EQUAL("test", str);
     free (str);
 
     str = string_strndup (str_test, 500);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, str_test);
+    STRCMP_EQUAL(str_test, str);
     free (str);
 }
 
