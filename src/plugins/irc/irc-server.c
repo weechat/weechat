@@ -1589,6 +1589,29 @@ irc_server_get_default_msg (const char *default_msg,
 }
 
 /*
+ * Sets "input_multiline" to 1 or 0, according to capability draft/multiline
+ * on all channels and private buffers.
+ */
+
+void
+irc_server_buffer_set_input_multiline (struct t_irc_server *server,
+                                       int multiline)
+{
+    struct t_irc_channel *ptr_channel;
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->buffer)
+        {
+            weechat_buffer_set (ptr_channel->buffer,
+                                "input_multiline",
+                                (multiline) ? "1" : "0");
+        }
+    }
+}
+
+/*
  * Allocates a new server and adds it to the servers queue.
  *
  * Returns pointer to new server, NULL if error.
@@ -5724,6 +5747,8 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
         irc_server_set_nick (server, NULL);
 
     irc_server_set_buffer_title (server);
+
+    irc_server_buffer_set_input_multiline (server, 0);
 
     server->disconnected = 1;
 

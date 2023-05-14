@@ -807,6 +807,7 @@ TEST(IrcProtocolWithServer, batch)
     /* assume "batch" and "draft/multiline" capabilities are enabled in server */
     hashtable_set (ptr_server->cap_list, "batch", NULL);
     hashtable_set (ptr_server->cap_list, "draft/multiline", NULL);
+    irc_server_buffer_set_input_multiline (ptr_server, 1);
 
     /* not enough parameters */
     RECV(":server BATCH");
