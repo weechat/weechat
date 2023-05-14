@@ -5651,6 +5651,48 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     weechat_hashtable_remove_all (server->cap_list);
     server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
     server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
+    if (server->isupport)
+    {
+        free (server->isupport);
+        server->isupport = NULL;
+    }
+    if (server->prefix_modes)
+    {
+        free (server->prefix_modes);
+        server->prefix_modes = NULL;
+    }
+    if (server->prefix_chars)
+    {
+        free (server->prefix_chars);
+        server->prefix_chars = NULL;
+    }
+    server->nick_max_length = 0;
+    server->user_max_length = 0;
+    server->host_max_length = 0;
+    server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
+    server->utf8mapping = IRC_SERVER_UTF8MAPPING_NONE;
+    if (server->chantypes)
+    {
+        free (server->chantypes);
+        server->chantypes = NULL;
+    }
+    if (server->chanmodes)
+    {
+        free (server->chanmodes);
+        server->chanmodes = NULL;
+    }
+    if (server->clienttagdeny)
+    {
+        free (server->clienttagdeny);
+        server->clienttagdeny = NULL;
+    }
+    if (server->clienttagdeny_array)
+    {
+        weechat_string_free_split (server->clienttagdeny_array);
+        server->clienttagdeny_array = NULL;
+    }
+    server->clienttagdeny_count = 0;
+    server->typing_allowed = 1;
     server->is_away = 0;
     server->away_time = 0;
     server->lag = 0;
