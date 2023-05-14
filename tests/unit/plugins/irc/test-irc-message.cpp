@@ -486,6 +486,7 @@ TEST(IrcMessage, Parse)
     const char *params_part[] = { "#channel", NULL };
     const char *params_invite[] = { "nick2", "#channel", NULL };
     const char *params_privmsg_no_msg[] = { "#channel", NULL };
+    const char *params_privmsg_empty_msg[] = { "#channel", "", NULL };
     const char *params_privmsg[] = { "#channel", "the message", NULL };
     const char *params_privmsg_nick2[] = { "nick2", "the message", NULL };
     const char *params_005[] = {
@@ -657,6 +658,11 @@ TEST(IrcMessage, Parse)
                     params_privmsg_no_msg, 1,
                     16, 24, 24, -1,
                     NULL, ":nick!user@host PRIVMSG #channel");
+    WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG #channel :", "nick", "user",
+                    "nick!user@host", "PRIVMSG", "#channel", "#channel :", "",
+                    params_privmsg_empty_msg, 1,
+                    16, 24, 24, 34,
+                    NULL, ":nick!user@host PRIVMSG #channel :");
     WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG #channel :the message",
                     "nick", "user", "nick!user@host", "PRIVMSG", "#channel",
                     "#channel :the message", "the message",
