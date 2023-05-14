@@ -261,6 +261,8 @@ TEST(IrcProtocol, Tags)
                             NULL, NULL);
     hashtable_set (tags_2, "key1", "value1");
     hashtable_set (tags_2, "key_2,comma", "value2,comma");
+    hashtable_set (tags_2, "key_3_empty", "");
+    hashtable_set (tags_2, "key_4_null", NULL);
 
     POINTERS_EQUAL(NULL, irc_protocol_tags (NULL, NULL, NULL, NULL, NULL, NULL));
 
@@ -275,13 +277,16 @@ TEST(IrcProtocol, Tags)
                  irc_protocol_tags (NULL, "privmsg", tags_empty, NULL, NULL, NULL));
     STRCMP_EQUAL("irc_join,log4",
                  irc_protocol_tags (NULL, "join", tags_empty, NULL, NULL, NULL));
-    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,log1",
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1=value1,log1",
                  irc_protocol_tags (NULL, "privmsg", tags_1, NULL, NULL, NULL));
-    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,log4",
+    STRCMP_EQUAL("irc_join,irc_tag_key1=value1,log4",
                  irc_protocol_tags (NULL, "join", tags_1, NULL, NULL, NULL));
-    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,log1",
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1=value1,"
+                 "irc_tag_key_2;comma=value2;comma,irc_tag_key_3_empty=,"
+                 "irc_tag_key_4_null,log1",
                  irc_protocol_tags (NULL, "privmsg", tags_2, NULL, NULL, NULL));
-    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,log4",
+    STRCMP_EQUAL("irc_join,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
+                 "irc_tag_key_3_empty=,irc_tag_key_4_null,log4",
                  irc_protocol_tags (NULL, "join", tags_2, NULL, NULL, NULL));
 
     /* command + extra_tags */
@@ -295,32 +300,34 @@ TEST(IrcProtocol, Tags)
                  irc_protocol_tags (NULL, "join", NULL, "tag1,tag2", NULL, NULL));
 
     /* command + irc_msg_tags + extra_tags + nick */
-    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
-                 "tag1,tag2,log1",
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
+                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,log1",
                  irc_protocol_tags (NULL, "privmsg", tags_2, "tag1,tag2", "", NULL));
-    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
-                 "tag1,tag2,log4",
+    STRCMP_EQUAL("irc_join,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
+                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,log4",
                  irc_protocol_tags (NULL, "join", tags_2, "tag1,tag2", "", NULL));
-    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
-                 "tag1,tag2,nick_alice,log1",
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
+                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,nick_alice,log1",
                  irc_protocol_tags (NULL, "privmsg", tags_2, "tag1,tag2", "alice", NULL));
-    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
-                 "tag1,tag2,nick_bob,log4",
+    STRCMP_EQUAL("irc_join,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
+                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,nick_bob,log4",
                  irc_protocol_tags (NULL, "join", tags_2, "tag1,tag2", "bob", NULL));
 
     /* command + irc_msg_tags + extra_tags + nick + address */
-    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
-                 "tag1,tag2,nick_alice,log1",
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
+                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,nick_alice,log1",
                  irc_protocol_tags (NULL, "privmsg", tags_2, "tag1,tag2", "alice", ""));
-    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
-                 "tag1,tag2,nick_bob,log4",
+    STRCMP_EQUAL("irc_join,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
+                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,nick_bob,log4",
                  irc_protocol_tags (NULL, "join", tags_2, "tag1,tag2", "bob", ""));
-    STRCMP_EQUAL("irc_privmsg,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
-                 "tag1,tag2,nick_alice,host_example.com,log1",
+    STRCMP_EQUAL("irc_privmsg,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
+                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,nick_alice,"
+                 "host_example.com,log1",
                  irc_protocol_tags (NULL, "privmsg", tags_2, "tag1,tag2", "alice",
                                     "example.com"));
-    STRCMP_EQUAL("irc_join,irc_tag_key1_value1,irc_tag_key-2;comma_value2;comma,"
-                 "tag1,tag2,nick_bob,host_example.com,log4",
+    STRCMP_EQUAL("irc_join,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
+                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,nick_bob,"
+                 "host_example.com,log4",
                  irc_protocol_tags (NULL, "join", tags_2, "tag1,tag2", "bob",
                                     "example.com"));
 

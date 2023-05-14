@@ -68,6 +68,7 @@ Bug fixes::
   * api: readjust string size in function string_dyn_free when string is not freed
   * buflist: do not display keys added in default context on first load
   * fset: remove scroll to top of fset buffer when options are added or removed (issue #1892)
+  * irc: fix format of IRC tags displayed in messages (use "=" to separate key from value, do not convert "_" to "-") (issue #1929)
   * irc: reset all internal servers variables when disconnecting
   * irc: fix join of channels in "autojoin" server option on first connection to server if auto reconnection is performed (issue #1873)
   * irc: update autojoin option with redirected channels when autojoin_dynamic is enabled (issue #1898)

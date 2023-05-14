@@ -124,10 +124,14 @@ irc_protocol_tags_add_cb (void *data,
                           const void *key,
                           const void *value)
 {
-    char **str_tags, *str_temp, *str_temp2;
+    const char *ptr_key, *ptr_value;
+    char **str_tags, *str_temp;
 
     /* make C compiler happy */
     (void) hashtable;
+
+    ptr_key = (const char *)key;
+    ptr_value = (const char *)value;
 
     str_tags = (char **)data;
 
@@ -137,18 +141,17 @@ irc_protocol_tags_add_cb (void *data,
     weechat_string_dyn_concat (str_tags, "irc_tag_", -1);
 
     /* key */
-    str_temp = weechat_string_replace ((const char *)key, ",", ";");
-    str_temp2 = weechat_string_replace (str_temp, "_", "-");
-    if (str_temp2)
-        weechat_string_dyn_concat (str_tags, str_temp2, -1);
+    str_temp = weechat_string_replace (ptr_key, ",", ";");
+    weechat_string_dyn_concat (str_tags, str_temp, -1);
     if (str_temp)
         free (str_temp);
-    if (str_temp2)
-        free (str_temp2);
-    weechat_string_dyn_concat (str_tags, "_", -1);
+
+    /* separator between key and value */
+    if (ptr_value)
+        weechat_string_dyn_concat (str_tags, "=", -1);
 
     /* value */
-    str_temp = weechat_string_replace ((const char *)value, ",", ";");
+    str_temp = weechat_string_replace (ptr_value, ",", ";");
     weechat_string_dyn_concat (str_tags, str_temp, -1);
     if (str_temp)
         free (str_temp);
