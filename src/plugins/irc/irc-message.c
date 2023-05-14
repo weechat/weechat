@@ -638,6 +638,34 @@ irc_message_parse_cap_multiline_value (struct t_irc_server *server,
 }
 
 /*
+ * Checks if a message is empty: either empty string or contains only newlines.
+ *
+ * Returns:
+ *   1: message is empty
+ *   0: message is NOT empty
+ */
+
+int
+irc_message_is_empty (const char *message)
+{
+    const char *ptr_msg;
+
+    if (!message || !message[0])
+        return 1;
+
+    ptr_msg = message;
+    while (ptr_msg && ptr_msg[0])
+    {
+        if (ptr_msg[0] != '\n')
+            return 0;
+        ptr_msg = weechat_utf8_next_char (ptr_msg);
+    }
+
+    /* only newlines => consider message is empty */
+    return 1;
+}
+
+/*
  * Encodes/decodes an IRC message using a charset.
  *
  * Note: result must be freed after use.
@@ -1309,6 +1337,10 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
 
     rc = 1;
 
+    /* privmsg/notice with empty message: not allowed */
+    if (irc_message_is_empty (arguments))
+        return 1;
+
     if (multiline)
     {
         index_multiline_args = 1;
@@ -1499,15 +1531,17 @@ irc_message_split (struct t_irc_server *server, const char *message)
     struct t_irc_message_split_context split_context;
     char **argv, **argv_eol, *tags, *host, *command, *arguments, target[4096];
     char *pos, monitor_action[3];
-    int split_ok, argc, index_args, max_length_nick, max_length_user;
-    int max_length_host, max_length_nick_user_host, split_msg_max_length;
-    int multiline, multiline_max_bytes, multiline_max_lines;
+    int split_ok, split_privmsg, argc, index_args, max_length_nick;
+    int max_length_user, max_length_host, max_length_nick_user_host;
+    int split_msg_max_length, multiline, multiline_max_bytes;
+    int multiline_max_lines;
 
     split_context.hashtable = NULL;
     split_context.number = 1;
     split_context.total_bytes = 0;
 
     split_ok = 0;
+    split_privmsg = 0;
     tags = NULL;
     host = NULL;
     command = NULL;
@@ -1679,6 +1713,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
          * PRIVMSG target :some text here
          * NOTICE target :some text here
          */
+        split_privmsg = 1;
         if (index_args + 1 <= argc - 1)
         {
             split_ok = irc_message_split_privmsg_notice (
@@ -1738,8 +1773,9 @@ irc_message_split (struct t_irc_server *server, const char *message)
 
 end:
     if (!split_ok
-        || (weechat_hashtable_get_integer (split_context.hashtable,
-                                           "items_count") == 0))
+        || (!split_privmsg
+            && (weechat_hashtable_get_integer (split_context.hashtable,
+                                               "items_count") == 0)))
     {
         split_context.number = (message) ? 1 : 0;
         irc_message_split_add (&split_context,

@@ -46,6 +46,7 @@ extern struct t_hashtable *irc_message_parse_to_hashtable (struct t_irc_server *
 extern struct t_hashtable *irc_message_parse_cap_value (const char *value);
 extern void irc_message_parse_cap_multiline_value (struct t_irc_server *server,
                                                    const char *value);
+extern int irc_message_is_empty (const char *message);
 extern char *irc_message_convert_charset (const char *message,
                                           int pos_start,
                                           const char *modifier,

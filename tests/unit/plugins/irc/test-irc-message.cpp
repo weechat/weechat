@@ -948,6 +948,24 @@ convert_irc_charset_cb (const void *pointer, void *data,
 
 /*
  * Tests functions:
+ *   irc_message_is_empty
+ */
+
+TEST(IrcMessage, IsEmpty)
+{
+    LONGS_EQUAL(1, irc_message_is_empty (NULL));
+    LONGS_EQUAL(1, irc_message_is_empty (""));
+    LONGS_EQUAL(1, irc_message_is_empty ("\n"));
+    LONGS_EQUAL(1, irc_message_is_empty ("\n\n\n\n\n\n\n\n"));
+
+    LONGS_EQUAL(0, irc_message_is_empty (" "));
+    LONGS_EQUAL(0, irc_message_is_empty ("\n "));
+    LONGS_EQUAL(0, irc_message_is_empty ("\n \n"));
+    LONGS_EQUAL(0, irc_message_is_empty ("test"));
+}
+
+/*
+ * Tests functions:
  *   irc_message_convert_charset
  */
 
@@ -1514,6 +1532,12 @@ TEST(IrcMessage, Split)
                  (const char *)hashtable_get (hashtable, "count"));
     STRCMP_EQUAL("PONG",
                  (const char *)hashtable_get (hashtable, "msg1"));
+    hashtable_free (hashtable);
+
+    /* PRIVMSG with no content: no split (not allowed) */
+    hashtable = irc_message_split (server, "PRIVMSG #channel :");
+    CHECK(hashtable);
+    LONGS_EQUAL(0, hashtable->items_count);
     hashtable_free (hashtable);
 
     /* PRIVMSG with small content: no split */
