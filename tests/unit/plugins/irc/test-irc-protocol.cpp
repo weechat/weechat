@@ -795,10 +795,124 @@ TEST(IrcProtocolWithServer, away)
 
 /*
  * Tests functions:
- *   irc_protocol_cb_batch
+ *   irc_protocol_cb_batch (without batch cap)
  */
 
-TEST(IrcProtocolWithServer, batch)
+TEST(IrcProtocolWithServer, batch_without_batch_cap)
+{
+    SRV_INIT_JOIN2;
+
+    /* not enough parameters */
+    RECV(":server BATCH");
+    CHECK_ERROR_PARAMS("batch", 0, 1);
+    RECV(":server BATCH +test");
+    CHECK_NO_MSG;
+
+    /* invalid reference: does not start with '+' or '-' */
+    RECV(":server BATCH zzz type");
+    CHECK_NO_MSG;
+    POINTERS_EQUAL(NULL, ptr_server->batches);
+
+    /* start batch without parameters */
+    RECV(":server BATCH +ref example");
+    CHECK_NO_MSG;
+    POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref"));
+
+    /* new messages with batch reference */
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :this is a test");
+    CHECK_CHAN("bob this is a test");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :second test");
+    CHECK_CHAN("bob second test");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :third test");
+    CHECK_CHAN("bob third test");
+
+    /* end batch */
+    RECV(":server BATCH -ref");
+    CHECK_NO_MSG;
+
+    /* start batch with parameters */
+    RECV(":server BATCH +ref example param1 param2 param3");
+    CHECK_NO_MSG;
+    POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref"));
+
+    /* new messages with batch reference */
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :test 1");
+    CHECK_CHAN("bob test 1");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :test 2");
+    CHECK_CHAN("bob test 2");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :test 3");
+    CHECK_CHAN("bob test 3");
+
+    /* end batch */
+    RECV(":server BATCH -ref");
+    CHECK_NO_MSG;
+
+    /* start/end batch without parameters */
+    RECV(":server BATCH +ref example");
+    RECV(":server BATCH -ref");
+    CHECK_NO_MSG;
+    POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref"));
+
+    /* interleaving batches */
+    RECV(":server BATCH +1 example");
+    CHECK_NO_MSG;
+    RECV("@batch=1 :bob!user_b@host_b PRIVMSG #test :message 1");
+    CHECK_CHAN("bob message 1");
+    RECV(":server BATCH +2 example");
+    CHECK_NO_MSG;
+    RECV("@batch=1 :bob!user_b@host_b PRIVMSG #test :message 2");
+    CHECK_CHAN("bob message 2");
+    RECV("@batch=2 :bob!user_b@host_b PRIVMSG #test :message 4");
+    CHECK_CHAN("bob message 4");
+    RECV("@batch=1 :bob!user_b@host_b PRIVMSG #test :message 3");
+    CHECK_CHAN("bob message 3");
+    RECV(":server BATCH -1");
+    CHECK_NO_MSG;
+    RECV("@batch=2 :bob!user_b@host_b PRIVMSG #test :message 5");
+    CHECK_CHAN("bob message 5");
+    RECV(":server BATCH -2");
+    CHECK_NO_MSG;
+
+    /* nested batch */
+    RECV(":server BATCH +ref1 example1");
+    CHECK_NO_MSG;
+    RECV("@batch=ref1 :server BATCH +ref2 example2");
+    RECV("@batch=ref1 :bob!user_b@host_b PRIVMSG #test :test ref1");
+    CHECK_CHAN("bob test ref1");
+    RECV("@batch=ref2 :bob!user_b@host_b PRIVMSG #test :test ref2");
+    CHECK_CHAN("bob test ref2");
+    RECV(":server BATCH -ref2");
+    CHECK_NO_MSG;
+    RECV(":server BATCH -ref1");
+    CHECK_NO_MSG;
+
+    /* multiline */
+    RECV(":server BATCH +ref draft/multiline #test");
+    CHECK_NO_MSG;
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 1");
+    CHECK_CHAN("bob line 1");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 2");
+    CHECK_CHAN("bob line 2");
+    RECV(":server BATCH -ref");
+    CHECK_NO_MSG;
+
+    /* multiline with CTCP */
+    RECV(":server BATCH +ref draft/multiline #test");
+    CHECK_NO_MSG;
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :\01ACTION is testing");
+    CHECK_CHAN(" * bob is testing");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again\01");
+    CHECK_CHAN("bob again\01");
+    RECV(":server BATCH -ref");
+    CHECK_NO_MSG;
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_batch (with batch cap)
+ */
+
+TEST(IrcProtocolWithServer, batch_with_batch_cap)
 {
     struct t_irc_batch *ptr_batch;
 

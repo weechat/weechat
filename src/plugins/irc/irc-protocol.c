@@ -668,6 +668,10 @@ IRC_PROTOCOL_CALLBACK(batch)
 
     IRC_PROTOCOL_MIN_PARAMS(1);
 
+    /* do nothing (but ignore BATCH) if capability "batch" is not enabled */
+    if (!weechat_hashtable_has_key (server->cap_list, "batch"))
+        return WEECHAT_RC_OK;
+
     if (params[0][0] == '+')
     {
         /* start batch */
@@ -7784,7 +7788,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
     /* if message is not BATCH but has a batch tag, just store it for later */
     if (!ignore_batch_tag
         && hash_tags
-        && (weechat_strcasecmp (msg_command, "batch") != 0))
+        && (weechat_strcasecmp (msg_command, "batch") != 0)
+        && weechat_hashtable_has_key (server->cap_list, "batch"))
     {
         ptr_batch_ref = weechat_hashtable_get (hash_tags, "batch");
         if (ptr_batch_ref)
