@@ -375,6 +375,8 @@ irc_batch_process_multiline (struct t_irc_server *server,
 
     result = weechat_string_dyn_alloc (256);
 
+    hash_tags = NULL;
+
     list_messages = weechat_string_split (messages, "\n", NULL, 0, 0,
                                           &count_messages);
     if (!list_messages)
