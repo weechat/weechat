@@ -5256,13 +5256,9 @@ Zmienne ustawiane za pomocą tagów w wiadomościach:
 | tg_msg_pv          | ciąg | "1" dla prywatnej wiadomości, inaczej "0".
 |===
 
+// TRANSLATION MISSING
 [NOTE]
-====
-^(1)^ Znaki specjalne są zastępowane w tagach IRC:
-
-* klucz: `_` -> `-` i `,` -> `;`
-* wartość: `,` -> `;`
-====
+^(1)^ Commas are replaced by semicolons in IRC tag (key and value).
 
 [[trigger_data_print]]
 ==== Print
@@ -5298,13 +5294,9 @@ Zmienne ustawiane za pomocą tagów w wiadomościach:
 | tg_msg_pv          | ciąg | "1" dla prywatnej wiadomości, inaczej "0".
 |===
 
+// TRANSLATION MISSING
 [NOTE]
-====
-^(1)^ Znaki specjalne są zastępowane w tagach IRC:
-
-* klucz: `_` -> `-` i `,` -> `;`
-* wartość: `,` -> `;`
-====
+^(1)^ Commas are replaced by semicolons in IRC tag (key and value).
 
 [[trigger_data_command]]
 ==== Command

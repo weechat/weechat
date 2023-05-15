@@ -4900,13 +4900,9 @@ ${buffer[${tg_signal_data}].full_name}
 | tg_msg_pv          | стринг | „1” за приватну поруку, у супротном „0”.
 |===
 
+// TRANSLATION MISSING
 [NOTE]
-====
-^(1)^ Специјални карактери се замењују у IRC ознаци:
-
-* кључ: `_` -> `-` и `,` -> `;`
-* вредност: `,` -> `;`
-====
+^(1)^ Commas are replaced by semicolons in IRC tag (key and value).
 
 [[trigger_data_print]]
 ==== Print
@@ -4942,13 +4938,9 @@ ${buffer[${tg_signal_data}].full_name}
 | tg_msg_pv          | стринг | „1” за приватну поруку, у супротном „0”.
 |===
 
+// TRANSLATION MISSING
 [NOTE]
-====
-^(1)^ Специјални карактери се замењују у IRC ознаци:
-
-* кључ: `_` -> `-` и `,` -> `;`
-* вредност: `,` -> `;`
-====
+^(1)^ Commas are replaced by semicolons in IRC tag (key and value).
 
 [[trigger_data_command]]
 ==== Команда

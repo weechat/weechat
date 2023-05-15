@@ -5184,12 +5184,7 @@ Variables set using tags in message:
 |===
 
 [NOTE]
-====
-^(1)^ Special chars are replaced in IRC tag:
-
-* key: `_` -> `-` and `,` -> `;`
-* value: `,` -> `;`
-====
+^(1)^ Commas are replaced by semicolons in IRC tag (key and value).
 
 [[trigger_data_print]]
 ==== Print
@@ -5226,12 +5221,7 @@ Variables set using tags in message:
 |===
 
 [NOTE]
-====
-^(1)^ Special chars are replaced in IRC tag:
-
-* key: `_` -> `-` and `,` -> `;`
-* value: `,` -> `;`
-====
+^(1)^ Commas are replaced by semicolons in IRC tag (key and value).
 
 [[trigger_data_command]]
 ==== Command

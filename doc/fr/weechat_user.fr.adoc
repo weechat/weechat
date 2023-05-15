@@ -5356,12 +5356,8 @@ Variables définies avec les étiquettes du message :
 |===
 
 [NOTE]
-====
-^(1)^ Des caractères spéciaux sont remplacés dans l'étiquette IRC :
-
-* clé : `_` -> `-` et `,` -> `;`
-* valeur : `,` -> `;`
-====
+^(1)^ Les virgules sont remplacées par des point-virgules dans l'étiquette IRC
+(clé et valeur).
 
 [[trigger_data_print]]
 ==== Print
@@ -5399,12 +5395,8 @@ Variables définies avec les étiquettes du message :
 |===
 
 [NOTE]
-====
-^(1)^ Des caractères spéciaux sont remplacés dans l'étiquette IRC :
-
-* clé : `_` -> `-` et `,` -> `;`
-* valeur : `,` -> `;`
-====
+^(1)^ Les virgules sont remplacées par des point-virgules dans l'étiquette IRC
+(clé et valeur).
 
 [[trigger_data_command]]
 ==== Command
