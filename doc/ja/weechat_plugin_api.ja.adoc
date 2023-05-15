@@ -12472,6 +12472,12 @@ WeeChat とプラグインが使う修飾子のリスト:
   all messages in the batch.
 
 // TRANSLATION MISSING
+| [[hook_modifier_irc_cap_sync_req]] irc_cap_sync_req | 4.0.0
+| Server name + "," + supported capabilities on server (separated by spaces)
+| Capabilities to request (separated by spaces).
+| New content of capabilities to request (separated by spaces).
+
+// TRANSLATION MISSING
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
 | サーバ名
 | IRC サーバから受信したメッセージの内容 (文字セットをデコードする前) +

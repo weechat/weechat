@@ -11938,6 +11938,12 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 | New content of messages (number can be different), an empty string discards
   all messages in the batch.
 
+// TRANSLATION MISSING
+| [[hook_modifier_irc_cap_sync_req]] irc_cap_sync_req | 4.0.0
+| Server name + "," + supported capabilities on server (separated by spaces)
+| Capabilities to request (separated by spaces).
+| New content of capabilities to request (separated by spaces).
+
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
 | Име сервера
 | Садржај поруке примљене са IRC сервера (пре декодирања скупа карактера). +

@@ -12343,6 +12343,11 @@ List of modifiers used by WeeChat and plugins:
 | New content of messages (number can be different), an empty string discards
   all messages in the batch.
 
+| [[hook_modifier_irc_cap_sync_req]] irc_cap_sync_req | 4.0.0
+| Server name + "," + supported capabilities on server (separated by spaces)
+| Capabilities to request (separated by spaces).
+| New content of capabilities to request (separated by spaces).
+
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
 | Server name
 | Content of message received from IRC server (before charset decoding). +

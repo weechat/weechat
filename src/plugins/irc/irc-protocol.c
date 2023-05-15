@@ -794,16 +794,62 @@ irc_protocol_cap_to_enable (const char *capabilities, int sasl_requested)
 }
 
 /*
+ * Requests capabilities for IRC server after synchronization.
+ */
+
+void
+irc_protocol_cap_sync_req (struct t_irc_server *server,
+                           const char *caps_server,
+                           const char *caps_req)
+{
+    char modifier_data[4096], *new_caps_req;
+    const char *ptr_caps_req;
+
+    snprintf (modifier_data, sizeof (modifier_data),
+              "%s,%s",
+              server->name,
+              (caps_server) ? caps_server : "");
+    new_caps_req = weechat_hook_modifier_exec ("irc_cap_sync_req",
+                                               modifier_data,
+                                               caps_req);
+
+    /* no changes in new caps requested */
+    if (new_caps_req && (strcmp (caps_req, new_caps_req) == 0))
+    {
+        free (new_caps_req);
+        new_caps_req = NULL;
+    }
+
+    /* caps not dropped? */
+    if (!new_caps_req || new_caps_req[0])
+    {
+        ptr_caps_req = (new_caps_req) ? new_caps_req : caps_req;
+        weechat_printf (
+            server->buffer,
+            _("%s%s: client capability, requesting: %s"),
+            weechat_prefix ("network"), IRC_PLUGIN_NAME,
+            ptr_caps_req);
+        irc_server_sendf (server, 0, NULL, "CAP REQ :%s", ptr_caps_req);
+    }
+
+    if (new_caps_req)
+        free (new_caps_req);
+}
+
+/*
  * Synchronizes requested capabilities for IRC server.
  */
 
 void
 irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
 {
-    char **caps_server, *caps_to_enable, **list_caps_to_enable, **cap_req;
-    const char *ptr_cap_option;
+    char *str_caps_server, **caps_server, *caps_to_enable;
+    char **list_caps_to_enable, **cap_req;
+    const char *ptr_caps_server, *ptr_cap_option;
     int sasl_requested, sasl_to_do, sasl_fail;
     int i, num_caps_server;
+
+    str_caps_server = NULL;
 
     sasl_requested = (sasl) ? irc_server_sasl_enabled (server) : 0;
     sasl_to_do = 0;
@@ -827,8 +873,11 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
         NULL);
     if (list_caps_to_enable)
     {
+        ptr_caps_server = weechat_hashtable_get_string (server->cap_ls, "keys");
+        str_caps_server = (ptr_caps_server) ?
+            weechat_string_replace (ptr_caps_server, ",", " ") : NULL;
         caps_server = weechat_string_split (
-            weechat_hashtable_get_string (server->cap_ls, "keys"),
+            (ptr_caps_server) ? ptr_caps_server : "",
             ",",
             NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -856,15 +905,7 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
             weechat_string_free_split (caps_server);
         }
 
-        if (*cap_req[0])
-        {
-            weechat_printf (
-                server->buffer,
-                _("%s%s: client capability, requesting: %s"),
-                weechat_prefix ("network"), IRC_PLUGIN_NAME,
-                *cap_req);
-            irc_server_sendf (server, 0, NULL, "CAP REQ :%s", *cap_req);
-        }
+        irc_protocol_cap_sync_req (server, str_caps_server, *cap_req);
 
         if (sasl)
         {
@@ -894,6 +935,8 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
         weechat_string_free_split (list_caps_to_enable);
     }
 
+    if (str_caps_server)
+        free (str_caps_server);
     if (caps_to_enable)
         free (caps_to_enable);
     if (cap_req)
