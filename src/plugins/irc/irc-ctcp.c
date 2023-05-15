@@ -284,7 +284,7 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                         const char *arguments)
 {
     struct t_arraylist *list_messages;
-    int i, number, list_size;
+    int i, list_size;
     char *msg_color, *dup_ctcp, *dup_ctcp_upper, *dup_args;
     const char *ptr_message;
 
@@ -362,7 +362,6 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                 (msg_color[0]) ? " " : "",
                 msg_color);
             free (msg_color);
-            number++;
         }
     }
 
