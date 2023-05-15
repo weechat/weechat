@@ -926,6 +926,7 @@ IRC_PROTOCOL_CALLBACK(cap)
 
     if (strcmp (params[1], "LS") == 0)
     {
+        /* list of capabilities supported by the server */
         if (num_params < 3)
             return WEECHAT_RC_OK;
 
@@ -1011,6 +1012,7 @@ IRC_PROTOCOL_CALLBACK(cap)
     }
     else if (strcmp (params[1], "LIST") == 0)
     {
+        /* list of capabilities currently enabled */
         if (num_params < 3)
             return WEECHAT_RC_OK;
 
@@ -1092,6 +1094,7 @@ IRC_PROTOCOL_CALLBACK(cap)
     }
     else if (strcmp (params[1], "ACK") == 0)
     {
+        /* capabilities acknowledged */
         if (num_params < 3)
             return WEECHAT_RC_OK;
 
@@ -1200,6 +1203,7 @@ IRC_PROTOCOL_CALLBACK(cap)
     }
     else if (strcmp (params[1], "NAK") == 0)
     {
+        /* capabilities rejected */
         if (num_params < 3)
             return WEECHAT_RC_OK;
 
@@ -1215,6 +1219,7 @@ IRC_PROTOCOL_CALLBACK(cap)
     }
     else if (strcmp (params[1], "NEW") == 0)
     {
+        /* new capabilities available */
         if (num_params < 3)
             return WEECHAT_RC_OK;
 
@@ -1266,6 +1271,7 @@ IRC_PROTOCOL_CALLBACK(cap)
     }
     else if (strcmp (params[1], "DEL") == 0)
     {
+        /* capabilities no longer available */
         if (num_params < 3)
             return WEECHAT_RC_OK;
 
