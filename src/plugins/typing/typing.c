@@ -549,6 +549,12 @@ typing_setup_hooks ()
                 "typing_reset_buffer",
                 &typing_typing_reset_buffer_signal_cb, NULL, NULL);
         }
+        if (!typing_timer)
+        {
+            typing_timer = weechat_hook_timer (
+                1000, 0, 0,
+                &typing_timer_cb, NULL, NULL);
+        }
     }
     else
     {
@@ -569,6 +575,8 @@ typing_setup_hooks ()
                 typing_status_nicks = NULL;
             }
         }
+        weechat_unhook (typing_timer);
+        typing_timer = NULL;
     }
 }
 

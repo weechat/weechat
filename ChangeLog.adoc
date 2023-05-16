@@ -81,6 +81,7 @@ Bug fixes::
   * ruby: fix crash on quit when a child process is still running (issue #1889, issue #1915)
   * spell: check buffer pointer received in info "spell_dict"
   * typing: fix crash when pointer buffer is not received in callback for signal "input_text_changed" (issue #1869)
+  * typing: remove nicks typing even when option typing.look.enabled_self is off (issue #1718)
 
 Tests::
 
