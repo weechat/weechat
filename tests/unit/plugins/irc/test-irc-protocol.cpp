@@ -4289,7 +4289,7 @@ TEST(IrcProtocolWithServer, 437_not_connected)
 
 TEST(IrcProtocolWithServer, 437_connected)
 {
-    SRV_INIT;
+    SRV_INIT_JOIN;
 
     /* not enough parameters */
     RECV(":server 437");
@@ -4303,6 +4303,8 @@ TEST(IrcProtocolWithServer, 437_connected)
     CHECK_SRV("-- * alice error");
     RECV(":server 437 * alice :Nick/channel is temporarily unavailable");
     CHECK_SRV("-- * alice Nick/channel is temporarily unavailable");
+    RECV(":server 437 alice #test :Cannot change nickname while banned on channel");
+    CHECK_SRV("-- #test: Cannot change nickname while banned on channel");
 }
 
 /*

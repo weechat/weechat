@@ -1511,7 +1511,7 @@ IRC_PROTOCOL_CALLBACK(error)
 
 IRC_PROTOCOL_CALLBACK(generic_error)
 {
-    int arg_error;
+    int arg_error, force_server_buffer;
     char *str_error, str_target[512];
     const char *pos_channel, *pos_nick;
     struct t_irc_channel *ptr_channel;
@@ -1529,8 +1529,16 @@ IRC_PROTOCOL_CALLBACK(generic_error)
 
     if (params[arg_error + 1])
     {
-        if ((strcmp (command, "432") != 0)
-            && (strcmp (command, "433") != 0)
+        /*
+         * force display on server buffer for these messages:
+         *   - 432: erroneous nickname
+         *   - 433: nickname already in use
+         *   - 437: nick/channel temporarily unavailable
+         */
+        force_server_buffer = ((strcmp (command, "432") == 0)
+                               || (strcmp (command, "433") == 0)
+                               || (strcmp (command, "437") == 0));
+        if (!force_server_buffer
             && irc_channel_is_channel (server, params[arg_error]))
         {
             pos_channel = params[arg_error];
