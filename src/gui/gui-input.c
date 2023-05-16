@@ -416,6 +416,14 @@ gui_input_complete (struct t_gui_buffer *buffer)
     if (!buffer->completion || !buffer->completion->word_found)
         return;
 
+    /*
+     * in case the word found is empty, we keep the word in input as-is
+     * (this can happen with partial completion when the common prefix found
+     * is empty)
+     */
+    if (!buffer->completion->word_found[0])
+        return;
+
     /* replace word with new completed word into input buffer */
     if (buffer->completion->diff_size > 0)
     {
