@@ -74,6 +74,7 @@ Bug fixes::
   * irc: reset all internal servers variables when disconnecting
   * irc: fix join of channels in "autojoin" server option on first connection to server if auto reconnection is performed (issue #1873)
   * irc: update autojoin option with redirected channels when autojoin_dynamic is enabled (issue #1898)
+  * irc: update secure data when server autojoin option contains `${sec.data.xxx}` and option autojoin_dynamic is enabled (issue #1934)
   * irc: don't switch to buffer of joined channel if it was not manually joined nor present in server autojoin option
   * irc: fix target buffer for commands 432/433 (erroneous nickname/nickname already in use) when the nickname looks like a channel
   * irc: display command 437 on server buffer when nickname cannot change while banned on channel (issue #88)

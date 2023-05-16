@@ -28,6 +28,8 @@ extern "C"
 #include <string.h>
 #include "src/core/wee-arraylist.h"
 #include "src/core/wee-config-file.h"
+#include "src/core/wee-hashtable.h"
+#include "src/core/wee-secure.h"
 #include "src/gui/gui-buffer.h"
 #include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-join.h"
@@ -596,6 +598,7 @@ TEST(IrcJoin, SortChannels)
 
 /*
  * Tests functions:
+ *   irc_join_set_autojoin_option
  *   irc_join_add_channel_to_autojoin
  *   irc_join_add_channels_to_autojoin
  *   irc_join_remove_channel_from_autojoin
@@ -756,6 +759,33 @@ TEST(IrcJoin, AddRemoveChannelsAutojoin)
         "#xyz,#DEF,#jkl key_xyz",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
 
+    /* use of secure data in autojoin option */
+    hashtable_set (secure_hashtable_data, "autojoin", "#abc");
+    config_file_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
+                            "${sec.data.autojoin}", 1);
+    irc_join_add_channels_to_autojoin (server, "#def key_def");
+    STRCMP_EQUAL(
+        "${sec.data.autojoin}",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    STRCMP_EQUAL(
+        "#def,#abc key_def",
+        (const char *)hashtable_get (secure_hashtable_data, "autojoin"));
+    irc_join_rename_channel_in_autojoin (server, "#abc", "#zzz");
+    STRCMP_EQUAL(
+        "${sec.data.autojoin}",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    STRCMP_EQUAL(
+        "#def,#zzz key_def",
+        (const char *)hashtable_get (secure_hashtable_data, "autojoin"));
+    irc_join_remove_channel_from_autojoin (server, "#def");
+    STRCMP_EQUAL(
+        "${sec.data.autojoin}",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    STRCMP_EQUAL(
+        "#zzz",
+        (const char *)hashtable_get (secure_hashtable_data, "autojoin"));
+    hashtable_remove (secure_hashtable_data, "autojoin");
+
     irc_server_free (server);
 }
 
@@ -782,6 +812,19 @@ TEST(IrcJoin, SaveChannelsToAutojoin)
     STRCMP_EQUAL(
         "#test2,#test1 key2",
         CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    /* use of secure data in autojoin option */
+    hashtable_set (secure_hashtable_data, "autojoin", "#abc");
+    config_file_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
+                            "${sec.data.autojoin}", 1);
+    irc_join_save_channels_to_autojoin (server);
+    STRCMP_EQUAL(
+        "${sec.data.autojoin}",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    STRCMP_EQUAL(
+        "#test2,#test1 key2",
+        (const char *)hashtable_get (secure_hashtable_data, "autojoin"));
+    hashtable_remove (secure_hashtable_data, "autojoin");
 
     gui_buffer_close (channel1->buffer);
     gui_buffer_close (channel2->buffer);
@@ -812,6 +855,20 @@ TEST(IrcJoin, SortAutojoinChannels)
     irc_join_sort_autojoin (server, IRC_JOIN_SORT_ALPHA);
     STRCMP_EQUAL("#xyz,#zzz,#ABC,#def,#ghi key_xyz,key_zzz",
                  CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+
+    /* use of secure data in autojoin option */
+    hashtable_set (secure_hashtable_data,
+                   "autojoin", "#zzz,#xyz,#ghi,#def,#ABC key_zzz,key_xyz");
+    config_file_option_set (server->options[IRC_SERVER_OPTION_AUTOJOIN],
+                            "${sec.data.autojoin}", 1);
+    irc_join_sort_autojoin (server, IRC_JOIN_SORT_ALPHA);
+    STRCMP_EQUAL(
+        "${sec.data.autojoin}",
+        CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    STRCMP_EQUAL(
+        "#xyz,#zzz,#ABC,#def,#ghi key_xyz,key_zzz",
+        (const char *)hashtable_get (secure_hashtable_data, "autojoin"));
+    hashtable_remove (secure_hashtable_data, "autojoin");
 
     irc_server_free (server);
 }
