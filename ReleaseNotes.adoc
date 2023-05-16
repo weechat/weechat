@@ -194,6 +194,18 @@ If needed, you can reset the option to the new default value after upgrade:
 
 The option `weechat.look.paste_auto_add_newline` has been removed.
 
+[[v4.0.0_default_triggers]]
+=== Default triggers
+
+The default triggers "cmd_pass", "cmd_pass_register" and "server_pass" have
+been updated to be compatible with multiline input.
+
+You can restore these default triggers with the following command:
+
+----
+/trigger restore cmd_pass cmd_pass_register server_pass
+----
+
 [[v4.0.0_build]]
 === Build
 

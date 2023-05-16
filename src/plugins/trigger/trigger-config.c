@@ -99,21 +99,21 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "5000|input_text_display;5000|history_add;5000|irc_command_auth",
       "",
       "s==^("
-      "(/(msg|m|quote) +(-server +[^ ]+ +)?nickserv +("
+      "(/(msg|m|quote) +(-server +[^ \\n]+ +)?nickserv +("
       "id|"
       "identify|"
       "set +password|"
-      "ghost +[^ ]+|"
-      "release +[^ ]+|"
-      "regain +[^ ]+|"
-      "recover +[^ ]+|"
-      "setpass +[^ ]+"
+      "ghost +[^ \\n]+|"
+      "release +[^ \\n]+|"
+      "regain +[^ \\n]+|"
+      "recover +[^ \\n]+|"
+      "setpass +[^ \\n]+"
       ") +)|"
-      "/oper +[^ ]+ +|"
+      "/oper +[^ \\n]+ +|"
       "/quote +pass +|"
-      "/secure +(passphrase|decrypt|set +[^ ]+) +"
+      "/secure +(passphrase|decrypt|set +[^ \\n]+) +"
       ")"
-      "(.*)"
+      "([^\\n]*)"
       "==${re:1}${hide:*,${re:+}}",
       "",
       "",
@@ -126,7 +126,8 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|input_text_display;5000|history_add;5000|irc_command_auth",
       "",
-      "s==^(/(msg|m|quote) +(-server +[^ ]+ +)?nickserv +register +)([^ ]+)(.*)"
+      "s==^(/(msg|m|quote) +(-server +[^ \\n]+ +)?nickserv +register +)"
+      "([^ \\n]+)([^\\n]*)"
       "==${re:1}${hide:*,${re:4}}${re:5}",
       "",
       "",
@@ -172,7 +173,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|input_text_display;5000|history_add",
       "",
-      "s==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)"
+      "s==^(/(server|connect) [^\\n]*-(sasl_)?password=)([^ \\n]+)([^\\n]*)"
       "==${re:1}${hide:*,${re:4}}${re:5}"
       "",
       "",
