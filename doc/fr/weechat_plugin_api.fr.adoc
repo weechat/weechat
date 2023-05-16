@@ -16726,7 +16726,8 @@ Paramètres :
 
 Valeur de retour :
 
-* table de hachage avec l'information demandée, NULL en cas d'erreur
+* table de hachage avec l'information demandée, NULL en cas d'erreur (doit être
+  supprimée par un appel à <<_hashtable_free,hashtable_free>> après utilisation)
 
 Infos :
 

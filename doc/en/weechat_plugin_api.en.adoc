@@ -16376,7 +16376,8 @@ Arguments:
 
 Return value:
 
-* hashtable with info asked, NULL if an error occurred
+* hashtable with info asked, NULL if an error occurred (must be freed by
+  calling <<_hashtable_free,hashtable_free>> after use)
 
 Infos:
 

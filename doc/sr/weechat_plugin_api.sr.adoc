@@ -15848,7 +15848,9 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 
 Повратна вредност:
 
-* хеш табела са траженом инфо, NULL у случају да је дошло до грешке
+// TRANSLATION MISSING
+* хеш табела са траженом инфо, NULL у случају да је дошло до грешке (must be
+  freed by calling <<_hashtable_free,hashtable_free>> after use)
 
 Информације:
 

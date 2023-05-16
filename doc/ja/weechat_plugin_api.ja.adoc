@@ -16545,7 +16545,9 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 
 戻り値:
 
-* 指定したインフォを含むハッシュテーブル、エラーが起きた場合は NULL
+// TRANSLATION MISSING
+* 指定したインフォを含むハッシュテーブル、エラーが起きた場合は NULL (must be
+  freed by calling <<_hashtable_free,hashtable_free>> after use)
 
 インフォ:
 

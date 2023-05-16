@@ -17113,7 +17113,9 @@ Argomenti:
 
 Valore restituito:
 
-* tabella hash con la info richiesta, NULL in caso di errore
+// TRANSLATION MISSING
+* tabella hash con la info richiesta, NULL in caso di errore (must be
+  freed by calling <<_hashtable_free,hashtable_free>> after use)
 
 // TRANSLATION MISSING
 Infos:
