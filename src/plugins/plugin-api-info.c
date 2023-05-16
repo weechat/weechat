@@ -32,9 +32,11 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-crypto.h"
+#include "../core/wee-hashtable.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-proxy.h"
+#include "../core/wee-secure.h"
 #include "../core/wee-string.h"
 #include "../core/wee-url.h"
 #include "../core/wee-util.h"
@@ -1022,6 +1024,24 @@ error:
     if (argv)
         string_free_split (argv);
     return NULL;
+}
+
+/*
+ * Returns secured data hashtable.
+ */
+
+struct t_hashtable *
+plugin_api_info_hashtable_secured_data_cb (const void *pointer, void *data,
+                                           const char *info_name,
+                                           struct t_hashtable *hashtable)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) hashtable;
+
+    return hashtable_dup (secure_hashtable_data);
 }
 
 /*
@@ -2039,6 +2059,15 @@ plugin_api_info_init ()
            "\"y\": y coordinate (string with integer >= 0)"),
         N_("see function \"hook_focus\" in Plugin API reference"),
         &gui_focus_info_hashtable_gui_focus_info_cb, NULL, NULL);
+    /* info (hashtable) with the secured data */
+    hook_info_hashtable (
+        NULL,
+        "secured_data",
+        N_("secured data"),
+        NULL,
+        N_("secured data: names and values (be careful: the values are "
+           "sensitive data: do NOT print/log them anywhere)"),
+        &plugin_api_info_hashtable_secured_data_cb, NULL, NULL);
 
     /* WeeChat core infolist hooks */
     hook_infolist (NULL, "bar",
