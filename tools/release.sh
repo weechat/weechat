@@ -89,7 +89,7 @@ release_build ()
     make install
     make changelog
     make rn
-    make test
+    make test CTEST_OUTPUT_ON_FAILURE=TRUE
     make dist
     VERSION_WEECHAT=$("${BUILD_DIR}/install/bin/weechat" --version)
     if [ "${VERSION_WEECHAT}" != "${VERSION}" ]; then
@@ -119,7 +119,7 @@ release_test_pkg ()
         -DENABLE_TESTS=ON \
         "${PKG_DIR}"
     make install
-    make test
+    make test CTEST_OUTPUT_ON_FAILURE=TRUE
     VERSION_WEECHAT=$("${PKG_BUILD_DIR}/install/bin/weechat" --version)
     if [ "${VERSION_WEECHAT}" != "${VERSION}" ]; then
         release_error "unexpected version \"${VERSION_WEECHAT}\" (expected: \"${VERSION}\")"
