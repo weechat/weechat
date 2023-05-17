@@ -248,6 +248,7 @@ struct t_irc_server
     int host_max_length;            /* max length of host (from msg 005)     */
     int casemapping;                /* casemapping from msg 005              */
     int utf8mapping;                /* utf8mapping from msg 005              */
+    int utf8only;                   /* UTF-8 only?                           */
     char *chantypes;                /* chantypes from msg 005 (eg "&#")      */
     char *chanmodes;                /* chanmodes from msg 005                */
                                     /* (eg "beI,k,l,imnpstaqr")              */

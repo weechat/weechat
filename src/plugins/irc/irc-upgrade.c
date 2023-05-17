@@ -557,6 +557,20 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                                 irc_upgrade_current_server->utf8mapping = utf8mapping;
                         }
                     }
+                    /* "utf8only" is new in WeeChat 4.0.0 */
+                    if (weechat_infolist_search_var (infolist, "utf8only"))
+                    {
+                        irc_upgrade_current_server->utf8only = weechat_infolist_integer (infolist, "utf8only");
+                    }
+                    else
+                    {
+                        /* WeeChat <= 3.8 */
+                        irc_upgrade_current_server->utf8only = (
+                            irc_server_get_isupport_value (
+                                irc_upgrade_current_server,
+                                "UTF8ONLY")) ?
+                            1 : 0;
+                    }
                     str = weechat_infolist_string (infolist, "chantypes");
                     if (str)
                         irc_upgrade_current_server->chantypes = strdup (str);

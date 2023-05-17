@@ -1715,6 +1715,7 @@ irc_server_alloc (const char *name)
     new_server->host_max_length = 0;
     new_server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
     new_server->utf8mapping = IRC_SERVER_UTF8MAPPING_NONE;
+    new_server->utf8only = 0;
     new_server->chantypes = NULL;
     new_server->chanmodes = NULL;
     new_server->monitor = 0;
@@ -2955,17 +2956,14 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                           server->name);
             }
 
-
-            if (!irc_server_get_isupport_value (server, "UTF8ONLY"))
+            /*
+             * when UTF8ONLY is enabled, clients must not send non-UTF-8 data
+             * to the server; the charset encoding below is then done only if
+             * UTF8ONLY is *NOT* enabled
+             * (see: https://ircv3.net/specs/extensions/utf8-only)
+             */
+            if (!server->utf8only)
             {
-                /* "Clients implementing this specification MUST NOT send
-                 * non-UTF-8 data to the server once they have seen
-                 * this token."
-                 * "If a client implementing this specification sees this token,
-                 * they MUST set their outgoing encoding to UTF-8 without
-                 * requiring any user intervention."
-                 * -- https://ircv3.net/specs/extensions/utf8-only
-                 */
                 msg_encoded = irc_message_convert_charset (ptr_msg, pos_encode,
                                                            "charset_encode",
                                                            modifier_data);
@@ -3562,14 +3560,17 @@ irc_server_msgq_flush ()
                                                   irc_recv_msgq->server->name);
                                     }
                                 }
-                                if (!irc_server_get_isupport_value (irc_recv_msgq->server,
-                                                                    "UTF8ONLY"))
+
+                                /*
+                                 * when UTF8ONLY is enabled, servers must
+                                 * not relay content containing non-UTF-8
+                                 * data to clients; the charset decoding below
+                                 * is then done only if UTF8ONLY is *NOT*
+                                 * enabled
+                                 * (see: https://ircv3.net/specs/extensions/utf8-only)
+                                 */
+                                if (!irc_recv_msgq->server->utf8only)
                                 {
-                                    /* "Servers publishing this token MUST NOT relay content
-                                     * [...] containing non-UTF-8 data to clients"
-                                     * -- https://ircv3.net/specs/extensions/utf8-only
-                                     * Therefore, no need to decode, we are sure it is UTF-8.
-                                     */
                                     msg_decoded = irc_message_convert_charset (
                                         ptr_msg, pos_decode,
                                         "charset_decode", modifier_data);
@@ -5718,6 +5719,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     server->host_max_length = 0;
     server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
     server->utf8mapping = IRC_SERVER_UTF8MAPPING_NONE;
+    server->utf8only = 0;
     if (server->chantypes)
     {
         free (server->chantypes);
@@ -6418,6 +6420,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, host_max_length, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, casemapping, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, utf8mapping, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, utf8only, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, chantypes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, chanmodes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, monitor, INTEGER, 0, NULL, NULL);
@@ -6799,6 +6802,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "utf8mapping", server->utf8mapping))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "utf8mapping_string", irc_server_utf8mapping_string[server->utf8mapping]))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "utf8only", server->utf8only))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "chantypes", server->chantypes))
         return 0;
@@ -7193,6 +7198,7 @@ irc_server_print_log ()
         weechat_log_printf ("  utf8mapping . . . . . . . : %d (%s)",
                             ptr_server->utf8mapping,
                             irc_server_utf8mapping_string[ptr_server->utf8mapping]);
+        weechat_log_printf ("  utf8only. . . . . . . . . : %d",    ptr_server->utf8only);
         weechat_log_printf ("  chantypes . . . . . . . . : '%s'",  ptr_server->chantypes);
         weechat_log_printf ("  chanmodes . . . . . . . . : '%s'",  ptr_server->chanmodes);
         weechat_log_printf ("  monitor . . . . . . . . . : %d",    ptr_server->monitor);

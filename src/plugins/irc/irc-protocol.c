@@ -4004,6 +4004,11 @@ IRC_PROTOCOL_CALLBACK(005)
             if (utf8mapping >= 0)
                 server->utf8mapping = utf8mapping;
         }
+        else if (strcmp (params[i], "UTF8ONLY") == 0)
+        {
+            /* save utf8only */
+            server->utf8only = 1;
+        }
         else if (strncmp (params[i], "CHANTYPES=", 10) == 0)
         {
             /* save chantypes */

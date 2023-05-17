@@ -65,7 +65,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     "CASEMAPPING=strict-rfc1459 LINELEN=4096 NICKLEN=30 MAXNICKLEN=31 " \
     "USERLEN=16 HOSTLEN=32 CHANNELLEN=50 TOPICLEN=390 DEAF=D "          \
     "CHANTYPES=# CHANMODES=eIbq,k,flj,CFLMPQScgimnprstuz "              \
-    "MONITOR=100"
+    "MONITOR=100 UTF8MAPPING=rfc8265 UTF8ONLY"
 #define IRC_ALL_CAPS "account-notify,away-notify,batch,cap-notify,"     \
     "chghost,draft/multiline,extended-join,invite-notify,message-tags," \
     "multi-prefix,server-time,setname,userhost-in-names"
@@ -2447,6 +2447,8 @@ TEST(IrcProtocolWithServer, 005_full)
     POINTERS_EQUAL(NULL, ptr_server->chantypes);
     POINTERS_EQUAL(NULL, ptr_server->chanmodes);
     LONGS_EQUAL(0, ptr_server->monitor);
+    LONGS_EQUAL(IRC_SERVER_UTF8MAPPING_NONE, ptr_server->utf8mapping);
+    LONGS_EQUAL(0, ptr_server->utf8only);
     POINTERS_EQUAL(NULL, ptr_server->isupport);
 
     RECV(":server 005 alice " IRC_MSG_005 " :are supported");
@@ -2462,6 +2464,8 @@ TEST(IrcProtocolWithServer, 005_full)
     STRCMP_EQUAL("#", ptr_server->chantypes);
     STRCMP_EQUAL("eIbq,k,flj,CFLMPQScgimnprstuz", ptr_server->chanmodes);
     LONGS_EQUAL(100, ptr_server->monitor);
+    LONGS_EQUAL(IRC_SERVER_UTF8MAPPING_RFC8265, ptr_server->utf8mapping);
+    LONGS_EQUAL(1, ptr_server->utf8only);
     STRCMP_EQUAL(IRC_MSG_005, ptr_server->isupport);
 
     /* check that realloc of info is OK if we receive the message again */
@@ -2478,6 +2482,8 @@ TEST(IrcProtocolWithServer, 005_full)
     STRCMP_EQUAL("#", ptr_server->chantypes);
     STRCMP_EQUAL("eIbq,k,flj,CFLMPQScgimnprstuz", ptr_server->chanmodes);
     LONGS_EQUAL(100, ptr_server->monitor);
+    LONGS_EQUAL(IRC_SERVER_UTF8MAPPING_RFC8265, ptr_server->utf8mapping);
+    LONGS_EQUAL(1, ptr_server->utf8only);
     STRCMP_EQUAL(IRC_MSG_005 " " IRC_MSG_005, ptr_server->isupport);
 }
 
