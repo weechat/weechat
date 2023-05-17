@@ -43,6 +43,7 @@ New features::
   * irc: add support of capabilities "batch" and "draft/multiline" (issue #1292, issue #1923)
   * irc: add modifier "irc_cap_sync_req" (issue #1767)
   * irc: add support of "LINELEN" in message 005 (max message length in bytes) (issue #1927)
+  * irc: add support of "UTF8ONLY" in message 005 (issue #1688)
   * irc: add command `/rules` (issue #1864)
   * irc: add command `/knock` (issue #7)
   * irc: add server option "registered_mode", add fields "authentication_method" and "sasl_mechanism_used" in server (issue #1625)
