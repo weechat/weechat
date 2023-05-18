@@ -52,6 +52,7 @@ New features::
   * irc: add `${username}` in server options "nicks" and "username", change their default values to use it
   * logger: add info "logger_log_file"
   * relay: rename "ssl" options and protocol to "tls"
+  * relay: make TLS certificate/key loading error handling more verbose (issue #1558)
 
 Bug fixes::
 

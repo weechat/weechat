@@ -20,6 +20,7 @@
  */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include <gnutls/gnutls.h>
 
@@ -47,6 +48,7 @@ gnutls_dh_params_t *relay_gnutls_dh_params = NULL;
 void
 relay_network_set_tls_cert_key (int verbose)
 {
+    const char *ptr_option;
     char *certkey_path;
     int ret;
     struct t_hashtable *options;
@@ -56,6 +58,20 @@ relay_network_set_tls_cert_key (int verbose)
 
     relay_network_init_tls_cert_key_ok = 0;
 
+    ptr_option = weechat_config_string (relay_config_network_tls_cert_key);
+
+    if (!ptr_option || !ptr_option[0])
+    {
+        if (verbose)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: no TLS certificate/key found (option "
+                              "relay.network.tls_cert_key is empty)"),
+                            weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+        }
+        return;
+    }
+
     options = weechat_hashtable_new (
         32,
         WEECHAT_HASHTABLE_STRING,
@@ -63,26 +79,42 @@ relay_network_set_tls_cert_key (int verbose)
         NULL, NULL);
     if (options)
         weechat_hashtable_set (options, "directory", "config");
-    certkey_path = weechat_string_eval_path_home (
-        weechat_config_string (relay_config_network_tls_cert_key),
-        NULL, NULL, options);
+    certkey_path = weechat_string_eval_path_home (ptr_option,
+                                                  NULL, NULL, options);
     if (options)
         weechat_hashtable_free (options);
-    if (certkey_path)
+
+    if (certkey_path && certkey_path[0])
     {
-        ret = gnutls_certificate_set_x509_key_file (relay_gnutls_x509_cred,
-                                                    certkey_path,
-                                                    certkey_path,
-                                                    GNUTLS_X509_FMT_PEM);
-        if (ret >= 0)
+        if (access (certkey_path, R_OK) == 0)
         {
-            relay_network_init_tls_cert_key_ok = 1;
-            if (verbose)
+            ret = gnutls_certificate_set_x509_key_file (relay_gnutls_x509_cred,
+                                                        certkey_path,
+                                                        certkey_path,
+                                                        GNUTLS_X509_FMT_PEM);
+            if (ret >= 0)
             {
-                weechat_printf (NULL,
-                                _("%s: TLS certificate and key have been "
-                                  "set"),
-                                RELAY_PLUGIN_NAME);
+                relay_network_init_tls_cert_key_ok = 1;
+                if (verbose)
+                {
+                    weechat_printf (NULL,
+                                    _("%s: TLS certificate and key have been "
+                                      "set"),
+                                    RELAY_PLUGIN_NAME);
+                }
+            }
+            else
+            {
+                if (verbose)
+                {
+                    weechat_printf (NULL,
+                                    _("%s%s: gnutls error: %s: %s "
+                                      "(option relay.network.tls_cert_key)"),
+                                    weechat_prefix ("error"),
+                                    RELAY_PLUGIN_NAME,
+                                    gnutls_strerror_name (ret),
+                                    gnutls_strerror (ret));
+                }
             }
         }
         else
@@ -90,13 +122,17 @@ relay_network_set_tls_cert_key (int verbose)
             if (verbose)
             {
                 weechat_printf (NULL,
-                                _("%s%s: warning: no TLS certificate/key "
-                                  "found (option relay.network.tls_cert_key)"),
-                                weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+                                _("%s%s: error: file with TLS certificate/key "
+                                  "is not readable: \"%s\" "
+                                  "(option relay.network.tls_cert_key)"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                certkey_path);
             }
         }
-        free (certkey_path);
     }
+
+    if (certkey_path)
+        free (certkey_path);
 }
 
 /*

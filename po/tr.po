@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-14 14:33+0200\n"
+"POT-Creation-Date: 2023-05-18 09:49+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5648,16 +5648,6 @@ msgstr ""
 
 msgid "No secured data set"
 msgstr "Ayarlanan güvenli veri yok"
-
-msgid "secured data"
-msgstr "güvenli veri"
-
-msgid ""
-"secured data: names and values (be careful: the values are sensitive data: "
-"do NOT print/log them anywhere)"
-msgstr ""
-"güvenli veri: adlar ve değerler (dikkatli olun, değerler hassas veridir, "
-"hiçbir zaman bir yerde yazdırmayın/günlüklemeyin)"
 
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
 msgstr ""
@@ -13428,6 +13418,16 @@ msgstr ""
 msgid "see function \"hook_focus\" in Plugin API reference"
 msgstr "eklenti API başvurusunda \"hook_focus\" işlevine bakın"
 
+msgid "secured data"
+msgstr "güvenli veri"
+
+msgid ""
+"secured data: names and values (be careful: the values are sensitive data: "
+"do NOT print/log them anywhere)"
+msgstr ""
+"güvenli veri: adlar ve değerler (dikkatli olun, değerler hassas veridir, "
+"hiçbir zaman bir yerde yazdırmayın/günlüklemeyin)"
+
 msgid "list of bars"
 msgstr "çubuklar listesi"
 
@@ -14494,9 +14494,40 @@ msgid "relay pointer (optional)"
 msgstr "iletim işaretçisi (isteğe bağlı)"
 
 #, fuzzy, c-format
+#| msgid ""
+#| "%s%s: warning: no SSL certificate/key found (option relay.network."
+#| "ssl_cert_key)"
+msgid ""
+"%s%s: no TLS certificate/key found (option relay.network.tls_cert_key is "
+"empty)"
+msgstr ""
+"%s%s: Uyarı: Bir SSL sertifika/anahtar seçeneği bulunamadı (relay.network."
+"ssl_cert_key seçeneği)"
+
+#, fuzzy, c-format
 #| msgid "%s: SSL certificate and key have been set"
 msgid "%s: TLS certificate and key have been set"
 msgstr "%s: SSL sertifikası ve anahtar ayarlandı"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: warning: no SSL certificate/key found (option relay.network."
+#| "ssl_cert_key)"
+msgid "%s%s: gnutls error: %s: %s (option relay.network.tls_cert_key)"
+msgstr ""
+"%s%s: Uyarı: Bir SSL sertifika/anahtar seçeneği bulunamadı (relay.network."
+"ssl_cert_key seçeneği)"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: warning: no SSL certificate/key found (option relay.network."
+#| "ssl_cert_key)"
+msgid ""
+"%s%s: error: file with TLS certificate/key is not readable: \"%s\" (option "
+"relay.network.tls_cert_key)"
+msgstr ""
+"%s%s: Uyarı: Bir SSL sertifika/anahtar seçeneği bulunamadı (relay.network."
+"ssl_cert_key seçeneği)"
 
 #, fuzzy, c-format
 #| msgid "%s%s: unable to initialize priority for SSL"

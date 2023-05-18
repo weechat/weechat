@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-14 14:33+0200\n"
+"POT-Creation-Date: 2023-05-18 09:49+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4968,15 +4968,6 @@ msgstr ""
 
 msgid "No secured data set"
 msgstr "Dati sicuri non configurati"
-
-#, fuzzy
-msgid "secured data"
-msgstr "Dati sicuri:"
-
-msgid ""
-"secured data: names and values (be careful: the values are sensitive data: "
-"do NOT print/log them anywhere)"
-msgstr ""
 
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
 msgstr ""
@@ -11665,6 +11656,15 @@ msgstr ""
 msgid "see function \"hook_focus\" in Plugin API reference"
 msgstr ""
 
+#, fuzzy
+msgid "secured data"
+msgstr "Dati sicuri:"
+
+msgid ""
+"secured data: names and values (be careful: the values are sensitive data: "
+"do NOT print/log them anywhere)"
+msgstr ""
+
 msgid "list of bars"
 msgstr "elenco delle barre"
 
@@ -12603,9 +12603,40 @@ msgid "relay pointer (optional)"
 msgstr "puntatore al relay (opzionale)"
 
 #, fuzzy, c-format
+#| msgid ""
+#| "%s%s: warning: no SSL certificate/key found (option relay.network."
+#| "ssl_cert_key)"
+msgid ""
+"%s%s: no TLS certificate/key found (option relay.network.tls_cert_key is "
+"empty)"
+msgstr ""
+"%s%s: attenzione: nessun certificato/chiave SSL trovato (opzione relay."
+"network.ssl_cert_key)"
+
+#, fuzzy, c-format
 #| msgid "%s: SSL certificate and key have been set"
 msgid "%s: TLS certificate and key have been set"
 msgstr "%s: il certificato SSL e la chiave sono stati impostati"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: warning: no SSL certificate/key found (option relay.network."
+#| "ssl_cert_key)"
+msgid "%s%s: gnutls error: %s: %s (option relay.network.tls_cert_key)"
+msgstr ""
+"%s%s: attenzione: nessun certificato/chiave SSL trovato (opzione relay."
+"network.ssl_cert_key)"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: warning: no SSL certificate/key found (option relay.network."
+#| "ssl_cert_key)"
+msgid ""
+"%s%s: error: file with TLS certificate/key is not readable: \"%s\" (option "
+"relay.network.tls_cert_key)"
+msgstr ""
+"%s%s: attenzione: nessun certificato/chiave SSL trovato (opzione relay."
+"network.ssl_cert_key)"
 
 #, fuzzy, c-format
 #| msgid "%s%s: unable to initialize priority for SSL"

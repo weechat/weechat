@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-14 14:33+0200\n"
+"POT-Creation-Date: 2023-05-18 09:49+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -6019,16 +6019,6 @@ msgstr ""
 
 msgid "No secured data set"
 msgstr "Brak zabezpieczonych danych"
-
-msgid "secured data"
-msgstr "zabezpieczone dane"
-
-msgid ""
-"secured data: names and values (be careful: the values are sensitive data: "
-"do NOT print/log them anywhere)"
-msgstr ""
-"zabezpieczone dane: nazwy i wartości (uważaj: to są wrażliwe dane: NIE "
-"wyświetlaj/zapisuj ich nigdzie)"
 
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
 msgstr ""
@@ -13884,6 +13874,16 @@ msgstr ""
 msgid "see function \"hook_focus\" in Plugin API reference"
 msgstr "zobacz funkcję „hook_focus” w opisie API wtyczek"
 
+msgid "secured data"
+msgstr "zabezpieczone dane"
+
+msgid ""
+"secured data: names and values (be careful: the values are sensitive data: "
+"do NOT print/log them anywhere)"
+msgstr ""
+"zabezpieczone dane: nazwy i wartości (uważaj: to są wrażliwe dane: NIE "
+"wyświetlaj/zapisuj ich nigdzie)"
+
 msgid "list of bars"
 msgstr "lista pasków"
 
@@ -14970,9 +14970,40 @@ msgid "relay pointer (optional)"
 msgstr "wskaźnik relay (opcjonalny)"
 
 #, fuzzy, c-format
+#| msgid ""
+#| "%s%s: warning: no SSL certificate/key found (option relay.network."
+#| "ssl_cert_key)"
+msgid ""
+"%s%s: no TLS certificate/key found (option relay.network.tls_cert_key is "
+"empty)"
+msgstr ""
+"%s%s: ostrzeżenie: nie znaleziono certyfikatu/klucza SSL (opcja relay."
+"network.ssl_cert_key)"
+
+#, fuzzy, c-format
 #| msgid "%s: SSL certificate and key have been set"
 msgid "%s: TLS certificate and key have been set"
 msgstr "%s: certyfikat SSL i klucz zostały ustawione"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: warning: no SSL certificate/key found (option relay.network."
+#| "ssl_cert_key)"
+msgid "%s%s: gnutls error: %s: %s (option relay.network.tls_cert_key)"
+msgstr ""
+"%s%s: ostrzeżenie: nie znaleziono certyfikatu/klucza SSL (opcja relay."
+"network.ssl_cert_key)"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: warning: no SSL certificate/key found (option relay.network."
+#| "ssl_cert_key)"
+msgid ""
+"%s%s: error: file with TLS certificate/key is not readable: \"%s\" (option "
+"relay.network.tls_cert_key)"
+msgstr ""
+"%s%s: ostrzeżenie: nie znaleziono certyfikatu/klucza SSL (opcja relay."
+"network.ssl_cert_key)"
 
 #, fuzzy, c-format
 #| msgid "%s%s: unable to initialize priority for SSL"
