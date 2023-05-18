@@ -48,7 +48,7 @@ gnutls_dh_params_t *relay_gnutls_dh_params = NULL;
 void
 relay_network_set_tls_cert_key (int verbose)
 {
-    const char *ptr_option;
+    const char *ptr_path;
     char *certkey_path;
     int ret;
     struct t_hashtable *options;
@@ -58,9 +58,9 @@ relay_network_set_tls_cert_key (int verbose)
 
     relay_network_init_tls_cert_key_ok = 0;
 
-    ptr_option = weechat_config_string (relay_config_network_tls_cert_key);
+    ptr_path = weechat_config_string (relay_config_network_tls_cert_key);
 
-    if (!ptr_option || !ptr_option[0])
+    if (!ptr_path || !ptr_path[0])
     {
         if (verbose)
         {
@@ -79,7 +79,7 @@ relay_network_set_tls_cert_key (int verbose)
         NULL, NULL);
     if (options)
         weechat_hashtable_set (options, "directory", "config");
-    certkey_path = weechat_string_eval_path_home (ptr_option,
+    certkey_path = weechat_string_eval_path_home (ptr_path,
                                                   NULL, NULL, options);
     if (options)
         weechat_hashtable_free (options);
