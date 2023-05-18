@@ -227,6 +227,9 @@ alias_replace_args (const char *alias_args, const char *user_args)
     const char *start, *pos;
     int n, m, argc, length_res, args_count, offset;
 
+    if (!alias_args || !user_args)
+        return NULL;
+
     argv = weechat_string_split (user_args, " ", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
