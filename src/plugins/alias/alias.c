@@ -209,6 +209,14 @@ alias_string_add_arguments (char **alias, int *length, char **argv, int start,
  *   $&   all arguments, with double quotes escaped (" replaced by \")
  *   $~   last argument
  *
+ * Example:
+ *
+ *   Parameters:
+ *     alias_args = "$2 $1 '$3-'"
+ *     user_args  = "abc def ghi jkl"
+ *
+ *   Result = "def abc 'ghi jkl'"
+ *
  * Note: result must be freed after use.
  */
 
