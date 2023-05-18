@@ -2212,7 +2212,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH],
                       &gui_bar_item_input_search_cb, NULL, NULL);
-    gui_bar_item_hook_signal ("window_switch;input_search;input_text_changed",
+    gui_bar_item_hook_signal ("window_switch;buffer_switch;input_search;"
+                              "input_text_changed",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH]);
 
     /* input text */
