@@ -62,6 +62,12 @@ add_library(weechat_unit_tests_core STATIC ${LIB_WEECHAT_UNIT_TESTS_CORE_SRC})
 # unit tests (plugins)
 set(LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC unit/plugins/test-plugins.cpp)
 
+if(ENABLE_ALIAS)
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/alias/test-alias.cpp
+  )
+endif()
+
 if(ENABLE_IRC)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     unit/plugins/irc/test-irc-batch.cpp
