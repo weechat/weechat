@@ -76,7 +76,6 @@ TEST(Alias, Search)
 
 /*
  * Tests functions:
- *   alias_string_add_word
  *   alias_string_add_word_range
  *   alias_string_add_arguments
  *   alias_replace_args
