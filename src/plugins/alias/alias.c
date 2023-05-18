@@ -206,6 +206,7 @@ alias_string_add_arguments (char **alias, int *length, char **argv, int start,
  *   $n-  arguments from n to last
  *   $n-m arguments from n to m
  *   $*   all arguments
+ *   $&   all arguments, with double quotes escaped (" replaced by \")
  *   $~   last argument
  *
  * Note: result must be freed after use.
