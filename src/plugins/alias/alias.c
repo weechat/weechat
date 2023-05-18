@@ -351,7 +351,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
     if (argv)
         weechat_string_free_split (argv);
 
-    return res;
+    return (res) ? res : strdup ("");
 }
 
 /*
