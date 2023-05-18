@@ -39,6 +39,7 @@ New features::
   * api: don't split on newline by default in functions `command` and `command_options` when `input_multiline` is set to 0
   * api: add optional argument with version in info "version_number"
   * alias: use lower case for default aliases, rename all aliases to lower case on upgrade (issue #1872)
+  * alias: add `$&` to replace all arguments with double quotes escaped (issue #1140, issue #1190)
   * irc: rename "ssl" options to "tls", connect with TLS and port 6697 by default
   * irc: add support of capabilities "batch" and "draft/multiline" (issue #1292, issue #1923)
   * irc: add modifier "irc_cap_sync_req" (issue #1767)
