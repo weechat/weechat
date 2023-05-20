@@ -199,14 +199,36 @@ trigger_buffer_set_callbacks ()
 void
 trigger_buffer_open (const char *filter, int switch_to_buffer)
 {
+    struct t_hashtable *buffer_props;
+
     if (!trigger_buffer)
     {
         if (!weechat_buffer_search (TRIGGER_PLUGIN_NAME, TRIGGER_BUFFER_NAME))
         {
-            trigger_buffer = weechat_buffer_new (
+            buffer_props = weechat_hashtable_new (32,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  NULL, NULL);
+            if (buffer_props)
+            {
+                weechat_hashtable_set (
+                    buffer_props, "localvar_set_type", "debug");
+                weechat_hashtable_set (
+                    buffer_props, "localvar_set_server", TRIGGER_BUFFER_NAME);
+                weechat_hashtable_set (
+                    buffer_props, "localvar_set_channel", TRIGGER_BUFFER_NAME);
+                weechat_hashtable_set (
+                    buffer_props, "localvar_set_no_log", "1");
+                /* disable all highlights on this buffer */
+                weechat_hashtable_set (buffer_props, "highlight_words", "-");
+            }
+            trigger_buffer = weechat_buffer_new_props (
                 TRIGGER_BUFFER_NAME,
+                buffer_props,
                 &trigger_buffer_input_cb, NULL, NULL,
                 &trigger_buffer_close_cb, NULL, NULL);
+            if (buffer_props)
+                weechat_hashtable_free (buffer_props);
         }
 
         /* failed to create buffer ? then return */
@@ -215,13 +237,6 @@ trigger_buffer_open (const char *filter, int switch_to_buffer)
 
         if (!weechat_buffer_get_integer (trigger_buffer, "short_name_is_set"))
             weechat_buffer_set (trigger_buffer, "short_name", TRIGGER_BUFFER_NAME);
-        weechat_buffer_set (trigger_buffer, "localvar_set_type", "debug");
-        weechat_buffer_set (trigger_buffer, "localvar_set_server", TRIGGER_BUFFER_NAME);
-        weechat_buffer_set (trigger_buffer, "localvar_set_channel", TRIGGER_BUFFER_NAME);
-        weechat_buffer_set (trigger_buffer, "localvar_set_no_log", "1");
-
-        /* disable all highlights on this buffer */
-        weechat_buffer_set (trigger_buffer, "highlight_words", "-");
     }
 
     if (filter && filter[0])
