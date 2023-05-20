@@ -51,27 +51,27 @@ if(ENABLE_MAN OR ENABLE_DOC)
     # asciidoctor arguments for user's guide
     set(ASCIIDOCTOR_USER_ARGS
       -a toc=left
-      -a toclevels=4
+      -a toclevels=2
       -a sectnums
-      -a sectnumlevels=3
+      -a sectnumlevels=1
       -a docinfo1
     )
 
     # asciidoctor arguments for plugin API reference
     set(ASCIIDOCTOR_PLUGIN_API_ARGS
       -a toc=left
-      -a toclevels=4
+      -a toclevels=3
       -a sectnums
-      -a sectnumlevels=3
+      -a sectnumlevels=2
       -a docinfo1
     )
 
     # asciidoctor arguments for scripting guide
     set(ASCIIDOCTOR_SCRIPTING_ARGS
       -a toc=left
-      -a toclevels=4
+      -a toclevels=3
       -a sectnums
-      -a sectnumlevels=3
+      -a sectnumlevels=1
       -a docinfo1
     )
 
@@ -98,7 +98,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a toc=left
       -a toclevels=3
       -a sectnums
-      -a sectnumlevels=3
+      -a sectnumlevels=1
       -a docinfo1
     )
 
@@ -107,7 +107,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a toc=left
       -a toclevels=3
       -a sectnums
-      -a sectnumlevels=3
+      -a sectnumlevels=1
       -a docinfo1
     )
 
