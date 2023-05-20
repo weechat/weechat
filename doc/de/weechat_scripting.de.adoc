@@ -2,24 +2,16 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: de
-:toc: left
-:toclevels: 4
 :toc-title: Inhaltsverzeichnis
-:sectnums:
-:sectnumlevels: 3
-:docinfo1:
-
 
 Übersetzer:
 
 * Nils Görs <weechatter@arcor.de>, 2010-2016
 
-
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
 
 Die neueste Version dieses Dokuments finden Sie unter
 https://weechat.org/doc/[this page ^↗^,window=_blank].
-
 
 [[introduction]]
 == Einleitung

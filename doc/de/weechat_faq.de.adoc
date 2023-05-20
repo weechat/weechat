@@ -2,21 +2,12 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: de
-:toc: left
 :toc-title: Inhaltsverzeichnis
-:toclevels: 2
-:sectnums:
-:sectnumlevels: 2
-:docinfo1:
-
 
 Übersetzer:
 
 * Juergen Descher <jhdl@gmx.net>, 2009
 * Nils Görs <weechatter@arcor.de>, 2009-2022
-
-toc::[]
-
 
 [[general]]
 == Allgemein

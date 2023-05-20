@@ -2,20 +2,11 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: sr
-:toc: left
-:toclevels: 2
 :toc-title: Садржај
-:sectnums:
-:sectnumlevels: 2
-:docinfo1:
 
 Превод:
 
 * Иван Пешић (<ivan.pesic@gmail.com>), 2021.
-
-
-toc::[]
-
 
 [[general]]
 == Опште

@@ -2,15 +2,11 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: sr
-:toc: left
 :toc-title: Садржај
-:sectnums:
-:docinfo1:
 
 Превод:
 
 * Иван Пешић (<ivan.pesic@gmail.com>), 2021.
-
 
 [[start]]
 == Покретање програма WeeChat

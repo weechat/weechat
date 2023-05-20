@@ -48,6 +48,69 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a autogendir="${CMAKE_CURRENT_BINARY_DIR}/autogen"
     )
 
+    # asciidoctor arguments for user's guide
+    set(ASCIIDOCTOR_USER_ARGS
+      -a toc=left
+      -a toclevels=4
+      -a sectnums
+      -a sectnumlevels=3
+      -a docinfo1
+    )
+
+    # asciidoctor arguments for plugin API reference
+    set(ASCIIDOCTOR_PLUGIN_API_ARGS
+      -a toc=left
+      -a toclevels=4
+      -a sectnums
+      -a sectnumlevels=3
+      -a docinfo1
+    )
+
+    # asciidoctor arguments for scripting guide
+    set(ASCIIDOCTOR_SCRIPTING_ARGS
+      -a toc=left
+      -a toclevels=4
+      -a sectnums
+      -a sectnumlevels=3
+      -a docinfo1
+    )
+
+    # asciidoctor arguments for FAQ
+    set(ASCIIDOCTOR_FAQ_ARGS
+      -a toc=left
+      -a toclevels=2
+      -a sectnums
+      -a sectnumlevels=2
+      -a docinfo1
+    )
+
+    # asciidoctor arguments for quickstart
+    set(ASCIIDOCTOR_QUICKSTART_ARGS
+      -a toc=left
+      -a toclevels=1
+      -a sectnums
+      -a sectnumlevels=1
+      -a docinfo1
+    )
+
+    # asciidoctor arguments for relay protocol
+    set(ASCIIDOCTOR_RELAY_ARGS
+      -a toc=left
+      -a toclevels=3
+      -a sectnums
+      -a sectnumlevels=3
+      -a docinfo1
+    )
+
+    # asciidoctor arguments for developer's guide
+    set(ASCIIDOCTOR_DEV_ARGS
+      -a toc=left
+      -a toclevels=3
+      -a sectnums
+      -a sectnumlevels=3
+      -a docinfo1
+    )
+
     # sed arguments used to replace links in ChangeLog and release notes
     set(SED_LINKS_ARGS
       -e "'s/issue #\\([0-9][0-9]*\\)/https:\\/\\/github.com\\/weechat\\/weechat\\/issues\\/\\1[issue #\\1^]/g'"
@@ -173,7 +236,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       foreach(lang ${USER_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_user.${lang}.html"
-          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o "weechat_user.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_user.${lang}.adoc"
+          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_USER_ARGS} -o "weechat_user.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_user.${lang}.adoc"
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_user.${lang}.adoc"
@@ -193,7 +256,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       foreach(lang ${PLUGIN_API_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.${lang}.html"
-          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o "weechat_plugin_api.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_plugin_api.${lang}.adoc"
+          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_PLUGIN_API_ARGS} -o "weechat_plugin_api.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_plugin_api.${lang}.adoc"
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_plugin_api.${lang}.adoc"
@@ -216,7 +279,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       foreach(lang ${SCRIPTING_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.${lang}.html"
-          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o "weechat_scripting.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_scripting.${lang}.adoc"
+          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_SCRIPTING_ARGS} -o "weechat_scripting.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_scripting.${lang}.adoc"
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_scripting.${lang}.adoc"
@@ -230,7 +293,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       foreach(lang ${FAQ_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.${lang}.html"
-          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o "weechat_faq.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_faq.${lang}.adoc"
+          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_FAQ_ARGS} -o "weechat_faq.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_faq.${lang}.adoc"
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_faq.${lang}.adoc"
@@ -244,7 +307,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       foreach(lang ${QUICKSTART_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.${lang}.html"
-          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o "weechat_quickstart.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_quickstart.${lang}.adoc"
+          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_QUICKSTART_ARGS} -o "weechat_quickstart.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_quickstart.${lang}.adoc"
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_quickstart.${lang}.adoc"
@@ -258,7 +321,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       foreach(lang ${RELAY_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.${lang}.html"
-          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o "weechat_relay_protocol.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_protocol.${lang}.adoc"
+          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_RELAY_ARGS} -o "weechat_relay_protocol.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_protocol.${lang}.adoc"
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_protocol.${lang}.adoc"
@@ -272,7 +335,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       foreach(lang ${DEV_LANG})
         add_custom_command(
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.${lang}.html"
-          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} -o "weechat_dev.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_dev.${lang}.adoc"
+          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_DEV_ARGS} -o "weechat_dev.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_dev.${lang}.adoc"
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_dev.${lang}.adoc"

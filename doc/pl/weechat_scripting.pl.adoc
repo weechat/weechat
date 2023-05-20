@@ -2,24 +2,16 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: pl
-:toc: left
-:toclevels: 4
 :toc-title: Spis treści
-:sectnums:
-:sectnumlevels: 3
-:docinfo1:
-
 
 Tłumaczenie:
 
 * Krzysztof Korościk <soltys1@gmail.com>, 2009-2022
 
-
 Ten dokument opisuje klienta rozmów WeeChat, który jest częścią WeeChat.
 
 Najnowszą wersję dokumentacji można znaleźć
 https://weechat.org/doc/[tutaj ^↗^,window=_blank].
-
 
 [[introduction]]
 == Wprowadzenie

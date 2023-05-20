@@ -2,22 +2,16 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: sr
-:toc: left
-:toclevels: 3
 :toc-title: Садржај
-:sectnums:
-:docinfo1:
 
 Превод:
 
 * Иван Пешић (<ivan.pesic@gmail.com>), 2021.
 
-
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
 Последња верзија овог документа може да се пронађе на
 https://weechat.org/doc/[овој страници ^↗^,window=_blank].
-
 
 [[introduction]]
 == Увод

@@ -2,16 +2,12 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: es
-:toc: left
-:sectnums:
-:docinfo1:
-
+:toc-title: Índice
 
 Traductores:
 
 * Lázaro A. <uranio-235@myopera.com>, 2012
 * Victorhck <victorhck@mailbox.org>, 2021
-
 
 [[start]]
 == Iniciar WeeChat

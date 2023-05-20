@@ -2,16 +2,11 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ja-jp
-:toc: left
 :toc-title: 目次
-:sectnums:
-:docinfo1:
-
 
 翻訳者:
 
 * Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2009-2019
-
 
 [[start]]
 == WeeChat を起動

@@ -2,25 +2,17 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ja-jp
-:toc: left
-:toclevels: 4
 :toc-title: 目次
-:sectnums:
-:sectnumlevels: 3
-:docinfo1:
-
 
 翻訳者:
 
 * Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2014-2019
-
 
 このマニュアルは WeeChat チャットクライアントについての文書で、WeeChat の一部です。
 
 // TRANSLATION MISSING
 Latest version of this document can be found on
 https://weechat.org/doc/[this page ^↗^,window=_blank].
-
 
 [[introduction]]
 == はじめに

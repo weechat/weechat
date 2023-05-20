@@ -2,17 +2,12 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: it
-:toc: left
 :toc-title: Indice
-:sectnums:
-:docinfo1:
-
 
 Traduttori:
 
 * Marco Paolone <marcopaolone@gmail.com>, 2009-2013
 * Mattia Ronchi <ronchimattia03@gmail.com>, 2023
-
 
 [[start]]
 == Avvio di WeeChat

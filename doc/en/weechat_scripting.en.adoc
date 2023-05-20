@@ -2,18 +2,11 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en
-:toc: left
-:toclevels: 4
-:sectnums:
-:sectnumlevels: 3
-:docinfo1:
-
 
 This manual documents WeeChat chat client, it is part of WeeChat.
 
 Latest version of this document can be found on
 https://weechat.org/doc/[this page ^↗^,window=_blank].
-
 
 [[introduction]]
 == Introduction

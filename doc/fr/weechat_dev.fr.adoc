@@ -2,19 +2,13 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr
-:toc: left
-:toclevels: 3
 :toc-title: Table des matières
-:sectnums:
-:docinfo1:
-
 
 Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.
 
 La dernière version de ce document peut être téléchargée sur
 https://weechat.org/doc/[cette page ^↗^,window=_blank].
-
 
 [[introduction]]
 == Introduction

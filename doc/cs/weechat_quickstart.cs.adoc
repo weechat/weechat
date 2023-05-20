@@ -2,10 +2,6 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: cs
-:toc: left
-:sectnums:
-:docinfo1:
-
 
 [[start]]
 == Spuštění WeeChatu

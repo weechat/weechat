@@ -2,21 +2,12 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: it
-:toc: left
 :toc-title: Indice
-:toclevels: 2
-:sectnums:
-:sectnumlevels: 2
-:docinfo1:
-
 
 // TRANSLATION MISSING
 Translators:
 
 * Marco Paolone <marcopaolone@gmail.com>, 2009-2013
-
-toc::[]
-
 
 [[general]]
 == Generale

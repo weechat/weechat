@@ -2,16 +2,11 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: pl
-:toc: left
 :toc-title: Spis treści
-:sectnums:
-:docinfo1:
-
 
 Tłumaczenie:
 
 * Krzysztof Korościk <soltys1@gmail.com>, 2009-2022
-
 
 [[start]]
 == Uruchamianie WeeChat

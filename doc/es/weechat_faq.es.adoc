@@ -2,19 +2,11 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: es
-:toc: left
-:toclevels: 2
-:sectnums:
-:sectnumlevels: 2
-:docinfo1:
+:toc-title: Índice
 
 Traductores
 
 * Victorhck <victorhck.mailbox.org>, 2021
-
-
-toc::[]
-
 
 [[general]]
 == General

@@ -2,10 +2,6 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en
-:toc: left
-:sectnums:
-:docinfo1:
-
 
 [[start]]
 == Start WeeChat

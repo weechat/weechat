@@ -2,19 +2,12 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: it
-:toc: left
-:toclevels: 4
 :toc-title: Indice
-:sectnums:
-:sectnumlevels: 3
-:docinfo1:
-
 
 // TRANSLATION MISSING
 Translators:
 
 * Marco Paolone <marcopaolone@gmail.com>, 2009-2012
-
 
 Questo manuale documenta il client di chat WeeChat, ed è parte
 del programma stesso.
@@ -22,7 +15,6 @@ del programma stesso.
 // TRANSLATION MISSING
 Latest version of this document can be found on
 https://weechat.org/doc/[this page ^↗^,window=_blank].
-
 
 [[introduction]]
 == Introduzione

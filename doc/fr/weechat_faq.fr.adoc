@@ -2,16 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr
-:toc: left
 :toc-title: Table des matières
-:toclevels: 2
-:sectnums:
-:sectnumlevels: 2
-:docinfo1:
-
-
-toc::[]
-
 
 == Général
 

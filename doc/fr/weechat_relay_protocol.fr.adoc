@@ -2,12 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr
-:toc: left
-:toclevels: 3
 :toc-title: Table des matières
-:sectnums:
-:docinfo1:
-
 
 [[introduction]]
 == Introduction
