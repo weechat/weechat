@@ -236,6 +236,24 @@ irc_channel_search_buffer (struct t_irc_server *server, int channel_type,
 }
 
 /*
+ * Applies properties to a buffer.
+ */
+
+void
+irc_channel_apply_props (void *data,
+                         struct t_hashtable *hashtable,
+                         const void *key,
+                         const void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+
+    weechat_buffer_set ((struct t_gui_buffer *)data,
+                        (const char *)key,
+                        (const char *)value);
+}
+
+/*
  * Creates a buffer for a channel.
  */
 
@@ -247,13 +265,14 @@ irc_channel_create_buffer (struct t_irc_server *server,
                            int auto_switch)
 {
     struct t_gui_buffer *ptr_buffer, *ptr_buffer_for_merge;
+    struct t_hashtable *buffer_props;
     int buffer_created, current_buffer_number, buffer_position;
     int autojoin_join, manual_join, noswitch;
     char str_number[32], *channel_name_lower, *buffer_name;
     const char *short_name, *localvar_channel;
 
     buffer_created = 0;
-
+    buffer_props = NULL;
     buffer_name = irc_buffer_build_name (server->name, channel_name);
 
     ptr_buffer = irc_channel_search_buffer (server, channel_type,
@@ -270,9 +289,44 @@ irc_channel_create_buffer (struct t_irc_server *server,
         if (ptr_buffer)
             weechat_bar_item_update ("buffer_name");
     }
+
+    buffer_props = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (buffer_props)
+    {
+        weechat_hashtable_set (
+            buffer_props,
+            "input_multiline",
+            (weechat_hashtable_has_key (server->cap_list, "batch")
+             && weechat_hashtable_has_key (server->cap_list, "draft/multiline")) ?
+            "1" : "0");
+        weechat_hashtable_set (buffer_props, "name", buffer_name);
+        weechat_hashtable_set (
+            buffer_props,
+            "localvar_set_type",
+            (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ? "channel" : "private");
+        weechat_hashtable_set (buffer_props, "localvar_set_nick", server->nick);
+        weechat_hashtable_set (buffer_props, "localvar_set_host", server->host);
+        weechat_hashtable_set (buffer_props, "localvar_set_server", server->name);
+        weechat_hashtable_set (buffer_props, "localvar_set_channel", channel_name);
+        if (server->is_away && server->away_message)
+        {
+            weechat_hashtable_set (buffer_props,
+                                   "localvar_set_away", server->away_message);
+        }
+        else
+        {
+            weechat_hashtable_set (buffer_props, "localvar_del_away", "");
+        }
+    }
+
     if (ptr_buffer)
     {
         weechat_nicklist_remove_all (ptr_buffer);
+        weechat_hashtable_map (buffer_props, &irc_channel_apply_props, ptr_buffer);
     }
     else
     {
@@ -294,9 +348,11 @@ irc_channel_create_buffer (struct t_irc_server *server,
         current_buffer_number = weechat_buffer_get_integer (
             weechat_current_buffer (), "number");
 
-        ptr_buffer = weechat_buffer_new (buffer_name,
-                                         &irc_input_data_cb, NULL, NULL,
-                                         &irc_buffer_close_cb, NULL, NULL);
+        ptr_buffer = weechat_buffer_new_props (
+            buffer_name,
+            buffer_props,
+            &irc_input_data_cb, NULL, NULL,
+            &irc_buffer_close_cb, NULL, NULL);
         if (!ptr_buffer)
             goto end;
 
@@ -345,30 +401,6 @@ irc_channel_create_buffer (struct t_irc_server *server,
             /* update the short_name only if it was not changed by the user */
             weechat_buffer_set (ptr_buffer, "short_name", channel_name);
         }
-    }
-
-    weechat_buffer_set (
-        ptr_buffer,
-        "input_multiline",
-        (weechat_hashtable_has_key (server->cap_list, "batch")
-         && weechat_hashtable_has_key (server->cap_list, "draft/multiline")) ?
-        "1" : "0");
-
-    weechat_buffer_set (ptr_buffer, "name", buffer_name);
-    weechat_buffer_set (ptr_buffer, "localvar_set_type",
-                        (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ? "channel" : "private");
-    weechat_buffer_set (ptr_buffer, "localvar_set_nick", server->nick);
-    weechat_buffer_set (ptr_buffer, "localvar_set_host", server->host);
-    weechat_buffer_set (ptr_buffer, "localvar_set_server", server->name);
-    weechat_buffer_set (ptr_buffer, "localvar_set_channel", channel_name);
-    if (server->is_away && server->away_message)
-    {
-        weechat_buffer_set (ptr_buffer, "localvar_set_away",
-                            server->away_message);
-    }
-    else
-    {
-        weechat_buffer_set (ptr_buffer, "localvar_del_away", "");
     }
 
     if (buffer_created)
@@ -450,6 +482,8 @@ irc_channel_create_buffer (struct t_irc_server *server,
     }
 
 end:
+    if (buffer_props)
+        weechat_hashtable_free (buffer_props);
     if (buffer_name)
         free (buffer_name);
     return ptr_buffer;

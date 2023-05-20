@@ -4668,6 +4668,7 @@ irc_server_create_buffer (struct t_irc_server *server)
 {
     char buffer_name[1024], charset_modifier[1024];
     struct t_gui_buffer *ptr_buffer_for_merge;
+    struct t_hashtable *buffer_props;
 
     ptr_buffer_for_merge = NULL;
     switch (weechat_config_integer (irc_config_look_server_buffer))
@@ -4682,30 +4683,49 @@ irc_server_create_buffer (struct t_irc_server *server)
             break;
     }
 
+    buffer_props = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (buffer_props)
+    {
+        weechat_hashtable_set (buffer_props, "localvar_set_type", "server");
+        weechat_hashtable_set (buffer_props,
+                               "localvar_set_server", server->name);
+        weechat_hashtable_set (buffer_props,
+                               "localvar_set_channel", server->name);
+        snprintf (charset_modifier, sizeof (charset_modifier),
+                  "irc.%s", server->name);
+        weechat_hashtable_set (buffer_props,
+                               "localvar_set_charset_modifier",
+                               charset_modifier);
+        if (weechat_config_boolean (irc_config_network_send_unknown_commands))
+        {
+            weechat_hashtable_set (buffer_props,
+                                   "input_get_unknown_commands", "1");
+        }
+    }
+
     snprintf (buffer_name, sizeof (buffer_name),
               "server.%s", server->name);
-    server->buffer = weechat_buffer_new (buffer_name,
-                                         &irc_input_data_cb, NULL, NULL,
-                                         &irc_buffer_close_cb, NULL, NULL);
+    server->buffer = weechat_buffer_new_props (
+        buffer_name,
+        buffer_props,
+        &irc_input_data_cb, NULL, NULL,
+        &irc_buffer_close_cb, NULL, NULL);
+    if (buffer_props)
+        weechat_hashtable_free (buffer_props);
+
     if (!server->buffer)
         return NULL;
 
     if (!weechat_buffer_get_integer (server->buffer, "short_name_is_set"))
         weechat_buffer_set (server->buffer, "short_name", server->name);
-    weechat_buffer_set (server->buffer, "localvar_set_type", "server");
-    weechat_buffer_set (server->buffer, "localvar_set_server", server->name);
-    weechat_buffer_set (server->buffer, "localvar_set_channel", server->name);
-    snprintf (charset_modifier, sizeof (charset_modifier),
-              "irc.%s", server->name);
-    weechat_buffer_set (server->buffer, "localvar_set_charset_modifier",
-                        charset_modifier);
 
     (void) weechat_hook_signal_send ("logger_backlog",
                                      WEECHAT_HOOK_SIGNAL_POINTER,
                                      server->buffer);
-
-    if (weechat_config_boolean (irc_config_network_send_unknown_commands))
-        weechat_buffer_set (server->buffer, "input_get_unknown_commands", "1");
 
     /* set highlights settings on server buffer */
     weechat_buffer_set (server->buffer, "highlight_words_add",
