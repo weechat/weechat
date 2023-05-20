@@ -1546,24 +1546,39 @@ fset_buffer_set_localvar_filter ()
 void
 fset_buffer_open ()
 {
-    if (!fset_buffer)
+    struct t_hashtable *buffer_props;
+
+    if (fset_buffer)
+        return;
+
+    buffer_props = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER,
+        NULL,
+        NULL);
+    if (buffer_props)
     {
-        fset_buffer = weechat_buffer_new (
-            FSET_BUFFER_NAME,
-            &fset_buffer_input_cb, NULL, NULL,
-            &fset_buffer_close_cb, NULL, NULL);
-
-        /* failed to create buffer ? then exit */
-        if (!fset_buffer)
-            return;
-
-        weechat_buffer_set (fset_buffer, "type", "free");
-        fset_buffer_set_keys ();
-        weechat_buffer_set (fset_buffer, "localvar_set_type", "option");
-        fset_buffer_set_localvar_filter ();
-
-        fset_buffer_selected_line = 0;
+        weechat_hashtable_set (buffer_props, "type", "free");
+        weechat_hashtable_set (buffer_props, "localvar_set_type", "option");
     }
+
+    fset_buffer = weechat_buffer_new_props (
+        FSET_BUFFER_NAME,
+        buffer_props,
+        &fset_buffer_input_cb, NULL, NULL,
+        &fset_buffer_close_cb, NULL, NULL);
+
+    if (buffer_props)
+        weechat_hashtable_free (buffer_props);
+
+    if (!fset_buffer)
+        return;
+
+    fset_buffer_set_keys ();
+    fset_buffer_set_localvar_filter ();
+
+    fset_buffer_selected_line = 0;
 }
 
 /*
