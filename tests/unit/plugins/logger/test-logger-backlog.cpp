@@ -42,16 +42,6 @@ TEST_GROUP(LoggerBacklog)
 
 /*
  * Tests functions:
- *   logger_backlog_check_conditions
- */
-
-TEST(LoggerBacklog, CheckConditions)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   logger_backlog_display_line
  */
 

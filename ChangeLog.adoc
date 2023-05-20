@@ -52,6 +52,7 @@ New features::
   * irc: use key when /joining in open channel buffer (issue #1260)
   * irc: add option `buffer` in command `/autojoin sort` (issue #1876)
   * irc: add `${username}` in server options "nicks" and "username", change their default values to use it
+  * logger: add option logger.file.log_conditions (issue #1942)
   * logger: add info "logger_log_file"
   * relay: rename "ssl" options and protocol to "tls"
   * relay: make TLS certificate/key loading error handling more verbose (issue #1558)

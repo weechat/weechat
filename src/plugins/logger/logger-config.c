@@ -58,6 +58,7 @@ struct t_config_option *logger_config_file_color_lines = NULL;
 struct t_config_option *logger_config_file_flush_delay = NULL;
 struct t_config_option *logger_config_file_fsync = NULL;
 struct t_config_option *logger_config_file_info_lines = NULL;
+struct t_config_option *logger_config_file_log_conditions = NULL;
 struct t_config_option *logger_config_file_mask = NULL;
 struct t_config_option *logger_config_file_name_lower_case = NULL;
 struct t_config_option *logger_config_file_nick_prefix = NULL;
@@ -578,6 +579,16 @@ logger_config_init ()
             N_("write information line in log file when log starts or ends for "
                "a buffer"),
             NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        logger_config_file_log_conditions = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "log_conditions", "string",
+            N_("conditions to save content of buffers to files "
+               "(note: content is evaluated, see /help eval); "
+               "empty value saves content on all buffers; "
+               "for example to log only private buffers: "
+               "\"${type} == private\""),
+            NULL, 0, 0, "", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         logger_config_file_mask = weechat_config_new_option (
             logger_config_file, logger_config_section_file,

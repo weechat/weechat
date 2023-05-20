@@ -89,6 +89,7 @@ endif()
 
 if(ENABLE_LOGGER)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/logger/test-logger.cpp
     unit/plugins/logger/test-logger-backlog.cpp
   )
 endif()

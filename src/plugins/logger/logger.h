@@ -34,6 +34,8 @@ extern struct t_weechat_plugin *weechat_logger_plugin;
 extern struct t_hook *logger_hook_timer;
 extern struct t_hook *logger_hook_print;
 
+extern int logger_check_conditions (struct t_gui_buffer *buffer,
+                                    const char *conditions);
 extern int logger_create_directory ();
 extern char *logger_build_option_name (struct t_gui_buffer *buffer);
 extern int logger_get_level_for_buffer (struct t_gui_buffer *buffer);

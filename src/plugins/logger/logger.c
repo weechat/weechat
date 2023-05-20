@@ -50,6 +50,62 @@ struct t_hook *logger_hook_print = NULL;
 
 
 /*
+ * Checks conditions against a buffer.
+ *
+ * Returns:
+ *   1: conditions OK
+ *   0: conditions not OK
+ */
+
+int
+logger_check_conditions (struct t_gui_buffer *buffer, const char *conditions)
+{
+    struct t_hashtable *pointers, *options;
+    char *result;
+    int condition_ok;
+
+    if (!buffer)
+        return 0;
+
+    /* empty conditions = always true */
+    if (!conditions || !conditions[0])
+        return 1;
+
+    pointers = weechat_hashtable_new (32,
+                                      WEECHAT_HASHTABLE_STRING,
+                                      WEECHAT_HASHTABLE_POINTER,
+                                      NULL,
+                                      NULL);
+    if (pointers)
+    {
+        weechat_hashtable_set (pointers, "window",
+                               weechat_window_search_with_buffer (buffer));
+        weechat_hashtable_set (pointers, "buffer", buffer);
+    }
+
+    options = weechat_hashtable_new (32,
+                                     WEECHAT_HASHTABLE_STRING,
+                                     WEECHAT_HASHTABLE_STRING,
+                                     NULL,
+                                     NULL);
+    if (options)
+        weechat_hashtable_set (options, "type", "condition");
+
+    result = weechat_string_eval_expression (conditions,
+                                             pointers, NULL, options);
+    condition_ok = (result && (strcmp (result, "1") == 0));
+    if (result)
+        free (result);
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (options)
+        weechat_hashtable_free (options);
+
+    return condition_ok;
+}
+
+/*
  * Gets logger file path option.
  *
  * Special vars are replaced:
