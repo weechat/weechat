@@ -230,6 +230,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/guile/weechat-guile.h
 ./src/plugins/irc/irc-bar-item.c
 ./src/plugins/irc/irc-bar-item.h
+./src/plugins/irc/irc-batch.c
+./src/plugins/irc/irc-batch.h
 ./src/plugins/irc/irc-buffer.c
 ./src/plugins/irc/irc-buffer.h
 ./src/plugins/irc/irc.c
