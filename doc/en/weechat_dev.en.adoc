@@ -390,6 +390,7 @@ WeeChat "core" is located in following directories:
 | Path/file                           | Description
 | tests/                              | Root of tests.
 |    tests.cpp                        | Program used to run all tests.
+|    tests-record.cpp                 | Record and search in messages displayed.
 |    scripts/                         | Root of scripting API tests.
 |       test-scripts.cpp              | Program used to run the scripting API tests.
 |       python/                       | Python scripts to generate and run the scripting API tests.

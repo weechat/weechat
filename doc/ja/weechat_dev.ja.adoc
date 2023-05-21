@@ -413,6 +413,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 | パス/ファイル名                     | 説明
 | tests/                              | テスト用のルートディレクトリ
 |    tests.cpp                        | 全テストの実行時に使われるプログラム
+// TRANSLATION MISSING
+|    tests-record.cpp                 | Record and search in messages displayed.
 |    scripts/                         | スクリプト API テスト用のルートディレクトリ
 |       test-scripts.cpp              | スクリプト API テストの実行時に使われるプログラム
 |       python/                       | スクリプト API テストを生成、実行する Python スクリプト

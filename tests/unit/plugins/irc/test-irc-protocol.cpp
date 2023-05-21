@@ -22,6 +22,7 @@
 #include "CppUTest/TestHarness.h"
 
 #include "tests/tests.h"
+#include "tests/tests-record.h"
 
 extern "C"
 {
@@ -78,22 +79,25 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
 #define RECV(__irc_msg)                                                 \
     server_recv (__irc_msg);
 
-#define CHECK_CORE(__message)                                           \
-    if (record_search ("core.weechat", __message) < 0)                  \
+#define CHECK_CORE(__prefix, __message)                                 \
+    if (record_search ("core.weechat", __prefix, __message) < 0)        \
     {                                                                   \
         char **msg = server_build_error (                               \
             "Core message not displayed",                               \
+            __prefix,                                                   \
             __message,                                                  \
             "All messages displayed");                                  \
         record_dump (msg);                                              \
         FAIL(string_dyn_free (msg, 0));                                 \
     }
 
-#define CHECK_SRV(__message)                                            \
-    if (record_search ("irc.server." IRC_FAKE_SERVER, __message) < 0)   \
+#define CHECK_SRV(__prefix, __message)                                  \
+    if (record_search ("irc.server." IRC_FAKE_SERVER, __prefix,         \
+                       __message) < 0)                                  \
     {                                                                   \
         char **msg = server_build_error (                               \
             "Server message not displayed",                             \
+            __prefix,                                                   \
             __message,                                                  \
             "All messages displayed");                                  \
         record_dump (msg);                                              \
@@ -101,35 +105,41 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     }
 
 #define CHECK_ERROR_PARAMS(__command, __params, __expected_params)      \
-    CHECK_SRV("=!= irc: too few parameters received in command "        \
+    CHECK_SRV("=!=",                                                    \
+              "irc: too few parameters received in command "            \
               "\"" __command "\" (received: " #__params ", "            \
               "expected: at least " #__expected_params ")");
 
 #define CHECK_ERROR_NICK(__command)                                     \
-    CHECK_SRV("=!= irc: command \"" __command "\" received without "    \
+    CHECK_SRV("=!=",                                                    \
+              "irc: command \"" __command "\" received without "        \
               "nick");
 
 #define CHECK_ERROR_PARSE(__command, __message)                         \
-    CHECK_SRV("=!= irc: failed to parse command \"" __command "\" "     \
+    CHECK_SRV("=!=",                                                    \
+              "irc: failed to parse command \"" __command "\" "         \
               "(please report to developers): \"" __message "\"");
 
-#define CHECK_CHAN(__message)                                           \
-    if (record_search ("irc." IRC_FAKE_SERVER ".#test", __message) < 0) \
+#define CHECK_CHAN(__prefix, __message)                                 \
+    if (record_search ("irc." IRC_FAKE_SERVER ".#test", __prefix,       \
+                       __message) < 0)                                  \
     {                                                                   \
         char **msg = server_build_error (                               \
             "Channel message not displayed",                            \
+            __prefix,                                                   \
             __message,                                                  \
             "All messages displayed");                                  \
         record_dump (msg);                                              \
         FAIL(string_dyn_free (msg, 0));                                 \
     }
 
-#define CHECK_PV(__nick, __message)                                     \
-    if (record_search ("irc." IRC_FAKE_SERVER "." __nick,               \
-                       __message) < 0)                                  \
+#define CHECK_PV(__nick, __prefix, __message)                           \
+     if (record_search ("irc." IRC_FAKE_SERVER "." __nick,               \
+                       __prefix, __message) < 0)                        \
     {                                                                   \
         char **msg = server_build_error (                               \
             "Private message not displayed",                            \
+            __prefix,                                                   \
             __message,                                                  \
             "All messages displayed");                                  \
         record_dump (msg);                                              \
@@ -141,6 +151,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     {                                                                   \
         char **msg = server_build_error (                               \
             "Unexpected message(s) displayed",                          \
+            NULL,                                                       \
             NULL,                                                       \
             NULL);                                                      \
         record_dump (msg);                                              \
@@ -154,6 +165,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     {                                                                   \
         char **msg = server_build_error (                               \
             "Message not sent to server",                               \
+            NULL,                                                       \
             __message,                                                  \
             "All messages sent");                                       \
         sent_msg_dump (msg);                                            \
@@ -165,6 +177,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
         char **msg = server_build_error (                               \
             "Unexpected response(s) sent to the IRC server",            \
             NULL,                                                       \
+            NULL,                                                       \
             NULL);                                                      \
         sent_msg_dump (msg);                                            \
         FAIL(string_dyn_free (msg, 0));                                 \
@@ -172,17 +185,17 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
 
 #define SRV_INIT                                                        \
     RECV(":server 001 alice :Welcome on this server, alice!");          \
-    CHECK_SRV("-- Welcome on this server, alice!");
+    CHECK_SRV("--", "Welcome on this server, alice!");
 
 #define SRV_INIT_JOIN                                                   \
     SRV_INIT;                                                           \
     RECV(":alice!user_a@host_a JOIN #test");                            \
-    CHECK_CHAN("--> alice (user_a@host_a) has joined #test");
+    CHECK_CHAN("-->", "alice (user_a@host_a) has joined #test");
 
 #define SRV_INIT_JOIN2                                                  \
     SRV_INIT_JOIN;                                                      \
     RECV(":bob!user_b@host_b JOIN #test");                              \
-    CHECK_CHAN("--> bob (user_b@host_b) has joined #test");
+    CHECK_CHAN("-->", "bob (user_b@host_b) has joined #test");
 
 struct t_irc_server *ptr_server = NULL;
 struct t_arraylist *sent_messages = NULL;
@@ -422,7 +435,9 @@ TEST_GROUP(IrcProtocolWithServer)
         record_stop ();
     }
 
-    char **server_build_error (const char *msg1, const char *message,
+    char **server_build_error (const char *msg1,
+                               const char *prefix,
+                               const char *message,
                                const char *msg2)
     {
         char **msg;
@@ -431,7 +446,9 @@ TEST_GROUP(IrcProtocolWithServer)
         string_dyn_concat (msg, msg1, -1);
         if (message)
         {
-            string_dyn_concat (msg, ": \"", -1);
+            string_dyn_concat (msg, ": prefix=\"", -1);
+            string_dyn_concat (msg, prefix, -1);
+            string_dyn_concat (msg, "\", message=\"", -1);
             string_dyn_concat (msg, message, -1);
             string_dyn_concat (msg, "\"\n", -1);
         }
@@ -618,17 +635,17 @@ TEST(IrcProtocolWithServer, recv_command_not_found)
     SRV_INIT;
 
     RECV(":alice!user@host XYZ");
-    CHECK_SRV("=!= irc: command \"XYZ\" not found: \":alice!user@host XYZ\"");
+    CHECK_SRV("=!=", "irc: command \"XYZ\" not found: \":alice!user@host XYZ\"");
 
     RECV(":alice!user@host XYZ abc def");
-    CHECK_SRV("=!= irc: command \"XYZ\" not found: \":alice!user@host XYZ "
-              "abc def\"");
+    CHECK_SRV("=!=",
+              "irc: command \"XYZ\" not found: \":alice!user@host XYZ abc def\"");
 
     RECV(":alice!user@host 099");
     CHECK_ERROR_PARAMS("099", 0, 1);
 
     RECV(":alice!user@host 099 abc def");
-    CHECK_SRV("-- abc def");
+    CHECK_SRV("--", "abc def");
 }
 
 /*
@@ -644,16 +661,16 @@ TEST(IrcProtocolWithServer, recv_command_invalid_message)
     CHECK_NO_MSG;
 
     RECV("abc");
-    CHECK_SRV("=!= irc: command \"abc\" not found: \"abc\"");
+    CHECK_SRV("=!=", "irc: command \"abc\" not found: \"abc\"");
 
     RECV(":alice!user@host");
     CHECK_NO_MSG;
 
     RECV("@");
-    CHECK_SRV("=!= irc: command \"@\" not found: \"@\"");
+    CHECK_SRV("=!=", "irc: command \"@\" not found: \"@\"");
 
     RECV("@test");
-    CHECK_SRV("=!= irc: command \"@test\" not found: \"@test\"");
+    CHECK_SRV("=!=", "irc: command \"@test\" not found: \"@test\"");
 
     RECV("@test :");
     CHECK_NO_MSG;
@@ -686,23 +703,23 @@ TEST(IrcProtocolWithServer, account_without_account_notify_cap)
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
     RECV(":bob!user@host ACCOUNT *");
-    CHECK_CHAN("-- bob has unidentified");
-    CHECK_PV("bob", "-- bob has unidentified");
+    CHECK_CHAN("--", "bob has unidentified");
+    CHECK_PV("bob", "--", "bob has unidentified");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
     RECV(":bob!user@host ACCOUNT :*");
-    CHECK_CHAN("-- bob has unidentified");
-    CHECK_PV("bob", "-- bob has unidentified");
+    CHECK_CHAN("--", "bob has unidentified");
+    CHECK_PV("bob", "--", "bob has unidentified");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
     RECV(":bob!user@host ACCOUNT new_account");
-    CHECK_CHAN("-- bob has identified as new_account");
-    CHECK_PV("bob", "-- bob has identified as new_account");
+    CHECK_CHAN("--", "bob has identified as new_account");
+    CHECK_PV("bob", "--", "bob has identified as new_account");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
     RECV(":bob!user@host ACCOUNT :new_account");
-    CHECK_CHAN("-- bob has identified as new_account");
-    CHECK_PV("bob", "-- bob has identified as new_account");
+    CHECK_CHAN("--", "bob has identified as new_account");
+    CHECK_PV("bob", "--", "bob has identified as new_account");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 }
 
@@ -725,23 +742,23 @@ TEST(IrcProtocolWithServer, account_with_account_notify_cap)
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
     RECV(":alice!user@host ACCOUNT new_account");
-    CHECK_CHAN("-- alice has identified as new_account");
+    CHECK_CHAN("--", "alice has identified as new_account");
     STRCMP_EQUAL("new_account", ptr_nick->account);
 
     RECV(":alice!user@host ACCOUNT :new_account2");
-    CHECK_CHAN("-- alice has identified as new_account2");
+    CHECK_CHAN("--", "alice has identified as new_account2");
     STRCMP_EQUAL("new_account2", ptr_nick->account);
 
     RECV(":alice!user@host ACCOUNT *");
-    CHECK_CHAN("-- alice has unidentified");
+    CHECK_CHAN("--", "alice has unidentified");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
     RECV(":alice!user@host ACCOUNT :new_account3");
-    CHECK_CHAN("-- alice has identified as new_account3");
+    CHECK_CHAN("--", "alice has identified as new_account3");
     STRCMP_EQUAL("new_account3", ptr_nick->account);
 
     RECV(":alice!user@host ACCOUNT :*");
-    CHECK_CHAN("-- alice has unidentified");
+    CHECK_CHAN("--", "alice has unidentified");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 }
 
@@ -827,11 +844,11 @@ TEST(IrcProtocolWithServer, batch_without_batch_cap)
 
     /* new messages with batch reference */
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :this is a test");
-    CHECK_CHAN("bob this is a test");
+    CHECK_CHAN("bob", "this is a test");
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :second test");
-    CHECK_CHAN("bob second test");
+    CHECK_CHAN("bob", "second test");
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :third test");
-    CHECK_CHAN("bob third test");
+    CHECK_CHAN("bob", "third test");
 
     /* end batch */
     RECV(":server BATCH -ref");
@@ -844,11 +861,11 @@ TEST(IrcProtocolWithServer, batch_without_batch_cap)
 
     /* new messages with batch reference */
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :test 1");
-    CHECK_CHAN("bob test 1");
+    CHECK_CHAN("bob", "test 1");
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :test 2");
-    CHECK_CHAN("bob test 2");
+    CHECK_CHAN("bob", "test 2");
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :test 3");
-    CHECK_CHAN("bob test 3");
+    CHECK_CHAN("bob", "test 3");
 
     /* end batch */
     RECV(":server BATCH -ref");
@@ -864,19 +881,19 @@ TEST(IrcProtocolWithServer, batch_without_batch_cap)
     RECV(":server BATCH +1 example");
     CHECK_NO_MSG;
     RECV("@batch=1 :bob!user_b@host_b PRIVMSG #test :message 1");
-    CHECK_CHAN("bob message 1");
+    CHECK_CHAN("bob", "message 1");
     RECV(":server BATCH +2 example");
     CHECK_NO_MSG;
     RECV("@batch=1 :bob!user_b@host_b PRIVMSG #test :message 2");
-    CHECK_CHAN("bob message 2");
+    CHECK_CHAN("bob", "message 2");
     RECV("@batch=2 :bob!user_b@host_b PRIVMSG #test :message 4");
-    CHECK_CHAN("bob message 4");
+    CHECK_CHAN("bob", "message 4");
     RECV("@batch=1 :bob!user_b@host_b PRIVMSG #test :message 3");
-    CHECK_CHAN("bob message 3");
+    CHECK_CHAN("bob", "message 3");
     RECV(":server BATCH -1");
     CHECK_NO_MSG;
     RECV("@batch=2 :bob!user_b@host_b PRIVMSG #test :message 5");
-    CHECK_CHAN("bob message 5");
+    CHECK_CHAN("bob", "message 5");
     RECV(":server BATCH -2");
     CHECK_NO_MSG;
 
@@ -885,9 +902,9 @@ TEST(IrcProtocolWithServer, batch_without_batch_cap)
     CHECK_NO_MSG;
     RECV("@batch=ref1 :server BATCH +ref2 example2");
     RECV("@batch=ref1 :bob!user_b@host_b PRIVMSG #test :test ref1");
-    CHECK_CHAN("bob test ref1");
+    CHECK_CHAN("bob", "test ref1");
     RECV("@batch=ref2 :bob!user_b@host_b PRIVMSG #test :test ref2");
-    CHECK_CHAN("bob test ref2");
+    CHECK_CHAN("bob", "test ref2");
     RECV(":server BATCH -ref2");
     CHECK_NO_MSG;
     RECV(":server BATCH -ref1");
@@ -897,9 +914,9 @@ TEST(IrcProtocolWithServer, batch_without_batch_cap)
     RECV(":server BATCH +ref draft/multiline #test");
     CHECK_NO_MSG;
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 1");
-    CHECK_CHAN("bob line 1");
+    CHECK_CHAN("bob", "line 1");
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 2");
-    CHECK_CHAN("bob line 2");
+    CHECK_CHAN("bob", "line 2");
     RECV(":server BATCH -ref");
     CHECK_NO_MSG;
 
@@ -907,9 +924,9 @@ TEST(IrcProtocolWithServer, batch_without_batch_cap)
     RECV(":server BATCH +ref draft/multiline #test");
     CHECK_NO_MSG;
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :\01ACTION is testing");
-    CHECK_CHAN(" * bob is testing");
+    CHECK_CHAN(" *", "bob is testing");
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again\01");
-    CHECK_CHAN("bob again\01");
+    CHECK_CHAN("bob", "again\01");
     RECV(":server BATCH -ref");
     CHECK_NO_MSG;
 }
@@ -959,9 +976,9 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
 
     /* end batch */
     RECV(":server BATCH -ref");
-    CHECK_CHAN("bob this is a test");
-    CHECK_CHAN("bob second test");
-    CHECK_CHAN("bob third test");
+    CHECK_CHAN("bob", "this is a test");
+    CHECK_CHAN("bob", "second test");
+    CHECK_CHAN("bob", "third test");
     POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref"));
 
     /* start batch with parameters */
@@ -984,9 +1001,9 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
 
     /* end batch */
     RECV(":server BATCH -ref");
-    CHECK_CHAN("bob test 1");
-    CHECK_CHAN("bob test 2");
-    CHECK_CHAN("bob test 3");
+    CHECK_CHAN("bob", "test 1");
+    CHECK_CHAN("bob", "test 2");
+    CHECK_CHAN("bob", "test 3");
     POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref"));
 
     /* start/end batch without parameters */
@@ -1011,15 +1028,15 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     RECV("@batch=1 :bob!user_b@host_b PRIVMSG #test :message 3");
     CHECK_NO_MSG;
     RECV(":server BATCH -1");
-    CHECK_CHAN("bob message 1");
-    CHECK_CHAN("bob message 2");
-    CHECK_CHAN("bob message 3");
+    CHECK_CHAN("bob", "message 1");
+    CHECK_CHAN("bob", "message 2");
+    CHECK_CHAN("bob", "message 3");
     POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "1"));
     RECV("@batch=2 :bob!user_b@host_b PRIVMSG #test :message 5");
     CHECK_NO_MSG;
     RECV(":server BATCH -2");
-    CHECK_CHAN("bob message 4");
-    CHECK_CHAN("bob message 5");
+    CHECK_CHAN("bob", "message 4");
+    CHECK_CHAN("bob", "message 5");
     POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "2"));
 
     /* nested batch */
@@ -1037,9 +1054,9 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     CHECK_NO_MSG;
     CHECK(irc_batch_search (ptr_server, "ref2"));
     RECV(":server BATCH -ref1");
-    CHECK_CHAN("bob test ref1");
-    CHECK_CHAN("bob test ref2");
-    POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref1"));
+    CHECK_CHAN("bob", "test ref1");
+    CHECK_CHAN("bob", "test ref2");
+     POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref1"));
     POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref2"));
 
     /* multiline */
@@ -1050,8 +1067,8 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 2");
     CHECK_NO_MSG;
     RECV(":server BATCH -ref");
-    CHECK_CHAN("bob line 1");
-    CHECK_CHAN("bob line 2");
+    CHECK_CHAN("bob", "line 1");
+    CHECK_CHAN("bob", "line 2");
 
     /* multiline with CTCP */
     RECV(":server BATCH +ref draft/multiline #test");
@@ -1061,10 +1078,10 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again\01");
     CHECK_NO_MSG;
     RECV(":server BATCH -ref");
-    CHECK_CHAN(" * bob is testing");
-    CHECK_CHAN("bob again\01");
+    CHECK_CHAN(" *", "bob is testing");
+    CHECK_CHAN("bob", "again\01");
     RECV(":bob!user_b@host_b PRIVMSG #test :prout\01");
-    CHECK_CHAN("bob prout\01");
+    CHECK_CHAN("bob", "prout\01");
 
     /* assume "draft/multiline" capability is enabled in server */
     hashtable_set (ptr_server->cap_list, "draft/multiline", NULL);
@@ -1078,7 +1095,7 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 2");
     CHECK_NO_MSG;
     RECV(":server BATCH -ref");
-    CHECK_CHAN("bob line 1\n"
+    CHECK_CHAN("bob", "line 1\n"
                "line 2");
 
     /* multiline with CTCP */
@@ -1089,7 +1106,7 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again\01");
     CHECK_NO_MSG;
     RECV(":server BATCH -ref");
-    CHECK_CHAN(" * bob is testing\n"
+    CHECK_CHAN(" *", "bob is testing\n"
                "again");
 
 }
@@ -1134,47 +1151,47 @@ TEST(IrcProtocolWithServer, cap)
 
     /* CAP LS */
     RECV("CAP * LS :multi-prefix sasl");
-    CHECK_SRV("-- irc: client capability, server supports: multi-prefix sasl");
+    CHECK_SRV("--", "irc: client capability, server supports: multi-prefix sasl");
     RECV("CAP * LS * :multi-prefix sasl");
     CHECK_NO_MSG;
     RECV(":server CAP * LS :multi-prefix sasl");
-    CHECK_SRV("-- irc: client capability, server supports: multi-prefix sasl");
+    CHECK_SRV("--", "irc: client capability, server supports: multi-prefix sasl");
     RECV(":server CAP * LS * :multi-prefix sasl");
     CHECK_NO_MSG;
 
     /* CAP LIST */
     RECV("CAP * LIST :multi-prefix sasl");
-    CHECK_SRV("-- irc: client capability, currently enabled: multi-prefix sasl");
+    CHECK_SRV("--", "irc: client capability, currently enabled: multi-prefix sasl");
     RECV("CAP * LIST * :multi-prefix sasl");
     CHECK_NO_MSG;
     RECV(":server CAP * LIST :multi-prefix sasl");
-    CHECK_SRV("-- irc: client capability, currently enabled: multi-prefix sasl");
+    CHECK_SRV("--", "irc: client capability, currently enabled: multi-prefix sasl");
     RECV(":server CAP * LIST * :multi-prefix sasl");
     CHECK_NO_MSG;
 
     /* CAP NEW */
     RECV("CAP * NEW :multi-prefix sasl");
-    CHECK_SRV("-- irc: client capability, now available: multi-prefix sasl");
+    CHECK_SRV("--", "irc: client capability, now available: multi-prefix sasl");
     RECV(":server CAP * NEW :multi-prefix sasl");
-    CHECK_SRV("-- irc: client capability, now available: multi-prefix sasl");
+    CHECK_SRV("--", "irc: client capability, now available: multi-prefix sasl");
 
     /* CAP DEL */
     RECV("CAP * DEL :multi-prefix sasl");
-    CHECK_SRV("-- irc: client capability, removed: multi-prefix sasl");
+    CHECK_SRV("--", "irc: client capability, removed: multi-prefix sasl");
     RECV(":server CAP * DEL :multi-prefix sasl");
-    CHECK_SRV("-- irc: client capability, removed: multi-prefix sasl");
+    CHECK_SRV("--", "irc: client capability, removed: multi-prefix sasl");
 
     /* CAP ACK */
     RECV("CAP * ACK :sasl");
-    CHECK_SRV("-- irc: client capability, enabled: sasl");
+    CHECK_SRV("--", "irc: client capability, enabled: sasl");
     RECV(":server CAP * ACK :sasl");
-    CHECK_SRV("-- irc: client capability, enabled: sasl");
+    CHECK_SRV("--", "irc: client capability, enabled: sasl");
 
     /* CAP NAK */
     RECV("CAP * NAK :sasl");
-    CHECK_SRV("=!= irc: client capability, refused: sasl");
+    CHECK_SRV("=!=", "irc: client capability, refused: sasl");
     RECV(":server CAP * NAK :sasl");
-    CHECK_SRV("=!= irc: client capability, refused: sasl");
+    CHECK_SRV("=!=", "irc: client capability, refused: sasl");
 }
 
 /*
@@ -1209,22 +1226,22 @@ TEST(IrcProtocolWithServer, chghost)
 
     /* self nick */
     RECV(":alice!user@host CHGHOST user2 host2");
-    CHECK_CHAN("-- alice (user@host) has changed host to user2@host2");
+    CHECK_CHAN("--", "alice (user@host) has changed host to user2@host2");
     STRCMP_EQUAL("user2@host2", ptr_nick->host);
 
     RECV(":alice!user@host CHGHOST user2 host2");
-    CHECK_CHAN("-- alice (user@host) has changed host to user2@host2");
+    CHECK_CHAN("--", "alice (user@host) has changed host to user2@host2");
     STRCMP_EQUAL("user2@host2", ptr_nick->host);
 
     RECV(":alice!user2@host2 CHGHOST user3 :host3");
-    CHECK_CHAN("-- alice (user2@host2) has changed host to user3@host3");
+    CHECK_CHAN("--", "alice (user2@host2) has changed host to user3@host3");
     STRCMP_EQUAL("user3@host3", ptr_nick->host);
 
     /* another nick */
     RECV(":bob!user@host CHGHOST user_bob_2 host_bob_2");
-    CHECK_CHAN("-- bob (user@host) has changed host to user_bob_2@host_bob_2");
+    CHECK_CHAN("--", "bob (user@host) has changed host to user_bob_2@host_bob_2");
     STRCMP_EQUAL("user_bob_2@host_bob_2", ptr_nick2->host);
-    CHECK_PV("bob", "-- bob (user@host) has changed host to user_bob_2@host_bob_2");
+    CHECK_PV("bob", "--", "bob (user@host) has changed host to user_bob_2@host_bob_2");
 }
 
 /*
@@ -1241,9 +1258,9 @@ TEST(IrcProtocolWithServer, error)
     CHECK_ERROR_PARAMS("error", 0, 1);
 
     RECV("ERROR test");
-    CHECK_SRV("=!= test");
+    CHECK_SRV("=!=", "test");
     RECV("ERROR :Closing Link: irc.server.org (Bad Password)");
-    CHECK_SRV("=!= Closing Link: irc.server.org (Bad Password)");
+    CHECK_SRV("=!=", "Closing Link: irc.server.org (Bad Password)");
 }
 
 /*
@@ -1264,22 +1281,22 @@ TEST(IrcProtocolWithServer, fail)
     CHECK_ERROR_PARAMS("fail", 1, 2);
 
     RECV(":server FAIL * TEST");
-    CHECK_SRV("=!= Failure: [] TEST");
+    CHECK_SRV("=!=", "Failure: [] TEST");
     RECV(":server FAIL * TEST :the message");
-    CHECK_SRV("=!= Failure: [TEST] the message");
+    CHECK_SRV("=!=", "Failure: [TEST] the message");
     RECV(":server FAIL * TEST TEST2");
-    CHECK_SRV("=!= Failure: [TEST] TEST2");
+    CHECK_SRV("=!=", "Failure: [TEST] TEST2");
     RECV(":server FAIL * TEST TEST2 :the message");
-    CHECK_SRV("=!= Failure: [TEST TEST2] the message");
+    CHECK_SRV("=!=", "Failure: [TEST TEST2] the message");
 
     RECV(":server FAIL COMMAND TEST");
-    CHECK_SRV("=!= Failure: COMMAND [] TEST");
+    CHECK_SRV("=!=", "Failure: COMMAND [] TEST");
     RECV(":server FAIL COMMAND TEST :the message");
-    CHECK_SRV("=!= Failure: COMMAND [TEST] the message");
+    CHECK_SRV("=!=", "Failure: COMMAND [TEST] the message");
     RECV(":server FAIL COMMAND TEST TEST2");
-    CHECK_SRV("=!= Failure: COMMAND [TEST] TEST2");
+    CHECK_SRV("=!=", "Failure: COMMAND [TEST] TEST2");
     RECV(":server FAIL COMMAND TEST TEST2 :the message");
-    CHECK_SRV("=!= Failure: COMMAND [TEST TEST2] the message");
+    CHECK_SRV("=!=", "Failure: COMMAND [TEST TEST2] the message");
 }
 
 /*
@@ -1302,9 +1319,9 @@ TEST(IrcProtocolWithServer, invite)
     CHECK_ERROR_NICK("invite");
 
     RECV(":bob!user@host INVITE alice #channel");
-    CHECK_SRV("-- You have been invited to #channel by bob");
+    CHECK_SRV("--", "You have been invited to #channel by bob");
     RECV(":bob!user@host INVITE xxx #channel");
-    CHECK_SRV("-- bob has invited xxx to #channel");
+    CHECK_SRV("--", "bob has invited xxx to #channel");
 }
 
 /*
@@ -1336,7 +1353,7 @@ TEST(IrcProtocolWithServer, join)
     CHECK_NO_MSG;
 
     RECV(":alice!user@host JOIN #test");
-    CHECK_CHAN("--> alice (user@host) has joined #test");
+    CHECK_CHAN("-->", "alice (user@host) has joined #test");
 
     ptr_channel = ptr_server->channels;
 
@@ -1375,7 +1392,7 @@ TEST(IrcProtocolWithServer, join)
     CHECK(ptr_channel->buffer);
 
     RECV(":bob!user@host JOIN #test * :Bob Name");
-    CHECK_CHAN("--> bob (Bob Name) (user@host) has joined #test");
+    CHECK_CHAN("-->", "bob (Bob Name) (user@host) has joined #test");
 
     ptr_nick = ptr_channel->last_nick;
 
@@ -1391,7 +1408,7 @@ TEST(IrcProtocolWithServer, join)
     CHECK(ptr_nick->color);
 
     RECV(":carol!user@host JOIN #test carol_account :Carol Name");
-    CHECK_CHAN("--> carol [carol_account] (Carol Name) (user@host) "
+    CHECK_CHAN("-->", "carol [carol_account] (Carol Name) (user@host) "
                "has joined #test");
 
     ptr_nick = ptr_channel->last_nick;
@@ -1422,9 +1439,9 @@ TEST(IrcProtocolWithServer, kick)
     POINTERS_EQUAL(NULL, ptr_server->channels);
 
     RECV(":alice!user@host JOIN #test");
-    CHECK_CHAN("--> alice (user@host) has joined #test");
+    CHECK_CHAN("-->", "alice (user@host) has joined #test");
     RECV(":bob!user@host JOIN #test");
-    CHECK_CHAN("--> bob (user@host) has joined #test");
+    CHECK_CHAN("-->", "bob (user@host) has joined #test");
 
     ptr_channel = ptr_server->channels;
 
@@ -1452,25 +1469,25 @@ TEST(IrcProtocolWithServer, kick)
 
     /* kick without a reason */
     RECV(":alice!user@host KICK #test bob");
-    CHECK_CHAN("<-- alice has kicked bob");
+    CHECK_CHAN("<--", "alice has kicked bob");
     STRCMP_EQUAL("alice", ptr_channel->nicks->name);
     POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick);
 
     RECV(":bob!user@host JOIN #test");
-    CHECK_CHAN("--> bob (user@host) has joined #test");
+    CHECK_CHAN("-->", "bob (user@host) has joined #test");
 
     /* with kick a reason */
     RECV(":alice!user@host KICK #test bob :no spam here! ");
-    CHECK_CHAN("<-- alice has kicked bob (no spam here! )");
+    CHECK_CHAN("<--", "alice has kicked bob (no spam here! )");
     STRCMP_EQUAL("alice", ptr_channel->nicks->name);
     POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick);
 
     RECV(":bob!user@host JOIN #test");
-    CHECK_CHAN("--> bob (user@host) has joined #test");
+    CHECK_CHAN("-->", "bob (user@host) has joined #test");
 
     /* kick of self nick */
     RECV(":bob!user@host KICK #test alice :no spam here! ");
-    CHECK_CHAN("<-- bob has kicked alice (no spam here! )");
+    CHECK_CHAN("<--", "bob has kicked alice (no spam here! )");
     POINTERS_EQUAL(NULL, ptr_channel->nicks);
 }
 
@@ -1505,17 +1522,17 @@ TEST(IrcProtocolWithServer, kill)
 
     /* kill without a reason */
     RECV(":bob!user@host KILL alice");
-    CHECK_CHAN("<-- You were killed by bob");
+    CHECK_CHAN("<--", "You were killed by bob");
     POINTERS_EQUAL(NULL, ptr_channel->nicks);
 
     RECV(":alice!user@host JOIN #test");
-    CHECK_CHAN("--> alice (user@host) has joined #test");
+    CHECK_CHAN("-->", "alice (user@host) has joined #test");
     RECV(":bob!user@host JOIN #test");
-    CHECK_CHAN("--> bob (user@host) has joined #test");
+    CHECK_CHAN("-->", "bob (user@host) has joined #test");
 
     /* kill with a reason */
     RECV(":bob!user@host KILL alice :killed by admin ");
-    CHECK_CHAN("<-- You were killed by bob (killed by admin )");
+    CHECK_CHAN("<--", "You were killed by bob (killed by admin )");
     POINTERS_EQUAL(NULL, ptr_channel->nicks);
 }
 
@@ -1554,57 +1571,57 @@ TEST(IrcProtocolWithServer, mode)
 
     /* channel mode */
     RECV(":admin MODE #test +nt");
-    CHECK_CHAN("-- Mode #test [+nt] by admin");
+    CHECK_CHAN("--", "Mode #test [+nt] by admin");
     STRCMP_EQUAL("+tn", ptr_channel->modes);
 
     /* channel mode removed */
     RECV(":admin MODE #test -n");
-    CHECK_CHAN("-- Mode #test [-n] by admin");
+    CHECK_CHAN("--", "Mode #test [-n] by admin");
     STRCMP_EQUAL("+t", ptr_channel->modes);
 
     /* channel mode removed */
     RECV(":admin MODE #test -t");
-    CHECK_CHAN("-- Mode #test [-t] by admin");
+    CHECK_CHAN("--", "Mode #test [-t] by admin");
     POINTERS_EQUAL(NULL, ptr_channel->modes);
 
     /* nick mode '@' on channel #test */
     RECV(":admin MODE #test +o alice");
-    CHECK_CHAN("-- Mode #test [+o alice] by admin");
+    CHECK_CHAN("--", "Mode #test [+o alice] by admin");
     STRCMP_EQUAL("@ ", ptr_nick->prefixes);
     STRCMP_EQUAL("@", ptr_nick->prefix);
 
     /* another nick mode '+' on channel #test */
     RECV(":admin MODE #test +v alice");
-    CHECK_CHAN("-- Mode #test [+v alice] by admin");
+    CHECK_CHAN("--", "Mode #test [+v alice] by admin");
     STRCMP_EQUAL("@+", ptr_nick->prefixes);
     STRCMP_EQUAL("@", ptr_nick->prefix);
 
     /* nick mode '@' removed on channel #test */
     RECV(":admin MODE #test -o alice");
-    CHECK_CHAN("-- Mode #test [-o alice] by admin");
+    CHECK_CHAN("--", "Mode #test [-o alice] by admin");
     STRCMP_EQUAL(" +", ptr_nick->prefixes);
     STRCMP_EQUAL("+", ptr_nick->prefix);
 
     /* nick mode '+' removed on channel #test */
     RECV(":admin MODE #test -v alice");
-    CHECK_CHAN("-- Mode #test [-v alice] by admin");
+    CHECK_CHAN("--", "Mode #test [-v alice] by admin");
     STRCMP_EQUAL("  ", ptr_nick->prefixes);
     STRCMP_EQUAL(" ", ptr_nick->prefix);
 
     /* nick mode 'i' */
     POINTERS_EQUAL(NULL, ptr_server->nick_modes);
     RECV(":admin MODE alice +i");
-    CHECK_SRV("-- User mode [+i] by admin");
+    CHECK_SRV("--", "User mode [+i] by admin");
     STRCMP_EQUAL("i", ptr_server->nick_modes);
 
     /* nick mode 'R' */
     RECV(":admin MODE alice +R");
-    CHECK_SRV("-- User mode [+R] by admin");
+    CHECK_SRV("--", "User mode [+R] by admin");
     STRCMP_EQUAL("iR", ptr_server->nick_modes);
 
     /* remove nick mode 'i' */
     RECV(":admin MODE alice -i");
-    CHECK_SRV("-- User mode [-i] by admin");
+    CHECK_SRV("--", "User mode [-i] by admin");
     STRCMP_EQUAL("R", ptr_server->nick_modes);
 }
 
@@ -1621,7 +1638,7 @@ TEST(IrcProtocolWithServer, nick)
     SRV_INIT_JOIN2;
 
     RECV(":bob!user@host PRIVMSG alice :hi Alice!");
-    CHECK_PV("bob", "bob hi Alice!");
+    CHECK_PV("bob", "bob", "hi Alice!");
 
     ptr_channel = ptr_server->channels;
     CHECK(ptr_channel);
@@ -1644,26 +1661,26 @@ TEST(IrcProtocolWithServer, nick)
 
     /* new nick for alice */
     RECV(":alice!user@host NICK alice_away");
-    CHECK_SRV("-- You are now known as alice_away");
-    CHECK_CHAN("-- You are now known as alice_away");
+    CHECK_SRV("--", "You are now known as alice_away");
+    CHECK_CHAN("--", "You are now known as alice_away");
     STRCMP_EQUAL("alice_away", ptr_nick1->name);
 
     /* new nick for alice_away (with ":") */
     RECV(":alice_away!user@host NICK :alice2");
-    CHECK_SRV("-- You are now known as alice2");
-    CHECK_CHAN("-- You are now known as alice2");
+    CHECK_SRV("--", "You are now known as alice2");
+    CHECK_CHAN("--", "You are now known as alice2");
     STRCMP_EQUAL("alice2", ptr_nick1->name);
 
     /* new nick for bob */
     RECV(":bob!user@host NICK bob_away");
-    CHECK_CHAN("-- bob is now known as bob_away");
-    CHECK_PV("bob_away", "-- bob is now known as bob_away");
+    CHECK_CHAN("--", "bob is now known as bob_away");
+    CHECK_PV("bob_away", "--", "bob is now known as bob_away");
     STRCMP_EQUAL("bob_away", ptr_nick2->name);
 
     /* new nick for bob_away (with ":") */
     RECV(":bob_away!user@host NICK :bob2");
-    CHECK_CHAN("-- bob_away is now known as bob2");
-    CHECK_PV("bob2", "-- bob_away is now known as bob2");
+    CHECK_CHAN("--", "bob_away is now known as bob2");
+    CHECK_PV("bob2", "--", "bob_away is now known as bob2");
     STRCMP_EQUAL("bob2", ptr_nick2->name);
 
     STRCMP_EQUAL("bob2", ptr_server->last_channel->name);
@@ -1687,22 +1704,22 @@ TEST(IrcProtocolWithServer, note)
     CHECK_ERROR_PARAMS("note", 1, 2);
 
     RECV(":server NOTE * TEST");
-    CHECK_SRV("-- Note: [] TEST");
+    CHECK_SRV("--", "Note: [] TEST");
     RECV(":server NOTE * TEST :the message");
-    CHECK_SRV("-- Note: [TEST] the message");
+    CHECK_SRV("--", "Note: [TEST] the message");
     RECV(":server NOTE * TEST TEST2");
-    CHECK_SRV("-- Note: [TEST] TEST2");
+    CHECK_SRV("--", "Note: [TEST] TEST2");
     RECV(":server NOTE * TEST TEST2 :the message");
-    CHECK_SRV("-- Note: [TEST TEST2] the message");
+    CHECK_SRV("--", "Note: [TEST TEST2] the message");
 
     RECV(":server NOTE COMMAND TEST");
-    CHECK_SRV("-- Note: COMMAND [] TEST");
+    CHECK_SRV("--", "Note: COMMAND [] TEST");
     RECV(":server NOTE COMMAND TEST :the message");
-    CHECK_SRV("-- Note: COMMAND [TEST] the message");
+    CHECK_SRV("--", "Note: COMMAND [TEST] the message");
     RECV(":server NOTE COMMAND TEST TEST2");
-    CHECK_SRV("-- Note: COMMAND [TEST] TEST2");
+    CHECK_SRV("--", "Note: COMMAND [TEST] TEST2");
     RECV(":server NOTE COMMAND TEST TEST2 :the message");
-    CHECK_SRV("-- Note: COMMAND [TEST TEST2] the message");
+    CHECK_SRV("--", "Note: COMMAND [TEST TEST2] the message");
 }
 
 /*
@@ -1728,113 +1745,113 @@ TEST(IrcProtocolWithServer, notice)
 
     /* notice from server */
     RECV("NOTICE AUTH :*** Looking up your hostname... ");
-    CHECK_SRV("-- *** Looking up your hostname... ");
+    CHECK_SRV("--", "*** Looking up your hostname... ");
     RECV(":server.address NOTICE AUTH :*** Looking up your hostname... ");
-    CHECK_SRV("-- server.address: *** Looking up your hostname... ");
+    CHECK_SRV("--", "server.address: *** Looking up your hostname... ");
     RECV(":server.address NOTICE * :*** Looking up your hostname... ");
-    CHECK_SRV("-- server.address: *** Looking up your hostname... ");
+    CHECK_SRV("--", "server.address: *** Looking up your hostname... ");
 
     /* notice to channel/user */
     RECV(":server.address NOTICE #test :a notice ");
-    CHECK_CHAN("-- Notice(server.address): a notice ");
+    CHECK_CHAN("--", "Notice(server.address): a notice ");
     RECV(":server.address NOTICE alice :a notice ");
-    CHECK_SRV("-- server.address: a notice ");
+    CHECK_SRV("--", "server.address: a notice ");
     RECV(":bob!user@host NOTICE #test :a notice ");
-    CHECK_CHAN("-- Notice(bob): a notice ");
+    CHECK_CHAN("--", "Notice(bob): a notice ");
     RECV(":bob!user@host NOTICE alice :a notice ");
-    CHECK_SRV("-- bob (user@host): a notice ");
+    CHECK_SRV("--", "bob (user@host): a notice ");
 
     /* notice to ops of channel */
     RECV(":server.address NOTICE @#test :a notice ");
-    CHECK_CHAN("-- Notice:@(server.address): a notice ");
+    CHECK_CHAN("--", "Notice:@(server.address): a notice ");
     RECV(":bob!user@host NOTICE @#test :a notice ");
-    CHECK_CHAN("-- Notice:@(bob): a notice ");
+    CHECK_CHAN("--", "Notice:@(bob): a notice ");
 
     /* notice from self nick (case of bouncer) */
     RECV(":alice!user@host NOTICE alice :a notice ");
-    CHECK_SRV("-- Notice -> alice: a notice ");
+    CHECK_SRV("--", "Notice -> alice: a notice ");
 
     /* notice with channel name at beginning */
     RECV(":server.address NOTICE alice :[#test] a notice ");
-    CHECK_CHAN("-- PvNotice(server.address): a notice ");
+    CHECK_CHAN("--", "PvNotice(server.address): a notice ");
     RECV(":server.address NOTICE alice :(#test) a notice ");
-    CHECK_CHAN("-- PvNotice(server.address): a notice ");
+    CHECK_CHAN("--", "PvNotice(server.address): a notice ");
     RECV(":server.address NOTICE alice :{#test} a notice ");
-    CHECK_CHAN("-- PvNotice(server.address): a notice ");
+    CHECK_CHAN("--", "PvNotice(server.address): a notice ");
     RECV(":server.address NOTICE alice :<#test> a notice ");
-    CHECK_CHAN("-- PvNotice(server.address): a notice ");
+    CHECK_CHAN("--", "PvNotice(server.address): a notice ");
     RECV(":bob!user@host NOTICE alice :[#test] a notice ");
-    CHECK_CHAN("-- PvNotice(bob): a notice ");
+    CHECK_CHAN("--", "PvNotice(bob): a notice ");
     RECV(":bob!user@host NOTICE alice :(#test) a notice ");
-    CHECK_CHAN("-- PvNotice(bob): a notice ");
+    CHECK_CHAN("--", "PvNotice(bob): a notice ");
     RECV(":bob!user@host NOTICE alice :{#test} a notice ");
-    CHECK_CHAN("-- PvNotice(bob): a notice ");
+    CHECK_CHAN("--", "PvNotice(bob): a notice ");
     RECV(":bob!user@host NOTICE alice :<#test> a notice ");
-    CHECK_CHAN("-- PvNotice(bob): a notice ");
+    CHECK_CHAN("--", "PvNotice(bob): a notice ");
 
     /* broken CTCP to channel */
     RECV(":bob!user@host NOTICE #test :\01");
-    CHECK_SRV("-- CTCP reply from bob: ");
+    CHECK_SRV("--", "CTCP reply from bob: ");
     RECV(":bob!user@host NOTICE #test :\01TEST");
-    CHECK_SRV("-- CTCP reply from bob: TEST");
+    CHECK_SRV("--", "CTCP reply from bob: TEST");
     RECV(":bob!user@host NOTICE #test :\01ACTION");
-    CHECK_SRV("-- CTCP reply from bob: ACTION");
+    CHECK_SRV("--", "CTCP reply from bob: ACTION");
     RECV(":bob!user@host NOTICE #test :\01ACTION is testing");
-    CHECK_SRV("-- CTCP reply from bob: ACTION is testing");
+    CHECK_SRV("--", "CTCP reply from bob: ACTION is testing");
     RECV(":bob!user@host NOTICE #test :\01VERSION");
-    CHECK_SRV("-- CTCP reply from bob: VERSION");
+    CHECK_SRV("--", "CTCP reply from bob: VERSION");
     RECV(":bob!user@host NOTICE #test :\01DCC");
-    CHECK_SRV("-- CTCP reply from bob: DCC");
+    CHECK_SRV("--", "CTCP reply from bob: DCC");
     RECV(":bob!user@host NOTICE #test :\01DCC SEND");
-    CHECK_SRV("-- CTCP reply from bob: DCC SEND");
+    CHECK_SRV("--", "CTCP reply from bob: DCC SEND");
     RECV(":bob!user@host NOTICE #test :\01DCC SEND file.txt");
-    CHECK_SRV("-- CTCP reply from bob: DCC SEND file.txt");
+    CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt");
     RECV(":bob!user@host NOTICE #test :\01DCC SEND file.txt 1 2 3");
-    CHECK_SRV("-- CTCP reply from bob: DCC SEND file.txt 1 2 3");
+    CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3");
 
     /* broken CTCP to user */
     RECV(":bob!user@host NOTICE alice :\01");
-    CHECK_SRV("-- CTCP reply from bob: ");
+    CHECK_SRV("--", "CTCP reply from bob: ");
     RECV(":bob!user@host NOTICE alice :\01TEST");
-    CHECK_SRV("-- CTCP reply from bob: TEST");
+    CHECK_SRV("--", "CTCP reply from bob: TEST");
     RECV(":bob!user@host NOTICE alice :\01ACTION");
-    CHECK_SRV("-- CTCP reply from bob: ACTION");
+    CHECK_SRV("--", "CTCP reply from bob: ACTION");
     RECV(":bob!user@host NOTICE alice :\01ACTION is testing");
-    CHECK_SRV("-- CTCP reply from bob: ACTION is testing");
+    CHECK_SRV("--", "CTCP reply from bob: ACTION is testing");
     RECV(":bob!user@host NOTICE alice :\01VERSION");
-    CHECK_SRV("-- CTCP reply from bob: VERSION");
+    CHECK_SRV("--", "CTCP reply from bob: VERSION");
     RECV(":bob!user@host NOTICE alice :\01DCC");
-    CHECK_SRV("-- CTCP reply from bob: DCC");
+    CHECK_SRV("--", "CTCP reply from bob: DCC");
     RECV(":bob!user@host NOTICE alice :\01DCC SEND");
-    CHECK_SRV("-- CTCP reply from bob: DCC SEND");
+    CHECK_SRV("--", "CTCP reply from bob: DCC SEND");
     RECV(":bob!user@host NOTICE alice :\01DCC SEND file.txt");
-    CHECK_SRV("-- CTCP reply from bob: DCC SEND file.txt");
+    CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt");
     RECV(":bob!user@host NOTICE alice :\01DCC SEND file.txt 1 2 3");
-    CHECK_SRV("-- CTCP reply from bob: DCC SEND file.txt 1 2 3");
+    CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3");
 
     /* valid CTCP to channel */
     RECV(":bob!user@host NOTICE #test :\01TEST\01");
-    CHECK_SRV("-- CTCP reply from bob: TEST");
+    CHECK_SRV("--", "CTCP reply from bob: TEST");
     RECV(":bob!user@host NOTICE #test :\01ACTION\01");
-    CHECK_SRV("-- CTCP reply from bob: ACTION");
+    CHECK_SRV("--", "CTCP reply from bob: ACTION");
     RECV(":bob!user@host NOTICE #test :\01ACTION is testing\01");
-    CHECK_SRV("-- CTCP reply from bob: ACTION is testing");
+    CHECK_SRV("--", "CTCP reply from bob: ACTION is testing");
     RECV(":bob!user@host NOTICE #test :\01VERSION\01");
-    CHECK_SRV("-- CTCP reply from bob: VERSION");
+    CHECK_SRV("--", "CTCP reply from bob: VERSION");
     RECV(":bob!user@host NOTICE #test :\01DCC SEND file.txt 1 2 3\01");
-    CHECK_SRV("-- CTCP reply from bob: DCC SEND file.txt 1 2 3");
+    CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3");
 
     /* valid CTCP to user */
     RECV(":bob!user@host NOTICE alice :\01TEST\01");
-    CHECK_SRV("-- CTCP reply from bob: TEST");
+    CHECK_SRV("--", "CTCP reply from bob: TEST");
     RECV(":bob!user@host NOTICE alice :\01ACTION\01");
-    CHECK_SRV("-- CTCP reply from bob: ACTION");
+    CHECK_SRV("--", "CTCP reply from bob: ACTION");
     RECV(":bob!user@host NOTICE alice :\01ACTION is testing\01");
-    CHECK_SRV("-- CTCP reply from bob: ACTION is testing");
+    CHECK_SRV("--", "CTCP reply from bob: ACTION is testing");
     RECV(":bob!user@host NOTICE alice :\01VERSION\01");
-    CHECK_SRV("-- CTCP reply from bob: VERSION");
+    CHECK_SRV("--", "CTCP reply from bob: VERSION");
     RECV(":bob!user@host NOTICE alice :\01DCC SEND file.txt 1 2 3\01");
-    CHECK_SRV("-- CTCP reply from bob: DCC SEND file.txt 1 2 3");
+    CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3");
 }
 
 /*
@@ -1867,7 +1884,7 @@ TEST(IrcProtocolWithServer, part)
 
     /* without part message */
     RECV(":alice!user@host PART #test");
-    CHECK_CHAN("<-- alice (user@host) has left #test");
+    CHECK_CHAN("<--", "alice (user@host) has left #test");
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     POINTERS_EQUAL(NULL, ptr_server->channels->nicks);
     LONGS_EQUAL(1, ptr_server->channels->part);
@@ -1875,7 +1892,7 @@ TEST(IrcProtocolWithServer, part)
     /* without part message (but empty trailing parameter) */
     RECV(":alice!user@host JOIN #test");
     RECV(":alice!user@host PART #test :");
-    CHECK_CHAN("<-- alice (user@host) has left #test");
+    CHECK_CHAN("<--", "alice (user@host) has left #test");
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     POINTERS_EQUAL(NULL, ptr_server->channels->nicks);
     LONGS_EQUAL(1, ptr_server->channels->part);
@@ -1883,19 +1900,19 @@ TEST(IrcProtocolWithServer, part)
     /* with part message */
     RECV(":alice!user@host JOIN #test");
     RECV(":alice!user@host PART #test :part message ");
-    CHECK_CHAN("<-- alice (user@host) has left #test (part message )");
+    CHECK_CHAN("<--", "alice (user@host) has left #test (part message )");
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     POINTERS_EQUAL(NULL, ptr_server->channels->nicks);
     LONGS_EQUAL(1, ptr_server->channels->part);
 
     RECV(":alice!user@host JOIN #test");
-    CHECK_CHAN("--> alice (user@host) has joined #test");
+    CHECK_CHAN("-->", "alice (user@host) has joined #test");
     RECV(":bob!user@host JOIN #test");
-    CHECK_CHAN("--> bob (user@host) has joined #test");
+    CHECK_CHAN("-->", "bob (user@host) has joined #test");
 
     /* part from another user */
     RECV(":bob!user@host PART #test :part message ");
-    CHECK_CHAN("<-- bob (user@host) has left #test (part message )");
+    CHECK_CHAN("<--", "bob (user@host) has left #test (part message )");
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     CHECK(ptr_server->channels->nicks == ptr_server->channels->last_nick);
     LONGS_EQUAL(0, ptr_server->channels->part);
@@ -1930,13 +1947,13 @@ TEST(IrcProtocolWithServer, pong)
     SRV_INIT;
 
     RECV(":server PONG");
-    CHECK_SRV("PONG");
+    CHECK_SRV("", "PONG");
     RECV(":server PONG server");
-    CHECK_SRV("PONG");
+    CHECK_SRV("", "PONG");
     RECV(":server PONG server :info");
-    CHECK_SRV("PONG: info");
+    CHECK_SRV("", "PONG: info");
     RECV(":server PONG server :extra info");
-    CHECK_SRV("PONG: extra info");
+    CHECK_SRV("", "PONG: extra info");
 }
 
 /*
@@ -1964,43 +1981,43 @@ TEST(IrcProtocolWithServer, privmsg)
 
     /* message to channel/user */
     RECV(":bob!user@host PRIVMSG #test :this is the message ");
-    CHECK_CHAN("bob this is the message ");
+    CHECK_CHAN("bob", "this is the message ");
     RECV(":bob!user@host PRIVMSG alice :this is the message ");
-    CHECK_PV("bob", "bob this is the message ");
+    CHECK_PV("bob", "bob", "this is the message ");
 
     /* message with tags to channel/user */
     RECV("@tag1=value1;tag2=value2 :bob!user@host PRIVMSG #test "
          ":this is the message ");
-    CHECK_CHAN("bob this is the message ");
+    CHECK_CHAN("bob", "this is the message ");
     RECV("@tag1=value1;tag2=value2 :bob!user@host PRIVMSG alice "
          ":this is the message ");
-    CHECK_PV("bob", "bob this is the message ");
+    CHECK_PV("bob", "bob", "this is the message ");
 
     /* message to ops of channel */
     RECV(":bob!user@host PRIVMSG @#test :this is the message ");
-    CHECK_CHAN("-- Msg:@(bob): this is the message ");
+    CHECK_CHAN("--", "Msg:@(bob): this is the message ");
 
     /* message from self nick (case of bouncer) */
     RECV(":alice!user@host PRIVMSG alice :this is the message ");
-    CHECK_PV("alice", "alice this is the message ");
+    CHECK_PV("alice", "alice", "this is the message ");
 
     /* broken CTCP to channel */
     RECV(":bob!user@host PRIVMSG #test :\01");
-    CHECK_CHAN("-- Unknown CTCP requested by bob: ");
+    CHECK_CHAN("--", "Unknown CTCP requested by bob: ");
     RECV(":bob!user@host PRIVMSG #test :\01TEST");
-    CHECK_CHAN("-- Unknown CTCP requested by bob: TEST");
+    CHECK_CHAN("--", "Unknown CTCP requested by bob: TEST");
     RECV(":bob!user@host PRIVMSG #test :\01ACTION");
-    CHECK_CHAN(" * bob");
+    CHECK_CHAN(" *", "bob");
     RECV(":bob!user@host PRIVMSG #test :\01ACTION is testing");
-    CHECK_CHAN(" * bob is testing");
+    CHECK_CHAN(" *", "bob is testing");
     RECV(":bob!user@host PRIVMSG #test :\01VERSION");
-    CHECK_CHAN("-- CTCP requested by bob: VERSION");
+    CHECK_CHAN("--", "CTCP requested by bob: VERSION");
     info = irc_ctcp_replace_variables (ptr_server,
                                        irc_ctcp_get_reply (ptr_server,
                                                            "VERSION"));
     snprintf (message, sizeof (message),
-              "-- CTCP reply to bob: VERSION %s", info);
-    CHECK_CHAN(message);
+              "CTCP reply to bob: VERSION %s", info);
+    CHECK_CHAN("--", message);
     snprintf (message, sizeof (message),
               "NOTICE bob :\01VERSION %s\01", info);
     CHECK_SENT(message);
@@ -2010,44 +2027,46 @@ TEST(IrcProtocolWithServer, privmsg)
     RECV(":bob!user@host PRIVMSG #test :\01DCC SEND");
     CHECK_NO_MSG;
     RECV(":bob!user@host PRIVMSG #test :\01DCC SEND file.txt");
-    CHECK_SRV("=!= irc: cannot parse \"privmsg\" command");
+    CHECK_SRV("=!=", "irc: cannot parse \"privmsg\" command");
     RECV(":bob!user@host PRIVMSG #test :\01DCC SEND file.txt 1 2 3");
-    CHECK_CORE("xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
+    CHECK_CORE("",
+               "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
                "), name: file.txt, 3 bytes (protocol: dcc)");
 
     /* broken CTCP to user */
     RECV(":bob!user@host PRIVMSG alice :\01");
-    CHECK_SRV("-- Unknown CTCP requested by bob: ");
+    CHECK_SRV("--", "Unknown CTCP requested by bob: ");
     RECV(":bob!user@host PRIVMSG alice :\01TEST");
-    CHECK_SRV("-- Unknown CTCP requested by bob: TEST");
+    CHECK_SRV("--", "Unknown CTCP requested by bob: TEST");
     RECV(":bob!user@host PRIVMSG alice :\01ACTION");
-    CHECK_PV("bob", " * bob");
+    CHECK_PV("bob", " *", "bob");
     RECV(":bob!user@host PRIVMSG alice :\01ACTION is testing");
-    CHECK_PV("bob", " * bob is testing");
+    CHECK_PV("bob", " *", "bob is testing");
     RECV(":bob!user@host PRIVMSG alice :\01VERSION");
     info = irc_ctcp_replace_variables (ptr_server,
                                        irc_ctcp_get_reply (ptr_server,
                                                            "VERSION"));
     snprintf (message, sizeof (message),
-              "-- CTCP reply to bob: VERSION %s", info);
-    CHECK_SRV(message);
+              "CTCP reply to bob: VERSION %s", info);
+    CHECK_SRV("--", message);
     free (info);
     RECV(":bob!user@host PRIVMSG alice :\01DCC");
     CHECK_NO_MSG;
     RECV(":bob!user@host PRIVMSG alice :\01DCC SEND");
     CHECK_NO_MSG;
     RECV(":bob!user@host PRIVMSG alice :\01DCC SEND file.txt");
-    CHECK_SRV("=!= irc: cannot parse \"privmsg\" command");
+    CHECK_SRV("=!=", "irc: cannot parse \"privmsg\" command");
     RECV(":bob!user@host PRIVMSG alice :\01DCC SEND file.txt 1 2 3");
-    CHECK_CORE("xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
+    CHECK_CORE("",
+               "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
                "), name: file.txt, 3 bytes (protocol: dcc)");
 
     /* valid CTCP to channel */
     RECV(":bob!user@host PRIVMSG #test :\01TEST\01");
     RECV(":bob!user@host PRIVMSG #test :\01ACTION\01");
-    CHECK_CHAN(" * bob");
+    CHECK_CHAN(" *", "bob");
     RECV(":bob!user@host PRIVMSG #test :\01ACTION is testing\01");
-    CHECK_CHAN(" * bob is testing");
+    CHECK_CHAN(" *", "bob is testing");
     RECV(":bob!user@host PRIVMSG #test :\01VERSION\01");
     RECV(":bob!user@host PRIVMSG #test :\01DCC SEND file.txt 1 2 3\01");
 
@@ -2059,13 +2078,13 @@ TEST(IrcProtocolWithServer, privmsg)
     RECV(":bob!user@host PRIVMSG alice :\01ACTION is testing\01");
     CHECK_SENT(NULL);
     RECV(":bob!user@host PRIVMSG alice :\01VERSION\01");
-    CHECK_SRV("-- CTCP requested by bob: VERSION");
+    CHECK_SRV("--", "CTCP requested by bob: VERSION");
     info = irc_ctcp_replace_variables (ptr_server,
                                        irc_ctcp_get_reply (ptr_server,
                                                            "VERSION"));
     snprintf (message, sizeof (message),
-              "-- CTCP reply to bob: VERSION %s", info);
-    CHECK_SRV(message);
+              "CTCP reply to bob: VERSION %s", info);
+    CHECK_SRV("--", message);
     snprintf (message, sizeof (message),
               "NOTICE bob :\01VERSION %s\01", info);
     CHECK_SENT(message);
@@ -2077,7 +2096,8 @@ TEST(IrcProtocolWithServer, privmsg)
     CHECK_SENT(message);
     free (info);
     RECV(":bob!user@host PRIVMSG alice :\01DCC SEND file.txt 1 2 3\01");
-    CHECK_CORE("xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
+    CHECK_CORE("",
+               "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
                "), name: file.txt, 3 bytes (protocol: dcc)");
     CHECK_SENT(NULL);
 
@@ -2102,14 +2122,14 @@ TEST(IrcProtocolWithServer, quit)
     CHECK_ERROR_NICK("quit");
 
     RECV(":bob!user@host PRIVMSG alice :hi Alice!");
-    CHECK_PV("bob", "bob hi Alice!");
+    CHECK_PV("bob", "bob", "hi Alice!");
 
     ptr_channel = ptr_server->channels;
 
     /* without quit message */
     RECV(":bob!user@host JOIN #test");
     RECV(":bob!user@host QUIT");
-    CHECK_CHAN("<-- bob (user@host) has quit");
+    CHECK_CHAN("<--", "bob (user@host) has quit");
     LONGS_EQUAL(1, ptr_channel->nicks_count);
     STRCMP_EQUAL("alice", ptr_channel->nicks->name);
     POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick);
@@ -2117,7 +2137,7 @@ TEST(IrcProtocolWithServer, quit)
     /* without quit message (but empty trailing parameter) */
     RECV(":bob!user@host JOIN #test");
     RECV(":bob!user@host QUIT :");
-    CHECK_CHAN("<-- bob (user@host) has quit");
+    CHECK_CHAN("<--", "bob (user@host) has quit");
     LONGS_EQUAL(1, ptr_channel->nicks_count);
     STRCMP_EQUAL("alice", ptr_channel->nicks->name);
     POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick);
@@ -2125,7 +2145,7 @@ TEST(IrcProtocolWithServer, quit)
     /* with quit message */
     RECV(":bob!user@host JOIN #test");
     RECV(":bob!user@host QUIT :quit message ");
-    CHECK_CHAN("<-- bob (user@host) has quit (quit message )");
+    CHECK_CHAN("<--", "bob (user@host) has quit (quit message )");
     LONGS_EQUAL(1, ptr_channel->nicks_count);
     STRCMP_EQUAL("alice", ptr_channel->nicks->name);
     POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick);
@@ -2158,12 +2178,12 @@ TEST(IrcProtocolWithServer, setname_without_setname_cap)
 
     /* real name of "bob" has changed */
     RECV(":bob!user@host SETNAME :new bob realname ");
-    CHECK_CHAN("-- bob has changed real name to \"new bob realname \"");
+    CHECK_CHAN("--", "bob has changed real name to \"new bob realname \"");
     POINTERS_EQUAL(NULL, ptr_nick->realname);
 
     /* self real name has changed */
     RECV(":alice!user@host SETNAME :new alice realname ");
-    CHECK_SRV("-- Your real name has been set to \"new alice realname \"");
+    CHECK_SRV("--", "Your real name has been set to \"new alice realname \"");
     POINTERS_EQUAL(NULL, ptr_nick->realname);
 }
 
@@ -2188,17 +2208,17 @@ TEST(IrcProtocolWithServer, setname_with_setname_cap)
 
     /* real name of "bob" has changed */
     RECV(":bob!user@host SETNAME :new bob realname ");
-    CHECK_CHAN("-- bob has changed real name to \"new bob realname \"");
+    CHECK_CHAN("--", "bob has changed real name to \"new bob realname \"");
     STRCMP_EQUAL("new bob realname ", ptr_nick2->realname);
 
     /* self real name has changed */
     RECV(":alice!user@host SETNAME :new realname");
-    CHECK_SRV("-- Your real name has been set to \"new realname\"");
+    CHECK_SRV("--", "Your real name has been set to \"new realname\"");
     STRCMP_EQUAL("new realname", ptr_nick->realname);
 
     /* self real name has changed */
     RECV(":alice!user@host SETNAME :new realname2");
-    CHECK_SRV("-- Your real name has been set to \"new realname2\"");
+    CHECK_SRV("--", "Your real name has been set to \"new realname2\"");
     STRCMP_EQUAL("new realname2", ptr_nick->realname);
 }
 
@@ -2281,32 +2301,32 @@ TEST(IrcProtocolWithServer, topic)
 
     /* not a channel */
     RECV(":alice!user@host TOPIC bob");
-    CHECK_SRV("=!= irc: \"topic\" command received without channel");
+    CHECK_SRV("=!=", "irc: \"topic\" command received without channel");
 
     /* empty topic */
     RECV(":alice!user@host TOPIC #test");
-    CHECK_CHAN("-- alice has unset topic for #test");
+    CHECK_CHAN("--", "alice has unset topic for #test");
     POINTERS_EQUAL(NULL, ptr_channel->topic);
 
     /* empty topic (with empty trailing parameter) */
     RECV(":alice!user@host TOPIC #test :");
-    CHECK_CHAN("-- alice has unset topic for #test");
+    CHECK_CHAN("--", "alice has unset topic for #test");
     POINTERS_EQUAL(NULL, ptr_channel->topic);
 
     /* new topic */
     RECV(":alice!user@host TOPIC #test :new topic ");
-    CHECK_CHAN("-- alice has changed topic for #test to \"new topic \"");
+    CHECK_CHAN("--", "alice has changed topic for #test to \"new topic \"");
     STRCMP_EQUAL("new topic ", ptr_channel->topic);
 
     /* another new topic */
     RECV(":alice!user@host TOPIC #test :another new topic ");
-    CHECK_CHAN("-- alice has changed topic for #test from \"new topic \" to "
+    CHECK_CHAN("--", "alice has changed topic for #test from \"new topic \" to "
                "\"another new topic \"");
     STRCMP_EQUAL("another new topic ", ptr_channel->topic);
 
     /* empty topic */
     RECV(":alice!user@host TOPIC #test");
-    CHECK_CHAN("-- alice has unset topic for #test (old topic: "
+    CHECK_CHAN("--", "alice has unset topic for #test (old topic: "
                "\"another new topic \")");
     POINTERS_EQUAL(NULL, ptr_channel->topic);
 }
@@ -2325,10 +2345,10 @@ TEST(IrcProtocolWithServer, wallops)
     CHECK_ERROR_PARAMS("wallops", 0, 1);
 
     RECV(":alice!user@host WALLOPS message ");
-    CHECK_SRV("-- Wallops from alice (user@host): message");
+    CHECK_SRV("--", "Wallops from alice (user@host): message");
 
     RECV(":alice!user@host WALLOPS :message from admin ");
-    CHECK_SRV("-- Wallops from alice (user@host): message from admin ");
+    CHECK_SRV("--", "Wallops from alice (user@host): message from admin ");
 }
 
 /*
@@ -2349,22 +2369,22 @@ TEST(IrcProtocolWithServer, warn)
     CHECK_ERROR_PARAMS("warn", 1, 2);
 
     RECV(":server WARN * TEST");
-    CHECK_SRV("=!= Warning: [] TEST");
+    CHECK_SRV("=!=", "Warning: [] TEST");
     RECV(":server WARN * TEST :the message");
-    CHECK_SRV("=!= Warning: [TEST] the message");
+    CHECK_SRV("=!=", "Warning: [TEST] the message");
     RECV(":server WARN * TEST TEST2");
-    CHECK_SRV("=!= Warning: [TEST] TEST2");
+    CHECK_SRV("=!=", "Warning: [TEST] TEST2");
     RECV(":server WARN * TEST TEST2 :the message");
-    CHECK_SRV("=!= Warning: [TEST TEST2] the message");
+    CHECK_SRV("=!=", "Warning: [TEST TEST2] the message");
 
     RECV(":server WARN COMMAND TEST");
-    CHECK_SRV("=!= Warning: COMMAND [] TEST");
+    CHECK_SRV("=!=", "Warning: COMMAND [] TEST");
     RECV(":server WARN COMMAND TEST :the message");
-    CHECK_SRV("=!= Warning: COMMAND [TEST] the message");
+    CHECK_SRV("=!=", "Warning: COMMAND [TEST] the message");
     RECV(":server WARN COMMAND TEST TEST2");
-    CHECK_SRV("=!= Warning: COMMAND [TEST] TEST2");
+    CHECK_SRV("=!=", "Warning: COMMAND [TEST] TEST2");
     RECV(":server WARN COMMAND TEST TEST2 :the message");
-    CHECK_SRV("=!= Warning: COMMAND [TEST TEST2] the message");
+    CHECK_SRV("=!=", "Warning: COMMAND [TEST TEST2] the message");
 }
 
 /*
@@ -2382,7 +2402,7 @@ TEST(IrcProtocolWithServer, 001_empty)
     CHECK_ERROR_PARAMS("001", 0, 1);
 
     RECV(":server 001 alice");
-    CHECK_SRV("--");
+    CHECK_SRV("--", "");
     LONGS_EQUAL(1, ptr_server->is_connected);
     STRCMP_EQUAL("alice", ptr_server->nick);
 }
@@ -2401,7 +2421,7 @@ TEST(IrcProtocolWithServer, 001_welcome)
     STRCMP_EQUAL("nick1", ptr_server->nick);
 
     RECV(":server 001 alice :Welcome on this server, alice!");
-    CHECK_SRV("-- Welcome on this server, alice!");
+    CHECK_SRV("--", "Welcome on this server, alice!");
 
     LONGS_EQUAL(1, ptr_server->is_connected);
     STRCMP_EQUAL("alice", ptr_server->nick);
@@ -2422,7 +2442,7 @@ TEST(IrcProtocolWithServer, 005_empty)
     POINTERS_EQUAL(NULL, ptr_server->prefix_chars);
 
     RECV(":server 005 alice TEST=A");
-    CHECK_SRV("-- TEST=A");
+    CHECK_SRV("--", "TEST=A");
 
     POINTERS_EQUAL(NULL, ptr_server->prefix_modes);
     POINTERS_EQUAL(NULL, ptr_server->prefix_chars);
@@ -2452,7 +2472,7 @@ TEST(IrcProtocolWithServer, 005_full)
     POINTERS_EQUAL(NULL, ptr_server->isupport);
 
     RECV(":server 005 alice " IRC_MSG_005 " :are supported");
-    CHECK_SRV("-- " IRC_MSG_005 " are supported");
+    CHECK_SRV("--", IRC_MSG_005 " are supported");
 
     STRCMP_EQUAL("ohv", ptr_server->prefix_modes);
     STRCMP_EQUAL("@%+", ptr_server->prefix_chars);
@@ -2470,7 +2490,7 @@ TEST(IrcProtocolWithServer, 005_full)
 
     /* check that realloc of info is OK if we receive the message again */
     RECV(":server 005 alice " IRC_MSG_005 " :are supported");
-    CHECK_SRV("-- " IRC_MSG_005 " are supported");
+    CHECK_SRV("--", IRC_MSG_005 " are supported");
 
     STRCMP_EQUAL("ohv", ptr_server->prefix_modes);
     STRCMP_EQUAL("@%+", ptr_server->prefix_chars);
@@ -2502,13 +2522,13 @@ TEST(IrcProtocolWithServer, 005_multiple_messages)
     POINTERS_EQUAL(NULL, ptr_server->isupport);
 
     RECV(":server 005 alice PREFIX=(ohv)@%+ :are supported");
-    CHECK_SRV("-- PREFIX=(ohv)@%+ are supported");
+    CHECK_SRV("--", "PREFIX=(ohv)@%+ are supported");
     STRCMP_EQUAL("ohv", ptr_server->prefix_modes);
     STRCMP_EQUAL("@%+", ptr_server->prefix_chars);
     STRCMP_EQUAL("PREFIX=(ohv)@%+", ptr_server->isupport);
 
     RECV(":server 005 alice HOSTLEN=24 :are supported");
-    CHECK_SRV("-- HOSTLEN=24 are supported");
+    CHECK_SRV("--", "HOSTLEN=24 are supported");
     LONGS_EQUAL(24, ptr_server->host_max_length);
     STRCMP_EQUAL("PREFIX=(ohv)@%+ HOSTLEN=24", ptr_server->isupport);
 }
@@ -2529,7 +2549,7 @@ TEST(IrcProtocolWithServer, 008)
     CHECK_ERROR_PARAMS("008", 1, 2);
 
     RECV(":server 008 alice +Zbfkrsuy :Server notice mask");
-    CHECK_SRV("-- Server notice mask for alice: +Zbfkrsuy Server notice mask");
+    CHECK_SRV("--", "Server notice mask for alice: +Zbfkrsuy Server notice mask");
 }
 
 /*
@@ -2550,11 +2570,11 @@ TEST(IrcProtocolWithServer, 221)
     POINTERS_EQUAL(NULL, ptr_server->nick_modes);
 
     RECV(":server 221 alice :+abc");
-    CHECK_SRV("-- User mode for alice is [+abc]");
+    CHECK_SRV("--", "User mode for alice is [+abc]");
     STRCMP_EQUAL("abc", ptr_server->nick_modes);
 
     RECV(":server 221 alice :-abc");
-    CHECK_SRV("-- User mode for alice is [-abc]");
+    CHECK_SRV("--","User mode for alice is [-abc]");
     POINTERS_EQUAL(NULL, ptr_server->nick_modes);
 }
 
@@ -2647,69 +2667,69 @@ TEST(IrcProtocolWithServer, whois_nick_msg)
     CHECK_ERROR_PARAMS("671", 1, 2);
 
     RECV(":server 223 alice bob UTF-8");
-    CHECK_SRV("-- [bob] UTF-8");
+    CHECK_SRV("--", "[bob] UTF-8");
     RECV(":server 223 alice bob :UTF-8");
-    CHECK_SRV("-- [bob] UTF-8");
+    CHECK_SRV("--", "[bob] UTF-8");
     RECV(":server 223 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 264 alice bob :is using encrypted connection");
-    CHECK_SRV("-- [bob] is using encrypted connection");
+    CHECK_SRV("--", "[bob] is using encrypted connection");
     RECV(":server 264 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 275 alice bob :is using secure connection");
-    CHECK_SRV("-- [bob] is using secure connection");
+    CHECK_SRV("--", "[bob] is using secure connection");
     RECV(":server 275 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 276 alice bob :has client certificate fingerprint");
-    CHECK_SRV("-- [bob] has client certificate fingerprint");
+    CHECK_SRV("--", "[bob] has client certificate fingerprint");
     RECV(":server 276 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 307 alice bob :registered nick");
-    CHECK_SRV("-- [bob] registered nick");
+    CHECK_SRV("--", "[bob] registered nick");
     RECV(":server 307 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 310 alice bob :help mode");
-    CHECK_SRV("-- [bob] help mode");
+    CHECK_SRV("--", "[bob] help mode");
     RECV(":server 310 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 313 alice bob :operator");
-    CHECK_SRV("-- [bob] operator");
+    CHECK_SRV("--", "[bob] operator");
     RECV(":server 313 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 318 alice bob :end");
-    CHECK_SRV("-- [bob] end");
+    CHECK_SRV("--", "[bob] end");
     RECV(":server 318 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 319 alice bob :channels");
-    CHECK_SRV("-- [bob] channels");
+    CHECK_SRV("--", "[bob] channels");
     RECV(":server 319 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 320 alice bob :identified user");
-    CHECK_SRV("-- [bob] identified user");
+    CHECK_SRV("--", "[bob] identified user");
     RECV(":server 320 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 326 alice bob :has oper privs");
-    CHECK_SRV("-- [bob] has oper privs");
+    CHECK_SRV("--", "[bob] has oper privs");
     RECV(":server 326 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 335 alice bob :is a bot");
-    CHECK_SRV("-- [bob] is a bot");
+    CHECK_SRV("--", "[bob] is a bot");
     RECV(":server 335 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 378 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 378 alice bob :connecting from");
-    CHECK_SRV("-- [bob] connecting from");
+    CHECK_SRV("--", "[bob] connecting from");
     RECV(":server 378 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 379 alice bob :using modes");
-    CHECK_SRV("-- [bob] using modes");
+    CHECK_SRV("--", "[bob] using modes");
     RECV(":server 379 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 671 alice bob :secure connection");
-    CHECK_SRV("-- [bob] secure connection");
+    CHECK_SRV("--", "[bob] secure connection");
     RECV(":server 671 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
 }
 
 /*
@@ -2731,11 +2751,11 @@ TEST(IrcProtocolWithServer, whowas_nick_msg)
     CHECK_ERROR_PARAMS("369", 1, 2);
 
     RECV(":server 369 alice bob end");
-    CHECK_SRV("-- [bob] end");
+    CHECK_SRV("--", "[bob] end");
     RECV(":server 369 alice bob :end");
-    CHECK_SRV("-- [bob] end");
+    CHECK_SRV("--", "[bob] end");
     RECV(":server 369 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
 }
 
 /*
@@ -2748,7 +2768,7 @@ TEST(IrcProtocolWithServer, 301)
     SRV_INIT;
 
     RECV(":bob!user@host PRIVMSG alice :hi Alice!");
-    CHECK_PV("bob", "bob hi Alice!");
+    CHECK_PV("bob", "bob", "hi Alice!");
 
     /* not enough parameters */
     RECV(":server 301");
@@ -2761,7 +2781,7 @@ TEST(IrcProtocolWithServer, 301)
     POINTERS_EQUAL(NULL, ptr_server->channels->away_message);
 
     RECV(":server 301 alice bob :I am away ");
-    CHECK_PV("bob", "-- [bob] is away: I am away ");
+    CHECK_PV("bob", "--", "[bob] is away: I am away ");
     STRCMP_EQUAL("I am away ", ptr_server->channels->away_message);
 }
 
@@ -2781,7 +2801,7 @@ TEST(IrcProtocolWithServer, 303)
     CHECK_ERROR_PARAMS("303", 1, 2);
 
     RECV(":server 303 alice :nick1 nick2");
-    CHECK_SRV("-- Users online: nick1 nick2");
+    CHECK_SRV("--", "Users online: nick1 nick2");
 }
 
 /*
@@ -2795,7 +2815,7 @@ TEST(IrcProtocolWithServer, 305_306)
     SRV_INIT;
 
     RECV(":bob!user@host PRIVMSG alice :hi Alice!");
-    CHECK_PV("bob", "bob hi Alice!");
+    CHECK_PV("bob", "bob", "hi Alice!");
 
     /* not enough parameters */
     RECV(":server 305");
@@ -2814,11 +2834,11 @@ TEST(IrcProtocolWithServer, 305_306)
     LONGS_EQUAL(0, ptr_server->is_away);
 
     RECV(":server 306 alice :We'll miss you");  /* now away */
-    CHECK_SRV("-- We'll miss you");
+    CHECK_SRV("--", "We'll miss you");
     LONGS_EQUAL(1, ptr_server->is_away);
 
     RECV(":server 305 alice :Does this mean you're really back?");
-    CHECK_SRV("-- Does this mean you're really back?");
+    CHECK_SRV("--", "Does this mean you're really back?");
     LONGS_EQUAL(0, ptr_server->is_away);
 }
 
@@ -2842,11 +2862,11 @@ TEST(IrcProtocolWithServer, 311)
 
     /* non-standard parameters (using default whois callback) */
     RECV(":server 311 alice bob user");
-    CHECK_SRV("-- [bob] user");
+    CHECK_SRV("--", "[bob] user");
 
     /* standard parameters */
     RECV(":server 311 alice bob user host * :real name");
-    CHECK_SRV("-- [bob] (user@host): real name");
+    CHECK_SRV("--", "[bob] (user@host): real name");
 }
 
 /*
@@ -2868,11 +2888,11 @@ TEST(IrcProtocolWithServer, 312)
 
     /* non-standard parameters (using default whois callback) */
     RECV(":server 312 alice bob server");
-    CHECK_SRV("-- [bob] server");
+    CHECK_SRV("--", "[bob] server");
 
     /* standard parameters */
     RECV(":server 312 alice bob server :https://example.com/");
-    CHECK_SRV("-- [bob] server (https://example.com/)");
+    CHECK_SRV("--", "[bob] server (https://example.com/)");
 }
 
 /*
@@ -2894,11 +2914,11 @@ TEST(IrcProtocolWithServer, 314)
 
     /* non-standard parameters (using default whowas callback) */
     RECV(":server 314 alice bob user");
-    CHECK_SRV("-- [bob] user");
+    CHECK_SRV("--", "[bob] user");
 
     /* standard parameters */
     RECV(":server 314 alice bob user host * :real name");
-    CHECK_SRV("-- [bob] (user@host) was real name");
+    CHECK_SRV("--", "[bob] (user@host) was real name");
 }
 
 /*
@@ -2919,7 +2939,7 @@ TEST(IrcProtocolWithServer, 315)
     CHECK_ERROR_PARAMS("315", 2, 3);
 
     RECV(":server 315 alice #test End of /WHO list.");
-    CHECK_SRV("-- [#test] End of /WHO list.");
+    CHECK_SRV("--", "[#test] End of /WHO list.");
 }
 
 /*
@@ -2946,10 +2966,10 @@ TEST(IrcProtocolWithServer, 317)
 
     /* signon at 03/12/2008 @ 1:18pm (UTC) */
     RECV(":server 317 alice bob 122877 1205327880");
-    CHECK_SRV("-- [bob] idle: 1 day, 10 hours 07 minutes 57 seconds, "
+    CHECK_SRV("--", "[bob] idle: 1 day, 10 hours 07 minutes 57 seconds, "
               "signon at: Wed, 12 Mar 2008 13:18:00");
     RECV(":server 317 alice bob 122877 1205327880 :seconds idle, signon time");
-    CHECK_SRV("-- [bob] idle: 1 day, 10 hours 07 minutes 57 seconds, "
+    CHECK_SRV("--", "[bob] idle: 1 day, 10 hours 07 minutes 57 seconds, "
               "signon at: Wed, 12 Mar 2008 13:18:00");
 
     /* signon 2 minutes ago */
@@ -2977,11 +2997,11 @@ TEST(IrcProtocolWithServer, 321)
     CHECK_ERROR_PARAMS("321", 1, 2);
 
     RECV(":server 321 alice #test");
-    CHECK_SRV("-- #test");
+    CHECK_SRV("--", "#test");
     RECV(":server 321 alice #test Users");
-    CHECK_SRV("-- #test Users");
+    CHECK_SRV("--", "#test Users");
     RECV(":server 321 alice #test :Users  Name");
-    CHECK_SRV("-- #test Users  Name");
+    CHECK_SRV("--", "#test Users  Name");
 }
 
 /*
@@ -3002,17 +3022,17 @@ TEST(IrcProtocolWithServer, 322)
     CHECK_ERROR_PARAMS("322", 2, 3);
 
     RECV(":server 322 alice #test 3");
-    CHECK_SRV("-- #test(3)");
+    CHECK_SRV("--", "#test(3)");
     RECV(":server 322 alice #test 3 :topic of channel ");
-    CHECK_SRV("-- #test(3): topic of channel ");
+    CHECK_SRV("--", "#test(3): topic of channel ");
 
     run_cmd_quiet ("/list -server " IRC_FAKE_SERVER " -re #test.*");
-    CHECK_SRV("-- #test(3): topic of channel ");
+    CHECK_SRV("--", "#test(3): topic of channel ");
 
     RECV(":server 322 alice #test 3");
-    CHECK_SRV("-- #test(3)");
+    CHECK_SRV("--", "#test(3)");
     RECV(":server 322 alice #test 3 :topic of channel ");
-    CHECK_SRV("-- #test(3): topic of channel ");
+    CHECK_SRV("--", "#test(3): topic of channel ");
 
     RECV(":server 322 alice #xyz 3");
     CHECK_NO_MSG;
@@ -3034,11 +3054,11 @@ TEST(IrcProtocolWithServer, 323)
     CHECK_ERROR_PARAMS("323", 0, 1);
 
     RECV(":server 323 alice");
-    CHECK_SRV("--");
+    CHECK_SRV("--", "");
     RECV(":server 323 alice end");
-    CHECK_SRV("-- end");
+    CHECK_SRV("--", "end");
     RECV(":server 323 alice :End of /LIST");
-    CHECK_SRV("-- End of /LIST");
+    CHECK_SRV("--", "End of /LIST");
 }
 
 /*
@@ -3063,7 +3083,7 @@ TEST(IrcProtocolWithServer, 324)
     STRCMP_EQUAL("+nt", ptr_server->channels->modes);
 
     RECV(":server 324 alice #test");
-    CHECK_CHAN("-- Mode #test []");
+    CHECK_CHAN("--", "Mode #test []");
     POINTERS_EQUAL(NULL, ptr_server->channels->modes);
 }
 
@@ -3086,13 +3106,13 @@ TEST(IrcProtocolWithServer, 327)
 
     /* non-standard parameters (using default whois callback) */
     RECV(":server 327 alice bob host");
-    CHECK_SRV("-- [bob] host");
+    CHECK_SRV("--", "[bob] host");
 
     /* standard parameters */
     RECV(":server 327 alice bob host 1.2.3.4");
-    CHECK_SRV("-- [bob] host 1.2.3.4");
+    CHECK_SRV("--", "[bob] host 1.2.3.4");
     RECV(":server 327 alice bob host 1.2.3.4 :real name");
-    CHECK_SRV("-- [bob] host 1.2.3.4 (real name)");
+    CHECK_SRV("--", "[bob] host 1.2.3.4 (real name)");
 }
 
 /*
@@ -3113,9 +3133,9 @@ TEST(IrcProtocolWithServer, 328)
     CHECK_ERROR_PARAMS("328", 2, 3);
 
     RECV(":server 328 alice #test :https://example.com/");
-    CHECK_CHAN("-- URL for #test: https://example.com/");
+    CHECK_CHAN("--", "URL for #test: https://example.com/");
     RECV(":server 328 alice #test :URL is https://example.com/");
-    CHECK_CHAN("-- URL for #test: URL is https://example.com/");
+    CHECK_CHAN("--", "URL for #test: URL is https://example.com/");
 
 }
 
@@ -3137,15 +3157,15 @@ TEST(IrcProtocolWithServer, 329)
     CHECK_ERROR_PARAMS("329", 2, 3);
 
     RECV(":server 329 alice #test 1205327894");
-    CHECK_CHAN("-- Channel created on Wed, 12 Mar 2008 13:18:14");
+    CHECK_CHAN("--", "Channel created on Wed, 12 Mar 2008 13:18:14");
     RECV(":server 329 alice #test :1205327894");
-    CHECK_CHAN("-- Channel created on Wed, 12 Mar 2008 13:18:14");
+    CHECK_CHAN("--", "Channel created on Wed, 12 Mar 2008 13:18:14");
 
     /* channel not found */
     RECV(":server 329 alice #xyz 1205327894");
-    CHECK_SRV("-- Channel #xyz created on Wed, 12 Mar 2008 13:18:14");
+    CHECK_SRV("--", "Channel #xyz created on Wed, 12 Mar 2008 13:18:14");
     RECV(":server 329 alice #xyz :1205327894");
-    CHECK_SRV("-- Channel #xyz created on Wed, 12 Mar 2008 13:18:14");
+    CHECK_SRV("--", "Channel #xyz created on Wed, 12 Mar 2008 13:18:14");
 }
 
 /*
@@ -3175,14 +3195,14 @@ TEST(IrcProtocolWithServer, 330_343)
     CHECK_ERROR_PARAMS("343", 2, 3);
 
     RECV(":server 330 alice bob bob2");
-    CHECK_SRV("-- [bob] bob2");
+    CHECK_SRV("--", "[bob] bob2");
     RECV(":server 330 alice bob bob2 :is logged in as");
-    CHECK_SRV("-- [bob] is logged in as bob2");
+    CHECK_SRV("--", "[bob] is logged in as bob2");
 
     RECV(":server 343 alice bob bob2");
-    CHECK_SRV("-- [bob] bob2");
+    CHECK_SRV("--", "[bob] bob2");
     RECV(":server 343 alice bob bob2 :is opered as");
-    CHECK_SRV("-- [bob] is opered as bob2");
+    CHECK_SRV("--", "[bob] is opered as bob2");
 }
 
 /*
@@ -3201,11 +3221,11 @@ TEST(IrcProtocolWithServer, 331)
     CHECK_ERROR_PARAMS("331", 1, 2);
 
     RECV(":server 331 alice #test");
-    CHECK_CHAN("-- No topic set for channel #test");
+    CHECK_CHAN("--", "No topic set for channel #test");
 
     /* channel not found */
     RECV(":server 331 alice #xyz");
-    CHECK_SRV("-- No topic set for channel #xyz");
+    CHECK_SRV("--", "No topic set for channel #xyz");
 }
 
 /*
@@ -3226,10 +3246,10 @@ TEST(IrcProtocolWithServer, 332)
     POINTERS_EQUAL(NULL, ptr_server->channels->topic);
 
     RECV(":server 332 alice #test");
-    CHECK_CHAN("-- Topic for #test is \"\"");
+    CHECK_CHAN("--", "Topic for #test is \"\"");
 
     RECV(":server 332 alice #test :the new topic ");
-    CHECK_CHAN("-- Topic for #test is \"the new topic \"");
+    CHECK_CHAN("--", "Topic for #test is \"the new topic \"");
     STRCMP_EQUAL("the new topic ", ptr_server->channels->topic);
 }
 
@@ -3253,18 +3273,18 @@ TEST(IrcProtocolWithServer, 333)
     RECV(":server 333 alice #test nick!user@host");
     CHECK_NO_MSG;
     RECV(":server 333 alice #test nick!user@host 1205428096");
-    CHECK_CHAN("-- Topic set by nick (user@host) on Thu, 13 Mar 2008 17:08:16");
+    CHECK_CHAN("--", "Topic set by nick (user@host) on Thu, 13 Mar 2008 17:08:16");
     RECV(":server 333 alice #test 1205428096");
-    CHECK_CHAN("-- Topic set on Thu, 13 Mar 2008 17:08:16");
+    CHECK_CHAN("--", "Topic set on Thu, 13 Mar 2008 17:08:16");
 
     /* channel not found */
     RECV(":server 333 alice #xyz nick!user@host");
     CHECK_NO_MSG;
     RECV(":server 333 alice #xyz nick!user@host 1205428096");
-    CHECK_SRV("-- Topic for #xyz set by nick (user@host) on "
+    CHECK_SRV("--", "Topic for #xyz set by nick (user@host) on "
               "Thu, 13 Mar 2008 17:08:16");
     RECV(":server 333 alice #xyz 1205428096");
-    CHECK_SRV("-- Topic for #xyz set on Thu, 13 Mar 2008 17:08:16");
+    CHECK_SRV("--", "Topic for #xyz set on Thu, 13 Mar 2008 17:08:16");
 }
 
 /*
@@ -3285,11 +3305,11 @@ TEST(IrcProtocolWithServer, 338)
     CHECK_ERROR_PARAMS("338", 2, 3);
 
     RECV(":server 338 alice bob hostname :actually using host");
-    CHECK_SRV("-- [bob] actually using host hostname");
+    CHECK_SRV("--", "[bob] actually using host hostname");
 
     /* on Rizon server */
     RECV(":server 338 alice bob :is actually bob@example.com [1.2.3.4]");
-    CHECK_SRV("-- [bob] is actually bob@example.com [1.2.3.4]");
+    CHECK_SRV("--", "[bob] is actually bob@example.com [1.2.3.4]");
 }
 
 /*
@@ -3310,9 +3330,9 @@ TEST(IrcProtocolWithServer, 341)
     CHECK_ERROR_PARAMS("341", 2, 3);
 
     RECV(":server 341 alice bob #test");
-    CHECK_SRV("-- alice has invited bob to #test");
+    CHECK_SRV("--", "alice has invited bob to #test");
     RECV(":server 341 alice bob :#test");
-    CHECK_SRV("-- alice has invited bob to #test");
+    CHECK_SRV("--", "alice has invited bob to #test");
 }
 
 /*
@@ -3334,19 +3354,19 @@ TEST(IrcProtocolWithServer, 344)
 
     /* channel reop (IRCnet) */
     RECV(":server 344 alice #test nick!user@host");
-    CHECK_SRV("-- Channel reop #test: nick!user@host");
+    CHECK_SRV("--", "Channel reop #test: nick!user@host");
     RECV(":server 344 alice #test :nick!user@host");
-    CHECK_SRV("-- Channel reop #test: nick!user@host");
+    CHECK_SRV("--", "Channel reop #test: nick!user@host");
 
     /* channel reop (IRCnet), channel not found */
     RECV(":server 344 alice #xyz nick!user@host");
-    CHECK_SRV("-- Channel reop #xyz: nick!user@host");
+    CHECK_SRV("--", "Channel reop #xyz: nick!user@host");
     RECV(":server 344 alice #xyz :nick!user@host");
-    CHECK_SRV("-- Channel reop #xyz: nick!user@host");
+    CHECK_SRV("--", "Channel reop #xyz: nick!user@host");
 
     /* whois, geo info (UnrealIRCd) */
     RECV(":server 344 alice bob FR :is connecting from France");
-    CHECK_SRV("-- [bob] FR is connecting from France");
+    CHECK_SRV("--", "[bob] FR is connecting from France");
 }
 
 /*
@@ -3367,15 +3387,15 @@ TEST(IrcProtocolWithServer, 345)
     CHECK_ERROR_PARAMS("345", 2, 3);
 
     RECV(":server 345 alice #test end");
-    CHECK_SRV("-- #test: end");
+    CHECK_SRV("--", "#test: end");
     RECV(":server 345 alice #test :End of Channel Reop List");
-    CHECK_SRV("-- #test: End of Channel Reop List");
+    CHECK_SRV("--", "#test: End of Channel Reop List");
 
     /* channel not found */
     RECV(":server 345 alice #xyz end");
-    CHECK_SRV("-- #xyz: end");
+    CHECK_SRV("--", "#xyz: end");
     RECV(":server 345 alice #xyz :End of Channel Reop List");
-    CHECK_SRV("-- #xyz: End of Channel Reop List");
+    CHECK_SRV("--", "#xyz: End of Channel Reop List");
 }
 
 /*
@@ -3396,20 +3416,20 @@ TEST(IrcProtocolWithServer, 346)
     CHECK_ERROR_PARAMS("346", 2, 3);
 
     RECV(":server 346 alice #test invitemask");
-    CHECK_CHAN("-- [#test] [1] invitemask invited");
+    CHECK_CHAN("--", "[#test] [1] invitemask invited");
     RECV(":server 346 alice #test invitemask nick!user@host");
-    CHECK_CHAN("-- [#test] [2] invitemask invited by nick (user@host)");
+    CHECK_CHAN("--", "[#test] [2] invitemask invited by nick (user@host)");
     RECV(":server 346 alice #test invitemask nick!user@host 1205590879");
-    CHECK_CHAN("-- [#test] [3] invitemask invited by nick (user@host) "
+    CHECK_CHAN("--", "[#test] [3] invitemask invited by nick (user@host) "
               "on Sat, 15 Mar 2008 14:21:19");
 
     /* channel not found */
     RECV(":server 346 alice #xyz invitemask");
-    CHECK_SRV("-- [#xyz] invitemask invited");
+    CHECK_SRV("--", "[#xyz] invitemask invited");
     RECV(":server 346 alice #xyz invitemask nick!user@host");
-    CHECK_SRV("-- [#xyz] invitemask invited by nick (user@host)");
+    CHECK_SRV("--", "[#xyz] invitemask invited by nick (user@host)");
     RECV(":server 346 alice #xyz invitemask nick!user@host 1205590879");
-    CHECK_SRV("-- [#xyz] invitemask invited by nick (user@host) "
+    CHECK_SRV("--", "[#xyz] invitemask invited by nick (user@host) "
               "on Sat, 15 Mar 2008 14:21:19");
 }
 
@@ -3429,19 +3449,19 @@ TEST(IrcProtocolWithServer, 347)
     CHECK_ERROR_PARAMS("347", 1, 2);
 
     RECV(":server 347 alice #test");
-    CHECK_CHAN("-- [#test]");
+    CHECK_CHAN("--", "[#test]");
     RECV(":server 347 alice #test end");
-    CHECK_CHAN("-- [#test] end");
+    CHECK_CHAN("--", "[#test] end");
     RECV(":server 347 alice #test :End of Channel Invite List");
-    CHECK_CHAN("-- [#test] End of Channel Invite List");
+    CHECK_CHAN("--", "[#test] End of Channel Invite List");
 
     /* channel not found */
     RECV(":server 347 alice #xyz");
-    CHECK_SRV("-- [#xyz]");
+    CHECK_SRV("--", "[#xyz]");
     RECV(":server 347 alice #xyz end");
-    CHECK_SRV("-- [#xyz] end");
+    CHECK_SRV("--", "[#xyz] end");
     RECV(":server 347 alice #xyz :End of Channel Invite List");
-    CHECK_SRV("-- [#xyz] End of Channel Invite List");
+    CHECK_SRV("--", "[#xyz] End of Channel Invite List");
 }
 
 /*
@@ -3462,24 +3482,24 @@ TEST(IrcProtocolWithServer, 348)
     CHECK_ERROR_PARAMS("348", 2, 3);
 
     RECV(":server 348 alice #test nick1!user1@host1");
-    CHECK_CHAN("-- [#test] [1] exception nick1!user1@host1");
+    CHECK_CHAN("--", "[#test] [1] exception nick1!user1@host1");
     RECV(":server 348 alice #test nick1!user1@host1 nick2!user2@host2");
-    CHECK_CHAN("-- [#test] [2] exception nick1!user1@host1 "
+    CHECK_CHAN("--", "[#test] [2] exception nick1!user1@host1 "
                "by nick2 (user2@host2)");
     RECV(":server 348 alice #test nick1!user1@host1 nick2!user2@host2 "
          "1205585109");
-    CHECK_CHAN("-- [#test] [3] exception nick1!user1@host1 "
+    CHECK_CHAN("--", "[#test] [3] exception nick1!user1@host1 "
                "by nick2 (user2@host2) on Sat, 15 Mar 2008 12:45:09");
 
     /* channel not found */
     RECV(":server 348 alice #xyz nick1!user1@host1");
-    CHECK_SRV("-- [#xyz] exception nick1!user1@host1");
+    CHECK_SRV("--", "[#xyz] exception nick1!user1@host1");
     RECV(":server 348 alice #xyz nick1!user1@host1 nick2!user2@host2");
-    CHECK_SRV("-- [#xyz] exception nick1!user1@host1 "
+    CHECK_SRV("--", "[#xyz] exception nick1!user1@host1 "
               "by nick2 (user2@host2)");
     RECV(":server 348 alice #xyz nick1!user1@host1 nick2!user2@host2 "
          "1205585109");
-    CHECK_SRV("-- [#xyz] exception nick1!user1@host1 "
+    CHECK_SRV("--", "[#xyz] exception nick1!user1@host1 "
               "by nick2 (user2@host2) on Sat, 15 Mar 2008 12:45:09");
 }
 
@@ -3499,19 +3519,19 @@ TEST(IrcProtocolWithServer, 349)
     CHECK_ERROR_PARAMS("349", 1, 2);
 
     RECV(":server 349 alice #test");
-    CHECK_CHAN("-- [#test]");
+    CHECK_CHAN("--", "[#test]");
     RECV(":server 349 alice #test end");
-    CHECK_CHAN("-- [#test] end");
+    CHECK_CHAN("--", "[#test] end");
     RECV(":server 349 alice #test :End of Channel Exception List");
-    CHECK_CHAN("-- [#test] End of Channel Exception List");
+    CHECK_CHAN("--", "[#test] End of Channel Exception List");
 
     /* channel not found */
     RECV(":server 349 alice #xyz");
-    CHECK_SRV("-- [#xyz]");
+    CHECK_SRV("--", "[#xyz]");
     RECV(":server 349 alice #xyz end");
-    CHECK_SRV("-- [#xyz] end");
+    CHECK_SRV("--", "[#xyz] end");
     RECV(":server 349 alice #xyz :End of Channel Exception List");
-    CHECK_SRV("-- [#xyz] End of Channel Exception List");
+    CHECK_SRV("--", "[#xyz] End of Channel Exception List");
 }
 
 
@@ -3532,23 +3552,23 @@ TEST(IrcProtocolWithServer, 350)
 
     /* non-standard parameters (using whois_nick_msg callback) */
     RECV(":server 350 alice bob :something here");
-    CHECK_SRV("-- [bob] something here");
+    CHECK_SRV("--", "[bob] something here");
     RECV(":server 350 alice bob * :something here");
-    CHECK_SRV("-- [bob] * something here");
+    CHECK_SRV("--", "[bob] * something here");
 
     /* non-standard parameters (using default whois callback) */
     RECV(":server 350 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
 
     /* standard parameters */
     RECV(":server 350 alice bob * * :is connected via the WebIRC gateway");
-    CHECK_SRV("-- [bob] is connected via the WebIRC gateway");
+    CHECK_SRV("--", "[bob] is connected via the WebIRC gateway");
     RECV(":server 350 alice bob example.com * :is connected via the WebIRC gateway");
-    CHECK_SRV("-- [bob] (example.com) is connected via the WebIRC gateway");
+    CHECK_SRV("--", "[bob] (example.com) is connected via the WebIRC gateway");
     RECV(":server 350 alice bob * 1.2.3.4 :is connected via the WebIRC gateway");
-    CHECK_SRV("-- [bob] (1.2.3.4) is connected via the WebIRC gateway");
+    CHECK_SRV("--", "[bob] (1.2.3.4) is connected via the WebIRC gateway");
     RECV(":server 350 alice bob example.com 1.2.3.4 :is connected via the WebIRC gateway");
-    CHECK_SRV("-- [bob] (example.com, 1.2.3.4) is connected via the WebIRC gateway");
+    CHECK_SRV("--", "[bob] (example.com, 1.2.3.4) is connected via the WebIRC gateway");
 }
 
 /*
@@ -3569,9 +3589,9 @@ TEST(IrcProtocolWithServer, 351)
     CHECK_ERROR_PARAMS("351", 2, 3);
 
     RECV(":server 351 alice dancer-ircd-1.0 server");
-    CHECK_SRV("-- dancer-ircd-1.0 server");
+    CHECK_SRV("--", "dancer-ircd-1.0 server");
     RECV(":server 351 alice dancer-ircd-1.0 server :iMZ dncrTS/v4");
-    CHECK_SRV("-- dancer-ircd-1.0 server (iMZ dncrTS/v4)");
+    CHECK_SRV("--", "dancer-ircd-1.0 server (iMZ dncrTS/v4)");
 }
 
 /*
@@ -3612,49 +3632,49 @@ TEST(IrcProtocolWithServer, 352)
     POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 352 alice #test user2 host2 server bob");
-    CHECK_SRV("-- [#test] bob (user2@host2) ()");
+    CHECK_SRV("--", "[#test] bob (user2@host2) ()");
     STRCMP_EQUAL("user2@host2", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 352 alice #test user3 host3 server bob *");
-    CHECK_SRV("-- [#test] bob (user3@host3) * ()");
+    CHECK_SRV("--", "[#test] bob (user3@host3) * ()");
     STRCMP_EQUAL("user3@host3", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 352 alice #test user4 host4 server bob * :0 real name 1");
-    CHECK_SRV("-- [#test] bob (user4@host4) * 0 (real name 1)");
+    CHECK_SRV("--", "[#test] bob (user4@host4) * 0 (real name 1)");
     STRCMP_EQUAL("user4@host4", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     STRCMP_EQUAL("real name 1", ptr_nick2->realname);
 
     RECV(":server 352 alice #test user5 host5 server bob H@ :0 real name 2");
-    CHECK_SRV("-- [#test] bob (user5@host5) H@ 0 (real name 2)");
+    CHECK_SRV("--", "[#test] bob (user5@host5) H@ 0 (real name 2)");
     STRCMP_EQUAL("user5@host5", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     STRCMP_EQUAL("real name 2", ptr_nick2->realname);
 
     RECV(":server 352 alice #test user6 host6 server bob G@ :0 real name 3");
-    CHECK_SRV("-- [#test] bob (user6@host6) G@ 0 (real name 3)");
+    CHECK_SRV("--", "[#test] bob (user6@host6) G@ 0 (real name 3)");
     STRCMP_EQUAL("user6@host6", ptr_nick2->host);
     LONGS_EQUAL(1, ptr_nick2->away);
     STRCMP_EQUAL("real name 3", ptr_nick2->realname);
 
     RECV(":server 352 alice #test user7 host7 server bob * :0 real name 4");
-    CHECK_SRV("-- [#test] bob (user7@host7) * 0 (real name 4)");
+    CHECK_SRV("--", "[#test] bob (user7@host7) * 0 (real name 4)");
     STRCMP_EQUAL("user7@host7", ptr_nick2->host);
     LONGS_EQUAL(1, ptr_nick2->away);
     STRCMP_EQUAL("real name 4", ptr_nick2->realname);
 
     RECV(":server 352 alice #test user8 host8 server bob H@ :0 real name 5");
-    CHECK_SRV("-- [#test] bob (user8@host8) H@ 0 (real name 5)");
+    CHECK_SRV("--", "[#test] bob (user8@host8) H@ 0 (real name 5)");
     STRCMP_EQUAL("user8@host8", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     STRCMP_EQUAL("real name 5", ptr_nick2->realname);
 
     RECV(":server 352 alice #test user8 host8 server bob H@ :0");
-    CHECK_SRV("-- [#test] bob (user8@host8) H@ 0 ()");
+    CHECK_SRV("--", "[#test] bob (user8@host8) H@ 0 ()");
     STRCMP_EQUAL("user8@host8", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     STRCMP_EQUAL("real name 5", ptr_nick2->realname);
@@ -3672,15 +3692,15 @@ TEST(IrcProtocolWithServer, 352)
     RECV(":server 352 alice #xyz user host server");
     CHECK_NO_MSG;
     RECV(":server 352 alice #xyz user host server bob");
-    CHECK_SRV("-- [#xyz] bob (user@host) ()");
+    CHECK_SRV("--", "[#xyz] bob (user@host) ()");
     RECV(":server 352 alice #xyz user host server bob *");
-    CHECK_SRV("-- [#xyz] bob (user@host) * ()");
+    CHECK_SRV("--", "[#xyz] bob (user@host) * ()");
     RECV(":server 352 alice #xyz user host server bob * :0 nick");
-    CHECK_SRV("-- [#xyz] bob (user@host) * 0 (nick)");
+    CHECK_SRV("--", "[#xyz] bob (user@host) * 0 (nick)");
     RECV(":server 352 alice #xyz user host server bob H@ :0 nick");
-    CHECK_SRV("-- [#xyz] bob (user@host) H@ 0 (nick)");
+    CHECK_SRV("--", "[#xyz] bob (user@host) H@ 0 (nick)");
     RECV(":server 352 alice #xyz user host server bob G@ :0 nick");
-    CHECK_SRV("-- [#xyz] bob (user@host) G@ 0 (nick)");
+    CHECK_SRV("--", "[#xyz] bob (user@host) G@ 0 (nick)");
 }
 
 /*
@@ -3770,15 +3790,15 @@ TEST(IrcProtocolWithServer, 353)
 
     /* channel not found */
     RECV(":server 353 alice #xyz :alice");
-    CHECK_SRV("-- Nicks #xyz: [alice]");
+    CHECK_SRV("--", "Nicks #xyz: [alice]");
     RECV(":server 353 alice #xyz :alice bob @carol +dan!user@host");
-    CHECK_SRV("-- Nicks #xyz: [alice bob @carol +dan]");
+    CHECK_SRV("--", "Nicks #xyz: [alice bob @carol +dan]");
 
     /* channel not found */
     RECV(":server 353 alice = #xyz :alice");
-    CHECK_SRV("-- Nicks #xyz: [alice]");
+    CHECK_SRV("--", "Nicks #xyz: [alice]");
     RECV(":server 353 alice = #xyz :alice bob @carol +dan!user@host");
-    CHECK_SRV("-- Nicks #xyz: [alice bob @carol +dan]");
+    CHECK_SRV("--", "Nicks #xyz: [alice bob @carol +dan]");
 }
 
 /*
@@ -3814,63 +3834,63 @@ TEST(IrcProtocolWithServer, 354)
     POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test");
-    CHECK_SRV("-- [#test]");
+    CHECK_SRV("--", "[#test]");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     POINTERS_EQUAL(NULL, ptr_nick2->account);
     POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2");
-    CHECK_SRV("-- [#test] user2");
+    CHECK_SRV("--", "[#test] user2");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     POINTERS_EQUAL(NULL, ptr_nick2->account);
     POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 :trailing parameter");
-    CHECK_SRV("-- [#test] user2 trailing parameter");
+    CHECK_SRV("--", "[#test] user2 trailing parameter");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     POINTERS_EQUAL(NULL, ptr_nick2->account);
     POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 host2");
-    CHECK_SRV("-- [#test] user2 host2");
+    CHECK_SRV("--", "[#test] user2 host2");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     POINTERS_EQUAL(NULL, ptr_nick2->account);
     POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 host2 server");
-    CHECK_SRV("-- [#test] user2 host2 server");
+    CHECK_SRV("--", "[#test] user2 host2 server");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     POINTERS_EQUAL(NULL, ptr_nick2->account);
     POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 host2 server bob");
-    CHECK_SRV("-- [#test] user2 host2 server bob");
+    CHECK_SRV("--", "[#test] user2 host2 server bob");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     POINTERS_EQUAL(NULL, ptr_nick2->account);
     POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 host2 server bob *");
-    CHECK_SRV("-- [#test] user2 host2 server bob *");
+    CHECK_SRV("--", "[#test] user2 host2 server bob *");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     POINTERS_EQUAL(NULL, ptr_nick2->account);
     POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 host2 server bob H@ 0");
-    CHECK_SRV("-- [#test] user2 host2 server bob H@ 0");
+    CHECK_SRV("--", "[#test] user2 host2 server bob H@ 0");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     POINTERS_EQUAL(NULL, ptr_nick2->account);
     POINTERS_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 host2 server bob * 0 account2");
-    CHECK_SRV("-- [#test] bob [account2] (user2@host2) * 0 ()");
+    CHECK_SRV("--", "[#test] bob [account2] (user2@host2) * 0 ()");
     STRCMP_EQUAL("user2@host2", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     STRCMP_EQUAL("account2", ptr_nick2->account);
@@ -3878,7 +3898,7 @@ TEST(IrcProtocolWithServer, 354)
 
     RECV(":server 354 alice #test user3 host3 server bob * 0 account3 "
          ":real name 2");
-    CHECK_SRV("-- [#test] bob [account3] (user3@host3) * 0 (real name 2)");
+    CHECK_SRV("--", "[#test] bob [account3] (user3@host3) * 0 (real name 2)");
     STRCMP_EQUAL("user3@host3", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     STRCMP_EQUAL("account3", ptr_nick2->account);
@@ -3886,7 +3906,7 @@ TEST(IrcProtocolWithServer, 354)
 
     RECV(":server 354 alice #test user4 host4 server bob H@ 0 account4 "
          ":real name 3");
-    CHECK_SRV("-- [#test] bob [account4] (user4@host4) H@ 0 (real name 3)");
+    CHECK_SRV("--", "[#test] bob [account4] (user4@host4) H@ 0 (real name 3)");
     STRCMP_EQUAL("user4@host4", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     STRCMP_EQUAL("account4", ptr_nick2->account);
@@ -3894,7 +3914,7 @@ TEST(IrcProtocolWithServer, 354)
 
     RECV(":server 354 alice #test user5 host5 server bob G@ 0 account5 "
          ":real name 4");
-    CHECK_SRV("-- [#test] bob [account5] (user5@host5) G@ 0 (real name 4)");
+    CHECK_SRV("--", "[#test] bob [account5] (user5@host5) G@ 0 (real name 4)");
     STRCMP_EQUAL("user5@host5", ptr_nick2->host);
     LONGS_EQUAL(1, ptr_nick2->away);
     STRCMP_EQUAL("account5", ptr_nick2->account);
@@ -3902,7 +3922,7 @@ TEST(IrcProtocolWithServer, 354)
 
     RECV(":server 354 alice #test user6 host6 server bob * 0 account6 "
          ":real name 5");
-    CHECK_SRV("-- [#test] bob [account6] (user6@host6) * 0 (real name 5)");
+    CHECK_SRV("--", "[#test] bob [account6] (user6@host6) * 0 (real name 5)");
     STRCMP_EQUAL("user6@host6", ptr_nick2->host);
     LONGS_EQUAL(1, ptr_nick2->away);
     STRCMP_EQUAL("account6", ptr_nick2->account);
@@ -3910,7 +3930,7 @@ TEST(IrcProtocolWithServer, 354)
 
     RECV(":server 354 alice #test user7 host7 server bob H@ 0 account7 "
          ":real name 6");
-    CHECK_SRV("-- [#test] bob [account7] (user7@host7) H@ 0 (real name 6)");
+    CHECK_SRV("--", "[#test] bob [account7] (user7@host7) H@ 0 (real name 6)");
     STRCMP_EQUAL("user7@host7", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     STRCMP_EQUAL("account7", ptr_nick2->account);
@@ -3924,24 +3944,24 @@ TEST(IrcProtocolWithServer, 354)
 
     /* channel not found */
     RECV(":server 354 alice #xyz");
-    CHECK_SRV("-- [#xyz]");
+    CHECK_SRV("--", "[#xyz]");
     RECV(":server 354 alice #xyz user2");
-    CHECK_SRV("-- [#xyz] user2");
+    CHECK_SRV("--", "[#xyz] user2");
     RECV(":server 354 alice #xyz user2 host2");
-    CHECK_SRV("-- [#xyz] user2 host2");
+    CHECK_SRV("--", "[#xyz] user2 host2");
     RECV(":server 354 alice #xyz user2 host2 server");
-    CHECK_SRV("-- [#xyz] user2 host2 server");
+    CHECK_SRV("--", "[#xyz] user2 host2 server");
     RECV(":server 354 alice #xyz user2 host2 server bob");
-    CHECK_SRV("-- [#xyz] user2 host2 server bob");
+    CHECK_SRV("--", "[#xyz] user2 host2 server bob");
     RECV(":server 354 alice #xyz user2 host2 server bob *");
-    CHECK_SRV("-- [#xyz] user2 host2 server bob *");
+    CHECK_SRV("--", "[#xyz] user2 host2 server bob *");
     RECV(":server 354 alice #xyz user2 host2 server bob G@ 0");
-    CHECK_SRV("-- [#xyz] user2 host2 server bob G@ 0");
+    CHECK_SRV("--", "[#xyz] user2 host2 server bob G@ 0");
     RECV(":server 354 alice #xyz user2 host2 server bob H@ 0 account");
-    CHECK_SRV("-- [#xyz] bob [account] (user2@host2) H@ 0 ()");
+    CHECK_SRV("--", "[#xyz] bob [account] (user2@host2) H@ 0 ()");
     RECV(":server 354 alice #xyz user2 host2 server bob G@ 0 account "
          ":real name");
-    CHECK_SRV("-- [#xyz] bob [account] (user2@host2) G@ 0 (real name)");
+    CHECK_SRV("--", "[#xyz] bob [account] (user2@host2) G@ 0 (real name)");
 }
 
 /*
@@ -3962,49 +3982,49 @@ TEST(IrcProtocolWithServer, 366)
     CHECK_ERROR_PARAMS("366", 2, 3);
 
     RECV(":server 366 alice #test end");
-    CHECK_CHAN("-- Channel #test: 1 nick (0 ops, 0 voiced, 1 regular)");
+    CHECK_CHAN("--", "Channel #test: 1 nick (0 ops, 0 voiced, 1 regular)");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 1 nick (0 ops, 0 voiced, 1 regular)");
+    CHECK_CHAN("--", "Channel #test: 1 nick (0 ops, 0 voiced, 1 regular)");
 
     RECV(":server 353 alice = #test :bob");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 2 nicks (0 ops, 0 voiced, 2 regular)");
+    CHECK_CHAN("--", "Channel #test: 2 nicks (0 ops, 0 voiced, 2 regular)");
 
     RECV(":server 353 alice = #test :@carol");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 3 nicks (1 op, 0 voiced, 2 regular)");
+    CHECK_CHAN("--", "Channel #test: 3 nicks (1 op, 0 voiced, 2 regular)");
 
     RECV(":server 353 alice = #test :+dan!user@host");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 4 nicks (1 op, 1 voiced, 2 regular)");
+    CHECK_CHAN("--", "Channel #test: 4 nicks (1 op, 1 voiced, 2 regular)");
 
     RECV(":server 353 alice = #test :@evans");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 5 nicks (2 ops, 1 voiced, 2 regular)");
+    CHECK_CHAN("--", "Channel #test: 5 nicks (2 ops, 1 voiced, 2 regular)");
 
     RECV(":server 353 alice = #test :+fred");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 6 nicks (2 ops, 2 voiced, 2 regular)");
+    CHECK_CHAN("--", "Channel #test: 6 nicks (2 ops, 2 voiced, 2 regular)");
 
     RECV(":server 353 alice = #test :greg");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 7 nicks (2 ops, 2 voiced, 3 regular)");
+    CHECK_CHAN("--", "Channel #test: 7 nicks (2 ops, 2 voiced, 3 regular)");
 
     RECV(":server 005 alice " IRC_MSG_005 " :are supported");
 
     RECV(":server 353 alice = #test :%harry");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 8 nicks (2 ops, 1 halfop, 2 voiced, 3 regular)");
+    CHECK_CHAN("--", "Channel #test: 8 nicks (2 ops, 1 halfop, 2 voiced, 3 regular)");
 
     RECV(":server 353 alice = #test :%ian");
     RECV(":server 366 alice #test :End of /NAMES list");
-    CHECK_CHAN("-- Channel #test: 9 nicks (2 ops, 2 halfops, 2 voiced, 3 regular)");
+    CHECK_CHAN("--", "Channel #test: 9 nicks (2 ops, 2 halfops, 2 voiced, 3 regular)");
 
     /* channel not found */
     RECV(":server 366 alice #xyz end");
-    CHECK_SRV("-- #xyz: end");
+    CHECK_SRV("--", "#xyz: end");
     RECV(":server 366 alice #xyz :End of /NAMES list");
-    CHECK_SRV("-- #xyz: End of /NAMES list");
+    CHECK_SRV("--", "#xyz: End of /NAMES list");
 }
 
 /*
@@ -4025,23 +4045,23 @@ TEST(IrcProtocolWithServer, 367)
     CHECK_ERROR_PARAMS("367", 2, 3);
 
     RECV(":server 367 alice #test nick1!user1@host1");
-    CHECK_CHAN("-- [#test] [1] nick1!user1@host1 banned");
+    CHECK_CHAN("--", "[#test] [1] nick1!user1@host1 banned");
     RECV(":server 367 alice #test nick1!user1@host1 nick2!user2@host2");
-    CHECK_CHAN("-- [#test] [2] nick1!user1@host1 banned "
+    CHECK_CHAN("--", "[#test] [2] nick1!user1@host1 banned "
                "by nick2 (user2@host2)");
     RECV(":server 367 alice #test nick1!user1@host1 nick2!user2@host2 "
          "1205585109");
-    CHECK_CHAN("-- [#test] [3] nick1!user1@host1 banned "
+    CHECK_CHAN("--", "[#test] [3] nick1!user1@host1 banned "
                "by nick2 (user2@host2) on Sat, 15 Mar 2008 12:45:09");
 
     /* channel not found */
     RECV(":server 367 alice #xyz nick1!user1@host1");
-    CHECK_SRV("-- [#xyz] nick1!user1@host1 banned");
+    CHECK_SRV("--", "[#xyz] nick1!user1@host1 banned");
     RECV(":server 367 alice #xyz nick1!user1@host1 nick2!user2@host2");
-    CHECK_SRV("-- [#xyz] nick1!user1@host1 banned by nick2 (user2@host2)");
+    CHECK_SRV("--", "[#xyz] nick1!user1@host1 banned by nick2 (user2@host2)");
     RECV(":server 367 alice #xyz nick1!user1@host1 nick2!user2@host2 "
          "1205585109");
-    CHECK_SRV("-- [#xyz] nick1!user1@host1 banned by nick2 (user2@host2) "
+    CHECK_SRV("--", "[#xyz] nick1!user1@host1 banned by nick2 (user2@host2) "
               "on Sat, 15 Mar 2008 12:45:09");
 }
 
@@ -4061,19 +4081,19 @@ TEST(IrcProtocolWithServer, 368)
     CHECK_ERROR_PARAMS("368", 1, 2);
 
     RECV(":server 368 alice #test");
-    CHECK_CHAN("-- [#test]");
+    CHECK_CHAN("--", "[#test]");
     RECV(":server 368 alice #test end");
-    CHECK_CHAN("-- [#test] end");
+    CHECK_CHAN("--", "[#test] end");
     RECV(":server 368 alice #test :End of Channel Ban List");
-    CHECK_CHAN("-- [#test] End of Channel Ban List");
+    CHECK_CHAN("--", "[#test] End of Channel Ban List");
 
     /* channel not found */
     RECV(":server 368 alice #xyz");
-    CHECK_SRV("-- [#xyz]");
+    CHECK_SRV("--", "[#xyz]");
     RECV(":server 368 alice #xyz end");
-    CHECK_SRV("-- [#xyz] end");
+    CHECK_SRV("--", "[#xyz] end");
     RECV(":server 368 alice #xyz :End of Channel Ban List");
-    CHECK_SRV("-- [#xyz] End of Channel Ban List");
+    CHECK_SRV("--", "[#xyz] End of Channel Ban List");
 }
 
 /*
@@ -4092,9 +4112,9 @@ TEST(IrcProtocolWithServer, 401)
     CHECK_ERROR_PARAMS("401", 1, 2);
 
     RECV(":server 401 alice bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 401 alice bob :No such nick/channel");
-    CHECK_SRV("-- bob: No such nick/channel");
+    CHECK_SRV("--", "bob: No such nick/channel");
 }
 
 /*
@@ -4113,9 +4133,9 @@ TEST(IrcProtocolWithServer, 402)
     CHECK_ERROR_PARAMS("402", 1, 2);
 
     RECV(":server 402 alice server");
-    CHECK_SRV("-- server");
+    CHECK_SRV("--", "server");
     RECV(":server 402 alice server :No such server");
-    CHECK_SRV("-- server: No such server");
+    CHECK_SRV("--", "server: No such server");
 }
 
 /*
@@ -4134,11 +4154,11 @@ TEST(IrcProtocolWithServer, 404)
     CHECK_ERROR_PARAMS("404", 1, 2);
 
     RECV(":server 404 alice #test");
-    CHECK_SRV("-- #test");
+    CHECK_SRV("--", "#test");
     RECV(":server 404 alice #test :Cannot send to channel");
-    CHECK_CHAN("-- #test: Cannot send to channel");
+    CHECK_CHAN("--", "#test: Cannot send to channel");
     RECV(":server 404 alice #test2 :Cannot send to channel");
-    CHECK_SRV("-- #test2: Cannot send to channel");
+    CHECK_SRV("--", "#test2: Cannot send to channel");
 }
 
 /*
@@ -4157,11 +4177,11 @@ TEST(IrcProtocolWithServer, 415)
     CHECK_ERROR_PARAMS("415", 1, 2);
 
     RECV(":server 415 alice #test");
-    CHECK_SRV("-- #test");
+    CHECK_SRV("--", "#test");
     RECV(":server 415 alice #test :Cannot send message to channel (+R)");
-    CHECK_CHAN("-- #test: Cannot send message to channel (+R)");
+    CHECK_CHAN("--", "#test: Cannot send message to channel (+R)");
     RECV(":server 415 alice #test2 :Cannot send message to channel (+R)");
-    CHECK_SRV("-- #test2: Cannot send message to channel (+R)");
+    CHECK_SRV("--", "#test2: Cannot send message to channel (+R)");
 }
 
 /*
@@ -4172,23 +4192,23 @@ TEST(IrcProtocolWithServer, 415)
 TEST(IrcProtocolWithServer, 432_not_connected)
 {
     RECV(":server 432 * alice error");
-    CHECK_SRV("-- * alice error");
-    CHECK_SRV("=!= irc: nickname \"nick1\" is invalid, "
+    CHECK_SRV("--", "* alice error");
+    CHECK_SRV("=!=", "irc: nickname \"nick1\" is invalid, "
               "trying nickname \"nick2\"");
 
     RECV(":server 432 * :alice error");
-    CHECK_SRV("-- * alice error");
-    CHECK_SRV("=!= irc: nickname \"nick2\" is invalid, "
+    CHECK_SRV("--", "* alice error");
+    CHECK_SRV("=!=", "irc: nickname \"nick2\" is invalid, "
               "trying nickname \"nick3\"");
 
     RECV(":server 432 * alice :Erroneous Nickname");
-    CHECK_SRV("-- * alice Erroneous Nickname");
-    CHECK_SRV("=!= irc: nickname \"nick3\" is invalid, "
+    CHECK_SRV("--", "* alice Erroneous Nickname");
+    CHECK_SRV("=!=", "irc: nickname \"nick3\" is invalid, "
               "trying nickname \"nick1_\"");
 
     RECV(":server 432 * alice1 :Erroneous Nickname");
-    CHECK_SRV("-- * alice1 Erroneous Nickname");
-    CHECK_SRV("=!= irc: nickname \"nick1_\" is invalid, "
+    CHECK_SRV("--", "* alice1 Erroneous Nickname");
+    CHECK_SRV("=!=", "irc: nickname \"nick1_\" is invalid, "
               "trying nickname \"nick1__\"");
 }
 
@@ -4208,18 +4228,18 @@ TEST(IrcProtocolWithServer, 432_connected)
     CHECK_ERROR_PARAMS("432", 1, 2);
 
     RECV(":server 432 alice test%+");
-    CHECK_SRV("-- test%+");
+    CHECK_SRV("--", "test%+");
     RECV(":server 432 alice test%+ error");
-    CHECK_SRV("-- test%+: error");
+    CHECK_SRV("--", "test%+: error");
     RECV(":server 432 alice test%+ :Erroneous Nickname");
-    CHECK_SRV("-- test%+: Erroneous Nickname");
+    CHECK_SRV("--", "test%+: Erroneous Nickname");
 
     /*
      * special case: erroneous nick is a channel: check that the message is
      * still displayed on the server buffer
      */
     RECV(":server 432 alice #test :Erroneous Nickname");
-    CHECK_SRV("-- #test: Erroneous Nickname");
+    CHECK_SRV("--", "#test: Erroneous Nickname");
 }
 
 /*
@@ -4230,15 +4250,15 @@ TEST(IrcProtocolWithServer, 432_connected)
 TEST(IrcProtocolWithServer, 433_not_connected)
 {
     RECV(":server 433 * alice error");
-    CHECK_SRV("-- irc: nickname \"nick1\" is already in use, "
+    CHECK_SRV("--", "irc: nickname \"nick1\" is already in use, "
               "trying nickname \"nick2\"");
 
     RECV(":server 433 * alice :Nickname is already in use.");
-    CHECK_SRV("-- irc: nickname \"nick2\" is already in use, "
+    CHECK_SRV("--", "irc: nickname \"nick2\" is already in use, "
               "trying nickname \"nick3\"");
 
     RECV(":server 433 * alice1 :Nickname is already in use.");
-    CHECK_SRV("-- irc: nickname \"nick3\" is already in use, "
+    CHECK_SRV("--", "irc: nickname \"nick3\" is already in use, "
               "trying nickname \"nick1_\"");
 }
 
@@ -4258,11 +4278,11 @@ TEST(IrcProtocolWithServer, 433_connected)
     CHECK_ERROR_PARAMS("433", 1, 2);
 
     RECV(":server 433 alice test");
-    CHECK_SRV("-- test");
+    CHECK_SRV("--", "test");
     RECV(":server 433 alice test error");
-    CHECK_SRV("-- test: error");
+    CHECK_SRV("--", "test: error");
     RECV(":server 433 alice test :Nickname is already in use.");
-    CHECK_SRV("-- test: Nickname is already in use.");
+    CHECK_SRV("--", "test: Nickname is already in use.");
 
     /*
      * special case: nickname already used looks like a channel (it should
@@ -4270,7 +4290,7 @@ TEST(IrcProtocolWithServer, 433_connected)
      * on the server buffer
      */
      RECV(":server 433 alice #test :Nickname is already in use.");
-     CHECK_SRV("-- #test: Nickname is already in use.");
+    CHECK_SRV("--", "#test: Nickname is already in use.");
 }
 
 /*
@@ -4281,11 +4301,11 @@ TEST(IrcProtocolWithServer, 433_connected)
 TEST(IrcProtocolWithServer, 437_not_connected)
 {
     RECV(":server 437 * alice error");
-    CHECK_SRV("-- * alice error");
+    CHECK_SRV("--", "* alice error");
     RECV(":server 437 * alice :Nick/channel is temporarily unavailable");
-    CHECK_SRV("-- * alice Nick/channel is temporarily unavailable");
+    CHECK_SRV("--", "* alice Nick/channel is temporarily unavailable");
     RECV(":server 437 * alice1 :Nick/channel is temporarily unavailable");
-    CHECK_SRV("-- * alice1 Nick/channel is temporarily unavailable");
+    CHECK_SRV("--", "* alice1 Nick/channel is temporarily unavailable");
 }
 
 /*
@@ -4304,13 +4324,13 @@ TEST(IrcProtocolWithServer, 437_connected)
     CHECK_ERROR_PARAMS("437", 1, 2);
 
     RECV(":server 437 * alice");
-    CHECK_SRV("-- * alice");
+    CHECK_SRV("--", "* alice");
     RECV(":server 437 * alice error");
-    CHECK_SRV("-- * alice error");
+    CHECK_SRV("--", "* alice error");
     RECV(":server 437 * alice :Nick/channel is temporarily unavailable");
-    CHECK_SRV("-- * alice Nick/channel is temporarily unavailable");
+    CHECK_SRV("--", "* alice Nick/channel is temporarily unavailable");
     RECV(":server 437 alice #test :Cannot change nickname while banned on channel");
-    CHECK_SRV("-- #test: Cannot change nickname while banned on channel");
+    CHECK_SRV("--", "#test: Cannot change nickname while banned on channel");
 }
 
 /*
@@ -4329,12 +4349,12 @@ TEST(IrcProtocolWithServer, 438)
     CHECK_ERROR_PARAMS("438", 1, 2);
 
     RECV(":server 438 alice alice2");
-    CHECK_SRV("-- alice alice2");
+    CHECK_SRV("--", "alice alice2");
     RECV(":server 438 alice alice2 error");
-    CHECK_SRV("-- error (alice => alice2)");
+    CHECK_SRV("--", "error (alice => alice2)");
     RECV(":server 438 alice alice2 :Nick change too fast. "
          "Please wait 30 seconds.");
-    CHECK_SRV("-- Nick change too fast. Please wait 30 seconds. "
+    CHECK_SRV("--", "Nick change too fast. Please wait 30 seconds. "
               "(alice => alice2)");
 }
 
@@ -4354,13 +4374,13 @@ TEST(IrcProtocolWithServer, 470)
     CHECK_ERROR_PARAMS("470", 1, 2);
 
     RECV(":server 470 alice #test");
-    CHECK_SRV("-- #test");
+    CHECK_SRV("--", "#test");
     RECV(":server 470 alice #test #test2");
-    CHECK_SRV("-- #test: #test2");
+    CHECK_SRV("--", "#test: #test2");
     RECV(":server 470 alice #test #test2 forwarding");
-    CHECK_SRV("-- #test: #test2 forwarding");
+    CHECK_SRV("--", "#test: #test2 forwarding");
     RECV(":server 470 alice #test #test2 :Forwarding to another channel");
-    CHECK_SRV("-- #test: #test2 Forwarding to another channel");
+    CHECK_SRV("--", "#test: #test2 Forwarding to another channel");
 }
 
 /*
@@ -4379,9 +4399,9 @@ TEST(IrcProtocolWithServer, 524)
     CHECK_ERROR_PARAMS("524", 1, 2);
 
     RECV(":server 524 alice UNKNOWN");
-    CHECK_SRV("--");
+    CHECK_SRV("--", "");
     RECV(":server 524 alice UNKNOWN :Help not found");
-    CHECK_SRV("-- Help not found");
+    CHECK_SRV("--", "Help not found");
 }
 
 /*
@@ -4400,10 +4420,10 @@ TEST(IrcProtocolWithServer, 704)
     CHECK_ERROR_PARAMS("704", 1, 2);
 
     RECV(":server 704 alice MODE");
-    CHECK_SRV("--");
+    CHECK_SRV("--", "");
     RECV(":server 704 alice MODE "
          ":MODE <target> [<modestring> [<mode arguments>...]]");
-    CHECK_SRV("-- MODE <target> [<modestring> [<mode arguments>...]]");
+    CHECK_SRV("--", "MODE <target> [<modestring> [<mode arguments>...]]");
 }
 
 /*
@@ -4422,9 +4442,9 @@ TEST(IrcProtocolWithServer, 705)
     CHECK_ERROR_PARAMS("705", 1, 2);
 
     RECV(":server 705 alice MODE");
-    CHECK_SRV("--");
+    CHECK_SRV("--", "");
     RECV(":server 705 alice MODE :Sets and removes modes from the given target.");
-    CHECK_SRV("-- Sets and removes modes from the given target.");
+    CHECK_SRV("--", "Sets and removes modes from the given target.");
 }
 
 /*
@@ -4443,9 +4463,9 @@ TEST(IrcProtocolWithServer, 706)
     CHECK_ERROR_PARAMS("706", 1, 2);
 
     RECV(":server 706 alice MODE");
-    CHECK_SRV("--");
+    CHECK_SRV("--", "");
     RECV(":server 706 alice MODE :End of /HELPOP");
-    CHECK_SRV("-- End of /HELPOP");
+    CHECK_SRV("--", "End of /HELPOP");
 }
 
 /*
@@ -4466,9 +4486,9 @@ TEST(IrcProtocolWithServer, 710)
     CHECK_ERROR_PARAMS("710", 2, 3);
 
     RECV(":server 710 #test #test nick1!user1@host1");
-    CHECK_CHAN("-- nick1 (user1@host1) has asked for an invite");
+    CHECK_CHAN("--", "nick1 (user1@host1) has asked for an invite");
     RECV(":server 710 #test #test nick1!user1@host1 :has asked for an invite.");
-    CHECK_CHAN("-- nick1 (user1@host1) has asked for an invite.");
+    CHECK_CHAN("--", "nick1 (user1@host1) has asked for an invite.");
 
     /* channel not found */
     RECV(":server 710 #xyz #xyz nick1!user1@host1");
@@ -4495,7 +4515,7 @@ TEST(IrcProtocolWithServer, 711)
     CHECK_ERROR_PARAMS("711", 2, 3);
 
     RECV(":server 711 alice #test :Your KNOCK has been delivered.");
-    CHECK_SRV("-- #test: Your KNOCK has been delivered.");
+    CHECK_SRV("--", "#test: Your KNOCK has been delivered.");
 }
 
 /*
@@ -4516,7 +4536,7 @@ TEST(IrcProtocolWithServer, 712)
     CHECK_ERROR_PARAMS("712", 2, 3);
 
     RECV(":server 712 alice #test :Too many KNOCKs (channel).");
-    CHECK_SRV("-- #test: Too many KNOCKs (channel).");
+    CHECK_SRV("--", "#test: Too many KNOCKs (channel).");
 }
 
 /*
@@ -4537,7 +4557,7 @@ TEST(IrcProtocolWithServer, 713)
     CHECK_ERROR_PARAMS("713", 2, 3);
 
     RECV(":server 713 alice #test :Channel is open.");
-    CHECK_SRV("-- #test: Channel is open.");
+    CHECK_SRV("--", "#test: Channel is open.");
 }
 
 /*
@@ -4558,7 +4578,7 @@ TEST(IrcProtocolWithServer, 714)
     CHECK_ERROR_PARAMS("714", 2, 3);
 
     RECV(":server 714 alice #test :You are already on that channel.");
-    CHECK_SRV("-- #test: You are already on that channel.");
+    CHECK_SRV("--", "#test: You are already on that channel.");
 }
 
 /*
@@ -4581,22 +4601,22 @@ TEST(IrcProtocolWithServer, 728)
     CHECK_ERROR_PARAMS("728", 3, 4);
 
     RECV(":server 728 alice #test q nick1!user1@host1");
-    CHECK_CHAN("-- [#test] nick1!user1@host1 quieted");
+    CHECK_CHAN("--", "[#test] nick1!user1@host1 quieted");
     RECV(":server 728 alice #test q nick1!user1@host1 alice!user@host");
-    CHECK_CHAN("-- [#test] nick1!user1@host1 quieted by alice (user@host)");
+    CHECK_CHAN("--", "[#test] nick1!user1@host1 quieted by alice (user@host)");
     RECV(":server 728 alice #test q nick1!user1@host1 alice!user@host "
          "1351350090");
-    CHECK_CHAN("-- [#test] nick1!user1@host1 quieted by alice (user@host) "
+    CHECK_CHAN("--", "[#test] nick1!user1@host1 quieted by alice (user@host) "
                "on Sat, 27 Oct 2012 15:01:30");
 
     /* channel not found */
     RECV(":server 728 alice #xyz q nick1!user1@host1");
-    CHECK_SRV("-- [#xyz] nick1!user1@host1 quieted");
+    CHECK_SRV("--", "[#xyz] nick1!user1@host1 quieted");
     RECV(":server 728 alice #xyz q nick1!user1@host1 alice!user@host");
-    CHECK_SRV("-- [#xyz] nick1!user1@host1 quieted by alice (user@host)");
+    CHECK_SRV("--", "[#xyz] nick1!user1@host1 quieted by alice (user@host)");
     RECV(":server 728 alice #xyz q nick1!user1@host1 alice!user@host "
          "1351350090");
-    CHECK_SRV("-- [#xyz] nick1!user1@host1 quieted by alice (user@host) "
+    CHECK_SRV("--", "[#xyz] nick1!user1@host1 quieted by alice (user@host) "
               "on Sat, 27 Oct 2012 15:01:30");
 }
 
@@ -4618,19 +4638,19 @@ TEST(IrcProtocolWithServer, 729)
     CHECK_ERROR_PARAMS("729", 2, 3);
 
     RECV(":server 729 alice #test q");
-    CHECK_CHAN("-- [#test]");
+    CHECK_CHAN("--", "[#test]");
     RECV(":server 729 alice #test q end");
-    CHECK_CHAN("-- [#test] end");
+    CHECK_CHAN("--", "[#test] end");
     RECV(":server 729 alice #test q :End of Channel Quiet List");
-    CHECK_CHAN("-- [#test] End of Channel Quiet List");
+    CHECK_CHAN("--", "[#test] End of Channel Quiet List");
 
     /* channel not found */
     RECV(":server 729 alice #xyz q");
-    CHECK_SRV("-- [#xyz]");
+    CHECK_SRV("--", "[#xyz]");
     RECV(":server 729 alice #xyz q end");
-    CHECK_SRV("-- [#xyz] end");
+    CHECK_SRV("--", "[#xyz] end");
     RECV(":server 729 alice #xyz q :End of Channel Quiet List");
-    CHECK_SRV("-- [#xyz] End of Channel Quiet List");
+    CHECK_SRV("--", "[#xyz] End of Channel Quiet List");
 }
 
 /*
@@ -4662,15 +4682,15 @@ TEST(IrcProtocolWithServer, 730)
     /* with notify on nick1 */
     run_cmd_quiet ("/notify add nick1 " IRC_FAKE_SERVER);
     RECV(":server 730 alice :nick1!user1@host1,nick2!user2@host2");
-    CHECK_SRV("-- notify: nick1 (user1@host1) is connected");
+    CHECK_SRV("--", "notify: nick1 (user1@host1) is connected");
     RECV(":server 731 alice :nick1!user1@host1,nick2!user2@host2");
-    CHECK_SRV("-- notify: nick1 (user1@host1) has quit");
+    CHECK_SRV("--", "notify: nick1 (user1@host1) has quit");
 
     /* with notify on nick1 and nick2 */
     run_cmd_quiet ("/notify add nick2 " IRC_FAKE_SERVER);
     RECV(":server 730 alice :nick1!user1@host1,nick2!user2@host2");
-    CHECK_SRV("-- notify: nick1 (user1@host1) has connected");
-    CHECK_SRV("-- notify: nick2 (user2@host2) is connected");
+    CHECK_SRV("--", "notify: nick1 (user1@host1) has connected");
+    CHECK_SRV("--", "notify: nick2 (user2@host2) is connected");
 
     run_cmd_quiet ("/mute /notify del nick1 " IRC_FAKE_SERVER);
     run_cmd_quiet ("/mute /notify del nick2 " IRC_FAKE_SERVER);
@@ -4690,9 +4710,9 @@ TEST(IrcProtocolWithServer, 732)
     CHECK_ERROR_PARAMS("732", 0, 1);
 
     RECV(":server 732 alice");
-    CHECK_SRV("--");
+    CHECK_SRV("--", "");
     RECV(":server 732 alice :nick1!user1@host1,nick2!user2@host2");
-    CHECK_SRV("-- nick1!user1@host1,nick2!user2@host2");
+    CHECK_SRV("--", "nick1!user1@host1,nick2!user2@host2");
 }
 
 /*
@@ -4709,11 +4729,11 @@ TEST(IrcProtocolWithServer, 733)
     CHECK_ERROR_PARAMS("733", 0, 1);
 
     RECV(":server 733 alice");
-    CHECK_SRV("--");
+    CHECK_SRV("--", "");
     RECV(":server 733 alice end");
-    CHECK_SRV("-- end");
+    CHECK_SRV("--", "end");
     RECV(":server 733 alice :End of MONITOR list");
-    CHECK_SRV("-- End of MONITOR list");
+    CHECK_SRV("--", "End of MONITOR list");
 }
 
 /*
@@ -4734,11 +4754,11 @@ TEST(IrcProtocolWithServer, 734)
     CHECK_ERROR_PARAMS("734", 2, 3);
 
     RECV(":server 734 alice 10 nick1,nick2");
-    CHECK_SRV("=!=  (10)");
+    CHECK_SRV("=!=", " (10)");
     RECV(":server 734 alice 10 nick1,nick2 full");
-    CHECK_SRV("=!= full (10)");
+    CHECK_SRV("=!=", "full (10)");
     RECV(":server 734 alice 10 nick1,nick2 :Monitor list is full");
-    CHECK_SRV("=!= Monitor list is full (10)");
+    CHECK_SRV("=!=", "Monitor list is full (10)");
 }
 
 /*
@@ -4757,14 +4777,14 @@ TEST(IrcProtocolWithServer, 742)
     CHECK_ERROR_PARAMS("742", 1, 2);
 
     RECV(":server 742 alice #test");
-    CHECK_SRV("-- #test");
+    CHECK_SRV("--", "#test");
     RECV(":server 742 alice #test n nstlk :MODE cannot be set due to channel "
          "having an active MLOCK restriction policy");
-    CHECK_CHAN("-- #test: n nstlk MODE cannot be set due to channel having "
+    CHECK_CHAN("--", "#test: n nstlk MODE cannot be set due to channel having "
                "an active MLOCK restriction policy");
     RECV(":server 742 alice #test2 n nstlk :MODE cannot be set due to channel "
          "having an active MLOCK restriction policy");
-    CHECK_SRV("-- #test2: n nstlk MODE cannot be set due to channel having "
+    CHECK_SRV("--", "#test2: n nstlk MODE cannot be set due to channel having "
                "an active MLOCK restriction policy");
 }
 
@@ -4788,12 +4808,12 @@ TEST(IrcProtocolWithServer, 900)
     CHECK_ERROR_PARAMS("900", 3, 4);
 
     RECV(":server 900 alice alice!user@host alice logged");
-    CHECK_SRV("-- logged (alice!user@host)");
+    CHECK_SRV("--", "logged (alice!user@host)");
     RECV(":server 900 alice alice!user@host alice "
          ":You are now logged in as mynick");
-    CHECK_SRV("-- You are now logged in as mynick (alice!user@host)");
+    CHECK_SRV("--", "You are now logged in as mynick (alice!user@host)");
     RECV(":server 900 * * alice :You are now logged in as mynick");
-    CHECK_SRV("-- You are now logged in as mynick");
+    CHECK_SRV("--", "You are now logged in as mynick");
 }
 
 /*
@@ -4814,9 +4834,9 @@ TEST(IrcProtocolWithServer, 901)
     CHECK_ERROR_PARAMS("901", 2, 3);
 
     RECV(":server 901 alice nick!user@host logged");
-    CHECK_SRV("-- logged");
+    CHECK_SRV("--", "logged");
     RECV(":server 901 alice nick!user@host :You are now logged out");
-    CHECK_SRV("-- You are now logged out");
+    CHECK_SRV("--", "You are now logged out");
 }
 
 /*
@@ -4838,17 +4858,17 @@ TEST(IrcProtocolWithServer, 903_907)
     CHECK_ERROR_PARAMS("907", 0, 1);
 
     RECV(":server 903 alice ok");
-    CHECK_SRV("-- ok");
+    CHECK_SRV("--", "ok");
     RECV(":server 903 alice :SASL authentication successful");
-    CHECK_SRV("-- SASL authentication successful");
+    CHECK_SRV("--", "SASL authentication successful");
     RECV(":server 903 * :SASL authentication successful");
-    CHECK_SRV("-- SASL authentication successful");
+    CHECK_SRV("--", "SASL authentication successful");
 
 
     RECV(":server 907 alice ok");
-    CHECK_SRV("-- ok");
+    CHECK_SRV("--", "ok");
     RECV(":server 907 alice :SASL authentication successful");
-    CHECK_SRV("-- SASL authentication successful");
+    CHECK_SRV("--", "SASL authentication successful");
 }
 
 /*
@@ -4880,24 +4900,24 @@ TEST(IrcProtocolWithServer, 902_904_905_906)
     CHECK_ERROR_PARAMS("906", 0, 1);
 
     RECV(":server 902 alice error");
-    CHECK_SRV("-- error");
+    CHECK_SRV("--", "error");
     RECV(":server 902 alice :SASL authentication failed");
-    CHECK_SRV("-- SASL authentication failed");
+    CHECK_SRV("--", "SASL authentication failed");
 
     RECV(":server 904 alice error");
-    CHECK_SRV("-- error");
+    CHECK_SRV("--", "error");
     RECV(":server 904 alice :SASL authentication failed");
-    CHECK_SRV("-- SASL authentication failed");
+    CHECK_SRV("--", "SASL authentication failed");
 
     RECV(":server 905 alice error");
-    CHECK_SRV("-- error");
+    CHECK_SRV("--", "error");
     RECV(":server 905 alice :SASL authentication failed");
-    CHECK_SRV("-- SASL authentication failed");
+    CHECK_SRV("--", "SASL authentication failed");
 
     RECV(":server 906 alice error");
-    CHECK_SRV("-- error");
+    CHECK_SRV("--", "error");
     RECV(":server 906 alice :SASL authentication failed");
-    CHECK_SRV("-- SASL authentication failed");
+    CHECK_SRV("--", "SASL authentication failed");
 }
 
 /*
@@ -4921,54 +4941,54 @@ TEST(IrcProtocolWithServer, server_mode_reason)
     RECV(":server 973 alice");
     CHECK_NO_MSG;
     RECV(":server 973 alice mode");
-    CHECK_SRV("-- mode");
+    CHECK_SRV("--", "mode");
     RECV(":server 973 alice mode test");
-    CHECK_SRV("-- mode: test");
+    CHECK_SRV("--", "mode: test");
     RECV(":server 973 alice mode :test");
-    CHECK_SRV("-- mode: test");
+    CHECK_SRV("--", "mode: test");
 
     RECV(":server 974 alice");
     CHECK_NO_MSG;
     RECV(":server 974 alice mode");
-    CHECK_SRV("-- mode");
+    CHECK_SRV("--", "mode");
     RECV(":server 974 alice mode test");
-    CHECK_SRV("-- mode: test");
+    CHECK_SRV("--", "mode: test");
     RECV(":server 974 alice mode :test");
-    CHECK_SRV("-- mode: test");
+    CHECK_SRV("--", "mode: test");
 
     RECV(":server 975 alice");
     CHECK_NO_MSG;
     RECV(":server 975 alice mode");
-    CHECK_SRV("-- mode");
+    CHECK_SRV("--", "mode");
     RECV(":server 975 alice mode test");
-    CHECK_SRV("-- mode: test");
+    CHECK_SRV("--", "mode: test");
     RECV(":server 975 alice mode :test");
-    CHECK_SRV("-- mode: test");
+    CHECK_SRV("--", "mode: test");
 
     RECV(":server 973 bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 973 bob mode");
-    CHECK_SRV("-- bob: mode");
+    CHECK_SRV("--", "bob: mode");
     RECV(":server 973 bob mode test");
-    CHECK_SRV("-- bob: mode test");
+    CHECK_SRV("--", "bob: mode test");
     RECV(":server 973 bob mode :test");
-    CHECK_SRV("-- bob: mode test");
+    CHECK_SRV("--", "bob: mode test");
 
     RECV(":server 974 bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 974 bob mode");
-    CHECK_SRV("-- bob: mode");
+    CHECK_SRV("--", "bob: mode");
     RECV(":server 974 bob mode test");
-    CHECK_SRV("-- bob: mode test");
+    CHECK_SRV("--", "bob: mode test");
     RECV(":server 974 bob mode :test");
-    CHECK_SRV("-- bob: mode test");
+    CHECK_SRV("--", "bob: mode test");
 
     RECV(":server 975 bob");
-    CHECK_SRV("-- bob");
+    CHECK_SRV("--", "bob");
     RECV(":server 975 bob mode");
-    CHECK_SRV("-- bob: mode");
+    CHECK_SRV("--", "bob: mode");
     RECV(":server 975 bob mode test");
-    CHECK_SRV("-- bob: mode test");
+    CHECK_SRV("--", "bob: mode test");
     RECV(":server 975 bob mode :test");
-    CHECK_SRV("-- bob: mode test");
+    CHECK_SRV("--", "bob: mode test");
 }

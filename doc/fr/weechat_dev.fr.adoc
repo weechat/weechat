@@ -392,6 +392,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 | Chemin/fichier                      | Description
 | tests/                              | Racine des tests.
 |    tests.cpp                        | Programme utilisé pour lancer tous les tests.
+|    tests-record.cpp                 | Enregistrement et recherche dans les messages affichés.
 |    scripts/                         | Racine des tests de l'API script.
 |       test-scripts.cpp              | Programme utilisé pour lancer les tests de l'API script.
 |       python/                       | Scripts Python pour générer et lancer les tests de l'API script.

@@ -135,7 +135,10 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
 endif()
 
 # binary to run tests
-set(WEECHAT_TESTS_SRC tests.cpp tests.h)
+set(WEECHAT_TESTS_SRC
+  tests.cpp tests.h
+  tests-record.cpp tests-record.h
+)
 add_executable(tests ${WEECHAT_TESTS_SRC})
 target_link_libraries(tests
   weechat_core
