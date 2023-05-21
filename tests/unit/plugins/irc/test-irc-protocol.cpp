@@ -1284,54 +1284,54 @@ TEST(IrcProtocolWithServer, cap)
     /* CAP LS */
     RECV("CAP * LS :multi-prefix sasl");
     CHECK_SRV("--", "irc: client capability, server supports: multi-prefix sasl",
-              "");
+              "irc_cap,log3");
     RECV("CAP * LS * :multi-prefix sasl");
     CHECK_NO_MSG;
     RECV(":server CAP * LS :multi-prefix sasl");
     CHECK_SRV("--", "irc: client capability, server supports: multi-prefix sasl",
-              "");
+              "irc_cap,log3");
     RECV(":server CAP * LS * :multi-prefix sasl");
     CHECK_NO_MSG;
 
     /* CAP LIST */
     RECV("CAP * LIST :multi-prefix sasl");
     CHECK_SRV("--", "irc: client capability, currently enabled: multi-prefix sasl",
-              "");
+              "irc_cap,log3");
     RECV("CAP * LIST * :multi-prefix sasl");
     CHECK_NO_MSG;
     RECV(":server CAP * LIST :multi-prefix sasl");
     CHECK_SRV("--", "irc: client capability, currently enabled: multi-prefix sasl",
-              "");
+              "irc_cap,log3");
     RECV(":server CAP * LIST * :multi-prefix sasl");
     CHECK_NO_MSG;
 
     /* CAP NEW */
     RECV("CAP * NEW :multi-prefix sasl");
     CHECK_SRV("--", "irc: client capability, now available: multi-prefix sasl",
-              "");
+              "irc_cap,log3");
     RECV(":server CAP * NEW :multi-prefix sasl");
     CHECK_SRV("--", "irc: client capability, now available: multi-prefix sasl",
-              "");
+              "irc_cap,log3");
 
     /* CAP DEL */
     RECV("CAP * DEL :multi-prefix sasl");
     CHECK_SRV("--", "irc: client capability, removed: multi-prefix sasl",
-              "");
+              "irc_cap,log3");
     RECV(":server CAP * DEL :multi-prefix sasl");
     CHECK_SRV("--", "irc: client capability, removed: multi-prefix sasl",
-              "");
+              "irc_cap,log3");
 
     /* CAP ACK */
     RECV("CAP * ACK :sasl");
-    CHECK_SRV("--", "irc: client capability, enabled: sasl", "");
+    CHECK_SRV("--", "irc: client capability, enabled: sasl", "irc_cap,log3");
     RECV(":server CAP * ACK :sasl");
-    CHECK_SRV("--", "irc: client capability, enabled: sasl", "");
+    CHECK_SRV("--", "irc: client capability, enabled: sasl", "irc_cap,log3");
 
     /* CAP NAK */
     RECV("CAP * NAK :sasl");
-    CHECK_SRV("=!=", "irc: client capability, refused: sasl", "");
+    CHECK_SRV("=!=", "irc: client capability, refused: sasl", "irc_cap,log3");
     RECV(":server CAP * NAK :sasl");
-    CHECK_SRV("=!=", "irc: client capability, refused: sasl", "");
+    CHECK_SRV("=!=", "irc: client capability, refused: sasl", "irc_cap,log3");
 }
 
 /*

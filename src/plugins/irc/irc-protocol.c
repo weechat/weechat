@@ -1041,7 +1041,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                                           irc_protocol_cap_print_cb,
                                           str_caps);
             weechat_printf_date_tags (
-                server->buffer, date, NULL,
+                server->buffer, date, "irc_cap,log3",
                 _("%s%s: client capability, server supports: %s"),
                 weechat_prefix ("network"),
                 IRC_PLUGIN_NAME,
@@ -1127,7 +1127,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                                           irc_protocol_cap_print_cb,
                                           str_caps);
             weechat_printf_date_tags (
-                server->buffer, date, NULL,
+                server->buffer, date, "irc_cap,log3",
                 _("%s%s: client capability, currently enabled: %s"),
                 weechat_prefix ("network"),
                 IRC_PLUGIN_NAME,
@@ -1192,7 +1192,7 @@ IRC_PROTOCOL_CALLBACK(cap)
         if (*str_caps_enabled[0] && *str_caps_disabled[0])
         {
             weechat_printf_date_tags (
-                server->buffer, date, NULL,
+                server->buffer, date, "irc_cap,log3",
                 _("%s%s: client capability, enabled: %s, disabled: %s"),
                 weechat_prefix ("network"), IRC_PLUGIN_NAME,
                 *str_caps_enabled, *str_caps_disabled);
@@ -1200,7 +1200,7 @@ IRC_PROTOCOL_CALLBACK(cap)
         else if (*str_caps_enabled[0])
         {
             weechat_printf_date_tags (
-                server->buffer, date, NULL,
+                server->buffer, date, "irc_cap,log3",
                 _("%s%s: client capability, enabled: %s"),
                 weechat_prefix ("network"), IRC_PLUGIN_NAME,
                 *str_caps_enabled);
@@ -1208,7 +1208,7 @@ IRC_PROTOCOL_CALLBACK(cap)
         else if (*str_caps_disabled[0])
         {
             weechat_printf_date_tags (
-                server->buffer, date, NULL,
+                server->buffer, date, "irc_cap,log3",
                 _("%s%s: client capability, disabled: %s"),
                 weechat_prefix ("network"), IRC_PLUGIN_NAME,
                 *str_caps_disabled);
@@ -1252,7 +1252,7 @@ IRC_PROTOCOL_CALLBACK(cap)
 
         str_params = irc_protocol_string_params (params, 2, num_params - 1);
         weechat_printf_date_tags (
-            server->buffer, date, NULL,
+            server->buffer, date, "irc_cap,log3",
             _("%s%s: client capability, refused: %s"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, str_params);
         if (str_params)
@@ -1268,7 +1268,7 @@ IRC_PROTOCOL_CALLBACK(cap)
 
         str_params = irc_protocol_string_params (params, 2, num_params - 1);
         weechat_printf_date_tags (
-            server->buffer, date, NULL,
+            server->buffer, date, "irc_cap,log3",
             _("%s%s: client capability, now available: %s"),
             weechat_prefix ("network"), IRC_PLUGIN_NAME, str_params);
         if (str_params)
@@ -1320,7 +1320,7 @@ IRC_PROTOCOL_CALLBACK(cap)
 
         str_params = irc_protocol_string_params (params, 2, num_params - 1);
         weechat_printf_date_tags (
-            server->buffer, date, NULL,
+            server->buffer, date, "irc_cap,log3",
             _("%s%s: client capability, removed: %s"),
             weechat_prefix ("network"), IRC_PLUGIN_NAME, str_params);
         if (str_params)
