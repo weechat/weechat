@@ -93,7 +93,7 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
                 weechat_config_color (
                     weechat_config_get ("weechat.color.chat_nick_self")));
             snprintf (str_tags, sizeof (str_tags),
-                      "notify_none,self_msg,no_highlight,prefix_nick_%s",
+                      "self_msg,notify_none,no_highlight,prefix_nick_%s",
                       (str_color) ? str_color : "default");
             if (str_color)
                 free (str_color);
