@@ -16,6 +16,29 @@ For a complete list of changes, please look at ChangeLog.
 
 This is a major version that includes breaking changes described below.
 
+[[v4.0.0_config_files]]
+=== Configuration file version
+
+A version has been introduced in configuration file, and due to the many
+breaking changes (listed in the chapters below), the following files are
+automatically upgraded to a new version:
+
+- weechat.conf: new key names
+  (see <<v4.0.0_key_bindings_improvements,Key bindings improvements>>)
+- alias.conf: aliases converted to lower case
+  (see <<v4.0.0_case_sensitive_identifiers,Case sensitive identifiers>>)
+- irc.conf: options "ssl*" renamed to "tls*"
+  (see <<v4.0.0_tls,TLS options and connections>>)
+- relay.conf: options and protocol "ssl*" renamed to "tls*"
+  (see <<v4.0.0_tls,TLS options and connections>>)
+
+[WARNING]
+Because of this new format, you must *NOT* load the new configuration files
+in any older WeeChat version < 4.0.0 once you have run any version ≥ 4.0.0
+at least one time. +
+For example the new key names make the input completely broken (you can not
+enter most chars in input any more and Enter key does not work).
+
 [[v4.0.0_key_bindings_improvements]]
 === Key bindings improvements
 
