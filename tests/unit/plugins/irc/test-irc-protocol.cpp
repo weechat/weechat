@@ -5161,18 +5161,18 @@ TEST(IrcProtocolWithServer, 730)
     run_cmd_quiet ("/notify add nick1 " IRC_FAKE_SERVER);
     RECV(":server 730 alice :nick1!user1@host1,nick2!user2@host2");
     CHECK_SRV("--", "notify: nick1 (user1@host1) is connected",
-              "irc_notify,irc_notify_join,nick_nick1,notify_message");
+              "irc_notify,irc_notify_join,nick_nick1,notify_message,log3");
     RECV(":server 731 alice :nick1!user1@host1,nick2!user2@host2");
     CHECK_SRV("--", "notify: nick1 (user1@host1) has quit",
-              "irc_notify,irc_notify_quit,nick_nick1,notify_message");
+              "irc_notify,irc_notify_quit,nick_nick1,notify_message,log3");
 
     /* with notify on nick1 and nick2 */
     run_cmd_quiet ("/notify add nick2 " IRC_FAKE_SERVER);
     RECV(":server 730 alice :nick1!user1@host1,nick2!user2@host2");
     CHECK_SRV("--", "notify: nick1 (user1@host1) has connected",
-              "irc_notify,irc_notify_join,nick_nick1,notify_message");
+              "irc_notify,irc_notify_join,nick_nick1,notify_message,log3");
     CHECK_SRV("--", "notify: nick2 (user2@host2) is connected",
-              "irc_notify,irc_notify_join,nick_nick2,notify_message");
+              "irc_notify,irc_notify_join,nick_nick2,notify_message,log3");
 
     run_cmd_quiet ("/mute /notify del nick1 " IRC_FAKE_SERVER);
     run_cmd_quiet ("/mute /notify del nick2 " IRC_FAKE_SERVER);

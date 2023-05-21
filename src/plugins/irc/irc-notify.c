@@ -629,7 +629,8 @@ irc_notify_get_tags (struct t_config_option *option, const char *type,
 
     tags = weechat_config_string (option);
 
-    snprintf (string, sizeof (string), "irc_notify,irc_notify_%s,nick_%s%s%s",
+    snprintf (string, sizeof (string),
+              "irc_notify,irc_notify_%s,nick_%s%s%s,log3",
               type,
               nick,
               (tags && tags[0]) ? "," : "",

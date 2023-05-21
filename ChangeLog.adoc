@@ -86,6 +86,7 @@ Bug fixes::
   * irc: fix target buffer for commands 432/433 (erroneous nickname/nickname already in use) when the nickname looks like a channel
   * irc: display command 437 on server buffer when nickname cannot change while banned on channel (issue #88)
   * irc: add messages 415 (cannot send message to channel) and 742 (mode cannot be set)
+  * irc: add missing tag "log3" in notify messages
   * lua: fix crash with print when the value to print is not a string (issue #1904, issue #1905)
   * ruby: fix crash on quit when a child process is still running (issue #1889, issue #1915)
   * script: remove trailing "J" (line feed char) in source of scripts displayed
