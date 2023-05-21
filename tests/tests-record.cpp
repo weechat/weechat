@@ -183,10 +183,13 @@ record_match (struct t_hashtable *recorded_msg,
  */
 
 int
-record_search (const char *buffer, const char *prefix, const char *message)
+record_search (const char *buffer, const char *prefix, const char *message,
+               const char *tags)
 {
-    int i, size;
+    int i, rc, size;
     struct t_hashtable *rec_msg;
+
+    rc = -1;
 
     size = arraylist_size (recorded_messages);
 
@@ -197,13 +200,15 @@ record_search (const char *buffer, const char *prefix, const char *message)
             continue;
         if (record_match (rec_msg, "buffer_name", buffer)
             && record_match (rec_msg, "prefix_no_color", prefix)
-            && record_match (rec_msg, "message_no_color", message))
+            && record_match (rec_msg, "message_no_color", message)
+            && (!tags || !tags[0] || record_match (rec_msg, "tags", tags)))
         {
-            return i;
+            rc = i;
+            break;
         }
     }
 
-    return -1;
+    return rc;
 }
 
 /*
@@ -214,7 +219,7 @@ void
 record_dump (char **msg)
 {
     struct t_hashtable *rec_msg;
-    const char *ptr_buffer_name, *ptr_prefix, *ptr_msg;
+    const char *ptr_buffer_name, *ptr_prefix, *ptr_msg, *ptr_tags;
     int i, size;
 
     size = arraylist_size (recorded_messages);
@@ -227,12 +232,15 @@ record_dump (char **msg)
         ptr_buffer_name = (const char *)hashtable_get (rec_msg, "buffer_name");
         ptr_prefix = (const char *)hashtable_get (rec_msg, "prefix_no_color");
         ptr_msg = (const char *)hashtable_get (rec_msg, "message_no_color");
+        ptr_tags = (const char *)hashtable_get (rec_msg, "tags");
         string_dyn_concat (msg, "  ", -1);
         string_dyn_concat (msg, ptr_buffer_name, -1);
         string_dyn_concat (msg, ": prefix=\"", -1);
         string_dyn_concat (msg, ptr_prefix, -1);
         string_dyn_concat (msg, "\", message=\"", -1);
         string_dyn_concat (msg, ptr_msg, -1);
+        string_dyn_concat (msg, "\", tags=\"", -1);
+        string_dyn_concat (msg, ptr_tags, -1);
         string_dyn_concat (msg, "\"\n", -1);
     }
 }

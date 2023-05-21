@@ -43,7 +43,7 @@ extern "C"
     command_record ("core.weechat", __command);
 
 #define WEE_CHECK_MSG_BUFFER(__buffer_name, __prefix, __message)        \
-    if (record_search (__buffer_name, __prefix, __message) < 0)         \
+    if (record_search (__buffer_name, __prefix, __message, NULL) < 0)   \
     {                                                                   \
         char **msg = command_build_error (__buffer_name, __prefix,      \
                                           __message);                   \
@@ -54,7 +54,7 @@ extern "C"
 #define WEE_CHECK_MSG_CORE(__prefix, __message)                         \
     WEE_CHECK_MSG_BUFFER("core.weechat", __prefix, __message);
 #define WEE_SEARCH_MSG_CORE(__prefix, __message)                        \
-    record_search ("core.weechat", __prefix, __message)
+    record_search ("core.weechat", __prefix, __message, NULL)
 
 
 TEST_GROUP(CoreCommand)
