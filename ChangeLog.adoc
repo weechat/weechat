@@ -88,6 +88,7 @@ Bug fixes::
   * irc: add messages 415 (cannot send message to channel) and 742 (mode cannot be set)
   * lua: fix crash with print when the value to print is not a string (issue #1904, issue #1905)
   * ruby: fix crash on quit when a child process is still running (issue #1889, issue #1915)
+  * script: remove trailing "J" (line feed char) in source of scripts displayed
   * spell: check buffer pointer received in info "spell_dict"
   * trigger: make default triggers "cmd_pass", "cmd_pass_register" and "server_pass" compatible with multiline input (issue #1935)
   * typing: fix crash when pointer buffer is not received in callback for signal "input_text_changed" (issue #1869)
