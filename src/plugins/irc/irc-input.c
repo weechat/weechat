@@ -41,10 +41,26 @@
  * If action != 0, then message is displayed as an action (like command /me).
  * If action == 0, but message is detected as an action (beginning with
  * "\01ACTION "), then action is forced.
+ *
+ * If notice == 1, the message is a notice, otherwise it's a privmsg.
+ *
+ * If target is NULL, the message is displayed like this (standard message
+ * then action):
+ *
+ *   nick | test
+ *      * | nick is testing
+ *
+ * If target is not NULL, the message is displayed with the target, like this
+ * (privmsg then notice):
+ *
+ *   Msg(nick) -> @#test: test message for ops
+ *   Notice(nick) -> @#test: test notice for ops
  */
 
 void
-irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
+irc_input_user_message_display (struct t_gui_buffer *buffer,
+                                int action, int notice,
+                                const char *target, int target_is_channel,
                                 const char *text)
 {
     struct t_irc_nick *ptr_nick;
@@ -92,9 +108,17 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
             str_color = irc_color_for_tags (
                 weechat_config_color (
                     weechat_config_get ("weechat.color.chat_nick_self")));
-            snprintf (str_tags, sizeof (str_tags),
-                      "self_msg,notify_none,no_highlight,prefix_nick_%s",
-                      (str_color) ? str_color : "default");
+            if (target)
+            {
+                snprintf (str_tags, sizeof (str_tags),
+                          "self_msg,notify_none,no_highlight");
+            }
+            else
+            {
+                snprintf (str_tags, sizeof (str_tags),
+                          "self_msg,notify_none,no_highlight,prefix_nick_%s",
+                          (str_color) ? str_color : "default");
+            }
             if (str_color)
                 free (str_color);
         }
@@ -106,7 +130,7 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
                 0,
                 irc_protocol_tags (
                     ptr_server,
-                    "privmsg",
+                    (notice) ? "notice" : "privmsg",
                     NULL,
                     str_tags,
                     (ptr_nick) ? ptr_nick->name : ptr_server->nick,
@@ -116,6 +140,38 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
                 irc_nick_mode_for_display (ptr_server, ptr_nick, 0),
                 IRC_COLOR_CHAT_NICK_SELF,
                 ptr_server->nick,
+                IRC_COLOR_RESET,
+                ptr_text);
+        }
+        else if (target)
+        {
+            weechat_printf_date_tags (
+                buffer,
+                0,
+                irc_protocol_tags (
+                    ptr_server,
+                    (notice) ? "notice" : "privmsg",
+                    NULL,
+                    str_tags,
+                    (ptr_nick) ? ptr_nick->name : ptr_server->nick,
+                    NULL),
+                "%s%s%s%s%s(%s%s%s%s)%s -> %s%s%s: %s",
+                weechat_prefix ("network"),
+                (notice) ? IRC_COLOR_NOTICE : "",
+                (notice) ?
+                /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
+                _("Notice") :
+                "Msg",
+                (notice) ? IRC_COLOR_RESET : "",
+                IRC_COLOR_CHAT_DELIMITERS,
+                irc_nick_mode_for_display (ptr_server, ptr_nick, 0),
+                IRC_COLOR_CHAT_NICK_SELF,
+                ptr_server->nick,
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_RESET,
+                (target_is_channel) ?
+                IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_msg (ptr_server, 0, NULL, target),
+                target,
                 IRC_COLOR_RESET,
                 ptr_text);
         }
@@ -187,6 +243,9 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
             irc_input_user_message_display (
                 buffer,
                 action,
+                0,  /* notice */
+                NULL,  /* target */
+                0,  /* target_is_channel */
                 (const char *)weechat_arraylist_get (list_messages, i));
         }
         weechat_arraylist_free (list_messages);

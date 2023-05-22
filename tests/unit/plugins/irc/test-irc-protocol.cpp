@@ -1941,27 +1941,48 @@ TEST(IrcProtocolWithServer, notice)
 
     /* notice to channel/user */
     RECV(":server.address NOTICE #test :a notice ");
-    CHECK_CHAN("--", "Notice(server.address): a notice ",
+    CHECK_CHAN("--", "Notice(server.address) -> #test: a notice ",
                "irc_notice,notify_message,nick_server.address,log1");
     RECV(":server.address NOTICE alice :a notice ");
     CHECK_SRV("--", "server.address: a notice ",
               "irc_notice,notify_private,nick_server.address,log1");
     RECV(":bob!user@host NOTICE #test :a notice ");
-    CHECK_CHAN("--", "Notice(bob): a notice ",
+    CHECK_CHAN("--", "Notice(bob) -> #test: a notice ",
                "irc_notice,notify_message,nick_bob,host_user@host,log1");
     RECV(":bob!user@host NOTICE alice :a notice ");
     CHECK_SRV("--", "bob (user@host): a notice ",
               "irc_notice,notify_private,nick_bob,host_user@host,log1");
 
+    /*
+     * notice to channel/user from self nick
+     * (case of bouncer of if echo-message capability is enabled)
+     */
+    RECV(":alice!user@host NOTICE #test :a notice ");
+    CHECK_CHAN("--", "Notice(alice) -> #test: a notice ",
+               "irc_notice,self_msg,notify_none,no_highlight,nick_alice,"
+               "host_user@host,log1");
+
     /* notice to ops of channel */
     RECV(":server.address NOTICE @#test :a notice ");
-    CHECK_CHAN("--", "Notice:@(server.address): a notice ",
+    CHECK_CHAN("--", "Notice(server.address) -> @#test: a notice ",
                "irc_notice,notify_message,nick_server.address,log1");
     RECV(":bob!user@host NOTICE @#test :a notice ");
-    CHECK_CHAN("--", "Notice:@(bob): a notice ",
+    CHECK_CHAN("--", "Notice(bob) -> @#test: a notice ",
                "irc_notice,notify_message,nick_bob,host_user@host,log1");
 
-    /* notice from self nick (case of bouncer) */
+    /*
+     * notice to ops of channel from self nick
+     * (case of bouncer of if echo-message capability is enabled)
+     */
+    RECV(":alice!user@host NOTICE @#test :a notice ");
+    CHECK_CHAN("--", "Notice(alice) -> @#test: a notice ",
+               "irc_notice,self_msg,notify_none,no_highlight,nick_alice,"
+               "host_user@host,log1");
+
+    /*
+     * notice from self nick
+     * (case of bouncer of if echo-message capability is enabled)
+     */
     RECV(":alice!user@host NOTICE alice :a notice ");
     CHECK_SRV("--", "Notice -> alice: a notice ",
               "irc_notice,notify_private,nick_alice,host_user@host,log1");
@@ -2238,12 +2259,33 @@ TEST(IrcProtocolWithServer, privmsg)
              "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
              "notify_private,prefix_nick_248,nick_bob,host_user@host,log1");
 
+    /*
+     * message to channel/user from self nick
+     * (case of bouncer of if echo-message capability is enabled)
+     */
+    RECV(":alice!user@host PRIVMSG #test :this is the message ");
+    CHECK_CHAN("alice", "this is the message ",
+               "irc_privmsg,self_msg,notify_none,no_highlight,"
+               "prefix_nick_white,nick_alice,host_user@host,log1");
+
     /* message to ops of channel */
     RECV(":bob!user@host PRIVMSG @#test :this is the message ");
-    CHECK_CHAN("--", "Msg:@(bob): this is the message ",
+    CHECK_CHAN("--", "Msg(bob) -> @#test: this is the message ",
                "irc_privmsg,notify_message,nick_bob,host_user@host,log1");
 
-    /* message from self nick (case of bouncer) */
+    /*
+     * message to ops of channel from self nick
+     * (case of bouncer of if echo-message capability is enabled)
+     */
+    RECV(":alice!user@host PRIVMSG @#test :this is the message ");
+    CHECK_CHAN("--", "Msg(alice) -> @#test: this is the message ",
+               "irc_privmsg,self_msg,notify_none,no_highlight,nick_alice,"
+               "host_user@host,log1");
+
+    /*
+     * message from self nick in private
+     * (case of bouncer of if echo-message capability is enabled)
+     */
     RECV(":alice!user@host PRIVMSG alice :this is the message ");
     CHECK_PV("alice", "alice", "this is the message ",
              "irc_privmsg,self_msg,notify_none,no_highlight,"

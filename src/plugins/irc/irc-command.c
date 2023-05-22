@@ -3681,7 +3681,8 @@ IRC_COMMAND_CALLBACK(msg)
             }
             else
             {
-                irc_input_user_message_display (ptr_channel->buffer, 0,
+                irc_input_user_message_display (ptr_channel->buffer,
+                                                0, 0, NULL, 0,
                                                 argv_eol[arg_text]);
                 irc_server_sendf (ptr_server,
                                   IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
@@ -3712,36 +3713,13 @@ IRC_COMMAND_CALLBACK(msg)
             {
                 if (ptr_channel2)
                 {
-                    if (status_msg)
-                    {
-                        /*
-                         * message to channel ops/voiced
-                         * (to "@#channel" or "+#channel")
-                         */
-                        string = irc_color_decode (
-                            argv_eol[arg_text],
-                            weechat_config_boolean (irc_config_network_colors_send));
-                        weechat_printf_date_tags (
-                            ptr_channel2->buffer,
-                            0,
-                            "self_msg,notify_none,no_highlight",
-                            "%s%s%s -> %s%s%s: %s",
-                            weechat_prefix ("network"),
-                            "Msg",
-                            IRC_COLOR_RESET,
-                            IRC_COLOR_CHAT_CHANNEL,
-                            targets[i],
-                            IRC_COLOR_RESET,
-                            (string) ? string : argv_eol[arg_text]);
-                        if (string)
-                            free (string);
-                    }
-                    else
-                    {
-                        /* standard message (to "#channel") */
-                        irc_input_user_message_display (ptr_channel2->buffer,
-                                                        0, argv_eol[arg_text]);
-                    }
+                    irc_input_user_message_display (
+                        ptr_channel2->buffer,
+                        0,  /* action */
+                        0,  /* notice */
+                        (status_msg) ? targets[i] : NULL,
+                        is_channel,
+                        argv_eol[arg_text]);
                 }
                 irc_server_sendf (ptr_server,
                                   IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
@@ -3799,7 +3777,8 @@ IRC_COMMAND_CALLBACK(msg)
                     if (ptr_channel2)
                     {
                         irc_input_user_message_display (ptr_channel2->buffer,
-                                                        0, argv_eol[arg_text]);
+                                                        0, 0, NULL, 0,
+                                                        argv_eol[arg_text]);
                     }
                     else
                     {
@@ -3937,7 +3916,6 @@ IRC_COMMAND_CALLBACK(nick)
 
 IRC_COMMAND_CALLBACK(notice)
 {
-    char *string;
     const char *ptr_message;
     int i, arg_target, arg_text, is_channel, list_size;
     struct t_irc_channel *ptr_channel;
@@ -3986,27 +3964,15 @@ IRC_COMMAND_CALLBACK(notice)
         for (i = 0; i < list_size; i++)
         {
             ptr_message = (const char *)weechat_arraylist_get (list_messages, i);
-            string = irc_color_decode (
-                ptr_message,
-                weechat_config_boolean (irc_config_network_colors_send));
-            weechat_printf_date_tags (
+            irc_input_user_message_display (
                 irc_msgbuffer_get_target_buffer (
                     ptr_server, argv[arg_target], "notice", NULL,
                     (ptr_channel) ? ptr_channel->buffer : NULL),
-                0,
-                "self_msg,notify_none,no_highlight",
-                "%s%s%s%s -> %s%s%s: %s",
-                weechat_prefix ("network"),
-                IRC_COLOR_NOTICE,
-                /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
-                _("Notice"),
-                IRC_COLOR_RESET,
-                (is_channel) ? IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_msg (ptr_server, 0, NULL, argv[arg_target]),
+                0,  /* action */
+                1,  /* notice */
                 argv[arg_target],
-                IRC_COLOR_RESET,
-                (string) ? string : ptr_message);
-            if (string)
-                free (string);
+                is_channel,
+                ptr_message);
         }
         weechat_arraylist_free (list_messages);
     }
@@ -4524,7 +4490,8 @@ IRC_COMMAND_CALLBACK(query)
             /* display text if given */
             if (argv_eol[arg_text])
             {
-                irc_input_user_message_display (ptr_channel->buffer, 0,
+                irc_input_user_message_display (ptr_channel->buffer,
+                                                0, 0, NULL, 0,
                                                 argv_eol[arg_text]);
                 irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH,
                                   NULL,

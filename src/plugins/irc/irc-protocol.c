@@ -2446,11 +2446,11 @@ IRC_PROTOCOL_CALLBACK(note)
 
 IRC_PROTOCOL_CALLBACK(notice)
 {
-    char *notice_args, *pos, end_char, *channel, status_notice[2];
+    char *notice_args, *pos, end_char, *channel, str_tags[1024];
     const char *pos_target, *pos_args, *nick_address;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    int notify_private, is_channel, is_channel_orig;
+    int notify_private, is_channel, is_channel_orig, nick_is_me;
     struct t_gui_buffer *ptr_buffer;
 
     IRC_PROTOCOL_MIN_PARAMS(2);
@@ -2458,12 +2458,11 @@ IRC_PROTOCOL_CALLBACK(notice)
     if (ignored)
         return WEECHAT_RC_OK;
 
-    status_notice[0] = '\0';
-    status_notice[1] = '\0';
-
     notice_args = irc_protocol_string_params (params, 1, num_params - 1);
     if (!notice_args)
         return WEECHAT_RC_ERROR;
+
+    nick_is_me = (irc_server_strcasecmp (server, server->nick, nick) == 0);
 
     pos_args = notice_args;
 
@@ -2472,7 +2471,6 @@ IRC_PROTOCOL_CALLBACK(notice)
     if (is_channel
         && irc_server_prefix_char_statusmsg (server, pos_target[0]))
     {
-        status_notice[0] = pos_target[0];
         pos_target++;
     }
 
@@ -2487,9 +2485,7 @@ IRC_PROTOCOL_CALLBACK(notice)
         is_channel = irc_channel_is_channel (server, pos_target);
         is_channel_orig = is_channel;
         if (is_channel)
-        {
             channel = strdup (pos_target);
-        }
         else if (weechat_config_boolean (irc_config_look_notice_welcome_redirect))
         {
             end_char = ' ';
@@ -2547,29 +2543,40 @@ IRC_PROTOCOL_CALLBACK(notice)
             }
 
             ptr_nick = irc_nick_search (server, ptr_channel, nick);
+            if (nick_is_me)
+            {
+                snprintf (str_tags, sizeof (str_tags),
+                          "self_msg,notify_none,no_highlight");
+            }
+            else
+            {
+                snprintf (str_tags, sizeof (str_tags),
+                          "%s",
+                          (is_channel_orig) ?
+                          "notify_message" :
+                          weechat_config_string (irc_config_look_notice_welcome_tags));
+            }
             weechat_printf_date_tags (
                 (ptr_channel) ? ptr_channel->buffer : server->buffer,
                 date,
-                irc_protocol_tags (server,
-                                   command,
-                                   tags,
-                                   (is_channel_orig) ?
-                                   "notify_message" :
-                                   weechat_config_string (irc_config_look_notice_welcome_tags),
+                irc_protocol_tags (server, command, tags, str_tags,
                                    nick, address),
-                "%s%s%s%s%s%s%s(%s%s%s)%s: %s",
+                "%s%s%s%s%s(%s%s%s%s)%s%s%s%s%s: %s",
                 weechat_prefix ("network"),
                 IRC_COLOR_NOTICE,
                 (is_channel_orig) ? "" : "Pv",
                 /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
                 _("Notice"),
-                (status_notice[0]) ? ":" : "",
-                status_notice,
                 IRC_COLOR_CHAT_DELIMITERS,
+                irc_nick_mode_for_display (server, ptr_nick, 0),
                 irc_nick_color_for_msg (server, 0, ptr_nick, nick),
                 (nick && nick[0]) ? nick : "?",
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_RESET,
+                (is_channel_orig) ? " -> " : "",
+                (is_channel_orig) ? IRC_COLOR_CHAT_CHANNEL : "",
+                (is_channel_orig) ? params[0] : "",
+                (is_channel_orig) ? IRC_COLOR_RESET : "",
                 pos_args);
         }
         else
@@ -2956,9 +2963,9 @@ IRC_PROTOCOL_CALLBACK(pong)
 
 IRC_PROTOCOL_CALLBACK(privmsg)
 {
-    char *msg_args, str_tags[1024], *str_color, status_msg[2], *color;
+    char *msg_args, str_tags[1024], *str_color, *color;
     const char *pos_target, *remote_nick, *pv_tags;
-    int is_channel, nick_is_me;
+    int status_msg, is_channel, nick_is_me;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
@@ -2972,9 +2979,10 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     if (!msg_args)
         return WEECHAT_RC_ERROR;
 
-    status_msg[0] = '\0';
-    status_msg[1] = '\0';
+    nick_is_me = (irc_server_strcasecmp (server, server->nick, nick) == 0);
+
     pos_target = params[0];
+    status_msg = 0;
     is_channel = irc_channel_is_channel (server, pos_target);
     if (!is_channel)
     {
@@ -2982,7 +2990,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             && irc_server_prefix_char_statusmsg (server, pos_target[0]))
         {
             is_channel = 1;
-            status_msg[0] = pos_target[0];
+            status_msg = 1;
             pos_target++;
         }
     }
@@ -3019,36 +3027,54 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             if (ptr_nick)
                 irc_nick_set_host (ptr_nick, address);
 
-            if (status_msg[0])
+            if (status_msg)
             {
                 /* message to channel ops/voiced (to "@#channel" or "+#channel") */
                 weechat_printf_date_tags (
                     ptr_channel->buffer,
                     date,
-                    irc_protocol_tags (server, command, tags, "notify_message",
-                                       nick, address),
-                    "%s%s%s%s%s(%s%s%s)%s: %s",
+                    irc_protocol_tags (
+                        server, command, tags,
+                        (nick_is_me) ?
+                        "self_msg,notify_none,no_highlight" : "notify_message",
+                        nick, address),
+                    "%s%s%s(%s%s%s%s)%s -> %s%s%s: %s",
                     weechat_prefix ("network"),
                     "Msg",
-                    (status_msg[0]) ? ":" : "",
-                    status_msg,
                     IRC_COLOR_CHAT_DELIMITERS,
+                    irc_nick_mode_for_display (server, ptr_nick, 0),
                     irc_nick_color_for_msg (server, 0, ptr_nick, nick),
                     (nick && nick[0]) ? nick : "?",
                     IRC_COLOR_CHAT_DELIMITERS,
+                    IRC_COLOR_RESET,
+                    IRC_COLOR_CHAT_CHANNEL,
+                    params[0],
                     IRC_COLOR_RESET,
                     msg_args);
             }
             else
             {
                 /* standard message (to "#channel") */
-                color = irc_nick_find_color_name ((ptr_nick) ? ptr_nick->name : nick);
-                str_color = irc_color_for_tags (color);
-                if (color)
-                    free (color);
-                snprintf (str_tags, sizeof (str_tags),
-                          "notify_message,prefix_nick_%s",
-                          (str_color) ? str_color : "default");
+                if (nick_is_me)
+                {
+                    str_color = irc_color_for_tags (
+                        weechat_config_color (
+                            weechat_config_get ("weechat.color.chat_nick_self")));
+                    snprintf (str_tags, sizeof (str_tags),
+                              "self_msg,notify_none,no_highlight,prefix_nick_%s",
+                              (str_color) ? str_color : "default");
+                }
+                else
+                {
+                    color = irc_nick_find_color_name (
+                        (ptr_nick) ? ptr_nick->name : nick);
+                    str_color = irc_color_for_tags (color);
+                    if (color)
+                        free (color);
+                    snprintf (str_tags, sizeof (str_tags),
+                              "notify_message,prefix_nick_%s",
+                              (str_color) ? str_color : "default");
+                }
                 if (str_color)
                     free (str_color);
                 weechat_printf_date_tags (
@@ -3075,8 +3101,6 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     }
     else
     {
-        nick_is_me = (irc_server_strcasecmp (server, server->nick, nick) == 0);
-
         remote_nick = (nick_is_me) ? pos_target : nick;
 
         /* CTCP to user */
