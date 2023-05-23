@@ -19,14 +19,9 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdio.h>
-#include <dlfcn.h>
 #include <string.h>
-#include <sys/stat.h>
-#include <sys/types.h>
 
 #include "tests-record.h"
 
