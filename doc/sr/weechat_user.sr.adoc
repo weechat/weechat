@@ -3184,355 +3184,6 @@ $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick
 За више информација, молимо вас да погледате
 https://www.oftc.net/NickServ/CertFP/[ову страницу ^↗^,window=_blank].
 
-[[irc_ircv3_support]]
-==== IRCv3 подршка
-
-WeeChat подржава следећа https://ircv3.net/irc/[IRCv3 проширења ^↗^,window=_blank]:
-
-* <<irc_ircv3_account_notify,account-notify>>
-* <<irc_ircv3_account_tag,account-tag>>
-* <<irc_ircv3_away_notify,away-notify>>
-* <<irc_ircv3_batch,batch>>
-* <<irc_ircv3_cap_notify,cap-notify>>
-* <<irc_ircv3_chghost,chghost>>
-* <<irc_ircv3_draft/multiline,draft/multiline>>
-* <<irc_ircv3_echo_message,echo-message>>
-* <<irc_ircv3_extended_join,extended-join>>
-* <<irc_ircv3_invite_notify,invite-notify>>
-* <<irc_ircv3_message_tags,message-tags>>
-* <<irc_ircv3_monitor,monitor>>
-* <<irc_ircv3_multi_prefix,multi-prefix>>
-* <<irc_ircv3_sasl,SASL v3.2>>
-* <<irc_ircv3_server_time,server-time>>
-* <<irc_ircv3_setname,setname>>
-* <<irc_ircv3_typing,typing>>
-* <<irc_ircv3_userhost_in_names,userhost-in-names>>
-* <<irc_ircv3_whox,WHOX>>
-
-Подразумевно су укључене све могућности које подржавају и сервер и WeeChat (погледајте
-опцију <<option_irc.server_default.capabilities,irc.server_default.capabilities>>).
-
-Табеле са поређењем различитих IRC клијената, укључујући и WeeChat, налазе се на
-on https://ircv3.net/software/clients[овој страници ^↗^,window=_blank].
-
-[[irc_ircv3_account_notify]]
-===== account-notify
-
-Спецификација: https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље поруке када се корисници идентификују на сервер или
-када са сервера уклоне своју идентификацију. +
-WeeChat такве поруке приказује ако је опција
-<<option_irc.look.display_account_message,irc.look.display_account_message>>
-укључена (што је подразумевана вредност).
-
-Примери:
-
-....
--- alice се идентификовао као Alice01
-
--- alice је уклонио идентификацију
-....
-
-[[irc_ircv3_account_tag]]
-===== account-tag
-
-Спецификација: https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље налог као ознаку поруке у командама које шаље клијенту. +
-WeeChat парсира ову ознаку у чува је у поруци, али се она не користи нити приказује. Може да се
-користи у <<command_filter,/filter>> команди за филтрирање порука које се подударају са
-одређеним налозима.
-
-Пример примљене сирове IRC поруке:
-
-....
-@account=Alice01 :user@example.com PRIVMSG #test :Здраво!
-....
-
-Порука која се приказује у каналу:
-
-....
-<alice> Здраво!
-....
-
-Порука са ознакама:
-
-....
-<alice> Здраво! [irc_privmsg,irc_tag_account_Alice01,notify_message,prefix_nick_lightcyan,nick_alice,host_user@example.com,log1]
-....
-
-[[irc_ircv3_away_notify]]
-===== away-notify
-
-Спецификација: https://ircv3.net/specs/extensions/away-notify[away-notify ^↗^,window=_blank]
-
-Ово могућност оспособљава сервер да шаље обавештења о одсуству за кориснике на истом каналу
-на којем се и ви налазите.
-
-Када се за корисника промени статус одсутности (одсутан или ту је), то се употребом
-следећих опција осликава одређеном бојом у листи надимака:
-
-* <<option_irc.server_default.away_check,irc.server_default.away_check>>
-* <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
-* <<option_weechat.look.item_away_message,weechat.look.item_away_message>>
-
-// TRANSLATION MISSING
-[[irc_ircv3_batch]]
-===== batch
-
-Specification: https://ircv3.net/specs/extensions/batch[batch ^↗^,window=_blank]
-
-This capability allows the server to send batched events (grouping of several
-messages that are related).
-
-For now, WeeChat only stores messages received in a batch and processes as usual
-later, when the batch ends.
-
-[[irc_ircv3_cap_notify]]
-===== cap-notify
-
-Спецификација: https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand[cap-notify ^↗^,window=_blank]
-
-Ово могућност оспособљава сервер да објављује нове или уклоњене могућности сервера
-(посредством `CAP NEW` и `CAP DEL` команди).
-
-Примери:
-
-....
--- irc: могућност клијента, сада је доступно: sasl
-
--- irc: могућност клијента, уклоњено: sasl
-....
-
-[[irc_ircv3_chghost]]
-===== chghost
-
-Спецификација: https://ircv3.net/specs/extensions/chghost[chghost ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље поруке када корисници промене име или хост. +
-Када је опција <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
-укључена (што је подразумевана вредност), промене хоста се аутоматски скривају ако
-надимак није говорио неколико минута. +
-Боја поруке о промени хоста се контролише опцијом
-<<option_irc.color.message_chghost,irc.color.message_chghost>>.
-
-Пример:
-
-....
--- alice (user@example.com) је променио свој хост на test.com
-....
-
-// TRANSLATION MISSING
-[[irc_ircv3_draft_multiline]]
-===== draft/multiline
-
-Specification: https://ircv3.net/specs/extensions/multiline[multiline ^↗^,window=_blank]
-
-This capability allows the client and server to send messages with multiple lines,
-using the <<irc_ircv3_batch,batch>> capability, that must be enabled as well.
-
-There are limits in term of bytes or number of lines in a multiline message
-that are given in the capability sent by the server, for example:
-
-....
-CAP alice LS * :draft/multiline=max-bytes=4096,max-lines=24
-....
-
-This sets a limit of 4096 bytes and 24 lines for a multiline batched content.
-
-If the limits are not given by the server, the default in WeeChat are:
-
-* max bytes: 4096
-* max lines: 24
-
-Only standard messages and those send by the <<command_irc_notice,/notice>>
-command can be multiline. +
-ACTION CTCP messages sent with command <<command_irc_me,/me>> are not affected
-by this capability. That means multiline actions are sent as multiple actions.
-
-[WARNING]
-As the specification is a "draft", it may change and the multiline support can
-possibly break at any time in WeeChat. +
-The capability is automatically enabled if the server supports it and can be
-disabled with this command:
-`/set irc.server_default.capabilities "*,!draft/multiline"`. +
-When the capability is disabled, a multiline message is sent as multiple messages,
-as if they were sent sequentially to the server.
-
-Example of IRC messages sent for a user message with two lines (`this is a test`
-/ `on two lines`), send to channel #test:
-
-....
-BATCH +i8Je7M7gquddoyC9 draft/multiline #test
-@batch=i8Je7M7gquddoyC9 PRIVMSG #test :this is a test
-@batch=i8Je7M7gquddoyC9 PRIVMSG #test :on two lines
-BATCH -i8Je7M7gquddoyC9
-....
-
-Display of the message sent in WeeChat:
-
-....
-19:01:45 alice | this is a test
-               | on two lines
-....
-
-// TRANSLATION MISSING
-[[irc_ircv3_echo_message]]
-===== echo-message
-
-Specification: https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^,window=_blank]
-
-This capability forces the server to send PRIVMSG, NOTICE and TAGMSG messages
-back to WeeChat.
-
-WeeChat displays only the message received and not the message sent, so a delay
-can be noticed between the send and the display. When the message is displayed,
-it means it has been properly received by the server and propagated to other
-clients connected to the server as well.
-
-[[irc_ircv3_extended_join]]
-===== extended-join
-
-Спецификација: https://ircv3.net/specs/extensions/extended-join[extended-join ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље налог и право име када корисници приступе
-каналима. +
-WeeChat приказује ове додатне информације у порукама приступа ако је опција
-<<option_irc.look.display_extended_join,irc.look.display_extended_join>>
-укључена (што је подразумевана вредност).
-
-Пример:
-
-....
---> john [John01] (John Doe) (~user@example.com) је приступио у #test
-....
-
-[[irc_ircv3_invite_notify]]
-===== invite-notify
-
-Спецификација: https://ircv3.net/specs/extensions/invite-notify[invite-notify ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље позивне поруке када се корисници позову на канале.
-
-Пример:
-
-....
--- alice је позвао bob на #test
-....
-
-[[irc_ircv3_message_tags]]
-===== message-tags
-
-Спецификација: https://ircv3.net/specs/extensions/message-tags[message-tags ^↗^,window=_blank]
-
-Ова могућност оспособљава додавање метаподатака у поруке. +
-Ове ознаке могу да се прикажу командом `/debug tags`.
-
-Она мора бити укључена да би се користила <<typing_notifications,обавештења о куцању>>.
-
-[[irc_ircv3_monitor]]
-===== monitor
-
-Спецификација: https://ircv3.net/specs/extensions/monitor[monitor ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље обавештења када клијенти оду
-ван мреже/повежу се на мрежу. +
-Ако је доступно, WeeChat аутоматски користи ово проширење када користи команду
-<<command_irc_notify,/notify>>.
-
-[[irc_ircv3_multi_prefix]]
-===== multi-prefix
-
-Спецификација: https://ircv3.net/specs/extensions/multi-prefix[multi-prefix ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље све корисничке режиме одједном у
-<<command_irc_names,/names>> и <<command_irc_whois,/whois>> одговорима. +
-
-////
-Пример: излаз команде `/names`:
-
-....
--- Надимци #test: [@%+alice bob +carol]
-....
-////
-
-[NOTE]
-За сада WeeChat не приказује све префиксе у излазу команде `/names`, чак и ако се
-пример и интерно сачувају исправно.
-
-Пример: излаз команде `/whois alice`:
-
-....
--- [alice] @%+#test
-....
-
-[[irc_ircv3_sasl]]
-===== SASL
-
-Спецификација: https://ircv3.net/specs/extensions/sasl-3.2[SASL 3.2 ^↗^,window=_blank]
-
-Погледајте посебно поглавље <<irc_sasl_authentication,SASL аутентификација>>.
-
-[[irc_ircv3_server_time]]
-===== server-time
-
-Спецификација: https://ircv3.net/specs/extensions/server-time[server-time ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље време за поруке као ознаку поруке. +
-Када се у поруци прими време, WeeChat то користи у приказу поруке (она тада
-може да се прикаже са датумом у прошлости).
-
-<<relay_irc_proxy,IRC прокси>> у Relay додатку подржава ову могућност, тако да
-би сваки IRC клијент Релеја требало да је укључи како би се приликом повезивања
-у дневнику пропуштених порука приказало реално време пристизања порука.
-
-[[irc_ircv3_setname]]
-===== setname
-
-Спецификација: https://ircv3.net/specs/extensions/setname[setname ^↗^,window=_blank]
-
-Ова могућност вам нуди опцију да промените своје реално име употребом
-<<command_irc_setname,/setname>> команде.
-
-[[irc_ircv3_typing]]
-===== typing
-
-Спецификација: https://ircv3.net/specs/client-tags/typing[typing ^↗^,window=_blank]
-
-Погледајте посебно поглавље <<typing_notifications,Обавештења о куцању>>.
-
-[[irc_ircv3_userhost_in_names]]
-===== userhost-in-names
-
-Спецификација: https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-names ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље имена хостова у <<command_irc_names,/names>> одговорима. 
-
-[NOTE]
-WeeChat не приказује имена хостова у излазу команде `/names`.
-
-Пример сирових IRC порука примљених без ове могућности:
-
-....
-:irc.server 353 alice = #test :@alice bob +carol
-....
-
-Пример сирових IRC порука примљених са овом могућношћу:
-
-....
-:irc.server 353 alice = #test :@alice!user1@host1 bob!user2@host2 +carol!user3@host3
-....
-
-[[irc_ircv3_whox]]
-===== WHOX
-
-Спецификација: https://ircv3.net/specs/extensions/whox[WHOX ^↗^,window=_blank]
-
-Ова могућност вас оспособљава да у WHO одговору захтевате додатна поља
-(помоћу команде <<command_irc_who,/who>>). +
-WeeChat приказује све додатне информације које се приме у WHO излазу.
-
 [[irc_sasl_authentication]]
 ==== SASL аутентификација
 
@@ -3670,6 +3321,355 @@ $ sudo apt-get install tor
 ----
 /connect irc-tor
 ----
+
+[[irc_ircv3_support]]
+=== IRCv3 подршка
+
+WeeChat подржава следећа https://ircv3.net/irc/[IRCv3 проширења ^↗^,window=_blank]:
+
+* <<irc_ircv3_account_notify,account-notify>>
+* <<irc_ircv3_account_tag,account-tag>>
+* <<irc_ircv3_away_notify,away-notify>>
+* <<irc_ircv3_batch,batch>>
+* <<irc_ircv3_cap_notify,cap-notify>>
+* <<irc_ircv3_chghost,chghost>>
+* <<irc_ircv3_draft/multiline,draft/multiline>>
+* <<irc_ircv3_echo_message,echo-message>>
+* <<irc_ircv3_extended_join,extended-join>>
+* <<irc_ircv3_invite_notify,invite-notify>>
+* <<irc_ircv3_message_tags,message-tags>>
+* <<irc_ircv3_monitor,monitor>>
+* <<irc_ircv3_multi_prefix,multi-prefix>>
+* <<irc_ircv3_sasl,SASL v3.2>>
+* <<irc_ircv3_server_time,server-time>>
+* <<irc_ircv3_setname,setname>>
+* <<irc_ircv3_typing,typing>>
+* <<irc_ircv3_userhost_in_names,userhost-in-names>>
+* <<irc_ircv3_whox,WHOX>>
+
+Подразумевно су укључене све могућности које подржавају и сервер и WeeChat (погледајте
+опцију <<option_irc.server_default.capabilities,irc.server_default.capabilities>>).
+
+Табеле са поређењем различитих IRC клијената, укључујући и WeeChat, налазе се на
+on https://ircv3.net/software/clients[овој страници ^↗^,window=_blank].
+
+[[irc_ircv3_account_notify]]
+==== account-notify
+
+Спецификација: https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^,window=_blank]
+
+Ова могућност оспособљава сервер да шаље поруке када се корисници идентификују на сервер или
+када са сервера уклоне своју идентификацију. +
+WeeChat такве поруке приказује ако је опција
+<<option_irc.look.display_account_message,irc.look.display_account_message>>
+укључена (што је подразумевана вредност).
+
+Примери:
+
+....
+-- alice се идентификовао као Alice01
+
+-- alice је уклонио идентификацију
+....
+
+[[irc_ircv3_account_tag]]
+==== account-tag
+
+Спецификација: https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^,window=_blank]
+
+Ова могућност оспособљава сервер да шаље налог као ознаку поруке у командама које шаље клијенту. +
+WeeChat парсира ову ознаку у чува је у поруци, али се она не користи нити приказује. Може да се
+користи у <<command_filter,/filter>> команди за филтрирање порука које се подударају са
+одређеним налозима.
+
+Пример примљене сирове IRC поруке:
+
+....
+@account=Alice01 :user@example.com PRIVMSG #test :Здраво!
+....
+
+Порука која се приказује у каналу:
+
+....
+<alice> Здраво!
+....
+
+Порука са ознакама:
+
+....
+<alice> Здраво! [irc_privmsg,irc_tag_account_Alice01,notify_message,prefix_nick_lightcyan,nick_alice,host_user@example.com,log1]
+....
+
+[[irc_ircv3_away_notify]]
+==== away-notify
+
+Спецификација: https://ircv3.net/specs/extensions/away-notify[away-notify ^↗^,window=_blank]
+
+Ово могућност оспособљава сервер да шаље обавештења о одсуству за кориснике на истом каналу
+на којем се и ви налазите.
+
+Када се за корисника промени статус одсутности (одсутан или ту је), то се употребом
+следећих опција осликава одређеном бојом у листи надимака:
+
+* <<option_irc.server_default.away_check,irc.server_default.away_check>>
+* <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
+* <<option_weechat.look.item_away_message,weechat.look.item_away_message>>
+
+// TRANSLATION MISSING
+[[irc_ircv3_batch]]
+==== batch
+
+Specification: https://ircv3.net/specs/extensions/batch[batch ^↗^,window=_blank]
+
+This capability allows the server to send batched events (grouping of several
+messages that are related).
+
+For now, WeeChat only stores messages received in a batch and processes as usual
+later, when the batch ends.
+
+[[irc_ircv3_cap_notify]]
+==== cap-notify
+
+Спецификација: https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand[cap-notify ^↗^,window=_blank]
+
+Ово могућност оспособљава сервер да објављује нове или уклоњене могућности сервера
+(посредством `CAP NEW` и `CAP DEL` команди).
+
+Примери:
+
+....
+-- irc: могућност клијента, сада је доступно: sasl
+
+-- irc: могућност клијента, уклоњено: sasl
+....
+
+[[irc_ircv3_chghost]]
+==== chghost
+
+Спецификација: https://ircv3.net/specs/extensions/chghost[chghost ^↗^,window=_blank]
+
+Ова могућност оспособљава сервер да шаље поруке када корисници промене име или хост. +
+Када је опција <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
+укључена (што је подразумевана вредност), промене хоста се аутоматски скривају ако
+надимак није говорио неколико минута. +
+Боја поруке о промени хоста се контролише опцијом
+<<option_irc.color.message_chghost,irc.color.message_chghost>>.
+
+Пример:
+
+....
+-- alice (user@example.com) је променио свој хост на test.com
+....
+
+// TRANSLATION MISSING
+[[irc_ircv3_draft_multiline]]
+==== draft/multiline
+
+Specification: https://ircv3.net/specs/extensions/multiline[multiline ^↗^,window=_blank]
+
+This capability allows the client and server to send messages with multiple lines,
+using the <<irc_ircv3_batch,batch>> capability, that must be enabled as well.
+
+There are limits in term of bytes or number of lines in a multiline message
+that are given in the capability sent by the server, for example:
+
+....
+CAP alice LS * :draft/multiline=max-bytes=4096,max-lines=24
+....
+
+This sets a limit of 4096 bytes and 24 lines for a multiline batched content.
+
+If the limits are not given by the server, the default in WeeChat are:
+
+* max bytes: 4096
+* max lines: 24
+
+Only standard messages and those send by the <<command_irc_notice,/notice>>
+command can be multiline. +
+ACTION CTCP messages sent with command <<command_irc_me,/me>> are not affected
+by this capability. That means multiline actions are sent as multiple actions.
+
+[WARNING]
+As the specification is a "draft", it may change and the multiline support can
+possibly break at any time in WeeChat. +
+The capability is automatically enabled if the server supports it and can be
+disabled with this command:
+`/set irc.server_default.capabilities "*,!draft/multiline"`. +
+When the capability is disabled, a multiline message is sent as multiple messages,
+as if they were sent sequentially to the server.
+
+Example of IRC messages sent for a user message with two lines (`this is a test`
+/ `on two lines`), send to channel #test:
+
+....
+BATCH +i8Je7M7gquddoyC9 draft/multiline #test
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :this is a test
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :on two lines
+BATCH -i8Je7M7gquddoyC9
+....
+
+Display of the message sent in WeeChat:
+
+....
+19:01:45 alice | this is a test
+               | on two lines
+....
+
+// TRANSLATION MISSING
+[[irc_ircv3_echo_message]]
+==== echo-message
+
+Specification: https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^,window=_blank]
+
+This capability forces the server to send PRIVMSG, NOTICE and TAGMSG messages
+back to WeeChat.
+
+WeeChat displays only the message received and not the message sent, so a delay
+can be noticed between the send and the display. When the message is displayed,
+it means it has been properly received by the server and propagated to other
+clients connected to the server as well.
+
+[[irc_ircv3_extended_join]]
+==== extended-join
+
+Спецификација: https://ircv3.net/specs/extensions/extended-join[extended-join ^↗^,window=_blank]
+
+Ова могућност оспособљава сервер да шаље налог и право име када корисници приступе
+каналима. +
+WeeChat приказује ове додатне информације у порукама приступа ако је опција
+<<option_irc.look.display_extended_join,irc.look.display_extended_join>>
+укључена (што је подразумевана вредност).
+
+Пример:
+
+....
+--> john [John01] (John Doe) (~user@example.com) је приступио у #test
+....
+
+[[irc_ircv3_invite_notify]]
+==== invite-notify
+
+Спецификација: https://ircv3.net/specs/extensions/invite-notify[invite-notify ^↗^,window=_blank]
+
+Ова могућност оспособљава сервер да шаље позивне поруке када се корисници позову на канале.
+
+Пример:
+
+....
+-- alice је позвао bob на #test
+....
+
+[[irc_ircv3_message_tags]]
+==== message-tags
+
+Спецификација: https://ircv3.net/specs/extensions/message-tags[message-tags ^↗^,window=_blank]
+
+Ова могућност оспособљава додавање метаподатака у поруке. +
+Ове ознаке могу да се прикажу командом `/debug tags`.
+
+Она мора бити укључена да би се користила <<typing_notifications,обавештења о куцању>>.
+
+[[irc_ircv3_monitor]]
+==== monitor
+
+Спецификација: https://ircv3.net/specs/extensions/monitor[monitor ^↗^,window=_blank]
+
+Ова могућност оспособљава сервер да шаље обавештења када клијенти оду
+ван мреже/повежу се на мрежу. +
+Ако је доступно, WeeChat аутоматски користи ово проширење када користи команду
+<<command_irc_notify,/notify>>.
+
+[[irc_ircv3_multi_prefix]]
+==== multi-prefix
+
+Спецификација: https://ircv3.net/specs/extensions/multi-prefix[multi-prefix ^↗^,window=_blank]
+
+Ова могућност оспособљава сервер да шаље све корисничке режиме одједном у
+<<command_irc_names,/names>> и <<command_irc_whois,/whois>> одговорима. +
+
+////
+Пример: излаз команде `/names`:
+
+....
+-- Надимци #test: [@%+alice bob +carol]
+....
+////
+
+[NOTE]
+За сада WeeChat не приказује све префиксе у излазу команде `/names`, чак и ако се
+пример и интерно сачувају исправно.
+
+Пример: излаз команде `/whois alice`:
+
+....
+-- [alice] @%+#test
+....
+
+[[irc_ircv3_sasl]]
+==== SASL
+
+Спецификација: https://ircv3.net/specs/extensions/sasl-3.2[SASL 3.2 ^↗^,window=_blank]
+
+Погледајте посебно поглавље <<irc_sasl_authentication,SASL аутентификација>>.
+
+[[irc_ircv3_server_time]]
+==== server-time
+
+Спецификација: https://ircv3.net/specs/extensions/server-time[server-time ^↗^,window=_blank]
+
+Ова могућност оспособљава сервер да шаље време за поруке као ознаку поруке. +
+Када се у поруци прими време, WeeChat то користи у приказу поруке (она тада
+може да се прикаже са датумом у прошлости).
+
+<<relay_irc_proxy,IRC прокси>> у Relay додатку подржава ову могућност, тако да
+би сваки IRC клијент Релеја требало да је укључи како би се приликом повезивања
+у дневнику пропуштених порука приказало реално време пристизања порука.
+
+[[irc_ircv3_setname]]
+==== setname
+
+Спецификација: https://ircv3.net/specs/extensions/setname[setname ^↗^,window=_blank]
+
+Ова могућност вам нуди опцију да промените своје реално име употребом
+<<command_irc_setname,/setname>> команде.
+
+[[irc_ircv3_typing]]
+==== typing
+
+Спецификација: https://ircv3.net/specs/client-tags/typing[typing ^↗^,window=_blank]
+
+Погледајте посебно поглавље <<typing_notifications,Обавештења о куцању>>.
+
+[[irc_ircv3_userhost_in_names]]
+==== userhost-in-names
+
+Спецификација: https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-names ^↗^,window=_blank]
+
+Ова могућност оспособљава сервер да шаље имена хостова у <<command_irc_names,/names>> одговорима. 
+
+[NOTE]
+WeeChat не приказује имена хостова у излазу команде `/names`.
+
+Пример сирових IRC порука примљених без ове могућности:
+
+....
+:irc.server 353 alice = #test :@alice bob +carol
+....
+
+Пример сирових IRC порука примљених са овом могућношћу:
+
+....
+:irc.server 353 alice = #test :@alice!user1@host1 bob!user2@host2 +carol!user3@host3
+....
+
+[[irc_ircv3_whox]]
+==== WHOX
+
+Спецификација: https://ircv3.net/specs/extensions/whox[WHOX ^↗^,window=_blank]
+
+Ова могућност вас оспособљава да у WHO одговору захтевате додатна поља
+(помоћу команде <<command_irc_who,/who>>). +
+WeeChat приказује све додатне информације које се приме у WHO излазу.
 
 [[irc_channels]]
 === Канали

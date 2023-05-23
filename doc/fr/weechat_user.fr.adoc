@@ -3494,366 +3494,6 @@ config WeeChat qui peut aussi être par exemple `~/.weechat`.
 Pour plus d'informations, merci de consulter
 https://www.oftc.net/NickServ/CertFP/[cette page ^↗^,window=_blank].
 
-[[irc_ircv3_support]]
-==== Support IRCv3
-
-WeeChat supporte les https://ircv3.net/irc/[extensions IRCv3 ^↗^,window=_blank] suivantes :
-
-* <<irc_ircv3_account_notify,account-notify>>
-* <<irc_ircv3_account_tag,account-tag>>
-* <<irc_ircv3_away_notify,away-notify>>
-* <<irc_ircv3_batch,batch>>
-* <<irc_ircv3_cap_notify,cap-notify>>
-* <<irc_ircv3_chghost,chghost>>
-* <<irc_ircv3_draft/multiline,draft/multiline>>
-* <<irc_ircv3_echo_message,echo-message>>
-* <<irc_ircv3_extended_join,extended-join>>
-* <<irc_ircv3_invite_notify,invite-notify>>
-* <<irc_ircv3_message_tags,message-tags>>
-* <<irc_ircv3_monitor,monitor>>
-* <<irc_ircv3_multi_prefix,multi-prefix>>
-* <<irc_ircv3_sasl,SASL v3.2>>
-* <<irc_ircv3_server_time,server-time>>
-* <<irc_ircv3_setname,setname>>
-* <<irc_ircv3_typing,typing>>
-* <<irc_ircv3_userhost_in_names,userhost-in-names>>
-* <<irc_ircv3_whox,WHOX>>
-
-Par défaut toutes les capacités supportées par le serveur et WeeChat sont
-automatiquement activées (voir l'option
-<<option_irc.server_default.capabilities,irc.server_default.capabilities>>).
-
-Des tableaux avec une comparaison des différents clients IRC, incluant WeeChat,
-sont disponibles sur https://ircv3.net/software/clients[cette page ^↗^,window=_blank].
-
-[[irc_ircv3_account_notify]]
-===== account-notify
-
-Spécification : https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^,window=_blank]
-
-Cette capacité autorise le serveur à envoyer des messages lorsque les utilisateurs
-s'identifient ou perdent l'identification sur le serveur. +
-WeeChat affiche ces messages si l'option
-<<option_irc.look.display_account_message,irc.look.display_account_message>>
-est activée (valeur par défaut).
-
-Exemples :
-
-....
--- alice s'est identifié en tant que Alice01
-
--- alice n'est plus identifié
-....
-
-[[irc_ircv3_account_tag]]
-===== account-tag
-
-Spécification : https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^,window=_blank]
-
-Cette capacité autorise le serveur à envoyer le compte comme étiquette de message
-dans les commandes envoyées au client. +
-WeeChat extrait cette étiquette et la sauve dans le message, mais elle n'est pas
-utilisée ni affichée. Elle peut être utilisée dans la commande <<command_filter,/filter>>
-pour filtrer les messages correspondants à des comptes spécifiques.
-
-Exemple de message IRC brut reçu :
-
-....
-@account=Alice01 :user@example.com PRIVMSG #test :Bonjour !
-....
-
-Message affiché dans le canal :
-
-....
-<alice> Bonjour !
-....
-
-Message avec les étiquettes :
-
-....
-<alice> Bonjour ! [irc_privmsg,irc_tag_account_Alice01,notify_message,prefix_nick_lightcyan,nick_alice,host_user@example.com,log1]
-....
-
-[[irc_ircv3_away_notify]]
-===== away-notify
-
-Spécification : https://ircv3.net/specs/extensions/away-notify[away-notify ^↗^,window=_blank]
-
-Cette capacité autorise le serveur à envoyer des notifications d'absence pour
-les utilisateurs qui sont sur les mêmes canaux que vous.
-
-Lorsque le statut d'absence est changé pour un utilisateur (absent ou de retour),
-cela est reflété avec une couleur spécifique dans la liste des pseudos, en utilisant
-les options suivantes :
-
-* <<option_irc.server_default.away_check,irc.server_default.away_check>>
-* <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
-* <<option_weechat.look.item_away_message,weechat.look.item_away_message>>
-
-[[irc_ircv3_batch]]
-===== batch
-
-Spécification : https://ircv3.net/specs/extensions/batch[batch ^↗^,window=_blank]
-
-Cette capacité autorise le serveur à envoyer des évènements "batch" (regroupement
-de plusieurs messages qui sont liés).
-
-Pour l'instant, WeeChat stocke seulement ces messages reçus dans un "batch"
-et les traite plus tard comme d'habitude, lorsque le "batch" prend fin.
-
-[[irc_ircv3_cap_notify]]
-===== cap-notify
-
-Spécification : https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand[cap-notify ^↗^,window=_blank]
-
-Cette capacité autorise le serveur à avertir des nouvelles capacités ou celles
-supprimées sur le serveur (via les commandes `CAP NEW` et `CAP DEL`).
-
-Exemples :
-
-....
--- irc : client capability, maintenant disponible : sasl
-
--- irc : client capability, supprimé : sasl
-....
-
-[[irc_ircv3_chghost]]
-===== chghost
-
-Spécification : https://ircv3.net/specs/extensions/chghost[chghost ^↗^,window=_blank]
-
-Cette capacité autorise le serveur à envoyer des messages lorsque les utilisateurs
-changent de nom ou d'hôte. +
-Lorsque l'option <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
-est activée (valeur par défaut), les changements d'hôtes sont automatiquement
-masqués si le pseudo n'a pas parlé pendant plusieurs minutes. +
-La couleur du message de changement d'hôte est contrôlée par l'option
-<<option_irc.color.message_chghost,irc.color.message_chghost>>.
-
-Exemple :
-
-....
--- alice (user@example.com) a changé d'hôte pour test.com
-....
-
-[[irc_ircv3_draft_multiline]]
-===== draft/multiline
-
-Spécification : https://ircv3.net/specs/extensions/multiline[multiline ^↗^,window=_blank]
-
-Cette capacité autorise le client et le serveur à envoyer des messages avec
-plusieurs lignes, en utilisant la capacité <<irc_ircv3_batch,batch>>, qui doit
-être activée également.
-
-Il y a des limites en terme d'octets ou nombre de lignes dans un message
-multi-lignes qui sont données dans la capacité envoyée par le serveur,
-par exemple :
-
-....
-CAP alice LS * :draft/multiline=max-bytes=4096,max-lines=24
-....
-
-Cela fixe la limite à 4096 octets et 24 lignes pour un contenu "batch"
-multi-lignes.
-
-Si les limites ne sont pas envoyées par le serveur, celles par défaut dans
-WeeChat sont :
-
-* max octets : 4096
-* max lignes : 24
-
-Seuls les messages standards et ceux envoyés avec la commande
-<<command_irc_notice,/notice>> peuvent être multi-lignes. +
-Les messages ACTION CTCP envoyés par avec la commande <<command_irc_me,/me>>
-ne sont pas affectés par cette capacité. Cela signifie que les actions
-multi-lignes sont envoyées sous forme de plusieurs actions.
-
-[WARNING]
-Comme la spécification est un brouillon (« draft »), elle peut changer et le
-support "multiline" peut être cassé à tout moment dans WeeChat. +
-La capacité est automatiquement activée si le serveur la supporte et peut être
-désactivée avec cette commande :
-`/set irc.server_default.capabilities "*,!draft/multiline"`. +
-Lorsque la capacité est désactivée, un message multi-lignes est envoyé sous
-forme de plusieurs messages, comme s'ils avaient été envoyés séquentiellement
-au serveur.
-
-Exemple de messages IRC envoyés pour un message utilisateur avec deux lignes
-(`ceci est un test` / `sur deux lignes`), envoyé au canal #test :
-
-....
-BATCH +i8Je7M7gquddoyC9 draft/multiline #test
-@batch=i8Je7M7gquddoyC9 PRIVMSG #test :ceci est un test
-@batch=i8Je7M7gquddoyC9 PRIVMSG #test :sur deux lignes
-BATCH -i8Je7M7gquddoyC9
-....
-
-Affichage du message envoyé dans WeeChat :
-
-....
-19:01:45 alice | ceci est un test
-               | sur deux lignes
-....
-
-[[irc_ircv3_echo_message]]
-===== echo-message
-
-Spécification : https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^,window=_blank]
-
-Cette capacité oblige le serveur à renvoyer les messages PRIVMSG, NOTICE et TAGMSG
-à WeeChat.
-
-WeeChat affiche seulement le message reçu et non pas le message envoyé, donc
-un délai peut être perçu entre l'envoi et l'affichage. Lorsque le message est
-affiché, cela signifie qu'il a bien été reçu par le serveur et également propagé
-aux autres clients connectés sur le serveur.
-
-[[irc_ircv3_extended_join]]
-===== extended-join
-
-Spécification : https://ircv3.net/specs/extensions/extended-join[extended-join ^↗^,window=_blank]
-
-Cette capacité autorise le serveur à envoyer le compte et nom réel lorsque les
-utilisateurs rejoignent les canaux. +
-WeeChat affiche les informations additionnelles dans les messages de "join"
-si l'option
-<<option_irc.look.display_extended_join,irc.look.display_extended_join>>
-est activée (valeur par défaut).
-
-Exemple :
-
-....
---> john [John01] (John Doe) (~user@example.com) a rejoint #test
-....
-
-[[irc_ircv3_invite_notify]]
-===== invite-notify
-
-Spécification : https://ircv3.net/specs/extensions/invite-notify[invite-notify ^↗^,window=_blank]
-
-Cette capacité autorise le serveur à envoyer des messages d'invitation lorsque
-les utilisateurs sont invités sur des canaux.
-
-Exemple :
-
-....
--- alice a invité bob sur #test
-....
-
-[[irc_ircv3_message_tags]]
-===== message-tags
-
-Spécification : https://ircv3.net/specs/extensions/message-tags[message-tags ^↗^,window=_blank]
-
-Cette capacité autorise l'envoi de méta-données dans les messages. +
-Ces étiquettes peuvent être affichées avec la commande `/debug tags`.
-
-Elle doit être activer pour utiliser les <<typing_notifications,notifications de saisie>>.
-
-[[irc_ircv3_monitor]]
-===== monitor
-
-Spécification : https://ircv3.net/specs/extensions/monitor[monitor ^↗^,window=_blank]
-
-Cette capacité autorise le serveur à envoyer des notifications lorsque les clients
-se connectent ou se déconnectent. +
-WeeChat utilise automatiquement cette extension si disponible lorsque la commande
-<<command_irc_notify,/notify>> est utilisée.
-
-[[irc_ircv3_multi_prefix]]
-===== multi-prefix
-
-Spécification : https://ircv3.net/specs/extensions/multi-prefix[multi-prefix ^↗^,window=_blank]
-
-Cette capacité autorise le serveur à envoyer tous les modes utilisateur d'un coup
-dans les réponses à <<command_irc_names,/names>> et <<command_irc_whois,/whois>>. +
-
-////
-Exemple : sortie de `/names` :
-
-....
--- Pseudos #test : [@%+alice bob +carol]
-....
-////
-
-[NOTE]
-Pour l'instant, WeeChat n'affiche pas les préfixes dans la sortie de `/names`,
-même s'ils sont reçus et correctement sauvegardés en interne.
-
-Exemple : sortie de `/whois alice` :
-
-....
--- [alice] @%+#test
-....
-
-[[irc_ircv3_sasl]]
-===== SASL
-
-Spécification : https://ircv3.net/specs/extensions/sasl-3.2[SASL 3.2 ^↗^,window=_blank]
-
-Voir le chapitre dédié <<irc_sasl_authentication,Authentification avec SASL>>.
-
-[[irc_ircv3_server_time]]
-===== server-time
-
-Spécification : https://ircv3.net/specs/extensions/server-time[server-time ^↗^,window=_blank]
-
-Cette capacité autorise le serveur à envoyer l'heure pour les messages sous forme
-d'étiquette de message. +
-Lorsque l'heure est reçue dans un message, WeeChat l'utilise pour afficher le message
-(qui peut alors avoir une date dans le passé).
-
-Le <<relay_irc_proxy,proxy IRC>> dans l'extension Relay supporte cette capacité,
-donc tout client IRC de Relay devrait l'activer pour afficher l'heure réelle
-des messages dans l'historique des messages envoyés à la connexion.
-
-[[irc_ircv3_setname]]
-===== setname
-
-Spécification : https://ircv3.net/specs/extensions/setname[setname ^↗^,window=_blank]
-
-Cette capacité vous permet de changer votre nom réel en utilisant la commande
-<<command_irc_setname,/setname>>.
-
-[[irc_ircv3_typing]]
-===== typing
-
-Spécification : https://ircv3.net/specs/client-tags/typing[typing ^↗^,window=_blank]
-
-Voir le chapitre dédié <<typing_notifications,Notifications de saisie>>.
-
-[[irc_ircv3_userhost_in_names]]
-===== userhost-in-names
-
-Spécification : https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-names ^↗^,window=_blank]
-
-Cette capacité autorise le serveur à envoyer les noms d'hôtes dans les réponses à
-<<command_irc_names,/names>>.
-
-[NOTE]
-WeeChat n'affiche pas les noms d'hôtes dans la sortie de `/names`.
-
-Exemple de message IRC brut reçu sans la capacité :
-
-....
-:irc.server 353 alice = #test :@alice bob +carol
-....
-
-Exemple de message IRC brut reçu avec la capacité :
-
-....
-:irc.server 353 alice = #test :@alice!user1@host1 bob!user2@host2 +carol!user3@host3
-....
-
-[[irc_ircv3_whox]]
-===== WHOX
-
-Spécification : https://ircv3.net/specs/extensions/whox[WHOX ^↗^,window=_blank]
-
-Cette capacité vous permet de demander des champs additionnels dans la réponse
-WHO (via la commande <<command_irc_who,/who>>). +
-WeeChat affiche ces informations additionnelles reçus dans la sortie de WHO.
-
 [[irc_sasl_authentication]]
 ==== Authentification avec SASL
 
@@ -4006,6 +3646,366 @@ Et enfin, connectez-vous au serveur :
 ----
 /connect irc-tor
 ----
+
+[[irc_ircv3_support]]
+=== Support IRCv3
+
+WeeChat supporte les https://ircv3.net/irc/[extensions IRCv3 ^↗^,window=_blank] suivantes :
+
+* <<irc_ircv3_account_notify,account-notify>>
+* <<irc_ircv3_account_tag,account-tag>>
+* <<irc_ircv3_away_notify,away-notify>>
+* <<irc_ircv3_batch,batch>>
+* <<irc_ircv3_cap_notify,cap-notify>>
+* <<irc_ircv3_chghost,chghost>>
+* <<irc_ircv3_draft/multiline,draft/multiline>>
+* <<irc_ircv3_echo_message,echo-message>>
+* <<irc_ircv3_extended_join,extended-join>>
+* <<irc_ircv3_invite_notify,invite-notify>>
+* <<irc_ircv3_message_tags,message-tags>>
+* <<irc_ircv3_monitor,monitor>>
+* <<irc_ircv3_multi_prefix,multi-prefix>>
+* <<irc_ircv3_sasl,SASL v3.2>>
+* <<irc_ircv3_server_time,server-time>>
+* <<irc_ircv3_setname,setname>>
+* <<irc_ircv3_typing,typing>>
+* <<irc_ircv3_userhost_in_names,userhost-in-names>>
+* <<irc_ircv3_whox,WHOX>>
+
+Par défaut toutes les capacités supportées par le serveur et WeeChat sont
+automatiquement activées (voir l'option
+<<option_irc.server_default.capabilities,irc.server_default.capabilities>>).
+
+Des tableaux avec une comparaison des différents clients IRC, incluant WeeChat,
+sont disponibles sur https://ircv3.net/software/clients[cette page ^↗^,window=_blank].
+
+[[irc_ircv3_account_notify]]
+==== account-notify
+
+Spécification : https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à envoyer des messages lorsque les utilisateurs
+s'identifient ou perdent l'identification sur le serveur. +
+WeeChat affiche ces messages si l'option
+<<option_irc.look.display_account_message,irc.look.display_account_message>>
+est activée (valeur par défaut).
+
+Exemples :
+
+....
+-- alice s'est identifié en tant que Alice01
+
+-- alice n'est plus identifié
+....
+
+[[irc_ircv3_account_tag]]
+==== account-tag
+
+Spécification : https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à envoyer le compte comme étiquette de message
+dans les commandes envoyées au client. +
+WeeChat extrait cette étiquette et la sauve dans le message, mais elle n'est pas
+utilisée ni affichée. Elle peut être utilisée dans la commande <<command_filter,/filter>>
+pour filtrer les messages correspondants à des comptes spécifiques.
+
+Exemple de message IRC brut reçu :
+
+....
+@account=Alice01 :user@example.com PRIVMSG #test :Bonjour !
+....
+
+Message affiché dans le canal :
+
+....
+<alice> Bonjour !
+....
+
+Message avec les étiquettes :
+
+....
+<alice> Bonjour ! [irc_privmsg,irc_tag_account_Alice01,notify_message,prefix_nick_lightcyan,nick_alice,host_user@example.com,log1]
+....
+
+[[irc_ircv3_away_notify]]
+==== away-notify
+
+Spécification : https://ircv3.net/specs/extensions/away-notify[away-notify ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à envoyer des notifications d'absence pour
+les utilisateurs qui sont sur les mêmes canaux que vous.
+
+Lorsque le statut d'absence est changé pour un utilisateur (absent ou de retour),
+cela est reflété avec une couleur spécifique dans la liste des pseudos, en utilisant
+les options suivantes :
+
+* <<option_irc.server_default.away_check,irc.server_default.away_check>>
+* <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
+* <<option_weechat.look.item_away_message,weechat.look.item_away_message>>
+
+[[irc_ircv3_batch]]
+==== batch
+
+Spécification : https://ircv3.net/specs/extensions/batch[batch ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à envoyer des évènements "batch" (regroupement
+de plusieurs messages qui sont liés).
+
+Pour l'instant, WeeChat stocke seulement ces messages reçus dans un "batch"
+et les traite plus tard comme d'habitude, lorsque le "batch" prend fin.
+
+[[irc_ircv3_cap_notify]]
+==== cap-notify
+
+Spécification : https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand[cap-notify ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à avertir des nouvelles capacités ou celles
+supprimées sur le serveur (via les commandes `CAP NEW` et `CAP DEL`).
+
+Exemples :
+
+....
+-- irc : client capability, maintenant disponible : sasl
+
+-- irc : client capability, supprimé : sasl
+....
+
+[[irc_ircv3_chghost]]
+==== chghost
+
+Spécification : https://ircv3.net/specs/extensions/chghost[chghost ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à envoyer des messages lorsque les utilisateurs
+changent de nom ou d'hôte. +
+Lorsque l'option <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
+est activée (valeur par défaut), les changements d'hôtes sont automatiquement
+masqués si le pseudo n'a pas parlé pendant plusieurs minutes. +
+La couleur du message de changement d'hôte est contrôlée par l'option
+<<option_irc.color.message_chghost,irc.color.message_chghost>>.
+
+Exemple :
+
+....
+-- alice (user@example.com) a changé d'hôte pour test.com
+....
+
+[[irc_ircv3_draft_multiline]]
+==== draft/multiline
+
+Spécification : https://ircv3.net/specs/extensions/multiline[multiline ^↗^,window=_blank]
+
+Cette capacité autorise le client et le serveur à envoyer des messages avec
+plusieurs lignes, en utilisant la capacité <<irc_ircv3_batch,batch>>, qui doit
+être activée également.
+
+Il y a des limites en terme d'octets ou nombre de lignes dans un message
+multi-lignes qui sont données dans la capacité envoyée par le serveur,
+par exemple :
+
+....
+CAP alice LS * :draft/multiline=max-bytes=4096,max-lines=24
+....
+
+Cela fixe la limite à 4096 octets et 24 lignes pour un contenu "batch"
+multi-lignes.
+
+Si les limites ne sont pas envoyées par le serveur, celles par défaut dans
+WeeChat sont :
+
+* max octets : 4096
+* max lignes : 24
+
+Seuls les messages standards et ceux envoyés avec la commande
+<<command_irc_notice,/notice>> peuvent être multi-lignes. +
+Les messages ACTION CTCP envoyés par avec la commande <<command_irc_me,/me>>
+ne sont pas affectés par cette capacité. Cela signifie que les actions
+multi-lignes sont envoyées sous forme de plusieurs actions.
+
+[WARNING]
+Comme la spécification est un brouillon (« draft »), elle peut changer et le
+support "multiline" peut être cassé à tout moment dans WeeChat. +
+La capacité est automatiquement activée si le serveur la supporte et peut être
+désactivée avec cette commande :
+`/set irc.server_default.capabilities "*,!draft/multiline"`. +
+Lorsque la capacité est désactivée, un message multi-lignes est envoyé sous
+forme de plusieurs messages, comme s'ils avaient été envoyés séquentiellement
+au serveur.
+
+Exemple de messages IRC envoyés pour un message utilisateur avec deux lignes
+(`ceci est un test` / `sur deux lignes`), envoyé au canal #test :
+
+....
+BATCH +i8Je7M7gquddoyC9 draft/multiline #test
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :ceci est un test
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :sur deux lignes
+BATCH -i8Je7M7gquddoyC9
+....
+
+Affichage du message envoyé dans WeeChat :
+
+....
+19:01:45 alice | ceci est un test
+               | sur deux lignes
+....
+
+[[irc_ircv3_echo_message]]
+==== echo-message
+
+Spécification : https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^,window=_blank]
+
+Cette capacité oblige le serveur à renvoyer les messages PRIVMSG, NOTICE et TAGMSG
+à WeeChat.
+
+WeeChat affiche seulement le message reçu et non pas le message envoyé, donc
+un délai peut être perçu entre l'envoi et l'affichage. Lorsque le message est
+affiché, cela signifie qu'il a bien été reçu par le serveur et également propagé
+aux autres clients connectés sur le serveur.
+
+[[irc_ircv3_extended_join]]
+==== extended-join
+
+Spécification : https://ircv3.net/specs/extensions/extended-join[extended-join ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à envoyer le compte et nom réel lorsque les
+utilisateurs rejoignent les canaux. +
+WeeChat affiche les informations additionnelles dans les messages de "join"
+si l'option
+<<option_irc.look.display_extended_join,irc.look.display_extended_join>>
+est activée (valeur par défaut).
+
+Exemple :
+
+....
+--> john [John01] (John Doe) (~user@example.com) a rejoint #test
+....
+
+[[irc_ircv3_invite_notify]]
+==== invite-notify
+
+Spécification : https://ircv3.net/specs/extensions/invite-notify[invite-notify ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à envoyer des messages d'invitation lorsque
+les utilisateurs sont invités sur des canaux.
+
+Exemple :
+
+....
+-- alice a invité bob sur #test
+....
+
+[[irc_ircv3_message_tags]]
+==== message-tags
+
+Spécification : https://ircv3.net/specs/extensions/message-tags[message-tags ^↗^,window=_blank]
+
+Cette capacité autorise l'envoi de méta-données dans les messages. +
+Ces étiquettes peuvent être affichées avec la commande `/debug tags`.
+
+Elle doit être activer pour utiliser les <<typing_notifications,notifications de saisie>>.
+
+[[irc_ircv3_monitor]]
+==== monitor
+
+Spécification : https://ircv3.net/specs/extensions/monitor[monitor ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à envoyer des notifications lorsque les clients
+se connectent ou se déconnectent. +
+WeeChat utilise automatiquement cette extension si disponible lorsque la commande
+<<command_irc_notify,/notify>> est utilisée.
+
+[[irc_ircv3_multi_prefix]]
+==== multi-prefix
+
+Spécification : https://ircv3.net/specs/extensions/multi-prefix[multi-prefix ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à envoyer tous les modes utilisateur d'un coup
+dans les réponses à <<command_irc_names,/names>> et <<command_irc_whois,/whois>>. +
+
+////
+Exemple : sortie de `/names` :
+
+....
+-- Pseudos #test : [@%+alice bob +carol]
+....
+////
+
+[NOTE]
+Pour l'instant, WeeChat n'affiche pas les préfixes dans la sortie de `/names`,
+même s'ils sont reçus et correctement sauvegardés en interne.
+
+Exemple : sortie de `/whois alice` :
+
+....
+-- [alice] @%+#test
+....
+
+[[irc_ircv3_sasl]]
+==== SASL
+
+Spécification : https://ircv3.net/specs/extensions/sasl-3.2[SASL 3.2 ^↗^,window=_blank]
+
+Voir le chapitre dédié <<irc_sasl_authentication,Authentification avec SASL>>.
+
+[[irc_ircv3_server_time]]
+==== server-time
+
+Spécification : https://ircv3.net/specs/extensions/server-time[server-time ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à envoyer l'heure pour les messages sous forme
+d'étiquette de message. +
+Lorsque l'heure est reçue dans un message, WeeChat l'utilise pour afficher le message
+(qui peut alors avoir une date dans le passé).
+
+Le <<relay_irc_proxy,proxy IRC>> dans l'extension Relay supporte cette capacité,
+donc tout client IRC de Relay devrait l'activer pour afficher l'heure réelle
+des messages dans l'historique des messages envoyés à la connexion.
+
+[[irc_ircv3_setname]]
+==== setname
+
+Spécification : https://ircv3.net/specs/extensions/setname[setname ^↗^,window=_blank]
+
+Cette capacité vous permet de changer votre nom réel en utilisant la commande
+<<command_irc_setname,/setname>>.
+
+[[irc_ircv3_typing]]
+==== typing
+
+Spécification : https://ircv3.net/specs/client-tags/typing[typing ^↗^,window=_blank]
+
+Voir le chapitre dédié <<typing_notifications,Notifications de saisie>>.
+
+[[irc_ircv3_userhost_in_names]]
+==== userhost-in-names
+
+Spécification : https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-names ^↗^,window=_blank]
+
+Cette capacité autorise le serveur à envoyer les noms d'hôtes dans les réponses à
+<<command_irc_names,/names>>.
+
+[NOTE]
+WeeChat n'affiche pas les noms d'hôtes dans la sortie de `/names`.
+
+Exemple de message IRC brut reçu sans la capacité :
+
+....
+:irc.server 353 alice = #test :@alice bob +carol
+....
+
+Exemple de message IRC brut reçu avec la capacité :
+
+....
+:irc.server 353 alice = #test :@alice!user1@host1 bob!user2@host2 +carol!user3@host3
+....
+
+[[irc_ircv3_whox]]
+==== WHOX
+
+Spécification : https://ircv3.net/specs/extensions/whox[WHOX ^↗^,window=_blank]
+
+Cette capacité vous permet de demander des champs additionnels dans la réponse
+WHO (via la commande <<command_irc_who,/who>>). +
+WeeChat affiche ces informations additionnelles reçus dans la sortie de WHO.
 
 [[irc_channels]]
 === Canaux
