@@ -3497,6 +3497,10 @@ IRC_PROTOCOL_CALLBACK(tagmsg)
     if (!tags)
         return WEECHAT_RC_OK;
 
+    /* ignore if coming from self nick (if echo-message is enabled) */
+    if (irc_server_strcasecmp (server, server->nick, nick) == 0)
+        return WEECHAT_RC_OK;
+
     ptr_channel = NULL;
     if (irc_channel_is_channel (server, params[0]))
         ptr_channel = irc_channel_search (server, params[0]);

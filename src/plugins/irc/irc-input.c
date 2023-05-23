@@ -70,6 +70,15 @@ irc_input_user_message_display (struct t_gui_buffer *buffer,
     if (!buffer || !text)
         return;
 
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
+
+    /*
+     * if capability "echo-message" is enabled, we don't display anything,
+     * the message will be displayed when server sends it back to us
+     */
+    if (weechat_hashtable_has_key (ptr_server->cap_list, "echo-message"))
+        return;
+
     /* if message is an action, force "action" to 1 and extract message */
     if (strncmp (text, "\01ACTION ", 8) == 0)
     {
@@ -86,8 +95,6 @@ irc_input_user_message_display (struct t_gui_buffer *buffer,
     text_decoded = irc_color_decode (
         (text2) ? text2 : text,
         weechat_config_boolean (irc_config_network_colors_send));
-
-    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     if (ptr_channel)
     {

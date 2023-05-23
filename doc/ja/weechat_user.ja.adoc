@@ -3557,6 +3557,7 @@ WeeChat supports the following https://ircv3.net/irc/[IRCv3 extensions ^↗^,wi
 * <<irc_ircv3_batch,batch>>
 * <<irc_ircv3_chghost,chghost>>
 * <<irc_ircv3_draft/multiline,draft/multiline>>
+* <<irc_ircv3_echo_message,echo-message>>
 * <<irc_ircv3_extended_join,extended-join>>
 * <<irc_ircv3_invite_notify,invite-notify>>
 * <<irc_ircv3_message_tags,message-tags>>
@@ -3738,6 +3739,20 @@ Display of the message sent in WeeChat:
 19:01:45 alice | this is a test
                | on two lines
 ....
+
+// TRANSLATION MISSING
+[[irc_ircv3_echo_message]]
+===== echo-message
+
+Specification: https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^,window=_blank]
+
+This capability forces the server to send PRIVMSG, NOTICE and TAGMSG messages
+back to WeeChat.
+
+WeeChat displays only the message received and not the message sent, so a delay
+can be noticed between the send and the display. When the message is displayed,
+it means it has been properly received by the server and propagated to other
+clients connected to the server as well.
 
 [[irc_ircv3_extended_join]]
 ===== extended-join

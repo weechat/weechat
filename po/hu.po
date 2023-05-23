@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-20 16:55+0200\n"
+"POT-Creation-Date: 2023-05-23 15:52+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6368,10 +6368,6 @@ msgid ""
 "%s%s: you must specify channel for \"%s\" command if you're not in a channel"
 msgstr ""
 
-#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
-msgid "Notice"
-msgstr ""
-
 #, fuzzy, c-format
 msgid ""
 "%s%s: server must be specified because you are not on an irc server or "
@@ -6535,6 +6531,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: you are not on channel \"%s\""
 msgstr "%s nem sikerült új szobát nyitni \"%s\"\n"
+
+#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
+msgid "Notice"
+msgstr ""
 
 msgid "find information about the administrator of the server"
 msgstr "információ lekérdezése a szerver adminisztrátorról"
@@ -6756,8 +6756,9 @@ msgid ""
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, batch, "
-"cap-notify, chghost, draft/multiline, extended-join, invite-notify, message-"
-"tags, multi-prefix, server-time, setname, userhost-in-names.\n"
+"cap-notify, chghost, draft/multiline, echo-message, extended-join, invite-"
+"notify, message-tags, multi-prefix, server-time, setname, userhost-in-"
+"names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
