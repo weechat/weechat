@@ -3746,73 +3746,71 @@ Beispiele:
 -- alice (user@example.com) hat den Host nach test.com geändert
 ....
 
-// TRANSLATION MISSING
 [[irc_ircv3_draft_multiline]]
 ==== draft/multiline
 
-Specification: https://ircv3.net/specs/extensions/multiline[multiline ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/multiline[multiline ^↗^,window=_blank]
 
-This capability allows the client and server to send messages with multiple lines,
-using the <<irc_ircv3_batch,batch>> capability, that must be enabled as well.
+Diese Funktion ermöglicht es dem Client und dem Server, Nachrichten über mehrere Zeilen zu senden.
+Es wird dazu die Fähigkeit <<irc_ircv3_batch,batch>> genutzt, die ebenfalls aktiviert sein muss.
 
-There are limits in term of bytes or number of lines in a multiline message
-that are given in the capability sent by the server, for example:
+Es gibt Beschränkungen hinsichtlich der Anzahl der Bytes oder der Anzahl der Zeilen in einer mehrzeiligen Nachricht
+die in der vom Server gesendeten Fähigkeit angegeben sind, zum Beispiel:
 
 ....
 CAP alice LS * :draft/multiline=max-bytes=4096,max-lines=24
 ....
 
-This sets a limit of 4096 bytes and 24 lines for a multiline batched content.
+Dies legt eine Grenze von 4096 Bytes und 24 Zeilen für einen mehrzeiligen Batch-Inhalt fest.
 
-If the limits are not given by the server, the default in WeeChat are:
+Wenn die Grenzwerte nicht vom Server vorgegeben sind, sind die Standardwerte in WeeChat:
 
-* max bytes: 4096
-* max lines: 24
+* max Bytes: 4096
+* max Zeilen: 24
 
-Only standard messages and those send by the <<command_irc_notice,/notice>>
-command can be multiline. +
-ACTION CTCP messages sent with command <<command_irc_me,/me>> are not affected
-by this capability. That means multiline actions are sent as multiple actions.
+Nur Standardnachrichten und solche, die von <<command_irc_notice,/notice>> Befehl gesendet werden
+können mehrzeilig sein. +
+ACTION CTCP-Nachrichten, die mit dem Befehl <<command_irc_me,/me>> gesendet werden, sind nicht betroffen
+durch diese Fähigkeit. Das bedeutet, dass mehrzeilige Aktionen als Mehrfachaktionen gesendet werden.
 
 [WARNING]
-As the specification is a "draft", it may change and the multiline support can
-possibly break at any time in WeeChat. +
-The capability is automatically enabled if the server supports it and can be
-disabled with this command:
+Da es sich bei der Spezifikation um einen „Entwurf“ handelt, kann sich diese Spezifikation ändern und
+die Mehrzeilenunterstützung in WeeChat abbrechen. +
+Die Funktion wird automatisch aktiviert, wenn der Server sie unterstützt und kann mit folgendem
+Befehl deaktiviert werden:
 `/set irc.server_default.capabilities "*,!draft/multiline"`. +
-When the capability is disabled, a multiline message is sent as multiple messages,
-as if they were sent sequentially to the server.
+Wenn die Funktion deaktiviert ist, wird eine mehrzeilige Nachricht einfach in mehreren Nachrichten gesendet,
+als ob sie die Nachrichten nacheinander an den Server gesendet wurden.
 
-Example of IRC messages sent for a user message with two lines (`this is a test`
-/ `on two lines`), send to channel #test:
+Beispiel einer IRC Nutzer Nachricht, die über zwei Zeilen geht (`Dies ist ein Test`
+/ `über zwei Zeilen`), und im Kanal #test gesendet wird:
 
 ....
 BATCH +i8Je7M7gquddoyC9 draft/multiline #test
-@batch=i8Je7M7gquddoyC9 PRIVMSG #test :this is a test
-@batch=i8Je7M7gquddoyC9 PRIVMSG #test :on two lines
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :Dies ist ein Test
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :über zwei Zeilen
 BATCH -i8Je7M7gquddoyC9
 ....
 
-Display of the message sent in WeeChat:
+Eine gesendete Nachricht wie sie in WeeChat dargestellt wird:
 
 ....
 19:01:45 alice | this is a test
                | on two lines
 ....
 
-// TRANSLATION MISSING
 [[irc_ircv3_echo_message]]
 ==== echo-message
 
-Specification: https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^,window=_blank]
+Spezifikation: https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^,window=_blank]
 
-This capability forces the server to send PRIVMSG, NOTICE and TAGMSG messages
-back to WeeChat.
+Diese Funktion zwingt den Server, PRIVMSG-, NOTICE- und TAGMSG-Nachrichten zurück an
+WeeChat zu senden.
 
-WeeChat displays only the message received and not the message sent, so a delay
-can be noticed between the send and the display. When the message is displayed,
-it means it has been properly received by the server and propagated to other
-clients connected to the server as well.
+WeeChat zeigt nur die empfangene Nachricht und nicht die gesendete Nachricht an, also eine Verzögerung
+zwischen dem Senden und der Darstellung ist erkennbar. Wenn die Nachricht dargestellt wird,
+bedeutet dies, dass die Nachricht ordnungsgemäß vom Server empfangen und an andere Clients weitergeleitet
+wurde, die ebenfalls mit dem Server verbunden sind.
 
 [[irc_ircv3_extended_join]]
 ==== extended-join
@@ -5306,9 +5304,8 @@ Variablen die mittels Tags in der Nachricht gesetzt werden:
 | tg_msg_pv          | string | "1" für eine private Nachricht, andernfalls "0".
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ Commas are replaced by semicolons in IRC tag (key and value).
+^(1)^ Kommas werden durch Semikolon ersetzt in IRC Tag (Schlüssel und Wert).
 
 [[trigger_data_print]]
 ==== Print
@@ -5344,9 +5341,8 @@ Variablen die mittels Tags in der Nachricht gesetzt werden:
 | tg_msg_pv          | string | "1" für eine private Nachricht, andernfalls "0".
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ Commas are replaced by semicolons in IRC tag (key and value).
+^(1)^ Kommas werden durch Semikolon ersetzt in IRC Tag (Schlüssel und Wert).
 
 [[trigger_data_command]]
 ==== Command
