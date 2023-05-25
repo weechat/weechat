@@ -3794,29 +3794,38 @@ IRC_COMMAND_CALLBACK(msg)
                     }
                     else
                     {
-                        string = irc_color_decode (
-                            argv_eol[arg_text],
-                            weechat_config_boolean (irc_config_network_colors_send));
-                        weechat_printf_date_tags (
-                            ptr_server->buffer,
-                            0,
-                            irc_protocol_tags (
-                                ptr_server,
-                                "privmsg",
-                                NULL,
-                                "self_msg,notify_none,no_highlight",
-                                ptr_server->nick, NULL),
-                            "%sMSG%s(%s%s%s)%s: %s",
-                            weechat_prefix ("network"),
-                            IRC_COLOR_CHAT_DELIMITERS,
-                            irc_nick_color_for_msg (
-                                ptr_server, 0, NULL, targets[i]),
-                            targets[i],
-                            IRC_COLOR_CHAT_DELIMITERS,
-                            IRC_COLOR_RESET,
-                            (string) ? string : argv_eol[arg_text]);
-                        if (string)
-                            free (string);
+                        /*
+                         * display message only if capability "echo-message"
+                         * is NOT enabled
+                         */
+                        if (!weechat_hashtable_has_key (ptr_server->cap_list,
+                                                        "echo-message"))
+                        {
+                            string = irc_color_decode (
+                                argv_eol[arg_text],
+                                weechat_config_boolean (
+                                    irc_config_network_colors_send));
+                            weechat_printf_date_tags (
+                                ptr_server->buffer,
+                                0,
+                                irc_protocol_tags (
+                                    ptr_server,
+                                    "privmsg",
+                                    NULL,
+                                    "self_msg,notify_none,no_highlight",
+                                    ptr_server->nick, NULL),
+                                "%sMSG%s(%s%s%s)%s: %s",
+                                weechat_prefix ("network"),
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                irc_nick_color_for_msg (
+                                    ptr_server, 0, NULL, targets[i]),
+                                targets[i],
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_RESET,
+                                (string) ? string : argv_eol[arg_text]);
+                            if (string)
+                                free (string);
+                        }
                     }
                 }
                 irc_server_sendf (ptr_server,
