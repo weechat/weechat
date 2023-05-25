@@ -1071,6 +1071,13 @@ irc_command_me_channel_display (struct t_irc_server *server,
     char *string;
     struct t_irc_nick *ptr_nick;
 
+    /*
+     * if capability "echo-message" is enabled, we don't display anything,
+     * the message will be displayed when server sends it back to us
+     */
+    if (weechat_hashtable_has_key (server->cap_list, "echo-message"))
+        return;
+
     string = (arguments && arguments[0]) ?
         irc_color_decode (arguments,
                           weechat_config_boolean (irc_config_network_colors_send)) : NULL;
