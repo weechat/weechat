@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-23 15:52+0200\n"
+"POT-Creation-Date: 2023-05-25 22:15+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8458,10 +8458,6 @@ msgstr ""
 "%s%s: \"%s\" komutu, yalnızca bir kanalda veya özel arabellekte yürütülebilir"
 
 #, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%s%s%s%s konumuna CTCP sorgusu: %s%s%s%s%s"
-
-#, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s%s: \"%s\" komutu, bir sunucu arabelleğinde yürütülemez"
 
@@ -11709,6 +11705,10 @@ msgstr "%s%s: %s%s%s konumundan bilinmeyen DCC CHAT türü alındı: \"%s\""
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%s%s%s%s tarafından bilinmeyen CTCP istendi: %s%s%s%s%s"
+
+#, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%s%s%s%s konumuna CTCP sorgusu: %s%s%s%s%s"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 eğer dizi sunucu için geçerli bir IRC kanal adıysa"

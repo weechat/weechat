@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-23 15:52+0200\n"
+"POT-Creation-Date: 2023-05-25 22:15+0200\n"
 "PO-Revision-Date: 2023-05-14 15:29+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8212,10 +8212,6 @@ msgstr ""
 "%s%s: команда „%s” може да се изврши само у каналу или приватном баферу"
 
 #, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%sCTCP упит за %s%s%s: %s%s%s%s%s"
-
-#, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s%s: команда „%s” не може да се изврши у серверском баферу"
 
@@ -11341,6 +11337,10 @@ msgstr "%s%s: примљен је непознати DCC CHAT тип од %s%s%s
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%sСтигао је непознати CTCP од %s%s%s: %s%s%s%s%s"
+
+#, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%sCTCP упит за %s%s%s: %s%s%s%s%s"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 ако је стринг важеће име IRC канала за сервер"

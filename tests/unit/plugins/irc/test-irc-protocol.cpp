@@ -2381,6 +2381,14 @@ TEST(IrcProtocolWithServer, privmsg)
     RECV(":bob!user@host PRIVMSG #test :\01VERSION\01");
     RECV(":bob!user@host PRIVMSG #test :\01DCC SEND file.txt 1 2 3\01");
 
+    /*
+     * valid CTCP to channel from self nick
+     * (case of bouncer of if echo-message capability is enabled)
+     */
+    RECV(":alice!user@host PRIVMSG #test :\01VERSION\01");
+    CHECK_SRV("--", "CTCP query to #test: VERSION",
+              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,log1");
+
     /* valid CTCP to user */
     RECV(":bob!user@host PRIVMSG alice :\01TEST\01");
     CHECK_SENT(NULL);
@@ -2414,6 +2422,14 @@ TEST(IrcProtocolWithServer, privmsg)
                "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
                "), name: file.txt, 3 bytes (protocol: dcc)");
     CHECK_SENT(NULL);
+
+    /*
+     * valid CTCP to channel from self nick
+     * (case of bouncer of if echo-message capability is enabled)
+     */
+    RECV(":alice!user@host PRIVMSG bob :\01VERSION\01");
+    CHECK_SRV("--", "CTCP query to bob: VERSION",
+              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,log1");
 
     /* close xfer buffer */
     if (xfer_buffer)

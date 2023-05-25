@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-23 15:52+0200\n"
+"POT-Creation-Date: 2023-05-25 22:15+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -8855,10 +8855,6 @@ msgstr ""
 "%s%s: komenda \"%s\" może być wykonana tylko na kanale lub prywatnym buforze"
 
 #, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%sZapytanie CTCP do %s%s%s: %s%s%s%s%s"
-
-#, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s%s: komenda \"%s\" nie można być wykonana w buforze serwera"
 
@@ -12148,6 +12144,10 @@ msgstr "%s%s: nieznany typ DCC CHAT otrzymano od %s%s%s: \"%s\""
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%sNieznane zażądane CTCP przez %s%s%s: %s%s%s%s%s"
+
+#, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%sZapytanie CTCP do %s%s%s: %s%s%s%s%s"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 jeśli ciąg jest poprawną nazwą kanału IRC dla serwera"

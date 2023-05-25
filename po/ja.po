@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-23 15:52+0200\n"
+"POT-Creation-Date: 2023-05-25 22:15+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -8122,10 +8122,6 @@ msgstr ""
 "%s%s: \"%s\" コマンドはチャンネル内かプライベートバッファで実行できます"
 
 #, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%s%s%s%s への CTCP クエリ: %s%s%s%s%s"
-
-#, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s%s: \"%s\" コマンドはサーババッファでは実行できません"
 
@@ -11150,6 +11146,10 @@ msgstr "%s%s: %s%s%s からの未知の DCC CHAT タイプ: \"%s\""
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%s%s%s%s からの未知の CTCP 要求: %s%s%s%s%s"
+
+#, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%s%s%s%s への CTCP クエリ: %s%s%s%s%s"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "文字列がサーバの有効な IRC チャンネル名なら 1"

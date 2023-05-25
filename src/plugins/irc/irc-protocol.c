@@ -2948,6 +2948,48 @@ IRC_PROTOCOL_CALLBACK(pong)
 }
 
 /*
+ * Displays a CTCP sent, that was received by PRIVMSG if the origin nick
+ * is self.
+ *
+ * Parameter "arguments" is the message arguments, for example:
+ *
+ *   \01VERSION\01
+ *   \01TEST some arguments\01
+ */
+
+void
+irc_protocol_privmsg_display_ctcp_send (struct t_irc_server *server,
+                                        const char *target,
+                                        const char *arguments)
+{
+    const char *pos_space, *pos_end;
+    char *ctcp_type, *ctcp_args;
+
+    if (!arguments || !arguments[0])
+        return;
+
+    pos_end = strchr (arguments + 1, '\01');
+    if (!pos_end)
+        return;
+
+    pos_space = strchr (arguments + 1, ' ');
+
+    ctcp_type = weechat_strndup (
+        arguments + 1,
+        (pos_space) ?
+        pos_space - arguments - 1 : pos_end - arguments - 1);
+    ctcp_args = (pos_space) ?
+        weechat_strndup (pos_space + 1, pos_end - pos_space - 1) : NULL;
+
+    irc_ctcp_display_send (server, target, ctcp_type, ctcp_args);
+
+    if (ctcp_type)
+        free (ctcp_type);
+    if (ctcp_args)
+        free (ctcp_args);
+}
+
+/*
  * Callback for the IRC command "PRIVMSG".
  *
  * Command looks like:
@@ -2984,15 +3026,13 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     pos_target = params[0];
     status_msg = 0;
     is_channel = irc_channel_is_channel (server, pos_target);
-    if (!is_channel)
+    if (!is_channel
+        && irc_channel_is_channel (server, pos_target + 1)
+        && irc_server_prefix_char_statusmsg (server, pos_target[0]))
     {
-        if (irc_channel_is_channel (server, pos_target + 1)
-            && irc_server_prefix_char_statusmsg (server, pos_target[0]))
-        {
-            is_channel = 1;
-            status_msg = 1;
-            pos_target++;
-        }
+        is_channel = 1;
+        status_msg = 1;
+        pos_target++;
     }
 
     /* receiver is a channel ? */
@@ -3010,8 +3050,16 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             /* CTCP to channel */
             if (msg_args[0] == '\01')
             {
-                irc_ctcp_recv (server, date, tags, command, ptr_channel,
-                               address, nick, NULL, msg_args, irc_message);
+                if (nick_is_me)
+                {
+                    irc_protocol_privmsg_display_ctcp_send (server, pos_target,
+                                                            msg_args);
+                }
+                else
+                {
+                    irc_ctcp_recv (server, date, tags, command, ptr_channel,
+                                   address, nick, NULL, msg_args, irc_message);
+                }
                 goto end;
             }
 
@@ -3106,8 +3154,16 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         /* CTCP to user */
         if (msg_args[0] == '\01')
         {
-            irc_ctcp_recv (server, date, tags, command, NULL,
-                           address, nick, remote_nick, msg_args, irc_message);
+            if (nick_is_me)
+            {
+                irc_protocol_privmsg_display_ctcp_send (server, remote_nick,
+                                                        msg_args);
+            }
+            else
+            {
+                irc_ctcp_recv (server, date, tags, command, NULL,
+                               address, nick, remote_nick, msg_args, irc_message);
+            }
             goto end;
         }
 

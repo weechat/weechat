@@ -35,6 +35,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-command.h"
+#include "irc-ctcp.h"
 #include "irc-buffer.h"
 #include "irc-channel.h"
 #include "irc-color.h"
@@ -1909,36 +1910,13 @@ IRC_COMMAND_CALLBACK(ctcp)
 
         if (ctcp_target)
         {
-            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "PRIVMSG %s :\01%s%s%s\01",
-                              ctcp_target,
-                              ctcp_type,
-                              (ctcp_args) ? " " : "",
-                              (ctcp_args) ? ctcp_args : "");
             /* display message only if capability "echo-message" is NOT enabled */
             if (!weechat_hashtable_has_key (ptr_server->cap_list, "echo-message"))
             {
-                weechat_printf_date_tags (
-                    irc_msgbuffer_get_target_buffer (
-                        ptr_server, ctcp_target, NULL, "ctcp", NULL),
-                    0,
-                    irc_protocol_tags (
-                        ptr_server,
-                        "privmsg",
-                        NULL,
-                        "irc_ctcp,self_msg,notify_none,no_highlight",
-                        NULL, NULL),
-                    _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
-                    weechat_prefix ("network"),
-                    irc_nick_color_for_msg (ptr_server, 0, NULL, ctcp_target),
-                    ctcp_target,
-                    IRC_COLOR_RESET,
-                    IRC_COLOR_CHAT_CHANNEL,
-                    ctcp_type,
-                    IRC_COLOR_RESET,
-                    (ctcp_args) ? " " : "",
-                    (ctcp_args) ? ctcp_args : "");
+                irc_ctcp_display_send (ptr_server, ctcp_target, ctcp_type,
+                                       ctcp_args);
             }
+            irc_ctcp_send (ptr_server, ctcp_target, ctcp_type, ctcp_args);
         }
     }
 

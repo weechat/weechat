@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-23 15:52+0200\n"
+"POT-Creation-Date: 2023-05-25 22:15+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6275,10 +6275,6 @@ msgid ""
 msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
 
 #, fuzzy, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
-
-#, fuzzy, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 
@@ -8959,6 +8955,10 @@ msgstr "%s usmeretlen DCC CHAT típus érkezett a következőtől:"
 #, fuzzy, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
+
+#, fuzzy, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
 
 #, fuzzy
 msgid "1 if string is a valid IRC channel name for server"

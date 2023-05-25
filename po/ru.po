@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-23 15:52+0200\n"
+"POT-Creation-Date: 2023-05-25 22:15+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6313,10 +6313,6 @@ msgstr ""
 "%s \"%s\" команда может быть выполнена только в буфере канала или привата\n"
 
 #, fuzzy, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%sСервер: %s%s %s[%s%s%s]\n"
-
-#, fuzzy, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
 
@@ -8996,6 +8992,10 @@ msgstr "%s неизвестный режим DCC CHAT получен от "
 #, fuzzy, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
+
+#, fuzzy, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
 #, fuzzy
 msgid "1 if string is a valid IRC channel name for server"

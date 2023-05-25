@@ -1255,3 +1255,50 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date,
 
     free (dup_arguments);
 }
+
+/*
+ * Displays an outgoing CTCP.
+ */
+
+void
+irc_ctcp_display_send (struct t_irc_server *server,
+                       const char *target, const char *type, const char *args)
+{
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (
+            server, target, NULL, "ctcp", NULL),
+        0,
+        irc_protocol_tags (
+            server,
+            "privmsg",
+            NULL,
+            "irc_ctcp,self_msg,notify_none,no_highlight",
+            NULL, NULL),
+        _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
+        weechat_prefix ("network"),
+        irc_nick_color_for_msg (server, 0, NULL, target),
+        target,
+        IRC_COLOR_RESET,
+        IRC_COLOR_CHAT_CHANNEL,
+        type,
+        IRC_COLOR_RESET,
+        (args && args[0]) ? " " : "",
+        (args && args[0]) ? args : "");
+}
+
+/*
+ * Sends a CTCP to a target.
+ */
+
+void
+irc_ctcp_send (struct t_irc_server *server,
+               const char *target, const char *type, const char *args)
+{
+    irc_server_sendf (server,
+                      IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                      "PRIVMSG %s :\01%s%s%s\01",
+                      target,
+                      type,
+                      (args) ? " " : "",
+                      (args) ? args : "");
+}
