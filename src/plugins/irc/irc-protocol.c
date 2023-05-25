@@ -3152,13 +3152,16 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     {
         remote_nick = (nick_is_me) ? pos_target : nick;
 
+        /* private message received => display it */
+        ptr_channel = irc_channel_search (server, remote_nick);
+
         /* CTCP to user */
         if (msg_args[0] == '\01')
         {
             if (nick_is_me)
             {
                 irc_protocol_privmsg_display_ctcp_send (
-                    server, NULL, remote_nick, msg_args);
+                    server, ptr_channel, remote_nick, msg_args);
             }
             else
             {
@@ -3167,9 +3170,6 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             }
             goto end;
         }
-
-        /* private message received => display it */
-        ptr_channel = irc_channel_search (server, remote_nick);
 
         if (ptr_channel)
         {
