@@ -48,7 +48,7 @@ RELEASE=1
 CATEGORY="Net"
 
 HOMEPAGE="https://weechat.org/"
-SRC_URI="https://weechat.org/files/src/weechat-${VERSION}.tar.xz"
+SRC_URI="weechat-${VERSION}.tar.xz"
 
 # Build dependencies only
 DEPEND="cmake gettext gettext-devel libgnutls-devel libaspell-devel \
