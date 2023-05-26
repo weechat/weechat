@@ -928,6 +928,8 @@ TEST(IrcProtocolWithServer, account_with_account_notify_cap)
     CHECK_CHAN("--", "alice has unidentified",
                "irc_account,nick_alice,host_user@host,log3");
     POINTERS_EQUAL(NULL, ptr_nick->account);
+
+    hashtable_remove (ptr_server->cap_list, "account-notify");
 }
 
 /*
@@ -1142,10 +1144,10 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
 {
     struct t_irc_batch *ptr_batch;
 
-    SRV_INIT_JOIN2;
-
     /* assume "batch" capability  is enabled in server */
     hashtable_set (ptr_server->cap_list, "batch", NULL);
+
+    SRV_INIT_JOIN2;
 
     /* not enough parameters */
     RECV(":server BATCH");
@@ -1368,6 +1370,10 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
                "irc_privmsg,irc_tag_batch=ref,irc_batch_type_draft/multiline,"
                "irc_action,notify_message,nick_bob,host_user_b@host_b,log1");
 
+    hashtable_remove (ptr_server->cap_list, "draft/multiline");
+    irc_server_buffer_set_input_multiline (ptr_server, 0);
+
+    hashtable_remove (ptr_server->cap_list, "batch");
 }
 
 /*
@@ -2687,6 +2693,8 @@ TEST(IrcProtocolWithServer, setname_with_setname_cap)
     CHECK_SRV("--", "Your real name has been set to \"new realname2\"",
               "irc_setname,log3");
     STRCMP_EQUAL("new realname2", ptr_nick->realname);
+
+    hashtable_remove (ptr_server->cap_list, "setname");
 }
 
 /*
@@ -4562,6 +4570,8 @@ TEST(IrcProtocolWithServer, 354)
          ":real name");
     CHECK_SRV("--", "[#xyz] bob [account] (user2@host2) G@ 0 (real name)",
               "irc_354,irc_numeric,log3");
+
+    hashtable_remove (ptr_server->cap_list, "account-notify");
 }
 
 /*
