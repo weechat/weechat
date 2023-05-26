@@ -32,6 +32,7 @@ extern "C"
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-hook.h"
+#include "src/core/wee-input.h"
 #include "src/core/wee-string.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
@@ -449,6 +450,20 @@ TEST_GROUP(IrcProtocolWithServer)
         record_stop ();
     }
 
+    void server_input_data (const char *buffer, const char *data)
+    {
+        struct t_gui_buffer *ptr_buffer;
+
+        record_start ();
+        arraylist_clear (sent_messages);
+
+        ptr_buffer = gui_buffer_search_by_full_name (buffer);
+        if (ptr_buffer)
+            input_data (ptr_buffer, data, NULL, 0);
+
+        record_stop ();
+    }
+
     char **server_build_error (const char *msg1,
                                const char *prefix,
                                const char *message,
@@ -580,6 +595,118 @@ TEST_GROUP(IrcProtocolWithServer)
         config_file_option_reset (logger_config_look_backlog, 1);
     }
 };
+
+/*
+ * Tests send of messages to channel and nick, without cap echo-message:
+ *   - message (text)
+ *   - notice (/notice)
+ *   - action (/me + /ctcp)
+ *   - CTCP (/ctcp)
+ */
+
+TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
+{
+    const char *buffer_server = "irc.server." IRC_FAKE_SERVER;
+    const char *buffer_chan = "irc." IRC_FAKE_SERVER ".#test";
+    const char *buffer_pv = "irc." IRC_FAKE_SERVER ".bob";
+
+    SRV_INIT_JOIN;
+
+    /* open private buffer */
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+
+    /* message to channel (text in buffer) */
+    server_input_data (buffer_chan, "msg chan 1");
+    CHECK_SENT("PRIVMSG #test :msg chan 1");
+    CHECK_CHAN("alice", "msg chan 1",
+               "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+               "nick_alice,log1");
+
+    /* message to channel (with /msg <channel>) */
+    server_input_data (buffer_server, "/msg #test msg chan 2");
+    CHECK_SENT("PRIVMSG #test :msg chan 2");
+    CHECK_CHAN("alice", "msg chan 2",
+               "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+               "nick_alice,log1");
+
+    /* message to a nick (text in private buffer) */
+    server_input_data (buffer_pv, "msg pv 1");
+    CHECK_SENT("PRIVMSG bob :msg pv 1");
+    CHECK_PV("bob", "alice", "msg pv 1",
+             "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+             "nick_alice,log1");
+
+    /* message to a nick (with /msg <nick>) */
+    server_input_data (buffer_server, "/msg bob msg pv 2");
+    CHECK_SENT("PRIVMSG bob :msg pv 2");
+    CHECK_PV("bob", "alice", "msg pv 2",
+             "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+             "nick_alice,log1");
+
+    /* notice to channel */
+    server_input_data (buffer_server, "/notice #test notice chan");
+    CHECK_SENT("NOTICE #test :notice chan");
+    CHECK_CHAN("--", "Notice(alice) -> #test: notice chan",
+               "irc_notice,self_msg,notify_none,no_highlight,nick_alice,log1");
+
+    /* notice to a nick */
+    server_input_data (buffer_server, "/notice bob notice pv");
+    CHECK_SENT("NOTICE bob :notice pv");
+    CHECK_PV("bob", "--", "Notice(alice) -> bob: notice pv",
+             "irc_notice,self_msg,notify_none,no_highlight,nick_alice,log1");
+
+    /* action on channel (with /me) */
+    server_input_data (buffer_chan, "/me action chan 1");
+    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 1\01");
+    CHECK_CHAN(" *", "alice action chan 1",
+               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
+
+    /* action on channel (with /ctcp) */
+    server_input_data (buffer_server, "/ctcp #test ACTION action chan 2");
+    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 2\01");
+    CHECK_CHAN(" *", "alice action chan 2",
+               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
+
+    /* action in private (with /me) */
+    server_input_data (buffer_pv, "/me action pv 1");
+    CHECK_SENT("PRIVMSG bob :\01ACTION action pv 1\01");
+    CHECK_PV("bob", " *", "alice action pv 1",
+             "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+             "nick_alice,log1");
+
+    /* action in private (with /ctcp) */
+    server_input_data (buffer_server, "/ctcp bob ACTION action pv 2");
+    CHECK_SENT("PRIVMSG bob :\01ACTION action pv 2\01");
+    CHECK_PV("bob", " *", "alice action pv 2",
+             "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+             "nick_alice,log1");
+
+    /* CTCP version to channel */
+    server_input_data (buffer_server, "/ctcp #test version");
+    CHECK_SENT("PRIVMSG #test :\01VERSION\01");
+    CHECK_SRV("--", "CTCP query to #test: VERSION",
+              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,log1");
+
+    /* unknown CTCP to channel */
+    server_input_data (buffer_server, "/ctcp #test unknown1 some args");
+    CHECK_SENT("PRIVMSG #test :\01UNKNOWN1 some args\01");
+    CHECK_SRV("--", "CTCP query to #test: UNKNOWN1 some args",
+              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,log1");
+
+    /* CTCP version to nick */
+    server_input_data (buffer_server, "/ctcp bob version");
+    CHECK_SENT("PRIVMSG bob :\01VERSION\01");
+    CHECK_SRV("--", "CTCP query to bob: VERSION",
+              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,log1");
+
+    /* unknown CTCP to nick */
+    server_input_data (buffer_server, "/ctcp bob unknown2 some args");
+    CHECK_SENT("PRIVMSG bob :\01UNKNOWN2 some args\01");
+    CHECK_SRV("--", "CTCP query to bob: UNKNOWN2 some args",
+              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,log1");
+}
 
 /*
  * Tests functions:
