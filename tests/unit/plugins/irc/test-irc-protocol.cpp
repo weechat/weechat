@@ -709,6 +709,101 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
 }
 
 /*
+ * Tests send of messages to channel and nick, with cap echo-message:
+ *   - message (text)
+ *   - notice (/notice)
+ *   - action (/me + /ctcp)
+ *   - CTCP (/ctcp)
+ */
+
+TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
+{
+    const char *buffer_server = "irc.server." IRC_FAKE_SERVER;
+    const char *buffer_chan = "irc." IRC_FAKE_SERVER ".#test";
+    const char *buffer_pv = "irc." IRC_FAKE_SERVER ".bob";
+
+    /* assume "echo-message" capability is enabled in server */
+    hashtable_set (ptr_server->cap_list, "echo-message", NULL);
+
+    SRV_INIT_JOIN;
+
+    /* open private buffer */
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+
+    /* message to channel (text in buffer) */
+    server_input_data (buffer_chan, "msg chan 1");
+    CHECK_SENT("PRIVMSG #test :msg chan 1");
+    CHECK_NO_MSG;
+
+    /* message to channel (with /msg <channel>) */
+    server_input_data (buffer_server, "/msg #test msg chan 2");
+    CHECK_SENT("PRIVMSG #test :msg chan 2");
+    CHECK_NO_MSG;
+
+    /* message to a nick (text in private buffer) */
+    server_input_data (buffer_pv, "msg pv 1");
+    CHECK_SENT("PRIVMSG bob :msg pv 1");
+    CHECK_NO_MSG;
+
+    /* message to a nick (with /msg <nick>) */
+    server_input_data (buffer_server, "/msg bob msg pv 2");
+    CHECK_SENT("PRIVMSG bob :msg pv 2");
+    CHECK_NO_MSG;
+
+    /* notice to channel */
+    server_input_data (buffer_server, "/notice #test notice chan");
+    CHECK_SENT("NOTICE #test :notice chan");
+    CHECK_NO_MSG;
+
+    /* notice to a nick */
+    server_input_data (buffer_server, "/notice bob notice pv");
+    CHECK_SENT("NOTICE bob :notice pv");
+    CHECK_NO_MSG;
+
+    /* action on channel (with /me) */
+    server_input_data (buffer_chan, "/me action chan 1");
+    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 1\01");
+    CHECK_NO_MSG;
+
+    /* action on channel (with /ctcp) */
+    server_input_data (buffer_server, "/ctcp #test ACTION action chan 2");
+    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 2\01");
+    CHECK_NO_MSG;
+
+    /* action in private (with /me) */
+    server_input_data (buffer_pv, "/me action pv 1");
+    CHECK_SENT("PRIVMSG bob :\01ACTION action pv 1\01");
+    CHECK_NO_MSG;
+
+    /* action in private (with /ctcp) */
+    server_input_data (buffer_server, "/ctcp bob ACTION action pv 2");
+    CHECK_SENT("PRIVMSG bob :\01ACTION action pv 2\01");
+    CHECK_NO_MSG;
+
+    /* CTCP version to channel */
+    server_input_data (buffer_server, "/ctcp #test version");
+    CHECK_SENT("PRIVMSG #test :\01VERSION\01");
+    CHECK_NO_MSG;
+
+    /* unknown CTCP to channel */
+    server_input_data (buffer_server, "/ctcp #test unknown1 some args");
+    CHECK_SENT("PRIVMSG #test :\01UNKNOWN1 some args\01");
+    CHECK_NO_MSG;
+
+    /* CTCP version to nick */
+    server_input_data (buffer_server, "/ctcp bob version");
+    CHECK_SENT("PRIVMSG bob :\01VERSION\01");
+    CHECK_NO_MSG;
+
+    /* unknown CTCP to nick */
+    server_input_data (buffer_server, "/ctcp bob unknown2 some args");
+    CHECK_SENT("PRIVMSG bob :\01UNKNOWN2 some args\01");
+    CHECK_NO_MSG;
+
+    hashtable_remove (ptr_server->cap_list, "echo-message");
+}
+
+/*
  * Tests functions:
  *   irc_protocol_nick_address
  */
