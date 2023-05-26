@@ -51,7 +51,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
     # asciidoctor arguments for user's guide
     set(ASCIIDOCTOR_USER_ARGS
       -a toc=left
-      -a toclevels=2
+      -a toclevels=3
       -a sectnums
       -a sectnumlevels=1
       -a docinfo1
