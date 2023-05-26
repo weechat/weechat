@@ -43,6 +43,7 @@ New features::
   * irc: rename "ssl" options to "tls", connect with TLS and port 6697 by default
   * irc: add support of capabilities "batch" and "draft/multiline" (issue #1292, issue #1923)
   * irc: add support of capability "echo-message" (issue #139)
+  * irc: display CTCP ACTION to channel on the channel buffer (issue #207)
   * irc: add modifier "irc_cap_sync_req" (issue #1767)
   * irc: add support of "LINELEN" in message 005 (max message length in bytes) (issue #1927)
   * irc: add support of "UTF8ONLY" in message 005 (issue #1688)

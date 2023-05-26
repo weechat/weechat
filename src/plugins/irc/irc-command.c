@@ -1913,8 +1913,12 @@ IRC_COMMAND_CALLBACK(ctcp)
             /* display message only if capability "echo-message" is NOT enabled */
             if (!weechat_hashtable_has_key (ptr_server->cap_list, "echo-message"))
             {
-                irc_ctcp_display_send (ptr_server, NULL, ctcp_target, ctcp_type,
-                                       ctcp_args);
+                irc_ctcp_display_send (
+                    ptr_server,
+                    irc_channel_search (ptr_server, ctcp_target),
+                    ctcp_target,
+                    ctcp_type,
+                    ctcp_args);
             }
             irc_ctcp_send (ptr_server, ctcp_target, ctcp_type, ctcp_args);
         }
