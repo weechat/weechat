@@ -876,28 +876,11 @@ indem der Filter deaktiviert wird.
 Die voreingestellte Tastenkombination zum Aktivieren bzw. Deaktivieren
 aller Filter ist kbd:[Alt+-].
 
+// TRANSLATION MISSING
 [[filter_irc_join_part_quit]]
-=== Wie kann ich join/part/quit Meldungen in den IRC Kanälen filtern/unterdrücken?
+=== How can I filter join/part/quit and other annoying messages on IRC channels?
 
-Zum einen mit dem Smart-Filter.
-Bei dessen Anwendung werden join/part/quit-Meldungen von Usern angezeigt,
-die kürzlich noch etwas geschrieben haben:
-
-----
-/set irc.look.smart_filter on
-/filter add irc_smart * irc_smart_filter *
-----
-
-Es besteht auch die Möglichkeit einer globalen Filterung.
-Dabei werden *alle* join/part/quit Nachrichten unterdrückt:
-
-----
-/filter add joinquit * irc_join,irc_part,irc_quit *
-----
-
-[NOTE]
-Für weitere Hilfe: `/help filter`, `+/help irc.look.smart_filter+` und
-link:weechat_user.de.html#irc_smart_filter_join_part_quit[Benutzerhandbuch / einfacher Filter für join/part/quit Nachrichten ^↗^,window=_blank].
+See link:weechat_user.de.html#irc_smart_filter[User's guide / IRC smart filter ^↗^,window=_blank].
 
 [[filter_irc_join_channel_messages]]
 === Wie kann ich die Server-Nachrichten filtern, wenn ich einen IRC Kanal betrete?

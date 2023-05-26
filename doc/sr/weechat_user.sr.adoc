@@ -3728,38 +3728,45 @@ WeeChat приказује све додатне информације које
 /close
 ----
 
-[[irc_smart_filter_join_part_quit]]
-=== Паметни филтер за join/part/quit поруке
+// TRANSLATION MISSING
+[[irc_smart_filter]]
+=== Smart filter
 
-За филтрирање join/part/quit порука када надимак на каналу ништа није рекао у последњих X минута, можете употребити паметни филтер.
+A smart filter is available to filter some messages when someone did not write
+anything in the channel during a configurable delay:
 
-Паметни филтер је подразумевано укључен, али морате да додате филтер који скрива линије у баферу, на пример:
+- join: user joins the channel
+- part: user leaves the channel
+- quit: user quits the server
+- account: user changes its account
+- chghost: user changes name or host
+- mode: mode changes on channel
+- nick: user changes its nick
+- setname: user changes its real name
+
+Smart filter is enabled by default, but you must add a filter to hide lines on
+buffers, for example:
 
 ----
 /filter add irc_smart * irc_smart_filter *
 ----
 
-Можете да креирате филтер само за један канал, или за канале који почињу на исто име (погледајте `/help filter`):
+It is possible to create filter for one channel only or channels beginning with
+same name (see `/help filter`):
 
 ----
-/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
-/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
+/filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
 ----
 
-Следећим опцијама можете да сакријете само join или part/quit поруке:
+You can setup a longer delay (in minutes):
 
 ----
-/set irc.look.smart_filter_join on
-/set irc.look.smart_filter_quit on
+/set irc.look.smart_filter_delay 10
 ----
 
-Можете да поставите паузу (у минутима):
-
-----
-/set irc.look.smart_filter_delay 5
-----
-
-Ако надимак није ништа рекао у последњих 5 минута, његове join и/или part/quit поруке ће бити скривене на каналу.
+If someone did not write anything during last 10 minutes, its messages like
+join/part/quit will be hidden by default on channel, and you can use key
+kbd:[Alt+=] (toggle filters) to see them.
 
 [[irc_ctcp_replies]]
 === CTCP одговори

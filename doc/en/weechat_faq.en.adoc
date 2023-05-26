@@ -819,24 +819,9 @@ Filtered lines are only hidden, not deleted, and you can see them if you
 disable filters (by default, the key kbd:[Alt+=] toggles filters).
 
 [[filter_irc_join_part_quit]]
-=== How can I filter join/part/quit messages on IRC channels?
+=== How can I filter join/part/quit and other annoying messages on IRC channels?
 
-With smart filter (keep join/part/quit from users who spoke recently):
-
-----
-/set irc.look.smart_filter on
-/filter add irc_smart * irc_smart_filter *
-----
-
-With a global filter (hide *all* join/part/quit):
-
-----
-/filter add joinquit * irc_join,irc_part,irc_quit *
-----
-
-[NOTE]
-For help: `/help filter`, `+/help irc.look.smart_filter+` and see
-link:weechat_user.en.html#irc_smart_filter_join_part_quit[User's guide / Smart filter for join/part/quit messages ^↗^,window=_blank].
+See link:weechat_user.en.html#irc_smart_filter[User's guide / IRC smart filter ^↗^,window=_blank].
 
 [[filter_irc_join_channel_messages]]
 === How can I filter some messages displayed when I join an IRC channel?

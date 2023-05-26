@@ -845,25 +845,9 @@ de les voir en désactivant les filtres (par défaut, la touche kbd:[Alt+=]
 active/désactive les filtres).
 
 [[filter_irc_join_part_quit]]
-=== Comment puis-je filtrer les messages join/part/quit sur les canaux IRC ?
+=== Comment puis-je filtrer les join/part/quit et autres messages gênants sur les canaux IRC ?
 
-Avec le filtre intelligent (pour garder les join/part/quit des utilisateurs qui
-ont parlé récemment) :
-
-----
-/set irc.look.smart_filter on
-/filter add irc_smart * irc_smart_filter *
-----
-
-Avec un filtre global (pour cacher *tous* les join/part/quit) :
-
-----
-/filter add joinquit * irc_join,irc_part,irc_quit *
-----
-
-[NOTE]
-Pour l'aide : `/help filter`, `+/help irc.look.smart_filter+` et voir
-link:weechat_user.fr.html#irc_smart_filter_join_part_quit[Guide utilisateur / Filtre intelligent pour les messages join/part/quit ^↗^,window=_blank].
+Voir link:weechat_user.fr.html#irc_smart_filter[Guide utilisateur / Filtre intelligent IRC ^↗^,window=_blank].
 
 [[filter_irc_join_channel_messages]]
 === Comment puis-je filtrer certains messages affichés quand je rejoins un canal IRC ?

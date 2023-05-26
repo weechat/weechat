@@ -3944,11 +3944,20 @@ To close the private buffer, you can do this command on the private buffer:
 /close
 ----
 
-[[irc_smart_filter_join_part_quit]]
-=== Smart filter for join/part/quit messages
+[[irc_smart_filter]]
+=== Smart filter
 
-A smart filter is available to filter join/part/quit messages when nick did not
-say something during past X minutes on channel.
+A smart filter is available to filter some messages when someone did not write
+anything in the channel during a configurable delay:
+
+- join: user joins the channel
+- part: user leaves the channel
+- quit: user quits the server
+- account: user changes its account
+- chghost: user changes name or host
+- mode: mode changes on channel
+- nick: user changes its nick
+- setname: user changes its real name
 
 Smart filter is enabled by default, but you must add a filter to hide lines on
 buffers, for example:
@@ -3961,25 +3970,18 @@ It is possible to create filter for one channel only or channels beginning with
 same name (see `/help filter`):
 
 ----
-/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
-/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
+/filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
 ----
 
-You can hide only join or part/quit with following options:
+You can setup a longer delay (in minutes):
 
 ----
-/set irc.look.smart_filter_join on
-/set irc.look.smart_filter_quit on
+/set irc.look.smart_filter_delay 10
 ----
 
-You can setup delay (in minutes):
-
-----
-/set irc.look.smart_filter_delay 5
-----
-
-If a nick did not speak during last 5 minutes, its join and/or part/quit will be
-hidden on channel.
+If someone did not write anything during last 10 minutes, its messages like
+join/part/quit will be hidden by default on channel, and you can use key
+kbd:[Alt+=] (toggle filters) to see them.
 
 [[irc_ctcp_replies]]
 === CTCP replies

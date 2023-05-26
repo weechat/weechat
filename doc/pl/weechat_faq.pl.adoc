@@ -823,26 +823,11 @@ regularnych dla przedrostków i zawartości linii.
 Filtrowane linie są tylko ukrywane, nie usuwane, można je zobaczyć wyłączając
 filtry (domyślnie kbd:[Alt+=] zmienia stan filtrów).
 
+// TRANSLATION MISSING
 [[filter_irc_join_part_quit]]
-=== Jak mogę filtrować wiadomości o wejściu/opuszczeniu/wyjściu na kanałach IRC?
+=== How can I filter join/part/quit and other annoying messages on IRC channels?
 
-Za pomocą inteligentnych filtrów (zachowuje wejścia/opuszczenia/wyjścia od osób
-piszących niedawno):
-
-----
-/set irc.look.smart_filter on
-/filter add irc_smart * irc_smart_filter *
-----
-
-Za pomocą globalnego filtru (ukrywa *wszystkie* wejścia/opuszczenia/wyjścia):
-
-----
-/filter add joinquit * irc_join,irc_part,irc_quit *
-----
-
-[NOTE]
-+For help: `/help filter`, `+/help irc.look.smart_filter+` and see
-+link:weechat_user.pl.html#irc_smart_filter_join_part_quit[Poradniku użytkownika / Inteligentne filtry dla wiadomości ^↗^,window=_blank].
+See link:weechat_user.pl.html#irc_smart_filter[User's guide / IRC smart filter ^↗^,window=_blank].
 
 [[filter_irc_join_channel_messages]]
 === Jak mogę filtrować wyświetlane wiadomości podczas wejścia na kanał IRC?

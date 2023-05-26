@@ -4067,11 +4067,20 @@ privé :
 /close
 ----
 
-[[irc_smart_filter_join_part_quit]]
-=== Filtre intelligent pour les messages join/part/quit
+[[irc_smart_filter]]
+=== Filtre intelligent
 
-Un filtre intelligent est disponible pour filtrer les messages join/part/quit
-lorsque le pseudo n'a rien dit durant les X dernières minutes sur le canal.
+Un filtre intelligent est disponible pour filtrer certains messages lorsqu'une
+personne n'a rien écrit sur le canal durant un délai configurable :
+
+- join : l'utilisateur rejoint le canal
+- part : l'utilisateur quitte le canal
+- quit : l'utilisateur quitte le serveur
+- account : l'utilisateur change de compte
+- chghost : l'utilisateur change son nom ou hôte
+- mode : changements de modes sur le canal
+- nick : l'utilisateur change son pseudo
+- setname : l'utilisateur change son nom réel
 
 Le filtre intelligent est activé par défaut, mais vous devez ajouter un filtre
 pour cacher les lignes sur les tampons, par exemple :
@@ -4084,25 +4093,18 @@ Il est possible de créer un filtre pour un canal seulement ou plusieurs canaux
 commençant par le même nom (voir `/help filter`) :
 
 ----
-/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
-/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
+/filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
 ----
 
-Vous pouvez cacher seulement les join ou part/quit avec les options suivantes :
+Vous pouvez définir un délai plus long (en minutes) :
 
 ----
-/set irc.look.smart_filter_join on
-/set irc.look.smart_filter_quit on
+/set irc.look.smart_filter_delay 10
 ----
 
-Vous pouvez modifier le délai (en minutes) :
-
-----
-/set irc.look.smart_filter_delay 5
-----
-
-Si le pseudo n'a pas parlé durant les 5 dernières minutes, ses join et/ou
-part/quit seront cachés sur le canal.
+Si quelqu'un n'a rien écrit durant les 10 dernières minutes, ses messages
+comme les join/part/quit seront cachés par défaut sur le canal, et vous pouvez
+utiliser la touche kbd:[Alt+=] (activer/désactiver les filtres) pour les voir.
 
 [[irc_ctcp_replies]]
 === Réponses CTCP

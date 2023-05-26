@@ -841,25 +841,11 @@ WeeChat
 フィルタされた行は隠されているだけで削除されているわけではありません。このため、フィルタを無効化
 (デフォルトでは kbd:[Alt+=] でフィルタの有効無効を切り替えられます) すれば見ることが可能です。
 
+// TRANSLATION MISSING
 [[filter_irc_join_part_quit]]
-=== どうすれば IRC チャンネルへの参加/退出/終了メッセージをフィルタできますか。
+=== How can I filter join/part/quit and other annoying messages on IRC channels?
 
-スマートフィルタを使う場合 (最近発言したユーザの参加/退出/終了メッセージは表示):
-
-----
-/set irc.look.smart_filter on
-/filter add irc_smart * irc_smart_filter *
-----
-
-グローバルフィルタを使う場合 (*全ての* 参加/退出/終了メッセージを隠す):
-
-----
-/filter add joinquit * irc_join,irc_part,irc_quit *
-----
-
-[NOTE]
-ヘルプを見るには `/help filter`、`+/help irc.look.smart_filter+`、link:weechat_user.ja.html#irc_smart_filter_join_part_quit[ユーザーズガイド
-/ 参加/退出/終了メッセージに対するスマートフィルタ ^↗^,window=_blank] を使ってください。
+See link:weechat_user.ja.html#irc_smart_filter[User's guide / IRC smart filter ^↗^,window=_blank].
 
 [[filter_irc_join_channel_messages]]
 === どうすれば IRC チャンネルに参加した際に表示される一部のメッセージをフィルタできますか。

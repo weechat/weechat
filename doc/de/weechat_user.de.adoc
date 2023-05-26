@@ -4017,43 +4017,45 @@ privaten Buffer aus:
 /close
 ----
 
-[[irc_smart_filter_join_part_quit]]
-=== einfacher Filter für join/part/quit Nachrichten
+// TRANSLATION MISSING
+[[irc_smart_filter]]
+=== Smart filter
 
-Es existiert ein einfacher Filter für join/part/quit Nachrichten falls ein Nick für
-eine vorgegebene Zeit in einem Channel inaktiv gewesen ist.
+A smart filter is available to filter some messages when someone did not write
+anything in the channel during a configurable delay:
 
-Diese Funktion ist standardmäßig aktiviert, aber Sie müssen einen Filter erstellen damit
-solche Nachrichten im Buffer unterdrückt werden. Ein Beispiel:
+- join: user joins the channel
+- part: user leaves the channel
+- quit: user quits the server
+- account: user changes its account
+- chghost: user changes name or host
+- mode: mode changes on channel
+- nick: user changes its nick
+- setname: user changes its real name
+
+Smart filter is enabled by default, but you must add a filter to hide lines on
+buffers, for example:
 
 ----
 /filter add irc_smart * irc_smart_filter *
 ----
 
-Dabei ist es natürlich möglich den Filter in der Form einzurichten dass er nur
-für einen Channel Gültigkeit besitzt oder aber für mehrere Channels die mit dem
-selben Namen beginnen (siehe `/help filter`):
+It is possible to create filter for one channel only or channels beginning with
+same name (see `/help filter`):
 
 ----
-/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
-/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
+/filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
 ----
 
-Sie können auch nur join oder part/quit Nachrichten unterdrücken:
+You can setup a longer delay (in minutes):
 
 ----
-/set irc.look.smart_filter_join on
-/set irc.look.smart_filter_quit on
+/set irc.look.smart_filter_delay 10
 ----
 
-Zusätzlich kann auch eine Verzögerung (in Minuten) eingestellt werden:
-
-----
-/set irc.look.smart_filter_delay 5
-----
-
-Falls ein Nick in den letzten fünf Minuten nicht aktiv gewesen ist werden seine
-join und/oder part/quit Nachrichten im Channel unterdrückt.
+If someone did not write anything during last 10 minutes, its messages like
+join/part/quit will be hidden by default on channel, and you can use key
+kbd:[Alt+=] (toggle filters) to see them.
 
 [[irc_ctcp_replies]]
 === CTCP Antworten

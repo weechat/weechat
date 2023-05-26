@@ -900,26 +900,11 @@ Le righe filtrate vengono solo nascoste, non eliminate, ed è possibile
 visualizzarle se i filtri vengono disabilitati (il comando predefinito
 kbd:[Alt+=] abilita/disabilita i filtri).
 
+// TRANSLATION MISSING
 [[filter_irc_join_part_quit]]
-=== Come posso filtrare i messaggi di entrata/uscita/abbandono sui canali IRC?
+=== How can I filter join/part/quit and other annoying messages on IRC channels?
 
-Con il filtro intelligente (mantiene entrata/uscita/abbandono degli utenti che
-hanno scritto di recente):
-
-----
-/set irc.look.smart_filter on
-/filter add irc_smart * irc_smart_filter *
-----
-
-Con un filtro globale (nasconde *tutti* entrata/uscita/abbandono):
-
-----
-/filter add joinquit * irc_join,irc_part,irc_quit *
-----
-
-[NOTE]
-Per aiuto: `/help filter`, `+/help irc.look.smart_filter+` e
-link:weechat_user.it.html#irc_smart_filter_join_part_quit[Guida per l’Utente / Filtro smart per i messaggi di entrata/uscita/disconnessione ^↗^,window=_blank].
+See link:weechat_user.it.html#irc_smart_filter[User's guide / IRC smart filter ^↗^,window=_blank].
 
 [[filter_irc_join_channel_messages]]
 === Come posso filtrare i messaggi visualizzati all'ingresso su un canale IRC?

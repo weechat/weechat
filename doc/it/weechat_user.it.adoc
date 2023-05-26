@@ -4252,44 +4252,45 @@ To close the private buffer, you can do this command on the private buffer:
 /close
 ----
 
-[[irc_smart_filter_join_part_quit]]
-=== Filtro smart per i messaggi di entrata/uscita/disconnessione
+// TRANSLATION MISSING
+[[irc_smart_filter]]
+=== Smart filter
 
-Un filtro smart è disponibile per filtrare i messaggi di
-entrata/uscita/disconnessione quando il nick non ha detto nulla durante
-gli ultimi X minuti sul canale
+A smart filter is available to filter some messages when someone did not write
+anything in the channel during a configurable delay:
 
-Il filtro smart è abilitato per default, ma è necessario aggiungere un filtro
-per nascondere le righe sul buffer, per esempio:
+- join: user joins the channel
+- part: user leaves the channel
+- quit: user quits the server
+- account: user changes its account
+- chghost: user changes name or host
+- mode: mode changes on channel
+- nick: user changes its nick
+- setname: user changes its real name
+
+Smart filter is enabled by default, but you must add a filter to hide lines on
+buffers, for example:
 
 ----
 /filter add irc_smart * irc_smart_filter *
 ----
 
-È possibile creare il filtro solo per un canale o per i canali che iniziano con
-lo stesso nome (consultare `/help filter`):
+It is possible to create filter for one channel only or channels beginning with
+same name (see `/help filter`):
 
 ----
-/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
-/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
+/filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
 ----
 
-È possibile nascondere solo i messaggi di entrata o di
-uscita/disconnessione con le seguenti opzioni:
+You can setup a longer delay (in minutes):
 
 ----
-/set irc.look.smart_filter_join on
-/set irc.look.smart_filter_quit on
+/set irc.look.smart_filter_delay 10
 ----
 
-È possibile impostare un ritardo (in minuti):
-
-----
-/set irc.look.smart_filter_delay 5
-----
-
-Se un nick non ha parlato durante gli ultimi 5 minuti, i suoi ingressi e/o
-uscite/disconnessioni verranno nascosti sul canale.
+If someone did not write anything during last 10 minutes, its messages like
+join/part/quit will be hidden by default on channel, and you can use key
+kbd:[Alt+=] (toggle filters) to see them.
 
 [[irc_ctcp_replies]]
 === Risposte CTCP

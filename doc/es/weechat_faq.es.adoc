@@ -842,25 +842,11 @@ prefijar el contenido de la línea.
 Las líneas flitradas solo son ocultadas, no eliminadas, y podrá verlas si
 inhabilita los filtros (de manera predeteminada, la tecla kbd:[Alt+=] alterna esos filtros).
 
+// TRANSLATION MISSING
 [[filter_irc_join_part_quit]]
-=== ¿Cómo puedo filtrar los mensajes join/part/quit en los canales IRC?
+=== How can I filter join/part/quit and other annoying messages on IRC channels?
 
-Con el filtro inteligente (mantiene los mensajes join/part/quit de usuarios que hayan hablado recientemente):
-
-----
-/set irc.look.smart_filter on
-/filter add irc_smart * irc_smart_filter *
-----
-
-Con un filtro global (oculta *todos* los mensajes join/part/quit):
-
-----
-/filter add joinquit * irc_join,irc_part,irc_quit *
-----
-
-[NOTE]
-Para más ayuda: `/help filter`, `+/help irc.look.smart_filter+` y vea la
-link:weechat_user.en.html#irc_smart_filter_join_part_quit[Guía del usuario / Filtros inteligente para mensajes join/part/quit ^↗^,window=_blank].
+See link:weechat_user.en.html#irc_smart_filter[User's guide / IRC smart filter ^↗^,window=_blank].
 
 [[filter_irc_join_channel_messages]]
 === ¿Cómo puedo filtrar algunos mensajes mostrados cuando me uno a un canal IRC?

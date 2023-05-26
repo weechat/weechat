@@ -4111,41 +4111,45 @@ To close the private buffer, you can do this command on the private buffer:
 /close
 ----
 
-[[irc_smart_filter_join_part_quit]]
-=== 参加/退出/終了メッセージに対するスマートフィルタ
+// TRANSLATION MISSING
+[[irc_smart_filter]]
+=== Smart filter
 
-チャンネル内での発言が過去 X
-分間なかった場合に参加/退出/終了メッセージをフィルタリングするスマートフィルタが利用できます。
+A smart filter is available to filter some messages when someone did not write
+anything in the channel during a configurable delay:
 
-スマートフィルタはデフォルトで有効化されていますが、バッファ内のメッセージを隠すにはフィルタを追加する必要があります。例えば:
+- join: user joins the channel
+- part: user leaves the channel
+- quit: user quits the server
+- account: user changes its account
+- chghost: user changes name or host
+- mode: mode changes on channel
+- nick: user changes its nick
+- setname: user changes its real name
+
+Smart filter is enabled by default, but you must add a filter to hide lines on
+buffers, for example:
 
 ----
 /filter add irc_smart * irc_smart_filter *
 ----
 
-特定のチャンネルのみ、またはある名前で始まるチャンネルに対してフィルタを作成することもできます
-(`/help filter` を参照):
+It is possible to create filter for one channel only or channels beginning with
+same name (see `/help filter`):
 
 ----
-/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
-/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
+/filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
 ----
 
-以下のコマンドで参加メッセージだけ、または退出/終了メッセージだけを隠すこともできます:
+You can setup a longer delay (in minutes):
 
 ----
-/set irc.look.smart_filter_join on
-/set irc.look.smart_filter_quit on
+/set irc.look.smart_filter_delay 10
 ----
 
-遅延時間 (分単位) を設定することもできます:
-
-----
-/set irc.look.smart_filter_delay 5
-----
-
-過去 5
-分間あるニックネームからの発言が無かった場合、このニックネームに対する参加または退出/終了メッセージがチャンネルから隠されます。
+If someone did not write anything during last 10 minutes, its messages like
+join/part/quit will be hidden by default on channel, and you can use key
+kbd:[Alt+=] (toggle filters) to see them.
 
 [[irc_ctcp_replies]]
 === CTCP 応答
