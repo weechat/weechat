@@ -100,7 +100,12 @@ Bug fixes::
 
 Tests::
 
+  * core: add tests on URL functions
   * gui: add tests on bar and key functions
+  * alias: add tests on alias functions
+  * irc: check tags in messages displayed by IRC plugin
+  * irc: add tests on function irc_server_alloc_with_url
+  * irc: add tests on message/notice/action/CTCP sent
 
 Build::
 
