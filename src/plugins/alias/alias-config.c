@@ -34,6 +34,7 @@ struct t_config_section *alias_config_section_completion = NULL;
 
 char *alias_default[][3] =
 { { "aaway",   "allserv /away",        NULL            },
+  { "action",  "ctcp $1 action $2-",   NULL            },
   { "anick",   "allserv /nick",        NULL            },
   { "beep",    "print -beep",          NULL            },
   { "bye",     "quit",                 NULL            },
