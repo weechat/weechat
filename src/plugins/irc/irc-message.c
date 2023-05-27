@@ -1441,9 +1441,15 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
                         pos[0] = saved_char;
                         list_lines[i][length - 1] = '\0';
                         ptr_args = pos;
-                        suffix[0] = '\01';
-                        suffix[1] = '\0';
                     }
+                    else
+                    {
+                        list_lines[i][length - 1] = '\0';
+                        snprintf (prefix, sizeof (prefix), ":%s", list_lines[i]);
+                        ptr_args = "";
+                    }
+                    suffix[0] = '\01';
+                    suffix[1] = '\0';
                 }
                 if (!prefix[0])
                     strcpy (prefix, ":");

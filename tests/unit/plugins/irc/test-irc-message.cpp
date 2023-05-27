@@ -1621,24 +1621,46 @@ TEST(IrcMessage, Split)
                  (const char *)hashtable_get (hashtable, "args2"));
     hashtable_free (hashtable);
 
-    /* PRIVMSG with "\x01ACTION " + 512 bytes + "\x01": 1 split */
+    /* PRIVMSG with "\01ACTION\01": no split */
+    hashtable = irc_message_split (server, "PRIVMSG #channel :\01ACTION\01");
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #channel :\01ACTION\01",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+
+    /* PRIVMSG with "\01ACTION test\01": no split */
+    hashtable = irc_message_split (server, "PRIVMSG #channel :\01ACTION test\01");
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #channel :\01ACTION test\01",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("test",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+
+    /* PRIVMSG with "\01ACTION " + 512 bytes + "\01": 1 split */
     hashtable = irc_message_split (server,
                                    "PRIVMSG #channel :"
-                                   "\x01" "ACTION "
-                                   LOREM_IPSUM_512
-                                   "\x01");
+                                   "\01ACTION " LOREM_IPSUM_512 "\01");
     CHECK(hashtable);
     LONGS_EQUAL(5, hashtable->items_count);
     STRCMP_EQUAL("2",
                  (const char *)hashtable_get (hashtable, "count"));
-    STRCMP_EQUAL("PRIVMSG #channel :" "\x01" "ACTION " "Lorem ipsum dolor sit"
+    STRCMP_EQUAL("PRIVMSG #channel :\01ACTION Lorem ipsum dolor sit"
                  " amet, consectetur adipiscing elit. Fusce auctor ac leo ut "
                  "maximus. Curabitur vestibulum facilisis neque, vitae sodale"
                  "s elit pulvinar ac. Mauris suscipit pharetra metus eu hendr"
                  "erit. Proin viverra ligula ut nibh malesuada, vel vehicula "
                  "leo pulvinar. Nullam tellus dolor, posuere sed orci in, pre"
                  "tium fermentum ante. Donec a quam vulputate, fermentum nisi"
-                 " nec, convallis" "\x01",
+                 " nec, convallis\01",
                  (const char *)hashtable_get (hashtable, "msg1"));
     STRCMP_EQUAL("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu"
                  "sce auctor ac leo ut maximus. Curabitur vestibulum facilisi"
@@ -1648,9 +1670,9 @@ TEST(IrcMessage, Split)
                  "uere sed orci in, pretium fermentum ante. Donec a quam vulp"
                  "utate, fermentum nisi nec, convallis",
                  (const char *)hashtable_get (hashtable, "args1"));
-    STRCMP_EQUAL("PRIVMSG #channel :" "\x01" "ACTION " "sapien. Vestibulum ma"
+    STRCMP_EQUAL("PRIVMSG #channel :\01ACTION sapien. Vestibulum ma"
                  "lesuada dui eget iaculis sagittis. Praesent egestas non ex "
-                 "quis blandit. Maecenas quis leo nunc. In." "\x01",
+                 "quis blandit. Maecenas quis leo nunc. In.\01",
                  (const char *)hashtable_get (hashtable, "msg2"));
     STRCMP_EQUAL("sapien. Vestibulum malesuada dui eget iaculis sagittis. Pra"
                  "esent egestas non ex quis blandit. Maecenas quis leo nunc. "
