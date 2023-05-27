@@ -675,10 +675,24 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
+    /* action on channel (with /me), no message */
+    server_input_data (buffer_chan, "/me");
+    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    CHECK_CHAN(" *", "alice",
+               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
+
     /* action on channel (with /ctcp <channel> action) */
     server_input_data (buffer_server, "/ctcp #test action action chan 2");
     CHECK_SENT("PRIVMSG #test :\01ACTION action chan 2\01");
     CHECK_CHAN(" *", "alice action chan 2",
+               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
+
+    /* action on channel (with /ctcp <channel> action), no message */
+    server_input_data (buffer_server, "/ctcp #test action");
+    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    CHECK_CHAN(" *", "alice",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
@@ -761,6 +775,11 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
     CHECK_SENT("PRIVMSG #test :msg chan 2");
     CHECK_NO_MSG;
 
+    /* STATUSMSG message to channel (with /msg @<channel>) */
+    server_input_data (buffer_server, "/msg @#test msg chan ops");
+    CHECK_SENT("PRIVMSG @#test :msg chan ops");
+    CHECK_NO_MSG;
+
     /* message to a nick (text in private buffer) */
     server_input_data (buffer_pv, "msg pv 1");
     CHECK_SENT("PRIVMSG bob :msg pv 1");
@@ -776,6 +795,11 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
     CHECK_SENT("NOTICE #test :notice chan");
     CHECK_NO_MSG;
 
+    /* STATUSMSG notice to channel */
+    server_input_data (buffer_server, "/notice @#test notice chan ops");
+    CHECK_SENT("NOTICE @#test :notice chan ops");
+    CHECK_NO_MSG;
+
     /* notice to a nick */
     server_input_data (buffer_server, "/notice bob notice pv");
     CHECK_SENT("NOTICE bob :notice pv");
@@ -786,9 +810,19 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
     CHECK_SENT("PRIVMSG #test :\01ACTION action chan 1\01");
     CHECK_NO_MSG;
 
-    /* action on channel (with /ctcp) */
+    /* action on channel (with /me), no message */
+    server_input_data (buffer_chan, "/me");
+    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    CHECK_NO_MSG;
+
+    /* action on channel (with /ctcp <channel> action) */
     server_input_data (buffer_server, "/ctcp #test ACTION action chan 2");
     CHECK_SENT("PRIVMSG #test :\01ACTION action chan 2\01");
+    CHECK_NO_MSG;
+
+    /* STATUSMSG action on channel (with /ctcp @<channel> action) */
+    server_input_data (buffer_server, "/ctcp @#test action action chan ops");
+    CHECK_SENT("PRIVMSG @#test :\01ACTION action chan ops\01");
     CHECK_NO_MSG;
 
     /* action in private (with /me) */

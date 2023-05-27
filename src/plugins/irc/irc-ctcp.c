@@ -1318,7 +1318,7 @@ irc_ctcp_display_send (struct t_irc_server *server,
                     "irc_action,self_msg,notify_none,no_highlight",
                     server->nick,
                     NULL),
-                "%s%s -> %s%s%s: %s%s%s%s %s",
+                "%s%s -> %s%s%s: %s%s%s%s%s%s",
                 weechat_prefix ("network"),
                 /* TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me */
                 _("Action"),
@@ -1328,8 +1328,9 @@ irc_ctcp_display_send (struct t_irc_server *server,
                 irc_nick_mode_for_display (server, ptr_nick, 0),
                 IRC_COLOR_CHAT_NICK_SELF,
                 server->nick,
-                IRC_COLOR_RESET,
-                args);
+                (args && args[0]) ? IRC_COLOR_RESET : "",
+                (args && args[0]) ? " " : "",
+                (args && args[0]) ? args : "");
         }
         else
         {
