@@ -711,11 +711,18 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
              "nick_alice,log1");
 
     /* action in private (with /ctcp) */
-    server_input_data (buffer_server, "/ctcp bob ACTION action pv 2");
+    server_input_data (buffer_server, "/ctcp bob action action pv 2");
     CHECK_SENT("PRIVMSG bob :\01ACTION action pv 2\01");
     CHECK_PV("bob", " *", "alice action pv 2",
              "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
              "nick_alice,log1");
+
+    /* action in private (with /ctcp), without private buffer */
+    server_input_data (buffer_server, "/ctcp bob2 action action pv 3");
+    CHECK_SENT("PRIVMSG bob2 :\01ACTION action pv 3\01");
+    CHECK_SRV("--", "Action -> bob2: alice action pv 3",
+              "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+              "nick_alice,log1");
 
     /* CTCP version to channel */
     server_input_data (buffer_server, "/ctcp #test version");
@@ -816,7 +823,7 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
     CHECK_NO_MSG;
 
     /* action on channel (with /ctcp <channel> action) */
-    server_input_data (buffer_server, "/ctcp #test ACTION action chan 2");
+    server_input_data (buffer_server, "/ctcp #test action action chan 2");
     CHECK_SENT("PRIVMSG #test :\01ACTION action chan 2\01");
     CHECK_NO_MSG;
 
@@ -831,8 +838,13 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
     CHECK_NO_MSG;
 
     /* action in private (with /ctcp) */
-    server_input_data (buffer_server, "/ctcp bob ACTION action pv 2");
+    server_input_data (buffer_server, "/ctcp bob action action pv 2");
     CHECK_SENT("PRIVMSG bob :\01ACTION action pv 2\01");
+    CHECK_NO_MSG;
+
+    /* action in private (with /ctcp), without private buffer */
+    server_input_data (buffer_server, "/ctcp bob2 action action pv 3");
+    CHECK_SENT("PRIVMSG bob2 :\01ACTION action pv 3\01");
     CHECK_NO_MSG;
 
     /* CTCP version to channel */
