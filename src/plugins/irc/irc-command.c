@@ -1850,6 +1850,7 @@ IRC_COMMAND_CALLBACK(connect)
 
 IRC_COMMAND_CALLBACK(ctcp)
 {
+    struct t_irc_channel *ptr_channel_target;
     char **targets, *ctcp_type, str_time[512];
     const char *ctcp_target, *ctcp_args;
     int num_targets, arg_target, arg_type, arg_args, i;
@@ -1932,12 +1933,14 @@ IRC_COMMAND_CALLBACK(ctcp)
             /* display message only if capability "echo-message" is NOT enabled */
             if (!weechat_hashtable_has_key (ptr_server->cap_list, "echo-message"))
             {
-                irc_ctcp_display_send (
+                ptr_channel_target = irc_channel_search (
                     ptr_server,
-                    irc_channel_search (ptr_server, ctcp_target),
-                    ctcp_target,
-                    ctcp_type,
-                    ctcp_args);
+                    (irc_server_prefix_char_statusmsg (ptr_server,
+                                                       ctcp_target[0])
+                     && irc_channel_is_channel (ptr_server, ctcp_target + 1)) ?
+                    ctcp_target + 1 : ctcp_target);
+                irc_ctcp_display_send (ptr_server, ptr_channel_target,
+                                       ctcp_target, ctcp_type, ctcp_args);
             }
             irc_ctcp_send (ptr_server, ctcp_target, ctcp_type, ctcp_args);
         }

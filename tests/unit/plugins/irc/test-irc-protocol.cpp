@@ -597,7 +597,8 @@ TEST_GROUP(IrcProtocolWithServer)
 };
 
 /*
- * Tests send of messages to channel and nick, without cap echo-message:
+ * Tests send of messages to channel (STATUSMSG and normal) and nick,
+ * without capability "echo-message" enabled:
  *   - message (text)
  *   - notice (/notice)
  *   - action (/me + /ctcp)
@@ -629,6 +630,12 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
                "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
                "nick_alice,log1");
 
+    /* STATUSMSG message to channel (with /msg @<channel>) */
+    server_input_data (buffer_server, "/msg @#test msg chan ops");
+    CHECK_SENT("PRIVMSG @#test :msg chan ops");
+    CHECK_CHAN("--", "Msg(alice) -> @#test: msg chan ops",
+               "irc_privmsg,self_msg,notify_none,no_highlight,nick_alice,log1");
+
     /* message to a nick (text in private buffer) */
     server_input_data (buffer_pv, "msg pv 1");
     CHECK_SENT("PRIVMSG bob :msg pv 1");
@@ -649,6 +656,12 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
     CHECK_CHAN("--", "Notice(alice) -> #test: notice chan",
                "irc_notice,self_msg,notify_none,no_highlight,nick_alice,log1");
 
+    /* STATUSMSG notice to channel */
+    server_input_data (buffer_server, "/notice @#test notice chan ops");
+    CHECK_SENT("NOTICE @#test :notice chan ops");
+    CHECK_CHAN("--", "Notice(alice) -> @#test: notice chan ops",
+               "irc_notice,self_msg,notify_none,no_highlight,nick_alice,log1");
+
     /* notice to a nick */
     server_input_data (buffer_server, "/notice bob notice pv");
     CHECK_SENT("NOTICE bob :notice pv");
@@ -662,10 +675,17 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
-    /* action on channel (with /ctcp) */
-    server_input_data (buffer_server, "/ctcp #test ACTION action chan 2");
+    /* action on channel (with /ctcp <channel> action) */
+    server_input_data (buffer_server, "/ctcp #test action action chan 2");
     CHECK_SENT("PRIVMSG #test :\01ACTION action chan 2\01");
     CHECK_CHAN(" *", "alice action chan 2",
+               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
+
+    /* STATUSMSG action on channel (with /ctcp @<channel> action) */
+    server_input_data (buffer_server, "/ctcp @#test action action chan ops");
+    CHECK_SENT("PRIVMSG @#test :\01ACTION action chan ops\01");
+    CHECK_CHAN("--", "Action -> @#test: alice action chan ops",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
@@ -709,7 +729,8 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
 }
 
 /*
- * Tests send of messages to channel and nick, with cap echo-message:
+ * Tests send of messages to channel (STATUSMSG and normal) and nick,
+ * with capability "echo-message" enabled:
  *   - message (text)
  *   - notice (/notice)
  *   - action (/me + /ctcp)

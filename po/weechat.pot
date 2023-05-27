@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-25 22:15+0200\n"
+"POT-Creation-Date: 2023-05-27 09:28+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8032,6 +8032,10 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
+msgstr ""
+
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
+msgid "Action"
 msgstr ""
 
 #, c-format

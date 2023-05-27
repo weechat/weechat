@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-25 22:15+0200\n"
+"POT-Creation-Date: 2023-05-27 09:28+0200\n"
 "PO-Revision-Date: 2023-05-14 15:29+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11333,6 +11333,12 @@ msgstr "%s%s: команда „%s” не може да се парсира"
 #, c-format
 msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s%s: примљен је непознати DCC CHAT тип од %s%s%s: „%s”"
+
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
+#, fuzzy
+#| msgid "Option"
+msgid "Action"
+msgstr "Опција"
 
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"

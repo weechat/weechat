@@ -3059,7 +3059,8 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 else
                 {
                     irc_ctcp_recv (server, date, tags, command, ptr_channel,
-                                   address, nick, NULL, msg_args, irc_message);
+                                   params[0], address, nick, NULL, msg_args,
+                                   irc_message);
                 }
                 goto end;
             }
@@ -3165,7 +3166,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             }
             else
             {
-                irc_ctcp_recv (server, date, tags, command, NULL,
+                irc_ctcp_recv (server, date, tags, command, NULL, params[0],
                                address, nick, remote_nick, msg_args, irc_message);
             }
             goto end;
