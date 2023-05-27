@@ -1297,7 +1297,8 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date,
 void
 irc_ctcp_display_send (struct t_irc_server *server,
                        struct t_irc_channel *channel,
-                       const char *target, const char *type, const char *args)
+                       const char *target, const char *address,
+                       const char *type, const char *args)
 {
     struct t_irc_nick *ptr_nick;
     int is_channel;
@@ -1321,7 +1322,7 @@ irc_ctcp_display_send (struct t_irc_server *server,
                     NULL,
                     "irc_action,self_msg,notify_none,no_highlight",
                     server->nick,
-                    NULL),
+                    address),
                 "%s%s -> %s%s%s: %s%s%s%s%s%s",
                 weechat_prefix ("network"),
                 /* TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me */
@@ -1350,7 +1351,7 @@ irc_ctcp_display_send (struct t_irc_server *server,
                     NULL,
                     "irc_action,self_msg,notify_none,no_highlight",
                     server->nick,
-                    NULL),
+                    address),
                 "%s%s%s%s%s%s",
                 weechat_prefix ("action"),
                 IRC_COLOR_CHAT_NICK_SELF,
@@ -1371,7 +1372,8 @@ irc_ctcp_display_send (struct t_irc_server *server,
                 "privmsg",
                 NULL,
                 "irc_ctcp,self_msg,notify_none,no_highlight",
-                NULL, NULL),
+                NULL,
+                address),
             _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
             weechat_prefix ("network"),
             (channel) ?

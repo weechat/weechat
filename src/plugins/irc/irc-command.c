@@ -1941,7 +1941,7 @@ IRC_COMMAND_CALLBACK(ctcp)
                      && irc_channel_is_channel (ptr_server, ctcp_target + 1)) ?
                     ctcp_target + 1 : ctcp_target);
                 irc_ctcp_display_send (ptr_server, ptr_channel_target,
-                                       ctcp_target, ctcp_type, ctcp_args);
+                                       ctcp_target, NULL, ctcp_type, ctcp_args);
             }
             irc_ctcp_send (ptr_server, ctcp_target, ctcp_type, ctcp_args);
         }

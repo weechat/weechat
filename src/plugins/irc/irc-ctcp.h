@@ -51,8 +51,8 @@ extern void irc_ctcp_recv (struct t_irc_server *server, time_t date,
                            const char *message);
 extern void irc_ctcp_display_send (struct t_irc_server *server,
                                    struct t_irc_channel *channel,
-                                   const char *target, const char *type,
-                                   const char *args);
+                                   const char *target, const char *address,
+                                   const char *type, const char *args);
 extern void irc_ctcp_send (struct t_irc_server *server,
                            const char *target, const char *type,
                            const char *args);

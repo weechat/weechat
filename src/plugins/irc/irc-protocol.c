@@ -2961,6 +2961,7 @@ void
 irc_protocol_privmsg_display_ctcp_send (struct t_irc_server *server,
                                         struct t_irc_channel *channel,
                                         const char *target,
+                                        const char *address,
                                         const char *arguments)
 {
     const char *pos_space, *pos_end;
@@ -2982,7 +2983,7 @@ irc_protocol_privmsg_display_ctcp_send (struct t_irc_server *server,
     ctcp_args = (pos_space) ?
         weechat_strndup (pos_space + 1, pos_end - pos_space - 1) : NULL;
 
-    irc_ctcp_display_send (server, channel, target, ctcp_type, ctcp_args);
+    irc_ctcp_display_send (server, channel, target, address, ctcp_type, ctcp_args);
 
     if (ctcp_type)
         free (ctcp_type);
@@ -3054,7 +3055,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 if (nick_is_me)
                 {
                     irc_protocol_privmsg_display_ctcp_send (
-                        server, ptr_channel, params[0], msg_args);
+                        server, ptr_channel, params[0], address, msg_args);
                 }
                 else
                 {
@@ -3162,7 +3163,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             if (nick_is_me)
             {
                 irc_protocol_privmsg_display_ctcp_send (
-                    server, ptr_channel, remote_nick, msg_args);
+                    server, ptr_channel, remote_nick, address, msg_args);
             }
             else
             {

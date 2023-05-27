@@ -2692,7 +2692,8 @@ TEST(IrcProtocolWithServer, privmsg)
      */
     RECV(":alice!user@host PRIVMSG #test :\01VERSION\01");
     CHECK_SRV("--", "CTCP query to #test: VERSION",
-              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,log1");
+              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
+              "host_user@host,log1");
 
     /*
      * valid CTCP to ops of channel from self nick
@@ -2701,11 +2702,11 @@ TEST(IrcProtocolWithServer, privmsg)
     RECV(":alice!user@host PRIVMSG @#test :\01ACTION\01");
     CHECK_CHAN("--", "Action -> @#test: alice",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
-               "nick_alice,log1");
+               "nick_alice,host_user@host,log1");
     RECV(":alice!user@host PRIVMSG @#test :\01ACTION is testing\01");
     CHECK_CHAN("--", "Action -> @#test: alice is testing",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
-               "nick_alice,log1");
+               "nick_alice,host_user@host,log1");
 
     /* valid CTCP to user */
     RECV(":bob!user@host PRIVMSG alice :\01TEST\01");
@@ -2747,7 +2748,8 @@ TEST(IrcProtocolWithServer, privmsg)
      */
     RECV(":alice!user@host PRIVMSG bob :\01VERSION\01");
     CHECK_SRV("--", "CTCP query to bob: VERSION",
-              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,log1");
+              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
+              "host_user@host,log1");
 
     /* close xfer buffer */
     if (xfer_buffer)
