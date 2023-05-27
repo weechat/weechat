@@ -3054,7 +3054,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 if (nick_is_me)
                 {
                     irc_protocol_privmsg_display_ctcp_send (
-                        server, ptr_channel, pos_target, msg_args);
+                        server, ptr_channel, params[0], msg_args);
                 }
                 else
                 {
