@@ -1104,6 +1104,40 @@ irc_command_me_channel_display (struct t_irc_server *server,
 }
 
 /*
+ * Sends a ctcp action to a channel for a single message
+ * (internal function called by irc_command_me_channel).
+ */
+
+void
+irc_command_me_channel_message (struct t_irc_server *server,
+                                struct t_irc_channel *channel,
+                                const char *message)
+{
+    struct t_arraylist *list_messages;
+    int i, list_size;
+
+    list_messages = irc_server_sendf (
+        server,
+        IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_LIST,
+        NULL,
+        "PRIVMSG %s :\01ACTION %s\01",
+        channel->name,
+        message);
+    if (list_messages)
+    {
+        list_size = weechat_arraylist_size (list_messages);
+        for (i = 0; i < list_size; i++)
+        {
+            irc_command_me_channel_display (
+                server,
+                channel,
+                (const char *)weechat_arraylist_get (list_messages, i));
+        }
+        weechat_arraylist_free (list_messages);
+    }
+}
+
+/*
  * Sends a ctcp action to a channel.
  */
 
@@ -1112,36 +1146,21 @@ irc_command_me_channel (struct t_irc_server *server,
                         struct t_irc_channel *channel,
                         const char *arguments)
 {
-    struct t_arraylist *list_messages;
     char **list_arguments;
-    int i, j, list_size, count_arguments;
+    int i, count_arguments;
 
     list_arguments = weechat_string_split ((arguments) ? arguments : "",
                                            "\n", NULL, 0, 0, &count_arguments);
-    if (!list_arguments)
-        return;
-
-    for (i = 0; i < count_arguments; i++)
+    if (list_arguments)
     {
-        list_messages = irc_server_sendf (
-            server,
-            IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_LIST,
-            NULL,
-            "PRIVMSG %s :\01ACTION %s\01",
-            channel->name,
-            list_arguments[i]);
-        if (list_messages)
+        for (i = 0; i < count_arguments; i++)
         {
-            list_size = weechat_arraylist_size (list_messages);
-            for (j = 0; j < list_size; j++)
-            {
-                irc_command_me_channel_display (
-                    server,
-                    channel,
-                    (const char *)weechat_arraylist_get (list_messages, j));
-            }
-            weechat_arraylist_free (list_messages);
+            irc_command_me_channel_message (server, channel, list_arguments[i]);
         }
+    }
+    else
+    {
+        irc_command_me_channel_message (server, channel, "");
     }
 
     weechat_string_free_split (list_arguments);
