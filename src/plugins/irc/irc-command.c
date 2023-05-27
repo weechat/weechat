@@ -1120,9 +1120,10 @@ irc_command_me_channel_message (struct t_irc_server *server,
         server,
         IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_LIST,
         NULL,
-        "PRIVMSG %s :\01ACTION %s\01",
+        "PRIVMSG %s :\01ACTION%s%s\01",
         channel->name,
-        message);
+        (message && message[0]) ? " " : "",
+        (message && message[0]) ? message : "");
     if (list_messages)
     {
         list_size = weechat_arraylist_size (list_messages);
