@@ -304,6 +304,8 @@ gui_chat_string_pos (const char *string, int real_pos)
 /*
  * Returns info about next word: beginning, end, length.
  *
+ * Stops before the first newline character, even if no characters or only spaces and color codes precede it.
+ *
  * Note: the word_{start|end}_offset are in bytes, but word_length(_with_spaces)
  * are in number of chars on screen.
  */
@@ -312,8 +314,7 @@ void
 gui_chat_get_word_info (struct t_gui_window *window,
                         const char *data,
                         int *word_start_offset, int *word_end_offset,
-                        int *word_length_with_spaces, int *word_length,
-                        int *word_is_newlines)
+                        int *word_length_with_spaces, int *word_length)
 {
     const char *start_data, *next_char, *next_char2;
     int leading_spaces, char_size_screen;
@@ -322,7 +323,6 @@ gui_chat_get_word_info (struct t_gui_window *window,
     *word_end_offset = 0;
     *word_length_with_spaces = 0;
     *word_length = -1;
-    *word_is_newlines = 0;
 
     start_data = data;
 
@@ -336,11 +336,15 @@ gui_chat_get_word_info (struct t_gui_window *window,
             next_char2 = utf8_next_char (next_char);
             if (next_char2)
             {
-                if (next_char[0] != ' ' &&
-                    (leading_spaces || (next_char[0] == '\n') == *word_is_newlines))
+                if (next_char[0] == '\n')
                 {
-                    if (next_char[0] == '\n')
-                        *word_is_newlines = 1;
+                    *word_end_offset = next_char - start_data - 1;
+                    if (*word_length < 0)
+                        *word_length = 0;
+                    return;
+                }
+                else if (next_char[0] != ' ')
+                {
                     if (leading_spaces)
                         *word_start_offset = next_char - start_data;
                     leading_spaces = 0;
