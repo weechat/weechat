@@ -1385,7 +1385,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     int num_lines, x, y, pre_lines_displayed, lines_displayed, line_align;
     int read_marker_x, read_marker_y;
     int word_start_offset, word_end_offset;
-    int word_length_with_spaces, word_length, word_is_newlines;
+    int word_length_with_spaces, word_length;
     char *message_with_tags, *message_with_search;
     const char *ptr_data, *ptr_end_offset, *ptr_style, *next_char;
     struct t_gui_line *ptr_prev_line, *ptr_next_line;
@@ -1521,11 +1521,24 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     {
         while (ptr_data && ptr_data[0])
         {
+            if (ptr_data[0] == '\n')
+            {
+                gui_chat_display_new_line (window, num_lines, count,
+                                           &lines_displayed, simulate);
+                ptr_data++;
+                gui_chat_display_prefix_suffix(window, line,
+                                               ptr_data,
+                                               pre_lines_displayed, &lines_displayed,
+                                               simulate,
+                                               CONFIG_BOOLEAN(config_look_color_inactive_message),
+                                               0);
+            }
+
             gui_chat_get_word_info (window,
                                     ptr_data,
                                     &word_start_offset,
                                     &word_end_offset,
-                                    &word_length_with_spaces, &word_length, &word_is_newlines);
+                                    &word_length_with_spaces, &word_length);
 
             ptr_end_offset = ptr_data + word_end_offset;
 
@@ -1538,68 +1551,43 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
 
             if (word_length >= 0)
             {
-                if (word_is_newlines)
+                line_align = gui_line_get_align (window->buffer, line, 1,
+                                                 (lines_displayed == 0) ? 1 : 0);
+                if ((window->win_chat_cursor_x + word_length_with_spaces > gui_chat_get_real_width (window))
+                    && (word_length <= gui_chat_get_real_width (window) - line_align))
                 {
+                    /* spaces + word too long for current line but OK for next line */
+                    gui_chat_display_new_line (window, num_lines, count,
+                                               &lines_displayed, simulate);
+                    /* apply styles before jumping to start of word */
+                    if (!simulate && (word_start_offset > 0))
+                    {
+                        ptr_style = ptr_data;
+                        while (ptr_style < ptr_data + word_start_offset)
+                        {
+                            /* loop until no style/char available */
+                            ptr_style = gui_chat_string_next_char (window, line,
+                                                                   (unsigned char *)ptr_style,
+                                                                   1,
+                                                                   CONFIG_BOOLEAN(config_look_color_inactive_message),
+                                                                   0);
+                            if (!ptr_style)
+                                break;
+                            ptr_style = utf8_next_char (ptr_style);
+                        }
+                    }
                     /* jump to start of word */
                     ptr_data += word_start_offset;
-
-                    while (ptr_data && ptr_data[0] == '\n')
-                    {
-                        gui_chat_display_new_line (window, num_lines, count,
-                                                   &lines_displayed, simulate);
-                        ptr_data++;
-                        gui_chat_display_prefix_suffix(window, line,
-                                                       ptr_data,
-                                                       pre_lines_displayed, &lines_displayed,
-                                                       simulate,
-                                                       CONFIG_BOOLEAN(config_look_color_inactive_message),
-                                                       0);
-                    }
-
-                    if (!ptr_data[0])
-                        gui_chat_display_new_line (window, num_lines, count,
-                                                   &lines_displayed, simulate);
                 }
-                else
-                {
-                    line_align = gui_line_get_align (window->buffer, line, 1,
-                                                     (lines_displayed == 0) ? 1 : 0);
-                    if ((window->win_chat_cursor_x + word_length_with_spaces > gui_chat_get_real_width (window))
-                        && (word_length <= gui_chat_get_real_width (window) - line_align))
-                    {
-                        /* spaces + word too long for current line but OK for next line */
-                        gui_chat_display_new_line (window, num_lines, count,
-                                                   &lines_displayed, simulate);
-                        /* apply styles before jumping to start of word */
-                        if (!simulate && (word_start_offset > 0))
-                        {
-                            ptr_style = ptr_data;
-                            while (ptr_style < ptr_data + word_start_offset)
-                            {
-                                /* loop until no style/char available */
-                                ptr_style = gui_chat_string_next_char (window, line,
-                                                                       (unsigned char *)ptr_style,
-                                                                       1,
-                                                                       CONFIG_BOOLEAN(config_look_color_inactive_message),
-                                                                       0);
-                                if (!ptr_style)
-                                    break;
-                                ptr_style = utf8_next_char (ptr_style);
-                            }
-                        }
-                        /* jump to start of word */
-                        ptr_data += word_start_offset;
-                    }
 
-                    /* display word */
-                    gui_chat_display_word (window, line, ptr_data,
-                                           ptr_end_offset + 1,
-                                           0, num_lines, count,
-                                           pre_lines_displayed, &lines_displayed,
-                                           simulate,
-                                           CONFIG_BOOLEAN(config_look_color_inactive_message),
-                                           0);
-                }
+                /* display word */
+                gui_chat_display_word (window, line, ptr_data,
+                                       ptr_end_offset + 1,
+                                       0, num_lines, count,
+                                       pre_lines_displayed, &lines_displayed,
+                                       simulate,
+                                       CONFIG_BOOLEAN(config_look_color_inactive_message),
+                                       0);
 
                 if ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height))
                     ptr_data = NULL;
@@ -1610,7 +1598,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                     if (*(ptr_data - 1) == '\0')
                         ptr_data = NULL;
 
-                    if (window->win_chat_cursor_x == 0 && !word_is_newlines)
+                    if (window->win_chat_cursor_x == 0)
                     {
                         while (ptr_data && (ptr_data[0] == ' '))
                         {
