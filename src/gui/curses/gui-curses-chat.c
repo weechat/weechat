@@ -1544,7 +1544,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
 
             /* if message ends with spaces, display them */
             if ((word_length <= 0) && (word_length_with_spaces > 0)
-                && !ptr_data[word_end_offset + 1])
+                && !ptr_data[word_end_offset])
             {
                 word_length = word_length_with_spaces;
             }
@@ -1582,7 +1582,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
 
                 /* display word */
                 gui_chat_display_word (window, line, ptr_data,
-                                       ptr_end_offset + 1,
+                                       ptr_end_offset,
                                        0, num_lines, count,
                                        pre_lines_displayed, &lines_displayed,
                                        simulate,
@@ -1594,7 +1594,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 else
                 {
                     /* move pointer after end of word */
-                    ptr_data = ptr_end_offset + 1;
+                    ptr_data = ptr_end_offset;
                     if (*(ptr_data - 1) == '\0')
                         ptr_data = NULL;
 
