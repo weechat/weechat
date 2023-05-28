@@ -339,31 +339,31 @@ TEST(GuiChat, GetWordInfo)
 
     WEE_GET_WORD_INFO (0, 0, 0, -1, NULL);
     WEE_GET_WORD_INFO (0, 0, 0, -1, "");
-    WEE_GET_WORD_INFO (0, 0, 1, 1, "a");
-    WEE_GET_WORD_INFO (0, 2, 3, 3, "abc");
-    WEE_GET_WORD_INFO (2, 4, 5, 3, "  abc");
-    WEE_GET_WORD_INFO (2, 4, 5, 3, "  abc  ");
-    WEE_GET_WORD_INFO (0, 4, 5, 5, "first second");
-    WEE_GET_WORD_INFO (1, 5, 6, 5, " first second");
+    WEE_GET_WORD_INFO (0, 1, 1, 1, "a");
+    WEE_GET_WORD_INFO (0, 3, 3, 3, "abc");
+    WEE_GET_WORD_INFO (2, 5, 5, 3, "  abc");
+    WEE_GET_WORD_INFO (2, 5, 5, 3, "  abc  ");
+    WEE_GET_WORD_INFO (0, 5, 5, 5, "first second");
+    WEE_GET_WORD_INFO (1, 6, 6, 5, " first second");
 
-    WEE_GET_WORD_INFO (0, -1, 0, 0, "\nabc");
-    WEE_GET_WORD_INFO (0, 0, 1, 0, " \nabc");
-    WEE_GET_WORD_INFO (0, 1, 2, 0, "  \nabc");
-    WEE_GET_WORD_INFO (0, 4, 5, 5, "first\nsecond");
+    WEE_GET_WORD_INFO (0, 0, 0, 0, "\nabc");
+    WEE_GET_WORD_INFO (0, 1, 1, 0, " \nabc");
+    WEE_GET_WORD_INFO (0, 2, 2, 0, "  \nabc");
+    WEE_GET_WORD_INFO (0, 5, 5, 5, "first\nsecond");
 
     snprintf (string, sizeof (string), "%c%c01abc", GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR);
-    WEE_GET_WORD_INFO (4, 6, 3, 3, string);
+    WEE_GET_WORD_INFO (4, 7, 3, 3, string);
     snprintf (string, sizeof (string), "abc%c%c01", GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR);
-    WEE_GET_WORD_INFO (0, 6, 3, 3, string);
+    WEE_GET_WORD_INFO (0, 7, 3, 3, string);
     snprintf (string, sizeof (string), " %c%c01 abc", GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR);
-    WEE_GET_WORD_INFO (6, 8, 5, 3, string);
+    WEE_GET_WORD_INFO (6, 9, 5, 3, string);
 
     snprintf (string, sizeof (string), "\n%c%c01abc", GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR);
-    WEE_GET_WORD_INFO (0, -1, 0, 0, string);
+    WEE_GET_WORD_INFO (0, 0, 0, 0, string);
     snprintf (string, sizeof (string), "%c%c01\nabc", GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR);
-    WEE_GET_WORD_INFO (0, 3, 0, 0, string);
+    WEE_GET_WORD_INFO (0, 4, 0, 0, string);
     snprintf (string, sizeof (string), " %c%c01 \nabc", GUI_COLOR_COLOR_CHAR, GUI_COLOR_FG_CHAR);
-    WEE_GET_WORD_INFO (0, 5, 2, 0, string);
+    WEE_GET_WORD_INFO (0, 6, 2, 0, string);
 }
 
 /*

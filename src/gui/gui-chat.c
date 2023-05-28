@@ -338,7 +338,7 @@ gui_chat_get_word_info (struct t_gui_window *window,
             {
                 if (next_char[0] == '\n')
                 {
-                    *word_end_offset = next_char - start_data - 1;
+                    *word_end_offset = next_char - start_data;
                     if (*word_length < 0)
                         *word_length = 0;
                     return;
@@ -348,7 +348,7 @@ gui_chat_get_word_info (struct t_gui_window *window,
                     if (leading_spaces)
                         *word_start_offset = next_char - start_data;
                     leading_spaces = 0;
-                    *word_end_offset = next_char2 - start_data - 1;
+                    *word_end_offset = next_char2 - start_data;
                     char_size_screen = utf8_char_size_screen (next_char);
                     if (char_size_screen > 0)
                         (*word_length_with_spaces) += char_size_screen;
@@ -362,11 +362,11 @@ gui_chat_get_word_info (struct t_gui_window *window,
                     if (leading_spaces)
                     {
                         (*word_length_with_spaces)++;
-                        *word_end_offset = next_char2 - start_data - 1;
+                        *word_end_offset = next_char2 - start_data;
                     }
                     else
                     {
-                        *word_end_offset = next_char - start_data - 1;
+                        *word_end_offset = next_char - start_data;
                         return;
                     }
                 }
@@ -375,7 +375,7 @@ gui_chat_get_word_info (struct t_gui_window *window,
         }
         else
         {
-            *word_end_offset = data + strlen (data) - start_data - 1;
+            *word_end_offset = data + strlen (data) - start_data;
             return;
         }
     }
