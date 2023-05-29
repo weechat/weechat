@@ -4017,45 +4017,44 @@ privaten Buffer aus:
 /close
 ----
 
-// TRANSLATION MISSING
 [[irc_smart_filter]]
-=== Smart filter
+=== Intelligenter Filter
 
-A smart filter is available to filter some messages when someone did not write
-anything in the channel during a configurable delay:
+Es steht ein intelligenter Filter zur Verfügung, um einige Nachrichten zu filtern, falls eine
+Person in einem Kanal, eine vorgegebene Zeit, nicht geschrieben hat:
 
-- join: user joins the channel
-- part: user leaves the channel
-- quit: user quits the server
-- account: user changes its account
-- chghost: user changes name or host
-- mode: mode changes on channel
-- nick: user changes its nick
-- setname: user changes its real name
+- join: Person betritt den Kanal
+- part: Person verlässt den Kanal
+- quit: Person meldet sich vom Server ab
+- account: Person ändert seinen Account
+- chghost: Persin ändert Name oder Host
+- mode: Modus des Kanals wurde geändert
+- nick: Person hat seinen Nick geändert
+- setname: Person hat seinen Realname geändert
 
-Smart filter is enabled by default, but you must add a filter to hide lines on
-buffers, for example:
+Der intelligente Filterung ist standardmäßig aktiviert, es muss jedoch ein Filter hinzugefügt werden,
+damit die Zeilen im Buffer unterdrückt werden. Zum Beispiel:
 
 ----
 /filter add irc_smart * irc_smart_filter *
 ----
 
-It is possible to create filter for one channel only or channels beginning with
-same name (see `/help filter`):
+Dabei ist es möglich, einen Filter für nur einen Kanal oder für mehrere Kanäle zu erstellen, die mit
+dem selben Namen beginnen (siehe `/help filter`):
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
 ----
 
-You can setup a longer delay (in minutes):
+Um eine längere Verzögerung (in Minuten) einzurichten:
 
 ----
 /set irc.look.smart_filter_delay 10
 ----
 
-If someone did not write anything during last 10 minutes, its messages like
-join/part/quit will be hidden by default on channel, and you can use key
-kbd:[Alt+=] (toggle filters) to see them.
+Falls jemand in den letzten 10 Minuten nichts geschrieben hat, werden seine join/part/quit Nachrichten
+standardmäßig in dem Kanal ausgeblendet. Um diese trotzdem angezeigt zu bekommen,
+muss man die Taste  kbd:[Alt+=] (Filter umschalten) drücken.
 
 [[irc_ctcp_replies]]
 === CTCP Antworten

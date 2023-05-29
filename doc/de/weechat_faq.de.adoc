@@ -876,11 +876,10 @@ indem der Filter deaktiviert wird.
 Die voreingestellte Tastenkombination zum Aktivieren bzw. Deaktivieren
 aller Filter ist kbd:[Alt+-].
 
-// TRANSLATION MISSING
 [[filter_irc_join_part_quit]]
-=== How can I filter join/part/quit and other annoying messages on IRC channels?
+===  Wie kann ich join/part/quit und andere unerwünschte Nachrichten in IRC-Kanälen filtern?
 
-See link:weechat_user.de.html#irc_smart_filter[User's guide / IRC smart filter ^↗^,window=_blank].
+siehe link:weechat_user.de.html#irc_smart_filter[User's guide / IRC smart filter ^↗^,window=_blank].
 
 [[filter_irc_join_channel_messages]]
 === Wie kann ich die Server-Nachrichten filtern, wenn ich einen IRC Kanal betrete?
