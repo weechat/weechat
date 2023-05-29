@@ -2744,6 +2744,15 @@ TEST(IrcProtocolWithServer, privmsg)
                  "irc_privmsg,self_msg,notify_none,no_highlight,"
                  "prefix_nick_white,nick_alice,host_user@host,log1");
 
+        /*
+         * message from self nick in private, with password hidden (nickserv)
+         * (case of bouncer of if echo-message capability is enabled)
+         */
+        RECV(":alice!user@host PRIVMSG nickserv :identify secret");
+        CHECK_PV("nickserv", "alice", "identify ******",
+                 "irc_privmsg,self_msg,notify_none,no_highlight,"
+                 "prefix_nick_white,nick_alice,host_user@host,log1");
+
         /* broken CTCP to channel */
         RECV(":bob!user@host PRIVMSG #test :\01");
         CHECK_CHAN("--", "Unknown CTCP requested by bob: ",

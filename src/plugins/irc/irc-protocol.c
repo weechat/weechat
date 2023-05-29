@@ -3014,7 +3014,7 @@ irc_protocol_privmsg_display_ctcp_send (struct t_irc_server *server,
 
 IRC_PROTOCOL_CALLBACK(privmsg)
 {
-    char *msg_args, str_tags[1024], *str_color, *color;
+    char *msg_args, *msg_args2, str_tags[1024], *str_color, *color;
     const char *pos_target, *remote_nick, *pv_tags;
     int status_msg, is_channel, nick_is_me;
     struct t_irc_channel *ptr_channel;
@@ -3249,6 +3249,8 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         }
         if (str_color)
             free (str_color);
+        msg_args2 = (nick_is_me) ?
+            irc_message_hide_password (server, remote_nick, msg_args) : NULL;
         weechat_printf_date_tags (
             ptr_channel->buffer,
             date,
@@ -3258,7 +3260,9 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 server, NULL, nick,
                 (nick_is_me) ?
                 IRC_COLOR_CHAT_NICK_SELF : irc_nick_color_for_pv (ptr_channel, nick)),
-            msg_args);
+            (msg_args2) ? msg_args2 : msg_args);
+        if (msg_args2)
+            free (msg_args2);
 
         if (ptr_channel->has_quit_server)
             ptr_channel->has_quit_server = 0;
