@@ -714,6 +714,20 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
+    /* action on channel (with raw code: "\01ACTION") */
+    server_input_data (buffer_chan, "\01ACTION is testing\01");
+    CHECK_SENT("PRIVMSG #test :\01ACTION is testing\01");
+    CHECK_CHAN(" *", "alice is testing",
+               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
+
+    /* action on channel (with raw code: "\01ACTION"), no message */
+    server_input_data (buffer_chan, "\01ACTION\01");
+    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    CHECK_CHAN(" *", "alice",
+               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
+
     /* action on channel (with /action *) */
     server_input_data (buffer_chan, "/action * action chan 2");
     CHECK_SENT("PRIVMSG #test :\01ACTION action chan 2\01");
@@ -922,6 +936,16 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
 
     /* action on channel (with /me), no message */
     server_input_data (buffer_chan, "/me");
+    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    CHECK_NO_MSG;
+
+    /* action on channel (with raw code: "\01ACTION") */
+    server_input_data (buffer_chan, "\01ACTION is testing\01");
+    CHECK_SENT("PRIVMSG #test :\01ACTION is testing\01");
+    CHECK_NO_MSG;
+
+    /* action on channel (with raw code: "\01ACTION"), no message */
+    server_input_data (buffer_chan, "\01ACTION\01");
     CHECK_SENT("PRIVMSG #test :\01ACTION\01");
     CHECK_NO_MSG;
 
