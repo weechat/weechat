@@ -40,15 +40,14 @@
 /*
  * Displays user message.
  *
- * If action != 0, then message is displayed as an action (like command /me).
- * If action == 0, but message is detected as an action (beginning with
- * "\01ACTION "), then action is forced.
+ * If ctcp_type == "action", then message is displayed as an action
+ * (like command /me), for example:
  *
- * If target is a channel or a nick, the message is displayed like this
- * (message, action):
+ *    * | nick is testing
+ *
+ * If target is a channel or a nick, the message is displayed like this:
  *
  *   nick | test
- *      * | nick is testing
  *
  * If target is a channel with STATUSMSG (for example "@#test"), the message
  * is displayed with the target, like this (message, action, notice):
@@ -56,6 +55,9 @@
  *   Msg(nick) -> @#test: test message for ops
  *   Action -> @#test: nick is testing
  *   Notice(nick) -> @#test: test notice for ops
+ *
+ * If decode_colors is 1, colors are stripped if the option
+ * irc.network.colors_send is off.
  */
 
 void
@@ -71,7 +73,7 @@ irc_input_user_message_display (struct t_irc_server *server,
     struct t_gui_buffer *ptr_buffer;
     struct t_irc_nick *ptr_nick;
     const char *ptr_target;
-    char *pos, *text2, *text3, *text_decoded, str_tags[256], *str_color;
+    char *text2, *text_decoded, str_tags[256], *str_color;
     const char *ptr_text;
     int is_notice, is_action, is_channel, display_target;
 
@@ -115,34 +117,11 @@ irc_input_user_message_display (struct t_irc_server *server,
     if (ptr_buffer == server->buffer)
         display_target = 1;
 
-    /* if message is an action, force "action" to 1 and extract message */
-    if (text)
-    {
-        if (strncmp (text, "\01ACTION ", 8) == 0)
-        {
-            is_action = 1;
-            pos = strrchr (text + 8, '\01');
-            if (pos)
-                text2 = weechat_strndup (text + 8, pos - text - 8);
-            else
-                text2 = strdup (text + 8);
-        }
-        else
-        {
-            text2 = strdup (text);
-        }
-        text3 = irc_message_hide_password (server, target, (text2) ? text2 : text);
-        text_decoded = (decode_colors) ?
-            irc_color_decode (
-                (text3) ? text3 : ((text2) ? text2 : text),
-                weechat_config_boolean (irc_config_network_colors_send)) : NULL;
-    }
-    else
-    {
-        text2 = NULL;
-        text3 = NULL;
-        text_decoded = NULL;
-    }
+    text2 = irc_message_hide_password (server, target, text);
+    text_decoded = (decode_colors) ?
+        irc_color_decode (
+            (text2) ? text2 : text,
+            weechat_config_boolean (irc_config_network_colors_send)) : NULL;
 
     ptr_nick = NULL;
     if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL))
@@ -175,8 +154,7 @@ irc_input_user_message_display (struct t_irc_server *server,
         }
     }
 
-    ptr_text = (text_decoded) ?
-        text_decoded : ((text3) ? text3 : ((text2) ? text2 : text));
+    ptr_text = (text_decoded) ? text_decoded : ((text2) ? text2 : text);
 
     if (is_action)
     {
@@ -308,8 +286,6 @@ irc_input_user_message_display (struct t_irc_server *server,
 
     if (text2)
         free (text2);
-    if (text3)
-        free (text3);
     if (text_decoded)
         free (text_decoded);
 }
