@@ -894,6 +894,47 @@ irc_message_replace_vars (struct t_irc_server *server,
 }
 
 /*
+ * Hides password in text, if the target is a nick configured in option
+ * irc.look.nicks_hide_password.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_message_hide_password (struct t_irc_server *server, const char *target,
+                           const char *text)
+{
+    int i, hide_password;
+
+    if (!text)
+        return NULL;
+
+    /* check if the password must be hidden for this nick */
+    hide_password = 0;
+    if (irc_config_nicks_hide_password)
+    {
+        for (i = 0; i < irc_config_num_nicks_hide_password; i++)
+        {
+            if (weechat_strcasecmp (irc_config_nicks_hide_password[i],
+                                    target) == 0)
+            {
+                hide_password = 1;
+                break;
+            }
+        }
+    }
+
+    /* hide password in message displayed using modifier */
+    if (hide_password)
+    {
+        return weechat_hook_modifier_exec ("irc_message_auth", server->name,
+                                           text);
+    }
+
+    return strdup (text);
+}
+
+/*
  * Adds a message + arguments in hashtable.
  */
 

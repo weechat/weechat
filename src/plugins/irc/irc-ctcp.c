@@ -33,6 +33,7 @@
 #include "irc-channel.h"
 #include "irc-color.h"
 #include "irc-config.h"
+#include "irc-input.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
 #include "irc-protocol.h"
@@ -1288,104 +1289,6 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date,
     }
 
     free (dup_arguments);
-}
-
-/*
- * Displays an outgoing CTCP.
- */
-
-void
-irc_ctcp_display_send (struct t_irc_server *server,
-                       struct t_irc_channel *channel,
-                       const char *target, const char *address,
-                       const char *type, const char *args)
-{
-    struct t_irc_nick *ptr_nick;
-    int is_channel;
-
-    if (weechat_strcasecmp (type, "action") == 0)
-    {
-        if (!channel || irc_server_prefix_char_statusmsg (server, target[0]))
-        {
-            /* no buffer or STATUSMSG action */
-            is_channel = ((irc_server_prefix_char_statusmsg (server, target[0])
-                           && irc_channel_is_channel (server, target + 1))
-                          || irc_channel_is_channel (server, target));
-            ptr_nick = irc_nick_search (server, channel, server->nick);
-            weechat_printf_date_tags (
-                (channel) ? channel->buffer : irc_msgbuffer_get_target_buffer (
-                    server, target, NULL, "ctcp", NULL),
-                0,
-                irc_protocol_tags (
-                    server,
-                    "privmsg",
-                    NULL,
-                    "irc_action,self_msg,notify_none,no_highlight",
-                    server->nick,
-                    address),
-                "%s%s -> %s%s%s: %s%s%s%s%s%s",
-                weechat_prefix ("network"),
-                /* TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me */
-                _("Action"),
-                (is_channel) ?
-                IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_msg (server, 0, NULL, target),
-                target,
-                IRC_COLOR_RESET,
-                irc_nick_mode_for_display (server, ptr_nick, 0),
-                IRC_COLOR_CHAT_NICK_SELF,
-                server->nick,
-                (args && args[0]) ? IRC_COLOR_RESET : "",
-                (args && args[0]) ? " " : "",
-                (args && args[0]) ? args : "");
-        }
-        else
-        {
-            /* standard action */
-            weechat_printf_date_tags (
-                (channel) ? channel->buffer : irc_msgbuffer_get_target_buffer (
-                    server, target, NULL, "ctcp", NULL),
-                0,
-                irc_protocol_tags (
-                    server,
-                    "privmsg",
-                    NULL,
-                    "irc_action,self_msg,notify_none,no_highlight",
-                    server->nick,
-                    address),
-                "%s%s%s%s%s%s",
-                weechat_prefix ("action"),
-                IRC_COLOR_CHAT_NICK_SELF,
-                server->nick,
-                (args && args[0]) ? IRC_COLOR_RESET : "",
-                (args && args[0]) ? " " : "",
-                (args && args[0]) ? args : "");
-        }
-    }
-    else
-    {
-        weechat_printf_date_tags (
-            irc_msgbuffer_get_target_buffer (
-                server, target, NULL, "ctcp", NULL),
-            0,
-            irc_protocol_tags (
-                server,
-                "privmsg",
-                NULL,
-                "irc_ctcp,self_msg,notify_none,no_highlight",
-                NULL,
-                address),
-            _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
-            weechat_prefix ("network"),
-            (channel) ?
-            IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_msg (server, 0, NULL, target),
-            target,
-            IRC_COLOR_RESET,
-            IRC_COLOR_CHAT_CHANNEL,
-            type,
-            IRC_COLOR_RESET,
-            (args && args[0]) ? " " : "",
-            (args && args[0]) ? args : "");
-    }
 }
 
 /*

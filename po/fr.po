@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-27 20:17+0200\n"
-"PO-Revision-Date: 2023-05-27 20:18+0200\n"
+"POT-Creation-Date: 2023-05-29 09:34+0200\n"
+"PO-Revision-Date: 2023-05-29 09:40+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -8315,6 +8315,13 @@ msgstr ""
 
 #, c-format
 msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+"%s%s : la commande \"%s\" peut seulement être exécutée dans un tampon canal "
+"ou privé"
+
+#, c-format
+msgid ""
 "%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
 "(server, channel or private)"
 msgstr ""
@@ -8388,13 +8395,6 @@ msgstr ""
 "%s%s : si vous voulez ajouter un serveur standard, utilisez la commande \"/"
 "server add\" (voir /help server); si vous voulez vraiment ajouter un serveur "
 "temporaire (NON SAUVÉ), activez l'option irc.look.temporary_servers"
-
-#, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
-msgstr ""
-"%s%s : la commande \"%s\" peut seulement être exécutée dans un tampon canal "
-"ou privé"
 
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -8658,6 +8658,21 @@ msgstr "%s%s : vous n'êtes pas sur le canal \"%s\""
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
 msgstr "Notice"
+
+msgid "send a CTCP action to a nick or channel"
+msgstr "envoyer une action CTCP à un pseudo ou canal"
+
+msgid "[-server <server>] <target>[,<target>...] <text>"
+msgstr "[-server <serveur>] <cible>[,<cible>...] <texte>"
+
+msgid ""
+"server: send to this server (internal name)\n"
+"target: nick or channel (may be mask, '*' = current channel)\n"
+"  text: text to send"
+msgstr ""
+"serveur : envoyer à ce serveur (nom interne)\n"
+"  cible : pseudo ou canal (peut-être un masque, '*' = canal courant)\n"
+"  texte : texte à envoyer"
 
 msgid "find information about the administrator of the server"
 msgstr "trouver les informations sur l'administrateur du serveur"
@@ -9602,18 +9617,6 @@ msgstr "obtenir le message du jour"
 
 msgid "send message to a nick or channel"
 msgstr "envoyer un message à un pseudo ou canal"
-
-msgid "[-server <server>] <target>[,<target>...] <text>"
-msgstr "[-server <serveur>] <cible>[,<cible>...] <texte>"
-
-msgid ""
-"server: send to this server (internal name)\n"
-"target: nick or channel (may be mask, '*' = current channel)\n"
-"  text: text to send"
-msgstr ""
-"serveur : envoyer à ce serveur (nom interne)\n"
-"  cible : pseudo ou canal (peut-être un masque, '*' = canal courant)\n"
-"  texte : texte à envoyer"
 
 msgid "list nicks on channels"
 msgstr "lister les pseudos sur des canaux"
@@ -11576,16 +11579,13 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s%s : type de DCC CHAT inconnu reçu de %s%s%s : \"%s\""
 
 #. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action
 msgid "Action"
 msgstr "Action"
 
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%sCTCP inconnu demandé par %s%s%s : %s%s%s%s%s"
-
-#, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%sDemande CTCP vers %s%s%s : %s%s%s%s%s"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 si la chaîne est un nom de canal IRC valide pour le serveur"
@@ -11788,6 +11788,10 @@ msgstr "serveur irc"
 
 msgid "irc batch"
 msgstr "batch irc"
+
+#, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%sDemande CTCP vers %s%s%s : %s%s%s%s%s"
 
 #, c-format
 msgid "%s%s: you are not connected to server"

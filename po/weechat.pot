@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-27 20:17+0200\n"
+"POT-Creation-Date: 2023-05-29 09:34+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5711,6 +5711,11 @@ msgstr ""
 
 #, c-format
 msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+
+#, c-format
+msgid ""
 "%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
 "(server, channel or private)"
 msgstr ""
@@ -5772,11 +5777,6 @@ msgid ""
 "%s%s: if you want to add a standard server, use the command \"/server "
 "add\" (see /help server); if you really want to add a temporary server (NOT "
 "SAVED), turn on the option irc.look.temporary_servers"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
 msgstr ""
 
 #, c-format
@@ -6025,6 +6025,18 @@ msgstr ""
 
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
+msgstr ""
+
+msgid "send a CTCP action to a nick or channel"
+msgstr ""
+
+msgid "[-server <server>] <target>[,<target>...] <text>"
+msgstr ""
+
+msgid ""
+"server: send to this server (internal name)\n"
+"target: nick or channel (may be mask, '*' = current channel)\n"
+"  text: text to send"
 msgstr ""
 
 msgid "find information about the administrator of the server"
@@ -6619,15 +6631,6 @@ msgid "get the \"Message Of The Day\""
 msgstr ""
 
 msgid "send message to a nick or channel"
-msgstr ""
-
-msgid "[-server <server>] <target>[,<target>...] <text>"
-msgstr ""
-
-msgid ""
-"server: send to this server (internal name)\n"
-"target: nick or channel (may be mask, '*' = current channel)\n"
-"  text: text to send"
 msgstr ""
 
 msgid "list nicks on channels"
@@ -8036,15 +8039,12 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr ""
 
 #. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action
 msgid "Action"
 msgstr ""
 
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
-msgstr ""
-
-#, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
 msgstr ""
 
 msgid "1 if string is a valid IRC channel name for server"
@@ -8226,6 +8226,10 @@ msgid "irc server"
 msgstr ""
 
 msgid "irc batch"
+msgstr ""
+
+#, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
 msgstr ""
 
 #, c-format

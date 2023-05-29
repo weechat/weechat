@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-27 20:17+0200\n"
+"POT-Creation-Date: 2023-05-29 09:34+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6945,6 +6945,11 @@ msgid ""
 "server"
 msgstr ""
 
+#, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+
 #, fuzzy, c-format
 msgid ""
 "%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
@@ -7012,11 +7017,6 @@ msgid ""
 "%s%s: if you want to add a standard server, use the command \"/server "
 "add\" (see /help server); if you really want to add a temporary server (NOT "
 "SAVED), turn on the option irc.look.temporary_servers"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
 msgstr ""
 
 #, c-format
@@ -7266,6 +7266,20 @@ msgstr ""
 
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
+msgstr ""
+
+#, fuzzy
+#| msgid "send a CTCP action to the current channel"
+msgid "send a CTCP action to a nick or channel"
+msgstr "envia um CTCP action para o canal atual"
+
+msgid "[-server <server>] <target>[,<target>...] <text>"
+msgstr ""
+
+msgid ""
+"server: send to this server (internal name)\n"
+"target: nick or channel (may be mask, '*' = current channel)\n"
+"  text: text to send"
 msgstr ""
 
 msgid "find information about the administrator of the server"
@@ -7904,15 +7918,6 @@ msgid "get the \"Message Of The Day\""
 msgstr ""
 
 msgid "send message to a nick or channel"
-msgstr ""
-
-msgid "[-server <server>] <target>[,<target>...] <text>"
-msgstr ""
-
-msgid ""
-"server: send to this server (internal name)\n"
-"target: nick or channel (may be mask, '*' = current channel)\n"
-"  text: text to send"
 msgstr ""
 
 msgid "list nicks on channels"
@@ -9498,6 +9503,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr ""
 
 #. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action
 #, fuzzy
 #| msgid "Option"
 msgid "Action"
@@ -9506,10 +9512,6 @@ msgstr "Opção"
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%sRequisição CTCP desconhecida por %s%s%s: %s%s%s%s%s"
-
-#, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr ""
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 se string é um nome de canal IRC válido para o servidor"
@@ -9712,6 +9714,10 @@ msgstr "servidor irc"
 #| msgid "irc channel"
 msgid "irc batch"
 msgstr "canal irc"
+
+#, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr ""
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -13967,3 +13973,8 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
+
+#, fuzzy
+#~| msgid "send a private message to a nick"
+#~ msgid "send action message to a nick or channel"
+#~ msgstr "enviar mensagem privada a um nick"

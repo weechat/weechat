@@ -28,9 +28,11 @@
 #include "irc-buffer.h"
 #include "irc-server.h"
 #include "irc-channel.h"
+#include "irc-message.h"
 #include "irc-nick.h"
 #include "irc-color.h"
 #include "irc-config.h"
+#include "irc-msgbuffer.h"
 #include "irc-protocol.h"
 #include "irc-raw.h"
 
@@ -42,170 +44,272 @@
  * If action == 0, but message is detected as an action (beginning with
  * "\01ACTION "), then action is forced.
  *
- * If notice == 1, the message is a notice, otherwise it's a privmsg.
- *
- * If target is NULL, the message is displayed like this (standard message
- * then action):
+ * If target is a channel or a nick, the message is displayed like this
+ * (message, action):
  *
  *   nick | test
  *      * | nick is testing
  *
- * If target is not NULL, the message is displayed with the target, like this
- * (privmsg then notice):
+ * If target is a channel with STATUSMSG (for example "@#test"), the message
+ * is displayed with the target, like this (message, action, notice):
  *
  *   Msg(nick) -> @#test: test message for ops
+ *   Action -> @#test: nick is testing
  *   Notice(nick) -> @#test: test notice for ops
  */
 
 void
-irc_input_user_message_display (struct t_gui_buffer *buffer,
-                                int action, int notice,
-                                const char *target, int target_is_channel,
-                                const char *text)
+irc_input_user_message_display (struct t_irc_server *server,
+                                const char *target,
+                                const char *address,
+                                const char *command,
+                                const char *ctcp_type,
+                                const char *text,
+                                int decode_colors)
 {
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
     struct t_irc_nick *ptr_nick;
-    char *pos, *text2, *text_decoded, str_tags[256], *str_color;
+    const char *ptr_target;
+    char *pos, *text2, *text3, *text_decoded, str_tags[256], *str_color;
     const char *ptr_text;
+    int is_notice, is_action, is_channel, display_target;
 
-    if (!buffer || !text)
+    if (!server || !target)
         return;
 
-    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
+    is_notice = (weechat_strcasecmp (command, "notice") == 0);
+    is_action = (ctcp_type && (weechat_strcasecmp (ctcp_type, "action") == 0));
 
-    /*
-     * if capability "echo-message" is enabled, we don't display anything,
-     * the message will be displayed when server sends it back to us
-     */
-    if (weechat_hashtable_has_key (ptr_server->cap_list, "echo-message"))
-        return;
-
-    /* if message is an action, force "action" to 1 and extract message */
-    if (strncmp (text, "\01ACTION ", 8) == 0)
+    is_channel = 0;
+    ptr_channel = NULL;
+    display_target = is_notice || (ctcp_type && !is_action);
+    ptr_target = target;
+    if (irc_server_prefix_char_statusmsg (server, target[0])
+        && irc_channel_is_channel (server, target + 1))
     {
-        action = 1;
-        pos = strrchr (text + 8, '\01');
-        if (pos)
-            text2 = weechat_strndup (text + 8, pos - text - 8);
-        else
-            text2 = strdup (text + 8);
+        ptr_channel = irc_channel_search (server, target + 1);
+        is_channel = 1;
+        display_target = 1;
+        ptr_target = target + 1;
     }
     else
-        text2 = strdup (text);
-
-    text_decoded = irc_color_decode (
-        (text2) ? text2 : text,
-        weechat_config_boolean (irc_config_network_colors_send));
+    {
+        ptr_channel = irc_channel_search (server, target);
+        if (irc_channel_is_channel (server, target))
+            is_channel = 1;
+    }
 
     if (ptr_channel)
     {
-        ptr_nick = NULL;
-        if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-        {
-            ptr_nick = irc_nick_search (ptr_server, ptr_channel,
-                                        ptr_server->nick);
-        }
+        ptr_buffer = ptr_channel->buffer;
+    }
+    else
+    {
+        ptr_buffer = irc_msgbuffer_get_target_buffer (
+            server, ptr_target, command, NULL, NULL);
+        if (!ptr_buffer)
+            ptr_buffer = server->buffer;
+    }
 
-        if (action)
+    if (ptr_buffer == server->buffer)
+        display_target = 1;
+
+    /* if message is an action, force "action" to 1 and extract message */
+    if (text)
+    {
+        if (strncmp (text, "\01ACTION ", 8) == 0)
+        {
+            is_action = 1;
+            pos = strrchr (text + 8, '\01');
+            if (pos)
+                text2 = weechat_strndup (text + 8, pos - text - 8);
+            else
+                text2 = strdup (text + 8);
+        }
+        else
+        {
+            text2 = strdup (text);
+        }
+        text3 = irc_message_hide_password (server, target, (text2) ? text2 : text);
+        text_decoded = (decode_colors) ?
+            irc_color_decode (
+                (text3) ? text3 : ((text2) ? text2 : text),
+                weechat_config_boolean (irc_config_network_colors_send)) : NULL;
+    }
+    else
+    {
+        text2 = NULL;
+        text3 = NULL;
+        text_decoded = NULL;
+    }
+
+    ptr_nick = NULL;
+    if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL))
+        ptr_nick = irc_nick_search (server, ptr_channel, server->nick);
+
+    if (is_action)
+    {
+        snprintf (str_tags, sizeof (str_tags),
+                  "irc_action,self_msg,notify_none,no_highlight");
+    }
+    else
+    {
+        if (display_target)
         {
             snprintf (str_tags, sizeof (str_tags),
-                      "irc_action,self_msg,notify_none,no_highlight");
+                      "%sself_msg,notify_none,no_highlight",
+                      (ctcp_type) ? "irc_ctcp," : "");
         }
         else
         {
             str_color = irc_color_for_tags (
                 weechat_config_color (
                     weechat_config_get ("weechat.color.chat_nick_self")));
-            if (target)
-            {
-                snprintf (str_tags, sizeof (str_tags),
-                          "self_msg,notify_none,no_highlight");
-            }
-            else
-            {
-                snprintf (str_tags, sizeof (str_tags),
-                          "self_msg,notify_none,no_highlight,prefix_nick_%s",
-                          (str_color) ? str_color : "default");
-            }
+            snprintf (str_tags, sizeof (str_tags),
+                      "%sself_msg,notify_none,no_highlight,prefix_nick_%s",
+                      (ctcp_type) ? "irc_ctcp," : "",
+                      (str_color) ? str_color : "default");
             if (str_color)
                 free (str_color);
         }
-        ptr_text = (text_decoded) ? text_decoded : ((text2) ? text2 : text);
-        if (action)
+    }
+
+    ptr_text = (text_decoded) ?
+        text_decoded : ((text3) ? text3 : ((text2) ? text2 : text));
+
+    if (is_action)
+    {
+        if (display_target)
         {
             weechat_printf_date_tags (
-                buffer,
+                ptr_buffer,
                 0,
                 irc_protocol_tags (
-                    ptr_server,
-                    (notice) ? "notice" : "privmsg",
+                    server,
+                    command,
                     NULL,
                     str_tags,
-                    (ptr_nick) ? ptr_nick->name : ptr_server->nick,
-                    NULL),
-                "%s%s%s%s%s %s",
-                weechat_prefix ("action"),
-                irc_nick_mode_for_display (ptr_server, ptr_nick, 0),
-                IRC_COLOR_CHAT_NICK_SELF,
-                ptr_server->nick,
-                IRC_COLOR_RESET,
-                ptr_text);
-        }
-        else if (target)
-        {
-            weechat_printf_date_tags (
-                buffer,
-                0,
-                irc_protocol_tags (
-                    ptr_server,
-                    (notice) ? "notice" : "privmsg",
-                    NULL,
-                    str_tags,
-                    (ptr_nick) ? ptr_nick->name : ptr_server->nick,
-                    NULL),
-                "%s%s%s%s%s(%s%s%s%s)%s -> %s%s%s: %s",
+                    (ptr_nick) ? ptr_nick->name : server->nick,
+                    address),
+                "%s%s -> %s%s%s: %s%s%s%s%s%s",
                 weechat_prefix ("network"),
-                (notice) ? IRC_COLOR_NOTICE : "",
-                (notice) ?
-                /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
-                _("Notice") :
-                "Msg",
-                (notice) ? IRC_COLOR_RESET : "",
-                IRC_COLOR_CHAT_DELIMITERS,
-                irc_nick_mode_for_display (ptr_server, ptr_nick, 0),
-                IRC_COLOR_CHAT_NICK_SELF,
-                ptr_server->nick,
-                IRC_COLOR_CHAT_DELIMITERS,
-                IRC_COLOR_RESET,
-                (target_is_channel) ?
-                IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_msg (ptr_server, 0, NULL, target),
+                /* TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action */
+                _("Action"),
+                (is_channel) ?
+                IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_msg (server, 0, NULL, target),
                 target,
                 IRC_COLOR_RESET,
-                ptr_text);
+                irc_nick_mode_for_display (server, ptr_nick, 0),
+                IRC_COLOR_CHAT_NICK_SELF,
+                server->nick,
+                (ptr_text && ptr_text[0]) ? IRC_COLOR_RESET : "",
+                (ptr_text && ptr_text[0]) ? " " : "",
+                (ptr_text && ptr_text[0]) ? ptr_text : "");
         }
         else
         {
             weechat_printf_date_tags (
-                buffer,
+                ptr_buffer,
                 0,
                 irc_protocol_tags (
-                    ptr_server,
-                    "privmsg",
+                    server,
+                    command,
                     NULL,
                     str_tags,
-                    (ptr_nick) ? ptr_nick->name : ptr_server->nick,
-                    NULL),
-                "%s%s",
-                irc_nick_as_prefix (
-                    ptr_server,
-                    (ptr_nick) ? ptr_nick : NULL,
-                    (ptr_nick) ? NULL : ptr_server->nick,
-                    IRC_COLOR_CHAT_NICK_SELF),
-                ptr_text);
+                    (ptr_nick) ? ptr_nick->name : server->nick,
+                    address),
+                "%s%s%s%s%s%s%s",
+                weechat_prefix ("action"),
+                irc_nick_mode_for_display (server, ptr_nick, 0),
+                IRC_COLOR_CHAT_NICK_SELF,
+                server->nick,
+                IRC_COLOR_RESET,
+                (ptr_text && ptr_text[0]) ? " " : "",
+                (ptr_text && ptr_text[0]) ? ptr_text : "");
         }
+    }
+    else if (ctcp_type)
+    {
+        weechat_printf_date_tags (
+            ptr_buffer,
+            0,
+            irc_protocol_tags (
+                server,
+                command,
+                NULL,
+                str_tags,
+                (ptr_nick) ? ptr_nick->name : server->nick,
+                address),
+            _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
+            weechat_prefix ("network"),
+            (is_channel) ?
+            IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_msg (server, 0, NULL, target),
+            target,
+            IRC_COLOR_RESET,
+            IRC_COLOR_CHAT_CHANNEL,
+            ctcp_type,
+            IRC_COLOR_RESET,
+            (ptr_text && ptr_text[0]) ? " " : "",
+            (ptr_text && ptr_text[0]) ? ptr_text : "");
+    }
+    else if (display_target)
+    {
+        weechat_printf_date_tags (
+            ptr_buffer,
+            0,
+            irc_protocol_tags (
+                server,
+                command,
+                NULL,
+                str_tags,
+                (ptr_nick) ? ptr_nick->name : server->nick,
+                address),
+            "%s%s%s%s%s(%s%s%s%s)%s -> %s%s%s: %s",
+            weechat_prefix ("network"),
+            (is_notice) ? IRC_COLOR_NOTICE : "",
+            (is_notice) ?
+            /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
+            _("Notice") :
+            "Msg",
+            (is_notice) ? IRC_COLOR_RESET : "",
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_mode_for_display (server, ptr_nick, 0),
+            IRC_COLOR_CHAT_NICK_SELF,
+            server->nick,
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (is_channel) ?
+            IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_msg (server, 0, NULL, target),
+            target,
+            IRC_COLOR_RESET,
+            (ptr_text) ? ptr_text : "");
+    }
+    else
+    {
+        weechat_printf_date_tags (
+            ptr_buffer,
+            0,
+            irc_protocol_tags (
+                server,
+                command,
+                NULL,
+                str_tags,
+                (ptr_nick) ? ptr_nick->name : server->nick,
+                address),
+            "%s%s",
+            irc_nick_as_prefix (
+                server,
+                (ptr_nick) ? ptr_nick : NULL,
+                (ptr_nick) ? NULL : server->nick,
+                IRC_COLOR_CHAT_NICK_SELF),
+            (ptr_text) ? ptr_text : "");
     }
 
     if (text2)
         free (text2);
+    if (text3)
+        free (text3);
     if (text_decoded)
         free (text_decoded);
 }
@@ -243,17 +347,22 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
                                       ptr_channel->name, message);
     if (list_messages)
     {
-        action = (strncmp (message, "\01ACTION ", 8) == 0);
-        list_size = weechat_arraylist_size (list_messages);
-        for (i = 0; i < list_size; i++)
+        /* display only if capability "echo-message" is NOT enabled */
+        if (!weechat_hashtable_has_key (ptr_server->cap_list, "echo-message"))
         {
-            irc_input_user_message_display (
-                buffer,
-                action,
-                0,  /* notice */
-                NULL,  /* target */
-                0,  /* target_is_channel */
-                (const char *)weechat_arraylist_get (list_messages, i));
+            action = (strncmp (message, "\01ACTION ", 8) == 0);
+            list_size = weechat_arraylist_size (list_messages);
+            for (i = 0; i < list_size; i++)
+            {
+                irc_input_user_message_display (
+                    ptr_server,
+                    ptr_channel->name,
+                    NULL,  /* address */
+                    "privmsg",
+                    (action) ? "action" : NULL,
+                    (const char *)weechat_arraylist_get (list_messages, i),
+                    1);  /* decode_colors */
+            }
         }
         weechat_arraylist_free (list_messages);
     }

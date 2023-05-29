@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-27 20:17+0200\n"
+"POT-Creation-Date: 2023-05-29 09:34+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6207,6 +6207,11 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
+
+#, fuzzy, c-format
+msgid ""
 "%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
 "(server, channel or private)"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
@@ -6269,11 +6274,6 @@ msgid ""
 "add\" (see /help server); if you really want to add a temporary server (NOT "
 "SAVED), turn on the option irc.look.temporary_servers"
 msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
-msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
 
 #, fuzzy, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -6532,6 +6532,24 @@ msgstr "%s nem sikerült új szobát nyitni \"%s\"\n"
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
 msgstr ""
+
+#, fuzzy
+#| msgid "send a CTCP action to the current channel"
+msgid "send a CTCP action to a nick or channel"
+msgstr "CTCP parancs küldése az aktuális szobába"
+
+#, fuzzy
+msgid "[-server <server>] <target>[,<target>...] <text>"
+msgstr "fogadó [,fogadó] szöveg"
+
+#, fuzzy
+msgid ""
+"server: send to this server (internal name)\n"
+"target: nick or channel (may be mask, '*' = current channel)\n"
+"  text: text to send"
+msgstr ""
+"fogadó: név vagy szoba (esetleg maszk, '*' = aktuális szoba)\n"
+"szöveg: küldendő üzenet"
 
 msgid "find information about the administrator of the server"
 msgstr "információ lekérdezése a szerver adminisztrátorról"
@@ -7244,19 +7262,6 @@ msgstr "\"A Napi Üzenet\" lekérdezése"
 
 msgid "send message to a nick or channel"
 msgstr "üzenet küldése egy felhasználónak vagy szobának"
-
-#, fuzzy
-msgid "[-server <server>] <target>[,<target>...] <text>"
-msgstr "fogadó [,fogadó] szöveg"
-
-#, fuzzy
-msgid ""
-"server: send to this server (internal name)\n"
-"target: nick or channel (may be mask, '*' = current channel)\n"
-"  text: text to send"
-msgstr ""
-"fogadó: név vagy szoba (esetleg maszk, '*' = aktuális szoba)\n"
-"szöveg: küldendő üzenet"
 
 #, fuzzy
 msgid "list nicks on channels"
@@ -8954,6 +8959,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s usmeretlen DCC CHAT típus érkezett a következőtől:"
 
 #. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action
 #, fuzzy
 msgid "Action"
 msgstr "[parancs]"
@@ -8961,10 +8967,6 @@ msgstr "[parancs]"
 #, fuzzy, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
-
-#, fuzzy, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
 
 #, fuzzy
 msgid "1 if string is a valid IRC channel name for server"
@@ -9176,6 +9178,10 @@ msgstr "szerver"
 #, fuzzy
 msgid "irc batch"
 msgstr "%d szoba"
+
+#, fuzzy, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
 
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
@@ -13371,3 +13377,8 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~| msgid "send message to a nick or channel"
+#~ msgid "send action message to a nick or channel"
+#~ msgstr "üzenet küldése egy felhasználónak vagy szobának"

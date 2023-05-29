@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-27 20:17+0200\n"
+"POT-Creation-Date: 2023-05-29 09:34+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -8044,6 +8044,12 @@ msgstr ""
 
 #, c-format
 msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+"%s%s: \"%s\" コマンドはチャンネル内かプライベートバッファで実行できます"
+
+#, c-format
+msgid ""
 "%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
 "(server, channel or private)"
 msgstr ""
@@ -8115,12 +8121,6 @@ msgstr ""
 "%s%s: 標準的なサーバを追加したい場合は、\"/server add\" コマンドを使ってくだ"
 "さい (/help server を参照してください); 一時的な (保存されない) サーバを本当"
 "に追加したい場合は、irc.look.temporary_servers オプションを on にしてください"
-
-#, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
-msgstr ""
-"%s%s: \"%s\" コマンドはチャンネル内かプライベートバッファで実行できます"
 
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -8373,6 +8373,24 @@ msgstr "%s%s: あなたはチャンネル \"%s\" にいません"
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
 msgstr "Notice"
+
+#, fuzzy
+#| msgid "send a CTCP action to the current channel"
+msgid "send a CTCP action to a nick or channel"
+msgstr "現在のチャンネルに CTCP action を送信"
+
+msgid "[-server <server>] <target>[,<target>...] <text>"
+msgstr "[-server <server>] <target>[,<target>...] <text>"
+
+msgid ""
+"server: send to this server (internal name)\n"
+"target: nick or channel (may be mask, '*' = current channel)\n"
+"  text: text to send"
+msgstr ""
+"server: このサーバに送信 (内部サーバ名)\n"
+"target: ニックネームまたはチャンネル名 (マスクを使えるかもしれない、'*' = 現"
+"在のチャンネル)\n"
+"  text: 送信するテキスト"
 
 msgid "find information about the administrator of the server"
 msgstr "サーバ管理者に関する情報を探す"
@@ -9243,19 +9261,6 @@ msgstr "\"今日のメッセージ\" を取得"
 
 msgid "send message to a nick or channel"
 msgstr "ニックネームかチャンネルにメッセージを送る"
-
-msgid "[-server <server>] <target>[,<target>...] <text>"
-msgstr "[-server <server>] <target>[,<target>...] <text>"
-
-msgid ""
-"server: send to this server (internal name)\n"
-"target: nick or channel (may be mask, '*' = current channel)\n"
-"  text: text to send"
-msgstr ""
-"server: このサーバに送信 (内部サーバ名)\n"
-"target: ニックネームまたはチャンネル名 (マスクを使えるかもしれない、'*' = 現"
-"在のチャンネル)\n"
-"  text: 送信するテキスト"
 
 msgid "list nicks on channels"
 msgstr "チャンネルに参加しているニックネームをリストアップ"
@@ -11145,6 +11150,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s%s: %s%s%s からの未知の DCC CHAT タイプ: \"%s\""
 
 #. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action
 #, fuzzy
 #| msgid "Option"
 msgid "Action"
@@ -11153,10 +11159,6 @@ msgstr "オプション"
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%s%s%s%s からの未知の CTCP 要求: %s%s%s%s%s"
-
-#, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%s%s%s%s への CTCP クエリ: %s%s%s%s%s"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "文字列がサーバの有効な IRC チャンネル名なら 1"
@@ -11358,6 +11360,10 @@ msgstr "irc サーバ"
 #| msgid "irc channel"
 msgid "irc batch"
 msgstr "irc チャンネル"
+
+#, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%s%s%s%s への CTCP クエリ: %s%s%s%s%s"
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -15991,3 +15997,8 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#, fuzzy
+#~| msgid "send message to a nick or channel"
+#~ msgid "send action message to a nick or channel"
+#~ msgstr "ニックネームかチャンネルにメッセージを送る"

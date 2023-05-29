@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-27 20:17+0200\n"
+"POT-Creation-Date: 2023-05-29 09:34+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6244,6 +6244,12 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+"%s \"%s\" команда может быть выполнена только в буфере канала или привата\n"
+
+#, fuzzy, c-format
+msgid ""
 "%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
 "(server, channel or private)"
 msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
@@ -6306,12 +6312,6 @@ msgid ""
 "add\" (see /help server); if you really want to add a temporary server (NOT "
 "SAVED), turn on the option irc.look.temporary_servers"
 msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
-msgstr ""
-"%s \"%s\" команда может быть выполнена только в буфере канала или привата\n"
 
 #, fuzzy, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -6574,6 +6574,24 @@ msgstr "%s не могу создать новый канал \"%s\"\n"
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
 msgstr ""
+
+#, fuzzy
+#| msgid "send a CTCP action to the current channel"
+msgid "send a CTCP action to a nick or channel"
+msgstr "отправить CTCP-действие на текущий канал"
+
+#, fuzzy
+msgid "[-server <server>] <target>[,<target>...] <text>"
+msgstr "адресат[,адресат] текст"
+
+#, fuzzy
+msgid ""
+"server: send to this server (internal name)\n"
+"target: nick or channel (may be mask, '*' = current channel)\n"
+"  text: text to send"
+msgstr ""
+"адресат: ник или канал (можно использовать маску, '*' = текущий канал)\n"
+"текст: отправляаемый текст"
 
 msgid "find information about the administrator of the server"
 msgstr "найти информацию об администрации сервера"
@@ -7282,19 +7300,6 @@ msgstr "получить \"Message Of The Day\""
 
 msgid "send message to a nick or channel"
 msgstr "отправить сообщение нику или на канал"
-
-#, fuzzy
-msgid "[-server <server>] <target>[,<target>...] <text>"
-msgstr "адресат[,адресат] текст"
-
-#, fuzzy
-msgid ""
-"server: send to this server (internal name)\n"
-"target: nick or channel (may be mask, '*' = current channel)\n"
-"  text: text to send"
-msgstr ""
-"адресат: ник или канал (можно использовать маску, '*' = текущий канал)\n"
-"текст: отправляаемый текст"
 
 #, fuzzy
 msgid "list nicks on channels"
@@ -8991,6 +8996,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s неизвестный режим DCC CHAT получен от "
 
 #. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action
 #, fuzzy
 msgid "Action"
 msgstr "[команда]"
@@ -8998,10 +9004,6 @@ msgstr "[команда]"
 #, fuzzy, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
-
-#, fuzzy, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
 #, fuzzy
 msgid "1 if string is a valid IRC channel name for server"
@@ -9213,6 +9215,10 @@ msgstr "сервер"
 #, fuzzy
 msgid "irc batch"
 msgstr "%d канал"
+
+#, fuzzy, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
@@ -13405,3 +13411,8 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+#~| msgid "send message to a nick or channel"
+#~ msgid "send action message to a nick or channel"
+#~ msgstr "отправить сообщение нику или на канал"

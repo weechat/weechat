@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-27 20:17+0200\n"
+"POT-Creation-Date: 2023-05-29 09:34+0200\n"
 "PO-Revision-Date: 2023-05-14 15:29+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8139,6 +8139,12 @@ msgstr "%s%s: команда /%s не може да се изврши, серв�
 
 #, c-format
 msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+"%s%s: команда „%s” може да се изврши само у каналу или приватном баферу"
+
+#, c-format
+msgid ""
 "%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
 "(server, channel or private)"
 msgstr ""
@@ -8210,12 +8216,6 @@ msgstr ""
 "%s%s: ако желите да додате стандардни сервер, употребите команду „/server "
 "add” (погледајте /help server); ако заиста желите да додате привремени "
 "сервер (који се НЕ ЧУВА), укључите опцију irc.look.temporary_servers"
-
-#, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
-msgstr ""
-"%s%s: команда „%s” може да се изврши само у каналу или приватном баферу"
 
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -8476,6 +8476,23 @@ msgstr "%s%s: нисте на каналу „%s”"
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
 msgstr "Notice"
+
+#, fuzzy
+#| msgid "send a CTCP action to the current channel"
+msgid "send a CTCP action to a nick or channel"
+msgstr "слање CTCP акције текућем каналу"
+
+msgid "[-server <server>] <target>[,<target>...] <text>"
+msgstr "[-server <сервер>] <циљ>[,<циљ>...] <текст>"
+
+msgid ""
+"server: send to this server (internal name)\n"
+"target: nick or channel (may be mask, '*' = current channel)\n"
+"  text: text to send"
+msgstr ""
+"сервер: слање на овај сервер (интерно име)\n"
+"   циљ: надимак или канал (може бити и маска, ’*’ = текући канал)\n"
+" текст: текст који се шаље"
 
 msgid "find information about the administrator of the server"
 msgstr "проналажење информација о администратору сервера"
@@ -9423,18 +9440,6 @@ msgstr "враћање „Message Of The Day” (поруке дана)"
 
 msgid "send message to a nick or channel"
 msgstr "слање поруке надимку или каналу"
-
-msgid "[-server <server>] <target>[,<target>...] <text>"
-msgstr "[-server <сервер>] <циљ>[,<циљ>...] <текст>"
-
-msgid ""
-"server: send to this server (internal name)\n"
-"target: nick or channel (may be mask, '*' = current channel)\n"
-"  text: text to send"
-msgstr ""
-"сервер: слање на овај сервер (интерно име)\n"
-"   циљ: надимак или канал (може бити и маска, ’*’ = текући канал)\n"
-" текст: текст који се шаље"
 
 msgid "list nicks on channels"
 msgstr "листа надимака на каналима"
@@ -11341,6 +11346,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s%s: примљен је непознати DCC CHAT тип од %s%s%s: „%s”"
 
 #. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action
 #, fuzzy
 #| msgid "Option"
 msgid "Action"
@@ -11349,10 +11355,6 @@ msgstr "Опција"
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%sСтигао је непознати CTCP од %s%s%s: %s%s%s%s%s"
-
-#, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%sCTCP упит за %s%s%s: %s%s%s%s%s"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 ако је стринг важеће име IRC канала за сервер"
@@ -11551,6 +11553,10 @@ msgstr "irc server"
 #| msgid "irc channel"
 msgid "irc batch"
 msgstr "irc channel"
+
+#, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%sCTCP упит за %s%s%s: %s%s%s%s%s"
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -16244,3 +16250,8 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+#, fuzzy
+#~| msgid "send message to a nick or channel"
+#~ msgid "send action message to a nick or channel"
+#~ msgstr "слање поруке надимку или каналу"

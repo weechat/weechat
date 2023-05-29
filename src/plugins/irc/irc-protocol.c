@@ -49,6 +49,7 @@
 #include "irc-config.h"
 #include "irc-ctcp.h"
 #include "irc-ignore.h"
+#include "irc-input.h"
 #include "irc-join.h"
 #include "irc-message.h"
 #include "irc-mode.h"
@@ -2959,7 +2960,6 @@ IRC_PROTOCOL_CALLBACK(pong)
 
 void
 irc_protocol_privmsg_display_ctcp_send (struct t_irc_server *server,
-                                        struct t_irc_channel *channel,
                                         const char *target,
                                         const char *address,
                                         const char *arguments)
@@ -2983,7 +2983,14 @@ irc_protocol_privmsg_display_ctcp_send (struct t_irc_server *server,
     ctcp_args = (pos_space) ?
         weechat_strndup (pos_space + 1, pos_end - pos_space - 1) : NULL;
 
-    irc_ctcp_display_send (server, channel, target, address, ctcp_type, ctcp_args);
+    irc_input_user_message_display (
+        server,
+        target,
+        address,
+        "privmsg",
+        ctcp_type,
+        ctcp_args,
+        0);  /* decode_colors */
 
     if (ctcp_type)
         free (ctcp_type);
@@ -3055,7 +3062,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 if (nick_is_me)
                 {
                     irc_protocol_privmsg_display_ctcp_send (
-                        server, ptr_channel, params[0], address, msg_args);
+                        server, params[0], address, msg_args);
                 }
                 else
                 {
@@ -3163,7 +3170,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             if (nick_is_me)
             {
                 irc_protocol_privmsg_display_ctcp_send (
-                    server, ptr_channel, remote_nick, address, msg_args);
+                    server, remote_nick, address, msg_args);
             }
             else
             {

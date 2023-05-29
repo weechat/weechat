@@ -630,11 +630,23 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
                "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
                "nick_alice,log1");
 
+    /* message to channel (with /msg <channel>), channel not joined */
+    server_input_data (buffer_server, "/msg #zzz msg chan not joined");
+    CHECK_SENT("PRIVMSG #zzz :msg chan not joined");
+    CHECK_SRV("--", "Msg(alice) -> #zzz: msg chan not joined",
+              "irc_privmsg,self_msg,notify_none,no_highlight,nick_alice,log1");
+
     /* STATUSMSG message to channel (with /msg @<channel>) */
     server_input_data (buffer_server, "/msg @#test msg chan ops");
     CHECK_SENT("PRIVMSG @#test :msg chan ops");
     CHECK_CHAN("--", "Msg(alice) -> @#test: msg chan ops",
                "irc_privmsg,self_msg,notify_none,no_highlight,nick_alice,log1");
+
+    /* STATUSMSG message to channel (with /msg @<channel>), channel not joined */
+    server_input_data (buffer_server, "/msg @#zzz msg chan ops not joined");
+    CHECK_SENT("PRIVMSG @#zzz :msg chan ops not joined");
+    CHECK_SRV("--", "Msg(alice) -> @#zzz: msg chan ops not joined",
+              "irc_privmsg,self_msg,notify_none,no_highlight,nick_alice,log1");
 
     /* message to a nick (text in private buffer) */
     server_input_data (buffer_pv, "msg pv 1");
@@ -647,6 +659,26 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
     server_input_data (buffer_server, "/msg bob msg pv 2");
     CHECK_SENT("PRIVMSG bob :msg pv 2");
     CHECK_PV("bob", "alice", "msg pv 2",
+             "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+             "nick_alice,log1");
+
+    /* message to a nick (with /msg <nick>), hidden password */
+    server_input_data (buffer_server, "/msg nickserv identify secret");
+    CHECK_SENT("PRIVMSG nickserv :identify secret");
+    CHECK_SRV("--", "Msg(alice) -> nickserv: identify ******",
+              "irc_privmsg,self_msg,notify_none,no_highlight,nick_alice,log1");
+
+    /* message to a nick (with /query <nick>) */
+    server_input_data (buffer_server, "/query bob msg pv 3");
+    CHECK_SENT("PRIVMSG bob :msg pv 3");
+    CHECK_PV("bob", "alice", "msg pv 3",
+             "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
+             "nick_alice,log1");
+
+    /* message to a nick (with /query <nick>), private buffer does not exist */
+    server_input_data (buffer_server, "/query bob_query msg pv 4");
+    CHECK_SENT("PRIVMSG bob_query :msg pv 4");
+    CHECK_PV("bob_query", "alice", "msg pv 4",
              "irc_privmsg,self_msg,notify_none,no_highlight,prefix_nick_white,"
              "nick_alice,log1");
 
@@ -682,10 +714,45 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
-    /* action on channel (with /ctcp <channel> action) */
-    server_input_data (buffer_server, "/ctcp #test action action chan 2");
+    /* action on channel (with /action *) */
+    server_input_data (buffer_chan, "/action * action chan 2");
     CHECK_SENT("PRIVMSG #test :\01ACTION action chan 2\01");
     CHECK_CHAN(" *", "alice action chan 2",
+               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
+
+    /* action on channel (with /action <channel>) */
+    server_input_data (buffer_server, "/action #test action chan 3");
+    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 3\01");
+    CHECK_CHAN(" *", "alice action chan 3",
+               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
+
+    /* action on channel (with /action <channel>), no message */
+    server_input_data (buffer_chan, "/action #test");
+    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    CHECK_CHAN(" *", "alice",
+               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
+
+    /* STATUSMSG action on channel (with /action @<channel>) */
+    server_input_data (buffer_server, "/action @#test action chan 4");
+    CHECK_SENT("PRIVMSG @#test :\01ACTION action chan 4\01");
+    CHECK_CHAN("--", "Action -> @#test: alice action chan 4",
+               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
+
+    /* STATUSMSG action on channel (with /action @<channel>), no message */
+    server_input_data (buffer_server, "/action @#test");
+    CHECK_SENT("PRIVMSG @#test :\01ACTION\01");
+    CHECK_CHAN("--", "Action -> @#test: alice",
+               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
+
+    /* action on channel (with /ctcp <channel> action) */
+    server_input_data (buffer_server, "/ctcp #test action action chan 5");
+    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 5\01");
+    CHECK_CHAN(" *", "alice action chan 5",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
@@ -727,26 +794,37 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
     /* CTCP version to channel */
     server_input_data (buffer_server, "/ctcp #test version");
     CHECK_SENT("PRIVMSG #test :\01VERSION\01");
-    CHECK_SRV("--", "CTCP query to #test: VERSION",
-              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,log1");
+    CHECK_CHAN("--", "CTCP query to #test: VERSION",
+               "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
 
     /* unknown CTCP to channel */
     server_input_data (buffer_server, "/ctcp #test unknown1 some args");
     CHECK_SENT("PRIVMSG #test :\01UNKNOWN1 some args\01");
-    CHECK_SRV("--", "CTCP query to #test: UNKNOWN1 some args",
-              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,log1");
+    CHECK_CHAN("--", "CTCP query to #test: UNKNOWN1 some args",
+               "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
+               "nick_alice,log1");
 
     /* CTCP version to nick */
     server_input_data (buffer_server, "/ctcp bob version");
     CHECK_SENT("PRIVMSG bob :\01VERSION\01");
-    CHECK_SRV("--", "CTCP query to bob: VERSION",
-              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,log1");
+    CHECK_PV("bob", "--", "CTCP query to bob: VERSION",
+             "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
+             "nick_alice,log1");
+
+    /* CTCP version to other nick (no private buffer) */
+    server_input_data (buffer_server, "/ctcp other_nick version");
+    CHECK_SENT("PRIVMSG other_nick :\01VERSION\01");
+    CHECK_SRV("--", "CTCP query to other_nick: VERSION",
+              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
+              "nick_alice,log1");
 
     /* unknown CTCP to nick */
     server_input_data (buffer_server, "/ctcp bob unknown2 some args");
     CHECK_SENT("PRIVMSG bob :\01UNKNOWN2 some args\01");
-    CHECK_SRV("--", "CTCP query to bob: UNKNOWN2 some args",
-              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,log1");
+    CHECK_PV("bob", "--", "CTCP query to bob: UNKNOWN2 some args",
+             "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
+             "nick_alice,log1");
 }
 
 /*
@@ -782,9 +860,19 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
     CHECK_SENT("PRIVMSG #test :msg chan 2");
     CHECK_NO_MSG;
 
+    /* message to channel (with /msg <channel>), channel not joined */
+    server_input_data (buffer_server, "/msg #zzz msg chan not joined");
+    CHECK_SENT("PRIVMSG #zzz :msg chan not joined");
+    CHECK_NO_MSG;
+
     /* STATUSMSG message to channel (with /msg @<channel>) */
     server_input_data (buffer_server, "/msg @#test msg chan ops");
     CHECK_SENT("PRIVMSG @#test :msg chan ops");
+    CHECK_NO_MSG;
+
+    /* STATUSMSG message to channel (with /msg @<channel>), channel not joined */
+    server_input_data (buffer_server, "/msg @#zzz msg chan ops not joined");
+    CHECK_SENT("PRIVMSG @#zzz :msg chan ops not joined");
     CHECK_NO_MSG;
 
     /* message to a nick (text in private buffer) */
@@ -795,6 +883,21 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
     /* message to a nick (with /msg <nick>) */
     server_input_data (buffer_server, "/msg bob msg pv 2");
     CHECK_SENT("PRIVMSG bob :msg pv 2");
+    CHECK_NO_MSG;
+
+    /* message to a nick (with /msg <nick>), hidden password */
+    server_input_data (buffer_server, "/msg nickserv identify secret");
+    CHECK_SENT("PRIVMSG nickserv :identify secret");
+    CHECK_NO_MSG;
+
+    /* message to a nick (with /query <nick>) */
+    server_input_data (buffer_server, "/query bob msg pv 3");
+    CHECK_SENT("PRIVMSG bob :msg pv 3");
+    CHECK_NO_MSG;
+
+    /* message to a nick (with /query <nick>), private buffer does not exist */
+    server_input_data (buffer_server, "/query bob_query msg pv 4");
+    CHECK_SENT("PRIVMSG bob_query :msg pv 4");
     CHECK_NO_MSG;
 
     /* notice to channel */
@@ -822,9 +925,34 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
     CHECK_SENT("PRIVMSG #test :\01ACTION\01");
     CHECK_NO_MSG;
 
-    /* action on channel (with /ctcp <channel> action) */
-    server_input_data (buffer_server, "/ctcp #test action action chan 2");
+    /* action on channel (with /action *) */
+    server_input_data (buffer_chan, "/action * action chan 2");
     CHECK_SENT("PRIVMSG #test :\01ACTION action chan 2\01");
+    CHECK_NO_MSG;
+
+    /* action on channel (with /action <channel>) */
+    server_input_data (buffer_server, "/action #test action chan 3");
+    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 3\01");
+    CHECK_NO_MSG;
+
+    /* action on channel (with /action <channel>), no message */
+    server_input_data (buffer_chan, "/action #test");
+    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    CHECK_NO_MSG;
+
+    /* STATUSMSG action on channel (with /action @<channel>) */
+    server_input_data (buffer_server, "/action @#test action chan 4");
+    CHECK_SENT("PRIVMSG @#test :\01ACTION action chan 4\01");
+    CHECK_NO_MSG;
+
+    /* STATUSMSG action on channel (with /action @<channel>), no message */
+    server_input_data (buffer_server, "/action @#test");
+    CHECK_SENT("PRIVMSG @#test :\01ACTION\01");
+    CHECK_NO_MSG;
+
+    /* action on channel (with /ctcp <channel> action) */
+    server_input_data (buffer_server, "/ctcp #test action action chan 5");
+    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 5\01");
     CHECK_NO_MSG;
 
     /* STATUSMSG action on channel (with /ctcp @<channel> action) */
@@ -860,6 +988,11 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
     /* CTCP version to nick */
     server_input_data (buffer_server, "/ctcp bob version");
     CHECK_SENT("PRIVMSG bob :\01VERSION\01");
+    CHECK_NO_MSG;
+
+    /* CTCP version to other nick (no private buffer) */
+    server_input_data (buffer_server, "/ctcp other_nick version");
+    CHECK_SENT("PRIVMSG other_nick :\01VERSION\01");
     CHECK_NO_MSG;
 
     /* unknown CTCP to nick */
@@ -2210,195 +2343,210 @@ TEST(IrcProtocolWithServer, note)
 
 TEST(IrcProtocolWithServer, notice)
 {
+    int i;
+
     SRV_INIT_JOIN;
 
-    /* not enough parameters */
-    RECV("NOTICE");
-    CHECK_ERROR_PARAMS("notice", 0, 2);
-    RECV("NOTICE AUTH");
-    CHECK_ERROR_PARAMS("notice", 1, 2);
-    RECV(":bob!user@host NOTICE");
-    CHECK_ERROR_PARAMS("notice", 0, 2);
-    RECV(":bob!user@host NOTICE #test");
-    CHECK_ERROR_PARSE("notice", ":bob!user@host NOTICE #test");
-    RECV(":bob!user@host NOTICE alice");
-    CHECK_ERROR_PARSE("notice", ":bob!user@host NOTICE alice");
+    /* test without and with capability "echo-message" */
+    for (i = 0; i < 2; i++)
+    {
+        if (i == 1)
+        {
+            /* assume "echo-message" capability is enabled in server */
+            hashtable_set (ptr_server->cap_list, "echo-message", NULL);
+        }
 
-    /* notice from server */
-    RECV("NOTICE AUTH :*** Looking up your hostname... ");
-    CHECK_SRV("--", "*** Looking up your hostname... ", "irc_notice,log1");
-    RECV(":server.address NOTICE AUTH :*** Looking up your hostname... ");
-    CHECK_SRV("--", "server.address: *** Looking up your hostname... ",
-              "irc_notice,notify_private,nick_server.address,log1");
-    RECV(":server.address NOTICE * :*** Looking up your hostname... ");
-    CHECK_SRV("--", "server.address: *** Looking up your hostname... ",
-              "irc_notice,notify_private,nick_server.address,log1");
+        /* not enough parameters */
+        RECV("NOTICE");
+        CHECK_ERROR_PARAMS("notice", 0, 2);
+        RECV("NOTICE AUTH");
+        CHECK_ERROR_PARAMS("notice", 1, 2);
+        RECV(":bob!user@host NOTICE");
+        CHECK_ERROR_PARAMS("notice", 0, 2);
+        RECV(":bob!user@host NOTICE #test");
+        CHECK_ERROR_PARSE("notice", ":bob!user@host NOTICE #test");
+        RECV(":bob!user@host NOTICE alice");
+        CHECK_ERROR_PARSE("notice", ":bob!user@host NOTICE alice");
 
-    /* notice to channel/user */
-    RECV(":server.address NOTICE #test :a notice ");
-    CHECK_CHAN("--", "Notice(server.address) -> #test: a notice ",
-               "irc_notice,notify_message,nick_server.address,log1");
-    RECV(":server.address NOTICE alice :a notice ");
-    CHECK_SRV("--", "server.address: a notice ",
-              "irc_notice,notify_private,nick_server.address,log1");
-    RECV(":bob!user@host NOTICE #test :a notice ");
-    CHECK_CHAN("--", "Notice(bob) -> #test: a notice ",
-               "irc_notice,notify_message,nick_bob,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :a notice ");
-    CHECK_SRV("--", "bob (user@host): a notice ",
-              "irc_notice,notify_private,nick_bob,host_user@host,log1");
+        /* notice from server */
+        RECV("NOTICE AUTH :*** Looking up your hostname... ");
+        CHECK_SRV("--", "*** Looking up your hostname... ", "irc_notice,log1");
+        RECV(":server.address NOTICE AUTH :*** Looking up your hostname... ");
+        CHECK_SRV("--", "server.address: *** Looking up your hostname... ",
+                  "irc_notice,notify_private,nick_server.address,log1");
+        RECV(":server.address NOTICE * :*** Looking up your hostname... ");
+        CHECK_SRV("--", "server.address: *** Looking up your hostname... ",
+                  "irc_notice,notify_private,nick_server.address,log1");
 
-    /*
-     * notice to channel/user from self nick
-     * (case of bouncer of if echo-message capability is enabled)
-     */
-    RECV(":alice!user@host NOTICE #test :a notice ");
-    CHECK_CHAN("--", "Notice(alice) -> #test: a notice ",
-               "irc_notice,self_msg,notify_none,no_highlight,nick_alice,"
-               "host_user@host,log1");
+        /* notice to channel/user */
+        RECV(":server.address NOTICE #test :a notice ");
+        CHECK_CHAN("--", "Notice(server.address) -> #test: a notice ",
+                   "irc_notice,notify_message,nick_server.address,log1");
+        RECV(":server.address NOTICE alice :a notice ");
+        CHECK_SRV("--", "server.address: a notice ",
+                  "irc_notice,notify_private,nick_server.address,log1");
+        RECV(":bob!user@host NOTICE #test :a notice ");
+        CHECK_CHAN("--", "Notice(bob) -> #test: a notice ",
+                   "irc_notice,notify_message,nick_bob,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :a notice ");
+        CHECK_SRV("--", "bob (user@host): a notice ",
+                  "irc_notice,notify_private,nick_bob,host_user@host,log1");
 
-    /* notice to ops of channel */
-    RECV(":server.address NOTICE @#test :a notice ");
-    CHECK_CHAN("--", "Notice(server.address) -> @#test: a notice ",
-               "irc_notice,notify_message,nick_server.address,log1");
-    RECV(":bob!user@host NOTICE @#test :a notice ");
-    CHECK_CHAN("--", "Notice(bob) -> @#test: a notice ",
-               "irc_notice,notify_message,nick_bob,host_user@host,log1");
+        /*
+         * notice to channel/user from self nick
+         * (case of bouncer of if echo-message capability is enabled)
+         */
+        RECV(":alice!user@host NOTICE #test :a notice ");
+        CHECK_CHAN("--", "Notice(alice) -> #test: a notice ",
+                   "irc_notice,self_msg,notify_none,no_highlight,nick_alice,"
+                   "host_user@host,log1");
 
-    /*
-     * notice to ops of channel from self nick
-     * (case of bouncer of if echo-message capability is enabled)
-     */
-    RECV(":alice!user@host NOTICE @#test :a notice ");
-    CHECK_CHAN("--", "Notice(alice) -> @#test: a notice ",
-               "irc_notice,self_msg,notify_none,no_highlight,nick_alice,"
-               "host_user@host,log1");
+        /* notice to ops of channel */
+        RECV(":server.address NOTICE @#test :a notice ");
+        CHECK_CHAN("--", "Notice(server.address) -> @#test: a notice ",
+                   "irc_notice,notify_message,nick_server.address,log1");
+        RECV(":bob!user@host NOTICE @#test :a notice ");
+        CHECK_CHAN("--", "Notice(bob) -> @#test: a notice ",
+                   "irc_notice,notify_message,nick_bob,host_user@host,log1");
 
-    /*
-     * notice from self nick
-     * (case of bouncer of if echo-message capability is enabled)
-     */
-    RECV(":alice!user@host NOTICE alice :a notice ");
-    CHECK_SRV("--", "Notice -> alice: a notice ",
-              "irc_notice,notify_private,nick_alice,host_user@host,log1");
+        /*
+         * notice to ops of channel from self nick
+         * (case of bouncer of if echo-message capability is enabled)
+         */
+        RECV(":alice!user@host NOTICE @#test :a notice ");
+        CHECK_CHAN("--", "Notice(alice) -> @#test: a notice ",
+                   "irc_notice,self_msg,notify_none,no_highlight,nick_alice,"
+                   "host_user@host,log1");
 
-    /* notice with channel name at beginning */
-    RECV(":server.address NOTICE alice :[#test] a notice ");
-    CHECK_CHAN("--", "PvNotice(server.address): a notice ",
-               "irc_notice,nick_server.address,log1");
-    RECV(":server.address NOTICE alice :(#test) a notice ");
-    CHECK_CHAN("--", "PvNotice(server.address): a notice ",
-               "irc_notice,nick_server.address,log1");
-    RECV(":server.address NOTICE alice :{#test} a notice ");
-    CHECK_CHAN("--", "PvNotice(server.address): a notice ",
-               "irc_notice,nick_server.address,log1");
-    RECV(":server.address NOTICE alice :<#test> a notice ");
-    CHECK_CHAN("--", "PvNotice(server.address): a notice ",
-               "irc_notice,nick_server.address,log1");
-    RECV(":bob!user@host NOTICE alice :[#test] a notice ");
-    CHECK_CHAN("--", "PvNotice(bob): a notice ",
-               "irc_notice,nick_bob,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :(#test) a notice ");
-    CHECK_CHAN("--", "PvNotice(bob): a notice ",
-               "irc_notice,nick_bob,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :{#test} a notice ");
-    CHECK_CHAN("--", "PvNotice(bob): a notice ",
-               "irc_notice,nick_bob,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :<#test> a notice ");
-    CHECK_CHAN("--", "PvNotice(bob): a notice ",
-               "irc_notice,nick_bob,host_user@host,log1");
+        /*
+         * notice from self nick
+         * (case of bouncer of if echo-message capability is enabled)
+         */
+        RECV(":alice!user@host NOTICE alice :a notice ");
+        CHECK_SRV("--", "Notice -> alice: a notice ",
+                  "irc_notice,notify_private,nick_alice,host_user@host,log1");
 
-    /* broken CTCP to channel */
-    RECV(":bob!user@host NOTICE #test :\01");
-    CHECK_SRV("--", "CTCP reply from bob: ",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE #test :\01TEST");
-    CHECK_SRV("--", "CTCP reply from bob: TEST",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE #test :\01ACTION");
-    CHECK_SRV("--", "CTCP reply from bob: ACTION",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE #test :\01ACTION is testing");
-    CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
-              "irc_notice,irc_ctcp,host_user@host,log1");
-    RECV(":bob!user@host NOTICE #test :\01VERSION");
-    CHECK_SRV("--", "CTCP reply from bob: VERSION",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE #test :\01DCC");
-    CHECK_SRV("--", "CTCP reply from bob: DCC",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE #test :\01DCC SEND");
-    CHECK_SRV("--", "CTCP reply from bob: DCC SEND",
-              "irc_notice,irc_ctcp,host_user@host,log1");
-    RECV(":bob!user@host NOTICE #test :\01DCC SEND file.txt");
-    CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt",
-              "irc_notice,irc_ctcp,host_user@host,log1");
-    RECV(":bob!user@host NOTICE #test :\01DCC SEND file.txt 1 2 3");
-    CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
-              "irc_notice,irc_ctcp,host_user@host,log1");
+        /* notice with channel name at beginning */
+        RECV(":server.address NOTICE alice :[#test] a notice ");
+        CHECK_CHAN("--", "PvNotice(server.address): a notice ",
+                   "irc_notice,nick_server.address,log1");
+        RECV(":server.address NOTICE alice :(#test) a notice ");
+        CHECK_CHAN("--", "PvNotice(server.address): a notice ",
+                   "irc_notice,nick_server.address,log1");
+        RECV(":server.address NOTICE alice :{#test} a notice ");
+        CHECK_CHAN("--", "PvNotice(server.address): a notice ",
+                   "irc_notice,nick_server.address,log1");
+        RECV(":server.address NOTICE alice :<#test> a notice ");
+        CHECK_CHAN("--", "PvNotice(server.address): a notice ",
+                   "irc_notice,nick_server.address,log1");
+        RECV(":bob!user@host NOTICE alice :[#test] a notice ");
+        CHECK_CHAN("--", "PvNotice(bob): a notice ",
+                   "irc_notice,nick_bob,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :(#test) a notice ");
+        CHECK_CHAN("--", "PvNotice(bob): a notice ",
+                   "irc_notice,nick_bob,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :{#test} a notice ");
+        CHECK_CHAN("--", "PvNotice(bob): a notice ",
+                   "irc_notice,nick_bob,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :<#test> a notice ");
+        CHECK_CHAN("--", "PvNotice(bob): a notice ",
+                   "irc_notice,nick_bob,host_user@host,log1");
 
-    /* broken CTCP to user */
-    RECV(":bob!user@host NOTICE alice :\01");
-    CHECK_SRV("--", "CTCP reply from bob: ",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :\01TEST");
-    CHECK_SRV("--", "CTCP reply from bob: TEST",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :\01ACTION");
-    CHECK_SRV("--", "CTCP reply from bob: ACTION",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :\01ACTION is testing");
-    CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
-              "irc_notice,irc_ctcp,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :\01VERSION");
-    CHECK_SRV("--", "CTCP reply from bob: VERSION",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :\01DCC");
-    CHECK_SRV("--", "CTCP reply from bob: DCC",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :\01DCC SEND");
-    CHECK_SRV("--", "CTCP reply from bob: DCC SEND",
-              "irc_notice,irc_ctcp,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :\01DCC SEND file.txt");
-    CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt",
-              "irc_notice,irc_ctcp,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :\01DCC SEND file.txt 1 2 3");
-    CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
-              "irc_notice,irc_ctcp,host_user@host,log1");
+        /* broken CTCP to channel */
+        RECV(":bob!user@host NOTICE #test :\01");
+        CHECK_SRV("--", "CTCP reply from bob: ",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE #test :\01TEST");
+        CHECK_SRV("--", "CTCP reply from bob: TEST",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE #test :\01ACTION");
+        CHECK_SRV("--", "CTCP reply from bob: ACTION",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE #test :\01ACTION is testing");
+        CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
+                  "irc_notice,irc_ctcp,host_user@host,log1");
+        RECV(":bob!user@host NOTICE #test :\01VERSION");
+        CHECK_SRV("--", "CTCP reply from bob: VERSION",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE #test :\01DCC");
+        CHECK_SRV("--", "CTCP reply from bob: DCC",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE #test :\01DCC SEND");
+        CHECK_SRV("--", "CTCP reply from bob: DCC SEND",
+                  "irc_notice,irc_ctcp,host_user@host,log1");
+        RECV(":bob!user@host NOTICE #test :\01DCC SEND file.txt");
+        CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt",
+                  "irc_notice,irc_ctcp,host_user@host,log1");
+        RECV(":bob!user@host NOTICE #test :\01DCC SEND file.txt 1 2 3");
+        CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
+                  "irc_notice,irc_ctcp,host_user@host,log1");
 
-    /* valid CTCP to channel */
-    RECV(":bob!user@host NOTICE #test :\01TEST\01");
-    CHECK_SRV("--", "CTCP reply from bob: TEST",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE #test :\01ACTION\01");
-    CHECK_SRV("--", "CTCP reply from bob: ACTION",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE #test :\01ACTION is testing\01");
-    CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
-              "irc_notice,irc_ctcp,host_user@host,log1");
-    RECV(":bob!user@host NOTICE #test :\01VERSION\01");
-    CHECK_SRV("--", "CTCP reply from bob: VERSION",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE #test :\01DCC SEND file.txt 1 2 3\01");
-    CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
-              "irc_notice,irc_ctcp,host_user@host,log1");
+        /* broken CTCP to user */
+        RECV(":bob!user@host NOTICE alice :\01");
+        CHECK_SRV("--", "CTCP reply from bob: ",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :\01TEST");
+        CHECK_SRV("--", "CTCP reply from bob: TEST",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :\01ACTION");
+        CHECK_SRV("--", "CTCP reply from bob: ACTION",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :\01ACTION is testing");
+        CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
+                  "irc_notice,irc_ctcp,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :\01VERSION");
+        CHECK_SRV("--", "CTCP reply from bob: VERSION",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :\01DCC");
+        CHECK_SRV("--", "CTCP reply from bob: DCC",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :\01DCC SEND");
+        CHECK_SRV("--", "CTCP reply from bob: DCC SEND",
+                  "irc_notice,irc_ctcp,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :\01DCC SEND file.txt");
+        CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt",
+                  "irc_notice,irc_ctcp,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :\01DCC SEND file.txt 1 2 3");
+        CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
+                  "irc_notice,irc_ctcp,host_user@host,log1");
 
-    /* valid CTCP to user */
-    RECV(":bob!user@host NOTICE alice :\01TEST\01");
-    CHECK_SRV("--", "CTCP reply from bob: TEST",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :\01ACTION\01");
-    CHECK_SRV("--", "CTCP reply from bob: ACTION",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :\01ACTION is testing\01");
-    CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
-              "irc_notice,irc_ctcp,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :\01VERSION\01");
-    CHECK_SRV("--", "CTCP reply from bob: VERSION",
-              "irc_notice,host_user@host,log1");
-    RECV(":bob!user@host NOTICE alice :\01DCC SEND file.txt 1 2 3\01");
-    CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
-              "irc_notice,irc_ctcp,host_user@host,log1");
+        /* valid CTCP to channel */
+        RECV(":bob!user@host NOTICE #test :\01TEST\01");
+        CHECK_SRV("--", "CTCP reply from bob: TEST",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE #test :\01ACTION\01");
+        CHECK_SRV("--", "CTCP reply from bob: ACTION",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE #test :\01ACTION is testing\01");
+        CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
+                  "irc_notice,irc_ctcp,host_user@host,log1");
+        RECV(":bob!user@host NOTICE #test :\01VERSION\01");
+        CHECK_SRV("--", "CTCP reply from bob: VERSION",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE #test :\01DCC SEND file.txt 1 2 3\01");
+        CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
+                  "irc_notice,irc_ctcp,host_user@host,log1");
+
+        /* valid CTCP to user */
+        RECV(":bob!user@host NOTICE alice :\01TEST\01");
+        CHECK_SRV("--", "CTCP reply from bob: TEST",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :\01ACTION\01");
+        CHECK_SRV("--", "CTCP reply from bob: ACTION",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :\01ACTION is testing\01");
+        CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
+                  "irc_notice,irc_ctcp,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :\01VERSION\01");
+        CHECK_SRV("--", "CTCP reply from bob: VERSION",
+                  "irc_notice,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :\01DCC SEND file.txt 1 2 3\01");
+        CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
+                  "irc_notice,irc_ctcp,host_user@host,log1");
+
+        if (i == 1)
+            hashtable_remove (ptr_server->cap_list, "echo-message");
+    }
 }
 
 /*
@@ -2517,243 +2665,265 @@ TEST(IrcProtocolWithServer, pong)
 TEST(IrcProtocolWithServer, privmsg)
 {
     char *info, message[1024];
+    int i;
 
     SRV_INIT_JOIN2;
 
-    /* not enough parameters */
-    RECV(":bob!user@host PRIVMSG");
-    CHECK_ERROR_PARAMS("privmsg", 0, 2);
-    RECV(":bob!user@host PRIVMSG #test");
-    CHECK_ERROR_PARAMS("privmsg", 1, 2);
-    RECV(":bob!user@host PRIVMSG alice");
-    CHECK_ERROR_PARAMS("privmsg", 1, 2);
+    /* test without and with capability "echo-message" */
+    for (i = 0; i < 2; i++)
+    {
+        if (i == 1)
+        {
+            /* assume "echo-message" capability is enabled in server */
+            hashtable_set (ptr_server->cap_list, "echo-message", NULL);
+        }
 
-    /* missing nick */
-    RECV("PRIVMSG #test :this is the message");
-    CHECK_ERROR_NICK("privmsg");
+        /* not enough parameters */
+        RECV(":bob!user@host PRIVMSG");
+        CHECK_ERROR_PARAMS("privmsg", 0, 2);
+        RECV(":bob!user@host PRIVMSG #test");
+        CHECK_ERROR_PARAMS("privmsg", 1, 2);
+        RECV(":bob!user@host PRIVMSG alice");
+        CHECK_ERROR_PARAMS("privmsg", 1, 2);
 
-    /* message to channel/user */
-    RECV(":bob!user@host PRIVMSG #test :this is the message ");
-    CHECK_CHAN("bob", "this is the message ",
-               "irc_privmsg,notify_message,prefix_nick_248,nick_bob,"
-               "host_user@host,log1");
-    RECV(":bob!user@host PRIVMSG alice :this is the message ");
-    CHECK_PV("bob", "bob", "this is the message ",
-             "irc_privmsg,notify_private,prefix_nick_248,nick_bob,"
-             "host_user@host,log1");
+        /* missing nick */
+        RECV("PRIVMSG #test :this is the message");
+        CHECK_ERROR_NICK("privmsg");
 
-    /* message with tags to channel/user */
-    RECV("@tag1=value1;tag2=value2 :bob!user@host PRIVMSG #test "
-         ":this is the message ");
-    CHECK_CHAN("bob", "this is the message ",
-               "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
-               "notify_message,prefix_nick_248,nick_bob,host_user@host,log1");
-    RECV("@tag1=value1;tag2=value2 :bob!user@host PRIVMSG alice "
-         ":this is the message ");
-    CHECK_PV("bob", "bob", "this is the message ",
-             "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
-             "notify_private,prefix_nick_248,nick_bob,host_user@host,log1");
+        /* message to channel/user */
+        RECV(":bob!user@host PRIVMSG #test :this is the message ");
+        CHECK_CHAN("bob", "this is the message ",
+                   "irc_privmsg,notify_message,prefix_nick_248,nick_bob,"
+                   "host_user@host,log1");
+        RECV(":bob!user@host PRIVMSG alice :this is the message ");
+        CHECK_PV("bob", "bob", "this is the message ",
+                 "irc_privmsg,notify_private,prefix_nick_248,nick_bob,"
+                 "host_user@host,log1");
 
-    /*
-     * message to channel/user from self nick
-     * (case of bouncer of if echo-message capability is enabled)
-     */
-    RECV(":alice!user@host PRIVMSG #test :this is the message ");
-    CHECK_CHAN("alice", "this is the message ",
-               "irc_privmsg,self_msg,notify_none,no_highlight,"
-               "prefix_nick_white,nick_alice,host_user@host,log1");
+        /* message with tags to channel/user */
+        RECV("@tag1=value1;tag2=value2 :bob!user@host PRIVMSG #test "
+             ":this is the message ");
+        CHECK_CHAN("bob", "this is the message ",
+                   "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
+                   "notify_message,prefix_nick_248,nick_bob,host_user@host,log1");
+        RECV("@tag1=value1;tag2=value2 :bob!user@host PRIVMSG alice "
+             ":this is the message ");
+        CHECK_PV("bob", "bob", "this is the message ",
+                 "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
+                 "notify_private,prefix_nick_248,nick_bob,host_user@host,log1");
 
-    /* message to ops of channel */
-    RECV(":bob!user@host PRIVMSG @#test :this is the message ");
-    CHECK_CHAN("--", "Msg(bob) -> @#test: this is the message ",
-               "irc_privmsg,notify_message,nick_bob,host_user@host,log1");
+        /*
+         * message to channel/user from self nick
+         * (case of bouncer of if echo-message capability is enabled)
+         */
+        RECV(":alice!user@host PRIVMSG #test :this is the message ");
+        CHECK_CHAN("alice", "this is the message ",
+                   "irc_privmsg,self_msg,notify_none,no_highlight,"
+                   "prefix_nick_white,nick_alice,host_user@host,log1");
 
-    /*
-     * message to ops of channel from self nick
-     * (case of bouncer of if echo-message capability is enabled)
-     */
-    RECV(":alice!user@host PRIVMSG @#test :this is the message ");
-    CHECK_CHAN("--", "Msg(alice) -> @#test: this is the message ",
-               "irc_privmsg,self_msg,notify_none,no_highlight,nick_alice,"
-               "host_user@host,log1");
+        /* message to ops of channel */
+        RECV(":bob!user@host PRIVMSG @#test :this is the message ");
+        CHECK_CHAN("--", "Msg(bob) -> @#test: this is the message ",
+                   "irc_privmsg,notify_message,nick_bob,host_user@host,log1");
 
-    /*
-     * message from self nick in private
-     * (case of bouncer of if echo-message capability is enabled)
-     */
-    RECV(":alice!user@host PRIVMSG alice :this is the message ");
-    CHECK_PV("alice", "alice", "this is the message ",
-             "irc_privmsg,self_msg,notify_none,no_highlight,"
-             "prefix_nick_white,nick_alice,host_user@host,log1");
+        /*
+         * message to ops of channel from self nick
+         * (case of bouncer of if echo-message capability is enabled)
+         */
+        RECV(":alice!user@host PRIVMSG @#test :this is the message ");
+        CHECK_CHAN("--", "Msg(alice) -> @#test: this is the message ",
+                   "irc_privmsg,self_msg,notify_none,no_highlight,nick_alice,"
+                   "host_user@host,log1");
 
-    /* broken CTCP to channel */
-    RECV(":bob!user@host PRIVMSG #test :\01");
-    CHECK_CHAN("--", "Unknown CTCP requested by bob: ",
-               "irc_privmsg,irc_ctcp,host_user@host,log1");
-    RECV(":bob!user@host PRIVMSG #test :\01TEST");
-    CHECK_CHAN("--", "Unknown CTCP requested by bob: TEST",
-               "irc_privmsg,irc_ctcp,host_user@host,log1");
-    RECV(":bob!user@host PRIVMSG #test :\01ACTION");
-    CHECK_CHAN(" *", "bob",
-               "irc_privmsg,irc_action,notify_message,nick_bob,"
-               "host_user@host,log1");
-    RECV(":bob!user@host PRIVMSG #test :\01ACTION is testing");
-    CHECK_CHAN(" *", "bob is testing",
-               "irc_privmsg,irc_action,notify_message,nick_bob,"
-               "host_user@host,log1");
-    RECV(":bob!user@host PRIVMSG #test :\01VERSION");
-    CHECK_CHAN("--", "CTCP requested by bob: VERSION",
-               "irc_privmsg,irc_ctcp,host_user@host,log1");
-    info = irc_ctcp_replace_variables (ptr_server,
-                                       irc_ctcp_get_reply (ptr_server,
-                                                           "VERSION"));
-    snprintf (message, sizeof (message),
-              "CTCP reply to bob: VERSION %s", info);
-    CHECK_CHAN("--", message,
-               "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
-               "no_highlight,log1");
-    snprintf (message, sizeof (message),
-              "NOTICE bob :\01VERSION %s\01", info);
-    CHECK_SENT(message);
-    free (info);
-    RECV(":bob!user@host PRIVMSG #test :\01DCC");
-    CHECK_NO_MSG;
-    RECV(":bob!user@host PRIVMSG #test :\01DCC SEND");
-    CHECK_NO_MSG;
-    RECV(":bob!user@host PRIVMSG #test :\01DCC SEND file.txt");
-    CHECK_SRV("=!=", "irc: cannot parse \"privmsg\" command", "");
-    RECV(":bob!user@host PRIVMSG #test :\01DCC SEND file.txt 1 2 3");
-    CHECK_CORE("",
-               "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
-               "), name: file.txt, 3 bytes (protocol: dcc)");
+        /*
+         * message from self nick in private
+         * (case of bouncer of if echo-message capability is enabled)
+         */
+        RECV(":alice!user@host PRIVMSG alice :this is the message ");
+        CHECK_PV("alice", "alice", "this is the message ",
+                 "irc_privmsg,self_msg,notify_none,no_highlight,"
+                 "prefix_nick_white,nick_alice,host_user@host,log1");
 
-    /* broken CTCP to user */
-    RECV(":bob!user@host PRIVMSG alice :\01");
-    CHECK_SRV("--", "Unknown CTCP requested by bob: ",
-              "irc_privmsg,irc_ctcp,host_user@host,log1");
-    RECV(":bob!user@host PRIVMSG alice :\01TEST");
-    CHECK_SRV("--", "Unknown CTCP requested by bob: TEST",
-              "irc_privmsg,irc_ctcp,host_user@host,log1");
-    RECV(":bob!user@host PRIVMSG alice :\01ACTION");
-    CHECK_PV("bob", " *", "bob",
-             "irc_privmsg,irc_action,notify_private,nick_bob,"
-             "host_user@host,log1");
-    RECV(":bob!user@host PRIVMSG alice :\01ACTION is testing");
-    CHECK_PV("bob", " *", "bob is testing",
-             "irc_privmsg,irc_action,notify_private,nick_bob,"
-             "host_user@host,log1");
-    RECV(":bob!user@host PRIVMSG alice :\01VERSION");
-    info = irc_ctcp_replace_variables (ptr_server,
-                                       irc_ctcp_get_reply (ptr_server,
-                                                           "VERSION"));
-    snprintf (message, sizeof (message),
-              "CTCP reply to bob: VERSION %s", info);
-    CHECK_SRV("--", message,
-              "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
-              "no_highlight,log1");
-    free (info);
-    RECV(":bob!user@host PRIVMSG alice :\01DCC");
-    CHECK_NO_MSG;
-    RECV(":bob!user@host PRIVMSG alice :\01DCC SEND");
-    CHECK_NO_MSG;
-    RECV(":bob!user@host PRIVMSG alice :\01DCC SEND file.txt");
-    CHECK_SRV("=!=", "irc: cannot parse \"privmsg\" command", "");
-    RECV(":bob!user@host PRIVMSG alice :\01DCC SEND file.txt 1 2 3");
-    CHECK_CORE("",
-               "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
-               "), name: file.txt, 3 bytes (protocol: dcc)");
+        /* broken CTCP to channel */
+        RECV(":bob!user@host PRIVMSG #test :\01");
+        CHECK_CHAN("--", "Unknown CTCP requested by bob: ",
+                   "irc_privmsg,irc_ctcp,host_user@host,log1");
+        RECV(":bob!user@host PRIVMSG #test :\01TEST");
+        CHECK_CHAN("--", "Unknown CTCP requested by bob: TEST",
+                   "irc_privmsg,irc_ctcp,host_user@host,log1");
+        RECV(":bob!user@host PRIVMSG #test :\01ACTION");
+        CHECK_CHAN(" *", "bob",
+                   "irc_privmsg,irc_action,notify_message,nick_bob,"
+                   "host_user@host,log1");
+        RECV(":bob!user@host PRIVMSG #test :\01ACTION is testing");
+        CHECK_CHAN(" *", "bob is testing",
+                   "irc_privmsg,irc_action,notify_message,nick_bob,"
+                   "host_user@host,log1");
+        RECV(":bob!user@host PRIVMSG #test :\01VERSION");
+        CHECK_CHAN("--", "CTCP requested by bob: VERSION",
+                   "irc_privmsg,irc_ctcp,host_user@host,log1");
+        info = irc_ctcp_replace_variables (ptr_server,
+                                           irc_ctcp_get_reply (ptr_server,
+                                                               "VERSION"));
+        snprintf (message, sizeof (message),
+                  "CTCP reply to bob: VERSION %s", info);
+        CHECK_CHAN("--", message,
+                   "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                   "no_highlight,log1");
+        snprintf (message, sizeof (message),
+                  "NOTICE bob :\01VERSION %s\01", info);
+        CHECK_SENT(message);
+        free (info);
+        RECV(":bob!user@host PRIVMSG #test :\01DCC");
+        CHECK_NO_MSG;
+        RECV(":bob!user@host PRIVMSG #test :\01DCC SEND");
+        CHECK_NO_MSG;
+        RECV(":bob!user@host PRIVMSG #test :\01DCC SEND file.txt");
+        CHECK_SRV("=!=", "irc: cannot parse \"privmsg\" command", "");
+        RECV(":bob!user@host PRIVMSG #test :\01DCC SEND file.txt 1 2 3");
+        CHECK_CORE("",
+                   "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
+                   "), name: file.txt, 3 bytes (protocol: dcc)");
 
-    /* valid CTCP to channel */
-    RECV(":bob!user@host PRIVMSG #test :\01TEST\01");
-    RECV(":bob!user@host PRIVMSG #test :\01ACTION\01");
-    CHECK_CHAN(" *", "bob",
-               "irc_privmsg,irc_action,notify_message,nick_bob,"
-               "host_user@host,log1");
-    RECV(":bob!user@host PRIVMSG #test :\01ACTION is testing\01");
-    CHECK_CHAN(" *", "bob is testing",
-               "irc_privmsg,irc_action,notify_message,nick_bob,"
-               "host_user@host,log1");
-    RECV(":bob!user@host PRIVMSG #test :\01VERSION\01");
-    RECV(":bob!user@host PRIVMSG #test :\01DCC SEND file.txt 1 2 3\01");
+        /* broken CTCP to user */
+        RECV(":bob!user@host PRIVMSG alice :\01");
+        CHECK_SRV("--", "Unknown CTCP requested by bob: ",
+                  "irc_privmsg,irc_ctcp,host_user@host,log1");
+        RECV(":bob!user@host PRIVMSG alice :\01TEST");
+        CHECK_SRV("--", "Unknown CTCP requested by bob: TEST",
+                  "irc_privmsg,irc_ctcp,host_user@host,log1");
+        RECV(":bob!user@host PRIVMSG alice :\01ACTION");
+        CHECK_PV("bob", " *", "bob",
+                 "irc_privmsg,irc_action,notify_private,nick_bob,"
+                 "host_user@host,log1");
+        RECV(":bob!user@host PRIVMSG alice :\01ACTION is testing");
+        CHECK_PV("bob", " *", "bob is testing",
+                 "irc_privmsg,irc_action,notify_private,nick_bob,"
+                 "host_user@host,log1");
+        RECV(":bob!user@host PRIVMSG alice :\01VERSION");
+        info = irc_ctcp_replace_variables (ptr_server,
+                                           irc_ctcp_get_reply (ptr_server,
+                                                               "VERSION"));
+        snprintf (message, sizeof (message),
+                  "CTCP reply to bob: VERSION %s", info);
+        CHECK_SRV("--", message,
+                  "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                  "no_highlight,log1");
+        free (info);
+        RECV(":bob!user@host PRIVMSG alice :\01DCC");
+        CHECK_NO_MSG;
+        RECV(":bob!user@host PRIVMSG alice :\01DCC SEND");
+        CHECK_NO_MSG;
+        RECV(":bob!user@host PRIVMSG alice :\01DCC SEND file.txt");
+        CHECK_SRV("=!=", "irc: cannot parse \"privmsg\" command", "");
+        RECV(":bob!user@host PRIVMSG alice :\01DCC SEND file.txt 1 2 3");
+        CHECK_CORE("",
+                   "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
+                   "), name: file.txt, 3 bytes (protocol: dcc)");
 
-    /* valid CTCP to ops of channel */
-    RECV(":bob!user@host PRIVMSG @#test :\01ACTION\01");
-    CHECK_CHAN("--", "Action -> @#test: bob",
-               "irc_privmsg,irc_action,notify_message,nick_bob,"
-               "host_user@host,log1");
-    RECV(":bob!user@host PRIVMSG @#test :\01ACTION is testing\01");
-    CHECK_CHAN("--", "Action -> @#test: bob is testing",
-               "irc_privmsg,irc_action,notify_message,nick_bob,"
-               "host_user@host,log1");
+        /* valid CTCP to channel */
+        RECV(":bob!user@host PRIVMSG #test :\01TEST\01");
+        RECV(":bob!user@host PRIVMSG #test :\01ACTION\01");
+        CHECK_CHAN(" *", "bob",
+                   "irc_privmsg,irc_action,notify_message,nick_bob,"
+                   "host_user@host,log1");
+        RECV(":bob!user@host PRIVMSG #test :\01ACTION is testing\01");
+        CHECK_CHAN(" *", "bob is testing",
+                   "irc_privmsg,irc_action,notify_message,nick_bob,"
+                   "host_user@host,log1");
+        RECV(":bob!user@host PRIVMSG #test :\01VERSION\01");
+        RECV(":bob!user@host PRIVMSG #test :\01DCC SEND file.txt 1 2 3\01");
 
-    /*
-     * valid CTCP to channel from self nick
-     * (case of bouncer of if echo-message capability is enabled)
-     */
-    RECV(":alice!user@host PRIVMSG #test :\01VERSION\01");
-    CHECK_SRV("--", "CTCP query to #test: VERSION",
-              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
-              "host_user@host,log1");
+        /* valid CTCP to ops of channel */
+        RECV(":bob!user@host PRIVMSG @#test :\01ACTION\01");
+        CHECK_CHAN("--", "Action -> @#test: bob",
+                   "irc_privmsg,irc_action,notify_message,nick_bob,"
+                   "host_user@host,log1");
+        RECV(":bob!user@host PRIVMSG @#test :\01ACTION is testing\01");
+        CHECK_CHAN("--", "Action -> @#test: bob is testing",
+                   "irc_privmsg,irc_action,notify_message,nick_bob,"
+                   "host_user@host,log1");
 
-    /*
-     * valid CTCP to ops of channel from self nick
-     * (case of bouncer of if echo-message capability is enabled)
-     */
-    RECV(":alice!user@host PRIVMSG @#test :\01ACTION\01");
-    CHECK_CHAN("--", "Action -> @#test: alice",
-               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
-               "nick_alice,host_user@host,log1");
-    RECV(":alice!user@host PRIVMSG @#test :\01ACTION is testing\01");
-    CHECK_CHAN("--", "Action -> @#test: alice is testing",
-               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
-               "nick_alice,host_user@host,log1");
+        /*
+         * valid CTCP to channel from self nick
+         * (case of bouncer of if echo-message capability is enabled)
+         */
+        RECV(":alice!user@host PRIVMSG #test :\01VERSION\01");
+        CHECK_CHAN("--", "CTCP query to #test: VERSION",
+                   "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
+                   "nick_alice,host_user@host,log1");
+        RECV(":alice!user@host PRIVMSG #test :\01ACTION\01");
+        CHECK_CHAN(" *", "alice",
+                   "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+                   "nick_alice,host_user@host,log1");
+        RECV(":alice!user@host PRIVMSG #test :\01ACTION is testing\01");
+        CHECK_CHAN(" *", "alice is testing",
+                   "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+                   "nick_alice,host_user@host,log1");
 
-    /* valid CTCP to user */
-    RECV(":bob!user@host PRIVMSG alice :\01TEST\01");
-    CHECK_SENT(NULL);
-    RECV(":bob!user@host PRIVMSG alice :\01ACTION\01");
-    CHECK_SENT(NULL);
-    RECV(":bob!user@host PRIVMSG alice :\01ACTION is testing\01");
-    CHECK_SENT(NULL);
-    RECV(":bob!user@host PRIVMSG alice :\01VERSION\01");
-    CHECK_SRV("--", "CTCP requested by bob: VERSION",
-              "irc_privmsg,irc_ctcp,host_user@host,log1");
-    info = irc_ctcp_replace_variables (ptr_server,
-                                       irc_ctcp_get_reply (ptr_server,
-                                                           "VERSION"));
-    snprintf (message, sizeof (message),
-              "CTCP reply to bob: VERSION %s", info);
-    CHECK_SRV("--", message,
-              "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
-              "no_highlight,log1");
-    snprintf (message, sizeof (message),
-              "NOTICE bob :\01VERSION %s\01", info);
-    CHECK_SENT(message);
-    free (info);
-    RECV(":bob!user@host PRIVMSG alice :\01SOURCE\01");
-    info = hook_info_get (NULL, "weechat_site_download", "");
-    snprintf (message, sizeof (message),
-              "NOTICE bob :\01SOURCE %s\01", info);
-    CHECK_SENT(message);
-    free (info);
-    RECV(":bob!user@host PRIVMSG alice :\01DCC SEND file.txt 1 2 3\01");
-    CHECK_CORE("",
-               "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
-               "), name: file.txt, 3 bytes (protocol: dcc)");
-    CHECK_SENT(NULL);
+        /*
+         * valid CTCP to ops of channel from self nick
+         * (case of bouncer of if echo-message capability is enabled)
+         */
+        RECV(":alice!user@host PRIVMSG @#test :\01ACTION\01");
+        CHECK_CHAN("--", "Action -> @#test: alice",
+                   "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+                   "nick_alice,host_user@host,log1");
+        RECV(":alice!user@host PRIVMSG @#test :\01ACTION is testing\01");
+        CHECK_CHAN("--", "Action -> @#test: alice is testing",
+                   "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
+                   "nick_alice,host_user@host,log1");
 
-    /*
-     * valid CTCP to channel from self nick
-     * (case of bouncer of if echo-message capability is enabled)
-     */
-    RECV(":alice!user@host PRIVMSG bob :\01VERSION\01");
-    CHECK_SRV("--", "CTCP query to bob: VERSION",
-              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
-              "host_user@host,log1");
+        /* valid CTCP to user */
+        RECV(":bob!user@host PRIVMSG alice :\01TEST\01");
+        CHECK_SENT(NULL);
+        RECV(":bob!user@host PRIVMSG alice :\01ACTION\01");
+        CHECK_SENT(NULL);
+        RECV(":bob!user@host PRIVMSG alice :\01ACTION is testing\01");
+        CHECK_SENT(NULL);
+        RECV(":bob!user@host PRIVMSG alice :\01VERSION\01");
+        CHECK_SRV("--", "CTCP requested by bob: VERSION",
+                  "irc_privmsg,irc_ctcp,host_user@host,log1");
+        info = irc_ctcp_replace_variables (ptr_server,
+                                           irc_ctcp_get_reply (ptr_server,
+                                                               "VERSION"));
+        snprintf (message, sizeof (message),
+                  "CTCP reply to bob: VERSION %s", info);
+        CHECK_SRV("--", message,
+                  "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                  "no_highlight,log1");
+        snprintf (message, sizeof (message),
+                  "NOTICE bob :\01VERSION %s\01", info);
+        CHECK_SENT(message);
+        free (info);
+        RECV(":bob!user@host PRIVMSG alice :\01SOURCE\01");
+        info = hook_info_get (NULL, "weechat_site_download", "");
+        snprintf (message, sizeof (message),
+                  "NOTICE bob :\01SOURCE %s\01", info);
+        CHECK_SENT(message);
+        free (info);
+        RECV(":bob!user@host PRIVMSG alice :\01DCC SEND file.txt 1 2 3\01");
+        CHECK_CORE("",
+                   "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
+                   "), name: file.txt, 3 bytes (protocol: dcc)");
+        CHECK_SENT(NULL);
 
-    /* close xfer buffer */
-    if (xfer_buffer)
-        gui_buffer_close (xfer_buffer);
+        /*
+         * valid CTCP to channel from self nick
+         * (case of bouncer of if echo-message capability is enabled)
+         */
+        RECV(":alice!user@host PRIVMSG bob :\01VERSION\01");
+        CHECK_PV("bob", "--", "CTCP query to bob: VERSION",
+                 "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
+                 "nick_alice,host_user@host,log1");
+
+        /* close xfer buffer */
+        if (xfer_buffer)
+            gui_buffer_close (xfer_buffer);
+
+        if (i == 1)
+            hashtable_remove (ptr_server->cap_list, "echo-message");
+    }
 }
 
 /*
@@ -4933,6 +5103,9 @@ TEST(IrcProtocolWithServer, 401)
     CHECK_SRV("--", "bob", "irc_401,irc_numeric,log3");
     RECV(":server 401 alice bob :No such nick/channel");
     CHECK_SRV("--", "bob: No such nick/channel", "irc_401,irc_numeric,log3");
+
+    RECV(":server 401 alice #unknown :No such nick/channel");
+    CHECK_SRV("--", "#unknown: No such nick/channel", "irc_401,irc_numeric,log3");
 }
 
 /*

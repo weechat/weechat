@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-27 20:17+0200\n"
+"POT-Creation-Date: 2023-05-29 09:34+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -8776,6 +8776,12 @@ msgstr ""
 
 #, c-format
 msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+"%s%s: komenda \"%s\" może być wykonana tylko na kanale lub prywatnym buforze"
+
+#, c-format
+msgid ""
 "%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
 "(server, channel or private)"
 msgstr ""
@@ -8848,12 +8854,6 @@ msgstr ""
 "%s%s: jeśli chcesz dodać standardowy serwer, użyj komendy \"/server "
 "add\" (zobacz /help server); jeśli naprawdę chcesz utworzyć serwer "
 "tymczasowy (NIE ZAPISANY), włącz opcję irc.look.temporary_servers"
-
-#, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
-msgstr ""
-"%s%s: komenda \"%s\" może być wykonana tylko na kanale lub prywatnym buforze"
 
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -9117,6 +9117,23 @@ msgstr "%s%s: nie jesteś na kanale \"%s\""
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
 msgstr "Powiadomienie"
+
+#, fuzzy
+#| msgid "send a CTCP action to the current channel"
+msgid "send a CTCP action to a nick or channel"
+msgstr "wysyła akcję CTCP na aktualny kanał"
+
+msgid "[-server <server>] <target>[,<target>...] <text>"
+msgstr "[-server <serwer>] <cel>[,<cel>...] <tekst>"
+
+msgid ""
+"server: send to this server (internal name)\n"
+"target: nick or channel (may be mask, '*' = current channel)\n"
+"  text: text to send"
+msgstr ""
+"serwer: wyślij do tego serwera (nazwa wewnętrzna)\n"
+"cel: nick lub kanał (może być maska, '*' = aktualny kanał)\n"
+"  tekst: wiadomość do wysłania"
 
 msgid "find information about the administrator of the server"
 msgstr "wyszukuje informacje o administratorze serwera"
@@ -10129,18 +10146,6 @@ msgstr "pobierz \"Wiadomość Dnia\" (motd)"
 
 msgid "send message to a nick or channel"
 msgstr "wysyła wiadomość do użytkownika albo kanału"
-
-msgid "[-server <server>] <target>[,<target>...] <text>"
-msgstr "[-server <serwer>] <cel>[,<cel>...] <tekst>"
-
-msgid ""
-"server: send to this server (internal name)\n"
-"target: nick or channel (may be mask, '*' = current channel)\n"
-"  text: text to send"
-msgstr ""
-"serwer: wyślij do tego serwera (nazwa wewnętrzna)\n"
-"cel: nick lub kanał (może być maska, '*' = aktualny kanał)\n"
-"  tekst: wiadomość do wysłania"
 
 msgid "list nicks on channels"
 msgstr "wyświetla nazwy użytkowników na kanałach"
@@ -12143,6 +12148,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s%s: nieznany typ DCC CHAT otrzymano od %s%s%s: \"%s\""
 
 #. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action
 #, fuzzy
 #| msgid "Option"
 msgid "Action"
@@ -12151,10 +12157,6 @@ msgstr "Opcja"
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%sNieznane zażądane CTCP przez %s%s%s: %s%s%s%s%s"
-
-#, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%sZapytanie CTCP do %s%s%s: %s%s%s%s%s"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 jeśli ciąg jest poprawną nazwą kanału IRC dla serwera"
@@ -12356,6 +12358,10 @@ msgstr "serwer irc"
 #| msgid "irc channel"
 msgid "irc batch"
 msgstr "kanał irc"
+
+#, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%sZapytanie CTCP do %s%s%s: %s%s%s%s%s"
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -17160,3 +17166,8 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#, fuzzy
+#~| msgid "send message to a nick or channel"
+#~ msgid "send action message to a nick or channel"
+#~ msgstr "wysyła wiadomość do użytkownika albo kanału"
