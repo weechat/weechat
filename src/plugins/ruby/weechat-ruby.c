@@ -1340,6 +1340,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         "end\n"
     };
 
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
+
     weechat_ruby_plugin = plugin;
 
     /* set interpreter name and version */
@@ -1413,7 +1417,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     ruby_data.unload_all = &weechat_ruby_unload_all;
 
     ruby_quiet = 1;
-    plugin_script_init (weechat_ruby_plugin, argc, argv, &ruby_data);
+    plugin_script_init (weechat_ruby_plugin, &ruby_data);
     ruby_quiet = 0;
 
     plugin_script_display_short_list (weechat_ruby_plugin,

@@ -158,16 +158,14 @@ plugin_script_create_dirs (struct t_weechat_plugin *weechat_plugin)
  *   - hooks config
  *   - creates directories in WeeChat home
  *   - hooks command, completion, hdata, infolist, signals
- *   - parses arguments
  *   - auto-loads scripts.
  */
 
 void
 plugin_script_init (struct t_weechat_plugin *weechat_plugin,
-                    int argc, char *argv[],
                     struct t_plugin_script_data *plugin_data)
 {
-    char string[512], *completion;
+    char string[512], *completion, *info_auto_load_scripts;
     char *action_signals[] = { "install", "remove", "autoload", NULL };
     int i, auto_load_scripts;
 
@@ -273,16 +271,13 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                        &plugin_script_info_version_cb,
                        weechat_plugin, NULL);
 
-    /* parse arguments */
-    auto_load_scripts = 1;
-    for (i = 0; i < argc; i++)
-    {
-        if ((strcmp (argv[i], "-s") == 0)
-            || (strcmp (argv[i], "--no-script") == 0))
-        {
-            auto_load_scripts = 0;
-        }
-    }
+    /* check if auto-load of scripts is enabled */
+    info_auto_load_scripts = weechat_info_get ("auto_load_scripts", NULL);
+    auto_load_scripts = (info_auto_load_scripts
+                         && (strcmp (info_auto_load_scripts, "1") == 0)) ?
+        1 : 0;
+    if (info_auto_load_scripts)
+        free (info_auto_load_scripts);
 
     /* autoload scripts */
     if (auto_load_scripts)

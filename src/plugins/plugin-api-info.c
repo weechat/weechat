@@ -449,6 +449,27 @@ plugin_api_info_auto_connect_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns WeeChat info "auto_load_scripts".
+ */
+
+char *
+plugin_api_info_auto_load_scripts_cb (const void *pointer, void *data,
+                                      const char *info_name,
+                                      const char *arguments)
+{
+    char value[32];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", weechat_auto_load_scripts);
+    return strdup (value);
+}
+
+/*
  * Returns WeeChat info "charset_terminal".
  */
 
@@ -1964,9 +1985,14 @@ plugin_api_info_init ()
                NULL, &plugin_api_info_weechat_daemon_cb, NULL, NULL);
     hook_info (NULL, "auto_connect",
                N_("1 if automatic connection to servers is enabled, "
-                  "0 if it has been disabled by the user (option \"-a\" or "
-                  "\"--no-connect\")"),
+                  "0 if it has been disabled by the user "
+                  "(option \"-a\" or \"--no-connect\")"),
                NULL, &plugin_api_info_auto_connect_cb, NULL, NULL);
+    hook_info (NULL, "auto_load_scripts",
+               N_("1 if scripts are automatically loaded, "
+                  "0 if the auto-load has been disabled by the user "
+                  "(option \"-s\" or \"--no-script\")"),
+               NULL, &plugin_api_info_auto_load_scripts_cb, NULL, NULL);
     hook_info (NULL, "charset_terminal",
                N_("terminal charset"),
                NULL, &plugin_api_info_charset_terminal_cb, NULL, NULL);

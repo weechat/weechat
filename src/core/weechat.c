@@ -132,6 +132,7 @@ int weechat_no_gcrypt = 0;             /* remove init/deinit of gcrypt      */
 struct t_weelist *weechat_startup_commands = NULL; /* startup commands      */
                                                    /* (option -r)           */
 int weechat_auto_connect = 1;          /* auto-connect to servers           */
+int weechat_auto_load_scripts = 1;     /* auto-load scripts                 */
 
 
 /*

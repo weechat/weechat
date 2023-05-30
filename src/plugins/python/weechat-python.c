@@ -1465,6 +1465,10 @@ weechat_python_signal_script_action_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
+
     weechat_python_plugin = plugin;
 
     /* set interpreter name and version */
@@ -1532,7 +1536,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     python_data.unload_all = &weechat_python_unload_all;
 
     python_quiet = 1;
-    plugin_script_init (weechat_python_plugin, argc, argv, &python_data);
+    plugin_script_init (weechat_python_plugin, &python_data);
     python_quiet = 0;
 
     plugin_script_display_short_list (weechat_python_plugin,

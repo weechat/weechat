@@ -924,6 +924,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     char str_interpreter[64];
 
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
+
     weechat_js_plugin = plugin;
 
     /* set interpreter name and version */
@@ -950,7 +954,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     js_data.unload_all = &weechat_js_unload_all;
 
     js_quiet = 1;
-    plugin_script_init (plugin, argc, argv, &js_data);
+    plugin_script_init (plugin, &js_data);
     js_quiet = 0;
 
     plugin_script_display_short_list (weechat_js_plugin, js_scripts);

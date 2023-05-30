@@ -26,6 +26,7 @@ New features::
   * core: don't split on newline characters in printf_date_tags when input_multiline is set (issue #1909)
   * core: add key @kbd:[l] in cursor mode to quote line, add variable "_chat_focused_line" in function hashtable sent to hook_focus callback (issue #1913, issue #1914)
   * core: add option `split_return` in command `/input` (issue #1916)
+  * core: send all command line parameters not beginning with a dash to all plugins
   * core: add command `/reset` to reset options to their default values
   * core: add option `rename` in command `/bar`
   * core: add relative move of read marker with `/buffer set unread [+/-]N` (issue #1895)
@@ -38,6 +39,7 @@ New features::
   * api: add function config_set_version (issue #1238)
   * api: don't split on newline by default in functions `command` and `command_options` when `input_multiline` is set to 0
   * api: add optional argument with version in info "version_number"
+  * api: add info "auto_load_scripts"
   * alias: use lower case for default aliases, rename all aliases to lower case on upgrade (issue #1872)
   * alias: add `$&` to replace all arguments with double quotes escaped (issue #1140, issue #1190)
   * alias: add option `missing` in command `/alias`

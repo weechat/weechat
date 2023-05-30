@@ -922,6 +922,10 @@ weechat_tcl_signal_script_action_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
+
     weechat_tcl_plugin = plugin;
 
     /* set interpreter name and version */
@@ -951,7 +955,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     tcl_data.unload_all = &weechat_tcl_unload_all;
 
     tcl_quiet = 1;
-    plugin_script_init (weechat_tcl_plugin, argc, argv, &tcl_data);
+    plugin_script_init (weechat_tcl_plugin, &tcl_data);
     tcl_quiet = 0;
 
     plugin_script_display_short_list (weechat_tcl_plugin,

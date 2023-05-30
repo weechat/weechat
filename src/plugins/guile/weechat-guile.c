@@ -1239,6 +1239,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     char str_version[128];
 
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
+
     weechat_guile_plugin = plugin;
 
     /* set interpreter name and version */
@@ -1296,7 +1300,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     guile_data.unload_all = &weechat_guile_unload_all;
 
     guile_quiet = 1;
-    plugin_script_init (weechat_guile_plugin, argc, argv, &guile_data);
+    plugin_script_init (weechat_guile_plugin, &guile_data);
     guile_quiet = 0;
 
     plugin_script_display_short_list (weechat_guile_plugin,
