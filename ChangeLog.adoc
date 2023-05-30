@@ -41,6 +41,7 @@ New features::
   * alias: use lower case for default aliases, rename all aliases to lower case on upgrade (issue #1872)
   * alias: add `$&` to replace all arguments with double quotes escaped (issue #1140, issue #1190)
   * alias: add option `missing` in command `/alias`
+  * fset: add options fset.color.color_name and fset.color.color_name_selected (issue #1920)
   * irc: rename "ssl" options to "tls", connect with TLS and port 6697 by default
   * irc: add support of capabilities "batch" and "draft/multiline" (issue #1292, issue #1923)
   * irc: add support of capability "echo-message" (issue #139)
