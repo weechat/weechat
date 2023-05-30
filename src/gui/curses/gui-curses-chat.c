@@ -498,6 +498,7 @@ gui_chat_display_prefix_suffix (struct t_gui_window *window,
                                 struct t_gui_line *line,
                                 const char *word,
                                 int pre_lines_displayed, int *lines_displayed,
+                                int pre_chars_displayed,
                                 int simulate,
                                 int apply_style_inactive,
                                 int nick_offline)
@@ -520,7 +521,7 @@ gui_chat_display_prefix_suffix (struct t_gui_window *window,
         && (length_align < (window->win_chat_width - 5)))
     {
         /* in the beginning of a word or in the middle of a word with multiline word align */
-        if ((chars_displayed == 0)
+        if ((pre_chars_displayed + chars_displayed == 0)
             || CONFIG_BOOLEAN(config_look_align_multiline_words))
         {
             window->win_chat_cursor_x += length_align;
@@ -610,6 +611,7 @@ gui_chat_display_word (struct t_gui_window *window,
                                                           word + (ptr_data - data),
                                                           pre_lines_displayed,
                                                           lines_displayed,
+                                                          chars_displayed,
                                                           simulate,
                                                           apply_style_inactive,
                                                           nick_offline);
@@ -1529,6 +1531,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 gui_chat_display_prefix_suffix(window, line,
                                                ptr_data,
                                                pre_lines_displayed, &lines_displayed,
+                                               0,
                                                simulate,
                                                CONFIG_BOOLEAN(config_look_color_inactive_message),
                                                0);
