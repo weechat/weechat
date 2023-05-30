@@ -396,7 +396,7 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
         && fset_option->default_value)
     {
         snprintf (str_color_name, sizeof (str_color_name),
-                  " %s(%s%s%s)",
+                  "%s (%s%s%s)",
                   weechat_color (
                       weechat_config_string (
                           fset_config_color_quotes[selected_line])),
@@ -488,7 +488,7 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
         && weechat_config_boolean (fset_config_look_use_color_value))
     {
         snprintf (str_color_name, sizeof (str_color_name),
-                  " %s(%s%s%s)",
+                  "%s (%s%s%s)",
                   weechat_color (
                       weechat_config_string (
                           fset_config_color_quotes[selected_line])),
@@ -980,7 +980,7 @@ fset_buffer_display_option_predefined_format (struct t_fset_option *fset_option)
         && fset_option->value)
     {
         snprintf (str_color_name, sizeof (str_color_name),
-                  " %s(%s%s%s)",
+                  "%s (%s%s%s)",
                   str_color_quotes,
                   weechat_color (
                       weechat_config_string (
