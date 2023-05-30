@@ -3415,17 +3415,16 @@ WeeChat парсира ову ознаку у чува је у поруци, а�
 * <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
 * <<option_weechat.look.item_away_message,weechat.look.item_away_message>>
 
-// TRANSLATION MISSING
 [[irc_ircv3_batch]]
 ==== batch
 
-Specification: https://ircv3.net/specs/extensions/batch[batch ^↗^,window=_blank]
+Спецификација: https://ircv3.net/specs/extensions/batch[batch ^↗^,window=_blank]
 
-This capability allows the server to send batched events (grouping of several
-messages that are related).
+Ова могућност дозвољава да сервер шаље докађаје у пакету (тј. да групише неколико
+порука које су у вези).
 
-For now, WeeChat only stores messages received in a batch and processes as usual
-later, when the batch ends.
+WeeChat за сада само само чува поруке примљене у пакету и обарђује их као и обично касније,
+када се заврши пакет.
 
 [[irc_ircv3_cap_notify]]
 ==== cap-notify
@@ -3461,73 +3460,70 @@ later, when the batch ends.
 -- alice (user@example.com) је променио свој хост на test.com
 ....
 
-// TRANSLATION MISSING
 [[irc_ircv3_draft_multiline]]
 ==== draft/multiline
 
-Specification: https://ircv3.net/specs/extensions/multiline[multiline ^↗^,window=_blank]
+Спецификација: https://ircv3.net/specs/extensions/multiline[multiline ^↗^,window=_blank]
 
-This capability allows the client and server to send messages with multiple lines,
-using the <<irc_ircv3_batch,batch>> capability, that must be enabled as well.
+Ова могућност дозвољава да клијент и сервер шаљу поруке у више линија када се користи
+<<irc_ircv3_batch,batch>> могућност, која такође мора да буде укључена.
 
-There are limits in term of bytes or number of lines in a multiline message
-that are given in the capability sent by the server, for example:
+Постоје ограничења у броју бајтова или линија вишелинијске поруке која се наводе у
+могућности коју пошаље сервер, на пример:
 
 ....
 CAP alice LS * :draft/multiline=max-bytes=4096,max-lines=24
 ....
 
-This sets a limit of 4096 bytes and 24 lines for a multiline batched content.
+Ово за вишелинијски пакетни садржај поставља ограничење на 4096 бајтова и 24 линије.
 
-If the limits are not given by the server, the default in WeeChat are:
+Ако сервер не наведе ограничења, WeeChat користи следеће подразумеване вредности:
 
-* max bytes: 4096
-* max lines: 24
+* макс бајтова: 4096
+* макс линија: 24
 
-Only standard messages and those send by the <<command_irc_notice,/notice>>
-command can be multiline. +
-ACTION CTCP messages sent with command <<command_irc_me,/me>> are not affected
-by this capability. That means multiline actions are sent as multiple actions.
+Вишелинијске могу да буду само стандардне поруке, као и оне које шаље команда
+<<command_irc_notice,/notice>>. +
+Ова могућност не утиче на ACTION CTCP поруке које се шаљу комадном <<command_irc_me,/me>>.
+То значи да се вишелинијске акције шаљу као више акција.
 
 [WARNING]
-As the specification is a "draft", it may change and the multiline support can
-possibly break at any time in WeeChat. +
-The capability is automatically enabled if the server supports it and can be
-disabled with this command:
+Пошто је спецификација „draft”, може да се промени, па вишелинијска подршка у
+WeeChat може у сваком тренутку престати да функционише. +
+Могућност се аутоматски укључује ако је сервер подржава, а може да се искључи
+следећом командом:
 `/set irc.server_default.capabilities "*,!draft/multiline"`. +
-When the capability is disabled, a multiline message is sent as multiple messages,
-as if they were sent sequentially to the server.
+Када се могућност искључи, вишелинијска порука се шаље као више порука, као да
+су једна за другом послате серверу.
 
-Example of IRC messages sent for a user message with two lines (`this is a test`
-/ `on two lines`), send to channel #test:
+Пример IRC порука које се шаљу за корисничку поруку у две линије (`ово је тест`
+/ `у две линије`), послато на канал #test:
 
 ....
 BATCH +i8Je7M7gquddoyC9 draft/multiline #test
-@batch=i8Je7M7gquddoyC9 PRIVMSG #test :this is a test
-@batch=i8Je7M7gquddoyC9 PRIVMSG #test :on two lines
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :ово је тест
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :у две линије
 BATCH -i8Je7M7gquddoyC9
 ....
 
-Display of the message sent in WeeChat:
+Приказ послатих порука у WeeChat:
 
 ....
-19:01:45 alice | this is a test
-               | on two lines
+19:01:45 alice | ово је тест
+               | у две линије
 ....
 
-// TRANSLATION MISSING
 [[irc_ircv3_echo_message]]
 ==== echo-message
 
-Specification: https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^,window=_blank]
+Спецификација: https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^,window=_blank]
 
-This capability forces the server to send PRIVMSG, NOTICE and TAGMSG messages
-back to WeeChat.
+Ова могућност форсира да сервер шаље поруке PRIVMSG, NOTICE и TAGMSG назад програму
+WeeChat.
 
-WeeChat displays only the message received and not the message sent, so a delay
-can be noticed between the send and the display. When the message is displayed,
-it means it has been properly received by the server and propagated to other
-clients connected to the server as well.
+WeeChat приказује само примљену поруку, а не и послату, тако да се може приметити
+кањење између слања и приказа. Када се порука прикаже, то значи да је сервер исправно
+примио поруку, као и да је поруку проследио осталим клијентима који су повезани на сервер.
 
 [[irc_ircv3_extended_join]]
 ==== extended-join
@@ -3728,45 +3724,44 @@ WeeChat приказује све додатне информације које
 /close
 ----
 
-// TRANSLATION MISSING
 [[irc_smart_filter]]
-=== Smart filter
+=== Паметни филтер
 
-A smart filter is available to filter some messages when someone did not write
-anything in the channel during a configurable delay:
+Паметни филтер служи за филтрирање неких порука које током подесивог интервала долазе
+након што нико није ништа писао:
 
-- join: user joins the channel
-- part: user leaves the channel
-- quit: user quits the server
-- account: user changes its account
-- chghost: user changes name or host
-- mode: mode changes on channel
-- nick: user changes its nick
-- setname: user changes its real name
+- join: корисник приступа каналу
+- part: корисник напушта канал
+- quit: корисник раскида везу са сервером
+- account: корисник мења свој налог
+- chghost: корисник мења име или хост
+- mode: промене режима на каналу
+- nick: корисник мења свој надимак
+- setname: корисник мења своје реално име
 
-Smart filter is enabled by default, but you must add a filter to hide lines on
-buffers, for example:
+Паметни филтер је подразумевано укључен, али морате да додате филтер како би се у
+баферима линије скривале, на пример:
 
 ----
 /filter add irc_smart * irc_smart_filter *
 ----
 
-It is possible to create filter for one channel only or channels beginning with
-same name (see `/help filter`):
+Постоји могућност да се креира филтер само за један канал, или за више канала који
+почињу истим именом (погледајте `/help filter`):
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
 ----
 
-You can setup a longer delay (in minutes):
+Можете да поставите веће кашњење (у минутима):
 
 ----
 /set irc.look.smart_filter_delay 10
 ----
 
-If someone did not write anything during last 10 minutes, its messages like
-join/part/quit will be hidden by default on channel, and you can use key
-kbd:[Alt+=] (toggle filters) to see them.
+Ако нико није ништа написао последњих 10 минута, његове поруке као што су
+join/part/quit ће се подразумевано сакрити на каналу, па можете да употребите
+тастер kbd:[Alt+=] (укљ./искљ. филтере) да их видите.
 
 [[irc_ctcp_replies]]
 === CTCP одговори
@@ -4915,9 +4910,8 @@ ${buffer[${tg_signal_data}].full_name}
 | tg_msg_pv          | стринг | „1” за приватну поруку, у супротном „0”.
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ Commas are replaced by semicolons in IRC tag (key and value).
+^(1)^ У IRC ознаци (кључу и вредности), запете се замењују тачка запетама
 
 [[trigger_data_print]]
 ==== Print
@@ -4953,9 +4947,8 @@ ${buffer[${tg_signal_data}].full_name}
 | tg_msg_pv          | стринг | „1” за приватну поруку, у супротном „0”.
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ Commas are replaced by semicolons in IRC tag (key and value).
+^(1)^ У IRC ознаци (кључу и вредности), запете се замењују тачка запетама
 
 [[trigger_data_command]]
 ==== Команда

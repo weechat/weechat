@@ -11924,18 +11924,16 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 |===
 | Модификатор | Мин WeeChat | Подаци модификатора | Стринг | Излаз
 
-// TRANSLATION MISSING
 | [[hook_modifier_irc_batch]] irc_batch | 4.0.0
-| Server name + "," + batch type + "," + batch parameters
-| Content of multiple messages, separated by a newline char ("\n").
-| New content of messages (number can be different), an empty string discards
-  all messages in the batch.
+| Име сервера + "," + тип пакета + "," + параметри пакета
+| Садржај више порука, раздвојен карактером новог реда („\n”).
+| Нов садржај порука (број може да се разликује), празан стринг одбацује
+  све поруке у пакету.
 
-// TRANSLATION MISSING
 | [[hook_modifier_irc_cap_sync_req]] irc_cap_sync_req | 4.0.0
-| Server name + "," + supported capabilities on server (separated by spaces)
-| Capabilities to request (separated by spaces).
-| New content of capabilities to request (separated by spaces).
+| Име сервера + "," + подржане могућности сервера (раздвојене размацима)
+| Могућности које се захтевају (раздвојене размацима).
+| Нов садржај могућности које се захтевају (раздвојен размацима).
 
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
 | Име сервера
@@ -15841,9 +15839,8 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-* хеш табела са траженом инфо, NULL у случају да је дошло до грешке (must be
-  freed by calling <<_hashtable_free,hashtable_free>> after use)
+* хеш табела са траженом инфо, NULL у случају да је дошло до грешке (након
+  употребе мора да се ослободи позивом <<_hashtable_free,hashtable_free>>)
 
 Информације:
 
