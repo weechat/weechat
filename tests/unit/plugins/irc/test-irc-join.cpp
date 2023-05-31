@@ -168,7 +168,7 @@ TEST(IrcJoin, SplitBuildString)
     struct t_arraylist *arraylist;
     struct t_irc_join_channel **channels;
     struct t_irc_server *server;
-    struct t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel, *ptr_next_channel;
     char *autojoin;
 
     arraylist = irc_join_split (NULL, NULL, IRC_JOIN_SORT_DISABLED);
@@ -388,11 +388,13 @@ TEST(IrcJoin, SplitBuildString)
     STRCMP_EQUAL("#xyz,#CHAN{A}~,#def,#abc,#zzz key_xyz", autojoin);
     free (autojoin);
     arraylist_free (arraylist);
-    for (ptr_channel = server->channels; ptr_channel;
-         ptr_channel = ptr_channel->next_channel)
+    ptr_channel = server->channels;
+    while (ptr_channel)
     {
+        ptr_next_channel = ptr_channel->next_channel;
         if (ptr_channel->buffer)
             gui_buffer_close (ptr_channel->buffer);
+        ptr_channel = ptr_next_channel;
     }
     irc_server_free (server);
 }
