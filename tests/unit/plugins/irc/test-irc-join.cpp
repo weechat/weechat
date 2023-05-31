@@ -168,7 +168,6 @@ TEST(IrcJoin, SplitBuildString)
     struct t_arraylist *arraylist;
     struct t_irc_join_channel **channels;
     struct t_irc_server *server;
-    struct t_irc_channel *ptr_channel, *ptr_next_channel;
     char *autojoin;
 
     arraylist = irc_join_split (NULL, NULL, IRC_JOIN_SORT_DISABLED);
@@ -362,6 +361,7 @@ TEST(IrcJoin, SplitBuildString)
     /* server with casemapping RFC1459, sort channels by buffer number */
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
+    irc_server_create_buffer (server);
     server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
     irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#CHAN{A}~", 0, 0);
     irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#def", 0, 0);
@@ -388,14 +388,7 @@ TEST(IrcJoin, SplitBuildString)
     STRCMP_EQUAL("#xyz,#CHAN{A}~,#def,#abc,#zzz key_xyz", autojoin);
     free (autojoin);
     arraylist_free (arraylist);
-    ptr_channel = server->channels;
-    while (ptr_channel)
-    {
-        ptr_next_channel = ptr_channel->next_channel;
-        if (ptr_channel->buffer)
-            gui_buffer_close (ptr_channel->buffer);
-        ptr_channel = ptr_next_channel;
-    }
+    gui_buffer_close (server->buffer);
     irc_server_free (server);
 }
 
