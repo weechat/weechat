@@ -266,24 +266,26 @@ rb_protect_funcall (VALUE recv, ID mid, int *state, int argc, VALUE *argv)
 int
 weechat_ruby_print_exception (VALUE err)
 {
-    VALUE backtrace, tmp1, tmp2, tmp3;
+    VALUE backtrace, message, class, class_name, tmp3;
     int i;
     int ruby_error;
-    char* line;
-    char* cline;
-    char* err_msg;
-    char* err_class;
+    char *line, **cline, *err_msg, *err_class;
 
     backtrace = rb_protect_funcall (err, rb_intern ("backtrace"),
                                     &ruby_error, 0, NULL);
 
-    tmp1 = rb_protect_funcall(err, rb_intern ("message"), &ruby_error, 0, NULL);
-    err_msg = StringValueCStr (tmp1);
+    message = rb_protect_funcall(err, rb_intern ("message"), &ruby_error, 0, NULL);
+    err_msg = StringValueCStr (message);
 
-    tmp2 = rb_protect_funcall (rb_protect_funcall (err, rb_intern ("class"),
-                                                   &ruby_error, 0, NULL),
-                               rb_intern ("name"), &ruby_error, 0, NULL);
-    err_class = StringValuePtr (tmp2);
+    err_class = NULL;
+    class = rb_protect_funcall (err, rb_intern ("singleton_class"),
+                                &ruby_error, 0, NULL);
+    if (class != Qnil)
+    {
+        class_name = rb_protect_funcall (class, rb_intern ("to_s"),
+                                         &ruby_error, 0, NULL);
+        err_class = StringValuePtr (class_name);
+    }
 
     if (strcmp (err_class, "SyntaxError") == 0)
     {
@@ -295,46 +297,34 @@ weechat_ruby_print_exception (VALUE err)
     }
     else
     {
+        cline = weechat_string_dyn_alloc (256);
         for (i = 0; i < RARRAY_LEN(backtrace); i++)
         {
             line = StringValuePtr (RARRAY_PTR(backtrace)[i]);
-            cline = NULL;
+            weechat_string_dyn_copy (cline, NULL);
             if (i == 0)
             {
-                cline = (char *)calloc (strlen (line) + 2 + strlen (err_msg) +
-                                        3 + strlen (err_class) + 1,
-                                        sizeof (char));
-                if (cline)
+                weechat_string_dyn_concat (cline, line, -1);
+                weechat_string_dyn_concat (cline, ": ", -1);
+                weechat_string_dyn_concat (cline, err_msg, -1);
+                if (err_class)
                 {
-                    strcat (cline, line);
-                    strcat (cline, ": ");
-                    strcat (cline, err_msg);
-                    strcat (cline, " (");
-                    strcat (cline, err_class);
-                    strcat (cline, ")");
+                    weechat_string_dyn_concat (cline, " (", -1);
+                    weechat_string_dyn_concat (cline, err_class, -1);
+                    weechat_string_dyn_concat (cline, ")", -1);
                 }
             }
             else
             {
-                cline = (char *)calloc (strlen (line) + strlen ("     from ") + 1,
-                                        sizeof (char));
-                if (cline)
-                {
-                    strcat (cline, "     from ");
-                    strcat (cline, line);
-                }
+                weechat_string_dyn_concat (cline, "     from ", -1);
+                weechat_string_dyn_concat (cline, line, -1);
             }
-            if (cline)
-            {
-                weechat_printf (NULL,
-                                weechat_gettext ("%s%s: error: %s"),
-                                weechat_prefix ("error"), RUBY_PLUGIN_NAME,
-                                cline);
-            }
-
-            if (cline)
-                free (cline);
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: error: %s"),
+                            weechat_prefix ("error"), RUBY_PLUGIN_NAME,
+                            *cline);
         }
+        weechat_string_dyn_free (cline, 1);
     }
 
     return 0;

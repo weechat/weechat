@@ -100,6 +100,7 @@ Bug fixes::
   * irc: remove extra space in CTCP ACTION message sent without arguments
   * lua: fix crash with print when the value to print is not a string (issue #1904, issue #1905)
   * ruby: fix crash on quit when a child process is still running (issue #1889, issue #1915)
+  * ruby: fix crash in display of exception backtrace with Ruby 3 (issue #1631, issue #1886)
   * script: remove trailing "J" (line feed char) in source of scripts displayed
   * spell: check buffer pointer received in info "spell_dict"
   * trigger: make default triggers "cmd_pass", "cmd_pass_register" and "server_pass" compatible with multiline input (issue #1935)
