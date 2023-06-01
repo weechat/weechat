@@ -198,8 +198,9 @@ void
 relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
 {
     int length, number;
-    char *pos, hash_key[32], *message;
-    const char *str_message;
+    char *pos, hash_key[32], *message, *new_msg1, *new_msg2;
+    char modifier_data[128];
+    const char *str_message, *ptr_msg1, *ptr_msg2;
     struct t_hashtable *hashtable_in, *hashtable_out;
 
     if (!client)
@@ -209,10 +210,32 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
     if (!vbuffer)
         return;
 
-    pos = strchr (vbuffer, '\r');
+    new_msg1 = NULL;
+    hashtable_in = NULL;
+    hashtable_out = NULL;
+
+    snprintf (modifier_data, sizeof (modifier_data),
+              "0x%lx", (unsigned long)client);
+    new_msg1 = weechat_hook_modifier_exec ("relay_client_irc_out1",
+                                           modifier_data, vbuffer);
+
+    /* no changes in new message? */
+    if (new_msg1 && (strcmp (vbuffer, new_msg1) == 0))
+    {
+        free (new_msg1);
+        new_msg1 = NULL;
+    }
+
+    /* message dropped? */
+    if (new_msg1 && !new_msg1[0])
+        goto end;
+
+    ptr_msg1 = (new_msg1) ? new_msg1 : vbuffer;
+
+    pos = strchr (ptr_msg1, '\r');
     if (pos)
         pos[0] = '\0';
-    pos = strchr (vbuffer, '\n');
+    pos = strchr (ptr_msg1, '\n');
     if (pos)
         pos[0] = '\0';
 
@@ -220,37 +243,57 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
                                           WEECHAT_HASHTABLE_STRING,
                                           WEECHAT_HASHTABLE_STRING,
                                           NULL, NULL);
-    if (hashtable_in)
+    if (!hashtable_in)
+        goto end;
+
+    weechat_hashtable_set (hashtable_in, "server", client->protocol_args);
+    weechat_hashtable_set (hashtable_in, "message", ptr_msg1);
+    hashtable_out = weechat_info_get_hashtable ("irc_message_split",
+                                                hashtable_in);
+    if (!hashtable_out)
+        goto end;
+
+    number = 1;
+    while (1)
     {
-        weechat_hashtable_set (hashtable_in, "server", client->protocol_args);
-        weechat_hashtable_set (hashtable_in, "message", vbuffer);
-        hashtable_out = weechat_info_get_hashtable ("irc_message_split",
-                                                    hashtable_in);
-        if (hashtable_out)
+        snprintf (hash_key, sizeof (hash_key), "msg%d", number);
+        str_message = weechat_hashtable_get (hashtable_out, hash_key);
+        if (!str_message)
+            break;
+        new_msg2 = weechat_hook_modifier_exec ("relay_client_irc_out",
+                                               modifier_data, str_message);
+        /* no changes in new message? */
+        if (new_msg2 && (strcmp (str_message, new_msg2) == 0))
         {
-            number = 1;
-            while (1)
-            {
-                snprintf (hash_key, sizeof (hash_key), "msg%d", number);
-                str_message = weechat_hashtable_get (hashtable_out, hash_key);
-                if (!str_message)
-                    break;
-                length = strlen (str_message) + 16 + 1;
-                message = malloc (length);
-                if (message)
-                {
-                    snprintf (message, length, "%s\r\n", str_message);
-                    relay_client_send (client, RELAY_CLIENT_MSG_STANDARD,
-                                       message, strlen (message), NULL);
-                    free (message);
-                }
-                number++;
-            }
-            weechat_hashtable_free (hashtable_out);
+            free (new_msg2);
+            new_msg2 = NULL;
         }
-        weechat_hashtable_free (hashtable_in);
+        /* message not dropped? */
+        if (!new_msg2 || new_msg2[0])
+        {
+            ptr_msg2 = (new_msg2) ? new_msg2 : str_message;
+            length = strlen (ptr_msg2) + 16 + 1;
+            message = malloc (length);
+            if (message)
+            {
+                snprintf (message, length, "%s\r\n", ptr_msg2);
+                relay_client_send (client, RELAY_CLIENT_MSG_STANDARD,
+                                   message, strlen (message), NULL);
+                free (message);
+            }
+        }
+        if (new_msg2)
+            free (new_msg2);
+        number++;
     }
 
+end:
+    if (new_msg1)
+        free (new_msg1);
+    if (hashtable_in)
+        weechat_hashtable_free (hashtable_in);
+    if (hashtable_out)
+        weechat_hashtable_free (hashtable_out);
     free (vbuffer);
 }
 
@@ -1334,12 +1377,15 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     struct t_hashtable *hash_parsed, *hash_redirect;
     struct t_infolist *infolist_server;
     const char *irc_command, *str_num_params, *isupport, *pos_password;
+    const char *ptr_data;
     char str_time[128], str_signal[128], str_server_channel[256], *nick;
     char str_param[128], *str_args, *version, str_command[128], **params;
     char *pos, *password, *irc_is_channel, *info, *error, *str_cmd_lower;
+    char modifier_data[128], *new_data;
     long num_params;
     int i, redirect_msg;
 
+    new_data = NULL;
     hash_parsed = NULL;
     params = NULL;
 
@@ -1354,8 +1400,26 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                         data);
     }
 
+    snprintf (modifier_data, sizeof (modifier_data),
+              "0x%lx", (unsigned long)client);
+    new_data = weechat_hook_modifier_exec ("relay_client_irc_in",
+                                           modifier_data, data);
+
+    /* no changes in new data */
+    if (new_data && (strcmp (data, new_data) == 0))
+    {
+        free (new_data);
+        new_data = NULL;
+    }
+
+    /* message dropped? */
+    if (new_data && !new_data[0])
+        goto end;
+
+    ptr_data = (new_data) ? new_data : data;
+
     /* parse IRC message */
-    hash_parsed = relay_irc_message_parse (data);
+    hash_parsed = relay_irc_message_parse (ptr_data);
     if (!hash_parsed)
         goto end;
     irc_command = weechat_hashtable_get (hash_parsed, "command");
@@ -1808,11 +1872,13 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
             relay_irc_input_send (client, NULL,
                                   "priority_high",
                                   "/quote %s",
-                                  data);
+                                  ptr_data);
         }
     }
 
 end:
+    if (new_data)
+        free (new_data);
     if (hash_parsed)
         weechat_hashtable_free (hash_parsed);
     if (params)

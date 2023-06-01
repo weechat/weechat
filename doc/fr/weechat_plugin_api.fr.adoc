@@ -12631,6 +12631,23 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
   (pour tenir dans les 512 octets par défaut).
 | Nouveau contenu du message.
 
+| [[hook_modifier_relay_client_irc_in]] relay_client_irc_in | 4.0.0
+| Chaîne avec un pointeur vers le client relay (par exemple : "0x1234abcd")
+| Contenu du message reçu du client relay IRC.
+| Nouveau contenu du message.
+
+| [[hook_modifier_relay_client_irc_out1]] relay_client_irc_out1 | 4.0.0
+| Chaîne avec un pointeur vers le client relay (par exemple : "0x1234abcd")
+| Contenu du message qui va être envoyé au client relay IRC avant découpage automatique
+  (pour tenir dans les 512 octets par défaut).
+| Nouveau contenu du message.
+
+| [[hook_modifier_relay_client_irc_out]] relay_client_irc_out | 4.0.0
+| Chaîne avec un pointeur vers le client relay (par exemple : "0x1234abcd")
+| Contenu du message qui va être envoyé au client relay IRC après découpage automatique
+  (pour tenir dans les 512 octets par défaut).
+| Nouveau contenu du message.
+
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
 | Chaîne avec un pointeur vers la fenêtre (par exemple : "0x1234abcd")
 | Chaîne vide.

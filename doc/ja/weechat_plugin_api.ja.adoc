@@ -12496,6 +12496,26 @@ WeeChat とプラグインが使う修飾子のリスト:
   メッセージの新しい内容
 
 // TRANSLATION MISSING
+| [[hook_modifier_relay_client_irc_in]] relay_client_irc_in | 4.0.0
+| String with relay client pointer (eg: "0x1234abcd")
+| Content of message received from relay IRC client.
+| New content of message.
+
+// TRANSLATION MISSING
+| [[hook_modifier_relay_client_irc_out1]] relay_client_irc_out1 | 4.0.0
+| String with relay client pointer (eg: "0x1234abcd")
+| Content of message about to be sent to relay IRC client before automatic split
+  (to fit in 512 bytes by default).
+| New content of message.
+
+// TRANSLATION MISSING
+| [[hook_modifier_relay_client_irc_out]] relay_client_irc_out | 4.0.0
+| String with relay client pointer (eg: "0x1234abcd")
+| Content of message about to be sent to relay IRC client after automatic split
+  (to fit in 512 bytes by default).
+| New content of message.
+
+// TRANSLATION MISSING
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
 | ウィンドウへのポインタの文字列 (eg: "0x1234abcd")
 | 空文字列
