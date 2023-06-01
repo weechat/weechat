@@ -1322,6 +1322,8 @@ relay_irc_recv_command_capab (struct t_relay_client *client,
         server_caps = RELAY_IRC_DATA(client, server_capabilities);
         for (i = 1; i < num_params; i++)
         {
+            if (!params[i][0])
+                continue;
             num_caps_received++;
             capability = relay_irc_search_server_capability (params[i]);
             if (capability >= 0)
