@@ -137,6 +137,7 @@ irc_message_parse_params (const char *parameters,
  *   - tags (string)
  *   - message without tags (string)
  *   - nick (string)
+ *   - user (string)
  *   - host (string)
  *   - command (string)
  *   - channel (string)
@@ -437,6 +438,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
  *   - tag_xxx (one key per tag, with unescaped value)
  *   - message_without_tags
  *   - nick
+ *   - user
  *   - host
  *   - command
  *   - channel
