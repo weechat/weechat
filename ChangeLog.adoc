@@ -117,6 +117,7 @@ Tests::
   * irc: check tags in messages displayed by IRC plugin
   * irc: add tests on function irc_server_alloc_with_url
   * irc: add tests on message/notice/action/CTCP sent
+  * relay: add tests on "irc" protocol
 
 Build::
 

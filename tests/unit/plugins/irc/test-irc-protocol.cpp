@@ -84,7 +84,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
 #define CHECK_CORE(__prefix, __message)                                 \
     if (record_search ("core.weechat", __prefix, __message, NULL) < 0)  \
     {                                                                   \
-        char **msg = server_build_error (                               \
+        char **msg = build_error (                                      \
             "Core message not displayed",                               \
             __prefix,                                                   \
             __message,                                                  \
@@ -98,7 +98,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     if (record_search ("irc.server." IRC_FAKE_SERVER, __prefix,         \
                        __message, __tags) < 0)                          \
     {                                                                   \
-        char **msg = server_build_error (                               \
+        char **msg = build_error (                                      \
             "Server message not displayed",                             \
             __prefix,                                                   \
             __message,                                                  \
@@ -130,7 +130,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     if (record_search ("irc." IRC_FAKE_SERVER ".#test", __prefix,       \
                        __message, __tags) < 0)                          \
     {                                                                   \
-        char **msg = server_build_error (                               \
+        char **msg = build_error (                                      \
             "Channel message not displayed",                            \
             __prefix,                                                   \
             __message,                                                  \
@@ -144,7 +144,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     if (record_search ("irc." IRC_FAKE_SERVER "." __nick,               \
                        __prefix, __message, __tags) < 0)                \
     {                                                                   \
-        char **msg = server_build_error (                               \
+        char **msg = build_error (                                      \
             "Private message not displayed",                            \
             __prefix,                                                   \
             __message,                                                  \
@@ -157,7 +157,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
 #define CHECK_NO_MSG                                                    \
     if (arraylist_size (recorded_messages) > 0)                         \
     {                                                                   \
-        char **msg = server_build_error (                               \
+        char **msg = build_error (                                      \
             "Unexpected message(s) displayed",                          \
             NULL,                                                       \
             NULL,                                                       \
@@ -172,8 +172,8 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
         && !arraylist_search (sent_messages, (void *)__message,         \
                               NULL, NULL))                              \
     {                                                                   \
-        char **msg = server_build_error (                               \
-            "Message not sent to server",                               \
+        char **msg = build_error (                                      \
+            "Message not sent to the IRC server",                       \
             NULL,                                                       \
             __message,                                                  \
             NULL,                                                       \
@@ -184,7 +184,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     else if ((__message == NULL)                                        \
              && (arraylist_size (sent_messages) > 0))                   \
     {                                                                   \
-        char **msg = server_build_error (                               \
+        char **msg = build_error (                                      \
             "Unexpected response(s) sent to the IRC server",            \
             NULL,                                                       \
             NULL,                                                       \
@@ -218,6 +218,170 @@ struct t_hook *hook_signal_irc_out = NULL;
 
 TEST_GROUP(IrcProtocol)
 {
+};
+
+TEST_GROUP(IrcProtocolWithServer)
+{
+    void server_recv (const char *command)
+    {
+        char str_command[4096];
+
+        record_start ();
+        arraylist_clear (sent_messages);
+
+        snprintf (str_command, sizeof (str_command),
+                  "/command -buffer irc.server." IRC_FAKE_SERVER " irc "
+                  "/server fakerecv \"%s\"",
+                  command);
+        run_cmd_quiet (str_command);
+
+        record_stop ();
+    }
+
+    void server_input_data (const char *buffer, const char *data)
+    {
+        struct t_gui_buffer *ptr_buffer;
+
+        record_start ();
+        arraylist_clear (sent_messages);
+
+        ptr_buffer = gui_buffer_search_by_full_name (buffer);
+        if (ptr_buffer)
+            input_data (ptr_buffer, data, NULL, 0);
+
+        record_stop ();
+    }
+
+    char **build_error (const char *msg1,
+                        const char *prefix,
+                        const char *message,
+                        const char *tags,
+                        const char *msg2)
+    {
+        char **msg;
+
+        msg = string_dyn_alloc (1024);
+        string_dyn_concat (msg, msg1, -1);
+        if (message)
+        {
+            string_dyn_concat (msg, ": prefix=\"", -1);
+            string_dyn_concat (msg, prefix, -1);
+            string_dyn_concat (msg, "\", message=\"", -1);
+            string_dyn_concat (msg, message, -1);
+            string_dyn_concat (msg, "\", tags=\"", -1);
+            string_dyn_concat (msg, tags, -1);
+            string_dyn_concat (msg, "\"\n", -1);
+        }
+        else
+        {
+            string_dyn_concat (msg, ":\n", -1);
+        }
+        if (msg2)
+        {
+            string_dyn_concat (msg, msg2, -1);
+            string_dyn_concat (msg, ":\n", -1);
+        }
+        return msg;
+    }
+
+    static int signal_irc_out_cb (const void *pointer, void *data,
+                                  const char *signal, const char *type_data,
+                                  void *signal_data)
+    {
+        /* make C++ compiler happy */
+        (void) pointer;
+        (void) data;
+        (void) signal;
+        (void) type_data;
+
+        if (signal_data)
+            arraylist_add (sent_messages, strdup ((const char *)signal_data));
+
+        return WEECHAT_RC_OK;
+    }
+
+    static int sent_msg_cmp_cb (void *data, struct t_arraylist *arraylist,
+                                void *pointer1, void *pointer2)
+    {
+        /* make C++ compiler happy */
+        (void) data;
+        (void) arraylist;
+
+        return strcmp ((char *)pointer1, (char *)pointer2);
+    }
+
+    static void sent_msg_free_cb (void *data, struct t_arraylist *arraylist,
+                                  void *pointer)
+    {
+        /* make C++ compiler happy */
+        (void) data;
+        (void) arraylist;
+
+        free (pointer);
+    }
+
+    void sent_msg_dump (char **msg)
+    {
+        int i;
+
+        for (i = 0; i < arraylist_size (sent_messages); i++)
+        {
+            string_dyn_concat (msg, "  \"", -1);
+            string_dyn_concat (msg,
+                               (const char *)arraylist_get (sent_messages, i),
+                               -1);
+            string_dyn_concat (msg, "\"\n", -1);
+        }
+    }
+
+    void setup ()
+    {
+        /* initialize list of messages sent to the server */
+        if (sent_messages)
+        {
+            arraylist_clear (sent_messages);
+        }
+        else
+        {
+            sent_messages = arraylist_new (16, 0, 1,
+                                           &sent_msg_cmp_cb, NULL,
+                                           &sent_msg_free_cb, NULL);
+        }
+
+        if (!hook_signal_irc_out)
+        {
+            hook_signal_irc_out = hook_signal (NULL,
+                                               IRC_FAKE_SERVER ",irc_out1_*",
+                                               &signal_irc_out_cb, NULL, NULL);
+        }
+
+        /*
+         * disable backlog feature during tests, so we are not polluted by
+         * these messages when buffers are opened
+         */
+        config_file_option_set (logger_config_look_backlog, "0", 1);
+
+        /* create a fake server (no I/O) */
+        run_cmd_quiet ("/mute /server add " IRC_FAKE_SERVER " fake:127.0.0.1 "
+                       "-nicks=nick1,nick2,nick3");
+
+        /* connect to the fake server */
+        run_cmd_quiet ("/connect " IRC_FAKE_SERVER);
+
+        /* get the server pointer */
+        ptr_server = irc_server_search (IRC_FAKE_SERVER);
+    }
+
+    void teardown ()
+    {
+        /* disconnect and delete the fake server */
+        run_cmd_quiet ("/mute /disconnect " IRC_FAKE_SERVER);
+        run_cmd_quiet ("/mute /server del " IRC_FAKE_SERVER);
+        ptr_server = NULL;
+
+        /* restore backlog feature */
+        config_file_option_reset (logger_config_look_backlog, 1);
+    }
 };
 
 /*
@@ -431,170 +595,6 @@ TEST(IrcProtocol, StringParams)
     WEE_TEST_STR("param3", irc_protocol_string_params (params_3, 2, 2));
     WEE_TEST_STR("", irc_protocol_string_params (params_3, 3, 3));
 }
-
-TEST_GROUP(IrcProtocolWithServer)
-{
-    void server_recv (const char *command)
-    {
-        char str_command[4096];
-
-        record_start ();
-        arraylist_clear (sent_messages);
-
-        snprintf (str_command, sizeof (str_command),
-                  "/command -buffer irc.server." IRC_FAKE_SERVER " irc "
-                  "/server fakerecv \"%s\"",
-                  command);
-        run_cmd_quiet (str_command);
-
-        record_stop ();
-    }
-
-    void server_input_data (const char *buffer, const char *data)
-    {
-        struct t_gui_buffer *ptr_buffer;
-
-        record_start ();
-        arraylist_clear (sent_messages);
-
-        ptr_buffer = gui_buffer_search_by_full_name (buffer);
-        if (ptr_buffer)
-            input_data (ptr_buffer, data, NULL, 0);
-
-        record_stop ();
-    }
-
-    char **server_build_error (const char *msg1,
-                               const char *prefix,
-                               const char *message,
-                               const char *tags,
-                               const char *msg2)
-    {
-        char **msg;
-
-        msg = string_dyn_alloc (1024);
-        string_dyn_concat (msg, msg1, -1);
-        if (message)
-        {
-            string_dyn_concat (msg, ": prefix=\"", -1);
-            string_dyn_concat (msg, prefix, -1);
-            string_dyn_concat (msg, "\", message=\"", -1);
-            string_dyn_concat (msg, message, -1);
-            string_dyn_concat (msg, "\", tags=\"", -1);
-            string_dyn_concat (msg, tags, -1);
-            string_dyn_concat (msg, "\"\n", -1);
-        }
-        else
-        {
-            string_dyn_concat (msg, ":\n", -1);
-        }
-        if (msg2)
-        {
-            string_dyn_concat (msg, msg2, -1);
-            string_dyn_concat (msg, ":\n", -1);
-        }
-        return msg;
-    }
-
-    static int signal_irc_out_cb (const void *pointer, void *data,
-                                  const char *signal, const char *type_data,
-                                  void *signal_data)
-    {
-        /* make C++ compiler happy */
-        (void) pointer;
-        (void) data;
-        (void) signal;
-        (void) type_data;
-
-        if (signal_data)
-            arraylist_add (sent_messages, strdup ((const char *)signal_data));
-
-        return WEECHAT_RC_OK;
-    }
-
-    static int sent_msg_cmp_cb (void *data, struct t_arraylist *arraylist,
-                                void *pointer1, void *pointer2)
-    {
-        /* make C++ compiler happy */
-        (void) data;
-        (void) arraylist;
-
-        return strcmp ((char *)pointer1, (char *)pointer2);
-    }
-
-    static void sent_msg_free_cb (void *data, struct t_arraylist *arraylist,
-                                  void *pointer)
-    {
-        /* make C++ compiler happy */
-        (void) data;
-        (void) arraylist;
-
-        free (pointer);
-    }
-
-    void sent_msg_dump (char **msg)
-    {
-        int i;
-
-        for (i = 0; i < arraylist_size (sent_messages); i++)
-        {
-            string_dyn_concat (msg, "  \"", -1);
-            string_dyn_concat (msg,
-                               (const char *)arraylist_get (sent_messages, i),
-                               -1);
-            string_dyn_concat (msg, "\"\n", -1);
-        }
-    }
-
-    void setup ()
-    {
-        /* initialize list of messages sent to the server */
-        if (sent_messages)
-        {
-            arraylist_clear (sent_messages);
-        }
-        else
-        {
-            sent_messages = arraylist_new (16, 0, 1,
-                                           &sent_msg_cmp_cb, NULL,
-                                           &sent_msg_free_cb, NULL);
-        }
-
-        if (!hook_signal_irc_out)
-        {
-            hook_signal_irc_out = hook_signal (NULL,
-                                               IRC_FAKE_SERVER ",irc_out1_*",
-                                               &signal_irc_out_cb, NULL, NULL);
-        }
-
-        /*
-         * disable backlog feature during tests, so we are not polluted by
-         * these messages when buffers are opened
-         */
-        config_file_option_set (logger_config_look_backlog, "0", 1);
-
-        /* create a fake server (no I/O) */
-        run_cmd_quiet ("/mute /server add " IRC_FAKE_SERVER " fake:127.0.0.1 "
-                       "-nicks=nick1,nick2,nick3");
-
-        /* connect to the fake server */
-        run_cmd_quiet ("/connect " IRC_FAKE_SERVER);
-
-        /* get the server pointer */
-        ptr_server = irc_server_search (IRC_FAKE_SERVER);
-    }
-
-    void teardown ()
-    {
-        /* disconnect and delete the fake server */
-        run_cmd_quiet ("/mute /disconnect " IRC_FAKE_SERVER);
-        run_cmd_quiet ("/mute /server del " IRC_FAKE_SERVER);
-        ptr_server = NULL;
-
-        /* restore backlog feature */
-        config_file_option_reset (logger_config_look_backlog, 1);
-    }
-};
 
 /*
  * Tests send of messages to channel (STATUSMSG and normal) and nick,

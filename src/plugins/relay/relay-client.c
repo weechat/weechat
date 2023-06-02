@@ -591,6 +591,9 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
 
     client = (struct t_relay_client *)pointer;
 
+    if (client->sock < 0)
+        return WEECHAT_RC_OK;
+
     /*
      * data can be received only during authentication
      * or if connected (authentication was OK)
@@ -800,15 +803,19 @@ relay_client_send_outqueue (struct t_relay_client *client)
     {
         if (client->tls)
         {
-            num_sent = gnutls_record_send (client->gnutls_sess,
-                                           client->outqueue->data,
-                                           client->outqueue->data_size);
+            num_sent = (client->sock >= 0) ?
+                gnutls_record_send (client->gnutls_sess,
+                                    client->outqueue->data,
+                                    client->outqueue->data_size) :
+                client->outqueue->data_size;
         }
         else
         {
-            num_sent = send (client->sock,
-                             client->outqueue->data,
-                             client->outqueue->data_size, 0);
+            num_sent = (client->sock >= 0) ?
+                send (client->sock,
+                      client->outqueue->data,
+                      client->outqueue->data_size, 0) :
+                client->outqueue->data_size;
         }
         if (num_sent >= 0)
         {
@@ -1138,9 +1145,16 @@ relay_client_send (struct t_relay_client *client,
     else
     {
         if (client->tls)
-            num_sent = gnutls_record_send (client->gnutls_sess, ptr_data, data_size);
+        {
+            num_sent = (client->sock >= 0) ?
+                gnutls_record_send (client->gnutls_sess, ptr_data, data_size) :
+                data_size;
+        }
         else
-            num_sent = send (client->sock, ptr_data, data_size, 0);
+        {
+            num_sent = (client->sock >= 0) ?
+                send (client->sock, ptr_data, data_size, 0) : data_size;
+        }
 
         if (num_sent >= 0)
         {
@@ -1307,6 +1321,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->sock = sock;
         new_client->server_port = server->port;
         new_client->tls = server->tls;
+        new_client->gnutls_sess = NULL;
         new_client->hook_timer_handshake = NULL;
         new_client->gnutls_handshake_ok = 0;
         new_client->websocket = RELAY_CLIENT_WEBSOCKET_NOT_USED;
@@ -1464,10 +1479,13 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                 _(relay_client_status_string[new_client->status]));
         }
 
-        new_client->hook_fd = weechat_hook_fd (new_client->sock,
-                                               1, 0, 0,
-                                               &relay_client_recv_cb,
-                                               new_client, NULL);
+        if (new_client->sock >= 0)
+        {
+            new_client->hook_fd = weechat_hook_fd (new_client->sock,
+                                                   1, 0, 0,
+                                                   &relay_client_recv_cb,
+                                                   new_client, NULL);
+        }
 
         relay_client_count++;
 

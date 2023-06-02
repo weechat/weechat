@@ -59,13 +59,13 @@ relay_irc_command_relayed (const char *irc_command)
 {
     int i;
 
-    if (irc_command)
+    if (!irc_command)
+        return 0;
+
+    for (i = 0; relay_irc_relay_commands[i]; i++)
     {
-        for (i = 0; relay_irc_relay_commands[i]; i++)
-        {
-            if (weechat_strcasecmp (relay_irc_relay_commands[i], irc_command) == 0)
-                return 1;
-        }
+        if (weechat_strcasecmp (relay_irc_relay_commands[i], irc_command) == 0)
+            return 1;
     }
 
     /* command must NOT be relayed to client */
@@ -85,16 +85,16 @@ relay_irc_command_ignored (const char *irc_command)
 {
     int i;
 
-    if (irc_command)
+    if (!irc_command)
+        return 0;
+
+    for (i = 0; relay_irc_ignore_commands[i]; i++)
     {
-        for (i = 0; relay_irc_ignore_commands[i]; i++)
-        {
-            if (weechat_strcasecmp (relay_irc_ignore_commands[i], irc_command) == 0)
-                return 1;
-        }
+        if (weechat_strcasecmp (relay_irc_ignore_commands[i], irc_command) == 0)
+            return 1;
     }
 
-    /* command must NOT be relayed to client */
+    /* command must be ignored */
     return 0;
 }
 
@@ -157,6 +157,9 @@ struct t_hashtable *
 relay_irc_message_parse (const char *message)
 {
     struct t_hashtable *hash_msg, *hash_parsed;
+
+    if (!message)
+        return NULL;
 
     hash_msg = NULL;
     hash_parsed = NULL;
@@ -384,30 +387,30 @@ relay_irc_tag_relay_client_id (const char *tags)
 
     result = -1;
 
-    if (tags && tags[0])
+    if (!tags || !tags[0])
+        return result;
+
+    argv = weechat_string_split (tags, ",", NULL,
+                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                 0, &argc);
+    if (argv)
     {
-        argv = weechat_string_split (tags, ",", NULL,
-                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
-                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                                     0, &argc);
-        if (argv)
+        for (i = 0; i < argc; i++)
         {
-            for (i = 0; i < argc; i++)
+            if (strncmp (argv[i], "relay_client_", 13) == 0)
             {
-                if (strncmp (argv[i], "relay_client_", 13) == 0)
+                error = NULL;
+                number = strtol (argv[i] + 13, &error, 10);
+                if (error && !error[0])
                 {
-                    error = NULL;
-                    number = strtol (argv[i] + 13, &error, 10);
-                    if (error && !error[0])
-                    {
-                        result = number;
-                        break;
-                    }
+                    result = number;
+                    break;
                 }
             }
-            weechat_string_free_split (argv);
         }
+        weechat_string_free_split (argv);
     }
 
     return result;
@@ -1189,7 +1192,7 @@ relay_irc_send_join_channels (struct t_relay_client *client)
 
 void
 relay_irc_input_send (struct t_relay_client *client, const char *irc_channel,
-                      char *options, const char *format, ...)
+                      const char *options, const char *format, ...)
 {
     char buf_beginning[1024], *buf;
     int length_beginning, length_vbuffer;
@@ -1459,11 +1462,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     /* server capabilities */
     if (irc_command && (weechat_strcasecmp (irc_command, "cap") == 0))
     {
-        if (num_params > 0)
-        {
-            relay_irc_recv_command_capab (client,
-                                          num_params, (const char **)params);
-        }
+        relay_irc_recv_command_capab (client, num_params, (const char **)params);
     }
     /* if client is not yet "connected" */
     if (!RELAY_IRC_DATA(client, connected))
@@ -1541,6 +1540,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                                          RELAY_IRC_DATA(client, address));
                         relay_client_set_status (client,
                                                  RELAY_STATUS_DISCONNECTED);
+                        weechat_infolist_free (infolist_server);
                         goto end;
                     }
                     if (num_params > 0)
