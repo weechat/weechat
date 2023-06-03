@@ -402,6 +402,82 @@ irc_info_info_irc_server_isupport_value_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns IRC info "irc_server_cap".
+ */
+
+char *
+irc_info_info_irc_server_cap_cb (const void *pointer, void *data,
+                                 const char *info_name,
+                                 const char *arguments)
+{
+    char *pos_comma, *server;
+    int has_cap;
+    struct t_irc_server *ptr_server;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    has_cap = 0;
+    pos_comma = strchr (arguments, ',');
+    if (pos_comma)
+    {
+        server = weechat_strndup (arguments, pos_comma - arguments);
+        if (server)
+        {
+            ptr_server = irc_server_search (server);
+            if (ptr_server)
+            {
+                has_cap = weechat_hashtable_has_key (ptr_server->cap_list,
+                                                     pos_comma + 1);
+            }
+            free (server);
+        }
+    }
+
+    return (has_cap) ? strdup ("1") : NULL;
+}
+
+/*
+ * Returns IRC info "irc_server_cap_value".
+ */
+
+char *
+irc_info_info_irc_server_cap_value_cb (const void *pointer, void *data,
+                                       const char *info_name,
+                                       const char *arguments)
+{
+    char *pos_comma, *server;
+    const char *cap_value;
+    struct t_irc_server *ptr_server;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    cap_value = NULL;
+    pos_comma = strchr (arguments, ',');
+    if (pos_comma)
+    {
+        server = weechat_strndup (arguments, pos_comma - arguments);
+        if (server)
+        {
+            ptr_server = irc_server_search (server);
+            if (ptr_server)
+            {
+                cap_value = weechat_hashtable_get (ptr_server->cap_list,
+                                                   pos_comma + 1);
+            }
+            free (server);
+        }
+    }
+
+    return (cap_value) ? strdup (cap_value) : NULL;
+}
+
+/*
  * Returns IRC info "irc_is_message_ignored".
  */
 
@@ -1171,6 +1247,16 @@ irc_info_init ()
         N_("value of feature, if supported by server (from IRC message 005)"),
         N_("server,feature"),
         &irc_info_info_irc_server_isupport_value_cb, NULL, NULL);
+    weechat_hook_info (
+        "irc_server_cap",
+        N_("1 if capability is enabled in server"),
+        N_("server,capability"),
+        &irc_info_info_irc_server_cap_cb, NULL, NULL);
+    weechat_hook_info (
+        "irc_server_cap_value",
+        N_("value of capability, if enabled in server"),
+        N_("server,capability"),
+        &irc_info_info_irc_server_cap_value_cb, NULL, NULL);
     weechat_hook_info (
         "irc_is_message_ignored",
         N_("1 if the nick is ignored (message is not displayed)"),

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-30 16:39+0200\n"
+"POT-Creation-Date: 2023-06-03 09:51+0200\n"
 "PO-Revision-Date: 2023-05-14 15:29+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11341,6 +11341,19 @@ msgstr "сервер,могућност"
 msgid "value of feature, if supported by server (from IRC message 005)"
 msgstr "вредност могућности, ако је сервер подржава (из IRC поруке 005)"
 
+#, fuzzy
+#| msgid "%s%s: client capability, enabled: %s"
+msgid "1 if capability is enabled in server"
+msgstr "%s%s: могућност клијента, укључено: %s"
+
+msgid "server,capability"
+msgstr ""
+
+#, fuzzy
+#| msgid "%s%s: client capability, enabled: %s"
+msgid "value of capability, if enabled in server"
+msgstr "%s%s: могућност клијента, укључено: %s"
+
 msgid "1 if the nick is ignored (message is not displayed)"
 msgstr "1 ако се надимак игнорише (порука се не приказује)"
 
@@ -14039,8 +14052,8 @@ msgid ""
 "%s%s: no TLS certificate/key found (option relay.network.tls_cert_key is "
 "empty)"
 msgstr ""
-"%s%s: није пронађен ниједан TLS сертификат/кључ (опција relay.network.tls_"
-"cert_key је празна)"
+"%s%s: није пронађен ниједан TLS сертификат/кључ (опција relay.network."
+"tls_cert_key је празна)"
 
 #, c-format
 msgid "%s: TLS certificate and key have been set"
@@ -14055,8 +14068,8 @@ msgid ""
 "%s%s: error: file with TLS certificate/key is not readable: \"%s\" (option "
 "relay.network.tls_cert_key)"
 msgstr ""
-"%s%s: грешка: фајл са TLS сертификатом/кључем не може да се чита: „%s” "
-"(опција relay.network.tls_cert_key)"
+"%s%s: грешка: фајл са TLS сертификатом/кључем не може да се чита: "
+"„%s” (опција relay.network.tls_cert_key)"
 
 #, c-format
 msgid "%s%s: unable to initialize priority for TLS"

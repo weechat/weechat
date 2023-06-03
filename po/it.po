@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-05-30 16:39+0200\n"
+"POT-Creation-Date: 2023-06-03 09:51+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10032,6 +10032,19 @@ msgstr "server,caratteristica"
 msgid "value of feature, if supported by server (from IRC message 005)"
 msgstr ""
 "valore della caratteristica, se supportata dal servre (dal messaggio IRC 005)"
+
+#, fuzzy
+#| msgid "%s%s: client capability, enabled: %s"
+msgid "1 if capability is enabled in server"
+msgstr "%s%s: capacità del client, abilitata: %s"
+
+msgid "server,capability"
+msgstr ""
+
+#, fuzzy
+#| msgid "%s%s: client capability, enabled: %s"
+msgid "value of capability, if enabled in server"
+msgstr "%s%s: capacità del client, abilitata: %s"
 
 msgid "1 if the nick is ignored (message is not displayed)"
 msgstr ""
