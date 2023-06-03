@@ -67,6 +67,7 @@ New features::
   * relay: make TLS certificate/key loading error handling more verbose (issue #1558)
   * relay: add modifiers "relay_client_irc_in", "relay_client_irc_out1" and "relay_client_irc_out" in irc protocol
   * relay: add support of capability "echo-message" in irc protocol (issue #1949)
+  * relay: add handshake option "escape_commands" in weechat protocol
 
 Bug fixes::
 

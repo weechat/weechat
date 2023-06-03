@@ -102,7 +102,7 @@ Liste des commandes disponibles (détail dans les chapitres suivants) :
 [[command_handshake]]
 === handshake
 
-_WeeChat ≥ 2.9, mis à jour dans la version 3.5._
+_WeeChat ≥ 2.9, mis à jour dans les versions 3.5, 4.0.0._
 
 Effectuer une poignée de main entre le client et WeeChat : cela est obligatoire
 dans la plupart des cas pour connaître les paramètres de la session et préparer
@@ -138,6 +138,12 @@ Paramètres :
 *** _zstd_ : compresser avec https://facebook.github.io/zstd/[Zstandard ^↗^^] :
     meilleure compression et bien plus rapide que _zlib_ pour la compression et
     la décompression _(WeeChat ≥ 3.5)_
+** _escape_commands_ : les commandes envoyées par le client vers _relay_ doivent
+   être échappées : toutes les barres obliques inverses sont interprétées et une
+   barre oblique inverse simple doit être échappée (`\\`) ; cela autorise
+   par exemple un client à envoyer des messages multi-lignes (les caractères
+   `\n` sont remplacés par des nouvelles lignes, voir la <<command_input,commande input>>)
+   _(WeeChat ≥ 4.0.0)_
 
 Notes à propos de l'option _password_hash_algo_ :
 
@@ -614,7 +620,7 @@ Demander une _infolist_.
 
 [IMPORTANT]
 Le contenu de l'infolist est une duplication des données. Dans la mesure du
-possible, utilisez plutôt la commande <<command_hdata,hdata>>, qui est un accès
+possible, utilisez plutôt la <<command_hdata,commande hdata>>, qui est un accès
 direct aux données (cela est plus rapide, utilise moins de mémoire et retourne
 des objets plus petits dans le message).
 
@@ -978,6 +984,14 @@ input core.weechat /help filter
 input irc.libera.#weechat bonjour !
 ----
 
+* Envoyer un message multi-lignes au canal #test (l'option _escape_commands_
+  doit avoir été activée dans la <<command_handshake,commande handshake>> et
+  requiert WeeChat ≥ 4.0.0) :
+
+----
+input irc.ergo.#test ce message a\n2 lignes
+----
+
 [[command_completion]]
 === completion
 
@@ -1228,7 +1242,7 @@ Paramètres :
   spécifier tous les tampons
 * _options_ : un ou plusieurs mots-clés, séparés par des virgules (le défaut est
   _buffers,upgrade,buffer,nicklist_ pour "*" et _buffer,nicklist_ pour un
-  tampon) ; voir <<command_sync,la commande sync>> pour les valeurs
+  tampon) ; voir la <<command_sync,commande sync>> pour les valeurs
 
 [NOTE]
 En utilisant le tampon "*", les autres tampons synchronisés (en utilisant un

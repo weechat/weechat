@@ -106,7 +106,8 @@ _リレー_ プラグインは _IRC プロキシ_ のように振舞います (�
 [[command_handshake]]
 === handshake
 
-_WeeChat ≥ 2.9, updated in version 3.5._
+// TRANSLATION MISSING
+_WeeChat ≥ 2.9, updated in versions 3.5, 4.0.0._
 
 Perform an handshake between the client and WeeChat: this is required in most
 cases to know the session settings and prepare the authentication with the
@@ -140,6 +141,12 @@ Arguments:
 *** _zstd_: compress with https://facebook.github.io/zstd/[Zstandard ^↗^^]: better
     compression and much faster than _zlib_ for both compression and decompression
     _(WeeChat ≥ 3.5)_
+// TRANSLATION MISSING
+** _escape_commands_: commands sent by the client to relay must be escaped:
+   all backslashes are interpreted and a single backslash must be escaped (`\\`);
+   this allows for example the client to send multiline messages (chars `\n` are
+   converted to newlines, see <<command_input,input command>>)
+   _(WeeChat ≥ 4.0.0)_
 
 Notes about option _password_hash_algo_:
 
@@ -983,6 +990,15 @@ input core.weechat /help filter
 
 ----
 input irc.libera.#weechat hello!
+----
+
+// TRANSLATION MISSING
+* Send multiline message to #test channel (option _escape_commands_ must have
+  been enabled in <<command_handshake,handshake command>> and requires
+  WeeChat ≥ 4.0.0):
+
+----
+input irc.ergo.#test this message has\n2 lines
 ----
 
 // TRANSLATION MISSING

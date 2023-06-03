@@ -44,12 +44,14 @@ struct t_relay_weechat_data
     /* handshake status */
     int handshake_done;                /* 1 if handshake has been done      */
 
+    /* handshake options */
+    enum t_relay_weechat_compression compression; /* compression type       */
+    int escape_commands;               /* 1 if backslashes are interpreted  */
+                                       /* in commands sent by client        */
+
     /* authentication status (init command) */
     int password_ok;                   /* password received and OK?         */
     int totp_ok;                       /* TOTP received and OK?             */
-
-    /* options set by client (init command) */
-    enum t_relay_weechat_compression compression; /* compression type       */
 
     /* sync of buffers */
     struct t_hashtable *buffers_sync;  /* buffers synchronized (events      */

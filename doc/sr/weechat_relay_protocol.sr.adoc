@@ -92,7 +92,8 @@ _клијенти_ су повезани са _релејем_ као што ј�
 [[command_handshake]]
 === handshake
 
-_WeeChat ≥ 2.9, ажурирано у верзији 3.5._
+// TRANSLATION MISSING
+_WeeChat ≥ 2.9, updated in versions 3.5, 4.0.0._
 
 Извршава руковање између клијента и програма WeeChat: ово је у већини случајева неопходно како би се сазнале поставке сесије и припремила аутентификација командом _init_.
 
@@ -122,6 +123,12 @@ _WeeChat ≥ 2.9, ажурирано у верзији 3.5._
 *** _zstd_: компресија са https://facebook.github.io/zstd/[Zstandard ^↗^^]: боља
     компресија, као и много бржа компресија и декомпресија у односу на _zlib_
     _(WeeChat ≥ 3.5)_
+// TRANSLATION MISSING
+** _escape_commands_: commands sent by the client to relay must be escaped:
+   all backslashes are interpreted and a single backslash must be escaped (`\\`);
+   this allows for example the client to send multiline messages (chars `\n` are
+   converted to newlines, see <<command_input,input command>>)
+   _(WeeChat ≥ 4.0.0)_
 
 Напомене у вези опције _password_hash_algo_:
 
@@ -909,6 +916,15 @@ input core.weechat /help filter
 
 ----
 input irc.libera.#weechat здраво!
+----
+
+// TRANSLATION MISSING
+* Send multiline message to #test channel (option _escape_commands_ must have
+  been enabled in <<command_handshake,handshake command>> and requires
+  WeeChat ≥ 4.0.0):
+
+----
+input irc.ergo.#test this message has\n2 lines
 ----
 
 [[command_completion]]
