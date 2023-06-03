@@ -8,7 +8,7 @@ Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.
 
 La dernière version de ce document peut être téléchargée sur
-https://weechat.org/doc/[cette page ^↗^,window=_blank].
+https://weechat.org/doc/[cette page ^↗^^].
 
 [[introduction]]
 == Introduction
@@ -28,7 +28,7 @@ Ce manuel documente l'intérieur de WeeChat :
 == Dépôts
 
 Les dépôts de WeeChat sont dans l'organisation
-https://github.com/weechat[weechat ^↗^,window=_blank] de GitHub.
+https://github.com/weechat[weechat ^↗^^] de GitHub.
 
 Liste des dépôts :
 
@@ -39,7 +39,7 @@ scripts::
     les scripts _officiels_ soumis sur weechat.org
 
 weechat.org::
-    le code source du https://weechat.org/[site de WeeChat ^↗^,window=_blank]
+    le code source du https://weechat.org/[site de WeeChat ^↗^^]
 
 weercd::
     serveur de test IRC
@@ -477,13 +477,13 @@ Fichiers de documentation :
 |    docinfo.html                               | Style Asciidoctor.
 |    XX/                                        | Documentation pour la langue XX (langues : en, fr, de, it, ...).
 |       weechat.1.XX.adoc                       | Page de manuel (`man weechat`).
-|       weechat_dev.XX.adoc                     | link:weechat_dev.fr.html[Guide du développeur ^↗^,window=_blank] (ce document).
-|       weechat_faq.XX.adoc                     | link:weechat_faq.fr.html[FAQ ^↗^,window=_blank] (questions fréquemment posées).
-|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.fr.html[Référence API extension ^↗^,window=_blank].
-|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.fr.html[Guide de démarrage ^↗^,window=_blank].
-|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.fr.html[Protocole Relay ^↗^,window=_blank] (pour les interfaces distantes).
-|       weechat_scripting.XX.adoc               | link:weechat_scripting.fr.html[Guide pour scripts ^↗^,window=_blank].
-|       weechat_user.XX.adoc                    | link:weechat_user.fr.html[Guide utilisateur ^↗^,window=_blank].
+|       weechat_dev.XX.adoc                     | link:weechat_dev.fr.html[Guide du développeur ^↗^^] (ce document).
+|       weechat_faq.XX.adoc                     | link:weechat_faq.fr.html[FAQ ^↗^^] (questions fréquemment posées).
+|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.fr.html[Référence API extension ^↗^^].
+|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.fr.html[Guide de démarrage ^↗^^].
+|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.fr.html[Protocole Relay ^↗^^] (pour les interfaces distantes).
+|       weechat_scripting.XX.adoc               | link:weechat_scripting.fr.html[Guide pour scripts ^↗^^].
+|       weechat_user.XX.adoc                    | link:weechat_user.fr.html[Guide utilisateur ^↗^^].
 |       includes/                               | Fichiers inclus dans la documentation.
 |          cmdline_options.XX.adoc              | Options de ligne de commande (fichier inclus dans les pages de manuel et le guide utilisateur).
 |          man.XX.adoc                          | Parties des pages de manuel : options d'extension, fichiers et copyright.
@@ -746,7 +746,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 [[coding_python_style]]
 === Style Python
 
-Voir https://www.python.org/dev/peps/pep-0008/[PEP 8 ^↗^,window=_blank].
+Voir https://www.python.org/dev/peps/pep-0008/[PEP 8 ^↗^^].
 
 [[core_internals]]
 == Intérieur du cœur
@@ -1136,7 +1136,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 [[git_repository]]
 === Dépôt Git
 
-Le dépôt Git est sur https://github.com/weechat/weechat[GitHub ^↗^,window=_blank].
+Le dépôt Git est sur https://github.com/weechat/weechat[GitHub ^↗^^].
 
 Tout patch pour un bug ou une nouvelle fonctionnalité doit être effectué sur la
 branche master, le format préféré étant une "pull request" sur GitHub. Un patch
@@ -1285,7 +1285,7 @@ Vous pouvez alors éditer les fichiers .po (si vous pouvez traduire dans une
 langue).
 
 Une fois terminé, vous *devez* vérifier votre fichier avec
-https://github.com/flashcode/msgcheck[msgcheck ^↗^,window=_blank] :
+https://github.com/flashcode/msgcheck[msgcheck ^↗^^] :
 
 ----
 $ msgcheck.py xx.po

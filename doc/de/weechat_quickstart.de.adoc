@@ -437,13 +437,13 @@ Zeige eine liste aller verfügbaren Skripten:
 ----
 
 Eine Liste von Skripten ist in WeeChat mittels `/script` oder auf
-https://weechat.org/scripts/[this page ^↗^,window=_blank] verfügbar.
+https://weechat.org/scripts/[this page ^↗^^] verfügbar.
 
 [[more_doc]]
 == Weitere Dokumentation
 
 WeeChat kann nun verwendet werden und lesen Sie
-https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+https://weechat.org/doc/[FAQ/documentation ^↗^^]
 falls Sie weitere Fragen haben.
 
 Viel Spass mit WeeChat!

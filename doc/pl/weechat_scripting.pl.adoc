@@ -11,7 +11,7 @@ Tłumaczenie:
 Ten dokument opisuje klienta rozmów WeeChat, który jest częścią WeeChat.
 
 Najnowszą wersję dokumentacji można znaleźć
-https://weechat.org/doc/[tutaj ^↗^,window=_blank].
+https://weechat.org/doc/[tutaj ^↗^^].
 
 [[introduction]]
 == Wprowadzenie
@@ -59,7 +59,7 @@ funkcji API, może to prowadzić to awarii WeeChat. +
 Jeśli coś musi zostać wykonane w tle, można użyć funkcji `+hook_process+`.
 Zobacz przykład w rozdziale <<hook_process,Wykonanie procesu w tle>> oraz
 dokumentację do funkcji `+hook_process+` w
-link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat ^↗^,window=_blank] (Angielski).
+link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat ^↗^^] (Angielski).
 
 [[languages_specificities]]
 === Specyfika języków
@@ -72,7 +72,7 @@ link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat ^↗^,w
 
 WeeChat definiuje moduł `weechat`, który należy zaimportowac poprzez `import weechat`. +
 Szkielet API WeeChat dla języka Python dostępny jest w repozytorium:
-https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^,window=_blank].
+https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^^].
 
 [[python_functions]]
 ===== Funkcje
@@ -106,7 +106,7 @@ dlatego callback może otrzymać ciąc typu `str` lub `bytes` (lista nie jest pe
   Zalecane jest używanie w zamian modyfikatora `+irc_in2_yyy+`, otrzymany ciąg
   jest zawsze poprawnym UTF-8. +
   Zobacz funkcję `+hook_modifier+` w
-  link:weechat_plugin_api.en.html#_hook_modifier[Opiie API wtyczek WeeChat ^↗^,window=_blank].
+  link:weechat_plugin_api.en.html#_hook_modifier[Opiie API wtyczek WeeChat ^↗^^].
 
 | hook_signal
 | xxx,irc_out_yyy +
@@ -121,7 +121,7 @@ dlatego callback może otrzymać ciąc typu `str` lub `bytes` (lista nie jest pe
   Zaleca się użycie w zamian sygnału `+xxx,irc_out1_yyy+`,otrzymany ciąg jest
   zawsze poprawnym UTF-8. +
   Zobacz funkcję `+hook_signal+` w
-  link:weechat_plugin_api.en.html#_hook_modifier[Opiie API wtyczek WeeChat ^↗^,window=_blank].
+  link:weechat_plugin_api.en.html#_hook_modifier[Opiie API wtyczek WeeChat ^↗^^].
 
 | hook_process +
   hook_process_hashtable
@@ -206,7 +206,7 @@ Możesz przekazać tą stałą do funkcji przyjmujących null jako argument i ot
 tą wartość w funkcji callback jeśli wartość argumentu to null. Aby zobaczyć które
 funlcje akceptują wartości null i przekazują ja do callbacków przejrzyj prototypy
 języka Python w
-link:weechat_plugin_api.en.html[Opisie API wtyczek WeeChat ^↗^,window=_blank].
+link:weechat_plugin_api.en.html[Opisie API wtyczek WeeChat ^↗^^].
 
 [[language_guile]]
 ==== Guile (Scheme)
@@ -383,7 +383,7 @@ dowiązanie w katalogu _autoload_.
 == Różnice pomiędzy API dla C
 
 API skryptów jest prawie takie same jak API dla wtyczek pisanych w C.
-Możesz zajrzeć do link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat ^↗^,window=_blank] (Angielski)
+Możesz zajrzeć do link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat ^↗^^] (Angielski)
 po więcej informacji na temat każdej z funkcji API: prototyp, argumenty,
 zwracane wartości, przykłady.
 
@@ -550,7 +550,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 == API skryptów
 
 Więcej informacji o funkcjach w API, znajdziesz w
-link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat ^↗^,window=_blank] (Angielski).
+link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat ^↗^^] (Angielski).
 
 [[script_api_functions]]
 === Fukcje
@@ -872,7 +872,7 @@ Lista stałych w API skryptów:
 
 Ten rozdział przedstawia część częstych zadań z przykładami.
 Użyto tu tylko część rzeczy dostępnych w API, dokładne informacje można znaleźć
-w link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat ^↗^,window=_blank] (Angielski).
+w link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat ^↗^^] (Angielski).
 
 [[buffers]]
 === Bufory
@@ -1142,7 +1142,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 
 [TIP]
 Wszystkie dostępne informacje można znaleźć na
-https://weechat.org/dev/info/[tej stronie ^↗^,window=_blank].
+https://weechat.org/dev/info/[tej stronie ^↗^^].
 
 Przykładowy transfer URL z opcją: pobranie najnowszej wersji rozwojowej WeeChat
 do pliku _/tmp/weechat-devel.tar.gz_:
@@ -1161,7 +1161,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 
 Więcej informacji o transferach URL i dostępnych opcjach dla funkcji
 `+hook_process+` oraz `+hook_process_hashtable+` można znaleźć w
-link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat ^↗^,window=_blank] (Angielski).
+link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat ^↗^^] (Angielski).
 
 [[config_options]]
 === Konfiguracja / opcje

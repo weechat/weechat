@@ -12,7 +12,7 @@
 
 // TRANSLATION MISSING
 Latest version of this document can be found on
-https://weechat.org/doc/[this page ^↗^,window=_blank].
+https://weechat.org/doc/[this page ^↗^^].
 
 [[introduction]]
 == はじめに
@@ -289,7 +289,7 @@ Functions to register a script: used only by scripting API, not the C API.
 Register the script.
 
 For more information, see the
-link:weechat_scripting.ja.html#register_function[WeeChat scripting guide ^↗^,window=_blank].
+link:weechat_scripting.ja.html#register_function[WeeChat scripting guide ^↗^^].
 
 スクリプト (Python) での使用例:
 
@@ -2038,7 +2038,7 @@ _WeeChat バージョン 1.0 以上で利用可。_
 // TRANSLATION MISSING
 This function is a C conversion of Python class "shlex" (file: Lib/shlex.py in
 Python repository), see
-https://docs.python.org/3/library/shlex.html[this page ^↗^,window=_blank].
+https://docs.python.org/3/library/shlex.html[this page ^↗^^].
 
 プロトタイプ:
 
@@ -3930,7 +3930,7 @@ exception for the following chars, that have a specific behavior in WeeChat:
 
 // TRANSLATION MISSING
 * U+0009 (Tabulation): value of option
-  link:weechat_user.ja.html#option_weechat.look.tab_width[weechat.look.tab_width ^↗^,window=_blank]
+  link:weechat_user.ja.html#option_weechat.look.tab_width[weechat.look.tab_width ^↗^^]
 * U+0001 (1) to U+001F (31), except U+0009 (Tabulation): 1
 * U+00AD (173, soft hyphen): -1
 * U+200B (8203, zero width space): -1
@@ -7193,7 +7193,7 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 [NOTE]
 Ruby では、3 組のコールバックとデータ (6 つの文字列変数) を渡す際に必ず 6 つの文字列変数の配列を
 1 つ渡してください (これは Ruby が関数に 15 個以上の引数を渡せないことが原因です)、より詳しい内容は
-link:++weechat_scripting.ja.html#_ruby++[WeeChat スクリプト作成ガイド ^↗^,window=_blank]を参照してください
+link:++weechat_scripting.ja.html#_ruby++[WeeChat スクリプト作成ガイド ^↗^^]を参照してください
 _(WeeChat バージョン 0.4.1 で修正済み)_。
 
 
@@ -9276,7 +9276,7 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 * _message_: 表示するメッセージ
 
 WeeChat で共通に使われるタグのリストは
-link:weechat_user.ja.html#lines_tags[WeeChat ユーザーズガイド / 行のタグ ^↗^,window=_blank]を参照してください
+link:weechat_user.ja.html#lines_tags[WeeChat ユーザーズガイド / 行のタグ ^↗^^]を参照してください
 
 C 言語での使用例:
 
@@ -10075,7 +10075,7 @@ _callback_ コールバックに送られます (関数の戻り値は外部コ�
 // TRANSLATION MISSING
 If you want to retrieve infos about WeeChat (like current stable version,
 latest git commit, etc.), you can use URLs on
-https://weechat.org/dev/info/[this page ^↗^,window=_blank].
+https://weechat.org/dev/info/[this page ^↗^^].
 
 [NOTE]
 コールバックにデータを送信するバッファのサイズは 64KB (バッファは 2
@@ -12680,14 +12680,14 @@ WeeChat とプラグインが定義する修飾子のリスト:
 | -
 | Any string.
 | String with IRC tag value escaped,
-  see https://ircv3.net/specs/extensions/message-tags#escaping-values[this page ^↗^,window=_blank].
+  see https://ircv3.net/specs/extensions/message-tags#escaping-values[this page ^↗^^].
 
 // TRANSLATION MISSING
 | [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3
 | -
 | Any string.
 | String with IRC tag value unescaped,
-  see https://ircv3.net/specs/extensions/message-tags#escaping-values[this page ^↗^,window=_blank].
+  see https://ircv3.net/specs/extensions/message-tags#escaping-values[this page ^↗^^].
 
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0
 | 色を保持する場合は "1"、削除する場合は "0"
@@ -15848,7 +15848,7 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 ** _inactive_: 非アクティブウィンドウのみに表示されているバー
 ** _nicklist_: ニックネームリストを持つウィンドウに表示されているバー
 ** 評価された式:
-   link:weechat_user.ja.html#bar_conditions[WeeChat ユーザーズガイド / バー状態 ^↗^,window=_blank]を参照してください
+   link:weechat_user.ja.html#bar_conditions[WeeChat ユーザーズガイド / バー状態 ^↗^^]を参照してください
 * _position_: _top_、_bottom_、_left_、_right_
 * _filling_top_bottom_:
 ** _horizontal_: 要素は水平方向に詰め込まれている (各要素の後に間隔)
@@ -15913,7 +15913,7 @@ bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", 
 With WeeChat ≥ 2.9, in Ruby, the 4 colors (color_fg, color_delim, color_bg,
 color_bg_inactive) must be given in an array of 4 strings (due to a Ruby
 limitation of 15 arguments by function), see the
-link:++weechat_scripting.ja.html#_ruby++[WeeChat scripting guide ^↗^,window=_blank]
+link:++weechat_scripting.ja.html#_ruby++[WeeChat scripting guide ^↗^^]
 for more info.
 
 ==== bar_set
@@ -16612,7 +16612,7 @@ if (hashtable_in)
 
 [NOTE]
 "irc_message_parse" の出力に関するより詳しい情報は
-link:weechat_scripting.ja.html#irc_message_parse[WeeChat スクリプト作成ガイド / メッセージの構文解析 ^↗^,window=_blank]を参照してください。
+link:weechat_scripting.ja.html#irc_message_parse[WeeChat スクリプト作成ガイド / メッセージの構文解析 ^↗^^]を参照してください。
 
 
 スクリプト (Python) での使用例:
@@ -18256,7 +18256,7 @@ void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *se
 * _pointer_: WeeChat および plugin オブジェクトへのポインタ
 * _search_: 評価する式、式中のデフォルトポインタは hdata の名前
   (デフォルトポインタはリストに含まれる各要素で置換されます); 式に関する詳細は
-  link:weechat_user.ja.html#command_weechat_eval[WeeChat ユーザーズガイド / WeeChat コマンド / eval ^↗^,window=_blank] を参照してください
+  link:weechat_user.ja.html#command_weechat_eval[WeeChat ユーザーズガイド / WeeChat コマンド / eval ^↗^^] を参照してください
 * _pointers_: 関数に渡されるハッシュテーブル
   <<_string_eval_expression,string_eval_expression>>
 * _extra_vars_: 関数に渡されるハッシュテーブル

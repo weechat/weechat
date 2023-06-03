@@ -12,7 +12,7 @@
 
 // TRANSLATION MISSING
 Latest version of this document can be found on
-https://weechat.org/doc/[this page ^↗^,window=_blank].
+https://weechat.org/doc/[this page ^↗^^].
 
 [[introduction]]
 == イントロダクション
@@ -59,7 +59,7 @@ WeeChat がクラッシュするため、スクリプトで fork したりスレ
 されています。これが必要な場合には専用 API 関数を使ってください。 +
 どうしてもバックグラウンド実行を避けられない場合には `+hook_process+`
 関数を使ってください。<<hook_process,バックグラウンドプロセスの実行>>の例および
-link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リファレンス ^↗^,window=_blank]内の
+link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リファレンス ^↗^^]内の
 `+hook_process+` 関数の文書を参照してください。
 
 [[languages_specificities]]
@@ -74,7 +74,7 @@ link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リフ
 
 WeeChat defines a `weechat` module which must be imported with `import weechat`. +
 A Python stub for WeeChat API is available in the repository:
-https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^,window=_blank].
+https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^^].
 
 // TRANSLATION MISSING
 [[python_functions]]
@@ -111,7 +111,7 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   It is recommended to use modifier `+irc_in2_yyy+` instead, the string received
   is always UTF-8 valid. +
   See function `+hook_modifier+` in the
-  link:weechat_plugin_api.ja.html#_hook_modifier[WeeChat plugin API reference ^↗^,window=_blank].
+  link:weechat_plugin_api.ja.html#_hook_modifier[WeeChat plugin API reference ^↗^^].
 
 | hook_signal
 | xxx,irc_out_yyy +
@@ -126,7 +126,7 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   It is recommended to use signal `+xxx,irc_out1_yyy+` instead, the string received
   is always UTF-8 valid. +
   See function `+hook_signal+` in the
-  link:weechat_plugin_api.ja.html#_hook_signal[WeeChat plugin API reference ^↗^,window=_blank].
+  link:weechat_plugin_api.ja.html#_hook_signal[WeeChat plugin API reference ^↗^^].
 
 | hook_process +
   hook_process_hashtable
@@ -214,7 +214,7 @@ You can pass this constant when a function accepts null as an argument and you
 will get it as the value of an argument in a callback function if the argument
 value is null. To see which functions accept null values and passes null values
 to callbacks, look at the Python prototypes in the
-link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^,window=_blank].
+link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^^].
 
 [[language_guile]]
 ==== Guile (Scheme)
@@ -395,7 +395,7 @@ $ ln -s ../script.py
 
 スクリプト API は C 言語プラグイン API とほぼ同じです。API
 に含まれる各関数の詳細 (プロトタイプ、引数、戻り値、例) については
-link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス ^↗^,window=_blank]を参照してください。
+link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス ^↗^^]を参照してください。
 
 _プラグイン_ と _スクリプト_ の違いを理解することは重要です:
 _プラグイン_ とはコンパイル済みバイナリファイルで `/plugin` コマンドを使ってロードします、これに対して
@@ -564,7 +564,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 == スクリプト API
 
 API に含まれる関数の詳しい情報は
-link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス ^↗^,window=_blank]を参照してください。
+link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス ^↗^^]を参照してください。
 
 [[script_api_functions]]
 === 関数
@@ -894,7 +894,7 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス 
 
 この章ではいくつかの良くあるタスクを例を交えて紹介します。ここでは
 API の一部の機能を使っています。完全なリファレンスは
-link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス ^↗^,window=_blank]を参照してください。
+link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス ^↗^^]を参照してください。
 
 [[buffers]]
 === バッファ
@@ -1167,7 +1167,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 [TIP]
 // TRANSLATION MISSING
 All infos available about WeeChat are on
-https://weechat.org/dev/info/[this page ^↗^,window=_blank].
+https://weechat.org/dev/info/[this page ^↗^^].
 
 オプション有りの URL 転送の例: 最新の WeeChat 開発パッケージをファイル
 _/tmp/weechat-devel.tar.gz_ にダウンロード:
@@ -1185,7 +1185,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 ----
 
 URL 転送に関するより詳しい情報と利用可能なオプションは
-link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リファレンス ^↗^,window=_blank]の
+link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リファレンス ^↗^^]の
 `+hook_process+` と `+hook_process_hashtable+` を参照してください。
 
 [[config_options]]

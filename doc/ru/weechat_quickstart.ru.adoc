@@ -405,14 +405,14 @@ _foo_):
 
 // TRANSLATION MISSING
 A list of scripts is available in WeeChat with `/script` or on
-https://weechat.org/scripts/[this page ^↗^,window=_blank].
+https://weechat.org/scripts/[this page ^↗^^].
 
 [[more_doc]]
 == Документация для дальнейшего чтения
 
 // TRANSLATION MISSING
 You can now use WeeChat and read
-https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+https://weechat.org/doc/[FAQ/documentation ^↗^^]
 for any other questions.
 
 Приятной работы с WeeChat!

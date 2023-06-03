@@ -21,7 +21,7 @@ apply to WeeChat!).
 Because WeeChat is very light and brings innovating features.
 
 More info on the WeeChat
-https://weechat.org/about/features/[features page ^↗^,window=_blank].
+https://weechat.org/about/features/[features page ^↗^^].
 
 [[compilation_install]]
 == Compilation / install
@@ -30,14 +30,14 @@ https://weechat.org/about/features/[features page ^↗^,window=_blank].
 === I've heard about many GUIs for WeeChat. How can I compile/use them?
 
 Some remote GUIs are available, see the
-https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blank].
+https://weechat.org/about/interfaces/[remote interfaces page ^↗^^].
 
 [[compile_git]]
 === I can't compile WeeChat after cloning git repository, why?
 
 WeeChat must be compiled with CMake.
 
-Please follow link:weechat_user.en.html#source_package[build instructions ^↗^,window=_blank]
+Please follow link:weechat_user.en.html#source_package[build instructions ^↗^^]
 and ensure all required dependencies are installed.
 
 If you still have issues, please report them to the developers.
@@ -45,7 +45,7 @@ If you still have issues, please report them to the developers.
 [[compile_macos]]
 === How can I install WeeChat on macOS?
 
-It is recommended to use https://brew.sh/[Homebrew ^↗^,window=_blank],
+It is recommended to use https://brew.sh/[Homebrew ^↗^^],
 you can get help with:
 
 ----
@@ -62,12 +62,12 @@ brew install weechat
 === I've launched WeeChat, but I'm lost, what can I do?
 
 For help you can type `/help`. For help about a command, type `/help command`.
-link:weechat_user.en.html#key_bindings[Keys ^↗^,window=_blank] and
-link:weechat_user.en.html#commands_and_options[commands ^↗^,window=_blank]
+link:weechat_user.en.html#key_bindings[Keys ^↗^^] and
+link:weechat_user.en.html#commands_and_options[commands ^↗^^]
 are listed in documentation.
 
 It's recommended for new users to read the
-link:weechat_quickstart.en.html[Quickstart guide ^↗^,window=_blank].
+link:weechat_quickstart.en.html[Quickstart guide ^↗^^].
 
 [[display]]
 == Display
@@ -95,7 +95,7 @@ It's a common issue with a variety of causes, please read carefully and check
 ** If you are using screen, check that it is run with UTF-8 mode
    ("`defutf8 on`" in ~/.screenrc or `screen -U` to run screen).
 * Check that option
-  link:weechat_user.en.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^,window=_blank]
+  link:weechat_user.en.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^^]
   is off (this option may cause display bugs).
 
 [NOTE]
@@ -110,9 +110,9 @@ This may be caused by a libc bug in function _wcwidth_, which should be fixed
 in glibc 2.22 (maybe not yet available in your distribution).
 
 There is a workaround to use the fixed _wcwidth_ function:
-https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^,window=_blank]
+https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^^]
 
-See this https://github.com/weechat/weechat/issues/79[bug report ^↗^,window=_blank]
+See this https://github.com/weechat/weechat/issues/79[bug report ^↗^^]
 for more information.
 
 [[bars_background]]
@@ -170,7 +170,7 @@ windows.
 [[buffers_list]]
 === How to display the buffers list on the left side?
 
-The plugin link:weechat_user.en.html#buflist[buflist ^↗^,window=_blank]
+The plugin link:weechat_user.en.html#buflist[buflist ^↗^^]
 is loaded and enabled by default.
 
 To limit size of bar:
@@ -216,7 +216,7 @@ like `237` for dark gray.
 The buflist plugin provides lot of options that you can customize, please read
 the help on each option.
 
-There's also a https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^,window=_blank]
+There's also a https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^^]
 with examples of advanced buflist configuration.
 
 [[customize_prefix]]
@@ -260,7 +260,7 @@ These colors can be changed with the options __weechat.color.status_data_*__
 (buffers) and __weechat.color.status_count_*__ (counters). +
 Other hotlist options can be changed with the options __weechat.look.hotlist_*__.
 
-See link:weechat_user.en.html#screen_layout[User's guide / Screen layout ^↗^,window=_blank]
+See link:weechat_user.en.html#screen_layout[User's guide / Screen layout ^↗^^]
 for more info about the hotlist.
 
 [[input_bar_size]]
@@ -420,7 +420,7 @@ you can change it with these two commands:
 You can use any color number in options (optional: you can add color aliases
 with command `/color`).
 
-Please read the link:weechat_user.en.html#colors[User's guide / Colors ^↗^,window=_blank]
+Please read the link:weechat_user.en.html#colors[User's guide / Colors ^↗^^]
 for more information about colors management.
 
 [[search_text]]
@@ -429,7 +429,7 @@ for more information about colors management.
 The default key is kbd:[Ctrl+r] (command is: `+/input search_text_here+`).
 And jump to highlights: kbd:[Alt+p] / kbd:[Alt+n].
 
-See link:weechat_user.en.html#key_bindings[User's guide / Key bindings ^↗^,window=_blank]
+See link:weechat_user.en.html#key_bindings[User's guide / Key bindings ^↗^^]
 for more info about this feature.
 
 [[terminal_focus]]
@@ -603,7 +603,7 @@ You can bind a key, for example:
 ----
 
 List of default keys is in
-link:weechat_user.en.html#key_bindings[User's guide / Key bindings ^↗^,window=_blank].
+link:weechat_user.en.html#key_bindings[User's guide / Key bindings ^↗^^].
 
 To jump to buffers with number ≥ 100, you could define a trigger and then use
 commands like `/123` to jump to buffer #123:
@@ -821,7 +821,7 @@ disable filters (by default, the key kbd:[Alt+=] toggles filters).
 [[filter_irc_join_part_quit]]
 === How can I filter join/part/quit and other annoying messages on IRC channels?
 
-See link:weechat_user.en.html#irc_smart_filter[User's guide / IRC smart filter ^↗^,window=_blank].
+See link:weechat_user.en.html#irc_smart_filter[User's guide / IRC smart filter ^↗^^].
 
 [[filter_irc_join_channel_messages]]
 === How can I filter some messages displayed when I join an IRC channel?
@@ -915,7 +915,7 @@ Other scripts on this subject:
 === How can I disable highlights for specific nicks?
 
 You can use the
-link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
+link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^^]
 buffer property to set the max hotlist level for some nicks, per buffer,
 or per group of buffers (like IRC servers).
 
@@ -1114,7 +1114,7 @@ Unload and disable auto-loading of "xfer" plugin (used for IRC DCC):
 Define a passphrase and use secured data wherever you can for sensitive data
 like passwords: see `/help secure` and `/help` on options
 (if you can use secured data, it is written in the help).
-See also link:weechat_user.en.html#secured_data[User's guide / Secured data ^↗^,window=_blank].
+See also link:weechat_user.en.html#secured_data[User's guide / Secured data ^↗^^].
 
 For example:
 
@@ -1135,7 +1135,7 @@ contains your passwords ciphered with your passphrase.
 Some other files may contain sensitive info like passwords (if they are not
 stored in _sec.conf_ with the `/secure` command).
 
-See the link:weechat_user.en.html#files_and_directories[User's guide / Files and directories ^↗^,window=_blank]
+See the link:weechat_user.en.html#files_and_directories[User's guide / Files and directories ^↗^^]
 for more information about configuration files.
 
 [[development]]
@@ -1144,7 +1144,7 @@ for more information about configuration files.
 [[bug_task_patch]]
 === How should I report bugs, ask for new features or send patches?
 
-See https://weechat.org/about/support/[this page ^↗^,window=_blank].
+See https://weechat.org/about/support/[this page ^↗^^].
 
 [[gdb_error_threads]]
 === When I run WeeChat under gdb, there is an error about threads, what can I do?
@@ -1181,10 +1181,10 @@ some OS' we don't have, to test WeeChat.
 There are many tasks to do (testing, code, documentation, etc.)
 
 Please contact us via IRC or mail, look at
-https://weechat.org/about/support/[support page ^↗^,window=_blank].
+https://weechat.org/about/support/[support page ^↗^^].
 
 [[donate]]
 === Can I give money or other things to WeeChat developers?
 
 You can give us money to help development.
-Details on https://weechat.org/donate/[donation page ^↗^,window=_blank].
+Details on https://weechat.org/donate/[donation page ^↗^^].

@@ -6,7 +6,7 @@
 This manual documents WeeChat chat client, it is part of WeeChat.
 
 Latest version of this document can be found on
-https://weechat.org/doc/[this page ^↗^,window=_blank].
+https://weechat.org/doc/[this page ^↗^^].
 
 [[introduction]]
 == Introduction
@@ -26,7 +26,7 @@ This manual documents WeeChat internals:
 == Repositories
 
 WeeChat repositories are on GitHub organization
-https://github.com/weechat[weechat ^↗^,window=_blank].
+https://github.com/weechat[weechat ^↗^^].
 
 List of repositories:
 
@@ -37,7 +37,7 @@ scripts::
     the _official_ scripts submitted on weechat.org
 
 weechat.org::
-    source of https://weechat.org/[WeeChat website ^↗^,window=_blank]
+    source of https://weechat.org/[WeeChat website ^↗^^]
 
 weercd::
     IRC testing server
@@ -475,13 +475,13 @@ Documentation files:
 |    docinfo.html                               | Asciidoctor style.
 |    XX/                                        | Documentation for language XX (languages: en, fr, de, it, ...).
 |       weechat.1.XX.adoc                       | Man page (`man weechat`).
-|       weechat_dev.XX.adoc                     | link:weechat_dev.en.html[Developer's guide ^↗^,window=_blank] (this document).
-|       weechat_faq.XX.adoc                     | link:weechat_faq.en.html[FAQ ^↗^,window=_blank].
-|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.en.html[Plugin API reference ^↗^,window=_blank].
-|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.en.html[Quickstart guide ^↗^,window=_blank].
-|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.en.html[Relay protocol ^↗^,window=_blank] (for remote interfaces).
-|       weechat_scripting.XX.adoc               | link:weechat_scripting.en.html[Scripting guide ^↗^,window=_blank].
-|       weechat_user.XX.adoc                    | link:weechat_user.en.html[User's guide ^↗^,window=_blank].
+|       weechat_dev.XX.adoc                     | link:weechat_dev.en.html[Developer's guide ^↗^^] (this document).
+|       weechat_faq.XX.adoc                     | link:weechat_faq.en.html[FAQ ^↗^^].
+|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.en.html[Plugin API reference ^↗^^].
+|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.en.html[Quickstart guide ^↗^^].
+|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.en.html[Relay protocol ^↗^^] (for remote interfaces).
+|       weechat_scripting.XX.adoc               | link:weechat_scripting.en.html[Scripting guide ^↗^^].
+|       weechat_user.XX.adoc                    | link:weechat_user.en.html[User's guide ^↗^^].
 |       includes/                               | Files included in documentation.
 |          cmdline_options.XX.adoc              | Command-line options (file included in man pages and user's guide).
 |          man.XX.adoc                          | Part of man pages: plugin options, files and copyright.
@@ -735,7 +735,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 [[coding_python_style]]
 === Python style
 
-See https://www.python.org/dev/peps/pep-0008/[PEP 8 ^↗^,window=_blank].
+See https://www.python.org/dev/peps/pep-0008/[PEP 8 ^↗^^].
 
 [[core_internals]]
 == Core internals
@@ -1117,7 +1117,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 [[git_repository]]
 === Git repository
 
-Git repository is on https://github.com/weechat/weechat[GitHub ^↗^,window=_blank].
+Git repository is on https://github.com/weechat/weechat[GitHub ^↗^^].
 
 Any patch for bug or new feature must be done on master branch, preferred way
 is a GitHub pull request. A patch can also be sent by e-mail
@@ -1264,7 +1264,7 @@ $ make translations && make update-po
 Then you can edit .po files (if you can translate in a language).
 
 When done, you *have* to check your file with
-https://github.com/flashcode/msgcheck[msgcheck ^↗^,window=_blank]:
+https://github.com/flashcode/msgcheck[msgcheck ^↗^^]:
 
 ----
 $ msgcheck.py xx.po

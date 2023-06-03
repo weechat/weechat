@@ -381,13 +381,13 @@ i zainstalować za pomocą komendy `/script`, na przykład:
 Więcej informacji można uzyskać wykonując komendę `/help script`.
 
 Listę skryptów możesz zobaczyć w WeeChat za pomocą polecenia `/script`
-lub https://weechat.org/scripts/[na tej stronie ^↗^,window=_blank].
+lub https://weechat.org/scripts/[na tej stronie ^↗^^].
 
 [[more_doc]]
 == Więcej dokumentacji
 
 Możesz teraz zacząć używać WeeChat i przeczytać
-https://weechat.org/doc/[FAQ/dokomentacje ^↗^,window=_blank]
+https://weechat.org/doc/[FAQ/dokomentacje ^↗^^]
 w razie dalszych pytań.
 
 Miłej pracy z WeeChat!

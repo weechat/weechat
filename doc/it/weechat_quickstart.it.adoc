@@ -393,13 +393,13 @@ per esempio:
 Vedi `/help script` per più informazioni.
 
 Una lista degli script è disponibile su WeeChat tramite `/script` o su
-https://weechat.org/scripts/[questa pagina ^↗^,window=_blank].
+https://weechat.org/scripts/[questa pagina ^↗^^].
 
 [[more_doc]]
 == Ulteriore documentazione
 
 Ora sei in grado di usare WeeChat e leggere
-https://weechat.org/doc/[FAQ/documentazione ^↗^,window=_blank]
+https://weechat.org/doc/[FAQ/documentazione ^↗^^]
 per qualsiasi altra domanda.
 
 Buon WeeChat!

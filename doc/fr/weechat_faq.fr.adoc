@@ -21,7 +21,7 @@ mais elle ne s'applique pas à WeeChat !).
 Parce que WeeChat est très léger et apporte des fonctionnalités innovantes.
 
 Plus d'infos sur la
-https://weechat.org/about/features/[page des fonctionnalités ^↗^,window=_blank]
+https://weechat.org/about/features/[page des fonctionnalités ^↗^^]
 WeeChat.
 
 
@@ -32,14 +32,14 @@ WeeChat.
 === J'ai entendu parler de plusieurs interfaces pour WeeChat. Comment puis-je les compiler/utiliser ?
 
 Des interfaces distantes sont disponibles, voir la
-https://weechat.org/about/interfaces/[page avec les interfaces distantes ^↗^,window=_blank].
+https://weechat.org/about/interfaces/[page avec les interfaces distantes ^↗^^].
 
 [[compile_git]]
 === Je ne peux pas compiler WeeChat après avoir cloné la base git, pourquoi ?
 
 WeeChat doit être compilé avec CMake.
 
-Merci de suivre les link:weechat_user.en.html#source_package[instructions de construction ^↗^,window=_blank]
+Merci de suivre les link:weechat_user.en.html#source_package[instructions de construction ^↗^^]
 et vous assurer que toutes les dépendances obligatoires sont installées.
 
 Si vous avez toujours des problèmes, merci de les remonter aux développeurs.
@@ -47,7 +47,7 @@ Si vous avez toujours des problèmes, merci de les remonter aux développeurs.
 [[compile_macos]]
 === Comment puis-je installer WeeChat sous macOS ?
 
-Il est recommandé d'utiliser https://brew.sh/[Homebrew ^↗^,window=_blank],
+Il est recommandé d'utiliser https://brew.sh/[Homebrew ^↗^^],
 vous pouvez avoir de l'aide avec :
 
 ----
@@ -64,12 +64,12 @@ brew install weechat
 === J'ai lancé WeeChat, mais je suis perdu, que puis-je faire ?
 
 Pour obtenir de l'aide tapez `/help`. Pour de l'aide sur une commande, tapez
-`/help commande`. Les link:weechat_user.fr.html#key_bindings[touches ^↗^,window=_blank] et
-link:weechat_user.fr.html#commands_and_options[commandes ^↗^,window=_blank] sont listées dans la
+`/help commande`. Les link:weechat_user.fr.html#key_bindings[touches ^↗^^] et
+link:weechat_user.fr.html#commands_and_options[commandes ^↗^^] sont listées dans la
 documentation.
 
 Il est recommandé pour les nouveaux utilisateurs de lire le
-link:weechat_quickstart.fr.html[Guide de démarrage rapide ^↗^,window=_blank].
+link:weechat_quickstart.fr.html[Guide de démarrage rapide ^↗^^].
 
 [[display]]
 == Affichage
@@ -101,7 +101,7 @@ attentivement et vérifier *TOUS* les points ci-dessous :
 ** Si vous utilisez screen, vérifiez qu'il est lancé en mode UTF-8
    ("`defutf8 on`" dans ~/.screenrc ou `screen -U` pour lancer screen).
 * Vérifiez que l'option
-  link:weechat_user.fr.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^,window=_blank]
+  link:weechat_user.fr.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^^]
   est désactivée (cette option peut causer des problèmes d'affichage).
 
 [NOTE]
@@ -117,9 +117,9 @@ devrait être corrigé dans la glibc 2.22 (peut-être pas encore disponible dans
 votre distribution).
 
 Il y a un moyen de contournement pour utiliser la fonction _wcwidth_ corrigée :
-https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^,window=_blank].
+https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^^].
 
-Voir ce https://github.com/weechat/weechat/issues/79[rapport de bug ^↗^,window=_blank]
+Voir ce https://github.com/weechat/weechat/issues/79[rapport de bug ^↗^^]
 pour plus d'informations.
 
 [[bars_background]]
@@ -178,7 +178,7 @@ fenêtres.
 [[buffers_list]]
 === Comment afficher la liste des tampons sur la gauche ?
 
-L'extension link:weechat_user.fr.html#buflist[buflist ^↗^,window=_blank]
+L'extension link:weechat_user.fr.html#buflist[buflist ^↗^^]
 est chargée et activée par défaut.
 
 Pour limiter la taille de la barre :
@@ -224,7 +224,7 @@ Vous pouvez aussi utiliser une couleur numérique à la place de `red`, comme
 L'extension buflist met à disposition beaucoup d'options que vous pouvez changer,
 merci de lire l'aide sur chaque option.
 
-Il y a aussi une https://github.com/weechat/weechat/wiki/buflist[page wiki ^↗^,window=_blank]
+Il y a aussi une https://github.com/weechat/weechat/wiki/buflist[page wiki ^↗^^]
 avec des exemples avancés de configuration buflist.
 
 [[customize_prefix]]
@@ -269,7 +269,7 @@ Ces couleurs peuvent être changées via les options __weechat.color.status_data
 Les autres options pour la "hotlist" peuvent être changées via les options
 __weechat.look.hotlist_*__.
 
-Voir le link:weechat_user.fr.html#screen_layout[Guide utilisateur / Organisation de l'écran ^↗^,window=_blank]
+Voir le link:weechat_user.fr.html#screen_layout[Guide utilisateur / Organisation de l'écran ^↗^^]
 pour plus d'information sur la "hotlist".
 
 [[input_bar_size]]
@@ -436,7 +436,7 @@ vous pouvez la changer avec ces deux commandes :
 Vous pouvez utiliser un numéro de couleur dans les options (facultatif : vous
 pouvez ajouter des alias de couleurs avec la commande `/color`).
 
-Merci de lire le link:weechat_user.fr.html#colors[Guide utilisateur / Couleurs ^↗^,window=_blank]
+Merci de lire le link:weechat_user.fr.html#colors[Guide utilisateur / Couleurs ^↗^^]
 pour plus d'information sur la gestion des couleurs.
 
 [[search_text]]
@@ -445,7 +445,7 @@ pour plus d'information sur la gestion des couleurs.
 La touche par défaut est kbd:[Ctrl+r] (la commande est : `+/input search_text_here+`).
 Et sauter aux highlights : kbd:[Alt+p] / kbd:[Alt+n].
 
-Voir le link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut ^↗^,window=_blank]
+Voir le link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut ^↗^^]
 pour plus d'information sur cette fonctionnalité.
 
 [[terminal_focus]]
@@ -622,7 +622,7 @@ Vous pouvez définir une touche, par exemple :
 ----
 
 La liste des touches par défaut est dans le
-link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut ^↗^,window=_blank].
+link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut ^↗^^].
 
 Pour sauter vers les tampons ayant un numéro ≥ 100, vous pouvez définir un trigger
 et utiliser les commandes comme `/123` pour sauter au tampon n°123 :
@@ -847,7 +847,7 @@ active/désactive les filtres).
 [[filter_irc_join_part_quit]]
 === Comment puis-je filtrer les join/part/quit et autres messages gênants sur les canaux IRC ?
 
-Voir link:weechat_user.fr.html#irc_smart_filter[Guide utilisateur / Filtre intelligent IRC ^↗^,window=_blank].
+Voir link:weechat_user.fr.html#irc_smart_filter[Guide utilisateur / Filtre intelligent IRC ^↗^^].
 
 [[filter_irc_join_channel_messages]]
 === Comment puis-je filtrer certains messages affichés quand je rejoins un canal IRC ?
@@ -945,7 +945,7 @@ Autres scripts sur ce sujet :
 === Comment puis-je désactiver le highlight pour des pseudos spécifiques ?
 
 Vous pouvez utiliser la propriété de tampon
-link:weechat_user.fr.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
+link:weechat_user.fr.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^^]
 pour définir le niveau maximum de hotlist pour certains pseudos, par tampon,
 ou groupe de tampons (comme des serveurs IRC).
 
@@ -1156,7 +1156,7 @@ Définissez une phrase de chiffrement et utilisez les données sécurisées part
 où vous le pouvez pour les données sensibles comme les mots de passe : voir
 `/help secure` et `/help` sur les options (si vous pouvez utiliser les données
 sécurisées, cela est mentionné dans l'aide).
-Voir aussi link:weechat_user.fr.html#secured_data[Guide utilisateur / Données sécurisées ^↗^,window=_blank].
+Voir aussi link:weechat_user.fr.html#secured_data[Guide utilisateur / Données sécurisées ^↗^^].
 
 Par exemple :
 
@@ -1179,7 +1179,7 @@ Quelques autres fichiers peuvent contenir des informations sensibles comme
 des mots de passes (s'ils ne sont pas stockés dans _sec.conf_ avec la commande
 `/secure`).
 
-Voir le link:weechat_user.fr.html#files_and_directories[Guide utilisateur / Fichiers et répertoires ^↗^,window=_blank]
+Voir le link:weechat_user.fr.html#files_and_directories[Guide utilisateur / Fichiers et répertoires ^↗^^]
 pour plus d'informations sur les fichiers de configuration.
 
 [[development]]
@@ -1188,7 +1188,7 @@ pour plus d'informations sur les fichiers de configuration.
 [[bug_task_patch]]
 === Comment puis-je reporter un bug, demander une nouvelle fonctionnalité ou envoyer un patch ?
 
-Voir https://weechat.org/about/support/[cette page ^↗^,window=_blank].
+Voir https://weechat.org/about/support/[cette page ^↗^^].
 
 [[gdb_error_threads]]
 === Quand je lance WeeChat sous gdb, il y a une erreur à propos des threads, que puis-je faire ?
@@ -1226,10 +1226,10 @@ tester WeeChat.
 Il y a plusieurs choses à faire (test, code, documentation, etc.)
 
 Merci de prendre contact avec nous par IRC ou mail, consultez la
-https://weechat.org/about/support/[page support ^↗^,window=_blank].
+https://weechat.org/about/support/[page support ^↗^^].
 
 [[donate]]
 === Puis-je donner de l'argent ou d'autres choses aux développeurs WeeChat ?
 
 Vous pouvez donner de l'argent pour aider le développement.
-Plus de détails sur https://weechat.org/donate/[la page de dons ^↗^,window=_blank].
+Plus de détails sur https://weechat.org/donate/[la page de dons ^↗^^].

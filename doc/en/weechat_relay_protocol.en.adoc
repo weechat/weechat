@@ -127,8 +127,8 @@ Arguments:
    if compression is enabled, messages from _relay_ to client are compressed
    to save bandwidth; allowed values are:
 *** _off_: no compression (default if option is not given)
-*** _zlib_: compress with https://zlib.net/[zlib ^↗^,window=_blank] _(WeeChat ≥ 0.3.7)_
-*** _zstd_: compress with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank]:
+*** _zlib_: compress with https://zlib.net/[zlib ^↗^^] _(WeeChat ≥ 0.3.7)_
+*** _zstd_: compress with https://facebook.github.io/zstd/[Zstandard ^↗^^]:
     better compression and much faster than _zlib_ for both compression and decompression
     _(WeeChat ≥ 3.5)_
 
@@ -170,8 +170,8 @@ WeeChat replies with a hashtable containing the following keys and values:
   in the password hash algorithm)
 * _compression_: compression type:
 ** _off_: messages are not compressed
-** _zlib_: messages are compressed with https://zlib.net/[zlib ^↗^,window=_blank]
-** _zstd_: messages are compressed with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank]
+** _zlib_: messages are compressed with https://zlib.net/[zlib ^↗^^]
+** _zstd_: messages are compressed with https://facebook.github.io/zstd/[Zstandard ^↗^^]
 
 [TIP]
 With WeeChat ≤ 2.8, the command _handshake_ is not implemented, WeeChat silently
@@ -1377,8 +1377,8 @@ Messages are sent as binary data, using following format (with size in bytes):
   (including this field)
 * _compression_ (byte): flag:
 ** _0x00_: following data is not compressed
-** _0x01_: following data is compressed with https://zlib.net/[zlib ^↗^,window=_blank]
-** _0x02_: following data is compressed with https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank]
+** _0x01_: following data is compressed with https://zlib.net/[zlib ^↗^^]
+** _0x02_: following data is compressed with https://facebook.github.io/zstd/[Zstandard ^↗^^]
 * _id_ (string, 4 bytes + content): identifier sent by client (before command name); it can be
   empty (string with zero length and no content) if no identifier was given in
   command
@@ -1389,8 +1389,8 @@ Messages are sent as binary data, using following format (with size in bytes):
 === Compression
 
 If flag _compression_ is equal to 0x01 or 0x02, then *all* data after is compressed
-with https://zlib.net/[zlib ^↗^,window=_blank] or
-https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank],
+with https://zlib.net/[zlib ^↗^^] or
+https://facebook.github.io/zstd/[Zstandard ^↗^^],
 and therefore must be uncompressed before being processed.
 
 [[message_identifier]]

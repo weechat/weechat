@@ -14,7 +14,7 @@ del programma stesso.
 
 // TRANSLATION MISSING
 Latest version of this document can be found on
-https://weechat.org/doc/[this page ^↗^,window=_blank].
+https://weechat.org/doc/[this page ^↗^^].
 
 [[introduction]]
 == Introduzione
@@ -63,7 +63,7 @@ function, this can crash WeeChat. +
 If something must be run in background, the function `+hook_process+` can be used.
 See example in the chapter <<hook_process,Eseguire un processo in background>>
 and the documentation on the function `+hook_process+` in the
-link:weechat_plugin_api.it.html#_hook_process[WeeChat plugin API reference ^↗^,window=_blank].
+link:weechat_plugin_api.it.html#_hook_process[WeeChat plugin API reference ^↗^^].
 
 [[languages_specificities]]
 === Specifiche per i linguaggi
@@ -77,7 +77,7 @@ link:weechat_plugin_api.it.html#_hook_process[WeeChat plugin API reference ^↗
 
 WeeChat defines a `weechat` module which must be imported with `import weechat`. +
 A Python stub for WeeChat API is available in the repository:
-https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^,window=_blank].
+https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^^].
 
 // TRANSLATION MISSING
 [[python_functions]]
@@ -114,7 +114,7 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   It is recommended to use modifier `+irc_in2_yyy+` instead, the string received
   is always UTF-8 valid. +
   See function `+hook_modifier+` in the
-  link:weechat_plugin_api.it.html#_hook_modifier[WeeChat plugin API reference ^↗^,window=_blank].
+  link:weechat_plugin_api.it.html#_hook_modifier[WeeChat plugin API reference ^↗^^].
 
 | hook_signal
 | xxx,irc_out_yyy +
@@ -129,7 +129,7 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   It is recommended to use signal `+xxx,irc_out1_yyy+` instead, the string received
   is always UTF-8 valid. +
   See function `+hook_signal+` in the
-  link:weechat_plugin_api.it.html#_hook_signal[WeeChat plugin API reference ^↗^,window=_blank].
+  link:weechat_plugin_api.it.html#_hook_signal[WeeChat plugin API reference ^↗^^].
 
 | hook_process +
   hook_process_hashtable
@@ -217,7 +217,7 @@ You can pass this constant when a function accepts null as an argument and you
 will get it as the value of an argument in a callback function if the argument
 value is null. To see which functions accept null values and passes null values
 to callbacks, look at the Python prototypes in the
-link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^,window=_blank].
+link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^^].
 
 [[language_guile]]
 ==== Guile (Scheme)
@@ -398,7 +398,7 @@ directory _autoload_ viene creato automaticamente'.
 
 // TRANSLATION MISSING
 Script API is almost the same as C plugin API.
-You can look at link:weechat_plugin_api.it.html[WeeChat plugin API reference ^↗^,window=_blank]
+You can look at link:weechat_plugin_api.it.html[WeeChat plugin API reference ^↗^^]
 for detail about each function in API: prototype, arguments, return values, examples.
 
 È importante fare la differenza tra un _plugin_ ed uno _script_:
@@ -572,7 +572,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 
 // TRANSLATION MISSING
 For more information about functions in API, please read the
-link:weechat_plugin_api.it.html[WeeChat plugin API reference ^↗^,window=_blank].
+link:weechat_plugin_api.it.html[WeeChat plugin API reference ^↗^^].
 
 [[script_api_functions]]
 === Funzioni
@@ -907,7 +907,7 @@ Elenco di costanti nelle API per gli script:
 // TRANSLATION MISSING
 This chapter shows some common tasks, with examples.
 Only partial things in API are used here, for full reference, see the
-link:weechat_plugin_api.it.html[WeeChat plugin API reference ^↗^,window=_blank].
+link:weechat_plugin_api.it.html[WeeChat plugin API reference ^↗^^].
 
 [[buffers]]
 === Buffer
@@ -1188,7 +1188,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 [TIP]
 // TRANSLATION MISSING
 All infos available about WeeChat are on
-https://weechat.org/dev/info/[this page ^↗^,window=_blank].
+https://weechat.org/dev/info/[this page ^↗^^].
 
 Esempio di trasferimento di un URL con un'opzione: scaricare l'ultimo pacchetto
 di sviluppo di WeeChat nel file _/tmp/weechat-devel.tar.gz_:
@@ -1208,7 +1208,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 // TRANSLATION MISSING
 For more information about URL transfer and available options, see functions
 `+hook_process+` and `+hook_process_hashtable+` in
-link:weechat_plugin_api.it.html#_hook_process[WeeChat plugin API reference ^↗^,window=_blank].
+link:weechat_plugin_api.it.html#_hook_process[WeeChat plugin API reference ^↗^^].
 
 [[config_options]]
 === Configurazione / opzioni
