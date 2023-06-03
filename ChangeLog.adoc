@@ -66,6 +66,7 @@ New features::
   * relay: rename "ssl" options and protocol to "tls"
   * relay: make TLS certificate/key loading error handling more verbose (issue #1558)
   * relay: add modifiers "relay_client_irc_in", "relay_client_irc_out1" and "relay_client_irc_out"
+  * relay: add support of capability "echo-message" (issue #1949)
 
 Bug fixes::
 

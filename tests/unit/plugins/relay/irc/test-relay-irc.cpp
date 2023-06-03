@@ -34,6 +34,7 @@ extern "C"
 #include "src/core/wee-hook.h"
 #include "src/core/wee-string.h"
 #include "src/plugins/plugin.h"
+#include "src/plugins/irc/irc-server.h"
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-client.h"
 #include "src/plugins/relay/relay-config.h"
@@ -46,11 +47,17 @@ extern int relay_irc_search_server_capability (const char *capability);
 extern struct t_hashtable *relay_irc_message_parse (const char *message);
 extern void relay_irc_sendf (struct t_relay_client *client,
                              const char *format, ...);
+extern void relay_irc_parse_cap_message (struct t_relay_client *client,
+                                         struct t_hashtable *parsed_msg);
 extern int relay_irc_tag_relay_client_id (const char *tags);
 extern void relay_irc_input_send (struct t_relay_client *client,
                                   const char *irc_channel,
                                   const char *options,
                                   const char *format, ...);
+extern int relay_irc_cap_enabled (struct t_relay_client *client,
+                                  const char *capability);
+extern int relay_irc_get_supported_caps (struct t_relay_client *client);
+extern struct t_arraylist *relay_irc_get_list_caps ();
 }
 
 #define CLIENT_RECV(__irc_msg)                                          \
@@ -113,19 +120,20 @@ extern void relay_irc_input_send (struct t_relay_client *client,
         FAIL(string_dyn_free (msg, 0));                                 \
     }
 
-struct t_relay_server *ptr_relay_server = NULL;
-struct t_relay_client *ptr_relay_client = NULL;
-struct t_arraylist *sent_messages_client = NULL;
-struct t_arraylist *sent_messages_irc = NULL;
-struct t_hook *hook_modifier_relay_irc_out = NULL;
-struct t_hook *hook_signal_irc_input_send = NULL;
-
 TEST_GROUP(RelayIrc)
 {
 };
 
 TEST_GROUP(RelayIrcWithClient)
 {
+    struct t_irc_server *ptr_server = NULL;
+    struct t_relay_server *ptr_relay_server = NULL;
+    struct t_relay_client *ptr_relay_client = NULL;
+    struct t_arraylist *sent_messages_client = NULL;
+    struct t_arraylist *sent_messages_irc = NULL;
+    struct t_hook *hook_modifier_relay_irc_out = NULL;
+    struct t_hook *hook_signal_irc_input_send = NULL;
+
     void test_client_recv (const char *data)
     {
         record_start ();
@@ -189,13 +197,12 @@ TEST_GROUP(RelayIrcWithClient)
                                             const char *string)
     {
         /* make C++ compiler happy */
-        (void) pointer;
         (void) data;
         (void) modifier;
         (void) modifier_data;
 
         if (string)
-            arraylist_add (sent_messages_client, strdup (string));
+            arraylist_add ((struct t_arraylist *)pointer, strdup (string));
 
         return NULL;
     }
@@ -206,14 +213,13 @@ TEST_GROUP(RelayIrcWithClient)
                                          void *signal_data)
     {
         /* make C++ compiler happy */
-        (void) pointer;
         (void) data;
         (void) signal;
         (void) type_data;
 
         if (signal_data)
         {
-            arraylist_add (sent_messages_irc,
+            arraylist_add ((struct t_arraylist *)pointer,
                            strdup ((const char *)signal_data));
         }
 
@@ -291,7 +297,7 @@ TEST_GROUP(RelayIrcWithClient)
             hook_modifier_relay_irc_out = hook_modifier (
                 NULL,
                 "relay_client_irc_out1",
-                &modifier_relay_irc_out_cb, NULL, NULL);
+                &modifier_relay_irc_out_cb, sent_messages_client, NULL);
         }
 
         if (!hook_signal_irc_input_send)
@@ -299,12 +305,15 @@ TEST_GROUP(RelayIrcWithClient)
             hook_signal_irc_input_send = hook_signal (
                 NULL,
                 "irc_input_send",
-                &signal_irc_input_send_cb, NULL, NULL);
+                &signal_irc_input_send_cb, sent_messages_irc, NULL);
         }
 
         /* create a fake server (no I/O) */
         run_cmd_quiet ("/mute /server add test fake:127.0.0.1 "
                        "-nicks=nick1,nick2,nick3");
+
+        /* get the server pointer */
+        ptr_server = irc_server_search ("test");
 
         /* connect to the fake server */
         run_cmd_quiet ("/connect test");
@@ -333,14 +342,15 @@ TEST_GROUP(RelayIrcWithClient)
     void teardown ()
     {
         relay_client_free (ptr_relay_client);
-        relay_server_free (ptr_relay_server);
-
-        ptr_relay_server = NULL;
         ptr_relay_client = NULL;
+
+        relay_server_free (ptr_relay_server);
+        ptr_relay_server = NULL;
 
         /* disconnect and delete the fake server */
         run_cmd_quiet ("/mute /disconnect test");
         run_cmd_quiet ("/mute /server del test");
+        ptr_server = NULL;
 
         /* restore auto-open of relay buffer */
         config_file_option_reset (relay_config_look_auto_open_buffer, 1);
@@ -413,6 +423,7 @@ TEST(RelayIrc, RelayIrcSearchServerCapability)
     LONGS_EQUAL(-1, relay_irc_search_server_capability ("unknown"));
 
     CHECK(relay_irc_search_server_capability ("server-time") >= 0);
+    CHECK(relay_irc_search_server_capability ("echo-message") >= 0);
 }
 
 /*
@@ -486,6 +497,42 @@ TEST(RelayIrcWithClient, RelayIrcSendf)
 
     CLIENT_SEND("PRIVMSG #test :test message");
     CHECK_SENT_CLIENT("PRIVMSG #test :test message");
+}
+
+/*
+ * Tests functions:
+ *   relay_irc_parse_cap_message
+ */
+
+TEST(RelayIrcWithClient, RelayIrcParseCapMessage)
+{
+    struct t_hashtable *hashtable;
+
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, irc_cap_echo_message));
+
+    /* CAP NAK: ignored */
+    hashtable = relay_irc_message_parse (":server CAP * NAK echo-message");
+    relay_irc_parse_cap_message (ptr_relay_client, hashtable);
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, irc_cap_echo_message));
+    hashtable_free (hashtable);
+
+    /* CAP ACK with unknown capability */
+    hashtable = relay_irc_message_parse (":server CAP * ACK unknown");
+    relay_irc_parse_cap_message (ptr_relay_client, hashtable);
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, irc_cap_echo_message));
+    hashtable_free (hashtable);
+
+    /* CAP ACK with extended-join and echo-message */
+    hashtable = relay_irc_message_parse (":server CAP * ACK extended-join echo-message");
+    relay_irc_parse_cap_message (ptr_relay_client, hashtable);
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, irc_cap_echo_message));
+    hashtable_free (hashtable);
+
+    /* CAP ACK with -extended-join and -echo-message */
+    hashtable = relay_irc_message_parse (":server CAP * ACK -extended-join -echo-message");
+    relay_irc_parse_cap_message (ptr_relay_client, hashtable);
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, irc_cap_echo_message));
+    hashtable_free (hashtable);
 }
 
 /*
@@ -609,6 +656,92 @@ TEST(RelayIrc, RelayIrcHookSignals)
 
 /*
  * Tests functions:
+ *   relay_irc_capability_compare_cb
+ */
+
+TEST(RelayIrc, RelayIrcCapabilityCompareCb)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_irc_capability_free_db
+ */
+
+TEST(RelayIrc, RelayIrcCapabilityFreeDb)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_irc_cap_enabled
+ */
+
+TEST(RelayIrcWithClient, RelayIrcCapEnabled)
+{
+    LONGS_EQUAL(0, relay_irc_cap_enabled (NULL, NULL));
+    LONGS_EQUAL(0, relay_irc_cap_enabled (NULL, "echo-message"));
+    LONGS_EQUAL(0, relay_irc_cap_enabled (ptr_relay_client, NULL));
+    LONGS_EQUAL(0, relay_irc_cap_enabled (ptr_relay_client, ""));
+
+    LONGS_EQUAL(0, relay_irc_cap_enabled (ptr_relay_client, "echo-message"));
+
+    hashtable_set (ptr_server->cap_list, "echo-message", NULL);
+    LONGS_EQUAL(1, relay_irc_cap_enabled (ptr_relay_client, "echo-message"));
+    hashtable_remove (ptr_server->cap_list, "echo-message");
+
+    LONGS_EQUAL(0, relay_irc_cap_enabled (ptr_relay_client, "echo-message"));
+}
+
+/*
+ * Tests functions:
+ *   relay_irc_get_supported_caps
+ */
+
+TEST(RelayIrcWithClient, RelayIrcGetSupportedCaps)
+{
+    int supported_caps;
+
+    supported_caps = relay_irc_get_supported_caps (ptr_relay_client);
+    LONGS_EQUAL(1 << RELAY_IRC_CAPAB_SERVER_TIME, supported_caps);
+
+    hashtable_set (ptr_server->cap_list, "echo-message", NULL);
+    supported_caps = relay_irc_get_supported_caps (ptr_relay_client);
+    LONGS_EQUAL((1 << RELAY_IRC_CAPAB_SERVER_TIME)
+                | (1 << RELAY_IRC_CAPAB_ECHO_MESSAGE),
+                supported_caps);
+    hashtable_remove (ptr_server->cap_list, "echo-message");
+}
+
+/*
+ * Tests functions:
+ *   relay_irc_get_list_caps
+ */
+
+TEST(RelayIrc, RelayGetListCaps)
+{
+    struct t_arraylist *list_caps;
+    int i, size;
+
+    list_caps = relay_irc_get_list_caps ();
+    CHECK(list_caps);
+    size = arraylist_size (list_caps);
+    LONGS_EQUAL(RELAY_IRC_NUM_CAPAB, size);
+
+    /* check that it's properly sorted */
+    for (i = 1; i < size; i++)
+    {
+        CHECK(strcmp ((const char *)arraylist_get (list_caps, i - 1),
+                      (const char *)arraylist_get (list_caps, i)) < 0);
+    }
+
+    arraylist_free (list_caps);
+}
+
+/*
+ * Tests functions:
  *   relay_irc_recv_command_capab
  */
 
@@ -629,13 +762,21 @@ TEST(RelayIrcWithClient, RelayIrcRecvCommandCapab)
     POINTERS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_ls_received));
     POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
+    /* enable "echo-message" in IRC server and list supported capabilities */
+    hashtable_set (ptr_server->cap_list, "echo-message", NULL);
+    CLIENT_RECV(":alice!user@host CAP LS");
+    CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick LS :echo-message server-time");
+    POINTERS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_ls_received));
+    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
+    hashtable_remove (ptr_server->cap_list, "echo-message");
+
     /* request unknown capability: reject */
     CLIENT_RECV(":alice!user@host CAP REQ unknown");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick NAK :unknown");
     POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));
     POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
-    /* request supported capability: accept */
+    /* request 1 supported capability: accept */
     CLIENT_RECV(":alice!user@host CAP REQ server-time");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick ACK :server-time");
     CHECK(RELAY_IRC_DATA(ptr_relay_client, server_capabilities)
@@ -643,7 +784,18 @@ TEST(RelayIrcWithClient, RelayIrcRecvCommandCapab)
     POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
     RELAY_IRC_DATA(ptr_relay_client, server_capabilities) = 0;
 
-    /* request unknown + supported capabilities: reject */
+    /* request 2 supported capabilities: accept */
+    hashtable_set (ptr_server->cap_list, "echo-message", NULL);
+    CLIENT_RECV(":alice!user@host CAP REQ :server-time echo-message");
+    CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick ACK :server-time echo-message");
+    CHECK(RELAY_IRC_DATA(ptr_relay_client, server_capabilities)
+          & ((1 << RELAY_IRC_CAPAB_SERVER_TIME)
+             | (1 << RELAY_IRC_CAPAB_ECHO_MESSAGE)));
+    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
+    RELAY_IRC_DATA(ptr_relay_client, server_capabilities) = 0;
+    hashtable_remove (ptr_server->cap_list, "echo-message");
+
+    /* request unknown + supported capabilities: reject both */
     CLIENT_RECV(":alice!user@host CAP REQ :server-time unknown");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick NAK :server-time unknown");
     POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));

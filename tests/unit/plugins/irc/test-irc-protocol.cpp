@@ -212,16 +212,16 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
                "irc_join,irc_smart_filter,nick_bob,host_user_b@host_b," \
                "log4");
 
-struct t_irc_server *ptr_server = NULL;
-struct t_arraylist *sent_messages = NULL;
-struct t_hook *hook_signal_irc_out = NULL;
-
 TEST_GROUP(IrcProtocol)
 {
 };
 
 TEST_GROUP(IrcProtocolWithServer)
 {
+    struct t_irc_server *ptr_server = NULL;
+    struct t_arraylist *sent_messages = NULL;
+    struct t_hook *hook_signal_irc_out = NULL;
+
     void server_recv (const char *command)
     {
         char str_command[4096];
@@ -289,13 +289,15 @@ TEST_GROUP(IrcProtocolWithServer)
                                   void *signal_data)
     {
         /* make C++ compiler happy */
-        (void) pointer;
         (void) data;
         (void) signal;
         (void) type_data;
 
         if (signal_data)
-            arraylist_add (sent_messages, strdup ((const char *)signal_data));
+        {
+            arraylist_add ((struct t_arraylist *)pointer,
+                           strdup ((const char *)signal_data));
+        }
 
         return WEECHAT_RC_OK;
     }
@@ -350,9 +352,10 @@ TEST_GROUP(IrcProtocolWithServer)
 
         if (!hook_signal_irc_out)
         {
-            hook_signal_irc_out = hook_signal (NULL,
-                                               IRC_FAKE_SERVER ",irc_out1_*",
-                                               &signal_irc_out_cb, NULL, NULL);
+            hook_signal_irc_out = hook_signal (
+                NULL,
+                IRC_FAKE_SERVER ",irc_out1_*",
+                &signal_irc_out_cb, sent_messages, NULL);
         }
 
         /*

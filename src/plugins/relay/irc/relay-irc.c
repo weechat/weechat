@@ -43,7 +43,7 @@ char *relay_irc_ignore_commands[] = { "cap", "pong", "quit", NULL };
 char *relay_irc_backlog_commands_tags[RELAY_IRC_NUM_CMD] =
 { "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg" };
 char *relay_irc_server_capabilities[RELAY_IRC_NUM_CAPAB] =
-{ "server-time" };
+{ "server-time", "echo-message" };
 
 
 /*
@@ -301,6 +301,46 @@ end:
 }
 
 /*
+ * Parses CAP command received from IRC server.
+ */
+
+void
+relay_irc_parse_cap_message (struct t_relay_client *client,
+                             struct t_hashtable *parsed_msg)
+{
+    const char *ptr_param;
+    char str_param[64], **caps;
+    int i, index, num_caps;
+
+    /* only CAP ACK is parsed */
+    ptr_param = weechat_hashtable_get (parsed_msg, "param2");
+    if (!ptr_param || (weechat_strcasecmp (ptr_param, "ACK") != 0))
+        return;
+
+    index = 3;
+    while (1)
+    {
+        snprintf (str_param, sizeof (str_param), "param%d", index);
+        ptr_param = weechat_hashtable_get (parsed_msg, str_param);
+        if (!ptr_param)
+            break;
+        caps = weechat_string_split (ptr_param, " ", NULL, 0, 0, &num_caps);
+        if (caps)
+        {
+            for (i = 0; i < num_caps; i++)
+            {
+                if (strcmp (caps[i], "-echo-message") == 0)
+                    RELAY_IRC_DATA(client, irc_cap_echo_message) = 0;
+                else if (strcmp (caps[i], "echo-message") == 0)
+                    RELAY_IRC_DATA(client, irc_cap_echo_message) = 1;
+            }
+            weechat_string_free_split (caps);
+        }
+        index++;
+    }
+}
+
+/*
  * Callback for signal "irc_in2".
  *
  * This is called when something is received on IRC server, and message can be
@@ -352,6 +392,12 @@ relay_irc_signal_irc_in2_cb (const void *pointer, void *data,
                 free (RELAY_IRC_DATA(client, nick));
             RELAY_IRC_DATA(client, nick) = strdup ((irc_args[0] == ':') ?
                                                    irc_args + 1 : irc_args);
+        }
+
+        /* if capabilities have changed, parse them to update in client */
+        if (irc_command && (weechat_strcasecmp (irc_command, "cap") == 0))
+        {
+            relay_irc_parse_cap_message (client, hash_parsed);
         }
 
         /* relay all commands to client, but not ping/pong */
@@ -496,29 +542,36 @@ relay_irc_signal_irc_outtags_cb (const void *pointer, void *data,
             && irc_channel && irc_channel[0]
             && relay_irc_command_relayed (irc_command))
         {
-            /* get host for nick (it is self nick) */
-            snprintf (str_infolist_args, sizeof (str_infolist_args),
-                      "%s,%s,%s",
-                      client->protocol_args,
-                      irc_channel,
-                      RELAY_IRC_DATA(client, nick));
+            /*
+             * relay command only if capability echo-message is NOS enabled
+             * in IRC server (otherwise message would be displayed two times)
+             */
+            if (!RELAY_IRC_DATA(client, irc_cap_echo_message))
+            {
+                /* get host for nick (it is self nick) */
+                snprintf (str_infolist_args, sizeof (str_infolist_args),
+                          "%s,%s,%s",
+                          client->protocol_args,
+                          irc_channel,
+                          RELAY_IRC_DATA(client, nick));
 
-            host = NULL;
-            infolist_nick = weechat_infolist_get ("irc_nick", NULL,
-                                                  str_infolist_args);
-            if (infolist_nick && weechat_infolist_next (infolist_nick))
-                host = weechat_infolist_string (infolist_nick, "host");
+                host = NULL;
+                infolist_nick = weechat_infolist_get ("irc_nick", NULL,
+                                                      str_infolist_args);
+                if (infolist_nick && weechat_infolist_next (infolist_nick))
+                    host = weechat_infolist_string (infolist_nick, "host");
 
-            /* send message to client */
-            relay_irc_sendf (client,
-                             ":%s%s%s %s",
-                             RELAY_IRC_DATA(client, nick),
-                             (host && host[0]) ? "!" : "",
-                             (host && host[0]) ? host : "",
-                             ptr_message);
+                /* send message to client */
+                relay_irc_sendf (client,
+                                 ":%s%s%s %s",
+                                 RELAY_IRC_DATA(client, nick),
+                                 (host && host[0]) ? "!" : "",
+                                 (host && host[0]) ? host : "",
+                                 ptr_message);
 
-            if (infolist_nick)
-                weechat_infolist_free (infolist_nick);
+                if (infolist_nick)
+                    weechat_infolist_free (infolist_nick);
+            }
         }
         if (irc_channel)
             free (irc_channel);
@@ -1286,6 +1339,125 @@ relay_irc_hook_signals (struct t_relay_client *client)
 }
 
 /*
+ * Compares two capabilities.
+ *
+ * Returns:
+ *   < 0: capability 1 < capability 2
+ *     0: capability 1 == capability 2
+ *   > 0: capability 1 > capability 2
+ */
+
+int
+relay_irc_capability_compare_cb (void *data,
+                                 struct t_arraylist *arraylist,
+                                 void *pointer1,
+                                 void *pointer2)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    return (weechat_strcmp ((const char *)pointer1, (const char *)pointer2));
+}
+
+/*
+ * Frees a capability in list.
+ */
+
+void
+relay_irc_capability_free_db (void *data,
+                              struct t_arraylist *arraylist,
+                              void *pointer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    free (pointer);
+}
+
+/*
+ * Checks if a capability is currently enabled in IRC server.
+ *
+ * Returns:
+ *   1: capability is enabled in server
+ *   0: capability is NOT enabled in server
+ */
+
+int
+relay_irc_cap_enabled (struct t_relay_client *client, const char *capability)
+{
+    char str_info[1024], *info;
+    int rc;
+
+    if (!client || !capability || !capability[0])
+        return 0;
+
+    snprintf (str_info, sizeof (str_info),
+              "%s,%s",
+              client->protocol_args,
+              capability);
+
+    info = weechat_info_get ("irc_server_cap", str_info);
+    rc = (info && (strcmp (info, "1") == 0)) ? 1 : 0;
+    if (info)
+        free (info);
+    return rc;
+}
+
+/*
+ * Returns an integer with bits set for each supported capability (ie that
+ * is either always supported, or enabled in the IRC server).
+ */
+
+int
+relay_irc_get_supported_caps (struct t_relay_client *client)
+{
+    int i, caps, check_server;
+
+    caps = 0;
+    for (i = 0; i < RELAY_IRC_NUM_CAPAB; i++)
+    {
+        check_server = RELAY_IRC_CAPAB_FOLLOW_SERVER & (1 << i);
+        if (!check_server
+            || relay_irc_cap_enabled (client, relay_irc_server_capabilities[i]))
+        {
+            caps |= (1 << i);
+        }
+    }
+
+    return caps;
+}
+
+/*
+ * Returns a sorted list of supported all server capabilities by relay (even
+ * those that should not be sent to clients when the IRC server doesn't
+ * support them).
+ *
+ * Note: result must be freed after use.
+ */
+
+struct t_arraylist *
+relay_irc_get_list_caps ()
+{
+    struct t_arraylist *list_capab;
+    int i;
+
+    list_capab = weechat_arraylist_new (
+        8, 1, 0,
+        &relay_irc_capability_compare_cb, NULL,
+        &relay_irc_capability_free_db, NULL);
+
+    for (i = 0; i < RELAY_IRC_NUM_CAPAB; i++)
+    {
+        weechat_arraylist_add (list_capab,
+                               strdup (relay_irc_server_capabilities[i]));
+    }
+
+    return list_capab;
+}
+
+/*
  * Processes the "CAP" irc command (received from client)
  */
 
@@ -1293,8 +1465,11 @@ void
 relay_irc_recv_command_capab (struct t_relay_client *client,
                               int num_params, const char **params)
 {
-    char str_capab[1024], *str_caps;
-    int i, capability, server_caps, num_caps_received, caps_ok;
+    struct t_arraylist *list_caps;
+    char **str_caps, **caps;
+    const char *ptr_cap;
+    int i, j, capability, server_caps, num_caps_received, caps_ok, size;
+    int num_caps, supported_caps;
 
     if (num_params < 1)
         return;
@@ -1302,17 +1477,37 @@ relay_irc_recv_command_capab (struct t_relay_client *client,
     if (weechat_strcasecmp (params[0], "ls") == 0)
     {
         /* return the list of supported server capabilities */
-        str_capab[0] = '\0';
-        for (i = 0; i < RELAY_IRC_NUM_CAPAB; i++)
+        list_caps = relay_irc_get_list_caps ();
+        if (list_caps)
         {
-            if (str_capab[0])
-                strcat (str_capab, " ");
-            strcat (str_capab, relay_irc_server_capabilities[i]);
-            relay_irc_sendf (client,
-                             ":%s CAP %s LS :%s",
-                             RELAY_IRC_DATA(client, address),
-                             (RELAY_IRC_DATA(client, nick)) ? RELAY_IRC_DATA(client, nick) : "nick",
-                             str_capab);
+            supported_caps = relay_irc_get_supported_caps (client);
+            str_caps = weechat_string_dyn_alloc (256);
+            if (str_caps)
+            {
+                size = weechat_arraylist_size (list_caps);
+                for (i = 0; i < size; i++)
+                {
+                    ptr_cap = (const char *)weechat_arraylist_get (list_caps, i);
+                    capability = relay_irc_search_server_capability (ptr_cap);
+                    if (capability >= 0)
+                    {
+                        if (supported_caps & (1 << capability))
+                        {
+                            if ((*str_caps)[0])
+                                weechat_string_dyn_concat (str_caps, " ", -1);
+                            weechat_string_dyn_concat (str_caps, ptr_cap, -1);
+                        }
+                    }
+                }
+                relay_irc_sendf (
+                    client,
+                    ":%s CAP %s LS :%s",
+                    RELAY_IRC_DATA(client, address),
+                    (RELAY_IRC_DATA(client, nick)) ? RELAY_IRC_DATA(client, nick) : "nick",
+                    *str_caps);
+                weechat_string_dyn_free (str_caps, 1);
+            }
+            weechat_arraylist_free (list_caps);
         }
         if (!RELAY_IRC_DATA(client, connected))
             RELAY_IRC_DATA(client, cap_ls_received) = 1;
@@ -1320,49 +1515,63 @@ relay_irc_recv_command_capab (struct t_relay_client *client,
     else if (weechat_strcasecmp (params[0], "req") == 0)
     {
         /* client is asking for one or more server capabilities */
-        num_caps_received = 0;
-        caps_ok = 0;
-        server_caps = RELAY_IRC_DATA(client, server_capabilities);
-        for (i = 1; i < num_params; i++)
+        list_caps = relay_irc_get_list_caps ();
+        if (list_caps)
         {
-            if (!params[i][0])
-                continue;
-            num_caps_received++;
-            capability = relay_irc_search_server_capability (params[i]);
-            if (capability >= 0)
+            supported_caps = relay_irc_get_supported_caps (client);
+            num_caps_received = 0;
+            caps_ok = 1;
+            server_caps = RELAY_IRC_DATA(client, server_capabilities);
+            str_caps = weechat_string_dyn_alloc (256);
+            if (str_caps)
             {
-                caps_ok = 1;
-                server_caps |= 1 << capability;
+                for (i = 1; i < num_params; i++)
+                {
+                    if (!params[i][0])
+                        continue;
+                    if ((*str_caps)[0])
+                        weechat_string_dyn_concat (str_caps, " ", -1);
+                    weechat_string_dyn_concat (str_caps, params[i], -1);
+                    caps = weechat_string_split (params[i], " ", NULL, 0, 0,
+                                                 &num_caps);
+                    if (caps)
+                    {
+                        for (j = 0; j < num_caps; j++)
+                        {
+                            num_caps_received++;
+                            capability = relay_irc_search_server_capability (caps[j]);
+                            if ((capability >= 0) && (supported_caps & (1 << capability)))
+                                server_caps |= 1 << capability;
+                            else
+                                caps_ok = 0;
+                        }
+                        weechat_string_free_split (caps);
+                    }
+                }
+                if (num_caps_received == 0)
+                    caps_ok = 0;
+                if (caps_ok)
+                    RELAY_IRC_DATA(client, server_capabilities) = server_caps;
+                relay_irc_sendf (
+                    client,
+                    ":%s CAP %s %s :%s",
+                    RELAY_IRC_DATA(client, address),
+                    (RELAY_IRC_DATA(client, nick)) ? RELAY_IRC_DATA(client, nick) : "nick",
+                    (caps_ok) ? "ACK" : "NAK",
+                    *str_caps);
+                weechat_string_dyn_free (str_caps, 1);
             }
-            else
+            /*
+             * if the CAP REQ command is received without arguments, we consider
+             * the CAP END is received; this is a workaround for clients like
+             * Atomic which are sending "CAP REQ :" (see issue #1040)
+             */
+            if (num_caps_received == 0)
             {
-                caps_ok = 0;
-                break;
+                if (!RELAY_IRC_DATA(client, connected))
+                    RELAY_IRC_DATA(client, cap_end_received) = 1;
             }
-        }
-        if (caps_ok)
-            RELAY_IRC_DATA(client, server_capabilities) = server_caps;
-        str_caps = (num_params > 1) ?
-            weechat_string_rebuild_split_string (params, " ", 1, -1) : NULL;
-        relay_irc_sendf (
-            client,
-            ":%s CAP %s %s :%s",
-            RELAY_IRC_DATA(client, address),
-            (RELAY_IRC_DATA(client, nick)) ? RELAY_IRC_DATA(client, nick) : "nick",
-            (caps_ok) ? "ACK" : "NAK",
-            (str_caps) ? str_caps : "");
-        if (str_caps)
-            free (str_caps);
-
-        /*
-         * if the CAP REQ command is received without arguments, we consider
-         * the CAP END is received; this is a workaround for clients like
-         * Atomic which are sending "CAP REQ :" (see issue #1040)
-         */
-        if (num_caps_received == 0)
-        {
-            if (!RELAY_IRC_DATA(client, connected))
-                RELAY_IRC_DATA(client, cap_end_received) = 1;
+            weechat_arraylist_free (list_caps);
         }
     }
     else if (weechat_strcasecmp (params[0], "end") == 0)
@@ -1568,6 +1777,8 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
             }
 
             RELAY_IRC_DATA(client, connected) = 1;
+            RELAY_IRC_DATA(client, irc_cap_echo_message) = relay_irc_cap_enabled (
+                client, "echo-message");
 
             /*
              * send nick to client if server nick is different of nick asked
@@ -1940,6 +2151,7 @@ relay_irc_alloc (struct t_relay_client *client)
         RELAY_IRC_DATA(client, cap_ls_received) = 0;
         RELAY_IRC_DATA(client, cap_end_received) = 0;
         RELAY_IRC_DATA(client, connected) = 0;
+        RELAY_IRC_DATA(client, irc_cap_echo_message) = 0;
         RELAY_IRC_DATA(client, server_capabilities) = 0;
         RELAY_IRC_DATA(client, hook_signal_irc_in2) = NULL;
         RELAY_IRC_DATA(client, hook_signal_irc_outtags) = NULL;
@@ -1974,6 +2186,7 @@ relay_irc_alloc_with_infolist (struct t_relay_client *client,
         RELAY_IRC_DATA(client, cap_ls_received) = weechat_infolist_integer (infolist, "cap_ls_received");
         RELAY_IRC_DATA(client, cap_end_received) = weechat_infolist_integer (infolist, "cap_end_received");
         RELAY_IRC_DATA(client, connected) = weechat_infolist_integer (infolist, "connected");
+        RELAY_IRC_DATA(client, irc_cap_echo_message) = weechat_infolist_integer (infolist, "irc_cap_echo_message");
         RELAY_IRC_DATA(client, server_capabilities) = weechat_infolist_integer (infolist, "server_capabilities");
         if (RELAY_IRC_DATA(client, connected))
         {
@@ -2074,6 +2287,8 @@ relay_irc_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!weechat_infolist_new_var_integer (item, "cap_end_received", RELAY_IRC_DATA(client, cap_end_received)))
         return 0;
+    if (!weechat_infolist_new_var_integer (item, "irc_cap_echo_message", RELAY_IRC_DATA(client, irc_cap_echo_message)))
+        return 0;
     if (!weechat_infolist_new_var_integer (item, "server_capabilities", RELAY_IRC_DATA(client, server_capabilities)))
         return 0;
     if (!weechat_infolist_new_var_pointer (item, "hook_signal_irc_in2", RELAY_IRC_DATA(client, hook_signal_irc_in2)))
@@ -2104,6 +2319,7 @@ relay_irc_print_log (struct t_relay_client *client)
         weechat_log_printf ("    cap_ls_received . . . . : %d",    RELAY_IRC_DATA(client, cap_ls_received));
         weechat_log_printf ("    cap_end_received. . . . : %d",    RELAY_IRC_DATA(client, cap_end_received));
         weechat_log_printf ("    connected . . . . . . . : %d",    RELAY_IRC_DATA(client, connected));
+        weechat_log_printf ("    irc_cap_echo_message. . : %d",    RELAY_IRC_DATA(client, irc_cap_echo_message));
         weechat_log_printf ("    server_capabilities . . : %d",    RELAY_IRC_DATA(client, server_capabilities));
         weechat_log_printf ("    hook_signal_irc_in2 . . : 0x%lx", RELAY_IRC_DATA(client, hook_signal_irc_in2));
         weechat_log_printf ("    hook_signal_irc_outtags : 0x%lx", RELAY_IRC_DATA(client, hook_signal_irc_outtags));
