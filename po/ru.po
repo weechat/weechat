@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-03 09:51+0200\n"
+"POT-Creation-Date: 2023-06-03 21:06+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8516,6 +8516,10 @@ msgstr "цвет  текущего окна с сообщениями"
 
 #, fuzzy
 msgid "display host in join messages from local client"
+msgstr "цвет  текущего окна с сообщениями"
+
+#, fuzzy
+msgid "display host in notice messages"
 msgstr "цвет  текущего окна с сообщениями"
 
 #, fuzzy

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-03 09:51+0200\n"
+"POT-Creation-Date: 2023-06-03 21:06+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11125,6 +11125,11 @@ msgstr "katılma iletilerinde makineyi görüntüle"
 
 msgid "display host in join messages from local client"
 msgstr "katılma iletilerinde yerel istemcideki makineyi görüntüle"
+
+#, fuzzy
+#| msgid "display host in join messages"
+msgid "display host in notice messages"
+msgstr "katılma iletilerinde makineyi görüntüle"
 
 msgid "display host in part/quit messages"
 msgstr "ayrılma/çıkma iletilerinde makineyi görüntüle"

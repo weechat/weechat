@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-03 09:51+0200\n"
+"POT-Creation-Date: 2023-06-03 21:06+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7603,6 +7603,9 @@ msgid "display host in join messages"
 msgstr ""
 
 msgid "display host in join messages from local client"
+msgstr ""
+
+msgid "display host in notice messages"
 msgstr ""
 
 msgid "display host in part/quit messages"

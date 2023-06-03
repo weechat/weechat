@@ -74,6 +74,7 @@ struct t_config_option *irc_config_look_display_ctcp_unknown = NULL;
 struct t_config_option *irc_config_look_display_extended_join = NULL;
 struct t_config_option *irc_config_look_display_host_join = NULL;
 struct t_config_option *irc_config_look_display_host_join_local = NULL;
+struct t_config_option *irc_config_look_display_host_notice = NULL;
 struct t_config_option *irc_config_look_display_host_quit = NULL;
 struct t_config_option *irc_config_look_display_join_message = NULL;
 struct t_config_option *irc_config_look_display_old_topic = NULL;
@@ -3010,6 +3011,12 @@ irc_config_init ()
             irc_config_file, irc_config_section_look,
             "display_host_join_local", "boolean",
             N_("display host in join messages from local client"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_config_look_display_host_notice = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "display_host_notice", "boolean",
+            N_("display host in notice messages"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_display_host_quit = weechat_config_new_option (

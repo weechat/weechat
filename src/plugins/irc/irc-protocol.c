@@ -2451,7 +2451,7 @@ IRC_PROTOCOL_CALLBACK(notice)
     const char *pos_target, *pos_args, *nick_address;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    int notify_private, is_channel, is_channel_orig, nick_is_me;
+    int notify_private, is_channel, is_channel_orig, nick_is_me, display_host;
     struct t_gui_buffer *ptr_buffer;
 
     IRC_PROTOCOL_MIN_PARAMS(2);
@@ -2686,8 +2686,14 @@ IRC_PROTOCOL_CALLBACK(notice)
                 }
                 else
                 {
-                    nick_address = irc_protocol_nick_address (server, 0, NULL,
-                                                              nick, address);
+                    display_host = weechat_config_boolean (
+                        irc_config_look_display_host_notice);
+                    nick_address = irc_protocol_nick_address (
+                        server,
+                        0,
+                        NULL,
+                        nick,
+                        (display_host) ? address : NULL);
                     weechat_printf_date_tags (
                         ptr_buffer,
                         date,

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-03 09:51+0200\n"
+"POT-Creation-Date: 2023-06-03 21:06+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8997,6 +8997,11 @@ msgstr "zobrazovat hosta ve zprávách o připojení"
 
 msgid "display host in join messages from local client"
 msgstr "zobrazovat hosta ve zprávách o připojení z lokálního klienta"
+
+#, fuzzy
+#| msgid "display host in join messages"
+msgid "display host in notice messages"
+msgstr "zobrazovat hosta ve zprávách o připojení"
 
 msgid "display host in part/quit messages"
 msgstr "zobrazovat hosta ve zprávách o odchodu/ukončení"
