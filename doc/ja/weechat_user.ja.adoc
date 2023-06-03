@@ -4778,6 +4778,15 @@ FIFO パイプに書き込むコマンド/テキストの文法は以下の例�
   *テキストまたはコマンド
 ....
 
+// TRANSLATION MISSING
+Backslashes can be interpreted with this format, where `*` is replaced by `\`,
+allowing for example to send multiline messages:
+
+....
+  plugin.buffer \text or command here
+  \text or command here
+....
+
 例:
 
 * IRC サーバ libera で使うニックネームを "newnick" に変更する:
@@ -4790,6 +4799,14 @@ $ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_1
 
 ----
 $ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+// TRANSLATION MISSING
+* Send a multiline message on IRC #test channel, if capability "draft/multiline"
+  is enabled on the ergo server:
+
+----
+$ echo 'irc.ergo.#test \hello\n...on two lines!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * 現在のバッファに対してテキストを送信:

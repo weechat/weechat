@@ -4597,6 +4597,14 @@ Syntax for the FIFO pipe commands/text is one of following:
   *text or command here
 ....
 
+Backslashes can be interpreted with this format, where `*` is replaced by `\`,
+allowing for example to send multiline messages:
+
+....
+  plugin.buffer \text or command here
+  \text or command here
+....
+
 Some examples:
 
 * Change nick on IRC server libera to "newnick":
@@ -4609,6 +4617,13 @@ $ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_1
 
 ----
 $ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+* Send a multiline message on IRC #test channel, if capability "draft/multiline"
+  is enabled on the ergo server:
+
+----
+$ echo 'irc.ergo.#test \hello\n...on two lines!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Send a message on current buffer:

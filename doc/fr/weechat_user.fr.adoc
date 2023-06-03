@@ -4747,6 +4747,14 @@ des suivantes :
   *texte ou commande ici
 ....
 
+Les barres obliques inverses peuvent être interprétées avec ce format, où `*`
+est remplacé par `\`, autorisant par exemple l'envoi de messages multi-lignes :
+
+....
+  plugin.buffer \texte ou commande ici
+  \texte ou commande ici
+....
+
 Quelques exemples :
 
 * Changer le pseudo sur libera en "autrepseudo" :
@@ -4759,6 +4767,13 @@ $ echo 'irc.server.libera */nick autrepseudo' >/run/user/1000/weechat/weechat_fi
 
 ----
 $ echo 'irc.libera.#weechat *bonjour !' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+* Envoyer un message multi-lignes sur le canal IRC #test, si la capacité
+  "draft/multiline" est activée sur le serveur ergo :
+
+----
+$ echo 'irc.ergo.#test \bonjour\n...sur deux lignes !' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Envoyer un message sur le tampon courant :
