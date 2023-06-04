@@ -4690,9 +4690,8 @@ Die Syntax der FIFO Pipe Befehle/Text sieht wie folgt aus:
   *hier Text oder Befehl
 ....
 
-// TRANSLATION MISSING
-Backslashes can be interpreted with this format, where `*` is replaced by `\`,
-allowing for example to send multiline messages:
+Backslashes können mit diesem Format interpretiert werden, wobei `*` durch `\` ersetzt wird,
+damit kann man beispielsweise mehrzeilige Nachrichten senden:
 
 ....
   plugin.buffer \text or command here
@@ -4713,9 +4712,8 @@ $ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_1
 $ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
-// TRANSLATION MISSING
-* Send a multiline message on IRC #test channel, if capability "draft/multiline"
-  is enabled on the ergo server:
+* Sendet eine mehrzeilige Nachricht in den IRC Kanal #test, wenn die Fähigkeit "draft/multiline"
+  auf dem Ergo Server aktiviert ist:
 
 ----
 $ echo 'irc.ergo.#test \hello\n...on two lines!' >/run/user/1000/weechat/weechat_fifo_12345
