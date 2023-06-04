@@ -125,6 +125,114 @@ logger_backlog_display_line (struct t_gui_buffer *buffer, const char *line)
 }
 
 /*
+ * Compares two messages in arraylist.
+ */
+
+int
+logger_backlog_msg_cmp_cb (void *data,
+                           struct t_arraylist *arraylist,
+                           void *pointer1,
+                           void *pointer2)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    return weechat_strcmp ((const char *)pointer1, (const char *)pointer2);
+}
+
+/*
+ * Frees a message in arraylist.
+ */
+
+void
+logger_backlog_msg_free_cb (void *data, struct t_arraylist *arraylist,
+                            void *pointer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    free (pointer);
+}
+
+/*
+ * Groups lines by messages: each line with a timestamp is considered the first
+ * line of a message, and subsequent lines without timestamp are the rest of
+ * the message.
+ *
+ * Note: result must be freed after use.
+ */
+
+struct t_arraylist *
+logger_backlog_group_messages (struct t_arraylist *lines)
+{
+    int i, size, time_found;
+    char **message, **old_message, *str_date, *error;
+    const char *ptr_line, *pos_message;
+    struct tm tm_line;
+    struct t_arraylist *messages;
+
+    if (!lines)
+        return NULL;
+
+    size = weechat_arraylist_size (lines);
+
+    messages = weechat_arraylist_new (size, 0, 1,
+                                      &logger_backlog_msg_cmp_cb, NULL,
+                                      &logger_backlog_msg_free_cb, NULL);
+    if (!messages)
+        return NULL;
+
+    message = weechat_string_dyn_alloc (256);
+    old_message = weechat_string_dyn_alloc (256);
+
+    for (i = size - 1; i >= 0; i--)
+    {
+        ptr_line = (const char *)weechat_arraylist_get (lines, i);
+
+        weechat_string_dyn_copy (old_message, *message);
+        weechat_string_dyn_copy (message, ptr_line);
+        if ((*old_message)[0])
+        {
+            weechat_string_dyn_concat (message, "\n", -1);
+            weechat_string_dyn_concat (message, *old_message, -1);
+        }
+
+        time_found = 0;
+        pos_message = strchr (ptr_line, '\t');
+        if (pos_message)
+        {
+            str_date = weechat_strndup (ptr_line, pos_message - ptr_line);
+            if (str_date)
+            {
+                memset (&tm_line, 0, sizeof (struct tm));
+                error = strptime (
+                    str_date,
+                    weechat_config_string (logger_config_file_time_format),
+                    &tm_line);
+                if (error && !error[0] && (tm_line.tm_year > 0))
+                    time_found = 1;
+                free (str_date);
+            }
+        }
+        if (time_found)
+        {
+            weechat_arraylist_insert (messages, 0, strdup (*message));
+            weechat_string_dyn_copy (message, NULL);
+        }
+    }
+
+    if ((*message)[0])
+        weechat_arraylist_insert (messages, 0, strdup (*message));
+
+    weechat_string_dyn_free (message, 1);
+    weechat_string_dyn_free (old_message, 1);
+
+    return messages;
+}
+
+/*
  * Displays backlog for a buffer by reading end of log file.
  */
 
@@ -132,36 +240,52 @@ void
 logger_backlog_file (struct t_gui_buffer *buffer, const char *filename,
                      int lines)
 {
-    struct t_arraylist *last_lines;
-    int i, num_lines;
+    struct t_arraylist *last_lines, *messages;
+    int i, num_msgs, old_input_multiline;
 
-    num_lines = 0;
+    num_msgs = 0;
     last_lines = logger_tail_file (filename, lines);
     if (!last_lines)
         return;
 
+    messages = logger_backlog_group_messages (last_lines);
+    if (!messages)
+    {
+        weechat_arraylist_free (last_lines);
+        return;
+    }
+
+    weechat_arraylist_free (last_lines);
+
+    /* disable any print hook during display of backlog */
     weechat_buffer_set (buffer, "print_hooks_enabled", "0");
 
-    num_lines = weechat_arraylist_size (last_lines);
-    for (i = 0; i < num_lines; i++)
+    /* temporary enable multiline support so we can display multiline msgs */
+    old_input_multiline = weechat_buffer_get_integer (buffer, "input_multiline");
+    weechat_buffer_set (buffer, "input_multiline", "1");
+
+    num_msgs = weechat_arraylist_size (messages);
+    for (i = 0; i < num_msgs; i++)
     {
         logger_backlog_display_line (
             buffer,
-            (const char *)weechat_arraylist_get (last_lines, i));
+            (const char *)weechat_arraylist_get (messages, i));
     }
-    weechat_arraylist_free (last_lines);
+    weechat_arraylist_free (messages);
 
-    if (num_lines > 0)
+    if (num_msgs > 0)
     {
         weechat_printf_date_tags (buffer, 0,
                                   "no_highlight,notify_none,logger_backlog_end",
                                   _("%s===\t%s========== End of backlog (%d lines) =========="),
                                   weechat_color (weechat_config_string (logger_config_color_backlog_end)),
                                   weechat_color (weechat_config_string (logger_config_color_backlog_end)),
-                                  num_lines);
+                                  num_msgs);
         weechat_buffer_set (buffer, "unread", "");
     }
 
+    weechat_buffer_set (buffer, "input_multiline",
+                        (old_input_multiline) ? "1" : "0");
     weechat_buffer_set (buffer, "print_hooks_enabled", "1");
 }
 

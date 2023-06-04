@@ -60,7 +60,7 @@ logger_tail_last_eol (const char *string_start, const char *string_ptr)
 }
 
 /*
- * Compares two lines.
+ * Compares two lines in arraylist.
  */
 
 int
@@ -77,7 +77,7 @@ logger_tail_lines_cmp_cb (void *data,
 }
 
 /*
- * Frees a line.
+ * Frees a line in arraylist.
  */
 
 void

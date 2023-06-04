@@ -105,6 +105,7 @@ Bug fixes::
   * irc: add missing tags "irc_cap" and "log3" in cap messages (client capability)
   * irc: fix split of CTCP message with no arguments
   * irc: remove extra space in CTCP ACTION message sent without arguments
+  * logger: fix display of multiline messages in backlog (issue #1926)
   * lua: fix crash with print when the value to print is not a string (issue #1904, issue #1905)
   * relay: fix connection with IRC clients sending "CAP REQ :" (without capability) and not sending "CAP END" (issue #1040)
   * ruby: fix crash on quit when a child process is still running (issue #1889, issue #1915)

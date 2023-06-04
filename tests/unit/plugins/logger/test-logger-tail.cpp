@@ -71,8 +71,9 @@ TEST(LoggerTail, LoggerTailLastEol)
 
 /*
  * Tests functions:
+ *   logger_tail_lines_cmp_cb
+ *   logger_tail_lines_free_cb
  *   logger_tail_file
- *   logger_tail_free
  */
 
 TEST(LoggerTail, LoggerTailFile)
