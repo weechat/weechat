@@ -502,6 +502,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |             test-logger-backlog.cpp | Tests: logger backlog.
 // TRANSLATION MISSING
+|             test-logger-tail.cpp    | Tests: logger tail functions.
+// TRANSLATION MISSING
 |          trigger/                   | Root of unit tests for trigger plugin.
 // TRANSLATION MISSING
 |             test-trigger.cpp        | Tests: triggers.

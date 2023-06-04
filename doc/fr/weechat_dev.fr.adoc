@@ -450,6 +450,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          logger/                    | Racine des tests unitaires pour l'extension logger.
 |             test-logger.cpp         | Tests : logger.
 |             test-logger-backlog.cpp | Tests : backlog logger.
+|             test-logger-tail.cpp    | Tests : fonctions "tail".
 |          trigger/                   | Racine des tests unitaires pour l'extension trigger.
 |             test-trigger.cpp        | Tests : triggers.
 |             test-trigger-config.cpp | Tests : configuration trigger.
