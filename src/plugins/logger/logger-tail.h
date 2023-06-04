@@ -20,14 +20,6 @@
 #ifndef WEECHAT_PLUGIN_LOGGER_TAIL_H
 #define WEECHAT_PLUGIN_LOGGER_TAIL_H
 
-struct t_logger_line
-{
-    char *data;                        /* line content                      */
-    struct t_logger_line *next_line;   /* link to next line                 */
-};
-
-extern struct t_logger_line *logger_tail_file (const char *filename,
-                                               int n_lines);
-extern void logger_tail_free (struct t_logger_line *lines);
+extern struct t_arraylist *logger_tail_file (const char *filename, int lines);
 
 #endif /* WEECHAT_PLUGIN_LOGGER_TAIL_H */

@@ -30,6 +30,7 @@
 #include <fcntl.h>
 #include <string.h>
 
+#include "../weechat-plugin.h"
 #include "logger.h"
 #include "logger-tail.h"
 
@@ -44,6 +45,9 @@
 const char *
 logger_tail_last_eol (const char *string_start, const char *string_ptr)
 {
+    if (!string_start || !string_ptr)
+        return NULL;
+
     while (string_ptr >= string_start)
     {
         if ((string_ptr[0] == '\n') || (string_ptr[0] == '\r'))
@@ -56,21 +60,56 @@ logger_tail_last_eol (const char *string_start, const char *string_ptr)
 }
 
 /*
- * Returns last lines of a file.
- *
- * Note: result must be freed after use with function logger_tail_free().
+ * Compares two lines.
  */
 
-struct t_logger_line *
-logger_tail_file (const char *filename, int n_lines)
+int
+logger_tail_lines_cmp_cb (void *data,
+                          struct t_arraylist *arraylist,
+                          void *pointer1,
+                          void *pointer2)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    return weechat_strcmp ((const char *)pointer1, (const char *)pointer2);
+}
+
+/*
+ * Frees a line.
+ */
+
+void
+logger_tail_lines_free_cb (void *data, struct t_arraylist *arraylist,
+                           void *pointer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    free (pointer);
+}
+
+/*
+ * Returns last lines of a file.
+ *
+ * Note: result must be freed after use.
+ */
+
+struct t_arraylist *
+logger_tail_file (const char *filename, int lines)
 {
     int fd;
     off_t file_length, file_pos;
     size_t to_read;
     ssize_t bytes_read;
     char buf[LOGGER_TAIL_BUFSIZE + 1];
-    char *ptr_buf, *pos_eol, *part_of_line, *new_part_of_line;
-    struct t_logger_line *ptr_line, *new_line;
+    char *ptr_buf, *pos_eol, *part_of_line, *new_part_of_line, *line;
+    struct t_arraylist *list_lines;
+
+    if (!filename || (lines < 1))
+        return NULL;
 
     /* open file */
     fd = open (filename, O_RDONLY);
@@ -92,10 +131,12 @@ logger_tail_file (const char *filename, int n_lines)
         to_read = LOGGER_TAIL_BUFSIZE;
     lseek (fd, file_pos, SEEK_SET);
 
-    /* loop until we have "n_lines" lines in list */
+    /* loop until we have "lines" lines in list */
     part_of_line = NULL;
-    ptr_line = NULL;
-    while (n_lines > 0)
+    list_lines = weechat_arraylist_new (lines, 0, 1,
+                                        &logger_tail_lines_cmp_cb, NULL,
+                                        &logger_tail_lines_free_cb, NULL);
+    while (lines > 0)
     {
         lseek (fd, file_pos, SEEK_SET);
         bytes_read = read (fd, buf, to_read);
@@ -103,7 +144,7 @@ logger_tail_file (const char *filename, int n_lines)
         {
             if (part_of_line)
                 free (part_of_line);
-            logger_tail_free (ptr_line);
+            weechat_arraylist_free (list_lines);
             close (fd);
             return NULL;
         }
@@ -128,38 +169,30 @@ logger_tail_file (const char *filename, int n_lines)
                 }
                 if (part_of_line || pos_eol[0])
                 {
-                    new_line = malloc (sizeof (*new_line));
-                    if (!new_line)
-                    {
-                        logger_tail_free (ptr_line);
-                        ptr_line = NULL;
-                        break;
-                    }
                     if (part_of_line)
                     {
-                        new_line->data = malloc ((strlen (pos_eol) +
-                                                  strlen (part_of_line) + 1));
-                        if (!new_line->data)
+                        line = malloc ((strlen (pos_eol) +
+                                        strlen (part_of_line) + 1));
+                        if (!line)
                         {
                             free (part_of_line);
-                            free (new_line);
-                            logger_tail_free (ptr_line);
+                            weechat_arraylist_free (list_lines);
                             close (fd);
                             return NULL;
                         }
-                        strcpy (new_line->data, pos_eol);
-                        strcat (new_line->data, part_of_line);
+                        strcpy (line, pos_eol);
+                        strcat (line, part_of_line);
                         free (part_of_line);
                         part_of_line = NULL;
+                        weechat_arraylist_insert (list_lines, 0, line);
                     }
                     else
                     {
-                        new_line->data = strdup (pos_eol);
+                        weechat_arraylist_insert (list_lines, 0,
+                                                  strdup (pos_eol));
                     }
-                    new_line->next_line = ptr_line;
-                    ptr_line = new_line;
-                    n_lines--;
-                    if (n_lines <= 0)
+                    lines--;
+                    if (lines <= 0)
                         break;
                 }
             }
@@ -175,7 +208,7 @@ logger_tail_file (const char *filename, int n_lines)
                     if (!new_part_of_line)
                     {
                         free (part_of_line);
-                        logger_tail_free (ptr_line);
+                        weechat_arraylist_free (list_lines);
                         close (fd);
                         return NULL;
                     }
@@ -209,30 +242,5 @@ logger_tail_file (const char *filename, int n_lines)
 
     close (fd);
 
-    return ptr_line;
-}
-
-/*
- * Frees structure returned by function "logger_tail_file".
- */
-
-void
-logger_tail_free (struct t_logger_line *lines)
-{
-    struct t_logger_line *ptr_line, *next_line;
-
-    if (!lines)
-        return;
-
-    ptr_line = lines;
-    while (ptr_line)
-    {
-        next_line = ptr_line->next_line;
-
-        if (ptr_line->data)
-            free (ptr_line->data);
-        free (ptr_line);
-
-        ptr_line = next_line;
-    }
+    return list_lines;
 }

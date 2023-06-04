@@ -132,22 +132,25 @@ void
 logger_backlog_file (struct t_gui_buffer *buffer, const char *filename,
                      int lines)
 {
-    struct t_logger_line *last_lines, *ptr_lines;
-    int num_lines;
-
-    weechat_buffer_set (buffer, "print_hooks_enabled", "0");
+    struct t_arraylist *last_lines;
+    int i, num_lines;
 
     num_lines = 0;
     last_lines = logger_tail_file (filename, lines);
-    ptr_lines = last_lines;
-    while (ptr_lines)
+    if (!last_lines)
+        return;
+
+    weechat_buffer_set (buffer, "print_hooks_enabled", "0");
+
+    num_lines = weechat_arraylist_size (last_lines);
+    for (i = 0; i < num_lines; i++)
     {
-        logger_backlog_display_line (buffer, ptr_lines->data);
-        num_lines++;
-        ptr_lines = ptr_lines->next_line;
+        logger_backlog_display_line (
+            buffer,
+            (const char *)weechat_arraylist_get (last_lines, i));
     }
-    if (last_lines)
-        logger_tail_free (last_lines);
+    weechat_arraylist_free (last_lines);
+
     if (num_lines > 0)
     {
         weechat_printf_date_tags (buffer, 0,
@@ -158,6 +161,7 @@ logger_backlog_file (struct t_gui_buffer *buffer, const char *filename,
                                   num_lines);
         weechat_buffer_set (buffer, "unread", "");
     }
+
     weechat_buffer_set (buffer, "print_hooks_enabled", "1");
 }
 
