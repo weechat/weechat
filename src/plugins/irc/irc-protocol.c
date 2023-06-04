@@ -1367,7 +1367,7 @@ IRC_PROTOCOL_CALLBACK(cap)
 IRC_PROTOCOL_CALLBACK(chghost)
 {
     int length, local_chghost, smart_filter;
-    char *str_host;
+    char *str_host, str_tags[512];
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
@@ -1402,12 +1402,14 @@ IRC_PROTOCOL_CALLBACK(chghost)
                     && (irc_server_strcasecmp (server,
                                                ptr_channel->name, nick) == 0))
                 {
+                    snprintf (str_tags, sizeof (str_tags),
+                              "new_host_%s", str_host);
                     weechat_printf_date_tags (
                         irc_msgbuffer_get_target_buffer (
                             server, NULL, command, NULL, ptr_channel->buffer),
                         date,
-                        irc_protocol_tags (server, command, tags, NULL, nick,
-                                           address),
+                        irc_protocol_tags (server, command, tags, str_tags,
+                                           nick, address),
                         _("%s%s%s%s (%s%s%s)%s has changed host to %s%s"),
                         weechat_prefix ("network"),
                         irc_nick_color_for_msg (server, 1, NULL, nick),
@@ -1434,17 +1436,17 @@ IRC_PROTOCOL_CALLBACK(chghost)
                                         && weechat_config_boolean (irc_config_look_smart_filter)
                                         && weechat_config_boolean (irc_config_look_smart_filter_chghost)
                                         && !ptr_nick_speaking);
-
+                        snprintf (str_tags, sizeof (str_tags),
+                                  "new_host_%s%s%s",
+                                  str_host,
+                                  (smart_filter) ? "," : "",
+                                  (smart_filter) ? "irc_smart_filter" : "");
                         weechat_printf_date_tags (
                             irc_msgbuffer_get_target_buffer (
                                 server, NULL, command, NULL, ptr_channel->buffer),
                             date,
-                            irc_protocol_tags (
-                                server,
-                                command,
-                                tags,
-                                (smart_filter) ? "irc_smart_filter" : NULL,
-                                nick, address),
+                            irc_protocol_tags (server, command, tags, str_tags,
+                                               nick, address),
                             _("%s%s%s%s (%s%s%s)%s has changed host to %s%s"),
                             weechat_prefix ("network"),
                             irc_nick_color_for_msg (server, 1, ptr_nick, nick),

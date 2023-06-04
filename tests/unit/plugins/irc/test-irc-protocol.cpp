@@ -1822,29 +1822,31 @@ TEST(IrcProtocolWithServer, chghost)
     /* self nick */
     RECV(":alice!user@host CHGHOST user2 host2");
     CHECK_CHAN("--", "alice (user@host) has changed host to user2@host2",
-               "irc_chghost,nick_alice,host_user@host,log3");
+               "irc_chghost,new_host_user2@host2,nick_alice,host_user@host,log3");
     STRCMP_EQUAL("user2@host2", ptr_nick->host);
 
     RECV(":alice!user@host CHGHOST user2 host2");
     CHECK_CHAN("--", "alice (user@host) has changed host to user2@host2",
-               "irc_chghost,nick_alice,host_user@host,log3");
+               "irc_chghost,new_host_user2@host2,nick_alice,host_user@host,log3");
     STRCMP_EQUAL("user2@host2", ptr_nick->host);
 
     RECV(":alice!user2@host2 CHGHOST user3 :host3");
     CHECK_CHAN("--", "alice (user2@host2) has changed host to user3@host3",
-               "irc_chghost,nick_alice,host_user2@host2,log3");
+               "irc_chghost,new_host_user3@host3,nick_alice,host_user2@host2,log3");
     STRCMP_EQUAL("user3@host3", ptr_nick->host);
 
     /* another nick */
     RECV(":bob!user@host CHGHOST user_bob_2 host_bob_2");
     CHECK_CHAN("--",
                "bob (user@host) has changed host to user_bob_2@host_bob_2",
-               "irc_chghost,irc_smart_filter,nick_bob,host_user@host,log3");
+               "irc_chghost,new_host_user_bob_2@host_bob_2,irc_smart_filter,"
+               "nick_bob,host_user@host,log3");
     STRCMP_EQUAL("user_bob_2@host_bob_2", ptr_nick2->host);
     CHECK_PV("bob",
              "--",
              "bob (user@host) has changed host to user_bob_2@host_bob_2",
-             "irc_chghost,nick_bob,host_user@host,log3");
+             "irc_chghost,new_host_user_bob_2@host_bob_2,nick_bob,"
+             "host_user@host,log3");
 }
 
 /*
