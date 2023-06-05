@@ -91,6 +91,7 @@ Bug fixes::
   * api: readjust string size in function string_dyn_free when string is not freed
   * buflist: do not display keys added in default context on first load
   * fset: remove scroll to top of fset buffer when options are added or removed (issue #1892)
+  * guile: fix crash when plugin is loaded on GNU/Hurd (issue #1951)
   * irc: fix format of IRC tags displayed in messages (use "=" to separate key from value, do not convert "_" to "-") (issue #1929)
   * irc: reset all internal servers variables when disconnecting
   * irc: start from the beginning of nicks at automatic reconnection (issue #337, issue #965)

@@ -1231,6 +1231,19 @@ weechat_guile_port_write (SCM port, const void *data, size_t size)
 #endif
 
 /*
+ * Callback called by scm_with_guile().
+ */
+
+void *
+weechat_guile_init (void *data)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    return NULL;
+}
+
+/*
  * Initializes guile plugin.
  */
 
@@ -1276,7 +1289,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     scm_install_gmp_memory_functions = 0;
 #endif /* defined(HAVE_GUILE_GMP_MEMORY_FUNCTIONS) && (SCM_MAJOR_VERSION < 3 || (SCM_MAJOR_VERSION == 3 && SCM_MINOR_VERSION == 0 && SCM_MICRO_VERSION < 8)) */
 
-    scm_init_guile ();
+    scm_with_guile (&weechat_guile_init, NULL);
 
     guile_module_weechat = scm_c_define_module ("weechat",
                                                 &weechat_guile_api_module_init,
