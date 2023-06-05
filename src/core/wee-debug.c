@@ -175,7 +175,7 @@ debug_sigsegv_cb ()
         "***      then issue command: \"bt full\" and send result to developers.\n"
         "***      See the user's guide for more info about enabling the core files\n"
         "***      and reporting crashes:\n"
-        "***      https://weechat.org/doc/stable/user/#report_crashes\n"
+        "***      https://weechat.org/doc/weechat/stable/user/#report_crashes\n"
         "***\n"
         "***   2. Otherwise send the backtrace (below), only if it is a complete trace.\n"
         "***      Keep the crash log file, just in case developers ask you some info\n"
