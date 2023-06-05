@@ -749,9 +749,9 @@ TEST(RelayIrcWithClient, RelayIrcRecvCommandCapab)
 {
     relay_client_set_status (ptr_relay_client, RELAY_STATUS_CONNECTING);
 
-    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));
-    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_ls_received));
-    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_ls_received));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
     /* not enough parameters */
     CLIENT_RECV(":alice!user@host CAP");
@@ -759,29 +759,29 @@ TEST(RelayIrcWithClient, RelayIrcRecvCommandCapab)
     /* list supported capabilities */
     CLIENT_RECV(":alice!user@host CAP LS");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick LS :server-time");
-    POINTERS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_ls_received));
-    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_ls_received));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
     /* enable "echo-message" in IRC server and list supported capabilities */
     hashtable_set (ptr_server->cap_list, "echo-message", NULL);
     CLIENT_RECV(":alice!user@host CAP LS");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick LS :echo-message server-time");
-    POINTERS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_ls_received));
-    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_ls_received));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
     hashtable_remove (ptr_server->cap_list, "echo-message");
 
     /* request unknown capability: reject */
     CLIENT_RECV(":alice!user@host CAP REQ unknown");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick NAK :unknown");
-    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));
-    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
     /* request 1 supported capability: accept */
     CLIENT_RECV(":alice!user@host CAP REQ server-time");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick ACK :server-time");
     CHECK(RELAY_IRC_DATA(ptr_relay_client, server_capabilities)
           & (1 << RELAY_IRC_CAPAB_SERVER_TIME));
-    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
     RELAY_IRC_DATA(ptr_relay_client, server_capabilities) = 0;
 
     /* request 2 supported capabilities: accept */
@@ -791,26 +791,26 @@ TEST(RelayIrcWithClient, RelayIrcRecvCommandCapab)
     CHECK(RELAY_IRC_DATA(ptr_relay_client, server_capabilities)
           & ((1 << RELAY_IRC_CAPAB_SERVER_TIME)
              | (1 << RELAY_IRC_CAPAB_ECHO_MESSAGE)));
-    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
     RELAY_IRC_DATA(ptr_relay_client, server_capabilities) = 0;
     hashtable_remove (ptr_server->cap_list, "echo-message");
 
     /* request unknown + supported capabilities: reject both */
     CLIENT_RECV(":alice!user@host CAP REQ :server-time unknown");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick NAK :server-time unknown");
-    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));
-    POINTERS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));
+    LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
     /* request with empty list: end of capability negociation */
     CLIENT_RECV(":alice!user@host CAP REQ :");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick NAK :");
-    POINTERS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
     RELAY_IRC_DATA(ptr_relay_client, cap_end_received) = 0;
 
     /* end capability negociation */
     CLIENT_RECV(":alice!user@host CAP END");
-    POINTERS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
+    LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 }
 
 /*
