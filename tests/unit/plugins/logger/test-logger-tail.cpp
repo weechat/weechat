@@ -27,6 +27,7 @@ extern "C"
 {
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
 #include "src/core/wee-arraylist.h"
 #include "src/core/wee-string.h"
 #include "src/plugins/logger/logger-tail.h"
