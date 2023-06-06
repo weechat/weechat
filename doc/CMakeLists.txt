@@ -53,7 +53,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a toc=left
       -a toclevels=3
       -a sectnums
-      -a sectnumlevels=1
+      -a sectnumlevels=2
       -a docinfo1
     )
 
@@ -71,7 +71,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a toc=left
       -a toclevels=3
       -a sectnums
-      -a sectnumlevels=1
+      -a sectnumlevels=2
       -a docinfo1
     )
 
@@ -87,9 +87,9 @@ if(ENABLE_MAN OR ENABLE_DOC)
     # asciidoctor arguments for quickstart
     set(ASCIIDOCTOR_QUICKSTART_ARGS
       -a toc=left
-      -a toclevels=1
+      -a toclevels=2
       -a sectnums
-      -a sectnumlevels=1
+      -a sectnumlevels=2
       -a docinfo1
     )
 
@@ -98,7 +98,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a toc=left
       -a toclevels=3
       -a sectnums
-      -a sectnumlevels=1
+      -a sectnumlevels=2
       -a docinfo1
     )
 
@@ -107,7 +107,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a toc=left
       -a toclevels=3
       -a sectnums
-      -a sectnumlevels=1
+      -a sectnumlevels=2
       -a docinfo1
     )
 
