@@ -16,6 +16,34 @@ For a complete list of changes, please look at ChangeLog.
 
 This is a major version that includes breaking changes described below.
 
+[[v4.0.0_irc_capabilities]]
+=== Support of new IRC capabilities
+
+Support of new capabilities has been introduced in this version and are all
+enabled by default, if the server supports them:
+
+* batch
+* draft/multiline
+* echo-message
+
+When the capability "echo-message" is enabled, you may notice time before your
+own IRC messages are displayed in the buffer, this is normal : the capability
+forces the server to sent back messages, and WeeChat displays messages only
+when they are received from the server.
+
+If you want to disable this capability on all servers, you can do:
+
+----
+/set irc.server_default.capabilities "*,!echo-message"
+----
+
+If you are already connected to a server with echo-message enabled, just ask
+the server to disable the capability on-the-fly (no need to reconnect):
+
+----
+/cap req -echo-message
+----
+
 [[v4.0.0_config_files]]
 === Configuration file version
 
