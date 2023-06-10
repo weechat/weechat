@@ -90,6 +90,7 @@ Bug fixes::
   * core: fix infinite loop on startup when running some gui commands before the switch to core buffer is performed (issue #1917)
   * api: readjust string size in function string_dyn_free when string is not freed
   * buflist: do not display keys added in default context on first load
+  * exec: remove trailing "M" (carriage return) in output of commands
   * fset: remove scroll to top of fset buffer when options are added or removed (issue #1892)
   * guile: fix crash when plugin is loaded on GNU/Hurd (issue #1951)
   * irc: fix format of IRC tags displayed in messages (use "=" to separate key from value, do not convert "_" to "-") (issue #1929)
