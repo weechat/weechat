@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-03 21:06+0200\n"
+"POT-Creation-Date: 2023-06-10 20:29+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13952,6 +13952,14 @@ msgstr ""
 #, fuzzy
 msgid "default triggers"
 msgstr "Elenco degli alias:"
+
+#, fuzzy
+msgid "disabled triggers"
+msgstr "Elenco degli alias:"
+
+#, fuzzy
+msgid "enabled triggers"
+msgstr "abilita il supporto del mouse"
 
 #, fuzzy
 msgid "options for triggers"

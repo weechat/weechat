@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-03 21:06+0200\n"
+"POT-Creation-Date: 2023-06-10 20:29+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -16033,6 +16033,16 @@ msgstr "tetikler"
 
 msgid "default triggers"
 msgstr "öntanımlı tetikler"
+
+#, fuzzy
+#| msgid "default triggers"
+msgid "disabled triggers"
+msgstr "öntanımlı tetikler"
+
+#, fuzzy
+#| msgid "enable trigger support"
+msgid "enabled triggers"
+msgstr "tetik desteğini etkinleştir"
 
 msgid "options for triggers"
 msgstr "tetik seçenekleri"

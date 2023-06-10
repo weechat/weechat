@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-03 21:06+0200\n"
+"POT-Creation-Date: 2023-06-10 20:29+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -15157,6 +15157,16 @@ msgstr "acionadores"
 
 msgid "default triggers"
 msgstr "acionadores predefinidos"
+
+#, fuzzy
+#| msgid "default triggers"
+msgid "disabled triggers"
+msgstr "acionadores predefinidos"
+
+#, fuzzy
+#| msgid "enable trigger support"
+msgid "enabled triggers"
+msgstr "ativar suporte de acionadores"
 
 msgid "options for triggers"
 msgstr "opções de acionadores"

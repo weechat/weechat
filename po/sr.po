@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-03 21:06+0200\n"
+"POT-Creation-Date: 2023-06-10 20:29+0200\n"
 "PO-Revision-Date: 2023-05-14 15:29+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15545,6 +15545,16 @@ msgstr "окидачи"
 
 msgid "default triggers"
 msgstr "подразумевани окидачи"
+
+#, fuzzy
+#| msgid "default triggers"
+msgid "disabled triggers"
+msgstr "подразумевани окидачи"
+
+#, fuzzy
+#| msgid "enable trigger support"
+msgid "enabled triggers"
+msgstr "укључивање подршке за окидаче"
 
 msgid "options for triggers"
 msgstr "опције за окидаче"

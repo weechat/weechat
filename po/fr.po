@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-03 21:06+0200\n"
-"PO-Revision-Date: 2023-06-03 21:09+0200\n"
+"POT-Creation-Date: 2023-06-10 20:29+0200\n"
+"PO-Revision-Date: 2023-06-10 20:30+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -15924,6 +15924,12 @@ msgstr "triggers"
 
 msgid "default triggers"
 msgstr "triggers par défaut"
+
+msgid "disabled triggers"
+msgstr "triggers désactivés"
+
+msgid "enabled triggers"
+msgstr "triggers activés"
 
 msgid "options for triggers"
 msgstr "options pour les triggers"
