@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-10 20:29+0200\n"
+"POT-Creation-Date: 2023-06-10 22:36+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2677,6 +2677,14 @@ msgstr ""
 
 #, fuzzy
 msgid "names of filters"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "names of disabled filters"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "names of enabled filters"
 msgstr "Список сокращений:\n"
 
 msgid ""

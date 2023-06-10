@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-10 20:29+0200\n"
-"PO-Revision-Date: 2023-06-10 20:30+0200\n"
+"POT-Creation-Date: 2023-06-10 22:36+0200\n"
+"PO-Revision-Date: 2023-06-10 22:37+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -3790,6 +3790,12 @@ msgstr ""
 
 msgid "names of filters"
 msgstr "noms des filtres"
+
+msgid "names of disabled filters"
+msgstr "noms des filtres désactivés"
+
+msgid "names of enabled filters"
+msgstr "noms des filtres activés"
 
 msgid ""
 "commands (weechat and plugins); optional argument: prefix to add before the "

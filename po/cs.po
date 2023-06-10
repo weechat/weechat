@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-10 20:29+0200\n"
+"POT-Creation-Date: 2023-06-10 22:36+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3012,6 +3012,16 @@ msgstr ""
 "uživatelské jméno pro proxy server(pozn.: obsah je vykonán, viz /help eval)"
 
 msgid "names of filters"
+msgstr "jména filtrů"
+
+#, fuzzy
+#| msgid "names of filters"
+msgid "names of disabled filters"
+msgstr "jména filtrů"
+
+#, fuzzy
+#| msgid "names of filters"
+msgid "names of enabled filters"
 msgstr "jména filtrů"
 
 msgid ""

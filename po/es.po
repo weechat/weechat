@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-10 20:29+0200\n"
+"POT-Creation-Date: 2023-06-10 22:36+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3563,6 +3563,16 @@ msgid "filename; optional argument: default path (evaluated, see /help eval)"
 msgstr ""
 
 msgid "names of filters"
+msgstr "nombre de los filtros"
+
+#, fuzzy
+#| msgid "names of filters"
+msgid "names of disabled filters"
+msgstr "nombre de los filtros"
+
+#, fuzzy
+#| msgid "names of filters"
+msgid "names of enabled filters"
 msgstr "nombre de los filtros"
 
 msgid ""

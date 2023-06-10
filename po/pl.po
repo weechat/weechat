@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-10 20:29+0200\n"
+"POT-Creation-Date: 2023-06-10 22:36+0200\n"
 "PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -4113,6 +4113,16 @@ msgstr ""
 "help eval)"
 
 msgid "names of filters"
+msgstr "nazwy filtrów"
+
+#, fuzzy
+#| msgid "names of filters"
+msgid "names of disabled filters"
+msgstr "nazwy filtrów"
+
+#, fuzzy
+#| msgid "names of filters"
+msgid "names of enabled filters"
 msgstr "nazwy filtrów"
 
 msgid ""

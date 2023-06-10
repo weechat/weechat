@@ -8294,8 +8294,8 @@ command_init ()
            "all buffers:\n"
            "    /filter add sucks2 * * (?-i)^WeeChat sucks$"),
         "list"
-        " || enable %(filters_names)|@"
-        " || disable %(filters_names)|@"
+        " || enable %(filters_names_disabled)|@"
+        " || disable %(filters_names_enabled)|@"
         " || toggle %(filters_names)|@"
         " || add|addreplace %(filters_names) %(buffers_plugins_names)|*"
         " || rename %(filters_names) %(filters_names)"

@@ -862,6 +862,68 @@ completion_list_add_filters_cb (const void *pointer, void *data,
 }
 
 /*
+ * Adds disabled filter names to completion list.
+ */
+
+int
+completion_list_add_filters_disabled_cb (const void *pointer, void *data,
+                                         const char *completion_item,
+                                         struct t_gui_buffer *buffer,
+                                         struct t_gui_completion *completion)
+{
+    struct t_gui_filter *ptr_filter;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (ptr_filter = gui_filters; ptr_filter;
+         ptr_filter = ptr_filter->next_filter)
+    {
+        if (!ptr_filter->enabled)
+        {
+            gui_completion_list_add (completion, ptr_filter->name,
+                                     0, WEECHAT_LIST_POS_SORT);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Adds enabled filter names to completion list.
+ */
+
+int
+completion_list_add_filters_enabled_cb (const void *pointer, void *data,
+                                        const char *completion_item,
+                                        struct t_gui_buffer *buffer,
+                                        struct t_gui_completion *completion)
+{
+    struct t_gui_filter *ptr_filter;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (ptr_filter = gui_filters; ptr_filter;
+         ptr_filter = ptr_filter->next_filter)
+    {
+        if (ptr_filter->enabled)
+        {
+            gui_completion_list_add (completion, ptr_filter->name,
+                                     0, WEECHAT_LIST_POS_SORT);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds command hooks to completion list.
  */
 
@@ -1991,6 +2053,12 @@ completion_init ()
     hook_completion (NULL, "filters_names", /* formerly "%F" */
                      N_("names of filters"),
                      &completion_list_add_filters_cb, NULL, NULL);
+    hook_completion (NULL, "filters_names_disabled",
+                     N_("names of disabled filters"),
+                     &completion_list_add_filters_disabled_cb, NULL, NULL);
+    hook_completion (NULL, "filters_names_enabled",
+                     N_("names of enabled filters"),
+                     &completion_list_add_filters_enabled_cb, NULL, NULL);
     hook_completion (NULL, "commands", /* formerly "%h" */
                      N_("commands (weechat and plugins); "
                         "optional argument: prefix to add before the commands"),
