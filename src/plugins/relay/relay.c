@@ -245,22 +245,18 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     relay_config_write ();
 
     if (relay_signal_upgrade_received)
-    {
         relay_upgrade_save (0);
-    }
     else
-    {
-        relay_raw_message_free_all ();
-
-        relay_server_free_all ();
-
         relay_client_disconnect_all ();
 
-        if (relay_buffer)
-            weechat_buffer_close (relay_buffer);
+    relay_raw_message_free_all ();
 
-        relay_client_free_all ();
-    }
+    relay_server_free_all ();
+
+    if (relay_buffer)
+        weechat_buffer_close (relay_buffer);
+
+    relay_client_free_all ();
 
     relay_network_end ();
 
