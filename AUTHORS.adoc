@@ -149,6 +149,7 @@ Alphabetically:
 * Vasco Almeida
 * Victorhck
 * Voroskoi
+* wfrsk
 * Wojciech Kwolek
 * W. Trevor King
 * Yannick Palanque

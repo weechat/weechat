@@ -27,4 +27,4 @@ set_target_properties(typing PROPERTIES PREFIX "")
 
 target_link_libraries(typing coverage_config)
 
-install(TARGETS typing LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
+install(TARGETS typing LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

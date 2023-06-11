@@ -61,6 +61,7 @@
 #include "wee-config.h"
 #include "wee-debug.h"
 #include "wee-dir.h"
+#include "wee-doc.h"
 #include "wee-eval.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
@@ -86,10 +87,11 @@
 #include "../plugins/plugin.h"
 #include "../plugins/plugin-api.h"
 
-/* debug command line options */
-#define OPTION_NO_DLCLOSE 1000
-#define OPTION_NO_GNUTLS  1001
-#define OPTION_NO_GCRYPT  1002
+/* some command line options */
+#define OPTION_DOCGEN     1000
+#define OPTION_NO_DLCLOSE 1001
+#define OPTION_NO_GNUTLS  1002
+#define OPTION_NO_GCRYPT  1003
 
 int weechat_headless = 0;              /* 1 if running headless (no GUI)    */
 int weechat_daemon = 0;                /* 1 if daemonized (no foreground)   */
@@ -118,6 +120,9 @@ int weechat_locale_ok = 0;             /* is locale OK?                     */
 char *weechat_local_charset = NULL;    /* example: ISO-8859-1, UTF-8        */
 int weechat_server_cmd_line = 0;       /* at least 1 server on cmd line     */
 char *weechat_force_plugin_autoload = NULL; /* force load of plugins        */
+int weechat_doc_gen = 0;               /* doc generation                    */
+char *weechat_doc_gen_path = NULL;     /* path for doc generation           */
+int weechat_doc_gen_ok = 0;            /* doc generation was successful?    */
 int weechat_plugin_no_dlclose = 0;     /* remove calls to dlclose for libs  */
                                        /* (useful with valgrind)            */
 int weechat_no_gnutls = 0;             /* remove init/deinit of gnutls      */
@@ -127,6 +132,7 @@ int weechat_no_gcrypt = 0;             /* remove init/deinit of gcrypt      */
 struct t_weelist *weechat_startup_commands = NULL; /* startup commands      */
                                                    /* (option -r)           */
 int weechat_auto_connect = 1;          /* auto-connect to servers           */
+int weechat_auto_load_scripts = 1;     /* auto-load scripts                 */
 
 
 /*
@@ -168,7 +174,8 @@ weechat_display_usage ()
         stdout,
         _("  -a, --no-connect         disable auto-connect to servers at "
           "startup\n"
-          "  -c, --colors             display default colors in terminal\n"
+          "  -c, --colors             display default colors in terminal "
+          "and exit\n"
           "  -d, --dir <path>         force a single WeeChat home directory\n"
           "                           or 4 different directories separated "
           "by colons (in this order: config, data, cache, runtime)\n"
@@ -177,8 +184,8 @@ weechat_display_usage ()
           "  -t, --temp-dir           create a temporary WeeChat home "
           "directory and delete it on exit\n"
           "                           (incompatible with option \"-d\")\n"
-          "  -h, --help               display this help\n"
-          "  -l, --license            display WeeChat license\n"
+          "  -h, --help               display this help and exit\n"
+          "  -l, --license            display WeeChat license and exit\n"
           "  -p, --no-plugin          don't load any plugin at startup\n"
           "  -P, --plugins <plugins>  load only these plugins at startup\n"
           "                           (see /help weechat.plugin.autoload)\n"
@@ -190,7 +197,7 @@ weechat_display_usage ()
           "  -s, --no-script          don't load any script at startup\n"
           "      --upgrade            upgrade WeeChat using session files "
           "(see /help upgrade in WeeChat)\n"
-          "  -v, --version            display WeeChat version\n"
+          "  -v, --version            display WeeChat version and exit\n"
           "  plugin:option            option for plugin (see man weechat)\n"));
     string_fprintf (stdout, "\n");
 
@@ -198,6 +205,10 @@ weechat_display_usage ()
     if (weechat_headless)
     {
         string_fprintf (stdout, _("Extra options in headless mode:\n"));
+        string_fprintf (
+            stdout,
+            _("      --doc-gen <path>     generate files to build "
+              "documentation and exit\n"));
         string_fprintf (
             stdout,
             _("      --daemon             run WeeChat as a daemon (fork, "
@@ -240,23 +251,24 @@ weechat_parse_args (int argc, char *argv[])
     int opt;
     struct option long_options[] = {
         /* standard options */
-        { "no-connect",  no_argument,       NULL, 'a'  },
-        { "colors",      no_argument,       NULL, 'c'  },
-        { "dir",         required_argument, NULL, 'd'  },
-        { "temp-dir",    no_argument,       NULL, 't'  },
-        { "help",        no_argument,       NULL, 'h'  },
-        { "license",     no_argument,       NULL, 'l'  },
-        { "no-plugin",   no_argument,       NULL, 'p'  },
-        { "plugins",     required_argument, NULL, 'P'  },
-        { "run-command", required_argument, NULL, 'r'  },
-        { "no-script",   no_argument,       NULL, 's'  },
-        { "upgrade",     no_argument,       NULL, 'u'  },
-        { "version",     no_argument,       NULL, 'v'  },
+        { "no-connect",  no_argument,       NULL, 'a'               },
+        { "colors",      no_argument,       NULL, 'c'               },
+        { "dir",         required_argument, NULL, 'd'               },
+        { "temp-dir",    no_argument,       NULL, 't'               },
+        { "help",        no_argument,       NULL, 'h'               },
+        { "license",     no_argument,       NULL, 'l'               },
+        { "no-plugin",   no_argument,       NULL, 'p'               },
+        { "plugins",     required_argument, NULL, 'P'               },
+        { "run-command", required_argument, NULL, 'r'               },
+        { "no-script",   no_argument,       NULL, 's'               },
+        { "upgrade",     no_argument,       NULL, 'u'               },
+        { "doc-gen",     required_argument, NULL, OPTION_DOCGEN     },
+        { "version",     no_argument,       NULL, 'v'               },
         /* debug options */
         { "no-dlclose",  no_argument,       NULL, OPTION_NO_DLCLOSE },
         { "no-gnutls",   no_argument,       NULL, OPTION_NO_GNUTLS  },
         { "no-gcrypt",   no_argument,       NULL, OPTION_NO_GCRYPT  },
-        { NULL,          0,                 NULL, 0 },
+        { NULL,          0,                 NULL, 0                 },
     };
 
     weechat_argv0 = (argv[0]) ? strdup (argv[0]) : NULL;
@@ -266,6 +278,7 @@ weechat_parse_args (int argc, char *argv[])
     weechat_home_delete_on_exit = 0;
     weechat_server_cmd_line = 0;
     weechat_force_plugin_autoload = NULL;
+    weechat_doc_gen = 0;
     weechat_plugin_no_dlclose = 0;
 
     optind = 0;
@@ -329,6 +342,13 @@ weechat_parse_args (int argc, char *argv[])
                 break;
             case 'u': /* --upgrade */
                 weechat_upgrading = 1;
+                break;
+            case OPTION_DOCGEN: /* --doc-gen */
+                if (weechat_headless)
+                {
+                    weechat_doc_gen = 1;
+                    weechat_doc_gen_path = strdup (optarg);
+                }
                 break;
             case 'v': /* -v / --version */
                 string_fprintf (stdout, version_get_version ());
@@ -572,9 +592,13 @@ weechat_shutdown (int return_code, int crash)
         free (weechat_force_plugin_autoload);
     if (weechat_startup_commands)
         weelist_free (weechat_startup_commands);
+    if (weechat_doc_gen_path)
+        free (weechat_doc_gen_path);
 
     if (crash)
         abort ();
+    else if (weechat_doc_gen)
+        exit ((weechat_doc_gen_ok) ? 0 : 1);
     else if (return_code >= 0)
         exit (return_code);
 }
@@ -650,7 +674,8 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
         else
             weechat_upgrading = 0;
     }
-    weechat_startup_message ();         /* display WeeChat startup message  */
+    if (!weechat_doc_gen)
+        weechat_startup_message ();     /* display WeeChat startup message  */
     gui_chat_print_lines_waiting_buffer (NULL); /* display lines waiting    */
     weechat_term_check ();              /* warning about wrong $TERM        */
     weechat_locale_check ();            /* warning about wrong locale       */
@@ -662,6 +687,12 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
         gui_layout_window_apply (gui_layout_current, -1);
     if (weechat_upgrading)
         upgrade_weechat_end ();         /* remove .upgrade files + signal   */
+
+    if (weechat_doc_gen)
+    {
+        weechat_doc_gen_ok = doc_generate (weechat_doc_gen_path);
+        weechat_quit = 1;
+    }
 }
 
 /*

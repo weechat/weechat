@@ -277,6 +277,20 @@ alias_command_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
+    if (weechat_strcmp (argv[1], "missing") == 0)
+    {
+        for (i = 0; alias_default[i][0]; i++)
+        {
+            if (!alias_search (alias_default[i][0]))
+            {
+                alias_command_add (alias_default[i][0],  /* name */
+                                   alias_default[i][1],  /* command */
+                                   alias_default[i][2]);  /* completion */
+            }
+        }
+        return WEECHAT_RC_OK;
+    }
+
     WEECHAT_COMMAND_ERROR;
 }
 
@@ -294,7 +308,8 @@ alias_command_init ()
            " || add <alias> [<command>[;<command>...]]"
            " || addcompletion <completion> <alias> [<command>[;<command>...]]"
            " || del <alias> [<alias>...]"
-           " || rename <alias> <new_alias>"),
+           " || rename <alias> <new_alias>"
+           " || missing"),
         /* xgettext:no-c-format */
         N_("         list: list aliases (without argument, this list is "
            "displayed)\n"
@@ -302,6 +317,7 @@ alias_command_init ()
            "addcompletion: add an alias with a custom completion\n"
            "          del: delete an alias\n"
            "       rename: rename an alias\n"
+           "      missing: add missing aliases (using default aliases)\n"
            "   completion: completion for alias: by default completion is "
            "done with target command\n"
            "               note: you can use %%command to use completion of "
@@ -316,6 +332,7 @@ alias_command_init ()
            "       $n-: arguments from 'n' to last\n"
            "      $n-m: arguments from 'n' to 'm'\n"
            "        $*: all arguments\n"
+           "        $&: all arguments, with \" replaced by \\\"\n"
            "        $~: last argument\n"
            "      $var: where \"var\" is a local variable of buffer (see "
            "/buffer listvar)\n"
@@ -336,6 +353,7 @@ alias_command_init ()
         " || add %(alias) %(commands:/)|%(alias_value)"
         " || addcompletion %- %(alias) %(commands:/)|%(alias_value)"
         " || del %(alias)|%*"
-        " || rename %(alias) %(alias)",
+        " || rename %(alias) %(alias)"
+        " || missing",
         &alias_command_cb, NULL, NULL);
 }

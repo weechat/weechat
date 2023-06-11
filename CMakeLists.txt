@@ -25,22 +25,29 @@ project(weechat C)
 
 # CMake options
 set(CMAKE_VERBOSE_MAKEFILE OFF)
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 set(CMAKE_SKIP_RPATH ON)
-set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -fsigned-char -fms-extensions -Wall -Wextra -Werror-implicit-function-declaration")
+
+# compiler options
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsigned-char -fms-extensions -Wall -Wextra -Werror-implicit-function-declaration")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char -fms-extensions -Wall -Wextra")
+if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
+  # extra options specific to gcc/g++
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wformat-overflow=2 -Wformat-truncation=2")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wformat-overflow=2 -Wformat-truncation=2")
+endif()
 
 # version
-execute_process(COMMAND ${CMAKE_SOURCE_DIR}/version.sh devel-major OUTPUT_VARIABLE VERSION_MAJOR)
-execute_process(COMMAND ${CMAKE_SOURCE_DIR}/version.sh devel-minor OUTPUT_VARIABLE VERSION_MINOR)
-execute_process(COMMAND ${CMAKE_SOURCE_DIR}/version.sh devel-patch OUTPUT_VARIABLE VERSION_PATCH)
+execute_process(COMMAND "${CMAKE_SOURCE_DIR}/version.sh" devel-major OUTPUT_VARIABLE VERSION_MAJOR)
+execute_process(COMMAND "${CMAKE_SOURCE_DIR}/version.sh" devel-minor OUTPUT_VARIABLE VERSION_MINOR)
+execute_process(COMMAND "${CMAKE_SOURCE_DIR}/version.sh" devel-patch OUTPUT_VARIABLE VERSION_PATCH)
 string(REGEX REPLACE "\n" "" VERSION_MAJOR "${VERSION_MAJOR}")
 string(REGEX REPLACE "\n" "" VERSION_MINOR "${VERSION_MINOR}")
 string(REGEX REPLACE "\n" "" VERSION_PATCH "${VERSION_PATCH}")
 if(VERSION_PATCH STREQUAL "")
-  set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
+  set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
 else()
-  set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+  set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 endif()
 
 # license
@@ -59,73 +66,97 @@ set(PKG_STRING "${PROJECT_NAME} ${VERSION}")
 string(REPLACE "\";\"" "\ " PKG_STRING ${PKG_STRING})
 
 if(NOT DEFINED LIBDIR)
-  set(LIBDIR ${CMAKE_INSTALL_PREFIX}/lib)
+  set(LIBDIR "${CMAKE_INSTALL_PREFIX}/lib")
 endif()
 
 if(NOT DEFINED WEECHAT_LIBDIR)
-  set(WEECHAT_LIBDIR ${LIBDIR}/${PROJECT_NAME})
+  set(WEECHAT_LIBDIR "${LIBDIR}/${PROJECT_NAME}")
 endif()
 
 if(NOT DEFINED DATAROOTDIR)
-  set(DATAROOTDIR ${CMAKE_INSTALL_PREFIX}/share)
+  set(DATAROOTDIR "${CMAKE_INSTALL_PREFIX}/share")
 endif()
 
 if(NOT DEFINED WEECHAT_SHAREDIR)
-  set(WEECHAT_SHAREDIR ${DATAROOTDIR}/weechat)
+  set(WEECHAT_SHAREDIR "${DATAROOTDIR}/weechat")
 endif()
 
 if(NOT DEFINED MANDIR)
-  set(MANDIR ${DATAROOTDIR}/man)
+  set(MANDIR "${DATAROOTDIR}/man")
 endif()
 
 if(NOT DEFINED LOCALEDIR)
-  set(LOCALEDIR ${DATAROOTDIR}/locale)
+  set(LOCALEDIR "${DATAROOTDIR}/locale")
 endif()
 
 if(DEFINED INCLUDEDIR)
-  set(INCLUDEDIR ${INCLUDEDIR}/${PROJECT_NAME})
+  set(INCLUDEDIR "${INCLUDEDIR}/${PROJECT_NAME}")
 else()
-  set(INCLUDEDIR ${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME})
+  set(INCLUDEDIR "${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}")
 endif()
 
-option(ENABLE_NCURSES       "Compile the Ncurses interface"               ON)
-option(ENABLE_HEADLESS      "Compile the headless binary (required for tests)" ON)
-option(ENABLE_NLS           "Enable Native Language Support"              ON)
-option(ENABLE_LARGEFILE     "Enable Large File Support"                   ON)
-option(ENABLE_ALIAS         "Enable Alias plugin"                         ON)
-option(ENABLE_BUFLIST       "Enable Buflist plugin"                       ON)
-option(ENABLE_CHARSET       "Enable Charset plugin"                       ON)
-option(ENABLE_EXEC          "Enable Exec plugin"                          ON)
-option(ENABLE_FIFO          "Enable FIFO plugin"                          ON)
-option(ENABLE_FSET          "Enable Fast Set plugin"                      ON)
-option(ENABLE_IRC           "Enable IRC plugin"                           ON)
-option(ENABLE_LOGGER        "Enable Logger plugin"                        ON)
-option(ENABLE_RELAY         "Enable Relay plugin"                         ON)
-option(ENABLE_SCRIPT        "Enable Script plugin (script manager)"       ON)
-option(ENABLE_SCRIPTS       "Enable script plugins (perl, python, ...)"   ON)
-option(ENABLE_PERL          "Enable Perl scripting language"              ON)
-option(ENABLE_PYTHON        "Enable Python scripting language"            ON)
-option(ENABLE_RUBY          "Enable Ruby scripting language"              ON)
-option(ENABLE_LUA           "Enable Lua scripting language"               ON)
-option(ENABLE_TCL           "Enable Tcl scripting language"               ON)
-option(ENABLE_GUILE         "Enable Scheme (guile) scripting language"    ON)
-option(ENABLE_JAVASCRIPT    "Enable JavaScript scripting language"        OFF)
-option(ENABLE_PHP           "Enable PHP scripting language"               ON)
-option(ENABLE_SPELL         "Enable Spell checker plugin"                 ON)
-option(ENABLE_ENCHANT       "Enable Enchant lib for Spell checker plugin" OFF)
-option(ENABLE_TRIGGER       "Enable Trigger plugin"                       ON)
-option(ENABLE_TYPING        "Enable Typing plugin"                        ON)
-option(ENABLE_XFER          "Enable Xfer plugin"                          ON)
-option(ENABLE_MAN           "Enable build of man page"                    OFF)
-option(ENABLE_DOC           "Enable build of documentation"               OFF)
-option(ENABLE_TESTS         "Enable tests"                                OFF)
-option(ENABLE_CODE_COVERAGE "Enable code coverage"                        OFF)
+option(ENABLE_NCURSES        "Compile the Ncurses interface"            ON)
+option(ENABLE_HEADLESS       "Compile the headless binary"              ON)
+option(ENABLE_NLS            "Enable Native Language Support"           ON)
+option(ENABLE_LARGEFILE      "Enable Large File Support"                ON)
+option(ENABLE_ALIAS          "Enable Alias plugin"                      ON)
+option(ENABLE_BUFLIST        "Enable Buflist plugin"                    ON)
+option(ENABLE_CHARSET        "Enable Charset plugin"                    ON)
+option(ENABLE_EXEC           "Enable Exec plugin"                       ON)
+option(ENABLE_FIFO           "Enable FIFO plugin"                       ON)
+option(ENABLE_FSET           "Enable Fast Set plugin"                   ON)
+option(ENABLE_IRC            "Enable IRC plugin"                        ON)
+option(ENABLE_LOGGER         "Enable Logger plugin"                     ON)
+option(ENABLE_RELAY          "Enable Relay plugin"                      ON)
+option(ENABLE_SCRIPT         "Enable Script plugin (script manager)"    ON)
+option(ENABLE_SCRIPTS        "Enable script plugins (perl, python, …)"  ON)
+option(ENABLE_PERL           "Enable Perl scripting language"           ON)
+option(ENABLE_PYTHON         "Enable Python scripting language"         ON)
+option(ENABLE_RUBY           "Enable Ruby scripting language"           ON)
+option(ENABLE_LUA            "Enable Lua scripting language"            ON)
+option(ENABLE_TCL            "Enable Tcl scripting language"            ON)
+option(ENABLE_GUILE          "Enable Scheme (guile) scripting language" ON)
+option(ENABLE_JAVASCRIPT     "Enable JavaScript scripting language"     OFF)
+option(ENABLE_PHP            "Enable PHP scripting language"            ON)
+option(ENABLE_SPELL          "Enable Spell checker plugin"              ON)
+option(ENABLE_ENCHANT        "Use Enchant lib in Spell checker plugin"  OFF)
+option(ENABLE_TRIGGER        "Enable Trigger plugin"                    ON)
+option(ENABLE_TYPING         "Enable Typing plugin"                     ON)
+option(ENABLE_XFER           "Enable Xfer plugin"                       ON)
+option(ENABLE_MAN            "Enable build of man page"                 OFF)
+option(ENABLE_DOC            "Enable build of documentation"            OFF)
+option(ENABLE_DOC_INCOMPLETE "Enable incomplete doc"                    OFF)
+option(ENABLE_TESTS          "Enable tests"                             OFF)
+option(ENABLE_CODE_COVERAGE  "Enable code coverage"                     OFF)
 
 # code coverage
 add_library(coverage_config INTERFACE)
 if(ENABLE_CODE_COVERAGE)
   target_compile_options(coverage_config INTERFACE -O0 -g --coverage)
   target_link_libraries(coverage_config INTERFACE --coverage)
+endif()
+
+# headless mode is required for documentation
+if(ENABLE_DOC AND NOT ENABLE_HEADLESS)
+  message(FATAL_ERROR "Headless mode is required to build documentation.")
+endif()
+
+# all plugins (except javascript) are required for documentation
+if(ENABLE_DOC AND NOT ENABLE_DOC_INCOMPLETE
+    AND (NOT ENABLE_NLS OR NOT ENABLE_ALIAS OR NOT ENABLE_BUFLIST
+      OR NOT ENABLE_CHARSET OR NOT ENABLE_EXEC OR NOT ENABLE_FIFO
+      OR NOT ENABLE_FSET OR NOT ENABLE_IRC OR NOT ENABLE_LOGGER
+      OR NOT ENABLE_RELAY OR NOT ENABLE_SCRIPT OR NOT ENABLE_SCRIPTS
+      OR NOT ENABLE_PERL OR NOT ENABLE_PYTHON OR NOT ENABLE_RUBY
+      OR NOT ENABLE_LUA OR NOT ENABLE_TCL OR NOT ENABLE_GUILE
+      OR NOT ENABLE_PHP OR NOT ENABLE_SPELL OR NOT ENABLE_TRIGGER
+      OR NOT ENABLE_TYPING OR NOT ENABLE_XFER))
+  message(
+    FATAL_ERROR
+    " All plugins are required to build documentation.\n"
+    " If you really want to build incomplete docs, enable this option:\n"
+    "   -DENABLE_DOC_INCOMPLETE=ON"
+  )
 endif()
 
 # headless mode is required for tests
@@ -266,7 +297,7 @@ add_custom_target(uninstall
 
 add_custom_target(dist
   "${CMAKE_CURRENT_SOURCE_DIR}/tools/makedist.sh" "${VERSION}" "HEAD" "${CMAKE_CURRENT_BINARY_DIR}"
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
 # pkgconfig file
@@ -275,52 +306,23 @@ set(prefix "${CMAKE_INSTALL_PREFIX}")
 set(exec_prefix "\${prefix}")
 string(REPLACE "${CMAKE_INSTALL_PREFIX}" "\${prefix}" libdir "${LIBDIR}")
 set(includedir "\${prefix}/include")
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/weechat.pc.in ${CMAKE_CURRENT_BINARY_DIR}/weechat.pc @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.pc DESTINATION ${LIBDIR}/pkgconfig)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/weechat.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/weechat.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat.pc" DESTINATION "${LIBDIR}/pkgconfig")
 
 # cygport file (used to build Cygwin packages)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/weechat.cygport.in ${CMAKE_CURRENT_BINARY_DIR}/weechat-${VERSION}-1.cygport @ONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/weechat.cygport.in" "${CMAKE_CURRENT_BINARY_DIR}/weechat-${VERSION}-1.cygport" @ONLY)
 
 # install some files (only on Cygwin)
 if(CYGWIN)
   install(FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/AUTHORS.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/ChangeLog.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Contributing.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/README.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/ReleaseNotes.adoc
-    DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME}
+    "${CMAKE_CURRENT_SOURCE_DIR}/AUTHORS.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/ChangeLog.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Contributing.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/README.adoc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/ReleaseNotes.adoc"
+    DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}"
   )
 endif()
 
 # desktop file
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat.desktop DESTINATION ${DATAROOTDIR}/applications)
-
-# packages
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Fast, light and extensible chat client")
-set(CPACK_PACKAGE_VENDOR "Sébastien Helleu")
-set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.adoc")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
-set(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${VERSION_PATCH})
-
-# binary package
-set(CPACK_GENERATOR "STGZ;TGZ;TBZ2")
-set(CPACK_PACKAGE_FILE_NAME weechat-binary-${VERSION})
-
-# source package
-set(CPACK_SOURCE_GENERATOR "TGZ;TBZ2")
-set(CPACK_SOURCE_PACKAGE_FILE_NAME weechat-${VERSION})
-set(CPACK_SOURCE_IGNORE_FILES
-  "/\\\\.git" "/build/" "/m4/"
-  "/autom4te\\\\.cache/" "/ABOUT-NLS$" "/config\\\\.guess$" "/config\\\\.h$"
-  "/config\\\\.h.in$" "/config\\\\.log$" "/config\\\\.rpath$"
-  "/config\\\\.status$" "/config\\\\.sub$" "/configure$" "/depcomp$"
-  "/install-sh$" "/missing$" "/intl/" "/libtool$" "/\\\\.libs/"
-  "/ltmain\\\\.sh$" "/\\\\.deps/" "/html/" "/html1/" "/Makefile$"
-  "/Makefile\\\\.in$" "stamp" "/po/.*\\\\.header$" "\\\\.gmo$" "~$" "\\\\.o$"
-  "\\\\.lo$" "\\\\.a$" "\\\\.la$" "\\\\.lai$" "\\\\.Plo$" "/weechat$"
-)
-
-include(CPack)
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/weechat.desktop" DESTINATION "${DATAROOTDIR}/applications")

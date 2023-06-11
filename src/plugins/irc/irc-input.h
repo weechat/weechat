@@ -22,8 +22,13 @@
 
 struct t_gui_buffer;
 
-extern void irc_input_user_message_display (struct t_gui_buffer *buffer,
-                                            int action, const char *text);
+extern void irc_input_user_message_display (struct t_irc_server *server,
+                                            const char *target,
+                                            const char *address,
+                                            const char *command,
+                                            const char *ctcp_type,
+                                            const char *text,
+                                            int decode_colors);
 extern int irc_input_data_cb (const void *pointer, void *data,
                               struct t_gui_buffer *buffer,
                               const char *input_data);

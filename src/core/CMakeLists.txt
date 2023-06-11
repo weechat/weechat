@@ -31,6 +31,7 @@ set(LIB_CORE_SRC
   wee-crypto.c wee-crypto.h
   wee-debug.c wee-debug.h
   wee-dir.c wee-dir.h
+  wee-doc.c wee-doc.h
   wee-eval.c wee-eval.h
   wee-hashtable.c wee-hashtable.h
   wee-hdata.c wee-hdata.h
@@ -90,7 +91,7 @@ include_directories(${CURL_INCLUDE_DIRS})
 
 include_directories(${ZSTD_INCLUDE_DIRS})
 
-include_directories(${CMAKE_BINARY_DIR})
+include_directories("${CMAKE_BINARY_DIR}")
 add_library(weechat_core STATIC ${LIB_CORE_SRC})
 target_link_libraries(weechat_core coverage_config)
 add_dependencies(weechat_core version_git)

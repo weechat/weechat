@@ -26,6 +26,9 @@ enum t_relay_status;
 #define RELAY_IRC_DATA(client, var)                              \
     (((struct t_relay_irc_data *)client->protocol_data)->var)
 
+#define RELAY_IRC_CAPAB_FOLLOW_SERVER                            \
+    (1 << RELAY_IRC_CAPAB_ECHO_MESSAGE)
+
 struct t_relay_irc_data
 {
     char *address;                     /* client address (used when sending */
@@ -37,6 +40,8 @@ struct t_relay_irc_data
     int cap_end_received;              /* 1 if CAP END was received         */
     int connected;                     /* 1 if client is connected as IRC   */
                                        /* client                            */
+    int irc_cap_echo_message;          /* 1 if cap echo-message is enabled  */
+                                       /* in IRC server                     */
     int server_capabilities;           /* server capabilities enabled (one  */
                                        /* bit per capability)               */
     struct t_hook *hook_signal_irc_in2;     /* signal "irc_in2"             */
@@ -56,9 +61,16 @@ enum t_relay_irc_command
     RELAY_IRC_NUM_CMD,
 };
 
+/*
+ * IMPORTANT:
+ * - only add newly supported caps at the end of list
+ * - these caps are sorted before being sent as "available" to the clients
+ */
+
 enum t_relay_irc_server_capab
 {
     RELAY_IRC_CAPAB_SERVER_TIME = 0,
+    RELAY_IRC_CAPAB_ECHO_MESSAGE,
     /* number of server capabilities */
     RELAY_IRC_NUM_CAPAB,
 };

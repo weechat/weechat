@@ -2,20 +2,11 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: pl
-:toc: left
 :toc-title: Spis treści
-:toclevels: 2
-:sectnums:
-:sectnumlevels: 2
-:docinfo1:
-
 
 Tłumaczenie:
 
 * Krzysztof Korościk <soltys1@gmail.com>, 2009-2022
-
-toc::[]
-
 
 [[general]]
 == Ogólne
@@ -34,7 +25,7 @@ pasuje ono do WeeChat!).
 
 Ponieważ WeeChat jest bardzo lekki i posiada innowacyjne funkcje.
 Więcej informacji na temat WeeChat można znaleźć na
-https://weechat.org/about/features/[tej stronie ^↗^,window=_blank].
+https://weechat.org/about/features/[tej stronie ^↗^^].
 
 [[compilation_install]]
 == Kompilacja / instalacja
@@ -43,7 +34,7 @@ https://weechat.org/about/features/[tej stronie ^↗^,window=_blank].
 === Słyszałem o wielu GUI dla WeeChat. Jak mogę je skompilować/użyć?
 
 Kilka zdalnych GUI jest dostępnych, zajrzyj na stronę poświęconą
-https://weechat.org/about/interfaces/[zdalnym interfejsom ^↗^,window=_blank].
+https://weechat.org/about/interfaces/[zdalnym interfejsom ^↗^^].
 
 [[compile_git]]
 === Nie mogę skompilować WeeChat po sklonowaniu repozytorium git, dlaczego?
@@ -52,7 +43,7 @@ https://weechat.org/about/interfaces/[zdalnym interfejsom ^↗^,window=_blank].
 WeeChat must be compiled with CMake.
 
 // TRANSLATION MISSING
-Please follow link:weechat_user.en.html#source_package[build instructions ^↗^,window=_blank]
+Please follow link:weechat_user.en.html#source_package[build instructions ^↗^^]
 and ensure all required dependencies are installed.
 
 // TRANSLATION MISSING
@@ -61,7 +52,7 @@ If you still have issues, please report them to the developers.
 [[compile_macos]]
 === Jak zainstalować WeeChat na macOS?
 
-Zaleca się użycie https://brew.sh/[Homebrew ^↗^,window=_blank], pomoc uzyskasz za pomocą komendy:
+Zaleca się użycie https://brew.sh/[Homebrew ^↗^^], pomoc uzyskasz za pomocą komendy:
 
 ----
 brew info weechat
@@ -77,11 +68,11 @@ brew install weechat
 === Uruchomiłem WeeChat, ale czuję się zagubiony, co robić?
 
 Dla pomocy wpisz `/help`. Aby uzyskać pomoc dla komendy wpisz `/help komenda`.
-link:weechat_user.pl.html#key_bindings[Keys ^↗^,window=_blank] i
-link:weechat_user.pl.html#commands_and_options[commands ^↗^,window=_blank] są opisane w dokumentacji.
+link:weechat_user.pl.html#key_bindings[Keys ^↗^^] i
+link:weechat_user.pl.html#commands_and_options[commands ^↗^^] są opisane w dokumentacji.
 
 Nowym użytkowniką zaleca się przeczytanie dokumentu
-link:weechat_quickstart.pl.html[Szybki start ^↗^,window=_blank].
+link:weechat_quickstart.pl.html[Szybki start ^↗^^].
 
 [[display]]
 == Wyświetlanie
@@ -109,7 +100,7 @@ Jest to częsty problem powodowany przez wiele rzeczy, przeczytaj uważnie i spr
 ** jeśli korzystasz ze screena, sprawdź czy jest uruchomiony z trybem UTF-8
    ("`defutf8 on`" w ~/.screenrc lub `screen -U` uruchamiając screena)
 * sprawdź czy opcja
-  link:weechat_user.pl.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^,window=_blank]
+  link:weechat_user.pl.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^^]
   jest wyłączona (ta opcja może powodować błędy wyświetlania)
 
 [NOTE]
@@ -124,9 +115,9 @@ Może to być spowodowane przez błąd libc w funkcji _wcwidth_, który powinien
 naprawiony w glibc 2.22 (może jeszcze nie być dostępny w twojej dystrybucji).
 
 Istnieje sposób na obejście błędu funkcji _wcwidth_:
-https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^,window=_blank].
+https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^^].
 
-Więcej informacji można znaleźć w tym https://github.com/weechat/weechat/issues/79[zgłoszonym błędzie ^↗^,window=_blank].
+Więcej informacji można znaleźć w tym https://github.com/weechat/weechat/issues/79[zgłoszonym błędzie ^↗^^].
 
 [[bars_background]]
 === Paski jak tytuł i status nie są filtrowane, kolor tła zatrzymuje się po tekście, czemu?
@@ -182,7 +173,7 @@ kilku oknach.
 [[buffers_list]]
 === Jak wyświetlić listę z buforami po lewej stronie?
 
-Wtyczka link:weechat_user.pl.html#buflist[buflist ^↗^,window=_blank]
+Wtyczka link:weechat_user.pl.html#buflist[buflist ^↗^^]
 jest domyślnie włączona i załadowana.
 
 Ograniczenie rozmiaru bufora z listą kanałów:
@@ -228,7 +219,7 @@ jak `237` dla ciemnego szarego.
 Wtyczka buflist posiada wiele opcji, które można personalizować, zapoznaj się
 z opisem dla każdej z nich.
 
-Jest też dostępna https://github.com/weechat/weechat/wiki/buflist[strona wiki ^↗^,window=_blank]
+Jest też dostępna https://github.com/weechat/weechat/wiki/buflist[strona wiki ^↗^^]
 z przykładami zaawansowanej konfiguracji listy buforów.
 
 [[customize_prefix]]
@@ -272,7 +263,7 @@ Kolory można zmienić za pomocą opcji __weechat.color.status_data_*__
 Pozostałe opcje hotlist można zmienić za pomocą opcji __weechat.look.hotlist_*__.
 
 Więcej informacji na temat hotlity można znaleźć w
-link:weechat_user.pl.html#screen_layout[Poradniku użytkownika / Układ ekranu ^↗^,window=_blank].
+link:weechat_user.pl.html#screen_layout[Poradniku użytkownika / Układ ekranu ^↗^^].
 
 [[input_bar_size]]
 === Jak używać linii poleceń z więcej niż jednym wierszem?
@@ -432,7 +423,7 @@ Możesz użyć dowolnego numeru koloru w opcjach (opcjonalnie możesz dodać ali
 dla kolorów za pomocą polecenia `/color`).
 
 Więcej informacji o zarządzaniu kolorami można znaleźć w
-link:weechat_user.pl.html#colors[Poradniku użytkownika / Kolory ^↗^,window=_blank].
+link:weechat_user.pl.html#colors[Poradniku użytkownika / Kolory ^↗^^].
 
 [[search_text]]
 === Jak mogę wyszukać tekst w buforze (jak za pomocą /lastlog w irssi)?
@@ -442,7 +433,7 @@ Domyślny skrót klawiszowy to kbd:[Ctrl+r] (komenda: `+/input search_text_here+
 Poruszanie się między podświetleniami: kbd:[Alt+p] / kbd:[Alt+n].
 
 Więcej informacji o skrótach klawiszowych można znaleźć w
-link:weechat_user.pl.html#key_bindings[Poradniku użytkownika / Domyślne skróty klawiszowe ^↗^,window=_blank].
+link:weechat_user.pl.html#key_bindings[Poradniku użytkownika / Domyślne skróty klawiszowe ^↗^^].
 
 [[terminal_focus]]
 === Jak mogę wykonywać komendy, kiedy terminal stanie się/przestanie być aktywny?
@@ -467,14 +458,14 @@ Następnie przypisz dwie kombinacje klawiszy dla stanu aktywności (zamień kome
 `/print` własnymi komendami:
 
 ----
-/key bind meta2-I /print -core focus
-/key bind meta2-O /print -core unfocus
+/key bind meta-[I /print -core focus
+/key bind meta-[O /print -core unfocus
 ----
 
 Na przykład w celu oznaczenia boforów jako nie przeczytane w momencie jak terminal straci focus:
 
 ----
-/key bind meta2-O /allbuf /buffer set unread
+/key bind meta-[O /allbuf /buffer set unread
 ----
 
 [[screen_paste]]
@@ -615,7 +606,7 @@ Można również samemu stworzyć skrót, na przykład:
 ----
 
 Listę domyślnych skrótów klawiszowych można znależć w
-link:weechat_user.pl.html#key_bindings[Poradniku uzytkownika / Domyślne skróty klawiszowe ^↗^,window=_blank].
+link:weechat_user.pl.html#key_bindings[Poradniku uzytkownika / Domyślne skróty klawiszowe ^↗^^].
 
 Aby przesjść do bufora o numerze  ≥ 100, możesz zdefiniować trigger i następnie użyć
 komendy w stylu `/123` żeby przejść do bufora #123:
@@ -633,13 +624,18 @@ globalnej historii przypisane są klawisze kbd:[Ctrl+↑] oraz kbd:[Ctrl+↓]).
 Przykład:
 
 ----
+/key bind up /input history_global_previous
+/key bind down /input history_global_next
+----
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.8, you must use the raw key code (press kbd:[Alt+k] then key
+to display its code):
+
+----
 /key bind meta2-A /input history_global_previous
 /key bind meta2-B /input history_global_next
 ----
-
-[NOTE]
-Klawisze "meta2-A" i "meta2-B" mogą być inne dla twojego terminala. W celu
-znalezienia ich kodów wciśnij kbd:[Alt+k] następnie przycisk.
 
 [[mouse]]
 == Obsługa myszy
@@ -691,8 +687,8 @@ kbd:[Shift]).
 [[irc]]
 == IRC
 
-[[irc_ssl_connection]]
-=== Mam problemy podczas połączenia z serwerem używającym SSL, co mogę zrobić?
+[[irc_tls_connection]]
+=== Mam problemy podczas połączenia z serwerem używającym TLS, co mogę zrobić?
 
 Jeśli używasz Mac macOS, musisz zainstalować `openssl` z Homebrew.
 Plik CA zostanie wygenerowany korzystając z systemowego keychaina.
@@ -701,43 +697,43 @@ Jeśli widzisz błędy gnutls, możesz użyć innej wielkości klucza
 Diffie-Hellman (domyślnie 2048):
 
 ----
-/set irc.server.example.ssl_dhkey_size 1024
+/set irc.server.example.tls_dhkey_size 1024
 ----
 
-Jeśli widzisz błędy związanie z certyfikatami, możesz wyłączyć opcję "ssl_verify"
+Jeśli widzisz błędy związanie z certyfikatami, możesz wyłączyć opcję "tls_verify"
 (należy jednak uważać, ponieważ połączenie będzie mniej bezpieczne):
 
 ----
-/set irc.server.example.ssl_verify off
+/set irc.server.example.tls_verify off
 ----
 
 Jeśli serwer ma niewłaściwy certyfikat i wiesz jaki on powinien być,
 możesz podać sumę kontrolną (SHA-512, SHA-256 lub SHA-1):
 
 ----
-/set irc.server.example.ssl_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
+/set irc.server.example.tls_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
 ----
 
-[[irc_ssl_handshake_error]]
-=== Podczas łączenia się z serwerem poprzez SSL widzę tylko błąd "TLS handshake failed", co mogę zrobić?
+[[irc_tls_handshake_error]]
+=== Podczas łączenia się z serwerem poprzez TLS widzę tylko błąd "TLS handshake failed", co mogę zrobić?
 
 Możesz spróbować innego ciągu priorytetu, zamień "xxx" nazwą serwera:
 
 ----
-/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+/set irc.server.xxx.tls_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
 ----
 
-[[irc_ssl_libera]]
-=== Jak mogę połączyć się z serwerem libera używając SSL?
+[[irc_tls_libera]]
+=== Jak mogę połączyć się z serwerem libera używając TLS?
 
 Sprawdź czy masz zainstalowane cartyfikaty w systemie, zazwyczaj zapewnia je paczka
 o nazwie "ca-certificates".
 
-Ustaw port serwera, SSL, następnie się połącz:
+Ustaw port serwera, TLS, następnie się połącz:
 
 ----
 /set irc.server.libera.addresses "irc.libera.chat/6697"
-/set irc.server.libera.ssl on
+/set irc.server.libera.tls on
 /connect libera
 ----
 
@@ -827,26 +823,11 @@ regularnych dla przedrostków i zawartości linii.
 Filtrowane linie są tylko ukrywane, nie usuwane, można je zobaczyć wyłączając
 filtry (domyślnie kbd:[Alt+=] zmienia stan filtrów).
 
+// TRANSLATION MISSING
 [[filter_irc_join_part_quit]]
-=== Jak mogę filtrować wiadomości o wejściu/opuszczeniu/wyjściu na kanałach IRC?
+=== How can I filter join/part/quit and other annoying messages on IRC channels?
 
-Za pomocą inteligentnych filtrów (zachowuje wejścia/opuszczenia/wyjścia od osób
-piszących niedawno):
-
-----
-/set irc.look.smart_filter on
-/filter add irc_smart * irc_smart_filter *
-----
-
-Za pomocą globalnego filtru (ukrywa *wszystkie* wejścia/opuszczenia/wyjścia):
-
-----
-/filter add joinquit * irc_join,irc_part,irc_quit *
-----
-
-[NOTE]
-+For help: `/help filter`, `+/help irc.look.smart_filter+` and see
-+link:weechat_user.pl.html#irc_smart_filter_join_part_quit[Poradniku użytkownika / Inteligentne filtry dla wiadomości ^↗^,window=_blank].
+See link:weechat_user.pl.html#irc_smart_filter[User's guide / IRC smart filter ^↗^^].
 
 [[filter_irc_join_channel_messages]]
 === Jak mogę filtrować wyświetlane wiadomości podczas wejścia na kanał IRC?
@@ -940,7 +921,7 @@ Inne podobne skrypty:
 === Jak mogę wyłączyć podświetlenia dla konkretnych nicków?
 
 Możesz użyć właściwości bufora
-link:weechat_user.pl.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank],
+link:weechat_user.pl.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^^],
 do ustawienia maksymalnego poziomu hotlisty dla niektórych nicków, dla buforów
 lub grup buforów (jak serwery IRC).
 
@@ -1003,7 +984,7 @@ Skrypty nie są kompatybilne z innymi klientami IRC.
 [[scripts_update]]
 === Komenda "/script update" nie może odczytać skryptów, jak to naprawić?
 
-Najpierw zapoznaj się z zagadnieniami dotyczącymi połączeń SSL znajdującymi się
+Najpierw zapoznaj się z zagadnieniami dotyczącymi połączeń TLS znajdującymi się
 w tym dokumencie.
 
 Jeśli to nie pomoże spróbuj ręcznie usunąć plik z listą skryptów (z poziomu powłoki):
@@ -1089,7 +1070,7 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
   ruby, lua, tcl, guile, javascript, php, spell, xfer (używana do DCC).
   Zobacz `/help weechat.plugin.autoload`.
 * ładować tylko naprawdę używane skrypty
-* nie ładuj systemowych certyfikatów jeśli SSL *nie* jest używane: wyłącz tą opcję:
+* nie ładuj systemowych certyfikatów jeśli TLS *nie* jest używane: wyłącz tą opcję:
   _weechat.network.gnutls_ca_system_.
 * zmniejsz wartość dla opcji _weechat.history.max_buffer_lines_number_ lub ustaw
   wartość opcji _weechat.history.max_buffer_lines_minutes_
@@ -1139,7 +1120,7 @@ Wyładuj i wyłącz automatyczne ładowanie wtyczki "xfer" (używanej przez IRC 
 Zdefiniuj hasło i używaj bezpiecznych danych wszędzie gdzie możesz dla danych wrażliwych
 jak hasła: zobacz `/help secure` oraz `/help` na opcjach
 (czy możesz użyć bezpiecznych danych, jest to zaznaczone w pomocy).
-Zobacz również link:weechat_user.pl.html#secured_data[Poradniku użytkownika / Zabezpieczone dane ^↗^,window=_blank].
+Zobacz również link:weechat_user.pl.html#secured_data[Poradniku użytkownika / Zabezpieczone dane ^↗^^].
 
 Na przykład:
 
@@ -1161,7 +1142,7 @@ zawiera hasla zaszyfrowane twoim kluczem.
 Niektóre inne pliki mogą zawierać poufne informacje jak hasła (jeśli nie są przetrzymywane
 w _sec.conf_ za pomocą komendy `/secure`).
 
-Przejrzyj link:weechat_user.pl.html#files_and_directories[Poradnik użytkownika / Pliki i foldery ^↗^,window=_blank],
+Przejrzyj link:weechat_user.pl.html#files_and_directories[Poradnik użytkownika / Pliki i foldery ^↗^^],
 gdzie znajdziesz więcej informacji o plikach konfiguracyjnych.
 
 [[development]]
@@ -1170,7 +1151,7 @@ gdzie znajdziesz więcej informacji o plikach konfiguracyjnych.
 [[bug_task_patch]]
 === Jak zgłaszać błędy, prosić o nowe możliwości lub wysyłać patche?
 
-Zobacz https://weechat.org/about/support/[tą strone ^↗^,window=_blank].
+Zobacz https://weechat.org/about/support/[tą strone ^↗^^].
 
 [[gdb_error_threads]]
 === Kiedy uruchamiam WeeChat pod gdb dostaję komunikat o wątkach, co mogę z tym zrobić?
@@ -1207,10 +1188,10 @@ możliwe. Mile widziana jest pomoc w testowaniu dla systemów, których nie mamy
 Jest wiele zadań do zrobienia (testowanie, kod, dokumentacja, ...)
 
 Proszę odezwij się do nas na IRCu albo mailem, zobacz na
-https://weechat.org/about/support/[stronę wsparcia ^↗^,window=_blank].
+https://weechat.org/about/support/[stronę wsparcia ^↗^^].
 
 [[donate]]
 === Czy mogę dać pieniądze albo inne rzeczy deweloperom WeeChat?
 
 Możesz dać nam pieniądze na pomoc w rozwoju.
-Szczegóły można znaleźć na https://weechat.org/donate/[stronie dotacji ^↗^,window=_blank].
+Szczegóły można znaleźć na https://weechat.org/donate/[stronie dotacji ^↗^^].

@@ -862,6 +862,68 @@ completion_list_add_filters_cb (const void *pointer, void *data,
 }
 
 /*
+ * Adds disabled filter names to completion list.
+ */
+
+int
+completion_list_add_filters_disabled_cb (const void *pointer, void *data,
+                                         const char *completion_item,
+                                         struct t_gui_buffer *buffer,
+                                         struct t_gui_completion *completion)
+{
+    struct t_gui_filter *ptr_filter;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (ptr_filter = gui_filters; ptr_filter;
+         ptr_filter = ptr_filter->next_filter)
+    {
+        if (!ptr_filter->enabled)
+        {
+            gui_completion_list_add (completion, ptr_filter->name,
+                                     0, WEECHAT_LIST_POS_SORT);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Adds enabled filter names to completion list.
+ */
+
+int
+completion_list_add_filters_enabled_cb (const void *pointer, void *data,
+                                        const char *completion_item,
+                                        struct t_gui_buffer *buffer,
+                                        struct t_gui_completion *completion)
+{
+    struct t_gui_filter *ptr_filter;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (ptr_filter = gui_filters; ptr_filter;
+         ptr_filter = ptr_filter->next_filter)
+    {
+        if (ptr_filter->enabled)
+        {
+            gui_completion_list_add (completion, ptr_filter->name,
+                                     0, WEECHAT_LIST_POS_SORT);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds command hooks to completion list.
  */
 
@@ -1648,7 +1710,7 @@ completion_list_add_keys_contexts_cb (const void *pointer, void *data,
                                       struct t_gui_buffer *buffer,
                                       struct t_gui_completion *completion)
 {
-    int i;
+    int context;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1656,9 +1718,9 @@ completion_list_add_keys_contexts_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+    for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
-        gui_completion_list_add (completion, gui_key_context_string[i],
+        gui_completion_list_add (completion, gui_key_context_string[context],
                                  0, WEECHAT_LIST_POS_END);
     }
 
@@ -1675,9 +1737,8 @@ completion_list_add_keys_codes_cb (const void *pointer, void *data,
                                    struct t_gui_buffer *buffer,
                                    struct t_gui_completion *completion)
 {
-    int i;
+    int context;
     struct t_gui_key *ptr_key;
-    char *expanded_name;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1685,17 +1746,12 @@ completion_list_add_keys_codes_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+    for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
-        for (ptr_key = gui_keys[i]; ptr_key; ptr_key = ptr_key->next_key)
+        for (ptr_key = gui_keys[context]; ptr_key; ptr_key = ptr_key->next_key)
         {
-            expanded_name = gui_key_get_expanded_name (ptr_key->key);
-            gui_completion_list_add (
-                completion,
-                (expanded_name) ? expanded_name : ptr_key->key,
-                0, WEECHAT_LIST_POS_SORT);
-            if (expanded_name)
-                free (expanded_name);
+            gui_completion_list_add (completion, ptr_key->key,
+                                     0, WEECHAT_LIST_POS_SORT);
         }
     }
 
@@ -1713,9 +1769,8 @@ completion_list_add_keys_codes_for_reset_cb (const void *pointer, void *data,
                                              struct t_gui_buffer *buffer,
                                              struct t_gui_completion *completion)
 {
-    int i;
+    int context;
     struct t_gui_key *ptr_key, *ptr_default_key;
-    char *expanded_name;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1723,39 +1778,31 @@ completion_list_add_keys_codes_for_reset_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+    for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {
         /* keys added or redefined */
-        for (ptr_key = gui_keys[i]; ptr_key; ptr_key = ptr_key->next_key)
+        for (ptr_key = gui_keys[context]; ptr_key; ptr_key = ptr_key->next_key)
         {
-            ptr_default_key = gui_key_search (gui_default_keys[i], ptr_key->key);
+            ptr_default_key = gui_key_search (gui_default_keys[context],
+                                              ptr_key->key);
             if (!ptr_default_key
                 || (strcmp (ptr_default_key->command, ptr_key->command) != 0))
             {
-                expanded_name = gui_key_get_expanded_name (ptr_key->key);
-                gui_completion_list_add (
-                    completion,
-                    (expanded_name) ? expanded_name : ptr_key->key,
-                    0, WEECHAT_LIST_POS_SORT);
-                if (expanded_name)
-                    free (expanded_name);
+                gui_completion_list_add (completion, ptr_key->key,
+                                         0, WEECHAT_LIST_POS_SORT);
             }
         }
 
         /* keys deleted */
-        for (ptr_default_key = gui_default_keys[i]; ptr_default_key;
+        for (ptr_default_key = gui_default_keys[context]; ptr_default_key;
              ptr_default_key = ptr_default_key->next_key)
         {
-            ptr_key = gui_key_search (gui_keys[i], ptr_default_key->key);
+            ptr_key = gui_key_search (gui_keys[context],
+                                      ptr_default_key->key);
             if (!ptr_key)
             {
-                expanded_name = gui_key_get_expanded_name (ptr_default_key->key);
-                gui_completion_list_add (
-                    completion,
-                    (expanded_name) ? expanded_name : ptr_default_key->key,
-                    0, WEECHAT_LIST_POS_SORT);
-                if (expanded_name)
-                    free (expanded_name);
+                gui_completion_list_add (completion, ptr_default_key->key,
+                                         0, WEECHAT_LIST_POS_SORT);
             }
         }
     }
@@ -2006,6 +2053,12 @@ completion_init ()
     hook_completion (NULL, "filters_names", /* formerly "%F" */
                      N_("names of filters"),
                      &completion_list_add_filters_cb, NULL, NULL);
+    hook_completion (NULL, "filters_names_disabled",
+                     N_("names of disabled filters"),
+                     &completion_list_add_filters_disabled_cb, NULL, NULL);
+    hook_completion (NULL, "filters_names_enabled",
+                     N_("names of enabled filters"),
+                     &completion_list_add_filters_enabled_cb, NULL, NULL);
     hook_completion (NULL, "commands", /* formerly "%h" */
                      N_("commands (weechat and plugins); "
                         "optional argument: prefix to add before the commands"),

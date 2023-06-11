@@ -1027,12 +1027,12 @@ weeurl_search_constant (struct t_url_constant *constants, const char *name)
 {
     int i;
 
-    if (!name)
+    if (!constants || !name)
         return -1;
 
     for (i = 0; constants[i].name; i++)
     {
-        if (strcmp (constants[i].name, name) == 0)
+        if (string_strcasecmp (constants[i].name, name) == 0)
         {
             return i;
         }
@@ -1055,6 +1055,9 @@ weeurl_get_mask_value (struct t_url_constant *constants,
     char **items, *item;
     int num_items, i, index;
     long mask;
+
+    if (!constants || !string_mask)
+        return 0;
 
     mask = 0;
 
@@ -1098,7 +1101,7 @@ weeurl_search_option (const char *name)
 
     for (i = 0; url_options[i].name; i++)
     {
-        if (strcmp (url_options[i].name, name) == 0)
+        if (string_strcasecmp (url_options[i].name, name) == 0)
         {
             return i;
         }

@@ -32,14 +32,6 @@
     }                                                                   \
     free (str);
 
-extern struct t_arraylist *recorded_messages;
-
-extern void record_start ();
-extern void record_stop ();
-extern int record_search (const char *buffer, const char *message);
-extern void record_dump (char **msg);
-extern void record_error_missing (const char *message);
-
 extern void run_cmd (const char *command);
 extern void run_cmd_quiet (const char *command);
 

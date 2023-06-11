@@ -32,4 +32,4 @@ if(RUBY_FOUND)
   target_link_libraries(ruby ${RUBY_LDFLAGS} weechat_plugins_scripts coverage_config)
 endif(RUBY_FOUND)
 
-install(TARGETS ruby LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
+install(TARGETS ruby LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

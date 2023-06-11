@@ -2,11 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr
-:toc: left
 :toc-title: Table des matières
-:sectnums:
-:docinfo1:
-
 
 [[start]]
 == Démarrer WeeChat
@@ -110,7 +106,7 @@ devriez voir "irc" et d'autres extensions dans cette liste.
 Vous pouvez ajouter un serveur IRC avec la commande `/server`, par exemple :
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 Dans cette commande, `libera` est le nom interne du serveur utilisé par
@@ -391,13 +387,13 @@ par exemple :
 Voir `/help script` pour plus d'infos.
 
 Une liste des scripts est disponible avec `/script` ou sur
-https://weechat.org/scripts/[cette page ^↗^,window=_blank].
+https://weechat.org/scripts/[cette page ^↗^^].
 
 [[more_doc]]
 == Plus de documentation
 
 Vous pouvez maintenant utiliser WeeChat et lire la
-https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+https://weechat.org/doc/[FAQ/documentation ^↗^^]
 pour toute autre question.
 
 Bon WeeChat !

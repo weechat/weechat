@@ -143,6 +143,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_list_remove_all, arginfo_weechat_list_remove_all)
     PHP_FE(weechat_list_free, arginfo_weechat_list_free)
     PHP_FE(weechat_config_new, arginfo_weechat_config_new)
+    PHP_FE(weechat_config_set_version, arginfo_weechat_config_set_version)
     PHP_FE(weechat_config_new_section, arginfo_weechat_config_new_section)
     PHP_FE(weechat_config_search_section, arginfo_weechat_config_search_section)
     PHP_FE(weechat_config_new_option, arginfo_weechat_config_new_option)
@@ -1301,6 +1302,10 @@ php_weechat_log_message (char *message)
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
+
     weechat_php_plugin = plugin;
 
     /* set interpreter name and version */
@@ -1340,7 +1345,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     PG(report_zend_debug) = 0;  /* Turn off --enable-debug output */
 
     php_quiet = 1;
-    plugin_script_init (weechat_php_plugin, argc, argv, &php_data);
+    plugin_script_init (weechat_php_plugin, &php_data);
     php_quiet = 0;
 
     plugin_script_display_short_list (weechat_php_plugin,

@@ -289,17 +289,17 @@ typing_status_nicks_status_map_cb (void *data,
                                    struct t_hashtable *hashtable,
                                    const void *key, const void *value)
 {
-    const char *ptr_nick;
+    struct t_gui_buffer *ptr_buffer;
     struct t_typing_status *ptr_typing_status;
     time_t current_time;
     int delay_purge_pause, delay_purge_typing;
 
     current_time = *((time_t *)data);
 
-    ptr_nick = (const char *)key;
+    ptr_buffer = (struct t_gui_buffer *)key;
     ptr_typing_status = (struct t_typing_status *)value;
 
-    if (!ptr_nick || !ptr_typing_status)
+    if (!ptr_buffer || !ptr_typing_status)
         return;
 
     delay_purge_pause = weechat_config_integer (
@@ -549,6 +549,12 @@ typing_setup_hooks ()
                 "typing_reset_buffer",
                 &typing_typing_reset_buffer_signal_cb, NULL, NULL);
         }
+        if (!typing_timer)
+        {
+            typing_timer = weechat_hook_timer (
+                1000, 0, 0,
+                &typing_timer_cb, NULL, NULL);
+        }
     }
     else
     {
@@ -569,6 +575,8 @@ typing_setup_hooks ()
                 typing_status_nicks = NULL;
             }
         }
+        weechat_unhook (typing_timer);
+        typing_timer = NULL;
     }
 }
 

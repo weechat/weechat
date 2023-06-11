@@ -379,12 +379,15 @@ exec_concat_output (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
                     int out, const char *text)
 {
     int length, new_size;
-    const char *ptr_text;
-    char *new_output, *pos, *line;
+    const char *ptr_text, *pos, *pos_next;
+    char *new_output, *line;
 
     ptr_text = text;
 
-    /* if output is not sent as hsignal, display lines (ending with '\n') */
+    /*
+     * if output is not sent as hsignal, display lines
+     * (ending with "\r\n" or "\n")
+     */
     if (!exec_cmd->hsignal)
     {
         ptr_text = text;
@@ -393,6 +396,9 @@ exec_concat_output (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
             pos = strchr (ptr_text, '\n');
             if (!pos)
                 break;
+            pos_next = pos + 1;
+            if ((pos > ptr_text) && (ptr_text[pos - ptr_text - 1] == '\r'))
+                pos--;
             if (exec_cmd->output_size[out] > 0)
             {
                 length = exec_cmd->output_size[out] + (pos - ptr_text) + 1;
@@ -418,7 +424,7 @@ exec_concat_output (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
             exec_cmd->output_size[out] = 0;
             exec_display_line (exec_cmd, buffer, out, line);
             free (line);
-            ptr_text = pos + 1;
+            ptr_text = pos_next;
         }
     }
 

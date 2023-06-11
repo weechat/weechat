@@ -22,32 +22,58 @@
 # Returns current stable or devel version of WeeChat.
 #
 # Syntax:
-#   version.sh stable|devel|devel-full|devel-major|devel-minor|devel-patch
+#   version.sh <name>
 #
-#     stable       the current stable (e.g. 1.3)
-#     devel        the current devel (e.g. 1.4)
-#     devel-full   the full name of devel (e.g. 1.4-dev or 1.4-rc1)
-#     devel-major  the major version of devel (e.g. 1)
-#     devel-minor  the minor version of devel (e.g. 4-dev)
-#     devel-patch  the patch version of devel (e.g. 2 for version 1.4.2)
+#   name is one of:
+#
+#     stable         the current stable (e.g. "4.0.2")
+#     stable-major   the major version of stable ("4" for "4.0.2")
+#     stable-minor   the minor version of stable ("0" for "4.0.2")
+#     stable-patch   the patch version of stable ("2" for "4.0.2")
+#     stable-number  the stable version as hex number ("0x04000200" for "4.0.2")
+#     devel          the devel with only digits/dots (e.g. "4.1.0")
+#     devel-full     the full devel (e.g. "4.1.0-dev")
+#     devel-major    the major version of devel ("4" for "4.1.0-dev")
+#     devel-minor    the minor version of devel ("1" for "4.1.0-dev")
+#     devel-patch    the patch version of devel ("0-dev" for "4.1.0-dev")
+#     devel-number   the devel version as hex number ("0x04010000" for "4.1.0-dev")
 #
 
-WEECHAT_STABLE=3.8
-WEECHAT_DEVEL=3.9
-WEECHAT_DEVEL_FULL=3.9-dev
+WEECHAT_STABLE="3.8"
+WEECHAT_DEVEL="4.0.0-rc1"
+
+STABLE_MAJOR=$(echo "${WEECHAT_STABLE}" | cut -d"." -f1)
+STABLE_MINOR=$(echo "${WEECHAT_STABLE}" | cut -d"." -f2)
+STABLE_PATCH=$(echo "${WEECHAT_STABLE}" | cut -d"." -f3-)
+STABLE_PATCH_DIGITS=$(echo "${WEECHAT_STABLE}" | cut -d"." -f3- | cut -d"-" -f1)
+
+DEVEL_MAJOR=$(echo "${WEECHAT_DEVEL}" | cut -d"." -f1)
+DEVEL_MINOR=$(echo "${WEECHAT_DEVEL}" | cut -d"." -f2)
+DEVEL_PATCH=$(echo "${WEECHAT_DEVEL}" | cut -d"." -f3-)
+DEVEL_PATCH_DIGITS=$(echo "${WEECHAT_DEVEL}" | cut -d"." -f3- | cut -d"-" -f1)
 
 if [ $# -lt 1 ]; then
-    echo >&2 "Syntax: $0 stable|devel|devel-full|devel-major|devel-minor|devel-patch"
+    echo >&2 "Syntax: $0 <name>"
+    echo >&2 "name: stable, stable-major, stable-minor, stable-patch, stable-number,"
+    echo >&2 "      devel, devel-full, devel-major, devel-minor, devel-patch, devel-number"
     exit 1
 fi
 
 case $1 in
-    stable ) echo "$WEECHAT_STABLE" ;;
-    devel ) echo "$WEECHAT_DEVEL" ;;
-    devel-full ) echo "$WEECHAT_DEVEL_FULL" ;;
-    devel-major ) echo "$WEECHAT_DEVEL_FULL" | cut -d'.' -f1 ;;
-    devel-minor ) echo "$WEECHAT_DEVEL_FULL" | cut -d'.' -f2 ;;
-    devel-patch ) echo "$WEECHAT_DEVEL_FULL" | cut -d'.' -f3- ;;
+    # stable
+    stable ) echo "${WEECHAT_STABLE}" ;;
+    stable-major ) echo "${STABLE_MAJOR}" ;;
+    stable-minor ) echo "${STABLE_MINOR}" ;;
+    stable-patch ) echo "${STABLE_PATCH}" ;;
+    stable-number ) printf "0x%02d%02d%02d00\n" "${STABLE_MAJOR}" "${STABLE_MINOR}" "${STABLE_PATCH_DIGITS}" ;;
+    # devel
+    devel ) echo "${WEECHAT_DEVEL}" | cut -d"-" -f1 ;;
+    devel-full ) echo "${WEECHAT_DEVEL}" ;;
+    devel-major ) echo "${DEVEL_MAJOR}" ;;
+    devel-minor ) echo "${DEVEL_MINOR}" ;;
+    devel-patch ) echo "${DEVEL_PATCH}" ;;
+    devel-number ) printf "0x%02d%02d%02d00\n" "${DEVEL_MAJOR}" "${DEVEL_MINOR}" "${DEVEL_PATCH_DIGITS}" ;;
+    # error
     * ) echo >&2 "ERROR: unknown version."
         exit 1 ;;
 esac

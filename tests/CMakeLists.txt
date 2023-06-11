@@ -43,6 +43,7 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/core/test-core-url.cpp
   unit/core/test-core-utf8.cpp
   unit/core/test-core-util.cpp
+  unit/gui/test-gui-bar.cpp
   unit/gui/test-gui-bar-item.cpp
   unit/gui/test-gui-bar-item-custom.cpp
   unit/gui/test-gui-bar-window.cpp
@@ -61,8 +62,15 @@ add_library(weechat_unit_tests_core STATIC ${LIB_WEECHAT_UNIT_TESTS_CORE_SRC})
 # unit tests (plugins)
 set(LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC unit/plugins/test-plugins.cpp)
 
+if(ENABLE_ALIAS)
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/alias/test-alias.cpp
+  )
+endif()
+
 if(ENABLE_IRC)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/irc/test-irc-batch.cpp
     unit/plugins/irc/test-irc-buffer.cpp
     unit/plugins/irc/test-irc-channel.cpp
     unit/plugins/irc/test-irc-color.cpp
@@ -81,13 +89,16 @@ endif()
 
 if(ENABLE_LOGGER)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/logger/test-logger.cpp
     unit/plugins/logger/test-logger-backlog.cpp
+    unit/plugins/logger/test-logger-tail.cpp
   )
 endif()
 
 if (ENABLE_RELAY)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     unit/plugins/relay/test-relay-auth.cpp
+    unit/plugins/relay/irc/test-relay-irc.cpp
   )
 endif()
 
@@ -126,7 +137,10 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
 endif()
 
 # binary to run tests
-set(WEECHAT_TESTS_SRC tests.cpp tests.h)
+set(WEECHAT_TESTS_SRC
+  tests.cpp tests.h
+  tests-record.cpp tests-record.h
+)
 add_executable(tests ${WEECHAT_TESTS_SRC})
 target_link_libraries(tests
   weechat_core
@@ -155,12 +169,12 @@ add_dependencies(tests
 
 # test for cmake (ctest)
 add_test(NAME unit
-  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
   COMMAND tests -v
 )
 set_property(TEST unit PROPERTY
   ENVIRONMENT "WEECHAT_TESTS_ARGS=-p;"
   "WEECHAT_EXTRA_LIBDIR=${PROJECT_BINARY_DIR}/src;"
-  "WEECHAT_TESTS_SCRIPTS_DIR=${CMAKE_CURRENT_SOURCE_DIR}/scripts/python"
+  "WEECHAT_TESTS_SCRIPTS_DIR=${CMAKE_CURRENT_SOURCE_DIR}/scripts/python;"
   "WEECHAT_TESTS_PLUGINS_LIB=${CMAKE_CURRENT_BINARY_DIR}/libweechat_unit_tests_plugins.so"
 )

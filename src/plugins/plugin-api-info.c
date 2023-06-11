@@ -32,9 +32,11 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-crypto.h"
+#include "../core/wee-hashtable.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-proxy.h"
+#include "../core/wee-secure.h"
 #include "../core/wee-string.h"
 #include "../core/wee-url.h"
 #include "../core/wee-util.h"
@@ -96,8 +98,10 @@ plugin_api_info_version_number_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    snprintf (version_number, sizeof (version_number), "%d",
-              util_version_number (version_get_version ()));
+    snprintf (
+        version_number, sizeof (version_number), "%d",
+        util_version_number (
+            (arguments && arguments[0]) ? arguments : version_get_version ()));
     return strdup (version_number);
 }
 
@@ -441,6 +445,27 @@ plugin_api_info_auto_connect_cb (const void *pointer, void *data,
     (void) arguments;
 
     snprintf (value, sizeof (value), "%d", weechat_auto_connect);
+    return strdup (value);
+}
+
+/*
+ * Returns WeeChat info "auto_load_scripts".
+ */
+
+char *
+plugin_api_info_auto_load_scripts_cb (const void *pointer, void *data,
+                                      const char *info_name,
+                                      const char *arguments)
+{
+    char value[32];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", weechat_auto_load_scripts);
     return strdup (value);
 }
 
@@ -1020,6 +1045,24 @@ error:
     if (argv)
         string_free_split (argv);
     return NULL;
+}
+
+/*
+ * Returns secured data hashtable.
+ */
+
+struct t_hashtable *
+plugin_api_info_hashtable_secured_data_cb (const void *pointer, void *data,
+                                           const char *info_name,
+                                           struct t_hashtable *hashtable)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) hashtable;
+
+    return hashtable_dup (secure_hashtable_data);
 }
 
 /*
@@ -1880,7 +1923,9 @@ plugin_api_info_init ()
                NULL, &plugin_api_info_version_cb, NULL, NULL);
     hook_info (NULL, "version_number",
                N_("WeeChat version (as number)"),
-               NULL, &plugin_api_info_version_number_cb, NULL, NULL);
+               N_("version (optional, by default the version of the running "
+                  "WeeChat is returned)"),
+               &plugin_api_info_version_number_cb, NULL, NULL);
     hook_info (NULL, "version_git",
                N_("WeeChat git version (output of command \"git describe\" "
                   "for a development version only, empty for a stable "
@@ -1940,9 +1985,14 @@ plugin_api_info_init ()
                NULL, &plugin_api_info_weechat_daemon_cb, NULL, NULL);
     hook_info (NULL, "auto_connect",
                N_("1 if automatic connection to servers is enabled, "
-                  "0 if it has been disabled by the user (option \"-a\" or "
-                  "\"--no-connect\")"),
+                  "0 if it has been disabled by the user "
+                  "(option \"-a\" or \"--no-connect\")"),
                NULL, &plugin_api_info_auto_connect_cb, NULL, NULL);
+    hook_info (NULL, "auto_load_scripts",
+               N_("1 if scripts are automatically loaded, "
+                  "0 if the auto-load has been disabled by the user "
+                  "(option \"-s\" or \"--no-script\")"),
+               NULL, &plugin_api_info_auto_load_scripts_cb, NULL, NULL);
     hook_info (NULL, "charset_terminal",
                N_("terminal charset"),
                NULL, &plugin_api_info_charset_terminal_cb, NULL, NULL);
@@ -2035,6 +2085,15 @@ plugin_api_info_init ()
            "\"y\": y coordinate (string with integer >= 0)"),
         N_("see function \"hook_focus\" in Plugin API reference"),
         &gui_focus_info_hashtable_gui_focus_info_cb, NULL, NULL);
+    /* info (hashtable) with the secured data */
+    hook_info_hashtable (
+        NULL,
+        "secured_data",
+        N_("secured data"),
+        NULL,
+        N_("secured data: names and values (be careful: the values are "
+           "sensitive data: do NOT print/log them anywhere)"),
+        &plugin_api_info_hashtable_secured_data_cb, NULL, NULL);
 
     /* WeeChat core infolist hooks */
     hook_infolist (NULL, "bar",

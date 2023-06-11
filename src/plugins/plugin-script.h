@@ -116,7 +116,6 @@ struct t_plugin_script_data
 extern void plugin_script_display_interpreter (struct t_weechat_plugin *plugin,
                                                int indent);
 extern void plugin_script_init (struct t_weechat_plugin *weechat_plugin,
-                                int argc, char *argv[],
                                 struct t_plugin_script_data *plugin_data);
 extern int plugin_script_valid (struct t_plugin_script *scripts,
                                 struct t_plugin_script *script);

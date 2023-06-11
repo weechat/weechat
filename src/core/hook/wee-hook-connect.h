@@ -57,7 +57,7 @@ struct t_hook_connect
     int ipv6;                          /* use IPv6                          */
     int sock;                          /* socket (set when connected)       */
     int retry;                         /* retry count                       */
-    gnutls_session_t *gnutls_sess;     /* GnuTLS session (SSL connection)   */
+    gnutls_session_t *gnutls_sess;     /* GnuTLS session (TLS connection)   */
     gnutls_callback_t *gnutls_cb;      /* GnuTLS callback during handshake  */
     int gnutls_dhkey_size;             /* Diffie Hellman Key Exchange size  */
     char *gnutls_priorities;           /* GnuTLS priorities                 */

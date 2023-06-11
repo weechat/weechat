@@ -66,20 +66,6 @@ char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
   "buffer_title", "buffer_nicklist", "window_number", "mouse_status", "away",
   "spacer"
 };
-char *gui_bar_items_default_for_bars[][2] =
-{ { GUI_BAR_DEFAULT_NAME_INPUT,
-    "[input_prompt]+(away),[input_search],[input_paste],input_text" },
-  { GUI_BAR_DEFAULT_NAME_TITLE,
-    "buffer_title" },
-  { GUI_BAR_DEFAULT_NAME_STATUS,
-    "[time],[buffer_last_number],[buffer_plugin],buffer_number+:+"
-    "buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+"
-    "buffer_filter,scroll,[lag],[hotlist],[typing],completion" },
-  { GUI_BAR_DEFAULT_NAME_NICKLIST,
-    "buffer_nicklist" },
-  { NULL,
-    NULL },
-};
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
 
@@ -850,9 +836,10 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
                             struct t_hashtable *extra_info)
 {
     char *ptr_input, *ptr_input2, str_buffer[128], str_start_input[16];
-    char str_cursor[16], *buf;
+    char str_cursor[16], *buf, str_key_debug[1024], *str_lead_linebreak;
     const char *pos_cursor;
-    int length, length_cursor, length_start_input, buf_pos;
+    int length, length_cursor, length_start_input, length_lead_linebreak;
+    int buf_pos, is_multiline;
 
     /* make C compiler happy */
     (void) pointer;
@@ -874,6 +861,15 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
               GUI_COLOR_BAR_CHAR,
               GUI_COLOR_BAR_START_INPUT_CHAR);
     length_start_input = strlen (str_start_input);
+
+    if (gui_key_debug)
+    {
+        snprintf (str_key_debug, sizeof (str_key_debug),
+                  "%s%s",
+                  _("keyboard and mouse debug ('q' to quit debug mode)"),
+                  str_cursor);
+        return strdup (str_key_debug);
+    }
 
     /* for modifiers */
     snprintf (str_buffer, sizeof (str_buffer),
@@ -942,14 +938,34 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
         ptr_input = ptr_input2;
     }
 
+    /*
+     * transform '\n' to '\r' so the newlines are displayed as real new lines
+     * instead of spaces
+     */
+    is_multiline = 0;
+    ptr_input2 = ptr_input;
+    while (ptr_input2 && ptr_input2[0])
+    {
+        if (ptr_input2[0] == '\n')
+        {
+            ptr_input2[0] = '\r';
+            is_multiline = 1;
+        }
+        ptr_input2 = (char *)utf8_next_char (ptr_input2);
+    }
+
+    str_lead_linebreak = (is_multiline &&
+        CONFIG_BOOLEAN(config_look_input_multiline_lead_linebreak)) ? "\r" : "";
+    length_lead_linebreak = strlen (str_lead_linebreak);
+
     /* insert "start input" at beginning of string */
     if (ptr_input)
     {
-        length = strlen (ptr_input) + length_start_input + 1;
+        length = strlen (ptr_input) + length_start_input + length_lead_linebreak + 1;
         buf = malloc (length);
         if (buf)
         {
-            snprintf (buf, length, "%s%s", str_start_input, ptr_input);
+            snprintf (buf, length, "%s%s%s", str_start_input, str_lead_linebreak, ptr_input);
             free (ptr_input);
             ptr_input = buf;
         }
@@ -960,20 +976,9 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
         ptr_input = malloc (length);
         if (ptr_input)
         {
-            snprintf (ptr_input, length, "%s%s", str_start_input, str_cursor);
+            strcpy (ptr_input, str_start_input);
+            strcat (ptr_input, str_cursor);
         }
-    }
-
-    /*
-     * transform '\n' to '\r' so the newlines are displayed as real new lines
-     * instead of spaces
-     */
-    ptr_input2 = ptr_input;
-    while (ptr_input2 && ptr_input2[0])
-    {
-        if (ptr_input2[0] == '\n')
-            ptr_input2[0] = '\r';
-        ptr_input2 = (char *)utf8_next_char (ptr_input2);
     }
 
     return ptr_input;
@@ -2207,7 +2212,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH],
                       &gui_bar_item_input_search_cb, NULL, NULL);
-    gui_bar_item_hook_signal ("window_switch;input_search;input_text_changed",
+    gui_bar_item_hook_signal ("window_switch;buffer_switch;input_search;"
+                              "input_text_changed",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH]);
 
     /* input text */

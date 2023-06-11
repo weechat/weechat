@@ -259,12 +259,6 @@ util_timeval_diff (struct timeval *tv1, struct timeval *tv2)
     diff_sec = tv2->tv_sec - tv1->tv_sec;
     diff_usec = tv2->tv_usec - tv1->tv_usec;
 
-    if (diff_usec < 0)
-    {
-        diff_usec += 1000000;
-        diff_sec--;
-    }
-
     return (diff_sec * 1000000) + diff_usec;
 }
 
@@ -421,12 +415,14 @@ util_parse_delay (const char *string_delay, long default_factor)
  * Non-digit chars like "-dev" are ignored.
  *
  * Examples:
- *   "0.3.2-dev" ==> 197120 (== 0x00030200)
- *   "0.3.2-rc1" ==> 197120 (== 0x00030200)
- *   "0.3.2"     ==> 197120 (== 0x00030200)
- *   "0.3.1.1"   ==> 196865 (== 0x00030101)
- *   "0.3.1"     ==> 196864 (== 0x00030100)
- *   "0.3.0"     ==> 196608 (== 0x00030000)
+ *   "4.0.0"     ==> 67108864 (== 0x04000000)
+ *   "1.0"       ==> 16777216 (== 0x01000000)
+ *   "0.3.2-dev" ==> 197120   (== 0x00030200)
+ *   "0.3.2-rc1" ==> 197120   (== 0x00030200)
+ *   "0.3.2"     ==> 197120   (== 0x00030200)
+ *   "0.3.1.1"   ==> 196865   (== 0x00030101)
+ *   "0.3.1"     ==> 196864   (== 0x00030100)
+ *   "0.3.0"     ==> 196608   (== 0x00030000)
  */
 
 int

@@ -713,7 +713,10 @@ logger_buffer_start (struct t_gui_buffer *buffer, int write_info_line)
 
     log_level = logger_get_level_for_buffer (buffer);
     log_enabled =  weechat_config_boolean (logger_config_file_auto_log)
-        && (log_level > 0);
+        && (log_level > 0)
+        && (logger_check_conditions (
+                buffer,
+                weechat_config_string (logger_config_file_log_conditions)));
 
     ptr_logger_buffer = logger_buffer_search_buffer (buffer);
 

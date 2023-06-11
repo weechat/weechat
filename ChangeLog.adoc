@@ -6,46 +6,140 @@
 :docinfo1:
 
 
-This document lists all changes for each version
-(the latest formatted version of this document can be found
-https://weechat.org/files/changelog/ChangeLog-devel.html[here]).
-
-For a list of important changes that require manual action, please look at
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
-(file _ReleaseNotes.adoc_ in sources).
+This document lists all the changes for each version. +
+For a list of important changes that require manual actions, please look at release notes.
 
 
-[[v3.9]]
-== Version 3.9 (under dev)
+[[v4.0.0]]
+== Version 4.0.0 (under dev)
 
 New features::
 
-  * core: display similar command names when a command is unknown (issue #1877)
+  * core: use human readable key bindings, separate keys with comma in combos, remove modifier "meta2-", add option `legacy` in command `/key` (issue #1238, task #10317)
+  * core: make keys normal options, so they are shown and can be updated with `/set` and `/fset` commands (task #12427, task #11783)
+  * core: add key kbd:[Alt+K] (upper case) to grab raw key and its command (issue #1238)
+  * core: add option `key` in command `/debug` (issue #1238)
   * core: force ctrl keys to lower case when they are added (issue #1875)
+  * core: use 256 colors by default and always allow 256 colors, find nearest color if less colors are available in terminal (issue #1920)
+  * core: insert multiple pasted lines in input instead of sending immediately, add keys to move and delete in a single line and whole input, add option weechat.look.input_multiline_lead_linebreak (issue #1502, issue #1503, issue #1504)
+  * core: render newline characters in chat line messages (issue #1908)
+  * core: don't split on newline characters in printf_date_tags when input_multiline is set (issue #1909)
+  * core: add key @kbd:[l] in cursor mode to quote line, add variable "_chat_focused_line" in function hashtable sent to hook_focus callback (issue #1913, issue #1914)
+  * core: add option `split_return` in command `/input` (issue #1916)
+  * core: send all command line parameters not beginning with a dash to all plugins
+  * core: add command `/reset` to reset options to their default values
+  * core: add option `rename` in command `/bar`
+  * core: add relative move of read marker with `/buffer set unread [+/-]N` (issue #1895)
+  * core: add access to hashtable properties in evaluation of expressions (issue #1888)
+  * core: display similar command names when a command is unknown (issue #1877)
+  * core: rename option weechat.color.status_name_ssl to weechat.color.status_name_tls
   * core, plugins: make many identifiers case sensitive (issue #1872, issue #398, bug #32213)
-  * alias: use lower case for default aliases (issue #1872)
+  * core: add item "mouse_status" in default status bar, change default color to lightgreen
+  * core, trigger: add options weechat.color.chat_status_disabled and weechat.color.chat_status_enabled, remove options trigger.color.trigger and trigger.color.trigger_disabled, add enabled/disabled status color in output of `/filter list` (issue #1820)
+  * core: add completions "filters_names_disabled" and "filters_names_enabled", used in completion of `/filter disable` and `/filter enable`
+  * api: add function config_set_version (issue #1238)
+  * api: don't split on newline by default in functions `command` and `command_options` when `input_multiline` is set to 0
+  * api: add optional argument with version in info "version_number"
+  * api: add info "auto_load_scripts"
+  * alias: use lower case for default aliases, rename all aliases to lower case on upgrade (issue #1872)
+  * alias: add `$&` to replace all arguments with double quotes escaped (issue #1140, issue #1190)
+  * alias: add option `missing` in command `/alias`
+  * fifo: add support of escaped chars in text or commands sent (issue #1950)
+  * fset: add options fset.color.color_name and fset.color.color_name_selected (issue #1920)
+  * irc: rename "ssl" options to "tls", connect with TLS and port 6697 by default
+  * irc: add support of capabilities "batch" and "draft/multiline" (issue #1292, issue #1923)
+  * irc: add support of capability "echo-message" (issue #139)
+  * irc: display CTCP ACTION to channel on the channel buffer (issue #207)
+  * irc: display STATUSMSG actions differently from standard actions on channels (issue #1577)
+  * irc: add modifier "irc_cap_sync_req" (issue #1767)
+  * irc: add support of "LINELEN" in message 005 (max message length in bytes) (issue #1927)
+  * irc: add support of "UTF8ONLY" in message 005 (issue #1688)
+  * irc: add command `/action` (issue #201, issue #1577)
   * irc: add command `/rules` (issue #1864)
   * irc: add command `/knock` (issue #7)
   * irc: add server option "registered_mode", add fields "authentication_method" and "sasl_mechanism_used" in server (issue #1625)
   * irc: add option `join` in command `/autojoin`
+  * irc: use key when /joining in open channel buffer (issue #1260)
+  * irc: add option `buffer` in command `/autojoin sort` (issue #1876)
+  * irc: add `${username}` in server options "nicks" and "username", change their default values to use it
+  * irc: add infos "irc_server_cap" and "irc_server_cap_value"
+  * irc: add option irc.look.display_host_notice
+  * irc: add tag "new_host_xxx" in message displayed for command CHGHOST (issue #1808)
+  * logger: add option logger.file.log_conditions (issue #1942)
+  * logger: add info "logger_log_file"
+  * relay: rename "ssl" options and protocol to "tls"
+  * relay: make TLS certificate/key loading error handling more verbose (issue #1558)
+  * relay: add modifiers "relay_client_irc_in", "relay_client_irc_out1" and "relay_client_irc_out" in irc protocol
+  * relay: add support of capability "echo-message" in irc protocol (issue #1949)
+  * relay: add handshake option "escape_commands" in weechat protocol
+  * trigger: add completions "trigger_names_disabled" and "trigger_names_enabled", used in completion of `/trigger disable` and `/trigger enable`
 
 Bug fixes::
 
+  * core: fix refresh of bar item "input_search" after buffer switch in root bars (issue #1939)
+  * core: fix completion after newline in input (issue #1925)
+  * core: fix partial completion when the common prefix found is empty (issue #340)
+  * core: display a specific error when trying to bind a key without area in mouse context
+  * core: fix display of key with command `/key bindctxt <context> <key>`
+  * core: fix default value of bar options (issue #846)
+  * core: allow any valid boolean value in command `/bar set <name> separator xxx`
+  * core: run config hooks only when value or default value is actually changed in set/reset/unset functions
   * core: fix crash in case of NULL message sent to function gui_chat_printf_y_date_tags (issue #1883)
   * core: allow command `/input move_next_word` going to the end of line (issue #1881)
   * core: ignore incomplete ctrl/meta/meta2 codes in keys
   * core: fix display glitch in command errors when a wide char is set in option weechat.look.command_chars (issue #1871)
+  * core: fix update of terminal title in some terminals like suckless terminal (stterm) (issue #1882)
+  * core: fix infinite loop on startup when running some gui commands before the switch to core buffer is performed (issue #1917)
   * api: readjust string size in function string_dyn_free when string is not freed
+  * buflist: do not display keys added in default context on first load
+  * exec: remove trailing "M" (carriage return) in output of commands
+  * fset: remove scroll to top of fset buffer when options are added or removed (issue #1892)
+  * guile: fix crash when plugin is loaded on GNU/Hurd (issue #1951)
+  * irc: fix format of IRC tags displayed in messages (use "=" to separate key from value, do not convert "_" to "-") (issue #1929)
+  * irc: reset all internal servers variables when disconnecting
+  * irc: start from the beginning of nicks at automatic reconnection (issue #337, issue #965)
   * irc: fix join of channels in "autojoin" server option on first connection to server if auto reconnection is performed (issue #1873)
+  * irc: update autojoin option with redirected channels when autojoin_dynamic is enabled (issue #1898)
+  * irc: update secure data when server autojoin option contains `${sec.data.xxx}` and option autojoin_dynamic is enabled (issue #1934)
+  * irc: don't switch to buffer of joined channel if it was not manually joined nor present in server autojoin option
+  * irc: fix target buffer for commands 432/433 (erroneous nickname/nickname already in use) when the nickname looks like a channel
+  * irc: display command 437 on server buffer when nickname cannot change while banned on channel (issue #88)
+  * irc: add messages 415 (cannot send message to channel) and 742 (mode cannot be set)
+  * irc: add missing tag "log3" in notify messages
+  * irc: add missing tags "irc_cap" and "log3" in cap messages (client capability)
+  * irc: fix split of CTCP message with no arguments
+  * irc: remove extra space in CTCP ACTION message sent without arguments
+  * logger: fix display of multiline messages in backlog (issue #1926)
+  * lua: fix crash with print when the value to print is not a string (issue #1904, issue #1905)
+  * relay: fix connection with IRC clients sending "CAP REQ :" (without capability) and not sending "CAP END" (issue #1040)
+  * ruby: fix crash on quit when a child process is still running (issue #1889, issue #1915)
+  * ruby: fix crash in display of exception backtrace with Ruby 3 (issue #1631, issue #1886)
+  * script: remove trailing "J" (line feed char) in source of scripts displayed
+  * spell: check buffer pointer received in info "spell_dict"
+  * trigger: make default triggers "cmd_pass", "cmd_pass_register" and "server_pass" compatible with multiline input (issue #1935)
   * typing: fix crash when pointer buffer is not received in callback for signal "input_text_changed" (issue #1869)
+  * typing: remove nicks typing even when option typing.look.enabled_self is off (issue #1718)
 
 Tests::
 
-  * gui: add tests on key functions
+  * core: add tests on URL functions
+  * gui: add tests on bar and key functions
+  * alias: add tests on alias functions
+  * irc: check tags in messages displayed by IRC plugin
+  * irc: add tests on function irc_server_alloc_with_url
+  * irc: add tests on message/notice/action/CTCP sent
+  * logger: add tests on tail functions
+  * relay: add tests on "irc" protocol
 
 Build::
 
   * core: remove build with autotools (issue #1860)
+  * core: remove RPM packaging
+  * core: remove build of .bz2 and .zst files in `make dist`
+  * core: remove obsolete cpack config
+  * core: add "stable-number" and "devel-number" in script version.sh
+  * core: add quotes around paths in CMake files (issue #29)
+  * doc: convert docgen.py to C, remove autogen files from repository, add parameter `--doc-gen` to `weechat-headless` binary, add CMake option `ENABLE_DOC_INCOMPLETE`
 
 [[v3.8]]
 == Version 3.8 (2023-01-08)

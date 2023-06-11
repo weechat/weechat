@@ -29,4 +29,4 @@ set_target_properties(buflist PROPERTIES PREFIX "")
 
 target_link_libraries(buflist coverage_config)
 
-install(TARGETS buflist LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
+install(TARGETS buflist LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

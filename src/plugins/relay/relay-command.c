@@ -344,9 +344,9 @@ relay_command_relay (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcmp (argv[1], "sslcertkey") == 0)
+        if (weechat_strcmp (argv[1], "tlscertkey") == 0)
         {
-            relay_network_set_ssl_cert_key (1);
+            relay_network_set_tls_cert_key (1);
             return WEECHAT_RC_OK;
         }
 
@@ -400,7 +400,7 @@ relay_command_init ()
            " || add <name> <port>|<path>"
            " || del|start|restart|stop <name>"
            " || raw"
-           " || sslcertkey"),
+           " || tlscertkey"),
         N_("         list: list relay clients (only active relays)\n"
            "     listfull: list relay clients (verbose, all relays)\n"
            "    listrelay: list relays (name and port)\n"
@@ -416,14 +416,14 @@ relay_command_init ()
            "path is evaluated (see function string_eval_path_home in "
            "plugin API reference)\n"
            "          raw: open buffer with raw Relay data\n"
-           "   sslcertkey: set SSL certificate/key using path in option "
-           "relay.network.ssl_cert_key\n"
+           "   tlscertkey: set TLS certificate/key using path in option "
+           "relay.network.tls_cert_key\n"
            "\n"
-           "Relay name is: [ipv4.][ipv6.][ssl.]<protocol.name> or "
-           "unix.[ssl.]<protocol.name>\n"
+           "Relay name is: [ipv4.][ipv6.][tls.]<protocol.name> or "
+           "unix.[tls.]<protocol.name>\n"
            "         ipv4: force use of IPv4\n"
            "         ipv6: force use of IPv6\n"
-           "          ssl: enable SSL\n"
+           "          tls: enable TLS\n"
            "         unix: use UNIX domain socket\n"
            "protocol.name: protocol and name to relay:\n"
            "                 - protocol \"irc\": name is the server to share "
@@ -442,20 +442,20 @@ relay_command_init ()
            "Examples:\n"
            "  irc proxy, for server \"libera\":\n"
            "    /relay add irc.libera 8000\n"
-           "  irc proxy, for server \"libera\", with SSL:\n"
-           "    /relay add ssl.irc.libera 8001\n"
-           "  irc proxy, for all servers (client will choose), with SSL:\n"
-           "    /relay add ssl.irc 8002\n"
+           "  irc proxy, for server \"libera\", with TLS:\n"
+           "    /relay add tls.irc.libera 8001\n"
+           "  irc proxy, for all servers (client will choose), with TLS:\n"
+           "    /relay add tls.irc 8002\n"
            "  weechat protocol:\n"
            "    /relay add weechat 9000\n"
-           "  weechat protocol with SSL:\n"
-           "    /relay add ssl.weechat 9001\n"
-           "  weechat protocol with SSL, using only IPv4:\n"
-           "    /relay add ipv4.ssl.weechat 9001\n"
-           "  weechat protocol with SSL, using only IPv6:\n"
-           "    /relay add ipv6.ssl.weechat 9001\n"
-           "  weechat protocol with SSL, using IPv4 + IPv6:\n"
-           "    /relay add ipv4.ipv6.ssl.weechat 9001\n"
+           "  weechat protocol with TLS:\n"
+           "    /relay add tls.weechat 9001\n"
+           "  weechat protocol with TLS, using only IPv4:\n"
+           "    /relay add ipv4.tls.weechat 9001\n"
+           "  weechat protocol with TLS, using only IPv6:\n"
+           "    /relay add ipv6.tls.weechat 9001\n"
+           "  weechat protocol with TLS, using IPv4 + IPv6:\n"
+           "    /relay add ipv4.ipv6.tls.weechat 9001\n"
            "  weechat protocol over UNIX domain socket:\n"
            "    /relay add unix.weechat ${weechat_runtime_dir}/relay_socket"),
         "list %(relay_relays)"
@@ -467,6 +467,6 @@ relay_command_init ()
         " || restart %(relay_relays)"
         " || stop %(relay_relays)"
         " || raw"
-        " || sslcertkey",
+        " || tlscertkey",
         &relay_command_relay, NULL, NULL);
 }

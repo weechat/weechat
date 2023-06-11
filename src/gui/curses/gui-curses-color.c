@@ -41,6 +41,7 @@
 #include "../gui-chat.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
+#include "gui-curses-color.h"
 
 
 #define GUI_COLOR_TIMER_TERM_COLORS 10
@@ -448,11 +449,34 @@ gui_color_get_pair (int fg, int bg)
     if (gui_color_use_term_colors)
         return COLOR_WHITE;
 
-    /* if invalid color, use default fg/bg */
+    /* if invalid color, use nearest color or default fg/bg */
     if (fg >= gui_color_term_colors)
-        fg = -1;
+    {
+        /* find nearest color */
+        if ((fg >= 0) && (fg <= 255))
+        {
+            fg = gui_color_convert_rgb_to_term (gui_color_term256[fg],
+                                                gui_color_term_colors);
+        }
+        else
+        {
+            /* fallback to default foreground */
+            fg = -1;
+        }
+    }
     if (bg >= gui_color_term_colors)
-        bg = -1;
+    {
+        if ((bg >= 0) && (bg <= 255))
+        {
+            bg = gui_color_convert_rgb_to_term (gui_color_term256[bg],
+                                                gui_color_term_colors);
+        }
+        else
+        {
+            /* fallback to default background */
+            bg = -1;
+        }
+    }
 
     /* compute index for gui_color_pairs with foreground and background */
     index = ((bg + 1) * (gui_color_term_colors + 2)) + (fg + 1);
@@ -1361,7 +1385,7 @@ gui_color_palette_build_aliases ()
                      WEECHAT_LIST_POS_END,
                      NULL);
     }
-    for (i = 0; i <= gui_color_term_colors; i++)
+    for (i = 0; i < 256; i++)
     {
         color_palette = gui_color_palette_get (i);
         if (color_palette)
@@ -1546,6 +1570,8 @@ gui_color_init_weechat ()
     gui_color_build (GUI_COLOR_EMPHASIS, CONFIG_COLOR(config_color_emphasized), CONFIG_COLOR(config_color_emphasized_bg));
     gui_color_build (GUI_COLOR_CHAT_DAY_CHANGE, CONFIG_COLOR(config_color_chat_day_change), CONFIG_COLOR(config_color_chat_bg));
     gui_color_build (GUI_COLOR_CHAT_VALUE_NULL, CONFIG_COLOR(config_color_chat_value_null), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_STATUS_DISABLED, CONFIG_COLOR(config_color_chat_status_disabled), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_STATUS_ENABLED, CONFIG_COLOR(config_color_chat_status_enabled), CONFIG_COLOR(config_color_chat_bg));
 
     /*
      * define old nick colors for compatibility on /upgrade with previous

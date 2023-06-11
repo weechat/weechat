@@ -2,10 +2,6 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ru
-:toc: left
-:sectnums:
-:docinfo1:
-
 
 Переводчики:
 
@@ -13,7 +9,6 @@
 * Алексей Бортник <thebosha@gmail.com>, 2009
 * Alexander Turenko <totktonada.ru@gmail.com>, 2014-2015
 * Evgeny Shmarnev <eshmarnev@suse.com>, 2016
-
 
 [[start]]
 == Запуск WeeChat
@@ -121,7 +116,7 @@ For more information about `/fset` command and keys, see `/help fset`.
 Вы можете добавить IRC сервер с помощью команды `/server`, например:
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 // TRANSLATION MISSING
@@ -410,14 +405,14 @@ _foo_):
 
 // TRANSLATION MISSING
 A list of scripts is available in WeeChat with `/script` or on
-https://weechat.org/scripts/[this page ^↗^,window=_blank].
+https://weechat.org/scripts/[this page ^↗^^].
 
 [[more_doc]]
 == Документация для дальнейшего чтения
 
 // TRANSLATION MISSING
 You can now use WeeChat and read
-https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+https://weechat.org/doc/[FAQ/documentation ^↗^^]
 for any other questions.
 
 Приятной работы с WeeChat!

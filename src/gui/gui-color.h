@@ -88,6 +88,8 @@ enum t_gui_color_enum
     GUI_COLOR_EMPHASIS,
     GUI_COLOR_CHAT_DAY_CHANGE,
     GUI_COLOR_CHAT_VALUE_NULL,
+    GUI_COLOR_CHAT_STATUS_DISABLED,
+    GUI_COLOR_CHAT_STATUS_ENABLED,
 
     /* number of colors */
     GUI_COLOR_NUM_COLORS,
@@ -183,6 +185,7 @@ extern struct t_gui_color *gui_color[];
 extern struct t_hashtable *gui_color_hash_palette_color;
 extern struct t_hashtable *gui_color_hash_palette_alias;
 extern struct t_weelist *gui_color_list_with_alias;
+extern int gui_color_term256[];
 
 /* color functions */
 

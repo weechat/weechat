@@ -210,21 +210,32 @@ trigger_callback_set_tags (struct t_gui_buffer *buffer,
         {
             /*
              * example:
-             *   tag: "irc_tag_time_2021-12-30T21:02:50.038Z"
+             *   tag: "irc_tag_time=2021-12-30T21:02:50.038Z"
              * is added in the hashtable like this:
              *   key  : "tg_tag_irc_time"
              *   value: "2021-12-30T21:02:50.038Z"
              */
-            pos = strchr (tags[i] + 8, '_');
-            if (pos && pos > tags[i] + 8)
+            pos = strchr (tags[i] + 8, '=');
+            if (!pos || (pos > tags[i] + 8))
             {
-                key = weechat_strndup (tags[i] + 8, pos - tags[i] - 8);
-                if (key)
+                if (pos)
                 {
+                    /* tag with value */
+                    key = weechat_strndup (tags[i] + 8, pos - tags[i] - 8);
+                    if (key)
+                    {
+                        snprintf (str_temp, sizeof (str_temp),
+                                  "tg_tag_irc_%s", key);
+                        weechat_hashtable_set (extra_vars, str_temp, pos + 1);
+                        free (key);
+                    }
+                }
+                else
+                {
+                    /* tag without value */
                     snprintf (str_temp, sizeof (str_temp),
-                              "tg_tag_irc_%s", key);
-                    weechat_hashtable_set (extra_vars, str_temp, pos + 1);
-                    free (key);
+                              "tg_tag_irc_%s", tags[i] + 8);
+                    weechat_hashtable_set (extra_vars, str_temp, NULL);
                 }
             }
         }

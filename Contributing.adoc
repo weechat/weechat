@@ -38,7 +38,7 @@ please include:
   problem here.
 * The *gdb's backtrace* (only for a crash): if you can reproduce the crash
   (or if you have a core file), please include the backtrace from gdb (look at
-  https://weechat.org/doc/user/#report_crashes[User's guide] for more info).
+  https://weechat.org/doc/weechat/user/#report_crashes[User's guide] for more info).
 * The *actual result*.
 * The *expected result*: the correct result you are expecting.
 
@@ -68,7 +68,7 @@ time, for https://github.com/weechat/weechat[WeeChat] and the website
 https://github.com/weechat/weechat.org[weechat.org].
 
 To start a translation in a new language (not yet supported), please look at
-https://weechat.org/doc/dev/#translations[translations]
+https://weechat.org/doc/weechat/dev/#translations[translations]
 in Developer's guide.
 
 == Feature requests
@@ -84,6 +84,26 @@ For major new features, it's better to discuss about it in IRC
 (server: _irc.libera.chat_, channel _#weechat_).
 
 Before submitting any pull request, be sure you have read the
-https://weechat.org/doc/dev/#coding_rules[coding rules]
+https://weechat.org/doc/weechat/dev/#coding_rules[coding rules]
 in Developer's guide, which contains info about styles used, naming convention
 and other useful info.
+
+== Semantic versioning
+
+Since version 4.0.0, WeeChat is following a "practical" semantic versioning.
+
+It is based on https://semver.org/[Semantic Versioning] but in a less strict way: breaking changes in API with low user impact don't bump the major version.
+
+The version number is on three digits `X.Y.Z`, where:
+
+* `X` is the major version
+* `Y` is the minor version
+* `Z` is the patch version.
+
+Rules to increment the version number:
+
+* the *major version* number (`X`) is incremented only when intentional breaking changes target feature areas that are actively consumed by users, scripts or C plugin API
+* the *minor version* number (`Y`) is incremented for any new release of WeeChat that includes new features and bug fixes, possibly breaking API with low impact on users
+* the *patch version* number (`Z`) is reserved for releases that address severe bugs or security issues found after the release.
+
+For more information, see the https://specs.weechat.org/specs/2023-003-practical-semantic-versioning.html[specification].

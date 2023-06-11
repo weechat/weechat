@@ -51,6 +51,7 @@ function weechat_list_remove(string $p0, string $p1): int {}
 function weechat_list_remove_all(string $p0): int {}
 function weechat_list_free(string $p0): int {}
 function weechat_config_new(string $p0, mixed $p1, string $p2): string {}
+function weechat_config_set_version(string $p0, int $p1, mixed $p2, string $p3): int {}
 function weechat_config_new_section(): string {}
 function weechat_config_search_section(string $p0, string $p1): string {}
 function weechat_config_new_option(): string {}

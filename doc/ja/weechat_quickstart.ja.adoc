@@ -2,16 +2,11 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ja-jp
-:toc: left
 :toc-title: 目次
-:sectnums:
-:docinfo1:
-
 
 翻訳者:
 
 * Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2009-2019
-
 
 [[start]]
 == WeeChat を起動
@@ -112,7 +107,7 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 IRC サーバを追加するには `/server` コマンドを使ってください、例:
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 このコマンドにおいて、`libera` は WeeChat が使う内部サーバ名です:
@@ -390,14 +385,14 @@ WeeChat では多くの外部スクリプト (貢献者の作った)
 
 // TRANSLATION MISSING
 A list of scripts is available in WeeChat with `/script` or on
-https://weechat.org/scripts/[this page ^↗^,window=_blank].
+https://weechat.org/scripts/[this page ^↗^^].
 
 [[more_doc]]
 == 詳しいドキュメント情報
 
 // TRANSLATION MISSING
 You can now use WeeChat and read
-https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+https://weechat.org/doc/[FAQ/documentation ^↗^^]
 for any other questions.
 
 WeeChat をお楽しみください!

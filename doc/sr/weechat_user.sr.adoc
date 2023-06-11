@@ -2,23 +2,16 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: sr
-:toc: left
-:toclevels: 4
 :toc-title: Садржај
-:sectnums:
-:sectnumlevels: 3
-:docinfo1:
 
 Превод:
 
 * Иван Пешић (<ivan.pesic@gmail.com>), 2021.
 
-
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
 Последња верзија овог документа се налази на
-https://weechat.org/doc/[овој страници ^↗^,window=_blank].
-
+https://weechat.org/doc/[овој страници ^↗^^].
 
 [[introduction]]
 == Увод
@@ -31,21 +24,22 @@ WeeChat (Wee Enhanced Environment for Chat) је бесплатни чет кл�
 Основне могућности програма су:
 
 * подржавање разне протоколе (углавном IRC)
-* разни начини повезивања са сервером (преко SSL, IPv6, прокси)
+* разни начини повезивања са сервером (преко TLS, IPv6, прокси)
 * мали је, брз и не оптерећује систем
 * прилагођавање и проширивање помоћу додатака и скрипти
 * сагласност са IRC RFC документима
-  https://datatracker.ietf.org/doc/html/rfc1459[1459 ^↗^,window=_blank],
-  https://datatracker.ietf.org/doc/html/rfc2810[2810 ^↗^,window=_blank],
-  https://datatracker.ietf.org/doc/html/rfc2811[2811 ^↗^,window=_blank],
-  https://datatracker.ietf.org/doc/html/rfc2812[2812 ^↗^,window=_blank] и
-  https://datatracker.ietf.org/doc/html/rfc2813[2813 ^↗^,window=_blank]
+  https://datatracker.ietf.org/doc/html/rfc1459[1459 ^↗^^],
+  https://datatracker.ietf.org/doc/html/rfc2810[2810 ^↗^^],
+  https://datatracker.ietf.org/doc/html/rfc2811[2811 ^↗^^],
+  https://datatracker.ietf.org/doc/html/rfc2812[2812 ^↗^^],
+  https://datatracker.ietf.org/doc/html/rfc2813[2813 ^↗^^] и
+  https://datatracker.ietf.org/doc/html/rfc7194[7194 ^↗^^],
 * IRC прокси и релеј за удаљене интерфејсе
 * подржавање различитих платформи (GNU/Linux, *BSD, macOS, Windows и остале)
 * 100% GPL, слободан софтвер
 
 Листа свих могућности може да се пронађе на
-https://weechat.org/about/features/[овој страници ^↗^,window=_blank].
+https://weechat.org/about/features/[овој страници ^↗^^].
 
 [[prerequisites]]
 === Потребно је да имате
@@ -68,14 +62,14 @@ https://weechat.org/about/features/[овој страници ^↗^,window=_bla
 * Cygwin (Windows): изаберите WeeChat пакете у setup.exe
 * Debian/Ubuntu (или било која Debian компатибилна дистрибуција): `apt-get install weechat-curses weechat-plugins` +
 За најновије верзије и ноћне изградње:
-  https://weechat.org/download/debian/[Debian репозиторијуми ^↗^,window=_blank]
+  https://weechat.org/download/debian/[Debian репозиторијуми ^↗^^]
 * Fedora Core: `dnf install weechat`
 * FreeBSD: `pkg install weechat`
 * Gentoo: `emerge weechat`
 * Mandriva/RedHat (или било која RPM компатибилна дистрибуција): `rpm -i /путања//до/weechat-x.y.z-1.i386.rpm`
 * openSUSE: `zypper in weechat`
 * Sourcemage: `cast weechat`
-* macOS (са https://brew.sh/[Homebrew ^↗^,window=_blank]): `brew install weechat`
+* macOS (са https://brew.sh/[Homebrew ^↗^^]): `brew install weechat`
   (за помоћ: `brew info weechat`)
 
 Још неки пакети вам могу бити од користи, као што је weechat-plugins.
@@ -86,9 +80,9 @@ https://weechat.org/about/features/[овој страници ^↗^,window=_bla
 === Контејнери
 
 Можете да изградите контејнере са WeeChat или да их инсталирате директно са
-https://hub.docker.com/r/weechat/weechat[Docker Hub ^↗^,window=_blank]. +
+https://hub.docker.com/r/weechat/weechat[Docker Hub ^↗^^]. +
 За више информација, погледајте README фајл у
-https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_blank]
+https://github.com/weechat/weechat-container[weechat-container ^↗^^]
 репозиторијуму.
 
 [[source_package]]
@@ -97,7 +91,7 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^,window=_bl
 WeeChat мора да се изгради са CMake.
 
 [NOTE]
-На macOS можете да употребите https://brew.sh/[Homebrew ^↗^,window=_blank]: `brew install --build-from-source weechat`.
+На macOS можете да употребите https://brew.sh/[Homebrew ^↗^^]: `brew install --build-from-source weechat`.
 
 [[dependencies]]
 ==== Зависности
@@ -133,12 +127,12 @@ WeeChat мора да се изгради са CMake.
 
 | zlib1g-dev |
 | Logger додатак: компресија ротирајућих лог фајлова (gzip). +
-  Relay додатак: компресија порука (WeeChat -> клијент) са https://zlib.net/[zlib ^↗^,window=_blank] (weechat протокол). +
+  Relay додатак: компресија порука (WeeChat -> клијент) са https://zlib.net/[zlib ^↗^^] (weechat протокол). +
   Script додатак: читање индекс фајла репозиторијума (gzip).
 
 | libzstd-dev | ≥ 0.8.1
 | Logger додатак: компресија ротирајућих лог фајлова. +
-  Relay додатак: компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^,window=_blank] (weechat протокол).
+  Relay додатак: компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat протокол).
 |===
 
 [NOTE]
@@ -154,7 +148,7 @@ WeeChat мора да се изгради са CMake.
 | Пакет ^(1)^                            | Верзија  | Могућности
 | {cpp} компајлер (pass:[g++ / clang++]) |          | Изградња и покретање тестова, JavaScript додатак.
 | gettext                                |          | Интернационализација (превод порука; основни језик је енглески).
-| ca-certificates                        |          | Сертификати за SSL везе.
+| ca-certificates                        |          | Сертификати за TLS везе.
 | libaspell-dev / libenchant-dev         |          | Spell додатак.
 | python3-dev                            | ≥ 3.0    | Python додатак.
 | libperl-dev                            |          | Perl додатак.
@@ -243,6 +237,10 @@ $ make install
 | ENABLE_DOC | `ON`, `OFF` | OFF
 | Изграђује HTML документацију.
 
+| ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
+| Форсира изградњу документације чак и ако неки додаци нису компајлирани
+  (не препоручује се: документација неће бити комплетна).
+
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF
 | Компајлира <<spell_checking,Spell додатак>> са Enchant.
 
@@ -299,7 +297,7 @@ $ make install
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON
 | Компајлира <<scripting_plugins,script додатке>> (Python, Perl, Ruby, Lua, Tcl,
-  Guile, JavaScript, PHP).
+  Guile, PHP).
 
 | ENABLE_SPELL | `ON`, `OFF` | ON
 | Компајлира <<spell_checking,Spell додатак>>.
@@ -440,7 +438,7 @@ ulimit -c 200000
 [NOTE]
 На неким системима као што је Archlinux, core извештаји могу бити у неком другом директоријуму као што је _/var/lib/systemd/coredump_ и морате да употребите команду `coredumpctl` да их прочитате. +
 За више информација, погледајте ову
-https://wiki.archlinux.org/title/Core_dump[вики страницу ^↗^,window=_blank].
+https://wiki.archlinux.org/title/Core_dump[вики страницу ^↗^^].
 
 На пример, ако је _weechat_ инсталиран у _/usr/bin/_ а _core_ фајл се налази у _/home/user/_, онда покрените gdb следећом командом:
 
@@ -582,15 +580,14 @@ term screen-256color
 [[xdg_directories]]
 ==== XDG директоријуми
 
-WeeChat подразумевано користи XDG директоријуме (сагласно са https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification ^↗^,window=_blank]). +
+WeeChat подразумевано користи XDG директоријуме (сагласно са https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html[XDG Base Directory Specification ^↗^^]). +
 Један почетни директоријум за све фајлове може да се форсира CMake опцијом `WEECHAT_HOME`, променљивом окружења `WEECHAT_HOME` или опцијом командне линије `-d` / `--dir`.
 
 Када се не форсира један WeeChat почетни директоријум, користе се XDG директоријуми и постављају се овако:
 
 [width="100%", cols="1,2m,5", options="header"]
 |===
-// TRANSLATION MISSING
-| Директоријум | Подразумевана вредност   | Fallback value if $XDG_XXX is not defined
+| Директоријум | Подразумевана вредност   | Резервна вредност ако $XDG_XXX није дефинисано
 | config       | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat`
 | data         | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat`
 | cache        | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat`
@@ -685,9 +682,9 @@ WeeChat подразумевано користи XDG директоријуме
 [[upgrade_command]]
 === Команда upgrade
 
-Програм WeeChat у месту може да поново покрене нови бинарни фајл, употребом команде <<command_weechat_upgrade,/upgrade>>: садржаји бафера и не-SSL везе се задржавају. +
-Током процеса ажурирња, SSL конекције се губе и аутоматски се обнављају
-након ажурирања (са GnuTLS тренутно није могуће поновно учитавање SSL сесија).
+Програм WeeChat у месту може да поново покрене нови бинарни фајл, употребом команде <<command_weechat_upgrade,/upgrade>>: садржаји бафера и не-TLS везе се задржавају. +
+Током процеса ажурирња, TLS конекције се губе и аутоматски се обнављају
+након ажурирања (са GnuTLS тренутно није могуће поновно учитавање TLS сесија).
 
 Команда такође може да се употреби и када морате поново да покренете машину, на пример, да бисте ажурирали кернел или да преместите свој WeeChat на другу машину:
 
@@ -707,7 +704,7 @@ $ weechat --upgrade
 [[restart_release_notes]]
 ==== Напомене о издању
 
-Након ажурирања, *снажно се препоручује* да прочитате https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[напомене о издању ^↗^,window=_blank] које садржи важне информације о променама које прекидају раније понашање програма, као и ручне акције које су због тога можда неопходне.
+Након ажурирања, *снажно се препоручује* да прочитате https://weechat.org/files/doc/weechat/ReleaseNotes-devel.html[напомене о издању ^↗^^] које садржи важне информације о променама које прекидају раније понашање програма, као и ручне акције које су због тога можда неопходне.
 
 Морате прочитати све напомене о издању издате између ваше старе (без ње) и ваше нове верзије (укључујући и њу). +
 На пример, ако пређете са верзије 3.0 на 3.2, морате да прочитате напомене о издању за верзије 3.1 и 3.2.
@@ -914,7 +911,7 @@ WeeChat командна линија (на дну прозора) вам омо
 
 Кодови боја за kbd:[Ctrl+c], kbd:[c] су:
 
-include::includes/autogen_user_irc_colors.sr.adoc[tag=irc_colors]
+include::{autogendir}/autogen_user_irc_colors.sr.adoc[tag=irc_colors]
 
 [NOTE]
 Да бисте у свом терминалу видели све доступне боје, можете да у програму WeeChat извршите `/color` па затим kbd:[Alt+c], или да у терминалу покренете следећу команду: `weechat --colors`.
@@ -1337,7 +1334,7 @@ Buflist додатак приказује листу бафера у ставк�
 [[buflist_commands]]
 ==== Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=buflist_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=buflist_commands]
 
 [[buflist_options]]
 ==== Опције
@@ -1353,7 +1350,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=buflist_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=buflist_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=buflist_options]
 
 [[key_bindings]]
 == Тастерске пречице
@@ -1371,17 +1368,23 @@ WeeChat нуди доста подразумеваних тастерских п
 |===
 | Тастер         | Опис | Команда
 | kbd:[←] +
+  kbd:[Shift+←] +
   kbd:[Ctrl+b]   | Одлазак на претходни карактер у командној линији. | `+/input move_previous_char+`
 | kbd:[→] +
+  kbd:[Shift+→] +
   kbd:[Ctrl+f]   | Одлазак на наредни карактер у командној линији. | `+/input move_next_char+`
+| kbd:[Shift+↑]  | Одлазак на претходну линију. | `+/input move_previous_line+`
+| kbd:[Shift+↓]  | Одлазак на наредну линију. | `+/input move_next_line+`
 | kbd:[Ctrl+←] +
   kbd:[Alt+b]    | Одлазак на претходну реч у командној линији. | `+/input move_previous_word+`
 | kbd:[Ctrl+→] +
   kbd:[Alt+f]    | Одлазак на наредну реч у командној линији. | `+/input move_next_word+`
 | kbd:[Home] +
-  kbd:[Ctrl+a]   | Одлазак на почетак командне линије. | `+/input move_beginning_of_line+`
+  kbd:[Ctrl+a]   | Одлазак на почетак текуће линије. | `+/input move_beginning_of_line+`
+| kbd:[Shift+Home] | Одлазак на почетак командне линије. | `+/input move_beginning_of_input+`
 | kbd:[End] +
-  kbd:[Ctrl+e]   | Одлазак на крај командне линије. | `+/input move_end_of_line+`
+  kbd:[Ctrl+e]   | Одлазак на крај текуће линије. | `+/input move_end_of_line+`
+| kbd:[Shift+End]  | Одлазак на крај командне линије. | `+/input move_end_of_input+`
 |===
 
 [[key_bindings_cmdline_editing]]
@@ -1394,9 +1397,11 @@ WeeChat нуди доста подразумеваних тастерских п
   kbd:[Ctrl+d]        | Брисање наредног карактера у командној линији. | `+/input delete_next_char+`
 | kbd:[Backspace] +
   kbd:[Ctrl+h]        | Брисање претходног карактера у командној линији. | `+/input delete_previous_char+`
-| kbd:[Ctrl+k]        | Брисање од курсора до краја командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+k]        | Брисање од курсора до краја текуће линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_end_of_line+`
+| kbd:[Alt+Ctrl+k]    | Брисање од курсора до краја командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_end_of_input+`
 | kbd:[Ctrl+t]        | Транспозиција карактера. | `/input transpose_chars`
-| kbd:[Ctrl+u]        | Брисање од курсора до почетка командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_beginning_of_line+`
+| kbd:[Ctrl+u]        | Брисање од курсора до почетка текуће линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_beginning_of_line+`
+| kbd:[Alt+Ctrl+u]    | Брисање од курсора до почетка командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_beginning_of_input+`
 | kbd:[Alt+Backspace] | Брисање претходне речи командне линије (обрисани стринг се копира у интерни клипборд). | `+/input delete_previous_word+`
 | kbd:[Ctrl+w]        | Брисање претходне речи командне линије до празног простора (обрисани стринг се копира у интерни клипборд). | `+/input delete_previous_word_whitespace+`
 | kbd:[Ctrl+y]        | Налепљивање садржаја интерног клипборда. | `+/input clipboard_paste+`
@@ -1410,7 +1415,8 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Alt+Enter]     | Умеће прелом реда. | `+/input insert \n+`
 | kbd:[Alt+d]         | Брисање наредне речи у командној линији (обрисани стринг се копира у интерни клипборд). | `+/input delete_next_word+`
 | kbd:[Alt+k]         | Хвата тастер и умеће његов кôд (и комадну везану за њега, ако постоји таква пречица) у командну линију. | `+/input grab_key_command+`
-| kbd:[Alt+r]         | Брише комплетну командну линију. | `+/input delete_line+`
+| kbd:[Alt+r]         | Брисање текуће линије. | `+/input delete_line+`
+| kbd:[Alt+R]         | Брисање комплетне командне линије. | `+/input delete_input+`
 |===
 
 [[key_bindings_cmdline_color_codes]]
@@ -1581,8 +1587,9 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Alt+←]    | -              | Помера курсор једну површину у лево. | `+/cursor move area_left+`
 | kbd:[Alt+→]    | -              | Помера курсор једну површину у десно. | `+/cursor move area_right+`
 | kbd:[m]        | чет            | Цитирање поруке. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[l]        | чет            | Цитирање фокусиране линије. | `+hsignal:chat_quote_focused_line;/cursor stop+`
 | kbd:[q]        | чет            | Цитирање префикса + поруке. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | чет            | Quote time + prefix + message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[Q]        | чет            | Цитирање времена + префикса + поруке. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
 | kbd:[b]        | листа надимака | Забрањује надимак. | `+/window ${_window_number};/ban ${nick}+`
 | kbd:[k]        | листа надимака | Избацује надимак. | `+/window ${_window_number};/kick ${nick}+`
 | kbd:[K]        | листа надимака | Избацује и забрањује надимак. | `+/window ${_window_number};/kickban ${nick}+`
@@ -1758,7 +1765,7 @@ Fast Set додатак приказује листу опција у бафер
 [[fset_commands]]
 ==== Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=fset_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=fset_commands]
 
 [[fset_options]]
 ==== Опције
@@ -1775,7 +1782,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=fset_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=fset_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=fset_options]
 
 [[colors]]
 === Боје
@@ -1954,12 +1961,12 @@ charset: терминал: ISO-8859-15, интерно: UTF-8
 ==== Решавање проблема
 
 Ако имате било каквих проблема са скуповима карактера, молимо вас да погледате
-link:weechat_faq.sr.html#charset[WeeChat ЧПП / Скуп карактера ^↗^,window=_blank].
+link:weechat_faq.sr.html#charset[WeeChat ЧПП / Скуп карактера ^↗^^].
 
 [[charset_commands]]
 ==== Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=charset_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=charset_commands]
 
 [[charset_options]]
 ==== Опције
@@ -1978,7 +1985,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=charset_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=charset_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=charset_options]
 
 [[notify_levels]]
 === Нивои обавештавања
@@ -2256,7 +2263,7 @@ logger.file.mask
 врши се аутоматска ротација лог фајла.
 
 Ротирани лог фајлови могу да се компресују помоћу gzip или
-https://facebook.github.io/zstd/[zstd ^↗^,window=_blank].
+https://facebook.github.io/zstd/[zstd ^↗^^].
 
 [NOTE]
 Пошто компресија фајла може да потраје, она се обавља у позадини.
@@ -2294,7 +2301,7 @@ https://facebook.github.io/zstd/[zstd ^↗^,window=_blank].
 [[logger_commands]]
 ==== Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=logger_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=logger_commands]
 
 [[logger_options]]
 ==== Опције
@@ -2313,7 +2320,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=logger_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=logger_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=logger_options]
 
 [[mouse]]
 === Подршка за миша
@@ -2346,7 +2353,7 @@ include::includes/autogen_user_options.sr.adoc[tag=logger_options]
 
 [NOTE]
 Ако имате било какав проблем са мишем, молимо вас да погледате
-link:weechat_faq.sr.html#mouse[WeeChat ЧПП / Миш ^↗^,window=_blank].
+link:weechat_faq.sr.html#mouse[WeeChat ЧПП / Миш ^↗^^].
 
 [[mouse_bind_events]]
 ==== Везивање догађаја миша за команде
@@ -2499,7 +2506,7 @@ $ aspell config
 [[spell_commands]]
 ==== Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=spell_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=spell_commands]
 
 [[spell_options]]
 ==== Опције
@@ -2519,7 +2526,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=spell_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=spell_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=spell_options]
 
 [[bars]]
 === Траке
@@ -2884,12 +2891,12 @@ libera = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA59533A
 
 Листа подразумеваних алијаса:
 
-include::includes/autogen_user_default_aliases.sr.adoc[tag=default_aliases]
+include::{autogendir}/autogen_user_default_aliases.sr.adoc[tag=default_aliases]
 
 [[alias_commands]]
 ==== Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=alias_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=alias_commands]
 
 [[alias_options]]
 ==== Опције
@@ -2911,7 +2918,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=alias_commands]
 [[weechat_commands]]
 ==== WeeChat команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=weechat_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=weechat_commands]
 
 [[sec_options]]
 ==== Опције за обезбеђене податке
@@ -2927,7 +2934,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=weechat_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=sec_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=sec_options]
 
 [[weechat_options]]
 ==== WeeChat опције
@@ -2948,7 +2955,7 @@ include::includes/autogen_user_options.sr.adoc[tag=sec_options]
 | history    | /set weechat.history.*                    | Опције историје (команди и бафера).
 | proxy      | <<command_weechat_proxy,/proxy>>          +
                /set weechat.proxy.*                      | Прокси опције.
-| network    | /set weechat.network.*                    | Мрежне/SSL опције.
+| network    | /set weechat.network.*                    | Мрежне/TLS опције.
 | plugin     | /set weechat.plugin.*                     | Опције додатака.
 | signal     | /set weechat.signal.*                     | Опције сигнала.
 | bar        | <<command_weechat_bar,/bar>>              +
@@ -2964,7 +2971,7 @@ include::includes/autogen_user_options.sr.adoc[tag=sec_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=weechat_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=weechat_options]
 
 [[irc]]
 == IRC
@@ -2997,11 +3004,11 @@ $ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 Подразумевано није дефинисан ниједан сервер. Командом <<command_irc_server,/server>>
 можете додати произвољан број сервера.
 
-На пример, да бисте се повезали на https://libera.chat/[libera.chat ^↗^,window=_blank]
-са SSL (шифровани саобраћај):
+На пример, да бисте се повезали на https://libera.chat/[libera.chat ^↗^^]
+са TLS (шифровани саобраћај):
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 Програму WeeChat можете наложити да се приликом покретања аутоматски повеже са овим сервером:
@@ -3080,13 +3087,13 @@ irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"
 irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.ssl                   boolean  on
-irc.server.libera.ssl_cert              string   null -> ""
-irc.server.libera.ssl_dhkey_size        integer  null -> 2048
-irc.server.libera.ssl_fingerprint       string   null -> ""
-irc.server.libera.ssl_password          string   null -> ""
-irc.server.libera.ssl_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.ssl_verify            boolean  null -> on
+irc.server.libera.tls                   boolean  on
+irc.server.libera.tls_cert              string   null -> ""
+irc.server.libera.tls_dhkey_size        integer  null -> 2048
+irc.server.libera.tls_fingerprint       string   null -> ""
+irc.server.libera.tls_password          string   null -> ""
+irc.server.libera.tls_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
+irc.server.libera.tls_verify            boolean  null -> on
 irc.server.libera.usermode              string   null -> ""
 irc.server.libera.username              string   null -> "alice"
 ....
@@ -3105,12 +3112,12 @@ irc.server.libera.username              string   null -> "alice"
 /unset irc.server.libera.autoconnect
 ----
 
-[[irc_ssl_certificates]]
-==== SSL сертификати
+[[irc_tls_certificates]]
+==== TLS сертификати
 
-Када се са IRC серверима успоставља веза преко SSL, програм WeeChat подразумевано проверава да ли се вези потпуно верује.
+Када се са IRC серверима успоставља веза преко TLS, програм WeeChat подразумевано проверава да ли се вези потпуно верује.
 
-Неке опције се користе за контролу SSL везе:
+Неке опције се користе за контролу TLS везе:
 
 weechat.network.gnutls_ca_system::
     током покретања учитава подразумеване системске сертификате којима се верује
@@ -3118,17 +3125,17 @@ weechat.network.gnutls_ca_system::
 weechat.network.gnutls_ca_user::
     додатни фајл(ови) са ауторитетима сертификата
 
-irc.server.xxx.ssl_cert::
-    Фајл SSL сертификата који се користи за аутоматску идентификацију вашег надимка (на пример CertFP на oftc, погледајте испод)
+irc.server.xxx.tls_cert::
+    Фајл TLS сертификата који се користи за аутоматску идентификацију вашег надимка (на пример CertFP на oftc, погледајте испод)
 
-irc.server.xxx.ssl_dhkey_size::
+irc.server.xxx.tls_dhkey_size::
     величина кључа који се користи током Дифи-Хелман Размене Кључева (подразумевано је: 2048)
 
-irc.server.xxx.ssl_verify::
-    провера да се SSL вези потпуно верује (подразумевано је укључено)
+irc.server.xxx.tls_verify::
+    провера да се TLS вези потпуно верује (подразумевано је укључено)
 
 [NOTE]
-Опција „ssl_verify” је подразумевано укључена, тако да је верификација стриктна и може да не успе, чак и када је била OK у верзијама пре 0.3.1.
+Опција „tls_verify” је подразумевано укључена, тако да је верификација стриктна и може да не успе, чак и када је била OK у верзијама пре 0.3.1.
 
 [[irc_connect_oftc_with_certificate]]
 ===== Први пример: повезивање на oftc и провера сертификата
@@ -3136,8 +3143,8 @@ irc.server.xxx.ssl_verify::
 * Увоз сертификата у командном окружењу:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+$ mkdir -p ~/.config/weechat/tls
+$ wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 [NOTE]
@@ -3158,8 +3165,8 @@ $ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.cr
 * Креирајте сертификат у командном окружењу:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
+$ mkdir -p ~/.config/weechat/tls
+$ cd ~/.config/weechat/tls
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
@@ -3169,279 +3176,13 @@ $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick
 * У програму WeeChat, када је сервер „oftc” већ додат:
 
 ----
-/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
+/set irc.server.oftc.tls_cert "${weechat_config_dir}/tls/nick.pem"
 /connect oftc
 /msg nickserv cert add
 ----
 
 За више информација, молимо вас да погледате
-https://www.oftc.net/NickServ/CertFP/[ову страницу ^↗^,window=_blank].
-
-[[irc_ircv3_support]]
-==== IRCv3 подршка
-
-WeeChat подржава следећа https://ircv3.net/irc/[IRCv3 проширења ^↗^,window=_blank]:
-
-* <<irc_ircv3_account_notify,account-notify>>
-* <<irc_ircv3_account_tag,account-tag>>
-* <<irc_ircv3_away_notify,away-notify>>
-* <<irc_ircv3_cap_notify,cap-notify>>
-* <<irc_ircv3_chghost,chghost>>
-* <<irc_ircv3_extended_join,extended-join>>
-* <<irc_ircv3_invite_notify,invite-notify>>
-* <<irc_ircv3_message_tags,message-tags>>
-* <<irc_ircv3_monitor,monitor>>
-* <<irc_ircv3_multi_prefix,multi-prefix>>
-* <<irc_ircv3_sasl,SASL v3.2>>
-* <<irc_ircv3_server_time,server-time>>
-* <<irc_ircv3_setname,setname>>
-* <<irc_ircv3_typing,typing>>
-* <<irc_ircv3_userhost_in_names,userhost-in-names>>
-* <<irc_ircv3_whox,WHOX>>
-
-Подразумевно су укључене све могућности које подржавају и сервер и WeeChat (погледајте
-опцију <<option_irc.server_default.capabilities,irc.server_default.capabilities>>).
-
-Табеле са поређењем различитих IRC клијената, укључујући и WeeChat, налазе се на
-on https://ircv3.net/software/clients[овој страници ^↗^,window=_blank].
-
-[[irc_ircv3_account_notify]]
-===== account-notify
-
-Спецификација: https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље поруке када се корисници идентификују на сервер или
-када са сервера уклоне своју идентификацију. +
-WeeChat такве поруке приказује ако је опција
-<<option_irc.look.display_account_message,irc.look.display_account_message>>
-укључена (што је подразумевана вредност).
-
-Примери:
-
-....
--- alice се идентификовао као Alice01
-
--- alice је уклонио идентификацију
-....
-
-[[irc_ircv3_account_tag]]
-===== account-tag
-
-Спецификација: https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље налог као ознаку поруке у командама које шаље клијенту. +
-WeeChat парсира ову ознаку у чува је у поруци, али се она не користи нити приказује. Може да се
-користи у <<command_filter,/filter>> команди за филтрирање порука које се подударају са
-одређеним налозима.
-
-Пример примљене сирове IRC поруке:
-
-....
-@account=Alice01 :user@example.com PRIVMSG #test :Здраво!
-....
-
-Порука која се приказује у каналу:
-
-....
-<alice> Здраво!
-....
-
-Порука са ознакама:
-
-....
-<alice> Здраво! [irc_privmsg,irc_tag_account_Alice01,notify_message,prefix_nick_lightcyan,nick_alice,host_user@example.com,log1]
-....
-
-[[irc_ircv3_away_notify]]
-===== away-notify
-
-Спецификација: https://ircv3.net/specs/extensions/away-notify[away-notify ^↗^,window=_blank]
-
-Ово могућност оспособљава сервер да шаље обавештења о одсуству за кориснике на истом каналу
-на којем се и ви налазите.
-
-Када се за корисника промени статус одсутности (одсутан или ту је), то се употребом
-следећих опција осликава одређеном бојом у листи надимака:
-
-* <<option_irc.server_default.away_check,irc.server_default.away_check>>
-* <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
-* <<option_weechat.look.item_away_message,weechat.look.item_away_message>>
-
-[[irc_ircv3_cap_notify]]
-===== cap-notify
-
-Спецификација: https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand[cap-notify ^↗^,window=_blank]
-
-Ово могућност оспособљава сервер да објављује нове или уклоњене могућности сервера
-(посредством `CAP NEW` и `CAP DEL` команди).
-
-Примери:
-
-....
--- irc: могућност клијента, сада је доступно: sasl
-
--- irc: могућност клијента, уклоњено: sasl
-....
-
-[[irc_ircv3_chghost]]
-===== chghost
-
-Спецификација: https://ircv3.net/specs/extensions/chghost[chghost ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље поруке када корисници промене име или хост. +
-Када је опција <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
-укључена (што је подразумевана вредност), промене хоста се аутоматски скривају ако
-надимак није говорио неколико минута. +
-Боја поруке о промени хоста се контролише опцијом
-<<option_irc.color.message_chghost,irc.color.message_chghost>>.
-
-Пример:
-
-....
--- alice (user@example.com) је променио свој хост на test.com
-....
-
-[[irc_ircv3_extended_join]]
-===== extended-join
-
-Спецификација: https://ircv3.net/specs/extensions/extended-join[extended-join ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље налог и право име када корисници приступе
-каналима. +
-WeeChat приказује ове додатне информације у порукама приступа ако је опција
-<<option_irc.look.display_extended_join,irc.look.display_extended_join>>
-укључена (што је подразумевана вредност).
-
-Пример:
-
-....
---> john [John01] (John Doe) (~user@example.com) је приступио у #test
-....
-
-[[irc_ircv3_invite_notify]]
-===== invite-notify
-
-Спецификација: https://ircv3.net/specs/extensions/invite-notify[invite-notify ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље позивне поруке када се корисници позову на канале.
-
-Пример:
-
-....
--- alice је позвао bob на #test
-....
-
-[[irc_ircv3_message_tags]]
-===== message-tags
-
-Спецификација: https://ircv3.net/specs/extensions/message-tags[message-tags ^↗^,window=_blank]
-
-Ова могућност оспособљава додавање метаподатака у поруке. +
-Ове ознаке могу да се прикажу командом `/debug tags`.
-
-Она мора бити укључена да би се користила <<typing_notifications,обавештења о куцању>>.
-
-[[irc_ircv3_monitor]]
-===== monitor
-
-Спецификација: https://ircv3.net/specs/extensions/monitor[monitor ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље обавештења када клијенти оду
-ван мреже/повежу се на мрежу. +
-Ако је доступно, WeeChat аутоматски користи ово проширење када користи команду
-<<command_irc_notify,/notify>>.
-
-[[irc_ircv3_multi_prefix]]
-===== multi-prefix
-
-Спецификација: https://ircv3.net/specs/extensions/multi-prefix[multi-prefix ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље све корисничке режиме одједном у
-<<command_irc_names,/names>> и <<command_irc_whois,/whois>> одговорима. +
-
-////
-Пример: излаз команде `/names`:
-
-....
--- Надимци #test: [@%+alice bob +carol]
-....
-////
-
-[NOTE]
-За сада WeeChat не приказује све префиксе у излазу команде `/names`, чак и ако се
-пример и интерно сачувају исправно.
-
-Пример: излаз команде `/whois alice`:
-
-....
--- [alice] @%+#test
-....
-
-[[irc_ircv3_sasl]]
-===== SASL
-
-Спецификација: https://ircv3.net/specs/extensions/sasl-3.2[SASL 3.2 ^↗^,window=_blank]
-
-Погледајте посебно поглавље <<irc_sasl_authentication,SASL аутентификација>>.
-
-[[irc_ircv3_server_time]]
-===== server-time
-
-Спецификација: https://ircv3.net/specs/extensions/server-time[server-time ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље време за поруке као ознаку поруке. +
-Када се у поруци прими време, WeeChat то користи у приказу поруке (она тада
-може да се прикаже са датумом у прошлости).
-
-<<relay_irc_proxy,IRC прокси>> у Relay додатку подржава ову могућност, тако да
-би сваки IRC клијент Релеја требало да је укључи како би се приликом повезивања
-у дневнику пропуштених порука приказало реално време пристизања порука.
-
-[[irc_ircv3_setname]]
-===== setname
-
-Спецификација: https://ircv3.net/specs/extensions/setname[setname ^↗^,window=_blank]
-
-Ова могућност вам нуди опцију да промените своје реално име употребом
-<<command_irc_setname,/setname>> команде.
-
-[[irc_ircv3_typing]]
-===== typing
-
-Спецификација: https://ircv3.net/specs/client-tags/typing[typing ^↗^,window=_blank]
-
-Погледајте посебно поглавље <<typing_notifications,Обавештења о куцању>>.
-
-[[irc_ircv3_userhost_in_names]]
-===== userhost-in-names
-
-Спецификација: https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-names ^↗^,window=_blank]
-
-Ова могућност оспособљава сервер да шаље имена хостова у <<command_irc_names,/names>> одговорима. 
-
-[NOTE]
-WeeChat не приказује имена хостова у излазу команде `/names`.
-
-Пример сирових IRC порука примљених без ове могућности:
-
-....
-:irc.server 353 alice = #test :@alice bob +carol
-....
-
-Пример сирових IRC порука примљених са овом могућношћу:
-
-....
-:irc.server 353 alice = #test :@alice!user1@host1 bob!user2@host2 +carol!user3@host3
-....
-
-[[irc_ircv3_whox]]
-===== WHOX
-
-Спецификација: https://ircv3.net/specs/extensions/whox[WHOX ^↗^,window=_blank]
-
-Ова могућност вас оспособљава да у WHO одговору захтевате додатна поља
-(помоћу команде <<command_irc_who,/who>>). +
-WeeChat приказује све додатне информације које се приме у WHO излазу.
+https://www.oftc.net/NickServ/CertFP/[ову страницу ^↗^^].
 
 [[irc_sasl_authentication]]
 ==== SASL аутентификација
@@ -3453,7 +3194,7 @@ WeeChat приказује све додатне информације које
 * _scram-sha-256_: SCRAM са SHA-256 digest алгоритмом
 * _scram-sha-512_: SCRAM са SHA-512 digest алгоритмом
 * _ecdsa-nist256p-challenge_: изазов са јавним/приватним кључем
-* _external_: SSL сертификат са клијентске стране
+* _external_: TLS сертификат са клијентске стране
 
 Опције за сервере су следеће:
 
@@ -3540,7 +3281,7 @@ $ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem 
 [[irc_tor_sasl]]
 ==== Повезивање преко Tor и SASL
 
-Неки сервери подржавају и везе са https://www.torproject.org/[Tor ^↗^,window=_blank],
+Неки сервери подржавају и везе са https://www.torproject.org/[Tor ^↗^^],
 мрежом виртуелних тунела који омогућавају људима и групама да унапреде своју приватност и безбедност на Интернету.
 
 Најпре морате да инсталирате Tor. За Debian (и изведене из њега):
@@ -3580,6 +3321,351 @@ $ sudo apt-get install tor
 ----
 /connect irc-tor
 ----
+
+[[irc_ircv3_support]]
+=== IRCv3 подршка
+
+WeeChat подржава следећа https://ircv3.net/irc/[IRCv3 проширења ^↗^^]:
+
+* <<irc_ircv3_account_notify,account-notify>>
+* <<irc_ircv3_account_tag,account-tag>>
+* <<irc_ircv3_away_notify,away-notify>>
+* <<irc_ircv3_batch,batch>>
+* <<irc_ircv3_cap_notify,cap-notify>>
+* <<irc_ircv3_chghost,chghost>>
+* <<irc_ircv3_draft/multiline,draft/multiline>>
+* <<irc_ircv3_echo_message,echo-message>>
+* <<irc_ircv3_extended_join,extended-join>>
+* <<irc_ircv3_invite_notify,invite-notify>>
+* <<irc_ircv3_message_tags,message-tags>>
+* <<irc_ircv3_monitor,monitor>>
+* <<irc_ircv3_multi_prefix,multi-prefix>>
+* <<irc_ircv3_sasl,SASL v3.2>>
+* <<irc_ircv3_server_time,server-time>>
+* <<irc_ircv3_setname,setname>>
+* <<irc_ircv3_typing,typing>>
+* <<irc_ircv3_userhost_in_names,userhost-in-names>>
+* <<irc_ircv3_whox,WHOX>>
+
+Подразумевно су укључене све могућности које подржавају и сервер и WeeChat (погледајте
+опцију <<option_irc.server_default.capabilities,irc.server_default.capabilities>>).
+
+Табеле са поређењем различитих IRC клијената, укључујући и WeeChat, налазе се на
+on https://ircv3.net/software/clients[овој страници ^↗^^].
+
+[[irc_ircv3_account_notify]]
+==== account-notify
+
+Спецификација: https://ircv3.net/specs/extensions/account-notify[account-notify ^↗^^]
+
+Ова могућност оспособљава сервер да шаље поруке када се корисници идентификују на сервер или
+када са сервера уклоне своју идентификацију. +
+WeeChat такве поруке приказује ако је опција
+<<option_irc.look.display_account_message,irc.look.display_account_message>>
+укључена (што је подразумевана вредност).
+
+Примери:
+
+....
+-- alice се идентификовао као Alice01
+
+-- alice је уклонио идентификацију
+....
+
+[[irc_ircv3_account_tag]]
+==== account-tag
+
+Спецификација: https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^^]
+
+Ова могућност оспособљава сервер да шаље налог као ознаку поруке у командама које шаље клијенту. +
+WeeChat парсира ову ознаку у чува је у поруци, али се она не користи нити приказује. Може да се
+користи у <<command_filter,/filter>> команди за филтрирање порука које се подударају са
+одређеним налозима.
+
+Пример примљене сирове IRC поруке:
+
+....
+@account=Alice01 :user@example.com PRIVMSG #test :Здраво!
+....
+
+Порука која се приказује у каналу:
+
+....
+<alice> Здраво!
+....
+
+Порука са ознакама:
+
+....
+<alice> Здраво! [irc_privmsg,irc_tag_account_Alice01,notify_message,prefix_nick_lightcyan,nick_alice,host_user@example.com,log1]
+....
+
+[[irc_ircv3_away_notify]]
+==== away-notify
+
+Спецификација: https://ircv3.net/specs/extensions/away-notify[away-notify ^↗^^]
+
+Ово могућност оспособљава сервер да шаље обавештења о одсуству за кориснике на истом каналу
+на којем се и ви налазите.
+
+Када се за корисника промени статус одсутности (одсутан или ту је), то се употребом
+следећих опција осликава одређеном бојом у листи надимака:
+
+* <<option_irc.server_default.away_check,irc.server_default.away_check>>
+* <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
+* <<option_weechat.look.item_away_message,weechat.look.item_away_message>>
+
+[[irc_ircv3_batch]]
+==== batch
+
+Спецификација: https://ircv3.net/specs/extensions/batch[batch ^↗^^]
+
+Ова могућност дозвољава да сервер шаље докађаје у пакету (тј. да групише неколико
+порука које су у вези).
+
+WeeChat за сада само само чува поруке примљене у пакету и обарђује их као и обично касније,
+када се заврши пакет.
+
+[[irc_ircv3_cap_notify]]
+==== cap-notify
+
+Спецификација: https://ircv3.net/specs/extensions/capability-negotiation#the-cap-new-subcommand[cap-notify ^↗^^]
+
+Ово могућност оспособљава сервер да објављује нове или уклоњене могућности сервера
+(посредством `CAP NEW` и `CAP DEL` команди).
+
+Примери:
+
+....
+-- irc: могућност клијента, сада је доступно: sasl
+
+-- irc: могућност клијента, уклоњено: sasl
+....
+
+[[irc_ircv3_chghost]]
+==== chghost
+
+Спецификација: https://ircv3.net/specs/extensions/chghost[chghost ^↗^^]
+
+Ова могућност оспособљава сервер да шаље поруке када корисници промене име или хост. +
+Када је опција <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
+укључена (што је подразумевана вредност), промене хоста се аутоматски скривају ако
+надимак није говорио неколико минута. +
+Боја поруке о промени хоста се контролише опцијом
+<<option_irc.color.message_chghost,irc.color.message_chghost>>.
+
+Пример:
+
+....
+-- alice (user@example.com) је променио свој хост на test.com
+....
+
+[[irc_ircv3_draft_multiline]]
+==== draft/multiline
+
+Спецификација: https://ircv3.net/specs/extensions/multiline[multiline ^↗^^]
+
+Ова могућност дозвољава да клијент и сервер шаљу поруке у више линија када се користи
+<<irc_ircv3_batch,batch>> могућност, која такође мора да буде укључена.
+
+Постоје ограничења у броју бајтова или линија вишелинијске поруке која се наводе у
+могућности коју пошаље сервер, на пример:
+
+....
+CAP alice LS * :draft/multiline=max-bytes=4096,max-lines=24
+....
+
+Ово за вишелинијски пакетни садржај поставља ограничење на 4096 бајтова и 24 линије.
+
+Ако сервер не наведе ограничења, WeeChat користи следеће подразумеване вредности:
+
+* макс бајтова: 4096
+* макс линија: 24
+
+Вишелинијске могу да буду само стандардне поруке, као и оне које шаље команда
+<<command_irc_notice,/notice>>. +
+Ова могућност не утиче на ACTION CTCP поруке које се шаљу комадном <<command_irc_me,/me>>.
+То значи да се вишелинијске акције шаљу као више акција.
+
+[WARNING]
+Пошто је спецификација „draft”, може да се промени, па вишелинијска подршка у
+WeeChat може у сваком тренутку престати да функционише. +
+Могућност се аутоматски укључује ако је сервер подржава, а може да се искључи
+следећом командом:
+`/set irc.server_default.capabilities "*,!draft/multiline"`. +
+Када се могућност искључи, вишелинијска порука се шаље као више порука, као да
+су једна за другом послате серверу.
+
+Пример IRC порука које се шаљу за корисничку поруку у две линије (`ово је тест`
+/ `у две линије`), послато на канал #test:
+
+....
+BATCH +i8Je7M7gquddoyC9 draft/multiline #test
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :ово је тест
+@batch=i8Je7M7gquddoyC9 PRIVMSG #test :у две линије
+BATCH -i8Je7M7gquddoyC9
+....
+
+Приказ послатих порука у WeeChat:
+
+....
+19:01:45 alice | ово је тест
+               | у две линије
+....
+
+[[irc_ircv3_echo_message]]
+==== echo-message
+
+Спецификација: https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^^]
+
+Ова могућност форсира да сервер шаље поруке PRIVMSG, NOTICE и TAGMSG назад програму
+WeeChat.
+
+WeeChat приказује само примљену поруку, а не и послату, тако да се може приметити
+кањење између слања и приказа. Када се порука прикаже, то значи да је сервер исправно
+примио поруку, као и да је поруку проследио осталим клијентима који су повезани на сервер.
+
+[[irc_ircv3_extended_join]]
+==== extended-join
+
+Спецификација: https://ircv3.net/specs/extensions/extended-join[extended-join ^↗^^]
+
+Ова могућност оспособљава сервер да шаље налог и право име када корисници приступе
+каналима. +
+WeeChat приказује ове додатне информације у порукама приступа ако је опција
+<<option_irc.look.display_extended_join,irc.look.display_extended_join>>
+укључена (што је подразумевана вредност).
+
+Пример:
+
+....
+--> john [John01] (John Doe) (~user@example.com) је приступио у #test
+....
+
+[[irc_ircv3_invite_notify]]
+==== invite-notify
+
+Спецификација: https://ircv3.net/specs/extensions/invite-notify[invite-notify ^↗^^]
+
+Ова могућност оспособљава сервер да шаље позивне поруке када се корисници позову на канале.
+
+Пример:
+
+....
+-- alice је позвао bob на #test
+....
+
+[[irc_ircv3_message_tags]]
+==== message-tags
+
+Спецификација: https://ircv3.net/specs/extensions/message-tags[message-tags ^↗^^]
+
+Ова могућност оспособљава додавање метаподатака у поруке. +
+Ове ознаке могу да се прикажу командом `/debug tags`.
+
+Она мора бити укључена да би се користила <<typing_notifications,обавештења о куцању>>.
+
+[[irc_ircv3_monitor]]
+==== monitor
+
+Спецификација: https://ircv3.net/specs/extensions/monitor[monitor ^↗^^]
+
+Ова могућност оспособљава сервер да шаље обавештења када клијенти оду
+ван мреже/повежу се на мрежу. +
+Ако је доступно, WeeChat аутоматски користи ово проширење када користи команду
+<<command_irc_notify,/notify>>.
+
+[[irc_ircv3_multi_prefix]]
+==== multi-prefix
+
+Спецификација: https://ircv3.net/specs/extensions/multi-prefix[multi-prefix ^↗^^]
+
+Ова могућност оспособљава сервер да шаље све корисничке режиме одједном у
+<<command_irc_names,/names>> и <<command_irc_whois,/whois>> одговорима. +
+
+////
+Пример: излаз команде `/names`:
+
+....
+-- Надимци #test: [@%+alice bob +carol]
+....
+////
+
+[NOTE]
+За сада WeeChat не приказује све префиксе у излазу команде `/names`, чак и ако се
+пример и интерно сачувају исправно.
+
+Пример: излаз команде `/whois alice`:
+
+....
+-- [alice] @%+#test
+....
+
+[[irc_ircv3_sasl]]
+==== SASL
+
+Спецификација: https://ircv3.net/specs/extensions/sasl-3.2[SASL 3.2 ^↗^^]
+
+Погледајте посебно поглавље <<irc_sasl_authentication,SASL аутентификација>>.
+
+[[irc_ircv3_server_time]]
+==== server-time
+
+Спецификација: https://ircv3.net/specs/extensions/server-time[server-time ^↗^^]
+
+Ова могућност оспособљава сервер да шаље време за поруке као ознаку поруке. +
+Када се у поруци прими време, WeeChat то користи у приказу поруке (она тада
+може да се прикаже са датумом у прошлости).
+
+<<relay_irc_proxy,IRC прокси>> у Relay додатку подржава ову могућност, тако да
+би сваки IRC клијент Релеја требало да је укључи како би се приликом повезивања
+у дневнику пропуштених порука приказало реално време пристизања порука.
+
+[[irc_ircv3_setname]]
+==== setname
+
+Спецификација: https://ircv3.net/specs/extensions/setname[setname ^↗^^]
+
+Ова могућност вам нуди опцију да промените своје реално име употребом
+<<command_irc_setname,/setname>> команде.
+
+[[irc_ircv3_typing]]
+==== typing
+
+Спецификација: https://ircv3.net/specs/client-tags/typing[typing ^↗^^]
+
+Погледајте посебно поглавље <<typing_notifications,Обавештења о куцању>>.
+
+[[irc_ircv3_userhost_in_names]]
+==== userhost-in-names
+
+Спецификација: https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-names ^↗^^]
+
+Ова могућност оспособљава сервер да шаље имена хостова у <<command_irc_names,/names>> одговорима. 
+
+[NOTE]
+WeeChat не приказује имена хостова у излазу команде `/names`.
+
+Пример сирових IRC порука примљених без ове могућности:
+
+....
+:irc.server 353 alice = #test :@alice bob +carol
+....
+
+Пример сирових IRC порука примљених са овом могућношћу:
+
+....
+:irc.server 353 alice = #test :@alice!user1@host1 bob!user2@host2 +carol!user3@host3
+....
+
+[[irc_ircv3_whox]]
+==== WHOX
+
+Спецификација: https://ircv3.net/specs/extensions/whox[WHOX ^↗^^]
+
+Ова могућност вас оспособљава да у WHO одговору захтевате додатна поља
+(помоћу команде <<command_irc_who,/who>>). +
+WeeChat приказује све додатне информације које се приме у WHO излазу.
 
 [[irc_channels]]
 === Канали
@@ -3638,38 +3724,44 @@ $ sudo apt-get install tor
 /close
 ----
 
-[[irc_smart_filter_join_part_quit]]
-=== Паметни филтер за join/part/quit поруке
+[[irc_smart_filter]]
+=== Паметни филтер
 
-За филтрирање join/part/quit порука када надимак на каналу ништа није рекао у последњих X минута, можете употребити паметни филтер.
+Паметни филтер служи за филтрирање неких порука које током подесивог интервала долазе
+након што нико није ништа писао:
 
-Паметни филтер је подразумевано укључен, али морате да додате филтер који скрива линије у баферу, на пример:
+- join: корисник приступа каналу
+- part: корисник напушта канал
+- quit: корисник раскида везу са сервером
+- account: корисник мења свој налог
+- chghost: корисник мења име или хост
+- mode: промене режима на каналу
+- nick: корисник мења свој надимак
+- setname: корисник мења своје реално име
+
+Паметни филтер је подразумевано укључен, али морате да додате филтер како би се у
+баферима линије скривале, на пример:
 
 ----
 /filter add irc_smart * irc_smart_filter *
 ----
 
-Можете да креирате филтер само за један канал, или за канале који почињу на исто име (погледајте `/help filter`):
+Постоји могућност да се креира филтер само за један канал, или за више канала који
+почињу истим именом (погледајте `/help filter`):
 
 ----
-/filter add irc_smart_weechat irc.libera.#weechat irc_smart_filter *
-/filter add irc_smart_weechats irc.libera.#weechat* irc_smart_filter *
+/filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
 ----
 
-Следећим опцијама можете да сакријете само join или part/quit поруке:
+Можете да поставите веће кашњење (у минутима):
 
 ----
-/set irc.look.smart_filter_join on
-/set irc.look.smart_filter_quit on
+/set irc.look.smart_filter_delay 10
 ----
 
-Можете да поставите паузу (у минутима):
-
-----
-/set irc.look.smart_filter_delay 5
-----
-
-Ако надимак није ништа рекао у последњих 5 минута, његове join и/или part/quit поруке ће бити скривене на каналу.
+Ако нико није ништа написао последњих 10 минута, његове поруке као што су
+join/part/quit ће се подразумевано сакрити на каналу, па можете да употребите
+тастер kbd:[Alt+=] (укљ./искљ. филтере) да их видите.
 
 [[irc_ctcp_replies]]
 === CTCP одговори
@@ -3681,6 +3773,10 @@ CTCP одговори могу да се прилагоде, или неки CTC
 ----
 /set irc.ctcp.version "Користим WeeChat $version, одличан је!"
 ----
+
+[NOTE]
+Име CTCP мора бити исписано малим словима. То значи да опција _irc.ctcp.VERSION_
+не би радила.
 
 Ако желите да блокирате CTCP „VERSION” (да се не пошаље одговор на овај упит), онда поставите празан стринг:
 
@@ -3871,7 +3967,7 @@ weechat::
 [[irc_commands]]
 === Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=irc_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=irc_commands]
 
 [[irc_options]]
 === Опције
@@ -3894,7 +3990,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=irc_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=irc_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=irc_options]
 
 [[xfer]]
 == Xfer
@@ -3907,7 +4003,7 @@ Xfer додатак вам омогућава:
 [[xfer_commands]]
 === Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=xfer_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=xfer_commands]
 
 [[xfer_options]]
 === Опције
@@ -3925,7 +4021,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=xfer_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=xfer_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=xfer_options]
 
 [[typing_notifications]]
 == Обавештења о куцању
@@ -3936,7 +4032,7 @@ include::includes/autogen_user_options.sr.adoc[tag=xfer_options]
 Користи га IRC додатак на баферима канала и на приватним баферима када је укључена
 „message-tags” могућност (што можете да проверите командом <<command_irc_cap,/cap>>). +
 Под хаубом, користи се клијентска ознака о куцању, у складу са
-https://ircv3.net/specs/client-tags/typing[овом спецификацијом ^↗^,window=_blank].
+https://ircv3.net/specs/client-tags/typing[овом спецификацијом ^↗^^].
 
 [[typing_activation]]
 === Активација
@@ -4018,7 +4114,7 @@ Typing додатак хвата следеће сигнале:
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=typing_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=typing_options]
 
 [[relay]]
 == Релеј
@@ -4027,7 +4123,7 @@ include::includes/autogen_user_options.sr.adoc[tag=typing_options]
 
 * _irc_: IRC прокси: користи се за дељење веза са IRC серверима са једним или више других клијената
 * _weechat_: протокол који користе удаљени интерфејси да прикажу и омогуће интеракцију са програмом
-  WeeChat, погледајте https://weechat.org/about/interfaces/[ову страницу ^↗^,window=_blank].
+  WeeChat, погледајте https://weechat.org/about/interfaces/[ову страницу ^↗^^].
 
 [[relay_password]]
 === Лозинка
@@ -4051,11 +4147,11 @@ TOTP (Time-based One-Time Password) може уз лозинку да се ко�
 једнократне лозинке могу да се генеришу апликацијама, на пример:
 
 * FreeOTP:
-  https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android ^↗^,window=_blank],
-  https://apps.apple.com/fr/app/freeotp-authenticator/id872559395[iOS ^↗^,window=_blank]
-  (https://freeotp.github.io/[вебсајт ^↗^,window=_blank])
-* Google Authenticator: https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android ^↗^,window=_blank],
-  https://apps.apple.com/fr/app/google-authenticator/id388497605[iOS ^↗^,window=_blank]
+  https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android ^↗^^],
+  https://apps.apple.com/fr/app/freeotp-authenticator/id872559395[iOS ^↗^^]
+  (https://freeotp.github.io/[вебсајт ^↗^^])
+* Google Authenticator: https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android ^↗^^],
+  https://apps.apple.com/fr/app/google-authenticator/id388497605[iOS ^↗^^]
 
 TOTP тајна мора да се постави у програму WeeChat и у апликацији која се користи за генерисање једнократних лозинки.
 
@@ -4066,18 +4162,18 @@ TOTP тајна мора да се постави у програму WeeChat и
 /set relay.network.totp_secret "${sec.data.relay_totp}"
 ----
 
-[[relay_ssl]]
-=== SSL
+[[relay_tls]]
+=== TLS
 
-SSL можете да користите креирањем сертификата и приватног кључа и употребом префикса „ssl.” у имену протокола.
+TLS можете да користите креирањем сертификата и приватног кључа и употребом префикса „tls.” у имену протокола.
 
-Подразумевана путања до сертификата/кључа је дефинисана опцијом <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>.
+Подразумевана путања до сертификата/кључа је дефинисана опцијом <<option_relay.network.tls_cert_key,relay.network.tls_cert_key>>.
 
 Сертификат и приватни кључ можете да креирате следећим командама:
 
 ----
-$ mkdir -p ~/.config/weechat/ssl
-$ cd ~/.config/weechat/ssl
+$ mkdir -p ~/.config/weechat/tls
+$ cd ~/.config/weechat/tls
 $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----
 
@@ -4087,7 +4183,7 @@ $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out rel
 Ако се програм WeeChat већ извршава, сертификат и приватни кључ можете поново да учитате командом:
 
 ----
-/relay sslcertkey
+/relay tlscertkey
 ----
 
 [[relay_irc_proxy]]
@@ -4103,13 +4199,13 @@ $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out rel
 PASS сервер:лозинка
 ----
 
-Пример: IRC прокси са SSL за било који сервер (клијент ће изабрати):
+Пример: IRC прокси са TLS за било који сервер (клијент ће изабрати):
 
 ----
-/relay add ssl.irc 8000
+/relay add tls.irc 8000
 ----
 
-Пример: IRC прокси без SSL само за сервер „libera”:
+Пример: IRC прокси без TLS само за сервер „libera”:
 
 ----
 /relay add irc.libera 8000
@@ -4130,7 +4226,7 @@ PASS сервер:лозинка
 Релеј додатак може да шаље податке удаљеном интерфејсу користећи WeeChat протокол.
 
 Можете да се повежете са удаљеним интерфејсом, погледајте
-https://weechat.org/about/interfaces/[ову страницу ^↗^,window=_blank].
+https://weechat.org/about/interfaces/[ову страницу ^↗^^].
 
 [IMPORTANT]
 Сам програм WeeChat НЕ може да се повеже на други програм WeeChat преко овог протокола.
@@ -4146,7 +4242,7 @@ https://weechat.org/about/interfaces/[ову страницу ^↗^,window=_bla
 [[relay_websocket]]
 === ВебСокет
 
-Релеј додатак подржава ВебСокет протокол (https://datatracker.ietf.org/doc/html/rfc6455[RFC 6455 ^↗^,window=_blank])
+Релеј додатак подржава ВебСокет протокол (https://datatracker.ietf.org/doc/html/rfc6455[RFC 6455 ^↗^^])
 за све протоколе.
 
 ВебСокет руковање се аутоматски детектује и ако се у руковању пронађу одговарајућа заглавља и ако је порекло дозвољено (погледајте опцију <<option_relay.network.websocket_allowed_origins,relay.network.websocket_allowed_origins>>), сокет постаје спреман за WebSocket.
@@ -4182,7 +4278,7 @@ $ ssh -L 9000:.weechat/relay_socket корисник@имехоста
 [[relay_commands]]
 === Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=relay_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=relay_commands]
 
 [[relay_options]]
 === Опције
@@ -4202,7 +4298,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=relay_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=relay_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=relay_options]
 
 [[external_commands]]
 == Спољне команде
@@ -4212,7 +4308,7 @@ include::includes/autogen_user_options.sr.adoc[tag=relay_options]
 [[exec_commands]]
 === Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=exec_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=exec_commands]
 
 [[exec_options]]
 === Опције
@@ -4228,7 +4324,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=exec_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=exec_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=exec_options]
 
 [[fifo_pipe]]
 == FIFO пајп
@@ -4244,6 +4340,15 @@ FIFO пајп се налази у WeeChat директоријуму за вр�
   *овде иде текст или команда
 ....
 
+// TRANSLATION MISSING
+Backslashes can be interpreted with this format, where `*` is replaced by `\`,
+allowing for example to send multiline messages:
+
+....
+  plugin.buffer \text or command here
+  \text or command here
+....
+
 Неки примери:
 
 * Измена надимка на IRC серверу libera на „newnick”:
@@ -4256,6 +4361,14 @@ $ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_1
 
 ----
 $ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
+----
+
+// TRANSLATION MISSING
+* Send a multiline message on IRC #test channel, if capability "draft/multiline"
+  is enabled on the ergo server:
+
+----
+$ echo 'irc.ergo.#test \hello\n...on two lines!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Слање поруке у текући бафер:
@@ -4273,7 +4386,7 @@ $ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/wee
 [[fifo_commands]]
 === Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=fifo_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=fifo_commands]
 
 [[fifo_options]]
 === Опције
@@ -4288,7 +4401,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=fifo_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=fifo_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=fifo_options]
 
 [[trigger]]
 == Окидач
@@ -4296,7 +4409,7 @@ include::includes/autogen_user_options.sr.adoc[tag=fifo_options]
 Окидач је Швајцарски војни нож програма WeeChat: може да ухвати многе ствари (сигнал, модификатор, испис, итд.), измени садржај података, и изврши једну или више команди. Ако желите да спречите покретање окидача у неким околностима, можете употребити услов.
 
 За коришћење окидача је неопходно познавање начина на који функционишу сигнали, модификатори, ... Стога је пожељно да прочитате
-link:weechat_plugin_api.sr.html#hooks[WeeChat референтни приручник API додатака / Куке ^↗^,window=_blank].
+link:weechat_plugin_api.sr.html#hooks[WeeChat референтни приручник API додатака / Куке ^↗^^].
 
 [[trigger_default]]
 === Подразумевани окидачи
@@ -4348,7 +4461,7 @@ link:weechat_plugin_api.sr.html#hooks[WeeChat референтни прируч�
 | hook | `+signal+`, `+hsignal+`, `+modifier+`, `+line+`, `+print+`, `+command+`,
   `+command_run+`, `+timer+`, `+config+`, `+focus+`, `+info+`, `+info_hashtable+`
 | Кука која се користи у окидачу. За више информација, погледајте
-  link:weechat_plugin_api.sr.html#hooks[WeeChat референтни приручник API додатака / Куке ^↗^,window=_blank].
+  link:weechat_plugin_api.sr.html#hooks[WeeChat референтни приручник API додатака / Куке ^↗^^].
 
 | arguments | стринг
 | Аргументи за куку, зависе од врсте куке која се користи.
@@ -4415,14 +4528,14 @@ trigger.trigger.beep.post_action = none
 `+*,irc_in_privmsg+` +
 `+*,irc_in_privmsg;*,irc_in_notice+` +
 `+signal_sigwinch+` |
-link:weechat_plugin_api.sr.html#_hook_signal[hook_signal ^↗^,window=_blank]
+link:weechat_plugin_api.sr.html#_hook_signal[hook_signal ^↗^^]
 
 | hsignal
 | 1. име сигнала (дозвољава се приоритет) (обавезан) +
   2. име сигнала (дозвољава се приоритет) +
   3. ... |
 `+nicklist_nick_added+` |
-link:weechat_plugin_api.sr.html#_hook_hsignal[hook_hsignal ^↗^,window=_blank]
+link:weechat_plugin_api.sr.html#_hook_hsignal[hook_hsignal ^↗^^]
 
 | modifier
 | 1. име модификатора (дозвољава се приоритет) (обавезан) +
@@ -4430,7 +4543,7 @@ link:weechat_plugin_api.sr.html#_hook_hsignal[hook_hsignal ^↗^,window=_blank]
   3. ... |
 `+weechat_print+` +
 `+5000\|input_text_display;5000\|history_add+` |
-link:weechat_plugin_api.sr.html#_hook_modifier[hook_modifier ^↗^,window=_blank]
+link:weechat_plugin_api.sr.html#_hook_modifier[hook_modifier ^↗^^]
 
 | line
 | 1. тип бафера +
@@ -4441,7 +4554,7 @@ link:weechat_plugin_api.sr.html#_hook_modifier[hook_modifier ^↗^,window=_blan
 `+*;irc.libera.*+` +
 `+*;irc.libera.#weechat+` +
 `+formatted;irc.libera.#weechat;irc_notice+` |
-link:weechat_plugin_api.sr.html#_hook_line[hook_line ^↗^,window=_blank]
+link:weechat_plugin_api.sr.html#_hook_line[hook_line ^↗^^]
 
 | print
 | 1. име бафера +
@@ -4452,7 +4565,7 @@ link:weechat_plugin_api.sr.html#_hook_line[hook_line ^↗^,window=_blank]
 `+irc.libera.#weechat+` +
 `+irc.libera.#weechat;irc_notice+` +
 `+*;;;1+` |
-link:weechat_plugin_api.sr.html#_hook_print[hook_print ^↗^,window=_blank]
+link:weechat_plugin_api.sr.html#_hook_print[hook_print ^↗^^]
 
 | command
 | 1. име команде (дозвољава се приоритет) (обавезан) +
@@ -4463,14 +4576,14 @@ link:weechat_plugin_api.sr.html#_hook_print[hook_print ^↗^,window=_blank]
 `+test+` +
 `+5000\|test+` +
 `+test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2+` |
-link:weechat_plugin_api.sr.html#_hook_command[hook_command ^↗^,window=_blank]
+link:weechat_plugin_api.sr.html#_hook_command[hook_command ^↗^^]
 
 | command_run
 | 1. команда (дозвољава се приоритет) (обавезан) +
   2. команда (дозвољава се приоритет) +
   3. ... |
 `+/cmd arguments+` |
-link:weechat_plugin_api.sr.html#_hook_command_run[hook_command_run ^↗^,window=_blank]
+link:weechat_plugin_api.sr.html#_hook_command_run[hook_command_run ^↗^^]
 
 | timer
 | 1. интервал у милисекундама (обавезан) +
@@ -4478,35 +4591,35 @@ link:weechat_plugin_api.sr.html#_hook_command_run[hook_command_run ^↗^,window
   3. макс број позива (подразумевано: 0, што значи „нема краја”) |
 `+3600000+` +
 `+60000;0;5+` |
-link:weechat_plugin_api.sr.html#_hook_timer[hook_timer ^↗^,window=_blank]
+link:weechat_plugin_api.sr.html#_hook_timer[hook_timer ^↗^^]
 
 | config
 | 1. име опције (дозвољава се приоритет) (обавезан) +
   2. име опције (дозвољава се приоритет) +
   3. ... |
 `+weechat.look.*+` |
-link:weechat_plugin_api.sr.html#_hook_config[hook_config ^↗^,window=_blank]
+link:weechat_plugin_api.sr.html#_hook_config[hook_config ^↗^^]
 
 | focus
 | 1. име површине (дозвољава се приоритет) (обавезан) +
   2. име површине (дозвољава се приоритет) +
   3. ... |
 `+buffer_nicklist+` |
-link:weechat_plugin_api.sr.html#_hook_focus[hook_focus ^↗^,window=_blank]
+link:weechat_plugin_api.sr.html#_hook_focus[hook_focus ^↗^^]
 
 | info
 | 1. инфо име (дозвољава се приоритет) (обавезан) +
   2. инфо име (дозвољава се приоритет) +
   3. ... |
 `+my_info+` |
-link:weechat_plugin_api.sr.html#_hook_info[hook_info ^↗^,window=_blank]
+link:weechat_plugin_api.sr.html#_hook_info[hook_info ^↗^^]
 
 | info_hashtable
 | 1. инфо име (дозвољава се приоритет) (обавезан) +
   2. инфо име (дозвољава се приоритет) +
   3. ...
 | `+my_info+`
-| link:weechat_plugin_api.sr.html#_hook_info_hashtable[hook_info_hashtable ^↗^,window=_blank]
+| link:weechat_plugin_api.sr.html#_hook_info_hashtable[hook_info_hashtable ^↗^^]
 |===
 
 [[trigger_conditions]]
@@ -4815,12 +4928,7 @@ ${buffer[${tg_signal_data}].full_name}
 |===
 
 [NOTE]
-====
-^(1)^ Специјални карактери се замењују у IRC ознаци:
-
-* кључ: `_` -> `-` и `,` -> `;`
-* вредност: `,` -> `;`
-====
+^(1)^ У IRC ознаци (кључу и вредности), запете се замењују тачка запетама
 
 [[trigger_data_print]]
 ==== Print
@@ -4857,12 +4965,7 @@ ${buffer[${tg_signal_data}].full_name}
 |===
 
 [NOTE]
-====
-^(1)^ Специјални карактери се замењују у IRC ознаци:
-
-* кључ: `_` -> `-` и `,` -> `;`
-* вредност: `,` -> `;`
-====
+^(1)^ У IRC ознаци (кључу и вредности), запете се замењују тачка запетама
 
 [[trigger_data_command]]
 ==== Команда
@@ -5016,7 +5119,7 @@ URL адресе се приказују зеленом бојом:
 [[trigger_commands]]
 === Команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=trigger_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=trigger_commands]
 
 [[trigger_options]]
 === Опције
@@ -5035,7 +5138,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=trigger_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=trigger_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=trigger_options]
 
 [[extending_weechat]]
 == Проширивање програма WeeChat
@@ -5099,14 +5202,14 @@ include::includes/autogen_user_options.sr.adoc[tag=trigger_options]
 | xfer       | Пренос фајлова и директни разговор.
 |===
 
-За више информација о развоју додатака или скрипти (помоћу API), молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat референтно упутство за API додатака ^↗^,window=_blank] или link:weechat_scripting.sr.html[WeeChat водич за скриптовање ^↗^,window=_blank].
+За више информација о развоју додатака или скрипти (помоћу API), молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat референтно упутство за API додатака ^↗^^] или link:weechat_scripting.sr.html[WeeChat водич за скриптовање ^↗^^].
 
 [[scripts]]
 === Скрипте
 
 Програм WeeChat нуди 8 додатака за скриптовање: Python, Perl, Ruby, Lua, Tcl, Guile (scheme), JavaScript и PHP. Ови додаци могу да учитају, изврше и уклоне из меморије скрипте за ове језике.
 
-За више информација о функцијама које постоје у API, молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat водич за скриптовање ^↗^,window=_blank].
+За више информација о функцијама које постоје у API, молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat водич за скриптовање ^↗^^].
 
 [[script_manager]]
 ==== Менаџер скрипти
@@ -5114,7 +5217,7 @@ include::includes/autogen_user_options.sr.adoc[tag=trigger_options]
 Менаџер скрипти (команда <<command_script_script,/script>>) се користи за
 учитавање/уклањање из меморије скрипти на било ком језику, и инсталирање/уклањање скрипти са WeeChat
 репозиторијум скрипти, а које можете да видите на
-https://weechat.org/scripts/[овој страници ^↗^,window=_blank].
+https://weechat.org/scripts/[овој страници ^↗^^].
 
 Из разлога приватности, преузимање скрипти је подразумевано искључено. +
 Ако желите да га укључите, откуцајте следећу команду:
@@ -5165,7 +5268,7 @@ https://weechat.org/scripts/[овој страници ^↗^,window=_blank].
 [[script_commands]]
 ===== Script команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=script_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=script_commands]
 
 [[script_options]]
 ===== Script опције
@@ -5182,7 +5285,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=script_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=script_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=script_options]
 
 [[scripting_plugins]]
 ==== Скриптинг додаци
@@ -5190,42 +5293,37 @@ include::includes/autogen_user_options.sr.adoc[tag=script_options]
 [[python_commands]]
 ===== Python команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=python_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=python_commands]
 
 [[perl_commands]]
 ===== Perl команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=perl_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=perl_commands]
 
 [[ruby_commands]]
 ===== Ruby команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=ruby_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=ruby_commands]
 
 [[lua_commands]]
 ===== Lua команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=lua_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=lua_commands]
 
 [[tcl_commands]]
 ===== Tcl команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=tcl_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=tcl_commands]
 
 [[guile_commands]]
 ===== Guile команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=guile_commands]
-
-[[javascript_commands]]
-===== JavaScript команде
-
-include::includes/autogen_user_commands.sr.adoc[tag=javascript_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=guile_commands]
 
 [[php_commands]]
 ===== PHP команде
 
-include::includes/autogen_user_commands.sr.adoc[tag=php_commands]
+include::{autogendir}/autogen_user_commands.sr.adoc[tag=php_commands]
 
 [[python_options]]
 ===== Python опције
@@ -5240,7 +5338,7 @@ include::includes/autogen_user_commands.sr.adoc[tag=php_commands]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=python_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=python_options]
 
 [[perl_options]]
 ===== Perl опције
@@ -5255,7 +5353,7 @@ include::includes/autogen_user_options.sr.adoc[tag=python_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=perl_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=perl_options]
 
 [[ruby_options]]
 ===== Ruby опције
@@ -5270,7 +5368,7 @@ include::includes/autogen_user_options.sr.adoc[tag=perl_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=ruby_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=ruby_options]
 
 [[lua_options]]
 ===== Lua опције
@@ -5285,7 +5383,7 @@ include::includes/autogen_user_options.sr.adoc[tag=ruby_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=lua_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=lua_options]
 
 [[tcl_options]]
 ===== Tcl опције
@@ -5300,7 +5398,7 @@ include::includes/autogen_user_options.sr.adoc[tag=lua_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=tcl_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=tcl_options]
 
 [[guile_options]]
 ===== Guile опције
@@ -5315,22 +5413,7 @@ include::includes/autogen_user_options.sr.adoc[tag=tcl_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=guile_options]
-
-[[javascript_options]]
-===== Javascript опције
-
-Одељци у фајлу _javascript.conf_:
-
-[width="100%", cols="3m,6m,16", options="header"]
-|===
-| Одељак  | Команда за контролу    | Опис
-| look    | /set javascript.look.* | Изглед и осећај.
-|===
-
-Опције:
-
-include::includes/autogen_user_options.sr.adoc[tag=javascript_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=guile_options]
 
 [[php_options]]
 ===== PHP опције
@@ -5345,7 +5428,7 @@ include::includes/autogen_user_options.sr.adoc[tag=javascript_options]
 
 Опције:
 
-include::includes/autogen_user_options.sr.adoc[tag=php_options]
+include::{autogendir}/autogen_user_options.sr.adoc[tag=php_options]
 
 [[support]]
 == Подршка
@@ -5362,4 +5445,4 @@ include::includes/autogen_user_options.sr.adoc[tag=php_options]
 ** _#weechat-fi_ (фински)
 
 За сорале начине подршке, погледајте
-https://weechat.org/about/support/[ову страницу ^↗^,window=_blank].
+https://weechat.org/about/support/[ову страницу ^↗^^].

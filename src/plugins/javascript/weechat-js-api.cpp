@@ -835,6 +835,63 @@ API_FUNC(config_new)
     API_RETURN_STRING(result);
 }
 
+struct t_hashtable *
+weechat_js_api_config_update_cb (const void *pointer, void *data,
+                                 struct t_config_file *config_file,
+                                 int version_read,
+                                 struct t_hashtable *data_read)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    struct t_hashtable *ret_hashtable;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (char *)API_PTR2STR(config_file);
+        func_argv[2] = &version_read;
+        func_argv[3] = data_read;
+
+        ret_hashtable = (struct t_hashtable *)weechat_js_exec (
+            script,
+            WEECHAT_SCRIPT_EXEC_HASHTABLE,
+            ptr_function,
+            "ssih", func_argv);
+
+        return ret_hashtable;
+    }
+
+    return NULL;
+}
+
+API_FUNC(config_set_version)
+{
+    int rc, version;
+
+    API_INIT_FUNC(1, "config_set_version", "siss", API_RETURN_INT(0));
+
+    v8::String::Utf8Value config_file(args[0]);
+    version = args[1]->IntegerValue();
+    v8::String::Utf8Value function(args[2]);
+    v8::String::Utf8Value data(args[3]);
+
+    rc = plugin_script_api_config_set_version (
+        weechat_js_plugin,
+        js_current_script,
+        (struct t_config_file *)API_STR2PTR(*config_file),
+        version,
+        &weechat_js_api_config_update_cb,
+        *function,
+        *data);
+
+    API_RETURN_INT(rc);
+}
+
 int
 weechat_js_api_config_read_cb (const void *pointer, void *data,
                                struct t_config_file *config_file,
@@ -5092,6 +5149,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(list_remove_all);
     API_DEF_FUNC(list_free);
     API_DEF_FUNC(config_new);
+    API_DEF_FUNC(config_set_version);
     API_DEF_FUNC(config_new_section);
     API_DEF_FUNC(config_search_section);
     API_DEF_FUNC(config_new_option);

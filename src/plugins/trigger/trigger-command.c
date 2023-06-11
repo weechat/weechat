@@ -71,10 +71,8 @@ trigger_command_display_trigger_internal (const char *name,
     {
         weechat_printf_date_tags (
             NULL, 0, "no_trigger",
-            "  %s%s%s: %s%s%s%s%s%s%s",
-            (enabled) ?
-            weechat_color (weechat_config_string (trigger_config_color_trigger)) :
-            weechat_color (weechat_config_string (trigger_config_color_trigger_disabled)),
+            _("  %s%s%s: %s%s%s%s%s%s%s"),
+            weechat_color ((enabled) ? "chat_status_enabled" : "chat_status_disabled"),
             name,
             weechat_color ("reset"),
             hook,
@@ -216,10 +214,8 @@ trigger_command_display_trigger_internal (const char *name,
         }
         weechat_printf_date_tags (
             NULL, 0, "no_trigger",
-            "  %s%s%s: %s%s%s%s%s%s%s%s%s%s%s%s%s",
-            (enabled) ?
-            weechat_color (weechat_config_string (trigger_config_color_trigger)) :
-            weechat_color (weechat_config_string (trigger_config_color_trigger_disabled)),
+            _("  %s%s%s: %s%s%s%s%s%s%s%s%s%s%s%s%s"),
+            weechat_color ((enabled) ? "chat_status_enabled": "chat_status_disabled"),
             name,
             weechat_color ("reset"),
             hook,
@@ -1318,8 +1314,9 @@ trigger_command_init ()
         " || input|output|recreate %(trigger_names)"
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
         " || rename|copy %(trigger_names) %(trigger_names)"
-        " || enable|disable|toggle|restart|del %(trigger_names)|-all "
-        "%(trigger_names)|%*"
+        " || enable %(trigger_names_disabled)|-all %(trigger_names_disabled)|%*"
+        " || disable %(trigger_names_enabled)|-all %(trigger_names_enabled)|%*"
+        " || toggle|restart|del %(trigger_names)|-all %(trigger_names)|%*"
         " || show %(trigger_names)"
         " || restore %(trigger_names_default)|%*"
         " || default"

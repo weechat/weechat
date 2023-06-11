@@ -1231,6 +1231,19 @@ weechat_guile_port_write (SCM port, const void *data, size_t size)
 #endif
 
 /*
+ * Callback called by scm_with_guile().
+ */
+
+void *
+weechat_guile_init (void *data)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    return NULL;
+}
+
+/*
  * Initializes guile plugin.
  */
 
@@ -1238,6 +1251,10 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     char str_version[128];
+
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
 
     weechat_guile_plugin = plugin;
 
@@ -1272,7 +1289,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     scm_install_gmp_memory_functions = 0;
 #endif /* defined(HAVE_GUILE_GMP_MEMORY_FUNCTIONS) && (SCM_MAJOR_VERSION < 3 || (SCM_MAJOR_VERSION == 3 && SCM_MINOR_VERSION == 0 && SCM_MICRO_VERSION < 8)) */
 
-    scm_init_guile ();
+    scm_with_guile (&weechat_guile_init, NULL);
 
     guile_module_weechat = scm_c_define_module ("weechat",
                                                 &weechat_guile_api_module_init,
@@ -1296,7 +1313,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     guile_data.unload_all = &weechat_guile_unload_all;
 
     guile_quiet = 1;
-    plugin_script_init (weechat_guile_plugin, argc, argv, &guile_data);
+    plugin_script_init (weechat_guile_plugin, &guile_data);
     guile_quiet = 0;
 
     plugin_script_display_short_list (weechat_guile_plugin,

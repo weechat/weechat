@@ -29,25 +29,30 @@
 
 
 struct t_config_file *trigger_config_file = NULL;
+
+/* sections */
+
+struct t_config_section *trigger_config_section_look = NULL;
+struct t_config_section *trigger_config_section_color = NULL;
 struct t_config_section *trigger_config_section_trigger = NULL;
 
 /* trigger config, look section */
 
-struct t_config_option *trigger_config_look_enabled;
-struct t_config_option *trigger_config_look_monitor_strip_colors;
+struct t_config_option *trigger_config_look_enabled = NULL;
+struct t_config_option *trigger_config_look_monitor_strip_colors = NULL;
 
 /* trigger config, color section */
 
-struct t_config_option *trigger_config_color_flag_command;
-struct t_config_option *trigger_config_color_flag_conditions;
-struct t_config_option *trigger_config_color_flag_regex;
-struct t_config_option *trigger_config_color_flag_return_code;
-struct t_config_option *trigger_config_color_flag_post_action;
-struct t_config_option *trigger_config_color_identifier;
-struct t_config_option *trigger_config_color_regex;
-struct t_config_option *trigger_config_color_replace;
-struct t_config_option *trigger_config_color_trigger;
-struct t_config_option *trigger_config_color_trigger_disabled;
+struct t_config_option *trigger_config_color_flag_command = NULL;
+struct t_config_option *trigger_config_color_flag_conditions = NULL;
+struct t_config_option *trigger_config_color_flag_regex = NULL;
+struct t_config_option *trigger_config_color_flag_return_code = NULL;
+struct t_config_option *trigger_config_color_flag_post_action = NULL;
+struct t_config_option *trigger_config_color_identifier = NULL;
+struct t_config_option *trigger_config_color_regex = NULL;
+struct t_config_option *trigger_config_color_replace = NULL;
+struct t_config_option *trigger_config_color_trigger = NULL;
+struct t_config_option *trigger_config_color_trigger_disabled = NULL;
 
 char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
 {
@@ -94,21 +99,21 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "5000|input_text_display;5000|history_add;5000|irc_command_auth",
       "",
       "s==^("
-      "(/(msg|m|quote) +(-server +[^ ]+ +)?nickserv +("
+      "(/(msg|m|quote) +(-server +[^ \\n]+ +)?nickserv +("
       "id|"
       "identify|"
       "set +password|"
-      "ghost +[^ ]+|"
-      "release +[^ ]+|"
-      "regain +[^ ]+|"
-      "recover +[^ ]+|"
-      "setpass +[^ ]+"
+      "ghost +[^ \\n]+|"
+      "release +[^ \\n]+|"
+      "regain +[^ \\n]+|"
+      "recover +[^ \\n]+|"
+      "setpass +[^ \\n]+"
       ") +)|"
-      "/oper +[^ ]+ +|"
+      "/oper +[^ \\n]+ +|"
       "/quote +pass +|"
-      "/secure +(passphrase|decrypt|set +[^ ]+) +"
+      "/secure +(passphrase|decrypt|set +[^ \\n]+) +"
       ")"
-      "(.*)"
+      "([^\\n]*)"
       "==${re:1}${hide:*,${re:+}}",
       "",
       "",
@@ -121,7 +126,8 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|input_text_display;5000|history_add;5000|irc_command_auth",
       "",
-      "s==^(/(msg|m|quote) +(-server +[^ ]+ +)?nickserv +register +)([^ ]+)(.*)"
+      "s==^(/(msg|m|quote) +(-server +[^ \\n]+ +)?nickserv +register +)"
+      "([^ \\n]+)([^\\n]*)"
       "==${re:1}${hide:*,${re:4}}${re:5}",
       "",
       "",
@@ -167,7 +173,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|input_text_display;5000|history_add",
       "",
-      "s==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)"
+      "s==^(/(server|connect) [^\\n]*-(sasl_)?password=)([^ \\n]+)([^\\n]*)"
       "==${re:1}${hide:*,${re:4}}${re:5}"
       "",
       "",
@@ -683,8 +689,6 @@ trigger_config_reload_cb (const void *pointer, void *data,
 int
 trigger_config_init ()
 {
-    struct t_config_section *ptr_section;
-
     trigger_config_file = weechat_config_new (
         TRIGGER_CONFIG_PRIO_NAME,
         &trigger_config_reload_cb, NULL, NULL);
@@ -692,113 +696,95 @@ trigger_config_init ()
         return 0;
 
     /* look */
-    ptr_section = weechat_config_new_section (trigger_config_file, "look",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (trigger_config_file);
-        trigger_config_file = NULL;
-        return 0;
-    }
-
-    trigger_config_look_enabled = weechat_config_new_option (
-        trigger_config_file, ptr_section,
-        "enabled", "boolean",
-        N_("enable trigger support"),
-        NULL, 0, 0, "on", NULL, 0,
+    trigger_config_section_look = weechat_config_new_section (
+        trigger_config_file, "look",
+        0, 0,
         NULL, NULL, NULL,
-        &trigger_config_change_enabled, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
         NULL, NULL, NULL);
-    trigger_config_look_monitor_strip_colors = weechat_config_new_option (
-        trigger_config_file, ptr_section,
-        "monitor_strip_colors", "boolean",
-        N_("strip colors in hashtable values displayed on monitor buffer"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    if (trigger_config_section_look)
+    {
+        trigger_config_look_enabled = weechat_config_new_option (
+            trigger_config_file, trigger_config_section_look,
+            "enabled", "boolean",
+            N_("enable trigger support"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL,
+            &trigger_config_change_enabled, NULL, NULL,
+            NULL, NULL, NULL);
+        trigger_config_look_monitor_strip_colors = weechat_config_new_option (
+            trigger_config_file, trigger_config_section_look,
+            "monitor_strip_colors", "boolean",
+            N_("strip colors in hashtable values displayed on monitor buffer"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    }
 
     /* color */
-    ptr_section = weechat_config_new_section (trigger_config_file, "color",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
+    trigger_config_section_color = weechat_config_new_section (
+        trigger_config_file, "color",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (trigger_config_section_color)
     {
-        weechat_config_free (trigger_config_file);
-        trigger_config_file = NULL;
-        return 0;
+        trigger_config_color_flag_command = weechat_config_new_option (
+            trigger_config_file, trigger_config_section_color,
+            "flag_command", "color",
+            N_("text color for command flag (in /trigger list)"),
+            NULL, 0, 0, "lightgreen", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        trigger_config_color_flag_conditions = weechat_config_new_option (
+            trigger_config_file, trigger_config_section_color,
+            "flag_conditions", "color",
+            N_("text color for conditions flag (in /trigger list)"),
+            NULL, 0, 0, "yellow", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        trigger_config_color_flag_regex = weechat_config_new_option (
+            trigger_config_file, trigger_config_section_color,
+            "flag_regex", "color",
+            N_("text color for regex flag (in /trigger list)"),
+            NULL, 0, 0, "lightcyan", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        trigger_config_color_flag_return_code = weechat_config_new_option (
+            trigger_config_file, trigger_config_section_color,
+            "flag_return_code", "color",
+            N_("text color for return code flag (in /trigger list)"),
+            NULL, 0, 0, "lightmagenta", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        trigger_config_color_flag_post_action = weechat_config_new_option (
+            trigger_config_file, trigger_config_section_color,
+            "flag_post_action", "color",
+            N_("text color for post action flag (in /trigger list)"),
+            NULL, 0, 0, "lightblue", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        trigger_config_color_identifier = weechat_config_new_option (
+            trigger_config_file, trigger_config_section_color,
+            "identifier", "color",
+            N_("text color for trigger context identifier in monitor buffer"),
+            NULL, 0, 0, "cyan", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        trigger_config_color_regex = weechat_config_new_option (
+            trigger_config_file, trigger_config_section_color,
+            "regex", "color",
+            N_("text color for regular expressions"),
+            NULL, 0, 0, "white", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        trigger_config_color_replace = weechat_config_new_option (
+            trigger_config_file, trigger_config_section_color,
+            "replace", "color",
+            N_("text color for replacement text (for regular expressions)"),
+            NULL, 0, 0, "cyan", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    trigger_config_color_flag_command = weechat_config_new_option (
-        trigger_config_file, ptr_section,
-        "flag_command", "color",
-        N_("text color for command flag (in /trigger list)"),
-        NULL, 0, 0, "lightgreen", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    trigger_config_color_flag_conditions = weechat_config_new_option (
-        trigger_config_file, ptr_section,
-        "flag_conditions", "color",
-        N_("text color for conditions flag (in /trigger list)"),
-        NULL, 0, 0, "yellow", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    trigger_config_color_flag_regex = weechat_config_new_option (
-        trigger_config_file, ptr_section,
-        "flag_regex", "color",
-        N_("text color for regex flag (in /trigger list)"),
-        NULL, 0, 0, "lightcyan", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    trigger_config_color_flag_return_code = weechat_config_new_option (
-        trigger_config_file, ptr_section,
-        "flag_return_code", "color",
-        N_("text color for return code flag (in /trigger list)"),
-        NULL, 0, 0, "lightmagenta", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    trigger_config_color_flag_post_action = weechat_config_new_option (
-        trigger_config_file, ptr_section,
-        "flag_post_action", "color",
-        N_("text color for post action flag (in /trigger list)"),
-        NULL, 0, 0, "lightblue", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    trigger_config_color_identifier = weechat_config_new_option (
-        trigger_config_file, ptr_section,
-        "identifier", "color",
-        N_("text color for trigger context identifier in monitor buffer"),
-        NULL, 0, 0, "cyan", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    trigger_config_color_regex = weechat_config_new_option (
-        trigger_config_file, ptr_section,
-        "regex", "color",
-        N_("text color for regular expressions"),
-        NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    trigger_config_color_replace = weechat_config_new_option (
-        trigger_config_file, ptr_section,
-        "replace", "color",
-        N_("text color for replacement text (for regular expressions)"),
-        NULL, 0, 0, "cyan", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    trigger_config_color_trigger = weechat_config_new_option (
-        trigger_config_file, ptr_section,
-        "trigger", "color",
-        N_("text color for trigger name"),
-        NULL, 0, 0, "green", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    trigger_config_color_trigger_disabled = weechat_config_new_option (
-        trigger_config_file, ptr_section,
-        "trigger_disabled", "color",
-        N_("text color for disabled trigger name"),
-        NULL, 0, 0, "red", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
     /* trigger */
-    ptr_section = weechat_config_new_section (
+    trigger_config_section_trigger = weechat_config_new_section (
         trigger_config_file,
         TRIGGER_CONFIG_SECTION_TRIGGER,
         0, 0,
@@ -807,14 +793,6 @@ trigger_config_init ()
         &trigger_config_trigger_write_default_cb, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (trigger_config_file);
-        trigger_config_file = NULL;
-        return 0;
-    }
-
-    trigger_config_section_trigger = ptr_section;
 
     return 1;
 }

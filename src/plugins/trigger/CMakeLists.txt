@@ -29,4 +29,4 @@ set_target_properties(trigger PROPERTIES PREFIX "")
 
 target_link_libraries(trigger coverage_config)
 
-install(TARGETS trigger LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
+install(TARGETS trigger LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

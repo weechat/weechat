@@ -37,6 +37,7 @@
 #include "wee-config-file.h"
 #include "wee-arraylist.h"
 #include "wee-config.h"
+#include "wee-hashtable.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
 #include "wee-infolist.h"
@@ -239,6 +240,10 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
             return NULL;
         }
         new_config_file->file = NULL;
+        new_config_file->version = 1;
+        new_config_file->callback_update = NULL;
+        new_config_file->callback_update_pointer = NULL;
+        new_config_file->callback_update_data = NULL;
         new_config_file->callback_reload = callback_reload;
         new_config_file->callback_reload_pointer = callback_reload_pointer;
         new_config_file->callback_reload_data = callback_reload_data;
@@ -249,6 +254,38 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
     }
 
     return new_config_file;
+}
+
+/*
+ * Sets configuration file version and a callback to update config
+ * sections/options on-the-fly when the config is read.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+config_file_set_version (struct t_config_file *config_file,
+                         int version,
+                         struct t_hashtable *(*callback_update)(const void *pointer,
+                                                                void *data,
+                                                                struct t_config_file *config_file,
+                                                                int version_read,
+                                                                struct t_hashtable *data_read),
+                         const void *callback_update_pointer,
+                         void *callback_update_data)
+{
+    if (version < 1)
+        return 0;
+
+    config_file->version = version;
+
+    config_file->callback_update = callback_update;
+    config_file->callback_update_pointer = callback_update_pointer;
+    config_file->callback_update_data = callback_update_data;
+
+    return 1;
 }
 
 /*
@@ -493,7 +530,7 @@ config_file_hook_config_exec (struct t_config_option *option)
 {
     char *option_full_name, str_value[256];
 
-    if (!option)
+    if (!option || !option->config_file || !option->section)
         return;
 
     option_full_name = config_file_option_full_name (option);
@@ -929,11 +966,7 @@ config_file_new_option (struct t_config_file *config_file,
             new_option->next_option = NULL;
         }
 
-        /* run config hook(s) */
-        if (new_option->config_file && new_option->section)
-        {
-            config_file_hook_config_exec (new_option);
-        }
+        config_file_hook_config_exec (new_option);
     }
 
     goto end;
@@ -1316,19 +1349,16 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
         }
     }
 
-    if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
-        && run_callback && option->callback_change)
+    /* run callback and config hook(s) if value was changed */
+    if (rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
     {
-        (void) (option->callback_change) (
-            option->callback_change_pointer,
-            option->callback_change_data,
-            option);
-    }
-
-    /* run config hook(s) */
-    if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
-        && option->config_file && option->section)
-    {
+        if (run_callback && option->callback_change)
+        {
+            (void) (option->callback_change) (
+                option->callback_change_pointer,
+                option->callback_change_data,
+                option);
+        }
         config_file_hook_config_exec (option);
     }
 
@@ -1641,20 +1671,16 @@ config_file_option_set (struct t_config_option *option, const char *value,
             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
 
-    /* run callback if asked and value was changed */
-    if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
-        && run_callback && option->callback_change)
+    /* run callback and config hook(s) if value was changed */
+    if (rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
     {
-        (void) (option->callback_change) (
-            option->callback_change_pointer,
-            option->callback_change_data,
-            option);
-    }
-
-    /* run config hook(s) */
-    if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
-        && option->config_file && option->section)
-    {
+        if (run_callback && option->callback_change)
+        {
+            (void) (option->callback_change) (
+                option->callback_change_pointer,
+                option->callback_change_data,
+                option);
+        }
         config_file_hook_config_exec (option);
     }
 
@@ -1799,20 +1825,327 @@ config_file_option_set_null (struct t_config_option *option, int run_callback)
         }
     }
 
-    /* run callback if asked and value was changed */
-    if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
-        && run_callback && option->callback_change)
+    /* run callback and config hook(s) if value was changed */
+    if (rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
     {
-        (void) (option->callback_change) (
-            option->callback_change_pointer,
-            option->callback_change_data,
-            option);
+        if (run_callback && option->callback_change)
+        {
+            (void) (option->callback_change) (
+                option->callback_change_pointer,
+                option->callback_change_data,
+                option);
+        }
+        config_file_hook_config_exec (option);
     }
 
-    /* run config hook(s) */
-    if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
-        && option->config_file && option->section)
+    return rc;
+}
+
+/*
+ * Sets the default value for an option.
+ *
+ * Returns:
+ *   WEECHAT_CONFIG_OPTION_SET_OK_CHANGED: OK, default value has been changed
+ *   WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE: OK, default value not changed
+ *   WEECHAT_CONFIG_OPTION_SET_ERROR: error
+ */
+
+int
+config_file_option_set_default (struct t_config_option *option,
+                                const char *value,
+                                int run_callback)
+{
+    int value_int, i, rc, new_value_ok, old_value_was_null, old_value;
+    long number;
+    char *error;
+
+    if (!option)
+        return WEECHAT_CONFIG_OPTION_SET_ERROR;
+
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+
+    if (value)
     {
+        old_value_was_null = (option->default_value == NULL);
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                if (!option->default_value)
+                {
+                    option->default_value = malloc (sizeof (int));
+                    if (option->default_value)
+                    {
+                        if (strcmp (value, "toggle") == 0)
+                        {
+                            CONFIG_BOOLEAN_DEFAULT(option) = CONFIG_BOOLEAN_TRUE;
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                        }
+                        else
+                        {
+                            if (config_file_string_boolean_is_valid (value))
+                            {
+                                value_int = config_file_string_to_boolean (value);
+                                CONFIG_BOOLEAN_DEFAULT(option) = value_int;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            }
+                            else
+                            {
+                                free (option->default_value);
+                                option->default_value = NULL;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (strcmp (value, "toggle") == 0)
+                    {
+                        CONFIG_BOOLEAN_DEFAULT(option) =
+                            (CONFIG_BOOLEAN_DEFAULT(option) == CONFIG_BOOLEAN_TRUE) ?
+                            CONFIG_BOOLEAN_FALSE : CONFIG_BOOLEAN_TRUE;
+                        rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                    }
+                    else
+                    {
+                        if (config_file_string_boolean_is_valid (value))
+                        {
+                            value_int = config_file_string_to_boolean (value);
+                            if (value_int == CONFIG_BOOLEAN_DEFAULT(option))
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                            else
+                            {
+                                CONFIG_BOOLEAN_DEFAULT(option) = value_int;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            }
+                        }
+                    }
+                }
+                break;
+            case CONFIG_OPTION_TYPE_INTEGER:
+                old_value = 0;
+                if (!option->default_value)
+                    option->default_value = malloc (sizeof (int));
+                else
+                    old_value = CONFIG_INTEGER_DEFAULT(option);
+                if (option->default_value)
+                {
+                    if (option->string_values)
+                    {
+                        value_int = -1;
+                        if (strncmp (value, "++", 2) == 0)
+                        {
+                            error = NULL;
+                            number = strtol (value + 2, &error, 10);
+                            if (error && !error[0])
+                            {
+                                number = number % (option->max + 1);
+                                value_int = (old_value + number) %
+                                    (option->max + 1);
+                            }
+                        }
+                        else if (strncmp (value, "--", 2) == 0)
+                        {
+                            error = NULL;
+                            number = strtol (value + 2, &error, 10);
+                            if (error && !error[0])
+                            {
+                                number = number % (option->max + 1);
+                                value_int = (old_value + (option->max + 1) - number) %
+                                    (option->max + 1);
+                            }
+                        }
+                        else
+                        {
+                            for (i = 0; option->string_values[i]; i++)
+                            {
+                                if (strcmp (option->string_values[i], value) == 0)
+                                {
+                                    value_int = i;
+                                    break;
+                                }
+                            }
+                        }
+                        if (value_int >= 0)
+                        {
+                            if (old_value_was_null
+                                || (value_int != old_value))
+                            {
+                                CONFIG_INTEGER_DEFAULT(option) = value_int;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            }
+                            else
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                        }
+                        else
+                        {
+                            if (old_value_was_null)
+                            {
+                                free (option->default_value);
+                                option->default_value = NULL;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        new_value_ok = 0;
+                        if (strncmp (value, "++", 2) == 0)
+                        {
+                            error = NULL;
+                            number = strtol (value + 2, &error, 10);
+                            if (error && !error[0])
+                            {
+                                value_int = old_value + number;
+                                if (value_int <= option->max)
+                                    new_value_ok = 1;
+                            }
+                        }
+                        else if (strncmp (value, "--", 2) == 0)
+                        {
+                            error = NULL;
+                            number = strtol (value + 2, &error, 10);
+                            if (error && !error[0])
+                            {
+                                value_int = old_value - number;
+                                if (value_int >= option->min)
+                                    new_value_ok = 1;
+                            }
+                        }
+                        else
+                        {
+                            error = NULL;
+                            number = strtol (value, &error, 10);
+                            if (error && !error[0])
+                            {
+                                value_int = number;
+                                if ((value_int >= option->min)
+                                    && (value_int <= option->max))
+                                    new_value_ok = 1;
+                            }
+                        }
+                        if (new_value_ok)
+                        {
+                            if (old_value_was_null
+                                || (value_int != old_value))
+                            {
+                                CONFIG_INTEGER_DEFAULT(option) = value_int;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            }
+                            else
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                        }
+                        else
+                        {
+                            if (old_value_was_null)
+                            {
+                                free (option->default_value);
+                                option->default_value = NULL;
+                            }
+                        }
+                    }
+                }
+                break;
+            case CONFIG_OPTION_TYPE_STRING:
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                if (!option->default_value
+                    || (strcmp (CONFIG_STRING_DEFAULT(option), value) != 0))
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                if (option->default_value)
+                {
+                    free (option->default_value);
+                    option->default_value = NULL;
+                }
+                option->default_value = strdup (value);
+                if (!option->default_value)
+                    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+                break;
+            case CONFIG_OPTION_TYPE_COLOR:
+                old_value = 0;
+                if (!option->default_value)
+                    option->default_value = malloc (sizeof (int));
+                else
+                    old_value = CONFIG_COLOR_DEFAULT(option);
+                if (option->default_value)
+                {
+                    value_int = -1;
+                    new_value_ok = 0;
+                    if (strncmp (value, "++", 2) == 0)
+                    {
+                        error = NULL;
+                        number = strtol (value + 2, &error, 10);
+                        if (error && !error[0])
+                        {
+                            if (gui_color_assign_by_diff (&value_int,
+                                                          gui_color_get_name (old_value),
+                                                          number))
+                                new_value_ok = 1;
+                        }
+                    }
+                    else if (strncmp (value, "--", 2) == 0)
+                    {
+                        error = NULL;
+                        number = strtol (value + 2, &error, 10);
+                        if (error && !error[0])
+                        {
+                            if (gui_color_assign_by_diff (&value_int,
+                                                          gui_color_get_name (old_value),
+                                                          -1 * number))
+                                new_value_ok = 1;
+                        }
+                    }
+                    else
+                    {
+                        if (gui_color_assign (&value_int, value))
+                            new_value_ok = 1;
+                    }
+                    if (new_value_ok)
+                    {
+                        if (old_value_was_null
+                            || (value_int != old_value))
+                        {
+                            CONFIG_COLOR_DEFAULT(option) = value_int;
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                        }
+                        else
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                    }
+                    else
+                    {
+                        if (old_value_was_null)
+                        {
+                            free (option->default_value);
+                            option->default_value = NULL;
+                        }
+                    }
+                }
+                break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
+        }
+        if (old_value_was_null && option->default_value)
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+    }
+    else
+    {
+        if (option->null_value_allowed && option->default_value)
+        {
+            free (option->default_value);
+            option->default_value = NULL;
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+        }
+        else
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    }
+
+    /* run callback and config hook(s) if default value was changed */
+    if (rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
+    {
+        if (run_callback && option->callback_change)
+        {
+            (void) (option->callback_change) (
+                option->callback_change_pointer,
+                option->callback_change_data,
+                option);
+        }
         config_file_hook_config_exec (option);
     }
 
@@ -2685,12 +3018,23 @@ config_file_write_internal (struct t_config_file *config_file,
             "#\n"
             "# Use commands like /set or /fset to change settings in WeeChat.\n"
             "#\n"
-            "# For more info, see: https://weechat.org/doc/quickstart/\n"
+            "# For more info, see: https://weechat.org/doc/weechat/quickstart/\n"
             "#\n",
             version_get_name (),
             config_file->filename))
     {
         goto error;
+    }
+
+    /* write config version (if different from 1) */
+    if (config_file->version > 1)
+    {
+        if (!string_fprintf (config_file->file,
+                             "\nconfig_version = %d\n",
+                             config_file->version))
+        {
+            goto error;
+        }
     }
 
     /* write all sections */
@@ -2797,6 +3141,142 @@ config_file_write (struct t_config_file *config_file)
 }
 
 /*
+ * Parses configuration version.
+ *
+ * Returns:
+ *   >= 1: configuration version
+ *     -1: error
+ */
+
+int
+config_file_parse_version (const char *version)
+{
+    long number;
+    char *error;
+
+    number = strtoll (version, &error, 10);
+    if (!error || error[0])
+        return -1;
+
+    return (number < 1) ? -1 : (int)number;
+}
+
+/*
+ * Updates data read from config file: either section or option + value.
+ * The update callback (if defined in config) is called if the config version
+ * read in file is less than to the current config version.
+ *
+ * Parameters "section", "option" and "value" are updated in place: if the
+ * callback gives a new value, they are first freed and allocated again with
+ * the new value (or set to NULL for the value if the callback returns
+ * special key "value_null").
+ *
+ * Section can be updated only if option and value are NULL (ie if we are
+ * reading a section line like "[section]").
+ */
+
+void
+config_file_update_data_read (struct t_config_file *config_file,
+                              const char *section,
+                              const char *option,
+                              const char *value,
+                              char **ret_section,
+                              char **ret_option,
+                              char **ret_value)
+{
+    struct t_hashtable *data_read, *hashtable;
+    const char *ptr_section, *ptr_option, *ptr_value;
+    int value_null;
+
+    /* do nothing if config is already the latest version */
+    if (config_file->version_read >= config_file->version)
+        return;
+
+    /* do nothing if there's no update callback */
+    if (!config_file->callback_update)
+        return;
+
+    value_null = 0;
+
+    data_read = hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (!data_read)
+        return;
+
+    hashtable_set (data_read, "config", config_file->name);
+    if (section)
+        hashtable_set (data_read, "section", section);
+    if (option)
+    {
+        hashtable_set (data_read, "option", option);
+        if (value)
+        {
+            hashtable_set (data_read, "value", value);
+        }
+        else
+        {
+            hashtable_set (data_read, "value_null", "1");
+            value_null = 1;
+        }
+    }
+
+    hashtable = (config_file->callback_update)
+        (config_file->callback_update_pointer,
+         config_file->callback_update_data,
+         config_file,
+         config_file->version_read,
+         data_read);
+
+    if (hashtable)
+    {
+        /* if reading a section line, we can update its name */
+        if (section && !option && ret_section)
+        {
+            ptr_section = hashtable_get (hashtable, "section");
+            if (ptr_section && ptr_section[0])
+            {
+                if (*ret_section)
+                    free (*ret_section);
+                *ret_section = strdup (ptr_section);
+            }
+        }
+
+        /* if reading an option line, we can update its name and value */
+        if (section && option)
+        {
+            /* option name */
+            if (ret_option)
+            {
+                ptr_option = hashtable_get (hashtable, "option");
+                if (ptr_option)
+                {
+                    if (*ret_option)
+                        free (*ret_option);
+                    *ret_option = strdup (ptr_option);
+                }
+            }
+            /* value */
+            if (ret_value)
+            {
+                ptr_value = hashtable_get (hashtable, "value");
+                if (!value_null && hashtable_has_key (hashtable, "value_null"))
+                    ptr_value = NULL;
+                if (*ret_value)
+                    free (*ret_value);
+                *ret_value = (ptr_value) ? strdup (ptr_value) : NULL;
+            }
+        }
+    }
+
+    if (hashtable && (hashtable != data_read))
+        hashtable_free (hashtable);
+    hashtable_free (data_read);
+}
+
+/*
  * Reads a configuration file (this function must not be called directly).
  *
  * Returns:
@@ -2808,14 +3288,16 @@ config_file_write (struct t_config_file *config_file)
 int
 config_file_read_internal (struct t_config_file *config_file, int reload)
 {
-    int filename_length, line_number, rc, undefined_value;
-    char *filename;
+    int filename_length, line_number, rc, length, version;
+    char *filename, *section, *option, *value;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    char line[16384], *ptr_line, *ptr_line2, *pos, *pos2, *ptr_option_name;
+    char line[16384], *ptr_line, *ptr_line2, *pos, *pos2;
 
     if (!config_file)
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
+
+    config_file->version_read = 1;
 
     /* build filename */
     filename_length = strlen (weechat_config_dir) + strlen (DIR_SEPARATOR) +
@@ -2862,192 +3344,242 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
     line_number = 0;
     while (!feof (config_file->file))
     {
-        ptr_line = fgets (line, sizeof (line) - 1, config_file->file);
         line_number++;
-        if (ptr_line)
+
+        option = NULL;
+        value = NULL;
+
+        ptr_line = fgets (line, sizeof (line) - 1, config_file->file);
+        if (!ptr_line)
+            goto end_line;
+
+        /* encode line to internal charset */
+        ptr_line2 = string_iconv_to_internal (NULL, ptr_line);
+        if (ptr_line2)
         {
-            /* encode line to internal charset */
-            ptr_line2 = string_iconv_to_internal (NULL, ptr_line);
-            if (ptr_line2)
-                snprintf (line, sizeof (line), "%s", ptr_line2);
+            snprintf (line, sizeof (line), "%s", ptr_line2);
+            free (ptr_line2);
+        }
 
-            /* skip spaces */
-            while (ptr_line[0] == ' ')
+        /* skip spaces */
+        while (ptr_line[0] == ' ')
+        {
+            ptr_line++;
+        }
+
+        /* remove CR/LF */
+        pos = strchr (ptr_line, '\r');
+        if (pos)
+            pos[0] = '\0';
+        pos = strchr (ptr_line, '\n');
+        if (pos)
+            pos[0] = '\0';
+
+        /* ignore empty line or comment */
+        if (!ptr_line[0] || (ptr_line[0] == '#'))
+            goto end_line;
+
+        /* beginning of section */
+        if ((ptr_line[0] == '[') && !strchr (ptr_line, '='))
+        {
+            pos = strchr (ptr_line, ']');
+            if (!pos)
             {
-                ptr_line++;
+                gui_chat_printf (NULL,
+                                 _("%sWarning: %s, line %d: invalid "
+                                   "syntax, missing \"]\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 filename, line_number);
             }
-
-            /* not a comment and not an empty line */
-            if ((ptr_line[0] != '#') && (ptr_line[0] != '\r')
-                && (ptr_line[0] != '\n'))
+            else
             {
-                /* beginning of section */
-                if ((ptr_line[0] == '[') && !strchr (ptr_line, '='))
+                section = string_strndup (ptr_line + 1, pos - ptr_line - 1);
+                if (section)
                 {
-                    pos = strchr (line, ']');
-                    if (!pos)
+                    config_file_update_data_read (config_file,
+                                                  section, NULL, NULL,
+                                                  &section, NULL, NULL);
+                    ptr_section = config_file_search_section (config_file,
+                                                              section);
+                    if (!ptr_section)
                     {
                         gui_chat_printf (NULL,
-                                         _("%sWarning: %s, line %d: invalid "
-                                           "syntax, missing \"]\""),
+                                         _("%sWarning: %s, line %d: unknown "
+                                           "section identifier (\"%s\")"),
                                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         filename, line_number);
+                                         filename, line_number, section);
+                    }
+                    free (section);
+                }
+            }
+            goto end_line;
+        }
+
+        /* skip escape char */
+        if (ptr_line[0] == '\\')
+            ptr_line++;
+
+        pos = strstr (ptr_line, " =");
+        if (pos)
+        {
+            /* skip spaces before '=' */
+            pos2 = pos - 1;
+            while ((pos2 > ptr_line) && (pos2[0] == ' '))
+            {
+                pos2--;
+            }
+            option = string_strndup (ptr_line, pos2 + 1 - ptr_line);
+            /* skip spaces after '=' */
+            pos += 2;
+            while (pos[0] == ' ')
+            {
+                pos++;
+            }
+            if (strcmp (pos, WEECHAT_CONFIG_OPTION_NULL) != 0)
+            {
+                length = strlen (pos);
+                if (length > 1)
+                {
+                    /* remove simple or double quotes and spaces at the end */
+                    pos2 = pos + length - 1;
+                    while ((pos2 > pos) && (pos2[0] == ' '))
+                    {
+                        pos2--;
+                    }
+                    if (((pos[0] == '\'') && (pos2[0] == '\''))
+                        || ((pos[0] == '"') && (pos2[0] == '"')))
+                    {
+                        value = string_strndup (pos + 1, pos2 - pos - 1);
                     }
                     else
                     {
-                        pos[0] = '\0';
-                        pos = ptr_line + 1;
-                        ptr_section = config_file_search_section (config_file,
-                                                                  pos);
-                        if (!ptr_section)
-                        {
-                            gui_chat_printf (NULL,
-                                             _("%sWarning: %s, line %d: unknown "
-                                               "section identifier "
-                                               "(\"%s\")"),
-                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             filename, line_number, pos);
-                        }
+                        value = string_strndup (pos, pos2 + 1 - pos);
                     }
                 }
                 else
                 {
-                    undefined_value = 1;
-
-                    /* remove CR/LF */
-                    pos = strchr (line, '\r');
-                    if (pos != NULL)
-                        pos[0] = '\0';
-                    pos = strchr (line, '\n');
-                    if (pos != NULL)
-                        pos[0] = '\0';
-
-                    pos = strstr (line, " =");
-                    if (pos)
-                    {
-                        pos[0] = '\0';
-                        pos += 2;
-
-                        /* remove spaces before '=' */
-                        pos2 = pos - 3;
-                        while ((pos2 > line) && (pos2[0] == ' '))
-                        {
-                            pos2[0] = '\0';
-                            pos2--;
-                        }
-
-                        /* skip spaces after '=' */
-                        while (pos[0] && (pos[0] == ' '))
-                        {
-                            pos++;
-                        }
-
-                        if (pos[0]
-                            && strcmp (pos, WEECHAT_CONFIG_OPTION_NULL) != 0)
-                        {
-                            undefined_value = 0;
-                            /* remove simple or double quotes and spaces at the end */
-                            if (strlen (pos) > 1)
-                            {
-                                pos2 = pos + strlen (pos) - 1;
-                                while ((pos2 > pos) && (pos2[0] == ' '))
-                                {
-                                    pos2[0] = '\0';
-                                    pos2--;
-                                }
-                                pos2 = pos + strlen (pos) - 1;
-                                if (((pos[0] == '\'') &&
-                                     (pos2[0] == '\'')) ||
-                                    ((pos[0] == '"') &&
-                                     (pos2[0] == '"')))
-                                {
-                                    pos2[0] = '\0';
-                                    pos++;
-                                }
-                            }
-                        }
-                    }
-
-                    ptr_option_name = (line[0] == '\\') ? line + 1 : line;
-
-                    if (ptr_section && ptr_section->callback_read)
-                    {
-                        ptr_option = NULL;
-                        rc = (ptr_section->callback_read)
-                            (ptr_section->callback_read_pointer,
-                             ptr_section->callback_read_data,
-                             config_file,
-                             ptr_section,
-                             ptr_option_name,
-                             (undefined_value) ? NULL : pos);
-                    }
-                    else
-                    {
-                        rc = WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
-                        ptr_option = config_file_search_option (config_file,
-                                                                ptr_section,
-                                                                ptr_option_name);
-                        if (ptr_option)
-                        {
-                            rc = config_file_option_set (ptr_option,
-                                                         (undefined_value) ?
-                                                         NULL : pos,
-                                                         1);
-                            ptr_option->loaded = 1;
-                        }
-                        else
-                        {
-                            if (ptr_section
-                                && ptr_section->callback_create_option)
-                            {
-                                rc = (int) (ptr_section->callback_create_option) (
-                                    ptr_section->callback_create_option_pointer,
-                                    ptr_section->callback_create_option_data,
-                                    config_file,
-                                    ptr_section,
-                                    ptr_option_name,
-                                    (undefined_value) ? NULL : pos);
-                            }
-                        }
-                    }
-
-                    switch (rc)
-                    {
-                        case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
-                            if (ptr_section)
-                                gui_chat_printf (NULL,
-                                                 _("%sWarning: %s, line %d: "
-                                                   "unknown option for section "
-                                                   "\"%s\": %s"),
-                                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                                 filename, line_number,
-                                                 ptr_section->name,
-                                                 ptr_line2);
-                            else
-                                gui_chat_printf (NULL,
-                                                 _("%sWarning: %s, line %d: "
-                                                   "option outside section: "
-                                                   "%s"),
-                                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                                 filename, line_number,
-                                                 ptr_line2);
-                            break;
-                        case WEECHAT_CONFIG_OPTION_SET_ERROR:
-                            gui_chat_printf (NULL,
-                                             _("%sWarning: %s, line %d: "
-                                               "invalid value for option: "
-                                               "%s"),
-                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             filename, line_number,
-                                             ptr_line2);
-                            break;
-                    }
+                    value = strdup (pos);
                 }
             }
-
-            if (ptr_line2)
-                free (ptr_line2);
         }
+        else
+        {
+            option = strdup (ptr_line);
+        }
+
+        if (!ptr_section && (strcmp (option, CONFIG_VERSION_OPTION) == 0))
+        {
+            version = config_file_parse_version (pos);
+            if (version < 0)
+            {
+                gui_chat_printf (
+                    NULL,
+                    _("%sWarning: %s, line %d: invalid config "
+                      "version: %s"),
+                    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                    filename, line_number,
+                    line);
+            }
+            else
+            {
+                config_file->version_read = version;
+                if (config_file->version_read > config_file->version)
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sWarning: %s, version read (%d) is "
+                                       "newer than supported version (%d), "
+                                       "options may be broken!"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     filename,
+                                     config_file->version_read,
+                                     config_file->version);
+                }
+            }
+            goto end_line;
+        }
+
+        if (!ptr_section)
+        {
+            gui_chat_printf (NULL,
+                             _("%sWarning: %s, line %d: "
+                               "option outside section: %s"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             filename, line_number,
+                             line);
+            goto end_line;
+        }
+
+        config_file_update_data_read (config_file,
+                                      ptr_section->name, option, value,
+                                      NULL, &option, &value);
+
+        /* option has been ignored by the update callback? */
+        if (!option || !option[0])
+            goto end_line;
+
+        if (ptr_section->callback_read)
+        {
+            ptr_option = NULL;
+            rc = (ptr_section->callback_read)
+                (ptr_section->callback_read_pointer,
+                 ptr_section->callback_read_data,
+                 config_file,
+                 ptr_section,
+                 option,
+                 value);
+        }
+        else
+        {
+            rc = WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
+            ptr_option = config_file_search_option (config_file,
+                                                    ptr_section,
+                                                    option);
+            if (ptr_option)
+            {
+                rc = config_file_option_set (ptr_option, value, 1);
+                ptr_option->loaded = 1;
+            }
+            else
+            {
+                if (ptr_section->callback_create_option)
+                {
+                    rc = (int) (ptr_section->callback_create_option) (
+                        ptr_section->callback_create_option_pointer,
+                        ptr_section->callback_create_option_data,
+                        config_file,
+                        ptr_section,
+                        option,
+                        value);
+                }
+            }
+        }
+
+        switch (rc)
+        {
+            case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
+                gui_chat_printf (NULL,
+                                 _("%sWarning: %s, line %d: "
+                                   "unknown option for section \"%s\": %s"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 filename, line_number,
+                                 ptr_section->name,
+                                 line);
+                break;
+            case WEECHAT_CONFIG_OPTION_SET_ERROR:
+                gui_chat_printf (NULL,
+                                 _("%sWarning: %s, line %d: "
+                                   "invalid value for option: %s"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 filename, line_number,
+                                 line);
+                break;
+        }
+
+    end_line:
+        if (option)
+            free (option);
+        if (value)
+            free (value);
     }
 
     fclose (config_file->file);
@@ -3305,6 +3837,8 @@ config_file_free (struct t_config_file *config_file)
         (config_file->next_config)->prev_config = config_file->prev_config;
 
     /* free data */
+    if (config_file->callback_update_data)
+        free (config_file->callback_update_data);
     if (config_file->callback_reload_data)
         free (config_file->callback_reload_data);
 
@@ -3370,6 +3904,7 @@ config_file_hdata_config_file_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_config_file, name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, filename, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, file, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_file, version, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, callback_reload, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, callback_reload_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, callback_reload_data, POINTER, 0, NULL, NULL);

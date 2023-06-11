@@ -1253,6 +1253,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     PERL_SYS_INIT3 (&a, (char ***)&perl_args_local, (char ***)&perl_env);
 #endif /* PERL_SYS_INIT3 */
 
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
+
     weechat_perl_plugin = plugin;
 
     /* set interpreter name and version */
@@ -1304,7 +1308,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     perl_data.unload_all = &weechat_perl_unload_all;
 
     perl_quiet = 1;
-    plugin_script_init (weechat_perl_plugin, argc, argv, &perl_data);
+    plugin_script_init (weechat_perl_plugin, &perl_data);
     perl_quiet = 0;
 
     plugin_script_display_short_list (weechat_perl_plugin,

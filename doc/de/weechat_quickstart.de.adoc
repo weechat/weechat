@@ -2,18 +2,13 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: de
-:toc: left
 :toc-title: Inhaltsverzeichnis
-:sectnums:
-:docinfo1:
-
 
 Übersetzer:
 
 * Frank Zacharias <frank_zacharias@web.de>, 2006
 * Juergen Descher <jhdl@gmx.net>, 2009
 * Nils Görs <weechatter@arcor.de>, 2009-2018
-
 
 [[start]]
 == Start von WeeChat
@@ -123,7 +118,7 @@ Um eine Verbindung zu einem IRC Server herzustellen, wird der
 `/server` Befehl verwendet. Beispiel:
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 In diesem Beispiel ist `libera` der interne, von Weechat genutzte Servername.
@@ -442,13 +437,13 @@ Zeige eine liste aller verfügbaren Skripten:
 ----
 
 Eine Liste von Skripten ist in WeeChat mittels `/script` oder auf
-https://weechat.org/scripts/[this page ^↗^,window=_blank] verfügbar.
+https://weechat.org/scripts/[this page ^↗^^] verfügbar.
 
 [[more_doc]]
 == Weitere Dokumentation
 
 WeeChat kann nun verwendet werden und lesen Sie
-https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+https://weechat.org/doc/[FAQ/documentation ^↗^^]
 falls Sie weitere Fragen haben.
 
 Viel Spass mit WeeChat!

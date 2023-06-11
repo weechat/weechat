@@ -1077,6 +1077,74 @@ weechat_ruby_api_config_new (VALUE class, VALUE name, VALUE function,
     API_RETURN_STRING(result);
 }
 
+struct t_hashtable *
+weechat_ruby_api_config_update_cb (const void *pointer, void *data,
+                                   struct t_config_file *config_file,
+                                   int version_read,
+                                   struct t_hashtable *data_read)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    struct t_hashtable *ret_hashtable;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (char *)API_PTR2STR(config_file);
+        func_argv[2] = &version_read;
+        func_argv[3] = data_read;
+
+        ret_hashtable =  weechat_ruby_exec (script,
+                                            WEECHAT_SCRIPT_EXEC_HASHTABLE,
+                                            ptr_function,
+                                            "ssih", func_argv);
+
+        return ret_hashtable;
+    }
+
+    return NULL;
+}
+
+static VALUE
+weechat_ruby_api_config_set_version (VALUE class, VALUE config_file,
+                                     VALUE version, VALUE function,
+                                     VALUE data)
+{
+    char *c_config_file, *c_function, *c_data;
+    int rc, c_version;
+
+    API_INIT_FUNC(1, "config_set_version", API_RETURN_INT(0));
+    if (NIL_P (config_file) || NIL_P (version) || NIL_P (function)
+        || NIL_P (data))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    Check_Type (config_file, T_STRING);
+    CHECK_INTEGER(version);
+    Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
+
+    c_config_file = StringValuePtr (config_file);
+    c_version = NUM2INT (version);
+    c_function = StringValuePtr (function);
+    c_data = StringValuePtr (data);
+
+    rc = plugin_script_api_config_set_version (
+        weechat_ruby_plugin,
+        ruby_current_script,
+        API_STR2PTR(c_config_file),
+        c_version,
+        &weechat_ruby_api_config_update_cb,
+        c_function,
+        c_data);
+
+    API_RETURN_INT(rc);
+}
+
 int
 weechat_ruby_api_config_read_cb (const void *pointer, void *data,
                                  struct t_config_file *config_file,
@@ -6600,6 +6668,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(list_remove_all, 1);
     API_DEF_FUNC(list_free, 1);
     API_DEF_FUNC(config_new, 3);
+    API_DEF_FUNC(config_set_version, 4);
     API_DEF_FUNC(config_new_section, 14);
     API_DEF_FUNC(config_search_section, 2);
     API_DEF_FUNC(config_new_option, 12);

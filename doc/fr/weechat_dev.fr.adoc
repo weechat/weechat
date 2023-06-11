@@ -2,19 +2,13 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr
-:toc: left
-:toclevels: 3
 :toc-title: Table des matières
-:sectnums:
-:docinfo1:
-
 
 Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.
 
 La dernière version de ce document peut être téléchargée sur
-https://weechat.org/doc/[cette page ^↗^,window=_blank].
-
+https://weechat.org/doc/[cette page ^↗^^].
 
 [[introduction]]
 == Introduction
@@ -34,7 +28,7 @@ Ce manuel documente l'intérieur de WeeChat :
 == Dépôts
 
 Les dépôts de WeeChat sont dans l'organisation
-https://github.com/weechat[weechat ^↗^,window=_blank] de GitHub.
+https://github.com/weechat[weechat ^↗^^] de GitHub.
 
 Liste des dépôts :
 
@@ -45,7 +39,7 @@ scripts::
     les scripts _officiels_ soumis sur weechat.org
 
 weechat.org::
-    le code source du https://weechat.org/[site de WeeChat ^↗^,window=_blank]
+    le code source du https://weechat.org/[site de WeeChat ^↗^^]
 
 weercd::
     serveur de test IRC
@@ -132,6 +126,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    wee-crypto.c                 | Fonctions de cryptographie.
 |    wee-debug.c                  | Quelques fonctions de debug.
 |    wee-dir.c                    | Fonctions sur les répertoires/fichiers.
+|    wee-doc.c                    | Génération de fichiers pour la documentation.
 |    wee-eval.c                   | Évaluation d'expressions avec des références à des variables internes.
 |    wee-hashtable.c              | Tables de hachage.
 |    wee-hdata.c                  | Hdata (accès direct aux données en utilisant des tables de hachage).
@@ -275,6 +270,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    irc/                           | Extension IRC (Internet Relay Chat).
 |       irc.c                       | Fonctions principales IRC.
 |       irc-bar-item.c              | Objets de barre IRC.
+|       irc-batch.c                 | Évènements batch IRC.
 |       irc-buffer.c                | Tampons IRC.
 |       irc-channel.c               | Canaux IRC.
 |       irc-color.c                 | Couleurs IRC.
@@ -293,7 +289,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       irc-msgbuffer.c             | Tampon cible pour les messages IRC.
 |       irc-nick.c                  | Pseudos IRC.
 |       irc-notify.c                | Listes de notification IRC.
-|       irc-protocol.c              | Protocole IRC (RFCs 1459/2810/2811/2812/2813).
+|       irc-protocol.c              | Protocole IRC (RFCs 1459/2810/2811/2812/2813/7194).
 |       irc-raw.c                   | Tampon des données brutes IRC.
 |       irc-redirect.c              | Redirection de la sortie des commandes IRC.
 |       irc-sasl.c                  | Authentification SASL avec le serveur IRC.
@@ -396,6 +392,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 | Chemin/fichier                      | Description
 | tests/                              | Racine des tests.
 |    tests.cpp                        | Programme utilisé pour lancer tous les tests.
+|    tests-record.cpp                 | Enregistrement et recherche dans les messages affichés.
 |    scripts/                         | Racine des tests de l'API script.
 |       test-scripts.cpp              | Programme utilisé pour lancer les tests de l'API script.
 |       python/                       | Scripts Python pour générer et lancer les tests de l'API script.
@@ -436,6 +433,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-gui-nick.cpp          | Tests : pseudos.
 |       plugins/                      | Racine des tests unitaires pour les extensions.
 |          irc/                       | Racine des tests unitaires pour l'extension IRC.
+|             test-irc-batch.cpp      | Tests : évènements batch IRC.
 |             test-irc-buffer.cpp     | Tests : tampons IRC.
 |             test-irc-channel.cpp    | Tests : canaux IRC.
 |             test-irc-color.cpp      | Tests : couleurs IRC.
@@ -450,7 +448,9 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-irc-server.cpp     | Tests : serveur IRC.
 |             test-irc-tag.cpp        | Tests : étiquettes des messages IRC.
 |          logger/                    | Racine des tests unitaires pour l'extension logger.
+|             test-logger.cpp         | Tests : logger.
 |             test-logger-backlog.cpp | Tests : backlog logger.
+|             test-logger-tail.cpp    | Tests : fonctions "tail".
 |          trigger/                   | Racine des tests unitaires pour l'extension trigger.
 |             test-trigger.cpp        | Tests : triggers.
 |             test-trigger-config.cpp | Tests : configuration trigger.
@@ -459,6 +459,8 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-typing-status.cpp  | Tests : statut d'écriture.
 |          relay/                     | Racine des tests unitaires pour l'extension Relay.
 |             test-relay-auth.cpp     | Tests : authentification des clients.
+|             irc/                    | Racine des tests unitaires pour le protocole relay "irc".
+|                test-relay-irc.cpp   | Tests : Protocole relay "irc".
 |          xfer/                      | Racine des tests unitaires pour l'extension Xfer.
 |             test-xfer-file.cpp      | Tests : fonctions sur les fichiers.
 |             test-xfer-network.cpp   | Tests : fonctions réseau.
@@ -474,28 +476,16 @@ Fichiers de documentation :
 | Chemin/fichier                                | Description
 | doc/                                          | Documentation.
 |    docinfo.html                               | Style Asciidoctor.
-|    docgen.py                                  | Script Python pour construire les fichiers auto-générés dans le répertoire _includes/_ (voir ci-dessous).
 |    XX/                                        | Documentation pour la langue XX (langues : en, fr, de, it, ...).
 |       weechat.1.XX.adoc                       | Page de manuel (`man weechat`).
-|       weechat_dev.XX.adoc                     | link:weechat_dev.fr.html[Guide du développeur ^↗^,window=_blank] (ce document).
-|       weechat_faq.XX.adoc                     | link:weechat_faq.fr.html[FAQ ^↗^,window=_blank] (questions fréquemment posées).
-|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.fr.html[Référence API extension ^↗^,window=_blank].
-|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.fr.html[Guide de démarrage ^↗^,window=_blank].
-|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.fr.html[Protocole Relay ^↗^,window=_blank] (pour les interfaces distantes).
-|       weechat_scripting.XX.adoc               | link:weechat_scripting.fr.html[Guide pour scripts ^↗^,window=_blank].
-|       weechat_user.XX.adoc                    | link:weechat_user.fr.html[Guide utilisateur ^↗^,window=_blank].
+|       weechat_dev.XX.adoc                     | link:weechat_dev.fr.html[Guide du développeur ^↗^^] (ce document).
+|       weechat_faq.XX.adoc                     | link:weechat_faq.fr.html[FAQ ^↗^^] (questions fréquemment posées).
+|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.fr.html[Référence API extension ^↗^^].
+|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.fr.html[Guide de démarrage ^↗^^].
+|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.fr.html[Protocole Relay ^↗^^] (pour les interfaces distantes).
+|       weechat_scripting.XX.adoc               | link:weechat_scripting.fr.html[Guide pour scripts ^↗^^].
+|       weechat_user.XX.adoc                    | link:weechat_user.fr.html[Guide utilisateur ^↗^^].
 |       includes/                               | Fichiers inclus dans la documentation.
-|          autogen_api_completions.XX.adoc      | Fichier auto-généré pour la Référence API extension : complétions (ne *JAMAIS* mettre à jour manuellement !).
-|          autogen_api_hdata.XX.adoc            | Fichier auto-généré pour la Référence API extension : hdata (ne *JAMAIS* mettre à jour manuellement !).
-|          autogen_api_infolists.XX.adoc        | Fichier auto-généré pour la Référence API extension : infolists (ne *JAMAIS* mettre à jour manuellement !).
-|          autogen_api_infos.XX.adoc            | Fichier auto-généré pour la Référence API extension : infos (ne *JAMAIS* mettre à jour manuellement !).
-|          autogen_api_infos_hashtable.XX.adoc  | Fichier auto-généré pour la Référence API extension : infos hashtable (ne *JAMAIS* mettre à jour manuellement !).
-|          autogen_api_plugins_priority.XX.adoc | Fichier auto-généré pour la Référence API extension : priorités des extensions (ne *JAMAIS* mettre à jour manuellement !).
-|          autogen_api_url_options.XX.adoc      | Fichier auto-généré pour la Référence API extension : options pour les URLs (ne *JAMAIS* mettre à jour manuellement !).
-|          autogen_user_commands.XX.adoc        | Fichier auto-généré pour le Guide utilisateur : commandes (ne *JAMAIS* mettre à jour manuellement !).
-|          autogen_user_default_aliases.XX.adoc | Fichier auto-généré pour le Guide utilisateur : alias par défaut (ne *JAMAIS* mettre à jour manuellement !).
-|          autogen_user_irc_colors.XX.adoc      | Fichier auto-généré pour le Guide utilisateur : couleurs IRC (ne *JAMAIS* mettre à jour manuellement !).
-|          autogen_user_options.XX.adoc         | Fichier auto-généré pour le Guide utilisateur : options de configuration (ne *JAMAIS* mettre à jour manuellement !).
 |          cmdline_options.XX.adoc              | Options de ligne de commande (fichier inclus dans les pages de manuel et le guide utilisateur).
 |          man.XX.adoc                          | Parties des pages de manuel : options d'extension, fichiers et copyright.
 |===
@@ -757,7 +747,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 [[coding_python_style]]
 === Style Python
 
-Voir https://www.python.org/dev/peps/pep-0008/[PEP 8 ^↗^,window=_blank].
+Voir https://www.python.org/dev/peps/pep-0008/[PEP 8 ^↗^^].
 
 [[core_internals]]
 == Intérieur du cœur
@@ -1051,6 +1041,8 @@ fichier _src/gui/gui-color.h_) :
 | 42   | weechat.color.emphasized _(WeeChat ≥ 0.4.2)_
 | 43   | weechat.color.chat_day_change _(WeeChat ≥ 0.4.2)_
 | 44   | weechat.color.chat_value_null _(WeeChat ≥ 1.4)_
+| 45   | weechat.color.chat_status_disabled _(WeeChat ≥ 4.0.0)_
+| 46   | weechat.color.chat_status_enabled _(WeeChat ≥ 4.0.0)_
 |===
 
 Les couleurs WeeChat sont :
@@ -1145,7 +1137,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 [[git_repository]]
 === Dépôt Git
 
-Le dépôt Git est sur https://github.com/weechat/weechat[GitHub ^↗^,window=_blank].
+Le dépôt Git est sur https://github.com/weechat/weechat[GitHub ^↗^^].
 
 Tout patch pour un bug ou une nouvelle fonctionnalité doit être effectué sur la
 branche master, le format préféré étant une "pull request" sur GitHub. Un patch
@@ -1184,8 +1176,7 @@ Où _composant_ est :
 | CMakeLists.txt +
   cmake/* +
   tools/* +
-  weechat.cygport.in +
-  weechat.spec
+  weechat.cygport.in
 | Construction
 
 | ci
@@ -1295,27 +1286,13 @@ Vous pouvez alors éditer les fichiers .po (si vous pouvez traduire dans une
 langue).
 
 Une fois terminé, vous *devez* vérifier votre fichier avec
-https://github.com/flashcode/msgcheck[msgcheck ^↗^,window=_blank] :
+https://github.com/flashcode/msgcheck[msgcheck ^↗^^] :
 
 ----
 $ msgcheck.py xx.po
 ----
 
 Et vous pouvez alors recompiler WeeChat pour utiliser les nouvelles traductions.
-
-[[build_autogen_files]]
-===== Construire les fichiers auto-générés
-
-Les fichiers nommés `+autogen_*+` dans le répertoire _doc/XX/includes/_ sont
-automatiquement générés par le script _doc/docgen.py_.
-
-Vous pouvez reconstruire les fichiers automatiquement générés directement dans
-vos sources WeeChat en lançant WeeChat dans un répertoire temporaire et en
-chargeant le script :
-
-----
-weechat -t -r "/python load /path/to/weechat/doc/docgen.py;/docgen;/quit"
-----
 
 [[asciidoc]]
 ==== Asciidoc

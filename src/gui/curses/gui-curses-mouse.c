@@ -43,23 +43,20 @@
 #include "../gui-key.h"
 #include "../gui-mouse.h"
 #include "../gui-window.h"
+#include "gui-curses-mouse.h"
 
-
-#define MOUSE_CODE_BUTTON(code) ((code >= 32) && (code < 64))
-#define MOUSE_CODE_MOTION(code) ((code >= 64) && (code < 96))
-#define MOUSE_CODE_END(code)    ((code == '#') || (code == '3')         \
-                                 || (code == '+') || (code == ';'))
 
 char *gui_mouse_wheel_codes[][2] =
 { { "`",  "wheelup"            },
   { "p",  "ctrl-wheelup"       },
   { "h",  "alt-wheelup"        },
-  { "x",  "ctrl-alt-wheelup"   },
+  { "x",  "alt-ctrl-wheelup"   },
   { "a",  "wheeldown"          },
   { "q",  "ctrl-wheeldown"     },
   { "i",  "alt-wheeldown"      },
-  { "y",  "ctrl-alt-wheeldown" },
+  { "y",  "alt-ctrl-wheeldown" },
   { NULL, NULL                 } };
+
 char *gui_mouse_button_codes[][2] =
 { { " ",  "button1"            },
   { "\"", "button2"            },
@@ -76,7 +73,7 @@ char *gui_mouse_button_codes[][2] =
   { "(",  "alt-button1"        },
   { "*",  "alt-button2"        },
   { ")",  "alt-button3"        },
-  { "8",  "ctrl-alt-button1"   },
+  { "8",  "alt-ctrl-button1"   },
   { NULL, NULL                 } };
 
 
@@ -439,6 +436,9 @@ gui_mouse_event_end ()
     const char *mouse_key;
     int bare_event;
 
+    if (gui_key_debug)
+        gui_key_debug_print_key (gui_key_combo, NULL, NULL, NULL, 1);
+
     gui_mouse_event_pending = 0;
 
     /* end mouse event timer */
@@ -449,7 +449,7 @@ gui_mouse_event_end ()
     }
 
     /* get key from mouse code */
-    mouse_key = gui_mouse_event_code2key (gui_key_combo_buffer);
+    mouse_key = gui_mouse_event_code2key (gui_key_combo);
     if (mouse_key && mouse_key[0])
     {
         bare_event = string_match (mouse_key, "*-event-*", 1);
@@ -458,7 +458,7 @@ gui_mouse_event_end ()
             if (!bare_event)
                 gui_mouse_grab_end (mouse_key);
         }
-        else
+        else if (!gui_key_debug)
         {
             /* execute command (if found) */
             (void) gui_key_focus (mouse_key,
@@ -468,5 +468,5 @@ gui_mouse_event_end ()
             gui_mouse_event_reset ();
     }
 
-    gui_key_combo_buffer[0] = '\0';
+    gui_key_combo[0] = '\0';
 }

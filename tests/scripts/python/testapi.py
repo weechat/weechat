@@ -151,6 +151,11 @@ def config_reload_cb(data, config_file):
     return weechat.WEECHAT_RC_OK
 
 
+def config_update_cb(data, config_file, version, data_read):
+    """Config update callback."""
+    return weechat.WEECHAT_RC_OK
+
+
 def section_read_cb(data, config_file, section, option_name, value):
     """Section read callback."""
     return weechat.WEECHAT_RC_OK
@@ -199,6 +204,9 @@ def test_config():
         'config_reload_cb', 'config_reload_data',
     )
     check(ptr_config != '')
+    # set version
+    weechat.config_set_version(ptr_config, 2,
+                               'config_update_cb', 'config_update_data')
     # section
     ptr_section = weechat.config_new_section(
         ptr_config, 'section1', 0, 0,
@@ -561,7 +569,7 @@ def test_hdata():
     check(weechat.hdata_get_var_type_string(hdata_line_data, 'prefix') == 'shared_string')
     check(weechat.hdata_get_var_type_string(hdata_line_data, 'date') == 'time')
     check(weechat.hdata_get_var_type_string(hdata_hotlist, 'creation_time.tv_usec') == 'long')
-    check(weechat.hdata_get_var_type_string(hdata_irc_server, 'gnutls_sess') == 'other')
+    check(weechat.hdata_get_var_type_string(hdata_irc_server, 'sasl_scram_salted_pwd') == 'other')
     # hdata_get_var_array_size
     check(weechat.hdata_get_var_array_size(hdata_buffer, buffer2, 'name') == -1)
     check(weechat.hdata_get_var_array_size(hdata_buffer, buffer2, 'highlight_tags_array') >= 0)

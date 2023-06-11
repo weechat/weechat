@@ -2,24 +2,17 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ja-jp
-:toc: left
-:toclevels: 3
 :toc-title: 目次
-:sectnums:
-:docinfo1:
-
 
 翻訳者:
 
 * Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2014-2019
 
-
 このマニュアルは WeeChat チャットクライアントについての文書で、これは WeeChat の一部です。
 
 // TRANSLATION MISSING
 Latest version of this document can be found on
-https://weechat.org/doc/[this page ^↗^,window=_blank].
-
+https://weechat.org/doc/[this page ^↗^^].
 
 [[introduction]]
 == はじめに
@@ -38,7 +31,7 @@ WeeChat (Wee Enhanced Environment for Chat)
 [[repositories]]
 == リポジトリ
 
-WeeChat リポジトリは GitHub organization の https://github.com/weechat[weechat ^↗^,window=_blank] にあります:
+WeeChat リポジトリは GitHub organization の https://github.com/weechat[weechat ^↗^^] にあります:
 
 リポジトリのリスト:
 
@@ -50,7 +43,7 @@ scripts::
 
 // TRANSLATION MISSING
 weechat.org::
-    source of https://weechat.org/[WeeChat website ^↗^,window=_blank]
+    source of https://weechat.org/[WeeChat website ^↗^^]
 
 weercd::
     IRC テストサーバ
@@ -141,6 +134,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    wee-debug.c                  | デバッグ用関数
 // TRANSLATION MISSING
 |    wee-dir.c                    | Directory/file functions.
+// TRANSLATION MISSING
+|    wee-doc.c                    | Build of files for documentation.
 |    wee-eval.c                   | 内部変数へのリファレンスを含む式を評価
 |    wee-hashtable.c              | ハッシュテーブル
 |    wee-hdata.c                  | hdata (ハッシュテーブルを用いて直接データを読む)
@@ -285,6 +280,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    irc/                           | IRC (Internet Relay Chat) プラグイン
 |       irc.c                       | IRC の主要関数
 |       irc-bar-item.c              | IRC バー要素
+// TRANSLATION MISSING
+|       irc-batch.c                 | IRC batched events.
 |       irc-buffer.c                | IRC バッファ
 |       irc-channel.c               | IRC チャンネル
 |       irc-color.c                 | IRC 色
@@ -304,7 +301,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       irc-msgbuffer.c             | IRC メッセージを送るバッファ
 |       irc-nick.c                  | IRC ニックネーム
 |       irc-notify.c                | IRC 通知リスト
-|       irc-protocol.c              | IRC プロトコル (RFC 1459/2810/2811/2812/2813)
+|       irc-protocol.c              | IRC プロトコル (RFC 1459/2810/2811/2812/2813/7194)
 |       irc-raw.c                   | IRC 生バッファ
 |       irc-redirect.c              | IRC コマンド出力のリダイレクト
 |       irc-sasl.c                  | IRC サーバに対する SASL 認証
@@ -416,6 +413,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 | パス/ファイル名                     | 説明
 | tests/                              | テスト用のルートディレクトリ
 |    tests.cpp                        | 全テストの実行時に使われるプログラム
+// TRANSLATION MISSING
+|    tests-record.cpp                 | Record and search in messages displayed.
 |    scripts/                         | スクリプト API テスト用のルートディレクトリ
 |       test-scripts.cpp              | スクリプト API テストの実行時に使われるプログラム
 |       python/                       | スクリプト API テストを生成、実行する Python スクリプト
@@ -472,6 +471,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       plugins/                      | プラグインの単体テストを収める最上位ディレクトリ
 |          irc/                       | IRC プラグインの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
+|             test-irc-batch.cpp      | Tests: IRC batched events.
+// TRANSLATION MISSING
 |             test-irc-buffer.cpp     | Tests: IRC buffers.
 // TRANSLATION MISSING
 |             test-irc-channel.cpp    | Tests: IRC channels.
@@ -497,7 +498,11 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |          logger/                    | Root of unit tests for logger plugin.
 // TRANSLATION MISSING
+|             test-logger.cpp         | Tests: logger.
+// TRANSLATION MISSING
 |             test-logger-backlog.cpp | Tests: logger backlog.
+// TRANSLATION MISSING
+|             test-logger-tail.cpp    | Tests: logger tail functions.
 // TRANSLATION MISSING
 |          trigger/                   | Root of unit tests for trigger plugin.
 // TRANSLATION MISSING
@@ -514,6 +519,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          relay/                     | Root of unit tests for Relay plugin.
 // TRANSLATION MISSING
 |             test-relay-auth.cpp     | Tests: clients authentication.
+// TRANSLATION MISSING
+|             irc/                    | Root of unit tests for Relay "irc" protocol.
+// TRANSLATION MISSING
+|                test-relay-irc.cpp   | Tests: Relay "irc" protocol.
 // TRANSLATION MISSING
 |          xfer/                      | Root of unit tests for Xfer plugin.
 // TRANSLATION MISSING
@@ -532,30 +541,17 @@ WeeChat "core" は以下のディレクトリに配置されています:
 | パス/ファイル名                               | 説明
 | doc/                                          | 文書
 |    docinfo.html                               | asciidoctor スタイル
-// TRANSLATION MISSING
-|    docgen.py                                  | Python script to build auto-generated files in _includes/_ directory (see below).
 |    XX/                                        | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
 |       weechat.1.XX.adoc                       | man ページ (`man weechat`)
-|       weechat_dev.XX.adoc                     | link:weechat_dev.ja.html[開発者リファレンス ^↗^,window=_blank] (この文書)
-|       weechat_faq.XX.adoc                     | link:weechat_faq.ja.html[FAQ ^↗^,window=_blank]
-|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.ja.html[プラグイン API リファレンス ^↗^,window=_blank]
-|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.ja.html[クイックスタートガイド ^↗^,window=_blank]
-|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.ja.html[リレープロトコル ^↗^,window=_blank] (リモートインターフェース用)
-|       weechat_scripting.XX.adoc               | link:weechat_scripting.ja.html[スクリプト作成ガイド ^↗^,window=_blank]
-|       weechat_user.XX.adoc                    | link:weechat_user.ja.html[ユーザーズガイド ^↗^,window=_blank]
+|       weechat_dev.XX.adoc                     | link:weechat_dev.ja.html[開発者リファレンス ^↗^^] (この文書)
+|       weechat_faq.XX.adoc                     | link:weechat_faq.ja.html[FAQ ^↗^^]
+|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.ja.html[プラグイン API リファレンス ^↗^^]
+|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.ja.html[クイックスタートガイド ^↗^^]
+|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.ja.html[リレープロトコル ^↗^^] (リモートインターフェース用)
+|       weechat_scripting.XX.adoc               | link:weechat_scripting.ja.html[スクリプト作成ガイド ^↗^^]
+|       weechat_user.XX.adoc                    | link:weechat_user.ja.html[ユーザーズガイド ^↗^^]
 // TRANSLATION MISSING
 |       includes/                               | Files included in documentation.
-|          autogen_api_completions.XX.adoc      | Auto-generated file for Plugin API reference: completions (do *NEVER* update manually!).
-|          autogen_api_hdata.XX.adoc            | Auto-generated file for Plugin API reference: hdata (do *NEVER* update manually!).
-|          autogen_api_infolists.XX.adoc        | Auto-generated file for Plugin API reference: infolists (do *NEVER* update manually!).
-|          autogen_api_infos.XX.adoc            | Auto-generated file for Plugin API reference: infos (do *NEVER* update manually!).
-|          autogen_api_infos_hashtable.XX.adoc  | Auto-generated file for Plugin API reference: infos hashtable (do *NEVER* update manually!).
-|          autogen_api_plugins_priority.XX.adoc | Auto-generated file for Plugin API reference: plugins priority (do *NEVER* update manually!).
-|          autogen_api_url_options.XX.adoc      | Auto-generated file for Plugin API reference: URL options (do *NEVER* update manually!).
-|          autogen_user_commands.XX.adoc        | Auto-generated file for User's guide: commands (do *NEVER* update manually!).
-|          autogen_user_default_aliases.XX.adoc | Auto-generated file for User's guide: default aliases (do *NEVER* update manually!).
-|          autogen_user_irc_colors.XX.adoc      | Auto-generated file for User's guide: IRC colors (do *NEVER* update manually!).
-|          autogen_user_options.XX.adoc         | Auto-generated file for User's guide: configuration options (do *NEVER* update manually!).
 // TRANSLATION MISSING
 |          cmdline_options.XX.adoc              | Command-line options (file included in man pages and user's guide).
 // TRANSLATION MISSING
@@ -806,7 +802,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 [[coding_python_style]]
 === Python スタイル
 
-https://www.python.org/dev/peps/pep-0008/[PEP 8 ^↗^,window=_blank] を参照
+https://www.python.org/dev/peps/pep-0008/[PEP 8 ^↗^^] を参照
 
 [[core_internals]]
 == コアの構造
@@ -1105,6 +1101,8 @@ could be used at same time in buffers).
 | 42   | weechat.color.emphasized _(WeeChat バージョン 0.4.2 以上で利用可)_
 | 43   | weechat.color.chat_day_change _(WeeChat バージョン 0.4.2 以上で利用可)_
 | 44   | weechat.color.chat_value_null _(WeeChat バージョン 1.4 以上で利用可)_
+| 45   | weechat.color.chat_status_disabled _(WeeChat バージョン 4.0.0 以上で利用可)_
+| 46   | weechat.color.chat_status_enabled _(WeeChat バージョン 4.0.0 以上で利用可)_
 |===
 
 WeeChat 色は:
@@ -1199,7 +1197,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 === Git リポジトリ
 
 // TRANSLATION MISSING
-Git repository is on https://github.com/weechat/weechat[GitHub ^↗^,window=_blank].
+Git repository is on https://github.com/weechat/weechat[GitHub ^↗^^].
 
 バグや新機能のパッチは必ず master ブランチに対して適用できるものを作成し、GitHub の pull
 リクエストを使って提出することを推奨します。パッチは電子メールで送信することも可能です
@@ -1240,8 +1238,7 @@ _component_ には以下から 1 つ選んで記入してください:
 | CMakeLists.txt +
   cmake/* +
   tools/* +
-  weechat.cygport.in +
-  weechat.spec |
+  weechat.cygport.in |
 // TRANSLATION MISSING
   Build
 
@@ -1365,28 +1362,13 @@ $ make translations && make update-po
 
 // TRANSLATION MISSING
 When done, you *have* to check your file with
-https://github.com/flashcode/msgcheck[msgcheck ^↗^,window=_blank]:
+https://github.com/flashcode/msgcheck[msgcheck ^↗^^]:
 
 ----
 $ msgcheck.py xx.po
 ----
 
 新しい翻訳を使うには WeeChat を再コンパイルしてください。
-
-[[build_autogen_files]]
-===== 自動生成ファイルを作成する
-
-// TRANSLATION MISSING
-Files named `+autogen_*+` in directory _doc/XX/includes/_ are auto-generated by
-script _doc/docgen.py_.
-
-// TRANSLATION MISSING
-You can rebuild auto-generated files directly in your WeeChat sources by
-running WeeChat in a temporary directory and loading the script:
-
-----
-weechat -t -r "/python load /path/to/weechat/doc/docgen.py;/docgen;/quit"
-----
 
 [[asciidoc]]
 ==== Asciidoc

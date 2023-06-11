@@ -139,43 +139,43 @@ TEST(CoreString, Strndup)
     str = string_strndup (str_test, 0);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, "");
+    STRCMP_EQUAL("", str);
     free (str);
 
     str = string_strndup (str_test, 1);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, "t");
+    STRCMP_EQUAL("t", str);
     free (str);
 
     str = string_strndup (str_test, 2);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, "te");
+    STRCMP_EQUAL("te", str);
     free (str);
 
     str = string_strndup (str_test, 3);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, "tes");
+    STRCMP_EQUAL("tes", str);
     free (str);
 
     str = string_strndup (str_test, 4);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, "test");
+    STRCMP_EQUAL("test", str);
     free (str);
 
     str = string_strndup (str_test, 5);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, "test");
+    STRCMP_EQUAL("test", str);
     free (str);
 
     str = string_strndup (str_test, 500);
     CHECK(str);
     CHECK(str != str_test);
-    STRCMP_EQUAL(str, str_test);
+    STRCMP_EQUAL(str_test, str);
     free (str);
 }
 
@@ -2490,6 +2490,7 @@ TEST(CoreString, InputForBuffer)
     POINTERS_EQUAL(NULL, string_input_for_buffer ("/"));
     POINTERS_EQUAL(NULL, string_input_for_buffer ("/abc"));
 
+    /* not commands */
     str = strdup ("");
     STRCMP_EQUAL(str, string_input_for_buffer (str));
     free (str);
@@ -2510,6 +2511,27 @@ TEST(CoreString, InputForBuffer)
     free (str);
     str = strdup ("//abc");
     STRCMP_EQUAL(str + 1, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("/abc/def /ghi");
+    STRCMP_EQUAL(str, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("/abc/def /ghi");
+    STRCMP_EQUAL(str, string_input_for_buffer (str));
+    free (str);
+
+    /* commands */
+    POINTERS_EQUAL(NULL, string_input_for_buffer (NULL));
+    str = strdup ("/");
+    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("/abc");
+    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("/abc /def");
+    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("/abc\n/def");
+    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
     free (str);
 
     /* test with custom command chars */

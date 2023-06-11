@@ -1,7 +1,0 @@
-DOMAIN = $(PACKAGE)
-subdir = po
-top_builddir = ..
-XGETTEXT_OPTIONS = --keyword=_ --keyword=weechat_gettext --keyword=N_ --keyword=NG_:1,2 --keyword=weechat_ngettext:1,2 --no-location --from-code=UTF-8
-COPYRIGHT_HOLDER =
-EXTRA_LOCALE_CATEGORIES =
-MSGID_BUGS_ADDRESS = flashcode@flashtux.org

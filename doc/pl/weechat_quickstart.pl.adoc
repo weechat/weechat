@@ -2,16 +2,11 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: pl
-:toc: left
 :toc-title: Spis treści
-:sectnums:
-:docinfo1:
-
 
 Tłumaczenie:
 
 * Krzysztof Korościk <soltys1@gmail.com>, 2009-2022
-
 
 [[start]]
 == Uruchamianie WeeChat
@@ -111,7 +106,7 @@ na liście "irc" oraz inne wtyczki.
 Możesz dodać serwer IRC za pomocą komendy `/server`, na przykład:
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 W tej komendzie `libera` to nazwa wewnętrzna używana przez WeeChat:
@@ -386,13 +381,13 @@ i zainstalować za pomocą komendy `/script`, na przykład:
 Więcej informacji można uzyskać wykonując komendę `/help script`.
 
 Listę skryptów możesz zobaczyć w WeeChat za pomocą polecenia `/script`
-lub https://weechat.org/scripts/[na tej stronie ^↗^,window=_blank].
+lub https://weechat.org/scripts/[na tej stronie ^↗^^].
 
 [[more_doc]]
 == Więcej dokumentacji
 
 Możesz teraz zacząć używać WeeChat i przeczytać
-https://weechat.org/doc/[FAQ/dokomentacje ^↗^,window=_blank]
+https://weechat.org/doc/[FAQ/dokomentacje ^↗^^]
 w razie dalszych pytań.
 
 Miłej pracy z WeeChat!

@@ -110,13 +110,51 @@ plugin_script_api_config_new (struct t_weechat_plugin *weechat_plugin,
         script,
         function_and_data);
 
-    if (!new_config_file)
-    {
-        if (function_and_data)
-            free (function_and_data);
-    }
+    if (!new_config_file && function_and_data)
+        free (function_and_data);
 
     return new_config_file;
+}
+
+/*
+ * Sets configuration file version and a callback to update config
+ * sections/options on-the-fly when the config is read.
+ *
+ * Returns pointer to new configuration file, NULL if error.
+ */
+
+int
+plugin_script_api_config_set_version (struct t_weechat_plugin *weechat_plugin,
+                                      struct t_plugin_script *script,
+                                      struct t_config_file *config_file,
+                                      int version,
+                                      struct t_hashtable *(*callback_update)(const void *pointer,
+                                                                             void *data,
+                                                                             struct t_config_file *config_file,
+                                                                             int version_read,
+                                                                             struct t_hashtable *data_read),
+                                      const char *function,
+                                      const char *data)
+{
+    char *function_and_data;
+    int rc;
+
+    if (!script)
+        return 0;
+
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
+    rc = weechat_config_set_version (
+        config_file,
+        version,
+        (function_and_data) ? callback_update : NULL,
+        script,
+        function_and_data);
+
+    if (!rc && function_and_data)
+        free (function_and_data);
+
+    return rc;
 }
 
 /*

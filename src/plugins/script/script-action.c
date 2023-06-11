@@ -993,6 +993,15 @@ script_action_show_source_process_cb (const void *pointer, void *data,
                                 ptr_line = fgets (line, sizeof (line) - 1, file);
                                 if (ptr_line)
                                 {
+                                    /* remove trailing '\r' and '\n' */
+                                    length = strlen (line) - 1;
+                                    while ((length >= 0)
+                                           && ((line[length] == '\n')
+                                               || (line[length] == '\r')))
+                                    {
+                                        line[length] = '\0';
+                                        length--;
+                                    }
                                     weechat_printf_y (script_buffer,
                                                       script_buffer_detail_script_last_line++,
                                                       "%s", ptr_line);

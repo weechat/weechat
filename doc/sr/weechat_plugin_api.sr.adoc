@@ -2,23 +2,16 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: sr
-:toc: left
-:toclevels: 4
 :toc-title: Садржај
-:sectnums:
-:sectnumlevels: 3
-:docinfo1:
 
 Превод:
 
 * Иван Пешић (<ivan.pesic@gmail.com>), 2021.
 
-
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
 Последња верзија овог документа се налази на
-https://weechat.org/doc/[овој страници ^↗^,window=_blank].
-
+https://weechat.org/doc/[овој страници ^↗^^].
 
 [[introduction]]
 == Увод
@@ -129,7 +122,7 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 
 Подразумевани додаци програма WeeChat се иницијализују у следећем редоследу:
 
-include::includes/autogen_api_plugins_priority.sr.adoc[tag=plugins_priority]
+include::{autogendir}/autogen_api_plugins_priority.sr.adoc[tag=plugins_priority]
 
 ==== weechat_plugin_end
 
@@ -267,7 +260,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
 Регистрација скрипте.
 
-За више информација, погледајте link:weechat_plugin_api.sr.html[WeeChat водич за скриптовање ^↗^,window=_blank].
+За више информација, погледајте link:weechat_plugin_api.sr.html[WeeChat водич за скриптовање ^↗^^].
 
 Скрипта (Python):
 
@@ -1913,7 +1906,7 @@ _WeeChat ≥ 1.0._
 
 Ова функција је C конверзија Python класе "shlex" (фајл: Lib/shlex.py у
 Python репозиторијуму), погледајте
-https://docs.python.org/3/library/shlex.html[ову страницу ^↗^,window=_blank].
+https://docs.python.org/3/library/shlex.html[ову страницу ^↗^^].
 
 Прототип:
 
@@ -2486,7 +2479,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6 и 3.8._
+_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6 и 3.8, 4.0.0._
 
 Израчунава израз и враћа вредност као стринг. Специјалне променљиве у формату `+${променљива}+` се развијају (погледајте табелу испод).
 
@@ -3185,7 +3178,9 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+${hdata[листа].пром1.пром2...}+` |
 | Hdata вредност (показивачи `window` и `buffer` се подразумевано постављају на текући
   прозор/бафер), `листа` може бити име листе (пример: „gui_buffers”), показивач
-  (пример: „0x1234abcd”) или име показивача (пример: „my_pointer”).
+  (пример: „0x1234abcd”) или име показивача (пример: „my_pointer”). +
+  Када је `var1` хеш табела, могу да се позову методе `keys()`, `values()`, `keys_sorted()`,
+  `keys_values()` и `keys_values_sorted()`.
 | >> `+${buffer[gui_buffers].full_name}+` +
   == `+core.weechat+` +
   +
@@ -3193,7 +3188,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   == `+core.weechat+` +
   +
   >> `+${window.buffer.number}+` +
-  == `+1+`
+  == `+1+` +
+  +
+  >> `+${buffer.local_variables.keys_values()}+` +
+  == `+plugin:core,name:weechat+` +
+  +
+  >> `+${buffer.local_variables.plugin}+` +
+  == `+core+`
 |===
 
 ==== string_dyn_alloc
@@ -3697,7 +3698,7 @@ int weechat_utf8_char_size_screen (const char *string);
 изузетак следећих карактера који у програму WeeChat имају посебну улогу:
 
 * U+0009 (Табулатор): вредност опције
-  link:weechat_user.sr.html#option_weechat.look.tab_width[weechat.look.tab_width ^↗^,window=_blank]
+  link:weechat_user.sr.html#option_weechat.look.tab_width[weechat.look.tab_width ^↗^^]
 * U+0001 (1) до U+001F (31), осим U+0009 (Табулатор): 1
 * U+00AD (173, мека цртица): -1
 * U+200B (8203, размак нулте ширине): -1
@@ -4520,6 +4521,8 @@ version_number = weechat_util_version_number ("0.3.8");      /* == 0x00030800 */
 version_number = weechat_util_version_number ("0.3.9-dev");  /* == 0x00030900 */
 version_number = weechat_util_version_number ("0.3.9-rc1");  /* == 0x00030900 */
 version_number = weechat_util_version_number ("0.3.9");      /* == 0x00030900 */
+version_number = weechat_util_version_number ("1.0");        /* == 0x01000000 */
+version_number = weechat_util_version_number ("4.0.0");      /* == 0x04000000 */
 ----
 
 [NOTE]
@@ -6106,7 +6109,7 @@ weechat_hashtable_free (hashtable);
 
 ==== config_new
 
-_Ажурирано у верзији 1.5, 3.9._
+_Ажурирано у верзији 1.5, 4.0.0._
 
 Креира нови конфигурациони фајл.
 
@@ -6127,7 +6130,7 @@ struct t_config_file *weechat_config_new (const char *name,
 * _name_: име конфигурационог фајла (без путање или екстензије); приоритет
   је дозвољен испред имена, у формату `nnn|име` где је `nnn` цео позитиван број
   који представља приоритет; подразумевани приоритет је 1000; када се извршава
-  команда `/reload` фајлови се сортирају према приоритету, од вишег ка нижем 
+  команда `/reload` фајлови се сортирају према приоритету, од вишег ка нижем
   (погледајте приоритет конфигурационих фајлова испод)
 * _callback_reload_: функција која се позива када се командом `/reload` поново учита конфигурациони фајл (није обавезна, може да буде NULL, погледајте испод), аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
@@ -6155,7 +6158,7 @@ struct t_config_file *weechat_config_new (const char *name,
 
 Приоритет подразумеваних конфигурационих фајлова:
 
-include::includes/autogen_api_config_priority.sr.adoc[tag=config_priority]
+include::{autogendir}/autogen_api_config_priority.sr.adoc[tag=config_priority]
 
 C пример:
 
@@ -6188,6 +6191,182 @@ def my_config_reload_cb(data: str, config_file: str) -> int:
     return weechat.WEECHAT_RC_OK
 
 config_file = weechat.config_new("test", "my_config_reload_cb", "")
+----
+
+==== config_set_version
+
+_WeeChat ≥ 4.0.0._
+
+Поставља верзију конфигурационог фајла и функцију повратног позива за ажурирање конфигурационих
+одељака/опција у лету, док се чита конфигурација.
+
+Прототип:
+
+[source,c]
+----
+int config_file_set_version (struct t_config_file *config_file,
+                             int version,
+                             struct t_hashtable *(*callback_update)(const void *pointer,
+                                                                    void *data,
+                                                                    struct t_config_file *config_file,
+                                                                    int version_read,
+                                                                    struct t_hashtable *data_read),
+                             const void *callback_update_pointer,
+                             void *callback_update_data);
+----
+
+Аргументи:
+
+* _config_file_: configuration file pointer
+* _version_: version, must be ≥ 2
+* _callback_update_: function called when configuration file is read, for each
+  section and each option, if the version read is less than the expected version,
+  (optional, can be NULL, see below), arguments and return value:
+** _const void *pointer_: pointer
+** _void *data_: pointer
+** _struct t_config_file *config_file_: configuration file pointer
+** _int version_read_: version read in configuration file (1 by default)
+** _struct t_hashtable *data_read_: hashtable with data read from configuration file
+   (see below)
+** return value:
+*** either "data_read" pointer (hashtable completed), or pointer to a new
+    hashtable (created by callback, with keys and values of type "string")
+* _callback_update_pointer_: pointer given to callback when it is called by
+  WeeChat
+* _callback_update_data_: pointer given to callback when it is called by
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it is automatically freed when the configuration file is freed
+
+Update callback:
+
+* The callback receives a hashtable with data read from configuration file:
+
+[width="100%",cols="1m,2,8",options="header"]
+|===
+| Key        | Availability    | Value
+| config     | Always set      | Name of configuration file, without extension (eg: `weechat`)
+| section    | Always set      | Name of section being read
+| option     | For option only | Name of the option
+| value      | For option only | Value of the option (if not NULL)
+| value_null | For option only | Option as NULL value (value is always `1`)
+|===
+
+* The callback can update "section" for a line with a section and "option", "value"
+  and "value_null" for a line with an option.
+* If "option" is set to empty string by the callback, the line read in
+  configuration file is ignored.
+* Field "value_null" is set to force a NULL value for the option.
+
+Повратна вредност:
+
+* 1 if OK, 0 if error
+
+C пример:
+
+[source,c]
+----
+struct t_hashtable *
+my_config_update_cb (const void *pointer, void *data,
+                     struct t_config_file *config_file,
+                     int version_read,
+                     struct t_hashtable *data_read)
+{
+    const char *ptr_section, *ptr_option;
+
+    /* return now if version is already up-to-date */
+    if (version_read >= 2)
+        return NULL;
+
+    ptr_section = hashtable_get (data_read, "section");
+    ptr_option = hashtable_get (data_read, "option");
+
+    /* rename section "abc" to "def" */
+    if (ptr_section && !ptr_option && (strcmp (ptr_section, "abc") == 0))
+    {
+        hashtable_set (data_read, "section", "def");
+        return data_read;
+    }
+
+    /* limit other changes to section "test" */
+    if (!ptr_section || !ptr_option || (strcmp (ptr_section, "test") != 0))
+        return NULL;
+
+    /* rename option "test1" to "test2" */
+    if (strcmp (ptr_option, "test1") == 0)
+    {
+        hashtable_set (data_read, "option", "test2");
+        return data_read;
+    }
+
+    /* set value to "xxx" for option "test" */
+    if (strcmp (ptr_option, "test") == 0)
+    {
+        hashtable_set (data_read, "value", "xxx");
+        return data_read;
+    }
+
+    /* set value to NULL for option "test_null" */
+    if (strcmp (ptr_option, "test_null") == 0)
+    {
+        hashtable_set (data_read, "value_null", "1");
+        return data_read;
+    }
+
+    /* no changes */
+    return NULL;
+}
+
+struct t_config_file *config_file = weechat_config_new ("test", NULL, NULL, NULL);
+weechat_config_set_version (config_file, 2, &my_config_update_cb, NULL, NULL);
+weechat_config_read (config_file);
+----
+
+Script (Python):
+
+[source,python]
+----
+# прототип
+def config_set_version(config_file: str, version: int, callback_update: str, callback_update_data: str) -> int: ...
+
+# пример
+def my_config_update_cb(data: str, config_file: str, version_read: int, data_read: Dict[str, str]) -> Dict[str, str]:
+    # return now if version is already up-to-date
+    if version_read >= 2:
+        return {}
+
+    section = data_read.get("section")
+    option = data_read.get("option")
+
+    # rename section "abc" to "def"
+    if section and not option and section == "abc":
+        data_read["section"] = "def"
+        return data_read
+
+    # limit other changes to section "test"
+    if not section or not option or section != "test":
+        return {}
+
+    # rename option "test1" to "test2"
+    if option == "test1":
+        data_read["option"] = "test2"
+        return data_read
+
+    # set value to "xxx" for option "test"
+    if option == "test":
+        data_read["value"] = "xxx"
+        return data_read
+
+    # set value to NULL for option "test_null"
+    if option == "test_null":
+        data_read["value_null"] = "1"
+        return data_read
+
+    # no changes
+    return {}
+
+config_file = weechat.config_new("test", "", "")
+weechat.config_set_version(config_file, 2, "my_config_update_cb", "")
+weechat.config_read(config_file)
 ----
 
 ==== config_new_section
@@ -6720,7 +6899,7 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 ----
 
 [NOTE]
-У језику Ruby, 3 функције повратног позива + подаци (6 стрингова) морају да се наведу у низу од 6 стрингова (услед Ruby ограничења од 15 аргумената по функцији), за више информација, погледајте link:++weechat_scripting.sr.html#_ruby++[WeeChat водич за скриптовање ^↗^,window=_blank] _(исправљено у верзији 0.4.1)_.
+У језику Ruby, 3 функције повратног позива + подаци (6 стрингова) морају да се наведу у низу од 6 стрингова (услед Ruby ограничења од 15 аргумената по функцији), за више информација, погледајте link:++weechat_scripting.sr.html#_ruby++[WeeChat водич за скриптовање ^↗^^] _(исправљено у верзији 0.4.1)_.
 
 ==== config_search_option
 
@@ -8755,7 +8934,7 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 * _tags_: листа ознака раздвојених запетама (NULL значи да нема ознака)
 * _message_: порука која треба да се прикаже
 
-За листу ознака које се уобичјаено користе у програму WeeChat, погледајте link:weechat_user.sr.html#lines_tags[Корисничко упутство / Ознаке линија ^↗^,window=_blank].
+За листу ознака које се уобичјаено користе у програму WeeChat, погледајте link:weechat_user.sr.html#lines_tags[Корисничко упутство / Ознаке линија ^↗^^].
 
 C пример:
 
@@ -9012,7 +9191,7 @@ _completion_ шаблон је листа довршавања за сваки �
 
 Подразумевани кодови довршавања су:
 
-include::includes/autogen_api_completions.sr.adoc[tag=completions]
+include::{autogendir}/autogen_api_completions.sr.adoc[tag=completions]
 
 Специјални кодови:
 
@@ -9479,7 +9658,7 @@ struct t_hook *weechat_hook_process (const char *command,
 [TIP]
 Ако желите да добијете информације у вези са WeeChat (као што је текућа стабилна верзија,
 последњи гит комит, итд.), можете да употребите URL адресе на
-https://weechat.org/dev/info/[овој страници ^↗^,window=_blank].
+https://weechat.org/dev/info/[овој страници ^↗^^].
 
 [NOTE]
 Величина бафера за слање података је 64KB (постоји 2 бафера: један за stdout и једна за stderr). Ако је излаз из дете процеса (stdout или stderr) дужи од 64KB, функција повратног позива ће се позивати више пута.
@@ -9667,7 +9846,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 
 За команду „url:...” су доступне следеће опције (за опис сваке опције погледајте `+man curl_easy_setopt+`):
 
-include::includes/autogen_api_url_options.sr.adoc[tag=url_options]
+include::{autogendir}/autogen_api_url_options.sr.adoc[tag=url_options]
 
 [NOTE]
 ^(1)^ За опције типа „mask”, формат је: „вредност1+вредност2+вредност3”; за опције типа „list”, ставке листе морају да се раздвоје преломом линије (`\n`). +
@@ -10984,7 +11163,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 | weechat | [[hook_signal_upgrade]] upgrade |
 | Стринг: „quit” ако је уз /upgrade наведен аргумент „-quit”, „save”
-  ако је уз /upgrade  наведен аргумент „-save”, у супротном NULL. 
+  ако је уз /upgrade  наведен аргумент „-save”, у супротном NULL.
 | Корисник је задао команду `/upgrade`.
 
 | weechat | [[hook_signal_upgrade_ended]] upgrade_ended | 0.3.4
@@ -11745,6 +11924,17 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 |===
 | Модификатор | Мин WeeChat | Подаци модификатора | Стринг | Излаз
 
+| [[hook_modifier_irc_batch]] irc_batch | 4.0.0
+| Име сервера + "," + тип пакета + "," + параметри пакета
+| Садржај више порука, раздвојен карактером новог реда („\n”).
+| Нов садржај порука (број може да се разликује), празан стринг одбацује
+  све поруке у пакету.
+
+| [[hook_modifier_irc_cap_sync_req]] irc_cap_sync_req | 4.0.0
+| Име сервера + "," + подржане могућности сервера (раздвојене размацима)
+| Могућности које се захтевају (раздвојене размацима).
+| Нов садржај могућности које се захтевају (раздвојен размацима).
+
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
 | Име сервера
 | Садржај поруке примљене са IRC сервера (пре декодирања скупа карактера). +
@@ -11769,6 +11959,26 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 | Садржај поруке које треба да се пошаље IRC серверу након аутоматске поделе
   (да стане у 512 подразумевано).
 | Нови садржај поруке.
+
+// TRANSLATION MISSING
+| [[hook_modifier_relay_client_irc_in]] relay_client_irc_in | 4.0.0
+| String with relay client pointer (eg: "0x1234abcd")
+| Content of message received from relay IRC client.
+| New content of message.
+
+// TRANSLATION MISSING
+| [[hook_modifier_relay_client_irc_out1]] relay_client_irc_out1 | 4.0.0
+| String with relay client pointer (eg: "0x1234abcd")
+| Content of message about to be sent to relay IRC client before automatic split
+  (to fit in 512 bytes by default).
+| New content of message.
+
+// TRANSLATION MISSING
+| [[hook_modifier_relay_client_irc_out]] relay_client_irc_out | 4.0.0
+| String with relay client pointer (eg: "0x1234abcd")
+| Content of message about to be sent to relay IRC client after automatic split
+  (to fit in 512 bytes by default).
+| New content of message.
 
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
 | Стринг са показивачем на прозор (нпр: "0x1234abcd")
@@ -11925,13 +12135,13 @@ char *weechat_hook_modifier_exec (const char *modifier,
 | -
 | Било који стринг.
 | Стринг са означеном вредности IRC ознаке,
-  погледајте https://ircv3.net/specs/extensions/message-tags#escaping-values[ову страницу ^↗^,window=_blank].
+  погледајте https://ircv3.net/specs/extensions/message-tags#escaping-values[ову страницу ^↗^^].
 
 | [[hook_modifier_irc_tag_unescape_value]] irc_tag_unescape_value | 3.3
 | -
 | Било који стринг.
 | Стринг са неозначеном вредности IRC ознаке,
-  погледајте https://ircv3.net/specs/extensions/message-tags#escaping-values[ову страницу ^↗^,window=_blank].
+  погледајте https://ircv3.net/specs/extensions/message-tags#escaping-values[ову страницу ^↗^^].
 
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0
 | "1" да се боје задрже, "0" да се боје уклоне
@@ -12373,6 +12583,9 @@ struct t_hook *weechat_hook_focus (const char *area,
 
 | _chat_line_message | Порука линије.
 | "Hello world!" | ""
+
+| _chat_focused_line | Линија на (x,y) _(WeeChat ≥ 4.0.0)_.
+| "Здраво свима!" | ""
 
 | _chat_word | Реч на (x,y).
 | "Здраво" | ""
@@ -13310,9 +13523,12 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   "1": довршавање се не зауставља када се ажурира командна линија
   (глобално подешавање, не користи се показивач на бафер).
 
-| unread | | празан стринг или "0"
+| unread | | празан стринг, "0", "+N", "-N" или "N" (N је цео број)
 | празан стринг: поставља ознаку непрочитано након последње линије бафера +
-  "0": уклања ознаку непрочитано из бафера.
+  "0": уклања ознаку непрочитано из бафера +
+  "N": помера ознаку непрочитано N линија од краја према првој линији бафера +
+  "-N": помера ознаку непрочитано N линија према првој линији бафера +
+  "+N": помера ознаку непрочитано N линија према последњој линији бафера.
 
 | display | | "1" или "auto"
 | "1": прелазак на овај бафер у текућем прозору +
@@ -13597,7 +13813,7 @@ str = weechat.buffer_string_replace_local_var(my_buffer, "тест са $toto")
 
 ==== buffer_match_list
 
-_WeeChat ≥ 0.3.5, ажурирано у верзији 3.9._
+_WeeChat ≥ 0.3.5, ажурирано у верзији 4.0.0._
 
 Проверава да ли се бафер подудара са листом бафера.
 
@@ -13617,7 +13833,7 @@ int weechat_buffer_match_list (struct t_gui_buffer *buffer, const char *string);
 ** у имену је дозвољен џокер `+*+`
 
 [NOTE]
-Од верзије 3.9, поређење имена бафера прави разлику у величини слова.
+Од верзије 4.0.0, поређење имена бафера прави разлику у величини слова.
 
 Повратна вредност:
 
@@ -14923,7 +15139,7 @@ bar = weechat.bar_search("mybar")
 
 ==== bar_new
 
-_Ажурирано у верзији 2.9._
+_Ажурирано у верзији 2.9, 4.0.0._
 
 Креира нову траку.
 
@@ -14963,7 +15179,7 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 ** _active_: трака се приказује само у активном прозору
 ** _inactive_: трака се приказује само у неактивним прозорима
 ** _nicklist_: трака се приказује у прозорима са листом надимака
-** израчунати услови: погледајте link:weechat_user.sr.html#bar_conditions[WeeChat Корисничко упутство / Услови трака ^↗^,window=_blank].
+** израчунати услови: погледајте link:weechat_user.sr.html#bar_conditions[WeeChat Корисничко упутство / Услови трака ^↗^^].
 * _position_: _top_, _bottom_, _left_ или _right_
 * _filling_top_bottom_:
 ** _horizontal_: ставке се попуњавају хоризонтално (размак након сваке ставке)
@@ -14990,26 +15206,18 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 
 * показивач на нову траку, NULL у случају грешке
 
+[NOTE]
+Почевши од верзије 4.0.0, ако трака већ постоји, WeeChat примљене вредности као
+подразумеване вредности опција траке и уместо NULL враћа показивач на траку.
+
 C пример:
 
 [source,c]
 ----
-struct t_gui_bar *my_bar = weechat_bar_new ("mybar",
-                                            "off",
-                                            "100",
-                                            "window",
-                                            "",
-                                            "top",
-                                            "horizontal",
-                                            "vertical",
-                                            "0",
-                                            "5",
-                                            "default",
-                                            "cyan",
-                                            "blue",
-                                            "darkgray",
-                                            "off",
-                                            "time,buffer_number+buffer_name");
+struct t_gui_bar *my_bar = weechat_bar_new (
+    "mybar", "off", "100", "window", "", "top", "horizontal", "vertical",
+    "0", "5", "default", "cyan", "blue", "darkgray", "off",
+    "time,buffer_number+buffer_name");
 ----
 
 Скрипта (Python):
@@ -15028,7 +15236,7 @@ bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", 
 ----
 
 [NOTE]
-У програму WeeChat верзије ≥ 2.9, у језику Ruby, 4 боје (color_fg, color_delim, color_bg, color_bg_inactive) морају да се наведу у низу од 4 стринга (услед ограничења језика Ruby од 15 аргумената по функцији), за више информација погледајте link:++weechat_scripting.sr.html#_ruby++[WeeChat водич за скриптовање ^↗^,window=_blank].
+У програму WeeChat верзије ≥ 2.9, у језику Ruby, 4 боје (color_fg, color_delim, color_bg, color_bg_inactive) морају да се наведу у низу од 4 стринга (услед ограничења језика Ruby од 15 аргумената по функцији), за више информација погледајте link:++weechat_scripting.sr.html#_ruby++[WeeChat водич за скриптовање ^↗^^].
 
 ==== bar_set
 
@@ -15596,7 +15804,7 @@ char *weechat_info_get (const char *info_name, const char *arguments);
 
 Информације:
 
-include::includes/autogen_api_infos.sr.adoc[tag=infos]
+include::{autogendir}/autogen_api_infos.sr.adoc[tag=infos]
 
 C пример:
 
@@ -15651,11 +15859,12 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 
 Повратна вредност:
 
-* хеш табела са траженом инфо, NULL у случају да је дошло до грешке
+* хеш табела са траженом инфо, NULL у случају да је дошло до грешке (након
+  употребе мора да се ослободи позивом <<_hashtable_free,hashtable_free>>)
 
 Информације:
 
-include::includes/autogen_api_infos_hashtable.sr.adoc[tag=infos_hashtable]
+include::{autogendir}/autogen_api_infos_hashtable.sr.adoc[tag=infos_hashtable]
 
 C пример:
 
@@ -15703,7 +15912,7 @@ if (hashtable_in)
 ----
 
 [NOTE]
-Погледајте link:weechat_scripting.sr.html#irc_message_parse[WeeChat водич за скриптовање / Парсирање поруке ^↗^,window=_blank] за више информација у вези излаза „irc_message_parse”.
+Погледајте link:weechat_scripting.sr.html#irc_message_parse[WeeChat водич за скриптовање / Парсирање поруке ^↗^^] за више информација у вези излаза „irc_message_parse”.
 
 Скрипта (Python):
 
@@ -16044,7 +16253,7 @@ struct t_infolist *weechat_infolist_get (const char *infolist_name,
 
 Инфолисте:
 
-include::includes/autogen_api_infolists.sr.adoc[tag=infolists]
+include::{autogendir}/autogen_api_infolists.sr.adoc[tag=infolists]
 
 C пример:
 
@@ -16769,7 +16978,7 @@ struct t_hdata *weechat_hdata_get (const char *hdata_name);
 
 Листа hdata:
 
-include::includes/autogen_api_hdata.sr.adoc[tag=hdata]
+include::{autogendir}/autogen_api_hdata.sr.adoc[tag=hdata]
 
 C пример:
 
@@ -17304,7 +17513,7 @@ void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *se
 
 * _hdata_: показивач на hdata
 * _pointer_: показивач на објекат програма WeeChat/додатка
-* _search_: израз који се израчунава, подразумевани показивач у изразу је име hdata (и овај показивач се мења за сваки елемент у листи); за помоћ у вези израза, погледајте link:weechat_user.sr.html#command_weechat_eval[WeeChat корисничко упутство / Команда /eval ^↗^,window=_blank]
+* _search_: израз који се израчунава, подразумевани показивач у изразу је име hdata (и овај показивач се мења за сваки елемент у листи); за помоћ у вези израза, погледајте link:weechat_user.sr.html#command_weechat_eval[WeeChat корисничко упутство / Команда /eval ^↗^^]
 * _pointers_: хеш табела за позив функције <<_string_eval_expression,string_eval_expression>>
 * _extra_vars_: хеш табела за позив функције <<_string_eval_expression,string_eval_expression>>
 * _options_: хеш табела за позив функције <<_string_eval_expression,string_eval_expression>>

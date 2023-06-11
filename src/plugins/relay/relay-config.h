@@ -25,6 +25,8 @@
 #define RELAY_CONFIG_NAME "relay"
 #define RELAY_CONFIG_PRIO_NAME (TO_STR(RELAY_PLUGIN_PRIORITY) "|" RELAY_CONFIG_NAME)
 
+#define RELAY_CONFIG_VERSION 2
+
 extern struct t_config_file *relay_config_file;
 extern struct t_config_section *relay_config_section_port;
 extern struct t_config_section *relay_config_section_path;
@@ -50,8 +52,8 @@ extern struct t_config_option *relay_config_network_nonce_size;
 extern struct t_config_option *relay_config_network_password;
 extern struct t_config_option *relay_config_network_password_hash_algo;
 extern struct t_config_option *relay_config_network_password_hash_iterations;
-extern struct t_config_option *relay_config_network_ssl_cert_key;
-extern struct t_config_option *relay_config_network_ssl_priorities;
+extern struct t_config_option *relay_config_network_tls_cert_key;
+extern struct t_config_option *relay_config_network_tls_priorities;
 extern struct t_config_option *relay_config_network_totp_secret;
 extern struct t_config_option *relay_config_network_totp_window;
 extern struct t_config_option *relay_config_network_websocket_allowed_origins;

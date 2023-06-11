@@ -3,6 +3,5 @@
 .git*                  export-ignore
 debian-devel           export-ignore
 debian-stable          export-ignore
-weechat.spec           export-ignore
 .mailmap               export-ignore
 tools/build_debian.sh  export-ignore

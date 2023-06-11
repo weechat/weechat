@@ -1,5 +1,4 @@
 SET(WEECHAT_SOURCES
-./doc/docgen.py
 ./src/core/hook/wee-hook-command.c
 ./src/core/hook/wee-hook-command.h
 ./src/core/hook/wee-hook-command-run.c
@@ -58,6 +57,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-debug.h
 ./src/core/wee-dir.c
 ./src/core/wee-dir.h
+./src/core/wee-doc.c
+./src/core/wee-doc.h
 ./src/core/wee-eval.c
 ./src/core/wee-eval.h
 ./src/core/wee-hashtable.c
@@ -101,14 +102,21 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-version.c
 ./src/core/wee-version.h
 ./src/gui/curses/gui-curses-bar-window.c
+./src/gui/curses/gui-curses-bar-window.h
 ./src/gui/curses/gui-curses-chat.c
+./src/gui/curses/gui-curses-chat.h
 ./src/gui/curses/gui-curses-color.c
+./src/gui/curses/gui-curses-color.h
 ./src/gui/curses/gui-curses.h
 ./src/gui/curses/gui-curses-key.c
+./src/gui/curses/gui-curses-key.h
 ./src/gui/curses/gui-curses-main.c
+./src/gui/curses/gui-curses-main.h
 ./src/gui/curses/gui-curses-mouse.c
+./src/gui/curses/gui-curses-mouse.h
 ./src/gui/curses/gui-curses-term.c
 ./src/gui/curses/gui-curses-window.c
+./src/gui/curses/gui-curses-window.h
 ./src/gui/curses/headless/main.c
 ./src/gui/curses/headless/ncurses-fake.c
 ./src/gui/curses/headless/ncurses-fake.h
@@ -116,9 +124,9 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-bar.c
 ./src/gui/gui-bar.h
 ./src/gui/gui-bar-item.c
-./src/gui/gui-bar-item.h
 ./src/gui/gui-bar-item-custom.c
 ./src/gui/gui-bar-item-custom.h
+./src/gui/gui-bar-item.h
 ./src/gui/gui-bar-window.c
 ./src/gui/gui-bar-window.h
 ./src/gui/gui-buffer.c
@@ -179,6 +187,7 @@ SET(WEECHAT_SOURCES
 ./src/plugins/buflist/buflist-mouse.c
 ./src/plugins/buflist/buflist-mouse.h
 ./src/plugins/charset/charset.c
+./src/plugins/charset/charset.h
 ./src/plugins/exec/exec-buffer.c
 ./src/plugins/exec/exec-buffer.h
 ./src/plugins/exec/exec.c
@@ -221,6 +230,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/guile/weechat-guile.h
 ./src/plugins/irc/irc-bar-item.c
 ./src/plugins/irc/irc-bar-item.h
+./src/plugins/irc/irc-batch.c
+./src/plugins/irc/irc-batch.h
 ./src/plugins/irc/irc-buffer.c
 ./src/plugins/irc/irc-buffer.h
 ./src/plugins/irc/irc.c
@@ -275,8 +286,11 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-typing.h
 ./src/plugins/irc/irc-upgrade.c
 ./src/plugins/irc/irc-upgrade.h
+./src/plugins/javascript/weechat-js-api.cpp
 ./src/plugins/javascript/weechat-js-api.h
+./src/plugins/javascript/weechat-js.cpp
 ./src/plugins/javascript/weechat-js.h
+./src/plugins/javascript/weechat-js-v8.cpp
 ./src/plugins/javascript/weechat-js-v8.h
 ./src/plugins/logger/logger-backlog.c
 ./src/plugins/logger/logger-backlog.h
@@ -410,9 +424,9 @@ SET(WEECHAT_SOURCES
 ./src/plugins/trigger/trigger-config.c
 ./src/plugins/trigger/trigger-config.h
 ./src/plugins/trigger/trigger.h
-./src/plugins/typing/typing.c
 ./src/plugins/typing/typing-bar-item.c
 ./src/plugins/typing/typing-bar-item.h
+./src/plugins/typing/typing.c
 ./src/plugins/typing/typing-config.c
 ./src/plugins/typing/typing-config.h
 ./src/plugins/typing/typing.h

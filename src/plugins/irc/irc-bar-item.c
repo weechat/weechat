@@ -137,7 +137,7 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
             snprintf (buf_name, sizeof (buf_name), "%s%s[%s%s%s]",
                       _("server"),
                       IRC_COLOR_BAR_DELIM,
-                      (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
+                      (server && server->tls_connected) ? IRC_COLOR_STATUS_NAME_TLS : IRC_COLOR_STATUS_NAME_INSECURE,
                       server->name,
                       IRC_COLOR_BAR_DELIM);
         }
@@ -151,11 +151,11 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
                           "%s%s%s%s%s%s%s%s%s%s",
                           (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
                           (part_from_channel) ? "(" : "",
-                          (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
+                          (server && server->tls_connected) ? IRC_COLOR_STATUS_NAME_TLS : IRC_COLOR_STATUS_NAME_INSECURE,
                           (server && display_server) ? server->name : "",
                           (server && display_server) ? IRC_COLOR_BAR_DELIM : "",
                           (server && display_server) ? "/" : "",
-                          (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
+                          (server && server->tls_connected) ? IRC_COLOR_STATUS_NAME_TLS : IRC_COLOR_STATUS_NAME_INSECURE,
                           (short_name) ? weechat_buffer_get_string (buffer, "short_name") : channel->name,
                           (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
                           (part_from_channel) ? ")" : "");
@@ -190,7 +190,7 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
 
     snprintf (buf, sizeof (buf),
               "%s%s",
-              (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
+              (server && server->tls_connected) ? IRC_COLOR_STATUS_NAME_TLS : IRC_COLOR_STATUS_NAME_INSECURE,
               buf_name);
 
     return strdup (buf);
@@ -549,25 +549,34 @@ irc_bar_item_tls_version (const void *pointer, void *data,
     irc_buffer_get_server_and_channel (buffer, &server, NULL);
     if (server && server->is_connected)
     {
-        if (server->ssl_connected)
+        if (server->tls_connected)
         {
-            version = gnutls_protocol_get_version (server->gnutls_sess);
-            switch (version)
+            if (server->gnutls_sess)
             {
+                version = gnutls_protocol_get_version (server->gnutls_sess);
+                switch (version)
+                {
 #if LIBGNUTLS_VERSION_NUMBER >= 0x030603 /* 3.6.3 */
-                case GNUTLS_TLS1_3:
-                    color = IRC_COLOR_ITEM_TLS_VERSION_OK;
-                    break;
+                    case GNUTLS_TLS1_3:
+                        color = IRC_COLOR_ITEM_TLS_VERSION_OK;
+                        break;
 #endif
-                case GNUTLS_TLS1_2:
-                    color = IRC_COLOR_ITEM_TLS_VERSION_DEPRECATED;
-                    break;
-                default:
-                    color = IRC_COLOR_ITEM_TLS_VERSION_INSECURE;
+                    case GNUTLS_TLS1_2:
+                        color = IRC_COLOR_ITEM_TLS_VERSION_DEPRECATED;
+                        break;
+                    default:
+                        color = IRC_COLOR_ITEM_TLS_VERSION_INSECURE;
+                }
+                snprintf (buf, sizeof (buf), "%s%s", color,
+                          gnutls_protocol_get_name (version));
+                return strdup (buf);
             }
-            snprintf (buf, sizeof (buf), "%s%s", color,
-                      gnutls_protocol_get_name (version));
-            return strdup (buf);
+            else
+            {
+                snprintf (buf, sizeof (buf),
+                          "%s?", IRC_COLOR_ITEM_TLS_VERSION_INSECURE);
+                return strdup (buf);
+            }
         }
         else
         {

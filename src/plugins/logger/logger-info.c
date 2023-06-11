@@ -21,11 +21,63 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "logger.h"
 #include "logger-buffer.h"
 
+
+/*
+ * Returns info "logger_log_file".
+ */
+
+char *
+logger_info_log_file_cb (const void *pointer, void *data,
+                         const char *info_name,
+                         const char *arguments)
+{
+    int rc;
+    unsigned long value;
+    struct t_gui_buffer *buffer;
+    struct t_logger_buffer *logger_buffer;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    if (!arguments)
+        return NULL;
+
+    buffer = NULL;
+    if (strncmp (arguments, "0x", 2) == 0)
+    {
+        rc = sscanf (arguments, "%lx", &value);
+        if ((rc != EOF) && (rc != 0) && value)
+        {
+            if (weechat_hdata_check_pointer (weechat_hdata_get ("buffer"),
+                                             NULL,
+                                             (struct t_gui_buffer *)value))
+            {
+                buffer = (struct t_gui_buffer *)value;
+            }
+        }
+    }
+    else
+    {
+        buffer = weechat_buffer_search ("==", arguments);
+    }
+
+    if (buffer)
+    {
+        logger_buffer = logger_buffer_search_buffer (buffer);
+        if (logger_buffer && logger_buffer->log_filename)
+            return strdup (logger_buffer->log_filename);
+    }
+
+    return NULL;
+}
 
 /*
  * Returns logger infolist "logger_buffer".
@@ -82,6 +134,7 @@ logger_info_infolist_logger_buffer_cb (const void *pointer, void *data,
     return NULL;
 }
 
+
 /*
  * Hooks infolist for logger plugin.
  */
@@ -89,6 +142,15 @@ logger_info_infolist_logger_buffer_cb (const void *pointer, void *data,
 void
 logger_info_init ()
 {
+    /* info hooks */
+    weechat_hook_info (
+        "logger_log_file",
+        N_("path to current log filename for the buffer"),
+        N_("buffer pointer (\"0x12345678\") or buffer full name "
+           "(\"irc.libera.#weechat\")"),
+        &logger_info_log_file_cb, NULL, NULL);
+
+    /* infolist hooks */
     weechat_hook_infolist (
         "logger_buffer", N_("list of logger buffers"),
         N_("logger pointer (optional)"),

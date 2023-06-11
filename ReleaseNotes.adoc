@@ -6,22 +6,132 @@
 :docinfo1:
 
 
-This document lists important changes for each version, that require manual
-actions (the latest formatted version of this document can be found
-https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[here]). +
-It is recommended to read it when upgrading to a new stable
-version.
-
-For a complete list of changes, please look at
-https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
-(file _ChangeLog.adoc_ in sources).
+This document lists important changes for each version, that require manual actions.
+It is recommended to read it when upgrading to a new stable version. +
+For a complete list of changes, please look at ChangeLog.
 
 
-[[v3.9]]
-== Version 3.9 (under dev)
+[[v4.0.0]]
+== Version 4.0.0 (under dev)
 
-[[v3.9_ctrl_keys_lower_case]]
-=== Control keys as lower case
+This is a major version that includes breaking changes described below.
+
+[[v4.0.0_irc_capabilities]]
+=== Support of new IRC capabilities
+
+Support of new capabilities has been introduced in this version and are all
+enabled by default, if the server supports them:
+
+* batch
+* draft/multiline
+* echo-message
+
+When the capability "echo-message" is enabled, you may notice time before your
+own IRC messages are displayed in the buffer, this is normal : the capability
+forces the server to sent back messages, and WeeChat displays messages only
+when they are received from the server.
+
+If you want to disable this capability on all servers, you can do:
+
+----
+/set irc.server_default.capabilities "*,!echo-message"
+----
+
+If you are already connected to a server with echo-message enabled, just ask
+the server to disable the capability on-the-fly (no need to reconnect):
+
+----
+/cap req -echo-message
+----
+
+[[v4.0.0_config_files]]
+=== Configuration file version
+
+A version has been introduced in configuration file, and due to the many
+breaking changes (listed in the chapters below), the following files are
+automatically upgraded to a new version:
+
+- weechat.conf: new key names
+  (see <<v4.0.0_key_bindings_improvements,Key bindings improvements>>)
+- alias.conf: aliases converted to lower case
+  (see <<v4.0.0_case_sensitive_identifiers,Case sensitive identifiers>>)
+- irc.conf: options "ssl*" renamed to "tls*"
+  (see <<v4.0.0_tls,TLS options and connections>>)
+- relay.conf: options and protocol "ssl*" renamed to "tls*"
+  (see <<v4.0.0_tls,TLS options and connections>>)
+
+[WARNING]
+Because of this new format, you must *NOT* load the new configuration files
+in any older WeeChat version < 4.0.0 once you have run any version ≥ 4.0.0
+at least one time. +
+For example the new key names make the input completely broken (you can not
+enter most chars in input any more and Enter key does not work).
+
+[[v4.0.0_key_bindings_improvements]]
+=== Key bindings improvements
+
+The format of key bindings has changed to be more user-friendly, and this is
+a breaking change: legacy keys are automatically converted, but some triggers,
+plugins or scripts might need manual changes.
+
+Overview of new features:
+
+- use of alias for keys (`meta-left` instead of `meta2-1;3D`)
+- use comma to separate keys in combos (`meta-w,meta-up` instead of
+  `meta-wmeta-meta2-A`)
+- control keys are converted to lower keys (`ctrl-a` instead of `ctrl-A`)
+- keys are normal options, so they are shown and can be updated with `/set`
+  and `/fset` commands
+- command `/key` without arguments opens the fset buffer with all keys
+
+See https://specs.weechat.org/specs/2023-002-key-bindings-improvements.html[Key bindings improvements specification]
+for more information.
+
+[[v4.0.0_new_key_format]]
+==== New key format
+
+Aliases are now used for keys, like `f1`, `home`, `return`, etc. +
+In addition, a comma is now required between different keys, for example `ctrl-cb`
+is not valid any more and must be replaced by `ctrl-c,b`.
+
+The keys in weechat.conf are automatically converted from legacy format on first
+run or upgrade with a legacy configuration file.
+
+For keys bound in external plugins or scripts, WeeChat tries to convert them
+on-the-fly to stay compatible, but this can not work in all cases (this is a
+breaking change).
+
+The following fixes are done on keys when they are defined:
+
+- transform upper case ctrl keys to lower case
+- replace space char by `space`
+- replace `meta2-` by `meta-[` (modifier `meta2-` doesn't exist any more)
+- mouse modifiers are now in this order: `alt-` then `ctrl-`.
+
+A warning is displayed when a raw key or invalid key is added. +
+For example `meta-[A` (which should be `up`) or `ctrl-ca` (missing comma, it
+should be `ctrl-c,a`).
+
+[[v4.0.0_grab_raw_key]]
+==== Grab raw key and command
+
+New key kbd:[Alt+K] (upper case) is added to grab raw key and its command.
+
+Most of times this command is not needed, and the existing key kbd:[Alt+k]
+(lower case) is preferred, as it returns the key using the new aliases.
+
+For example:
+
+- key kbd:[Alt+k] then up arrow displays: `up /input history_previous`
+- key kbd:[Alt+K] then up arrow displays: `meta-[A`
+
+Raw keys have higher priority than key with alias (they are looked first);
+they can still be used and bound, but this is not recommended. +
+They should be used only in case of problem with the new aliases or with your
+terminal.
+
+[[v4.0.0_ctrl_keys_lower_case]]
+==== Control keys as lower case
 
 Keys using the kbd:[Ctrl] key and a letter are now automatically converted to
 lower case. +
@@ -43,7 +153,7 @@ New key binding (context "default"): ctrl-q => /print test
 With older releases, upper case was mandatory and lower case letter for control
 keys were not working at all.
 
-[[v3.9_case_sensitive_identifiers]]
+[[v4.0.0_case_sensitive_identifiers]]
 === Case sensitive identifiers
 
 Many identifiers are made case sensitive, including among others:
@@ -62,51 +172,152 @@ See https://specs.weechat.org/specs/2023-001-case-sensitive-identifiers.html[Cas
 for more information.
 
 Accordingly, default aliases are now in lower case. +
-If you upgraded from an old WeeChat version, the aliases are still in upper case
-and must be completed/used with upper case. For example `/CLO` + key kbd:[Tab]
-completes to `/CLOSE` (and `/close` is not valid any more). +
-The default aliases can be converted to lower case with the following commands:
+All aliases (default ones and those added manually) are automatically converted
+to lower case with a message like this one:
 
 ----
-/alias rename AAWAY aaway
-/alias rename ANICK anick
-/alias rename BEEP beep
-/alias rename BYE bye
-/alias rename C c
-/alias rename CHAT chat
-/alias rename CL cl
-/alias rename CLOSE close
-/alias rename EXIT exit
-/alias rename IG ig
-/alias rename J j
-/alias rename K k
-/alias rename KB kb
-/alias rename LEAVE leave
-/alias rename M m
-/alias rename MSGBUF msgbuf
-/alias rename MUB mub
-/alias rename N n
-/alias rename Q q
-/alias rename REDRAW redraw
-/alias rename SAY say
-/alias rename SIGNOFF signoff
-/alias rename T t
-/alias rename UB ub
-/alias rename UMODE umode
-/alias rename V v
-/alias rename W w
-/alias rename WC wc
-/alias rename WI wi
-/alias rename WII wii
-/alias rename WM wm
-/alias rename WW ww
+Alias converted to lower case: "CLOSE" => "close"
 ----
 
-[[v3.9_remove_autotools]]
-=== Remove build with autotools
+[[v4.0.0_tls]]
+=== TLS options and connections
+
+Options, commands and documentation have been updated to "TLS" instead of "SSL":
+
+* core option:
+** weechat.color.status_name_ssl -> weechat.color.status_name_tls
+* IRC server default options:
+** irc.server_default.ssl -> irc.server_default.tls
+** irc.server_default.ssl_cert -> irc.server_default.tls_cert
+** irc.server_default.ssl_dhkey_size -> irc.server_default.tls_dhkey_size
+** irc.server_default.ssl_fingerprint -> irc.server_default.tls_fingerprint
+** irc.server_default.ssl_password -> irc.server_default.tls_password
+** irc.server_default.ssl_priorities -> irc.server_default.tls_priorities
+** irc.server_default.ssl_verify -> irc.server_default.tls_verify
+* IRC options for a specific server:
+** irc.server.xxx.ssl -> irc.server.xxx.tls
+** irc.server.xxx.ssl_cert -> irc.server.xxx.tls_cert
+** irc.server.xxx.ssl_dhkey_size -> irc.server.xxx.tls_dhkey_size
+** irc.server.xxx.ssl_fingerprint -> irc.server.xxx.tls_fingerprint
+** irc.server.xxx.ssl_password -> irc.server.xxx.tls_password
+** irc.server.xxx.ssl_priorities -> irc.server.xxx.tls_priorities
+** irc.server.xxx.ssl_verify -> irc.server.xxx.tls_verify
+* Relay options:
+** relay.network.ssl_cert_key -> relay.network.tls_cert_key
+** relay.network.ssl_priorities -> relay.network.tls_priorities
+* Relay:
+** protocol `ssl` -> `tls`
+* Relay command:
+** `/relay sslcertkey` -> `/relay tlscertkey`
+
+Default value of option `irc.server_default.tls` is now `on`. +
+Connection to IRC servers is done with TLS and port 6697 by default.
+
+For example to create libera.chat server, using TLS (if option
+`irc.server_default.tls` is `on`) and default port 6697:
+
+----
+/server add libera irc.libera.chat
+
+irc: server added: libera -> irc.libera.chat/6697 (TLS: enabled)
+----
+
+To force non-TLS connection (with default port 6667):
+
+----
+/server add libera irc.libera.chat -notls
+
+irc: server added: libera -> irc.libera.chat/6667 (TLS: disabled)
+----
+
+[[v4.0.0_insert_multiple_pasted_lines]]
+=== Insert of multiple pasted lines in input
+
+By default multiple pasted lines are now inserted in input and not sent immediately.
+
+To enable this feature, the default value of option `weechat.look.paste_max_lines`
+has been changed to `100` (it was `1`). +
+If needed, you can reset the option to the new default value after upgrade:
+
+----
+/reset weechat.look.paste_max_lines
+----
+
+The option `weechat.look.paste_auto_add_newline` has been removed.
+
+[[v4.0.0_default_triggers]]
+=== Default triggers
+
+The default triggers "cmd_pass", "cmd_pass_register" and "server_pass" have
+been updated to be compatible with multiline input.
+
+You can restore these default triggers with the following command:
+
+----
+/trigger restore cmd_pass cmd_pass_register server_pass
+----
+
+[[v4.0.0_build]]
+=== Build
+
+[[v4.0.0_build_autotools]]
+==== Autotools
 
 The autotools support for build of WeeChat has been removed. +
 WeeChat must now be built with CMake.
+
+[[v4.0.0_build_doc]]
+==== Documentation
+
+The auto-generated files for documentation are now built with `weechat-headless`,
+after compilation of WeeChat and the plugins (the files are not in repository
+any more). +
+This implies all plugins must be compiled and loaded in order to have complete docs
+(User's guide and Plugin API reference).
+
+If ever you want to disable some plugins and force the build of incomplete docs,
+a new option has been added: `ENABLE_DOC_INCOMPLETE` (`OFF` by default).
+
+For example if you disable PHP plugin but still want docs where PHP options,
+commands, etc. are missing:
+
+----
+cmake .. -DENABLE_PHP=OFF -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON
+----
+
+[[v4.0.0_packaging]]
+=== Packaging
+
+[[v4.0.0_packaging_tarballs]]
+==== Tarballs
+
+The command `make dist` now builds only `.gz` and `.xz` compressed tarballs. +
+Formats `.bz2` and `.zst` are not built any more.
+
+[[v4.0.0_packaging_rpm]]
+==== RPM packaging
+
+The file `weechat.spec` used for RPM packaging has been removed. +
+openSUSE has its own here:
+https://build.opensuse.org/package/view_file/server:irc/weechat/weechat.spec?expand=1
+
+[[v4.0.0_packaging_cpack]]
+==== cpack
+
+The configuration for cpack has been removed. +
+It was used to build binary package of WeeChat, which has never been released
+in this format.
+
+[[v4.0.0_bar_new]]
+=== Function bar_new
+
+When the bar name already exists, the API function
+link:https://weechat.org/doc/weechat/plugin/#_bar_new[bar_new] returns the pointer to
+the bar (instead of NULL) and sets the default value for all options with the
+values received. +
+If you don't want to set default values in an existing bar, it is recommended
+to first check if the bar exists with the API function
+link:https://weechat.org/doc/weechat/plugin/#_bar_search[bar_search].
 
 [[v3.8]]
 == Version 3.8 (2023-01-08)
@@ -189,8 +400,8 @@ int diff = string_strcasecmp ("aaa", "CCC");  /* == -1 */
 [[v3.8_api_string_lower_upper]]
 === API functions string_tolower and string_toupper
 
-The functions link:https://weechat.org/doc/plugin/#_string_tolower[string_tolower]
-and link:https://weechat.org/doc/plugin/#_string_toupper[string_toupper]
+The functions link:https://weechat.org/doc/weechat/plugin/#_string_tolower[string_tolower]
+and link:https://weechat.org/doc/weechat/plugin/#_string_toupper[string_toupper]
 now return newly allocated string instead of doing the change in place. +
 The returned string must then be freed after use.
 
@@ -299,7 +510,7 @@ And add the new key kbd:[Alt+Backspace] with this command:
 === Function string_rebuild_split_string
 
 The API function string_build_with_split_string has been renamed to
-link:https://weechat.org/doc/plugin/#_string_rebuild_split_string[string_rebuild_split_string]
+link:https://weechat.org/doc/weechat/plugin/#_string_rebuild_split_string[string_rebuild_split_string]
 and two new arguments have been added: _index_start_ and _index_end_.
 
 To stay compatible, the existing calls to the function must be done with the
@@ -343,11 +554,11 @@ which allows better compression and is much faster than zlib for both compressio
 
 The new compression type is `zstd`, and the default compression is now `off`
 instead of `zlib`: the compression must now be explicitly given in the
-link:https://weechat.org/doc/relay/#command_handshake[handshake] command.
+link:https://weechat.org/doc/weechat/relay/#command_handshake[handshake] command.
 
-The option `compression` in link:https://weechat.org/doc/relay/#command_handshake[init]
+The option `compression` in link:https://weechat.org/doc/weechat/relay/#command_handshake[init]
 command has been removed, it is now ignored and must be given in the
-link:https://weechat.org/doc/relay/#command_handshake[handshake] command
+link:https://weechat.org/doc/weechat/relay/#command_handshake[handshake] command
 (it was deprecated since WeeChat 2.9).
 
 The option relay.network.compression_level has been renamed to relay.network.compression
@@ -382,11 +593,11 @@ You can restore the default triggers with the following command:
 === New parameters in function hdata_search
 
 New parameters have been added in function
-link:https://weechat.org/doc/plugin/#_hdata_search[hdata_search], used for the
+link:https://weechat.org/doc/weechat/plugin/#_hdata_search[hdata_search], used for the
 evaluation of expression.
 
 New parameters are the same as function
-link:https://weechat.org/doc/plugin/#_string_eval_expression[string_eval_expression]:
+link:https://weechat.org/doc/weechat/plugin/#_string_eval_expression[string_eval_expression]:
 
 * pointers: hashtable with pointers (pointers)
 * extra_vars: hashtable with extra variables (strings)
@@ -408,7 +619,7 @@ WeeChat versions:
 
 Support of static array in hdata has been added.
 For pointers to arrays, a prefix `*,` must be added in parameter `array_size`
-of API function link:https://weechat.org/doc/plugin/#_hdata_new_var[hdata_new_var].
+of API function link:https://weechat.org/doc/weechat/plugin/#_hdata_new_var[hdata_new_var].
 
 [[v3.3]]
 == Version 3.3 (2021-09-19)
@@ -833,7 +1044,7 @@ bars, so if you want to use the new default settings, you can do:
 If you changed the option "color_bg" in some bars, you should also adjust
 the new option "color_bg_inactive", depending on your needs.
 
-The function link:https://weechat.org/doc/plugin/#_bar_new[bar_new] in API is updated,
+The function link:https://weechat.org/doc/weechat/plugin/#_bar_new[bar_new] in API is updated,
 so this is an incompatible change: all plugins and scripts calling this function must be updated.
 
 The following scripts are updated consequently to be compatible with all
@@ -899,8 +1110,8 @@ plugins/scripts to complete a string, without using the buffer input.
 Therefore two functions have been renamed in API and moved to the new
 "completion" category:
 
-* hook_completion_get_string -> link:https://weechat.org/doc/plugin/#_completion_get_string[completion_get_string]
-* hook_completion_list_add -> link:https://weechat.org/doc/plugin/#_completion_list_add[completion_list_add]
+* hook_completion_get_string -> link:https://weechat.org/doc/weechat/plugin/#_completion_get_string[completion_get_string]
+* hook_completion_list_add -> link:https://weechat.org/doc/weechat/plugin/#_completion_list_add[completion_list_add]
 
 [NOTE]
 The old names are still valid for compatibility reasons, but it is recommended
@@ -998,7 +1209,7 @@ A `handshake` command has been added in weechat relay protocol. +
 The client should send this command before the `init` to negotiate the way to
 authenticate with the relay server.
 
-See the link:https://weechat.org/doc/relay/#command_handshake[handshake command]
+See the link:https://weechat.org/doc/weechat/relay/#command_handshake[handshake command]
 in Relay protocol doc for more information.
 
 ==== Server "nonce"
@@ -1016,7 +1227,7 @@ So the hash is computed on: (`server nonce` + `client nonce` + `password`).
 This salt is now mandatory even for algorithms `SHA256` and `SHA512`; this is
 a breaking change in protocol, needed for security reasons.
 
-See the link:https://weechat.org/doc/relay/#command_init[init command]
+See the link:https://weechat.org/doc/weechat/relay/#command_init[init command]
 in Relay protocol doc for more information.
 
 [[v2.8]]
@@ -1027,7 +1238,7 @@ in Relay protocol doc for more information.
 
 The command line option `-a` (or `--no-connect`), which can also be used in the
 `/plugin` command, is now used to set a new info called `auto_connect`
-(see the function link:https://weechat.org/doc/plugin/#_info_get[info_get] in the Plugin API reference).
+(see the function link:https://weechat.org/doc/weechat/plugin/#_info_get[info_get] in the Plugin API reference).
 
 Therefore, the option is not sent any more to the function `weechat_plugin_init`
 of plugins. +
@@ -1289,8 +1500,8 @@ base 16, 32, and 64.
 
 New functions in C API, supporting base 16, 32, and 64:
 
-* link:https://weechat.org/doc/plugin/#_string_base_encode[string_base_encode]
-* link:https://weechat.org/doc/plugin/#_string_base_decode[string_base_decode]
+* link:https://weechat.org/doc/weechat/plugin/#_string_base_encode[string_base_encode]
+* link:https://weechat.org/doc/weechat/plugin/#_string_base_decode[string_base_decode]
 
 Functions removed from C API:
 
@@ -1366,7 +1577,7 @@ See issue #787 for more information.
 
 [NOTE]
 It is recommended for plugins and scripts to use the WeeChat IRC parser:
-see the function link:https://weechat.org/doc/plugin/#_info_get_hashtable[info_get_hashtable]
+see the function link:https://weechat.org/doc/weechat/plugin/#_info_get_hashtable[info_get_hashtable]
 in the Plugin API reference.
 
 Now the whole IRC message is received by the signal callback, for example:
@@ -1687,33 +1898,33 @@ reduce memory usage).
 
 Following functions are changed in the C API:
 
-* link:https://weechat.org/doc/plugin/#_exec_on_files[exec_on_files]
-* link:https://weechat.org/doc/plugin/#_config_new[config_new]
-* link:https://weechat.org/doc/plugin/#_config_new_section[config_new_section]
-* link:https://weechat.org/doc/plugin/#_config_new_option[config_new_option]
-* link:https://weechat.org/doc/plugin/#_hook_command[hook_command]
-* link:https://weechat.org/doc/plugin/#_hook_command_run[hook_command_run]
-* link:https://weechat.org/doc/plugin/#_hook_timer[hook_timer]
-* link:https://weechat.org/doc/plugin/#_hook_fd[hook_fd]
-* link:https://weechat.org/doc/plugin/#_hook_process[hook_process]
-* link:https://weechat.org/doc/plugin/#_hook_process_hashtable[hook_process_hashtable]
-* link:https://weechat.org/doc/plugin/#_hook_connect[hook_connect]
-* link:https://weechat.org/doc/plugin/#_hook_print[hook_print]
-* link:https://weechat.org/doc/plugin/#_hook_signal[hook_signal]
-* link:https://weechat.org/doc/plugin/#_hook_hsignal[hook_hsignal]
-* link:https://weechat.org/doc/plugin/#_hook_config[hook_config]
-* link:https://weechat.org/doc/plugin/#_hook_completion[hook_completion]
-* link:https://weechat.org/doc/plugin/#_hook_modifier[hook_modifier]
-* link:https://weechat.org/doc/plugin/#_hook_info[hook_info]
-* link:https://weechat.org/doc/plugin/#_hook_info_hashtable[hook_info_hashtable]
-* link:https://weechat.org/doc/plugin/#_hook_infolist[hook_infolist]
-* link:https://weechat.org/doc/plugin/#_hook_hdata[hook_hdata]
-* link:https://weechat.org/doc/plugin/#_hook_focus[hook_focus]
-* link:https://weechat.org/doc/plugin/#_unhook_all[unhook_all]
-* link:https://weechat.org/doc/plugin/#_buffer_new[buffer_new]
-* link:https://weechat.org/doc/plugin/#_bar_item_new[bar_item_new]
-* link:https://weechat.org/doc/plugin/#_upgrade_new[upgrade_new]
-* link:https://weechat.org/doc/plugin/#_upgrade_read[upgrade_read]
+* link:https://weechat.org/doc/weechat/plugin/#_exec_on_files[exec_on_files]
+* link:https://weechat.org/doc/weechat/plugin/#_config_new[config_new]
+* link:https://weechat.org/doc/weechat/plugin/#_config_new_section[config_new_section]
+* link:https://weechat.org/doc/weechat/plugin/#_config_new_option[config_new_option]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_command[hook_command]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_command_run[hook_command_run]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_timer[hook_timer]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_fd[hook_fd]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_process[hook_process]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_process_hashtable[hook_process_hashtable]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_connect[hook_connect]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_print[hook_print]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_signal[hook_signal]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_hsignal[hook_hsignal]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_config[hook_config]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_completion[hook_completion]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_modifier[hook_modifier]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_info[hook_info]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_info_hashtable[hook_info_hashtable]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_infolist[hook_infolist]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_hdata[hook_hdata]
+* link:https://weechat.org/doc/weechat/plugin/#_hook_focus[hook_focus]
+* link:https://weechat.org/doc/weechat/plugin/#_unhook_all[unhook_all]
+* link:https://weechat.org/doc/weechat/plugin/#_buffer_new[buffer_new]
+* link:https://weechat.org/doc/weechat/plugin/#_bar_item_new[bar_item_new]
+* link:https://weechat.org/doc/weechat/plugin/#_upgrade_new[upgrade_new]
+* link:https://weechat.org/doc/weechat/plugin/#_upgrade_read[upgrade_read]
 
 The function `unhook_all` has a new argument `const char *subplugin` to remove
 only hooks created by this "subplugin" (script).
@@ -1884,7 +2095,7 @@ You can restore the default "beep" trigger with the following command:
 [[v1.1_commands_return_code]]
 === Return code of commands
 
-The API function link:https://weechat.org/doc/plugin/#_command[command]
+The API function link:https://weechat.org/doc/weechat/plugin/#_command[command]
 now sends the value returned return by command callback.
 
 WeeChat does not display any more an error when a command returns
@@ -1947,9 +2158,9 @@ the old behavior in command `/connect`:
 The API functions using timeval are now using or returning microseconds,
 instead of milliseconds:
 
-* function link:https://weechat.org/doc/plugin/#_util_timeval_diff[util_timeval_diff]:
+* function link:https://weechat.org/doc/weechat/plugin/#_util_timeval_diff[util_timeval_diff]:
   returns microseconds
-* function link:https://weechat.org/doc/plugin/#_util_timeval_add[util_timeval_add]:
+* function link:https://weechat.org/doc/weechat/plugin/#_util_timeval_add[util_timeval_add]:
   the argument "interval" is now expressed in microseconds.
 
 [[v1.0.1]]
@@ -2453,7 +2664,7 @@ disable IPv6 in relay if you don't plan to use it at all:
 == Version 0.3.9.2 (2012-11-18)
 
 This version fixes a security vulnerability when a plugin/script gives
-untrusted command to API function link:https://weechat.org/doc/plugin/#_hook_process[hook_process].
+untrusted command to API function link:https://weechat.org/doc/weechat/plugin/#_hook_process[hook_process].
 
 [[v0.3.9.1]]
 == Version 0.3.9.1 (2012-11-09)

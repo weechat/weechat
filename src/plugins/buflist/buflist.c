@@ -424,21 +424,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     int i;
     char str_key[256];
     char *default_keys[][2] = {
-        { /* m-B    */ "meta-B",         "/buflist toggle" },
-        { /* <f1>   */ "meta-OP",        "/bar scroll buflist * -100%" },
-        { /* <f1>   */ "meta2-11~",      "/bar scroll buflist * -100%" },
-        { /* <f2>   */ "meta-OQ",        "/bar scroll buflist * +100%" },
-        { /* <f2>   */ "meta2-12~",      "/bar scroll buflist * +100%" },
-        { /* c-<f1> */ "meta2-11^",      "/bar scroll buflist * -100%" },
-        { /* c-<f1> */ "meta2-1;5P",     "/bar scroll buflist * -100%" },
-        { /* c-<f2> */ "meta2-12^",      "/bar scroll buflist * +100%" },
-        { /* c-<f2> */ "meta2-1;5Q",     "/bar scroll buflist * +100%" },
-        { /* m-<f1> */ "meta-meta-OP",   "/bar scroll buflist * b"     },
-        { /* m-<f1> */ "meta-meta2-11~", "/bar scroll buflist * b"     },
-        { /* m-<f1> */ "meta2-1;3P",     "/bar scroll buflist * b"     },
-        { /* m-<f2> */ "meta-meta-OQ",   "/bar scroll buflist * e"     },
-        { /* m-<f2> */ "meta-meta2-12~", "/bar scroll buflist * e"     },
-        { /* m-<f2> */ "meta2-1;3Q",     "/bar scroll buflist * e"     },
+        { "meta-B",  "/buflist toggle"             },
+        { "f1",      "/bar scroll buflist * -100%" },
+        { "f2",      "/bar scroll buflist * +100%" },
+        { "ctrl-f1", "/bar scroll buflist * -100%" },
+        { "ctrl-f2", "/bar scroll buflist * +100%" },
+        { "meta-f1", "/bar scroll buflist * b"     },
+        { "meta-f2", "/bar scroll buflist * e"     },
         { NULL, NULL },
     };
 
@@ -486,6 +478,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
             weechat_hashtable_set (keys,
                                    default_keys[i][0], default_keys[i][1]);
         }
+        weechat_hashtable_set (keys, "__quiet", "1");
         weechat_key_bind ("default", keys);
 
         /* default mouse actions */

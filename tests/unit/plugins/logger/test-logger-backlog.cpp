@@ -26,6 +26,8 @@
 extern "C"
 {
 #include <stdio.h>
+#include <string.h>
+#include "src/core/wee-arraylist.h"
 #include "src/core/wee-config.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
@@ -34,21 +36,12 @@ extern "C"
 
 extern void logger_backlog_display_line (struct t_gui_buffer *buffer,
                                          const char *line);
+extern struct t_arraylist *logger_backlog_group_messages (struct t_arraylist *lines);
 }
 
 TEST_GROUP(LoggerBacklog)
 {
 };
-
-/*
- * Tests functions:
- *   logger_backlog_check_conditions
- */
-
-TEST(LoggerBacklog, CheckConditions)
-{
-    /* TODO: write tests */
-}
 
 /*
  * Tests functions:
@@ -153,6 +146,107 @@ TEST(LoggerBacklog, DisplayLine)
                   gui_color_get_name (
                       CONFIG_COLOR(logger_config_color_backlog_line))));
     STRCMP_EQUAL(string, ptr_data->message);
+}
+
+/*
+ * Compares two messages in arraylist.
+ */
+
+int
+test_logger_backlog_msg_cmp_cb (void *data,
+                                struct t_arraylist *arraylist,
+                                void *pointer1,
+                                void *pointer2)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    return strcmp ((const char *)pointer1, (const char *)pointer2);
+}
+
+/*
+ * Frees a message in arraylist.
+ */
+
+void
+test_logger_backlog_msg_free_cb (void *data, struct t_arraylist *arraylist,
+                                 void *pointer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    free (pointer);
+}
+
+/*
+ * Tests functions:
+ *   logger_backlog_msg_cmp_cb
+ *   logger_backlog_msg_free_cb
+ *   logger_backlog_group_messages
+ */
+
+TEST(LoggerBacklog, GroupMessages)
+{
+    struct t_arraylist *lines, *messages;
+    const char *test_lines_1[] = {
+        "2023-06-04 21:15:34\t\tMessage 1",
+        "2023-06-04 21:15:40\t\tMessage 2",
+        NULL,
+    };
+    const char *test_lines_2[] = {
+        "end of line",
+        "2023-06-04 21:15:34\t\tFirst line",
+        "of multiline message",
+        "end of message",
+        "2023-06-04 21:15:40\t\tMessage on one line",
+        NULL,
+    };
+    int i;
+
+    POINTERS_EQUAL(NULL, logger_backlog_group_messages (NULL));
+
+    lines = arraylist_new (3, 0, 1,
+                           &test_logger_backlog_msg_cmp_cb, NULL,
+                           &test_logger_backlog_msg_free_cb, NULL);
+
+    for (i = 0; test_lines_1[i]; i++)
+    {
+        arraylist_add (lines, strdup (test_lines_1[i]));
+    }
+
+    messages = logger_backlog_group_messages (lines);
+    CHECK(messages);
+    LONGS_EQUAL(2, arraylist_size (messages));
+    STRCMP_EQUAL("2023-06-04 21:15:34\t\tMessage 1",
+                 (const char *)arraylist_get (messages, 0));
+    STRCMP_EQUAL("2023-06-04 21:15:40\t\tMessage 2",
+                 (const char *)arraylist_get (messages, 1));
+    arraylist_free (messages);
+
+    arraylist_clear (lines);
+
+    for (i = 0; test_lines_2[i]; i++)
+    {
+        arraylist_add (lines, strdup (test_lines_2[i]));
+    }
+
+    messages = logger_backlog_group_messages (lines);
+    CHECK(messages);
+    LONGS_EQUAL(3, arraylist_size (messages));
+    STRCMP_EQUAL("end of line",
+                 (const char *)arraylist_get (messages, 0));
+    STRCMP_EQUAL("2023-06-04 21:15:34\t\tFirst line\n"
+                 "of multiline message\n"
+                 "end of message",
+                 (const char *)arraylist_get (messages, 1));
+    STRCMP_EQUAL("2023-06-04 21:15:40\t\tMessage on one line",
+                 (const char *)arraylist_get (messages, 2));
+    arraylist_free (messages);
+
+
+    arraylist_free (lines);
 }
 
 /*

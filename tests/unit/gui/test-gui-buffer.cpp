@@ -462,11 +462,11 @@ TEST(GuiBuffer, NewProps)
     STRCMP_EQUAL("value",
                  (const char *)hashtable_get (buffer->local_variables, "test"));
     CHECK(buffer->keys);
-    STRCMP_EQUAL("\x01[y", buffer->keys->key);
+    STRCMP_EQUAL("meta-y", buffer->keys->key);
     STRCMP_EQUAL("/test_y arg1 arg2", buffer->keys->command);
     POINTERS_EQUAL(NULL, buffer->keys->prev_key);
     CHECK(buffer->keys->next_key);
-    STRCMP_EQUAL("\x01[z", buffer->keys->next_key->key);
+    STRCMP_EQUAL("meta-z", buffer->keys->next_key->key);
     STRCMP_EQUAL("/test_z arg1 arg2", buffer->keys->next_key->command);
     POINTERS_EQUAL(buffer->keys, buffer->keys->next_key->prev_key);
     POINTERS_EQUAL(NULL, buffer->keys->next_key->next_key);
@@ -534,7 +534,7 @@ TEST(GuiBuffer, NewUser)
 
         /* test signal "buffer_user_input_test" */
         signal_buffer_user_input[0] = '\0';
-        input_data (buffer, "something", NULL);
+        input_data (buffer, "something", NULL, 0);
         STRCMP_EQUAL("something", signal_buffer_user_input);
 
         /* test signal "buffer_user_closing_test" */
@@ -549,7 +549,7 @@ TEST(GuiBuffer, NewUser)
         /* close the buffer by sending "q" */
         signal_buffer_user_input[0] = '\0';
         signal_buffer_user_closing = 0;
-        input_data (buffer, "q", NULL);
+        input_data (buffer, "q", NULL, 0);
         STRCMP_EQUAL("q", signal_buffer_user_input);
         LONGS_EQUAL(1, signal_buffer_user_closing);
 
@@ -569,7 +569,7 @@ TEST(GuiBuffer, NewUser)
          */
         signal_buffer_user_input[0] = '\0';
         signal_buffer_user_closing = 0;
-        input_data (buffer, "q", NULL);
+        input_data (buffer, "q", NULL, 0);
         STRCMP_EQUAL("q", signal_buffer_user_input);
         LONGS_EQUAL(0, signal_buffer_user_closing);
 
@@ -1039,16 +1039,6 @@ TEST(GuiBuffer, SearchByNumberOrName)
 
 /*
  * Tests functions:
- *   gui_buffer_search_by_layout_number
- */
-
-TEST(GuiBuffer, SearchByLayoutNumber)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_buffer_search_range
  */
 
@@ -1069,16 +1059,6 @@ TEST(GuiBuffer, CountMergedBuffers)
 
 /*
  * Tests functions:
- *   gui_buffer_is_scrolled
- */
-
-TEST(GuiBuffer, IsScrolled)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_buffer_clear
  */
 
@@ -1093,6 +1073,106 @@ TEST(GuiBuffer, Clear)
  */
 
 TEST(GuiBuffer, ClearAll)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_get_next_active_buffer
+ */
+
+TEST(GuiBuffer, GetNextActiveBuffer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_get_previous_active_buffer
+ */
+
+TEST(GuiBuffer, GetPreviousActiveBuffer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_get_index_previous
+ */
+
+TEST(GuiBuffer, VisitedGetIndexPrevious)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_get_index_next
+ */
+
+TEST(GuiBuffer, VisitedGetIndexNext)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_search
+ */
+
+TEST(GuiBuffer, VisitedSearch)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_search_by_number
+ */
+
+TEST(GuiBuffer, VisitedSearchByNumber)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_remove
+ */
+
+TEST(GuiBuffer, VisitedRemove)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_remove_by_buffer
+ */
+
+TEST(GuiBuffer, VisitedRemoveByBuffer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_remove_all
+ */
+
+TEST(GuiBuffer, VisitedRemoveAll)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_visited_add
+ */
+
+TEST(GuiBuffer, VisitedAdd)
 {
     /* TODO: write tests */
 }
@@ -1123,26 +1203,6 @@ TEST(GuiBuffer, SwitchByNumber)
  */
 
 TEST(GuiBuffer, SetActiveBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_get_next_active_buffer
- */
-
-TEST(GuiBuffer, GetNextActiveBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_get_previous_active_buffer
- */
-
-TEST(GuiBuffer, GetPreviousActiveBuffer)
 {
     /* TODO: write tests */
 }
@@ -1343,86 +1403,6 @@ TEST(GuiBuffer, UndoFreeAll)
  */
 
 TEST(GuiBuffer, InputMoveToBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_search
- */
-
-TEST(GuiBuffer, VisitedSearch)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_search_by_number
- */
-
-TEST(GuiBuffer, VisitedSearchByNumber)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_remove
- */
-
-TEST(GuiBuffer, VisitedRemove)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_remove_by_buffer
- */
-
-TEST(GuiBuffer, VisitedRemoveByBuffer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_remove_all
- */
-
-TEST(GuiBuffer, VisitedRemoveAll)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_add
- */
-
-TEST(GuiBuffer, VisitedAdd)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_get_index_previous
- */
-
-TEST(GuiBuffer, VisitedGetIndexPrevious)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_visited_get_index_next
- */
-
-TEST(GuiBuffer, VisitedGetIndexNext)
 {
     /* TODO: write tests */
 }

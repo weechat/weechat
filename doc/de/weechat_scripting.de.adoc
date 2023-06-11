@@ -2,24 +2,16 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: de
-:toc: left
-:toclevels: 4
 :toc-title: Inhaltsverzeichnis
-:sectnums:
-:sectnumlevels: 3
-:docinfo1:
-
 
 Übersetzer:
 
 * Nils Görs <weechatter@arcor.de>, 2010-2016
 
-
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
 
 Die neueste Version dieses Dokuments finden Sie unter
-https://weechat.org/doc/[this page ^↗^,window=_blank].
-
+https://weechat.org/doc/[this page ^↗^^].
 
 [[introduction]]
 == Einleitung
@@ -67,7 +59,7 @@ Ein Skript darf *NIEMALS* einen fork nutzen oder einen eigenen Thread erstellen,
 dafür gibt es explizit eine API Funktion, andernfalls kann WeeChat abstürzen. +
 Wenn etwas in einem Hintergrundprozess ausgeführt werden soll, kann die Funktion
 `+hook_process+` genutzt werden. Siehe Beispiele im Kapitel <<hook_process,Hintergrundprozesse>>
-und die Dokumentation für die Funktion `+hook_process+` in link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference ^↗^,window=_blank] (Englisch).
+und die Dokumentation für die Funktion `+hook_process+` in link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference ^↗^^] (Englisch).
 
 [[languages_specificities]]
 === Besonderheiten der einzelnen Skriptsprachen
@@ -81,7 +73,7 @@ und die Dokumentation für die Funktion `+hook_process+` in link:weechat_plugin_
 WeeChat definiert ein `weechat` Module welches mittels `import weechat`
 importiert werden muss. +
 Ein Python-Stub für die WeeChat-API ist im Repository verfügbar:
-https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^,window=_blank].
+https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^^].
 
 [[python_functions]]
 ===== Funktionen
@@ -119,7 +111,7 @@ Liste ist nicht vollständig):
   Es wird empfohlen den Modifier `+irc_in2_yyy+` zu nutzen, da die empfangene Zeichenkette
   immer UTF-8 gültig ist. +
   siehe Funktion `+hook_modifier+` in der
-  link:weechat_plugin_api.en.html#_hook_modifier[WeeChat Anleitung für API Erweiterung ^↗^,window=_blank].
+  link:weechat_plugin_api.en.html#_hook_modifier[WeeChat Anleitung für API Erweiterung ^↗^^].
 
 | hook_signal
 | xxx,irc_out_yyy +
@@ -134,7 +126,7 @@ Liste ist nicht vollständig):
   Es wird empfohlen das Signal `+xxx,irc_out1_yyy+` zu nutzen, da die empfangene Zeichenkette
   immer UTF-8 gültig ist. +
   siehe Funktion `+hook_signal+` in der
-  link:weechat_plugin_api.en.html#_hook_signal[WeeChat Anleitung für API Erweiterung ^↗^,window=_blank].
+  link:weechat_plugin_api.en.html#_hook_signal[WeeChat Anleitung für API Erweiterung ^↗^^].
 
 | hook_process +
   hook_process_hashtable
@@ -215,7 +207,7 @@ Sie können diese Konstante übergeben, wenn eine Funktion NULL als Argument akz
 und Sie erhält es als Wert eines Arguments in einer Callback-Funktion zurück, wenn
 der Wert des Arguments NULL ist. Um zu sehen, welche Funktionen Nullwerte akzeptieren
 und Nullwerte in Rückrufen übergeben, schauen Sie sich die Python-Prototypen an
-link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^,window=_blank].
+link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^^].
 
 [[language_guile]]
 ==== Guile (Scheme)
@@ -396,7 +388,7 @@ ein Link in das entsprechende _autoload_ Verzeichnis erzeugt.
 Die Skripten API ist nahezu identisch mit der API der C Erweiterung.
 Um einen Überblick über alle API Funktionen (Prototyp, Argumente,
 Rückgabe werte, Beispiele) zu erhalten werfen Sie einen Blick in
-die link:weechat_plugin_api.en.html[WeeChat Plugin API Reference ^↗^,window=_blank] (Englisch).
+die link:weechat_plugin_api.en.html[WeeChat Plugin API Reference ^↗^^] (Englisch).
 Es ist wichtig das man zwischen einer _Erweiterung_ und einem _Skript_
 unterscheidet: Eine _Erweiterung_ ist eine Binärdatei die kompiliert wurde
 und mittels `/plugin` geladen wird. Ein _Skript_ ist eine Textdatei welche
@@ -565,7 +557,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 == Skript API
 
 Um weiterführende Informationen zu den API Funktionen zu erhalten
-lesen Sie bitte link:weechat_plugin_api.en.html[WeeChat Plugin API Reference ^↗^,window=_blank] (Englisch).
+lesen Sie bitte link:weechat_plugin_api.en.html[WeeChat Plugin API Reference ^↗^^] (Englisch).
 
 [[script_api_functions]]
 === Funktionen
@@ -888,7 +880,7 @@ Liste der Konstanten in Skript API:
 Dieses Kapitel beinhaltet einige Aufgaben mit Lösungsbeispielen.
 Die Skript API wird dabei nur sehr oberflächlich besprochen.Um eine vollständige
 Übersicht aller Befehle zu erhalten nutzen Sie bitte die
-link:weechat_plugin_api.en.html[WeeChat Plugin API Reference ^↗^,window=_blank] (Englisch).
+link:weechat_plugin_api.en.html[WeeChat Plugin API Reference ^↗^^] (Englisch).
 
 [[buffers]]
 === Buffer
@@ -1166,7 +1158,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 
 [TIP]
 Alle verfügbaren Informationen über WeeChat findet man unter
-https://weechat.org/dev/info/[this page ^↗^,window=_blank].
+https://weechat.org/dev/info/[this page ^↗^^].
 
 Beispiel eines URL Transfers, mit zusätzliche Optionen: Es wird das neuste
 WeeChat Entwicklerpaket in die Datei _/tmp/weechat-devel.tar.gz_ gesichert:
@@ -1185,7 +1177,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 
 Für weitere Informationen zum URL Transfer und verfügbare Optionen, siehe Funktionen
 `+hook_process+` und `+hook_process_hashtable+` in
-link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference ^↗^,window=_blank] (Englisch).
+link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference ^↗^^] (Englisch).
 
 [[config_options]]
 === Konfiguration / Optionen

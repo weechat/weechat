@@ -20,6 +20,7 @@
 add_library(irc MODULE
   irc.c irc.h
   irc-bar-item.c irc-bar-item.h
+  irc-batch.c irc-batch.h
   irc-buffer.c irc-buffer.h
   irc-channel.c irc-channel.h
   irc-color.c irc-color.h
@@ -63,4 +64,4 @@ endif()
 
 target_link_libraries(irc ${LINK_LIBS} coverage_config)
 
-install(TARGETS irc LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
+install(TARGETS irc LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

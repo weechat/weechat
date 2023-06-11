@@ -47,62 +47,6 @@
 
 
 /*
- * Checks conditions to display the backlog.
- *
- * Returns:
- *   1: conditions OK (backlog is displayed)
- *   0: conditions not OK (backlog is NOT displayed)
- */
-
-int
-logger_backlog_check_conditions (struct t_gui_buffer *buffer)
-{
-    struct t_hashtable *pointers, *options;
-    const char *ptr_condition;
-    char *result;
-    int condition_ok;
-
-    ptr_condition = weechat_config_string (logger_config_look_backlog_conditions);
-
-    /* empty condition displays the backlog everywhere */
-    if (!ptr_condition || !ptr_condition[0])
-        return 1;
-
-    pointers = weechat_hashtable_new (32,
-                                      WEECHAT_HASHTABLE_STRING,
-                                      WEECHAT_HASHTABLE_POINTER,
-                                      NULL,
-                                      NULL);
-    if (pointers)
-    {
-        weechat_hashtable_set (pointers, "window",
-                               weechat_window_search_with_buffer (buffer));
-        weechat_hashtable_set (pointers, "buffer", buffer);
-    }
-
-    options = weechat_hashtable_new (32,
-                                     WEECHAT_HASHTABLE_STRING,
-                                     WEECHAT_HASHTABLE_STRING,
-                                     NULL,
-                                     NULL);
-    if (options)
-        weechat_hashtable_set (options, "type", "condition");
-
-    result = weechat_string_eval_expression (ptr_condition,
-                                             pointers, NULL, options);
-    condition_ok = (result && (strcmp (result, "1") == 0));
-    if (result)
-        free (result);
-
-    if (pointers)
-        weechat_hashtable_free (pointers);
-    if (options)
-        weechat_hashtable_free (options);
-
-    return condition_ok;
-}
-
-/*
  * Displays a line read from log file.
  */
 
@@ -181,6 +125,114 @@ logger_backlog_display_line (struct t_gui_buffer *buffer, const char *line)
 }
 
 /*
+ * Compares two messages in arraylist.
+ */
+
+int
+logger_backlog_msg_cmp_cb (void *data,
+                           struct t_arraylist *arraylist,
+                           void *pointer1,
+                           void *pointer2)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    return weechat_strcmp ((const char *)pointer1, (const char *)pointer2);
+}
+
+/*
+ * Frees a message in arraylist.
+ */
+
+void
+logger_backlog_msg_free_cb (void *data, struct t_arraylist *arraylist,
+                            void *pointer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    free (pointer);
+}
+
+/*
+ * Groups lines by messages: each line with a timestamp is considered the first
+ * line of a message, and subsequent lines without timestamp are the rest of
+ * the message.
+ *
+ * Note: result must be freed after use.
+ */
+
+struct t_arraylist *
+logger_backlog_group_messages (struct t_arraylist *lines)
+{
+    int i, size, time_found;
+    char **message, **old_message, *str_date, *error;
+    const char *ptr_line, *pos_message;
+    struct tm tm_line;
+    struct t_arraylist *messages;
+
+    if (!lines)
+        return NULL;
+
+    size = weechat_arraylist_size (lines);
+
+    messages = weechat_arraylist_new (size, 0, 1,
+                                      &logger_backlog_msg_cmp_cb, NULL,
+                                      &logger_backlog_msg_free_cb, NULL);
+    if (!messages)
+        return NULL;
+
+    message = weechat_string_dyn_alloc (256);
+    old_message = weechat_string_dyn_alloc (256);
+
+    for (i = size - 1; i >= 0; i--)
+    {
+        ptr_line = (const char *)weechat_arraylist_get (lines, i);
+
+        weechat_string_dyn_copy (old_message, *message);
+        weechat_string_dyn_copy (message, ptr_line);
+        if ((*old_message)[0])
+        {
+            weechat_string_dyn_concat (message, "\n", -1);
+            weechat_string_dyn_concat (message, *old_message, -1);
+        }
+
+        time_found = 0;
+        pos_message = strchr (ptr_line, '\t');
+        if (pos_message)
+        {
+            str_date = weechat_strndup (ptr_line, pos_message - ptr_line);
+            if (str_date)
+            {
+                memset (&tm_line, 0, sizeof (struct tm));
+                error = strptime (
+                    str_date,
+                    weechat_config_string (logger_config_file_time_format),
+                    &tm_line);
+                if (error && !error[0] && (tm_line.tm_year > 0))
+                    time_found = 1;
+                free (str_date);
+            }
+        }
+        if (time_found)
+        {
+            weechat_arraylist_insert (messages, 0, strdup (*message));
+            weechat_string_dyn_copy (message, NULL);
+        }
+    }
+
+    if ((*message)[0])
+        weechat_arraylist_insert (messages, 0, strdup (*message));
+
+    weechat_string_dyn_free (message, 1);
+    weechat_string_dyn_free (old_message, 1);
+
+    return messages;
+}
+
+/*
  * Displays backlog for a buffer by reading end of log file.
  */
 
@@ -188,32 +240,52 @@ void
 logger_backlog_file (struct t_gui_buffer *buffer, const char *filename,
                      int lines)
 {
-    struct t_logger_line *last_lines, *ptr_lines;
-    int num_lines;
+    struct t_arraylist *last_lines, *messages;
+    int i, num_msgs, old_input_multiline;
 
+    num_msgs = 0;
+    last_lines = logger_tail_file (filename, lines);
+    if (!last_lines)
+        return;
+
+    messages = logger_backlog_group_messages (last_lines);
+    if (!messages)
+    {
+        weechat_arraylist_free (last_lines);
+        return;
+    }
+
+    weechat_arraylist_free (last_lines);
+
+    /* disable any print hook during display of backlog */
     weechat_buffer_set (buffer, "print_hooks_enabled", "0");
 
-    num_lines = 0;
-    last_lines = logger_tail_file (filename, lines);
-    ptr_lines = last_lines;
-    while (ptr_lines)
+    /* temporary enable multiline support so we can display multiline msgs */
+    old_input_multiline = weechat_buffer_get_integer (buffer, "input_multiline");
+    weechat_buffer_set (buffer, "input_multiline", "1");
+
+    num_msgs = weechat_arraylist_size (messages);
+    for (i = 0; i < num_msgs; i++)
     {
-        logger_backlog_display_line (buffer, ptr_lines->data);
-        num_lines++;
-        ptr_lines = ptr_lines->next_line;
+        logger_backlog_display_line (
+            buffer,
+            (const char *)weechat_arraylist_get (messages, i));
     }
-    if (last_lines)
-        logger_tail_free (last_lines);
-    if (num_lines > 0)
+    weechat_arraylist_free (messages);
+
+    if (num_msgs > 0)
     {
         weechat_printf_date_tags (buffer, 0,
                                   "no_highlight,notify_none,logger_backlog_end",
                                   _("%s===\t%s========== End of backlog (%d lines) =========="),
                                   weechat_color (weechat_config_string (logger_config_color_backlog_end)),
                                   weechat_color (weechat_config_string (logger_config_color_backlog_end)),
-                                  num_lines);
+                                  num_msgs);
         weechat_buffer_set (buffer, "unread", "");
     }
+
+    weechat_buffer_set (buffer, "input_multiline",
+                        (old_input_multiline) ? "1" : "0");
     weechat_buffer_set (buffer, "print_hooks_enabled", "1");
 }
 
@@ -227,6 +299,7 @@ logger_backlog_signal_cb (const void *pointer, void *data,
                           const char *type_data, void *signal_data)
 {
     struct t_logger_buffer *ptr_logger_buffer;
+    int rc;
 
     /* make C compiler happy */
     (void) pointer;
@@ -237,7 +310,10 @@ logger_backlog_signal_cb (const void *pointer, void *data,
     if (weechat_config_integer (logger_config_look_backlog) == 0)
         return WEECHAT_RC_OK;
 
-    if (!logger_backlog_check_conditions (signal_data))
+    rc = logger_check_conditions (
+        signal_data,
+        weechat_config_string (logger_config_look_backlog_conditions));
+    if (!rc)
         return WEECHAT_RC_OK;
 
     ptr_logger_buffer = logger_buffer_search_buffer (signal_data);

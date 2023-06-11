@@ -27,4 +27,4 @@ if(PYTHON_FOUND)
   target_link_libraries(python PkgConfig::PYTHON weechat_plugins_scripts coverage_config)
 endif()
 
-install(TARGETS python LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
+install(TARGETS python LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

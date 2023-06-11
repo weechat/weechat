@@ -486,6 +486,7 @@ TEST(IrcMessage, Parse)
     const char *params_part[] = { "#channel", NULL };
     const char *params_invite[] = { "nick2", "#channel", NULL };
     const char *params_privmsg_no_msg[] = { "#channel", NULL };
+    const char *params_privmsg_empty_msg[] = { "#channel", "", NULL };
     const char *params_privmsg[] = { "#channel", "the message", NULL };
     const char *params_privmsg_nick2[] = { "nick2", "the message", NULL };
     const char *params_005[] = {
@@ -657,6 +658,11 @@ TEST(IrcMessage, Parse)
                     params_privmsg_no_msg, 1,
                     16, 24, 24, -1,
                     NULL, ":nick!user@host PRIVMSG #channel");
+    WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG #channel :", "nick", "user",
+                    "nick!user@host", "PRIVMSG", "#channel", "#channel :", "",
+                    params_privmsg_empty_msg, 1,
+                    16, 24, 24, 34,
+                    NULL, ":nick!user@host PRIVMSG #channel :");
     WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG #channel :the message",
                     "nick", "user", "nick!user@host", "PRIVMSG", "#channel",
                     "#channel :the message", "the message",
@@ -841,6 +847,78 @@ TEST(IrcMessage, ParseToHashtable)
     hashtable_free (hashtable);
 }
 
+/*
+ * Tests functions:
+ *   irc_message_parse_cap_value
+ */
+
+TEST(IrcMessage, ParseCapValue)
+{
+    struct t_hashtable *hashtable;
+
+    POINTERS_EQUAL(NULL, irc_message_parse_cap_value (NULL));
+
+    hashtable = irc_message_parse_cap_value ("");
+    CHECK(hashtable);
+    LONGS_EQUAL(0, hashtable->items_count);
+    hashtable_free (hashtable);
+
+    hashtable = irc_message_parse_cap_value ("key1=value1,key2,key3=123");
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("value1", (const char *)hashtable_get (hashtable, "key1"));
+    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, "key2"));
+    STRCMP_EQUAL("123", (const char *)hashtable_get (hashtable, "key3"));
+    hashtable_free (hashtable);
+}
+
+/*
+ * Tests functions:
+ *   irc_message_parse_multiline_value
+ */
+
+TEST(IrcMessage, ParseCapMultilineValue)
+{
+    struct t_irc_server *server;
+
+    server = irc_server_alloc ("test_multiline");
+    CHECK(server);
+
+    irc_message_parse_cap_multiline_value (NULL, NULL);
+
+    server->multiline_max_bytes = 0;
+    server->multiline_max_lines = 0;
+    irc_message_parse_cap_multiline_value (server, NULL);
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, server->multiline_max_bytes);
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES, server->multiline_max_lines);
+
+    server->multiline_max_bytes = 0;
+    server->multiline_max_lines = 0;
+    irc_message_parse_cap_multiline_value (server, "");
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, server->multiline_max_bytes);
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES, server->multiline_max_lines);
+
+    server->multiline_max_bytes = 0;
+    server->multiline_max_lines = 0;
+    irc_message_parse_cap_multiline_value (server, "max-bytes=2048");
+    LONGS_EQUAL(2048, server->multiline_max_bytes);
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES, server->multiline_max_lines);
+
+    server->multiline_max_bytes = 0;
+    server->multiline_max_lines = 0;
+    irc_message_parse_cap_multiline_value (server, "max-lines=8");
+    LONGS_EQUAL(IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES, server->multiline_max_bytes);
+    LONGS_EQUAL(8, server->multiline_max_lines);
+
+    server->multiline_max_bytes = 0;
+    server->multiline_max_lines = 0;
+    irc_message_parse_cap_multiline_value (server, "max-bytes=2048,max-lines=8");
+    LONGS_EQUAL(2048, server->multiline_max_bytes);
+    LONGS_EQUAL(8, server->multiline_max_lines);
+
+    irc_server_free (server);
+}
+
 char *
 convert_irc_charset_cb (const void *pointer, void *data,
                         const char *modifier, const char *modifier_data,
@@ -866,6 +944,24 @@ convert_irc_charset_cb (const void *pointer, void *data,
     snprintf (new_string, length, "%s MODIFIED", string);
 
     return new_string;
+}
+
+/*
+ * Tests functions:
+ *   irc_message_is_empty
+ */
+
+TEST(IrcMessage, IsEmpty)
+{
+    LONGS_EQUAL(1, irc_message_is_empty (NULL));
+    LONGS_EQUAL(1, irc_message_is_empty (""));
+    LONGS_EQUAL(1, irc_message_is_empty ("\n"));
+    LONGS_EQUAL(1, irc_message_is_empty ("\n\n\n\n\n\n\n\n"));
+
+    LONGS_EQUAL(0, irc_message_is_empty (" "));
+    LONGS_EQUAL(0, irc_message_is_empty ("\n "));
+    LONGS_EQUAL(0, irc_message_is_empty ("\n \n"));
+    LONGS_EQUAL(0, irc_message_is_empty ("test"));
 }
 
 /*
@@ -1039,6 +1135,8 @@ TEST(IrcMessage, Split)
 {
     struct t_irc_server *server;
     struct t_hashtable *hashtable;
+    const char *ptr_msg, *pos1, *pos2;
+    char batch_ref[512], msg[4096];
 
     server = irc_server_alloc ("test_split_msg");
     CHECK(server);
@@ -1436,6 +1534,12 @@ TEST(IrcMessage, Split)
                  (const char *)hashtable_get (hashtable, "msg1"));
     hashtable_free (hashtable);
 
+    /* PRIVMSG with no content: no split (not allowed) */
+    hashtable = irc_message_split (server, "PRIVMSG #channel :");
+    CHECK(hashtable);
+    LONGS_EQUAL(0, hashtable->items_count);
+    hashtable_free (hashtable);
+
     /* PRIVMSG with small content: no split */
     hashtable = irc_message_split (server, "PRIVMSG #channel :test");
     CHECK(hashtable);
@@ -1517,24 +1621,46 @@ TEST(IrcMessage, Split)
                  (const char *)hashtable_get (hashtable, "args2"));
     hashtable_free (hashtable);
 
-    /* PRIVMSG with "\x01ACTION " + 512 bytes + "\x01": 1 split */
+    /* PRIVMSG with "\01ACTION\01": no split */
+    hashtable = irc_message_split (server, "PRIVMSG #channel :\01ACTION\01");
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #channel :\01ACTION\01",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+
+    /* PRIVMSG with "\01ACTION test\01": no split */
+    hashtable = irc_message_split (server, "PRIVMSG #channel :\01ACTION test\01");
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #channel :\01ACTION test\01",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("test",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+
+    /* PRIVMSG with "\01ACTION " + 512 bytes + "\01": 1 split */
     hashtable = irc_message_split (server,
                                    "PRIVMSG #channel :"
-                                   "\x01" "ACTION "
-                                   LOREM_IPSUM_512
-                                   "\x01");
+                                   "\01ACTION " LOREM_IPSUM_512 "\01");
     CHECK(hashtable);
     LONGS_EQUAL(5, hashtable->items_count);
     STRCMP_EQUAL("2",
                  (const char *)hashtable_get (hashtable, "count"));
-    STRCMP_EQUAL("PRIVMSG #channel :" "\x01" "ACTION " "Lorem ipsum dolor sit"
+    STRCMP_EQUAL("PRIVMSG #channel :\01ACTION Lorem ipsum dolor sit"
                  " amet, consectetur adipiscing elit. Fusce auctor ac leo ut "
                  "maximus. Curabitur vestibulum facilisis neque, vitae sodale"
                  "s elit pulvinar ac. Mauris suscipit pharetra metus eu hendr"
                  "erit. Proin viverra ligula ut nibh malesuada, vel vehicula "
                  "leo pulvinar. Nullam tellus dolor, posuere sed orci in, pre"
                  "tium fermentum ante. Donec a quam vulputate, fermentum nisi"
-                 " nec, convallis" "\x01",
+                 " nec, convallis\01",
                  (const char *)hashtable_get (hashtable, "msg1"));
     STRCMP_EQUAL("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu"
                  "sce auctor ac leo ut maximus. Curabitur vestibulum facilisi"
@@ -1544,9 +1670,9 @@ TEST(IrcMessage, Split)
                  "uere sed orci in, pretium fermentum ante. Donec a quam vulp"
                  "utate, fermentum nisi nec, convallis",
                  (const char *)hashtable_get (hashtable, "args1"));
-    STRCMP_EQUAL("PRIVMSG #channel :" "\x01" "ACTION " "sapien. Vestibulum ma"
+    STRCMP_EQUAL("PRIVMSG #channel :\01ACTION sapien. Vestibulum ma"
                  "lesuada dui eget iaculis sagittis. Praesent egestas non ex "
-                 "quis blandit. Maecenas quis leo nunc. In." "\x01",
+                 "quis blandit. Maecenas quis leo nunc. In.\01",
                  (const char *)hashtable_get (hashtable, "msg2"));
     STRCMP_EQUAL("sapien. Vestibulum malesuada dui eget iaculis sagittis. Pra"
                  "esent egestas non ex quis blandit. Maecenas quis leo nunc. "
@@ -1606,6 +1732,254 @@ TEST(IrcMessage, Split)
                  "lentesque efficitur nisl quis sodales. Nam hendreri.",
                  (const char *)hashtable_get (hashtable, "args3"));
     hashtable_free (hashtable);
+
+    /* PRIVMSG with multiline: BATCH is used */
+    hashtable_set (server->cap_list, "batch", NULL);
+    hashtable_set (server->cap_list, "draft/multiline", NULL);
+    hashtable = irc_message_split (server, "PRIVMSG #channel :test\n\nline 3");
+    CHECK(hashtable);
+    LONGS_EQUAL(12, hashtable->items_count);
+    STRCMP_EQUAL("5",
+                 (const char *)hashtable_get (hashtable, "count"));
+    ptr_msg = (const char *)hashtable_get (hashtable, "msg1");
+    CHECK(ptr_msg);
+    STRNCMP_EQUAL("BATCH +", ptr_msg, 7);
+    pos1 = ptr_msg + 7;
+    pos2 = strchr (pos1, ' ');
+    CHECK(pos2);
+    memcpy (batch_ref, pos1, pos2 - pos1);
+    batch_ref[pos2 - pos1] = '\0';
+    snprintf (msg, sizeof (msg),
+              "BATCH +%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg1"));
+    snprintf (msg, sizeof (msg),
+              "+%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args1"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s PRIVMSG #channel :test", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("test", (const char *)hashtable_get (hashtable, "args2"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s PRIVMSG #channel :", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg3"));
+    STRCMP_EQUAL("", (const char *)hashtable_get (hashtable, "args3"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s PRIVMSG #channel :line 3", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg4"));
+    STRCMP_EQUAL("line 3", (const char *)hashtable_get (hashtable, "args4"));
+    snprintf (msg, sizeof (msg),
+              "BATCH -%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg5"));
+    snprintf (msg, sizeof (msg),
+              "-%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args5"));
+    STRCMP_EQUAL("test\n\nline 3",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    hashtable_free (hashtable);
+    hashtable_remove (server->cap_list, "batch");
+    hashtable_remove (server->cap_list, "draft/multiline");
+
+    /* NOTICE with multiline: BATCH is used */
+    hashtable_set (server->cap_list, "batch", NULL);
+    hashtable_set (server->cap_list, "draft/multiline", NULL);
+    hashtable = irc_message_split (server, "NOTICE #channel :\ntest\nline 2");
+    CHECK(hashtable);
+    LONGS_EQUAL(12, hashtable->items_count);
+    STRCMP_EQUAL("5",
+                 (const char *)hashtable_get (hashtable, "count"));
+    ptr_msg = (const char *)hashtable_get (hashtable, "msg1");
+    CHECK(ptr_msg);
+    STRNCMP_EQUAL("BATCH +", ptr_msg, 7);
+    pos1 = ptr_msg + 7;
+    pos2 = strchr (pos1, ' ');
+    CHECK(pos2);
+    memcpy (batch_ref, pos1, pos2 - pos1);
+    batch_ref[pos2 - pos1] = '\0';
+    snprintf (msg, sizeof (msg),
+              "BATCH +%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg1"));
+    snprintf (msg, sizeof (msg),
+              "+%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args1"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s NOTICE #channel :", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("", (const char *)hashtable_get (hashtable, "args2"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s NOTICE #channel :test", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg3"));
+    STRCMP_EQUAL("test", (const char *)hashtable_get (hashtable, "args3"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s NOTICE #channel :line 2", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg4"));
+    STRCMP_EQUAL("line 2", (const char *)hashtable_get (hashtable, "args4"));
+    snprintf (msg, sizeof (msg),
+              "BATCH -%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg5"));
+    snprintf (msg, sizeof (msg),
+              "-%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args5"));
+    STRCMP_EQUAL("\ntest\nline 2",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    hashtable_free (hashtable);
+    hashtable_remove (server->cap_list, "batch");
+    hashtable_remove (server->cap_list, "draft/multiline");
+
+    /* PRIVMSG with multiline exceeding "max-lines" */
+    server->multiline_max_bytes = IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES;
+    server->multiline_max_lines = 3;
+    hashtable_set (server->cap_list, "batch", NULL);
+    hashtable_set (server->cap_list, "draft/multiline", NULL);
+    hashtable = irc_message_split (
+        server,
+        "PRIVMSG #channel :test\nline 2\nline 3\nline 4");
+    CHECK(hashtable);
+    LONGS_EQUAL(19, hashtable->items_count);
+    STRCMP_EQUAL("8",
+                 (const char *)hashtable_get (hashtable, "count"));
+    ptr_msg = (const char *)hashtable_get (hashtable, "msg1");
+    CHECK(ptr_msg);
+    STRNCMP_EQUAL("BATCH +", ptr_msg, 7);
+    pos1 = ptr_msg + 7;
+    pos2 = strchr (pos1, ' ');
+    CHECK(pos2);
+    memcpy (batch_ref, pos1, pos2 - pos1);
+    batch_ref[pos2 - pos1] = '\0';
+    snprintf (msg, sizeof (msg),
+              "BATCH +%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg1"));
+    snprintf (msg, sizeof (msg),
+              "+%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args1"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s PRIVMSG #channel :test", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("test", (const char *)hashtable_get (hashtable, "args2"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s PRIVMSG #channel :line 2", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg3"));
+    STRCMP_EQUAL("line 2", (const char *)hashtable_get (hashtable, "args3"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s PRIVMSG #channel :line 3", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg4"));
+    STRCMP_EQUAL("line 3", (const char *)hashtable_get (hashtable, "args4"));
+    snprintf (msg, sizeof (msg),
+              "BATCH -%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg5"));
+    snprintf (msg, sizeof (msg),
+              "-%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args5"));
+    ptr_msg = (const char *)hashtable_get (hashtable, "msg6");
+    CHECK(ptr_msg);
+    STRNCMP_EQUAL("BATCH +", ptr_msg, 7);
+    pos1 = ptr_msg + 7;
+    pos2 = strchr (pos1, ' ');
+    CHECK(pos2);
+    memcpy (batch_ref, pos1, pos2 - pos1);
+    batch_ref[pos2 - pos1] = '\0';
+    snprintf (msg, sizeof (msg),
+              "BATCH +%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg6"));
+    snprintf (msg, sizeof (msg),
+              "+%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args6"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s PRIVMSG #channel :line 4", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg7"));
+    STRCMP_EQUAL("line 4", (const char *)hashtable_get (hashtable, "args7"));
+    snprintf (msg, sizeof (msg),
+              "BATCH -%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg8"));
+    snprintf (msg, sizeof (msg),
+              "-%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args8"));
+    STRCMP_EQUAL("test\nline 2\nline 3",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    STRCMP_EQUAL("line 4",
+                 (const char *)hashtable_get (hashtable, "multiline_args2"));
+    hashtable_free (hashtable);
+    hashtable_remove (server->cap_list, "batch");
+    hashtable_remove (server->cap_list, "draft/multiline");
+
+    /* PRIVMSG with multiline exceeding "max-bytes" */
+    server->multiline_max_bytes = 200;
+    server->multiline_max_lines = IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES;
+    hashtable_set (server->cap_list, "batch", NULL);
+    hashtable_set (server->cap_list, "draft/multiline", NULL);
+    hashtable = irc_message_split (
+        server,
+        "PRIVMSG #channel :test\n"
+        "this is a loooooooooooooooong line 2\n"
+        "this is a loooooooooooooooong line 3\n"
+        "this is a loooooooooooooooong line 4");
+    CHECK(hashtable);
+    LONGS_EQUAL(19, hashtable->items_count);
+    STRCMP_EQUAL("8", (const char *)hashtable_get (hashtable, "count"));
+    ptr_msg = (const char *)hashtable_get (hashtable, "msg1");
+    CHECK(ptr_msg);
+    STRNCMP_EQUAL("BATCH +", ptr_msg, 7);
+    pos1 = ptr_msg + 7;
+    pos2 = strchr (pos1, ' ');
+    CHECK(pos2);
+    memcpy (batch_ref, pos1, pos2 - pos1);
+    batch_ref[pos2 - pos1] = '\0';
+    snprintf (msg, sizeof (msg),
+              "BATCH +%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg1"));
+    snprintf (msg, sizeof (msg),
+              "+%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args1"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s PRIVMSG #channel :test", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("test", (const char *)hashtable_get (hashtable, "args2"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s PRIVMSG #channel :this is a loooooooooooooooong line 2", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg3"));
+    STRCMP_EQUAL("this is a loooooooooooooooong line 2", (const char *)hashtable_get (hashtable, "args3"));
+    snprintf (msg, sizeof (msg),
+              "BATCH -%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg4"));
+    snprintf (msg, sizeof (msg),
+              "-%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args4"));
+    ptr_msg = (const char *)hashtable_get (hashtable, "msg5");
+    CHECK(ptr_msg);
+    STRNCMP_EQUAL("BATCH +", ptr_msg, 7);
+    pos1 = ptr_msg + 7;
+    pos2 = strchr (pos1, ' ');
+    CHECK(pos2);
+    memcpy (batch_ref, pos1, pos2 - pos1);
+    batch_ref[pos2 - pos1] = '\0';
+    snprintf (msg, sizeof (msg),
+              "BATCH +%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg5"));
+    snprintf (msg, sizeof (msg),
+              "+%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args5"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s PRIVMSG #channel :this is a loooooooooooooooong line 3", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg6"));
+    STRCMP_EQUAL("this is a loooooooooooooooong line 3", (const char *)hashtable_get (hashtable, "args6"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s PRIVMSG #channel :this is a loooooooooooooooong line 4", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg7"));
+    STRCMP_EQUAL("this is a loooooooooooooooong line 4", (const char *)hashtable_get (hashtable, "args7"));
+    snprintf (msg, sizeof (msg),
+              "BATCH -%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg8"));
+    snprintf (msg, sizeof (msg),
+              "-%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args8"));
+    STRCMP_EQUAL("test\n"
+                 "this is a loooooooooooooooong line 2",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    STRCMP_EQUAL("this is a loooooooooooooooong line 3\n"
+                 "this is a loooooooooooooooong line 4",
+                 (const char *)hashtable_get (hashtable, "multiline_args2"));
+    hashtable_free (hashtable);
+    hashtable_remove (server->cap_list, "batch");
+    hashtable_remove (server->cap_list, "draft/multiline");
 
     /* 005: no split */
     hashtable = irc_message_split (server, "005 nick " MSG_005);

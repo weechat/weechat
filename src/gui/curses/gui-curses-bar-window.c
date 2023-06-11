@@ -41,6 +41,9 @@
 #include "../gui-cursor.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
+#include "gui-curses-bar-window.h"
+#include "gui-curses-color.h"
+#include "gui-curses-window.h"
 
 
 /*

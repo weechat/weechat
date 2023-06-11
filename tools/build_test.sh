@@ -31,8 +31,7 @@
 # This script is used to build WeeChat in CI environment.
 #
 
-# exit on any error
-set -e
+set -o errexit
 
 BUILDDIR="build-tmp-$$"
 

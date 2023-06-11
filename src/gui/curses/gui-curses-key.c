@@ -45,7 +45,8 @@
 #include "../gui-window.h"
 #include "gui-curses.h"
 
-#define BIND(key, command) gui_key_default_bind(context, key, command)
+#define BIND(key, command)                                      \
+    gui_key_default_bind(context, key, command, create_option)
 
 
 /*
@@ -53,227 +54,190 @@
  */
 
 void
-gui_key_default_bind (int context, const char *key, const char *command)
+gui_key_default_bind (int context, const char *key, const char *command,
+                      int create_option)
 {
     struct t_gui_key *ptr_key;
-    char *internal_code;
 
-    internal_code = gui_key_get_internal_code (key);
-    if (!internal_code)
-        return;
-
-    ptr_key = gui_key_search (gui_keys[context], internal_code);
+    ptr_key = gui_key_search (gui_keys[context], key);
     if (!ptr_key)
-        gui_key_new (NULL, context, key, command);
-
-    free (internal_code);
+        gui_key_new (NULL, context, key, command, create_option);
 }
 
 /*
  * Creates default key bindings for a given context.
+ *
+ * If create_option == 1, config options are created, otherwise keys are just
+ * added to linked list (gui_keys[]).
  */
 
 void
-gui_key_default_bindings (int context)
+gui_key_default_bindings (int context, int create_option)
 {
     int i;
     char key_str[32], command[32];
 
     if (context == GUI_KEY_CONTEXT_DEFAULT)
     {
-        BIND(/* <enter>       */ "ctrl-m",             "/input return");
-        BIND(/* <enter>       */ "ctrl-j",             "/input return");
-        BIND(/* m-<enter>     */ "meta-ctrl-m",        "/input insert \\n");
-        BIND(/* <tab>         */ "ctrl-i",             "/input complete_next");
-        BIND(/* s-<tab>       */ "meta2-Z",            "/input complete_previous");
-        BIND(/* ^r            */ "ctrl-r",             "/input search_text_here");
-        BIND(/* <backspace>   */ "ctrl-h",             "/input delete_previous_char");
-        BIND(/* <backspace>   */ "ctrl-?",             "/input delete_previous_char");
-        BIND(/* ^_            */ "ctrl-_",             "/input undo");
-        BIND(/* m-_           */ "meta-_",             "/input redo");
-        BIND(/* <del>         */ "meta2-3~",           "/input delete_next_char");
-        BIND(/* ^d            */ "ctrl-d",             "/input delete_next_char");
-        BIND(/* ^w            */ "ctrl-w",             "/input delete_previous_word_whitespace");
-        BIND(/* m-<backspace> */ "meta-ctrl-?",        "/input delete_previous_word");
-        BIND(/* ^x            */ "ctrl-x",             "/buffer switch");
-        BIND(/* m-x           */ "meta-x",             "/buffer zoom");
-        BIND(/* m-d           */ "meta-d",             "/input delete_next_word");
-        BIND(/* ^k            */ "ctrl-k",             "/input delete_end_of_line");
-        BIND(/* m-r           */ "meta-r",             "/input delete_line");
-        BIND(/* ^t            */ "ctrl-t",             "/input transpose_chars");
-        BIND(/* ^u            */ "ctrl-u",             "/input delete_beginning_of_line");
-        BIND(/* ^y            */ "ctrl-y",             "/input clipboard_paste");
-        BIND(/* <home>        */ "meta2-1~",           "/input move_beginning_of_line");
-        BIND(/* <home>        */ "meta2-H",            "/input move_beginning_of_line");
-        BIND(/* <home>        */ "meta2-7~",           "/input move_beginning_of_line");
-        BIND(/* <home>        */ "meta-OH",            "/input move_beginning_of_line");
-        BIND(/* ^a            */ "ctrl-a",             "/input move_beginning_of_line");
-        BIND(/* <end>         */ "meta2-4~",           "/input move_end_of_line");
-        BIND(/* <end>         */ "meta2-F",            "/input move_end_of_line");
-        BIND(/* <end>         */ "meta2-8~",           "/input move_end_of_line");
-        BIND(/* <end>         */ "meta-OF",            "/input move_end_of_line");
-        BIND(/* ^e            */ "ctrl-e",             "/input move_end_of_line");
-        BIND(/* <left>        */ "meta2-D",            "/input move_previous_char");
-        BIND(/* ^b            */ "ctrl-b",             "/input move_previous_char");
-        BIND(/* <right>       */ "meta2-C",            "/input move_next_char");
-        BIND(/* ^f            */ "ctrl-f",             "/input move_next_char");
-        BIND(/* m-b           */ "meta-b",             "/input move_previous_word");
-        BIND(/* ^<left>       */ "meta-Od",            "/input move_previous_word");
-        BIND(/* ^<left>       */ "meta-OD",            "/input move_previous_word");
-        BIND(/* ^<left>       */ "meta2-1;5D",         "/input move_previous_word");
-        BIND(/* m-f           */ "meta-f",             "/input move_next_word");
-        BIND(/* ^<right>      */ "meta-Oc",            "/input move_next_word");
-        BIND(/* ^<right>      */ "meta-OC",            "/input move_next_word");
-        BIND(/* ^<right>      */ "meta2-1;5C",         "/input move_next_word");
-        BIND(/* <up>          */ "meta2-A",            "/input history_previous");
-        BIND(/* <down>        */ "meta2-B",            "/input history_next");
-        BIND(/* ^<up>         */ "meta-Oa",            "/input history_global_previous");
-        BIND(/* ^<up>         */ "meta-OA",            "/input history_global_previous");
-        BIND(/* ^<up>         */ "meta2-1;5A",         "/input history_global_previous");
-        BIND(/* ^<down>       */ "meta-Ob",            "/input history_global_next");
-        BIND(/* ^<down>       */ "meta-OB",            "/input history_global_next");
-        BIND(/* ^<down>       */ "meta2-1;5B",         "/input history_global_next");
-        BIND(/* m-a           */ "meta-a",             "/buffer jump smart");
-        BIND(/* m-j,m-f       */ "meta-jmeta-f",       "/buffer -");
-        BIND(/* m-j,m-l       */ "meta-jmeta-l",       "/buffer +");
-        BIND(/* m-j,m-r       */ "meta-jmeta-r",       "/server raw");
-        BIND(/* m-j,m-s       */ "meta-jmeta-s",       "/server jump");
-        BIND(/* m-h,m-c       */ "meta-hmeta-c",       "/hotlist clear");
-        BIND(/* m-h,m-m       */ "meta-hmeta-m",       "/hotlist remove");
-        BIND(/* m-h,m-r       */ "meta-hmeta-r",       "/hotlist restore");
-        BIND(/* m-h,m-R       */ "meta-hmeta-R",       "/hotlist restore -all");
-        BIND(/* m-k           */ "meta-k",             "/input grab_key_command");
-        BIND(/* m-s           */ "meta-s",             "/mute spell toggle");
-        BIND(/* m-u           */ "meta-u",             "/window scroll_unread");
-        BIND(/* ^s^u          */ "ctrl-sctrl-u",       "/allbuf /buffer set unread");
-        BIND(/* ^cb           */ "ctrl-cb",            "/input insert \\x02");
-        BIND(/* ^cc           */ "ctrl-cc",            "/input insert \\x03");
-        BIND(/* ^ci           */ "ctrl-ci",            "/input insert \\x1D");
-        BIND(/* ^co           */ "ctrl-co",            "/input insert \\x0F");
-        BIND(/* ^cv           */ "ctrl-cv",            "/input insert \\x16");
-        BIND(/* ^c_           */ "ctrl-c_",            "/input insert \\x1F");
-        BIND(/* m-<right>     */ "meta-meta2-C",       "/buffer +1");
-        BIND(/* m-<right>     */ "meta2-1;3C",         "/buffer +1");
-        BIND(/* m-<down>      */ "meta-meta2-B",       "/buffer +1");
-        BIND(/* m-<down>      */ "meta2-1;3B",         "/buffer +1");
-        BIND(/* <f6>          */ "meta2-17~",          "/buffer +1");
-        BIND(/* ^n            */ "ctrl-n",             "/buffer +1");
-        BIND(/* m-<left>      */ "meta-meta2-D",       "/buffer -1");
-        BIND(/* m-<left>      */ "meta2-1;3D",         "/buffer -1");
-        BIND(/* m-<up>        */ "meta-meta2-A",       "/buffer -1");
-        BIND(/* m-<up>        */ "meta2-1;3A",         "/buffer -1");
-        BIND(/* <f5>          */ "meta2-15~",          "/buffer -1");
-        BIND(/* <f5>          */ "meta2-[E",           "/buffer -1");
-        BIND(/* ^p            */ "ctrl-p",             "/buffer -1");
-        BIND(/* <pgup>        */ "meta2-5~",           "/window page_up");
-        BIND(/* <pgup>        */ "meta2-I",            "/window page_up");
-        BIND(/* <pgdn>        */ "meta2-6~",           "/window page_down");
-        BIND(/* <pgdn>        */ "meta2-G",            "/window page_down");
-        BIND(/* m-<pgup>      */ "meta-meta2-5~",      "/window scroll_up");
-        BIND(/* m-<pgup>      */ "meta2-5;3~",         "/window scroll_up");
-        BIND(/* m-<pgdn>      */ "meta-meta2-6~",      "/window scroll_down");
-        BIND(/* m-<pgdn>      */ "meta2-6;3~",         "/window scroll_down");
-        BIND(/* m-<home>      */ "meta-meta2-1~",      "/window scroll_top");
-        BIND(/* m-<home>      */ "meta-meta2-7~",      "/window scroll_top");
-        BIND(/* m-<home>      */ "meta2-1;3H",         "/window scroll_top");
-        BIND(/* m-<end>       */ "meta-meta2-4~",      "/window scroll_bottom");
-        BIND(/* m-<end>       */ "meta-meta2-8~",      "/window scroll_bottom");
-        BIND(/* m-<end>       */ "meta2-1;3F",         "/window scroll_bottom");
-        BIND(/* m-n           */ "meta-n",             "/window scroll_next_highlight");
-        BIND(/* m-p           */ "meta-p",             "/window scroll_previous_highlight");
-        BIND(/* m-N           */ "meta-N",             "/bar toggle nicklist");
-        BIND(/* <f9>          */ "meta2-20~",          "/bar scroll title * -30%");
-        BIND(/* <f10>         */ "meta2-21~",          "/bar scroll title * +30%");
-        BIND(/* <f11>         */ "meta2-23~",          "/bar scroll nicklist * -100%");
-        BIND(/* <f12>         */ "meta2-24~",          "/bar scroll nicklist * +100%");
-        BIND(/* c-<f11>       */ "meta2-23^",          "/bar scroll nicklist * -100%");
-        BIND(/* c-<f11>       */ "meta2-23;5~",        "/bar scroll nicklist * -100%");
-        BIND(/* c-<f12>       */ "meta2-24^",          "/bar scroll nicklist * +100%");
-        BIND(/* c-<f12>       */ "meta2-24;5~",        "/bar scroll nicklist * +100%");
-        BIND(/* m-<f11>       */ "meta2-23;3~",        "/bar scroll nicklist * b");
-        BIND(/* m-<f11>       */ "meta-meta2-23~",     "/bar scroll nicklist * b");
-        BIND(/* m-<f12>       */ "meta2-24;3~",        "/bar scroll nicklist * e");
-        BIND(/* m-<f12>       */ "meta-meta2-24~",     "/bar scroll nicklist * e");
-        BIND(/* ^l            */ "ctrl-l",             "/window refresh");
-        BIND(/* <f7>          */ "meta2-18~",          "/window -1");
-        BIND(/* <f8>          */ "meta2-19~",          "/window +1");
-        BIND(/* m-w,m-<up>    */ "meta-wmeta-meta2-A", "/window up");
-        BIND(/* m-w,m-<up>    */ "meta-wmeta2-1;3A",   "/window up");
-        BIND(/* m-w,m-<down>  */ "meta-wmeta-meta2-B", "/window down");
-        BIND(/* m-w,m-<down>  */ "meta-wmeta2-1;3B",   "/window down");
-        BIND(/* m-w,m-<right> */ "meta-wmeta-meta2-C", "/window right");
-        BIND(/* m-w,m-<right> */ "meta-wmeta2-1;3C",   "/window right");
-        BIND(/* m-w,m-<left>  */ "meta-wmeta-meta2-D", "/window left");
-        BIND(/* m-w,m-<left>  */ "meta-wmeta2-1;3D",   "/window left");
-        BIND(/* m-w,m-b       */ "meta-wmeta-b",       "/window balance");
-        BIND(/* m-w,m-s       */ "meta-wmeta-s",       "/window swap");
-        BIND(/* m-z           */ "meta-z",             "/window zoom");
-        BIND(/* m-=           */ "meta-=",             "/filter toggle");
-        BIND(/* m--           */ "meta--",             "/filter toggle @");
-        BIND(/* m-0           */ "meta-0",             "/buffer *10");
-        BIND(/* m-1           */ "meta-1",             "/buffer *1");
-        BIND(/* m-2           */ "meta-2",             "/buffer *2");
-        BIND(/* m-3           */ "meta-3",             "/buffer *3");
-        BIND(/* m-4           */ "meta-4",             "/buffer *4");
-        BIND(/* m-5           */ "meta-5",             "/buffer *5");
-        BIND(/* m-6           */ "meta-6",             "/buffer *6");
-        BIND(/* m-7           */ "meta-7",             "/buffer *7");
-        BIND(/* m-8           */ "meta-8",             "/buffer *8");
-        BIND(/* m-9           */ "meta-9",             "/buffer *9");
-        BIND(/* m-<           */ "meta-<",             "/buffer jump prev_visited");
-        BIND(/* m->           */ "meta->",             "/buffer jump next_visited");
-        BIND(/* m-/           */ "meta-/",             "/buffer jump last_displayed");
-        BIND(/* m-l           */ "meta-l",             "/window bare");
-        BIND(/* m-m           */ "meta-m",             "/mute mouse toggle");
-        BIND(/* start paste   */ "meta2-200~",         "/input paste_start");
-        BIND(/* end paste     */ "meta2-201~",         "/input paste_stop");
+        BIND("return",            "/input return");
+        BIND("meta-return",       "/input insert \\n");
+        BIND("tab",               "/input complete_next");
+        BIND("shift-tab",         "/input complete_previous");
+        BIND("ctrl-r",            "/input search_text_here");
+        BIND("backspace",         "/input delete_previous_char");
+        BIND("ctrl-_",            "/input undo");
+        BIND("meta-_",            "/input redo");
+        BIND("delete",            "/input delete_next_char");
+        BIND("ctrl-d",            "/input delete_next_char");
+        BIND("ctrl-w",            "/input delete_previous_word_whitespace");
+        BIND("meta-backspace",    "/input delete_previous_word");
+        BIND("ctrl-x",            "/buffer switch");
+        BIND("meta-x",            "/buffer zoom");
+        BIND("meta-d",            "/input delete_next_word");
+        BIND("ctrl-k",            "/input delete_end_of_line");
+        BIND("meta-ctrl-k",       "/input delete_end_of_input");
+        BIND("meta-r",            "/input delete_line");
+        BIND("meta-R",            "/input delete_input");
+        BIND("ctrl-t",            "/input transpose_chars");
+        BIND("ctrl-u",            "/input delete_beginning_of_line");
+        BIND("meta-ctrl-u",       "/input delete_beginning_of_input");
+        BIND("ctrl-y",            "/input clipboard_paste");
+        BIND("home",              "/input move_beginning_of_line");
+        BIND("ctrl-a",            "/input move_beginning_of_line");
+        BIND("shift-home",        "/input move_beginning_of_input");
+        BIND("end",               "/input move_end_of_line");
+        BIND("ctrl-e",            "/input move_end_of_line");
+        BIND("shift-end",         "/input move_end_of_input");
+        BIND("left",              "/input move_previous_char");
+        BIND("shift-left",        "/input move_previous_char");
+        BIND("ctrl-b",            "/input move_previous_char");
+        BIND("right",             "/input move_next_char");
+        BIND("shift-right",       "/input move_next_char");
+        BIND("ctrl-f",            "/input move_next_char");
+        BIND("meta-b",            "/input move_previous_word");
+        BIND("ctrl-left",         "/input move_previous_word");
+        BIND("meta-f",            "/input move_next_word");
+        BIND("ctrl-right",        "/input move_next_word");
+        BIND("up",                "/input history_previous");
+        BIND("down",              "/input history_next");
+        BIND("ctrl-up",           "/input history_global_previous");
+        BIND("ctrl-down",         "/input history_global_next");
+        BIND("shift-up",          "/input move_previous_line");
+        BIND("shift-down",        "/input move_next_line");
+        BIND("meta-a",            "/buffer jump smart");
+        BIND("meta-j,meta-f",     "/buffer -");
+        BIND("meta-j,meta-l",     "/buffer +");
+        BIND("meta-j,meta-r",     "/server raw");
+        BIND("meta-j,meta-s",     "/server jump");
+        BIND("meta-h,meta-c",     "/hotlist clear");
+        BIND("meta-h,meta-m",     "/hotlist remove");
+        BIND("meta-h,meta-r",     "/hotlist restore");
+        BIND("meta-h,meta-R",     "/hotlist restore -all");
+        BIND("meta-k",            "/input grab_key_command");
+        BIND("meta-K",            "/input grab_raw_key_command");
+        BIND("meta-s",            "/mute spell toggle");
+        BIND("meta-u",            "/window scroll_unread");
+        BIND("ctrl-s,ctrl-u",     "/allbuf /buffer set unread");
+        BIND("ctrl-c,b",          "/input insert \\x02");
+        BIND("ctrl-c,c",          "/input insert \\x03");
+        BIND("ctrl-c,i",          "/input insert \\x1D");
+        BIND("ctrl-c,o",          "/input insert \\x0F");
+        BIND("ctrl-c,v",          "/input insert \\x16");
+        BIND("ctrl-c,_",          "/input insert \\x1F");
+        BIND("meta-right",        "/buffer +1");
+        BIND("meta-down",         "/buffer +1");
+        BIND("f6",                "/buffer +1");
+        BIND("ctrl-n",            "/buffer +1");
+        BIND("meta-left",         "/buffer -1");
+        BIND("meta-up",           "/buffer -1");
+        BIND("f5",                "/buffer -1");
+        BIND("ctrl-p",            "/buffer -1");
+        BIND("pgup",              "/window page_up");
+        BIND("pgdn",              "/window page_down");
+        BIND("meta-pgup",         "/window scroll_up");
+        BIND("meta-pgdn",         "/window scroll_down");
+        BIND("meta-home",         "/window scroll_top");
+        BIND("meta-end",          "/window scroll_bottom");
+        BIND("meta-n",            "/window scroll_next_highlight");
+        BIND("meta-p",            "/window scroll_previous_highlight");
+        BIND("meta-N",            "/bar toggle nicklist");
+        BIND("f9",                "/bar scroll title * -30%");
+        BIND("f10",               "/bar scroll title * +30%");
+        BIND("f11",               "/bar scroll nicklist * -100%");
+        BIND("f12",               "/bar scroll nicklist * +100%");
+        BIND("ctrl-f11",          "/bar scroll nicklist * -100%");
+        BIND("ctrl-f12",          "/bar scroll nicklist * +100%");
+        BIND("meta-f11",          "/bar scroll nicklist * b");
+        BIND("meta-f12",          "/bar scroll nicklist * e");
+        BIND("ctrl-l",            "/window refresh");
+        BIND("f7",                "/window -1");
+        BIND("f8",                "/window +1");
+        BIND("meta-w,meta-up",    "/window up");
+        BIND("meta-w,meta-down",  "/window down");
+        BIND("meta-w,meta-right", "/window right");
+        BIND("meta-w,meta-left",  "/window left");
+        BIND("meta-w,meta-b",     "/window balance");
+        BIND("meta-w,meta-s",     "/window swap");
+        BIND("meta-z",            "/window zoom");
+        BIND("meta-=",            "/filter toggle");
+        BIND("meta--",            "/filter toggle @");
+        BIND("meta-0",            "/buffer *10");
+        BIND("meta-1",            "/buffer *1");
+        BIND("meta-2",            "/buffer *2");
+        BIND("meta-3",            "/buffer *3");
+        BIND("meta-4",            "/buffer *4");
+        BIND("meta-5",            "/buffer *5");
+        BIND("meta-6",            "/buffer *6");
+        BIND("meta-7",            "/buffer *7");
+        BIND("meta-8",            "/buffer *8");
+        BIND("meta-9",            "/buffer *9");
+        BIND("meta-<",            "/buffer jump prev_visited");
+        BIND("meta->",            "/buffer jump next_visited");
+        BIND("meta-/",            "/buffer jump last_displayed");
+        BIND("meta-l",            "/window bare");
+        BIND("meta-m",            "/mute mouse toggle");
 
         /* bind meta-j + {01..99} to switch to buffers # > 10 */
         for (i = 1; i < 100; i++)
         {
-            snprintf (key_str, sizeof (key_str), "meta-j%02d", i);
+            snprintf (key_str, sizeof (key_str), "meta-j,%1d,%1d", i / 10, i % 10);
             snprintf (command, sizeof (command), "/buffer *%d", i);
             BIND(key_str, command);
         }
     }
     else if (context == GUI_KEY_CONTEXT_SEARCH)
     {
-        BIND(/* <enter> */ "ctrl-m",  "/input search_stop_here");
-        BIND(/* <enter> */ "ctrl-j",  "/input search_stop_here");
-        BIND(/* ^q      */ "ctrl-q",  "/input search_stop");
-        BIND(/* m-c     */ "meta-c",  "/input search_switch_case");
-        BIND(/* ^r      */ "ctrl-r",  "/input search_switch_regex");
-        BIND(/* <tab>   */ "ctrl-i",  "/input search_switch_where");
-        BIND(/* <up>    */ "meta2-A", "/input search_previous");
-        BIND(/* <down>  */ "meta2-B", "/input search_next");
+        BIND("return", "/input search_stop_here");
+        BIND("ctrl-q", "/input search_stop");
+        BIND("meta-c", "/input search_switch_case");
+        BIND("ctrl-r", "/input search_switch_regex");
+        BIND("tab",    "/input search_switch_where");
+        BIND("up",     "/input search_previous");
+        BIND("down",   "/input search_next");
     }
     else if (context == GUI_KEY_CONTEXT_CURSOR)
     {
         /* general & move */
-        BIND(/* <enter>   */ "ctrl-m",                   "/cursor stop");
-        BIND(/* <enter>   */ "ctrl-j",                   "/cursor stop");
-        BIND(/* <up>      */ "meta2-A",                  "/cursor move up");
-        BIND(/* <down>    */ "meta2-B",                  "/cursor move down");
-        BIND(/* <left>    */ "meta2-D",                  "/cursor move left");
-        BIND(/* <right>   */ "meta2-C",                  "/cursor move right");
-        BIND(/* m-<up>    */ "meta-meta2-A",             "/cursor move area_up");
-        BIND(/* m-<up>    */ "meta2-1;3A",               "/cursor move area_up");
-        BIND(/* m-<down>  */ "meta-meta2-B",             "/cursor move area_down");
-        BIND(/* m-<down>  */ "meta2-1;3B",               "/cursor move area_down");
-        BIND(/* m-<left>  */ "meta-meta2-D",             "/cursor move area_left");
-        BIND(/* m-<left>  */ "meta2-1;3D",               "/cursor move area_left");
-        BIND(/* m-<right> */ "meta-meta2-C",             "/cursor move area_right");
-        BIND(/* m-<right> */ "meta2-1;3C",               "/cursor move area_right");
+        BIND("return",    "/cursor stop");
+        BIND("up",        "/cursor move up");
+        BIND("down",      "/cursor move down");
+        BIND("left",      "/cursor move left");
+        BIND("right",     "/cursor move right");
+        BIND("meta-up",   "/cursor move area_up");
+        BIND("meta-down", "/cursor move area_down");
+        BIND("meta-left", "/cursor move area_left");
+        BIND("meta-right","/cursor move area_right");
         /* chat */
-        BIND(/* m         */ "@chat:m",                  "hsignal:chat_quote_message;/cursor stop");
-        BIND(/* q         */ "@chat:q",                  "hsignal:chat_quote_prefix_message;/cursor stop");
-        BIND(/* Q         */ "@chat:Q",                  "hsignal:chat_quote_time_prefix_message;/cursor stop");
+        BIND("@chat:m", "hsignal:chat_quote_message;/cursor stop");
+        BIND("@chat:l", "hsignal:chat_quote_focused_line;/cursor stop");
+        BIND("@chat:q", "hsignal:chat_quote_prefix_message;/cursor stop");
+        BIND("@chat:Q", "hsignal:chat_quote_time_prefix_message;/cursor stop");
         /* nicklist */
-        BIND(/* b         */ "@item(buffer_nicklist):b", "/window ${_window_number};/ban ${nick}");
-        BIND(/* k         */ "@item(buffer_nicklist):k", "/window ${_window_number};/kick ${nick}");
-        BIND(/* K         */ "@item(buffer_nicklist):K", "/window ${_window_number};/kickban ${nick}");
-        BIND(/* q         */ "@item(buffer_nicklist):q", "/window ${_window_number};/query ${nick};/cursor stop");
-        BIND(/* w         */ "@item(buffer_nicklist):w", "/window ${_window_number};/whois ${nick}");
+        BIND("@item(buffer_nicklist):b", "/window ${_window_number};/ban ${nick}");
+        BIND("@item(buffer_nicklist):k", "/window ${_window_number};/kick ${nick}");
+        BIND("@item(buffer_nicklist):K", "/window ${_window_number};/kickban ${nick}");
+        BIND("@item(buffer_nicklist):q", "/window ${_window_number};/query ${nick};/cursor stop");
+        BIND("@item(buffer_nicklist):w", "/window ${_window_number};/whois ${nick}");
     }
     else if (context == GUI_KEY_CONTEXT_MOUSE)
     {
@@ -340,17 +304,25 @@ gui_key_flush (int paste)
     for (i = 0; i < gui_key_buffer_size; i++)
     {
         key = gui_key_buffer[i];
+
+        /*
+         * many terminal emulators send "\n" as "\r" when pasting, so replace
+         * them back
+         */
+        if (paste && (key == '\r'))
+            key = '\n';
+
         insert_ok = 1;
         utf_partial_char[0] = '\0';
 
-        if (gui_mouse_event_pending)
+        if (!paste && gui_mouse_event_pending)
         {
             insert_ok = 0;
             key_str[0] = (char)key;
             key_str[1] = '\0';
             length_key_str = 1;
         }
-        else if (key < 32)
+        else if (!paste && (key < 32))
         {
             insert_ok = 0;
             key_str[0] = '\x01';
@@ -365,8 +337,9 @@ gui_key_flush (int paste)
             key_str[2] = '\0';
             length_key_str = 2;
         }
-        else if (key == 127)
+        else if (!paste && (key == 127))
         {
+            insert_ok = 0;
             key_str[0] = '\x01';
             key_str[1] = '?';
             key_str[2] = '\0';
@@ -424,7 +397,9 @@ gui_key_flush (int paste)
              * or if the mouse code is valid UTF-8 (do not send partial mouse
              * code which is not UTF-8 valid)
              */
-            if (!gui_mouse_event_pending || utf8_is_valid (key_str, -1, NULL))
+            if (!paste
+                && (!gui_mouse_event_pending
+                    || utf8_is_valid (key_str, -1, NULL)))
             {
                 (void) hook_signal_send ("key_pressed",
                                          WEECHAT_HOOK_SIGNAL_STRING, key_str);
@@ -437,8 +412,9 @@ gui_key_flush (int paste)
                 input_old = NULL;
             old_buffer = gui_current_window->buffer;
 
-            if ((gui_key_pressed (key_str) != 0) && (insert_ok)
-                && (!gui_cursor_mode))
+            if ((paste || gui_key_pressed (key_str) != 0)
+                && insert_ok
+                && !gui_cursor_mode)
             {
                 if (!paste || !undo_done)
                     gui_buffer_undo_snap (gui_current_window->buffer);
@@ -503,7 +479,7 @@ gui_key_flush (int paste)
         length_key_str = strlen (key_str);
 
         /* set last key used in buffer if combo buffer is empty */
-        if (gui_key_grab || gui_mouse_event_pending || !gui_key_combo_buffer[0])
+        if (gui_key_grab || gui_mouse_event_pending || !gui_key_combo[0])
             last_key_used = i;
     }
 
@@ -513,7 +489,7 @@ gui_key_flush (int paste)
         gui_key_buffer_remove (0, last_key_used + 1);
 
     if (!gui_key_grab && !gui_mouse_event_pending)
-        gui_key_combo_buffer[0] = '\0';
+        gui_key_combo[0] = '\0';
 }
 
 /*
@@ -569,37 +545,37 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
         }
     }
 
-    if (gui_key_paste_pending)
+    if (!gui_key_paste_bracketed)
     {
-        if (accept_paste)
+        pos = gui_key_buffer_search (0, -1, GUI_KEY_BRACKETED_PASTE_START);
+        if (pos >= 0)
         {
-            /* user is OK for pasting text, let's paste! */
-            gui_key_paste_accept ();
-        }
-        else if (cancel_paste)
-        {
-            /* user doesn't want to paste text: clear whole buffer! */
-            gui_key_paste_cancel ();
-        }
-        else if (text_added_to_buffer)
-        {
-            /* new text received while asking for paste, update message */
-            gui_input_paste_pending_signal ();
+            gui_key_buffer_remove (pos, GUI_KEY_BRACKETED_PASTE_LENGTH);
+            gui_key_paste_bracketed_start ();
         }
     }
-    else
+
+    if (!gui_key_paste_bracketed)
     {
-        if (!gui_key_paste_bracketed)
+        if (gui_key_paste_pending)
         {
-            pos = gui_key_buffer_search (0, -1, GUI_KEY_BRACKETED_PASTE_START);
-            if (pos >= 0)
+            if (accept_paste)
             {
-                gui_key_buffer_remove (pos, GUI_KEY_BRACKETED_PASTE_LENGTH);
-                gui_key_paste_bracketed_start ();
+                /* user is OK for pasting text, let's paste! */
+                gui_key_paste_accept ();
+            }
+            else if (cancel_paste)
+            {
+                /* user doesn't want to paste text: clear whole buffer! */
+                gui_key_paste_cancel ();
+            }
+            else if (text_added_to_buffer)
+            {
+                /* new text received while asking for paste, update message */
+                gui_input_paste_pending_signal ();
             }
         }
-
-        if (!gui_key_paste_bracketed)
+        else
             gui_key_paste_check (0);
     }
 
@@ -613,19 +589,16 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
             /* remove the code for end of bracketed paste (ESC[201~) */
             gui_key_buffer_remove (pos, GUI_KEY_BRACKETED_PASTE_LENGTH);
 
-            /* remove final newline (if needed) */
-            gui_key_paste_remove_newline ();
-
-            /* replace tabs by spaces */
-            gui_key_paste_replace_tabs ();
-
             /* stop bracketed mode */
             gui_key_paste_bracketed_timer_remove ();
             gui_key_paste_bracketed_stop ();
 
             /* if paste confirmation not displayed, flush buffer now */
             if (!gui_key_paste_pending)
+            {
+                gui_key_paste_finish ();
                 gui_key_flush (1);
+            }
         }
     }
 

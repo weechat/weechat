@@ -24,10 +24,15 @@ struct t_infolist;
 struct t_weechat_plugin;
 struct t_gui_window;
 
-#define GUI_BAR_DEFAULT_NAME_INPUT    "input"
-#define GUI_BAR_DEFAULT_NAME_TITLE    "title"
-#define GUI_BAR_DEFAULT_NAME_STATUS   "status"
-#define GUI_BAR_DEFAULT_NAME_NICKLIST "nicklist"
+enum t_gui_bar_default
+{
+    GUI_BAR_DEFAULT_INPUT,
+    GUI_BAR_DEFAULT_TITLE,
+    GUI_BAR_DEFAULT_STATUS,
+    GUI_BAR_DEFAULT_NICKLIST,
+    /* number of default bars */
+    GUI_BAR_NUM_DEFAULT_BARS,
+};
 
 enum t_gui_bar_option
 {
@@ -106,6 +111,8 @@ extern char *gui_bar_option_string[];
 extern char *gui_bar_type_string[];
 extern char *gui_bar_position_string[];
 extern char *gui_bar_filling_string[];
+extern char *gui_bar_default_name[];
+extern char *gui_bar_default_values[][GUI_BAR_NUM_OPTIONS];
 extern struct t_gui_bar *gui_bars;
 extern struct t_gui_bar *last_gui_bar;
 extern struct t_gui_bar *gui_temp_bars;
@@ -114,6 +121,7 @@ extern struct t_gui_bar *last_gui_temp_bar;
 /* functions */
 
 extern int gui_bar_valid (struct t_gui_bar *bar);
+extern int gui_bar_search_default_bar (const char *bar_name);
 extern int gui_bar_search_option (const char *option_name);
 extern int gui_bar_search_type (const char *type);
 extern int gui_bar_search_position (const char *position);

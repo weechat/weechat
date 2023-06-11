@@ -274,20 +274,18 @@ plugin_check_autoload (const char *filename)
  */
 
 void
-plugin_get_args (struct t_weechat_plugin *plugin,
-                 int argc, char **argv,
+plugin_get_args (int argc, char **argv,
                  int *plugin_argc, char ***plugin_argv,
-                 int *no_connect)
+                 int *no_connect, int *no_script)
 {
-    int i, temp_argc, length_plugin_name;
+    int i, temp_argc;
     char **temp_argv;
 
     temp_argc = 0;
     temp_argv = NULL;
 
     *no_connect = 0;
-
-    length_plugin_name = strlen (plugin->name);
+    *no_script = 0;
 
     if (argc > 0)
     {
@@ -302,10 +300,11 @@ plugin_get_args (struct t_weechat_plugin *plugin,
                     *no_connect = 1;
                 }
                 else if ((strcmp (argv[i], "-s") == 0)
-                         || (strcmp (argv[i], "--no-script") == 0)
-                         || ((strncmp (argv[i], plugin->name,
-                                       length_plugin_name) == 0)
-                             && (argv[i][length_plugin_name] == ':')))
+                         || (strcmp (argv[i], "--no-script") == 0))
+                {
+                    *no_script = 1;
+                }
+                else if (argv[i][0] != '-')
                 {
                     temp_argv[temp_argc++] = argv[i];
                 }
@@ -336,7 +335,8 @@ int
 plugin_call_init (struct t_weechat_plugin *plugin, int argc, char **argv)
 {
     t_weechat_init_func *init_func;
-    int plugin_argc, no_connect, rc, old_auto_connect;
+    int no_connect, rc, old_auto_connect, no_script, old_auto_load_scripts;
+    int plugin_argc;
     char **plugin_argv;
 
     if (plugin->initialized)
@@ -348,11 +348,14 @@ plugin_call_init (struct t_weechat_plugin *plugin, int argc, char **argv)
         return 0;
 
     /* get arguments for the plugin */
-    plugin_get_args (plugin, argc, argv,
-                     &plugin_argc, &plugin_argv, &no_connect);
+    plugin_get_args (argc, argv,
+                     &plugin_argc, &plugin_argv, &no_connect, &no_script);
 
     old_auto_connect = weechat_auto_connect;
     weechat_auto_connect = (no_connect) ? 0 : 1;
+
+    old_auto_load_scripts = weechat_auto_load_scripts;
+    weechat_auto_load_scripts = (no_script) ? 0 : 1;
 
     /* init plugin */
     if (weechat_debug_core >= 1)
@@ -377,6 +380,7 @@ plugin_call_init (struct t_weechat_plugin *plugin, int argc, char **argv)
     }
 
     weechat_auto_connect = old_auto_connect;
+    weechat_auto_load_scripts = old_auto_load_scripts;
 
     if (plugin_argv)
         free (plugin_argv);
@@ -736,6 +740,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hashtable_free = &hashtable_free;
 
         new_plugin->config_new = &config_file_new;
+        new_plugin->config_set_version = &config_file_set_version;
         new_plugin->config_new_section = &config_file_new_section;
         new_plugin->config_search_section = &config_file_search_section;
         new_plugin->config_new_option = &config_file_new_option;

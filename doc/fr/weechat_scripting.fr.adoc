@@ -2,20 +2,13 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr
-:toc: left
-:toclevels: 4
 :toc-title: Table des matières
-:sectnums:
-:sectnumlevels: 3
-:docinfo1:
-
 
 Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.
 
 La dernière version de ce document peut être téléchargée sur
-https://weechat.org/doc/[cette page ^↗^,window=_blank].
-
+https://weechat.org/doc/[cette page ^↗^^].
 
 [[introduction]]
 == Introduction
@@ -67,7 +60,7 @@ Si quelque chose doit être lancé en arrière-plan, la fonction `+hook_process+
 peut être utilisée. Voir l'exemple dans le chapitre
 <<hook_process,Lancer un processus en tâche de fond>> et la documentation sur
 la fonction `+hook_process+` dans la
-link:weechat_plugin_api.fr.html#_hook_process[Référence API extension WeeChat ^↗^,window=_blank].
+link:weechat_plugin_api.fr.html#_hook_process[Référence API extension WeeChat ^↗^^].
 
 [[languages_specificities]]
 === Spécificités des langages
@@ -80,7 +73,7 @@ link:weechat_plugin_api.fr.html#_hook_process[Référence API extension WeeChat�
 
 WeeChat définit un module `weechat` qui doit être importé avec `import weechat`. +
 Un "stub" Python pour l'API WeeChat est disponible dans le dépôt :
-https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^,window=_blank].
+https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^^].
 
 [[python_functions]]
 ===== Fonctions
@@ -116,7 +109,7 @@ pas exhaustive) :
   Il est recommandé d'utiliser plutôt le modificateur `+irc_in2_yyy+`, la chaîne
   reçue sera toujours valide UTF-8. +
   Voir la fonction `+hook_modifier+` dans la
-  link:weechat_plugin_api.fr.html#_hook_modifier[Référence API extension WeeChat ^↗^,window=_blank].
+  link:weechat_plugin_api.fr.html#_hook_modifier[Référence API extension WeeChat ^↗^^].
 
 | hook_signal
 | xxx,irc_out_yyy +
@@ -132,7 +125,7 @@ pas exhaustive) :
   Il est recommandé d'utiliser plutôt le signal `+xxx,irc_out1_yyy+`, la chaîne
   reçue sera toujours valide UTF-8. +
   Voir la fonction `+hook_signal+` dans la
-  link:weechat_plugin_api.fr.html#_hook_signal[Référence API extension WeeChat ^↗^,window=_blank].
+  link:weechat_plugin_api.fr.html#_hook_signal[Référence API extension WeeChat ^↗^^].
 
 | hook_process +
   hook_process_hashtable
@@ -201,22 +194,23 @@ Les fonctions sont appelées par `+weechat.xxx(arg1, arg2, ...)+`.
 
 Les fonctions sont appelées par `+weechat::xxx arg1 arg2 ...+`.
 
-// TRANSLATION MISSING
 [[tcl_null]]
 ===== Null values
 
-Since Tcl only has string types, there's no null type to pass as an argument
-when a function accepts null values or to get as an argument in a callback
-function. To overcome this the WeeChat API defines the constant
-`$::weechat::WEECHAT_NULL` which acts as a null value. This constant is defined
-as `\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, so it's very unlikely to
-appear unintentionally.
+Puisque Tcl n'a que des types "string", il n'y a pas de type "null" à passer
+comme paramètre lorsqu'une fonction accepte des valeurs "null" ou pour recevoir
+comme paramètre dans une fonction de rappel. Pour y remédier, l'API WeeChat
+définit la constante `$::weechat::WEECHAT_NULL` qui agit comme une valeur
+"null". Cette constante est définie avec la valeur
+`\uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF`, donc il est très peu probable
+qu'elle apparaisse involontairement.
 
-You can pass this constant when a function accepts null as an argument and you
-will get it as the value of an argument in a callback function if the argument
-value is null. To see which functions accept null values and passes null values
-to callbacks, look at the Python prototypes in the
-link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^,window=_blank].
+Vous pouvez passer cette constante lorsqu'une fonction accepte "null" comme
+paramètre et vous la recevrez comment valeur d'un paramètre de fonction de rappel
+si la valeur du paramètre est "null". Pour voir quelles fonctions acceptent des
+valeurs "null" et passent des valeurs "null" aux fonctions de rappel, regardez
+les prototypes Python dans la
+link:weechat_plugin_api.fr.html[Référence API extension WeeChat ^↗^^].
 
 [[language_guile]]
 ==== Guile (Scheme)
@@ -395,7 +389,7 @@ dans le répertoire _autoload_ est automatiquement créé.
 == Différences avec l'API C
 
 L'API script est quasiment identique à l'API C.
-Vous pouvez consulter la link:weechat_plugin_api.fr.html[Référence API extension WeeChat ^↗^,window=_blank]
+Vous pouvez consulter la link:weechat_plugin_api.fr.html[Référence API extension WeeChat ^↗^^]
 pour le détail de chaque fonction de l'API : prototype, paramètres, valeurs
 de retour, exemples.
 
@@ -569,7 +563,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 == API script
 
 Pour plus d'informations sur les fonctions de l'API, merci de consulter la
-link:weechat_plugin_api.fr.html[Référence API extension WeeChat ^↗^,window=_blank].
+link:weechat_plugin_api.fr.html[Référence API extension WeeChat ^↗^^].
 
 [[script_api_functions]]
 === Fonctions
@@ -892,7 +886,7 @@ Liste des constantes de l'API script :
 
 Ce chapitre montre quelques tâches courantes, avec des exemples.
 Seule une partie de l'API est utilisée ici, pour une référence complète, voir la
-link:weechat_plugin_api.fr.html[Référence API extension WeeChat ^↗^,window=_blank].
+link:weechat_plugin_api.fr.html[Référence API extension WeeChat ^↗^^].
 
 [[buffers]]
 === Tampons
@@ -1171,7 +1165,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 
 [TIP]
 Toutes les infos disponibles à propos de WeeChat sont sur
-https://weechat.org/dev/info/[cette page ^↗^,window=_blank].
+https://weechat.org/dev/info/[cette page ^↗^^].
 
 Exemple de transfert d'URL avec une option : télécharger le dernier paquet de
 développement WeeChat dans le fichier _/tmp/weechat-devel.tar.gz_ :
@@ -1190,7 +1184,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 
 Pour plus d'information sur le transfert d'URL et les options disponibles, voir
 les fonctions `+hook_process+` et `+hook_process_hashtable+` dans la
-link:weechat_plugin_api.fr.html#_hook_process[Référence API extension WeeChat ^↗^,window=_blank].
+link:weechat_plugin_api.fr.html#_hook_process[Référence API extension WeeChat ^↗^^].
 
 [[config_options]]
 === Config / options

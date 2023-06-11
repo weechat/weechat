@@ -36,4 +36,4 @@ list(APPEND LINK_LIBS ${ZLIB_LIBRARY})
 
 target_link_libraries(script ${LINK_LIBS} coverage_config)
 
-install(TARGETS script LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
+install(TARGETS script LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

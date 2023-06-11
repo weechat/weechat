@@ -2,20 +2,11 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ja-jp
-:toc: left
 :toc-title: 目次
-:toclevels: 2
-:sectnums:
-:sectnumlevels: 2
-:docinfo1:
-
 
 翻訳者:
 
 * Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2012-2019
-
-toc::[]
-
 
 [[general]]
 == 一般
@@ -36,7 +27,7 @@ WeeChat は非常に軽く、革新的な機能を備えているからです。
 
 // TRANSLATION MISSING
 More info on the WeeChat
-https://weechat.org/about/features/[features page ^↗^,window=_blank].
+https://weechat.org/about/features/[features page ^↗^^].
 
 [[compilation_install]]
 == コンパイル / インストール
@@ -46,7 +37,7 @@ https://weechat.org/about/features/[features page ^↗^,window=_blank].
 
 // TRANSLATION MISSING
 Some remote GUIs are available, see the
-https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blank].
+https://weechat.org/about/interfaces/[remote interfaces page ^↗^^].
 
 [[compile_git]]
 === git リポジトリをクローンした後に WeeChat をコンパイルできません。
@@ -55,7 +46,7 @@ https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blan
 WeeChat must be compiled with CMake.
 
 // TRANSLATION MISSING
-Please follow link:weechat_user.en.html#source_package[build instructions ^↗^,window=_blank]
+Please follow link:weechat_user.en.html#source_package[build instructions ^↗^^]
 and ensure all required dependencies are installed.
 
 // TRANSLATION MISSING
@@ -64,7 +55,7 @@ If you still have issues, please report them to the developers.
 [[compile_macos]]
 === どうすれば macOS に WeeChat をインストールできますか?
 
-https://brew.sh/[Homebrew ^↗^,window=_blank] を使うことをお勧めします、ヘルプを見るには:
+https://brew.sh/[Homebrew ^↗^^] を使うことをお勧めします、ヘルプを見るには:
 
 ----
 brew info weechat
@@ -80,9 +71,9 @@ brew install weechat
 === WeeChat を起動しました。でも何をすればいいかわかりません。
 
 ヘルプを見るには、`/help` と入力してください。コマンドに関するヘルプを見るには、`/help command`
-と入力してください。link:weechat_user.ja.html#key_bindings[キー ^↗^,window=_blank]とlink:weechat_user.ja.html#commands_and_options[コマンド ^↗^,window=_blank]は文書中で説明されています。
+と入力してください。link:weechat_user.ja.html#key_bindings[キー ^↗^^]とlink:weechat_user.ja.html#commands_and_options[コマンド ^↗^^]は文書中で説明されています。
 
-新しいユーザはlink:weechat_quickstart.ja.html[クイックスタートガイド ^↗^,window=_blank]を読むことをお勧めします
+新しいユーザはlink:weechat_quickstart.ja.html[クイックスタートガイド ^↗^^]を読むことをお勧めします
 
 [[display]]
 == 表示
@@ -108,7 +99,7 @@ brew install weechat
    rxvt-unicode を推奨)
 ** screen を使っている場合は、UTF-8 モードで起動されていることを確認
    (~/.screenrc に "`defutf8 on`" の記述があるかまたは `screen -U` のようにして起動)。
-* link:weechat_user.ja.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^,window=_blank]
+* link:weechat_user.ja.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^^]
   オプションが off であることを確認してください (このオプションは表示上のバグを引き起こす可能性があります)
 
 [NOTE]
@@ -123,10 +114,10 @@ WeeChat は UTF-8 ロケールを推奨します。ISO
 で修正されているはずです (使用中のディストリビューションではまだ提供されていないかもしれません)
 
 次の回避方法を使えば、修正済みの _wcwidth_ 関数を使う事が可能です:
-https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^,window=_blank].
+https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^^].
 
 // TRANSLATION MISSING
-See this https://github.com/weechat/weechat/issues/79[bug report ^↗^,window=_blank]
+See this https://github.com/weechat/weechat/issues/79[bug report ^↗^^]
 for more information.
 
 [[bars_background]]
@@ -185,7 +176,7 @@ _ウィンドウ_
 === どうすれば左側にバッファリストを表示できますか。
 
 // TRANSLATION MISSING
-The plugin link:weechat_user.ja.html#buflist[buflist ^↗^,window=_blank]
+The plugin link:weechat_user.ja.html#buflist[buflist ^↗^^]
 is loaded and enabled by default.
 
 // TRANSLATION MISSING
@@ -233,7 +224,7 @@ like `237` for dark gray.
 The buflist plugin provides lot of options that you can customize, please read
 the help on each option.
 
-There's also a https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^,window=_blank]
+There's also a https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^^]
 with examples of advanced buflist configuration.
 
 [[customize_prefix]]
@@ -275,7 +266,7 @@ with examples of advanced buflist configuration.
 および __weechat.color.status_count_*__ オプション (カウンタ) を設定します。 +
 その他のホットリスト関連オプションは __weechat.look.hotlist_*__ オプションを使って変更します。
 
-ホットリストに関する詳しい情報はlink:weechat_user.ja.html#screen_layout[ユーザーズガイド / 画面レイアウト ^↗^,window=_blank]を参照してください
+ホットリストに関する詳しい情報はlink:weechat_user.ja.html#screen_layout[ユーザーズガイド / 画面レイアウト ^↗^^]を参照してください
 
 [[input_bar_size]]
 === コマンドラインの行数を増やすにはどうすればいいですか。
@@ -442,7 +433,7 @@ _TERM_ 変数が間違った値に設定された状態で WeeChat が起動完�
 You can use any color number in options (optional: you can add color aliases
 with command `/color`).
 
-色管理に関するより詳しい情報はlink:weechat_user.ja.html#colors[ユーザーズガイド / 色 ^↗^,window=_blank]を参照してください
+色管理に関するより詳しい情報はlink:weechat_user.ja.html#colors[ユーザーズガイド / 色 ^↗^^]を参照してください
 
 [[search_text]]
 === どうすればバッファ内の文字列を検索できますか (irssi の /lastlog の様に)。
@@ -450,7 +441,7 @@ with command `/color`).
 デフォルトのキーは kbd:[Ctrl+r] です (コマンドは: `+/input search_text_here+`)。
 ハイライト部分へのジャンプは: kbd:[Alt+p] / kbd:[Alt+n]
 
-この機能に関するより詳しい情報はlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て ^↗^,window=_blank]を参照してください
+この機能に関するより詳しい情報はlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て ^↗^^]を参照してください
 
 [[terminal_focus]]
 === どうすれば端末にフォーカスが合った時や外れた時にコマンドを実行できますか。
@@ -476,14 +467,14 @@ WeeChat の開始時にコードを送信するには:
 (例に挙げた `/print` コマンドは適当なコマンドに書き換えてください):
 
 ----
-/key bind meta2-I /print -core focus
-/key bind meta2-O /print -core unfocus
+/key bind meta-[I /print -core focus
+/key bind meta-[O /print -core unfocus
 ----
 
 端末のフォーカスが外れた時点でバッファに未読マークをつける例:
 
 ----
-/key bind meta2-O /allbuf /buffer set unread
+/key bind meta-[O /allbuf /buffer set unread
 ----
 
 [[screen_paste]]
@@ -626,7 +617,7 @@ macOS のターミナル.app を使っている場合、設定メニューのキ
 /key bind meta-q /buffer *11
 ----
 
-デフォルトキー割り当てのリストはlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て ^↗^,window=_blank]を参照してください
+デフォルトキー割り当てのリストはlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て ^↗^^]を参照してください
 
 番号 100 以上のバッファにジャンプするには、以下のトリガを定義してください。こうすることでコマンド
 `/123` でバッファ #123 にジャンプできるようになります:
@@ -644,13 +635,18 @@ macOS のターミナル.app を使っている場合、設定メニューのキ
 例:
 
 ----
+/key bind up /input history_global_previous
+/key bind down /input history_global_next
+----
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.8, you must use the raw key code (press kbd:[Alt+k] then key
+to display its code):
+
+----
 /key bind meta2-A /input history_global_previous
 /key bind meta2-B /input history_global_next
 ----
-
-[NOTE]
-"meta2-A" と "meta2-B" キーは端末によって異なります。キーコードを見つけるには
-kbd:[Alt+k] の後にキー を押してください。
 
 [[mouse]]
 == マウス
@@ -701,8 +697,8 @@ WeeChat でマウスが利用可能な場合、kbd:[Shift]
 [[irc]]
 == IRC
 
-[[irc_ssl_connection]]
-=== SSL を使うサーバへの接続中に問題が発生しました。どうすればいいですか。
+[[irc_tls_connection]]
+=== TLS を使うサーバへの接続中に問題が発生しました。どうすればいいですか。
 
 macOS をお使いの場合、必ず Homebrew から `openssl`
 をインストールしてください。こうすることでシステムの鍵束に含まれる証明書を使いつつ、CA
@@ -711,45 +707,45 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 (デフォルトは 2048) のサイズを小さくすることを試してみてください:
 
 ----
-/set irc.server.example.ssl_dhkey_size 1024
+/set irc.server.example.tls_dhkey_size 1024
 ----
 
-証明書に関するエラーの場合、"ssl_verify" を無効化してください
+証明書に関するエラーの場合、"tls_verify" を無効化してください
 (接続の機密保護がより甘くなることに注意):
 
 ----
-/set irc.server.example.ssl_verify off
+/set irc.server.example.tls_verify off
 ----
 
 サーバが不正な証明書を持っており、正常な証明書がどのようなものであるかわかっている場合、証明書の指紋を設定しておくことが可能です
 (SHA-512、SHA-256、SHA-1):
 
 ----
-/set irc.server.example.ssl_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
+/set irc.server.example.tls_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
 ----
 
-[[irc_ssl_handshake_error]]
-=== SSL を使うサーバへの接続中に、"TLS handshake failed" というエラーだけが表示されます。どうすれば良いですか。
+[[irc_tls_handshake_error]]
+=== TLS を使うサーバへの接続中に、"TLS handshake failed" というエラーだけが表示されます。どうすれば良いですか。
 
 // TRANSLATION MISSING
 You can try a different priority string, replace "xxx" by your server name:
 
 ----
-/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+/set irc.server.xxx.tls_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
 ----
 
-[[irc_ssl_libera]]
-=== どうすれば SSL を使って libera サーバに接続できますか。
+[[irc_tls_libera]]
+=== どうすれば TLS を使って libera サーバに接続できますか。
 
 // TRANSLATION MISSING
 Check that you have certificates installed on your system, this is commonly
 provided by the package "ca-certificates".
 
-サーバポート、SSL を設定の後に接続してください:
+サーバポート、TLS を設定の後に接続してください:
 
 ----
 /set irc.server.libera.addresses "irc.libera.chat/6697"
-/set irc.server.libera.ssl on
+/set irc.server.libera.tls on
 /connect libera
 ----
 
@@ -845,25 +841,11 @@ WeeChat
 フィルタされた行は隠されているだけで削除されているわけではありません。このため、フィルタを無効化
 (デフォルトでは kbd:[Alt+=] でフィルタの有効無効を切り替えられます) すれば見ることが可能です。
 
+// TRANSLATION MISSING
 [[filter_irc_join_part_quit]]
-=== どうすれば IRC チャンネルへの参加/退出/終了メッセージをフィルタできますか。
+=== How can I filter join/part/quit and other annoying messages on IRC channels?
 
-スマートフィルタを使う場合 (最近発言したユーザの参加/退出/終了メッセージは表示):
-
-----
-/set irc.look.smart_filter on
-/filter add irc_smart * irc_smart_filter *
-----
-
-グローバルフィルタを使う場合 (*全ての* 参加/退出/終了メッセージを隠す):
-
-----
-/filter add joinquit * irc_join,irc_part,irc_quit *
-----
-
-[NOTE]
-ヘルプを見るには `/help filter`、`+/help irc.look.smart_filter+`、link:weechat_user.ja.html#irc_smart_filter_join_part_quit[ユーザーズガイド
-/ 参加/退出/終了メッセージに対するスマートフィルタ ^↗^,window=_blank] を使ってください。
+See link:weechat_user.ja.html#irc_smart_filter[User's guide / IRC smart filter ^↗^^].
 
 [[filter_irc_join_channel_messages]]
 === どうすれば IRC チャンネルに参加した際に表示される一部のメッセージをフィルタできますか。
@@ -960,7 +942,7 @@ _launcher.pl_ の場合、コマンドの設定が必要です:
 
 // TRANSLATION MISSING
 You can use the
-link:weechat_user.ja.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
+link:weechat_user.ja.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^^]
 buffer property to set the max hotlist level for some nicks, per buffer,
 or per group of buffers (like IRC servers).
 
@@ -1024,7 +1006,7 @@ for help).
 [[scripts_update]]
 === コマンド "/script update" でスクリプトを読み込むことができません。どうすればいいですか。
 
-手始めに、この FAQ の SSL 接続に関する質問を確認してください。
+手始めに、この FAQ の TLS 接続に関する質問を確認してください。
 
 それでもだめなら、手作業で (シェルから) スクリプトリストファイルを削除してください:
 
@@ -1111,7 +1093,7 @@ spell プラグインをリロードしてください:
   `/help weechat.plugin.autoload` を参照してください。
 * 本当に必要なスクリプトだけをロード
 // TRANSLATION MISSING
-* Do not load system certificates if SSL is *NOT* used: turn off this option:
+* Do not load system certificates if TLS is *NOT* used: turn off this option:
   _weechat.network.gnutls_ca_system_.
 * _weechat.history.max_buffer_lines_number_
   オプションの値を減らすか、_weechat.history.max_buffer_lines_minutes_ オプションに値を設定してください。
@@ -1162,7 +1144,7 @@ IRC の退出および終了メッセージを無効化します:
 パスフレーズを定義してパスワードなどの保護したいデータの使用時は常にセキュアデータを使います:
 `/help secure` およびセキュアデータを使用したいオプションの `/help` を参照してください
 (セキュアデータを使うことが可能なオプションのヘルプにはこの点が明記されています)。
-link:weechat_user.ja.html#secured_data[ユーザーズガイド / 暗号化データ ^↗^,window=_blank] を参照してください。
+link:weechat_user.ja.html#secured_data[ユーザーズガイド / 暗号化データ ^↗^^] を参照してください。
 
 例:
 
@@ -1185,7 +1167,7 @@ contains your passwords ciphered with your passphrase.
 Some other files may contain sensitive info like passwords (if they are not
 stored in _sec.conf_ with the `/secure` command).
 
-設定ファイルに関する詳しい情報はlink:weechat_user.ja.html#files_and_directories[ユーザーズガイド / ファイルとディレクトリ ^↗^,window=_blank]を参照してください。
+設定ファイルに関する詳しい情報はlink:weechat_user.ja.html#files_and_directories[ユーザーズガイド / ファイルとディレクトリ ^↗^^]を参照してください。
 
 [[development]]
 == 開発
@@ -1194,7 +1176,7 @@ stored in _sec.conf_ with the `/secure` command).
 === どのようにバグ報告、新機能のリクエスト、パッチ送信すればよいですか。
 
 // TRANSLATION MISSING
-See https://weechat.org/about/support/[this page ^↗^,window=_blank].
+See https://weechat.org/about/support/[this page ^↗^^].
 
 [[gdb_error_threads]]
 === gdb で WeeChat を実行する場合、スレッドに関するエラーが発生します。
@@ -1233,11 +1215,11 @@ OS で WeeChat をテストすることを歓迎します。
 
 // TRANSLATION MISSING
 Please contact us via IRC or mail, look at
-https://weechat.org/about/support/[support page ^↗^,window=_blank].
+https://weechat.org/about/support/[support page ^↗^^].
 
 [[donate]]
 === WeeChat 開発者にお金か何かを贈りたいのですが。
 
 // TRANSLATION MISSING
 You can give us money to help development.
-Details on https://weechat.org/donate/[donation page ^↗^,window=_blank].
+Details on https://weechat.org/donate/[donation page ^↗^^].

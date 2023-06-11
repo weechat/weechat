@@ -203,6 +203,10 @@ relay_weechat_protocol_handshake_reply (struct t_relay_client *client,
             hashtable,
             "compression",
             relay_weechat_compression_string[RELAY_WEECHAT_DATA(client, compression)]);
+        weechat_hashtable_set (
+            hashtable,
+            "escape_commands",
+            RELAY_WEECHAT_DATA(client, escape_commands) ? "on" : "off");
 
         msg = relay_weechat_msg_new (id);
         if (msg)
@@ -315,6 +319,12 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
                         weechat_string_free_split (compressions);
                     }
                 }
+                else if (strcmp (options[i], "escape_commands") == 0)
+                {
+                    RELAY_WEECHAT_DATA(client, escape_commands) =
+                        (weechat_strcmp (pos, "on") == 0) ?
+                        1 : 0;
+                }
             }
         }
         weechat_string_free_split_command (options);
@@ -349,7 +359,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
  * Format is:  init arg1=value1,arg2=value2
  *
  * Allowed arguments:
- *   password       plain text password (recommended with SSL only)
+ *   password       plain text password (recommended with TLS only)
  *   password_hash  hashed password, value is: algorithm:[parameters:]hash
  *                  supported algorithms: sha256, sha512 and pbkdf2
  *                  for pbkdf2, parameters are: algorithm, salt, iterations
@@ -1752,7 +1762,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(quit)
 void
 relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
 {
-    char *pos, *id, *command, **argv, **argv_eol;
+    const char *ptr_data;
+    char *data_unescaped, *pos, *id, *command, **argv, **argv_eol;
     int i, argc, return_code;
     struct t_relay_weechat_protocol_cb protocol_cb[] =
         { { "handshake", &relay_weechat_protocol_cb_handshake },
@@ -1785,35 +1796,44 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
                         data);
     }
 
-    /* extract id */
+    data_unescaped = NULL;
+    ptr_data = data;
     id = NULL;
-    if (data[0] == '(')
+    command = NULL;
+    argv = NULL;
+    argv_eol = NULL;
+
+    if (RELAY_WEECHAT_DATA(client, escape_commands))
     {
-        pos = strchr (data, ')');
+        data_unescaped = weechat_string_convert_escaped_chars (data);
+        if (data_unescaped)
+            ptr_data = data_unescaped;
+    }
+
+    /* extract id */
+    if (ptr_data[0] == '(')
+    {
+        pos = strchr (ptr_data, ')');
         if (pos)
         {
-            id = weechat_strndup (data + 1, pos - data - 1);
-            data = pos + 1;
-            while (data[0] == ' ')
+            id = weechat_strndup (ptr_data + 1, pos - ptr_data - 1);
+            ptr_data = pos + 1;
+            while (ptr_data[0] == ' ')
             {
-                data++;
+                ptr_data++;
             }
         }
     }
 
     /* search end of data */
-    pos = strchr (data, ' ');
+    pos = strchr (ptr_data, ' ');
     if (pos)
-        command = weechat_strndup (data, pos - data);
+        command = weechat_strndup (ptr_data, pos - ptr_data);
     else
-        command = strdup (data);
+        command = strdup (ptr_data);
 
     if (!command)
-    {
-        if (id)
-            free (id);
-        return;
-    }
+        goto end;
 
     argc = 0;
     argv = NULL;
@@ -1878,6 +1898,9 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
         }
     }
 
+end:
+    if (data_unescaped)
+        free (data_unescaped);
     if (id)
         free (id);
     free (command);

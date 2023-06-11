@@ -902,6 +902,62 @@ weechat_guile_api_config_new (SCM name, SCM function, SCM data)
     API_RETURN_STRING(result);
 }
 
+struct t_hashtable *
+weechat_guile_api_config_update_cb (const void *pointer, void *data,
+                                    struct t_config_file *config_file,
+                                    int version_read,
+                                    struct t_hashtable *data_read)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    struct t_hashtable *ret_hashtable;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (char *)API_PTR2STR(config_file);
+        func_argv[2] = &version_read;
+        func_argv[3] = data_read;
+
+        ret_hashtable = weechat_guile_exec (script,
+                                            WEECHAT_SCRIPT_EXEC_HASHTABLE,
+                                            ptr_function,
+                                            "ssih", func_argv);
+
+        return ret_hashtable;
+    }
+
+    return NULL;
+}
+
+SCM
+weechat_guile_api_config_set_version (SCM config_file, SCM version,
+                                      SCM function, SCM data)
+{
+    int rc;
+
+    API_INIT_FUNC(1, "config_set_version", API_RETURN_INT(0));
+    if (!scm_is_string (config_file) || !scm_is_integer (version)
+        || !scm_is_string (function) || !scm_is_string (data))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    rc = plugin_script_api_config_set_version (
+        weechat_guile_plugin,
+        guile_current_script,
+        API_STR2PTR(API_SCM_TO_STRING(config_file)),
+        scm_to_int (version),
+        &weechat_guile_api_config_update_cb,
+        API_SCM_TO_STRING(function),
+        API_SCM_TO_STRING(data));
+
+    API_RETURN_INT(rc);
+}
+
 int
 weechat_guile_api_config_read_cb (const void *pointer, void *data,
                                   struct t_config_file *config_file,
@@ -5150,6 +5206,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(list_remove_all, 1);
     API_DEF_FUNC(list_free, 1);
     API_DEF_FUNC(config_new, 3);
+    API_DEF_FUNC(config_set_version, 4);
     API_DEF_FUNC(config_new_section, 1);
     API_DEF_FUNC(config_search_section, 2);
     API_DEF_FUNC(config_new_option, 1);

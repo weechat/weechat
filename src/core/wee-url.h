@@ -54,6 +54,7 @@ struct t_url_file
     FILE *stream;                      /* file stream                       */
 };
 
+extern char *url_type_string[];
 extern struct t_url_option url_options[];
 
 extern int weeurl_download (const char *url, struct t_hashtable *options);

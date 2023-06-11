@@ -51,17 +51,17 @@ struct t_relay_server *last_relay_server = NULL;
  *
  * Examples:
  *
- *   string                    ipv4 ipv6 ssl unix protocol protocol_args
+ *   string                    ipv4 ipv6 tls unix protocol protocol_args
  *   ---------------------------------------------------------------
  *   irc.libera                1    1    0   0    irc      libera
- *   ssl.irc.libera            1    1    1   0    irc      libera
+ *   tls.irc.libera            1    1    1   0    irc      libera
  *   ipv4.irc.libera           1    0    0   0    irc      libera
  *   ipv6.irc.libera           0    1    0   0    irc      libera
  *   ipv4.ipv6.irc.libera      1    1    0   0    irc      libera
- *   ipv6.ssl.irc.libera       0    1    1   0    irc      libera
+ *   ipv6.tls.irc.libera       0    1    1   0    irc      libera
  *   weechat                   1    1    0   0    weechat
- *   ssl.weechat               1    1    1   0    weechat
- *   ipv6.ssl.weechat          0    1    1   0    weechat
+ *   tls.weechat               1    1    1   0    weechat
+ *   ipv6.tls.weechat          0    1    1   0    weechat
  *   unix.weechat              0    0    0   1    weechat
  *
  * Note: *protocol and *protocol_args must be freed after use.
@@ -69,16 +69,16 @@ struct t_relay_server *last_relay_server = NULL;
 
 void
 relay_server_get_protocol_args (const char *protocol_and_args,
-                                int *ipv4, int *ipv6, int *ssl,
+                                int *ipv4, int *ipv6, int *tls,
                                 int *unix_socket,
                                 char **protocol, char **protocol_args)
 {
-    int opt_ipv4, opt_ipv6, opt_ssl, opt_unix_socket;
+    int opt_ipv4, opt_ipv6, opt_tls, opt_unix_socket;
     char *pos;
 
     opt_ipv4 = -1;
     opt_ipv6 = -1;
-    opt_ssl = 0;
+    opt_tls = 0;
     opt_unix_socket = -1;
     while (1)
     {
@@ -92,9 +92,9 @@ relay_server_get_protocol_args (const char *protocol_and_args,
             opt_ipv6 = 1;
             protocol_and_args += 5;
         }
-        else if (strncmp (protocol_and_args, "ssl.", 4) == 0)
+        else if (strncmp (protocol_and_args, "tls.", 4) == 0)
         {
-            opt_ssl = 1;
+            opt_tls = 1;
             protocol_and_args += 4;
         }
         else if (strncmp (protocol_and_args, "unix.", 5) == 0)
@@ -134,8 +134,8 @@ relay_server_get_protocol_args (const char *protocol_and_args,
         *ipv4 = opt_ipv4;
     if (ipv6)
         *ipv6 = opt_ipv6;
-    if (ssl)
-        *ssl = opt_ssl;
+    if (tls)
+        *tls = opt_tls;
     if (unix_socket)
         *unix_socket = opt_unix_socket;
 
@@ -793,7 +793,7 @@ relay_server_create_socket (struct t_relay_server *server)
 struct t_relay_server *
 relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
                   const char *protocol_args, int port, const char *path,
-                  int ipv4, int ipv6, int ssl, int unix_socket)
+                  int ipv4, int ipv6, int tls, int unix_socket)
 {
     struct t_relay_server *new_server, *dup_server;
     struct t_hashtable *options;
@@ -842,7 +842,7 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
             weechat_hashtable_free (options);
         new_server->ipv4 = ipv4;
         new_server->ipv6 = ipv6;
-        new_server->ssl = ssl;
+        new_server->tls = tls;
         new_server->unix_socket = unix_socket;
         new_server->sock = -1;
         new_server->hook_fd = NULL;
@@ -1010,7 +1010,7 @@ relay_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ipv6", server->ipv6))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "ssl", server->ssl))
+    if (!weechat_infolist_new_var_integer (ptr_item, "tls", server->tls))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "unix_socket", server->unix_socket))
         return 0;
@@ -1049,7 +1049,7 @@ relay_server_print_log ()
         weechat_log_printf ("  path. . . . . . . . . : %s",    ptr_server->path);
         weechat_log_printf ("  ipv4. . . . . . . . . : %d",    ptr_server->ipv4);
         weechat_log_printf ("  ipv6. . . . . . . . . : %d",    ptr_server->ipv6);
-        weechat_log_printf ("  ssl . . . . . . . . . : %d",    ptr_server->ssl);
+        weechat_log_printf ("  tls . . . . . . . . . : %d",    ptr_server->tls);
         weechat_log_printf ("  unix_socket . . . . . : %d",    ptr_server->unix_socket);
         weechat_log_printf ("  sock. . . . . . . . . : %d",    ptr_server->sock);
         weechat_log_printf ("  hook_fd . . . . . . . : 0x%lx", ptr_server->hook_fd);

@@ -28,10 +28,14 @@
 
 struct t_config_file *fifo_config_file = NULL;
 
+/* sections */
+
+struct t_config_section *fifo_config_section_file = NULL;
+
 /* fifo config, file section */
 
-struct t_config_option *fifo_config_file_enabled;
-struct t_config_option *fifo_config_file_path;
+struct t_config_option *fifo_config_file_enabled = NULL;
+struct t_config_option *fifo_config_file_path = NULL;
 
 
 /*
@@ -85,47 +89,42 @@ fifo_config_change_file_path (const void *pointer, void *data,
 int
 fifo_config_init ()
 {
-    struct t_config_section *ptr_section;
-
     fifo_config_file = weechat_config_new (FIFO_CONFIG_PRIO_NAME,
                                            NULL, NULL, NULL);
     if (!fifo_config_file)
         return 0;
 
     /* file */
-    ptr_section = weechat_config_new_section (fifo_config_file, "file",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
+    fifo_config_section_file = weechat_config_new_section (
+        fifo_config_file, "file",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (fifo_config_section_file)
     {
-        weechat_config_free (fifo_config_file);
-        fifo_config_file = NULL;
-        return 0;
+        fifo_config_file_enabled = weechat_config_new_option (
+            fifo_config_file, fifo_config_section_file,
+            "enabled", "boolean",
+            N_("enable FIFO pipe"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL,
+            &fifo_config_change_file_enabled, NULL, NULL,
+            NULL, NULL, NULL);
+        fifo_config_file_path = weechat_config_new_option (
+            fifo_config_file, fifo_config_section_file,
+            "path", "string",
+            N_("path for FIFO file; "
+               "WeeChat PID can be used in path with ${info:pid} "
+               "(path is evaluated, see function string_eval_path_home in "
+               "plugin API reference)"),
+            NULL, 0, 0, "${weechat_runtime_dir}/weechat_fifo_${info:pid}", NULL, 0,
+            NULL, NULL, NULL,
+            fifo_config_change_file_path, NULL, NULL,
+            NULL, NULL, NULL);
     }
-
-    fifo_config_file_enabled = weechat_config_new_option (
-        fifo_config_file, ptr_section,
-        "enabled", "boolean",
-        N_("enable FIFO pipe"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL,
-        &fifo_config_change_file_enabled, NULL, NULL,
-        NULL, NULL, NULL);
-    fifo_config_file_path = weechat_config_new_option (
-        fifo_config_file, ptr_section,
-        "path", "string",
-        N_("path for FIFO file; "
-           "WeeChat PID can be used in path with ${info:pid} "
-           "(path is evaluated, see function string_eval_path_home in "
-           "plugin API reference)"),
-        NULL, 0, 0, "${weechat_runtime_dir}/weechat_fifo_${info:pid}", NULL, 0,
-        NULL, NULL, NULL,
-        fifo_config_change_file_path, NULL, NULL,
-        NULL, NULL, NULL);
 
     return 1;
 }

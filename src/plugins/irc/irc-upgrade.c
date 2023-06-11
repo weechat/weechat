@@ -418,7 +418,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     }
                     /*
                      * "authentication_method" and "sasl_mechanism_used" are
-                     * new in WeeChat 3.9
+                     * new in WeeChat 4.0.0
                      */
                     if (weechat_infolist_search_var (infolist, "authentication_method"))
                     {
@@ -431,7 +431,11 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                         irc_upgrade_current_server->sasl_mechanism_used = -1;
                     }
                     irc_upgrade_current_server->is_connected = weechat_infolist_integer (infolist, "is_connected");
-                    irc_upgrade_current_server->ssl_connected = weechat_infolist_integer (infolist, "ssl_connected");
+                    /* "tls_connected" replaces "ssl_connected" in WeeChat 4.0.0 */
+                    if (weechat_infolist_search_var (infolist, "tls_connected"))
+                        irc_upgrade_current_server->tls_connected = weechat_infolist_integer (infolist, "tls_connected");
+                    else
+                        irc_upgrade_current_server->tls_connected = weechat_infolist_integer (infolist, "ssl_connected");
                     irc_upgrade_current_server->disconnected = weechat_infolist_integer (infolist, "disconnected");
                     str = weechat_infolist_string (infolist, "unterminated_message");
                     if (str)
@@ -497,6 +501,24 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                             free (irc_upgrade_current_server->prefix_chars);
                         irc_upgrade_current_server->prefix_chars = strdup (str);
                     }
+                    /* "msg_max_length" is new in WeeChat 4.0.0 */
+                    if (weechat_infolist_search_var (infolist, "msg_max_length"))
+                    {
+                        irc_upgrade_current_server->msg_max_length = weechat_infolist_integer (infolist, "msg_max_length");
+                    }
+                    else
+                    {
+                        /* WeeChat <= 3.8 */
+                        str = irc_server_get_isupport_value (irc_upgrade_current_server,
+                                                             "LINELEN");
+                        if (str)
+                        {
+                            error = NULL;
+                            number = strtol (str, &error, 10);
+                            if (error && !error[0])
+                                irc_upgrade_current_server->msg_max_length = (int)number;
+                        }
+                    }
                     irc_upgrade_current_server->nick_max_length = weechat_infolist_integer (infolist, "nick_max_length");
                     /* "user_max_length" is new in WeeChat 2.6 */
                     if (weechat_infolist_search_var (infolist, "user_max_length"))
@@ -551,6 +573,20 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                             if (utf8mapping >= 0)
                                 irc_upgrade_current_server->utf8mapping = utf8mapping;
                         }
+                    }
+                    /* "utf8only" is new in WeeChat 4.0.0 */
+                    if (weechat_infolist_search_var (infolist, "utf8only"))
+                    {
+                        irc_upgrade_current_server->utf8only = weechat_infolist_integer (infolist, "utf8only");
+                    }
+                    else
+                    {
+                        /* WeeChat <= 3.8 */
+                        irc_upgrade_current_server->utf8only = (
+                            irc_server_get_isupport_value (
+                                irc_upgrade_current_server,
+                                "UTF8ONLY")) ?
+                            1 : 0;
                     }
                     str = weechat_infolist_string (infolist, "chantypes");
                     if (str)

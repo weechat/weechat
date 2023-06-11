@@ -1,3 +1,13 @@
+weechat (3.8-1) unstable; urgency=medium
+
+  * New upstream release
+  * Add a patch remove some autotools leftovers
+  * Update debian/copyright (new year)
+  * Update debian/rules to remove workarounds which avoid issues with
+  autotools build system
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 15 Jan 2023 08:34:04 +0000
+
 weechat (3.7.1-1) unstable; urgency=medium
 
   * New upstream release

@@ -511,7 +511,7 @@ weechat_lua_load (const char *filename, const char *code)
     FILE *fp;
     char *lua_redirect_output = {
         "function weechat_output_string(str)\n"
-        "    weechat.__output__(str)\n"
+        "    weechat.__output__(tostring(str))\n"
         "end\n"
         "weechat_outputs = {\n"
         "    write = weechat_output_string\n"
@@ -1237,6 +1237,10 @@ weechat_lua_signal_script_action_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
+
     weechat_lua_plugin = plugin;
 
     /* set interpreter name and version */
@@ -1271,7 +1275,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     lua_data.unload_all = &weechat_lua_unload_all;
 
     lua_quiet = 1;
-    plugin_script_init (weechat_lua_plugin, argc, argv, &lua_data);
+    plugin_script_init (weechat_lua_plugin, &lua_data);
     lua_quiet = 0;
 
     plugin_script_display_short_list (weechat_lua_plugin,

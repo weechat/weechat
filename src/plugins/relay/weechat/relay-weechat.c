@@ -184,6 +184,7 @@ relay_weechat_alloc (struct t_relay_client *client)
     RELAY_WEECHAT_DATA(client, password_ok) = 0;
     RELAY_WEECHAT_DATA(client, totp_ok) = 0;
     RELAY_WEECHAT_DATA(client, compression) = RELAY_WEECHAT_COMPRESSION_OFF;
+    RELAY_WEECHAT_DATA(client, escape_commands) = 0;
     RELAY_WEECHAT_DATA(client, buffers_sync) =
         weechat_hashtable_new (32,
                                WEECHAT_HASHTABLE_STRING,
@@ -237,6 +238,8 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
             RELAY_WEECHAT_DATA(client, totp_ok) = 1;
         RELAY_WEECHAT_DATA(client, compression) = weechat_infolist_integer (
             infolist, "compression");
+        RELAY_WEECHAT_DATA(client, escape_commands) = weechat_infolist_integer (
+            infolist, "escape_commands");
 
         /* sync of buffers */
         RELAY_WEECHAT_DATA(client, buffers_sync) = weechat_hashtable_new (
@@ -357,6 +360,8 @@ relay_weechat_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!weechat_infolist_new_var_integer (item, "compression", RELAY_WEECHAT_DATA(client, compression)))
         return 0;
+    if (!weechat_infolist_new_var_integer (item, "escape_commands", RELAY_WEECHAT_DATA(client, escape_commands)))
+        return 0;
     if (!weechat_hashtable_add_to_infolist (RELAY_WEECHAT_DATA(client, buffers_sync), item, "buffers_sync"))
         return 0;
 
@@ -376,6 +381,7 @@ relay_weechat_print_log (struct t_relay_client *client)
         weechat_log_printf ("    password_ok . . . . . . : %d",   RELAY_WEECHAT_DATA(client, password_ok));
         weechat_log_printf ("    totp_ok . . . . . . . . : %d",   RELAY_WEECHAT_DATA(client, totp_ok));
         weechat_log_printf ("    compression . . . . . . : %d",   RELAY_WEECHAT_DATA(client, compression));
+        weechat_log_printf ("    escape_commands . . . . : %d",   RELAY_WEECHAT_DATA(client, escape_commands));
         weechat_log_printf ("    buffers_sync. . . . . . : 0x%lx (hashtable: '%s')",
                             RELAY_WEECHAT_DATA(client, buffers_sync),
                             weechat_hashtable_get_string (RELAY_WEECHAT_DATA(client, buffers_sync),

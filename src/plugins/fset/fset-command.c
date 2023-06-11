@@ -454,7 +454,6 @@ fset_command_run_set_cb (const void *pointer, void *data,
     /* make C compiler happy */
     (void) pointer;
     (void) data;
-    (void) buffer;
 
     /* ignore /set command if issued on fset buffer */
     if (fset_buffer && (buffer == fset_buffer))
@@ -573,6 +572,44 @@ end:
         weechat_string_free_split (argv);
 
     return rc;
+}
+
+/*
+ * Hooks execution of command "/key".
+ */
+
+int
+fset_command_run_key_cb (const void *pointer, void *data,
+                         struct t_gui_buffer *buffer, const char *command)
+{
+    const char *ptr_args;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) buffer;
+
+    if (strncmp (command, "/key", 4) != 0)
+        return WEECHAT_RC_OK;
+
+    ptr_args = strchr (command,  ' ');
+    while (ptr_args && (ptr_args[0] == ' '))
+    {
+        ptr_args++;
+    }
+
+    if (!ptr_args || !ptr_args[0])
+    {
+        fset_option_filter_options ("weechat.key*");
+        if (!fset_buffer)
+            fset_buffer_open ();
+        fset_buffer_set_localvar_filter ();
+        fset_buffer_refresh (1);
+        weechat_buffer_set (fset_buffer, "display", "1");
+        return WEECHAT_RC_OK_EAT;
+    }
+
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -807,4 +844,5 @@ fset_command_init ()
         " || *|c:|f:|s:|d|d:|d=|d==|=|==|%(fset_options)",
         &fset_command_fset, NULL, NULL);
     weechat_hook_command_run ("/set", &fset_command_run_set_cb, NULL, NULL);
+    weechat_hook_command_run ("/key", &fset_command_run_key_cb, NULL, NULL);
 }

@@ -65,6 +65,7 @@ void
 relay_raw_open (int switch_to_buffer)
 {
     struct t_relay_raw_message *ptr_raw_message;
+    struct t_hashtable *buffer_props;
 
     if (!relay_raw_buffer)
     {
@@ -72,30 +73,43 @@ relay_raw_open (int switch_to_buffer)
                                                   RELAY_RAW_BUFFER_NAME);
         if (!relay_raw_buffer)
         {
-            relay_raw_buffer = weechat_buffer_new (
+            buffer_props = weechat_hashtable_new (
+                32,
+                WEECHAT_HASHTABLE_STRING,
+                WEECHAT_HASHTABLE_STRING,
+                NULL, NULL);
+            if (buffer_props)
+            {
+                weechat_hashtable_set (buffer_props,
+                                       "title", _("Relay raw messages"));
+                weechat_hashtable_set (buffer_props,
+                                       "localvar_set_type", "debug");
+                weechat_hashtable_set (buffer_props,
+                                       "localvar_set_server", RELAY_RAW_BUFFER_NAME);
+                weechat_hashtable_set (buffer_props,
+                                       "localvar_set_channel", RELAY_RAW_BUFFER_NAME);
+                weechat_hashtable_set (buffer_props,
+                                       "localvar_set_no_log", "1");
+                /* disable all highlights on this buffer */
+                weechat_hashtable_set (buffer_props, "highlight_words", "-");
+            }
+            relay_raw_buffer = weechat_buffer_new_props (
                 RELAY_RAW_BUFFER_NAME,
+                buffer_props,
                 &relay_buffer_input_cb, NULL, NULL,
                 &relay_buffer_close_cb, NULL, NULL);
+            if (buffer_props)
+                weechat_hashtable_free (buffer_props);
 
             /* failed to create buffer ? then return */
             if (!relay_raw_buffer)
                 return;
-
-            weechat_buffer_set (relay_raw_buffer,
-                                "title", _("Relay raw messages"));
 
             if (!weechat_buffer_get_integer (relay_raw_buffer, "short_name_is_set"))
             {
                 weechat_buffer_set (relay_raw_buffer, "short_name",
                                     RELAY_RAW_BUFFER_NAME);
             }
-            weechat_buffer_set (relay_raw_buffer, "localvar_set_type", "debug");
-            weechat_buffer_set (relay_raw_buffer, "localvar_set_server", RELAY_RAW_BUFFER_NAME);
-            weechat_buffer_set (relay_raw_buffer, "localvar_set_channel", RELAY_RAW_BUFFER_NAME);
-            weechat_buffer_set (relay_raw_buffer, "localvar_set_no_log", "1");
-
-            /* disable all highlights on this buffer */
-            weechat_buffer_set (relay_raw_buffer, "highlight_words", "-");
 
             /* print messages in list */
             for (ptr_raw_message = relay_raw_messages; ptr_raw_message;

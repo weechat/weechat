@@ -28,6 +28,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include "tests-record.h"
+
 extern "C"
 {
 #ifndef HAVE_CONFIG_H
@@ -76,6 +78,7 @@ IMPORT_TEST_GROUP(CoreUrl);
 IMPORT_TEST_GROUP(CoreUtf8);
 IMPORT_TEST_GROUP(CoreUtil);
 /* GUI */
+IMPORT_TEST_GROUP(GuiBar);
 IMPORT_TEST_GROUP(GuiBarItem);
 IMPORT_TEST_GROUP(GuiBarItemCustom);
 IMPORT_TEST_GROUP(GuiBarWindow);
@@ -91,10 +94,6 @@ IMPORT_TEST_GROUP(GuiNick);
 IMPORT_TEST_GROUP(Scripts);
 
 struct t_gui_buffer *ptr_core_buffer = NULL;
-
-/* recording of messages: to test if a message is actually displayed */
-int record_messages = 0;
-struct t_arraylist *recorded_messages = NULL;
 
 
 /*
@@ -119,9 +118,6 @@ test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
                time_t date, int tags_count, const char **tags, int displayed,
                int highlight, const char *prefix, const char *message)
 {
-    const char *buffer_full_name;
-    char str_recorded[8192];
-
     /* make C++ compiler happy */
     (void) pointer;
     (void) data;
@@ -132,21 +128,8 @@ test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     (void) displayed;
     (void) highlight;
 
-    buffer_full_name = gui_buffer_get_string (buffer, "full_name");
-
-    if (record_messages)
-    {
-        snprintf (str_recorded, sizeof (str_recorded),
-                  "%s: \"%s%s%s\"",
-                  buffer_full_name,
-                  (prefix && prefix[0]) ? prefix : "",
-                  (prefix && prefix[0] && message && message[0]) ? " " : "",
-                  (message && message[0]) ? message : "");
-        arraylist_add (recorded_messages, strdup (str_recorded));
-    }
-
     /* keep only messages displayed on core buffer */
-    if (strcmp (buffer_full_name, "core.weechat") == 0)
+    if (strcmp (gui_buffer_get_string (buffer, "full_name"), "core.weechat") == 0)
     {
         printf ("%s%s%s\n",  /* with color: "\33[34m%s%s%s\33[0m\n" */
                 (prefix && prefix[0]) ? prefix : "",
@@ -155,110 +138,6 @@ test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     }
 
     return WEECHAT_RC_OK;
-}
-
-/*
- * Callback used to compare two recorded messages.
- */
-
-int
-record_cmp_cb (void *data, struct t_arraylist *arraylist,
-               void *pointer1, void *pointer2)
-{
-    /* make C++ compiler happy */
-    (void) data;
-    (void) arraylist;
-
-    return strcmp ((char *)pointer1, (char *)pointer2);
-}
-
-/*
- * Callback used to free a recorded message.
- */
-
-void
-record_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
-{
-    /* make C++ compiler happy */
-    (void) data;
-    (void) arraylist;
-
-    free (pointer);
-}
-
-/*
- * Starts recording of messages displayed.
- */
-
-void
-record_start ()
-{
-    record_messages = 1;
-
-    if (recorded_messages)
-    {
-        arraylist_clear (recorded_messages);
-    }
-    else
-    {
-        recorded_messages = arraylist_new (16, 0, 1,
-                                           &record_cmp_cb, NULL,
-                                           &record_free_cb, NULL);
-    }
-}
-
-/*
- * Stops recording of messages displayed.
- */
-
-void
-record_stop ()
-{
-    record_messages = 0;
-}
-
-/*
- * Searches if a message has been displayed in a buffer.
- *
- * The format of "message" argument is: "prefix message" (prefix and message
- * separated by a space).
- *
- * Returns index of message displayed (≥ 0), -1 if message has NOT been
- * displayed.
- */
-
-int
-record_search (const char *buffer, const char *message)
-{
-    char str_message[8192];
-    int index;
-
-    snprintf (str_message, sizeof (str_message),
-              "%s: \"%s\"",
-              buffer, message);
-
-    arraylist_search (recorded_messages, str_message, &index, NULL);
-
-    return index;
-}
-
-/*
- * Adds all recorded messages to the dynamic string "msg".
- */
-
-void
-record_dump (char **msg)
-{
-    int i;
-
-    for (i = 0; i < arraylist_size (recorded_messages); i++)
-    {
-        string_dyn_concat (msg, "  ", -1);
-        string_dyn_concat (msg,
-                           (const char *)arraylist_get (recorded_messages, i),
-                           -1);
-        string_dyn_concat (msg, "\n", -1);
-    }
 }
 
 /*
@@ -296,7 +175,7 @@ void
 run_cmd (const char *command)
 {
     printf (">>> Running command: %s\n", command);
-    input_data (ptr_core_buffer, command, NULL);
+    input_data (ptr_core_buffer, command, NULL, 0);
 }
 
 /*
@@ -306,7 +185,7 @@ run_cmd (const char *command)
 void
 run_cmd_quiet (const char *command)
 {
-    input_data (ptr_core_buffer, command, NULL);
+    input_data (ptr_core_buffer, command, NULL, 0);
 }
 
 /*

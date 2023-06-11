@@ -30,6 +30,12 @@
 
 
 struct t_config_file *logger_config_file = NULL;
+
+/* sections */
+
+struct t_config_section *logger_config_section_look = NULL;
+struct t_config_section *logger_config_section_color = NULL;
+struct t_config_section *logger_config_section_file = NULL;
 struct t_config_section *logger_config_section_level = NULL;
 struct t_config_section *logger_config_section_mask = NULL;
 
@@ -37,31 +43,32 @@ int logger_config_loading = 0;
 
 /* logger config, look section */
 
-struct t_config_option *logger_config_look_backlog;
-struct t_config_option *logger_config_look_backlog_conditions;
+struct t_config_option *logger_config_look_backlog = NULL;
+struct t_config_option *logger_config_look_backlog_conditions = NULL;
 
 /* logger config, color section */
 
-struct t_config_option *logger_config_color_backlog_end;
-struct t_config_option *logger_config_color_backlog_line;
+struct t_config_option *logger_config_color_backlog_end = NULL;
+struct t_config_option *logger_config_color_backlog_line = NULL;
 
 /* logger config, file section */
 
-struct t_config_option *logger_config_file_auto_log;
-struct t_config_option *logger_config_file_color_lines;
-struct t_config_option *logger_config_file_flush_delay;
-struct t_config_option *logger_config_file_fsync;
-struct t_config_option *logger_config_file_info_lines;
-struct t_config_option *logger_config_file_mask;
-struct t_config_option *logger_config_file_name_lower_case;
-struct t_config_option *logger_config_file_nick_prefix;
-struct t_config_option *logger_config_file_nick_suffix;
-struct t_config_option *logger_config_file_path;
-struct t_config_option *logger_config_file_replacement_char;
-struct t_config_option *logger_config_file_rotation_compression_level;
-struct t_config_option *logger_config_file_rotation_compression_type;
-struct t_config_option *logger_config_file_rotation_size_max;
-struct t_config_option *logger_config_file_time_format;
+struct t_config_option *logger_config_file_auto_log = NULL;
+struct t_config_option *logger_config_file_color_lines = NULL;
+struct t_config_option *logger_config_file_flush_delay = NULL;
+struct t_config_option *logger_config_file_fsync = NULL;
+struct t_config_option *logger_config_file_info_lines = NULL;
+struct t_config_option *logger_config_file_log_conditions = NULL;
+struct t_config_option *logger_config_file_mask = NULL;
+struct t_config_option *logger_config_file_name_lower_case = NULL;
+struct t_config_option *logger_config_file_nick_prefix = NULL;
+struct t_config_option *logger_config_file_nick_suffix = NULL;
+struct t_config_option *logger_config_file_path = NULL;
+struct t_config_option *logger_config_file_replacement_char = NULL;
+struct t_config_option *logger_config_file_rotation_compression_level = NULL;
+struct t_config_option *logger_config_file_rotation_compression_type = NULL;
+struct t_config_option *logger_config_file_rotation_size_max = NULL;
+struct t_config_option *logger_config_file_time_format = NULL;
 
 /* other */
 
@@ -460,234 +467,234 @@ logger_config_get_mask (const char *name)
 int
 logger_config_init ()
 {
-    struct t_config_section *ptr_section;
-
     logger_config_file = weechat_config_new (LOGGER_CONFIG_PRIO_NAME,
                                              NULL, NULL, NULL);
     if (!logger_config_file)
         return 0;
 
     /* look */
-    ptr_section = weechat_config_new_section (logger_config_file, "look",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
+    logger_config_section_look = weechat_config_new_section (
+        logger_config_file, "look",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (logger_config_section_look)
     {
-        weechat_config_free (logger_config_file);
-        logger_config_file = NULL;
-        return 0;
+        logger_config_look_backlog = weechat_config_new_option (
+            logger_config_file, logger_config_section_look,
+            "backlog", "integer",
+            N_("maximum number of lines to display from log file when creating "
+               "new buffer (0 = no backlog)"),
+            NULL, 0, INT_MAX, "20", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        logger_config_look_backlog_conditions = weechat_config_new_option (
+            logger_config_file, logger_config_section_look,
+            "backlog_conditions", "string",
+            N_("conditions to display the backlog "
+               "(note: content is evaluated, see /help eval); "
+               "empty value displays the backlog on all buffers; "
+               "for example to display backlog on private buffers only: "
+               "\"${type} == private\""),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
-
-    logger_config_look_backlog = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "backlog", "integer",
-        N_("maximum number of lines to display from log file when creating "
-           "new buffer (0 = no backlog)"),
-        NULL, 0, INT_MAX, "20", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    logger_config_look_backlog_conditions = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "backlog_conditions", "string",
-        N_("conditions to display the backlog "
-           "(note: content is evaluated, see /help eval); "
-           "empty value displays the backlog on all buffers; "
-           "for example to display backlog on private buffers only: "
-           "\"${type} == private\""),
-        NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* color */
-    ptr_section = weechat_config_new_section (logger_config_file, "color",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
+    logger_config_section_color = weechat_config_new_section (
+        logger_config_file, "color",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (logger_config_section_color)
     {
-        weechat_config_free (logger_config_file);
-        logger_config_file = NULL;
-        return 0;
+        logger_config_color_backlog_end = weechat_config_new_option (
+            logger_config_file, logger_config_section_color,
+            "backlog_end", "color",
+            N_("color for line ending the backlog"),
+            NULL, -1, 0, "246", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        logger_config_color_backlog_line = weechat_config_new_option (
+            logger_config_file, logger_config_section_color,
+            "backlog_line", "color",
+            N_("color for backlog lines, used only if the option "
+               "logger.file.color_lines is off"),
+            NULL, -1, 0, "246", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
-
-    logger_config_color_backlog_end = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "backlog_end", "color",
-        N_("color for line ending the backlog"),
-        NULL, -1, 0, "default", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    logger_config_color_backlog_line = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "backlog_line", "color",
-        N_("color for backlog lines, used only if the option "
-           "logger.file.color_lines is off"),
-        NULL, -1, 0, "default", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* file */
-    ptr_section = weechat_config_new_section (logger_config_file, "file",
-                                              0, 0,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL,
-                                              NULL, NULL, NULL);
-    if (!ptr_section)
+    logger_config_section_file = weechat_config_new_section (
+        logger_config_file, "file",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (logger_config_section_file)
     {
-        weechat_config_free (logger_config_file);
-        logger_config_file = NULL;
-        return 0;
+        logger_config_file_auto_log = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "auto_log", "boolean",
+            N_("automatically save content of buffers to files (unless a buffer "
+               "disables log); if disabled, logging is disabled on all buffers"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        logger_config_file_color_lines = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "color_lines", "boolean",
+            N_("use ANSI color codes in lines written in log files and display "
+               "backlog lines with these colors"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL,
+            &logger_config_color_lines_change, NULL, NULL,
+            NULL, NULL, NULL);
+        logger_config_file_flush_delay = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "flush_delay", "integer",
+            N_("number of seconds between flush of log files (0 = write in log "
+               "files immediately for each line printed)"),
+            NULL, 0, 3600, "120", NULL, 0,
+            NULL, NULL, NULL,
+            &logger_config_flush_delay_change, NULL, NULL,
+            NULL, NULL, NULL);
+        logger_config_file_fsync = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "fsync", "boolean",
+            N_("use fsync to synchronize the log file with the storage device "
+               "after the flush (see man fsync); this is slower but should "
+               "prevent any data loss in case of power failure during the save "
+               "of log file"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        logger_config_file_info_lines = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "info_lines", "boolean",
+            N_("write information line in log file when log starts or ends for "
+               "a buffer"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        logger_config_file_log_conditions = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "log_conditions", "string",
+            N_("conditions to save content of buffers to files "
+               "(note: content is evaluated, see /help eval); "
+               "empty value saves content on all buffers; "
+               "for example to log only private buffers: "
+               "\"${type} == private\""),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        logger_config_file_mask = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "mask", "string",
+            N_("default file name mask for log files (format is "
+               "\"directory/to/file\" or \"file\", without first \"/\" because "
+               "\"path\" option is used to build complete path to file); local "
+               "buffer variables are permitted (you should use only variables "
+               "that are defined on all buffers, so for example you should NOT "
+               "use $server nor $channel); date specifiers are permitted "
+               "(see man strftime)"),
+            NULL, 0, 0, "$plugin.$name.weechatlog", NULL, 0,
+            NULL, NULL, NULL,
+            &logger_config_change_file_option_restart_log, NULL, NULL,
+            NULL, NULL, NULL);
+        logger_config_file_name_lower_case = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "name_lower_case", "boolean",
+            N_("use only lower case for log filenames"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL,
+            &logger_config_change_file_option_restart_log, NULL, NULL,
+            NULL, NULL, NULL);
+        logger_config_file_nick_prefix = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "nick_prefix", "string",
+            N_("text to write before nick in prefix of message, example: \"<\""),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        logger_config_file_nick_suffix = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "nick_suffix", "string",
+            N_("text to write after nick in prefix of message, example: \">\""),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        logger_config_file_path = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "path", "string",
+            N_("path for WeeChat log files; "
+               "date specifiers are permitted (see man strftime) "
+               "(path is evaluated, see function string_eval_path_home in "
+               "plugin API reference)"),
+            NULL, 0, 0, "${weechat_data_dir}/logs", NULL, 0,
+            NULL, NULL, NULL,
+            &logger_config_change_file_option_restart_log, NULL, NULL,
+            NULL, NULL, NULL);
+        logger_config_file_replacement_char = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "replacement_char", "string",
+            N_("replacement char for special chars in filename built with mask "
+               "(like directory delimiter)"),
+            NULL, 0, 0, "_", NULL, 0,
+            NULL, NULL, NULL,
+            &logger_config_change_file_option_restart_log, NULL, NULL,
+            NULL, NULL, NULL);
+        logger_config_file_rotation_compression_level = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "rotation_compression_level", "integer",
+            N_("compression level for rotated log files (with extension \".1\", "
+               "\".2\", etc.), if option logger.file.rotation_compression_type "
+               "is enabled: 1 = low compression / fast ... 100 = best "
+               "compression / slow; the value is a percentage converted to "
+               "1-9 for gzip and 1-19 for zstd; the default value is "
+               "recommended, it offers a good compromise between compression "
+               "and speed"),
+            NULL, 1, 100, "20", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        logger_config_file_rotation_compression_type = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "rotation_compression_type", "integer",
+            N_("compression type for rotated log files; if set to \"none\", "
+               "rotated log files are not compressed; WARNING: if rotation was "
+               "enabled with another type of compression (or no compression), "
+               "you must first unload the logger plugin, compress files with the "
+               "new type (or decompress files), then change the option in "
+               "logger.conf, then load the logger plugin"),
+            "none|gzip|zstd", 0, 0, "none", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        logger_config_file_rotation_size_max = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "rotation_size_max", "string",
+            N_("when this size is reached, a rotation of log files is performed: "
+               "the existing rotated log files are renamed (.1 becomes .2, .2 "
+               "becomes .3, etc.) and the current file is renamed with extension "
+               ".1; an integer number with a suffix is allowed: b = bytes "
+               "(default if no unit given), k = kilobytes, m = megabytes, "
+               "g = gigabytes, t = terabytes; example: \"2g\" causes a rotation "
+               "if the file size is > 2,000,000,000 bytes; if set to \"0\", "
+               "no rotation is performed (unlimited log size); WARNING: before "
+               "changing this option, you should first set the compression type "
+               "via option logger.file.rotation_compression_type"),
+            NULL, 0, 0, "0", NULL, 0,
+            &logger_config_rotation_size_max_check, NULL, NULL,
+            &logger_config_rotation_size_max_change, NULL, NULL,
+            NULL, NULL, NULL);
+        logger_config_file_time_format = weechat_config_new_option (
+            logger_config_file, logger_config_section_file,
+            "time_format", "string",
+            N_("timestamp used in log files (see man strftime for date/time "
+               "specifiers)"),
+            NULL, 0, 0, "%Y-%m-%d %H:%M:%S", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    logger_config_file_auto_log = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "auto_log", "boolean",
-        N_("automatically save content of buffers to files (unless a buffer "
-           "disables log); if disabled, logging is disabled on all buffers"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    logger_config_file_color_lines = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "color_lines", "boolean",
-        N_("use ANSI color codes in lines written in log files and display "
-           "backlog lines with these colors"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL,
-        &logger_config_color_lines_change, NULL, NULL,
-        NULL, NULL, NULL);
-    logger_config_file_flush_delay = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "flush_delay", "integer",
-        N_("number of seconds between flush of log files (0 = write in log "
-           "files immediately for each line printed)"),
-        NULL, 0, 3600, "120", NULL, 0,
-        NULL, NULL, NULL,
-        &logger_config_flush_delay_change, NULL, NULL,
-        NULL, NULL, NULL);
-    logger_config_file_fsync = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "fsync", "boolean",
-        N_("use fsync to synchronize the log file with the storage device "
-           "after the flush (see man fsync); this is slower but should "
-           "prevent any data loss in case of power failure during the save of "
-           "log file"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    logger_config_file_info_lines = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "info_lines", "boolean",
-        N_("write information line in log file when log starts or ends for a "
-           "buffer"),
-        NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    logger_config_file_mask = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "mask", "string",
-        N_("default file name mask for log files (format is "
-           "\"directory/to/file\" or \"file\", without first \"/\" because "
-           "\"path\" option is used to build complete path to file); local "
-           "buffer variables are permitted (you should use only variables "
-           "that are defined on all buffers, so for example you should NOT "
-           "use $server nor $channel); date specifiers are permitted "
-           "(see man strftime)"),
-        NULL, 0, 0, "$plugin.$name.weechatlog", NULL, 0,
-        NULL, NULL, NULL,
-        &logger_config_change_file_option_restart_log, NULL, NULL,
-        NULL, NULL, NULL);
-    logger_config_file_name_lower_case = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "name_lower_case", "boolean",
-        N_("use only lower case for log filenames"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL,
-        &logger_config_change_file_option_restart_log, NULL, NULL,
-        NULL, NULL, NULL);
-    logger_config_file_nick_prefix = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "nick_prefix", "string",
-        N_("text to write before nick in prefix of message, example: \"<\""),
-        NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    logger_config_file_nick_suffix = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "nick_suffix", "string",
-        N_("text to write after nick in prefix of message, example: \">\""),
-        NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    logger_config_file_path = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "path", "string",
-        N_("path for WeeChat log files; "
-           "date specifiers are permitted (see man strftime) "
-           "(path is evaluated, see function string_eval_path_home in "
-           "plugin API reference)"),
-        NULL, 0, 0, "${weechat_data_dir}/logs", NULL, 0,
-        NULL, NULL, NULL,
-        &logger_config_change_file_option_restart_log, NULL, NULL,
-        NULL, NULL, NULL);
-    logger_config_file_replacement_char = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "replacement_char", "string",
-        N_("replacement char for special chars in filename built with mask "
-           "(like directory delimiter)"),
-        NULL, 0, 0, "_", NULL, 0,
-        NULL, NULL, NULL,
-        &logger_config_change_file_option_restart_log, NULL, NULL,
-        NULL, NULL, NULL);
-    logger_config_file_rotation_compression_level = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "rotation_compression_level", "integer",
-        N_("compression level for rotated log files (with extension \".1\", "
-           "\".2\", etc.), if option logger.file.rotation_compression_type is "
-           "enabled: 1 = low compression / fast ... 100 = best compression / "
-           "slow; the value is a percentage converted to 1-9 for gzip and "
-           "1-19 for zstd; the default value is recommended, it offers a good "
-           "compromise between compression and speed"),
-        NULL, 1, 100, "20", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    logger_config_file_rotation_compression_type = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "rotation_compression_type", "integer",
-        N_("compression type for rotated log files; if set to \"none\", "
-           "rotated log files are not compressed; WARNING: if rotation was "
-           "enabled with another type of compression (or no compression), "
-           "you must first unload the logger plugin, compress files with the "
-           "new type (or decompress files), then change the option in "
-           "logger.conf, then load the logger plugin"),
-        "none|gzip|zstd", 0, 0, "none", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    logger_config_file_rotation_size_max = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "rotation_size_max", "string",
-        N_("when this size is reached, a rotation of log files is performed: "
-           "the existing rotated log files are renamed (.1 becomes .2, .2 "
-           "becomes .3, etc.) and the current file is renamed with extension "
-           ".1; an integer number with a suffix is allowed: b = bytes "
-           "(default if no unit given), k = kilobytes, m = megabytes, "
-           "g = gigabytes, t = terabytes; example: \"2g\" causes a rotation "
-           "if the file size is > 2,000,000,000 bytes; if set to \"0\", "
-           "no rotation is performed (unlimited log size); WARNING: before "
-           "changing this option, you should first set the compression type "
-           "via option logger.file.rotation_compression_type"),
-        NULL, 0, 0, "0", NULL, 0,
-        &logger_config_rotation_size_max_check, NULL, NULL,
-        &logger_config_rotation_size_max_change, NULL, NULL,
-        NULL, NULL, NULL);
-    logger_config_file_time_format = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "time_format", "string",
-        N_("timestamp used in log files (see man strftime for date/time "
-           "specifiers)"),
-        NULL, 0, 0, "%Y-%m-%d %H:%M:%S", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
     /* level */
-    ptr_section = weechat_config_new_section (
+    logger_config_section_level = weechat_config_new_section (
         logger_config_file, "level",
         1, 1,
         NULL, NULL, NULL,
@@ -695,17 +702,9 @@ logger_config_init ()
         NULL, NULL, NULL,
         &logger_config_level_create_option, NULL, NULL,
         &logger_config_level_delete_option, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (logger_config_file);
-        logger_config_file = NULL;
-        return 0;
-    }
-
-    logger_config_section_level = ptr_section;
 
     /* mask */
-    ptr_section = weechat_config_new_section (
+    logger_config_section_mask = weechat_config_new_section (
         logger_config_file, "mask",
         1, 1,
         NULL, NULL, NULL,
@@ -713,14 +712,6 @@ logger_config_init ()
         NULL, NULL, NULL,
         &logger_config_mask_create_option, NULL, NULL,
         &logger_config_mask_delete_option, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (logger_config_file);
-        logger_config_file = NULL;
-        return 0;
-    }
-
-    logger_config_section_mask = ptr_section;
 
     return 1;
 }

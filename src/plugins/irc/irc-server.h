@@ -52,13 +52,13 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_ADDRESSES = 0, /* server addresses (IP/name with port) */
     IRC_SERVER_OPTION_PROXY,         /* proxy used for server (optional)     */
     IRC_SERVER_OPTION_IPV6,          /* use IPv6 protocol                    */
-    IRC_SERVER_OPTION_SSL,           /* SSL protocol                         */
-    IRC_SERVER_OPTION_SSL_CERT,      /* client ssl certificate file          */
-    IRC_SERVER_OPTION_SSL_PASSWORD,   /* client ssl certificate key password */
-    IRC_SERVER_OPTION_SSL_PRIORITIES, /* gnutls priorities                   */
-    IRC_SERVER_OPTION_SSL_DHKEY_SIZE, /* Diffie Hellman key size             */
-    IRC_SERVER_OPTION_SSL_FINGERPRINT, /* SHA1 fingerprint of certificate    */
-    IRC_SERVER_OPTION_SSL_VERIFY,    /* check if the connection is trusted   */
+    IRC_SERVER_OPTION_TLS,           /* TLS protocol                         */
+    IRC_SERVER_OPTION_TLS_CERT,      /* client TLS certificate file          */
+    IRC_SERVER_OPTION_TLS_PASSWORD,   /* client TLS certificate key password */
+    IRC_SERVER_OPTION_TLS_PRIORITIES, /* gnutls priorities                   */
+    IRC_SERVER_OPTION_TLS_DHKEY_SIZE, /* Diffie Hellman key size             */
+    IRC_SERVER_OPTION_TLS_FINGERPRINT, /* SHA1 fingerprint of certificate    */
+    IRC_SERVER_OPTION_TLS_VERIFY,    /* check if the connection is trusted   */
     IRC_SERVER_OPTION_PASSWORD,      /* password for server                  */
     IRC_SERVER_OPTION_CAPABILITIES,  /* client capabilities to enable        */
     IRC_SERVER_OPTION_SASL_MECHANISM,/* mechanism for SASL authentication    */
@@ -120,20 +120,26 @@ enum t_irc_server_option
       weechat_config_string(irc_config_server_default[__index])               \
       : weechat_config_string_default(irc_config_server_default[__index])))
 
-#define IRC_SERVER_DEFAULT_PORT     6667
-#define IRC_SERVER_DEFAULT_PORT_SSL 6697
-#define IRC_SERVER_DEFAULT_NICKS    "weechat1,weechat2,weechat3,weechat4,weechat5"
+#define IRC_SERVER_DEFAULT_PORT_CLEARTEXT 6667
+#define IRC_SERVER_DEFAULT_PORT_TLS       6697
+
+#define IRC_SERVER_DEFAULT_NICKS "weechat1,weechat2,weechat3,weechat4,weechat5"
 
 /* number of queues for sending messages */
-#define IRC_SERVER_NUM_OUTQUEUES_PRIO 2
+#define IRC_SERVER_NUM_OUTQUEUES_PRIO 3
 
 /* flags for irc_server_sendf() */
-#define IRC_SERVER_SEND_OUTQ_PRIO_HIGH   (1 << 0)
-#define IRC_SERVER_SEND_OUTQ_PRIO_LOW    (1 << 1)
-#define IRC_SERVER_SEND_RETURN_HASHTABLE (1 << 2)
+#define IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE (1 << 0)
+#define IRC_SERVER_SEND_OUTQ_PRIO_HIGH      (1 << 1)
+#define IRC_SERVER_SEND_OUTQ_PRIO_LOW       (1 << 2)
+#define IRC_SERVER_SEND_RETURN_LIST         (1 << 3)
 
 /* version strings */
 #define IRC_SERVER_VERSION_CAP "302"
+
+/* multiline default limits */
+#define IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES 4096
+#define IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES 24
 
 /* casemapping (string comparisons for nicks/channels) */
 enum t_irc_server_casemapping
@@ -212,11 +218,11 @@ struct t_irc_server
     int authentication_method;      /* authentication method used to login   */
     int sasl_mechanism_used;        /* SASL method used at login time        */
     int is_connected;               /* 1 if WeeChat is connected to server   */
-    int ssl_connected;              /* = 1 if connected with SSL             */
+    int tls_connected;              /* = 1 if connected with TLS             */
     int disconnected;               /* 1 if server has been disconnected     */
-    gnutls_session_t gnutls_sess;   /* gnutls session (only if SSL is used)  */
-    gnutls_x509_crt_t tls_cert;     /* certificate used if ssl_cert is set   */
-    gnutls_x509_privkey_t tls_cert_key; /* key used if ssl_cert is set       */
+    gnutls_session_t gnutls_sess;   /* gnutls session (only if TLS is used)  */
+    gnutls_x509_crt_t tls_cert;     /* certificate used if tls_cert is set   */
+    gnutls_x509_privkey_t tls_cert_key; /* key used if tls_cert is set       */
     char *unterminated_message;     /* beginning of a message in input buf   */
     int nicks_count;                /* number of nicknames                   */
     char **nicks_array;             /* nicknames (after split)               */
@@ -231,14 +237,18 @@ struct t_irc_server
     struct t_hashtable *cap_ls;     /* list of supported capabilities        */
     int checking_cap_list;          /* 1 if checking enabled capabilities    */
     struct t_hashtable *cap_list;   /* list of enabled capabilities          */
+    int multiline_max_bytes;        /* max bytes for multiline batch         */
+    int multiline_max_lines;        /* max lines for multiline batch         */
     char *isupport;                 /* copy of message 005 (ISUPPORT)        */
     char *prefix_modes;             /* prefix modes from msg 005 (eg "ohv")  */
     char *prefix_chars;             /* prefix chars from msg 005 (eg "@%+")  */
+    int msg_max_length;             /* max length of msg (from msg 005)      */
     int nick_max_length;            /* max length of nick (from msg 005)     */
     int user_max_length;            /* max length of user (from msg 005)     */
     int host_max_length;            /* max length of host (from msg 005)     */
     int casemapping;                /* casemapping from msg 005              */
     int utf8mapping;                /* utf8mapping from msg 005              */
+    int utf8only;                   /* UTF-8 only?                           */
     char *chantypes;                /* chantypes from msg 005 (eg "&#")      */
     char *chanmodes;                /* chanmodes from msg 005                */
                                     /* (eg "beI,k,l,imnpstaqr")              */
@@ -266,9 +276,11 @@ struct t_irc_server
     time_t last_user_message;       /* time of last user message (anti flood)*/
     time_t last_away_check;         /* time of last away check on server     */
     time_t last_data_purge;         /* time of last purge (some hashtables)  */
-    struct t_irc_outqueue *outqueue[2];      /* queue for outgoing messages  */
+    struct t_irc_outqueue *outqueue[IRC_SERVER_NUM_OUTQUEUES_PRIO];
+                                             /* queue for outgoing messages  */
                                              /* with 2 priorities (high/low) */
-    struct t_irc_outqueue *last_outqueue[2]; /* last outgoing message        */
+    struct t_irc_outqueue *last_outqueue[IRC_SERVER_NUM_OUTQUEUES_PRIO];
+                                             /* last outgoing message        */
     struct t_irc_redirect *redirects;        /* command redirections         */
     struct t_irc_redirect *last_redirect;    /* last command redirection     */
     struct t_irc_notify *notify_list;        /* list of notify               */
@@ -277,6 +289,8 @@ struct t_irc_server
     struct t_hashtable *join_manual;         /* manual joins pending         */
     struct t_hashtable *join_channel_key;    /* keys pending for joins       */
     struct t_hashtable *join_noswitch;       /* joins w/o switch to buffer   */
+    struct t_irc_batch *batches;          /* batched events (cap "batch")    */
+    struct t_irc_batch *last_batch;       /* last batch                      */
     struct t_gui_buffer *buffer;          /* GUI buffer allocated for server */
     char *buffer_as_string;               /* used to return buffer info      */
     struct t_irc_channel *channels;       /* opened channels on server       */
@@ -333,8 +347,9 @@ extern void irc_server_sasl_get_creds (struct t_irc_server *server,
                                        char **key);
 extern int irc_server_sasl_enabled (struct t_irc_server *server);
 extern char *irc_server_get_name_without_port (const char *name);
+extern char *irc_server_get_short_description (struct t_irc_server *server);
 extern int irc_server_set_addresses (struct t_irc_server *server,
-                                     const char *addresses);
+                                     const char *addresses, int tls);
 extern void irc_server_set_nicks (struct t_irc_server *server,
                                   const char *nicks);
 extern void irc_server_set_nick (struct t_irc_server *server,
@@ -369,6 +384,8 @@ extern char *irc_server_get_default_msg (const char *default_msg,
                                          struct t_irc_server *server,
                                          const char *channel_name,
                                          const char *target_nick);
+extern void irc_server_buffer_set_input_multiline (struct t_irc_server *server,
+                                                   int multiline);
 extern struct t_irc_server *irc_server_alloc (const char *name);
 extern struct t_irc_server *irc_server_alloc_with_url (const char *irc_url);
 extern void irc_server_apply_command_line_options (struct t_irc_server *server,
@@ -383,7 +400,7 @@ extern int irc_server_send_signal (struct t_irc_server *server,
                                    const char *full_message,
                                    const char *tags);
 extern void irc_server_set_send_default_tags (const char *tags);
-extern struct t_hashtable *irc_server_sendf (struct t_irc_server *server,
+extern struct t_arraylist *irc_server_sendf (struct t_irc_server *server,
                                              int flags,
                                              const char *tags,
                                              const char *format, ...);

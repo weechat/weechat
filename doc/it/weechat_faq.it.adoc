@@ -2,21 +2,12 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: it
-:toc: left
 :toc-title: Indice
-:toclevels: 2
-:sectnums:
-:sectnumlevels: 2
-:docinfo1:
-
 
 // TRANSLATION MISSING
 Translators:
 
 * Marco Paolone <marcopaolone@gmail.com>, 2009-2013
-
-toc::[]
-
 
 [[general]]
 == Generale
@@ -38,7 +29,7 @@ Because WeeChat is very light and brings innovating features.
 
 // TRANSLATION MISSING
 More info on the WeeChat
-https://weechat.org/about/features/[features page ^↗^,window=_blank].
+https://weechat.org/about/features/[features page ^↗^^].
 
 [[compilation_install]]
 == Compilazione / installazione
@@ -48,7 +39,7 @@ https://weechat.org/about/features/[features page ^↗^,window=_blank].
 
 // TRANSLATION MISSING
 Some remote GUIs are available, see the
-https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blank].
+https://weechat.org/about/interfaces/[remote interfaces page ^↗^^].
 
 [[compile_git]]
 === Non è possibile compilare WeeChat dopo aver clonato il repository git, perché?
@@ -57,7 +48,7 @@ https://weechat.org/about/interfaces/[remote interfaces page ^↗^,window=_blan
 WeeChat must be compiled with CMake.
 
 // TRANSLATION MISSING
-Please follow link:weechat_user.en.html#source_package[build instructions ^↗^,window=_blank]
+Please follow link:weechat_user.en.html#source_package[build instructions ^↗^^]
 and ensure all required dependencies are installed.
 
 // TRANSLATION MISSING
@@ -68,7 +59,7 @@ If you still have issues, please report them to the developers.
 === How can I install WeeChat on macOS?
 
 // TRANSLATION MISSING
-It is recommended to use https://brew.sh/[Homebrew ^↗^,window=_blank],
+It is recommended to use https://brew.sh/[Homebrew ^↗^^],
 you can get help with:
 
 ----
@@ -87,13 +78,13 @@ brew install weechat
 
 // TRANSLATION MISSING
 Per l'aiuto digitare `/help`. Per l'aiuto su un comando, digitare `/help comando`.
-link:weechat_user.it.html#key_bindings[Keys ^↗^,window=_blank] and
-link:weechat_user.it.html#commands_and_options[commands ^↗^,window=_blank] are listed
+link:weechat_user.it.html#key_bindings[Keys ^↗^^] and
+link:weechat_user.it.html#commands_and_options[commands ^↗^^] are listed
 in documentation.
 
 // TRANSLATION MISSING
 It's recommended for new users to read the
-link:weechat_quickstart.it.html[Quickstart guide ^↗^,window=_blank].
+link:weechat_quickstart.it.html[Quickstart guide ^↗^^].
 
 [[display]]
 == Visualizzare
@@ -126,7 +117,7 @@ It's a common issue with a variety of causes, please read carefully and check
     screen)
 // TRANSLATION MISSING
 * check that option
-  link:weechat_user.it.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^,window=_blank]
+  link:weechat_user.it.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_ ^↗^^]
   is off (this option may cause display bugs)
 
 [NOTE]
@@ -142,9 +133,9 @@ This may be caused by a libc bug in function _wcwidth_, which should be fixed
 in glibc 2.22 (maybe not yet available in your distribution).
 
 There is a workaround to use the fixed _wcwidth_ function:
-https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^,window=_blank].
+https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat[https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat ^↗^^].
 
-See this https://github.com/weechat/weechat/issues/79[bug report ^↗^,window=_blank]
+See this https://github.com/weechat/weechat/issues/79[bug report ^↗^^]
 for more information.
 
 [[bars_background]]
@@ -209,7 +200,7 @@ windows.
 [[buffers_list]]
 === Come si può visualizzare la lista dei buffer sulla sinistra?
 
-The plugin link:weechat_user.it.html#buflist[buflist ^↗^,window=_blank]
+The plugin link:weechat_user.it.html#buflist[buflist ^↗^^]
 is loaded and enabled by default.
 
 To limit size of bar:
@@ -256,7 +247,7 @@ like `237` for dark gray.
 The buflist plugin provides lot of options that you can customize, please read
 the help on each option.
 
-There's also a https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^,window=_blank]
+There's also a https://github.com/weechat/weechat/wiki/buflist[wiki page ^↗^^]
 with examples of advanced buflist configuration.
 
 [[customize_prefix]]
@@ -302,7 +293,7 @@ These colors can be changed with the options __weechat.color.status_data_*__
 (buffers) and __weechat.color.status_count_*__ (counters). +
 Other hotlist options can be changed with the options __weechat.look.hotlist_*__.
 
-See link:weechat_user.it.html#screen_layout[User's guide / Screen layout ^↗^,window=_blank]
+See link:weechat_user.it.html#screen_layout[User's guide / Screen layout ^↗^^]
 for more info about the hotlist.
 
 [[input_bar_size]]
@@ -481,7 +472,7 @@ You can use any color number in options (optional: you can add color aliases
 with command `/color`).
 
 // TRANSLATION MISSING
-Please read the link:weechat_user.it.html#colors[User's guide / Colors ^↗^,window=_blank]
+Please read the link:weechat_user.it.html#colors[User's guide / Colors ^↗^^]
 for more information about colors management.
 
 [[search_text]]
@@ -491,7 +482,7 @@ Il tasto predefinito è kbd:[Ctrl+r] (il comando è: `+/input search_text_here+`
 E per passare alle notifiche: kbd:[Alt+p] / kbd:[Alt+n].
 
 // TRANSLATION MISSING
-See link:weechat_user.it.html#key_bindings[User's guide / Key bindings ^↗^,window=_blank]
+See link:weechat_user.it.html#key_bindings[User's guide / Key bindings ^↗^^]
 for more info about this feature.
 
 // TRANSLATION MISSING
@@ -519,15 +510,15 @@ And then you bind two keys for the focus (replace the `/print` commands by the
 commands of your choice):
 
 ----
-/key bind meta2-I /print -core focus
-/key bind meta2-O /print -core unfocus
+/key bind meta-[I /print -core focus
+/key bind meta-[O /print -core unfocus
 ----
 
 // TRANSLATION MISSING
 For example to mark buffers as read when the terminal loses the focus:
 
 ----
-/key bind meta2-O /allbuf /buffer set unread
+/key bind meta-[O /allbuf /buffer set unread
 ----
 
 // TRANSLATION MISSING
@@ -675,7 +666,7 @@ kbd:[1] per passare al buffer 11.
 
 // TRANSLATION MISSING
 List of default keys is in
-link:weechat_user.it.html#key_bindings[User's guide / Key bindings ^↗^,window=_blank].
+link:weechat_user.it.html#key_bindings[User's guide / Key bindings ^↗^^].
 
 // TRANSLATION MISSING
 To jump to buffers with number ≥ 100, you could define a trigger and then use
@@ -694,13 +685,18 @@ sono kbd:[Ctrl+↑] e kbd:[Ctrl+↓]).
 Esempio:
 
 ----
+/key bind up /input history_global_previous
+/key bind down /input history_global_next
+----
+
+// TRANSLATION MISSING
+With WeeChat ≤ 3.8, you must use the raw key code (press kbd:[Alt+k] then key
+to display its code):
+
+----
 /key bind meta2-A /input history_global_previous
 /key bind meta2-B /input history_global_next
 ----
-
-[NOTE]
-I tasti "meta2-A" e "meta2-B" possono essere differenti nel proprio terminale.
-Per trovare il codice tasto digitare kbd:[Alt+k] poi il tast.
 
 [[mouse]]
 == Mouse
@@ -753,8 +749,8 @@ kbd:[Shift]).
 [[irc]]
 == IRC
 
-[[irc_ssl_connection]]
-=== Ho dei problemi nella connessione al server con SSL, cosa posso fare?
+[[irc_tls_connection]]
+=== Ho dei problemi nella connessione al server con TLS, cosa posso fare?
 
 // TRANSLATION MISSING
 If you are using macOS, you must install `openssl` from Homebrew.
@@ -764,14 +760,14 @@ Se si verificano problemi con l'handshake gnutls, si può cercare di
 usare una chiave Diffie-Hellman più piccola (la predefinita è 2048):
 
 ----
-/set irc.server.example.ssl_dhkey_size 1024
+/set irc.server.example.tls_dhkey_size 1024
 ----
 
-Se si verificano errori con i certificati, è possibile disabilitare "ssl_verify"
+Se si verificano errori con i certificati, è possibile disabilitare "tls_verify"
 (attenzione, la connessione in questo modo sarà meno sicura):
 
 ----
-/set irc.server.example.ssl_verify off
+/set irc.server.example.tls_verify off
 ----
 
 // TRANSLATION MISSING
@@ -779,30 +775,30 @@ If the server has an invalid certificate and you know what the certificate
 should be, you can specify the fingerprint (SHA-512, SHA-256 or SHA-1):
 
 ----
-/set irc.server.example.ssl_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
+/set irc.server.example.tls_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
 ----
 
-[[irc_ssl_handshake_error]]
-=== Alla connessione al server con SSL ottengo solo l'errore "handshake TLS fallito", cosa posso fare?
+[[irc_tls_handshake_error]]
+=== Alla connessione al server con TLS ottengo solo l'errore "handshake TLS fallito", cosa posso fare?
 
 Provare una stringa di priorità diversa, sostituendo "xxx" con il nome del server:
 
 ----
-/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+/set irc.server.xxx.tls_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
 ----
 
-[[irc_ssl_libera]]
-=== Come ci si può connettere al server libera via SSL?
+[[irc_tls_libera]]
+=== Come ci si può connettere al server libera via TLS?
 
 // TRANSLATION MISSING
 Check that you have certificates installed on your system, this is commonly
 provided by the package "ca-certificates".
 
-Impostare la porta del server, SSL, poi riconnettersi:
+Impostare la porta del server, TLS, poi riconnettersi:
 
 ----
 /set irc.server.libera.addresses "irc.libera.chat/6697"
-/set irc.server.libera.ssl on
+/set irc.server.libera.tls on
 /connect libera
 ----
 
@@ -904,26 +900,11 @@ Le righe filtrate vengono solo nascoste, non eliminate, ed è possibile
 visualizzarle se i filtri vengono disabilitati (il comando predefinito
 kbd:[Alt+=] abilita/disabilita i filtri).
 
+// TRANSLATION MISSING
 [[filter_irc_join_part_quit]]
-=== Come posso filtrare i messaggi di entrata/uscita/abbandono sui canali IRC?
+=== How can I filter join/part/quit and other annoying messages on IRC channels?
 
-Con il filtro intelligente (mantiene entrata/uscita/abbandono degli utenti che
-hanno scritto di recente):
-
-----
-/set irc.look.smart_filter on
-/filter add irc_smart * irc_smart_filter *
-----
-
-Con un filtro globale (nasconde *tutti* entrata/uscita/abbandono):
-
-----
-/filter add joinquit * irc_join,irc_part,irc_quit *
-----
-
-[NOTE]
-Per aiuto: `/help filter`, `+/help irc.look.smart_filter+` e
-link:weechat_user.it.html#irc_smart_filter_join_part_quit[Guida per l’Utente / Filtro smart per i messaggi di entrata/uscita/disconnessione ^↗^,window=_blank].
+See link:weechat_user.it.html#irc_smart_filter[User's guide / IRC smart filter ^↗^^].
 
 [[filter_irc_join_channel_messages]]
 === Come posso filtrare i messaggi visualizzati all'ingresso su un canale IRC?
@@ -1026,7 +1007,7 @@ Altri script correlati:
 
 // TRANSLATION MISSING
 You can use the
-link:weechat_user.it.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^,window=_blank]
+link:weechat_user.it.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^↗^^]
 buffer property to set the max hotlist level for some nicks, per buffer,
 or per group of buffers (like IRC servers).
 
@@ -1093,7 +1074,7 @@ Gli script non sono compatibili con altri client IRC.
 [[scripts_update]]
 === The command "/script update" can not read scripts, how to fix that?
 
-First check questions about SSL connection in this FAQ.
+First check questions about TLS connection in this FAQ.
 
 If still not working, try to manually delete the scripts file (in your shell):
 
@@ -1185,7 +1166,7 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
   See `/help weechat.plugin.autoload`.
 * caricare solo gli script veramente necessari
 // TRANSLATION MISSING
-* Do not load system certificates if SSL is *NOT* used: turn off this option:
+* Do not load system certificates if TLS is *NOT* used: turn off this option:
   _weechat.network.gnutls_ca_system_.
 * ridurre il valore dell'opzione _weechat.history.max_buffer_lines_number_  oppure
   impostare il valore dell'opzione _weechat.history.max_buffer_lines_minutes_
@@ -1244,7 +1225,7 @@ Unload and disable auto-loading of "xfer" plugin (used for IRC DCC):
 Define a passphrase and use secured data wherever you can for sensitive data
 like passwords: see `/help secure` and `/help` on options
 (if you can use secured data, it is written in the help).
-See also link:weechat_user.it.html#secured_data[Guida per l’Utente / Secured data ^↗^,window=_blank].
+See also link:weechat_user.it.html#secured_data[Guida per l’Utente / Secured data ^↗^^].
 
 For example:
 
@@ -1266,7 +1247,7 @@ contains your passwords ciphered with your passphrase.
 Some other files may contain sensitive info like passwords (if they are not
 stored in _sec.conf_ with the `/secure` command).
 
-See the link:weechat_user.it.html#files_and_directories[User's guide / Files and directories ^↗^,window=_blank]
+See the link:weechat_user.it.html#files_and_directories[User's guide / Files and directories ^↗^^]
 for more information about configuration files.
 
 [[development]]
@@ -1276,7 +1257,7 @@ for more information about configuration files.
 === Come posso segnalare bug, richiedere nuove funzionalità o inviare patch?
 
 // TRANSLATION MISSING
-See https://weechat.org/about/support/[this page ^↗^,window=_blank].
+See https://weechat.org/about/support/[this page ^↗^^].
 
 [[gdb_error_threads]]
 === Quando eseguo WeeChat in gdb, c'è un errore riguardo ai thread, cosa posso fare?
@@ -1316,11 +1297,11 @@ Ci sono molti compiti da fare (testing, scrittura del codice, documentazione, ..
 
 // TRANSLATION MISSING
 Please contact us via IRC or mail, look at
-https://weechat.org/about/support/[support page ^↗^,window=_blank].
+https://weechat.org/about/support/[support page ^↗^^].
 
 [[donate]]
 === Posso donare denaro o altre cose agli sviluppatori di WeeChat?
 
 // TRANSLATION MISSING
 You can give us money to help development.
-Details on https://weechat.org/donate/[donation page ^↗^,window=_blank].
+Details on https://weechat.org/donate/[donation page ^↗^^].

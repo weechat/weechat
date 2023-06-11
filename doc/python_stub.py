@@ -81,7 +81,7 @@ def print_stub_functions() -> None:
               encoding="utf-8") as api_doc_file:
         api_doc = api_doc_file.read()
         for match in function_pattern.finditer(api_doc):
-            url = f'https://weechat.org/doc/api/#_{match["function"]}'
+            url = f'https://weechat.org/doc/weechat/api/#_{match["function"]}'
             example = (
                 f'\n    ::\n\n{indent(match["example"].lstrip(), " " * 8)}'
                 if match["example"]

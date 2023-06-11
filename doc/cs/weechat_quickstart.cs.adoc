@@ -2,10 +2,6 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: cs
-:toc: left
-:sectnums:
-:docinfo1:
-
 
 [[start]]
 == Spuštění WeeChatu
@@ -113,7 +109,7 @@ Použijte příkaz `/plugin` k zobrazení nahraných pluginů, pravděpodobně u
 Můžete přidat irc server příkazem `/server`, například:
 
 ----
-/server add libera irc.libera.chat/6697 -ssl
+/server add libera irc.libera.chat/6697 -tls
 ----
 
 // TRANSLATION MISSING
@@ -403,14 +399,14 @@ Zkuste `/help script` pro více informací.
 
 // TRANSLATION MISSING
 A list of scripts is available in WeeChat with `/script` or on
-https://weechat.org/scripts/[this page ^↗^,window=_blank].
+https://weechat.org/scripts/[this page ^↗^^].
 
 [[more_doc]]
 == Další dokumentace
 
 // TRANSLATION MISSING
 You can now use WeeChat and read
-https://weechat.org/doc/[FAQ/documentation ^↗^,window=_blank]
+https://weechat.org/doc/[FAQ/documentation ^↗^^]
 for any other questions.
 
 Ať máte radost z použití WeeChatu!

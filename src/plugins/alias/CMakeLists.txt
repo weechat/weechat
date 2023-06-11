@@ -28,4 +28,4 @@ set_target_properties(alias PROPERTIES PREFIX "")
 
 target_link_libraries(alias coverage_config)
 
-install(TARGETS alias LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
+install(TARGETS alias LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

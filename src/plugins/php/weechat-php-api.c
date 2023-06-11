@@ -1072,6 +1072,58 @@ API_FUNC(config_new)
     API_RETURN_STRING(result);
 }
 
+struct t_hashtable *
+weechat_php_api_config_update_cb (const void *pointer, void *data,
+                                  struct t_config_file *config_file,
+                                  int version_read,
+                                  struct t_hashtable *data_read)
+{
+    struct t_hashtable *rc;
+    void *func_argv[4];
+
+    func_argv[1] = (char *)API_PTR2STR(config_file);
+    func_argv[2] = &version_read;
+    func_argv[3] = data_read;
+
+    weechat_php_cb (pointer, data, func_argv, "ssih",
+                    WEECHAT_SCRIPT_EXEC_HASHTABLE, &rc);
+
+    return rc;
+}
+
+API_FUNC(config_set_version)
+{
+    zend_string *z_config_file;
+    zend_long z_version;
+    zval *z_callback_update;
+    zend_string *z_data;
+    struct t_config_file *config_file;
+    char *data;
+    int rc, version;
+
+    API_INIT_FUNC(1, "config_set_version", API_RETURN_INT(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SlzS", &z_config_file,
+                               &z_version, &z_callback_update,
+                               &z_data) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
+    version = (int)z_version;
+    weechat_php_get_function_name (z_callback_update, callback_update_name);
+    data = ZSTR_VAL(z_data);
+
+    rc = plugin_script_api_config_set_version (
+        weechat_php_plugin,
+        php_current_script,
+        config_file,
+        version,
+        &weechat_php_api_config_update_cb,
+        (const char *)callback_update_name,
+        (const char *)data);
+
+    API_RETURN_INT(rc);
+}
+
 static int
 weechat_php_api_config_section_read_cb (const void *pointer, void *data,
                                         struct t_config_file *config_file,

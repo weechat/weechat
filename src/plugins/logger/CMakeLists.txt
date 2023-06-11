@@ -30,4 +30,4 @@ set_target_properties(logger PROPERTIES PREFIX "")
 
 target_link_libraries(logger coverage_config)
 
-install(TARGETS logger LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
+install(TARGETS logger LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

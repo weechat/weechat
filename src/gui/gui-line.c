@@ -1574,7 +1574,7 @@ gui_line_hook_update (struct t_gui_line *line,
     struct t_gui_buffer *ptr_buffer;
     unsigned long value_pointer;
     long value;
-    char *error;
+    char *error, *new_message, *pos_newline;
     int rc, tags_updated, notify_level_updated, highlight_updated;
     int max_notify_level;
 
@@ -1717,9 +1717,19 @@ gui_line_hook_update (struct t_gui_line *line,
     ptr_value2 = hashtable_get (hashtable2, "message");
     if (ptr_value2 && (!ptr_value || (strcmp (ptr_value, ptr_value2) != 0)))
     {
+        new_message = strdup (ptr_value2);
+        if (new_message && !line->data->buffer->input_multiline)
+        {
+            /* if input_multiline is not set, keep only first line */
+            pos_newline = strchr (new_message, '\n');
+            if (pos_newline)
+                pos_newline[0] = '\0';
+        }
         if (line->data->message)
             free (line->data->message);
-        line->data->message = (ptr_value2) ? strdup (ptr_value2) : NULL;
+        line->data->message = (new_message) ? strdup (new_message) : NULL;
+        if (new_message)
+            free (new_message);
     }
 
     max_notify_level = gui_line_get_max_notify_level (line);
@@ -2147,6 +2157,7 @@ gui_line_hdata_line_data_update_cb (void *data,
                                     struct t_hashtable *hashtable)
 {
     const char *value;
+    char *new_value, *pos_newline;
     struct t_gui_line_data *line_data;
     struct t_gui_window *ptr_win;
     int rc, update_coords;
@@ -2205,9 +2216,19 @@ gui_line_hdata_line_data_update_cb (void *data,
     if (hashtable_has_key (hashtable, "message"))
     {
         value = hashtable_get (hashtable, "message");
-        hdata_set (hdata, pointer, "message", value);
+        new_value = (value) ? strdup (value) : NULL;
+        if (new_value && !line_data->buffer->input_multiline)
+        {
+            /* if input_multiline is not set, keep only first line */
+            pos_newline = strchr (new_value, '\n');
+            if (pos_newline)
+                pos_newline[0] = '\0';
+        }
+        hdata_set (hdata, pointer, "message", new_value);
         rc++;
         update_coords = 1;
+        if (new_value)
+            free (new_value);
     }
 
     if (rc > 0)

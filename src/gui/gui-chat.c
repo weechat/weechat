@@ -84,7 +84,7 @@ gui_chat_init ()
     /* some hsignals */
     hook_hsignal (NULL,
                   "chat_quote_time_prefix_message;chat_quote_prefix_message;"
-                  "chat_quote_message",
+                  "chat_quote_message;chat_quote_focused_line",
                   &gui_chat_hsignal_quote_line_cb, NULL, NULL);
 }
 
@@ -304,6 +304,8 @@ gui_chat_string_pos (const char *string, int real_pos)
 /*
  * Returns info about next word: beginning, end, length.
  *
+ * Stops before the first newline character, even if no characters or only spaces and color codes precede it.
+ *
  * Note: the word_{start|end}_offset are in bytes, but word_length(_with_spaces)
  * are in number of chars on screen.
  */
@@ -334,12 +336,19 @@ gui_chat_get_word_info (struct t_gui_window *window,
             next_char2 = utf8_next_char (next_char);
             if (next_char2)
             {
-                if (next_char[0] != ' ')
+                if (next_char[0] == '\n')
+                {
+                    *word_end_offset = next_char - start_data;
+                    if (*word_length < 0)
+                        *word_length = 0;
+                    return;
+                }
+                else if (next_char[0] != ' ')
                 {
                     if (leading_spaces)
                         *word_start_offset = next_char - start_data;
                     leading_spaces = 0;
-                    *word_end_offset = next_char2 - start_data - 1;
+                    *word_end_offset = next_char2 - start_data;
                     char_size_screen = utf8_char_size_screen (next_char);
                     if (char_size_screen > 0)
                         (*word_length_with_spaces) += char_size_screen;
@@ -353,11 +362,11 @@ gui_chat_get_word_info (struct t_gui_window *window,
                     if (leading_spaces)
                     {
                         (*word_length_with_spaces)++;
-                        *word_end_offset = next_char2 - start_data - 1;
+                        *word_end_offset = next_char2 - start_data;
                     }
                     else
                     {
-                        *word_end_offset = next_char - start_data - 1;
+                        *word_end_offset = next_char - start_data;
                         return;
                     }
                 }
@@ -366,7 +375,7 @@ gui_chat_get_word_info (struct t_gui_window *window,
         }
         else
         {
-            *word_end_offset = data + strlen (data) - start_data - 1;
+            *word_end_offset = data + strlen (data) - start_data;
             return;
         }
     }
@@ -585,7 +594,7 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
 {
     int display_time, length_data, length_str;
     char *ptr_msg, *pos_prefix, *pos_tab;
-    char *modifier_data, *string, *new_string;
+    char *modifier_data, *string, *new_string, *pos_newline;
     struct t_gui_line *new_line;
 
     new_line = NULL;
@@ -683,6 +692,14 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
             }
             else if (strcmp (string, new_string) != 0)
             {
+                if (!buffer->input_multiline)
+                {
+                    /* if input_multiline is not set, keep only first line */
+                    pos_newline = strchr (new_string, '\n');
+                    if (pos_newline)
+                        pos_newline[0] = '\0';
+                }
+
                 /* use new message if there are changes */
                 display_time = 1;
                 pos_prefix = NULL;
@@ -845,6 +862,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 {
     time_t date_printed;
     char *pos, *pos_end;
+    int one_line = 0;
 
     if (!message)
         return;
@@ -870,10 +888,17 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     pos = vbuffer;
     while (pos)
     {
-        /* display until next end of line */
-        pos_end = strchr (pos, '\n');
-        if (pos_end)
-            pos_end[0] = '\0';
+        if (!buffer || !buffer->input_multiline)
+        {
+            /* display until next end of line */
+            pos_end = strchr (pos, '\n');
+            if (pos_end)
+                pos_end[0] = '\0';
+        }
+        else
+        {
+            one_line = 1;
+        }
 
         if (gui_init_ok)
         {
@@ -883,6 +908,11 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         else
         {
             gui_chat_add_line_waiting_buffer (pos);
+        }
+
+        if (one_line)
+        {
+            break;
         }
 
         pos = (pos_end && pos_end[1]) ? pos_end + 1 : NULL;
@@ -1086,7 +1116,9 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
             ptr_prefix++;
         }
     }
-    message = hashtable_get (hashtable, "_chat_line_message");
+
+    message = (strstr (signal, "focused_line")) ?
+        hashtable_get (hashtable, "_chat_focused_line") : hashtable_get (hashtable, "_chat_line_message");
 
     if (!message)
         return WEECHAT_RC_OK;

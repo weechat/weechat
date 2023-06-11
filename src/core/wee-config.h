@@ -31,6 +31,8 @@ struct t_gui_buffer;
 #define WEECHAT_CONFIG_NAME "weechat"
 #define WEECHAT_CONFIG_PRIO_NAME "110000|weechat"
 
+#define WEECHAT_CONFIG_VERSION 2
+
 #define TAB_MAX_WIDTH 64
 
 enum t_config_look_align_end_of_lines
@@ -125,11 +127,24 @@ struct t_config_look_word_char_item
 };
 
 extern struct t_config_file *weechat_config_file;
+
+extern struct t_config_section *weechat_config_section_debug;
+extern struct t_config_section *weechat_config_section_startup;
+extern struct t_config_section *weechat_config_section_look;
+extern struct t_config_section *weechat_config_section_palette;
 extern struct t_config_section *weechat_config_section_color;
+extern struct t_config_section *weechat_config_section_completion;
+extern struct t_config_section *weechat_config_section_history;
+extern struct t_config_section *weechat_config_section_network;
 extern struct t_config_section *weechat_config_section_proxy;
+extern struct t_config_section *weechat_config_section_plugin;
+extern struct t_config_section *weechat_config_section_signal;
 extern struct t_config_section *weechat_config_section_bar;
 extern struct t_config_section *weechat_config_section_custom_bar_item;
+extern struct t_config_section *weechat_config_section_layout;
 extern struct t_config_section *weechat_config_section_notify;
+extern struct t_config_section *weechat_config_section_filter;
+extern struct t_config_section *weechat_config_section_key[];
 
 extern struct t_config_option *config_startup_command_after_plugins;
 extern struct t_config_option *config_startup_command_before_plugins;
@@ -194,6 +209,7 @@ extern struct t_config_option *config_look_hotlist_suffix;
 extern struct t_config_option *config_look_hotlist_unique_numbers;
 extern struct t_config_option *config_look_hotlist_update_on_buffer_switch;
 extern struct t_config_option *config_look_input_cursor_scroll;
+extern struct t_config_option *config_look_input_multiline_lead_linebreak;
 extern struct t_config_option *config_look_input_share;
 extern struct t_config_option *config_look_input_share_overwrite;
 extern struct t_config_option *config_look_input_undo_max;
@@ -286,6 +302,8 @@ extern struct t_config_option *config_color_chat_prefix_suffix;
 extern struct t_config_option *config_color_chat_read_marker;
 extern struct t_config_option *config_color_chat_read_marker_bg;
 extern struct t_config_option *config_color_chat_server;
+extern struct t_config_option *config_color_chat_status_disabled;
+extern struct t_config_option *config_color_chat_status_enabled;
 extern struct t_config_option *config_color_chat_tags;
 extern struct t_config_option *config_color_chat_text_found;
 extern struct t_config_option *config_color_chat_text_found_bg;
@@ -313,7 +331,7 @@ extern struct t_config_option *config_color_status_filter;
 extern struct t_config_option *config_color_status_more;
 extern struct t_config_option *config_color_status_mouse;
 extern struct t_config_option *config_color_status_name;
-extern struct t_config_option *config_color_status_name_ssl;
+extern struct t_config_option *config_color_status_name_tls;
 extern struct t_config_option *config_color_status_nicklist_count;
 extern struct t_config_option *config_color_status_number;
 extern struct t_config_option *config_color_status_time;
@@ -385,6 +403,7 @@ extern void config_weechat_debug_set_all ();
 extern int config_weechat_notify_set (struct t_gui_buffer *buffer,
                                       const char *notify);
 extern void config_get_item_time (char *text_time, int max_length);
+extern int config_weechat_get_key_context (struct t_config_section *section);
 extern int config_weechat_init ();
 extern int config_weechat_read ();
 extern int config_weechat_write ();

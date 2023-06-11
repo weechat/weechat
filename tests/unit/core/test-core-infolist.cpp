@@ -314,6 +314,10 @@ TEST(CoreInfolist, Move)
 
     POINTERS_EQUAL(NULL, infolist->ptr_item);
 
+    infolist_next (NULL);
+    infolist_prev (NULL);
+    infolist_reset_item_cursor (NULL);
+
     /* move to first item in infolist */
     POINTERS_EQUAL(infolist->items, infolist_next (infolist));
     POINTERS_EQUAL(infolist->items, infolist->ptr_item);

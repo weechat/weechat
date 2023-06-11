@@ -378,11 +378,6 @@ plugin_config_init ()
             &plugin_config_create_desc, NULL, NULL,
             &plugin_config_delete_desc, NULL, NULL);
     }
-    else
-    {
-        plugin_config_section_var = NULL;
-        plugin_config_section_desc = NULL;
-    }
 }
 
 /*

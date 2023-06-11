@@ -2,23 +2,16 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: sr
-:toc: left
-:toclevels: 4
 :toc-title: Садржај
-:sectnums:
-:sectnumlevels: 3
-:docinfo1:
 
 Превод:
 
 * Иван Пешић (<ivan.pesic@gmail.com>), 2021.
 
-
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
 Последња верзија овог документа се налази на
-https://weechat.org/doc/[овој страници ^↗^,window=_blank].
-
+https://weechat.org/doc/[овој страници ^↗^^].
 
 [[introduction]]
 == Увод
@@ -56,7 +49,7 @@ Almost all examples in this doc are written in Python, but API is the same for o
 
 [IMPORTANT]
 Скрипта *НИКАДА* не сме да се рачва или да креира нити без употребе одговарајуће API функције, то може да сруши програм WeeChat. +
-Ако нешто мора да се извршава у позадини, употребите функцију `+hook_process+`. Погледајте пример у поглављу <<hook_process,Покретање процеса у позадини>> као и документацију функције `+hook_process+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтном приручнику API додатака ^↗^,window=_blank].
+Ако нешто мора да се извршава у позадини, употребите функцију `+hook_process+`. Погледајте пример у поглављу <<hook_process,Покретање процеса у позадини>> као и документацију функције `+hook_process+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтном приручнику API додатака ^↗^^].
 
 [[languages_specificities]]
 === Језичке специфичности
@@ -68,7 +61,7 @@ Almost all examples in this doc are written in Python, but API is the same for o
 ===== Модул
 
 Програм WeeChat дефинише `weechat` модул који мора да се увезе командом `import weechat`. +
-Python стаб за WeeChat API је соступан у репозиторијуму: https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^,window=_blank].
+Python стаб за WeeChat API је соступан у репозиторијуму: https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^^].
 
 [[python_functions]]
 ===== Функције
@@ -98,7 +91,7 @@ Python стаб за WeeChat API је соступан у репозиториј
   Препоручује се да се уместо ње користи модификатор `+irc_in2_yyy+`, примљени
   стринг је увек валидан UTF-8. +
   Погледајте функцију `+hook_modifier+` у
-  link:weechat_plugin_api.sr.html#_hook_modifier[WeeChat референтном приручнику API додатака ^↗^,window=_blank].
+  link:weechat_plugin_api.sr.html#_hook_modifier[WeeChat референтном приручнику API додатака ^↗^^].
 
 | hook_signal
 | xxx,irc_out_yyy +
@@ -113,7 +106,7 @@ Python стаб за WeeChat API је соступан у репозиториј
   Препоручује се да се уместо њега користи сигнал `+xxx,irc_out1_yyy+`, стринг који
   се прима је увек валидан UTF-8. +
   Погледајте функцију `+hook_signal+` у
-  link:weechat_plugin_api.sr.html#_hook_signal[WeeChat референтном приручнику API додатака ^↗^,window=_blank].
+  link:weechat_plugin_api.sr.html#_hook_signal[WeeChat референтном приручнику API додатака ^↗^^].
 
 | hook_process +
   hook_process_hashtable
@@ -190,7 +183,7 @@ null типа када функција прихвата null вредности
 вретиће вам се као вредност аргумента у функцији повратног позива ако је вредност
 аргумента null. Да бисте видели које функције прихватају null вредности и 
 прослеђују null вредности функцијама повратног позива, погледајте Python прототипе
-у link:weechat_plugin_api.en.html[API референтном приручнику WeeChat додатака ^↗^,window=_blank].
+у link:weechat_plugin_api.en.html[API референтном приручнику WeeChat додатака ^↗^^].
 
 [[language_guile]]
 ==== Guile (Scheme)
@@ -510,7 +503,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 [[script_api]]
 == API скриптовања
 
-За више информација о функцијама које постоје у API, молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat референтни приручник API додатака ^↗^,window=_blank].
+За више информација о функцијама које постоје у API, молимо вас да прочитате link:weechat_plugin_api.sr.html[WeeChat референтни приручник API додатака ^↗^^].
 
 [[script_api_functions]]
 === Функције
@@ -830,7 +823,7 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 [[common_tasks]]
 == Уобичајени задаци
 
-Ово поглавље приказује неке уобичајене задатке, уз примере. Овде се користе само делимичне ствари из API, за потпуно упутство, погледајте link:weechat_plugin_api.sr.html[WeeChat референтни приручник API додатака ^↗^,window=_blank].
+Ово поглавље приказује неке уобичајене задатке, уз примере. Овде се користе само делимичне ствари из API, за потпуно упутство, погледајте link:weechat_plugin_api.sr.html[WeeChat референтни приручник API додатака ^↗^^].
 
 [[buffers]]
 === Бафери
@@ -1091,7 +1084,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 
 [TIP]
 Све информације у вези програма WeeChat се налазе на
-https://weechat.org/dev/info/[овој страници ^↗^,window=_blank].
+https://weechat.org/dev/info/[овој страници ^↗^^].
 
 Пример URL преноса са опцијом: преузимање најновијег WeeChat развојног пакета у фајл _/tmp/weechat-devel.tar.gz_:
 
@@ -1107,7 +1100,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
                                30 * 1000, "my_process_cb", "")
 ----
 
-За више информација у вези URL преноса, као и за доступне опције, погледајте функције `+hook_process+` и `+hook_process_hashtable+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтни приручник API додатака ^↗^,window=_blank].
+За више информација у вези URL преноса, као и за доступне опције, погледајте функције `+hook_process+` и `+hook_process_hashtable+` у link:weechat_plugin_api.sr.html#_hook_process[WeeChat референтни приручник API додатака ^↗^^].
 
 [[config_options]]
 === Конфигурација / опције

@@ -26,7 +26,7 @@
 
 struct t_relay_server
 {
-    char *protocol_string;             /* example: "ipv6.ssl.irc.libera"    */
+    char *protocol_string;             /* example: "ipv6.tls.irc.libera"    */
     enum t_relay_protocol protocol;    /* protocol (irc/weechat)            */
     char *protocol_args;               /* arguments used for protocol       */
                                        /* example: server for irc protocol  */
@@ -37,7 +37,7 @@ struct t_relay_server
                                        /* port if IP                        */
     int ipv4;                          /* IPv4 protocol enabled             */
     int ipv6;                          /* IPv6 protocol enabled             */
-    int ssl;                           /* 1 if SSL is enabled               */
+    int tls;                           /* 1 if TLS is enabled               */
     int unix_socket;                   /* 1 if UNIX socket                  */
     int sock;                          /* socket for connection             */
     struct t_hook *hook_fd;            /* hook for socket                   */
@@ -52,7 +52,7 @@ extern struct t_relay_server *last_relay_server;
 
 extern void relay_server_get_protocol_args (const char *protocol_and_string,
                                             int *ipv4, int *ipv6,
-                                            int *ssl, int *unix_socket,
+                                            int *tls, int *unix_socket,
                                             char **protocol,
                                             char **protocol_args);
 extern struct t_relay_server *relay_server_search (const char *protocol_and_args);
@@ -65,7 +65,7 @@ extern struct t_relay_server *relay_server_new (const char *protocol_string,
                                                 const char *protocol_args,
                                                 int port, const char *path,
                                                 int ipv4, int ipv6,
-                                                int ssl, int unix_socket);
+                                                int tls, int unix_socket);
 extern void relay_server_update_path (struct t_relay_server *server,
                                       const char *path);
 extern void relay_server_update_port (struct t_relay_server *server, int port);

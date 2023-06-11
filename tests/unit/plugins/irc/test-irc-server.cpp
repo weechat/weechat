@@ -27,6 +27,7 @@ extern "C"
 {
 #include <stdio.h>
 #include <string.h>
+#include "src/core/wee-config-file.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-server.h"
@@ -176,12 +177,103 @@ TEST(IrcServer, GetNameWithoutPort)
 
 /*
  * Tests functions:
+ *   irc_server_get_short_description
  *   irc_server_set_addresses
  */
 
 TEST(IrcServer, SetAddresses)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    char *str;
+
+    POINTERS_EQUAL(NULL, irc_server_get_short_description (NULL));
+
+    server = irc_server_alloc ("server1");
+
+    config_file_option_set (server->options[IRC_SERVER_OPTION_TLS], "off", 1);
+
+    LONGS_EQUAL(0, irc_server_set_addresses (NULL, NULL, 0));
+    LONGS_EQUAL(0, irc_server_set_addresses (NULL, "irc.example.org", 0));
+
+    LONGS_EQUAL(1, irc_server_set_addresses (server, "fake:irc.fake.org", 0));
+    LONGS_EQUAL(1, server->fake_server);
+    STRCMP_EQUAL("irc.fake.org", server->addresses_eval);
+    LONGS_EQUAL(1, server->addresses_count);
+    STRCMP_EQUAL("irc.fake.org", server->addresses_array[0]);
+    LONGS_EQUAL(6667, server->ports_array[0]);
+    LONGS_EQUAL(0, server->retry_array[0]);
+
+    WEE_TEST_STR("irc.fake.org/6667 (fake, TLS: disabled)",
+                 irc_server_get_short_description (server));
+
+    LONGS_EQUAL(1, irc_server_set_addresses (server, "irc.example.org", 0));
+    LONGS_EQUAL(0, server->fake_server);
+    STRCMP_EQUAL("irc.example.org", server->addresses_eval);
+    LONGS_EQUAL(1, server->addresses_count);
+    STRCMP_EQUAL("irc.example.org", server->addresses_array[0]);
+    LONGS_EQUAL(6667, server->ports_array[0]);
+    LONGS_EQUAL(0, server->retry_array[0]);
+
+    WEE_TEST_STR("irc.example.org/6667 (TLS: disabled)",
+                 irc_server_get_short_description (server));
+
+    LONGS_EQUAL(1,
+                irc_server_set_addresses (
+                    server, "irc.example.org,irc2.example.org/6666", 0));
+    LONGS_EQUAL(0, server->fake_server);
+    STRCMP_EQUAL("irc.example.org,irc2.example.org/6666", server->addresses_eval);
+    LONGS_EQUAL(2, server->addresses_count);
+    STRCMP_EQUAL("irc.example.org", server->addresses_array[0]);
+    STRCMP_EQUAL("irc2.example.org", server->addresses_array[1]);
+    LONGS_EQUAL(6667, server->ports_array[0]);
+    LONGS_EQUAL(6666, server->ports_array[1]);
+    LONGS_EQUAL(0, server->retry_array[0]);
+    LONGS_EQUAL(0, server->retry_array[1]);
+
+    WEE_TEST_STR("irc.example.org/6667, irc2.example.org/6666 (TLS: disabled)",
+                 irc_server_get_short_description (server));
+
+    config_file_option_set (server->options[IRC_SERVER_OPTION_TLS], "on", 1);
+
+    LONGS_EQUAL(1,
+                irc_server_set_addresses (
+                    server, "irc.example.org,irc2.example.org/7000", 1));
+    LONGS_EQUAL(0, server->fake_server);
+    STRCMP_EQUAL("irc.example.org,irc2.example.org/7000", server->addresses_eval);
+    LONGS_EQUAL(2, server->addresses_count);
+    STRCMP_EQUAL("irc.example.org", server->addresses_array[0]);
+    STRCMP_EQUAL("irc2.example.org", server->addresses_array[1]);
+    LONGS_EQUAL(6697, server->ports_array[0]);
+    LONGS_EQUAL(7000, server->ports_array[1]);
+    LONGS_EQUAL(0, server->retry_array[0]);
+    LONGS_EQUAL(0, server->retry_array[1]);
+
+    WEE_TEST_STR("irc.example.org/6697, irc2.example.org/7000 (TLS: enabled)",
+                 irc_server_get_short_description (server));
+
+    LONGS_EQUAL(0,
+                irc_server_set_addresses (
+                    server, "irc.example.org,irc2.example.org/7000", 1));
+    LONGS_EQUAL(0, server->fake_server);
+    STRCMP_EQUAL("irc.example.org,irc2.example.org/7000", server->addresses_eval);
+    LONGS_EQUAL(2, server->addresses_count);
+    STRCMP_EQUAL("irc.example.org", server->addresses_array[0]);
+    STRCMP_EQUAL("irc2.example.org", server->addresses_array[1]);
+    LONGS_EQUAL(6697, server->ports_array[0]);
+    LONGS_EQUAL(7000, server->ports_array[1]);
+    LONGS_EQUAL(0, server->retry_array[0]);
+    LONGS_EQUAL(0, server->retry_array[1]);
+
+    WEE_TEST_STR("irc.example.org/6697, irc2.example.org/7000 (TLS: enabled)",
+                 irc_server_get_short_description (server));
+
+    server->temp_server = 1;
+
+    WEE_TEST_STR("irc.example.org/6697, irc2.example.org/7000 "
+                 "(temporary, TLS: enabled)",
+                 irc_server_get_short_description (server));
+
+    irc_server_free (server);
 }
 
 /*
@@ -529,7 +621,157 @@ TEST(IrcServer, Alloc)
 
 TEST(IrcServer, AllocWithUrl)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+
+    POINTERS_EQUAL(NULL, irc_server_alloc_with_url (NULL));
+    POINTERS_EQUAL(NULL, irc_server_alloc_with_url (""));
+    POINTERS_EQUAL(NULL, irc_server_alloc_with_url ("test"));
+    POINTERS_EQUAL(NULL, irc_server_alloc_with_url ("test://irc.example.org"));
+
+    /* address */
+    server = irc_server_alloc_with_url ("irc://irc.example.org");
+    CHECK(server);
+    STRCMP_EQUAL(server->name, "irc.example.org");
+    STRCMP_EQUAL("irc.example.org/6667",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_ADDRESSES]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_IPV6]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    irc_server_free (server);
+
+    /* address/port */
+    server = irc_server_alloc_with_url ("irc://irc.example.org:7000");
+    CHECK(server);
+    STRCMP_EQUAL(server->name, "irc.example.org");
+    STRCMP_EQUAL("irc.example.org/7000",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_ADDRESSES]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_IPV6]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    irc_server_free (server);
+
+    /* address/port, IPv6 */
+    server = irc_server_alloc_with_url ("irc6://irc.example.org:7000");
+    CHECK(server);
+    STRCMP_EQUAL(server->name, "irc.example.org");
+    STRCMP_EQUAL("irc.example.org/7000",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_ADDRESSES]));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_IPV6]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    irc_server_free (server);
+
+    /* address, TLS */
+    server = irc_server_alloc_with_url ("ircs://irc.example.org");
+    CHECK(server);
+    STRCMP_EQUAL(server->name, "irc.example.org");
+    STRCMP_EQUAL("irc.example.org/6697",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_ADDRESSES]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_IPV6]));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    irc_server_free (server);
+
+    /* address, IPv6, TLS */
+    server = irc_server_alloc_with_url ("irc6s://irc.example.org");
+    CHECK(server);
+    STRCMP_EQUAL(server->name, "irc.example.org");
+    STRCMP_EQUAL("irc.example.org/6697",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_ADDRESSES]));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_IPV6]));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    irc_server_free (server);
+
+    /* address/port, TLS */
+    server = irc_server_alloc_with_url ("ircs://irc.example.org:7000");
+    CHECK(server);
+    STRCMP_EQUAL(server->name, "irc.example.org");
+    STRCMP_EQUAL("irc.example.org/7000",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_ADDRESSES]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_IPV6]));
+    LONGS_EQUAL(1, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    irc_server_free (server);
+
+    /* address, nick */
+    server = irc_server_alloc_with_url ("irc://alice@irc.example.org");
+    CHECK(server);
+    STRCMP_EQUAL(server->name, "irc.example.org");
+    STRCMP_EQUAL("irc.example.org/6667",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_ADDRESSES]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_IPV6]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+    STRCMP_EQUAL("alice,alice2,alice3,alice4,alice5",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    irc_server_free (server);
+
+    /* address, nick, password */
+    server = irc_server_alloc_with_url ("irc://alice:secret@irc.example.org");
+    CHECK(server);
+    STRCMP_EQUAL(server->name, "irc.example.org");
+    STRCMP_EQUAL("irc.example.org/6667",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_ADDRESSES]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_IPV6]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
+    STRCMP_EQUAL("secret",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+    STRCMP_EQUAL("alice,alice2,alice3,alice4,alice5",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
+    POINTERS_EQUAL(NULL,
+                   CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    irc_server_free (server);
+
+    /* address, nick, password, channels */
+    server = irc_server_alloc_with_url (
+        "irc://alice:secret@irc.example.org/#test1,#test2");
+    CHECK(server);
+    STRCMP_EQUAL(server->name, "irc.example.org");
+    STRCMP_EQUAL("irc.example.org/6667",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_ADDRESSES]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_IPV6]));
+    LONGS_EQUAL(0, CONFIG_BOOLEAN(server->options[IRC_SERVER_OPTION_TLS]));
+    STRCMP_EQUAL("secret",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_PASSWORD]));
+    STRCMP_EQUAL("alice,alice2,alice3,alice4,alice5",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_NICKS]));
+    STRCMP_EQUAL("#test1,#test2",
+                 CONFIG_STRING(server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+    irc_server_free (server);
 }
 
 

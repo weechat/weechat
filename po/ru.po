@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-01-31 18:40+0100\n"
-"PO-Revision-Date: 2022-10-15 22:51+0200\n"
+"POT-Creation-Date: 2023-06-10 22:36+0200\n"
+"PO-Revision-Date: 2023-05-01 20:23+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -32,124 +32,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Poedit-Bookmarks: -1,-1,608,-1,-1,-1,-1,-1,-1,-1\n"
-
-#, fuzzy
-msgid "any string"
-msgstr "Ожидание"
-
-#, fuzzy
-msgid "any char"
-msgstr "развернуть символы"
-
-#, fuzzy
-msgid "max chars"
-msgstr "управление буферами"
-
-#, fuzzy
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
-"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
-"underline"
-msgstr ""
-"название цвета WeeChat (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), код "
-"или алиас цвета терминала; перед цветом допустимы атрибуты (только для цвета "
-"текста, но не фона): \"*\" жирный, \"!\" инверсия, \"_\" подчёркивание"
-
-#, fuzzy
-msgid "description"
-msgstr "  . описание: %s\n"
-
-msgid "type"
-msgstr "тип"
-
-#, fuzzy
-msgid "values"
-msgstr "  . значения: "
-
-#, fuzzy
-msgid "default value"
-msgstr "  . значение по умолчанию: %d\n"
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
-msgstr "разрешено неопределённое значение (null)"
-
-msgid "Alias"
-msgstr ""
-
-#, fuzzy
-msgid "Command"
-msgstr "Внутренние команды %s:\n"
-
-#, fuzzy
-msgid "Completion"
-msgstr "собран:"
-
-#, fuzzy
-msgid "IRC color"
-msgstr "цвет чата"
-
-#, fuzzy
-msgid "WeeChat color"
-msgstr "Ошибка WeeChat:"
-
-#, fuzzy
-msgid "Plugin"
-msgstr "  (нет pluginа)\n"
-
-msgid "Name"
-msgstr ""
-
-#, fuzzy
-msgid "Description"
-msgstr "  . описание: %s\n"
-
-#, fuzzy
-msgid "Arguments"
-msgstr "адресат тип [аргументы]"
-
-msgid "Hashtable (input)"
-msgstr ""
-
-msgid "Hashtable (output)"
-msgstr ""
-
-#, fuzzy
-msgid "Pointer"
-msgstr "минута"
-
-msgid "Lists"
-msgstr ""
-
-#, fuzzy
-msgid "Variables"
-msgstr "  . тип: целочисленный\n"
-
-msgid "Update allowed:"
-msgstr ""
-
-#, fuzzy
-msgid "Option"
-msgstr "[команда]"
-
-msgid "Type"
-msgstr ""
-
-msgid "Constants"
-msgstr ""
-
-msgid "Rank"
-msgstr ""
-
-msgid "Priority"
-msgstr ""
-
-msgid "File"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
@@ -195,7 +77,7 @@ msgstr "Использование: %s [опция...] [расширение:о�
 #, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal\n"
+"  -c, --colors             display default colors in terminal and exit\n"
 "  -d, --dir <path>         force a single WeeChat home directory\n"
 "                           or 4 different directories separated by colons "
 "(in this order: config, data, cache, runtime)\n"
@@ -204,8 +86,8 @@ msgid ""
 "  -t, --temp-dir           create a temporary WeeChat home directory and "
 "delete it on exit\n"
 "                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help\n"
-"  -l, --license            display WeeChat license\n"
+"  -h, --help               display this help and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
 "  -P, --plugins <plugins>  load only these plugins at startup\n"
 "                           (see /help weechat.plugin.autoload)\n"
@@ -216,7 +98,7 @@ msgid ""
 "  -s, --no-script          don't load any script at startup\n"
 "      --upgrade            upgrade WeeChat using session files (see /help "
 "upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version\n"
+"  -v, --version            display WeeChat version and exit\n"
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
 "  -a, --no-connect        не подключаться автоматически при запуске\n"
@@ -234,6 +116,10 @@ msgstr ""
 "  -w, --weechat-commands  отобразить команды WeeChat\n"
 
 msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
 msgstr ""
 
 msgid ""
@@ -353,6 +239,10 @@ msgid "No bar item defined"
 msgstr "Сокращения не заданы.\n"
 
 #, fuzzy, c-format
+msgid "%sBar \"%s\" already exists"
+msgstr "%s игнорирование уже существует\n"
+
+#, fuzzy, c-format
 msgid "%sNot enough memory (%s)"
 msgstr "Недостаточно памяти для новой строчки\n"
 
@@ -376,13 +266,21 @@ msgstr "%s не могу сохранить конфигурационный ф�
 msgid "%sInvalid size \"%s\" for bar \"%s\""
 msgstr "%s некорректное количество аргументов команды \"%s\"\n"
 
-#, fuzzy
-msgid "All bars have been deleted"
-msgstr "команда users отключена"
-
 #, fuzzy, c-format
 msgid "%sBar \"%s\" not found"
 msgstr "%s адрес \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%sBar \"%s\" already exists for \"%s\" command"
+msgstr "%s сервер \"%s\" уже существует для команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Bar \"%s\" renamed to \"%s\""
+msgstr "команда users отключена"
+
+#, fuzzy
+msgid "All bars have been deleted"
+msgstr "команда users отключена"
 
 #, fuzzy, c-format
 msgid "Bar \"%s\" deleted"
@@ -483,12 +381,8 @@ msgid "%sError in expression to evaluate"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
+msgid "  %s%s%s: buffer: %s%s%s / tags: %s / regex: %s"
 msgstr "       (нет обработчика сообщений)\n"
-
-#, fuzzy
-msgid "(disabled)"
-msgstr "команда users отключена"
 
 #, fuzzy
 msgid "Message filtering enabled"
@@ -546,12 +440,41 @@ msgstr "команда users отключена"
 msgid "Filter \"%s\" deleted"
 msgstr "команда users отключена"
 
+#, fuzzy
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"%\" for blink, \".\" for \"dim\" (half "
+"bright), \"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
+"underline"
+msgstr ""
+"название цвета WeeChat (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), код "
+"или алиас цвета терминала; перед цветом допустимы атрибуты (только для цвета "
+"текста, но не фона): \"*\" жирный, \"!\" инверсия, \"_\" подчёркивание"
+
 #, fuzzy, c-format
 msgid "Option \"%s%s%s\":"
 msgstr "Ники %s%s%s: %s["
 
+#, fuzzy
+msgid "description"
+msgstr "  . описание: %s\n"
+
+msgid "type"
+msgstr "тип"
+
 msgid "boolean"
 msgstr "boolean"
+
+#, fuzzy
+msgid "values"
+msgstr "  . значения: "
+
+#, fuzzy
+msgid "default value"
+msgstr "  . значение по умолчанию: %d\n"
 
 #, fuzzy
 msgid "(undefined)"
@@ -569,8 +492,24 @@ msgid "integer"
 msgstr "минута"
 
 #, fuzzy
+msgid "any string"
+msgstr "Ожидание"
+
+#, fuzzy
+msgid "any char"
+msgstr "развернуть символы"
+
+#, fuzzy
+msgid "max chars"
+msgstr "управление буферами"
+
+#, fuzzy
 msgid "color"
 msgstr "цвет чата"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr "разрешено неопределённое значение (null)"
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -646,10 +585,6 @@ msgstr "Комбинации клавиш:\n"
 msgid "No key binding added, redefined or removed for context \"%s\""
 msgstr "Комбинации клавиш:\n"
 
-#, fuzzy, c-format
-msgid "%sUnable to bind key \"%s\""
-msgstr "%s не могу установить клавишу \"%s\"\n"
-
 #, c-format
 msgid "Key \"%s\" has already default value"
 msgstr "Для \"%s\" уже определено значение по-умолчанию"
@@ -687,13 +622,6 @@ msgstr "Клавиша:\n"
 #, fuzzy
 msgid "No key found"
 msgstr "Клавиши не найдены.\n"
-
-#, c-format
-msgid ""
-"%sIt is not safe to bind key \"%s\" because it does not start with a ctrl or "
-"meta code (tip: use alt-k to find key codes); if you want to bind this key "
-"anyway, turn off option weechat.look.key_bind_safe"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%sContext \"%s\" not found"
@@ -864,6 +792,22 @@ msgid "%sInvalid number: \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
+msgid "%sFailed to reset option \"%s\""
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+
+#, fuzzy
+msgid "Option reset: "
+msgstr "Настройки pluginов сохранены\n"
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr "%sСброс всех опций запрещён"
+
+#, fuzzy, c-format
+msgid "%d option(s) reset"
+msgstr "Настройки pluginов сохранены\n"
+
+#, fuzzy, c-format
 msgid "Options saved to %s"
 msgstr "Настройки pluginов сохранены\n"
 
@@ -1006,25 +950,13 @@ msgstr "не на канале"
 msgid "Option created: "
 msgstr "не на канале"
 
-#, fuzzy
-msgid "Option changed"
-msgstr "не на канале"
-
 #, fuzzy, c-format
 msgid "%sFailed to unset option \"%s\""
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
-#, fuzzy
-msgid "Option reset: "
-msgstr "Настройки pluginов сохранены\n"
-
 #, fuzzy, c-format
 msgid "Option removed: %s"
 msgstr "не на канале"
-
-#, c-format
-msgid "%sReset of all options is not allowed"
-msgstr "%sСброс всех опций запрещён"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
@@ -1161,8 +1093,9 @@ msgstr "управление буферами"
 msgid ""
 "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
 "<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || del <name>|-all || set <name> <option> <value> || hide|show|"
-"toggle <name> || scroll <name> <window> <scroll_value>"
+"nicklist] || rename <name> <new_name> || del <name>|-all || set <name> "
+"<option> <value> || hide|show|toggle <name> || scroll <name> <window> "
+"<scroll_value>"
 msgstr ""
 
 msgid ""
@@ -1188,6 +1121,7 @@ msgid ""
 "between items) or \"+\" (glued items))\n"
 "      default: create a default bar (all default bars if no bar name is "
 "given)\n"
+"       rename: rename a bar\n"
 "          del: delete a bar (or all bars with -all)\n"
 "          set: set a value for a bar property\n"
 "       option: option to change (for options list, look at /set weechat.bar."
@@ -1461,6 +1395,8 @@ msgid ""
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
 "infolists: display infos about infolists\n"
+"      key: enable keyboard and mouse debug: display raw codes, expanded key "
+"name and associated command ('q' to quit this mode)\n"
 "     libs: display infos about external libraries used\n"
 "   memory: display infos about memory usage\n"
 "    mouse: toggle debug for mouse\n"
@@ -1596,47 +1532,53 @@ msgid ""
 "pointer (can be used in triggers)\n"
 "    ${buffer[my_pointer].full_name}: full name of the buffer with this "
 "pointer name (can be used in triggers)\n"
+"  hdata[pointer].var1.method(): when var1 is a hashtable, methods "
+"\"keys()\", \"values()\", \"keys_sorted()\", \"keys_values()\" and "
+"\"keys_values_sorted()\" can be called\n"
 "For name of hdata and variables, please look at \"Plugin API reference\", "
 "function \"weechat_hdata_get\".\n"
 "\n"
 "Examples (simple strings):\n"
-"  /eval -n ${raw:${info:version}}                 ==> ${info:version}\n"
-"  /eval -n ${eval_cond:${window.win_width}>100}   ==> 1\n"
-"  /eval -n ${info:version}                        ==> 0.4.3\n"
-"  /eval -n ${env:HOME}                            ==> /home/user\n"
-"  /eval -n ${weechat.look.scroll_amount}          ==> 3\n"
-"  /eval -n ${sec.data.password}                   ==> secret\n"
-"  /eval -n ${window}                              ==> 0x2549aa0\n"
-"  /eval -n ${window.buffer}                       ==> 0x2549320\n"
-"  /eval -n ${window.buffer.full_name}             ==> core.weechat\n"
-"  /eval -n ${window.buffer.number}                ==> 1\n"
-"  /eval -n ${\\t}                                  ==> <tab>\n"
-"  /eval -n ${chars:digit}                         ==> 0123456789\n"
-"  /eval -n ${chars:J-T}                           ==> JKLMNOPQRST\n"
-"  /eval -n ${lower:TEST}                          ==> test\n"
-"  /eval -n ${upper:test}                          ==> TEST\n"
-"  /eval -n ${hide:-,${relay.network.password}}    ==> --------\n"
-"  /eval -n ${cut:3,+,test}                        ==> tes+\n"
-"  /eval -n ${cut:+3,+,test}                       ==> te+\n"
-"  /eval -n ${date:%H:%M:%S}                       ==> 07:46:40\n"
-"  /eval -n ${if:${info:term_width}>80?big:small}  ==> big\n"
-"  /eval -n ${rev:Hello}                           ==> olleH\n"
-"  /eval -n ${repeat:5,-}                          ==> -----\n"
-"  /eval -n ${length:test}                         ==> 4\n"
-"  /eval -n ${split:1,,,abc,def,ghi}               ==> abc\n"
-"  /eval -n ${split:-1,,,abc,def,ghi}              ==> ghi\n"
-"  /eval -n ${split:count,,,abc,def,ghi}           ==> 3\n"
-"  /eval -n ${split:random,,,abc,def,ghi}          ==> def\n"
-"  /eval -n ${split_shell:1,\"arg 1\" arg2}          ==> arg 1\n"
-"  /eval -n ${split_shell:-1,\"arg 1\" arg2}         ==> arg2\n"
-"  /eval -n ${split_shell:count,\"arg 1\" arg2}      ==> 2\n"
-"  /eval -n ${split_shell:random,\"arg 1\" arg2}     ==> arg2\n"
-"  /eval -n ${calc:(5+2)*3}                        ==> 21\n"
-"  /eval -n ${random:0,10}                         ==> 3\n"
-"  /eval -n ${base_encode:64,test}                 ==> dGVzdA==\n"
-"  /eval -n ${base_decode:64,dGVzdA==}             ==> test\n"
-"  /eval -n ${translate:Plugin}                    ==> Extension\n"
-"  /eval -n ${define:len,${calc:5+3}}${len}x${len} ==> 8x8\n"
+"  /eval -n ${raw:${info:version}}                  ==> ${info:version}\n"
+"  /eval -n ${eval_cond:${window.win_width}>100}    ==> 1\n"
+"  /eval -n ${info:version}                         ==> 0.4.3\n"
+"  /eval -n ${env:HOME}                             ==> /home/user\n"
+"  /eval -n ${weechat.look.scroll_amount}           ==> 3\n"
+"  /eval -n ${sec.data.password}                    ==> secret\n"
+"  /eval -n ${window}                               ==> 0x2549aa0\n"
+"  /eval -n ${window.buffer}                        ==> 0x2549320\n"
+"  /eval -n ${window.buffer.full_name}              ==> core.weechat\n"
+"  /eval -n ${window.buffer.number}                 ==> 1\n"
+"  /eval -n ${buffer.local_variables.keys_values()} ==> plugin:core,name:"
+"weechat\n"
+"  /eval -n ${buffer.local_variables.plugin}        ==> core\n"
+"  /eval -n ${\\t}                                   ==> <tab>\n"
+"  /eval -n ${chars:digit}                          ==> 0123456789\n"
+"  /eval -n ${chars:J-T}                            ==> JKLMNOPQRST\n"
+"  /eval -n ${lower:TEST}                           ==> test\n"
+"  /eval -n ${upper:test}                           ==> TEST\n"
+"  /eval -n ${hide:-,${relay.network.password}}     ==> --------\n"
+"  /eval -n ${cut:3,+,test}                         ==> tes+\n"
+"  /eval -n ${cut:+3,+,test}                        ==> te+\n"
+"  /eval -n ${date:%H:%M:%S}                        ==> 07:46:40\n"
+"  /eval -n ${if:${info:term_width}>80?big:small}   ==> big\n"
+"  /eval -n ${rev:Hello}                            ==> olleH\n"
+"  /eval -n ${repeat:5,-}                           ==> -----\n"
+"  /eval -n ${length:test}                          ==> 4\n"
+"  /eval -n ${split:1,,,abc,def,ghi}                ==> abc\n"
+"  /eval -n ${split:-1,,,abc,def,ghi}               ==> ghi\n"
+"  /eval -n ${split:count,,,abc,def,ghi}            ==> 3\n"
+"  /eval -n ${split:random,,,abc,def,ghi}           ==> def\n"
+"  /eval -n ${split_shell:1,\"arg 1\" arg2}           ==> arg 1\n"
+"  /eval -n ${split_shell:-1,\"arg 1\" arg2}          ==> arg2\n"
+"  /eval -n ${split_shell:count,\"arg 1\" arg2}       ==> 2\n"
+"  /eval -n ${split_shell:random,\"arg 1\" arg2}      ==> arg2\n"
+"  /eval -n ${calc:(5+2)*3}                         ==> 21\n"
+"  /eval -n ${random:0,10}                          ==> 3\n"
+"  /eval -n ${base_encode:64,test}                  ==> dGVzdA==\n"
+"  /eval -n ${base_decode:64,dGVzdA==}              ==> test\n"
+"  /eval -n ${translate:Plugin}                     ==> Extension\n"
+"  /eval -n ${define:len,${calc:5+3}}${len}x${len}  ==> 8x8\n"
 "\n"
 "Examples (conditions):\n"
 "  /eval -n -c ${window.buffer.number} > 2 ==> 0\n"
@@ -1793,6 +1735,8 @@ msgstr "адресат тип [аргументы]"
 msgid ""
 "list of actions:\n"
 "  return: simulate key \"enter\"\n"
+"  split_return: split input on newlines then simulate key \"enter\" for each "
+"line\n"
 "  complete_next: complete word with next completion\n"
 "  complete_previous: complete word with previous completion\n"
 "  search_text_here: search text in buffer at current position\n"
@@ -1810,18 +1754,25 @@ msgid ""
 "  delete_previous_word_whitespace: delete previous word (until whitespace)\n"
 "  delete_next_word: delete next word\n"
 "  delete_beginning_of_line: delete from beginning of line until cursor\n"
+"  delete_beginning_of_input: delete from beginning of input until cursor\n"
 "  delete_end_of_line: delete from cursor until end of line\n"
-"  delete_line: delete entire line\n"
+"  delete_end_of_input: delete from cursor until end of input\n"
+"  delete_line: delete current line\n"
+"  delete_input: delete entire input\n"
 "  clipboard_paste: paste from the internal clipboard\n"
 "  transpose_chars: transpose two chars\n"
 "  undo: undo last command line action\n"
 "  redo: redo last command line action\n"
 "  move_beginning_of_line: move cursor to beginning of line\n"
+"  move_beginning_of_input: move cursor to beginning of input\n"
 "  move_end_of_line: move cursor to end of line\n"
+"  move_end_of_input: move cursor to end of input\n"
 "  move_previous_char: move cursor to previous char\n"
 "  move_next_char: move cursor to next char\n"
 "  move_previous_word: move cursor to previous word\n"
 "  move_next_word: move cursor to next word\n"
+"  move_previous_line: move cursor to previous line\n"
+"  move_next_line: move cursor to next line\n"
 "  history_previous: recall previous command in current buffer history\n"
 "  history_next: recall next command in current buffer history\n"
 "  history_global_previous: recall previous command in global history\n"
@@ -1835,8 +1786,6 @@ msgid ""
 "  insert: insert text in command line (escaped chars are allowed, see /help "
 "print)\n"
 "  send: send text to the buffer\n"
-"  paste_start: start paste (bracketed paste mode)\n"
-"  paste_stop: stop paste (bracketed paste mode)\n"
 "\n"
 "This command is used by key bindings or plugins."
 msgstr ""
@@ -1906,18 +1855,17 @@ msgstr "установить/снять клавиши"
 
 #, fuzzy
 msgid ""
-"list|listdefault|listdiff [<context>] || bind <key> [<command> [<args>]] || "
-"bindctxt <context> <key> [<command> [<args>]] || unbind <key> || unbindctxt "
-"<context> <key> || reset <key> || resetctxt <context> <key> || resetall -yes "
-"[<context>] || missing [<context>]"
+"[list|listdefault|listdiff] [<context>] || bind <key> [<command> [<args>]] "
+"|| bindctxt <context> <key> [<command> [<args>]] || unbind <key> || "
+"unbindctxt <context> <key> || reset <key> || resetctxt <context> <key> || "
+"resetall -yes [<context>] || missing [<context>] || legacy <key> [<key>...]"
 msgstr ""
 "[клавиша [функция/команда]] [unbind клавиша] [функции] [call функция "
 "[\"аргументы\"]] [reset -yes]"
 
 #, fuzzy
 msgid ""
-"       list: list all current keys (without argument, this list is "
-"displayed)\n"
+"       list: list all current keys\n"
 "listdefault: list default keys\n"
 "   listdiff: list differences between current and default keys (keys added, "
 "redefined or deleted)\n"
@@ -1935,10 +1883,21 @@ msgid ""
 "bindings (use carefully!)\n"
 "    missing: add missing keys (using default bindings), useful after "
 "installing new WeeChat version\n"
+"     legacy: display new name for legacy keys\n"
 "\n"
 "When binding a command to a key, it is recommended to use key alt+k (or Esc "
-"then k), and then press the key to bind: this will insert key code in "
+"then k), and then press the key to bind: this will insert key name in "
 "command line.\n"
+"\n"
+"Modifiers allowed (in this order when multiple are used):\n"
+"  meta-  (alt key)\n"
+"  ctrl-  (control key)\n"
+"  shift-  (shift key, can only be used with key names below)\n"
+"\n"
+"Key names allowed: f0 to f20, home, insert, delete, end, backspace, pgup, "
+"pgdn, up, down, right, left, tab, return, comma, space.\n"
+"\n"
+"Combo of keys must be separated by a comma.\n"
 "\n"
 "For context \"mouse\" (possible in context \"cursor\" too), key has format: "
 "\"@area:key\" or \"@area1>area2:key\" where area can be:\n"
@@ -1958,14 +1917,14 @@ msgid ""
 "when looking for keys).\n"
 "\n"
 "Examples:\n"
-"  key alt-t to toggle nicklist bar:\n"
-"    /key bind meta-t /bar toggle nicklist\n"
 "  key alt-r to jump to #weechat IRC channel:\n"
 "    /key bind meta-r /buffer #weechat\n"
 "  restore default binding for key alt-r:\n"
 "    /key reset meta-r\n"
+"  key meta-v then f1 to run /help:\n"
+"    /key bind meta-v,f1 /help\n"
 "  key \"tab\" to stop search in buffer:\n"
-"    /key bindctxt search ctrl-i /input search_stop\n"
+"    /key bindctxt search tab /input search_stop\n"
 "  middle button of mouse on a nick to retrieve info on nick:\n"
 "    /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info "
 "${nick}"
@@ -2251,6 +2210,25 @@ msgstr ""
 "команды)\n"
 
 #, fuzzy
+msgid "reset config options"
+msgstr "настроить параметры конфигурации"
+
+msgid "<option> || -mask <option>"
+msgstr ""
+
+msgid ""
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
+"\n"
+"Examples:\n"
+"  reset one option:\n"
+"    /reset weechat.look.item_time_format\n"
+"  reset all color options:\n"
+"    /reset -mask weechat.color.*"
+msgstr ""
+
+#, fuzzy
 msgid "save configuration files to disk"
 msgstr "сохранять конфигурационный файл при выходе"
 
@@ -2404,9 +2382,6 @@ msgstr ""
 msgid "unset/reset config options"
 msgstr "настроить параметры конфигурации"
 
-msgid "<option> || -mask <option>"
-msgstr ""
-
 msgid ""
 "option: name of an option\n"
 " -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
@@ -2449,8 +2424,8 @@ msgid ""
 "binary must have been compiled or installed with a package manager before "
 "running this command.\n"
 "\n"
-"Note: SSL connections are lost during upgrade (except with -save), because "
-"the reload of SSL sessions is currently not possible with GnuTLS. There is "
+"Note: TLS connections are lost during upgrade (except with -save), because "
+"the reload of TLS sessions is currently not possible with GnuTLS. There is "
 "automatic reconnection after upgrade.\n"
 "\n"
 "Important: use of option -save can be dangerous, it is recommended to use "
@@ -2704,6 +2679,14 @@ msgstr ""
 msgid "names of filters"
 msgstr "Список сокращений:\n"
 
+#, fuzzy
+msgid "names of disabled filters"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "names of enabled filters"
+msgstr "Список сокращений:\n"
+
 msgid ""
 "commands (weechat and plugins); optional argument: prefix to add before the "
 "commands"
@@ -2829,6 +2812,18 @@ msgstr ""
 #, c-format
 msgid ""
 "%sWarning: proxy \"%s\" does not exist (you can add it with command /proxy)"
+msgstr ""
+
+#, c-format
+msgid "Legacy key removed: \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Legacy key converted: \"%s\" => \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
 msgstr ""
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
@@ -2957,9 +2952,8 @@ msgstr ""
 msgid ""
 "time format for each line displayed in buffers (see man strftime for date/"
 "time specifiers) (note: content is evaluated, so you can use colors with "
-"format \"${color:xxx}\", see /help eval); for example time using grayscale "
-"(requires support of 256 colors): "
-"\"${color:252}%H${color:245}%M${color:240}%S\""
+"format \"${color:xxx}\", see /help eval); for example time using grayscale: "
+"\"${color:252}%H${color:243}%M${color:237}%S\""
 msgstr "отображение маркера даты при смене дня"
 
 #. TRANSLATORS: string "${color:xxx}" must NOT be translated
@@ -3214,6 +3208,11 @@ msgid ""
 msgstr ""
 
 msgid ""
+"start the input text on a new line when the input contains multiple lines, "
+"so that the start of the lines align"
+msgstr ""
+
+msgid ""
 "share commands, text, or both in input for all buffers (there is still local "
 "history for each buffer)"
 msgstr ""
@@ -3315,11 +3314,6 @@ msgstr "текст, который отображать до ника в окн�
 #, fuzzy
 msgid "text to display after nick in prefix of message, example: \">\""
 msgstr "текст, который отображать после ника в окне чата"
-
-msgid ""
-"automatically add a newline at the end of pasted text if there are at least "
-"two lines and if a confirmation is asked"
-msgstr ""
 
 msgid ""
 "enable terminal \"bracketed paste mode\" (not supported in all terminals/"
@@ -3685,6 +3679,14 @@ msgid "text color for server names"
 msgstr "цвет названия сервера"
 
 #, fuzzy
+msgid "text color for \"disabled\" status"
+msgstr "цвет \"неудачных\" в окне DCC"
+
+#, fuzzy
+msgid "text color for \"enabled\" status"
+msgstr "цвет \"неудачных\" в окне DCC"
+
+#, fuzzy
 msgid "text color for tags after messages (displayed with command /debug tags)"
 msgstr "цвет окна с подсвеченным сообщением (в строке состояния)"
 
@@ -3800,8 +3802,14 @@ msgstr "цвет текущего канала в строке состояни�
 
 #, fuzzy
 msgid ""
-"text color for current buffer name in status bar, if data are secured with a "
-"protocol like SSL"
+"text color for current buffer name in status bar, if data are exchanged and "
+"not secured with a protocol like TLS"
+msgstr "цвет текущего канала в строке состояния"
+
+#, fuzzy
+msgid ""
+"text color for current buffer name in status bar, if data are exchanged and "
+"secured with a protocol like TLS"
 msgstr "цвет текущего канала в строке состояния"
 
 #, fuzzy
@@ -3917,7 +3925,7 @@ msgstr "использовать SSL при связи с сервером"
 
 msgid ""
 "load system's default trusted certificate authorities on startup; this can "
-"be turned off to save some memory only if you are not using SSL connections "
+"be turned off to save some memory only if you are not using TLS connections "
 "at all"
 msgstr ""
 
@@ -4011,11 +4019,21 @@ msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
 
 #, fuzzy, c-format
-msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
-msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
+msgid "%sWarning: %s, line %d: invalid config version: %s"
+msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
+
+#, c-format
+msgid ""
+"%sWarning: %s, version read (%d) is newer than supported version (%d), "
+"options may be broken!"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: option outside section: %s"
+msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
+
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
 msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
 
 #, fuzzy, c-format
@@ -4077,6 +4095,79 @@ msgstr "%s домашний каталог (%s) не является дирек
 #, fuzzy, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s не могу создать директорию \"%s\"\n"
+
+msgid "Alias"
+msgstr ""
+
+#, fuzzy
+msgid "Command"
+msgstr "Внутренние команды %s:\n"
+
+#, fuzzy
+msgid "Completion"
+msgstr "собран:"
+
+#, fuzzy
+msgid "IRC color"
+msgstr "цвет чата"
+
+#, fuzzy
+msgid "WeeChat color"
+msgstr "Ошибка WeeChat:"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "  (нет pluginа)\n"
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Description"
+msgstr "  . описание: %s\n"
+
+#, fuzzy
+msgid "Arguments"
+msgstr "адресат тип [аргументы]"
+
+msgid "Hashtable (input)"
+msgstr ""
+
+msgid "Hashtable (output)"
+msgstr ""
+
+#, fuzzy
+msgid "Pointer"
+msgstr "минута"
+
+msgid "Update allowed:"
+msgstr ""
+
+msgid "Lists"
+msgstr ""
+
+#, fuzzy
+msgid "Variables"
+msgstr "  . тип: целочисленный\n"
+
+#, fuzzy
+msgid "Option"
+msgstr "[команда]"
+
+msgid "Type"
+msgstr ""
+
+msgid "Constants"
+msgstr ""
+
+msgid "Rank"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "File"
+msgstr ""
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
@@ -4198,14 +4289,6 @@ msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
 msgstr ""
 
 msgid "No secured data set"
-msgstr ""
-
-msgid "secured data"
-msgstr ""
-
-msgid ""
-"secured data: names and values (be careful: the values are sensitive data: "
-"do NOT print/log them anywhere)"
 msgstr ""
 
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
@@ -4566,6 +4649,9 @@ msgstr[2] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
 msgid "Search"
 msgstr ""
 
+msgid "keyboard and mouse debug ('q' to quit debug mode)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s-MORE(%d)-"
 msgstr "-ДАЛЬШЕ-"
@@ -4633,8 +4719,35 @@ msgid "not enough memory"
 msgstr "Недостаточно памяти для новой строчки\n"
 
 #, fuzzy, c-format
+msgid "key \"%s\" in context \"%s\""
+msgstr "Клавиша \"%s\" не привязана\n"
+
+#, c-format
+msgid ""
+"%sInvalid key for mouse context \"%s\": it must start with \"@area\" (see /"
+"help key)"
+msgstr ""
+
+#, fuzzy, c-format
 msgid "New key binding (context \"%s\"): %s%s => %s%s"
 msgstr "Новая комбинация клавиш:  %s"
+
+#, fuzzy, c-format
+msgid "%sUnable to bind key \"%s\" in context \"%s\" (see /help key)"
+msgstr "%s не могу установить клавишу \"%s\"\n"
+
+#, c-format
+msgid ""
+"%sIt is not safe to bind key \"%s\" because it does not start with a ctrl or "
+"meta code (tip: use alt-k to find key codes); if you want to bind this key "
+"anyway, turn off option weechat.look.key_bind_safe"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sWarning: key \"%s\" seems either a raw code or invalid, it may not work "
+"(see /help key)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Key \"%s\" unbound (context: \"%s\")"
@@ -4654,6 +4767,16 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Executing command: \"%s\" on buffer \"%s\""
 msgstr "Внутренние команды %s:\n"
+
+#, fuzzy
+msgid "no key binding"
+msgstr "Список игнорирования:\n"
+
+msgid "debug:"
+msgstr ""
+
+msgid "mouse"
+msgstr ""
 
 #, c-format
 msgid "Debug enabled for mouse (%s)"
@@ -4725,7 +4848,7 @@ msgstr "перечислить, добавить или удалить серв�
 msgid ""
 "list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
 "<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...] "
-"|| rename <alias> <new_alias>"
+"|| rename <alias> <new_alias> || missing"
 msgstr ""
 
 #, fuzzy, no-c-format
@@ -4735,6 +4858,7 @@ msgid ""
 "addcompletion: add an alias with a custom completion\n"
 "          del: delete an alias\n"
 "       rename: rename an alias\n"
+"      missing: add missing aliases (using default aliases)\n"
 "   completion: completion for alias: by default completion is done with "
 "target command\n"
 "               note: you can use %%command to use completion of an existing "
@@ -4749,6 +4873,7 @@ msgid ""
 "       $n-: arguments from 'n' to last\n"
 "      $n-m: arguments from 'n' to 'm'\n"
 "        $*: all arguments\n"
+"        $&: all arguments, with \" replaced by \\\"\n"
 "        $~: last argument\n"
 "      $var: where \"var\" is a local variable of buffer (see /buffer "
 "listvar)\n"
@@ -4786,6 +4911,10 @@ msgstr "Список сокращений:\n"
 #, fuzzy, c-format
 msgid "%s%s: error creating completion for alias \"%s\": alias not found"
 msgstr "%s параметр конфигурации \"%s\" не найден\n"
+
+#, c-format
+msgid "Alias converted to lower case: \"%s\" => \"%s\""
+msgstr ""
 
 #, fuzzy
 msgid "alias pointer (optional)"
@@ -4961,8 +5090,10 @@ msgid ""
 "variable of buffer (\"var\"), a hdata variable of IRC server (\"irc_server."
 "var\") or a hdata variable of IRC channel (\"irc_channel.var\"); char \"-\" "
 "can be used before field to reverse order, char \"~\" can be used to do a "
-"case insensitive comparison; example: \"-~short_name\" for case insensitive "
-"and reverse sort on buffer short name (note: the content is evaluated, "
+"case insensitive comparison; examples: \"-~short_name\" for case insensitive "
+"and reverse sort on buffer short name, \"-hotlist.priority,hotlist."
+"creation_time.tv_sec,number,-active\" for sort like the hotlist then by "
+"buffer number for buffers without activity (note: the content is evaluated, "
 "before being split into fields, but at that time \"bar_item\" is the only "
 "variable that can be used, to distinguish between different buflist items, "
 "for example \"${bar_item.name}\")"
@@ -5734,6 +5865,14 @@ msgid ""
 "ctrl-x"
 msgstr ""
 
+msgid "color for color name when option fset.look.use_color_value is enabled"
+msgstr ""
+
+msgid ""
+"color for color name on the selected line when option fset.look."
+"use_color_value is enabled"
+msgstr ""
+
 #, fuzzy
 msgid "color for default value"
 msgstr "  . значение по умолчанию: %d\n"
@@ -6061,14 +6200,14 @@ msgstr ""
 #, c-format
 msgid ""
 "%s%s: disconnecting from server because upgrade can't work for servers "
-"connected via SSL"
+"connected via TLS"
 msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: disconnected from %d server (SSL connection not supported with upgrade)"
+"%s%s: disconnected from %d server (TLS connection not supported with upgrade)"
 msgid_plural ""
-"%s%s: disconnected from %d servers (SSL connection not supported with "
+"%s%s: disconnected from %d servers (TLS connection not supported with "
 "upgrade)"
 msgstr[0] ""
 msgstr[1] ""
@@ -6110,6 +6249,12 @@ msgid ""
 "%s%s: cannot execute command /%s, channel mode \"%s\" is not supported by "
 "server"
 msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+"%s \"%s\" команда может быть выполнена только в буфере канала или привата\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -6175,16 +6320,6 @@ msgid ""
 "add\" (see /help server); if you really want to add a temporary server (NOT "
 "SAVED), turn on the option irc.look.temporary_servers"
 msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
-msgstr ""
-"%s \"%s\" команда может быть выполнена только в буфере канала или привата\n"
-
-#, fuzzy, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
 #, fuzzy, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -6274,10 +6409,6 @@ msgstr "%s \"%s\" не является регулярным выражение�
 #, c-format
 msgid ""
 "%s%s: you must specify channel for \"%s\" command if you're not in a channel"
-msgstr ""
-
-#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
-msgid "Notice"
 msgstr ""
 
 #, fuzzy, c-format
@@ -6390,6 +6521,10 @@ msgid "%s%s: unable to add server"
 msgstr "%s не могу создать сервер\n"
 
 #, fuzzy, c-format
+msgid "%s: server added: %s%s%s -> %s"
+msgstr "Сервер %s%s%s создан\n"
+
+#, fuzzy, c-format
 msgid "%s%s: server \"%s\" not found for \"%s\" command"
 msgstr "%s сервер \"%s\" не найден для команды \"%s\"\n"
 
@@ -6443,6 +6578,28 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: you are not on channel \"%s\""
 msgstr "%s не могу создать новый канал \"%s\"\n"
+
+#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
+msgid "Notice"
+msgstr ""
+
+#, fuzzy
+#| msgid "send a CTCP action to the current channel"
+msgid "send a CTCP action to a nick or channel"
+msgstr "отправить CTCP-действие на текущий канал"
+
+#, fuzzy
+msgid "[-server <server>] <target>[,<target>...] <text>"
+msgstr "адресат[,адресат] текст"
+
+#, fuzzy
+msgid ""
+"server: send to this server (internal name)\n"
+"target: nick or channel (may be mask, '*' = current channel)\n"
+"  text: text to send"
+msgstr ""
+"адресат: ник или канал (можно использовать маску, '*' = текущий канал)\n"
+"текст: отправляаемый текст"
 
 msgid "find information about the administrator of the server"
 msgstr "найти информацию об администрации сервера"
@@ -6596,7 +6753,7 @@ msgstr "Не найден параметр\n"
 msgid ""
 "add [<channel1> [<channel2>...]] || addraw <channel1>[,<channel2>...] "
 "[<key1>[,<key2>...]] || del [<channel1> [<channel2>...]] || apply || join || "
-"sort"
+"sort [buffer]"
 msgstr ""
 
 msgid ""
@@ -6611,7 +6768,8 @@ msgid ""
 "    key: key for the channel\n"
 "  apply: set currently joined channels in the autojoin option\n"
 "   join: join the channels in the autojoin option\n"
-"   sort: sort alphabetically channels in the autojoin option\n"
+"   sort: sort alphabetically channels in the autojoin option; with "
+"\"buffer\": first sort by buffer number, then alphabetically\n"
 "\n"
 "Examples:\n"
 "  /autojoin add\n"
@@ -6623,7 +6781,8 @@ msgid ""
 "  /autojoin del #chan1\n"
 "  /autojoin apply\n"
 "  /autojoin join\n"
-"  /autojoin sort"
+"  /autojoin sort\n"
+"  /autojoin sort buffer"
 msgstr ""
 
 #, fuzzy
@@ -6661,9 +6820,10 @@ msgid ""
 "\n"
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
-"Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
-"notify, chghost, extended-join, invite-notify, message-tags, multi-prefix, "
-"server-time, setname, userhost-in-names.\n"
+"Capabilities supported by WeeChat are: account-notify, away-notify, batch, "
+"cap-notify, chghost, draft/multiline, echo-message, extended-join, invite-"
+"notify, message-tags, multi-prefix, server-time, setname, userhost-in-"
+"names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -6697,14 +6857,15 @@ msgid ""
 "    server: server name, which can be:\n"
 "            - internal server name (added by /server add, recommended "
 "usage)\n"
-"            - hostname/port or IP/port, port is 6667 by default\n"
+"            - hostname/port or IP/port, port is 6697 by default for TLS, "
+"6667 otherwise\n"
 "            - URL with format: irc[6][s]://[nickname[:password]@]irc.example."
 "org[:port][/#channel1][,#channel2[...]]\n"
 "            Note: for an address/IP/URL, a temporary server is added (NOT "
 "SAVED), see /help irc.look.temporary_servers\n"
 "    option: set option for server (for boolean option, value can be "
 "omitted)\n"
-"  nooption: set boolean option to 'off' (for example: -nossl)\n"
+"  nooption: set boolean option to 'off' (for example: -notls)\n"
 "      -all: connect to all servers defined in configuration\n"
 "     -auto: connect to servers with autoconnect enabled\n"
 "     -open: connect to all opened servers that are not currently connected\n"
@@ -6716,10 +6877,10 @@ msgid ""
 "\n"
 "Examples:\n"
 "  /connect libera\n"
-"  /connect irc.oftc.net/6667\n"
-"  /connect irc6.oftc.net/6667 -ipv6\n"
-"  /connect irc6.oftc.net/6697 -ipv6 -ssl\n"
-"  /connect my.server.org/6697 -ssl -password=test\n"
+"  /connect irc.oftc.net\n"
+"  /connect irc.oftc.net/6667 -notls\n"
+"  /connect irc6.oftc.net/9999 -ipv6\n"
+"  /connect my.server.org -password=test\n"
 "  /connect irc://nick@irc.oftc.net/#channel\n"
 "  /connect -switch"
 msgstr ""
@@ -7149,19 +7310,6 @@ msgid "send message to a nick or channel"
 msgstr "отправить сообщение нику или на канал"
 
 #, fuzzy
-msgid "[-server <server>] <target>[,<target>...] <text>"
-msgstr "адресат[,адресат] текст"
-
-#, fuzzy
-msgid ""
-"server: send to this server (internal name)\n"
-"target: nick or channel (may be mask, '*' = current channel)\n"
-"  text: text to send"
-msgstr ""
-"адресат: ник или канал (можно использовать маску, '*' = текущий канал)\n"
-"текст: отправляаемый текст"
-
-#, fuzzy
 msgid "list nicks on channels"
 msgstr "перечислить ники на канале"
 
@@ -7479,11 +7627,11 @@ msgid ""
 "    name: server name, for internal and display use; this name is used to "
 "connect to the server (/connect name) and to set server options: irc.server."
 "name.xxx\n"
-"hostname: name or IP address of server, with optional port (default: 6667), "
-"many addresses can be separated by a comma\n"
+"hostname: name or IP address of server, with optional port (default: 6697 "
+"for TLS, 6667 otherwise), many addresses can be separated by a comma\n"
 "   -temp: add a temporary server (not saved)\n"
 "  option: set option for server (for boolean option, value can be omitted)\n"
-"nooption: set boolean option to 'off' (for example: -nossl)\n"
+"nooption: set boolean option to 'off' (for example: -notls)\n"
 "    copy: duplicate a server\n"
 "  rename: rename a server\n"
 " reorder: reorder list of servers\n"
@@ -7512,8 +7660,9 @@ msgid ""
 "Examples:\n"
 "  /server listfull\n"
 "  /server add libera irc.libera.chat\n"
-"  /server add libera irc.libera.chat/6697 -ssl -autoconnect\n"
-"  /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667\n"
+"  /server add libera irc.libera.chat/6667 -notls -autoconnect\n"
+"  /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667 -"
+"notls\n"
 "  /server copy libera libera-test\n"
 "  /server rename libera-test libera2\n"
 "  /server reorder libera2 libera\n"
@@ -7927,12 +8076,24 @@ msgid ""
 "memory because it's currently used"
 msgstr ""
 
+#, c-format
+msgid ""
+"%s%s: warning: the command name \"%s\" must be lower case, the option \"irc."
+"msgbuffer.%s\" will not work"
+msgstr ""
+
 msgid "buffer used to display message received from IRC server"
 msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: error creating \"%s\" => \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, c-format
+msgid ""
+"%s%s: warning: the CTCP name \"%s\" must be lower case, the option \"irc."
+"ctcp.%s\" will not work"
+msgstr ""
 
 msgid ""
 "format for CTCP reply or empty string for blocking CTCP (no reply), "
@@ -7963,12 +8124,14 @@ msgid ""
 "if disabled, only IPv4 is used"
 msgstr ""
 
-msgid "use SSL for server communication"
+#, fuzzy
+#| msgid "use SSL for server communication"
+msgid "use TLS for server communication"
 msgstr "использовать SSL при связи с сервером"
 
 #, fuzzy
 msgid ""
-"SSL certificate file used to automatically identify your nick (path is "
+"TLS certificate file used to automatically identify your nick (path is "
 "evaluated, see function string_eval_path_home in plugin API reference)"
 msgstr ""
 "путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
@@ -7976,7 +8139,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"password for SSL certificate's private key; only used with gnutls version >= "
+"password for TLS certificate's private key; only used with gnutls version >= "
 "3.1.0 (note: content is evaluated, see /help eval; server options are "
 "evaluated with ${irc_server.xxx} and ${server} is replaced by the server "
 "name)"
@@ -7999,12 +8162,12 @@ msgid ""
 "only hexadecimal digits are allowed (0-9, a-f): 128 chars for SHA-512, 64 "
 "chars for SHA-256, 40 chars for SHA-1 (insecure, not recommended); many "
 "fingerprints can be separated by commas; if this option is set, the other "
-"checks on certificates are NOT performed (option \"ssl_verify\") (note: "
+"checks on certificates are NOT performed (option \"tls_verify\") (note: "
 "content is evaluated, see /help eval; server options are evaluated with "
 "${irc_server.xxx} and ${server} is replaced by the server name)"
 msgstr ""
 
-msgid "check that the SSL connection is fully trusted"
+msgid "check that the TLS connection is fully trusted"
 msgstr ""
 
 #, fuzzy
@@ -8032,7 +8195,7 @@ msgid ""
 "\"scram-sha-256\" for SCRAM authentication with SHA-256 digest algorithm, "
 "\"scram-sha-512\" for SCRAM authentication with SHA-512 digest algorithm, "
 "\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
-"\"external\" for authentication using client side SSL certificate"
+"\"external\" for authentication using client side TLS certificate"
 msgstr ""
 
 #, fuzzy
@@ -8088,8 +8251,9 @@ msgstr "задержка (в секундах) перед повторным с�
 #, fuzzy
 msgid ""
 "nicknames to use on server (separated by comma) (note: content is evaluated, "
-"see /help eval; server options are evaluated with ${irc_server.xxx} and "
-"${server} is replaced by the server name)"
+"see /help eval; ${username} is replaced by system username (fallback to "
+"\"weechat\" if not found), server options are evaluated with ${irc_server."
+"xxx} and ${server} is replaced by the server name)"
 msgstr "ник, используемый на IRC сервере"
 
 msgid ""
@@ -8102,12 +8266,10 @@ msgstr ""
 #, fuzzy
 msgid ""
 "user name to use on server (note: content is evaluated, see /help eval; "
-"server options are evaluated with ${irc_server.xxx} and ${server} is "
+"${username} is replaced by system username (fallback to \"weechat\" if not "
+"found), server options are evaluated with ${irc_server.xxx} and ${server} is "
 "replaced by the server name)"
-msgstr ""
-"      канал: канал, на котором присутствует пользователь\n"
-"        ник: цель для кика\n"
-"комментарий: причина кика"
+msgstr "ник, используемый на IRC сервере"
 
 #, fuzzy
 msgid ""
@@ -8287,6 +8449,10 @@ msgstr "%s недостаточно памяти для сообщения в с
 msgid "%s%s: error creating server option \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
+#, c-format
+msgid "IRC option renamed: \"irc.%s.%s\" => \"irc.%s.%s\""
+msgstr ""
+
 msgid ""
 "open channel buffer before the JOIN is received from server when it is auto "
 "joined (with server option \"autojoin\"); this is useful to open channels "
@@ -8358,6 +8524,10 @@ msgstr "цвет  текущего окна с сообщениями"
 
 #, fuzzy
 msgid "display host in join messages from local client"
+msgstr "цвет  текущего окна с сообщениями"
+
+#, fuzzy
+msgid "display host in notice messages"
 msgstr "цвет  текущего окна с сообщениями"
 
 #, fuzzy
@@ -8837,6 +9007,12 @@ msgstr "%s не могу проанализировать команду \"%s\"\
 msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s неизвестный режим DCC CHAT получен от "
 
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action
+#, fuzzy
+msgid "Action"
+msgstr "[команда]"
+
 #, fuzzy, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
@@ -8901,6 +9077,16 @@ msgid "server,feature"
 msgstr "цель: название сервера"
 
 msgid "value of feature, if supported by server (from IRC message 005)"
+msgstr ""
+
+#, fuzzy
+msgid "1 if capability is enabled in server"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+msgid "server,capability"
+msgstr ""
+
+msgid "value of capability, if enabled in server"
 msgstr ""
 
 msgid "1 if the nick is ignored (message is not displayed)"
@@ -9047,6 +9233,14 @@ msgstr ""
 #, fuzzy
 msgid "irc server"
 msgstr "сервер"
+
+#, fuzzy
+msgid "irc batch"
+msgstr "%d канал"
+
+#, fuzzy, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
@@ -9615,6 +9809,27 @@ msgid ""
 "hexadecimal digits (0-9, a-f)"
 msgstr ""
 
+#. TRANSLATORS: "temporary IRC server"
+msgid "temporary"
+msgstr ""
+
+#. TRANSLATORS: "fake IRC server"
+msgid "fake"
+msgstr ""
+
+msgid "TLS:"
+msgstr ""
+
+#. TRANSLATORS: "TLS: enabled"
+#, fuzzy
+msgid "enabled"
+msgstr "команда users отключена"
+
+#. TRANSLATORS: "TLS: disabled"
+#, fuzzy
+msgid "disabled"
+msgstr "команда users отключена"
+
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s не могу расположить новый сервер\n"
@@ -9731,7 +9946,7 @@ msgstr "%s инициализация gnutls не удалось\n"
 
 #, c-format
 msgid ""
-"%s%s: you should play with option irc.server.%s.ssl_dhkey_size (current "
+"%s%s: you should play with option irc.server.%s.tls_dhkey_size (current "
 "value is %d, try a lower value like %d or %d)"
 msgstr ""
 
@@ -9781,7 +9996,7 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 #, c-format
 msgid ""
 "%sgnutls: certificate fingerprint does NOT match (check value of option irc."
-"server.%s.ssl_fingerprint)"
+"server.%s.tls_fingerprint)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -9859,6 +10074,34 @@ msgstr "%s: Повторное соединение...\n"
 #, fuzzy, c-format
 msgid "%s%s: disconnected from server"
 msgstr "Отключен от сервера!\n"
+
+#, fuzzy
+msgid "Support of javascript scripts"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sЦвет \"%s\" не определён в палитре"
+
+#, fuzzy, c-format
+msgid "%s%s: exception: %s"
+msgstr "%sСервер: %s%s\n"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
@@ -10014,6 +10257,12 @@ msgid "write information line in log file when log starts or ends for a buffer"
 msgstr ""
 
 msgid ""
+"conditions to save content of buffers to files (note: content is evaluated, "
+"see /help eval); empty value saves content on all buffers; for example to "
+"log only private buffers: \"${type} == private\""
+msgstr ""
+
+msgid ""
 "default file name mask for log files (format is \"directory/to/file\" or "
 "\"file\", without first \"/\" because \"path\" option is used to build "
 "complete path to file); local buffer variables are permitted (you should use "
@@ -10073,6 +10322,13 @@ msgstr ""
 msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
 
+msgid "path to current log filename for the buffer"
+msgstr ""
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
+msgstr ""
+
 #, fuzzy
 msgid "list of logger buffers"
 msgstr "время в буферах"
@@ -10086,14 +10342,6 @@ msgid "Support of lua scripts"
 msgstr "Список сокращений:\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s не могу создать сервер\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s не могу создать сервер\n"
 
@@ -10102,15 +10350,7 @@ msgid "%s%s: unable to load source code"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to execute source code"
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to execute file \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy
@@ -10140,10 +10380,6 @@ msgstr "%s не могу инициализировать plugin \"%s\"\n"
 #, fuzzy
 msgid "Support of PHP scripts"
 msgstr "Список сокращений:\n"
-
-#, fuzzy, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sЦвет \"%s\" не определён в палитре"
 
 msgid "bar"
 msgstr ""
@@ -10257,6 +10493,10 @@ msgid "WeeChat version (as number)"
 msgstr "слоган WeeChat"
 
 msgid ""
+"version (optional, by default the version of the running WeeChat is returned)"
+msgstr ""
+
+msgid ""
 "WeeChat git version (output of command \"git describe\" for a development "
 "version only, empty for a stable release)"
 msgstr ""
@@ -10323,6 +10563,11 @@ msgstr ""
 msgid ""
 "1 if automatic connection to servers is enabled, 0 if it has been disabled "
 "by the user (option \"-a\" or \"--no-connect\")"
+msgstr ""
+
+msgid ""
+"1 if scripts are automatically loaded, 0 if the auto-load has been disabled "
+"by the user (option \"-s\" or \"--no-script\")"
 msgstr ""
 
 #, fuzzy
@@ -10430,6 +10675,14 @@ msgid ""
 msgstr ""
 
 msgid "see function \"hook_focus\" in Plugin API reference"
+msgstr ""
+
+msgid "secured data"
+msgstr ""
+
+msgid ""
+"secured data: names and values (be careful: the values are sensitive data: "
+"do NOT print/log them anywhere)"
 msgstr ""
 
 #, fuzzy
@@ -10840,13 +11093,13 @@ msgstr ""
 #, c-format
 msgid ""
 "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
-"clients connected via SSL"
+"clients connected via TLS"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "%d" is "client" or "clients"
 #, c-format
 msgid ""
-"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
+"%s%s: disconnected from %d %s (TLS connection not supported with upgrade)"
 msgstr ""
 
 msgid "client"
@@ -10905,8 +11158,8 @@ msgstr "%s ошибка при отправке данных IRC серверу\
 
 #, c-format
 msgid ""
-"%s%s: warning: no SSL certificate/key found (option relay.network."
-"ssl_cert_key)"
+"%s%s: warning: no TLS certificate/key found (option relay.network."
+"tls_cert_key)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -10995,7 +11248,7 @@ msgstr ""
 
 msgid ""
 "list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
-"stop <name> || raw || sslcertkey"
+"stop <name> || raw || tlscertkey"
 msgstr ""
 
 msgid ""
@@ -11013,14 +11266,14 @@ msgid ""
 "         path: path used for relay (for UNIX domain socket only); path is "
 "evaluated (see function string_eval_path_home in plugin API reference)\n"
 "          raw: open buffer with raw Relay data\n"
-"   sslcertkey: set SSL certificate/key using path in option relay.network."
-"ssl_cert_key\n"
+"   tlscertkey: set TLS certificate/key using path in option relay.network."
+"tls_cert_key\n"
 "\n"
-"Relay name is: [ipv4.][ipv6.][ssl.]<protocol.name> or unix.[ssl.]<protocol."
+"Relay name is: [ipv4.][ipv6.][tls.]<protocol.name> or unix.[tls.]<protocol."
 "name>\n"
 "         ipv4: force use of IPv4\n"
 "         ipv6: force use of IPv6\n"
-"          ssl: enable SSL\n"
+"          tls: enable TLS\n"
 "         unix: use UNIX domain socket\n"
 "protocol.name: protocol and name to relay:\n"
 "                 - protocol \"irc\": name is the server to share (optional, "
@@ -11038,20 +11291,20 @@ msgid ""
 "Examples:\n"
 "  irc proxy, for server \"libera\":\n"
 "    /relay add irc.libera 8000\n"
-"  irc proxy, for server \"libera\", with SSL:\n"
-"    /relay add ssl.irc.libera 8001\n"
-"  irc proxy, for all servers (client will choose), with SSL:\n"
-"    /relay add ssl.irc 8002\n"
+"  irc proxy, for server \"libera\", with TLS:\n"
+"    /relay add tls.irc.libera 8001\n"
+"  irc proxy, for all servers (client will choose), with TLS:\n"
+"    /relay add tls.irc 8002\n"
 "  weechat protocol:\n"
 "    /relay add weechat 9000\n"
-"  weechat protocol with SSL:\n"
-"    /relay add ssl.weechat 9001\n"
-"  weechat protocol with SSL, using only IPv4:\n"
-"    /relay add ipv4.ssl.weechat 9001\n"
-"  weechat protocol with SSL, using only IPv6:\n"
-"    /relay add ipv6.ssl.weechat 9001\n"
-"  weechat protocol with SSL, using IPv4 + IPv6:\n"
-"    /relay add ipv4.ipv6.ssl.weechat 9001\n"
+"  weechat protocol with TLS:\n"
+"    /relay add tls.weechat 9001\n"
+"  weechat protocol with TLS, using only IPv4:\n"
+"    /relay add ipv4.tls.weechat 9001\n"
+"  weechat protocol with TLS, using only IPv6:\n"
+"    /relay add ipv6.tls.weechat 9001\n"
+"  weechat protocol with TLS, using IPv4 + IPv6:\n"
+"    /relay add ipv4.ipv6.tls.weechat 9001\n"
 "  weechat protocol over UNIX domain socket:\n"
 "    /relay add unix.weechat ${weechat_runtime_dir}/relay_socket"
 msgstr ""
@@ -11108,6 +11361,14 @@ msgstr ""
 #, fuzzy
 msgid "port for relay"
 msgstr "Нет сервера.\n"
+
+#, c-format
+msgid "Relay option renamed: \"relay.network.%s\" => \"relay.network.%s\""
+msgstr ""
+
+#, c-format
+msgid "Relay option renamed: \"relay.%s.%s\" => \"relay.%s.%s\""
+msgstr ""
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr ""
@@ -11225,11 +11486,14 @@ msgid ""
 "not be too high if your CPU is slow"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"file with SSL certificate and private key (for serving clients with SSL) "
+"file with TLS certificate and private key (for serving clients with TLS) "
 "(path is evaluated, see function string_eval_path_home in plugin API "
 "reference)"
 msgstr ""
+"путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
+"умолчанию - ~/.weechat)"
 
 msgid ""
 "secret for the generation of the Time-based One-Time Password (TOTP), "
@@ -11310,12 +11574,28 @@ msgstr "Список сокращений:\n"
 msgid "relay pointer (optional)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s: SSL certificate and key have been set"
-msgstr "Не могу записать лог-файл \"%s\"\n"
+#, c-format
+msgid ""
+"%s%s: no TLS certificate/key found (option relay.network.tls_cert_key is "
+"empty)"
+msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: unable to initialize priority for SSL"
+msgid "%s: TLS certificate and key have been set"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, c-format
+msgid "%s%s: gnutls error: %s: %s (option relay.network.tls_cert_key)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: error: file with TLS certificate/key is not readable: \"%s\" (option "
+"relay.network.tls_cert_key)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to initialize priority for TLS"
 msgstr "%s не могу инициализировать plugin \"%s\"\n"
 
 #, fuzzy
@@ -12207,10 +12487,6 @@ msgstr "цвет окна с подсвеченным сообщением (в �
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr ""
 
-msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.libera.#weechat\")"
-msgstr ""
-
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr ""
@@ -12276,6 +12552,14 @@ msgstr "команда users отключена"
 #, fuzzy
 msgid "Triggers disabled"
 msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "  %s%s%s: %s%s%s%s%s%s%s"
+msgstr "%sСервер: %s%s %s[%s%s%s]\n"
+
+#, fuzzy, c-format
+msgid "  %s%s%s: %s%s%s%s%s%s%s%s%s%s%s%s%s"
+msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
 #, fuzzy
 msgid "No trigger defined"
@@ -12538,6 +12822,14 @@ msgid "default triggers"
 msgstr "Список сокращений:\n"
 
 #, fuzzy
+msgid "disabled triggers"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "enabled triggers"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
 msgid "options for triggers"
 msgstr "Список сокращений:\n"
 
@@ -12670,19 +12962,11 @@ msgstr "цвет стрелки захода на канал (префикс)"
 msgid "text color for replacement text (for regular expressions)"
 msgstr ""
 
-#, fuzzy
-msgid "text color for trigger name"
-msgstr "цвет названия сервера"
-
-#, fuzzy
-msgid "text color for disabled trigger name"
-msgstr "цвет названия сервера"
-
-msgid "Typing status of users"
-msgstr ""
-
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
 msgid "Typing:"
+msgstr ""
+
+msgid "Typing status of users"
 msgstr ""
 
 msgid ""
@@ -13164,15 +13448,6 @@ msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
 
 #, fuzzy
-#~ msgid ""
-#~ "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-#~ "terminal color number or an alias; attributes are allowed before color "
-#~ "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
-#~ "\"/\" for italic, \"_\" for underline"
-#~ msgstr ""
-#~ "название цвета WeeChat (default, black, (dark)gray, white, (light)red, "
-#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), "
-#~ "код или алиас цвета терминала; перед цветом допустимы атрибуты (только "
-#~ "для цвета текста, но не фона): \"*\" жирный, \"!\" инверсия, \"_\" "
-#~ "подчёркивание"
+#~| msgid "send message to a nick or channel"
+#~ msgid "send action message to a nick or channel"
+#~ msgstr "отправить сообщение нику или на канал"
