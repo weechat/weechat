@@ -31,7 +31,7 @@
 # Script arguments:          Examples:
 #
 #   1. version               devel, devel-2, stable, stable-2, 1.9, 1.9-2
-#   2. distro type/name      debian/sid, ubuntu/jammy, raspbian/bullseye
+#   2. distro type/name      debian/sid, ubuntu/jammy, raspbian/bookworm
 #
 # The script can also just check that all Debian/Ubuntu patches apply fine
 # with a single argument: "test-patches".
@@ -39,7 +39,7 @@
 # Examples:
 #
 #   …/build_debian.sh devel debian/sid
-#   …/build_debian.sh stable debian/bullseye
+#   …/build_debian.sh stable debian/bookworm
 #   …/build_debian.sh 1.9 ubuntu/jammy
 #   …/build_debian.sh 1.9-2 ubuntu/focal
 #
@@ -71,7 +71,7 @@ Syntax: $0 devel|stable|<version> distro
        version  version to build: stable, devel or specific version
                 (debian package revision is allowed after name (default is 1),
                 for example: devel-2, stable-2, 1.9-2)
-        distro  the distro type/name (debian/sid, ubuntu/jammy, raspbian/bullseye, ...)
+        distro  the distro type/name (debian/sid, ubuntu/jammy, raspbian/bookworm, ...)
 
   test-patches  test that all Debian/Ubuntu patches apply fine (with git apply --check)
 
@@ -82,7 +82,7 @@ IMPORTANT: the current OS must match the distro, and the WeeChat sources
 Examples:
 
   $0 devel debian/sid
-  $0 stable debian/bullseye
+  $0 stable debian/bookworm
   $0 1.9 ubuntu/jammy
   $0 1.9-2 ubuntu/focal
   $0 test-patches
