@@ -1655,7 +1655,7 @@ text in buffer).
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Stop search at current position. | `+/input search_stop_here+`
-| kbd:[Ctrl+q]   | Stop search and scroll to bottom of buffer. | `+/input search_stop+`
+| kbd:[Ctrl+q]   | Stop search and reset scroll to pre-text search state. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]

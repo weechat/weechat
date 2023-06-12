@@ -1769,7 +1769,8 @@ kbd:[Ctrl+r] が押された状態) でのみ有効です。
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | 現在の位置で検索を終了 | `+/input search_stop_here+`
-| kbd:[Ctrl+q]   | 検索を終了してバッファの最後までスクロール | `+/input search_stop+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and reset scroll to pre-text search state. | `+/input search_stop+`
 |===
 
 // TRANSLATION MISSING

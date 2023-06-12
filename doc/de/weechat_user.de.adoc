@@ -1670,7 +1670,8 @@ in einem Buffer nach einem Text zu suchen).
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | beendet Suche ab aktueller Position. | `+/input search_stop_here+`
-| kbd:[Ctrl+q]   | beendet Suche und blättert zum Ende des Buffers. | `+/input search_stop+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and reset scroll to pre-text search state. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]

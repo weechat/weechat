@@ -1567,7 +1567,8 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Заустављање претраге на текућој позицији. | `+/input search_stop_here+`
-| kbd:[Ctrl+q]   | Заустављање претраге и скроловање на дно бафера. | `+/input search_stop+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and reset scroll to pre-text search state. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]
