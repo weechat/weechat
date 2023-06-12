@@ -144,7 +144,7 @@ WeeChat:
 |===
 
 [NOTE]
-^(1)^ Nazwa pochodzi z repozytorium dystrybucji Debian GNU/Linux Bullseye distribution,
+^(1)^ Nazwa pochodzi z repozytorium dystrybucji Debian GNU/Linux Bookworm distribution,
 wersja i nazwa mogą się różnić dla innych dystrybucji. +
 ^(2)^ Zaleca się kompilację z użyciem libncurses**w**5-dev (*w* jest istotne).
 WeeChat można skompilowac używając libncurses5-dev, ale *NIE* jest to zalecane:
@@ -164,10 +164,10 @@ WeeChat:
 | libaspell-dev / libenchant-dev          |          | Wtyczka spell.
 | python3-dev                             | ≥ 3.0    | Wtyczka python.
 | libperl-dev                             |          | Wtyczka perl.
-| ruby2.7, ruby2.7-dev                    | ≥ 1.9.1  | Wtyczka ruby.
+| ruby3.1, ruby3.1-dev                    | ≥ 1.9.1  | Wtyczka ruby.
 | liblua5.4-dev                           |          | Wtyczka lua.
 | tcl-dev                                 | ≥ 8.5    | Wtyczka tcl.
-| guile-2.2-dev                           | ≥ 2.0    | Wtyczka guile (scheme).
+| guile-3.0-dev                           | ≥ 2.0    | Wtyczka guile (scheme).
 | libv8-dev                               | ≤ 3.24.3 | Wtyczka javascript.
 | php-dev                                 | ≥ 7.0    | Wtyczka PHP.
 | libphp-embed                            | ≥ 7.0    | Wtyczka PHP.
@@ -180,7 +180,7 @@ WeeChat:
 |===
 
 [NOTE]
-^(1)^ Nazwa pochodzi z repozytorium dystrybucji Debian GNU/Linux Bullseye distribution,
+^(1)^ Nazwa pochodzi z repozytorium dystrybucji Debian GNU/Linux Bookworm distribution,
 wersja i nazwa mogą się różnić dla innych dystrybucji. +
 
 Jeśli używasz dystrybujci bazującej na Debianie/Ubuntu, oraz jeśli posiadasz wpisy

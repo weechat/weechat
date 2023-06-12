@@ -137,7 +137,7 @@ WeeChat:
 |===
 
 [NOTE]
-^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
 name can be different in other distributions. +
 ^(2)^ It is recommended to compile with libncurses**w**5-dev (the *w* is
 important). WeeChat can compile with libncurses5-dev, but it is *NOT* recommended:
@@ -157,10 +157,10 @@ WeeChat:
 | libaspell-dev / libenchant-dev        |          | Spell plugin.
 | python3-dev                           | ≥ 3.0    | Python plugin.
 | libperl-dev                           |          | Perl plugin.
-| ruby2.7, ruby2.7-dev                  | ≥ 1.9.1  | Ruby plugin.
+| ruby3.1, ruby3.1-dev                  | ≥ 1.9.1  | Ruby plugin.
 | liblua5.4-dev                         |          | Lua plugin.
 | tcl-dev                               | ≥ 8.5    | Tcl plugin.
-| guile-2.2-dev                         | ≥ 2.0    | Guile (scheme) plugin.
+| guile-3.0-dev                         | ≥ 2.0    | Guile (scheme) plugin.
 | libv8-dev                             | ≤ 3.24.3 | JavaScript plugin.
 | php-dev                               | ≥ 7.0    | PHP plugin.
 | libphp-embed                          | ≥ 7.0    | PHP plugin.
@@ -173,7 +173,7 @@ WeeChat:
 |===
 
 [NOTE]
-^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
 name can be different in other distributions.
 
 If you are using a Debian/Ubuntu based distribution, and if you have some
