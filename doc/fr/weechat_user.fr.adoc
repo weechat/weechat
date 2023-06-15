@@ -1179,8 +1179,8 @@ Si WeeChat ressemble à ceci :
 │4.  #def │12:52:27    -- | Canal créé le Tue Jan 27 06:30:17 2009             │peter  │
 │5.  #ghi │12:54:15 peter | bonjour !                                          │       │
 │         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
+│         │               | /weechat/devel/weechat_plugin_api.en.html#_weechat │       │
+│         │               | _hook_process                                      │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
@@ -1223,8 +1223,8 @@ L'écran ressemblera à ça en mode dépouillé :
 │12:52 -- Canal #abc: 4 pseudos (2 ops, 1 voice, 1 normal)                             │
 │12:52 -- Canal créé le Tue Jan 27 06:30:17 2009                                       │
 │12:54 <peter> bonjour !                                                               │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/weechat/devel/weechat_│
+│plugin_api.en.html#_weechat_hook_process                                              │
 └──────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
