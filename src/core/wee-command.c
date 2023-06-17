@@ -4941,7 +4941,7 @@ command_plugin_list_input (struct t_gui_buffer *buffer,
     else
     {
         gui_buffer_set (buffer, "input", *buf);
-        length = strlen (*buf);
+        length = utf8_strlen (*buf);
         snprintf (str_pos, sizeof (str_pos), "%d", length);
         gui_buffer_set (buffer, "input_pos", str_pos);
     }
