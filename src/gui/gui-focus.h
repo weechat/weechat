@@ -32,6 +32,8 @@ struct t_gui_focus_info
     int chat_line_x;                   /* x in line                         */
     char *chat_word;                   /* word at (x,y)                     */
     char *chat_focused_line;           /* line at (x,y)                     */
+    char *chat_focused_line_bol;       /* beg. of focused line until (x,y)  */
+    char *chat_focused_line_eol;       /* (x,y) until end of focused line   */
     char *chat_bol;                    /* beginning of line until (x,y)     */
     char *chat_eol;                    /* (x,y) until end of line           */
     struct t_gui_bar_window *bar_window; /* bar window found                */

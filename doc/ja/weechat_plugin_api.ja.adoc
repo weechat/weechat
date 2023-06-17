@@ -13051,7 +13051,7 @@ struct t_hook *my_hdata = weechat_hook_hdata ("my_hdata",
 
 ==== hook_focus
 
-_WeeChat バージョン 1.5 で更新。_
+_WeeChat バージョン 1.5, 4.0.0, 4.1.0 で更新。_
 
 フォーカス (マウスイベントやカーソルモード
 (カーソルが自由に移動出来る状態) でキーが押されたこと) をフック。
@@ -13168,18 +13168,26 @@ info を使う前にエリアが一致していることを確認して下さい
 | "Hello world!" | ""
 
 // TRANSLATION MISSING
-| _chat_focused_line | Line at (x,y) _(WeeChat ≥ 4.0.0)_.
+| _chat_focused_line | Line at (x, y) _(WeeChat ≥ 4.0.0)_.
 | "Hello world!" | ""
+
+// TRANSLATION MISSING
+| _chat_focused_line_bol | Text from beginning of line to (x-1, y) _(WeeChat ≥ 4.1.0)_.
+| "Hello" | ""
+
+// TRANSLATION MISSING
+| _chat_focused_line_eol | Text from (x, y) to end of line _(WeeChat ≥ 4.1.0)_.
+| "llo world!" | ""
 
 | _chat_word | (x,y) の位置にある単語
 | "Hello" | ""
 
 // TRANSLATION MISSING
-| _chat_bol | Text from beginning of line to (x-1, y).
+| _chat_bol | Text from beginning of message to (x-1, y).
 | "He" | ""
 
 // TRANSLATION MISSING
-| _chat_eol | Text from (x, y) to the end of line.
+| _chat_eol | Text from (x, y) to the end of message.
 | "llo world!" | ""
 
 | _bar_name | バーの名前

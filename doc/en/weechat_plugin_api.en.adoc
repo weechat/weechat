@@ -12902,7 +12902,7 @@ This function is not available in scripting API.
 
 ==== hook_focus
 
-_Updated in 1.5._
+_Updated in 1.5, 4.0.0, 4.1.0._
 
 Hook a focus: mouse event or key pressed in cursor mode (free movement of
 cursor).
@@ -13017,16 +13017,22 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 | _chat_line_message | Message of line.
 | "Hello world!" | ""
 
-| _chat_focused_line | Line at (x,y) _(WeeChat ≥ 4.0.0)_.
+| _chat_focused_line | Line at (x, y) _(WeeChat ≥ 4.0.0)_.
 | "Hello world!" | ""
+
+| _chat_focused_line_bol | Text from beginning of line to (x-1, y) _(WeeChat ≥ 4.1.0)_.
+| "Hello" | ""
+
+| _chat_focused_line_eol | Text from (x, y) to end of line _(WeeChat ≥ 4.1.0)_.
+| "llo world!" | ""
 
 | _chat_word | Word at (x,y).
 | "Hello" | ""
 
-| _chat_bol | Text from beginning of line to (x-1, y).
+| _chat_bol | Text from beginning of message to (x-1, y).
 | "He" | ""
 
-| _chat_eol | Text from (x, y) to the end of line.
+| _chat_eol | Text from (x, y) to the end of message.
 | "llo world!" | ""
 
 | _bar_name | Name of bar.

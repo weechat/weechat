@@ -13192,7 +13192,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== hook_focus
 
-_Mis à jour dans la 1.5._
+_Mis à jour dans la 1.5, 4.0.0, 4.1.0._
 
 Accrocher un focus : évènement souris ou touche du clavier pressée dans le mode
 "curseur" (mouvement libre du curseur).
@@ -13312,16 +13312,22 @@ valeurs sont de type "string") :
 | _chat_line_message | Message de la ligne.
 | "Hello world!" | ""
 
-| _chat_focused_line | Ligne à la position (x,y) _(WeeChat ≥ 4.0.0)_.
+| _chat_focused_line | Ligne à la position (x, y) _(WeeChat ≥ 4.0.0)_.
 | "Hello world!" | ""
+
+| _chat_focused_line_bol | Texte du début de la ligne jusqu'à (x-1, y) _(WeeChat ≥ 4.1.0)_.
+| "Hello" | ""
+
+| _chat_focused_line_eol | Texte de (x, y) jusqu'à la fin de la ligne _(WeeChat ≥ 4.1.0)_.
+| "llo world!" | ""
 
 | _chat_word | Mot à la position (x,y).
 | "Hello" | ""
 
-| _chat_bol | Texte du début de ligne jusqu'à (x-1, y).
+| _chat_bol | Texte du début du message jusqu'à (x-1, y).
 | "He" | ""
 
-| _chat_eol | Texte de (x, y) jusqu'à la fin de la ligne.
+| _chat_eol | Texte de (x, y) jusqu'à la fin du message.
 | "llo world!" | ""
 
 | _bar_name | Nom de la barre.

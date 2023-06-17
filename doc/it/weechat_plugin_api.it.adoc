@@ -13486,7 +13486,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 ==== hook_focus
 
 // TRANSLATION MISSING
-_Updated in 1.5._
+_Updated in 1.5, 4.0.0, 4.1.0._
 
 Hook sul foucus: evento del mouse o tasto premuto nella modalità cursore
 (movimento libero del cursore).
@@ -13606,18 +13606,26 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 | "Hello world!" | ""
 
 // TRANSLATION MISSING
-| _chat_focused_line | Line at (x,y) _(WeeChat ≥ 4.0.0)_.
+| _chat_focused_line | Line at (x, y) _(WeeChat ≥ 4.0.0)_.
 | "Hello world!" | ""
+
+// TRANSLATION MISSING
+| _chat_focused_line_bol | Text from beginning of line to (x-1, y) _(WeeChat ≥ 4.1.0)_.
+| "Hello" | ""
+
+// TRANSLATION MISSING
+| _chat_focused_line_eol | Text from (x, y) to end of line _(WeeChat ≥ 4.1.0)_.
+| "llo world!" | ""
 
 | _chat_word | Parola a (x,y).
 | "Hello" | ""
 
 // TRANSLATION MISSING
-| _chat_bol | Text from beginning of line to (x-1, y).
+| _chat_bol | Text from beginning of message to (x-1, y).
 | "He" | ""
 
 // TRANSLATION MISSING
-| _chat_eol | Text from (x, y) to the end of line.
+| _chat_eol | Text from (x, y) to the end of message.
 | "llo world!" | ""
 
 | _bar_name | Nome della barra.

@@ -137,6 +137,8 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                               int *line_x,
                               char **word,
                               char **focused_line,
+                              char **focused_line_beginning,
+                              char **focused_line_end,
                               char **beginning,
                               char **end)
 {
@@ -150,6 +152,8 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
     *line_x = -1;
     *word = NULL;
     *focused_line = NULL;
+    *focused_line_beginning = NULL;
+    *focused_line_end = NULL;
     *beginning = NULL;
     *end = NULL;
 
@@ -284,6 +288,24 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                     if (str_temp)
                     {
                         *focused_line = gui_color_decode (str_temp, NULL);
+                        free (str_temp);
+                    }
+                }
+                if (line_start)
+                {
+                    str_temp = string_strndup (line_start, ptr_data - line_start);
+                    if (str_temp)
+                    {
+                        *focused_line_beginning = gui_color_decode (str_temp, NULL);
+                        free (str_temp);
+                    }
+                }
+                if (line_end)
+                {
+                    str_temp = string_strndup (ptr_data, line_end - ptr_data);
+                    if (str_temp)
+                    {
+                        *focused_line_end = gui_color_decode (str_temp, NULL);
                         free (str_temp);
                     }
                 }

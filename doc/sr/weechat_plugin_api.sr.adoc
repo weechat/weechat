@@ -12482,7 +12482,7 @@ struct t_hook *my_hdata = weechat_hook_hdata ("my_hdata",
 
 ==== hook_focus
 
-_Ажурирано у верзији 1.5._
+_Ажурирано у верзији 1.5, 4.0.0, 4.1.0._
 
 Качи се на фокус: догађај миша или тастер притиснут у режиму померања курсора.
 
@@ -12584,16 +12584,26 @@ struct t_hook *weechat_hook_focus (const char *area,
 | _chat_line_message | Порука линије.
 | "Hello world!" | ""
 
-| _chat_focused_line | Линија на (x,y) _(WeeChat ≥ 4.0.0)_.
+| _chat_focused_line | Линија на (x, y) _(WeeChat ≥ 4.0.0)_.
 | "Здраво свима!" | ""
+
+// TRANSLATION MISSING
+| _chat_focused_line_bol | Text from beginning of line to (x-1, y) _(WeeChat ≥ 4.1.0)_.
+| "Hello" | ""
+
+// TRANSLATION MISSING
+| _chat_focused_line_eol | Text from (x, y) to end of line _(WeeChat ≥ 4.1.0)_.
+| "llo world!" | ""
 
 | _chat_word | Реч на (x,y).
 | "Здраво" | ""
 
-| _chat_bol | Текст од почетка линије до (x-1, y).
+// TRANSLATION MISSING
+| _chat_bol | Text from beginning of message to (x-1, y).
 | "Зд" | ""
 
-| _chat_eol | Тест од (x, y) до краја линије.
+// TRANSLATION MISSING
+| _chat_eol | Text from (x, y) to the end of message.
 | "раво свете!" | ""
 
 | _bar_name | Име траке.
