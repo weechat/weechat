@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-15 22:05+0200\n"
-"PO-Revision-Date: 2023-06-15 22:06+0200\n"
+"POT-Creation-Date: 2023-06-17 11:44+0200\n"
+"PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -5334,13 +5334,18 @@ msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr "%sУпозорење: %s, линија %d: непознати идентификатор одељка („%s”)"
 
 #, c-format
-msgid "%sWarning: %s, line %d: invalid config version: %s"
-msgstr "%sУпозорење: %s, линија %d: неважећа конфиг верзија: %s"
-
-#, c-format
 msgid ""
-"%sWarning: %s, version read (%d) is newer than supported version (%d), "
-"options may be broken!"
+"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
+"IGNORED, default options are used"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%sWarning: %s, version read (%d) is newer than supported version (%d), "
+#| "options may be broken!"
+msgid ""
+"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
+"of file is IGNORED, default options are used"
 msgstr ""
 "%sУпозорење: %s, прочитана верзија (%d) је новија од подржане верзије (%d), "
 "опције можда неће радити!"
@@ -16216,8 +16221,3 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
-
-#, fuzzy
-#~| msgid "send message to a nick or channel"
-#~ msgid "send action message to a nick or channel"
-#~ msgstr "слање поруке надимку или каналу"

@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-15 22:05+0200\n"
-"PO-Revision-Date: 2023-06-15 22:06+0200\n"
+"POT-Creation-Date: 2023-06-17 11:44+0200\n"
+"PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -5751,15 +5751,16 @@ msgstr "%sOstrzeżenie: %s, w linii %d: błędna składnia, brakuje \"]\""
 msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr "%sOstrzeżenie: %s, w linii %d: nieznany identyfikator sekcji (\"%s\")"
 
-#, fuzzy, c-format
-#| msgid "%sWarning: %s, line %d: invalid value for option: %s"
-msgid "%sWarning: %s, line %d: invalid config version: %s"
-msgstr "%sOstrzeżenie: %s, linai %d: nieprawidłowa wartość dla opcji: %s"
+#, c-format
+msgid ""
+"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
+"IGNORED, default options are used"
+msgstr ""
 
 #, c-format
 msgid ""
-"%sWarning: %s, version read (%d) is newer than supported version (%d), "
-"options may be broken!"
+"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
+"of file is IGNORED, default options are used"
 msgstr ""
 
 #, c-format
@@ -17220,8 +17221,3 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
-
-#, fuzzy
-#~| msgid "send message to a nick or channel"
-#~ msgid "send action message to a nick or channel"
-#~ msgstr "wysyła wiadomość do użytkownika albo kanału"

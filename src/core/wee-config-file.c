@@ -3474,25 +3474,29 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
             {
                 gui_chat_printf (
                     NULL,
-                    _("%sWarning: %s, line %d: invalid config "
-                      "version: %s"),
+                    _("%sError: %s, line %d: invalid config "
+                      "version: \"%s\" => "
+                      "rest of file is IGNORED, default options are used"),
                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                     filename, line_number,
                     line);
+                goto end_file;
             }
             else
             {
                 config_file->version_read = version;
                 if (config_file->version_read > config_file->version)
                 {
-                    gui_chat_printf (NULL,
-                                     _("%sWarning: %s, version read (%d) is "
-                                       "newer than supported version (%d), "
-                                       "options may be broken!"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     filename,
-                                     config_file->version_read,
-                                     config_file->version);
+                    gui_chat_printf (
+                        NULL,
+                        _("%sError: %s, version read (%d) is newer than "
+                          "supported version (%d) => "
+                          "rest of file is IGNORED, default options are used"),
+                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                        filename,
+                        config_file->version_read,
+                        config_file->version);
+                    goto end_file;
                 }
             }
             goto end_line;
@@ -3582,6 +3586,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
             free (value);
     }
 
+end_file:
     fclose (config_file->file);
     config_file->file = NULL;
     free (filename);

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-15 22:05+0200\n"
-"PO-Revision-Date: 2023-05-01 20:23+0200\n"
+"POT-Creation-Date: 2023-06-17 11:44+0200\n"
+"PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -3990,14 +3990,16 @@ msgstr "%s %s, %d. sor: érvénytelen szintaxis, hiányzó \"]\"\n"
 msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
 
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: invalid config version: %s"
-msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
+#, c-format
+msgid ""
+"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
+"IGNORED, default options are used"
+msgstr ""
 
 #, c-format
 msgid ""
-"%sWarning: %s, version read (%d) is newer than supported version (%d), "
-"options may be broken!"
+"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
+"of file is IGNORED, default options are used"
 msgstr ""
 
 #, fuzzy, c-format
@@ -13413,8 +13415,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy
-#~| msgid "send message to a nick or channel"
-#~ msgid "send action message to a nick or channel"
-#~ msgstr "üzenet küldése egy felhasználónak vagy szobának"

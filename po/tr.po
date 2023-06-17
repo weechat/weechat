@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-15 22:05+0200\n"
-"PO-Revision-Date: 2023-06-15 22:07+0200\n"
+"POT-Creation-Date: 2023-06-17 11:44+0200\n"
+"PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -5395,15 +5395,16 @@ msgstr "%sUyarı: %s, %d. satır: Geçersiz sözdizim, \"!\" eksik"
 msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr "%sUyarı: %s, %d. satır: Bilinmeyen bölüm tanımlayıcısı (\"%s\")"
 
-#, fuzzy, c-format
-#| msgid "%sWarning: %s, line %d: invalid value for option: %s"
-msgid "%sWarning: %s, line %d: invalid config version: %s"
-msgstr "%sUyarı: %s, %d. satır: Seçenek için geçersiz değer: %s"
+#, c-format
+msgid ""
+"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
+"IGNORED, default options are used"
+msgstr ""
 
 #, c-format
 msgid ""
-"%sWarning: %s, version read (%d) is newer than supported version (%d), "
-"options may be broken!"
+"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
+"of file is IGNORED, default options are used"
 msgstr ""
 
 #, c-format
@@ -16697,8 +16698,3 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
-
-#, fuzzy
-#~| msgid "send message to a nick or channel"
-#~ msgid "send action message to a nick or channel"
-#~ msgstr "bir takma ada veya kanala ileti gönder"

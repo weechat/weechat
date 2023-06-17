@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-15 22:05+0200\n"
-"PO-Revision-Date: 2023-05-01 20:23+0200\n"
+"POT-Creation-Date: 2023-06-17 11:44+0200\n"
+"PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -5345,15 +5345,16 @@ msgstr "%sAviso: %s, linha %d: sintaxe inválida, falta ']'"
 msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr "%sAviso: %s, linha %d: identificador de secção desconhecido (\"%s\")"
 
-#, fuzzy, c-format
-#| msgid "%sWarning: %s, line %d: invalid value for option: %s"
-msgid "%sWarning: %s, line %d: invalid config version: %s"
-msgstr "%sAviso: %s, linha %d: valor inválido na opção: %s"
+#, c-format
+msgid ""
+"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
+"IGNORED, default options are used"
+msgstr ""
 
 #, c-format
 msgid ""
-"%sWarning: %s, version read (%d) is newer than supported version (%d), "
-"options may be broken!"
+"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
+"of file is IGNORED, default options are used"
 msgstr ""
 
 #, c-format
@@ -15813,8 +15814,3 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
-
-#, fuzzy
-#~| msgid "send message to a nick or channel"
-#~ msgid "send action message to a nick or channel"
-#~ msgstr "enviar mensagem para um nick ou canal"
