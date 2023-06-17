@@ -13,6 +13,10 @@ For a list of important changes that require manual actions, please look at rele
 [[v4.1.0]]
 == Version 4.1.0 (under dev)
 
+New features::
+
+  * api: add info "buffer" (issue #1962)
+
 Bug fixes::
 
   * core: force key "return" to command "/input return" when migrating legacy keys

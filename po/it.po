@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-17 11:44+0200\n"
-"PO-Revision-Date: 2023-06-17 11:47+0200\n"
+"POT-Creation-Date: 2023-06-26 21:34+0200\n"
+"PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -11606,6 +11606,13 @@ msgid ""
 "by the user (option \"-s\" or \"--no-script\")"
 msgstr ""
 
+msgid "buffer pointer"
+msgstr "puntatore al buffer"
+
+#, fuzzy
+msgid "buffer full name"
+msgstr "Registra i buffer su file"
+
 msgid "terminal charset"
 msgstr "set caratteri terminale"
 
@@ -11764,9 +11771,6 @@ msgstr ""
 
 msgid "lines of a buffer"
 msgstr "righe di un buffer"
-
-msgid "buffer pointer"
-msgstr "puntatore al buffer"
 
 msgid "list of filters"
 msgstr "elenco dei filtri"

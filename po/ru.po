@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-17 11:44+0200\n"
+"POT-Creation-Date: 2023-06-26 21:34+0200\n"
 "PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10573,6 +10573,14 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "buffer pointer"
+msgstr "поиск текста в истории буфера"
+
+#, fuzzy
+msgid "buffer full name"
+msgstr "перезагрузить конфигурационный файл сервера"
+
+#, fuzzy
 msgid "terminal charset"
 msgstr "управление буферами"
 
@@ -10727,10 +10735,6 @@ msgstr ""
 #, fuzzy
 msgid "lines of a buffer"
 msgstr "загрузка буфера не удалась"
-
-#, fuzzy
-msgid "buffer pointer"
-msgstr "поиск текста в истории буфера"
 
 #, fuzzy
 msgid "list of filters"

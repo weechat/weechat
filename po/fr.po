@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-17 11:44+0200\n"
-"PO-Revision-Date: 2023-06-25 19:12+0200\n"
+"POT-Creation-Date: 2023-06-26 21:34+0200\n"
+"PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -13238,6 +13238,12 @@ msgstr ""
 "1 si la les scripts sont automatiquement charés, 0 si l'auto-chargement a "
 "été désactivé par l'utilisateur (option \"-s\" ou \"--no-script\")"
 
+msgid "buffer pointer"
+msgstr "pointeur vers le tampon"
+
+msgid "buffer full name"
+msgstr "nom complet du tampon"
+
 msgid "terminal charset"
 msgstr "charset du terminal"
 
@@ -13401,9 +13407,6 @@ msgstr "nom de tampon (le caractère joker \"*\" est autorisé) (optionnel)"
 
 msgid "lines of a buffer"
 msgstr "lignes d'un tampon"
-
-msgid "buffer pointer"
-msgstr "pointeur vers le tampon"
 
 msgid "list of filters"
 msgstr "liste des filtres"

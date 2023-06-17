@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-17 11:44+0200\n"
-"PO-Revision-Date: 2023-06-17 11:47+0200\n"
+"POT-Creation-Date: 2023-06-26 21:34+0200\n"
+"PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -13373,6 +13373,14 @@ msgstr ""
 "Sunuculara kendiliğinden bağlantı etkinleştirilmişse 1, kullanıcı ayarı ile "
 "devre dışı bırakılmışsa 0 (\"-a\" veya \"--no-connect\" seçeneği)"
 
+msgid "buffer pointer"
+msgstr "arabellek işaretçisi"
+
+#, fuzzy
+#| msgid "buffer local variables"
+msgid "buffer full name"
+msgstr "arabellek yerel değişkenleri"
+
 msgid "terminal charset"
 msgstr "uçbirim karakter seti"
 
@@ -13533,9 +13541,6 @@ msgstr "arabellek adı (\"*\" jokerine izin verilir) (isteğe bağlı)"
 
 msgid "lines of a buffer"
 msgstr "bir arabelleğin satırları"
-
-msgid "buffer pointer"
-msgstr "arabellek işaretçisi"
 
 msgid "list of filters"
 msgstr "süzgeçlerin listesi"

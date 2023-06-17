@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-17 11:44+0200\n"
-"PO-Revision-Date: 2023-06-17 11:47+0200\n"
+"POT-Creation-Date: 2023-06-26 21:34+0200\n"
+"PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -12937,6 +12937,14 @@ msgstr ""
 "1 ако је укључено аутоматско повезивање са серверима, 0 ако је корисник то "
 "искључио (опцијом „-a” или „--no-connect”)"
 
+msgid "buffer pointer"
+msgstr "показивач на бафер"
+
+#, fuzzy
+#| msgid "buffer local variables"
+msgid "buffer full name"
+msgstr "бафер локалне променљиве"
+
 msgid "terminal charset"
 msgstr "скуп карактера терминала"
 
@@ -13099,9 +13107,6 @@ msgstr "име бафера (дозвољен је џокер „*”) (није
 
 msgid "lines of a buffer"
 msgstr "линије бафера"
-
-msgid "buffer pointer"
-msgstr "показивач на бафер"
 
 msgid "list of filters"
 msgstr "листа филтера"

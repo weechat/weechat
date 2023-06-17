@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-17 11:44+0200\n"
-"PO-Revision-Date: 2023-06-17 11:47+0200\n"
+"POT-Creation-Date: 2023-06-26 21:34+0200\n"
+"PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -13829,6 +13829,14 @@ msgstr ""
 "1 jeśli automatycznie łączenie z serwerami jest włączone, 0 jeśli zostało "
 "wyłączone przez użytkownika (opcja \"-a\" lub \"--no-connect\")"
 
+msgid "buffer pointer"
+msgstr "wskaźnik bufora"
+
+#, fuzzy
+#| msgid "buffer local variables"
+msgid "buffer full name"
+msgstr "zmienne lokalne bufora"
+
 msgid "terminal charset"
 msgstr "kodowanie terminala"
 
@@ -13989,9 +13997,6 @@ msgstr "nazwa bufora (wildcard \"*\" jest dozwolony) (opcjonalne)"
 
 msgid "lines of a buffer"
 msgstr "linie w buforze"
-
-msgid "buffer pointer"
-msgstr "wskaźnik bufora"
 
 msgid "list of filters"
 msgstr "lista filtrów"

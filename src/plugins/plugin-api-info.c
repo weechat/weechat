@@ -470,6 +470,34 @@ plugin_api_info_auto_load_scripts_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns WeeChat info "buffer".
+ */
+
+char *
+plugin_api_info_buffer_cb (const void *pointer, void *data,
+                           const char *info_name,
+                           const char *arguments)
+{
+    struct t_gui_buffer *ptr_buffer;
+    char value[64];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    ptr_buffer = gui_buffer_search_by_full_name (arguments);
+    if (!ptr_buffer)
+        return NULL;
+
+    snprintf (value, sizeof (value), "0x%lx", (unsigned long)ptr_buffer);
+    return strdup (value);
+}
+
+/*
  * Returns WeeChat info "charset_terminal".
  */
 
@@ -1993,6 +2021,10 @@ plugin_api_info_init ()
                   "0 if the auto-load has been disabled by the user "
                   "(option \"-s\" or \"--no-script\")"),
                NULL, &plugin_api_info_auto_load_scripts_cb, NULL, NULL);
+    hook_info (NULL, "buffer",
+               N_("buffer pointer"),
+               N_("buffer full name"),
+               &plugin_api_info_buffer_cb, NULL, NULL);
     hook_info (NULL, "charset_terminal",
                N_("terminal charset"),
                NULL, &plugin_api_info_charset_terminal_cb, NULL, NULL);

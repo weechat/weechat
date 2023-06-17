@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-17 11:44+0200\n"
-"PO-Revision-Date: 2023-06-17 11:47+0200\n"
+"POT-Creation-Date: 2023-06-26 21:34+0200\n"
+"PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -12811,6 +12811,13 @@ msgid ""
 "by the user (option \"-s\" or \"--no-script\")"
 msgstr ""
 
+msgid "buffer pointer"
+msgstr "バッファポインタ"
+
+#, fuzzy
+msgid "buffer full name"
+msgstr "ファイルにバッファログを保存"
+
 msgid "terminal charset"
 msgstr "端末の文字セット"
 
@@ -12967,9 +12974,6 @@ msgstr "バッファ名 (ワイルドカード \"*\" を使うことができま
 
 msgid "lines of a buffer"
 msgstr "バッファの行数"
-
-msgid "buffer pointer"
-msgstr "バッファポインタ"
 
 msgid "list of filters"
 msgstr "フィルタのリスト"
