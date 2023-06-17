@@ -163,7 +163,7 @@ script_action_run_list_input (int send_to_buffer, int translated)
     else
     {
         weechat_buffer_set (weechat_current_buffer (), "input", *buf);
-        length = strlen (*buf);
+        length = weechat_utf8_strlen (*buf);
         snprintf (str_pos, sizeof (str_pos), "%d", length);
         weechat_buffer_set (weechat_current_buffer (), "input_pos", str_pos);
     }

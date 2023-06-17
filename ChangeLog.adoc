@@ -28,6 +28,7 @@ Bug fixes::
   * core: keep keys ctrl-H and ctrl-? (in lower case) if they were manually bound to custom commands in a previous version
   * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
   * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
+  * script: fix cursor position after `/script list -i` or `/script list -il`
 
 Tests::
 
