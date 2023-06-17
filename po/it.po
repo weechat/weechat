@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-04 18:42+0200\n"
+"POT-Creation-Date: 2023-07-04 21:49+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13720,6 +13720,22 @@ msgid "No trigger defined"
 msgstr "Nessun rmodifier definito"
 
 #, fuzzy
+msgid "Triggers enabled:"
+msgstr "Filtro \"%s\" abilitato"
+
+#, fuzzy
+#| msgid "default: "
+msgid "default"
+msgstr "predefinito: "
+
+msgid "custom"
+msgstr ""
+
+#, fuzzy
+msgid "No triggers enabled"
+msgstr "Filtro \"%s\" abilitato"
+
+#, fuzzy
 msgid "List of default triggers:"
 msgstr "Elenco degli alias:"
 
@@ -13863,7 +13879,8 @@ msgid "manage triggers, the Swiss Army knife for WeeChat"
 msgstr ""
 
 msgid ""
-"list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
+"list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
+"<name> <hook> "
 "[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
@@ -13874,6 +13891,12 @@ msgstr ""
 
 msgid ""
 "       list: list triggers (without argument, this list is displayed)\n"
+"         -o: send list of triggers enabled to buffer (string in English)\n"
+"        -ol: send list of triggers enabled to buffer (translated string)\n"
+"         -i: copy list of triggers enabled in command line (for sending to "
+"buffer) (string in English)\n"
+"        -il: copy list of triggers enabled in command line (for sending to "
+"buffer) (translated string)\n"
 "   listfull: list triggers with detailed info for each trigger\n"
 "listdefault: list default triggers\n"
 "        add: add a trigger\n"

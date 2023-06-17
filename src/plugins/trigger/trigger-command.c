@@ -288,6 +288,107 @@ trigger_command_list (const char *message, int verbose)
 }
 
 /*
+ * Sends the list of enabled triggers to the buffer.
+ */
+
+void
+trigger_command_list_buffer (struct t_gui_buffer *buffer,
+                             int send_to_buffer,
+                             int translated)
+{
+    struct t_trigger *ptr_trigger;
+    char **output, str_pos[16];
+    int i, count, length;
+
+    output = weechat_string_dyn_alloc (256);
+    if (!output)
+        return;
+
+    count = 0;
+    for (ptr_trigger = triggers; ptr_trigger;
+         ptr_trigger = ptr_trigger->next_trigger)
+    {
+        if (!weechat_config_boolean (ptr_trigger->options[TRIGGER_OPTION_ENABLED]))
+            continue;
+        if (count == 0)
+        {
+            weechat_string_dyn_concat (
+                output,
+                (translated) ? _("Triggers enabled:") : "Triggers enabled:",
+                -1);
+            weechat_string_dyn_concat (output, " ", -1);
+        }
+        if (count > 0)
+            weechat_string_dyn_concat (output, ", ", -1);
+        weechat_string_dyn_concat (output, ptr_trigger->name, -1);
+        weechat_string_dyn_concat (output, " (", -1);
+        weechat_string_dyn_concat (
+            output,
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
+            -1);
+        for (i = 0; trigger_config_default_list[i][0]; i++)
+        {
+            if (strcmp (trigger_config_default_list[i][0], ptr_trigger->name) == 0)
+                break;
+        }
+        if (trigger_config_default_list[i][0])
+        {
+            weechat_string_dyn_concat (output, ", ", -1);
+            weechat_string_dyn_concat (
+                output,
+                (translated) ? _("default") : "default",
+                -1);
+            if ((weechat_strcmp (
+                     weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
+                     trigger_config_default_list[i][TRIGGER_OPTION_HOOK + 1]) != 0)
+                || (weechat_strcmp (
+                        weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+                        trigger_config_default_list[i][TRIGGER_OPTION_ARGUMENTS + 1]) != 0)
+                || (weechat_strcmp (
+                        weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]),
+                        trigger_config_default_list[i][TRIGGER_OPTION_CONDITIONS + 1]) != 0)
+                || (weechat_strcmp (
+                        weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_REGEX]),
+                        trigger_config_default_list[i][TRIGGER_OPTION_REGEX + 1]) != 0)
+                || (weechat_strcmp (
+                        weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]),
+                        trigger_config_default_list[i][TRIGGER_OPTION_COMMAND + 1]) != 0))
+            {
+                weechat_string_dyn_concat (output, ", ", -1);
+                weechat_string_dyn_concat (
+                    output,
+                    (translated) ? _("custom") : "custom",
+                    -1);
+            }
+        }
+        weechat_string_dyn_concat (output, ")", -1);
+        count++;
+    }
+
+    if (count == 0)
+    {
+        weechat_string_dyn_concat (
+            output,
+            (translated) ? _("No triggers enabled") : "No triggers enabled",
+            -1);
+    }
+
+    if (send_to_buffer)
+    {
+        weechat_command (buffer, *output);
+    }
+    else
+    {
+        weechat_buffer_set (buffer, "input", *output);
+        length = weechat_utf8_strlen (*output);
+        snprintf (str_pos, sizeof (str_pos), "%d", length);
+        weechat_buffer_set (buffer, "input_pos", str_pos);
+    }
+
+    weechat_string_dyn_free (output, 1);
+}
+
+/*
  * Displays a list of default triggers.
  */
 
@@ -523,21 +624,37 @@ trigger_command_trigger (const void *pointer, void *data,
 
     /* list all triggers */
     if ((argc == 1)
-        || ((argc == 2) && (weechat_strcmp (argv[1], "list") == 0)))
+        || ((argc > 1) && (weechat_strcmp (argv[1], "list") == 0)))
     {
-        trigger_command_list (_("List of triggers:"), 0);
+        if (argc > 2)
+        {
+            if (weechat_strcmp (argv[2], "-i") == 0)
+                trigger_command_list_buffer (buffer, 0, 0);
+            else if (weechat_strcmp (argv[2], "-il") == 0)
+                trigger_command_list_buffer (buffer, 0, 1);
+            else if (weechat_strcmp (argv[2], "-o") == 0)
+                trigger_command_list_buffer (buffer, 1, 0);
+            else if (weechat_strcmp (argv[2], "-ol") == 0)
+                trigger_command_list_buffer (buffer, 1, 1);
+            else
+                trigger_command_list (_("List of triggers:"), 0);
+        }
+        else
+        {
+            trigger_command_list (_("List of triggers:"), 0);
+        }
         goto end;
     }
 
     /* full list of all triggers */
-    if ((argc == 2) && (weechat_strcmp (argv[1], "listfull") == 0))
+    if (weechat_strcmp (argv[1], "listfull") == 0)
     {
         trigger_command_list (_("List of triggers:"), 1);
         goto end;
     }
 
     /* list of default triggers */
-    if ((argc == 2) && (weechat_strcmp (argv[1], "listdefault") == 0))
+    if (weechat_strcmp (argv[1], "listdefault") == 0)
     {
         trigger_command_list_default (1);
         goto end;
@@ -1196,7 +1313,9 @@ trigger_command_init ()
     weechat_hook_command (
         "trigger",
         N_("manage triggers, the Swiss Army knife for WeeChat"),
-        N_("list|listfull|listdefault"
+        N_("list [-o|-ol|-i|-il]"
+           " || listfull"
+           " || listdefault"
            " || add|addoff|addreplace <name> <hook> [\"<arguments>\" "
            "[\"<conditions>\" [\"<regex>\" [\"<command>\" "
            "[\"<return_code>\" [\"<post_action>\"]]]]]]"
@@ -1212,6 +1331,12 @@ trigger_command_init ()
            " || default -yes"
            " || monitor [<filter>]"),
         N_("       list: list triggers (without argument, this list is displayed)\n"
+           "         -o: send list of triggers enabled to buffer (string in English)\n"
+           "        -ol: send list of triggers enabled to buffer (translated string)\n"
+           "         -i: copy list of triggers enabled in command line (for "
+           "sending to buffer) (string in English)\n"
+           "        -il: copy list of triggers enabled in command line (for "
+           "sending to buffer) (translated string)\n"
            "   listfull: list triggers with detailed info for each trigger\n"
            "listdefault: list default triggers\n"
            "        add: add a trigger\n"
@@ -1308,7 +1433,9 @@ trigger_command_init ()
            "  open trigger monitor and show only modifiers and triggers whose "
            "name starts with \"resize\":\n"
            "    /trigger monitor @modifier,resize*"),
-        "list|listfull|listdefault"
+        "list -i|-il|-o|-ol"
+        " || listfull"
+        " || listdefault"
         " || add|addoff|addreplace %(trigger_add_arguments)|%*"
         " || addinput %(trigger_hooks)"
         " || input|output|recreate %(trigger_names)"
