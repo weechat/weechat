@@ -72,7 +72,7 @@ script_command_action (struct t_gui_buffer *buffer,
                           (quiet) ? "-q " : "",
                           action,
                           ptr_script->name_with_extension);
-                script_action_schedule (str_action, need_repository,
+                script_action_schedule (buffer, str_action, need_repository,
                                         error_repository, quiet);
             }
         }
@@ -83,7 +83,7 @@ script_command_action (struct t_gui_buffer *buffer,
                       (quiet) ? "-q " : "",
                       action,
                       arguments);
-            script_action_schedule (str_action, need_repository,
+            script_action_schedule (buffer, str_action, need_repository,
                                     error_repository, quiet);
         }
     }
@@ -98,7 +98,7 @@ script_command_action (struct t_gui_buffer *buffer,
             snprintf (str_action, sizeof (str_action),
                       "-q %s",
                       action);
-            script_action_schedule (str_action, need_repository,
+            script_action_schedule (buffer, str_action, need_repository,
                                     error_repository, 1);
         }
         else
@@ -113,7 +113,7 @@ script_command_action (struct t_gui_buffer *buffer,
                               "-q %s %s",
                               action,
                               ptr_script->name_with_extension);
-                    script_action_schedule (str_action, need_repository,
+                    script_action_schedule (buffer, str_action, need_repository,
                                             error_repository, 1);
                 }
             }
@@ -140,7 +140,7 @@ script_command_script (const void *pointer, void *data,
 
     if (argc == 1)
     {
-        script_action_schedule ("buffer", 1, 1, 0);
+        script_action_schedule (buffer, "buffer", 1, 1, 0);
         return WEECHAT_RC_OK;
     }
 
@@ -164,13 +164,13 @@ script_command_script (const void *pointer, void *data,
             script_repo_filter_scripts ((argc > 2) ? argv_eol[2] : NULL);
         else
             script_repo_set_filter ((argc > 2) ? argv_eol[2] : NULL);
-        script_action_schedule ("buffer", 1, 1, 0);
+        script_action_schedule (buffer, "buffer", 1, 1, 0);
         return WEECHAT_RC_OK;
     }
 
     if (weechat_strcmp (argv[1], "list") == 0)
     {
-        script_action_schedule (argv_eol[1], 1, 0, 0);
+        script_action_schedule (buffer, argv_eol[1], 1, 0, 0);
         return WEECHAT_RC_OK;
     }
 
@@ -206,7 +206,7 @@ script_command_script (const void *pointer, void *data,
 
     if (weechat_strcmp (argv[1], "upgrade") == 0)
     {
-        script_action_schedule ("upgrade", 1, 1, 0);
+        script_action_schedule (buffer, "upgrade", 1, 1, 0);
         return WEECHAT_RC_OK;
     }
 

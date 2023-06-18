@@ -29,6 +29,7 @@ Bug fixes::
   * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
   * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
   * script: fix cursor position after `/script list -i` or `/script list -il`
+  * script: fix buffer used by command `/script list -i|-il|-o|-ol`
 
 Tests::
 
