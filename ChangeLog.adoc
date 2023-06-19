@@ -43,7 +43,7 @@ New features::
   * api: add info "auto_load_scripts"
   * alias: use lower case for default aliases, rename all aliases to lower case on upgrade (issue #1872)
   * alias: add `$&` to replace all arguments with double quotes escaped (issue #1140, issue #1190)
-  * alias: add option `missing` in command `/alias`
+  * alias: add options `missing` and `rename` in command `/alias`
   * fifo: add support of escaped chars in text or commands sent (issue #1950)
   * fset: add options fset.color.color_name and fset.color.color_name_selected (issue #1920)
   * irc: rename "ssl" options to "tls", connect with TLS and port 6697 by default
