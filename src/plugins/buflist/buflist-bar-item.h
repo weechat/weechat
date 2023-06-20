@@ -22,7 +22,7 @@
 
 #define BUFLIST_BAR_ITEM_NAME "buflist"
 
-#define BUFLIST_BAR_NUM_ITEMS 3
+#define BUFLIST_BAR_NUM_ITEMS 5
 
 struct t_gui_bar_item;
 

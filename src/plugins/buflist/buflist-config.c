@@ -70,8 +70,10 @@ struct t_config_option *buflist_config_format_tls_version = NULL;
 
 struct t_hook **buflist_config_signals_refresh = NULL;
 int buflist_config_num_signals_refresh = 0;
-char **buflist_config_sort_fields[BUFLIST_BAR_NUM_ITEMS] = { NULL, NULL, NULL };
-int buflist_config_sort_fields_count[BUFLIST_BAR_NUM_ITEMS] = { 0, 0, 0 };
+char **buflist_config_sort_fields[BUFLIST_BAR_NUM_ITEMS] =
+{ NULL, NULL, NULL, NULL, NULL };
+int buflist_config_sort_fields_count[BUFLIST_BAR_NUM_ITEMS] =
+{ 0, 0, 0, 0, 0 };
 char *buflist_config_format_buffer_eval = NULL;
 char *buflist_config_format_buffer_current_eval = NULL;
 char *buflist_config_format_hotlist_eval = NULL;
@@ -622,9 +624,9 @@ buflist_config_init ()
             buflist_config_file, buflist_config_section_look,
             "use_items", "integer",
             N_("number of buflist bar items that can be used; the item names "
-               "are: \"buflist\", \"buflist2\", \"buflist3\"; be careful, "
-               "using more than one bar item slows down the display of "
-               "buffers list"),
+               "are: \"buflist\", \"buflist2\", \"buflist3\", \"buflist4\" and "
+               "\"buflist5\"; be careful, using more than one bar item slows "
+               "down the display of buffers list"),
             NULL, 1, BUFLIST_BAR_NUM_ITEMS, "1", NULL, 0,
             NULL, NULL, NULL,
             &buflist_config_change_use_items, NULL, NULL,
