@@ -25,6 +25,7 @@ Bug fixes::
   * core: display actual key name and command with key kbd:[Alt+k], remove key kbd:[Alt+K] (grab raw key) and associated commands `/input grab_raw_key` and `/input grab_raw_key_command`
   * irc: reply to a CTCP request sent to self nick (issue #1966)
   * irc: sent "QUIT" message to servers connected with TLS on `/upgrade`
+  * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
 
 [[v4.0.0]]
 == Version 4.0.0 (2023-06-24)

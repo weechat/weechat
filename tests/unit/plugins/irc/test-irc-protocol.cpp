@@ -4325,7 +4325,12 @@ TEST(IrcProtocolWithServer, 344)
 
     /* whois, geo info (UnrealIRCd) */
     RECV(":server 344 alice bob FR :is connecting from France");
-    CHECK_SRV("--", "[bob] FR is connecting from France",
+    CHECK_SRV("--", "[bob] is connecting from France (FR)",
+              "irc_344,irc_numeric,log3");
+
+    /* whois, geo info (UnrealIRCd), no country code */
+    RECV(":server 344 alice bob :is connecting from France");
+    CHECK_SRV("--", "[bob] is connecting from France",
               "irc_344,irc_numeric,log3");
 }
 

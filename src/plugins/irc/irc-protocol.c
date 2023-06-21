@@ -5488,7 +5488,7 @@ IRC_PROTOCOL_CALLBACK(341)
 
 IRC_PROTOCOL_CALLBACK(344)
 {
-    char *str_host;
+    char *str_host, *str_params;
 
     IRC_PROTOCOL_MIN_PARAMS(3);
 
@@ -5513,7 +5513,36 @@ IRC_PROTOCOL_CALLBACK(344)
     else
     {
         /* whois, geo info (UnrealIRCd) */
-        IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
+        if (num_params >= 3)
+        {
+            str_params = irc_protocol_string_params (
+                params,
+                (num_params >= 4) ? 3 : 2,
+                num_params - 1);
+            weechat_printf_date_tags (
+                irc_msgbuffer_get_target_buffer (
+                    server, params[1], command, "whois", NULL),
+                date,
+                irc_protocol_tags (server, command, tags, NULL, NULL, NULL),
+                "%s%s[%s%s%s] %s%s%s%s%s",
+                weechat_prefix ("network"),
+                IRC_COLOR_CHAT_DELIMITERS,
+                irc_nick_color_for_msg (server, 1, NULL, params[1]),
+                params[1],
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_RESET,
+                str_params,
+                (num_params >= 4) ? " (" : "",
+                (num_params >= 4) ? params[2] : "",
+                (num_params >= 4) ? ")" : "");
+            if (str_params)
+                free (str_params);
+        }
+        else
+        {
+            /* not enough arguments: use the default whois callback */
+            IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
+        }
     }
 
     return WEECHAT_RC_OK;
