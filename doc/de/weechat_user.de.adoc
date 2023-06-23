@@ -1670,8 +1670,7 @@ in einem Buffer nach einem Text zu suchen).
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | beendet Suche ab aktueller Position. | `+/input search_stop_here+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+q]   | Stop search and reset scroll to pre-text search state. | `+/input search_stop+`
+| kbd:[Ctrl+q]   | Suche wird abgebrochen und der Bildlauf wird auf die Vortextsuche zurückgesetzt. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]
