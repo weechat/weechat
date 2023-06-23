@@ -3901,7 +3901,7 @@ Spécification : https://ircv3.net/specs/extensions/message-tags[message-tags 
 Cette capacité autorise l'envoi de méta-données dans les messages. +
 Ces étiquettes peuvent être affichées avec la commande `/debug tags`.
 
-Elle doit être activer pour utiliser les <<typing_notifications,notifications de saisie>>.
+Elle doit être activée pour utiliser les <<typing_notifications,notifications de saisie>>.
 
 [[irc_ircv3_monitor]]
 ==== monitor
