@@ -32,6 +32,7 @@
 #include <regex.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-arraylist.h"
 #include "../core/wee-config.h"
 #include "../core/wee-eval.h"
 #include "../core/wee-hashtable.h"
@@ -592,15 +593,18 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
                                     const char *tags,
                                     char *message)
 {
-    int display_time, length_data, length_str;
+    int i, display_time, length_data, length_str, num_buffers;
     char *ptr_msg, *pos_prefix, *pos_tab;
     char *modifier_data, *string, *new_string, *pos_newline;
-    struct t_gui_line *new_line;
+    struct t_gui_line *new_line, *new_line2;
+    struct t_arraylist *buffers;
 
     new_line = NULL;
+    new_line2 = NULL;
     string = NULL;
     modifier_data = NULL;
     new_string = NULL;
+    buffers = NULL;
 
     display_time = 1;
 
@@ -643,134 +647,132 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
     if (!new_line)
         goto no_print;
 
-    hook_line_exec (new_line);
-
-    if (!new_line->data->buffer)
+    buffers = hook_line_exec (new_line);
+    if (!buffers || !new_line->data->buffer)
         goto no_print;
 
-    /* call modifier for message printed ("weechat_print") */
-    length_data = 64 + 1 + ((tags) ? strlen (tags) : 0) + 1;
-    modifier_data = malloc (length_data);
-    length_str = ((new_line->data->prefix && new_line->data->prefix[0]) ? strlen (new_line->data->prefix) : 1) +
-        1 +
-        (new_line->data->message ? strlen (new_line->data->message) : 0) +
-        1;
-    string = malloc (length_str);
-    if (modifier_data && string)
+    num_buffers = arraylist_size (buffers);
+    for (i = 0; i < num_buffers; i++)
     {
-        snprintf (modifier_data, length_data,
-                  "0x%lx;%s",
-                  (unsigned long)buffer,
-                  (tags) ? tags : "");
-        if (display_time)
-        {
-            snprintf (string, length_str,
-                      "%s\t%s",
-                      (new_line->data->prefix && new_line->data->prefix[0]) ?
-                      new_line->data->prefix : " ",
-                      (new_line->data->message) ? new_line->data->message : "");
-        }
-        else
-        {
-            snprintf (string, length_str,
-                      "\t\t%s",
-                      (new_line->data->message) ? new_line->data->message : "");
-        }
-        new_string = hook_modifier_exec (NULL,
-                                         "weechat_print",
-                                         modifier_data,
-                                         string);
-        if (new_string)
-        {
-            if (!new_string[0] && string[0])
-            {
-                /*
-                 * modifier returned empty message, then we'll not
-                 * print anything
-                 */
-                goto no_print;
-            }
-            else if (strcmp (string, new_string) != 0)
-            {
-                if (!buffer->input_multiline)
-                {
-                    /* if input_multiline is not set, keep only first line */
-                    pos_newline = strchr (new_string, '\n');
-                    if (pos_newline)
-                        pos_newline[0] = '\0';
-                }
+        new_line2 = gui_line_dup_for_buffer (new_line,
+                                             arraylist_get (buffers, i));
+        if (!new_line2)
+            goto no_print;
 
-                /* use new message if there are changes */
-                display_time = 1;
-                pos_prefix = NULL;
-                ptr_msg = new_string;
-                /* space followed by tab => prefix ignored */
-                if ((ptr_msg[0] == ' ') && (ptr_msg[1] == '\t'))
+        /* call modifier for message printed ("weechat_print") */
+        length_data = 64 + 1 + ((tags) ? strlen (tags) : 0) + 1;
+        modifier_data = malloc (length_data);
+        length_str = ((new_line2->data->prefix && new_line2->data->prefix[0]) ? strlen (new_line2->data->prefix) : 1) +
+            1 +
+            (new_line2->data->message ? strlen (new_line2->data->message) : 0) +
+            1;
+        string = malloc (length_str);
+        if (modifier_data && string)
+        {
+            snprintf (modifier_data, length_data,
+                      "0x%lx;%s",
+                      (unsigned long)buffer,
+                      (tags) ? tags : "");
+            if (display_time)
+            {
+                snprintf (string, length_str,
+                          "%s\t%s",
+                          (new_line2->data->prefix && new_line2->data->prefix[0]) ?
+                          new_line2->data->prefix : " ",
+                          (new_line2->data->message) ? new_line2->data->message : "");
+            }
+            else
+            {
+                snprintf (string, length_str,
+                          "\t\t%s",
+                          (new_line2->data->message) ? new_line2->data->message : "");
+            }
+            new_string = hook_modifier_exec (NULL,
+                                             "weechat_print",
+                                             modifier_data,
+                                             string);
+            if (new_string)
+            {
+                if (!new_string[0] && string[0])
                 {
-                    ptr_msg += 2;
+                    /*
+                     * modifier returned empty message, then we'll not
+                     * print anything
+                     */
+                    goto no_print;
                 }
-                else
+                else if (strcmp (string, new_string) != 0)
                 {
-                    /* if two first chars are tab, then do not display time */
-                    if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
+                    if (!buffer->input_multiline)
                     {
-                        display_time = 0;
-                        new_line->data->date = 0;
+                        /* if input_multiline is not set, keep only first line */
+                        pos_newline = strchr (new_string, '\n');
+                        if (pos_newline)
+                            pos_newline[0] = '\0';
+                    }
+
+                    /* use new message if there are changes */
+                    display_time = 1;
+                    pos_prefix = NULL;
+                    ptr_msg = new_string;
+                    /* space followed by tab => prefix ignored */
+                    if ((ptr_msg[0] == ' ') && (ptr_msg[1] == '\t'))
+                    {
                         ptr_msg += 2;
                     }
                     else
                     {
-                        /* if tab found, use prefix (before tab) */
-                        pos_tab = strchr (ptr_msg, '\t');
-                        if (pos_tab)
+                        /* if two first chars are tab, then do not display time */
+                        if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
                         {
-                            pos_tab[0] = '\0';
-                            pos_prefix = ptr_msg;
-                            ptr_msg = pos_tab + 1;
+                            display_time = 0;
+                            new_line2->data->date = 0;
+                            ptr_msg += 2;
+                        }
+                        else
+                        {
+                            /* if tab found, use prefix (before tab) */
+                            pos_tab = strchr (ptr_msg, '\t');
+                            if (pos_tab)
+                            {
+                                pos_tab[0] = '\0';
+                                pos_prefix = ptr_msg;
+                                ptr_msg = pos_tab + 1;
+                            }
                         }
                     }
+                    if ((new_line2->data->date == 0) && display_time)
+                        new_line2->data->date = new_line2->data->date_printed;
+                    if (new_line2->data->prefix)
+                        string_shared_free (new_line2->data->prefix);
+                    if (pos_prefix)
+                    {
+                        new_line2->data->prefix = (char *)string_shared_get (pos_prefix);
+                    }
+                    else
+                    {
+                        new_line2->data->prefix = (new_line2->data->date != 0) ?
+                            (char *)string_shared_get ("") : NULL;
+                    }
+                    new_line2->data->prefix_length = gui_chat_strlen_screen (
+                        new_line2->data->prefix);
+                    if (new_line2->data->message)
+                        free (new_line2->data->message);
+                    new_line2->data->message = strdup (ptr_msg);
                 }
-                if ((new_line->data->date == 0) && display_time)
-                    new_line->data->date = new_line->data->date_printed;
-                if (new_line->data->prefix)
-                    string_shared_free (new_line->data->prefix);
-                if (pos_prefix)
-                {
-                    new_line->data->prefix = (char *)string_shared_get (pos_prefix);
-                }
-                else
-                {
-                    new_line->data->prefix = (new_line->data->date != 0) ?
-                        (char *)string_shared_get ("") : NULL;
-                }
-                new_line->data->prefix_length = gui_chat_strlen_screen (
-                    new_line->data->prefix);
-                if (new_line->data->message)
-                    free (new_line->data->message);
-                new_line->data->message = strdup (ptr_msg);
             }
         }
+
+        /* add line in the buffer */
+        gui_line_add (new_line2);
+
+        /* run hook_print for the new line */
+        if (new_line2->data->buffer && new_line2->data->buffer->print_hooks_enabled)
+            hook_print_exec (new_line2->data->buffer, new_line2);
+
+        gui_buffer_ask_chat_refresh (new_line2->data->buffer, 1);
     }
 
-    /* add line in the buffer */
-    gui_line_add (new_line);
-
-    /* run hook_print for the new line */
-    if (new_line->data->buffer && new_line->data->buffer->print_hooks_enabled)
-        hook_print_exec (new_line->data->buffer, new_line);
-
-    gui_buffer_ask_chat_refresh (new_line->data->buffer, 1);
-
-    if (string)
-        free (string);
-    if (modifier_data)
-        free (modifier_data);
-    if (new_string)
-        free (new_string);
-
-    return;
-
-no_print:
     if (new_line)
     {
         gui_line_free_data (new_line);
@@ -782,6 +784,30 @@ no_print:
         free (modifier_data);
     if (new_string)
         free (new_string);
+    if (buffers)
+        arraylist_free (buffers);
+
+    return;
+
+no_print:
+    if (new_line)
+    {
+        gui_line_free_data (new_line);
+        free (new_line);
+    }
+    if (new_line2)
+    {
+        gui_line_free_data (new_line2);
+        free (new_line2);
+    }
+    if (string)
+        free (string);
+    if (modifier_data)
+        free (modifier_data);
+    if (new_string)
+        free (new_string);
+    if (buffers)
+        arraylist_free (buffers);
 }
 
 /*
@@ -932,9 +958,13 @@ void
 gui_chat_printf_y_date_tags (struct t_gui_buffer *buffer, int y, time_t date,
                            const char *tags, const char *message, ...)
 {
-    struct t_gui_line *ptr_line, *new_line, *new_line_empty;
+    struct t_gui_line *ptr_line, *new_line, *new_line2, *new_line_empty;
+    struct t_arraylist *buffers;
     time_t date_printed;
-    int i, last_y, num_lines_to_add;
+    int i, last_y, num_lines_to_add, num_buffers;
+
+    new_line = NULL;
+    buffers = NULL;
 
     if (!message)
         return;
@@ -964,84 +994,96 @@ gui_chat_printf_y_date_tags (struct t_gui_buffer *buffer, int y, time_t date,
     if (!new_line)
         goto end;
 
-    hook_line_exec (new_line);
-
-    if (!new_line->data->buffer)
+    buffers = hook_line_exec (new_line);
+    if (!buffers || !new_line->data->buffer)
     {
         gui_line_free_data (new_line);
         free (new_line);
         goto end;
     }
 
-    if (new_line->data->message && new_line->data->message[0])
+    num_buffers = arraylist_size (buffers);
+    for (i = 0; i < num_buffers; i++)
     {
-        if (gui_init_ok)
+        new_line2 = gui_line_dup_for_buffer (new_line,
+                                             arraylist_get (buffers, i));
+        if (new_line2->data->message && new_line2->data->message[0])
         {
-            /* compute the number of lines to add before y */
-            if (new_line->data->buffer->own_lines
-                && new_line->data->buffer->own_lines->last_line)
+            if (gui_init_ok)
             {
-                num_lines_to_add = y - new_line->data->buffer->own_lines->last_line->data->y - 1;
+                /* compute the number of lines to add before y */
+                if (new_line2->data->buffer->own_lines
+                    && new_line2->data->buffer->own_lines->last_line)
+                {
+                    num_lines_to_add = y - new_line2->data->buffer->own_lines->last_line->data->y - 1;
+                }
+                else
+                {
+                    num_lines_to_add = y;
+                }
+                if (num_lines_to_add > 0)
+                {
+                    /*
+                     * add empty line(s) before asked line, to ensure there is at
+                     * least "y" lines in buffer, and then be able to scroll
+                     * properly buffer page by page
+                     */
+                    for (i = y - num_lines_to_add; i < y; i++)
+                    {
+                        new_line_empty = gui_line_new (new_line2->data->buffer,
+                                                       i, 0, 0, NULL, NULL, "");
+                        if (new_line_empty)
+                            gui_line_add_y (new_line_empty);
+                    }
+                }
+                gui_line_add_y (new_line2);
             }
             else
             {
-                num_lines_to_add = y;
+                string_fprintf (stdout, "%s\n", new_line2->data->message);
+                gui_line_free_data (new_line2);
+                free (new_line2);
             }
-            if (num_lines_to_add > 0)
-            {
-                /*
-                 * add empty line(s) before asked line, to ensure there is at
-                 * least "y" lines in buffer, and then be able to scroll
-                 * properly buffer page by page
-                 */
-                for (i = y - num_lines_to_add; i < y; i++)
-                {
-                    new_line_empty = gui_line_new (new_line->data->buffer,
-                                                   i, 0, 0, NULL, NULL, "");
-                    if (new_line_empty)
-                        gui_line_add_y (new_line_empty);
-                }
-            }
-            gui_line_add_y (new_line);
         }
         else
         {
-            string_fprintf (stdout, "%s\n", new_line->data->message);
-            gui_line_free_data (new_line);
-            free (new_line);
-        }
-    }
-    else
-    {
-        if (gui_init_ok)
-        {
-            /* delete line */
-            last_y = (new_line->data->buffer->own_lines->last_line) ?
-                new_line->data->buffer->own_lines->last_line->data->y : 0;
-            if (y <= last_y)
+            if (gui_init_ok)
             {
-                for (ptr_line = new_line->data->buffer->own_lines->first_line;
-                     ptr_line; ptr_line = ptr_line->next_line)
+                /* delete line */
+                last_y = (new_line2->data->buffer->own_lines->last_line) ?
+                    new_line2->data->buffer->own_lines->last_line->data->y : 0;
+                if (y <= last_y)
                 {
-                    if (ptr_line->data->y >= y)
-                        break;
-                }
-                if (ptr_line && (ptr_line->data->y == y))
-                {
-                    if (ptr_line->next_line)
-                        gui_line_clear (ptr_line);
-                    else
-                        gui_line_free (new_line->data->buffer, ptr_line);
-                    gui_buffer_ask_chat_refresh (new_line->data->buffer, 2);
+                    for (ptr_line = new_line2->data->buffer->own_lines->first_line;
+                         ptr_line; ptr_line = ptr_line->next_line)
+                    {
+                        if (ptr_line->data->y >= y)
+                            break;
+                    }
+                    if (ptr_line && (ptr_line->data->y == y))
+                    {
+                        if (ptr_line->next_line)
+                            gui_line_clear (ptr_line);
+                        else
+                            gui_line_free (new_line2->data->buffer, ptr_line);
+                        gui_buffer_ask_chat_refresh (new_line2->data->buffer, 2);
+                    }
                 }
             }
+            gui_line_free_data (new_line2);
+            free (new_line2);
         }
-        gui_line_free_data (new_line);
-        free (new_line);
     }
 
 end:
+    if (new_line)
+    {
+        gui_line_free_data (new_line);
+        free (new_line);
+    }
     free (vbuffer);
+    if (buffers)
+        arraylist_free (buffers);
 }
 
 /*

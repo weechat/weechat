@@ -30,6 +30,7 @@
 #include <regex.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-arraylist.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
@@ -109,6 +110,45 @@ gui_line_tags_alloc (struct t_gui_line_data *line_data, const char *tags)
     {
         line_data->tags_count = 0;
         line_data->tags_array = NULL;
+    }
+}
+
+/*
+ * Duplicates array with tags of a line into another line.
+ */
+
+void
+gui_line_tags_dup (struct t_gui_line_data *line_data,
+                   struct t_gui_line_data *line_data2)
+{
+    int i;
+
+    if (!line_data || !line_data2)
+        return;
+
+    if (line_data->tags_count > 0)
+    {
+        line_data2->tags_array = malloc (
+            (line_data->tags_count + 1) * sizeof (*(line_data->tags_array)));
+        if (line_data2->tags_array)
+        {
+            line_data2->tags_count = line_data->tags_count;
+            for (i = 0; i < line_data->tags_count; i++)
+            {
+                line_data2->tags_array[i] = (char *)string_shared_get (
+                    line_data->tags_array[i]);
+            }
+            line_data2->tags_array[line_data->tags_count] = NULL;
+        }
+        else
+        {
+            line_data2->tags_count = 0;
+        }
+    }
+    else
+    {
+        line_data2->tags_count = 0;
+        line_data2->tags_array = NULL;
     }
 }
 
@@ -1562,11 +1602,95 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
 }
 
 /*
+ * Duplicates a line to print it on another buffer.
+ */
+
+struct t_gui_line *
+gui_line_dup_for_buffer (struct t_gui_line *line, struct t_gui_buffer *buffer)
+{
+    struct t_gui_line *new_line;
+    struct t_gui_line_data *new_line_data;
+
+    if (!line || !buffer)
+        return NULL;
+
+    /* create new line */
+    new_line = malloc (sizeof (*new_line));
+    if (!new_line)
+        return NULL;
+
+    /* create data for line */
+    new_line_data = malloc (sizeof (*new_line_data));
+    if (!new_line_data)
+    {
+        free (new_line);
+        return NULL;
+    }
+    new_line->data = new_line_data;
+
+    /* fill data in new line */
+    new_line->data->buffer = buffer;
+    new_line->data->message = (line->data->message) ?
+        strdup (line->data->message) : strdup ("");
+
+    if (buffer->type == GUI_BUFFER_TYPE_FORMATTED)
+    {
+        /*
+         * the line identifier is almost unique: when reaching INT_MAX, it is
+         * reset to 0; it is extremely unlikely all integer are used in the
+         * same buffer, that would mean the buffer has a huge number of lines;
+         * when searching a line id in a buffer, it is recommended to start
+         * from the last line and loop to the first
+         */
+        new_line->data->id = buffer->next_line_id;
+        buffer->next_line_id = (buffer->next_line_id == INT_MAX) ?
+            0 : buffer->next_line_id + 1;
+        new_line->data->y = line->data->y;
+        new_line->data->date = line->data->date;
+        new_line->data->date_printed = line->data->date_printed;
+        new_line->data->str_time = (line->data->str_time) ?
+            strdup (line->data->str_time) : NULL;
+        gui_line_tags_dup (line->data, new_line->data);
+        new_line->data->refresh_needed = line->data->refresh_needed;
+        new_line->data->prefix = (line->data->prefix) ?
+            (char *)string_shared_get (line->data->prefix) : NULL;
+        new_line->data->prefix_length = line->data->prefix_length;
+        new_line->data->notify_level = line->data->notify_level;
+        new_line->data->highlight = line->data->highlight;
+    }
+    else
+    {
+        new_line->data->id = line->data->y;
+        new_line->data->y = line->data->y;
+        new_line->data->date = line->data->date;
+        new_line->data->date_printed = line->data->date_printed;
+        new_line->data->str_time = (line->data->str_time) ?
+            strdup (line->data->str_time) : NULL;
+        gui_line_tags_dup (line->data, new_line->data);
+        new_line->data->refresh_needed = line->data->refresh_needed;
+        new_line->data->prefix = (line->data->prefix) ?
+            (char *)string_shared_get (line->data->prefix) : NULL;
+        new_line->data->prefix_length = line->data->prefix_length;
+        new_line->data->notify_level = line->data->notify_level;
+        new_line->data->highlight = line->data->highlight;
+    }
+
+    /* set display flag (check if line is filtered or not) */
+    new_line->data->displayed = gui_filter_check_line (new_line->data);
+
+    new_line->prev_line = NULL;
+    new_line->next_line = NULL;
+
+    return new_line;
+}
+
+/*
  * Updates data in a line via the hook_line.
  */
 
 void
 gui_line_hook_update (struct t_gui_line *line,
+                      struct t_arraylist *buffers,
                       struct t_hashtable *hashtable,
                       struct t_hashtable *hashtable2)
 {
@@ -1574,9 +1698,9 @@ gui_line_hook_update (struct t_gui_line *line,
     struct t_gui_buffer *ptr_buffer;
     unsigned long value_pointer;
     long value;
-    char *error, *new_message, *pos_newline;
-    int rc, tags_updated, notify_level_updated, highlight_updated;
-    int max_notify_level;
+    char *error, *new_message, *pos_newline, **list_buffers;
+    int i, rc, tags_updated, notify_level_updated, highlight_updated;
+    int max_notify_level, num_buffers;
 
     tags_updated = 0;
     notify_level_updated = 0;
@@ -1587,12 +1711,30 @@ gui_line_hook_update (struct t_gui_line *line,
     {
         if (ptr_value2[0])
         {
-            ptr_buffer = gui_buffer_search_by_full_name (ptr_value2);
-            if (gui_chat_buffer_valid (ptr_buffer, line->data->buffer->type))
-                line->data->buffer = ptr_buffer;
+            list_buffers = string_split (
+                ptr_value2, ",", NULL,
+                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                0, &num_buffers);
+            if (list_buffers)
+            {
+                arraylist_clear (buffers);
+                for (i = 0; i < num_buffers; i++)
+                {
+                    ptr_buffer = gui_buffer_search_by_full_name (list_buffers[i]);
+                    if (gui_chat_buffer_valid (ptr_buffer,
+                                               line->data->buffer->type))
+                    {
+                        arraylist_add (buffers, ptr_buffer);
+                    }
+                }
+                string_free_split (list_buffers);
+            }
         }
         else
         {
+            arraylist_clear (buffers);
             line->data->buffer = NULL;
             return;
         }
@@ -1604,19 +1746,37 @@ gui_line_hook_update (struct t_gui_line *line,
         {
             if (ptr_value2[0])
             {
-                if ((ptr_value2[0] == '0') && (ptr_value2[1] == 'x'))
+                list_buffers = string_split (
+                    ptr_value2, ",", NULL,
+                    WEECHAT_STRING_SPLIT_STRIP_LEFT
+                    | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                    | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                    0, &num_buffers);
+                if (list_buffers)
                 {
-                    rc = sscanf (ptr_value2 + 2, "%lx", &value_pointer);
-                    ptr_buffer = (struct t_gui_buffer *)value_pointer;
-                    if ((rc != EOF) && (rc >= 1)
-                        && gui_chat_buffer_valid (ptr_buffer, line->data->buffer->type))
+                    arraylist_clear (buffers);
+                    for (i = 0; i < num_buffers; i++)
                     {
-                        line->data->buffer = ptr_buffer;
+                        if ((list_buffers[i][0] == '0')
+                            && (list_buffers[i][1] == 'x'))
+                        {
+                            rc = sscanf (list_buffers[i] + 2,
+                                         "%lx", &value_pointer);
+                            ptr_buffer = (struct t_gui_buffer *)value_pointer;
+                            if ((rc != EOF) && (rc >= 1)
+                                && gui_chat_buffer_valid (
+                                    ptr_buffer, line->data->buffer->type))
+                            {
+                                arraylist_add (buffers, ptr_buffer);
+                            }
+                        }
                     }
+                    string_free_split (list_buffers);
                 }
             }
             else
             {
+                arraylist_clear (buffers);
                 line->data->buffer = NULL;
                 return;
             }

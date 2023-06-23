@@ -10831,7 +10831,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== hook_line
 
-_WeeChat ≥ 2.3, mis à jour dans la 3.7._
+_WeeChat ≥ 2.3, mis à jour dans la 3.7, 4.1.0._
 
 Intercepter une ligne sur le point d'être affichée dans un tampon.
 
@@ -10909,13 +10909,13 @@ de hachage, avec les valeurs suivantes (les clés et valeurs sont des chaînes)�
 | Clé | Valeur (tampon formaté) | Valeur (tampon libre) | Exemples
 
 | buffer
-| Pointeur vers le tampon.
-| Pointeur vers le tampon.
+| Liste de pointeurs vers les tampons, séparés par des virgules.
+| Liste de pointeurs vers les tampons, séparés par des virgules.
 | `+0x1234abcd+`
 
 | buffer_name
-| Nom du tampon.
-| Nom du tampon.
+| Liste de noms de tampons, séparés par des virgules.
+| Liste de noms de tampons, séparés par des virgules.
 | `+core.weechat+` +
   `+irc.server.libera+` +
   `+irc.libera.#weechat+`
@@ -11004,16 +11004,20 @@ valeurs sont des chaînes dans cette table de hachage) :
 | Clé | Valeur autorisée (tampon formaté) | Valeur autorisée (tampon libre) | Résultat
 
 | buffer
-| Pointeur vers un tampon avec contenu formaté.
-| Pointeur vers un tampon avec contenu libre.
-| La ligne est affichée sur ce tampon. +
+| Liste de pointeurs vers les tampons, séparés par des virgules (avec contenu formaté)
+  (plusieurs tampons sont supportés seulement avec WeeChat ≥ 4.1.0).
+| Liste de pointeurs vers les tampons, séparés par des virgules (avec contenu libre)
+  (plusieurs tampons sont supportés seulement avec WeeChat ≥ 4.1.0).
+| La ligne est affichée sur ces tampons. +
   Si la valeur est vide, la ligne est supprimée (le reste de la table de hachage
   est alors ignoré) ; les "hooks" suivants de type "line" ne sont pas appelés.
 
 | buffer_name
-| Nom d'un tampon avec contenu formaté.
-| Nom d'un tampon avec contenu libre.
-| La ligne est affichée sur ce tampon. +
+| Liste de noms de tampons, séparés par des virgules (avec contenu formaté)
+  (multiple buffers are supported only with WeeChat ≥ 4.1.0).
+| Liste de noms de tampons, séparés par des virgules (avec contenu libre)
+  (multiple buffers are supported only with WeeChat ≥ 4.1.0).
+| La ligne est affichée sur ces tampons. +
   Si `buffer` est également défini, la valeur de `+buffer_name+` a une priorité
   plus haute est est utilisée. +
   Si la valeur est vide, la ligne est supprimée (le reste de la table de hachage

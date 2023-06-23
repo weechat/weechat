@@ -10293,7 +10293,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== hook_line
 
-_WeeChat ≥ 2.3, ажурирано у 3.7._
+_WeeChat ≥ 2.3, ажурирано у 3.7, 4.1.0._
 
 Качи се на линију која треба да се испише у бафер.
 
@@ -10349,14 +10349,16 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 |===
 | Кључ | Вредност (форматирани бафер) | Вредност (слободни бафер) | Примери
 
+// TRANSLATION MISSING
 | buffer
-| Показивач на бафер.
-| Показивач на бафер.
+| Comma-separated list of buffer pointers.
+| Comma-separated list of buffer pointers.
 | `+0x1234abcd+`
 
+// TRANSLATION MISSING
 | buffer_name
-| Име бафера.
-| Име бафера.
+| Comma-separated list of buffer names.
+| Comma-separated list of buffer names.
 | `+core.weechat+` +
   `+irc.server.libera+` +
   `+irc.libera.#weechat+`
@@ -10441,17 +10443,23 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 |===
 | Кључ | Дозвољена вредност (форматирани бафер) | Дозвољена вредност (слободни бафер) | Резултат
 
+// TRANSLATION MISSING
 | buffer
-| Показивач на бафер са форматираним садржајем.
-| Показивач на бафер са слободним садржајем.
-| Линија се приказује у овом баферу. +
+| Comma-separated list buffer pointers (with formatted content)
+  (multiple buffers are supported only with WeeChat ≥ 4.1.0).
+| Comma-separated list buffer pointers (with free content)
+  (multiple buffers are supported only with WeeChat ≥ 4.1.0).
+| The line is displayed on these buffers. +
   Ако је вредност празна, линија се брише (тада се све остало у хеш табели
   игнорише); наредне куке типа „line” се не позивају.
 
+// TRANSLATION MISSING
 | buffer_name
-| Име бафера са форматираним садржајем.
-| Име бафера са слободним садржајем.
-| Линија се приказује у овом баферу. +
+| Comma-separated list buffer names (with formatted content)
+  (multiple buffers are supported only with WeeChat ≥ 4.1.0).
+| Comma-separated list buffer names (with free content)
+  (multiple buffers are supported only with WeeChat ≥ 4.1.0).
+| The line is displayed on these buffers. +
   Ако је и `buffer` постављено, вредност `+buffer_name+` има виши приоритет и она се користи. +
   Ако је вредност празна, линија се брише (тада се све остало у хеш табели
   игнорише); наредне куке типа „line” се не позивају.

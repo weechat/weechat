@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include "../weechat.h"
+#include "../wee-arraylist.h"
 #include "../wee-hashtable.h"
 #include "../wee-hook.h"
 #include "../wee-infolist.h"
@@ -121,17 +122,31 @@ hook_line (struct t_weechat_plugin *plugin, const char *buffer_type,
  * Executes a line hook and updates the line data.
  */
 
-void
+struct t_arraylist *
 hook_line_exec (struct t_gui_line *line)
 {
     struct t_hook *ptr_hook, *next_hook;
     struct t_hashtable *hashtable, *hashtable2;
-    char str_value[128], *str_tags;
-
-    if (!weechat_hooks[HOOK_TYPE_LINE])
-        return;
+    struct t_arraylist *buffers;
+    struct t_gui_buffer *ptr_buffer;
+    char str_value[128], *str_tags, **str_buffers;
+    int i, size;
 
     hashtable = NULL;
+    buffers = NULL;
+    str_buffers = NULL;
+
+    buffers = arraylist_new (16, 0, 0, NULL, NULL, NULL, NULL);
+    if (!buffers)
+        goto end;
+    arraylist_add (buffers, line->data->buffer);
+
+    if (!weechat_hooks[HOOK_TYPE_LINE])
+        goto end;
+
+    str_buffers = string_dyn_alloc (256);
+    if (!str_buffers)
+        goto end;
 
     hook_exec_start ();
 
@@ -161,8 +176,28 @@ hook_line_exec (struct t_gui_line *line)
                 if (!hashtable)
                     break;
             }
-            HASHTABLE_SET_POINTER("buffer", line->data->buffer);
-            HASHTABLE_SET_STR("buffer_name", line->data->buffer->full_name);
+            size = arraylist_size (buffers);
+            /* build list of buffer pointers */
+            string_dyn_copy (str_buffers, NULL);
+            for (i = 0; i < size; i++)
+            {
+                if (i > 0)
+                    string_dyn_concat (str_buffers, ",", -1);
+                snprintf (str_value, sizeof (str_value),
+                          "0x%lx", (unsigned long)(arraylist_get (buffers, i)));
+                string_dyn_concat (str_buffers, str_value, -1);
+            }
+            HASHTABLE_SET_STR("buffer", *str_buffers);
+            /* build list of buffer names */
+            string_dyn_copy (str_buffers, NULL);
+            for (i = 0; i < size; i++)
+            {
+                if (i > 0)
+                    string_dyn_concat (str_buffers, ",", -1);
+                ptr_buffer = (struct t_gui_buffer *)arraylist_get (buffers, i);
+                string_dyn_concat (str_buffers, ptr_buffer->full_name, -1);
+            }
+            HASHTABLE_SET_STR("buffer_name", *str_buffers);
             HASHTABLE_SET_STR("buffer_type",
                               gui_buffer_type_string[line->data->buffer->type]);
             HASHTABLE_SET_INT("y", line->data->y);
@@ -191,7 +226,7 @@ hook_line_exec (struct t_gui_line *line)
 
             if (hashtable2)
             {
-                gui_line_hook_update (line, hashtable, hashtable2);
+                gui_line_hook_update (line, buffers, hashtable, hashtable2);
                 hashtable_free (hashtable2);
                 if (!line->data->buffer)
                     break;
@@ -203,8 +238,17 @@ hook_line_exec (struct t_gui_line *line)
 
     hook_exec_end ();
 
+end:
     if (hashtable)
         hashtable_free (hashtable);
+
+    if (str_buffers)
+        string_dyn_free (str_buffers, 1);
+
+    if (line->data->buffer && buffers && (arraylist_size (buffers) == 0))
+        arraylist_add (buffers, line->data->buffer);
+
+    return buffers;
 }
 
 /*

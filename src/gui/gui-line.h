@@ -128,7 +128,10 @@ extern struct t_gui_line *gui_line_new (struct t_gui_buffer *buffer,
                                         const char *tags,
                                         const char *prefix,
                                         const char *message);
+extern struct t_gui_line *gui_line_dup_for_buffer (struct t_gui_line *line,
+                                                   struct t_gui_buffer *buffer);
 extern void gui_line_hook_update (struct t_gui_line *line,
+                                  struct t_arraylist *buffers,
                                   struct t_hashtable *hashtable,
                                   struct t_hashtable *hashtable2);
 extern void gui_line_add (struct t_gui_line *line);

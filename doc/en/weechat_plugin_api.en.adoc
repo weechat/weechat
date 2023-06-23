@@ -10628,7 +10628,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== hook_line
 
-_WeeChat ≥ 2.3, updated in 3.7._
+_WeeChat ≥ 2.3, updated in 3.7, 4.1.0._
 
 Hook a line to be printed in a buffer.
 
@@ -10699,13 +10699,13 @@ Line data sent to the callback is a hashtable, with following values
 | Key | Value (formatted buffer) | Value (free buffer) | Examples
 
 | buffer
-| Buffer pointer.
-| Buffer pointer.
+| Comma-separated list of buffer pointers.
+| Comma-separated list of buffer pointers.
 | `+0x1234abcd+`
 
 | buffer_name
-| Buffer name.
-| Buffer name.
+| Comma-separated list of buffer names.
+| Comma-separated list of buffer names.
 | `+core.weechat+` +
   `+irc.server.libera+` +
   `+irc.libera.#weechat+`
@@ -10793,16 +10793,20 @@ in this hashtable):
 | Key | Allowed value (formatted buffer) | Allowed value (free buffer) | Result
 
 | buffer
-| Pointer of a buffer with formatted content.
-| Pointer of a buffer with free content.
-| The line is displayed on this buffer. +
+| Comma-separated list buffer pointers (with formatted content)
+  (multiple buffers are supported only with WeeChat ≥ 4.1.0).
+| Comma-separated list buffer pointers (with free content)
+  (multiple buffers are supported only with WeeChat ≥ 4.1.0).
+| The line is displayed on these buffers. +
   If the value is empty, the line is deleted (anything else in the hashtable
   is then ignored); the next hooks of type "line" are not called.
 
 | buffer_name
-| Name of a buffer with formatted content.
-| Name of a buffer with free content.
-| The line is displayed on this buffer. +
+| Comma-separated list buffer names (with formatted content)
+  (multiple buffers are supported only with WeeChat ≥ 4.1.0).
+| Comma-separated list buffer names (with free content)
+  (multiple buffers are supported only with WeeChat ≥ 4.1.0).
+| The line is displayed on these buffers. +
   If `buffer` is also set, the value of `+buffer_name+` has higher priority and is used. +
   If the value is empty, the line is deleted (anything else in the hashtable
   is then ignored); the next hooks of type "line" are not called.
