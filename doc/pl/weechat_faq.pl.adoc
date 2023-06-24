@@ -39,15 +39,12 @@ https://weechat.org/about/interfaces/[zdalnym interfejsom ^↗^^].
 [[compile_git]]
 === Nie mogę skompilować WeeChat po sklonowaniu repozytorium git, dlaczego?
 
-// TRANSLATION MISSING
-WeeChat must be compiled with CMake.
+WeeChat musi być kompilowany przy użyciu CMake.
 
-// TRANSLATION MISSING
-Please follow link:weechat_user.en.html#source_package[build instructions ^↗^^]
-and ensure all required dependencies are installed.
+Postępuj zgodnie z link:weechat_user.en.html#source_package[instrukcjami kompilacji ^↗^^]
+w celu upewnienia się, że wszystkie wymagane zależności są zainstalowane.
 
-// TRANSLATION MISSING
-If you still have issues, please report them to the developers.
+Jeśli nadal występują jakieś problemy zgłoś je do developerów.
 
 [[compile_macos]]
 === Jak zainstalować WeeChat na macOS?
@@ -628,9 +625,8 @@ Przykład:
 /key bind down /input history_global_next
 ----
 
-// TRANSLATION MISSING
-With WeeChat ≤ 3.8, you must use the raw key code (press kbd:[Alt+k] then key
-to display its code):
+Dla wersji WeeChat ≤ 3.8, należy podać kody klawiszy (naciśnij kbd:[Alt+k] następnie kombinacje
+klawiszy, aby zobaczyć ich kod):
 
 ----
 /key bind meta2-A /input history_global_previous
@@ -823,11 +819,10 @@ regularnych dla przedrostków i zawartości linii.
 Filtrowane linie są tylko ukrywane, nie usuwane, można je zobaczyć wyłączając
 filtry (domyślnie kbd:[Alt+=] zmienia stan filtrów).
 
-// TRANSLATION MISSING
 [[filter_irc_join_part_quit]]
-=== How can I filter join/part/quit and other annoying messages on IRC channels?
+=== Jak odfiltrować informację o join/part/quit i inne uciążliwe wiadomości na kanałach IRC?
 
-See link:weechat_user.pl.html#irc_smart_filter[User's guide / IRC smart filter ^↗^^].
+Zobacz link:weechat_user.pl.html#irc_smart_filter[Poradnik użytkownika / Inteligentny filtr ^↗^^].
 
 [[filter_irc_join_channel_messages]]
 === Jak mogę filtrować wyświetlane wiadomości podczas wejścia na kanał IRC?

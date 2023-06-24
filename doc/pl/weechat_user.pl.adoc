@@ -92,8 +92,7 @@ https://github.com/weechat/weechat-container[weechat-container ^↗^^].
 [[source_package]]
 === Pakiety źródłowe
 
-// TRANSLATION MISSING
-WeeChat must be built with CMake.
+WeeChat musi być kompilowany przy użyciu CMake.
 
 [NOTE]
 Na macOS możesz użyć https://brew.sh/[Homebrew ^↗^^]:
@@ -102,17 +101,15 @@ Na macOS możesz użyć https://brew.sh/[Homebrew ^↗^^]:
 [[dependencies]]
 ==== Zależności
 
-// TRANSLATION MISSING
-The following table shows the list of packages that are *required* to build
+Poniższa tabela pokazuje listę pakietów *wymaganych* do skompilowania
 WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
 | Pakiet ^(1)^ | Wersja | Funkcje
 
-// TRANSLATION MISSING
 | kompilator C (gcc / clang) |
-| Compile C sources.
+| Kompilacja źródeł C.
 
 | cmake | ≥ 3.0
 | Kompilacja.
@@ -191,9 +188,8 @@ za pomocą jednej komendy:
 # apt-get build-dep weechat
 ----
 
-// TRANSLATION MISSING
 [[build]]
-==== Build
+==== Kompilacja
 
 * Instalacja w katalogach systemowych (wymaga uprawnień użytkownika _root_):
 
@@ -252,10 +248,9 @@ Lista popularnych opcji:
 | ENABLE_DOC | `ON`, `OFF` | OFF
 | Generowanie dokumentacji HTML.
 
-// TRANSLATION MISSING
 | ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
-| Force build of documentation even if some plugins are not compiled
-  (not recommended: docs will be incomplete).
+| Wymusza wygenerowanie dokumentacji nawet w przypadku jeśli nie wszystki
+  wtyczki zostaną skompilowane (nie zalecane: dokumentacja nie będzie kompletna).
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF
 | Kompilacja <<spell_checking,wtyczki spell>> z Enchant.
@@ -350,9 +345,8 @@ Lub z interfejsem Curses:
 $ ccmake ..
 ----
 
-// TRANSLATION MISSING
 [[tests]]
-==== Tests
+==== Testy
 
 Następujące pakiety są *wymagane* do kompilacji testów:
 
@@ -628,8 +622,7 @@ XDG z takim podziałem:
 
 [width="100%",cols="1,2m,5",options="header"]
 |===
-// TRANSLATION MISSING
-| Katalog   | Domyślna wartość         | Fallback value if $XDG_XXX is not defined
+| Katalog   | Domyślna wartość         | Wartość jeśli $XDG_XXX nie jest zdefiniowana
 | config    | $XDG_CONFIG_HOME/weechat | `$HOME/.config/weechat`
 | data      | $XDG_DATA_HOME/weechat   | `$HOME/.local/share/weechat`
 | cache     | $XDG_CACHE_HOME/weechat  | `$HOME/.cache/weechat`
@@ -1475,24 +1468,18 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | kbd:[→] +
   kbd:[Shift+→] +
   kbd:[Ctrl+f]   | Idź do następnego znaku w linii poleceń. | `+/input move_next_char+`
-// TRANSLATION MISSING
-| kbd:[Shift+↑]  | Go to previous line. | `+/input move_previous_line+`
-// TRANSLATION MISSING
-| kbd:[Shift+↓]  | Go to next line. | `+/input move_next_line+`
+| kbd:[Shift+↑]  | Idź do poprzedniej linii. | `+/input move_previous_line+`
+| kbd:[Shift+↓]  | Idź do następnej linii. | `+/input move_next_line+`
 | kbd:[Ctrl+←] +
   kbd:[Alt+b]    | Idź do poprzedniego słowa w linii poleceń. | `+/input move_previous_word+`
 | kbd:[Ctrl+→] +
   kbd:[Alt+f]    | Idź do następnego słowa w linii poleceń. | `+/input move_next_word+`
-// TRANSLATION MISSING
 | kbd:[Home] +
-  kbd:[Ctrl+a]   | Go to the beginning of current line. | `+/input move_beginning_of_line+`
-// TRANSLATION MISSING
-| kbd:[Shift+Home] | Go to the beginning of command line. | `+/input move_beginning_of_input+`
-// TRANSLATION MISSING
+  kbd:[Ctrl+a]   | Idź na początek obecnej linii. | `+/input move_beginning_of_line+`
+| kbd:[Shift+Home] | Idź na początek lini poleceń. | `+/input move_beginning_of_input+`
 | kbd:[End] +
-  kbd:[Ctrl+e]   | Go to the end of current line. | `+/input move_end_of_line+`
-// TRANSLATION MISSING
-| kbd:[Shift+End]  | Go to the end of command line. | `+/input move_end_of_input+`
+  kbd:[Ctrl+e]   | Idź na koniec obecnej linii. | `+/input move_end_of_line+`
+| kbd:[Shift+End]  | Idż na koniec linii poleceń. | `+/input move_end_of_input+`
 |===
 
 [[key_bindings_cmdline_editing]]
@@ -1505,15 +1492,11 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
   kbd:[Ctrl+d]        | Usuń następny znak w linii poleceń. | `+/input delete_next_char+`
 | kbd:[Backspace] +
   kbd:[Ctrl+h]        | Usuń poprzedni znak w linii poleceń. | `+/input delete_previous_char+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+k]        | Delete from cursor until end of current line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
-// TRANSLATION MISSING
-| kbd:[Alt+Ctrl+k]    | Delete from cursor until end of command line (deleted string is copied to the internal clipboard). | `+/input delete_end_of_input+`
+| kbd:[Ctrl+k]        | Usuń wszystko od kursora do końca obecnej linii (skasowany ciąg zostanie skopipowany do wewnętrznego schowka). | `+/input delete_end_of_line+`
+| kbd:[Alt+Ctrl+k]    | Usuń wszystko od kursora do końca linii poleceń (skasowany ciąg zostanie skopipowany do wewnętrznego schowka). | `+/input delete_end_of_input+`
 | kbd:[Ctrl+t]        | Przestaw znaki. | `+/input transpose_chars+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+u]        | Delete from cursor until beginning of current line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
-// TRANSLATION MISSING
-| kbd:[Alt+Ctrl+u]    | Delete from cursor until beginning of command line (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_input+`
+| kbd:[Ctrl+u]        | Usuń wszystko od kursora do początku obecnej linii (skasowany ciąg zostanie skopipowany do wewnętrznego schowka). | `+/input delete_beginning_of_line+`
+| kbd:[Alt+Ctrl+u]    | Usuń wszystko od kursora do początku linii poleceń (skasowany ciąg zostanie skopipowany do wewnętrznego schowka). | `+/input delete_beginning_of_input+`
 | kbd:[Alt+Backspace] | Usuń poprzednie słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_previous_word+`
 | kbd:[Ctrl+w]        | Usuń poprzednie słowo w linii poleceń do białego znaku (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_previous_word_whitespace+`
 | kbd:[Ctrl+y]        | Wkleja zawartość wewnętrznego schowka. | `+/input clipboard_paste+`
@@ -1527,10 +1510,8 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | kbd:[Alt+Enter]     | Wstawia nową linię. | `+/input insert \n+`
 | kbd:[Alt+d]         | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `+/input delete_next_word+`
 | kbd:[Alt+k]         | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń. | `+/input grab_key_command+`
-// TRANSLATION MISSING
-| kbd:[Alt+r]         | Delete current line. | `+/input delete_line+`
-// TRANSLATION MISSING
-| kbd:[Alt+R]         | Delete entire command line. | `+/input delete_input+`
+| kbd:[Alt+r]         | Usuń obecną linię. | `+/input delete_line+`
+| kbd:[Alt+R]         | Usuń całą linię poleceń. | `+/input delete_input+`
 |===
 
 [[key_bindings_cmdline_color_codes]]
@@ -1682,8 +1663,7 @@ zostanie wciśnięta w buforze tekstowym).
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Zatrzymaj wyszukiwanie na obecnej pozycji. | `+/input search_stop_here+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+q]   | Stop search and reset scroll to pre-text search state. | `+/input search_stop+`
+| kbd:[Ctrl+q]   | Zatrzymaj wyszukiwanie i przywróć ekran do stanu z przed wyszukiwania. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]
@@ -1704,8 +1684,7 @@ ekranie).
 | kbd:[Alt+←]    | -        | Przesuń kursor obszar w lewo. | `+/cursor move area_left+`
 | kbd:[Alt+→]    | -        | Przesuń kursor obszar w prawo. | `+/cursor move area_right+`
 | kbd:[m]        | chat     | Cytuj wiadomość. | `+hsignal:chat_quote_message;/cursor stop+`
-// TRANSLATION MISSING
-| kbd:[l]        | chat     | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
+| kbd:[l]        | chat     | Cytuj zaznaczoną linię. | `+hsignal:chat_quote_focused_line;/cursor stop+`
 | kbd:[q]        | chat     | Cytuj prefiks i wiadomość. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
 | kbd:[Q]        | chat     | Cytuj czas, prefiks i wiadomość. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
 | kbd:[b]        | nicklist | Zbanuj osobę. | `+/window ${_window_number};/ban ${nick}+`
@@ -3677,17 +3656,16 @@ konkretnym kolorze na liście nicków, za pomocą następujących opcji:
 * <<option_irc.server_default.away_check_max_nicks,irc.server_default.away_check_max_nicks>>
 * <<option_weechat.look.item_away_message,weechat.look.item_away_message>>
 
-// TRANSLATION MISSING
 [[irc_ircv3_batch]]
 ==== batch
 
-Specification: https://ircv3.net/specs/extensions/batch[batch ^↗^^]
+Specifikacja: https://ircv3.net/specs/extensions/batch[batch ^↗^^]
 
-This capability allows the server to send batched events (grouping of several
-messages that are related).
+Ta właściwość pozwala serwerowi na wysyłanie seri zdarzeń (pogrupowane kilka powiązanych
+wiadomości).
 
-For now, WeeChat only stores messages received in a batch and processes as usual
-later, when the batch ends.
+Obecnie WeeChat tylko przechowuje wiadomości odebrane w seri i przetwarza je w normalny
+sposób, po zakończeniu seri.
 
 [[irc_ircv3_cap_notify]]
 ==== cap-notify
@@ -3710,7 +3688,7 @@ Przykłady:
 
 Specyfikacja: https://ircv3.net/specs/extensions/chghost[chghost ^↗^^]
 
-Ta właściwośc pozwala serwerowi na wysyłanie wiadomości, kiedy użytkownik zmienia
+Ta właściwość pozwala serwerowi na wysyłanie wiadomości, kiedy użytkownik zmienia
 nazwę lub hosta. Kiedy opcja <<option_irc.look.smart_filter_chghost,irc.look.smart_filter_chghost>>
 jest włączona (domyślna wartość), zmiany hosta są domyślnie ukrywane jeśli dany
 nick nie odzywał się od kilku minut. +
@@ -3723,45 +3701,44 @@ Przykłady:
 -- alice (user@example.com) zmienił hosta na test.com
 ....
 
-// TRANSLATION MISSING
 [[irc_ircv3_draft_multiline]]
 ==== draft/multiline
 
-Specification: https://ircv3.net/specs/extensions/multiline[multiline ^↗^^]
+Specifikacja: https://ircv3.net/specs/extensions/multiline[multiline ^↗^^]
 
-This capability allows the client and server to send messages with multiple lines,
-using the <<irc_ircv3_batch,batch>> capability, that must be enabled as well.
+Ta właściwość pozwala klientowi i serwerowi wysyłać wieloliniowe wiadomości,
+za pomocą właściwości <<irc_ircv3_batch,batch>>, która również musi być włączona.
 
-There are limits in term of bytes or number of lines in a multiline message
-that are given in the capability sent by the server, for example:
+Istnieje limit bajtów lub ilości lini tych wiadomości podawane dla tej
+właściwości wysyłanej przez serwer, na przykład:
 
 ....
 CAP alice LS * :draft/multiline=max-bytes=4096,max-lines=24
 ....
 
-This sets a limit of 4096 bytes and 24 lines for a multiline batched content.
+Ustawia to limit na 4096 bajtów i 24 linie dla zawartości wieloliniowej serii.
 
-If the limits are not given by the server, the default in WeeChat are:
+Jeśli serwer nie ustawia limitu, domyślne wartości dla WeeChat to:
 
-* max bytes: 4096
-* max lines: 24
+* ilość bajtów: 4096
+* ilość lin: 24
 
-Only standard messages and those send by the <<command_irc_notice,/notice>>
-command can be multiline. +
-ACTION CTCP messages sent with command <<command_irc_me,/me>> are not affected
-by this capability. That means multiline actions are sent as multiple actions.
+Tylko standardowe wiadmości oraz te wysyłane przez polecenie  <<command_irc_notice,/notice>>
+mogą mieć wiele linii. +
+Ta właściwość nie ma wpływu na wiadomości ACTION CTCP wysyłane przez polecenie
+<<command_irc_me,/me>>. Oznacza to ze wieloliniowe akcje wysyłane są jako wiele akcji.
 
 [WARNING]
-As the specification is a "draft", it may change and the multiline support can
-possibly break at any time in WeeChat. +
-The capability is automatically enabled if the server supports it and can be
-disabled with this command:
+Ponieważ specyfikacja jest "szkicem" może się zmienić i wsparcie dla tej właściwości
+w WeeChat może się zepsuć w dowolnym momencie. +
+Wsparcie dla tej właściwości jest automatycznie włączane jeśli serwer ją wspiera,
+można ją wyłączyć za pomocą polecenia:
 `/set irc.server_default.capabilities "*,!draft/multiline"`. +
-When the capability is disabled, a multiline message is sent as multiple messages,
-as if they were sent sequentially to the server.
+Kiedy wsparcie jest wyłączone, wieloliniowe wiadomości są wysyłane jako wiele wiadomości,
+tak jakby były wysyłane sekwencyjnie do serwera.
 
-Example of IRC messages sent for a user message with two lines (`this is a test`
-/ `on two lines`), send to channel #test:
+Przykład wiadomości IRC wysłanych dla wiadomości użytkownika z dwoma liniami
+(`this is a test` / `on two lines`), wysłane na kanał #test:
 
 ....
 BATCH +i8Je7M7gquddoyC9 draft/multiline #test
@@ -3770,26 +3747,25 @@ BATCH +i8Je7M7gquddoyC9 draft/multiline #test
 BATCH -i8Je7M7gquddoyC9
 ....
 
-Display of the message sent in WeeChat:
+Wiadomość wyświetlana w WeeChat:
 
 ....
 19:01:45 alice | this is a test
                | on two lines
 ....
 
-// TRANSLATION MISSING
 [[irc_ircv3_echo_message]]
 ==== echo-message
 
-Specification: https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^^]
+Specifikacja: https://ircv3.net/specs/extensions/echo-message[echo-message ^↗^^]
 
-This capability forces the server to send PRIVMSG, NOTICE and TAGMSG messages
-back to WeeChat.
+Ta właściwość wymusza na serwerze wysyłanie wiadomości PRIVMSG, NOTICE i TAGMSG
+spowrotem do WeeChat.
 
-WeeChat displays only the message received and not the message sent, so a delay
-can be noticed between the send and the display. When the message is displayed,
-it means it has been properly received by the server and propagated to other
-clients connected to the server as well.
+WeeChat wyświetla tylko otrzymane wiadomości, dlatego można zaobserwować pewne
+opóźnienia pomiędzy wysłaniem a wyświetleniem wiadomości. Kiedy wiadomość zostanie
+wyświetlona, oznacza to, że została ona poprawnie odebrana przez serwer i przesłana
+do innych połączonych klientów.
 
 [[irc_ircv3_extended_join]]
 ==== extended-join
@@ -3996,12 +3972,11 @@ W celu zamknięcia prywatnego buforu możesz wykonać to polecenie w prywatnym b
 /close
 ----
 
-// TRANSLATION MISSING
 [[irc_smart_filter]]
-=== Smart filter
+=== Inteligentne filtry
 
-A smart filter is available to filter some messages when someone did not write
-anything in the channel during a configurable delay:
+Inteligentne filtry są dostępne dla filtrowania części wiadomości w przypadku,
+kiedy ktoś nic nie napisał na kanale w określonym czasie:
 
 - join: user joins the channel
 - part: user leaves the channel
@@ -4012,29 +3987,29 @@ anything in the channel during a configurable delay:
 - nick: user changes its nick
 - setname: user changes its real name
 
-Smart filter is enabled by default, but you must add a filter to hide lines on
-buffers, for example:
+Intgeligentne filtry są domyślnie włączone, ale musisz dodać filtr ukrywający
+wiadomości w buforach, na przydład:
 
 ----
 /filter add irc_smart * irc_smart_filter *
 ----
 
-It is possible to create filter for one channel only or channels beginning with
-same name (see `/help filter`):
+Można stworzyć filtry dla pojedynczego kanału lub kanałów, których nazwy
+zaczynają się tak samo (zobacz `/help filter`):
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
 ----
 
-You can setup a longer delay (in minutes):
+Możesz ustawić dłuższe opóźnienie (w minutach):
 
 ----
 /set irc.look.smart_filter_delay 10
 ----
 
-If someone did not write anything during last 10 minutes, its messages like
-join/part/quit will be hidden by default on channel, and you can use key
-kbd:[Alt+=] (toggle filters) to see them.
+Jeśli ktoś nie napiał nic w ciągu ostatnich 10 minut, jego wiadomości jak
+join/part/quit zostaną domyślnie ukryte na kanale. Można użyć skrótu kbd:[Alt+=]
+(przełącz filtry) żeby je zobaczyć.
 
 [[irc_ctcp_replies]]
 === Odpowiedzi CTCP
@@ -4049,10 +4024,9 @@ pomocą polecenia:
 /set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-The name of CTCP must be in lower case. That means option _irc.ctcp.VERSION_
-would not work.
+Nazwa wiadomości CTCP musi być pisana małymi literami. Oznacza to, że ustawienie
+opcji _irc.ctcp.VERSION_ nie zadziała.
 
 Jeśli chcesz zablokować CTCP "VERSION" (nie odpowiadać na zapytanie), ustaw
 pusty ciąg:
@@ -4659,9 +4633,8 @@ Składnia dla komend/tekstu przekazywanego do kolejki FIFO wygląda następując
   *tekst lub komenda
 ....
 
-// TRANSLATION MISSING
-Backslashes can be interpreted with this format, where `*` is replaced by `\`,
-allowing for example to send multiline messages:
+Backslashe mogą być użyte w tym formacie zastępując `*` przez `\`, pozwalając
+na przykład wysyłanie wiadomości wieloliniowych:
 
 ....
   plugin.buffer \text or command here
@@ -4682,9 +4655,8 @@ $ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_1
 $ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
-// TRANSLATION MISSING
-* Send a multiline message on IRC #test channel, if capability "draft/multiline"
-  is enabled on the ergo server:
+* Wysyłanie wielolinowych wiadomości na kanał IRC #test, jeśli właściwość
+  "draft/multiline" jest włączona na serwerze ergo:
 
 ----
 $ echo 'irc.ergo.#test \hello\n...on two lines!' >/run/user/1000/weechat/weechat_fifo_12345
@@ -5284,9 +5256,8 @@ Zmienne ustawiane za pomocą tagów w wiadomościach:
 | tg_msg_pv          | ciąg | "1" dla prywatnej wiadomości, inaczej "0".
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ Commas are replaced by semicolons in IRC tag (key and value).
+^(1)^ Przecinki są zastępowane przez średniki w tagach IRC (kluczach i wartościach)
 
 [[trigger_data_print]]
 ==== Print
@@ -5322,9 +5293,8 @@ Zmienne ustawiane za pomocą tagów w wiadomościach:
 | tg_msg_pv          | ciąg | "1" dla prywatnej wiadomości, inaczej "0".
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ Commas are replaced by semicolons in IRC tag (key and value).
+^(1)^ Przecinki są zastępowane przez średniki w tagach IRC (kluczach i wartościach)
 
 [[trigger_data_command]]
 ==== Command
