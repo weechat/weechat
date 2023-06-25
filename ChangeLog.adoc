@@ -10,6 +10,13 @@ This document lists all the changes for each version. +
 For a list of important changes that require manual actions, please look at release notes.
 
 
+[[v4.0.1]]
+== Version 4.0.1 (under dev)
+
+Bug fixes::
+
+  * core: force key "return" to command "/input return" when migrating legacy keys
+
 [[v4.0.0]]
 == Version 4.0.0 (2023-06-24)
 

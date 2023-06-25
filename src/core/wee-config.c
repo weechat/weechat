@@ -1612,6 +1612,18 @@ config_weechat_update_cb (const void *pointer, void *data,
                             ptr_option, new_option);
                         hashtable_set (data_read, "option", new_option);
                         changes++;
+                        if (ptr_section
+                            && (strcmp (ptr_section, "key") == 0)
+                            && (strcmp (new_option, "return") == 0)
+                            && (!ptr_value
+                                || (strcmp (ptr_value, "/input return") != 0)))
+                        {
+                            gui_chat_printf (
+                                NULL,
+                                _("Command converted for key \"%s\": \"%s\" => \"%s\""),
+                                "return", ptr_value, "/input return");
+                            hashtable_set (data_read, "value", "/input return");
+                        }
                     }
                     free (new_option);
                 }
