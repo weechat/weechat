@@ -182,6 +182,10 @@ Alias converted to lower case: "CLOSE" => "close"
 [[v4.0.0_tls]]
 === TLS options and connections
 
+Option `weechat.color.status_name_insecure` has been added, the buffer name
+is now displayed with color `lightmagenta` by default if the connection with
+the server is *NOT* made with TLS.
+
 Options, commands and documentation have been updated to "TLS" instead of "SSL":
 
 * core option:
