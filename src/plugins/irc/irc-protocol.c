@@ -2454,6 +2454,8 @@ IRC_PROTOCOL_CALLBACK(notice)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     int notify_private, is_channel, is_channel_orig, nick_is_me, display_host;
+    int cap_echo_message, msg_already_received;
+    time_t time_now;
     struct t_gui_buffer *ptr_buffer;
 
     IRC_PROTOCOL_MIN_PARAMS(2);
@@ -2479,8 +2481,23 @@ IRC_PROTOCOL_CALLBACK(notice)
 
     if (nick && (pos_args[0] == '\01'))
     {
-        irc_ctcp_display_reply_from_nick (server, date, tags, command, nick,
-                                          address, pos_args);
+        cap_echo_message = weechat_hashtable_has_key (server->cap_list,
+                                                      "echo-message");
+        msg_already_received = weechat_hashtable_has_key (
+            server->echo_msg_recv, irc_message);
+        if (!msg_already_received && cap_echo_message)
+        {
+            time_now = time (NULL);
+            weechat_hashtable_set (server->echo_msg_recv,
+                                   irc_message, &time_now);
+        }
+        if (!cap_echo_message || !msg_already_received)
+        {
+            irc_ctcp_display_reply_from_nick (server, date, tags, command, nick,
+                                              address, pos_args);
+        }
+        if (msg_already_received)
+            weechat_hashtable_remove (server->echo_msg_recv, irc_message);
     }
     else
     {
@@ -3024,7 +3041,9 @@ IRC_PROTOCOL_CALLBACK(privmsg)
 {
     char *msg_args, *msg_args2, str_tags[1024], *str_color, *color;
     const char *pos_target, *remote_nick, *pv_tags;
-    int status_msg, is_channel, nick_is_me;
+    int status_msg, is_channel, nick_is_me, cap_echo_message;
+    int msg_already_received;
+    time_t time_now;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
@@ -3175,7 +3194,17 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         /* CTCP to user */
         if (msg_args[0] == '\01')
         {
-            if (nick_is_me)
+            cap_echo_message = weechat_hashtable_has_key (server->cap_list,
+                                                          "echo-message");
+            msg_already_received = weechat_hashtable_has_key (
+                server->echo_msg_recv, irc_message);
+            if (!msg_already_received && cap_echo_message)
+            {
+                time_now = time (NULL);
+                weechat_hashtable_set (server->echo_msg_recv,
+                                       irc_message, &time_now);
+            }
+            if (nick_is_me && cap_echo_message && !msg_already_received)
             {
                 irc_protocol_privmsg_display_ctcp_send (
                     server, remote_nick, address, msg_args);
@@ -3185,6 +3214,8 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 irc_ctcp_recv (server, date, tags, command, NULL, params[0],
                                address, nick, remote_nick, msg_args, irc_message);
             }
+            if (msg_already_received)
+                weechat_hashtable_remove (server->echo_msg_recv, irc_message);
             goto end;
         }
 
