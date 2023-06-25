@@ -33,6 +33,7 @@ New features::
   * core: add access to hashtable properties in evaluation of expressions (issue #1888)
   * core: display similar command names when a command is unknown (issue #1877)
   * core: rename option weechat.color.status_name_ssl to weechat.color.status_name_tls
+  * core: add option weechat.color.status_name_insecure to display buffer name with a specific color when not connected with TLS to the server
   * core, plugins: make many identifiers case sensitive (issue #1872, issue #398, bug #32213)
   * core: add item "mouse_status" in default status bar, change default color to lightgreen
   * core, trigger: add options weechat.color.chat_status_disabled and weechat.color.chat_status_enabled, remove options trigger.color.trigger and trigger.color.trigger_disabled, add enabled/disabled status color in output of `/filter list` (issue #1820)
