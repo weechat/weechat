@@ -168,7 +168,7 @@ WeeChat:
 
 [NOTE]
 // TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
 name can be different in other distributions. +
 // TRANSLATION MISSING
 ^(2)^ It is recommended to compile with libncurses**w**5-dev (the *w* is
@@ -193,10 +193,10 @@ WeeChat:
 | libaspell-dev / libenchant-dev        |          | Plugin spell.
 | python3-dev                           | ≥ 3.0    | Plugin python.
 | libperl-dev                           |          | Plugin perl.
-| ruby2.7, ruby2.7-dev                  | ≥ 1.9.1  | Plugin ruby.
+| ruby3.1, ruby3.1-dev                  | ≥ 1.9.1  | Plugin ruby.
 | liblua5.4-dev                         |          | Plugin lua.
 | tcl-dev                               | ≥ 8.5    | Plugin tcl.
-| guile-2.2-dev                         | ≥ 2.0    | Plugin guile (scheme).
+| guile-3.0-dev                         | ≥ 2.0    | Plugin guile (scheme).
 | libv8-dev                             | ≤ 3.24.3 | Plugin javascript.
 | php-dev                               | ≥ 7.0    | Plugin php.
 | libphp-embed                          | ≥ 7.0    | Plugin php.
@@ -215,7 +215,7 @@ WeeChat:
 
 [NOTE]
 // TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
 name can be different in other distributions.
 
 // TRANSLATION MISSING
@@ -1265,8 +1265,8 @@ If WeeChat looks like that:
 │4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
 │5.  #ghi │12:54:15 peter | hey!                                               │       │
 │         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
+│         │               | /weechat/devel/weechat_plugin_api.en.html#_weechat │       │
+│         │               | _hook_process                                      │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
@@ -1309,8 +1309,8 @@ The screen will look like that in bare display:
 │12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
 │12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
 │12:54 <peter> hey!                                                                    │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/weechat/devel/weechat_│
+│plugin_api.en.html#_weechat_hook_process                                              │
 └──────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -1825,7 +1825,7 @@ kbd:[Ctrl+r] per cercare del testo nel buffer).
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Stop search at current position. | `+/input search_stop_here+`
 // TRANSLATION MISSING
-| kbd:[Ctrl+q]   | Stop search and scroll to bottom of buffer. | `+/input search_stop+`
+| kbd:[Ctrl+q]   | Stop search and reset scroll to pre-text search state. | `+/input search_stop+`
 |===
 
 // TRANSLATION MISSING

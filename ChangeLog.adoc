@@ -11,7 +11,7 @@ For a list of important changes that require manual actions, please look at rele
 
 
 [[v4.0.0]]
-== Version 4.0.0 (under dev)
+== Version 4.0.0 (2023-06-24)
 
 New features::
 
@@ -43,7 +43,7 @@ New features::
   * api: add info "auto_load_scripts"
   * alias: use lower case for default aliases, rename all aliases to lower case on upgrade (issue #1872)
   * alias: add `$&` to replace all arguments with double quotes escaped (issue #1140, issue #1190)
-  * alias: add option `missing` in command `/alias`
+  * alias: add options `missing` and `rename` in command `/alias`
   * fifo: add support of escaped chars in text or commands sent (issue #1950)
   * fset: add options fset.color.color_name and fset.color.color_name_selected (issue #1920)
   * irc: rename "ssl" options to "tls", connect with TLS and port 6697 by default
@@ -111,6 +111,7 @@ Bug fixes::
   * irc: remove extra space in CTCP ACTION message sent without arguments
   * logger: fix display of multiline messages in backlog (issue #1926)
   * lua: fix crash with print when the value to print is not a string (issue #1904, issue #1905)
+  * relay: fix crash on `/upgrade` when at least a client is connected with weechat protocol
   * relay: fix connection with IRC clients sending "CAP REQ :" (without capability) and not sending "CAP END" (issue #1040)
   * ruby: fix crash on quit when a child process is still running (issue #1889, issue #1915)
   * ruby: fix crash in display of exception backtrace with Ruby 3 (issue #1631, issue #1886)

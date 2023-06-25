@@ -142,7 +142,7 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 |===
 
 [NOTE]
-^(1)^ Der Name stammt von der Debian GNU/Linux Bullseye-Distribution,
+^(1)^ Der Name stammt von der Debian GNU/Linux Bookworm-Distribution,
 Version und Name können in anderen Distributionen anders lauten. +
 ^(2)^ Es wird empfohlen WeeChat mit libncurses**w**5-dev (das *w* ist
 entscheidend) zu kompilieren. Eine Kompilierung kann auch mit libncurses5-dev erfolgen,
@@ -163,10 +163,10 @@ WeeChat optional sind:
 | libaspell-dev / libenchant-dev        |          | Spell Erweiterung.
 | python3-dev                           | ≥ 3.0    | Python Erweiterung.
 | libperl-dev                           |          | Perl Erweiterung.
-| ruby2.7, ruby2.7-dev                  | ≥ 1.9.1  | Ruby Erweiterung.
+| ruby3.1, ruby3.1-dev                  | ≥ 1.9.1  | Ruby Erweiterung.
 | liblua5.4-dev                         |          | Lua Erweiterung.
 | tcl-dev                               | ≥ 8.5    | Tcl Erweiterung.
-| guile-2.2-dev                         | ≥ 2.0    | Guile (scheme) Erweiterung.
+| guile-3.0-dev                         | ≥ 2.0    | Guile (scheme) Erweiterung.
 | libv8-dev                             | ≤ 3.24.3 | JavaScript Erweiterung.
 | php-dev                               | ≥ 7.0    | PHP Erweiterung.
 | libphp-embed                          | ≥ 7.0    | PHP Erweiterung.
@@ -179,7 +179,7 @@ WeeChat optional sind:
 |===
 
 [NOTE]
-^(1)^ Der Name stammt von der Debian GNU/Linux Bullseye-Distribution,
+^(1)^ Der Name stammt von der Debian GNU/Linux Bookworm-Distribution,
 Version und Name können in anderen Distributionen anders lauten.
 
 Falls eine Debian/Ubuntu basierte Distribution genutzt wird und man einen
@@ -1172,8 +1172,8 @@ Im normalen Modus sieht WeeChat wie folgt aus:
 │4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
 │5.  #ghi │12:54:15 peter | hey!                                               │       │
 │         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
+│         │               | /weechat/devel/weechat_plugin_api.en.html#_weechat │       │
+│         │               | _hook_process                                      │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
@@ -1216,8 +1216,8 @@ Der selbe Bildschirm sieht im vereinfachten Anzeigemodus wie folgt aus:
 │12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
 │12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
 │12:54 <peter> hey!                                                                    │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/weechat/devel/weechat_│
+│plugin_api.en.html#_weechat_hook_process                                              │
 └──────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -1670,7 +1670,7 @@ in einem Buffer nach einem Text zu suchen).
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | beendet Suche ab aktueller Position. | `+/input search_stop_here+`
-| kbd:[Ctrl+q]   | beendet Suche und blättert zum Ende des Buffers. | `+/input search_stop+`
+| kbd:[Ctrl+q]   | Suche wird abgebrochen und der Bildlauf wird auf die Vortextsuche zurückgesetzt. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]

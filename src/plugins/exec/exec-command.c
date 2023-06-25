@@ -933,7 +933,7 @@ exec_command_init ()
            "  /exec -sh -n ps xu | grep weechat\n"
            "  /exec -n -norc url:https://pastebin.com/raw.php?i=xxxxxxxx\n"
            "  /exec -nf -noln links -dump "
-           "https://weechat.org/files/doc/devel/weechat_user.en.html\n"
+           "https://weechat.org/files/doc/weechat/devel/weechat_user.en.html\n"
            "  /exec -o uptime\n"
            "  /exec -pipe \"/print Machine uptime:\" uptime\n"
            "  /exec -n tail -f /var/log/messages\n"

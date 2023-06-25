@@ -136,7 +136,7 @@ WeeChat мора да се изгради са CMake.
 |===
 
 [NOTE]
-^(1)^ Име долази из Debian GNU/Linux Bullseye дистрибуције, верзија и
+^(1)^ Име долази из Debian GNU/Linux Bookworm дистрибуције, верзија и
 име могу да буду другачији у осталим дитрибуцијама. +
 ^(2)^ Препоручује се компајлирање са libncurses**w**5-dev (битно је *w*). Програм WeeChat може да се компајлира са libncurses5-dev, али се то *НЕ* препоручује: можете имати багове код приказа широких карактера. +
 ^(3)^ GnuTLS ≥ 3.0.21 је неопходан за IRC SASL аутентификацију механизмом ECDSA-NIST256P-CHALLENGE.
@@ -152,10 +152,10 @@ WeeChat мора да се изгради са CMake.
 | libaspell-dev / libenchant-dev         |          | Spell додатак.
 | python3-dev                            | ≥ 3.0    | Python додатак.
 | libperl-dev                            |          | Perl додатак.
-| ruby2.7, ruby2.7-dev                   | ≥ 1.9.1  | Ruby додатак.
+| ruby3.1, ruby3.1-dev                   | ≥ 1.9.1  | Ruby додатак.
 | liblua5.4-dev                          |          | Lua додатак.
 | tcl-dev                                | ≥ 8.5    | Tcl додатак.
-| guile-2.2-dev                          | ≥ 2.0    | Guile (scheme) додатак.
+| guile-3.0-dev                          | ≥ 2.0    | Guile (scheme) додатак.
 | libv8-dev                              | ≤ 3.24.3 | JavaScript додатак.
 | php-dev                                | ≥ 7.0    | PHP додатак.
 | libphp-embed                           | ≥ 7.0    | PHP додатак.
@@ -168,7 +168,7 @@ WeeChat мора да се изгради са CMake.
 |===
 
 [NOTE]
-^(1)^ Име долази из Debian GNU/Linux Bullseye дистрибуције, верзија и
+^(1)^ Име долази из Debian GNU/Linux Bookworm дистрибуције, верзија и
 име могу да буду другачији у осталим дистрибуцијама.
 
 Ако користите дистрибуцију базирану на Debian/Ubuntu и ако имате неке „deb-src” изворне ставке у фајлу _/etc/apt/sources.list_, можете инсталирати све зависности командом:
@@ -1075,9 +1075,9 @@ _прозор_ је површина екрана која приказује б
 │3.  #abc │12:52:27    -- | Канал #abc: 4 надимка (2 опа, 1 глас, 1 обични)    │+weebot│
 │4.  #def │12:52:27    -- | Канал је креиран у Уто Јан 27 06:30:17 2009        │peter  │
 │5.  #ghi │12:54:15 peter | hey!                                               │       │
-│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/do  │       │
-│         │               | c/devel/weechat_plugin_api.en.html#_weechat_hook_  │       │
-│         │               | process                                            │       │
+│         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
+│         │               | /weechat/devel/weechat_plugin_api.en.html#_weechat │       │
+│         │               | _hook_process                                      │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
@@ -1098,31 +1098,31 @@ _прозор_ је површина екрана која приказује б
 Екран у огољеном приказу ће изгледати овако:
 
 ....
-┌───────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│                                                                                       │
-│12:52 --> Flashy (flashcode@weechat.org) је приступио у #abc                           │
-│12:52 -- Надимци #abc: [@Flashy @joe +weebot peter]                                    │
-│12:52 -- Канал #abc: 4 надимка (2 опа, 1 глас, 1 обичан)                               │
-│12:52 -- Канал је креиран у Уто Јан 27 06:30:17 2009                                   │
-│12:54 <peter> hey!                                                                     │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_ap│
-│i.en.html#_weechat_hook_process                                                        │
-└───────────────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│12:52 --> Flashy (flashcode@weechat.org) је приступио у #abc                          │
+│12:52 -- Надимци #abc: [@Flashy @joe +weebot peter]                                   │
+│12:52 -- Канал #abc: 4 надимка (2 опа, 1 глас, 1 обичан)                              │
+│12:52 -- Канал је креиран у Уто Јан 27 06:30:17 2009                                  │
+│12:54 <peter> hey!                                                                    │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/weechat/devel/weechat_│
+│plugin_api.en.html#_weechat_hook_process                                               │
+└──────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
 Тако да у свом терминалу без проблема можете кликнути на URL адресу од надимка _joe_ (наравно, ово претпоставља да ваш терминал подржава кликове на URL адресе).
@@ -1567,7 +1567,8 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Заустављање претраге на текућој позицији. | `+/input search_stop_here+`
-| kbd:[Ctrl+q]   | Заустављање претраге и скроловање на дно бафера. | `+/input search_stop+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and reset scroll to pre-text search state. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]

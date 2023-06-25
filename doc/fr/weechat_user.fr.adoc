@@ -137,7 +137,7 @@ Le tableau suivant liste les paquets *requis* pour construire WeeChat :
 |===
 
 [NOTE]
-^(1)^ Le nom provient de la distribution GNU/Linux Debian Bullseye, la version
+^(1)^ Le nom provient de la distribution GNU/Linux Debian Bookworm, la version
 et le nom peuvent être différents dans les autres distributions.
 ^(2)^ Il est recommandé de compiler avec libncurses**w**5-dev (le *w* est
 important). WeeChat peut compiler avec libncurses5-dev, mais ce n'est *PAS*
@@ -157,10 +157,10 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 | libaspell-dev / libenchant-dev           |          | Extension spell.
 | python3-dev                              | ≥ 3.0    | Extension python.
 | libperl-dev                              |          | Extension perl.
-| ruby2.7, ruby2.7-dev                     | ≥ 1.9.1  | Extension ruby.
+| ruby3.1, ruby3.1-dev                     | ≥ 1.9.1  | Extension ruby.
 | liblua5.4-dev                            |          | Extension lua.
 | tcl-dev                                  | ≥ 8.5    | Extension tcl.
-| guile-2.2-dev                            | ≥ 2.0    | Extension guile (scheme).
+| guile-3.0-dev                            | ≥ 2.0    | Extension guile (scheme).
 | libv8-dev                                | ≤ 3.24.3 | Extension javascript.
 | php-dev                                  | ≥ 7.0    | Extension PHP.
 | libphp-embed                             | ≥ 7.0    | Extension PHP.
@@ -173,7 +173,7 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 |===
 
 [NOTE]
-^(1)^ Le nom provient de la distribution GNU/Linux Debian Bullseye, la version
+^(1)^ Le nom provient de la distribution GNU/Linux Debian Bookworm, la version
 et le nom peuvent être différents dans les autres distributions.
 
 Si vous utilisez une distribution basée sur Debian ou Ubuntu, et si vous avez
@@ -1179,8 +1179,8 @@ Si WeeChat ressemble à ceci :
 │4.  #def │12:52:27    -- | Canal créé le Tue Jan 27 06:30:17 2009             │peter  │
 │5.  #ghi │12:54:15 peter | bonjour !                                          │       │
 │         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
+│         │               | /weechat/devel/weechat_plugin_api.en.html#_weechat │       │
+│         │               | _hook_process                                      │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
@@ -1223,8 +1223,8 @@ L'écran ressemblera à ça en mode dépouillé :
 │12:52 -- Canal #abc: 4 pseudos (2 ops, 1 voice, 1 normal)                             │
 │12:52 -- Canal créé le Tue Jan 27 06:30:17 2009                                       │
 │12:54 <peter> bonjour !                                                               │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/weechat/devel/weechat_│
+│plugin_api.en.html#_weechat_hook_process                                              │
 └──────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -1691,7 +1691,7 @@ pressé pour chercher du texte dans le tampon).
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Arrêter la recherche à la position courante. | `+/input search_stop_here+`
-| kbd:[Ctrl+q]   | Arrêter la recherche et aller à la fin du tampon. | `+/input search_stop+`
+| kbd:[Ctrl+q]   | Arrêter la recherche et réinitialiser le défilement à l'état antérieur à la recherche de texte. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]
@@ -3901,7 +3901,7 @@ Spécification : https://ircv3.net/specs/extensions/message-tags[message-tags 
 Cette capacité autorise l'envoi de méta-données dans les messages. +
 Ces étiquettes peuvent être affichées avec la commande `/debug tags`.
 
-Elle doit être activer pour utiliser les <<typing_notifications,notifications de saisie>>.
+Elle doit être activée pour utiliser les <<typing_notifications,notifications de saisie>>.
 
 [[irc_ircv3_monitor]]
 ==== monitor

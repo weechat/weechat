@@ -155,7 +155,7 @@ WeeChat:
 
 [NOTE]
 // TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
 name can be different in other distributions. +
 ^(2)^ WeeChat は libncurses**w**5-dev でコンパイルすることを推奨します
 (*w* が重要です)。libncurses5-dev でもコンパイル可能ですが、これは推奨
@@ -177,10 +177,10 @@ WeeChat:
 | libaspell-dev / libenchant-dev          |             | spell プラグイン
 | python3-dev                             | 3.0 以上    | python プラグイン
 | libperl-dev                             |             | perl プラグイン
-| ruby2.7, ruby2.7-dev                    | 1.9.1 以上  | ruby プラグイン
+| ruby3.1, ruby3.1-dev                    | 1.9.1 以上  | ruby プラグイン
 | liblua5.4-dev                           |             | lua プラグイン
 | tcl-dev                                 | 8.5 以上    | tcl プラグイン
-| guile-2.2-dev                           | 2.0 以上    | guile (scheme) プラグイン
+| guile-3.0-dev                           | 2.0 以上    | guile (scheme) プラグイン
 | libv8-dev                               | 3.24.3 以下 | javascript プラグイン
 | php-dev                                 | 7.0 以上    | PHP プラグイン
 | libphp-embed                            | 7.0 以上    | PHP プラグイン
@@ -195,7 +195,7 @@ WeeChat:
 
 [NOTE]
 // TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bullseye distribution, version and
+^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
 name can be different in other distributions.
 
 Debian および Ubuntu
@@ -1229,8 +1229,8 @@ WeeChat が以下のような表示状態の場合:
 │4.  #def │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009        │peter  │
 │5.  #ghi │12:54:15 peter | hey!                                               │       │
 │         │12:55:01  @joe | peter: hook_process: https://weechat.org/files/doc │       │
-│         │               | /devel/weechat_plugin_api.en.html#_weechat_hook_pr │       │
-│         │               | ocess                                              │       │
+│         │               | /weechat/devel/weechat_plugin_api.en.html#_weechat │       │
+│         │               | _hook_process                                      │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
@@ -1273,8 +1273,8 @@ WeeChat が以下のような表示状態の場合:
 │12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
 │12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
 │12:54 <peter> hey!                                                                    │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
-│pi.en.html#_weechat_hook_process                                                      │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/weechat/devel/weechat_│
+│plugin_api.en.html#_weechat_hook_process                                              │
 └──────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -1769,7 +1769,8 @@ kbd:[Ctrl+r] が押された状態) でのみ有効です。
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | 現在の位置で検索を終了 | `+/input search_stop_here+`
-| kbd:[Ctrl+q]   | 検索を終了してバッファの最後までスクロール | `+/input search_stop+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and reset scroll to pre-text search state. | `+/input search_stop+`
 |===
 
 // TRANSLATION MISSING

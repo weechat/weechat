@@ -1170,7 +1170,7 @@ relay_config_init ()
             "bind_address", "string",
             N_("address for bind (if empty, connection is possible on all "
                "interfaces, use \"127.0.0.1\" to allow connections from "
-               "local machine only)"),
+               "local machine only with IPv4 and \"::ffff:127.0.0.1\" with IPv6)"),
             NULL, 0, 0, "", NULL, 0,
             NULL, NULL, NULL,
             &relay_config_change_network_bind_address_cb, NULL, NULL,
