@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2023-06-17 11:44+0200\n"
-"PO-Revision-Date: 2023-06-17 11:46+0200\n"
+"PO-Revision-Date: 2023-06-25 19:12+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -3932,7 +3932,7 @@ msgstr "Ancienne touche convertie : \"%s\" => \"%s\""
 
 #, c-format
 msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
-msgstr "Commande convertie pour la touche\"%s\" : \"%s\" => \"%s\""
+msgstr "Commande convertie pour la touche \"%s\" : \"%s\" => \"%s\""
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "niveau de debug pour l'extension (\"core\" pour le cœur de WeeChat)"
