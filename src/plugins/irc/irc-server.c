@@ -1768,6 +1768,11 @@ irc_server_alloc (const char *name)
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_TIME,
         NULL, NULL);
+    new_server->echo_msg_recv = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_TIME,
+        NULL, NULL);
     new_server->batches = NULL;
     new_server->last_batch = NULL;
     new_server->buffer = NULL;
@@ -2254,6 +2259,7 @@ irc_server_free_data (struct t_irc_server *server)
     weechat_hashtable_free (server->join_manual);
     weechat_hashtable_free (server->join_channel_key);
     weechat_hashtable_free (server->join_noswitch);
+    weechat_hashtable_free (server->echo_msg_recv);
 
     /* free server data */
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
@@ -3915,6 +3921,23 @@ irc_server_check_join_smart_filtered_cb (void *data,
 }
 
 /*
+ * Callback called for each message received with echo-message: deletes old
+ * messages in the hashtable.
+ */
+
+void
+irc_server_check_echo_msg_recv_cb (void *data,
+                                   struct t_hashtable *hashtable,
+                                   const void *key, const void *value)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    if (*((time_t *)value) + (60 * 5) < time (NULL))
+        weechat_hashtable_remove (hashtable, key);
+}
+
+/*
  * Timer called each second to perform some operations on servers.
  */
 
@@ -4094,6 +4117,9 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                                                NULL);
                     }
                 }
+                weechat_hashtable_map (ptr_server->echo_msg_recv,
+                                       &irc_server_check_echo_msg_recv_cb,
+                                       NULL);
                 ptr_batch = ptr_server->batches;
                 while (ptr_batch)
                 {
@@ -4195,6 +4221,9 @@ irc_server_close_connection (struct t_irc_server *server)
 
     /* remove all keys for joins without switch */
     weechat_hashtable_remove_all (server->join_noswitch);
+
+    /* remove all messages stored (with capability echo-message) */
+    weechat_hashtable_remove_all (server->echo_msg_recv);
 
     /* remove all batched events pending */
     irc_batch_free_all (server);
@@ -6476,6 +6505,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, join_manual, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, join_channel_key, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, join_noswitch, HASHTABLE, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, echo_msg_recv, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, batches, POINTER, 0, NULL, "irc_batch");
         WEECHAT_HDATA_VAR(struct t_irc_server, last_batch, POINTER, 0, NULL, "irc_batch");
         WEECHAT_HDATA_VAR(struct t_irc_server, buffer, POINTER, 0, NULL, "buffer");
@@ -7265,6 +7295,9 @@ irc_server_print_log ()
         weechat_log_printf ("  join_noswitch . . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->join_noswitch,
                             weechat_hashtable_get_string (ptr_server->join_noswitch, "keys_values"));
+        weechat_log_printf ("  echo_msg_recv . . . . . . : 0x%lx (hashtable: '%s')",
+                            ptr_server->echo_msg_recv,
+                            weechat_hashtable_get_string (ptr_server->echo_msg_recv, "keys_values"));
         weechat_log_printf ("  batches . . . . . . . . . : 0x%lx", ptr_server->batches);
         weechat_log_printf ("  last_batch. . . . . . . . : 0x%lx", ptr_server->last_batch);
         weechat_log_printf ("  buffer. . . . . . . . . . : 0x%lx", ptr_server->buffer);

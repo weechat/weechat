@@ -2950,10 +2950,33 @@ TEST(IrcProtocolWithServer, privmsg)
          * valid CTCP to channel from self nick
          * (case of bouncer of if echo-message capability is enabled)
          */
-        RECV(":alice!user@host PRIVMSG bob :\01VERSION\01");
-        CHECK_PV("bob", "--", "CTCP query to bob: VERSION",
-                 "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
-                 "nick_alice,host_user@host,log1");
+        RECV(":alice!user@host PRIVMSG alice :\01CLIENTINFO\01");
+        if (i == 0)
+        {
+            CHECK_SRV("--", "CTCP requested by alice: CLIENTINFO",
+                     "irc_privmsg,irc_ctcp,host_user@host,log1");
+            CHECK_SRV("--", "CTCP reply to alice: CLIENTINFO ACTION DCC "
+                      "CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION",
+                     "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                      "no_highlight,log1");
+        }
+        else
+        {
+            CHECK_PV("alice", "--", "CTCP query to alice: CLIENTINFO",
+                     "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
+                     "nick_alice,host_user@host,log1");
+            /*
+             * with echo-message capability, when the same message is received
+             * for the second time, the request and reply are displayed
+             */
+            RECV(":alice!user@host PRIVMSG alice :\01CLIENTINFO\01");
+            CHECK_SRV("--", "CTCP requested by alice: CLIENTINFO",
+                      "irc_privmsg,irc_ctcp,host_user@host,log1");
+            CHECK_SRV("--", "CTCP reply to alice: CLIENTINFO ACTION DCC "
+                      "CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION",
+                     "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                      "no_highlight,log1");
+        }
 
         /* close xfer buffer */
         if (xfer_buffer)
