@@ -1517,7 +1517,7 @@ IRC_PROTOCOL_CALLBACK(generic_error)
     int arg_error, force_server_buffer;
     char *str_error, str_target[512];
     const char *pos_channel, *pos_nick;
-    struct t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel, *ptr_channel2;
     struct t_gui_buffer *ptr_buffer;
 
     IRC_PROTOCOL_MIN_PARAMS(2);
@@ -1530,17 +1530,18 @@ IRC_PROTOCOL_CALLBACK(generic_error)
     pos_nick = NULL;
     str_target[0] = '\0';
 
+    /*
+     * force display on server buffer for these messages:
+     *   - 432: erroneous nickname
+     *   - 433: nickname already in use
+     *   - 437: nick/channel temporarily unavailable
+     */
+    force_server_buffer = ((strcmp (command, "432") == 0)
+                           || (strcmp (command, "433") == 0)
+                           || (strcmp (command, "437") == 0));
+
     if (params[arg_error + 1])
     {
-        /*
-         * force display on server buffer for these messages:
-         *   - 432: erroneous nickname
-         *   - 433: nickname already in use
-         *   - 437: nick/channel temporarily unavailable
-         */
-        force_server_buffer = ((strcmp (command, "432") == 0)
-                               || (strcmp (command, "433") == 0)
-                               || (strcmp (command, "437") == 0));
         if (!force_server_buffer
             && irc_channel_is_channel (server, params[arg_error]))
         {
@@ -1565,7 +1566,19 @@ IRC_PROTOCOL_CALLBACK(generic_error)
         }
     }
 
-    ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+    ptr_buffer = NULL;
+    if (ptr_channel)
+    {
+        ptr_buffer = ptr_channel->buffer;
+    }
+    else if (!force_server_buffer && pos_nick)
+    {
+        ptr_channel2 = irc_channel_search (server, pos_nick);
+        if (ptr_channel2)
+            ptr_buffer = ptr_channel2->buffer;
+    }
+    if (!ptr_buffer)
+        ptr_buffer = server->buffer;
 
     str_error = irc_protocol_string_params (params, arg_error, num_params - 1);
 
@@ -7897,6 +7910,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(712, 1, 0, knock_reply),    /* knock: too many knocks          */
         IRCB(713, 1, 0, knock_reply),    /* knock: channel is open          */
         IRCB(714, 1, 0, knock_reply),    /* knock: already on that channel  */
+        IRCB(716, 1, 0, generic_error),  /* nick is in +g mode              */
+        IRCB(717, 1, 0, generic_error),  /* nick has been informed of msg   */
         IRCB(728, 1, 0, 728),            /* quietlist                       */
         IRCB(729, 1, 0, 729),            /* end of quietlist                */
         IRCB(730, 1, 0, 730),            /* monitored nicks online          */

@@ -5357,7 +5357,7 @@ TEST(IrcProtocolWithServer, 433_connected)
      * never happen in practice): check that the message is still displayed
      * on the server buffer
      */
-     RECV(":server 433 alice #test :Nickname is already in use.");
+    RECV(":server 433 alice #test :Nickname is already in use.");
     CHECK_SRV("--", "#test: Nickname is already in use.",
               "irc_433,irc_numeric,log3");
 }
@@ -5664,6 +5664,66 @@ TEST(IrcProtocolWithServer, 714)
     RECV(":server 714 alice #test :You are already on that channel.");
     CHECK_SRV("--", "#test: You are already on that channel.",
               "irc_714,irc_numeric,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_716 (nick is in +g mode)
+ */
+
+TEST(IrcProtocolWithServer, 716)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 716");
+    CHECK_ERROR_PARAMS("716", 0, 2);
+    RECV(":server 716 alice");
+    CHECK_ERROR_PARAMS("716", 1, 2);
+
+    RECV(":server 716 alice bob :is in +g mode and must manually allow you to "
+         "message them. Your message was discarded.");
+    CHECK_SRV("--",
+              "bob: is in +g mode and must manually allow you to message them. "
+              "Your message was discarded.",
+              "irc_716,irc_numeric,log3");
+
+    /* open private buffer */
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+
+    RECV(":server 716 alice bob :is in +g mode and must manually allow you to "
+         "message them. Your message was discarded.");
+    CHECK_PV("bob", "--",
+             "bob: is in +g mode and must manually allow you to message them. "
+             "Your message was discarded.",
+             "irc_716,irc_numeric,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_717 (nick has been informed that you messaged them)
+ */
+
+TEST(IrcProtocolWithServer, 717)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 717");
+    CHECK_ERROR_PARAMS("717", 0, 2);
+    RECV(":server 717 alice");
+    CHECK_ERROR_PARAMS("717", 1, 2);
+
+    RECV(":server 717 alice bob :has been informed that you messaged them.");
+    CHECK_SRV("--", "bob: has been informed that you messaged them.",
+              "irc_717,irc_numeric,log3");
+
+    /* open private buffer */
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+    RECV(":server 717 alice bob :has been informed that you messaged them.");
+    CHECK_PV("bob", "--",
+             "bob: has been informed that you messaged them.",
+             "irc_717,irc_numeric,log3");
 }
 
 /*
