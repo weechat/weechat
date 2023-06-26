@@ -3534,28 +3534,12 @@ COMMAND_CALLBACK(input)
     else if (string_strcmp (argv[1], "grab_key") == 0)
     {
         gui_input_grab_key (buffer,
-                            0, /* raw_key */
-                            0, /* command */
-                            (argc > 2) ? argv[2] : NULL);
-    }
-    else if (string_strcmp (argv[1], "grab_raw_key") == 0)
-    {
-        gui_input_grab_key (buffer,
-                            1, /* raw_key */
                             0, /* command */
                             (argc > 2) ? argv[2] : NULL);
     }
     else if (string_strcmp (argv[1], "grab_key_command") == 0)
     {
         gui_input_grab_key (buffer,
-                            0, /* raw_key */
-                            1, /* command */
-                            (argc > 2) ? argv[2] : NULL);
-    }
-    else if (string_strcmp (argv[1], "grab_raw_key_command") == 0)
-    {
-        gui_input_grab_key (buffer,
-                            1, /* raw_key */
                             1, /* command */
                             (argc > 2) ? argv[2] : NULL);
     }
@@ -8433,7 +8417,7 @@ command_init ()
         "move_next_word || move_previous_line || move_next_line || "
         "history_previous || history_next || history_global_previous || "
         "history_global_next || "
-        "grab_key || grab_raw_key || grab_raw_key_command || grab_key_command || "
+        "grab_key || grab_key_command || "
         "grab_mouse || grab_mouse_area || "
         "insert || send",
         &command_input, NULL, NULL);
