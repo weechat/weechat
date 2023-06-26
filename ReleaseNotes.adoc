@@ -15,7 +15,7 @@ For a complete list of changes, please look at ChangeLog.
 == Version 4.0.1 (under dev)
 
 [[v4.0.1_grab_raw_key]]
-==== Grab raw key and command
+=== Grab raw key and command
 
 Key kbd:[Alt+K] (upper case) has been removed, as well as commands
 `/input grab_raw_key` and `/input grab_raw_key_command`.
