@@ -149,6 +149,8 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
                       "work for servers connected via TLS"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME);
             }
+            /* send QUIT to server, then disconnect */
+            irc_command_quit_server (ptr_server, NULL);
             irc_server_disconnect (ptr_server, 0, 0);
             /*
              * schedule reconnection: WeeChat will reconnect to this server
