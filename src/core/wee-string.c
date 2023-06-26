@@ -1312,7 +1312,7 @@ string_convert_escaped_chars (const char *string)
 }
 
 /*
- * Checks if first char of string is a whitespace (space or tab).
+ * Checks if first char of string is a whitespace (space, tab, newline or carriage return).
  *
  * Returns:
  *   1: first char is whitespace
@@ -1322,7 +1322,11 @@ string_convert_escaped_chars (const char *string)
 int
 string_is_whitespace_char (const char *string)
 {
-    return (string && ((string[0] == ' ') || string[0] == '\t')) ? 1 : 0;
+    return (string && (
+            (string[0] == ' ')
+            || (string[0] == '\t')
+            || (string[0] == '\n')
+            || (string[0] == '\r'))) ? 1 : 0;
 }
 
 /*
