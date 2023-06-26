@@ -87,7 +87,6 @@ int gui_key_verbose = 0;            /* 1 to see some messages               */
 
 char gui_key_combo[1024];           /* buffer used for combos               */
 int gui_key_grab = 0;               /* 1 if grab mode enabled (alt-k)       */
-int gui_key_grab_raw = 0;           /* grab raw key code?                   */
 int gui_key_grab_count = 0;         /* number of keys pressed in grab mode  */
 int gui_key_grab_command = 0;       /* grab command bound to key?           */
 int gui_key_grab_delay = 0;         /* delay for grab (default is 500)      */
@@ -185,13 +184,12 @@ gui_key_get_current_context ()
  */
 
 void
-gui_key_grab_init (int grab_raw_key, int grab_command, const char *delay)
+gui_key_grab_init (int grab_command, const char *delay)
 {
     long milliseconds;
     char *error;
 
     gui_key_grab = 1;
-    gui_key_grab_raw = grab_raw_key;
     gui_key_grab_count = 0;
     gui_key_grab_command = grab_command;
 
@@ -217,8 +215,7 @@ int
 gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     char *key_name, *key_name_alias, *key_utf8;
-    const char *ptr_key_name;
-    struct t_gui_key *ptr_key;
+    struct t_gui_key *ptr_key_raw, *ptr_key;
     int rc;
 
     /* make C compiler happy */
@@ -264,23 +261,23 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
             }
         }
 
-        ptr_key_name = (gui_key_grab_raw) ? key_name : key_name_alias;
-
         /* add expanded key to input buffer */
         if (gui_current_window->buffer->input)
         {
-            gui_input_insert_string (gui_current_window->buffer, ptr_key_name);
-            if (gui_key_grab_command)
+            ptr_key_raw = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
+                                          key_name);
+            ptr_key = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
+                                      key_name_alias);
+            gui_input_insert_string (gui_current_window->buffer,
+                                     (ptr_key_raw) ? key_name : key_name_alias);
+            /* add command bound to key (if found) */
+            if (gui_key_grab_command && (ptr_key_raw || ptr_key))
             {
-                /* add command bound to key (if found) */
-                ptr_key = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
-                                          ptr_key_name);
-                if (ptr_key)
-                {
-                    gui_input_insert_string (gui_current_window->buffer, " ");
-                    gui_input_insert_string (gui_current_window->buffer,
-                                             ptr_key->command);
-                }
+                gui_input_insert_string (gui_current_window->buffer, " ");
+                gui_input_insert_string (
+                    gui_current_window->buffer,
+                    (ptr_key_raw) ?
+                    ptr_key_raw->command : ptr_key->command);
             }
             gui_input_text_changed_modifier_and_signal (
                 gui_current_window->buffer,

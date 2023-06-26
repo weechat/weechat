@@ -11,6 +11,18 @@ It is recommended to read it when upgrading to a new stable version. +
 For a complete list of changes, please look at ChangeLog.
 
 
+[[v4.1.0]]
+== Version 4.1.0 (under dev)
+
+[[v4.1.0_grab_raw_key]]
+==== Grab raw key and command
+
+Key kbd:[Alt+K] (upper case) has been removed, as well as commands
+`/input grab_raw_key` and `/input grab_raw_key_command`.
+
+Now the key kbd:[Alt+k] displays the actual key name and command, possibly
+raw key.
+
 [[v4.0.0]]
 == Version 4.0.0 (2023-06-24)
 

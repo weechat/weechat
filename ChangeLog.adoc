@@ -16,6 +16,7 @@ For a list of important changes that require manual actions, please look at rele
 Bug fixes::
 
   * core: force key "return" to command "/input return" when migrating legacy keys
+  * core: display actual key name and command with key kbd:[Alt+k], remove key kbd:[Alt+K] (grab raw key) and associated commands `/input grab_raw_key` and `/input grab_raw_key_command`
   * irc: reply to a CTCP request sent to self nick (issue #1966)
 
 [[v4.0.0]]
