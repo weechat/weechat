@@ -1090,6 +1090,8 @@ TEST(CoreString, IsWhitespaceChar)
 
     LONGS_EQUAL(1, string_is_whitespace_char (" abc def"));
     LONGS_EQUAL(1, string_is_whitespace_char ("\tabc def"));
+    LONGS_EQUAL(1, string_is_whitespace_char ("\nabc def"));
+    LONGS_EQUAL(1, string_is_whitespace_char ("\rabc def"));
 }
 
 /*
