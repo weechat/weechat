@@ -19,6 +19,7 @@ Bug fixes::
   * core: display actual key name and command with key kbd:[Alt+k], remove key kbd:[Alt+K] (grab raw key) and associated commands `/input grab_raw_key` and `/input grab_raw_key_command`
   * core: check for newline characters in string_is_whitespace_char (issue #1968)
   * api: do not convert option name to lower case in API functions config_set_plugin and config_set_desc_plugin
+  * guile: fix crash on quit with Guile < 3 (issue #1965)
   * irc: reply to a CTCP request sent to self nick (issue #1966)
   * irc: sent "QUIT" message to servers connected with TLS on `/upgrade`
 
