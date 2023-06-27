@@ -627,6 +627,13 @@ comandos como `/123` para saltar al buffer #123:
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
 ----
 
+// TRANSLATION MISSING
+For an easy jump to buffers, you can also install the _go.py_ script:
+
+----
+/script install go.py
+----
+
 [[global_history]]
 === ¿Cómo utilizar el historial global (en vez del historial del buffer) con las teclas de las flechas arriba y abajo?
 
