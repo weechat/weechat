@@ -14,6 +14,14 @@ For a complete list of changes, please look at ChangeLog.
 [[v4.1.0]]
 == Version 4.1.0 (under dev)
 
+[[v4.1.0_config_set_plugin]]
+=== Functions config_set_plugin and config_set_desc_plugin
+
+The functions link:https://weechat.org/doc/weechat/plugin/#_config_set_plugin[config_set_plugin]
+and link:https://weechat.org/doc/weechat/plugin/#_config_set_desc_plugin[config_set_desc_plugin]
+are not converting any more the option name to lower case because since version 4.0.0,
+the name of options is case sensitive.
+
 [[v4.1.0_grab_raw_key]]
 === Grab raw key and command
 
