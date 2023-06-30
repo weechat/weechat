@@ -39,8 +39,8 @@
 #     devel-number   the devel version as hex number ("0x04010000" for "4.1.0-dev")
 #
 
-WEECHAT_STABLE="4.0.0"
-WEECHAT_DEVEL="4.0.1-dev"
+WEECHAT_STABLE="4.0.1"
+WEECHAT_DEVEL="4.0.1"
 
 STABLE_MAJOR=$(echo "${WEECHAT_STABLE}" | cut -d"." -f1)
 STABLE_MINOR=$(echo "${WEECHAT_STABLE}" | cut -d"." -f2)

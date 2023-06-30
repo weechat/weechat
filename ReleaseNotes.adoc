@@ -12,7 +12,7 @@ For a complete list of changes, please look at ChangeLog.
 
 
 [[v4.0.1]]
-== Version 4.0.1 (under dev)
+== Version 4.0.1 (2023-06-30)
 
 [[v4.0.1_config_set_plugin]]
 === Functions config_set_plugin and config_set_desc_plugin
