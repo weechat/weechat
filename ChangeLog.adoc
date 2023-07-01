@@ -13,6 +13,10 @@ For a list of important changes that require manual actions, please look at rele
 [[v4.0.2]]
 == Version 4.0.2 (under dev)
 
+Tests::
+
+  * relay: fix crash in tests on Alpine 3.18
+
 Build::
 
   * php: fix detection of PHP 8.2 on Alpine 3.18

@@ -487,7 +487,6 @@ TEST(RelayIrc, RelayIrcMessageParse)
 
 TEST(RelayIrcWithClient, RelayIrcSendf)
 {
-
     relay_irc_sendf (NULL, NULL);
     relay_irc_sendf (NULL, "test");
     relay_irc_sendf (ptr_relay_client, NULL);
