@@ -25,6 +25,7 @@ Bug fixes::
 
 Tests::
 
+  * core: fix hdata tests failure on Alpine 3.18
   * relay: fix crash in tests on Alpine 3.18
 
 Build::

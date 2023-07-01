@@ -526,7 +526,7 @@ TEST_GROUP(CoreHdataWithList)
         item->test_string = strdup ("item2");
         item->test_string2 = strdup ("string2");
         item->test_string3 = NULL;
-        ptr_item1->test_string_null = NULL;
+        item->test_string_null = NULL;
         item->test_shared_string = string_shared_get ("item2_shared");
         strcpy (item->test_array_2_words_fixed_size[0], "item2-word1");
         strcpy (item->test_array_2_words_fixed_size[1], "item2-word2");
