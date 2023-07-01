@@ -23,6 +23,10 @@ Bug fixes::
 
   * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
 
+Tests::
+
+  * relay: fix crash in tests on Alpine 3.18
+
 Build::
 
   * php: fix detection of PHP 8.2 on Alpine 3.18

@@ -206,7 +206,7 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
     const char *str_message, *ptr_msg1, *ptr_msg2;
     struct t_hashtable *hashtable_in, *hashtable_out;
 
-    if (!client)
+    if (!client || !format)
         return;
 
     weechat_va_format (format);
