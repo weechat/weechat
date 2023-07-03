@@ -2390,9 +2390,7 @@ gui_key_pressed (const char *key_str)
     rc_expand = gui_key_expand (gui_key_combo, &key_name, &key_name_alias);
 
     if (!rc_expand)
-    {
         goto end_no_input;
-    }
 
     ptr_key = NULL;
     exact_match = 0;

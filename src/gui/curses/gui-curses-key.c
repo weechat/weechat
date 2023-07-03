@@ -396,7 +396,8 @@ gui_key_flush (int paste)
              * or if the mouse code is valid UTF-8 (do not send partial mouse
              * code which is not UTF-8 valid)
              */
-            if (!paste && i > gui_key_last_key_pressed_sent
+            if (!paste
+                && (i > gui_key_last_key_pressed_sent)
                 && (!gui_mouse_event_pending
                     || utf8_is_valid (key_str, -1, NULL)))
             {
