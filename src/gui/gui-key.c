@@ -94,6 +94,7 @@ int gui_key_grab_delay = 0;         /* delay for grab (default is 500)      */
 int *gui_key_buffer = NULL;         /* input buffer (for paste detection)   */
 int gui_key_buffer_alloc = 0;       /* input buffer allocated size          */
 int gui_key_buffer_size = 0;        /* input buffer size in bytes           */
+int gui_key_last_key_pressed_sent = -1;
 
 int gui_key_paste_pending = 0;      /* 1 is big paste was detected and      */
                                     /* WeeChat is asking user what to do    */
@@ -2695,6 +2696,7 @@ gui_key_buffer_reset ()
         gui_key_buffer_optimize ();
     }
     gui_key_paste_lines = 0;
+    gui_key_last_key_pressed_sent = -1;
 }
 
 /*
