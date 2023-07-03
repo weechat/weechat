@@ -21,6 +21,8 @@ New features::
 
 Bug fixes::
 
+  * core: don't send "key_pressed" signal again for the same key press (issue #1976)
+  * core: don't send "key_combo_*" signals for incomplete keys (issue #1976)
   * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
 
 Tests::
