@@ -396,12 +396,13 @@ gui_key_flush (int paste)
              * or if the mouse code is valid UTF-8 (do not send partial mouse
              * code which is not UTF-8 valid)
              */
-            if (!paste
+            if (!paste && i > gui_key_last_key_pressed_sent
                 && (!gui_mouse_event_pending
                     || utf8_is_valid (key_str, -1, NULL)))
             {
                 (void) hook_signal_send ("key_pressed",
                                          WEECHAT_HOOK_SIGNAL_STRING, key_str);
+                gui_key_last_key_pressed_sent = i;
             }
 
             if (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
