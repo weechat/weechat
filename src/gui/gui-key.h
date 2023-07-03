@@ -82,6 +82,7 @@ extern int gui_key_grab;
 extern int gui_key_grab_count;
 extern int *gui_key_buffer;
 extern int gui_key_buffer_size;
+extern int gui_key_last_key_pressed_sent;
 extern int gui_key_paste_pending;
 extern int gui_key_paste_bracketed;
 extern time_t gui_key_last_activity_time;
