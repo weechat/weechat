@@ -1610,7 +1610,8 @@ config_weechat_update_cb (const void *pointer, void *data,
                     && (strcmp (ptr_section, "key") == 0)
                     && ((strcmp (ptr_option, "ctrl-H") == 0)
                         || (strcmp (ptr_option, "ctrl-?") == 0))
-                    && (strcmp (ptr_value, "/input delete_previous_char") != 0))
+                    && (ptr_value
+                        && (strcmp (ptr_value, "/input delete_previous_char") != 0)))
                 {
                     new_option = string_tolower (ptr_option);
                 }
