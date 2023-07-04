@@ -1601,7 +1601,23 @@ config_weechat_update_cb (const void *pointer, void *data,
             }
             else
             {
-                new_option = gui_key_legacy_to_alias (ptr_option);
+                /*
+                 * if backspace or ctrl-backspace was manually bound to a
+                 * different command, keep the key as-is (in lower case) ;
+                 * in all other cases, convert the key to the new name
+                 */
+                if (ptr_section
+                    && (strcmp (ptr_section, "key") == 0)
+                    && ((strcmp (ptr_option, "ctrl-H") == 0)
+                        || (strcmp (ptr_option, "ctrl-?") == 0))
+                    && (strcmp (ptr_value, "/input delete_previous_char") != 0))
+                {
+                    new_option = string_tolower (ptr_option);
+                }
+                else
+                {
+                    new_option = gui_key_legacy_to_alias (ptr_option);
+                }
                 if (new_option)
                 {
                     if (strcmp (ptr_option, new_option) != 0)
