@@ -30,6 +30,7 @@
 #include <libintl.h>
 #include <locale.h>
 #include <gcrypt.h>
+#include <regex.h>
 
 #include "weechat.h"
 #include "wee-arraylist.h"
@@ -46,7 +47,8 @@
 #include "wee-utf8.h"
 #include "../plugins/plugin.h"
 
-#define ESCAPE(msg) (doc_gen_escape (msg))
+#define ESCAPE_TABLE(msg) (doc_gen_escape_table (msg))
+#define ESCAPE_ANCHOR(msg) (doc_gen_escape_anchor_link (msg))
 #define TRANS(msg) ((msg && msg[0]) ? _(msg) : msg)
 #define TRANS_DEF(msg, def) ((msg && msg[0]) ? _(msg) : def)
 #define PLUGIN(plugin) ((plugin) ? plugin->name : "weechat")
@@ -62,7 +64,7 @@ char *string_escaped[32];
  */
 
 char *
-doc_gen_escape (const char *message)
+doc_gen_escape_table (const char *message)
 {
     index_string_escaped = (index_string_escaped + 1) % 32;
 
@@ -70,6 +72,31 @@ doc_gen_escape (const char *message)
         free (string_escaped[index_string_escaped]);
 
     string_escaped[index_string_escaped] = string_replace (message, "|", "\\|");
+
+    return string_escaped[index_string_escaped];
+}
+
+/*
+ * Escapes a string to be used as anchor link: replace ",", "@" and "*" by "-".
+ */
+
+char *
+doc_gen_escape_anchor_link (const char *message)
+{
+    regex_t regex;
+
+    if (string_regcomp (&regex, "[,@*():&|]+", REG_EXTENDED) != 0)
+        return NULL;
+
+    index_string_escaped = (index_string_escaped + 1) % 32;
+
+    if (string_escaped[index_string_escaped])
+        free (string_escaped[index_string_escaped]);
+
+    string_escaped[index_string_escaped] = string_replace_regex (
+        message, &regex, "-", '$', NULL, NULL);
+
+    regfree (&regex);
 
     return string_escaped[index_string_escaped];
 }
@@ -435,7 +462,7 @@ doc_gen_user_options (const char *path, const char *lang)
     struct t_config_option *ptr_option;
     struct t_arraylist *list_options;
     int i, list_size, index_option;
-    char *name_escaped, *desc_escaped, *values, str_values[256];
+    char *desc_escaped, *values, str_values[256];
     char *default_value, *tmp;
 
     file = doc_gen_open_file (path, "user", "options", lang);
@@ -489,15 +516,14 @@ doc_gen_user_options (const char *path, const char *lang)
         }
         if (index_option > 0)
             string_fprintf (file, "\n");
-        name_escaped = string_replace (ptr_option->name, ",", "_");
         desc_escaped = (ptr_option->description) ?
             string_replace (TRANS(ptr_option->description), "]", "\\]") :
             strdup ("");
         string_fprintf (file,
-                        "* [[option_%s.%s.%s]] *%s.%s.%s*\n",
+                        "* [[option_%s.%s.%s]] *pass:none[%s.%s.%s]*\n",
                         ptr_option->config_file->name,
                         ptr_option->section->name,
-                        name_escaped,
+                        ESCAPE_ANCHOR(ptr_option->name),
                         ptr_option->config_file->name,
                         ptr_option->section->name,
                         ptr_option->name);
@@ -568,8 +594,6 @@ doc_gen_user_options (const char *path, const char *lang)
             (ptr_option->type == CONFIG_OPTION_TYPE_STRING) ? "\"" : "",
             default_value,
             (ptr_option->type == CONFIG_OPTION_TYPE_STRING) ? "\"" : "");
-        if (name_escaped)
-            free (name_escaped);
         if (desc_escaped)
             free (desc_escaped);
         if (values)
@@ -614,9 +638,9 @@ doc_gen_user_default_aliases (const char *path, const char *lang)
         "[width=\"100%\",cols=\"2m,5m,5\",options=\"header\"]\n"
         "|===\n"
         "| %s | %s | %s\n",
-        ESCAPE(_("Alias")),
-        ESCAPE(_("Command")),
-        ESCAPE(_("Completion")));
+        ESCAPE_TABLE(_("Alias")),
+        ESCAPE_TABLE(_("Command")),
+        ESCAPE_TABLE(_("Completion")));
 
     ptr_infolist = hook_infolist_get (NULL, "alias_default", NULL, NULL);
     while (infolist_next (ptr_infolist))
@@ -624,10 +648,10 @@ doc_gen_user_default_aliases (const char *path, const char *lang)
         ptr_completion = infolist_string(ptr_infolist, "completion");
         string_fprintf (file,
                         "| /%s | /%s | %s\n",
-                        ESCAPE(infolist_string(ptr_infolist, "name")),
-                        ESCAPE(infolist_string(ptr_infolist, "command")),
+                        ESCAPE_TABLE(infolist_string(ptr_infolist, "name")),
+                        ESCAPE_TABLE(infolist_string(ptr_infolist, "command")),
                         (ptr_completion && ptr_completion[0]) ?
-                        ESCAPE(ptr_completion) : "-");
+                        ESCAPE_TABLE(ptr_completion) : "-");
     }
     infolist_free (ptr_infolist);
 
@@ -663,8 +687,8 @@ doc_gen_user_irc_colors (const char *path, const char *lang)
         "[width=\"50%\",cols=\"^2m,3\",options=\"header\"]\n"
         "|===\n"
         "| %s | %s\n",
-        ESCAPE(_("IRC color")),
-        ESCAPE(_("WeeChat color")));
+        ESCAPE_TABLE(_("IRC color")),
+        ESCAPE_TABLE(_("WeeChat color")));
 
     ptr_infolist = hook_infolist_get (NULL, "irc_color_weechat", NULL, NULL);
     while (infolist_next (ptr_infolist))
@@ -672,8 +696,8 @@ doc_gen_user_irc_colors (const char *path, const char *lang)
         string_fprintf (
             file,
             "| %s | %s\n",
-            ESCAPE(infolist_string(ptr_infolist, "color_irc")),
-            ESCAPE(infolist_string(ptr_infolist, "color_weechat")));
+            ESCAPE_TABLE(infolist_string(ptr_infolist, "color_irc")),
+            ESCAPE_TABLE(infolist_string(ptr_infolist, "color_weechat")));
     }
     infolist_free (ptr_infolist);
 
@@ -737,10 +761,10 @@ doc_gen_api_infos (const char *path, const char *lang)
         "[width=\"100%\",cols=\"^1,^2,6,6\",options=\"header\"]\n"
         "|===\n"
         "| %s | %s | %s | %s\n",
-        ESCAPE(_("Plugin")),
-        ESCAPE(_("Name")),
-        ESCAPE(_("Description")),
-        ESCAPE(_("Arguments")));
+        ESCAPE_TABLE(_("Plugin")),
+        ESCAPE_TABLE(_("Name")),
+        ESCAPE_TABLE(_("Description")),
+        ESCAPE_TABLE(_("Arguments")));
 
     list_hooks = arraylist_new (64, 1, 0,
                                 &doc_gen_hook_info_cmp_cb, NULL,
@@ -758,10 +782,10 @@ doc_gen_api_infos (const char *path, const char *lang)
         string_fprintf (
             file,
             "| %s | %s | %s | %s\n",
-            ESCAPE(PLUGIN(ptr_hook->plugin)),
-            ESCAPE(HOOK_INFO(ptr_hook, info_name)),
-            ESCAPE(TRANS(HOOK_INFO(ptr_hook, description))),
-            ESCAPE(TRANS_DEF(HOOK_INFO(ptr_hook, args_description), "-")));
+            ESCAPE_TABLE(PLUGIN(ptr_hook->plugin)),
+            ESCAPE_TABLE(HOOK_INFO(ptr_hook, info_name)),
+            ESCAPE_TABLE(TRANS(HOOK_INFO(ptr_hook, description))),
+            ESCAPE_TABLE(TRANS_DEF(HOOK_INFO(ptr_hook, args_description), "-")));
     }
 
     arraylist_free (list_hooks);
@@ -826,11 +850,11 @@ doc_gen_api_infos_hashtable (const char *path, const char *lang)
         "[width=\"100%\",cols=\"^1,^2,6,6,8\",options=\"header\"]\n"
         "|===\n"
         "| %s | %s | %s | %s | %s\n",
-        ESCAPE(_("Plugin")),
-        ESCAPE(_("Name")),
-        ESCAPE(_("Description")),
-        ESCAPE(_("Hashtable (input)")),
-        ESCAPE(_("Hashtable (output)")));
+        ESCAPE_TABLE(_("Plugin")),
+        ESCAPE_TABLE(_("Name")),
+        ESCAPE_TABLE(_("Description")),
+        ESCAPE_TABLE(_("Hashtable (input)")),
+        ESCAPE_TABLE(_("Hashtable (output)")));
 
     list_hooks = arraylist_new (64, 1, 0,
                                 &doc_gen_hook_info_hashtable_cmp_cb, NULL,
@@ -848,10 +872,10 @@ doc_gen_api_infos_hashtable (const char *path, const char *lang)
         string_fprintf (
             file,
             "| %s | %s | %s | %s | %s\n",
-            ESCAPE(PLUGIN(ptr_hook->plugin)),
-            ESCAPE(HOOK_INFO(ptr_hook, info_name)),
-            ESCAPE(TRANS(HOOK_INFO_HASHTABLE(ptr_hook, description))),
-            ESCAPE(TRANS_DEF(HOOK_INFO_HASHTABLE(ptr_hook, args_description), "-")),
+            ESCAPE_TABLE(PLUGIN(ptr_hook->plugin)),
+            ESCAPE_TABLE(HOOK_INFO(ptr_hook, info_name)),
+            ESCAPE_TABLE(TRANS(HOOK_INFO_HASHTABLE(ptr_hook, description))),
+            ESCAPE_TABLE(TRANS_DEF(HOOK_INFO_HASHTABLE(ptr_hook, args_description), "-")),
             TRANS_DEF(HOOK_INFO_HASHTABLE(ptr_hook, output_description), "-"));
     }
 
@@ -917,11 +941,11 @@ doc_gen_api_infolists (const char *path, const char *lang)
         "[width=\"100%\",cols=\"^1,^2,5,5,5\",options=\"header\"]\n"
         "|===\n"
         "| %s | %s | %s | %s | %s\n",
-        ESCAPE(_("Plugin")),
-        ESCAPE(_("Name")),
-        ESCAPE(_("Description")),
-        ESCAPE(_("Pointer")),
-        ESCAPE(_("Arguments")));
+        ESCAPE_TABLE(_("Plugin")),
+        ESCAPE_TABLE(_("Name")),
+        ESCAPE_TABLE(_("Description")),
+        ESCAPE_TABLE(_("Pointer")),
+        ESCAPE_TABLE(_("Arguments")));
 
     list_hooks = arraylist_new (64, 1, 0,
                                 &doc_gen_hook_infolist_cmp_cb, NULL,
@@ -939,11 +963,11 @@ doc_gen_api_infolists (const char *path, const char *lang)
         string_fprintf (
             file,
             "| %s | %s | %s | %s | %s\n",
-            ESCAPE(PLUGIN(ptr_hook->plugin)),
-            ESCAPE(HOOK_INFOLIST(ptr_hook, infolist_name)),
-            ESCAPE(TRANS(HOOK_INFOLIST(ptr_hook, description))),
-            ESCAPE(TRANS_DEF(HOOK_INFOLIST(ptr_hook, pointer_description), "-")),
-            ESCAPE(TRANS_DEF(HOOK_INFOLIST(ptr_hook, args_description), "-")));
+            ESCAPE_TABLE(PLUGIN(ptr_hook->plugin)),
+            ESCAPE_TABLE(HOOK_INFOLIST(ptr_hook, infolist_name)),
+            ESCAPE_TABLE(TRANS(HOOK_INFOLIST(ptr_hook, description))),
+            ESCAPE_TABLE(TRANS_DEF(HOOK_INFOLIST(ptr_hook, pointer_description), "-")),
+            ESCAPE_TABLE(TRANS_DEF(HOOK_INFOLIST(ptr_hook, args_description), "-")));
     }
 
     arraylist_free (list_hooks);
@@ -1203,11 +1227,11 @@ doc_gen_api_hdata (const char *path, const char *lang)
         "[width=\"100%\",cols=\"^1,^2,2,2,5\",options=\"header\"]\n"
         "|===\n"
         "| %s | %s | %s | %s | %s\n\n",
-        ESCAPE(_("Plugin")),
-        ESCAPE(_("Name")),
-        ESCAPE(_("Description")),
-        ESCAPE(_("Lists")),
-        ESCAPE(_("Variables")));
+        ESCAPE_TABLE(_("Plugin")),
+        ESCAPE_TABLE(_("Name")),
+        ESCAPE_TABLE(_("Description")),
+        ESCAPE_TABLE(_("Lists")),
+        ESCAPE_TABLE(_("Variables")));
 
     list_hooks = arraylist_new (64, 1, 0,
                                 &doc_gen_hook_hdata_cmp_cb, NULL,
@@ -1227,15 +1251,15 @@ doc_gen_api_hdata (const char *path, const char *lang)
                   HOOK_HDATA(ptr_hook, hdata_name));
         string_fprintf (file,
                         "| %s\n",
-                        ESCAPE(PLUGIN(ptr_hook->plugin)));
+                        ESCAPE_TABLE(PLUGIN(ptr_hook->plugin)));
         string_fprintf (file,
                         "| [[%s]]<<%s,%s>>\n",
-                        ESCAPE(str_anchor),
-                        ESCAPE(str_anchor),
-                        ESCAPE(HOOK_HDATA(ptr_hook, hdata_name)));
+                        ESCAPE_TABLE(str_anchor),
+                        ESCAPE_TABLE(str_anchor),
+                        ESCAPE_TABLE(HOOK_HDATA(ptr_hook, hdata_name)));
         string_fprintf (file,
                         "| %s\n",
-                        ESCAPE(TRANS(HOOK_HDATA(ptr_hook, description))));
+                        ESCAPE_TABLE(TRANS(HOOK_HDATA(ptr_hook, description))));
         ptr_hdata = hook_hdata_get (NULL, HOOK_HDATA(ptr_hook, hdata_name));
         if (ptr_hdata)
             doc_gen_api_hdata_content (file, ptr_hdata);
@@ -1303,9 +1327,9 @@ doc_gen_api_completions (const char *path, const char *lang)
         "[width=\"100%\",cols=\"^1,^2,7\",options=\"header\"]\n"
         "|===\n"
         "| %s | %s | %s\n",
-        ESCAPE(_("Plugin")),
-        ESCAPE(_("Name")),
-        ESCAPE(_("Description")));
+        ESCAPE_TABLE(_("Plugin")),
+        ESCAPE_TABLE(_("Name")),
+        ESCAPE_TABLE(_("Description")));
 
     list_hooks = arraylist_new (64, 1, 0,
                                 &doc_gen_hook_completion_cmp_cb, NULL,
@@ -1323,9 +1347,9 @@ doc_gen_api_completions (const char *path, const char *lang)
         string_fprintf (
             file,
             "| %s | %s | %s\n",
-            ESCAPE(PLUGIN(ptr_hook->plugin)),
-            ESCAPE(HOOK_COMPLETION(ptr_hook, completion_item)),
-            ESCAPE(TRANS(HOOK_COMPLETION(ptr_hook, description))));
+            ESCAPE_TABLE(PLUGIN(ptr_hook->plugin)),
+            ESCAPE_TABLE(HOOK_COMPLETION(ptr_hook, completion_item)),
+            ESCAPE_TABLE(TRANS(HOOK_COMPLETION(ptr_hook, description))));
     }
 
     arraylist_free (list_hooks);
@@ -1363,9 +1387,9 @@ doc_gen_api_url_options (const char *path, const char *lang)
         "[width=\"100%\",cols=\"2,^1,7\",options=\"header\"]\n"
         "|===\n"
         "| %s | %s ^(1)^ | %s ^(2)^\n",
-        ESCAPE(_("Option")),
-        ESCAPE(_("Type")),
-        ESCAPE(_("Constants")));
+        ESCAPE_TABLE(_("Option")),
+        ESCAPE_TABLE(_("Type")),
+        ESCAPE_TABLE(_("Constants")));
 
     for (i = 0; url_options[i].name; i++)
     {
@@ -1373,8 +1397,8 @@ doc_gen_api_url_options (const char *path, const char *lang)
         string_fprintf (
             file,
             "| %s | %s |",
-            ESCAPE(name),
-            ESCAPE(url_type_string[url_options[i].type]));
+            ESCAPE_TABLE(name),
+            ESCAPE_TABLE(url_type_string[url_options[i].type]));
         if (name)
             free (name);
         if (url_options[i].constants)
@@ -1450,9 +1474,9 @@ doc_gen_api_plugins_priority (const char *path, const char *lang)
         "[width=\"30%\",cols=\"1,3,2\",options=\"header\"]\n"
         "|===\n"
         "| %s | %s | %s\n",
-        ESCAPE(_("Rank")),
-        ESCAPE(_("Plugin")),
-        ESCAPE(_("Priority")));
+        ESCAPE_TABLE(_("Rank")),
+        ESCAPE_TABLE(_("Plugin")),
+        ESCAPE_TABLE(_("Priority")));
 
     list_plugins = arraylist_new (64, 1, 0,
                                   &doc_gen_plugin_cmp_cb, NULL,
@@ -1536,9 +1560,9 @@ doc_gen_api_config_priority (const char *path, const char *lang)
         "[width=\"30%\",cols=\"1,3,2\",options=\"header\"]\n"
         "|===\n"
         "| %s | %s | %s\n",
-        ESCAPE(_("Rank")),
-        ESCAPE(_("File")),
-        ESCAPE(_("Priority")));
+        ESCAPE_TABLE(_("Rank")),
+        ESCAPE_TABLE(_("File")),
+        ESCAPE_TABLE(_("Priority")));
 
     list_configs = arraylist_new (64, 1, 0,
                                   &doc_gen_config_cmp_cb, NULL,
