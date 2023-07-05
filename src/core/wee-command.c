@@ -8524,7 +8524,7 @@ command_init ()
            "\n"
            "For some keys you might need to use /debug key, this displays "
            "the raw key code that can be used (for example the key "
-           "ctrl+backspace could be ctrl-h or ctrl-?, depending on your "
+           "ctrl+backspace could be \"ctrl-h\" or \"ctrl-?\", depending on your "
            "terminal and other settings).\n"
            "\n"
            "Modifiers allowed (in this order when multiple are used):\n"
