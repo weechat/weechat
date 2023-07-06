@@ -48,11 +48,11 @@ struct t_hook *fset_option_timer_hook = NULL;
 
 /* types */
 char *fset_option_type_string[FSET_OPTION_NUM_TYPES] =
-{ N_("boolean"), N_("integer"), N_("string"), N_("color") };
+{ N_("boolean"), N_("integer"), N_("string"), N_("color"), N_("enum") };
 char *fset_option_type_string_short[FSET_OPTION_NUM_TYPES] =
-{ "bool", "int", "str", "col" };
+{ "bool", "int", "str", "col", "enum" };
 char *fset_option_type_string_tiny[FSET_OPTION_NUM_TYPES] =
-{ "b", "i", "s", "c" };
+{ "b", "i", "s", "c", "e" };
 
 
 /*
@@ -170,6 +170,18 @@ fset_option_set_value_string (struct t_config_option *option,
                 *value_string = strdup (*((int *)value) ? "on" : "off");
                 break;
             case FSET_OPTION_TYPE_INTEGER:
+                snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
+                *value_string = strdup (str_value);
+                break;
+            case FSET_OPTION_TYPE_STRING:
+                *value_string = strdup (
+                    (default_value) ? weechat_config_string_default (option) : weechat_config_string (option));
+                break;
+            case FSET_OPTION_TYPE_COLOR:
+                *value_string = strdup (
+                    (default_value) ? weechat_config_color_default (option) : weechat_config_color (option));
+                break;
+            case FSET_OPTION_TYPE_ENUM:
                 ptr_string_values = weechat_config_option_get_pointer (
                     option, "string_values");
                 if (ptr_string_values)
@@ -179,17 +191,8 @@ fset_option_set_value_string (struct t_config_option *option,
                 }
                 else
                 {
-                    snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
-                    *value_string = strdup (str_value);
+                    *value_string = strdup ("");
                 }
-                break;
-            case FSET_OPTION_TYPE_STRING:
-                *value_string = strdup (
-                    (default_value) ? weechat_config_string_default (option) : weechat_config_string (option));
-                break;
-            case FSET_OPTION_TYPE_COLOR:
-                *value_string = strdup (
-                    (default_value) ? weechat_config_color_default (option) : weechat_config_color (option));
                 break;
             case FSET_OPTION_NUM_TYPES:
                 break;
@@ -1114,7 +1117,7 @@ fset_option_toggle_value (struct t_fset_option *fset_option,
 }
 
 /*
- * Adds a value to an integer/color option.
+ * Adds a value to an integer/enum/color option.
  */
 
 void
@@ -1126,7 +1129,8 @@ fset_option_add_value (struct t_fset_option *fset_option,
 
     if (!fset_option || !option
         || ((fset_option->type != FSET_OPTION_TYPE_INTEGER)
-            && (fset_option->type != FSET_OPTION_TYPE_COLOR)))
+            && (fset_option->type != FSET_OPTION_TYPE_COLOR)
+            && (fset_option->type != FSET_OPTION_TYPE_ENUM)))
         return;
 
     snprintf (str_value, sizeof (str_value),

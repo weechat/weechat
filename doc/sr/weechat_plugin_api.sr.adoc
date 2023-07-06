@@ -6685,7 +6685,7 @@ section = weechat.config_search_section(config_file, "section")
 
 ==== config_new_option
 
-_Ажурирано у верзији 1.5._
+_Ажурирано у верзији 1.5, 4.1.0._
 
 Креира нову опцију у одељку конфигурационог фајла.
 
@@ -6730,11 +6730,15 @@ struct t_config_option *weechat_config_new_option (
 * _name_: име опције; у програм у WeeChat верзије ≥ 1.4, име може да укључи и име родитељске опције (у случају да је ова опција „null”, вредност родитељске опције ће се приказати у излазу команде `/set`), тада је синтакса: „име << фајл.одељак.опција”
 * _type_: тип опције:
 ** _boolean_: логичка вредност (on/off)
-** _integer_: целобројна вредност (са стринговима за вредности који нису обавезни)
+** _integer_: целобројна вредност
 ** _string_: стринг вредност
 ** _color_: боја
+// TRANSLATION MISSING
+** _enum_: list of string values (stored as integer internally)
 * _description_: опис опције
-* _string_values_: вредности као стринг (раздвојене са `+|+`), користе се за _integer_ тип (није обавезно)
+// TRANSLATION MISSING
+* _string_values_: вредности као стринг (раздвојене са `+|+`) (optional, required
+  for type _enum_)
 * _min_: минимална вредност (за _integer_ тип)
 * _max_: максимална вредност (за _integer_ тип)
 * _default_value_: подразумевана вредност опције (користи се када се опција ресетује)
@@ -6772,8 +6776,8 @@ C пример:
 [source,c]
 ----
 /* логичка */
-struct t_config_option *option1 =
-    weechat_config_new_option (config_file, section, "option1", "boolean",
+struct t_config_option *option_bool =
+    weechat_config_new_option (config_file, section, "option_bool", "boolean",
                                "My option, type boolean",
                                NULL,
                                0, 0,
@@ -6785,8 +6789,8 @@ struct t_config_option *option1 =
                                NULL, NULL, NULL);
 
 /* целобројна */
-struct t_config_option *option2 =
-    weechat_config_new_option (config_file, section, "option2", "integer",
+struct t_config_option *option_int =
+    weechat_config_new_option (config_file, section, "option_int", "integer",
                                "My option, type integer",
                                NULL,
                                0, 100,
@@ -6797,22 +6801,9 @@ struct t_config_option *option2 =
                                NULL, NULL, NULL,
                                NULL, NULL, NULL);
 
-/* целобројна (са стринг вредностима) */
-struct t_config_option *option3 =
-    weechat_config_new_option (config_file, section, "option3", "integer",
-                               "My option, type integer (with string values)",
-                               "top|bottom|left|right",
-                               0, 0,
-                               "bottom",
-                               "bottom",
-                               0,
-                               NULL, NULL, NULL,
-                               NULL, NULL, NULL,
-                               NULL, NULL, NULL);
-
 /* стринг */
-struct t_config_option *option4 =
-    weechat_config_new_option (config_file, section, "option4", "string",
+struct t_config_option *option_str =
+    weechat_config_new_option (config_file, section, "option_str", "string",
                                "My option, type string",
                                NULL,
                                0, 0,
@@ -6824,13 +6815,26 @@ struct t_config_option *option4 =
                                NULL, NULL, NULL);
 
 /* боја */
-struct t_config_option *option5 =
-    weechat_config_new_option (config_file, section, "option5", "color",
+struct t_config_option *option_col =
+    weechat_config_new_option (config_file, section, "option_col", "color",
                                "My option, type color",
                                NULL,
                                0, 0,
                                "lightblue",
                                "lightblue",
+                               0,
+                               NULL, NULL, NULL,
+                               NULL, NULL, NULL,
+                               NULL, NULL, NULL);
+
+/* целобројна (са стринг вредностима) */
+struct t_config_option *option_enum =
+    weechat_config_new_option (config_file, section, "option_enum", "enum",
+                               "My option, type enum",
+                               "top|bottom|left|right",
+                               0, 0,
+                               "bottom",
+                               "bottom",
                                0,
                                NULL, NULL, NULL,
                                NULL, NULL, NULL,
@@ -6850,49 +6854,49 @@ def config_new_option(config_file: str, section: str, name: str, type: str, desc
                       callback_delete: str, callback_delete_data: str) -> str: ...
 
 # пример
-def option4_check_value_cb(data: str, option: str, value: str) -> int:
+def option_str_check_value_cb(data: str, option: str, value: str) -> int:
     # ...
     return 1
     # return 0
 
-def option4_change_cb(data: str, option: str) -> None:
+def option_str_change_cb(data: str, option: str) -> None:
     # ...
 
-def option4_delete_cb(data: str, option: str) -> None:
+def option_str_delete_cb(data: str, option: str) -> None:
     # ...
 
-option1 = weechat.config_new_option(config_file, section, "option1", "boolean",
+option_bool = weechat.config_new_option(config_file, section, "option_bool", "boolean",
     "My option, type boolean",
     "", 0, 0, "on", "on", 0,
     "", "",
     "", "",
     "", "")
 
-option2 = weechat.config_new_option(config_file, section, "option2", "integer",
+option_int = weechat.config_new_option(config_file, section, "option_int", "integer",
     "My option, type integer",
     "", 0, 100, "15", "15", 0,
     "", "",
     "", "",
     "", "")
 
-option3 = weechat.config_new_option(config_file, section, "option3", "integer",
-    "My option, type integer (with string values)",
-    "top|bottom|left|right",
-    0, 0, "bottom", "bottom", 0,
+option_str = weechat.config_new_option(config_file, section, "option_str", "string",
+    "My option, type string",
+    "", 0, 0, "test", "test", 1,
+    "option_str_check_value_cb", "",
+    "option_str_change_cb", "",
+    "option_str_delete_cb", "")
+
+option_col = weechat.config_new_option(config_file, section, "option_col", "color",
+    "My option, type color",
+    "", 0, 0, "lightblue", "lightblue", 0,
     "", "",
     "", "",
     "", "")
 
-option4 = weechat.config_new_option(config_file, section, "option4", "string",
-    "My option, type string",
-    "", 0, 0, "test", "test", 1,
-    "option4_check_value_cb", "",
-    "option4_change_cb", "",
-    "option4_delete_cb", "")
-
-option5 = weechat.config_new_option(config_file, section, "option5", "color",
-    "My option, type color",
-    "", 0, 0, "lightblue", "lightblue", 0,
+option_enum = weechat.config_new_option(config_file, section, "option_enum", "enum",
+    "My option, type enum",
+    "top|bottom|left|right",
+    0, 0, "bottom", "bottom", 0,
     "", "",
     "", "",
     "", "")
@@ -7164,7 +7168,8 @@ int weechat_config_option_set (struct t_config_option *option,
 * _value_: нова вредност опције, могуће су и специјалне вредности које зависе од типа опције:
 ** _boolean_:
 *** `toggle`: пребацује текућу вредност
-** _integer_ или _color_:
+// TRANSLATION MISSING
+** _integer_, _color_ or _enum_:
 *** `++N`: додаје `N` (било који цео број) на текућу вредност
 *** `--N`: одузима `N` (било који цео број) од текуће вредности
 * _run_callback_: 1 за позив change функције повратног позива ако је вредност измењена, у супротном 0
@@ -7395,6 +7400,7 @@ const char *weechat_config_option_get_string (struct t_config_option *option,
 *** _integer_
 *** _string_
 *** _color_
+*** _enum_
 ** _description_: опис опције
 
 Повратна вредност:
@@ -7569,6 +7575,7 @@ int weechat_config_boolean (struct t_config_option *option);
 * _integer_: 0
 * _string_: 0
 * _color_: 0
+* _enum_: 0
 
 C пример:
 
@@ -7619,6 +7626,7 @@ int weechat_config_boolean_default (struct t_config_option *option);
 * _integer_: 0
 * _string_: 0
 * _color_: 0
+* _enum_: 0
 
 C пример:
 
@@ -7669,6 +7677,8 @@ int weechat_config_integer (struct t_config_option *option);
 * _integer_: целобројна вредност опције
 * _string_: 0
 * _color_: индекс боје
+// TRANSLATION MISSING
+* _enum_: integer value of option (index of enum value)
 
 C пример:
 
@@ -7711,6 +7721,8 @@ int weechat_config_integer_default (struct t_config_option *option);
 * _integer_: подразумевана целобројна вредност опције
 * _string_: 0
 * _color_: подразумевани индекс боје
+// TRANSLATION MISSING
+* _enum_: default integer value of option (index of enum value)
 
 C пример:
 
@@ -7750,9 +7762,11 @@ const char *weechat_config_string (struct t_config_option *option);
 Повратна вредност, зависи од типа опције:
 
 * _boolean_: „on” ако је вредност истинита, у супротном „off”
-* _integer_: стринг вредност опције је цео број са стринг вредностима, у супротном је NULL
+* _integer_: NULL
 * _string_: стринг вредност опције
 * _color_: име боје
+// TRANSLATION MISSING
+* _enum_: string value of option
 
 C пример:
 
@@ -7792,9 +7806,11 @@ const char *weechat_config_string_default (struct t_config_option *option);
 Повратна вредност, зависи од типа опције:
 
 * _boolean_: „on” ако је подразумевана вредност истинита, у супротном „off”
-* _integer_: подразумевана стринг вредност опције је цео број са стринг вредностима, у супротном је NULL
+* _integer_: NULL
 * _string_: подразумевана стринг вредност опције
 * _color_: име подразумеване боје
+// TRANSLATION MISSING
+* _enum_: default string value of option
 
 C пример:
 
@@ -7837,6 +7853,7 @@ const char *weechat_config_color (struct t_config_option *option);
 * _integer_: NULL
 * _string_: NULL
 * _color_: име боје
+* _enum_: NULL
 
 C пример:
 
@@ -7879,6 +7896,7 @@ const char *weechat_config_color_default (struct t_config_option *option);
 * _integer_: NULL
 * _string_: NULL
 * _color_: име подразумеване боје
+* _enum_: NULL
 
 C пример:
 
@@ -7898,6 +7916,98 @@ def config_color_default(option: str) -> str: ...
 # пример
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_color_default(option)
+----
+
+// TRANSLATION MISSING
+==== config_enum
+
+_WeeChat ≥ 4.1.0._
+
+Return enum value of option, as integer.
+
+Prototype:
+
+[source,c]
+----
+int weechat_config_enum (struct t_config_option *option);
+----
+
+Arguments:
+
+* _option_: option pointer
+
+Return value, depending on the option type:
+
+* _boolean_: boolean value of option (0 or 1)
+* _integer_: integer value of option
+* _string_: 0
+* _color_: color index
+* _enum_: integer value of option (index of enum value)
+
+C example:
+
+[source,c]
+----
+struct t_config_option *option = weechat_config_get ("plugin.section.option");
+int value = weechat_config_enum (option);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+def config_enum(option: str) -> int: ...
+
+# example
+option = weechat.config_get("plugin.section.option")
+value = weechat.config_enum(option)
+----
+
+// TRANSLATION MISSING
+==== config_enum_default
+
+_WeeChat ≥ 4.1.0._
+
+Return default enum value of option, as integer.
+
+Prototype:
+
+[source,c]
+----
+int weechat_config_enum_default (struct t_config_option *option);
+----
+
+Arguments:
+
+* _option_: option pointer
+
+Return value, depending on the option type:
+
+* _boolean_: default boolean value of option (0 or 1)
+* _integer_: default integer value of option
+* _string_: 0
+* _color_: default color index
+* _enum_: integer value of option (index of enum value)
+
+C example:
+
+[source,c]
+----
+struct t_config_option *option = weechat_config_get ("plugin.section.option");
+int value = weechat_config_enum_default (option);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+def config_enum_default(option: str) -> int: ...
+
+# example
+option = weechat.config_get("plugin.section.option")
+value = weechat.config_enum_default(option)
 ----
 
 ==== config_write_option

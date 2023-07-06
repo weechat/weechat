@@ -98,7 +98,7 @@ fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
 }
 
 /*
- * Get distance between x and x2 (as a positive integer);
+ * Get distance between x and x2 (as a positive integer).
  */
 
 int
@@ -224,7 +224,8 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
     {
         distance = fset_mouse_get_distance_x (hashtable);
         if ((ptr_fset_option->type == FSET_OPTION_TYPE_INTEGER)
-            || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR))
+            || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR)
+            || (ptr_fset_option->type == FSET_OPTION_TYPE_ENUM))
         {
             snprintf (str_command, sizeof (str_command),
                       "/fset -add -%d",
@@ -240,7 +241,8 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
     {
         distance = fset_mouse_get_distance_x (hashtable);
         if ((ptr_fset_option->type == FSET_OPTION_TYPE_INTEGER)
-            || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR))
+            || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR)
+            || (ptr_fset_option->type == FSET_OPTION_TYPE_ENUM))
         {
             snprintf (str_command, sizeof (str_command),
                       "/fset -add %d",

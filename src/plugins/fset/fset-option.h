@@ -30,6 +30,7 @@ enum t_fset_option_type
     FSET_OPTION_TYPE_INTEGER,
     FSET_OPTION_TYPE_STRING,
     FSET_OPTION_TYPE_COLOR,
+    FSET_OPTION_TYPE_ENUM,
     /* number of option types */
     FSET_OPTION_NUM_TYPES,
 };

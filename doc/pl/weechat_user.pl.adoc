@@ -1719,8 +1719,10 @@ za pomocą skrótu kbd:[Alt+m] (komenda: `+/mouse toggle+`).
 | kbd:[▼]             | -             | chat: bufor fset     | Przewiń pięć linii w dół w buforze fset. | `+/fset -down 5+`
 | ◾◽◽                 | -             | chat: bufor fset     | Zaznacz linię b buforze fset. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
 | ◽◽◾                 | -             | chat: bufor fset     | Przełącz (włącz/wyłącz) lub edytuj wartośc opcji. | `+hsignal:fset_mouse+`
-| ◽◽◾                 | left          | chat: bufor fset     | Zmniejsz wartość zmiennej liczbowej / koloru, ustaw/rozszerz wartośc innego typu. | `+hsignal:fset_mouse+`
-| ◽◽◾                 | right         | chat: bufor fset     | Zwiększ wartość zmiennej liczbowej / koloru, ustaw/rozszerz wartośc innego typu. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| ◽◽◾                 | left          | chat: bufor fset     | Zmniejsz wartość zmiennej liczbowej / koloru / enum, ustaw/rozszerz wartośc innego typu. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| ◽◽◾                 | right         | chat: bufor fset     | Zwiększ wartość zmiennej liczbowej / koloru / enum, ustaw/rozszerz wartośc innego typu. | `+hsignal:fset_mouse+`
 | ◽◽◾                 | up / down     | chat: bufor fset     | Zaznacz/odznacz wiele opcji. | `+hsignal:fset_mouse+`
 | kbd:[▲]             | -             | chat: bufor skryptów | Przejdź 5 linii w górę w buforze skryptów. | `+/script up 5+`
 | kbd:[▼]             | -             | chat: bufor skryptów | Przejdź 5 linii w dół w buforze skryptów. | `+/script down 5+`
@@ -1767,8 +1769,10 @@ Poniższe skróty i akcje mogą zostać użyte w buforze fset (zobacz <<fset,wty
 | kbd:[F11]                | `pass:[<]`   | Przewiń poziomo w lewo. | `+/fset -left+`
 | kbd:[F12]                | `pass:[>]`   | Przewiń poziomo w prawo. | `+/fset -right+`
 | kbd:[Alt+Space]          | `t`          | Przełącz zmienną boolowską. | `+/fset -toggle+`
-| kbd:[Alt+-]              | `-`          | Odejmij 1 od wartości liczbowej/koloru, ustaw wartość pozostałych typów. | `+/fset -del -1+`
-| kbd:[Alt++]              | `+`          | Dodaj 1 do wartości liczbowej/koloru, dodaj to wartości pozostałych typów. | `+/fset -add 1+`
+// TRANSLATION MISSING
+| kbd:[Alt+-]              | `-`          | Odejmij 1 od wartości liczbowej/koloru/enum, ustaw wartość pozostałych typów. | `+/fset -del -1+`
+// TRANSLATION MISSING
+| kbd:[Alt++]              | `+`          | Dodaj 1 do wartości liczbowej/koloru/enum, dodaj to wartości pozostałych typów. | `+/fset -add 1+`
 | kbd:[Alt+f], kbd:[Alt+r] | `r`          | Zresetuj wartość. | `+/fset -reset+`
 | kbd:[Alt+f], kbd:[Alt+u] | `u`          | Skasuj wartość. | `+/fset -unset+`
 | kbd:[Alt+Enter]          | `s`          | Ustaw wartość. | `+/fset -set+`
@@ -1838,7 +1842,7 @@ Przykład bufora fset wyświetlający opcje zaczynające się od `weechat.look`�
 │2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
 │         │hanges in input [default: on]                                               │
 │         │----------------------------------------------------------------------------│
-│         │  weechat.look.align_end_of_lines                   integer  message        │
+│         │  weechat.look.align_end_of_lines                   enum     message        │
 │         │  weechat.look.align_multiline_words                boolean  on             │
 │         │  weechat.look.bar_more_down                        string   "++"           │
 │         │  weechat.look.bar_more_left                        string   "<<"           │
@@ -1847,12 +1851,12 @@ Przykład bufora fset wyświetlający opcje zaczynające się od `weechat.look`�
 │         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
 │         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
 │         │  weechat.look.buffer_auto_renumber                 boolean  on             │
-│         │  weechat.look.buffer_notify_default                integer  all            │
-│         │  weechat.look.buffer_position                      integer  end            │
+│         │  weechat.look.buffer_notify_default                enum     all            │
+│         │  weechat.look.buffer_position                      enum     end            │
 │         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
 │         │  weechat.look.buffer_search_force_default          boolean  off            │
 │         │  weechat.look.buffer_search_regex                  boolean  off            │
-│         │  weechat.look.buffer_search_where                  integer  prefix_message │
+│         │  weechat.look.buffer_search_where                  enum     prefix_message │
 │         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
 │         │  weechat.look.buffer_time_same                     string   ""             │
 │         │[12:55] [2] [fset] 2:fset                                                   │
@@ -3287,7 +3291,7 @@ irc.server.libera.autorejoin_delay      integer  null -> 30
 irc.server.libera.away_check            integer  null -> 0
 irc.server.libera.away_check_max_nicks  integer  null -> 25
 irc.server.libera.capabilities          string   null -> "*"
-irc.server.libera.charset_message       integer  null -> message
+irc.server.libera.charset_message       enum     null -> message
 irc.server.libera.command               string   null -> ""
 irc.server.libera.command_delay         integer  null -> 0
 irc.server.libera.connection_timeout    integer  null -> 60
@@ -3303,9 +3307,9 @@ irc.server.libera.notify                string   null -> ""
 irc.server.libera.password              string   null -> ""
 irc.server.libera.proxy                 string   null -> ""
 irc.server.libera.realname              string   null -> ""
-irc.server.libera.sasl_fail             integer  null -> reconnect
+irc.server.libera.sasl_fail             enum     null -> reconnect
 irc.server.libera.sasl_key              string   null -> ""
-irc.server.libera.sasl_mechanism        integer  null -> plain
+irc.server.libera.sasl_mechanism        enum     null -> plain
 irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"

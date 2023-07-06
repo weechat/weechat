@@ -282,7 +282,8 @@ fset_command_fset (const void *pointer, void *data,
                 fset_command_get_option (&ptr_fset_option, &ptr_option);
                 if (ptr_fset_option &&
                     ((ptr_fset_option->type == FSET_OPTION_TYPE_INTEGER)
-                     || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR)))
+                     || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR)
+                     || (ptr_fset_option->type == FSET_OPTION_TYPE_ENUM)))
                 {
                     fset_option_add_value (ptr_fset_option, ptr_option, value);
                 }
@@ -651,7 +652,7 @@ fset_command_init ()
            "(\"end\" to select the last line)\n"
            "    -toggle: toggle the boolean value\n"
            "       -add: add \"value\" (which can be a negative number) "
-           "for integers and colors, set/append to value for other types "
+           "for integers, colors and enums, set/append to value for other types "
            "(set for a negative value, append for a positive value)\n"
            "     -reset: reset the value of option\n"
            "     -unset: unset the option\n"
@@ -675,7 +676,7 @@ fset_command_init ()
            "               *       show all options (no filter)\n"
            "               xxx     show only options with \"xxx\" in name\n"
            "               f:xxx   show only configuration file \"xxx\"\n"
-           "               t:xxx   show only type \"xxx\" (bool/int/str/col)\n"
+           "               t:xxx   show only type \"xxx\" (bool/int/str/col/enum)\n"
            "               d       show only changed options\n"
            "               d:xxx   show only changed options with \"xxx\" in "
            "name\n"
@@ -692,7 +693,7 @@ fset_command_init ()
            "               c:xxx   show only options matching the evaluated "
            "condition \"xxx\", using following variables: file, section, "
            "option, name, parent_name, type, type_en, type_short "
-           "(bool/int/str/col), type_tiny (b/i/s/c), default_value, "
+           "(bool/int/str/col/enum), type_tiny (b/i/s/c), default_value, "
            "default_value_undef, value, quoted_value, value_undef, "
            "value_changed, parent_value, min, max, description, description2, "
            "description_en, description_en2, string_values\n"
@@ -712,7 +713,7 @@ fset_command_init ()
            "    - ${parent_name}: parent option name\n"
            "    - ${type}: option type (translated)\n"
            "    - ${type_en}: option type (in English)\n"
-           "    - ${type_short}: short option type (bool/int/str/col)\n"
+           "    - ${type_short}: short option type (bool/int/str/col/enum)\n"
            "    - ${type_tiny}: tiny option type (b/i/s/c)\n"
            "    - ${default_value}: option default value\n"
            "    - ${default_value_undef}: \"1\" if default value is null, "
@@ -731,8 +732,8 @@ fset_command_init ()
            "    - ${description_en}: option description (in English)\n"
            "    - ${description_en2}: option description (in English), "
            "\"(no description)\" if there's no description\n"
-           "    - ${string_values}: string values allowed for set of an "
-           "integer option using strings\n"
+           "    - ${string_values}: string values allowed for set of an enum "
+           "option\n"
            "    - ${marked}: \"1\" if option is marked, otherwise \"0\"\n"
            "    - ${index}: index of option in list\n"
            "  - option data, with color but no spaces:\n"
@@ -762,10 +763,10 @@ fset_command_init ()
            "\n"
            "Keys and input to set options on fset buffer:\n"
            "  alt+space         t       toggle boolean value\n"
-           "  alt+'-'           -       subtract 1 from value for integer/color, "
-           "set value for other types\n"
-           "  alt+'+'           +       add 1 to value for integer/color, append "
-           "to value for other types\n"
+           "  alt+'-'           -       subtract 1 from value for "
+           "integer/color/enum, set value for other types\n"
+           "  alt+'+'           +       add 1 to value for integer/color/enum, "
+           "append to value for other types\n"
            "  alt+f, alt+r      r       reset value\n"
            "  alt+f, alt+u      u       unset value\n"
            "  alt+enter         s       set value\n"
@@ -805,7 +806,7 @@ fset_command_init ()
            "  right button                    toggle boolean (on/off) or "
            "edit the option value\n"
            "  right button + drag left/right  increase/decrease value "
-           "for integer/color, set/append to value for other types\n"
+           "for integer/color/enum, set/append to value for other types\n"
            "  right button + drag up/down     mark/unmark multiple options\n"
            "\n"
            "Note: if input has one or more leading spaces, the following text "

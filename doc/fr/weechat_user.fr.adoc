@@ -1747,8 +1747,8 @@ avec la touche kbd:[Alt+m] (commande : `+/mouse toggle+`).
 | kbd:[▼]               | -            | chat : tampon fset   | Descendre de cinq lignes dans le tampon fset. | `+/fset -down 5+`
 | ◾◽◽                   | -            | chat : tampon fset   | Sélectionner la ligne dans le tampon fset. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
 | ◽◽◾                   | -            | chat : tampon fset   | Basculer le booléen (on/off) ou éditer la valeur de l'option. | `+hsignal:fset_mouse+`
-| ◽◽◾                   | left         | chat : tampon fset   | Décrémenter la valeur de l'entier/couleur, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
-| ◽◽◾                   | right        | chat : tampon fset   | Incrémenter la valeur de l'entier/couleur, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
+| ◽◽◾                   | left         | chat : tampon fset   | Décrémenter la valeur de l'entier/couleur/énuméré, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
+| ◽◽◾                   | right        | chat : tampon fset   | Incrémenter la valeur de l'entier/couleur/énuméré, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
 | ◽◽◾                   | up / down    | chat : tampon fset   | Marquer/démarquer de multiples options. | `+hsignal:fset_mouse+`
 | kbd:[▲]               | -            | chat : tampon script | Monter de 5 lignes dans le tampon script. | `+/script up 5+`
 | kbd:[▼]               | -            | chat : tampon script | Descendre de 5 lignes dans le tampon script. | `+/script down 5+`
@@ -1796,8 +1796,8 @@ Ces touches et actions sont utilisées sur le tampon fset
 | kbd:[F11]                | `pass:[<]`   | Faire défiler horizontalement vers la gauche. | `+/fset -left+`
 | kbd:[F12]                | `pass:[>]`   | Faire défiler horizontalement vers la droite. | `+/fset -right+`
 | kbd:[Alt+Space]          | `t`          | Basculer la valeur booléenne. | `+/fset -toggle+`
-| kbd:[Alt+-]              | `-`          | Soustraire 1 de la valeur de l'entier/couleur, définir la valeur pour les autres types. | `+/fset -add -1+`
-| kbd:[Alt++]              | `+`          | Ajouter 1 à la valeur de l'entier/couleur, ajouter à la valeur pour les autres types. | `+/fset -add 1+`
+| kbd:[Alt+-]              | `-`          | Soustraire 1 de la valeur de l'entier/couleur/énuméré, définir la valeur pour les autres types. | `+/fset -add -1+`
+| kbd:[Alt++]              | `+`          | Ajouter 1 à la valeur de l'entier/couleur/énuméré, ajouter à la valeur pour les autres types. | `+/fset -add 1+`
 | kbd:[Alt+f], kbd:[Alt+r] | `r`          | Réinitialiser la valeur. | `+/fset -reset+`
 | kbd:[Alt+f], kbd:[Alt+u] | `u`          | Supprimer/réinitialiser la valeur. | `+/fset -unset+`
 | kbd:[Alt+Enter]          | `s`          | Définir la valeur. | `+/fset -set+`
@@ -1868,7 +1868,7 @@ Exemple de tampon fset affichant les options commençant par `weechat.look` :
 │2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
 │         │hanges in input [default: on]                                               │
 │         │----------------------------------------------------------------------------│
-│         │  weechat.look.align_end_of_lines                   integer  message        │
+│         │  weechat.look.align_end_of_lines                   enum     message        │
 │         │  weechat.look.align_multiline_words                boolean  on             │
 │         │  weechat.look.bar_more_down                        string   "++"           │
 │         │  weechat.look.bar_more_left                        string   "<<"           │
@@ -1877,12 +1877,12 @@ Exemple de tampon fset affichant les options commençant par `weechat.look` :
 │         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
 │         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
 │         │  weechat.look.buffer_auto_renumber                 boolean  on             │
-│         │  weechat.look.buffer_notify_default                integer  all            │
-│         │  weechat.look.buffer_position                      integer  end            │
+│         │  weechat.look.buffer_notify_default                enum     all            │
+│         │  weechat.look.buffer_position                      enum     end            │
 │         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
 │         │  weechat.look.buffer_search_force_default          boolean  off            │
 │         │  weechat.look.buffer_search_regex                  boolean  off            │
-│         │  weechat.look.buffer_search_where                  integer  prefix_message │
+│         │  weechat.look.buffer_search_where                  enum     prefix_message │
 │         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
 │         │  weechat.look.buffer_time_same                     string   ""             │
 │         │[12:55] [2] [fset] 2:fset                                                   │
@@ -3366,7 +3366,7 @@ irc.server.libera.autorejoin_delay      integer  null -> 30
 irc.server.libera.away_check            integer  null -> 0
 irc.server.libera.away_check_max_nicks  integer  null -> 25
 irc.server.libera.capabilities          string   null -> "*"
-irc.server.libera.charset_message       integer  null -> message
+irc.server.libera.charset_message       enum     null -> message
 irc.server.libera.command               string   null -> ""
 irc.server.libera.command_delay         integer  null -> 0
 irc.server.libera.connection_timeout    integer  null -> 60
@@ -3382,9 +3382,9 @@ irc.server.libera.notify                string   null -> ""
 irc.server.libera.password              string   null -> ""
 irc.server.libera.proxy                 string   null -> ""
 irc.server.libera.realname              string   null -> ""
-irc.server.libera.sasl_fail             integer  null -> reconnect
+irc.server.libera.sasl_fail             enum     null -> reconnect
 irc.server.libera.sasl_key              string   null -> ""
-irc.server.libera.sasl_mechanism        integer  null -> plain
+irc.server.libera.sasl_mechanism        enum     null -> plain
 irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"

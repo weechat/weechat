@@ -541,19 +541,11 @@ doc_gen_user_options (const char *path, const char *lang)
                 values = strdup ("on, off");
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
-                if (ptr_option->string_values)
-                {
-                    values = string_rebuild_split_string (
-                        (const char **)ptr_option->string_values, ", ", 0, -1);
-                }
-                else
-                {
-                    snprintf (str_values, sizeof (str_values),
-                              "%d .. %d",
-                              ptr_option->min,
-                              ptr_option->max);
-                    values = strdup (str_values);
-                }
+                snprintf (str_values, sizeof (str_values),
+                          "%d .. %d",
+                          ptr_option->min,
+                          ptr_option->max);
+                values = strdup (str_values);
                 break;
             case CONFIG_OPTION_TYPE_STRING:
                 if (ptr_option->max <= 0)
@@ -572,6 +564,10 @@ doc_gen_user_options (const char *path, const char *lang)
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
                 values = strdup (command_help_option_color_values ());
+                break;
+            case CONFIG_OPTION_TYPE_ENUM:
+                values = string_rebuild_split_string (
+                    (const char **)ptr_option->string_values, ", ", 0, -1);
                 break;
             default:
                 values = NULL;

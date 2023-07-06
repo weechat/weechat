@@ -1892,9 +1892,9 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 // TRANSLATION MISSING
 | ◽◽◾               | -                | chat: fset buffer   | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾               | left             | chat: fset buffer   | Decrease value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
+| ◽◽◾               | left             | chat: fset buffer   | Decrease value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾               | right            | chat: fset buffer   | Increase value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
+| ◽◽◾               | right            | chat: fset buffer   | Increase value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
 | ◽◽◾               | up / down        | chat: fset buffer   | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
@@ -1956,8 +1956,8 @@ These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 | kbd:[F11]                | `pass:[<]`   | Scroll horizontally on the left. | `+/fset -left+`
 | kbd:[F12]                | `pass:[>]`   | Scroll horizontally on the right. | `+/fset -right+`
 | kbd:[Alt+Space]          | `t`          | Toggle boolean value. | `+/fset -toggle+`
-| kbd:[Alt+-]              | `-`          | Subtract 1 from value for integer/color, set value for other types. | `+/fset -add -1+`
-| kbd:[Alt++]              | `+`          | Add 1 to value for integer/color, append to value for other types. | `+/fset -add 1+`
+| kbd:[Alt+-]              | `-`          | Subtract 1 from value for integer/color/enum, set value for other types. | `+/fset -add -1+`
+| kbd:[Alt++]              | `+`          | Add 1 to value for integer/color/enum, append to value for other types. | `+/fset -add 1+`
 | kbd:[Alt+f], kbd:[Alt+r] | `r`          | Reset value. | `+/fset -reset+`
 | kbd:[Alt+f], kbd:[Alt+u] | `u`          | Unset value. | `+/fset -unset+`
 | kbd:[Alt+Enter]          | `s`          | Set value. | `+/fset -set+`
@@ -2035,7 +2035,7 @@ Example of fset buffer displaying options starting with `weechat.look` :
 │2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
 │         │hanges in input [default: on]                                               │
 │         │----------------------------------------------------------------------------│
-│         │  weechat.look.align_end_of_lines                   integer  message        │
+│         │  weechat.look.align_end_of_lines                   enum     message        │
 │         │  weechat.look.align_multiline_words                boolean  on             │
 │         │  weechat.look.bar_more_down                        string   "++"           │
 │         │  weechat.look.bar_more_left                        string   "<<"           │
@@ -2044,12 +2044,12 @@ Example of fset buffer displaying options starting with `weechat.look` :
 │         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
 │         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
 │         │  weechat.look.buffer_auto_renumber                 boolean  on             │
-│         │  weechat.look.buffer_notify_default                integer  all            │
-│         │  weechat.look.buffer_position                      integer  end            │
+│         │  weechat.look.buffer_notify_default                enum     all            │
+│         │  weechat.look.buffer_position                      enum     end            │
 │         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
 │         │  weechat.look.buffer_search_force_default          boolean  off            │
 │         │  weechat.look.buffer_search_regex                  boolean  off            │
-│         │  weechat.look.buffer_search_where                  integer  prefix_message │
+│         │  weechat.look.buffer_search_where                  enum     prefix_message │
 │         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
 │         │  weechat.look.buffer_time_same                     string   ""             │
 │         │[12:55] [2] [fset] 2:fset                                                   │
@@ -3542,7 +3542,7 @@ irc.server.libera.autorejoin_delay      integer  null -> 30
 irc.server.libera.away_check            integer  null -> 0
 irc.server.libera.away_check_max_nicks  integer  null -> 25
 irc.server.libera.capabilities          string   null -> "*"
-irc.server.libera.charset_message       integer  null -> message
+irc.server.libera.charset_message       enum     null -> message
 irc.server.libera.command               string   null -> ""
 irc.server.libera.command_delay         integer  null -> 0
 irc.server.libera.connection_timeout    integer  null -> 60
@@ -3558,9 +3558,9 @@ irc.server.libera.notify                string   null -> ""
 irc.server.libera.password              string   null -> ""
 irc.server.libera.proxy                 string   null -> ""
 irc.server.libera.realname              string   null -> ""
-irc.server.libera.sasl_fail             integer  null -> reconnect
+irc.server.libera.sasl_fail             enum     null -> reconnect
 irc.server.libera.sasl_key              string   null -> ""
-irc.server.libera.sasl_mechanism        integer  null -> plain
+irc.server.libera.sasl_mechanism        enum     null -> plain
 irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"

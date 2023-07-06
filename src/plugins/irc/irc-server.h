@@ -120,6 +120,13 @@ enum t_irc_server_option
       weechat_config_string(irc_config_server_default[__index])               \
       : weechat_config_string_default(irc_config_server_default[__index])))
 
+#define IRC_SERVER_OPTION_ENUM(__server, __index)                             \
+    ((!weechat_config_option_is_null(__server->options[__index])) ?           \
+     weechat_config_enum(__server->options[__index]) :                        \
+     ((!weechat_config_option_is_null(irc_config_server_default[__index])) ?  \
+      weechat_config_enum(irc_config_server_default[__index])                 \
+      : weechat_config_enum_default(irc_config_server_default[__index])))
+
 #define IRC_SERVER_DEFAULT_PORT_CLEARTEXT 6667
 #define IRC_SERVER_DEFAULT_PORT_TLS       6697
 

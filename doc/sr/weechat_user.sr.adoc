@@ -1623,8 +1623,10 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[▼]             | -            | чет: fset бафер   | Помера за пет линија наниже у fset баферу. | `+/fset -down 5+`
 | ◾◽◽                 | -            | чет: fset бафер   | Бира линију у fset баферу. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
 | ◽◽◾                 | -            | чет: fset бафер   | Пребацује логичку вредност (on/off) или уређује вредност опције. | `+hsignal:fset_mouse+`
-| ◽◽◾                 | лево         | чет: fset бафер   | Умањује вредност за цео број/боју, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
-| ◽◽◾                 | десно        | чет: fset бафер   | Увећава вредност за цео број/боју, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| ◽◽◾                 | лево         | чет: fset бафер   | Умањује вредност за цео број/боју/enum, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| ◽◽◾                 | десно        | чет: fset бафер   | Увећава вредност за цео број/боју/enum, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
 | ◽◽◾                 | горе / доле  | чет: fset бафер   | Маркира/уклања маркер са више опција. | `+hsignal:fset_mouse+`
 | kbd:[▲]             | -            | чет: script бафер | Помера за пет линија навише у script баферу. | `+/script up 5+`
 | kbd:[▼]             | -            | чет: script бафер | Помера за пет линија наниже у script баферу. | `+/script down 5+`
@@ -1671,8 +1673,10 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[F11]                | `pass:[<]`   | Скролује хоризонтално у лево. | `+/fset -left+`
 | kbd:[F12]                | `pass:[>]`   | Скролује хоризонтално у десно. | `+/fset -right+`
 | kbd:[Alt+Space]          | `t`          | Пребацује стање логичке вредности. | `+/fset -toggle+`
-| kbd:[Alt+-]              | `-`          | Одузима 1 од вредности за цео број/боју, поставља вредност за остале типове. | `+/fset -add -1+`
-| kbd:[Alt++]              | `+`          | Додаје 1 на вредност за цео број/боју, надовезује вредност за остале типове. | `+/fset -add 1+`
+// TRANSLATION MISSING
+| kbd:[Alt+-]              | `-`          | Одузима 1 од вредности за цео број/боју/enum, поставља вредност за остале типове. | `+/fset -add -1+`
+// TRANSLATION MISSING
+| kbd:[Alt++]              | `+`          | Додаје 1 на вредност за цео број/боју/enum, надовезује вредност за остале типове. | `+/fset -add 1+`
 | kbd:[Alt+f], kbd:[Alt+r] | `r`          | Ресетује вредност. | `+/fset -reset+`
 | kbd:[Alt+f], kbd:[Alt+u] | `u`          | Поставља да је вредност празна. | `+/fset -unset+`
 | kbd:[Alt+Enter]          | `s`          | Поставља вредност. | `+/fset -set+`
@@ -1741,7 +1745,7 @@ Fast Set додатак приказује листу опција у бафер
 │2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
 │         │hanges in input [default: on]                                               │
 │         │----------------------------------------------------------------------------│
-│         │  weechat.look.align_end_of_lines                   integer  message        │
+│         │  weechat.look.align_end_of_lines                   enum     message        │
 │         │  weechat.look.align_multiline_words                boolean  on             │
 │         │  weechat.look.bar_more_down                        string   "++"           │
 │         │  weechat.look.bar_more_left                        string   "<<"           │
@@ -1750,12 +1754,12 @@ Fast Set додатак приказује листу опција у бафер
 │         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
 │         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
 │         │  weechat.look.buffer_auto_renumber                 boolean  on             │
-│         │  weechat.look.buffer_notify_default                integer  all            │
-│         │  weechat.look.buffer_position                      integer  end            │
+│         │  weechat.look.buffer_notify_default                enum     all            │
+│         │  weechat.look.buffer_position                      enum     end            │
 │         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
 │         │  weechat.look.buffer_search_force_default          boolean  off            │
 │         │  weechat.look.buffer_search_regex                  boolean  off            │
-│         │  weechat.look.buffer_search_where                  integer  prefix_message │
+│         │  weechat.look.buffer_search_where                  enum     prefix_message │
 │         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
 │         │  weechat.look.buffer_time_same                     string   ""             │
 │         │[12:55] [2] [fset] 2:fset                                                   │
@@ -3065,7 +3069,7 @@ irc.server.libera.autorejoin_delay      integer  null -> 30
 irc.server.libera.away_check            integer  null -> 0
 irc.server.libera.away_check_max_nicks  integer  null -> 25
 irc.server.libera.capabilities          string   null -> "*"
-irc.server.libera.charset_message       integer  null -> message
+irc.server.libera.charset_message       enum     null -> message
 irc.server.libera.command               string   null -> ""
 irc.server.libera.command_delay         integer  null -> 0
 irc.server.libera.connection_timeout    integer  null -> 60
@@ -3081,9 +3085,9 @@ irc.server.libera.notify                string   null -> ""
 irc.server.libera.password              string   null -> ""
 irc.server.libera.proxy                 string   null -> ""
 irc.server.libera.realname              string   null -> ""
-irc.server.libera.sasl_fail             integer  null -> reconnect
+irc.server.libera.sasl_fail             enum     null -> reconnect
 irc.server.libera.sasl_key              string   null -> ""
-irc.server.libera.sasl_mechanism        integer  null -> plain
+irc.server.libera.sasl_mechanism        enum     null -> plain
 irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"
