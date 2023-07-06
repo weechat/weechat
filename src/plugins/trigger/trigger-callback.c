@@ -147,7 +147,7 @@ trigger_callback_set_common_vars (struct t_trigger *trigger,
     weechat_hashtable_set (
         hashtable, "tg_hook_type",
         trigger_hook_type_string[
-            weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])]);
+            weechat_config_enum (trigger->options[TRIGGER_OPTION_HOOK])]);
 }
 
 /*
@@ -396,7 +396,7 @@ trigger_callback_regex (struct t_trigger *trigger,
 
         ptr_key = (trigger->regex[i].variable) ?
             trigger->regex[i].variable :
-            trigger_hook_regex_default_var[weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])];
+            trigger_hook_regex_default_var[weechat_config_enum (trigger->options[TRIGGER_OPTION_HOOK])];
         if (!ptr_key || !ptr_key[0])
         {
             if (trigger_buffer && display_monitor)

@@ -57,7 +57,7 @@ trigger_buffer_match_filters (struct t_trigger *trigger)
         {
             /* check if the hook matches the filter */
             if (weechat_strcasecmp (
-                    trigger_hook_type_string[weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])],
+                    trigger_hook_type_string[weechat_config_enum (trigger->options[TRIGGER_OPTION_HOOK])],
                     trigger_buffer_filters[i] + 1) == 0)
             {
                 return 1;
@@ -355,7 +355,7 @@ trigger_buffer_display_trigger (struct t_trigger *trigger,
         "--> %s%lu\t%s: %s%s %s(%s%s%s)%s",
         weechat_color (weechat_config_string (trigger_config_color_identifier)),
         context->id,
-        trigger_hook_type_string[weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])],
+        trigger_hook_type_string[weechat_config_enum (trigger->options[TRIGGER_OPTION_HOOK])],
         weechat_color ("chat_status_enabled"),
         trigger->name,
         weechat_color ("chat_delimiters"),

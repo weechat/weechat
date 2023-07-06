@@ -306,7 +306,7 @@ gui_buffer_notify_get (struct t_gui_buffer *buffer)
     struct t_config_option *ptr_option;
 
     if (!buffer)
-        return CONFIG_INTEGER(config_look_buffer_notify_default);
+        return CONFIG_ENUM(config_look_buffer_notify_default);
 
     length = strlen (buffer->full_name) + 1;
     option_name = malloc (length);
@@ -344,7 +344,7 @@ gui_buffer_notify_get (struct t_gui_buffer *buffer)
     }
 
     /* notify level not found */
-    return CONFIG_INTEGER(config_look_buffer_notify_default);
+    return CONFIG_ENUM(config_look_buffer_notify_default);
 }
 
 /*
@@ -480,7 +480,7 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
      */
     if (!pos_buffer
         && (buffer->layout_number == 0)
-        && (CONFIG_INTEGER(config_look_buffer_position) == CONFIG_LOOK_BUFFER_POSITION_FIRST_GAP))
+        && (CONFIG_ENUM(config_look_buffer_position) == CONFIG_LOOK_BUFFER_POSITION_FIRST_GAP))
     {
         for (ptr_buffer = gui_buffers; ptr_buffer;
              ptr_buffer = ptr_buffer->next_buffer)
@@ -719,7 +719,7 @@ gui_buffer_new_props (struct t_weechat_plugin *plugin,
     gui_buffer_build_full_name (new_buffer);
     new_buffer->short_name = NULL;
     new_buffer->type = GUI_BUFFER_TYPE_DEFAULT;
-    new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
+    new_buffer->notify = CONFIG_ENUM(config_look_buffer_notify_default);
     new_buffer->num_displayed = 0;
     new_buffer->active = 1;
     new_buffer->hidden = 0;
@@ -2371,7 +2371,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             if (number < GUI_BUFFER_NUM_NOTIFY)
             {
                 if (number < 0)
-                    number = CONFIG_INTEGER(config_look_buffer_notify_default);
+                    number = CONFIG_ENUM(config_look_buffer_notify_default);
                 ptr_notify = gui_buffer_notify_string[number];
             }
         }
@@ -4622,7 +4622,7 @@ gui_buffer_input_move_to_buffer (struct t_gui_buffer *from_buffer,
      * - input buffer in first buffer is not empty
      */
     if (!from_buffer || !to_buffer || (from_buffer == to_buffer)
-        || (CONFIG_INTEGER(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_NONE)
+        || (CONFIG_ENUM(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_NONE)
         || !from_buffer->input_buffer || !from_buffer->input_buffer[0])
         return;
 
@@ -4632,8 +4632,8 @@ gui_buffer_input_move_to_buffer (struct t_gui_buffer *from_buffer,
      * then do nothing
      */
     is_command = (string_input_for_buffer (from_buffer->input_buffer) == NULL) ? 1 : 0;
-    if ((is_command && (CONFIG_INTEGER(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_TEXT))
-        || (!is_command && (CONFIG_INTEGER(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_COMMANDS)))
+    if ((is_command && (CONFIG_ENUM(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_TEXT))
+        || (!is_command && (CONFIG_ENUM(config_look_input_share) == CONFIG_LOOK_INPUT_SHARE_COMMANDS)))
         return;
 
     /*

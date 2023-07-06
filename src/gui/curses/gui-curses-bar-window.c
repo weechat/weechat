@@ -128,7 +128,7 @@ gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
 
         if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SEPARATOR]))
         {
-            switch (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]))
+            switch (CONFIG_ENUM(bar_window->bar->options[GUI_BAR_OPTION_POSITION]))
             {
                 case GUI_BAR_POSITION_BOTTOM:
                     GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator =
@@ -184,7 +184,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
 
     wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, *y, *x);
 
-    color_bg = ((CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_TYPE]) != GUI_BAR_TYPE_ROOT)
+    color_bg = ((CONFIG_ENUM(bar_window->bar->options[GUI_BAR_OPTION_TYPE]) != GUI_BAR_TYPE_ROOT)
                 && (window != gui_current_window)) ?
         GUI_BAR_OPTION_COLOR_BG_INACTIVE : GUI_BAR_OPTION_COLOR_BG;
 
@@ -556,7 +556,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     if (!bar_window || (bar_window->x < 0) || (bar_window->y < 0))
         return;
 
-    color_bg = ((CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_TYPE]) != GUI_BAR_TYPE_ROOT)
+    color_bg = ((CONFIG_ENUM(bar_window->bar->options[GUI_BAR_OPTION_TYPE]) != GUI_BAR_TYPE_ROOT)
                 && (window != gui_current_window)) ?
         GUI_BAR_OPTION_COLOR_BG_INACTIVE : GUI_BAR_OPTION_COLOR_BG;
 
@@ -595,7 +595,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
 
     gui_window_current_emphasis = 0;
 
-    bar_position = CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]);
+    bar_position = CONFIG_ENUM(bar_window->bar->options[GUI_BAR_OPTION_POSITION]);
     bar_filling = gui_bar_get_filling (bar_window->bar);
     bar_size = CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE]);
 

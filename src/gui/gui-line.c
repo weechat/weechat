@@ -304,7 +304,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 
     /* return immediately if alignment for end of lines is "time" */
     if (!first_line
-        && (CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_TIME))
+        && (CONFIG_ENUM(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_TIME))
     {
         return 0;
     }
@@ -319,7 +319,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 
     /* return immediately if alignment for end of lines is "buffer" */
     if (!first_line
-        && (CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_BUFFER))
+        && (CONFIG_ENUM(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_BUFFER))
     {
         return length_time;
     }
@@ -327,12 +327,12 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     /* length of buffer name (when many buffers are merged) */
     if (buffer->mixed_lines && (buffer->active != 2))
     {
-        if ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
-            && (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE))
+        if ((CONFIG_ENUM(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
+            && (CONFIG_ENUM(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE))
             length_buffer = gui_chat_strlen_screen (gui_buffer_get_short_name (line->data->buffer)) + 1;
         else
         {
-            if (CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
+            if (CONFIG_ENUM(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
                 length_buffer = buffer->mixed_lines->buffer_max_length + 1;
             else
                 length_buffer = ((CONFIG_INTEGER(config_look_prefix_buffer_align_max) > 0)
@@ -345,7 +345,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 
     /* return immediately if alignment for end of lines is "prefix" */
     if (!first_line
-        && (CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_PREFIX))
+        && (CONFIG_ENUM(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_PREFIX))
     {
         return length_time + length_buffer;
     }
@@ -356,7 +356,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     if (prefix_is_nick)
         prefix_length += config_length_nick_prefix_suffix;
 
-    if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
+    if (CONFIG_ENUM(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
     {
         return length_time + length_buffer + prefix_length + ((prefix_length > 0) ? 1 : 0);
     }

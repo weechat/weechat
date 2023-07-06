@@ -554,7 +554,7 @@ IRC_PROTOCOL_CALLBACK(authenticate)
     irc_server_sasl_get_creds (server, &sasl_username, &sasl_password,
                                &sasl_key);
 
-    sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
+    sasl_mechanism = IRC_SERVER_OPTION_ENUM(
         server, IRC_SERVER_OPTION_SASL_MECHANISM);
 
     answer = NULL;
@@ -922,7 +922,7 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
                 if (weechat_config_boolean (irc_config_network_sasl_fail_unavailable))
                 {
                     /* same handling as for sasl_end_fail */
-                    sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
+                    sasl_fail = IRC_SERVER_OPTION_ENUM(server, IRC_SERVER_OPTION_SASL_FAIL);
                     if ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
                         || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT))
                     {
@@ -1219,7 +1219,7 @@ IRC_PROTOCOL_CALLBACK(cap)
 
         if (sasl_to_do)
         {
-            sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
+            sasl_mechanism = IRC_SERVER_OPTION_ENUM(
                 server, IRC_SERVER_OPTION_SASL_MECHANISM);
             if ((sasl_mechanism >= 0)
                 && (sasl_mechanism < IRC_NUM_SASL_MECHANISMS))
@@ -2634,11 +2634,11 @@ IRC_PROTOCOL_CALLBACK(notice)
 
             ptr_channel = NULL;
             if (nick
-                && weechat_config_integer (irc_config_look_notice_as_pv) != IRC_CONFIG_LOOK_NOTICE_AS_PV_NEVER)
+                && weechat_config_enum (irc_config_look_notice_as_pv) != IRC_CONFIG_LOOK_NOTICE_AS_PV_NEVER)
             {
                 ptr_channel = irc_channel_search (server, nick);
                 if (!ptr_channel
-                    && weechat_config_integer (irc_config_look_notice_as_pv) == IRC_CONFIG_LOOK_NOTICE_AS_PV_ALWAYS)
+                    && weechat_config_enum (irc_config_look_notice_as_pv) == IRC_CONFIG_LOOK_NOTICE_AS_PV_ALWAYS)
                 {
                     ptr_channel = irc_channel_new (server,
                                                    IRC_CHANNEL_TYPE_PRIVATE,
@@ -7742,7 +7742,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
 
     IRC_PROTOCOL_RUN_CALLBACK(numeric);
 
-    sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
+    sasl_fail = IRC_SERVER_OPTION_ENUM(server, IRC_SERVER_OPTION_SASL_FAIL);
     if (!server->is_connected
         && ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
             || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT)))

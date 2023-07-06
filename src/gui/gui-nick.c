@@ -129,7 +129,7 @@ gui_nick_hash_color (const char *nickname, int num_colors)
 
     color_64 = 0;
 
-    switch (CONFIG_INTEGER(config_look_nick_color_hash))
+    switch (CONFIG_ENUM(config_look_nick_color_hash))
     {
         case CONFIG_LOOK_NICK_COLOR_HASH_DJB2:
             /* variant of djb2 hash, using 64-bit integer */

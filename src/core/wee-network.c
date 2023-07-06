@@ -767,7 +767,7 @@ network_pass_proxy (const char *proxy, int sock, const char *address, int port)
     ptr_proxy = proxy_search (proxy);
     if (ptr_proxy)
     {
-        switch (CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_TYPE]))
+        switch (CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_TYPE]))
         {
             case PROXY_TYPE_HTTP:
                 rc = network_pass_httpproxy (ptr_proxy, sock, address, port);

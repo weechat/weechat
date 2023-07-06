@@ -84,7 +84,7 @@ gui_chat_marker_for_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
     struct t_gui_line *last_read_line;
 
     /* marker is disabled in config? */
-    if (CONFIG_INTEGER(config_look_read_marker) != CONFIG_LOOK_READ_MARKER_LINE)
+    if (CONFIG_ENUM(config_look_read_marker) != CONFIG_LOOK_READ_MARKER_LINE)
         return 0;
 
     /* marker is not set for buffer? */
@@ -204,7 +204,7 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
         return;
 
     gui_window_coords_init_line (window, window->win_chat_cursor_y);
-    if (CONFIG_INTEGER(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_LINE)
+    if (CONFIG_ENUM(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_LINE)
     {
         read_marker_string = CONFIG_STRING(config_look_read_marker_string);
         if (!read_marker_string || !read_marker_string[0])
@@ -526,8 +526,8 @@ gui_chat_display_prefix_suffix (struct t_gui_window *window,
         {
             window->win_chat_cursor_x += length_align;
 
-            if ((CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE)
-                && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
+            if ((CONFIG_ENUM(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE)
+                && (CONFIG_ENUM(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
                 && CONFIG_STRING(config_look_prefix_suffix)
                 && CONFIG_STRING(config_look_prefix_suffix)[0]
                 && line->data->date > 0)
@@ -892,7 +892,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
     if (mixed_lines && (line->data->buffer->active != 2))
     {
         if ((CONFIG_INTEGER(config_look_prefix_buffer_align_max) > 0)
-            && (CONFIG_INTEGER(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE))
+            && (CONFIG_ENUM(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE))
         {
             length_allowed =
                 (mixed_lines->buffer_max_length <= CONFIG_INTEGER(config_look_prefix_buffer_align_max)) ?
@@ -905,7 +905,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         length = gui_chat_strlen_screen (short_name);
         num_spaces = length_allowed - length;
 
-        if (CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_RIGHT)
+        if (CONFIG_ENUM(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_RIGHT)
         {
             if (!simulate)
             {
@@ -941,7 +941,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             window->coords[window->win_chat_cursor_y].buffer_x1 = window->win_chat_cursor_x;
 
         /* not enough space to display full buffer name? => truncate it! */
-        if ((CONFIG_INTEGER(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
+        if ((CONFIG_ENUM(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
             && (num_spaces < 0))
         {
             chars_to_display = length_allowed;
@@ -976,7 +976,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         if (window->win_chat_cursor_y < window->coords_size)
             window->coords[window->win_chat_cursor_y].buffer_x2 = window->win_chat_cursor_x - 1;
 
-        if ((CONFIG_INTEGER(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
+        if ((CONFIG_ENUM(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
             && (num_spaces < 0))
         {
             if (!simulate)
@@ -1017,9 +1017,9 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                       GUI_COLOR_CHAT_INACTIVE_BUFFER,
                                       GUI_COLOR_CHAT);
             }
-            if ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_LEFT)
-                || ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
-                && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
+            if ((CONFIG_ENUM(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_LEFT)
+                || ((CONFIG_ENUM(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
+                    && (CONFIG_ENUM(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
             {
                 for (i = 0; i < num_spaces; i++)
                 {
@@ -1083,7 +1083,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
     /* display prefix */
     if (ptr_prefix
         && (ptr_prefix[0]
-            || (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
+            || (CONFIG_ENUM(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
     {
         if (!simulate)
         {
@@ -1116,7 +1116,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
 
         num_spaces = length_allowed - prefix_length - length_nick_prefix_suffix;
 
-        if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_RIGHT)
+        if (CONFIG_ENUM(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_RIGHT)
         {
             for (i = 0; i < num_spaces; i++)
             {
@@ -1195,7 +1195,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
 
         /* not enough space to display full prefix? => truncate it! */
         extra_spaces = 0;
-        if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
+        if ((CONFIG_ENUM(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
             && (num_spaces < 0))
         {
             chars_to_display = length_allowed - length_nick_prefix_suffix;
@@ -1256,7 +1256,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         }
 
         if (!CONFIG_BOOLEAN(config_look_prefix_align_more_after)
-            && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
+            && (CONFIG_ENUM(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
             && (num_spaces < 0))
         {
             if (!simulate)
@@ -1288,7 +1288,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                    simulate, 0, 0);
         }
 
-        if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_LEFT)
+        if (CONFIG_ENUM(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_LEFT)
         {
             if (!simulate)
             {
@@ -1309,7 +1309,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         }
 
         if (CONFIG_BOOLEAN(config_look_prefix_align_more_after)
-            && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
+            && (CONFIG_ENUM(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
             && (num_spaces < 0))
         {
             if (!simulate)
@@ -1345,7 +1345,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             }
         }
 
-        if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
+        if ((CONFIG_ENUM(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
             && CONFIG_STRING(config_look_prefix_suffix)
             && CONFIG_STRING(config_look_prefix_suffix)[0])
         {
@@ -1709,7 +1709,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         else
         {
             /* display read marker if needed */
-            if ((CONFIG_INTEGER(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_CHAR)
+            if ((CONFIG_ENUM(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_CHAR)
                 && window->buffer->lines->last_read_line
                 && (window->buffer->lines->last_read_line == gui_line_get_prev_displayed (line)))
             {

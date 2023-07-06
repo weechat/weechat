@@ -351,7 +351,7 @@ logger_buffer_compress_file (struct t_logger_buffer *logger_buffer)
     const char *ptr_extension;
     int compression_type, compression_level;
 
-    compression_type = weechat_config_integer (
+    compression_type = weechat_config_enum (
         logger_config_file_rotation_compression_type);
     ptr_extension = logger_buffer_compression_extension[compression_type];
 
@@ -475,7 +475,7 @@ logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
                             logger_buffer->log_filename);
     }
 
-    compression_type = weechat_config_integer (
+    compression_type = weechat_config_enum (
         logger_config_file_rotation_compression_type);
     ptr_extension = logger_buffer_compression_extension[compression_type];
 

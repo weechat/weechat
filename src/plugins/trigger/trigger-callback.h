@@ -54,7 +54,7 @@ struct t_trigger_context
     trigger->hook_count_cb++;                                   \
     trigger->hook_running = 1;                                  \
     trigger_rc = trigger_return_code[                           \
-        weechat_config_integer (                                \
+        weechat_config_enum (                                   \
             trigger->options[TRIGGER_OPTION_RETURN_CODE])];
 
 #define TRIGGER_CALLBACK_CB_NEW_POINTERS                        \
@@ -88,7 +88,7 @@ struct t_trigger_context
     if (ctx.vars_updated)                                       \
         weechat_list_free (ctx.vars_updated);                   \
     trigger->hook_running = 0;                                  \
-    switch (weechat_config_integer (                            \
+    switch (weechat_config_enum (                               \
                 trigger->options[TRIGGER_OPTION_POST_ACTION]))  \
     {                                                           \
         case TRIGGER_POST_ACTION_DISABLE:                       \

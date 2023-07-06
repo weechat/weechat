@@ -173,15 +173,15 @@ command_bar_list (int full)
                                  GUI_COLOR(GUI_COLOR_CHAT),
                                  (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])) ? _("(hidden)") : "",
                                  (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])) ? " " : "",
-                                 gui_bar_type_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE])],
+                                 gui_bar_type_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE])],
                                  (CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS])
                                   && CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS])[0]) ?
                                  CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS]) : "-",
-                                 gui_bar_position_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION])],
-                                 gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM])],
-                                 gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT])],
-                                 ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
-                                  || (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP)) ?
+                                 gui_bar_position_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION])],
+                                 gui_bar_filling_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM])],
+                                 gui_bar_filling_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT])],
+                                 ((CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
+                                  || (CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP)) ?
                                  _("height") : _("width"),
                                  (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]) == 0) ? _("auto") : str_size);
                 gui_chat_printf (NULL,
@@ -205,10 +205,10 @@ command_bar_list (int full)
                                  GUI_COLOR(GUI_COLOR_CHAT),
                                  (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])) ? _("(hidden)") : "",
                                  (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])) ? " " : "",
-                                 gui_bar_type_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE])],
-                                 gui_bar_position_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION])],
-                                 ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
-                                  || (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP)) ?
+                                 gui_bar_type_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE])],
+                                 gui_bar_position_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION])],
+                                 ((CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
+                                  || (CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP)) ?
                                  _("height") : _("width"),
                                  (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]) == 0) ? _("auto") : str_size);
             }
@@ -5373,7 +5373,7 @@ command_proxy_list ()
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                              ptr_proxy->name,
                              GUI_COLOR(GUI_COLOR_CHAT),
-                             proxy_type_string[CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_TYPE])],
+                             proxy_type_string[CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_TYPE])],
                              CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]),
                              CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]),
                              (CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_IPV6])) ? "IPv6" : "IPv4",

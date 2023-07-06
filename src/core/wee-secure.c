@@ -469,8 +469,8 @@ secure_decrypt_data_not_decrypted (const char *passphrase)
                     rc = secure_decrypt_data (
                         buffer,
                         length_buffer,
-                        secure_hash_algo[CONFIG_INTEGER(secure_config_crypt_hash_algo)],
-                        secure_cipher[CONFIG_INTEGER(secure_config_crypt_cipher)],
+                        secure_hash_algo[CONFIG_ENUM(secure_config_crypt_hash_algo)],
+                        secure_cipher[CONFIG_ENUM(secure_config_crypt_cipher)],
                         passphrase,
                         &decrypted,
                         &length_decrypted);

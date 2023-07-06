@@ -329,7 +329,7 @@ trigger_hook (struct t_trigger *trigger)
         0,
         NULL);
 
-    switch (weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK]))
+    switch (weechat_config_enum (trigger->options[TRIGGER_OPTION_HOOK]))
     {
         case TRIGGER_HOOK_SIGNAL:
             if (argv && (argc >= 1))
@@ -1290,8 +1290,8 @@ trigger_print_log ()
         weechat_log_printf ("  enabled . . . . . . . . : %d",
                             weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_ENABLED]));
         weechat_log_printf ("  hook . .  . . . . . . . : %d ('%s')",
-                            weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
-                            trigger_hook_type_string[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_HOOK])]);
+                            weechat_config_enum (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
+                            trigger_hook_type_string[weechat_config_enum (ptr_trigger->options[TRIGGER_OPTION_HOOK])]);
         weechat_log_printf ("  arguments . . . . . . . : '%s'",
                             weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]));
         weechat_log_printf ("  conditions. . . . . . . : '%s'",
@@ -1301,11 +1301,11 @@ trigger_print_log ()
         weechat_log_printf ("  command . . . . . . . . : '%s'",
                             weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]));
         weechat_log_printf ("  return_code . . . . . . : %d ('%s')",
-                            weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]),
-                            trigger_return_code_string[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE])]);
+                            weechat_config_enum (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]),
+                            trigger_return_code_string[weechat_config_enum (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE])]);
         weechat_log_printf ("  post_action . . . . . . : %d ('%s')",
-                            weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION]),
-                            trigger_post_action_string[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION])]);
+                            weechat_config_enum (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION]),
+                            trigger_post_action_string[weechat_config_enum (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION])]);
         weechat_log_printf ("  hooks_count . . . . . . : %d",    ptr_trigger->hooks_count);
         weechat_log_printf ("  hooks . . . . . . . . . : 0x%lx", ptr_trigger->hooks);
         for (i = 0; i < ptr_trigger->hooks_count; i++)

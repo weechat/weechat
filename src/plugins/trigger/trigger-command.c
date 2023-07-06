@@ -254,8 +254,8 @@ trigger_command_display_trigger (struct t_trigger *trigger, int verbose)
         trigger->regex,
         trigger->commands_count,
         trigger->commands,
-        weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE]),
-        weechat_config_integer (trigger->options[TRIGGER_OPTION_POST_ACTION]),
+        weechat_config_enum (trigger->options[TRIGGER_OPTION_RETURN_CODE]),
+        weechat_config_enum (trigger->options[TRIGGER_OPTION_POST_ACTION]),
         verbose);
 }
 
@@ -877,7 +877,7 @@ trigger_command_trigger (const void *pointer, void *data,
                                       argv[2]);
             goto end;
         }
-        add_rc = trigger_hook_default_rc[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_HOOK])][0];
+        add_rc = trigger_hook_default_rc[weechat_config_enum (ptr_trigger->options[TRIGGER_OPTION_HOOK])][0];
         arg_arguments = trigger_command_escape_argument (
             weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]));
         arg_conditions = trigger_command_escape_argument (

@@ -239,7 +239,7 @@ gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
     sub_width = 0;
     sub_height = 0;
 
-    switch (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_POSITION]))
+    switch (CONFIG_ENUM(bar->options[GUI_BAR_OPTION_POSITION]))
     {
         case GUI_BAR_POSITION_BOTTOM:
         case GUI_BAR_POSITION_TOP:
@@ -256,7 +256,7 @@ gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
     for (ptr_window = gui_windows; ptr_window;
          ptr_window = ptr_window->next_window)
     {
-        if ((CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+        if ((CONFIG_ENUM(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
             || (gui_bar_window_search_bar (ptr_window, bar)))
         {
             if ((ptr_window->win_chat_width - sub_width < 1)
@@ -277,11 +277,11 @@ gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
 enum t_gui_bar_filling
 gui_bar_get_filling (struct t_gui_bar *bar)
 {
-    if ((CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
-        || (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP))
-        return CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM]);
+    if ((CONFIG_ENUM(bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
+        || (CONFIG_ENUM(bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP))
+        return CONFIG_ENUM(bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM]);
 
-    return CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT]);
+    return CONFIG_ENUM(bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT]);
 }
 
 /*
@@ -474,8 +474,8 @@ gui_bar_root_get_size (struct t_gui_bar *bar, enum t_gui_bar_position position)
         if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])
             && ptr_bar->bar_window)
         {
-            if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
-                && (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == (int)position))
+            if ((CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+                && (CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == (int)position))
             {
                 total_size += gui_bar_window_get_current_size (ptr_bar->bar_window);
                 if (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SEPARATOR]))
@@ -596,7 +596,7 @@ gui_bar_refresh (struct t_gui_bar *bar)
 {
     struct t_gui_window *ptr_win;
 
-    if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+    if (CONFIG_ENUM(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
         gui_window_ask_refresh (1);
     else
     {
@@ -654,7 +654,7 @@ gui_bar_apply_current_size (struct t_gui_bar *bar)
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *ptr_bar_win;
 
-    if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+    if (CONFIG_ENUM(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
     {
         gui_bar_window_set_current_size (bar->bar_window,
                                          NULL,
@@ -853,7 +853,7 @@ gui_bar_config_change_hidden (const void *pointer, void *data,
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
     {
-        if (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+        if (CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
         {
             if (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
             {
@@ -1374,7 +1374,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
         case GUI_BAR_OPTION_TYPE:
             ptr_option = config_file_new_option (
                 weechat_config_file, weechat_config_section_bar,
-                option_name, "integer",
+                option_name, "enum",
                 N_("bar type (root, window, window_active, window_inactive)"),
                 "root|window|window_active|window_inactive",
                 0, 0, default_value, value, 0,
@@ -1401,7 +1401,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
         case GUI_BAR_OPTION_POSITION:
             ptr_option = config_file_new_option (
                 weechat_config_file, weechat_config_section_bar,
-                option_name, "integer",
+                option_name, "enum",
                 N_("bar position (bottom, top, left, right)"),
                 "bottom|top|left|right", 0, 0, default_value, value, 0,
                 NULL, NULL, NULL,
@@ -1411,7 +1411,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
         case GUI_BAR_OPTION_FILLING_TOP_BOTTOM:
             ptr_option = config_file_new_option (
                 weechat_config_file, weechat_config_section_bar,
-                option_name, "integer",
+                option_name, "enum",
                 N_("bar filling direction (\"horizontal\" (from left to right) "
                    "or \"vertical\" (from top to bottom)) when bar position is "
                    "top or bottom"),
@@ -1424,7 +1424,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
         case GUI_BAR_OPTION_FILLING_LEFT_RIGHT:
             ptr_option = config_file_new_option (
                 weechat_config_file, weechat_config_section_bar,
-                option_name, "integer",
+                option_name, "enum",
                 N_("bar filling direction (\"horizontal\" (from left to right) "
                    "or \"vertical\" (from top to bottom)) when bar position is "
                    "left or right"),
@@ -1669,7 +1669,7 @@ gui_bar_new_with_options (const char *name,
     gui_bar_insert (new_bar);
 
     /* add window bar */
-    if (CONFIG_INTEGER(new_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+    if (CONFIG_ENUM(new_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
     {
         /* create only one window for bar */
         gui_bar_window_new (new_bar, NULL);
@@ -2172,7 +2172,7 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
         }
     }
 
-    if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+    if (CONFIG_ENUM(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
     {
         gui_bar_window_scroll (bar->bar_window, NULL,
                                add_x, scroll_beginning, scroll_end,
@@ -2352,15 +2352,15 @@ gui_bar_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "priority", CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_PRIORITY])))
         return 0;
-    if (!infolist_new_var_integer (ptr_item, "type", CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE])))
+    if (!infolist_new_var_integer (ptr_item, "type", CONFIG_ENUM(bar->options[GUI_BAR_OPTION_TYPE])))
         return 0;
     if (!infolist_new_var_string (ptr_item, "conditions", CONFIG_STRING(bar->options[GUI_BAR_OPTION_CONDITIONS])))
         return 0;
-    if (!infolist_new_var_integer (ptr_item, "position", CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_POSITION])))
+    if (!infolist_new_var_integer (ptr_item, "position", CONFIG_ENUM(bar->options[GUI_BAR_OPTION_POSITION])))
         return 0;
-    if (!infolist_new_var_integer (ptr_item, "filling_top_bottom", CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM])))
+    if (!infolist_new_var_integer (ptr_item, "filling_top_bottom", CONFIG_ENUM(bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM])))
         return 0;
-    if (!infolist_new_var_integer (ptr_item, "filling_left_right", CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT])))
+    if (!infolist_new_var_integer (ptr_item, "filling_left_right", CONFIG_ENUM(bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT])))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "size", CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_SIZE])))
         return 0;
@@ -2430,18 +2430,18 @@ gui_bar_print_log ()
         log_printf ("  hidden . . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]));
         log_printf ("  priority . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_PRIORITY]));
         log_printf ("  type . . . . . . . . . : %d (%s)",
-                    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]),
-                    gui_bar_type_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE])]);
+                    CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE]),
+                    gui_bar_type_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE])]);
         log_printf ("  conditions . . . . . . : '%s'",  CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS]));
         log_printf ("  position . . . . . . . : %d (%s)",
-                    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION]),
-                    gui_bar_position_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION])]);
+                    CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION]),
+                    gui_bar_position_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION])]);
         log_printf ("  filling_top_bottom . . : %d (%s)",
-                    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM]),
-                    gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM])]);
+                    CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM]),
+                    gui_bar_filling_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM])]);
         log_printf ("  filling_left_right . . : %d (%s)",
-                    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT]),
-                    gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT])]);
+                    CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT]),
+                    gui_bar_filling_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT])]);
         log_printf ("  size . . . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]));
         log_printf ("  size_max . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE_MAX]));
         log_printf ("  color_fg . . . . . . . : %d (%s)",

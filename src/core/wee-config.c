@@ -391,7 +391,7 @@ void
 config_change_save_config_layout_on_exit ()
 {
     if (gui_init_ok && !CONFIG_BOOLEAN(config_look_save_config_on_exit)
-        && (CONFIG_INTEGER(config_look_save_layout_on_exit) != CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_NONE))
+        && (CONFIG_ENUM(config_look_save_layout_on_exit) != CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_NONE))
     {
         gui_chat_printf (NULL,
                          _("Warning: option weechat.look.save_config_on_exit "
@@ -2546,7 +2546,8 @@ config_weechat_notify_create_option_cb (const void *pointer, void *data,
                 {
                     ptr_option = config_file_new_option (
                         config_file, section,
-                        option_name, "integer", _("Notify level for buffer"),
+                        option_name, "enum",
+                        _("Notify level for buffer"),
                         "none|highlight|message|all",
                         0, 0, "", value, 0,
                         &config_weechat_notify_check_cb, NULL, NULL,
@@ -2901,7 +2902,7 @@ config_weechat_init_options ()
     {
         config_look_align_end_of_lines = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "align_end_of_lines", "integer",
+            "align_end_of_lines", "enum",
             N_("alignment for end of lines (all lines after the first): they "
                "are starting under this data (time, buffer, prefix, suffix, "
                "message (default))"),
@@ -2984,7 +2985,7 @@ config_weechat_init_options ()
             NULL, NULL, NULL);
         config_look_buffer_notify_default = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "buffer_notify_default", "integer",
+            "buffer_notify_default", "enum",
             N_("default notify level for buffers (used to tell WeeChat if "
                "buffer must be displayed in hotlist or not, according to "
                "importance of message): all=all messages (default), "
@@ -2996,7 +2997,7 @@ config_weechat_init_options ()
             NULL, NULL, NULL);
         config_look_buffer_position = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "buffer_position", "integer",
+            "buffer_position", "enum",
             N_("position of a new buffer: end = after the end of list (number = "
                "last number + 1) (default), first_gap = at first available "
                "number in the list (after the end of list if no number is "
@@ -3026,7 +3027,7 @@ config_weechat_init_options ()
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_look_buffer_search_where = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "buffer_search_where", "integer",
+            "buffer_search_where", "enum",
             N_("default text search in buffer: in message, prefix, prefix and "
                "message"),
             "prefix|message|prefix_message", 0, 0, "prefix_message",
@@ -3392,7 +3393,7 @@ config_weechat_init_options ()
             NULL, NULL, NULL);
         config_look_hotlist_remove = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "hotlist_remove", "integer",
+            "hotlist_remove", "enum",
             N_("remove buffers in hotlist: buffer = remove buffer by buffer, "
                "merged = remove all visible merged buffers at once"),
             "buffer|merged",
@@ -3409,7 +3410,7 @@ config_weechat_init_options ()
             NULL, NULL, NULL);
         config_look_hotlist_sort = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "hotlist_sort", "integer",
+            "hotlist_sort", "enum",
             N_("sort of hotlist: group_time_*: group by notify level "
                "(highlights first) then sort by time, group_number_*: group "
                "by notify level (highlights first) then sort by number, "
@@ -3460,7 +3461,7 @@ config_weechat_init_options ()
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_look_input_share = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "input_share", "integer",
+            "input_share", "enum",
             N_("share commands, text, or both in input for all buffers (there "
                "is still local history for each buffer)"),
             "none|commands|text|all",
@@ -3592,7 +3593,7 @@ config_weechat_init_options ()
             NULL, NULL, NULL);
         config_look_nick_color_hash = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "nick_color_hash", "integer",
+            "nick_color_hash", "enum",
             N_("hash algorithm used to find the color for a nick: djb2 = variant "
                "of djb2 (position of letters matters: anagrams of a nick have "
                "different color), djb2_32 = variant of djb2 using 32-bit instead "
@@ -3721,7 +3722,7 @@ config_weechat_init_options ()
             NULL, NULL, NULL);
         config_look_prefix_align = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "prefix_align", "integer",
+            "prefix_align", "enum",
             N_("prefix alignment (none, left, right (default))"),
             "none|left|right", 0, 0, "right", NULL, 0,
             NULL, NULL, NULL,
@@ -3764,7 +3765,7 @@ config_weechat_init_options ()
             NULL, NULL, NULL);
         config_look_prefix_buffer_align = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "prefix_buffer_align", "integer",
+            "prefix_buffer_align", "enum",
             N_("prefix alignment for buffer name, when many buffers are merged "
                "with same number (none, left, right (default))"),
             "none|left|right", 0, 0, "right", NULL, 0,
@@ -3852,7 +3853,7 @@ config_weechat_init_options ()
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_look_read_marker = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "read_marker", "integer",
+            "read_marker", "enum",
             N_("use a marker (line or char) on buffers to show first unread "
                "line"),
             "none|line|char",
@@ -3902,7 +3903,7 @@ config_weechat_init_options ()
             NULL, NULL, NULL);
         config_look_save_layout_on_exit = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "save_layout_on_exit", "integer",
+            "save_layout_on_exit", "enum",
             N_("save layout on exit (buffers, windows, or both)"),
             "none|buffers|windows|all", 0, 0, "none", NULL, 0,
             NULL, NULL, NULL,

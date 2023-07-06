@@ -587,7 +587,7 @@ gui_bar_item_update (const char *item_name)
                     if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
                         check_bar_conditions = 1;
 
-                    if (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+                    if (CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
                     {
                         if (ptr_bar->bar_window)
                         {
@@ -621,7 +621,7 @@ gui_bar_item_update (const char *item_name)
          */
         if (check_bar_conditions)
         {
-            if (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+            if (CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
             {
                 condition_ok = gui_bar_check_conditions (ptr_bar, NULL);
                 if ((condition_ok && !ptr_bar->bar_window)

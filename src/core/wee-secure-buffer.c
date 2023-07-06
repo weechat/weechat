@@ -101,8 +101,8 @@ secure_buffer_display ()
 
     gui_chat_printf_y (secure_buffer, line++,
                        "Hash algo: %s  Cipher: %s  Salt: %s",
-                       secure_hash_algo_string[CONFIG_INTEGER(secure_config_crypt_hash_algo)],
-                       secure_cipher_string[CONFIG_INTEGER(secure_config_crypt_cipher)],
+                       secure_hash_algo_string[CONFIG_ENUM(secure_config_crypt_hash_algo)],
+                       secure_cipher_string[CONFIG_ENUM(secure_config_crypt_cipher)],
                        (CONFIG_BOOLEAN(secure_config_crypt_salt)) ? _("on") : _("off"));
 
     /* display passphrase */

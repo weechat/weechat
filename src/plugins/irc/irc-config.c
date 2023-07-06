@@ -344,7 +344,7 @@ irc_config_change_look_display_away (const void *pointer, void *data,
     (void) option;
 
     if (!irc_config_loading
-        && (weechat_config_integer (irc_config_look_display_away) == IRC_CONFIG_DISPLAY_AWAY_CHANNEL))
+        && (weechat_config_enum (irc_config_look_display_away) == IRC_CONFIG_DISPLAY_AWAY_CHANNEL))
     {
         weechat_printf (
             NULL,
@@ -428,13 +428,13 @@ irc_config_change_look_server_buffer (const void *pointer, void *data,
     }
 
     /* merge IRC server buffers with core buffer or another buffer */
-    if ((weechat_config_integer (irc_config_look_server_buffer) ==
+    if ((weechat_config_enum (irc_config_look_server_buffer) ==
          IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITH_CORE)
-        || (weechat_config_integer (irc_config_look_server_buffer) ==
+        || (weechat_config_enum (irc_config_look_server_buffer) ==
             IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITHOUT_CORE))
     {
         ptr_buffer =
-            (weechat_config_integer (irc_config_look_server_buffer) ==
+            (weechat_config_enum (irc_config_look_server_buffer) ==
              IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITH_CORE) ?
             weechat_buffer_search_main () : irc_buffer_search_server_lowest_number ();
 
@@ -483,8 +483,8 @@ irc_config_change_look_pv_buffer (const void *pointer, void *data,
     }
 
     /* merge IRC private buffers */
-    if ((weechat_config_integer (irc_config_look_pv_buffer) == IRC_CONFIG_LOOK_PV_BUFFER_MERGE_BY_SERVER)
-        || (weechat_config_integer (irc_config_look_pv_buffer) == IRC_CONFIG_LOOK_PV_BUFFER_MERGE_ALL))
+    if ((weechat_config_enum (irc_config_look_pv_buffer) == IRC_CONFIG_LOOK_PV_BUFFER_MERGE_BY_SERVER)
+        || (weechat_config_enum (irc_config_look_pv_buffer) == IRC_CONFIG_LOOK_PV_BUFFER_MERGE_ALL))
     {
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
@@ -496,7 +496,7 @@ irc_config_change_look_pv_buffer (const void *pointer, void *data,
                     && ptr_channel->buffer)
                 {
                     ptr_buffer = NULL;
-                    switch (weechat_config_integer (irc_config_look_pv_buffer))
+                    switch (weechat_config_enum (irc_config_look_pv_buffer))
                     {
                         case IRC_CONFIG_LOOK_PV_BUFFER_MERGE_BY_SERVER:
                             /* merge private buffers by server */
@@ -1474,7 +1474,7 @@ irc_config_msgbuffer_create_option (const void *pointer, void *data,
 
                 ptr_option = weechat_config_new_option (
                     config_file, section,
-                    option_name, "integer",
+                    option_name, "enum",
                     _("buffer used to display message received from IRC "
                       "server"),
                     "weechat|server|current|private", 0, 0, value, value, 0,
@@ -1951,7 +1951,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
         case IRC_SERVER_OPTION_SASL_MECHANISM:
             new_option = weechat_config_new_option (
                 config_file, section,
-                option_name, "integer",
+                option_name, "enum",
                 N_("mechanism for SASL authentication: "
                    "\"plain\" for plain text password, "
                    "\"scram-sha-1\" for SCRAM authentication with SHA-1 "
@@ -2057,7 +2057,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
         case IRC_SERVER_OPTION_SASL_FAIL:
             new_option = weechat_config_new_option (
                 config_file, section,
-                option_name, "integer",
+                option_name, "enum",
                 N_("action to perform if SASL authentication fails: "
                    "\"continue\" to ignore the authentication problem, "
                    "\"reconnect\" to schedule a reconnection to the server, "
@@ -2555,7 +2555,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
         case IRC_SERVER_OPTION_CHARSET_MESSAGE:
             new_option = weechat_config_new_option (
                 config_file, section,
-                option_name, "integer",
+                option_name, "enum",
                 N_("part of the IRC message (received or sent) which is "
                    "decoded/encoded to the target charset; "
                    "message = the whole IRC message (default), "
@@ -2968,7 +2968,7 @@ irc_config_init ()
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_display_away = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
-            "display_away", "integer",
+            "display_away", "enum",
             N_("display message when (un)marking as away (off: do not "
                "display/send anything, local: display locally, channel: send "
                "action to channels)"),
@@ -3132,7 +3132,7 @@ irc_config_init ()
             NULL, NULL, NULL);
         irc_config_look_item_display_server = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
-            "item_display_server", "integer",
+            "item_display_server", "enum",
             N_("name of bar item where IRC server is displayed (for status bar)"),
             "buffer_plugin|buffer_name", 0, 0, "buffer_plugin", NULL, 0,
             NULL, NULL, NULL,
@@ -3165,14 +3165,14 @@ irc_config_init ()
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_msgbuffer_fallback = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
-            "msgbuffer_fallback", "integer",
+            "msgbuffer_fallback", "enum",
             N_("default target buffer for msgbuffer options when target is "
                "private and that private buffer is not found"),
             "current|server", 0, 0, "current", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_new_channel_position = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
-            "new_channel_position", "integer",
+            "new_channel_position", "enum",
             N_("force position of new channel in list of buffers "
                "(none = default position (should be last buffer), "
                "next = current buffer + 1, near_server = after last channel/pv "
@@ -3181,7 +3181,7 @@ irc_config_init ()
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_new_pv_position = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
-            "new_pv_position", "integer",
+            "new_pv_position", "enum",
             N_("force position of new private in list of buffers "
                "(none = default position (should be last buffer), "
                "next = current buffer + 1, near_server = after last channel/pv "
@@ -3190,7 +3190,7 @@ irc_config_init ()
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_nick_completion_smart = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
-            "nick_completion_smart", "integer",
+            "nick_completion_smart", "enum",
             N_("smart completion for nicks (completes first with last speakers): "
                "speakers = all speakers (including highlights), "
                "speakers_highlights = only speakers with highlight"),
@@ -3198,7 +3198,7 @@ irc_config_init ()
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_nick_mode = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
-            "nick_mode", "integer",
+            "nick_mode", "enum",
             N_("display nick mode (op, voice, ...) before nick (none = never, "
                "prefix = in prefix only (default), action = in action messages "
                "only, both = prefix + action messages)"),
@@ -3226,7 +3226,7 @@ irc_config_init ()
             NULL, NULL, NULL);
         irc_config_look_notice_as_pv = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
-            "notice_as_pv", "integer",
+            "notice_as_pv", "enum",
             N_("display notices as private messages (if auto, use private "
                "buffer if found)"),
             "auto|never|always", 0, 0, "auto", NULL, 0,
@@ -3274,7 +3274,7 @@ irc_config_init ()
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_pv_buffer = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
-            "pv_buffer", "integer",
+            "pv_buffer", "enum",
             N_("merge private buffers"),
             "independent|merge_by_server|merge_all", 0, 0, "independent", NULL, 0,
             NULL, NULL, NULL,
@@ -3315,7 +3315,7 @@ irc_config_init ()
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_server_buffer = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
-            "server_buffer", "integer",
+            "server_buffer", "enum",
             N_("merge server buffers; this option has no effect if a layout "
                "is saved and is conflicting with this value (see /help layout)"),
             "merge_with_core|merge_without_core|independent", 0, 0, "merge_with_core",

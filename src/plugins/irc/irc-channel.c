@@ -145,7 +145,7 @@ irc_channel_move_near_server (struct t_irc_server *server, int channel_type,
     }
 
     if ((number_found == 0)
-        && (weechat_config_integer (irc_config_look_server_buffer) ==
+        && (weechat_config_enum (irc_config_look_server_buffer) ==
             IRC_CONFIG_LOOK_SERVER_BUFFER_INDEPENDENT))
     {
         number_found = weechat_buffer_get_integer (server->buffer, "number") + 1;
@@ -333,7 +333,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
         ptr_buffer_for_merge = NULL;
         if (channel_type == IRC_CHANNEL_TYPE_PRIVATE)
         {
-            switch (weechat_config_integer (irc_config_look_pv_buffer))
+            switch (weechat_config_enum (irc_config_look_pv_buffer))
             {
                 case IRC_CONFIG_LOOK_PV_BUFFER_MERGE_BY_SERVER:
                     /* merge private buffers by server */
@@ -359,8 +359,8 @@ irc_channel_create_buffer (struct t_irc_server *server,
         if (weechat_buffer_get_integer (ptr_buffer, "layout_number") < 1)
         {
             buffer_position = (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
-                weechat_config_integer (irc_config_look_new_channel_position) :
-                weechat_config_integer (irc_config_look_new_pv_position);
+                weechat_config_enum (irc_config_look_new_channel_position) :
+                weechat_config_enum (irc_config_look_new_pv_position);
             switch (buffer_position)
             {
                 case IRC_CONFIG_LOOK_BUFFER_POSITION_NONE:

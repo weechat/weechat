@@ -329,12 +329,12 @@ irc_completion_channel_nicks_cb (const void *pointer, void *data,
                                                  WEECHAT_LIST_POS_SORT);
                 }
                 /* add recent speakers on channel */
-                if (weechat_config_integer (irc_config_look_nick_completion_smart) == IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS)
+                if (weechat_config_enum (irc_config_look_nick_completion_smart) == IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS)
                 {
                     irc_completion_channel_nicks_add_speakers (completion, ptr_server, ptr_channel, 0);
                 }
                 /* add nicks whose make highlights on me recently on this channel */
-                if (weechat_config_integer (irc_config_look_nick_completion_smart) == IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS_HIGHLIGHTS)
+                if (weechat_config_enum (irc_config_look_nick_completion_smart) == IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS_HIGHLIGHTS)
                 {
                     irc_completion_channel_nicks_add_speakers (completion, ptr_server, ptr_channel, 1);
                 }
