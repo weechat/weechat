@@ -584,8 +584,8 @@ fset_config_init ()
             NULL, 0, 0,
             "${marked} ${name}  ${type}  ${value2}${newline}"
             "  ${empty_name}  ${_default_value}${color:244} -- "
-            "${min}..${max}${newline}"
-            "  ${empty_name}  ${description}",
+            "${_min}..${_max}${newline}"
+            "  ${empty_name}  ${_description}",
             NULL, 0,
             NULL, NULL, NULL,
             &fset_config_change_format_cb, NULL, NULL,
