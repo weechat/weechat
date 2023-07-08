@@ -610,11 +610,11 @@ fset_option_set_values (struct t_fset_option *fset_option,
             break;
         case FSET_OPTION_TYPE_STRING:
             snprintf (str_allowed_values, sizeof (str_allowed_values),
-                      _("any string"));
+                      "%s", _("any string"));
             break;
         case FSET_OPTION_TYPE_COLOR:
             snprintf (str_allowed_values, sizeof (str_allowed_values),
-                      _("any color"));
+                      "%s", _("any color"));
             break;
         case FSET_OPTION_TYPE_ENUM:
             snprintf (str_allowed_values, sizeof (str_allowed_values),
