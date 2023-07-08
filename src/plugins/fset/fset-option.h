@@ -51,6 +51,7 @@ struct t_fset_option
     char *max;                           /* max value                       */
     char *description;                   /* option description              */
     char *string_values;                 /* string values for option        */
+    char *allowed_values;                /* allowed values (depends on type)*/
     int marked;                          /* option marked for group oper.   */
     struct t_fset_option *prev_option;   /* link to previous option         */
     struct t_fset_option *next_option;   /* link to next option             */
@@ -78,6 +79,7 @@ struct t_fset_option_max_length
     int description_en;
     int description_en2;
     int string_values;
+    int allowed_values;
     int marked;
 };
 

@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-08 14:42+0200\n"
+"POT-Creation-Date: 2023-07-08 16:18+0200\n"
 "PO-Revision-Date: 2023-07-05 21:23+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -548,6 +548,7 @@ msgstr "integer"
 msgid "string"
 msgstr "Zeichenkette"
 
+#, c-format
 msgid "any string"
 msgstr "beliebige Zeichenkette"
 
@@ -7831,7 +7832,8 @@ msgid ""
 "parent_name, type, type_en, type_short (bool/int/str/col/enum), type_tiny (b/"
 "i/s/c/e), default_value, default_value_undef, value, quoted_value, "
 "value_undef, value_changed, parent_value, min, max, description, "
-"description2, description_en, description_en2, string_values\n"
+"description2, description_en, description_en2, string_values, "
+"allowed_values\n"
 "\n"
 "The lines with options are displayed using string evaluation (see /help eval "
 "for the format), with these options:\n"
@@ -7867,6 +7869,7 @@ msgid ""
 "    - ${description_en2}: option description (in English), \"(no "
 "description)\" if there's no description\n"
 "    - ${string_values}: string values allowed for set of an enum option\n"
+"    - ${allowed_values}: allowed values\n"
 "    - ${marked}: \"1\" if option is marked, otherwise \"0\"\n"
 "    - ${index}: index of option in list\n"
 "  - option data, with color but no spaces:\n"
@@ -8300,6 +8303,14 @@ msgstr ""
 "ohne eine Evaluierung statt, was wesentlich schneller ist; zwischen den "
 "Formaten kann mittels ctrl-x umgeschaltet werden"
 
+msgid "color for allowed values"
+msgstr "Farbe für erlaubte Werte"
+
+#, fuzzy
+#| msgid "color for max value on the selected line"
+msgid "color for allowed values on the selected line"
+msgstr "Farbe für Maximalwert bei der ausgewählten Zeile"
+
 msgid "color for color name when option fset.look.use_color_value is enabled"
 msgstr ""
 "Farbe für Farbnamen, wenn die Option fset.look.use_color_value aktiviert ist"
@@ -8346,9 +8357,6 @@ msgstr "Farbe für Namen in Hilfe-Bar"
 
 msgid "color for quotes around string values"
 msgstr "Farbe der Anführungszeichen für Stringwerte"
-
-msgid "color for allowed values"
-msgstr "Farbe für erlaubte Werte"
 
 msgid "color for index of option"
 msgstr "Farbe für Index einer Option"
@@ -8541,6 +8549,11 @@ msgstr ""
 
 msgid "fset options"
 msgstr "fset Optionen"
+
+#, fuzzy, c-format
+#| msgid "color"
+msgid "any color"
+msgstr "Farbe"
 
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"

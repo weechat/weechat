@@ -19,6 +19,7 @@ New features::
   * core: add variables "_chat_focused_line_bol" and "_chat_focused_line_eol" in focus data (issue #1955)
   * api: add info "buffer" (issue #1962)
   * buflist: increase max number of buflist items from 3 to 5 (issue #1703)
+  * fset: add variable `allowed_values` in options, add options fset.color.allowed_values and fset.color.allowed_values_selected
   * fset: allow long type name in type filter
   * irc: display commands 716/717 in private buffer (if present) (issue #146)
   * trigger: add options `-o`, `-ol`, `-i` and `-il` in command `/trigger list` (issue #1953)

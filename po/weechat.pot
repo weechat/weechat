@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-08 14:42+0200\n"
+"POT-Creation-Date: 2023-07-08 16:18+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -448,6 +448,7 @@ msgstr ""
 msgid "string"
 msgstr ""
 
+#, c-format
 msgid "any string"
 msgstr ""
 
@@ -5170,7 +5171,8 @@ msgid ""
 "parent_name, type, type_en, type_short (bool/int/str/col/enum), type_tiny (b/"
 "i/s/c/e), default_value, default_value_undef, value, quoted_value, "
 "value_undef, value_changed, parent_value, min, max, description, "
-"description2, description_en, description_en2, string_values\n"
+"description2, description_en, description_en2, string_values, "
+"allowed_values\n"
 "\n"
 "The lines with options are displayed using string evaluation (see /help eval "
 "for the format), with these options:\n"
@@ -5206,6 +5208,7 @@ msgid ""
 "    - ${description_en2}: option description (in English), \"(no "
 "description)\" if there's no description\n"
 "    - ${string_values}: string values allowed for set of an enum option\n"
+"    - ${allowed_values}: allowed values\n"
 "    - ${marked}: \"1\" if option is marked, otherwise \"0\"\n"
 "    - ${index}: index of option in list\n"
 "  - option data, with color but no spaces:\n"
@@ -5392,6 +5395,12 @@ msgid ""
 "ctrl-x"
 msgstr ""
 
+msgid "color for allowed values"
+msgstr ""
+
+msgid "color for allowed values on the selected line"
+msgstr ""
+
 msgid "color for color name when option fset.look.use_color_value is enabled"
 msgstr ""
 
@@ -5434,9 +5443,6 @@ msgid "color for name in help bar"
 msgstr ""
 
 msgid "color for quotes around string values"
-msgstr ""
-
-msgid "color for allowed values"
 msgstr ""
 
 msgid "color for index of option"
@@ -5605,6 +5611,10 @@ msgid "option name (wildcard \"*\" is allowed) (optional)"
 msgstr ""
 
 msgid "fset options"
+msgstr ""
+
+#, c-format
+msgid "any color"
 msgstr ""
 
 #, c-format

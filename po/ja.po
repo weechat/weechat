@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-08 14:42+0200\n"
+"POT-Creation-Date: 2023-07-08 16:18+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -528,6 +528,7 @@ msgstr "整数"
 msgid "string"
 msgstr "文字列"
 
+#, c-format
 msgid "any string"
 msgstr "未制約文字列"
 
@@ -7248,7 +7249,8 @@ msgid ""
 "parent_name, type, type_en, type_short (bool/int/str/col/enum), type_tiny (b/"
 "i/s/c/e), default_value, default_value_undef, value, quoted_value, "
 "value_undef, value_changed, parent_value, min, max, description, "
-"description2, description_en, description_en2, string_values\n"
+"description2, description_en, description_en2, string_values, "
+"allowed_values\n"
 "\n"
 "The lines with options are displayed using string evaluation (see /help eval "
 "for the format), with these options:\n"
@@ -7284,6 +7286,7 @@ msgid ""
 "    - ${description_en2}: option description (in English), \"(no "
 "description)\" if there's no description\n"
 "    - ${string_values}: string values allowed for set of an enum option\n"
+"    - ${allowed_values}: allowed values\n"
 "    - ${marked}: \"1\" if option is marked, otherwise \"0\"\n"
 "    - ${index}: index of option in list\n"
 "  - option data, with color but no spaces:\n"
@@ -7693,6 +7696,14 @@ msgstr ""
 "書式 (\"${marked} ${name}  ${type}  ${value2}\") を使います、デフォルト書式は"
 "文字列を評価しないので高速です; 書式を切り替えるには ctrl+X を使います"
 
+msgid "color for allowed values"
+msgstr "利用可能な値のテキスト色"
+
+#, fuzzy
+#| msgid "color for max value on the selected line"
+msgid "color for allowed values on the selected line"
+msgstr "最大値を意味するテキスト色 (選択行に表示される場合)"
+
 msgid "color for color name when option fset.look.use_color_value is enabled"
 msgstr ""
 
@@ -7742,9 +7753,6 @@ msgstr "オプション名のテキスト色 (ヘルプバー内に表示され�
 
 msgid "color for quotes around string values"
 msgstr "文字列値を囲む引用符のテキスト色"
-
-msgid "color for allowed values"
-msgstr "利用可能な値のテキスト色"
 
 msgid "color for index of option"
 msgstr "オプションインデックスのテキスト色"
@@ -7925,6 +7933,11 @@ msgstr "オプション名 (ワイルドカード \"*\" を使うことができ
 
 msgid "fset options"
 msgstr "fset オプション"
+
+#, fuzzy, c-format
+#| msgid "color"
+msgid "any color"
+msgstr "色"
 
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"

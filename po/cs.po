@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-08 14:42+0200\n"
+"POT-Creation-Date: 2023-07-08 16:18+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -511,6 +511,7 @@ msgstr "celé číslo"
 msgid "string"
 msgstr "řetězec"
 
+#, c-format
 msgid "any string"
 msgstr "jakýkoliv řetězec"
 
@@ -6092,7 +6093,8 @@ msgid ""
 "parent_name, type, type_en, type_short (bool/int/str/col/enum), type_tiny (b/"
 "i/s/c/e), default_value, default_value_undef, value, quoted_value, "
 "value_undef, value_changed, parent_value, min, max, description, "
-"description2, description_en, description_en2, string_values\n"
+"description2, description_en, description_en2, string_values, "
+"allowed_values\n"
 "\n"
 "The lines with options are displayed using string evaluation (see /help eval "
 "for the format), with these options:\n"
@@ -6128,6 +6130,7 @@ msgid ""
 "    - ${description_en2}: option description (in English), \"(no "
 "description)\" if there's no description\n"
 "    - ${string_values}: string values allowed for set of an enum option\n"
+"    - ${allowed_values}: allowed values\n"
 "    - ${marked}: \"1\" if option is marked, otherwise \"0\"\n"
 "    - ${index}: index of option in list\n"
 "  - option data, with color but no spaces:\n"
@@ -6326,6 +6329,14 @@ msgid ""
 "ctrl-x"
 msgstr ""
 
+#, fuzzy
+msgid "color for allowed values"
+msgstr "barva položek, které jsou pryč"
+
+#, fuzzy
+msgid "color for allowed values on the selected line"
+msgstr "barva položek, které jsou pryč"
+
 msgid "color for color name when option fset.look.use_color_value is enabled"
 msgstr ""
 
@@ -6379,10 +6390,6 @@ msgstr "barva přezdívky ve vstupním poli"
 #, fuzzy
 msgid "color for quotes around string values"
 msgstr "barva textu vezprávách připojení"
-
-#, fuzzy
-msgid "color for allowed values"
-msgstr "barva položek, které jsou pryč"
 
 #, fuzzy
 msgid "color for index of option"
@@ -6589,6 +6596,11 @@ msgstr "jméno serveru (zástupný znak \"*\" je povolen) (volitelný)"
 #, fuzzy
 msgid "fset options"
 msgstr "seznam konfiguračních možností"
+
+#, fuzzy, c-format
+#| msgid "color"
+msgid "any color"
+msgstr "barva"
 
 #, fuzzy, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"

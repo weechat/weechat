@@ -14,14 +14,26 @@ For a complete list of changes, please look at ChangeLog.
 [[v4.1.0]]
 == Version 4.1.0 (under dev)
 
+[[v4.1.0_fset_allowed_values]]
+=== Allowed values for options on fset buffer
+
+A new variable `allowed_values` has been added in fset options.
+
+The default value for the second format has changed. +
+You can reset it with this command:
+
+----
+/reset fset.format.option2
+----
+
 [[v4.1.0_fset_mouse]]
 === Mouse actions on fset buffer
 
 Mouse actions on fset buffer has been fixed when option `fset.look.format_number`
 is set to 2.
 
-The key for button 1 on fset buffer has been fixed and must be reset with this
-command:
+The key for button 1 on fset buffer has been fixed. +
+You can reset it with this command:
 
 ----
 /reset weechat.key_mouse.@chat(fset.fset):button1

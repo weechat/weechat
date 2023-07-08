@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-08 14:42+0200\n"
+"POT-Creation-Date: 2023-07-08 16:18+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -512,6 +512,7 @@ msgstr "inteiro"
 msgid "string"
 msgstr "cadeia"
 
+#, c-format
 msgid "any string"
 msgstr "qualquer cadeia"
 
@@ -7170,7 +7171,8 @@ msgid ""
 "parent_name, type, type_en, type_short (bool/int/str/col/enum), type_tiny (b/"
 "i/s/c/e), default_value, default_value_undef, value, quoted_value, "
 "value_undef, value_changed, parent_value, min, max, description, "
-"description2, description_en, description_en2, string_values\n"
+"description2, description_en, description_en2, string_values, "
+"allowed_values\n"
 "\n"
 "The lines with options are displayed using string evaluation (see /help eval "
 "for the format), with these options:\n"
@@ -7206,6 +7208,7 @@ msgid ""
 "    - ${description_en2}: option description (in English), \"(no "
 "description)\" if there's no description\n"
 "    - ${string_values}: string values allowed for set of an enum option\n"
+"    - ${allowed_values}: allowed values\n"
 "    - ${marked}: \"1\" if option is marked, otherwise \"0\"\n"
 "    - ${index}: index of option in list\n"
 "  - option data, with color but no spaces:\n"
@@ -7412,6 +7415,14 @@ msgid ""
 "ctrl-x"
 msgstr ""
 
+#, fuzzy
+msgid "color for allowed values"
+msgstr "cor das linhas do registo recente"
+
+#, fuzzy
+msgid "color for allowed values on the selected line"
+msgstr "cor das linhas do registo recente"
+
 msgid "color for color name when option fset.look.use_color_value is enabled"
 msgstr ""
 
@@ -7471,10 +7482,6 @@ msgstr "cor do nick na barra de entrada"
 #, fuzzy
 msgid "color for quotes around string values"
 msgstr "cor do texto das mensagens de join"
-
-#, fuzzy
-msgid "color for allowed values"
-msgstr "cor das linhas do registo recente"
 
 #, fuzzy
 msgid "color for index of option"
@@ -7684,6 +7691,11 @@ msgstr "nome da opção (o caráter universal \"*\" é permitido) (opcional)"
 #, fuzzy
 msgid "fset options"
 msgstr "lista de opções"
+
+#, fuzzy, c-format
+#| msgid "color"
+msgid "any color"
+msgstr "cor"
 
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"

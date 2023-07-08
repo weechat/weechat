@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-08 14:42+0200\n"
+"POT-Creation-Date: 2023-07-08 16:18+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -546,6 +546,7 @@ msgstr "tamsayı"
 msgid "string"
 msgstr "dizi"
 
+#, c-format
 msgid "any string"
 msgstr "herhangi bir dizi"
 
@@ -7572,7 +7573,8 @@ msgid ""
 "parent_name, type, type_en, type_short (bool/int/str/col/enum), type_tiny (b/"
 "i/s/c/e), default_value, default_value_undef, value, quoted_value, "
 "value_undef, value_changed, parent_value, min, max, description, "
-"description2, description_en, description_en2, string_values\n"
+"description2, description_en, description_en2, string_values, "
+"allowed_values\n"
 "\n"
 "The lines with options are displayed using string evaluation (see /help eval "
 "for the format), with these options:\n"
@@ -7608,6 +7610,7 @@ msgid ""
 "    - ${description_en2}: option description (in English), \"(no "
 "description)\" if there's no description\n"
 "    - ${string_values}: string values allowed for set of an enum option\n"
+"    - ${allowed_values}: allowed values\n"
 "    - ${marked}: \"1\" if option is marked, otherwise \"0\"\n"
 "    - ${index}: index of option in list\n"
 "  - option data, with color but no spaces:\n"
@@ -8030,6 +8033,14 @@ msgstr ""
 "değerlendirilmediğinden çok daha hızlı olur; biçimler, ctrl+X ile birbiri "
 "arasında değiştirilebilir"
 
+msgid "color for allowed values"
+msgstr "izin verilen değerler rengi"
+
+#, fuzzy
+#| msgid "color for max value on the selected line"
+msgid "color for allowed values on the selected line"
+msgstr "seçili satırdaki en büyük değer rengi"
+
 msgid "color for color name when option fset.look.use_color_value is enabled"
 msgstr ""
 
@@ -8079,9 +8090,6 @@ msgstr "yardım çubuğundaki ad rengi"
 
 msgid "color for quotes around string values"
 msgstr "dizi değerlerinin çevresindeki tırnak imi rengi"
-
-msgid "color for allowed values"
-msgstr "izin verilen değerler rengi"
 
 msgid "color for index of option"
 msgstr "bir seçenek indeksi rengi"
@@ -8258,6 +8266,11 @@ msgstr "seçenek adı (\"*\" jokerine izin verilir) (isteğe bağlı)"
 
 msgid "fset options"
 msgstr "fset seçenekleri"
+
+#, fuzzy, c-format
+#| msgid "color"
+msgid "any color"
+msgstr "renk"
 
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
