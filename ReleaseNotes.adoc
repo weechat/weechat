@@ -11,6 +11,22 @@ It is recommended to read it when upgrading to a new stable version. +
 For a complete list of changes, please look at ChangeLog.
 
 
+[[v4.1.0]]
+== Version 4.1.0 (under dev)
+
+[[v4.1.0_fset_mouse]]
+=== Mouse actions on fset buffer
+
+Mouse actions on fset buffer has been fixed when option `fset.look.format_number`
+is set to 2.
+
+The key for button 1 on fset buffer has been fixed and must be reset with this
+command:
+
+----
+/reset weechat.key_mouse.@chat(fset.fset):button1
+----
+
 [[v4.0.1]]
 == Version 4.0.1 (2023-06-30)
 

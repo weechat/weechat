@@ -33,17 +33,17 @@
 
 
 /*
- * Callback called when a mouse action occurs in fset bar item.
+ * Callback called when a mouse action occurs in fset buffer.
  */
 
 struct t_hashtable *
 fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
 {
     const char *buffer;
-    int rc;
+    int rc, format_number;
     unsigned long value;
     struct t_gui_buffer *ptr_buffer;
-    long y;
+    long y, option_index;
     char *error, str_value[128];
     struct t_fset_option *ptr_fset_option;
 
@@ -75,13 +75,18 @@ fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     if (y < 0)
         return info;
 
-    ptr_fset_option = weechat_arraylist_get (fset_options, y);
+    format_number = weechat_config_integer (fset_config_look_format_number);
+    option_index = y / fset_config_format_option_num_lines[format_number - 1];
+
+    ptr_fset_option = weechat_arraylist_get (fset_options, option_index);
     if (!ptr_fset_option)
         return info;
 
     snprintf (str_value, sizeof (str_value),
               "0x%lx", (unsigned long)ptr_fset_option);
     weechat_hashtable_set (info, "fset_option", str_value);
+    snprintf (str_value, sizeof (str_value), "%ld", option_index);
+    weechat_hashtable_set (info, "fset_option_index", str_value);
     weechat_hashtable_set (info, "fset_option_name", ptr_fset_option->name);
     weechat_hashtable_set (info, "fset_option_parent_name", ptr_fset_option->parent_name);
     weechat_hashtable_set (info, "fset_option_type", fset_option_type_string[ptr_fset_option->type]);
@@ -102,80 +107,72 @@ fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
  */
 
 int
-fset_mouse_get_distance_x (struct t_hashtable *hashtable)
+fset_mouse_get_distance_x (int x, int x2)
 {
-    int distance, x, x2;
-    char *error;
+    int distance;
 
-    distance = 0;
-    error = NULL;
-    x = (int)strtol (weechat_hashtable_get (hashtable, "_chat_line_x"),
-                     &error, 10);
-    if (error && !error[0])
-    {
-        error = NULL;
-        x2 = (int)strtol (weechat_hashtable_get (hashtable, "_chat_line_x2"),
-                          &error, 10);
-        if (error && !error[0])
-        {
-            distance = (x2 - x) / 3;
-            if (distance < 0)
-                distance *= -1;
-            else if (distance == 0)
-                distance = 1;
-        }
-    }
+    if ((x < 0) || (x2 < 0))
+        return 0;
+
+    distance = (x2 - x) / 3;
+    if (distance < 0)
+        distance *= -1;
+    else if (distance == 0)
+        distance = 1;
+
     return distance;
 }
 
 /*
- * Gets coordinates: y, y2, chat_line_y, chat_line_y2 from hashtable.
- *
- * Returns:
- *   1: OK, all coordinates are set
- *   0: error (coordinates must not be used)
+ * Returns an integer value from the hashtable (where value is a string).
+ * If value is invalid, "default_value" is returned.
  */
 
 int
-fset_mouse_get_coords (struct t_hashtable *hashtable,
-                       int *y, int *y2, int *chat_line_y, int *chat_line_y2)
+fset_mouse_get_hashtable_int (struct t_hashtable *hashtable,
+                              const char *variable,
+                              int default_value)
 {
-    char *error;
     const char *ptr_value;
+    char *error;
+    int value;
 
-    ptr_value = weechat_hashtable_get (hashtable, "_y");
+    ptr_value = weechat_hashtable_get (hashtable, variable);
     if (!ptr_value)
-        return 0;
+        return default_value;
     error = NULL;
-    *y = (int)strtol (ptr_value, &error, 10);
+    value = (int)strtol (ptr_value, &error, 10);
     if (!error || error[0])
-        return 0;
+        return default_value;
 
-    ptr_value = weechat_hashtable_get (hashtable, "_y2");
-    if (!ptr_value)
-        return 0;
-    error = NULL;
-    *y2 = (int)strtol (ptr_value, &error, 10);
-    if (!error || error[0])
-        return 0;
+    return value;
+}
 
-    ptr_value = weechat_hashtable_get (hashtable, "_chat_line_y");
-    if (!ptr_value)
-        return 0;
-    error = NULL;
-    *chat_line_y = (int)strtol (ptr_value, &error, 10);
-    if (!error || error[0])
-        return 0;
+/*
+ * Gets coordinates from hashtable.
+ */
 
-    ptr_value = weechat_hashtable_get (hashtable, "_chat_line_y2");
-    if (!ptr_value)
-        return 0;
-    error = NULL;
-    *chat_line_y2 = (int)strtol (ptr_value, &error, 10);
-    if (!error || error[0])
-        return 0;
+void
+fset_mouse_get_coords (struct t_hashtable *hashtable,
+                       int *chat_line_x, int *chat_line_x2,
+                       int *y, int *y2,
+                       int *chat_line_y, int *chat_line_y2,
+                       int *option_index, int *option_index2)
+{
+    int format_number;
 
-    return 1;
+    *chat_line_x = fset_mouse_get_hashtable_int (hashtable, "_chat_line_x", -1);
+    *chat_line_x2 = fset_mouse_get_hashtable_int (hashtable, "_chat_line_x2", -1);
+    *y = fset_mouse_get_hashtable_int (hashtable, "_y", -1);
+    *y2 = fset_mouse_get_hashtable_int (hashtable, "_y2", -1);
+    *chat_line_y = fset_mouse_get_hashtable_int (hashtable, "_chat_line_y", -1);
+    *chat_line_y2 = fset_mouse_get_hashtable_int (hashtable, "_chat_line_y2", -1);
+
+    format_number = weechat_config_integer (fset_config_look_format_number);
+    *option_index = (*chat_line_y >= 0) ?
+        *chat_line_y / fset_config_format_option_num_lines[format_number - 1] : -1;
+    *option_index2 = (*chat_line_y2 >= 0) ?
+        *chat_line_y2 / fset_config_format_option_num_lines[format_number - 1] : -1;
 }
 
 /*
@@ -186,12 +183,13 @@ int
 fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
                        struct t_hashtable *hashtable)
 {
-    const char *ptr_key, *ptr_chat_line_y, *ptr_fset_option_pointer;
+    const char *ptr_key, *ptr_fset_option_pointer;
     char str_command[1024];
     struct t_fset_option *ptr_fset_option;
     unsigned long value;
-    int rc, distance, num_options, y, y2, chat_line_y, chat_line_y2;
-    int min_y, max_y, i;
+    int rc, distance, num_options, min_y, max_y, i;
+    int chat_line_x, chat_line_x2, y, y2, chat_line_y, chat_line_y2;
+    int option_index, option_index2, index1, index2;
 
     /* make C compiler happy */
     (void) pointer;
@@ -202,10 +200,9 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
         return WEECHAT_RC_OK;
 
     ptr_key = weechat_hashtable_get (hashtable, "_key");
-    ptr_chat_line_y = weechat_hashtable_get (hashtable, "_chat_line_y");
     ptr_fset_option_pointer = weechat_hashtable_get (hashtable, "fset_option");
 
-    if (!ptr_key || !ptr_chat_line_y || !ptr_fset_option_pointer)
+    if (!ptr_key || !ptr_fset_option_pointer)
         return WEECHAT_RC_OK;
 
     rc = sscanf (ptr_fset_option_pointer, "%lx", &value);
@@ -215,14 +212,23 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
     if (!ptr_fset_option)
         return WEECHAT_RC_OK;
 
+    fset_mouse_get_coords (hashtable,
+                           &chat_line_x, &chat_line_x2,
+                           &y, &y2,
+                           &chat_line_y, &chat_line_y2,
+                           &option_index, &option_index2);
+
+    if (chat_line_y < 0)
+        return WEECHAT_RC_OK;
+
     snprintf (str_command, sizeof (str_command),
-              "/fset -go %s",
-              ptr_chat_line_y);
+              "/fset -go %d",
+              option_index);
     weechat_command (fset_buffer, str_command);
 
     if (weechat_string_match (ptr_key, "button2-gesture-left*", 1))
     {
-        distance = fset_mouse_get_distance_x (hashtable);
+        distance = fset_mouse_get_distance_x (chat_line_x, chat_line_x2);
         if ((ptr_fset_option->type == FSET_OPTION_TYPE_INTEGER)
             || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR)
             || (ptr_fset_option->type == FSET_OPTION_TYPE_ENUM))
@@ -239,7 +245,7 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
     }
     else if (weechat_string_match (ptr_key, "button2-gesture-right*", 1))
     {
-        distance = fset_mouse_get_distance_x (hashtable);
+        distance = fset_mouse_get_distance_x (chat_line_x, chat_line_x2);
         if ((ptr_fset_option->type == FSET_OPTION_TYPE_INTEGER)
             || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR)
             || (ptr_fset_option->type == FSET_OPTION_TYPE_ENUM))
@@ -256,48 +262,44 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
     }
     else if (weechat_string_match (ptr_key, "button2*", 1))
     {
-        if (fset_mouse_get_coords (hashtable, &y, &y2,
-                                   &chat_line_y, &chat_line_y2))
+        if (y == y2)
         {
-            if (y == y2)
+            /* toggle or set option */
+            snprintf (
+                str_command, sizeof (str_command),
+                "/fset %s",
+                (ptr_fset_option->type == FSET_OPTION_TYPE_BOOLEAN) ?
+                "-toggle" : "-set");
+            weechat_command (fset_buffer, str_command);
+        }
+        else if ((option_index >= 0) || (option_index2 >= 0))
+        {
+            /* mark/unmark multiple options */
+            num_options = weechat_arraylist_size (fset_options);
+            index1 = option_index;
+            index2 = option_index2;
+            if (index1 < 0)
+                index1 = (y > y2) ? 0 : num_options - 1;
+            else if (index2 < 0)
+                index2 = (y > y2) ? 0 : num_options - 1;
+            min_y = (index1 < index2) ? index1 : index2;
+            max_y = (index1 > index2) ? index1 : index2;
+            if (min_y < 0)
+                min_y = 0;
+            if (max_y > num_options - 1)
+                max_y = num_options - 1;
+            for (i = min_y; i <= max_y; i++)
             {
-                /* toggle or set option */
-                snprintf (
-                    str_command, sizeof (str_command),
-                    "/fset %s",
-                    (ptr_fset_option->type == FSET_OPTION_TYPE_BOOLEAN) ?
-                    "-toggle" : "-set");
-                weechat_command (fset_buffer, str_command);
-            }
-            else if ((chat_line_y >= 0) || (chat_line_y2 >= 0))
-            {
-                /* mark/unmark multiple options */
-                num_options = weechat_arraylist_size (fset_options);
-                if (chat_line_y < 0)
-                    chat_line_y = (y > y2) ? 0 : num_options - 1;
-                else if (chat_line_y2 < 0)
-                    chat_line_y2 = (y > y2) ? 0 : num_options - 1;
-                min_y = (chat_line_y < chat_line_y2) ?
-                    chat_line_y : chat_line_y2;
-                max_y = (chat_line_y > chat_line_y2) ?
-                    chat_line_y : chat_line_y2;
-                if (min_y < 0)
-                    min_y = 0;
-                if (max_y > num_options - 1)
-                    max_y = num_options - 1;
-                for (i = min_y; i <= max_y; i++)
+                ptr_fset_option = weechat_arraylist_get (fset_options, i);
+                if (ptr_fset_option)
                 {
-                    ptr_fset_option = weechat_arraylist_get (fset_options, i);
-                    if (ptr_fset_option)
-                    {
-                        fset_option_toggle_mark (ptr_fset_option, NULL);
-                    }
+                    fset_option_toggle_mark (ptr_fset_option, NULL);
                 }
-                snprintf (str_command, sizeof (str_command),
-                          "/fset -go %d",
-                          chat_line_y2);
-                weechat_command (fset_buffer, str_command);
             }
+            snprintf (str_command, sizeof (str_command),
+                      "/fset -go %d",
+                      index2);
+            weechat_command (fset_buffer, str_command);
         }
     }
 
@@ -332,7 +334,7 @@ fset_mouse_init ()
     weechat_hashtable_set (
         keys,
         "@chat(" FSET_PLUGIN_NAME "." FSET_BUFFER_NAME "):button1",
-        "/window ${_window_number};/fset -go ${_chat_line_y}");
+        "/window ${_window_number};/fset -go ${fset_option_index}");
     weechat_hashtable_set (
         keys,
         "@chat(" FSET_PLUGIN_NAME "." FSET_BUFFER_NAME "):button2*",
