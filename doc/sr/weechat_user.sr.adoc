@@ -3813,14 +3813,14 @@ CTCP може да се прилагоди само за један сервер
 |===
 | Кôд          | Опис                                | Вредност/пример
 | $clientinfo  | Листа подржаних CTCP                | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| $version     | Верзија програма WeeChat            | `+0.4.0-dev+`
-| $versiongit  | WeeChat верзија + Git верзија ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| $git         | Git верзија ^(1)^                   | `+v0.3.9-104-g7eb5cc4+`
-| $compilation | Датум компајлирања програма WeeChat | `+Dec 16 2012+`
-| $osinfo      | Инфо о ОС                           | `+Linux 2.6.32-5-amd64 / x86_64+`
+| $version     | Верзија програма WeeChat            | `+4.1.0-dev+`
+| $versiongit  | WeeChat верзија + Git верзија ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
+| $git         | Git верзија ^(1)^                   | `+v4.0.0-51-g8f98b922a+`
+| $compilation | Датум компајлирања програма WeeChat | `+Jul  8 2023 20:14:23+`
+| $osinfo      | Инфо о ОС                           | `+Linux 5.10.0-23-amd64 / x86_64+`
 | $site        | WeeChat вебсајт                     | `+https://weechat.org/+`
 | $download    | WeeChat сајт, страна за преузимање  | `+https://weechat.org/download/+`
-| $time        | Текући датум/време                  | `+Sun, 16 Dec 2012 10:40:48 +0100+`
+| $time        | Текући датум/време                  | `+Sat, 08 Jul 2023 21:11:19 +0200+`
 | $username    | Корисничко име на IRC серверу       | `+name+`
 | $realname    | Реално име на IRC серверу           | `+John Doe+`
 |===
@@ -3832,13 +3832,13 @@ CTCP може да се прилагоди само за један сервер
 
 [width="100%", cols="2,4,8", options="header"]
 |===
-| CTCP       | Формат одговора                        | Пример
-| CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| SOURCE     | `+$download+`                          | `+https://weechat.org/download/+`
-| TIME       | `+$time+`                              | `+нед, 16 дец 2012 10:40:48 +0100+`
-| USERINFO   | `+$username ($realname)+`              | `+име (Пера Перић)+`
-| VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
+| CTCP       | Формат одговора           | Пример
+| CLIENTINFO | `+$clientinfo+`           | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| FINGER     | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
+| SOURCE     | `+$download+`             | `+https://weechat.org/download/+`
+| TIME       | `+$time+`                 | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| USERINFO   | `+$username ($realname)+` | `+име (Пера Перић)+`
+| VERSION    | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
 |===
 
 [[irc_target_buffer]]

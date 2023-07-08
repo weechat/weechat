@@ -4157,14 +4157,14 @@ automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 |===
 | Code         | Description                            | Valeur / exemple
 | $clientinfo  | Liste des CTCP supportés               | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| $version     | Version de WeeChat                     | `+0.4.0-dev+`
-| $versiongit  | Version de WeeChat + version Git ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| $git         | Version Git ^(1)^                      | `+v0.3.9-104-g7eb5cc4+`
-| $compilation | Date de compilation WeeChat            | `+Dec 16 2012+`
-| $osinfo      | Information sur l'OS                   | `+Linux 2.6.32-5-amd64 / x86_64+`
+| $version     | Version de WeeChat                     | `+4.1.0-dev+`
+| $versiongit  | Version de WeeChat + version Git ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
+| $git         | Version Git ^(1)^                      | `+v4.0.0-51-g8f98b922a+`
+| $compilation | Date de compilation WeeChat            | `+Jul  8 2023 20:14:23+`
+| $osinfo      | Information sur l'OS                   | `+Linux 5.10.0-23-amd64 / x86_64+`
 | $site        | Site WeeChat                           | `+https://weechat.org/+`
 | $download    | Site WeeChat, page téléchargement      | `+https://weechat.org/download/+`
-| $time        | Date/heure courante                    | `+Sun, 16 Dec 2012 10:40:48 +0100+`
+| $time        | Date/heure courante                    | `+Sat, 08 Jul 2023 21:11:19 +0200+`
 | $username    | Nom d'utilisateur sur le serveur       | `+nom+`
 | $realname    | Nom réel sur le serveur                | `+John Doe+`
 |===
@@ -4178,13 +4178,13 @@ Si les options CTCP ne sont pas définies (par défaut), les réponses CTCP sont
 
 [width="100%",cols="2,4,8",options="header"]
 |===
-| CTCP       | Format de réponse                      | Exemple
-| CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| SOURCE     | `+$download+`                          | `+https://weechat.org/download/+`
-| TIME       | `+$time+`                              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
-| USERINFO   | `+$username ($realname)+`              | `+nom (John Doe)+`
-| VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
+| CTCP       | Format de réponse          | Exemple
+| CLIENTINFO | `+$clientinfo+`            | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| FINGER     | `+WeeChat $version+`       | `+WeeChat 4.1.0-dev+`
+| SOURCE     | `+$download+`              | `+https://weechat.org/download/+`
+| TIME       | `+$time+`                  | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| USERINFO   | `+$username ($realname)+`  | `+nom (John Doe)+`
+| VERSION    | `+WeeChat $version+`       | `+WeeChat 4.1.0-dev+`
 |===
 
 [[irc_target_buffer]]
