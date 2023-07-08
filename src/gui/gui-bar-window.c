@@ -223,7 +223,7 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
                     if ((item >= 0) && (subitem >= 0))
                     {
                         *bar_item = (*bar_window)->bar->items_name[item][subitem];
-                        *bar_item_line = (*bar_window)->coords[i]->line;
+                        *bar_item_line = y - (*bar_window)->coords[i]->y;
                         *bar_item_col = x - (y == (*bar_window)->coords[i]->y ?
                             (*bar_window)->coords[i]->x : (*bar_window)->x);
                     }
@@ -236,7 +236,7 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
                     item = (*bar_window)->coords[i]->item;
                     subitem = (*bar_window)->coords[i]->subitem;
                     *bar_item = (*bar_window)->bar->items_name[item][subitem];
-                    *bar_item_line = (*bar_window)->coords[i]->line;
+                    *bar_item_line = y - (*bar_window)->coords[i]->y;
                     *bar_item_col = x - (y == (*bar_window)->coords[i]->y ?
                         (*bar_window)->coords[i]->x : (*bar_window)->x);
                     if ((*bar_window)->bar->items_buffer[item][subitem])
