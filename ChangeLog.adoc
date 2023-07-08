@@ -30,6 +30,7 @@ Bug fixes::
   * core: add key ctrl-backspace in /help key (issue #1975)
   * core: keep keys ctrl-H and ctrl-? (in lower case) if they were manually bound to custom commands in a previous version
   * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
+  * core: display focus hashtable for debug even if no key is matching
   * fset: remove extra spaces between min and max values when second format is used
   * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
   * script: fix cursor position after `/script list -i` or `/script list -il`

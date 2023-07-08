@@ -2003,6 +2003,31 @@ gui_key_focus_matching (struct t_gui_key *key,
 }
 
 /*
+ * Displays focus hashtable (for debug).
+ */
+
+void
+gui_key_focus_display_hashtable (struct t_hashtable *hashtable)
+{
+    struct t_weelist *list_keys;
+    struct t_weelist_item *ptr_item;
+
+    gui_chat_printf (NULL, _("Hashtable focus:"));
+    list_keys = hashtable_get_list_keys (hashtable);
+    if (list_keys)
+    {
+        for (ptr_item = list_keys->items; ptr_item;
+             ptr_item = ptr_item->next_item)
+        {
+            gui_chat_printf (NULL, "  %s: \"%s\"",
+                             ptr_item->data,
+                             hashtable_get (hashtable, ptr_item->data));
+        }
+        weelist_free (list_keys);
+    }
+}
+
+/*
  * Runs command according to focus.
  *
  * Returns:
@@ -2020,8 +2045,6 @@ gui_key_focus_command (const char *key, int context,
     char *command, **commands;
     const char *str_buffer;
     struct t_hashtable *hashtable;
-    struct t_weelist *list_keys;
-    struct t_weelist_item *ptr_item;
     struct t_gui_buffer *ptr_buffer;
 
     debug = 0;
@@ -2088,24 +2111,10 @@ gui_key_focus_command (const char *key, int context,
             gui_input_delete_line (gui_current_window->buffer);
         }
 
-        if (debug > 1)
-        {
-            gui_chat_printf (NULL, _("Hashtable focus:"));
-            list_keys = hashtable_get_list_keys (hashtable);
-            if (list_keys)
-            {
-                for (ptr_item = list_keys->items; ptr_item;
-                     ptr_item = ptr_item->next_item)
-                {
-                    gui_chat_printf (NULL, "  %s: \"%s\"",
-                                     ptr_item->data,
-                                     hashtable_get (hashtable, ptr_item->data));
-                }
-                weelist_free (list_keys);
-            }
-        }
         if (debug)
         {
+            if (debug > 1)
+                gui_key_focus_display_hashtable (hashtable);
             gui_chat_printf (NULL, _("Command for key: \"%s\""),
                              ptr_key->command);
         }
@@ -2154,6 +2163,17 @@ gui_key_focus_command (const char *key, int context,
         }
         hashtable_free (hashtable);
         return 1;
+    }
+
+    if (debug > 1)
+    {
+        hashtable = hook_focus_get_data (hashtable_focus[0],
+                                         hashtable_focus[1]);
+        if (hashtable)
+        {
+            gui_key_focus_display_hashtable (hashtable);
+            hashtable_free (hashtable);
+        }
     }
 
     return 0;
