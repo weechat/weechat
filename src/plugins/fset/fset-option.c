@@ -344,9 +344,14 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
     else if (strncmp (filter, "t:", 2) == 0)
     {
         /* filter by type */
-        return (weechat_strcasecmp (
-                    fset_option_type_string_short[fset_option->type],
-                    filter + 2) == 0) ? 1 : 0;
+        return (
+            (weechat_strcasecmp (
+                fset_option_type_string_short[fset_option->type],
+                filter + 2) == 0)
+            || (weechat_strcasecmp (
+                    fset_option_type_string[fset_option->type],
+                    filter + 2) == 0)) ?
+            1 : 0;
     }
     else if (strncmp (filter, "d==", 3) == 0)
     {
