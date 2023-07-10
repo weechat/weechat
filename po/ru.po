@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-08 16:18+0200\n"
+"POT-Creation-Date: 2023-07-10 14:05+0200\n"
 "PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -491,7 +491,7 @@ msgstr "минута"
 msgid "string"
 msgstr "Ожидание"
 
-#, fuzzy, c-format
+#, fuzzy
 msgid "any string"
 msgstr "Ожидание"
 
@@ -6143,7 +6143,7 @@ msgstr ""
 msgid "fset options"
 msgstr "настроить параметры конфигурации"
 
-#, fuzzy, c-format
+#, fuzzy
 msgid "any color"
 msgstr "цвет чата"
 
@@ -6839,10 +6839,10 @@ msgid ""
 "\n"
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
-"Capabilities supported by WeeChat are: account-notify, away-notify, batch, "
-"cap-notify, chghost, draft/multiline, echo-message, extended-join, invite-"
-"notify, message-tags, multi-prefix, server-time, setname, userhost-in-"
-"names.\n"
+"Capabilities supported by WeeChat are: account-notify, account-tag, away-"
+"notify, batch, cap-notify, chghost, draft/multiline, echo-message, extended-"
+"join, invite-notify, message-tags, multi-prefix, server-time, setname, "
+"userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."

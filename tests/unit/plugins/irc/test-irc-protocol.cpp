@@ -69,9 +69,10 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     "USERLEN=16 HOSTLEN=32 CHANNELLEN=50 TOPICLEN=390 DEAF=D "          \
     "CHANTYPES=# CHANMODES=eIbq,k,flj,CFLMPQScgimnprstuz "              \
     "MONITOR=100 UTF8MAPPING=rfc8265 UTF8ONLY"
-#define IRC_ALL_CAPS "account-notify,away-notify,batch,cap-notify,"     \
-    "chghost,draft/multiline,echo-message,extended-join,invite-notify," \
-    "message-tags,multi-prefix,server-time,setname,userhost-in-names"
+#define IRC_ALL_CAPS "account-notify,account-tag,away-notify,batch,"    \
+    "cap-notify,chghost,draft/multiline,echo-message,extended-join,"    \
+    "invite-notify,message-tags,multi-prefix,server-time,setname,"      \
+    "userhost-in-names"
 
 #define WEE_CHECK_CAP_TO_ENABLE(__result, __string, __sasl_requested)   \
     str = irc_protocol_cap_to_enable (__string, __sasl_requested);      \

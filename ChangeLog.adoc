@@ -37,6 +37,7 @@ Bug fixes::
   * fset: remove extra spaces between min and max values when second format is used
   * fset: fix mouse actions when second format is used
   * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
+  * irc: add missing "account-tag" in list of supported capabilities
   * script: fix cursor position after `/script list -i` or `/script list -il`
   * script: fix buffer used by command `/script list -i|-il|-o|-ol`
 

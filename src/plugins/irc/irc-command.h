@@ -58,7 +58,7 @@ struct t_irc_channel;
  * (enabled if supported by the server + completion in command /cap)
  */
 #define IRC_COMMAND_CAP_SUPPORTED                                       \
-    "account-notify|away-notify|batch|cap-notify|chghost|"              \
+    "account-notify|account-tag|away-notify|batch|cap-notify|chghost|"  \
     "draft/multiline|echo-message|extended-join|invite-notify|"         \
     "message-tags|multi-prefix|server-time|setname|userhost-in-names"
 
