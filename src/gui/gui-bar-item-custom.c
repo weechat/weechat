@@ -443,10 +443,18 @@ gui_bar_item_custom_new (const char *name, const char *conditions,
         name,
         GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS,
         conditions);
+    if (!option_conditions)
+        return NULL;
+
     option_content = gui_bar_item_custom_create_option (
         name,
         GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT,
         content);
+    if (!option_content)
+    {
+        config_file_option_free (option_conditions, 0);
+        return NULL;
+    }
 
     new_bar_item_custom = gui_bar_item_custom_new_with_options (
         name,
@@ -517,20 +525,47 @@ int
 gui_bar_item_custom_rename (struct t_gui_bar_item_custom *item,
                             const char *new_name)
 {
+    char *old_name, *option_name;
+    int i, length;
+
     if (!item || !gui_bar_item_custom_name_valid (new_name))
         return 0;
 
     if (gui_bar_item_custom_search (new_name))
         return 0;
 
+    old_name = strdup (item->name);
+    if (!old_name)
+        return 0;
+
+    length = strlen (new_name) + 128;
+    option_name = malloc (length);
+    if (!option_name)
+    {
+        free (old_name);
+        return 0;
+    }
+
     free (item->bar_item->name);
     item->bar_item->name = strdup (new_name);
 
-    gui_bar_item_update (item->name);
-    gui_bar_item_update (item->bar_item->name);
-
     free (item->name);
     item->name = strdup (new_name);
+
+    for (i = 0; i < GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS; i++)
+    {
+        snprintf (option_name, length,
+                  "%s.%s",
+                  new_name,
+                  gui_bar_item_custom_option_string[i]);
+        config_file_option_rename (item->options[i], option_name);
+    }
+
+    gui_bar_item_update (old_name);
+    gui_bar_item_update (item->name);
+
+    free (old_name);
+    free (option_name);
 
     return 1;
 }

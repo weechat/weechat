@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 Bug fixes::
 
+  * core: fix renaming of options with command `/item rename` (issue #1978)
   * core: don't send "key_pressed" signal again for the same key press (issue #1976)
   * core: don't send "key_combo_*" signals for incomplete keys (issue #1976)
   * core: add key ctrl-backspace in /help key (issue #1975)
