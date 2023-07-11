@@ -602,49 +602,49 @@ def config_new_option(config_file: str, section: str, name: str, type: str, desc
     ::
 
         # example
-        def option4_check_value_cb(data: str, option: str, value: str) -> int:
+        def option_str_check_value_cb(data: str, option: str, value: str) -> int:
             # ...
             return 1
             # return 0
 
-        def option4_change_cb(data: str, option: str) -> None:
+        def option_str_change_cb(data: str, option: str) -> None:
             # ...
 
-        def option4_delete_cb(data: str, option: str) -> None:
+        def option_str_delete_cb(data: str, option: str) -> None:
             # ...
 
-        option1 = weechat.config_new_option(config_file, section, "option1", "boolean",
+        option_bool = weechat.config_new_option(config_file, section, "option_bool", "boolean",
             "My option, type boolean",
             "", 0, 0, "on", "on", 0,
             "", "",
             "", "",
             "", "")
 
-        option2 = weechat.config_new_option(config_file, section, "option2", "integer",
+        option_int = weechat.config_new_option(config_file, section, "option_int", "integer",
             "My option, type integer",
             "", 0, 100, "15", "15", 0,
             "", "",
             "", "",
             "", "")
 
-        option3 = weechat.config_new_option(config_file, section, "option3", "integer",
-            "My option, type integer (with string values)",
-            "top|bottom|left|right",
-            0, 0, "bottom", "bottom", 0,
+        option_str = weechat.config_new_option(config_file, section, "option_str", "string",
+            "My option, type string",
+            "", 0, 0, "test", "test", 1,
+            "option_str_check_value_cb", "",
+            "option_str_change_cb", "",
+            "option_str_delete_cb", "")
+
+        option_col = weechat.config_new_option(config_file, section, "option_col", "color",
+            "My option, type color",
+            "", 0, 0, "lightblue", "lightblue", 0,
             "", "",
             "", "",
             "", "")
 
-        option4 = weechat.config_new_option(config_file, section, "option4", "string",
-            "My option, type string",
-            "", 0, 0, "test", "test", 1,
-            "option4_check_value_cb", "",
-            "option4_change_cb", "",
-            "option4_delete_cb", "")
-
-        option5 = weechat.config_new_option(config_file, section, "option5", "color",
-            "My option, type color",
-            "", 0, 0, "lightblue", "lightblue", 0,
+        option_enum = weechat.config_new_option(config_file, section, "option_enum", "enum",
+            "My option, type enum",
+            "top|bottom|left|right",
+            0, 0, "bottom", "bottom", 0,
             "", "",
             "", "",
             "", "")
@@ -857,6 +857,28 @@ def config_color_default(option: str) -> str:
         # example
         option = weechat.config_get("plugin.section.option")
         value = weechat.config_color_default(option)
+    """
+    ...
+
+
+def config_enum(option: str) -> int:
+    """`config_enum in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_config_enum>`_
+    ::
+
+        # example
+        option = weechat.config_get("plugin.section.option")
+        value = weechat.config_enum(option)
+    """
+    ...
+
+
+def config_enum_default(option: str) -> int:
+    """`config_enum_default in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_config_enum_default>`_
+    ::
+
+        # example
+        option = weechat.config_get("plugin.section.option")
+        value = weechat.config_enum_default(option)
     """
     ...
 

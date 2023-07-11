@@ -87,7 +87,6 @@ int gui_key_verbose = 0;            /* 1 to see some messages               */
 
 char gui_key_combo[1024];           /* buffer used for combos               */
 int gui_key_grab = 0;               /* 1 if grab mode enabled (alt-k)       */
-int gui_key_grab_raw = 0;           /* grab raw key code?                   */
 int gui_key_grab_count = 0;         /* number of keys pressed in grab mode  */
 int gui_key_grab_command = 0;       /* grab command bound to key?           */
 int gui_key_grab_delay = 0;         /* delay for grab (default is 500)      */
@@ -95,6 +94,7 @@ int gui_key_grab_delay = 0;         /* delay for grab (default is 500)      */
 int *gui_key_buffer = NULL;         /* input buffer (for paste detection)   */
 int gui_key_buffer_alloc = 0;       /* input buffer allocated size          */
 int gui_key_buffer_size = 0;        /* input buffer size in bytes           */
+int gui_key_last_key_pressed_sent = -1;
 
 int gui_key_paste_pending = 0;      /* 1 is big paste was detected and      */
                                     /* WeeChat is asking user what to do    */
@@ -185,13 +185,12 @@ gui_key_get_current_context ()
  */
 
 void
-gui_key_grab_init (int grab_raw_key, int grab_command, const char *delay)
+gui_key_grab_init (int grab_command, const char *delay)
 {
     long milliseconds;
     char *error;
 
     gui_key_grab = 1;
-    gui_key_grab_raw = grab_raw_key;
     gui_key_grab_count = 0;
     gui_key_grab_command = grab_command;
 
@@ -217,8 +216,7 @@ int
 gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     char *key_name, *key_name_alias, *key_utf8;
-    const char *ptr_key_name;
-    struct t_gui_key *ptr_key;
+    struct t_gui_key *ptr_key_raw, *ptr_key;
     int rc;
 
     /* make C compiler happy */
@@ -264,23 +262,23 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
             }
         }
 
-        ptr_key_name = (gui_key_grab_raw) ? key_name : key_name_alias;
-
         /* add expanded key to input buffer */
         if (gui_current_window->buffer->input)
         {
-            gui_input_insert_string (gui_current_window->buffer, ptr_key_name);
-            if (gui_key_grab_command)
+            ptr_key_raw = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
+                                          key_name);
+            ptr_key = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
+                                      key_name_alias);
+            gui_input_insert_string (gui_current_window->buffer,
+                                     (ptr_key_raw) ? key_name : key_name_alias);
+            /* add command bound to key (if found) */
+            if (gui_key_grab_command && (ptr_key_raw || ptr_key))
             {
-                /* add command bound to key (if found) */
-                ptr_key = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
-                                          ptr_key_name);
-                if (ptr_key)
-                {
-                    gui_input_insert_string (gui_current_window->buffer, " ");
-                    gui_input_insert_string (gui_current_window->buffer,
-                                             ptr_key->command);
-                }
+                gui_input_insert_string (gui_current_window->buffer, " ");
+                gui_input_insert_string (
+                    gui_current_window->buffer,
+                    (ptr_key_raw) ?
+                    ptr_key_raw->command : ptr_key->command);
             }
             gui_input_text_changed_modifier_and_signal (
                 gui_current_window->buffer,
@@ -2005,6 +2003,31 @@ gui_key_focus_matching (struct t_gui_key *key,
 }
 
 /*
+ * Displays focus hashtable (for debug).
+ */
+
+void
+gui_key_focus_display_hashtable (struct t_hashtable *hashtable)
+{
+    struct t_weelist *list_keys;
+    struct t_weelist_item *ptr_item;
+
+    gui_chat_printf (NULL, _("Hashtable focus:"));
+    list_keys = hashtable_get_list_keys (hashtable);
+    if (list_keys)
+    {
+        for (ptr_item = list_keys->items; ptr_item;
+             ptr_item = ptr_item->next_item)
+        {
+            gui_chat_printf (NULL, "  %s: \"%s\"",
+                             ptr_item->data,
+                             hashtable_get (hashtable, ptr_item->data));
+        }
+        weelist_free (list_keys);
+    }
+}
+
+/*
  * Runs command according to focus.
  *
  * Returns:
@@ -2022,8 +2045,6 @@ gui_key_focus_command (const char *key, int context,
     char *command, **commands;
     const char *str_buffer;
     struct t_hashtable *hashtable;
-    struct t_weelist *list_keys;
-    struct t_weelist_item *ptr_item;
     struct t_gui_buffer *ptr_buffer;
 
     debug = 0;
@@ -2090,24 +2111,10 @@ gui_key_focus_command (const char *key, int context,
             gui_input_delete_line (gui_current_window->buffer);
         }
 
-        if (debug > 1)
-        {
-            gui_chat_printf (NULL, _("Hashtable focus:"));
-            list_keys = hashtable_get_list_keys (hashtable);
-            if (list_keys)
-            {
-                for (ptr_item = list_keys->items; ptr_item;
-                     ptr_item = ptr_item->next_item)
-                {
-                    gui_chat_printf (NULL, "  %s: \"%s\"",
-                                     ptr_item->data,
-                                     hashtable_get (hashtable, ptr_item->data));
-                }
-                weelist_free (list_keys);
-            }
-        }
         if (debug)
         {
+            if (debug > 1)
+                gui_key_focus_display_hashtable (hashtable);
             gui_chat_printf (NULL, _("Command for key: \"%s\""),
                              ptr_key->command);
         }
@@ -2156,6 +2163,17 @@ gui_key_focus_command (const char *key, int context,
         }
         hashtable_free (hashtable);
         return 1;
+    }
+
+    if (debug > 1)
+    {
+        hashtable = hook_focus_get_data (hashtable_focus[0],
+                                         hashtable_focus[1]);
+        if (hashtable)
+        {
+            gui_key_focus_display_hashtable (hashtable);
+            hashtable_free (hashtable);
+        }
     }
 
     return 0;
@@ -2390,6 +2408,9 @@ gui_key_pressed (const char *key_str)
     }
 
     rc_expand = gui_key_expand (gui_key_combo, &key_name, &key_name_alias);
+
+    if (!rc_expand)
+        goto end_no_input;
 
     ptr_key = NULL;
     exact_match = 0;
@@ -2693,6 +2714,7 @@ gui_key_buffer_reset ()
         gui_key_buffer_optimize ();
     }
     gui_key_paste_lines = 0;
+    gui_key_last_key_pressed_sent = -1;
 }
 
 /*

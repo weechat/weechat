@@ -676,6 +676,13 @@ commands like `/123` to jump to buffer #123:
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
 ----
 
+// TRANSLATION MISSING
+For an easy jump to buffers, you can also install the _go.py_ script:
+
+----
+/script install go.py
+----
+
 [[global_history]]
 === Come si può usare la cronologia globale (invece di quella del buffer) con i tasti su e giù?
 

@@ -1832,11 +1832,6 @@ eval_replace_vars_cb (void *data, const char *text)
                                 EVAL_STR_TRUE : EVAL_STR_FALSE);
                 goto end;
             case CONFIG_OPTION_TYPE_INTEGER:
-                if (ptr_option->string_values)
-                {
-                    value = strdup (ptr_option->string_values[CONFIG_INTEGER(ptr_option)]);
-                    goto end;
-                }
                 snprintf (str_value, sizeof (str_value),
                           "%d", CONFIG_INTEGER(ptr_option));
                 value = strdup (str_value);
@@ -1846,6 +1841,9 @@ eval_replace_vars_cb (void *data, const char *text)
                 goto end;
             case CONFIG_OPTION_TYPE_COLOR:
                 value = strdup (gui_color_get_name (CONFIG_COLOR(ptr_option)));
+                goto end;
+            case CONFIG_OPTION_TYPE_ENUM:
+                value = strdup (ptr_option->string_values[CONFIG_ENUM(ptr_option)]);
                 goto end;
             case CONFIG_NUM_OPTION_TYPES:
                 value = strdup ("");

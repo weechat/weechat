@@ -42,11 +42,11 @@
 
 struct t_irc_ctcp_reply irc_ctcp_default_reply[] =
 { { "clientinfo", "$clientinfo" },
-  { "finger",     "WeeChat $versiongit" },
+  { "finger",     "WeeChat $version" },
   { "source",     "$download" },
   { "time",       "$time" },
   { "userinfo",   "$username ($realname)" },
-  { "version",    "WeeChat $versiongit ($compilation)" },
+  { "version",    "WeeChat $version" },
   { NULL,         NULL },
 };
 

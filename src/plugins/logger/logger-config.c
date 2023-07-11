@@ -658,7 +658,7 @@ logger_config_init ()
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         logger_config_file_rotation_compression_type = weechat_config_new_option (
             logger_config_file, logger_config_section_file,
-            "rotation_compression_type", "integer",
+            "rotation_compression_type", "enum",
             N_("compression type for rotated log files; if set to \"none\", "
                "rotated log files are not compressed; WARNING: if rotation was "
                "enabled with another type of compression (or no compression), "

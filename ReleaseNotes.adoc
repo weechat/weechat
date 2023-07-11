@@ -11,6 +11,54 @@ It is recommended to read it when upgrading to a new stable version. +
 For a complete list of changes, please look at ChangeLog.
 
 
+[[v4.1.0]]
+== Version 4.1.0 (under dev)
+
+[[v4.1.0_fset_allowed_values]]
+=== Allowed values for options on fset buffer
+
+A new variable `allowed_values` has been added in fset options.
+
+The default value for the second format has changed. +
+You can reset it with this command:
+
+----
+/reset fset.format.option2
+----
+
+[[v4.1.0_fset_mouse]]
+=== Mouse actions on fset buffer
+
+Mouse actions on fset buffer has been fixed when option `fset.look.format_number`
+is set to 2.
+
+The key for button 1 on fset buffer has been fixed. +
+You can reset it with this command:
+
+----
+/reset weechat.key_mouse.@chat(fset.fset):button1
+----
+
+[[v4.0.1]]
+== Version 4.0.1 (2023-06-30)
+
+[[v4.0.1_config_set_plugin]]
+=== Functions config_set_plugin and config_set_desc_plugin
+
+The functions link:https://weechat.org/doc/weechat/plugin/#_config_set_plugin[config_set_plugin]
+and link:https://weechat.org/doc/weechat/plugin/#_config_set_desc_plugin[config_set_desc_plugin]
+are not converting any more the option name to lower case because since version 4.0.0,
+the name of options is case sensitive.
+
+[[v4.0.1_grab_raw_key]]
+=== Grab raw key and command
+
+Key kbd:[Alt+K] (upper case) has been removed, as well as commands
+`/input grab_raw_key` and `/input grab_raw_key_command`.
+
+Now the key kbd:[Alt+k] displays the actual key name and command, possibly
+raw key.
+
 [[v4.0.0]]
 == Version 4.0.0 (2023-06-24)
 
@@ -181,6 +229,10 @@ Alias converted to lower case: "CLOSE" => "close"
 
 [[v4.0.0_tls]]
 === TLS options and connections
+
+Option `weechat.color.status_name_insecure` has been added, the buffer name
+is now displayed with color `lightmagenta` by default if the connection with
+the server is *NOT* made with TLS.
 
 Options, commands and documentation have been updated to "TLS" instead of "SSL":
 

@@ -455,6 +455,9 @@ TEST(GuiBarItemCustom, Rename)
     CHECK(new_item->bar_item);
     STRCMP_EQUAL("test3", new_item->bar_item->name);
 
+    STRCMP_EQUAL("test3.conditions", new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS]->name);
+    STRCMP_EQUAL("test3.content", new_item->options[GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT]->name);
+
     gui_bar_item_custom_free (new_item);
     gui_bar_item_custom_free (new_item2);
 }

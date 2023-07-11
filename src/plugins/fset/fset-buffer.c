@@ -625,7 +625,9 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
     }
 
     /* min */
-    snprintf (str_field, length_field, "%s", fset_option->min);
+    snprintf (str_field, length_field,
+              "%s",
+              (fset_option->min) ? fset_option->min : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "__min", str_field);
     snprintf (str_field, length_field,
@@ -642,7 +644,9 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
                            "empty_min", str_field2);
 
     /* max */
-    snprintf (str_field, length_field, "%s", fset_option->max);
+    snprintf (str_field, length_field,
+              "%s",
+              (fset_option->max) ? fset_option->max : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "__max", str_field);
     snprintf (str_field, length_field,
@@ -743,6 +747,25 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
                            "string_values", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "empty_string_values", str_field2);
+
+    /* allowed_values */
+    snprintf (str_field, length_field,
+              "%s",
+              (fset_option->allowed_values) ? fset_option->allowed_values : "");
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "__allowed_values", str_field);
+    snprintf (str_field, length_field,
+              "%s%s",
+              weechat_color (weechat_config_string (fset_config_color_allowed_values[selected_line])),
+              (fset_option->allowed_values) ? fset_option->allowed_values : "");
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "_allowed_values", str_field);
+    fset_buffer_fills_field (str_field, str_field2, length_field,
+                             fset_option_max_length->allowed_values, 1, 1);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "allowed_values", str_field);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "empty_allowed_values", str_field2);
 
     /* marked */
     snprintf (str_field, length_field,

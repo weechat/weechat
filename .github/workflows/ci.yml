@@ -92,7 +92,9 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v2
+    - name: Setup Homebrew
+      id: setup-homebrew
+      uses: Homebrew/actions/setup-homebrew@master
 
     - name: Install dependencies
       run: |
@@ -111,6 +113,8 @@ jobs:
           /usr/local/bin/python3.11-config \
         ;
         brew install asciidoctor guile lua pkg-config ruby
+
+    - uses: actions/checkout@v2
 
     - name: Build
       env:

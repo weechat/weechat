@@ -10,6 +10,57 @@ This document lists all the changes for each version. +
 For a list of important changes that require manual actions, please look at release notes.
 
 
+[[v4.1.0]]
+== Version 4.1.0 (under dev)
+
+New features::
+
+  * core: add option type "enum" (issue #1973)
+  * core: add variables "_chat_focused_line_bol" and "_chat_focused_line_eol" in focus data (issue #1955)
+  * api: add info "buffer" (issue #1962)
+  * buflist: increase max number of buflist items from 3 to 5 (issue #1703)
+  * fset: add variable `allowed_values` in options, add options fset.color.allowed_values and fset.color.allowed_values_selected
+  * fset: allow long type name in type filter
+  * irc: display commands 716/717 in private buffer (if present) (issue #146)
+  * irc: remove Git revision and compilation date from CTCP VERSION/FINGER reply (issue #1974)
+  * trigger: add options `-o`, `-ol`, `-i` and `-il` in command `/trigger list` (issue #1953)
+
+Bug fixes::
+
+  * core: fix renaming of options with command `/item rename` (issue #1978)
+  * core: don't send "key_pressed" signal again for the same key press (issue #1976)
+  * core: don't send "key_combo_*" signals for incomplete keys (issue #1976)
+  * core: add key ctrl-backspace in /help key (issue #1975)
+  * core: keep keys ctrl-H and ctrl-? (in lower case) if they were manually bound to custom commands in a previous version
+  * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
+  * core: display focus hashtable for debug even if no key is matching
+  * fset: remove extra spaces between min and max values when second format is used
+  * fset: fix mouse actions when second format is used
+  * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
+  * irc: add missing "account-tag" in list of supported capabilities
+  * script: fix cursor position after `/script list -i` or `/script list -il`
+  * script: fix buffer used by command `/script list -i|-il|-o|-ol`
+
+Tests::
+
+  * core: fix hdata tests failure on Alpine 3.18
+  * relay: fix crash in tests on Alpine 3.18
+
+Build::
+
+  * php: fix detection of PHP 8.2 on Alpine 3.18
+
+[[v4.0.1]]
+== Version 4.0.1 (2023-06-30)
+
+  * core: force key "return" to command "/input return" when migrating legacy keys
+  * core: display actual key name and command with key kbd:[Alt+k], remove key kbd:[Alt+K] (grab raw key) and associated commands `/input grab_raw_key` and `/input grab_raw_key_command`
+  * core: check for newline characters in string_is_whitespace_char (issue #1968)
+  * api: do not convert option name to lower case in API functions config_set_plugin and config_set_desc_plugin
+  * guile: fix crash on quit with Guile < 3 (issue #1965)
+  * irc: reply to a CTCP request sent to self nick (issue #1966)
+  * irc: sent "QUIT" message to servers connected with TLS on `/upgrade`
+
 [[v4.0.0]]
 == Version 4.0.0 (2023-06-24)
 
@@ -33,6 +84,7 @@ New features::
   * core: add access to hashtable properties in evaluation of expressions (issue #1888)
   * core: display similar command names when a command is unknown (issue #1877)
   * core: rename option weechat.color.status_name_ssl to weechat.color.status_name_tls
+  * core: add option weechat.color.status_name_insecure to display buffer name with a specific color when not connected with TLS to the server
   * core, plugins: make many identifiers case sensitive (issue #1872, issue #398, bug #32213)
   * core: add item "mouse_status" in default status bar, change default color to lightgreen
   * core, trigger: add options weechat.color.chat_status_disabled and weechat.color.chat_status_enabled, remove options trigger.color.trigger and trigger.color.trigger_disabled, add enabled/disabled status color in output of `/filter list` (issue #1820)

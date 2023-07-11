@@ -546,7 +546,7 @@ irc_server_sasl_enabled (struct t_irc_server *server)
     irc_server_sasl_get_creds (server,
                                &sasl_username, &sasl_password, &sasl_key);
 
-    sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
+    sasl_mechanism = IRC_SERVER_OPTION_ENUM(
         server, IRC_SERVER_OPTION_SASL_MECHANISM);
 
     /*
@@ -1768,6 +1768,11 @@ irc_server_alloc (const char *name)
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_TIME,
         NULL, NULL);
+    new_server->echo_msg_recv = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_TIME,
+        NULL, NULL);
     new_server->batches = NULL;
     new_server->last_batch = NULL;
     new_server->buffer = NULL;
@@ -2254,6 +2259,7 @@ irc_server_free_data (struct t_irc_server *server)
     weechat_hashtable_free (server->join_manual);
     weechat_hashtable_free (server->join_channel_key);
     weechat_hashtable_free (server->join_noswitch);
+    weechat_hashtable_free (server->echo_msg_recv);
 
     /* free server data */
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
@@ -2921,8 +2927,8 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                            NULL,  /* pos_arguments */
                            &pos_channel,
                            &pos_text);
-        switch (IRC_SERVER_OPTION_INTEGER(server,
-                                          IRC_SERVER_OPTION_CHARSET_MESSAGE))
+        switch (IRC_SERVER_OPTION_ENUM(server,
+                                       IRC_SERVER_OPTION_CHARSET_MESSAGE))
         {
             case IRC_SERVER_CHARSET_MESSAGE_MESSAGE:
                 pos_encode = 0;
@@ -3511,8 +3517,8 @@ irc_server_msgq_flush ()
 
                             msg_decoded = NULL;
 
-                            switch (IRC_SERVER_OPTION_INTEGER(irc_recv_msgq->server,
-                                                              IRC_SERVER_OPTION_CHARSET_MESSAGE))
+                            switch (IRC_SERVER_OPTION_ENUM(irc_recv_msgq->server,
+                                                           IRC_SERVER_OPTION_CHARSET_MESSAGE))
                             {
                                 case IRC_SERVER_CHARSET_MESSAGE_MESSAGE:
                                     pos_decode = 0;
@@ -3841,8 +3847,7 @@ irc_server_timer_sasl_cb (const void *pointer, void *data, int remaining_calls)
         weechat_printf (server->buffer,
                         _("%s%s: SASL authentication timeout"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME);
-        sasl_fail = IRC_SERVER_OPTION_INTEGER(server,
-                                              IRC_SERVER_OPTION_SASL_FAIL);
+        sasl_fail = IRC_SERVER_OPTION_ENUM(server, IRC_SERVER_OPTION_SASL_FAIL);
         if ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
             || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT))
         {
@@ -3912,6 +3917,23 @@ irc_server_check_join_smart_filtered_cb (void *data,
     {
         weechat_hashtable_remove (hashtable, key);
     }
+}
+
+/*
+ * Callback called for each message received with echo-message: deletes old
+ * messages in the hashtable.
+ */
+
+void
+irc_server_check_echo_msg_recv_cb (void *data,
+                                   struct t_hashtable *hashtable,
+                                   const void *key, const void *value)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    if (*((time_t *)value) + (60 * 5) < time (NULL))
+        weechat_hashtable_remove (hashtable, key);
 }
 
 /*
@@ -4094,6 +4116,9 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                                                NULL);
                     }
                 }
+                weechat_hashtable_map (ptr_server->echo_msg_recv,
+                                       &irc_server_check_echo_msg_recv_cb,
+                                       NULL);
                 ptr_batch = ptr_server->batches;
                 while (ptr_batch)
                 {
@@ -4195,6 +4220,9 @@ irc_server_close_connection (struct t_irc_server *server)
 
     /* remove all keys for joins without switch */
     weechat_hashtable_remove_all (server->join_noswitch);
+
+    /* remove all messages stored (with capability echo-message) */
+    weechat_hashtable_remove_all (server->echo_msg_recv);
 
     /* remove all batched events pending */
     irc_batch_free_all (server);
@@ -4671,7 +4699,7 @@ irc_server_create_buffer (struct t_irc_server *server)
     struct t_hashtable *buffer_props;
 
     ptr_buffer_for_merge = NULL;
-    switch (weechat_config_integer (irc_config_look_server_buffer))
+    switch (weechat_config_enum (irc_config_look_server_buffer))
     {
         case IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITH_CORE:
             /* merge with WeeChat core buffer */
@@ -6476,6 +6504,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, join_manual, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, join_channel_key, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, join_noswitch, HASHTABLE, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, echo_msg_recv, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, batches, POINTER, 0, NULL, "irc_batch");
         WEECHAT_HDATA_VAR(struct t_irc_server, last_batch, POINTER, 0, NULL, "irc_batch");
         WEECHAT_HDATA_VAR(struct t_irc_server, buffer, POINTER, 0, NULL, "buffer");
@@ -6568,7 +6597,7 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_CAPABILITIES)))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "sasl_mechanism",
-                                          IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_MECHANISM)))
+                                          IRC_SERVER_OPTION_ENUM(server, IRC_SERVER_OPTION_SASL_MECHANISM)))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "sasl_username",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME)))
@@ -6580,7 +6609,7 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY)))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "sasl_fail",
-                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL)))
+                                           IRC_SERVER_OPTION_ENUM(server, IRC_SERVER_OPTION_SASL_FAIL)))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "autoconnect",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOCONNECT)))
@@ -6954,10 +6983,10 @@ irc_server_print_log ()
         /* sasl_mechanism */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_MECHANISM]))
             weechat_log_printf ("  sasl_mechanism. . . . . . : null ('%s')",
-                                irc_sasl_mechanism_string[IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_SASL_MECHANISM)]);
+                                irc_sasl_mechanism_string[IRC_SERVER_OPTION_ENUM(ptr_server, IRC_SERVER_OPTION_SASL_MECHANISM)]);
         else
             weechat_log_printf ("  sasl_mechanism. . . . . . : '%s'",
-                                irc_sasl_mechanism_string[weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_SASL_MECHANISM])]);
+                                irc_sasl_mechanism_string[weechat_config_enum (ptr_server->options[IRC_SERVER_OPTION_SASL_MECHANISM])]);
         /* sasl_username */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_USERNAME]))
             weechat_log_printf ("  sasl_username . . . . . . : null ('%s')",
@@ -6980,10 +7009,10 @@ irc_server_print_log ()
         /* sasl_fail */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_FAIL]))
             weechat_log_printf ("  sasl_fail . . . . . . . . : null ('%s')",
-                                irc_server_sasl_fail_string[IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_SASL_FAIL)]);
+                                irc_server_sasl_fail_string[IRC_SERVER_OPTION_ENUM(ptr_server, IRC_SERVER_OPTION_SASL_FAIL)]);
         else
             weechat_log_printf ("  sasl_fail . . . . . . . . : '%s'",
-                                irc_server_sasl_fail_string[weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_SASL_FAIL])]);
+                                irc_server_sasl_fail_string[weechat_config_enum (ptr_server->options[IRC_SERVER_OPTION_SASL_FAIL])]);
         /* autoconnect */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOCONNECT]))
             weechat_log_printf ("  autoconnect . . . . . . . : null (%s)",
@@ -7265,6 +7294,9 @@ irc_server_print_log ()
         weechat_log_printf ("  join_noswitch . . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->join_noswitch,
                             weechat_hashtable_get_string (ptr_server->join_noswitch, "keys_values"));
+        weechat_log_printf ("  echo_msg_recv . . . . . . : 0x%lx (hashtable: '%s')",
+                            ptr_server->echo_msg_recv,
+                            weechat_hashtable_get_string (ptr_server->echo_msg_recv, "keys_values"));
         weechat_log_printf ("  batches . . . . . . . . . : 0x%lx", ptr_server->batches);
         weechat_log_printf ("  last_batch. . . . . . . . : 0x%lx", ptr_server->last_batch);
         weechat_log_printf ("  buffer. . . . . . . . . . : 0x%lx", ptr_server->buffer);

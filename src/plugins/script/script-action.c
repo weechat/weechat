@@ -100,15 +100,19 @@ script_action_run_list ()
  */
 
 void
-script_action_run_list_input (int send_to_buffer, int translated)
+script_action_run_list_input (struct t_gui_buffer *buffer,
+                              int send_to_buffer, int translated)
 {
     int i, length;
-    char hdata_name[128], **buf, str_pos[16];
+    char hdata_name[128], **output, str_pos[16];
     struct t_hdata *hdata;
     void *ptr_script;
 
-    buf = weechat_string_dyn_alloc (256);
-    if (!buf)
+    if (!buffer)
+        return;
+
+    output = weechat_string_dyn_alloc (256);
+    if (!output)
         return;
 
     for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
@@ -119,27 +123,27 @@ script_action_run_list_input (int send_to_buffer, int translated)
         ptr_script = weechat_hdata_get_list (hdata, "scripts");
         while (ptr_script)
         {
-            if (*buf[0])
+            if (*output[0])
             {
-                weechat_string_dyn_concat (buf, ", ", -1);
+                weechat_string_dyn_concat (output, ", ", -1);
             }
             else
             {
                 weechat_string_dyn_concat (
-                    buf,
+                    output,
                     (translated) ? _("Scripts loaded:") : "Scripts loaded:",
                     -1);
-                weechat_string_dyn_concat (buf, " ", -1);
+                weechat_string_dyn_concat (output, " ", -1);
             }
-            weechat_string_dyn_concat (buf,
+            weechat_string_dyn_concat (output,
                                        weechat_hdata_string (hdata,
                                                              ptr_script,
                                                              "name"),
                                        -1);
-            weechat_string_dyn_concat (buf, ".", -1);
-            weechat_string_dyn_concat (buf, script_extension[i], -1);
-            weechat_string_dyn_concat (buf, " ", -1);
-            weechat_string_dyn_concat (buf,
+            weechat_string_dyn_concat (output, ".", -1);
+            weechat_string_dyn_concat (output, script_extension[i], -1);
+            weechat_string_dyn_concat (output, " ", -1);
+            weechat_string_dyn_concat (output,
                                        weechat_hdata_string (hdata,
                                                              ptr_script,
                                                              "version"),
@@ -148,27 +152,27 @@ script_action_run_list_input (int send_to_buffer, int translated)
         }
     }
 
-    if (!*buf[0])
+    if (!*output[0])
     {
         weechat_string_dyn_concat (
-            buf,
+            output,
             (translated) ? _("No scripts loaded") : "No scripts loaded",
             -1);
     }
 
     if (send_to_buffer)
     {
-        weechat_command (weechat_current_buffer (), *buf);
+        weechat_command (buffer, *output);
     }
     else
     {
-        weechat_buffer_set (weechat_current_buffer (), "input", *buf);
-        length = strlen (*buf);
+        weechat_buffer_set (buffer, "input", *output);
+        length = weechat_utf8_strlen (*output);
         snprintf (str_pos, sizeof (str_pos), "%d", length);
-        weechat_buffer_set (weechat_current_buffer (), "input_pos", str_pos);
+        weechat_buffer_set (buffer, "input_pos", str_pos);
     }
 
-    weechat_string_dyn_free (buf, 1);
+    weechat_string_dyn_free (output, 1);
 }
 
 /*
@@ -1200,7 +1204,7 @@ script_action_run_showdiff ()
  */
 
 void
-script_action_add (const char *action)
+script_action_add (struct t_gui_buffer *buffer, const char *action)
 {
     if (!action)
         return;
@@ -1215,6 +1219,9 @@ script_action_add (const char *action)
     if (*script_actions[0])
         weechat_string_dyn_concat (script_actions, "\n", -1);
 
+    weechat_string_dyn_concat (
+        script_actions, weechat_buffer_get_string (buffer, "full_name"), -1);
+    weechat_string_dyn_concat (script_actions, "\r", -1);
     weechat_string_dyn_concat (script_actions, action, -1);
 }
 
@@ -1243,6 +1250,7 @@ script_action_run_all ()
     char **actions, **argv, **argv_eol, *ptr_action;
     int num_actions, argc, i, j, quiet, script_found;
     struct t_script_repo *ptr_script;
+    struct t_gui_buffer *ptr_buffer;
 
     if (!script_actions || !script_actions[0])
         return 0;
@@ -1259,7 +1267,14 @@ script_action_run_all ()
         for (i = 0; i < num_actions; i++)
         {
             quiet = 0;
-            ptr_action = actions[i];
+            ptr_action = strchr (actions[i], '\r');
+            if (!ptr_action)
+                continue;
+            ptr_action[0] = '\0';
+            ptr_action++;
+            ptr_buffer = weechat_buffer_search ("==", actions[i]);
+            if (!ptr_buffer)
+                ptr_buffer = weechat_current_buffer ();
             if (ptr_action[0] == '-')
             {
                 /*
@@ -1318,13 +1333,13 @@ script_action_run_all ()
                     if (argc > 1)
                     {
                         if (weechat_strcmp (argv[1], "-i") == 0)
-                            script_action_run_list_input (0, 0);
+                            script_action_run_list_input (ptr_buffer, 0, 0);
                         else if (weechat_strcmp (argv[1], "-il") == 0)
-                            script_action_run_list_input (0, 1);
+                            script_action_run_list_input (ptr_buffer, 0, 1);
                         else if (weechat_strcmp (argv[1], "-o") == 0)
-                            script_action_run_list_input (1, 0);
+                            script_action_run_list_input (ptr_buffer, 1, 0);
                         else if (weechat_strcmp (argv[1], "-ol") == 0)
-                            script_action_run_list_input (1, 1);
+                            script_action_run_list_input (ptr_buffer, 1, 1);
                         else
                             script_action_run_list ();
                     }
@@ -1527,7 +1542,8 @@ script_action_run_all ()
  */
 
 void
-script_action_schedule (const char *action,
+script_action_schedule (struct t_gui_buffer *buffer,
+                        const char *action,
                         int need_repository, int error_repository,
                         int quiet)
 {
@@ -1535,7 +1551,7 @@ script_action_schedule (const char *action,
     if (!weechat_mkdir_home ("${weechat_cache_dir}/" SCRIPT_PLUGIN_NAME, 0755))
         return;
 
-    script_action_add (action);
+    script_action_add (buffer, action);
 
     if (need_repository)
     {

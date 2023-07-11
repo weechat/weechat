@@ -1289,7 +1289,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     scm_install_gmp_memory_functions = 0;
 #endif /* defined(HAVE_GUILE_GMP_MEMORY_FUNCTIONS) && (SCM_MAJOR_VERSION < 3 || (SCM_MAJOR_VERSION == 3 && SCM_MINOR_VERSION == 0 && SCM_MICRO_VERSION < 8)) */
 
+#if defined(__MACH__) || SCM_MAJOR_VERSION < 3
+    /*
+     * on GNU/Hurd or if using Guile < 3, use scm_with_guile() instead of
+     * scm_init_guile() to prevent crash on exit
+     */
     scm_with_guile (&weechat_guile_init, NULL);
+#else
+    /* any other OS (not GNU/Hurd) or Guile >= 3.x */
+    scm_init_guile ();
+#endif
 
     guile_module_weechat = scm_c_define_module ("weechat",
                                                 &weechat_guile_api_module_init,

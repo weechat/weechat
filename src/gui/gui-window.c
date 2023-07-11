@@ -137,6 +137,8 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                               int *line_x,
                               char **word,
                               char **focused_line,
+                              char **focused_line_beginning,
+                              char **focused_line_end,
                               char **beginning,
                               char **end)
 {
@@ -150,6 +152,8 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
     *line_x = -1;
     *word = NULL;
     *focused_line = NULL;
+    *focused_line_beginning = NULL;
+    *focused_line_end = NULL;
     *beginning = NULL;
     *end = NULL;
 
@@ -284,6 +288,24 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                     if (str_temp)
                     {
                         *focused_line = gui_color_decode (str_temp, NULL);
+                        free (str_temp);
+                    }
+                }
+                if (line_start)
+                {
+                    str_temp = string_strndup (line_start, ptr_data - line_start);
+                    if (str_temp)
+                    {
+                        *focused_line_beginning = gui_color_decode (str_temp, NULL);
+                        free (str_temp);
+                    }
+                }
+                if (line_end)
+                {
+                    str_temp = string_strndup (ptr_data, line_end - ptr_data);
+                    if (str_temp)
+                    {
+                        *focused_line_end = gui_color_decode (str_temp, NULL);
                         free (str_temp);
                     }
                 }
@@ -714,7 +736,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
     /* create bar windows */
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        if (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) != GUI_BAR_TYPE_ROOT)
+        if (CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE]) != GUI_BAR_TYPE_ROOT)
             gui_bar_window_new (ptr_bar, new_window);
     }
 
@@ -1669,7 +1691,7 @@ gui_window_search_start (struct t_gui_window *window,
         window->buffer->text_search_regex = CONFIG_BOOLEAN(config_look_buffer_search_regex);
         if (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
         {
-            switch (CONFIG_INTEGER(config_look_buffer_search_where))
+            switch (CONFIG_ENUM(config_look_buffer_search_where))
             {
                 case CONFIG_LOOK_BUFFER_SEARCH_PREFIX:
                     window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_PREFIX;

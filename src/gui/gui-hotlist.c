@@ -238,7 +238,7 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist,
 {
     struct t_gui_hotlist *ptr_hotlist;
 
-    switch (CONFIG_INTEGER(config_look_hotlist_sort))
+    switch (CONFIG_ENUM(config_look_hotlist_sort))
     {
         case CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_ASC:
             for (ptr_hotlist = hotlist; ptr_hotlist;
@@ -691,7 +691,7 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer,
 
     hotlist_changed = 0;
 
-    hotlist_remove = CONFIG_INTEGER(config_look_hotlist_remove);
+    hotlist_remove = CONFIG_ENUM(config_look_hotlist_remove);
 
     ptr_hotlist = gui_hotlist;
     while (ptr_hotlist)

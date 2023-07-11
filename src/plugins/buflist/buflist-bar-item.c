@@ -30,14 +30,15 @@
 
 
 struct t_gui_bar_item *buflist_bar_item_buflist[BUFLIST_BAR_NUM_ITEMS] =
-{ NULL, NULL, NULL };
+{ NULL, NULL, NULL, NULL, NULL };
 struct t_hashtable *buflist_hashtable_pointers = NULL;
 struct t_hashtable *buflist_hashtable_extra_vars = NULL;
 struct t_hashtable *buflist_hashtable_options_conditions = NULL;
 struct t_arraylist *buflist_list_buffers[BUFLIST_BAR_NUM_ITEMS] =
-{ NULL, NULL, NULL };
+{ NULL, NULL, NULL, NULL, NULL };
 
-int old_line_number_current_buffer[BUFLIST_BAR_NUM_ITEMS] = { -1, -1, -1 };
+int old_line_number_current_buffer[BUFLIST_BAR_NUM_ITEMS] =
+{ -1, -1, -1, -1, -1 };
 
 
 /*

@@ -1008,7 +1008,7 @@ IRC_COMMAND_CALLBACK(auth)
     if (weechat_hashtable_has_key (ptr_server->cap_list, "sasl"))
     {
         /* SASL capability already enabled, authenticate */
-        sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
+        sasl_mechanism = IRC_SERVER_OPTION_ENUM(
             ptr_server, IRC_SERVER_OPTION_SASL_MECHANISM);
         if ((sasl_mechanism >= 0)
             && (sasl_mechanism < IRC_NUM_SASL_MECHANISMS))
@@ -1278,11 +1278,11 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
             server->away_time = time (NULL);
             irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                               "AWAY :%s", arguments);
-            if (weechat_config_integer (irc_config_look_display_away) != IRC_CONFIG_DISPLAY_AWAY_OFF)
+            if (weechat_config_enum (irc_config_look_display_away) != IRC_CONFIG_DISPLAY_AWAY_OFF)
             {
                 string = irc_color_decode (arguments,
                                            weechat_config_boolean (irc_config_network_colors_send));
-                if (weechat_config_integer (irc_config_look_display_away) == IRC_CONFIG_DISPLAY_AWAY_LOCAL)
+                if (weechat_config_enum (irc_config_look_display_away) == IRC_CONFIG_DISPLAY_AWAY_LOCAL)
                 {
                     irc_command_display_away (server, "away",
                                               (string) ? string : arguments);
@@ -1350,9 +1350,9 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
                 elapsed = (time_now >= server->away_time) ?
                     time_now - server->away_time : 0;
                 server->away_time = 0;
-                if (weechat_config_integer (irc_config_look_display_away) != IRC_CONFIG_DISPLAY_AWAY_OFF)
+                if (weechat_config_enum (irc_config_look_display_away) != IRC_CONFIG_DISPLAY_AWAY_OFF)
                 {
-                    if (weechat_config_integer (irc_config_look_display_away) == IRC_CONFIG_DISPLAY_AWAY_LOCAL)
+                    if (weechat_config_enum (irc_config_look_display_away) == IRC_CONFIG_DISPLAY_AWAY_LOCAL)
                     {
                         snprintf (buffer, sizeof (buffer),
                                   "gone %.2ld:%.2ld:%.2ld",
@@ -5124,11 +5124,11 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
         /* sasl_mechanism */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SASL_MECHANISM]))
             weechat_printf (NULL, "  sasl_mechanism . . . :   ('%s')",
-                            irc_sasl_mechanism_string[IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_MECHANISM)]);
+                            irc_sasl_mechanism_string[IRC_SERVER_OPTION_ENUM(server, IRC_SERVER_OPTION_SASL_MECHANISM)]);
         else
             weechat_printf (NULL, "  sasl_mechanism . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
-                            irc_sasl_mechanism_string[weechat_config_integer (server->options[IRC_SERVER_OPTION_SASL_MECHANISM])]);
+                            irc_sasl_mechanism_string[weechat_config_enum (server->options[IRC_SERVER_OPTION_SASL_MECHANISM])]);
         /* sasl_username */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SASL_USERNAME]))
             weechat_printf (NULL, "  sasl_username. . . . :   ('%s')",
@@ -5166,11 +5166,11 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
         /* sasl_fail */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SASL_FAIL]))
             weechat_printf (NULL, "  sasl_fail. . . . . . :   ('%s')",
-                            irc_server_sasl_fail_string[IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL)]);
+                            irc_server_sasl_fail_string[IRC_SERVER_OPTION_ENUM(server, IRC_SERVER_OPTION_SASL_FAIL)]);
         else
             weechat_printf (NULL, "  sasl_fail. . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
-                            irc_server_sasl_fail_string[weechat_config_integer (server->options[IRC_SERVER_OPTION_SASL_FAIL])]);
+                            irc_server_sasl_fail_string[weechat_config_enum (server->options[IRC_SERVER_OPTION_SASL_FAIL])]);
         /* autoconnect */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOCONNECT]))
             weechat_printf (NULL, "  autoconnect. . . . . :   (%s)",
@@ -6889,9 +6889,9 @@ irc_command_init ()
            "Without argument, \"ls\" and \"list\" are sent.\n"
            "\n"
            "Capabilities supported by WeeChat are: "
-           "account-notify, away-notify, batch, cap-notify, chghost, "
-           "draft/multiline, echo-message, extended-join, invite-notify, "
-           "message-tags, multi-prefix, server-time, setname, "
+           "account-notify, account-tag, away-notify, batch, cap-notify, "
+           "chghost, draft/multiline, echo-message, extended-join, "
+           "invite-notify, message-tags, multi-prefix, server-time, setname, "
            "userhost-in-names.\n"
            "\n"
            "The capabilities to automatically enable on servers can be set "

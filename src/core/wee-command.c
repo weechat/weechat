@@ -173,15 +173,15 @@ command_bar_list (int full)
                                  GUI_COLOR(GUI_COLOR_CHAT),
                                  (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])) ? _("(hidden)") : "",
                                  (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])) ? " " : "",
-                                 gui_bar_type_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE])],
+                                 gui_bar_type_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE])],
                                  (CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS])
                                   && CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS])[0]) ?
                                  CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS]) : "-",
-                                 gui_bar_position_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION])],
-                                 gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM])],
-                                 gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT])],
-                                 ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
-                                  || (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP)) ?
+                                 gui_bar_position_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION])],
+                                 gui_bar_filling_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM])],
+                                 gui_bar_filling_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT])],
+                                 ((CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
+                                  || (CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP)) ?
                                  _("height") : _("width"),
                                  (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]) == 0) ? _("auto") : str_size);
                 gui_chat_printf (NULL,
@@ -205,10 +205,10 @@ command_bar_list (int full)
                                  GUI_COLOR(GUI_COLOR_CHAT),
                                  (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])) ? _("(hidden)") : "",
                                  (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])) ? " " : "",
-                                 gui_bar_type_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE])],
-                                 gui_bar_position_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION])],
-                                 ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
-                                  || (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP)) ?
+                                 gui_bar_type_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE])],
+                                 gui_bar_position_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION])],
+                                 ((CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
+                                  || (CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP)) ?
                                  _("height") : _("width"),
                                  (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]) == 0) ? _("auto") : str_size);
             }
@@ -3128,99 +3128,35 @@ COMMAND_CALLBACK(help)
                 }
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
-                if (ptr_option->string_values)
+                gui_chat_printf (NULL, "  %s: %s",
+                                 _("type"), _("integer"));
+                gui_chat_printf (NULL, "  %s: %d .. %d",
+                                 _("values"),
+                                 ptr_option->min, ptr_option->max);
+                if (ptr_option->default_value)
                 {
-                    length = 0;
-                    i = 0;
-                    while (ptr_option->string_values[i])
-                    {
-                        length += strlen (ptr_option->string_values[i]) + 5;
-                        i++;
-                    }
-                    if (length > 0)
-                    {
-                        string = malloc (length);
-                        if (string)
-                        {
-                            string[0] = '\0';
-                            i = 0;
-                            while (ptr_option->string_values[i])
-                            {
-                                strcat (string, "\"");
-                                strcat (string, ptr_option->string_values[i]);
-                                strcat (string, "\"");
-                                if (ptr_option->string_values[i + 1])
-                                    strcat (string, ", ");
-                                i++;
-                            }
-                            gui_chat_printf (NULL, "  %s: %s",
-                                             _("type"), _("string"));
-                            gui_chat_printf (NULL, "  %s: %s",
-                                             _("values"), string);
-                            if (ptr_option->default_value)
-                            {
-                                gui_chat_printf (NULL, "  %s: \"%s\"",
-                                                 _("default value"),
-                                                 ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]);
-                            }
-                            else
-                            {
-                                gui_chat_printf (NULL, "  %s: %s",
-                                                 _("default value"),
-                                                 _("(undefined)"));
-                            }
-                            if (ptr_option->value)
-                            {
-                                gui_chat_printf (NULL,
-                                                 "  %s: \"%s%s%s\"",
-                                                 _("current value"),
-                                                 GUI_COLOR(GUI_COLOR_CHAT_VALUE),
-                                                 ptr_option->string_values[CONFIG_INTEGER(ptr_option)],
-                                                 GUI_COLOR(GUI_COLOR_CHAT));
-                            }
-                            else
-                            {
-                                gui_chat_printf (NULL,
-                                                 "  %s: %s",
-                                                 _("current value"),
-                                                 _("(undefined)"));
-                            }
-                            free (string);
-                        }
-                    }
+                    gui_chat_printf (NULL, "  %s: %d",
+                                     _("default value"),
+                                     CONFIG_INTEGER_DEFAULT(ptr_option));
                 }
                 else
                 {
                     gui_chat_printf (NULL, "  %s: %s",
-                                     _("type"), _("integer"));
-                    gui_chat_printf (NULL, "  %s: %d .. %d",
-                                     _("values"),
-                                     ptr_option->min, ptr_option->max);
-                    if (ptr_option->default_value)
-                    {
-                        gui_chat_printf (NULL, "  %s: %d",
-                                         _("default value"),
-                                         CONFIG_INTEGER_DEFAULT(ptr_option));
-                    }
-                    else
-                    {
-                        gui_chat_printf (NULL, "  %s: %s",
-                                         _("default value"),
-                                         _("(undefined)"));
-                    }
-                    if (ptr_option->value)
-                    {
-                        gui_chat_printf (NULL, "  %s: %s%d",
-                                         _("current value"),
-                                         GUI_COLOR(GUI_COLOR_CHAT_VALUE),
-                                         CONFIG_INTEGER(ptr_option));
-                    }
-                    else
-                    {
-                        gui_chat_printf (NULL, "  %s: %s",
-                                         _("current value"),
-                                         _("(undefined)"));
-                    }
+                                     _("default value"),
+                                     _("(undefined)"));
+                }
+                if (ptr_option->value)
+                {
+                    gui_chat_printf (NULL, "  %s: %s%d",
+                                     _("current value"),
+                                     GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                                     CONFIG_INTEGER(ptr_option));
+                }
+                else
+                {
+                    gui_chat_printf (NULL, "  %s: %s",
+                                     _("current value"),
+                                     _("(undefined)"));
                 }
                 break;
             case CONFIG_OPTION_TYPE_STRING:
@@ -3304,6 +3240,66 @@ COMMAND_CALLBACK(help)
                     gui_chat_printf (NULL, "  %s: %s",
                                      _("current value"),
                                      _("(undefined)"));
+                }
+                break;
+            case CONFIG_OPTION_TYPE_ENUM:
+                length = 0;
+                i = 0;
+                while (ptr_option->string_values[i])
+                {
+                    length += strlen (ptr_option->string_values[i]) + 5;
+                    i++;
+                }
+                if (length > 0)
+                {
+                    string = malloc (length);
+                    if (string)
+                    {
+                        string[0] = '\0';
+                        i = 0;
+                        while (ptr_option->string_values[i])
+                        {
+                            strcat (string, "\"");
+                            strcat (string, ptr_option->string_values[i]);
+                            strcat (string, "\"");
+                            if (ptr_option->string_values[i + 1])
+                                strcat (string, ", ");
+                            i++;
+                        }
+                        gui_chat_printf (NULL, "  %s: %s",
+                                         _("type"), _("enum"));
+                        gui_chat_printf (NULL, "  %s: %s",
+                                         _("values"), string);
+                        if (ptr_option->default_value)
+                        {
+                            gui_chat_printf (NULL, "  %s: \"%s\"",
+                                             _("default value"),
+                                             ptr_option->string_values[CONFIG_ENUM_DEFAULT(ptr_option)]);
+                        }
+                        else
+                        {
+                            gui_chat_printf (NULL, "  %s: %s",
+                                             _("default value"),
+                                             _("(undefined)"));
+                        }
+                        if (ptr_option->value)
+                        {
+                            gui_chat_printf (NULL,
+                                             "  %s: \"%s%s%s\"",
+                                             _("current value"),
+                                             GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                                             ptr_option->string_values[CONFIG_ENUM(ptr_option)],
+                                             GUI_COLOR(GUI_COLOR_CHAT));
+                        }
+                        else
+                        {
+                            gui_chat_printf (NULL,
+                                             "  %s: %s",
+                                             _("current value"),
+                                             _("(undefined)"));
+                        }
+                        free (string);
+                    }
                 }
                 break;
             case CONFIG_NUM_OPTION_TYPES:
@@ -3534,28 +3530,12 @@ COMMAND_CALLBACK(input)
     else if (string_strcmp (argv[1], "grab_key") == 0)
     {
         gui_input_grab_key (buffer,
-                            0, /* raw_key */
-                            0, /* command */
-                            (argc > 2) ? argv[2] : NULL);
-    }
-    else if (string_strcmp (argv[1], "grab_raw_key") == 0)
-    {
-        gui_input_grab_key (buffer,
-                            1, /* raw_key */
                             0, /* command */
                             (argc > 2) ? argv[2] : NULL);
     }
     else if (string_strcmp (argv[1], "grab_key_command") == 0)
     {
         gui_input_grab_key (buffer,
-                            0, /* raw_key */
-                            1, /* command */
-                            (argc > 2) ? argv[2] : NULL);
-    }
-    else if (string_strcmp (argv[1], "grab_raw_key_command") == 0)
-    {
-        gui_input_grab_key (buffer,
-                            1, /* raw_key */
                             1, /* command */
                             (argc > 2) ? argv[2] : NULL);
     }
@@ -4957,7 +4937,7 @@ command_plugin_list_input (struct t_gui_buffer *buffer,
     else
     {
         gui_buffer_set (buffer, "input", *buf);
-        length = strlen (*buf);
+        length = utf8_strlen (*buf);
         snprintf (str_pos, sizeof (str_pos), "%d", length);
         gui_buffer_set (buffer, "input_pos", str_pos);
     }
@@ -5393,7 +5373,7 @@ command_proxy_list ()
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                              ptr_proxy->name,
                              GUI_COLOR(GUI_COLOR_CHAT),
-                             proxy_type_string[CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_TYPE])],
+                             proxy_type_string[CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_TYPE])],
                              CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]),
                              CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]),
                              (CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_IPV6])) ? "IPv6" : "IPv4",
@@ -8433,7 +8413,7 @@ command_init ()
         "move_next_word || move_previous_line || move_next_line || "
         "history_previous || history_next || history_global_previous || "
         "history_global_next || "
-        "grab_key || grab_raw_key || grab_raw_key_command || grab_key_command || "
+        "grab_key || grab_key_command || "
         "grab_mouse || grab_mouse_area || "
         "insert || send",
         &command_input, NULL, NULL);
@@ -8537,6 +8517,11 @@ command_init ()
            "When binding a command to a key, it is recommended to use key alt+k "
            "(or Esc then k), and then press the key to bind: this will insert "
            "key name in command line.\n"
+           "\n"
+           "For some keys you might need to use /debug key, this displays "
+           "the raw key code that can be used (for example the key "
+           "ctrl+backspace could be \"ctrl-h\" or \"ctrl-?\", depending on your "
+           "terminal and other settings).\n"
            "\n"
            "Modifiers allowed (in this order when multiple are used):\n"
            "  meta-  (alt key)\n"

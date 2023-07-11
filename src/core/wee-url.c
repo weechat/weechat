@@ -1249,7 +1249,7 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
         return;
 
     /* set proxy type */
-    switch (CONFIG_INTEGER(proxy->options[PROXY_OPTION_TYPE]))
+    switch (CONFIG_ENUM(proxy->options[PROXY_OPTION_TYPE]))
     {
         case PROXY_TYPE_HTTP:
             curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);

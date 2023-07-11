@@ -139,6 +139,8 @@ extern void gui_window_get_context_at_xy (struct t_gui_window *window,
                                           int *line_x,
                                           char **word,
                                           char **focused_line,
+                                          char **focused_line_beginning,
+                                          char **focused_line_end,
                                           char **beginning,
                                           char **end);
 extern void gui_window_ask_refresh (int refresh);

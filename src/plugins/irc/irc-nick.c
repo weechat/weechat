@@ -913,7 +913,7 @@ irc_nick_mode_for_display (struct t_irc_server *server, struct t_irc_nick *nick,
     str_prefix[0] = (nick) ? nick->prefix[0] : '\0';
     str_prefix[1] = '\0';
 
-    nick_mode = weechat_config_integer (irc_config_look_nick_mode);
+    nick_mode = weechat_config_enum (irc_config_look_nick_mode);
     if ((nick_mode == IRC_CONFIG_LOOK_NICK_MODE_BOTH)
         || (prefix && (nick_mode == IRC_CONFIG_LOOK_NICK_MODE_PREFIX))
         || (!prefix && (nick_mode == IRC_CONFIG_LOOK_NICK_MODE_ACTION)))

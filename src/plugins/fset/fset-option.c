@@ -48,11 +48,11 @@ struct t_hook *fset_option_timer_hook = NULL;
 
 /* types */
 char *fset_option_type_string[FSET_OPTION_NUM_TYPES] =
-{ N_("boolean"), N_("integer"), N_("string"), N_("color") };
+{ N_("boolean"), N_("integer"), N_("string"), N_("color"), N_("enum") };
 char *fset_option_type_string_short[FSET_OPTION_NUM_TYPES] =
-{ "bool", "int", "str", "col" };
+{ "bool", "int", "str", "col", "enum" };
 char *fset_option_type_string_tiny[FSET_OPTION_NUM_TYPES] =
-{ "b", "i", "s", "c" };
+{ "b", "i", "s", "c", "e" };
 
 
 /*
@@ -170,6 +170,18 @@ fset_option_set_value_string (struct t_config_option *option,
                 *value_string = strdup (*((int *)value) ? "on" : "off");
                 break;
             case FSET_OPTION_TYPE_INTEGER:
+                snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
+                *value_string = strdup (str_value);
+                break;
+            case FSET_OPTION_TYPE_STRING:
+                *value_string = strdup (
+                    (default_value) ? weechat_config_string_default (option) : weechat_config_string (option));
+                break;
+            case FSET_OPTION_TYPE_COLOR:
+                *value_string = strdup (
+                    (default_value) ? weechat_config_color_default (option) : weechat_config_color (option));
+                break;
+            case FSET_OPTION_TYPE_ENUM:
                 ptr_string_values = weechat_config_option_get_pointer (
                     option, "string_values");
                 if (ptr_string_values)
@@ -179,17 +191,8 @@ fset_option_set_value_string (struct t_config_option *option,
                 }
                 else
                 {
-                    snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
-                    *value_string = strdup (str_value);
+                    *value_string = strdup ("");
                 }
-                break;
-            case FSET_OPTION_TYPE_STRING:
-                *value_string = strdup (
-                    (default_value) ? weechat_config_string_default (option) : weechat_config_string (option));
-                break;
-            case FSET_OPTION_TYPE_COLOR:
-                *value_string = strdup (
-                    (default_value) ? weechat_config_color_default (option) : weechat_config_color (option));
                 break;
             case FSET_OPTION_NUM_TYPES:
                 break;
@@ -287,6 +290,8 @@ fset_option_add_option_in_hashtable (struct t_hashtable *hashtable,
     weechat_hashtable_set (hashtable,
                            "string_values", fset_option->string_values);
     weechat_hashtable_set (hashtable,
+                           "allowed_values", fset_option->allowed_values);
+    weechat_hashtable_set (hashtable,
                            "default_value_undef",
                            (fset_option->default_value == NULL) ? "1" : "0");
     weechat_hashtable_set (hashtable,
@@ -341,9 +346,14 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
     else if (strncmp (filter, "t:", 2) == 0)
     {
         /* filter by type */
-        return (weechat_strcasecmp (
-                    fset_option_type_string_short[fset_option->type],
-                    filter + 2) == 0) ? 1 : 0;
+        return (
+            (weechat_strcasecmp (
+                fset_option_type_string_short[fset_option->type],
+                filter + 2) == 0)
+            || (weechat_strcasecmp (
+                    fset_option_type_string[fset_option->type],
+                    filter + 2) == 0)) ?
+            1 : 0;
     }
     else if (strncmp (filter, "d==", 3) == 0)
     {
@@ -427,7 +437,7 @@ fset_option_set_values (struct t_fset_option *fset_option,
     void *ptr_default_value, *ptr_value;
     struct t_config_option *ptr_parent_option;
     int length, *ptr_type, *ptr_min, *ptr_max;
-    char str_value[64];
+    char str_value[64], str_allowed_values[4096];
 
     /* file */
     if (fset_option->file)
@@ -580,6 +590,40 @@ fset_option_set_values (struct t_fset_option *fset_option,
     {
         fset_option->string_values = strdup ("");
     }
+
+    /* allowed_values */
+    if (fset_option->allowed_values)
+    {
+        free (fset_option->allowed_values);
+        fset_option->allowed_values = NULL;
+    }
+    str_allowed_values[0] = '\0';
+    switch (fset_option->type)
+    {
+        case FSET_OPTION_TYPE_BOOLEAN:
+            snprintf (str_allowed_values, sizeof (str_allowed_values),
+                      "on,off");
+            break;
+        case FSET_OPTION_TYPE_INTEGER:
+            snprintf (str_allowed_values, sizeof (str_allowed_values),
+                      "%d..%d", *ptr_min, *ptr_max);
+            break;
+        case FSET_OPTION_TYPE_STRING:
+            snprintf (str_allowed_values, sizeof (str_allowed_values),
+                      "%s", _("any string"));
+            break;
+        case FSET_OPTION_TYPE_COLOR:
+            snprintf (str_allowed_values, sizeof (str_allowed_values),
+                      "%s", _("any color"));
+            break;
+        case FSET_OPTION_TYPE_ENUM:
+            snprintf (str_allowed_values, sizeof (str_allowed_values),
+                      "%s", fset_option->string_values);
+            break;
+        case FSET_OPTION_NUM_TYPES:
+            break;
+    }
+    fset_option->allowed_values = strdup (str_allowed_values);
 }
 
 /*
@@ -726,6 +770,11 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     if (length > fset_option_max_length->string_values)
         fset_option_max_length->string_values = length;
 
+    /* allowed_values */
+    length = weechat_utf8_strlen_screen (fset_option->allowed_values);
+    if (length > fset_option_max_length->allowed_values)
+        fset_option_max_length->allowed_values = length;
+
     /* marked */
     length = weechat_utf8_strlen_screen (weechat_config_string (fset_config_look_marked_string));
     if (length > fset_option_max_length->marked)
@@ -798,6 +847,7 @@ fset_option_alloc (struct t_config_option *option)
     new_fset_option->max = NULL;
     new_fset_option->description = NULL;
     new_fset_option->string_values = NULL;
+    new_fset_option->allowed_values = NULL;
     new_fset_option->marked = 0;
 
     fset_option_set_values (new_fset_option, option);
@@ -919,6 +969,8 @@ fset_option_free (struct t_fset_option *fset_option)
         free (fset_option->description);
     if (fset_option->string_values)
         free (fset_option->string_values);
+    if (fset_option->allowed_values)
+        free (fset_option->allowed_values);
 
     free (fset_option);
 }
@@ -1114,7 +1166,7 @@ fset_option_toggle_value (struct t_fset_option *fset_option,
 }
 
 /*
- * Adds a value to an integer/color option.
+ * Adds a value to an integer/enum/color option.
  */
 
 void
@@ -1126,7 +1178,8 @@ fset_option_add_value (struct t_fset_option *fset_option,
 
     if (!fset_option || !option
         || ((fset_option->type != FSET_OPTION_TYPE_INTEGER)
-            && (fset_option->type != FSET_OPTION_TYPE_COLOR)))
+            && (fset_option->type != FSET_OPTION_TYPE_COLOR)
+            && (fset_option->type != FSET_OPTION_TYPE_ENUM)))
         return;
 
     snprintf (str_value, sizeof (str_value),
@@ -1711,6 +1764,8 @@ fset_option_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "string_values", fset_option->description))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "allowed_values", fset_option->allowed_values))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "marked", fset_option->marked))
         return 0;
 
@@ -1751,6 +1806,7 @@ fset_option_print_log ()
         weechat_log_printf ("  max . . . . . . . . . : '%s'",  ptr_fset_option->max);
         weechat_log_printf ("  description . . . . . : '%s'",  ptr_fset_option->description);
         weechat_log_printf ("  string_values . . . . : '%s'",  ptr_fset_option->string_values);
+        weechat_log_printf ("  allowed_values. . . . : '%s'",  ptr_fset_option->allowed_values);
         weechat_log_printf ("  marked. . . . . . . . : %d",    ptr_fset_option->marked);
     }
 }

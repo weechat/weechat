@@ -39,6 +39,9 @@
 #define CONFIG_COLOR(option) (*((int *)((option)->value)))
 #define CONFIG_COLOR_DEFAULT(option) (*((int *)((option)->default_value)))
 
+#define CONFIG_ENUM(option) (*((int *)((option)->value)))
+#define CONFIG_ENUM_DEFAULT(option) (*((int *)((option)->default_value)))
+
 #define CONFIG_BOOLEAN_FALSE  0
 #define CONFIG_BOOLEAN_TRUE   1
 
@@ -136,6 +139,7 @@ enum t_config_option_type
     CONFIG_OPTION_TYPE_INTEGER,
     CONFIG_OPTION_TYPE_STRING,
     CONFIG_OPTION_TYPE_COLOR,
+    CONFIG_OPTION_TYPE_ENUM,
     /* number of option types */
     CONFIG_NUM_OPTION_TYPES,
 };
@@ -317,6 +321,8 @@ extern const char *config_file_option_string (struct t_config_option *option);
 extern const char *config_file_option_string_default (struct t_config_option *option);
 extern const char *config_file_option_color (struct t_config_option *option);
 extern const char *config_file_option_color_default (struct t_config_option *option);
+extern int config_file_option_enum (struct t_config_option *option);
+extern int config_file_option_enum_default (struct t_config_option *option);
 extern int config_file_write_option (struct t_config_file *config_file,
                                      struct t_config_option *option);
 extern int config_file_write_line (struct t_config_file *config_file,

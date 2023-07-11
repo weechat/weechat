@@ -770,7 +770,7 @@ gui_layout_store_on_exit ()
 {
     struct t_gui_layout *ptr_layout;
 
-    if (CONFIG_BOOLEAN(config_look_save_layout_on_exit) == CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_NONE)
+    if (CONFIG_ENUM(config_look_save_layout_on_exit) == CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_NONE)
         return;
 
     ptr_layout = gui_layout_current;
@@ -788,7 +788,7 @@ gui_layout_store_on_exit ()
     }
 
     /* store current layout */
-    switch (CONFIG_BOOLEAN(config_look_save_layout_on_exit))
+    switch (CONFIG_ENUM(config_look_save_layout_on_exit))
     {
         case CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_BUFFERS:
             gui_layout_buffer_store (ptr_layout);

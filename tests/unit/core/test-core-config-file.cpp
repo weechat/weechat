@@ -45,6 +45,7 @@ struct t_config_option *ptr_option_int = NULL;
 struct t_config_option *ptr_option_int_str = NULL;
 struct t_config_option *ptr_option_str = NULL;
 struct t_config_option *ptr_option_col = NULL;
+struct t_config_option *ptr_option_enum = NULL;
 
 TEST_GROUP(CoreConfigFile)
 {
@@ -79,6 +80,7 @@ TEST_GROUP(CoreConfigFileWithNewOptions)
             NULL, NULL, NULL,
             NULL, NULL, NULL,
             NULL, NULL, NULL);
+        /* auto-created as enum with WeeChat >= 4.1.0 */
         ptr_option_int_str = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "test_integer_values", "integer", "", "v1|v2|v3", 0, 0, "v1", NULL, 0,
@@ -97,6 +99,12 @@ TEST_GROUP(CoreConfigFileWithNewOptions)
             NULL, NULL, NULL,
             NULL, NULL, NULL,
             NULL, NULL, NULL);
+        ptr_option_enum = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "test_enum", "enum", "", "v1|v2|v3", 0, 0, "v1", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
     }
 
     void teardown ()
@@ -111,6 +119,9 @@ TEST_GROUP(CoreConfigFileWithNewOptions)
         ptr_option_str = NULL;
         config_file_option_free (ptr_option_col, 0);
         ptr_option_col = NULL;
+        config_file_option_free (ptr_option_enum, 0);
+        ptr_option_enum = NULL;
+
     }
 };
 
@@ -615,7 +626,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetReset)
                 config_file_option_reset (ptr_option_int, 1));
     LONGS_EQUAL(100, CONFIG_INTEGER(ptr_option_int));
 
-    /* integer with string values */
+    /* integer with string values (enum with WeeChat >= 4.1.0) */
     LONGS_EQUAL(0, CONFIG_INTEGER(ptr_option_int_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_set (ptr_option_int_str, "zzz", 1));
@@ -685,6 +696,17 @@ TEST(CoreConfigFileWithNewOptions, OptionSetReset)
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
                 config_file_option_reset (ptr_option_col, 1));
     LONGS_EQUAL(9, CONFIG_COLOR(ptr_option_col));
+
+    /* enum */
+    LONGS_EQUAL(0, CONFIG_ENUM(ptr_option_enum));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set (ptr_option_enum, "zzz", 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set (ptr_option_enum, "v2", 1));
+    LONGS_EQUAL(1, CONFIG_ENUM(ptr_option_enum));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_reset (ptr_option_enum, 1));
+    LONGS_EQUAL(0, CONFIG_INTEGER(ptr_option_enum));
 }
 
 /*
@@ -770,7 +792,7 @@ TEST(CoreConfigFileWithNewOptions, OptionToggle)
                 config_file_option_reset (ptr_option_int, 1));
     LONGS_EQUAL(100, CONFIG_INTEGER(ptr_option_int));
 
-    /* integer with string values */
+    /* integer with string values (enum with WeeChat >= 4.1.0) */
     LONGS_EQUAL(0, CONFIG_INTEGER(ptr_option_int_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
                 config_file_option_toggle (ptr_option_int_str,
@@ -845,6 +867,30 @@ TEST(CoreConfigFileWithNewOptions, OptionToggle)
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
                 config_file_option_reset (ptr_option_col, 1));
     LONGS_EQUAL(9, CONFIG_COLOR(ptr_option_col));
+
+    /* enum */
+    LONGS_EQUAL(0, CONFIG_ENUM(ptr_option_enum));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_toggle (ptr_option_enum,
+                                           values_integer_str_error, 2, 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_toggle (ptr_option_enum,
+                                           NULL, 0, 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_toggle (ptr_option_enum,
+                                           value_integer_str_ok, 1, 1));
+    LONGS_EQUAL(1, CONFIG_ENUM(ptr_option_enum));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_toggle (ptr_option_enum,
+                                           values_integer_str_ok, 2, 1));
+    LONGS_EQUAL(2, CONFIG_ENUM(ptr_option_enum));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_toggle (ptr_option_enum,
+                                           values_integer_str_ok, 2, 1));
+    LONGS_EQUAL(1, CONFIG_ENUM(ptr_option_enum));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_reset (ptr_option_enum, 1));
+    LONGS_EQUAL(0, CONFIG_ENUM(ptr_option_enum));
 }
 
 /*
@@ -903,7 +949,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetDefault)
                 config_file_option_set_default (ptr_option_int, "--3", 1));
     LONGS_EQUAL(62, CONFIG_INTEGER_DEFAULT(ptr_option_int));
 
-    /* integer with string values */
+    /* integer with string values (enum with WeeChat >= 4.1.0) */
     LONGS_EQUAL(0, CONFIG_INTEGER_DEFAULT(ptr_option_int_str));
     LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
                 config_file_option_set_default (ptr_option_int_str, NULL, 1));
@@ -966,6 +1012,16 @@ TEST(CoreConfigFileWithNewOptions, OptionSetDefault)
                 | GUI_COLOR_EXTENDED_UNDERLINE_FLAG
                 | GUI_COLOR_EXTENDED_KEEPATTR_FLAG,
                 CONFIG_COLOR_DEFAULT(ptr_option_col));
+
+    /* enum */
+    LONGS_EQUAL(0, CONFIG_ENUM_DEFAULT(ptr_option_enum));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
+                config_file_option_set_default (ptr_option_enum, NULL, 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_ERROR,
+                config_file_option_set_default (ptr_option_enum, "zzz", 1));
+    LONGS_EQUAL(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED,
+                config_file_option_set_default (ptr_option_enum, "v2", 1));
+    LONGS_EQUAL(1, CONFIG_INTEGER_DEFAULT(ptr_option_enum));
 }
 
 /*

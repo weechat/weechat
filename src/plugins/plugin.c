@@ -761,6 +761,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->config_boolean_default = &config_file_option_boolean_default;
         new_plugin->config_integer = &config_file_option_integer;
         new_plugin->config_integer_default = &config_file_option_integer_default;
+        new_plugin->config_enum = &config_file_option_enum;
+        new_plugin->config_enum_default = &config_file_option_enum_default;
         new_plugin->config_string = &config_file_option_string;
         new_plugin->config_string_default = &config_file_option_string_default;
         new_plugin->config_color = &config_file_option_color;

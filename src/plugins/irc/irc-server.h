@@ -120,6 +120,13 @@ enum t_irc_server_option
       weechat_config_string(irc_config_server_default[__index])               \
       : weechat_config_string_default(irc_config_server_default[__index])))
 
+#define IRC_SERVER_OPTION_ENUM(__server, __index)                             \
+    ((!weechat_config_option_is_null(__server->options[__index])) ?           \
+     weechat_config_enum(__server->options[__index]) :                        \
+     ((!weechat_config_option_is_null(irc_config_server_default[__index])) ?  \
+      weechat_config_enum(irc_config_server_default[__index])                 \
+      : weechat_config_enum_default(irc_config_server_default[__index])))
+
 #define IRC_SERVER_DEFAULT_PORT_CLEARTEXT 6667
 #define IRC_SERVER_DEFAULT_PORT_TLS       6697
 
@@ -289,6 +296,7 @@ struct t_irc_server
     struct t_hashtable *join_manual;         /* manual joins pending         */
     struct t_hashtable *join_channel_key;    /* keys pending for joins       */
     struct t_hashtable *join_noswitch;       /* joins w/o switch to buffer   */
+    struct t_hashtable *echo_msg_recv;    /* msg received with echo-message  */
     struct t_irc_batch *batches;          /* batched events (cap "batch")    */
     struct t_irc_batch *last_batch;       /* last batch                      */
     struct t_gui_buffer *buffer;          /* GUI buffer allocated for server */

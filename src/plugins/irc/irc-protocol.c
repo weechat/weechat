@@ -554,7 +554,7 @@ IRC_PROTOCOL_CALLBACK(authenticate)
     irc_server_sasl_get_creds (server, &sasl_username, &sasl_password,
                                &sasl_key);
 
-    sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
+    sasl_mechanism = IRC_SERVER_OPTION_ENUM(
         server, IRC_SERVER_OPTION_SASL_MECHANISM);
 
     answer = NULL;
@@ -922,7 +922,7 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
                 if (weechat_config_boolean (irc_config_network_sasl_fail_unavailable))
                 {
                     /* same handling as for sasl_end_fail */
-                    sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
+                    sasl_fail = IRC_SERVER_OPTION_ENUM(server, IRC_SERVER_OPTION_SASL_FAIL);
                     if ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
                         || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT))
                     {
@@ -1219,7 +1219,7 @@ IRC_PROTOCOL_CALLBACK(cap)
 
         if (sasl_to_do)
         {
-            sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
+            sasl_mechanism = IRC_SERVER_OPTION_ENUM(
                 server, IRC_SERVER_OPTION_SASL_MECHANISM);
             if ((sasl_mechanism >= 0)
                 && (sasl_mechanism < IRC_NUM_SASL_MECHANISMS))
@@ -1517,7 +1517,7 @@ IRC_PROTOCOL_CALLBACK(generic_error)
     int arg_error, force_server_buffer;
     char *str_error, str_target[512];
     const char *pos_channel, *pos_nick;
-    struct t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel, *ptr_channel2;
     struct t_gui_buffer *ptr_buffer;
 
     IRC_PROTOCOL_MIN_PARAMS(2);
@@ -1530,17 +1530,18 @@ IRC_PROTOCOL_CALLBACK(generic_error)
     pos_nick = NULL;
     str_target[0] = '\0';
 
+    /*
+     * force display on server buffer for these messages:
+     *   - 432: erroneous nickname
+     *   - 433: nickname already in use
+     *   - 437: nick/channel temporarily unavailable
+     */
+    force_server_buffer = ((strcmp (command, "432") == 0)
+                           || (strcmp (command, "433") == 0)
+                           || (strcmp (command, "437") == 0));
+
     if (params[arg_error + 1])
     {
-        /*
-         * force display on server buffer for these messages:
-         *   - 432: erroneous nickname
-         *   - 433: nickname already in use
-         *   - 437: nick/channel temporarily unavailable
-         */
-        force_server_buffer = ((strcmp (command, "432") == 0)
-                               || (strcmp (command, "433") == 0)
-                               || (strcmp (command, "437") == 0));
         if (!force_server_buffer
             && irc_channel_is_channel (server, params[arg_error]))
         {
@@ -1565,7 +1566,19 @@ IRC_PROTOCOL_CALLBACK(generic_error)
         }
     }
 
-    ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+    ptr_buffer = NULL;
+    if (ptr_channel)
+    {
+        ptr_buffer = ptr_channel->buffer;
+    }
+    else if (!force_server_buffer && pos_nick)
+    {
+        ptr_channel2 = irc_channel_search (server, pos_nick);
+        if (ptr_channel2)
+            ptr_buffer = ptr_channel2->buffer;
+    }
+    if (!ptr_buffer)
+        ptr_buffer = server->buffer;
 
     str_error = irc_protocol_string_params (params, arg_error, num_params - 1);
 
@@ -2454,6 +2467,8 @@ IRC_PROTOCOL_CALLBACK(notice)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     int notify_private, is_channel, is_channel_orig, nick_is_me, display_host;
+    int cap_echo_message, msg_already_received;
+    time_t time_now;
     struct t_gui_buffer *ptr_buffer;
 
     IRC_PROTOCOL_MIN_PARAMS(2);
@@ -2479,8 +2494,23 @@ IRC_PROTOCOL_CALLBACK(notice)
 
     if (nick && (pos_args[0] == '\01'))
     {
-        irc_ctcp_display_reply_from_nick (server, date, tags, command, nick,
-                                          address, pos_args);
+        cap_echo_message = weechat_hashtable_has_key (server->cap_list,
+                                                      "echo-message");
+        msg_already_received = weechat_hashtable_has_key (
+            server->echo_msg_recv, irc_message);
+        if (!msg_already_received && cap_echo_message)
+        {
+            time_now = time (NULL);
+            weechat_hashtable_set (server->echo_msg_recv,
+                                   irc_message, &time_now);
+        }
+        if (!cap_echo_message || !msg_already_received)
+        {
+            irc_ctcp_display_reply_from_nick (server, date, tags, command, nick,
+                                              address, pos_args);
+        }
+        if (msg_already_received)
+            weechat_hashtable_remove (server->echo_msg_recv, irc_message);
     }
     else
     {
@@ -2604,11 +2634,11 @@ IRC_PROTOCOL_CALLBACK(notice)
 
             ptr_channel = NULL;
             if (nick
-                && weechat_config_integer (irc_config_look_notice_as_pv) != IRC_CONFIG_LOOK_NOTICE_AS_PV_NEVER)
+                && weechat_config_enum (irc_config_look_notice_as_pv) != IRC_CONFIG_LOOK_NOTICE_AS_PV_NEVER)
             {
                 ptr_channel = irc_channel_search (server, nick);
                 if (!ptr_channel
-                    && weechat_config_integer (irc_config_look_notice_as_pv) == IRC_CONFIG_LOOK_NOTICE_AS_PV_ALWAYS)
+                    && weechat_config_enum (irc_config_look_notice_as_pv) == IRC_CONFIG_LOOK_NOTICE_AS_PV_ALWAYS)
                 {
                     ptr_channel = irc_channel_new (server,
                                                    IRC_CHANNEL_TYPE_PRIVATE,
@@ -3024,7 +3054,9 @@ IRC_PROTOCOL_CALLBACK(privmsg)
 {
     char *msg_args, *msg_args2, str_tags[1024], *str_color, *color;
     const char *pos_target, *remote_nick, *pv_tags;
-    int status_msg, is_channel, nick_is_me;
+    int status_msg, is_channel, nick_is_me, cap_echo_message;
+    int msg_already_received;
+    time_t time_now;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
@@ -3175,7 +3207,17 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         /* CTCP to user */
         if (msg_args[0] == '\01')
         {
-            if (nick_is_me)
+            cap_echo_message = weechat_hashtable_has_key (server->cap_list,
+                                                          "echo-message");
+            msg_already_received = weechat_hashtable_has_key (
+                server->echo_msg_recv, irc_message);
+            if (!msg_already_received && cap_echo_message)
+            {
+                time_now = time (NULL);
+                weechat_hashtable_set (server->echo_msg_recv,
+                                       irc_message, &time_now);
+            }
+            if (nick_is_me && cap_echo_message && !msg_already_received)
             {
                 irc_protocol_privmsg_display_ctcp_send (
                     server, remote_nick, address, msg_args);
@@ -3185,6 +3227,8 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 irc_ctcp_recv (server, date, tags, command, NULL, params[0],
                                address, nick, remote_nick, msg_args, irc_message);
             }
+            if (msg_already_received)
+                weechat_hashtable_remove (server->echo_msg_recv, irc_message);
             goto end;
         }
 
@@ -5444,7 +5488,7 @@ IRC_PROTOCOL_CALLBACK(341)
 
 IRC_PROTOCOL_CALLBACK(344)
 {
-    char *str_host;
+    char *str_host, *str_params;
 
     IRC_PROTOCOL_MIN_PARAMS(3);
 
@@ -5469,7 +5513,36 @@ IRC_PROTOCOL_CALLBACK(344)
     else
     {
         /* whois, geo info (UnrealIRCd) */
-        IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
+        if (num_params >= 3)
+        {
+            str_params = irc_protocol_string_params (
+                params,
+                (num_params >= 4) ? 3 : 2,
+                num_params - 1);
+            weechat_printf_date_tags (
+                irc_msgbuffer_get_target_buffer (
+                    server, params[1], command, "whois", NULL),
+                date,
+                irc_protocol_tags (server, command, tags, NULL, NULL, NULL),
+                "%s%s[%s%s%s] %s%s%s%s%s",
+                weechat_prefix ("network"),
+                IRC_COLOR_CHAT_DELIMITERS,
+                irc_nick_color_for_msg (server, 1, NULL, params[1]),
+                params[1],
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_RESET,
+                str_params,
+                (num_params >= 4) ? " (" : "",
+                (num_params >= 4) ? params[2] : "",
+                (num_params >= 4) ? ")" : "");
+            if (str_params)
+                free (str_params);
+        }
+        else
+        {
+            /* not enough arguments: use the default whois callback */
+            IRC_PROTOCOL_RUN_CALLBACK(whois_nick_msg);
+        }
     }
 
     return WEECHAT_RC_OK;
@@ -7669,7 +7742,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
 
     IRC_PROTOCOL_RUN_CALLBACK(numeric);
 
-    sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
+    sasl_fail = IRC_SERVER_OPTION_ENUM(server, IRC_SERVER_OPTION_SASL_FAIL);
     if (!server->is_connected
         && ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
             || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT)))
@@ -7866,6 +7939,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(712, 1, 0, knock_reply),    /* knock: too many knocks          */
         IRCB(713, 1, 0, knock_reply),    /* knock: channel is open          */
         IRCB(714, 1, 0, knock_reply),    /* knock: already on that channel  */
+        IRCB(716, 1, 0, generic_error),  /* nick is in +g mode              */
+        IRCB(717, 1, 0, generic_error),  /* nick has been informed of msg   */
         IRCB(728, 1, 0, 728),            /* quietlist                       */
         IRCB(729, 1, 0, 729),            /* end of quietlist                */
         IRCB(730, 1, 0, 730),            /* monitored nicks online          */

@@ -272,7 +272,7 @@ proxy_create_option (const char *proxy_name, int index_option,
         case PROXY_OPTION_TYPE:
             ptr_option = config_file_new_option (
                 weechat_config_file, weechat_config_section_proxy,
-                option_name, "integer",
+                option_name, "enum",
                 N_("proxy type (http (default), socks4, socks5)"),
                 "http|socks4|socks5", 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -633,9 +633,9 @@ proxy_add_to_infolist (struct t_infolist *infolist, struct t_proxy *proxy)
 
     if (!infolist_new_var_string (ptr_item, "name", proxy->name))
         return 0;
-    if (!infolist_new_var_integer (ptr_item, "type", CONFIG_INTEGER(proxy->options[PROXY_OPTION_TYPE])))
+    if (!infolist_new_var_integer (ptr_item, "type", CONFIG_ENUM(proxy->options[PROXY_OPTION_TYPE])))
         return 0;
-    if (!infolist_new_var_string (ptr_item, "type_string", proxy_type_string[CONFIG_INTEGER(proxy->options[PROXY_OPTION_TYPE])]))
+    if (!infolist_new_var_string (ptr_item, "type_string", proxy_type_string[CONFIG_ENUM(proxy->options[PROXY_OPTION_TYPE])]))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "ipv6", CONFIG_INTEGER(proxy->options[PROXY_OPTION_IPV6])))
         return 0;
@@ -667,8 +667,8 @@ proxy_print_log ()
         log_printf ("[proxy (addr:0x%lx)]", ptr_proxy);
         log_printf ("  name . . . . . . . . . : '%s'",  ptr_proxy->name);
         log_printf ("  type . . . . . . . . . : %d (%s)",
-                    CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_TYPE]),
-                    proxy_type_string[CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_TYPE])]);
+                    CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_TYPE]),
+                    proxy_type_string[CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_TYPE])]);
         log_printf ("  ipv6 . . . . . . . . . : %d",    CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_IPV6]));
         log_printf ("  address. . . . . . . . : '%s'",  CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]));
         log_printf ("  port . . . . . . . . . : %d",    CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));

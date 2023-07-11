@@ -134,7 +134,6 @@ gui_key_default_bindings (int context, int create_option)
         BIND("meta-h,meta-r",     "/hotlist restore");
         BIND("meta-h,meta-R",     "/hotlist restore -all");
         BIND("meta-k",            "/input grab_key_command");
-        BIND("meta-K",            "/input grab_raw_key_command");
         BIND("meta-s",            "/mute spell toggle");
         BIND("meta-u",            "/window scroll_unread");
         BIND("ctrl-s,ctrl-u",     "/allbuf /buffer set unread");
@@ -398,11 +397,13 @@ gui_key_flush (int paste)
              * code which is not UTF-8 valid)
              */
             if (!paste
+                && (i > gui_key_last_key_pressed_sent)
                 && (!gui_mouse_event_pending
                     || utf8_is_valid (key_str, -1, NULL)))
             {
                 (void) hook_signal_send ("key_pressed",
                                          WEECHAT_HOOK_SIGNAL_STRING, key_str);
+                gui_key_last_key_pressed_sent = i;
             }
 
             if (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)

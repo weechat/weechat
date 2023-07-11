@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-06-17 11:44+0200\n"
+"POT-Creation-Date: 2023-07-10 14:05+0200\n"
 "PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -473,12 +473,12 @@ msgid "current value"
 msgstr ""
 
 #, fuzzy
-msgid "string"
-msgstr "Várakozás"
-
-#, fuzzy
 msgid "integer"
 msgstr "perc"
+
+#, fuzzy
+msgid "string"
+msgstr "Várakozás"
 
 #, fuzzy
 msgid "any string"
@@ -495,6 +495,9 @@ msgstr "pufferek kezelése"
 #, fuzzy
 msgid "color"
 msgstr "üzenetek színe"
+
+msgid "enum"
+msgstr ""
 
 #. TRANSLATORS: please do not translate "(null)"
 msgid "undefined value allowed (null)"
@@ -1867,6 +1870,10 @@ msgid ""
 "When binding a command to a key, it is recommended to use key alt+k (or Esc "
 "then k), and then press the key to bind: this will insert key name in "
 "command line.\n"
+"\n"
+"For some keys you might need to use /debug key, this displays the raw key "
+"code that can be used (for example the key ctrl+backspace could be \"ctrl-"
+"h\" or \"ctrl-?\", depending on your terminal and other settings).\n"
 "\n"
 "Modifiers allowed (in this order when multiple are used):\n"
 "  meta-  (alt key)\n"
@@ -5066,8 +5073,8 @@ msgstr ""
 
 msgid ""
 "number of buflist bar items that can be used; the item names are: "
-"\"buflist\", \"buflist2\", \"buflist3\"; be careful, using more than one bar "
-"item slows down the display of buffers list"
+"\"buflist\", \"buflist2\", \"buflist3\", \"buflist4\" and \"buflist5\"; be "
+"careful, using more than one bar item slows down the display of buffers list"
 msgstr ""
 
 msgid ""
@@ -5557,9 +5564,9 @@ msgid ""
 "        -go: select a line by number, first line number is 0 (\"end\" to "
 "select the last line)\n"
 "    -toggle: toggle the boolean value\n"
-"       -add: add \"value\" (which can be a negative number) for integers and "
-"colors, set/append to value for other types (set for a negative value, "
-"append for a positive value)\n"
+"       -add: add \"value\" (which can be a negative number) for integers, "
+"colors and enums, set/append to value for other types (set for a negative "
+"value, append for a positive value)\n"
 "     -reset: reset the value of option\n"
 "     -unset: unset the option\n"
 "       -set: add the /set command in input to edit the value of option (move "
@@ -5581,7 +5588,8 @@ msgid ""
 "               *       show all options (no filter)\n"
 "               xxx     show only options with \"xxx\" in name\n"
 "               f:xxx   show only configuration file \"xxx\"\n"
-"               t:xxx   show only type \"xxx\" (bool/int/str/col)\n"
+"               t:xxx   show only type \"xxx\" (bool/int/str/col/enum or "
+"boolean/integer/string/color/enum)\n"
 "               d       show only changed options\n"
 "               d:xxx   show only changed options with \"xxx\" in name\n"
 "               d=xxx   show only changed options with \"xxx\" in value\n"
@@ -5594,10 +5602,11 @@ msgid ""
 "               ==xxx   show only options with exact value \"xxx\"\n"
 "               c:xxx   show only options matching the evaluated condition "
 "\"xxx\", using following variables: file, section, option, name, "
-"parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/"
-"c), default_value, default_value_undef, value, quoted_value, value_undef, "
-"value_changed, parent_value, min, max, description, description2, "
-"description_en, description_en2, string_values\n"
+"parent_name, type, type_en, type_short (bool/int/str/col/enum), type_tiny (b/"
+"i/s/c/e), default_value, default_value_undef, value, quoted_value, "
+"value_undef, value_changed, parent_value, min, max, description, "
+"description2, description_en, description_en2, string_values, "
+"allowed_values\n"
 "\n"
 "The lines with options are displayed using string evaluation (see /help eval "
 "for the format), with these options:\n"
@@ -5613,8 +5622,8 @@ msgid ""
 "    - ${parent_name}: parent option name\n"
 "    - ${type}: option type (translated)\n"
 "    - ${type_en}: option type (in English)\n"
-"    - ${type_short}: short option type (bool/int/str/col)\n"
-"    - ${type_tiny}: tiny option type (b/i/s/c)\n"
+"    - ${type_short}: short option type (bool/int/str/col/enum)\n"
+"    - ${type_tiny}: tiny option type (b/i/s/c/e)\n"
 "    - ${default_value}: option default value\n"
 "    - ${default_value_undef}: \"1\" if default value is null, otherwise "
 "\"0\"\n"
@@ -5632,8 +5641,8 @@ msgid ""
 "    - ${description_en}: option description (in English)\n"
 "    - ${description_en2}: option description (in English), \"(no "
 "description)\" if there's no description\n"
-"    - ${string_values}: string values allowed for set of an integer option "
-"using strings\n"
+"    - ${string_values}: string values allowed for set of an enum option\n"
+"    - ${allowed_values}: allowed values\n"
 "    - ${marked}: \"1\" if option is marked, otherwise \"0\"\n"
 "    - ${index}: index of option in list\n"
 "  - option data, with color but no spaces:\n"
@@ -5662,9 +5671,9 @@ msgid ""
 "\n"
 "Keys and input to set options on fset buffer:\n"
 "  alt+space         t       toggle boolean value\n"
-"  alt+'-'           -       subtract 1 from value for integer/color, set "
-"value for other types\n"
-"  alt+'+'           +       add 1 to value for integer/color, append to "
+"  alt+'-'           -       subtract 1 from value for integer/color/enum, "
+"set value for other types\n"
+"  alt+'+'           +       add 1 to value for integer/color/enum, append to "
 "value for other types\n"
 "  alt+f, alt+r      r       reset value\n"
 "  alt+f, alt+u      u       unset value\n"
@@ -5703,8 +5712,8 @@ msgid ""
 "  left button                     move line here\n"
 "  right button                    toggle boolean (on/off) or edit the option "
 "value\n"
-"  right button + drag left/right  increase/decrease value for integer/color, "
-"set/append to value for other types\n"
+"  right button + drag left/right  increase/decrease value for integer/color/"
+"enum, set/append to value for other types\n"
 "  right button + drag up/down     mark/unmark multiple options\n"
 "\n"
 "Note: if input has one or more leading spaces, the following text is "
@@ -5830,6 +5839,14 @@ msgid ""
 "ctrl-x"
 msgstr ""
 
+#, fuzzy
+msgid "color for allowed values"
+msgstr "távollevő felhasználók nevének színe"
+
+#, fuzzy
+msgid "color for allowed values on the selected line"
+msgstr "távollevő felhasználók nevének színe"
+
 msgid "color for color name when option fset.look.use_color_value is enabled"
 msgstr ""
 
@@ -5883,10 +5900,6 @@ msgstr "nevek színe"
 #, fuzzy
 msgid "color for quotes around string values"
 msgstr "új üzenetet tartalmazó ablak színe"
-
-#, fuzzy
-msgid "color for allowed values"
-msgstr "távollevő felhasználók nevének színe"
 
 #, fuzzy
 msgid "color for index of option"
@@ -6092,6 +6105,10 @@ msgstr ""
 #, fuzzy
 msgid "fset options"
 msgstr "konfigurációs paraméterek beállítása"
+
+#, fuzzy
+msgid "any color"
+msgstr "üzenetek színe"
 
 #, fuzzy, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
@@ -6780,10 +6797,10 @@ msgid ""
 "\n"
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
-"Capabilities supported by WeeChat are: account-notify, away-notify, batch, "
-"cap-notify, chghost, draft/multiline, echo-message, extended-join, invite-"
-"notify, message-tags, multi-prefix, server-time, setname, userhost-in-"
-"names.\n"
+"Capabilities supported by WeeChat are: account-notify, account-tag, away-"
+"notify, batch, cap-notify, chghost, draft/multiline, echo-message, extended-"
+"join, invite-notify, message-tags, multi-prefix, server-time, setname, "
+"userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -10535,6 +10552,14 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "buffer pointer"
+msgstr "szöveg keresése a puffertörténetben"
+
+#, fuzzy
+msgid "buffer full name"
+msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, fuzzy
 msgid "terminal charset"
 msgstr "pufferek kezelése"
 
@@ -10689,10 +10714,6 @@ msgstr ""
 #, fuzzy
 msgid "lines of a buffer"
 msgstr "puffer betöltése sikertelen"
-
-#, fuzzy
-msgid "buffer pointer"
-msgstr "szöveg keresése a puffertörténetben"
 
 #, fuzzy
 msgid "list of filters"
@@ -12531,6 +12552,21 @@ msgid "No trigger defined"
 msgstr "Nincs aliasz definiálva.\n"
 
 #, fuzzy
+msgid "Triggers enabled:"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy
+msgid "default"
+msgstr "  . alapérték: %d\n"
+
+msgid "custom"
+msgstr ""
+
+#, fuzzy
+msgid "No triggers enabled"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy
 msgid "List of default triggers:"
 msgstr "Aliaszok listája:\n"
 
@@ -12673,7 +12709,8 @@ msgid "manage triggers, the Swiss Army knife for WeeChat"
 msgstr ""
 
 msgid ""
-"list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
+"list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
+"<name> <hook> "
 "[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
@@ -12684,6 +12721,12 @@ msgstr ""
 
 msgid ""
 "       list: list triggers (without argument, this list is displayed)\n"
+"         -o: send list of triggers enabled to buffer (string in English)\n"
+"        -ol: send list of triggers enabled to buffer (translated string)\n"
+"         -i: copy list of triggers enabled in command line (for sending to "
+"buffer) (string in English)\n"
+"        -il: copy list of triggers enabled in command line (for sending to "
+"buffer) (translated string)\n"
 "   listfull: list triggers with detailed info for each trigger\n"
 "listdefault: list default triggers\n"
 "        add: add a trigger\n"

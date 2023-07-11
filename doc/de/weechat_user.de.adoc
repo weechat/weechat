@@ -1725,8 +1725,10 @@ wurde (Befehl: `+/mouse toggle+`).
 | kbd:[▼]                 | -            | chat: fset buffer   | Auswahl wird fünf Einträge nach unten bewegt, im fset Buffer. | `+/fset -down 5+`
 | ◾◽◽                     | -            | chat: fset buffer   | springt zu einem Eintrag im fset Buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
 | ◽◽◾                     | -            | chat: fset buffer   | Boolean-Wert wird umgeschaltet (an/aus) oder editiere den Wert einer Option. | `+hsignal:fset_mouse+`
-| ◽◽◾                     | left         | chat: fset buffer   | Integer/Farbwerte werden verringert, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
-| ◽◽◾                     | right        | chat: fset buffer   | Integer/Farbwerte werden erhöht, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| ◽◽◾                     | left         | chat: fset buffer   | Integer/Farbwerte/enum werden verringert, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| ◽◽◾                     | right        | chat: fset buffer   | Integer/Farbwerte/enum werden erhöht, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
 | ◽◽◾                     | up / down    | chat: fset buffer   | markieren/demarkieren von mehreren Optionen. | `+hsignal:fset_mouse+`
 | kbd:[▲]                 | -            | chat: script buffer | fünf Zeilen nach oben blättern, im Script-Buffer. | `+/script up 5+`
 | kbd:[▼]                 | -            | chat: script buffer | fünf Zeilen nach unten blättern, im Script-Buffer. | `+/script down 5+`
@@ -1773,8 +1775,10 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<fset,Fset Erw
 | kbd:[F11]                | `pass:[<]`   | scrollt horizontal nach links. | `+/fset -left+`
 | kbd:[F12]                | `pass:[>]`   | scrollt horizontal nach rechts. | `+/fset -right+`
 | kbd:[Alt+Space]          | `t`          | Boolean Wert ein/ausschalten. | `+/fset -toggle+`
-| kbd:[Alt+-]              | `-`          | subtrahiert 1 vom Wert bei Integer/Farboptionen, bei anderen Typen kann der Wert editiert werden. | `+/fset -add -1+`
-| kbd:[Alt++]              | `+`          | addiert 1 zum Wert bei Integer/Farboptionen, bei anderen Typen kann der Wert editiert werden. | `+/fset -add 1+`
+// TRANSLATION MISSING
+| kbd:[Alt+-]              | `-`          | subtrahiert 1 vom Wert bei Integer/Farboptionen/enum, bei anderen Typen kann der Wert editiert werden. | `+/fset -add -1+`
+// TRANSLATION MISSING
+| kbd:[Alt++]              | `+`          | addiert 1 zum Wert bei Integer/Farboptionen/enum, bei anderen Typen kann der Wert editiert werden. | `+/fset -add 1+`
 | kbd:[Alt+f], kbd:[Alt+r] | `r`          | Wert resetten. | `+/fset -reset+`
 | kbd:[Alt+f], kbd:[Alt+u] | `u`          | Wert zurücksetzen. | `+/fset -unset+`
 | kbd:[Alt+Enter]          | `s`          | Wert setzen. | `+/fset -set+`
@@ -1844,7 +1848,7 @@ Beispiel des fset-Buffer, der Optionen anzeigt, die mit `weechat.look` beginnen
 │2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
 │         │hanges in input [default: on]                                               │
 │         │----------------------------------------------------------------------------│
-│         │  weechat.look.align_end_of_lines                   integer  message        │
+│         │  weechat.look.align_end_of_lines                   enum     message        │
 │         │  weechat.look.align_multiline_words                boolean  on             │
 │         │  weechat.look.bar_more_down                        string   "++"           │
 │         │  weechat.look.bar_more_left                        string   "<<"           │
@@ -1853,12 +1857,12 @@ Beispiel des fset-Buffer, der Optionen anzeigt, die mit `weechat.look` beginnen
 │         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
 │         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
 │         │  weechat.look.buffer_auto_renumber                 boolean  on             │
-│         │  weechat.look.buffer_notify_default                integer  all            │
-│         │  weechat.look.buffer_position                      integer  end            │
+│         │  weechat.look.buffer_notify_default                enum     all            │
+│         │  weechat.look.buffer_position                      enum     end            │
 │         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
 │         │  weechat.look.buffer_search_force_default          boolean  off            │
 │         │  weechat.look.buffer_search_regex                  boolean  off            │
-│         │  weechat.look.buffer_search_where                  integer  prefix_message │
+│         │  weechat.look.buffer_search_where                  enum     prefix_message │
 │         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
 │         │  weechat.look.buffer_time_same                     string   ""             │
 │         │[12:55] [2] [fset] 2:fset                                                   │
@@ -3325,7 +3329,7 @@ irc.server.libera.autorejoin_delay      integer  null -> 30
 irc.server.libera.away_check            integer  null -> 0
 irc.server.libera.away_check_max_nicks  integer  null -> 25
 irc.server.libera.capabilities          string   null -> "*"
-irc.server.libera.charset_message       integer  null -> message
+irc.server.libera.charset_message       enum     null -> message
 irc.server.libera.command               string   null -> ""
 irc.server.libera.command_delay         integer  null -> 0
 irc.server.libera.connection_timeout    integer  null -> 60
@@ -3341,9 +3345,9 @@ irc.server.libera.notify                string   null -> ""
 irc.server.libera.password              string   null -> ""
 irc.server.libera.proxy                 string   null -> ""
 irc.server.libera.realname              string   null -> ""
-irc.server.libera.sasl_fail             integer  null -> reconnect
+irc.server.libera.sasl_fail             enum     null -> reconnect
 irc.server.libera.sasl_key              string   null -> ""
-irc.server.libera.sasl_mechanism        integer  null -> plain
+irc.server.libera.sasl_mechanism        enum     null -> plain
 irc.server.libera.sasl_password         string   "${sec.data.libera}"
 irc.server.libera.sasl_timeout          integer  null -> 15
 irc.server.libera.sasl_username         string   "alice"
@@ -4108,14 +4112,14 @@ mit dem entsprechenden Wert ersetzt:
 |===
 | Platzhalter  | Beschreibung                        | Wert/Beispiel
 | $clientinfo  | Liste der CTCP Antworten            | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| $version     | WeeChat Version                     | `+0.4.0-dev+`
-| $versiongit  | WeeChat Version + Git version ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| $git         | Git Version ^(1)^                   | `+v0.3.9-104-g7eb5cc4+`
-| $compilation | Datum der Kompilierung              | `+Dec 16 2012+`
-| $osinfo      | Info über das genutzte OS           | `+Linux 2.6.32-5-amd64 / x86_64+`
+| $version     | WeeChat Version                     | `+4.1.0-dev+`
+| $versiongit  | WeeChat Version + Git version ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
+| $git         | Git Version ^(1)^                   | `+v4.0.0-51-g8f98b922a+`
+| $compilation | Datum der Kompilierung              | `+Jul  8 2023 20:14:23+`
+| $osinfo      | Info über das genutzte OS           | `+Linux 5.10.0-23-amd64 / x86_64+`
 | $site        | WeeChat Seite                       | `+https://weechat.org/+`
 | $download    | WeeChat, Download Seite             | `+https://weechat.org/download/+`
-| $time        | Aktuelle Uhrzeit/Datum              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
+| $time        | Aktuelle Uhrzeit/Datum              | `+Sat, 08 Jul 2023 21:11:19 +0200+`
 | $username    | Username beim IRC Server            | `+Name+`
 | $realname    | Realname beim IRC Server            | `+John Doe+`
 |===
@@ -4129,13 +4133,13 @@ Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
 
 [width="100%",cols="2,4,8",options="header"]
 |===
-| CTCP       | Antwortformat                          | Beispiel
-| CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
-| SOURCE     | `+$download+`                          | `+https://weechat.org/download/+`
-| TIME       | `+$time+`                              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
-| USERINFO   | `+$username ($realname)+`              | `+Name (John Doe)+`
-| VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
+| CTCP       | Antwortformat             | Beispiel
+| CLIENTINFO | `+$clientinfo+`           | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| FINGER     | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
+| SOURCE     | `+$download+`             | `+https://weechat.org/download/+`
+| TIME       | `+$time+`                 | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| USERINFO   | `+$username ($realname)+` | `+Name (John Doe)+`
+| VERSION    | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
 |===
 
 [[irc_target_buffer]]

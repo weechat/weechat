@@ -250,8 +250,8 @@ secure_config_data_read_cb (const void *pointer, void *data,
         rc = secure_decrypt_data (
             buffer,
             length_buffer,
-            secure_hash_algo[CONFIG_INTEGER(secure_config_crypt_hash_algo)],
-            secure_cipher[CONFIG_INTEGER(secure_config_crypt_cipher)],
+            secure_hash_algo[CONFIG_ENUM(secure_config_crypt_hash_algo)],
+            secure_cipher[CONFIG_ENUM(secure_config_crypt_cipher)],
             secure_passphrase,
             &decrypted,
             &length_decrypted);
@@ -326,8 +326,8 @@ secure_config_data_write_map_cb (void *data,
         /* encrypt password using passphrase */
         rc = secure_encrypt_data (
             value, strlen (value) + 1,
-            secure_hash_algo[CONFIG_INTEGER(secure_config_crypt_hash_algo)],
-            secure_cipher[CONFIG_INTEGER(secure_config_crypt_cipher)],
+            secure_hash_algo[CONFIG_ENUM(secure_config_crypt_hash_algo)],
+            secure_cipher[CONFIG_ENUM(secure_config_crypt_cipher)],
             secure_passphrase,
             &buffer,
             &length_buffer);
@@ -465,14 +465,14 @@ secure_config_init_options ()
     {
         secure_config_crypt_cipher = config_file_new_option (
             secure_config_file, secure_config_section_crypt,
-            "cipher", "integer",
+            "cipher", "enum",
             N_("cipher used to crypt data (the number after algorithm is the "
                "size of the key in bits)"),
             "aes128|aes192|aes256", 0, 0, "aes256", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         secure_config_crypt_hash_algo = config_file_new_option (
             secure_config_file, secure_config_section_crypt,
-            "hash_algo", "integer",
+            "hash_algo", "enum",
             N_("hash algorithm used to check the decrypted data"),
             "sha224|sha256|sha384|sha512", 0, 0, "sha256", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);

@@ -643,6 +643,12 @@ werden um dann z.B. mit einem Kurzbefehl `/123` zum Buffer #123 zu springen:
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
 ----
 
+Um einfach von einem Buffer zu einem anderen zu springen, kann man das _go.py_ Skript installieren:
+
+----
+/script install go.py
+----
+
 [[global_history]]
 === Wie kann ich den globalen Verlaufsspeicher (anstelle des Buffer eigenen) mit den Up-/Down-Tasten nutzen?
 

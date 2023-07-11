@@ -69,9 +69,10 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     "USERLEN=16 HOSTLEN=32 CHANNELLEN=50 TOPICLEN=390 DEAF=D "          \
     "CHANTYPES=# CHANMODES=eIbq,k,flj,CFLMPQScgimnprstuz "              \
     "MONITOR=100 UTF8MAPPING=rfc8265 UTF8ONLY"
-#define IRC_ALL_CAPS "account-notify,away-notify,batch,cap-notify,"     \
-    "chghost,draft/multiline,echo-message,extended-join,invite-notify," \
-    "message-tags,multi-prefix,server-time,setname,userhost-in-names"
+#define IRC_ALL_CAPS "account-notify,account-tag,away-notify,batch,"    \
+    "cap-notify,chghost,draft/multiline,echo-message,extended-join,"    \
+    "invite-notify,message-tags,multi-prefix,server-time,setname,"      \
+    "userhost-in-names"
 
 #define WEE_CHECK_CAP_TO_ENABLE(__result, __string, __sasl_requested)   \
     str = irc_protocol_cap_to_enable (__string, __sasl_requested);      \
@@ -2950,10 +2951,33 @@ TEST(IrcProtocolWithServer, privmsg)
          * valid CTCP to channel from self nick
          * (case of bouncer of if echo-message capability is enabled)
          */
-        RECV(":alice!user@host PRIVMSG bob :\01VERSION\01");
-        CHECK_PV("bob", "--", "CTCP query to bob: VERSION",
-                 "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
-                 "nick_alice,host_user@host,log1");
+        RECV(":alice!user@host PRIVMSG alice :\01CLIENTINFO\01");
+        if (i == 0)
+        {
+            CHECK_SRV("--", "CTCP requested by alice: CLIENTINFO",
+                     "irc_privmsg,irc_ctcp,host_user@host,log1");
+            CHECK_SRV("--", "CTCP reply to alice: CLIENTINFO ACTION DCC "
+                      "CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION",
+                     "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                      "no_highlight,log1");
+        }
+        else
+        {
+            CHECK_PV("alice", "--", "CTCP query to alice: CLIENTINFO",
+                     "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
+                     "nick_alice,host_user@host,log1");
+            /*
+             * with echo-message capability, when the same message is received
+             * for the second time, the request and reply are displayed
+             */
+            RECV(":alice!user@host PRIVMSG alice :\01CLIENTINFO\01");
+            CHECK_SRV("--", "CTCP requested by alice: CLIENTINFO",
+                      "irc_privmsg,irc_ctcp,host_user@host,log1");
+            CHECK_SRV("--", "CTCP reply to alice: CLIENTINFO ACTION DCC "
+                      "CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION",
+                     "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                      "no_highlight,log1");
+        }
 
         /* close xfer buffer */
         if (xfer_buffer)
@@ -4302,7 +4326,12 @@ TEST(IrcProtocolWithServer, 344)
 
     /* whois, geo info (UnrealIRCd) */
     RECV(":server 344 alice bob FR :is connecting from France");
-    CHECK_SRV("--", "[bob] FR is connecting from France",
+    CHECK_SRV("--", "[bob] is connecting from France (FR)",
+              "irc_344,irc_numeric,log3");
+
+    /* whois, geo info (UnrealIRCd), no country code */
+    RECV(":server 344 alice bob :is connecting from France");
+    CHECK_SRV("--", "[bob] is connecting from France",
               "irc_344,irc_numeric,log3");
 }
 
@@ -5334,7 +5363,7 @@ TEST(IrcProtocolWithServer, 433_connected)
      * never happen in practice): check that the message is still displayed
      * on the server buffer
      */
-     RECV(":server 433 alice #test :Nickname is already in use.");
+    RECV(":server 433 alice #test :Nickname is already in use.");
     CHECK_SRV("--", "#test: Nickname is already in use.",
               "irc_433,irc_numeric,log3");
 }
@@ -5641,6 +5670,66 @@ TEST(IrcProtocolWithServer, 714)
     RECV(":server 714 alice #test :You are already on that channel.");
     CHECK_SRV("--", "#test: You are already on that channel.",
               "irc_714,irc_numeric,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_716 (nick is in +g mode)
+ */
+
+TEST(IrcProtocolWithServer, 716)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 716");
+    CHECK_ERROR_PARAMS("716", 0, 2);
+    RECV(":server 716 alice");
+    CHECK_ERROR_PARAMS("716", 1, 2);
+
+    RECV(":server 716 alice bob :is in +g mode and must manually allow you to "
+         "message them. Your message was discarded.");
+    CHECK_SRV("--",
+              "bob: is in +g mode and must manually allow you to message them. "
+              "Your message was discarded.",
+              "irc_716,irc_numeric,log3");
+
+    /* open private buffer */
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+
+    RECV(":server 716 alice bob :is in +g mode and must manually allow you to "
+         "message them. Your message was discarded.");
+    CHECK_PV("bob", "--",
+             "bob: is in +g mode and must manually allow you to message them. "
+             "Your message was discarded.",
+             "irc_716,irc_numeric,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_717 (nick has been informed that you messaged them)
+ */
+
+TEST(IrcProtocolWithServer, 717)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 717");
+    CHECK_ERROR_PARAMS("717", 0, 2);
+    RECV(":server 717 alice");
+    CHECK_ERROR_PARAMS("717", 1, 2);
+
+    RECV(":server 717 alice bob :has been informed that you messaged them.");
+    CHECK_SRV("--", "bob: has been informed that you messaged them.",
+              "irc_717,irc_numeric,log3");
+
+    /* open private buffer */
+    RECV(":bob!user@host PRIVMSG alice :hi Alice!");
+    RECV(":server 717 alice bob :has been informed that you messaged them.");
+    CHECK_PV("bob", "--",
+             "bob: has been informed that you messaged them.",
+             "irc_717,irc_numeric,log3");
 }
 
 /*

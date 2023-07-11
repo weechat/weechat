@@ -69,7 +69,7 @@ irc_bar_item_buffer_plugin (const void *pointer, void *data,
     if (ptr_plugin == weechat_irc_plugin)
     {
         irc_buffer_get_server_and_channel (buffer, &server, &channel);
-        if (weechat_config_integer (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_PLUGIN)
+        if (weechat_config_enum (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_PLUGIN)
         {
             if (server && channel)
             {
@@ -127,7 +127,7 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
 
     buf_name[0] = '\0';
 
-    display_server = (weechat_config_integer (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME);
+    display_server = (weechat_config_enum (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME);
 
     irc_buffer_get_server_and_channel (buffer, &server, &channel);
     if (server || channel)
@@ -330,7 +330,7 @@ irc_bar_item_channel (const void *pointer, void *data,
     buf_name[0] = '\0';
     modes[0] = '\0';
 
-    display_server = (weechat_config_integer (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME);
+    display_server = (weechat_config_enum (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME);
 
     irc_buffer_get_server_and_channel (buffer, &server, &channel);
     if (server || channel)

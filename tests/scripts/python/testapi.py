@@ -254,7 +254,7 @@ def test_config():
     check(weechat.config_option_reset(ptr_opt_int, 1) == 2)  # SET_OK_CHANGED
     check(weechat.config_option_reset(ptr_opt_int, 1) == 1)  # SET_OK_SAME_VALUE
     check(weechat.config_integer(ptr_opt_int) == 2)
-    # integer option (with string values)
+    # integer option (with string values: enum with WeeChat >= 4.1.0)
     ptr_opt_int_str = weechat.config_new_option(
         ptr_config, ptr_section, 'option_int_str', 'integer', 'int option str',
         'val1|val2|val3', 0, 0, 'val2', 'val2', 0,
@@ -318,6 +318,27 @@ def test_config():
     check(weechat.config_option_reset(ptr_opt_col, 1) == 2)  # SET_OK_CHANGED
     check(weechat.config_option_reset(ptr_opt_col, 1) == 1)  # SET_OK_SAME_VALUE
     check(weechat.config_color(ptr_opt_col) == 'lightgreen')
+    # enum option
+    ptr_opt_enum = weechat.config_new_option(
+        ptr_config, ptr_section, 'option_enum', 'enum', 'enum option',
+        'val1|val2|val3', 0, 0, 'val2', 'val2', 0,
+        'option_check_value_cb', '',
+        'option_change_cb', '',
+        'option_delete_cb', '',
+    )
+    check(ptr_opt_enum != '')
+    check(weechat.config_integer(ptr_opt_enum) == 1)
+    check(weechat.config_string(ptr_opt_enum) == 'val2')
+    check(weechat.config_option_set(ptr_opt_enum, 'val1', 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_set(ptr_opt_enum, 'val1', 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_integer(ptr_opt_enum) == 0)
+    check(weechat.config_string(ptr_opt_enum) == 'val1')
+    check(weechat.config_integer_default(ptr_opt_enum) == 1)
+    check(weechat.config_string_default(ptr_opt_enum) == 'val2')
+    check(weechat.config_option_reset(ptr_opt_enum, 1) == 2)  # SET_OK_CHANGED
+    check(weechat.config_option_reset(ptr_opt_enum, 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_integer(ptr_opt_enum) == 1)
+    check(weechat.config_string(ptr_opt_enum) == 'val2')
     # search option
     ptr_opt_bool2 = weechat.config_search_option(ptr_config, ptr_section,
                                                  'option_bool')
