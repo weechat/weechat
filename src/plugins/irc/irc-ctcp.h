@@ -31,6 +31,8 @@ struct t_irc_ctcp_reply
     char *reply;                    /* CTCP reply format                     */
 };
 
+extern struct t_irc_ctcp_reply irc_ctcp_default_reply[];
+
 extern const char *irc_ctcp_get_default_reply (const char *ctcp);
 extern const char *irc_ctcp_get_reply (struct t_irc_server *server,
                                        const char *ctcp);

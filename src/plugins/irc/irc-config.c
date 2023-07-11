@@ -1425,10 +1425,10 @@ irc_config_reload (const void *pointer, void *data,
  */
 
 int
-irc_config_msgbuffer_create_option (const void *pointer, void *data,
-                                    struct t_config_file *config_file,
-                                    struct t_config_section *section,
-                                    const char *option_name, const char *value)
+irc_config_msgbuffer_create_option_cb (const void *pointer, void *data,
+                                       struct t_config_file *config_file,
+                                       struct t_config_section *section,
+                                       const char *option_name, const char *value)
 {
     struct t_config_option *ptr_option;
     char *name_lower;
@@ -1500,14 +1500,44 @@ irc_config_msgbuffer_create_option (const void *pointer, void *data,
 }
 
 /*
+ * Writes default ctcp reply formats.
+ */
+
+int
+irc_config_ctcp_write_default_cb (const void *pointer, void *data,
+                                  struct t_config_file *config_file,
+                                  const char *section_name)
+{
+    int i;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    if (!weechat_config_write_line (config_file, section_name, NULL))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+
+    for (i = 0; irc_ctcp_default_reply[i].name; i++)
+    {
+        if (!weechat_config_write_line (config_file,
+                                        irc_ctcp_default_reply[i].name,
+                                        "\"%s\"",
+                                        irc_ctcp_default_reply[i].reply))
+            return WEECHAT_CONFIG_WRITE_ERROR;
+    }
+
+    return WEECHAT_CONFIG_WRITE_OK;
+}
+
+/*
  * Sets a ctcp reply format.
  */
 
 int
-irc_config_ctcp_create_option (const void *pointer, void *data,
-                               struct t_config_file *config_file,
-                               struct t_config_section *section,
-                               const char *option_name, const char *value)
+irc_config_ctcp_create_option_cb (const void *pointer, void *data,
+                                  struct t_config_file *config_file,
+                                  struct t_config_section *section,
+                                  const char *option_name, const char *value)
 {
     struct t_config_option *ptr_option;
     int rc;
@@ -3747,7 +3777,7 @@ irc_config_init ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
-        &irc_config_msgbuffer_create_option, NULL, NULL,
+        &irc_config_msgbuffer_create_option_cb, NULL, NULL,
         NULL, NULL, NULL);
 
     /* CTCP */
@@ -3756,8 +3786,8 @@ irc_config_init ()
         1, 1,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
-        NULL, NULL, NULL,
-        &irc_config_ctcp_create_option, NULL, NULL,
+        &irc_config_ctcp_write_default_cb, NULL, NULL,
+        &irc_config_ctcp_create_option_cb, NULL, NULL,
         NULL, NULL, NULL);
 
     /* ignore */

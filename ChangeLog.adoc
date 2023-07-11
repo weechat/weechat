@@ -22,6 +22,7 @@ New features::
   * fset: add variable `allowed_values` in options, add options fset.color.allowed_values and fset.color.allowed_values_selected
   * fset: allow long type name in type filter
   * irc: display commands 716/717 in private buffer (if present) (issue #146)
+  * irc: create default options irc.ctcp.* when file irc.conf is created (issue #1974)
   * irc: remove Git revision and compilation date from CTCP VERSION/FINGER reply (issue #1974)
   * trigger: add options `-o`, `-ol`, `-i` and `-il` in command `/trigger list` (issue #1953)
 
