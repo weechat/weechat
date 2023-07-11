@@ -3503,11 +3503,12 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                                                               section);
                     if (!ptr_section)
                     {
-                        gui_chat_printf (NULL,
-                                         _("%sWarning: %s, line %d: unknown "
-                                           "section identifier (\"%s\")"),
-                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         filename, line_number, section);
+                        gui_chat_printf (
+                            NULL,
+                            _("%sWarning: %s, line %d: ignoring unknown "
+                              "section identifier (\"%s\")"),
+                            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                            filename, line_number, section);
                     }
                     free (section);
                 }
@@ -3606,7 +3607,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
         {
             gui_chat_printf (NULL,
                              _("%sWarning: %s, line %d: "
-                               "option outside section: %s"),
+                               "ignoring option outside section: %s"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              filename, line_number,
                              line);
@@ -3661,21 +3662,23 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
         switch (rc)
         {
             case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
-                gui_chat_printf (NULL,
-                                 _("%sWarning: %s, line %d: "
-                                   "unknown option for section \"%s\": %s"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 filename, line_number,
-                                 ptr_section->name,
-                                 line);
+                gui_chat_printf (
+                    NULL,
+                    _("%sWarning: %s, line %d: "
+                      "ignoring unknown option for section \"%s\": %s"),
+                    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                    filename, line_number,
+                    ptr_section->name,
+                    line);
                 break;
             case WEECHAT_CONFIG_OPTION_SET_ERROR:
-                gui_chat_printf (NULL,
-                                 _("%sWarning: %s, line %d: "
-                                   "invalid value for option: %s"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 filename, line_number,
-                                 line);
+                gui_chat_printf (
+                    NULL,
+                    _("%sWarning: %s, line %d: "
+                      "ignoring invalid value for option: %s"),
+                    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                    filename, line_number,
+                    line);
                 break;
         }
 

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-10 14:05+0200\n"
+"POT-Creation-Date: 2023-07-11 18:06+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5398,8 +5398,9 @@ msgstr "%s yapılandırma dosyası okunuyor"
 msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
 msgstr "%sUyarı: %s, %d. satır: Geçersiz sözdizim, \"!\" eksik"
 
-#, c-format
-msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
+msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
 msgstr "%sUyarı: %s, %d. satır: Bilinmeyen bölüm tanımlayıcısı (\"%s\")"
 
 #, c-format
@@ -5414,16 +5415,19 @@ msgid ""
 "of file is IGNORED, default options are used"
 msgstr ""
 
-#, c-format
-msgid "%sWarning: %s, line %d: option outside section: %s"
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: option outside section: %s"
+msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
 msgstr "%sUyarı: %s, %d. satır: Bölüm dışı seçenek: %s"
 
-#, c-format
-msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
+msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
 msgstr "%sUyarı: %s, %d. satır: \"%s\" bölümü için bilinmeyen seçenek: %s"
 
-#, c-format
-msgid "%sWarning: %s, line %d: invalid value for option: %s"
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: invalid value for option: %s"
+msgid "%sWarning: %s, line %d: ignoring invalid value for option: %s"
 msgstr "%sUyarı: %s, %d. satır: Seçenek için geçersiz değer: %s"
 
 #, c-format

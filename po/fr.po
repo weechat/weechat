@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-10 14:05+0200\n"
-"PO-Revision-Date: 2023-07-10 14:06+0200\n"
+"POT-Creation-Date: 2023-07-11 18:06+0200\n"
+"PO-Revision-Date: 2023-07-11 18:07+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -5477,8 +5477,8 @@ msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
 msgstr "%sAttention : %s, ligne %d : syntaxe invalide, il manque \"]\""
 
 #, c-format
-msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
-msgstr "%sAttention : %s, ligne %d : section inconnue (\"%s\")"
+msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
+msgstr "%sAttention : %s, ligne %d : section inconnue, ignorée (\"%s\")"
 
 #, c-format
 msgid ""
@@ -5497,17 +5497,20 @@ msgstr ""
 "(%d) => le reste du fichier est IGNORÉ, les options par défaut sont utilisées"
 
 #, c-format
-msgid "%sWarning: %s, line %d: option outside section: %s"
-msgstr "%sAttention : %s, ligne %d : option en dehors de la section : %s"
-
-#, c-format
-msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
+msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
 msgstr ""
-"%sAttention : %s, ligne %d : option inconnue pour la section \"%s\" : %s"
+"%sAttention : %s, ligne %d : option en dehors de la section, ignorée : %s"
 
 #, c-format
-msgid "%sWarning: %s, line %d: invalid value for option: %s"
-msgstr "%sAttention : %s, ligne %d : valeur invalide pour l'option : %s"
+msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
+msgstr ""
+"%sAttention : %s, ligne %d : option inconnue pour la section \"%s\", "
+"ignorée : %s"
+
+#, c-format
+msgid "%sWarning: %s, line %d: ignoring invalid value for option: %s"
+msgstr ""
+"%sAttention : %s, ligne %d : valeur invalide pour l'option, ignorée : %s"
 
 #, c-format
 msgid "Reloading configuration file %s"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-10 14:05+0200\n"
+"POT-Creation-Date: 2023-07-11 18:06+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5317,8 +5317,9 @@ msgstr "設定ファイル %s の読み込み中"
 msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
 msgstr "%s警告: %s、行 %d: 無効な構文、\"]\" が足りません"
 
-#, c-format
-msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
+msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
 msgstr "%s警告: %s、行 %d: セクションインジケータ (\"%s\") は未定義"
 
 #, c-format
@@ -5333,16 +5334,19 @@ msgid ""
 "of file is IGNORED, default options are used"
 msgstr ""
 
-#, c-format
-msgid "%sWarning: %s, line %d: option outside section: %s"
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: option outside section: %s"
+msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
 msgstr "%s警告: %s、行 %d: セクション外オプション: %s"
 
-#, c-format
-msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
+msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
 msgstr "%s警告: %s、行 %d: セクション \"%s\" の無効なオプション: %s"
 
-#, c-format
-msgid "%sWarning: %s, line %d: invalid value for option: %s"
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: invalid value for option: %s"
+msgid "%sWarning: %s, line %d: ignoring invalid value for option: %s"
 msgstr "%s警告: %s、行 %d: オプションに対する無効な値: %s"
 
 #, c-format

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-10 14:05+0200\n"
+"POT-Creation-Date: 2023-07-11 18:06+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -5348,8 +5348,9 @@ msgstr "A ler o ficheiro de configuração %s"
 msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
 msgstr "%sAviso: %s, linha %d: sintaxe inválida, falta ']'"
 
-#, c-format
-msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
+msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
 msgstr "%sAviso: %s, linha %d: identificador de secção desconhecido (\"%s\")"
 
 #, c-format
@@ -5364,16 +5365,19 @@ msgid ""
 "of file is IGNORED, default options are used"
 msgstr ""
 
-#, c-format
-msgid "%sWarning: %s, line %d: option outside section: %s"
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: option outside section: %s"
+msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
 msgstr "%sAviso: %s, linha %d: opção fora de secção: %s"
 
-#, c-format
-msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
+msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
 msgstr "%sAviso: %s, linha %d: opção desconhecida na secção \"%s\": %s"
 
-#, c-format
-msgid "%sWarning: %s, line %d: invalid value for option: %s"
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: invalid value for option: %s"
+msgid "%sWarning: %s, line %d: ignoring invalid value for option: %s"
 msgstr "%sAviso: %s, linha %d: valor inválido na opção: %s"
 
 #, c-format
