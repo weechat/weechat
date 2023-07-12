@@ -42,10 +42,8 @@
 
 struct t_irc_ctcp_reply irc_ctcp_default_reply[] =
 { { "clientinfo", "${clientinfo}" },
-  { "finger",     "WeeChat ${version}" },
   { "source",     "${download}" },
   { "time",       "${time}" },
-  { "userinfo",   "${username} (${realname})" },
   { "version",    "WeeChat ${version}" },
   { NULL,         NULL },
 };
@@ -572,8 +570,8 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
         return NULL;
 
     /*
-     * $clientinfo: supported CTCP, example:
-     *   ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+     * $clientinfo: supported CTCP, example with default config:
+     *   ACTION CLIENTINFO DCC PING SOURCE TIME VERSION
      */
     info = irc_ctcp_get_supported_ctcp (server);
     if (info)

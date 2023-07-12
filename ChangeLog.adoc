@@ -25,7 +25,8 @@ New features::
   * irc: create default options irc.ctcp.* when file irc.conf is created (issue #1974)
   * irc: evaluate options irc.ctcp.* (issue #1974)
   * irc: build dynamically the list of CTCPs supported in reply to "CTCP CLIENTINFO" (issue #1974)
-  * irc: remove Git revision and compilation date from CTCP VERSION/FINGER reply (issue #1974)
+  * irc: remove Git revision and compilation date from CTCP VERSION reply (issue #1974)
+  * irc: remove default CTCP replies FINGER and USERINFO (issue #1974)
   * trigger: add options `-o`, `-ol`, `-i` and `-il` in command `/trigger list` (issue #1953)
 
 Bug fixes::

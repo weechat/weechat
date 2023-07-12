@@ -125,19 +125,19 @@ TEST(IrcCtcp, IrcCtcpGetSupportedCtcp)
     server = irc_server_alloc ("server");
     CHECK(server);
 
-    WEE_TEST_STR("ACTION CLIENTINFO DCC FINGER PING SOURCE TIME USERINFO VERSION",
+    WEE_TEST_STR("ACTION CLIENTINFO DCC PING SOURCE TIME VERSION",
                  irc_ctcp_get_supported_ctcp (server));
 
     config_file_option_set_with_string ("irc.ctcp.version", "");
-    WEE_TEST_STR("ACTION CLIENTINFO DCC FINGER PING SOURCE TIME USERINFO",
+    WEE_TEST_STR("ACTION CLIENTINFO DCC PING SOURCE TIME",
                  irc_ctcp_get_supported_ctcp (server));
 
     config_file_option_set_with_string ("irc.ctcp.time", "");
-    WEE_TEST_STR("ACTION CLIENTINFO DCC FINGER PING SOURCE USERINFO",
+    WEE_TEST_STR("ACTION CLIENTINFO DCC PING SOURCE",
                  irc_ctcp_get_supported_ctcp (server));
 
     config_file_option_set_with_string ("irc.ctcp.version", "test");
-    WEE_TEST_STR("ACTION CLIENTINFO DCC FINGER PING SOURCE USERINFO VERSION",
+    WEE_TEST_STR("ACTION CLIENTINFO DCC PING SOURCE VERSION",
                  irc_ctcp_get_supported_ctcp (server));
 
     config_file_search_with_string ("irc.ctcp.version", NULL, NULL, &ptr_option, NULL);
@@ -179,7 +179,7 @@ TEST(IrcCtcp, IrcCtcpEvalReply)
     WEE_TEST_STR("abc", irc_ctcp_eval_reply (server, "abc"));
 
     /* ${clientinfo} */
-    WEE_TEST_STR("ACTION CLIENTINFO DCC FINGER PING SOURCE TIME USERINFO VERSION",
+    WEE_TEST_STR("ACTION CLIENTINFO DCC PING SOURCE TIME VERSION",
                  irc_ctcp_eval_reply (server, "${clientinfo}"));
 
     /* ${version} */

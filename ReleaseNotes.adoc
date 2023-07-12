@@ -21,6 +21,22 @@ IRC CTCP replies are now evaluated, with the same variables available, so now
 the syntax is for example `${version}` instead of `$version`. +
 The existing options `irc.ctcp.*` are automatically converted on upgrade.
 
+In addition, for privacy reasons, these default CTCP replies have been removed:
+
+- FINGER
+- USERINFO
+
+If ever you want that WeeChat replies to these CTCP requests, you can add them
+back with the two following commands:
+
+----
+/set irc.ctcp.finger "WeeChat ${version}"
+/set irc.ctcp.userinfo "${username} (${realname})"
+----
+
+They will then be advertised in reply to "CTCP CLIENTINFO", which is now built
+dynamically with these options.
+
 [[v4.1.0_fset_allowed_values]]
 === Allowed values for options on fset buffer
 

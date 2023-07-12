@@ -2954,7 +2954,7 @@ TEST(IrcProtocolWithServer, privmsg)
             CHECK_SRV("--", "CTCP requested by alice: CLIENTINFO",
                      "irc_privmsg,irc_ctcp,host_user@host,log1");
             CHECK_SRV("--", "CTCP reply to alice: CLIENTINFO ACTION CLIENTINFO "
-                      "DCC FINGER PING SOURCE TIME USERINFO VERSION",
+                      "DCC PING SOURCE TIME VERSION",
                       "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
                       "no_highlight,log1");
         }
@@ -2971,7 +2971,7 @@ TEST(IrcProtocolWithServer, privmsg)
             CHECK_SRV("--", "CTCP requested by alice: CLIENTINFO",
                       "irc_privmsg,irc_ctcp,host_user@host,log1");
             CHECK_SRV("--", "CTCP reply to alice: CLIENTINFO ACTION CLIENTINFO "
-                      "DCC FINGER PING SOURCE TIME USERINFO VERSION",
+                      "DCC PING SOURCE TIME VERSION",
                       "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
                       "no_highlight,log1");
         }
