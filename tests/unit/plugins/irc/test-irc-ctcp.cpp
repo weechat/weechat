@@ -31,6 +31,8 @@ extern "C"
 #include "src/plugins/irc/irc-config.h"
 #include "src/plugins/irc/irc-ctcp.h"
 #include "src/plugins/irc/irc-server.h"
+
+extern char *irc_ctcp_get_supported_ctcp (struct t_irc_server *server);
 }
 
 TEST_GROUP(IrcCtcp)
@@ -111,6 +113,44 @@ TEST(IrcCtcp, IrcCtcpReplyToNick)
 
 /*
  * Tests functions:
+ *   irc_ctcp_get_supported_ctcp
+ */
+
+TEST(IrcCtcp, IrcCtcpGetSupportedCtcp)
+{
+    struct t_irc_server *server;
+    struct t_config_option *ptr_option;
+    char *str;
+
+    server = irc_server_alloc ("server");
+    CHECK(server);
+
+    WEE_TEST_STR("ACTION CLIENTINFO DCC FINGER PING SOURCE TIME USERINFO VERSION",
+                 irc_ctcp_get_supported_ctcp (server));
+
+    config_file_option_set_with_string ("irc.ctcp.version", "");
+    WEE_TEST_STR("ACTION CLIENTINFO DCC FINGER PING SOURCE TIME USERINFO",
+                 irc_ctcp_get_supported_ctcp (server));
+
+    config_file_option_set_with_string ("irc.ctcp.time", "");
+    WEE_TEST_STR("ACTION CLIENTINFO DCC FINGER PING SOURCE USERINFO",
+                 irc_ctcp_get_supported_ctcp (server));
+
+    config_file_option_set_with_string ("irc.ctcp.version", "test");
+    WEE_TEST_STR("ACTION CLIENTINFO DCC FINGER PING SOURCE USERINFO VERSION",
+                 irc_ctcp_get_supported_ctcp (server));
+
+    config_file_search_with_string ("irc.ctcp.version", NULL, NULL, &ptr_option, NULL);
+    config_file_option_unset (ptr_option);
+
+    config_file_search_with_string ("irc.ctcp.time", NULL, NULL, &ptr_option, NULL);
+    config_file_option_unset (ptr_option);
+
+    irc_server_free (server);
+}
+
+/*
+ * Tests functions:
  *   irc_ctcp_eval_reply
  */
 
@@ -139,7 +179,7 @@ TEST(IrcCtcp, IrcCtcpEvalReply)
     WEE_TEST_STR("abc", irc_ctcp_eval_reply (server, "abc"));
 
     /* ${clientinfo} */
-    WEE_TEST_STR("ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION",
+    WEE_TEST_STR("ACTION CLIENTINFO DCC FINGER PING SOURCE TIME USERINFO VERSION",
                  irc_ctcp_eval_reply (server, "${clientinfo}"));
 
     /* ${version} */

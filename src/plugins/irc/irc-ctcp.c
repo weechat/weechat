@@ -428,6 +428,123 @@ end:
 }
 
 /*
+ * Compares two CTCPs in arraylist.
+ */
+
+int
+irc_ctcp_list_ctcp_cmp_cb (void *data, struct t_arraylist *arraylist,
+                           void *pointer1, void *pointer2)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    return weechat_strcasecmp ((const char *)pointer1, (const char *)pointer2);
+}
+
+/*
+ * Frees a CTCP in arraylist.
+ */
+
+void
+irc_ctcp_list_ctcp_free_cb (void *data, struct t_arraylist *arraylist,
+                            void *pointer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    free (pointer);
+}
+
+/*
+ * Returns list of supported/configured CTCP replies, aggregation of these
+ * lists:
+ *
+ *   - list of default CTCP replies (if not blocked)
+ *   - list of CTCP replies defined in options irc.ctcp.* (if not blocked)
+ *   - other CTCP: ACTION, DCC, PING.
+ *
+ * The list returned is a string with multiple CTCP (upper case) separated by
+ * spaces.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_ctcp_get_supported_ctcp (struct t_irc_server *server)
+{
+    struct t_arraylist *list_ctcp;
+    struct t_hdata *hdata_config_section, *hdata_config_option;
+    struct t_config_option *ptr_option;
+    const char *reply, *ptr_name;
+    char *ctcp_upper, **result;
+    int i, list_size;
+
+    list_ctcp = weechat_arraylist_new (16, 1, 0,
+                                       &irc_ctcp_list_ctcp_cmp_cb, NULL,
+                                       &irc_ctcp_list_ctcp_free_cb, NULL);
+    if (!list_ctcp)
+        return NULL;
+
+    /* add default CTCPs */
+    for (i = 0; irc_ctcp_default_reply[i].name; i++)
+    {
+        reply = irc_ctcp_get_reply (server, irc_ctcp_default_reply[i].name);
+        if (reply && reply[0])
+        {
+            weechat_arraylist_add (list_ctcp,
+                                   strdup (irc_ctcp_default_reply[i].name));
+        }
+    }
+
+    /* add customized CTCPs */
+    hdata_config_section = weechat_hdata_get ("config_section");
+    hdata_config_option = weechat_hdata_get ("config_option");
+    ptr_option = weechat_hdata_pointer (hdata_config_section,
+                                        irc_config_section_ctcp,
+                                        "options");
+    while (ptr_option)
+    {
+        ptr_name = weechat_hdata_string (hdata_config_option, ptr_option, "name");
+        if (ptr_name)
+        {
+            reply = irc_ctcp_get_reply (server, ptr_name);
+            if (reply && reply[0])
+                weechat_arraylist_add (list_ctcp, strdup (ptr_name));
+        }
+        ptr_option = weechat_hdata_move (hdata_config_option, ptr_option, 1);
+    }
+
+    /* add other CTCPs */
+    weechat_arraylist_add (list_ctcp, strdup ("action"));
+    weechat_arraylist_add (list_ctcp, strdup ("dcc"));
+    weechat_arraylist_add (list_ctcp, strdup ("ping"));
+
+    result = weechat_string_dyn_alloc (128);
+    if (result)
+    {
+        list_size = weechat_arraylist_size (list_ctcp);
+        for (i = 0; i < list_size; i++)
+        {
+            ctcp_upper = weechat_string_toupper (
+                (const char *)weechat_arraylist_get (list_ctcp, i));
+            if (ctcp_upper)
+            {
+                if (*result[0])
+                    weechat_string_dyn_concat (result, " ", -1);
+                weechat_string_dyn_concat (result, ctcp_upper, -1);
+                free (ctcp_upper);
+            }
+        }
+    }
+
+    weechat_arraylist_free (list_ctcp);
+
+    return (result) ? weechat_string_dyn_free (result, 0) : NULL;
+}
+
+/*
  * Evaluates CTCP reply format.
  *
  * Note: result must be freed after use.
@@ -458,9 +575,12 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
      * $clientinfo: supported CTCP, example:
      *   ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
      */
-    weechat_hashtable_set (extra_vars, "clientinfo",
-                           "ACTION DCC CLIENTINFO FINGER PING SOURCE TIME "
-                           "USERINFO VERSION");
+    info = irc_ctcp_get_supported_ctcp (server);
+    if (info)
+    {
+        weechat_hashtable_set (extra_vars, "clientinfo", info);
+        free (info);
+    }
 
     info_version = weechat_info_get ("version", "");
     info_version_git = weechat_info_get ("version_git", "");
