@@ -31,11 +31,6 @@ New features::
 
 Bug fixes::
 
-  * core: fix renaming of options with command `/item rename` (issue #1978)
-  * core: don't send "key_pressed" signal again for the same key press (issue #1976)
-  * core: don't send "key_combo_*" signals for incomplete keys (issue #1976)
-  * core: add key ctrl-backspace in /help key (issue #1975)
-  * core: keep keys ctrl-H and ctrl-? (in lower case) if they were manually bound to custom commands in a previous version
   * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
   * core: display focus hashtable for debug even if no key is matching
   * fset: remove extra spaces between min and max values when second format is used
@@ -44,6 +39,17 @@ Bug fixes::
   * irc: add missing "account-tag" in list of supported capabilities
   * script: fix cursor position after `/script list -i` or `/script list -il`
   * script: fix buffer used by command `/script list -i|-il|-o|-ol`
+
+[[v4.0.2]]
+== Version 4.0.2 (2023-07-12)
+
+Bug fixes::
+
+  * core: fix renaming of options with command `/item rename` (issue #1978)
+  * core: don't send "key_pressed" signal again for the same key press (issue #1976)
+  * core: don't send "key_combo_*" signals for incomplete keys (issue #1976)
+  * core: add key ctrl-backspace in /help key (issue #1975)
+  * core: keep keys ctrl-H and ctrl-? (in lower case) if they were manually bound to custom commands in a previous version
 
 Tests::
 
