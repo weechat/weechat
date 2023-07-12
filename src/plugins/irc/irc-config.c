@@ -1594,15 +1594,19 @@ irc_config_ctcp_create_option_cb (const void *pointer, void *data,
                     config_file, section,
                     option_name, "string",
                     _("format for CTCP reply or empty string for blocking "
-                      "CTCP (no reply), following variables are replaced: "
-                      "$version (WeeChat version), "
-                      "$compilation (compilation date), "
-                      "$osinfo (info about OS), "
-                      "$site (WeeChat site), "
-                      "$download (WeeChat site, download page), "
-                      "$time (current date and time as text), "
-                      "$username (username on server), "
-                      "$realname (realname on server)"),
+                      "CTCP (no reply); content is evaluated, see /help eval; "
+                      "following variables are replaced: "
+                      "${clientinfo}: list of supported CTCP, "
+                      "${version}: WeeChat version, "
+                      "${git}: Git version, "
+                      "${versiongit}: WeeChat version and Git version, "
+                      "${compilation}: compilation date, "
+                      "${osinfo}: info about OS, "
+                      "${site}: WeeChat site, "
+                      "${download}: WeeChat site, download page, "
+                      "${time}: current date and time as text, "
+                      "${username}: username on server, "
+                      "${realname}: realname on server"),
                     NULL, 0, 0, default_value, value, 0,
                     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
                 rc = (ptr_option) ?
@@ -2796,8 +2800,8 @@ irc_config_update_cb (const void *pointer, void *data,
                       int version_read,
                       struct t_hashtable *data_read)
 {
-    const char *ptr_section, *ptr_option;
-    char *new_option, *pos_option;
+    const char *ptr_section, *ptr_option, *ptr_value;
+    char *new_option, *pos_option, *new_value;
     int changes;
 
     /* make C compiler happy */
@@ -2868,6 +2872,39 @@ irc_config_update_cb (const void *pointer, void *data,
                     free (new_option);
                 }
             }
+        }
+    }
+
+    if (version_read < 3)
+    {
+        /*
+         * changes in v3:
+         *   - options "irc.ctcp.*" are now evaluated
+         *     (eg: "$version" -> "${version"})
+         */
+        ptr_section = weechat_hashtable_get (data_read, "section");
+        ptr_option = weechat_hashtable_get (data_read, "option");
+        ptr_value = weechat_hashtable_get (data_read, "value");
+        if (ptr_section
+            && ptr_option
+            && ptr_value
+            && ptr_value[0]
+            && (strcmp (ptr_section, "ctcp") == 0))
+        {
+            new_value = irc_ctcp_convert_legacy_format (ptr_value);
+            if (new_value && (strcmp (ptr_value, new_value) != 0))
+            {
+                weechat_printf (
+                    NULL,
+                    _("IRC CTCP format converted for \"%s\": \"%s\" => \"%s\""),
+                    ptr_option,
+                    ptr_value,
+                    new_value);
+                weechat_hashtable_set (data_read, "value", new_value);
+                changes++;
+            }
+            if (new_value)
+                free (new_value);
         }
     }
 

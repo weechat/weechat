@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-11 18:06+0200\n"
+"POT-Creation-Date: 2023-07-12 17:22+0200\n"
 "PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8115,11 +8115,13 @@ msgid ""
 msgstr ""
 
 msgid ""
-"format for CTCP reply or empty string for blocking CTCP (no reply), "
-"following variables are replaced: $version (WeeChat version), $compilation "
-"(compilation date), $osinfo (info about OS), $site (WeeChat site), $download "
-"(WeeChat site, download page), $time (current date and time as text), "
-"$username (username on server), $realname (realname on server)"
+"format for CTCP reply or empty string for blocking CTCP (no reply); content "
+"is evaluated, see /help eval; following variables are replaced: "
+"${clientinfo}: list of supported CTCP, ${version}: WeeChat version, ${git}: "
+"Git version, ${versiongit}: WeeChat version and Git version, ${compilation}: "
+"compilation date, ${osinfo}: info about OS, ${site}: WeeChat site, "
+"${download}: WeeChat site, download page, ${time}: current date and time as "
+"text, ${username}: username on server, ${realname}: realname on server"
 msgstr ""
 
 #, fuzzy, c-format
@@ -8470,6 +8472,10 @@ msgstr "%s недостаточно памяти для сообщения в с
 
 #, c-format
 msgid "IRC option renamed: \"irc.%s.%s\" => \"irc.%s.%s\""
+msgstr ""
+
+#, c-format
+msgid "IRC CTCP format converted for \"%s\": \"%s\" => \"%s\""
 msgstr ""
 
 msgid ""

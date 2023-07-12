@@ -3776,7 +3776,7 @@ CTCP одговори могу да се прилагоде, или неки CTC
 На пример, ако желите да прилагодите одговор на CTCP „VERSION”, употребите следећу команду:
 
 ----
-/set irc.ctcp.version "Користим WeeChat $version, одличан је!"
+/set irc.ctcp.version "Користим WeeChat ${version}, одличан је!"
 ----
 
 [NOTE]
@@ -3798,7 +3798,7 @@ CTCP одговори могу да се прилагоде, или неки CTC
 CTCP може да се прилагоди само за један сервер, употребом његовог интерног имена испред CTCP имена:
 
 ----
-/set irc.ctcp.libera.version "WeeChat $version (за libera)"
+/set irc.ctcp.libera.version "WeeChat ${version} (за libera)"
 ----
 
 Ако желите да вратите стандардни CTCP одговор, уклоните опцију:
@@ -3807,38 +3807,42 @@ CTCP може да се прилагоди само за један сервер
 /unset irc.ctcp.version
 ----
 
-У стринговима је могућа употреба следећих кодова и они се аутоматски развијају када програм WeeChat одговара на CTCP:
+// TRANSLATION MISSING
+The CTCP replies are evaluated (see command <<command_weechat_eval,/eval>>) and
+the following extra variables are available:
 
-[width="100%", cols="2l,4,8", options="header"]
+[width="100%", cols="2,4,8", options="header"]
 |===
-| Кôд          | Опис                                | Вредност/пример
-| $clientinfo  | Листа подржаних CTCP                | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| $version     | Верзија програма WeeChat            | `+4.1.0-dev+`
-| $versiongit  | WeeChat верзија + Git верзија ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
-| $git         | Git верзија ^(1)^                   | `+v4.0.0-51-g8f98b922a+`
-| $compilation | Датум компајлирања програма WeeChat | `+Jul  8 2023 20:14:23+`
-| $osinfo      | Инфо о ОС                           | `+Linux 5.10.0-23-amd64 / x86_64+`
-| $site        | WeeChat вебсајт                     | `+https://weechat.org/+`
-| $download    | WeeChat сајт, страна за преузимање  | `+https://weechat.org/download/+`
-| $time        | Текући датум/време                  | `+Sat, 08 Jul 2023 21:11:19 +0200+`
-| $username    | Корисничко име на IRC серверу       | `+name+`
-| $realname    | Реално име на IRC серверу           | `+John Doe+`
+// TRANSLATION MISSING
+| Variable           | Опис                                | Вредност/пример
+| `+${clientinfo}+`  | Листа подржаних CTCP                | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| `+${version}+`     | Верзија програма WeeChat            | `+4.1.0-dev+`
+| `+${versiongit}+`  | WeeChat верзија + Git верзија ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
+| `+${git}+`         | Git верзија ^(1)^                   | `+v4.0.0-51-g8f98b922a+`
+| `+${compilation}+` | Датум компајлирања програма WeeChat | `+Jul  8 2023 20:14:23+`
+| `+${osinfo}+`      | Инфо о ОС                           | `+Linux 5.10.0-23-amd64 / x86_64+`
+| `+${site}+`        | WeeChat вебсајт                     | `+https://weechat.org/+`
+| `+${download}+`    | WeeChat сајт, страна за преузимање  | `+https://weechat.org/download/+`
+| `+${time}+`        | Текући датум/време                  | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| `+${username}+`    | Корисничко име на IRC серверу       | `+name+`
+| `+${realname}+`    | Реално име на IRC серверу           | `+John Doe+`
 |===
 
 [NOTE]
 ^(1)^ Git верзија је излаз команде `git describe`. Позната је само ако је програм WeeChat компајлиран унутар Git репозиторијума и ако је Git инсталиран.
 
-Ако CTCP опције нису дефинисане (што је подразумевано), CTCP одговори су следећи:
+// TRANSLATION MISSING
+The default CTCP replies are:
 
 [width="100%", cols="2,4,8", options="header"]
 |===
-| CTCP       | Формат одговора           | Пример
-| CLIENTINFO | `+$clientinfo+`           | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
-| SOURCE     | `+$download+`             | `+https://weechat.org/download/+`
-| TIME       | `+$time+`                 | `+Sat, 08 Jul 2023 21:11:19 +0200+`
-| USERINFO   | `+$username ($realname)+` | `+име (Пера Перић)+`
-| VERSION    | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
+| CTCP       | Формат одговора               | Пример
+| CLIENTINFO | `+${clientinfo}+`             | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| FINGER     | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
+| SOURCE     | `+${download}+`               | `+https://weechat.org/download/+`
+| TIME       | `+${time}+`                   | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| USERINFO   | `+${username} (${realname})+` | `+име (Пера Перић)+`
+| VERSION    | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
 |===
 
 [[irc_target_buffer]]

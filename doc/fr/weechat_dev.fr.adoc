@@ -438,6 +438,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-irc-channel.cpp    | Tests : canaux IRC.
 |             test-irc-color.cpp      | Tests : couleurs IRC.
 |             test-irc-config.cpp     | Tests : configuration IRC.
+|             test-irc-ctcp.cpp       | Tests : CTCP IRC.
 |             test-irc-ignore.cpp     | Tests : ignores IRC.
 |             test-irc-join.cpp       | Tests : fonctions de join IRC.
 |             test-irc-message.cpp    | Tests : messages IRC.

@@ -4070,7 +4070,7 @@ Beispiel: Um eine Antwort auf die CTCP Anfrage "VERSION" anzupassen nutzen Sie
 folgenden Befehl:
 
 ----
-/set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
+/set irc.ctcp.version "I'm running WeeChat ${version}, it rocks!"
 ----
 
 [NOTE]
@@ -4095,7 +4095,7 @@ Auch kann man CTCP Antworten für jeden einzelnen Server anpassen. Dazu muss
 man lediglich den internen Servernamen vor die CTCP Anfrage setzen:
 
 ----
-/set irc.ctcp.libera.version "WeeChat $version (for libera)"
+/set irc.ctcp.libera.version "WeeChat ${version} (for libera)"
 ----
 
 Sollen die CTCP Antworten wieder auf die Standardeinstellungen zurück gesetzt werden
@@ -4105,23 +4105,25 @@ dann müssen Sie lediglich die Option löschen:
 /unset irc.ctcp.version
 ----
 
-Folgende Platzhalter können in den CTCP-Antworten genutzt werden. Diese werden dann
-mit dem entsprechenden Wert ersetzt:
+// TRANSLATION MISSING
+The CTCP replies are evaluated (see command <<command_weechat_eval,/eval>>) and
+the following extra variables are available:
 
-[width="100%",cols="2l,4,8",options="header"]
+[width="100%",cols="2,4,8",options="header"]
 |===
-| Platzhalter  | Beschreibung                        | Wert/Beispiel
-| $clientinfo  | Liste der CTCP Antworten            | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| $version     | WeeChat Version                     | `+4.1.0-dev+`
-| $versiongit  | WeeChat Version + Git version ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
-| $git         | Git Version ^(1)^                   | `+v4.0.0-51-g8f98b922a+`
-| $compilation | Datum der Kompilierung              | `+Jul  8 2023 20:14:23+`
-| $osinfo      | Info über das genutzte OS           | `+Linux 5.10.0-23-amd64 / x86_64+`
-| $site        | WeeChat Seite                       | `+https://weechat.org/+`
-| $download    | WeeChat, Download Seite             | `+https://weechat.org/download/+`
-| $time        | Aktuelle Uhrzeit/Datum              | `+Sat, 08 Jul 2023 21:11:19 +0200+`
-| $username    | Username beim IRC Server            | `+Name+`
-| $realname    | Realname beim IRC Server            | `+John Doe+`
+// TRANSLATION MISSING
+| Variable           | Beschreibung                        | Wert/Beispiel
+| `+${clientinfo}+`  | Liste der CTCP Antworten            | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| `+${version}+`     | WeeChat Version                     | `+4.1.0-dev+`
+| `+${versiongit}+`  | WeeChat Version + Git version ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
+| `+${git}+`         | Git Version ^(1)^                   | `+v4.0.0-51-g8f98b922a+`
+| `+${compilation}+` | Datum der Kompilierung              | `+Jul  8 2023 20:14:23+`
+| `+${osinfo}+`      | Info über das genutzte OS           | `+Linux 5.10.0-23-amd64 / x86_64+`
+| `+${site}+`        | WeeChat Seite                       | `+https://weechat.org/+`
+| `+${download}+`    | WeeChat, Download Seite             | `+https://weechat.org/download/+`
+| `+${time}+`        | Aktuelle Uhrzeit/Datum              | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| `+${username}+`    | Username beim IRC Server            | `+Name+`
+| `+${realname}+`    | Realname beim IRC Server            | `+John Doe+`
 |===
 
 [NOTE]
@@ -4129,17 +4131,18 @@ mit dem entsprechenden Wert ersetzt:
 Dies erfordert, dass WeeChat aus dem Git Repository heraus kompiliert wurde
 und das Git überhaupt installiert ist.
 
-Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
+// TRANSLATION MISSING
+The default CTCP replies are:
 
 [width="100%",cols="2,4,8",options="header"]
 |===
-| CTCP       | Antwortformat             | Beispiel
-| CLIENTINFO | `+$clientinfo+`           | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
-| SOURCE     | `+$download+`             | `+https://weechat.org/download/+`
-| TIME       | `+$time+`                 | `+Sat, 08 Jul 2023 21:11:19 +0200+`
-| USERINFO   | `+$username ($realname)+` | `+Name (John Doe)+`
-| VERSION    | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
+| CTCP       | Antwortformat                 | Beispiel
+| CLIENTINFO | `+${clientinfo}+`             | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| FINGER     | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
+| SOURCE     | `+${download}+`               | `+https://weechat.org/download/+`
+| TIME       | `+${time}+`                   | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| USERINFO   | `+${username} (${realname})+` | `+Name (John Doe)+`
+| VERSION    | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
 |===
 
 [[irc_target_buffer]]

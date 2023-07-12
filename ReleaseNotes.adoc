@@ -14,6 +14,13 @@ For a complete list of changes, please look at ChangeLog.
 [[v4.1.0]]
 == Version 4.1.0 (under dev)
 
+[[v4.1.0_irc_ctcp_replies]]
+=== IRC CTCP replies
+
+IRC CTCP replies are now evaluated, with the same variables available, so now
+the syntax is for example `${version}` instead of `$version`. +
+The existing options `irc.ctcp.*` are automatically converted on upgrade.
+
 [[v4.1.0_fset_allowed_values]]
 === Allowed values for options on fset buffer
 

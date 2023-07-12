@@ -438,6 +438,8 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-irc-channel.cpp    | Тестови: IRC канали.
 |             test-irc-color.cpp      | Тестови: IRC боје.
 |             test-irc-config.cpp     | Тестови: IRC конфигурација.
+// TRANSLATION MISSING
+|             test-irc-ctcp.cpp       | Tests: IRC CTCP.
 |             test-irc-ignore.cpp     | Тестови: IRC игнорисања.
 |             test-irc-join.cpp       | Тестови: IRC функције приступања.
 |             test-irc-message.cpp    | Тестови: IRC поруке.

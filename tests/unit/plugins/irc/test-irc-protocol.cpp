@@ -2801,9 +2801,8 @@ TEST(IrcProtocolWithServer, privmsg)
         RECV(":bob!user@host PRIVMSG #test :\01VERSION");
         CHECK_CHAN("--", "CTCP requested by bob: VERSION",
                    "irc_privmsg,irc_ctcp,host_user@host,log1");
-        info = irc_ctcp_replace_variables (ptr_server,
-                                           irc_ctcp_get_reply (ptr_server,
-                                                               "VERSION"));
+        info = irc_ctcp_eval_reply (ptr_server,
+                                    irc_ctcp_get_reply (ptr_server, "VERSION"));
         snprintf (message, sizeof (message),
                   "CTCP reply to bob: VERSION %s", info);
         CHECK_CHAN("--", message,
@@ -2840,9 +2839,8 @@ TEST(IrcProtocolWithServer, privmsg)
                  "irc_privmsg,irc_action,notify_private,nick_bob,"
                  "host_user@host,log1");
         RECV(":bob!user@host PRIVMSG alice :\01VERSION");
-        info = irc_ctcp_replace_variables (ptr_server,
-                                           irc_ctcp_get_reply (ptr_server,
-                                                               "VERSION"));
+        info = irc_ctcp_eval_reply (ptr_server,
+                                    irc_ctcp_get_reply (ptr_server, "VERSION"));
         snprintf (message, sizeof (message),
                   "CTCP reply to bob: VERSION %s", info);
         CHECK_SRV("--", message,
@@ -2923,9 +2921,8 @@ TEST(IrcProtocolWithServer, privmsg)
         RECV(":bob!user@host PRIVMSG alice :\01VERSION\01");
         CHECK_SRV("--", "CTCP requested by bob: VERSION",
                   "irc_privmsg,irc_ctcp,host_user@host,log1");
-        info = irc_ctcp_replace_variables (ptr_server,
-                                           irc_ctcp_get_reply (ptr_server,
-                                                               "VERSION"));
+        info = irc_ctcp_eval_reply (ptr_server,
+                                    irc_ctcp_get_reply (ptr_server, "VERSION"));
         snprintf (message, sizeof (message),
                   "CTCP reply to bob: VERSION %s", info);
         CHECK_SRV("--", message,

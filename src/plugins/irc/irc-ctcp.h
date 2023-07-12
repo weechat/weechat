@@ -33,6 +33,7 @@ struct t_irc_ctcp_reply
 
 extern struct t_irc_ctcp_reply irc_ctcp_default_reply[];
 
+extern char *irc_ctcp_convert_legacy_format (const char *format);
 extern const char *irc_ctcp_get_default_reply (const char *ctcp);
 extern const char *irc_ctcp_get_reply (struct t_irc_server *server,
                                        const char *ctcp);
@@ -43,8 +44,8 @@ extern void irc_ctcp_display_reply_from_nick (struct t_irc_server *server,
                                               const char *nick,
                                               const char *address,
                                               const char *arguments);
-extern char *irc_ctcp_replace_variables (struct t_irc_server *server,
-                                         const char *format);
+extern char *irc_ctcp_eval_reply (struct t_irc_server *server,
+                                  const char *format);
 extern void irc_ctcp_recv (struct t_irc_server *server, time_t date,
                            struct t_hashtable *tags, const char *command,
                            struct t_irc_channel *channel, const char *target,
