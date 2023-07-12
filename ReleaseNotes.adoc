@@ -11,6 +11,11 @@ It is recommended to read it when upgrading to a new stable version. +
 For a complete list of changes, please look at ChangeLog.
 
 
+[[v4.0.2]]
+== Version 4.0.2 (2023-07-12)
+
+No release notes.
+
 [[v4.0.1]]
 == Version 4.0.1 (2023-06-30)
 
@@ -473,7 +478,7 @@ now any return value is ignored (like it has always been in the C API).
 [[v3.7.1]]
 == Version 3.7.1 (2022-10-21)
 
-Bug fix and maintenance release.
+No release notes.
 
 [[v3.7]]
 == Version 3.7 (2022-10-09)
@@ -595,7 +600,7 @@ and is now a percentage between `0` and `100`:
 [[v3.4.1]]
 == Version 3.4.1 (2022-03-13)
 
-Bug fix and maintenance release.
+No release notes.
 
 [[v3.4]]
 == Version 3.4 (2021-12-18)
@@ -753,7 +758,7 @@ For example:
 [[v3.2.1]]
 == Version 3.2.1 (2021-09-04)
 
-Bug fix and maintenance release.
+No release notes.
 
 [[v3.2]]
 == Version 3.2 (2021-06-13)
@@ -983,7 +988,7 @@ must adjust the value of the new option, which defaults to 1:
 [[v3.0.1]]
 == Version 3.0.1 (2021-01-31)
 
-Bug fix and maintenance release.
+No release notes.
 
 [[v3.0]]
 == Version 3.0 (2020-11-11)
@@ -1291,7 +1296,7 @@ version:
 [[v2.7.1]]
 == Version 2.7.1 (2020-02-20)
 
-Bug fix and maintenance release.
+No release notes.
 
 [[v2.7]]
 == Version 2.7 (2019-12-08)
@@ -1535,7 +1540,7 @@ Functions removed from C API:
 [[v2.3]]
 == Version 2.3 (2018-10-21)
 
-No release note.
+No release notes.
 
 [[v2.2]]
 == Version 2.2 (2018-07-14)
@@ -1671,7 +1676,7 @@ List of options moved:
 [[v2.0.1]]
 == Version 2.0.1 (2017-12-20)
 
-Bug fix and maintenance release.
+No release notes.
 
 [[v2.0]]
 == Version 2.0 (2017-12-03)
@@ -1766,12 +1771,12 @@ to integer before using it, for example in Python: `int(fd)`.
 [[v1.9.1]]
 == Version 1.9.1 (2017-09-23)
 
-Bug fix and maintenance release.
+No release notes.
 
 [[v1.9]]
 == Version 1.9 (2017-06-25)
 
-No release note.
+No release notes.
 
 [[v1.8]]
 == Version 1.8 (2017-05-13)
@@ -1823,7 +1828,7 @@ Aspell option with color for suggestion on a misspelled word has been renamed:
 [[v1.7.1]]
 == Version 1.7.1 (2017-04-22)
 
-Bug fix and maintenance release.
+No release notes.
 
 [[v1.7]]
 == Version 1.7 (2017-01-15)
@@ -2070,7 +2075,7 @@ command:
 [[v1.1.1]]
 == Version 1.1.1 (2015-01-25)
 
-Bug fix and maintenance release.
+No release notes.
 
 [[v1.1]]
 == Version 1.1 (2015-01-11)
@@ -2190,7 +2195,7 @@ instead of milliseconds:
 [[v1.0.1]]
 == Version 1.0.1 (2014-09-28)
 
-Bug fix and maintenance release.
+No release notes.
 
 [[v1.0]]
 == Version 1.0 (2014-08-15)
@@ -3016,17 +3021,17 @@ This version fixes a major bug: crash with some special chars in IRC messages.
 [[v0.2.6]]
 == Version 0.2.6 (2007-09-06)
 
-No release note.
+No release notes.
 
 [[v0.2.5]]
 == Version 0.2.5 (2007-06-07)
 
-No release note.
+No release notes.
 
 [[v0.2.4]]
 == Version 0.2.4 (2007-03-29)
 
-No release note.
+No release notes.
 
 [[v0.2.3]]
 == Version 0.2.3 (2007-01-10)
@@ -3085,7 +3090,7 @@ Which gives something like:
 [[v0.2.1]]
 == Version 0.2.1 (2006-10-01)
 
-No release note.
+No release notes.
 
 [[v0.2.0]]
 == Version 0.2.0 (2006-08-19)
@@ -3199,74 +3204,74 @@ at startup.
 [[v0.1.5]]
 == Version 0.1.5 (2005-09-24)
 
-No release note.
+No release notes.
 
 [[v0.1.4]]
 == Version 0.1.4 (2005-07-30)
 
-No release note.
+No release notes.
 
 [[v0.1.3]]
 == Version 0.1.3 (2005-07-02)
 
-No release note.
+No release notes.
 
 [[v0.1.2]]
 == Version 0.1.2 (2005-05-21)
 
-No release note.
+No release notes.
 
 [[v0.1.1]]
 == Version 0.1.1 (2005-03-20)
 
-No release note.
+No release notes.
 
 [[v0.1.0]]
 == Version 0.1.0 (2005-02-12)
 
-No release note.
+No release notes.
 
 [[v0.0.9]]
 == Version 0.0.9 (2005-01-01)
 
-No release note.
+No release notes.
 
 [[v0.0.8]]
 == Version 0.0.8 (2004-10-30)
 
-No release note.
+No release notes.
 
 [[v0.0.7]]
 == Version 0.0.7 (2004-08-08)
 
-No release note.
+No release notes.
 
 [[v0.0.6]]
 == Version 0.0.6 (2004-06-05)
 
-No release note.
+No release notes.
 
 [[v0.0.5]]
 == Version 0.0.5 (2004-02-07)
 
-No release note.
+No release notes.
 
 [[v0.0.4]]
 == Version 0.0.4 (2004-01-01)
 
-No release note.
+No release notes.
 
 [[v0.0.3]]
 == Version 0.0.3 (2003-11-03)
 
-No release note.
+No release notes.
 
 [[v0.0.2]]
 == Version 0.0.2 (2003-10-05)
 
-No release note.
+No release notes.
 
 [[v0.0.1]]
 == Version 0.0.1 (2003-09-27)
 
-No release note.
+No release notes.
