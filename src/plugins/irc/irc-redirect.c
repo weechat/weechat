@@ -55,7 +55,7 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *        stop: 323: end of /list
        *       extra: -
        */
-      "321",
+      "321,322",
       "323",
       NULL,
       NULL, NULL,
