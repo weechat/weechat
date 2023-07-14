@@ -1238,11 +1238,7 @@ fset_buffer_get_window_info (struct t_gui_window *window,
 }
 
 /*
- * Checks if current line is outside window.
- *
- * Returns:
- *   1: line is outside window
- *   0: line is inside window
+ * Checks if current line is outside window and adjusts scroll if needed.
  */
 
 void
