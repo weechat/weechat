@@ -59,6 +59,7 @@
 #include "irc-command.h"
 #include "irc-config.h"
 #include "irc-input.h"
+#include "irc-list.h"
 #include "irc-message.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
@@ -1740,6 +1741,7 @@ irc_server_alloc (const char *name)
         weechat_config_integer (irc_config_network_lag_check);
     new_server->lag_last_refresh = 0;
     new_server->cmd_list_regexp = NULL;
+    new_server->list = irc_list_alloc (new_server);
     new_server->last_user_message = 0;
     new_server->last_away_check = 0;
     new_server->last_data_purge = 0;
@@ -2325,6 +2327,8 @@ irc_server_free_data (struct t_irc_server *server)
         regfree (server->cmd_list_regexp);
         free (server->cmd_list_regexp);
     }
+    if (server->list)
+        irc_list_free (server);
     if (server->buffer_as_string)
         free (server->buffer_as_string);
 }
@@ -6474,6 +6478,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, lag_next_check, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, lag_last_refresh, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, cmd_list_regexp, POINTER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, list, POINTER, 0, NULL, "irc_list");
         WEECHAT_HDATA_VAR(struct t_irc_server, last_user_message, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, last_away_check, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, last_data_purge, TIME, 0, NULL, NULL);
@@ -7255,6 +7260,13 @@ irc_server_print_log ()
         weechat_log_printf ("  lag_next_check. . . . . . : %lld",  (long long)ptr_server->lag_next_check);
         weechat_log_printf ("  lag_last_refresh. . . . . : %lld",  (long long)ptr_server->lag_last_refresh);
         weechat_log_printf ("  cmd_list_regexp . . . . . : 0x%lx", ptr_server->cmd_list_regexp);
+        weechat_log_printf ("  list. . . . . . . . . . . : 0x%lx", ptr_server->list);
+        if (ptr_server->list)
+        {
+            weechat_log_printf ("    buffer. . . . . . . . . : 0x%lx", ptr_server->list->buffer);
+            weechat_log_printf ("    channels. . . . . . . . : 0x%lx", ptr_server->list->channels);
+            weechat_log_printf ("    filter_channels . . . . : 0x%lx", ptr_server->list->filter_channels);
+        }
         weechat_log_printf ("  last_user_message . . . . : %lld",  (long long)ptr_server->last_user_message);
         weechat_log_printf ("  last_away_check . . . . . : %lld",  (long long)ptr_server->last_away_check);
         weechat_log_printf ("  last_data_purge . . . . . : %lld",  (long long)ptr_server->last_data_purge);

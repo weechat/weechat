@@ -30,6 +30,7 @@
 #include "irc-color.h"
 #include "irc-config.h"
 #include "irc-ignore.h"
+#include "irc-list.h"
 #include "irc-message.h"
 #include "irc-modelist.h"
 #include "irc-nick.h"
@@ -1384,4 +1385,10 @@ irc_info_init ()
     weechat_hook_hdata (
         "irc_batch", N_("irc batch"),
         &irc_batch_hdata_batch_cb, NULL, NULL);
+    weechat_hook_hdata (
+        "irc_list_channel", N_("irc channel on /list buffer"),
+        &irc_list_hdata_list_channel_cb, NULL, NULL);
+    weechat_hook_hdata (
+        "irc_list", N_("irc data for /list buffer"),
+        &irc_list_hdata_list_cb, NULL, NULL);
 }

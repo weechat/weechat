@@ -32,6 +32,7 @@
 #include "irc-nick.h"
 #include "irc-color.h"
 #include "irc-config.h"
+#include "irc-list.h"
 #include "irc-msgbuffer.h"
 #include "irc-protocol.h"
 #include "irc-raw.h"
@@ -364,6 +365,12 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags,
             weechat_buffer_close (buffer);
         else
             irc_raw_filter_options (input_data);
+    }
+    else if (weechat_strcmp (
+                 weechat_buffer_get_string (buffer,
+                                            "localvar_type"), "irc_list") == 0)
+    {
+        irc_list_buffer_input_data (buffer, input_data);
     }
     else
     {

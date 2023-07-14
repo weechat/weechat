@@ -37,6 +37,7 @@
 #include "irc-ignore.h"
 #include "irc-info.h"
 #include "irc-input.h"
+#include "irc-list.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
 #include "irc-protocol.h"
@@ -197,6 +198,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     irc_config_read ();
 
+    irc_list_init ();
+
     irc_raw_init ();
 
     irc_command_init ();
@@ -223,12 +226,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                          &irc_input_send_cb, NULL, NULL);
     weechat_hook_signal ("typing_self_*",
                          &irc_typing_signal_typing_self_cb, NULL, NULL);
+    weechat_hook_signal ("window_scrolled",
+                         &irc_list_window_scrolled_cb, NULL, NULL);
 
     /* hook hsignals for redirection */
     weechat_hook_hsignal ("irc_redirect_pattern",
                           &irc_redirect_pattern_hsignal_cb, NULL, NULL);
     weechat_hook_hsignal ("irc_redirect_command",
                           &irc_redirect_command_hsignal_cb, NULL, NULL);
+    weechat_hook_hsignal ("irc_redirection_server_*_list",
+                          &irc_list_hsignal_redirect_list_cb, NULL, NULL);
 
     /* modifiers */
     weechat_hook_modifier ("irc_color_decode",
@@ -321,6 +328,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     }
 
     irc_ignore_free_all ();
+
+    irc_list_end ();
 
     irc_raw_end ();
 

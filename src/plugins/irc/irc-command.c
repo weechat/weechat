@@ -43,6 +43,7 @@
 #include "irc-ignore.h"
 #include "irc-input.h"
 #include "irc-join.h"
+#include "irc-list.h"
 #include "irc-message.h"
 #include "irc-mode.h"
 #include "irc-modelist.h"
@@ -3370,14 +3371,37 @@ IRC_COMMAND_CALLBACK(links)
 }
 
 /*
+ * Gets an integer argument given to the /list command.
+ */
+
+int
+irc_command_list_get_int_arg (int argc, char **argv, int arg_number,
+                              int default_value)
+{
+    long value;
+    char *error;
+
+    value = default_value;
+    if (argc > arg_number)
+    {
+        error = NULL;
+        value = strtol (argv[arg_number], &error, 10);
+        if (!error || error[0])
+            value = default_value;
+    }
+    return (int)value;
+}
+
+/*
  * Callback for command "/list": lists channels and their topics.
  */
 
 IRC_COMMAND_CALLBACK(list)
 {
+    struct t_hashtable *hashtable;
     char buf[512], *ptr_channel_name, *ptr_server_name, *ptr_regex;
     regex_t *new_regexp;
-    int i, ret;
+    int i, ret, value;
 
     IRC_BUFFER_GET_SERVER(buffer);
 
@@ -3389,6 +3413,69 @@ IRC_COMMAND_CALLBACK(list)
     ptr_server_name = NULL;
     ptr_regex = NULL;
     new_regexp = NULL;
+
+    if ((argc > 0) && (weechat_strcmp (argv[1], "-up") == 0))
+    {
+        if (ptr_server && ptr_server->list->buffer)
+        {
+            irc_list_move_line_relative (
+                ptr_server,
+                -1 * irc_command_list_get_int_arg (argc, argv, 2, 1));
+        }
+        return WEECHAT_RC_OK;
+    }
+    if ((argc > 0) && (weechat_strcmp (argv[1], "-down") == 0))
+    {
+        if (ptr_server && ptr_server->list->buffer)
+        {
+            irc_list_move_line_relative (
+                ptr_server,
+                irc_command_list_get_int_arg (argc, argv, 2, 1));
+        }
+        return WEECHAT_RC_OK;
+    }
+    if ((argc > 0) && (weechat_strcmp (argv[1], "-go") == 0))
+    {
+        if (ptr_server && ptr_server->list->buffer)
+        {
+            if (argc < 3)
+                WEECHAT_COMMAND_ERROR;
+            value = (weechat_strcmp (argv[2], "end") == 0) ?
+                -1 : irc_command_list_get_int_arg (argc, argv, 2, -2);
+            if (value < -1)
+                WEECHAT_COMMAND_ERROR;
+            irc_list_move_line_absolute (ptr_server, value);
+        }
+        return WEECHAT_RC_OK;
+    }
+    if ((argc > 0) && (weechat_strcmp (argv[1], "-left") == 0))
+    {
+        if (ptr_server && ptr_server->list->buffer)
+        {
+            value = irc_command_list_get_int_arg (
+                argc, argv, 2,
+                weechat_config_integer (irc_config_look_list_buffer_scroll_horizontal));
+            irc_list_scroll_horizontal (ptr_server, -1 * value);
+        }
+        return WEECHAT_RC_OK;
+    }
+    if ((argc > 0) && (weechat_strcmp (argv[1], "-right") == 0))
+    {
+        if (ptr_server && ptr_server->list->buffer)
+        {
+            value = irc_command_list_get_int_arg (
+                argc, argv, 2,
+                weechat_config_integer (irc_config_look_list_buffer_scroll_horizontal));
+            irc_list_scroll_horizontal (ptr_server, value);
+        }
+        return WEECHAT_RC_OK;
+    }
+    if ((argc > 0) && (weechat_strcmp (argv[1], "-join") == 0))
+    {
+        if (ptr_server && ptr_server->list->buffer)
+            irc_list_join_channel (ptr_server);
+        return WEECHAT_RC_OK;
+    }
 
     for (i = 1; i < argc; i++)
     {
@@ -3456,6 +3543,39 @@ IRC_COMMAND_CALLBACK(list)
         regfree (ptr_server->cmd_list_regexp);
         free (ptr_server->cmd_list_regexp);
         ptr_server->cmd_list_regexp = NULL;
+    }
+
+    if (ptr_server->list && !ptr_server->cmd_list_regexp)
+    {
+        hashtable = weechat_hashtable_new (32,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           NULL,
+                                           NULL);
+        if (hashtable)
+        {
+            weechat_hashtable_set (hashtable, "server", ptr_server->name);
+            weechat_hashtable_set (hashtable, "pattern", "list");
+            snprintf (buf, sizeof (buf), "server_%s", ptr_server->name);
+            weechat_hashtable_set (hashtable, "signal", buf);
+            weechat_hook_hsignal_send ("irc_redirect_command", hashtable);
+            weechat_hashtable_free (hashtable);
+        }
+
+        irc_list_reset (ptr_server);
+
+        if (ptr_server->list->buffer)
+            weechat_buffer_clear (ptr_server->list->buffer);
+        else
+            ptr_server->list->buffer = irc_list_create_buffer (ptr_server);
+        if (ptr_server->list->buffer)
+        {
+            weechat_printf_y (ptr_server->list->buffer, 1,
+                              "%s",
+                              _("Receiving list of channels, please wait..."));
+            irc_list_buffer_set_title (ptr_server);
+            weechat_buffer_set (ptr_server->list->buffer, "display", "1");
+        }
     }
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
@@ -7155,24 +7275,84 @@ irc_command_init ()
         "list",
         N_("list channels and their topics"),
         N_("[-server <server>] [-re <regex>] [<channel>[,<channel>...]] "
-           "[<target>]"),
+           "[<target>]"
+           " || -up|-down [<number>]"
+           " || -left|-right [<percent>]"
+           " || -go <line>|end"
+           " || -join"),
         N_(" server: send to this server (internal name)\n"
            "  regex: POSIX extended regular expression used to filter results "
            "(case insensitive, can start by \"(?-i)\" to become case "
            "sensitive)\n"
            "channel: channel to list\n"
            " target: server name\n"
+           "    -up: move the selected line up by \"number\" lines\n"
+           "  -down: move the selected line down by \"number\" lines\n"
+           "  -left: scroll the list buffer by \"percent\" of width "
+           "on the left\n"
+           " -right: scroll the list buffer by \"percent\" of width "
+           "on the right\n"
+           "    -go: select a line by number, first line number is 0 "
+           "(\"end\" to select the last line)\n"
+           "  -join: join the channel on the selected line\n"
+           "\n"
+           "Keys and input on /list buffer:\n"
+           "  up                       move one line up\n"
+           "  down                     move one line down\n"
+           "  pgup                     move one page up\n"
+           "  pgdn                     move one page down\n"
+           "  alt-home          <<     move to first line\n"
+           "  alt-end           >>     move to last line\n"
+           "  F11               <      scroll horizontally on the left\n"
+           "  F12               >      scroll horizontally on the right\n"
+           "                    *      show all channels (no filter)\n"
+           "                    xxx    show only channels with \"xxx\" in name or topic (case insensitive)\n"
+           "                    n:xxx  show only channels with \"xxx\" in name (case insensitive)\n"
+           "                    u:n    show only channels with at least \"n\" users\n"
+           "                    u:>n   show only channels with more than \"n\" users\n"
+           "                    u:<n   show only channels with less than \"n\" users\n"
+           "                    t:xxx  show only channels with \"xxx\" in topic (case insensitive)\n"
+           "                    c:xxx  show only channels matching the evaluated "
+           "condition \"xxx\", using following variables: name, name2, users, "
+           "topic\n"
+           "  ctrl-j            j      join channel on selected line\n"
+           "                    s:x,y  sort channels by fields x,y (see below)\n"
+           "                    s:     reset sort to its default value (see below)\n"
+           "                    $      refresh list\n"
+           "                    q      close buffer\n"
+           "\n"
+           "Sort keys on /list buffer:\n"
+           "  name   channel name (eg: \"##test\")\n"
+           "  name2  channel name without prefix (eg: \"test\")\n"
+           "  users  number of users on channel\n"
+           "  topic  channel topic\n"
            "\n"
            "Examples:\n"
-           "  list all channels on server (can be very slow on large networks):\n"
+           "  list all channels on server and display them in a dedicated buffer "
+           "(can be slow on large networks):\n"
            "    /list\n"
            "  list channel #weechat:\n"
            "    /list #weechat\n"
            "  list all channels beginning with \"#weechat\" (can be very slow "
            "on large networks):\n"
-           "    /list -re #weechat.*"),
+           "    /list -re #weechat.*\n"
+           "  on /list buffer:\n"
+           "    channels with \"weechat\" in name:\n"
+           "      n:weechat\n"
+           "    channels with at least 100 users:\n"
+           "      u:100\n"
+           "    channels with \"freebsd\" (case insensitive) in topic and more than 10 users:\n"
+           "      c:${topic} =- freebsd && ${users} > 10\n"
+           "    sort channels by users (big channels first), then name2 (name without prefix):\n"
+           "      s:-users,name2"),
         "-server %(irc_servers)"
-        " || -re",
+        " || -re"
+        " || -up 1|2|3|4|5"
+        " || -down 1|2|3|4|5"
+        " || -left 10|20|30|40|50|60|70|80|90|100"
+        " || -right 10|20|30|40|50|60|70|80|90|100"
+        " || -go 0|end"
+        " || -join",
         &irc_command_list, NULL, NULL);
     weechat_hook_command (
         "lusers",

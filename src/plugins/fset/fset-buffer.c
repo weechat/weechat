@@ -1433,7 +1433,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* execute action on an option */
+    /* execute action */
     for (i = 0; actions[i][0]; i++)
     {
         if (strcmp (input_data, actions[i][0]) == 0)

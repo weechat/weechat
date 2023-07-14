@@ -280,6 +280,7 @@ struct t_irc_server
     time_t lag_next_check;          /* time for next check                   */
     time_t lag_last_refresh;        /* last refresh of lag item              */
     regex_t *cmd_list_regexp;       /* compiled Regular Expression for /list */
+    struct t_irc_list *list;        /* /list buffer management               */
     time_t last_user_message;       /* time of last user message (anti flood)*/
     time_t last_away_check;         /* time of last away check on server     */
     time_t last_data_purge;         /* time of last purge (some hashtables)  */

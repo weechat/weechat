@@ -33,6 +33,7 @@
 #include "irc-channel.h"
 #include "irc-ctcp.h"
 #include "irc-ignore.h"
+#include "irc-list.h"
 #include "irc-mode.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
@@ -91,8 +92,12 @@ struct t_config_option *irc_config_look_item_display_server = NULL;
 struct t_config_option *irc_config_look_item_nick_modes = NULL;
 struct t_config_option *irc_config_look_item_nick_prefix = NULL;
 struct t_config_option *irc_config_look_join_auto_add_chantype = NULL;
+struct t_config_option *irc_config_look_list_buffer_scroll_horizontal = NULL;
+struct t_config_option *irc_config_look_list_buffer_sort = NULL;
+struct t_config_option *irc_config_look_list_buffer_topic_strip_colors = NULL;
 struct t_config_option *irc_config_look_msgbuffer_fallback = NULL;
 struct t_config_option *irc_config_look_new_channel_position = NULL;
+struct t_config_option *irc_config_look_new_list_position = NULL;
 struct t_config_option *irc_config_look_new_pv_position = NULL;
 struct t_config_option *irc_config_look_nick_completion_smart = NULL;
 struct t_config_option *irc_config_look_nick_mode = NULL;
@@ -133,6 +138,8 @@ struct t_config_option *irc_config_color_item_nick_modes = NULL;
 struct t_config_option *irc_config_color_item_tls_version_deprecated = NULL;
 struct t_config_option *irc_config_color_item_tls_version_insecure = NULL;
 struct t_config_option *irc_config_color_item_tls_version_ok = NULL;
+struct t_config_option *irc_config_color_list_buffer_line_selected = NULL;
+struct t_config_option *irc_config_color_list_buffer_line_selected_bg = NULL;
 struct t_config_option *irc_config_color_message_account = NULL;
 struct t_config_option *irc_config_color_message_chghost = NULL;
 struct t_config_option *irc_config_color_message_join = NULL;
@@ -733,6 +740,29 @@ irc_config_change_color_item_tls_version (const void *pointer, void *data,
     (void) option;
 
     weechat_bar_item_update ("tls_version");
+}
+
+/*
+ * Callback for changes on options "irc.color.list_buffer_*".
+ */
+
+void
+irc_config_change_color_list_buffer (const void *pointer, void *data,
+                                     struct t_config_option *option)
+{
+    struct t_irc_server *ptr_server;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->list->buffer)
+            irc_list_buffer_refresh (ptr_server, 0);
+    }
 }
 
 /*
@@ -3230,6 +3260,34 @@ irc_config_init ()
                "will in fact send: \"/join #weechat\""),
             NULL, 0, 0, "off", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_config_look_list_buffer_scroll_horizontal = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "list_buffer_scroll_horizontal", "integer",
+            N_("left/right scroll in /list buffer (percent of width)"),
+            NULL, 1, 100, "10", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+        irc_config_look_list_buffer_sort = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "list_buffer_sort", "string",
+            N_("comma-separated list of fields to sort channels (see /help list "
+               "for a list of fields); char \"-\" can be used before field to "
+               "reverse order, char \"~\" can be used to do a case insensitive "
+               "comparison; example: \"-count,~name\" for biggest channels "
+               "first then case insensitive sort on name"),
+            NULL, 0, 0, "~name2", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+        irc_config_look_list_buffer_topic_strip_colors = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "list_buffer_topic_strip_colors", "boolean",
+            N_("strip channel topic colors in /list buffer"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
         irc_config_look_msgbuffer_fallback = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "msgbuffer_fallback", "enum",
@@ -3241,6 +3299,15 @@ irc_config_init ()
             irc_config_file, irc_config_section_look,
             "new_channel_position", "enum",
             N_("force position of new channel in list of buffers "
+               "(none = default position (should be last buffer), "
+               "next = current buffer + 1, near_server = after last channel/pv "
+               "of server)"),
+            "none|next|near_server", 0, 0, "none", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_config_look_new_list_position = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "new_list_position", "enum",
+            N_("force position of new /list buffer in list of buffers "
                "(none = default position (should be last buffer), "
                "next = current buffer + 1, near_server = after last channel/pv "
                "of server)"),
@@ -3563,6 +3630,22 @@ irc_config_init ()
             NULL, -1, 0, "green", NULL, 0,
             NULL, NULL, NULL,
             &irc_config_change_color_item_tls_version, NULL, NULL,
+            NULL, NULL, NULL);
+        irc_config_color_list_buffer_line_selected = weechat_config_new_option (
+            irc_config_file, irc_config_section_color,
+            "list_buffer_line_selected", "color",
+            N_("color for selected line on /list buffer"),
+            NULL, -1, 0, "white", NULL, 0,
+            NULL, NULL, NULL,
+            &irc_config_change_color_list_buffer, NULL, NULL,
+            NULL, NULL, NULL);
+        irc_config_color_list_buffer_line_selected_bg = weechat_config_new_option (
+            irc_config_file, irc_config_section_color,
+            "list_buffer_line_selected_bg", "color",
+            N_("background color for selected line on /list buffer"),
+            NULL, -1, 0, "24", NULL, 0,
+            NULL, NULL, NULL,
+            &irc_config_change_color_list_buffer, NULL, NULL,
             NULL, NULL, NULL);
         irc_config_color_message_account = weechat_config_new_option (
             irc_config_file, irc_config_section_color,

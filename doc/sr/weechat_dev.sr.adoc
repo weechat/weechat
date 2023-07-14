@@ -283,6 +283,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       irc-info.c                  | IRC info/infolists/hdata.
 |       irc-input.c                 | Унос команди/текста.
 |       irc-join.c                  | Функције за листе канала којима се приступа.
+// TRANSLATION MISSING
+|       irc-list.c                  | Buffer for reply to /list command.
 |       irc-message.c               | Функције за манипулисање IRC порукама.
 |       irc-mode.c                  | Функције у вези режима канала/надимка.
 |       irc-modelist.c              | Листе режима IRC канала (+b, +e, +I, ...).
@@ -442,6 +444,8 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-irc-ctcp.cpp       | Tests: IRC CTCP.
 |             test-irc-ignore.cpp     | Тестови: IRC игнорисања.
 |             test-irc-join.cpp       | Тестови: IRC функције приступања.
+// TRANSLATION MISSING
+|             test-irc-list.cpp       | Tests: IRC buffer for reply to /list command.
 |             test-irc-message.cpp    | Тестови: IRC поруке.
 |             test-irc-mode.cpp       | Тестови: IRC режими.
 |             test-irc-nick.cpp       | Тестови: IRC надимци.

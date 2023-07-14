@@ -283,6 +283,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       irc-info.c                  | Info/infolists/hdata pour IRC.
 |       irc-input.c                 | Entrée de commandes/texte.
 |       irc-join.c                  | Fonctions pour les listes de canaux à rejoindre.
+|       irc-list.c                  | Tampon pour la réponse à la commande /list.
 |       irc-message.c               | Fonctions pour manipuler les messages IRC.
 |       irc-mode.c                  | Fonctions pour les modes de canal/pseudo.
 |       irc-modelist.c              | Listes de modes de canaux IRC (+b, +e, +I, ...).
@@ -441,6 +442,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-irc-ctcp.cpp       | Tests : CTCP IRC.
 |             test-irc-ignore.cpp     | Tests : ignores IRC.
 |             test-irc-join.cpp       | Tests : fonctions de join IRC.
+|             test-irc-list.cpp       | Tests : tampon IRC pour la réponse à la commande /list.
 |             test-irc-message.cpp    | Tests : messages IRC.
 |             test-irc-mode.cpp       | Tests : modes IRC.
 |             test-irc-nick.cpp       | Tests : pseudos IRC.

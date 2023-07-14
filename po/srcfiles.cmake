@@ -258,6 +258,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-input.h
 ./src/plugins/irc/irc-join.c
 ./src/plugins/irc/irc-join.h
+./src/plugins/irc/irc-list.c
+./src/plugins/irc/irc-list.h
 ./src/plugins/irc/irc-message.c
 ./src/plugins/irc/irc-message.h
 ./src/plugins/irc/irc-mode.c
