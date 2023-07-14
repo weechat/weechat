@@ -17679,7 +17679,7 @@ Arguments:
 
 Return value:
 
-* variable offset, 0 if an error occurred
+* variable offset, -1 if an error occurred
 
 C example:
 

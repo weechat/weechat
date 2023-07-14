@@ -18464,7 +18464,7 @@ Argomenti:
 
 Valore restituito:
 
-* offset della variabile, 0 in caso di errore
+* offset della variabile, -1 in caso di errore
 
 Esempio in C:
 

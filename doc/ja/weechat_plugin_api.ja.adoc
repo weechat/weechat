@@ -17868,7 +17868,7 @@ int weechat_hdata_get_var_offset (struct t_hdata *hdata, const char *name);
 
 戻り値:
 
-* オフセットの値、エラーが起きた場合は 0
+* オフセットの値、エラーが起きた場合は -1
 
 C 言語での使用例:
 

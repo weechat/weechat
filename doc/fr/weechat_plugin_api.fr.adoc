@@ -18053,7 +18053,7 @@ Paramètres :
 
 Valeur de retour :
 
-* position (offset) de la variable, 0 en cas d'erreur
+* position (offset) de la variable, -1 en cas d'erreur
 
 Exemple en C :
 
