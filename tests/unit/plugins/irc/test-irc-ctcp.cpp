@@ -25,6 +25,7 @@
 
 extern "C"
 {
+#include <string.h>
 #include <sys/utsname.h>
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-hook.h"
