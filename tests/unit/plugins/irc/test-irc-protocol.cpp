@@ -2424,7 +2424,7 @@ TEST(IrcProtocolWithServer, notice)
 
         /*
          * notice to channel/user from self nick
-         * (case of bouncer of if echo-message capability is enabled)
+         * (case of bouncer or if echo-message capability is enabled)
          */
         RECV(":alice!user@host NOTICE #test :a notice ");
         CHECK_CHAN("--", "Notice(alice) -> #test: a notice ",
@@ -2441,7 +2441,7 @@ TEST(IrcProtocolWithServer, notice)
 
         /*
          * notice to ops of channel from self nick
-         * (case of bouncer of if echo-message capability is enabled)
+         * (case of bouncer or if echo-message capability is enabled)
          */
         RECV(":alice!user@host NOTICE @#test :a notice ");
         CHECK_CHAN("--", "Notice(alice) -> @#test: a notice ",
@@ -2450,7 +2450,7 @@ TEST(IrcProtocolWithServer, notice)
 
         /*
          * notice from self nick
-         * (case of bouncer of if echo-message capability is enabled)
+         * (case of bouncer or if echo-message capability is enabled)
          */
         RECV(":alice!user@host NOTICE alice :a notice ");
         CHECK_SRV("--", "Notice -> alice: a notice ",
@@ -2744,7 +2744,7 @@ TEST(IrcProtocolWithServer, privmsg)
 
         /*
          * message to channel/user from self nick
-         * (case of bouncer of if echo-message capability is enabled)
+         * (case of bouncer or if echo-message capability is enabled)
          */
         RECV(":alice!user@host PRIVMSG #test :this is the message ");
         CHECK_CHAN("alice", "this is the message ",
@@ -2758,7 +2758,7 @@ TEST(IrcProtocolWithServer, privmsg)
 
         /*
          * message to ops of channel from self nick
-         * (case of bouncer of if echo-message capability is enabled)
+         * (case of bouncer or if echo-message capability is enabled)
          */
         RECV(":alice!user@host PRIVMSG @#test :this is the message ");
         CHECK_CHAN("--", "Msg(alice) -> @#test: this is the message ",
@@ -2767,7 +2767,7 @@ TEST(IrcProtocolWithServer, privmsg)
 
         /*
          * message from self nick in private
-         * (case of bouncer of if echo-message capability is enabled)
+         * (case of bouncer or if echo-message capability is enabled)
          */
         RECV(":alice!user@host PRIVMSG alice :this is the message ");
         CHECK_PV("alice", "alice", "this is the message ",
@@ -2776,7 +2776,7 @@ TEST(IrcProtocolWithServer, privmsg)
 
         /*
          * message from self nick in private, with password hidden (nickserv)
-         * (case of bouncer of if echo-message capability is enabled)
+         * (case of bouncer or if echo-message capability is enabled)
          */
         RECV(":alice!user@host PRIVMSG nickserv :identify secret");
         CHECK_PV("nickserv", "alice", "identify ******",
@@ -2864,8 +2864,8 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_CHAN(" *", "bob",
                    "irc_privmsg,irc_action,notify_message,nick_bob,"
                    "host_user@host,log1");
-        RECV(":bob!user@host PRIVMSG #test :\01ACTION is testing\01");
-        CHECK_CHAN(" *", "bob is testing",
+        RECV(":bob!user@host PRIVMSG #test :\01ACTION is testing with \02bold\02\01");
+        CHECK_CHAN(" *", "bob is testing with bold",
                    "irc_privmsg,irc_action,notify_message,nick_bob,"
                    "host_user@host,log1");
         RECV(":bob!user@host PRIVMSG #test :\01VERSION\01");
@@ -2883,7 +2883,7 @@ TEST(IrcProtocolWithServer, privmsg)
 
         /*
          * valid CTCP to channel from self nick
-         * (case of bouncer of if echo-message capability is enabled)
+         * (case of bouncer or if echo-message capability is enabled)
          */
         RECV(":alice!user@host PRIVMSG #test :\01VERSION\01");
         CHECK_CHAN("--", "CTCP query to #test: VERSION",
@@ -2893,14 +2893,14 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_CHAN(" *", "alice",
                    "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                    "nick_alice,host_user@host,log1");
-        RECV(":alice!user@host PRIVMSG #test :\01ACTION is testing\01");
-        CHECK_CHAN(" *", "alice is testing",
+        RECV(":alice!user@host PRIVMSG #test :\01ACTION is testing with \02bold\02\01");
+        CHECK_CHAN(" *", "alice is testing with bold",
                    "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                    "nick_alice,host_user@host,log1");
 
         /*
          * valid CTCP to ops of channel from self nick
-         * (case of bouncer of if echo-message capability is enabled)
+         * (case of bouncer or if echo-message capability is enabled)
          */
         RECV(":alice!user@host PRIVMSG @#test :\01ACTION\01");
         CHECK_CHAN("--", "Action -> @#test: alice",
@@ -2946,7 +2946,7 @@ TEST(IrcProtocolWithServer, privmsg)
 
         /*
          * valid CTCP to channel from self nick
-         * (case of bouncer of if echo-message capability is enabled)
+         * (case of bouncer or if echo-message capability is enabled)
          */
         RECV(":alice!user@host PRIVMSG alice :\01CLIENTINFO\01");
         if (i == 0)
