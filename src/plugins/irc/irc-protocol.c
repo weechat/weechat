@@ -2995,7 +2995,7 @@ irc_protocol_privmsg_display_ctcp_send (struct t_irc_server *server,
     if (!arguments || !arguments[0])
         return;
 
-    pos_end = strchr (arguments + 1, '\01');
+    pos_end = strrchr (arguments + 1, '\01');
     if (!pos_end)
         return;
 
