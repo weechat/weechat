@@ -144,7 +144,7 @@ doc_gen_open_file (const char *path, const char *doc, const char *name,
 
 /*
  * Closes the file and renames it without ".temp" suffix, if the target name
- * does not exist of if it exists with a different (obsolete) content.
+ * does not exist or if it exists with a different (obsolete) content.
  *
  * If the target name exists with same content it's kept as-is (so the
  * timestamp does not change) and the temporary file is just deleted.
