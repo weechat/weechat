@@ -529,6 +529,8 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
         free (arguments);
     if (text)
         free (text);
+    if (params)
+        weechat_string_free_split (params);
 
     return hashtable;
 }
