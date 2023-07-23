@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2023-07-12 17:22+0200\n"
-"PO-Revision-Date: 2023-07-05 21:23+0200\n"
+"PO-Revision-Date: 2023-07-23 11:42+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -561,7 +561,7 @@ msgid "color"
 msgstr "Farbe"
 
 msgid "enum"
-msgstr ""
+msgstr "Aufzählung"
 
 #. TRANSLATORS: please do not translate "(null)"
 msgid "undefined value allowed (null)"
@@ -5608,10 +5608,10 @@ msgstr "Konfigurationsdatei %s wird geladen"
 msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
 msgstr "%sWarnung: %s, Zeile %d: Syntaxfehler, Zeichen \"]\" wurde erwartet"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
-msgstr "%sWarnung: %s, Zeile %d: unbekannte Sektion (\"%s\")"
+msgstr "%sWarnung: %s, Zeile %d: unbekannte Sektion wird ignoriert (\"%s\")"
 
 #, c-format
 msgid ""
@@ -5630,20 +5630,22 @@ msgstr ""
 "(%d) => Der Rest der Datei wird IGNORIERT, es werden Standardoptionen "
 "verwendet"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sWarning: %s, line %d: option outside section: %s"
 msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
-msgstr "%sWarnung: %s, Zeile %d: Einstellung ist außerhalb der Sektion: %s"
+msgstr "%sWarnung: %s, Zeile %d: ignoriert Option außerhalb des Abschnitts: %s"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
 msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
-msgstr "%sWarnung: %s, Zeile %d: unbekannte Einstellung für Sektion \"%s\": %s"
+msgstr ""
+"%sWarnung: %s, Zeile %d: ignoriert unbekannte Einstellung für Sektion \"%s\":"
+" %s"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sWarning: %s, line %d: invalid value for option: %s"
 msgid "%sWarning: %s, line %d: ignoring invalid value for option: %s"
-msgstr "%sWarnung: %s, Zeile %d: ungültiger Wert für Einstellung %s"
+msgstr "%sWarnung: %s, Zeile %d: ignoriert ungültigen Wert für Einstellung %s"
 
 #, c-format
 msgid "Reloading configuration file %s"
@@ -7604,7 +7606,6 @@ msgstr ""
 "setnew || -append || -mark || -format || -export [-help|-nohelp] <filename> "
 "|| <filter>"
 
-#, fuzzy
 #| msgid ""
 #| "       -bar: add the help bar\n"
 #| "   -refresh: refresh list of options, then whole screen (command: /window "
@@ -8060,6 +8061,7 @@ msgstr ""
 "    - ${description_en2}: Beschreibung der Option (in englisch), \"(keine "
 "Beschreibung)\" falls keine Beschreibung vorhanden\n"
 "    - ${string_values}: Zeichenketten sind für Integer Optionen erlaubt\n"
+"    - ${allowed_values}: zulässige Werte\n"
 "    - ${marked}: \"1\" wenn Option markiert ist, andernfalls \"0\"\n"
 "    - ${index}: Index der Option in der Liste\n"
 "  - Optionsdaten, mit Farbe aber ohne Leerzeichen:\n"
@@ -8309,10 +8311,9 @@ msgstr ""
 msgid "color for allowed values"
 msgstr "Farbe für erlaubte Werte"
 
-#, fuzzy
 #| msgid "color for max value on the selected line"
 msgid "color for allowed values on the selected line"
-msgstr "Farbe für Maximalwert bei der ausgewählten Zeile"
+msgstr "Farbe für zulässige Werte in der ausgewählten Zeile"
 
 msgid "color for color name when option fset.look.use_color_value is enabled"
 msgstr ""
@@ -8553,10 +8554,9 @@ msgstr ""
 msgid "fset options"
 msgstr "fset Optionen"
 
-#, fuzzy
 #| msgid "color"
 msgid "any color"
-msgstr "Farbe"
+msgstr "irgendeine Farbe"
 
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
@@ -9401,7 +9401,6 @@ msgstr "Aushandlung der Clientfähigkeit"
 msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgstr "ls || list || req|ack [<capability> [<capability>...]] || end"
 
-#, fuzzy
 #| msgid ""
 #| "   ls: list the capabilities supported by the server\n"
 #| " list: list the capabilities currently enabled\n"
@@ -9469,10 +9468,11 @@ msgstr ""
 "\n"
 "Ohne Angaben von Argumenten werden \"ls\" und \"list\" gesendet.\n"
 "\n"
-"Fähigkeiten die von WeeChat unterstützt werden: account-notify, away-notify, "
-"batch, cap-notify, chghost, draft/multiline, echo-message, extended-join, "
-"invite-notify, message-tags, multi-prefix, server-time, setname, userhost-in-"
-"names.\n"
+"Fähigkeiten die von WeeChat unterstützt werden: account-notify, account-tag,"
+" away-"
+"notify, batch, cap-notify, chghost, draft/multiline, echo-message, extended-"
+"join, invite-notify, message-tags, multi-prefix, server-time, setname, "
+"userhost-in-names.\n"
 "\n"
 "Fähigkeiten die standardmäßig genutzt werden sollen, können mit der Option "
 "irc.server_default.capabilities gesetzt werden (oder individuell für jeden "
@@ -10858,7 +10858,6 @@ msgstr ""
 "%s%s: Warnung: Der CTCP Name \"%s\" muss in Kleinbuchstaben geschrieben "
 "werden, die Option \"irc.ctcp.%s\" funktioniert nicht"
 
-#, fuzzy
 #| msgid ""
 #| "format for CTCP reply or empty string for blocking CTCP (no reply), "
 #| "following variables are replaced: $version (WeeChat version), "
@@ -10875,13 +10874,15 @@ msgid ""
 "${download}: WeeChat site, download page, ${time}: current date and time as "
 "text, ${username}: username on server, ${realname}: realname on server"
 msgstr ""
-"Format der CTCP Antwort. Folgende Variablen werden durch den entsprechenden "
-"Wert ersetzt: $version (WeeChat Version), $compilation (Datum der "
-"Kompilierung), $osinfo (Informationen über genutztes Betriebssystem), $site "
-"(WeeChat Webseite), $download (Download-Seite von WeeChat), $time (aktuelles "
-"Datum und Uhrzeit, als Text), $username (Username auf Server), $realname "
-"(Realname auf Server). Durch die Nutzung einer leeren Zeichenkette wird die "
-"CTCP Antwort blockiert"
+"Format für CTCP-Antwort oder leere Zeichenfolge zum Blockieren von CTCP"
+" (keine Antwort); Inhalt wird ausgewertet, siehe /help eval; Folgende"
+" Variablen werden durch den entsprechenden Wert ersetzt: ${clientinfo}: Liste"
+" von unterstützten CTCP, ${version} WeeChat Version, ${git} Git-Version,"
+" ${versiongit}: WeeChat Version und Git Version, ${compilation} Datum der "
+"Kompilierung, ${osinfo} Informationen über genutztes Betriebssystem, ${site} "
+"WeeChat Webseite, ${download} Download-Seite von WeeChat, ${time} aktuelles "
+"Datum und Uhrzeit, als Text, ${username} Username auf Server, ${realname} "
+"Realname auf Server"
 
 #, c-format
 msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
@@ -11337,10 +11338,10 @@ msgstr "%s%s: Fehler bei der Erstellung der Serveroption \"%s\""
 msgid "IRC option renamed: \"irc.%s.%s\" => \"irc.%s.%s\""
 msgstr "IRC Option umbenannt: \"irc.%s.%s\" => \"irc.%s.%s\""
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
 msgid "IRC CTCP format converted for \"%s\": \"%s\" => \"%s\""
-msgstr "Befehl für Taste konvertiert: \"%s\": \"%s\" => \"%s\""
+msgstr "IRC CTCP Format konvertiert für \"%s\": \"%s\" => \"%s\""
 
 msgid ""
 "open channel buffer before the JOIN is received from server when it is auto "
@@ -16291,7 +16292,8 @@ msgstr "verwaltet Trigger, das Schweizer Armeemesser für WeeChat"
 msgid ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
+"return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
 "all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
@@ -16300,7 +16302,8 @@ msgid ""
 msgstr ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
+"return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
 "all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
