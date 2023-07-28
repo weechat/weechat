@@ -31,6 +31,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix input length and crash after delete of line (issue #1989)
   * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
   * core: display focus hashtable for debug even if no key is matching
   * fset: remove extra spaces between min and max values when second format is used
