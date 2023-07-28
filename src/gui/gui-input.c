@@ -1142,7 +1142,7 @@ gui_input_delete_line (struct t_gui_buffer *buffer)
     end_of_line = (char *)utf8_end_of_line (start);
 
     size_deleted = end_of_line - beginning_of_line;
-    length_deleted = utf8_strnlen (start, size_deleted);
+    length_deleted = utf8_strnlen (beginning_of_line, size_deleted);
 
     memmove (beginning_of_line, end_of_line, strlen (end_of_line));
 
