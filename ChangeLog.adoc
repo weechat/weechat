@@ -22,7 +22,7 @@ Bug fixes::
 
 Build::
 
-  * doc: stop build of docs if a locale is missing, add CMake option "ENABLE_DOC_WARN_LOCALE" (issue #1985)
+  * doc: display a warning if a locale is missing with fallback to English for auto-generated content (issue #1985)
 
 [[v4.0.2]]
 == Version 4.0.2 (2023-07-12)
