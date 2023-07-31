@@ -126,7 +126,7 @@ doc_gen_open_file (const char *path, const char *doc, const char *name,
     if (!file)
     {
         string_fprintf (stderr,
-                        "doc generator: ERROR: unable to write file \"%s\"",
+                        "doc generator: ERROR: unable to write file \"%s\"\n",
                         filename);
         return NULL;
     }
@@ -1652,7 +1652,7 @@ doc_generate (const char *path)
     {
         string_fprintf (
             stderr,
-            "doc generator: ERROR: failed to create directory \"%s\")",
+            "doc generator: ERROR: failed to create directory \"%s\")\n",
             path);
         goto end;
     }
