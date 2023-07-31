@@ -204,12 +204,14 @@ fset_bar_item_fset_cb (const void *pointer, void *data,
 
     snprintf (str_help, sizeof (str_help),
               /* TRANSLATORS: "%s%s%s:" at beginning of string it the name of option */
-              _("%s%s%s: %s %s[%s%s]%s"),
+              _("%s%s%s: %s%s%s %s[%s%s]%s"),
               weechat_color (weechat_config_string (fset_config_color_help_name)),
               ptr_fset_option->name,
+              weechat_color ("bar_fg"),
               weechat_color (weechat_config_string (fset_config_color_help_description)),
               (ptr_fset_option->description && ptr_fset_option->description[0]) ?
               _(ptr_fset_option->description) : _("(no description)"),
+              weechat_color ("bar_fg"),
               weechat_color ("bar_delim"),
               *default_and_values,
               weechat_color ("bar_delim"),
