@@ -210,7 +210,7 @@ Build::
   * core: remove obsolete cpack config
   * core: add "stable-number" and "devel-number" in script version.sh
   * core: add quotes around paths in CMake files (issue #29)
-  * doc: convert docgen.py to C, remove autogen files from repository, add parameter `--doc-gen` to `weechat-headless` binary, add CMake option `ENABLE_DOC_INCOMPLETE`
+  * doc: convert docgen.py to C, remove autogen files from repository, add parameter `--doc-gen` to `weechat-headless` binary, add CMake option "ENABLE_DOC_INCOMPLETE"
 
 [[v3.8]]
 == Version 3.8 (2023-01-08)
@@ -2031,7 +2031,7 @@ Documentation::
 Build::
 
   * core: add CA_FILE option in CMake and configure to setup default value of option weechat.network.gnutls_ca_file (default is "/etc/ssl/certs/ca-certificates.crt") (task #12725)
-  * core: disable build of doc by default, add CMake option ENABLE_MAN to compile man page (off by default)
+  * core: disable build of doc by default, add CMake option "ENABLE_MAN" to compile man page (off by default)
   * xfer: fix compilation on OpenBSD (bug #39071)
 
 [[v0.4.1]]
