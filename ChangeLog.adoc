@@ -20,6 +20,10 @@ Bug fixes::
   * irc: fix memory leak in IRC message parser
   * irc: fix switch to channel manually joined when server option autojoin_dynamic is on and option irc.look.buffer_switch_autojoin is off (issue #1982)
 
+Build::
+
+  * doc: stop build of docs if a locale is missing, add CMake option "ENABLE_DOC_WARN_LOCALE" (issue #1985)
+
 [[v4.0.2]]
 == Version 4.0.2 (2023-07-12)
 

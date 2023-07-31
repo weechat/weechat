@@ -14,7 +14,36 @@ For a complete list of changes, please look at ChangeLog.
 [[v4.0.3]]
 == Version 4.0.3 (under dev)
 
-No release notes.
+[[v4.0.3_doc_locales]]
+=== Required locales for auto-generated docs
+
+The build of auto-generated files for docs now requires all locales to be installed. +
+If at least one locale is not installed, the following error is displayed:
+
+----
+doc generator: ERROR: failed to set locale "de_DE.UTF-8", these locales must be installed to build docs:
+  de_DE.UTF-8
+  en_US.UTF-8
+  fr_FR.UTF-8
+  it_IT.UTF-8
+  ja_JP.UTF-8
+  pl_PL.UTF-8
+  sr_RS.UTF-8
+doc generator: you can turn this error as a warning with the cmake option ENABLE_DOC_WARN_LOCALE
+----
+
+A new CMake option "ENABLE_DOC_WARN_LOCALE" has been added to allow the build
+of docs even if locales are missing:
+
+----
+cmake .. -DENABLE_DOC_WARN_LOCALE=ON
+----
+
+When this option is enabled, such warning is displayed and the doc is built anyway:
+
+----
+doc generator: WARNING: failed to set locale "de_DE.UTF-8", docs will include auto-generated English content
+----
 
 [[v4.0.2]]
 == Version 4.0.2 (2023-07-12)
