@@ -1698,7 +1698,7 @@ doc_generate (const char *path)
                 }
                 string_fprintf (
                     stderr,
-                    "doc generator: you can turn this error as a warning "
+                    "doc generator: you can turn this error into a warning "
                     "with the cmake option ENABLE_DOC_WARN_LOCALE\n");
                 goto end;
             }
