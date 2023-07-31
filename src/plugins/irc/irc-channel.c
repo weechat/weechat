@@ -462,7 +462,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
                 if (noswitch
                     || (!manual_join && !autojoin_join)
                     || (manual_join && !weechat_config_boolean (irc_config_look_buffer_switch_join))
-                    || (autojoin_join && !weechat_config_boolean (irc_config_look_buffer_switch_autojoin)))
+                    || (!manual_join && autojoin_join && !weechat_config_boolean (irc_config_look_buffer_switch_autojoin)))
                 {
                     switch_to_channel = 0;
                 }

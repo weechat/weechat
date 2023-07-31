@@ -18,6 +18,7 @@ Bug fixes::
   * core: fix input length and crash after delete of line (issue #1989)
   * irc: fix display of self CTCP message containing bold attribute (issue #1981)
   * irc: fix memory leak in IRC message parser
+  * irc: fix switch to channel manually joined when server option autojoin_dynamic is on and option irc.look.buffer_switch_autojoin is off (issue #1982)
 
 [[v4.0.2]]
 == Version 4.0.2 (2023-07-12)
