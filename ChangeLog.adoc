@@ -44,6 +44,10 @@ Bug fixes::
   * script: fix cursor position after `/script list -i` or `/script list -il`
   * script: fix buffer used by command `/script list -i|-il|-o|-ol`
 
+Build::
+
+  * doc: stop build of docs if a locale is missing, add CMake option "ENABLE_DOC_WARN_LOCALE" (issue #1985)
+
 [[v4.0.2]]
 == Version 4.0.2 (2023-07-12)
 

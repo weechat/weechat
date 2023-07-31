@@ -180,7 +180,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
         )
       endforeach()
       add_custom_target(doc-autogen ALL
-        COMMAND "${CMAKE_COMMAND}" -E env "WEECHAT_EXTRA_LIBDIR=${PROJECT_BINARY_DIR}/src" "WEECHAT_DOCGEN_LOCALEDIR=${PROJECT_BINARY_DIR}/po" "${CMAKE_BINARY_DIR}/src/gui/curses/headless/weechat-headless" --temp-dir --doc-gen "${CMAKE_CURRENT_BINARY_DIR}/autogen"
+        COMMAND "${CMAKE_COMMAND}" -E env "WEECHAT_EXTRA_LIBDIR=${PROJECT_BINARY_DIR}/src" "WEECHAT_DOCGEN_LOCALEDIR=${PROJECT_BINARY_DIR}/po" "WEECHAT_DOCGEN_WARN_LOCALE=${ENABLE_DOC_WARN_LOCALE}" "${CMAKE_BINARY_DIR}/src/gui/curses/headless/weechat-headless" --temp-dir --doc-gen "${CMAKE_CURRENT_BINARY_DIR}/autogen"
         DEPENDS
         # the headless binary is required
         weechat-headless

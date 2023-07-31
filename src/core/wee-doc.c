@@ -1602,7 +1602,7 @@ doc_gen_api_config_priority (const char *path, const char *lang)
 int
 doc_generate (const char *path)
 {
-    int i, j, rc_doc_gen, rc, num_files;
+    int i, j, rc_doc_gen, rc, num_files, warn_locale;
     char *locales[] = {
         "de_DE.UTF-8",
         "en_US.UTF-8",
@@ -1662,10 +1662,47 @@ doc_generate (const char *path)
     if (localedir && localedir[0])
         bindtextdomain (PACKAGE, localedir);
 
+    /*
+     * if warn locale is enabled, any missing locale triggers a warning
+     * instead of a fatal error
+     */
+    warn_locale = (string_strcasecmp (getenv ("WEECHAT_DOCGEN_WARN_LOCALE"), "on") == 0) ?
+        1 : 0;
+
     for (i = 0; locales[i]; i++)
     {
         setenv ("LANGUAGE", locales[i], 1);
-        setlocale (LC_ALL, locales[i]);
+        if (!setlocale (LC_ALL, locales[i]))
+        {
+            if (warn_locale)
+            {
+                /* warning on missing locale */
+                string_fprintf (
+                    stderr,
+                    "doc generator: WARNING: failed to set locale \"%s\", "
+                    "docs will include auto-generated English content\n",
+                    locales[i]);
+                setlocale (LC_ALL, "C");
+            }
+            else
+            {
+                /* fatal error on missing locale */
+                string_fprintf (
+                    stderr,
+                    "doc generator: ERROR: failed to set locale \"%s\", "
+                    "these locales must be installed to build docs:\n",
+                    locales[i]);
+                for (j = 0; locales[j]; j++)
+                {
+                    string_fprintf (stderr, "  %s\n", locales[j]);
+                }
+                string_fprintf (
+                    stderr,
+                    "doc generator: you can turn this error as a warning "
+                    "with the cmake option ENABLE_DOC_WARN_LOCALE\n");
+                goto end;
+            }
+        }
         memcpy (lang, locales[i], 2);
         lang[2] = '\0';
         for (j = 0; doc_gen_functions[j]; j++)
