@@ -2482,6 +2482,14 @@ TEST(IrcProtocolWithServer, notice)
         CHECK_CHAN("--", "PvNotice(bob): a notice ",
                    "irc_notice,nick_bob,host_user@host,log1");
 
+        /*
+         * notice to another nick with channel name at beginning
+         * (case of a notice sent if echo-message capability is enabled)
+         */
+        RECV(":alice!user@host NOTICE bob :[#test] a notice ");
+        CHECK_SRV("--", "Notice -> bob: [#test] a notice ",
+                   "irc_notice,notify_private,nick_alice,host_user@host,log1");
+
         /* broken CTCP to channel */
         RECV(":bob!user@host NOTICE #test :\01");
         CHECK_SRV("--", "CTCP reply from bob: ",
