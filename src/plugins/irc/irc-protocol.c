@@ -2505,8 +2505,11 @@ IRC_PROTOCOL_CALLBACK(notice)
         is_channel = irc_channel_is_channel (server, pos_target);
         is_channel_orig = is_channel;
         if (is_channel)
+        {
             channel = strdup (pos_target);
-        else if (weechat_config_boolean (irc_config_look_notice_welcome_redirect))
+        }
+        else if (weechat_config_boolean (irc_config_look_notice_welcome_redirect)
+                 && (irc_server_strcasecmp (server, server->nick, pos_target) == 0))
         {
             end_char = ' ';
             switch (pos_args[0])
