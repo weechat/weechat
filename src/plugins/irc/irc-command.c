@@ -2872,8 +2872,8 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                          int manual_join, int noswitch)
 {
     char *new_args, **channels, **keys, *pos_space, *pos_keys, *pos_channel;
-    char *channel_name, *ptr_key;
-    int i, num_channels, num_keys, length, save_autojoin;
+    char *channel_name_lower;
+    int i, num_channels, num_keys, length;
     time_t time_now;
     struct t_irc_channel *ptr_channel;
 
@@ -2885,9 +2885,6 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "join");
         return;
     }
-
-    save_autojoin = IRC_SERVER_OPTION_BOOLEAN(server,
-                                              IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC);
 
     /* split channels and keys */
     channels = NULL;
@@ -2955,30 +2952,27 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                 strcat (new_args,
                         irc_channel_get_auto_chantype (server, channels[i]));
                 strcat (new_args, channels[i]);
+                channel_name_lower = weechat_string_tolower (pos_channel);
                 if (manual_join || noswitch)
                 {
-                    channel_name = weechat_string_tolower (pos_channel);
-                    if (channel_name)
+                    if (channel_name_lower)
                     {
                         if (manual_join)
                         {
                             weechat_hashtable_set (server->join_manual,
-                                                   channel_name,
+                                                   channel_name_lower,
                                                    &time_now);
                         }
                         if (noswitch)
                         {
                             weechat_hashtable_set (server->join_noswitch,
-                                                   channel_name,
+                                                   channel_name_lower,
                                                    &time_now);
                         }
-                        free (channel_name);
                     }
                 }
-                ptr_key = NULL;
                 if (keys && (i < num_keys))
                 {
-                    ptr_key = keys[i];
                     ptr_channel = irc_channel_search (server, pos_channel);
                     if (ptr_channel)
                     {
@@ -2986,10 +2980,10 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                             free (ptr_channel->key);
                         ptr_channel->key = strdup (keys[i]);
                     }
-                    else
+                    else if (channel_name_lower)
                     {
                         weechat_hashtable_set (server->join_channel_key,
-                                               pos_channel, keys[i]);
+                                               channel_name_lower, keys[i]);
                     }
                 }
                 if (manual_join
@@ -3006,12 +3000,9 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                             server, IRC_CHANNEL_TYPE_CHANNEL, pos_channel,
                             1, 1);
                     }
-                    if (save_autojoin)
-                    {
-                        irc_join_add_channel_to_autojoin (server, pos_channel,
-                                                          ptr_key);
-                    }
                 }
+                if (channel_name_lower)
+                    free (channel_name_lower);
             }
             if (pos_space)
                 strcat (new_args, pos_space);

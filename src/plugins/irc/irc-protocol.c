@@ -1710,7 +1710,7 @@ IRC_PROTOCOL_CALLBACK(join)
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
     const char *pos_account, *pos_realname;
-    char str_account[512], str_realname[512];
+    char str_account[512], str_realname[512], *channel_name_lower;
     int local_join, display_host, smart_filter;
 
     IRC_PROTOCOL_MIN_PARAMS(1);
@@ -1871,6 +1871,25 @@ IRC_PROTOCOL_CALLBACK(join)
     {
         irc_server_set_host (server, address);
         irc_bar_item_update_channel ();
+
+        /* add channel to autojoin option (on manual join only) */
+        channel_name_lower = weechat_string_tolower (params[0]);
+        if (channel_name_lower)
+        {
+            if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC)
+                && weechat_hashtable_has_key (server->join_manual,
+                                              channel_name_lower))
+            {
+                irc_join_add_channel_to_autojoin (
+                    server,
+                    params[0],
+                    weechat_hashtable_get (server->join_channel_key,
+                                           channel_name_lower));
+            }
+            weechat_hashtable_remove (server->join_manual, channel_name_lower);
+            weechat_hashtable_remove (server->join_channel_key, channel_name_lower);
+            free (channel_name_lower);
+        }
     }
 
     return WEECHAT_RC_OK;

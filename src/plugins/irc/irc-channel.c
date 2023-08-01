@@ -475,7 +475,6 @@ irc_channel_create_buffer (struct t_irc_server *server,
         }
         if (channel_name_lower)
         {
-            weechat_hashtable_remove (server->join_manual, channel_name_lower);
             weechat_hashtable_remove (server->join_noswitch, channel_name_lower);
             free (channel_name_lower);
         }
@@ -502,7 +501,8 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 {
     struct t_irc_channel *new_channel;
     struct t_gui_buffer *ptr_buffer;
-    const char *ptr_chanmode;
+    const char *ptr_chanmode, *ptr_channel_key;
+    char *channel_name_lower;
 
     /* create buffer for channel (or use existing one) */
     ptr_buffer = irc_channel_create_buffer (server, channel_type,
@@ -526,15 +526,15 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->topic = NULL;
     new_channel->modes = NULL;
     new_channel->limit = 0;
-    if (weechat_hashtable_has_key (server->join_channel_key, channel_name))
+    new_channel->key = NULL;
+    channel_name_lower = weechat_string_tolower (channel_name);
+    if (channel_name_lower)
     {
-        new_channel->key = strdup (
-            weechat_hashtable_get (server->join_channel_key, channel_name));
-        weechat_hashtable_remove (server->join_channel_key, channel_name);
-    }
-    else
-    {
-        new_channel->key = NULL;
+        ptr_channel_key = weechat_hashtable_get (server->join_channel_key,
+                                                 channel_name_lower);
+        if (ptr_channel_key)
+            new_channel->key = strdup (ptr_channel_key);
+        free (channel_name_lower);
     }
     new_channel->join_msg_received = weechat_hashtable_new (
         32,

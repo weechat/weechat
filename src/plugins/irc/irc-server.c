@@ -3863,31 +3863,14 @@ irc_server_timer_sasl_cb (const void *pointer, void *data, int remaining_calls)
 }
 
 /*
- * Callback called for each manual join of a server: deletes old channels in the
- * hashtable.
+ * Callback called for each channel: remove old key from the hashtable if it's
+ * too old.
  */
 
 void
-irc_server_check_join_manual_cb (void *data,
-                                 struct t_hashtable *hashtable,
-                                 const void *key, const void *value)
-{
-    /* make C compiler happy */
-    (void) data;
-
-    if (*((time_t *)value) + (60 * 10) < time (NULL))
-        weechat_hashtable_remove (hashtable, key);
-}
-
-/*
- * Callback called for each join without switch of a server: deletes old channel
- * in the hashtable.
- */
-
-void
-irc_server_check_join_noswitch_cb (void *data,
-                                   struct t_hashtable *hashtable,
-                                   const void *key, const void *value)
+irc_server_check_channel_cb (void *data,
+                             struct t_hashtable *hashtable,
+                             const void *key, const void *value)
 {
     /* make C compiler happy */
     (void) data;
@@ -4101,11 +4084,11 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
             if (current_time > ptr_server->last_data_purge + (60 * 10))
             {
                 weechat_hashtable_map (ptr_server->join_manual,
-                                       &irc_server_check_join_manual_cb,
-                                       NULL);
+                                       &irc_server_check_channel_cb, NULL);
+                weechat_hashtable_map (ptr_server->join_channel_key,
+                                       &irc_server_check_channel_cb, NULL);
                 weechat_hashtable_map (ptr_server->join_noswitch,
-                                       &irc_server_check_join_noswitch_cb,
-                                       NULL);
+                                       &irc_server_check_channel_cb, NULL);
                 for (ptr_channel = ptr_server->channels; ptr_channel;
                      ptr_channel = ptr_channel->next_channel)
                 {
