@@ -42,6 +42,7 @@ Bug fixes::
   * irc: fix memory leak in IRC message parser
   * irc: fix switch to channel manually joined when server option autojoin_dynamic is on and option irc.look.buffer_switch_autojoin is off (issue #1982)
   * irc: add channel in "autojoin" server option only when the channel is actually joined (issue #1990)
+  * irc: fix display of outgoing notice with channel when capability "echo-message" is enabled (issue #1991)
   * script: fix cursor position after `/script list -i` or `/script list -il`
   * script: fix buffer used by command `/script list -i|-il|-o|-ol`
 
