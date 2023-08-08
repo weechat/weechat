@@ -27,12 +27,10 @@ New features::
   * irc: build dynamically the list of CTCPs supported in reply to "CTCP CLIENTINFO" (issue #1974)
   * irc: remove Git revision and compilation date from CTCP VERSION reply (issue #1974)
   * irc: remove default CTCP replies FINGER and USERINFO (issue #1974)
-  * relay: fix display of IRC CTCP messages received from client (issue #1986)
   * trigger: add options `-o`, `-ol`, `-i` and `-il` in command `/trigger list` (issue #1953)
 
 Bug fixes::
 
-  * core: fix input length and crash after delete of line (issue #1989)
   * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
   * core: display focus hashtable for debug even if no key is matching
   * fset: remove extra spaces between min and max values when second format is used
@@ -40,13 +38,21 @@ Bug fixes::
   * fset: apply option fset.color.help_description (issue #1988)
   * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
   * irc: add missing "account-tag" in list of supported capabilities
+  * irc: add channel in "autojoin" server option only when the channel is actually joined (issue #1990)
+  * script: fix cursor position after `/script list -i` or `/script list -il`
+  * script: fix buffer used by command `/script list -i|-il|-o|-ol`
+
+[[v4.0.3]]
+== Version 4.0.3 (2023-08-08)
+
+Bug fixes::
+
+  * core: fix input length and crash after delete of line (issue #1989)
   * irc: fix display of self CTCP message containing bold attribute (issue #1981)
   * irc: fix memory leak in IRC message parser
   * irc: fix switch to channel manually joined when server option autojoin_dynamic is on and option irc.look.buffer_switch_autojoin is off (issue #1982)
-  * irc: add channel in "autojoin" server option only when the channel is actually joined (issue #1990)
   * irc: fix display of outgoing notice with channel when capability "echo-message" is enabled (issue #1991)
-  * script: fix cursor position after `/script list -i` or `/script list -il`
-  * script: fix buffer used by command `/script list -i|-il|-o|-ol`
+  * relay: fix display of IRC CTCP messages received from client (issue #1986)
 
 Build::
 
