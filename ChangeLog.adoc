@@ -11,7 +11,7 @@ For a list of important changes that require manual actions, please look at rele
 
 
 [[v4.0.3]]
-== Version 4.0.3 (under dev)
+== Version 4.0.3 (2023-08-08)
 
 Bug fixes::
 
