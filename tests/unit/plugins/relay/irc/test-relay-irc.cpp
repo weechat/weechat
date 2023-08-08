@@ -49,6 +49,8 @@ extern void relay_irc_sendf (struct t_relay_client *client,
                              const char *format, ...);
 extern void relay_irc_parse_cap_message (struct t_relay_client *client,
                                          struct t_hashtable *parsed_msg);
+extern void relay_irc_parse_ctcp (const char *message,
+                                  char **ctcp_type, char **ctcp_params);
 extern int relay_irc_tag_relay_client_id (const char *tags);
 extern void relay_irc_input_send (struct t_relay_client *client,
                                   const char *irc_channel,
@@ -810,6 +812,72 @@ TEST(RelayIrcWithClient, RelayIrcRecvCommandCapab)
     /* end capability negociation */
     CLIENT_RECV(":alice!user@host CAP END");
     LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
+}
+
+/*
+ * Tests functions:
+ *   relay_irc_parse_ctcp
+ */
+
+TEST(RelayIrcWithClient, RelayIrcParseCtcp)
+{
+    char *ctcp_type, *ctcp_params;
+
+    relay_irc_parse_ctcp (NULL, NULL, NULL);
+    relay_irc_parse_ctcp ("test", NULL, NULL);
+
+    ctcp_type = (char *)0x01;
+    ctcp_params = (char *)0x01;
+    relay_irc_parse_ctcp (NULL, &ctcp_type, &ctcp_params);
+    POINTERS_EQUAL(NULL, ctcp_type);
+    POINTERS_EQUAL(NULL, ctcp_params);
+
+    ctcp_type = (char *)0x01;
+    ctcp_params = (char *)0x01;
+    relay_irc_parse_ctcp ("\01ACTION is testing\01", &ctcp_type, &ctcp_params);
+    STRCMP_EQUAL("ACTION", ctcp_type);
+    STRCMP_EQUAL("is testing", ctcp_params);
+    free (ctcp_type);
+    free (ctcp_params);
+
+    ctcp_type = (char *)0x01;
+    ctcp_params = (char *)0x01;
+    relay_irc_parse_ctcp ("\01ACTION   is testing  \01 extra", &ctcp_type, &ctcp_params);
+    STRCMP_EQUAL("ACTION", ctcp_type);
+    STRCMP_EQUAL("  is testing  ", ctcp_params);
+    free (ctcp_type);
+    free (ctcp_params);
+
+    ctcp_type = (char *)0x01;
+    ctcp_params = (char *)0x01;
+    relay_irc_parse_ctcp ("\01VERSION\01", &ctcp_type, &ctcp_params);
+    STRCMP_EQUAL("VERSION", ctcp_type);
+    POINTERS_EQUAL(NULL, ctcp_params);
+    free (ctcp_type);
+
+    ctcp_type = (char *)0x01;
+    ctcp_params = (char *)0x01;
+    relay_irc_parse_ctcp ("\01ACTION is testing", &ctcp_type, &ctcp_params);
+    POINTERS_EQUAL(NULL, ctcp_type);
+    POINTERS_EQUAL(NULL, ctcp_params);
+
+    ctcp_type = (char *)0x01;
+    ctcp_params = (char *)0x01;
+    relay_irc_parse_ctcp ("\01VERSION", &ctcp_type, &ctcp_params);
+    POINTERS_EQUAL(NULL, ctcp_type);
+    POINTERS_EQUAL(NULL, ctcp_params);
+
+    ctcp_type = (char *)0x01;
+    ctcp_params = (char *)0x01;
+    relay_irc_parse_ctcp ("test", &ctcp_type, &ctcp_params);
+    POINTERS_EQUAL(NULL, ctcp_type);
+    POINTERS_EQUAL(NULL, ctcp_params);
+
+    ctcp_type = (char *)0x01;
+    ctcp_params = (char *)0x01;
+    relay_irc_parse_ctcp ("", &ctcp_type, &ctcp_params);
+    POINTERS_EQUAL(NULL, ctcp_type);
+    POINTERS_EQUAL(NULL, ctcp_params);
 }
 
 /*

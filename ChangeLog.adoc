@@ -27,6 +27,7 @@ New features::
   * irc: build dynamically the list of CTCPs supported in reply to "CTCP CLIENTINFO" (issue #1974)
   * irc: remove Git revision and compilation date from CTCP VERSION reply (issue #1974)
   * irc: remove default CTCP replies FINGER and USERINFO (issue #1974)
+  * relay: fix display of IRC CTCP messages received from client (issue #1986)
   * trigger: add options `-o`, `-ol`, `-i` and `-il` in command `/trigger list` (issue #1953)
 
 Bug fixes::
