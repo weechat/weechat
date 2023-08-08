@@ -1582,6 +1582,53 @@ relay_irc_recv_command_capab (struct t_relay_client *client,
 }
 
 /*
+ * Parses CTCP message and return CTCP type and parameters.
+ * If message is not a valid CTCP format, type and parameters are set to NULL.
+ *
+ * Examples:
+ *
+ *   message                   | type      | params
+ *   --------------------------|-----------|-----------
+ *   "\01ACTION is testing\01" | "ACTION"  | "is testing"
+ *   "\01VERSION\01"           | "VERSION" | NULL
+ *   "\01VERSION"              | NULL      | NULL
+ *   "test"                    | NULL      | NULL
+ */
+
+void
+relay_irc_parse_ctcp (const char *message, char **ctcp_type, char **ctcp_params)
+{
+    const char *pos_space, *pos_end;
+
+    if (!ctcp_type || !ctcp_params)
+        return;
+
+    *ctcp_type = NULL;
+    *ctcp_params = NULL;
+
+    if (!message)
+        return;
+
+    if (message[0] != '\01')
+        return;
+
+    pos_end = strrchr (message + 1, '\01');
+    if (!pos_end)
+        return;
+
+    pos_space = strchr (message, ' ' );
+    if (pos_space && (pos_space < pos_end))
+    {
+        *ctcp_type = weechat_strndup (message + 1, pos_space - message - 1);
+        *ctcp_params = weechat_strndup (pos_space + 1, pos_end - pos_space - 1);
+    }
+    else
+    {
+        *ctcp_type = weechat_strndup (message + 1, pos_end - message - 1);
+    }
+}
+
+/*
  * Reads one message from client.
  */
 
@@ -1595,7 +1642,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     char str_time[128], str_signal[128], str_server_channel[256], *nick;
     char str_param[128], *str_args, *version, str_command[128], **params;
     char *pos, *password, *irc_is_channel, *info, *error, *str_cmd_lower;
-    char modifier_data[128], *new_data;
+    char modifier_data[128], *new_data, *ctcp_type, *ctcp_params;
     long num_params;
     int i, redirect_msg;
 
@@ -1933,26 +1980,61 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
             {
                 str_args = weechat_string_rebuild_split_string (
                     (const char **)params, " ", 1, -1);
+                relay_irc_parse_ctcp (str_args, &ctcp_type, &ctcp_params);
                 irc_is_channel = weechat_info_get ("irc_is_channel", params[0]);
                 if (irc_is_channel && (strcmp (irc_is_channel, "1") == 0))
                 {
-                    relay_irc_input_send (client, params[0],
-                                          "priority_high,user_message",
-                                          "%s",
-                                          (str_args) ? str_args : "");
+                    if (ctcp_type)
+                    {
+                        relay_irc_input_send (client, NULL,
+                                              "priority_high",
+                                              "/ctcp %s %s%s%s",
+                                              params[0],
+                                              ctcp_type,
+                                              (ctcp_params) ? " " : "",
+                                              (ctcp_params) ? ctcp_params : "");
+                    }
+                    else
+                    {
+                        relay_irc_input_send (client, params[0],
+                                              "priority_high,user_message",
+                                              "%s",
+                                              (str_args) ? str_args : "");
+                    }
                 }
                 else
                 {
-                    relay_irc_input_send (client, NULL,
-                                          "priority_high",
-                                          "/query %s %s",
-                                          params[0],
-                                          (str_args) ? str_args : "");
+                    if (ctcp_type)
+                    {
+                        relay_irc_input_send (client, NULL,
+                                              "priority_high",
+                                              "/query %s",
+                                              params[0]);
+                        relay_irc_input_send (client, NULL,
+                                              "priority_high",
+                                              "/ctcp %s %s%s%s",
+                                              params[0],
+                                              ctcp_type,
+                                              (ctcp_params) ? " " : "",
+                                              (ctcp_params) ? ctcp_params : "");
+                    }
+                    else
+                    {
+                        relay_irc_input_send (client, NULL,
+                                              "priority_high",
+                                              "/query %s %s",
+                                              params[0],
+                                              (str_args) ? str_args : "");
+                    }
                 }
                 if (str_args)
                     free (str_args);
                 if (irc_is_channel)
                     free (irc_is_channel);
+                if (ctcp_type)
+                    free (ctcp_type);
+                if (ctcp_params)
+                    free (ctcp_params);
             }
         }
         else if (!relay_irc_command_ignored (irc_command))

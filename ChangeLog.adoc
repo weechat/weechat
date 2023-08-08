@@ -20,6 +20,7 @@ Bug fixes::
   * irc: fix memory leak in IRC message parser
   * irc: fix switch to channel manually joined when server option autojoin_dynamic is on and option irc.look.buffer_switch_autojoin is off (issue #1982)
   * irc: fix display of outgoing notice with channel when capability "echo-message" is enabled (issue #1991)
+  * relay: fix display of IRC CTCP messages received from client (issue #1986)
 
 Build::
 
