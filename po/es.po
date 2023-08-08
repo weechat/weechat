@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-07-12 17:22+0200\n"
+"POT-Creation-Date: 2023-08-08 07:11+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6632,7 +6632,7 @@ msgstr "valores"
 
 #. TRANSLATORS: "%s%s%s:" at beginning of string it the name of option
 #, fuzzy, c-format
-msgid "%s%s%s: %s %s[%s%s]%s"
+msgid "%s%s%s: %s%s%s %s[%s%s]%s"
 msgstr "%sApodos %s%s%s: %s[%s%s%s]"
 
 #, fuzzy
