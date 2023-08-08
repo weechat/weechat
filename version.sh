@@ -40,7 +40,7 @@
 #
 
 WEECHAT_STABLE="4.0.3"
-WEECHAT_DEVEL="4.0.3"
+WEECHAT_DEVEL="4.0.4-dev"
 
 STABLE_MAJOR=$(echo "${WEECHAT_STABLE}" | cut -d"." -f1)
 STABLE_MINOR=$(echo "${WEECHAT_STABLE}" | cut -d"." -f2)
