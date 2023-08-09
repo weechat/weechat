@@ -688,7 +688,8 @@ IRC_PROTOCOL_CALLBACK(batch)
             params[0] + 1,  /* reference */
             weechat_hashtable_get (tags, "batch"),  /* parent ref */
             params[1],  /* type */
-            str_params);
+            str_params,
+            tags);
         if (str_params)
             free (str_params);
     }

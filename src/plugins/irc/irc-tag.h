@@ -30,5 +30,7 @@ extern char *irc_tag_modifier_cb (const void *pointer,
 extern int irc_tag_parse (const char *tags,
                           struct t_hashtable *hashtable,
                           const char *prefix_key);
+extern char *irc_tag_add_tags_to_message (const char *message,
+                                          struct t_hashtable *tags);
 
 #endif /* WEECHAT_PLUGIN_IRC_TAG_H */

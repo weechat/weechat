@@ -39,6 +39,7 @@ Bug fixes::
   * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
   * irc: add missing "account-tag" in list of supported capabilities
   * irc: add channel in "autojoin" server option only when the channel is actually joined (issue #1990)
+  * irc: add missing tags on multiline messages (issue #1987)
   * script: fix cursor position after `/script list -i` or `/script list -il`
   * script: fix buffer used by command `/script list -i|-il|-o|-ol`
 
