@@ -22,6 +22,7 @@
 
 #include <time.h>
 
+struct t_hashtable;
 struct t_irc_server;
 
 struct t_irc_batch
@@ -30,6 +31,7 @@ struct t_irc_batch
     char *parent_ref;                   /* ref of parent batch (optional)   */
     char *type;                         /* type                             */
     char *parameters;                   /* parameters                       */
+    struct t_hashtable *tags;           /* batch message tags               */
     time_t start_time;                  /* start time (to auto-purge if     */
                                         /* batch end is not received)       */
     char **messages;                    /* messages separated by '\n'       */
@@ -46,7 +48,8 @@ extern struct t_irc_batch *irc_batch_start_batch (struct t_irc_server *server,
                                                   const char *reference,
                                                   const char *parent_ref,
                                                   const char *type,
-                                                  const char *parameters);
+                                                  const char *parameters,
+                                                  struct t_hashtable *tags);
 extern int irc_batch_add_message (struct t_irc_server *server,
                                   const char *reference,
                                   const char *irc_message);

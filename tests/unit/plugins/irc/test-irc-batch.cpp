@@ -26,6 +26,8 @@
 extern "C"
 {
 #include <string.h>
+#include "src/core/wee-hashtable.h"
+#include "src/plugins/weechat-plugin.h"
 #include "src/plugins/irc/irc-batch.h"
 #include "src/plugins/irc/irc-server.h"
 }
@@ -43,14 +45,23 @@ TEST(IrcBatch, Search)
 {
     struct t_irc_server *server;
     struct t_irc_batch *batch1, *batch2;
+    struct t_hashtable *tags;
 
     server = irc_server_alloc ("server");
     CHECK(server);
 
-    batch1 = irc_batch_start_batch (server, "ref1", "parent_ref", "type", "params");
+    tags = hashtable_new (32,
+                          WEECHAT_HASHTABLE_STRING,
+                          WEECHAT_HASHTABLE_STRING,
+                          NULL, NULL);
+    CHECK(tags);
+    hashtable_set (tags, "time", "2023-08-09T07:43:01.830Z");
+    hashtable_set (tags, "msgid", "icqfzy7zdbpix4gy8pvzuv49kw");
+
+    batch1 = irc_batch_start_batch (server, "ref1", "parent_ref", "type", "params", tags);
     CHECK(batch1);
 
-    batch2 = irc_batch_start_batch (server, "ref2", "parent_ref", "type", "params");
+    batch2 = irc_batch_start_batch (server, "ref2", "parent_ref", "type", "params", NULL);
     CHECK(batch2);
 
     POINTERS_EQUAL(NULL, irc_batch_search (NULL, NULL));
@@ -105,19 +116,29 @@ TEST(IrcBatch, StartBatch)
 {
     struct t_irc_server *server;
     struct t_irc_batch *batch;
+    struct t_hashtable *tags;
 
     server = irc_server_alloc ("server");
     CHECK(server);
 
+    tags = hashtable_new (32,
+                          WEECHAT_HASHTABLE_STRING,
+                          WEECHAT_HASHTABLE_STRING,
+                          NULL, NULL);
+    CHECK(tags);
+    hashtable_set (tags, "time", "2023-08-09T07:43:01.830Z");
+    hashtable_set (tags, "msgid", "icqfzy7zdbpix4gy8pvzuv49kw");
+
     POINTERS_EQUAL(NULL, server->batches);
 
-    batch = irc_batch_start_batch (server, "ref", NULL, "type", NULL);
+    batch = irc_batch_start_batch (server, "ref", NULL, "type", NULL, NULL);
     CHECK(batch);
     POINTERS_EQUAL(batch, server->batches);
     STRCMP_EQUAL("ref", batch->reference);
     POINTERS_EQUAL(NULL, batch->parent_ref);
     STRCMP_EQUAL("type", batch->type);
     POINTERS_EQUAL(NULL, batch->parameters);
+    POINTERS_EQUAL(NULL, batch->tags);
     CHECK(batch->start_time > 0);
     POINTERS_EQUAL(NULL, batch->messages);
     LONGS_EQUAL(0, batch->end_received);
@@ -126,13 +147,19 @@ TEST(IrcBatch, StartBatch)
 
     POINTERS_EQUAL(NULL, server->batches);
 
-    batch = irc_batch_start_batch (server, "ref", "parent_ref", "type", "params");
+    batch = irc_batch_start_batch (server, "ref", "parent_ref", "type", "params",
+                                   tags);
     CHECK(batch);
     POINTERS_EQUAL(batch, server->batches);
     STRCMP_EQUAL("ref", batch->reference);
     STRCMP_EQUAL("parent_ref", batch->parent_ref);
     STRCMP_EQUAL("type", batch->type);
     STRCMP_EQUAL("params", batch->parameters);
+    CHECK(batch->tags);
+    STRCMP_EQUAL("2023-08-09T07:43:01.830Z",
+                 (const char *)hashtable_get (batch->tags, "time"));
+    STRCMP_EQUAL("icqfzy7zdbpix4gy8pvzuv49kw",
+                 (const char *)hashtable_get (batch->tags, "msgid"));
     CHECK(batch->start_time > 0);
     POINTERS_EQUAL(NULL, batch->messages);
 
@@ -159,7 +186,8 @@ TEST(IrcBatch, AddMessage)
     server = irc_server_alloc ("server");
     CHECK(server);
 
-    batch = irc_batch_start_batch (server, "ref", "parent_ref", "type", "params");
+    batch = irc_batch_start_batch (server, "ref", "parent_ref", "type", "params",
+                                   NULL);
     CHECK(batch);
 
     irc_batch_add_message (server, "ref", ":alice PRIVMSG #test: test1");
@@ -187,10 +215,12 @@ TEST(IrcBatch, FreeAll)
     server = irc_server_alloc ("server");
     CHECK(server);
 
-    batch1 = irc_batch_start_batch (server, "ref1", "parent_ref", "type", "params");
+    batch1 = irc_batch_start_batch (server, "ref1", "parent_ref", "type", "params",
+                                    NULL);
     CHECK(batch1);
 
-    batch2 = irc_batch_start_batch (server, "ref2", "parent_ref", "type", "params");
+    batch2 = irc_batch_start_batch (server, "ref2", "parent_ref", "type", "params",
+                                    NULL);
     CHECK(batch2);
 
     POINTERS_EQUAL(batch1, server->batches);

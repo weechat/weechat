@@ -1625,7 +1625,8 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     POINTERS_EQUAL(NULL, irc_batch_search (ptr_server, "ref2"));
 
     /* multiline */
-    RECV(":server BATCH +ref draft/multiline #test");
+    RECV("@time=2023-08-09T07:43:01.830Z;msgid=icqfzy7zdbpix4gy8pvzuv49kw "
+         ":server BATCH +ref draft/multiline #test");
     CHECK_NO_MSG;
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 1");
     CHECK_NO_MSG;
@@ -1633,13 +1634,14 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     CHECK_NO_MSG;
     RECV(":server BATCH -ref");
     CHECK_CHAN("bob", "line 1",
-               "irc_privmsg,irc_tag_batch=ref,irc_batch_type_draft/multiline,"
-               "notify_message,prefix_nick_248,nick_bob,"
-               "host_user_b@host_b,log1");
+               "irc_privmsg,irc_tag_batch=ref,irc_tag_time=2023-08-09T07:43:01.830Z,"
+               "irc_tag_msgid=icqfzy7zdbpix4gy8pvzuv49kw,"
+               "irc_batch_type_draft/multiline,notify_message,prefix_nick_248,"
+               "nick_bob,host_user_b@host_b,log1");
     CHECK_CHAN("bob", "line 2",
-               "irc_privmsg,irc_tag_batch=ref,irc_batch_type_draft/multiline,"
-               "notify_message,prefix_nick_248,nick_bob,"
-               "host_user_b@host_b,log1");
+               "irc_privmsg,irc_tag_batch=ref,irc_tag_time=2023-08-09T07:43:01.830Z,"
+               "irc_tag_msgid=icqfzy7zdbpix4gy8pvzuv49kw,irc_batch_type_draft/multiline,"
+               "notify_message,prefix_nick_248,nick_bob,host_user_b@host_b,log1");
 
     /* multiline with CTCP */
     RECV(":server BATCH +ref draft/multiline #test");
@@ -1666,7 +1668,8 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     irc_server_buffer_set_input_multiline (ptr_server, 1);
 
     /* multiline */
-    RECV(":server BATCH +ref draft/multiline #test");
+    RECV("@time=2023-08-09T07:43:01.830Z;msgid=icqfzy7zdbpix4gy8pvzuv49kw "
+         ":server BATCH +ref draft/multiline #test");
     CHECK_NO_MSG;
     RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :line 1");
     CHECK_NO_MSG;
@@ -1675,9 +1678,10 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     RECV(":server BATCH -ref");
     CHECK_CHAN("bob", "line 1\n"
                "line 2",
-               "irc_privmsg,irc_tag_batch=ref,irc_batch_type_draft/multiline,"
-               "notify_message,prefix_nick_248,nick_bob,host_user_b@host_b,"
-               "log1");
+               "irc_privmsg,irc_tag_batch=ref,irc_tag_time=2023-08-09T07:43:01.830Z,"
+               "irc_tag_msgid=icqfzy7zdbpix4gy8pvzuv49kw,"
+               "irc_batch_type_draft/multiline,notify_message,prefix_nick_248,"
+               "nick_bob,host_user_b@host_b,log1");
 
     /* multiline with CTCP */
     RECV(":server BATCH +ref draft/multiline #test");

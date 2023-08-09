@@ -110,7 +110,7 @@ irc_batch_add_to_list (struct t_irc_server *server, struct t_irc_batch *batch)
 struct t_irc_batch *
 irc_batch_start_batch (struct t_irc_server *server, const char *reference,
                        const char *parent_ref, const char *type,
-                       const char *parameters)
+                       const char *parameters, struct t_hashtable *tags)
 {
     struct t_irc_batch *ptr_batch;
 
@@ -130,6 +130,7 @@ irc_batch_start_batch (struct t_irc_server *server, const char *reference,
     ptr_batch->parent_ref = (parent_ref) ? strdup (parent_ref) : NULL;
     ptr_batch->type = strdup (type);
     ptr_batch->parameters = (parameters) ? strdup (parameters) : NULL;
+    ptr_batch->tags = (tags) ? weechat_hashtable_dup (tags) : NULL;
     ptr_batch->start_time = time (NULL);
     ptr_batch->messages = NULL;
     ptr_batch->end_received = 0;
@@ -188,6 +189,8 @@ irc_batch_free (struct t_irc_server *server, struct t_irc_batch *batch)
         free (batch->type);
     if (batch->parameters)
         free (batch->parameters);
+    if (batch->tags)
+        weechat_hashtable_free (batch->tags);
     if (batch->messages)
         weechat_string_dyn_free (batch->messages, 1);
 
@@ -226,7 +229,7 @@ irc_batch_process_messages (struct t_irc_server *server,
                             struct t_irc_batch *batch)
 {
     char **list_messages, *command, *channel, modifier_data[1024], *new_messages;
-    char *message;
+    char *message, *message2;
     int i, count_messages;
 
     if (!batch || !batch->messages)
@@ -261,8 +264,13 @@ irc_batch_process_messages (struct t_irc_server *server,
                 if (!message)
                     continue;
 
+                message2 = irc_tag_add_tags_to_message (message,
+                                                        batch->tags);
+                if (!message2)
+                    continue;
+
                 irc_message_parse (server,
-                                   message,
+                                   message2,
                                    NULL,   /* tags */
                                    NULL,   /* message_without_tags */
                                    NULL,   /* nick */
@@ -280,13 +288,13 @@ irc_batch_process_messages (struct t_irc_server *server,
                                    NULL);  /* pos_text */
 
                 /* add raw message */
-                irc_raw_print (server, IRC_RAW_FLAG_RECV, message);
+                irc_raw_print (server, IRC_RAW_FLAG_RECV, message2);
 
                 /* call receive callback, ignoring batch tags */
-                irc_protocol_recv_command (server, message, command, channel, 1);
+                irc_protocol_recv_command (server, message2, command, channel, 1);
 
-                if (message)
-                    free (message);
+                free (message);
+                free (message2);
                 if (command)
                     free (command);
                 if (channel)
@@ -562,6 +570,10 @@ irc_batch_print_log (struct t_irc_server *server)
         weechat_log_printf ("       parent_ref. . . . . : '%s'",  ptr_batch->parent_ref);
         weechat_log_printf ("       type. . . . . . . . : '%s'",  ptr_batch->type);
         weechat_log_printf ("       parameters. . . . . : '%s'",  ptr_batch->parameters);
+        weechat_log_printf ("       tags. . . . . . . . : 0x%lx (hashtable: '%s')",
+                            ptr_batch->tags,
+                            weechat_hashtable_get_string (ptr_batch->tags,
+                                                          "keys_values"));
         weechat_log_printf ("       start_time. . . . . : %lld",  (long long)ptr_batch->start_time);
         weechat_log_printf ("       message . . . . . . : 0x%lx ('%s')",
                             ptr_batch->messages,
