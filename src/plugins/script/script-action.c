@@ -441,11 +441,57 @@ void
 script_action_run_autoload (const char *name, int quiet, int autoload)
 {
     struct t_script_repo *ptr_script;
-    char str_signal[256], *filename;
-    int length;
+    char *pos, str_signal[256], *weechat_data_dir, *filename;
+    int language, length, script_found, script_autoloaded;
+    struct stat st;
 
-    ptr_script = script_repo_search_by_name_ext (name);
-    if (!ptr_script)
+    /* find script language */
+    language = -1;
+    pos = strrchr (name, '.');
+    if (pos)
+        language = script_language_search_by_extension (pos + 1);
+    if (language < 0)
+    {
+        if (!quiet)
+        {
+            weechat_printf (NULL,
+                            _("%s: unknown language for script \"%s\""),
+                            SCRIPT_PLUGIN_NAME, name);
+        }
+        return;
+    }
+
+    /* check if script exists and if it's currently autoloaded */
+    script_found = 0;
+    script_autoloaded = 0;
+    weechat_data_dir = weechat_info_get ("weechat_data_dir", NULL);
+    length = strlen (weechat_data_dir) + strlen (name) + 64;
+    filename = malloc (length);
+    if (filename)
+    {
+        /* check if script exists */
+        snprintf (filename, length, "%s/%s/%s",
+                  weechat_data_dir,
+                  script_language[language],
+                  name);
+        if (stat (filename, &st) == 0)
+            script_found = 1;
+
+        /* check if script is autoloaded */
+        snprintf (filename, length, "%s/%s/autoload/%s",
+                  weechat_data_dir,
+                  script_language[language],
+                  name);
+        if (stat (filename, &st) == 0)
+            script_autoloaded = 1;
+
+        free (filename);
+    }
+
+    if (weechat_data_dir)
+        free (weechat_data_dir);
+
+    if (!script_found)
     {
         if (!quiet)
         {
@@ -456,24 +502,12 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
         return;
     }
 
-    /* check that script is installed */
-    if (!(ptr_script->status & SCRIPT_STATUS_INSTALLED))
-    {
-        if (!quiet)
-        {
-            weechat_printf (NULL,
-                            _("%s: script \"%s\" is not installed"),
-                            SCRIPT_PLUGIN_NAME, name);
-        }
-        return;
-    }
-
     /* toggle autoload if value is -1 */
     if (autoload < 0)
-        autoload = (ptr_script->status & SCRIPT_STATUS_AUTOLOADED) ? 0 : 1;
+        autoload = (script_autoloaded) ? 0 : 1;
 
     /* ask plugin to autoload (or not) script */
-    length = 16 + strlen (ptr_script->name_with_extension) + 1;
+    length = 16 + strlen (name) + 1;
     filename = malloc (length);
     if (filename)
     {
@@ -481,15 +515,16 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
                   "%s%s%s",
                   (quiet && weechat_config_boolean (script_config_look_quiet_actions)) ? "-q " : "",
                   (autoload) ? "-a " : "",
-                  ptr_script->name_with_extension);
+                  name);
         snprintf (str_signal, sizeof (str_signal),
                   "%s_script_autoload",
-                  script_language[ptr_script->language]);
+                  script_language[language]);
         (void) weechat_hook_signal_send (str_signal,
                                          WEECHAT_HOOK_SIGNAL_STRING,
                                          filename);
         free (filename);
     }
+
     if (!quiet)
     {
         weechat_printf (NULL,
@@ -498,7 +533,10 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
                         _("%s: autoload disabled for script \"%s\""),
                         SCRIPT_PLUGIN_NAME, name);
     }
-    script_repo_update_status (ptr_script);
+
+    ptr_script = script_repo_search_by_name_ext (name);
+    if (ptr_script)
+        script_repo_update_status (ptr_script);
 }
 
 /*
