@@ -289,7 +289,7 @@ script_action_run_unload (const char *name, int quiet)
     }
     else
     {
-        /* unload script by using name (example: "iset") */
+        /* unload script by using name (example: "go") */
         for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
         {
             snprintf (hdata_name, sizeof (hdata_name),
@@ -394,7 +394,7 @@ script_action_run_reload (const char *name, int quiet)
     }
     else
     {
-        /* reload script by using name (example: "iset") */
+        /* reload script by using name (example: "go") */
         for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
         {
             snprintf (hdata_name, sizeof (hdata_name),

@@ -112,7 +112,7 @@ script_repo_search_displayed_by_number (int number)
 }
 
 /*
- * Searches for a script by name (example: "iset").
+ * Searches for a script by name (example: "go").
  *
  * Returns pointer to script found, NULL if not found.
  */
