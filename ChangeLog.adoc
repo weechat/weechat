@@ -43,6 +43,7 @@ Bug fixes::
   * irc: add channel in "autojoin" server option only when the channel is actually joined (issue #1990)
   * irc: add missing tags on multiline messages (issue #1987)
   * irc: fix redirection of command `/list` when the reply doesn't start with message 321 (start of /list)
+  * relay: synchronize nick modes with IRC client upon connection (issue #1984)
   * script: fix cursor position after `/script list -i` or `/script list -il`
   * script: fix buffer used by command `/script list -i|-il|-o|-ol`
 

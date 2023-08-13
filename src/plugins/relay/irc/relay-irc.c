@@ -1638,11 +1638,11 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     struct t_hashtable *hash_parsed, *hash_redirect;
     struct t_infolist *infolist_server;
     const char *irc_command, *str_num_params, *isupport, *pos_password;
-    const char *ptr_data;
+    const char *ptr_data, *ptr_nick_modes;
     char str_time[128], str_signal[128], str_server_channel[256], *nick;
     char str_param[128], *str_args, *version, str_command[128], **params;
     char *pos, *password, *irc_is_channel, *info, *error, *str_cmd_lower;
-    char modifier_data[128], *new_data, *ctcp_type, *ctcp_params;
+    char modifier_data[128], *new_data, *ctcp_type, *ctcp_params, *nick_modes;
     long num_params;
     int i, redirect_msg;
 
@@ -1875,12 +1875,17 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                              version);
             if (version)
                 free (version);
+            nick_modes = NULL;
             infolist_server = weechat_infolist_get ("irc_server", NULL,
                                                     client->protocol_args);
             if (infolist_server)
             {
                 if (weechat_infolist_next (infolist_server))
                 {
+                    ptr_nick_modes = weechat_infolist_string (infolist_server,
+                                                              "nick_modes");
+                    if (ptr_nick_modes)
+                        nick_modes = strdup (ptr_nick_modes);
                     isupport = weechat_infolist_string (infolist_server,
                                                         "isupport");
                     if (isupport && isupport[0])
@@ -1915,6 +1920,18 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                              ":%s 422 %s :MOTD File is missing",
                              RELAY_IRC_DATA(client, address),
                              RELAY_IRC_DATA(client, nick));
+
+            /* send nick modes */
+            if (nick_modes && nick_modes[0])
+            {
+                relay_irc_sendf (client,
+                                 ":%s MODE %s :+%s",
+                                 RELAY_IRC_DATA(client, address),
+                                 RELAY_IRC_DATA(client, nick),
+                                 nick_modes);
+            }
+            if (nick_modes)
+                free (nick_modes);
 
             /* hook signals */
             relay_irc_hook_signals (client);
