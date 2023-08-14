@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-12 16:24+0200\n"
+"POT-Creation-Date: 2023-08-14 10:19+0200\n"
 "PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7208,17 +7208,17 @@ msgid ""
 "(case insensitive)\n"
 "                    n:xxx  show only channels with \"xxx\" in name (case "
 "insensitive)\n"
+"                    t:xxx  show only channels with \"xxx\" in topic (case "
+"insensitive)\n"
 "                    u:n    show only channels with at least \"n\" users\n"
 "                    u:>n   show only channels with more than \"n\" users\n"
 "                    u:<n   show only channels with less than \"n\" users\n"
-"                    t:xxx  show only channels with \"xxx\" in topic (case "
-"insensitive)\n"
 "                    c:xxx  show only channels matching the evaluated "
 "condition \"xxx\", using following variables: name, name2, users, topic\n"
 "  ctrl-j            j      join channel on selected line\n"
 "                    s:x,y  sort channels by fields x,y (see below)\n"
 "                    s:     reset sort to its default value (see below)\n"
-"                    $      refresh list\n"
+"                    $      refresh list (run again command /list)\n"
 "                    q      close buffer\n"
 "\n"
 "Sort keys on /list buffer:\n"
@@ -11863,10 +11863,6 @@ msgid "%s: script \"%s\" not found"
 msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy, c-format
-msgid "%s: script \"%s\" is not installed"
-msgstr "%s a \"%s\" szerver nem található\n"
-
-#, fuzzy, c-format
 msgid "%s: autoload enabled for script \"%s\""
 msgstr "folyamat: \"%s\" szerver betöltése\n"
 
@@ -11888,6 +11884,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s: downloading script \"%s\"..."
 msgstr "folyamat: \"%s\" szerver betöltése\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" is not installed"
+msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy, c-format
 msgid "%s: script \"%s\" is held"
