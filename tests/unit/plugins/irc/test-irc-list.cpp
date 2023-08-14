@@ -54,6 +54,16 @@ TEST(IrcList, IrcListFreeCb)
 
 /*
  * Tests functions:
+ *   irc_list_buffer_set_localvar_filter
+ */
+
+TEST(IrcList, IrcListBufferSetLocalvarFilter)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   irc_list_set_filter
  */
 
