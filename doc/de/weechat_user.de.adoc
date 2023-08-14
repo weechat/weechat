@@ -1723,7 +1723,7 @@ wurde (Befehl: `+/mouse toggle+`).
 | kbd:[Ctrl+▼]            | -            | Chat                | horizontal, nach rechts scrollen. | `+/window scroll_horiz -window ${_window_number} +10%+`
 | kbd:[▲]                 | -            | chat: fset Buffer   | Auswahl wird fünf Einträge nach oben bewegt, im fset Buffer. | `+/fset -up 5+`
 | kbd:[▼]                 | -            | chat: fset buffer   | Auswahl wird fünf Einträge nach unten bewegt, im fset Buffer. | `+/fset -down 5+`
-| ◾◽◽                     | -            | chat: fset buffer   | springt zu einem Eintrag im fset Buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| ◾◽◽                     | -            | chat: fset buffer   | springt zu einem Eintrag im fset Buffer. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
 | ◽◽◾                     | -            | chat: fset buffer   | Boolean-Wert wird umgeschaltet (an/aus) oder editiere den Wert einer Option. | `+hsignal:fset_mouse+`
 | ◽◽◾                     | left         | chat: fset buffer   | Integer/Farbwerte/Aufzählung werden verringert, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
 | ◽◽◾                     | right        | chat: fset buffer   | Integer/Farbwerte/Aufzählung werden erhöht, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`

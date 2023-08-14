@@ -1621,7 +1621,7 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Ctrl+▼]        | -            | чет                | Скролује хоризонтално у десно. | `+/window scroll_horiz -window ${_window_number} +10%+`
 | kbd:[▲]             | -            | чет: fset бафер   | Помера за пет линија навише у fset баферу. | `+/fset -up 5+`
 | kbd:[▼]             | -            | чет: fset бафер   | Помера за пет линија наниже у fset баферу. | `+/fset -down 5+`
-| ◾◽◽                 | -            | чет: fset бафер   | Бира линију у fset баферу. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| ◾◽◽                 | -            | чет: fset бафер   | Бира линију у fset баферу. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
 | ◽◽◾                 | -            | чет: fset бафер   | Пребацује логичку вредност (on/off) или уређује вредност опције. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
 | ◽◽◾                 | лево         | чет: fset бафер   | Умањује вредност за цео број/боју/enum, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`

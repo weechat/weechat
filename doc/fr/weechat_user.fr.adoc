@@ -1745,7 +1745,7 @@ avec la touche kbd:[Alt+m] (commande : `+/mouse toggle+`).
 | kbd:[Ctrl+▼]          | -            | chat                 | Faire défiler horizontalement vers la droite. | `+/window scroll_horiz -window ${_window_number} +10%+`
 | kbd:[▲]               | -            | chat : tampon fset   | Monter de cinq lignes dans le tampon fset. | `+/fset -up 5+`
 | kbd:[▼]               | -            | chat : tampon fset   | Descendre de cinq lignes dans le tampon fset. | `+/fset -down 5+`
-| ◾◽◽                   | -            | chat : tampon fset   | Sélectionner la ligne dans le tampon fset. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| ◾◽◽                   | -            | chat : tampon fset   | Sélectionner la ligne dans le tampon fset. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
 | ◽◽◾                   | -            | chat : tampon fset   | Basculer le booléen (on/off) ou éditer la valeur de l'option. | `+hsignal:fset_mouse+`
 | ◽◽◾                   | left         | chat : tampon fset   | Décrémenter la valeur de l'entier/couleur/énuméré, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
 | ◽◽◾                   | right        | chat : tampon fset   | Incrémenter la valeur de l'entier/couleur/énuméré, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`

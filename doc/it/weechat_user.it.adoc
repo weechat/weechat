@@ -1888,7 +1888,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 // TRANSLATION MISSING
 | kbd:[▼]           | -                | chat: fset buffer   | Move five lines down in fset buffer. | `+/fset -down 5+`
 // TRANSLATION MISSING
-| ◾◽◽               | -                | chat: fset buffer   | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| ◾◽◽               | -                | chat: fset buffer   | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
 // TRANSLATION MISSING
 | ◽◽◾               | -                | chat: fset buffer   | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING

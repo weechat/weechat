@@ -1708,7 +1708,7 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 | kbd:[Ctrl+▼]       | -            | chat                | Scroll horizontally to the right. | `+/window scroll_horiz -window ${_window_number} +10%+`
 | kbd:[▲]            | -            | chat: fset buffer   | Move five lines up in fset buffer. | `+/fset -up 5+`
 | kbd:[▼]            | -            | chat: fset buffer   | Move five lines down in fset buffer. | `+/fset -down 5+`
-| ◾◽◽                | -            | chat: fset buffer   | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| ◾◽◽                | -            | chat: fset buffer   | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
 | ◽◽◾                | -            | chat: fset buffer   | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
 | ◽◽◾                | left         | chat: fset buffer   | Decrease value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
 | ◽◽◾                | right        | chat: fset buffer   | Increase value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`

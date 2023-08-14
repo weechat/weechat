@@ -1717,7 +1717,7 @@ za pomocą skrótu kbd:[Alt+m] (komenda: `+/mouse toggle+`).
 | kbd:[Ctrl+▼]        | -             | chat                 | Przewiń poziomo w prawo. | `+/window scroll_horiz -window ${_window_number} +10%+`
 | kbd:[▲]             | -             | chat: bufor fset     | Przewiń pięć linii w góre w buforze fset. | `+/fset -up 5+`
 | kbd:[▼]             | -             | chat: bufor fset     | Przewiń pięć linii w dół w buforze fset. | `+/fset -down 5+`
-| ◾◽◽                 | -             | chat: bufor fset     | Zaznacz linię b buforze fset. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| ◾◽◽                 | -             | chat: bufor fset     | Zaznacz linię b buforze fset. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
 | ◽◽◾                 | -             | chat: bufor fset     | Przełącz (włącz/wyłącz) lub edytuj wartośc opcji. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
 | ◽◽◾                 | left          | chat: bufor fset     | Zmniejsz wartość zmiennej liczbowej / koloru / enum, ustaw/rozszerz wartośc innego typu. | `+hsignal:fset_mouse+`
