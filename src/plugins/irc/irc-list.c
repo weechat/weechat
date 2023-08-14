@@ -112,6 +112,21 @@ irc_list_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 }
 
 /*
+ * Sets the local variable "filter" in the list buffer.
+ */
+
+void
+irc_list_buffer_set_localvar_filter (struct t_gui_buffer *buffer,
+                                     struct t_irc_server *server)
+{
+    if (!buffer || !server)
+        return;
+
+    weechat_buffer_set (buffer, "localvar_set_filter",
+                        (server->list->filter) ? server->list->filter : "*");
+}
+
+/*
  * Sets filter for list of channels.
  */
 
@@ -126,6 +141,8 @@ irc_list_set_filter (struct t_irc_server *server, const char *filter)
 
     server->list->filter = (filter && (strcmp (filter, "*") != 0)) ?
         strdup (filter) : NULL;
+
+    irc_list_buffer_set_localvar_filter (server->list->buffer, server);
 }
 
 /*
@@ -963,6 +980,7 @@ irc_list_create_buffer (struct t_irc_server *server)
         weechat_hashtable_free (buffer_props);
 
     irc_list_buffer_set_keys (buffer);
+    irc_list_buffer_set_localvar_filter (buffer, server);
 
     if (weechat_buffer_get_integer (buffer, "layout_number") < 1)
     {
