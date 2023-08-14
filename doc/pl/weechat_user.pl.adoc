@@ -1339,7 +1339,9 @@ WeeChat i jego wtyczki domyślnie tworzą następujące zmienne:
 
 | filter
 | dowolny ciąg
-| Filtry zdefiniowane dla buforów jak `/fset`, `/server raw` (irc) i `/script`.
+// TRANSLATION MISSING
+| Filter defined on some buffers like `/fset`, `/list` (irc), `/server raw` (irc)
+  and `/script`.
 
 | host
 | dowolny ciąg
@@ -1724,6 +1726,14 @@ za pomocą skrótu kbd:[Alt+m] (komenda: `+/mouse toggle+`).
 // TRANSLATION MISSING
 | ◽◽◾                 | right         | chat: bufor fset     | Zwiększ wartość zmiennej liczbowej / koloru / enum, ustaw/rozszerz wartośc innego typu. | `+hsignal:fset_mouse+`
 | ◽◽◾                 | up / down     | chat: bufor fset     | Zaznacz/odznacz wiele opcji. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| kbd:[▲]             | -            | chat: /list buffer  | Move five lines up in /list buffer. | `+/list -up 5+`
+// TRANSLATION MISSING
+| kbd:[▼]             | -            | chat: /list buffer  | Move five lines down in /list buffer. | `+/list -down 5+`
+// TRANSLATION MISSING
+| ◾◽◽                 | -            | chat: /list buffer  | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+// TRANSLATION MISSING
+| ◽◽◾                 | -            | chat: /list buffer  | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
 | kbd:[▲]             | -             | chat: bufor skryptów | Przejdź 5 linii w górę w buforze skryptów. | `+/script up 5+`
 | kbd:[▼]             | -             | chat: bufor skryptów | Przejdź 5 linii w dół w buforze skryptów. | `+/script down 5+`
 | ◾◽◽                 | -             | chat: bufor skryptów | Zaznacz linię w buforze skryptów. | `+/script go ${_chat_line_y}+`
@@ -1795,6 +1805,40 @@ Poniższe skróty i akcje mogą zostać użyte w buforze fset (zobacz <<fset,wty
 |                          | `w+:xxx`     | Wyeksportuj opcje do pliku "xxx" z dodatkowymi informacjami. | `+/fset -export -help xxx+`
 | kbd:[Ctrl+x]             | `x`          | Zmień format w jakim wyświetlane są opcje. | `+/fset -format+`
 |                          | `q`          | Zamkknij bufor fset. | `+/buffer close+`
+|===
+
+[NOTE]
+^(1)^ Akcja musi zostać wprowadzona z linii poleceń i potwierdzona przez kbd:[Enter].
+
+// TRANSLATION MISSING
+[[key_bindings_irc_list_buffer]]
+=== IRC /list buffer
+
+These keys and actions are used on the IRC /list buffer (see command <<command_irc_list,/list>>).
+
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Skrót          | Akcja ^(1)^  | Opis | Komenda
+| kbd:[↑]        |              | Przejdź linię wyżej. | `+/list -up+`
+| kbd:[↓]        |              | Przejdź linię niżej. | `+/list -down+`
+| kbd:[PgUp]     |              | Przejdź stronę do góry. | `+/window page_up+`
+| kbd:[PgDn]     |              | Przejdź stronę w dół. | `+/window page_down+`
+| kbd:[Alt+Home] | `pass:[<<]`  | Przejdź do pierwszej linii. | `+/list -go 0+`
+| kbd:[Alt+End]  | `pass:[>>]`  | Przejdź do ostatniej linii. | `+/list -go end+`
+| kbd:[F11]      | `pass:[<]`   | Przewiń poziomo w lewo. | `+/list -left+`
+| kbd:[F12]      | `pass:[>]`   | Przewiń poziomo w prawo. | `+/list -right+`
+| kbd:[Ctrl+j]   | `j`          | Join IRC channel on selected line. | `+/list -join+`
+|                | `xxx`        | Show only channels with "xxx" in name or topic (case insensitive). |
+|                | `n:xxx`      | Show only channels with "xxx" in name (case insensitive). |
+|                | `t:xxx`      | Show only channels with "xxx" in topic (case insensitive). |
+|                | `u:n`        | Show only channels with at least "n" users. |
+|                | `u:>n`       | Show only channels with more than "n" users. |
+|                | `u:<n`       | Show only channels with less than "n" users. |
+|                | `c:xxx`      | Show only channels matching the evaluated condition "xxx", using following variables: name, name2, users, topic. |
+|                | `s:x,y`      | Sort channels by fields x,y (see command <<command_irc_list,/list>>). |
+|                | `s:`         | Reset sort to its default value (see command <<command_irc_list,/list>>). |
+|                | `$`          | Refresh list (run again command <<command_irc_list,/list>>). |
+|                | `q`          | Close buffer. | `+/buffer close+`
 |===
 
 [NOTE]

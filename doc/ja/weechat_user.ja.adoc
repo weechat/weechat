@@ -1412,7 +1412,8 @@ By default WeeChat and its default plugins interpret these variables:
 
 | filter
 | any string
-| Filter defined on some buffers like `/fset`, `/server raw` (irc) and `/script`.
+| Filter defined on some buffers like `/fset`, `/list` (irc), `/server raw` (irc)
+  and `/script`.
 
 | host
 | any string
@@ -1839,6 +1840,14 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 | ◽◽◾                | right        | chat: fset buffer       | Increase value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
 | ◽◽◾                | up / down    | chat: fset buffer       | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| kbd:[▲]            | -            | chat: /list buffer  | Move five lines up in /list buffer. | `+/list -up 5+`
+// TRANSLATION MISSING
+| kbd:[▼]            | -            | chat: /list buffer  | Move five lines down in /list buffer. | `+/list -down 5+`
+// TRANSLATION MISSING
+| ◾◽◽                | -            | chat: /list buffer  | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+// TRANSLATION MISSING
+| ◽◽◾                | -            | chat: /list buffer  | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
 | kbd:[▲]            | -            | チャット: スクリプトバッファ | スクリプトバッファを 5 行上方向にスクロール | `+/script up 5+`
 | kbd:[▼]            | -            | チャット: スクリプトバッファ | スクリプトバッファで 5 行下方向にスクロール | `+/script down 5+`
 | ◾◽◽                | -            | チャット: スクリプトバッファ | スクリプトバッファで行選択 | `+/script go ${_chat_line_y}+`
@@ -1914,6 +1923,40 @@ These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 |===
 
 // TRANSLATION MISSING
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
+
+// TRANSLATION MISSING
+[[key_bindings_irc_list_buffer]]
+=== IRC /list buffer
+
+These keys and actions are used on the IRC /list buffer (see command <<command_irc_list,/list>>).
+
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key            | Action ^(1)^ | Description | Command
+| kbd:[↑]        |              | Move one line up. | `+/list -up+`
+| kbd:[↓]        |              | Move one line down. | `+/list -down+`
+| kbd:[PgUp]     |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]     |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+Home] | `pass:[<<]`  | Move to first line. | `+/list -go 0+`
+| kbd:[Alt+End]  | `pass:[>>]`  | Move to last line. | `+/list -go end+`
+| kbd:[F11]      | `pass:[<]`   | Scroll horizontally on the left. | `+/list -left+`
+| kbd:[F12]      | `pass:[>]`   | Scroll horizontally on the right. | `+/list -right+`
+| kbd:[Ctrl+j]   | `j`          | Join IRC channel on selected line. | `+/list -join+`
+|                | `xxx`        | Show only channels with "xxx" in name or topic (case insensitive). |
+|                | `n:xxx`      | Show only channels with "xxx" in name (case insensitive). |
+|                | `t:xxx`      | Show only channels with "xxx" in topic (case insensitive). |
+|                | `u:n`        | Show only channels with at least "n" users. |
+|                | `u:>n`       | Show only channels with more than "n" users. |
+|                | `u:<n`       | Show only channels with less than "n" users. |
+|                | `c:xxx`      | Show only channels matching the evaluated condition "xxx", using following variables: name, name2, users, topic. |
+|                | `s:x,y`      | Sort channels by fields x,y (see command <<command_irc_list,/list>>). |
+|                | `s:`         | Reset sort to its default value (see command <<command_irc_list,/list>>). |
+|                | `$`          | Refresh list (run again command <<command_irc_list,/list>>). |
+|                | `q`          | Close buffer. | `+/buffer close+`
+|===
+
 [NOTE]
 ^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
 

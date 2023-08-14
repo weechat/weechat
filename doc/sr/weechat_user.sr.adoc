@@ -1246,7 +1246,9 @@ _прозор_ је површина екрана која приказује б
 
 | filter
 | било који стринг
-| Филтер дефинисан за неке бафере, као што су `/fset`, `/server raw` (irc) и `/script`.
+// TRANSLATION MISSING
+| Filter defined on some buffers like `/fset`, `/list` (irc), `/server raw` (irc)
+  and `/script`.
 
 | host
 | било који стринг
@@ -1628,6 +1630,14 @@ WeeChat нуди доста подразумеваних тастерских п
 // TRANSLATION MISSING
 | ◽◽◾                 | десно        | чет: fset бафер   | Увећава вредност за цео број/боју/enum, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
 | ◽◽◾                 | горе / доле  | чет: fset бафер   | Маркира/уклања маркер са више опција. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| kbd:[▲]             | -            | chat: /list buffer  | Move five lines up in /list buffer. | `+/list -up 5+`
+// TRANSLATION MISSING
+| kbd:[▼]             | -            | chat: /list buffer  | Move five lines down in /list buffer. | `+/list -down 5+`
+// TRANSLATION MISSING
+| ◾◽◽                 | -            | chat: /list buffer  | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+// TRANSLATION MISSING
+| ◽◽◾                 | -            | chat: /list buffer  | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
 | kbd:[▲]             | -            | чет: script бафер | Помера за пет линија навише у script баферу. | `+/script up 5+`
 | kbd:[▼]             | -            | чет: script бафер | Помера за пет линија наниже у script баферу. | `+/script down 5+`
 | ◾◽◽                 | -            | chat: script бафер | Бира линију у script баферу. | `+/script go ${_chat_line_y}+`
@@ -1699,6 +1709,40 @@ WeeChat нуди доста подразумеваних тастерских п
 |                          | `w+:xxx`     | Извози опције у фајл „xxx” заједно са помоћи. | `+/fset -export -help xxx+`
 | kbd:[Ctrl+x]             | `x`          | Пребацује формат који се користи за приказ опција. | `+/fset -format+`
 |                          | `q`          | Затвара fset бафер. | `+/buffer close+`
+|===
+
+[NOTE]
+^(1)^ Акција мора да се унесе као унос у командну линију, након чега се притисне kbd:[Ентер].
+
+// TRANSLATION MISSING
+[[key_bindings_irc_list_buffer]]
+=== IRC /list buffer
+
+These keys and actions are used on the IRC /list buffer (see command <<command_irc_list,/list>>).
+
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Тастер         | Акција ^(1)^ | Опис | Команда
+| kbd:[↑]        |              | Помера једну линију навише. | `+/list -up+`
+| kbd:[↓]        |              | Помера једну линију наниже. | `+/list -down+`
+| kbd:[PgUp]     |              | Помера једну страну навише. | `+/window page_up+`
+| kbd:[PgDn]     |              | Помера једну страну наниже. | `+/window page_down+`
+| kbd:[Alt+Home] | `pass:[<<]`  | Скок на прву линију. | `+/list -go 0+`
+| kbd:[Alt+End]  | `pass:[>>]`  | Скок на последњу линију. | `+/list -go end+`
+| kbd:[F11]      | `pass:[<]`   | Скролује хоризонтално у лево. | `+/list -left+`
+| kbd:[F12]      | `pass:[>]`   | Скролује хоризонтално у десно. | `+/list -right+`
+| kbd:[Ctrl+j]   | `j`          | Join IRC channel on selected line. | `+/list -join+`
+|                | `xxx`        | Show only channels with "xxx" in name or topic (case insensitive). |
+|                | `n:xxx`      | Show only channels with "xxx" in name (case insensitive). |
+|                | `t:xxx`      | Show only channels with "xxx" in topic (case insensitive). |
+|                | `u:n`        | Show only channels with at least "n" users. |
+|                | `u:>n`       | Show only channels with more than "n" users. |
+|                | `u:<n`       | Show only channels with less than "n" users. |
+|                | `c:xxx`      | Show only channels matching the evaluated condition "xxx", using following variables: name, name2, users, topic. |
+|                | `s:x,y`      | Sort channels by fields x,y (see command <<command_irc_list,/list>>). |
+|                | `s:`         | Reset sort to its default value (see command <<command_irc_list,/list>>). |
+|                | `$`          | Refresh list (run again command <<command_irc_list,/list>>). |
+|                | `q`          | Close buffer. | `+/buffer close+`
 |===
 
 [NOTE]
