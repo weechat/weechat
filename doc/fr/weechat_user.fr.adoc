@@ -1788,9 +1788,6 @@ Roulette : +
 kbd:[▲] : roulette vers le haut +
 kbd:[▼] : roulette vers le bas
 
-[NOTE]
-^(1)^ kbd:[▲] et kbd:[▼] sont la roulette vers le haut et le bas.
-
 [[key_bindings_fset_buffer]]
 === Tampon fset
 
