@@ -1817,64 +1817,71 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
 | ボタン/ホイール ^(1)^ | ジェスチャー | エリア                       | 説明 | コマンド
-| ◾◽◽                | -            | チャット                     | ウィンドウに移動 | `+/window ${_window_number}+`
-| ◾◽◽                | 左           | チャット                     | 前のバッファに移動 | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                | 右           | チャット                     | 次のバッファに移動 | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                | 左 (長く)    | チャット                     | 最初のバッファに移動 | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                | 右 (長く)    | チャット                     | 最後のバッファに移動 | `+/window ${_window_number};/buffer ++`
-| kbd:[▲]            | -            | チャット                     | バッファ履歴を上方向にスクロール | `+/window scroll_up -window ${_window_number}+`
-| kbd:[▼]            | -            | チャット                     | バッファ履歴を下方向にスクロール | `+/window scroll_down -window ${_window_number}+`
-| kbd:[Ctrl+▲]       | -            | チャット                     | 水平左方向にスクロール | `+/window scroll_horiz -window ${_window_number} -10%+`
-| kbd:[Ctrl+▼]       | -            | チャット                     | 水平右方向にスクロール | `+/window scroll_horiz -window ${_window_number} +10%+`
+| kbd:[■ □ □]           | -            | チャット                     | ウィンドウに移動 | `+/window ${_window_number}+`
+| kbd:[■ □ □]           | 左           | チャット                     | 前のバッファに移動 | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]           | 右           | チャット                     | 次のバッファに移動 | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]           | 左 (長く)    | チャット                     | 最初のバッファに移動 | `+/window ${_window_number};/buffer 1+`
+| kbd:[■ □ □]           | 右 (長く)    | チャット                     | 最後のバッファに移動 | `+/window ${_window_number};/buffer ++`
+| kbd:[▲]               | -            | チャット                     | バッファ履歴を上方向にスクロール | `+/window scroll_up -window ${_window_number}+`
+| kbd:[▼]               | -            | チャット                     | バッファ履歴を下方向にスクロール | `+/window scroll_down -window ${_window_number}+`
+| kbd:[Ctrl+▲]          | -            | チャット                     | 水平左方向にスクロール | `+/window scroll_horiz -window ${_window_number} -10%+`
+| kbd:[Ctrl+▼]          | -            | チャット                     | 水平右方向にスクロール | `+/window scroll_horiz -window ${_window_number} +10%+`
 // TRANSLATION MISSING
-| kbd:[▲]            | -            | chat: fset buffer       | Move five lines up in fset buffer. | `+/fset -up 5+`
+| kbd:[▲]               | -            | chat: fset buffer            | Move five lines up in fset buffer. | `+/fset -up 5+`
 // TRANSLATION MISSING
-| kbd:[▼]            | -            | chat: fset buffer       | Move five lines down in fset buffer. | `+/fset -down 5+`
+| kbd:[▼]               | -            | chat: fset buffer            | Move five lines down in fset buffer. | `+/fset -down 5+`
 // TRANSLATION MISSING
-| ◾◽◽                | -            | chat: fset buffer       | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
+| kbd:[■ □ □]           | -            | chat: fset buffer            | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
 // TRANSLATION MISSING
-| ◽◽◾                | -            | chat: fset buffer       | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]           | -            | chat: fset buffer            | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾                | left         | chat: fset buffer       | Decrease value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]           | left         | chat: fset buffer            | Decrease value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾                | right        | chat: fset buffer       | Increase value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]           | right        | chat: fset buffer            | Increase value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾                | up / down    | chat: fset buffer       | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]           | up / down    | chat: fset buffer            | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| kbd:[▲]            | -            | chat: /list buffer  | Move five lines up in /list buffer. | `+/list -up 5+`
+| kbd:[▲]               | -            | chat: /list buffer           | Move five lines up in /list buffer. | `+/list -up 5+`
 // TRANSLATION MISSING
-| kbd:[▼]            | -            | chat: /list buffer  | Move five lines down in /list buffer. | `+/list -down 5+`
+| kbd:[▼]               | -            | chat: /list buffer           | Move five lines down in /list buffer. | `+/list -down 5+`
 // TRANSLATION MISSING
-| ◾◽◽                | -            | chat: /list buffer  | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+| kbd:[■ □ □]           | -            | chat: /list buffer           | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
 // TRANSLATION MISSING
-| ◽◽◾                | -            | chat: /list buffer  | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
-| kbd:[▲]            | -            | チャット: スクリプトバッファ | スクリプトバッファを 5 行上方向にスクロール | `+/script up 5+`
-| kbd:[▼]            | -            | チャット: スクリプトバッファ | スクリプトバッファで 5 行下方向にスクロール | `+/script down 5+`
-| ◾◽◽                | -            | チャット: スクリプトバッファ | スクリプトバッファで行選択 | `+/script go ${_chat_line_y}+`
-| ◽◽◾                | -            | チャット: スクリプトバッファ | スクリプトのインストール `+/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}+`
-| ◾◽◽                | 上 / 左      | バッファリスト               | 指定したバッファを下の番号に移動 | `+buflist_mouse+` シグナル
-| ◾◽◽                | 下 / 右      | バッファリスト               | 指定したバッファを上の番号に移動 | `+buflist_mouse+` シグナル
-| ◾◽◽                | -            | バッファリスト               | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `+buflist_mouse+` シグナル
-| ◽◽◾                | -            | バッファリスト               | 現在のバッファを指定した場合、バッファ切り替え履歴で次のバッファに切り替える | `+buflist_mouse+` シグナル
-| kbd:[Ctrl+▲]       | -            | バッファリスト               | バッファ切り替え履歴で前のバッファに切り替える | `+buflist_mouse+` シグナル
-| kbd:[Ctrl+▼]       | -            | バッファリスト               | バッファ切り替え履歴で次のバッファに切り替える | `+buflist_mouse+` シグナル
-| ◾◽◽                | 上           | ニックネームリスト           | ニックネームリストを 1 ページ分上方向にスクロール | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽                | 下           | ニックネームリスト           | ニックネームリストを 1 ページ分下方向にスクロール | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽                | 上 (長く)    | ニックネームリスト           | ニックネームリストの最初に移動 | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽                | 下 (長く)    | ニックネームリスト           | ニックネームリストの最後に移動 | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽                | -            | ニックネームリスト           | ニックネームに対するクエリを開く | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾                | -            | ニックネームリスト           | ニックネームに対する whois を行う | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽                | 左           | ニックネームリスト           | ニックネームをキックする | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽                | 左 (長く)    | ニックネームリスト           | ニックネームをキックとバンする | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾                | 左           | ニックネームリスト           | ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾                | -            | 入力                         | マウスイベントを奪ってコマンドラインにコードを入力 | `+/input grab_mouse_area+`
-| kbd:[▲]            | -            | 任意のバー                   | バーを -20% スクロール | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
-| kbd:[▼]            | -            | 任意のバー                   | バーを +20% スクロール | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽                | -            | 任意の場所                   | この場所でカーソルモードを開始 | `+/cursor go ${_x},${_y}+`
+| kbd:[□ □ ■]           | -            | chat: /list buffer           | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
+| kbd:[▲]               | -            | チャット: スクリプトバッファ | スクリプトバッファを 5 行上方向にスクロール | `+/script up 5+`
+| kbd:[▼]               | -            | チャット: スクリプトバッファ | スクリプトバッファで 5 行下方向にスクロール | `+/script down 5+`
+| kbd:[■ □ □]           | -            | チャット: スクリプトバッファ | スクリプトバッファで行選択 | `+/script go ${_chat_line_y}+`
+| kbd:[□ □ ■]           | -            | チャット: スクリプトバッファ | スクリプトのインストール `+/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}+`
+| kbd:[■ □ □]           | 上 / 左      | バッファリスト               | 指定したバッファを下の番号に移動 | `+buflist_mouse+` シグナル
+| kbd:[■ □ □]           | 下 / 右      | バッファリスト               | 指定したバッファを上の番号に移動 | `+buflist_mouse+` シグナル
+| kbd:[■ □ □]           | -            | バッファリスト               | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `+buflist_mouse+` シグナル
+| kbd:[□ □ ■]           | -            | バッファリスト               | 現在のバッファを指定した場合、バッファ切り替え履歴で次のバッファに切り替える | `+buflist_mouse+` シグナル
+| kbd:[Ctrl+▲]          | -            | バッファリスト               | バッファ切り替え履歴で前のバッファに切り替える | `+buflist_mouse+` シグナル
+| kbd:[Ctrl+▼]          | -            | バッファリスト               | バッファ切り替え履歴で次のバッファに切り替える | `+buflist_mouse+` シグナル
+| kbd:[■ □ □]           | 上           | ニックネームリスト           | ニックネームリストを 1 ページ分上方向にスクロール | `+/bar scroll nicklist ${_window_number} -100%+`
+| kbd:[■ □ □]           | 下           | ニックネームリスト           | ニックネームリストを 1 ページ分下方向にスクロール | `+/bar scroll nicklist ${_window_number} +100%+`
+| kbd:[■ □ □]           | 上 (長く)    | ニックネームリスト           | ニックネームリストの最初に移動 | `+/bar scroll nicklist ${_window_number} b+`
+| kbd:[■ □ □]           | 下 (長く)    | ニックネームリスト           | ニックネームリストの最後に移動 | `+/bar scroll nicklist ${_window_number} e+`
+| kbd:[■ □ □]           | -            | ニックネームリスト           | ニックネームに対するクエリを開く | `+/window ${_window_number};/query ${nick}+`
+| kbd:[□ □ ■]           | -            | ニックネームリスト           | ニックネームに対する whois を行う | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[■ □ □]           | 左           | ニックネームリスト           | ニックネームをキックする | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[■ □ □]           | 左 (長く)    | ニックネームリスト           | ニックネームをキックとバンする | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[□ □ ■]           | 左           | ニックネームリスト           | ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[□ □ ■]           | -            | 入力                         | マウスイベントを奪ってコマンドラインにコードを入力 | `+/input grab_mouse_area+`
+| kbd:[▲]               | -            | 任意のバー                   | バーを -20% スクロール | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
+| kbd:[▼]               | -            | 任意のバー                   | バーを +20% スクロール | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
+| kbd:[□ ■ □]           | -            | 任意の場所                   | この場所でカーソルモードを開始 | `+/cursor go ${_x},${_y}+`
 |===
 
 [NOTE]
-^(1)^ kbd:[▲] と kbd:[▼] はホイールの上方向回転と下方向回転に対応します。
+// TRANSLATION MISSING
+^(1)^ Buttons: +
+kbd:[◼ □ □]: click on left button +
+kbd:[□ ◼ □]: click on middle button +
+kbd:[□ □ ◼]: click on right button +
+Wheel: +
+kbd:[▲]: wheel up +
+kbd:[▼]: wheel down
 
 // TRANSLATION MISSING
 [[key_bindings_fset_buffer]]

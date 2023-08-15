@@ -1611,60 +1611,67 @@ WeeChat нуди доста подразумеваних тастерских п
 
 [width="100%", cols="^.^3,^.^3,^.^3,.^8,.^8", options="header"]
 |===
-| Тастер/Точкић ^(1)^ | Гестикулација      | Површина                | Опис | Команда
-| ◾◽◽                 | -            | чет                | Пребацивање на прозор. | `+/window ${_window_number}+`
-| ◾◽◽                 | лево         | чет                | Пребацивање на претходни бафер. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                 | десно        | чет                | Пребацивање на наредни бафер. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                 | лево (дуго)  | чет                | Пребацивање на први бафер. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                 | десно (дуго) | чет                | Пребацивање на последњи бафер. | `+/window ${_window_number};/buffer ++`
-| kbd:[▲]             | -            | чет                | Скролује навише неколико линија у историји бафера. | `+/window scroll_up -window ${_window_number}+`
-| kbd:[▼]             | -            | чет                | Скролује наниже неколико линија у историји бафера. | `+/window scroll_down -window ${_window_number}+`
-| kbd:[Ctrl+▲]        | -            | чет                | Скролује хоризонтално у лево. | `+/window scroll_horiz -window ${_window_number} -10%+`
-| kbd:[Ctrl+▼]        | -            | чет                | Скролује хоризонтално у десно. | `+/window scroll_horiz -window ${_window_number} +10%+`
-| kbd:[▲]             | -            | чет: fset бафер   | Помера за пет линија навише у fset баферу. | `+/fset -up 5+`
-| kbd:[▼]             | -            | чет: fset бафер   | Помера за пет линија наниже у fset баферу. | `+/fset -down 5+`
-| ◾◽◽                 | -            | чет: fset бафер   | Бира линију у fset баферу. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
-| ◽◽◾                 | -            | чет: fset бафер   | Пребацује логичку вредност (on/off) или уређује вредност опције. | `+hsignal:fset_mouse+`
+| Тастер/Точкић ^(1)^ | Гестикулација | Површина           | Опис | Команда
+| kbd:[■ □ □]         | -             | чет                | Пребацивање на прозор. | `+/window ${_window_number}+`
+| kbd:[■ □ □]         | лево          | чет                | Пребацивање на претходни бафер. | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]         | десно         | чет                | Пребацивање на наредни бафер. | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]         | лево (дуго)   | чет                | Пребацивање на први бафер. | `+/window ${_window_number};/buffer 1+`
+| kbd:[■ □ □]         | десно (дуго)  | чет                | Пребацивање на последњи бафер. | `+/window ${_window_number};/buffer ++`
+| kbd:[▲]             | -             | чет                | Скролује навише неколико линија у историји бафера. | `+/window scroll_up -window ${_window_number}+`
+| kbd:[▼]             | -             | чет                | Скролује наниже неколико линија у историји бафера. | `+/window scroll_down -window ${_window_number}+`
+| kbd:[Ctrl+▲]        | -             | чет                | Скролује хоризонтално у лево. | `+/window scroll_horiz -window ${_window_number} -10%+`
+| kbd:[Ctrl+▼]        | -             | чет                | Скролује хоризонтално у десно. | `+/window scroll_horiz -window ${_window_number} +10%+`
+| kbd:[▲]             | -             | чет: fset бафер    | Помера за пет линија навише у fset баферу. | `+/fset -up 5+`
+| kbd:[▼]             | -             | чет: fset бафер    | Помера за пет линија наниже у fset баферу. | `+/fset -down 5+`
+| kbd:[■ □ □]         | -             | чет: fset бафер    | Бира линију у fset баферу. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
+| kbd:[□ □ ■]         | -             | чет: fset бафер    | Пребацује логичку вредност (on/off) или уређује вредност опције. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾                 | лево         | чет: fset бафер   | Умањује вредност за цео број/боју/enum, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]         | лево          | чет: fset бафер    | Умањује вредност за цео број/боју/enum, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾                 | десно        | чет: fset бафер   | Увећава вредност за цео број/боју/enum, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
-| ◽◽◾                 | горе / доле  | чет: fset бафер   | Маркира/уклања маркер са више опција. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]         | десно         | чет: fset бафер    | Увећава вредност за цео број/боју/enum, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]         | горе / доле   | чет: fset бафер    | Маркира/уклања маркер са више опција. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| kbd:[▲]             | -            | chat: /list buffer  | Move five lines up in /list buffer. | `+/list -up 5+`
+| kbd:[▲]             | -             | chat: /list buffer | Move five lines up in /list buffer. | `+/list -up 5+`
 // TRANSLATION MISSING
-| kbd:[▼]             | -            | chat: /list buffer  | Move five lines down in /list buffer. | `+/list -down 5+`
+| kbd:[▼]             | -             | chat: /list buffer | Move five lines down in /list buffer. | `+/list -down 5+`
 // TRANSLATION MISSING
-| ◾◽◽                 | -            | chat: /list buffer  | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+| kbd:[■ □ □]         | -             | chat: /list buffer | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
 // TRANSLATION MISSING
-| ◽◽◾                 | -            | chat: /list buffer  | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
-| kbd:[▲]             | -            | чет: script бафер | Помера за пет линија навише у script баферу. | `+/script up 5+`
-| kbd:[▼]             | -            | чет: script бафер | Помера за пет линија наниже у script баферу. | `+/script down 5+`
-| ◾◽◽                 | -            | chat: script бафер | Бира линију у script баферу. | `+/script go ${_chat_line_y}+`
-| ◽◽◾                 | -            | chat: script бафер | Инсталира/уклања скрипту. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
-| ◾◽◽                 | горе / лево  | листа бафера       | Помера бафер на нижи број. | Signal `+buflist_mouse+`.
-| ◾◽◽                 | доле / десно | листа бафера       | Помера бафер на виши број. | Signal `+buflist_mouse+`.
-| ◾◽◽                 | -            | листа бафера       | Пребацивање на бафер (претходно посећени багер ако је бафер текући). | Signal `+buflist_mouse+`.
-| ◽◽◾                 | -            | листа бафера       | Пребацивање на наредни посећени бафер ако је бафер текући. | Signal `+buflist_mouse+`.
-| kbd:[Ctrl+▲]        | -            | листа бафера       | Пребацивање на претходни бафер. | Signal `+buflist_mouse+`.
-| kbd:[Ctrl+▼]        | -            | листа бафера        | Пребацивање на наредни бафер. | Signal `+buflist_mouse+`.
-| ◾◽◽                 | горе         | листа надимака      | Скроловање једне стране навише у листи надимака. | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽                 | доле         | листа надимака      | Скроловање једне стране наниже у листи надимака. | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽                 | горе (дуго)  | листа надимака      | Скок на почетак листе надимака. | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽                 | доле (дуго)  | листа надимака      | Скок на крај листе надимака. | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽                 | -            | листа надимака      | Отварање упита са надимком. | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾                 | -            | листа надимака      | Извршавање whois над надимком. | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽                 | лево         | листа надимака      | Избацивање надимка. | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽                 | лево (дуго)  | листа надимака      | Избацивање и забрана надимка. | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾                 | лево         | листа надимака      | Забрана надимка. | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾                 | -            | унос                | Хвата догађај миша и умеће његов кôд у командну линију. | `+/input grab_mouse_area+`
-| kbd:[▲]             | -            | било која трака     | Скролује траку за -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
-| kbd:[▼]             | -            | било која трака     | Скролује траку за +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽                 | -            | било где            | Започиње режим померања курсора на овој тачки. | `+/cursor go ${_x},${_y}+`
+| kbd:[□ □ ■]         | -             | chat: /list buffer | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
+| kbd:[▲]             | -             | чет: script бафер  | Помера за пет линија навише у script баферу. | `+/script up 5+`
+| kbd:[▼]             | -             | чет: script бафер  | Помера за пет линија наниже у script баферу. | `+/script down 5+`
+| kbd:[■ □ □]         | -             | chat: script бафер | Бира линију у script баферу. | `+/script go ${_chat_line_y}+`
+| kbd:[□ □ ■]         | -             | chat: script бафер | Инсталира/уклања скрипту. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| kbd:[■ □ □]         | горе / лево   | листа бафера       | Помера бафер на нижи број. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]         | доле / десно  | листа бафера       | Помера бафер на виши број. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]         | -             | листа бафера       | Пребацивање на бафер (претходно посећени багер ако је бафер текући). | Signal `+buflist_mouse+`.
+| kbd:[□ □ ■]         | -             | листа бафера       | Пребацивање на наредни посећени бафер ако је бафер текући. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▲]        | -             | листа бафера       | Пребацивање на претходни бафер. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▼]        | -             | листа бафера       | Пребацивање на наредни бафер. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]         | горе          | листа надимака     | Скроловање једне стране навише у листи надимака. | `+/bar scroll nicklist ${_window_number} -100%+`
+| kbd:[■ □ □]         | доле          | листа надимака     | Скроловање једне стране наниже у листи надимака. | `+/bar scroll nicklist ${_window_number} +100%+`
+| kbd:[■ □ □]         | горе (дуго)   | листа надимака     | Скок на почетак листе надимака. | `+/bar scroll nicklist ${_window_number} b+`
+| kbd:[■ □ □]         | доле (дуго)   | листа надимака     | Скок на крај листе надимака. | `+/bar scroll nicklist ${_window_number} e+`
+| kbd:[■ □ □]         | -             | листа надимака     | Отварање упита са надимком. | `+/window ${_window_number};/query ${nick}+`
+| kbd:[□ □ ■]         | -             | листа надимака     | Извршавање whois над надимком. | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[■ □ □]         | лево          | листа надимака     | Избацивање надимка. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[■ □ □]         | лево (дуго)   | листа надимака     | Избацивање и забрана надимка. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[□ □ ■]         | лево          | листа надимака     | Забрана надимка. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[□ □ ■]         | -             | унос               | Хвата догађај миша и умеће његов кôд у командну линију. | `+/input grab_mouse_area+`
+| kbd:[▲]             | -             | било која трака    | Скролује траку за -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
+| kbd:[▼]             | -             | било која трака    | Скролује траку за +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
+| kbd:[□ ■ □]         | -             | било где           | Започиње режим померања курсора на овој тачки. | `+/cursor go ${_x},${_y}+`
 |===
 
 [NOTE]
-^(1)^ kbd:[▲] и kbd:[▼] значе точкић навише и наниже.
+// TRANSLATION MISSING
+^(1)^ Buttons: +
+kbd:[◼ □ □]: click on left button +
+kbd:[□ ◼ □]: click on middle button +
+kbd:[□ □ ◼]: click on right button +
+Wheel: +
+kbd:[▲]: wheel up +
+kbd:[▼]: wheel down
 
 [[key_bindings_fset_buffer]]
 === Fset бафер

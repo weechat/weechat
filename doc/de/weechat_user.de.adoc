@@ -1714,57 +1714,64 @@ wurde (Befehl: `+/mouse toggle+`).
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
 | Maustaste/Mausrad ^(1)^ | Mausgeste    | Bereich             | Beschreibung | Befehl
-| ◾◽◽                     | -            | Chat                | wechselt zum Fenster. | `+/window ${_window_number}+`
-| ◾◽◽                     | links        | Chat                | zum vorherigen Buffer springen. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                     | rechts       | Chat                | zum nächsten Buffer springen. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                     | links(lang)  | Chat                | wechselt zum ersten Buffer. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                     | rechts(lang) | Chat                | wechselt zum letzten Buffer. | `+/window ${_window_number};/buffer ++`
+| kbd:[■ □ □]             | -            | Chat                | wechselt zum Fenster. | `+/window ${_window_number}+`
+| kbd:[■ □ □]             | links        | Chat                | zum vorherigen Buffer springen. | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]             | rechts       | Chat                | zum nächsten Buffer springen. | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]             | links(lang)  | Chat                | wechselt zum ersten Buffer. | `+/window ${_window_number};/buffer 1+`
+| kbd:[■ □ □]             | rechts(lang) | Chat                | wechselt zum letzten Buffer. | `+/window ${_window_number};/buffer ++`
 | kbd:[▲]                 | -            | Chat                | mehrere Zeilen im Verlaufsspeicher des Buffer nach oben blättern. | `+/window scroll_up -window ${_window_number}+`
 | kbd:[▼]                 | -            | Chat                | mehrere Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `+/window scroll_down -window ${_window_number}+`
 | kbd:[Ctrl+▲]            | -            | Chat                | horizontal, nach links scrollen. | `+/window scroll_horiz -window ${_window_number} -10%+`
 | kbd:[Ctrl+▼]            | -            | Chat                | horizontal, nach rechts scrollen. | `+/window scroll_horiz -window ${_window_number} +10%+`
 | kbd:[▲]                 | -            | chat: fset Buffer   | Auswahl wird fünf Einträge nach oben bewegt, im fset Buffer. | `+/fset -up 5+`
 | kbd:[▼]                 | -            | chat: fset buffer   | Auswahl wird fünf Einträge nach unten bewegt, im fset Buffer. | `+/fset -down 5+`
-| ◾◽◽                     | -            | chat: fset buffer   | springt zu einem Eintrag im fset Buffer. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
-| ◽◽◾                     | -            | chat: fset buffer   | Boolean-Wert wird umgeschaltet (an/aus) oder editiere den Wert einer Option. | `+hsignal:fset_mouse+`
-| ◽◽◾                     | left         | chat: fset buffer   | Integer/Farbwerte/Aufzählung werden verringert, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
-| ◽◽◾                     | right        | chat: fset buffer   | Integer/Farbwerte/Aufzählung werden erhöht, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
-| ◽◽◾                     | up / down    | chat: fset buffer   | markieren/demarkieren von mehreren Optionen. | `+hsignal:fset_mouse+`
+| kbd:[■ □ □]             | -            | chat: fset buffer   | springt zu einem Eintrag im fset Buffer. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
+| kbd:[□ □ ■]             | -            | chat: fset buffer   | Boolean-Wert wird umgeschaltet (an/aus) oder editiere den Wert einer Option. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]             | left         | chat: fset buffer   | Integer/Farbwerte/Aufzählung werden verringert, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]             | right        | chat: fset buffer   | Integer/Farbwerte/Aufzählung werden erhöht, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]             | up / down    | chat: fset buffer   | markieren/demarkieren von mehreren Optionen. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
 | kbd:[▲]                 | -            | chat: /list buffer  | Move five lines up in /list buffer. | `+/list -up 5+`
 // TRANSLATION MISSING
 | kbd:[▼]                 | -            | chat: /list buffer  | Move five lines down in /list buffer. | `+/list -down 5+`
 // TRANSLATION MISSING
-| ◾◽◽                     | -            | chat: /list buffer  | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+| kbd:[■ □ □]             | -            | chat: /list buffer  | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
 // TRANSLATION MISSING
-| ◽◽◾                     | -            | chat: /list buffer  | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
+| kbd:[□ □ ■]             | -            | chat: /list buffer  | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
 | kbd:[▲]                 | -            | chat: script buffer | fünf Zeilen nach oben blättern, im Script-Buffer. | `+/script up 5+`
 | kbd:[▼]                 | -            | chat: script buffer | fünf Zeilen nach unten blättern, im Script-Buffer. | `+/script down 5+`
-| ◾◽◽                     | -            | chat: script buffer | wählt einen Eintrag im Script-Buffer aus. | `+/script go ${_chat_line_y}+`
-| ◽◽◾                     | -            | chat: script buffer | installiert/entfernt ein Skript. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
-| ◾◽◽                     | up / left    | buflist             | verschiebt Buffer in der Reihenfolge nach unten. | Signal `+buflist_mouse+`.
-| ◾◽◽                     | down / right | buflist             | verschiebt Buffer in der Reihenfolge nach oben. | Signal `+buflist_mouse+`.
-| ◾◽◽                     | -            | buflist             | wechselt zum Buffer (oder zum vorherigen Buffer, falls der aktuell genutzte Buffer angewählt wurde). | Signal `+buflist_mouse+`.
-| ◽◽◾                     | -            | buflist             | wechselt zum nächsten Buffer, falls der aktuell genutzte Buffer angewählt wurde. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]             | -            | chat: script buffer | wählt einen Eintrag im Script-Buffer aus. | `+/script go ${_chat_line_y}+`
+| kbd:[□ □ ■]             | -            | chat: script buffer | installiert/entfernt ein Skript. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| kbd:[■ □ □]             | up / left    | buflist             | verschiebt Buffer in der Reihenfolge nach unten. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]             | down / right | buflist             | verschiebt Buffer in der Reihenfolge nach oben. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]             | -            | buflist             | wechselt zum Buffer (oder zum vorherigen Buffer, falls der aktuell genutzte Buffer angewählt wurde). | Signal `+buflist_mouse+`.
+| kbd:[□ □ ■]             | -            | buflist             | wechselt zum nächsten Buffer, falls der aktuell genutzte Buffer angewählt wurde. | Signal `+buflist_mouse+`.
 | kbd:[Ctrl+▲]            | -            | buflist             | wechselt zum vorherigen Buffer. | Signal `+buflist_mouse+`.
 | kbd:[Ctrl+▼]            | -            | buflist             | wechselt zum nächsten Buffer. | Signal `+buflist_mouse+`.
-| ◾◽◽                     | hoch         | Benutzerliste       | Benutzerliste um eine Seite nach oben blättern. | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽                     | runter       | Benutzerliste       | Benutzerliste um eine Seite nach unten blättern. | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽                     | hoch(lang)   | Benutzerliste       | springt zum Anfang der Benutzerliste. | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽                     | runter(lang) | Benutzerliste       | springt zum Ende der Benutzerliste. | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽                     | -            | Benutzerliste       | öffnet privaten Chat mit Nick. | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾                     | -            | Benutzerliste       | führt einen whois für Nick aus. | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽                     | links        | Benutzerliste       | kickt Nick. | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽                     | links(lang)  | Benutzerliste       | kickt und verbannt Nick. | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾                     | links        | Benutzerliste       | verbannt Nick. | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾                     | -            | Input               | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein. | `+/input grab_mouse_area+`
+| kbd:[■ □ □]             | hoch         | Benutzerliste       | Benutzerliste um eine Seite nach oben blättern. | `+/bar scroll nicklist ${_window_number} -100%+`
+| kbd:[■ □ □]             | runter       | Benutzerliste       | Benutzerliste um eine Seite nach unten blättern. | `+/bar scroll nicklist ${_window_number} +100%+`
+| kbd:[■ □ □]             | hoch(lang)   | Benutzerliste       | springt zum Anfang der Benutzerliste. | `+/bar scroll nicklist ${_window_number} b+`
+| kbd:[■ □ □]             | runter(lang) | Benutzerliste       | springt zum Ende der Benutzerliste. | `+/bar scroll nicklist ${_window_number} e+`
+| kbd:[■ □ □]             | -            | Benutzerliste       | öffnet privaten Chat mit Nick. | `+/window ${_window_number};/query ${nick}+`
+| kbd:[□ □ ■]             | -            | Benutzerliste       | führt einen whois für Nick aus. | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[■ □ □]             | links        | Benutzerliste       | kickt Nick. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[■ □ □]             | links(lang)  | Benutzerliste       | kickt und verbannt Nick. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[□ □ ■]             | links        | Benutzerliste       | verbannt Nick. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[□ □ ■]             | -            | Input               | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein. | `+/input grab_mouse_area+`
 | kbd:[▲]                 | -            | jede Bar            | blättert Bar um 20% nach oben. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
 | kbd:[▼]                 | -            | jede Bar            | blättert Bar um 20% nach unten. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽                     | -            | überall             | aktiviert den Cursor-Modus an dieser Position. | `+/cursor go ${_x},${_y}+`
+| kbd:[□ ■ □]             | -            | überall             | aktiviert den Cursor-Modus an dieser Position. | `+/cursor go ${_x},${_y}+`
 |===
 
 [NOTE]
-^(1)^ kbd:[▲] und kbd:[▼] sind Symbole für Mausrad hoch/runter.
+// TRANSLATION MISSING
+^(1)^ Buttons: +
+kbd:[◼ □ □]: click on left button +
+kbd:[□ ◼ □]: click on middle button +
+kbd:[□ □ ◼]: click on right button +
+Wheel: +
+kbd:[▲]: wheel up +
+kbd:[▼]: wheel down
 
 [[key_bindings_fset_buffer]]
 === Fset Buffer

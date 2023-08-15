@@ -1733,51 +1733,60 @@ avec la touche kbd:[Alt+m] (commande : `+/mouse toggle+`).
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-| Bouton/Roulette ^(1)^ | Geste        | Zone                 | Description | Commande
-| ◾◽◽                   | -            | chat                 | Aller à la fenêtre. | `+/window ${_window_number}+`
-| ◾◽◽                   | left         | chat                 | Aller au tampon précédent. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                   | right        | chat                 | Aller au tampon suivant. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                   | left (long)  | chat                 | Aller au premier tampon. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                   | right (long) | chat                 | Aller au dernier tampon. | `+/window ${_window_number};/buffer ++`
-| kbd:[▲]               | -            | chat                 | Monter de quelques lignes dans l'historique du tampon. | `+/window scroll_up -window ${_window_number}+`
-| kbd:[▼]               | -            | chat                 | Descendre de quelques lignes dans l'historique du tampon. | `+/window scroll_down -window ${_window_number}+`
-| kbd:[Ctrl+▲]          | -            | chat                 | Faire défiler horizontalement vers la gauche. | `+/window scroll_horiz -window ${_window_number} -10%+`
-| kbd:[Ctrl+▼]          | -            | chat                 | Faire défiler horizontalement vers la droite. | `+/window scroll_horiz -window ${_window_number} +10%+`
-| kbd:[▲]               | -            | chat : tampon fset   | Monter de cinq lignes dans le tampon fset. | `+/fset -up 5+`
-| kbd:[▼]               | -            | chat : tampon fset   | Descendre de cinq lignes dans le tampon fset. | `+/fset -down 5+`
-| ◾◽◽                   | -            | chat : tampon fset   | Sélectionner la ligne dans le tampon fset. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
-| ◽◽◾                   | -            | chat : tampon fset   | Basculer le booléen (on/off) ou éditer la valeur de l'option. | `+hsignal:fset_mouse+`
-| ◽◽◾                   | left         | chat : tampon fset   | Décrémenter la valeur de l'entier/couleur/énuméré, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
-| ◽◽◾                   | right        | chat : tampon fset   | Incrémenter la valeur de l'entier/couleur/énuméré, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
-| ◽◽◾                   | up / down    | chat : tampon fset   | Marquer/démarquer de multiples options. | `+hsignal:fset_mouse+`
-| kbd:[▲]               | -            | chat : tampon /list  | Monter de cinq lignes dans le tampon /list. | `+/list -up 5+`
-| kbd:[▼]               | -            | chat : tampon /list  | Descendre de cinq lignes dans le tampon /list. | `+/list -down 5+`
-| ◾◽◽                   | -            | chat : tampon /list  | Sélectionner la ligne dans le tampon /list. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
-| ◽◽◾                   | -            | chat : tampon /list  | Rejoindre le canal IRC sur la ligne sélectionnée. | `+hsignal:irc_list_mouse+`
-| kbd:[▲]               | -            | chat : tampon script | Monter de 5 lignes dans le tampon script. | `+/script up 5+`
-| kbd:[▼]               | -            | chat : tampon script | Descendre de 5 lignes dans le tampon script. | `+/script down 5+`
-| ◾◽◽                   | -            | chat : tampon script | Sélectionner la ligne dans le tampon script. | `+/script go ${_chat_line_y}+`
-| ◽◽◾                   | -            | chat : tampon script | Installer/supprimer un script. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
-| ◾◽◽                   | up / left    | buflist              | Déplacer le tampon vers un numéro inférieur. | Signal `+buflist_mouse+`.
-| ◾◽◽                   | down / right | buflist              | Déplacer le tampon vers un numéro supérieur. | Signal `+buflist_mouse+`.
-| ◾◽◽                   | -            | buflist              | Aller au tampon (tampon précédent dans la liste des tampons visités si le tampon est le courant). | Signal `+buflist_mouse+`.
-| ◽◽◾                   | -            | buflist              | Aller au tampon suivant dans la liste des tampons visités si le tampon est le courant. | Signal `+buflist_mouse+`.
-| kbd:[Ctrl+▲]          | -            | buflist              | Aller au tampon précédent. | Signal `+buflist_mouse+`.
-| kbd:[Ctrl+▼]          | -            | buflist              | Aller au tampon suivant. | Signal `+buflist_mouse+`.
-| ◾◽◽                   | up           | liste des pseudos    | Monter d'une page dans la liste des pseudos. | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽                   | down         | liste des pseudos    | Descendre d'une page dans la liste des pseudos. | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽                   | up (long)    | liste des pseudos    | Aller au début de la liste des pseudos. | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽                   | down (long)  | liste des pseudos    | Aller à la fin de la liste des pseudos. | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽                   | -            | liste des pseudos    | Ouvrir une discussion avec le pseudo. | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾                   | -            | liste des pseudos    | Effectuer un whois sur le pseudo. | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽                   | left         | liste des pseudos    | Retirer par la force le pseudo. | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽                   | left (long)  | liste des pseudos    | Retirer par la force et bannir le pseudo. | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾                   | left         | liste des pseudos    | Bannir le pseudo. | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾                   | -            | ligne de commande    | Capturer un évènement de la souris et insérer son code sur la ligne de commande. | `+/input grab_mouse_area+`
-| kbd:[▲]               | -            | toute barre          | Faire défiler la barre de -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
-| kbd:[▼]               | -            | toute barre          | Faire défiler la barre de +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽                   | -            | n'importe où         | Démarrer le mode curseur ("cursor") à ce point. | `+/cursor go ${_x},${_y}+`
+| Bouton/Roulette ^(1)^ | Geste         | Zone                 | Description | Commande
+| kbd:[■ □ □]           | -             | chat                 | Aller à la fenêtre. | `+/window ${_window_number}+`
+| kbd:[■ □ □]           | gauche        | chat                 | Aller au tampon précédent. | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]           | droit         | chat                 | Aller au tampon suivant. | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]           | gauche (long) | chat                 | Aller au premier tampon. | `+/window ${_window_number};/buffer 1+`
+| kbd:[■ □ □]           | droit (long)  | chat                 | Aller au dernier tampon. | `+/window ${_window_number};/buffer ++`
+| kbd:[▲]               | -             | chat                 | Monter de quelques lignes dans l'historique du tampon. | `+/window scroll_up -window ${_window_number}+`
+| kbd:[▼]               | -             | chat                 | Descendre de quelques lignes dans l'historique du tampon. | `+/window scroll_down -window ${_window_number}+`
+| kbd:[Ctrl+▲]          | -             | chat                 | Faire défiler horizontalement vers la gauche. | `+/window scroll_horiz -window ${_window_number} -10%+`
+| kbd:[Ctrl+▼]          | -             | chat                 | Faire défiler horizontalement vers la droite. | `+/window scroll_horiz -window ${_window_number} +10%+`
+| kbd:[▲]               | -             | chat : tampon fset   | Monter de cinq lignes dans le tampon fset. | `+/fset -up 5+`
+| kbd:[▼]               | -             | chat : tampon fset   | Descendre de cinq lignes dans le tampon fset. | `+/fset -down 5+`
+| kbd:[■ □ □]           | -             | chat : tampon fset   | Sélectionner la ligne dans le tampon fset. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
+| kbd:[□ □ ■]           | -             | chat : tampon fset   | Basculer le booléen (on/off) ou éditer la valeur de l'option. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]           | gauche        | chat : tampon fset   | Décrémenter la valeur de l'entier/couleur/énuméré, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]           | droit         | chat : tampon fset   | Incrémenter la valeur de l'entier/couleur/énuméré, définir/ajouter à la valeur pour les autres types. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]           | haut / bas    | chat : tampon fset   | Marquer/démarquer de multiples options. | `+hsignal:fset_mouse+`
+| kbd:[▲]               | -             | chat : tampon /list  | Monter de cinq lignes dans le tampon /list. | `+/list -up 5+`
+| kbd:[▼]               | -             | chat : tampon /list  | Descendre de cinq lignes dans le tampon /list. | `+/list -down 5+`
+| kbd:[■ □ □]           | -             | chat : tampon /list  | Sélectionner la ligne dans le tampon /list. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+| kbd:[□ □ ■]           | -             | chat : tampon /list  | Rejoindre le canal IRC sur la ligne sélectionnée. | `+hsignal:irc_list_mouse+`
+| kbd:[▲]               | -             | chat : tampon script | Monter de 5 lignes dans le tampon script. | `+/script up 5+`
+| kbd:[▼]               | -             | chat : tampon script | Descendre de 5 lignes dans le tampon script. | `+/script down 5+`
+| kbd:[■ □ □]           | -             | chat : tampon script | Sélectionner la ligne dans le tampon script. | `+/script go ${_chat_line_y}+`
+| kbd:[□ □ ■]           | -             | chat : tampon script | Installer/supprimer un script. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| kbd:[■ □ □]           | haut / gauche | buflist              | Déplacer le tampon vers un numéro inférieur. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]           | bas / droit   | buflist              | Déplacer le tampon vers un numéro supérieur. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]           | -             | buflist              | Aller au tampon (tampon précédent dans la liste des tampons visités si le tampon est le courant). | Signal `+buflist_mouse+`.
+| kbd:[□ □ ■]           | -             | buflist              | Aller au tampon suivant dans la liste des tampons visités si le tampon est le courant. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▲]          | -             | buflist              | Aller au tampon précédent. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▼]          | -             | buflist              | Aller au tampon suivant. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]           | haut          | liste des pseudos    | Monter d'une page dans la liste des pseudos. | `+/bar scroll nicklist ${_window_number} -100%+`
+| kbd:[■ □ □]           | bas           | liste des pseudos    | Descendre d'une page dans la liste des pseudos. | `+/bar scroll nicklist ${_window_number} +100%+`
+| kbd:[■ □ □]           | haut (long)   | liste des pseudos    | Aller au début de la liste des pseudos. | `+/bar scroll nicklist ${_window_number} b+`
+| kbd:[■ □ □]           | bas (long)    | liste des pseudos    | Aller à la fin de la liste des pseudos. | `+/bar scroll nicklist ${_window_number} e+`
+| kbd:[■ □ □]           | -             | liste des pseudos    | Ouvrir une discussion avec le pseudo. | `+/window ${_window_number};/query ${nick}+`
+| kbd:[□ □ ■]           | -             | liste des pseudos    | Effectuer un whois sur le pseudo. | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[■ □ □]           | gauche        | liste des pseudos    | Retirer par la force le pseudo. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[■ □ □]           | gauche (long) | liste des pseudos    | Retirer par la force et bannir le pseudo. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[□ □ ■]           | gauche        | liste des pseudos    | Bannir le pseudo. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[□ □ ■]           | -             | ligne de commande    | Capturer un évènement de la souris et insérer son code sur la ligne de commande. | `+/input grab_mouse_area+`
+| kbd:[▲]               | -             | toute barre          | Faire défiler la barre de -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
+| kbd:[▼]               | -             | toute barre          | Faire défiler la barre de +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
+| kbd:[□ ■ □]           | -             | n'importe où         | Démarrer le mode curseur ("cursor") à ce point. | `+/cursor go ${_x},${_y}+`
 |===
+
+[NOTE]
+^(1)^ Boutons : +
+kbd:[◼ □ □] : clic sur le bouton de gauche +
+kbd:[□ ◼ □] : clic sur le bouton du milieu +
+kbd:[□ □ ◼] : clic sur le bouton de droite +
+Roulette : +
+kbd:[▲] : roulette vers le haut +
+kbd:[▼] : roulette vers le bas
 
 [NOTE]
 ^(1)^ kbd:[▲] et kbd:[▼] sont la roulette vers le haut et le bas.
