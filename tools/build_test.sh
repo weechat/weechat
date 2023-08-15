@@ -33,7 +33,7 @@
 
 set -o errexit
 
-BUILDDIR="build-tmp-$$"
+build_dir="build-tmp-$$"
 
 if [ $# -ge 1 ]; then
     BUILDARGS="$*"
@@ -48,8 +48,8 @@ run ()
 set -x
 
 # create build directory
-mkdir "$BUILDDIR"
-cd "$BUILDDIR"
+mkdir "${build_dir}"
+cd "${build_dir}"
 
 run cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON "${BUILDARGS}"
 if [ -f "build.ninja" ]; then

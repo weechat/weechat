@@ -56,13 +56,13 @@
 set -o errexit
 
 # default values for options from environment variables
-DEFAULT_PACKAGER_NAME="Sébastien Helleu"
-DEFAULT_PACKAGER_EMAIL="flashcode@flashtux.org"
-DEFAULT_JOBS=""
+default_packager_name="Sébastien Helleu"
+default_packager_email="flashcode@flashtux.org"
+default_jobs=""
 
 usage ()
 {
-    RC=$1
+    rc=$1
     cat <<-EOF
 
 Syntax: $0 devel|stable|<version> distro
@@ -88,7 +88,7 @@ Examples:
   $0 test-patches
 
 EOF
-    exit "${RC}"
+    exit "${rc}"
 }
 
 error ()
@@ -106,38 +106,38 @@ error_usage ()
 test_patches ()
 {
     set +e
-    PATCHES_OK=0
-    PATCHES_ERROR=0
-    for file in "${ROOT_DIR}"/tools/debian/patches/*.patch; do
+    patches_ok=0
+    patches_error=0
+    for file in "${root_dir}"/tools/debian/patches/*.patch; do
         echo "=== Testing patch ${file} ==="
         if git apply --check "${file}"; then
-            PATCHES_OK=$((PATCHES_OK+1))
+            patches_ok=$((patches_ok+1))
         else
-            PATCHES_ERROR=$((PATCHES_ERROR+1))
+            patches_error=$((patches_error+1))
         fi
     done
-    echo "Patches: ${PATCHES_OK} OK, ${PATCHES_ERROR} in error."
-    exit ${PATCHES_ERROR}
+    echo "Patches: ${patches_ok} OK, ${patches_error} in error."
+    exit ${patches_error}
 }
 
 # ================================== START ==================================
 
 # package name/email
-[ -z "${PACKAGER_NAME}" ] && PACKAGER_NAME="${DEFAULT_PACKAGER_NAME}" && PACKAGER_EMAIL="${DEFAULT_PACKAGER_EMAIL}"
+[ -z "${PACKAGER_NAME}" ] && PACKAGER_NAME="${default_packager_name}" && PACKAGER_EMAIL="${default_packager_email}"
 if [ -z "${PACKAGER_EMAIL}" ]; then
     echo >&2 "ERROR: PACKAGER_EMAIL must be set if PACKAGER_NAME is set."
     exit 1
 fi
 
 # simultaneous jobs for compilation (dpkg-buildpackage -jN)
-[ -z "${JOBS}" ] && JOBS="${DEFAULT_JOBS}"
+[ -z "${JOBS}" ] && JOBS="${default_jobs}"
 
 # check git repository
-ROOT_DIR=$(git rev-parse --show-toplevel)
-if [ -z "${ROOT_DIR}" ] || [ ! -d "${ROOT_DIR}/.git" ] || [ ! -d "${ROOT_DIR}/debian-stable" ]; then
+root_dir=$(git rev-parse --show-toplevel)
+if [ -z "${root_dir}" ] || [ ! -d "${root_dir}/.git" ] || [ ! -d "${root_dir}/debian-stable" ]; then
     error "this script must be run from WeeChat git repository."
 fi
-cd "${ROOT_DIR}"
+cd "${root_dir}"
 
 # check command line arguments
 if [ $# -eq 0 ]; then
@@ -151,58 +151,58 @@ if [ $# -lt 2 ]; then
 fi
 
 # command line arguments
-VERSION="$1"
-DISTRO="$2"
+version="$1"
+distro="$2"
 
 # separate version and revision
 # example: devel => devel / 1, stable-2 => stable / 2, 1.9-2 => 1.9 / 2
-TMP_VERSION=$(expr "${VERSION}" : '\([^/]*\)-') || true
+tmp_version=$(expr "${version}" : '\([^/]*\)-') || true
 DEB_REVISION=""
-if [ -n "${TMP_VERSION}" ]; then
-    DEB_REVISION=$(expr "${VERSION}" : '[^-]*-\([^-]*\)') || true
-    VERSION="${TMP_VERSION}"
+if [ -n "${tmp_version}" ]; then
+    DEB_REVISION=$(expr "${version}" : '[^-]*-\([^-]*\)') || true
+    version="${tmp_version}"
 fi
 if [ -z "${DEB_REVISION}" ]; then
     DEB_REVISION="1"
 fi
 
 # convert version "stable" to its number
-if [ "${VERSION}" = "stable" ]; then
-    VERSION="$("${ROOT_DIR}/version.sh" stable)"
+if [ "${version}" = "stable" ]; then
+    version="$("${root_dir}/version.sh" stable)"
 fi
 
-if [ -z "${VERSION}" ]; then
+if [ -z "${version}" ]; then
     error_usage "unknown version"
 fi
 
 # extract distro type (debian, ubuntu, ...)
-DISTRO_TYPE=$(expr "${DISTRO}" : '\([^/]*\)/') || true
+distro_type=$(expr "${distro}" : '\([^/]*\)/') || true
 
 # extract distro name (sid, jessie, wily, ...)
-DISTRO_NAME=$(expr "${DISTRO}" : '[^/]*/\([a-z]*\)') || true
+distro_name=$(expr "${distro}" : '[^/]*/\([a-z]*\)') || true
 
-if [ -z "${DISTRO_TYPE}" ] || [ -z "${DISTRO_NAME}" ]; then
+if [ -z "${distro_type}" ] || [ -z "${distro_name}" ]; then
     error_usage "missing distro type/name"
 fi
 
 # set distro for dch
-if [ "${DISTRO_TYPE}" = "ubuntu" ]; then
+if [ "${distro_type}" = "ubuntu" ]; then
     # ubuntu
-    if [ "${VERSION}" = "devel" ]; then
+    if [ "${version}" = "devel" ]; then
         DCH_DISTRO="UNRELEASED"
     else
-        DCH_DISTRO="${DISTRO_NAME}"
+        DCH_DISTRO="${distro_name}"
     fi
 else
     # debian/raspbian
     DCH_DISTRO="unstable"
 fi
 
-if [ "${VERSION}" = "devel" ]; then
+if [ "${version}" = "devel" ]; then
     # devel packages: weechat-devel(-xxx)_X.Y-1~dev20150511_arch.deb
     DEB_DIR="debian-devel"
     DEB_NAME="weechat-devel"
-    DEB_VERSION="$("${ROOT_DIR}/version.sh" devel)-1~dev$(date '+%Y%m%d')"
+    DEB_VERSION="$("${root_dir}/version.sh" devel)-1~dev$(date '+%Y%m%d')"
     if [ "${DEB_REVISION}" != "1" ]; then
         DEB_VERSION="${DEB_VERSION}-${DEB_REVISION}"
     fi
@@ -213,22 +213,22 @@ else
     # stable packages: weechat-(-xxx)_X.Y-1_arch.deb
     DEB_DIR="debian-stable"
     DEB_NAME="weechat"
-    DEB_VERSION="${VERSION}-${DEB_REVISION}"
+    DEB_VERSION="${version}-${DEB_REVISION}"
     DCH_CREATE=""
     DCH_URGENCY="medium"
     DCH_CHANGELOG="New upstream release"
 fi
 
 # display build info
-echo "=== Building ${DEB_NAME}-${DEB_VERSION} on ${DISTRO_TYPE}/${DISTRO_NAME} (${DCH_DISTRO}) ==="
+echo "=== Building ${DEB_NAME}-${DEB_VERSION} on ${distro_type}/${distro_name} (${DCH_DISTRO}) ==="
 
 # ================================== BUILD ==================================
 
 # apply patch (if needed, for old distros)
-PATCH_FILE="${ROOT_DIR}/tools/debian/patches/weechat_${DISTRO_TYPE}_${DISTRO_NAME}.patch"
-if [ -f "${PATCH_FILE}" ]; then
-    echo " - Applying patch ${PATCH_FILE}"
-    git apply "${PATCH_FILE}"
+patch_file="${root_dir}/tools/debian/patches/weechat_${distro_type}_${distro_name}.patch"
+if [ -f "${patch_file}" ]; then
+    echo " - Applying patch ${patch_file}"
+    git apply "${patch_file}"
 fi
 
 # create a symlink "debian" -> "debian-{stable|devel}"
@@ -236,7 +236,7 @@ rm -f debian
 ln -s -f "${DEB_DIR}" debian
 
 # update debian changelog
-if [ "${VERSION}" = "devel" ]; then
+if [ "${version}" = "devel" ]; then
     rm -f "${DEB_DIR}/changelog"
 fi
 
