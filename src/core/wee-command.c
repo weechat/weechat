@@ -7926,8 +7926,9 @@ command_init ()
         N_("free movement of cursor on screen to execute actions on specific "
            "areas of screen"),
         N_("go chat|<bar> [top_left|top_right|bottom_left|bottom_right]"
-           " || go |<x>,<y>"
+           " || go <x>,<y>"
            " || move up|down|left|right|"
+           "top_left|top_right|bottom_left|bottom_right|"
            "edge_top|edge_bottom|edge_left|edge_right|"
            "area_up|area_down|area_left|area_right"
            " || stop"),
@@ -7959,7 +7960,7 @@ command_init ()
            "  enter      exit cursor mode\n"
            "\n"
            "Examples:\n"
-           "  go to chat (bottom left corner):\n"
+           "  go to the bottom left corner of chat area:\n"
            "    /cursor go chat bottom_left\n"
            "  go to nicklist:\n"
            "    /cursor go nicklist\n"
