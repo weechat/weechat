@@ -1473,6 +1473,23 @@ Options :
 
 include::{autogendir}/autogen_user_options.fr.adoc[tag=buflist_options]
 
+[[cursor_mode]]
+=== Mode curseur
+
+Le mode curseur vous permet de déplacer librement le curseur partout sur l'écran,
+dans la zone de discussion et les barres, et vous permet d'effectuer des actions
+à la position donnée. +
+Vous pouvez entrer dans le mode curseur avec la commande `/cursor` ou avec un
+clic du milieu sur la souris (la souris doit avoir été activée avec la touche
+kbd:[Alt+m] ou la commande `/mouse enable`).
+
+L'utilisation typique est de citer des messages (zone de discussion) ou d'interagir
+avec des pseudos (barre avec la liste de pseudos).
+
+Voir la commande <<command_weechat_cursor,/cursor>> et
+<<key_bindings_cursor_context,les touches du contexte curseur>> pour la liste
+des actions que vous pouvez effectuer dans ce mode.
+
 [[key_bindings]]
 == Raccourcis clavier
 
@@ -1698,7 +1715,7 @@ pressé pour chercher du texte dans le tampon).
 === Contexte curseur
 
 Ces touches sont utilisées dans le contexte "cursor" (mouvement libre du curseur
-à l'écran).
+à l'écran), voir le <<cursor_mode,Mode curseur>>.
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===

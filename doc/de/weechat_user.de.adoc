@@ -1456,6 +1456,22 @@ Optionen:
 
 include::{autogendir}/autogen_user_options.de.adoc[tag=buflist_options]
 
+// TRANSLATION MISSING
+[[cursor_mode]]
+=== Cursor mode
+
+The cursor mode allows you to move freely the cursor anywhere on screen, in chat
+area and bars, and lets you perform actions at the given position. +
+You can enter in cursor mode either with the command `/cursor` or with a mouse
+middle click (mouse must have been enabled with key kbd:[Alt+m] or command
+`/mouse enable`).
+
+Typical use is to quote messages (chat area) or interact with nicks (nicklist bar).
+
+See command <<command_weechat_cursor,/cursor>> and
+<<key_bindings_cursor_context,key bindings in cursor context>> for the list
+of actions you can perform in this mode.
+
 [[key_bindings]]
 == Tastenbelegungen
 
@@ -1678,7 +1694,9 @@ in einem Buffer nach einem Text zu suchen).
 [[key_bindings_cursor_context]]
 === Cursor-Kontext
 
-Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bildschirm bewegt werden)
+// TRANSLATION MISSING
+Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bildschirm bewegt werden),
+see <<cursor_mode,Cursor mode>>.
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===

@@ -1522,6 +1522,22 @@ _buflist.conf_ ファイル内のセクション:
 include::{autogendir}/autogen_user_options.ja.adoc[tag=buflist_options]
 
 // TRANSLATION MISSING
+[[cursor_mode]]
+=== Cursor mode
+
+The cursor mode allows you to move freely the cursor anywhere on screen, in chat
+area and bars, and lets you perform actions at the given position. +
+You can enter in cursor mode either with the command `/cursor` or with a mouse
+middle click (mouse must have been enabled with key kbd:[Alt+m] or command
+`/mouse enable`).
+
+Typical use is to quote messages (chat area) or interact with nicks (nicklist bar).
+
+See command <<command_weechat_cursor,/cursor>> and
+<<key_bindings_cursor_context,key bindings in cursor context>> for the list
+of actions you can perform in this mode.
+
+// TRANSLATION MISSING
 [[key_bindings]]
 == Key bindings
 
@@ -1778,7 +1794,9 @@ kbd:[Ctrl+r] が押された状態) でのみ有効です。
 [[key_bindings_cursor_context]]
 === Cursor context
 
-以下のキーは「カーソル」モード (画面上でカーソルを自由に動かせる状態) でのみ有効です。
+// TRANSLATION MISSING
+以下のキーは「カーソル」モード (画面上でカーソルを自由に動かせる状態) でのみ有効です,
+see <<cursor_mode,Cursor mode>>.
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
