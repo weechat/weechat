@@ -1580,27 +1580,39 @@ WeeChat нуди доста подразумеваних тастерских п
 
 [width="100%", cols="^.^3,^.^2,.^7,.^7", options="header"]
 |===
-| Тастер         | Површина       | Опис | Команда
-| kbd:[↑]        | -              | Помера курсор једну линију навише. | `+/cursor move up+`
-| kbd:[↓]        | -              | Помера курсор једну линију наниже. | `+/cursor move down+`
-| kbd:[←]        | -              | Помера курсор једну колони у лево. | `+/cursor move left+`
-| kbd:[→]        | -              | Помера курсор једну колону у десно. | `+/cursor move right+`
-| kbd:[Alt+↑]    | -              | Помера курсор једну површину навише. | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -              | Помера курсор једну површину наниже. | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -              | Помера курсор једну површину у лево. | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -              | Помера курсор једну површину у десно. | `+/cursor move area_right+`
-| kbd:[m]        | чет            | Цитирање поруке. | `+hsignal:chat_quote_message;/cursor stop+`
-| kbd:[l]        | чет            | Цитирање фокусиране линије. | `+hsignal:chat_quote_focused_line;/cursor stop+`
-| kbd:[q]        | чет            | Цитирање префикса + поруке. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | чет            | Цитирање времена + префикса + поруке. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | листа надимака | Забрањује надимак. | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | листа надимака | Избацује надимак. | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | листа надимака | Избацује и забрањује надимак. | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | листа надимака | Отвара упит са надимком. | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | листа надимака | Извршава whois над надимком. | `+/window ${_window_number};/whois ${nick}+`
+| Тастер            | Површина       | Опис | Команда
+| kbd:[↑]           | -              | Помера курсор једну линију навише. | `+/cursor move up+`
+| kbd:[↓]           | -              | Помера курсор једну линију наниже. | `+/cursor move down+`
+| kbd:[←]           | -              | Помера курсор једну колони у лево. | `+/cursor move left+`
+| kbd:[→]           | -              | Помера курсор једну колону у десно. | `+/cursor move right+`
+// TRANSLATION MISSING
+| kbd:[Alt+↑]       | -              | Move cursor to the first line of the area. | `+/cursor move edge_top+`
+// TRANSLATION MISSING
+| kbd:[Alt+↓]       | -              | Move cursor to the last line of the area. | `+/cursor move edge_bottom+`
+// TRANSLATION MISSING
+| kbd:[Alt+←]       | -              | Move cursor to the first column of the area. | `+/cursor move edge_left+`
+// TRANSLATION MISSING
+| kbd:[Alt+→]       | -              | Move cursor to the last column of the area. | `+/cursor move edge_right+`
+// TRANSLATION MISSING
+| kbd:[Alt+Home]    | -              | Move cursor to the top left corner of the area. | `+/cursor move top_left+`
+// TRANSLATION MISSING
+| kbd:[Alt+End]     | -              | Move cursor to the bottom right corner of the area. | `+/cursor move bottom_right+`
+| kbd:[Alt+Shift+↑] | -              | Помера курсор једну површину навише. | `+/cursor move area_up+`
+| kbd:[Alt+Shift+↓] | -              | Помера курсор једну површину наниже. | `+/cursor move area_down+`
+| kbd:[Alt+Shift+←] | -              | Помера курсор једну површину у лево. | `+/cursor move area_left+`
+| kbd:[Alt+Shift+→] | -              | Помера курсор једну површину у десно. | `+/cursor move area_right+`
+| kbd:[m]           | чет            | Цитирање поруке. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[l]           | чет            | Цитирање фокусиране линије. | `+hsignal:chat_quote_focused_line;/cursor stop+`
+| kbd:[q]           | чет            | Цитирање префикса + поруке. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]           | чет            | Цитирање времена + префикса + поруке. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]           | листа надимака | Забрањује надимак. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]           | листа надимака | Избацује надимак. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]           | листа надимака | Избацује и забрањује надимак. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]           | листа надимака | Отвара упит са надимком. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]           | листа надимака | Извршава whois над надимком. | `+/window ${_window_number};/whois ${nick}+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -        | Зауставља режим померања курсора | `/cursor stop`
+  kbd:[Ctrl+m]      | -              | Зауставља режим померања курсора | `/cursor stop`
 |===
 
 [[key_bindings_mouse]]

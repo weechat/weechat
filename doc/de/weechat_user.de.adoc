@@ -1682,27 +1682,39 @@ Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bild
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
-| Taste          | Bereich       | Beschreibung | Befehl
-| kbd:[↑]        | -             | bewegt Cursor eine Zeile nach oben. | `+/cursor move up+`
-| kbd:[↓]        | -             | bewegt Cursor eine Zeile nach unten. | `+/cursor move down+`
-| kbd:[←]        | -             | bewegt Cursor eine Spalte nach links. | `+/cursor move left+`
-| kbd:[→]        | -             | bewegt Cursor eine Spalte nach rechts. | `+/cursor move right+`
-| kbd:[Alt+↑]    | -             | bewegt Cursor einen Bereich nach oben. | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -             | bewegt Cursor einen Bereich nach unten. | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -             | bewegt Cursor einen Bereich nach links. | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -             | bewegt Cursor einen Bereich nach rechts. | `+/cursor move area_right+`
-| kbd:[m]        | Chat          | zitiert Nachricht. | `+hsignal:chat_quote_message;/cursor stop+`
-| kbd:[l]        | Chat          | zitiert aktuelle Zeile. | `+hsignal:chat_quote_focused_line;/cursor stop+`
-| kbd:[q]        | Chat          | zitiert prefix + Nachricht. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | Chat          | zitiert Uhrzeit + prefix + Nachricht. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | Benutzerliste | verbannt nick (Ban). | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | Benutzerliste | kickt nick. | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | Benutzerliste | kickt und verbannt nick. | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | Benutzerliste | öffnet privaten Chat mit Nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | Benutzerliste | führt einen whois für Nick aus. | `+/window ${_window_number};/whois ${nick}+`
+| Taste             | Bereich       | Beschreibung | Befehl
+| kbd:[↑]           | -             | bewegt Cursor eine Zeile nach oben. | `+/cursor move up+`
+| kbd:[↓]           | -             | bewegt Cursor eine Zeile nach unten. | `+/cursor move down+`
+| kbd:[←]           | -             | bewegt Cursor eine Spalte nach links. | `+/cursor move left+`
+| kbd:[→]           | -             | bewegt Cursor eine Spalte nach rechts. | `+/cursor move right+`
+// TRANSLATION MISSING
+| kbd:[Alt+↑]       | -             | Move cursor to the first line of the area. | `+/cursor move edge_top+`
+// TRANSLATION MISSING
+| kbd:[Alt+↓]       | -             | Move cursor to the last line of the area. | `+/cursor move edge_bottom+`
+// TRANSLATION MISSING
+| kbd:[Alt+←]       | -             | Move cursor to the first column of the area. | `+/cursor move edge_left+`
+// TRANSLATION MISSING
+| kbd:[Alt+→]       | -             | Move cursor to the last column of the area. | `+/cursor move edge_right+`
+// TRANSLATION MISSING
+| kbd:[Alt+Home]    | -             | Move cursor to the top left corner of the area. | `+/cursor move top_left+`
+// TRANSLATION MISSING
+| kbd:[Alt+End]     | -             | Move cursor to the bottom right corner of the area. | `+/cursor move bottom_right+`
+| kbd:[Alt+Shift+↑] | -             | bewegt Cursor einen Bereich nach oben. | `+/cursor move area_up+`
+| kbd:[Alt+Shift+↓] | -             | bewegt Cursor einen Bereich nach unten. | `+/cursor move area_down+`
+| kbd:[Alt+Shift+←] | -             | bewegt Cursor einen Bereich nach links. | `+/cursor move area_left+`
+| kbd:[Alt+Shift+→] | -             | bewegt Cursor einen Bereich nach rechts. | `+/cursor move area_right+`
+| kbd:[m]           | Chat          | zitiert Nachricht. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[l]           | Chat          | zitiert aktuelle Zeile. | `+hsignal:chat_quote_focused_line;/cursor stop+`
+| kbd:[q]           | Chat          | zitiert prefix + Nachricht. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]           | Chat          | zitiert Uhrzeit + prefix + Nachricht. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]           | Benutzerliste | verbannt nick (Ban). | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]           | Benutzerliste | kickt nick. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]           | Benutzerliste | kickt und verbannt nick. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]           | Benutzerliste | öffnet privaten Chat mit Nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]           | Benutzerliste | führt einen whois für Nick aus. | `+/window ${_window_number};/whois ${nick}+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -             | beendet den Cursor-Modus. | `+/cursor stop+`
+  kbd:[Ctrl+m]      | -             | beendet den Cursor-Modus. | `+/cursor stop+`
 |===
 
 [[key_bindings_mouse]]

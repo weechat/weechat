@@ -14,6 +14,28 @@ For a complete list of changes, please look at ChangeLog.
 [[v4.1.0]]
 == Version 4.1.0 (under dev)
 
+[[v4.1.0_cursor_mode_keys]]
+=== New keys to move in cursor mode
+
+New keys have been added to move in cursor mode, and existing keys to move to
+another area have been changed: modifier is now kbd:[Alt+Shift] instead of
+kbd:[Alt].
+
+You can change existing keys and add new ones with these commands:
+
+----
+/key bindctxt cursor meta-up /cursor move edge_top
+/key bindctxt cursor meta-down /cursor move edge_bottom
+/key bindctxt cursor meta-left /cursor move edge_left
+/key bindctxt cursor meta-right /cursor move edge_right
+/key bindctxt cursor meta-end /cursor move bottom_right
+/key bindctxt cursor meta-home /cursor move top_left
+/key bindctxt cursor meta-shift-up /cursor move area_up
+/key bindctxt cursor meta-shift-down /cursor move area_down
+/key bindctxt cursor meta-shift-left /cursor move area_left
+/key bindctxt cursor meta-shift-right /cursor move area_right
+----
+
 [[v4.1.0_irc_ctcp_replies]]
 === IRC CTCP replies
 

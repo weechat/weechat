@@ -1666,27 +1666,33 @@ These keys are used in context "cursor" (free movement of cursor on screen).
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
-| Key            | Area     | Description | Command
-| kbd:[↑]        | -        | Move cursor one line up. | `+/cursor move up+`
-| kbd:[↓]        | -        | Move cursor one line down. | `+/cursor move down+`
-| kbd:[←]        | -        | Move cursor one column left. | `+/cursor move left+`
-| kbd:[→]        | -        | Move cursor one column right. | `+/cursor move right+`
-| kbd:[Alt+↑]    | -        | Move cursor one area up. | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -        | Move cursor one area down. | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -        | Move cursor one area left. | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -        | Move cursor one area right. | `+/cursor move area_right+`
-| kbd:[m]        | chat     | Quote message. | `+hsignal:chat_quote_message;/cursor stop+`
-| kbd:[l]        | chat     | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
-| kbd:[q]        | chat     | Quote prefix + message. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | chat     | Quote time + prefix + message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | nicklist | Ban nick. | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | nicklist | Kick nick. | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | nicklist | Kick and ban nick. | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | nicklist | Open query with nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | nicklist | Do a whois on nick. | `+/window ${_window_number};/whois ${nick}+`
+| Key               | Area     | Description | Command
+| kbd:[↑]           | -        | Move cursor one line up. | `+/cursor move up+`
+| kbd:[↓]           | -        | Move cursor one line down. | `+/cursor move down+`
+| kbd:[←]           | -        | Move cursor one column left. | `+/cursor move left+`
+| kbd:[→]           | -        | Move cursor one column right. | `+/cursor move right+`
+| kbd:[Alt+↑]       | -        | Move cursor to the first line of the area. | `+/cursor move edge_top+`
+| kbd:[Alt+↓]       | -        | Move cursor to the last line of the area. | `+/cursor move edge_bottom+`
+| kbd:[Alt+←]       | -        | Move cursor to the first column of the area. | `+/cursor move edge_left+`
+| kbd:[Alt+→]       | -        | Move cursor to the last column of the area. | `+/cursor move edge_right+`
+| kbd:[Alt+Home]    | -        | Move cursor to the top left corner of the area. | `+/cursor move top_left+`
+| kbd:[Alt+End]     | -        | Move cursor to the bottom right corner of the area. | `+/cursor move bottom_right+`
+| kbd:[Alt+Shift+↑] | -        | Move cursor one area up. | `+/cursor move area_up+`
+| kbd:[Alt+Shift+↓] | -        | Move cursor one area down. | `+/cursor move area_down+`
+| kbd:[Alt+Shift+←] | -        | Move cursor one area left. | `+/cursor move area_left+`
+| kbd:[Alt+Shift+→] | -        | Move cursor one area right. | `+/cursor move area_right+`
+| kbd:[m]           | chat     | Quote message. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[l]           | chat     | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
+| kbd:[q]           | chat     | Quote prefix + message. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]           | chat     | Quote time + prefix + message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]           | nicklist | Ban nick. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]           | nicklist | Kick nick. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]           | nicklist | Kick and ban nick. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]           | nicklist | Open query with nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]           | nicklist | Do a whois on nick. | `+/window ${_window_number};/whois ${nick}+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -        | Stop cursor mode | `/cursor stop`
+  kbd:[Ctrl+m]      | -        | Stop cursor mode | `/cursor stop`
 |===
 
 [[key_bindings_mouse]]

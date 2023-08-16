@@ -1702,27 +1702,33 @@ Ces touches sont utilisées dans le contexte "cursor" (mouvement libre du curseu
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
-| Touche         | Zone              | Description | Commande
-| kbd:[↑]        | -                 | Déplacer le curseur d'une ligne vers le haut. | `+/cursor move up+`
-| kbd:[↓]        | -                 | Déplacer le curseur d'une ligne vers le bas. | `+/cursor move down+`
-| kbd:[←]        | -                 | Déplacer le curseur d'une colonne vers la gauche. | `+/cursor move left+`
-| kbd:[→]        | -                 | Déplacer le curseur d'une colonne vers la droite. | `+/cursor move right+`
-| kbd:[Alt+↑]    | -                 | Déplacer le curseur vers la zone au dessus. | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -                 | Déplacer le curseur vers la zone en dessous. | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -                 | Déplacer le curseur vers la zone sur la gauche. | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -                 | Déplacer le curseur vers la zone sur la droite. | `+/cursor move area_right+`
-| kbd:[m]        | chat              | Citer le message. | `+hsignal:chat_quote_message;/cursor stop+`
-| kbd:[l]        | chat              | Citer la ligne ciblée. | `+hsignal:chat_quote_focused_line;/cursor stop+`
-| kbd:[q]        | chat              | Citer le préfixe + le message. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | chat              | Citer l'heure + le préfixe + le message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | liste des pseudos | Bannir le pseudo. | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | liste des pseudos | Retirer par la force le pseudo. | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | liste des pseudos | Retirer par la force et bannir le pseudo. | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | liste des pseudos | Ouvrir une discussion avec le pseudo. | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | liste des pseudos | Effectuer un whois sur le pseudo. | `+/window ${_window_number};/whois ${nick}+`
+| Touche            | Zone              | Description | Commande
+| kbd:[↑]           | -                 | Déplacer le curseur d'une ligne vers le haut. | `+/cursor move up+`
+| kbd:[↓]           | -                 | Déplacer le curseur d'une ligne vers le bas. | `+/cursor move down+`
+| kbd:[←]           | -                 | Déplacer le curseur d'une colonne vers la gauche. | `+/cursor move left+`
+| kbd:[→]           | -                 | Déplacer le curseur d'une colonne vers la droite. | `+/cursor move right+`
+| kbd:[Alt+↑]       | -                 | Déplacer le curseur vers la première ligne de la zone. | `+/cursor move edge_top+`
+| kbd:[Alt+↓]       | -                 | Déplacer le curseur vers la dernière ligne de la zone. | `+/cursor move edge_bottom+`
+| kbd:[Alt+←]       | -                 | Déplacer le curseur vers la première colonne de la zone. | `+/cursor move edge_left+`
+| kbd:[Alt+→]       | -                 | Déplacer le curseur vers la dernière colonne de la zone. | `+/cursor move edge_right+`
+| kbd:[Alt+Home]    | -                 | Déplacer le curseur vers le coin supérieur gauche de la zone. | `+/cursor move top_left+`
+| kbd:[Alt+End]     | -                 | Déplacer le curseur vers la coin inférieur droit de la zone. | `+/cursor move bottom_right+`
+| kbd:[Alt+Shift+↑] | -                 | Déplacer le curseur vers la zone au dessus. | `+/cursor move area_up+`
+| kbd:[Alt+Shift+↓] | -                 | Déplacer le curseur vers la zone en dessous. | `+/cursor move area_down+`
+| kbd:[Alt+Shift+←] | -                 | Déplacer le curseur vers la zone sur la gauche. | `+/cursor move area_left+`
+| kbd:[Alt+Shift+→] | -                 | Déplacer le curseur vers la zone sur la droite. | `+/cursor move area_right+`
+| kbd:[m]           | chat              | Citer le message. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[l]           | chat              | Citer la ligne ciblée. | `+hsignal:chat_quote_focused_line;/cursor stop+`
+| kbd:[q]           | chat              | Citer le préfixe + le message. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]           | chat              | Citer l'heure + le préfixe + le message. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]           | liste des pseudos | Bannir le pseudo. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]           | liste des pseudos | Retirer par la force le pseudo. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]           | liste des pseudos | Retirer par la force et bannir le pseudo. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]           | liste des pseudos | Ouvrir une discussion avec le pseudo. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]           | liste des pseudos | Effectuer un whois sur le pseudo. | `+/window ${_window_number};/whois ${nick}+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -                 | Arrêter le mode curseur ("cursor"). | `+/cursor stop+`
+  kbd:[Ctrl+m]      | -                 | Arrêter le mode curseur ("cursor"). | `+/cursor stop+`
 |===
 
 [[key_bindings_mouse]]

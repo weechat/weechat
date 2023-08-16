@@ -217,15 +217,21 @@ gui_key_default_bindings (int context, int create_option)
     else if (context == GUI_KEY_CONTEXT_CURSOR)
     {
         /* general & move */
-        BIND("return",    "/cursor stop");
-        BIND("up",        "/cursor move up");
-        BIND("down",      "/cursor move down");
-        BIND("left",      "/cursor move left");
-        BIND("right",     "/cursor move right");
-        BIND("meta-up",   "/cursor move area_up");
-        BIND("meta-down", "/cursor move area_down");
-        BIND("meta-left", "/cursor move area_left");
-        BIND("meta-right","/cursor move area_right");
+        BIND("return",           "/cursor stop");
+        BIND("up",               "/cursor move up");
+        BIND("down",             "/cursor move down");
+        BIND("left",             "/cursor move left");
+        BIND("right",            "/cursor move right");
+        BIND("meta-up",          "/cursor move edge_top");
+        BIND("meta-down",        "/cursor move edge_bottom");
+        BIND("meta-left",        "/cursor move edge_left");
+        BIND("meta-right",       "/cursor move edge_right");
+        BIND("meta-home",        "/cursor move top_left");
+        BIND("meta-end",         "/cursor move bottom_right");
+        BIND("meta-shift-up",    "/cursor move area_up");
+        BIND("meta-shift-down",  "/cursor move area_down");
+        BIND("meta-shift-left",  "/cursor move area_left");
+        BIND("meta-shift-right", "/cursor move area_right");
         /* chat */
         BIND("@chat:m", "hsignal:chat_quote_message;/cursor stop");
         BIND("@chat:l", "hsignal:chat_quote_focused_line;/cursor stop");

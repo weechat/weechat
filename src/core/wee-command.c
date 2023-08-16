@@ -1892,7 +1892,10 @@ COMMAND_CALLBACK(cursor)
                 }
             }
             else
-                gui_cursor_move_area (argv[2]);
+            {
+                gui_cursor_move_area (argv[2],
+                                      (argc > 3) ? argv_eol[3] : NULL);
+            }
         }
         return WEECHAT_RC_OK;
     }
@@ -1917,6 +1920,17 @@ COMMAND_CALLBACK(cursor)
                 gui_cursor_move_area_add_xy (-1, 0);
             else if (string_strcmp (argv[2], "area_right") == 0)
                 gui_cursor_move_area_add_xy (1, 0);
+            else if ((string_strcmp (argv[2], "top_left") == 0)
+                     || (string_strcmp (argv[2], "top_right") == 0)
+                     || (string_strcmp (argv[2], "bottom_left") == 0)
+                     || (string_strcmp (argv[2], "bottom_right") == 0)
+                     || (string_strcmp (argv[2], "edge_top") == 0)
+                     || (string_strcmp (argv[2], "edge_bottom") == 0)
+                     || (string_strcmp (argv[2], "edge_left") == 0)
+                     || (string_strcmp (argv[2], "edge_right") == 0))
+            {
+                gui_cursor_move_position (argv[2]);
+            }
         }
         return WEECHAT_RC_OK;
     }
@@ -7911,8 +7925,11 @@ command_init ()
         NULL, "cursor",
         N_("free movement of cursor on screen to execute actions on specific "
            "areas of screen"),
-        N_("go chat|<bar>|<x>,<y>"
-           " || move up|down|left|right|area_up|area_down|area_left|area_right"
+        N_("go chat|<bar> [top_left|top_right|bottom_left|bottom_right]"
+           " || go |<x>,<y>"
+           " || move up|down|left|right|"
+           "edge_top|edge_bottom|edge_left|edge_right|"
+           "area_up|area_down|area_left|area_right"
            " || stop"),
         N_("  go: move cursor to chat area, a bar (using bar name) or "
            "coordinates \"x,y\"\n"
@@ -7942,12 +7959,17 @@ command_init ()
            "  enter      exit cursor mode\n"
            "\n"
            "Examples:\n"
+           "  go to chat (bottom left corner):\n"
+           "    /cursor go chat bottom_left\n"
            "  go to nicklist:\n"
            "    /cursor go nicklist\n"
            "  go to coordinates x=10, y=5:\n"
            "    /cursor go 10,5"),
-        "go %(cursor_areas)"
-        " || move up|down|left|right|area_up|area_down|area_left|area_right"
+        "go %(cursor_areas) top_left|top_right|bottom_left|bottom_right"
+        " || move up|down|left|right|"
+        "top_left|top_right|bottom_left|bottom_right|"
+        "edge_top|edge_bottom|edge_left|edge_right|"
+        "area_up|area_down|area_left|area_right"
         " || stop",
         &command_cursor, NULL, NULL);
     hook_command (

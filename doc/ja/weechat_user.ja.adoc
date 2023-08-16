@@ -1782,28 +1782,40 @@ kbd:[Ctrl+r] が押された状態) でのみ有効です。
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
-| キー            | エリア            | 説明 | コマンド
-| kbd:[↑]        | -                 | カーソルを上の行に移動 | `+/cursor move up+`
-| kbd:[↓]        | -                 | カーソルを下の行に移動 | `+/cursor move down+`
-| kbd:[←]        | -                 | カーソルを左の列に移動 | `+/cursor move left+`
-| kbd:[→]        | -                 | カーソルを右の列に移動 | `+/cursor move right+`
-| kbd:[Alt+↑]    | -                 | カーソルを上のエリアに移動 | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -                 | カーソルを下のエリアに移動 | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -                 | カーソルを左のエリアに移動 | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -                 | カーソルを右のエリアに移動 | `+/cursor move area_right+`
-| kbd:[m]        | チャット          | メッセージを引用 | `+hsignal:chat_quote_message;/cursor stop+`
+| キー              | エリア             | 説明 | コマンド
+| kbd:[↑]           | -                  | カーソルを上の行に移動 | `+/cursor move up+`
+| kbd:[↓]           | -                  | カーソルを下の行に移動 | `+/cursor move down+`
+| kbd:[←]           | -                  | カーソルを左の列に移動 | `+/cursor move left+`
+| kbd:[→]           | -                  | カーソルを右の列に移動 | `+/cursor move right+`
 // TRANSLATION MISSING
-| kbd:[l]        | チャット          | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
-| kbd:[q]        | チャット          | プレフィックスとメッセージを引用 | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | チャット          | 時間、プレフィックス、メッセージを引用 | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | ニックネームリスト| ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | ニックネームリスト| ニックネームをキックする | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | ニックネームリスト| ニックネームをバンとキックする | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | ニックネームリスト| ニックネームに対するクエリを開く | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | ニックネームリスト| ニックネームに対して whois を行う | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[Alt+↑]       | -                  | Move cursor to the first line of the area. | `+/cursor move edge_top+`
+// TRANSLATION MISSING
+| kbd:[Alt+↓]       | -                  | Move cursor to the last line of the area. | `+/cursor move edge_bottom+`
+// TRANSLATION MISSING
+| kbd:[Alt+←]       | -                  | Move cursor to the first column of the area. | `+/cursor move edge_left+`
+// TRANSLATION MISSING
+| kbd:[Alt+→]       | -                  | Move cursor to the last column of the area. | `+/cursor move edge_right+`
+// TRANSLATION MISSING
+| kbd:[Alt+Home]    | -                  | Move cursor to the top left corner of the area. | `+/cursor move top_left+`
+// TRANSLATION MISSING
+| kbd:[Alt+End]     | -                  | Move cursor to the bottom right corner of the area. | `+/cursor move bottom_right+`
+| kbd:[Alt+Shift+↑] | -                  | カーソルを上のエリアに移動 | `+/cursor move area_up+`
+| kbd:[Alt+Shift+↓] | -                  | カーソルを下のエリアに移動 | `+/cursor move area_down+`
+| kbd:[Alt+Shift+←] | -                  | カーソルを左のエリアに移動 | `+/cursor move area_left+`
+| kbd:[Alt+Shift+→] | -                  | カーソルを右のエリアに移動 | `+/cursor move area_right+`
+| kbd:[m]           | チャット           | メッセージを引用 | `+hsignal:chat_quote_message;/cursor stop+`
+// TRANSLATION MISSING
+| kbd:[l]           | チャット           | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
+| kbd:[q]           | チャット           | プレフィックスとメッセージを引用 | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]           | チャット           | 時間、プレフィックス、メッセージを引用 | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]           | ニックネームリスト | ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]           | ニックネームリスト | ニックネームをキックする | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]           | ニックネームリスト | ニックネームをバンとキックする | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]           | ニックネームリスト | ニックネームに対するクエリを開く | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]           | ニックネームリスト | ニックネームに対して whois を行う | `+/window ${_window_number};/whois ${nick}+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -                 | カーソルモードを終了 | `+/cursor stop+`
+  kbd:[Ctrl+m]      | -                  | カーソルモードを終了 | `+/cursor stop+`
 |===
 
 // TRANSLATION MISSING

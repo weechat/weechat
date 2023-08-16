@@ -1676,27 +1676,39 @@ ekranie).
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
-| Skrót          | Obszar   | Opis | Komenda
-| kbd:[↑]        | -        | Przesuń kursor linię wyżej. | `+/cursor move up+`
-| kbd:[↓]        | -        | Przesuń kursor linię niżej. | `+/cursor move down+`
-| kbd:[←]        | -        | Przesuń kursor kolumnę w lewo. | `+/cursor move left+`
-| kbd:[→]        | -        | Przesuń kursor kolumnę w prawo. | `+/cursor move right+`
-| kbd:[Alt+↑]    | -        | Przesuń kursor obszar do góry. | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -        | Przesuń kursor obszar w dół. | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -        | Przesuń kursor obszar w lewo. | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -        | Przesuń kursor obszar w prawo. | `+/cursor move area_right+`
-| kbd:[m]        | chat     | Cytuj wiadomość. | `+hsignal:chat_quote_message;/cursor stop+`
-| kbd:[l]        | chat     | Cytuj zaznaczoną linię. | `+hsignal:chat_quote_focused_line;/cursor stop+`
-| kbd:[q]        | chat     | Cytuj prefiks i wiadomość. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | chat     | Cytuj czas, prefiks i wiadomość. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | nicklist | Zbanuj osobę. | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | nicklist | Wykop osobę. | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | nicklist | Wykop i zbanuj osobę. | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | nicklist | Otwórz rozmowę z osobą. | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | nicklist | Wykonaj whois dla osoby. | `+/window ${_window_number};/whois ${nick}+`
+| Skrót             | Obszar   | Opis | Komenda
+| kbd:[↑]           | -        | Przesuń kursor linię wyżej. | `+/cursor move up+`
+| kbd:[↓]           | -        | Przesuń kursor linię niżej. | `+/cursor move down+`
+| kbd:[←]           | -        | Przesuń kursor kolumnę w lewo. | `+/cursor move left+`
+| kbd:[→]           | -        | Przesuń kursor kolumnę w prawo. | `+/cursor move right+`
+// TRANSLATION MISSING
+| kbd:[Alt+↑]       | -        | Move cursor to the first line of the area. | `+/cursor move edge_top+`
+// TRANSLATION MISSING
+| kbd:[Alt+↓]       | -        | Move cursor to the last line of the area. | `+/cursor move edge_bottom+`
+// TRANSLATION MISSING
+| kbd:[Alt+←]       | -        | Move cursor to the first column of the area. | `+/cursor move edge_left+`
+// TRANSLATION MISSING
+| kbd:[Alt+→]       | -        | Move cursor to the last column of the area. | `+/cursor move edge_right+`
+// TRANSLATION MISSING
+| kbd:[Alt+Home]    | -        | Move cursor to the top left corner of the area. | `+/cursor move top_left+`
+// TRANSLATION MISSING
+| kbd:[Alt+End]     | -        | Move cursor to the bottom right corner of the area. | `+/cursor move bottom_right+`
+| kbd:[Alt+Shift+↑] | -        | Przesuń kursor obszar do góry. | `+/cursor move area_up+`
+| kbd:[Alt+Shift+↓] | -        | Przesuń kursor obszar w dół. | `+/cursor move area_down+`
+| kbd:[Alt+Shift+←] | -        | Przesuń kursor obszar w lewo. | `+/cursor move area_left+`
+| kbd:[Alt+Shift+→] | -        | Przesuń kursor obszar w prawo. | `+/cursor move area_right+`
+| kbd:[m]           | chat     | Cytuj wiadomość. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[l]           | chat     | Cytuj zaznaczoną linię. | `+hsignal:chat_quote_focused_line;/cursor stop+`
+| kbd:[q]           | chat     | Cytuj prefiks i wiadomość. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]           | chat     | Cytuj czas, prefiks i wiadomość. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]           | nicklist | Zbanuj osobę. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]           | nicklist | Wykop osobę. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]           | nicklist | Wykop i zbanuj osobę. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]           | nicklist | Otwórz rozmowę z osobą. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]           | nicklist | Wykonaj whois dla osoby. | `+/window ${_window_number};/whois ${nick}+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -        | Wyłącz tryb kursora. | `/cursor stop`
+  kbd:[Ctrl+m]      | -        | Wyłącz tryb kursora. | `/cursor stop`
 |===
 
 [[key_bindings_mouse]]
