@@ -828,6 +828,8 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("yes", "${if:5>2?yes:no}");
     WEE_CHECK_EVAL("no", "${if:1>7?yes:no}");
     WEE_CHECK_EVAL("yes", "${if:5>2 && 6>3?yes:no}");
+    WEE_CHECK_EVAL("yes", "${if:1?yes:no:test}");
+    WEE_CHECK_EVAL("no:test", "${if:0?yes:no:test}");
     WEE_CHECK_EVAL("yes-yes", "${if:5>2?${if:6>3?yes-yes:yes-no}:${if:9>4?no-yes:no-no}}");
     WEE_CHECK_EVAL("yes-no", "${if:5>2?${if:1>7?yes-yes:yes-no}:${if:9>4?no-yes:no-no}}");
     WEE_CHECK_EVAL("no-yes", "${if:1>7?${if:6>3?yes-yes:yes-no}:${if:9>4?no-yes:no-no}}");
