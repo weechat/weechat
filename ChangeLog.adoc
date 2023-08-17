@@ -34,6 +34,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix integer overflow when setting integer option with `++N` or `--N`
   * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
   * core: display focus hashtable for debug even if no key is matching
   * fset: remove extra spaces between min and max values when second format is used

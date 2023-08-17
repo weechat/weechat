@@ -1491,22 +1491,22 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     {
                         error = NULL;
                         number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (error && !error[0]
+                            && (long)old_value + number <= (long)(option->max))
                         {
                             value_int = old_value + number;
-                            if (value_int <= option->max)
-                                new_value_ok = 1;
+                            new_value_ok = 1;
                         }
                     }
                     else if (strncmp (value, "--", 2) == 0)
                     {
                         error = NULL;
                         number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (error && !error[0]
+                            && (long)old_value - number >= (long)(option->min))
                         {
                             value_int = old_value - number;
-                            if (value_int >= option->min)
-                                new_value_ok = 1;
+                            new_value_ok = 1;
                         }
                     }
                     else
