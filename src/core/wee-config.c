@@ -2467,27 +2467,6 @@ config_weechat_layout_write_cb (const void *pointer, void *data,
 }
 
 /*
- * Checks notify option value.
- *
- * Returns:
- *   1: value OK
- *   0: invalid value
- */
-
-int
-config_weechat_notify_check_cb (const void *pointer, void *data,
-                                 struct t_config_option *option,
-                                 const char *value)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) option;
-
-    return (gui_buffer_search_notify (value) >= 0) ? 1 : 0;
-}
-
-/*
  * Callback for changes on a notify option.
  */
 
@@ -2549,7 +2528,7 @@ config_weechat_notify_create_option_cb (const void *pointer, void *data,
                         option_name, "integer", _("Notify level for buffer"),
                         "none|highlight|message|all",
                         0, 0, "", value, 0,
-                        &config_weechat_notify_check_cb, NULL, NULL,
+                        NULL, NULL, NULL,
                         &config_weechat_notify_change_cb, NULL, NULL,
                         NULL, NULL, NULL);
                     rc = (ptr_option) ?
