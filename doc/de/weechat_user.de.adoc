@@ -1348,9 +1348,8 @@ Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese V
 
 | filter
 | beliebige Zeichenkette
-// TRANSLATION MISSING
-| Filter defined on some buffers like `/fset`, `/list` (irc), `/server raw` (irc)
-  and `/script`.
+| Filter für einige Buffer definiert, zum Beispiel`/fset`, `/list` (irc), `/server raw` (irc)
+  und `/script`.
 
 | host
 | beliebige Zeichenkette
@@ -1456,21 +1455,19 @@ Optionen:
 
 include::{autogendir}/autogen_user_options.de.adoc[tag=buflist_options]
 
-// TRANSLATION MISSING
 [[cursor_mode]]
-=== Cursor mode
+=== Cursor-Modus
 
-The cursor mode allows you to move freely the cursor anywhere on screen, in chat
-area and bars, and lets you perform actions at the given position. +
-You can enter in cursor mode either with the command `/cursor` or with a mouse
-middle click (mouse must have been enabled with key kbd:[Alt+m] or command
-`/mouse enable`).
+Mit dem Cursormodus können Sie den Cursor frei an eine beliebige Stelle auf dem Bildschirm bewegen,
+sowohl im Chatbereich als auch in Bars und ermöglicht das Ausführen von Aktionen an der angegebenen Position. +
+Sie können den Cursormodus entweder mit dem Befehl `/cursor` oder mit der mittleren Maustaste aktivieren
+(Maus muss mit der Taste kbd:[Alt+m] oder dem Befehl `/mouse enable` aktiviert worden sein).
 
-Typical use is to quote messages (chat area) or interact with nicks (nicklist bar).
+Typischer Anwendungszweck ist das Zitieren von Nachrichten (Chat-Bereich) oder die Interaktion mit Nicks (Nicklist-Leiste).
 
-See command <<command_weechat_cursor,/cursor>> and
-<<key_bindings_cursor_context,key bindings in cursor context>> for the list
-of actions you can perform in this mode.
+Siehe Befehl <<command_weechat_cursor,/cursor>> und
+<<key_bindings_cursor_context,key bindings in cursor context>>, für die Liste
+der Aktionen, die in diesem Modus ausgeführt werden können.
 
 [[key_bindings]]
 == Tastenbelegungen
@@ -1694,33 +1691,26 @@ in einem Buffer nach einem Text zu suchen).
 [[key_bindings_cursor_context]]
 === Cursor-Kontext
 
-// TRANSLATION MISSING
 Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bildschirm bewegt werden),
 see <<cursor_mode,Cursor mode>>.
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
 | Taste             | Bereich       | Beschreibung | Befehl
-| kbd:[↑]           | -             | bewegt Cursor eine Zeile nach oben. | `+/cursor move up+`
-| kbd:[↓]           | -             | bewegt Cursor eine Zeile nach unten. | `+/cursor move down+`
-| kbd:[←]           | -             | bewegt Cursor eine Spalte nach links. | `+/cursor move left+`
-| kbd:[→]           | -             | bewegt Cursor eine Spalte nach rechts. | `+/cursor move right+`
-// TRANSLATION MISSING
-| kbd:[Alt+↑]       | -             | Move cursor to the first line of the area. | `+/cursor move edge_top+`
-// TRANSLATION MISSING
-| kbd:[Alt+↓]       | -             | Move cursor to the last line of the area. | `+/cursor move edge_bottom+`
-// TRANSLATION MISSING
-| kbd:[Alt+←]       | -             | Move cursor to the first column of the area. | `+/cursor move edge_left+`
-// TRANSLATION MISSING
-| kbd:[Alt+→]       | -             | Move cursor to the last column of the area. | `+/cursor move edge_right+`
-// TRANSLATION MISSING
-| kbd:[Alt+Home]    | -             | Move cursor to the top left corner of the area. | `+/cursor move top_left+`
-// TRANSLATION MISSING
-| kbd:[Alt+End]     | -             | Move cursor to the bottom right corner of the area. | `+/cursor move bottom_right+`
-| kbd:[Alt+Shift+↑] | -             | bewegt Cursor einen Bereich nach oben. | `+/cursor move area_up+`
-| kbd:[Alt+Shift+↓] | -             | bewegt Cursor einen Bereich nach unten. | `+/cursor move area_down+`
-| kbd:[Alt+Shift+←] | -             | bewegt Cursor einen Bereich nach links. | `+/cursor move area_left+`
-| kbd:[Alt+Shift+→] | -             | bewegt Cursor einen Bereich nach rechts. | `+/cursor move area_right+`
+| kbd:[↑]           | -             | bewegt den Cursor eine Zeile nach oben. | `+/cursor move up+`
+| kbd:[↓]           | -             | bewegt den Cursor eine Zeile nach unten. | `+/cursor move down+`
+| kbd:[←]           | -             | bewegt den Cursor eine Spalte nach links. | `+/cursor move left+`
+| kbd:[→]           | -             | bewegt den Cursor eine Spalte nach rechts. | `+/cursor move right+`
+| kbd:[Alt+↑]       | -             | bewegt den Cursor zur ersten Zeile des Bereichs. | `+/cursor move edge_top+`
+| kbd:[Alt+↓]       | -             | bewegt den Cursor zur letzten Zeile des Bereichs. | `+/cursor move edge_bottom+`
+| kbd:[Alt+←]       | -             | bewegt den Cursor zur ersten Spalte des Bereichs. | `+/cursor move edge_left+`
+| kbd:[Alt+→]       | -             | bewegt den Cursor zur letzten Spalte des Bereichs. | `+/cursor move edge_right+`
+| kbd:[Alt+Home]    | -             | bewegt den Cursor in die obere linke Ecke des Bereichs. | `+/cursor move top_left+`
+| kbd:[Alt+End]     | -             | bewegt den Cursor in die untere rechte Ecke des Bereichs. | `+/cursor move bottom_right+`
+| kbd:[Alt+Shift+↑] | -             | bewegt den Cursor einen Bereich nach oben. | `+/cursor move area_up+`
+| kbd:[Alt+Shift+↓] | -             | bewegt den Cursor einen Bereich nach unten. | `+/cursor move area_down+`
+| kbd:[Alt+Shift+←] | -             | bewegt den Cursor einen Bereich nach links. | `+/cursor move area_left+`
+| kbd:[Alt+Shift+→] | -             | bewegt den Cursor einen Bereich nach rechts. | `+/cursor move area_right+`
 | kbd:[m]           | Chat          | zitiert Nachricht. | `+hsignal:chat_quote_message;/cursor stop+`
 | kbd:[l]           | Chat          | zitiert aktuelle Zeile. | `+hsignal:chat_quote_focused_line;/cursor stop+`
 | kbd:[q]           | Chat          | zitiert prefix + Nachricht. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
@@ -1760,14 +1750,10 @@ wurde (Befehl: `+/mouse toggle+`).
 | kbd:[□ □ ■]             | left         | chat: fset buffer   | Integer/Farbwerte/Aufzählung werden verringert, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
 | kbd:[□ □ ■]             | right        | chat: fset buffer   | Integer/Farbwerte/Aufzählung werden erhöht, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
 | kbd:[□ □ ■]             | up / down    | chat: fset buffer   | markieren/demarkieren von mehreren Optionen. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| kbd:[▲]                 | -            | chat: /list buffer  | Move five lines up in /list buffer. | `+/list -up 5+`
-// TRANSLATION MISSING
-| kbd:[▼]                 | -            | chat: /list buffer  | Move five lines down in /list buffer. | `+/list -down 5+`
-// TRANSLATION MISSING
-| kbd:[■ □ □]             | -            | chat: /list buffer  | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
-// TRANSLATION MISSING
-| kbd:[□ □ ■]             | -            | chat: /list buffer  | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
+| kbd:[▲]                 | -            | chat: /list buffer  | gehe fünf Zeilen im /list-Buffer nach oben. | `+/list -up 5+`
+| kbd:[▼]                 | -            | chat: /list buffer  | gehe fünf Zeilen im /list-Buffer nach unten. | `+/list -down 5+`
+| kbd:[■ □ □]             | -            | chat: /list buffer  | Zeile im /list-Buffer auswählen. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+| kbd:[□ □ ■]             | -            | chat: /list buffer  | tritt dem IRC-Kanal, in der ausgewählten Zeile, bei. | `+hsignal:irc_list_mouse+`
 | kbd:[▲]                 | -            | chat: script buffer | fünf Zeilen nach oben blättern, im Script-Buffer. | `+/script up 5+`
 | kbd:[▼]                 | -            | chat: script buffer | fünf Zeilen nach unten blättern, im Script-Buffer. | `+/script down 5+`
 | kbd:[■ □ □]             | -            | chat: script buffer | wählt einen Eintrag im Script-Buffer aus. | `+/script go ${_chat_line_y}+`
@@ -1794,14 +1780,13 @@ wurde (Befehl: `+/mouse toggle+`).
 |===
 
 [NOTE]
-// TRANSLATION MISSING
 ^(1)^ Buttons: +
-kbd:[◼ □ □]: click on left button +
-kbd:[□ ◼ □]: click on middle button +
-kbd:[□ □ ◼]: click on right button +
-Wheel: +
-kbd:[▲]: wheel up +
-kbd:[▼]: wheel down
+kbd:[◼ □ □]: Klicke linke Maustaste +
+kbd:[□ ◼ □]: Klicke mittlere Maustaste +
+kbd:[□ □ ◼]: Klicke rechte Maustaste +
+Mausrad: +
+kbd:[▲]: Mausrad hoch +
+kbd:[▼]: Mausrad runter
 
 [[key_bindings_fset_buffer]]
 === Fset Buffer
@@ -1849,11 +1834,10 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<fset,Fset Erw
 [NOTE]
 ^(1)^ Die Aktion muss als Eingabe in die Befehlszeile eingegeben werden, gefolgt von kbd:[Enter].
 
-// TRANSLATION MISSING
 [[key_bindings_irc_list_buffer]]
-=== IRC /list buffer
+=== IRC /list Buffer
 
-These keys and actions are used on the IRC /list buffer (see command <<command_irc_list,/list>>).
+Diese Tastenbefehle und Aktionen können im IRC /list-Buffer genutzt werden (siehe Befehl <<command_irc_list,/list>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
@@ -1867,17 +1851,17 @@ These keys and actions are used on the IRC /list buffer (see command <<command_i
 | kbd:[F11]      | `pass:[<]`   | scrollt horizontal nach links. | `+/list -left+`
 | kbd:[F12]      | `pass:[>]`   | scrollt horizontal nach rechts. | `+/list -right+`
 | kbd:[Ctrl+j]   | `j`          | Join IRC channel on selected line. | `+/list -join+`
-|                | `xxx`        | Show only channels with "xxx" in name or topic (case insensitive). |
-|                | `n:xxx`      | Show only channels with "xxx" in name (case insensitive). |
-|                | `t:xxx`      | Show only channels with "xxx" in topic (case insensitive). |
-|                | `u:n`        | Show only channels with at least "n" users. |
-|                | `u:>n`       | Show only channels with more than "n" users. |
-|                | `u:<n`       | Show only channels with less than "n" users. |
-|                | `c:xxx`      | Show only channels matching the evaluated condition "xxx", using following variables: name, name2, users, topic. |
-|                | `s:x,y`      | Sort channels by fields x,y (see command <<command_irc_list,/list>>). |
-|                | `s:`         | Reset sort to its default value (see command <<command_irc_list,/list>>). |
-|                | `$`          | Refresh list (run again command <<command_irc_list,/list>>). |
-|                | `q`          | Close buffer. | `+/buffer close+`
+|                | `xxx`        | zeigt nur Kanäle an mit "xxx" im Namen oder Thema (Groß- und Kleinschreibung wird ignoriert). |
+|                | `n:xxx`      | zeigt nur Kanäle mit im Namen (Groß- und Kleinschreibung wird ignoriert). |
+|                | `t:xxx`      | zeigt nur Kanäle mit "xxx" im Thema (Groß- und Kleinschreibung wird ignoriert). |
+|                | `u:n`        | zeigt nur Kanäle mit wenigstens "n" Usern. |
+|                | `u:>n`       | zeigt nur Kanäle mit mehr als "n" Usern |
+|                | `u:<n`       | zeigt nur Kanäle mit weniger als "n" Usern |
+|                | `c:xxx`      | zeigt nur Kanäle an, die der ausgewerteten Bedingung, "xxx", entsprechen , unter Verwendung folgender Variablen: name, name2, users, topic |
+|                | `s:x,y`      | sortiert Kanäle nach Feldern x,y (siehe Befehl <<command_irc_list,/list>>). |
+|                | `s:`         | Sortierung auf den Standardwert zurücksetzen (siehe Befehl <<command_irc_list,/list>>). |
+|                | `$`          | Liste aktualisieren (Der Befehl <<command_irc_list,/list>> wird erneut ausgeführt). |
+|                | `q`          | Buffer schließen. | `+/buffer close+`
 |===
 
 [NOTE]
