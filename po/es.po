@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-16 16:10+0200\n"
+"POT-Creation-Date: 2023-08-18 00:45+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5112,7 +5112,9 @@ msgstr ""
 
 #, fuzzy, c-format
 #| msgid "%sWarning: %s, line %d: invalid value for option: %s"
-msgid "%sWarning: %s, line %d: ignoring invalid value for option: %s"
+msgid ""
+"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
+"%s"
 msgstr "%sAtención: %s, línea %d: valor inválido para la opción: %s"
 
 #, c-format

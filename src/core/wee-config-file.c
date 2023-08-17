@@ -3675,9 +3675,10 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                 gui_chat_printf (
                     NULL,
                     _("%sWarning: %s, line %d: "
-                      "ignoring invalid value for option: %s"),
+                      "ignoring invalid value for option in section \"%s\": %s"),
                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                     filename, line_number,
+                    ptr_section->name,
                     line);
                 break;
         }

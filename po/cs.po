@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-16 16:10+0200\n"
+"POT-Creation-Date: 2023-08-18 00:45+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4480,7 +4480,9 @@ msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
 msgstr "%sUpozornění: %s, řádek %d: neznámý identifikátor sekce (\"%s\")"
 
 #, fuzzy, c-format
-msgid "%sWarning: %s, line %d: ignoring invalid value for option: %s"
+msgid ""
+"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
+"%s"
 msgstr "%sUpozornění: %s, řádek %d: nevalidní syntaxe, chybí \"]\""
 
 #, c-format

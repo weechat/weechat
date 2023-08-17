@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-16 16:10+0200\n"
+"POT-Creation-Date: 2023-08-18 00:45+0200\n"
 "PO-Revision-Date: 2023-08-08 07:14+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5477,7 +5477,9 @@ msgstr "%sУпозорење: %s, линија %d: непозната опциј
 
 #, fuzzy, c-format
 #| msgid "%sWarning: %s, line %d: invalid value for option: %s"
-msgid "%sWarning: %s, line %d: ignoring invalid value for option: %s"
+msgid ""
+"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
+"%s"
 msgstr "%sУпозорење: %s, линија %d: неважећа вредност опције: %s"
 
 #, c-format
