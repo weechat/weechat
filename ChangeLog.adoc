@@ -50,6 +50,10 @@ Bug fixes::
   * script: fix cursor position after `/script list -i` or `/script list -il`
   * script: fix buffer used by command `/script list -i|-il|-o|-ol`
 
+Tests::
+
+  * irc: fix tests on function irc_join_compare_join_channel (issue #1997)
+
 [[v4.0.3]]
 == Version 4.0.3 (2023-08-08)
 
