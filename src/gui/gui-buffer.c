@@ -301,47 +301,42 @@ gui_buffer_local_var_remove_all (struct t_gui_buffer *buffer)
 int
 gui_buffer_notify_get (struct t_gui_buffer *buffer)
 {
-    char *option_name, *ptr_end;
-    int length;
+    char *option_name, *pos;
     struct t_config_option *ptr_option;
 
-    if (!buffer)
+    if (!buffer || !buffer->full_name)
         return CONFIG_ENUM(config_look_buffer_notify_default);
 
-    length = strlen (buffer->full_name) + 1;
-    option_name = malloc (length);
-    if (option_name)
-    {
-        snprintf (option_name, length, "%s", buffer->full_name);
+    option_name = strdup (buffer->full_name);
+    if (!option_name)
+        return CONFIG_ENUM(config_look_buffer_notify_default);
 
-        ptr_end = option_name + strlen (option_name);
-        while (ptr_end >= option_name)
-        {
-            ptr_option = config_file_search_option (weechat_config_file,
-                                                    weechat_config_section_notify,
-                                                    option_name);
-            if (ptr_option)
-            {
-                free (option_name);
-                return CONFIG_INTEGER(ptr_option);
-            }
-            ptr_end--;
-            while ((ptr_end >= option_name) && (ptr_end[0] != '.'))
-            {
-                ptr_end--;
-            }
-            if ((ptr_end >= option_name) && (ptr_end[0] == '.'))
-                ptr_end[0] = '\0';
-        }
+    ptr_option = NULL;
+
+    while (1)
+    {
         ptr_option = config_file_search_option (weechat_config_file,
                                                 weechat_config_section_notify,
                                                 option_name);
-
-        free (option_name);
-
         if (ptr_option)
+        {
+            free (option_name);
             return CONFIG_INTEGER(ptr_option);
+        }
+        pos = strrchr (option_name, '.');
+        if (!pos)
+            break;
+        pos[0] = '\0';
     }
+
+    ptr_option = config_file_search_option (weechat_config_file,
+                                            weechat_config_section_notify,
+                                            option_name);
+
+    free (option_name);
+
+    if (ptr_option)
+        return CONFIG_INTEGER(ptr_option);
 
     /* notify level not found */
     return CONFIG_ENUM(config_look_buffer_notify_default);
