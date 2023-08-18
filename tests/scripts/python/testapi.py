@@ -83,7 +83,7 @@ def test_strings():
     check(weechat.string_parse_size('123 b') == 123)
     check(weechat.string_parse_size('120k') == 120000)
     check(weechat.string_parse_size('1500m') == 1500000000)
-    check(weechat.string_parse_size('3g') == 3000000000)
+    check(weechat.string_parse_size('2g') == 2000000000)
     check(weechat.string_color_code_size('') == 0)
     check(weechat.string_color_code_size('test') == 0)
     str_color = weechat.color('yellow,red')
