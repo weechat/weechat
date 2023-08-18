@@ -129,24 +129,24 @@ TEST(IrcJoin, CompareJoinChannel)
     LONGS_EQUAL(0, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
 
     join_chan1.name = strdup ("#abc");
-    LONGS_EQUAL(35, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
+    CHECK(irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2) > 0);
 
     join_chan2.name = strdup ("#abc");
     LONGS_EQUAL(0, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
 
     join_chan1.key = strdup ("key_abc");
-    LONGS_EQUAL(-1, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
+    CHECK(irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2) < 0);
 
     join_chan2.key = strdup ("key_abc");
     LONGS_EQUAL(0, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
 
     free (join_chan2.key);
     join_chan2.key = strdup ("key2_abc");
-    LONGS_EQUAL(45, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
+    CHECK(irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2) > 0);
 
     free (join_chan2.name);
     join_chan2.name = strdup ("#def");
-    LONGS_EQUAL(-3, irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2));
+    CHECK(irc_join_compare_join_channel (NULL, &join_chan1, &join_chan2) < 0);
 
     free (join_chan1.name);
     free (join_chan1.key);
