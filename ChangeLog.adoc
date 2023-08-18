@@ -20,6 +20,10 @@ Bug fixes::
   * irc: add missing tags on multiline messages (issue #1987)
   * irc: fix redirection of command `/list` when the reply doesn't start with message 321 (start of /list)
 
+Tests::
+
+  * irc: fix tests on function irc_join_compare_join_channel (issue #1997)
+
 [[v4.0.3]]
 == Version 4.0.3 (2023-08-08)
 
