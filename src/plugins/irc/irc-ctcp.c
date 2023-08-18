@@ -747,7 +747,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                    const char *arguments, const char *message)
 {
     char *dcc_args, *pos, *pos_file, *pos_addr, *pos_port, *pos_size;
-    char *pos_start_resume, *filename;
+    char *pos_start_resume, *pos_token, *filename;
     struct t_infolist *infolist;
     struct t_infolist_item *item;
     char charset_modifier[1024];
@@ -773,16 +773,58 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             return;
         }
 
-        /* DCC filename */
+        /*
+         * DCC SEND <filename> <address> <port> <filesize> [<token>]
+         *          ^^^^^^^^^^
+         **/
         pos_file = dcc_args;
         while (pos_file[0] == ' ')
         {
             pos_file++;
         }
+        if (pos_file[0] == '"')
+        {
+            /* The file name is wrapped in double-quotes; find the terminating double-quote. */
+            pos = strrchr (pos_file, '"');
+            if (!pos || (pos == pos_file))
+            {
+                weechat_printf (
+                    server->buffer,
+                    _("%s%s: cannot parse \"%s\" command"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, "privmsg");
+                free (dcc_args);
+                return;
+            }
+            pos[1] = '\0';
+            pos += 2;
+        }
+        else
+        {
+            pos = strchr (pos_file, ' ');
+            if (!pos)
+            {
+                weechat_printf (
+                    server->buffer,
+                    _("%s%s: cannot parse \"%s\" command"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, "privmsg");
+                free (dcc_args);
+                return;
+            }
+            pos[0] = '\0';
+            pos++;
+        }
 
-        /* look for file size */
-        pos_size = strrchr (pos_file, ' ');
-        if (!pos_size)
+        /*
+         * DCC SEND <filename> <address> <port> <filesize> [<token>]
+         *                     ^^^^^^^^^
+         **/
+        pos_addr = pos;
+        while (pos_addr[0] == ' ')
+        {
+            pos_addr++;
+        }
+        pos = strchr (pos_addr, ' ');
+        if (!pos)
         {
             weechat_printf (
                 server->buffer,
@@ -791,38 +833,20 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             free (dcc_args);
             return;
         }
+        pos[0] = '\0';
+        pos++;
 
-        pos = pos_size;
-        pos_size++;
-        while (pos[0] == ' ')
+        /*
+         * DCC SEND <filename> <address> <port> <filesize> [<token>]
+         *                               ^^^^^^
+         **/
+        pos_port = pos;
+        while (pos_port[0] == ' ')
         {
-            pos--;
+            pos_port++;
         }
-        pos[1] = '\0';
-
-        /* look for DCC port */
-        pos_port = strrchr (pos_file, ' ');
-        if (!pos_port)
-        {
-            weechat_printf (
-                server->buffer,
-                _("%s%s: cannot parse \"%s\" command"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME, "privmsg");
-            free (dcc_args);
-            return;
-        }
-
-        pos = pos_port;
-        pos_port++;
-        while (pos[0] == ' ')
-        {
-            pos--;
-        }
-        pos[1] = '\0';
-
-        /* look for DCC IP address */
-        pos_addr = strrchr (pos_file, ' ');
-        if (!pos_addr)
+        pos = strchr (pos_port, ' ');
+        if (!pos)
         {
             weechat_printf (
                 server->buffer,
@@ -831,17 +855,55 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             free (dcc_args);
             return;
         }
+        pos[0] = '\0';
+        pos++;
 
-        pos = pos_addr;
-        pos_addr++;
-        while (pos[0] == ' ')
+        /*
+         * DCC SEND <filename> <address> <port> <filesize> [<token>]
+         *                                      ^^^^^^^^^^
+         **/
+        pos_size = pos;
+        while (pos_size[0] == ' ')
         {
-            pos--;
+            pos_size++;
         }
-        pos[1] = '\0';
+        pos = strchr (pos_size, ' ');
+        if (pos)
+        {
+            /*
+             * DCC SEND <filename> <address> <port> <filesize> [<token>]
+             *                                                 ^^^^^^^^^
+             **/
+            pos[0] = '\0';
+            pos_token = ++pos;
+            while (pos_token[0] == ' ')
+            {
+                pos_token++;
+            }
+        }
+        else
+        {
+            pos_token = NULL;
+        }
 
         /* remove double quotes around filename */
         filename = irc_ctcp_dcc_filename_without_quotes (pos_file);
+
+        /* use the local interface, from the server socket */
+        memset (&addr, 0, sizeof (addr));
+        length = sizeof (addr);
+        getsockname (server->sock, (struct sockaddr *)&addr, &length);
+        rc = getnameinfo ((struct sockaddr *)&addr, length, str_address,
+                          sizeof (str_address), NULL, 0, NI_NUMERICHOST);
+        if (rc != 0)
+        {
+            weechat_printf (
+                server->buffer,
+                _("%s%s: unable to resolve local address of server socket: error "
+                  "%d %s"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME, rc, gai_strerror (rc));
+            return;
+        }
 
         /* add DCC file via xfer plugin */
         infolist = weechat_infolist_new ();
@@ -863,6 +925,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
                 weechat_infolist_new_var_string (item, "remote_address", pos_addr);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
+                weechat_infolist_new_var_string (item, "token", pos_token);
                 (void) weechat_hook_signal_send ("xfer_add",
                                                  WEECHAT_HOOK_SIGNAL_POINTER,
                                                  infolist);
@@ -897,16 +960,58 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             return;
         }
 
-        /* DCC filename */
+        /*
+         * DCC RESUME <filename> <port> <start_resume> [<token>]
+         *            ^^^^^^^^^^
+         **/
         pos_file = dcc_args;
         while (pos_file[0] == ' ')
         {
             pos_file++;
         }
+        if (pos_file[0] == '"')
+        {
+            /* The file name is wrapped in double-quotes; find the terminating double-quote. */
+            pos = strrchr (pos_file, '"');
+            if (!pos || (pos == pos_file))
+            {
+                weechat_printf (
+                    server->buffer,
+                    _("%s%s: cannot parse \"%s\" command"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, "privmsg");
+                free (dcc_args);
+                return;
+            }
+            pos[1] = '\0';
+            pos += 2;
+        }
+        else
+        {
+            pos = strchr (pos_file, ' ');
+            if (!pos)
+            {
+                weechat_printf (
+                    server->buffer,
+                    _("%s%s: cannot parse \"%s\" command"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, "privmsg");
+                free (dcc_args);
+                return;
+            }
+            pos[0] = '\0';
+            pos++;
+        }
 
-        /* look for resume start position */
-        pos_start_resume = strrchr (pos_file, ' ');
-        if (!pos_start_resume)
+        /*
+         * DCC RESUME <filename> <port> <start_resume> [<token>]
+         *                       ^^^^^^
+         **/
+        pos_port = pos;
+        while (pos_port[0] == ' ')
+        {
+            pos_port++;
+        }
+        pos = strchr (pos_port, ' ');
+        if (!pos)
         {
             weechat_printf (
                 server->buffer,
@@ -915,32 +1020,36 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             free (dcc_args);
             return;
         }
-        pos = pos_start_resume;
-        pos_start_resume++;
-        while (pos[0] == ' ')
-        {
-            pos--;
-        }
-        pos[1] = '\0';
+        pos[0] = '\0';
+        pos++;
 
-        /* look for DCC port */
-        pos_port = strrchr (pos_file, ' ');
-        if (!pos_port)
+        /*
+         * DCC RESUME <filename> <port> <start_resume> [<token>]
+         *                              ^^^^^^^^^^^^^^
+         **/
+        pos_start_resume = pos;
+        while (pos_start_resume[0] == ' ')
         {
-            weechat_printf (
-                server->buffer,
-                _("%s%s: cannot parse \"%s\" command"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME, "privmsg");
-            free (dcc_args);
-            return;
+            pos_start_resume++;
         }
-        pos = pos_port;
-        pos_port++;
-        while (pos[0] == ' ')
+        pos = strchr (pos_start_resume, ' ');
+        if (pos)
         {
-            pos--;
+            /*
+             * DCC RESUME <filename> <port> <start_resume> [<token>]
+             *                                             ^^^^^^^^^
+             **/
+            pos[0] = '\0';
+            pos_token = ++pos;
+            while (pos_token[0] == ' ')
+            {
+                pos_token++;
+            }
         }
-        pos[1] = '\0';
+        else
+        {
+            pos_token = NULL;
+        }
 
         /* remove double quotes around filename */
         filename = irc_ctcp_dcc_filename_without_quotes (pos_file);
@@ -959,6 +1068,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                                                  (filename) ? filename : pos_file);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                 weechat_infolist_new_var_string (item, "start_resume", pos_start_resume);
+                weechat_infolist_new_var_string (item, "token", pos_token);
                 (void) weechat_hook_signal_send ("xfer_accept_resume",
                                                  WEECHAT_HOOK_SIGNAL_POINTER,
                                                  infolist);
@@ -993,16 +1103,58 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             return;
         }
 
-        /* DCC filename */
+        /*
+         * DCC ACCEPT <filename> <port> <start_resume> [<token>]
+         *            ^^^^^^^^^^
+         **/
         pos_file = dcc_args;
         while (pos_file[0] == ' ')
         {
             pos_file++;
         }
+        if (pos_file[0] == '"')
+        {
+            /* The file name is wrapped in double-quotes; find the terminating double-quote. */
+            pos = strrchr (pos_file, '"');
+            if (!pos || (pos == pos_file))
+            {
+                weechat_printf (
+                    server->buffer,
+                    _("%s%s: cannot parse \"%s\" command"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, "privmsg");
+                free (dcc_args);
+                return;
+            }
+            pos[1] = '\0';
+            pos += 2;
+        }
+        else
+        {
+            pos = strchr (pos_file, ' ');
+            if (!pos)
+            {
+                weechat_printf (
+                    server->buffer,
+                    _("%s%s: cannot parse \"%s\" command"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, "privmsg");
+                free (dcc_args);
+                return;
+            }
+            pos[0] = '\0';
+            pos++;
+        }
 
-        /* look for resume start position */
-        pos_start_resume = strrchr (pos_file, ' ');
-        if (!pos_start_resume)
+        /*
+         * DCC ACCEPT <filename> <port> <start_resume> [<token>]
+         *                       ^^^^^^
+         **/
+        pos_port = pos;
+        while (pos_port[0] == ' ')
+        {
+            pos_port++;
+        }
+        pos = strchr (pos_port, ' ');
+        if (!pos)
         {
             weechat_printf (
                 server->buffer,
@@ -1011,32 +1163,36 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             free (dcc_args);
             return;
         }
-        pos = pos_start_resume;
-        pos_start_resume++;
-        while (pos[0] == ' ')
-        {
-            pos--;
-        }
-        pos[1] = '\0';
+        pos[0] = '\0';
+        pos++;
 
-        /* look for DCC port */
-        pos_port = strrchr (pos_file, ' ');
-        if (!pos_port)
+        /*
+         * DCC ACCEPT <filename> <port> <start_resume> [<token>]
+         *                              ^^^^^^^^^^^^^^
+         **/
+        pos_start_resume = pos;
+        while (pos_start_resume[0] == ' ')
         {
-            weechat_printf (
-                server->buffer,
-                _("%s%s: cannot parse \"%s\" command"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME, "privmsg");
-            free (dcc_args);
-            return;
+            pos_start_resume++;
         }
-        pos = pos_port;
-        pos_port++;
-        while (pos[0] == ' ')
+        pos = strchr (pos_start_resume, ' ');
+        if (pos)
         {
-            pos--;
+            /*
+             * DCC ACCEPT <filename> <port> <filesize> [<token>]
+             *                                         ^^^^^^^^^
+             **/
+            pos[0] = '\0';
+            pos_token = ++pos;
+            while (pos_token[0] == ' ')
+            {
+                pos_token++;
+            }
         }
-        pos[1] = '\0';
+        else
+        {
+            pos_token = NULL;
+        }
 
         /* remove double quotes around filename */
         filename = irc_ctcp_dcc_filename_without_quotes (pos_file);
@@ -1055,6 +1211,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                                                  (filename) ? filename : pos_file);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                 weechat_infolist_new_var_string (item, "start_resume", pos_start_resume);
+                weechat_infolist_new_var_string (item, "token", pos_token);
                 (void) weechat_hook_signal_send ("xfer_start_resume",
                                                  WEECHAT_HOOK_SIGNAL_POINTER,
                                                  infolist);
