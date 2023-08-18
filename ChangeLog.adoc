@@ -25,6 +25,7 @@ Bug fixes::
 Tests::
 
   * irc: fix tests on function irc_join_compare_join_channel (issue #1997)
+  * scripts: fix tests of functions print_date_tag, print_y_date_tags and hook_timer on 32-bit systems (issue #1999)
 
 [[v4.0.3]]
 == Version 4.0.3 (2023-08-08)
