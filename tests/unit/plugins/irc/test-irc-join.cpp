@@ -117,7 +117,7 @@ TEST_GROUP(IrcJoin)
  *   irc_join_compare_join_channel
  */
 
-TEST(IrcJoin, CompateJoinChannel)
+TEST(IrcJoin, CompareJoinChannel)
 {
     struct t_irc_join_channel join_chan1, join_chan2;
 
