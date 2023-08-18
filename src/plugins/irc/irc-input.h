@@ -20,9 +20,12 @@
 #ifndef WEECHAT_PLUGIN_IRC_INPUT_H
 #define WEECHAT_PLUGIN_IRC_INPUT_H
 
+#include <time.h>
+
 struct t_gui_buffer;
 
 extern void irc_input_user_message_display (struct t_irc_server *server,
+                                            time_t date,
                                             const char *target,
                                             const char *address,
                                             const char *command,
