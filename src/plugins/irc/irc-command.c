@@ -2148,7 +2148,7 @@ IRC_COMMAND_CALLBACK(dcc)
             {
                 weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                 weechat_infolist_new_var_string (item, "plugin_id", ptr_server->name);
-                weechat_infolist_new_var_string (item, "type_string", "file_send");
+                weechat_infolist_new_var_string (item, "type_string", "file_send_passive");
                 weechat_infolist_new_var_string (item, "protocol_string", "dcc");
                 weechat_infolist_new_var_string (item, "remote_nick", argv[2]);
                 weechat_infolist_new_var_string (item, "local_nick", ptr_server->nick);

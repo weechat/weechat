@@ -6232,7 +6232,7 @@ irc_server_xfer_send_ready_cb (const void *pointer, void *data,
                 if (type && converted_addr[0])
                 {
                     /* send DCC PRIVMSG */
-                    if (strcmp (type, "file_send") == 0)
+                    if (strcmp (type, "file_send_passive") == 0)
                     {
                         filename = weechat_infolist_string (infolist, "filename");
                         spaces_in_name = (strchr (filename, ' ') != NULL);

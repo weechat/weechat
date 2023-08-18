@@ -55,8 +55,9 @@ WEECHAT_PLUGIN_PRIORITY(XFER_PLUGIN_PRIORITY);
 struct t_weechat_plugin *weechat_xfer_plugin = NULL;
 
 char *xfer_type_string[] =             /* strings for types                 */
-{ "file_recv", "file_send", "chat_recv",
-  "chat_send"
+{ "file_recv_active", "file_recv_passive",
+  "file_send_active", "file_send_passive",
+  "chat_recv", "chat_send"
 };
 
 char *xfer_protocol_string[] =         /* strings for protocols             */
@@ -349,7 +350,7 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
                             (xfer->status == XFER_STATUS_DONE) ? "" : weechat_prefix ("error"),
                             XFER_PLUGIN_NAME,
                             xfer->filename,
-                            (xfer->type == XFER_TYPE_FILE_SEND) ? _("sent to") : _("received from"),
+                            (xfer->type == XFER_TYPE_FILE_SEND_PASSIVE) ? _("sent to") : _("received from"),
                             xfer->remote_nick,
                             xfer->remote_address_str,
                             (xfer->status == XFER_STATUS_DONE) ? _("OK") : _("FAILED"));
@@ -713,7 +714,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
     new_xfer->hash_target = NULL;
     new_xfer->hash_status = XFER_HASH_STATUS_UNKNOWN;
 
-    if ((type == XFER_TYPE_FILE_RECV)
+    if ((type == XFER_TYPE_FILE_RECV_ACTIVE)
         && weechat_config_boolean (xfer_config_file_auto_check_crc32))
     {
         ptr_crc32 = xfer_file_search_crc32 (new_xfer->filename);
@@ -742,7 +743,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
     /* write info message on core buffer */
     switch (type)
     {
-        case XFER_TYPE_FILE_RECV:
+        case XFER_TYPE_FILE_RECV_ACTIVE:
             weechat_printf (NULL,
                             _("%s: incoming file from %s "
                               "(%s, %s.%s), name: %s, %llu bytes "
@@ -757,7 +758,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
                             xfer_protocol_string[protocol]);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             break;
-        case XFER_TYPE_FILE_SEND:
+        case XFER_TYPE_FILE_SEND_PASSIVE:
             weechat_printf (NULL,
                             _("%s: offering file to %s (%s.%s), name: %s "
                               "(local filename: %s), %llu bytes (protocol: %s)"),
@@ -831,7 +832,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
      */
     if ((XFER_IS_RECV(type)
          && xfer_nick_auto_accepted (new_xfer->plugin_id, new_xfer->remote_nick))
-        || ((type == XFER_TYPE_FILE_RECV)
+        || ((type == XFER_TYPE_FILE_RECV_ACTIVE)
             && weechat_config_boolean (xfer_config_file_auto_accept_files))
         || ((type == XFER_TYPE_CHAT_RECV)
             && weechat_config_boolean (xfer_config_file_auto_accept_chats)))
@@ -1079,13 +1080,13 @@ xfer_add_cb (const void *pointer, void *data,
         }
     }
 
-    if (type == XFER_TYPE_FILE_RECV)
+    if (type == XFER_TYPE_FILE_RECV_ACTIVE)
     {
         filename2 = strdup (filename);
         sscanf (weechat_infolist_string (infolist, "size"), "%llu", &file_size);
     }
 
-    if (type == XFER_TYPE_FILE_SEND)
+    if (type == XFER_TYPE_FILE_SEND_PASSIVE)
     {
         /* add home if filename not beginning with '/' or '~' (not for Win32) */
 #ifdef _WIN32
@@ -1317,7 +1318,7 @@ xfer_add_cb (const void *pointer, void *data,
         }
     }
 
-    if (type == XFER_TYPE_FILE_RECV)
+    if (type == XFER_TYPE_FILE_RECV_ACTIVE)
     {
         if (filename2)
         {
@@ -1428,7 +1429,7 @@ xfer_start_resume_cb (const void *pointer, void *data,
 
     sscanf (str_start_resume, "%llu", &start_resume);
 
-    ptr_xfer = xfer_search (plugin_name, plugin_id, XFER_TYPE_FILE_RECV,
+    ptr_xfer = xfer_search (plugin_name, plugin_id, XFER_TYPE_FILE_RECV_ACTIVE,
                             XFER_STATUS_CONNECTING, port);
     if (ptr_xfer)
     {
@@ -1514,7 +1515,7 @@ xfer_accept_resume_cb (const void *pointer, void *data,
 
     sscanf (str_start_resume, "%llu", &start_resume);
 
-    ptr_xfer = xfer_search (plugin_name, plugin_id, XFER_TYPE_FILE_SEND,
+    ptr_xfer = xfer_search (plugin_name, plugin_id, XFER_TYPE_FILE_SEND_PASSIVE,
                             XFER_STATUS_CONNECTING, port);
     if (ptr_xfer)
     {
