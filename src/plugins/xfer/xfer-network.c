@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -57,17 +58,17 @@ char *
 xfer_network_convert_integer_to_ipv4 (const char *str_address)
 {
     char *error, result[128];
-    long number;
+    long long number;
 
     if (!str_address || !str_address[0])
         return NULL;
 
-    number = strtol (str_address, &error, 10);
-    if (!error || error[0] || (number <= 0))
+    number = strtoll (str_address, &error, 10);
+    if (!error || error[0] || (number <= 0) || (number > UINT32_MAX))
         return NULL;
 
     snprintf (result, sizeof (result),
-              "%ld.%ld.%ld.%ld",
+              "%lld.%lld.%lld.%lld",
               (number >> 24) & 0xFF,
               (number >> 16) & 0xFF,
               (number >> 8) & 0xFF,
