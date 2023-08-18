@@ -775,8 +775,8 @@ TEST(IrcMessage, ParseToHashtable)
                  (const char *)hashtable_get (hashtable, "tags"));
     POINTERS_EQUAL(NULL,
                    (const char *)hashtable_get (hashtable, "tag_time"));
-    STRCMP_EQUAL(NULL,
-                 (const char *)hashtable_get (hashtable, "tag_tag2"));
+    POINTERS_EQUAL(NULL,
+                   (const char *)hashtable_get (hashtable, "tag_tag2"));
     STRCMP_EQUAL("PING :arguments here",
                  (const char *)hashtable_get (hashtable, "message_without_tags"));
     STRCMP_EQUAL("",
