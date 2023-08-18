@@ -1630,46 +1630,34 @@ gui_buffer_set_highlight_words_list (struct t_gui_buffer *buffer,
                                      struct t_weelist *list)
 {
     struct t_weelist_item *ptr_list_item;
-    int length;
     const char *ptr_string;
-    char *words;
+    char **words;
 
     if (!buffer)
         return;
 
-    /* compute length */
-    length = 0;
-    for (ptr_list_item = weelist_get (list, 0); ptr_list_item;
-         ptr_list_item = weelist_next (ptr_list_item))
-    {
-        ptr_string = weelist_string (ptr_list_item);
-        if (ptr_string)
-            length += strlen (ptr_string) + 1;
-    }
-    length += 2; /* '\n' + '\0' */
-
-    /* allocate memory */
-    words = malloc (length);
+    words = string_dyn_alloc (64);
     if (!words)
         return;
 
-    /* build string */
-    words[0] = '\0';
-    for (ptr_list_item = weelist_get (list, 0); ptr_list_item;
-         ptr_list_item = weelist_next (ptr_list_item))
+    if (list)
     {
-        ptr_string = weelist_string (ptr_list_item);
-        if (ptr_string)
+        for (ptr_list_item = weelist_get (list, 0); ptr_list_item;
+             ptr_list_item = weelist_next (ptr_list_item))
         {
-            strcat (words, ptr_string);
-            if (weelist_next (ptr_list_item))
-                strcat (words, ",");
+            ptr_string = weelist_string (ptr_list_item);
+            if (ptr_string)
+            {
+                if (*words[0])
+                    string_dyn_concat (words, ",", -1);
+                string_dyn_concat (words, ptr_string, -1);
+            }
         }
     }
 
-    gui_buffer_set_highlight_words (buffer, words);
+    gui_buffer_set_highlight_words (buffer, *words);
 
-    free (words);
+    string_dyn_free (words, 1);
 }
 
 /*
