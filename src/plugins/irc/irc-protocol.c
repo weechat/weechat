@@ -2989,6 +2989,7 @@ IRC_PROTOCOL_CALLBACK(pong)
 
 void
 irc_protocol_privmsg_display_ctcp_send (struct t_irc_server *server,
+                                        time_t date,
                                         const char *target,
                                         const char *address,
                                         const char *arguments)
@@ -3014,6 +3015,7 @@ irc_protocol_privmsg_display_ctcp_send (struct t_irc_server *server,
 
     irc_input_user_message_display (
         server,
+        date,
         target,
         address,
         "privmsg",
@@ -3093,7 +3095,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 if (nick_is_me)
                 {
                     irc_protocol_privmsg_display_ctcp_send (
-                        server, params[0], address, msg_args);
+                        server, date, params[0], address, msg_args);
                 }
                 else
                 {
@@ -3211,7 +3213,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             if (nick_is_me && cap_echo_message && !msg_already_received)
             {
                 irc_protocol_privmsg_display_ctcp_send (
-                    server, remote_nick, address, msg_args);
+                    server, date, remote_nick, address, msg_args);
             }
             else
             {

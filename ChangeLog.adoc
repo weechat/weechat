@@ -19,6 +19,7 @@ Bug fixes::
   * core: fix increment/decrement of options weechat.notify.*
   * irc: add missing tags on multiline messages (issue #1987)
   * irc: fix redirection of command `/list` when the reply doesn't start with message 321 (start of /list)
+  * irc: fix wrong time displayed for CTCP messages received from self nick (issue #2000)
   * scripts: fix function string_parse_size on 32-bit systems (python and ruby) (issue #1999)
   * xfer: fix conversion of string to IPv4 on 32-bit systems (issue #1999)
 

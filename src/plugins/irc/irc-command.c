@@ -385,6 +385,7 @@ irc_command_me_channel_message (struct t_irc_server *server,
             {
                 irc_input_user_message_display (
                     server,
+                    0,  /* date */
                     channel_name,
                     NULL,  /* address */
                     "privmsg",
@@ -1970,6 +1971,7 @@ IRC_COMMAND_CALLBACK(ctcp)
             {
                 irc_input_user_message_display (
                     ptr_server,
+                    0,  /* date */
                     ctcp_target,
                     NULL,  /* address */
                     "privmsg",
@@ -3735,6 +3737,7 @@ IRC_COMMAND_CALLBACK(msg)
                 {
                     irc_input_user_message_display (
                         ptr_server,
+                        0,  /* date */
                         ptr_channel->name,
                         NULL,  /* address */
                         "privmsg",
@@ -3755,6 +3758,7 @@ IRC_COMMAND_CALLBACK(msg)
             {
                 irc_input_user_message_display (
                     ptr_server,
+                    0,  /* date */
                     targets[i],
                     NULL,  /* address */
                     "privmsg",
@@ -3910,6 +3914,7 @@ IRC_COMMAND_CALLBACK(notice)
                 ptr_message = (const char *)weechat_arraylist_get (list_messages, i);
                 irc_input_user_message_display (
                     ptr_server,
+                    0,  /* date */
                     argv[arg_target],
                     NULL,  /* address */
                     "notice",
@@ -4439,6 +4444,7 @@ IRC_COMMAND_CALLBACK(query)
                 {
                     irc_input_user_message_display (
                         ptr_server,
+                        0,  /* date */
                         ptr_channel->name,
                         NULL,  /* address */
                         "privmsg",
