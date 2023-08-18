@@ -52,6 +52,7 @@ Bug fixes::
 
 Tests::
 
+  * core: add tests on GUI buffer functions
   * irc: fix tests on function irc_join_compare_join_channel (issue #1997)
 
 [[v4.0.3]]
