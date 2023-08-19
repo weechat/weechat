@@ -142,6 +142,7 @@ extern struct t_config_section *weechat_config_section_signal;
 extern struct t_config_section *weechat_config_section_bar;
 extern struct t_config_section *weechat_config_section_custom_bar_item;
 extern struct t_config_section *weechat_config_section_layout;
+extern struct t_config_section *weechat_config_section_buffer;
 extern struct t_config_section *weechat_config_section_notify;
 extern struct t_config_section *weechat_config_section_filter;
 extern struct t_config_section *weechat_config_section_key[];

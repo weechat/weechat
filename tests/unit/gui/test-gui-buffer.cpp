@@ -414,6 +414,43 @@ TEST(GuiBuffer, ApplyPropertiesCb)
 }
 
 /*
+ * Tests functions:
+ *   gui_buffer_apply_config_properties
+ */
+
+TEST(GuiBuffer, ApplyConfigProperties)
+{
+    struct t_gui_buffer *buffer;
+    struct t_config_option *ptr_option;
+
+    config_file_option_set_with_string (
+        "weechat.buffer.core." TEST_BUFFER_NAME ".short_name", "t1");
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    STRCMP_EQUAL("t1", buffer->short_name);
+
+    gui_buffer_close (buffer);
+
+    config_file_search_with_string (
+        "weechat.buffer.core." TEST_BUFFER_NAME ".short_name",
+        NULL, NULL, &ptr_option, NULL);
+    config_file_option_unset (ptr_option);
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    POINTERS_EQUAL(NULL, buffer->short_name);
+
+    gui_buffer_close (buffer);
+}
+
+/*
  * Test callback for buffer input.
  */
 

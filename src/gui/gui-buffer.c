@@ -36,6 +36,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-eval.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
@@ -648,6 +649,59 @@ gui_buffer_apply_properties_cb (void *data,
 }
 
 /*
+ * Applies buffer properties defined in options "weechat.buffer.*".
+ */
+
+void
+gui_buffer_apply_config_properties (struct t_gui_buffer *buffer)
+{
+    struct t_config_option *ptr_option;
+    struct t_hashtable *pointers;
+    const char *pos;
+    char *buffer_mask, *value;
+
+    pointers = NULL;
+
+    for (ptr_option = weechat_config_section_buffer->options; ptr_option;
+         ptr_option = ptr_option->next_option)
+    {
+        pos = strrchr (ptr_option->name, '.');
+        if (!pos)
+            continue;
+        buffer_mask = strndup (ptr_option->name, pos - ptr_option->name);
+        if (!buffer_mask)
+            continue;
+        if (string_match (buffer->full_name, buffer_mask, 1))
+        {
+            if (!pointers)
+            {
+                pointers = hashtable_new (
+                    32,
+                    WEECHAT_HASHTABLE_STRING,
+                    WEECHAT_HASHTABLE_POINTER,
+                    NULL, NULL);
+            }
+            if (pointers)
+            {
+                hashtable_set (pointers, "buffer", buffer);
+                value = eval_expression (
+                    CONFIG_STRING(ptr_option),
+                    pointers, NULL, NULL);
+                if (value)
+                {
+                    gui_buffer_set (buffer, pos + 1, value);
+                    free (value);
+                }
+            }
+        }
+        free (buffer_mask);
+    }
+
+    if (pointers)
+        hashtable_free (pointers);
+}
+
+/*
  * Creates a new buffer in current window with some optional properties.
  *
  * Returns pointer to new buffer, NULL if error.
@@ -845,9 +899,12 @@ gui_buffer_new_props (struct t_weechat_plugin *plugin,
     /* assign this buffer to windows of layout */
     gui_layout_window_assign_buffer (new_buffer);
 
-    /* apply properties */
+    /* apply properties (from parameters) */
     if (properties)
         hashtable_map (properties, &gui_buffer_apply_properties_cb, new_buffer);
+
+    /* apply properties (from options weechat.buffer.*) */
+    gui_buffer_apply_config_properties (new_buffer);
 
     if (first_buffer_creation)
     {

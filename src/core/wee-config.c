@@ -84,6 +84,7 @@ struct t_config_section *weechat_config_section_signal = NULL;
 struct t_config_section *weechat_config_section_bar = NULL;
 struct t_config_section *weechat_config_section_custom_bar_item = NULL;
 struct t_config_section *weechat_config_section_layout = NULL;
+struct t_config_section *weechat_config_section_buffer = NULL;
 struct t_config_section *weechat_config_section_notify = NULL;
 struct t_config_section *weechat_config_section_filter = NULL;
 struct t_config_section *weechat_config_section_key[GUI_KEY_NUM_CONTEXTS] = {
@@ -2480,6 +2481,72 @@ config_weechat_notify_change_cb (const void *pointer, void *data,
     (void) option;
 
     gui_buffer_notify_set_all ();
+}
+
+/*
+ * Callback called when an option is created in section "buffer".
+ */
+
+int
+config_weechat_buffer_create_option_cb (const void *pointer, void *data,
+                                        struct t_config_file *config_file,
+                                        struct t_config_section *section,
+                                        const char *option_name,
+                                        const char *value)
+{
+    struct t_config_option *ptr_option;
+    const char *pos;
+    char *buffer_mask, description[4096];
+    int rc;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+
+    if (option_name)
+    {
+        ptr_option = config_file_search_option (config_file, section,
+                                                option_name);
+        if (ptr_option)
+        {
+            rc = config_file_option_set (ptr_option, value, 1);
+        }
+        else
+        {
+            pos = strrchr (option_name, '.');
+            if (pos)
+            {
+                buffer_mask = strndup (option_name, pos - option_name);
+                if (buffer_mask)
+                {
+                    snprintf (description, sizeof (description),
+                              _("set property \"%s\" on any buffer matching "
+                                "mask \"%s\"; "
+                                "content is evaluated, see /help eval; "
+                                "${buffer} is a pointer to the buffer being "
+                                "opened"),
+                              pos + 1,
+                              buffer_mask);
+                    ptr_option = config_file_new_option (
+                        config_file, section,
+                        option_name, "string",
+                        description,
+                        "",
+                        0, 0, "", value, 0,
+                        NULL, NULL, NULL,
+                        NULL, NULL, NULL,
+                        NULL, NULL, NULL);
+                    rc = (ptr_option) ?
+                        WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+                    free (buffer_mask);
+                }
+            }
+        }
+    }
+
+    return rc;
 }
 
 /*
@@ -4980,6 +5047,16 @@ config_weechat_init_options ()
         &config_weechat_layout_write_cb, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
+        NULL, NULL, NULL);
+
+    /* buffer */
+    weechat_config_section_buffer = config_file_new_section (
+        weechat_config_file, "buffer",
+        1, 1,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        &config_weechat_buffer_create_option_cb, NULL, NULL,
         NULL, NULL, NULL);
 
     /* notify */
