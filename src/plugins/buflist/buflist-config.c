@@ -739,7 +739,7 @@ buflist_config_init ()
         buflist_config_format_indent = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
             "indent", "string",
-            N_("string displayed to indent channel and private buffers "
+            N_("string displayed to indent channel, private and list buffers "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0, "  ", NULL, 0,
             NULL, NULL, NULL,

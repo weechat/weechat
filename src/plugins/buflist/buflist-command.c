@@ -146,7 +146,7 @@ buflist_command_init ()
            "are between 10 and 99 buffers\n"
            "    - ${number_displayed}: \"1\" if the number is displayed, "
            "otherwise \"0\"\n"
-           "    - ${indent}: indentation for name (channel and private "
+           "    - ${indent}: indentation for name (channel, private and list "
            "buffers are indented) (evaluation of "
            "option buflist.format.indent)\n"
            "    - ${format_nick_prefix}: colored nick prefix for a channel "
