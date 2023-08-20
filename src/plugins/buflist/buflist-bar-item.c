@@ -314,7 +314,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                         "highlight" };
     const char indent_empty[1] = { '\0' };
     const char *ptr_lag, *ptr_item_name, *ptr_tls_version;
-    int item_index, num_buffers, is_channel, is_private;
+    int item_index, num_buffers, is_channel, is_private, is_list;
     int i, j, length_max_number, current_buffer, number, prev_number, priority;
     int rc, count, line_number, line_number_current_buffer;
     int hotlist_priority_number;
@@ -445,7 +445,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         ptr_type = weechat_buffer_get_string (ptr_buffer, "localvar_type");
         is_channel = (ptr_type && (strcmp (ptr_type, "channel") == 0));
         is_private = (ptr_type && (strcmp (ptr_type, "private") == 0));
-        ptr_format_indent = (is_channel || is_private) ?
+        is_list = (ptr_type && (strcmp (ptr_type, "list") == 0));
+        ptr_format_indent = (is_channel || is_private || is_list) ?
             weechat_config_string (buflist_config_format_indent) : indent_empty;
 
         /* nick prefix */
