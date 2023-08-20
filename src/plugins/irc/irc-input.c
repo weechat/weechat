@@ -370,7 +370,7 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags,
     }
     else if (weechat_strcmp (
                  weechat_buffer_get_string (buffer,
-                                            "localvar_type"), "irc_list") == 0)
+                                            "localvar_type"), "list") == 0)
     {
         irc_list_buffer_input_data (buffer, input_data);
     }

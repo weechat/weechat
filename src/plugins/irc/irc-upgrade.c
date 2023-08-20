@@ -324,7 +324,7 @@ irc_upgrade_set_buffer_callbacks ()
                                                     ptr_server);
                     }
                 }
-                if (type && (strcmp (type, "irc_list") == 0))
+                if (type && (strcmp (type, "list") == 0))
                 {
                     ptr_server = irc_server_search (
                         weechat_buffer_get_string (ptr_buffer,

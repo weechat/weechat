@@ -957,7 +957,7 @@ irc_list_create_buffer (struct t_irc_server *server)
     if (buffer_props)
     {
         weechat_hashtable_set (buffer_props, "type", "free");
-        weechat_hashtable_set (buffer_props, "localvar_set_type", "irc_list");
+        weechat_hashtable_set (buffer_props, "localvar_set_type", "list");
         weechat_hashtable_set (buffer_props, "localvar_set_server", server->name);
         weechat_hashtable_set (buffer_props, "localvar_set_channel", server->name);
         weechat_hashtable_set (buffer_props, "localvar_set_no_log", "1");
