@@ -6733,12 +6733,10 @@ struct t_config_option *weechat_config_new_option (
 ** _integer_: целобројна вредност
 ** _string_: стринг вредност
 ** _color_: боја
-// TRANSLATION MISSING
-** _enum_: list of string values (stored as integer internally)
+** _enum_: листа стринг вредности (интерно се чува као цео број)
 * _description_: опис опције
-// TRANSLATION MISSING
-* _string_values_: вредности као стринг (раздвојене са `+|+`) (optional, required
-  for type _enum_)
+* _string_values_: вредности као стринг (раздвојене са `+|+`) (није обавезно, потребно је
+  за тип _enum_)
 * _min_: минимална вредност (за _integer_ тип)
 * _max_: максимална вредност (за _integer_ тип)
 * _default_value_: подразумевана вредност опције (користи се када се опција ресетује)
@@ -7168,8 +7166,7 @@ int weechat_config_option_set (struct t_config_option *option,
 * _value_: нова вредност опције, могуће су и специјалне вредности које зависе од типа опције:
 ** _boolean_:
 *** `toggle`: пребацује текућу вредност
-// TRANSLATION MISSING
-** _integer_, _color_ or _enum_:
+** _integer_, _color_ или _enum_:
 *** `++N`: додаје `N` (било који цео број) на текућу вредност
 *** `--N`: одузима `N` (било који цео број) од текуће вредности
 * _run_callback_: 1 за позив change функције повратног позива ако је вредност измењена, у супротном 0
@@ -7677,8 +7674,7 @@ int weechat_config_integer (struct t_config_option *option);
 * _integer_: целобројна вредност опције
 * _string_: 0
 * _color_: индекс боје
-// TRANSLATION MISSING
-* _enum_: integer value of option (index of enum value)
+* _enum_: целобројна вредност опције (индекс enum вредности)
 
 C пример:
 
@@ -7721,8 +7717,7 @@ int weechat_config_integer_default (struct t_config_option *option);
 * _integer_: подразумевана целобројна вредност опције
 * _string_: 0
 * _color_: подразумевани индекс боје
-// TRANSLATION MISSING
-* _enum_: default integer value of option (index of enum value)
+* _enum_: подразумевана целобројна вредност опције (индекс enum вредности)
 
 C пример:
 
@@ -7765,8 +7760,7 @@ const char *weechat_config_string (struct t_config_option *option);
 * _integer_: NULL
 * _string_: стринг вредност опције
 * _color_: име боје
-// TRANSLATION MISSING
-* _enum_: string value of option
+* _enum_: стринг вредност опције
 
 C пример:
 
@@ -7809,8 +7803,7 @@ const char *weechat_config_string_default (struct t_config_option *option);
 * _integer_: NULL
 * _string_: подразумевана стринг вредност опције
 * _color_: име подразумеване боје
-// TRANSLATION MISSING
-* _enum_: default string value of option
+* _enum_: подразумевана стринг вредност опције
 
 C пример:
 
@@ -7918,33 +7911,32 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_color_default(option)
 ----
 
-// TRANSLATION MISSING
 ==== config_enum
 
 _WeeChat ≥ 4.1.0._
 
-Return enum value of option, as integer.
+Враћа enum вредност опције, као цео број.
 
-Prototype:
+Прототип:
 
 [source,c]
 ----
 int weechat_config_enum (struct t_config_option *option);
 ----
 
-Arguments:
+Аргументи:
 
-* _option_: option pointer
+* _option_: показивач на опцију
 
-Return value, depending on the option type:
+Враћена вредност, у зависности од типа опције:
 
-* _boolean_: boolean value of option (0 or 1)
-* _integer_: integer value of option
+* _boolean_: логичка вредност опције (0 или 1)
+* _integer_: целобројна вредност опције
 * _string_: 0
-* _color_: color index
-* _enum_: integer value of option (index of enum value)
+* _color_: индекс боје
+* _enum_: целобројна вредност опције (индекс enum вредности)
 
-C example:
+C пример:
 
 [source,c]
 ----
@@ -7952,45 +7944,44 @@ struct t_config_option *option = weechat_config_get ("plugin.section.option");
 int value = weechat_config_enum (option);
 ----
 
-Script (Python):
+Скрипта (Python):
 
 [source,python]
 ----
-# prototype
+# прототип
 def config_enum(option: str) -> int: ...
 
-# example
+# пример
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum(option)
 ----
 
-// TRANSLATION MISSING
 ==== config_enum_default
 
 _WeeChat ≥ 4.1.0._
 
-Return default enum value of option, as integer.
+Враћа подразумевану enum вредност опције, као цео број.
 
-Prototype:
+Прототип:
 
 [source,c]
 ----
 int weechat_config_enum_default (struct t_config_option *option);
 ----
 
-Arguments:
+Аргументи:
 
-* _option_: option pointer
+* _option_: показивач на опцију
 
-Return value, depending on the option type:
+Повратна вредност, у зависности од типа опције:
 
-* _boolean_: default boolean value of option (0 or 1)
-* _integer_: default integer value of option
+* _boolean_: подразумевана логичка вредност опције (0 или 1)
+* _integer_: подразумевана целобројна вредност опције
 * _string_: 0
-* _color_: default color index
-* _enum_: integer value of option (index of enum value)
+* _color_: подразумевани индекс боје
+* _enum_: подразумевана целобројна вредност опције (индекс enum вредности)
 
-C example:
+C пример:
 
 [source,c]
 ----
@@ -7998,14 +7989,14 @@ struct t_config_option *option = weechat_config_get ("plugin.section.option");
 int value = weechat_config_enum_default (option);
 ----
 
-Script (Python):
+Скрипта (Python):
 
 [source,python]
 ----
-# prototype
+# прототип
 def config_enum_default(option: str) -> int: ...
 
-# example
+# пример
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum_default(option)
 ----
@@ -12070,25 +12061,22 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
   (да стане у 512 подразумевано).
 | Нови садржај поруке.
 
-// TRANSLATION MISSING
 | [[hook_modifier_relay_client_irc_in]] relay_client_irc_in | 4.0.0
-| String with relay client pointer (eg: "0x1234abcd")
-| Content of message received from relay IRC client.
-| New content of message.
+| Стринг са показивачем на релеј клијента (нпр. "0x1234abcd")
+| Садржај поруке примљене од релеј IRC клијента.
+| Нови садржај поруке.
 
-// TRANSLATION MISSING
 | [[hook_modifier_relay_client_irc_out1]] relay_client_irc_out1 | 4.0.0
-| String with relay client pointer (eg: "0x1234abcd")
-| Content of message about to be sent to relay IRC client before automatic split
-  (to fit in 512 bytes by default).
-| New content of message.
+| Стринг са показивачем на релеј клијента (нпр. "0x1234abcd")
+| Садржај поруке која треба да се пошаље релеј IRC клијенту пре аутоматске поделе
+  (тако да стане у подразумевано 512 бајтова).
+| Нови садржај поруке.
 
-// TRANSLATION MISSING
 | [[hook_modifier_relay_client_irc_out]] relay_client_irc_out | 4.0.0
-| String with relay client pointer (eg: "0x1234abcd")
-| Content of message about to be sent to relay IRC client after automatic split
-  (to fit in 512 bytes by default).
-| New content of message.
+| Стринг са показивачем на релеј клијента (нпр. "0x1234abcd")
+| Садржај поруке која треба да се пошаље релеј IRC клијенту након аутоматске поделе
+  (тако да стане у подразумевано 512 бајтова).
+| Нови садржај поруке.
 
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
 | Стринг са показивачем на прозор (нпр: "0x1234abcd")
@@ -12697,23 +12685,19 @@ struct t_hook *weechat_hook_focus (const char *area,
 | _chat_focused_line | Линија на (x, y) _(WeeChat ≥ 4.0.0)_.
 | "Здраво свима!" | ""
 
-// TRANSLATION MISSING
-| _chat_focused_line_bol | Text from beginning of line to (x-1, y) _(WeeChat ≥ 4.1.0)_.
-| "Hello" | ""
+| _chat_focused_line_bol | Текст од почетка линије до (x-1, y) _(WeeChat ≥ 4.1.0)_.
+| "Здраво" | ""
 
-// TRANSLATION MISSING
-| _chat_focused_line_eol | Text from (x, y) to end of line _(WeeChat ≥ 4.1.0)_.
-| "llo world!" | ""
+| _chat_focused_line_eol | Текст од (x, y) до краја линије _(WeeChat ≥ 4.1.0)_.
+| "аво свима!" | ""
 
 | _chat_word | Реч на (x,y).
 | "Здраво" | ""
 
-// TRANSLATION MISSING
-| _chat_bol | Text from beginning of message to (x-1, y).
+| _chat_bol | Текст од почетка поруке до (x-1, y).
 | "Зд" | ""
 
-// TRANSLATION MISSING
-| _chat_eol | Text from (x, y) to the end of message.
+| _chat_eol | Текст од (x, y) до краја поруке.
 | "раво свете!" | ""
 
 | _bar_name | Име траке.
