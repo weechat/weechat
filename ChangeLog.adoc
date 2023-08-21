@@ -47,6 +47,7 @@ Bug fixes::
   * irc: add missing tags on multiline messages (issue #1987)
   * irc: fix redirection of command `/list` when the reply doesn't start with message 321 (start of /list)
   * irc: fix wrong time displayed for CTCP messages received from self nick (issue #2000)
+  * logger: remove trailing empty line in display of backlog (issue #2002)
   * perl: fix display of non-ASCII chars after load of a script with Perl >= 5.38 (issue #1996)
   * relay: synchronize nick modes with IRC client upon connection (issue #1984)
   * script: fix cursor position after `/script list -i` or `/script list -il`
