@@ -20,6 +20,7 @@ Bug fixes::
   * irc: add missing tags on multiline messages (issue #1987)
   * irc: fix redirection of command `/list` when the reply doesn't start with message 321 (start of /list)
   * irc: fix wrong time displayed for CTCP messages received from self nick (issue #2000)
+  * logger: remove trailing empty line in display of backlog (issue #2002)
   * perl: fix display of non-ASCII chars after load of a script with Perl >= 5.38 (issue #1996)
   * scripts: fix function string_parse_size on 32-bit systems (python and ruby) (issue #1999)
   * xfer: fix conversion of string to IPv4 on 32-bit systems (issue #1999)

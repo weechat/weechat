@@ -79,21 +79,24 @@ TEST(LoggerTail, LoggerTailLastEol)
 
 TEST(LoggerTail, LoggerTailFile)
 {
-    char *filename;
-    FILE *file;
-    const char *content = "line 1\nline 2\nline 3";
+    const char *content_3_lines = "line 1\nline 2\nline 3\n";
+    const char *content_5_lines = "line 1\nline 2\n\nline 3\n\n";
+    char *filename, line[4096];
     struct t_arraylist *lines;
-
-    /* write a test file */
-    filename = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
-                                      NULL, NULL, NULL);
-    file = fopen (filename, "w");
-    fwrite (content, 1, strlen (content), file);
-    fflush (file);
-    fclose (file);
+    FILE *file;
+    int i;
 
     POINTERS_EQUAL(NULL, logger_tail_file (NULL, 0));
     POINTERS_EQUAL(NULL, logger_tail_file (NULL, 1));
+
+    /* write a small test file */
+    filename = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
+                                      NULL, NULL, NULL);
+    file = fopen (filename, "w");
+    fwrite (content_3_lines, 1, strlen (content_3_lines), file);
+    fflush (file);
+    fclose (file);
+
     POINTERS_EQUAL(NULL, logger_tail_file (filename, 0));
 
     lines = logger_tail_file (filename, 1);
@@ -123,6 +126,221 @@ TEST(LoggerTail, LoggerTailFile)
     STRCMP_EQUAL("line 1", (const char *)arraylist_get (lines, 0));
     STRCMP_EQUAL("line 2", (const char *)arraylist_get (lines, 1));
     STRCMP_EQUAL("line 3", (const char *)arraylist_get (lines, 2));
+    arraylist_free (lines);
+
+    unlink (filename);
+    free (filename);
+
+    /* write a small test file, with empty lines */
+    filename = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
+                                      NULL, NULL, NULL);
+    file = fopen (filename, "w");
+    fwrite (content_5_lines, 1, strlen (content_5_lines), file);
+    fflush (file);
+    fclose (file);
+
+    POINTERS_EQUAL(NULL, logger_tail_file (filename, 0));
+
+    lines = logger_tail_file (filename, 1);
+    CHECK(lines);
+    LONGS_EQUAL(1, arraylist_size (lines));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 0));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 2);
+    CHECK(lines);
+    LONGS_EQUAL(2, arraylist_size (lines));
+    STRCMP_EQUAL("line 3", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 1));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 3);
+    CHECK(lines);
+    LONGS_EQUAL(3, arraylist_size (lines));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("line 3", (const char *)arraylist_get (lines, 1));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 2));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 4);
+    CHECK(lines);
+    LONGS_EQUAL(4, arraylist_size (lines));
+    STRCMP_EQUAL("line 2", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 1));
+    STRCMP_EQUAL("line 3", (const char *)arraylist_get (lines, 2));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 3));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 5);
+    CHECK(lines);
+    LONGS_EQUAL(5, arraylist_size (lines));
+    STRCMP_EQUAL("line 1", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("line 2", (const char *)arraylist_get (lines, 1));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 2));
+    STRCMP_EQUAL("line 3", (const char *)arraylist_get (lines, 3));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 4));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 6);
+    CHECK(lines);
+    LONGS_EQUAL(5, arraylist_size (lines));
+    STRCMP_EQUAL("line 1", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("line 2", (const char *)arraylist_get (lines, 1));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 2));
+    STRCMP_EQUAL("line 3", (const char *)arraylist_get (lines, 3));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 4));
+    arraylist_free (lines);
+
+    unlink (filename);
+    free (filename);
+
+    /* write a bigger test file */
+    filename = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
+                                      NULL, NULL, NULL);
+    file = fopen (filename, "w");
+    for (i = 0; i < 1000; i++)
+    {
+        snprintf (line, sizeof (line), "this is a test, line %d\n", i + 1);
+        fwrite (line, 1, strlen (line), file);
+    }
+    fflush (file);
+    fclose (file);
+
+    POINTERS_EQUAL(NULL, logger_tail_file (filename, 0));
+
+    lines = logger_tail_file (filename, 1);
+    CHECK(lines);
+    LONGS_EQUAL(1, arraylist_size (lines));
+    STRCMP_EQUAL("this is a test, line 1000", (const char *)arraylist_get (lines, 0));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 2);
+    CHECK(lines);
+    LONGS_EQUAL(2, arraylist_size (lines));
+    STRCMP_EQUAL("this is a test, line 999", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("this is a test, line 1000", (const char *)arraylist_get (lines, 1));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 3);
+    CHECK(lines);
+    LONGS_EQUAL(3, arraylist_size (lines));
+    STRCMP_EQUAL("this is a test, line 998", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("this is a test, line 999", (const char *)arraylist_get (lines, 1));
+    STRCMP_EQUAL("this is a test, line 1000", (const char *)arraylist_get (lines, 2));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 4);
+    CHECK(lines);
+    LONGS_EQUAL(4, arraylist_size (lines));
+    STRCMP_EQUAL("this is a test, line 997", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("this is a test, line 998", (const char *)arraylist_get (lines, 1));
+    STRCMP_EQUAL("this is a test, line 999", (const char *)arraylist_get (lines, 2));
+    STRCMP_EQUAL("this is a test, line 1000", (const char *)arraylist_get (lines, 3));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 1000);
+    CHECK(lines);
+    LONGS_EQUAL(1000, arraylist_size (lines));
+    STRCMP_EQUAL("this is a test, line 1", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("this is a test, line 2", (const char *)arraylist_get (lines, 1));
+    STRCMP_EQUAL("this is a test, line 3", (const char *)arraylist_get (lines, 2));
+    STRCMP_EQUAL("this is a test, line 4", (const char *)arraylist_get (lines, 3));
+    STRCMP_EQUAL("this is a test, line 998", (const char *)arraylist_get (lines, 997));
+    STRCMP_EQUAL("this is a test, line 999", (const char *)arraylist_get (lines, 998));
+    STRCMP_EQUAL("this is a test, line 1000", (const char *)arraylist_get (lines, 999));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 2000);
+    CHECK(lines);
+    LONGS_EQUAL(1000, arraylist_size (lines));
+    STRCMP_EQUAL("this is a test, line 1", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("this is a test, line 2", (const char *)arraylist_get (lines, 1));
+    STRCMP_EQUAL("this is a test, line 3", (const char *)arraylist_get (lines, 2));
+    STRCMP_EQUAL("this is a test, line 4", (const char *)arraylist_get (lines, 3));
+    STRCMP_EQUAL("this is a test, line 998", (const char *)arraylist_get (lines, 997));
+    STRCMP_EQUAL("this is a test, line 999", (const char *)arraylist_get (lines, 998));
+    STRCMP_EQUAL("this is a test, line 1000", (const char *)arraylist_get (lines, 999));
+    arraylist_free (lines);
+
+    unlink (filename);
+    free (filename);
+
+    /* write a bigger test file, with empty lines */
+    filename = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
+                                      NULL, NULL, NULL);
+    file = fopen (filename, "w");
+    for (i = 0; i < 1000; i++)
+    {
+        snprintf (line, sizeof (line), "this is a test, line %d\n\n", i + 1);
+        fwrite (line, 1, strlen (line), file);
+    }
+    fflush (file);
+    fclose (file);
+
+    POINTERS_EQUAL(NULL, logger_tail_file (filename, 0));
+
+    lines = logger_tail_file (filename, 1);
+    CHECK(lines);
+    LONGS_EQUAL(1, arraylist_size (lines));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 0));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 2);
+    CHECK(lines);
+    LONGS_EQUAL(2, arraylist_size (lines));
+    STRCMP_EQUAL("this is a test, line 1000", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 1));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 3);
+    CHECK(lines);
+    LONGS_EQUAL(3, arraylist_size (lines));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("this is a test, line 1000", (const char *)arraylist_get (lines, 1));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 2));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 4);
+    CHECK(lines);
+    LONGS_EQUAL(4, arraylist_size (lines));
+    STRCMP_EQUAL("this is a test, line 999", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 1));
+    STRCMP_EQUAL("this is a test, line 1000", (const char *)arraylist_get (lines, 2));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 3));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 2000);
+    CHECK(lines);
+    LONGS_EQUAL(2000, arraylist_size (lines));
+    STRCMP_EQUAL("this is a test, line 1", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 1));
+    STRCMP_EQUAL("this is a test, line 2", (const char *)arraylist_get (lines, 2));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 3));
+    STRCMP_EQUAL("this is a test, line 3", (const char *)arraylist_get (lines, 4));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 5));
+    STRCMP_EQUAL("this is a test, line 998", (const char *)arraylist_get (lines, 1994));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 1995));
+    STRCMP_EQUAL("this is a test, line 999", (const char *)arraylist_get (lines, 1996));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 1997));
+    STRCMP_EQUAL("this is a test, line 1000", (const char *)arraylist_get (lines, 1998));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 1999));
+    arraylist_free (lines);
+
+    lines = logger_tail_file (filename, 4000);
+    CHECK(lines);
+    LONGS_EQUAL(2000, arraylist_size (lines));
+    STRCMP_EQUAL("this is a test, line 1", (const char *)arraylist_get (lines, 0));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 1));
+    STRCMP_EQUAL("this is a test, line 2", (const char *)arraylist_get (lines, 2));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 3));
+    STRCMP_EQUAL("this is a test, line 3", (const char *)arraylist_get (lines, 4));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 5));
+    STRCMP_EQUAL("this is a test, line 998", (const char *)arraylist_get (lines, 1994));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 1995));
+    STRCMP_EQUAL("this is a test, line 999", (const char *)arraylist_get (lines, 1996));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 1997));
+    STRCMP_EQUAL("this is a test, line 1000", (const char *)arraylist_get (lines, 1998));
+    STRCMP_EQUAL("", (const char *)arraylist_get (lines, 1999));
     arraylist_free (lines);
 
     unlink (filename);
