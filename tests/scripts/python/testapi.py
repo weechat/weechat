@@ -419,7 +419,7 @@ def test_display():
     weechat.prnt_date_tags('', 946681200, 'tag1,tag2',
                            '## test print_date_tags core buffer')
     weechat.prnt_date_tags('', 2146383600, 'tag1,tag2',
-                           '## test print_date_tags core buffer, 2038-01-06 09:40:00')
+                           '## test print_date_tags core buffer, January, 6th 2038')
     hdata_buffer = weechat.hdata_get('buffer')
     hdata_lines = weechat.hdata_get('lines')
     hdata_line = weechat.hdata_get('line')
@@ -445,7 +445,7 @@ def test_display():
     weechat.prnt_y_date_tags(buffer, 0, 946681200, 'tag1,tag2',
                              '## test print_y_date_tags free buffer')
     weechat.prnt_y_date_tags(buffer, 1, 2146383600, 'tag1,tag2',
-                             '## test print_y_date_tags free buffer, 2038-01-06 09:40:00')
+                             '## test print_y_date_tags free buffer, January, 6th 2038')
     weechat.buffer_close(buffer)
 
 
