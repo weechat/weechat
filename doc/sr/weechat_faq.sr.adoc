@@ -543,8 +543,7 @@ UXTerm*metaSendsEscape: true
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
 ----
 
-// TRANSLATION MISSING
-For an easy jump to buffers, you can also install the _go.py_ script:
+За једноставно скакање на бафере, можете такође да инсталирате и _go.py_ скрипту:
 
 ----
 /script install go.py

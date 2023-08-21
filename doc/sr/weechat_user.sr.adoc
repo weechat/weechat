@@ -1246,9 +1246,8 @@ _прозор_ је површина екрана која приказује б
 
 | filter
 | било који стринг
-// TRANSLATION MISSING
-| Filter defined on some buffers like `/fset`, `/list` (irc), `/server raw` (irc)
-  and `/script`.
+| Филтер дефинисан у неким баферима као што су `/fset`, `/list` (irc), `/server raw` (irc)
+  и `/script`.
 
 | host
 | било који стринг
@@ -1354,21 +1353,19 @@ include::{autogendir}/autogen_user_commands.sr.adoc[tag=buflist_commands]
 
 include::{autogendir}/autogen_user_options.sr.adoc[tag=buflist_options]
 
-// TRANSLATION MISSING
 [[cursor_mode]]
-=== Cursor mode
+=== Режим курсора
 
-The cursor mode allows you to move freely the cursor anywhere on screen, in chat
-area and bars, and lets you perform actions at the given position. +
-You can enter in cursor mode either with the command `/cursor` or with a mouse
-middle click (mouse must have been enabled with key kbd:[Alt+m] or command
-`/mouse enable`).
+Режим курсора вам омогућава да курсор слободно померате по целом екрану, у чет
+површини и тракама, тако да на одређеној опцији можете да обављате акције. +
+У режим курсора можете да уђете било командом `/cursor`, било средњим кликом
+(потребно је да миш буде укључен тастером kbd:[Alt+m] или командом `/mouse enable`).
 
-Typical use is to quote messages (chat area) or interact with nicks (nicklist bar).
+Типична употреба је за цитирање порука (чет површина) или интеракција са надимцима (трака листе надимака).
 
-See command <<command_weechat_cursor,/cursor>> and
-<<key_bindings_cursor_context,key bindings in cursor context>> for the list
-of actions you can perform in this mode.
+За листу акција које можете да извршите у овом режим погледајте погледајте
+команду <<command_weechat_cursor,/cursor>> и
+<<key_bindings_cursor_context,везивања тастера у контексту курсора.>>
 
 [[key_bindings]]
 == Тастерске пречице
@@ -1585,16 +1582,14 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Заустављање претраге на текућој позицији. | `+/input search_stop_here+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+q]   | Stop search and reset scroll to pre-text search state. | `+/input search_stop+`
+| kbd:[Ctrl+q]   | Заустављање претраге и ресетовање скрола на стање пре почетка претраге текста. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]
 === Контекст курсора
 
-// TRANSLATION MISSING
 Ови тастери се користе у „cursor” контексту (слободно померање курсора по екрану),
-see <<cursor_mode,Cursor mode>>.
+погледајте <<cursor_mode,Режим курсора>>.
 
 [width="100%", cols="^.^3,^.^2,.^7,.^7", options="header"]
 |===
@@ -1603,18 +1598,12 @@ see <<cursor_mode,Cursor mode>>.
 | kbd:[↓]           | -              | Помера курсор једну линију наниже. | `+/cursor move down+`
 | kbd:[←]           | -              | Помера курсор једну колони у лево. | `+/cursor move left+`
 | kbd:[→]           | -              | Помера курсор једну колону у десно. | `+/cursor move right+`
-// TRANSLATION MISSING
-| kbd:[Alt+↑]       | -              | Move cursor to the first line of the area. | `+/cursor move edge_top+`
-// TRANSLATION MISSING
-| kbd:[Alt+↓]       | -              | Move cursor to the last line of the area. | `+/cursor move edge_bottom+`
-// TRANSLATION MISSING
-| kbd:[Alt+←]       | -              | Move cursor to the first column of the area. | `+/cursor move edge_left+`
-// TRANSLATION MISSING
-| kbd:[Alt+→]       | -              | Move cursor to the last column of the area. | `+/cursor move edge_right+`
-// TRANSLATION MISSING
-| kbd:[Alt+Home]    | -              | Move cursor to the top left corner of the area. | `+/cursor move top_left+`
-// TRANSLATION MISSING
-| kbd:[Alt+End]     | -              | Move cursor to the bottom right corner of the area. | `+/cursor move bottom_right+`
+| kbd:[Alt+↑]       | -              | Помера курсор на прву линију површине. | `+/cursor move edge_top+`
+| kbd:[Alt+↓]       | -              | Помера курсор на последњу линију површине. | `+/cursor move edge_bottom+`
+| kbd:[Alt+←]       | -              | Помера курсор на прву колону површине. | `+/cursor move edge_left+`
+| kbd:[Alt+→]       | -              | Помера курсор на последњу колону површине. | `+/cursor move edge_right+`
+| kbd:[Alt+Home]    | -              | Помера курсор на горњи леви угао површине. | `+/cursor move top_left+`
+| kbd:[Alt+End]     | -              | Помера курсор на доњи десни угао површине. | `+/cursor move bottom_right+`
 | kbd:[Alt+Shift+↑] | -              | Помера курсор једну површину навише. | `+/cursor move area_up+`
 | kbd:[Alt+Shift+↓] | -              | Помера курсор једну површину наниже. | `+/cursor move area_down+`
 | kbd:[Alt+Shift+←] | -              | Помера курсор једну површину у лево. | `+/cursor move area_left+`
@@ -1655,23 +1644,17 @@ see <<cursor_mode,Cursor mode>>.
 | kbd:[▼]             | -             | чет: fset бафер    | Помера за пет линија наниже у fset баферу. | `+/fset -down 5+`
 | kbd:[■ □ □]         | -             | чет: fset бафер    | Бира линију у fset баферу. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
 | kbd:[□ □ ■]         | -             | чет: fset бафер    | Пребацује логичку вредност (on/off) или уређује вредност опције. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| kbd:[□ □ ■]         | лево          | чет: fset бафер    | Умањује вредност за цео број/боју/enum, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| kbd:[□ □ ■]         | десно         | чет: fset бафер    | Увећава вредност за цео број/боју/enum, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]         | лево          | чет: fset бафер    | Умањује вредност за цео број/боју/набрајање, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]         | десно         | чет: fset бафер    | Увећава вредност за цео број/боју/набрајање, поставља/надовезује вредност за остале типове. | `+hsignal:fset_mouse+`
 | kbd:[□ □ ■]         | горе / доле   | чет: fset бафер    | Маркира/уклања маркер са више опција. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| kbd:[▲]             | -             | chat: /list buffer | Move five lines up in /list buffer. | `+/list -up 5+`
-// TRANSLATION MISSING
-| kbd:[▼]             | -             | chat: /list buffer | Move five lines down in /list buffer. | `+/list -down 5+`
-// TRANSLATION MISSING
-| kbd:[■ □ □]         | -             | chat: /list buffer | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
-// TRANSLATION MISSING
-| kbd:[□ □ ■]         | -             | chat: /list buffer | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
+| kbd:[▲]             | -             | чет: /list бафер   | Помера за пет линија навише у /list баферу. | `+/list -up 5+`
+| kbd:[▼]             | -             | чет: /list бафер   | Помера за пет линија наниже у /list баферу. | `+/list -down 5+`
+| kbd:[■ □ □]         | -             | чет: /list бафер   | Бира линију у /list баферу. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+| kbd:[□ □ ■]         | -             | чет: /list бафер   | Приступа IRC каналу на изабраној линији. | `+hsignal:irc_list_mouse+`
 | kbd:[▲]             | -             | чет: script бафер  | Помера за пет линија навише у script баферу. | `+/script up 5+`
 | kbd:[▼]             | -             | чет: script бафер  | Помера за пет линија наниже у script баферу. | `+/script down 5+`
-| kbd:[■ □ □]         | -             | chat: script бафер | Бира линију у script баферу. | `+/script go ${_chat_line_y}+`
-| kbd:[□ □ ■]         | -             | chat: script бафер | Инсталира/уклања скрипту. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| kbd:[■ □ □]         | -             | чет: script бафер  | Бира линију у script баферу. | `+/script go ${_chat_line_y}+`
+| kbd:[□ □ ■]         | -             | чет: script бафер  | Инсталира/уклања скрипту. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
 | kbd:[■ □ □]         | горе / лево   | листа бафера       | Помера бафер на нижи број. | Signal `+buflist_mouse+`.
 | kbd:[■ □ □]         | доле / десно  | листа бафера       | Помера бафер на виши број. | Signal `+buflist_mouse+`.
 | kbd:[■ □ □]         | -             | листа бафера       | Пребацивање на бафер (претходно посећени багер ако је бафер текући). | Signal `+buflist_mouse+`.
@@ -1694,14 +1677,13 @@ see <<cursor_mode,Cursor mode>>.
 |===
 
 [NOTE]
-// TRANSLATION MISSING
-^(1)^ Buttons: +
-kbd:[◼ □ □]: click on left button +
-kbd:[□ ◼ □]: click on middle button +
-kbd:[□ □ ◼]: click on right button +
-Wheel: +
-kbd:[▲]: wheel up +
-kbd:[▼]: wheel down
+^(1)^ Тастери: +
+kbd:[◼ □ □]: клик на леви тастер +
+kbd:[□ ◼ □]: клик на средњи тастер +
+kbd:[□ □ ◼]: клик на десни тастер +
+Точкић: +
+kbd:[▲]: точкић горе +
+kbd:[▼]: точкић доле
 
 [[key_bindings_fset_buffer]]
 === Fset бафер
@@ -1720,10 +1702,8 @@ kbd:[▼]: wheel down
 | kbd:[F11]                | `pass:[<]`   | Скролује хоризонтално у лево. | `+/fset -left+`
 | kbd:[F12]                | `pass:[>]`   | Скролује хоризонтално у десно. | `+/fset -right+`
 | kbd:[Alt+Space]          | `t`          | Пребацује стање логичке вредности. | `+/fset -toggle+`
-// TRANSLATION MISSING
-| kbd:[Alt+-]              | `-`          | Одузима 1 од вредности за цео број/боју/enum, поставља вредност за остале типове. | `+/fset -add -1+`
-// TRANSLATION MISSING
-| kbd:[Alt++]              | `+`          | Додаје 1 на вредност за цео број/боју/enum, надовезује вредност за остале типове. | `+/fset -add 1+`
+| kbd:[Alt+-]              | `-`          | Одузима 1 од вредности за цео број/боју/набрајање, поставља вредност за остале типове. | `+/fset -add -1+`
+| kbd:[Alt++]              | `+`          | Додаје 1 на вредност за цео број/боју/набрајање, надовезује вредност за остале типове. | `+/fset -add 1+`
 | kbd:[Alt+f], kbd:[Alt+r] | `r`          | Ресетује вредност. | `+/fset -reset+`
 | kbd:[Alt+f], kbd:[Alt+u] | `u`          | Поставља да је вредност празна. | `+/fset -unset+`
 | kbd:[Alt+Enter]          | `s`          | Поставља вредност. | `+/fset -set+`
@@ -1751,11 +1731,10 @@ kbd:[▼]: wheel down
 [NOTE]
 ^(1)^ Акција мора да се унесе као унос у командну линију, након чега се притисне kbd:[Ентер].
 
-// TRANSLATION MISSING
 [[key_bindings_irc_list_buffer]]
-=== IRC /list buffer
+=== IRC /list бафер
 
-These keys and actions are used on the IRC /list buffer (see command <<command_irc_list,/list>>).
+Следећи тастери и акције се користе у IRC /list баферу (погледајте команду <<command_irc_list,/list>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
@@ -1768,18 +1747,18 @@ These keys and actions are used on the IRC /list buffer (see command <<command_i
 | kbd:[Alt+End]  | `pass:[>>]`  | Скок на последњу линију. | `+/list -go end+`
 | kbd:[F11]      | `pass:[<]`   | Скролује хоризонтално у лево. | `+/list -left+`
 | kbd:[F12]      | `pass:[>]`   | Скролује хоризонтално у десно. | `+/list -right+`
-| kbd:[Ctrl+j]   | `j`          | Join IRC channel on selected line. | `+/list -join+`
-|                | `xxx`        | Show only channels with "xxx" in name or topic (case insensitive). |
-|                | `n:xxx`      | Show only channels with "xxx" in name (case insensitive). |
-|                | `t:xxx`      | Show only channels with "xxx" in topic (case insensitive). |
-|                | `u:n`        | Show only channels with at least "n" users. |
-|                | `u:>n`       | Show only channels with more than "n" users. |
-|                | `u:<n`       | Show only channels with less than "n" users. |
-|                | `c:xxx`      | Show only channels matching the evaluated condition "xxx", using following variables: name, name2, users, topic. |
-|                | `s:x,y`      | Sort channels by fields x,y (see command <<command_irc_list,/list>>). |
-|                | `s:`         | Reset sort to its default value (see command <<command_irc_list,/list>>). |
-|                | `$`          | Refresh list (run again command <<command_irc_list,/list>>). |
-|                | `q`          | Close buffer. | `+/buffer close+`
+| kbd:[Ctrl+j]   | `j`          | Приступа IRC каналу на изабраној линији. | `+/list -join+`
+|                | `xxx`        | Приказује само канале са „xxx” у имену или теми (величина слова се не разликује). |
+|                | `n:xxx`      | Приказује само канале са „xxx” у имену (величина слова се не разликује). |
+|                | `t:xxx`      | Приказује само канале са „xxx” у теми (величина слова се не разликује). |
+|                | `u:n`        | Приказује само канале са барем "n" users. |
+|                | `u:>n`       | Приказује само канале са више од „n” корисника. |
+|                | `u:<n`       | Приказује само канале са мање од „n” корисника. |
+|                | `c:xxx`      | Приказује само канале који задовољавају израчунати услов „xxx”, користећи следеће променљиве: name, name2, users, topic. |
+|                | `s:x,y`      | Сортира канале по пољима x,y (погледајте команду <<command_irc_list,/list>>). |
+|                | `s:`         | Ресетује сортирање на подразумевану вредност (погледајте команду <<command_irc_list,/list>>). |
+|                | `$`          | Освежава листу (поново извршава команду <<command_irc_list,/list>>). |
+|                | `q`          | Затвара бафер. | `+/buffer close+`
 |===
 
 [NOTE]
@@ -3888,14 +3867,12 @@ CTCP може да се прилагоди само за један сервер
 /unset irc.ctcp.version
 ----
 
-// TRANSLATION MISSING
-The CTCP replies are evaluated (see command <<command_weechat_eval,/eval>>) and
-the following extra variables are available:
+CTCP одговори се израчунавају (погледајте команду <<command_weechat_eval,/eval>>) и
+доступне су следеће додатне променљиве:
 
 [width="100%", cols="2,4,8", options="header"]
 |===
-// TRANSLATION MISSING
-| Variable           | Опис                                | Вредност/пример
+| Променљива         | Опис                                | Вредност/пример
 | `+${clientinfo}+`  | Листа подржаних CTCP                | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | `+${version}+`     | Верзија програма WeeChat            | `+4.1.0-dev+`
 | `+${versiongit}+`  | WeeChat верзија + Git верзија ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
@@ -3904,16 +3881,15 @@ the following extra variables are available:
 | `+${osinfo}+`      | Инфо о ОС                           | `+Linux 5.10.0-23-amd64 / x86_64+`
 | `+${site}+`        | WeeChat вебсајт                     | `+https://weechat.org/+`
 | `+${download}+`    | WeeChat сајт, страна за преузимање  | `+https://weechat.org/download/+`
-| `+${time}+`        | Текући датум/време                  | `+Sat, 08 Jul 2023 21:11:19 +0200+`
-| `+${username}+`    | Корисничко име на IRC серверу       | `+name+`
-| `+${realname}+`    | Реално име на IRC серверу           | `+John Doe+`
+| `+${time}+`        | Текући датум/време                  | `+Суб, 08 јул 2023 21:11:19 +0200+`
+| `+${username}+`    | Корисничко име на IRC серверу       | `+име+`
+| `+${realname}+`    | Реално име на IRC серверу           | `+Пера Перић+`
 |===
 
 [NOTE]
 ^(1)^ Git верзија је излаз команде `git describe`. Позната је само ако је програм WeeChat компајлиран унутар Git репозиторијума и ако је Git инсталиран.
 
-// TRANSLATION MISSING
-The default CTCP replies are:
+Подразумевани CTCP осговори су:
 
 [width="100%", cols="2,4,8", options="header"]
 |===
@@ -3921,7 +3897,7 @@ The default CTCP replies are:
 | CLIENTINFO | `+${clientinfo}+`             | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
 | FINGER     | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
 | SOURCE     | `+${download}+`               | `+https://weechat.org/download/+`
-| TIME       | `+${time}+`                   | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| TIME       | `+${time}+`                   | `+Суб, 08 Јул 2023 21:11:19 +0200+`
 | USERINFO   | `+${username} (${realname})+` | `+име (Пера Перић)+`
 | VERSION    | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
 |===
@@ -4430,13 +4406,12 @@ FIFO пајп се налази у WeeChat директоријуму за вр�
   *овде иде текст или команда
 ....
 
-// TRANSLATION MISSING
-Backslashes can be interpreted with this format, where `*` is replaced by `\`,
-allowing for example to send multiline messages:
+Овим форматом могу да се интерпретирају обрнуте косе црте, где је `*` замењено са `\`,
+чиме се омогућава слање вишелинијских порука, на пример:
 
 ....
-  plugin.buffer \text or command here
-  \text or command here
+  plugin.buffer \овде иде текст или команда
+  \овде иде текст или команда
 ....
 
 Неки примери:
@@ -4453,12 +4428,11 @@ $ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_1
 $ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
-// TRANSLATION MISSING
-* Send a multiline message on IRC #test channel, if capability "draft/multiline"
-  is enabled on the ergo server:
+* Слање вишелинијске поруке на IRC канал #test, у случају да је могуност „draft/multiline”
+  укључена на ergo серверу:
 
 ----
-$ echo 'irc.ergo.#test \hello\n...on two lines!' >/run/user/1000/weechat/weechat_fifo_12345
+$ echo 'irc.ergo.#test \здраво\n...на две линије!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Слање поруке у текући бафер:
