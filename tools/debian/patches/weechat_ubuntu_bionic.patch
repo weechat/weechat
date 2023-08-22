@@ -6,19 +6,21 @@ index 48082f72f..b4de39476 100644
 -12
 +11
 diff --git a/debian-devel/control b/debian-devel/control
-index 1abbda247..41addd80b 100644
+index 4229b00f6..41addd80b 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
-@@ -5,7 +5,7 @@ Maintainer: Sébastien Helleu <flashcode@flashtux.org>
+@@ -5,17 +5,17 @@ Maintainer: Sébastien Helleu <flashcode@flashtux.org>
  Build-Depends:
      asciidoctor (>= 1.5.4),
      ruby-pygments.rb,
 -    debhelper (>= 12),
 +    debhelper (>= 11),
      cmake, pkg-config,
-     libncursesw5-dev,
+-    libncurses-dev,
++    libncursesw5-dev,
      gem2deb,
-@@ -14,8 +14,8 @@ Build-Depends:
+     libperl-dev,
+     python3-dev,
      libaspell-dev,
      liblua5.3-dev,
      tcl8.6-dev,
@@ -37,19 +39,21 @@ index 48082f72f..b4de39476 100644
 -12
 +11
 diff --git a/debian-stable/control b/debian-stable/control
-index 428f11ce9..e88f167b8 100644
+index ad3f771b7..e88f167b8 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
-@@ -5,7 +5,7 @@ Maintainer: Emmanuel Bouthenot <kolter@debian.org>
+@@ -5,17 +5,17 @@ Maintainer: Emmanuel Bouthenot <kolter@debian.org>
  Build-Depends:
      asciidoctor (>= 1.5.4),
      ruby-pygments.rb,
 -    debhelper (>= 12),
 +    debhelper (>= 11),
      cmake, pkg-config,
-     libncursesw5-dev,
+-    libncurses-dev,
++    libncursesw5-dev,
      gem2deb,
-@@ -14,8 +14,8 @@ Build-Depends:
+     libperl-dev,
+     python3-dev,
      libaspell-dev,
      liblua5.3-dev,
      tcl8.6-dev,

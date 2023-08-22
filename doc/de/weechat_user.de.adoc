@@ -118,7 +118,7 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 | pkg-config |
 | entdeckt installierte Bibliotheken.
 
-| libncursesw5-dev ^(2)^ |
+| libncurses-dev |
 | Ncurses Oberfläche.
 
 | libcurl4-gnutls-dev |
@@ -127,7 +127,7 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 | libgcrypt20-dev |
 | Geschützte Daten, IRC SASL Authentifikation.
 
-| libgnutls28-dev | ≥ 2.2.0 ^(3)^
+| libgnutls28-dev | ≥ 2.2.0 ^(2)^
 | IRC-Erweiterung: Unterstützung von TLS Verbindungen, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE). +
   Relay-Erweiterung: Untersützung von TLS Verbindungen.
 
@@ -144,11 +144,7 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 [NOTE]
 ^(1)^ Der Name stammt von der Debian GNU/Linux Bookworm-Distribution,
 Version und Name können in anderen Distributionen anders lauten. +
-^(2)^ Es wird empfohlen WeeChat mit libncurses**w**5-dev (das *w* ist
-entscheidend) zu kompilieren. Eine Kompilierung kann auch mit libncurses5-dev erfolgen,
-aber dies wird *NICHT* empfohlen:
-Es können Darstellungsfehler mit breiten Zeichen auftreten. +
-^(3)^ GnuTLS ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
+^(2)^ GnuTLS ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
 ECDSA-NIST256P-CHALLENGE durchzuführen.
 
 Die folgende Tabelle zeigt die Liste der Pakete, die zum Kompilieren von

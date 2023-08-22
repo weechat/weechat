@@ -117,7 +117,7 @@ WeeChat:
 | pkg-config |
 | Wykrywa zainstalowane biblioteki.
 
-| libncursesw5-dev ^(2)^ |
+| libncurses-dev |
 | Interfejs ncurses.
 
 | libcurl4-gnutls-dev |
@@ -126,7 +126,7 @@ WeeChat:
 | libgcrypt20-dev |
 | Zabezpieczone dane, uwierzytelnianie IRC SASL.
 
-| libgnutls28-dev | ≥ 2.2.0 ^(3)^
+| libgnutls28-dev | ≥ 2.2.0 ^(2)^
 | Wtyczka IRC: wsparcie dla połączeń TLS, autentykacja IRC SASL (ECDSA-NIST256P-CHALLENGE). +
   Wtyczka relay: wsparcie dla połączeń TLS.
 
@@ -143,10 +143,7 @@ WeeChat:
 [NOTE]
 ^(1)^ Nazwa pochodzi z repozytorium dystrybucji Debian GNU/Linux Bookworm distribution,
 wersja i nazwa mogą się różnić dla innych dystrybucji. +
-^(2)^ Zaleca się kompilację z użyciem libncurses**w**5-dev (*w* jest istotne).
-WeeChat można skompilowac używając libncurses5-dev, ale *NIE* jest to zalecane:
-możesz doświadczyć błędów wyświetlania. +
-^(3)^ GnuTLS ≥ 3.0.21 jest wymagany dla uwierzytelnienia IRC SASL za pomocą
+^(2)^ GnuTLS ≥ 3.0.21 jest wymagany dla uwierzytelnienia IRC SASL za pomocą
 mechanizmu ECDSA-NIST256P-CHALLENGE.
 
 The following table shows the list of packages that are optional to compile

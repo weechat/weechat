@@ -7,7 +7,7 @@ Build-Depends:
     ruby-pygments.rb,
     debhelper (>= 12),
     cmake, pkg-config,
-    libncursesw5-dev,
+    libncurses-dev,
     gem2deb,
     libperl-dev,
     python3-dev,
