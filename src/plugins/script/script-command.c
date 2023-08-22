@@ -144,20 +144,6 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcmp (argv[1], "go") == 0)
-    {
-        if ((argc > 2) && script_buffer && !script_buffer_detail_script)
-        {
-            error = NULL;
-            value = strtol (argv[2], &error, 10);
-            if (error && !error[0])
-            {
-                script_buffer_set_current_line (value);
-            }
-        }
-        return WEECHAT_RC_OK;
-    }
-
     if (weechat_strcmp (argv[1], "search") == 0)
     {
         if (scripts_repo)
@@ -213,6 +199,21 @@ script_command_script (const void *pointer, void *data,
     if (weechat_strcmp (argv[1], "update") == 0)
     {
         script_repo_file_update (0);
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcmp (argv[1], "go") == 0)
+    {
+        if ((argc > 2) && script_buffer && !script_buffer_detail_script)
+        {
+            error = NULL;
+            value = strtol (argv[2], &error, 10);
+            if (error && !error[0])
+            {
+                script_buffer_set_current_line (value);
+                script_buffer_check_line_outside_window ();
+            }
+        }
         return WEECHAT_RC_OK;
     }
 
