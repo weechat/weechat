@@ -206,11 +206,21 @@ script_command_script (const void *pointer, void *data,
     {
         if ((argc > 2) && script_buffer && !script_buffer_detail_script)
         {
-            error = NULL;
-            value = strtol (argv[2], &error, 10);
-            if (error && !error[0])
+            line = -1;
+            if (weechat_strcmp (argv[2], "end") == 0)
             {
-                script_buffer_set_current_line (value);
+                line = script_repo_count_displayed - 1;
+            }
+            else
+            {
+                error = NULL;
+                value = strtol (argv[2], &error, 10);
+                if (error && !error[0])
+                    line = value;
+            }
+            if (line >= 0)
+            {
+                script_buffer_set_current_line (line);
                 script_buffer_check_line_outside_window ();
             }
         }
