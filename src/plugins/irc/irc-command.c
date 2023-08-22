@@ -2104,11 +2104,9 @@ IRC_COMMAND_CALLBACK(cycle)
 
 IRC_COMMAND_CALLBACK(dcc)
 {
-    struct sockaddr_storage addr;
-    socklen_t length;
     struct t_infolist *infolist;
     struct t_infolist_item *item;
-    char str_address[NI_MAXHOST], charset_modifier[1024];
+    char charset_modifier[1024];
     int rc;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
@@ -2119,22 +2117,7 @@ IRC_COMMAND_CALLBACK(dcc)
     (void) data;
 
     WEECHAT_COMMAND_MIN_ARGS(3, "");
-
-    /* use the local interface, from the server socket */
-    memset (&addr, 0, sizeof (addr));
-    length = sizeof (addr);
-    getsockname (ptr_server->sock, (struct sockaddr *)&addr, &length);
-    rc = getnameinfo ((struct sockaddr *)&addr, length, str_address,
-                      sizeof (str_address), NULL, 0, NI_NUMERICHOST);
-    if (rc != 0)
-    {
-        weechat_printf (
-            ptr_server->buffer,
-            _("%s%s: unable to resolve local address of server socket: error "
-              "%d %s"),
-            weechat_prefix ("error"), IRC_PLUGIN_NAME, rc, gai_strerror (rc));
-        return WEECHAT_RC_OK;
-    }
+    rc = WEECHAT_RC_ERROR;
 
     /* DCC SEND file */
     if (weechat_strcmp (argv[1], "send") == 0)
@@ -2153,7 +2136,6 @@ IRC_COMMAND_CALLBACK(dcc)
                 weechat_infolist_new_var_string (item, "remote_nick", argv[2]);
                 weechat_infolist_new_var_string (item, "local_nick", ptr_server->nick);
                 weechat_infolist_new_var_string (item, "filename", argv_eol[3]);
-                weechat_infolist_new_var_string (item, "local_address", str_address);
                 weechat_infolist_new_var_integer (item, "socket", ptr_server->sock);
                 rc = weechat_hook_signal_send ("xfer_add",
                                                WEECHAT_HOOK_SIGNAL_POINTER,
@@ -2182,7 +2164,7 @@ IRC_COMMAND_CALLBACK(dcc)
                 snprintf (charset_modifier, sizeof (charset_modifier),
                           "irc.%s.%s", ptr_server->name, argv[2]);
                 weechat_infolist_new_var_string (item, "charset_modifier", charset_modifier);
-                weechat_infolist_new_var_string (item, "local_address", str_address);
+                weechat_infolist_new_var_integer (item, "socket", ptr_server->sock);
                 rc = weechat_hook_signal_send ("xfer_add",
                                                WEECHAT_HOOK_SIGNAL_POINTER,
                                                infolist);

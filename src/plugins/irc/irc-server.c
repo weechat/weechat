@@ -6226,7 +6226,25 @@ irc_server_xfer_send_ready_cb (const void *pointer, void *data,
                 if (type && converted_addr[0])
                 {
                     /* send DCC PRIVMSG */
-                    if (strcmp (type, "file_send_passive") == 0)
+                    if (strcmp (type, "file_recv_passive") == 0)
+                    {
+                        filename = weechat_infolist_string (infolist, "filename");
+                        spaces_in_name = (strchr (filename, ' ') != NULL);
+                        irc_server_sendf (
+                            ptr_server,
+                            IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                            "PRIVMSG %s :\01DCC SEND %s%s%s "
+                            "%s %d %s %s\01",
+                            weechat_infolist_string (infolist, "remote_nick"),
+                            (spaces_in_name) ? "\"" : "",
+                            filename,
+                            (spaces_in_name) ? "\"" : "",
+                            converted_addr,
+                            weechat_infolist_integer (infolist, "port"),
+                            weechat_infolist_string (infolist, "size"),
+                            weechat_infolist_string (infolist, "token"));
+                    }
+                    else if (strcmp (type, "file_send_passive") == 0)
                     {
                         filename = weechat_infolist_string (infolist, "filename");
                         spaces_in_name = (strchr (filename, ' ') != NULL);
@@ -6277,7 +6295,7 @@ irc_server_xfer_resume_ready_cb (const void *pointer, void *data,
 {
     struct t_infolist *infolist;
     struct t_irc_server *ptr_server;
-    const char *plugin_name, *plugin_id, *filename;
+    const char *plugin_name, *plugin_id, *filename, *type;
     int spaces_in_name;
 
     /* make C compiler happy */
@@ -6297,18 +6315,36 @@ irc_server_xfer_resume_ready_cb (const void *pointer, void *data,
             ptr_server = irc_server_search (plugin_id);
             if (ptr_server)
             {
+                type = weechat_infolist_string (infolist, "type_string");
                 filename = weechat_infolist_string (infolist, "filename");
                 spaces_in_name = (strchr (filename, ' ') != NULL);
-                irc_server_sendf (
-                    ptr_server,
-                    IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                    "PRIVMSG %s :\01DCC RESUME %s%s%s %d %s\01",
-                    weechat_infolist_string (infolist, "remote_nick"),
-                    (spaces_in_name) ? "\"" : "",
-                    filename,
-                    (spaces_in_name) ? "\"" : "",
-                    weechat_infolist_integer (infolist, "port"),
-                    weechat_infolist_string (infolist, "start_resume"));
+                if (strcmp (type, "file_recv_passive") == 0)
+                {
+                    irc_server_sendf (
+                        ptr_server,
+                        IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                        "PRIVMSG %s :\01DCC RESUME %s%s%s %d %s %s\01",
+                        weechat_infolist_string (infolist, "remote_nick"),
+                        (spaces_in_name) ? "\"" : "",
+                        filename,
+                        (spaces_in_name) ? "\"" : "",
+                        weechat_infolist_integer (infolist, "port"),
+                        weechat_infolist_string (infolist, "start_resume"),
+                        weechat_infolist_string (infolist, "token"));
+                }
+                else
+                {
+                    irc_server_sendf (
+                        ptr_server,
+                        IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                        "PRIVMSG %s :\01DCC RESUME %s%s%s %d %s\01",
+                        weechat_infolist_string (infolist, "remote_nick"),
+                        (spaces_in_name) ? "\"" : "",
+                        filename,
+                        (spaces_in_name) ? "\"" : "",
+                        weechat_infolist_integer (infolist, "port"),
+                        weechat_infolist_string (infolist, "start_resume"));
+                }
             }
         }
     }

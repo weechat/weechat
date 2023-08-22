@@ -498,7 +498,7 @@ xfer_network_fd_cb (const void *pointer, void *data, int fd)
 
     if (xfer->status == XFER_STATUS_CONNECTING)
     {
-        if (xfer->type == XFER_TYPE_FILE_SEND_PASSIVE)
+        if (XFER_IS_PASSIVE(xfer->type))
         {
             xfer->last_activity = time (NULL);
             sock = accept (xfer->sock,
@@ -546,7 +546,22 @@ xfer_network_fd_cb (const void *pointer, void *data, int fd)
             xfer->status = XFER_STATUS_ACTIVE;
             xfer->start_transfer = time (NULL);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
-            xfer_network_send_file_fork (xfer);
+            switch (xfer->type)
+            {
+                case XFER_TYPE_FILE_SEND_PASSIVE:
+                    xfer_network_send_file_fork (xfer);
+                    break;
+                case XFER_TYPE_FILE_RECV_PASSIVE:
+                    xfer_network_recv_file_fork (xfer);
+                    break;
+                default:
+                    weechat_printf (NULL,
+                                    _("%s%s: encountered unexpected xfer type (%d)"),
+                                    weechat_prefix ("error"), XFER_PLUGIN_NAME, xfer->type);
+                    xfer_close (xfer, XFER_STATUS_FAILED);
+                    xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+                    return WEECHAT_RC_OK;
+            }
         }
     }
 
@@ -787,7 +802,7 @@ xfer_network_connect (struct t_xfer *xfer)
     else
         xfer->status = XFER_STATUS_CONNECTING;
 
-    if (XFER_IS_SEND(xfer->type))
+    if (XFER_IS_SEND(xfer->type) || (xfer->type == XFER_TYPE_FILE_RECV_PASSIVE))
     {
         /* create socket */
         if (xfer->sock < 0)
@@ -822,6 +837,10 @@ xfer_network_connect (struct t_xfer *xfer)
                                                    &xfer_network_timer_cb,
                                                    xfer, NULL);
         }
+
+        /* send signal if type is file or chat "send" */
+        if ((xfer->type == XFER_TYPE_FILE_RECV_PASSIVE) && !XFER_HAS_ENDED(xfer->status))
+            xfer_send_signal (xfer, "xfer_send_ready");
     }
 
     /* for chat receiving, connect to listening host */
@@ -854,7 +873,7 @@ xfer_network_connect_init (struct t_xfer *xfer)
     else
     {
         /* for a file: launch child process */
-        if (XFER_IS_FILE(xfer->type))
+        if (XFER_IS_FILE(xfer->type) && XFER_IS_ACTIVE(xfer->type))
             xfer_network_recv_file_fork (xfer);
 
         xfer->status = XFER_STATUS_CONNECTING;
