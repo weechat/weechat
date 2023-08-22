@@ -315,7 +315,9 @@ script_command_init ()
            " || autoload|noautoload|toggleautoload <script> [<script>...]"
            " || install|remove|installremove|hold [-q] <script> [<script>...]"
            " || upgrade"
-           " || update"),
+           " || update"
+           " || up|down [<number>]"
+           " || go <line>|end"),
         N_("          list: list loaded scripts (all languages)\n"
            "            -o: send list of loaded scripts to buffer "
            "(string in English)\n"
@@ -345,6 +347,10 @@ script_command_init ()
            "       upgrade: upgrade all installed scripts which are obsolete "
            "(new version available)\n"
            "        update: update local scripts cache\n"
+           "            up: move the selected line up by \"number\" lines\n"
+           "          down: move the selected line down by \"number\" lines\n"
+           "            go: select a line by number, first line number is 0 "
+           "(\"end\" to select the last line)\n"
            "\n"
            "Without argument, this command opens a buffer with list of scripts.\n"
            "\n"
@@ -419,6 +425,9 @@ script_command_init ()
         " || installremove %(script_scripts)|%*"
         " || hold %(script_scripts)|%*"
         " || update"
-        " || upgrade",
+        " || upgrade"
+        " || up 1|2|3|4|5"
+        " || down 1|2|3|4|5"
+        " || go 0|end",
         &script_command_script, NULL, NULL);
 }
