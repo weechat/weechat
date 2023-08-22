@@ -160,6 +160,7 @@ struct t_xfer
     socklen_t remote_address_length;   /* remote sockaddr length            */
     char *remote_address_str;          /* remote IP address as string       */
     int port;                          /* remote port                       */
+    char *token;                       /* remote passive-DCC token          */
 
     /* internal data */
     enum t_xfer_status status;         /* xfer status (waiting, sending,..) */

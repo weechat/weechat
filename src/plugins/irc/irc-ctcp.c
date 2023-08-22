@@ -26,6 +26,9 @@
 #include <time.h>
 #include <sys/utsname.h>
 #include <locale.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
 
 #include "../weechat-plugin.h"
 #include "irc.h"
@@ -889,22 +892,6 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         /* remove double quotes around filename */
         filename = irc_ctcp_dcc_filename_without_quotes (pos_file);
 
-        /* use the local interface, from the server socket */
-        memset (&addr, 0, sizeof (addr));
-        length = sizeof (addr);
-        getsockname (server->sock, (struct sockaddr *)&addr, &length);
-        rc = getnameinfo ((struct sockaddr *)&addr, length, str_address,
-                          sizeof (str_address), NULL, 0, NI_NUMERICHOST);
-        if (rc != 0)
-        {
-            weechat_printf (
-                server->buffer,
-                _("%s%s: unable to resolve local address of server socket: error "
-                  "%d %s"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME, rc, gai_strerror (rc));
-            return;
-        }
-
         /* add DCC file via xfer plugin */
         infolist = weechat_infolist_new ();
         if (infolist)
@@ -914,7 +901,8 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             {
                 weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                 weechat_infolist_new_var_string (item, "plugin_id", server->name);
-                weechat_infolist_new_var_string (item, "type_string", "file_recv_active");
+                weechat_infolist_new_var_string (item, "type_string",
+                                                 strcmp (pos_port, "0") ? "file_recv_active" : "file_recv_passive");
                 weechat_infolist_new_var_string (item, "protocol_string", "dcc");
                 weechat_infolist_new_var_string (item, "remote_nick", nick);
                 weechat_infolist_new_var_string (item, "local_nick", server->nick);
@@ -924,6 +912,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                 weechat_infolist_new_var_string (item, "proxy",
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
                 weechat_infolist_new_var_string (item, "remote_address", pos_addr);
+                weechat_infolist_new_var_integer (item, "socket", server->sock);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                 weechat_infolist_new_var_string (item, "token", pos_token);
                 (void) weechat_hook_signal_send ("xfer_add",
