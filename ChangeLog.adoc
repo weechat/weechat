@@ -35,8 +35,6 @@ New features::
 
 Bug fixes::
 
-  * core: fix integer overflow when setting integer option with `++N` or `--N`
-  * core: fix increment/decrement of options weechat.notify.*
   * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
   * core: display focus hashtable for debug even if no key is matching
   * fset: remove extra spaces between min and max values when second format is used
@@ -45,22 +43,33 @@ Bug fixes::
   * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
   * irc: add missing "account-tag" in list of supported capabilities
   * irc: add channel in "autojoin" server option only when the channel is actually joined (issue #1990)
+  * relay: synchronize nick modes with IRC client upon connection (issue #1984)
+  * script: add parameters up/down/go in `/help script` and command completion
+  * script: fix cursor position after `/script list -i` or `/script list -il`
+  * script: fix buffer used by command `/script list -i|-il|-o|-ol`
+
+Tests::
+
+  * core: add tests on GUI buffer functions
+
+[[v4.0.4]]
+== Version 4.0.4 (2023-08-22)
+
+Bug fixes::
+
+  * core: fix integer overflow when setting integer option with `++N` or `--N`
+  * core: fix increment/decrement of options weechat.notify.*
   * irc: add missing tags on multiline messages (issue #1987)
   * irc: fix redirection of command `/list` when the reply doesn't start with message 321 (start of /list)
   * irc: fix wrong time displayed for CTCP messages received from self nick (issue #2000)
   * logger: remove trailing empty line in display of backlog (issue #2002)
   * perl: fix display of non-ASCII chars after load of a script with Perl >= 5.38 (issue #1996)
-  * relay: synchronize nick modes with IRC client upon connection (issue #1984)
-  * script: add parameters up/down/go in `/help script` and command completion
   * script: adjust scroll after command `/script go N`
-  * script: fix cursor position after `/script list -i` or `/script list -il`
-  * script: fix buffer used by command `/script list -i|-il|-o|-ol`
   * scripts: fix function string_parse_size on 32-bit systems (python and ruby) (issue #1999)
   * xfer: fix conversion of string to IPv4 on 32-bit systems (issue #1999)
 
 Tests::
 
-  * core: add tests on GUI buffer functions
   * irc: fix tests on function irc_join_compare_join_channel (issue #1997)
   * scripts: fix tests of functions print_date_tag, print_y_date_tags and hook_timer on 32-bit systems (issue #1999)
 
