@@ -1137,12 +1137,19 @@ Inhabilite las respuestas a todas las peticiones CTCP:
 
 ----
 /set irc.ctcp.clientinfo ""
-/set irc.ctcp.finger ""
 /set irc.ctcp.source ""
 /set irc.ctcp.time ""
-/set irc.ctcp.userinfo ""
 /set irc.ctcp.version ""
 /set irc.ctcp.ping ""
+----
+
+// TRANSLATION MISSING
+With WeeChat < 4.1.0, other CTCP queries were replied by default and must be
+disabled as well:
+
+----
+/set irc.ctcp.finger ""
+/set irc.ctcp.userinfo ""
 ----
 
 Elimine de la memoria e inhabilite la carga automática del complemento "xfer" (utilizdo para IRC DCC):

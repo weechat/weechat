@@ -1143,12 +1143,18 @@ Désactivez les réponses à toutes les demandes CTCP :
 
 ----
 /set irc.ctcp.clientinfo ""
-/set irc.ctcp.finger ""
 /set irc.ctcp.source ""
 /set irc.ctcp.time ""
-/set irc.ctcp.userinfo ""
 /set irc.ctcp.version ""
 /set irc.ctcp.ping ""
+----
+
+Avec WeeChat < 4.1.0, d'autres demandes CTCP étaient répondues par défaut et
+doivent être désactivées également :
+
+----
+/set irc.ctcp.finger ""
+/set irc.ctcp.userinfo ""
 ----
 
 Déchargez et désactivez le chargement automatique de l'extension "xfer"

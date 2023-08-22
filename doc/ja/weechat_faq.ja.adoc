@@ -1136,12 +1136,19 @@ IRC の退出および終了メッセージを無効化します:
 
 ----
 /set irc.ctcp.clientinfo ""
-/set irc.ctcp.finger ""
 /set irc.ctcp.source ""
 /set irc.ctcp.time ""
-/set irc.ctcp.userinfo ""
 /set irc.ctcp.version ""
 /set irc.ctcp.ping ""
+----
+
+// TRANSLATION MISSING
+With WeeChat < 4.1.0, other CTCP queries were replied by default and must be
+disabled as well:
+
+----
+/set irc.ctcp.finger ""
+/set irc.ctcp.userinfo ""
 ----
 
 "xfer" プラグイン (これは IRC DCC 機能を使うためのものです) をアンロードして自動ロードを無効化します:
