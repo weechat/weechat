@@ -1112,7 +1112,10 @@ Puede intentar estos trucos para consumir menos memoria:
 
 Puede seguir los mismos consejo que para la <<memory_usage,memoria>> y estos otros:
 
-* Oculte la barra de la lista de apodos: `/bar hide nicklist`.
+// TRANSLATION MISSING
+* Oculte la barra de la lista de apodos: `/bar hide nicklist` (key: kbd:[Alt+Shift+N]).
+// TRANSLATION MISSING
+* Disable "buflist": `/buflist disable` (key: kbd:[Alt+Shift+B]).
 * Elimine que se muestren los segundos en la hora de la barra de estado:
   `+/set weechat.look.item_time_format "%H:%M"+` (este es el valor predeterminado).
 * Inhabilite la comprobación en tiempo real de palabras erróneas en la línea de comandos (si lo había habilitado previamente):

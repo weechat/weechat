@@ -1186,7 +1186,10 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
 // TRANSLATION MISSING
 You can follow same tips as for <<memory_usage,memory>>, and these ones:
 
-* hide "nicklist" bar: `/bar hide nicklist`
+// TRANSLATION MISSING
+* hide "nicklist" bar: `/bar hide nicklist` (key: kbd:[Alt+Shift+N]).
+// TRANSLATION MISSING
+* Disable "buflist": `/buflist disable` (key: kbd:[Alt+Shift+B]).
 * remove display of seconds in status bar time:
   `+/set weechat.look.item_time_format "%H:%M"+` (this is the default value)
 // TRANSLATION MISSING

@@ -1083,7 +1083,10 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 
 Możesz skorzystać z tych samych porad jak dla  <<memory_usage,memory>>, oraz tych:
 
-* schowaj pasek "nicklist": `/bar hide nicklist`
+// TRANSLATION MISSING
+* schowaj pasek "nicklist": `/bar hide nicklist` (key: kbd:[Alt+Shift+N]).
+// TRANSLATION MISSING
+* Disable "buflist": `/buflist disable` (key: kbd:[Alt+Shift+B]).
 * usuń wyświetlanie sekund w czasie na pasku statusu:
   `+/set weechat.look.item_time_format "%H:%M"+` (domyślna wartość)
 * wyłącz automatyczne sprawdzanie poprawności wpisywanych słów w linii poleceń (o ile je włączyłeś):

@@ -1120,7 +1120,8 @@ Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
 Vous pouvez suivre les mêmes astuces que pour la <<memory_usage,mémoire>>, et
 celles-ci :
 
-* Cacher la barre "nicklist" : `/bar hide nicklist`.
+* Cacher la barre "nicklist" : `/bar hide nicklist` (touche : kbd:[Alt+Shift+N]).
+* Désactiver "buflist" : `/buflist disable` (touche : kbd:[Alt+Shift+B]).
 * Supprimer l'affichage des secondes dans l'heure de la barre de statut :
   `+/set weechat.look.item_time_format "%H:%M"+` (ceci est la valeur par défaut).
 * Désactiver la vérification en temps réel des mots mal orthographiés dans la

@@ -1111,7 +1111,10 @@ spell プラグインをリロードしてください:
 
 以下に挙げる <<memory_usage,memory>> に関するヒントに従ってください:
 
-* "nicklist" バーを非表示にする: `/bar hide nicklist`
+// TRANSLATION MISSING
+* "nicklist" バーを非表示にする: `/bar hide nicklist` (key: kbd:[Alt+Shift+N]).
+// TRANSLATION MISSING
+* Disable "buflist": `/buflist disable` (key: kbd:[Alt+Shift+B]).
 * ステータスバー時間に秒の表示を止める:
   `+/set weechat.look.item_time_format "%H:%M"+` (これはデフォルト値です)
 * コマンドライン内の単語スペルミスのリアルタイムチェックを無効にする (有効にしていた場合):

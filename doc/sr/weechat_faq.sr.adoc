@@ -963,7 +963,10 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 Можете да следите исте савете као за <<memory_usage,меморију>>, као и следеће:
 
-* Сакријте „nicklist” траку: `/bar hide nicklist`.
+// TRANSLATION MISSING
+* Сакријте „nicklist” траку: `/bar hide nicklist` (key: kbd:[Alt+Shift+N]).
+// TRANSLATION MISSING
+* Disable "buflist": `/buflist disable` (key: kbd:[Alt+Shift+B]).
 * Уклоните приказ секунди из времена у статусној траци: `+/set weechat.look.item_time_format "%H:%M"+` (ово је и подразумевана вредност).
 * Искључите проверу неисправно написаних речи у командној линији у реалном времену (ако сте је укључили): `+/set spell.check.real_time off+`.
 * Поставите променљиву _TZ_ (на пример: `export TZ="Europe/Paris"`), тиме спречавате чест приступ фајлу _/etc/localtime_.

@@ -1080,7 +1080,8 @@ You can try following tips to consume less memory:
 
 You can follow same tips as for <<memory_usage,memory>>, and these ones:
 
-* Hide "nicklist" bar: `/bar hide nicklist`.
+* Hide "nicklist" bar: `/bar hide nicklist` (key: kbd:[Alt+Shift+N]).
+* Disable "buflist": `/buflist disable` (key: kbd:[Alt+Shift+B]).
 * Remove display of seconds in status bar time:
   `+/set weechat.look.item_time_format "%H:%M"+` (this is the default value).
 * Disable real time check of misspelled words in command line (if you enabled it):
