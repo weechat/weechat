@@ -52,6 +52,7 @@ Bug fixes::
 Tests::
 
   * core: add tests on GUI buffer functions
+  * irc: add tests on server functions
 
 [[v4.0.4]]
 == Version 4.0.4 (2023-08-22)
