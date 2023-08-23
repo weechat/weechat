@@ -40,6 +40,7 @@ Bug fixes::
   * fset: remove extra spaces between min and max values when second format is used
   * fset: fix mouse actions when second format is used
   * fset: apply option fset.color.help_description (issue #1988)
+  * irc: fix string comparison when CASEMAPPING is set to "ascii"
   * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
   * irc: add missing "account-tag" in list of supported capabilities
   * irc: add channel in "autojoin" server option only when the channel is actually joined (issue #1990)
