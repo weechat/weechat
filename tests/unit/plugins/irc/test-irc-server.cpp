@@ -215,6 +215,64 @@ TEST(IrcServer, Strcasecmp)
 
 /*
  * Tests functions:
+ *   irc_server_string_tolower
+ *   irc_server_string_toupper
+ */
+
+TEST(IrcServer, StringToLowerUpper)
+{
+    struct t_irc_server *server;
+    char *str;
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    POINTERS_EQUAL(NULL, irc_server_string_tolower (NULL, NULL));
+    POINTERS_EQUAL(NULL, irc_server_string_toupper (NULL, NULL));
+
+    WEE_TEST_STR("", irc_server_string_tolower (NULL, ""));
+    WEE_TEST_STR("", irc_server_string_toupper (NULL, ""));
+
+    WEE_TEST_STR("abcdÉ", irc_server_string_tolower (NULL, "ABCDÉ"));
+    WEE_TEST_STR("ABCDé", irc_server_string_toupper (NULL, "abcdé"));
+
+    WEE_TEST_STR("nick{a}", irc_server_string_tolower (NULL, "NICK[A]"));
+    WEE_TEST_STR("NICK[A]", irc_server_string_toupper (NULL, "nick{a}"));
+    WEE_TEST_STR("nick~a", irc_server_string_tolower (NULL, "NICK^A"));
+    WEE_TEST_STR("NICK^A", irc_server_string_toupper (NULL, "nick~a"));
+    WEE_TEST_STR("nick_Ô", irc_server_string_tolower (NULL, "NICK_Ô"));
+    WEE_TEST_STR("NICK_ô", irc_server_string_toupper (NULL, "nick_ô"));
+
+    WEE_TEST_STR("nick{a}", irc_server_string_tolower (server, "NICK[A]"));
+    WEE_TEST_STR("NICK[A]", irc_server_string_toupper (server, "nick{a}"));
+    WEE_TEST_STR("nick~a", irc_server_string_tolower (server, "NICK^A"));
+    WEE_TEST_STR("NICK^A", irc_server_string_toupper (server, "nick~a"));
+    WEE_TEST_STR("nick_Ô", irc_server_string_tolower (server, "NICK_Ô"));
+    WEE_TEST_STR("NICK_ô", irc_server_string_toupper (server, "nick_ô"));
+
+    server->casemapping = IRC_SERVER_CASEMAPPING_STRICT_RFC1459;
+
+    WEE_TEST_STR("nick{a}", irc_server_string_tolower (server, "NICK[A]"));
+    WEE_TEST_STR("NICK[A]", irc_server_string_toupper (server, "nick{a}"));
+    WEE_TEST_STR("nick^a", irc_server_string_tolower (server, "NICK^A"));
+    WEE_TEST_STR("NICK~A", irc_server_string_toupper (server, "nick~a"));
+    WEE_TEST_STR("nick_Ô", irc_server_string_tolower (server, "NICK_Ô"));
+    WEE_TEST_STR("NICK_ô", irc_server_string_toupper (server, "nick_ô"));
+
+    server->casemapping = IRC_SERVER_CASEMAPPING_ASCII;
+
+    WEE_TEST_STR("nick[a]", irc_server_string_tolower (server, "NICK[A]"));
+    WEE_TEST_STR("NICK{A}", irc_server_string_toupper (server, "nick{a}"));
+    WEE_TEST_STR("nick^a", irc_server_string_tolower (server, "NICK^A"));
+    WEE_TEST_STR("NICK~A", irc_server_string_toupper (server, "nick~a"));
+    WEE_TEST_STR("nick_Ô", irc_server_string_tolower (server, "NICK_Ô"));
+    WEE_TEST_STR("NICK_ô", irc_server_string_toupper (server, "nick_ô"));
+
+    irc_server_free (server);
+}
+
+/*
+ * Tests functions:
  *   irc_server_eval_expression
  */
 

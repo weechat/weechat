@@ -334,6 +334,72 @@ irc_server_strncasecmp (struct t_irc_server *server,
 }
 
 /*
+ * Converts string to lower case, following server casemapping.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_server_string_tolower (struct t_irc_server *server, const char *string)
+{
+    char *result, *ptr_result;
+    int casemapping, range;
+
+    if (!string)
+        return NULL;
+
+    casemapping = (server) ? server->casemapping : -1;
+    if ((casemapping < 0) || (casemapping >= IRC_SERVER_NUM_CASEMAPPING))
+        casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
+
+    range = irc_server_casemapping_range[casemapping];
+
+    result = strdup (string);
+    ptr_result = result;
+    while (ptr_result && ptr_result[0])
+    {
+        if ((ptr_result[0] >= 'A') && (ptr_result[0] < 'A' + range))
+            ptr_result[0] += ('a' - 'A');
+        ptr_result = (char *)weechat_utf8_next_char (ptr_result);
+    }
+
+    return result;
+}
+
+/*
+ * Converts string to upper case, following server casemapping.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_server_string_toupper (struct t_irc_server *server, const char *string)
+{
+    char *result, *ptr_result;
+    int casemapping, range;
+
+    if (!string)
+        return NULL;
+
+    casemapping = (server) ? server->casemapping : -1;
+    if ((casemapping < 0) || (casemapping >= IRC_SERVER_NUM_CASEMAPPING))
+        casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
+
+    range = irc_server_casemapping_range[casemapping];
+
+    result = strdup (string);
+    ptr_result = result;
+    while (ptr_result && ptr_result[0])
+    {
+        if ((ptr_result[0] >= 'a') && (ptr_result[0] < 'a' + range))
+            ptr_result[0] -= ('a' - 'A');
+        ptr_result = (char *)weechat_utf8_next_char (ptr_result);
+    }
+
+    return result;
+}
+
+/*
  * Evaluates a string using the server as context:
  * ${irc_server.xxx} and ${server} are replaced by a server option and the
  * server name.
