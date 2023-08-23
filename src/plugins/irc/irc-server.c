@@ -404,6 +404,28 @@ irc_server_eval_expression (struct t_irc_server *server, const char *string)
 }
 
 /*
+ * Searches for a fingerprint digest algorithm with the size (in bits).
+ *
+ * Returns index of algo in enum t_irc_fingerprint_digest_algo,
+ * -1 if not found.
+ */
+
+int
+irc_server_fingerprint_search_algo_with_size (int size)
+{
+    int i;
+
+    for (i = 0; i < IRC_FINGERPRINT_NUM_ALGOS; i++)
+    {
+        if (irc_fingerprint_digest_algos_size[i] == size)
+            return i;
+    }
+
+    /* digest algorithm not found */
+    return -1;
+}
+
+/*
  * Evaluates and returns the fingerprint.
  *
  * Returns the evaluated fingerprint, NULL if the fingerprint option is
@@ -4771,28 +4793,6 @@ irc_server_create_buffer (struct t_irc_server *server)
                                      server->buffer);
 
     return server->buffer;
-}
-
-/*
- * Searches for a fingerprint digest algorithm with the size (in bits).
- *
- * Returns index of algo in enum t_irc_fingerprint_digest_algo,
- * -1 if not found.
- */
-
-int
-irc_server_fingerprint_search_algo_with_size (int size)
-{
-    int i;
-
-    for (i = 0; i < IRC_FINGERPRINT_NUM_ALGOS; i++)
-    {
-        if (irc_fingerprint_digest_algos_size[i] == size)
-            return i;
-    }
-
-    /* digest algorithm not found */
-    return -1;
 }
 
 /*
