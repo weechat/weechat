@@ -418,6 +418,9 @@ irc_server_eval_fingerprint (struct t_irc_server *server)
     char *fingerprint_eval, **fingerprints, *str_sizes;
     int i, j, rc, algo, length;
 
+    if (!server)
+        return NULL;
+
     ptr_fingerprint = IRC_SERVER_OPTION_STRING(server,
                                                IRC_SERVER_OPTION_TLS_FINGERPRINT);
 
