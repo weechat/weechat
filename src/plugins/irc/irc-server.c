@@ -131,6 +131,8 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
 { "rfc1459", "strict-rfc1459", "ascii" };
+int irc_server_casemapping_range[IRC_SERVER_NUM_CASEMAPPING] =
+{ 30, 29, 26 };
 
 char *irc_server_utf8mapping_string[IRC_SERVER_NUM_UTF8MAPPING] =
 { "none", "rfc8265" };
@@ -294,25 +296,15 @@ int
 irc_server_strcasecmp (struct t_irc_server *server,
                        const char *string1, const char *string2)
 {
-    int casemapping, rc;
+    int casemapping, range;
 
-    casemapping = (server) ? server->casemapping : IRC_SERVER_CASEMAPPING_RFC1459;
-    switch (casemapping)
-    {
-        case IRC_SERVER_CASEMAPPING_RFC1459:
-            rc = weechat_strcasecmp_range (string1, string2, 30);
-            break;
-        case IRC_SERVER_CASEMAPPING_STRICT_RFC1459:
-            rc = weechat_strcasecmp_range (string1, string2, 29);
-            break;
-        case IRC_SERVER_CASEMAPPING_ASCII:
-            rc = weechat_strcasecmp (string1, string2);
-            break;
-        default:
-            rc = weechat_strcasecmp_range (string1, string2, 30);
-            break;
-    }
-    return rc;
+    casemapping = (server) ? server->casemapping : -1;
+    if ((casemapping < 0) || (casemapping >= IRC_SERVER_NUM_CASEMAPPING))
+        casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
+
+    range = irc_server_casemapping_range[casemapping];
+
+    return weechat_strcasecmp_range (string1, string2, range);
 }
 
 /*
@@ -329,25 +321,15 @@ int
 irc_server_strncasecmp (struct t_irc_server *server,
                         const char *string1, const char *string2, int max)
 {
-    int casemapping, rc;
+    int casemapping, range;
 
-    casemapping = (server) ? server->casemapping : IRC_SERVER_CASEMAPPING_RFC1459;
-    switch (casemapping)
-    {
-        case IRC_SERVER_CASEMAPPING_RFC1459:
-            rc = weechat_strncasecmp_range (string1, string2, max, 30);
-            break;
-        case IRC_SERVER_CASEMAPPING_STRICT_RFC1459:
-            rc = weechat_strncasecmp_range (string1, string2, max, 29);
-            break;
-        case IRC_SERVER_CASEMAPPING_ASCII:
-            rc = weechat_strncasecmp (string1, string2, max);
-            break;
-        default:
-            rc = weechat_strncasecmp_range (string1, string2, max, 30);
-            break;
-    }
-    return rc;
+    casemapping = (server) ? server->casemapping : -1;
+    if ((casemapping < 0) || (casemapping >= IRC_SERVER_NUM_CASEMAPPING))
+        casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
+
+    range = irc_server_casemapping_range[casemapping];
+
+    return weechat_strncasecmp_range (string1, string2, max, range);
 }
 
 /*
