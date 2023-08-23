@@ -17,6 +17,10 @@ Bug fixes::
 
   * irc: fix string comparison when CASEMAPPING is set to "ascii"
 
+Tests::
+
+  * irc: add tests on server functions
+
 [[v4.0.4]]
 == Version 4.0.4 (2023-08-22)
 
