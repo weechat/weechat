@@ -499,6 +499,11 @@ TEST(CoreString, CharComparison)
     LONGS_EQUAL(0, string_charcasecmp_range ("]", "}", 30));
     LONGS_EQUAL(0, string_charcasecmp_range ("\\", "|", 30));
     LONGS_EQUAL(0, string_charcasecmp_range ("^", "~", 30));
+    LONGS_EQUAL(0, string_charcasecmp_range ("[", "{", 29));
+    LONGS_EQUAL(0, string_charcasecmp_range ("]", "}", 29));
+    LONGS_EQUAL(0, string_charcasecmp_range ("\\", "|", 29));
+    LONGS_EQUAL(-32, string_charcasecmp_range ("^", "~", 29));
+    LONGS_EQUAL(32, string_charcasecmp_range ("~", "^", 29));
     LONGS_EQUAL(-32, string_charcasecmp_range ("[", "{", 26));
     LONGS_EQUAL(32, string_charcasecmp_range ("{", "[", 26));
     LONGS_EQUAL(-32, string_charcasecmp_range ("]", "}", 26));
@@ -628,6 +633,11 @@ TEST(CoreString, StringComparison)
     LONGS_EQUAL(0, string_strcasecmp_range ("]", "}", 30));
     LONGS_EQUAL(0, string_strcasecmp_range ("\\", "|", 30));
     LONGS_EQUAL(0, string_strcasecmp_range ("^", "~", 30));
+    LONGS_EQUAL(0, string_strcasecmp_range ("[", "{", 29));
+    LONGS_EQUAL(0, string_strcasecmp_range ("]", "}", 29));
+    LONGS_EQUAL(0, string_strcasecmp_range ("\\", "|", 29));
+    LONGS_EQUAL(-32, string_strcasecmp_range ("^", "~", 29));
+    LONGS_EQUAL(32, string_strcasecmp_range ("~", "^", 29));
     LONGS_EQUAL(-32, string_strcasecmp_range ("[", "{", 26));
     LONGS_EQUAL(32, string_strcasecmp_range ("{", "[", 26));
     LONGS_EQUAL(-32, string_strcasecmp_range ("]", "}", 26));
@@ -661,6 +671,11 @@ TEST(CoreString, StringComparison)
     LONGS_EQUAL(0, string_strncasecmp_range ("^^^", "~~~", 3, 30));
     LONGS_EQUAL(0, string_strncasecmp_range ("^^^abc", "~~~def", 3, 30));
     LONGS_EQUAL(-3, string_strncasecmp_range ("^^^abc", "~~~def", 6, 30));
+    LONGS_EQUAL(0, string_strncasecmp_range ("[[[", "{{{", 3, 29));
+    LONGS_EQUAL(0, string_strncasecmp_range ("]]]", "}}}", 3, 29));
+    LONGS_EQUAL(0, string_strncasecmp_range ("\\\\\\", "|||", 3, 29));
+    LONGS_EQUAL(-32, string_strncasecmp_range ("^^^", "~~~", 3, 29));
+    LONGS_EQUAL(32, string_strncasecmp_range ("~~~", "^^^", 3, 29));
     LONGS_EQUAL(-32, string_strncasecmp_range ("[[[", "{{{", 3, 26));
     LONGS_EQUAL(-32, string_strncasecmp_range ("]]]", "}}}", 3, 26));
     LONGS_EQUAL(-32, string_strncasecmp_range ("\\\\\\", "|||", 3, 26));
