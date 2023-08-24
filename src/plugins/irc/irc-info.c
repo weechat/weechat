@@ -197,6 +197,10 @@ irc_info_info_irc_nick_color_cb (const void *pointer, void *data,
                                  const char *info_name,
                                  const char *arguments)
 {
+    char *pos_comma, *server;
+    const char *pos_nick;
+    struct t_irc_server *ptr_server;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
@@ -205,7 +209,21 @@ irc_info_info_irc_nick_color_cb (const void *pointer, void *data,
     if (!arguments || !arguments[0])
         return NULL;
 
-    return irc_nick_find_color (arguments);
+    ptr_server = NULL;
+    pos_nick = arguments;
+    pos_comma = strchr (arguments, ',');
+    if (pos_comma)
+    {
+        pos_nick = pos_comma + 1;
+        server = weechat_strndup (arguments, pos_comma - arguments);
+        if (server)
+        {
+            ptr_server = irc_server_search (server);
+            free (server);
+        }
+    }
+
+    return irc_nick_find_color (ptr_server, pos_nick);
 }
 
 /*
@@ -217,6 +235,10 @@ irc_info_info_irc_nick_color_name_cb (const void *pointer, void *data,
                                       const char *info_name,
                                       const char *arguments)
 {
+    char *pos_comma, *server;
+    const char *pos_nick;
+    struct t_irc_server *ptr_server;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
@@ -225,7 +247,21 @@ irc_info_info_irc_nick_color_name_cb (const void *pointer, void *data,
     if (!arguments || !arguments[0])
         return NULL;
 
-    return irc_nick_find_color_name (arguments);
+    ptr_server = NULL;
+    pos_nick = arguments;
+    pos_comma = strchr (arguments, ',');
+    if (pos_comma)
+    {
+        pos_nick = pos_comma + 1;
+        server = weechat_strndup (arguments, pos_comma - arguments);
+        if (server)
+        {
+            ptr_server = irc_server_search (server);
+            free (server);
+        }
+    }
+
+    return irc_nick_find_color_name (ptr_server, pos_nick);
 }
 
 /*
@@ -1223,15 +1259,17 @@ irc_info_init ()
         &irc_info_info_irc_nick_from_host_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick_color",
-        N_("get nick color code "
-           "(*deprecated* since version 1.5, replaced by \"nick_color\")"),
-        N_("nickname"),
+        N_("get nick color code (nick is first converted to lower case, "
+           "following the value of CASEMAPPING on the server, "
+           "defaulting to \"rfc1459\" if the server is not given)"),
+        N_("server,nickname (server is optional)"),
         &irc_info_info_irc_nick_color_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick_color_name",
-        N_("get nick color name "
-           "(*deprecated* since version 1.5, replaced by \"nick_color_name\")"),
-        N_("nickname"),
+        N_("get nick color name (nick is first converted to lower case, "
+           "following the value of CASEMAPPING on the server, "
+           "defaulting to \"rfc1459\" if the server is not given)"),
+        N_("server,nickname (server is optional)"),
         &irc_info_info_irc_nick_color_name_cb, NULL, NULL);
     weechat_hook_info (
         "irc_buffer",

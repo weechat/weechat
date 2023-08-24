@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-22 09:26+0200\n"
+"POT-Creation-Date: 2023-08-24 09:00+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10415,16 +10415,15 @@ msgid "IRC host (like `:nick!name@server.com`)"
 msgstr "IRC host (como `:apodo!nombre@servidor.com`)"
 
 msgid ""
-"get nick color code (*deprecated* since version 1.5, replaced by "
-"\"nick_color\")"
+"get nick color code (nick is first converted to lower case, following the "
+"value of CASEMAPPING on the server, defaulting to \"rfc1459\" if the server "
+"is not given)"
 msgstr ""
 
-msgid "nickname"
-msgstr "apodo"
-
 msgid ""
-"get nick color name (*deprecated* since version 1.5, replaced by "
-"\"nick_color_name\")"
+"get nick color name (nick is first converted to lower case, following the "
+"value of CASEMAPPING on the server, defaulting to \"rfc1459\" if the server "
+"is not given)"
 msgstr ""
 
 msgid "get buffer pointer for an IRC server/channel/nick"
@@ -14997,6 +14996,9 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse: error (%d)"
+
+#~ msgid "nickname"
+#~ msgstr "apodo"
 
 #, fuzzy
 #~ msgid "color for selected line"

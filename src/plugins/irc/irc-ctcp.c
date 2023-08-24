@@ -1241,7 +1241,7 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date,
                 if (ptr_nick)
                     nick_color = strdup (ptr_nick->color);
                 else if (nick)
-                    nick_color = irc_nick_find_color (nick);
+                    nick_color = irc_nick_find_color (server, nick);
                 else
                     nick_color = strdup (IRC_COLOR_CHAT_NICK);
                 if (irc_server_prefix_char_statusmsg (server, target[0]))
@@ -1336,7 +1336,9 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date,
                         "%s%s%s%s%s%s",
                         weechat_prefix ("action"),
                         (nick_is_me) ?
-                        IRC_COLOR_CHAT_NICK_SELF : irc_nick_color_for_pv (ptr_channel, nick),
+                        IRC_COLOR_CHAT_NICK_SELF : irc_nick_color_for_pv (server,
+                                                                          ptr_channel,
+                                                                          nick),
                         nick,
                         (pos_args) ? IRC_COLOR_RESET : "",
                         (pos_args) ? " " : "",

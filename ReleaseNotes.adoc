@@ -59,6 +59,36 @@ back with the two following commands:
 They will then be advertised in reply to "CTCP CLIENTINFO", which is now built
 dynamically with these options.
 
+[[v4.1.0_info_irc_nick_color]]
+=== Infos irc_nick_color and irc_nick_color_name
+
+The infos irc_nick_color and irc_nick_color_name, that were deprecated since
+version 1.5 are now used again, with a change in parameter: the server is now
+optional before the nick: "server,nick". +
+The nick is first converted to lower case, following the value of CASEMAPPING
+on the server, then hashed to compute the color. +
+That means the color for a nick is now case insensitive (in the way IRC servers
+are case insensitive, so with a limited range of chars only).
+
+If a script was using this info with a comma in nickname (which should not happen
+anyway), this is now interpreted as the server name, and the script must be
+modified. +
+Anyway, it is recommended to always give the server name to respect the
+CASEMAPPING of the server and prevent any issue with a comma in the nickname.
+
+For example nick color of "alice" and "ALICE" is now always guaranteed to be the
+same:
+
+----
+# with server name (recommended)
+weechat.info_get("irc_nick_color", "libera,alice") == weechat.info_get("irc_nick_color", "libera,ALICE")
+weechat.info_get("irc_nick_color_name", "libera,alice") == weechat.info_get("irc_nick_color_name", "libera,ALICE")
+
+# without server name (allowed but not recommended, kept for compatibility)
+weechat.info_get("irc_nick_color", "alice") == weechat.info_get("irc_nick_color", "ALICE")
+weechat.info_get("irc_nick_color_name", "alice") == weechat.info_get("irc_nick_color_name", "ALICE")
+----
+
 [[v4.1.0_fset_allowed_values]]
 === Allowed values for options on fset buffer
 

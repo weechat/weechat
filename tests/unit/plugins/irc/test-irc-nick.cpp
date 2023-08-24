@@ -21,9 +21,12 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <string.h>
+#include "src/gui/gui-color.h"
 #include "src/plugins/irc/irc-nick.h"
 #include "src/plugins/irc/irc-server.h"
 }
@@ -171,4 +174,392 @@ TEST(IrcNick, IsNick)
     LONGS_EQUAL(0, irc_nick_is_nick (server, "\xf0\xa4\xad\xa2")); /* han char */
 
     irc_server_free (server);
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_find_color
+ *   irc_nick_find_color_name
+ */
+
+TEST(IrcNick, IrcNickFindColor)
+{
+    struct t_irc_server *server;
+    char *str, str_color[128];
+
+    server = irc_server_alloc ("my_ircd");
+    CHECK(server);
+
+    POINTERS_EQUAL(NULL, irc_nick_find_color (NULL, NULL));
+    POINTERS_EQUAL(NULL, irc_nick_find_color_name (NULL, NULL));
+
+    POINTERS_EQUAL(NULL, irc_nick_find_color (server, NULL));
+    POINTERS_EQUAL(NULL, irc_nick_find_color_name (server, NULL));
+
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("162"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (NULL, "NICK[A]"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (NULL, "nick{a}"));
+    WEE_TEST_STR("162", irc_nick_find_color_name (NULL, "NICK[A]"));
+    WEE_TEST_STR("162", irc_nick_find_color_name (NULL, "nick{a}"));
+
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("lightcyan"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (NULL, "NICK^A"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (NULL, "nick~a"));
+    WEE_TEST_STR("lightcyan", irc_nick_find_color_name (NULL, "NICK^A"));
+    WEE_TEST_STR("lightcyan", irc_nick_find_color_name (NULL, "nick~a"));
+
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("162"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK[A]"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "nick{a}"));
+    WEE_TEST_STR("162", irc_nick_find_color_name (server, "NICK[A]"));
+    WEE_TEST_STR("162", irc_nick_find_color_name (server, "nick{a}"));
+
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("lightcyan"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK^A"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "nick~a"));
+    WEE_TEST_STR("lightcyan", irc_nick_find_color_name (server, "NICK^A"));
+    WEE_TEST_STR("lightcyan", irc_nick_find_color_name (server, "nick~a"));
+
+    server->casemapping = IRC_SERVER_CASEMAPPING_STRICT_RFC1459;
+
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("162"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK[A]"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "nick{a}"));
+    WEE_TEST_STR("162", irc_nick_find_color_name (server, "NICK[A]"));
+    WEE_TEST_STR("162", irc_nick_find_color_name (server, "nick{a}"));
+
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("176"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK^A"));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("lightcyan"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "nick~a"));
+    WEE_TEST_STR("176", irc_nick_find_color_name (server, "NICK^A"));
+    WEE_TEST_STR("lightcyan", irc_nick_find_color_name (server, "nick~a"));
+
+    server->casemapping = IRC_SERVER_CASEMAPPING_ASCII;
+
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("212"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK[A]"));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("162"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "nick{a}"));
+    WEE_TEST_STR("212", irc_nick_find_color_name (server, "NICK[A]"));
+    WEE_TEST_STR("162", irc_nick_find_color_name (server, "nick{a}"));
+
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("176"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK^A"));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("lightcyan"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "nick~a"));
+    WEE_TEST_STR("176", irc_nick_find_color_name (server, "NICK^A"));
+    WEE_TEST_STR("lightcyan", irc_nick_find_color_name (server, "nick~a"));
+
+    irc_server_free (server);
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_set_current_prefix
+ */
+
+TEST(IrcNick, IrcNickSetCurrentPrefix)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_set_prefix
+ */
+
+TEST(IrcNick, IrcNickSetPrefix)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_set_prefixes
+ */
+
+TEST(IrcNick, IrcNickSetPrefixes)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_set_host
+ */
+
+TEST(IrcNick, IrcNickSetHost)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_is_op
+ */
+
+TEST(IrcNick, IrcNickIsOp)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_has_prefix_mode
+ */
+
+TEST(IrcNick, IrcNickHasPrefixMode)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_get_nicklist_group
+ */
+
+TEST(IrcNick, IrcNickGetNicklistGroup)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_get_prefix_color_name
+ */
+
+TEST(IrcNick, IrcNickGetPrefixColorName)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_get_color_for_nicklist
+ */
+
+TEST(IrcNick, IrcNickGetColorForNicklist)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_nicklist_add
+ */
+
+TEST(IrcNick, IrcNickNicklistAdd)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_nicklist_remove
+ */
+
+TEST(IrcNick, IrcNickNicklistRemove)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_nicklist_set
+ */
+
+TEST(IrcNick, IrcNickNicklistSet)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_nicklist_set_prefix_color_all
+ */
+
+TEST(IrcNick, IrcNickNicklistSetPrefixColorAll)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_nicklist_set_color_all
+ */
+
+TEST(IrcNick, IrcNickNicklistSetColorAll)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_new
+ */
+
+TEST(IrcNick, IrcNickNew)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_change
+ */
+
+TEST(IrcNick, IrcNickChange)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_set_mode
+ */
+
+TEST(IrcNick, IrcNickSetMode)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_realloc_prefixes
+ */
+
+TEST(IrcNick, IrcNickReallocPrefixes)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_free
+ */
+
+TEST(IrcNick, IrcNickFree)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_free_all
+ */
+
+TEST(IrcNick, IrcNickFreeAll)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_search
+ */
+
+TEST(IrcNick, IrcNickSearch)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_count
+ */
+
+TEST(IrcNick, IrcNickCount)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_set_away
+ */
+
+TEST(IrcNick, IrcNickSetAway)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_mode_for_display
+ */
+
+TEST(IrcNick, IrcNickModeForDisplay)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_as_prefix
+ */
+
+TEST(IrcNick, IrcNickAsPrefix)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_color_for_msg
+ */
+
+TEST(IrcNick, IrcNickColorForMsg)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_color_for_pv
+ */
+
+TEST(IrcNick, IrcNickColorForPv)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_default_ban_mask
+ */
+
+TEST(IrcNick, IrcNickDefaultBanMask)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_hdata_nick_cb
+ */
+
+TEST(IrcNick, IrcNickHdataNickCb)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_add_to_infolist
+ */
+
+TEST(IrcNick, IrcNickAddToInfolist)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_nick_print_log
+ */
+
+TEST(IrcNick, IrcNickPrintLog)
+{
+    /* TODO: write tests */
 }
