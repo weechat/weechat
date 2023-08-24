@@ -244,16 +244,6 @@ TEST(IrcList, IrcListBufferInputDataCb)
 
 /*
  * Tests functions:
- *   irc_list_buffer_set_keys
- */
-
-TEST(IrcList, IrcListBufferSetKeys)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   irc_list_create_buffer
  */
 

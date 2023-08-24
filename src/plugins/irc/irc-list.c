@@ -909,33 +909,6 @@ irc_list_buffer_input_data (struct t_gui_buffer *buffer, const char *input_data)
 }
 
 /*
- * Sets keys on list buffer.
- */
-
-void
-irc_list_buffer_set_keys (struct t_gui_buffer *buffer)
-{
-    char *keys[][2] = {
-        { "up",        "/list -up"     },
-        { "down",      "/list -down"   },
-        { "meta-home", "/list -go 0"   },
-        { "meta-end",  "/list -go end" },
-        { "f11",       "/list -left"   },
-        { "f12",       "/list -right"  },
-        { "ctrl-j",    "/list -join"   },
-        { NULL, NULL },
-    };
-    char str_key[64];
-    int i;
-
-    for (i = 0; keys[i][0]; i++)
-    {
-        snprintf (str_key, sizeof (str_key), "key_bind_%s", keys[i][0]);
-        weechat_buffer_set (buffer, str_key, keys[i][1]);
-    }
-}
-
-/*
  * Creates buffer with list of channels for a server.
  *
  * Returns pointer to newly created buffer, NULL if error.
@@ -963,6 +936,14 @@ irc_list_create_buffer (struct t_irc_server *server)
         weechat_hashtable_set (buffer_props, "localvar_set_no_log", "1");
         /* disable all highlights on this buffer */
         weechat_hashtable_set (buffer_props, "highlight_words", "-");
+        /* set keys on buffer */
+        weechat_hashtable_set (buffer_props, "key_bind_up", "/list -up");
+        weechat_hashtable_set (buffer_props, "key_bind_down", "/list -down");
+        weechat_hashtable_set (buffer_props, "key_bind_meta-home", "/list -go 0");
+        weechat_hashtable_set (buffer_props, "key_bind_meta-end", "/list -go end");
+        weechat_hashtable_set (buffer_props, "key_bind_f11", "/list -left");
+        weechat_hashtable_set (buffer_props, "key_bind_f12", "/list -right");
+        weechat_hashtable_set (buffer_props, "key_bind_ctrl-j", "/list -join");
     }
 
     current_buffer_number = weechat_buffer_get_integer (
@@ -979,7 +960,6 @@ irc_list_create_buffer (struct t_irc_server *server)
     if (buffer_props)
         weechat_hashtable_free (buffer_props);
 
-    irc_list_buffer_set_keys (buffer);
     irc_list_buffer_set_localvar_filter (buffer, server);
 
     if (weechat_buffer_get_integer (buffer, "layout_number") < 1)
