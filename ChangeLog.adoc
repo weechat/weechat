@@ -19,6 +19,7 @@ New features::
   * core: add options weechat.buffer.* to save buffer properties set by user, add option `setauto` in command `/buffer` (issue #352)
   * core: add parameters and key bindings to move to edges of current area with commands `/cursor go` and `/cursor move` (issue #1282)
   * core: add variables "_chat_focused_line_bol" and "_chat_focused_line_eol" in focus data (issue #1955)
+  * api: add infos "nick_color_ignore_case" and "nick_color_name_ignore_case" (issue #194)
   * api: add info "buffer" (issue #1962)
   * buflist: increase max number of buflist items from 3 to 5 (issue #1703)
   * fset: add variable `allowed_values` in options, add options fset.color.allowed_values and fset.color.allowed_values_selected

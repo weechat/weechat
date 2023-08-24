@@ -141,15 +141,20 @@ irc_nick_is_nick (struct t_irc_server *server, const char *string)
 char *
 irc_nick_find_color (struct t_irc_server *server, const char *nickname)
 {
-    char *nickname_lower, *result;
+    char str_args[4096];
+    int casemapping, range;
 
-    nickname_lower = irc_server_string_tolower (server, nickname);
-    if (!nickname_lower)
-        return NULL;
+    casemapping = (server) ? server->casemapping : -1;
+    if ((casemapping < 0) || (casemapping >= IRC_SERVER_NUM_CASEMAPPING))
+        casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
+    range = irc_server_casemapping_range[casemapping];
 
-    result = weechat_info_get ("nick_color", nickname_lower);
-    free (nickname_lower);
-    return result;
+    snprintf (str_args, sizeof (str_args),
+              "%s;%d",
+              (nickname) ? nickname : "",
+              range);
+
+    return weechat_info_get ("nick_color_ignore_case", str_args);
 }
 
 /*
@@ -161,15 +166,20 @@ irc_nick_find_color (struct t_irc_server *server, const char *nickname)
 char *
 irc_nick_find_color_name (struct t_irc_server *server, const char *nickname)
 {
-    char *nickname_lower, *result;
+    char str_args[4096];
+    int casemapping, range;
 
-    nickname_lower = irc_server_string_tolower (server, nickname);
-    if (!nickname_lower)
-        return NULL;
+    casemapping = (server) ? server->casemapping : -1;
+    if ((casemapping < 0) || (casemapping >= IRC_SERVER_NUM_CASEMAPPING))
+        casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
+    range = irc_server_casemapping_range[casemapping];
 
-    result = weechat_info_get ("nick_color_name", nickname_lower);
-    free (nickname_lower);
-    return result;
+    snprintf (str_args, sizeof (str_args),
+              "%s;%d",
+              (nickname) ? nickname: "",
+              range);
+
+    return weechat_info_get ("nick_color_name_ignore_case", str_args);
 }
 
 /*

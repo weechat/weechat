@@ -395,6 +395,70 @@ string_toupper (const char *string)
 }
 
 /*
+ * Converts string to lower case (using a range of chars).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_tolower_range (const char *string, int range)
+{
+    char *result, *ptr_result;
+
+    if (!string)
+        return NULL;
+
+    if (range <= 0)
+        return string_tolower (string);
+
+    result = strdup (string);
+    if (!result)
+        return NULL;
+
+    ptr_result = result;
+    while (ptr_result && ptr_result[0])
+    {
+        if ((ptr_result[0] >= 'A') && (ptr_result[0] < 'A' + range))
+            ptr_result[0] += ('a' - 'A');
+        ptr_result = (char *)utf8_next_char (ptr_result);
+    }
+
+    return result;
+}
+
+/*
+ * Converts string to upper case (using a range of char).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_toupper_range (const char *string, int range)
+{
+    char *result, *ptr_result;
+
+    if (!string)
+        return NULL;
+
+    if (range <= 0)
+        return string_toupper (string);
+
+    result = strdup (string);
+    if (!result)
+        return NULL;
+
+    ptr_result = result;
+    while (ptr_result && ptr_result[0])
+    {
+        if ((ptr_result[0] >= 'a') && (ptr_result[0] < 'a' + range))
+            ptr_result[0] -= ('a' - 'A');
+        ptr_result = (char *)utf8_next_char (ptr_result);
+    }
+
+    return result;
+}
+
+/*
  * Compares two chars (case sensitive).
  *
  * Returns: arithmetic result of subtracting the first UTF-8 char in string2

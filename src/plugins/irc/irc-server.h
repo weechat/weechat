@@ -328,6 +328,7 @@ enum t_irc_fingerprint_digest_algo
     IRC_FINGERPRINT_NUM_ALGOS,
 };
 
+extern int irc_server_casemapping_range[];
 extern char *irc_server_prefix_modes_default;
 extern char *irc_server_prefix_chars_default;
 extern char *irc_server_chanmodes_default;
@@ -348,10 +349,6 @@ extern int irc_server_strcasecmp (struct t_irc_server *server,
 extern int irc_server_strncasecmp (struct t_irc_server *server,
                                    const char *string1, const char *string2,
                                    int max);
-extern char *irc_server_string_tolower (struct t_irc_server *server,
-                                        const char *string);
-extern char *irc_server_string_toupper (struct t_irc_server *server,
-                                        const char *string);
 extern char *irc_server_eval_expression (struct t_irc_server *server,
                                          const char *string);
 extern void irc_server_sasl_get_creds (struct t_irc_server *server,

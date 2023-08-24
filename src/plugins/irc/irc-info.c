@@ -1259,15 +1259,17 @@ irc_info_init ()
         &irc_info_info_irc_nick_from_host_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick_color",
-        N_("get nick color code (nick is first converted to lower case, "
-           "following the value of CASEMAPPING on the server, "
+        N_("get nick color code, ignoring case (this calls the info "
+           "\"nick_color_ignore_case\" with appropriate range, according "
+           "to the value of CASEMAPPING on the server, "
            "defaulting to \"rfc1459\" if the server is not given)"),
         N_("server,nickname (server is optional)"),
         &irc_info_info_irc_nick_color_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick_color_name",
-        N_("get nick color name (nick is first converted to lower case, "
-           "following the value of CASEMAPPING on the server, "
+        N_("get nick color name, ignoring case (this calls the info "
+           "\"nick_color_name_ignore_case\" with appropriate range, according "
+           "to the value of CASEMAPPING on the server, "
            "defaulting to \"rfc1459\" if the server is not given)"),
         N_("server,nickname (server is optional)"),
         &irc_info_info_irc_nick_color_name_cb, NULL, NULL);

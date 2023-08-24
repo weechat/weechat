@@ -65,12 +65,12 @@ extern char *gui_nick_strdup_for_color (const char *nickname);
     if (nick)                                                           \
         free (nick);
 
-#define WEE_FIND_COLOR(__result, __nickname, __colors)                  \
-    color = gui_nick_find_color_name (__nickname, __colors);            \
+#define WEE_FIND_COLOR(__result, __nickname, __range, __colors)         \
+    color = gui_nick_find_color_name (__nickname, __range, __colors);   \
     STRCMP_EQUAL(__result, color);                                      \
     free (color);                                                       \
     result_color = gui_color_get_custom (__result);                     \
-    color = gui_nick_find_color (__nickname, __colors);                 \
+    color = gui_nick_find_color (__nickname, __range, __colors);        \
     STRCMP_EQUAL(result_color, color);                                  \
     free (color);
 
@@ -363,27 +363,41 @@ TEST(GuiNick, FindColor)
     const char *result_color;
     char *color;
 
-    WEE_FIND_COLOR("default", NULL, NULL);
-    WEE_FIND_COLOR("default", "", NULL);
+    WEE_FIND_COLOR("default", NULL, -1, NULL);
+    WEE_FIND_COLOR("default", "", -1, NULL);
 
-    WEE_FIND_COLOR("212", "abcdef", NULL);
-    WEE_FIND_COLOR("92", "abcdefghi", NULL);
+    WEE_FIND_COLOR("212", "abcdef", -1, NULL);
+    WEE_FIND_COLOR("92", "abcdefghi", -1, NULL);
 
     /* with forced color */
     config_file_option_set (config_look_nick_color_force,
                             "abcdef:green;abcdefghi:125", 1);
-    WEE_FIND_COLOR("green", "abcdef", NULL);
-    WEE_FIND_COLOR("125", "abcdefghi", NULL);
+    WEE_FIND_COLOR("green", "abcdef", -1, NULL);
+    WEE_FIND_COLOR("125", "abcdefghi", -1, NULL);
     config_file_option_reset (config_look_nick_color_force, 1);
 
     /* with custom colors */
-    WEE_FIND_COLOR("214", "abcdef", "red,blue,214,magenta");
-    WEE_FIND_COLOR("blue", "abcdefghi", "red,blue,214,magenta");
+    WEE_FIND_COLOR("214", "abcdef", -1, "red,blue,214,magenta");
+    WEE_FIND_COLOR("blue", "abcdefghi", -1, "red,blue,214,magenta");
 
     /* with forced color and custom colors (forced color is ignored) */
     config_file_option_set (config_look_nick_color_force,
                             "abcdef:green;abcdefghi:125", 1);
-    WEE_FIND_COLOR("214", "abcdef", "red,blue,214,magenta");
-    WEE_FIND_COLOR("blue", "abcdefghi", "red,blue,214,magenta");
+    WEE_FIND_COLOR("214", "abcdef", -1, "red,blue,214,magenta");
+    WEE_FIND_COLOR("blue", "abcdefghi", -1, "red,blue,214,magenta");
     config_file_option_reset (config_look_nick_color_force, 1);
+
+    /* with case range */
+    WEE_FIND_COLOR("176", "ABCDEF]^", -1, NULL);
+    WEE_FIND_COLOR("186", "ABCDEF]^", 0, NULL);
+    WEE_FIND_COLOR("174", "ABCDEF]^", 30, NULL);
+    WEE_FIND_COLOR("148", "ABCDEF]^", 29, NULL);
+    WEE_FIND_COLOR("186", "ABCDEF]^", 26, NULL);
+
+    /* with case range and custom colors */
+    WEE_FIND_COLOR("214", "ABCDEF]^", -1, "red,blue,214,magenta,yellow");
+    WEE_FIND_COLOR("yellow", "ABCDEF]^", 0, "red,blue,214,magenta,yellow");
+    WEE_FIND_COLOR("blue", "ABCDEF]^", 30, "red,blue,214,magenta,yellow");
+    WEE_FIND_COLOR("magenta", "ABCDEF]^", 29, "red,blue,214,magenta,yellow");
+    WEE_FIND_COLOR("yellow", "ABCDEF]^", 26, "red,blue,214,magenta,yellow");
 }

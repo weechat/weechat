@@ -59,8 +59,14 @@ back with the two following commands:
 They will then be advertised in reply to "CTCP CLIENTINFO", which is now built
 dynamically with these options.
 
-[[v4.1.0_info_irc_nick_color]]
-=== Infos irc_nick_color and irc_nick_color_name
+[[v4.1.0_nick_color_infos]]
+=== Nick color infos
+
+Two infos to get nick colors have been added: nick_color_ignore_case and
+nick_color_name_ignore_case. +
+They are similar to nick_color and nick_color_name, except they take as second
+argument a range of chars to apply on the nick: the nick is converted to lower
+case using this range of chars.
 
 The infos irc_nick_color and irc_nick_color_name, that were deprecated since
 version 1.5 are now used again, with a change in parameter: the server is now

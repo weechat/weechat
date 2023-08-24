@@ -190,17 +190,19 @@ TEST(IrcNick, IrcNickFindColor)
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
 
-    POINTERS_EQUAL(NULL, irc_nick_find_color (NULL, NULL));
-    POINTERS_EQUAL(NULL, irc_nick_find_color_name (NULL, NULL));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("default"));
 
-    POINTERS_EQUAL(NULL, irc_nick_find_color (server, NULL));
-    POINTERS_EQUAL(NULL, irc_nick_find_color_name (server, NULL));
+    WEE_TEST_STR(str_color, irc_nick_find_color (NULL, NULL));
+    WEE_TEST_STR("default", irc_nick_find_color_name (NULL, NULL));
 
-    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("162"));
-    WEE_TEST_STR(str_color, irc_nick_find_color (NULL, "NICK[A]"));
-    WEE_TEST_STR(str_color, irc_nick_find_color (NULL, "nick{a}"));
-    WEE_TEST_STR("162", irc_nick_find_color_name (NULL, "NICK[A]"));
-    WEE_TEST_STR("162", irc_nick_find_color_name (NULL, "nick{a}"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, NULL));
+    WEE_TEST_STR("default", irc_nick_find_color_name (server, NULL));
+
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("142"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (NULL, "NICK]"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (NULL, "nick}"));
+    WEE_TEST_STR("142", irc_nick_find_color_name (NULL, "NICK]"));
+    WEE_TEST_STR("142", irc_nick_find_color_name (NULL, "nick}"));
 
     snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("lightcyan"));
     WEE_TEST_STR(str_color, irc_nick_find_color (NULL, "NICK^A"));
@@ -208,11 +210,11 @@ TEST(IrcNick, IrcNickFindColor)
     WEE_TEST_STR("lightcyan", irc_nick_find_color_name (NULL, "NICK^A"));
     WEE_TEST_STR("lightcyan", irc_nick_find_color_name (NULL, "nick~a"));
 
-    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("162"));
-    WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK[A]"));
-    WEE_TEST_STR(str_color, irc_nick_find_color (server, "nick{a}"));
-    WEE_TEST_STR("162", irc_nick_find_color_name (server, "NICK[A]"));
-    WEE_TEST_STR("162", irc_nick_find_color_name (server, "nick{a}"));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("142"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK]"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "nick}"));
+    WEE_TEST_STR("142", irc_nick_find_color_name (server, "NICK]"));
+    WEE_TEST_STR("142", irc_nick_find_color_name (server, "nick}"));
 
     snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("lightcyan"));
     WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK^A"));
@@ -222,11 +224,11 @@ TEST(IrcNick, IrcNickFindColor)
 
     server->casemapping = IRC_SERVER_CASEMAPPING_STRICT_RFC1459;
 
-    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("162"));
-    WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK[A]"));
-    WEE_TEST_STR(str_color, irc_nick_find_color (server, "nick{a}"));
-    WEE_TEST_STR("162", irc_nick_find_color_name (server, "NICK[A]"));
-    WEE_TEST_STR("162", irc_nick_find_color_name (server, "nick{a}"));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("142"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK]"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "nick}"));
+    WEE_TEST_STR("142", irc_nick_find_color_name (server, "NICK]"));
+    WEE_TEST_STR("142", irc_nick_find_color_name (server, "nick}"));
 
     snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("176"));
     WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK^A"));
@@ -237,12 +239,12 @@ TEST(IrcNick, IrcNickFindColor)
 
     server->casemapping = IRC_SERVER_CASEMAPPING_ASCII;
 
-    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("212"));
-    WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK[A]"));
-    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("162"));
-    WEE_TEST_STR(str_color, irc_nick_find_color (server, "nick{a}"));
-    WEE_TEST_STR("212", irc_nick_find_color_name (server, "NICK[A]"));
-    WEE_TEST_STR("162", irc_nick_find_color_name (server, "nick{a}"));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("169"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK]"));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("142"));
+    WEE_TEST_STR(str_color, irc_nick_find_color (server, "nick}"));
+    WEE_TEST_STR("169", irc_nick_find_color_name (server, "NICK]"));
+    WEE_TEST_STR("142", irc_nick_find_color_name (server, "nick}"));
 
     snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("176"));
     WEE_TEST_STR(str_color, irc_nick_find_color (server, "NICK^A"));

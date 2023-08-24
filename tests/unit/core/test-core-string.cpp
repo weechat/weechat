@@ -219,6 +219,46 @@ TEST(CoreString, ToUpper)
 
 /*
  * Tests functions:
+ *   string_tolower_range
+ */
+
+TEST(CoreString, ToLowerRange)
+{
+    char *str;
+
+    WEE_TEST_STR(NULL, string_tolower_range (NULL, 0));
+    WEE_TEST_STR(NULL, string_tolower_range (NULL, 30));
+
+    WEE_TEST_STR("", string_tolower_range ("", 0));
+    WEE_TEST_STR("", string_tolower_range ("", 30));
+    WEE_TEST_STR("^[a]ô", string_tolower_range ("^[A]Ô", 0));
+    WEE_TEST_STR("~{a}Ô", string_tolower_range ("^[A]Ô", 30));
+    WEE_TEST_STR("^{a}Ô", string_tolower_range ("^[A]Ô", 29));
+    WEE_TEST_STR("^[a]Ô", string_tolower_range ("^[A]Ô", 26));
+}
+
+/*
+ * Tests functions:
+ *   string_toupper_range
+ */
+
+TEST(CoreString, ToUpperRange)
+{
+    char *str;
+
+    WEE_TEST_STR(NULL, string_toupper_range (NULL, 0));
+    WEE_TEST_STR(NULL, string_toupper_range (NULL, 30));
+
+    WEE_TEST_STR("", string_toupper_range ("", 0));
+    WEE_TEST_STR("", string_toupper_range ("", 30));
+    WEE_TEST_STR("~{A}Ô", string_toupper_range ("~{a}ô", 0));
+    WEE_TEST_STR("^[A]ô", string_toupper_range ("~{a}ô", 30));
+    WEE_TEST_STR("~[A]ô", string_toupper_range ("~{a}ô", 29));
+    WEE_TEST_STR("~{A}ô", string_toupper_range ("~{a}ô", 26));
+}
+
+/*
+ * Tests functions:
  *   string_cut
  */
 

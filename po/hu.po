@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-24 11:29+0200\n"
+"POT-Creation-Date: 2023-08-24 18:16+0200\n"
 "PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9147,13 +9147,15 @@ msgid "IRC host (like `:nick!name@server.com`)"
 msgstr ""
 
 msgid ""
-"get nick color code (nick is first converted to lower case, following the "
-"value of CASEMAPPING on the server, defaulting to \"rfc1459\" if the server "
-"is not given)"
+"get nick color code, ignoring case (this calls the info "
+"\"nick_color_ignore_case\" with appropriate range, according to the value of "
+"CASEMAPPING on the server, defaulting to \"rfc1459\" if the server is not "
+"given)"
 msgstr ""
 
 msgid ""
-"get nick color name (nick is first converted to lower case, following the "
+"get nick color name, ignoring case (this calls the info "
+"\"nick_color_name_ignore_case\" with appropriate range, according to the "
 "value of CASEMAPPING on the server, defaulting to \"rfc1459\" if the server "
 "is not given)"
 msgstr ""
@@ -10753,6 +10755,23 @@ msgstr "idő színe a beszédablakban"
 
 #, fuzzy
 msgid "get nick color name"
+msgstr "üzenetek színe"
+
+#, fuzzy
+msgid "get nick color code, ignoring case"
+msgstr "üzenetek színe"
+
+#, fuzzy
+msgid ""
+"nickname;range;colors (range is a number of chars (see function "
+"strcasecmp_range, 0 = convert to lower case without using a range), colors "
+"is an optional comma-separated list of colors to use; background is allowed "
+"for a color with format text:background; if colors is present, WeeChat "
+"options with nick colors and forced nick colors are ignored)"
+msgstr "idő színe a beszédablakban"
+
+#, fuzzy
+msgid "get nick color name, ignoring case"
 msgstr "üzenetek színe"
 
 msgid "WeeChat uptime (format: \"days:hh:mm:ss\")"
