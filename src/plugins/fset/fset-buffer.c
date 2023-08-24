@@ -1573,7 +1573,7 @@ fset_buffer_open ()
     buffer_props = weechat_hashtable_new (
         32,
         WEECHAT_HASHTABLE_STRING,
-        WEECHAT_HASHTABLE_POINTER,
+        WEECHAT_HASHTABLE_STRING,
         NULL,
         NULL);
     if (buffer_props)
