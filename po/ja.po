@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-24 09:00+0200\n"
+"POT-Creation-Date: 2023-08-24 11:29+0200\n"
 "PO-Revision-Date: 2023-08-08 07:13+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -389,6 +389,11 @@ msgstr "バッファ \"%s\" のローカル変数:"
 #, c-format
 msgid "No local variable defined for buffer \"%s\""
 msgstr "バッファ \"%s\" にローカル変数は設定されていません"
+
+#, fuzzy, c-format
+msgid "%sUnable to create option for buffer property \"%s\""
+msgstr ""
+"%1$sエラー: プロキシ \"%3$s\" に対するオプション \"%2$s\" を設定できません"
 
 #, c-format
 msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
@@ -1280,8 +1285,8 @@ msgid ""
 "|| switch [-previous] || zoom || renumber [<number1> [<number2> [<start>]]] "
 "|| close [<n1>[-<n2>]|<name>...] || notify [<level>] || listvar [<number>|"
 "<name>] || setvar <name> [<value>] || delvar <name> || set <property> "
-"[<value>] || get <property> || jump smart|last_displayed|prev_visited|"
-"next_visited || <number>|-|+|<name>"
+"[<value>] || setauto <property> [<value>] || get <property> || jump smart|"
+"last_displayed|prev_visited|next_visited || <number>|-|+|<name>"
 msgstr ""
 "list || add [-free] [-switch] <name> || clear [<number>|<name>|-merged|-all "
 "[<number>|<name>...]] || move <number>|-|+ || swap <number1>|<name1> "
@@ -1327,6 +1332,9 @@ msgid ""
 "  setvar: set a local variable in the current buffer\n"
 "  delvar: delete a local variable from the current buffer\n"
 "     set: set a property in the current buffer\n"
+" setauto: like \"set\" and also define option \"weechat.buffer.<name>."
+"<property>\" so that the property is saved in configuration and applied each "
+"time this buffer is opened\n"
 "     get: display a property of current buffer\n"
 "    jump: jump to another buffer:\n"
 "          smart: next buffer with activity\n"
@@ -3730,6 +3738,11 @@ msgstr "環境変数の値"
 msgid "properties that can be set on a buffer"
 msgstr "バッファに指定可能なプロパティ"
 
+#, fuzzy
+#| msgid "properties that can be set on a buffer"
+msgid "properties that can be automatically set on a buffer"
+msgstr "バッファに指定可能なプロパティ"
+
 msgid "properties that can be read on a buffer"
 msgstr "バッファから読み取り可能なプロパティ"
 
@@ -3913,6 +3926,17 @@ msgstr "%sエラー: パレットオプションは数字でなければいけ�
 #, c-format
 msgid "%sWarning: unknown option for section \"%s\": %s (value: \"%s\")"
 msgstr "%s警告: セクション \"%s\" の不明なオプション: %s (値: \"%s\")"
+
+#, c-format
+msgid ""
+"set property \"%s\" on any buffer matching mask \"%s\"; content is "
+"evaluated, see /help eval; ${buffer} is a pointer to the buffer being opened"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "Options saved to %s"
+msgid "Option \"weechat.buffer.%s\" has been set to \"%s\""
+msgstr "%s にオプションを保存しました"
 
 msgid "Notify level for buffer"
 msgstr "バッファの通知レベル"

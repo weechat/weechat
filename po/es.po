@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-24 09:00+0200\n"
+"POT-Creation-Date: 2023-08-24 11:29+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -422,6 +422,11 @@ msgstr "Variables locales para el buffer \"%s\":"
 #, c-format
 msgid "No local variable defined for buffer \"%s\""
 msgstr "Ninguna variable local definida para el buffer \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%sUnable to set option \"%s\" for proxy \"%s\""
+msgid "%sUnable to create option for buffer property \"%s\""
+msgstr "%sError: no se pudo configurar la opción \"%s\" para el proxy \"%s\""
 
 #, c-format
 msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
@@ -1330,8 +1335,8 @@ msgid ""
 "|| switch [-previous] || zoom || renumber [<number1> [<number2> [<start>]]] "
 "|| close [<n1>[-<n2>]|<name>...] || notify [<level>] || listvar [<number>|"
 "<name>] || setvar <name> [<value>] || delvar <name> || set <property> "
-"[<value>] || get <property> || jump smart|last_displayed|prev_visited|"
-"next_visited || <number>|-|+|<name>"
+"[<value>] || setauto <property> [<value>] || get <property> || jump smart|"
+"last_displayed|prev_visited|next_visited || <number>|-|+|<name>"
 msgstr ""
 "list || add [-free] [-switch] <nombre> || clear [<número>|<nombre>|-merged|-"
 "all [<número>|<nombre>...]] || move <número>|-|+ || swap <número1>|<nombre1> "
@@ -1378,6 +1383,9 @@ msgid ""
 "  setvar: set a local variable in the current buffer\n"
 "  delvar: delete a local variable from the current buffer\n"
 "     set: set a property in the current buffer\n"
+" setauto: like \"set\" and also define option \"weechat.buffer.<name>."
+"<property>\" so that the property is saved in configuration and applied each "
+"time this buffer is opened\n"
 "     get: display a property of current buffer\n"
 "    jump: jump to another buffer:\n"
 "          smart: next buffer with activity\n"
@@ -3558,6 +3566,11 @@ msgstr "valor de una variable local de un buffer"
 msgid "properties that can be set on a buffer"
 msgstr "propiedades del buffer que pueden configurarse"
 
+#, fuzzy
+#| msgid "properties that can be set on a buffer"
+msgid "properties that can be automatically set on a buffer"
+msgstr "propiedades del buffer que pueden configurarse"
+
 msgid "properties that can be read on a buffer"
 msgstr "propiedades del buffer que pueden leerse"
 
@@ -3734,6 +3747,17 @@ msgstr "%sError: el valor de la paleta debe ser un número"
 msgid "%sWarning: unknown option for section \"%s\": %s (value: \"%s\")"
 msgstr ""
 "%sAtención: opción desconocida para la sección \"%s\": %s (valor: \"%s\")"
+
+#, c-format
+msgid ""
+"set property \"%s\" on any buffer matching mask \"%s\"; content is "
+"evaluated, see /help eval; ${buffer} is a pointer to the buffer being opened"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "Options saved to %s"
+msgid "Option \"weechat.buffer.%s\" has been set to \"%s\""
+msgstr "Opciones guardadas en %s"
 
 msgid "Notify level for buffer"
 msgstr "Nivel de notificación para el buffer"
