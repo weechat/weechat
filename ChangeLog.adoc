@@ -40,6 +40,7 @@ Bug fixes::
 
   * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
   * core: display focus hashtable for debug even if no key is matching
+  * fset: add local key bindings during the buffer creation
   * fset: remove extra spaces between min and max values when second format is used
   * fset: fix mouse actions when second format is used
   * fset: apply option fset.color.help_description (issue #1988)

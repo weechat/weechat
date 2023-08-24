@@ -256,7 +256,7 @@ fset_config_change_use_keys_cb (const void *pointer, void *data,
     (void) option;
 
     if (fset_buffer)
-        fset_buffer_set_keys ();
+        fset_buffer_set_keys (NULL);
 }
 
 /*

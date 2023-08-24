@@ -1497,10 +1497,13 @@ fset_buffer_set_callbacks ()
 
 /*
  * Sets keys on fset buffer.
+ *
+ * If hashtable is not NULL, it is used to set keys, otherwise keys are directly
+ * set in the fset buffer.
  */
 
 void
-fset_buffer_set_keys ()
+fset_buffer_set_keys (struct t_hashtable *hashtable)
 {
     char *keys[][2] = {
         { "up",            "/fset -up"                                     },
@@ -1534,12 +1537,18 @@ fset_buffer_set_keys ()
         if (weechat_config_boolean (fset_config_look_use_keys))
         {
             snprintf (str_key, sizeof (str_key), "key_bind_%s", keys[i][0]);
-            weechat_buffer_set (fset_buffer, str_key, keys[i][1]);
+            if (hashtable)
+                weechat_hashtable_set (hashtable, str_key, keys[i][1]);
+            else
+                weechat_buffer_set (fset_buffer, str_key, keys[i][1]);
         }
         else
         {
             snprintf (str_key, sizeof (str_key), "key_unbind_%s", keys[i][0]);
-            weechat_buffer_set (fset_buffer, str_key, "");
+            if (hashtable)
+                weechat_hashtable_set (hashtable, str_key, "");
+            else
+                weechat_buffer_set (fset_buffer, str_key, "");
         }
     }
 }
@@ -1580,6 +1589,7 @@ fset_buffer_open ()
     {
         weechat_hashtable_set (buffer_props, "type", "free");
         weechat_hashtable_set (buffer_props, "localvar_set_type", "option");
+        fset_buffer_set_keys (buffer_props);
     }
 
     fset_buffer = weechat_buffer_new_props (
@@ -1594,7 +1604,6 @@ fset_buffer_open ()
     if (!fset_buffer)
         return;
 
-    fset_buffer_set_keys ();
     fset_buffer_set_localvar_filter ();
 
     fset_buffer_selected_line = 0;
