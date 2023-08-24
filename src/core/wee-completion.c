@@ -513,8 +513,8 @@ completion_list_map_buffer_local_variable_setauto_cb (void *data,
 }
 
 /*
- * Adds buffer properties and local variables (that can be set) to completion
- * list.
+ * Adds buffer properties (that can be set), local variables and key bindings
+ * to completion list.
  */
 
 int
@@ -523,6 +523,8 @@ completion_list_add_buffer_properties_setauto_cb (const void *pointer, void *dat
                                                   struct t_gui_buffer *buffer,
                                                   struct t_gui_completion *completion)
 {
+    struct t_gui_key *ptr_key;
+    char str_key[1024];
     int i;
 
     /* make C compiler happy */
@@ -531,6 +533,7 @@ completion_list_add_buffer_properties_setauto_cb (const void *pointer, void *dat
     (void) completion_item;
     (void) buffer;
 
+    /* add buffer properties */
     for (i = 0; gui_buffer_properties_set[i]; i++)
     {
         gui_completion_list_add (completion,
@@ -538,9 +541,20 @@ completion_list_add_buffer_properties_setauto_cb (const void *pointer, void *dat
                                  0, WEECHAT_LIST_POS_SORT);
     }
 
+    /* add buffer local variables */
     hashtable_map (completion->buffer->local_variables,
                    &completion_list_map_buffer_local_variable_setauto_cb,
                    completion);
+
+    /* add buffer keys */
+    for (ptr_key = completion->buffer->keys; ptr_key;
+         ptr_key = ptr_key->next_key)
+    {
+        snprintf (str_key, sizeof (str_key), "key_bind_%s", ptr_key->key);
+        gui_completion_list_add (completion, str_key, 0, WEECHAT_LIST_POS_SORT);
+        snprintf (str_key, sizeof (str_key), "key_unbind_%s", ptr_key->key);
+        gui_completion_list_add (completion, str_key, 0, WEECHAT_LIST_POS_SORT);
+    }
 
     return WEECHAT_RC_OK;
 }
