@@ -7078,7 +7078,7 @@ irc_command_init ()
         "%(irc_msg_part)", &irc_command_cycle, NULL, NULL);
     weechat_hook_command (
         "dcc",
-        N_("start a DCC (file transfer or direct chat)"),
+        N_("start a DCC (passive file transfer or direct chat)"),
         N_("chat <nick> || send <nick> <file>"),
         N_("nick: nick\n"
            "file: filename (on local host)\n"
