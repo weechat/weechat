@@ -995,15 +995,12 @@ oder pro Gruppe von Buffern (wie IRC-Server).
 Um nun Highlights (Hervorhebungen) für bestimmte Nicks zu deaktivieren, muss
 man die entsprechende Eigenschaft auf 2 setzen.
 
-// TRANSLATION MISSING
-For the current buffer:
-
+Für den aktuellen Buffer:
 ----
 /buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-// TRANSLATION MISSING
-For all channels on server "libera":
+Für alle Kanäle auf dem Server "libera":
 
 ----
 /set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
@@ -1141,10 +1138,8 @@ Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
 Man sollte sich die Tipps zum <<memory_usage,Speicherverbrauch>> ansehen
 und zusätzlich diese Tipps beherzigen:
 
-// TRANSLATION MISSING
-* "nicklist"-Bar sollte versteckt werden: `/bar hide nicklist` (key: kbd:[Alt+Shift+N]).
-// TRANSLATION MISSING
-* Disable "buflist": `/buflist disable` (key: kbd:[Alt+Shift+B]).
+* "nicklist"-Bar sollte versteckt werden: `/bar hide nicklist` (Taste: kbd:[Alt+Shift+N]).
+* deaktiviere "buflist": `/buflist disable` (Taste: kbd:[Alt+Shift+B]).
 * die Sekundenanzeigen in der Statusbar sollte deaktiviert werden:
   `+/set weechat.look.item_time_format "%H:%M"+` (dies ist die Standardeinstellung)
 * die Echtzeit Rechtschreibkorrektur sollte deaktiviert werden (falls sie aktiviert wurde):
@@ -1172,9 +1167,7 @@ Deaktiviere die automatische Antwort für alle CTCP Anfragen:
 /set irc.ctcp.ping ""
 ----
 
-// TRANSLATION MISSING
-With WeeChat < 4.1.0, other CTCP queries were replied by default and must be
-disabled as well:
+Mit WeeChat < 4.1.0 wurden andere CTCP-Anfragen standardmäßig beantwortet und müssen ebenfalls deaktiviert werden:
 
 ----
 /set irc.ctcp.finger ""
