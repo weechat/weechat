@@ -13,6 +13,10 @@ For a list of important changes that require manual actions, please look at rele
 [[v4.0.5]]
 == Version 4.0.5 (under dev)
 
+New features::
+
+  * python: make stub (weechat.pyi) compatible with Python 3.8 and 3.9 (issue #2006)
+
 Bug fixes::
 
   * irc: fix string comparison when CASEMAPPING is set to "ascii"

@@ -3,7 +3,7 @@
 # DO NOT EDIT BY HAND!
 #
 
-from typing import Dict
+from typing import Dict, Union
 
 WEECHAT_RC_OK: int = 0
 WEECHAT_RC_OK_EAT: int = 1
@@ -539,7 +539,7 @@ def config_new_section(config_file: str, name: str,
     ::
 
         # example
-        def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
+        def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: Union[str, None]) -> int:
             # ...
             return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
             # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
@@ -558,7 +558,7 @@ def config_new_section(config_file: str, name: str,
             # return weechat.WEECHAT_CONFIG_WRITE_ERROR
             # return weechat.WEECHAT_CONFIG_WRITE_MEMORY_ERROR
 
-        def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
+        def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: Union[str, None]) -> int:
             # ...
             return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
             # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
@@ -594,7 +594,7 @@ def config_search_section(config_file: str, section_name: str) -> str:
 
 def config_new_option(config_file: str, section: str, name: str, type: str, description: str,
                       string_values: str, min: int, max: int,
-                      default_value: str | None, value: str | None, null_value_allowed: int,
+                      default_value: Union[str, None], value: Union[str, None], null_value_allowed: int,
                       callback_check_value: str, callback_check_value_data: str,
                       callback_change: str, callback_change_data: str,
                       callback_delete: str, callback_delete_data: str) -> str:

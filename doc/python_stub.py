@@ -37,7 +37,7 @@ STUB_HEADER = """\
 # DO NOT EDIT BY HAND!
 #
 
-from typing import Dict
+from typing import Dict, Union
 """
 
 CONSTANT_RE = (
