@@ -2253,13 +2253,8 @@ z ustawonym dla każdego z nich maksymalnym poziomem hotlisty, możliwe poziomy 
 Na przykład, żeby wyłączyć podświetlenia od "joe" oraz "mike" w obecnym buforze:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-[NOTE]
-Właściwość bufora "hotlist_max_level_nicks" nie jest zapisywana w konfiguracji. +
-Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalować za pomocą
-`+/script install buffer_autoset.py+`, informacje o używaniu `+/help buffer_autoset+`.
 
 [[highlights]]
 === Podświetlenia
@@ -2285,13 +2280,8 @@ Można to także osiągnąć za pomocą właściwości bufora "highlight_disable
 Ten sam przykład, tylko dla konkretnego bufora:
 
 ----
-/buffer set highlight_disable_regex <flash.*>
+/buffer setauto highlight_disable_regex <flash.*>
 ----
-
-[NOTE]
-Właściwość bufora "highlight_disable_regex" nie jest zapisywana w konfiguracji. +
-Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalować za pomocą
-`+/script install buffer_autoset.py+`, informacje o używaniu `+/help buffer_autoset+`.
 
 [[highlights_words]]
 ==== Dodawanie słów do podświetleń
@@ -2346,13 +2336,8 @@ Możesz wymusić podświetlenia używając wyrażenia regularnego z właściwoś
 Na przykład żeby wymusić podświetlenie dla wszytkich wiadomości w obecnym buforze:
 
 ----
-/buffer set highlight_regex .*
+/buffer setauto highlight_regex .*
 ----
-
-[NOTE]
-Właściwość bufora "highlight_regex" nie jest zapisywana w konfiguracji. +
-Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalować za pomocą
-`+/script install buffer_autoset.py+`, informacje o używaniu `+/help buffer_autoset+`.
 
 [[buffer_logging]]
 === Bufor logera

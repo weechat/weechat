@@ -642,7 +642,7 @@ COMMAND_CALLBACK(buffer)
     long number, number1, number2, numbers[3];
     char *error, *value, *pos, *str_number1, *pos_number2;
     int i, count, prev_number, clear_number, list_size;
-    int buffer_found, arg_name, type_free, switch_to_buffer;
+    int buffer_found, arg_name, type_free, switch_to_buffer, rc;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1324,6 +1324,41 @@ COMMAND_CALLBACK(buffer)
             gui_buffer_set (buffer, argv[2], (value) ? value : argv_eol[3]);
             if (value)
                 free (value);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /*
+     * set a property on buffer, saved in config, auto-applied when the buffer
+     * is opened
+     */
+    if (string_strcmp (argv[1], "setauto") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "setauto");
+        if (argc == 3)
+        {
+            /*
+             * default to empty value for valueless buffer "properties",
+             * e.g. localvar_del_xxx
+             */
+            rc = config_weechat_buffer_set (buffer, argv[2], "");
+        }
+        else
+        {
+            value = string_remove_quotes (argv_eol[3], "'\"");
+            rc = config_weechat_buffer_set (buffer,
+                                            argv[2],
+                                            (value) ? value : argv_eol[3]);
+            if (value)
+                free (value);
+        }
+        if (!rc)
+        {
+            gui_chat_printf (
+                NULL,
+                _("%sUnable to create option for buffer property \"%s\""),
+                gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                argv[2]);
         }
         return WEECHAT_RC_OK;
     }
@@ -7758,6 +7793,7 @@ command_init ()
            " || setvar <name> [<value>]"
            " || delvar <name>"
            " || set <property> [<value>]"
+           " || setauto <property> [<value>]"
            " || get <property>"
            " || jump smart|last_displayed|prev_visited|next_visited"
            " || <number>|-|+|<name>"),
@@ -7795,6 +7831,9 @@ command_init ()
            "  setvar: set a local variable in the current buffer\n"
            "  delvar: delete a local variable from the current buffer\n"
            "     set: set a property in the current buffer\n"
+           " setauto: like \"set\" and also define option "
+           "\"weechat.buffer.<name>.<property>\" so that the property is saved "
+           "in configuration and applied each time this buffer is opened\n"
            "     get: display a property of current buffer\n"
            "    jump: jump to another buffer:\n"
            "          smart: next buffer with activity\n"
@@ -7861,6 +7900,7 @@ command_init ()
         " || setvar %(buffer_local_variables) %(buffer_local_variable_value)"
         " || delvar %(buffer_local_variables)"
         " || set %(buffer_properties_set)"
+        " || setauto %(buffer_properties_setauto)"
         " || get %(buffer_properties_get)"
         " || jump smart|last_displayed|prev_visited|next_visited"
         " || %(buffers_plugins_names)|%(buffers_names)|%(irc_channels)|"

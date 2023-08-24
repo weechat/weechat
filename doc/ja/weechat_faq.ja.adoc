@@ -953,33 +953,21 @@ link:weechat_user.ja.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 buffer property to set the max hotlist level for some nicks, per buffer,
 or per group of buffers (like IRC servers).
 
-ハイライトを無効化するだけなら、このプロパティを 2 に設定してください:
+ハイライトを無効化するだけなら、このプロパティを 2 に設定してください.
+
+// TRANSLATION MISSING
+For the current buffer:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-このバッファプロパティは設定に保存されません。このバッファプロパティを自動的に適用するには、_buffer_autoset.py_
-スクリプトが必要です:
+// TRANSLATION MISSING
+For all channels on server "libera":
 
 ----
-/script install buffer_autoset.py
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-例えば、IRC サーバ libera のチャンネル #weechat に参加している "mike"
-の発言に対してハイライトを永久的に無効化するには以下のように設定します:
-
-----
-/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
-----
-
-この設定をすべての libera サーバのバッファに対して適用するには以下のように設定します:
-
-----
-/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
-----
-
-これ以外の例は `+/help buffer_autoset+` を参照してください。
 
 [[irc_target_buffer]]
 === どうすればマージされたバッファ内であるコマンドを発行するターゲットバッファを変更できますか。

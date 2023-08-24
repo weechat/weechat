@@ -2373,13 +2373,8 @@ irc サーバ "libera" に含まれる全てのバッファに対して設定す
 例えば現在のバッファで "joe" と "mike" からのメッセージに対するハイライトを無効化するには以下のように設定します:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-[NOTE]
-バッファプロパティ "hotlist_max_level_nicks" は設定ファイルに保存されません。 +
-これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
-`+/script install buffer_autoset.py+` コマンドを使い、ヘルプを見るには `+/help buffer_autoset+` コマンドを使ってください。
 
 [[highlights]]
 === ハイライト
@@ -2406,13 +2401,8 @@ This can also be set with the buffer property "highlight_disable_regex".
 Same example, specific to the current buffer:
 
 ----
-/buffer set highlight_disable_regex <flash.*>
+/buffer setauto highlight_disable_regex <flash.*>
 ----
-
-[NOTE]
-バッファプロパティ "highlight_disable_regex" は設定ファイルに保存されません。 +
-これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
-`+/script install buffer_autoset.py+` コマンドを使い、ヘルプを見るには `+/help buffer_autoset+` コマンドを使ってください。
 
 [[highlights_words]]
 ==== ハイライトする単語の追加
@@ -2468,13 +2458,8 @@ Same example, specific to the current buffer:
 例えば現在のバッファ宛のすべてのメッセージをハイライトするには以下のように設定します:
 
 ----
-/buffer set highlight_regex .*
+/buffer setauto highlight_regex .*
 ----
-
-[NOTE]
-バッファプロパティ "highlight_regex" は設定ファイルに保存されません。 +
-これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
-`+/script install buffer_autoset.py+` コマンドを使い、ヘルプを見るには `+/help buffer_autoset+` コマンドを使ってください。
 
 // TRANSLATION MISSING
 [[buffer_logging]]

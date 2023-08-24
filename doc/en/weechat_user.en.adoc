@@ -2221,14 +2221,8 @@ and for each nick the max hotlist level to trigger, possible levels are:
 For example to disable highlights from "joe" and "mike" on current buffer:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-[NOTE]
-The buffer property "hotlist_max_level_nicks" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `+/script install buffer_autoset.py+` and get help with
-`+/help buffer_autoset+`.
 
 [[highlights]]
 === Highlights
@@ -2254,14 +2248,8 @@ This can also be set with the buffer property "highlight_disable_regex".
 Same example, specific to the current buffer:
 
 ----
-/buffer set highlight_disable_regex <flash.*>
+/buffer setauto highlight_disable_regex <flash.*>
 ----
-
-[NOTE]
-The buffer property "highlight_disable_regex" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `+/script install buffer_autoset.py+` and get help with
-`+/help buffer_autoset+`.
 
 [[highlights_words]]
 ==== Add words to highlight
@@ -2317,14 +2305,8 @@ You can force highlight using a regular expression with the buffer property
 For example to force the highlight on all messages in the current buffer:
 
 ----
-/buffer set highlight_regex .*
+/buffer setauto highlight_regex .*
 ----
-
-[NOTE]
-The buffer property "highlight_regex" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `+/script install buffer_autoset.py+` and get help with
-`+/help buffer_autoset+`.
 
 [[buffer_logging]]
 === Buffer logging

@@ -2276,15 +2276,8 @@ Par exemple pour désactiver les « highlights » de "joe" et "mike" sur le ta
 courant :
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-[NOTE]
-La propriété de tampon "hotlist_max_level_nicks" n'est pas sauvegardée dans la
-configuration. +
-Vous pouvez facilement la sauvegarder avec le script _buffer_autoset.py_ : vous
-pouvez l'installer avec `+/script install buffer_autoset.py+` et obtenir de l'aide
-avec `+/help buffer_autoset+`.
 
 [[highlights]]
 === Highlights
@@ -2310,15 +2303,8 @@ Ceci peut aussi être défini avec la propriété de tampon "highlight_disable_r
 Même exemple, spécifique au tampon courant :
 
 ----
-/buffer set highlight_disable_regex <flash.*>
+/buffer setauto highlight_disable_regex <flash.*>
 ----
-
-[NOTE]
-La propriété de tampon "highlight_disable_regex" n'est pas sauvegardée dans la
-configuration. +
-Vous pouvez facilement la sauvegarder avec le script _buffer_autoset.py_ : vous
-pouvez l'installer avec `+/script install buffer_autoset.py+` et obtenir de l'aide
-avec `+/help buffer_autoset+`.
 
 [[highlights_words]]
 ==== Ajouter des mots pour le « highlight »
@@ -2377,15 +2363,8 @@ Par exemple pour forcer le highlight sur tous les messages dans le canal
 courant :
 
 ----
-/buffer set highlight_regex .*
+/buffer setauto highlight_regex .*
 ----
-
-[NOTE]
-La propriété de tampon "highlight_regex" n'est pas sauvegardée dans la
-configuration. +
-Vous pouvez facilement la sauvegarder avec le script _buffer_autoset.py_ : vous
-pouvez l'installer avec `+/script install buffer_autoset.py+` et obtenir de l'aide
-avec `+/help buffer_autoset+`.
 
 [[buffer_logging]]
 === Enregistrement des tampons

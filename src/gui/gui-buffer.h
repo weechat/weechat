@@ -23,8 +23,9 @@
 #include <limits.h>
 #include <regex.h>
 
-struct t_hashtable;
+struct t_config_option;
 struct t_gui_window;
+struct t_hashtable;
 struct t_infolist;
 
 enum t_gui_buffer_type
@@ -269,6 +270,8 @@ extern void gui_buffer_local_var_remove (struct t_gui_buffer *buffer,
                                          const char *name);
 extern void gui_buffer_notify_set_all ();
 extern int gui_buffer_is_reserved_name (const char *name);
+extern void gui_buffer_apply_config_option_property (struct t_gui_buffer *buffer,
+                                                     struct t_config_option *option);
 extern struct t_gui_buffer *gui_buffer_new_props (struct t_weechat_plugin *plugin,
                                                   const char *name,
                                                   struct t_hashtable *properties,

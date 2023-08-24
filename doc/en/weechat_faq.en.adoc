@@ -925,34 +925,19 @@ link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 buffer property to set the max hotlist level for some nicks, per buffer,
 or per group of buffers (like IRC servers).
 
-To only disable highlights, you'd have to set it to 2:
+To only disable highlights, you'd have to set it to 2.
+
+For the current buffer:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-This buffer property isn't stored in the configuration though.
-To automatically reapply these buffer properties, you would need the
-_buffer_autoset.py_ script:
+For all channels on server "libera":
 
 ----
-/script install buffer_autoset.py
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-For example, to permanently disable highlights from "mike" on #weechat
-on the IRC server libera:
-
-----
-/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
-----
-
-To apply it to the entire libera server instead:
-
-----
-/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
-----
-
-For more examples, see `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === How can I change target buffer for commands on merged buffers (like buffer with servers)?

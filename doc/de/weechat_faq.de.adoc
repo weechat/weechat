@@ -993,34 +993,21 @@ die Buffer-Eigenschaft genutzt werden, um das maximale Hotlist-Level für einige
 oder pro Gruppe von Buffern (wie IRC-Server).
 
 Um nun Highlights (Hervorhebungen) für bestimmte Nicks zu deaktivieren, muss
-man die entsprechende Eigenschaft auf 2 setzen:
+man die entsprechende Eigenschaft auf 2 setzen.
+
+// TRANSLATION MISSING
+For the current buffer:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-Diese Buffereigenschaft wird aber nicht permanent in der Konfiguration
-gespeichert. Um diese Eigenschaften permanent zu verwenden, muss man
-das Skript _buffer_autoset.py_ nutzen:
+// TRANSLATION MISSING
+For all channels on server "libera":
 
 ----
-/script install buffer_autoset.py
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-Um zum Beispiel Highlights (Hervorhebungen) von Nick "mike" im Kanal
-#weechat auf dem IRC Server libera zu deaktivieren:
-
-----
-/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
-----
-
-Um dies auf den kompletten libera Server anzuwenden:
-
-----
-/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
-----
-
-Für weitere Beispiele, siehe `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === Wie kann ich bei zusammengefügten Buffern den Zielbuffer ändern (z.B. bei einem Server-Buffer)?

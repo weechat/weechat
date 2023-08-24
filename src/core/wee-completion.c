@@ -490,6 +490,62 @@ completion_list_add_buffer_properties_set_cb (const void *pointer, void *data,
 }
 
 /*
+ * Adds a buffer local variable to completions list (for `/buffer setauto`).
+ */
+
+void
+completion_list_map_buffer_local_variable_setauto_cb (void *data,
+                                                      struct t_hashtable *hashtable,
+                                                      const void *key,
+                                                      const void *value)
+{
+    char str_localvar[4096];
+
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) value;
+
+    snprintf (str_localvar, sizeof (str_localvar),
+              "localvar_set_%s", (const char *)key);
+    gui_completion_list_add ((struct t_gui_completion *)data,
+                             str_localvar,
+                             0, WEECHAT_LIST_POS_SORT);
+}
+
+/*
+ * Adds buffer properties and local variables (that can be set) to completion
+ * list.
+ */
+
+int
+completion_list_add_buffer_properties_setauto_cb (const void *pointer, void *data,
+                                                  const char *completion_item,
+                                                  struct t_gui_buffer *buffer,
+                                                  struct t_gui_completion *completion)
+{
+    int i;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (i = 0; gui_buffer_properties_set[i]; i++)
+    {
+        gui_completion_list_add (completion,
+                                 gui_buffer_properties_set[i],
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+
+    hashtable_map (completion->buffer->local_variables,
+                   &completion_list_map_buffer_local_variable_setauto_cb,
+                   completion);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds buffer properties (that can be read) to completion list.
  */
 
@@ -2026,6 +2082,9 @@ completion_init ()
     hook_completion (NULL, "buffer_properties_set",
                      N_("properties that can be set on a buffer"),
                      &completion_list_add_buffer_properties_set_cb, NULL, NULL);
+    hook_completion (NULL, "buffer_properties_setauto",
+                     N_("properties that can be automatically set on a buffer"),
+                     &completion_list_add_buffer_properties_setauto_cb, NULL, NULL);
     hook_completion (NULL, "buffer_properties_get",
                      N_("properties that can be read on a buffer"),
                      &completion_list_add_buffer_properties_get_cb, NULL, NULL);

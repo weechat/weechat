@@ -649,6 +649,49 @@ gui_buffer_apply_properties_cb (void *data,
 }
 
 /*
+ * Applies a buffer property defined in a an option "weechat.buffer.xxx".
+ */
+
+void
+gui_buffer_apply_config_option_property (struct t_gui_buffer *buffer,
+                                         struct t_config_option *option)
+{
+    const char *pos;
+    char *buffer_mask, *value;
+    struct t_hashtable *pointers;
+
+    pos = strrchr (option->name, '.');
+    if (!pos)
+        return;
+
+    buffer_mask = strndup (option->name, pos - option->name);
+    if (!buffer_mask)
+        return;
+
+    if (string_match (buffer->full_name, buffer_mask, 1))
+    {
+        pointers = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_POINTER,
+            NULL, NULL);
+        if (pointers)
+        {
+            hashtable_set (pointers, "buffer", buffer);
+            value = eval_expression (CONFIG_STRING(option), pointers, NULL, NULL);
+            if (value)
+            {
+                gui_buffer_set (buffer, pos + 1, value);
+                free (value);
+            }
+            hashtable_free (pointers);
+        }
+    }
+
+    free (buffer_mask);
+}
+
+/*
  * Applies buffer properties defined in options "weechat.buffer.*".
  */
 
@@ -656,49 +699,12 @@ void
 gui_buffer_apply_config_properties (struct t_gui_buffer *buffer)
 {
     struct t_config_option *ptr_option;
-    struct t_hashtable *pointers;
-    const char *pos;
-    char *buffer_mask, *value;
-
-    pointers = NULL;
 
     for (ptr_option = weechat_config_section_buffer->options; ptr_option;
          ptr_option = ptr_option->next_option)
     {
-        pos = strrchr (ptr_option->name, '.');
-        if (!pos)
-            continue;
-        buffer_mask = strndup (ptr_option->name, pos - ptr_option->name);
-        if (!buffer_mask)
-            continue;
-        if (string_match (buffer->full_name, buffer_mask, 1))
-        {
-            if (!pointers)
-            {
-                pointers = hashtable_new (
-                    32,
-                    WEECHAT_HASHTABLE_STRING,
-                    WEECHAT_HASHTABLE_POINTER,
-                    NULL, NULL);
-            }
-            if (pointers)
-            {
-                hashtable_set (pointers, "buffer", buffer);
-                value = eval_expression (
-                    CONFIG_STRING(ptr_option),
-                    pointers, NULL, NULL);
-                if (value)
-                {
-                    gui_buffer_set (buffer, pos + 1, value);
-                    free (value);
-                }
-            }
-        }
-        free (buffer_mask);
+        gui_buffer_apply_config_option_property (buffer, ptr_option);
     }
-
-    if (pointers)
-        hashtable_free (pointers);
 }
 
 /*

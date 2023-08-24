@@ -2111,12 +2111,8 @@ include::{autogendir}/autogen_user_options.sr.adoc[tag=charset_options]
 На пример, ако желите да искључите истицања од „joe” и „mike” у текућем баферу:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-[NOTE]
-Особина бафера „hotlist_max_level_nicks” се не чува у конфигурацији. +
-Лако можете да је сачувате скриптом _buffer_autoset.py_: инсталирате је командом `+/script install buffer_autoset.py+`, а помоћ добијате са `+/help buffer_autoset+`.
 
 [[highlights]]
 === Истицања
@@ -2141,12 +2137,8 @@ include::{autogendir}/autogen_user_options.sr.adoc[tag=charset_options]
 Исти пример, који функционише само на текућем баферу:
 
 ----
-/buffer set highlight_disable_regex <flash.*>
+/buffer setauto highlight_disable_regex <flash.*>
 ----
-
-[NOTE]
-Особина бафера „highlight_disable_regex” се не чува у конфигурацији. +
-Лако можете да је сачувате скриптом _buffer_autoset.py_: инсталирате је командом `+/script install buffer_autoset.py+`, а помоћ добијате са `+/help buffer_autoset+`.
 
 [[highlights_words]]
 ==== Додавање речи које се истичу
@@ -2189,12 +2181,8 @@ include::{autogendir}/autogen_user_options.sr.adoc[tag=charset_options]
 На пример, да форсирате истицање свих порука у текућем баферу:
 
 ----
-/buffer set highlight_regex .*
+/buffer setauto highlight_regex .*
 ----
-
-[NOTE]
-Особина бафера „highlight_regex” се не чува у конфигурацији. +
-Лако можете да је сачувате скриптом _buffer_autoset.py_: инсталирате је командом `+/script install buffer_autoset.py+`, а помоћ добијате са `+/help buffer_autoset+`.
 
 [[buffer_logging]]
 === Логовање бафера

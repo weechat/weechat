@@ -954,34 +954,21 @@ link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 buffer property to set the max hotlist level for some nicks, per buffer,
 or per group of buffers (like IRC servers).
 
-Para únicamente inhabilitar las notificaciones, debería establecerlo a 2:
+Para únicamente inhabilitar las notificaciones, debería establecerlo a 2.
+
+// TRANSLATION MISSING
+For the current buffer:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-Esta propiedad del buffer no es almacenada en la configuración.
-Para volver a aplicar automáticamente estas propiedades del buffer, necesitaría el script
-_buffer_autoset.py_:
+// TRANSLATION MISSING
+For all channels on server "libera":
 
 ----
-/script install buffer_autoset.py
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-Por ejemplo, para inhabilitar automáticamente las menciones de "mike" en #weechat
-en el servidor IRC de libera:
-
-----
-/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
-----
-
-Para aplicarlo al servidor completo de libera:
-
-----
-/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
-----
-
-Para más ejemplos, vea `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === ¿Cómo puedo cambiar el objetivo del buffer para comandos en buffers unidos (como en un buffer con servidores)?

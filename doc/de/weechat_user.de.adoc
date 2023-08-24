@@ -2246,14 +2246,8 @@ und für jeden einzelen Nick kann ein maximler Hotlist-Level eingestellt wertden
 Um zum Beispiel Highlights von "joe" und "mike" im aktuellen Buffer zu deaktivieren:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-[NOTE]
-Die Buffer-Eigenschaft "hotlist_max_level_nicks" ist keine permanente Einstellung und wird nicht
-in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
-das Skript _buffer_autoset.py_: Um das Skript zu installieren `+/script install buffer_autoset.py+`
-und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 
 [[highlights]]
 === Hervorhebungen
@@ -2279,14 +2273,8 @@ Dies kann auch mit der Buffereigenschaft „highlight_disable_regex“ eingestel
 Gleiches Beispiel, spezifisch für den aktuellen Buffer:
 
 ----
-/buffer set highlight_disable_regex <flash.*>
+/buffer setauto highlight_disable_regex <flash.*>
 ----
-
-[NOTE]
-Die Buffer-Eigenschaft "highlight_disable_regex" ist keine permanente Einstellung und wird nicht
-in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
-das Skript _buffer_autoset.py_: Um das Skript zu installieren `+/script install buffer_autoset.py+`
-und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 
 [[highlights_words]]
 ==== Worte als Highlights hinzufügen
@@ -2346,14 +2334,8 @@ die Eigenschaft des Buffers mittels "highlight_regex" anpasst.
 Um zum Beispiel jede Nachricht im aktuellen Buffer als Highlight-Nachricht einzustufen:
 
 ----
-/buffer set highlight_regex .*
+/buffer setauto highlight_regex .*
 ----
-
-[NOTE]
-Die Buffer-Eigenschaft "highlight_regex" ist keine permanente Einstellung und wird nicht
-in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
-das Skript _buffer_autoset.py_: Um das Skript zu installieren `+/script install buffer_autoset.py+`
-und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 
 [[buffer_logging]]
 === Bufferprotokollierung

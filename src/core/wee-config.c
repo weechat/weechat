@@ -36,6 +36,7 @@
 #include <regex.h>
 
 #include "weechat.h"
+#include "wee-arraylist.h"
 #include "wee-config.h"
 #include "wee-eval.h"
 #include "wee-hashtable.h"
@@ -2468,19 +2469,54 @@ config_weechat_layout_write_cb (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on a notify option.
+ * Applies a buffer option to all matching buffers.
  */
 
 void
-config_weechat_notify_change_cb (const void *pointer, void *data,
+config_weechat_buffer_apply_option (struct t_config_option *option)
+{
+    struct t_arraylist *all_buffers;
+    struct t_gui_buffer *ptr_buffer;
+    int i, list_size;
+
+    if (!option)
+        return;
+
+    all_buffers = arraylist_new (gui_buffers_count, 0, 0,
+                                 NULL, NULL, NULL, NULL);
+    if (!all_buffers)
+        return;
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        arraylist_add (all_buffers, ptr_buffer);
+    }
+
+    list_size = arraylist_size (all_buffers);
+    for (i = 0; i < list_size; i++)
+    {
+        ptr_buffer = (struct t_gui_buffer *)arraylist_get (all_buffers, i);
+        if (gui_buffer_valid (ptr_buffer))
+            gui_buffer_apply_config_option_property (ptr_buffer, option);
+    }
+
+    arraylist_free (all_buffers);
+}
+
+/*
+ * Callback for changes on a buffer option.
+ */
+
+void
+config_weechat_buffer_change_cb (const void *pointer, void *data,
                                  struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) pointer;
     (void) data;
-    (void) option;
 
-    gui_buffer_notify_set_all ();
+    config_weechat_buffer_apply_option (option);
 }
 
 /*
@@ -2505,48 +2541,110 @@ config_weechat_buffer_create_option_cb (const void *pointer, void *data,
 
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
 
-    if (option_name)
+    if (!option_name)
+        return rc;
+
+    ptr_option = config_file_search_option (config_file, section,
+                                            option_name);
+    if (ptr_option)
     {
-        ptr_option = config_file_search_option (config_file, section,
-                                                option_name);
-        if (ptr_option)
+        rc = config_file_option_set (ptr_option, value, 1);
+    }
+    else
+    {
+        pos = strrchr (option_name, '.');
+        if (pos)
         {
-            rc = config_file_option_set (ptr_option, value, 1);
-        }
-        else
-        {
-            pos = strrchr (option_name, '.');
-            if (pos)
+            buffer_mask = strndup (option_name, pos - option_name);
+            if (buffer_mask)
             {
-                buffer_mask = strndup (option_name, pos - option_name);
-                if (buffer_mask)
-                {
-                    snprintf (description, sizeof (description),
-                              _("set property \"%s\" on any buffer matching "
-                                "mask \"%s\"; "
-                                "content is evaluated, see /help eval; "
-                                "${buffer} is a pointer to the buffer being "
-                                "opened"),
-                              pos + 1,
-                              buffer_mask);
-                    ptr_option = config_file_new_option (
-                        config_file, section,
-                        option_name, "string",
-                        description,
-                        "",
-                        0, 0, "", value, 0,
-                        NULL, NULL, NULL,
-                        NULL, NULL, NULL,
-                        NULL, NULL, NULL);
-                    rc = (ptr_option) ?
-                        WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
-                    free (buffer_mask);
-                }
+                snprintf (description, sizeof (description),
+                          _("set property \"%s\" on any buffer matching "
+                            "mask \"%s\"; "
+                            "content is evaluated, see /help eval; "
+                            "${buffer} is a pointer to the buffer being "
+                            "opened"),
+                          pos + 1,
+                          buffer_mask);
+                ptr_option = config_file_new_option (
+                    config_file, section,
+                    option_name, "string",
+                    description,
+                    "",
+                    0, 0, "", value, 0,
+                    NULL, NULL, NULL,
+                    &config_weechat_buffer_change_cb, NULL, NULL,
+                    NULL, NULL, NULL);
+                rc = (ptr_option) ?
+                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+                free (buffer_mask);
             }
         }
     }
 
+    if (ptr_option)
+        config_weechat_buffer_apply_option (ptr_option);
+
     return rc;
+}
+
+/*
+ * Sets a buffer property.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+config_weechat_buffer_set (struct t_gui_buffer *buffer,
+                           const char *property, const char *value)
+{
+    char option_name[4096];
+    int rc;
+
+    if (!buffer || !property || !property[0])
+        return 0;
+
+    snprintf (option_name, sizeof (option_name),
+              "%s.%s",
+              buffer->full_name,
+              property);
+
+    /* create/update option */
+    rc = config_weechat_buffer_create_option_cb (
+        NULL, NULL,
+        weechat_config_file,
+        weechat_config_section_buffer,
+        option_name,
+        (value) ? value : "");
+
+    if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+    {
+        gui_chat_printf (
+            NULL,
+            _("Option \"weechat.buffer.%s\" has been set to \"%s\""),
+            option_name,
+            (value) ? value : "");
+    }
+
+    return (rc != WEECHAT_CONFIG_OPTION_SET_ERROR) ? 1 : 0;
+}
+
+/*
+ * Callback for changes on a notify option.
+ */
+
+void
+config_weechat_notify_change_cb (const void *pointer, void *data,
+                                 struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    gui_buffer_notify_set_all ();
 }
 
 /*

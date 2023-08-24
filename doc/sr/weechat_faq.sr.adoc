@@ -821,31 +821,21 @@ link:weechat_user.sr.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 можете користити да за неке надимке подесите максимални ниво вруће листе, по баферу, или по
 групи бафера (као на пример IRC сервери).
 
-Ако само желите да искључите истицања, треба да је поставите на 2:
+Ако само желите да искључите истицања, треба да је поставите на 2.
+
+// TRANSLATION MISSING
+For the current buffer:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-Међутим, ова особина бафера се не чува у конфигурацији. Ако желите да се ове особине бафера аутоматски поново примене, биће вам потребна скрипта _buffer_autoset.py_:
+// TRANSLATION MISSING
+For all channels on server "libera":
 
 ----
-/script install buffer_autoset.py
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-На пример, ако за стално желите да искључите истицања од надимка „mike” са #weechat на IRC серверу libera:
-
-----
-/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
-----
-
-Ако уместо овога желите да се примени на комплетан libera сервер:
-
-----
-/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
-----
-
-За још примера, погледајте `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === Како могу да променим циљни бафер за команде над спојеним баферима (као што је бафер са серверима)?

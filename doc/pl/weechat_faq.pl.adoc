@@ -927,33 +927,21 @@ link:weechat_user.pl.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 do ustawienia maksymalnego poziomu hotlisty dla niektórych nicków, dla buforów
 lub grup buforów (jak serwery IRC).
 
-W celu wyłączenia tylko podświetleń wystarczy ustawić ja na 2:
+W celu wyłączenia tylko podświetleń wystarczy ustawić ja na 2.
+
+// TRANSLATION MISSING
+For the current buffer:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-To utawienie nie jest zapisywane jednak w konfiguracji.
-W celu automatycznego ustawiania tej właściwości należy użyć skryptu _buffer_autoset.py_:
+// TRANSLATION MISSING
+For all channels on server "libera":
 
 ----
-/script install buffer_autoset.py
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-Na przykład w celu wyłączenia powiadomień od "mike" na #weechat w sieci libera:
-on the IRC server libera:
-
-----
-/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
-----
-
-Dla całego serwera libera:
-
-----
-/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
-----
-
-Więcej przykładów można znaleźć wykonując komende `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === Jak mogę zmienić docelowy bufor dla komendy w połączonym buforze (jak bufor z serwerami)?
