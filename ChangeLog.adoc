@@ -32,6 +32,7 @@ New features::
   * irc: build dynamically the list of CTCPs supported in reply to "CTCP CLIENTINFO" (issue #1974)
   * irc: remove Git revision and compilation date from CTCP VERSION reply (issue #1974)
   * irc: remove default CTCP replies FINGER and USERINFO (issue #1974)
+  * python: make stub (weechat.pyi) compatible with Python 3.8 and 3.9 (issue #2006)
   * script: allow jump to the last script with command `/script go end`
   * script: allow commands `/script autoload`, `/script noautoload`, `/script toggleautoload` with scripts not present in the repository (issue #1980)
   * trigger: add options `-o`, `-ol`, `-i` and `-il` in command `/trigger list` (issue #1953)
