@@ -364,6 +364,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     struct t_hook *ptr_hook, *next_hook;
     struct t_hook *hook_plugin, *hook_other_plugin, *hook_other_plugin2;
     struct t_hook *hook_incomplete_command;
+    struct t_hook_exec_cb hook_exec_cb;
     char **argv, **argv_eol;
     const char *ptr_command_name;
     int argc, rc, length_command_name, allow_incomplete_commands;
@@ -500,7 +501,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
         else
         {
             /* execute the command! */
-            ptr_hook->running++;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             rc = (int) (HOOK_COMMAND(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
@@ -508,7 +509,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                  argc,
                  argv,
                  argv_eol);
-            ptr_hook->running--;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
             if (rc == WEECHAT_RC_ERROR)
                 rc = HOOK_COMMAND_EXEC_ERROR;
             else

@@ -110,6 +110,12 @@ struct t_hook
     struct t_hook *next_hook;          /* link to next hook                 */
 };
 
+struct t_hook_exec_cb
+{
+    struct timeval start_time;         /* callback exec star time (to trace */
+                                       /* long running callbacks)           */
+};
+
 /* hook variables */
 
 extern char *hook_type_string[];
@@ -118,6 +124,7 @@ extern struct t_hook *last_weechat_hook[];
 extern int hooks_count[];
 extern int hooks_count_total;
 extern int hook_socketpair_ok;
+extern long long hook_debug_long_callbacks;
 
 /* hook functions */
 
@@ -130,6 +137,10 @@ extern void hook_init_data (struct t_hook *hook,
 extern int hook_valid (struct t_hook *hook);
 extern void hook_exec_start ();
 extern void hook_exec_end ();
+extern void hook_callback_start (struct t_hook *hook,
+                                 struct t_hook_exec_cb *hook_exec_cb);
+extern void hook_callback_end (struct t_hook *hook,
+                               struct t_hook_exec_cb *hook_exec_cb);
 extern char *hook_get_description (struct t_hook *hook);
 extern void hook_set (struct t_hook *hook, const char *property,
                       const char *value);

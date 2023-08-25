@@ -792,6 +792,7 @@ void
 hook_process_exec ()
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
 
     hook_exec_start ();
 
@@ -804,9 +805,9 @@ hook_process_exec ()
             && !ptr_hook->running
             && (HOOK_PROCESS(ptr_hook, child_pid) == 0))
         {
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             hook_process_run (ptr_hook);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
         }
 
         ptr_hook = next_hook;

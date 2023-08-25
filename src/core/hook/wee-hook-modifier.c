@@ -100,6 +100,7 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
                     const char *modifier_data, const char *string)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
     char *new_msg, *message_modified;
 
     /* make C compiler happy */
@@ -125,14 +126,14 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
             && (string_strcasecmp (HOOK_MODIFIER(ptr_hook, modifier),
                                    modifier) == 0))
         {
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             new_msg = (HOOK_MODIFIER(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
                  modifier,
                  modifier_data,
                  message_modified);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
 
             /* empty string returned => message dropped */
             if (new_msg && !new_msg[0])

@@ -31,12 +31,14 @@
 #include <errno.h>
 
 #include "weechat.h"
+#include "wee-debug.h"
 #include "wee-hook.h"
 #include "wee-hashtable.h"
 #include "wee-infolist.h"
 #include "wee-log.h"
 #include "wee-signal.h"
 #include "wee-string.h"
+#include "wee-util.h"
 #include "../gui/gui-chat.h"
 #include "../plugins/plugin.h"
 
@@ -424,6 +426,67 @@ hook_exec_end ()
 
     if (hook_exec_recursion == 0)
         hook_remove_deleted ();
+}
+
+/*
+ * Starts execution of a hook callback.
+ */
+
+void
+hook_callback_start (struct t_hook *hook, struct t_hook_exec_cb *hook_exec_cb)
+{
+    if (hook->type == HOOK_TYPE_COMMAND)
+        hook->running++;
+    else
+        hook->running = 1;
+
+    if (debug_long_callbacks > 0)
+    {
+        gettimeofday (&hook_exec_cb->start_time, NULL);
+    }
+    else
+    {
+        hook_exec_cb->start_time.tv_sec = 0;
+        hook_exec_cb->start_time.tv_usec = 0;
+    }
+}
+
+/*
+ * Ends execution of a hook callback.
+ */
+
+void
+hook_callback_end (struct t_hook *hook, struct t_hook_exec_cb *hook_exec_cb)
+{
+    struct timeval end_time;
+    long long time_diff;
+    char *str_diff;
+
+    if (hook->type == HOOK_TYPE_COMMAND)
+        hook->running--;
+    else
+        hook->running = 0;
+
+    if ((debug_long_callbacks > 0)
+        && (hook_exec_cb->start_time.tv_sec > 0))
+    {
+        gettimeofday (&end_time, NULL);
+        time_diff = util_timeval_diff (&hook_exec_cb->start_time, &end_time);
+        if (time_diff >= debug_long_callbacks)
+        {
+            str_diff = util_get_microseconds_string (time_diff);
+            log_printf (
+                _("debug: long callback: hook %s (%s), plugin: %s, "
+                  "subplugin: %s, time elapsed: %s"),
+                hook_type_string[hook->type],
+                hook_get_description (hook),
+                plugin_get_name (hook->plugin),
+                (hook->subplugin) ? hook->subplugin : "-",
+                str_diff);
+            if (str_diff)
+                free (str_diff);
+        }
+    }
 }
 
 /*

@@ -153,6 +153,7 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
                      struct t_hashtable *hashtable_focus2)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
     struct t_hashtable *hashtable1, *hashtable2, *hashtable_ret;
     const char *focus1_chat, *focus1_bar_item_name, *keys;
     char **list_keys, *new_key;
@@ -185,12 +186,12 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
                     && (strcmp (HOOK_FOCUS(ptr_hook, area), focus1_bar_item_name) == 0))))
         {
             /* run callback for focus #1 */
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             hashtable_ret = (HOOK_FOCUS(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
                  hashtable1);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
             if (hashtable_ret)
             {
                 if (hashtable_ret != hashtable1)
@@ -209,12 +210,12 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
             /* run callback for focus #2 */
             if (hashtable2)
             {
-                ptr_hook->running = 1;
+                hook_callback_start (ptr_hook, &hook_exec_cb);
                 hashtable_ret = (HOOK_FOCUS(ptr_hook, callback))
                     (ptr_hook->callback_pointer,
                      ptr_hook->callback_data,
                      hashtable2);
-                ptr_hook->running = 0;
+                hook_callback_end (ptr_hook, &hook_exec_cb);
                 if (hashtable_ret)
                 {
                     if (hashtable_ret != hashtable2)

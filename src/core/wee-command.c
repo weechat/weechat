@@ -1988,7 +1988,8 @@ COMMAND_CALLBACK(debug)
     struct t_config_option *ptr_option;
     struct t_weechat_plugin *ptr_plugin;
     struct timeval time_start, time_end;
-    char *result;
+    char *result, *str_threshold;
+    long long threshold;
     int debug;
 
     /* make C compiler happy */
@@ -2020,6 +2021,28 @@ COMMAND_CALLBACK(debug)
         gui_chat_printf (NULL,
                          _("Raw content of buffers has been written in log "
                            "file"));
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcmp (argv[1], "callbacks") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "callbacks");
+        threshold = util_parse_delay (argv[2], 1);
+        if (threshold > 0)
+        {
+            str_threshold = util_get_microseconds_string (threshold);
+            debug_long_callbacks = threshold;
+            gui_chat_printf (NULL,
+                             _("Debug enabled for callbacks (threshold: %s)"),
+                             (str_threshold) ? str_threshold : "?");
+            if (str_threshold)
+                free (str_threshold);
+        }
+        else
+        {
+            debug_long_callbacks = 0;
+            gui_chat_printf (NULL, _("Debug disabled for callbacks"));
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -8024,6 +8047,7 @@ command_init ()
            " || dump|hooks [<plugin>]"
            " || buffer|certs|color|dirs|infolists|libs|memory|tags|"
            "term|windows"
+           " || callbacks <duration>[<unit>]"
            " || mouse|cursor [verbose]"
            " || hdata [free]"
            " || time <command>"
@@ -8036,7 +8060,16 @@ command_init ()
            "written when WeeChat crashes)\n"
            "    hooks: display infos about hooks (with a plugin: display "
            "detailed info about hooks created by the plugin)\n"
-           "   buffer: dump buffer content with hexadecimal values in log file\n"
+           "   buffer: dump buffer content with hexadecimal values in WeeChat "
+           "log file\n"
+           "callbacks: write hook and bar item callbacks that took more than "
+           "\"duration\" in the WeeChat log file (0 = disable), where optional "
+           "unit is one of:\n"
+           "             us: microseconds (default)\n"
+           "             ms: milliseconds\n"
+           "              s: seconds\n"
+           "              m: minutes\n"
+           "              h: hours\n"
            "    certs: display number of loaded trusted certificate authorities\n"
            "    color: display infos about current color pairs\n"
            "   cursor: toggle debug for cursor mode\n"
@@ -8066,6 +8099,7 @@ command_init ()
         " || set %(plugins_names)|" PLUGIN_CORE
         " || dump %(plugins_names)|" PLUGIN_CORE
         " || buffer"
+        " || callbacks"
         " || certs"
         " || color"
         " || cursor verbose"

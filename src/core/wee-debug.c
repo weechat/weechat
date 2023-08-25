@@ -67,6 +67,9 @@
 
 int debug_dump_active = 0;
 
+long long debug_long_callbacks = 0;    /* callbacks taking more than        */
+                                       /* N microseconds will be traced     */
+
 
 /*
  * Writes dump of data to WeeChat log file.

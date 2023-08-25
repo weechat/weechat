@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-25 11:16+0200\n"
+"POT-Creation-Date: 2023-08-25 13:26+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -388,6 +388,15 @@ msgstr "%sPlugin \"%s\" nenalezen"
 
 msgid "Raw content of buffers has been written in log file"
 msgstr "Veškerý obsah bufferů byl zapsán do logovacího souboru"
+
+#, fuzzy, c-format
+msgid "Debug enabled for callbacks (threshold: %s)"
+msgstr "Ladění vypnuto pro \"%s\""
+
+#, fuzzy
+#| msgid "Debug disabled for \"%s\""
+msgid "Debug disabled for callbacks"
+msgstr "Ladění vypnuto pro \"%s\""
 
 #, fuzzy, c-format
 msgid "%d certificate loaded (system: %d, user: %d)"
@@ -1483,8 +1492,9 @@ msgstr "ladící funkce"
 #, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
-"hdata [free] || time <command> || unicode <string>"
+"dirs|infolists|libs|memory|tags|term|windows || callbacks <duration>[<unit>] "
+"|| mouse|cursor [verbose] || hdata [free] || time <command> || unicode "
+"<string>"
 msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|memory|term|"
 "windows"
@@ -1499,7 +1509,15 @@ msgid ""
 "WeeChat crashes)\n"
 "    hooks: display infos about hooks (with a plugin: display detailed info "
 "about hooks created by the plugin)\n"
-"   buffer: dump buffer content with hexadecimal values in log file\n"
+"   buffer: dump buffer content with hexadecimal values in WeeChat log file\n"
+"callbacks: write hook and bar item callbacks that took more than "
+"\"duration\" in the WeeChat log file (0 = disable), where optional unit is "
+"one of:\n"
+"             us: microseconds (default)\n"
+"             ms: milliseconds\n"
+"              s: seconds\n"
+"              m: minutes\n"
+"              h: hours\n"
 "    certs: display number of loaded trusted certificate authorities\n"
 "    color: display infos about current color pairs\n"
 "   cursor: toggle debug for cursor mode\n"
@@ -4631,6 +4649,12 @@ msgid "File"
 msgstr ""
 
 #, c-format
+msgid ""
+"debug: long callback: hook %s (%s), plugin: %s, subplugin: %s, time elapsed: "
+"%s"
+msgstr ""
+
+#, c-format
 msgid "%sError sending signal %d to pid %d: %s"
 msgstr "%sChyba odesílání signálu %d na pid %d: %s"
 
@@ -5102,6 +5126,10 @@ msgstr ""
 #, c-format
 msgid "Bar \"%s\" updated"
 msgstr "Pole \"%s\" zaktualizováno"
+
+#, c-format
+msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"

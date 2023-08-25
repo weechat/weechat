@@ -98,6 +98,7 @@ void
 hook_config_exec (const char *option, const char *value)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
 
     hook_exec_start ();
 
@@ -111,13 +112,13 @@ hook_config_exec (const char *option, const char *value)
             && (!HOOK_CONFIG(ptr_hook, option)
                 || (string_match (option, HOOK_CONFIG(ptr_hook, option), 0))))
         {
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             (void) (HOOK_CONFIG(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
                  option,
                  value);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
         }
 
         ptr_hook = next_hook;

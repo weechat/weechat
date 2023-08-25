@@ -101,6 +101,7 @@ int
 hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
     int rc, hook_matching, length;
     char *command2;
     const char *ptr_string, *ptr_command;
@@ -149,13 +150,13 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
 
             if (hook_matching)
             {
-                ptr_hook->running = 1;
+                hook_callback_start (ptr_hook, &hook_exec_cb);
                 rc = (HOOK_COMMAND_RUN(ptr_hook, callback)) (
                     ptr_hook->callback_pointer,
                     ptr_hook->callback_data,
                     buffer,
                     ptr_command);
-                ptr_hook->running = 0;
+                hook_callback_end (ptr_hook, &hook_exec_cb);
                 if (rc == WEECHAT_RC_OK_EAT)
                 {
                     if (command2)

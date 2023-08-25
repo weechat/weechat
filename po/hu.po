@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-25 11:16+0200\n"
+"POT-Creation-Date: 2023-08-25 13:26+0200\n"
 "PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -360,6 +360,13 @@ msgid "%sPlugin \"%s\" not found"
 msgstr "%s cím \"%s\" nem található\n"
 
 msgid "Raw content of buffers has been written in log file"
+msgstr ""
+
+#, c-format
+msgid "Debug enabled for callbacks (threshold: %s)"
+msgstr ""
+
+msgid "Debug disabled for callbacks"
 msgstr ""
 
 #, fuzzy, c-format
@@ -1367,8 +1374,9 @@ msgstr ""
 #, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] || "
-"hdata [free] || time <command> || unicode <string>"
+"dirs|infolists|libs|memory|tags|term|windows || callbacks <duration>[<unit>] "
+"|| mouse|cursor [verbose] || hdata [free] || time <command> || unicode "
+"<string>"
 msgstr "dump | buffer | windows"
 
 #, fuzzy
@@ -1381,7 +1389,15 @@ msgid ""
 "WeeChat crashes)\n"
 "    hooks: display infos about hooks (with a plugin: display detailed info "
 "about hooks created by the plugin)\n"
-"   buffer: dump buffer content with hexadecimal values in log file\n"
+"   buffer: dump buffer content with hexadecimal values in WeeChat log file\n"
+"callbacks: write hook and bar item callbacks that took more than "
+"\"duration\" in the WeeChat log file (0 = disable), where optional unit is "
+"one of:\n"
+"             us: microseconds (default)\n"
+"             ms: milliseconds\n"
+"              s: seconds\n"
+"              m: minutes\n"
+"              h: hours\n"
 "    certs: display number of loaded trusted certificate authorities\n"
 "    color: display infos about current color pairs\n"
 "   cursor: toggle debug for cursor mode\n"
@@ -4180,6 +4196,12 @@ msgid "File"
 msgstr ""
 
 #, c-format
+msgid ""
+"debug: long callback: hook %s (%s), plugin: %s, subplugin: %s, time elapsed: "
+"%s"
+msgstr ""
+
+#, c-format
 msgid "%sError sending signal %d to pid %d: %s"
 msgstr ""
 
@@ -4639,6 +4661,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Bar \"%s\" updated"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
+
+#, c-format
+msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"

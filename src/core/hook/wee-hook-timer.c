@@ -302,8 +302,9 @@ end:
 void
 hook_timer_exec ()
 {
-    struct timeval tv_time;
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
+    struct timeval tv_time;
 
     if (!weechat_hooks[HOOK_TYPE_TIMER])
         return;
@@ -324,13 +325,13 @@ hook_timer_exec ()
             && (util_timeval_cmp (&HOOK_TIMER(ptr_hook, next_exec),
                                   &tv_time) <= 0))
         {
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             (void) (HOOK_TIMER(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
                  (HOOK_TIMER(ptr_hook, remaining_calls) > 0) ?
                   HOOK_TIMER(ptr_hook, remaining_calls) - 1 : -1);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
             if (!ptr_hook->deleted)
             {
                 HOOK_TIMER(ptr_hook, last_exec).tv_sec = tv_time.tv_sec;

@@ -125,6 +125,7 @@ void
 hook_line_exec (struct t_gui_line *line)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
     struct t_hashtable *hashtable, *hashtable2;
     char str_value[128], *str_tags;
 
@@ -182,12 +183,12 @@ hook_line_exec (struct t_gui_line *line)
             HASHTABLE_SET_STR_NOT_NULL("message", line->data->message);
 
             /* run callback */
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             hashtable2 = (HOOK_LINE(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
                  hashtable);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
 
             if (hashtable2)
             {

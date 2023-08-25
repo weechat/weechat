@@ -106,6 +106,7 @@ hook_info_get_hashtable (struct t_weechat_plugin *plugin, const char *info_name,
                          struct t_hashtable *hashtable)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
     struct t_hashtable *value;
 
     /* make C compiler happy */
@@ -125,13 +126,13 @@ hook_info_get_hashtable (struct t_weechat_plugin *plugin, const char *info_name,
             && !ptr_hook->running
             && (strcmp (HOOK_INFO_HASHTABLE(ptr_hook, info_name), info_name) == 0))
         {
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             value = (HOOK_INFO_HASHTABLE(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
                  info_name,
                  hashtable);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
 
             hook_exec_end ();
             return value;

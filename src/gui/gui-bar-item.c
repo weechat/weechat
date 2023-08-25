@@ -30,6 +30,7 @@
 #include "../core/weechat.h"
 #include "../core/wee-arraylist.h"
 #include "../core/wee-config.h"
+#include "../core/wee-debug.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
@@ -37,6 +38,7 @@
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
+#include "../core/wee-util.h"
 #include "../plugins/plugin.h"
 #include "gui-bar-item.h"
 #include "gui-bar.h"
@@ -359,9 +361,11 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
                         int item, int subitem)
 {
     char *item_value, delimiter_color[32], bar_color[32];
-    char **result, str_attr[8];
+    char **result, str_attr[8], *str_diff;
     struct t_gui_buffer *buffer;
     struct t_gui_bar_item *ptr_item;
+    struct timeval start_time, end_time;
+    long long time_diff;
 
     if (!bar || !bar->items_array[item][subitem])
         return NULL;
@@ -383,6 +387,15 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
                                                     bar->items_name[item][subitem]);
         if (ptr_item && ptr_item->build_callback)
         {
+            if (debug_long_callbacks > 0)
+            {
+                gettimeofday (&start_time, NULL);
+            }
+            else
+            {
+                start_time.tv_sec = 0;
+                start_time.tv_usec = 0;
+            }
             item_value = (ptr_item->build_callback) (
                 ptr_item->build_callback_pointer,
                 ptr_item->build_callback_data,
@@ -390,6 +403,24 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
                 window,
                 buffer,
                 NULL);
+            if ((debug_long_callbacks > 0) && (start_time.tv_sec > 0))
+            {
+                gettimeofday (&end_time, NULL);
+                time_diff = util_timeval_diff (&start_time, &end_time);
+                if (time_diff >= debug_long_callbacks)
+                {
+                    str_diff = util_get_microseconds_string (time_diff);
+                    log_printf (
+                        _("debug: long callback: bar: %s, item: %s, plugin: %s, "
+                          "time elapsed: %s"),
+                        bar->name,
+                        ptr_item->name,
+                        plugin_get_name (ptr_item->plugin),
+                        str_diff);
+                    if (str_diff)
+                        free (str_diff);
+                }
+            }
         }
         if (item_value && !item_value[0])
         {
