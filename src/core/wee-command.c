@@ -5743,7 +5743,7 @@ command_repeat_timer_cb (const void *pointer, void *data, int remaining_calls)
 COMMAND_CALLBACK(repeat)
 {
     int arg_count, count, i;
-    long interval;
+    long long interval;
     char *error, **repeat_args;
 
     /* make C compiler happy */
@@ -5757,9 +5757,10 @@ COMMAND_CALLBACK(repeat)
 
     if ((argc >= 5) && (string_strcmp (argv[1], "-interval") == 0))
     {
-        interval = util_parse_delay (argv[2], 1000);
-        if (interval < 1)
+        interval = util_parse_delay (argv[2], 1000000);
+        if (interval < 0)
             interval = 0;
+        interval /= 1000;
         arg_count = 3;
     }
 
@@ -7256,7 +7257,7 @@ COMMAND_CALLBACK(version)
 
 COMMAND_CALLBACK(wait)
 {
-    long delay;
+    long long delay;
 
     /* make C compiler happy */
     (void) pointer;
@@ -7264,9 +7265,11 @@ COMMAND_CALLBACK(wait)
 
     COMMAND_MIN_ARGS(3, "");
 
-    delay = util_parse_delay (argv[1], 1000);
+    delay = util_parse_delay (argv[1], 1000000);
     if (delay < 1)
         COMMAND_ERROR;
+
+    delay /= 1000;
 
     if (input_data_delayed (buffer, argv_eol[2], NULL, 0, delay) != WEECHAT_RC_OK)
         COMMAND_ERROR;
@@ -8886,8 +8889,9 @@ command_init ()
         NULL, "repeat",
         N_("execute a command several times"),
         N_("[-interval <delay>[<unit>]] <count> <command>"),
-        N_("  delay: delay between execution of commands\n"
+        N_("  delay: delay between execution of commands (minimum: 1 millisecond)\n"
            "   unit: optional, values are:\n"
+           "           us: microseconds\n"
            "           ms: milliseconds\n"
            "            s: seconds (default)\n"
            "            m: minutes\n"
@@ -9172,8 +9176,9 @@ command_init ()
         NULL, "wait",
         N_("schedule a command execution in future"),
         N_("<number>[<unit>] <command>"),
-        N_(" number: amount of time to wait (integer number)\n"
+        N_(" number: amount of time to wait (minimum: 1 millisecond)\n"
            "   unit: optional, values are:\n"
+           "           us: microseconds\n"
            "           ms: milliseconds\n"
            "            s: seconds (default)\n"
            "            m: minutes\n"

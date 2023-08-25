@@ -48,7 +48,8 @@ extern void util_get_time_diff (time_t time1, time_t time2,
 
 /* delay */
 
-extern long util_parse_delay (const char *string_delay, long default_factor);
+extern long long util_parse_delay (const char *string_delay,
+                                   long long default_factor);
 
 /* version */
 extern int util_version_number (const char *version);

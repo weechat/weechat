@@ -339,32 +339,34 @@ util_get_time_diff (time_t time1, time_t time2,
 
 /*
  * Parses a string with a delay and optional unit, returns the delay in
- * milliseconds.
+ * microseconds.
  *
  * The delay is a number followed by a unit which can be:
+ *   - "us": microseconds
  *   - "ms": milliseconds
  *   - "s": seconds
  *   - "m": minutes
  *   - "h": hours
  *
  * The default factor sets the default unit:
- *   - 1: milliseconds
- *   - 1000: seconds
- *   - 60000: minutes
- *   - 3600000: hours
+ *   - 1: microseconds
+ *   - 1000: milliseconds
+ *   - 1000000: seconds
+ *   - 60000000: minutes
+ *   - 3600000000: hours
  *
- * Returns the delay in milliseconds, -1 if error.
+ * Returns the delay in microseconds, -1 if error.
  */
 
-long
-util_parse_delay (const char *string_delay, long default_factor)
+long long
+util_parse_delay (const char *string_delay, long long default_factor)
 {
     const char *pos;
     char *str_number, *error;
-    long factor, delay;
+    long long factor, delay;
 
     if (!string_delay || !string_delay[0] || (default_factor < 1))
-        return -1;
+        return -1LL;
 
     factor = default_factor;
 
@@ -377,16 +379,18 @@ util_parse_delay (const char *string_delay, long default_factor)
     if ((pos > string_delay) && pos[0])
     {
         str_number = string_strndup (string_delay, pos - string_delay);
-        if (strcmp (pos, "ms") == 0)
-            factor = 1;
+        if (strcmp (pos, "us") == 0)
+            factor = 1LL;
+        else if (strcmp (pos, "ms") == 0)
+            factor = 1000LL;
         else if (strcmp (pos, "s") == 0)
-            factor = 1000;
+            factor = 1000LL * 1000LL;
         else if (strcmp (pos, "m") == 0)
-            factor = 1000 * 60;
+            factor = 1000LL * 1000LL * 60LL;
         else if (strcmp (pos, "h") == 0)
-            factor = 1000 * 60 * 60;
+            factor = 1000LL * 1000LL * 60LL * 60LL;
         else
-            return -1;
+            return -1LL;
     }
     else
     {
@@ -394,14 +398,14 @@ util_parse_delay (const char *string_delay, long default_factor)
     }
 
     if (!str_number)
-        return -1;
+        return -1LL;
 
     error = NULL;
-    delay = strtol (str_number, &error, 10);
+    delay = strtoll (str_number, &error, 10);
     if (!error || error[0] || (delay < 0))
     {
         free (str_number);
-        return -1;
+        return -1LL;
     }
 
     free (str_number);

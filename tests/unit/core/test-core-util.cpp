@@ -178,48 +178,59 @@ TEST(CoreUtil, GetTimeDiff)
 TEST(CoreUtil, ParseDelay)
 {
     /* error: no string */
-    LONGS_EQUAL(-1, util_parse_delay (NULL, -1));
-    LONGS_EQUAL(-1, util_parse_delay (NULL, 0));
-    LONGS_EQUAL(-1, util_parse_delay (NULL, 1));
-    LONGS_EQUAL(-1, util_parse_delay ("", -1));
-    LONGS_EQUAL(-1, util_parse_delay ("", 0));
-    LONGS_EQUAL(-1, util_parse_delay ("", 1));
+    LONGS_EQUAL(-1LL, util_parse_delay (NULL, -1LL));
+    LONGS_EQUAL(-1LL, util_parse_delay (NULL, 0LL));
+    LONGS_EQUAL(-1LL, util_parse_delay (NULL, 1LL));
+    LONGS_EQUAL(-1LL, util_parse_delay ("", -1LL));
+    LONGS_EQUAL(-1LL, util_parse_delay ("", 0LL));
+    LONGS_EQUAL(-1LL, util_parse_delay ("", 1LL));
 
     /* error: bad default_factor */
-    LONGS_EQUAL(-1, util_parse_delay ("abcd", -1));
-    LONGS_EQUAL(-1, util_parse_delay ("abcd", 0));
-    LONGS_EQUAL(-1, util_parse_delay ("123", -1));
-    LONGS_EQUAL(-1, util_parse_delay ("123", 0));
+    LONGS_EQUAL(-1LL, util_parse_delay ("abcd", -1LL));
+    LONGS_EQUAL(-1LL, util_parse_delay ("abcd", 0LL));
+    LONGS_EQUAL(-1LL, util_parse_delay ("123", -1LL));
+    LONGS_EQUAL(-1LL, util_parse_delay ("123", 0LL));
 
     /* error: bad unit */
-    LONGS_EQUAL(-1, util_parse_delay ("123a", 1));
-    LONGS_EQUAL(-1, util_parse_delay ("123ss", 1));
-    LONGS_EQUAL(-1, util_parse_delay ("123mss", 1));
+    LONGS_EQUAL(-1LL, util_parse_delay ("123a", 1LL));
+    LONGS_EQUAL(-1LL, util_parse_delay ("123ss", 1LL));
+    LONGS_EQUAL(-1LL, util_parse_delay ("123mss", 1LL));
+    LONGS_EQUAL(-1LL, util_parse_delay ("123uss", 1LL));
 
     /* error: bad number */
-    LONGS_EQUAL(-1, util_parse_delay ("abcd", 1));
+    LONGS_EQUAL(-1LL, util_parse_delay ("abcd", 1LL));
 
     /* tests with delay == 0 */
-    LONGS_EQUAL(0, util_parse_delay ("0", 1));
-    LONGS_EQUAL(0, util_parse_delay ("0ms", 1));
-    LONGS_EQUAL(0, util_parse_delay ("0s", 1));
-    LONGS_EQUAL(0, util_parse_delay ("0m", 1));
-    LONGS_EQUAL(0, util_parse_delay ("0h", 1));
+    LONGS_EQUAL(0LL, util_parse_delay ("0", 1LL));
+    LONGS_EQUAL(0LL, util_parse_delay ("0us", 1LL));
+    LONGS_EQUAL(0LL, util_parse_delay ("0ms", 1LL));
+    LONGS_EQUAL(0LL, util_parse_delay ("0s", 1LL));
+    LONGS_EQUAL(0LL, util_parse_delay ("0m", 1LL));
+    LONGS_EQUAL(0LL, util_parse_delay ("0h", 1LL));
 
-    /* tests with delay == 123, default_factor = 1 */
-    LONGS_EQUAL(123, util_parse_delay ("123", 1));
-    LONGS_EQUAL(123, util_parse_delay ("123", 1));
-    LONGS_EQUAL(123, util_parse_delay ("123ms", 1));
-    LONGS_EQUAL(123 * 1000, util_parse_delay ("123s", 1));
-    LONGS_EQUAL(123 * 1000 * 60, util_parse_delay ("123m", 1));
-    LONGS_EQUAL(123 * 1000 * 60 * 60, util_parse_delay ("123h", 1));
+    /* tests with delay == 123, default_factor = 1 (1 microsecond) */
+    LONGS_EQUAL(123LL, util_parse_delay ("123", 1LL));
+    LONGS_EQUAL(123LL, util_parse_delay ("123us", 1LL));
+    LONGS_EQUAL(123LL * 1000LL, util_parse_delay ("123ms", 1LL));
+    LONGS_EQUAL(123LL * 1000LL * 1000LL, util_parse_delay ("123s", 1LL));
+    LONGS_EQUAL(123LL * 1000LL * 1000LL * 60LL, util_parse_delay ("123m", 1LL));
+    LONGS_EQUAL(123LL * 1000LL * 1000LL * 60LL * 60LL, util_parse_delay ("123h", 1LL));
 
-    /* tests with delay == 123, default_factor = 1000 */
-    LONGS_EQUAL(123 * 1000, util_parse_delay ("123", 1000));
-    LONGS_EQUAL(123, util_parse_delay ("123ms", 1000));
-    LONGS_EQUAL(123 * 1000, util_parse_delay ("123s", 1000));
-    LONGS_EQUAL(123 * 1000 * 60, util_parse_delay ("123m", 1000));
-    LONGS_EQUAL(123 * 1000 * 60 * 60, util_parse_delay ("123h", 1000));
+    /* tests with delay == 123, default_factor = 1000 (1 millisecond) */
+    LONGS_EQUAL(123LL * 1000LL, util_parse_delay ("123", 1000LL));
+    LONGS_EQUAL(123LL, util_parse_delay ("123us", 1000LL));
+    LONGS_EQUAL(123LL * 1000LL, util_parse_delay ("123ms", 1000LL));
+    LONGS_EQUAL(123LL * 1000LL * 1000LL, util_parse_delay ("123s", 1000LL));
+    LONGS_EQUAL(123LL * 1000LL * 1000LL * 60LL, util_parse_delay ("123m", 1000LL));
+    LONGS_EQUAL(123LL * 1000LL * 1000LL * 60LL * 60LL, util_parse_delay ("123h", 1000LL));
+
+    /* tests with delay == 123, default_factor = 1000000 (1 second) */
+    LONGS_EQUAL(123LL * 1000LL * 1000LL, util_parse_delay ("123", 1000000LL));
+    LONGS_EQUAL(123LL, util_parse_delay ("123us", 1000000LL));
+    LONGS_EQUAL(123LL * 1000LL, util_parse_delay ("123ms", 1000000LL));
+    LONGS_EQUAL(123LL * 1000LL * 1000LL, util_parse_delay ("123s", 1000000LL));
+    LONGS_EQUAL(123LL * 1000LL * 1000LL * 60LL, util_parse_delay ("123m", 1000000LL));
+    LONGS_EQUAL(123LL * 1000LL * 1000LL * 60LL * 60LL, util_parse_delay ("123h", 1000000LL));
 }
 
 /*
