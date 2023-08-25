@@ -736,29 +736,29 @@ debug_display_time_elapsed (struct timeval *time1, struct timeval *time2,
                             const char *message, int display)
 {
     struct timeval debug_timeval_end;
-    long long diff, diff_hour, diff_min, diff_sec, diff_usec;
+    char *str_diff;
+    long long diff;
 
     gettimeofday (&debug_timeval_end, NULL);
     diff = util_timeval_diff (time1, time2);
-
-    diff_usec = diff % 1000000;
-    diff_sec = (diff / 1000000) % 60;
-    diff_min = ((diff / 1000000) / 60) % 60;
-    diff_hour = (diff / 1000000) / 3600;
+    str_diff = util_get_microseconds_string (diff);
 
     if (display)
     {
         gui_chat_printf (NULL,
-                         "debug: time[%s] -> %lld:%02lld:%02lld.%06lld",
+                         "debug: time[%s] -> %s",
                          (message) ? message : "?",
-                         diff_hour, diff_min, diff_sec, diff_usec);
+                         (str_diff) ? str_diff : "?");
     }
     else
     {
-        log_printf ("debug: time[%s] -> %lld:%02lld:%02lld.%06lld",
+        log_printf ("debug: time[%s] -> %s",
                     (message) ? message : "?",
-                    diff_hour, diff_min, diff_sec, diff_usec);
+                    (str_diff) ? str_diff : "?");
     }
+
+    if (str_diff)
+        free (str_diff);
 }
 
 /*

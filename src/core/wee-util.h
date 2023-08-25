@@ -40,6 +40,7 @@ extern long long util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 extern void util_timeval_add (struct timeval *tv, long long interval);
 
 /* time */
+extern char *util_get_microseconds_string (long long diff);
 extern const char *util_get_time_string (const time_t *date);
 extern void util_get_time_diff (time_t time1, time_t time2,
                                 time_t *total_seconds,

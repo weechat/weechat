@@ -286,6 +286,31 @@ util_timeval_add (struct timeval *tv, long long interval)
 }
 
 /*
+ * Converts microseconds to a string, using format: "H:MM:SS.mmmmmm"
+ * where: H=hours, MM=minutes, SS=seconds, mmmmmm=microseconds
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+util_get_microseconds_string (long long microseconds)
+{
+    long long hour, min, sec, usec;
+    char result[128];
+
+    usec = microseconds % 1000000;
+    sec = (microseconds / 1000000) % 60;
+    min = ((microseconds / 1000000) / 60) % 60;
+    hour = (microseconds / 1000000) / 3600;
+
+    snprintf (result, sizeof (result),
+              "%lld:%02lld:%02lld.%06lld",
+              hour, min, sec, usec);
+
+    return strdup (result);
+}
+
+/*
  * Converts date to a string, using format of option "weechat.look.time_format"
  * (can be localized).
  */

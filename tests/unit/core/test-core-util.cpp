@@ -21,6 +21,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <unistd.h>
@@ -34,6 +36,26 @@ extern "C"
 TEST_GROUP(CoreUtil)
 {
 };
+
+/*
+ * Tests functions:
+ *   util_setrlimit_resource
+ */
+
+TEST(CoreUtil, SetrlimitResource)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   util_setrlimit
+ */
+
+TEST(CoreUtil, Setrlimit)
+{
+    /* TODO: write tests */
+}
 
 /*
  * Tests functions:
@@ -84,6 +106,43 @@ TEST(CoreUtil, Timeval)
     util_timeval_add (&tv, 999000);
     LONGS_EQUAL(123461, tv.tv_sec);
     LONGS_EQUAL(21000, tv.tv_usec);
+}
+
+/*
+ * Tests functions:
+ *   util_get_microseconds_string
+ */
+
+TEST(CoreUtil, GetMicrosecondsString)
+{
+    char *str;
+
+    /* zero */
+    WEE_TEST_STR("0:00:00.000000",
+                 util_get_microseconds_string (0LL));
+
+    /* microseconds */
+    WEE_TEST_STR("0:00:00.000001", util_get_microseconds_string (1LL));
+    WEE_TEST_STR("0:00:00.000123", util_get_microseconds_string (123LL));
+
+    /* microseconds */
+    WEE_TEST_STR("0:00:00.001000", util_get_microseconds_string (1LL * 1000LL));
+    WEE_TEST_STR("0:00:00.123000", util_get_microseconds_string (123LL * 1000LL));
+
+    /* seconds */
+    WEE_TEST_STR("0:00:01.000000", util_get_microseconds_string (1LL * 1000LL * 1000LL));
+    WEE_TEST_STR("0:00:12.000000", util_get_microseconds_string (12LL * 1000LL * 1000LL));
+
+    /* minutes */
+    WEE_TEST_STR("0:01:00.000000", util_get_microseconds_string (1LL * 60LL * 1000LL * 1000LL));
+    WEE_TEST_STR("0:34:00.000000", util_get_microseconds_string (34LL * 60LL * 1000LL * 1000LL));
+
+    /* hours */
+    WEE_TEST_STR("1:00:00.000000", util_get_microseconds_string (1LL * 60LL * 60LL * 1000LL * 1000LL));
+    WEE_TEST_STR("34:00:00.000000", util_get_microseconds_string (34LL * 60LL * 60LL * 1000LL * 1000LL));
+
+    /* hours + minutes + seconds + milliseconds + microseconds */
+    WEE_TEST_STR("3:25:45.678901", util_get_microseconds_string (12345678901LL));
 }
 
 /*
