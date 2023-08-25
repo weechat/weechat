@@ -400,7 +400,13 @@ TEST(GuiBuffer, InputBufferInit)
 
 TEST(GuiBuffer, IsReservedName)
 {
-    /* TODO: write tests */
+    LONGS_EQUAL(0, gui_buffer_is_reserved_name (NULL));
+    LONGS_EQUAL(0, gui_buffer_is_reserved_name (""));
+    LONGS_EQUAL(0, gui_buffer_is_reserved_name ("zzz"));
+
+    LONGS_EQUAL(1, gui_buffer_is_reserved_name ("weechat"));
+    LONGS_EQUAL(1, gui_buffer_is_reserved_name ("secured_data"));
+    LONGS_EQUAL(1, gui_buffer_is_reserved_name ("color"));
 }
 
 /*
@@ -836,7 +842,53 @@ TEST(GuiBuffer, PropertyInList)
 
 TEST(GuiBuffer, GetInteger)
 {
-    /* TODO: write tests */
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, NULL));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, ""));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "zzz"));
+
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "number"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "layout_number"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "layout_number_merge_order"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "short_name_is_set"));
+    LONGS_EQUAL(GUI_BUFFER_TYPE_FORMATTED, gui_buffer_get_integer (gui_buffers, "type"));
+    LONGS_EQUAL(GUI_BUFFER_NOTIFY_ALL, gui_buffer_get_integer (gui_buffers, "notify"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "num_displayed"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "active"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "hidden"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "zoomed"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "print_hooks_enabled"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "day_change"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "clear"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "filter"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "closing"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "lines_hidden"));
+    LONGS_EQUAL(12, gui_buffer_get_integer (gui_buffers, "prefix_max_length"));
+    CHECK(gui_buffer_get_integer (gui_buffers, "next_line_id") > 0);
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "time_for_each_line"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_case_sensitive"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_max_length"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "nicklist_display_groups"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_count"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_visible_count"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_groups_count"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_groups_visible_count"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_nicks_count"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_nicks_visible_count"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "input"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_get_unknown_commands"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_get_empty"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_multiline"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_size"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_length"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_pos"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_1st_display"));
+    CHECK(gui_buffer_get_integer (gui_buffers, "num_history") >= 0);
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_exact"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_regex"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_where"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_found"));
 }
 
 /*
@@ -846,7 +898,24 @@ TEST(GuiBuffer, GetInteger)
 
 TEST(GuiBuffer, GetString)
 {
-    /* TODO: write tests */
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, NULL));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, ""));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "zzz"));
+
+    STRCMP_EQUAL("core", gui_buffer_get_string (gui_buffers, "plugin"));
+    STRCMP_EQUAL("weechat", gui_buffer_get_string (gui_buffers, "name"));
+    STRCMP_EQUAL("core.weechat", gui_buffer_get_string (gui_buffers, "full_name"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "old_full_name"));
+    STRCMP_EQUAL("weechat", gui_buffer_get_string (gui_buffers, "short_name"));
+    STRNCMP_EQUAL("WeeChat ", gui_buffer_get_string (gui_buffers, "title"), 8);
+    STRCMP_EQUAL("", gui_buffer_get_string (gui_buffers, "input"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "text_search_input"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "highlight_words"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "highlight_disable_regex"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "highlight_regex"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "highlight_tags_restrict"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "highlight_tags"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "hotlist_max_level_nicks"));
 }
 
 /*
@@ -856,7 +925,14 @@ TEST(GuiBuffer, GetString)
 
 TEST(GuiBuffer, GetPointer)
 {
-    /* TODO: write tests */
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, NULL));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, ""));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "zzz"));
+
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "plugin"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "text_search_regex_compiled"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "highlight_disable_regex_compiled"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "highlight_regex_compiled"));
 }
 
 /*

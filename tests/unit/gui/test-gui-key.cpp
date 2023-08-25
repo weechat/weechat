@@ -124,6 +124,8 @@ TEST(GuiKey, GetCurrentContext)
 
     input_data (gui_buffers, "/input search_stop", NULL, 0);
     LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
+
+    gui_buffers->text_search_where = 0;
 }
 
 /*
