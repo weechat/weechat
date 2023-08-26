@@ -6315,7 +6315,7 @@ IRC_PROTOCOL_CALLBACK(353)
             free (prefixes);
     }
 
-    if (!ptr_channel)
+    if (!ptr_channel && str_nicks)
     {
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
