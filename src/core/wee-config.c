@@ -2563,7 +2563,8 @@ config_weechat_buffer_create_option_cb (const void *pointer, void *data,
                             "mask \"%s\"; "
                             "content is evaluated, see /help eval; "
                             "${buffer} is a pointer to the buffer being "
-                            "opened"),
+                            "opened, ${property} is the name of the property "
+                            "being set"),
                           pos + 1,
                           buffer_mask);
                 ptr_option = config_file_new_option (

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-26 15:27+0200\n"
+"POT-Creation-Date: 2023-08-26 20:02+0200\n"
 "PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2861,7 +2861,8 @@ msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
 #, c-format
 msgid ""
 "set property \"%s\" on any buffer matching mask \"%s\"; content is "
-"evaluated, see /help eval; ${buffer} is a pointer to the buffer being opened"
+"evaluated, see /help eval; ${buffer} is a pointer to the buffer being "
+"opened, ${property} is the name of the property being set"
 msgstr ""
 
 #, fuzzy, c-format

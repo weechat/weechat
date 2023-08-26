@@ -658,7 +658,7 @@ gui_buffer_apply_config_option_property (struct t_gui_buffer *buffer,
 {
     const char *pos;
     char *buffer_mask, *value;
-    struct t_hashtable *pointers;
+    struct t_hashtable *pointers, *extra_vars;
 
     pos = strrchr (option->name, '.');
     if (!pos)
@@ -675,16 +675,24 @@ gui_buffer_apply_config_option_property (struct t_gui_buffer *buffer,
             WEECHAT_HASHTABLE_STRING,
             WEECHAT_HASHTABLE_POINTER,
             NULL, NULL);
-        if (pointers)
+        extra_vars = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+        if (pointers && extra_vars)
         {
             hashtable_set (pointers, "buffer", buffer);
-            value = eval_expression (CONFIG_STRING(option), pointers, NULL, NULL);
+            hashtable_set (extra_vars, "property", pos + 1);
+            value = eval_expression (CONFIG_STRING(option),
+                                     pointers, extra_vars, NULL);
             if (value)
             {
                 gui_buffer_set (buffer, pos + 1, value);
                 free (value);
             }
             hashtable_free (pointers);
+            hashtable_free (extra_vars);
         }
     }
 
