@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-25 13:26+0200\n"
+"POT-Creation-Date: 2023-08-26 15:27+0200\n"
 "PO-Revision-Date: 2023-08-08 07:14+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12703,9 +12703,14 @@ msgstr "%s%s: şu kanal için \"%s\" takma adı oluşturulamıyor: \"%s\""
 msgid "%sNicks %s%s%s: %s[%s%s%s]"
 msgstr "%sTakma adlar %s%s%s: %s[%s%s%s]"
 
-#, c-format
-msgid "%sNicks %s%s%s: %s[%s%s]"
-msgstr "%sTakma adlar %s%s%s: %s[%s%s]"
+#. TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular"
+#, fuzzy
+#| msgid "%s%s%d%s normal"
+#| msgid_plural "%s%s%d%s normals"
+msgid "regular"
+msgid_plural "regular"
+msgstr[0] "%s%s%d%s normal kullanıcı"
+msgstr[1] "%s%s%d%s normal kullanıcı"
 
 msgid "op"
 msgid_plural "ops"
@@ -12725,14 +12730,9 @@ msgid_plural "voiced"
 msgstr[0] "yardımcı"
 msgstr[1] "yardımcı"
 
-#. TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular"
-#, fuzzy, c-format
-#| msgid "%s%s%d%s normal"
-#| msgid_plural "%s%s%d%s normals"
-msgid "%s%s%d%s regular"
-msgid_plural "%s%s%d%s regular"
-msgstr[0] "%s%s%d%s normal kullanıcı"
-msgstr[1] "%s%s%d%s normal kullanıcı"
+#, c-format
+msgid "%sNicks %s%s%s: %s[%s%s]"
+msgstr "%sTakma adlar %s%s%s: %s[%s%s]"
 
 #, c-format
 msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"

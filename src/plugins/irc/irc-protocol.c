@@ -6476,6 +6476,174 @@ IRC_PROTOCOL_CALLBACK(354)
 }
 
 /*
+ * Returns a string with the list of nicks on a channel.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
+                                       struct t_irc_channel *channel)
+{
+    struct t_infolist *infolist;
+    struct t_config_option *ptr_option;
+    const char *prefix, *prefix_color, *nickname;
+    char **str_nicks, *color;
+
+    str_nicks = weechat_string_dyn_alloc (1024);
+    if (!str_nicks)
+        return NULL;
+
+    infolist = weechat_infolist_get ("nicklist", channel->buffer, NULL);
+    if (!infolist)
+    {
+        weechat_string_dyn_free (str_nicks, 1);
+        return NULL;
+    }
+
+    while (weechat_infolist_next (infolist))
+    {
+        if (strcmp (weechat_infolist_string (infolist, "type"), "nick") == 0)
+        {
+            if (*str_nicks[0])
+            {
+                weechat_string_dyn_concat (str_nicks,
+                                           IRC_COLOR_RESET,
+                                           -1);
+                weechat_string_dyn_concat (str_nicks, " ", -1);
+            }
+            prefix = weechat_infolist_string (infolist, "prefix");
+            if (prefix[0] && (prefix[0] != ' '))
+            {
+                prefix_color = weechat_infolist_string (infolist,
+                                                        "prefix_color");
+                if (strchr (prefix_color, '.'))
+                {
+                    ptr_option = weechat_config_get (
+                        weechat_infolist_string (infolist, "prefix_color"));
+                    if (ptr_option)
+                    {
+                        weechat_string_dyn_concat (
+                            str_nicks,
+                            weechat_color (
+                                weechat_config_string (ptr_option)),
+                            -1);
+                    }
+                }
+                else
+                {
+                    weechat_string_dyn_concat (str_nicks,
+                                               weechat_color (prefix_color),
+                                               -1);
+                }
+                weechat_string_dyn_concat (str_nicks, prefix, -1);
+            }
+            nickname = weechat_infolist_string (infolist, "name");
+            if (weechat_config_boolean (irc_config_look_color_nicks_in_names))
+            {
+                if (irc_server_strcasecmp (server, nickname, server->nick) == 0)
+                {
+                    weechat_string_dyn_concat (str_nicks,
+                                               IRC_COLOR_CHAT_NICK_SELF,
+                                               -1);
+                }
+                else
+                {
+                    color = irc_nick_find_color (server, nickname);
+                    weechat_string_dyn_concat (str_nicks, color, -1);
+                    if (color)
+                        free (color);
+                }
+            }
+            else
+            {
+                weechat_string_dyn_concat (str_nicks, IRC_COLOR_RESET, -1);
+            }
+            weechat_string_dyn_concat (str_nicks, nickname, -1);
+        }
+    }
+
+    weechat_infolist_free (infolist);
+
+    return weechat_string_dyn_free (str_nicks, 0);
+}
+
+/*
+ * Returns a string with the count of nicks per mode on a channel.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_protocol_get_string_channel_nicks_count (struct t_irc_server *server,
+                                             struct t_irc_channel *channel)
+{
+    const char *ptr_prefix_modes;
+    char **str_counts, str_count[128], str_mode_name[128];
+    int i, *nicks_by_mode, size;
+
+    ptr_prefix_modes = irc_server_get_prefix_modes (server);
+    if (!ptr_prefix_modes)
+        return NULL;
+
+    str_counts = weechat_string_dyn_alloc (1024);
+    if (!str_counts)
+        return NULL;
+
+    nicks_by_mode = irc_nick_count (server, channel, &size);
+    if (!nicks_by_mode)
+    {
+        weechat_string_dyn_free (str_counts, 1);
+        return NULL;
+    }
+
+    for (i = 0; i < size; i++)
+    {
+        snprintf (str_count, sizeof (str_count),
+                  "%s%d%s ",
+                  IRC_COLOR_CHAT_CHANNEL,
+                  nicks_by_mode[i],
+                  IRC_COLOR_RESET);
+        if (i == size - 1)
+        {
+            snprintf (str_mode_name, sizeof (str_mode_name),
+                      "%s",
+                      /* TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular" */
+                      NG_("regular", "regular", nicks_by_mode[i]));
+        }
+        else if (ptr_prefix_modes[i] == 'o')
+        {
+            snprintf (str_mode_name, sizeof (str_mode_name),
+                      "%s", NG_("op", "ops", nicks_by_mode[i]));
+        }
+        else if (ptr_prefix_modes[i] == 'h')
+        {
+            snprintf (str_mode_name, sizeof (str_mode_name),
+                      "%s", NG_("halfop", "halfops", nicks_by_mode[i]));
+        }
+        else if (ptr_prefix_modes[i] == 'v')
+        {
+            snprintf (str_mode_name, sizeof (str_mode_name),
+                      "%s", NG_("voiced", "voiced", nicks_by_mode[i]));
+        }
+        else
+        {
+            /* other modes: "+x" */
+            snprintf (str_mode_name, sizeof (str_mode_name),
+                      "+%c", ptr_prefix_modes[i]);
+        }
+        if (*str_counts[0])
+            weechat_string_dyn_concat (str_counts, ", ", -1);
+        weechat_string_dyn_concat (str_counts, str_count, -1);
+        weechat_string_dyn_concat (str_counts, str_mode_name, -1);
+    }
+
+    free (nicks_by_mode);
+
+    return weechat_string_dyn_free (str_counts, 0);
+}
+
+/*
  * Callback for the IRC command "366": end of /names list.
  *
  * Command looks like:
@@ -6485,11 +6653,7 @@ IRC_PROTOCOL_CALLBACK(354)
 IRC_PROTOCOL_CALLBACK(366)
 {
     struct t_irc_channel *ptr_channel;
-    struct t_infolist *infolist;
-    struct t_config_option *ptr_option;
-    int num_nicks, num_ops, num_halfops, num_voiced, num_regular;
-    char *str_params, str_count[1024], **str_nicks, *color;
-    const char *prefix, *prefix_color, *nickname;
+    char *str_params, *string;
 
     IRC_PROTOCOL_MIN_PARAMS(3);
 
@@ -6497,170 +6661,57 @@ IRC_PROTOCOL_CALLBACK(366)
 
     if (ptr_channel && ptr_channel->nicks)
     {
-        /* display users on channel */
+        /* display the list of users on channel */
         if (weechat_hashtable_has_key (ptr_channel->join_msg_received, "353")
             || weechat_hashtable_has_key (irc_config_hashtable_display_join_message, "353"))
         {
-            infolist = weechat_infolist_get ("nicklist", ptr_channel->buffer, NULL);
-            if (infolist)
+            string = irc_protocol_get_string_channel_nicks (server, ptr_channel);
+            if (string)
             {
-                str_nicks = weechat_string_dyn_alloc (1024);
-                while (weechat_infolist_next (infolist))
-                {
-                    if (strcmp (weechat_infolist_string (infolist, "type"),
-                                "nick") == 0)
-                    {
-                        if (*str_nicks[0])
-                        {
-                            weechat_string_dyn_concat (str_nicks,
-                                                       IRC_COLOR_RESET,
-                                                       -1);
-                            weechat_string_dyn_concat (str_nicks, " ", -1);
-                        }
-                        prefix = weechat_infolist_string (infolist, "prefix");
-                        if (prefix[0] && (prefix[0] != ' '))
-                        {
-                            prefix_color = weechat_infolist_string (infolist,
-                                                                    "prefix_color");
-                            if (strchr (prefix_color, '.'))
-                            {
-                                ptr_option = weechat_config_get (weechat_infolist_string (infolist,
-                                                                                          "prefix_color"));
-                                if (ptr_option)
-                                {
-                                    weechat_string_dyn_concat (
-                                        str_nicks,
-                                        weechat_color (
-                                            weechat_config_string (ptr_option)),
-                                        -1);
-                                }
-                            }
-                            else
-                            {
-                                weechat_string_dyn_concat (
-                                    str_nicks,
-                                    weechat_color (prefix_color),
-                                    -1);
-                            }
-                            weechat_string_dyn_concat (str_nicks, prefix, -1);
-                        }
-                        nickname = weechat_infolist_string (infolist, "name");
-                        if (weechat_config_boolean (irc_config_look_color_nicks_in_names))
-                        {
-                            if (irc_server_strcasecmp (server, nickname, server->nick) == 0)
-                            {
-                                weechat_string_dyn_concat (
-                                    str_nicks,
-                                    IRC_COLOR_CHAT_NICK_SELF,
-                                    -1);
-                            }
-                            else
-                            {
-                                color = irc_nick_find_color (server, nickname);
-                                weechat_string_dyn_concat (str_nicks, color, -1);
-                                if (color)
-                                    free (color);
-                            }
-                        }
-                        else
-                        {
-                            weechat_string_dyn_concat (str_nicks,
-                                                       IRC_COLOR_RESET,
-                                                       -1);
-                        }
-                        weechat_string_dyn_concat (str_nicks, nickname, -1);
-                    }
-                }
                 weechat_printf_date_tags (
                     irc_msgbuffer_get_target_buffer (
-                        server, NULL, command, "names",
-                        ptr_channel->buffer),
+                        server, NULL, command, "names", ptr_channel->buffer),
                     date,
-                    irc_protocol_tags (
-                        server, command, tags, NULL, NULL, NULL),
+                    irc_protocol_tags (server, command, tags, NULL, NULL, NULL),
                     _("%sNicks %s%s%s: %s[%s%s]"),
                     weechat_prefix ("network"),
                     IRC_COLOR_CHAT_CHANNEL,
                     ptr_channel->name,
                     IRC_COLOR_RESET,
                     IRC_COLOR_CHAT_DELIMITERS,
-                    *str_nicks,
+                    string,
                     IRC_COLOR_CHAT_DELIMITERS);
-                weechat_string_dyn_free (str_nicks, 1);
-                weechat_infolist_free (infolist);
+                free (string);
             }
         }
 
-        /*
-         * display the number of total nicks, ops, halfops, voiced and
-         * regular on the channel
-         */
+        /* display the number of nicks per mode on channel */
         if (weechat_hashtable_has_key (ptr_channel->join_msg_received, "366")
             || weechat_hashtable_has_key (irc_config_hashtable_display_join_message, "366"))
         {
-            irc_nick_count (server, ptr_channel, &num_nicks, &num_ops,
-                            &num_halfops, &num_voiced, &num_regular);
-            str_nicks = weechat_string_dyn_alloc (1024);
-            if (irc_server_get_prefix_mode_index (server, 'o') >= 0)
+            string = irc_protocol_get_string_channel_nicks_count (server,
+                                                                  ptr_channel);
+            if (string)
             {
-                snprintf (str_count, sizeof (str_count),
-                          "%s%s%d%s %s",
-                          (*str_nicks[0]) ? ", " : "",
-                          IRC_COLOR_CHAT_CHANNEL,
-                          num_ops,
-                          IRC_COLOR_RESET,
-                          NG_("op", "ops", num_ops));
-                weechat_string_dyn_concat (str_nicks, str_count, -1);
+                weechat_printf_date_tags (
+                    irc_msgbuffer_get_target_buffer (
+                        server, NULL, command, "names", ptr_channel->buffer),
+                    date,
+                    irc_protocol_tags (server, command, tags, NULL, NULL, NULL),
+                    _("%sChannel %s%s%s: %s%d%s %s %s(%s%s)"),
+                    weechat_prefix ("network"),
+                    IRC_COLOR_CHAT_CHANNEL,
+                    ptr_channel->name,
+                    IRC_COLOR_RESET,
+                    IRC_COLOR_CHAT_CHANNEL,
+                    ptr_channel->nicks_count,
+                    IRC_COLOR_RESET,
+                    NG_("nick", "nicks", ptr_channel->nicks_count),
+                    IRC_COLOR_CHAT_DELIMITERS,
+                    string,
+                    IRC_COLOR_CHAT_DELIMITERS);
+                free (string);
             }
-            if (irc_server_get_prefix_mode_index (server, 'h') >= 0)
-            {
-                snprintf (str_count, sizeof (str_count),
-                          "%s%s%d%s %s",
-                          (*str_nicks[0]) ? ", " : "",
-                          IRC_COLOR_CHAT_CHANNEL,
-                          num_halfops,
-                          IRC_COLOR_RESET,
-                          NG_("halfop", "halfops", num_halfops));
-                weechat_string_dyn_concat (str_nicks, str_count, -1);
-            }
-            if (irc_server_get_prefix_mode_index (server, 'v') >= 0)
-            {
-                snprintf (str_count, sizeof (str_count),
-                          "%s%s%d%s %s",
-                          (*str_nicks[0]) ? ", " : "",
-                          IRC_COLOR_CHAT_CHANNEL,
-                          num_voiced,
-                          IRC_COLOR_RESET,
-                          NG_("voiced", "voiced", num_voiced));
-                weechat_string_dyn_concat (str_nicks, str_count, -1);
-            }
-            snprintf (
-                str_count, sizeof (str_count),
-                /* TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular" */
-                NG_("%s%s%d%s regular", "%s%s%d%s regular", num_regular),
-                (*str_nicks[0]) ? ", " : "",
-                IRC_COLOR_CHAT_CHANNEL,
-                num_regular,
-                IRC_COLOR_RESET);
-            weechat_string_dyn_concat (str_nicks, str_count, -1);
-            weechat_printf_date_tags (
-                irc_msgbuffer_get_target_buffer (
-                    server, NULL, command, "names", ptr_channel->buffer),
-                date,
-                irc_protocol_tags (server, command, tags, NULL, NULL, NULL),
-                _("%sChannel %s%s%s: %s%d%s %s %s(%s%s)"),
-                weechat_prefix ("network"),
-                IRC_COLOR_CHAT_CHANNEL,
-                ptr_channel->name,
-                IRC_COLOR_RESET,
-                IRC_COLOR_CHAT_CHANNEL,
-                num_nicks,
-                IRC_COLOR_RESET,
-                NG_("nick", "nicks", num_nicks),
-                IRC_COLOR_CHAT_DELIMITERS,
-                *str_nicks,
-                IRC_COLOR_CHAT_DELIMITERS);
-            weechat_string_dyn_free (str_nicks, 1);
         }
 
         if (!weechat_hashtable_has_key (ptr_channel->join_msg_received, command))

@@ -6657,7 +6657,7 @@ IRC_COMMAND_CALLBACK(wallchops)
         for (ptr_nick = ptr_channel->nicks; ptr_nick;
              ptr_nick = ptr_nick->next_nick)
         {
-            if (irc_nick_is_op (ptr_server, ptr_nick)
+            if (irc_nick_is_op_or_higher (ptr_server, ptr_nick)
                 && (irc_server_strcasecmp (ptr_server,
                                            ptr_nick->name,
                                            ptr_server->nick) != 0))

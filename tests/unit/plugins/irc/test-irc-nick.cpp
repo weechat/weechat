@@ -298,10 +298,10 @@ TEST(IrcNick, IrcNickSetHost)
 
 /*
  * Tests functions:
- *   irc_nick_is_op
+ *   irc_nick_is_op_or_higher
  */
 
-TEST(IrcNick, IrcNickIsOp)
+TEST(IrcNick, IrcNickIsOpOrHigher)
 {
     /* TODO: write tests */
 }

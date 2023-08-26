@@ -54,8 +54,8 @@ extern char *irc_nick_find_color (struct t_irc_server *server,
 extern char *irc_nick_find_color_name (struct t_irc_server *server,
                                        const char *nickname);
 extern void irc_nick_set_host (struct t_irc_nick *nick, const char *host);
-extern int irc_nick_is_op (struct t_irc_server *server,
-                           struct t_irc_nick *nick);
+extern int irc_nick_is_op_or_higher (struct t_irc_server *server,
+                                     struct t_irc_nick *nick);
 extern int irc_nick_has_prefix_mode (struct t_irc_server *server,
                                      struct t_irc_nick *nick,
                                      char prefix_mode);
@@ -87,10 +87,8 @@ extern void irc_nick_free_all (struct t_irc_server *server,
 extern struct t_irc_nick *irc_nick_search (struct t_irc_server *server,
                                            struct t_irc_channel *channel,
                                            const char *nickname);
-extern void irc_nick_count (struct t_irc_server *server,
-                            struct t_irc_channel *channel, int *total,
-                            int *count_ops, int *count_halfops,
-                            int *count_voiced, int *count_regular);
+extern int *irc_nick_count (struct t_irc_server *server,
+                            struct t_irc_channel *channel, int *size);
 extern void irc_nick_set_away (struct t_irc_server *server,
                                struct t_irc_channel *channel,
                                struct t_irc_nick *nick, int is_away);

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-25 13:26+0200\n"
+"POT-Creation-Date: 2023-08-26 15:27+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8775,9 +8775,11 @@ msgstr ""
 msgid "%sNicks %s%s%s: %s[%s%s%s]"
 msgstr ""
 
-#, c-format
-msgid "%sNicks %s%s%s: %s[%s%s]"
-msgstr ""
+#. TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular"
+msgid "regular"
+msgid_plural "regular"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "op"
 msgid_plural "ops"
@@ -8794,12 +8796,9 @@ msgid_plural "voiced"
 msgstr[0] ""
 msgstr[1] ""
 
-#. TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular"
 #, c-format
-msgid "%s%s%d%s regular"
-msgid_plural "%s%s%d%s regular"
-msgstr[0] ""
-msgstr[1] ""
+msgid "%sNicks %s%s%s: %s[%s%s]"
+msgstr ""
 
 #, c-format
 msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-25 13:26+0200\n"
+"POT-Creation-Date: 2023-08-26 15:27+0200\n"
 "PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9778,9 +9778,12 @@ msgstr "%s не могу создать ник \"%s\" для канала \"%s\"
 msgid "%sNicks %s%s%s: %s[%s%s%s]"
 msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
-#, fuzzy, c-format
-msgid "%sNicks %s%s%s: %s[%s%s]"
-msgstr "%sСервер: %s%s %s[%s%s%s]\n"
+#. TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular"
+msgid "regular"
+msgid_plural "regular"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #, fuzzy
 msgid "op"
@@ -9803,13 +9806,9 @@ msgstr[0] "войс"
 msgstr[1] "войс"
 msgstr[2] "войс"
 
-#. TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular"
-#, c-format
-msgid "%s%s%d%s regular"
-msgid_plural "%s%s%d%s regular"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+#, fuzzy, c-format
+msgid "%sNicks %s%s%s: %s[%s%s]"
+msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
 #, fuzzy, c-format
 msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"
