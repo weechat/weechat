@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
+  * core: evaluate command given to `/repeat` with contextual variables (issue #2007)
   * core: add option `callbacks` in command `/debug`
   * core: add option type "enum" (issue #1973)
   * core: add options weechat.buffer.* to save buffer properties set by user, add option `setauto` in command `/buffer` (issue #352)

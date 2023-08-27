@@ -5720,41 +5720,102 @@ COMMAND_CALLBACK(reload)
 }
 
 /*
+ * Executes a repeated command.
+ */
+
+void
+command_repeat_exec (struct t_command_repeat *command_repeat)
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_hashtable *pointers, *extra_vars;
+    char str_number[32], *cmd_eval;
+
+    if (!command_repeat || !command_repeat->buffer_name
+        || !command_repeat->command)
+    {
+        return;
+    }
+
+    ptr_buffer = gui_buffer_search_by_full_name (command_repeat->buffer_name);
+    if (!ptr_buffer)
+        return;
+
+    pointers = hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER,
+        NULL, NULL);
+    if (!pointers)
+        return;
+    extra_vars = hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (!extra_vars)
+    {
+        hashtable_free (pointers);
+        return;
+    }
+
+    hashtable_set (pointers, "buffer", ptr_buffer);
+    snprintf (str_number, sizeof (str_number), "%d", command_repeat->count);
+    hashtable_set (extra_vars, "repeat_count", str_number);
+    snprintf (str_number, sizeof (str_number), "%d", command_repeat->index);
+    hashtable_set (extra_vars, "repeat_index", str_number);
+    snprintf (str_number, sizeof (str_number), "%d", command_repeat->index - 1);
+    hashtable_set (extra_vars, "repeat_index0", str_number);
+    snprintf (str_number, sizeof (str_number), "%d", command_repeat->count - command_repeat->index + 1);
+    hashtable_set (extra_vars, "repeat_revindex", str_number);
+    snprintf (str_number, sizeof (str_number), "%d", command_repeat->count - command_repeat->index);
+    hashtable_set (extra_vars, "repeat_revindex0", str_number);
+    hashtable_set (extra_vars, "repeat_first",
+                   (command_repeat->index == 1) ? "1" : "0");
+    hashtable_set (extra_vars, "repeat_last",
+                   (command_repeat->index >= command_repeat->count) ? "1" : "0");
+
+    cmd_eval = eval_expression (command_repeat->command,
+                                pointers, extra_vars, NULL);
+    if (cmd_eval)
+    {
+        (void) input_data (ptr_buffer,
+                           cmd_eval,
+                           command_repeat->commands_allowed,
+                           0);  /* split_newline */
+        free (cmd_eval);
+    }
+
+    hashtable_free (pointers);
+    hashtable_free (extra_vars);
+
+    if (command_repeat->index < command_repeat->count)
+    {
+        /* increment index for next execution */
+        command_repeat->index++;
+    }
+    else
+    {
+        /* it was the last execution, free up memory */
+        free (command_repeat->buffer_name);
+        free (command_repeat->command);
+        if (command_repeat->commands_allowed)
+            free (command_repeat->commands_allowed);
+        free (command_repeat);
+    }
+}
+
+/*
  * Callback for repeat timer.
  */
 
 int
 command_repeat_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
-    char **repeat_args;
-    int i;
-    struct t_gui_buffer *ptr_buffer;
-
     /* make C compiler happy */
     (void) data;
+    (void) remaining_calls;
 
-    repeat_args = (char **)pointer;
-
-    if (!repeat_args)
-        return WEECHAT_RC_ERROR;
-
-    if (repeat_args[0] && repeat_args[1])
-    {
-        /* search buffer, fallback to core buffer if not found */
-        ptr_buffer = gui_buffer_search_by_full_name (repeat_args[0]);
-        if (ptr_buffer)
-            (void) input_data (ptr_buffer, repeat_args[1], repeat_args[2], 0);
-    }
-
-    if (remaining_calls == 0)
-    {
-        for (i = 0; i < 3; i++)
-        {
-            if (repeat_args[i])
-                free (repeat_args[i]);
-        }
-        free (repeat_args);
-    }
+    command_repeat_exec ((struct t_command_repeat *)pointer);
 
     return WEECHAT_RC_OK;
 }
@@ -5767,7 +5828,8 @@ COMMAND_CALLBACK(repeat)
 {
     int arg_count, count, i;
     long long interval;
-    char *error, **repeat_args;
+    char *error;
+    struct t_command_repeat *cmd_repeat;
 
     /* make C compiler happy */
     (void) pointer;
@@ -5799,8 +5861,25 @@ COMMAND_CALLBACK(repeat)
         return WEECHAT_RC_OK;
     }
 
+    cmd_repeat = malloc (sizeof (*cmd_repeat));
+    if (!cmd_repeat)
+    {
+        gui_chat_printf (NULL,
+                         _("%sNot enough memory (%s)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         "/repeat");
+        return WEECHAT_RC_OK;
+    }
+    cmd_repeat->buffer_name = strdup (buffer->full_name);
+    cmd_repeat->command = strdup (argv_eol[arg_count + 1]);
+    cmd_repeat->commands_allowed = (input_commands_allowed) ?
+        string_rebuild_split_string (
+            (const char **)input_commands_allowed, ",", 0, -1) : NULL;
+    cmd_repeat->count = count;
+    cmd_repeat->index = 1;
+
     /* first execute command now */
-    (void) input_data (buffer, argv_eol[arg_count + 1], NULL, 0);
+    command_repeat_exec (cmd_repeat);
 
     /* repeat execution of command */
     if (count > 1)
@@ -5810,28 +5889,14 @@ COMMAND_CALLBACK(repeat)
             /* execute command multiple times now */
             for (i = 0; i < count - 1; i++)
             {
-                (void) input_data (buffer, argv_eol[arg_count + 1], NULL, 0);
+                command_repeat_exec (cmd_repeat);
             }
         }
         else
         {
             /* schedule execution of command in future */
-            repeat_args = malloc (3 * sizeof (*repeat_args));
-            if (!repeat_args)
-            {
-                gui_chat_printf (NULL,
-                                 _("%sNot enough memory (%s)"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 "/repeat");
-                return WEECHAT_RC_OK;
-            }
-            repeat_args[0] = strdup (buffer->full_name);
-            repeat_args[1] = strdup (argv_eol[arg_count + 1]);
-            repeat_args[2] = (input_commands_allowed) ?
-                string_rebuild_split_string (
-                    (const char **)input_commands_allowed, ",", 0, -1) : NULL;
             hook_timer (NULL, interval, 0, count - 1,
-                        &command_repeat_timer_cb, repeat_args, NULL);
+                        &command_repeat_timer_cb, cmd_repeat, NULL);
         }
     }
 
@@ -8932,7 +8997,20 @@ command_init ()
            "            h: hours\n"
            "  count: number of times to execute command\n"
            "command: command to execute (or text to send to buffer if command "
-           "does not start with '/')\n"
+           "does not start with '/'), evaluated and the following variables "
+           "are set each time the command is executed:\n"
+           "           ${buffer}: buffer pointer\n"
+           "           ${repeat_count}: number of times the command is executed\n"
+           "           ${repeat_index}: current index (from 1 to \"count\")\n"
+           "           ${repeat_index0}: current index (from 0 to \"count\" - 1)\n"
+           "           ${repeat_revindex}: current index from the end "
+           "(from \"count\" to 1)\n"
+           "           ${repeat_revindex0}: current index from the end "
+           "(from \"count\" - 1 to 0)\n"
+           "           ${repeat_first}: \"1\" for the first execution, "
+           "\"0\" for the others\n"
+           "           ${repeat_last}: \"1\" for the last execution, "
+           "\"0\" for the others\n"
            "\n"
            "Note: the command is executed on buffer where /repeat was executed "
            "(if the buffer does not exist any more, the command is not "
