@@ -4106,7 +4106,7 @@ COMMAND_CALLBACK(key)
 {
     struct t_gui_key *ptr_new_key;
     int i, old_keys_count, keys_added, context, rc;
-    char *key_name;
+    char *key_name, *value;
 
     /* make C compiler happy */
     (void) pointer;
@@ -4197,8 +4197,14 @@ COMMAND_CALLBACK(key)
         }
 
         gui_key_verbose = 1;
-        (void) gui_key_bind (NULL, GUI_KEY_CONTEXT_DEFAULT,
-                             argv[2], argv_eol[3], 1);
+        value = string_remove_quotes (argv_eol[3], "'\"");
+        (void) gui_key_bind (NULL,  /* buffer */
+                             GUI_KEY_CONTEXT_DEFAULT,
+                             argv[2],
+                             (value) ? value : argv_eol[3],
+                             1);  /* check_key */
+        if (value)
+            free (value);
         gui_key_verbose = 0;
 
         return WEECHAT_RC_OK;
@@ -4239,7 +4245,14 @@ COMMAND_CALLBACK(key)
         }
 
         gui_key_verbose = 1;
-        gui_key_bind (NULL, context, argv[3], argv_eol[4], 1);
+        value = string_remove_quotes (argv_eol[4], "'\"");
+        gui_key_bind (NULL,  /* buffer */
+                      context,
+                      argv[3],
+                      (value) ? value : argv_eol[4],
+                      1);  /* check_key */
+        if (value)
+            free (value);
         gui_key_verbose = 0;
 
         return WEECHAT_RC_OK;
@@ -8667,7 +8680,9 @@ command_init ()
            "key (for context \"default\")\n"
            "   bindctxt: bind a command to a key or display command bound to "
            "key, for given context\n"
-           "    command: command (many commands can be separated by semicolons)\n"
+           "    command: command (many commands can be separated by semicolons); "
+           "quotes can be used to preserve spaces at the beginning/end of "
+           "command\n"
            "     unbind: remove a key binding (for context \"default\")\n"
            " unbindctxt: remove a key binding for given context\n"
            "      reset: reset a key to default binding (for context "
