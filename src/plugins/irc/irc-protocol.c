@@ -6478,17 +6478,34 @@ IRC_PROTOCOL_CALLBACK(354)
 /*
  * Returns a string with the list of nicks on a channel.
  *
+ * If filter is NULL, all nicks are displayed.
+ * Otherwise first char of filter is a mode:
+ *   o: ops
+ *   h: halfops
+ *   v: voiced
+ *   ...
+ *   *: regular
+ *
  * Note: result must be freed after use.
  */
 
 char *
 irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
-                                       struct t_irc_channel *channel)
+                                       struct t_irc_channel *channel,
+                                       const char *filter)
 {
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
-    const char *prefix, *prefix_color, *nickname;
+    const char *prefix, *prefix_color, *nickname, *ptr_prefix_modes;
     char **str_nicks, *color;
+    int index_mode, filter_ok;
+
+    /*
+     * filter "#" means display only nicks count, so the list of nicks is not
+     * displayed at all
+     */
+    if (filter && (filter[0] == '#'))
+        return NULL;
 
     str_nicks = weechat_string_dyn_alloc (1024);
     if (!str_nicks)
@@ -6501,10 +6518,30 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
         return NULL;
     }
 
+    ptr_prefix_modes = irc_server_get_prefix_modes (server);
+
     while (weechat_infolist_next (infolist))
     {
         if (strcmp (weechat_infolist_string (infolist, "type"), "nick") == 0)
         {
+            prefix = weechat_infolist_string (infolist, "prefix");
+            index_mode = (prefix[0] && (prefix[0] != ' ')) ?
+                irc_server_get_prefix_char_index (server, prefix[0]) : -1;
+
+            /* check filter */
+            if (filter && ptr_prefix_modes)
+            {
+                filter_ok = (((filter[0] == '*') && (index_mode < 0))
+                             || ((filter[0] != '*') && (index_mode >= 0)
+                                 && (filter[0] == ptr_prefix_modes[index_mode])));
+            }
+            else
+            {
+                filter_ok = 1;
+            }
+            if (!filter_ok)
+                continue;
+
             if (*str_nicks[0])
             {
                 weechat_string_dyn_concat (str_nicks,
@@ -6512,7 +6549,6 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
                                            -1);
                 weechat_string_dyn_concat (str_nicks, " ", -1);
             }
-            prefix = weechat_infolist_string (infolist, "prefix");
             if (prefix[0] && (prefix[0] != ' '))
             {
                 prefix_color = weechat_infolist_string (infolist,
@@ -6653,7 +6689,8 @@ irc_protocol_get_string_channel_nicks_count (struct t_irc_server *server,
 IRC_PROTOCOL_CALLBACK(366)
 {
     struct t_irc_channel *ptr_channel;
-    char *str_params, *string;
+    const char *ptr_filter;
+    char *str_params, *string, *channel_name_lower, str_filter[256];
 
     IRC_PROTOCOL_MIN_PARAMS(3);
 
@@ -6661,23 +6698,44 @@ IRC_PROTOCOL_CALLBACK(366)
 
     if (ptr_channel && ptr_channel->nicks)
     {
-        /* display the list of users on channel */
-        if (weechat_hashtable_has_key (ptr_channel->join_msg_received, "353")
-            || weechat_hashtable_has_key (irc_config_hashtable_display_join_message, "353"))
+        /* check if a filter was given to /names command */
+        ptr_filter = NULL;
+        channel_name_lower = weechat_string_tolower (ptr_channel->name);
+        if (channel_name_lower)
         {
-            string = irc_protocol_get_string_channel_nicks (server, ptr_channel);
+            ptr_filter = weechat_hashtable_get (server->names_channel_filter,
+                                                channel_name_lower);
+        }
+
+        /* display the list of users on channel */
+        if ((!ptr_filter || (ptr_filter[0] != '#'))
+            && (weechat_hashtable_has_key (ptr_channel->join_msg_received, "353")
+                || weechat_hashtable_has_key (irc_config_hashtable_display_join_message, "353")))
+        {
+            string = irc_protocol_get_string_channel_nicks (server, ptr_channel,
+                                                            ptr_filter);
             if (string)
             {
+                if (ptr_filter)
+                {
+                    snprintf (str_filter, sizeof (str_filter),
+                              " (%s %s)", _("filter:"), ptr_filter);
+                }
+                else
+                {
+                    str_filter[0] = '\0';
+                }
                 weechat_printf_date_tags (
                     irc_msgbuffer_get_target_buffer (
                         server, NULL, command, "names", ptr_channel->buffer),
                     date,
                     irc_protocol_tags (server, command, tags, NULL, NULL, NULL),
-                    _("%sNicks %s%s%s: %s[%s%s]"),
+                    _("%sNicks %s%s%s%s: %s[%s%s]"),
                     weechat_prefix ("network"),
                     IRC_COLOR_CHAT_CHANNEL,
                     ptr_channel->name,
                     IRC_COLOR_RESET,
+                    str_filter,
                     IRC_COLOR_CHAT_DELIMITERS,
                     string,
                     IRC_COLOR_CHAT_DELIMITERS);
@@ -6712,6 +6770,14 @@ IRC_PROTOCOL_CALLBACK(366)
                     IRC_COLOR_CHAT_DELIMITERS);
                 free (string);
             }
+        }
+
+        if (channel_name_lower)
+        {
+            /* remove filter */
+            weechat_hashtable_remove (server->names_channel_filter,
+                                      channel_name_lower);
+            free (channel_name_lower);
         }
 
         if (!weechat_hashtable_has_key (ptr_channel->join_msg_received, command))

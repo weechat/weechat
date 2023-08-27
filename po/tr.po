@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 09:58+0200\n"
+"POT-Creation-Date: 2023-08-27 11:25+0200\n"
 "PO-Revision-Date: 2023-08-08 07:14+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10078,11 +10078,17 @@ msgstr "bir takma ada veya kanala ileti gönder"
 msgid "list nicks on channels"
 msgstr "kanaldaki takma adları listele"
 
-msgid "[<channel>[,<channel>...]]"
+#, fuzzy
+#| msgid "[<channel>[,<channel>...]]"
+msgid "[-count | -x] [<channel>[,<channel>...]]"
 msgstr "[<kanal>[,<kanal>...]]"
 
-msgid "channel: channel name"
-msgstr "kanal: kanal adı"
+msgid ""
+" -count: display only number of users\n"
+"     -x: display only users with this mode: -o for ops, -h for halfops, -v "
+"for voiced, etc. and -* for regular users\n"
+"channel: channel name"
+msgstr ""
 
 msgid "change current nick"
 msgstr "geçerli takma adı değiştir"
@@ -10793,6 +10799,11 @@ msgstr "geçerli IRC sunucusundaki gizliler"
 
 msgid "nicks on all channels of current IRC server"
 msgstr "geçerli IRC sunucusunun tüm kanallarındaki takma adlar"
+
+msgid ""
+"arguments to filter by prefix mode (for example: \"-o\", \"-h\", \"-v\", \"-"
+"*\")"
+msgstr ""
 
 msgid "IRC servers (internal names)"
 msgstr "IRC sunucuları (dahili adlar)"
@@ -12749,8 +12760,14 @@ msgid_plural "voiced"
 msgstr[0] "yardımcı"
 msgstr[1] "yardımcı"
 
-#, c-format
-msgid "%sNicks %s%s%s: %s[%s%s]"
+#, fuzzy
+#| msgid "filter"
+msgid "filter:"
+msgstr "süzgeç"
+
+#, fuzzy, c-format
+#| msgid "%sNicks %s%s%s: %s[%s%s]"
+msgid "%sNicks %s%s%s%s: %s[%s%s]"
 msgstr "%sTakma adlar %s%s%s: %s[%s%s]"
 
 #, c-format
@@ -17274,6 +17291,9 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
+
+#~ msgid "channel: channel name"
+#~ msgstr "kanal: kanal adı"
 
 #~ msgid ""
 #~ "get nick color code (*deprecated* since version 1.5, replaced by "

@@ -1782,6 +1782,11 @@ irc_server_alloc (const char *name)
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_TIME,
         NULL, NULL);
+    new_server->names_channel_filter = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
     new_server->batches = NULL;
     new_server->last_batch = NULL;
     new_server->buffer = NULL;
@@ -2269,6 +2274,7 @@ irc_server_free_data (struct t_irc_server *server)
     weechat_hashtable_free (server->join_channel_key);
     weechat_hashtable_free (server->join_noswitch);
     weechat_hashtable_free (server->echo_msg_recv);
+    weechat_hashtable_free (server->names_channel_filter);
 
     /* free server data */
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
@@ -4217,6 +4223,9 @@ irc_server_close_connection (struct t_irc_server *server)
 
     /* remove all messages stored (with capability echo-message) */
     weechat_hashtable_remove_all (server->echo_msg_recv);
+
+    /* remove all /names filters */
+    weechat_hashtable_remove_all (server->names_channel_filter);
 
     /* remove all batched events pending */
     irc_batch_free_all (server);
@@ -6478,6 +6487,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, join_channel_key, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, join_noswitch, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, echo_msg_recv, HASHTABLE, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, names_channel_filter, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, batches, POINTER, 0, NULL, "irc_batch");
         WEECHAT_HDATA_VAR(struct t_irc_server, last_batch, POINTER, 0, NULL, "irc_batch");
         WEECHAT_HDATA_VAR(struct t_irc_server, buffer, POINTER, 0, NULL, "buffer");
@@ -7277,6 +7287,9 @@ irc_server_print_log ()
         weechat_log_printf ("  echo_msg_recv . . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->echo_msg_recv,
                             weechat_hashtable_get_string (ptr_server->echo_msg_recv, "keys_values"));
+        weechat_log_printf ("  names_channel_filter. . . : 0x%lx (hashtable: '%s')",
+                            ptr_server->names_channel_filter,
+                            weechat_hashtable_get_string (ptr_server->names_channel_filter, "keys_values"));
         weechat_log_printf ("  batches . . . . . . . . . : 0x%lx", ptr_server->batches);
         weechat_log_printf ("  last_batch. . . . . . . . : 0x%lx", ptr_server->last_batch);
         weechat_log_printf ("  buffer. . . . . . . . . . : 0x%lx", ptr_server->buffer);

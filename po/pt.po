@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 09:58+0200\n"
+"POT-Creation-Date: 2023-08-27 11:25+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -9176,11 +9176,17 @@ msgstr "enviar mensagem para um nick ou canal"
 msgid "list nicks on channels"
 msgstr "listar nicks em canais"
 
-msgid "[<channel>[,<channel>...]]"
+#, fuzzy
+#| msgid "[<channel>[,<channel>...]]"
+msgid "[-count | -x] [<channel>[,<channel>...]]"
 msgstr "[<canal>[,<canal>...]]"
 
-msgid "channel: channel name"
-msgstr "canal: nome do canal"
+msgid ""
+" -count: display only number of users\n"
+"     -x: display only users with this mode: -o for ops, -h for halfops, -v "
+"for voiced, etc. and -* for regular users\n"
+"channel: channel name"
+msgstr ""
 
 msgid "change current nick"
 msgstr "mudar o nick atual"
@@ -9845,6 +9851,11 @@ msgstr "privados no servidor IRC atual"
 
 msgid "nicks on all channels of current IRC server"
 msgstr "nicks em todos os canais do servidor IRC atual"
+
+msgid ""
+"arguments to filter by prefix mode (for example: \"-o\", \"-h\", \"-v\", \"-"
+"*\")"
+msgstr ""
 
 msgid "IRC servers (internal names)"
 msgstr "servidores IRC (nomes internos)"
@@ -11767,8 +11778,14 @@ msgid_plural "voiced"
 msgstr[0] "voz"
 msgstr[1] "vozes"
 
-#, c-format
-msgid "%sNicks %s%s%s: %s[%s%s]"
+#, fuzzy
+#| msgid "filter"
+msgid "filter:"
+msgstr "filtro"
+
+#, fuzzy, c-format
+#| msgid "%sNicks %s%s%s: %s[%s%s]"
+msgid "%sNicks %s%s%s%s: %s[%s%s]"
 msgstr "%sNicks %s%s%s: %s[%s%s]"
 
 #, c-format
@@ -16088,6 +16105,9 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
+
+#~ msgid "channel: channel name"
+#~ msgstr "canal: nome do canal"
 
 #~ msgid ""
 #~ "get nick color code (*deprecated* since version 1.5, replaced by "

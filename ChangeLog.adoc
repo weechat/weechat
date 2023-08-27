@@ -27,6 +27,7 @@ New features::
   * fset: add variable `allowed_values` in options, add options fset.color.allowed_values and fset.color.allowed_values_selected
   * fset: allow long type name in type filter
   * irc: add count for all nick modes in output of `/names` (issue #97)
+  * irc: add count and mode filter in command `/names` (issue #98)
   * irc: compute color in case insensitive way, reintroduce infos "irc_nick_color" and "irc_nick_color_name", add support of server name (issue #194)
   * irc: add buffer for /list reply, add options irc.color.list_buffer_line_selected, irc.color.list_buffer_line_selected_bg, irc.look.list_buffer_sort, irc.look.list_buffer_scroll_horizontal, irc.look.new_list_position, irc.look.list_buffer_topic_strip_colors (issue #1972)
   * irc: display commands 716/717 in private buffer (if present) (issue #146)

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 09:58+0200\n"
+"POT-Creation-Date: 2023-08-27 11:25+0200\n"
 "PO-Revision-Date: 2023-08-08 07:13+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -10569,11 +10569,17 @@ msgstr "wysyła wiadomość do użytkownika albo kanału"
 msgid "list nicks on channels"
 msgstr "wyświetla nazwy użytkowników na kanałach"
 
-msgid "[<channel>[,<channel>...]]"
+#, fuzzy
+#| msgid "[<channel>[,<channel>...]]"
+msgid "[-count | -x] [<channel>[,<channel>...]]"
 msgstr "[<kanał>[,<kanał>...]]"
 
-msgid "channel: channel name"
-msgstr "kanał: nazwa kanału"
+msgid ""
+" -count: display only number of users\n"
+"     -x: display only users with this mode: -o for ops, -h for halfops, -v "
+"for voiced, etc. and -* for regular users\n"
+"channel: channel name"
+msgstr ""
 
 msgid "change current nick"
 msgstr "zmienia obecną nazwę użytkownika"
@@ -11293,6 +11299,11 @@ msgstr "rozmowy prywatne na obecnym serwerze IRC"
 
 msgid "nicks on all channels of current IRC server"
 msgstr "użytkownicy na wszystkich kanałach obecnego serwera IRC"
+
+msgid ""
+"arguments to filter by prefix mode (for example: \"-o\", \"-h\", \"-v\", \"-"
+"*\")"
+msgstr ""
 
 msgid "IRC servers (internal names)"
 msgstr "Serwery IRC (nazwy wewnętrzne)"
@@ -13268,8 +13279,14 @@ msgstr[0] "voice"
 msgstr[1] "voice"
 msgstr[2] "voice"
 
-#, c-format
-msgid "%sNicks %s%s%s: %s[%s%s]"
+#, fuzzy
+#| msgid "filter"
+msgid "filter:"
+msgstr "filtr"
+
+#, fuzzy, c-format
+#| msgid "%sNicks %s%s%s: %s[%s%s]"
+msgid "%sNicks %s%s%s%s: %s[%s%s]"
 msgstr "%sNicki %s%s%s: %s[%s%s]"
 
 #, c-format
@@ -17972,6 +17989,9 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid "channel: channel name"
+#~ msgstr "kanał: nazwa kanału"
 
 #~ msgid ""
 #~ "get nick color code (*deprecated* since version 1.5, replaced by "

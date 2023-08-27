@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 09:58+0200\n"
+"POT-Creation-Date: 2023-08-27 11:25+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8630,11 +8630,17 @@ msgstr "envía mensaje a un usuario o canal"
 msgid "list nicks on channels"
 msgstr "listar apodos en los canales"
 
-msgid "[<channel>[,<channel>...]]"
+#, fuzzy
+#| msgid "[<channel>[,<channel>...]]"
+msgid "[-count | -x] [<channel>[,<channel>...]]"
 msgstr "[<canal>[,<canal>...]]"
 
-msgid "channel: channel name"
-msgstr "canal: nombre del canal"
+msgid ""
+" -count: display only number of users\n"
+"     -x: display only users with this mode: -o for ops, -h for halfops, -v "
+"for voiced, etc. and -* for regular users\n"
+"channel: channel name"
+msgstr ""
 
 msgid "change current nick"
 msgstr "cambiar el apodo actual"
@@ -9248,6 +9254,11 @@ msgstr "conversaciones privadas en el servidor IRC actual"
 
 msgid "nicks on all channels of current IRC server"
 msgstr "apodos en todos los canales del servidor IRC actual"
+
+msgid ""
+"arguments to filter by prefix mode (for example: \"-o\", \"-h\", \"-v\", \"-"
+"*\")"
+msgstr ""
 
 msgid "IRC servers (internal names)"
 msgstr "servidores IRC (nombres internos)"
@@ -11085,8 +11096,14 @@ msgid_plural "voiced"
 msgstr[0] "voz"
 msgstr[1] "voces"
 
-#, c-format
-msgid "%sNicks %s%s%s: %s[%s%s]"
+#, fuzzy
+#| msgid "filter"
+msgid "filter:"
+msgstr "filtro"
+
+#, fuzzy, c-format
+#| msgid "%sNicks %s%s%s: %s[%s%s]"
+msgid "%sNicks %s%s%s%s: %s[%s%s]"
 msgstr "%sApodos %s%s%s: %s[%s%s]"
 
 # dunno what reop means
@@ -15092,6 +15109,9 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse: error (%d)"
+
+#~ msgid "channel: channel name"
+#~ msgstr "canal: nombre del canal"
 
 #~ msgid "nickname"
 #~ msgstr "apodo"

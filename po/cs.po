@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 09:58+0200\n"
+"POT-Creation-Date: 2023-08-27 11:25+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7974,11 +7974,17 @@ msgstr "poslat zprávu přezdívce nebo kanálu"
 msgid "list nicks on channels"
 msgstr "vypsat přezdívky na kanálech"
 
-msgid "[<channel>[,<channel>...]]"
+#, fuzzy
+#| msgid "[<channel>[,<channel>...]]"
+msgid "[-count | -x] [<channel>[,<channel>...]]"
 msgstr "[<kanál>[,<kanál>...]]"
 
-msgid "channel: channel name"
-msgstr "kanál: jméno kanálu"
+msgid ""
+" -count: display only number of users\n"
+"     -x: display only users with this mode: -o for ops, -h for halfops, -v "
+"for voiced, etc. and -* for regular users\n"
+"channel: channel name"
+msgstr ""
 
 msgid "change current nick"
 msgstr "změnit aktuální přezdívku"
@@ -8579,6 +8585,11 @@ msgstr "soukromé rozhovory na aktuálním IRC serveru"
 
 msgid "nicks on all channels of current IRC server"
 msgstr "přezdívky na všech kanálech aktuálního IRC serveru"
+
+msgid ""
+"arguments to filter by prefix mode (for example: \"-o\", \"-h\", \"-v\", \"-"
+"*\")"
+msgstr ""
 
 msgid "IRC servers (internal names)"
 msgstr "IRC servery (vnitřní jména)"
@@ -10348,8 +10359,14 @@ msgstr[0] "voiců"
 msgstr[1] "voice"
 msgstr[2] "voiců"
 
-#, c-format
-msgid "%sNicks %s%s%s: %s[%s%s]"
+#, fuzzy
+#| msgid "filter"
+msgid "filter:"
+msgstr "filtr"
+
+#, fuzzy, c-format
+#| msgid "%sNicks %s%s%s: %s[%s%s]"
+msgid "%sNicks %s%s%s%s: %s[%s%s]"
 msgstr "%sPřezdívka %s%s%s: %s[%s%s]"
 
 #, fuzzy, c-format
@@ -14410,6 +14427,9 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid "channel: channel name"
+#~ msgstr "kanál: jméno kanálu"
 
 #~ msgid "nickname"
 #~ msgstr "přezdívka"

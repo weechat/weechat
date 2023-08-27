@@ -3895,6 +3895,10 @@ IRC_COMMAND_CALLBACK(msg)
 
 IRC_COMMAND_CALLBACK(names)
 {
+    int i, arg_channels;
+    char filter[2], **channels, *channel_name_lower;
+    int num_channels;
+
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("names", 1, 1);
 
@@ -3903,25 +3907,63 @@ IRC_COMMAND_CALLBACK(names)
     (void) data;
     (void) argv;
 
-    if (argc > 1)
+    arg_channels = argc;
+    filter[0] = '\0';
+    filter[1] = '\0';
+
+    for (i = 1; i < argc; i++)
     {
-        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "NAMES %s", argv_eol[1]);
-    }
-    else
-    {
-        if (!ptr_channel || (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL))
+        if (argv[i][0] == '-')
         {
-            weechat_printf (
-                ptr_server->buffer,
-                _("%s%s: \"%s\" command can only be executed in a channel "
-                  "buffer"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME, "names");
-            return WEECHAT_RC_OK;
+            if (weechat_strcmp (argv[i], "-count") == 0)
+                filter[0] = '#';
+            else if (argv[i][1])
+                filter[0] = argv[i][1];
         }
-        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "NAMES %s", ptr_channel->name);
+        else
+        {
+            arg_channels = i;
+            break;
+        }
     }
+
+    if ((arg_channels >= argc)
+        && (!ptr_channel || (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)))
+    {
+        weechat_printf (
+            ptr_server->buffer,
+            _("%s%s: \"%s\" command can only be executed in a channel "
+              "buffer"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, "names");
+        return WEECHAT_RC_OK;
+    }
+
+    if (filter[0])
+    {
+        channels = weechat_string_split (
+            (arg_channels < argc) ? argv_eol[arg_channels] : ptr_channel->name,
+            ",", NULL, 0, 0, &num_channels);
+        if (channels)
+        {
+            for (i = 0; i < num_channels; i++)
+            {
+                channel_name_lower = weechat_string_tolower (channels[i]);
+                if (channel_name_lower)
+                {
+                    weechat_hashtable_set (ptr_server->names_channel_filter,
+                                           channel_name_lower,
+                                           filter);
+                    free (channel_name_lower);
+                }
+            }
+            weechat_string_free_split (channels);
+        }
+    }
+
+    irc_server_sendf (
+        ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+        "NAMES %s",
+        (arg_channels < argc) ? argv_eol[arg_channels] : ptr_channel->name);
 
     return WEECHAT_RC_OK;
 }
@@ -7432,9 +7474,13 @@ irc_command_init ()
     weechat_hook_command (
         "names",
         N_("list nicks on channels"),
-        N_("[<channel>[,<channel>...]]"),
-        N_("channel: channel name"),
-        "%(irc_channels)", &irc_command_names, NULL, NULL);
+        N_("[-count | -x] [<channel>[,<channel>...]]"),
+        N_(" -count: display only number of users\n"
+           "     -x: display only users with this mode: -o for ops, "
+           "-h for halfops, -v for voiced, etc. and -* for regular users\n"
+           "channel: channel name"),
+        "-count|%(irc_server_prefix_modes_filter) %(irc_channels)"
+        " || %(irc_channels)", &irc_command_names, NULL, NULL);
     weechat_hook_command (
         "nick",
         N_("change current nick"),

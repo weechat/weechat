@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 09:58+0200\n"
+"POT-Creation-Date: 2023-08-27 11:25+0200\n"
 "PO-Revision-Date: 2023-08-08 07:14+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9845,11 +9845,17 @@ msgstr "слање поруке надимку или каналу"
 msgid "list nicks on channels"
 msgstr "листа надимака на каналима"
 
-msgid "[<channel>[,<channel>...]]"
+#, fuzzy
+#| msgid "[<channel>[,<channel>...]]"
+msgid "[-count | -x] [<channel>[,<channel>...]]"
 msgstr "[<канал>[,<канал>...]]"
 
-msgid "channel: channel name"
-msgstr "канал: име канала"
+msgid ""
+" -count: display only number of users\n"
+"     -x: display only users with this mode: -o for ops, -h for halfops, -v "
+"for voiced, etc. and -* for regular users\n"
+"channel: channel name"
+msgstr ""
 
 msgid "change current nick"
 msgstr "измена текућег надимка"
@@ -10513,6 +10519,11 @@ msgstr "приватни разговори на текућем IRC сервер
 
 msgid "nicks on all channels of current IRC server"
 msgstr "надимци на свим каналима текућег IRC сервера"
+
+msgid ""
+"arguments to filter by prefix mode (for example: \"-o\", \"-h\", \"-v\", \"-"
+"*\")"
+msgstr ""
 
 msgid "IRC servers (internal names)"
 msgstr "IRC сервери (интерна имена)"
@@ -12408,8 +12419,14 @@ msgstr[0] "говори"
 msgstr[1] "говоре"
 msgstr[2] "говори"
 
-#, c-format
-msgid "%sNicks %s%s%s: %s[%s%s]"
+#, fuzzy
+#| msgid "filter"
+msgid "filter:"
+msgstr "филтер"
+
+#, fuzzy, c-format
+#| msgid "%sNicks %s%s%s: %s[%s%s]"
+msgid "%sNicks %s%s%s%s: %s[%s%s]"
 msgstr "%sНадимци %s%s%s: %s[%s%s]"
 
 #, c-format
@@ -16869,6 +16886,9 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+#~ msgid "channel: channel name"
+#~ msgstr "канал: име канала"
 
 #~ msgid ""
 #~ "get nick color code (*deprecated* since version 1.5, replaced by "

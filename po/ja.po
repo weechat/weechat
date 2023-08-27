@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 09:58+0200\n"
+"POT-Creation-Date: 2023-08-27 11:25+0200\n"
 "PO-Revision-Date: 2023-08-08 07:13+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -9469,11 +9469,17 @@ msgstr "ニックネームかチャンネルにメッセージを送る"
 msgid "list nicks on channels"
 msgstr "チャンネルに参加しているニックネームをリストアップ"
 
-msgid "[<channel>[,<channel>...]]"
+#, fuzzy
+#| msgid "[<channel>[,<channel>...]]"
+msgid "[-count | -x] [<channel>[,<channel>...]]"
 msgstr "[<channel>[,<channel>...]]"
 
-msgid "channel: channel name"
-msgstr "channel: チャンネル名"
+msgid ""
+" -count: display only number of users\n"
+"     -x: display only users with this mode: -o for ops, -h for halfops, -v "
+"for voiced, etc. and -* for regular users\n"
+"channel: channel name"
+msgstr ""
 
 msgid "change current nick"
 msgstr "現在のニックネームを変更"
@@ -10119,6 +10125,11 @@ msgstr "現在の IRC サーバにあるプライベートチャンネル"
 
 msgid "nicks on all channels of current IRC server"
 msgstr "現在の IRC サーバの全てのチャンネルにいるニックネーム"
+
+msgid ""
+"arguments to filter by prefix mode (for example: \"-o\", \"-h\", \"-v\", \"-"
+"*\")"
+msgstr ""
 
 msgid "IRC servers (internal names)"
 msgstr "IRC サーバ (内部名)"
@@ -12050,8 +12061,14 @@ msgid "voiced"
 msgid_plural "voiced"
 msgstr[0] "発言"
 
-#, c-format
-msgid "%sNicks %s%s%s: %s[%s%s]"
+#, fuzzy
+#| msgid "filter"
+msgid "filter:"
+msgstr "フィルタ"
+
+#, fuzzy, c-format
+#| msgid "%sNicks %s%s%s: %s[%s%s]"
+msgid "%sNicks %s%s%s%s: %s[%s%s]"
 msgstr "%sニックネーム %s%s%s: %s[%s%s]"
 
 #, c-format
@@ -16382,6 +16399,9 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "channel: channel name"
+#~ msgstr "channel: チャンネル名"
 
 #~ msgid ""
 #~ "get nick color code (*deprecated* since version 1.5, replaced by "

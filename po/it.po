@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 09:58+0200\n"
+"POT-Creation-Date: 2023-08-27 11:25+0200\n"
 "PO-Revision-Date: 2023-06-26 21:34+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8332,11 +8332,17 @@ msgstr "invia un messaggio ad un nick o a un canale"
 msgid "list nicks on channels"
 msgstr "elenca i nick sul canale"
 
-msgid "[<channel>[,<channel>...]]"
+#, fuzzy
+#| msgid "[<channel>[,<channel>...]]"
+msgid "[-count | -x] [<channel>[,<channel>...]]"
 msgstr "[<canale>[,<canale>...]]"
 
-msgid "channel: channel name"
-msgstr "canale: nome canale"
+msgid ""
+" -count: display only number of users\n"
+"     -x: display only users with this mode: -o for ops, -h for halfops, -v "
+"for voiced, etc. and -* for regular users\n"
+"channel: channel name"
+msgstr ""
 
 msgid "change current nick"
 msgstr "cambia il nick corrente"
@@ -8950,6 +8956,11 @@ msgstr "privati sul server IRC corrente"
 
 msgid "nicks on all channels of current IRC server"
 msgstr "nick su tutti i canali del server IRC corrente"
+
+msgid ""
+"arguments to filter by prefix mode (for example: \"-o\", \"-h\", \"-v\", \"-"
+"*\")"
+msgstr ""
 
 msgid "IRC servers (internal names)"
 msgstr "server IRC (nomi interni)"
@@ -10813,8 +10824,14 @@ msgid_plural "voiced"
 msgstr[0] "voice"
 msgstr[1] "voice"
 
-#, c-format
-msgid "%sNicks %s%s%s: %s[%s%s]"
+#, fuzzy
+#| msgid "filter"
+msgid "filter:"
+msgstr "filtro"
+
+#, fuzzy, c-format
+#| msgid "%sNicks %s%s%s: %s[%s%s]"
+msgid "%sNicks %s%s%s%s: %s[%s%s]"
 msgstr "%sNick %s%s%s: %s[%s%s]"
 
 #, c-format
@@ -14861,6 +14878,9 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#~ msgid "channel: channel name"
+#~ msgstr "canale: nome canale"
 
 #~ msgid "nickname"
 #~ msgstr "nick"

@@ -298,6 +298,7 @@ struct t_irc_server
     struct t_hashtable *join_channel_key;    /* keys pending for joins       */
     struct t_hashtable *join_noswitch;       /* joins w/o switch to buffer   */
     struct t_hashtable *echo_msg_recv;    /* msg received with echo-message  */
+    struct t_hashtable *names_channel_filter; /* filter for /names on channel*/
     struct t_irc_batch *batches;          /* batched events (cap "batch")    */
     struct t_irc_batch *last_batch;       /* last batch                      */
     struct t_gui_buffer *buffer;          /* GUI buffer allocated for server */
