@@ -1653,6 +1653,10 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
     for (ptr_key = (buffer) ? buffer->keys : gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
     {
+        /* ignore keys with no command */
+        if (!ptr_key->command || !ptr_key->command[0])
+            continue;
+
         if (ptr_key->key
             && ((context != GUI_KEY_CONTEXT_CURSOR)
                 || (ptr_key->key[0] != '@')))
