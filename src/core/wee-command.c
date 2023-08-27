@@ -9018,7 +9018,10 @@ command_init ()
            "\n"
            "Example:\n"
            "  scroll 2 pages up:\n"
-           "    /repeat 2 /window page_up"),
+           "    /repeat 2 /window page_up\n"
+           "  print a countdown, starting at 5:\n"
+           "    /repeat -interval 1 6 "
+           "/print ${if:${repeat_last}?Boom!:${repeat_revindex0}}"),
         "%- %(commands:/)",
         &command_repeat, NULL, NULL);
     hook_command (
