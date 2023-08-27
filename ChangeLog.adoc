@@ -20,6 +20,7 @@ New features::
 Bug fixes::
 
   * irc: fix string comparison when CASEMAPPING is set to "ascii"
+  * script: fix crash when a `/script` command triggers another `/script` command (issue #923)
 
 Tests::
 
