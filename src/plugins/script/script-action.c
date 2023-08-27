@@ -1300,6 +1300,9 @@ script_action_run_all ()
                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                     0, &num_actions);
+
+    script_action_clear ();
+
     if (actions)
     {
         for (i = 0; i < num_actions; i++)
@@ -1563,8 +1566,6 @@ script_action_run_all ()
         }
         weechat_string_free_split (actions);
     }
-
-    script_action_clear ();
 
     return 1;
 }
