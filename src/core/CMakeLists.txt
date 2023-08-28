@@ -47,13 +47,13 @@ set(LIB_CORE_SRC
   wee-secure-config.c wee-secure-config.h
   wee-signal.c wee-signal.h
   wee-string.c wee-string.h
+  wee-sys.c wee-sys.h
   wee-upgrade.c wee-upgrade.h
   wee-upgrade-file.c wee-upgrade-file.h
   wee-url.c wee-url.h
   wee-utf8.c wee-utf8.h
   wee-util.c wee-util.h
   wee-version.c wee-version.h
-  wee-sys.c wee-sys.h
   hook/wee-hook-command-run.c hook/wee-hook-command-run.h
   hook/wee-hook-command.c hook/wee-hook-command.h
   hook/wee-hook-completion.c hook/wee-hook-completion.h

@@ -6734,6 +6734,41 @@ COMMAND_CALLBACK(set)
 }
 
 /*
+ * Callback for command "/sys": system actions.
+ */
+
+COMMAND_CALLBACK(sys)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) buffer;
+
+    COMMAND_MIN_ARGS(2, "");
+
+    if (string_strcmp (argv[1], "get") == 0)
+    {
+        COMMAND_MIN_ARGS(2, "get");
+
+        if (string_strcmp (argv[2], "rlimit") == 0)
+            sys_display_rlimit ();
+        else if (string_strcmp (argv[2], "rusage") == 0)
+            sys_display_rusage ();
+        else
+            COMMAND_ERROR;
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcmp (argv[1], "suspend") == 0)
+    {
+        signal_suspend ();
+        return WEECHAT_RC_OK;
+    }
+
+    COMMAND_ERROR;
+}
+
+/*
  * Callback for command "/toggle": toggles value of configuration option.
  */
 
@@ -7770,41 +7805,6 @@ COMMAND_CALLBACK(window)
     if (error && !error[0])
     {
         gui_window_switch_by_number (number);
-        return WEECHAT_RC_OK;
-    }
-
-    COMMAND_ERROR;
-}
-
-/*
- * Callback for command "/sys": system actions.
- */
-
-COMMAND_CALLBACK(sys)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) buffer;
-
-    COMMAND_MIN_ARGS(2, "");
-
-    if (string_strcmp (argv[1], "get") == 0)
-    {
-        COMMAND_MIN_ARGS(2, "get");
-
-        if (string_strcmp (argv[2], "rlimit") == 0)
-            sys_display_rlimit ();
-        else if (string_strcmp (argv[2], "rusage") == 0)
-            sys_display_rusage ();
-        else
-            COMMAND_ERROR;
-        return WEECHAT_RC_OK;
-    }
-
-    if (string_strcmp (argv[1], "suspend") == 0)
-    {
-        signal_suspend ();
         return WEECHAT_RC_OK;
     }
 
@@ -9206,6 +9206,20 @@ command_init ()
         " || env %(env_vars) %(env_value)",
         &command_set, NULL, NULL);
     hook_command (
+        NULL, "sys",
+        N_("system actions"),
+        N_("get rlimit|rusage"
+            " || suspend"),
+        N_("    get: display system info\n"
+           " rlimit: display resource limits "
+           "(see /help weechat.startup.sys_rlimit and \"man getrlimit\")\n"
+           " rusage: display resource usage (see \"man getrusage\")\n"
+           "suspend: suspend WeeChat and go back to the shell, by sending "
+           "signal SIGTSTP to the WeeChat process"),
+        "get rlimit|rusage"
+        " || suspend",
+        &command_sys, NULL, NULL);
+    hook_command (
         NULL, "toggle",
         N_("toggle value of a config option"),
         N_("<option> [<value> [<value>...]]"),
@@ -9493,20 +9507,6 @@ command_init ()
         " || bare"
         " || %(windows_numbers)",
         &command_window, NULL, NULL);
-    hook_command (
-        NULL, "sys",
-        N_("system actions"),
-        N_("get rlimit|rusage"
-            " || suspend"),
-        N_("    get: display system info\n"
-           " rlimit: display resource limits "
-           "(see /help weechat.startup.sys_rlimit and \"man getrlimit\")\n"
-           " rusage: display resource usage (see \"man getrusage\")\n"
-           "suspend: suspend WeeChat and go back to the shell, by sending "
-           "signal SIGTSTP to the WeeChat process"),
-        "get rlimit|rusage"
-        " || suspend",
-        &command_sys, NULL, NULL);
 }
 
 /*

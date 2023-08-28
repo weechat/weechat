@@ -89,6 +89,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-signal.h
 ./src/core/wee-string.c
 ./src/core/wee-string.h
+./src/core/wee-sys.c
+./src/core/wee-sys.h
 ./src/core/wee-upgrade.c
 ./src/core/wee-upgrade-file.c
 ./src/core/wee-upgrade-file.h
@@ -101,8 +103,6 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-util.h
 ./src/core/wee-version.c
 ./src/core/wee-version.h
-./src/core/wee-sys.c
-./src/core/wee-sys.h
 ./src/gui/curses/gui-curses-bar-window.c
 ./src/gui/curses/gui-curses-bar-window.h
 ./src/gui/curses/gui-curses-chat.c

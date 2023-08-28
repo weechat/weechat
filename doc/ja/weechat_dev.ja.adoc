@@ -152,14 +152,14 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |    wee-signal.c                 | Signal functions.
 |    wee-string.c                 | 文字列関数
+// TRANSLATION MISSING
+|    wee-sys.c                    | System functions.
 |    wee-upgrade-file.c           | 内部アップグレードシステム
 |    wee-upgrade.c                | WeeChat コアのアップグレード (バッファ、行、履歴、...)
 |    wee-url.c                    | URL 転送 (libcurl を使う)
 |    wee-utf8.c                   | UTF-8 関数
 |    wee-util.c                   | その他の関数
 |    wee-version.c                | WeeChat バージョンについての関数
-// TRANSLATION MISSING
-|    wee-sys.c                    | System functions.
 |    weechat.c                    | 主要関数: コマンドラインオプション、起動
 |    hook/                        | フック関数
 |       wee-hook-command-run.c    | "command_run" フック

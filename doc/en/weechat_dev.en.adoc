@@ -140,13 +140,13 @@ WeeChat "core" is located in following directories:
 |    wee-secure-config.c          | Secured data options (file sec.conf).
 |    wee-signal.c                 | Signal functions.
 |    wee-string.c                 | Functions on strings.
+|    wee-sys.c                    | System functions.
 |    wee-upgrade-file.c           | Internal upgrade system.
 |    wee-upgrade.c                | Upgrade for WeeChat core (buffers, lines, history, ...).
 |    wee-url.c                    | URL transfer (using libcurl).
 |    wee-utf8.c                   | UTF-8 functions.
 |    wee-util.c                   | Some other functions.
 |    wee-version.c                | Functions for WeeChat version.
-|    wee-sys.c                    | System functions.
 |    weechat.c                    | Main functions: command line options, startup.
 |    hook/                        | Hook functions.
 |       wee-hook-command-run.c    | Hook "command_run".

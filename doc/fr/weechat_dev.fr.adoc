@@ -142,13 +142,13 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    wee-secure-config.c          | Options des données sécurisées (fichier sec.conf).
 |    wee-signal.c                 | Fonctions sur les signaux.
 |    wee-string.c                 | Fonctions sur les chaînes de caractères.
+|    wee-sys.c                    | Fonctions système.
 |    wee-upgrade-file.c           | Système de mise à jour interne.
 |    wee-upgrade.c                | Mise à jour du cœur de WeeChat (tampons, lignes, historique, ...).
 |    wee-url.c                    | Transfert d'URL (en utilisant libcurl).
 |    wee-utf8.c                   | Fonctions UTF-8.
 |    wee-util.c                   | Quelques autres fonctions utilitaires.
 |    wee-version.c                | Fonctions pour la version de WeeChat.
-|    wee-sys.c                    | Fonctions système.
 |    weechat.c                    | Fonctions principales : options de ligne de commande, démarrage.
 |    hook/                        | Hook functions.
 |       wee-hook-command-run.c    | Hook "command_run".
