@@ -1459,6 +1459,16 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Ctrl+↓] | Позив наредне команде/поруке у глобалној историји (заједничкој за све бафере). | `+/input history_global_next+`
 |===
 
+// TRANSLATION MISSING
+[[key_bindings_cmdline_system]]
+==== System
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Тастер       | Опис | Команда
+| kbd:[Ctrl+z] | Suspend WeeChat process. | `+/sys suspend+`
+|===
+
 [[key_bindings_buffers]]
 === Бафери
 

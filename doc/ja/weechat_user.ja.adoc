@@ -1648,6 +1648,16 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 |===
 
 // TRANSLATION MISSING
+[[key_bindings_cmdline_system]]
+==== System
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー         | 説明 | コマンド
+| kbd:[Ctrl+z] | Suspend WeeChat process. | `+/sys suspend+`
+|===
+
+// TRANSLATION MISSING
 [[key_bindings_buffers]]
 === Buffers
 

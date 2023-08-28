@@ -102,6 +102,7 @@ gui_key_default_bindings (int context, int create_option)
         BIND("ctrl-u",            "/input delete_beginning_of_line");
         BIND("meta-ctrl-u",       "/input delete_beginning_of_input");
         BIND("ctrl-y",            "/input clipboard_paste");
+        BIND("ctrl-z",            "/sys suspend");
         BIND("home",              "/input move_beginning_of_line");
         BIND("ctrl-a",            "/input move_beginning_of_line");
         BIND("shift-home",        "/input move_beginning_of_input");

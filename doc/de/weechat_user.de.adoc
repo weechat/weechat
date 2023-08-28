@@ -1558,6 +1558,16 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | kbd:[Ctrl+↓] | ruft nächsten Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer). | `+/input history_global_next+`
 |===
 
+// TRANSLATION MISSING
+[[key_bindings_cmdline_system]]
+==== System
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Taste        | Beschreibung | Befehl
+| kbd:[Ctrl+z] | Suspend WeeChat process. | `+/sys suspend+`
+|===
+
 [[key_bindings_buffers]]
 === Buffer
 

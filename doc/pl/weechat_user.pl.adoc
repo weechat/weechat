@@ -1555,6 +1555,16 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | kbd:[Ctrl+↓] | Pokaż następną komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów). | `+/input history_global_next+`
 |===
 
+// TRANSLATION MISSING
+[[key_bindings_cmdline_system]]
+==== System
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Skrót        | Opis | Komenda
+| kbd:[Ctrl+z] | Suspend WeeChat process. | `+/sys suspend+`
+|===
+
 [[key_bindings_buffers]]
 === Bufory
 

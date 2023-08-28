@@ -32,6 +32,7 @@ extern int signal_search_number (int signal_number);
 extern int signal_search_name (const char *name);
 extern void signal_catch (int signum, void (*handler)(int));
 extern void signal_handle ();
+extern void signal_suspend ();
 extern void signal_init ();
 
 #endif /* WEECHAT_SIGNAL_H */

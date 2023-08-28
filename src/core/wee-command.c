@@ -59,12 +59,13 @@
 #include "wee-secure.h"
 #include "wee-secure-buffer.h"
 #include "wee-secure-config.h"
+#include "wee-signal.h"
 #include "wee-string.h"
+#include "wee-sys.h"
 #include "wee-upgrade.h"
 #include "wee-utf8.h"
 #include "wee-util.h"
 #include "wee-version.h"
-#include "wee-sys.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-bar-item-custom.h"
@@ -7801,6 +7802,12 @@ COMMAND_CALLBACK(sys)
         return WEECHAT_RC_OK;
     }
 
+    if (string_strcmp (argv[1], "suspend") == 0)
+    {
+        signal_suspend ();
+        return WEECHAT_RC_OK;
+    }
+
     COMMAND_ERROR;
 }
 
@@ -9489,12 +9496,16 @@ command_init ()
     hook_command (
         NULL, "sys",
         N_("system actions"),
-        N_("get rlimit|rusage"),
-        N_("   get: display system info\n"
-           "rlimit: display resource limits "
+        N_("get rlimit|rusage"
+            " || suspend"),
+        N_("    get: display system info\n"
+           " rlimit: display resource limits "
            "(see /help weechat.startup.sys_rlimit and man getrlimit)\n"
-           "rusage: display resource usage (see man getrusage)"),
-        "get rlimit|rusage",
+           " rusage: display resource usage (see man getrusage)\n"
+           "suspend: suspend WeeChat and go back to the shell, by sending "
+           "signal SIGTSTP to the WeeChat process"),
+        "get rlimit|rusage"
+        " || suspend",
         &command_sys, NULL, NULL);
 }
 

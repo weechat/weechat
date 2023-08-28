@@ -1545,6 +1545,15 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+↓] | Call next command/message in global history (common for all buffers). | `+/input history_global_next+`
 |===
 
+[[key_bindings_cmdline_system]]
+==== System
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Key          | Description | Command
+| kbd:[Ctrl+z] | Suspend WeeChat process. | `+/sys suspend+`
+|===
+
 [[key_bindings_buffers]]
 === Buffers
 

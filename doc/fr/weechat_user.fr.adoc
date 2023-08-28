@@ -1581,6 +1581,15 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 | kbd:[Ctrl+↓] | Rappeler la commande suivante dans l'historique global (commun à tous les tampons). | `+/input history_global_next+`
 |===
 
+[[key_bindings_cmdline_system]]
+==== Système
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche       | Description | Commande
+| kbd:[Ctrl+z] | Suspendre le processus WeeChat. | `+/sys suspend+`
+|===
+
 [[key_bindings_buffers]]
 === Tampons
 
