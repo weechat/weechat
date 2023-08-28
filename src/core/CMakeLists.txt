@@ -53,6 +53,7 @@ set(LIB_CORE_SRC
   wee-utf8.c wee-utf8.h
   wee-util.c wee-util.h
   wee-version.c wee-version.h
+  wee-sys.c wee-sys.h
   hook/wee-hook-command-run.c hook/wee-hook-command-run.h
   hook/wee-hook-command.c hook/wee-hook-command.h
   hook/wee-hook-completion.c hook/wee-hook-completion.h

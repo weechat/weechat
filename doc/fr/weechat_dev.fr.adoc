@@ -148,6 +148,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    wee-utf8.c                   | Fonctions UTF-8.
 |    wee-util.c                   | Quelques autres fonctions utilitaires.
 |    wee-version.c                | Fonctions pour la version de WeeChat.
+|    wee-sys.c                    | Fonctions système.
 |    weechat.c                    | Fonctions principales : options de ligne de commande, démarrage.
 |    hook/                        | Hook functions.
 |       wee-hook-command-run.c    | Hook "command_run".
@@ -422,6 +423,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-core-url.cpp          | Tests : URLs.
 |          test-core-utf8.cpp         | Tests : UTF-8.
 |          test-core-util.cpp         | Tests : fonctions utiles.
+|          test-core-sys.cpp          | Tests : fonctions système.
 |       gui/                          | Racine des tests unitaires pour les interfaces.
 |          test-gui-bar-window.cpp    | Tests : fonctions de fenêtres de barre.
 |          test-gui-buffer.cpp        | Tests : fonctions de tampons.

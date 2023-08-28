@@ -39,26 +39,6 @@ TEST_GROUP(CoreUtil)
 
 /*
  * Tests functions:
- *   util_setrlimit_resource
- */
-
-TEST(CoreUtil, SetrlimitResource)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   util_setrlimit
- */
-
-TEST(CoreUtil, Setrlimit)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   util_timeval_cmp
  *   util_timeval_diff
  *   util_timeval_add

@@ -101,6 +101,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-util.h
 ./src/core/wee-version.c
 ./src/core/wee-version.h
+./src/core/wee-sys.c
+./src/core/wee-sys.h
 ./src/gui/curses/gui-curses-bar-window.c
 ./src/gui/curses/gui-curses-bar-window.h
 ./src/gui/curses/gui-curses-chat.c

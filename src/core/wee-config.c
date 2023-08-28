@@ -44,11 +44,11 @@
 #include "wee-log.h"
 #include "wee-network.h"
 #include "wee-utf8.h"
-#include "wee-util.h"
 #include "wee-list.h"
 #include "wee-proxy.h"
 #include "wee-string.h"
 #include "wee-version.h"
+#include "wee-sys.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-bar-item-custom.h"
@@ -382,7 +382,7 @@ config_change_sys_rlimit (const void *pointer, void *data,
     (void) option;
 
     if (gui_init_ok)
-        util_setrlimit ();
+        sys_setrlimit ();
 }
 
 /*
@@ -1482,7 +1482,7 @@ config_weechat_init_after_read ()
 {
     int context;
 
-    util_setrlimit ();
+    sys_setrlimit ();
 
     gui_buffer_notify_set_all ();
 

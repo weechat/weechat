@@ -158,6 +158,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    wee-utf8.c                   | UTF-8 関数
 |    wee-util.c                   | その他の関数
 |    wee-version.c                | WeeChat バージョンについての関数
+// TRANSLATION MISSING
+|    wee-sys.c                    | System functions.
 |    weechat.c                    | 主要関数: コマンドラインオプション、起動
 |    hook/                        | フック関数
 |       wee-hook-command-run.c    | "command_run" フック
@@ -452,6 +454,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-core-url.cpp          | テスト: URL
 |          test-core-utf8.cpp         | テスト: UTF-8
 |          test-core-util.cpp         | テスト: ユーティリティ関数
+// TRANSLATION MISSING
+|          test-core-sys.cpp          | Tests: system functions.
 |       gui/                          | インターフェースの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
 |          test-gui-bar-window.cpp    | Tests: bar window functions.

@@ -64,6 +64,7 @@
 #include "wee-utf8.h"
 #include "wee-util.h"
 #include "wee-version.h"
+#include "wee-sys.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-bar-item-custom.h"
@@ -7775,6 +7776,35 @@ COMMAND_CALLBACK(window)
 }
 
 /*
+ * Callback for command "/sys": system actions.
+ */
+
+COMMAND_CALLBACK(sys)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) buffer;
+
+    COMMAND_MIN_ARGS(2, "");
+
+    if (string_strcmp (argv[1], "get") == 0)
+    {
+        COMMAND_MIN_ARGS(2, "get");
+
+        if (string_strcmp (argv[2], "rlimit") == 0)
+            sys_display_rlimit ();
+        else if (string_strcmp (argv[2], "rusage") == 0)
+            sys_display_rusage ();
+        else
+            COMMAND_ERROR;
+        return WEECHAT_RC_OK;
+    }
+
+    COMMAND_ERROR;
+}
+
+/*
  * Hooks WeeChat core commands.
  */
 
@@ -9456,6 +9486,16 @@ command_init ()
         " || bare"
         " || %(windows_numbers)",
         &command_window, NULL, NULL);
+    hook_command (
+        NULL, "sys",
+        N_("system actions"),
+        N_("get rlimit|rusage"),
+        N_("   get: display system info\n"
+           "rlimit: display resource limits "
+           "(see /help weechat.startup.sys_rlimit and man getrlimit)\n"
+           "rusage: display resource usage (see man getrusage)"),
+        "get rlimit|rusage",
+        &command_sys, NULL, NULL);
 }
 
 /*
