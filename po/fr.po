@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 14:12+0200\n"
-"PO-Revision-Date: 2023-08-27 14:12+0200\n"
+"POT-Creation-Date: 2023-08-28 17:45+0200\n"
+"PO-Revision-Date: 2023-08-28 17:46+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -3834,6 +3834,27 @@ msgstr ""
 "  activer le mode d'affichage dépouillé pendant 2 secondes :\n"
 "    /window bare 2"
 
+msgid "system actions"
+msgstr "actions système"
+
+msgid "get rlimit|rusage || suspend"
+msgstr "get rlimit|rusage || suspend"
+
+msgid ""
+"    get: display system info\n"
+" rlimit: display resource limits (see /help weechat.startup.sys_rlimit and "
+"\"man getrlimit\")\n"
+" rusage: display resource usage (see \"man getrusage\")\n"
+"suspend: suspend WeeChat and go back to the shell, by sending signal SIGTSTP "
+"to the WeeChat process"
+msgstr ""
+"    get : afficher des informations système\n"
+" rlimit : afficher les limites de ressource (voir /help weechat.startup."
+"sys_rlimit et \"man getrlimit\")\n"
+" rusage : afficher l'utilisation des ressources (voir \"man getrusage\")\n"
+"suspend : suspendre WeeChat et retourner au shell, en envoyant le signal "
+"SIGTSTP au processus WeeChat"
+
 #, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
 msgstr ""
@@ -6089,6 +6110,20 @@ msgstr ""
 msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgstr ""
 "%sLimite de ressource \"%s\" inconnue (voir /help weechat.startup.sys_rlimit)"
+
+msgid "Resource limits (see \"man getrlimit\" for help):"
+msgstr "Limites de ressource (voir \"man getrlimit' pour de l'aide) :"
+
+#, c-format
+msgid "%sUnable to get resource limit \"%s\": error %d %s"
+msgstr "%sImpossible de lire la limite de ressource \"%s\" : erreur %d %s"
+
+#, c-format
+msgid "System function \"%s\" is not available"
+msgstr "La fonction système \"%s\" n'est pas disponible"
+
+msgid "Resource usage (see \"man getrusage\" for help):"
+msgstr "Utilisation des ressources (voir \"man getrusage\" pour de l'aide) :"
 
 #, c-format
 msgid ""

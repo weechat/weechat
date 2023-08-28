@@ -9500,8 +9500,8 @@ command_init ()
             " || suspend"),
         N_("    get: display system info\n"
            " rlimit: display resource limits "
-           "(see /help weechat.startup.sys_rlimit and man getrlimit)\n"
-           " rusage: display resource usage (see man getrusage)\n"
+           "(see /help weechat.startup.sys_rlimit and \"man getrlimit\")\n"
+           " rusage: display resource usage (see \"man getrusage\")\n"
            "suspend: suspend WeeChat and go back to the shell, by sending "
            "signal SIGTSTP to the WeeChat process"),
         "get rlimit|rusage"

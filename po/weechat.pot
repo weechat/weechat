@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 14:12+0200\n"
+"POT-Creation-Date: 2023-08-28 17:45+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2455,6 +2455,21 @@ msgid ""
 "    /window bare 2"
 msgstr ""
 
+msgid "system actions"
+msgstr ""
+
+msgid "get rlimit|rusage || suspend"
+msgstr ""
+
+msgid ""
+"    get: display system info\n"
+" rlimit: display resource limits (see /help weechat.startup.sys_rlimit and "
+"\"man getrlimit\")\n"
+" rusage: display resource usage (see \"man getrusage\")\n"
+"suspend: suspend WeeChat and go back to the shell, by sending signal SIGTSTP "
+"to the WeeChat process"
+msgstr ""
+
 #, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
 msgstr ""
@@ -4146,6 +4161,20 @@ msgstr ""
 
 #, c-format
 msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
+msgstr ""
+
+msgid "Resource limits (see \"man getrlimit\" for help):"
+msgstr ""
+
+#, c-format
+msgid "%sUnable to get resource limit \"%s\": error %d %s"
+msgstr ""
+
+#, c-format
+msgid "System function \"%s\" is not available"
+msgstr ""
+
+msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr ""
 
 #, c-format

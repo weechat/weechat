@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 14:12+0200\n"
+"POT-Creation-Date: 2023-08-28 17:45+0200\n"
 "PO-Revision-Date: 2023-08-08 07:14+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3978,6 +3978,23 @@ msgstr ""
 "  укључивање огољеног приказа на 2 секунде:\n"
 "    /window bare 2"
 
+#, fuzzy
+#| msgid "fset options"
+msgid "system actions"
+msgstr "fset опције"
+
+msgid "get rlimit|rusage || suspend"
+msgstr ""
+
+msgid ""
+"    get: display system info\n"
+" rlimit: display resource limits (see /help weechat.startup.sys_rlimit and "
+"\"man getrlimit\")\n"
+" rusage: display resource usage (see \"man getrusage\")\n"
+"suspend: suspend WeeChat and go back to the shell, by sending signal SIGTSTP "
+"to the WeeChat process"
+msgstr ""
+
 #, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
 msgstr ""
@@ -6151,6 +6168,26 @@ msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgstr ""
 "%sНепознато ограничење ресурса „%s” (погледајте /help weechat.startup."
 "sys_rlimit)"
+
+#, fuzzy
+#| msgid "Memory usage (see \"man mallinfo\" for help):"
+msgid "Resource limits (see \"man getrlimit\" for help):"
+msgstr "Искоришћење меморије (за помоћ погледајте „man mallinfo”):"
+
+#, fuzzy, c-format
+#| msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
+msgid "%sUnable to get resource limit \"%s\": error %d %s"
+msgstr "%sОграничење ресурса „%s” није могло да се постави на %s: грешка %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s: error: dictionary \"%s\" is not available on your system"
+msgid "System function \"%s\" is not available"
+msgstr "%s: грешка: на вашем систему није доступан речник „%s”"
+
+#, fuzzy
+#| msgid "Memory usage (see \"man mallinfo\" for help):"
+msgid "Resource usage (see \"man getrusage\" for help):"
+msgstr "Искоришћење меморије (за помоћ погледајте „man mallinfo”):"
 
 #, c-format
 msgid ""

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 14:12+0200\n"
+"POT-Creation-Date: 2023-08-28 17:45+0200\n"
 "PO-Revision-Date: 2023-08-08 07:13+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -3784,6 +3784,23 @@ msgstr ""
 "  最小限表示を 2 秒間有効にする:\n"
 "    /window bare 2"
 
+#, fuzzy
+#| msgid "fset options"
+msgid "system actions"
+msgstr "fset オプション"
+
+msgid "get rlimit|rusage || suspend"
+msgstr ""
+
+msgid ""
+"    get: display system info\n"
+" rlimit: display resource limits (see /help weechat.startup.sys_rlimit and "
+"\"man getrlimit\")\n"
+" rusage: display resource usage (see \"man getrusage\")\n"
+"suspend: suspend WeeChat and go back to the shell, by sending signal SIGTSTP "
+"to the WeeChat process"
+msgstr ""
+
 #, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
 msgstr ""
@@ -5909,6 +5926,25 @@ msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgstr ""
 "%sエラー: リソース \"%s\" は定義されていません (/help weechat.startup."
 "sys_rlimit を参照してください)"
+
+#, fuzzy
+#| msgid "Memory usage (see \"man mallinfo\" for help):"
+msgid "Resource limits (see \"man getrlimit\" for help):"
+msgstr "メモリ使用量 (ヘルプを見るには \"man mallinfo\" を参照してください):"
+
+#, fuzzy, c-format
+msgid "%sUnable to get resource limit \"%s\": error %d %s"
+msgstr "%sエラー: リソース \"%s\" を %s に制限できません: エラー %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s: error: dictionary \"%s\" is not available on your system"
+msgid "System function \"%s\" is not available"
+msgstr "%s: エラー: 辞書 \"%s\" がシステム上に見つかりません"
+
+#, fuzzy
+#| msgid "Memory usage (see \"man mallinfo\" for help):"
+msgid "Resource usage (see \"man getrusage\" for help):"
+msgstr "メモリ使用量 (ヘルプを見るには \"man mallinfo\" を参照してください):"
 
 #, c-format
 msgid ""

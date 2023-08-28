@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-27 14:12+0200\n"
+"POT-Creation-Date: 2023-08-28 17:45+0200\n"
 "PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2652,6 +2652,22 @@ msgstr ""
 "hogy az új ablak hány százaléka lesz a szülőablaknak. Például 25 esetén a "
 "szülőablak negyedét kapjuk."
 
+#, fuzzy
+msgid "system actions"
+msgstr "konfigurációs paraméterek beállítása"
+
+msgid "get rlimit|rusage || suspend"
+msgstr ""
+
+msgid ""
+"    get: display system info\n"
+" rlimit: display resource limits (see /help weechat.startup.sys_rlimit and "
+"\"man getrlimit\")\n"
+" rusage: display resource usage (see \"man getrusage\")\n"
+"suspend: suspend WeeChat and go back to the shell, by sending signal SIGTSTP "
+"to the WeeChat process"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
 msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
@@ -4518,6 +4534,20 @@ msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, c-format
 msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
+msgstr ""
+
+msgid "Resource limits (see \"man getrlimit\" for help):"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sUnable to get resource limit \"%s\": error %d %s"
+msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
+
+#, fuzzy, c-format
+msgid "System function \"%s\" is not available"
+msgstr "%s a \"%s\" modul nem található\n"
+
+msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr ""
 
 #, c-format

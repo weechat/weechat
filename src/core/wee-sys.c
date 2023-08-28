@@ -269,8 +269,7 @@ sys_display_rlimit ()
     }
 #else /* HAVE_SYS_RESOURCE_H */
     gui_chat_printf (NULL,
-                     _("System function \"%s\" is not available "
-                       "on this system"),
+                     _("System function \"%s\" is not available"),
                      "getrlimit");
 #endif /* HAVE_SYS_RESOURCE_H */
 }
@@ -338,8 +337,7 @@ sys_display_rusage ()
     gui_chat_printf (NULL, "  ru_nivcsw  : %ld", usage.ru_nivcsw);
 #else /* HAVE_SYS_RESOURCE_H */
     gui_chat_printf (NULL,
-                     _("System function \"%s\" is not available "
-                       "on this system"),
+                     _("System function \"%s\" is not available"),
                      "getrusage");
 #endif /* HAVE_SYS_RESOURCE_H */
 }
