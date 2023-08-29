@@ -1272,7 +1272,8 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
                     property = string_strndup (pos + 1,
                                                pos_open_paren - pos - 1);
                     ptr_value = hashtable_get_string (hashtable, property);
-                    free (property);
+                    if (property)
+                        free (property);
                     value = (ptr_value) ? strdup (ptr_value) : NULL;
                     break;
                 }
