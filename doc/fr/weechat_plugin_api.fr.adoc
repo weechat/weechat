@@ -18982,7 +18982,7 @@ for key in hash:
 
 ==== hdata_compare
 
-_WeeChat ≥ 1.9._
+_WeeChat ≥ 1.9, mis à jour dans la 4.1.0._
 
 Comparer une variable hdata de deux objets.
 
@@ -18998,8 +18998,9 @@ Paramètres :
 * _hdata_ : pointeur vers le hdata
 * _pointer1_ : pointeur vers le premier objet WeeChat ou d'une extension
 * _pointer2_ : pointeur vers le second objet WeeChat ou d'une extension
-* _name_ : nom de la variable ; pour les tableaux, le nom peut être "N|name" où N
-  est un index dans le tableau (démarrant à 0), par exemple : "2|name"
+* _name_ : nom de la variable ou chemin vers le nom de la variable ; pour les
+  tableaux, le nom peut être "N|name" où N est un index dans le tableau
+  (démarrant à 0), par exemple : "2|name"
 * _case_sensitive_ : 1 pour une comparaison tenant compte de la casse pour les chaînes,
   sinon 0
 
@@ -19016,7 +19017,12 @@ Exemple en C :
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
 struct t_gui_buffer *buffer2 = weechat_buffer_search ("irc", "libera.#weechat-fr");
-weechat_printf (NULL, "comparaison de numéro = %d", weechat_hdata_compare (hdata, buffer1, buffer2, "number", 0));
+weechat_printf (NULL, "comparaison de numéro de tampon = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "number", 0));
+weechat_printf (NULL, "comparaison du nombre de lignes = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "own_lines.lines_count", 0));
+weechat_printf (NULL, "comparaison de variable locale = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "local_variables.myvar", 0));
 ----
 
 Script (Python) :
@@ -19030,7 +19036,9 @@ def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sens
 hdata = weechat.hdata_get("buffer")
 buffer1 = weechat.buffer_search("irc", "libera.#weechat")
 buffer2 = weechat.buffer_search("irc", "libera.#weechat-fr")
-weechat.prnt("", "comparaison de numéro = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+weechat.prnt("", "comparaison de numéro de tampon = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+weechat.prnt("", "comparaison du nombre de lignes = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "own_lines.lines_count", 0))
+weechat.prnt("", "comparaison de variable locale = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "local_variables.myvar", 0))
 ----
 
 ==== hdata_set

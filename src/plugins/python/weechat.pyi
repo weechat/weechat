@@ -2661,7 +2661,9 @@ def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sens
         hdata = weechat.hdata_get("buffer")
         buffer1 = weechat.buffer_search("irc", "libera.#weechat")
         buffer2 = weechat.buffer_search("irc", "libera.#weechat-fr")
-        weechat.prnt("", "number comparison = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+        weechat.prnt("", "comparison of buffer number = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+        weechat.prnt("", "comparison of number of lines = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "own_lines.lines_count", 0))
+        weechat.prnt("", "comparison of local variable = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "local_variables.myvar", 0))
     """
     ...
 

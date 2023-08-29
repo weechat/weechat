@@ -19408,7 +19408,7 @@ for key in hash:
 // TRANSLATION MISSING
 ==== hdata_compare
 
-_WeeChat ≥ 1.9._
+_WeeChat ≥ 1.9, updated in 4.1.0._
 
 Compare a hdata variable of two objects.
 
@@ -19424,8 +19424,8 @@ Argomenti:
 * _hdata_: hdata pointer
 * _pointer1_: pointer to first WeeChat/plugin object
 * _pointer2_: pointer to second WeeChat/plugin object
-* _name_: variable name; for arrays, the name can be "N|name" where N is
-  the index in array (starting at 0), for example: "2|name"
+* _name_: variable name or path to a variable name; for arrays, the name can be
+  "N|name" where N is the index in array (starting at 0), for example: "2|name"
 * _case_sensitive_: 1 for case sensitive comparison of strings, otherwise 0
 
 Valore restituito:
@@ -19441,8 +19441,12 @@ Esempio in C:
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
 struct t_gui_buffer *buffer2 = weechat_buffer_search ("irc", "libera.#weechat-fr");
-weechat_printf (NULL, "number comparison = %d",
+weechat_printf (NULL, "comparison of buffer number = %d",
                 weechat_hdata_compare (hdata, buffer1, buffer2, "number", 0));
+weechat_printf (NULL, "comparison of number of lines = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "own_lines.lines_count", 0));
+weechat_printf (NULL, "comparison of local variable = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "local_variables.myvar", 0));
 ----
 
 Script (Python):
@@ -19456,7 +19460,9 @@ def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sens
 hdata = weechat.hdata_get("buffer")
 buffer1 = weechat.buffer_search("irc", "libera.#weechat")
 buffer2 = weechat.buffer_search("irc", "libera.#weechat-fr")
-weechat.prnt("", "number comparison = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+weechat.prnt("", "comparison of buffer number = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+weechat.prnt("", "comparison of number of lines = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "own_lines.lines_count", 0))
+weechat.prnt("", "comparison of local variable = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "local_variables.myvar", 0))
 ----
 
 // TRANSLATION MISSING
