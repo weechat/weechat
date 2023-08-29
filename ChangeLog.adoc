@@ -15,7 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
-  * core: add command `/sys` to show resource limits/usage and suspend WeeChat process (issue #985)
+  * core: add command `/sys` to show resource limits/usage and suspend WeeChat process, add key kbd:[Ctrl+z] to suspend WeeChat (issue #985)
   * core: ignore key bindings with empty command
   * core: add support of quotes in commands `/key bind` and `/key bindctxt`
   * core: evaluate command given to `/repeat` with contextual variables (issue #2007)
