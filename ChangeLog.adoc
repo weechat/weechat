@@ -67,6 +67,7 @@ Bug fixes::
 
 Tests::
 
+  * ci: add CodeQL code scanning (issue #2102)
   * core: fix tests on function strftimeval on Alpine
   * core: add tests on mouse events (issue #2082)
   * gui: add tests on hotlist functions
