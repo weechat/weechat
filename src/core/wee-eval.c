@@ -1167,7 +1167,7 @@ char *
 eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
                       struct t_eval_context *eval_context)
 {
-    char *value, *old_value, *var_name, str_value[128], *pos, *property;
+    char *value, *var_name, str_value[128], *pos, *property;
     const char *ptr_value, *hdata_name, *ptr_var_name, *pos_open_paren;
     int type, debug_id;
     struct t_hashtable *hashtable;
@@ -1327,13 +1327,12 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
             goto end;
 
         hdata = hook_hdata_get (NULL, hdata_name);
-        old_value = value;
+        if (value)
+            free (value);
         value = eval_hdata_get_value (hdata,
                                       pointer,
-                                      (pos) ? pos + 1 : NULL,
+                                      pos + 1,
                                       eval_context);
-        if (old_value)
-            free (old_value);
     }
 
 end:
