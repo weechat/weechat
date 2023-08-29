@@ -1,0 +1,3 @@
+query-filters:
+  - exclude:
+      id: cpp/wrong-type-format-argument
