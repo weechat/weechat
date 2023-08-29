@@ -114,8 +114,8 @@ Bug fixes::
   * core: fix renaming of options with command `/item rename` (issue #1978)
   * core: don't send "key_pressed" signal again for the same key press (issue #1976)
   * core: don't send "key_combo_*" signals for incomplete keys (issue #1976)
-  * core: add key ctrl-backspace in /help key (issue #1975)
-  * core: keep keys ctrl-H and ctrl-? (in lower case) if they were manually bound to custom commands in a previous version
+  * core: add key kbd:[Ctrl+Backspace] in /help key (issue #1975)
+  * core: keep keys `ctrl-H` and `ctrl-?` (in lower case) if they were manually bound to custom commands in a previous version
 
 Tests::
 
@@ -151,7 +151,7 @@ New features::
   * core: insert multiple pasted lines in input instead of sending immediately, add keys to move and delete in a single line and whole input, add option weechat.look.input_multiline_lead_linebreak (issue #1502, issue #1503, issue #1504)
   * core: render newline characters in chat line messages (issue #1908)
   * core: don't split on newline characters in printf_date_tags when input_multiline is set (issue #1909)
-  * core: add key @kbd:[l] in cursor mode to quote line, add variable "_chat_focused_line" in function hashtable sent to hook_focus callback (issue #1913, issue #1914)
+  * core: add key kbd:[l] (lower `L`) in cursor mode to quote line, add variable "_chat_focused_line" in function hashtable sent to hook_focus callback (issue #1913, issue #1914)
   * core: add option `split_return` in command `/input` (issue #1916)
   * core: send all command line parameters not beginning with a dash to all plugins
   * core: add command `/reset` to reset options to their default values
@@ -1765,7 +1765,7 @@ New features::
   * core: add option weechat.look.hotlist_add_conditions, remove option weechat.look.hotlist_add_buffer_if_away
   * core: add option weechat.look.hotlist_remove (issue #99)
   * core: add options `-beep` and `-current` in command `/print`
-  * core: add bare display mode for easy text selection and click on URLs, new key: kbd:[Alt+l] (`L`), new option "bare" in command `/window`, new options: weechat.look.bare_display_exit_on_input and weechat.look.bare_display_time_format
+  * core: add bare display mode for easy text selection and click on URLs, new key: kbd:[Alt+l] (lower `L`), new option "bare" in command `/window`, new options: weechat.look.bare_display_exit_on_input and weechat.look.bare_display_time_format
   * core: add signals "key_combo_{default|search|cursor}"
   * core: add terabyte unit for size displayed
   * core: display a warning in case of inconsistency between the options weechat.look.save_{config|layout}_on_exit
