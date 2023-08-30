@@ -2561,10 +2561,11 @@ config_weechat_buffer_create_option_cb (const void *pointer, void *data,
                 snprintf (description, sizeof (description),
                           _("set property \"%s\" on any buffer matching "
                             "mask \"%s\"; "
-                            "content is evaluated, see /help eval; "
-                            "${buffer} is a pointer to the buffer being "
-                            "opened, ${property} is the name of the property "
-                            "being set"),
+                            "content is evaluated (see /help eval) for all "
+                            "properties except \"key_bind_xxx\" and "
+                            "\"key_unbind_xxx\"; when evaluation is done, "
+                            "${buffer} is a pointer to the buffer being opened, "
+                            "${property} is the name of the property being set"),
                           pos + 1,
                           buffer_mask);
                 ptr_option = config_file_new_option (

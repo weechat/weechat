@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-28 17:45+0200\n"
-"PO-Revision-Date: 2023-08-28 17:46+0200\n"
+"POT-Creation-Date: 2023-08-30 17:22+0200\n"
+"PO-Revision-Date: 2023-08-30 17:22+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -3369,6 +3369,27 @@ msgstr ""
 "  réinitialiser la variable d'environnement ABC :\n"
 "    /set env ABC \"\""
 
+msgid "system actions"
+msgstr "actions système"
+
+msgid "get rlimit|rusage || suspend"
+msgstr "get rlimit|rusage || suspend"
+
+msgid ""
+"    get: display system info\n"
+" rlimit: display resource limits (see /help weechat.startup.sys_rlimit and "
+"\"man getrlimit\")\n"
+" rusage: display resource usage (see \"man getrusage\")\n"
+"suspend: suspend WeeChat and go back to the shell, by sending signal SIGTSTP "
+"to the WeeChat process"
+msgstr ""
+"    get : afficher des informations système\n"
+" rlimit : afficher les limites de ressource (voir /help weechat.startup."
+"sys_rlimit et \"man getrlimit\")\n"
+" rusage : afficher l'utilisation des ressources (voir \"man getrusage\")\n"
+"suspend : suspendre WeeChat et retourner au shell, en envoyant le signal "
+"SIGTSTP au processus WeeChat"
+
 msgid "toggle value of a config option"
 msgstr "basculer la valeur d'une option de configuration"
 
@@ -3834,27 +3855,6 @@ msgstr ""
 "  activer le mode d'affichage dépouillé pendant 2 secondes :\n"
 "    /window bare 2"
 
-msgid "system actions"
-msgstr "actions système"
-
-msgid "get rlimit|rusage || suspend"
-msgstr "get rlimit|rusage || suspend"
-
-msgid ""
-"    get: display system info\n"
-" rlimit: display resource limits (see /help weechat.startup.sys_rlimit and "
-"\"man getrlimit\")\n"
-" rusage: display resource usage (see \"man getrusage\")\n"
-"suspend: suspend WeeChat and go back to the shell, by sending signal SIGTSTP "
-"to the WeeChat process"
-msgstr ""
-"    get : afficher des informations système\n"
-" rlimit : afficher les limites de ressource (voir /help weechat.startup."
-"sys_rlimit et \"man getrlimit\")\n"
-" rusage : afficher l'utilisation des ressources (voir \"man getrusage\")\n"
-"suspend : suspendre WeeChat et retourner au shell, en envoyant le signal "
-"SIGTSTP au processus WeeChat"
-
 #, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
 msgstr ""
@@ -4069,14 +4069,16 @@ msgstr ""
 
 #, c-format
 msgid ""
-"set property \"%s\" on any buffer matching mask \"%s\"; content is "
-"evaluated, see /help eval; ${buffer} is a pointer to the buffer being "
-"opened, ${property} is the name of the property being set"
+"set property \"%s\" on any buffer matching mask \"%s\"; content is evaluated "
+"(see /help eval) for all properties except \"key_bind_xxx\" and "
+"\"key_unbind_xxx\"; when evaluation is done, ${buffer} is a pointer to the "
+"buffer being opened, ${property} is the name of the property being set"
 msgstr ""
 "définir la propriété \"%s\" sur tout tampon correspondant au masque \"%s\" ; "
-"le contenu est évalue, voir /help eval ; ${buffer} est un pointeur vers le "
-"tampon en cours d'ouverture, ${property} est le nom de la propriété qui est "
-"définie"
+"le contenu est évalué (voir /help eval) pour toutes les propriétés sauf "
+"\"key_bind_xxx\" et \"key_unbind_xxx\" ; lorsque l'évaluation a lieu, "
+"${buffer} est un pointeur vers le tampon en cours d'ouverture, ${property} "
+"est le nom de la propriété qui est définie"
 
 #, c-format
 msgid "Option \"weechat.buffer.%s\" has been set to \"%s\""
@@ -6012,6 +6014,38 @@ msgstr[0] "octet"
 msgstr[1] "octets"
 
 #, c-format
+msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
+msgstr "%sLimite de ressource \"%s\" invalide : %s (doit être >= 1)"
+
+#, c-format
+msgid "Limit for resource \"%s\" has been set to %s"
+msgstr "La limite de ressource \"%s\" a été modifiée en %s"
+
+#, c-format
+msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
+msgstr ""
+"%sImpossible de définir la limite de ressource \"%s\" à %s : erreur %d %s"
+
+#, c-format
+msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
+msgstr ""
+"%sLimite de ressource \"%s\" inconnue (voir /help weechat.startup.sys_rlimit)"
+
+msgid "Resource limits (see \"man getrlimit\" for help):"
+msgstr "Limites de ressource (voir \"man getrlimit' pour de l'aide) :"
+
+#, c-format
+msgid "%sUnable to get resource limit \"%s\": error %d %s"
+msgstr "%sImpossible de lire la limite de ressource \"%s\" : erreur %d %s"
+
+#, c-format
+msgid "System function \"%s\" is not available"
+msgstr "La fonction système \"%s\" n'est pas disponible"
+
+msgid "Resource usage (see \"man getrusage\" for help):"
+msgstr "Utilisation des ressources (voir \"man getrusage\" pour de l'aide) :"
+
+#, c-format
 msgid "debug: removing file: %s"
 msgstr "debug : suppression du fichier : %s"
 
@@ -6092,38 +6126,6 @@ msgstr ""
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "erreur curl %d (%s) (URL : \"%s\")\n"
-
-#, c-format
-msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
-msgstr "%sLimite de ressource \"%s\" invalide : %s (doit être >= 1)"
-
-#, c-format
-msgid "Limit for resource \"%s\" has been set to %s"
-msgstr "La limite de ressource \"%s\" a été modifiée en %s"
-
-#, c-format
-msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
-msgstr ""
-"%sImpossible de définir la limite de ressource \"%s\" à %s : erreur %d %s"
-
-#, c-format
-msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
-msgstr ""
-"%sLimite de ressource \"%s\" inconnue (voir /help weechat.startup.sys_rlimit)"
-
-msgid "Resource limits (see \"man getrlimit\" for help):"
-msgstr "Limites de ressource (voir \"man getrlimit' pour de l'aide) :"
-
-#, c-format
-msgid "%sUnable to get resource limit \"%s\": error %d %s"
-msgstr "%sImpossible de lire la limite de ressource \"%s\" : erreur %d %s"
-
-#, c-format
-msgid "System function \"%s\" is not available"
-msgstr "La fonction système \"%s\" n'est pas disponible"
-
-msgid "Resource usage (see \"man getrusage\" for help):"
-msgstr "Utilisation des ressources (voir \"man getrusage\" pour de l'aide) :"
 
 #, c-format
 msgid ""

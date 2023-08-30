@@ -668,31 +668,45 @@ gui_buffer_apply_config_option_property (struct t_gui_buffer *buffer,
     if (!buffer_mask)
         return;
 
+    pos++;
+
     if (string_match (buffer->full_name, buffer_mask, 1))
     {
-        pointers = hashtable_new (
-            32,
-            WEECHAT_HASHTABLE_STRING,
-            WEECHAT_HASHTABLE_POINTER,
-            NULL, NULL);
-        extra_vars = hashtable_new (
-            32,
-            WEECHAT_HASHTABLE_STRING,
-            WEECHAT_HASHTABLE_STRING,
-            NULL, NULL);
-        if (pointers && extra_vars)
+        if ((strncmp (pos, "key_bind_", 9) == 0)
+            || (strncmp (pos, "key_unbind_", 11) == 0))
         {
-            hashtable_set (pointers, "buffer", buffer);
-            hashtable_set (extra_vars, "property", pos + 1);
-            value = eval_expression (CONFIG_STRING(option),
-                                     pointers, extra_vars, NULL);
-            if (value)
+            /*
+             * no evaluation for local buffer key bindings: this allows to
+             * use command /eval without having to escape `${`
+             */
+            gui_buffer_set (buffer, pos, CONFIG_STRING(option));
+        }
+        else
+        {
+            pointers = hashtable_new (
+                32,
+                WEECHAT_HASHTABLE_STRING,
+                WEECHAT_HASHTABLE_POINTER,
+                NULL, NULL);
+            extra_vars = hashtable_new (
+                32,
+                WEECHAT_HASHTABLE_STRING,
+                WEECHAT_HASHTABLE_STRING,
+                NULL, NULL);
+            if (pointers && extra_vars)
             {
-                gui_buffer_set (buffer, pos + 1, value);
-                free (value);
+                hashtable_set (pointers, "buffer", buffer);
+                hashtable_set (extra_vars, "property", pos);
+                value = eval_expression (CONFIG_STRING(option),
+                                         pointers, extra_vars, NULL);
+                if (value)
+                {
+                    gui_buffer_set (buffer, pos, value);
+                    free (value);
+                }
+                hashtable_free (pointers);
+                hashtable_free (extra_vars);
             }
-            hashtable_free (pointers);
-            hashtable_free (extra_vars);
         }
     }
 

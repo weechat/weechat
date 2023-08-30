@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-28 17:45+0200\n"
+"POT-Creation-Date: 2023-08-30 17:22+0200\n"
 "PO-Revision-Date: 2023-08-08 07:14+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3508,6 +3508,23 @@ msgstr ""
 "  уклања променљиву окружења ABC:\n"
 "    /set env ABC \"\""
 
+#, fuzzy
+#| msgid "fset options"
+msgid "system actions"
+msgstr "fset опције"
+
+msgid "get rlimit|rusage || suspend"
+msgstr ""
+
+msgid ""
+"    get: display system info\n"
+" rlimit: display resource limits (see /help weechat.startup.sys_rlimit and "
+"\"man getrlimit\")\n"
+" rusage: display resource usage (see \"man getrusage\")\n"
+"suspend: suspend WeeChat and go back to the shell, by sending signal SIGTSTP "
+"to the WeeChat process"
+msgstr ""
+
 msgid "toggle value of a config option"
 msgstr "пребацује вредност опције конфигурације"
 
@@ -3978,23 +3995,6 @@ msgstr ""
 "  укључивање огољеног приказа на 2 секунде:\n"
 "    /window bare 2"
 
-#, fuzzy
-#| msgid "fset options"
-msgid "system actions"
-msgstr "fset опције"
-
-msgid "get rlimit|rusage || suspend"
-msgstr ""
-
-msgid ""
-"    get: display system info\n"
-" rlimit: display resource limits (see /help weechat.startup.sys_rlimit and "
-"\"man getrlimit\")\n"
-" rusage: display resource usage (see \"man getrusage\")\n"
-"suspend: suspend WeeChat and go back to the shell, by sending signal SIGTSTP "
-"to the WeeChat process"
-msgstr ""
-
 #, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
 msgstr ""
@@ -4207,9 +4207,10 @@ msgstr "%sУпозорење: непозната опција за одељак 
 
 #, c-format
 msgid ""
-"set property \"%s\" on any buffer matching mask \"%s\"; content is "
-"evaluated, see /help eval; ${buffer} is a pointer to the buffer being "
-"opened, ${property} is the name of the property being set"
+"set property \"%s\" on any buffer matching mask \"%s\"; content is evaluated "
+"(see /help eval) for all properties except \"key_bind_xxx\" and "
+"\"key_unbind_xxx\"; when evaluation is done, ${buffer} is a pointer to the "
+"buffer being opened, ${property} is the name of the property being set"
 msgstr ""
 
 #, fuzzy, c-format
@@ -6071,6 +6072,44 @@ msgstr[1] "бајта"
 msgstr[2] "бајтова"
 
 #, c-format
+msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
+msgstr "%sНеважеће ограничење за ресурс „%s”: %s (мора бити >= -1)"
+
+#, c-format
+msgid "Limit for resource \"%s\" has been set to %s"
+msgstr "Ограничење за ресурс „%s” је постављено на %s"
+
+#, c-format
+msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
+msgstr "%sОграничење ресурса „%s” није могло да се постави на %s: грешка %d %s"
+
+#, c-format
+msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
+msgstr ""
+"%sНепознато ограничење ресурса „%s” (погледајте /help weechat.startup."
+"sys_rlimit)"
+
+#, fuzzy
+#| msgid "Memory usage (see \"man mallinfo\" for help):"
+msgid "Resource limits (see \"man getrlimit\" for help):"
+msgstr "Искоришћење меморије (за помоћ погледајте „man mallinfo”):"
+
+#, fuzzy, c-format
+#| msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
+msgid "%sUnable to get resource limit \"%s\": error %d %s"
+msgstr "%sОграничење ресурса „%s” није могло да се постави на %s: грешка %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s: error: dictionary \"%s\" is not available on your system"
+msgid "System function \"%s\" is not available"
+msgstr "%s: грешка: на вашем систему није доступан речник „%s”"
+
+#, fuzzy
+#| msgid "Memory usage (see \"man mallinfo\" for help):"
+msgid "Resource usage (see \"man getrusage\" for help):"
+msgstr "Искоришћење меморије (за помоћ погледајте „man mallinfo”):"
+
+#, c-format
 msgid "debug: removing file: %s"
 msgstr "дибаг: уклањање фајла: %s"
 
@@ -6150,44 +6189,6 @@ msgstr ""
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "curl грешка %d (%s) (URL: „%s”)\n"
-
-#, c-format
-msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
-msgstr "%sНеважеће ограничење за ресурс „%s”: %s (мора бити >= -1)"
-
-#, c-format
-msgid "Limit for resource \"%s\" has been set to %s"
-msgstr "Ограничење за ресурс „%s” је постављено на %s"
-
-#, c-format
-msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
-msgstr "%sОграничење ресурса „%s” није могло да се постави на %s: грешка %d %s"
-
-#, c-format
-msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
-msgstr ""
-"%sНепознато ограничење ресурса „%s” (погледајте /help weechat.startup."
-"sys_rlimit)"
-
-#, fuzzy
-#| msgid "Memory usage (see \"man mallinfo\" for help):"
-msgid "Resource limits (see \"man getrlimit\" for help):"
-msgstr "Искоришћење меморије (за помоћ погледајте „man mallinfo”):"
-
-#, fuzzy, c-format
-#| msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
-msgid "%sUnable to get resource limit \"%s\": error %d %s"
-msgstr "%sОграничење ресурса „%s” није могло да се постави на %s: грешка %d %s"
-
-#, fuzzy, c-format
-#| msgid "%s: error: dictionary \"%s\" is not available on your system"
-msgid "System function \"%s\" is not available"
-msgstr "%s: грешка: на вашем систему није доступан речник „%s”"
-
-#, fuzzy
-#| msgid "Memory usage (see \"man mallinfo\" for help):"
-msgid "Resource usage (see \"man getrusage\" for help):"
-msgstr "Искоришћење меморије (за помоћ погледајте „man mallinfo”):"
 
 #, c-format
 msgid ""

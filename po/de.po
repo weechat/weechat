@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-28 17:45+0200\n"
+"POT-Creation-Date: 2023-08-30 17:22+0200\n"
 "PO-Revision-Date: 2023-08-28 20:33+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -3191,12 +3191,12 @@ msgstr ""
 "           ${repeat_count}: wie oft der Befehl ausgeführt wird\n"
 "           ${repeat_index}: Aktueller Index (von 1 bis \"count\")\n"
 "           ${repeat_index0}: Aktueller Index (von 0  bis \"count\" - 1)\n"
-"           ${repeat_revindex}: aktueller Index vom Ende (von \"count\" "
-"bis 1)\n"
+"           ${repeat_revindex}: aktueller Index vom Ende (von \"count\" bis "
+"1)\n"
 "           ${repeat_revindex0}: aktueller Index vom Ende (von \"count\" - 1 "
 "bis 0)\n"
-"           ${repeat_first}: \"1\" für die erste Ausführung, \"0\" für "
-"die anderen\n"
+"           ${repeat_first}: \"1\" für die erste Ausführung, \"0\" für die "
+"anderen\n"
 "           ${repeat_last}: \"1\" für die letzte Ausführung. \"0\" für die "
 "anderen\n"
 "\n"
@@ -3445,6 +3445,27 @@ msgstr ""
 "    /upgrade\n"
 "  entfernt die Umgebungsvariable ABC:\n"
 "    /set env ABC \"\""
+
+msgid "system actions"
+msgstr "Systemaktionen"
+
+msgid "get rlimit|rusage || suspend"
+msgstr "get rlimit|rusage || suspend"
+
+msgid ""
+"    get: display system info\n"
+" rlimit: display resource limits (see /help weechat.startup.sys_rlimit and "
+"\"man getrlimit\")\n"
+" rusage: display resource usage (see \"man getrusage\")\n"
+"suspend: suspend WeeChat and go back to the shell, by sending signal SIGTSTP "
+"to the WeeChat process"
+msgstr ""
+"    get: Systeminformationen anzeigen\n"
+" rlimit: Ressourcengrenzen anzeigen (siehe /help weechat.startup.sys_rlimit "
+"und \"man getrlimit\")\n"
+" rusage: Ressourcennutzung anzeigen (siehe \"man getrusage\")\n"
+"suspend: beendet WeeChat und kehren zur Shell zurück, indem das Signal "
+"SIGTSTP an den WeeChat-Prozess gesendet wird"
 
 msgid "toggle value of a config option"
 msgstr "den Wert einer Konfigurationsoption umschalten"
@@ -3919,29 +3940,6 @@ msgstr ""
 "  aktiviert den einfachen Anzeigemodus für zwei Sekunden:\n"
 "    /window bare 2"
 
-#| msgid "fset options"
-msgid "system actions"
-msgstr "Systemaktionen"
-
-msgid "get rlimit|rusage || suspend"
-msgstr "get rlimit|rusage || suspend"
-
-msgid ""
-"    get: display system info\n"
-" rlimit: display resource limits (see /help weechat.startup.sys_rlimit and "
-"\"man getrlimit\")\n"
-" rusage: display resource usage (see \"man getrusage\")\n"
-"suspend: suspend WeeChat and go back to the shell, by sending signal SIGTSTP "
-"to the WeeChat process"
-msgstr ""
-"    get: Systeminformationen anzeigen\n"
-" rlimit: Ressourcengrenzen anzeigen (siehe /help weechat.startup.sys_rlimit"
-" und "
-"\"man getrlimit\")\n"
-" rusage: Ressourcennutzung anzeigen (siehe \"man getrusage\")\n"
-"suspend: beendet WeeChat und kehren zur Shell zurück, indem das Signal"
-" SIGTSTP an den WeeChat-Prozess gesendet wird"
-
 #, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
 msgstr ""
@@ -4157,11 +4155,16 @@ msgid "%sWarning: unknown option for section \"%s\": %s (value: \"%s\")"
 msgstr ""
 "%sWarnung: unbekannte Einstellung für Sektion \"%s\": %s (Wert: \"%s\")"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "set property \"%s\" on any buffer matching mask \"%s\"; content is "
+#| "evaluated, see /help eval; ${buffer} is a pointer to the buffer being "
+#| "opened, ${property} is the name of the property being set"
 msgid ""
-"set property \"%s\" on any buffer matching mask \"%s\"; content is "
-"evaluated, see /help eval; ${buffer} is a pointer to the buffer being "
-"opened, ${property} is the name of the property being set"
+"set property \"%s\" on any buffer matching mask \"%s\"; content is evaluated "
+"(see /help eval) for all properties except \"key_bind_xxx\" and "
+"\"key_unbind_xxx\"; when evaluation is done, ${buffer} is a pointer to the "
+"buffer being opened, ${property} is the name of the property being set"
 msgstr ""
 "Setze Eigenschaft „%s“ bei jedem Buffer, der mit der Maske „%s“ "
 "übereinstimmt; Inhalt ist evaluiert, siehe /help eval; ${buffer} ist ein "
@@ -6137,6 +6140,41 @@ msgstr[0] "Byte"
 msgstr[1] "Bytes"
 
 #, c-format
+msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
+msgstr "%sUngültiges Limit für Ressource \"%s\": %s (Wert muss >= -1 sein)"
+
+#, c-format
+msgid "Limit for resource \"%s\" has been set to %s"
+msgstr ""
+"Beschränkung für den Ressourcenbedarf von \"%s\" wurde eingestellt auf %s"
+
+#, c-format
+msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
+msgstr ""
+"%sDas Resource-Limit kann nicht von \"%s\" nach %s verändert werden: Fehler "
+"%d %s"
+
+#, c-format
+msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
+msgstr ""
+"%sUnbekannte Beschränkung für den Ressourcenbedarf \"%s\" (siehe /help "
+"weechat.startup.sys_rlimit)"
+
+msgid "Resource limits (see \"man getrlimit\" for help):"
+msgstr "Ressourcenlimits (siehe „man getrlimit“ für Hilfe):"
+
+#, c-format
+msgid "%sUnable to get resource limit \"%s\": error %d %s"
+msgstr "%sRessourcenlimit „%s“ konnte nicht abgerufen werden: Fehler %d %s"
+
+#, c-format
+msgid "System function \"%s\" is not available"
+msgstr "Die Systemfunktion „%s“ ist nicht verfügbar"
+
+msgid "Resource usage (see \"man getrusage\" for help):"
+msgstr "Ressourcennutzung (siehe „man getrusage“ für Hilfe):"
+
+#, c-format
 msgid "debug: removing file: %s"
 msgstr "debug: lösche Datei: %s"
 
@@ -6219,45 +6257,6 @@ msgstr ""
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "curl Fehler %d (%s) (URL: \"%s\")\n"
-
-#, c-format
-msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
-msgstr "%sUngültiges Limit für Ressource \"%s\": %s (Wert muss >= -1 sein)"
-
-#, c-format
-msgid "Limit for resource \"%s\" has been set to %s"
-msgstr ""
-"Beschränkung für den Ressourcenbedarf von \"%s\" wurde eingestellt auf %s"
-
-#, c-format
-msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
-msgstr ""
-"%sDas Resource-Limit kann nicht von \"%s\" nach %s verändert werden: Fehler "
-"%d %s"
-
-#, c-format
-msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
-msgstr ""
-"%sUnbekannte Beschränkung für den Ressourcenbedarf \"%s\" (siehe /help "
-"weechat.startup.sys_rlimit)"
-
-#| msgid "Memory usage (see \"man mallinfo\" for help):"
-msgid "Resource limits (see \"man getrlimit\" for help):"
-msgstr "Ressourcenlimits (siehe „man getrlimit“ für Hilfe):"
-
-#, c-format
-#| msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
-msgid "%sUnable to get resource limit \"%s\": error %d %s"
-msgstr "%sRessourcenlimit „%s“ konnte nicht abgerufen werden: Fehler %d %s"
-
-#, c-format
-#| msgid "%s: error: dictionary \"%s\" is not available on your system"
-msgid "System function \"%s\" is not available"
-msgstr "Die Systemfunktion „%s“ ist nicht verfügbar"
-
-#| msgid "Memory usage (see \"man mallinfo\" for help):"
-msgid "Resource usage (see \"man getrusage\" for help):"
-msgstr "Ressourcennutzung (siehe „man getrusage“ für Hilfe):"
 
 #, c-format
 msgid ""
@@ -16447,8 +16446,7 @@ msgstr "verwaltet Trigger, das Schweizer Armeemesser für WeeChat"
 msgid ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
-"return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
 "all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
@@ -16457,8 +16455,7 @@ msgid ""
 msgstr ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
-"return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
 "all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
