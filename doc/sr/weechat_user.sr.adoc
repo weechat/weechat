@@ -3005,30 +3005,32 @@ include::{autogendir}/autogen_user_options.sr.adoc[tag=sec_options]
 
 [width="100%", cols="3m,6m,16", options="header"]
 |===
-| Одељак     | Команда за контролу                       | Опис
-| debug      | <<command_weechat_debug,/debug set>>      +
-               /set weechat.debug.*                      | Дибаг ниво, за језгро и додатке (у одељку је могуће додавање/уклањање опција).
-| startup    | /set weechat.startup.*                    | Опције покретања програма.
-| look       | /set weechat.look.*                       | Изглед и осећај.
-| palette    | <<command_weechat_color,/color alias>>    +
-               /set weechat.palette.*                    | Алијаси боја (у одељку је могуће додавање/уклањање опција).
-| color      | /set weechat.color.*                      | Боје.
-| completion | /set weechat.completion.*                 | Опције довршавања.
-| history    | /set weechat.history.*                    | Опције историје (команди и бафера).
-| proxy      | <<command_weechat_proxy,/proxy>>          +
-               /set weechat.proxy.*                      | Прокси опције.
-| network    | /set weechat.network.*                    | Мрежне/TLS опције.
-| plugin     | /set weechat.plugin.*                     | Опције додатака.
-| signal     | /set weechat.signal.*                     | Опције сигнала.
-| bar        | <<command_weechat_bar,/bar>>              +
-               /set weechat.bar.*                        | Опције трака.
-| layout     | <<command_weechat_layout,/layout>>        | Распореди.
-| notify     | <<command_weechat_buffer,/buffer notify>> | Нивои обавештавања за бафере (у одељку је могуће додавање/уклањање опција).
-| filter     | <<command_weechat_filter,/filter>>        | Филтери.
-| key        | <<command_weechat_key,/key>>              | Тастери у подразумеваном контексту.
-| key_search | <<command_weechat_key,/key>>              | Тастери у search контексту.
-| key_cursor | <<command_weechat_key,/key>>              | Тастери у cursor контексту.
-| key_mouse  | <<command_weechat_key,/key>>              | Тастери у mouse конексту.
+| Одељак     | Команда за контролу                        | Опис
+| debug      | <<command_weechat_debug,/debug set>>       +
+               /set weechat.debug.*                       | Дибаг ниво, за језгро и додатке (у одељку је могуће додавање/уклањање опција).
+| startup    | /set weechat.startup.*                     | Опције покретања програма.
+| look       | /set weechat.look.*                        | Изглед и осећај.
+| palette    | <<command_weechat_color,/color alias>>     +
+               /set weechat.palette.*                     | Алијаси боја (у одељку је могуће додавање/уклањање опција).
+| color      | /set weechat.color.*                       | Боје.
+| completion | /set weechat.completion.*                  | Опције довршавања.
+| history    | /set weechat.history.*                     | Опције историје (команди и бафера).
+| proxy      | <<command_weechat_proxy,/proxy>>           +
+               /set weechat.proxy.*                       | Прокси опције.
+| network    | /set weechat.network.*                     | Мрежне/TLS опције.
+| plugin     | /set weechat.plugin.*                      | Опције додатака.
+| signal     | /set weechat.signal.*                      | Опције сигнала.
+| bar        | <<command_weechat_bar,/bar>>               +
+               /set weechat.bar.*                         | Опције трака.
+| layout     | <<command_weechat_layout,/layout>>         | Распореди.
+// TRANSLATION MISSING
+| buffer     | <<command_weechat_buffer,/buffer setauto>> | Properties auto-applied on buffers when they are opened.
+| notify     | <<command_weechat_buffer,/buffer notify>>  | Нивои обавештавања за бафере (у одељку је могуће додавање/уклањање опција).
+| filter     | <<command_weechat_filter,/filter>>         | Филтери.
+| key        | <<command_weechat_key,/key>>               | Тастери у подразумеваном контексту.
+| key_search | <<command_weechat_key,/key>>               | Тастери у search контексту.
+| key_cursor | <<command_weechat_key,/key>>               | Тастери у cursor контексту.
+| key_mouse  | <<command_weechat_key,/key>>               | Тастери у mouse конексту.
 |===
 
 Опције:

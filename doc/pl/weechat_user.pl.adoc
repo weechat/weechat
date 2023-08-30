@@ -3236,30 +3236,32 @@ Sekcje w pliku _weechat.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Sekcja     | Komenda                                   | Opis
-| debug      | <<command_weechat_debug,/debug set>>      +
-               /set weechat.debug.*                      | Poziom debugowania dla rdzenia i wtyczek (opcje mogą być dodawane/usuwane w sekcji).
-| startup    | /set weechat.startup.*                    | Opcje dla startu aplikacji.
-| look       | /set weechat.look.*                       | Wygląd.
-| palette    | <<command_weechat_color,/color alias>>    +
-               /set weechat.palette.*                    | Aliasy kolorów (opcje mogą być dodawane/usuwane w sekcji).
-| color      | /set weechat.color.*                      | Kolory.
-| completion | /set weechat.completion.*                 | Opcje dopełnień.
-| history    | /set weechat.history.*                    | Opcje historii (komend i buforów).
-| proxy      | <<command_weechat_proxy,/proxy>>          +
-               /set weechat.proxy.*                      | Opcje proxy.
-| network    | /set weechat.network.*                    | Opcje sieci/TLS.
-| plugin     | /set weechat.plugin.*                     | Opcje wtyczek.
-| signal     | /set weechat.signal.*                     | Opcje sygnałów.
-| bar        | <<command_weechat_bar,/bar>>              +
-               /set weechat.bar.*                        | Opcje pasków.
-| layout     | <<command_weechat_layout,/layout>>        | Układy.
-| notify     | <<command_weechat_buffer,/buffer notify>> | Poziomy powiadomień dla buforów (opcje mogą być dodawane/usuwane w sekcji).
-| filter     | <<command_weechat_filter,/filter>>        | Filtry.
-| key        | <<command_weechat_key,/key>>              | Skróty klawiszowe dla domyślnego kontekstu.
-| key_search | <<command_weechat_key,/key>>              | Skróty klawiszowe dla kontekstu wyszukiwania.
-| key_cursor | <<command_weechat_key,/key>>              | Skróty klawiszowe dla kontekstu kursora.
-| key_mouse  | <<command_weechat_key,/key>>              | Skróty klawiszowe dla kontekstu myszy.
+| Sekcja     | Komenda                                    | Opis
+| debug      | <<command_weechat_debug,/debug set>>       +
+               /set weechat.debug.*                       | Poziom debugowania dla rdzenia i wtyczek (opcje mogą być dodawane/usuwane w sekcji).
+| startup    | /set weechat.startup.*                     | Opcje dla startu aplikacji.
+| look       | /set weechat.look.*                        | Wygląd.
+| palette    | <<command_weechat_color,/color alias>>     +
+               /set weechat.palette.*                     | Aliasy kolorów (opcje mogą być dodawane/usuwane w sekcji).
+| color      | /set weechat.color.*                       | Kolory.
+| completion | /set weechat.completion.*                  | Opcje dopełnień.
+| history    | /set weechat.history.*                     | Opcje historii (komend i buforów).
+| proxy      | <<command_weechat_proxy,/proxy>>           +
+               /set weechat.proxy.*                       | Opcje proxy.
+| network    | /set weechat.network.*                     | Opcje sieci/TLS.
+| plugin     | /set weechat.plugin.*                      | Opcje wtyczek.
+| signal     | /set weechat.signal.*                      | Opcje sygnałów.
+| bar        | <<command_weechat_bar,/bar>>               +
+               /set weechat.bar.*                         | Opcje pasków.
+| layout     | <<command_weechat_layout,/layout>>         | Układy.
+// TRANSLATION MISSING
+| buffer     | <<command_weechat_buffer,/buffer setauto>> | Properties auto-applied on buffers when they are opened.
+| notify     | <<command_weechat_buffer,/buffer notify>>  | Poziomy powiadomień dla buforów (opcje mogą być dodawane/usuwane w sekcji).
+| filter     | <<command_weechat_filter,/filter>>         | Filtry.
+| key        | <<command_weechat_key,/key>>               | Skróty klawiszowe dla domyślnego kontekstu.
+| key_search | <<command_weechat_key,/key>>               | Skróty klawiszowe dla kontekstu wyszukiwania.
+| key_cursor | <<command_weechat_key,/key>>               | Skróty klawiszowe dla kontekstu kursora.
+| key_mouse  | <<command_weechat_key,/key>>               | Skróty klawiszowe dla kontekstu myszy.
 |===
 
 Opcje:
