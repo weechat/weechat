@@ -1558,14 +1558,13 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | kbd:[Ctrl+↓] | ruft nächsten Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer). | `+/input history_global_next+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_system]]
 ==== System
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Taste        | Beschreibung | Befehl
-| kbd:[Ctrl+z] | Suspend WeeChat process. | `+/sys suspend+`
+| kbd:[Ctrl+z] | Breche den Weechat-Prozess ab | `+/sys suspend+`
 |===
 
 [[key_bindings_buffers]]
@@ -3271,8 +3270,7 @@ Sektion in Datei _weechat.conf_:
 | bar        | <<command_weechat_bar,/bar>>               +
                /set weechat.bar.*                         | Optionen für die Bars.
 | layout     | <<command_weechat_layout,/layout>>         | Layouts.
-// TRANSLATION MISSING
-| buffer     | <<command_weechat_buffer,/buffer setauto>> | Properties auto-applied on buffers when they are opened.
+| buffer     | <<command_weechat_buffer,/buffer setauto>> | Eigenschaften, die beim Öffnen des Buffers automatisch angewendet werden.
 | notify     | <<command_weechat_buffer,/buffer notify>>  | Benachrichtigungsstufe für Buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
 | filter     | <<command_weechat_filter,/filter>>         | Filter.
 | key        | <<command_weechat_key,/key>>               | Tastenbefehle in default context.
