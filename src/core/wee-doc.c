@@ -317,7 +317,7 @@ doc_gen_user_commands (const char *path, const char *lang)
             HOOK_COMMAND(ptr_hook, command),
             TRANS(HOOK_COMMAND(ptr_hook, description)));
 
-        length = 1 + utf8_strlen (HOOK_COMMAND(ptr_hook, command)) + 2;
+        length = 1 + utf8_strlen_screen (HOOK_COMMAND(ptr_hook, command)) + 2;
         snprintf (format, sizeof (format), "%%-%ds%%s\n", length);
         ptr_args = TRANS(HOOK_COMMAND(ptr_hook, args));
         first_line = 1;
