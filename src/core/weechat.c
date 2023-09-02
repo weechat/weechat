@@ -642,6 +642,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
            ^ getpid ());
 
     weeurl_init ();                     /* initialize URL                   */
+    string_init ();                     /* initialize string                */
     signal_init ();                     /* initialize signals               */
     hdata_init ();                      /* initialize hdata                 */
     hook_init ();                       /* initialize hooks                 */

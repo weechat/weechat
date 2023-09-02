@@ -658,6 +658,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_dyn_copy = &string_dyn_copy;
         new_plugin->string_dyn_concat = &string_dyn_concat;
         new_plugin->string_dyn_free = &string_dyn_free;
+        new_plugin->string_concat = &string_concat;
 
         new_plugin->utf8_has_8bits = &utf8_has_8bits;
         new_plugin->utf8_is_valid = &utf8_is_valid;

@@ -24,6 +24,9 @@
 #include <stdint.h>
 #include <regex.h>
 
+#define STRING_NUM_CONCAT_BUFFERS 8
+#define STR_CONCAT(separator, argz...) string_concat (separator, ##argz, NULL)
+
 typedef uint32_t string_shared_count_t;
 
 typedef uint32_t string_dyn_size_t;
@@ -157,6 +160,8 @@ extern char **string_dyn_alloc (int size_alloc);
 extern int string_dyn_copy (char **string, const char *new_string);
 extern int string_dyn_concat (char **string, const char *add, int bytes);
 extern char *string_dyn_free (char **string, int free_string);
+extern const char *string_concat (const char *separator, ...);
+extern void string_init ();
 extern void string_end ();
 
 #endif /* WEECHAT_STRING_H */

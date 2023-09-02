@@ -37,7 +37,7 @@ New features::
   * core: add options weechat.buffer.* to save buffer properties set by user, add option `setauto` in command `/buffer` (issue #352)
   * core: add parameters and key bindings to move to edges of current area with commands `/cursor go` and `/cursor move` (issue #1282)
   * core: add variables "_chat_focused_line_bol" and "_chat_focused_line_eol" in focus data (issue #1955)
-  * api: add function hook_url, add option `url` in command `/debug` (issue #1723)
+  * api: add function string_concat (issue #2005)
   * api: add support of path to variable and hashtable comparison in function hdata_compare (issue #1066)
   * api: add infos "nick_color_ignore_case" and "nick_color_name_ignore_case" (issue #194)
   * api: add info "buffer" (issue #1962)

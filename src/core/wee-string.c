@@ -66,6 +66,8 @@
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 
 struct t_hashtable *string_hashtable_shared = NULL;
+int string_concat_index = 0;
+char **string_concat_buffer[STRING_NUM_CONCAT_BUFFERS];
 
 
 /*
@@ -4694,15 +4696,87 @@ string_dyn_free (char **string, int free_string)
 }
 
 /*
+ * Concatenates strings, using a separator (which can be NULL or empty string
+ * to not use any separator).
+ *
+ * Last argument must be NULL to terminate the variable list of arguments.
+ */
+
+const char *
+string_concat (const char *separator, ...)
+{
+    va_list args;
+    const char *str;
+    int index;
+
+    string_concat_index = (string_concat_index + 1) % 8;
+
+    if (string_concat_buffer[string_concat_index])
+    {
+        string_dyn_copy (string_concat_buffer[string_concat_index], NULL);
+    }
+    else
+    {
+        string_concat_buffer[string_concat_index] = string_dyn_alloc (128);
+        if (!string_concat_buffer[string_concat_index])
+            return NULL;
+    }
+
+    index = 0;
+    va_start (args, separator);
+    while (1)
+    {
+        str = va_arg (args, const char *);
+        if (!str)
+            break;
+        if ((index > 0) && separator && separator[0])
+        {
+            string_dyn_concat (string_concat_buffer[string_concat_index],
+                               separator, -1);
+        }
+        string_dyn_concat (string_concat_buffer[string_concat_index], str, -1);
+        index++;
+    }
+    va_end (args);
+
+    return (const char *)(*string_concat_buffer[string_concat_index]);
+}
+
+/*
+ * Initializes string.
+ */
+
+void
+string_init ()
+{
+    int i;
+
+    for (i = 0; i < STRING_NUM_CONCAT_BUFFERS; i++)
+    {
+        string_concat_buffer[i] = NULL;
+    }
+}
+
+/*
  * Frees all allocated data.
  */
 
 void
 string_end ()
 {
+    int i;
+
     if (string_hashtable_shared)
     {
         hashtable_free (string_hashtable_shared);
         string_hashtable_shared = NULL;
+    }
+    for (i = 0; i < STRING_NUM_CONCAT_BUFFERS; i++)
+    {
+        if (string_concat_buffer[i])
+        {
+            string_dyn_free (string_concat_buffer[i], 1);
+            string_concat_buffer[i] = NULL;
+        }
     }
 }

@@ -3357,6 +3357,51 @@ weechat_string_dyn_free (string, 1);
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
+==== string_concat
+
+_WeeChat ≥ 4.2.0._
+
+// TRANSLATION MISSING
+Concatenate multiple strings using a separator.
+
+Прототип:
+
+[source,c]
+----
+const char *weechat_string_concat (const char *separator, ...);
+----
+
+Аргументи:
+
+// TRANSLATION MISSING
+* _separator_: the separator string which is inserted between concatenated
+  strings (can be NULL or empty string)
+
+// TRANSLATION MISSING
+[NOTE]
+Last argument *MUST* always be NULL. +
+A macro called `WEECHAT_STR_CONCAT` can be used, where the final NULL value is
+not needed (usage of this macro is recommended).
+
+Повратна вредност:
+
+// TRANSLATION MISSING
+* concatenated string
+
+C пример:
+
+// TRANSLATION MISSING
+[source,c]
+----
+const char *result = weechat_string_concat (" / ", "abc", "def", "ghi", NULL);  /* result == "abc / def / ghi" */
+
+/* with macro */
+const char *result = WEECHAT_STR_CONCAT(" / ", "abc", "def", "ghi");  /* result == "abc / def / ghi" */
+----
+
+[NOTE]
+Ова функција није доступна у API скриптовања.
+
 [[utf-8]]
 === UTF-8
 

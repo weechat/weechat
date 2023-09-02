@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20230908-01"
+#define WEECHAT_PLUGIN_API_VERSION "20231017-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -215,6 +215,10 @@ struct timeval;
             vbuffer = vaa_buffer2;                                      \
         }                                                               \
     }
+
+/* macro to concatenate strings */
+#define WEECHAT_STR_CONCAT(separator, argz...)                          \
+    weechat_string_concat (separator, ##argz, NULL)
 
 /*
  * macro to return error in case of missing arguments in callback of
@@ -367,6 +371,7 @@ struct t_weechat_plugin
     int (*string_dyn_copy) (char **string, const char *new_string);
     int (*string_dyn_concat) (char **string, const char *add, int bytes);
     char *(*string_dyn_free) (char **string, int free_string);
+    const char *(*string_concat) (const char *separator, ...);
 
     /* UTF-8 strings */
     int (*utf8_has_8bits) (const char *string);
@@ -1379,6 +1384,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->string_dyn_concat)(__string, __add, __bytes)
 #define weechat_string_dyn_free(__string, __free_string)                \
     (weechat_plugin->string_dyn_free)(__string, __free_string)
+#define weechat_string_concat(__separator, __argz...)                   \
+    (weechat_plugin->string_concat)(__separator, ##__argz)
 
 /* UTF-8 strings */
 #define weechat_utf8_has_8bits(__string)                                \

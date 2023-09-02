@@ -2969,3 +2969,32 @@ TEST(CoreString, Dyn)
     string_dyn_free (NULL, 0);
     string_dyn_free (str, 0);
 }
+
+/*
+ * Tests functions:
+ *   string_concat
+ */
+
+TEST(CoreString, Concat)
+{
+    STRCMP_EQUAL("", string_concat (NULL, NULL));
+    STRCMP_EQUAL("", string_concat (NULL, "", NULL));
+    STRCMP_EQUAL("", string_concat ("", "", NULL));
+    STRCMP_EQUAL("", string_concat (",", "", NULL));
+
+    STRCMP_EQUAL("abc", string_concat (NULL, "abc", NULL));
+    STRCMP_EQUAL("abcdef", string_concat (NULL, "abc", "def", NULL));
+    STRCMP_EQUAL("abcdefghi", string_concat (NULL, "abc", "def", "ghi", NULL));
+
+    STRCMP_EQUAL("abc", string_concat ("", "abc", NULL));
+    STRCMP_EQUAL("abcdef", string_concat ("", "abc", "def", NULL));
+    STRCMP_EQUAL("abcdefghi", string_concat ("", "abc", "def", "ghi", NULL));
+
+    STRCMP_EQUAL("abc", string_concat (",", "abc", NULL));
+    STRCMP_EQUAL("abc,def", string_concat (",", "abc", "def", NULL));
+    STRCMP_EQUAL("abc,def,ghi", string_concat (",", "abc", "def", "ghi", NULL));
+
+    STRCMP_EQUAL("abc", string_concat (" / ", "abc", NULL));
+    STRCMP_EQUAL("abc / def", string_concat (" / ", "abc", "def", NULL));
+    STRCMP_EQUAL("abc / def / ghi", string_concat (" / ", "abc", "def", "ghi", NULL));
+}
