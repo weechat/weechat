@@ -256,7 +256,7 @@ doc_gen_user_commands (const char *path, const char *lang)
     struct t_hook *ptr_hook;
     struct t_arraylist *list_hooks;
     int i, list_size, length, first_cmd_plugin, first_line;
-    char old_plugin[1024], format[32], *value;
+    char old_plugin[1024], format[32], *value, *args_desc;
     const char *ptr_args, *pos_pipes, *pos_next;
 
     file = doc_gen_open_file (path, "user", "commands", lang);
@@ -365,12 +365,12 @@ doc_gen_user_commands (const char *path, const char *lang)
             }
             ptr_args = pos_next;
         }
-        if (HOOK_COMMAND(ptr_hook, args_description)
-            && HOOK_COMMAND(ptr_hook, args_description[0]))
+        args_desc = hook_command_format_args_description (
+            HOOK_COMMAND(ptr_hook, args_description));
+        if (args_desc)
         {
-            string_fprintf (file,
-                            "\n%s\n",
-                            TRANS(HOOK_COMMAND(ptr_hook, args_description)));
+            string_fprintf (file, "\n%s\n", args_desc);
+            free (args_desc);
         }
     }
 

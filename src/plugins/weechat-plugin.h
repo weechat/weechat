@@ -221,6 +221,19 @@ struct timeval;
     weechat_string_concat (separator, ##argz, NULL)
 
 /*
+ * string used at beginning of arguments description to format the help text
+ * and translate it line by line
+ */
+#define WEECHAT_HOOK_COMMAND_STR_FORMATTED "[fmt]"
+
+/* macro to concatenate strings for description of command arguments */
+#define WEECHAT_CMD_ARGS_DESC(args...)                                  \
+    WEECHAT_STR_CONCAT(                                                 \
+        "\n",                                                           \
+        WEECHAT_HOOK_COMMAND_STR_FORMATTED,                             \
+        ##args)
+
+/*
  * macro to return error in case of missing arguments in callback of
  * hook_command
  */
@@ -1248,6 +1261,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define NG_(single,plural,number)                                       \
     (weechat_plugin->ngettext)(single, plural, number)
 #endif /* NG_ */
+#define AI(string) (string)
 #endif /* WEECHAT_H */
 #define weechat_gettext(string) (weechat_plugin->gettext)(string)
 #define weechat_ngettext(single,plural,number)                          \

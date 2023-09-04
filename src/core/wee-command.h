@@ -82,6 +82,9 @@ struct t_gui_buffer;
         return WEECHAT_RC_ERROR;                                        \
     }
 
+#define CMD_ARGS_DESC(args...)                                          \
+    STR_CONCAT("\n", WEECHAT_HOOK_COMMAND_STR_FORMATTED, ##args)
+
 struct t_command_repeat
 {
     char *buffer_name;                 /* full buffer name                  */

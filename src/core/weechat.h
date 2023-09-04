@@ -48,6 +48,7 @@
     #define N_(string) (string)
     #define gettext(string) (string)
 #endif /* !defined(_) */
+#define AI(string) (string)
 
 
 #define WEECHAT_COPYRIGHT_DATE   "(C) 2003-2023"

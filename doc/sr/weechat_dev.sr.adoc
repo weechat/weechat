@@ -427,6 +427,11 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-core-utf8.cpp         | Тестови: UTF-8.
 |          test-core-util.cpp         | Тестови: помоћне функције.
 |          test-core-sys.cpp          | Тестови: системске функције.
+// TRANSLATION MISSING
+|          hook/                      | Root of unit tests for hooks.
+// TRANSLATION MISSING
+|             test-hook-command.cpp   | Tests: hooks "command".
+>>>>>>> 94c43287a (core: add a way to format and translate description of command arguments line by line)
 |       gui/                          | Корен unit тестова интерфејса.
 |          test-gui-bar-window.cpp    | Тестови: функције прозора траке.
 |          test-gui-buffer.cpp        | Тестови: бафер функције.

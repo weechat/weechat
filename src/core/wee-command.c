@@ -3006,7 +3006,7 @@ COMMAND_CALLBACK(help)
     struct t_weechat_plugin *ptr_plugin;
     struct t_config_option *ptr_option;
     int i, length, command_found, first_line_displayed, verbose;
-    char *string, *ptr_string, *pos_double_pipe, *pos_end;
+    char *string, *ptr_string, *pos_double_pipe, *pos_end, *args_desc;
     char empty_string[1] = { '\0' }, str_format[64];
 
     /* make C compiler happy */
@@ -3121,12 +3121,13 @@ COMMAND_CALLBACK(help)
                 gui_chat_printf (NULL, "%s",
                                  _(HOOK_COMMAND(ptr_hook, description)));
             }
-            if (HOOK_COMMAND(ptr_hook, args_description)
-                && HOOK_COMMAND(ptr_hook, args_description)[0])
+            args_desc = hook_command_format_args_description (
+                HOOK_COMMAND(ptr_hook, args_description));
+            if (args_desc)
             {
                 gui_chat_printf (NULL, "");
-                gui_chat_printf (NULL, "%s",
-                                 _(HOOK_COMMAND(ptr_hook, args_description)));
+                gui_chat_printf (NULL, "%s", args_desc);
+                free (args_desc);
             }
         }
     }

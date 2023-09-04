@@ -270,6 +270,236 @@ hook_command_build_completion (struct t_hook_command *hook_command)
 }
 
 /*
+ * Removes all raw markers from a string: converts "raw[xxx]" to "xxx".
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_command_remove_raw_markers (const char *string)
+{
+    const char *ptr_string, *pos_raw, *pos_end;
+    char **result;
+
+    if (!string)
+        return NULL;
+
+    result = string_dyn_alloc (128);
+    if (!result)
+        return NULL;
+
+    ptr_string = string;
+
+    while (ptr_string[0])
+    {
+        pos_raw = strstr (ptr_string, "raw[");
+        if (!pos_raw)
+        {
+            string_dyn_concat (result, ptr_string, -1);
+            break;
+        }
+        pos_end = strchr (pos_raw, ']');
+        if (!pos_end)
+        {
+            string_dyn_concat (result, ptr_string, -1);
+            break;
+        }
+        if (pos_raw > ptr_string)
+            string_dyn_concat (result, ptr_string, pos_raw - ptr_string);
+        if (pos_end > pos_raw + 4)
+            string_dyn_concat (result, pos_raw + 4, pos_end - pos_raw - 4);
+        ptr_string = pos_end + 1;
+    }
+
+    return string_dyn_free (result, 0);
+}
+
+/*
+ * Frees an argument description.
+ */
+
+void
+hook_command_arraylist_arg_desc_free (void *data, struct t_arraylist *arraylist,
+                                      void *pointer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    free (pointer);
+}
+
+/*
+ * Formats and translates arguments description of a command.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+hook_command_format_args_description (const char *args_description)
+{
+    struct t_arraylist *args;
+    const char *pos, *ptr_line;
+    char **lines, **result, *arg_translated, *arg_name, *line_translated;
+    int i, j, num_lines, length, max_length_arg, size, line_after_args;
+    int lines_added;
+
+    if (!args_description)
+        return NULL;
+
+    if (!args_description[0])
+        return strdup (args_description);
+
+    /* if args description is not formatted, translate the whole string */
+    if (strncmp (args_description,
+                 WEECHAT_HOOK_COMMAND_STR_FORMATTED "\n",
+                 strlen (WEECHAT_HOOK_COMMAND_STR_FORMATTED) + 1) != 0)
+    {
+        return strdup (_(args_description));
+    }
+
+    /* translate line by line and indent properly arguments */
+    result = NULL;
+    lines = NULL;
+    args = NULL;
+
+    result = string_dyn_alloc (1024);
+    if (!result)
+        goto error;
+
+    lines = string_split (args_description, "\n", NULL, 0, 0, &num_lines);
+    if (!lines)
+        goto error;
+
+    if (num_lines == 0)
+    {
+        string_free_split (lines);
+        return string_dyn_free (result, 0);
+    }
+
+    args = arraylist_new (num_lines, 0, 1,
+                          NULL, NULL,
+                          &hook_command_arraylist_arg_desc_free, NULL);
+    if (!args)
+        goto error;
+
+    /* store description of arguments and find longest argument name on screen */
+    line_after_args = -1;
+    max_length_arg = 0;
+    for (i = 0; i < num_lines; i++)
+    {
+        if (!lines[i][0])
+        {
+            line_after_args = i;
+            break;
+        }
+        if (strcmp (lines[i], WEECHAT_HOOK_COMMAND_STR_FORMATTED) == 0)
+            continue;
+        arg_translated = hook_command_remove_raw_markers (_(lines[i]));
+        if (!arg_translated)
+            continue;
+        arraylist_add (args, arg_translated);
+        if ((strncmp (arg_translated, "> ", 2) == 0)
+            || (strncmp (arg_translated, ">> ", 3) == 0))
+            continue;
+        pos = strchr (arg_translated, ':');
+        if (!pos)
+            continue;
+        arg_name = string_strndup (arg_translated, pos - arg_translated);
+        if (arg_name)
+        {
+            length = utf8_strlen_screen (arg_name);
+            if (length > max_length_arg)
+                max_length_arg = length;
+            free (arg_name);
+        }
+    }
+
+    /* add arguments with their description */
+    lines_added = 0;
+    size = arraylist_size (args);
+    for (i = 0; i < size; i++)
+    {
+        ptr_line = (const char *)arraylist_get (args, i);
+        if (!ptr_line)
+            continue;
+        if (lines_added > 0)
+            string_dyn_concat (result, "\n", -1);
+        if (strncmp (ptr_line, "> ", 2) == 0)
+        {
+            /* indented line: after the argument name */
+            for (j = 0; j < max_length_arg + 2; j++)
+            {
+                string_dyn_concat (result, " ", -1);
+            }
+            ptr_line += 2;
+        }
+        else if (strncmp (ptr_line, ">> ", 3) == 0)
+        {
+            /* indented line: after the argument name (+ 2 spaces) */
+            for (j = 0; j < max_length_arg + 4; j++)
+            {
+                string_dyn_concat (result, " ", -1);
+            }
+            ptr_line += 3;
+        }
+        else
+        {
+            pos = strchr (ptr_line, ':');
+            if (pos)
+            {
+                arg_name = string_strndup (ptr_line, pos - ptr_line);
+                if (arg_name)
+                {
+                    length = utf8_strlen_screen (arg_name);
+                    for (j = length; j < max_length_arg; j++)
+                    {
+                        string_dyn_concat (result, " ", -1);
+                    }
+                    free (arg_name);
+                }
+            }
+        }
+        string_dyn_concat (result, ptr_line, -1);
+        lines_added++;
+    }
+
+    /* add additional description (after arguments) */
+    if (line_after_args >= 0)
+    {
+        for (i = line_after_args; i < num_lines; i++)
+        {
+            if (lines_added > 0)
+                string_dyn_concat (result, "\n", -1);
+            if (lines[i][0])
+            {
+                line_translated = hook_command_remove_raw_markers (_(lines[i]));
+                if (line_translated)
+                {
+                    string_dyn_concat (result, line_translated, -1);
+                    lines_added++;
+                    free (line_translated);
+                }
+            }
+        }
+    }
+
+    arraylist_free (args);
+    string_free_split (lines);
+
+    return string_dyn_free (result, 0);
+
+error:
+    if (args)
+        arraylist_free (args);
+    if (result)
+        string_dyn_free (result, 1);
+    if (lines)
+        string_free_split (lines);
+    return NULL;
+}
+
+/*
  * Hooks a command.
  *
  * Returns pointer to new hook, NULL if error.
@@ -820,6 +1050,8 @@ int
 hook_command_add_to_infolist (struct t_infolist_item *item,
                               struct t_hook *hook)
 {
+    char *args_desc_nls;
+
     if (!item || !hook || !hook->hook_data)
         return 0;
 
@@ -846,11 +1078,13 @@ hook_command_add_to_infolist (struct t_infolist_item *item,
     if (!infolist_new_var_string (item, "args_description",
                                   HOOK_COMMAND(hook, args_description)))
         return 0;
+    args_desc_nls = hook_command_format_args_description (
+        HOOK_COMMAND(hook, args_description));
     if (!infolist_new_var_string (item, "args_description_nls",
-                                  (HOOK_COMMAND(hook, args_description)
-                                   && HOOK_COMMAND(hook, args_description)[0]) ?
-                                  _(HOOK_COMMAND(hook, args_description)) : ""))
+                                  (args_desc_nls) ? args_desc_nls : ""))
         return 0;
+    if (args_desc_nls)
+        free (args_desc_nls);
     if (!infolist_new_var_string (item, "completion", HOOK_COMMAND(hook, completion)))
         return 0;
 
