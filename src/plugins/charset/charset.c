@@ -608,6 +608,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_command (
         "charset",
         N_("change charset for current buffer"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("decode|encode <charset>"
            " || reset"),
         N_(" decode: change decoding charset\n"

@@ -304,6 +304,7 @@ alias_command_init ()
     weechat_hook_command (
         "alias",
         N_("list, add or remove command aliases"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list [<alias>]"
            " || add <alias> [<command>[;<command>...]]"
            " || addcompletion <completion> <alias> [<command>[;<command>...]]"

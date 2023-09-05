@@ -479,6 +479,7 @@ spell_command_init ()
     weechat_hook_command (
         "spell",
         N_("spell plugin configuration"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("enable|disable|toggle"
            " || listdict"
            " || setdict -|<dict>[,<dict>...]"

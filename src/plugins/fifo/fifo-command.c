@@ -95,7 +95,7 @@ fifo_command_init ()
     weechat_hook_command (
         "fifo",
         N_("fifo plugin configuration"),
-        N_("enable|disable|toggle"),
+        "enable|disable|toggle",
         N_(" enable: enable FIFO pipe\n"
            "disable: disable FIFO pipe\n"
            " toggle: toggle FIFO pipe\n"

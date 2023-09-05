@@ -396,6 +396,7 @@ relay_command_init ()
     weechat_hook_command (
         "relay",
         N_("relay control"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list|listfull|listrelay"
            " || add <name> <port>|<path>"
            " || del|start|restart|stop <name>"

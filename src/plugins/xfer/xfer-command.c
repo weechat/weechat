@@ -256,6 +256,7 @@ xfer_command_init ()
     weechat_hook_command (
         "me",
         N_("send a CTCP action to remote host"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<message>"),
         N_("message: message to send"),
         NULL,

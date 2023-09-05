@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-08-30 17:22+0200\n"
-"PO-Revision-Date: 2023-06-26 21:34+0200\n"
+"POT-Creation-Date: 2023-09-05 11:20+0200\n"
+"PO-Revision-Date: 2023-09-05 11:21+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -1086,6 +1086,7 @@ msgstr ""
 msgid "execute a command on all buffers"
 msgstr "executa um comando várias vezes"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 #| msgid "Command"
 msgid "<command>"
@@ -1103,6 +1104,7 @@ msgstr ""
 msgid "set or remove away status"
 msgstr "ativar ou remover o status de ausente"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[-all] [<message>]"
 msgstr "[-all] [<mensagem>]"
 
@@ -1118,6 +1120,7 @@ msgstr ""
 msgid "manage bars"
 msgstr "gerenciar barras"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
@@ -1237,6 +1240,7 @@ msgstr ""
 msgid "manage buffers"
 msgstr "gerenciar buffers"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "list || add [-free] [-switch] <name> || clear [<number>|<name>|-merged|-all "
@@ -1402,6 +1406,7 @@ msgstr ""
 msgid "define color aliases and display palette of colors"
 msgstr "define apelidos para cores e mostra a palheta de cores"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "alias <color> <name> || unalias <color> || reset || term2rgb <color> || "
@@ -1459,6 +1464,7 @@ msgstr ""
 msgid "launch explicit WeeChat or plugin command"
 msgstr "executar explicitamente um comando do WeeChat ou de um plugin"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "[-buffer <name>] <plugin> <command>"
 msgstr "<plugin> <comando>"
@@ -1485,6 +1491,7 @@ msgstr ""
 "da tela"
 
 # Are those weechat commands/options? I don't think they must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 #| msgid ""
 #| "go chat|<bar>|<x>,<y> || move up|down|left|right|area_up|area_down|"
@@ -1556,6 +1563,7 @@ msgstr ""
 
 # find a better translation to dump?
 # find a better translation do log?
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
@@ -1637,6 +1645,7 @@ msgstr ""
 msgid "evaluate expression"
 msgstr "avaliar expressão"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "[-n|-s] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
@@ -1814,6 +1823,7 @@ msgstr ""
 "filtra mensagens nos buffers, para ocultar/mostrar as mesmas de acordo com "
 "marcadores ou regex"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "list || enable|disable|toggle [<name>|@] || add|addreplace <name> <buffer>[,"
@@ -1958,6 +1968,7 @@ msgstr ""
 msgid "display help about commands and options"
 msgstr "mostra a ajuda sobre comandos e opções"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
 msgstr "-list|-listfull [<plugin> [<plugin>...]] || <comando> || <opção>"
 
@@ -1979,6 +1990,7 @@ msgstr ""
 msgid "show buffer command history"
 msgstr "mostra o histórico de linhas de comando do buffer"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "clear || <value>"
 msgstr "clear || <valor>"
 
@@ -1994,6 +2006,7 @@ msgstr ""
 msgid "manage hotlist"
 msgstr "gerenciar proxies"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "add [low|message|private|highlight] || clear [<level>] || remove || restore "
 "[-all]"
@@ -2014,6 +2027,7 @@ msgstr ""
 msgid "functions for command line"
 msgstr "funções para linha de comando"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<action> [<arguments>]"
 msgstr "<ação> [<argumentos>]"
 
@@ -2139,6 +2153,7 @@ msgstr ""
 msgid "manage custom bar items"
 msgstr "lista de itens da barra"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
@@ -2195,6 +2210,7 @@ msgstr ""
 msgid "bind/unbind keys"
 msgstr "vincular/desvincular teclas"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 #| msgid ""
 #| "list|listdefault|listdiff [<context>] || bind <key> [<command> [<args>]] "
@@ -2343,6 +2359,7 @@ msgstr ""
 msgid "manage buffers/windows layouts"
 msgstr "gerenciar buffers"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
@@ -2389,6 +2406,7 @@ msgstr ""
 msgid "mouse control"
 msgstr "controle do mouse"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "enable|disable|toggle [<delay>]"
 msgstr "enable|disable|toggle [<atraso>]"
 
@@ -2424,6 +2442,7 @@ msgstr ""
 msgid "execute a command silently"
 msgstr "executa um comando silenciosamente"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "[-core | -current | -buffer <name>] <command>"
 msgstr "[-current | -buffer <nome> | -all] <comando>"
@@ -2471,6 +2490,7 @@ msgstr ""
 msgid "list/load/unload plugins"
 msgstr "list/load/unload plugins"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 #| msgid ""
 #| "list|listfull [<name>] || load <filename> [<arguments>] || autoload "
@@ -2508,6 +2528,7 @@ msgstr ""
 msgid "display text on a buffer"
 msgstr "cor do texto para nomes de buffer"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "[-buffer <number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
 "current] [-y <line>] [-escape] [-date <date>] [-tags <tags>] [-action|-"
@@ -2567,6 +2588,7 @@ msgstr ""
 msgid "manage proxies"
 msgstr "gerenciar proxies"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "list || add <name> <type> <address> <port> [<username> [<password>]] || del "
 "<name>|-all || set <name> <option> <value>"
@@ -2604,6 +2626,7 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr "quit WeeChat"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[-yes] [<arguments>]"
 msgstr "[-yes] [<argumentos>]"
 
@@ -2626,6 +2649,7 @@ msgstr ""
 msgid "reload configuration files from disk"
 msgstr "recarrega a configuração dos arquivos do disco"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<file> [<file>...]]"
 msgstr "[<arquivo> [<arquivo>...]]"
 
@@ -2641,6 +2665,7 @@ msgstr ""
 msgid "execute a command several times"
 msgstr "executa um comando várias vezes"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "[-interval <delay>[<unit>]] <count> <command>"
 msgstr "[-interval <tempo_de_espera>] <contador> <comandos>"
@@ -2697,6 +2722,7 @@ msgstr ""
 msgid "reset config options"
 msgstr "indefine/restaura opções de configuração"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<option> || -mask <option>"
 msgstr "<option> || -mask <option>"
 
@@ -2745,6 +2771,7 @@ msgid ""
 "manage secured data (passwords or private data encrypted in file sec.conf)"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "passphrase <passphrase>|-delete || decrypt <passphrase>|-discard || set "
 "<name> <value> || del <name>"
@@ -2802,6 +2829,7 @@ msgstr ""
 msgid "set config options and environment variables"
 msgstr "setar opções de config e variáveis do ambiente"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "[<option> [<value>]] || diff [<option> [<option>...]] || env [<variable> "
@@ -2874,9 +2902,6 @@ msgstr ""
 msgid "system actions"
 msgstr "lista de opções"
 
-msgid "get rlimit|rusage || suspend"
-msgstr ""
-
 msgid ""
 "    get: display system info\n"
 " rlimit: display resource limits (see /help weechat.startup.sys_rlimit and "
@@ -2891,6 +2916,7 @@ msgstr ""
 msgid "toggle value of a config option"
 msgstr "valores para uma opção de configuração"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 #| msgid "[<file> [<file>...]]"
 msgid "<option> [<value> [<value>...]]"
@@ -2964,6 +2990,7 @@ msgid ""
 "from servers"
 msgstr "atualiza o WeeChat sem desconectar dos servidores"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "[-yes] [<path_to_binary>|-save|-quit]"
 msgstr "[<caminho_para_o_binário>|-quit]"
@@ -3085,6 +3112,7 @@ msgstr ""
 msgid "schedule a command execution in future"
 msgstr "agenda a execução de um comando no futuro"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<number>[<unit>] <command>"
 msgstr "<número>[<unidade>] <comando>"
 
@@ -3135,6 +3163,7 @@ msgstr ""
 msgid "manage windows"
 msgstr "gerencia janelas"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy, no-c-format
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
@@ -5649,6 +5678,7 @@ msgstr "Disposição \"%s\" renomeado para \"%s\""
 msgid "list, add or remove command aliases"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
 "<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...] "
@@ -6070,6 +6100,7 @@ msgstr "%s%s: charset inválido: \"%s\""
 msgid "change charset for current buffer"
 msgstr "alterar o charset para o buffer atual"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "decode|encode <charset> || reset"
 msgstr "decode|encode <charset> || reset"
 
@@ -6154,6 +6185,7 @@ msgstr "Comando \"%s\" removido"
 msgid "execute external commands"
 msgstr "executa um comando externo"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "-list || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-"
 "oc|-n|-nf] [-oerr] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] [-flush|-noflush] [-"
@@ -6323,10 +6355,6 @@ msgstr "Mouse está desabilitado"
 msgid "fifo plugin configuration"
 msgstr "configuração do plugin de registro"
 
-#, fuzzy
-msgid "enable|disable|toggle"
-msgstr "enable|disable|toggle [<atraso>]"
-
 msgid ""
 " enable: enable FIFO pipe\n"
 "disable: disable FIFO pipe\n"
@@ -6398,6 +6426,7 @@ msgstr ""
 msgid "fast set WeeChat and plugins options"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "-bar || -refresh || -up|-down [<number>] || -left|-right [<percent>] || -go "
 "<line>|end || -toggle || -add [<value>] || -reset || -unset || -set || -"
@@ -7425,6 +7454,7 @@ msgstr ""
 msgid "send a CTCP action to a nick or channel"
 msgstr "envia um CTCP action para o canal atual"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[-server <server>] <target>[,<target>...] <text>"
 msgstr ""
 
@@ -7437,6 +7467,7 @@ msgstr ""
 msgid "find information about the administrator of the server"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<target>]"
 msgstr ""
 
@@ -7446,6 +7477,7 @@ msgstr ""
 msgid "execute a command on all channels of all connected servers"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command> || [-"
@@ -7485,6 +7517,7 @@ msgstr ""
 msgid "execute a command on all private buffers of all connected servers"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "[-current] [-exclude=<nick>[,<nick>...]] <command> || [-current] -"
@@ -7522,6 +7555,7 @@ msgstr ""
 msgid "execute a command on all connected servers"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "[-exclude=<server>[,<server>...]] <command> || -include=<server>[,"
 "<server>...] <command>"
@@ -7551,6 +7585,7 @@ msgstr ""
 msgid "authenticate with SASL"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 #| msgid "<user> <password>"
 msgid "[<username> <password>]"
@@ -7581,6 +7616,7 @@ msgstr ""
 msgid "configure the \"autojoin\" server option"
 msgstr "opções de configuração"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "add [<channel1> [<channel2>...]] || addraw <channel1>[,<channel2>...] "
 "[<key1>[,<key2>...]] || del [<channel1> [<channel2>...]] || apply || join || "
@@ -7619,6 +7655,7 @@ msgstr ""
 msgid "ban nicks or hosts"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<channel>] [<nick> [<nick>...]]"
 msgstr ""
 
@@ -7632,6 +7669,7 @@ msgstr ""
 msgid "client capability negotiation"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgstr ""
 
@@ -7668,6 +7706,7 @@ msgstr ""
 msgid "connect to IRC server(s)"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "[<server> [<server>...]] [-<option>[=<value>]] [-no<option>] [-nojoin] [-"
 "switch] || -all|-auto|-open [-nojoin] [-switch]"
@@ -7708,6 +7747,7 @@ msgstr ""
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "envia uma mensagem CTCP (Protocolo Cliente-Cliente)"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
 msgstr "<target> <tipo> [<argumentos>]"
@@ -7727,6 +7767,7 @@ msgstr ""
 msgid "leave and rejoin a channel"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<channel>[,<channel>...]] [<message>]"
 msgstr "[<canal>[,<canal>...]] [<mensagem>]"
 
@@ -7738,6 +7779,7 @@ msgstr ""
 msgid "start a DCC (file transfer or direct chat)"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "chat <nick> || send <nick> <file>"
 msgstr ""
 
@@ -7755,6 +7797,7 @@ msgstr ""
 msgid "remove channel half-operator status from nick(s)"
 msgstr "remover status de semi-operador do(s) apelido(s)"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "<nick> [<nick>...] || * -yes"
 msgstr "<apelido> [<apelido>...]"
@@ -7800,6 +7843,7 @@ msgstr "desligar o servidor"
 msgid "disconnect from one or all IRC servers"
 msgstr "desconectar de um ou todos os servidores IRC"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<server>|-all|-pending [<reason>]]"
 msgstr ""
 
@@ -7825,6 +7869,7 @@ msgstr ""
 msgid "ignore nicks/hosts from servers or channels"
 msgstr "ignorar apelidos/hosts de servidores ou canais"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 msgstr "list || add [re:]<apelido> [<servidor> [<canal>]] || del <número>|-all"
 
@@ -7857,6 +7902,7 @@ msgstr ""
 msgid "invite a nick on a channel"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "<nick> [<nick>...] [<channel>]"
 msgstr "<apelido> [<apelido>...]"
@@ -7869,6 +7915,7 @@ msgstr ""
 msgid "check if a nick is currently on IRC"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<nick> [<nick>...]"
 msgstr "<apelido> [<apelido>...]"
 
@@ -7878,6 +7925,7 @@ msgstr ""
 msgid "join a channel"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "[-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,"
 "<key2>...]]"
@@ -7901,6 +7949,7 @@ msgstr ""
 msgid "kick a user out of a channel"
 msgstr "forçar um usuário a deixar algum(s) canal(is)"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<channel>] <nick> [<reason>]"
 msgstr ""
 
@@ -7934,6 +7983,7 @@ msgstr ""
 msgid "close client-server connection"
 msgstr "fecha conexão cliente-servidor"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "<nick> [<reason>]"
 msgstr "<aplido> <razão>"
@@ -7946,6 +7996,7 @@ msgstr ""
 msgid "send a notice to an invitation-only channel, requesting an invite"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 #| msgid "[-all] [<message>]"
 msgid "<channel> [<message>]"
@@ -7968,6 +8019,7 @@ msgstr ""
 "listar todos os nomes de servidores que são conhecidos pelo servidor "
 "respondendo a pergunta"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "[[<target>] <server_mask>]"
 msgstr "[[<servidor>] <máscara_do_servidor>]"
@@ -7981,6 +8033,7 @@ msgstr ""
 msgid "list channels and their topics"
 msgstr "listar canais e seus tópicos"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || -"
@@ -8061,6 +8114,7 @@ msgstr ""
 msgid "get statistics about the size of the IRC network"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<mask> [<target>]]"
 msgstr "[<máscara> [<target>]]"
 
@@ -8075,6 +8129,7 @@ msgstr "exibe um mapa gráfico da rede IRC"
 msgid "send a CTCP action to the current channel"
 msgstr "envia um CTCP action para o canal atual"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<message>"
 msgstr "<mensagem>"
 
@@ -8084,6 +8139,7 @@ msgstr "mensagem: mensagem para enviar"
 msgid "change channel or user mode"
 msgstr "altera modo de usuário ou canal"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "[<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>] || <nick> [+|-]i|s|w|o"
 msgstr ""
@@ -8131,6 +8187,7 @@ msgstr ""
 msgid "list nicks on channels"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 #| msgid "<nick> <channel>[,<channel>...]"
 msgid "[-count | -x] [<channel>[,<channel>...]]"
@@ -8146,6 +8203,7 @@ msgstr ""
 msgid "change current nick"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[-all] <nick>"
 msgstr ""
 
@@ -8157,6 +8215,7 @@ msgstr ""
 msgid "send notice message to user"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[-server <server>] <target> <text>"
 msgstr ""
 
@@ -8169,6 +8228,7 @@ msgstr ""
 msgid "add a notification for presence or away status of nicks on servers"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr ""
 
@@ -8207,6 +8267,7 @@ msgstr ""
 msgid "get operator privileges"
 msgstr "conseguir privilegios de operador"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<user> <password>"
 msgstr "<user> <password>"
 
@@ -8230,6 +8291,7 @@ msgstr ""
 msgid "send a ping to server"
 msgstr "enviar um ping para o servidor"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "<target1> [<target2>]"
 msgstr "[<máscara> [<target>]]"
@@ -8245,6 +8307,7 @@ msgstr ""
 msgid "answer to a ping message"
 msgstr "responder a mensagem de ping"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<daemon> [<daemon2>]"
 msgstr "<daemon> [<daemon2>]"
 
@@ -8258,6 +8321,7 @@ msgstr ""
 msgid "send a private message to a nick"
 msgstr "enviar mensagem privada a um nick"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "[-noswitch] [-server <server>] <nick>[,<nick>...] [<text>]"
 msgstr "[-server <server>] <nick>[,<nick>...] [<text>]"
@@ -8283,6 +8347,7 @@ msgstr ""
 msgid "send raw data to server without parsing"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[-server <server>] <data>"
 msgstr ""
 
@@ -8294,6 +8359,7 @@ msgstr ""
 msgid "reconnect to server(s)"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<server> [<server>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 msgstr ""
 
@@ -8307,6 +8373,7 @@ msgstr ""
 msgid "tell the server to reload its config file"
 msgstr "requisitar ao servidor para recarregar seu arquivo de configuração"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<option>]"
 msgstr "[<opção>]"
 
@@ -8335,12 +8402,14 @@ msgstr "desligar o servidor"
 msgid "force a user to join channel(s)"
 msgstr "forçar o usuário a entrar em algum(s) canal(is)"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<nick> <channel>[,<channel>...]"
 msgstr "<apelido> <canal>[,<canal>...]"
 
 msgid "change mode on channel, without having operator status"
 msgstr "alterar modo de canal, sem ter status de operador"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "[<channel>] <mode>"
 msgstr "<canal> <modo>"
@@ -8353,6 +8422,7 @@ msgstr ""
 msgid "force a user to use another nick"
 msgstr "forçar um usuário a usar outro apelido"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<nick> <new_nick>"
 msgstr "<apelido> <novo_apelido>"
 
@@ -8367,12 +8437,14 @@ msgstr "forçar um usuário a deixar algum(s) canal(is)"
 msgid "force a user to quit server with a reason"
 msgstr "forçar um usuário a sair do servidor sem uma razão"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<nick> <reason>"
 msgstr "<aplido> <razão>"
 
 msgid "register a new service"
 msgstr "registrar um novo serviço"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<nick> <reserved> <distribution> <type> <reserved> <info>"
 msgstr ""
 
@@ -8384,6 +8456,7 @@ msgstr ""
 msgid "list, add or remove IRC servers"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
 "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
@@ -8447,6 +8520,7 @@ msgstr ""
 msgid "list services currently connected to the network"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<mask> [<type>]]"
 msgstr ""
 
@@ -8458,6 +8532,7 @@ msgstr ""
 msgid "deliver a message to a service"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<service> <text>"
 msgstr ""
 
@@ -8470,6 +8545,7 @@ msgstr ""
 msgid "set real name"
 msgstr "nome do servidor"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<realname>"
 msgstr ""
 
@@ -8479,6 +8555,7 @@ msgstr ""
 msgid "disconnect server links"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<target> <comment>"
 msgstr ""
 
@@ -8490,6 +8567,7 @@ msgstr ""
 msgid "query statistics about server"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "[<query> [<target>]]"
 msgstr "[<máscara> [<target>]]"
@@ -8504,6 +8582,7 @@ msgid ""
 "please join IRC"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<user> [<target> [<channel>]]"
 msgstr ""
 
@@ -8522,6 +8601,7 @@ msgstr ""
 msgid "get/set channel topic"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<channel>] [<topic>|-delete]"
 msgstr ""
 
@@ -8537,6 +8617,7 @@ msgstr ""
 msgid "unban nicks or hosts"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgstr ""
 
@@ -8571,6 +8652,7 @@ msgstr "lista os usuários logados no servidor"
 msgid "give the version info of nick or server (current or specified)"
 msgstr "mostra a versão do nick ou servidor (corrent ou especificado)"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "[<target>|<nick>]"
 msgstr "[<server>|<nick>]"
@@ -8598,6 +8680,7 @@ msgstr ""
 msgid "send a notice to channel ops"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<channel>] <text>"
 msgstr ""
 
@@ -8613,6 +8696,7 @@ msgstr ""
 "envia uma mensagem para todos os usuários conectados que setaram o modo de "
 "usuário 'w' para eles mesmos"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<text>"
 msgstr "<texto>"
 
@@ -8622,6 +8706,7 @@ msgstr "texto: texto a ser enviado"
 msgid "generate a query which returns a list of information"
 msgstr "gera uma pergunta que retorna uma lista de informações"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "[<mask> [o]]"
 msgstr "[<máscara> [o]]"
 
@@ -8633,6 +8718,7 @@ msgstr ""
 msgid "query information about user(s)"
 msgstr "requisitar informações sobre usuário(s)"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "[<target>] [<nick>[,<nick>...]]"
 msgstr "<apelido> [<apelido>...]"
@@ -8652,6 +8738,7 @@ msgstr ""
 msgid "ask for information about a nick which no longer exists"
 msgstr "requisitar informação sobre um apelido que não existe mais"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<nick>[,<nick>...] [<count> [<target>]]"
 msgstr "<apelido>[,<apelido>...] [<contador> [<target>]]"
 
@@ -10976,6 +11063,7 @@ msgstr "%s: \"%s\" => nível %d"
 msgid "logger plugin configuration"
 msgstr "configuração do plugin de registro"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid "list || set <level> || flush || disable"
 msgstr "list || set <nível> || disable"
@@ -11724,6 +11812,7 @@ msgstr "descrição da opção do plugin"
 msgid "list/load/unload scripts"
 msgstr "listar/carregar/descarregar scripts"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
@@ -12090,6 +12179,7 @@ msgstr ""
 msgid "relay control"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
 "stop <name> || raw || tlscertkey"
@@ -12792,6 +12882,7 @@ msgstr ""
 msgid "WeeChat script manager"
 msgstr "site do WeeChat"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "list [-o|-ol|-i|-il] || search <text> || show <script> || load|unload|reload "
 "<script> [<script>...] || autoload|noautoload|toggleautoload <script> "
@@ -13231,6 +13322,7 @@ msgstr "Corretor ortográfico está desabilitado"
 msgid "spell plugin configuration"
 msgstr "configuração do plugin aspell"
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
 "enable|disable|toggle || listdict || setdict -|<dict>[,<dict>...] || deldict "
@@ -13607,6 +13699,7 @@ msgstr ""
 msgid "manage triggers, the Swiss Army knife for WeeChat"
 msgstr ""
 
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
@@ -14351,14 +14444,3 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
-
-#~ msgid "nickname"
-#~ msgstr "apelido"
-
-#, fuzzy
-#~ msgid "color for selected line"
-#~ msgstr "seção de configuração"
-
-#, fuzzy
-#~ msgid "background color for selected line"
-#~ msgstr "cor do texto da linha do cliente selecionada"

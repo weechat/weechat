@@ -623,6 +623,7 @@ fset_command_init ()
     weechat_hook_command (
         "fset",
         N_("fast set WeeChat and plugins options"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("-bar"
            " || -refresh"
            " || -up|-down [<number>]"

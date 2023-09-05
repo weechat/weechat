@@ -7821,6 +7821,7 @@ command_init ()
     hook_command (
         NULL, "allbuf",
         N_("execute a command on all buffers"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<command>"),
         N_("command: command to execute (or text to send to buffer if "
            "command does not start with '/')\n"
@@ -7832,6 +7833,7 @@ command_init ()
     hook_command (
         NULL, "away",
         N_("set or remove away status"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-all] [<message>]"),
         N_("   -all: set or remove away status on all connected servers\n"
            "message: message for away (if no message is given, away status is "
@@ -7840,6 +7842,7 @@ command_init ()
     hook_command (
         NULL, "bar",
         N_("manage bars"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list|listfull|listitems"
            " || add <name> <type>[,<conditions>] <position> <size> <separator> "
            "<item1>[,<item2>...]"
@@ -7915,6 +7918,7 @@ command_init ()
     hook_command (
         NULL, "buffer",
         N_("manage buffers"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list"
            " || add [-free] [-switch] <name>"
            " || clear [<number>|<name>|-merged|-all [<number>|<name>...]]"
@@ -8050,6 +8054,7 @@ command_init ()
     hook_command (
         NULL, "color",
         N_("define color aliases and display palette of colors"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("alias <color> <name>"
            " || unalias <color>"
            " || reset"
@@ -8091,6 +8096,7 @@ command_init ()
     hook_command (
         NULL, "50000|command",
         N_("launch explicit WeeChat or plugin command"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-buffer <name>] <plugin> <command>"),
         N_("-buffer: execute the command on this buffer\n"
            " plugin: execute the command from this plugin; 'core' for a "
@@ -8106,6 +8112,7 @@ command_init ()
         NULL, "cursor",
         N_("free movement of cursor on screen to execute actions on specific "
            "areas of screen"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("go chat|<bar> [top_left|top_right|bottom_left|bottom_right]"
            " || go <x>,<y>"
            " || move up|down|left|right|"
@@ -8157,6 +8164,7 @@ command_init ()
     hook_command (
         NULL, "debug",
         N_("debug functions"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list"
            " || set <plugin> <level>"
            " || dump|hooks [<plugin>]"
@@ -8235,6 +8243,7 @@ command_init ()
     hook_command (
         NULL, "eval",
         N_("evaluate expression"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-n|-s] [-d] <expression>"
            " || [-n] [-d [-d]] -c <expression1> <operator> <expression2>"),
         N_("        -n: display result without sending it to buffer "
@@ -8411,6 +8420,7 @@ command_init ()
         NULL, "filter",
         N_("filter messages in buffers, to hide/show them according to tags or "
            "regex"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list"
            " || enable|disable|toggle [<name>|@]"
            " || add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>"
@@ -8500,6 +8510,7 @@ command_init ()
     hook_command (
         NULL, "help",
         N_("display help about commands and options"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"),
         N_("    -list: list commands, by plugin (without argument, this list is "
            "displayed)\n"
@@ -8514,6 +8525,7 @@ command_init ()
     hook_command (
         NULL, "history",
         N_("show buffer command history"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("clear || <value>"),
         N_("clear: clear history\n"
            "value: number of history entries to show"),
@@ -8522,6 +8534,7 @@ command_init ()
     hook_command (
         NULL, "hotlist",
         N_("manage hotlist"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("add [low|message|private|highlight]"
            " || clear [<level>]"
            " || remove"
@@ -8549,6 +8562,7 @@ command_init ()
     hook_command (
         NULL, "50000|input",
         N_("functions for command line"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<action> [<arguments>]"),
         N_("list of actions:\n"
            "  return: simulate key \"enter\"\n"
@@ -8635,6 +8649,7 @@ command_init ()
     hook_command (
         NULL, "item",
         N_("manage custom bar items"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list"
            " || add|addreplace <name> \"<conditions>\" \"<content>\""
            " || rename <name> <new_name>"
@@ -8698,6 +8713,7 @@ command_init ()
     hook_command (
         NULL, "key",
         N_("bind/unbind keys"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[list|listdefault|listdiff] [<context>]"
            " || bind <key> [<command> [<args>]]"
            " || bindctxt <context> <key> [<command> [<args>]]"
@@ -8796,6 +8812,7 @@ command_init ()
     hook_command (
         NULL, "layout",
         N_("manage buffers/windows layouts"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("store [<name>] [buffers|windows]"
            " || apply [<name>] [buffers|windows]"
            " || leave"
@@ -8831,6 +8848,7 @@ command_init ()
     hook_command (
         NULL, "mouse",
         N_("mouse control"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("enable|disable|toggle [<delay>]"),
         N_(" enable: enable mouse\n"
            "disable: disable mouse\n"
@@ -8850,6 +8868,7 @@ command_init ()
     hook_command (
         NULL, "mute",
         N_("execute a command silently"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-core | -current | -buffer <name>] <command>"),
         N_("   -core: no output on WeeChat core buffer\n"
            "-current: no output on current buffer\n"
@@ -8876,6 +8895,7 @@ command_init ()
     hook_command (
         NULL, "plugin",
         N_("list/load/unload plugins"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list [-o|-ol|-i|-il|<name>]"
            " || listfull [<name>]"
            " || load <filename> [<arguments>]"
@@ -8912,6 +8932,7 @@ command_init ()
     hook_command (
         NULL, "print",
         N_("display text on a buffer"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-buffer <number>|<name>] [-newbuffer <name>] [-free] [-switch] "
            "[-core|-current] [-y <line>] [-escape] [-date <date>] "
            "[-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]"
@@ -8978,6 +8999,7 @@ command_init ()
     hook_command (
         NULL, "proxy",
         N_("manage proxies"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list"
            " || add <name> <type> <address> <port> [<username> [<password>]]"
            " || del <name>|-all"
@@ -9014,6 +9036,7 @@ command_init ()
     hook_command (
         NULL, "quit",
         N_("quit WeeChat"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-yes] [<arguments>]"),
         N_("     -yes: required if option \"weechat.look.confirm_quit\" "
            "is enabled\n"
@@ -9030,6 +9053,7 @@ command_init ()
     hook_command (
         NULL, "reload",
         N_("reload configuration files from disk"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<file> [<file>...]]"),
         N_("file: configuration file to reload (without extension \".conf\")\n"
            "\n"
@@ -9039,6 +9063,7 @@ command_init ()
     hook_command (
         NULL, "repeat",
         N_("execute a command several times"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-interval <delay>[<unit>]] <count> <command>"),
         N_("  delay: delay between execution of commands (minimum: 1 millisecond)\n"
            "   unit: optional, values are:\n"
@@ -9079,6 +9104,7 @@ command_init ()
     hook_command (
         NULL, "reset",
         N_("reset config options"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<option>"
            " || -mask <option>"),
         N_("option: name of an option\n"
@@ -9096,6 +9122,7 @@ command_init ()
     hook_command (
         NULL, "save",
         N_("save configuration files to disk"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<file> [<file>...]]"),
         N_("file: configuration file to save (without extension \".conf\")\n"
            "\n"
@@ -9109,6 +9136,7 @@ command_init ()
         NULL, "secure",
         N_("manage secured data (passwords or private data encrypted in file "
            "sec.conf)"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("passphrase <passphrase>|-delete"
            " || decrypt <passphrase>|-discard"
            " || set <name> <value>"
@@ -9168,6 +9196,7 @@ command_init ()
     hook_command (
         NULL, "set",
         N_("set config options and environment variables"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<option> [<value>]]"
            " || diff [<option> [<option>...]]"
            " || env [<variable> [<value>]]"),
@@ -9208,8 +9237,8 @@ command_init ()
     hook_command (
         NULL, "sys",
         N_("system actions"),
-        N_("get rlimit|rusage"
-            " || suspend"),
+        "get rlimit|rusage"
+        " || suspend",
         N_("    get: display system info\n"
            " rlimit: display resource limits "
            "(see /help weechat.startup.sys_rlimit and \"man getrlimit\")\n"
@@ -9222,6 +9251,7 @@ command_init ()
     hook_command (
         NULL, "toggle",
         N_("toggle value of a config option"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<option> [<value> [<value>...]]"),
         N_("option: name of an option\n"
            " value: possible values for the option (values are split like the "
@@ -9258,6 +9288,7 @@ command_init ()
     hook_command (
         NULL, "unset",
         N_("unset/reset config options"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<option>"
            " || -mask <option>"),
         N_("option: name of an option\n"
@@ -9279,6 +9310,7 @@ command_init ()
         NULL, "upgrade",
         N_("save WeeChat session and reload the WeeChat binary without "
            "disconnecting from servers"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-yes] [<path_to_binary>|-save|-quit]"),
         N_("          -yes: required if option \"weechat.look.confirm_upgrade\" "
            "is enabled\n"
@@ -9356,6 +9388,7 @@ command_init ()
     hook_command (
         NULL, "wait",
         N_("schedule a command execution in future"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<number>[<unit>] <command>"),
         N_(" number: amount of time to wait (minimum: 1 millisecond)\n"
            "   unit: optional, values are:\n"
@@ -9383,6 +9416,7 @@ command_init ()
     hook_command (
         NULL, "window",
         N_("manage windows"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         /* xgettext:no-c-format */
         N_("list"
            " || -1|+1|b#|up|down|left|right [-window <number>]"
