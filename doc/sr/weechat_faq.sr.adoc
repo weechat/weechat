@@ -823,18 +823,16 @@ link:weechat_user.sr.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 
 Ако само желите да искључите истицања, треба да је поставите на 2.
 
-// TRANSLATION MISSING
-For the current buffer:
+За текући бафер:
 
 ----
-/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add пера:2,мика:2
 ----
 
-// TRANSLATION MISSING
-For all channels on server "libera":
+За све канале на серверу „libera”:
 
 ----
-/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add пера:2,мика:2
 ----
 
 [[irc_target_buffer]]
@@ -953,10 +951,8 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 Можете да следите исте савете као за <<memory_usage,меморију>>, као и следеће:
 
-// TRANSLATION MISSING
-* Сакријте „nicklist” траку: `/bar hide nicklist` (key: kbd:[Alt+Shift+N]).
-// TRANSLATION MISSING
-* Disable "buflist": `/buflist disable` (key: kbd:[Alt+Shift+B]).
+* Сакријте „nicklist” траку: `/bar hide nicklist` (тастер: kbd:[Alt+Shift+N]).
+* Искључите „buflist”: `/buflist disable` (тастер: kbd:[Alt+Shift+B]).
 * Уклоните приказ секунди из времена у статусној траци: `+/set weechat.look.item_time_format "%H:%M"+` (ово је и подразумевана вредност).
 * Искључите проверу неисправно написаних речи у командној линији у реалном времену (ако сте је укључили): `+/set spell.check.real_time off+`.
 * Поставите променљиву _TZ_ (на пример: `export TZ="Europe/Paris"`), тиме спречавате чест приступ фајлу _/etc/localtime_.
@@ -981,9 +977,8 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 /set irc.ctcp.ping ""
 ----
 
-// TRANSLATION MISSING
-With WeeChat < 4.1.0, other CTCP queries were replied by default and must be
-disabled as well:
+Са WeeChat < 4.1.0, на остале CTCP упите се подразумевано одговарало и такође морају
+да се искључе:
 
 ----
 /set irc.ctcp.finger ""
