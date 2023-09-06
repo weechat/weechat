@@ -4160,7 +4160,7 @@ die folgenden zusätzlichen Variablen sind verfügbar:
 [width="100%",cols="2,4,8",options="header"]
 |===
 | Variable           | Beschreibung                        | Wert/Beispiel
-| `+${clientinfo}+`  | Liste der CTCP Antworten            | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| `+${clientinfo}+`  | Liste der CTCP Antworten            | `+ACTION DCC CLIENTINFO PING SOURCE TIME VERSION+`
 | `+${version}+`     | WeeChat Version                     | `+4.1.0-dev+`
 | `+${versiongit}+`  | WeeChat Version + Git version ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
 | `+${git}+`         | Git Version ^(1)^                   | `+v4.0.0-51-g8f98b922a+`
@@ -4183,11 +4183,9 @@ Die Standard-CTCP-Antworten sind:
 [width="100%",cols="2,4,8",options="header"]
 |===
 | CTCP       | Antwortformat                 | Beispiel
-| CLIENTINFO | `+${clientinfo}+`             | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
+| CLIENTINFO | `+${clientinfo}+`             | `+ACTION DCC CLIENTINFO PING SOURCE TIME VERSION+`
 | SOURCE     | `+${download}+`               | `+https://weechat.org/download/+`
 | TIME       | `+${time}+`                   | `+Sat, 08 Jul 2023 21:11:19 +0200+`
-| USERINFO   | `+${username} (${realname})+` | `+Name (John Doe)+`
 | VERSION    | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
 |===
 

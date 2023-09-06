@@ -3870,7 +3870,7 @@ CTCP одговори се израчунавају (погледајте ком
 [width="100%", cols="2,4,8", options="header"]
 |===
 | Променљива         | Опис                                | Вредност/пример
-| `+${clientinfo}+`  | Листа подржаних CTCP                | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| `+${clientinfo}+`  | Листа подржаних CTCP                | `+ACTION DCC CLIENTINFO PING SOURCE TIME VERSION+`
 | `+${version}+`     | Верзија програма WeeChat            | `+4.1.0-dev+`
 | `+${versiongit}+`  | WeeChat верзија + Git верзија ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
 | `+${git}+`         | Git верзија ^(1)^                   | `+v4.0.0-51-g8f98b922a+`
@@ -3891,11 +3891,9 @@ CTCP одговори се израчунавају (погледајте ком
 [width="100%", cols="2,4,8", options="header"]
 |===
 | CTCP       | Формат одговора               | Пример
-| CLIENTINFO | `+${clientinfo}+`             | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
+| CLIENTINFO | `+${clientinfo}+`             | `+ACTION DCC CLIENTINFO PING SOURCE TIME VERSION+`
 | SOURCE     | `+${download}+`               | `+https://weechat.org/download/+`
 | TIME       | `+${time}+`                   | `+Суб, 08 Јул 2023 21:11:19 +0200+`
-| USERINFO   | `+${username} (${realname})+` | `+име (Пера Перић)+`
 | VERSION    | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
 |===
 
