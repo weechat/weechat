@@ -18027,8 +18027,7 @@ int weechat_hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2
 * _hdata_: показивач на hdata
 * _pointer1_: показивач на први објекат програма WeeChat/додатка
 * _pointer2_: показивач на други објекат програма WeeChat/додатка
-// TRANSLATION MISSING
-* _name_: variable name or path to a variable name; у случају низова, име може
+* _name_: назив променљиве или путања до назива променљиве; у случају низова, име може
   бити „N|име” где је N индекс низа (који почиње од 0), на пример: „2|име”
 * _case_sensitive_: 1 за поређење стрингова које разликује величину слова, у супротном 0
 

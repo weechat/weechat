@@ -1459,14 +1459,13 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Ctrl+↓] | Позив наредне команде/поруке у глобалној историји (заједничкој за све бафере). | `+/input history_global_next+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_system]]
-==== System
+==== Систем
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Тастер       | Опис | Команда
-| kbd:[Ctrl+z] | Suspend WeeChat process. | `+/sys suspend+`
+| kbd:[Ctrl+z] | Суспендује WeeChat процес. | `+/sys suspend+`
 |===
 
 [[key_bindings_buffers]]
@@ -3023,8 +3022,7 @@ include::{autogendir}/autogen_user_options.sr.adoc[tag=sec_options]
 | bar        | <<command_weechat_bar,/bar>>               +
                /set weechat.bar.*                         | Опције трака.
 | layout     | <<command_weechat_layout,/layout>>         | Распореди.
-// TRANSLATION MISSING
-| buffer     | <<command_weechat_buffer,/buffer setauto>> | Properties auto-applied on buffers when they are opened.
+| buffer     | <<command_weechat_buffer,/buffer setauto>> | Особине које се аутоматски примењују на бафере када се отварају.
 | notify     | <<command_weechat_buffer,/buffer notify>>  | Нивои обавештавања за бафере (у одељку је могуће додавање/уклањање опција).
 | filter     | <<command_weechat_filter,/filter>>         | Филтери.
 | key        | <<command_weechat_key,/key>>               | Тастери у подразумеваном контексту.
