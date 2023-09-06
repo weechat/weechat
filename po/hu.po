@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-05 11:20+0200\n"
-"PO-Revision-Date: 2023-09-05 11:21+0200\n"
+"POT-Creation-Date: 2023-09-06 19:11+0200\n"
+"PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -6439,10 +6439,6 @@ msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to resolve local address of server socket: error %d %s"
-msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to create DCC"
 msgstr "%s nem sikerült a szervert létrehozni\n"
 
@@ -7056,7 +7052,7 @@ msgstr ""
 "kilépő_üzenet: kilépő üzenet (csak a többi felhasználó látja)"
 
 #, fuzzy
-msgid "start a DCC (file transfer or direct chat)"
+msgid "start a DCC (passive file transfer or direct chat)"
 msgstr "DCC (fájl vagy beszélgetés) indítása vagy beszélgetés lezárása"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
@@ -13625,16 +13621,16 @@ msgstr "nem vár ACK válaszra fájl küldésekor"
 
 #, fuzzy
 msgid ""
-"IP or DNS address used for sending files/chats (if empty, local interface IP "
-"is used)"
+"IP or DNS address used for sending and passively receiving files/chats (if "
+"empty, local interface IP is used)"
 msgstr "kimenő dcc forgalom IP/DNS-címe (ha üres, a helyi interfész IP-címe)"
 
 #, fuzzy
 msgid ""
-"restricts outgoing files/chats to use only ports in the given range (useful "
-"for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, "
-"empty value means any port, it's recommended to use ports greater than 1024, "
-"because only root can use ports below 1024)"
+"restricts outgoing files/chats and incoming/passive files to use only ports "
+"in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
+"port range, ie. 5000-5015, empty value means any port, it's recommended to "
+"use ports greater than 1024, because only root can use ports below 1024)"
 msgstr ""
 "korlátozza a dcc-t, hogy csak egy bizonyos tartományban lévő portokat "
 "használja (NAT esetén hasznos) (szintaxis: egyetlen port, pl. 5000 vagy egy "
@@ -13787,6 +13783,10 @@ msgstr "%s DCC: nem sikerült csatornát nyitni a fájlküldéshez\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
+
+#, fuzzy, c-format
+msgid "%s%s: encountered unexpected xfer type (%d)"
+msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
 
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-05 11:20+0200\n"
-"PO-Revision-Date: 2023-09-05 11:21+0200\n"
+"POT-Creation-Date: 2023-09-06 19:11+0200\n"
+"PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -8351,10 +8351,6 @@ msgstr ""
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s%s: \"%s\" コマンドはサーババッファでは実行できません"
 
-#, c-format
-msgid "%s%s: unable to resolve local address of server socket: error %d %s"
-msgstr "%s%s: サーバソケットのローカルアドレスを解決できません: エラー %d %s"
-
 #, fuzzy, c-format
 #| msgid "%s%s: unable to create socket"
 msgid "%s%s: unable to create DCC"
@@ -9066,7 +9062,9 @@ msgstr ""
 "channel: チャンネル名\n"
 "message: 退出メッセージ (他のユーザに宛てる)"
 
-msgid "start a DCC (file transfer or direct chat)"
+#, fuzzy
+#| msgid "start a DCC (file transfer or direct chat)"
+msgid "start a DCC (passive file transfer or direct chat)"
 msgstr "DCC の開始 (ファイル転送かダイレクトチャット)"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
@@ -16353,18 +16351,28 @@ msgstr "送信パケットのブロックサイズ、バイト単位"
 msgid "does not wait for ACK when sending file"
 msgstr "ファイル送信時に肯定応答を待たない"
 
+#, fuzzy
+#| msgid ""
+#| "IP or DNS address used for sending files/chats (if empty, local interface "
+#| "IP is used)"
 msgid ""
-"IP or DNS address used for sending files/chats (if empty, local interface IP "
-"is used)"
+"IP or DNS address used for sending and passively receiving files/chats (if "
+"empty, local interface IP is used)"
 msgstr ""
 "ファイル/チャットの送信に使う IP か DNS アドレス (空の場合、ローカルインター"
 "フェース IP を使う)"
 
+#, fuzzy
+#| msgid ""
+#| "restricts outgoing files/chats to use only ports in the given range "
+#| "(useful for NAT) (syntax: a single port, ie. 5000 or a port range, ie. "
+#| "5000-5015, empty value means any port, it's recommended to use ports "
+#| "greater than 1024, because only root can use ports below 1024)"
 msgid ""
-"restricts outgoing files/chats to use only ports in the given range (useful "
-"for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, "
-"empty value means any port, it's recommended to use ports greater than 1024, "
-"because only root can use ports below 1024)"
+"restricts outgoing files/chats and incoming/passive files to use only ports "
+"in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
+"port range, ie. 5000-5015, empty value means any port, it's recommended to "
+"use ports greater than 1024, because only root can use ports below 1024)"
 msgstr ""
 "ファイル/チャットを送信する際に、与えられた範囲のポートを使う (NAT で便利) こ"
 "とを強制 (構文: 単一のポートを指定する場合は 5000 等、ポート範囲の場合は "
@@ -16523,6 +16531,11 @@ msgstr "%s%s: ファイル送信用にソケットを作れません: エラー 
 #, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できません: エラー %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to connect: unexpected error (%d)"
+msgid "%s%s: encountered unexpected xfer type (%d)"
+msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"

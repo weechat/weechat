@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-05 11:20+0200\n"
-"PO-Revision-Date: 2023-09-05 11:21+0200\n"
+"POT-Creation-Date: 2023-09-06 19:11+0200\n"
+"PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -8066,11 +8066,6 @@ msgstr ""
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s%s: o comando \"%s\" não pode ser executado num buffer de servidor"
 
-#, c-format
-msgid "%s%s: unable to resolve local address of server socket: error %d %s"
-msgstr ""
-"%s%s: não foi possível resolver o endereço do socket do servidor: erro %d %s"
-
 #, fuzzy, c-format
 #| msgid "%s%s: unable to create socket"
 msgid "%s%s: unable to create DCC"
@@ -8771,7 +8766,9 @@ msgstr ""
 "   canal: nome do canal\n"
 "mensagem: mensagem de saída (mostrada aos outros utilizadores)"
 
-msgid "start a DCC (file transfer or direct chat)"
+#, fuzzy
+#| msgid "start a DCC (file transfer or direct chat)"
+msgid "start a DCC (passive file transfer or direct chat)"
 msgstr "iniciar um DCC (transferência de ficheiro ou chat direto)"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
@@ -16053,18 +16050,28 @@ msgstr "tamanho do bloco dos pacotes enviados, em bytes"
 msgid "does not wait for ACK when sending file"
 msgstr "não aguardar por ACK ao enviar ficheiros"
 
+#, fuzzy
+#| msgid ""
+#| "IP or DNS address used for sending files/chats (if empty, local interface "
+#| "IP is used)"
 msgid ""
-"IP or DNS address used for sending files/chats (if empty, local interface IP "
-"is used)"
+"IP or DNS address used for sending and passively receiving files/chats (if "
+"empty, local interface IP is used)"
 msgstr ""
 "IP ou endereço DNS usado para enviar ficheiros/chats (se vazio, é usado o IP "
 "da interface local)"
 
+#, fuzzy
+#| msgid ""
+#| "restricts outgoing files/chats to use only ports in the given range "
+#| "(useful for NAT) (syntax: a single port, ie. 5000 or a port range, ie. "
+#| "5000-5015, empty value means any port, it's recommended to use ports "
+#| "greater than 1024, because only root can use ports below 1024)"
 msgid ""
-"restricts outgoing files/chats to use only ports in the given range (useful "
-"for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, "
-"empty value means any port, it's recommended to use ports greater than 1024, "
-"because only root can use ports below 1024)"
+"restricts outgoing files/chats and incoming/passive files to use only ports "
+"in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
+"port range, ie. 5000-5015, empty value means any port, it's recommended to "
+"use ports greater than 1024, because only root can use ports below 1024)"
 msgstr ""
 "restringir ficheiros/chat enviados a usar apenas as portas do intervalo "
 "indicado (útil para NAT) (sintaxe: um única porta, i.e. 5000 ou um intervalo "
@@ -16230,6 +16237,11 @@ msgstr "%s%s: não foi possível criar socket para enviar ficheiro: erro %d %s"
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr ""
 "%s%s: não foi possível definir a opção \"nonblock\" do socket: erro %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to connect: unexpected error (%d)"
+msgid "%s%s: encountered unexpected xfer type (%d)"
+msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"

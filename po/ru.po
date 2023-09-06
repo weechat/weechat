@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-05 11:20+0200\n"
-"PO-Revision-Date: 2023-09-05 11:21+0200\n"
+"POT-Creation-Date: 2023-09-06 19:11+0200\n"
+"PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -6479,10 +6479,6 @@ msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to resolve local address of server socket: error %d %s"
-msgstr "%s DCC: не могу установить неблокирующий режим для сокета\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to create DCC"
 msgstr "%s не могу создать сервер\n"
 
@@ -7099,7 +7095,7 @@ msgstr ""
 "сообщение: причина покидания (отображается другим пользователям)"
 
 #, fuzzy
-msgid "start a DCC (file transfer or direct chat)"
+msgid "start a DCC (passive file transfer or direct chat)"
 msgstr "начинает DCC (передачу файла или чат) или закрывает чат"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
@@ -13662,18 +13658,18 @@ msgstr "не ожидать ACK при отправке файла"
 
 #, fuzzy
 msgid ""
-"IP or DNS address used for sending files/chats (if empty, local interface IP "
-"is used)"
+"IP or DNS address used for sending and passively receiving files/chats (if "
+"empty, local interface IP is used)"
 msgstr ""
 "IP адрес или домен, используемый для исходящих DCC соединений (пустое "
 "значение означает текущий IP адрес)"
 
 #, fuzzy
 msgid ""
-"restricts outgoing files/chats to use only ports in the given range (useful "
-"for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, "
-"empty value means any port, it's recommended to use ports greater than 1024, "
-"because only root can use ports below 1024)"
+"restricts outgoing files/chats and incoming/passive files to use only ports "
+"in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a "
+"port range, ie. 5000-5015, empty value means any port, it's recommended to "
+"use ports greater than 1024, because only root can use ports below 1024)"
 msgstr ""
 "привязывает исходящие DCС соединения к определённому интервалу портов "
 "(полезно для NAT) (синтаксис: определённый порт, например 5000, или интервал "
@@ -13825,6 +13821,10 @@ msgstr "%s DCC: не могу создать сокет для отправки 
 #, fuzzy, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s DCC: не могу установить неблокирующий режим для сокета\n"
+
+#, fuzzy, c-format
+msgid "%s%s: encountered unexpected xfer type (%d)"
+msgstr "%s DCC: не могу соединиться с отправителем\n"
 
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
