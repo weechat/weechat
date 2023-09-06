@@ -570,7 +570,7 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
         return NULL;
 
     /*
-     * $clientinfo: supported CTCP, example with default config:
+     * ${clientinfo}: supported CTCP, example with default config:
      *   ACTION CLIENTINFO DCC PING SOURCE TIME VERSION
      */
     info = irc_ctcp_get_supported_ctcp (server);
@@ -584,26 +584,26 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
     info_version_git = weechat_info_get ("version_git", "");
 
     /*
-     * $version: WeeChat version, examples:
-     *   0.3.9
-     *   0.4.0-dev
+     * ${version}: WeeChat version, examples:
+     *   4.0.0
+     *   4.1.0-dev
      */
     if (info_version)
         weechat_hashtable_set (extra_vars, "version", info_version);
 
     /*
-     * $git: git version (output of "git describe" for a development version
+     * ${git}: git version (output of "git describe" for a development version
      * only, empty string if unknown), example:
-     *   v0.3.9-104-g7eb5cc4
+     *   v4.0.0-51-g8f98b922a
      */
     if (info_version_git)
         weechat_hashtable_set (extra_vars, "git", info_version_git);
 
     /*
-     * $versiongit: WeeChat version + git version (if known), examples:
-     *   0.3.9
-     *   0.4.0-dev
-     *   0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+     * ${versiongit}: WeeChat version + git version (if known), examples:
+     *   4.0.0
+     *   4.1.0-dev
+     *   4.1.0-dev (git: v4.0.0-51-g8f98b922a)
      */
     if (info_version && info_version_git)
     {
@@ -614,8 +614,8 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
     }
 
     /*
-     * $compilation: compilation date, example:
-     *   Dec 16 2012
+     * ${compilation}: compilation date, example:
+     *   Jul  8 2023 20:14:23
      */
     info = weechat_info_get ("date", "");
     if (info)
@@ -625,8 +625,8 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
     }
 
     /*
-     * $osinfo: info about OS, example:
-     *   Linux 2.6.32-5-amd64 / x86_64
+     * ${osinfo}: info about OS, example:
+     *   Linux 5.10.0-23-amd64 / x86_64
      */
     buf_uname = (struct utsname *)malloc (sizeof (struct utsname));
     if (buf_uname)
@@ -645,7 +645,7 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
     }
 
     /*
-     * $site: WeeChat website, example:
+     * ${site}: WeeChat website, example:
      *   https://weechat.org/
      */
     info = weechat_info_get ("weechat_site", "");
@@ -656,7 +656,7 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
     }
 
     /*
-     * $download: WeeChat download page, example:
+     * ${download}: WeeChat download page, example:
      *   https://weechat.org/download/
      */
     info = weechat_info_get ("weechat_site_download", "");
@@ -667,8 +667,8 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
     }
 
     /*
-     * $time: local date/time of user, example:
-     *   Sun, 16 Dec 2012 10:40:48 +0100
+     * ${time}: local date/time of user, example:
+     *   Sat, 08 Jul 2023 21:11:19 +0200
      */
     now = time (NULL);
     local_time = localtime (&now);
@@ -681,8 +681,8 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
     weechat_hashtable_set (extra_vars, "time", buf);
 
     /*
-     * $username: user name, example:
-     *   name
+     * ${username}: user name, example:
+     *   john
      */
     username = irc_server_eval_expression (
         server,
@@ -694,8 +694,8 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
     }
 
     /*
-     * $realname: real name, example:
-     *   John doe
+     * ${realname}: real name, example:
+     *   John Doe
      */
     realname = irc_server_eval_expression (
         server,
