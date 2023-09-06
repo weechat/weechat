@@ -6233,8 +6233,7 @@ irc_server_xfer_send_ready_cb (const void *pointer, void *data,
                         irc_server_sendf (
                             ptr_server,
                             IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                            "PRIVMSG %s :\01DCC SEND %s%s%s "
-                            "%s %d %s %s\01",
+                            "PRIVMSG %s :\01DCC SEND %s%s%s %s %d %s %s\01",
                             weechat_infolist_string (infolist, "remote_nick"),
                             (spaces_in_name) ? "\"" : "",
                             filename,
@@ -6251,8 +6250,7 @@ irc_server_xfer_send_ready_cb (const void *pointer, void *data,
                         irc_server_sendf (
                             ptr_server,
                             IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                            "PRIVMSG %s :\01DCC SEND %s%s%s "
-                            "%s %d %s\01",
+                            "PRIVMSG %s :\01DCC SEND %s%s%s %s %d %s\01",
                             weechat_infolist_string (infolist, "remote_nick"),
                             (spaces_in_name) ? "\"" : "",
                             filename,

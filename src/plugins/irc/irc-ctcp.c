@@ -779,7 +779,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         /*
          * DCC SEND <filename> <address> <port> <filesize> [<token>]
          *          ^^^^^^^^^^
-         **/
+         */
         pos_file = dcc_args;
         while (pos_file[0] == ' ')
         {
@@ -787,7 +787,10 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         }
         if (pos_file[0] == '"')
         {
-            /* The file name is wrapped in double-quotes; find the terminating double-quote. */
+            /*
+             * the file name is wrapped in double-quotes; find the terminating
+             * double-quote
+             */
             pos = strrchr (pos_file, '"');
             if (!pos || (pos == pos_file))
             {
@@ -820,7 +823,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         /*
          * DCC SEND <filename> <address> <port> <filesize> [<token>]
          *                     ^^^^^^^^^
-         **/
+         */
         pos_addr = pos;
         while (pos_addr[0] == ' ')
         {
@@ -842,7 +845,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         /*
          * DCC SEND <filename> <address> <port> <filesize> [<token>]
          *                               ^^^^^^
-         **/
+         */
         pos_port = pos;
         while (pos_port[0] == ' ')
         {
@@ -864,7 +867,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         /*
          * DCC SEND <filename> <address> <port> <filesize> [<token>]
          *                                      ^^^^^^^^^^
-         **/
+         */
         pos_size = pos;
         while (pos_size[0] == ' ')
         {
@@ -876,7 +879,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             /*
              * DCC SEND <filename> <address> <port> <filesize> [<token>]
              *                                                 ^^^^^^^^^
-             **/
+             */
             pos[0] = '\0';
             pos_token = ++pos;
             while (pos_token[0] == ' ')
@@ -952,7 +955,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         /*
          * DCC RESUME <filename> <port> <start_resume> [<token>]
          *            ^^^^^^^^^^
-         **/
+         */
         pos_file = dcc_args;
         while (pos_file[0] == ' ')
         {
@@ -960,7 +963,10 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         }
         if (pos_file[0] == '"')
         {
-            /* The file name is wrapped in double-quotes; find the terminating double-quote. */
+            /*
+             * the file name is wrapped in double-quotes; find the terminating
+             * double-quote
+             */
             pos = strrchr (pos_file, '"');
             if (!pos || (pos == pos_file))
             {
@@ -993,7 +999,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         /*
          * DCC RESUME <filename> <port> <start_resume> [<token>]
          *                       ^^^^^^
-         **/
+         */
         pos_port = pos;
         while (pos_port[0] == ' ')
         {
@@ -1015,7 +1021,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         /*
          * DCC RESUME <filename> <port> <start_resume> [<token>]
          *                              ^^^^^^^^^^^^^^
-         **/
+         */
         pos_start_resume = pos;
         while (pos_start_resume[0] == ' ')
         {
@@ -1027,7 +1033,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             /*
              * DCC RESUME <filename> <port> <start_resume> [<token>]
              *                                             ^^^^^^^^^
-             **/
+             */
             pos[0] = '\0';
             pos_token = ++pos;
             while (pos_token[0] == ' ')
@@ -1095,7 +1101,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         /*
          * DCC ACCEPT <filename> <port> <start_resume> [<token>]
          *            ^^^^^^^^^^
-         **/
+         */
         pos_file = dcc_args;
         while (pos_file[0] == ' ')
         {
@@ -1103,7 +1109,10 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         }
         if (pos_file[0] == '"')
         {
-            /* The file name is wrapped in double-quotes; find the terminating double-quote. */
+            /*
+             * the file name is wrapped in double-quotes; find the terminating
+             * double-quote
+             */
             pos = strrchr (pos_file, '"');
             if (!pos || (pos == pos_file))
             {
@@ -1136,7 +1145,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         /*
          * DCC ACCEPT <filename> <port> <start_resume> [<token>]
          *                       ^^^^^^
-         **/
+         */
         pos_port = pos;
         while (pos_port[0] == ' ')
         {
@@ -1158,7 +1167,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
         /*
          * DCC ACCEPT <filename> <port> <start_resume> [<token>]
          *                              ^^^^^^^^^^^^^^
-         **/
+         */
         pos_start_resume = pos;
         while (pos_start_resume[0] == ' ')
         {
@@ -1170,7 +1179,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             /*
              * DCC ACCEPT <filename> <port> <filesize> [<token>]
              *                                         ^^^^^^^^^
-             **/
+             */
             pos[0] = '\0';
             pos_token = ++pos;
             while (pos_token[0] == ' ')
