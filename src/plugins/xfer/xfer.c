@@ -1743,7 +1743,7 @@ xfer_print_log ()
         weechat_log_printf ("  local_address_length. . : %d",    ptr_xfer->local_address_length);
         weechat_log_printf ("  local_address_str . . . : '%s'" , ptr_xfer->local_address_str);
         weechat_log_printf ("  remote_address. . . . . : 0x%lx", ptr_xfer->remote_address);
-        weechat_log_printf ("  remote_address_length . : %d",   ptr_xfer->remote_address_length);
+        weechat_log_printf ("  remote_address_length . : %d",    ptr_xfer->remote_address_length);
         weechat_log_printf ("  remote_address_str. . . : '%s'",  ptr_xfer->remote_address_str);
         weechat_log_printf ("  port. . . . . . . . . . : %d",    ptr_xfer->port);
         weechat_log_printf ("  token . . . . . . . . . : %s",    ptr_xfer->token);
