@@ -85,6 +85,7 @@ Alphabetically:
 * Mantas Mikulėnas (grawity)
 * Marco Paolone
 * Marco Sirabella
+* Mario Campos
 * Mateusz Poszwa
 * Matt Robinson
 * Matthew Horan
