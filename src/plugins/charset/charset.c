@@ -611,10 +611,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("decode|encode <charset>"
            " || reset"),
-        N_(" decode: change decoding charset\n"
-           " encode: change encoding charset\n"
-           "charset: new charset for current buffer\n"
-           "  reset: reset charsets for current buffer"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[decode]: change decoding charset"),
+            N_("raw[encode]: change encoding charset"),
+            N_("charset: new charset for current buffer"),
+            N_("raw[reset]: reset charsets for current buffer")),
         "decode|encode|reset",
         &charset_command_cb, NULL, NULL);
 
