@@ -2072,6 +2072,119 @@ completion_list_add_env_value_cb (const void *pointer, void *data,
 }
 
 /*
+ * Adds a buffer local variable for /eval to completions list.
+ */
+
+void
+completion_list_map_eval_buffer_local_variable_cb (void *data,
+                                                   struct t_hashtable *hashtable,
+                                                   const void *key, const void *value)
+{
+    char *name;
+    int length;
+
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) value;
+
+    length = strlen (key) + 3 + 1;
+    name = malloc (length);
+    if (name)
+    {
+        snprintf (name, length, "${%s}", (const char *)key);
+        gui_completion_list_add ((struct t_gui_completion *)data,
+                                 name, 0, WEECHAT_LIST_POS_SORT);
+        free (name);
+    }
+}
+
+/*
+ * Adds /eval variables to completion list.
+ */
+
+int
+completion_list_add_eval_variables_cb (const void *pointer, void *data,
+                                       const char *completion_item,
+                                       struct t_gui_buffer *buffer,
+                                       struct t_gui_completion *completion)
+{
+    char *eval_variables[] = {
+        "${\\xxx}",
+        "${base_decode:base,xxx}",
+        "${base_encode:base,xxx}",
+        "${calc:xxx}",
+        "${chars:range}",
+        "${color:xxx}",
+        "${cut:+max,suffix,string}",
+        "${cut:max,suffix,string}",
+        "${cutscr:+max,suffix,string}",
+        "${cutscr:max,suffix,string}",
+        "${date:format}",
+        "${date}",
+        "${define:name,value}",
+        "${env:XXX}",
+        "${esc:xxx}",
+        "${eval:xxx}",
+        "${eval_cond:xxx}",
+        "${file.section.option}",
+        "${hdata.var1.var2}",
+        "${hdata[list].var1.var2}",
+        "${hdata[ptr].var1.var2}",
+        "${hdata[ptr_name].var1.var2}",
+        "${hide:char,string}",
+        "${if:condition?value_if_true:value_if_false}",
+        "${info:name,arguments}",
+        "${length:xxx}",
+        "${lengthscr:xxx}",
+        "${lower:xxx}",
+        "${modifier:name,data,xxx}",
+        "${random:min,max}",
+        "${raw:xxx}",
+        "${re:+}",
+        "${re:N}",
+        "${repeat:count,string}",
+        "${rev:xxx}",
+        "${revscr:xxx}",
+        "${sec.data.xxx}",
+        "${split:count,separators,flags,xxx}",
+        "${split:number,separators,flags,xxx}",
+        "${split:random,separators,flags,xxx}",
+        "${split_shell:count,xxx}",
+        "${split_shell:number,xxx}",
+        "${split_shell:random,xxx}",
+        "${translate:xxx}",
+        "${upper:xxx}",
+        "${weechat_cache_dir}",
+        "${weechat_config_dir}",
+        "${weechat_data_dir}",
+        "${weechat_runtime_dir}",
+        "${window}",
+        "${window.buffer}",
+        "${window.buffer.xxx}",
+        NULL,
+    };
+    int i;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (i = 0; eval_variables[i]; i++)
+    {
+        gui_completion_list_add (completion, eval_variables[i],
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+
+    hashtable_map (completion->buffer->local_variables,
+                   &completion_list_map_eval_buffer_local_variable_cb,
+                   completion);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds hooks for completions done by WeeChat core.
  */
 
@@ -2215,4 +2328,7 @@ completion_init ()
     hook_completion (NULL, "env_value",
                      N_("value of an environment variable"),
                      &completion_list_add_env_value_cb, NULL, NULL);
+    hook_completion (NULL, "eval_variables",
+                     N_("variables that can be used in /eval command"),
+                     &completion_list_add_eval_variables_cb, NULL, NULL);
 }

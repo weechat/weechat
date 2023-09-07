@@ -8414,7 +8414,7 @@ command_init ()
            "  /eval -n -c abcd !~ abc                 ==> 0\n"
            "  /eval -n -c abcd =* a*d                 ==> 1\n"
            "  /eval -n -c abcd =- bc                  ==> 1"),
-        "-n|-s|-c -n|-s|-c",
+        "-n|-s|-c|%(eval_variables)|%*",
         &command_eval, NULL, NULL);
     hook_command (
         NULL, "filter",
