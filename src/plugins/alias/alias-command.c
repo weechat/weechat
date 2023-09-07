@@ -307,45 +307,39 @@ alias_command_init ()
            " || rename <name> <new_name>"
            " || missing"),
         /* xgettext:no-c-format */
-        N_("         list: list aliases (without argument, this list is "
-           "displayed)\n"
-           "          add: add an alias\n"
-           "         name: name of alias\n"
-           "addcompletion: add an alias with a custom completion\n"
-           "          del: delete aliases\n"
-           "         mask: name where wildcard \"*\" is allowed\n"
-           "       rename: rename an alias\n"
-           "      missing: add missing aliases (using default aliases)\n"
-           "   completion: completion for alias: by default completion is "
-           "done with target command\n"
-           "               note: you can use %%command to use completion of "
-           "an existing command\n"
-           "      command: command name with arguments (many commands can be "
-           "separated by semicolons)\n"
-           "\n"
-           "Note: in command, special variables are replaced:\n"
-           "        $n: argument 'n' (between 1 and 9)\n"
-           "       $-m: arguments from 1 to 'm'\n"
-           "       $n-: arguments from 'n' to last\n"
-           "      $n-m: arguments from 'n' to 'm'\n"
-           "        $*: all arguments\n"
-           "        $&: all arguments, with \" replaced by \\\"\n"
-           "        $~: last argument\n"
-           "      $var: where \"var\" is a local variable of buffer (see "
-           "/buffer listvar)\n"
-           "            examples: $nick, $channel, $server, $plugin, $name\n"
-           "\n"
-           "Examples:\n"
-           "  alias /split to split window horizontally:\n"
-           "    /alias add split /window splith\n"
-           "  alias /hello to say \"hello\" on all channels but not on "
-           "#weechat:\n"
-           "    /alias add hello /allchan -exclude=#weechat hello\n"
-           "  rename alias \"hello\" to \"Hello\":\n"
-           "    /alias rename hello Hello\n"
-           "  alias /forcejoin to send IRC command \"forcejoin\" with "
-           "completion of /sajoin:\n"
-           "    /alias addcompletion %%sajoin forcejoin /quote forcejoin"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[list]: list aliases (without argument, this list is "
+               "displayed)"),
+            N_("raw[add]: add an alias"),
+            N_("name: name of alias"),
+            N_("raw[addcompletion]: add an alias with a custom completion"),
+            N_("raw[del]: delete aliases"),
+            N_("mask: name where wildcard \"*\" is allowed"),
+            N_("raw[rename]: rename an alias"),
+            N_("raw[missing]: add missing aliases (using default aliases)"),
+            N_("completion: completion for alias: by default completion is "
+               "done with target command (you can use \"%%command\" to use the "
+               "completion of an existing command)"),
+            N_("command: command name with arguments (many commands can be "
+               "separated by semicolons)"),
+            "",
+            N_("In command, special variables are replaced:"),
+            N_("  $n: argument \"n\" (between 1 and 9)"),
+            N_("  $-m: arguments from 1 to \"m\""),
+            N_("  $n-: arguments from \"n\" to last"),
+            N_("  $n-m: arguments from \"n\" to \"m\""),
+            N_("  $*: all arguments"),
+            N_("  $&: all arguments, with \" replaced by \\\""),
+            N_("  $~: last argument"),
+            N_("  $var: where \"var\" is a local variable of buffer (see "
+               "/buffer listvar), examples: $nick, $channel, $server, $plugin, "
+               "$name"),
+            "",
+            N_("Examples:"),
+            AI("  /alias add split /window splith"),
+            AI("  /alias add hello /allchan -exclude=#weechat hello"),
+            AI("  /alias rename hello Hello"),
+            AI("  /alias addcompletion %%sajoin forcejoin /quote forcejoin")),
         "list %(alias)"
         " || add %(alias) %(commands:/)|%(alias_value)"
         " || addcompletion %- %(alias) %(commands:/)|%(alias_value)"
