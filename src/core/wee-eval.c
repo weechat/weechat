@@ -1463,7 +1463,7 @@ end:
  *  - a string to evaluate (format: eval:xxx)
  *  - a condition to evaluate (format: eval_cond:xxx)
  *  - a string with escaped chars (format: esc:xxx or \xxx)
- *  - a string with a range of chars (format: chars:xxx)
+ *  - a string with a range of chars (format: chars:range)
  *  - a string converted to lower case (format: lower:xxx)
  *  - a string converted to upper case (format: upper:xxx)
  *  - a string with chars to hide (format: hide:char,string)
@@ -1478,15 +1478,15 @@ end:
  *  - split string (format: split:number,separators,flags,xxx
  *    or split:count,separators,flags,xxx
  *    or split:random,separators,flags,xxx)
- *  - split shell arguments (format: split:number,xxx or split:count,xxx
- *    or split:random,xxx)
+ *  - split shell arguments (format: split_shell:number,xxx or
+ *    split_shell:count,xxx or split_shell:random,xxx)
  *  - a regex group captured (format: re:N (0.99) or re:+)
  *  - a color (format: color:xxx)
  *  - a modifier (format: modifier:name,data,xxx)
  *  - an info (format: info:name,arguments)
  *  - a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
  *    or base_decode:base,xxx)
- *  - current date/time (format: date or date:xxx)
+ *  - current date/time (format: date or date:format)
  *  - an environment variable (format: env:XXX)
  *  - a ternary operator (format: if:condition?value_if_true:value_if_false)
  *  - calculate result of an expression (format: calc:xxx)
