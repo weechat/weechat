@@ -7816,21 +7816,22 @@ command_init ()
         N_("execute a command on all buffers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<command>"),
-        N_("command: command to execute (or text to send to buffer if "
-           "command does not start with '/')\n"
-           "\n"
-           "Examples:\n"
-           "  set unread marker on all buffers:\n"
-           "    /allbuf /buffer set unread"),
+        CMD_ARGS_DESC(
+            N_("command: command to execute (or text to send to buffer if "
+               "command does not start with \"/\")"),
+            "",
+            N_("Example:"),
+            AI("  /allbuf /buffer set unread")),
         "%(commands:/)", &command_allbuf, NULL, NULL);
     hook_command (
         NULL, "away",
         N_("set or remove away status"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-all] [<message>]"),
-        N_("   -all: set or remove away status on all connected servers\n"
-           "message: message for away (if no message is given, away status is "
-           "removed)"),
+        CMD_ARGS_DESC(
+            N_("raw[-all]: set or remove away status on all connected servers"),
+            N_("message: message for away (if no message is given, away status is "
+               "removed)")),
         "-all", &command_away, NULL, NULL);
     hook_command (
         NULL, "bar",
@@ -7845,57 +7846,50 @@ command_init ()
            " || set <name> <option> <value>"
            " || hide|show|toggle <name>"
            " || scroll <name> <window> <scroll_value>"),
-        N_("         list: list all bars\n"
-           "     listfull: list all bars (verbose)\n"
-           "    listitems: list all bar items\n"
-           "          add: add a new bar\n"
-           "         name: name of bar (must be unique)\n"
-           "         type:   root: outside windows,\n"
-           "               window: inside windows, with optional conditions "
-           "(see below)\n"
-           "   conditions: the conditions to display the bar:\n"
-           "                 active: on active window\n"
-           "               inactive: on inactive windows\n"
-           "               nicklist: on windows with nicklist\n"
-           "               other condition: see /help weechat.bar.xxx.conditions "
-           "and /help eval\n"
-           "               without conditions, the bar is always displayed\n"
-           "     position: bottom, top, left or right\n"
-           "         size: size of bar (in chars)\n"
-           "    separator: 1 for using separator (line), 0 or nothing means no "
-           "separator\n"
-           "    item1,...: items for this bar (items can be separated by comma "
-           "(space between items) or \"+\" (glued items))\n"
-           "      default: create a default bar (all default bars if no bar "
-           "name is given)\n"
-           "       rename: rename a bar\n"
-           "          del: delete bars\n"
-           "         mask: name where wildcard \"*\" is allowed\n"
-           "          set: set a value for a bar property\n"
-           "       option: option to change (for options list, look at /set "
-           "weechat.bar.<barname>.*)\n"
-           "        value: new value for option\n"
-           "         hide: hide a bar\n"
-           "         show: show an hidden bar\n"
-           "       toggle: hide/show a bar\n"
-           "       scroll: scroll bar\n"
-           "       window: window number (use '*' for current window or for "
-           "root bars)\n"
-           " scroll_value: value for scroll: 'x' or 'y' (optional), followed by "
-           "'+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and "
-           "optional % (to scroll by % of width/height, otherwise value is "
-           "number of chars)\n"
-           "\n"
-           "Examples:\n"
-           "  create a bar with time, buffer number + name, and completion:\n"
-           "    /bar add mybar root bottom 1 0 [time],buffer_number+:+"
-           "buffer_name,completion\n"
-           "  hide a bar:\n"
-           "    /bar hide mybar\n"
-           "  scroll nicklist 10 lines down on current buffer:\n"
-           "    /bar scroll nicklist * y+10\n"
-           "  scroll to end of nicklist on current buffer:\n"
-           "    /bar scroll nicklist * ye"),
+        CMD_ARGS_DESC(
+            N_("raw[list]: list all bars"),
+            N_("raw[listfull]: list all bars (verbose)"),
+            N_("raw[listitems]: list all bar items"),
+            N_("raw[add]: add a new bar"),
+            N_("name: name of bar (must be unique)"),
+            N_("type: type of bar:"),
+            N_("> raw[root]: outside windows"),
+            N_("> raw[window]: inside windows, with optional conditions (see below)"),
+            N_("conditions: the conditions to display the bar (without conditions, "
+               "the bar is always displayed:"),
+            N_("> raw[active]: on active window"),
+            N_("> raw[inactive]: on inactive windows"),
+            N_("> raw[nicklist]: on windows with nicklist"),
+            N_("> other condition: see /help weechat.bar.xxx.conditions and /help eval"),
+            N_("position: bottom, top, left or right"),
+            N_("size: size of bar (in chars)"),
+            N_("separator: 1 for using separator (line), 0 or nothing means no separator"),
+            N_("item1,...: items for this bar (items can be separated by comma "
+               "(space between items) or \"+\" (glued items))"),
+            N_("raw[default]: create a default bar (all default bars if no bar "
+               "name is given)"),
+            N_("raw[rename]: rename a bar"),
+            N_("raw[del]: delete bars"),
+            N_("mask: name where wildcard \"*\" is allowed"),
+            N_("raw[set]: set a value for a bar property"),
+            N_("option: option to change (for options list, look at /set "
+               "weechat.bar.<barname>.*)"),
+            N_("value: new value for option"),
+            N_("raw[hide]: hide a bar"),
+            N_("raw[show]: show an hidden bar"),
+            N_("raw[toggle]: hide/show a bar"),
+            N_("raw[scroll]: scroll bar"),
+            N_("window: window number (\"*\" for current window or for root bars)"),
+            N_("scroll_value: value for scroll: \"x\" or \"y\" (optional), followed by "
+               "\"+\", \"-\", \"b\" (beginning) or \"e\" (end), value (for +/-), and "
+               "optional \"%\" (to scroll by % of width/height, otherwise value is "
+               "number of chars)"),
+            "",
+            N_("Examples:"),
+            AI("  /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion"),
+            AI("  /bar hide mybar"),
+            AI("  /bar scroll nicklist * y+10"),
+            AI("  /bar scroll nicklist * ye")),
         "list"
         " || listfull"
         " || listitems"
@@ -7936,86 +7930,71 @@ command_init ()
            " || get <property>"
            " || jump smart|last_displayed|prev_visited|next_visited"
            " || <number>|-|+|<name>"),
-        N_("    list: list buffers (without argument, this list is displayed)\n"
-           "     add: add a new buffer (it can be closed with \"/buffer close\" "
-           "or input \"q\")\n"
-           "   clear: clear buffer content (number for a buffer, -merged for "
-           "merged buffers, -all for all buffers, or nothing for current buffer)\n"
-           "    move: move buffer in the list (may be relative, for example -1); "
-           "\"-\" = move to first buffer number, \"+\" = move to last buffer "
-           "number + 1\n"
-           "    swap: swap two buffers (swap with current buffer if only one "
-           "number/name given)\n"
-           "   cycle: jump loop between a list of buffers\n"
-           "   merge: merge current buffer to another buffer (chat area will "
-           "be mix of both buffers)\n"
-           "          (by default ctrl-x switches between merged buffers)\n"
-           " unmerge: unmerge buffer from other buffers which have same number\n"
-           "    hide: hide the buffer\n"
-           "  unhide: unhide the buffer\n"
-           "  switch: switch to next merged buffer (or to previous buffer "
-           "with \"-previous\")\n"
-           "    zoom: zoom on merged buffer\n"
-           "renumber: renumber buffers (works only if option weechat.look."
-           "buffer_auto_renumber is off)\n"
-           "   close: close buffer (number/range or name is optional)\n"
-           "  notify: display or set notify level for current buffer: this level "
-           "determines whether buffer will be added to hotlist or not:\n"
-           "               none: never\n"
-           "          highlight: for highlights only\n"
-           "            message: for messages from users + highlights\n"
-           "                all: all messages\n"
-           "              reset: reset to default value (all)\n"
-           " listvar: display local variables in a buffer\n"
-           "  setvar: set a local variable in the current buffer\n"
-           "  delvar: delete a local variable from the current buffer\n"
-           "     set: set a property in the current buffer\n"
-           " setauto: like \"set\" and also define option "
-           "\"weechat.buffer.<name>.<property>\" so that the property is saved "
-           "in configuration and applied each time this buffer is opened\n"
-           "     get: display a property of current buffer\n"
-           "    jump: jump to another buffer:\n"
-           "          smart: next buffer with activity\n"
-           "          last_displayed: last buffer displayed (before last jump "
-           "to a buffer)\n"
-           "          prev_visited: previously visited buffer\n"
-           "          next_visited: jump to next visited buffer\n"
-           "  number: jump to buffer by number, possible prefix:\n"
-           "          '+': relative jump, add number to current\n"
-           "          '-': relative jump, sub number to current\n"
-           "          '*': jump to number, using option \"weechat.look."
-           "jump_current_to_previous_buffer\"\n"
-           "       -: jump to first buffer number\n"
-           "       +: jump to last buffer number\n"
-           "    name: jump to buffer by (partial) name\n"
-           "\n"
-           "Examples:\n"
-           "  clear current buffer:\n"
-           "    /buffer clear\n"
-           "  move buffer to number 5:\n"
-           "    /buffer move 5\n"
-           "  swap buffer 1 with 3:\n"
-           "    /buffer swap 1 3\n"
-           "  swap buffer #weechat with current buffer:\n"
-           "    /buffer swap #weechat\n"
-           "  jump on #chan1, #chan2, #chan3 and loop:\n"
-           "    /buffer cycle #chan1 #chan2 #chan3\n"
-           "  merge with core buffer:\n"
-           "    /buffer merge 1\n"
-           "  merge with #weechat buffer:\n"
-           "    /buffer merge #weechat\n"
-           "  unmerge buffer:\n"
-           "    /buffer unmerge\n"
-           "  close current buffer:\n"
-           "    /buffer close\n"
-           "  close buffers 5 to 7:\n"
-           "    /buffer close 5-7\n"
-           "  jump to #weechat:\n"
-           "    /buffer #weechat\n"
-           "  jump to next buffer:\n"
-           "    /buffer +1\n"
-           "  jump to last buffer number:\n"
-           "    /buffer +"),
+        CMD_ARGS_DESC(
+            N_("raw[list]: list buffers (without argument, this list is displayed)"),
+            N_("raw[add]: add a new buffer (it can be closed with \"/buffer close\" "
+               "or input \"q\")"),
+            N_("raw[clear]: clear buffer content (number for a buffer, \"-merged\" "
+               "for merged buffers, \"-all\" for all buffers, or nothing for "
+               "current buffer)"),
+            N_("raw[move]: move buffer in the list (may be relative, for example -1); "
+               "\"-\" = move to first buffer number, \"+\" = move to last buffer "
+               "number + 1"),
+            N_("raw[swap]: swap two buffers (swap with current buffer if only one "
+               "number/name given)"),
+            N_("raw[cycle]: jump loop between a list of buffers"),
+            N_("raw[merge]: merge current buffer to another buffer (chat area will "
+               "be mix of both buffers); by default ctrl-x switches between merged buffers"),
+            N_("raw[unmerge]: unmerge buffer from other buffers which have same number"),
+            N_("raw[hide]: hide the buffer"),
+            N_("raw[unhide]: unhide the buffer"),
+            N_("raw[switch]: switch to next merged buffer (or to previous buffer "
+               "with \"-previous\")"),
+            N_("raw[zoom]: zoom on merged buffer"),
+            N_("raw[renumber]: renumber buffers (works only if option weechat.look."
+               "buffer_auto_renumber is off)"),
+            N_("raw[close]: close buffer (number/range or name is optional)"),
+            N_("raw[notify]: display or set notify level for current buffer: this level "
+               "determines whether buffer will be added to hotlist or not:"),
+            N_("> raw[none]: never"),
+            N_("> raw[highlight]: for highlights only"),
+            N_("> raw[message]: for messages from users + highlights"),
+            N_("> raw[all]: for all messages"),
+            N_("> raw[reset]: reset to default value (all)"),
+            N_("raw[listvar]: display local variables in a buffer"),
+            N_("raw[setvar]: set a local variable in the current buffer"),
+            N_("raw[delvar]: delete a local variable from the current buffer"),
+            N_("raw[set]: set a property in the current buffer"),
+            N_("raw[setauto]: like \"set\" and also define option "
+               "\"weechat.buffer.<name>.<property>\" so that the property is saved "
+               "in configuration and applied each time this buffer is opened"),
+            N_("raw[get]: display a property of current buffer"),
+            N_("raw[jump]: jump to another buffer:"),
+            N_("> raw[smart]: next buffer with activity"),
+            N_("> raw[last_displayed]: last buffer displayed (before last jump "
+               "to a buffer)"),
+            N_("> raw[prev_visited]: previously visited buffer"),
+            N_("> raw[next_visited]: jump to next visited buffer"),
+            N_("number: jump to buffer by number, possible prefix:"),
+            N_("> \"+\": relative jump, add number to current"),
+            N_("> \"-\": relative jump, sub number to current"),
+            N_("> \"*\": jump to number, using option \"weechat.look."
+               "jump_current_to_previous_buffer\""),
+            N_("raw[-]: jump to first buffer number"),
+            N_("raw[+]: jump to last buffer number"),
+            N_("name: jump to buffer by (partial) name"),
+            "",
+            N_("Examples:"),
+            AI("  /buffer move 5"),
+            AI("  /buffer swap 1 3"),
+            AI("  /buffer swap #weechat"),
+            AI("  /buffer cycle #chan1 #chan2 #chan3"),
+            AI("  /buffer merge 1"),
+            AI("  /buffer merge #weechat"),
+            AI("  /buffer close 5-7"),
+            AI("  /buffer #weechat"),
+            AI("  /buffer +1"),
+            AI("  /buffer +")),
         "add -free|-switch"
         " || clear -merged|-all|%(buffers_numbers)|%(buffers_plugins_names) "
         "%(buffers_numbers)|%(buffers_plugins_names)|%*"
@@ -8055,27 +8034,26 @@ command_init ()
            " || term2rgb <color>"
            " || rgb2term <rgb> [<limit>]"
            " || -o"),
-        N_("   alias: add an alias for a color\n"
-           " unalias: delete an alias\n"
-           "   color: color number (greater than or equal to 0, max depends on "
-           "terminal, commonly 63 or 255)\n"
-           "    name: alias name for color (for example: \"orange\")\n"
-           "   reset: reset all color pairs (required when no more color pairs "
-           "are available if automatic reset is disabled, see option "
-           "\"weechat.look.color_pairs_auto_reset\")\n"
-           "term2rgb: convert a terminal color (0-255) to RGB color\n"
-           "rgb2term: convert a RGB color to terminal color (0-255)\n"
-           "   limit: number of colors to use in terminal table (starting from "
-           "0); default is 256\n"
-           "      -o: send terminal/colors info to current buffer as input\n"
-           "\n"
-           "Without argument, this command displays colors in a new buffer.\n"
-           "\n"
-           "Examples:\n"
-           "  add alias \"orange\" for color 214:\n"
-           "    /color alias 214 orange\n"
-           "  delete color 214:\n"
-           "    /color unalias 214"),
+        CMD_ARGS_DESC(
+            N_("raw[alias]: add an alias for a color"),
+            N_("raw[unalias]: delete an alias"),
+            N_("color: color number (greater than or equal to 0, max depends on "
+               "terminal, commonly 63 or 255)"),
+            N_("name: alias name for color (for example: \"orange\")"),
+            N_("raw[reset]: reset all color pairs (required when no more color pairs "
+               "are available if automatic reset is disabled, see option "
+               "\"weechat.look.color_pairs_auto_reset\")"),
+            N_("raw[term2rgb]: convert a terminal color (0-255) to RGB color"),
+            N_("raw[rgb2term]: convert a RGB color to terminal color (0-255)"),
+            N_("limit: number of colors to use in terminal table (starting from "
+               "0); default is 256"),
+            N_("raw[-o]: send terminal/colors info to current buffer as input"),
+            "",
+            N_("Without argument, this command displays colors in a new buffer."),
+            "",
+            N_("Examples:"),
+            AI("  /color alias 214 orange"),
+            AI("  /color unalias 214")),
         "alias %(palette_colors)"
         " || unalias %(palette_colors)"
         " || reset"
@@ -8092,12 +8070,13 @@ command_init ()
         N_("launch explicit WeeChat or plugin command"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-buffer <name>] <plugin> <command>"),
-        N_("-buffer: execute the command on this buffer\n"
-           " plugin: execute the command from this plugin; 'core' for a "
-           "WeeChat command, '*' for automatic plugin (it depends on the "
-           "buffer where the command is executed)\n"
-           "command: command to execute (a '/' is automatically added if not "
-           "found at beginning of command)"),
+        CMD_ARGS_DESC(
+            N_("raw[-buffer]: execute the command on this buffer"),
+            N_("plugin: execute the command from this plugin; \"core\" for a "
+               "WeeChat command, \"*\" for automatic plugin (it depends on the "
+               "buffer where the command is executed)"),
+            N_("command: command to execute (a \"/\" is automatically added if not "
+               "found at beginning of command)")),
         "-buffer %(buffers_plugins_names) "
         "%(plugins_names)|" PLUGIN_CORE " %(plugins_commands:/)"
         " || %(plugins_names)|" PLUGIN_CORE " %(plugins_commands:/)",
@@ -8114,40 +8093,24 @@ command_init ()
            "edge_top|edge_bottom|edge_left|edge_right|"
            "area_up|area_down|area_left|area_right"
            " || stop"),
-        N_("  go: move cursor to chat area, a bar (using bar name) or "
-           "coordinates \"x,y\"\n"
-           "move: move cursor with direction\n"
-           "stop: stop cursor mode\n"
-           "\n"
-           "Without argument, this command toggles cursor mode.\n"
-           "\n"
-           "When mouse is enabled (see /help mouse), by default a middle click "
-           "will start cursor mode at this point.\n"
-           "\n"
-           "Default keys in cursor mode on chat messages:\n"
-           "  m  quote message\n"
-           "  q  quote prefix + message\n"
-           "  Q  quote time + prefix + message\n"
-           "\n"
-           "Default keys in cursor mode on nicklist:\n"
-           "  b  ban nick (/ban)\n"
-           "  k  kick nick (/kick)\n"
-           "  K  kick and ban nick (/kickban)\n"
-           "  q  open query with nick (/query)\n"
-           "  w  query information about user (/whois)\n"
-           "\n"
-           "Other default keys in cursor mode:\n"
-           "  arrow      move cursor\n"
-           "  alt+arrow  move cursor to the next area\n"
-           "  enter      exit cursor mode\n"
-           "\n"
-           "Examples:\n"
-           "  go to the bottom left corner of chat area:\n"
-           "    /cursor go chat bottom_left\n"
-           "  go to nicklist:\n"
-           "    /cursor go nicklist\n"
-           "  go to coordinates x=10, y=5:\n"
-           "    /cursor go 10,5"),
+        CMD_ARGS_DESC(
+            N_("raw[go]: move cursor to chat area, a bar (using bar name) or "
+               "coordinates \"x,y\""),
+            N_("raw[move]: move cursor with direction"),
+            N_("raw[stop]: stop cursor mode"),
+            "",
+            N_("Without argument, this command toggles cursor mode."),
+            "",
+            N_("When mouse is enabled (see /help mouse), by default a middle click "
+               "will start cursor mode at this point."),
+            "",
+            N_("See chapter on key bindings in User's guide for a list of keys "
+               "that can be used in cursor mode."),
+            "",
+            N_("Examples:"),
+            AI("  /cursor go chat bottom_left"),
+            AI("  /cursor go nicklist"),
+            AI("  /cursor go 10,5")),
         "go %(cursor_areas) top_left|top_right|bottom_left|bottom_right"
         " || move up|down|left|right|"
         "top_left|top_right|bottom_left|bottom_right|"
@@ -8162,57 +8125,58 @@ command_init ()
         N_("list"
            " || set <plugin> <level>"
            " || dump|hooks [<plugin>]"
-           " || buffer|certs|color|dirs|infolists|libs|memory|tags|"
+           " || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
            "term|url|windows"
            " || callbacks <duration>[<unit>]"
            " || mouse|cursor [verbose]"
            " || hdata [free]"
            " || time <command>"
            " || unicode <string>"),
-        N_("     list: list plugins with debug levels\n"
-           "      set: set debug level for plugin\n"
-           "   plugin: name of plugin (\"core\" for WeeChat core)\n"
-           "    level: debug level for plugin (0 = disable debug)\n"
-           "     dump: save memory dump in WeeChat log file (same dump is "
-           "written when WeeChat crashes)\n"
-           "    hooks: display infos about hooks (with a plugin: display "
-           "detailed info about hooks created by the plugin)\n"
-           "   buffer: dump buffer content with hexadecimal values in WeeChat "
-           "log file\n"
-           "callbacks: write hook and bar item callbacks that took more than "
-           "\"duration\" in the WeeChat log file (0 = disable), where optional "
-           "unit is one of:\n"
-           "             us: microseconds (default)\n"
-           "             ms: milliseconds\n"
-           "              s: seconds\n"
-           "              m: minutes\n"
-           "              h: hours\n"
-           "    certs: display number of loaded trusted certificate authorities\n"
-           "    color: display infos about current color pairs\n"
-           "   cursor: toggle debug for cursor mode\n"
-           "     dirs: display directories\n"
-           "    hdata: display infos about hdata (with free: remove all hdata "
-           "in memory)\n"
-           "infolists: display infos about infolists\n"
-           "      key: enable keyboard and mouse debug: display raw codes, "
-           "expanded key name and associated command ('q' to quit this mode)\n"
-           "     libs: display infos about external libraries used\n"
-           "   memory: display infos about memory usage\n"
-           "    mouse: toggle debug for mouse\n"
-           "     tags: display tags for lines\n"
-           "     term: display infos about terminal\n"
-           "      url: toggle debug for calls to hook_url (display output hashtable)\n"
-           "  windows: display windows tree\n"
-           "     time: measure time to execute a command or to send text to "
-           "the current buffer\n"
-           "  unicode: display information about string and unicode chars "
-           "(evaluated, see /help eval)\n"
-           "\n"
-           "Examples:\n"
-           "  /debug set irc 1\n"
-           "  /debug mouse verbose\n"
-           "  /debug time /filter toggle\n"
-           "  /debug unicode ${chars:${\\u26C0}-${\\u26CF}}"),
+        CMD_ARGS_DESC(
+            N_("raw[list]: list plugins with debug levels"),
+            N_("raw[set]: set debug level for plugin"),
+            N_("plugin: name of plugin (\"core\" for WeeChat core)"),
+            N_("level: debug level for plugin (0 = disable debug)"),
+            N_("raw[dump]: save memory dump in WeeChat log file (same dump is "
+               "written when WeeChat crashes)"),
+            N_("raw[hooks]: display infos about hooks (with a plugin: display "
+               "detailed info about hooks created by the plugin)"),
+            N_("raw[buffer]: dump buffer content with hexadecimal values in WeeChat "
+               "log file"),
+            N_("raw[callbacks]: write hook and bar item callbacks that took more than "
+               "\"duration\" in the WeeChat log file (0 = disable), where optional "
+               "unit is one of:"),
+            N_("> raw[us]: microseconds (default)"),
+            N_("> raw[ms]: milliseconds"),
+            N_("> raw[s]: seconds"),
+            N_("> raw[m]: minutes"),
+            N_("> raw[h]: hours"),
+            N_("raw[certs]: display number of loaded trusted certificate authorities"),
+            N_("raw[color]: display infos about current color pairs"),
+            N_("raw[cursor]: toggle debug for cursor mode"),
+            N_("raw[dirs]: display directories"),
+            N_("raw[hdata]: display infos about hdata (with free: remove all hdata "
+               "in memory)"),
+            N_("raw[infolists]: display infos about infolists"),
+            N_("raw[key]: enable keyboard and mouse debug: display raw codes, "
+               "expanded key name and associated command (\"q\" to quit this mode)"),
+            N_("raw[libs]: display infos about external libraries used"),
+            N_("raw[memory]: display infos about memory usage"),
+            N_("raw[mouse]: toggle debug for mouse"),
+            N_("raw[tags]: display tags for lines"),
+            N_("raw[term]: display infos about terminal"),
+            N_("raw[url]: toggle debug for calls to hook_url (display output hashtable)"),
+            N_("raw[windows]: display windows tree"),
+            N_("raw[time]: measure time to execute a command or to send text to "
+               "the current buffer"),
+            N_("raw[unicode]: display information about string and unicode chars "
+               "(evaluated, see /help eval)"),
+            "",
+            N_("Examples:"),
+            AI("  /debug set irc 1"),
+            AI("  /debug mouse verbose"),
+            AI("  /debug time /filter toggle"),
+            AI("  /debug unicode ${chars:${\\u26C0}-${\\u26CF}}")),
         "list"
         " || set %(plugins_names)|" PLUGIN_CORE
         " || dump %(plugins_names)|" PLUGIN_CORE
@@ -8242,174 +8206,80 @@ command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-n|-s] [-d] <expression>"
            " || [-n] [-d [-d]] -c <expression1> <operator> <expression2>"),
-        N_("        -n: display result without sending it to buffer "
-           "(debug mode)\n"
-           "        -s: split expression before evaluating it "
-           "(many commands can be separated by semicolons)\n"
-           "        -d: display debug output after evaluation "
-           "(with two -d: more verbose debug)\n"
-           "        -c: evaluate as condition: use operators and parentheses, "
-           "return a boolean value (\"0\" or \"1\")\n"
-           "expression: expression to evaluate, variables with format "
-           "${variable} are replaced (see below); many commands can be "
-           "separated by semicolons\n"
-           "  operator: a logical or comparison operator:\n"
-           "            - logical operators:\n"
-           "                &&   boolean \"and\"\n"
-           "                ||   boolean \"or\"\n"
-           "            - comparison operators:\n"
-           "                ==   equal\n"
-           "                !=   not equal\n"
-           "                <=   less or equal\n"
-           "                <    less\n"
-           "                >=   greater or equal\n"
-           "                >    greater\n"
-           "                =~   is matching POSIX extended regex\n"
-           "                !~   is NOT matching POSIX extended regex\n"
-           "                ==*  is matching mask, case sensitive "
-           "(wildcard \"*\" is allowed)\n"
-           "                !!*  is NOT matching mask, case sensitive "
-           "(wildcard \"*\" is allowed)\n"
-           "                =*   is matching mask, case insensitive "
-           "(wildcard \"*\" is allowed)\n"
-           "                !*   is NOT matching mask, case insensitive "
-           "(wildcard \"*\" is allowed)\n"
-           "                ==-  is included, case sensitive\n"
-           "                !!-  is NOT included, case sensitive\n"
-           "                =-   is included, case insensitive\n"
-           "                !-   is NOT included, case insensitive\n"
-           "\n"
-           "An expression is considered as \"true\" if it is not NULL, not "
-           "empty, and different from \"0\".\n"
-           "The comparison is made using floating point numbers if the two "
-           "expressions are valid numbers, with one of the following formats:\n"
-           "  - integer (examples: 5, -7)\n"
-           "  - floating point number (examples: 5.2, -7.5, 2.83e-2)\n"
-           "  - hexadecimal number (examples: 0xA3, -0xA3)\n"
-           "To force a string comparison, you can add double quotes around "
-           "each expression, for example:\n"
-           "  50 > 100      ==> 0\n"
-           "  \"50\" > \"100\"  ==> 1\n"
-           "\n"
-           "Some variables are replaced in expression, using the format "
-           "${variable}, variable can be, by order of priority:\n"
-           "  - the string itself without evaluation (format: \"raw:xxx\")\n"
-           "  - a user-defined variable (format: \"name\")\n"
-           "  - an evaluated sub-string (format: \"eval:xxx\")\n"
-           "  - an evaluated condition (format: \"eval_cond:xxx\")\n"
-           "  - a string with escaped chars (format: \"esc:xxx\" or \"\\xxx\")\n"
-           "  - a string with a range of chars (format: \"chars:xxx\" or "
-           "\"chars:c1-c2\" where \"xxx\" is one of: \"digit\", \"xdigit\", "
-           "\"lower\", \"upper\", \"alpha\", \"alnum\")\n"
-           "  - a string converted to lower case (format: \"lower:xxx\")\n"
-           "  - a string converted to upper case (format: \"upper:xxx\")\n"
-           "  - a string with chars to hide (format: \"hide:char,string\")\n"
-           "  - a string with max chars (format: \"cut:max,suffix,string\" "
-           "or \"cut:+max,suffix,string\")\n"
-           "     or max chars displayed on screen "
-           "(format: \"cutscr:max,suffix,string\" or "
-           "\"cutscr:+max,suffix,string\")\n"
-           "  - a reversed string (format: \"rev:xxx\" or \"revscr:xxx\")\n"
-           "  - a repeated string (format: \"repeat:count,string\")\n"
-           "  - length of a string (format: \"length:xxx\" or "
-           "\"lengthscr:xxx\")\n"
-           "  - split of a string (format: "
-           "\"split:number,separators,flags,xxx\")\n"
-           "  - split of shell argmuents (format: \"split_shell:number,xxx\")\n"
-           "  - a color (format: \"color:xxx\", see \"Plugin API "
-           "reference\", function \"color\")\n"
-           "  - a modifier (format: \"modifier:name,data,string\")\n"
-           "  - an info (format: \"info:name,arguments\", arguments are "
-           "optional)\n"
-           "  - a base 16/32/64 encoded/decoded string (format: "
-           "\"base_encode:base,xxx\" or \"base_decode:base,xxx\")\n"
-           "  - current date/time (format: \"date\" or \"date:format\")\n"
-           "  - an environment variable (format: \"env:XXX\")\n"
-           "  - a ternary operator (format: "
-           "\"if:condition?value_if_true:value_if_false\")\n"
-           "  - result of an expression with parentheses and operators "
-           "+ - * / // % ** (format: \"calc:xxx\")\n"
-           "  - a random integer number (format: \"random:min,max\")\n"
-           "  - a translated string (format: \"translate:xxx\")\n"
-           "  - define a user variable (format: \"define:name,value\")\n"
-           "  - an option (format: \"file.section.option\")\n"
-           "  - a local variable in buffer\n"
-           "  - a hdata name/variable (the value is automatically converted "
-           "to string), by default \"window\" and \"buffer\" point to current "
-           "window/buffer.\n"
-           "Format for hdata can be one of following:\n"
-           "  hdata.var1.var2...: start with a hdata (pointer must be known), "
-           "and ask variables one after one (other hdata can be followed)\n"
-           "  hdata[list].var1.var2...: start with a hdata using a "
-           "list/pointer/pointer name, for example:\n"
-           "    ${buffer[gui_buffers].full_name}: full name of first buffer "
-           "in linked list of buffers\n"
-           "    ${plugin[weechat_plugins].name}: name of first plugin in "
-           "linked list of plugins\n"
-           "  hdata[pointer].var1.var2...: start with a hdata using a "
-           "pointer, for example:\n"
-           "    ${buffer[0x1234abcd].full_name}: full name of the buffer "
-           "with this pointer (can be used in triggers)\n"
-           "    ${buffer[my_pointer].full_name}: full name of the buffer "
-           "with this pointer name (can be used in triggers)\n"
-           "  hdata[pointer].var1.method(): when var1 is a hashtable, methods "
-           "\"keys()\", \"values()\", \"keys_sorted()\", \"keys_values()\" "
-           "and \"keys_values_sorted()\" can be called\n"
-           "For name of hdata and variables, please look at \"Plugin API "
-           "reference\", function \"weechat_hdata_get\".\n"
-           "\n"
-           "Examples (simple strings):\n"
-           "  /eval -n ${raw:${info:version}}                  ==> ${info:version}\n"
-           "  /eval -n ${eval_cond:${window.win_width}>100}    ==> 1\n"
-           "  /eval -n ${info:version}                         ==> 0.4.3\n"
-           "  /eval -n ${env:HOME}                             ==> /home/user\n"
-           "  /eval -n ${weechat.look.scroll_amount}           ==> 3\n"
-           "  /eval -n ${sec.data.password}                    ==> secret\n"
-           "  /eval -n ${window}                               ==> 0x2549aa0\n"
-           "  /eval -n ${window.buffer}                        ==> 0x2549320\n"
-           "  /eval -n ${window.buffer.full_name}              ==> core.weechat\n"
-           "  /eval -n ${window.buffer.number}                 ==> 1\n"
-           "  /eval -n ${buffer.local_variables.keys_values()} ==> plugin:core,name:weechat\n"
-           "  /eval -n ${buffer.local_variables.plugin}        ==> core\n"
-           "  /eval -n ${\\t}                                   ==> <tab>\n"
-           "  /eval -n ${chars:digit}                          ==> 0123456789\n"
-           "  /eval -n ${chars:J-T}                            ==> JKLMNOPQRST\n"
-           "  /eval -n ${lower:TEST}                           ==> test\n"
-           "  /eval -n ${upper:test}                           ==> TEST\n"
-           "  /eval -n ${hide:-,${relay.network.password}}     ==> --------\n"
-           "  /eval -n ${cut:3,+,test}                         ==> tes+\n"
-           "  /eval -n ${cut:+3,+,test}                        ==> te+\n"
-           "  /eval -n ${date:%H:%M:%S}                        ==> 07:46:40\n"
-           "  /eval -n ${if:${info:term_width}>80?big:small}   ==> big\n"
-           "  /eval -n ${rev:Hello}                            ==> olleH\n"
-           "  /eval -n ${repeat:5,-}                           ==> -----\n"
-           "  /eval -n ${length:test}                          ==> 4\n"
-           "  /eval -n ${split:1,,,abc,def,ghi}                ==> abc\n"
-           "  /eval -n ${split:-1,,,abc,def,ghi}               ==> ghi\n"
-           "  /eval -n ${split:count,,,abc,def,ghi}            ==> 3\n"
-           "  /eval -n ${split:random,,,abc,def,ghi}           ==> def\n"
-           "  /eval -n ${split_shell:1,\"arg 1\" arg2}           ==> arg 1\n"
-           "  /eval -n ${split_shell:-1,\"arg 1\" arg2}          ==> arg2\n"
-           "  /eval -n ${split_shell:count,\"arg 1\" arg2}       ==> 2\n"
-           "  /eval -n ${split_shell:random,\"arg 1\" arg2}      ==> arg2\n"
-           "  /eval -n ${calc:(5+2)*3}                         ==> 21\n"
-           "  /eval -n ${random:0,10}                          ==> 3\n"
-           "  /eval -n ${base_encode:64,test}                  ==> dGVzdA==\n"
-           "  /eval -n ${base_decode:64,dGVzdA==}              ==> test\n"
-           "  /eval -n ${translate:Plugin}                     ==> Extension\n"
-           "  /eval -n ${define:len,${calc:5+3}}${len}x${len}  ==> 8x8\n"
-           "\n"
-           "Examples (conditions):\n"
-           "  /eval -n -c ${window.buffer.number} > 2 ==> 0\n"
-           "  /eval -n -c ${window.win_width} > 100   ==> 1\n"
-           "  /eval -n -c (8 > 12) || (5 > 2)         ==> 1\n"
-           "  /eval -n -c (8 > 12) && (5 > 2)         ==> 0\n"
-           "  /eval -n -c abcd =~ ^ABC                ==> 1\n"
-           "  /eval -n -c abcd =~ (?-i)^ABC           ==> 0\n"
-           "  /eval -n -c abcd =~ (?-i)^abc           ==> 1\n"
-           "  /eval -n -c abcd !~ abc                 ==> 0\n"
-           "  /eval -n -c abcd =* a*d                 ==> 1\n"
-           "  /eval -n -c abcd =- bc                  ==> 1"),
+        CMD_ARGS_DESC(
+            N_("raw[-n]: display result without sending it to buffer (debug mode)"),
+            N_("raw[-s]: split expression before evaluating it "
+               "(many commands can be separated by semicolons)"),
+            N_("raw[-d]: display debug output after evaluation "
+               "(with two -d: more verbose debug)"),
+            N_("raw[-c]: evaluate as condition: use operators and parentheses, "
+               "return a boolean value (\"0\" or \"1\")"),
+            N_("expression: expression to evaluate, variables with format ${variable} "
+               "are replaced "
+               "(see function \"string_eval_expression\" in \"Plugin API reference\")"),
+            N_("operator: a logical or comparison operator "
+               "(see function \"string_eval_expression\" in \"Plugin API reference\")"),
+            "",
+            N_("An expression is considered as \"true\" if it is not NULL, not "
+               "empty, and different from \"0\"."),
+            N_("The comparison is made using floating point numbers if the two "
+               "expressions are valid numbers, with one of the following formats: "
+               "integer (examples: 5, -7), floating point number (examples: "
+               "5.2, -7.5, 2.83e-2), hexadecimal number (examples: 0xA3, -0xA3)."),
+            N_("To force a string comparison, you can add double quotes around "
+               "each expression, for example: 50 > 100 == 0 and \"50\" > \"100\" == 1"),
+            "",
+            N_("Examples (simple strings):"),
+            AI("  /eval -n ${raw:${info:version}}                  ==> ${info:version}"),
+            AI("  /eval -n ${eval_cond:${window.win_width}>100}    ==> 1"),
+            AI("  /eval -n ${info:version}                         ==> " PACKAGE_VERSION),
+            AI("  /eval -n ${env:HOME}                             ==> /home/user"),
+            AI("  /eval -n ${weechat.look.scroll_amount}           ==> 3"),
+            AI("  /eval -n ${sec.data.password}                    ==> secret"),
+            AI("  /eval -n ${window}                               ==> 0x2549aa0"),
+            AI("  /eval -n ${window.buffer}                        ==> 0x2549320"),
+            AI("  /eval -n ${window.buffer.full_name}              ==> core.weechat"),
+            AI("  /eval -n ${window.buffer.number}                 ==> 1"),
+            AI("  /eval -n ${buffer.local_variables.keys_values()} ==> plugin:core,name:weechat"),
+            AI("  /eval -n ${buffer.local_variables.plugin}        ==> core"),
+            AI("  /eval -n ${\\t}                                   ==> <tab>"),
+            AI("  /eval -n ${chars:digit}                          ==> 0123456789"),
+            AI("  /eval -n ${chars:J-T}                            ==> JKLMNOPQRST"),
+            AI("  /eval -n ${lower:TEST}                           ==> test"),
+            AI("  /eval -n ${upper:test}                           ==> TEST"),
+            AI("  /eval -n ${hide:-,${relay.network.password}}     ==> --------"),
+            AI("  /eval -n ${cut:3,+,test}                         ==> tes+"),
+            AI("  /eval -n ${cut:+3,+,test}                        ==> te+"),
+            AI("  /eval -n ${date:%H:%M:%S}                        ==> 07:46:40"),
+            AI("  /eval -n ${if:${info:term_width}>80?big:small}   ==> big"),
+            AI("  /eval -n ${rev:Hello}                            ==> olleH"),
+            AI("  /eval -n ${repeat:5,-}                           ==> -----"),
+            AI("  /eval -n ${length:test}                          ==> 4"),
+            AI("  /eval -n ${split:1,,,abc,def,ghi}                ==> abc"),
+            AI("  /eval -n ${split:-1,,,abc,def,ghi}               ==> ghi"),
+            AI("  /eval -n ${split:count,,,abc,def,ghi}            ==> 3"),
+            AI("  /eval -n ${split:random,,,abc,def,ghi}           ==> def"),
+            AI("  /eval -n ${split_shell:1,\"arg 1\" arg2}           ==> arg 1"),
+            AI("  /eval -n ${split_shell:-1,\"arg 1\" arg2}          ==> arg2"),
+            AI("  /eval -n ${split_shell:count,\"arg 1\" arg2}       ==> 2"),
+            AI("  /eval -n ${split_shell:random,\"arg 1\" arg2}      ==> arg2"),
+            AI("  /eval -n ${calc:(5+2)*3}                         ==> 21"),
+            AI("  /eval -n ${random:0,10}                          ==> 3"),
+            AI("  /eval -n ${base_encode:64,test}                  ==> dGVzdA=="),
+            AI("  /eval -n ${base_decode:64,dGVzdA==}              ==> test"),
+            AI("  /eval -n ${define:len,${calc:5+3}}${len}x${len}  ==> 8x8"),
+            "",
+            N_("Examples (conditions):"),
+            AI("  /eval -n -c ${window.buffer.number} > 2 ==> 0"),
+            AI("  /eval -n -c ${window.win_width} > 100   ==> 1"),
+            AI("  /eval -n -c (8 > 12) || (5 > 2)         ==> 1"),
+            AI("  /eval -n -c (8 > 12) && (5 > 2)         ==> 0"),
+            AI("  /eval -n -c abcd =~ ^ABC                ==> 1"),
+            AI("  /eval -n -c abcd =~ (?-i)^ABC           ==> 0"),
+            AI("  /eval -n -c abcd =~ (?-i)^abc           ==> 1"),
+            AI("  /eval -n -c abcd !~ abc                 ==> 0"),
+            AI("  /eval -n -c abcd =* a*d                 ==> 1"),
+            AI("  /eval -n -c abcd =- bc                  ==> 1")),
         "-n|-s|-c|%(eval_variables)|%*",
         &command_eval, NULL, NULL);
     hook_command (
@@ -8423,77 +8293,73 @@ command_init ()
            " || rename <name> <new_name>"
            " || recreate <name>"
            " || del <name>|<mask> [<name>|<mask>...]"),
-        N_("      list: list all filters\n"
-           "    enable: enable filters (filters are enabled by default)\n"
-           "   disable: disable filters\n"
-           "    toggle: toggle filters\n"
-           "      mask: name where wildcard \"*\" is allowed "
-           "(\"@\" = enable/disable all filters in current buffer)\n"
-           "       add: add a filter\n"
-           "addreplace: add or replace an existing filter\n"
-           "      name: filter name\n"
-           "    rename: rename a filter\n"
-           "  recreate: set input with the command used to edit the filter\n"
-           "       del: delete filters\n"
-           "    buffer: comma separated list of buffers where filter "
-           "is active:\n"
-           "            - this is full name including plugin (example: \"irc."
-           "libera.#weechat\" or \"irc.server.libera\")\n"
-           "            - \"*\" means all buffers\n"
-           "            - a name starting with '!' is excluded\n"
-           "            - wildcard \"*\" is allowed\n"
-           "   tags: comma separated list of tags, for example \"irc_join,"
-           "irc_part,irc_quit\"\n"
-           "            - logical \"and\": use \"+\" between tags "
-           "(for example: \"nick_toto+irc_action\")\n"
-           "            - wildcard \"*\" is allowed\n"
-           "            - if tag starts with '!', then it is excluded and "
-           "must NOT be in message\n"
-           "  regex: POSIX extended regular expression to search in line\n"
-           "            - use '\\t' to separate prefix from message, "
-           "special chars like '|' must be escaped: '\\|'\n"
-           "            - if regex starts with '!', then matching result is "
-           "reversed (use '\\!' to start with '!')\n"
-           "            - two regular expressions are created: "
-           "one for prefix and one for message\n"
-           "            - regex are case insensitive, they can start by "
-           "\"(?-i)\" to become case sensitive\n"
-           "\n"
-           "The default key alt+'=' toggles filtering on/off globally and "
-           "alt+'-' toggles filtering on/off in the current buffer.\n"
-           "\n"
-           "Tags most commonly used:\n"
-           "  no_filter, no_highlight, no_log, log0..log9 (log level),\n"
-           "  notify_none, notify_message, notify_private, notify_highlight,\n"
-           "  self_msg, nick_xxx (xxx is nick in message), "
-           "prefix_nick_ccc (ccc is color of nick),\n"
-           "  host_xxx (xxx is username + host in message),\n"
-           "  irc_xxx (xxx is command name or number, see /server raw or "
-           "/debug tags),\n"
-           "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
-           "irc_smart_filter, away_info.\n"
-           "To see tags for lines in buffers: /debug tags\n"
-           "\n"
-           "Examples:\n"
-           "  use IRC smart filter on all buffers:\n"
-           "    /filter add irc_smart * irc_smart_filter *\n"
-           "  use IRC smart filter on all buffers except those with "
-           "\"#weechat\" in name:\n"
-           "    /filter add irc_smart *,!*#weechat* irc_smart_filter *\n"
-           "  filter all IRC join/part/quit messages:\n"
-           "    /filter add joinquit * irc_join,irc_part,irc_quit *\n"
-           "  filter nicks displayed when joining channels or with /names:\n"
-           "    /filter add nicks * irc_366 *\n"
-           "  filter nick \"toto\" on IRC channel #weechat:\n"
-           "    /filter add toto irc.libera.#weechat nick_toto *\n"
-           "  filter IRC join/action messages from nick \"toto\":\n"
-           "    /filter add toto * nick_toto+irc_join,nick_toto+irc_action *\n"
-           "  filter lines containing \"weechat sucks\" on IRC channel "
-           "#weechat:\n"
-           "    /filter add sucks irc.libera.#weechat * weechat sucks\n"
-           "  filter lines that are strictly equal to \"WeeChat sucks\" on "
-           "all buffers:\n"
-           "    /filter add sucks2 * * (?-i)^WeeChat sucks$"),
+        CMD_ARGS_DESC(
+            N_("raw[list]: list all filters"),
+            N_("raw[enable]: enable filters (filters are enabled by default)"),
+            N_("raw[disable]: disable filters"),
+            N_("raw[toggle]: toggle filters"),
+            N_("mask: name where wildcard \"*\" is allowed "
+               "(\"@\" = enable/disable all filters in current buffer)"),
+            N_("raw[add]: add a filter"),
+            N_("raw[addreplace]: add or replace an existing filter"),
+            N_("name: filter name"),
+            N_("raw[rename]: rename a filter"),
+            N_("raw[recreate]: set input with the command used to edit the filter"),
+            N_("raw[del]: delete filters"),
+            N_("buffer: comma separated list of buffers where filter is active:"),
+            N_("> - this is full name including plugin (example: \"irc."
+               "libera.#weechat\" or \"irc.server.libera\")"),
+            N_("> - \"*\" means all buffers"),
+            N_("> - a name starting with \"!\" is excluded"),
+            N_("> - wildcard \"*\" is allowed"),
+            N_("tags: comma separated list of tags (for example \"irc_join,"
+               "irc_part,irc_quit\"):"),
+            N_("> - logical \"and\": \"+\" between tags (for example: "
+               "\"nick_toto+irc_action\")"),
+            N_("> - wildcard \"*\" is allowed"),
+            N_("> - if tag starts with \"!\", then it is excluded and "
+               "must NOT be in message"),
+            N_("regex: POSIX extended regular expression to search in line:"),
+            N_("> - use \"\\t\" to separate prefix from message, "
+               "special chars like \"|\" must be escaped: \"\\|\""),
+            N_("> - if regex starts with \"!\", then matching result is "
+               "reversed (use \"\\!\" to start with \"!\")"),
+            N_("> - two regular expressions are created: "
+               "one for prefix and one for message"),
+            N_("> - regex are case insensitive, they can start by "
+               "\"(?-i)\" to become case sensitive"),
+            "",
+            N_("The default key alt+\"=\" toggles filtering on/off globally and "
+               "alt+\"-\" toggles filtering on/off in the current buffer."),
+            "",
+            N_("Tags most commonly used: no_filter, no_highlight, no_log, "
+               "log0..log9 (log level), notify_none, notify_message, "
+               "notify_private, notify_highlight, self_msg, nick_xxx (xxx is "
+               "nick in message), prefix_nick_ccc (ccc is color of nick), "
+               "host_xxx (xxx is username + host in message), irc_xxx (xxx is "
+               "command name or number, see /server raw or /debug tags), "
+               "irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
+               "irc_smart_filter, away_info."),
+            N_("To see tags for lines in buffers: /debug tags"),
+            "",
+            N_("Examples:"),
+            N_("  use IRC smart filter on all buffers:"),
+            AI("    /filter add irc_smart * irc_smart_filter *"),
+            N_("  use IRC smart filter on all buffers except those with "
+               "\"#weechat\" in name:"),
+            AI("    /filter add irc_smart *,!*#weechat* irc_smart_filter *"),
+            N_("  filter all IRC join/part/quit messages:"),
+            AI("    /filter add joinquit * irc_join,irc_part,irc_quit *"),
+            N_("  filter nicks displayed when joining channels or with /names:"),
+            AI("    /filter add nicks * irc_366 *"),
+            N_("  filter nick \"toto\" on IRC channel #weechat:"),
+            AI("    /filter add toto irc.libera.#weechat nick_toto *"),
+            N_("  filter IRC join/action messages from nick \"toto\":"),
+            AI("    /filter add toto * nick_toto+irc_join,nick_toto+irc_action *"),
+            N_("  filter lines containing \"weechat sucks\" on IRC channel #weechat:"),
+            AI("    /filter add sucks irc.libera.#weechat * weechat sucks"),
+            N_("  filter lines that are strictly equal to \"WeeChat sucks\" on all buffers:"),
+            AI("    /filter add sucks2 * * (?-i)^WeeChat sucks$")),
         "list"
         " || enable %(filters_names_disabled)|@|%+"
         " || disable %(filters_names_enabled)|@|%+"
@@ -8508,12 +8374,13 @@ command_init ()
         N_("display help about commands and options"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"),
-        N_("    -list: list commands, by plugin (without argument, this list is "
-           "displayed)\n"
-           "-listfull: list commands with description, by plugin\n"
-           "   plugin: list commands for this plugin\n"
-           "  command: a command name\n"
-           "   option: an option name (use /set to see list)"),
+        CMD_ARGS_DESC(
+            N_("raw[-list]: list commands, by plugin (without argument, this list is "
+               "displayed)"),
+            N_("raw[-listfull]: list commands with description, by plugin"),
+            N_("plugin: list commands for this plugin"),
+            N_("command: a command name"),
+            N_("option: an option name (use /set to see list)")),
         "-list %(plugins_names)|" PLUGIN_CORE "|%*"
         " || -listfull %(plugins_names)|" PLUGIN_CORE "|%*"
         " || %(commands)|%(config_options)",
@@ -8523,8 +8390,9 @@ command_init ()
         N_("show buffer command history"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("clear || <value>"),
-        N_("clear: clear history\n"
-           "value: number of history entries to show"),
+        CMD_ARGS_DESC(
+            N_("raw[clear]: clear history"),
+            N_("value: number of history entries to show")),
         "clear",
         &command_history, NULL, NULL);
     hook_command (
@@ -8535,17 +8403,18 @@ command_init ()
            " || clear [<level>]"
            " || remove"
            " || restore [-all]"),
-        N_("    add: add current buffer in hotlist (default level: \"low\", "
-            "conditions defined in option weechat.look.hotlist_add_conditions "
-            "are NOT checked)\n"
-           "  clear: clear hotlist\n"
-           "  level: \"lowest\" to clear only lowest level in hotlist, "
-           "highest\" to clear only highest level in hotlist, or level mask: "
-           "integer which is a combination of 1=join/part, 2=message, "
-           "4=private, 8=highlight)\n"
-           " remove: remove current buffer from hotlist\n"
-           "restore: restore latest hotlist removed in the current buffer "
-           "(or all buffers with -all)"),
+        CMD_ARGS_DESC(
+            N_("raw[add]: add current buffer in hotlist (default level: \"low\", "
+               "conditions defined in option weechat.look.hotlist_add_conditions "
+               "are NOT checked)"),
+            N_("raw[clear]: clear hotlist"),
+            N_("level: \"lowest\" to clear only lowest level in hotlist, "
+               "highest\" to clear only highest level in hotlist, or level mask: "
+               "integer which is a combination of 1=join/part, 2=message, "
+               "4=private, 8=highlight"),
+            N_("raw[remove]: remove current buffer from hotlist"),
+            N_("raw[restore]: restore latest hotlist removed in the current buffer "
+               "(or all buffers with \"-all\")")),
         "add low|message|private|highlight || "
         "clear 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|lowest|highest || "
         "remove || "
@@ -8560,65 +8429,67 @@ command_init ()
         N_("functions for command line"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<action> [<arguments>]"),
-        N_("list of actions:\n"
-           "  return: simulate key \"enter\"\n"
-           "  split_return: split input on newlines then simulate key \"enter\" "
-           "for each line\n"
-           "  complete_next: complete word with next completion\n"
-           "  complete_previous: complete word with previous completion\n"
-           "  search_text_here: search text in buffer at current position\n"
-           "  search_text: search text in buffer\n"
-           "  search_switch_case: switch exact case for search\n"
-           "  search_switch_regex: switch search type: string/regular expression\n"
-           "  search_switch_where: switch search in messages/prefixes\n"
-           "  search_previous: search previous line\n"
-           "  search_next: search next line\n"
-           "  search_stop_here: stop search at current position\n"
-           "  search_stop: stop search\n"
-           "  delete_previous_char: delete previous char\n"
-           "  delete_next_char: delete next char\n"
-           "  delete_previous_word: delete previous word\n"
-           "  delete_previous_word_whitespace: delete previous word "
-           "(until whitespace)\n"
-           "  delete_next_word: delete next word\n"
-           "  delete_beginning_of_line: delete from beginning of line until "
-           "cursor\n"
-           "  delete_beginning_of_input: delete from beginning of input until "
-           "cursor\n"
-           "  delete_end_of_line: delete from cursor until end of line\n"
-           "  delete_end_of_input: delete from cursor until end of input\n"
-           "  delete_line: delete current line\n"
-           "  delete_input: delete entire input\n"
-           "  clipboard_paste: paste from the internal clipboard\n"
-           "  transpose_chars: transpose two chars\n"
-           "  undo: undo last command line action\n"
-           "  redo: redo last command line action\n"
-           "  move_beginning_of_line: move cursor to beginning of line\n"
-           "  move_beginning_of_input: move cursor to beginning of input\n"
-           "  move_end_of_line: move cursor to end of line\n"
-           "  move_end_of_input: move cursor to end of input\n"
-           "  move_previous_char: move cursor to previous char\n"
-           "  move_next_char: move cursor to next char\n"
-           "  move_previous_word: move cursor to previous word\n"
-           "  move_next_word: move cursor to next word\n"
-           "  move_previous_line: move cursor to previous line\n"
-           "  move_next_line: move cursor to next line\n"
-           "  history_previous: recall previous command in current buffer "
-           "history\n"
-           "  history_next: recall next command in current buffer history\n"
-           "  history_global_previous: recall previous command in global history\n"
-           "  history_global_next: recall next command in global history\n"
-           "  grab_key: grab a key (optional argument: delay for end of grab, "
-            "default is 500 milliseconds)\n"
-           "  grab_key_command: grab a key with its associated command (optional "
-           "argument: delay for end of grab, default is 500 milliseconds)\n"
-           "  grab_mouse: grab mouse event code\n"
-           "  grab_mouse_area: grab mouse event code with area\n"
-           "  insert: insert text in command line (escaped chars are allowed, "
-           "see /help print)\n"
-           "  send: send text to the buffer\n"
-           "\n"
-           "This command is used by key bindings or plugins."),
+        CMD_ARGS_DESC(
+            N_("action: the action, one of:"),
+            N_("> raw[return]: simulate key \"enter\""),
+            N_("> raw[split_return]: split input on newlines then simulate key \"enter\" "
+               "for each line"),
+            N_("> raw[complete_next]: complete word with next completion"),
+            N_("> raw[complete_previous]: complete word with previous completion"),
+            N_("> raw[search_text_here]: search text in buffer at current position"),
+            N_("> raw[search_text]: search text in buffer"),
+            N_("> raw[search_switch_case]: switch exact case for search"),
+            N_("> raw[search_switch_regex]: switch search type: string/regular expression"),
+            N_("> raw[search_switch_where]: switch search in messages/prefixes"),
+            N_("> raw[search_previous]: search previous line"),
+            N_("> raw[search_next]: search next line"),
+            N_("> raw[search_stop_here]: stop search at current position"),
+            N_("> raw[search_stop]: stop search"),
+            N_("> raw[delete_previous_char]: delete previous char"),
+            N_("> raw[delete_next_char]: delete next char"),
+            N_("> raw[delete_previous_word]: delete previous word"),
+            N_("> raw[delete_previous_word_whitespace]: delete previous word "
+               "(until whitespace)"),
+            N_("> raw[delete_next_word]: delete next word"),
+            N_("> raw[delete_beginning_of_line]: delete from beginning of line until "
+               "cursor"),
+            N_("> raw[delete_beginning_of_input]: delete from beginning of input until "
+               "cursor"),
+            N_("> raw[delete_end_of_line]: delete from cursor until end of line"),
+            N_("> raw[delete_end_of_input]: delete from cursor until end of input"),
+            N_("> raw[delete_line]: delete current line"),
+            N_("> raw[delete_input]: delete entire input"),
+            N_("> raw[clipboard_paste]: paste from the internal clipboard"),
+            N_("> raw[transpose_chars]: transpose two chars"),
+            N_("> raw[undo]: undo last command line action"),
+            N_("> raw[redo]: redo last command line action"),
+            N_("> raw[move_beginning_of_line]: move cursor to beginning of line"),
+            N_("> raw[move_beginning_of_input]: move cursor to beginning of input"),
+            N_("> raw[move_end_of_line]: move cursor to end of line"),
+            N_("> raw[move_end_of_input]: move cursor to end of input"),
+            N_("> raw[move_previous_char]: move cursor to previous char"),
+            N_("> raw[move_next_char]: move cursor to next char"),
+            N_("> raw[move_previous_word]: move cursor to previous word"),
+            N_("> raw[move_next_word]: move cursor to next word"),
+            N_("> raw[move_previous_line]: move cursor to previous line"),
+            N_("> raw[move_next_line]: move cursor to next line"),
+            N_("> raw[history_previous]: recall previous command in current buffer "
+               "history"),
+            N_("> raw[history_next]: recall next command in current buffer history"),
+            N_("> raw[history_global_previous]: recall previous command in global history"),
+            N_("> raw[history_global_next]: recall next command in global history"),
+            N_("> raw[grab_key]: grab a key (optional argument: delay for end of grab, "
+               "default is 500 milliseconds)"),
+            N_("> raw[grab_key_command]: grab a key with its associated command (optional "
+               "argument: delay for end of grab, default is 500 milliseconds)"),
+            N_("> raw[grab_mouse]: grab mouse event code"),
+            N_("> raw[grab_mouse_area]: grab mouse event code with area"),
+            N_("> raw[insert]: insert text in command line (escaped chars are allowed, "
+               "see /help print)"),
+            N_("> raw[send]: send text to the buffer"),
+            N_("arguments: optional arguments for the action"),
+            "",
+            N_("This command is used by key bindings or plugins.")),
         "return || split_return || "
         "complete_next || complete_previous || search_text_here || "
         "search_text || search_switch_case || search_switch_regex || "
@@ -8652,53 +8523,54 @@ command_init ()
            " || refresh <name> [<name>...]"
            " || recreate <name>"
            " || del <name>|<mask> [<name>|<mask>...]"),
-        N_("      list: list all custom bar items\n"
-           "       add: add a custom bar item\n"
-           "addreplace: add or replace an existing custom bar item\n"
-           "      name: custom bar item name\n"
-           "conditions: evaluated conditions to display the bar item "
-           "(for example to display the bar item only in specific buffers)\n"
-           "   content: content (evaluated, see /help eval)\n"
-           "    rename: rename a custom bar item\n"
-           "   refresh: update content of item in all bars where the item is "
-           "displayed; any item can be refreshed: default/plugin/custom "
-           "bar items\n"
-           "  recreate: set input with the command used to edit the custom "
-           "bar item\n"
-           "       del: delete custom bar items\n"
-           "      mask: name where wildcard \"*\" is allowed\n"
-           "\n"
-           "Examples:\n"
-           "  add item with terminal size, displayed only in buffers with "
-           "number = 1:\n"
-           "    /item add terminfo \"${buffer.number} == 1\" "
-           "\"term:${info:term_width}x${info:term_height}\"\n"
-           "  add item with buffer info:\n"
-           "    /item add bufinfo \"\" \"${buffer.number}:${buffer.name}"
-           "${if:${buffer.zoomed}?(Z)}\"\n"
-           "  add item with date/time using format \"Dec 25, 12:34 +0100\", "
-           "refreshed every minute:\n"
-           "    /item add datetime \"\" \"${date:%b %d, %H:%M %z}\"\n"
-           "    /trigger add datetime_refresh timer \"60000;60\" \"\" \"\" "
-           "\"/item refresh datetime\"\n"
-           "  add item with number of lines in buffer (displayed/total), "
-           "refreshed each time a new line is displayed or if filtered lines "
-           "have changed:\n"
-           "    /item add lines_count \"\" "
-           "\"${calc:${buffer.lines.lines_count}-${buffer.lines.lines_hidden}}/"
-           "${buffer.lines.lines_count} lines\"\n"
-           "    /trigger add lines_count_refresh_print print \"\" \"\" \"\" "
-           "\"/item refresh lines_count\"\n"
-           "    /trigger add lines_count_refresh_signal signal \"window_switch;"
-           "buffer_switch;buffer_lines_hidden;filters_*\" \"\" \"\" "
-           "\"/item refresh lines_count\"\n"
-           "  force refresh of item \"lines_count\":\n"
-           "    /item refresh lines_count\n"
-           "  recreate item \"lines_count\" with different conditions or "
-           "content:\n"
-           "    /item recreate lines_count\n"
-           "  delete item \"lines_count\":\n"
-           "    /item del lines_count"),
+        CMD_ARGS_DESC(
+            N_("raw[list]: list all custom bar items"),
+            N_("raw[add]: add a custom bar item"),
+            N_("raw[addreplace]: add or replace an existing custom bar item"),
+            N_("name: custom bar item name"),
+            N_("conditions: evaluated conditions to display the bar item "
+               "(for example to display the bar item only in specific buffers)"),
+            N_("content: content (evaluated, see /help eval)"),
+            N_("raw[rename]: rename a custom bar item"),
+            N_("raw[refresh]: update content of item in all bars where the item is "
+               "displayed; any item can be refreshed: default/plugin/custom "
+               "bar items"),
+            N_("raw[recreate]: set input with the command used to edit the custom "
+               "bar item"),
+            N_("raw[del]: delete custom bar items"),
+            N_("mask: name where wildcard \"*\" is allowed"),
+            "",
+            N_("Examples:"),
+            N_("  add item with terminal size, displayed only in buffers with "
+               "number = 1:"),
+            AI("    /item add terminfo \"${buffer.number} == 1\" "
+               "\"term:${info:term_width}x${info:term_height}\""),
+            N_("  add item with buffer info:"),
+            AI("    /item add bufinfo \"\" \"${buffer.number}:${buffer.name}"
+               "${if:${buffer.zoomed}?(Z)}\""),
+            N_("  add item with date/time using format \"Dec 25, 12:34 +0100\", "
+               "refreshed every minute:"),
+            AI("    /item add datetime \"\" \"${date:%b %d, %H:%M %z}\""),
+            AI("    /trigger add datetime_refresh timer \"60000;60\" \"\" \"\" "
+               "\"/item refresh datetime\""),
+            N_("  add item with number of lines in buffer (displayed/total), "
+               "refreshed each time a new line is displayed or if filtered lines "
+               "have changed:"),
+            AI("    /item add lines_count \"\" "
+               "\"${calc:${buffer.lines.lines_count}-${buffer.lines.lines_hidden}}/"
+               "${buffer.lines.lines_count} lines\""),
+            AI("    /trigger add lines_count_refresh_print print \"\" \"\" \"\" "
+               "\"/item refresh lines_count\""),
+            AI("    /trigger add lines_count_refresh_signal signal \"window_switch;"
+               "buffer_switch;buffer_lines_hidden;filters_*\" \"\" \"\" "
+               "\"/item refresh lines_count\""),
+            N_("  force refresh of item \"lines_count\":"),
+            AI("    /item refresh lines_count"),
+            N_("  recreate item \"lines_count\" with different conditions or "
+               "content:"),
+            AI("    /item recreate lines_count"),
+            N_("  delete item \"lines_count\":"),
+            AI("    /item del lines_count")),
         "list"
         " || add|addreplace %(custom_bar_item_add_arguments)|%*"
         " || rename %(custom_bar_items_names) %(custom_bar_items_names)"
@@ -8720,78 +8592,73 @@ command_init ()
            " || resetall -yes [<context>]"
            " || missing [<context>]"
            " || legacy <key> [<key>...]"),
-        N_("       list: list all current keys\n"
-           "listdefault: list default keys\n"
-           "   listdiff: list differences between current and default keys "
-           "(keys added, redefined or deleted)\n"
-           "    context: name of context (\"default\" or \"search\")\n"
-           "       bind: bind a command to a key or display command bound to "
-           "key (for context \"default\")\n"
-           "   bindctxt: bind a command to a key or display command bound to "
-           "key, for given context\n"
-           "    command: command (many commands can be separated by semicolons); "
-           "quotes can be used to preserve spaces at the beginning/end of "
-           "command\n"
-           "     unbind: remove a key binding (for context \"default\")\n"
-           " unbindctxt: remove a key binding for given context\n"
-           "      reset: reset a key to default binding (for context "
-           "\"default\")\n"
-           "  resetctxt: reset a key to default binding, for given context\n"
-           "   resetall: restore bindings to the default values and delete ALL "
-           "personal bindings (use carefully!)\n"
-           "    missing: add missing keys (using default bindings), useful "
-           "after installing new WeeChat version\n"
-           "     legacy: display new name for legacy keys\n"
-           "\n"
-           "When binding a command to a key, it is recommended to use key alt+k "
-           "(or Esc then k), and then press the key to bind: this will insert "
-           "key name in command line.\n"
-           "\n"
-           "For some keys you might need to use /debug key, this displays "
-           "the raw key code that can be used (for example the key "
-           "ctrl+backspace could be \"ctrl-h\" or \"ctrl-?\", depending on your "
-           "terminal and other settings).\n"
-           "\n"
-           "Modifiers allowed (in this order when multiple are used):\n"
-           "  meta-  (alt key)\n"
-           "  ctrl-  (control key)\n"
-           "  shift-  (shift key, can only be used with key names below)\n"
-           "\n"
-           "Key names allowed: f0 to f20, home, insert, delete, end, "
-           "backspace, pgup, pgdn, up, down, right, left, tab, return, comma, "
-           "space.\n"
-           "\n"
-           "Combo of keys must be separated by a comma.\n"
-           "\n"
-           "For context \"mouse\" (possible in context \"cursor\" too), key has "
-           "format: \"@area:key\" or \"@area1>area2:key\" where area can be:\n"
-           "          *: any area on screen\n"
-           "       chat: chat area (any buffer)\n"
-           "  chat(xxx): chat area for buffer with name \"xxx\" (full name "
-           "including plugin)\n"
-           "     bar(*): any bar\n"
-           "   bar(xxx): bar \"xxx\"\n"
-           "    item(*): any bar item\n"
-           "  item(xxx): bar item \"xxx\"\n"
-           "Wildcard \"*\" is allowed in key to match many mouse events.\n"
-           "A special value for command with format \"hsignal:name\" can be "
-           "used for context mouse, this will send the hsignal \"name\" with "
-           "the focus hashtable as argument.\n"
-           "Another special value \"-\" can be used to disable key (it will be "
-           "ignored when looking for keys).\n"
-           "\n"
-           "Examples:\n"
-           "  key alt-r to jump to #weechat IRC channel:\n"
-           "    /key bind meta-r /buffer #weechat\n"
-           "  restore default binding for key alt-r:\n"
-           "    /key reset meta-r\n"
-           "  key meta-v then f1 to run /help:\n"
-           "    /key bind meta-v,f1 /help\n"
-           "  key \"tab\" to stop search in buffer:\n"
-           "    /key bindctxt search tab /input search_stop\n"
-           "  middle button of mouse on a nick to retrieve info on nick:\n"
-           "    /key bindctxt mouse @item(buffer_nicklist):button3 "
-           "/msg nickserv info ${nick}"),
+        CMD_ARGS_DESC(
+            N_("raw[list]: list all current keys"),
+            N_("raw[listdefault]: list default keys"),
+            N_("raw[listdiff]: list differences between current and default keys "
+               "(keys added, redefined or deleted)"),
+            N_("context: name of context (\"default\" or \"search\")"),
+            N_("raw[bind]: bind a command to a key or display command bound to "
+               "key (for context \"default\")"),
+            N_("raw[bindctxt]: bind a command to a key or display command bound to "
+               "key, for given context"),
+            N_("command: command (many commands can be separated by semicolons); "
+               "quotes can be used to preserve spaces at the beginning/end of "
+               "command"),
+            N_("raw[unbind]: remove a key binding (for context \"default\")"),
+            N_("raw[unbindctxt]: remove a key binding for given context"),
+            N_("raw[reset]: reset a key to default binding (for context "
+               "\"default\")"),
+            N_("raw[resetctxt]: reset a key to default binding, for given context"),
+            N_("raw[resetall]: restore bindings to the default values and delete ALL "
+               "personal bindings (use carefully!)"),
+            N_("raw[missing]: add missing keys (using default bindings), useful "
+               "after installing new WeeChat version"),
+            N_("raw[legacy]: display new name for legacy keys"),
+            "",
+            N_("When binding a command to a key, it is recommended to use key alt+k "
+               "(or Esc then k), and then press the key to bind: this will insert "
+               "key name in command line."),
+            "",
+            N_("For some keys you might need to use /debug key, this displays "
+               "the raw key code that can be used (for example the key "
+               "ctrl+backspace could be \"ctrl-h\" or \"ctrl-?\", depending on your "
+               "terminal and other settings)."),
+            "",
+            N_("Modifiers allowed (in this order when multiple are used):"),
+            N_("  \"meta-\": alt key"),
+            N_("  \"ctrl-\": control key"),
+            N_("  \"shift-\": shift key, can only be used with key names below"),
+            "",
+            N_("Key names allowed: f0 to f20, home, insert, delete, end, "
+               "backspace, pgup, pgdn, up, down, right, left, tab, return, comma, "
+               "space."),
+            "",
+            N_("Combo of keys must be separated by a comma."),
+            "",
+            N_("For context \"mouse\" (possible in context \"cursor\" too), key has "
+               "format: \"@area:key\" or \"@area1>area2:key\" where area can be:"),
+            N_("  raw[*]: any area on screen"),
+            N_("  raw[chat]: chat area (any buffer)"),
+            N_("  raw[chat(xxx)]: chat area for buffer with name \"xxx\" (full name "
+               "including plugin)"),
+            N_("  raw[bar(*)]: any bar"),
+            N_("  raw[bar(xxx)]: bar \"xxx\""),
+            N_("  raw[item(*)]: any bar item"),
+            N_("  raw[item(xxx)]: bar item \"xxx\""),
+            N_("Wildcard \"*\" is allowed in key to match many mouse events."),
+            N_("A special value for command with format \"hsignal:name\" can be "
+               "used for context mouse, this will send the hsignal \"name\" with "
+               "the focus hashtable as argument."),
+            N_("Another special value \"-\" can be used to disable key (it will be "
+               "ignored when looking for keys)."),
+            "",
+            N_("Examples:"),
+            AI("  /key bind meta-r /buffer #weechat"),
+            AI("  /key reset meta-r"),
+            AI("  /key bind meta-v,f1 /help"),
+            AI("  /key bindctxt search f12 /input search_stop"),
+            AI("  /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}")),
         "list %(keys_contexts)"
         " || listdefault %(keys_contexts)"
         " || listdiff %(keys_contexts)"
@@ -8814,27 +8681,27 @@ command_init ()
            " || leave"
            " || del [<name>] [buffers|windows]"
            " || rename <name> <new_name>"),
-        N_("  store: store current buffers/windows in a layout\n"
-           "  apply: apply stored layout\n"
-           "  leave: leave current layout (does not update any layout)\n"
-           "    del: delete buffers and/or windows in a stored layout\n"
-           "         (if neither \"buffers\" nor \"windows\" is given after "
-           "the name, the layout is deleted)\n"
-           " rename: rename a layout\n"
-           "   name: name for stored layout (default is \"default\")\n"
-           "buffers: store/apply only buffers (order of buffers)\n"
-           "windows: store/apply only windows (buffer displayed by each "
-           "window)\n"
-           "\n"
-           "Without argument, this command displays stored layouts.\n"
-           "\n"
-           "The current layout can be saved on /quit command with the option "
-           "\"weechat.look.save_layout_on_exit\".\n"
-           "\n"
-           "Note: the layout only remembers windows split and buffers numbers. "
-           "It does not open buffers. That means for example you must still "
-           "auto-join IRC channels to open the buffers, the saved layout only "
-           "applies once the buffers are opened."),
+        CMD_ARGS_DESC(
+            N_("raw[store]: store current buffers/windows in a layout"),
+            N_("raw[apply]: apply stored layout"),
+            N_("raw[leave]: leave current layout (does not update any layout)"),
+            N_("raw[del]: delete buffers and/or windows in a stored layout "
+               "(if neither \"buffers\" nor \"windows\" is given after "
+               "the name, the layout is deleted)"),
+            N_("raw[rename]: rename a layout"),
+            N_("name: name for stored layout (default is \"default\")"),
+            N_("raw[buffers]: store/apply only buffers (order of buffers)"),
+            N_("raw[windows]: store/apply only windows (buffer displayed by each window)"),
+            "",
+            N_("Without argument, this command displays stored layouts."),
+            "",
+            N_("The current layout can be saved on /quit command with the option "
+               "\"weechat.look.save_layout_on_exit\"."),
+            "",
+            N_("Note: the layout only remembers windows split and buffers numbers. "
+               "It does not open buffers. That means for example you must still "
+               "auto-join IRC channels to open the buffers, the saved layout only "
+               "applies once the buffers are opened.")),
         "store %(layouts_names)|buffers|windows buffers|windows"
         " || apply %(layouts_names)|buffers|windows buffers|windows"
         " || leave"
@@ -8846,19 +8713,18 @@ command_init ()
         N_("mouse control"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("enable|disable|toggle [<delay>]"),
-        N_(" enable: enable mouse\n"
-           "disable: disable mouse\n"
-           " toggle: toggle mouse\n"
-           "  delay: delay (in seconds) after which initial mouse state is "
-           "restored (useful to temporarily disable mouse)\n"
-           "\n"
-           "The mouse state is saved in option \"weechat.look.mouse\".\n"
-           "\n"
-           "Examples:\n"
-           "  enable mouse:\n"
-           "    /mouse enable\n"
-           "  toggle mouse for 5 seconds:\n"
-           "    /mouse toggle 5"),
+        CMD_ARGS_DESC(
+            N_("raw[enable]: enable mouse"),
+            N_("raw[disable]: disable mouse"),
+            N_("raw[toggle]: toggle mouse"),
+            N_("delay: delay (in seconds) after which initial mouse state is "
+               "restored (useful to temporarily disable mouse)"),
+            "",
+            N_("The mouse state is saved in option \"weechat.look.mouse\"."),
+            "",
+            N_("Examples:"),
+            AI("  /mouse enable"),
+            AI("  /mouse toggle 5")),
         "enable|disable|toggle",
         &command_mouse, NULL, NULL);
     hook_command (
@@ -8866,24 +8732,22 @@ command_init ()
         N_("execute a command silently"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-core | -current | -buffer <name>] <command>"),
-        N_("   -core: no output on WeeChat core buffer\n"
-           "-current: no output on current buffer\n"
-           " -buffer: no output on specified buffer\n"
-           "    name: full buffer name (examples: \"irc.server.libera\", "
-           "\"irc.libera.#weechat\")\n"
-           " command: command to execute silently (a '/' is automatically added "
-           "if not found at beginning of command)\n"
-           "\n"
-           "If no target is specified (-core, -current or -buffer), then "
-            "default is to mute all buffers.\n"
-           "\n"
-           "Examples:\n"
-           "  config save:\n"
-           "    /mute save\n"
-           "  message to current IRC channel:\n"
-           "    /mute -current msg * hi!\n"
-           "  message to #weechat channel:\n"
-           "    /mute -buffer irc.libera.#weechat msg #weechat hi!"),
+        CMD_ARGS_DESC(
+            N_("raw[-core]: no output on WeeChat core buffer"),
+            N_("raw[-current]: no output on current buffer"),
+            N_("raw[-buffer]: no output on specified buffer"),
+            N_("name: full buffer name (examples: \"irc.server.libera\", "
+               "\"irc.libera.#weechat\")"),
+            N_("command: command to execute silently (a \"/\" is automatically added "
+               "if not found at beginning of command)"),
+            "",
+            N_("If no target is specified (\"-core\", \"-current\" or \"-buffer\"), "
+               "then default is to mute all buffers."),
+            "",
+            N_("Examples:"),
+            AI("  /mute save"),
+            AI("  /mute -current msg * hi!"),
+            AI("  /mute -buffer irc.libera.#weechat msg #weechat hi!")),
         "-core|-current %(commands:/)|%*"
         " || -buffer %(buffers_plugins_names) %(commands:/)|%*"
         " || %(commands:/)|%*",
@@ -8898,26 +8762,27 @@ command_init ()
            " || autoload [<arguments>]"
            " || reload [<name>|* [<arguments>]]"
            " || unload [<name>]"),
-        N_("     list: list loaded plugins\n"
-           "       -o: send list of loaded plugins to buffer "
-           "(string in English)\n"
-           "      -ol: send list of loaded plugins to buffer "
-           "(translated string)\n"
-           "       -i: copy list of loaded plugins in command line (for "
-           "sending to buffer) (string in English)\n"
-           "      -il: copy list of loaded plugins in command line (for "
-           "sending to buffer) (translated string)\n"
-           "     name: a plugin name\n"
-           " listfull: list loaded plugins (verbose)\n"
-           "     load: load a plugin\n"
-           " filename: plugin (file) to load\n"
-           "arguments: arguments given to plugin on load\n"
-           " autoload: autoload plugins in system or user directory\n"
-           "   reload: reload a plugin (if no name given, unload all plugins, "
-           "then autoload plugins)\n"
-           "   unload: unload a plugin (if no name given, unload all plugins)\n"
-           "\n"
-           "Without argument, this command lists loaded plugins."),
+        CMD_ARGS_DESC(
+            N_("raw[list]: list loaded plugins"),
+            N_("raw[-o]: send list of loaded plugins to buffer "
+               "(string in English)"),
+            N_("raw[-ol]: send list of loaded plugins to buffer "
+               "(translated string)"),
+            N_("raw[-i]: copy list of loaded plugins in command line (for "
+               "sending to buffer) (string in English)"),
+            N_("raw[-il]: copy list of loaded plugins in command line (for "
+               "sending to buffer) (translated string)"),
+            N_("name: a plugin name"),
+            N_("raw[listfull]: list loaded plugins (verbose)"),
+            N_("raw[load]: load a plugin"),
+            N_("filename: plugin (file) to load"),
+            N_("arguments: arguments given to plugin on load"),
+            N_("raw[autoload]: autoload plugins in system or user directory"),
+            N_("raw[reload]: reload a plugin (if no name given, unload all plugins, "
+               "then autoload plugins)"),
+            N_("raw[unload]: unload a plugin (if no name given, unload all plugins)"),
+            "",
+            N_("Without argument, this command lists loaded plugins.")),
         "list %(plugins_names)|-i|-il|-o|-ol"
         " || listfull %(plugins_names)"
         " || load %(plugins_installed)"
@@ -8934,55 +8799,50 @@ command_init ()
            "[-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]"
            " || -stdout|-stderr [<text>]"
            " || -beep"),
-        N_("   -buffer: display text in this buffer (default: buffer where "
-           "command is executed)\n"
-           "-newbuffer: create a new buffer and display text in this buffer\n"
-           "     -free: create a buffer with free content "
-           "(with -newbuffer only)\n"
-           "   -switch: switch to the buffer\n"
-           "     -core: alias of \"-buffer core.weechat\"\n"
-           "  -current: display text on current buffer\n"
-           "        -y: display on a custom line (for buffer with free content "
-           "only)\n"
-           "      line: line number for buffer with free content (first line "
-           "is 0, a negative number displays after last line: -1 = after last "
-           "line, -2 = two lines after last line, etc.)\n"
-           "   -escape: interpret escaped chars (for example \\a, \\07, \\x07)\n"
-           "     -date: message date, format can be:\n"
-           "              -n: 'n' seconds before now\n"
-           "              +n: 'n' seconds in the future\n"
-           "               n: 'n' seconds since the Epoch (see man time)\n"
-           "              date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: "
-           "2014-01-19T04:32:55\n"
-           "              time: hh:mm:ss (example: 04:32:55)\n"
-           "     -tags: comma-separated list of tags (see /help filter for a "
-           "list of tags most commonly used)\n"
-           "      text: text to display (prefix and message must be separated by "
-           "\"\\t\", if text starts with \"-\", then add a \"\\\" before)\n"
-           "   -stdout: display text on stdout (escaped chars are interpreted)\n"
-           "   -stderr: display text on stderr (escaped chars are interpreted)\n"
-           "     -beep: alias of \"-stderr \\a\"\n"
-           "\n"
-           "The options -action ... -quit use the prefix defined in options "
-           "\"weechat.look.prefix_*\".\n"
-           "\n"
-           "Following escaped chars are supported:\n"
-           "  \\\" \\\\ \\a \\b \\e \\f \\n \\r \\t \\v \\0ooo \\xhh \\uhhhh "
-           "\\Uhhhhhhhh\n"
-           "\n"
-           "Examples:\n"
-           "  display a reminder on core buffer with a highlight:\n"
-           "    /print -core -tags notify_highlight Reminder: buy milk\n"
-           "  display an error on core buffer:\n"
-           "    /print -core -error Some error here\n"
-           "  display message on core buffer with prefix \"abc\":\n"
-           "    /print -core abc\\tThe message\n"
-           "  display a message on channel #weechat:\n"
-           "    /print -buffer irc.libera.#weechat Message on #weechat\n"
-           "  display a snowman (U+2603):\n"
-           "    /print -escape \\u2603\n"
-           "  send alert (BEL):\n"
-           "    /print -beep"),
+        CMD_ARGS_DESC(
+            N_("raw[-buffer]: display text in this buffer (default: buffer where "
+               "command is executed)"),
+            N_("raw[-newbuffer]: create a new buffer and display text in this buffer"),
+            N_("raw[-free]: create a buffer with free content "
+               "(with -newbuffer only)"),
+            N_("raw[-switch]: switch to the buffer"),
+            N_("raw[-core]: alias of \"-buffer core.weechat\""),
+            N_("raw[-current]: display text on current buffer"),
+            N_("raw[-y]: display on a custom line (for buffer with free content "
+               "only)"),
+            N_("line: line number for buffer with free content (first line "
+               "is 0, a negative number displays after last line: -1 = after last "
+               "line, -2 = two lines after last line, etc.)"),
+            N_("raw[-escape]: interpret escaped chars (for example \\a, \\07, \\x07)"),
+            N_("raw[-date]: message date, format can be:"),
+            N_("> -n: \"n\" seconds before now"),
+            N_("> +n: \"n\" seconds in the future"),
+            N_("> n: \"n\" seconds since the Epoch (see man time)"),
+            N_("> date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: "
+               "2014-01-19T04:32:55"),
+            N_("> time: hh:mm:ss (example: 04:32:55)"),
+            N_("raw[-tags]: comma-separated list of tags (see /help filter for a "
+               "list of tags most commonly used)"),
+            N_("text: text to display (prefix and message must be separated by "
+               "\"\\t\", if text starts with \"-\", then add a \"\\\" before)"),
+            N_("raw[-stdout]: display text on stdout (escaped chars are interpreted)"),
+            N_("raw[-stderr]: display text on stderr (escaped chars are interpreted)"),
+            N_("raw[-beep]: alias of \"-stderr \\a\""),
+            "",
+            N_("The options -action ... -quit use the prefix defined in options "
+               "\"weechat.look.prefix_*\"."),
+            "",
+            N_("Following escaped chars are supported:"),
+            AI("  \\\" \\\\ \\a \\b \\e \\f \\n \\r \\t \\v \\0ooo \\xhh \\uhhhh "
+               "\\Uhhhhhhhh"),
+            "",
+            N_("Examples:"),
+            AI("  /print -core -tags notify_highlight Reminder: buy milk"),
+            AI("  /print -core -error Some error here"),
+            AI("  /print -core prefix\\tThe message"),
+            AI("  /print -buffer irc.libera.#weechat Message on #weechat"),
+            AI("  /print -escape \\u2603"),
+            AI("  /print -beep")),
         "-buffer %(buffers_numbers)|%(buffers_plugins_names)"
         " || -newbuffer"
         " || -y -1|0|1|2|3"
@@ -9000,31 +8860,32 @@ command_init ()
            " || add <name> <type> <address> <port> [<username> [<password>]]"
            " || del <name>|<mask> [<name>|<mask>...]"
            " || set <name> <option> <value>"),
-        N_("    list: list all proxies\n"
-           "     add: add a new proxy\n"
-           "    name: name of proxy (must be unique)\n"
-           "    type: http, socks4 or socks5\n"
-           " address: IP or hostname\n"
-           "    port: port\n"
-           "username: username (optional)\n"
-           "password: password (optional)\n"
-           "     del: delete proxies\n"
-           "    mask: name where wildcard \"*\" is allowed\n"
-           "     set: set a value for a proxy property\n"
-           "  option: option to change (for options list, look at /set "
-           "weechat.proxy.<proxyname>.*)\n"
-           "   value: new value for option\n"
-           "\n"
-           "Examples:\n"
-           "  add a http proxy, running on local host, port 8888:\n"
-           "    /proxy add local http 127.0.0.1 8888\n"
-           "  add a http proxy using IPv6 protocol:\n"
-           "    /proxy add local http ::1 8888\n"
-           "    /proxy set local ipv6 on\n"
-           "  add a socks5 proxy with username/password:\n"
-           "    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
-           "  delete a proxy:\n"
-           "    /proxy del myproxy"),
+        CMD_ARGS_DESC(
+            N_("raw[list]: list all proxies"),
+            N_("raw[add]: add a new proxy"),
+            N_("name: name of proxy (must be unique)"),
+            N_("type: http, socks4 or socks5"),
+            N_("address: IP or hostname"),
+            N_("port: port number"),
+            N_("username: username (optional)"),
+            N_("password: password (optional)"),
+            N_("raw[del]: delete proxies"),
+            N_("mask: name where wildcard \"*\" is allowed"),
+            N_("raw[set]: set a value for a proxy property"),
+            N_("option: option to change (for options list, look at /set "
+               "weechat.proxy.<proxyname>.*)"),
+            N_("value: new value for option"),
+            "",
+            N_("Examples:"),
+            N_("  add a http proxy, running on local host, port 8888:"),
+            AI("    /proxy add local http 127.0.0.1 8888"),
+            N_("  add a http proxy using IPv6 protocol:"),
+            AI("    /proxy add local http ::1 8888"),
+            AI("    /proxy set local ipv6 on"),
+            N_("  add a socks5 proxy with username/password:"),
+            AI("    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass"),
+            N_("  delete a proxy:"),
+            AI("    /proxy del myproxy")),
         "list"
         " || add %(proxies_names) http|socks4|socks5"
         " || del %(proxies_names)|%*"
@@ -9035,16 +8896,16 @@ command_init ()
         N_("quit WeeChat"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-yes] [<arguments>]"),
-        N_("     -yes: required if option \"weechat.look.confirm_quit\" "
-           "is enabled\n"
-           "arguments: text sent with signal \"quit\"\n"
-           "           (for example irc plugin uses this text to send quit "
-           "message to server)\n"
-           "\n"
-           "By default when quitting the configuration files are saved "
-           "(see option \"weechat.look.save_config_on_exit\") and the current "
-           "layout can be saved (see option "
-           "\"weechat.look.save_layout_on_exit\")."),
+        CMD_ARGS_DESC(
+            N_("raw[-yes]: required if option \"weechat.look.confirm_quit\" "
+               "is enabled"),
+            N_("arguments: text sent with signal \"quit\" (for example irc "
+               "plugin uses this text to send quit message to server)"),
+            "",
+            N_("By default when quitting the configuration files are saved "
+               "(see option \"weechat.look.save_config_on_exit\") and the current "
+               "layout can be saved (see option "
+               "\"weechat.look.save_layout_on_exit\").")),
         "",
         &command_quit, NULL, NULL);
     hook_command (
@@ -9052,9 +8913,10 @@ command_init ()
         N_("reload configuration files from disk"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<file> [<file>...]]"),
-        N_("file: configuration file to reload (without extension \".conf\")\n"
-           "\n"
-           "Without argument, all files (WeeChat and plugins) are reloaded."),
+        CMD_ARGS_DESC(
+            N_("file: configuration file to reload (without extension \".conf\")"),
+            "",
+            N_("Without argument, all files (WeeChat and plugins) are reloaded.")),
         "%(config_files)|%*",
         &command_reload, NULL, NULL);
     hook_command (
@@ -9062,40 +8924,34 @@ command_init ()
         N_("execute a command several times"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-interval <delay>[<unit>]] <count> <command>"),
-        N_("  delay: delay between execution of commands (minimum: 1 millisecond)\n"
-           "   unit: optional, values are:\n"
-           "           us: microseconds\n"
-           "           ms: milliseconds\n"
-           "            s: seconds (default)\n"
-           "            m: minutes\n"
-           "            h: hours\n"
-           "  count: number of times to execute command\n"
-           "command: command to execute (or text to send to buffer if command "
-           "does not start with '/'), evaluated and the following variables "
-           "are set each time the command is executed:\n"
-           "           ${buffer}: buffer pointer\n"
-           "           ${repeat_count}: number of times the command is executed\n"
-           "           ${repeat_index}: current index (from 1 to \"count\")\n"
-           "           ${repeat_index0}: current index (from 0 to \"count\" - 1)\n"
-           "           ${repeat_revindex}: current index from the end "
-           "(from \"count\" to 1)\n"
-           "           ${repeat_revindex0}: current index from the end "
-           "(from \"count\" - 1 to 0)\n"
-           "           ${repeat_first}: \"1\" for the first execution, "
-           "\"0\" for the others\n"
-           "           ${repeat_last}: \"1\" for the last execution, "
-           "\"0\" for the others\n"
-           "\n"
-           "Note: the command is executed on buffer where /repeat was executed "
-           "(if the buffer does not exist any more, the command is not "
-           "executed).\n"
-           "\n"
-           "Example:\n"
-           "  scroll 2 pages up:\n"
-           "    /repeat 2 /window page_up\n"
-           "  print a countdown, starting at 5:\n"
-           "    /repeat -interval 1 6 "
-           "/print ${if:${repeat_last}?Boom!:${repeat_revindex0}}"),
+        CMD_ARGS_DESC(
+            N_("delay: delay between execution of commands (minimum: 1 millisecond)"),
+            N_("unit: optional, values are:"),
+            N_("> raw[us]: microseconds"),
+            N_("> raw[ms]: milliseconds"),
+            N_("> raw[s]: seconds (default)"),
+            N_("> raw[m]: minutes"),
+            N_("> raw[h]: hours"),
+            N_("count: number of times to execute command"),
+            N_("command: command to execute (or text to send to buffer if command "
+               "does not start with \"/\"), evaluated and the following variables "
+               "are set each time the command is executed:"),
+            N_("> ${buffer}: buffer pointer"),
+            N_("> ${repeat_count}: number of times the command is executed"),
+            N_("> ${repeat_index}: current index (from 1 to \"count\")"),
+            N_("> ${repeat_index0}: current index (from 0 to \"count\" - 1)"),
+            N_("> ${repeat_revindex}: current index from the end (from \"count\" to 1)"),
+            N_("> ${repeat_revindex0}: current index from the end (from \"count\" - 1 to 0)"),
+            N_("> ${repeat_first}: \"1\" for the first execution, \"0\" for the others"),
+            N_("> ${repeat_last}: \"1\" for the last execution, \"0\" for the others"),
+            "",
+            N_("Note: the command is executed on buffer where /repeat was executed "
+               "(if the buffer does not exist any more, the command is not "
+               "executed)."),
+            "",
+            N_("Examples:"),
+            AI("  /repeat 2 /window page_up"),
+            AI("  /repeat -interval 1 6 /print ${if:${repeat_last}?Boom!:${repeat_revindex0}}")),
         "%- %(commands:/)",
         &command_repeat, NULL, NULL);
     hook_command (
@@ -9104,15 +8960,14 @@ command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<option>"
            " || -mask <option>"),
-        N_("option: name of an option\n"
-           " -mask: use a mask in option (wildcard \"*\" is allowed to "
-           "mass-reset options, use carefully!)\n"
-           "\n"
-           "Examples:\n"
-           "  reset one option:\n"
-           "    /reset weechat.look.item_time_format\n"
-           "  reset all color options:\n"
-           "    /reset -mask weechat.color.*"),
+        CMD_ARGS_DESC(
+            N_("option: name of an option"),
+            N_("raw[-mask]: use a mask in option (wildcard \"*\" is allowed to "
+               "mass-reset options, use carefully!)"),
+            "",
+            N_("Examples:"),
+            AI("  /reset weechat.look.item_time_format"),
+            AI("  /reset -mask weechat.color.*")),
         "%(config_options)"
         " || -mask %(config_options)",
         &command_reset, NULL, NULL);
@@ -9121,12 +8976,13 @@ command_init ()
         N_("save configuration files to disk"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<file> [<file>...]]"),
-        N_("file: configuration file to save (without extension \".conf\")\n"
-           "\n"
-           "Without argument, all files (WeeChat and plugins) are saved.\n"
-           "\n"
-           "By default all configuration files are saved to disk on /quit "
-           "command (see option \"weechat.look.save_config_on_exit\")."),
+        CMD_ARGS_DESC(
+            N_("file: configuration file to save (without extension \".conf\")"),
+            "",
+            N_("Without argument, all files (WeeChat and plugins) are saved."),
+            "",
+            N_("By default all configuration files are saved to disk on /quit "
+               "command (see option \"weechat.look.save_config_on_exit\").")),
         "%(config_files)|%*",
         &command_save, NULL, NULL);
     hook_command (
@@ -9138,53 +8994,52 @@ command_init ()
            " || decrypt <passphrase>|-discard"
            " || set <name> <value>"
            " || del <name>"),
-        N_("passphrase: change the passphrase (without passphrase, data is "
-           "stored as plain text in file sec.conf)\n"
-           "   -delete: delete passphrase\n"
-           "   decrypt: decrypt data still encrypted (it happens only if "
-           "passphrase was not given on startup)\n"
-           "  -discard: discard all data still encrypted\n"
-           "       set: add or change secured data\n"
-           "       del: delete secured data\n"
-           "\n"
-           "Without argument, this command displays secured data in a new "
-           "buffer.\n"
-           "\n"
-           "Keys on secure buffer:\n"
-           "  alt+v  toggle values\n"
-           "\n"
-           "When a passphrase is used (data encrypted), it is asked by WeeChat "
-           "on startup.\n"
-           "It is possible to set environment variable \"WEECHAT_PASSPHRASE\" "
-           "to prevent the prompt (this same variable is used by WeeChat on "
-           "/upgrade), or to set option sec.crypt.passphrase_command to read "
-           "the passphrase from the output of an external command like a "
-           "password manager (see /help sec.crypt.passphrase_command).\n"
-           "\n"
-           "Secured data with format ${sec.data.xxx} can be used in:\n"
-           "  - command /eval\n"
-           "  - command line argument \"--run-command\"\n"
-           "  - options weechat.startup.command_{before|after}_plugins\n"
-           "  - other options that may contain a password or sensitive data "
-           "(for example proxy, irc server and relay); see /help on the "
-           "options to check if they are evaluated.\n"
-           "\n"
-           "Examples:\n"
-           "  set a passphrase:\n"
-           "    /secure passphrase this is my passphrase\n"
-           "  use program \"pass\" to read the passphrase on startup:\n"
-           "    /set sec.crypt.passphrase_command "
-           "\"/usr/bin/pass show weechat/passphrase\"\n"
-           "  encrypt libera SASL password:\n"
-           "    /secure set libera mypassword\n"
-           "    /set irc.server.libera.sasl_password \"${sec.data.libera}\"\n"
-           "  encrypt oftc password for nickserv:\n"
-           "    /secure set oftc mypassword\n"
-           "    /set irc.server.oftc.command \"/msg nickserv identify "
-           "${sec.data.oftc}\"\n"
-           "  alias to ghost the nick \"mynick\":\n"
-           "    /alias add ghost /eval /msg -server libera nickserv ghost mynick "
-           "${sec.data.libera}"),
+        CMD_ARGS_DESC(
+            N_("raw[passphrase]: change the passphrase (without passphrase, data is "
+               "stored as plain text in file sec.conf)"),
+            N_("raw[-delete]: delete passphrase"),
+            N_("raw[decrypt]: decrypt data still encrypted (it happens only if "
+               "passphrase was not given on startup)"),
+            N_("raw[-discard]: discard all data still encrypted"),
+            N_("raw[set]: add or change secured data"),
+            N_("raw[del]: delete secured data"),
+            "",
+            N_("Without argument, this command displays secured data in a new "
+               "buffer."),
+            "",
+            N_("Keys on secure buffer:"),
+            N_("  alt+v  toggle values"),
+            "",
+            N_("When a passphrase is used (data encrypted), it is asked by WeeChat "
+               "on startup."),
+            N_("It is possible to set environment variable \"WEECHAT_PASSPHRASE\" "
+               "to prevent the prompt (this same variable is used by WeeChat on "
+               "/upgrade), or to set option sec.crypt.passphrase_command to read "
+               "the passphrase from the output of an external command like a "
+               "password manager (see /help sec.crypt.passphrase_command)."),
+            "",
+            N_("Secured data with format ${sec.data.xxx} can be used in:"),
+            N_("  - command /eval"),
+            N_("  - command line argument \"--run-command\""),
+            N_("  - options weechat.startup.command_{before|after}_plugins"),
+            N_("  - other options that may contain a password or sensitive data "
+               "(for example proxy, irc server and relay); see /help on the "
+               "options to check if they are evaluated."),
+            "",
+            N_("Examples:"),
+            N_("  set a passphrase:"),
+            AI("    /secure passphrase this is my passphrase"),
+            N_("  use program \"pass\" to read the passphrase on startup:"),
+            AI("    /set sec.crypt.passphrase_command \"/usr/bin/pass show weechat/passphrase\""),
+            N_("  encrypt libera SASL password:"),
+            AI("    /secure set libera mypassword"),
+            AI("    /set irc.server.libera.sasl_password \"${sec.data.libera}\""),
+            N_("  encrypt oftc password for nickserv:"),
+            AI("    /secure set oftc mypassword"),
+            AI("    /set irc.server.oftc.command \"/msg nickserv identify ${sec.data.oftc}\""),
+            N_("  alias to ghost the nick \"mynick\":"),
+            AI("    /alias add ghost /eval /msg -server libera nickserv ghost mynick "
+               "${sec.data.libera}")),
         "passphrase -delete"
         " || decrypt -discard"
         " || set %(secured_data)"
@@ -9197,36 +9052,30 @@ command_init ()
         N_("[<option> [<value>]]"
            " || diff [<option> [<option>...]]"
            " || env [<variable> [<value>]]"),
-        N_("option: name of an option (wildcard \"*\" is allowed to list "
-           "options, if no value is specified)\n"
-           " value: new value for option, according to type:\n"
-           "          boolean: on, off or toggle\n"
-           "          integer: number, ++number or --number\n"
-           "           string: any string (\"\" for empty string)\n"
-           "            color: color name, ++number or --number\n"
-           "        Note: for all types, you can use null to remove option "
-           "value (undefined value). This works only for some special plugin "
-           "variables.\n"
-           "  diff: display only changed options\n"
-           "   env: display or set an environment variable (use value \"\" to "
-           "unset a variable)\n"
-           "\n"
-           "Examples:\n"
-           "  display options about highlight:\n"
-           "    /set *highlight*\n"
-           "  add a word to highlight:\n"
-           "    /set weechat.look.highlight \"word\"\n"
-           "  display changed options:\n"
-           "    /set diff\n"
-           "  display changed options in irc plugin:\n"
-           "    /set diff irc.*\n"
-           "  display value of environment variable LANG:\n"
-           "    /set env LANG\n"
-           "  set environment variable LANG and use it:\n"
-           "    /set env LANG fr_FR.UTF-8\n"
-           "    /upgrade\n"
-           "  unset environment variable ABC:\n"
-           "    /set env ABC \"\""),
+        CMD_ARGS_DESC(
+            N_("option: name of an option (wildcard \"*\" is allowed to list "
+               "options, if no value is specified)"),
+            N_("value: new value for option, according to type:"),
+            N_("> boolean: on, off or toggle"),
+            N_("> integer: number, ++number or --number"),
+            N_("> string: any string (\"\" for empty string)"),
+            N_("> color: color name, ++number or --number"),
+            N_("diff: display only changed options"),
+            N_("env: display or set an environment variable (\"\" to unset "
+               "a variable)"),
+            "",
+            N_("Note: the value \"null\" (without quotes) can be used to "
+               "remove option value (undefined value). This works only for "
+               "some special plugin variables."),
+            "",
+            N_("Examples:"),
+            AI("  /set *highlight*"),
+            AI("  /set weechat.look.highlight \"word\""),
+            AI("  /set diff"),
+            AI("  /set diff irc.*"),
+            AI("  /set env LANG"),
+            AI("  /set env LANG fr_FR.UTF-8"),
+            AI("  /set env ABC \"\"")),
         "%(config_options) %(config_option_values)"
         " || diff %(config_options)|%*"
         " || env %(env_vars) %(env_value)",
@@ -9237,14 +9086,15 @@ command_init ()
         "get rlimit|rusage"
         " || suspend"
         " || waitpid",
-        N_("    get: display system info\n"
-           " rlimit: display resource limits "
-           "(see /help weechat.startup.sys_rlimit and \"man getrlimit\")\n"
-           " rusage: display resource usage (see \"man getrusage\")\n"
-           "suspend: suspend WeeChat and go back to the shell, by sending "
-           "signal SIGTSTP to the WeeChat process\n"
-           "waitpid: acknowledge the end of children processes (to prevent "
-           "\"zombie\" processes)"),
+        CMD_ARGS_DESC(
+            N_("raw[get]: display system info"),
+            N_("raw[rlimit]: display resource limits "
+               "(see /help weechat.startup.sys_rlimit and \"man getrlimit\")"),
+            N_("raw[rusage]: display resource usage (see \"man getrusage\")"),
+            N_("raw[suspend]: suspend WeeChat and go back to the shell, by sending "
+               "signal SIGTSTP to the WeeChat process") ,
+            N_("raw[waitpid]: acknowledge the end of children processes "
+               "(to prevent \"zombie\" processes)")),
         "get rlimit|rusage"
         " || suspend"
         " || waitpid",
@@ -9254,36 +9104,36 @@ command_init ()
         N_("toggle value of a config option"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<option> [<value> [<value>...]]"),
-        N_("option: name of an option\n"
-           " value: possible values for the option (values are split like the "
-           "shell command arguments: quotes can be used to preserve spaces at "
-           "the beginning/end of values)\n"
-           "\n"
-           "Behavior:\n"
-           "  - only an option of type boolean or string can be toggled "
-           "without a value:\n"
-           "      - boolean: toggle between on/off according to current value\n"
-           "      - string: toggle between empty string and default value "
-           "(works only if empty string is allowed for the option)\n"
-           "  - with a single value given, toggle between this value and "
-           "the default value of option\n"
-           "  - with multiple values given, toggle between these values: "
-           "the value used is the one following the current value of option; "
-           "if the current value of option is not in list, the first value in "
-           "the list is used\n"
-           "  - the special value \"null\" can be given, but only as first "
-           "value in the list and without quotes around.\n"
-           "\n"
-           "Examples:\n"
-           "  toggle display of time in chat area (without displaying the "
-           "new value used):\n"
-           "    /mute /toggle weechat.look.buffer_time_format\n"
-           "  switch format of time in chat area (with seconds, without "
-           "seconds, disabled):\n"
-           "    /toggle weechat.look.buffer_time_format \"%H:%M:%S\" "
-           "\"%H:%M\" \"\"\n"
-           "  toggle autojoin of #weechat channel on libera server:\n"
-           "    /toggle irc.server.libera.autojoin null #weechat"),
+        CMD_ARGS_DESC(
+            N_("option: name of an option"),
+            N_("value: possible values for the option (values are split like the "
+               "shell command arguments: quotes can be used to preserve spaces at "
+               "the beginning/end of values)"),
+            "",
+            N_("Behavior:"),
+            N_("  - only an option of type boolean or string can be toggled "
+               "without a value:"),
+            N_("    - boolean: toggle between on/off according to current value"),
+            N_("    - string: toggle between empty string and default value "
+               "(works only if empty string is allowed for the option)"),
+            N_("  - with a single value given, toggle between this value and "
+               "the default value of option"),
+            N_("  - with multiple values given, toggle between these values: "
+               "the value used is the one following the current value of option; "
+               "if the current value of option is not in list, the first value in "
+               "the list is used"),
+            N_("  - the special value \"null\" can be given, but only as first "
+               "value in the list and without quotes around."),
+            "",
+            N_("Examples:"),
+            N_("  toggle display of time in chat area (without displaying the "
+               "new value used):"),
+            AI("    /mute /toggle weechat.look.buffer_time_format"),
+            N_("  switch format of time in chat area (with seconds, without "
+               "seconds, disabled):"),
+            AI("    /toggle weechat.look.buffer_time_format \"%H:%M:%S\" \"%H:%M\" \"\""),
+            N_("  toggle autojoin of #weechat channel on libera server:"),
+            AI("    /toggle irc.server.libera.autojoin null #weechat")),
         "%(config_options) %(config_option_values)",
         &command_toggle, NULL, NULL);
     hook_command (
@@ -9292,18 +9142,17 @@ command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<option>"
            " || -mask <option>"),
-        N_("option: name of an option\n"
-           " -mask: use a mask in option (wildcard \"*\" is allowed to "
-           "mass-reset options, use carefully!)\n"
-           "\n"
-           "According to option, it's reset (for standard options) or removed "
-           "(for optional settings, like server values).\n"
-           "\n"
-           "Examples:\n"
-           "  reset one option:\n"
-           "    /unset weechat.look.item_time_format\n"
-           "  reset all color options:\n"
-           "    /unset -mask weechat.color.*"),
+        CMD_ARGS_DESC(
+            N_("option: name of an option"),
+            N_("raw[-mask]: use a mask in option (wildcard \"*\" is allowed to "
+               "mass-reset options, use carefully!)"),
+            "",
+            N_("According to option, it's reset (for standard options) or removed "
+               "(for optional settings, like server values)."),
+            "",
+            N_("Examples:"),
+            AI("  /unset weechat.look.item_time_format"),
+            AI("  /unset -mask weechat.color.*")),
         "%(config_options)"
         " || -mask %(config_options)",
         &command_unset, NULL, NULL);
@@ -9313,77 +9162,80 @@ command_init ()
            "disconnecting from servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-yes] [<path_to_binary>|-save|-quit]"),
-        N_("          -yes: required if option \"weechat.look.confirm_upgrade\" "
-           "is enabled\n"
-           "path_to_binary: path to WeeChat binary (default is current binary)\n"
-           "        -dummy: do nothing (option used to prevent accidental "
-           "completion with \"-quit\")\n"
-           "         -save: only save the session, do not quit nor reload "
-           "WeeChat; the configuration files are not saved (if needed you can "
-           "use /save before this command)\n"
-           "         -quit: close *ALL* connections, save session and quit "
-           "WeeChat, which makes possible a delayed restoration (see below)\n"
-           "\n"
-           "This command upgrades and reloads a running WeeChat session. The "
-           "new WeeChat binary must have been compiled or installed with a "
-           "package manager before running this command.\n"
-           "\n"
-           "Note: TLS connections are lost during upgrade (except with -save), "
-           "because the reload of TLS sessions is currently not possible with "
-           "GnuTLS. There is automatic reconnection after upgrade.\n"
-           "\n"
-           "Important: use of option -save can be dangerous, it is recommended "
-           "to use only /upgrade (or with -quit) for a standard upgrade and "
-           "a restart; the option -save can be used to save the session "
-           "regularly and restore it in case of after abnormal exit "
-           "(power outage, crash, etc.)\n"
-           "\n"
-           "Upgrade process has 4 steps:\n"
-           "  1. save session into files for core and plugins (buffers, "
-           "history, ..)\n"
-           "  2. unload all plugins (configuration files (*.conf) are written "
-           "on disk)\n"
-           "  3. save WeeChat configuration (weechat.conf)\n"
-           "  4. execute new WeeChat binary and reload session.\n"
-           "\n"
-           "With option \"-quit\", the process is:\n"
-           "  1. close *ALL* connections (irc, xfer, relay, ...)\n"
-           "  2. save session into files (*.upgrade)\n"
-           "  3. unload all plugins\n"
-           "  4. save WeeChat configuration\n"
-           "  5. quit WeeChat\n"
-           "\n"
-           "With option \"-save\", the process is:\n"
-           "  1. save session into files (*.upgrade) with a disconnected state "
-           "for IRC servers and Relay clients (but no disconnection is made)\n"
-           "\n"
-           "With -quit or -save, you can restore the session later with "
-           "this command: weechat --upgrade\n"
-           "IMPORTANT: you must restore the session with exactly same "
-           "configuration (files *.conf) and if possible the same WeeChat "
-           "version (or a more recent one).\n"
-           "It is possible to restore WeeChat session on another machine if you "
-           "copy the content of WeeChat home directories (see /debug dirs)."),
+        CMD_ARGS_DESC(
+            N_("raw[-yes]: required if option \"weechat.look.confirm_upgrade\" "
+               "is enabled"),
+            N_("path_to_binary: path to WeeChat binary (default is current binary)"),
+            N_("raw[-dummy]: do nothing (option used to prevent accidental "
+               "completion with \"-quit\")"),
+            N_("raw[-save]: only save the session, do not quit nor reload "
+               "WeeChat; the configuration files are not saved (if needed you can "
+               "use /save before this command)"),
+            N_("raw[-quit]: close *ALL* connections, save session and quit "
+               "WeeChat, which makes possible a delayed restoration (see below)"),
+            "",
+            N_("This command upgrades and reloads a running WeeChat session. The "
+               "new WeeChat binary must have been compiled or installed with a "
+               "package manager before running this command."),
+            "",
+            N_("Note: TLS connections are lost during upgrade (except with -save), "
+               "because the reload of TLS sessions is currently not possible with "
+               "GnuTLS. There is automatic reconnection after upgrade."),
+            "",
+            N_("Important: use of option \"-save\" can be dangerous, it is recommended "
+               "to use only /upgrade (or with \"-quit\") for a standard upgrade and "
+               "a restart; the option \"-save\" can be used to save the session "
+               "regularly and restore it in case of after abnormal exit "
+               "(power outage, crash, etc.)."),
+            "",
+            N_("Upgrade process has 4 steps:"),
+            N_("  1. save session into files for core and plugins (buffers, "
+               "history, ..)"),
+            N_("  2. unload all plugins (configuration files (*.conf) are written "
+               "on disk)"),
+            N_("  3. save WeeChat configuration (weechat.conf)"),
+            N_("  4. execute new WeeChat binary and reload session."),
+            "",
+            N_("With option \"-quit\", the process is:"),
+            N_("  1. close *ALL* connections (irc, xfer, relay, ...)"),
+            N_("  2. save session into files (*.upgrade)"),
+            N_("  3. unload all plugins"),
+            N_("  4. save WeeChat configuration"),
+            N_("  5. quit WeeChat"),
+            "",
+            N_("With option \"-save\", the process is:"),
+            N_("  1. save session into files (*.upgrade) with a disconnected state "
+               "for IRC servers and Relay clients (but no disconnection is made)"),
+            "",
+            N_("With -quit or -save, you can restore the session later with "
+               "this command: weechat --upgrade"),
+            N_("IMPORTANT: you must restore the session with exactly same "
+               "configuration (files *.conf) and if possible the same WeeChat "
+               "version (or a more recent one)."),
+            N_("It is possible to restore WeeChat session on another machine if you "
+               "copy the content of WeeChat home directories (see /debug dirs).")),
         "%(filename)|-dummy|-save|-quit",
         &command_upgrade, NULL, NULL);
     hook_command (
         NULL, "uptime",
         N_("show WeeChat uptime"),
         "[-o|-ol]",
-        N_(" -o: send uptime to current buffer as input (English string)\n"
-           "-ol: send uptime to current buffer as input (translated string)"),
+        CMD_ARGS_DESC(
+            N_("raw[-o]: send uptime to current buffer as input (English string)"),
+            N_("raw[-ol]: send uptime to current buffer as input (translated string)")),
         "-o|-ol",
         &command_uptime, NULL, NULL);
     hook_command (
         NULL, "version",
         N_("show WeeChat version and compilation date"),
         "[-o|-ol]",
-        N_(" -o: send version to current buffer as input (English string)\n"
-           "-ol: send version to current buffer as input (translated string)\n"
-           "\n"
-           "The default alias /v can be used to execute this command on "
-           "all buffers (otherwise the irc command /version is used on irc "
-           "buffers)."),
+        CMD_ARGS_DESC(
+            N_("raw[-o]: send version to current buffer as input (English string)"),
+            N_("raw[-ol]: send version to current buffer as input (translated string)"),
+            "",
+            N_("The default alias /v can be used to execute this command on "
+               "all buffers (otherwise the irc command /version is used on irc "
+               "buffers).")),
         "-o|-ol",
         &command_version, NULL, NULL);
     hook_command (
@@ -9391,27 +9243,25 @@ command_init ()
         N_("schedule a command execution in future"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<number>[<unit>] <command>"),
-        N_(" number: amount of time to wait (minimum: 1 millisecond)\n"
-           "   unit: optional, values are:\n"
-           "           us: microseconds\n"
-           "           ms: milliseconds\n"
-           "            s: seconds (default)\n"
-           "            m: minutes\n"
-           "            h: hours\n"
-           "command: command to execute (or text to send to buffer if command "
-           "does not start with '/')\n"
-           "\n"
-           "Note: the command is executed on buffer where /wait was executed "
-           "(if the buffer does not exist any more, the command is not "
-           "executed).\n"
-           "\n"
-           "Examples:\n"
-           "  join channel in 10 seconds:\n"
-           "    /wait 10 /join #test\n"
-           "  set away in 15 minutes:\n"
-           "    /wait 15m /away -all I'm away\n"
-           "  say 'hello' in 2 minutes:\n"
-           "    /wait 2m hello"),
+        CMD_ARGS_DESC(
+            N_("number: amount of time to wait (minimum: 1 millisecond)"),
+            N_("unit: optional, values are:"),
+            N_("> raw[us]: microseconds"),
+            N_("> raw[ms]: milliseconds"),
+            N_("> raw[s]: seconds (default)"),
+            N_("> raw[m]: minutes"),
+            N_("> raw[h]: hours"),
+            N_("command: command to execute (or text to send to buffer if command "
+               "does not start with \"/\")"),
+            "",
+            N_("Note: the command is executed on buffer where /wait was executed "
+               "(if the buffer does not exist any more, the command is not "
+               "executed)."),
+            "",
+            N_("Examples:"),
+            AI("  /wait 10 /join #test"),
+            AI("  /wait 15m /away -all I'm away"),
+            AI("  /wait 2m hello")),
         "%- %(commands:/)",
         &command_wait, NULL, NULL);
     hook_command (
@@ -9438,79 +9288,61 @@ command_init ()
            " || zoom [-window <number>]"
            " || bare [<delay>]"),
         /* xgettext:no-c-format */
-        N_("         list: list opened windows (without argument, this list is "
-           "displayed)\n"
-           "           -1: jump to previous window\n"
-           "           +1: jump to next window\n"
-           "           b#: jump to next window displaying buffer number #\n"
-           "           up: switch to window above current one\n"
-           "         down: switch to window below current one\n"
-           "         left: switch to window on the left\n"
-           "        right: switch to window on the right\n"
-           "       number: window number (see /window list)\n"
-           "       splith: split current window horizontally "
-           "(to undo: /window merge)\n"
-           "       splitv: split current window vertically "
-           "(to undo: /window merge)\n"
-           "       resize: resize window size, new size is <pct> percentage of "
-           "parent window\n"
-           "               if \"h\" or \"v\" is specified, the resize affects "
-           "the nearest parent window with a split of this type "
-           "(horizontal/vertical)\n"
-           "      balance: balance the sizes of all windows\n"
-           "        merge: merge window with another (all = keep only one "
-           "window)\n"
-           "        close: close window\n"
-           "      page_up: scroll one page up\n"
-           "    page_down: scroll one page down\n"
-           "      refresh: refresh screen\n"
-           "       scroll: scroll a number of lines (+/-N) or with time: "
-           "s=seconds, m=minutes, h=hours, d=days, M=months, y=years\n"
-           " scroll_horiz: scroll horizontally a number of columns (+/-N) or "
-           "percentage of window size (this scrolling is possible only on "
-           "buffers with free content)\n"
-           "    scroll_up: scroll a few lines up\n"
-           "  scroll_down: scroll a few lines down\n"
-           "   scroll_top: scroll to top of buffer\n"
-           "scroll_bottom: scroll to bottom of buffer\n"
-           "scroll_beyond_end: scroll beyond the end of buffer\n"
-           "scroll_previous_highlight: scroll to previous highlight\n"
-           "scroll_next_highlight: scroll to next highlight\n"
-           "scroll_unread: scroll to unread marker\n"
-           "         swap: swap buffers of two windows (with optional direction "
-           "for target window)\n"
-           "         zoom: zoom on window\n"
-           "         bare: toggle bare display (with optional delay in "
-           "seconds for automatic return to standard display mode)\n"
-           "\n"
-           "For splith and splitv, pct is a percentage which represents size of "
-           "new window, computed with current window as size reference. For "
-           "example 25 means create a new window with size = current_size / 4\n"
-           "\n"
-           "Examples:\n"
-           "  jump to window displaying buffer #1:\n"
-           "    /window b1\n"
-           "  scroll 2 lines up:\n"
-           "    /window scroll -2\n"
-           "  scroll 2 days up:\n"
-           "    /window scroll -2d\n"
-           "  scroll to beginning of current day:\n"
-           "    /window scroll -d\n"
-           "  zoom on window #2:\n"
-           "    /window zoom -window 2\n"
-           "  split window horizontally using 30% of space for the window on "
-           "top:\n"
-           "    /window splith 30\n"
-           "  resize window to 75% of the parent window size:\n"
-           "    /window resize 75\n"
-           "  resize vertical split, add 10% in size:\n"
-           "    /window resize v+10\n"
-           "  remove the split, keep the current window:\n"
-           "    /window merge\n"
-           "  close the current window:\n"
-           "    /window close\n"
-           "  enable bare display for 2 seconds:\n"
-           "    /window bare 2"),
+        CMD_ARGS_DESC(
+            N_("raw[list]: list opened windows (without argument, this list is displayed)"),
+            N_("raw[-1]: jump to previous window"),
+            N_("raw[+1]: jump to next window"),
+            N_("raw[b#]: jump to next window displaying buffer number #"),
+            N_("raw[up]: switch to window above current one"),
+            N_("raw[down]: switch to window below current one"),
+            N_("raw[left]: switch to window on the left"),
+            N_("raw[right]: switch to window on the right"),
+            N_("number: window number (see /window list)"),
+            N_("raw[splith]: split current window horizontally (to undo: /window merge)"),
+            N_("raw[splitv]: split current window vertically (to undo: /window merge)"),
+            N_("raw[resize]: resize window size, new size is <pct> percentage of "
+               "parent window; if \"h\" or \"v\" is specified, the resize affects "
+               "the nearest parent window with a split of this type "
+               "(horizontal/vertical)"),
+            N_("raw[balance]: balance the sizes of all windows"),
+            N_("raw[merge]: merge window with another (raw[all] = keep only one window)"),
+            N_("raw[close]: close window"),
+            N_("raw[page_up]: scroll one page up"),
+            N_("raw[page_down]: scroll one page down"),
+            N_("raw[refresh]: refresh screen"),
+            N_("raw[scroll]: scroll a number of lines (+/-N) or with time: "
+               "s=seconds, m=minutes, h=hours, d=days, M=months, y=years"),
+            N_("raw[scroll_horiz]: scroll horizontally a number of columns (+/-N) or "
+               "percentage of window size (this scrolling is possible only on "
+               "buffers with free content)"),
+            N_("raw[scroll_up]: scroll a few lines up"),
+            N_("raw[scroll_down]: scroll a few lines down"),
+            N_("raw[scroll_top]: scroll to top of buffer"),
+            N_("raw[scroll_bottom]: scroll to bottom of buffer"),
+            N_("raw[scroll_beyond_end]: scroll beyond the end of buffer"),
+            N_("raw[scroll_previous_highlight]: scroll to previous highlight"),
+            N_("raw[scroll_next_highlight]: scroll to next highlight"),
+            N_("raw[scroll_unread]: scroll to unread marker"),
+            N_("raw[swap]: swap buffers of two windows (with optional direction "
+               "for target window)"),
+            N_("raw[zoom]: zoom on window"),
+            N_("raw[bare]: toggle bare display (with optional delay in "
+               "seconds for automatic return to standard display mode)"),
+            "",
+            N_("For splith and splitv, pct is a percentage which represents size of "
+               "new window, computed with current window as size reference. For "
+               "example 25 means create a new window with size = current_size / 4"),
+            "",
+            N_("Examples:"),
+            AI("  /window b1"),
+            AI("  /window scroll -2"),
+            AI("  /window scroll -2d"),
+            AI("  /window scroll -d"),
+            AI("  /window zoom -window 2"),
+            AI("  /window splith 30"),
+            AI("  /window resize 75"),
+            AI("  /window resize v+10"),
+            AI("  /window bare 2")),
         "list"
         " || -1 -window %(windows_numbers)"
         " || +1 -window %(windows_numbers)"
