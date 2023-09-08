@@ -131,32 +131,6 @@ script_download_enabled (int display_error)
 }
 
 /*
- * Builds download URL (to use with hook_process or hook_process_hashtable).
- *
- * Note: result must be freed after use.
- */
-
-char *
-script_build_download_url (const char *url)
-{
-    char *result;
-    int length;
-
-    if (!url || !url[0])
-        return NULL;
-
-    /* length of url + "url:" */
-    length = 4 + strlen (url) + 1;
-    result = malloc (length);
-    if (!result)
-        return NULL;
-
-    snprintf (result, length, "url:%s", url);
-
-    return result;
-}
-
-/*
  * Gets loaded plugins (in array of integers).
  */
 
