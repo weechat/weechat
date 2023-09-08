@@ -96,28 +96,26 @@ fifo_command_init ()
         "fifo",
         N_("fifo plugin configuration"),
         "enable|disable|toggle",
-        N_(" enable: enable FIFO pipe\n"
-           "disable: disable FIFO pipe\n"
-           " toggle: toggle FIFO pipe\n"
-           "\n"
-           "FIFO pipe is used as remote control of WeeChat: you can send "
-           "commands or text to the FIFO pipe from your shell.\n"
-           "By default the FIFO pipe is called weechat_fifo_xxx (where xxx is "
-           "the WeeChat process id) and located in the WeeChat runtime "
-           "directory (see /debug dirs).\n"
-           "\n"
-           "The expected format is one of:\n"
-           "  plugin.buffer *text or command here\n"
-           "  *text or command here\n"
-           "\n"
-           "For example to change your libera nick:\n"
-           "  echo 'irc.server.libera */nick newnick' "
-           ">/run/user/1000/weechat/weechat_fifo_12345\n"
-           "\n"
-           "Please read the user's guide for more info and examples.\n"
-           "\n"
-           "Examples:\n"
-           "  /fifo toggle"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[enable]: enable FIFO pipe"),
+            N_("raw[disable]: disable FIFO pipe"),
+            N_("raw[toggle]: toggle FIFO pipe"),
+            "",
+            N_("FIFO pipe is used as remote control of WeeChat: you can send "
+               "commands or text to the FIFO pipe from your shell."),
+            N_("By default the FIFO pipe is called weechat_fifo_xxx (where xxx is "
+               "the WeeChat process id) and located in the WeeChat runtime "
+               "directory (see /debug dirs)."),
+            "",
+            N_("The expected format is one of:"),
+            N_("  plugin.buffer *text or command here"),
+            N_("  *text or command here"),
+            "",
+            N_("For example to change your libera nick:"),
+            AI("  echo 'irc.server.libera */nick newnick' "
+               ">/run/user/1000/weechat/weechat_fifo_12345"),
+            "",
+            N_("Please read the user's guide for more info and examples.")),
         "enable|disable|toggle",
         &fifo_command_fifo, NULL, NULL);
 }
