@@ -9725,7 +9725,6 @@ struct t_hook *weechat_hook_process (const char *command,
                                      void *callback_data);
 ----
 
-
 Аргументи:
 
 * _command_: команда која се покреће у дете процесу, URL _(WeeChat ≥ 0.3.7)_ или функција _(WeeChat ≥ 1.5)_ (погледајте испод)
@@ -10125,6 +10124,148 @@ hook4 = weechat.hook_process_hashtable("sh",
                                        {"arg1": "-c",
                                         "arg2": "ls -l /tmp | grep something"},
                                        20000, "my_process_cb", "")
+----
+
+// TRANSLATION MISSING
+==== hook_url
+
+_WeeChat ≥ 4.1.0._
+
+URL transfer.
+
+Прототип:
+
+[source,c]
+----
+struct t_hook *weechat_hook_url (const char *url,
+                                 struct t_hashtable *options,
+                                 int timeout,
+                                 int (*callback)(const void *pointer,
+                                                 void *data,
+                                                 const char *url,
+                                                 struct t_hashtable *options,
+                                                 struct t_hashtable *output),
+                                 const void *callback_pointer,
+                                 void *callback_data);
+----
+
+Аргументи:
+
+* _url_: URL
+* _options_: options for URL transfer (see below); хеш табела се дуплира у функцији, тако да након овог позива безбедно можете да ослободите меморију коју заузима
+* _timeout_: timeout for URL transfer (in milliseconds): after this timeout,
+  the transfer is stopped (0 means no timeout)
+* _callback_: function called when the transfer has ended, arguments and return
+  value:
+** _const void *pointer_: pointer
+** _void *data_: pointer
+** _const char *url_: URL
+** _struct t_hashtable *options_: options
+** _struct t_hashtable *output_: result (keys and values are strings), which may
+   contain the following keys:
+*** _response_code_: HTTP response code
+*** _headers_: HTTP headers in response
+*** _output_: standard output (set only if _file_out_ was not set in options)
+*** _error_: error message (set only in case of error)
+** return value:
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: показивач који се прослеђује функцији повратног позива када је позове програм WeeChat
+* _callback_data_: показивач који се прослеђује функцији повратног позива када је позове програм WeeChat; ако није NULL, алоцирала га је malloc (или нека слична функција) и аутоматски се ослобађа када се кука обрише
+
+The following Curl options are available (see `+man curl_easy_setopt+` for
+a description of each option):
+
+include::{autogendir}/autogen_api_url_options.sr.adoc[tag=url_options]
+
+[NOTE]
+^(1)^ За опције типа „mask”, формат је: „вредност1+вредност2+вредност3”; за опције типа „list”, ставке листе морају да се раздвоје преломом линије (`\n`). +
+^(2)^ Ако су доступне константе, оне морају да се користе као вредност опције.
+
+These two extra options (strings) are allowed for input/output file:
+
+* _file_in_: фајл који се чита и шаље URL адресама (post фајл)
+* _file_out_: преузети URL/фајл се уписује у овај фајл (уместо на стандардни излаз)
+
+Повратна вредност:
+
+* показивач на нову куку, NULL у случају грешке
+
+C пример:
+
+[source,c]
+----
+int
+my_url_cb (const void *pointer, void *data, const char *url,
+           struct t_hashtable *options, struct t_hashtable *output)
+{
+    weechat_printf (NULL, "response_code: %s", weechat_hashtable_get (output, "response_code"));
+    weechat_printf (NULL, "headers: %s", weechat_hashtable_get (output, "headers"));
+    weechat_printf (NULL, "output: %s", weechat_hashtable_get (output, "output"));
+    weechat_printf (NULL, "error: %s", weechat_hashtable_get (output, "error"));
+    return WEECHAT_RC_OK;
+}
+
+/* example 1: output to a file */
+struct t_hashtable *options_url1 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url1)
+{
+    weechat_hashtable_set (options_url1, "file_out", "/tmp/weechat.org.html");
+    struct t_hook *my_url_hook = weechat_hook_url ("https://weechat.org/",
+                                                   options_url1,
+                                                   20000,
+                                                   &my_url_cb, NULL, NULL);
+    weechat_hashtable_free (options_url1);
+}
+
+/* example 2: custom HTTP headers, output sent to callback */
+struct t_hashtable *options_url2 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url2)
+{
+    weechat_hashtable_set (options_url2, "httpheader",
+                           "Header1: value1\n"
+                           "Header2: value2");
+    struct t_hook *my_url_hook = weechat_hook_url ("http://localhost:8080/",
+                                                   options_url2,
+                                                   20000,
+                                                   &my_url_cb, NULL, NULL);
+    weechat_hashtable_free (options_url2);
+}
+----
+
+Скрипта (Python):
+
+[source,python]
+----
+# прототип
+def hook_url(url: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str: ...
+
+# пример
+def my_url_cb(data: str, url: str, options: Dict[str, str], output: Dict[str, str]) -> int:
+    weechat.prnt("", "output: %s" % output)
+    return weechat.WEECHAT_RC_OK
+
+# example 1: output to a file
+hook1 = weechat.hook_url("https://weechat.org/",
+                         {"file_out": "/tmp/weechat.org.html"},
+                         20000, "my_url_cb", "")
+
+# example 2: custom HTTP headers, output sent to callback
+options = {
+    "httpheader": "\n".join([
+        "Header1: value1",
+        "Header2: value2",
+    ]),
+}
+hook2 = weechat.hook_url("http://localhost:8080/", options, 20000, "my_url_cb", "")
 ----
 
 ==== hook_connect

@@ -10207,7 +10207,6 @@ struct t_hook *weechat_hook_process (const char *command,
                                      void *callback_data);
 ----
 
-
 Paramètres :
 
 * _command_ : commande à lancer dans le processus fils, URL _(WeeChat ≥ 0.3.7)_
@@ -10441,7 +10440,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 Les paramètres sont les mêmes que ceux de la fonction
 <<_hook_process,hook_process>>, avec un paramètre supplémentaire :
 
-* _options_ : options pour la commande exécutée; la table de hachage est
+* _options_ : options pour la commande exécutée ; la table de hachage est
   dupliquée dans la fonction, donc il est possible de la supprimer après cet
   appel
 
@@ -10647,6 +10646,160 @@ hook4 = weechat.hook_process_hashtable("sh",
                                        {"arg1": "-c",
                                         "arg2": "ls -l /tmp | grep something"},
                                        20000, "my_process_cb", "")
+----
+
+==== hook_url
+
+_WeeChat ≥ 4.1.0._
+
+Transfert d'URL.
+
+Prototype :
+
+[source,c]
+----
+struct t_hook *weechat_hook_url (const char *url,
+                                 struct t_hashtable *options,
+                                 int timeout,
+                                 int (*callback)(const void *pointer,
+                                                 void *data,
+                                                 const char *url,
+                                                 struct t_hashtable *options,
+                                                 struct t_hashtable *output),
+                                 const void *callback_pointer,
+                                 void *callback_data);
+----
+
+Paramètres :
+
+* _url_ : URL
+* _options_ : options pour le transfert d'URL (voir ci-dessous) ; la table de
+  hachage est dupliquée dans la fonction, donc il est possible de la supprimer
+  après cet appel
+* _timeout_ : timeout pour le transfert d'URL (en millisecondes) : après de délai,
+  le transfert est stoppé (0 signifie pas de limite)
+* _callback_ : fonction appelée lorsque le transfert est terminé, paramètres et
+  valeur de retour :
+** _const void *pointer_ : pointeur
+** _void *data_ : pointeur
+** _const char *url_ : URL
+** _struct t_hashtable *options_ : options
+** _struct t_hashtable *output_ : résultat (les clés et valeurs sont des chaînes),
+   qui peut contenir les clés suivantes :
+*** _response_code_ : code réponse HTTP
+*** _headers_ : en-têtes HTTP dans la réponse
+*** _output_ : sortie standard (défini seulement si _file_out_ n'était pas défini
+    dans les options)
+*** _error_ : message d'erreur (défini seulement en cas d'erreur)
+** valeur de retour :
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
+
+Les options Curl suivantes sont disponibles (voir `+man curl_easy_setopt+` pour
+une description de chaque option) :
+
+include::{autogendir}/autogen_api_url_options.fr.adoc[tag=url_options]
+
+[NOTE]
+^(1)^ Pour les options avec le type "mask", le format est :
+"value1+value2+value3" ;
+pour les options avec le type "list", les éléments de la liste doivent être
+séparés par un retour à la ligne (`\n`). +
+^(2)^ Lorsque des constantes sont disponibles, elles doivent être utilisées
+comme valeur pour l'option.
+
+Ces deux options supplémentaires (chaînes) sont autorisées, pour le fichier en
+entrée/sortie :
+
+* _file_in_ : fichier à lire pour envoyer avec l'URL (envoi de fichier "post")
+* _file_out_ : écrire l'URL/fichier dans ce fichier (au lieu de la sortie
+  standard)
+
+Valeur de retour :
+
+* pointeur vers le nouveau "hook", NULL en cas d'erreur
+
+Exemple en C :
+
+[source,c]
+----
+int
+my_url_cb (const void *pointer, void *data, const char *url,
+           struct t_hashtable *options, struct t_hashtable *output)
+{
+    weechat_printf (NULL, "response_code : %s", weechat_hashtable_get (output, "response_code"));
+    weechat_printf (NULL, "headers : %s", weechat_hashtable_get (output, "headers"));
+    weechat_printf (NULL, "output : %s", weechat_hashtable_get (output, "output"));
+    weechat_printf (NULL, "error : %s", weechat_hashtable_get (output, "error"));
+    return WEECHAT_RC_OK;
+}
+
+/* example 1: sortie dans un fichier */
+struct t_hashtable *options_url1 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url1)
+{
+    weechat_hashtable_set (options_url1, "file_out", "/tmp/weechat.org.html");
+    struct t_hook *my_url_hook = weechat_hook_url ("https://weechat.org/",
+                                                   options_url1,
+                                                   20000,
+                                                   &my_url_cb, NULL, NULL);
+    weechat_hashtable_free (options_url1);
+}
+
+/* example 2: en-têtes HTTP personnalisés, sortie envoyée à la fonction de rappel */
+struct t_hashtable *options_url2 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url2)
+{
+    weechat_hashtable_set (options_url2, "httpheader",
+                           "Header1: valeur1\n"
+                           "Header2: valeur2");
+    struct t_hook *my_url_hook = weechat_hook_url ("http://localhost:8080/",
+                                                   options_url2,
+                                                   20000,
+                                                   &my_url_cb, NULL, NULL);
+    weechat_hashtable_free (options_url2);
+}
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def hook_url(url: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str: ...
+
+# exemple
+def my_url_cb(data: str, url: str, options: Dict[str, str], output: Dict[str, str]) -> int:
+    weechat.prnt("", "output: %s" % output)
+    return weechat.WEECHAT_RC_OK
+
+# exemple 1 : sortie dans un fichier
+hook1 = weechat.hook_url("https://weechat.org/",
+                         {"file_out": "/tmp/weechat.org.html"},
+                         20000, "my_url_cb", "")
+
+# exemple 2 : en-têtes HTTP personnalisés, sortie envoyée à la fonction de rappel
+options = {
+    "httpheader": "\n".join([
+        "Header1: valeur1",
+        "Header2: valeur2",
+    ]),
+}
+hook2 = weechat.hook_url("http://localhost:8080/", options, 20000, "my_url_cb", "")
 ----
 
 ==== hook_connect
