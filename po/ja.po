@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-06 19:11+0200\n"
+"POT-Creation-Date: 2023-09-08 13:01+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -3994,6 +3994,9 @@ msgstr "環境変数"
 
 msgid "value of an environment variable"
 msgstr "環境変数の値"
+
+msgid "variables that can be used in /eval command"
+msgstr ""
 
 msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
