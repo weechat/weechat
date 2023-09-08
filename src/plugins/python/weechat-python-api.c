@@ -2580,6 +2580,84 @@ API_FUNC(hook_process_hashtable)
 }
 
 int
+weechat_python_api_hook_url_cb (const void *pointer, void *data,
+                                const char *url,
+                                struct t_hashtable *options,
+                                struct t_hashtable *output)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    int *rc, ret;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (url) ? (char *)url : empty_arg;
+        func_argv[2] = options;
+        func_argv[3] = output;
+
+        rc = (int *) weechat_python_exec (script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          ptr_function,
+                                          "sshh", func_argv);
+
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+
+        return ret;
+    }
+
+    return WEECHAT_RC_ERROR;
+}
+
+API_FUNC(hook_url)
+{
+    char *url, *function, *data;
+    const char *result;
+    int timeout;
+    struct t_hashtable *options;
+    PyObject *dict;
+
+    API_INIT_FUNC(1, "hook_url", API_RETURN_EMPTY);
+    url = NULL;
+    dict = NULL;
+    options = NULL;
+    timeout = 0;
+    function = NULL;
+    data = NULL;
+    if (!PyArg_ParseTuple (args, "sOiss", &url, &dict, &timeout, &function,
+                           &data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    options = weechat_python_dict_to_hashtable (dict,
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
+    result = API_PTR2STR(plugin_script_api_hook_url (weechat_python_plugin,
+                                                     python_current_script,
+                                                     url,
+                                                     options,
+                                                     timeout,
+                                                     &weechat_python_api_hook_url_cb,
+                                                     function,
+                                                     data));
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_STRING(result);
+}
+
+int
 weechat_python_api_hook_connect_cb (const void *pointer, void *data,
                                     int status, int gnutls_rc,
                                     int sock, const char *error,
@@ -5461,6 +5539,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(hook_fd),
     API_DEF_FUNC(hook_process),
     API_DEF_FUNC(hook_process_hashtable),
+    API_DEF_FUNC(hook_url),
     API_DEF_FUNC(hook_connect),
     API_DEF_FUNC(hook_line),
     API_DEF_FUNC(hook_print),

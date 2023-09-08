@@ -2537,6 +2537,81 @@ weechat_guile_api_hook_process_hashtable (SCM command, SCM options, SCM timeout,
 }
 
 int
+weechat_guile_api_hook_url_cb (const void *pointer, void *data,
+                               const char *url,
+                               struct t_hashtable *options,
+                               struct t_hashtable *output)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    int *rc, ret;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (url) ? (char *)url : empty_arg;
+        func_argv[2] = options;
+        func_argv[3] = output;
+
+        rc = (int *) weechat_guile_exec (script,
+                                         WEECHAT_SCRIPT_EXEC_INT,
+                                         ptr_function,
+                                         "sshh", func_argv);
+
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+
+        return ret;
+    }
+
+    return WEECHAT_RC_ERROR;
+}
+
+SCM
+weechat_guile_api_hook_url (SCM url, SCM options, SCM timeout,
+                            SCM function, SCM data)
+{
+    const char *result;
+    SCM return_value;
+    struct t_hashtable *c_options;
+
+    API_INIT_FUNC(1, "hook_url", API_RETURN_EMPTY);
+    if (!scm_is_string (url) || !scm_list_p (options)
+        || !scm_is_integer (timeout) || !scm_is_string (function)
+        || !scm_is_string (data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    c_options = weechat_guile_alist_to_hashtable (options,
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING);
+
+    result = API_PTR2STR(plugin_script_api_hook_url (weechat_guile_plugin,
+                                                     guile_current_script,
+                                                     API_SCM_TO_STRING(url),
+                                                     c_options,
+                                                     scm_to_int (timeout),
+                                                     &weechat_guile_api_hook_url_cb,
+                                                     API_SCM_TO_STRING(function),
+                                                     API_SCM_TO_STRING(data)));
+
+    if (c_options)
+        weechat_hashtable_free (c_options);
+
+    API_RETURN_STRING(result);
+}
+
+int
 weechat_guile_api_hook_connect_cb (const void *pointer, void *data,
                                    int status, int gnutls_rc,
                                    int sock, const char *error,
@@ -5290,6 +5365,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(hook_fd, 6);
     API_DEF_FUNC(hook_process, 4);
     API_DEF_FUNC(hook_process_hashtable, 5);
+    API_DEF_FUNC(hook_url, 5);
     API_DEF_FUNC(hook_connect, 8);
     API_DEF_FUNC(hook_line, 5);
     API_DEF_FUNC(hook_print, 6);

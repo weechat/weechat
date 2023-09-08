@@ -705,6 +705,50 @@ plugin_script_api_hook_process (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * Hooks a URL.
+ *
+ * Returns pointer to new hook, NULL if error.
+ */
+
+struct t_hook *
+plugin_script_api_hook_url (struct t_weechat_plugin *weechat_plugin,
+                            struct t_plugin_script *script,
+                            const char *url,
+                            struct t_hashtable *options,
+                            int timeout,
+                            int (*callback)(const void *pointer,
+                                            void *data,
+                                            const char *url,
+                                            struct t_hashtable *options,
+                                            struct t_hashtable *output),
+                            const char *function,
+                            const char *data)
+{
+    char *function_and_data;
+    struct t_hook *new_hook;
+
+    if (!script)
+        return NULL;
+
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
+    new_hook = weechat_hook_url (url, options, timeout,
+                                 callback, script, function_and_data);
+
+    if (new_hook)
+    {
+        weechat_hook_set (new_hook, "subplugin", script->name);
+    }
+    else
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
+
+    return new_hook;
+}
+
+/*
  * Hooks a connection to a peer (using fork).
  *
  * Returns pointer to new hook, NULL if error.

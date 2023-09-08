@@ -107,6 +107,7 @@ function weechat_hook_timer(int $p0, int $p1, int $p2, mixed $p3, string $p4): s
 function weechat_hook_fd(int $p0, int $p1, int $p2, int $p3, mixed $p4, string $p5): string {}
 function weechat_hook_process(string $p0, int $p1, mixed $p2, string $p3): string {}
 function weechat_hook_process_hashtable(string $p0, array $p1, int $p2, mixed $p3, string $p4): string {}
+function weechat_hook_url(string $p0, array $p1, int $p2, mixed $p3, string $p4): string {}
 function weechat_hook_connect(): string {}
 function weechat_hook_line(string $p0, string $p1, string $p2, mixed $p3, string $p4): string {}
 function weechat_hook_print(string $p0, string $p1, string $p2, int $p3, mixed $p4, string $p5): string {}

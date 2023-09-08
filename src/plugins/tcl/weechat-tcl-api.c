@@ -2876,6 +2876,85 @@ API_FUNC(hook_process_hashtable)
 }
 
 int
+weechat_tcl_api_hook_url_cb (const void *pointer, void *data,
+                             const char *url,
+                             struct t_hashtable *options,
+                             struct t_hashtable *output)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    int *rc, ret;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (url) ? (char *)url : empty_arg;
+        func_argv[2] = options;
+        func_argv[3] = output;
+
+        rc = (int *) weechat_tcl_exec (script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       ptr_function,
+                                       "sshh", func_argv);
+
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+
+        return ret;
+    }
+
+    return WEECHAT_RC_ERROR;
+}
+
+API_FUNC(hook_url)
+{
+    Tcl_Obj *objp;
+    char *url, *function, *data;
+    const char *result;
+    struct t_hashtable *options;
+    int i, timeout;
+
+    API_INIT_FUNC(1, "hook_url", API_RETURN_EMPTY);
+    if (objc < 6)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    if ((Tcl_GetIntFromObj (interp, objv[3], &timeout) != TCL_OK))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    url = Tcl_GetStringFromObj (objv[1], &i);
+    options = weechat_tcl_dict_to_hashtable (interp, objv[2],
+                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                             WEECHAT_HASHTABLE_STRING,
+                                             WEECHAT_HASHTABLE_STRING);
+    function = Tcl_GetStringFromObj (objv[4], &i);
+    data = Tcl_GetStringFromObj (objv[5], &i);
+
+    result = API_PTR2STR(plugin_script_api_hook_url (weechat_tcl_plugin,
+                                                     tcl_current_script,
+                                                     url,
+                                                     options,
+                                                     timeout,
+                                                     &weechat_tcl_api_hook_url_cb,
+                                                     function,
+                                                     data));
+
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_STRING(result);
+}
+
+int
 weechat_tcl_api_hook_connect_cb (const void *pointer, void *data,
                                  int status, int gnutls_rc,
                                  int sock, const char *error,
@@ -6051,6 +6130,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(hook_fd);
     API_DEF_FUNC(hook_process);
     API_DEF_FUNC(hook_process_hashtable);
+    API_DEF_FUNC(hook_url);
     API_DEF_FUNC(hook_connect);
     API_DEF_FUNC(hook_line);
     API_DEF_FUNC(hook_print);

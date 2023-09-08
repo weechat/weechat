@@ -199,6 +199,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_hook_fd, arginfo_weechat_hook_fd)
     PHP_FE(weechat_hook_process, arginfo_weechat_hook_process)
     PHP_FE(weechat_hook_process_hashtable, arginfo_weechat_hook_process_hashtable)
+    PHP_FE(weechat_hook_url, arginfo_weechat_hook_url)
     PHP_FE(weechat_hook_connect, arginfo_weechat_hook_connect)
     PHP_FE(weechat_hook_line, arginfo_weechat_hook_line)
     PHP_FE(weechat_hook_print, arginfo_weechat_hook_print)
