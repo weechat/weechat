@@ -6858,9 +6858,10 @@ irc_command_init ()
         N_("send a CTCP action to a nick or channel"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-server <server>] <target>[,<target>...] <text>"),
-        N_("server: send to this server (internal name)\n"
-           "target: nick or channel (may be mask, '*' = current channel)\n"
-           "  text: text to send"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("server: send to this server (internal name)"),
+            N_("target: nick or channel (may be mask, \"*\" = current channel)"),
+            N_("text: text to send")),
         "-server %(irc_servers) %(nicks)|*"
         " || %(nicks)|*",
         &irc_command_action, NULL, NULL);
@@ -6869,7 +6870,8 @@ irc_command_init ()
         N_("find information about the administrator of the server"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<target>]"),
-        N_("target: server name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target: server name")),
         NULL, &irc_command_admin, NULL, NULL);
     weechat_hook_command (
         "allchan",
@@ -6877,33 +6879,28 @@ irc_command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>"
            " || [-current] [-parted] -include=<channel>[,<channel>...] <command>"),
-        N_(" -current: execute command for channels of current server only\n"
-           "  -parted: execute on parted channels only\n"
-           " -exclude: exclude some channels (wildcard \"*\" is allowed)\n"
-           " -include: include only some channels (wildcard \"*\" is allowed)\n"
-           "  command: command to execute (or text to send to buffer if "
-           "command does not start with '/')\n"
-           "\n"
-           "Command and arguments are evaluated (see /help eval), the following "
-           "variables are replaced:\n"
-           "  $server             server name\n"
-           "  $channel            channel name\n"
-           "  $nick               nick on server\n"
-           "  ${irc_server.xxx}   variable xxx in server\n"
-           "  ${irc_channel.xxx}  variable xxx in channel\n"
-           "\n"
-           "Examples:\n"
-           "  execute '/me is testing' on all channels:\n"
-           "    /allchan /me is testing\n"
-           "  say 'hello' everywhere but not on #weechat:\n"
-           "    /allchan -exclude=#weechat hello\n"
-           "  say 'hello' everywhere but not on #weechat and channels beginning "
-           "with #linux:\n"
-           "    /allchan -exclude=#weechat,#linux* hello\n"
-           "  say 'hello' on all channels beginning with #linux:\n"
-           "    /allchan -include=#linux* hello\n"
-           "  close all buffers with parted channels:\n"
-           "    /allchan -parted /close"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[-current]: execute command for channels of current server only"),
+            N_("raw[-parted]: execute on parted channels only"),
+            N_("raw[-exclude]: exclude some channels (wildcard \"*\" is allowed)"),
+            N_("raw[-include]: include only some channels (wildcard \"*\" is allowed)"),
+            N_("command: command to execute (or text to send to buffer if "
+               "command does not start with \"/\")"),
+            "",
+            N_("Command and arguments are evaluated (see /help eval), the following "
+               "variables are replaced:"),
+            N_("  $server: server name"),
+            N_("  $channel: channel name"),
+            N_("  $nick: nick on server"),
+            N_("  ${irc_server.xxx}: variable xxx in server"),
+            N_("  ${irc_channel.xxx}: variable xxx in channel"),
+            "",
+            N_("Examples:"),
+            AI("  /allchan /me is testing"),
+            AI("  /allchan -exclude=#weechat hello"),
+            AI("  /allchan -exclude=#weechat,#linux* hello"),
+            AI("  /allchan -include=#linux* hello"),
+            AI("  /allchan -parted /close")),
         "-current|-parted", &irc_command_allchan, NULL, NULL);
     weechat_hook_command (
         "allpv",
@@ -6911,33 +6908,28 @@ irc_command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-current] [-exclude=<nick>[,<nick>...]] <command>"
            " || [-current] -include=<nick>[,<nick>...] <command>"),
-        N_(" -current: execute command for private buffers of current server "
-           "only\n"
-           " -exclude: exclude some nicks (wildcard \"*\" is allowed)\n"
-           " -include: include only some nicks (wildcard \"*\" is allowed)\n"
-           "  command: command to execute (or text to send to buffer if "
-           "command does not start with '/')\n"
-           "\n"
-           "Command and arguments are evaluated (see /help eval), the following "
-           "variables are replaced:\n"
-           "  $server             server name\n"
-           "  $channel            channel name\n"
-           "  $nick               nick on server\n"
-           "  ${irc_server.xxx}   variable xxx in server\n"
-           "  ${irc_channel.xxx}  variable xxx in channel\n"
-           "\n"
-           "Examples:\n"
-           "  execute '/me is testing' on all private buffers:\n"
-           "    /allpv /me is testing\n"
-           "  say 'hello' everywhere but not for nick foo:\n"
-           "    /allpv -exclude=foo hello\n"
-           "  say 'hello' everywhere but not for nick foo and nicks beginning "
-           "with bar:\n"
-           "    /allpv -exclude=foo,bar* hello\n"
-           "  say 'hello' for all nicks beginning with bar:\n"
-           "    /allpv -include=bar* hello\n"
-           "  close all private buffers:\n"
-           "    /allpv /close"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[-current]: execute command for private buffers of current server "
+               "only"),
+            N_("raw[-exclude]: exclude some nicks (wildcard \"*\" is allowed)"),
+            N_("raw[-include]: include only some nicks (wildcard \"*\" is allowed)"),
+            N_("command: command to execute (or text to send to buffer if "
+               "command does not start with \"/\")"),
+            "",
+            N_("Command and arguments are evaluated (see /help eval), the following "
+               "variables are replaced:"),
+            N_("  $server: server name"),
+            N_("  $channel: channel name"),
+            N_("  $nick: nick on server"),
+            N_("  ${irc_server.xxx}: variable xxx in server"),
+            N_("  ${irc_channel.xxx}: variable xxx in channel"),
+            "",
+            N_("Examples:"),
+            AI("  /allpv /me is testing"),
+            AI("  /allpv -exclude=foo hello"),
+            AI("  /allpv -exclude=foo,bar* hello"),
+            AI("  /allpv -include=bar* hello"),
+            AI("  /allpv /close")),
         "-current", &irc_command_allpv, NULL, NULL);
     weechat_hook_command (
         "allserv",
@@ -6946,50 +6938,48 @@ irc_command_init ()
         N_("[-exclude=<server>[,<server>...]] <command>"
            " || -include=<server>[,<server>...] "
            "<command>"),
-        N_(" -exclude: exclude some servers (wildcard \"*\" is allowed)\n"
-           " -include: include only some servers (wildcard \"*\" is allowed)\n"
-           "  command: command to execute (or text to send to buffer if "
-           "command does not start with '/')\n"
-           "\n"
-           "Command and arguments are evaluated (see /help eval), the following "
-           "variables are replaced:\n"
-           "  $server             server name\n"
-           "  $nick               nick on server\n"
-           "  ${irc_server.xxx}   variable xxx in server\n"
-           "\n"
-           "Examples:\n"
-           "  change nick on all servers:\n"
-           "    /allserv /nick newnick\n"
-           "  set away on all servers:\n"
-           "    /allserv /away I'm away\n"
-           "  do a whois on my nick on all servers:\n"
-           "    /allserv /whois $nick"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[-exclude]: exclude some servers (wildcard \"*\" is allowed)"),
+            N_("raw[-include]: include only some servers (wildcard \"*\" is allowed)"),
+            N_("command: command to execute (or text to send to buffer if "
+               "command does not start with \"/\")"),
+            "",
+            N_("Command and arguments are evaluated (see /help eval), the following "
+               "variables are replaced:"),
+            N_("  $server: server name"),
+            N_("  $nick: nick on server"),
+            N_("  ${irc_server.xxx}: variable xxx in server"),
+            "",
+            N_("Examples:"),
+            AI("  /allserv /nick newnick"),
+            AI("  /allserv /away I'm away"),
+            AI("  /allserv /whois $nick")),
         NULL, &irc_command_allserv, NULL, NULL);
     weechat_hook_command (
         "auth",
         N_("authenticate with SASL"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<username> <password>]"),
-        N_("username: SASL username (content is evaluated, see /help eval; "
-           "server options are evaluated with ${irc_server.xxx} and ${server} "
-           "is replaced by the server name)\n"
-           "password: SASL password or path to file with private key "
-           "(content is evaluated, see /help eval; server options are "
-           "evaluated with ${irc_server.xxx} and ${server} is replaced by the "
-           "server name)\n"
-           "\n"
-           "If username and password are not provided, the values from server "
-           "options \"sasl_username\" and \"sasl_password\" (or \"sasl_key\") "
-           "are used.\n"
-           "\n"
-           "Examples:\n"
-           "  authenticate with username/password defined in the server:\n"
-           "    /auth\n"
-           "  authenticate as a different user:\n"
-           "    /auth user2 password2\n"
-           "  authenticate as a different user with mechanism "
-           "ecdsa-nist256p-challenge:\n"
-           "    /auth user2 ${weechat_config_dir}/ecdsa2.pem"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("username: SASL username (content is evaluated, see /help eval; "
+               "server options are evaluated with ${irc_server.xxx} and ${server} "
+               "is replaced by the server name)"),
+            N_("password: SASL password or path to file with private key "
+               "(content is evaluated, see /help eval; server options are "
+               "evaluated with ${irc_server.xxx} and ${server} is replaced by the "
+               "server name)"),
+            "",
+            N_("If username and password are not provided, the values from server "
+               "options \"sasl_username\" and \"sasl_password\" (or \"sasl_key\") "
+               "are used."),
+            "",
+            N_("Examples:"),
+            N_("  authenticate with username/password defined in the server:"),
+            AI("    /auth"),
+            N_("  authenticate as a different user:"),
+            AI("    /auth user2 password2"),
+            N_("  authenticate as a different user with mechanism ecdsa-nist256p-challenge:"),
+            AI("    /auth user2 ${weechat_config_dir}/ecdsa2.pem")),
         NULL, &irc_command_auth, NULL, NULL);
     weechat_hook_command (
         "autojoin",
@@ -7001,32 +6991,33 @@ irc_command_init ()
            " || apply"
            " || join"
            " || sort [buffer]"),
-        N_("    add: add current channel or a list of channels (with optional "
-           "keys) to the autojoin option; if you are on the channel and the "
-           "key is not provided, the key is read in the channel\n"
-           " addraw: use the IRC raw format (same as /join command): all "
-           "channels separated by commas, optional keys separated by commas\n"
-           "    del: delete current channel or a list of channels from the "
-           "autojoin option\n"
-           "channel: channel name\n"
-           "    key: key for the channel\n"
-           "  apply: set currently joined channels in the autojoin option\n"
-           "   join: join the channels in the autojoin option\n"
-           "   sort: sort alphabetically channels in the autojoin option; "
-           "with \"buffer\": first sort by buffer number, then alphabetically\n"
-           "\n"
-           "Examples:\n"
-           "  /autojoin add\n"
-           "  /autojoin add #test\n"
-           "  /autojoin add #chan1 #chan2\n"
-           "  /allchan /autojoin add\n"
-           "  /autojoin addraw #chan1,#chan2,#chan3 key1,key2\n"
-           "  /autojoin del\n"
-           "  /autojoin del #chan1\n"
-           "  /autojoin apply\n"
-           "  /autojoin join\n"
-           "  /autojoin sort\n"
-           "  /autojoin sort buffer"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[add]: add current channel or a list of channels (with optional "
+               "keys) to the autojoin option; if you are on the channel and the "
+               "key is not provided, the key is read in the channel"),
+            N_("raw[addraw]: use the IRC raw format (same as /join command): all "
+               "channels separated by commas, optional keys separated by commas"),
+            N_("raw[del]: delete current channel or a list of channels from the "
+               "autojoin option"),
+            N_("channel: channel name"),
+            N_("key: key for the channel"),
+            N_("raw[apply]: set currently joined channels in the autojoin option"),
+            N_("raw[join]: join the channels in the autojoin option"),
+            N_("raw[sort]: sort alphabetically channels in the autojoin option; "
+               "with \"buffer\": first sort by buffer number, then alphabetically"),
+            "",
+            N_("Examples:"),
+            AI("  /autojoin add"),
+            AI("  /autojoin add #test"),
+            AI("  /autojoin add #chan1 #chan2"),
+            AI("  /allchan /autojoin add"),
+            AI("  /autojoin addraw #chan1,#chan2,#chan3 key1,key2"),
+            AI("  /autojoin del"),
+            AI("  /autojoin del #chan1"),
+            AI("  /autojoin apply"),
+            AI("  /autojoin join"),
+            AI("  /autojoin sort"),
+            AI("  /autojoin sort buffer")),
         "add %(irc_channels)|%*"
         " || addraw %(irc_channels) %-"
         " || del %(irc_channels_autojoin)|%*"
@@ -7040,11 +7031,12 @@ irc_command_init ()
         N_("ban nicks or hosts"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>] [<nick> [<nick>...]]"),
-        N_("channel: channel name\n"
-           "   nick: nick or host\n"
-           "\n"
-           "Without argument, this command displays the ban list for current "
-           "channel."),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("nick: nick or host"),
+            "",
+            N_("Without argument, this command displays the ban list for current "
+               "channel.")),
         "%(irc_channel_nicks_hosts)", &irc_command_ban, NULL, NULL);
     weechat_hook_command (
         "cap",
@@ -7054,35 +7046,36 @@ irc_command_init ()
            " || list"
            " || req|ack [<capability> [<capability>...]]"
            " || end"),
-        N_("   ls: list the capabilities supported by the server\n"
-           " list: list the capabilities currently enabled\n"
-           "  req: request a new capability or remove a capability "
-           "(if starting with \"-\", for example: \"-multi-prefix\")\n"
-           "  ack: acknowledge capabilities which require client-side "
-           "acknowledgement\n"
-           "  end: end the capability negotiation\n"
-           "\n"
-           "Without argument, \"ls\" and \"list\" are sent.\n"
-           "\n"
-           "Capabilities supported by WeeChat are: "
-           "account-notify, account-tag, away-notify, batch, cap-notify, "
-           "chghost, draft/multiline, echo-message, extended-join, "
-           "invite-notify, message-tags, multi-prefix, server-time, setname, "
-           "userhost-in-names.\n"
-           "\n"
-           "The capabilities to automatically enable on servers can be set "
-           "in option irc.server_default.capabilities (or by server in "
-           "option irc.server.xxx.capabilities).\n"
-           "\n"
-           "Examples:\n"
-           "  display supported and enabled capabilities:\n"
-           "    /cap\n"
-           "  request capabilities multi-prefix and away-notify:\n"
-           "    /cap req multi-prefix away-notify\n"
-           "  request capability extended-join, remove capability multi-prefix:\n"
-           "    /cap req extended-join -multi-prefix\n"
-           "  remove capability away-notify:\n"
-           "    /cap req -away-notify"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[ls]: list the capabilities supported by the server"),
+            N_("raw[list]: list the capabilities currently enabled"),
+            N_("raw[req]: request a new capability or remove a capability "
+               "(if starting with \"-\", for example: \"-multi-prefix\")"),
+            N_("raw[ack]: acknowledge capabilities which require client-side "
+               "acknowledgement"),
+            N_("raw[end]: end the capability negotiation"),
+            "",
+            N_("Without argument, \"ls\" and \"list\" are sent."),
+            "",
+            N_("Capabilities supported by WeeChat are: "
+               "account-notify, account-tag, away-notify, batch, cap-notify, "
+               "chghost, draft/multiline, echo-message, extended-join, "
+               "invite-notify, message-tags, multi-prefix, server-time, setname, "
+               "userhost-in-names."),
+            "",
+            N_("The capabilities to automatically enable on servers can be set "
+               "in option irc.server_default.capabilities (or by server in "
+               "option irc.server.xxx.capabilities)."),
+            "",
+            N_("Examples:"),
+            N_("  display supported and enabled capabilities:"),
+            AI("    /cap"),
+            N_("  request capabilities multi-prefix and away-notify:"),
+            AI("    /cap req multi-prefix away-notify"),
+            N_("  request capability extended-join, remove capability multi-prefix:"),
+            AI("    /cap req extended-join -multi-prefix"),
+            N_("  remove capability away-notify:"),
+            AI("    /cap req -away-notify")),
         "ls"
         " || list"
         " || req " IRC_COMMAND_CAP_SUPPORTED "|%*"
@@ -7096,37 +7089,36 @@ irc_command_init ()
         N_("[<server> [<server>...]] [-<option>[=<value>]] [-no<option>] "
            "[-nojoin] [-switch]"
            " || -all|-auto|-open [-nojoin] [-switch]"),
-        N_("    server: server name, which can be:\n"
-           "            - internal server name (added by /server add, "
-           "recommended usage)\n"
-           "            - hostname/port or IP/port, port is 6697 by default "
-           "for TLS, 6667 otherwise\n"
-           "            - URL with format: irc[6][s]://[nickname[:password]@]"
-           "irc.example.org[:port][/#channel1][,#channel2[...]]\n"
-           "            Note: for an address/IP/URL, a temporary server is "
-           "added (NOT SAVED), see /help irc.look.temporary_servers\n"
-           "    option: set option for server (for boolean option, value can be "
-           "omitted)\n"
-           "  nooption: set boolean option to 'off' (for example: -notls)\n"
-           "      -all: connect to all servers defined in configuration\n"
-           "     -auto: connect to servers with autoconnect enabled\n"
-           "     -open: connect to all opened servers that are not currently "
-           "connected\n"
-           "   -nojoin: do not join any channel (even if autojoin is enabled on "
-           "server)\n"
-           "   -switch: switch to next server address\n"
-           "\n"
-           "To disconnect from a server or stop any connection attempt, use "
-           "command /disconnect.\n"
-           "\n"
-           "Examples:\n"
-           "  /connect libera\n"
-           "  /connect irc.oftc.net\n"
-           "  /connect irc.oftc.net/6667 -notls\n"
-           "  /connect irc6.oftc.net/9999 -ipv6\n"
-           "  /connect my.server.org -password=test\n"
-           "  /connect irc://nick@irc.oftc.net/#channel\n"
-           "  /connect -switch"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("server: server name, which can be:"),
+            N_("> - internal server name (added by /server add, "
+               "recommended usage)"),
+            N_("> - hostname/port or IP/port, port is 6697 by default "
+               "for TLS, 6667 otherwise"),
+            N_("> - URL with format: irc[6][s]://[nickname[:password]@]"
+               "irc.example.org[:port][/#channel1][,#channel2[...]]"),
+            N_("> Note: for an address/IP/URL, a temporary server is "
+               "added (NOT SAVED), see /help irc.look.temporary_servers"),
+            N_("option: set option for server (for boolean option, value can be "
+               "omitted)"),
+            N_("raw[nooption]: set boolean option to \"off\" (for example: -notls)"),
+            N_("raw[-all]: connect to all servers defined in configuration"),
+            N_("raw[-auto]: connect to servers with autoconnect enabled"),
+            N_("raw[-open]: connect to all opened servers that are not currently connected"),
+            N_("raw[-nojoin]: do not join any channel (even if autojoin is enabled on server)"),
+            N_("raw[-switch]: switch to next server address"),
+            "",
+            N_("To disconnect from a server or stop any connection attempt, use "
+               "command /disconnect."),
+            "",
+            N_("Examples:"),
+            AI("  /connect libera"),
+            AI("  /connect irc.oftc.net"),
+            AI("  /connect irc.oftc.net/6667 -notls"),
+            AI("  /connect irc6.oftc.net/9999 -ipv6"),
+            AI("  /connect my.server.org -password=test"),
+            AI("  /connect irc://nick@irc.oftc.net/#channel"),
+            AI("  /connect -switch")),
         "%(irc_servers)|-all|-auto|-open|-nojoin|-switch|%*",
         &irc_command_connect, NULL, NULL);
     weechat_hook_command (
@@ -7134,15 +7126,16 @@ irc_command_init ()
         N_("send a CTCP message (Client-To-Client Protocol)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-server <server>] <target>[,<target>...] <type> [<arguments>]"),
-        N_("   server: send to this server (internal name)\n"
-           "   target: nick or channel ('*' = current channel)\n"
-           "     type: CTCP type (examples: \"version\", \"ping\", etc.)\n"
-           "arguments: arguments for CTCP\n"
-           "\n"
-           "Examples:\n"
-           "  /ctcp toto time\n"
-           "  /ctcp toto version\n"
-           "  /ctcp * version"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("server: send to this server (internal name)"),
+            N_("target: nick or channel (\"*\" = current channel)"),
+            N_("type: CTCP type (examples: \"version\", \"ping\", etc.)"),
+            N_("arguments: arguments for CTCP"),
+            "",
+            N_("Examples:"),
+            AI("  /ctcp toto time"),
+            AI("  /ctcp toto version"),
+            AI("  /ctcp * version")),
         "-server %(irc_servers) %(irc_channel)|%(nicks)|* "
         IRC_COMMAND_CTCP_SUPPORTED_COMPLETION
         " || %(irc_channel)|%(nicks)|* "
@@ -7153,22 +7146,22 @@ irc_command_init ()
         N_("leave and rejoin a channel"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>[,<channel>...]] [<message>]"),
-        N_("channel: channel name\n"
-           "message: part message (displayed to other users)"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("message: part message (displayed to other users)")),
         "%(irc_msg_part)", &irc_command_cycle, NULL, NULL);
     weechat_hook_command (
         "dcc",
         N_("start a DCC (passive file transfer or direct chat)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("chat <nick> || send <nick> <file>"),
-        N_("nick: nick\n"
-           "file: filename (on local host)\n"
-           "\n"
-           "Examples:\n"
-           "  chat with nick \"toto\":\n"
-           "    /dcc chat toto\n"
-           "  send file \"/home/foo/bar.txt\" to nick \"toto\":\n"
-           "    /dcc send toto /home/foo/bar.txt"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick"),
+            N_("file: filename (on local host)"),
+            "",
+            N_("Examples:"),
+            AI("  /dcc chat toto"),
+            AI("  /dcc send toto /home/foo/bar.txt")),
         "chat %(nicks)"
         " || send %(nicks) "
         "%(filename:${modifier:eval_path_home,directory=data,"
@@ -7179,44 +7172,47 @@ irc_command_init ()
         N_("remove channel half-operator status from nick(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> [<nick>...] || * -yes"),
-        N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
-           "   *: remove channel half-operator status from everybody on channel "
-           "except yourself"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick or mask (wildcard \"*\" is allowed)"),
+            N_("*: remove channel half-operator status from everybody on channel "
+               "except yourself")),
         "%(nicks)|%*", &irc_command_dehalfop, NULL, NULL);
     weechat_hook_command (
         "deop",
         N_("remove channel operator status from nick(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> [<nick>...] || * -yes"),
-        N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
-           "   *: remove channel operator status from everybody on channel "
-           "except yourself"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick or mask (wildcard \"*\" is allowed)"),
+            N_("*: remove channel operator status from everybody on channel except yourself")),
         "%(nicks)|%*", &irc_command_deop, NULL, NULL);
     weechat_hook_command (
         "devoice",
         N_("remove voice from nick(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> [<nick>...] || * -yes"),
-        N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
-           "   *: remove voice from everybody on channel"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick or mask (wildcard \"*\" is allowed)"),
+            N_("*: remove voice from everybody on channel")),
         "%(nicks)|%*", &irc_command_devoice, NULL, NULL);
     weechat_hook_command (
         "die",
         N_("shutdown the server"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<target>]"),
-        N_("target: server name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target: server name")),
         NULL, &irc_command_die, NULL, NULL);
     weechat_hook_command (
         "disconnect",
         N_("disconnect from one or all IRC servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<server>|-all|-pending [<reason>]]"),
-        N_("  server: internal server name\n"
-           "    -all: disconnect from all servers\n"
-           "-pending: cancel auto-reconnection on servers currently "
-           "reconnecting\n"
-           "  reason: reason for the \"quit\""),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("server: internal server name"),
+            N_("raw[-all]: disconnect from all servers"),
+            N_("raw[-pending]: cancel auto-reconnection on servers currently reconnecting"),
+            N_("reason: reason for the \"quit\"")),
         "%(irc_servers)|-all|-pending",
         &irc_command_disconnect, NULL, NULL);
     weechat_hook_command (
@@ -7224,8 +7220,9 @@ irc_command_init ()
         N_("give channel half-operator status to nick(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> [<nick>...] || * -yes"),
-        N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
-           "   *: give channel half-operator status to everybody on channel"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick or mask (wildcard \"*\" is allowed)"),
+            N_("*: give channel half-operator status to everybody on channel")),
         "%(nicks)|%*", &irc_command_halfop, NULL, NULL);
     weechat_hook_command (
         "ignore",
@@ -7234,27 +7231,27 @@ irc_command_init ()
         N_("list"
            " || add [re:]<nick> [<server> [<channel>]]"
            " || del <number>|-all"),
-        N_("     list: list all ignores\n"
-           "      add: add an ignore\n"
-           "     nick: nick or hostname (can be a POSIX extended regular "
-           "expression if \"re:\" is given or a mask using \"*\" to replace "
-           "zero or more chars)\n"
-           "      del: delete an ignore\n"
-           "   number: number of ignore to delete (look at list to find it)\n"
-           "     -all: delete all ignores\n"
-           "   server: internal server name where ignore is working\n"
-           "  channel: channel name where ignore is working\n"
-           "\n"
-           "Note: the regular expression can start with \"(?-i)\" to become "
-            "case sensitive.\n"
-           "\n"
-           "Examples:\n"
-           "  ignore nick \"toto\" everywhere:\n"
-           "    /ignore add toto\n"
-           "  ignore host \"toto@domain.com\" on libera server:\n"
-           "    /ignore add toto@domain.com libera\n"
-           "  ignore host \"toto*@*.domain.com\" on libera/#weechat:\n"
-           "    /ignore add toto*@*.domain.com libera #weechat"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[list]: list all ignores"),
+            N_("raw[add]: add an ignore"),
+            N_("nick: nick or hostname; can be a POSIX extended regular expression "
+               "if \"re:\" is given or a mask using \"*\" to replace zero or more "
+               "chars (the regular expression can start with \"(?-i)\" to become "
+               "case sensitive)"),
+            N_("raw[del]: delete an ignore"),
+            N_("number: number of ignore to delete (look at list to find it)"),
+            N_("raw[-all]: delete all ignores"),
+            N_("server: internal server name where ignore is working"),
+            N_("channel: channel name where ignore is working"),
+            "",
+            N_("Note: if option irc.look.ignore_tag_messages is enabled, the "
+               "ignored messages are just tagged with \"irc_ignored\" instead "
+               "of being completely removed."),
+            "",
+            N_("Examples:"),
+            AI("  /ignore add toto"),
+            AI("  /ignore add toto@domain.com libera"),
+            AI("  /ignore add toto*@*.domain.com libera #weechat")),
         "list"
         " || add %(irc_channel_nicks_hosts) %(irc_servers) %(irc_channels) %-"
         " || del %(irc_ignores_numbers)|-all %-",
@@ -7264,22 +7261,25 @@ irc_command_init ()
         N_("get information describing the server"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<target>]"),
-        N_("target: server name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target: server name")),
         NULL, &irc_command_info, NULL, NULL);
     weechat_hook_command (
         "invite",
         N_("invite a nick on a channel"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> [<nick>...] [<channel>]"),
-        N_("   nick: nick\n"
-           "channel: channel name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick"),
+            N_("channel: channel name")),
         "%(nicks) %(irc_server_channels)", &irc_command_invite, NULL, NULL);
     weechat_hook_command (
         "ison",
         N_("check if a nick is currently on IRC"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> [<nick>...]"),
-        N_("nick: nick"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick")),
         "%(nicks)|%*", &irc_command_ison, NULL, NULL);
     weechat_hook_command (
         "join",
@@ -7287,17 +7287,18 @@ irc_command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-noswitch] [-server <server>] "
            "[<channel1>[,<channel2>...]] [<key1>[,<key2>...]]"),
-        N_("-noswitch: do not switch to new buffer\n"
-           "   server: send to this server (internal name)\n"
-           "  channel: channel name to join\n"
-           "      key: key to join the channel (channels with a key must be the "
-           "first in list)\n"
-           "\n"
-           "Examples:\n"
-           "  /join #weechat\n"
-           "  /join #protectedchan,#weechat key\n"
-           "  /join -server libera #weechat\n"
-           "  /join -noswitch #weechat"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[-noswitch]: do not switch to new buffer"),
+            N_("server: send to this server (internal name)"),
+            N_("channel: channel name"),
+            N_("key: key to join the channel (channels with a key must be the "
+               "first in list)"),
+            "",
+            N_("Examples:"),
+            AI("  /join #weechat"),
+            AI("  /join #protectedchan,#weechat key"),
+            AI("  /join -server libera #weechat"),
+            AI("  /join -noswitch #weechat")),
         "%(irc_channels)|-noswitch|-server|%(irc_servers)|%*",
         &irc_command_join, NULL, NULL);
     weechat_hook_command (
@@ -7305,29 +7306,30 @@ irc_command_init ()
         N_("kick a user out of a channel"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>] <nick> [<reason>]"),
-        N_("channel: channel name\n"
-           "   nick: nick\n"
-           " reason: reason (evaluated, see /help eval; special variables "
-           "${nick} (self nick), ${target} (target nick), ${channel} and "
-           "${server} are replaced by their values)"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("nick: nick"),
+            N_("reason: reason (evaluated, see /help eval; special variables "
+               "${nick} (self nick), ${target} (target nick), ${channel} and "
+               "${server} are replaced by their values)")),
         "%(nicks) %(irc_msg_kick) %-", &irc_command_kick, NULL, NULL);
     weechat_hook_command (
         "kickban",
         N_("kick a user out of a channel and ban the host"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>] <nick> [<reason>]"),
-        N_("channel: channel name\n"
-           "   nick: nick\n"
-           " reason: reason (evaluated, see /help eval; special variables "
-           "${nick} (self nick), ${target} (target nick), ${channel} and "
-           "${server} are replaced by their values)\n"
-           "\n"
-           "It is possible to kick/ban with a mask, nick will be extracted from "
-           "mask and replaced by \"*\".\n"
-           "\n"
-           "Example:\n"
-           "  ban \"*!*@host.com\" and then kick \"toto\":\n"
-           "    /kickban toto!*@host.com"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("nick: nick"),
+            N_("reason: reason (evaluated, see /help eval; special variables "
+               "${nick} (self nick), ${target} (target nick), ${channel} and "
+               "${server} are replaced by their values)"),
+            "",
+            N_("It is possible to kick/ban with a mask, nick will be extracted from "
+               "mask and replaced by \"*\"."),
+            "",
+            N_("Example:"),
+            AI("  /kickban toto!*@host.com")),
         "%(irc_channel_nicks_hosts) %(irc_msg_kick) %-",
         &irc_command_kickban, NULL, NULL);
     weechat_hook_command (
@@ -7335,16 +7337,18 @@ irc_command_init ()
         N_("close client-server connection"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> [<reason>]"),
-        N_("  nick: nick\n"
-           "reason: reason"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick"),
+            N_("reason: reason")),
         "%(nicks) %-", &irc_command_kill, NULL, NULL);
     weechat_hook_command (
         "knock",
         N_("send a notice to an invitation-only channel, requesting an invite"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<channel> [<message>]"),
-        N_("channel: channel name\n"
-           "message: message to send"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("message: message to send")),
         "%(irc_channels)",
         &irc_command_knock, NULL, NULL);
     weechat_hook_command (
@@ -7353,8 +7357,9 @@ irc_command_init ()
            "query"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[[<target>] <server_mask>]"),
-        N_("     target: this remote server should answer the query\n"
-           "server_mask: list of servers must match this mask"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target: this remote server should answer the query"),
+            N_("server_mask: list of servers must match this mask")),
         NULL, &irc_command_links, NULL, NULL);
     weechat_hook_command (
         "list",
@@ -7366,70 +7371,49 @@ irc_command_init ()
            " || -left|-right [<percent>]"
            " || -go <line>|end"
            " || -join"),
-        N_(" server: send to this server (internal name)\n"
-           "  regex: POSIX extended regular expression used to filter results "
-           "(case insensitive, can start by \"(?-i)\" to become case "
-           "sensitive); when a regular expression is used, the result is "
-           "displayed on server buffer instead of a dedicated buffer\n"
-           "channel: channel to list\n"
-           " target: server name\n"
-           "    -up: move the selected line up by \"number\" lines\n"
-           "  -down: move the selected line down by \"number\" lines\n"
-           "  -left: scroll the /list buffer by \"percent\" of width on the left\n"
-           " -right: scroll the /list buffer by \"percent\" of width on the right\n"
-           "    -go: select a line by number, first line number is 0 "
-           "(\"end\" to select the last line)\n"
-           "  -join: join the channel on the selected line\n"
-           "\n"
-           "Keys and input on /list buffer:\n"
-           "  up                       move one line up\n"
-           "  down                     move one line down\n"
-           "  pgup                     move one page up\n"
-           "  pgdn                     move one page down\n"
-           "  alt-home          <<     move to first line\n"
-           "  alt-end           >>     move to last line\n"
-           "  F11               <      scroll horizontally on the left\n"
-           "  F12               >      scroll horizontally on the right\n"
-           "                    *      show all channels (no filter)\n"
-           "                    xxx    show only channels with \"xxx\" in name or topic (case insensitive)\n"
-           "                    n:xxx  show only channels with \"xxx\" in name (case insensitive)\n"
-           "                    t:xxx  show only channels with \"xxx\" in topic (case insensitive)\n"
-           "                    u:n    show only channels with at least \"n\" users\n"
-           "                    u:>n   show only channels with more than \"n\" users\n"
-           "                    u:<n   show only channels with less than \"n\" users\n"
-           "                    c:xxx  show only channels matching the evaluated "
-           "condition \"xxx\", using following variables: name, name2, users, "
-           "topic\n"
-           "  ctrl-j            j      join channel on selected line\n"
-           "                    s:x,y  sort channels by fields x,y (see below)\n"
-           "                    s:     reset sort to its default value (see below)\n"
-           "                    $      refresh list (run again command /list)\n"
-           "                    q      close buffer\n"
-           "\n"
-           "Sort keys on /list buffer:\n"
-           "  name   channel name (eg: \"##test\")\n"
-           "  name2  channel name without prefix (eg: \"test\")\n"
-           "  users  number of users on channel\n"
-           "  topic  channel topic\n"
-           "\n"
-           "Examples:\n"
-           "  list all channels on server and display them in a dedicated buffer "
-           "(can be slow on large networks):\n"
-           "    /list\n"
-           "  list channel #weechat:\n"
-           "    /list #weechat\n"
-           "  list all channels beginning with \"#weechat\" (can be very slow "
-           "on large networks):\n"
-           "    /list -re #weechat.*\n"
-           "  on /list buffer:\n"
-           "    channels with \"weechat\" in name:\n"
-           "      n:weechat\n"
-           "    channels with at least 100 users:\n"
-           "      u:100\n"
-           "    channels with \"freebsd\" (case insensitive) in topic and more than 10 users:\n"
-           "      c:${topic} =- freebsd && ${users} > 10\n"
-           "    sort channels by users (big channels first), then name2 (name without prefix):\n"
-           "      s:-users,name2"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("server: send to this server (internal name)"),
+            N_("regex: POSIX extended regular expression used to filter results "
+               "(case insensitive, can start by \"(?-i)\" to become case "
+               "sensitive); when a regular expression is used, the result is "
+               "displayed on server buffer instead of a dedicated buffer"),
+            N_("channel: channel name"),
+            N_("target: server name"),
+            N_("raw[-up]: move the selected line up by \"number\" lines"),
+            N_("raw[-down]: move the selected line down by \"number\" lines"),
+            N_("raw[-left]: scroll the buffer by \"percent\" of width on the left"),
+            N_("raw[-right]: scroll the buffer by \"percent\" of width on the right"),
+            N_("raw[-go]: select a line by number, first line number is 0 "
+               "(\"end\" to select the last line)"),
+            N_("raw[-join]: join the channel on the selected line"),
+            "",
+            N_("For keys, input and mouse actions on the buffer, "
+               "see key bindings in User's guide."),
+            "",
+            N_("Sort keys on /list buffer:"),
+            N_("  raw[name]: channel name (eg: \"##test\")"),
+            N_("  raw[name2]: channel name without prefix (eg: \"test\")"),
+            N_("  raw[users]: number of users on channel"),
+            N_("  raw[topic]: channel topic"),
+            "",
+            N_("Examples:"),
+            N_("  list all channels on server and display them in a dedicated buffer "
+               "(can be slow on large networks):"),
+            AI("    /list"),
+            N_("  list channel #weechat:"),
+            AI("    /list #weechat"),
+            N_("  list all channels beginning with \"#weechat\" (can be very slow "
+               "on large networks):"),
+            AI("    /list -re #weechat.*"),
+            N_("  on /list buffer:"),
+            N_("    channels with \"weechat\" in name:"),
+            AI("      n:weechat"),
+            N_("    channels with at least 100 users:"),
+            AI("      u:100"),
+            N_("    channels with \"freebsd\" (case insensitive) in topic and more than 10 users:"),
+            AI("      c:${topic} =- freebsd && ${users} > 10"),
+            N_("    sort channels by users (big channels first), then name2 (name without prefix):"),
+            AI("      s:-users,name2")),
         "-server %(irc_servers)"
         " || -re"
         " || -up 1|2|3|4|5"
@@ -7444,8 +7428,9 @@ irc_command_init ()
         N_("get statistics about the size of the IRC network"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<mask> [<target>]]"),
-        N_("  mask: servers matching the mask only\n"
-           "target: server for forwarding request"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("mask: servers matching the mask only"),
+            N_("target: server for forwarding request")),
         NULL, &irc_command_lusers, NULL, NULL);
     weechat_hook_command (
         "map",
@@ -7458,7 +7443,8 @@ irc_command_init ()
         N_("send a CTCP action to the current channel"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<message>"),
-        N_("message: message to send"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("message: message to send")),
         NULL, &irc_command_me, NULL, NULL);
     weechat_hook_command (
         "mode",
@@ -7466,51 +7452,54 @@ irc_command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>]"
            " || <nick> [+|-]i|s|w|o"),
-        N_("channel modes:\n"
-           "  channel: channel name to modify (default is current one)\n"
-           "  o: give/take channel operator privileges\n"
-           "  p: private channel flag\n"
-           "  s: secret channel flag\n"
-           "  i: invite-only channel flag\n"
-           "  t: topic settable by channel operator only flag\n"
-           "  n: no messages to channel from clients on the outside\n"
-           "  m: moderated channel\n"
-           "  l: set the user limit to channel\n"
-           "  b: set a ban mask to keep users out\n"
-           "  e: set exception mask\n"
-           "  v: give/take the ability to speak on a moderated channel\n"
-           "  k: set a channel key (password)\n"
-           "user modes:\n"
-           "  nick: nick to modify\n"
-           "  i: mark a user as invisible\n"
-           "  s: mark a user for receive server notices\n"
-           "  w: user receives wallops\n"
-           "  o: operator flag\n"
-           "\n"
-           "List of modes is not comprehensive, you should read documentation "
-           "about your server to see all possible modes.\n"
-           "\n"
-           "Examples:\n"
-           "  protect topic on channel #weechat:\n"
-           "    /mode #weechat +t\n"
-           "  become invisible on server:\n"
-           "    /mode nick +i"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name to modify (default is current one)"),
+            "",
+            N_("Channel modes:"),
+            N_("  o: give/take channel operator privileges"),
+            N_("  p: private channel"),
+            N_("  s: secret channel"),
+            N_("  i: invite-only channel"),
+            N_("  t: topic settable by channel operator only"),
+            N_("  n: no messages to channel from clients on the outside"),
+            N_("  m: moderated channel"),
+            N_("  l: set the user limit to channel"),
+            N_("  b: set a ban mask to keep users out"),
+            N_("  e: set exception mask"),
+            N_("  v: give/take the ability to speak on a moderated channel"),
+            N_("  k: set a channel key (password)"),
+            "",
+            N_("User modes:"),
+            N_("  nick: nick to modify"),
+            N_("  i: invisible"),
+            N_("  s: user receives server notices"),
+            N_("  w: user receives wallops"),
+            N_("  o: operator"),
+            "",
+            N_("List of modes is not comprehensive, you should read documentation "
+               "about your server to see all possible modes."),
+            "",
+            N_("Examples:"),
+            AI("  /mode #weechat +t"),
+            AI("  /mode nick +i")),
         "%(irc_channel)|%(irc_server_nick)", &irc_command_mode, NULL, NULL);
     weechat_hook_command (
         "motd",
         N_("get the \"Message Of The Day\""),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<target>]"),
-        N_("target: server name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target: server name")),
         NULL, &irc_command_motd, NULL, NULL);
     weechat_hook_command (
         "msg",
         N_("send message to a nick or channel"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-server <server>] <target>[,<target>...] <text>"),
-        N_("server: send to this server (internal name)\n"
-           "target: nick or channel (may be mask, '*' = current channel)\n"
-           "  text: text to send"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("server: send to this server (internal name)"),
+            N_("target: nick or channel (may be mask, \"*\" = current channel)"),
+            N_("text: text to send")),
         "-server %(irc_servers) %(nicks)|*"
         " || %(nicks)|*",
         &irc_command_msg, NULL, NULL);
@@ -7519,10 +7508,11 @@ irc_command_init ()
         N_("list nicks on channels"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-count | -x] [<channel>[,<channel>...]]"),
-        N_(" -count: display only number of users\n"
-           "     -x: display only users with this mode: -o for ops, "
-           "-h for halfops, -v for voiced, etc. and -* for regular users\n"
-           "channel: channel name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[-count]: display only number of users"),
+            N_("raw[-x]: display only users with this mode: -o for ops, "
+               "-h for halfops, -v for voiced, etc. and -* for regular users"),
+            N_("channel: channel name")),
         "-count|%(irc_server_prefix_modes_filter) %(irc_channels)"
         " || %(irc_channels)", &irc_command_names, NULL, NULL);
     weechat_hook_command (
@@ -7530,8 +7520,9 @@ irc_command_init ()
         N_("change current nick"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-all] <nick>"),
-        N_("-all: set new nick for all connected servers\n"
-           "nick: new nick"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[-all]: set new nick for all connected servers"),
+            N_("nick: new nick")),
         "-all %(irc_server_nick)"
         " || %(irc_server_nick)",
         &irc_command_nick, NULL, NULL);
@@ -7540,9 +7531,10 @@ irc_command_init ()
         N_("send notice message to user"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-server <server>] <target> <text>"),
-        N_("server: send to this server (internal name)\n"
-           "target: nick or channel name\n"
-           "  text: text to send"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("server: send to this server (internal name)"),
+            N_("target: nick or channel name"),
+            N_("text: text to send")),
         "-server %(irc_servers) %(nicks)"
         " || %(nicks)",
         &irc_command_notice, NULL, NULL);
@@ -7552,24 +7544,21 @@ irc_command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("add <nick> [<server> [-away]]"
            " || del <nick>|-all [<server>]"),
-        N_("   add: add a notification\n"
-           "  nick: nick\n"
-           "server: internal server name (by default current server)\n"
-           " -away: notify when away message is changed (by doing whois on "
-           "nick)\n"
-           "   del: delete a notification\n"
-           "  -all: delete all notifications\n"
-           "\n"
-           "Without argument, this command displays notifications for current "
-           "server (or all servers if command is issued on core buffer).\n"
-           "\n"
-           "Examples:\n"
-           "  notify when \"toto\" joins/quits current server:\n"
-           "    /notify add toto\n"
-           "  notify when \"toto\" joins/quits libera server:\n"
-           "    /notify add toto libera\n"
-           "  notify when \"toto\" is away or back on libera server:\n"
-           "    /notify add toto libera -away"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[add]: add a notification"),
+            N_("nick: nick"),
+            N_("server: internal server name (by default current server)"),
+            N_("raw[-away]: notify when away message is changed (by doing whois on nick)"),
+            N_("raw[del]: delete a notification"),
+            N_("raw[-all]: delete all notifications"),
+            "",
+            N_("Without argument, this command displays notifications for current "
+               "server (or all servers if command is issued on core buffer)."),
+            "",
+            N_("Examples:"),
+            AI("  /notify add toto"),
+            AI("  /notify add toto libera"),
+            AI("  /notify add toto libera -away")),
         "add %(irc_channel_nicks) %(irc_servers) -away %-"
         " || del -all|%(irc_notify_nicks) %(irc_servers) %-",
         &irc_command_notify, NULL, NULL);
@@ -7578,50 +7567,56 @@ irc_command_init ()
         N_("give channel operator status to nick(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> [<nick>...] || * -yes"),
-        N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
-           "   *: give channel operator status to everybody on channel"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick or mask (wildcard \"*\" is allowed)"),
+            N_("*: give channel operator status to everybody on channel")),
         "%(nicks)|%*", &irc_command_op, NULL, NULL);
     weechat_hook_command (
         "oper",
         N_("get operator privileges"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<user> <password>"),
-        N_("    user: user\n"
-           "password: password"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("user: user"),
+            N_("password: password")),
         NULL, &irc_command_oper, NULL, NULL);
     weechat_hook_command (
         "part",
         N_("leave a channel"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>[,<channel>...]] [<message>]"),
-        N_("channel: channel name to leave\n"
-           "message: part message (displayed to other users)"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("message: part message (displayed to other users)")),
         "%(irc_msg_part)", &irc_command_part, NULL, NULL);
     weechat_hook_command (
         "ping",
         N_("send a ping to server"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<target1> [<target2>]"),
-        N_("target1: server\n"
-           "target2: forward ping to this server"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target1: server"),
+            N_("target2: forward ping to this server")),
         NULL, &irc_command_ping, NULL, NULL);
     weechat_hook_command (
         "pong",
         N_("answer to a ping message"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<daemon> [<daemon2>]"),
-        N_(" daemon: daemon who has responded to Ping message\n"
-           "daemon2: forward message to this daemon"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("daemon: daemon who has responded to Ping message"),
+            N_("daemon2: forward message to this daemon")),
         NULL, &irc_command_pong, NULL, NULL);
     weechat_hook_command (
         "query",
         N_("send a private message to a nick"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-noswitch] [-server <server>] <nick>[,<nick>...] [<text>]"),
-        N_("-noswitch: do not switch to new buffer\n"
-           "   server: send to this server (internal name)\n"
-           "     nick: nick\n"
-           "     text: text to send"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[-noswitch]: do not switch to new buffer"),
+            N_("server: send to this server (internal name)"),
+            N_("nick: nick"),
+            N_("text: text to send")),
         "-noswitch|-server %(irc_servers) %(nicks)"
         " || %(nicks)",
         &irc_command_query, NULL, NULL);
@@ -7630,19 +7625,21 @@ irc_command_init ()
         N_("quiet nicks or hosts"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>] [<nick> [<nick>...]]"),
-        N_("channel: channel name\n"
-           "   nick: nick or host\n"
-           "\n"
-           "Without argument, this command displays the quiet list for "
-           "current channel."),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("nick: nick or host"),
+            "",
+            N_("Without argument, this command displays the quiet list for "
+               "current channel.")),
         "%(irc_channel_nicks_hosts)", &irc_command_quiet, NULL, NULL);
     weechat_hook_command (
         "quote",
         N_("send raw data to server without parsing"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[-server <server>] <data>"),
-        N_("server: send to this server (internal name)\n"
-           "  data: raw data to send"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("server: send to this server (internal name)"),
+            N_("data: raw data to send")),
         "-server %(irc_servers)", &irc_command_quote, NULL, NULL);
     weechat_hook_command (
         "reconnect",
@@ -7650,11 +7647,11 @@ irc_command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<server> [<server>...] [-nojoin] [-switch]"
            " || -all [-nojoin] [-switch]"),
-        N_(" server: server to reconnect (internal name)\n"
-           "   -all: reconnect to all servers\n"
-           "-nojoin: do not join any channel (even if autojoin is enabled on "
-           "server)\n"
-           "-switch: switch to next server address"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("server: internal server name"),
+            N_("raw[-all]: reconnect to all servers"),
+            N_("raw[-nojoin]: do not join any channel (even if autojoin is enabled on server)"),
+            N_("raw[-switch]: switch to next server address")),
         "%(irc_servers)|-all|-nojoin|-switch|%*",
         &irc_command_reconnect, NULL, NULL);
     weechat_hook_command (
@@ -7662,24 +7659,27 @@ irc_command_init ()
         N_("tell the server to reload its config file"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<option>]"),
-        N_("option: extra option, for some servers"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("option: extra option, for some servers")),
         NULL, &irc_command_rehash, NULL, NULL);
     weechat_hook_command (
         "remove",
         N_("force a user to leave a channel"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>] <nick> [<reason>]"),
-        N_("channel: channel name\n"
-           "   nick: nick\n"
-           " reason: reason (special variables $nick, $channel and $server are "
-           "replaced by their values)"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("nick: nick"),
+            N_("reason: reason (special variables $nick, $channel and $server are "
+               "replaced by their values)")),
         "%(irc_channel)|%(nicks) %(nicks)", &irc_command_remove, NULL, NULL);
     weechat_hook_command (
         "restart",
         N_("tell the server to restart itself"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<target>]"),
-        N_("target: server name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target: server name")),
         NULL, &irc_command_restart, NULL, NULL);
     weechat_hook_command (
         "rules",
@@ -7692,48 +7692,54 @@ irc_command_init ()
         N_("force a user to join channel(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> <channel>[,<channel>...]"),
-        N_("   nick: nick\n"
-           "channel: channel name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick"),
+            N_("channel: channel name")),
         "%(nicks) %(irc_server_channels)", &irc_command_sajoin, NULL, NULL);
     weechat_hook_command (
         "samode",
         N_("change mode on channel, without having operator status"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>] <mode>"),
-        N_("channel: channel name\n"
-           "   mode: mode for channel"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("mode: mode for channel")),
         "%(irc_server_channels)", &irc_command_samode, NULL, NULL);
     weechat_hook_command (
         "sanick",
         N_("force a user to use another nick"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> <new_nick>"),
-        N_("    nick: nick\n"
-           "new_nick: new nick"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick"),
+            N_("new_nick: new nick")),
         "%(nicks) %(nicks)", &irc_command_sanick, NULL, NULL);
     weechat_hook_command (
         "sapart",
         N_("force a user to leave channel(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> <channel>[,<channel>...]"),
-        N_("   nick: nick\n"
-           "channel: channel name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick"),
+            N_("channel: channel name")),
         "%(nicks) %(irc_server_channels)", &irc_command_sapart, NULL, NULL);
     weechat_hook_command (
         "saquit",
         N_("force a user to quit server with a reason"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> <reason>"),
-        N_("  nick: nick\n"
-           "reason: reason"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick"),
+            N_("reason: reason")),
         "%(nicks)", &irc_command_saquit, NULL, NULL);
     weechat_hook_command (
         "service",
         N_("register a new service"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> <reserved> <distribution> <type> <reserved> <info>"),
-        N_("distribution: visibility of service\n"
-           "        type: reserved for future usage"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("distribution: visibility of service"),
+            N_("type: reserved for future usage")),
         NULL, &irc_command_service, NULL, NULL);
     weechat_hook_command (
         "server",
@@ -7748,60 +7754,60 @@ irc_command_init ()
            " || del|keep <name>"
            " || deloutq|jump"
            " || raw [<filter>]"),
-        N_("    list: list servers (without argument, this list is displayed)\n"
-           "listfull: list servers with detailed info for each server\n"
-           "     add: add a new server\n"
-           "    name: server name, for internal and display use; this name "
-           "is used to connect to the server (/connect name) and to set server "
-           "options: irc.server.name.xxx\n"
-           "hostname: name or IP address of server, with optional port "
-           "(default: 6697 for TLS, 6667 otherwise), many addresses can be "
-           "separated by a comma\n"
-           "   -temp: add a temporary server (not saved)\n"
-           "  option: set option for server (for boolean option, value can be "
-           "omitted)\n"
-           "nooption: set boolean option to 'off' (for example: -notls)\n"
-           "    copy: duplicate a server\n"
-           "  rename: rename a server\n"
-           " reorder: reorder list of servers\n"
-           "    open: open the server buffer without connecting\n"
-           "    keep: keep server in config file (for temporary servers only)\n"
-           "     del: delete a server\n"
-           " deloutq: delete messages out queue for all servers (all messages "
-           "WeeChat is currently sending)\n"
-           "    jump: jump to server buffer\n"
-           "     raw: open buffer with raw IRC data\n"
-           "  filter: set a new filter to see only matching messages (this "
-           "filter can be used as input in raw IRC data buffer as well); "
-           "allowed formats are:\n"
-           "            *       show all messages (no filter)\n"
-           "            xxx     show only messages containing \"xxx\"\n"
-           "            s:xxx   show only messages for server \"xxx\"\n"
-           "            f:xxx   show only messages with a flag: recv (message "
-           "received), sent (message sent), modified (message modified by "
-           "a modifier), redirected (message redirected)\n"
-           "            m:xxx   show only IRC command \"xxx\"\n"
-           "            c:xxx   show only messages matching the evaluated "
-           "condition \"xxx\", using following variables: output of function "
-           "irc_message_parse (like nick, command, channel, text, etc., see "
-           "function info_get_hashtable in plugin API reference for the list "
-           "of all variables), date (format: \"yyyy-mm-dd hh:mm:ss\"), server, "
-           "recv, sent, modified, redirected\n"
-           "\n"
-           "Examples:\n"
-           "  /server listfull\n"
-           "  /server add libera irc.libera.chat\n"
-           "  /server add libera irc.libera.chat/6667 -notls -autoconnect\n"
-           "  /server add chatspike irc.chatspike.net/6667,"
-           "irc.duckspike.net/6667 -notls\n"
-           "  /server copy libera libera-test\n"
-           "  /server rename libera-test libera2\n"
-           "  /server reorder libera2 libera\n"
-           "  /server del libera\n"
-           "  /server deloutq\n"
-           "  /server raw\n"
-           "  /server raw s:libera\n"
-           "  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[list]: list servers (without argument, this list is displayed)"),
+            N_("raw[listfull]: list servers with detailed info for each server"),
+            N_("raw[add]: add a new server"),
+            N_("name: server name, for internal and display use; this name "
+               "is used to connect to the server (/connect name) and to set server "
+               "options: irc.server.name.xxx"),
+            N_("hostname: name or IP address of server, with optional port "
+               "(default: 6697 for TLS, 6667 otherwise), many addresses can be "
+               "separated by a comma"),
+            N_("raw[-temp]: add a temporary server (not saved)"),
+            N_("option: set option for server (for boolean option, value can be omitted)"),
+            N_("raw[nooption]: set boolean option to \"off\" (for example: -notls)"),
+            N_("raw[copy]: duplicate a server"),
+            N_("raw[rename]: rename a server"),
+            N_("raw[reorder]: reorder list of servers"),
+            N_("raw[open]: open the server buffer without connecting"),
+            N_("raw[keep]: keep server in config file (for temporary servers only)"),
+            N_("raw[del]: delete a server"),
+            N_("raw[deloutq]: delete messages out queue for all servers (all messages "
+               "WeeChat is currently sending)"),
+            N_("raw[jump]: jump to server buffer"),
+            N_("raw[raw]: open buffer with raw IRC data"),
+            N_("filter: set a new filter to see only matching messages (this "
+               "filter can be used as input in raw IRC data buffer as well); "
+               "allowed formats are:"),
+            N_("> `*`: show all messages (no filter)"),
+            N_("> `xxx`: show only messages containing \"xxx\""),
+            N_("> `s:xxx`: show only messages for server \"xxx\""),
+            N_("> `f:xxx`: show only messages with a flag: recv (message "
+               "received), sent (message sent), modified (message modified by "
+               "a modifier), redirected (message redirected)"),
+            N_("> `m:xxx`: show only IRC command \"xxx\""),
+            N_("> `c:xxx`: show only messages matching the evaluated "
+               "condition \"xxx\", using following variables: output of function "
+               "irc_message_parse (like nick, command, channel, text, etc., see "
+               "function info_get_hashtable in plugin API reference for the list "
+               "of all variables), date (format: \"yyyy-mm-dd hh:mm:ss\"), server, "
+               "recv, sent, modified, redirected"),
+            "",
+            N_("Examples:"),
+            AI("  /server listfull"),
+            AI("  /server add libera irc.libera.chat"),
+            AI("  /server add libera irc.libera.chat/6667 -notls -autoconnect"),
+            AI("  /server add chatspike irc.chatspike.net/6667,"
+               "irc.duckspike.net/6667 -notls"),
+            AI("  /server copy libera libera-test"),
+            AI("  /server rename libera-test libera2"),
+            AI("  /server reorder libera2 libera"),
+            AI("  /server del libera"),
+            AI("  /server deloutq"),
+            AI("  /server raw"),
+            AI("  /server raw s:libera"),
+            AI("  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo")),
         "list %(irc_servers)"
         " || listfull %(irc_servers)"
         " || add %(irc_servers)"
@@ -7820,39 +7826,44 @@ irc_command_init ()
         N_("list services currently connected to the network"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<mask> [<type>]]"),
-        N_("mask: list only services matching this mask\n"
-           "type: list only services of this type"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("mask: list only services matching this mask"),
+            N_("type: list only services of this type")),
         NULL, &irc_command_servlist, NULL, NULL);
     weechat_hook_command (
         "squery",
         N_("deliver a message to a service"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<service> <text>"),
-        N_("service: name of service\n"
-           "   text: text to send"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("service: name of service"),
+            N_("text: text to send")),
         NULL, &irc_command_squery, NULL, NULL);
     weechat_hook_command (
         "setname",
         N_("set real name"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<realname>"),
-        N_("realname: new real name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("realname: new real name")),
         NULL, &irc_command_setname, NULL, NULL);
     weechat_hook_command (
         "squit",
         N_("disconnect server links"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<target> <comment>"),
-        N_( " target: server name\n"
-            "comment: comment"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target: server name"),
+            N_("comment: comment")),
         NULL, &irc_command_squit, NULL, NULL);
     weechat_hook_command (
         "stats",
         N_("query statistics about server"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<query> [<target>]]"),
-        N_(" query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
-           "target: server name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("query: c/h/i/k/l/m/o/y/u (see RFC1459)"),
+            N_("target: server name")),
         NULL, &irc_command_stats, NULL, NULL);
     weechat_hook_command (
         "summon",
@@ -7861,41 +7872,46 @@ irc_command_init ()
            "IRC"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<user> [<target> [<channel>]]"),
-        N_("   user: username\n"
-           " target: server name\n"
-           "channel: channel name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("user: username"),
+            N_("target: server name"),
+            N_("channel: channel name")),
         NULL, &irc_command_summon, NULL, NULL);
     weechat_hook_command (
         "time",
         N_("query local time from server"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<target>]"),
-        N_("target: query time from specified server"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target: query time from specified server")),
         NULL, &irc_command_time, NULL, NULL);
     weechat_hook_command (
         "topic",
         N_("get/set channel topic"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>] [<topic>|-delete]"),
-        N_("channel: channel name\n"
-           "  topic: new topic\n"
-           "-delete: delete channel topic"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("topic: new topic"),
+            N_("raw[-delete]: delete channel topic")),
         "%(irc_channel_topic)|-delete", &irc_command_topic, NULL, NULL);
     weechat_hook_command (
         "trace",
         N_("find the route to specific server"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<target>]"),
-        N_("target: server name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target: server name")),
         NULL, &irc_command_trace, NULL, NULL);
     weechat_hook_command (
         "unban",
         N_("unban nicks or hosts"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>] <nick>|<number> [<nick>|<number>...]"),
-        N_("channel: channel name\n"
-           "   nick: nick or host\n"
-           " number: ban number (as displayed by command /ban)"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("nick: nick or host"),
+            N_("number: ban number (as displayed by command /ban)")),
         "%(irc_modelist_masks:b)|%(irc_modelist_numbers:b)",
         &irc_command_unban, NULL, NULL);
     weechat_hook_command (
@@ -7903,9 +7919,10 @@ irc_command_init ()
         N_("unquiet nicks or hosts"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>] <nick>|<number> [<nick>|<number>...]"),
-        N_("channel: channel name\n"
-           "   nick: nick or host\n"
-           " number: quiet number (as displayed by command /quiet)"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("nick: nick or host"),
+            N_("number: quiet number (as displayed by command /quiet)")),
         "%(irc_modelist_masks:q)|%(irc_modelist_numbers:q)",
         &irc_command_unquiet, NULL, NULL);
     weechat_hook_command (
@@ -7913,78 +7930,86 @@ irc_command_init ()
         N_("return a list of information about nicks"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> [<nick>...]"),
-        N_("nick: nick"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick")),
         "%(nicks)", &irc_command_userhost, NULL, NULL);
     weechat_hook_command (
         "users",
         N_("list of users logged into the server"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<target>]"),
-        N_("target: server name"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target: server name")),
         NULL, &irc_command_users, NULL, NULL);
     weechat_hook_command (
         "version",
         N_("give the version info of nick or server (current or specified)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<target>|<nick>]"),
-        N_("target: server name\n"
-           "  nick: nick"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target: server name"),
+            N_("nick: nick")),
         "%(nicks)", &irc_command_version, NULL, NULL);
     weechat_hook_command (
         "voice",
         N_("give voice to nick(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick> [<nick>...] || * -yes"),
-        N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
-           "   *: give voice to everybody on channel"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick or mask (wildcard \"*\" is allowed)"),
+            N_("*: give voice to everybody on channel")),
         "%(nicks)|%*", &irc_command_voice, NULL, NULL);
     weechat_hook_command (
         "wallchops",
         N_("send a notice to channel ops"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<channel>] <text>"),
-        N_("channel: channel name\n"
-           "   text: text to send"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("channel: channel name"),
+            N_("text: text to send")),
         NULL, &irc_command_wallchops, NULL, NULL);
     weechat_hook_command (
         "wallops",
         N_("send a message to all currently connected users who have set the "
-           "'w' user mode for themselves"),
+           "\"w\" user mode for themselves"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<text>"),
-        N_("text: text to send"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("text: text to send")),
         NULL, &irc_command_wallops, NULL, NULL);
     weechat_hook_command (
         "who",
         N_("generate a query which returns a list of information"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<mask> [o]]"),
-        N_("mask: only information which match this mask\n"
-           "   o: only operators are returned according to the mask supplied"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("mask: only information which match this mask"),
+            N_("o: only operators are returned according to the mask supplied")),
         "%(irc_channels)", &irc_command_who, NULL, NULL);
     weechat_hook_command (
         "whois",
         N_("query information about user(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<target>] [<nick>[,<nick>...]]"),
-        N_("target: server name\n"
-           "  nick: nick (may be a mask)\n"
-           "\n"
-           "Without argument, this command will do a whois on:\n"
-           "- your own nick if buffer is a server/channel\n"
-           "- remote nick if buffer is a private.\n"
-           "\n"
-           "If option irc.network.whois_double_nick is enabled, two nicks are "
-           "sent (if only one nick is given), to get idle time in answer."),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("target: server name"),
+            N_("nick: nick (may be a mask)"),
+            "",
+            N_("Without argument, this command will do a whois on:"),
+            N_("  - your own nick if buffer is a server/channel"),
+            N_("  - remote nick if buffer is a private."),
+            "",
+            N_("If option irc.network.whois_double_nick is enabled, two nicks are "
+               "sent (if only one nick is given), to get idle time in answer.")),
         "%(nicks)", &irc_command_whois, NULL, NULL);
     weechat_hook_command (
         "whowas",
         N_("ask for information about a nick which no longer exists"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<nick>[,<nick>...] [<count> [<target>]]"),
-        N_("  nick: nick\n"
-           " count: number of replies to return (full search if negative "
-           "number)\n"
-           "target: reply should match this mask"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("nick: nick"),
+            N_("count: number of replies to return (full search if negative number)"),
+            N_("target: reply should match this mask")),
         "%(nicks)", &irc_command_whowas, NULL, NULL);
 }
