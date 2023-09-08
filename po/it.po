@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-08 13:01+0200\n"
+"POT-Creation-Date: 2023-09-08 13:02+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14991,6 +14991,11 @@ msgid "%s%s: CRC32 error while resuming"
 msgstr "%s%s: errore durante il caricamento del file \"%s\""
 
 #, fuzzy, c-format
+#| msgid "%s%s: unable to read file \"%s\""
+msgid "%s%s: unable to read file \"%s\": %s"
+msgstr "%s%s: impossibile leggere il file \"%s\""
+
+#, fuzzy, c-format
 msgid "%s%s: unable to fork (%s)"
 msgstr "%s%s: impossibile effettuare il fork"
 
@@ -15001,6 +15006,11 @@ msgid ""
 msgstr ""
 "%s: invio file a %s (%s.%s), nome: %s (nome file locale: %s), %llu byte "
 "(protocollo: %s)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to write log file \"%s\": %s"
+msgid "%s%s: unable to write file \"%s\": %s"
+msgstr "%s%s: impossibile scrivere il file di log \"%s\": %s"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"

@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-08 13:01+0200\n"
+"POT-Creation-Date: 2023-09-08 13:02+0200\n"
 "PO-Revision-Date: 2023-09-08 07:55+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -17428,6 +17428,11 @@ msgstr "%s%s: Datei %s besitzt fehlerhafte CRC32 Prüfsumme"
 msgid "%s%s: CRC32 error while resuming"
 msgstr "%s%s: CRC32 Fehler bei der Wiederaufnahme"
 
+#, fuzzy, c-format
+#| msgid "%s%s: unable to read file \"%s\""
+msgid "%s%s: unable to read file \"%s\": %s"
+msgstr "%s%s: Datei \"%s\" kann nicht gelesen werden"
+
 #, c-format
 msgid "%s%s: unable to fork (%s)"
 msgstr "%s%s: ein Fork kann nicht erstellt werden (%s)"
@@ -17439,6 +17444,11 @@ msgid ""
 msgstr ""
 "%s: sende Datei an %s (%s, %s.%s), Name: %s (lokaler Dateiname: %s), %llu "
 "Bytes (Protokoll: %s)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to write log file \"%s\": %s"
+msgid "%s%s: unable to write file \"%s\": %s"
+msgstr "%s%s: Protokoll-Datei \"%s\" kann nicht geschrieben werden: %s"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"

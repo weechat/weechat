@@ -65,6 +65,7 @@ Bug fixes::
   * script: add parameters up/down/go in `/help script` and command completion
   * script: fix cursor position after `/script list -i` or `/script list -il`
   * script: fix buffer used by command `/script list -i|-il|-o|-ol`
+  * xfer: display an error message when opening file for read or write fails (issue #2010)
 
 Tests::
 

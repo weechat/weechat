@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-08 13:01+0200\n"
+"POT-Creation-Date: 2023-09-08 13:02+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -16705,6 +16705,11 @@ msgstr "%s%s: погрешан CRC32 за фајл %s"
 msgid "%s%s: CRC32 error while resuming"
 msgstr "%s%s: CRC32 грешка приликом настављања"
 
+#, fuzzy, c-format
+#| msgid "%s%s: unable to read file \"%s\""
+msgid "%s%s: unable to read file \"%s\": %s"
+msgstr "%s%s: фајл „%s” не може да се прочита"
+
 #, c-format
 msgid "%s%s: unable to fork (%s)"
 msgstr "%s%s: није могуће рачвање (%s)"
@@ -16716,6 +16721,11 @@ msgid ""
 msgstr ""
 "%s: слање фајла за %s (%s, %s.%s), име: %s (локално име фајла: %s), %llu "
 "бајтова (протокол: %s)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to write log file \"%s\": %s"
+msgid "%s%s: unable to write file \"%s\": %s"
+msgstr "%s%s: не може да се упише у лог фајл „%s”: %s"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"

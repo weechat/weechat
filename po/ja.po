@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-08 13:01+0200\n"
+"POT-Creation-Date: 2023-09-08 13:02+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -16515,6 +16515,11 @@ msgstr "%s%s: ファイル %s の CRC32 が違います"
 msgid "%s%s: CRC32 error while resuming"
 msgstr "%s%s: レジューム中に CRC32 エラー"
 
+#, fuzzy, c-format
+#| msgid "%s%s: unable to read file \"%s\""
+msgid "%s%s: unable to read file \"%s\": %s"
+msgstr "%s%s: ファイル \"%s\" を読み込めません"
+
 #, c-format
 msgid "%s%s: unable to fork (%s)"
 msgstr "%s%s: フォークできません (%s)"
@@ -16526,6 +16531,11 @@ msgid ""
 msgstr ""
 "%s: %s (%s、%s.%s) へファイルを送信: 名前: %s (ローカルファイル名: %s)、%llu "
 "バイト (プロトコル: %s)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to write log file \"%s\": %s"
+msgid "%s%s: unable to write file \"%s\": %s"
+msgstr "%s%s: ログファイル \"%s\" の書き込みに失敗: %s"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"

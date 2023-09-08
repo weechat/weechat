@@ -331,6 +331,18 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
 
     xfer->file = open (xfer->local_filename, O_RDONLY | O_NONBLOCK, 0644);
 
+    if (xfer->file < 0)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: unable to read file \"%s\": %s"),
+                        weechat_prefix ("error"),
+                        XFER_PLUGIN_NAME,
+                        xfer->local_filename,
+                        strerror (errno));
+        xfer_close (xfer, XFER_STATUS_FAILED);
+        xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+    }
+
     switch (pid = fork ())
     {
         case -1:  /* fork failed */
@@ -406,6 +418,19 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
         xfer->file = open (xfer->temp_local_filename,
                            O_CREAT | O_TRUNC | O_WRONLY | O_NONBLOCK,
                            0644);
+    }
+
+    if (xfer->file < 0)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: unable to write file \"%s\": %s"),
+                        weechat_prefix ("error"),
+                        XFER_PLUGIN_NAME,
+                        xfer->temp_local_filename,
+                        strerror (errno));
+        xfer_close (xfer, XFER_STATUS_FAILED);
+        xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+        return;
     }
 
     switch (pid = fork ())
@@ -872,11 +897,10 @@ xfer_network_connect_init (struct t_xfer *xfer)
     }
     else
     {
+        xfer->status = XFER_STATUS_CONNECTING;
         /* for a file: launch child process */
         if (XFER_IS_FILE(xfer->type) && XFER_IS_ACTIVE(xfer->type))
             xfer_network_recv_file_fork (xfer);
-
-        xfer->status = XFER_STATUS_CONNECTING;
     }
     xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
 }

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-08 13:01+0200\n"
+"POT-Creation-Date: 2023-09-08 13:02+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14543,6 +14543,11 @@ msgid "%s%s: CRC32 error while resuming"
 msgstr "%s%s: chyba při načítání souboru \"%s\""
 
 #, fuzzy, c-format
+#| msgid "%s%s: unable to read file \"%s\""
+msgid "%s%s: unable to read file \"%s\": %s"
+msgstr "%s%s: nemůžu číst soubor \"%s\""
+
+#, fuzzy, c-format
 msgid "%s%s: unable to fork (%s)"
 msgstr "%s%s: nemohu provést fork"
 
@@ -14553,6 +14558,10 @@ msgid ""
 msgstr ""
 "%s: posílám soubor k %s: %s (lokální jméno souboru: %s), %llu bytů "
 "(protokol: %s)"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to write file \"%s\": %s"
+msgstr "%s%s: nemůžu zapsat log soubor \"%s\""
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"

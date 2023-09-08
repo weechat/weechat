@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-08 13:01+0200\n"
+"POT-Creation-Date: 2023-09-08 13:02+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -17408,6 +17408,11 @@ msgstr "%s%s: %s dosyası için hatalı CRC32"
 msgid "%s%s: CRC32 error while resuming"
 msgstr "%s%s: Sürdürme sırasında CRC32 hatası"
 
+#, fuzzy, c-format
+#| msgid "%s%s: unable to read file \"%s\""
+msgid "%s%s: unable to read file \"%s\": %s"
+msgstr "%s%s: \"%s\" dosyası okunamıyor"
+
 #, c-format
 msgid "%s%s: unable to fork (%s)"
 msgstr "%s%s: Çatallanamıyor (%s)"
@@ -17419,6 +17424,11 @@ msgid ""
 msgstr ""
 "%s: Dosya gönderiliyor: %s (%s, %s.%s), ad: %s (yerel dosya adı: %s), %llu "
 "bayt (protokol: %s)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to write log file \"%s\": %s"
+msgid "%s%s: unable to write file \"%s\": %s"
+msgstr "%s%s: \"%s\" günlük dosyası yazılamıyor: %s"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"
