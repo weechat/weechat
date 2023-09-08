@@ -169,6 +169,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       wee-hook-process.c        | Hook "process".
 |       wee-hook-signal.c         | Hook "signal".
 |       wee-hook-timer.c          | Hook "timer".
+|       wee-hook-url.c            | Hook "url".
 | gui/                            | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces).
 |    gui-bar-item.c               | Objets de barre.
 |    gui-bar-window.c             | Fenêtres de barre.

@@ -40,6 +40,7 @@ struct t_hook;
 #include "hook/wee-hook-process.h"
 #include "hook/wee-hook-signal.h"
 #include "hook/wee-hook-timer.h"
+#include "hook/wee-hook-url.h"
 
 struct t_gui_bar;
 struct t_gui_buffer;
@@ -73,6 +74,7 @@ enum t_hook_type
     HOOK_TYPE_INFOLIST,                /* get some info as infolist         */
     HOOK_TYPE_HDATA,                   /* get hdata pointer                 */
     HOOK_TYPE_FOCUS,                   /* focus event (mouse/key)           */
+    HOOK_TYPE_URL,                     /* URL transfer                      */
     /* number of hook types */
     HOOK_NUM_TYPES,
 };

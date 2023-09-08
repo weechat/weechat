@@ -139,6 +139,10 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
   endif()
 endif()
 
+if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
+  list(APPEND EXTRA_LIBS "pthread")
+endif()
+
 # binary to run tests
 set(WEECHAT_TESTS_SRC
   tests.cpp tests.h

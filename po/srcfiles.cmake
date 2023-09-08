@@ -35,6 +35,8 @@ SET(WEECHAT_SOURCES
 ./src/core/hook/wee-hook-signal.h
 ./src/core/hook/wee-hook-timer.c
 ./src/core/hook/wee-hook-timer.h
+./src/core/hook/wee-hook-url.c
+./src/core/hook/wee-hook-url.h
 ./src/core/wee-arraylist.c
 ./src/core/wee-arraylist.h
 ./src/core/wee-backtrace.c

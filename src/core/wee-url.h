@@ -54,10 +54,12 @@ struct t_url_file
     FILE *stream;                      /* file stream                       */
 };
 
+extern int url_debug;
 extern char *url_type_string[];
 extern struct t_url_option url_options[];
 
-extern int weeurl_download (const char *url, struct t_hashtable *options);
+extern int weeurl_download (const char *url, struct t_hashtable *options,
+                            struct t_hashtable *output);
 extern int weeurl_option_add_to_infolist (struct t_infolist *infolist,
                                           struct t_url_option *option);
 

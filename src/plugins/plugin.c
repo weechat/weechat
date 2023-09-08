@@ -798,6 +798,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hook_fd = &hook_fd;
         new_plugin->hook_process = &hook_process;
         new_plugin->hook_process_hashtable = &hook_process_hashtable;
+        new_plugin->hook_url = &hook_url;
         new_plugin->hook_connect = &hook_connect;
         new_plugin->hook_line = &hook_line;
         new_plugin->hook_print = &hook_print;

@@ -180,6 +180,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       wee-hook-process.c        | "process" フック
 |       wee-hook-signal.c         | "signal" フック
 |       wee-hook-timer.c          | "timer" フック
+|       wee-hook-url.c            | "url" フック
 | gui/                            | バッファ、ウィンドウなどの関数 (全てのインターフェースで利用)
 |    gui-bar-item.c               | バー要素
 |    gui-bar-window.c             | バーウィンドウ

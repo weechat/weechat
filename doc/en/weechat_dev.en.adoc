@@ -167,6 +167,7 @@ WeeChat "core" is located in following directories:
 |       wee-hook-process.c        | Hook "process".
 |       wee-hook-signal.c         | Hook "signal".
 |       wee-hook-timer.c          | Hook "timer".
+|       wee-hook-url.c            | Hook "url".
 | gui/                            | Functions for buffers, windows, ... (used by all interfaces).
 |    gui-bar-item.c               | Bar items.
 |    gui-bar-window.c             | Bar windows.

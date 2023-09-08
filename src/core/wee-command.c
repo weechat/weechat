@@ -63,6 +63,7 @@
 #include "wee-string.h"
 #include "wee-sys.h"
 #include "wee-upgrade.h"
+#include "wee-url.h"
 #include "wee-utf8.h"
 #include "wee-util.h"
 #include "wee-version.h"
@@ -2220,6 +2221,15 @@ COMMAND_CALLBACK(debug)
             debug_unicode (result);
             free (result);
         }
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcmp (argv[1], "url") == 0)
+    {
+        url_debug ^= 1;
+        gui_chat_printf (NULL,
+                         _("Debug hook_url: %s"),
+                         (url_debug) ? _("enabled") : _("disabled"));
         return WEECHAT_RC_OK;
     }
 
@@ -7056,14 +7066,17 @@ COMMAND_CALLBACK(upgrade)
     }
 
     /*
-     * it is forbidden to upgrade while there are some background process
-     * (hook type "process" or "connect")
+     * it is forbidden to upgrade while there are some background process or
+     * thread (hook types: process, connect, url)
      */
-    if (weechat_hooks[HOOK_TYPE_PROCESS] || weechat_hooks[HOOK_TYPE_CONNECT])
+    if (weechat_hooks[HOOK_TYPE_PROCESS]
+        || weechat_hooks[HOOK_TYPE_CONNECT]
+        || weechat_hooks[HOOK_TYPE_URL])
     {
         gui_chat_printf (NULL,
                          _("%sCan't upgrade: there is one or more background "
-                           "process (hook type 'process' or 'connect')"),
+                           "process/thread running (hook type: process, "
+                           "connect or url)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         return WEECHAT_RC_OK;
     }
@@ -8189,7 +8202,7 @@ command_init ()
            " || set <plugin> <level>"
            " || dump|hooks [<plugin>]"
            " || buffer|certs|color|dirs|infolists|libs|memory|tags|"
-           "term|windows"
+           "term|url|windows"
            " || callbacks <duration>[<unit>]"
            " || mouse|cursor [verbose]"
            " || hdata [free]"
@@ -8227,6 +8240,7 @@ command_init ()
            "    mouse: toggle debug for mouse\n"
            "     tags: display tags for lines\n"
            "     term: display infos about terminal\n"
+           "      url: toggle debug for calls to hook_url (display output hashtable)\n"
            "  windows: display windows tree\n"
            "     time: measure time to execute a command or to send text to "
            "the current buffer\n"
@@ -8256,6 +8270,7 @@ command_init ()
         " || mouse verbose"
         " || tags"
         " || term"
+        " || url"
         " || windows"
         " || time %(commands:/)"
         " || unicode",

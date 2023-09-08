@@ -72,6 +72,7 @@ set(LIB_CORE_SRC
   hook/wee-hook-process.c hook/wee-hook-process.h
   hook/wee-hook-signal.c hook/wee-hook-signal.h
   hook/wee-hook-timer.c hook/wee-hook-timer.h
+  hook/wee-hook-url.c hook/wee-hook-url.h
 )
 
 # Check for flock support

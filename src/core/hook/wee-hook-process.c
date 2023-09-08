@@ -278,7 +278,9 @@ hook_process_child (struct t_hook *hook_process)
         {
             ptr_url++;
         }
-        rc = weeurl_download (ptr_url, HOOK_PROCESS(hook_process, options));
+        rc = weeurl_download (ptr_url,
+                              HOOK_PROCESS(hook_process, options),
+                              NULL);  /* output */
     }
     else if (strncmp (HOOK_PROCESS(hook_process, command), "func:", 5) == 0)
     {
