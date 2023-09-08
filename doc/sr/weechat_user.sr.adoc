@@ -1725,8 +1725,8 @@ kbd:[▼]: точкић доле
 | kbd:[Ctrl+l] (`L`)       |              | Освежава опције и цео екран. | `+/fset -refresh+`
 |                          | `$`          | Освежава опције (маркиране опције остају маркиране). |
 |                          | `$$`         | Освежава опције (уклања се маркирање са свих опција). |
-| kbd:[Alt+p]              |              | Пребацује стање опција описа додатка (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]              |              | Пребацује стање видљивости траке помоћи. | `+/bar toggle fset+`
+| kbd:[Alt+p]              | `p`          | Пребацује стање опција описа додатка (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              | `v`          | Пребацује стање видљивости траке помоћи. | `+/bar toggle fset+`
 |                          | `s:x,y`      | Сортира опције по пољима x,y (погледајте опцију <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
 |                          | `s:`         | Ресетује сортирање на подразумевану вредност (погледајте опцију <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
 |                          | `w:xxx`      | Извози опције у фајл „xxx”. | `+/fset -export xxx+`

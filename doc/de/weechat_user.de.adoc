@@ -1825,8 +1825,8 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<fset,Fset Erw
 | kbd:[Ctrl+l] (`L`)       |              | der Bildschirm wird neu gezeichnet. | `+/fset -refresh+`
 |                          | `$`          | Optionen neu einlesen (markierte Optionen werden beibehalten). |
 |                          | `$$`         | Optionen neu einlesen (Markierungen von Optionen werden dabei gelöscht). |
-| kbd:[Alt+p]              |              | Umschalten der Beschreibung von Erweiterungen (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]              |              | Hilfe-Bar Ein-/Ausschalten. | `+/bar toggle fset+`
+| kbd:[Alt+p]              | `p`          | Umschalten der Beschreibung von Erweiterungen (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              | `v`          | Hilfe-Bar Ein-/Ausschalten. | `+/bar toggle fset+`
 |                          | `s:x,y`      | sortiert Optionen nach Bereichen x,y (siehe Option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
 |                          | `s:`         | setzt Sortierung wieder auf Standardwerte (siehe Option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
 |                          | `w:xxx`      | exportiert Optionen in Datei "xxx". | `+/fset -export xxx+`

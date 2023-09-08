@@ -1839,8 +1839,8 @@ Poniższe skróty i akcje mogą zostać użyte w buforze fset (zobacz <<fset,wty
 | kbd:[Ctrl+l] (`L`)       |              | Odświerz opcje i cały ekran. | `+/fset -refresh+`
 |                          | `$`          | Odświerz opcje (zachowuje zaznaczone opcje). |
 |                          | `$$`         | Odświerz opcje (odznacza zaznaczone kompilację). |
-| kbd:[Alt+p]              |              | Przełącz opcje opisu wtyczki (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]              |              | Przełącz pasek pomocy. | `+/bar toggle fset+`
+| kbd:[Alt+p]              | `p`          | Przełącz opcje opisu wtyczki (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              | `v`          | Przełącz pasek pomocy. | `+/bar toggle fset+`
 |                          | `s:x,y`      | Sortuj opcje po polach x,y (zobacz opcję <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
 |                          | `s:`         | Zresetuj soerowanie do domyślnej wartości (zobacz opcję <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
 |                          | `w:xxx`      | Wyeksportuj opcje do pliku "xxx". | `+/fset -export xxx+`

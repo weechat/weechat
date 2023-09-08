@@ -1849,8 +1849,8 @@ Ces touches et actions sont utilisées sur le tampon fset
 | kbd:[Ctrl+l] (`L`)       |              | Rafraîchir les options et l'écran entier. | `+/fset -refresh+`
 |                          | `$`          | Rafraîchir les options (garder les options marquées). |
 |                          | `$$`         | Rafraîchir les options (démarquer toutes les options). |
-| kbd:[Alt+p]              |              | Activer/désactiver la description des options d'extensions (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]              |              | Activer/désactiver la barre d'aide. | `+/bar toggle fset+`
+| kbd:[Alt+p]              | `p`          | Activer/désactiver la description des options d'extensions (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              | `v`          | Activer/désactiver la barre d'aide. | `+/bar toggle fset+`
 |                          | `s:x,y`      | Trier les options par les champs x,y (voir l'option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
 |                          | `s:`         | Réinitialiser le tri à sa valeur par défaut (voir l'option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
 |                          | `w:xxx`      | Exporter les options dans le fichier "xxx". | `+/fset -export xxx+`

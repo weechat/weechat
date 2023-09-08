@@ -1812,8 +1812,8 @@ These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 | kbd:[Ctrl+l] (`L`)       |              | Refresh options and whole screen. | `+/fset -refresh+`
 |                          | `$`          | Refresh options (keep marked options). |
 |                          | `$$`         | Refresh options (unmark all options). |
-| kbd:[Alt+p]              |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]              |              | Toggle help bar. | `+/bar toggle fset+`
+| kbd:[Alt+p]              | `p`          | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              | `v`          | Toggle help bar. | `+/bar toggle fset+`
 |                          | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
 |                          | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
 |                          | `w:xxx`      | Export options in file "xxx". | `+/fset -export xxx+`
