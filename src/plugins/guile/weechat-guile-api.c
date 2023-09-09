@@ -1660,6 +1660,34 @@ weechat_guile_api_config_color_default (SCM option)
 }
 
 SCM
+weechat_guile_api_config_enum (SCM option)
+{
+    int value;
+
+    API_INIT_FUNC(1, "config_enum", API_RETURN_INT(0));
+    if (!scm_is_string (option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_config_enum (API_STR2PTR(API_SCM_TO_STRING(option)));
+
+    API_RETURN_INT(value);
+}
+
+SCM
+weechat_guile_api_config_enum_default (SCM option)
+{
+    int value;
+
+    API_INIT_FUNC(1, "config_enum_default", API_RETURN_INT(0));
+    if (!scm_is_string (option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_config_enum_default (API_STR2PTR(API_SCM_TO_STRING(option)));
+
+    API_RETURN_INT(value);
+}
+
+SCM
 weechat_guile_api_config_write_option (SCM config_file, SCM option)
 {
     API_INIT_FUNC(1, "config_write_option", API_RETURN_ERROR);
@@ -5227,6 +5255,8 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(config_string_default, 1);
     API_DEF_FUNC(config_color, 1);
     API_DEF_FUNC(config_color_default, 1);
+    API_DEF_FUNC(config_enum, 1);
+    API_DEF_FUNC(config_enum_default, 1);
     API_DEF_FUNC(config_write_option, 2);
     API_DEF_FUNC(config_write_line, 3);
     API_DEF_FUNC(config_write, 1);

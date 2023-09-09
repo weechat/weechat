@@ -164,6 +164,8 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_config_string_default, arginfo_weechat_config_string_default)
     PHP_FE(weechat_config_color, arginfo_weechat_config_color)
     PHP_FE(weechat_config_color_default, arginfo_weechat_config_color_default)
+    PHP_FE(weechat_config_enum, arginfo_weechat_config_enum)
+    PHP_FE(weechat_config_enum_default, arginfo_weechat_config_enum_default)
     PHP_FE(weechat_config_write_option, arginfo_weechat_config_write_option)
     PHP_FE(weechat_config_write_line, arginfo_weechat_config_write_line)
     PHP_FE(weechat_config_write, arginfo_weechat_config_write)

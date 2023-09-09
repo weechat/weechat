@@ -2001,6 +2001,44 @@ weechat_ruby_api_config_color_default (VALUE class, VALUE option)
 }
 
 static VALUE
+weechat_ruby_api_config_enum (VALUE class, VALUE option)
+{
+    char *c_option;
+    int value;
+
+    API_INIT_FUNC(1, "config_enum", API_RETURN_INT(0));
+    if (NIL_P (option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    Check_Type (option, T_STRING);
+
+    c_option = StringValuePtr (option);
+
+    value = weechat_config_enum (API_STR2PTR(c_option));
+
+    API_RETURN_INT(value);
+}
+
+static VALUE
+weechat_ruby_api_config_enum_default (VALUE class, VALUE option)
+{
+    char *c_option;
+    int value;
+
+    API_INIT_FUNC(1, "config_enum_default", API_RETURN_INT(0));
+    if (NIL_P (option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    Check_Type (option, T_STRING);
+
+    c_option = StringValuePtr (option);
+
+    value = weechat_config_enum_default (API_STR2PTR(c_option));
+
+    API_RETURN_INT(value);
+}
+
+static VALUE
 weechat_ruby_api_config_write_option (VALUE class, VALUE config_file,
                                       VALUE option)
 {
@@ -6691,6 +6729,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(config_string_default, 1);
     API_DEF_FUNC(config_color, 1);
     API_DEF_FUNC(config_color_default, 1);
+    API_DEF_FUNC(config_enum, 1);
+    API_DEF_FUNC(config_enum_default, 1);
     API_DEF_FUNC(config_write_option, 2);
     API_DEF_FUNC(config_write_line, 3);
     API_DEF_FUNC(config_write, 1);

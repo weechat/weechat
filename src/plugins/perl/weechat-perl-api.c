@@ -1631,6 +1631,34 @@ API_FUNC(config_color_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_enum)
+{
+    int value;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "config_enum", API_RETURN_INT(0));
+    if (items < 1)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_config_enum (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
+
+    API_RETURN_INT(value);
+}
+
+API_FUNC(config_enum_default)
+{
+    int value;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "config_enum_default", API_RETURN_INT(0));
+    if (items < 1)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_config_enum_default (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
+
+    API_RETURN_INT(value);
+}
+
 API_FUNC(config_write_option)
 {
     char *config_file, *option;
@@ -5480,6 +5508,8 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(config_string_default);
     API_DEF_FUNC(config_color);
     API_DEF_FUNC(config_color_default);
+    API_DEF_FUNC(config_enum);
+    API_DEF_FUNC(config_enum_default);
     API_DEF_FUNC(config_write_option);
     API_DEF_FUNC(config_write_line);
     API_DEF_FUNC(config_write);

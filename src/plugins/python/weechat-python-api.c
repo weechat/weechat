@@ -1630,6 +1630,36 @@ API_FUNC(config_color_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_enum)
+{
+    char *option;
+    int value;
+
+    API_INIT_FUNC(1, "config_enum", API_RETURN_INT(0));
+    option = NULL;
+    if (!PyArg_ParseTuple (args, "s", &option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_config_enum (API_STR2PTR(option));
+
+    API_RETURN_INT(value);
+}
+
+API_FUNC(config_enum_default)
+{
+    char *option;
+    int value;
+
+    API_INIT_FUNC(1, "config_enum_default", API_RETURN_INT(0));
+    option = NULL;
+    if (!PyArg_ParseTuple (args, "s", &option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_config_enum_default (API_STR2PTR(option));
+
+    API_RETURN_INT(value);
+}
+
 API_FUNC(config_write_option)
 {
     char *config_file, *option;
@@ -5396,6 +5426,8 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(config_string_default),
     API_DEF_FUNC(config_color),
     API_DEF_FUNC(config_color_default),
+    API_DEF_FUNC(config_enum),
+    API_DEF_FUNC(config_enum_default),
     API_DEF_FUNC(config_write_option),
     API_DEF_FUNC(config_write_line),
     API_DEF_FUNC(config_write),

@@ -72,6 +72,8 @@ function weechat_config_string(string $p0): string {}
 function weechat_config_string_default(string $p0): string {}
 function weechat_config_color(string $p0): string {}
 function weechat_config_color_default(string $p0): string {}
+function weechat_config_enum(string $p0): int {}
+function weechat_config_enum_default(string $p0): int {}
 function weechat_config_write_option(string $p0, string $p1): int {}
 function weechat_config_write_line(string $p0, string $p1, string $p2): int {}
 function weechat_config_write(string $p0): int {}

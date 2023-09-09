@@ -327,16 +327,20 @@ def test_config():
         'option_delete_cb', '',
     )
     check(ptr_opt_enum != '')
+    check(weechat.config_enum(ptr_opt_enum) == 1)
     check(weechat.config_integer(ptr_opt_enum) == 1)
     check(weechat.config_string(ptr_opt_enum) == 'val2')
     check(weechat.config_option_set(ptr_opt_enum, 'val1', 1) == 2)  # SET_OK_CHANGED
     check(weechat.config_option_set(ptr_opt_enum, 'val1', 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_enum(ptr_opt_enum) == 0)
     check(weechat.config_integer(ptr_opt_enum) == 0)
     check(weechat.config_string(ptr_opt_enum) == 'val1')
+    check(weechat.config_enum_default(ptr_opt_enum) == 1)
     check(weechat.config_integer_default(ptr_opt_enum) == 1)
     check(weechat.config_string_default(ptr_opt_enum) == 'val2')
     check(weechat.config_option_reset(ptr_opt_enum, 1) == 2)  # SET_OK_CHANGED
     check(weechat.config_option_reset(ptr_opt_enum, 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_enum(ptr_opt_enum) == 1)
     check(weechat.config_integer(ptr_opt_enum) == 1)
     check(weechat.config_string(ptr_opt_enum) == 'val2')
     # search option

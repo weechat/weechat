@@ -1740,6 +1740,40 @@ API_FUNC(config_color_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_enum)
+{
+    zend_string *z_option;
+    struct t_config_option *option;
+    int result;
+
+    API_INIT_FUNC(1, "config_enum", API_RETURN_INT(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
+    result = weechat_config_enum (option);
+
+    API_RETURN_INT(result);
+}
+
+API_FUNC(config_enum_default)
+{
+    zend_string *z_option;
+    struct t_config_option *option;
+    int result;
+
+    API_INIT_FUNC(1, "config_enum_default", API_RETURN_INT(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
+    result = weechat_config_enum_default (option);
+
+    API_RETURN_INT(result);
+}
+
 API_FUNC(config_write_option)
 {
     zend_string *z_config_file, *z_option;

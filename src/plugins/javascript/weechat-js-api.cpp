@@ -1565,6 +1565,34 @@ API_FUNC(config_color_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_enum)
+{
+    int value;
+
+    API_INIT_FUNC(1, "config_enum", "s", API_RETURN_INT(0));
+
+    v8::String::Utf8Value option(args[0]);
+
+    value = weechat_config_enum (
+        (struct t_config_option *)API_STR2PTR(*option));
+
+    API_RETURN_INT(value);
+}
+
+API_FUNC(config_enum_default)
+{
+    int value;
+
+    API_INIT_FUNC(1, "config_enum_default", "s", API_RETURN_INT(0));
+
+    v8::String::Utf8Value option(args[0]);
+
+    value = weechat_config_enum_default (
+        (struct t_config_option *)API_STR2PTR(*option));
+
+    API_RETURN_INT(value);
+}
+
 API_FUNC(config_write_option)
 {
     API_INIT_FUNC(1, "config_write_option", "ss", API_RETURN_ERROR);
@@ -5170,6 +5198,8 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(config_string_default);
     API_DEF_FUNC(config_color);
     API_DEF_FUNC(config_color_default);
+    API_DEF_FUNC(config_enum);
+    API_DEF_FUNC(config_enum_default);
     API_DEF_FUNC(config_write_option);
     API_DEF_FUNC(config_write_line);
     API_DEF_FUNC(config_write);

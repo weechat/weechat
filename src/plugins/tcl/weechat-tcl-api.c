@@ -1871,6 +1871,34 @@ API_FUNC(config_color_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_enum)
+{
+    Tcl_Obj *objp;
+    int result, i;
+
+    API_INIT_FUNC(1, "config_enum", API_RETURN_INT(0));
+    if (objc < 2)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    result = weechat_config_enum (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i))); /* option */
+
+    API_RETURN_INT(result);
+}
+
+API_FUNC(config_enum_default)
+{
+    Tcl_Obj *objp;
+    int result, i;
+
+    API_INIT_FUNC(1, "config_enum_default", API_RETURN_INT(0));
+    if (objc < 2)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    result = weechat_config_enum_default (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i))); /* option */
+
+    API_RETURN_INT(result);
+}
+
 API_FUNC(config_write_option)
 {
     Tcl_Obj *objp;
@@ -5988,6 +6016,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(config_string_default);
     API_DEF_FUNC(config_color);
     API_DEF_FUNC(config_color_default);
+    API_DEF_FUNC(config_enum);
+    API_DEF_FUNC(config_enum_default);
     API_DEF_FUNC(config_write_option);
     API_DEF_FUNC(config_write_line);
     API_DEF_FUNC(config_write);

@@ -106,6 +106,8 @@ PHP_FUNCTION(weechat_config_string);
 PHP_FUNCTION(weechat_config_string_default);
 PHP_FUNCTION(weechat_config_color);
 PHP_FUNCTION(weechat_config_color_default);
+PHP_FUNCTION(weechat_config_enum);
+PHP_FUNCTION(weechat_config_enum_default);
 PHP_FUNCTION(weechat_config_write_option);
 PHP_FUNCTION(weechat_config_write_line);
 PHP_FUNCTION(weechat_config_write);
