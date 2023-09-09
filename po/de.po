@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2023-09-08 13:02+0200\n"
-"PO-Revision-Date: 2023-09-08 07:55+0200\n"
+"PO-Revision-Date: 2023-09-09 20:58+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -4129,7 +4129,7 @@ msgid "value of an environment variable"
 msgstr "Wert einer Umgebungsvariable"
 
 msgid "variables that can be used in /eval command"
-msgstr ""
+msgstr "Variablen die mit dem /eval Befehl genutzt werden können"
 
 msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
@@ -16534,7 +16534,8 @@ msgstr "verwaltet Trigger, das Schweizer Armeemesser für WeeChat"
 msgid ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
+"return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
 "all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
@@ -16543,7 +16544,8 @@ msgid ""
 msgstr ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
+"return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
 "all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
@@ -17428,10 +17430,10 @@ msgstr "%s%s: Datei %s besitzt fehlerhafte CRC32 Prüfsumme"
 msgid "%s%s: CRC32 error while resuming"
 msgstr "%s%s: CRC32 Fehler bei der Wiederaufnahme"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s%s: unable to read file \"%s\""
 msgid "%s%s: unable to read file \"%s\": %s"
-msgstr "%s%s: Datei \"%s\" kann nicht gelesen werden"
+msgstr "%s%s: Datei \"%s\" kann nicht gelesen werden: %s"
 
 #, c-format
 msgid "%s%s: unable to fork (%s)"
@@ -17445,10 +17447,10 @@ msgstr ""
 "%s: sende Datei an %s (%s, %s.%s), Name: %s (lokaler Dateiname: %s), %llu "
 "Bytes (Protokoll: %s)"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s%s: unable to write log file \"%s\": %s"
 msgid "%s%s: unable to write file \"%s\": %s"
-msgstr "%s%s: Protokoll-Datei \"%s\" kann nicht geschrieben werden: %s"
+msgstr "%s%s: Datei \"%s\" kann nicht geschrieben werden: %s"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"

@@ -1887,14 +1887,12 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<script_manage
 | kbd:[Alt+i]       | `i`          | Skript installieren. | `+/script install+`
 | kbd:[Alt+r]       | `r`          | Skript entfernen. | `+/script remove+`
 | kbd:[Alt+l]       | `l`          | Skript laden. | `+/script load+`
-// TRANSLATION MISSING
-| kbd:[Alt+L]       | `L`          | Reload script. | `+/script reload+`
+| kbd:[Alt+L]       | `L`          | Skript neu laden. | `+/script reload+`
 | kbd:[Alt+u]       | `u`          | Skript wird beendet. | `+/script unload+`
 | kbd:[Alt+Shift+A] | `A`          | das Skript wird in das autoload-Verzeichnis eingebunden. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Skript wird gehalten bzw. freigegeben. | `+/script hold+`
 | kbd:[Alt+v]       | `v`          | Skript Quelltext anzeigen. | `+/script show+`
-// TRANSLATION MISSING
-|                   | `s:x,y`      | Sort scripts by fields x,y (siehe Option <<option_script.look.sort,script.look.sort>>). |
+|                   | `s:x,y`      | Sortiert Skrips nach Feldern x,y (siehe Option <<option_script.look.sort,script.look.sort>>). |
 |                   | `s:`         | Sortierung auf den Standardwert zurücksetzen (siehe Option <<option_script.look.sort,script.look.sort>>). |
 |                   | `$`          | Liste aktualisieren. |
 |                   | `q`          | Buffer schließen. | `+/buffer close+`
