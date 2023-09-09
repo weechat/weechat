@@ -2022,12 +2022,15 @@ These keys and actions are used on the script buffer (see <<script_manager,scrip
 | kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`
 | kbd:[Alt+r]       | `r`          | Remove script. | `+/script remove+`
 | kbd:[Alt+l]       | `l`          | Load script. | `+/script load+`
-// TRANSLATION MISSING
 | kbd:[Alt+L]       | `L`          | Reload script. | `+/script reload+`
 | kbd:[Alt+u]       | `u`          | Unload script. | `+/script unload+`
 | kbd:[Alt+Shift+A] | `A`          | Autoload script. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Hold/unhold script. | `+/script hold+`
 | kbd:[Alt+v]       | `v`          | View script. | `+/script show+`
+|                   | `s:x,y`      | Sort scripts by fields x,y (see option <<option_script.look.sort,script.look.sort>>). |
+|                   | `s:`         | Reset sort to its default value (see option <<option_script.look.sort,script.look.sort>>). |
+|                   | `$`          | Refresh list. |
+|                   | `q`          | Close buffer. | `+/buffer close+`
 |===
 
 // TRANSLATION MISSING

@@ -1908,6 +1908,14 @@ Te skróty klawiszowe i akcje mogą zostać użyte w buforze skryptów (zobacz <
 | kbd:[Alt+Shift+A] | `A`          | Automatycznie ładuj skrypt. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Zablokuj/odblokuj skrypt. | `+/script hold+`
 | kbd:[Alt+v]       | `v`          | Pokarz skrypt. | `+/script show+`
+// TRANSLATION MISSING
+|                   | `s:x,y`      | Sort scripts by fields x,y (see option <<option_script.look.sort,script.look.sort>>). |
+// TRANSLATION MISSING
+|                   | `s:`         | Reset sort to its default value (see option <<option_script.look.sort,script.look.sort>>). |
+// TRANSLATION MISSING
+|                   | `$`          | Refresh list. |
+// TRANSLATION MISSING
+|                   | `q`          | Close buffer. | `+/buffer close+`
 |===
 
 [NOTE]

@@ -1918,6 +1918,10 @@ Ces touches et actions sont utilisées sur le tampon script
 | kbd:[Alt+Shift+A] | `A`          | Charger automatiquement le script. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Figer/défiger le script. | `+/script hold+`
 | kbd:[Alt+v]       | `v`          | Voir le script. | `+/script show+`
+|                   | `s:x,y`      | Trier les scripts par les champs x,y (voir l'option <<option_script.look.sort,script.look.sort>>). |
+|                   | `s:`         | Reset sort to its default value (voir l'option <<option_script.look.sort,script.look.sort>>). |
+|                   | `$`          | Rafraîchir la liste. |
+|                   | `q`          | Fermer le tampon. | `+/buffer close+`
 |===
 
 [NOTE]

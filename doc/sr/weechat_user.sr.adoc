@@ -1793,6 +1793,11 @@ kbd:[▼]: точкић доле
 | kbd:[Alt+Shift+A] | `A`          | Аутоучитавање скрипте. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Задржава/отпушта скрипту. | `+/script hold+`
 | kbd:[Alt+v]       | `v`          | Преглед скрипте. | `+/script show+`
+// TRANSLATION MISSING
+|                   | `s:x,y`      | Sort scripts by fields x,y (погледајте опцију <<option_script.look.sort,script.look.sort>>). |
+|                   | `s:`         | Ресетује сортирање на подразумевану вредност (погледајте опцију <<option_script.look.sort,script.look.sort>>). |
+|                   | `$`          | Освежава листу. |
+|                   | `q`          | Затвара бафер. | `+/buffer close+`
 |===
 
 [NOTE]
