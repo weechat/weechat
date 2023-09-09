@@ -1298,106 +1298,109 @@ trigger_command_init ()
            " || restore <name>|<mask> [<name>|<mask>...]"
            " || default -yes"
            " || monitor [<filter>]"),
-        N_("       list: list triggers (without argument, this list is displayed)\n"
-           "         -o: send list of triggers enabled to buffer (string in English)\n"
-           "        -ol: send list of triggers enabled to buffer (translated string)\n"
-           "         -i: copy list of triggers enabled in command line (for "
-           "sending to buffer) (string in English)\n"
-           "        -il: copy list of triggers enabled in command line (for "
-           "sending to buffer) (translated string)\n"
-           "   listfull: list triggers with detailed info for each trigger\n"
-           "listdefault: list default triggers\n"
-           "        add: add a trigger\n"
-           "     addoff: add a trigger (disabled)\n"
-           " addreplace: add or replace an existing trigger\n"
-           "       name: name of trigger\n"
-           "       hook: signal, hsignal, modifier, line, print, command, "
-           "command_run, timer, config, focus, info, info_hashtable\n"
-           "  arguments: arguments for the hook, depending on hook (separated "
-           "by semicolons):\n"
-           "             signal: name(s) of signal (required)\n"
-           "             hsignal: name(s) of hsignal (required)\n"
-           "             modifier: name(s) of modifier (required)\n"
-           "             line: buffer type (\"formatted\", \"free\" or \"*\"), "
-           "list of buffer masks, tags\n"
-           "             print: buffer, tags, message, strip colors\n"
-           "             command: command (required), description, arguments, "
-           "description of arguments, completion (all arguments except command "
-           "are evaluated, \"${tg_trigger_name}\" is replaced by the trigger "
-           "name, see /help eval)\n"
-           "             command_run: command(s) (required)\n"
-           "             timer: interval (required), align on second, max calls\n"
-           "             config: name(s) of option (required)\n"
-           "             focus: name(s) of area (required)\n"
-           "             info: name(s) of info (required)\n"
-           "             info_hashtable: name(s) of info (required)\n"
-           " conditions: evaluated conditions for the trigger\n"
-           "      regex: one or more regular expressions to replace strings "
-           "in variables\n"
-           "    command: command to execute (many commands can be separated by "
-           "\";\")\n"
-           "return_code: return code in callback (ok (default), ok_eat, error)\n"
-           "post_action: action to take after execution (none (default), "
-           "disable, delete)\n"
-           "   addinput: set input with default arguments to create a trigger\n"
-           "      input: set input with the command used to create the trigger\n"
-           "     output: send the command to create the trigger on the buffer\n"
-           "   recreate: same as \"input\", with option \"addreplace\" instead "
-           "of \"add\"\n"
-           "        set: set an option in a trigger\n"
-           "     option: name of option: name, hook, arguments, conditions, "
-           "regex, command, return_code\n"
-           "             (for help on option, you can type: /help "
-           "trigger.trigger.<name>.<option>)\n"
-           "      value: new value for the option\n"
-           "     rename: rename a trigger\n"
-           "       copy: copy a trigger\n"
-           "     enable: enable triggers (without arguments: enable triggers globally)\n"
-           "    disable: disable triggers (without arguments: disable triggers globally)\n"
-           "     toggle: toggle triggers (without arguments: toggle triggers globally)\n"
-           "    restart: restart triggers (recreate the hooks)\n"
-           "       show: show detailed info on a trigger (with some stats)\n"
-           "        del: delete triggers\n"
-           "    restore: restore triggers with the default values (works "
-           "only for default triggers)\n"
-           "       mask: name where wildcard \"*\" is allowed\n"
-           "    default: delete all triggers and restore default ones\n"
-           "    monitor: open the trigger monitor buffer, with optional filter:\n"
-           "     filter: filter hooks/triggers to display (a hook must start "
-           "with \"@\", for example \"@signal\"), many filters can be separated "
-           "by commas; wildcard \"*\" is allowed in each trigger name\n"
-           "\n"
-           "When a trigger callback is called, following actions are performed, "
-           "in this order:\n"
-           "  1. check conditions; if false, exit\n"
-           "  2. replace text using POSIX extended regular expression(s) (if "
-           "defined in trigger)\n"
-           "  3. execute command(s) (if defined in trigger)\n"
-           "  4. exit with a return code (except for modifier, line, focus, "
-           "info and info_hashtable)\n"
-           "  5. perform post action\n"
-           "\n"
-           "Examples (you can also look at default triggers with /trigger "
-           "listdefault):\n"
-           "  add text attributes *bold*, _underline_ and /italic/ (only in "
-           "user messages):\n"
-           "    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" "
-           "\"==\\*([^ ]+)\\*==*${color:bold}${re:1}${color:-bold}*== "
-           "==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== "
-           "==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/\"\n"
-           "  hide nicklist bar on small terminals:\n"
-           "    /trigger add resize_small signal signal_sigwinch "
-           "\"${info:term_width} < 100\" \"\" \"/bar hide nicklist\"\n"
-           "    /trigger add resize_big signal signal_sigwinch "
-           "\"${info:term_width} >= 100\" \"\" \"/bar show nicklist\"\n"
-           "  silently save config each hour:\n"
-           "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\"\n"
-           "  silently save WeeChat session at midnight (see /help upgrade):\n"
-           "    /trigger add session_save signal day_changed \"\" \"\" "
-           "\"/mute /upgrade -save\"\n"
-           "  open trigger monitor and show only modifiers and triggers whose "
-           "name starts with \"resize\":\n"
-           "    /trigger monitor @modifier,resize*"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[list]: list triggers (without argument, this list is displayed)"),
+            N_("raw[-o]: send list of triggers enabled to buffer (string in English)"),
+            N_("raw[-ol]: send list of triggers enabled to buffer (translated string)"),
+            N_("raw[-i]: copy list of triggers enabled in command line (for "
+               "sending to buffer) (string in English)"),
+            N_("raw[-il]: copy list of triggers enabled in command line (for "
+               "sending to buffer) (translated string)"),
+            N_("raw[listfull]: list triggers with detailed info for each trigger"),
+            N_("raw[listdefault]: list default triggers"),
+            N_("raw[add]: add a trigger"),
+            N_("raw[addoff]: add a trigger (disabled)"),
+            N_("raw[addreplace]: add or replace an existing trigger"),
+            N_("name: name of trigger"),
+            N_("hook: signal, hsignal, modifier, line, print, command, "
+               "command_run, timer, config, focus, info, info_hashtable"),
+            N_("arguments: arguments for the hook, depending on hook (separated "
+               "by semicolons):"),
+            N_("> type `signal`: name(s) of signal (required)"),
+            N_("> type `hsignal`: name(s) of hsignal (required)"),
+            N_("> type `modifier`: name(s) of modifier (required)"),
+            N_("> type `line`: buffer type (\"formatted\", \"free\" or \"*\"), "
+               "list of buffer masks, tags"),
+            N_("> type `print`: buffer, tags, message, strip colors"),
+            N_("> type `command`: command (required), description, arguments, "
+               "description of arguments, completion (all arguments except command "
+               "are evaluated, \"${tg_trigger_name}\" is replaced by the trigger "
+               "name, see /help eval)"),
+            N_("> type `command_run`: command(s) (required)"),
+            N_("> type `timer`: interval (required), align on second, max calls"),
+            N_("> type `config`: name(s) of option (required)"),
+            N_("> type `focus`: name(s) of area (required)"),
+            N_("> type `info`: name(s) of info (required)"),
+            N_("> type `info_hashtable`: name(s) of info (required)"),
+            N_("conditions: evaluated conditions for the trigger"),
+            N_("regex: one or more regular expressions to replace strings "
+               "in variables"),
+            N_("command: command to execute (many commands can be separated by "
+               "\";\")"),
+            N_("return_code: return code in callback (ok (default), ok_eat, error)"),
+            N_("post_action: action to take after execution (none (default), "
+               "disable, delete)"),
+            N_("raw[addinput]: set input with default arguments to create a trigger"),
+            N_("raw[input]: set input with the command used to create the trigger"),
+            N_("raw[output]: send the command to create the trigger on the buffer"),
+            N_("raw[recreate]: same as \"input\", with option \"addreplace\" instead "
+               "of \"add\""),
+            N_("raw[set]: set an option in a trigger"),
+            N_("option: name of option: name, hook, arguments, conditions, "
+               "regex, command, return_code (for help on option, you can type: "
+               "/help trigger.trigger.<name>.<option>)"),
+            N_("value: new value for the option"),
+            N_("raw[rename]: rename a trigger"),
+            N_("raw[copy]: copy a trigger"),
+            N_("raw[enable]: enable triggers "
+               "(without arguments: enable triggers globally)"),
+            N_("raw[disable]: disable triggers "
+               "(without arguments: disable triggers globally)"),
+            N_("raw[toggle]: toggle triggers "
+               "(without arguments: toggle triggers globally)"),
+            N_("raw[restart]: restart triggers (recreate the hooks)"),
+            N_("raw[show]: show detailed info on a trigger (with some stats)"),
+            N_("raw[del]: delete triggers"),
+            N_("raw[restore]: restore triggers with the default values (works "
+               "only for default triggers)"),
+            N_("mask: name where wildcard \"*\" is allowed"),
+            N_("raw[default]: delete all triggers and restore default ones"),
+            N_("raw[monitor]: open the trigger monitor buffer, with optional filter"),
+            N_("filter: filter hooks/triggers to display (a hook must start "
+               "with \"@\", for example \"@signal\"), many filters can be separated "
+               "by commas; wildcard \"*\" is allowed in each trigger name"),
+            "",
+            N_("When a trigger callback is called, following actions are performed, "
+               "in this order:"),
+            N_("  1. check conditions; if false, exit"),
+            N_("  2. replace text using POSIX extended regular expression(s) (if "
+               "defined in trigger)"),
+            N_("  3. execute command(s) (if defined in trigger)"),
+            N_("  4. exit with a return code (except for modifier, line, focus, "
+               "info and info_hashtable)"),
+            N_("  5. perform post action"),
+            "",
+            N_("Examples (you can also look at default triggers with /trigger "
+               "listdefault):"),
+            N_("  add text attributes *bold*, _underline_ and /italic/ (only in "
+               "user messages):"),
+            AI("    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" "
+               "\"==\\*([^ ]+)\\*==*${color:bold}${re:1}${color:-bold}*== "
+               "==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== "
+               "==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/\""),
+            N_("  hide nicklist bar on small terminals:"),
+            AI("    /trigger add resize_small signal signal_sigwinch "
+               "\"${info:term_width} < 100\" \"\" \"/bar hide nicklist\""),
+            AI("    /trigger add resize_big signal signal_sigwinch "
+               "\"${info:term_width} >= 100\" \"\" \"/bar show nicklist\""),
+            N_("  silently save config each hour:"),
+            AI("    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""),
+            N_("  silently save WeeChat session at midnight (see /help upgrade):"),
+            AI("    /trigger add session_save signal day_changed \"\" \"\" "
+               "\"/mute /upgrade -save\""),
+            N_("  open trigger monitor and show only modifiers and triggers whose "
+               "name starts with \"resize\":"),
+            AI("    /trigger monitor @modifier,resize*")),
         "list -i|-il|-o|-ol"
         " || listfull"
         " || listdefault"
