@@ -201,27 +201,28 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
            " || reload|unload [-q] [<name>]"
            " || eval [-o|-oc] <code>"
            " || version"),
-        N_("    list: list loaded scripts\n"
-           "listfull: list loaded scripts (verbose)\n"
-           "    load: load a script\n"
-           "autoload: load all scripts in \"autoload\" directory\n"
-           "  reload: reload a script (if no name given, unload all scripts, "
-           "then load all scripts in \"autoload\" directory)\n"
-           "  unload: unload a script (if no name given, unload all scripts)\n"
-           "filename: script (file) to load\n"
-           "      -q: quiet mode: do not display messages\n"
-           "    name: a script name (name used in call to \"register\" "
-           "function)\n"
-           "    eval: evaluate source code and display result on current "
-           "buffer\n"
-           "      -o: send evaluation result to the buffer without executing "
-           "commands\n"
-           "     -oc: send evaluation result to the buffer and execute "
-           "commands\n"
-           "    code: source code to evaluate\n"
-           " version: display the version of interpreter used\n"
-           "\n"
-           "Without argument, this command lists all loaded scripts."),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[list]: list loaded scripts"),
+            N_("raw[listfull]: list loaded scripts (verbose)"),
+            N_("raw[load]: load a script"),
+            N_("raw[autoload]: load all scripts in \"autoload\" directory"),
+            N_("raw[reload]: reload a script (if no name given, unload all scripts, "
+               "then load all scripts in \"autoload\" directory)"),
+            N_("raw[unload]: unload a script (if no name given, unload all scripts)"),
+            N_("filename: script (file) to load"),
+            N_("raw[-q]: quiet mode: do not display messages"),
+            N_("name: a script name (name used in call to \"register\" "
+               "function)"),
+            N_("raw[eval]: evaluate source code and display result on current "
+               "buffer"),
+            N_("raw[-o]: send evaluation result to the buffer without executing "
+               "commands"),
+            N_("raw[-oc]: send evaluation result to the buffer and execute "
+               "commands"),
+            N_("code: source code to evaluate"),
+            N_("raw[version]: display the version of interpreter used"),
+            "",
+            N_("Without argument, this command lists all loaded scripts.")),
         completion,
         plugin_data->callback_command, NULL, NULL);
     if (completion)
