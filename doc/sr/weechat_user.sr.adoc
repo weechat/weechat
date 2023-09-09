@@ -1786,7 +1786,9 @@ kbd:[▼]: точкић доле
 | kbd:[PgDn]        |              | Помера једну страну наниже. | `+/window page_down+`
 | kbd:[Alt+i]       | `i`          | Инсталира скрипту. | `+/script install+`
 | kbd:[Alt+r]       | `r`          | Брише скрипту. | `+/script remove+`
-| kbd:[Alt+l] (`L`) | `l`          | Учитава скрипту. | `+/script load+`
+| kbd:[Alt+l]       | `l`          | Учитава скрипту. | `+/script load+`
+// TRANSLATION MISSING
+| kbd:[Alt+L]       | `L`          | Reload script. | `+/script reload+`
 | kbd:[Alt+u]       | `u`          | Уклања скрипту из меморије. | `+/script unload+`
 | kbd:[Alt+Shift+A] | `A`          | Аутоучитавање скрипте. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Задржава/отпушта скрипту. | `+/script hold+`

@@ -2087,7 +2087,9 @@ These keys and actions are used on the script buffer (see <<script_manager,scrip
 | kbd:[PgDn]        |              | Move one page down. | `+/window page_down+`
 | kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`
 | kbd:[Alt+r]       | `r`          | Remove script. | `+/script remove+`
-| kbd:[Alt+l] (`L`) | `l`          | Load script. | `+/script load+`
+| kbd:[Alt+l]       | `l`          | Load script. | `+/script load+`
+// TRANSLATION MISSING
+| kbd:[Alt+L]       | `L`          | Reload script. | `+/script reload+`
 | kbd:[Alt+u]       | `u`          | Unload script. | `+/script unload+`
 | kbd:[Alt+Shift+A] | `A`          | Autoload script. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Hold/unhold script. | `+/script hold+`

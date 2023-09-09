@@ -1906,17 +1906,18 @@ Ces touches et actions sont utilisées sur le tampon script
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
 | Touche            | Action ^(1)^ | Description | Commande
-| kbd:[↑]           |              | Move one line up. | `+/script up+`
-| kbd:[↓]           |              | Move one line down. | `+/script down+`
-| kbd:[PgUp]        |              | Move one page up. | `+/window page_up+`
-| kbd:[PgDn]        |              | Move one page down. | `+/window page_down+`
-| kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`
-| kbd:[Alt+r]       | `r`          | Remove script. | `+/script remove+`
-| kbd:[Alt+l] (`L`) | `l`          | Load script. | `+/script load+`
-| kbd:[Alt+u]       | `u`          | Unload script. | `+/script unload+`
-| kbd:[Alt+Shift+A] | `A`          | Autoload script. | `+/script toggleautoload+`
-| kbd:[Alt+h]       | `h`          | Hold/unhold script. | `+/script hold+`
-| kbd:[Alt+v]       | `v`          | View script. | `+/script show+`
+| kbd:[↑]           |              | Monter d'une ligne. | `+/script up+`
+| kbd:[↓]           |              | Descendre d'une ligne. | `+/script down+`
+| kbd:[PgUp]        |              | Monter d'une page. | `+/window page_up+`
+| kbd:[PgDn]        |              | Descendre d'une page. | `+/window page_down+`
+| kbd:[Alt+i]       | `i`          | Installer le script. | `+/script install+`
+| kbd:[Alt+r]       | `r`          | Supprimer le script. | `+/script remove+`
+| kbd:[Alt+l]       | `l`          | Charger le script. | `+/script load+`
+| kbd:[Alt+L]       | `L`          | Recharger le script. | `+/script reload+`
+| kbd:[Alt+u]       | `u`          | Décharger le script. | `+/script unload+`
+| kbd:[Alt+Shift+A] | `A`          | Charger automatiquement le script. | `+/script toggleautoload+`
+| kbd:[Alt+h]       | `h`          | Figer/défiger le script. | `+/script hold+`
+| kbd:[Alt+v]       | `v`          | Voir le script. | `+/script show+`
 |===
 
 [NOTE]

@@ -1901,7 +1901,9 @@ Te skróty klawiszowe i akcje mogą zostać użyte w buforze skryptów (zobacz <
 | kbd:[PgDn]        |              | Przewiń stronę w dół. | `+/window page_down+`
 | kbd:[Alt+i]       | `i`          | Zainstaluj skrypt. | `+/script install+`
 | kbd:[Alt+r]       | `r`          | Usuń skrypt. | `+/script remove+`
-| kbd:[Alt+l] (`L`) | `l`          | Załaduj skrypt. | `+/script load+`
+| kbd:[Alt+l]       | `l`          | Załaduj skrypt. | `+/script load+`
+// TRANSLATION MISSING
+| kbd:[Alt+L]       | `L`          | Reload script. | `+/script reload+`
 | kbd:[Alt+u]       | `u`          | Wyładuj skrypt. | `+/script unload+`
 | kbd:[Alt+Shift+A] | `A`          | Automatycznie ładuj skrypt. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Zablokuj/odblokuj skrypt. | `+/script hold+`

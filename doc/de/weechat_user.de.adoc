@@ -1886,7 +1886,9 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<script_manage
 | kbd:[PgDn]        |              | eine Seite nach unten blättern. | `+/window page_down+`
 | kbd:[Alt+i]       | `i`          | Skript installieren. | `+/script install+`
 | kbd:[Alt+r]       | `r`          | Skript entfernen. | `+/script remove+`
-| kbd:[Alt+l] (`L`) | `l`          | Skript laden. | `+/script load+`
+| kbd:[Alt+l]       | `l`          | Skript laden. | `+/script load+`
+// TRANSLATION MISSING
+| kbd:[Alt+L]       | `L`          | Reload script. | `+/script reload+`
 | kbd:[Alt+u]       | `u`          | Skript wird beendet. | `+/script unload+`
 | kbd:[Alt+Shift+A] | `A`          | das Skript wird in das autoload-Verzeichnis eingebunden. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Skript wird gehalten bzw. freigegeben. | `+/script hold+`
