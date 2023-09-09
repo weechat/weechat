@@ -402,63 +402,55 @@ relay_command_init ()
            " || del|start|restart|stop <name>"
            " || raw"
            " || tlscertkey"),
-        N_("         list: list relay clients (only active relays)\n"
-           "     listfull: list relay clients (verbose, all relays)\n"
-           "    listrelay: list relays (name and port)\n"
-           "          add: add a relay (listen on a port/path)\n"
-           "          del: remove a relay (clients remain connected)\n"
-           "        start: listen on port\n"
-           "      restart: close the server socket and listen again on port "
-           "(clients remain connected)\n"
-           "         stop: close the server socket (clients remain connected)\n"
-           "         name: relay name (see format below)\n"
-           "         port: port used for relay\n"
-           "         path: path used for relay (for UNIX domain socket only); "
-           "path is evaluated (see function string_eval_path_home in "
-           "plugin API reference)\n"
-           "          raw: open buffer with raw Relay data\n"
-           "   tlscertkey: set TLS certificate/key using path in option "
-           "relay.network.tls_cert_key\n"
-           "\n"
-           "Relay name is: [ipv4.][ipv6.][tls.]<protocol.name> or "
-           "unix.[tls.]<protocol.name>\n"
-           "         ipv4: force use of IPv4\n"
-           "         ipv6: force use of IPv6\n"
-           "          tls: enable TLS\n"
-           "         unix: use UNIX domain socket\n"
-           "protocol.name: protocol and name to relay:\n"
-           "                 - protocol \"irc\": name is the server to share "
-           "(optional, if not given, the server name must be sent by client in "
-           "command \"PASS\", with format: \"PASS server:password\")\n"
-           "                 - protocol \"weechat\" (name is not used)\n"
-           "\n"
-           "The \"irc\" protocol allows any IRC client (including WeeChat "
-           "itself) to connect on the port.\n"
-           "The \"weechat\" protocol allows a remote interface to connect on "
-           "the port, see the list here: https://weechat.org/about/interfaces/\n"
-           "\n"
-           "Without argument, this command opens buffer with list of relay "
-           "clients.\n"
-           "\n"
-           "Examples:\n"
-           "  irc proxy, for server \"libera\":\n"
-           "    /relay add irc.libera 8000\n"
-           "  irc proxy, for server \"libera\", with TLS:\n"
-           "    /relay add tls.irc.libera 8001\n"
-           "  irc proxy, for all servers (client will choose), with TLS:\n"
-           "    /relay add tls.irc 8002\n"
-           "  weechat protocol:\n"
-           "    /relay add weechat 9000\n"
-           "  weechat protocol with TLS:\n"
-           "    /relay add tls.weechat 9001\n"
-           "  weechat protocol with TLS, using only IPv4:\n"
-           "    /relay add ipv4.tls.weechat 9001\n"
-           "  weechat protocol with TLS, using only IPv6:\n"
-           "    /relay add ipv6.tls.weechat 9001\n"
-           "  weechat protocol with TLS, using IPv4 + IPv6:\n"
-           "    /relay add ipv4.ipv6.tls.weechat 9001\n"
-           "  weechat protocol over UNIX domain socket:\n"
-           "    /relay add unix.weechat ${weechat_runtime_dir}/relay_socket"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[list]: list relay clients (only active relays)"),
+            N_("raw[listfull]: list relay clients (verbose, all relays)"),
+            N_("raw[listrelay]: list relays (name and port)"),
+            N_("raw[add]: add a relay (listen on a port/path)"),
+            N_("raw[del]: remove a relay (clients remain connected)"),
+            N_("raw[start]: listen on port"),
+            N_("raw[restart]: close the server socket and listen again on port "
+               "(clients remain connected)"),
+            N_("raw[stop]: close the server socket (clients remain connected)"),
+            N_("name: relay name (see format below)"),
+            N_("port: port used for relay"),
+            N_("path: path used for relay (for UNIX domain socket only); "
+               "path is evaluated (see function string_eval_path_home in "
+               "plugin API reference)"),
+            N_("raw[raw]: open buffer with raw Relay data"),
+            N_("raw[tlscertkey]: set TLS certificate/key using path in option "
+               "relay.network.tls_cert_key"),
+            "",
+            N_("Relay name is: [ipv4.][ipv6.][tls.]<protocol.name> or "
+               "unix.[tls.]<protocol.name>:"),
+            N_("  - ipv4: force use of IPv4"),
+            N_("  - ipv6: force use of IPv6"),
+            N_("  - tls: enable TLS"),
+            N_("  - unix: use UNIX domain socket"),
+            N_("  - protocol.name: protocol and name to relay:"),
+            N_("    - protocol \"irc\": name is the server to share "
+               "(optional, if not given, the server name must be sent by client in "
+               "command \"PASS\", with format: \"PASS server:password\")"),
+            N_("    - protocol \"weechat\" (name is not used)"),
+            "",
+            N_("The \"irc\" protocol allows any IRC client (including WeeChat "
+               "itself) to connect on the port."),
+            N_("The \"weechat\" protocol allows a remote interface to connect on "
+               "the port, see the list here: https://weechat.org/about/interfaces/"),
+            "",
+            N_("Without argument, this command opens buffer with list of relay "
+               "clients."),
+            "",
+            N_("Examples:"),
+            AI("  /relay add irc.libera 8000"),
+            AI("  /relay add tls.irc.libera 8001"),
+            AI("  /relay add tls.irc 8002"),
+            AI("  /relay add weechat 9000"),
+            AI("  /relay add tls.weechat 9001"),
+            AI("  /relay add ipv4.tls.weechat 9001"),
+            AI("  /relay add ipv6.tls.weechat 9001"),
+            AI("  /relay add ipv4.ipv6.tls.weechat 9001"),
+            AI("  /relay add unix.weechat ${weechat_runtime_dir}/relay_socket")),
         "list %(relay_relays)"
         " || listfull %(relay_relays)"
         " || listrelay"
