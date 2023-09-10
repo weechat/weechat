@@ -4100,18 +4100,28 @@ Algorithmes de hachage supportés :
 
 [width="100%",cols="2,2,3,6",options="header"]
 |===
-| Valeur       | Algorithme | Taille du haché      | Notes
-| `+crc32+`    | CRC32      | 4 octets (32 bits)   | Pas un algorithme de hachage au sens cryptographique.
-| `+md5+`      | MD5        | 16 octets (128 bits) | *Faible*, non recommandé pour un usage cryptographique.
-| `+sha1+`     | SHA-1      | 20 octets (160 bits) | *Faible*, non recommandé pour un usage cryptographique.
-| `+sha224+`   | SHA-224    | 28 octets (224 bits) |
-| `+sha256+`   | SHA-256    | 32 octets (256 bits) |
-| `+sha384+`   | SHA-384    | 48 octets (384 bits) |
-| `+sha512+`   | SHA-512    | 64 octets (512 bits) |
-| `+sha3-224+` | SHA3-224   | 28 octets (224 bits) | Algorithme disponible avec libgcrypt ≥ 1.7.0.
-| `+sha3-256+` | SHA3-256   | 32 octets (256 bits) | Algorithme disponible avec libgcrypt ≥ 1.7.0.
-| `+sha3-384+` | SHA3-384   | 48 octets (384 bits) | Algorithme disponible avec libgcrypt ≥ 1.7.0.
-| `+sha3-512+` | SHA3-512   | 64 octets (512 bits) | Algorithme disponible avec libgcrypt ≥ 1.7.0.
+| Valeur          | Algorithme  | Taille du haché      | Notes
+| `+crc32+`       | CRC32       | 4 octets (32 bits)   | Pas un algorithme de hachage au sens cryptographique.
+| `+md5+`         | MD5         | 16 octets (128 bits) | *Faible*, non recommandé pour un usage cryptographique.
+| `+sha1+`        | SHA-1       | 20 octets (160 bits) | *Faible*, non recommandé pour un usage cryptographique.
+| `+sha224+`      | SHA-224     | 28 octets (224 bits) |
+| `+sha256+`      | SHA-256     | 32 octets (256 bits) |
+| `+sha384+`      | SHA-384     | 48 octets (384 bits) |
+| `+sha512+`      | SHA-512     | 64 octets (512 bits) |
+| `+sha512-224+`  | SHA-512/224 | 28 octets (224 bits) | Algorithme disponible avec libgcrypt ≥ 1.9.4.
+| `+sha512-256+`  | SHA-512/256 | 32 octets (256 bits) | Algorithme disponible avec libgcrypt ≥ 1.9.4.
+| `+sha3-224+`    | SHA3-224    | 28 octets (224 bits) | Algorithme disponible avec libgcrypt ≥ 1.7.0.
+| `+sha3-256+`    | SHA3-256    | 32 octets (256 bits) | Algorithme disponible avec libgcrypt ≥ 1.7.0.
+| `+sha3-384+`    | SHA3-384    | 48 octets (384 bits) | Algorithme disponible avec libgcrypt ≥ 1.7.0.
+| `+sha3-512+`    | SHA3-512    | 64 octets (512 bits) | Algorithme disponible avec libgcrypt ≥ 1.7.0.
+| `+blake2b-160+` | BLAKE2B-160 | 20 octets (160 bits) | Algorithme disponible avec libgcrypt ≥ 1.8.0.
+| `+blake2b-256+` | BLAKE2B-256 | 32 octets (256 bits) | Algorithme disponible avec libgcrypt ≥ 1.8.0.
+| `+blake2b-384+` | BLAKE2B-384 | 48 octets (384 bits) | Algorithme disponible avec libgcrypt ≥ 1.8.0.
+| `+blake2b-512+` | BLAKE2B-512 | 64 octets (512 bits) | Algorithme disponible avec libgcrypt ≥ 1.8.0.
+| `+blake2s-128+` | BLAKE2S-128 | 16 octets (128 bits) | Algorithme disponible avec libgcrypt ≥ 1.8.0.
+| `+blake2s-160+` | BLAKE2S-160 | 20 octets (160 bits) | Algorithme disponible avec libgcrypt ≥ 1.8.0.
+| `+blake2s-224+` | BLAKE2S-224 | 28 octets (224 bits) | Algorithme disponible avec libgcrypt ≥ 1.8.0.
+| `+blake2s-256+` | BLAKE2S-256 | 32 octets (256 bits) | Algorithme disponible avec libgcrypt ≥ 1.8.0.
 |===
 
 Valeur de retour :

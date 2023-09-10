@@ -4141,18 +4141,28 @@ Supported hash algorithms:
 
 [width="100%",cols="2,2,3,6",options="header"]
 |===
-| Value        | Algorithm | Hash size           | Notes
-| `+crc32+`    | CRC32     | 4 bytes (32 bits)   | Not a hash algorithm in the cryptographic sense.
-| `+md5+`      | MD5       | 16 bytes (128 bits) | *Weak*, not recommended for cryptography usage.
-| `+sha1+`     | SHA-1     | 20 bytes (160 bits) | *Weak*, not recommended for cryptography usage.
-| `+sha224+`   | SHA-224   | 28 bytes (224 bits) |
-| `+sha256+`   | SHA-256   | 32 bytes (256 bits) |
-| `+sha384+`   | SHA-384   | 48 bytes (384 bits) |
-| `+sha512+`   | SHA-512   | 64 bytes (512 bits) |
-| `+sha3-224+` | SHA3-224  | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
-| `+sha3-256+` | SHA3-256  | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
-| `+sha3-384+` | SHA3-384  | 48 bytes (384 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
-| `+sha3-512+` | SHA3-512  | 64 bytes (512 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| Value           | Algorithm   | Hash size           | Notes
+| `+crc32+`       | CRC32       | 4 bytes (32 bits)   | Not a hash algorithm in the cryptographic sense.
+| `+md5+`         | MD5         | 16 bytes (128 bits) | *Weak*, not recommended for cryptography usage.
+| `+sha1+`        | SHA-1       | 20 bytes (160 bits) | *Weak*, not recommended for cryptography usage.
+| `+sha224+`      | SHA-224     | 28 bytes (224 bits) |
+| `+sha256+`      | SHA-256     | 32 bytes (256 bits) |
+| `+sha384+`      | SHA-384     | 48 bytes (384 bits) |
+| `+sha512+`      | SHA-512     | 64 bytes (512 bits) |
+| `+sha512-224+`  | SHA-512/224 | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.9.4.
+| `+sha512-256+`  | SHA-512/256 | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.9.4.
+| `+sha3-224+`    | SHA3-224    | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+sha3-256+`    | SHA3-256    | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+sha3-384+`    | SHA3-384    | 48 bytes (384 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+sha3-512+`    | SHA3-512    | 64 bytes (512 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+blake2b-160+` | BLAKE2B-160 | 20 bytes (160 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2b-256+` | BLAKE2B-256 | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2b-384+` | BLAKE2B-384 | 48 bytes (384 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2b-512+` | BLAKE2B-512 | 64 bytes (512 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2s-128+` | BLAKE2S-128 | 16 bytes (128 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2s-160+` | BLAKE2S-160 | 20 bytes (160 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2s-224+` | BLAKE2S-224 | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2s-256+` | BLAKE2S-256 | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
 |===
 
 戻り値:
