@@ -1097,6 +1097,46 @@ irc_list_alloc ()
 }
 
 /*
+ * Frees data in a list structure.
+ */
+
+void
+irc_list_free_data (struct t_irc_server *server)
+{
+    if (!server || !server->list)
+        return;
+
+    if (server->list->channels)
+    {
+        weechat_arraylist_free (server->list->channels);
+        server->list->channels = NULL;
+    }
+    if (server->list->filter_channels)
+    {
+        weechat_arraylist_free (server->list->filter_channels);
+        server->list->filter_channels = NULL;
+    }
+    server->list->name_max_length = 0;
+    if (server->list->filter)
+    {
+        free (server->list->filter);
+        server->list->filter = NULL;
+    }
+    if (server->list->sort)
+    {
+        free (server->list->sort);
+        server->list->sort = NULL;
+    }
+    if (server->list->sort_fields)
+    {
+        weechat_string_free_split (server->list->sort_fields);
+        server->list->sort_fields = NULL;
+    }
+    server->list->sort_fields_count = 0;
+    server->list->selected_line = 0;
+}
+
+/*
  * Frees a list structure in a server.
  */
 
@@ -1108,16 +1148,8 @@ irc_list_free (struct t_irc_server *server)
 
     if (server->list->buffer)
         weechat_buffer_close (server->list->buffer);
-    if (server->list->channels)
-        weechat_arraylist_free (server->list->channels);
-    if (server->list->filter_channels)
-        weechat_arraylist_free (server->list->filter_channels);
-    if (server->list->filter)
-        free (server->list->filter);
-    if (server->list->sort)
-        free (server->list->sort);
-    if (server->list->sort_fields)
-        weechat_string_free_split (server->list->sort_fields);
+
+    irc_list_free_data (server);
 
     free (server->list);
     server->list = NULL;

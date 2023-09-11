@@ -69,6 +69,7 @@ extern int irc_list_hsignal_redirect_list_cb (const void *pointer,
                                               struct t_hashtable *hashtable);
 extern void irc_list_reset (struct t_irc_server *server);
 extern struct t_irc_list *irc_list_alloc ();
+extern void irc_list_free_data (struct t_irc_server *server);
 extern void irc_list_free (struct t_irc_server *server);
 extern struct t_hdata *irc_list_hdata_list_channel_cb (const void *pointer,
                                                        void *data,

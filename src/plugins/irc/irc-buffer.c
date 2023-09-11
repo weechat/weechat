@@ -248,17 +248,8 @@ irc_buffer_close_cb (const void *pointer, void *data,
         }
         else if (ptr_server && (ptr_server->list->buffer == buffer))
         {
+            irc_list_free_data (ptr_server);
             ptr_server->list->buffer = NULL;
-            if (ptr_server->list->channels)
-            {
-                weechat_arraylist_free (ptr_server->list->channels);
-                ptr_server->list->channels = NULL;
-            }
-            if (ptr_server->list->filter_channels)
-            {
-                weechat_arraylist_free (ptr_server->list->filter_channels);
-                ptr_server->list->filter_channels = NULL;
-            }
         }
     }
 

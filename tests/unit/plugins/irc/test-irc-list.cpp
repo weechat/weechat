@@ -286,6 +286,16 @@ TEST(IrcList, IrcListAlloc)
 
 /*
  * Tests functions:
+ *   irc_list_free_data
+ */
+
+TEST(IrcList, IrcListFreeData)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   irc_list_free
  */
 
