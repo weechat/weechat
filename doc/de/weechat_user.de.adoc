@@ -899,12 +899,10 @@ andere Items die zur Verfügung stehen (die aber nicht standardmäßig in einer 
 | buffer_nicklist_count_all    | `4`                      | Anzahl der sichtbaren Gruppen und Nicks in der Nickliste.
 | buffer_nicklist_count_groups | `0`                      | Anzahl der sichtbaren Gruppen in der Nickliste.
 | buffer_short_name            | `#test`                  | Kurzname des aktuellen Buffers.
-| buflist2                     | `1.weechat`              | List der Buffer, zweites Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
-| buflist3                     | `1.weechat`              | List der Buffer, drittes Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
-// TRANSLATION MISSING
-| buflist4                     | `1.weechat`              | List of buffers, fourth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
-// TRANSLATION MISSING
-| buflist5                     | `1.weechat`              | List of buffers, fifth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist2                     | `1.weechat`              | Liste der Buffer, zweites Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist3                     | `1.weechat`              | Liste der Buffer, drittes Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist4                     | `1.weechat`              | Liste der Buffer, viertes Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist5                     | `1.weechat`              | Liste der Buffer, fünftes Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
 | fset                         | `+buflist.look.sort: …+` | Hilfstext zur aktuell ausgewählten Option im Fset-Buffer.
 | irc_channel                  | `#test`                  | aktueller Name des IRC Kanals.
 | irc_host                     | `+user@host.com+`        | aktueller IRC Host.
@@ -1430,10 +1428,9 @@ Externe Erweitertungen und Skripte können andere lokale Variablen definieren un
 [[buflist]]
 === Liste der Buffer
 
-// TRANSLATION MISSING
 Die Buflist-Erweiterung dient dazu eine Liste der geöffneten Buffer in einer Bar-Item, mit Namen
-"buflist", darzustellen (four other bar items "buflist2", "buflist3", "buflist4"
-and "buflist5" are available as well). +
+"buflist", darzustellen (vier weitere Bar-Items sind dabei verfügbar "buflist2", "buflist3", "buflist4"
+und "buflist5"). +
 Eine Standardbar, "buflist", wird beim Programmstart automatisch mit folgendem Inhalt erstellt.
 
 [[buflist_commands]]
