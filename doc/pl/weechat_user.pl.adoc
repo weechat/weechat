@@ -899,6 +899,10 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 | buffer_short_name            | `#test`                  | Skrócona nazwa obecnego buforu.
 | buflist2                     | `1.weechat`              | Lista buforów, drugi element paska (zobacz opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
 | buflist3                     | `1.weechat`              | Lista buforów, trzeci element paska (zobac opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist4                     | `1.weechat`              | List of buffers, fourth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist5                     | `1.weechat`              | List of buffers, fifth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
 | fset                         | `+buflist.look.sort: …+` | Pomoc dla obecnie wybranej opcji w buforze fset.
 | irc_channel                  | `#test`                  | Nazwa bieżącego kanału IRC.
 | irc_host                     | `+user@host.com+`        | Aktualny host IRC.
@@ -1421,8 +1425,10 @@ External plugins and scripts can define and use other local variables.
 [[buflist]]
 === Lista buforów
 
+// TRANSLATION MISSING
 Wtyczka buflist wyświetla listę buforów w elemencie paska nazwanym "buflist"
-(dostępne są również dwa dodatkowe elementy "buflist2" oraz "buflist3"). +
+(four other bar items "buflist2", "buflist3", "buflist4" and "buflist5" are
+available as well). +
 Domyślny pasek "buflist" jest tworzony podczas uruchomieina z włączoną wtyczką.
 
 [[buflist_commands]]

@@ -95,7 +95,7 @@ buflist_command_init ()
            " toggle: toggle buflist\n"
            "    bar: add the \"buflist\" bar\n"
            "refresh: force the refresh of the bar items (buflist, buflist2 "
-           "and buflist3)\n"
+           "buflist3, buflist4 and buflist5)\n"
            "\n"
            "The lines with buffers are displayed using string evaluation "
            "(see /help eval for the format), with these options:\n"

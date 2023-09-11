@@ -651,7 +651,7 @@ buflist_config_init ()
                "(note: content is evaluated, see /help buflist); "
                "example: standard format for bar item \"buflist\" and only the "
                "buffer number between square brackets for other bar items "
-               "(\"buflist2\" and \"buflist3\"): "
+               "(\"buflist2\" to \"buflist5\"): "
                "\"${if:${bar_item.name}==buflist?${format_number}${indent}"
                "${format_nick_prefix}${color_hotlist}${format_name}:"
                "[${number}]}\""),

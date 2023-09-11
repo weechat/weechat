@@ -954,6 +954,10 @@ By default, the screen is divided up into the following areas:
 // TRANSLATION MISSING
 | buflist3                     | `1.weechat`              | List of buffers, third bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
 // TRANSLATION MISSING
+| buflist4                     | `1.weechat`              | List of buffers, fourth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist5                     | `1.weechat`              | List of buffers, fifth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
 | fset                         | `+buflist.look.sort: …+` | Help on currently selected option on fset buffer.
 | irc_channel                  | `#test`                  | 現在の IRC チャンネル名
 // TRANSLATION MISSING
@@ -1493,8 +1497,10 @@ External plugins and scripts can define and use other local variables.
 [[buflist]]
 === List of buffers
 
+// TRANSLATION MISSING
 Buflist プラグインを使うことで、"buflist" と呼ばれるバー要素の中にバッファリストを表示させることが可能になります
-(それ以外に "buflist2" と "buflist3" と呼ばれるバー要素も利用可能です)。 +
+(four other bar items "buflist2", "buflist3", "buflist4" and "buflist5" are
+available as well)。 +
 プラグインは開始時にバー要素 "buflist" を持つデフォルトバー "buflist" を作成します。
 
 [[buflist_commands]]

@@ -843,6 +843,10 @@ _nicklist_ трака садржи следеће подразумеване с�
 | buffer_short_name            | `#test`                  | Кратко име текућег бафера.
 | buflist2                     | `1.weechat`              | Листа бафера, друга ставка траке (погледајте опцију <<option_buflist.look.use_items,buflist.look.use_items>>).
 | buflist3                     | `1.weechat`              | Листа бафера, трећа ставка траке (погледајте опцију <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist4                     | `1.weechat`              | List of buffers, fourth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist5                     | `1.weechat`              | List of buffers, fifth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
 | fset                         | `+buflist.look.sort: …+` | Помоћ у вези тренутно изабране опције у fset баферу.
 | irc_channel                  | `#test`                  | Име тренутног IRC канала.
 | irc_host                     | `+user@host.com+`        | Име тренутног IRC хоста.
@@ -1328,7 +1332,10 @@ _прозор_ је површина екрана која приказује б
 [[buflist]]
 === Листа бафера
 
-Buflist додатак приказује листу бафера у ставки траке која се зове „buflist” (такође су доступне још две ставке траке „buflist2” и „buflist3”). +
+// TRANSLATION MISSING
+Buflist додатак приказује листу бафера у ставки траке која се зове „buflist”
+(four other bar items "buflist2", "buflist3", "buflist4" and "buflist5" are
+available as well). +
 Подразумевана трака „buflist” са овом ставком се креира током покретања програма.
 
 [[buflist_commands]]

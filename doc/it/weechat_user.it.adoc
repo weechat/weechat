@@ -988,6 +988,10 @@ Other items available (not used in bars by default):
 | buffer_short_name            | `#test`                  | Current buffer short name.
 | buflist2                     | `1.weechat`              | List of buffers, second bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
 | buflist3                     | `1.weechat`              | List of buffers, third bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist4                     | `1.weechat`              | List of buffers, fourth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist5                     | `1.weechat`              | List of buffers, fifth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
 | fset                         | `+buflist.look.sort: …+` | Help on currently selected option on fset buffer.
 | irc_channel                  | `#test`                  | Current IRC channel name.
 | irc_host                     | `+user@host.com+`        | Current IRC host.
@@ -1532,7 +1536,8 @@ External plugins and scripts can define and use other local variables.
 
 // TRANSLATION MISSING
 Buflist plugin displays a list of buffers in a bar item called "buflist"
-(two other bar items "buflist2" and "buflist3" are available as well). +
+(four other bar items "buflist2", "buflist3", "buflist4" and "buflist5" are
+available as well). +
 A default bar "buflist" is created on startup with this item.
 
 [[buflist_commands]]
