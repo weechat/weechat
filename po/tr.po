@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-11 07:52+0200\n"
+"POT-Creation-Date: 2023-09-11 09:52+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5588,6 +5588,12 @@ msgstr "%s\"%s\" dosyası oluşturulamıyor"
 #, c-format
 msgid "%sError writing configuration file \"%s\""
 msgstr "%s\"%s\" yapılandırma dosyası yazılırken hata"
+
+#, c-format
+msgid ""
+"%sImportant: file %s has been updated from version %d to %d, it is not "
+"compatible and can not be loaded any more with any older version"
+msgstr ""
 
 #, c-format
 msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
