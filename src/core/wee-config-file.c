@@ -3281,6 +3281,7 @@ config_file_parse_version (const char *version)
 
 void
 config_file_update_data_read (struct t_config_file *config_file,
+                              const char *filename,
                               const char *section,
                               const char *option,
                               const char *value,
@@ -3306,7 +3307,7 @@ config_file_update_data_read (struct t_config_file *config_file,
               "it is not compatible and can not be loaded any more with any "
               "older version"),
             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-            config_file->filename,
+            filename,
             config_file->version_read,
             config_file->version);
         *warning_update_displayed = 1;
@@ -3518,7 +3519,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                 section = string_strndup (ptr_line + 1, pos - ptr_line - 1);
                 if (section)
                 {
-                    config_file_update_data_read (config_file,
+                    config_file_update_data_read (config_file, filename,
                                                   section, NULL, NULL,
                                                   &section, NULL, NULL,
                                                   &warning_update_displayed);
@@ -3637,7 +3638,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
             goto end_line;
         }
 
-        config_file_update_data_read (config_file,
+        config_file_update_data_read (config_file, filename,
                                       ptr_section->name, option, value,
                                       NULL, &option, &value,
                                       &warning_update_displayed);
