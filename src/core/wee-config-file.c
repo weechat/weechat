@@ -3173,6 +3173,10 @@ config_file_parse_version (const char *version)
  *
  * Section can be updated only if option and value are NULL (ie if we are
  * reading a section line like "[section]").
+ *
+ * Integer warning_update_displayed is set to 1 if a warning is displayed,
+ * when the file is updated to a newer version (then it's not compatible any
+ * more with previous versions).
  */
 
 void
@@ -3182,7 +3186,8 @@ config_file_update_data_read (struct t_config_file *config_file,
                               const char *value,
                               char **ret_section,
                               char **ret_option,
-                              char **ret_value)
+                              char **ret_value,
+                              int *warning_update_displayed)
 {
     struct t_hashtable *data_read, *hashtable;
     const char *ptr_section, *ptr_option, *ptr_value;
@@ -3191,6 +3196,21 @@ config_file_update_data_read (struct t_config_file *config_file,
     /* do nothing if config is already the latest version */
     if (config_file->version_read >= config_file->version)
         return;
+
+    if (!*warning_update_displayed
+        && (config_file->version_read < config_file->version))
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sImportant: file %s has been updated from version %d to %d, "
+              "it is not compatible and can not be loaded any more with any "
+              "older version"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            config_file->filename,
+            config_file->version_read,
+            config_file->version);
+        *warning_update_displayed = 1;
+    }
 
     /* do nothing if there's no update callback */
     if (!config_file->callback_update)
@@ -3289,6 +3309,7 @@ int
 config_file_read_internal (struct t_config_file *config_file, int reload)
 {
     int filename_length, line_number, rc, length, version;
+    int warning_update_displayed;
     char *filename, *section, *option, *value;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
@@ -3298,6 +3319,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
 
     config_file->version_read = 1;
+    warning_update_displayed = 0;
 
     /* build filename */
     filename_length = strlen (weechat_config_dir) + strlen (DIR_SEPARATOR) +
@@ -3398,7 +3420,8 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                 {
                     config_file_update_data_read (config_file,
                                                   section, NULL, NULL,
-                                                  &section, NULL, NULL);
+                                                  &section, NULL, NULL,
+                                                  &warning_update_displayed);
                     ptr_section = config_file_search_section (config_file,
                                                               section);
                     if (!ptr_section)
@@ -3515,7 +3538,8 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
 
         config_file_update_data_read (config_file,
                                       ptr_section->name, option, value,
-                                      NULL, &option, &value);
+                                      NULL, &option, &value,
+                                      &warning_update_displayed);
 
         /* option has been ignored by the update callback? */
         if (!option || !option[0])
