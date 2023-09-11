@@ -799,6 +799,16 @@ TEST(IrcServer, GetDefaultMsg)
 
 /*
  * Tests functions:
+ *   irc_server_has_channels
+ */
+
+TEST(IrcServer, HasChannels)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   irc_server_alloc
  */
 

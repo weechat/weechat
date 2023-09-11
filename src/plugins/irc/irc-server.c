@@ -1620,6 +1620,25 @@ irc_server_buffer_set_input_multiline (struct t_irc_server *server,
 }
 
 /*
+ * Checks if a server has channels opened.
+ */
+
+int
+irc_server_has_channels (struct t_irc_server *server)
+{
+    struct t_irc_channel *ptr_channel;
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+            return 1;
+    }
+
+    return 0;
+}
+
+/*
  * Allocates a new server and adds it to the servers queue.
  *
  * Returns pointer to new server, NULL if error.
@@ -5841,7 +5860,7 @@ irc_server_autojoin_create_buffers (struct t_irc_server *server)
      * buffers are opened only if auto-join was not already done
      * and if no channels are currently opened
      */
-    if (server->autojoin_done || server->channels)
+    if (server->autojoin_done || irc_server_has_channels (server))
         return;
 
     /* evaluate server option "autojoin" */
@@ -6002,7 +6021,7 @@ irc_server_autojoin_channels (struct t_irc_server *server)
         return;
     }
 
-    if (!server->autojoin_done && !server->channels)
+    if (!server->autojoin_done && !irc_server_has_channels (server))
     {
         /* auto-join when connecting to server for first time */
         autojoin = irc_server_eval_expression (
@@ -6016,7 +6035,7 @@ irc_server_autojoin_channels (struct t_irc_server *server)
         if (autojoin)
             free (autojoin);
     }
-    else if (server->channels)
+    else if (irc_server_has_channels (server))
     {
         /* auto-join after disconnection (only rejoins opened channels) */
         autojoin = irc_server_build_autojoin (server);
