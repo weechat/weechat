@@ -319,7 +319,8 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
         return;
     }
     list_messages = irc_server_sendf (ptr_server,
-                                      flags | IRC_SERVER_SEND_RETURN_LIST,
+                                      flags | IRC_SERVER_SEND_RETURN_LIST
+                                      | IRC_SERVER_SEND_MULTILINE,
                                       tags,
                                       "PRIVMSG %s :%s",
                                       ptr_channel->name, message);
@@ -386,7 +387,9 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags,
         {
             if (ptr_server)
             {
-                irc_server_sendf (ptr_server, flags, NULL,
+                irc_server_sendf (ptr_server,
+                                  flags | IRC_SERVER_SEND_MULTILINE,
+                                  NULL,
                                   "%s", weechat_utf8_next_char (input_data));
             }
             return WEECHAT_RC_OK;

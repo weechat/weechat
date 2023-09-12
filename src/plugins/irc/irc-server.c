@@ -3174,8 +3174,8 @@ struct t_arraylist *
 irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
                   const char *format, ...)
 {
-    char hash_key[32], *nick, *command, *channel, *new_msg;
-    char str_modifier[128];
+    char hash_key[32], *nick, *command, *channel, *new_msg, str_modifier[128];
+    char *pos;
     const char *str_message, *str_args, *ptr_msg;
     int number, multiline;
     struct t_hashtable *hashtable;
@@ -3198,6 +3198,20 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
     else
     {
         list_messages = NULL;
+    }
+
+    if (!(flags & IRC_SERVER_SEND_MULTILINE))
+    {
+        /*
+         * if multiline is not allowed, we stop at first \r or \n in the
+         * message, and everything after is ignored
+         */
+        pos = strchr (vbuffer, '\r');
+        if (pos)
+            pos[0] = '\0';
+        pos = strchr (vbuffer, '\n');
+        if (pos)
+            pos[0] = '\0';
     }
 
     /* run modifier "irc_out1_xxx" (like "irc_out_xxx", but before split) */

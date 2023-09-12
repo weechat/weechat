@@ -370,7 +370,8 @@ irc_command_me_channel_message (struct t_irc_server *server,
 
     list_messages = irc_server_sendf (
         server,
-        IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_LIST,
+        IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_LIST
+        | IRC_SERVER_SEND_MULTILINE,
         NULL,
         "PRIVMSG %s :\01ACTION%s%s\01",
         channel_name,
@@ -3839,7 +3840,9 @@ IRC_COMMAND_CALLBACK(msg)
                         1);  /* decode_colors */
                 }
                 irc_server_sendf (ptr_server,
-                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH
+                                  | IRC_SERVER_SEND_MULTILINE,
+                                  NULL,
                                   "PRIVMSG %s :%s",
                                   ptr_channel->name, argv_eol[arg_text]);
             }
@@ -3860,7 +3863,9 @@ IRC_COMMAND_CALLBACK(msg)
                     1);  /* decode_colors */
             }
             irc_server_sendf (ptr_server,
-                              IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              IRC_SERVER_SEND_OUTQ_PRIO_HIGH
+                              | IRC_SERVER_SEND_MULTILINE,
+                              NULL,
                               "PRIVMSG %s :%s",
                               targets[i], argv_eol[arg_text]);
         }
@@ -4034,7 +4039,8 @@ IRC_COMMAND_CALLBACK(notice)
 
     list_messages = irc_server_sendf (
         ptr_server,
-        IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_LIST,
+        IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_LIST
+        | IRC_SERVER_SEND_MULTILINE,
         NULL,
         "NOTICE %s :%s",
         argv[arg_target], argv_eol[arg_text]);
@@ -4587,7 +4593,9 @@ IRC_COMMAND_CALLBACK(query)
                         argv_eol[arg_text],
                         1);  /* decode_colors */
                 }
-                irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH,
+                irc_server_sendf (ptr_server,
+                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH
+                                  | IRC_SERVER_SEND_MULTILINE,
                                   NULL,
                                   "PRIVMSG %s :%s",
                                   nicks[i], argv_eol[arg_text]);
@@ -4696,14 +4704,20 @@ IRC_COMMAND_CALLBACK(quote)
         ptr_server = irc_server_search (argv[2]);
         if (!ptr_server || (ptr_server->sock < 0))
             WEECHAT_COMMAND_ERROR;
-        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+        irc_server_sendf (ptr_server,
+                          IRC_SERVER_SEND_OUTQ_PRIO_HIGH
+                          | IRC_SERVER_SEND_MULTILINE,
+                          NULL,
                           "%s", argv_eol[3]);
     }
     else
     {
         if (!ptr_server || (ptr_server->sock < 0))
             WEECHAT_COMMAND_ERROR;
-        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+        irc_server_sendf (ptr_server,
+                          IRC_SERVER_SEND_OUTQ_PRIO_HIGH
+                          | IRC_SERVER_SEND_MULTILINE,
+                          NULL,
                           "%s", argv_eol[1]);
     }
 
@@ -6668,7 +6682,10 @@ IRC_COMMAND_CALLBACK(wallchops)
          * if WALLCHOPS is supported, or if STATUSMSG includes '@',
          * then send a notice to @#channel
          */
-        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+        irc_server_sendf (ptr_server,
+                          IRC_SERVER_SEND_OUTQ_PRIO_HIGH
+                          | IRC_SERVER_SEND_MULTILINE,
+                          NULL,
                           "NOTICE @%s :%s",
                           ptr_channel->name, argv_eol[pos_args]);
     }
@@ -6687,7 +6704,9 @@ IRC_COMMAND_CALLBACK(wallchops)
                                            ptr_server->nick) != 0))
             {
                 irc_server_sendf (ptr_server,
-                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH
+                                  | IRC_SERVER_SEND_MULTILINE,
+                                  NULL,
                                   "NOTICE %s :%s",
                                   ptr_nick->name, argv_eol[pos_args]);
             }

@@ -370,7 +370,8 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
 
     list_messages = irc_server_sendf (
         server,
-        IRC_SERVER_SEND_OUTQ_PRIO_LOW | IRC_SERVER_SEND_RETURN_LIST,
+        IRC_SERVER_SEND_OUTQ_PRIO_LOW | IRC_SERVER_SEND_RETURN_LIST
+        | IRC_SERVER_SEND_MULTILINE,
         NULL,
         "NOTICE %s :\01%s%s%s\01",
         nick,
@@ -1602,7 +1603,9 @@ irc_ctcp_send (struct t_irc_server *server,
                const char *target, const char *type, const char *args)
 {
     irc_server_sendf (server,
-                      IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                      IRC_SERVER_SEND_OUTQ_PRIO_HIGH
+                      | IRC_SERVER_SEND_MULTILINE,
+                      NULL,
                       "PRIVMSG %s :\01%s%s%s\01",
                       target,
                       type,

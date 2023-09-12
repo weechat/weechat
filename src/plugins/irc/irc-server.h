@@ -140,6 +140,7 @@ enum t_irc_server_option
 #define IRC_SERVER_SEND_OUTQ_PRIO_HIGH      (1 << 1)
 #define IRC_SERVER_SEND_OUTQ_PRIO_LOW       (1 << 2)
 #define IRC_SERVER_SEND_RETURN_LIST         (1 << 3)
+#define IRC_SERVER_SEND_MULTILINE           (1 << 4)
 
 /* version strings */
 #define IRC_SERVER_VERSION_CAP "302"
