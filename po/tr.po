@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-11 09:52+0200\n"
+"POT-Creation-Date: 2023-09-12 15:06+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5588,6 +5588,16 @@ msgstr "%s\"%s\" dosyası oluşturulamıyor"
 #, c-format
 msgid "%sError writing configuration file \"%s\""
 msgstr "%s\"%s\" yapılandırma dosyası yazılırken hata"
+
+#, fuzzy, c-format
+#| msgid "%s: server %s%s%s has been copied to %s%s%s"
+msgid "%sFile %s has been backed up as %s"
+msgstr "%s: %s%s%s sunucusu %s%s%s konumuna kopyalandı"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to load file \"%s\""
+msgid "%sError: unable to backup file %s"
+msgstr "%s%s: \"%s\" dosyası yüklenemiyor"
 
 #, c-format
 msgid ""

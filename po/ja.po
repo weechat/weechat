@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-11 09:52+0200\n"
+"POT-Creation-Date: 2023-09-12 15:06+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5456,6 +5456,16 @@ msgstr "%sエラー: ファイル \"%s\" の作成に失敗"
 #, c-format
 msgid "%sError writing configuration file \"%s\""
 msgstr "%s設定ファイル \"%s\" の書き込み中にエラー"
+
+#, fuzzy, c-format
+#| msgid "%s: server %s%s%s has been copied to %s%s%s"
+msgid "%sFile %s has been backed up as %s"
+msgstr "%s: サーバ %s%s%s を %s%s%s にコピーしました"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to load file \"%s\""
+msgid "%sError: unable to backup file %s"
+msgstr "%s%s: ファイル \"%s\" をロードできません"
 
 #, c-format
 msgid ""

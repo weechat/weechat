@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-11 09:52+0200\n"
+"POT-Creation-Date: 2023-09-12 15:06+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4543,6 +4543,16 @@ msgstr "%sChyba: nemohu vytvořit soubor \"%s\""
 #, c-format
 msgid "%sError writing configuration file \"%s\""
 msgstr "%sChyba při zápisu konfiguračního souboru \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s: server %s%s%s has been copied to %s%s%s"
+msgid "%sFile %s has been backed up as %s"
+msgstr "%s: server %s%s%s byl zkopírován do %s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to load file \"%s\""
+msgid "%sError: unable to backup file %s"
+msgstr "%s%s: nemůžu načíst soubor \"%s\""
 
 #, c-format
 msgid ""

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-11 09:52+0200\n"
+"POT-Creation-Date: 2023-09-12 15:06+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -6022,6 +6022,16 @@ msgstr "%sNie można utworzyć pliku \"%s\""
 #, c-format
 msgid "%sError writing configuration file \"%s\""
 msgstr "%sBłąd podczas zapisu pliku konfiguracyjnego \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s: server %s%s%s has been copied to %s%s%s"
+msgid "%sFile %s has been backed up as %s"
+msgstr "%s: serwer %s%s%s został skopiowany do %s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to load file \"%s\""
+msgid "%sError: unable to backup file %s"
+msgstr "%s%s: nie można wczytać pliku \"%s\""
 
 #, c-format
 msgid ""

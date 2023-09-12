@@ -3306,13 +3306,15 @@ config_file_backup (const char *filename)
 
     if (dir_file_copy (filename, filename_backup))
     {
-        gui_chat_printf (NULL, "%sFile %s has been backed up as %s",
+        gui_chat_printf (NULL,
+                         _("%sFile %s has been backed up as %s"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          filename, filename_backup);
     }
     else
     {
-        gui_chat_printf (NULL, "%sError: unable to backup file %s",
+        gui_chat_printf (NULL,
+                         _("%sError: unable to backup file %s"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          filename);
     }

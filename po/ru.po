@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-11 09:52+0200\n"
+"POT-Creation-Date: 2023-09-12 15:06+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4114,6 +4114,14 @@ msgstr "%s не могу создать файл \"%s\"\n"
 #, fuzzy, c-format
 msgid "%sError writing configuration file \"%s\""
 msgstr "перезагрузить конфигурационный файл сервера"
+
+#, fuzzy, c-format
+msgid "%sFile %s has been backed up as %s"
+msgstr "Сервер %s%s%s скопирован в %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sError: unable to backup file %s"
+msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, c-format
 msgid ""
