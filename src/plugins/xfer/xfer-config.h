@@ -25,7 +25,7 @@
 
 #define XFER_CONFIG_PROGRESS_BAR_MAX_SIZE 256
 
-extern struct t_config_file *xfer_config;
+extern struct t_config_file *xfer_config_file;
 
 extern struct t_config_option *xfer_config_look_auto_open_buffer;
 extern struct t_config_option *xfer_config_look_progress_bar_size;

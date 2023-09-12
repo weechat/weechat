@@ -23,6 +23,7 @@ Bug fixes::
   * irc: fix autojoin of channels when private buffers are opened (issue #2012)
   * irc: fix string comparison when CASEMAPPING is set to "ascii"
   * script: fix crash when a `/script` command triggers another `/script` command (issue #923)
+  * xfer: fix memory leak on plugin unload
 
 Tests::
 
