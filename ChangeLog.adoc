@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
+  * core: automatically backup config file read if it has an unsupported version (issue #2013)
   * core: display a message when a configuration file is updated to a newer version
   * python: make stub (weechat.pyi) compatible with Python 3.8 and 3.9 (issue #2006)
 
