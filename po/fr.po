@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-11 09:32+0200\n"
-"PO-Revision-Date: 2023-09-11 09:33+0200\n"
+"POT-Creation-Date: 2023-09-12 15:10+0200\n"
+"PO-Revision-Date: 2023-09-12 15:11+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -5451,6 +5451,14 @@ msgstr "%sImpossible de créer le fichier \"%s\""
 #, c-format
 msgid "%sError writing configuration file \"%s\""
 msgstr "%sErreur d'écriture du fichier de configuration \"%s\""
+
+#, c-format
+msgid "%sFile %s has been backed up as %s"
+msgstr "%sLe fichier %s a été sauvegardé sous le nom %s"
+
+#, c-format
+msgid "%sError: unable to backup file %s"
+msgstr "%sErreur : impossible de sauvegarder le fichier %s"
 
 #, c-format
 msgid ""

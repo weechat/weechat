@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-11 09:32+0200\n"
+"POT-Creation-Date: 2023-09-12 15:10+0200\n"
 "PO-Revision-Date: 2023-06-17 11:47+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5376,6 +5376,16 @@ msgstr "%sНе може да се креира фајл „%s”"
 #, c-format
 msgid "%sError writing configuration file \"%s\""
 msgstr "%sГрешка при уписивању конфигурационог фајла „%s”"
+
+#, fuzzy, c-format
+#| msgid "%s: server %s%s%s has been copied to %s%s%s"
+msgid "%sFile %s has been backed up as %s"
+msgstr "%s: сервер %s%s%s је копиран у %s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to load file \"%s\""
+msgid "%sError: unable to backup file %s"
+msgstr "%s%s: фајл „%s” не може да се учита"
 
 #, c-format
 msgid ""
