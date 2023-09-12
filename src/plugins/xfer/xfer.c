@@ -1881,5 +1881,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     xfer_free_all ();
 
+    weechat_config_free (xfer_config_file);
+
     return WEECHAT_RC_OK;
 }
