@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
+  * core: automatically backup config file read if it has an unsupported version (issue #2013)
   * core: display a message when a configuration file is updated to a newer version
   * core: add completion "eval_variables", used in completion of `/eval`
   * core: add command `/sys` to show resource limits/usage and suspend WeeChat process, add key kbd:[Ctrl+z] to suspend WeeChat (issue #985)

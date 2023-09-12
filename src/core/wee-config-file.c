@@ -37,6 +37,7 @@
 #include "wee-config-file.h"
 #include "wee-arraylist.h"
 #include "wee-config.h"
+#include "wee-dir.h"
 #include "wee-hashtable.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
@@ -3262,6 +3263,64 @@ config_file_parse_version (const char *version)
 }
 
 /*
+ * Backups a configuration file if its version is unsupported and cannot be
+ * loaded.
+ */
+
+void
+config_file_backup (const char *filename)
+{
+    char *filename_backup, str_time[32], str_index[32];
+    int length, index;
+    struct tm *local_time;
+    time_t date;
+
+    if (!filename)
+        return;
+
+    length = strlen (filename) + 128;
+
+    filename_backup = malloc (length);
+    if (!filename_backup)
+        return;
+
+    date = time (NULL);
+    local_time = localtime (&date);
+    if (strftime (str_time, sizeof (str_time), ".%Y%m%d.%H%M%S", local_time) == 0)
+        str_time[0] = '\0';
+
+    index = 1;
+    while (1)
+    {
+        if (index == 1)
+            str_index[0] = '\0';
+        else
+            snprintf (str_index, sizeof (str_index), ".%d", index);
+        snprintf (filename_backup, length,
+                  "%s.backup%s%s",
+                  filename, str_time, str_index);
+        if (access (filename_backup, F_OK) != 0)
+            break;
+        index++;
+    }
+
+    if (dir_file_copy (filename, filename_backup))
+    {
+        gui_chat_printf (NULL, "%sFile %s has been backed up as %s",
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         filename, filename_backup);
+    }
+    else
+    {
+        gui_chat_printf (NULL, "%sError: unable to backup file %s",
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         filename);
+    }
+
+    free (filename_backup);
+}
+
+/*
  * Updates data read from config file: either section or option + value.
  * The update callback (if defined in config) is called if the config version
  * read in file is less than to the current config version.
@@ -3605,6 +3664,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                     filename, line_number,
                     line);
+                config_file_backup (filename);
                 goto end_file;
             }
             else
@@ -3621,6 +3681,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         filename,
                         config_file->version_read,
                         config_file->version);
+                    config_file_backup (filename);
                     goto end_file;
                 }
             }
