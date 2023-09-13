@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-12 15:06+0200\n"
+"POT-Creation-Date: 2023-09-13 15:09+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -868,12 +868,25 @@ msgstr "暗号化されたデータはありません"
 msgid "All encrypted data has been deleted"
 msgstr "全ての暗号化されたデータを削除しました"
 
-msgid "Encrypted data has been successfully decrypted"
-msgstr "暗号化されたデータの復号に成功しました"
+#, c-format
+msgid ""
+"%sFailed to decrypt data: hash algorithm \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
 
 #, c-format
-msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid ""
+"%sFailed to decrypt data: cipher \"%s\" is not available (ligbcrypt version "
+"is too old?)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid "%sFailed to decrypt data: wrong passphrase?"
 msgstr "%sデータの復号に失敗しました (パスフレーズが間違っているかも?)"
+
+msgid "Encrypted data has been successfully decrypted"
+msgstr "暗号化されたデータの復号に成功しました"
 
 #, c-format
 msgid ""
@@ -5757,6 +5770,12 @@ msgstr ""
 msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr "WeeChat の保護データ (sec.conf) | キー: [alt-v] 値のトグル"
 
+#. TRANSLATORS: "hash algorithm not supported"
+#, fuzzy
+#| msgid "log not started"
+msgid "not supported"
+msgstr "ログ保存が開始されていません"
+
 msgid "on"
 msgstr "オン"
 
@@ -5808,8 +5827,25 @@ msgstr ""
 "ん (/help secure を参照し、/secure decrypt を利用してください)"
 
 #, c-format
+msgid ""
+"%sOption %s.%s.%s can not be changed because there are still encrypted data"
+msgstr ""
+
+#, c-format
 msgid "%sPassphrase is not set, unable to decrypt data \"%s\""
 msgstr "%sパスフレーズが設定されていません、データ \"%s\" の復号化ができません"
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
 
 #, c-format
 msgid "%sWrong passphrase, unable to decrypt data \"%s\""
@@ -5820,7 +5856,20 @@ msgid "*** Wrong passphrase (decrypt error: %s) ***"
 msgstr "*** パスフレーズが違います (復号化エラー: %s) ***"
 
 #, c-format
-msgid "%sError encrypting data \"%s\" (%d)"
+msgid ""
+"%sFailed to encrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to encrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sError encrypting data \"%s\" (%d)"
+msgid "%sFailed to encrypt data \"%s\" (%d)"
 msgstr "%s データ \"%s\" (%d) を暗号化中にエラー"
 
 msgid ""
@@ -5829,8 +5878,11 @@ msgid ""
 msgstr ""
 "データの暗号化を行う暗号鍵 (アルゴリズムの後ろに書かれた数は鍵のビット数)"
 
-msgid "hash algorithm used to check the decrypted data"
-msgstr "復号化データをチェックするハッシュアルゴリズム"
+msgid ""
+"hash algorithm used to check the decrypted data; some of them require a "
+"specific libgcrypt version: sha3-*: libgcrypt >= 1.7.0, blake2*: libgcrypt "
+">= 1.8.0, sha512-*: libgcrypt >= 1.9.4"
+msgstr ""
 
 msgid ""
 "read the passphrase from the output of this system command (only the first "
@@ -16581,3 +16633,6 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "hash algorithm used to check the decrypted data"
+#~ msgstr "復号化データをチェックするハッシュアルゴリズム"

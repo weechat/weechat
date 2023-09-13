@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-12 15:06+0200\n"
+"POT-Creation-Date: 2023-09-13 15:09+0200\n"
 "PO-Revision-Date: 2023-09-13 10:19+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -872,12 +872,25 @@ msgstr "Es liegen keine verschlüsselten Daten vor"
 msgid "All encrypted data has been deleted"
 msgstr "Alle verschlüsselten Daten wurden gelöscht"
 
-msgid "Encrypted data has been successfully decrypted"
-msgstr "Die verschlüsselten Daten wurden erfolgreich entschlüsselt"
+#, c-format
+msgid ""
+"%sFailed to decrypt data: hash algorithm \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
 
 #, c-format
-msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid ""
+"%sFailed to decrypt data: cipher \"%s\" is not available (ligbcrypt version "
+"is too old?)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid "%sFailed to decrypt data: wrong passphrase?"
 msgstr "%sFehler beim Entschlüsseln der Daten (falsche Passphrase?)"
+
+msgid "Encrypted data has been successfully decrypted"
+msgstr "Die verschlüsselten Daten wurden erfolgreich entschlüsselt"
 
 #, c-format
 msgid ""
@@ -5739,12 +5752,10 @@ msgstr ""
 "%sEs ist ein Fehler beim Speichern der Konfigurationsdatei \"%s\" aufgetreten"
 
 #, c-format
-#| msgid "%s: server %s%s%s has been copied to %s%s%s"
 msgid "%sFile %s has been backed up as %s"
 msgstr "%sFür Datei %s wurde eine Sicherheitskopie %s erstellt"
 
 #, c-format
-#| msgid "%s%s: unable to load file \"%s\""
 msgid "%sError: unable to backup file %s"
 msgstr "%sFehler: Für die Datei %s konnte keine Sicherung geschrieben werden"
 
@@ -6060,6 +6071,12 @@ msgstr ""
 "WeeChat schutzwürdigen Daten (sec.conf) | Tastenbefehle: [alt-v] Werte "
 "umschalten"
 
+#. TRANSLATORS: "hash algorithm not supported"
+#, fuzzy
+#| msgid "log not started"
+msgid "not supported"
+msgstr "Protokollierung wurde nicht gestartet"
+
 msgid "on"
 msgstr "an"
 
@@ -6110,10 +6127,27 @@ msgstr ""
 "verschlüsselte Daten vorliegen (nutze /secure decrypt, siehe /help secure)"
 
 #, c-format
+msgid ""
+"%sOption %s.%s.%s can not be changed because there are still encrypted data"
+msgstr ""
+
+#, c-format
 msgid "%sPassphrase is not set, unable to decrypt data \"%s\""
 msgstr ""
 "%sPassphrase wurde nicht angegeben, Variable \"%s\" kann nicht entschlüsselt "
 "werden"
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
 
 #, c-format
 msgid "%sWrong passphrase, unable to decrypt data \"%s\""
@@ -6125,7 +6159,20 @@ msgid "*** Wrong passphrase (decrypt error: %s) ***"
 msgstr "*** Passphrase falsch (Fehler bei Entschlüsselung: %s) ***"
 
 #, c-format
-msgid "%sError encrypting data \"%s\" (%d)"
+msgid ""
+"%sFailed to encrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to encrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sError encrypting data \"%s\" (%d)"
+msgid "%sFailed to encrypt data \"%s\" (%d)"
 msgstr "%sFehler beim Verschlüsseln von \"%s\" (%d)"
 
 msgid ""
@@ -6135,8 +6182,11 @@ msgstr ""
 "zu nutzendes Chiffre zum Verschlüsseln von Daten (die Zahl hinter dem "
 "Algorithmus bestimmt die Größe des Schlüssels, in Bits)"
 
-msgid "hash algorithm used to check the decrypted data"
-msgstr "Hash-Algorithmus zur Überprüfung der verschlüsselten Daten"
+msgid ""
+"hash algorithm used to check the decrypted data; some of them require a "
+"specific libgcrypt version: sha3-*: libgcrypt >= 1.7.0, blake2*: libgcrypt "
+">= 1.8.0, sha512-*: libgcrypt >= 1.9.4"
+msgstr ""
 
 msgid ""
 "read the passphrase from the output of this system command (only the first "
@@ -16553,8 +16603,7 @@ msgstr "verwaltet Trigger, das Schweizer Armeemesser für WeeChat"
 msgid ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
-"return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
 "all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
@@ -16563,8 +16612,7 @@ msgid ""
 msgstr ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
-"return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
 "all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
@@ -17492,3 +17540,6 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
+#~ msgid "hash algorithm used to check the decrypted data"
+#~ msgstr "Hash-Algorithmus zur Überprüfung der verschlüsselten Daten"

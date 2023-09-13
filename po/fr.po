@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-12 15:06+0200\n"
-"PO-Revision-Date: 2023-09-12 15:07+0200\n"
+"POT-Creation-Date: 2023-09-13 15:07+0200\n"
+"PO-Revision-Date: 2023-09-13 15:07+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -854,13 +854,29 @@ msgstr "Il n'y a pas de donnée chiffrée"
 msgid "All encrypted data has been deleted"
 msgstr "Toutes les données chiffrées ont été supprimées"
 
-msgid "Encrypted data has been successfully decrypted"
-msgstr "La donnée chiffrée a été déchiffrée avec succès"
+#, c-format
+msgid ""
+"%sFailed to decrypt data: hash algorithm \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
+"%sImpossible de déchiffrer les données : l'algorithme de hash \"%s\" n'est "
+"pas disponible (version de ligbcrypt trop ancienne ?)"
 
 #, c-format
-msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid ""
+"%sFailed to decrypt data: cipher \"%s\" is not available (ligbcrypt version "
+"is too old?)"
 msgstr ""
-"%sImpossible de déchiffrer la donnée (mauvaise phrase de chiffrement ?)"
+"%sImpossible de chiffrer les données : le chiffrement (\"cipher\") \"%s\" "
+"n'est pas disponible (version de ligbcrypt trop ancienne ?)"
+
+#, c-format
+msgid "%sFailed to decrypt data: wrong passphrase?"
+msgstr ""
+"%sImpossible de déchiffrer les données : mauvaise phrase de chiffrement ?"
+
+msgid "Encrypted data has been successfully decrypted"
+msgstr "La donnée chiffrée a été déchiffrée avec succès"
 
 #, c-format
 msgid ""
@@ -5933,6 +5949,10 @@ msgstr ""
 "Données sécurisées WeeChat (sec.conf) | Touches : [alt-v] Afficher/cacher "
 "les valeurs"
 
+#. TRANSLATORS: "hash algorithm not supported"
+msgid "not supported"
+msgstr "non supporté"
+
 msgid "on"
 msgstr "activé"
 
@@ -5983,10 +6003,33 @@ msgstr ""
 "toujours chiffrées (utilisez /secure decrypt, voir /help secure)"
 
 #, c-format
+msgid ""
+"%sOption %s.%s.%s can not be changed because there are still encrypted data"
+msgstr ""
+"%sL'option %s.%s.%s ne peut pas être modifiée car il y a encore des données "
+"chiffrées"
+
+#, c-format
 msgid "%sPassphrase is not set, unable to decrypt data \"%s\""
 msgstr ""
 "%sPhrase de chiffrement non définie, impossible de déchiffrer la donnée "
 "\"%s\""
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+"%sImpossible de déchiffrer la donnée \"%s\" : l'algorithme de hash \"%s\" "
+"n'est pas disponible (version de ligbcrypt trop ancienne ?)"
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
+"%sImpossible de déchiffrer la donnée \"%s\" : le chiffrement (\"cipher\") "
+"\"%s\" n'est pas disponible (version de ligbcrypt trop ancienne ?)"
 
 #, c-format
 msgid "%sWrong passphrase, unable to decrypt data \"%s\""
@@ -5998,8 +6041,24 @@ msgid "*** Wrong passphrase (decrypt error: %s) ***"
 msgstr "*** Mauvaise phrase de chiffrement (erreur de déchiffrement : %s) ***"
 
 #, c-format
-msgid "%sError encrypting data \"%s\" (%d)"
-msgstr "%sErreur de chiffrement de la donnée \"%s\" (%d)"
+msgid ""
+"%sFailed to encrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+"%sImpossible de chiffrer la donnée \"%s\" : l'algorithme de hash \"%s\" "
+"n'est pas disponible (version de ligbcrypt trop ancienne ?)"
+
+#, c-format
+msgid ""
+"%sFailed to encrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
+"%sImpossible de chiffrer la donnée \"%s\" : le chiffrement (\"cipher\") "
+"\"%s\" n'est pas disponible (version de ligbcrypt trop ancienne ?)"
+
+#, c-format
+msgid "%sFailed to encrypt data \"%s\" (%d)"
+msgstr "%sImpossible de chiffrer la donnée \"%s\" (%d)"
 
 msgid ""
 "cipher used to crypt data (the number after algorithm is the size of the key "
@@ -6008,8 +6067,14 @@ msgstr ""
 "chiffrement (\"cipher\") utilisé pour chiffrer les données (le nombre après "
 "l'algorithme est la taille de la clé en bits)"
 
-msgid "hash algorithm used to check the decrypted data"
-msgstr "algorithme de hash pour vérifier les données déchiffrées"
+msgid ""
+"hash algorithm used to check the decrypted data; some of them require a "
+"specific libgcrypt version: sha3-*: libgcrypt >= 1.7.0, blake2*: libgcrypt "
+">= 1.8.0, sha512-*: libgcrypt >= 1.9.4"
+msgstr ""
+"algorithme de hash pour vérifier les données déchiffrées ; certains "
+"nécessitent une version spécifique de libgcrypt : sha3-* : libgcrypt >= "
+"1.7.0, blake2* : libgcrypt >= 1.8.0, sha512-* : libgcrypt >= 1.9.4"
 
 msgid ""
 "read the passphrase from the output of this system command (only the first "

@@ -271,6 +271,22 @@ TEST(CoreCrypto, GetHashAlgo)
 
 /*
  * Tests functions:
+ *   weecrypto_get_cipher
+ */
+
+TEST(CoreCrypto, GetCipher)
+{
+    LONGS_EQUAL(GCRY_CIPHER_NONE, weecrypto_get_cipher (NULL));
+    LONGS_EQUAL(GCRY_CIPHER_NONE, weecrypto_get_cipher (""));
+    LONGS_EQUAL(GCRY_CIPHER_NONE, weecrypto_get_cipher ("not_a_cipher"));
+
+    LONGS_EQUAL(GCRY_CIPHER_AES128, weecrypto_get_cipher ("aes128"));
+    LONGS_EQUAL(GCRY_CIPHER_AES192, weecrypto_get_cipher ("aes192"));
+    LONGS_EQUAL(GCRY_CIPHER_AES256, weecrypto_get_cipher ("aes256"));
+}
+
+/*
+ * Tests functions:
  *   weecrypto_hash
  */
 

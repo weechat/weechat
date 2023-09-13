@@ -6109,7 +6109,7 @@ COMMAND_CALLBACK(save)
 
 COMMAND_CALLBACK(secure)
 {
-    int passphrase_was_set, count_encrypted;
+    int passphrase_was_set, count_encrypted, rc;
 
     /* make C compiler happy */
     (void) pointer;
@@ -6140,19 +6140,39 @@ COMMAND_CALLBACK(secure)
             gui_chat_printf (NULL, _("All encrypted data has been deleted"));
             return WEECHAT_RC_OK;
         }
-        if (secure_decrypt_data_not_decrypted (argv_eol[2]) > 0)
+        rc = secure_decrypt_data_not_decrypted (argv_eol[2]);
+        if (rc == -2)
+        {
+            gui_chat_printf (
+                NULL,
+                _("%sFailed to decrypt data: hash algorithm \"%s\" is not "
+                  "available (ligbcrypt version is too old?)"),
+                gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                config_file_option_string (secure_config_crypt_hash_algo));
+        }
+        else if (rc == -3)
+        {
+            gui_chat_printf (
+                NULL,
+                _("%sFailed to decrypt data: cipher \"%s\" is not "
+                  "available (ligbcrypt version is too old?)"),
+                gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                config_file_option_string (secure_config_crypt_cipher));
+        }
+        else if ((rc == -1) || (rc == 0))
+        {
+            gui_chat_printf (NULL,
+                             _("%sFailed to decrypt data: wrong passphrase?"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+
+        }
+        else
         {
             gui_chat_printf (NULL,
                              _("Encrypted data has been successfully decrypted"));
             if (secure_passphrase)
                 free (secure_passphrase);
             secure_passphrase = strdup (argv_eol[2]);
-        }
-        else
-        {
-            gui_chat_printf (NULL,
-                             _("%sFailed to decrypt data (wrong passphrase?)"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         }
         return WEECHAT_RC_OK;
     }

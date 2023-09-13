@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-12 15:06+0200\n"
+"POT-Creation-Date: 2023-09-13 15:09+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -845,12 +845,25 @@ msgstr "Zde nejsou šifrovaná data"
 msgid "All encrypted data has been deleted"
 msgstr "Všechna šifrovaná data byla smazána"
 
-msgid "Encrypted data has been successfully decrypted"
-msgstr "Šifrovaná data byly úspěšně dešifrována"
+#, c-format
+msgid ""
+"%sFailed to decrypt data: hash algorithm \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
 
 #, c-format
-msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid ""
+"%sFailed to decrypt data: cipher \"%s\" is not available (ligbcrypt version "
+"is too old?)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid "%sFailed to decrypt data: wrong passphrase?"
 msgstr "%sNepovedlo se dešifrovat data (špatné heslo?)"
+
+msgid "Encrypted data has been successfully decrypted"
+msgstr "Šifrovaná data byly úspěšně dešifrována"
 
 #, c-format
 msgid ""
@@ -4840,6 +4853,12 @@ msgstr "heslo pro proxy server(pozn.: obsah je vykonán, viz /help eval)"
 msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr "Chráněná data WeeChatu (sec.conf) | Klávesy: [alt-v] Přepnou hodnoty"
 
+#. TRANSLATORS: "hash algorithm not supported"
+#, fuzzy
+#| msgid "log not started"
+msgid "not supported"
+msgstr "logování nebylo spuštěno"
+
 msgid "on"
 msgstr "na"
 
@@ -4885,8 +4904,25 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid ""
+"%sOption %s.%s.%s can not be changed because there are still encrypted data"
+msgstr ""
+
+#, c-format
 msgid "%sPassphrase is not set, unable to decrypt data \"%s\""
 msgstr "%sHeslo není nastaveno, nejde dešifrovat data \"%s\""
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
 
 #, c-format
 msgid "%sWrong passphrase, unable to decrypt data \"%s\""
@@ -4896,8 +4932,20 @@ msgstr "%sŠpatné heslo, nemohu dešifrovat údaje \"%s\""
 msgid "*** Wrong passphrase (decrypt error: %s) ***"
 msgstr "*** Špatné heslo (chyba dešifrování %s) ***"
 
+#, c-format
+msgid ""
+"%sFailed to encrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to encrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
+
 #, fuzzy, c-format
-msgid "%sError encrypting data \"%s\" (%d)"
+msgid "%sFailed to encrypt data \"%s\" (%d)"
 msgstr "%sChyba odesílání signálu %d na pid %d: %s"
 
 msgid ""
@@ -4907,8 +4955,11 @@ msgstr ""
 "šifra použitá k šifrování dat (číslo za algoritmem je velikost klíče v "
 "bitech)"
 
-msgid "hash algorithm used to check the decrypted data"
-msgstr "hash algoritmus použitý ke kontrole dešifrovaných dat"
+msgid ""
+"hash algorithm used to check the decrypted data; some of them require a "
+"specific libgcrypt version: sha3-*: libgcrypt >= 1.7.0, blake2*: libgcrypt "
+">= 1.8.0, sha512-*: libgcrypt >= 1.9.4"
+msgstr ""
 
 msgid ""
 "read the passphrase from the output of this system command (only the first "
@@ -14599,3 +14650,6 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid "hash algorithm used to check the decrypted data"
+#~ msgstr "hash algoritmus použitý ke kontrole dešifrovaných dat"

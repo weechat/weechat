@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-12 15:06+0200\n"
+"POT-Creation-Date: 2023-09-13 15:09+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -869,12 +869,25 @@ msgstr "Şifrelenmiş veri yok"
 msgid "All encrypted data has been deleted"
 msgstr "Tüm şifrelenmiş veri silindi"
 
-msgid "Encrypted data has been successfully decrypted"
-msgstr "Şifrelenmiş verinin şifresi başarıyla çözüldü"
+#, c-format
+msgid ""
+"%sFailed to decrypt data: hash algorithm \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
 
 #, c-format
-msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid ""
+"%sFailed to decrypt data: cipher \"%s\" is not available (ligbcrypt version "
+"is too old?)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid "%sFailed to decrypt data: wrong passphrase?"
 msgstr "%sVeri şifresi açılamadı (hatalı parola?)"
+
+msgid "Encrypted data has been successfully decrypted"
+msgstr "Şifrelenmiş verinin şifresi başarıyla çözüldü"
 
 #, c-format
 msgid ""
@@ -5887,6 +5900,12 @@ msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr ""
 "WeeChat güvenli verisi (sec.conf) | Düğmeler: [alt-v] Değerleri aç/kapat"
 
+#. TRANSLATORS: "hash algorithm not supported"
+#, fuzzy
+#| msgid "log not started"
+msgid "not supported"
+msgstr "günlük başlamadı"
+
 msgid "on"
 msgstr "açık"
 
@@ -5937,8 +5956,25 @@ msgstr ""
 "secure decrypt kullanın, bkz. /help secure)"
 
 #, c-format
+msgid ""
+"%sOption %s.%s.%s can not be changed because there are still encrypted data"
+msgstr ""
+
+#, c-format
 msgid "%sPassphrase is not set, unable to decrypt data \"%s\""
 msgstr "%sParola ayarlanmamış, \"%s\" verisi şifresi çözülemiyor"
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
 
 #, c-format
 msgid "%sWrong passphrase, unable to decrypt data \"%s\""
@@ -5949,7 +5985,20 @@ msgid "*** Wrong passphrase (decrypt error: %s) ***"
 msgstr "*** Yanlış parola (şifre çözüm hatası: %s) ***"
 
 #, c-format
-msgid "%sError encrypting data \"%s\" (%d)"
+msgid ""
+"%sFailed to encrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to encrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sError encrypting data \"%s\" (%d)"
+msgid "%sFailed to encrypt data \"%s\" (%d)"
 msgstr "%s\"%s\" verisi şifrelenirken hata (%d)"
 
 msgid ""
@@ -5959,8 +6008,11 @@ msgstr ""
 "veriyi şifrelemek için kullanılan şifre (sayı sonrası algoritması anahtarın "
 "bit türünden boyutudur)"
 
-msgid "hash algorithm used to check the decrypted data"
-msgstr "şifresi çözülen veriyi denetlemek için kullanılan sağlama algoritması"
+msgid ""
+"hash algorithm used to check the decrypted data; some of them require a "
+"specific libgcrypt version: sha3-*: libgcrypt >= 1.7.0, blake2*: libgcrypt "
+">= 1.8.0, sha512-*: libgcrypt >= 1.9.4"
+msgstr ""
 
 msgid ""
 "read the passphrase from the output of this system command (only the first "
@@ -17474,3 +17526,7 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
+
+#~ msgid "hash algorithm used to check the decrypted data"
+#~ msgstr ""
+#~ "şifresi çözülen veriyi denetlemek için kullanılan sağlama algoritması"

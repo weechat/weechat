@@ -27,6 +27,7 @@ New features::
   * core: add options weechat.buffer.* to save buffer properties set by user, add option `setauto` in command `/buffer` (issue #352)
   * core: add parameters and key bindings to move to edges of current area with commands `/cursor go` and `/cursor move` (issue #1282)
   * core: add variables "_chat_focused_line_bol" and "_chat_focused_line_eol" in focus data (issue #1955)
+  * core: add algorithms `sha512-224`, `sha512-256`, `sha3-*`, blake2b-*` and `blake2s-*` in option sec.crypt.hash_algo (issue #2008)
   * api: add algorithms `sha512-224`, `sha512-256`, blake2b-*` and `blake2s-*` in hash functions (issue #2008)
   * api: add support of path to variable and hashtable comparison in function hdata_compare (issue #1066)
   * api: add infos "nick_color_ignore_case" and "nick_color_name_ignore_case" (issue #194)

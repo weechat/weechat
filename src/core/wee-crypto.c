@@ -98,6 +98,18 @@ int weecrypto_hash_algo[] = {
 #endif
 };
 
+char *weecrypto_cipher_string[] = {
+    "aes128",
+    "aes192",
+    "aes256",
+    NULL,
+};
+int weecrypto_cipher[] = {
+    GCRY_CIPHER_AES128,
+    GCRY_CIPHER_AES192,
+    GCRY_CIPHER_AES256,
+};
+
 
 /*
  * Returns the hash algorithm with the name, or GCRY_MD_NONE if not found.
@@ -118,6 +130,27 @@ weecrypto_get_hash_algo (const char *hash_algo)
     }
 
     return GCRY_MD_NONE;
+}
+
+/*
+ * Returns the cipher with the name, or GCRY_CIPHER_NONE if not found.
+ */
+
+int
+weecrypto_get_cipher (const char *cipher)
+{
+    int i;
+
+    if (!cipher)
+        return GCRY_CIPHER_NONE;
+
+    for (i = 0; weecrypto_cipher_string[i]; i++)
+    {
+        if (strcmp (weecrypto_cipher_string[i], cipher) == 0)
+            return weecrypto_cipher[i];
+    }
+
+    return GCRY_CIPHER_NONE;
 }
 
 /*

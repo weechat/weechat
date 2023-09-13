@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-12 15:06+0200\n"
+"POT-Creation-Date: 2023-09-13 15:09+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -901,12 +901,25 @@ msgstr "No hay datos encriptados"
 msgid "All encrypted data has been deleted"
 msgstr "Todos los datos encriptados fueron eliminados"
 
-msgid "Encrypted data has been successfully decrypted"
-msgstr "Los datos encriptados fueron desencriptados"
+#, c-format
+msgid ""
+"%sFailed to decrypt data: hash algorithm \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
 
 #, c-format
-msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid ""
+"%sFailed to decrypt data: cipher \"%s\" is not available (ligbcrypt version "
+"is too old?)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid "%sFailed to decrypt data: wrong passphrase?"
 msgstr "%s Error al desencriptar datos (¿passphrase incorrecta?)"
+
+msgid "Encrypted data has been successfully decrypted"
+msgstr "Los datos encriptados fueron desencriptados"
 
 #, c-format
 msgid ""
@@ -5470,6 +5483,12 @@ msgstr ""
 msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr ""
 
+#. TRANSLATORS: "hash algorithm not supported"
+#, fuzzy
+#| msgid "log not started"
+msgid "not supported"
+msgstr "registro no iniciado"
+
 msgid "on"
 msgstr "activo"
 
@@ -5510,7 +5529,24 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid ""
+"%sOption %s.%s.%s can not be changed because there are still encrypted data"
+msgstr ""
+
+#, c-format
 msgid "%sPassphrase is not set, unable to decrypt data \"%s\""
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -5521,8 +5557,20 @@ msgstr "%sError: no se puede desplazar la barra \"%s\""
 msgid "*** Wrong passphrase (decrypt error: %s) ***"
 msgstr ""
 
+#, c-format
+msgid ""
+"%sFailed to encrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to encrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
+
 #, fuzzy, c-format
-msgid "%sError encrypting data \"%s\" (%d)"
+msgid "%sFailed to encrypt data \"%s\" (%d)"
 msgstr "%s%s: error al crear el alias \"%s\" => \"%s\""
 
 msgid ""
@@ -5530,7 +5578,10 @@ msgid ""
 "in bits)"
 msgstr ""
 
-msgid "hash algorithm used to check the decrypted data"
+msgid ""
+"hash algorithm used to check the decrypted data; some of them require a "
+"specific libgcrypt version: sha3-*: libgcrypt >= 1.7.0, blake2*: libgcrypt "
+">= 1.8.0, sha512-*: libgcrypt >= 1.9.4"
 msgstr ""
 
 msgid ""

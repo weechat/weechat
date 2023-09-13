@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-12 15:06+0200\n"
+"POT-Creation-Date: 2023-09-13 15:09+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -845,12 +845,25 @@ msgstr "Нема шифрованих података"
 msgid "All encrypted data has been deleted"
 msgstr "Обрисани су сви шифровани подаци"
 
-msgid "Encrypted data has been successfully decrypted"
-msgstr "Шифровани подаци су успешно дешифровани"
+#, c-format
+msgid ""
+"%sFailed to decrypt data: hash algorithm \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
 
 #, c-format
-msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid ""
+"%sFailed to decrypt data: cipher \"%s\" is not available (ligbcrypt version "
+"is too old?)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgid "%sFailed to decrypt data: wrong passphrase?"
 msgstr "%sНије успело дешифровање података (погрешна тајна реченица?)"
+
+msgid "Encrypted data has been successfully decrypted"
+msgstr "Шифровани подаци су успешно дешифровани"
 
 #, c-format
 msgid ""
@@ -5789,6 +5802,12 @@ msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr ""
 "WeeChat обезбеђени подаци (sec.conf) | Тастери: [alt-v] Пребацивање вредности"
 
+#. TRANSLATORS: "hash algorithm not supported"
+#, fuzzy
+#| msgid "log not started"
+msgid "not supported"
+msgstr "лог није започет"
+
 msgid "on"
 msgstr "укључено"
 
@@ -5839,9 +5858,26 @@ msgstr ""
 "података (употребите /secure decrypt, погледајте /help secure)"
 
 #, c-format
+msgid ""
+"%sOption %s.%s.%s can not be changed because there are still encrypted data"
+msgstr ""
+
+#, c-format
 msgid "%sPassphrase is not set, unable to decrypt data \"%s\""
 msgstr ""
 "%sНије постављена тајна реченица, није могуће дешифровање података „%s”"
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to decrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
 
 #, c-format
 msgid "%sWrong passphrase, unable to decrypt data \"%s\""
@@ -5852,7 +5888,20 @@ msgid "*** Wrong passphrase (decrypt error: %s) ***"
 msgstr "*** Погрешна тајна реченица (грешка дешифровања: %s) ***"
 
 #, c-format
-msgid "%sError encrypting data \"%s\" (%d)"
+msgid ""
+"%sFailed to encrypt data \"%s\": hash algorithm \"%s\" is not available "
+"(ligbcrypt version is too old?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sFailed to encrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"version is too old?)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sError encrypting data \"%s\" (%d)"
+msgid "%sFailed to encrypt data \"%s\" (%d)"
 msgstr "%sГрешка при шифрирању података „%s” (%d)"
 
 msgid ""
@@ -5862,8 +5911,11 @@ msgstr ""
 "шифра која се користи за шифрирање података (број након алгоритма је "
 "величина кључа у битовима)"
 
-msgid "hash algorithm used to check the decrypted data"
-msgstr "хеш алгоритам који се користи за проверу дешифрованих података"
+msgid ""
+"hash algorithm used to check the decrypted data; some of them require a "
+"specific libgcrypt version: sha3-*: libgcrypt >= 1.7.0, blake2*: libgcrypt "
+">= 1.8.0, sha512-*: libgcrypt >= 1.9.4"
+msgstr ""
 
 msgid ""
 "read the passphrase from the output of this system command (only the first "
@@ -16853,3 +16905,6 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+#~ msgid "hash algorithm used to check the decrypted data"
+#~ msgstr "хеш алгоритам који се користи за проверу дешифрованих података"
