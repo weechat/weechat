@@ -2799,9 +2799,17 @@ TEST(IrcProtocolWithServer, privmsg)
         {
             /* with echo-message */
             RECV(":alice!user@host PRIVMSG bob :this is the message ");
+            CHECK_PV_CLOSE("bob", "alice", "this is the message ",
+                           "irc_privmsg,self_msg,notify_none,no_highlight,"
+                           "prefix_nick_white,nick_alice,host_user@host,log1");
+            /* with echo-message, option irc.look.open_pv_buffer_echo_msg off */
+            config_file_option_set (irc_config_look_open_pv_buffer_echo_msg,
+                                    "off", 1);
+            RECV(":alice!user@host PRIVMSG bob :this is the message ");
             CHECK_SRV("--", "Msg(alice) -> bob: this is the message ",
                       "irc_privmsg,self_msg,notify_none,no_highlight,"
                       "nick_alice,host_user@host,log1");
+            config_file_option_reset (irc_config_look_open_pv_buffer_echo_msg, 1);
         }
 
         /*
@@ -2820,9 +2828,17 @@ TEST(IrcProtocolWithServer, privmsg)
         {
             /* with echo-message */
             RECV(":alice!user@host PRIVMSG nickserv :identify secret");
+            CHECK_PV_CLOSE("nickserv", "alice", "identify ******",
+                           "irc_privmsg,self_msg,notify_none,no_highlight,"
+                           "prefix_nick_white,nick_alice,host_user@host,log1");
+            /* with echo-message, option irc.look.open_pv_buffer_echo_msg off */
+            config_file_option_set (irc_config_look_open_pv_buffer_echo_msg,
+                                    "off", 1);
+            RECV(":alice!user@host PRIVMSG nickserv :identify secret");
             CHECK_SRV("--", "Msg(alice) -> nickserv: identify ******",
                       "irc_privmsg,self_msg,notify_none,no_highlight,"
                       "nick_alice,host_user@host,log1");
+            config_file_option_reset (irc_config_look_open_pv_buffer_echo_msg, 1);
         }
 
         /* broken CTCP to channel */

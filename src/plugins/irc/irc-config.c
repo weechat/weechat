@@ -108,6 +108,7 @@ struct t_config_option *irc_config_look_notice_welcome_redirect = NULL;
 struct t_config_option *irc_config_look_notice_welcome_tags = NULL;
 struct t_config_option *irc_config_look_notify_tags_ison = NULL;
 struct t_config_option *irc_config_look_notify_tags_whois = NULL;
+struct t_config_option *irc_config_look_open_pv_buffer_echo_msg = NULL;
 struct t_config_option *irc_config_look_part_closes_buffer = NULL;
 struct t_config_option *irc_config_look_pv_buffer = NULL;
 struct t_config_option *irc_config_look_pv_tags = NULL;
@@ -3400,6 +3401,13 @@ irc_config_init ()
                "whois), for example: \"notify_message\", \"notify_private\" or "
                "\"notify_highlight\""),
             NULL, 0, 0, "notify_message", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_config_look_open_pv_buffer_echo_msg = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "open_pv_buffer_echo_msg", "boolean",
+            N_("open a private buffer on self message when capability "
+               "echo-message is enabled"),
+            NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_part_closes_buffer = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
