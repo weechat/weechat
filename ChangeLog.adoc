@@ -59,6 +59,7 @@ Bug fixes::
   * fset: remove extra spaces between min and max values when second format is used
   * fset: fix mouse actions when second format is used
   * fset: apply option fset.color.help_description (issue #1988)
+  * irc: don't open a new private buffer on `/msg` command when capability echo-message is enabled (issue #2016)
   * irc: fix title of private buffers wrongly set to own address when capability echo-message is enabled (issue #2016)
   * irc: fix unexpected message sent to server when part of the second line of an IRC command (issue #1992)
   * irc: fix autojoin of channels when private buffers are opened (issue #2012)

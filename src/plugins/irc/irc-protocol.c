@@ -3264,7 +3264,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             if (strcmp (ptr_channel->name, remote_nick) != 0)
                 irc_channel_pv_rename (server, ptr_channel, remote_nick);
         }
-        else
+        else if (!nick_is_me)
         {
             ptr_channel = irc_channel_new (server,
                                            IRC_CHANNEL_TYPE_PRIVATE,
@@ -3280,7 +3280,8 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             }
         }
 
-        if (weechat_config_boolean (irc_config_look_typing_status_nicks))
+        if (ptr_channel
+            && weechat_config_boolean (irc_config_look_typing_status_nicks))
         {
             irc_typing_channel_set_nick (ptr_channel, nick,
                                          IRC_CHANNEL_TYPING_STATE_OFF);
@@ -3294,7 +3295,8 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         }
         else
         {
-            irc_channel_set_topic (ptr_channel, address);
+            if (ptr_channel)
+                irc_channel_set_topic (ptr_channel, address);
             if (weechat_config_boolean (irc_config_look_color_pv_nick_like_channel))
             {
                 color = irc_nick_find_color_name (server, nick);
@@ -3328,22 +3330,37 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             free (str_color);
         msg_args2 = (nick_is_me) ?
             irc_message_hide_password (server, remote_nick, msg_args) : NULL;
-        weechat_printf_date_tags (
-            ptr_channel->buffer,
-            date,
-            irc_protocol_tags (server, command, tags, str_tags, nick, address),
-            "%s%s",
-            irc_nick_as_prefix (
-                server, NULL, nick,
-                (nick_is_me) ?
-                IRC_COLOR_CHAT_NICK_SELF : irc_nick_color_for_pv (server,
-                                                                  ptr_channel,
-                                                                  nick)),
-            (msg_args2) ? msg_args2 : msg_args);
+        if (nick_is_me && !ptr_channel)
+        {
+            irc_input_user_message_display (
+                server,
+                date,
+                remote_nick,
+                address,
+                "privmsg",
+                NULL,  /* ctcp_type */
+                (msg_args2) ? msg_args2 : msg_args,
+                1);  /* decode_colors */
+        }
+        else
+        {
+            weechat_printf_date_tags (
+                (ptr_channel) ? ptr_channel->buffer : server->buffer,
+                date,
+                irc_protocol_tags (server, command, tags, str_tags, nick, address),
+                "%s%s",
+                irc_nick_as_prefix (
+                    server, NULL, nick,
+                    (nick_is_me) ?
+                    IRC_COLOR_CHAT_NICK_SELF : irc_nick_color_for_pv (server,
+                                                                      ptr_channel,
+                                                                      nick)),
+                (msg_args2) ? msg_args2 : msg_args);
+        }
         if (msg_args2)
             free (msg_args2);
 
-        if (ptr_channel->has_quit_server)
+        if (ptr_channel && ptr_channel->has_quit_server)
             ptr_channel->has_quit_server = 0;
 
         (void) weechat_hook_signal_send ("irc_pv",
