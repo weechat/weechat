@@ -2780,19 +2780,19 @@ TEST(IrcProtocolWithServer, privmsg)
          * message from self nick in private
          * (case of bouncer or if echo-message capability is enabled)
          */
-        RECV(":alice!user@host PRIVMSG alice :this is the message ");
-        CHECK_PV("alice", "alice", "this is the message ",
-                 "irc_privmsg,self_msg,notify_none,no_highlight,"
-                 "prefix_nick_white,nick_alice,host_user@host,log1");
+        RECV(":alice!user@host PRIVMSG bob2 :this is the message ");
+        CHECK_SRV("--", "Msg(alice) -> bob2: this is the message ",
+                  "irc_privmsg,self_msg,notify_none,no_highlight,"
+                  "nick_alice,host_user@host,log1");
 
         /*
          * message from self nick in private, with password hidden (nickserv)
          * (case of bouncer or if echo-message capability is enabled)
          */
         RECV(":alice!user@host PRIVMSG nickserv :identify secret");
-        CHECK_PV("nickserv", "alice", "identify ******",
-                 "irc_privmsg,self_msg,notify_none,no_highlight,"
-                 "prefix_nick_white,nick_alice,host_user@host,log1");
+        CHECK_SRV("--", "Msg(alice) -> nickserv: identify ******",
+                  "irc_privmsg,self_msg,notify_none,no_highlight,"
+                  "nick_alice,host_user@host,log1");
 
         /* broken CTCP to channel */
         RECV(":bob!user@host PRIVMSG #test :\01");
@@ -2974,7 +2974,7 @@ TEST(IrcProtocolWithServer, privmsg)
         }
         else
         {
-            CHECK_PV("alice", "--", "CTCP query to alice: CLIENTINFO",
+            CHECK_SRV("--", "CTCP query to alice: CLIENTINFO",
                      "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
                      "nick_alice,host_user@host,log1");
             /*
