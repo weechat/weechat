@@ -3077,6 +3077,9 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         pos_target++;
     }
 
+    cap_echo_message = weechat_hashtable_has_key (server->cap_list,
+                                                  "echo-message");
+
     /* receiver is a channel ? */
     if (is_channel)
     {
@@ -3200,8 +3203,6 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         /* CTCP to user */
         if (msg_args[0] == '\01')
         {
-            cap_echo_message = weechat_hashtable_has_key (server->cap_list,
-                                                          "echo-message");
             msg_already_received = weechat_hashtable_has_key (
                 server->echo_msg_recv, irc_message);
             if (!msg_already_received && cap_echo_message)
@@ -3231,7 +3232,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             if (strcmp (ptr_channel->name, remote_nick) != 0)
                 irc_channel_pv_rename (server, ptr_channel, remote_nick);
         }
-        else if (!nick_is_me)
+        else if (!nick_is_me || !cap_echo_message)
         {
             ptr_channel = irc_channel_new (server,
                                            IRC_CHANNEL_TYPE_PRIVATE,

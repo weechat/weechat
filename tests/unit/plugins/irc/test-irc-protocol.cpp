@@ -154,6 +154,12 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
         FAIL(string_dyn_free (msg, 0));                                 \
     }
 
+#define CHECK_PV_CLOSE(__nick, __prefix, __message, __tags)             \
+    CHECK_PV(__nick, __prefix, __message, __tags);                      \
+    gui_buffer_close (                                                  \
+        gui_buffer_search_by_full_name ("irc." IRC_FAKE_SERVER          \
+                                        "." __nick));
+
 #define CHECK_NO_MSG                                                    \
     if (arraylist_size (recorded_messages) > 0)                         \
     {                                                                   \
@@ -2737,9 +2743,9 @@ TEST(IrcProtocolWithServer, privmsg)
                    "irc_privmsg,notify_message,prefix_nick_248,nick_bob,"
                    "host_user@host,log1");
         RECV(":bob!user@host PRIVMSG alice :this is the message ");
-        CHECK_PV("bob", "bob", "this is the message ",
-                 "irc_privmsg,notify_private,prefix_nick_248,nick_bob,"
-                 "host_user@host,log1");
+        CHECK_PV_CLOSE("bob", "bob", "this is the message ",
+                       "irc_privmsg,notify_private,prefix_nick_248,nick_bob,"
+                       "host_user@host,log1");
 
         /* message with tags to channel/user */
         RECV("@tag1=value1;tag2=value2 :bob!user@host PRIVMSG #test "
@@ -2749,9 +2755,9 @@ TEST(IrcProtocolWithServer, privmsg)
                    "notify_message,prefix_nick_248,nick_bob,host_user@host,log1");
         RECV("@tag1=value1;tag2=value2 :bob!user@host PRIVMSG alice "
              ":this is the message ");
-        CHECK_PV("bob", "bob", "this is the message ",
-                 "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
-                 "notify_private,prefix_nick_248,nick_bob,host_user@host,log1");
+        CHECK_PV_CLOSE("bob", "bob", "this is the message ",
+                       "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
+                       "notify_private,prefix_nick_248,nick_bob,host_user@host,log1");
 
         /*
          * message to channel/user from self nick
@@ -2780,19 +2786,43 @@ TEST(IrcProtocolWithServer, privmsg)
          * message from self nick in private
          * (case of bouncer or if echo-message capability is enabled)
          */
-        RECV(":alice!user@host PRIVMSG bob2 :this is the message ");
-        CHECK_SRV("--", "Msg(alice) -> bob2: this is the message ",
-                  "irc_privmsg,self_msg,notify_none,no_highlight,"
-                  "nick_alice,host_user@host,log1");
+        if (i == 0)
+        {
+            /* without echo-message */
+            RECV(":alice!user@host PRIVMSG bob :this is the message ");
+            CHECK_PV_CLOSE("bob", "alice", "this is the message ",
+                           "irc_privmsg,self_msg,notify_none,no_highlight,"
+                           "prefix_nick_white,nick_alice,host_user@host,log1");
+        }
+        else
+        {
+            /* with echo-message */
+            RECV(":alice!user@host PRIVMSG bob :this is the message ");
+            CHECK_SRV("--", "Msg(alice) -> bob: this is the message ",
+                      "irc_privmsg,self_msg,notify_none,no_highlight,"
+                      "nick_alice,host_user@host,log1");
+        }
 
         /*
          * message from self nick in private, with password hidden (nickserv)
          * (case of bouncer or if echo-message capability is enabled)
          */
-        RECV(":alice!user@host PRIVMSG nickserv :identify secret");
-        CHECK_SRV("--", "Msg(alice) -> nickserv: identify ******",
-                  "irc_privmsg,self_msg,notify_none,no_highlight,"
-                  "nick_alice,host_user@host,log1");
+        if (i == 0)
+        {
+            /* without echo-message */
+            RECV(":alice!user@host PRIVMSG nickserv :identify secret");
+            CHECK_PV_CLOSE("nickserv", "alice", "identify ******",
+                           "irc_privmsg,self_msg,notify_none,no_highlight,"
+                           "prefix_nick_white,nick_alice,host_user@host,log1");
+        }
+        else
+        {
+            /* with echo-message */
+            RECV(":alice!user@host PRIVMSG nickserv :identify secret");
+            CHECK_SRV("--", "Msg(alice) -> nickserv: identify ******",
+                      "irc_privmsg,self_msg,notify_none,no_highlight,"
+                      "nick_alice,host_user@host,log1");
+        }
 
         /* broken CTCP to channel */
         RECV(":bob!user@host PRIVMSG #test :\01");
@@ -2843,13 +2873,13 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_SRV("--", "Unknown CTCP requested by bob: TEST",
                   "irc_privmsg,irc_ctcp,host_user@host,log1");
         RECV(":bob!user@host PRIVMSG alice :\01ACTION");
-        CHECK_PV("bob", " *", "bob",
-                 "irc_privmsg,irc_action,notify_private,nick_bob,"
-                 "host_user@host,log1");
+        CHECK_PV_CLOSE("bob", " *", "bob",
+                       "irc_privmsg,irc_action,notify_private,nick_bob,"
+                       "host_user@host,log1");
         RECV(":bob!user@host PRIVMSG alice :\01ACTION is testing");
-        CHECK_PV("bob", " *", "bob is testing",
-                 "irc_privmsg,irc_action,notify_private,nick_bob,"
-                 "host_user@host,log1");
+        CHECK_PV_CLOSE("bob", " *", "bob is testing",
+                       "irc_privmsg,irc_action,notify_private,nick_bob,"
+                       "host_user@host,log1");
         RECV(":bob!user@host PRIVMSG alice :\01VERSION");
         info = irc_ctcp_replace_variables (ptr_server,
                                            irc_ctcp_get_reply (ptr_server,
