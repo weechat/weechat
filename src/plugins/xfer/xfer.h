@@ -133,8 +133,8 @@ enum t_xfer_hash_status
                             (type == XFER_TYPE_CHAT_SEND))
 #define XFER_IS_ACTIVE(type) ((type == XFER_TYPE_FILE_RECV_ACTIVE) || \
                               (type == XFER_TYPE_FILE_SEND_ACTIVE))
-#define XFER_IS_PASSIVE(type) ((type == XFER_TYPE_FILE_RECV_PASSIVE) || \
-                               (type == XFER_TYPE_FILE_SEND_PASSIVE))
+#define XFER_IS_FILE_PASSIVE(type) ((type == XFER_TYPE_FILE_RECV_PASSIVE) || \
+                                    (type == XFER_TYPE_FILE_SEND_PASSIVE))
 
 #define XFER_HAS_ENDED(status) ((status == XFER_STATUS_DONE) ||      \
                                 (status == XFER_STATUS_FAILED) ||    \

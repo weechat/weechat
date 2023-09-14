@@ -702,7 +702,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         new_xfer->remote_address_str = strdup ("");
     }
 
-    if (XFER_IS_PASSIVE(type))
+    if (XFER_IS_FILE_PASSIVE(type) || (type == XFER_TYPE_CHAT_SEND))
     {
         rc = getnameinfo ((struct sockaddr *)local_address, local_address_length, str_address,
                           sizeof (str_address), NULL, 0, NI_NUMERICHOST);
@@ -1102,7 +1102,8 @@ xfer_add_cb (const void *pointer, void *data,
         }
     }
 
-    if (XFER_IS_RECV(type))
+    if ((type == XFER_TYPE_FILE_RECV_ACTIVE)
+        || (type == XFER_TYPE_FILE_RECV_PASSIVE))
     {
         filename2 = strdup (filename);
         sscanf (weechat_infolist_string (infolist, "size"), "%llu", &file_size);
@@ -1203,7 +1204,7 @@ xfer_add_cb (const void *pointer, void *data,
             goto error;
         }
     }
-    if (XFER_IS_PASSIVE(type))
+    if (XFER_IS_FILE_PASSIVE(type) || (type == XFER_TYPE_CHAT_SEND))
     {
         memset (&bind_addr, 0, sizeof (bind_addr));
 
@@ -1351,7 +1352,8 @@ xfer_add_cb (const void *pointer, void *data,
         }
     }
 
-    if (XFER_IS_RECV(type))
+    if ((type == XFER_TYPE_FILE_RECV_ACTIVE)
+        || (type == XFER_TYPE_FILE_RECV_PASSIVE))
     {
         if (filename2)
         {
@@ -1365,14 +1367,19 @@ xfer_add_cb (const void *pointer, void *data,
     {
         ptr_xfer = xfer_new (plugin_name, plugin_id, type, protocol,
                              remote_nick, local_nick, charset_modifier,
-                             short_filename, file_size, proxy, remote_addr,
-                             remote_addr_length, local_addr, local_addr_length, port, sock, filename2, token);
+                             short_filename, file_size, proxy,
+                             remote_addr, remote_addr_length,
+                             local_addr, local_addr_length,
+                             port, sock, filename2, token);
     }
     else
     {
         ptr_xfer = xfer_new (plugin_name, plugin_id, type, protocol,
-                             remote_nick, local_nick, charset_modifier, NULL,
-                             0, proxy, NULL, 0, local_addr, local_addr_length, port, sock, NULL, token);
+                             remote_nick, local_nick, charset_modifier,
+                             NULL, 0, proxy,
+                             remote_addr, remote_addr_length,
+                             local_addr, local_addr_length,
+                             port, sock, NULL, token);
     }
 
     if (!ptr_xfer)

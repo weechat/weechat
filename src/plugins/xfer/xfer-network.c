@@ -523,7 +523,7 @@ xfer_network_fd_cb (const void *pointer, void *data, int fd)
 
     if (xfer->status == XFER_STATUS_CONNECTING)
     {
-        if (XFER_IS_PASSIVE(xfer->type))
+        if (XFER_IS_FILE_PASSIVE(xfer->type))
         {
             xfer->last_activity = time (NULL);
             sock = accept (xfer->sock,
