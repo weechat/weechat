@@ -139,6 +139,7 @@ extern struct t_config_option *irc_config_look_notice_welcome_redirect;
 extern struct t_config_option *irc_config_look_notice_welcome_tags;
 extern struct t_config_option *irc_config_look_notify_tags_ison;
 extern struct t_config_option *irc_config_look_notify_tags_whois;
+extern struct t_config_option *irc_config_look_open_pv_buffer_echo_msg;
 extern struct t_config_option *irc_config_look_part_closes_buffer;
 extern struct t_config_option *irc_config_look_pv_buffer;
 extern struct t_config_option *irc_config_look_pv_tags;

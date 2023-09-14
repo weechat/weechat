@@ -3232,7 +3232,8 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             if (strcmp (ptr_channel->name, remote_nick) != 0)
                 irc_channel_pv_rename (server, ptr_channel, remote_nick);
         }
-        else if (!nick_is_me || !cap_echo_message)
+        else if (!nick_is_me || !cap_echo_message
+                 || weechat_config_boolean (irc_config_look_open_pv_buffer_echo_msg))
         {
             ptr_channel = irc_channel_new (server,
                                            IRC_CHANNEL_TYPE_PRIVATE,
