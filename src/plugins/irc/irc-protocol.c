@@ -3255,8 +3255,14 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                                          IRC_CHANNEL_TYPING_STATE_OFF);
         }
 
-        if (ptr_channel && (!nick_is_me || !cap_echo_message))
+        if (ptr_channel
+            && (!nick_is_me
+                || !cap_echo_message
+                || (irc_server_strcasecmp (server,
+                                           server->nick, remote_nick) == 0)))
+        {
             irc_channel_set_topic (ptr_channel, address);
+        }
 
         if (nick_is_me)
         {
