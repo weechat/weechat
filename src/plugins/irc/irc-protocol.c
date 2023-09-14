@@ -3288,6 +3288,9 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                                          IRC_CHANNEL_TYPING_STATE_OFF);
         }
 
+        if (ptr_channel && (!nick_is_me || !cap_echo_message))
+            irc_channel_set_topic (ptr_channel, address);
+
         if (nick_is_me)
         {
             str_color = irc_color_for_tags (
@@ -3296,8 +3299,6 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         }
         else
         {
-            if (ptr_channel)
-                irc_channel_set_topic (ptr_channel, address);
             if (weechat_config_boolean (irc_config_look_color_pv_nick_like_channel))
             {
                 color = irc_nick_find_color_name (server, nick);
