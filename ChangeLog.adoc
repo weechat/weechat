@@ -59,6 +59,7 @@ Bug fixes::
   * fset: remove extra spaces between min and max values when second format is used
   * fset: fix mouse actions when second format is used
   * fset: apply option fset.color.help_description (issue #1988)
+  * irc: fix title of private buffers wrongly set to own address when capability echo-message is enabled (issue #2016)
   * irc: fix unexpected message sent to server when part of the second line of an IRC command (issue #1992)
   * irc: fix autojoin of channels when private buffers are opened (issue #2012)
   * irc: fix string comparison when CASEMAPPING is set to "ascii"
@@ -86,7 +87,6 @@ Bug fixes::
 
   * core: fix integer overflow when setting integer option with `++N` or `--N`
   * core: fix increment/decrement of options weechat.notify.*
-  * irc: fix title of private buffers wrongly set to own address when capability echo-message is enabled (issue #2016)
   * irc: add missing tags on multiline messages (issue #1987)
   * irc: fix redirection of command `/list` when the reply doesn't start with message 321 (start of /list)
   * irc: fix wrong time displayed for CTCP messages received from self nick (issue #2000)
