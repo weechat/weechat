@@ -202,7 +202,7 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcmp (argv[1], "go") == 0)
+    if (weechat_strcmp (argv[1], "-go") == 0)
     {
         if ((argc > 2) && script_buffer && !script_buffer_detail_script)
         {
@@ -227,7 +227,7 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcmp (argv[1], "up") == 0)
+    if (weechat_strcmp (argv[1], "-up") == 0)
     {
         if (script_buffer)
         {
@@ -261,7 +261,7 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcmp (argv[1], "down") == 0)
+    if (weechat_strcmp (argv[1], "-down") == 0)
     {
         if (script_buffer)
         {
@@ -317,8 +317,8 @@ script_command_init ()
            " || install|remove|installremove|hold [-q] <script> [<script>...]"
            " || upgrade"
            " || update"
-           " || up|down [<number>]"
-           " || go <line>|end"),
+           " || -up|-down [<number>]"
+           " || -go <line>|end"),
         N_("          list: list loaded scripts (all languages)\n"
            "            -o: send list of loaded scripts to buffer "
            "(string in English)\n"
@@ -348,9 +348,9 @@ script_command_init ()
            "       upgrade: upgrade all installed scripts which are obsolete "
            "(new version available)\n"
            "        update: update local scripts cache\n"
-           "            up: move the selected line up by \"number\" lines\n"
-           "          down: move the selected line down by \"number\" lines\n"
-           "            go: select a line by number, first line number is 0 "
+           "           -up: move the selected line up by \"number\" lines\n"
+           "         -down: move the selected line down by \"number\" lines\n"
+           "           -go: select a line by number, first line number is 0 "
            "(\"end\" to select the last line)\n"
            "\n"
            "Without argument, this command opens a buffer with list of scripts.\n"
@@ -427,8 +427,8 @@ script_command_init ()
         " || hold %(script_scripts)|%*"
         " || update"
         " || upgrade"
-        " || up 1|2|3|4|5"
-        " || down 1|2|3|4|5"
-        " || go 0|end",
+        " || -up 1|2|3|4|5"
+        " || -down 1|2|3|4|5"
+        " || -go 0|end",
         &script_command_script, NULL, NULL);
 }

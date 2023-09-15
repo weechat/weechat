@@ -1094,8 +1094,8 @@ void
 script_buffer_set_keys (struct t_hashtable *hashtable)
 {
     char *keys[][2] = {
-        { "up",     "up"             },
-        { "down",   "down"           },
+        { "up",     "-up"            },
+        { "down",   "-down"          },
         { "meta-A", "toggleautoload" },
         { "meta-l", "load"           },
         { "meta-u", "unload"         },
@@ -1113,8 +1113,8 @@ script_buffer_set_keys (struct t_hashtable *hashtable)
     for (i = 0; keys[i][0]; i++)
     {
         if (weechat_config_boolean (script_config_look_use_keys)
-            || (strcmp (keys[i][1], "up") == 0)
-            || (strcmp (keys[i][1], "down") == 0))
+            || (strcmp (keys[i][1], "-up") == 0)
+            || (strcmp (keys[i][1], "-down") == 0))
         {
             snprintf (str_key, sizeof (str_key), "key_bind_%s", keys[i][0]);
             snprintf (str_command, sizeof (str_command), "/script %s", keys[i][1]);

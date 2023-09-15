@@ -47,7 +47,8 @@ New features::
   * irc: remove default CTCP replies FINGER and USERINFO (issue #1974)
   * irc, xfer: add support of passive DCC (issue #2004, issue #487)
   * python: make stub (weechat.pyi) compatible with Python 3.8 and 3.9 (issue #2006)
-  * script: allow jump to the last script with command `/script go end`
+  * script: rename parameters up/down/go to -up/-down/-go in command `/script`
+  * script: allow jump to the last script with command `/script -go end`
   * script: allow commands `/script autoload`, `/script noautoload`, `/script toggleautoload` with scripts not present in the repository (issue #1980)
   * trigger: add options `-o`, `-ol`, `-i` and `-il` in command `/trigger list` (issue #1953)
 
