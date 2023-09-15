@@ -137,7 +137,7 @@ hook_url_transfer_thread (void *hook_pointer)
 
     pthread_cleanup_pop (1);
 
-    return NULL;
+    pthread_exit (NULL);
 }
 
 /*
@@ -222,6 +222,7 @@ hook_url_transfer (struct t_hook *hook)
     }
 
     /* main thread */
+    HOOK_URL(hook, thread_created) = 1;
     timeout = HOOK_URL(hook, timeout);
     interval = 100;
     max_calls = 0;
@@ -288,6 +289,7 @@ hook_url (struct t_weechat_plugin *plugin,
     new_hook_url->options = (options) ? hashtable_dup (options) : NULL;
     new_hook_url->timeout = timeout;
     new_hook_url->thread_id = 0;
+    new_hook_url->thread_created = 0;
     new_hook_url->thread_running = 0;
     new_hook_url->hook_timer = NULL;
     new_hook_url->output = hashtable_new (32,
@@ -326,6 +328,8 @@ error:
 void
 hook_url_free_data (struct t_hook *hook)
 {
+    void *retval;
+
     if (!hook || !hook->hook_data)
         return;
 
@@ -349,6 +353,8 @@ hook_url_free_data (struct t_hook *hook)
         pthread_cancel (HOOK_URL(hook, thread_id));
         HOOK_URL(hook, thread_running) = 0;
     }
+    if (HOOK_URL(hook, thread_created))
+        pthread_join (HOOK_URL(hook, thread_id), &retval);
     if (HOOK_URL(hook, output))
     {
         hashtable_free (HOOK_URL(hook, output));
@@ -382,6 +388,8 @@ hook_url_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!infolist_new_var_integer (item, "timeout", (int)(HOOK_URL(hook, timeout))))
         return 0;
+    if (!infolist_new_var_integer (item, "thread_created", (int)(HOOK_URL(hook, thread_created))))
+        return 0;
     if (!infolist_new_var_integer (item, "thread_running", (int)(HOOK_URL(hook, thread_running))))
         return 0;
     if (!infolist_new_var_pointer (item, "hook_timer", HOOK_URL(hook, hook_timer)))
@@ -410,6 +418,7 @@ hook_url_print_log (struct t_hook *hook)
                 hashtable_get_string (HOOK_URL(hook, options),
                                       "keys_values"));
     log_printf ("    timeout . . . . . . . : %ld", HOOK_URL(hook, timeout));
+    log_printf ("    thread_created. . . . : %d", (int)HOOK_URL(hook, thread_created));
     log_printf ("    thread_running. . . . : %d", (int)HOOK_URL(hook, thread_running));
     log_printf ("    hook_timer. . . . . . : 0x%lx", HOOK_URL(hook, hook_timer));
     log_printf ("    output. . . . . . . . : 0x%lx (hashtable: '%s')",

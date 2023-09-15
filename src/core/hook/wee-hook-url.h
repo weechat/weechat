@@ -38,6 +38,7 @@ struct t_hook_url
     struct t_hashtable *options;       /* URL options (see doc)             */
     long timeout;                      /* timeout (ms) (0 = no timeout)     */
     pthread_t thread_id;               /* thread id                         */
+    int thread_created;                /* thread created                    */
     int thread_running;                /* 1 if thread is running            */
     struct t_hook *hook_timer;         /* timer to check if thread has ended*/
     struct t_hashtable *output;        /* URL transfer output data          */
