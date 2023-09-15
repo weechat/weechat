@@ -598,6 +598,15 @@ Si está utilizando aplicación Terminal de macOS, habilite la opción
 "Use option as meta key" en el menú Settings/Keyboard después de la cual puede utilizar la tecla
 kbd:[Option] como tecla meta.
 
+// TRANSLATION MISSING
+[[enter_key]]
+=== Some keys including Enter are not working, why?
+
+If you run a WeeChat < 4.0.0 with configuration files created by any
+version ≥ 4.0.0, the keys names become invalid and many keys won't work at all. +
+To repair them, exit WeeChat, remove all sections `[key*]` from weechat.conf
+and start WeeChat again: all default keys will be created.
+
 [[customize_key_bindings]]
 === ¿Cómo puedo personalizar los atajos de teclado?
 

@@ -583,6 +583,14 @@ If you are using the macOS Terminal app, enable the option
 "Use option as meta key" in menu Settings/Keyboard after which you can use the
 kbd:[Option] key as meta key.
 
+[[enter_key]]
+=== Some keys including Enter are not working, why?
+
+If you run a WeeChat < 4.0.0 with configuration files created by any
+version ≥ 4.0.0, the keys names become invalid and many keys won't work at all. +
+To repair them, exit WeeChat, remove all sections `[key*]` from weechat.conf
+and start WeeChat again: all default keys will be created.
+
 [[customize_key_bindings]]
 === How can I customize key bindings?
 

@@ -598,6 +598,15 @@ macOS のターミナル.app を使っている場合、設定メニューのキ
 キーを使用」を有効化してください。こうすることで、kbd:[Option]
 キーをメタキーとして使うことが可能です。
 
+// TRANSLATION MISSING
+[[enter_key]]
+=== Some keys including Enter are not working, why?
+
+If you run a WeeChat < 4.0.0 with configuration files created by any
+version ≥ 4.0.0, the keys names become invalid and many keys won't work at all. +
+To repair them, exit WeeChat, remove all sections `[key*]` from weechat.conf
+and start WeeChat again: all default keys will be created.
+
 [[customize_key_bindings]]
 === どうすればキー割り当てをカスタマイズできますか。
 

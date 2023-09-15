@@ -517,6 +517,15 @@ UXTerm*metaSendsEscape: true
 
 Ако користите macOS Terminal апликацију, укључите опцију „Use option as meta key” у менију Settings/Keyboard након чега можете користити тастер kbd:[Option] као meta тастер.
 
+// TRANSLATION MISSING
+[[enter_key]]
+=== Some keys including Enter are not working, why?
+
+If you run a WeeChat < 4.0.0 with configuration files created by any
+version ≥ 4.0.0, the keys names become invalid and many keys won't work at all. +
+To repair them, exit WeeChat, remove all sections `[key*]` from weechat.conf
+and start WeeChat again: all default keys will be created.
+
 [[customize_key_bindings]]
 === Како могу да прилагодим тастерске пречице?
 

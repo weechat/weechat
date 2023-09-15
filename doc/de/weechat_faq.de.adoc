@@ -613,6 +613,15 @@ Sollte die macOS Terminal Applikation genutzt werden, empfiehlt es sich,
 die Option "Use option as meta key" in den Menü-Einstellungen zu aktivieren.
 Dadurch kann man die kbd:[Option] Taste als Meta-Taste verwenden.
 
+// TRANSLATION MISSING
+[[enter_key]]
+=== Some keys including Enter are not working, why?
+
+If you run a WeeChat < 4.0.0 with configuration files created by any
+version ≥ 4.0.0, the keys names become invalid and many keys won't work at all. +
+To repair them, exit WeeChat, remove all sections `[key*]` from weechat.conf
+and start WeeChat again: all default keys will be created.
+
 [[customize_key_bindings]]
 === Wie kann ich die Tastaturbelegung anpassen?
 

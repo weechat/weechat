@@ -582,6 +582,15 @@ Jeśli używasz aplikacji Terminal na macOS włącz opcję
 "Use option as meta key" w menu Settings/Keyboard. Następnie możesz używać klawisza
 kbd:[Option] jako klawisza meta.
 
+// TRANSLATION MISSING
+[[enter_key]]
+=== Some keys including Enter are not working, why?
+
+If you run a WeeChat < 4.0.0 with configuration files created by any
+version ≥ 4.0.0, the keys names become invalid and many keys won't work at all. +
+To repair them, exit WeeChat, remove all sections `[key*]` from weechat.conf
+and start WeeChat again: all default keys will be created.
+
 [[customize_key_bindings]]
 === Jak mogę zmienić przypisania klawiszy?
 

@@ -601,6 +601,16 @@ Si vous utilisez l'application Terminal sous macOS, activez l'option
 "Use option as meta key" dans le menu Réglages/Clavier. Vous pouvez alors
 utiliser la touche kbd:[Option] comme touche meta.
 
+[[enter_key]]
+=== Quelques touches comme Entrée ne fonctionnent pas, pourquoi ?
+
+Si vous lancez WeeChat < 4.0.0 avec des fichiers de configuration créés par toute
+version ≥ 4.0.0, les noms des touches sont invalides et de nombreuses touches
+ne fonctionneront plus. +
+Pour les réparer, quittez WeeChat, supprimez toutes les sections `[key*]` de
+weechat.conf et démarrez WeeChat à nouveau : toutes les touches par défaut
+seront recréées.
+
 [[customize_key_bindings]]
 === Comment puis-je configurer les raccourcis clavier ?
 
