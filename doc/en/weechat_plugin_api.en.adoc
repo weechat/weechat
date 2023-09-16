@@ -10498,9 +10498,12 @@ for options with type "list", the list items must be separated by a newline
 
 These two extra options (strings) are allowed for input/output file:
 
-* _file_in_: file to read and send with URLs (post file)
-* _file_out_: write downloaded URL/file in this file (instead of standard
-  output)
+[width="100%",cols="2,^1,7",options="header"]
+|===
+| Option   | Type   | Description
+| file_in  | string | file to read and send with URLs (post file)
+| file_out | string | write downloaded URL/file in this file (instead of standard output)
+|===
 
 Return value:
 

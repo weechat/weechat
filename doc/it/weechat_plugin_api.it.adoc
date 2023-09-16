@@ -10880,8 +10880,12 @@ l'opzione.
 
 These two extra options (strings) are allowed for input/output file:
 
-* _file_in_: file da leggere e inviare con gli URL (invio del file "post")
-* _file_out_: scrive URL scaricato/file in questo file (invece dello standard output)
+[width="100%",cols="2,^1,7",options="header"]
+|===
+| Option   | Type   | Description
+| file_in  | string | file da leggere e inviare con gli URL (invio del file "post")
+| file_out | string | scrive URL scaricato/file in questo file (invece dello standard output)
+|===
 
 Valore restituito:
 

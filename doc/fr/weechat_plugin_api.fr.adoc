@@ -10700,9 +10700,12 @@ comme valeur pour l'option.
 Ces deux options supplémentaires (chaînes) sont autorisées, pour le fichier en
 entrée/sortie :
 
-* _file_in_ : fichier à lire pour envoyer avec l'URL (envoi de fichier "post")
-* _file_out_ : écrire l'URL/fichier dans ce fichier (au lieu de la sortie
-  standard)
+[width="100%",cols="2,^1,7",options="header"]
+|===
+| Option   | Type   | Description
+| file_in  | string | fichier à lire pour envoyer avec l'URL (envoi de fichier "post")
+| file_out | string | écrire l'URL/fichier dans ce fichier (au lieu de la sortie standard)
+|===
 
 Valeur de retour :
 

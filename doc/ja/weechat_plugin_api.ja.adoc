@@ -10611,9 +10611,12 @@ include::{autogendir}/autogen_api_url_options.ja.adoc[tag=url_options]
 
 These two extra options (strings) are allowed for input/output file:
 
-* _file_in_: 読み込んで URL に送信するファイル (ファイルを送信)
-* _file_out_: ダウンロードした URL/ファイルをこのファイルに書き込む
-  (標準出力を使わない)
+[width="100%",cols="2,^1,7",options="header"]
+|===
+| Option   | Type   | Description
+| file_in  | string | 読み込んで URL に送信するファイル (ファイルを送信)
+| file_out | string | ダウンロードした URL/ファイルをこのファイルに書き込む (標準出力を使わない)
+|===
 
 戻り値:
 

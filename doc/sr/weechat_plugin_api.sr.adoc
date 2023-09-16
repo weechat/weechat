@@ -10174,8 +10174,12 @@ include::{autogendir}/autogen_api_url_options.sr.adoc[tag=url_options]
 
 These two extra options (strings) are allowed for input/output file:
 
-* _file_in_: фајл који се чита и шаље URL адресама (post фајл)
-* _file_out_: преузети URL/фајл се уписује у овај фајл (уместо на стандардни излаз)
+[width="100%",cols="2,^1,7",options="header"]
+|===
+| Option   | Type   | Description
+| file_in  | string | фајл који се чита и шаље URL адресама (post фајл)
+| file_out | string | преузети URL/фајл се уписује у овај фајл (уместо на стандардни излаз)
+|===
 
 Повратна вредност:
 
