@@ -1190,6 +1190,37 @@ des mots de passes (s'ils ne sont pas stockés dans _sec.conf_ avec la commande
 Voir le link:weechat_user.fr.html#files_and_directories[Guide utilisateur / Fichiers et répertoires ^↗^^]
 pour plus d'informations sur les fichiers de configuration.
 
+[[move_to_another_device]]
+=== Je souhaite déplacer mon WeeChat vers une autre machine et garder ma configuration, que dois-je copier ?
+
+Premièrement, vérifiez les répertoires utilisés par WeeChat avec cette commande :
+`/debug dirs`. +
+Les répertoires home/config et home/data doivent être copiés (tous les fichiers
+et sous-répertoires).
+
+Par exemple si vous utilisez les répertoires XDG (par défaut avec WeeChat ≥ 3.2),
+les répertoires devraient être `$HOME/.config/weechat` et `$HOME/.local/share/weechat`. +
+Si vous utilisez un répertoire unique (par défaut avec WeeChat < 3.2), le répertoire
+devrait être `$HOME/.weechat`.
+
+[IMPORTANT]
+La version de WeeChat sur la nouvelle machine doit être supérieure ou égale
+à celle de la machine initiale. +
+La rétrogradation de la configuration n'est *PAS SUPPORTÉE* et pourrait la casser,
+rendant WeeChat inutilisable.
+
+Étapes :
+
+. Quitter Weechat : `/quit` (ou `/upgrade -quit` si vous souhaitez restaurer
+  la session, qui inclut le contenu de tous les tampons).
+. Copier tous les répertoires, fichiers et sous-répertoires vers la nouvelle machine
+  au même endroit, en préservant les noms et les permissions.
+. Facultatif : copier tout fichier en dehors de ces répertoires que vous référencez
+  dans votre configuration (il n'est pas recommandé d'utiliser des fichiers en
+  dehors des répertoires WeeChat).
+. Démarrer WeeChat sur la nouvelle machine : `weechat` (ou `weechat --upgrade`
+  si vous avez sauvé la session).
+
 [[development]]
 == Développement
 

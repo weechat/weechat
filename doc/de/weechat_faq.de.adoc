@@ -1218,6 +1218,35 @@ Kennwörter (sofern sie nicht mit dem Befehl `/secure` in _sec.conf_ gesichert w
 Siehe link:weechat_user.de.html#files_and_directories[Benutzerhandbuch / Dateien und Verzeichnisse ^↗^^]
 für weitere Informationen über Konfigurationsdateien.
 
+// TRANSLATION MISSING
+[[move_to_another_device]]
+=== I want to move my WeeChat to another device and keep my config, what should I copy?
+
+First check directories used by WeeChat with this command: `/debug dirs`. +
+Directories home/config and home/data must be copied (all files and sub-directories).
+
+For example if you're using XDG directories (default with WeeChat ≥ 3.2),
+the directories should be `$HOME/.config/weechat` and `$HOME/.local/share/weechat`. +
+If you're using a single directory (default with WeeChat < 3.2), the directory
+should be `$HOME/.weechat`.
+
+[IMPORTANT]
+The WeeChat version on the new device must be greater than or equal to the version
+on the initial device. +
+Downgrading WeeChat configuration is *NOT SUPPORTED* and can break it,
+leading to unusable WeeChat.
+
+Steps:
+
+. Quit Weechat: `/quit` (or `/upgrade -quit` if you want to resume the session,
+  which includes content of all buffers).
+. Copy all directories, sub-directories and files to the new device, keeping
+  same names and permissions.
+. Optional: copy any file outside these directories that you refer to in your
+  configuration (it's not recommended to use files outside WeeChat directories).
+. Start WeeChat on the new device: `weechat` (or `weechat --upgrade` if you
+  saved the session).
+
 [[development]]
 == Entwicklung
 
