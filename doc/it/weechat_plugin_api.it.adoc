@@ -10654,24 +10654,8 @@ available:
   _/dev/null_.
 |===
 
-Per il comando "url:..." sono disponibili le seguenti opzioni (consultare
-`+man curl_easy_setopt+` per la descrizione di ogni opzione):
-
-include::{autogendir}/autogen_api_url_options.it.adoc[tag=url_options]
-
 // TRANSLATION MISSING
-[NOTE]
-^(1)^ Per le opzioni con il tipo "mask" il formato è: "value1+value2+value3";
-for options with type "list", the list items must be separated by a newline
-(`\n`). +
-^(2)^ Quando sono disponibili le costanti, esse vanno usate come valore per
-l'opzione.
-
-Per un URL, sono consentite due opzioni aggiuntive (stringhe) per il file in
-input/output:
-
-* _file_in_: file da leggere e inviare con gli URL (invio del file "post")
-* _file_out_: scrive URL scaricato/file in questo file (invece dello standard output)
+For command "url:...", see available options in function <<_hook_url,hook_url>>.
 
 Valore restituito:
 

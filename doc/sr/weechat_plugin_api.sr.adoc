@@ -9955,18 +9955,8 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   _/dev/null_.
 |===
 
-За команду „url:...” су доступне следеће опције (за опис сваке опције погледајте `+man curl_easy_setopt+`):
-
-include::{autogendir}/autogen_api_url_options.sr.adoc[tag=url_options]
-
-[NOTE]
-^(1)^ За опције типа „mask”, формат је: „вредност1+вредност2+вредност3”; за опције типа „list”, ставке листе морају да се раздвоје преломом линије (`\n`). +
-^(2)^ Ако су доступне константе, оне морају да се користе као вредност опције.
-
-За URL су дозвољене две додатне опције (стрингови) за улазни/излазни фајл:
-
-* _file_in_: фајл који се чита и шаље URL адресама (post фајл)
-* _file_out_: преузети URL/фајл се уписује у овај фајл (уместо на стандардни излаз)
+// TRANSLATION MISSING
+For command "url:...", see available options in function <<_hook_url,hook_url>>.
 
 Повратна вредност:
 
