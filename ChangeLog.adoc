@@ -68,6 +68,7 @@ Bug fixes::
   * irc: add missing "account-tag" in list of supported capabilities
   * irc: add channel in "autojoin" server option only when the channel is actually joined (issue #1990)
   * relay: synchronize nick modes with IRC client upon connection (issue #1984)
+  * script: fix autoload of multiple scripts at once with `/script autoload` (issue #2018)
   * script: fix crash when a `/script` command triggers another `/script` command (issue #923)
   * script: add local key bindings during the buffer creation
   * script: add parameters up/down/go in `/help script` and command completion
