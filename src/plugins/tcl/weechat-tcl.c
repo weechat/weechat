@@ -658,7 +658,7 @@ weechat_tcl_command_cb (const void *pointer, void *data,
             {
                 /* load tcl script */
                 path_script = plugin_script_search_path (weechat_tcl_plugin,
-                                                         ptr_name);
+                                                         ptr_name, 1);
                 weechat_tcl_load ((path_script) ? path_script : ptr_name,
                                   NULL);
                 if (path_script)

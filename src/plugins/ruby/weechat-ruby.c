@@ -1003,7 +1003,7 @@ weechat_ruby_command_cb (const void *pointer, void *data,
             {
                 /* load ruby script */
                 path_script = plugin_script_search_path (weechat_ruby_plugin,
-                                                         ptr_name);
+                                                         ptr_name, 1);
                 weechat_ruby_load ((path_script) ? path_script : ptr_name,
                                    NULL);
                 if (path_script)

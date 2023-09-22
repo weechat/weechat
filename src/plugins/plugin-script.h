@@ -135,7 +135,8 @@ extern void plugin_script_auto_load (struct t_weechat_plugin *weechat_plugin,
 extern struct t_plugin_script *plugin_script_search (struct t_plugin_script *scripts,
                                                      const char *name);
 extern char *plugin_script_search_path (struct t_weechat_plugin *weechat_plugin,
-                                        const char *filename);
+                                        const char *filename,
+                                        int search_system_dir);
 extern struct t_plugin_script *plugin_script_alloc (const char *filename,
                                                     const char *name,
                                                     const char *author,

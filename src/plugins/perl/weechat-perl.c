@@ -963,7 +963,7 @@ weechat_perl_command_cb (const void *pointer, void *data,
             {
                 /* load perl script */
                 path_script = plugin_script_search_path (weechat_perl_plugin,
-                                                         ptr_name);
+                                                         ptr_name, 1);
                 weechat_perl_load ((path_script) ? path_script : ptr_name,
                                    NULL);
                 if (path_script)

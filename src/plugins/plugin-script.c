@@ -536,7 +536,8 @@ plugin_script_search_by_full_name (struct t_plugin_script *scripts,
 
 char *
 plugin_script_search_path (struct t_weechat_plugin *weechat_plugin,
-                           const char *filename)
+                           const char *filename,
+                           int search_system_dir)
 {
     char *final_name, *weechat_data_dir, *dir_system;
     int length;
@@ -601,28 +602,31 @@ plugin_script_search_path (struct t_weechat_plugin *weechat_plugin,
         free (weechat_data_dir);
     }
 
-    /* try WeeChat system dir */
-    dir_system = weechat_info_get ("weechat_sharedir", "");
-    if (dir_system)
+    if (search_system_dir)
     {
-        length = strlen (dir_system) + strlen (weechat_plugin->name) +
-            strlen (filename) + 16;
-        final_name = malloc (length);
-        if (final_name)
+        /* try WeeChat system dir */
+        dir_system = weechat_info_get ("weechat_sharedir", "");
+        if (dir_system)
         {
-            snprintf (final_name,length,
-                      "%s/%s/%s", dir_system, weechat_plugin->name, filename);
-            if ((stat (final_name, &st) == 0) && (st.st_size > 0))
+            length = strlen (dir_system) + strlen (weechat_plugin->name) +
+                strlen (filename) + 16;
+            final_name = malloc (length);
+            if (final_name)
             {
-                free (dir_system);
-                return final_name;
+                snprintf (final_name,length,
+                          "%s/%s/%s", dir_system, weechat_plugin->name, filename);
+                if ((stat (final_name, &st) == 0) && (st.st_size > 0))
+                {
+                    free (dir_system);
+                    return final_name;
+                }
+                free (final_name);
             }
-            free (final_name);
+            free (dir_system);
         }
-        free (dir_system);
     }
 
-    return strdup (filename);
+    return NULL;
 }
 
 /*
@@ -1146,7 +1150,7 @@ plugin_script_remove_file (struct t_weechat_plugin *weechat_plugin,
     i = 0;
     while (i < 2)
     {
-        path_script = plugin_script_search_path (weechat_plugin, name);
+        path_script = plugin_script_search_path (weechat_plugin, name, 0);
         /*
          * script not found? (if path_script == name, that means the function
          * above did not find the script)
