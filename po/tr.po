@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-15 08:41+0200\n"
+"POT-Creation-Date: 2023-09-22 23:07+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -59,6 +59,20 @@ msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 "Sistem saati hatalı (%+ld saniye), tüm zamanlayıcılar yeniden başlatılıyor"
+
+#, fuzzy, c-format
+#| msgid "curl error %d (%s) (URL: \"%s\")\n"
+msgid "%sURL transfer error: %s (URL: \"%s\")"
+msgstr "curl hatası %d (%s) (URL: \"%s\")\n"
+
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "End of URL transfer '%s', timeout reached (%.1fs)"
+msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
+
+#, c-format
+msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
+msgstr ""
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -451,6 +465,22 @@ msgstr[1] "%d sertifika yüklendi (sistem: %d, kullanıcı: %d)"
 #, c-format
 msgid "Debug disabled for \"%s\""
 msgstr "\"%s\" için hata ayıklama devre dışı"
+
+#, c-format
+msgid "Debug hook_url: %s"
+msgstr ""
+
+#. TRANSLATORS: "TLS: enabled"
+#, fuzzy
+#| msgid "Mouse enabled"
+msgid "enabled"
+msgstr "Fare etkin"
+
+#. TRANSLATORS: "TLS: disabled"
+#, fuzzy
+#| msgid "(disabled)"
+msgid "disabled"
+msgstr "(devre dışı)"
 
 msgid "error"
 msgstr "hata"
@@ -1024,10 +1054,13 @@ msgstr "%sWeeChat oturumu kaydedilemiyor (*.upgrade dosyalar)"
 msgid "WeeChat session saved (files *.upgrade)"
 msgstr "WeeChat oturumu kaydedildi (*.upgrade dosyalar)"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sCan't upgrade: there is one or more background process (hook type "
+#| "'process' or 'connect')"
 msgid ""
-"%sCan't upgrade: there is one or more background process (hook type "
-"'process' or 'connect')"
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
 msgstr ""
 "%sYükseltilemiyor: Bir veya birden çok arka plan süreci var (kanca türü "
 "'process' veya 'connect')"
@@ -1705,9 +1738,9 @@ msgstr "hata ayıklama işlevleri"
 #| "[verbose] || hdata [free] || time <command> || unicode <string>"
 msgid ""
 "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|libs|memory|tags|term|windows || callbacks <duration>[<unit>] "
-"|| mouse|cursor [verbose] || hdata [free] || time <command> || unicode "
-"<string>"
+"dirs|infolists|libs|memory|tags|term|url|windows || callbacks "
+"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
+"<command> || unicode <string>"
 msgstr ""
 "list || set <eklenti> <düzey> || dump|hooks [<eklenti>] || buffer|certs|"
 "color|dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] "
@@ -1746,6 +1779,7 @@ msgid ""
 "    mouse: toggle debug for mouse\n"
 "     tags: display tags for lines\n"
 "     term: display infos about terminal\n"
+"      url: toggle debug for calls to hook_url (display output hashtable)\n"
 "  windows: display windows tree\n"
 "     time: measure time to execute a command or to send text to the current "
 "buffer\n"
@@ -6177,6 +6211,27 @@ msgstr ""
 "oku - hatalı imza (yükseltme dosyası biçimi son sürümden bu yana "
 "değiştirilmiş olabilir)"
 
+msgid "invalid URL"
+msgstr ""
+
+msgid "not enough memory"
+msgstr "yetersiz bellek"
+
+#, fuzzy, c-format
+#| msgid "%sFilter \"%s\" not found"
+msgid "file \"%s\" not found"
+msgstr "%s\"%s\" süzgeci bulunamadı"
+
+#, fuzzy, c-format
+#| msgid "%sCannot create file \"%s\""
+msgid "can not write file \"%s\""
+msgstr "%s\"%s\" dosyası oluşturulamıyor"
+
+#, fuzzy
+#| msgid "fork error"
+msgid "transfer error"
+msgstr "çatal hatası"
+
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "curl hatası %d (%s) (URL: \"%s\")\n"
@@ -6434,9 +6489,6 @@ msgstr ""
 #, c-format
 msgid "invalid regular expression (%s)"
 msgstr "geçersiz düzenli ifade (%s)"
-
-msgid "not enough memory"
-msgstr "yetersiz bellek"
 
 #, fuzzy, c-format
 #| msgid "Key \"%s\" unbound (context: \"%s\")"
@@ -13180,18 +13232,6 @@ msgstr " (sahte)"
 
 msgid "TLS:"
 msgstr ""
-
-#. TRANSLATORS: "TLS: enabled"
-#, fuzzy
-#| msgid "Mouse enabled"
-msgid "enabled"
-msgstr "Fare etkin"
-
-#. TRANSLATORS: "TLS: disabled"
-#, fuzzy
-#| msgid "(disabled)"
-msgid "disabled"
-msgstr "(devre dışı)"
 
 #, c-format
 msgid "%s%s: error when allocating new server"

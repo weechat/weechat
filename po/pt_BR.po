@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-15 08:41+0200\n"
+"POT-Creation-Date: 2023-09-22 23:07+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -61,6 +61,18 @@ msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 "Distroção no relógio do sistema detectada (%+ld segundos), reinicializando "
 "todos os contadores de tempo"
+
+#, c-format
+msgid "%sURL transfer error: %s (URL: \"%s\")"
+msgstr ""
+
+#, c-format
+msgid "End of URL transfer '%s', timeout reached (%.1fs)"
+msgstr ""
+
+#, c-format
+msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
+msgstr ""
 
 # Common conventions used here:
 # hotlist -> lista de atividade
@@ -417,6 +429,22 @@ msgstr[1] "%sgnutls: certificado foi expirado"
 #, c-format
 msgid "Debug disabled for \"%s\""
 msgstr "Depuração desabilitada para \"%s\""
+
+#, c-format
+msgid "Debug hook_url: %s"
+msgstr ""
+
+#. TRANSLATORS: "TLS: enabled"
+#, fuzzy
+#| msgid "Mouse enabled"
+msgid "enabled"
+msgstr "Mouse habilitado"
+
+#. TRANSLATORS: "TLS: disabled"
+#, fuzzy
+#| msgid "(disabled)"
+msgid "disabled"
+msgstr "(desabilitado)"
 
 msgid "error"
 msgstr ""
@@ -1009,10 +1037,13 @@ msgstr "%sErro: incapaz de salvar a sessão em arquivo"
 msgid "WeeChat session saved (files *.upgrade)"
 msgstr "%sErro: incapaz de salvar a sessão em arquivo"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sCan't upgrade: there is one or more background process (hook type "
+#| "'process' or 'connect')"
 msgid ""
-"%sCan't upgrade: there is one or more background process (hook type "
-"'process' or 'connect')"
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
 msgstr ""
 "%sNão foi possível atualizar: existe um ou mais processos em segundo plano "
 "(tipo de hook 'process' ou 'connect')"
@@ -1579,9 +1610,9 @@ msgstr ""
 #, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|libs|memory|tags|term|windows || callbacks <duration>[<unit>] "
-"|| mouse|cursor [verbose] || hdata [free] || time <command> || unicode "
-"<string>"
+"dirs|infolists|libs|memory|tags|term|url|windows || callbacks "
+"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
+"<command> || unicode <string>"
 msgstr ""
 "list || set <plugin> <nível> || dump [<plugin>] || buffer|color|cursor|"
 "infolists|memory|mouse|tags|term|windows || hdata [free]"
@@ -1620,6 +1651,7 @@ msgid ""
 "    mouse: toggle debug for mouse\n"
 "     tags: display tags for lines\n"
 "     term: display infos about terminal\n"
+"      url: toggle debug for calls to hook_url (display output hashtable)\n"
 "  windows: display windows tree\n"
 "     time: measure time to execute a command or to send text to the current "
 "buffer\n"
@@ -5367,6 +5399,25 @@ msgid ""
 "version)"
 msgstr ""
 
+msgid "invalid URL"
+msgstr ""
+
+#, fuzzy
+msgid "not enough memory"
+msgstr "%sMemória insuficiente"
+
+#, fuzzy, c-format
+msgid "file \"%s\" not found"
+msgstr "%sTecla \"%s\" não encontrada"
+
+#, fuzzy, c-format
+msgid "can not write file \"%s\""
+msgstr "%sErro: não foi possível criar arquivo \"%s\""
+
+#, fuzzy
+msgid "transfer error"
+msgstr "%s%s: erro: %s"
+
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr ""
@@ -5614,10 +5665,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "invalid regular expression (%s)"
 msgstr "%s%s: erro ao compilar expressão regular \"%s\""
-
-#, fuzzy
-msgid "not enough memory"
-msgstr "%sMemória insuficiente"
 
 #, fuzzy, c-format
 #| msgid "Key \"%s\" unbound (context: \"%s\")"
@@ -10763,18 +10810,6 @@ msgstr ""
 
 msgid "TLS:"
 msgstr ""
-
-#. TRANSLATORS: "TLS: enabled"
-#, fuzzy
-#| msgid "Mouse enabled"
-msgid "enabled"
-msgstr "Mouse habilitado"
-
-#. TRANSLATORS: "TLS: disabled"
-#, fuzzy
-#| msgid "(disabled)"
-msgid "disabled"
-msgstr "(desabilitado)"
 
 #, c-format
 msgid "%s%s: error when allocating new server"

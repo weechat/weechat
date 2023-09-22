@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-15 08:41+0200\n"
+"POT-Creation-Date: 2023-09-22 23:07+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -56,6 +56,18 @@ msgstr ""
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr ""
+
+#, c-format
+msgid "%sURL transfer error: %s (URL: \"%s\")"
+msgstr ""
+
+#, c-format
+msgid "End of URL transfer '%s', timeout reached (%.1fs)"
+msgstr ""
+
+#, c-format
+msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
 msgstr ""
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
@@ -378,6 +390,20 @@ msgstr[1] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 #, c-format
 msgid "Debug disabled for \"%s\""
 msgstr ""
+
+#, c-format
+msgid "Debug hook_url: %s"
+msgstr ""
+
+#. TRANSLATORS: "TLS: enabled"
+#, fuzzy
+msgid "enabled"
+msgstr "a felhasználók le lettek tiltva"
+
+#. TRANSLATORS: "TLS: disabled"
+#, fuzzy
+msgid "disabled"
+msgstr "a felhasználók le lettek tiltva"
 
 msgid "error"
 msgstr ""
@@ -978,8 +1004,8 @@ msgstr "%s nem sikerült a folyamatot menteni\n"
 
 #, c-format
 msgid ""
-"%sCan't upgrade: there is one or more background process (hook type "
-"'process' or 'connect')"
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
 msgstr ""
 
 #, c-format
@@ -1394,9 +1420,9 @@ msgstr ""
 #, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|libs|memory|tags|term|windows || callbacks <duration>[<unit>] "
-"|| mouse|cursor [verbose] || hdata [free] || time <command> || unicode "
-"<string>"
+"dirs|infolists|libs|memory|tags|term|url|windows || callbacks "
+"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
+"<command> || unicode <string>"
 msgstr "dump | buffer | windows"
 
 #, fuzzy
@@ -1432,6 +1458,7 @@ msgid ""
 "    mouse: toggle debug for mouse\n"
 "     tags: display tags for lines\n"
 "     term: display infos about terminal\n"
+"      url: toggle debug for calls to hook_url (display output hashtable)\n"
 "  windows: display windows tree\n"
 "     time: measure time to execute a command or to send text to the current "
 "buffer\n"
@@ -4643,6 +4670,25 @@ msgid ""
 "version)"
 msgstr ""
 
+msgid "invalid URL"
+msgstr ""
+
+#, fuzzy
+msgid "not enough memory"
+msgstr "Nincs elég memória az új sorhoz\n"
+
+#, fuzzy, c-format
+msgid "file \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "can not write file \"%s\""
+msgstr "%s nem sikerült a \"%s\" fájlt létrehozni\n"
+
+#, fuzzy
+msgid "transfer error"
+msgstr "%sSzerver: %s%s\n"
+
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr ""
@@ -4884,10 +4930,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "invalid regular expression (%s)"
 msgstr "%s a(z) \"%s\" érvénytelen reguláris kifejezés (%s)\n"
-
-#, fuzzy
-msgid "not enough memory"
-msgstr "Nincs elég memória az új sorhoz\n"
 
 #, fuzzy, c-format
 msgid "key \"%s\" in context \"%s\""
@@ -10173,16 +10215,6 @@ msgstr ""
 
 msgid "TLS:"
 msgstr ""
-
-#. TRANSLATORS: "TLS: enabled"
-#, fuzzy
-msgid "enabled"
-msgstr "a felhasználók le lettek tiltva"
-
-#. TRANSLATORS: "TLS: disabled"
-#, fuzzy
-msgid "disabled"
-msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"

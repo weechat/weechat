@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-15 08:41+0200\n"
+"POT-Creation-Date: 2023-09-22 23:07+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -59,6 +59,19 @@ msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 "Rilevato ritardo nell'orologio di sistema (%+ld secondi), reset di tutti i "
 "timer"
+
+#, c-format
+msgid "%sURL transfer error: %s (URL: \"%s\")"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "End of URL transfer '%s', timeout reached (%.1fs)"
+msgstr "Fine comando '%s', timeout raggiunto (%.1fs)"
+
+#, c-format
+msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
+msgstr ""
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -382,6 +395,22 @@ msgstr[1] "%sgnutls: il certificato è scaduto"
 #, c-format
 msgid "Debug disabled for \"%s\""
 msgstr "Debug disabilitato per \"%s\""
+
+#, c-format
+msgid "Debug hook_url: %s"
+msgstr ""
+
+#. TRANSLATORS: "TLS: enabled"
+#, fuzzy
+#| msgid "Mouse enabled"
+msgid "enabled"
+msgstr "Mouse abilitato"
+
+#. TRANSLATORS: "TLS: disabled"
+#, fuzzy
+#| msgid "(disabled)"
+msgid "disabled"
+msgstr "(disabilitato)"
 
 msgid "error"
 msgstr "errore"
@@ -970,10 +999,13 @@ msgstr "%sErrore: impossibile salvare la sessione su file"
 msgid "WeeChat session saved (files *.upgrade)"
 msgstr "%sErrore: impossibile salvare la sessione su file"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sCan't upgrade: there is one or more background process (hook type "
+#| "'process' or 'connect')"
 msgid ""
-"%sCan't upgrade: there is one or more background process (hook type "
-"'process' or 'connect')"
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
 msgstr ""
 "%sImpossibile aggiornare: ci sono uno o più processi in background (hook di "
 "tipo 'process' o 'connect')"
@@ -1511,9 +1543,9 @@ msgstr ""
 #, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|libs|memory|tags|term|windows || callbacks <duration>[<unit>] "
-"|| mouse|cursor [verbose] || hdata [free] || time <command> || unicode "
-"<string>"
+"dirs|infolists|libs|memory|tags|term|url|windows || callbacks "
+"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
+"<command> || unicode <string>"
 msgstr ""
 "list || set <plugin> <livello> || dump [<plugin>] || buffer|color|infolists|"
 "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
@@ -1551,6 +1583,7 @@ msgid ""
 "    mouse: toggle debug for mouse\n"
 "     tags: display tags for lines\n"
 "     term: display infos about terminal\n"
+"      url: toggle debug for calls to hook_url (display output hashtable)\n"
 "  windows: display windows tree\n"
 "     time: measure time to execute a command or to send text to the current "
 "buffer\n"
@@ -5399,6 +5432,25 @@ msgstr ""
 "lettura - firma errata (l'aggiornamento del formato del file potrebbe essere "
 "cambiato dall'ultima versione)"
 
+msgid "invalid URL"
+msgstr ""
+
+#, fuzzy
+msgid "not enough memory"
+msgstr "%sSpazio non sufficiente"
+
+#, fuzzy, c-format
+msgid "file \"%s\" not found"
+msgstr "%sTasto \"%s\" non trovato"
+
+#, fuzzy, c-format
+msgid "can not write file \"%s\""
+msgstr "%sErrore: impossibile creare il file \"%s\""
+
+#, fuzzy
+msgid "transfer error"
+msgstr "errore"
+
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr ""
@@ -5651,10 +5703,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "invalid regular expression (%s)"
 msgstr "%s%s: \"%s\" non è una espressione regolare valida (%s)"
-
-#, fuzzy
-msgid "not enough memory"
-msgstr "%sSpazio non sufficiente"
 
 #, fuzzy, c-format
 #| msgid "Key \"%s\" unbound (context: \"%s\")"
@@ -11235,18 +11283,6 @@ msgstr ""
 
 msgid "TLS:"
 msgstr ""
-
-#. TRANSLATORS: "TLS: enabled"
-#, fuzzy
-#| msgid "Mouse enabled"
-msgid "enabled"
-msgstr "Mouse abilitato"
-
-#. TRANSLATORS: "TLS: disabled"
-#, fuzzy
-#| msgid "(disabled)"
-msgid "disabled"
-msgstr "(disabilitato)"
 
 #, c-format
 msgid "%s%s: error when allocating new server"

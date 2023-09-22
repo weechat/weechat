@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-15 08:41+0200\n"
+"POT-Creation-Date: 2023-09-22 23:07+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -60,6 +60,20 @@ msgstr "Konec příkazu '%s', vypršel časový limit (%.1fs)"
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 "Detekován posun systémových hodin (%+ld sekund), znovu inicializuji časovače"
+
+#, fuzzy, c-format
+#| msgid "curl error %d (%s) (URL: \"%s\")\n"
+msgid "%sURL transfer error: %s (URL: \"%s\")"
+msgstr "chyba curlu %d (%s) (URL: \"%s\")\n"
+
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "End of URL transfer '%s', timeout reached (%.1fs)"
+msgstr "Konec příkazu '%s', vypršel časový limit (%.1fs)"
+
+#, c-format
+msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
+msgstr ""
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -408,6 +422,22 @@ msgstr[2] "%sgnutls: certifikát vypršel"
 #, c-format
 msgid "Debug disabled for \"%s\""
 msgstr "Ladění vypnuto pro \"%s\""
+
+#, c-format
+msgid "Debug hook_url: %s"
+msgstr ""
+
+#. TRANSLATORS: "TLS: enabled"
+#, fuzzy
+#| msgid "Mouse enabled"
+msgid "enabled"
+msgstr "Myš povolena"
+
+#. TRANSLATORS: "TLS: disabled"
+#, fuzzy
+#| msgid "(disabled)"
+msgid "disabled"
+msgstr "(vypnuto)"
 
 msgid "error"
 msgstr "chyba"
@@ -1000,10 +1030,13 @@ msgstr "%sChyba: nemohu uložit sezení do souboru"
 msgid "WeeChat session saved (files *.upgrade)"
 msgstr "%sChyba: nemohu uložit sezení do souboru"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sCan't upgrade: there is one or more background process (hook type "
+#| "'process' or 'connect')"
 msgid ""
-"%sCan't upgrade: there is one or more background process (hook type "
-"'process' or 'connect')"
+"%sCan't upgrade: there is one or more background process/thread running "
+"(hook type: process, connect or url)"
 msgstr ""
 "%sNemohu aktualizovat: je zde jeden nebo více procesů na pozadí (napojení "
 "typu 'process' nebo 'connect')"
@@ -1513,9 +1546,9 @@ msgstr "ladící funkce"
 #, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|libs|memory|tags|term|windows || callbacks <duration>[<unit>] "
-"|| mouse|cursor [verbose] || hdata [free] || time <command> || unicode "
-"<string>"
+"dirs|infolists|libs|memory|tags|term|url|windows || callbacks "
+"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
+"<command> || unicode <string>"
 msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|memory|term|"
 "windows"
@@ -1553,6 +1586,7 @@ msgid ""
 "    mouse: toggle debug for mouse\n"
 "     tags: display tags for lines\n"
 "     term: display infos about terminal\n"
+"      url: toggle debug for calls to hook_url (display output hashtable)\n"
 "  windows: display windows tree\n"
 "     time: measure time to execute a command or to send text to the current "
 "buffer\n"
@@ -5113,6 +5147,24 @@ msgstr ""
 "čtení - špatný podpis (formát aktualizačního souboru se mohl změnit od "
 "poslední verze)"
 
+msgid "invalid URL"
+msgstr ""
+
+msgid "not enough memory"
+msgstr "nedostatek paměti"
+
+#, fuzzy, c-format
+msgid "file \"%s\" not found"
+msgstr "%sPlugin \"%s\" nenalezen"
+
+#, fuzzy, c-format
+msgid "can not write file \"%s\""
+msgstr "%sChyba: nemohu vytvořit soubor \"%s\""
+
+#, fuzzy
+msgid "transfer error"
+msgstr "chyba"
+
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "chyba curlu %d (%s) (URL: \"%s\")\n"
@@ -5362,9 +5414,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "invalid regular expression (%s)"
 msgstr "%s%s: nedostatek paměti pro regulární výraz"
-
-msgid "not enough memory"
-msgstr "nedostatek paměti"
 
 #, fuzzy, c-format
 msgid "key \"%s\" in context \"%s\""
@@ -10770,18 +10819,6 @@ msgstr ""
 
 msgid "TLS:"
 msgstr ""
-
-#. TRANSLATORS: "TLS: enabled"
-#, fuzzy
-#| msgid "Mouse enabled"
-msgid "enabled"
-msgstr "Myš povolena"
-
-#. TRANSLATORS: "TLS: disabled"
-#, fuzzy
-#| msgid "(disabled)"
-msgid "disabled"
-msgstr "(vypnuto)"
 
 #, c-format
 msgid "%s%s: error when allocating new server"
