@@ -6672,6 +6672,16 @@ irc_protocol_get_string_channel_nicks_count (struct t_irc_server *server,
                       /* TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular" */
                       NG_("regular", "regular", nicks_by_mode[i]));
         }
+        else if (ptr_prefix_modes[i] == 'q')
+        {
+            snprintf (str_mode_name, sizeof (str_mode_name),
+                      "%s", NG_("owner", "owners", nicks_by_mode[i]));
+        }
+        else if (ptr_prefix_modes[i] == 'a')
+        {
+            snprintf (str_mode_name, sizeof (str_mode_name),
+                      "%s", NG_("admin", "admins", nicks_by_mode[i]));
+        }
         else if (ptr_prefix_modes[i] == 'o')
         {
             snprintf (str_mode_name, sizeof (str_mode_name),

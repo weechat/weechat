@@ -5129,21 +5129,44 @@ TEST(IrcProtocolWithServer, 366)
     RECV(":server 366 alice #test :End of /NAMES list");
     CHECK_CHAN(
         "--",
-        "Channel #test: 10 nicks (1 +q, 0 +a, 2 ops, 2 halfops, 2 voiced, 3 regular)",
+        "Channel #test: 10 nicks (1 owner, 0 admins, 2 ops, 2 halfops, 2 voiced, 3 regular)",
         "irc_366,irc_numeric,log3");
 
     RECV(":server 353 alice = #test :&karl");
     RECV(":server 366 alice #test :End of /NAMES list");
     CHECK_CHAN(
         "--",
-        "Channel #test: 11 nicks (1 +q, 1 +a, 2 ops, 2 halfops, 2 voiced, 3 regular)",
+        "Channel #test: 11 nicks (1 owner, 1 admin, 2 ops, 2 halfops, 2 voiced, 3 regular)",
         "irc_366,irc_numeric,log3");
 
     RECV(":server 353 alice = #test :&mike");
     RECV(":server 366 alice #test :End of /NAMES list");
     CHECK_CHAN(
         "--",
-        "Channel #test: 12 nicks (1 +q, 2 +a, 2 ops, 2 halfops, 2 voiced, 3 regular)",
+        "Channel #test: 12 nicks (1 owner, 2 admins, 2 ops, 2 halfops, 2 voiced, 3 regular)",
+        "irc_366,irc_numeric,log3");
+
+    RECV(":server 353 alice = #test :~olivia");
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN(
+        "--",
+        "Channel #test: 13 nicks (2 owners, 2 admins, 2 ops, 2 halfops, 2 voiced, 3 regular)",
+        "irc_366,irc_numeric,log3");
+
+    RECV(":server 005 alice PREFIX=(zqaohv)?~&@%+ :are supported");
+
+    RECV(":server 353 alice = #test :?peggy");
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN(
+        "--",
+        "Channel #test: 14 nicks (1 +z, 2 owners, 2 admins, 2 ops, 2 halfops, 2 voiced, 3 regular)",
+        "irc_366,irc_numeric,log3");
+
+    RECV(":server 353 alice = #test :?robert");
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN(
+        "--",
+        "Channel #test: 15 nicks (2 +z, 2 owners, 2 admins, 2 ops, 2 halfops, 2 voiced, 3 regular)",
         "irc_366,irc_numeric,log3");
 
     /* channel not found */
