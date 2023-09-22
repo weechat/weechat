@@ -1152,16 +1152,8 @@ plugin_script_remove_file (struct t_weechat_plugin *weechat_plugin,
     while (i < 2)
     {
         path_script = plugin_script_search_path (weechat_plugin, name, 0);
-        /*
-         * script not found? (if path_script == name, that means the function
-         * above did not find the script)
-         */
-        if (!path_script || (strcmp (path_script, name) == 0))
-        {
-            if (path_script)
-                free (path_script);
+        if (!path_script)
             break;
-        }
         num_found++;
         if (unlink (path_script) == 0)
         {
