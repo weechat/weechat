@@ -980,7 +980,7 @@ weechat_php_command_cb (const void *pointer, void *data,
             {
                 /* load PHP script */
                 path_script = plugin_script_search_path (weechat_php_plugin,
-                                                         ptr_name);
+                                                         ptr_name, 1);
                 weechat_php_load ((path_script) ? path_script : ptr_name,
                                   NULL);
                 if (path_script)
