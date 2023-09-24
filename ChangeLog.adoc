@@ -15,8 +15,6 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
-  * core: automatically backup config file read if it has an unsupported version (issue #2013)
-  * core: display a message when a configuration file is updated to a newer version
   * core: add completion "eval_variables", used in completion of `/eval`
   * core: add command `/sys` to show resource limits/usage and suspend WeeChat process, add key kbd:[Ctrl+z] to suspend WeeChat (issue #985)
   * core: ignore key bindings with empty command
@@ -45,7 +43,6 @@ New features::
   * irc: remove Git revision and compilation date from CTCP VERSION reply (issue #1974)
   * irc: remove default CTCP replies FINGER and USERINFO (issue #1974)
   * irc, xfer: add support of passive DCC (issue #2004, issue #487)
-  * python: make stub (weechat.pyi) compatible with Python 3.8 and 3.9 (issue #2006)
   * script: rename parameters up/down/go to -up/-down/-go in command `/script`
   * script: allow jump to the last script with command `/script -go end`
   * script: allow commands `/script autoload`, `/script noautoload`, `/script toggleautoload` with scripts not present in the repository (issue #1980)
@@ -59,28 +56,43 @@ Bug fixes::
   * fset: remove extra spaces between min and max values when second format is used
   * fset: fix mouse actions when second format is used
   * fset: apply option fset.color.help_description (issue #1988)
-  * irc: add option irc.look.open_pv_buffer_echo_msg to open private buffer on self message when capability echo-message is enabled (issue #2016)
-  * irc: fix title of private buffers wrongly set to own address when capability echo-message is enabled (issue #2016)
   * irc: fix unexpected message sent to server when part of the second line of an IRC command (issue #1992)
-  * irc: fix autojoin of channels when private buffers are opened (issue #2012)
-  * irc: fix string comparison when CASEMAPPING is set to "ascii"
   * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
   * irc: add missing "account-tag" in list of supported capabilities
   * irc: add channel in "autojoin" server option only when the channel is actually joined (issue #1990)
   * relay: synchronize nick modes with IRC client upon connection (issue #1984)
-  * script: fix removal of script in system directory while trying to install a script (issue #2019)
-  * script: fix autoload of multiple scripts at once with `/script autoload` (issue #2018)
-  * script: fix crash when a `/script` command triggers another `/script` command (issue #923)
   * script: add local key bindings during the buffer creation
   * script: add parameters up/down/go in `/help script` and command completion
   * script: fix cursor position after `/script list -i` or `/script list -il`
   * script: fix buffer used by command `/script list -i|-il|-o|-ol`
-  * xfer: fix memory leak on plugin unload
   * xfer: display an error message when opening file for read or write fails (issue #2010)
 
 Tests::
 
   * core: add tests on GUI buffer functions
+
+[[v4.0.5]]
+== Version 4.0.5 (2023-09-24)
+
+New features::
+
+  * core: automatically backup config file read if it has an unsupported version (issue #2013)
+  * core: display a message when a configuration file is updated to a newer version
+  * python: make stub (weechat.pyi) compatible with Python 3.8 and 3.9 (issue #2006)
+
+Bug fixes::
+
+  * irc: add option irc.look.open_pv_buffer_echo_msg to open private buffer on self message when capability echo-message is enabled (issue #2016)
+  * irc: fix title of private buffers wrongly set to own address when capability echo-message is enabled (issue #2016)
+  * irc: fix autojoin of channels when private buffers are opened (issue #2012)
+  * irc: fix string comparison when CASEMAPPING is set to "ascii"
+  * script: fix removal of script in system directory while trying to install a script (issue #2019)
+  * script: fix autoload of multiple scripts at once with `/script autoload` (issue #2018)
+  * script: fix crash when a `/script` command triggers another `/script` command (issue #923)
+  * xfer: fix memory leak on plugin unload
+
+Tests::
+
   * irc: add tests on server functions
 
 [[v4.0.4]]
