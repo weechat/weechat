@@ -21,7 +21,7 @@ New features::
 
 Bug fixes::
 
-  irc: add option irc.look.open_pv_buffer_echo_msg to open private buffer on self message when capability echo-message is enabled (issue #2016)
+  * irc: add option irc.look.open_pv_buffer_echo_msg to open private buffer on self message when capability echo-message is enabled (issue #2016)
   * irc: fix title of private buffers wrongly set to own address when capability echo-message is enabled (issue #2016)
   * irc: fix autojoin of channels when private buffers are opened (issue #2012)
   * irc: fix string comparison when CASEMAPPING is set to "ascii"
