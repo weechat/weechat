@@ -421,6 +421,10 @@ weecrypto_totp_generate_internal (const char *secret, int length_secret,
     int rc, offset, length;
     unsigned long bin_code;
 
+#if __BYTE_ORDER == __BIG_ENDIAN
+    /* Big endian does not need to swap bytes here! */
+    moving_factor_swapped = moving_factor;
+#else
     moving_factor_swapped = (moving_factor >> 56)
         | ((moving_factor << 40) & 0x00FF000000000000)
         | ((moving_factor << 24) & 0x0000FF0000000000)
@@ -429,6 +433,7 @@ weecrypto_totp_generate_internal (const char *secret, int length_secret,
         | ((moving_factor >> 24) & 0x0000000000FF0000)
         | ((moving_factor >> 40) & 0x000000000000FF00)
         | (moving_factor << 56);
+#endif
 
     rc = weecrypto_hmac (secret, length_secret,
                          &moving_factor_swapped, sizeof (moving_factor_swapped),
