@@ -599,7 +599,7 @@ def test_hdata():
     # hdata_char
     check(weechat.hdata_char(hdata_line_data, line1_data, 'displayed') == 1)
     # hdata_integer
-    check(weechat.hdata_char(hdata_buffer, buffer2, 'number') == 2)
+    check(weechat.hdata_integer(hdata_buffer, buffer2, 'number') == 2)
     # hdata_long
     weechat.buffer_set(buffer, 'hotlist', weechat.WEECHAT_HOTLIST_MESSAGE)
     gui_hotlist = weechat.hdata_get_list(hdata_hotlist, 'gui_hotlist')
