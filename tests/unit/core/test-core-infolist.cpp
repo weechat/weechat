@@ -222,7 +222,7 @@ TEST(CoreInfolist, New)
     /* check content of variable */
     STRCMP_EQUAL("test_time", var_time->name);
     LONGS_EQUAL(INFOLIST_TIME, var_time->type);
-    LONGS_EQUAL(1234567890, *((int *)var_time->value));
+    LONGS_EQUAL(1234567890, *((time_t *)var_time->value));
     LONGS_EQUAL(0, var_time->size);
     POINTERS_EQUAL(var_buf, var_time->prev_var);
     POINTERS_EQUAL(NULL, var_time->next_var);
