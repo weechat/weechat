@@ -50,6 +50,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix generation of TOTP on Big Endian systems (issue #2021)
   * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
   * core: display focus hashtable for debug even if no key is matching
   * fset: add local key bindings during the buffer creation
