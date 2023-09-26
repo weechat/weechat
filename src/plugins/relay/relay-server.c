@@ -512,7 +512,7 @@ relay_server_create_socket (struct t_relay_server *server)
         server_addr6.sin6_addr = in6addr_any;
         if (bind_address && bind_address[0])
         {
-            if (!inet_pton (domain, bind_address, &server_addr6.sin6_addr))
+            if (inet_pton (domain, bind_address, &server_addr6.sin6_addr) != 1)
             {
                 weechat_printf (NULL,
                                 /* TRANSLATORS: second "%s" is "IPv4" or "IPv6" */
@@ -534,7 +534,7 @@ relay_server_create_socket (struct t_relay_server *server)
         server_addr.sin_addr.s_addr = INADDR_ANY;
         if (bind_address && bind_address[0])
         {
-            if (!inet_pton (domain, bind_address, &server_addr.sin_addr))
+            if (inet_pton (domain, bind_address, &server_addr.sin_addr) != 1)
             {
                 weechat_printf (NULL,
                                 /* TRANSLATORS: second "%s" is "IPv4" or "IPv6" */
