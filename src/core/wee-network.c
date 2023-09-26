@@ -554,10 +554,12 @@ network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
     socks4.method = 1;
     socks4.port = htons (port);
     network_resolve (address, ip_addr, NULL);
-    socks4.address = inet_addr (ip_addr);
     strncpy (socks4.user, username, sizeof (socks4.user) - 1);
 
     free (username);
+
+    if (inet_pton (AF_INET, ip_addr, &socks4.address) != 1)
+        return 0;
 
     length = 8 + strlen (socks4.user) + 1;
     if (network_send_with_retry (sock, (char *) &socks4, length, 0) != length)
