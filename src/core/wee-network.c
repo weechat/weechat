@@ -337,11 +337,11 @@ network_is_ip_address (const char *address)
         return 0;
 
     /* valid IPv4? */
-    if (inet_pton (AF_INET, address, &server_addr.sin_addr))
+    if (inet_pton (AF_INET, address, &server_addr.sin_addr) == 1)
         return 1;
 
     /* valid IPv6? */
-    if (inet_pton (AF_INET6, address, &server_addr6.sin6_addr))
+    if (inet_pton (AF_INET6, address, &server_addr6.sin6_addr) == 1)
         return 1;
 
     /* not a valid IP address */
