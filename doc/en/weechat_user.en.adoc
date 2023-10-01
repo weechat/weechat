@@ -130,10 +130,6 @@ WeeChat:
 | Logger plugin: compression of rotated log files (gzip). +
   Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^^] (weechat protocol). +
   Script plugin: read of repository index file (gzip).
-
-| libzstd-dev | ≥ 0.8.1
-| Logger plugin: compression of rotated log files. +
-  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
 |===
 
 [NOTE]
@@ -147,26 +143,68 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Package ^(1)^                         | Version  | Features
-| {cpp} compiler (pass:[g++ / clang++]) |          | Build and run tests, JavaScript plugin.
-| gettext                               |          | Internationalization (translation of messages; base language is English).
-| ca-certificates                       |          | Certificates for TLS connections.
-| libaspell-dev / libenchant-dev        |          | Spell plugin.
-| python3-dev                           | ≥ 3.0    | Python plugin.
-| libperl-dev                           |          | Perl plugin.
-| ruby3.1, ruby3.1-dev                  | ≥ 1.9.1  | Ruby plugin.
-| liblua5.4-dev                         |          | Lua plugin.
-| tcl-dev                               | ≥ 8.5    | Tcl plugin.
-| guile-3.0-dev                         | ≥ 2.0    | Guile (scheme) plugin.
-| libv8-dev                             | ≤ 3.24.3 | JavaScript plugin.
-| php-dev                               | ≥ 7.0    | PHP plugin.
-| libphp-embed                          | ≥ 7.0    | PHP plugin.
-| libxml2-dev                           |          | PHP plugin.
-| libargon2-dev                         |          | PHP plugin (if PHP ≥ 7.2).
-| libsodium-dev                         |          | PHP plugin (if PHP ≥ 7.2).
-| asciidoctor                           | ≥ 1.5.4  | Build man page and documentation.
-| ruby-pygments.rb                      |          | Build documentation.
-| libcpputest-dev                       | ≥ 3.4    | Build and run tests.
+| Package ^(1)^ | Version  | Features
+
+| {cpp} compiler (pass:[g++ / clang++]) |
+| Build and run tests, JavaScript plugin.
+
+| gettext |
+| Internationalization (translation of messages; base language is English).
+
+| ca-certificates |
+| Certificates for TLS connections.
+
+| libzstd-dev | ≥ 0.8.1
+| Logger plugin: compression of rotated log files (zstandard). +
+  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
+
+| libaspell-dev / libenchant-dev |
+| Spell plugin.
+
+| python3-dev | ≥ 3.0
+| Python plugin.
+
+| libperl-dev |
+| Perl plugin.
+
+| ruby3.1, ruby3.1-dev | ≥ 1.9.1
+| Ruby plugin.
+
+| liblua5.4-dev |
+| Lua plugin.
+
+| tcl-dev | ≥ 8.5
+| Tcl plugin.
+
+| guile-3.0-dev | ≥ 2.0
+| Guile (scheme) plugin.
+
+| libv8-dev | ≤ 3.24.3
+| JavaScript plugin.
+
+| php-dev | ≥ 7.0
+| PHP plugin.
+
+| libphp-embed | ≥ 7.0
+| PHP plugin.
+
+| libxml2-dev |
+| PHP plugin.
+
+| libargon2-dev |
+| PHP plugin (if PHP ≥ 7.2).
+
+| libsodium-dev |
+| PHP plugin (if PHP ≥ 7.2).
+
+| asciidoctor | ≥ 1.5.4
+| Build man page and documentation.
+
+| ruby-pygments.rb |
+| Build documentation.
+
+| libcpputest-dev | ≥ 3.4
+| Build and run tests.
 |===
 
 [NOTE]
@@ -206,7 +244,7 @@ $ make install
 
 Options can be used for CMake, with format: `-DOPTION=VALUE`.
 
-List of commonly used options:
+List of available options:
 
 [width="100%",cols="3m,3,3m,10",options="header"]
 |===
@@ -259,6 +297,9 @@ List of commonly used options:
 
 | ENABLE_GUILE | `ON`, `OFF` | ON
 | Compile <<scripting_plugins,Guile plugin>> (Scheme).
+
+| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| Compile headless binary.
 
 | ENABLE_IRC | `ON`, `OFF` | ON
 | Compile <<irc,IRC plugin>>.
@@ -317,6 +358,9 @@ List of commonly used options:
 
 | ENABLE_XFER | `ON`, `OFF` | ON
 | Compile <<xfer,Xfer plugin>>.
+
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF
 | Compile tests.

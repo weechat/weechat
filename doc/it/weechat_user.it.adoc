@@ -159,11 +159,6 @@ WeeChat:
 | Logger plugin: compression of rotated log files (gzip). +
   Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^^] (weechat protocol). +
   Script plugin: read of repository index file (gzip).
-
-// TRANSLATION MISSING
-| libzstd-dev | ≥ 0.8.1
-| Logger plugin: compression of rotated log files. +
-  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
 |===
 
 [NOTE]
@@ -181,32 +176,75 @@ WeeChat:
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
 // TRANSLATION MISSING
-| Pacchetto ^(1)^                       | Versione | Features
+| Pacchetto ^(1)^ | Versione | Features
+
 // TRANSLATION MISSING
-| {cpp} compiler (pass:[g++ / clang++]) |          | Build and run tests, plugin JavaScript.
-| gettext                               |          | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
-| ca-certificates                       |          | Certificati per le connessioni TLS.
-| libaspell-dev / libenchant-dev        |          | Plugin spell.
-| python3-dev                           | ≥ 3.0    | Plugin python.
-| libperl-dev                           |          | Plugin perl.
-| ruby3.1, ruby3.1-dev                  | ≥ 1.9.1  | Plugin ruby.
-| liblua5.4-dev                         |          | Plugin lua.
-| tcl-dev                               | ≥ 8.5    | Plugin tcl.
-| guile-3.0-dev                         | ≥ 2.0    | Plugin guile (scheme).
-| libv8-dev                             | ≤ 3.24.3 | Plugin javascript.
-| php-dev                               | ≥ 7.0    | Plugin php.
-| libphp-embed                          | ≥ 7.0    | Plugin php.
-| libxml2-dev                           |          | Plugin php.
+| {cpp} compiler (pass:[g++ / clang++]) |
+| Build and run tests, plugin JavaScript.
+
+| gettext |
+| Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
+
+| ca-certificates |
+| Certificati per le connessioni TLS.
+
 // TRANSLATION MISSING
-| libargon2-dev                         |          | Plugin php (if PHP ≥ 7.2).
+| libzstd-dev | ≥ 0.8.1
+| Logger plugin: compression of rotated log files (zstandard). +
+  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
+
+| libaspell-dev / libenchant-dev |
+| Plugin spell.
+
+| python3-dev | ≥ 3.0
+| Plugin python.
+
+| libperl-dev |
+| Plugin perl.
+
+| ruby3.1, ruby3.1-dev | ≥ 1.9.1
+| Plugin ruby.
+
+| liblua5.4-dev |
+| Plugin lua.
+
+| tcl-dev | ≥ 8.5
+| Plugin tcl.
+
+| guile-3.0-dev | ≥ 2.0
+| Plugin guile (scheme).
+
+| libv8-dev | ≤ 3.24.3
+| Plugin javascript.
+
+| php-dev | ≥ 7.0
+| Plugin php.
+
+| libphp-embed | ≥ 7.0
+| Plugin php.
+
+| libxml2-dev |
+| Plugin php.
+
 // TRANSLATION MISSING
-| libsodium-dev                         |          | Plugin php (if PHP ≥ 7.2).
+| libargon2-dev |
+| Plugin php (if PHP ≥ 7.2).
+
 // TRANSLATION MISSING
-| asciidoctor                           | ≥ 1.5.4  | Build man page and documentation.
+| libsodium-dev |
+| Plugin php (if PHP ≥ 7.2).
+
 // TRANSLATION MISSING
-| ruby-pygments.rb                      |          | Build documentation.
+| asciidoctor | ≥ 1.5.4
+| Build man page and documentation.
+
 // TRANSLATION MISSING
-| libcpputest-dev                       | ≥ 3.4    | Build and run tests.
+| ruby-pygments.rb |
+| Build documentation.
+
+// TRANSLATION MISSING
+| libcpputest-dev | ≥ 3.4
+| Build and run tests.
 |===
 
 [NOTE]
@@ -252,7 +290,7 @@ $ make install
 Options can be used for CMake, with format: `-DOPTION=VALUE`.
 
 // TRANSLATION MISSING
-List of commonly used options:
+List of available options:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,3,3m,10",options="header"]
@@ -266,7 +304,6 @@ List of commonly used options:
 | CMAKE_INSTALL_PREFIX | directory | /usr/local
 | The directory where WeeChat will be installed.
 
-// TRANSLATION MISSING
 | WEECHAT_HOME | directory | (empty string)
 | The default home directory when running WeeChat. +
   With an empty value (recommended), XDG directories are used by default.
@@ -289,7 +326,6 @@ List of commonly used options:
 | ENABLE_DOC | `ON`, `OFF` | OFF
 | Build HTML documentation.
 
-// TRANSLATION MISSING
 | ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
 | Force build of documentation even if some plugins are not compiled
   (not recommended: docs will be incomplete).
@@ -308,6 +344,9 @@ List of commonly used options:
 
 | ENABLE_GUILE | `ON`, `OFF` | ON
 | Compile <<scripting_plugins,Guile plugin>> (Scheme).
+
+| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| Compile headless binary.
 
 | ENABLE_IRC | `ON`, `OFF` | ON
 | Compile <<irc,IRC plugin>>.
@@ -366,6 +405,10 @@ List of commonly used options:
 
 | ENABLE_XFER | `ON`, `OFF` | ON
 | Compile <<xfer,Xfer plugin>>.
+
+// TRANSLATION MISSING
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF
 | Compile tests.

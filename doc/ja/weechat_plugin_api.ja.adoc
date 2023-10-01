@@ -4601,7 +4601,8 @@ int weechat_file_compress (const char *from, const char *to,
 * _to_: destination file
 * _compressor_: the compressor to use, one of:
 ** _gzip_: gzip compression
-** _zstd_: zstandard compression
+** _zstd_: zstandard compression (available only if zstd was enabled when
+   WeeChat was compiled)
 * _compression_level_: compression level, between 1 (fast, low compression) to
   100 (slow, best compression)
 

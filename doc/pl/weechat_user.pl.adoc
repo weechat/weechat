@@ -134,10 +134,6 @@ WeeChat:
 | Wtyczka logger: kompresja rotowanych plików z logami (gzip). +
   Wtyczka relay: kompresja wiadomości (WeeChat -> klient) za pomocą https://zlib.net/[zlib ^↗^^] (protokół weechat). +
   Wtyczka script: odczyt repozytorium ze skryptami (gzip).
-
-| libzstd-dev | ≥ 0.8.1
-| Wtyczka logger: kompresja rotowanych plików z logami. +
-  Wtyczka Relay: kompresja wiadomości (WeeChat -> klient) za pomocą https://facebook.github.io/zstd/[Zstandard ^↗^^] (protokół weechat).
 |===
 
 [NOTE]
@@ -151,26 +147,68 @@ WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Pakiet ^(1)^                            | Wersja   | Funkcje
-| kompilator {cpp} (pass:[g++ / clang++]) |          | Kompilacja i uruchamianie testów, wtyczka JavaScript.
-| gettext                                 |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski).
-| ca-certificates                         |          | Certyfikaty dla połączeń TLS.
-| libaspell-dev / libenchant-dev          |          | Wtyczka spell.
-| python3-dev                             | ≥ 3.0    | Wtyczka python.
-| libperl-dev                             |          | Wtyczka perl.
-| ruby3.1, ruby3.1-dev                    | ≥ 1.9.1  | Wtyczka ruby.
-| liblua5.4-dev                           |          | Wtyczka lua.
-| tcl-dev                                 | ≥ 8.5    | Wtyczka tcl.
-| guile-3.0-dev                           | ≥ 2.0    | Wtyczka guile (scheme).
-| libv8-dev                               | ≤ 3.24.3 | Wtyczka javascript.
-| php-dev                                 | ≥ 7.0    | Wtyczka PHP.
-| libphp-embed                            | ≥ 7.0    | Wtyczka PHP.
-| libxml2-dev                             |          | Wtyczka PHP.
-| libargon2-dev                           |          | Wtyczka PHP (jeśli PHP ≥ 7.2).
-| libsodium-dev                           |          | Wtyczka PHP (jeśli PHP ≥ 7.2).
-| asciidoctor                             | ≥ 1.5.4  | Tworzenie strony man i dokumentacji.
-| ruby-pygments.rb                        |          | Dokumentacja budowania.
-| libcpputest-dev                         | ≥ 3.4    | Kompilacja i uruchamianie testów.
+| Pakiet ^(1)^ | Wersja | Funkcje
+
+| kompilator {cpp} (pass:[g++ / clang++]) |
+| Kompilacja i uruchamianie testów, wtyczka JavaScript.
+
+| gettext |
+| Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski).
+
+| ca-certificates |
+| Certyfikaty dla połączeń TLS.
+
+| libzstd-dev | ≥ 0.8.1
+| Wtyczka logger: kompresja rotowanych plików z logami (zstandard). +
+  Wtyczka Relay: kompresja wiadomości (WeeChat -> klient) za pomocą https://facebook.github.io/zstd/[Zstandard ^↗^^] (protokół weechat).
+
+| libaspell-dev / libenchant-dev |
+| Wtyczka spell.
+
+| python3-dev | ≥ 3.0
+| Wtyczka python.
+
+| libperl-dev |
+| Wtyczka perl.
+
+| ruby3.1, ruby3.1-dev | ≥ 1.9.1
+| Wtyczka ruby.
+
+| liblua5.4-dev |
+| Wtyczka lua.
+
+| tcl-dev | ≥ 8.5
+| Wtyczka tcl.
+
+| guile-3.0-dev | ≥ 2.0
+| Wtyczka guile (scheme).
+
+| libv8-dev | ≤ 3.24.3
+| Wtyczka javascript.
+
+| php-dev | ≥ 7.0
+| Wtyczka PHP.
+
+| libphp-embed | ≥ 7.0
+| Wtyczka PHP.
+
+| libxml2-dev |
+| Wtyczka PHP.
+
+| libargon2-dev |
+| Wtyczka PHP (jeśli PHP ≥ 7.2).
+
+| libsodium-dev |
+| Wtyczka PHP (jeśli PHP ≥ 7.2).
+
+| asciidoctor | ≥ 1.5.4
+| Tworzenie strony man i dokumentacji.
+
+| ruby-pygments.rb |
+| Dokumentacja budowania.
+
+| libcpputest-dev | ≥ 3.4
+| Kompilacja i uruchamianie testów.
 |===
 
 [NOTE]
@@ -210,7 +248,8 @@ $ make install
 
 Opcje mogą zostać przekazane do CMake, format `-DOPCJA=WARTOŚĆ`.
 
-Lista popularnych opcji:
+// TRANSLATION MISSING
+List of available options:
 
 [width="100%",cols="3m,3,3m,10",options="header"]
 |===
@@ -263,6 +302,10 @@ Lista popularnych opcji:
 
 | ENABLE_GUILE | `ON`, `OFF` | ON
 | Kompilacja <<scripting_plugins,wtyczki guile>> (Scheme).
+
+// TRANSLATION MISSING
+| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| Compile headless binary.
 
 | ENABLE_IRC | `ON`, `OFF` | ON
 | Kompilacja <<irc,wtyczki IRC>>.
@@ -321,6 +364,10 @@ Lista popularnych opcji:
 
 | ENABLE_XFER | `ON`, `OFF` | ON
 | Kompilacja <<xfer,wtyczki xfer>>.
+
+// TRANSLATION MISSING
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF
 | Kompiluje testy.

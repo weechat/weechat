@@ -146,11 +146,6 @@ WeeChat:
 | Logger plugin: compression of rotated log files (gzip). +
   Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^^] (weechat protocol). +
   Script plugin: read of repository index file (gzip).
-
-// TRANSLATION MISSING
-| libzstd-dev | ≥ 0.8.1
-| Logger plugin: compression of rotated log files. +
-  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
 |===
 
 [NOTE]
@@ -167,27 +162,70 @@ WeeChat:
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
 // TRANSLATION MISSING
-| パッケージ ^(1)^                        | バージョン  | Features
-| {cpp} コンパイラ (pass:[g++ / clang++]) |             | ビルドとテストの実行、JavaScript プラグイン
-| gettext                                 |             | 国際化 (メッセージの翻訳; ベース言語は英語です)
-| ca-certificates                         |             | TLS 接続に必要な証明書、relay プラグインで TLS サポート
-| libaspell-dev / libenchant-dev          |             | spell プラグイン
-| python3-dev                             | 3.0 以上    | python プラグイン
-| libperl-dev                             |             | perl プラグイン
-| ruby3.1, ruby3.1-dev                    | 1.9.1 以上  | ruby プラグイン
-| liblua5.4-dev                           |             | lua プラグイン
-| tcl-dev                                 | 8.5 以上    | tcl プラグイン
-| guile-3.0-dev                           | 2.0 以上    | guile (scheme) プラグイン
-| libv8-dev                               | 3.24.3 以下 | javascript プラグイン
-| php-dev                                 | 7.0 以上    | PHP プラグイン
-| libphp-embed                            | 7.0 以上    | PHP プラグイン
-| libxml2-dev                             |             | PHP プラグイン
-| libargon2-dev                           |             | PHP プラグイン (PHP 7.2 以上の場合)
-| libsodium-dev                           |             | PHP プラグイン (PHP 7.2 以上の場合)
-| asciidoctor                             | 1.5.4 以上  | man ページと文書のビルド
+| パッケージ ^(1)^ | バージョン | Features
+
+| {cpp} コンパイラ (pass:[g++ / clang++]) |
+| ビルドとテストの実行、JavaScript プラグイン
+
+| gettext |
+| 国際化 (メッセージの翻訳; ベース言語は英語です)
+
+| ca-certificates |
+| TLS 接続に必要な証明書、relay プラグインで TLS サポート
+
 // TRANSLATION MISSING
-| ruby-pygments.rb                        |          | Build documentation.
-| libcpputest-dev                         | 3.4 以上    | ビルドとテストの実行
+| libzstd-dev | ≥ 0.8.1
+| Logger plugin: compression of rotated log files (zstandard). +
+  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
+
+| libaspell-dev / libenchant-dev |
+| spell プラグイン
+
+| python3-dev | 3.0 以上
+| python プラグイン
+
+| libperl-dev |
+| perl プラグイン
+
+| ruby3.1, ruby3.1-dev | 1.9.1 以上
+| ruby プラグイン
+
+| liblua5.4-dev |
+| lua プラグイン
+
+| tcl-dev | 8.5 以上
+| tcl プラグイン
+
+| guile-3.0-dev | 2.0 以上
+| guile (scheme) プラグイン
+
+| libv8-dev | 3.24.3 以下
+| javascript プラグイン
+
+| php-dev | 7.0 以上
+| PHP プラグイン
+
+| libphp-embed | 7.0 以上
+| PHP プラグイン
+
+| libxml2-dev |
+| PHP プラグイン
+
+| libargon2-dev |
+| PHP プラグイン (PHP 7.2 以上の場合)
+
+| libsodium-dev |
+| PHP プラグイン (PHP 7.2 以上の場合)
+
+| asciidoctor | 1.5.4 以上
+| man ページと文書のビルド
+
+// TRANSLATION MISSING
+| ruby-pygments.rb |
+| Build documentation.
+
+| libcpputest-dev | 3.4 以上
+| ビルドとテストの実行
 |===
 
 [NOTE]
@@ -229,7 +267,8 @@ $ make install
 
 CMake に対するオプションを指定するには、以下の書式を使ってください: `-DOPTION=VALUE`。
 
-よく利用されるオプションのリスト:
+// TRANSLATION MISSING
+List of available options:
 
 [width="100%",cols="3m,3,3m,10",options="header"]
 |===
@@ -284,6 +323,10 @@ CMake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_GUILE | `ON`, `OFF` | ON
 | <<scripting_plugins,Guile プラグイン>> (Scheme) のコンパイル。
+
+// TRANSLATION MISSING
+| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| Compile headless binary.
 
 | ENABLE_IRC | `ON`, `OFF` | ON
 | <<irc,IRC プラグイン>>のコンパイル
@@ -342,6 +385,10 @@ CMake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_XFER | `ON`, `OFF` | ON
 | <<xfer,Xfer プラグイン>>のコンパイル。
+
+// TRANSLATION MISSING
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF
 | コンパイルテスト。

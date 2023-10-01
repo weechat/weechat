@@ -130,10 +130,6 @@ Le tableau suivant liste les paquets *requis* pour construire WeeChat :
 | Extension Logger : compression des fichiers de log qui tournent (gzip). +
   Extention Relay : compression des messages (WeeChat -> client) avec https://zlib.net/[zlib ^↗^^] (protocole weechat). +
   Extension Script : lecture du fichier d'index du dépôt (gzip).
-
-| libzstd-dev | ≥ 0.8.1
-| Extension Logger : compression des fichiers de log qui tournent. +
-  Extension Relay : compression des messages (WeeChat -> client) avec https://facebook.github.io/zstd/[Zstandard ^↗^^] (protocole weechat).
 |===
 
 [NOTE]
@@ -146,26 +142,68 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paquet ^(1)^                             | Version  | Fonctionnalités
-| compilateur {cpp} (pass:[g++ / clang++]) |          | Construction et lancement des tests, extension JavaScript.
-| gettext                                  |          | Internationalisation (traduction des messages ; la langue de base est l'anglais).
-| ca-certificates                          |          | Certificats pour les connexions TLS.
-| libaspell-dev / libenchant-dev           |          | Extension spell.
-| python3-dev                              | ≥ 3.0    | Extension python.
-| libperl-dev                              |          | Extension perl.
-| ruby3.1, ruby3.1-dev                     | ≥ 1.9.1  | Extension ruby.
-| liblua5.4-dev                            |          | Extension lua.
-| tcl-dev                                  | ≥ 8.5    | Extension tcl.
-| guile-3.0-dev                            | ≥ 2.0    | Extension guile (scheme).
-| libv8-dev                                | ≤ 3.24.3 | Extension javascript.
-| php-dev                                  | ≥ 7.0    | Extension PHP.
-| libphp-embed                             | ≥ 7.0    | Extension PHP.
-| libxml2-dev                              |          | Extension PHP.
-| libargon2-dev                            |          | Extension PHP (si PHP ≥ 7.2).
-| libsodium-dev                            |          | Extension PHP (si PHP ≥ 7.2).
-| asciidoctor                              | ≥ 1.5.4  | Construction de la page man et de la documentation.
-| ruby-pygments.rb                         |          | Construction de la documentation.
-| libcpputest-dev                          | ≥ 3.4    | Construction et lancement des tests.
+| Paquet ^(1)^ | Version | Fonctionnalités
+
+| compilateur {cpp} (pass:[g++ / clang++]) |
+| Construction et lancement des tests, extension JavaScript.
+
+| gettext |
+| Internationalisation (traduction des messages ; la langue de base est l'anglais).
+
+| ca-certificates |
+| Certificats pour les connexions TLS.
+
+| libzstd-dev | ≥ 0.8.1
+| Extension Logger : compression des fichiers de log qui tournent (zstandard). +
+  Extension Relay : compression des messages (WeeChat -> client) avec https://facebook.github.io/zstd/[Zstandard ^↗^^] (protocole weechat).
+
+| libaspell-dev / libenchant-dev |
+| Extension spell.
+
+| python3-dev | ≥ 3.0
+| Extension python.
+
+| libperl-dev |
+| Extension perl.
+
+| ruby3.1, ruby3.1-dev | ≥ 1.9.1
+| Extension ruby.
+
+| liblua5.4-dev |
+| Extension lua.
+
+| tcl-dev | ≥ 8.5
+| Extension tcl.
+
+| guile-3.0-dev | ≥ 2.0
+| Extension guile (scheme).
+
+| libv8-dev | ≤ 3.24.3
+| Extension javascript.
+
+| php-dev | ≥ 7.0
+| Extension PHP.
+
+| libphp-embed | ≥ 7.0
+| Extension PHP.
+
+| libxml2-dev |
+| Extension PHP.
+
+| libargon2-dev |
+| Extension PHP (si PHP ≥ 7.2).
+
+| libsodium-dev |
+| Extension PHP (si PHP ≥ 7.2).
+
+| asciidoctor | ≥ 1.5.4
+| Construction de la page man et de la documentation.
+
+| ruby-pygments.rb |
+| Construction de la documentation.
+
+| libcpputest-dev | ≥ 3.4
+| Construction et lancement des tests.
 |===
 
 [NOTE]
@@ -205,7 +243,7 @@ $ make install
 
 Des options peuvent être utilisées pour CMake, avec le format : `-DOPTION=VALUE`.
 
-Liste des options couramment utilisées :
+Liste des options disponibles :
 
 [width="100%",cols="3m,3,3m,10",options="header"]
 |===
@@ -258,6 +296,9 @@ Liste des options couramment utilisées :
 
 | ENABLE_GUILE | `ON`, `OFF` | ON
 | Compiler <<scripting_plugins,l'extension Guile>> (Scheme).
+
+| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| Compiler le binaire sans interface (« headless »).
 
 | ENABLE_IRC | `ON`, `OFF` | ON
 | Compiler <<irc,l'extension IRC>>.
@@ -316,6 +357,9 @@ Liste des options couramment utilisées :
 
 | ENABLE_XFER | `ON`, `OFF` | ON
 | Compiler <<xfer,l'extension Xfer>>.
+
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Activer la compression https://facebook.github.io/zstd/[Zstandard ^↗^^].
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF
 | Compiler les tests.

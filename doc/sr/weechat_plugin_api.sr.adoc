@@ -4326,11 +4326,6 @@ if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
-[[util]]
-=== Алати
-
-Неке корисне функције.
-
 ==== file_compress
 
 _WeeChat ≥ 3.7._
@@ -4351,7 +4346,9 @@ int weechat_file_compress (const char *from, const char *to,
 * _to_: одредишни фајл
 * _compressor_: компресор који треба да се користи, једно од:
 ** _gzip_: gzip компресија
-** _zstd_: zstandard компресија
+// TRANSLATION MISSING
+** _zstd_: zstandard компресија (available only if zstd was enabled when
+   WeeChat was compiled)
 * _compression_level_: ниво компресије, између 1 (брзо, ниска компресија) и
   100 (споро, најбоља компресија)
 
@@ -4371,6 +4368,11 @@ if (weechat_file_compress ("/tmp/test.txt", "/tmp/test.txt.zst", "zstd", 50))
 
 [NOTE]
 Ова функција није доступна у API скриптовања.
+
+[[util]]
+=== Алати
+
+Неке корисне функције.
 
 ==== util_timeval_cmp
 

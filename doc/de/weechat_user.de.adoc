@@ -135,10 +135,6 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 | Logger-Erweitertung: Kompression von rotierenden Protokolldateien (gzip). +
   Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://zlib.net/[zlib ^↗^^] (weechat protocol). +
   Script-Erweiterung: Lesen der Repository-Indexdatei (gzip).
-
-| libzstd-dev | ≥ 0.8.1
-| Logger-Erweiterung: Kompression von rotierenden Protokolldateien. +
-  Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
 |===
 
 [NOTE]
@@ -152,26 +148,68 @@ WeeChat optional sind:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paket ^(1)^                           | Version  | Funktionen
-| {cpp} compiler (pass:[g++ / clang++]) |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
-| gettext                               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
-| ca-certificates                       |          | Zertifikate für TLS Verbindungen.
-| libaspell-dev / libenchant-dev        |          | Spell Erweiterung.
-| python3-dev                           | ≥ 3.0    | Python Erweiterung.
-| libperl-dev                           |          | Perl Erweiterung.
-| ruby3.1, ruby3.1-dev                  | ≥ 1.9.1  | Ruby Erweiterung.
-| liblua5.4-dev                         |          | Lua Erweiterung.
-| tcl-dev                               | ≥ 8.5    | Tcl Erweiterung.
-| guile-3.0-dev                         | ≥ 2.0    | Guile (scheme) Erweiterung.
-| libv8-dev                             | ≤ 3.24.3 | JavaScript Erweiterung.
-| php-dev                               | ≥ 7.0    | PHP Erweiterung.
-| libphp-embed                          | ≥ 7.0    | PHP Erweiterung.
-| libxml2-dev                           |          | PHP Erweiterung.
-| libargon2-dev                         |          | PHP Erweiterung (wenn PHP ≥ 7.2).
-| libsodium-dev                         |          | PHP Erweiterung (wenn PHP ≥ 7.2).
-| asciidoctor                           | ≥ 1.5.4  | zum Erstellen der man page und der Dokumentation.
-| ruby-pygments.rb                      |          | Build Dokumentation.
-| libcpputest-dev                       | ≥ 3.4    | zum Erstellen und um Test auszuführen.
+| Paket ^(1)^ | Version | Funktionen
+
+| {cpp} compiler (pass:[g++ / clang++]) |
+| zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
+
+| gettext |
+| Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
+
+| ca-certificates |
+| Zertifikate für TLS Verbindungen.
+
+| libzstd-dev | ≥ 0.8.1
+| Logger-Erweiterung: Kompression von rotierenden Protokolldateien (zstandard). +
+  Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
+
+| libaspell-dev / libenchant-dev |
+| Spell Erweiterung.
+
+| python3-dev | ≥ 3.0
+| Python Erweiterung.
+
+| libperl-dev |
+| Perl Erweiterung.
+
+| ruby3.1, ruby3.1-dev | ≥ 1.9.1
+| Ruby Erweiterung.
+
+| liblua5.4-dev |
+| Lua Erweiterung.
+
+| tcl-dev | ≥ 8.5
+| Tcl Erweiterung.
+
+| guile-3.0-dev | ≥ 2.0
+| Guile (scheme) Erweiterung.
+
+| libv8-dev | ≤ 3.24.3
+| JavaScript Erweiterung.
+
+| php-dev | ≥ 7.0
+| PHP Erweiterung.
+
+| libphp-embed | ≥ 7.0
+| PHP Erweiterung.
+
+| libxml2-dev |
+| PHP Erweiterung.
+
+| libargon2-dev |
+| PHP Erweiterung (wenn PHP ≥ 7.2).
+
+| libsodium-dev |
+| PHP Erweiterung (wenn PHP ≥ 7.2).
+
+| asciidoctor | ≥ 1.5.4
+| zum Erstellen der man page und der Dokumentation.
+
+| ruby-pygments.rb |
+| Build Dokumentation.
+
+| libcpputest-dev | ≥ 3.4
+| zum Erstellen und um Test auszuführen.
 |===
 
 [NOTE]
@@ -212,7 +250,8 @@ $ make install
 
 Optionen für CMake können mit dem Format, `-DOPTION=VALUE`, genutzt werden.
 
-Liste von häufig verwendeten Optionen:
+// TRANSLATION MISSING
+List of available options:
 
 [width="100%",cols="3m,3,3m,10",options="header"]
 |===
@@ -265,6 +304,10 @@ Liste von häufig verwendeten Optionen:
 
 | ENABLE_GUILE | `ON`, `OFF` | ON
 | kompiliert <<scripting_plugins,Guile Erweiterung>> (Scheme).
+
+// TRANSLATION MISSING
+| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| Compile headless binary.
 
 | ENABLE_IRC | `ON`, `OFF` | ON
 | kompiliert <<irc,IRC Erweiterung>>.
@@ -323,6 +366,10 @@ Liste von häufig verwendeten Optionen:
 
 | ENABLE_XFER | `ON`, `OFF` | ON
 | kompiliert <<xfer,Xfer Erweiterung>>.
+
+// TRANSLATION MISSING
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF
 | kompiliert Testumgebung.

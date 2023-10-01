@@ -33,7 +33,9 @@
 #include <gcrypt.h>
 #include <curl/curl.h>
 #include <zlib.h>
+#ifdef HAVE_ZSTD
 #include <zstd.h>
+#endif
 
 #include <gnutls/gnutls.h>
 
@@ -683,11 +685,13 @@ debug_libs_cb (const void *pointer, void *data,
     gui_chat_printf (NULL, "    zlib: (?)");
 #endif /* ZLIB_VERSION */
 
+#ifdef HAVE_ZSTD
     /* display zstd version */
     gui_chat_printf (NULL, "    zstd: %d.%d.%d",
                     ZSTD_VERSION_MAJOR,
                     ZSTD_VERSION_MINOR,
                     ZSTD_VERSION_RELEASE);
+#endif /* HAVE_ZSTD */
 
     return WEECHAT_RC_OK;
 }

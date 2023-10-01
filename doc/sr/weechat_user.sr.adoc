@@ -129,10 +129,6 @@ WeeChat мора да се изгради са CMake.
 | Logger додатак: компресија ротирајућих лог фајлова (gzip). +
   Relay додатак: компресија порука (WeeChat -> клијент) са https://zlib.net/[zlib ^↗^^] (weechat протокол). +
   Script додатак: читање индекс фајла репозиторијума (gzip).
-
-| libzstd-dev | ≥ 0.8.1
-| Logger додатак: компресија ротирајућих лог фајлова. +
-  Relay додатак: компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat протокол).
 |===
 
 [NOTE]
@@ -144,26 +140,68 @@ WeeChat мора да се изгради са CMake.
 
 [width="100%", cols="5,^3,.^15", options="header"]
 |===
-| Пакет ^(1)^                            | Верзија  | Могућности
-| {cpp} компајлер (pass:[g++ / clang++]) |          | Изградња и покретање тестова, JavaScript додатак.
-| gettext                                |          | Интернационализација (превод порука; основни језик је енглески).
-| ca-certificates                        |          | Сертификати за TLS везе.
-| libaspell-dev / libenchant-dev         |          | Spell додатак.
-| python3-dev                            | ≥ 3.0    | Python додатак.
-| libperl-dev                            |          | Perl додатак.
-| ruby3.1, ruby3.1-dev                   | ≥ 1.9.1  | Ruby додатак.
-| liblua5.4-dev                          |          | Lua додатак.
-| tcl-dev                                | ≥ 8.5    | Tcl додатак.
-| guile-3.0-dev                          | ≥ 2.0    | Guile (scheme) додатак.
-| libv8-dev                              | ≤ 3.24.3 | JavaScript додатак.
-| php-dev                                | ≥ 7.0    | PHP додатак.
-| libphp-embed                           | ≥ 7.0    | PHP додатак.
-| libxml2-dev                            |          | PHP додатак.
-| libargon2-dev                          |          | PHP додатак (ако је PHP ≥ 7.2).
-| libsodium-dev                          |          | PHP додатак (ако је PHP ≥ 7.2).
-| asciidoctor                            | ≥ 1.5.4  | Изградња man странице и документације.
-| ruby-pygments.rb                       |          | Документација изградње.
-| libcpputest-dev                        | ≥ 3.4    | Изградња и покретање тестова.
+| Пакет ^(1)^ | Верзија | Могућности
+
+| {cpp} компајлер (pass:[g++ / clang++]) |
+| Изградња и покретање тестова, JavaScript додатак.
+
+| gettext |
+| Интернационализација (превод порука; основни језик је енглески).
+
+| ca-certificates |
+| Сертификати за TLS везе.
+
+| libzstd-dev | ≥ 0.8.1
+| Logger додатак: компресија ротирајућих лог фајлова (zstandard). +
+  Relay додатак: компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat протокол).
+
+| libaspell-dev / libenchant-dev |
+| Spell додатак.
+
+| python3-dev | ≥ 3.0
+| Python додатак.
+
+| libperl-dev |
+| Perl додатак.
+
+| ruby3.1, ruby3.1-dev | ≥ 1.9.1
+| Ruby додатак.
+
+| liblua5.4-dev |
+| Lua додатак.
+
+| tcl-dev | ≥ 8.5
+| Tcl додатак.
+
+| guile-3.0-dev | ≥ 2.0
+| Guile (scheme) додатак.
+
+| libv8-dev | ≤ 3.24.3
+| JavaScript додатак.
+
+| php-dev | ≥ 7.0
+| PHP додатак.
+
+| libphp-embed | ≥ 7.0
+| PHP додатак.
+
+| libxml2-dev |
+| PHP додатак.
+
+| libargon2-dev |
+| PHP додатак (ако је PHP ≥ 7.2).
+
+| libsodium-dev |
+| PHP додатак (ако је PHP ≥ 7.2).
+
+| asciidoctor | ≥ 1.5.4
+| Изградња man странице и документације.
+
+| ruby-pygments.rb |
+| Документација изградње.
+
+| libcpputest-dev | ≥ 3.4
+| Изградња и покретање тестова.
 |===
 
 [NOTE]
@@ -201,7 +239,8 @@ $ make install
 
 Можете да користите опције за CMake, у формату: `-DОПЦИЈА=ВРЕДНОСТ`.
 
-Листа често коришћених опција:
+// TRANSLATION MISSING
+List of available options:
 
 [width="100%", cols="3m,3,3m,10", options="header"]
 |===
@@ -254,6 +293,10 @@ $ make install
 
 | ENABLE_GUILE | `ON`, `OFF` | ON
 | Компајлира <<scripting_plugins,Guile додатак>> (Scheme).
+
+// TRANSLATION MISSING
+| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| Compile headless binary.
 
 | ENABLE_IRC | `ON`, `OFF` | ON
 | Компајлира <<irc,IRC додатак>>.
@@ -312,6 +355,10 @@ $ make install
 
 | ENABLE_XFER | `ON`, `OFF` | ON
 | Компајлира <<xfer,Xfer додатак>>.
+
+// TRANSLATION MISSING
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF
 | Компајлира тестове.

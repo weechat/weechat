@@ -4562,7 +4562,8 @@ Paramètres :
 * _to_ : fichier cible
 * _compressor_ : le compresseur à utiliser, un parmi :
 ** _gzip_ : compression gzip
-** _zstd_ : compression zstandard
+** _zstd_ : compression zstandard (disponible seulement si zstd a été activé
+   lors de la compilation de WeeChat)
 * _compression_level_ : niveau de compression, entre 1 (rapide, peu de
   compression) à 100 (lent, meilleure compression)
 

@@ -45,7 +45,9 @@
 #include <dirent.h>
 #include <ftw.h>
 #include <zlib.h>
+#ifdef HAVE_ZSTD
 #include <zstd.h>
+#endif
 
 #include "weechat.h"
 #include "wee-config.h"
@@ -1135,6 +1137,7 @@ int
 dir_file_compress_zstd (const char *from, const char *to,
                         int compression_level)
 {
+#ifdef HAVE_ZSTD
     FILE *source, *dest;
     void *buffer_in, *buffer_out;
     size_t buffer_in_size, buffer_out_size, num_read, remaining;
@@ -1297,6 +1300,14 @@ end:
         fclose (dest);
 
     return rc;
+#else
+    /* make C compiler happy */
+    (void) from;
+    (void) to;
+    (void) compression_level;
+
+    return 0;
+#endif /* HAVE_ZSTD */
 }
 
 /*
@@ -1306,7 +1317,7 @@ end:
  *
  * Supported values for parameter "compressor":
  *   - "gzip": gzip compression (via zlib)
- *   - "zstd": zstandard compression
+ *   - "zstd": zstandard compression (it must be enabled at build time)
  *
  * Parameter "compression_level" is the compression level as percentage:
  * from 1 (fast, low compression) to 100 (slow, best compression).

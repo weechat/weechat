@@ -73,6 +73,10 @@ Tests::
 
   * core: add tests on GUI buffer functions
 
+Build::
+
+  * core: make zstd dependency optional (issue #2024)
+
 [[v4.0.5]]
 == Version 4.0.5 (2023-09-24)
 

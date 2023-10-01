@@ -99,6 +99,7 @@ option(ENABLE_NCURSES        "Compile the Ncurses interface"            ON)
 option(ENABLE_HEADLESS       "Compile the headless binary"              ON)
 option(ENABLE_NLS            "Enable Native Language Support"           ON)
 option(ENABLE_LARGEFILE      "Enable Large File Support"                ON)
+option(ENABLE_ZSTD           "Enable Zstandard compression"             ON)
 option(ENABLE_ALIAS          "Enable Alias plugin"                      ON)
 option(ENABLE_BUFLIST        "Enable Buflist plugin"                    ON)
 option(ENABLE_CHARSET        "Enable Charset plugin"                    ON)
@@ -230,7 +231,10 @@ list(APPEND EXTRA_LIBS gnutls)
 find_package(ZLIB REQUIRED)
 
 # Check for zstd
-pkg_check_modules(LIBZSTD REQUIRED libzstd)
+if(ENABLE_ZSTD)
+  pkg_check_modules(LIBZSTD REQUIRED libzstd)
+  add_definitions(-DHAVE_ZSTD)
+endif()
 
 # Check for iconv
 find_package(Iconv)
