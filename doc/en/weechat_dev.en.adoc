@@ -238,6 +238,7 @@ WeeChat "core" is located in following directories:
 |       buflist.c                   | Main buflist functions.
 |       buflist-bar-item.c          | Buflist bar items.
 |       buflist-command.c           | Buflist commands.
+|       buflist-completion.c        | Buflist completions.
 |       buflist-config.c            | Buflist config options (file buflist.conf).
 |       buflist-info.c              | Buflist info/infolists/hdata.
 |       buflist-mouse.c             | Buflist mouse actions.

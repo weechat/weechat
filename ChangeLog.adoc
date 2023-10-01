@@ -29,6 +29,7 @@ New features::
   * api: add support of path to variable and hashtable comparison in function hdata_compare (issue #1066)
   * api: add infos "nick_color_ignore_case" and "nick_color_name_ignore_case" (issue #194)
   * api: add info "buffer" (issue #1962)
+  * buflist: add support of item names in command `/buflist refresh`
   * buflist: increase max number of buflist items from 3 to 5 (issue #1703)
   * fset: add variable `allowed_values` in options, add options fset.color.allowed_values and fset.color.allowed_values_selected
   * fset: allow long type name in type filter

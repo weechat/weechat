@@ -105,24 +105,34 @@ buflist_bar_item_get_index_with_pointer (struct t_gui_bar_item *item)
 /*
  * Updates buflist bar item if buflist is enabled (or if force argument is 1).
  *
- * If force == 1, all used items are refreshed
- *   (according to option buflist.look.use_items).
+ * If index == -1, all bar items (or all bar items used) are refreshed,
+ * otherwise only this bar item is refreshed.
+ *
+ * If force == 1, all used items are refreshed (according to option
+ * buflist.look.use_items).
  * If force == 2, all items are refreshed.
  */
 
 void
-buflist_bar_item_update (int force)
+buflist_bar_item_update (int index, int force)
 {
     int i, num_items;
 
     if (force || weechat_config_boolean (buflist_config_look_enabled))
     {
-        num_items = (force == 2) ?
-            BUFLIST_BAR_NUM_ITEMS :
-            weechat_config_integer (buflist_config_look_use_items);
-        for (i = 0; i < num_items; i++)
+        if ((index >= 0) && (index < BUFLIST_BAR_NUM_ITEMS))
         {
-            weechat_bar_item_update (buflist_bar_item_get_name (i));
+            weechat_bar_item_update (buflist_bar_item_get_name (index));
+        }
+        else
+        {
+            num_items = (force == 2) ?
+                BUFLIST_BAR_NUM_ITEMS :
+                weechat_config_integer (buflist_config_look_use_items);
+            for (i = 0; i < num_items; i++)
+            {
+                weechat_bar_item_update (buflist_bar_item_get_name (i));
+            }
         }
     }
 }

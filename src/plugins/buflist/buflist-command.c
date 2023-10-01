@@ -37,6 +37,8 @@ buflist_command_buflist (const void *pointer, void *data,
                          struct t_gui_buffer *buffer, int argc,
                          char **argv, char **argv_eol)
 {
+    int i, index;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
@@ -72,7 +74,20 @@ buflist_command_buflist (const void *pointer, void *data,
 
     if (weechat_strcmp (argv[1], "refresh") == 0)
     {
-        buflist_bar_item_update (0);
+        if (argc > 2)
+        {
+            for (i = 2; i < argc; i++)
+            {
+                index = buflist_bar_item_get_index (argv[i]);
+                if (index >= 0)
+                    buflist_bar_item_update (index, 0);
+            }
+        }
+        else
+        {
+            /* refresh all bar items used */
+            buflist_bar_item_update (-1, 0);
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -89,13 +104,16 @@ buflist_command_init ()
     weechat_hook_command (
         "buflist",
         N_("bar item with list of buffers"),
-        "enable|disable|toggle || bar || refresh",
+        "enable|disable|toggle"
+        " || bar"
+        " || refresh [<item>[,<item>...]]",
         N_(" enable: enable buflist\n"
            "disable: disable buflist\n"
            " toggle: toggle buflist\n"
            "    bar: add the \"buflist\" bar\n"
-           "refresh: force the refresh of the bar items (buflist, buflist2 "
-           "buflist3, buflist4 and buflist5)\n"
+           "refresh: force the refresh of some bar items (if no item is given, "
+           "all bar items used are refreshed, according to option "
+           "buflist.look.use_items)\n"
            "\n"
            "The lines with buffers are displayed using string evaluation "
            "(see /help eval for the format), with these options:\n"
@@ -174,6 +192,8 @@ buflist_command_init ()
            "    - ${format_tls_version}: indicator of TLS version for a server "
            "buffer, empty for channels (evaluation of option "
            "buflist.format.tls_version)"),
-        "enable|disable|toggle || bar || refresh",
+        "enable|disable|toggle"
+        " || bar"
+        " || refresh %(buflist_used_items)|%*",
         &buflist_command_buflist, NULL, NULL);
 }

@@ -28,6 +28,7 @@
 #include "buflist.h"
 #include "buflist-bar-item.h"
 #include "buflist-command.h"
+#include "buflist-completion.h"
 #include "buflist-config.h"
 #include "buflist-info.h"
 #include "buflist-mouse.h"
@@ -458,10 +459,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     buflist_config_change_sort (NULL, NULL, NULL);
 
     buflist_command_init ();
+    buflist_completion_init ();
 
     buflist_add_bar ();
 
-    buflist_bar_item_update (0);
+    buflist_bar_item_update (-1, 0);
 
     buflist_mouse_init ();
 

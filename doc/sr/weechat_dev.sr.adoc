@@ -240,6 +240,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       buflist.c                   | Главне buflist функције.
 |       buflist-bar-item.c          | Buflist ставке траке.
 |       buflist-command.c           | Buflist команде.
+// TRANSLATION MISSING
+|       buflist-completion.c        | Buflist completions.
 |       buflist-config.c            | Buflist опције кофиг (фајл buflist.conf).
 |       buflist-info.c              | Buflist info/infolists/hdata.
 |       buflist-mouse.c             | Buflist акције мишем.
