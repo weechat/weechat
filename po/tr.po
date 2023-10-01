@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-01 09:56+0200\n"
+"POT-Creation-Date: 2023-10-01 12:11+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7015,10 +7015,10 @@ msgstr ""
 
 #, fuzzy
 #| msgid "list of bar items"
-msgid "all buflist bar items"
+msgid "buflist bar items"
 msgstr "çubuk ögeleri listesi"
 
-msgid "used buflist bar items (according to option buflist.look.use_items)"
+msgid "buflist bar items used (according to option buflist.look.use_items)"
 msgstr ""
 
 #, c-format

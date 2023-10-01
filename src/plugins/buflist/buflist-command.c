@@ -194,6 +194,6 @@ buflist_command_init ()
            "buflist.format.tls_version)"),
         "enable|disable|toggle"
         " || bar"
-        " || refresh %(buflist_used_items)|%*",
+        " || refresh %(buflist_items_used)|%*",
         &buflist_command_buflist, NULL, NULL);
 }

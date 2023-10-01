@@ -32,10 +32,10 @@
  */
 
 int
-buflist_completion_all_items_cb (const void *pointer, void *data,
-                                 const char *completion_item,
-                                 struct t_gui_buffer *buffer,
-                                 struct t_gui_completion *completion)
+buflist_completion_items_cb (const void *pointer, void *data,
+                             const char *completion_item,
+                             struct t_gui_buffer *buffer,
+                             struct t_gui_completion *completion)
 {
     int i;
 
@@ -60,7 +60,7 @@ buflist_completion_all_items_cb (const void *pointer, void *data,
  */
 
 int
-buflist_completion_used_items_cb (const void *pointer, void *data,
+buflist_completion_items_used_cb (const void *pointer, void *data,
                                   const char *completion_item,
                                   struct t_gui_buffer *buffer,
                                   struct t_gui_completion *completion)
@@ -90,11 +90,11 @@ buflist_completion_used_items_cb (const void *pointer, void *data,
 void
 buflist_completion_init ()
 {
-    weechat_hook_completion ("buflist_all_items",
-                             N_("all buflist bar items"),
-                             &buflist_completion_all_items_cb, NULL, NULL);
-    weechat_hook_completion ("buflist_used_items",
-                             N_("used buflist bar items (according to option "
+    weechat_hook_completion ("buflist_items",
+                             N_("buflist bar items"),
+                             &buflist_completion_items_cb, NULL, NULL);
+    weechat_hook_completion ("buflist_items_used",
+                             N_("buflist bar items used (according to option "
                                 "buflist.look.use_items)"),
-                             &buflist_completion_used_items_cb, NULL, NULL);
+                             &buflist_completion_items_used_cb, NULL, NULL);
 }
