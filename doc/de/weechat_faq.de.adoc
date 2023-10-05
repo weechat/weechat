@@ -613,14 +613,13 @@ Sollte die macOS Terminal Applikation genutzt werden, empfiehlt es sich,
 die Option "Use option as meta key" in den Menü-Einstellungen zu aktivieren.
 Dadurch kann man die kbd:[Option] Taste als Meta-Taste verwenden.
 
-// TRANSLATION MISSING
 [[enter_key]]
-=== Some keys including Enter are not working, why?
+=== Einige Tasten, einschließlich Enter, funktionieren nicht. Weshalb?
 
-If you run a WeeChat < 4.0.0 with configuration files created by any
-version ≥ 4.0.0, the keys names become invalid and many keys won't work at all. +
-To repair them, exit WeeChat, remove all sections `[key*]` from weechat.conf
-and start WeeChat again: all default keys will be created.
+Wenn eine WeeChat Version < 4.0.0 mit Konfigurationsdateien ausgeführt wird,
+die von einer Weechat Version ≥ 4.0.0 erstellt wurde, sind die Tastennamen ungültig und viele Tasten funktionieren überhaupt nicht mehr. +
+Um dies zu reparieren, muss WeeChat beendet und alle Einträge aus dem Abschnitt `[key*]` innerhalb der weechat.conf entfernt werden.
+Wenn WeeChat erneut gestartet wird, wird die Standardtastenbelegung neu erstellt.
 
 [[customize_key_bindings]]
 === Wie kann ich die Tastaturbelegung anpassen?
@@ -1218,34 +1217,31 @@ Kennwörter (sofern sie nicht mit dem Befehl `/secure` in _sec.conf_ gesichert w
 Siehe link:weechat_user.de.html#files_and_directories[Benutzerhandbuch / Dateien und Verzeichnisse ^↗^^]
 für weitere Informationen über Konfigurationsdateien.
 
-// TRANSLATION MISSING
 [[move_to_another_device]]
-=== I want to move my WeeChat to another device and keep my config, what should I copy?
+=== Ich möchte mein WeeChat auf ein anderes Gerät verschieben und meine Konfiguration behalten. Was muss ich kopieren?
 
-First check directories used by WeeChat with this command: `/debug dirs`. +
-Directories home/config and home/data must be copied (all files and sub-directories).
+Überprüfen Sie zunächst die von WeeChat verwendeten Verzeichnisse mit diesem Befehl: `/debug dirs`. +
+Die Verzeichnisse home/config und home/data müssen kopiert werden (alle Dateien und Unterverzeichnisse).
 
-For example if you're using XDG directories (default with WeeChat ≥ 3.2),
-the directories should be `$HOME/.config/weechat` and `$HOME/.local/share/weechat`. +
-If you're using a single directory (default with WeeChat < 3.2), the directory
-should be `$HOME/.weechat`.
+Falls beispielsweise XDG-Verzeichnisse verwendet werden (Standard bei WeeChat ≥ 3.2), sollten die
+Verzeichnisse `$HOME/.config/weechat` und `$HOME/.local/share/weechat` lauten. +
+Sollte ein einzelnes Verzeichnis verwenden werden (Standard bei WeeChat < 3.2), sollte das Verzeichnis
+`$HOME/.weechat` lauuten.
 
 [IMPORTANT]
-The WeeChat version on the new device must be greater than or equal to the version
-on the initial device. +
-Downgrading WeeChat configuration is *NOT SUPPORTED* and can break it,
-leading to unusable WeeChat.
+Die WeeChat-Version auf dem Zielgerät muss größer oder gleich der Version sein des Ausganggerätes. +
+Ein Downgrade der WeeChat-Konfiguration wird *NICHT UNTERSTÜTZT* und kann zu Schäden führen und ein
+unbrauchbares WeeChat verursachen.
 
-Steps:
+Schritte:
 
-. Quit Weechat: `/quit` (or `/upgrade -quit` if you want to resume the session,
-  which includes content of all buffers).
-. Copy all directories, sub-directories and files to the new device, keeping
-  same names and permissions.
-. Optional: copy any file outside these directories that you refer to in your
-  configuration (it's not recommended to use files outside WeeChat directories).
-. Start WeeChat on the new device: `weechat` (or `weechat --upgrade` if you
-  saved the session).
+. Weechat beenden: `/quit` (oder `/upgrade -quit`, falls eine Sitzung fortgesetzt werden soll,
+  einschließlich des Inhalts aller Buffer).
+. Kopieren Sie alle Verzeichnisse, Unterverzeichnisse und Dateien auf das neue Gerät und behalten Sie die
+  Namen und Berechtigungen bei.
+. Optional: Kopieren Sie alle Dateien außerhalb dieser Verzeichnisse, die auf Ihre Konfiguration verweisen
+  (es wird nicht empfohlen, Dateien außerhalb von WeeChat-Verzeichnissen zu verwenden).
+. WeeChat auf dem neuen Gerät starten: `weechat` (oder `weechat --upgrade`, falls die Sitzung gesichert wurde).
 
 [[development]]
 == Entwicklung

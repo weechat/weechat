@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2023-10-01 16:11+0200\n"
-"PO-Revision-Date: 2023-09-15 12:46+0200\n"
+"PO-Revision-Date: 2023-10-05 08:04+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -73,19 +73,19 @@ msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 "Die Systemzeit ist nicht korrekt (%+ld Sekunden), reinitialisiere alle Uhren"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgid "%sURL transfer error: %s (URL: \"%s\")"
-msgstr "curl Fehler %d (%s) (URL: \"%s\")\n"
+msgstr "%sURL Transferfehler: %s (URL: \"%s\")"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "End of command '%s', timeout reached (%.1fs)"
 msgid "End of URL transfer '%s', timeout reached (%.1fs)"
-msgstr "Befehl '%s' beendet, Zeit ist verstrichen (%.1fs)"
+msgstr "Ende der URL-Übertragung „%s“, Zeitüberschreitung erreicht (%.1fs)"
 
 #, c-format
 msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
-msgstr ""
+msgstr "%sFehler beim Ausführen des Threads in hook_url: %s (URL: \"%s\")"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -465,7 +465,7 @@ msgstr "Debug-Modus für \"%s\" deaktiviert"
 
 #, c-format
 msgid "Debug hook_url: %s"
-msgstr ""
+msgstr "Debug hook_url: %s"
 
 #. TRANSLATORS: "TLS: enabled"
 msgid "enabled"
@@ -1058,7 +1058,7 @@ msgstr "%sWeechat-Sitzung kann nicht gespeichert werden (Dateien *.upgrade)"
 msgid "WeeChat session saved (files *.upgrade)"
 msgstr "WeeChat Sitzung gesichert (Dateien *.upgrade)"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "%sCan't upgrade: there is one or more background process (hook type "
 #| "'process' or 'connect')"
@@ -1066,8 +1066,9 @@ msgid ""
 "%sCan't upgrade: there is one or more background process/thread running "
 "(hook type: process, connect or url)"
 msgstr ""
-"%sUpgrade nicht möglich: Ein- oder mehrere Hintergrundprozesse laufen noch "
-"(Hook-Typ 'process' oder 'connect')"
+"%sAktualisierung nicht möglich: Es laufen ein oder mehrere"
+" Hintergrundprozesse/-threads"
+"(Hook-Typ: 'process', 'connect' oder 'url')"
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
@@ -1679,7 +1680,6 @@ msgid "debug functions"
 msgstr "Debug-Funktionen"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
 #| msgid ""
 #| "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|"
 #| "color|dirs|infolists|libs|memory|tags|term|windows || callbacks "
@@ -1692,11 +1692,10 @@ msgid ""
 "<command> || unicode <string>"
 msgstr ""
 "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|libs|memory|tags|term|windows || callbacks <duration>[<unit>] "
-"|| mouse|cursor [verbose] || hdata [free] || time <command> || unicode "
-"<string>"
+"dirs|infolists|libs|memory|tags|term|url|windows || callbacks "
+"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
+"<command> || unicode <string>"
 
-#, fuzzy
 #| msgid ""
 #| "     list: list plugins with debug levels\n"
 #| "      set: set debug level for plugin\n"
@@ -1821,6 +1820,8 @@ msgstr ""
 "    mouse: schaltet den debug-Modus für den Maus-Modus ein/aus\n"
 "     tags: zeigt für jede einzelne Zeile die dazugehörigen Schlagwörter an\n"
 "     term: zeigt Informationen über das Terminal an\n"
+"      url: zeigt Debug-Informationen für hook_url Aufrufe an (Ausgabe als"
+" Hashtable)\n"
 "  windows: zeigt die Fensterstruktur an\n"
 "     time: misst die Zeit um einen Befehl auszuführen oder um einen Text in "
 "den aktuellen Buffer zu senden\n"
@@ -6447,25 +6448,24 @@ msgstr ""
 "Version verändern)"
 
 msgid "invalid URL"
-msgstr ""
+msgstr "Ungültige URL"
 
 msgid "not enough memory"
 msgstr "nicht genügend Speicher"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sFilter \"%s\" not found"
 msgid "file \"%s\" not found"
-msgstr "%sFilter, \"%s\", nicht gefunden"
+msgstr "Datei \"%s\", nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sCannot create file \"%s\""
 msgid "can not write file \"%s\""
-msgstr "%sDie Datei \"%s\" kann nicht erstellt werden"
+msgstr "Datei \"%s\" kann nicht erstellt werden"
 
-#, fuzzy
 #| msgid "fork error"
 msgid "transfer error"
-msgstr "Fork-Fehler"
+msgstr "Übertragungsfehler"
 
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
@@ -7006,7 +7006,6 @@ msgstr ""
 msgid "bar item with list of buffers"
 msgstr "Bar-Item mit der Liste von Buffern"
 
-#, fuzzy
 #| msgid ""
 #| " enable: enable buflist\n"
 #| "disable: disable buflist\n"
@@ -7171,8 +7170,9 @@ msgstr ""
 "disable: buflist deaktivieren\n"
 " toggle: buflist umschalten\n"
 "    bar: fügt eine \"buflist\" Bar hinzu\n"
-"refresh: erzwingt eine Aktualisierung der Bar-Item (buflist, buflist2, "
-"buflist3, buflist4 und buflist5)\n"
+"refresh: erzwingt die Aktualisierung einiger Bar-Items (wenn kein Element"
+" angegeben ist, werden alle Bar-Items aktualisiert, entsprechend der Option"
+" buflist.look.use_items)\n"
 "\n"
 "Jede Zeile die einen Buffer anzeigt, wird mittels Zeichenketten-Evaluation "
 "dargestellt (siehe /help eval für das Format), dazu werden folgende Optionen "
@@ -7251,13 +7251,13 @@ msgstr ""
 "    - ${format_tls_version}: Indikator der TLS Version für den Serverbuffer, "
 "Channels bleiben unberührt (evaluiert aus Option buflist.format.tls_version)"
 
-#, fuzzy
 #| msgid "list of bar items"
 msgid "buflist bar items"
-msgstr "Auflistung der Bar-Items"
+msgstr "Buflist Bar-Items"
 
 msgid "buflist bar items used (according to option buflist.look.use_items)"
 msgstr ""
+"Verwendete Elemente der Buflist-Item (gemäß Option buflist.look.use_items)"
 
 #, c-format
 msgid "%s: %d signals hooked"
@@ -13160,13 +13160,13 @@ msgstr[1] "reguläre"
 
 msgid "owner"
 msgid_plural "owners"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Eigentümer"
+msgstr[1] "Eigentümer"
 
 msgid "admin"
 msgid_plural "admins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Administrator"
+msgstr[1] "Administratoren"
 
 msgid "op"
 msgid_plural "ops"
@@ -13836,6 +13836,8 @@ msgstr ""
 msgid ""
 "%s%s: zstd compression is not available, logger files will not be compressed"
 msgstr ""
+"%s%s: zstd Komprimierung ist nicht verfügbar, Logger-Dateien werden nicht"
+" komprimiert"
 
 msgid ""
 "logging level for this buffer (0 = logging disabled, 1 = a few messages "
@@ -16818,7 +16820,8 @@ msgstr "verwaltet Trigger, das Schweizer Armeemesser für WeeChat"
 msgid ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
+"return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
 "all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
@@ -16827,7 +16830,8 @@ msgid ""
 msgstr ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
+"return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
 "all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "

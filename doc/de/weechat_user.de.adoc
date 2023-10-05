@@ -250,8 +250,7 @@ $ make install
 
 Optionen für CMake können mit dem Format, `-DOPTION=VALUE`, genutzt werden.
 
-// TRANSLATION MISSING
-List of available options:
+Liste der verfügbaren Optionen:
 
 [width="100%",cols="3m,3,3m,10",options="header"]
 |===
@@ -305,9 +304,8 @@ List of available options:
 | ENABLE_GUILE | `ON`, `OFF` | ON
 | kompiliert <<scripting_plugins,Guile Erweiterung>> (Scheme).
 
-// TRANSLATION MISSING
 | ENABLE_HEADLESS | `ON`, `OFF` | ON
-| Compile headless binary.
+| Kompilieren der headless Binärdatei.
 
 | ENABLE_IRC | `ON`, `OFF` | ON
 | kompiliert <<irc,IRC Erweiterung>>.
@@ -367,9 +365,8 @@ List of available options:
 | ENABLE_XFER | `ON`, `OFF` | ON
 | kompiliert <<xfer,Xfer Erweiterung>>.
 
-// TRANSLATION MISSING
 | ENABLE_ZSTD | `ON`, `OFF` | ON
-| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
+| aktiviere https://facebook.github.io/zstd/[Zstandard ^↗^^] Kompression.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF
 | kompiliert Testumgebung.
