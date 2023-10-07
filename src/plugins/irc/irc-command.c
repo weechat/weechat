@@ -2888,11 +2888,13 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
             pos_keys++;
         }
         if (pos_keys[0])
+        {
             keys = weechat_string_split (pos_keys, ",", NULL,
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                          0, &num_keys);
+        }
     }
     else
         new_args = strdup (arguments);
@@ -3000,6 +3002,9 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
         }
         weechat_string_free_split (channels);
     }
+
+    if (keys)
+        weechat_string_free_split (keys);
 }
 
 /*
