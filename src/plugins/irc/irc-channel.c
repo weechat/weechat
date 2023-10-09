@@ -1454,9 +1454,14 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
                                      const char *nickname)
 {
     struct t_irc_channel *ptr_channel;
+    struct t_irc_protocol_ctxt ctxt;
 
     if (!server || (!nick && !nickname))
         return;
+
+    memset (&ctxt, 0, sizeof (ctxt));
+    ctxt.server = server;
+    ctxt.command = strdup ("nick_back");
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -1471,10 +1476,8 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
                     ptr_channel->buffer,
                     0,
                     irc_protocol_tags (
-                        server,
-                        "nick_back",
-                        NULL,
-                        NULL,
+                        &ctxt,
+                        NULL,  /* extra_tags */
                         (nick) ? nick->name : NULL,
                         (nick) ? nick->host : NULL),
                     _("%s%s%s %s(%s%s%s)%s is back on server"),
@@ -1490,6 +1493,8 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
             ptr_channel->has_quit_server = 0;
         }
     }
+
+    free (ctxt.command);
 }
 
 /*

@@ -74,6 +74,22 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     "invite-notify,message-tags,multi-prefix,server-time,setname,"      \
     "userhost-in-names"
 
+#define WEE_CHECK_PROTOCOL_TAGS(__result, __server, __command, __tags,  \
+                            __extra_tags, __nick, __address)            \
+    ctxt.server = __server;                                             \
+    ctxt.command = (char *)__command;                                   \
+    ctxt.tags = __tags;                                                 \
+    if (__result == NULL)                                               \
+    {                                                                   \
+        POINTERS_EQUAL(NULL, irc_protocol_tags (&ctxt, __extra_tags,    \
+                                                __nick, __address));    \
+    }                                                                   \
+    else                                                                \
+    {                                                                   \
+        STRCMP_EQUAL(__result, irc_protocol_tags (&ctxt, __extra_tags,  \
+                                                  __nick, __address));  \
+    }
+
 #define WEE_CHECK_CAP_TO_ENABLE(__result, __string, __sasl_requested)   \
     str = irc_protocol_cap_to_enable (__string, __sasl_requested);      \
     STRCMP_EQUAL(__result, str);                                        \
@@ -444,7 +460,10 @@ TEST(IrcProtocol, LogLevelForCommand)
 
 TEST(IrcProtocol, Tags)
 {
+    struct t_irc_protocol_ctxt ctxt;
     struct t_hashtable *tags_empty, *tags_1, *tags_2;
+
+    memset (&ctxt, 0, sizeof (ctxt));
 
     tags_empty = hashtable_new (32,
                                 WEECHAT_HASHTABLE_STRING,
@@ -466,72 +485,86 @@ TEST(IrcProtocol, Tags)
     hashtable_set (tags_2, "key_3_empty", "");
     hashtable_set (tags_2, "key_4_null", NULL);
 
-    POINTERS_EQUAL(NULL, irc_protocol_tags (NULL, NULL, NULL, NULL, NULL, NULL));
+    WEE_CHECK_PROTOCOL_TAGS(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* command */
-    STRCMP_EQUAL("irc_privmsg,log1",
-                 irc_protocol_tags (NULL, "privmsg", NULL, NULL, NULL, NULL));
-    STRCMP_EQUAL("irc_join,log4",
-                 irc_protocol_tags (NULL, "join", NULL, NULL, NULL, NULL));
+    WEE_CHECK_PROTOCOL_TAGS("irc_privmsg,log1",
+                            NULL, "privmsg", NULL, NULL, NULL, NULL);
+    WEE_CHECK_PROTOCOL_TAGS("irc_join,log4",
+                            NULL, "join", NULL, NULL, NULL, NULL);
 
     /* command + irc_msg_tags */
-    STRCMP_EQUAL("irc_privmsg,log1",
-                 irc_protocol_tags (NULL, "privmsg", tags_empty, NULL, NULL, NULL));
-    STRCMP_EQUAL("irc_join,log4",
-                 irc_protocol_tags (NULL, "join", tags_empty, NULL, NULL, NULL));
-    STRCMP_EQUAL("irc_privmsg,irc_tag_key1=value1,log1",
-                 irc_protocol_tags (NULL, "privmsg", tags_1, NULL, NULL, NULL));
-    STRCMP_EQUAL("irc_join,irc_tag_key1=value1,log4",
-                 irc_protocol_tags (NULL, "join", tags_1, NULL, NULL, NULL));
-    STRCMP_EQUAL("irc_privmsg,irc_tag_key1=value1,"
-                 "irc_tag_key_2;comma=value2;comma,irc_tag_key_3_empty=,"
-                 "irc_tag_key_4_null,log1",
-                 irc_protocol_tags (NULL, "privmsg", tags_2, NULL, NULL, NULL));
-    STRCMP_EQUAL("irc_join,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
-                 "irc_tag_key_3_empty=,irc_tag_key_4_null,log4",
-                 irc_protocol_tags (NULL, "join", tags_2, NULL, NULL, NULL));
+    WEE_CHECK_PROTOCOL_TAGS("irc_privmsg,log1",
+                            NULL, "privmsg", tags_empty, NULL, NULL, NULL);
+    WEE_CHECK_PROTOCOL_TAGS("irc_join,log4",
+                            NULL, "join", tags_empty, NULL, NULL, NULL);
+    WEE_CHECK_PROTOCOL_TAGS("irc_privmsg,irc_tag_key1=value1,log1",
+                            NULL, "privmsg", tags_1, NULL, NULL, NULL);
+    WEE_CHECK_PROTOCOL_TAGS("irc_join,irc_tag_key1=value1,log4",
+                            NULL, "join", tags_1, NULL, NULL, NULL);
+    WEE_CHECK_PROTOCOL_TAGS("irc_privmsg,irc_tag_key1=value1,"
+                            "irc_tag_key_2;comma=value2;comma,"
+                            "irc_tag_key_3_empty=,irc_tag_key_4_null,log1",
+                            NULL, "privmsg", tags_2, NULL, NULL, NULL);
+    WEE_CHECK_PROTOCOL_TAGS("irc_join,irc_tag_key1=value1,"
+                            "irc_tag_key_2;comma=value2;comma,"
+                            "irc_tag_key_3_empty=,irc_tag_key_4_null,log4",
+                            NULL, "join", tags_2, NULL, NULL, NULL);
 
     /* command + extra_tags */
-    STRCMP_EQUAL("irc_privmsg,log1",
-                 irc_protocol_tags (NULL, "privmsg", NULL, "", NULL, NULL));
-    STRCMP_EQUAL("irc_join,log4",
-                 irc_protocol_tags (NULL, "join", NULL, "", NULL, NULL));
-    STRCMP_EQUAL("irc_privmsg,tag1,tag2,log1",
-                 irc_protocol_tags (NULL, "privmsg", NULL, "tag1,tag2", NULL, NULL));
-    STRCMP_EQUAL("irc_join,tag1,tag2,log4",
-                 irc_protocol_tags (NULL, "join", NULL, "tag1,tag2", NULL, NULL));
+    WEE_CHECK_PROTOCOL_TAGS("irc_privmsg,log1",
+                            NULL, "privmsg", NULL, "", NULL, NULL);
+    WEE_CHECK_PROTOCOL_TAGS("irc_join,log4",
+                            NULL, "join", NULL, "", NULL, NULL);
+    WEE_CHECK_PROTOCOL_TAGS("irc_privmsg,tag1,tag2,log1",
+                            NULL, "privmsg", NULL, "tag1,tag2", NULL, NULL);
+    WEE_CHECK_PROTOCOL_TAGS("irc_join,tag1,tag2,log4",
+                            NULL, "join", NULL, "tag1,tag2", NULL, NULL);
 
     /* command + irc_msg_tags + extra_tags + nick */
-    STRCMP_EQUAL("irc_privmsg,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
-                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,log1",
-                 irc_protocol_tags (NULL, "privmsg", tags_2, "tag1,tag2", "", NULL));
-    STRCMP_EQUAL("irc_join,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
-                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,log4",
-                 irc_protocol_tags (NULL, "join", tags_2, "tag1,tag2", "", NULL));
-    STRCMP_EQUAL("irc_privmsg,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
-                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,nick_alice,log1",
-                 irc_protocol_tags (NULL, "privmsg", tags_2, "tag1,tag2", "alice", NULL));
-    STRCMP_EQUAL("irc_join,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
-                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,nick_bob,log4",
-                 irc_protocol_tags (NULL, "join", tags_2, "tag1,tag2", "bob", NULL));
+    WEE_CHECK_PROTOCOL_TAGS("irc_privmsg,irc_tag_key1=value1,"
+                            "irc_tag_key_2;comma=value2;comma,"
+                            "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,"
+                            "tag2,log1",
+                            NULL, "privmsg", tags_2, "tag1,tag2", "", NULL);
+    WEE_CHECK_PROTOCOL_TAGS("irc_join,irc_tag_key1=value1,"
+                            "irc_tag_key_2;comma=value2;comma,"
+                            "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,"
+                            "tag2,log4",
+                            NULL, "join", tags_2, "tag1,tag2", "", NULL);
+    WEE_CHECK_PROTOCOL_TAGS("irc_privmsg,irc_tag_key1=value1,"
+                            "irc_tag_key_2;comma=value2;comma,"
+                            "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,"
+                            "tag2,nick_alice,log1",
+                            NULL, "privmsg", tags_2, "tag1,tag2", "alice", NULL);
+    WEE_CHECK_PROTOCOL_TAGS("irc_join,irc_tag_key1=value1,"
+                            "irc_tag_key_2;comma=value2;comma,"
+                            "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,"
+                            "tag2,nick_bob,log4",
+                            NULL, "join", tags_2, "tag1,tag2", "bob", NULL);
 
     /* command + irc_msg_tags + extra_tags + nick + address */
-    STRCMP_EQUAL("irc_privmsg,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
-                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,nick_alice,log1",
-                 irc_protocol_tags (NULL, "privmsg", tags_2, "tag1,tag2", "alice", ""));
-    STRCMP_EQUAL("irc_join,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
-                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,nick_bob,log4",
-                 irc_protocol_tags (NULL, "join", tags_2, "tag1,tag2", "bob", ""));
-    STRCMP_EQUAL("irc_privmsg,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
-                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,nick_alice,"
-                 "host_example.com,log1",
-                 irc_protocol_tags (NULL, "privmsg", tags_2, "tag1,tag2", "alice",
-                                    "example.com"));
-    STRCMP_EQUAL("irc_join,irc_tag_key1=value1,irc_tag_key_2;comma=value2;comma,"
-                 "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,tag2,nick_bob,"
-                 "host_example.com,log4",
-                 irc_protocol_tags (NULL, "join", tags_2, "tag1,tag2", "bob",
-                                    "example.com"));
+    WEE_CHECK_PROTOCOL_TAGS("irc_privmsg,irc_tag_key1=value1,"
+                            "irc_tag_key_2;comma=value2;comma,"
+                            "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,"
+                            "tag2,nick_alice,log1",
+                            NULL, "privmsg", tags_2, "tag1,tag2", "alice", "");
+    WEE_CHECK_PROTOCOL_TAGS("irc_join,irc_tag_key1=value1,"
+                            "irc_tag_key_2;comma=value2;comma,"
+                            "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,"
+                            "tag2,nick_bob,log4",
+                            NULL, "join", tags_2, "tag1,tag2", "bob", "");
+    WEE_CHECK_PROTOCOL_TAGS("irc_privmsg,irc_tag_key1=value1,"
+                            "irc_tag_key_2;comma=value2;comma,"
+                            "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,"
+                            "tag2,nick_alice,"
+                            "host_example.com,log1",
+                            NULL, "privmsg", tags_2, "tag1,tag2", "alice", "example.com");
+    WEE_CHECK_PROTOCOL_TAGS("irc_join,irc_tag_key1=value1,"
+                            "irc_tag_key_2;comma=value2;comma,"
+                            "irc_tag_key_3_empty=,irc_tag_key_4_null,tag1,"
+                            "tag2,nick_bob,host_example.com,log4",
+                            NULL, "join", tags_2, "tag1,tag2", "bob", "example.com");
 
     hashtable_free (tags_empty);
     hashtable_free (tags_1);
