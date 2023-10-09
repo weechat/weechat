@@ -7081,7 +7081,7 @@ irc_command_init ()
            "    /ignore add toto*@*.domain.com libera #weechat"),
         "list"
         " || add %(irc_channel_nicks_hosts) %(irc_servers) %(irc_channels) %-"
-        " || del -all|%(irc_ignores_numbers) %-",
+        " || del %(irc_ignores_numbers)|-all %-",
         &irc_command_ignore, NULL, NULL);
     weechat_hook_command (
         "info",
