@@ -221,7 +221,7 @@ irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt,
     }
 
     snprintf (string, sizeof (string),
-              "%s%s%s%s%s%s%s%s%s%s%s%s%s",
+              "%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
               (ctxt->command && ctxt->command[0]) ? "irc_" : "",
               (ctxt->command && ctxt->command[0]) ? ctxt->command : "",
               (is_numeric) ? "," : "",
@@ -230,6 +230,7 @@ irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt,
               (str_irc_tags && *str_irc_tags[0]) ? *str_irc_tags : "",
               (extra_tags && extra_tags[0]) ? "," : "",
               (extra_tags && extra_tags[0]) ? extra_tags : "",
+              (ctxt->ignore_tag) ? ",irc_ignored" : "",
               (nick && nick[0]) ? ",nick_" : "",
               (nick && nick[0]) ? nick : "",
               (address && address[0]) ? ",host_" : "",
@@ -457,7 +458,7 @@ IRC_PROTOCOL_CALLBACK(account)
         switch (ptr_channel->type)
         {
             case IRC_CHANNEL_TYPE_PRIVATE:
-                if (!ctxt->ignored
+                if (!ctxt->ignore_remove
                     && weechat_config_boolean (irc_config_look_display_account_message)
                     && (irc_server_strcasecmp (ctxt->server,
                                                ptr_channel->name, ctxt->nick) == 0))
@@ -479,7 +480,7 @@ IRC_PROTOCOL_CALLBACK(account)
                 ptr_nick = irc_nick_search (ctxt->server, ptr_channel, ctxt->nick);
                 if (ptr_nick)
                 {
-                    if (!ctxt->ignored
+                    if (!ctxt->ignore_remove
                         && weechat_config_boolean (irc_config_look_display_account_message))
                     {
                         ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
@@ -1383,7 +1384,7 @@ IRC_PROTOCOL_CALLBACK(chghost)
         switch (ptr_channel->type)
         {
             case IRC_CHANNEL_TYPE_PRIVATE:
-                if (!ctxt->ignored
+                if (!ctxt->ignore_remove
                     && (irc_server_strcasecmp (ctxt->server,
                                                ptr_channel->name, ctxt->nick) == 0))
                 {
@@ -1412,7 +1413,7 @@ IRC_PROTOCOL_CALLBACK(chghost)
                 ptr_nick = irc_nick_search (ctxt->server, ptr_channel, ctxt->nick);
                 if (ptr_nick)
                 {
-                    if (!ctxt->ignored)
+                    if (!ctxt->ignore_remove)
                     {
                         ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                                              && (weechat_config_boolean (irc_config_look_smart_filter_chghost))) ?
@@ -1625,7 +1626,7 @@ IRC_PROTOCOL_CALLBACK(invite)
     IRC_PROTOCOL_MIN_PARAMS(2);
     IRC_PROTOCOL_CHECK_NICK;
 
-    if (ctxt->ignored)
+    if (ctxt->ignore_remove)
         return WEECHAT_RC_OK;
 
     if (irc_server_strcasecmp (ctxt->server, ctxt->params[0], ctxt->server->nick) == 0)
@@ -1779,7 +1780,7 @@ IRC_PROTOCOL_CALLBACK(join)
     /* rename the nick if it was in list with a different case */
     irc_channel_nick_speaking_rename_if_present (ctxt->server, ptr_channel, ctxt->nick);
 
-    if (!ctxt->ignored)
+    if (!ctxt->ignore_remove)
     {
         ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                              && (weechat_config_boolean (irc_config_look_smart_filter_join))) ?
@@ -2454,7 +2455,7 @@ IRC_PROTOCOL_CALLBACK(notice)
 
     IRC_PROTOCOL_MIN_PARAMS(2);
 
-    if (ctxt->ignored)
+    if (ctxt->ignore_remove)
         return WEECHAT_RC_OK;
 
     notice_args = irc_protocol_string_params (ctxt->params, 1, ctxt->num_params - 1);
@@ -2763,7 +2764,7 @@ IRC_PROTOCOL_CALLBACK(part)
     ptr_nick = irc_nick_search (ctxt->server, ptr_channel, ctxt->nick);
 
     /* display part message */
-    if (!ctxt->ignored)
+    if (!ctxt->ignore_remove)
     {
         ptr_nick_speaking = NULL;
         if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
@@ -3041,7 +3042,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     IRC_PROTOCOL_MIN_PARAMS(2);
     IRC_PROTOCOL_CHECK_NICK;
 
-    if (ctxt->ignored)
+    if (ctxt->ignore_remove)
         return WEECHAT_RC_OK;
 
     msg_args = irc_protocol_string_params (ctxt->params, 1, ctxt->num_params - 1);
@@ -3500,7 +3501,7 @@ IRC_PROTOCOL_CALLBACK(setname)
         switch (ptr_channel->type)
         {
             case IRC_CHANNEL_TYPE_PRIVATE:
-                if (!ctxt->ignored
+                if (!ctxt->ignore_remove
                     && !ctxt->nick_is_me
                     && (irc_server_strcasecmp (ctxt->server,
                                                ptr_channel->name, ctxt->nick) == 0))
@@ -3526,7 +3527,7 @@ IRC_PROTOCOL_CALLBACK(setname)
                 ptr_nick = irc_nick_search (ctxt->server, ptr_channel, ctxt->nick);
                 if (ptr_nick)
                 {
-                    if (!ctxt->ignored && !ctxt->nick_is_me)
+                    if (!ctxt->ignore_remove && !ctxt->nick_is_me)
                     {
                         ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                                              && (weechat_config_boolean (irc_config_look_smart_filter_setname))) ?
@@ -3567,7 +3568,7 @@ IRC_PROTOCOL_CALLBACK(setname)
         }
     }
 
-    if (!ctxt->ignored && ctxt->nick_is_me)
+    if (!ctxt->ignore_remove && ctxt->nick_is_me)
     {
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (ctxt->server, NULL, ctxt->command, NULL, NULL),
@@ -3608,7 +3609,7 @@ IRC_PROTOCOL_CALLBACK(tagmsg)
 
     IRC_PROTOCOL_MIN_PARAMS(1);
 
-    if (ctxt->ignored)
+    if (ctxt->ignore_remove)
         return WEECHAT_RC_OK;
 
     if (!ctxt->tags)
@@ -3887,7 +3888,7 @@ IRC_PROTOCOL_CALLBACK(wallops)
 
     IRC_PROTOCOL_MIN_PARAMS(1);
 
-    if (ctxt->ignored)
+    if (ctxt->ignore_remove)
         return WEECHAT_RC_OK;
 
     nick_address = irc_protocol_nick_address (ctxt->server, 0, NULL, ctxt->nick, ctxt->address);
@@ -7298,7 +7299,7 @@ IRC_PROTOCOL_CALLBACK(help)
 
     IRC_PROTOCOL_MIN_PARAMS(2);
 
-    if (ctxt->ignored)
+    if (ctxt->ignore_remove)
         return WEECHAT_RC_OK;
 
     str_message = irc_protocol_string_params (ctxt->params, 2, ctxt->num_params - 1);
@@ -7332,7 +7333,7 @@ IRC_PROTOCOL_CALLBACK(710)
 
     IRC_PROTOCOL_MIN_PARAMS(3);
 
-    if (ctxt->ignored)
+    if (ctxt->ignore_remove)
         return WEECHAT_RC_OK;
 
     ptr_channel = irc_channel_search (ctxt->server, ctxt->params[1]);
@@ -7938,7 +7939,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
                            const char *msg_channel,
                            int ignore_batch_tag)
 {
-    int i, cmd_found, return_code, decode_color, keep_trailing_spaces;
+    int i, cmd_found, return_code, decode_color, keep_trailing_spaces, ignored;
     char *message_colors_decoded, *pos_space, *tags;
     struct t_irc_channel *ptr_channel;
     t_irc_recv_func *cmd_recv_func;
@@ -8136,7 +8137,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
     ctxt.address = NULL;
     ctxt.host = NULL;
     ctxt.command = NULL;
-    ctxt.ignored = 0;
+    ctxt.ignore_remove = 0;
+    ctxt.ignore_tag = 0;
     ctxt.params = NULL;
     ctxt.num_params = 0;
 
@@ -8225,11 +8227,18 @@ irc_protocol_recv_command (struct t_irc_server *server,
     ptr_channel = NULL;
     if (msg_channel)
         ptr_channel = irc_channel_search (server, msg_channel);
-    ctxt.ignored = irc_ignore_check (
+    ignored = irc_ignore_check (
         server,
         (ptr_channel) ? ptr_channel->name : msg_channel,
         ctxt.nick,
         host_no_color);
+    if (ignored)
+    {
+        if (weechat_config_boolean (irc_config_look_ignore_tag_messages))
+            ctxt.ignore_tag = 1;
+        else
+            ctxt.ignore_remove = 1;
+    }
 
     /* send signal with received command, even if command is ignored */
     return_code = irc_server_send_signal (server, "irc_raw_in", msg_command,
@@ -8238,7 +8247,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         goto end;
 
     /* send signal with received command, only if message is not ignored */
-    if (!ctxt.ignored)
+    if (!ctxt.ignore_remove)
     {
         return_code = irc_server_send_signal (server, "irc_in", msg_command,
                                               irc_message, NULL);
@@ -8332,7 +8341,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         }
 
         /* send signal with received command (if message is not ignored) */
-        if (!ctxt.ignored)
+        if (!ctxt.ignore_remove)
         {
             (void) irc_server_send_signal (server, "irc_in2", msg_command,
                                            irc_message, NULL);

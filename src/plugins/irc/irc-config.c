@@ -87,6 +87,7 @@ struct t_config_option *irc_config_look_highlight_channel = NULL;
 struct t_config_option *irc_config_look_highlight_pv = NULL;
 struct t_config_option *irc_config_look_highlight_server = NULL;
 struct t_config_option *irc_config_look_highlight_tags_restrict = NULL;
+struct t_config_option *irc_config_look_ignore_tag_messages = NULL;
 struct t_config_option *irc_config_look_item_channel_modes_hide_args = NULL;
 struct t_config_option *irc_config_look_item_display_server = NULL;
 struct t_config_option *irc_config_look_item_nick_modes = NULL;
@@ -3217,6 +3218,16 @@ irc_config_init ()
             NULL, 0, 0, "irc_privmsg,irc_notice", NULL, 0,
             NULL, NULL, NULL,
             &irc_config_change_look_highlight_tags_restrict, NULL, NULL,
+            NULL, NULL, NULL);
+        irc_config_look_ignore_tag_messages = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "ignore_tag_messages", "boolean",
+            N_("add tag \"irc_ignored\" in ignored messages instead of removing "
+               "them; that way messages can be filtered with /filter command "
+               "and toggled on-demand"),
+            NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
             NULL, NULL, NULL);
         irc_config_look_item_channel_modes_hide_args = weechat_config_new_option (
             irc_config_file, irc_config_section_look,

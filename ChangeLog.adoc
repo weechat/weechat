@@ -16,6 +16,7 @@ For a list of important changes that require manual actions, please look at rele
 New features::
 
   * core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias` and `/trigger` (issue #1956)
+  * irc: add option irc.look.ignore_tag_messages (issue #989)
 
 Build::
 

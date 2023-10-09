@@ -122,6 +122,7 @@ extern struct t_config_option *irc_config_look_highlight_channel;
 extern struct t_config_option *irc_config_look_highlight_pv;
 extern struct t_config_option *irc_config_look_highlight_server;
 extern struct t_config_option *irc_config_look_highlight_tags_restrict;
+extern struct t_config_option *irc_config_look_ignore_tag_messages;
 extern struct t_config_option *irc_config_look_item_channel_modes_hide_args;
 extern struct t_config_option *irc_config_look_item_display_server;
 extern struct t_config_option *irc_config_look_item_nick_modes;

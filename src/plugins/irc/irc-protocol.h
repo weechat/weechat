@@ -61,18 +61,19 @@ struct t_irc_server;
 
 struct t_irc_protocol_ctxt
 {
-    struct t_irc_server *server;
-    time_t date;
-    char *irc_message;
-    struct t_hashtable *tags;
-    char *nick;
-    int nick_is_me;
-    char *address;
-    char *host;
-    char *command;
-    int ignored;
-    char **params;
-    int num_params;
+    struct t_irc_server *server;       /* IRC server                        */
+    time_t date;                       /* message date                      */
+    char *irc_message;                 /* whole raw IRC message             */
+    struct t_hashtable *tags;          /* IRC tags                          */
+    char *nick;                        /* nick of sender                    */
+    int nick_is_me;                    /* nick of sender is myself          */
+    char *address;                     /* address of sender                 */
+    char *host;                        /* host of sender                    */
+    char *command;                     /* IRC command (eg: PRIVMSG)         */
+    int ignore_remove;                 /* msg ignored (not displayed)       */
+    int ignore_tag;                    /* mse ignored (displayed with tag)  */
+    char **params;                     /* IRC command parameters            */
+    int num_params;                    /* number of IRC command parameters  */
 };
 
 typedef int (t_irc_recv_func)(struct t_irc_protocol_ctxt *ctxt);
