@@ -31,5 +31,6 @@ struct t_rlimit_resource
 extern void sys_setrlimit ();
 extern void sys_display_rlimit ();
 extern void sys_display_rusage ();
+extern void sys_waitpid ();
 
 #endif /* WEECHAT_SYS_H */

@@ -6795,6 +6795,12 @@ COMMAND_CALLBACK(sys)
         return WEECHAT_RC_OK;
     }
 
+    if (string_strcmp (argv[1], "waitpid") == 0)
+    {
+        sys_waitpid ();
+        return WEECHAT_RC_OK;
+    }
+
     COMMAND_ERROR;
 }
 
@@ -9273,15 +9279,19 @@ command_init ()
         NULL, "sys",
         N_("system actions"),
         "get rlimit|rusage"
-        " || suspend",
+        " || suspend"
+        " || waitpid",
         N_("    get: display system info\n"
            " rlimit: display resource limits "
            "(see /help weechat.startup.sys_rlimit and \"man getrlimit\")\n"
            " rusage: display resource usage (see \"man getrusage\")\n"
            "suspend: suspend WeeChat and go back to the shell, by sending "
-           "signal SIGTSTP to the WeeChat process"),
+           "signal SIGTSTP to the WeeChat process\n"
+           "waitpid: acknowledge the end of children processes (to prevent "
+           "\"zombie\" processes)"),
         "get rlimit|rusage"
-        " || suspend",
+        " || suspend"
+        " || waitpid",
         &command_sys, NULL, NULL);
     hook_command (
         NULL, "toggle",

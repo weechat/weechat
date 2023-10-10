@@ -32,6 +32,7 @@
 #ifdef HAVE_SYS_RESOURCE_H
 #include <sys/resource.h>
 #endif
+#include <sys/wait.h>
 
 #include "weechat.h"
 #include "wee-config.h"
@@ -340,4 +341,22 @@ sys_display_rusage ()
                      _("System function \"%s\" is not available"),
                      "getrusage");
 #endif /* HAVE_SYS_RESOURCE_H */
+}
+
+/*
+ * Calls waitpid() to acknowledge the end of forked processes, thus preventing
+ * them to become zombies.
+ */
+
+void
+sys_waitpid ()
+{
+    int i;
+
+    /* acknowledge the end of up to 42 forked processes */
+    i = 0;
+    while ((i < 42) && (waitpid (-1, NULL, WNOHANG) > 0))
+    {
+        i++;
+    }
 }

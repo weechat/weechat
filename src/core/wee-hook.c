@@ -38,6 +38,7 @@
 #include "wee-log.h"
 #include "wee-signal.h"
 #include "wee-string.h"
+#include "wee-sys.h"
 #include "wee-util.h"
 #include "../gui/gui-chat.h"
 #include "../plugins/plugin.h"
@@ -625,6 +626,35 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             }
         }
     }
+}
+
+/*
+ * Callback used to clean all children (forked processes) by acknowledging
+ * their end.
+ */
+
+int
+hook_timer_clean_children_cb (const void *pointer, void *data,
+                              int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) remaining_calls;
+
+    sys_waitpid ();
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Schedule a cleanup timer to clean children (forked processes).
+ */
+
+void
+hook_schedule_clean_children ()
+{
+    hook_timer (NULL, 100, 0, 1, &hook_timer_clean_children_cb, NULL, NULL);
 }
 
 /*

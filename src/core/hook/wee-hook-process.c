@@ -603,7 +603,6 @@ hook_process_timer_cb (const void *pointer, void *data, int remaining_calls)
                              ((float)HOOK_PROCESS(hook_process, timeout)) / 1000);
         }
         kill (HOOK_PROCESS(hook_process, child_pid), SIGKILL);
-        usleep (1000);
         unhook (hook_process);
     }
     else
@@ -863,7 +862,7 @@ hook_process_free_data (struct t_hook *hook)
     if (HOOK_PROCESS(hook, child_pid) > 0)
     {
         kill (HOOK_PROCESS(hook, child_pid), SIGKILL);
-        waitpid (HOOK_PROCESS(hook, child_pid), NULL, 0);
+        hook_schedule_clean_children ();
         HOOK_PROCESS(hook, child_pid) = 0;
     }
     if (HOOK_PROCESS(hook, child_read[HOOK_PROCESS_STDIN]) != -1)
