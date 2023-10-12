@@ -607,12 +607,12 @@ trigger_command_trigger (const void *pointer, void *data,
                          struct t_gui_buffer *buffer, int argc,
                          char **argv, char **argv_eol)
 {
-    struct t_trigger *ptr_trigger, *ptr_trigger2;
+    struct t_trigger *ptr_trigger, *ptr_trigger2, *ptr_next_trigger;
     struct t_trigger_regex *regex;
-    char *value, **sargv, **items, *input, str_pos[16];
+    char *value, **sargv, **items, *input, str_pos[16], *name;
     char *arg_arguments, *arg_conditions, *arg_regex, *arg_command;
     char *arg_return_code, *arg_post_action;
-    int rc, i, j, type, count, index_option, enable, sargc, num_items, add_rc;
+    int rc, i, j, type, index_option, enable, sargc, num_items, add_rc;
     int regex_count, regex_rc;
 
     /* make C compiler happy */
@@ -1092,28 +1092,15 @@ trigger_command_trigger (const void *pointer, void *data,
             enable = 0;
         else if (weechat_strcmp (argv[1], "restart") == 0)
             enable = 2;
-        if (weechat_strcmp (argv[2], "-all") == 0)
+        for (i = 2; i < argc; i++)
         {
             for (ptr_trigger = triggers; ptr_trigger;
                  ptr_trigger = ptr_trigger->next_trigger)
             {
-                trigger_command_set_enabled (ptr_trigger, enable, argv[1], 0);
-            }
-        }
-        else
-        {
-            for (i = 2; i < argc; i++)
-            {
-                ptr_trigger = trigger_search (argv[i]);
-                if (ptr_trigger)
-                    trigger_command_set_enabled (ptr_trigger, enable, argv[1],
-                                                 1);
-                else
+                if (weechat_string_match (ptr_trigger->name, argv[i], 1))
                 {
-                    weechat_printf_date_tags (NULL, 0, "no_trigger",
-                                              _("%sTrigger \"%s\" not found"),
-                                              weechat_prefix ("error"),
-                                              argv[i]);
+                    trigger_command_set_enabled (ptr_trigger, enable,
+                                                 argv[1], 1);
                 }
             }
         }
@@ -1125,34 +1112,13 @@ trigger_command_trigger (const void *pointer, void *data,
     {
         if (argc < 3)
             goto error;
-        if (weechat_strcmp (argv[2], "-all") == 0)
+        for (i = 2; i < argc; i++)
         {
-            count = triggers_count;
             ptr_trigger = triggers;
             while (ptr_trigger)
             {
-                ptr_trigger2 = ptr_trigger->next_trigger;
-                if (ptr_trigger->hook_running)
-                {
-                    trigger_command_error_running (ptr_trigger, argv[1]);
-                }
-                else
-                {
-                    trigger_free (ptr_trigger);
-                }
-                ptr_trigger = ptr_trigger2;
-            }
-            count = count - triggers_count;
-            if (count > 0)
-                weechat_printf_date_tags (NULL, 0, "no_trigger",
-                                          _("%d triggers removed"), count);
-        }
-        else
-        {
-            for (i = 2; i < argc; i++)
-            {
-                ptr_trigger = trigger_search (argv[i]);
-                if (ptr_trigger)
+                ptr_next_trigger = ptr_trigger->next_trigger;
+                if (weechat_string_match (ptr_trigger->name, argv[i], 1))
                 {
                     if (ptr_trigger->hook_running)
                     {
@@ -1160,19 +1126,16 @@ trigger_command_trigger (const void *pointer, void *data,
                     }
                     else
                     {
+                        name = strdup (ptr_trigger->name);
                         trigger_free (ptr_trigger);
                         weechat_printf_date_tags (NULL, 0, "no_trigger",
                                                   _("Trigger \"%s\" removed"),
-                                                  argv[i]);
+                                                  name);
+                        if (name)
+                            free (name);
                     }
                 }
-                else
-                {
-                    weechat_printf_date_tags (NULL, 0, "no_trigger",
-                                              _("%sTrigger \"%s\" not found"),
-                                              weechat_prefix ("error"),
-                                              argv[i]);
-                }
+                ptr_trigger = ptr_next_trigger;
             }
         }
         goto end;
@@ -1208,41 +1171,45 @@ trigger_command_trigger (const void *pointer, void *data,
         {
             for (j = 0; trigger_config_default_list[j][0]; j++)
             {
-                if (strcmp (trigger_config_default_list[j][0], argv[i]) == 0)
-                    break;
-            }
-            if (trigger_config_default_list[j][0])
-            {
-                ptr_trigger = trigger_search (argv[i]);
-                if (ptr_trigger && ptr_trigger->hook_running)
+                if (weechat_string_match (trigger_config_default_list[j][0],
+                                          argv[i], 1))
                 {
-                    trigger_command_error_running (ptr_trigger, argv[1]);
+                    ptr_trigger = trigger_search (trigger_config_default_list[j][0]);
+                    if (ptr_trigger && ptr_trigger->hook_running)
+                    {
+                        trigger_command_error_running (
+                            ptr_trigger, trigger_config_default_list[j][0]);
+                    }
+                    else
+                    {
+                        if (ptr_trigger)
+                            trigger_free (ptr_trigger);
+                        ptr_trigger = trigger_new (
+                            trigger_config_default_list[j][0],   /* name */
+                            trigger_config_default_list[j][1],   /* enabled */
+                            trigger_config_default_list[j][2],   /* hook */
+                            trigger_config_default_list[j][3],   /* arguments */
+                            trigger_config_default_list[j][4],   /* conditions */
+                            trigger_config_default_list[j][5],   /* regex */
+                            trigger_config_default_list[j][6],   /* command */
+                            trigger_config_default_list[j][7],   /* return code */
+                            trigger_config_default_list[j][8]);  /* post action */
+                        if (ptr_trigger)
+                        {
+                            weechat_printf_date_tags (
+                                NULL, 0, "no_trigger",
+                                _("Trigger \"%s\" restored"),
+                                ptr_trigger->name);
+                        }
+                        else
+                        {
+                            weechat_printf_date_tags (
+                                NULL, 0, "no_trigger",
+                                _("Failed to restore trigger \"%s\""),
+                                trigger_config_default_list[j][0]);
+                        }
+                    }
                 }
-                else
-                {
-                    if (ptr_trigger)
-                        trigger_free (ptr_trigger);
-                    trigger_new (
-                        trigger_config_default_list[j][0],   /* name */
-                        trigger_config_default_list[j][1],   /* enabled */
-                        trigger_config_default_list[j][2],   /* hook */
-                        trigger_config_default_list[j][3],   /* arguments */
-                        trigger_config_default_list[j][4],   /* conditions */
-                        trigger_config_default_list[j][5],   /* regex */
-                        trigger_config_default_list[j][6],   /* command */
-                        trigger_config_default_list[j][7],   /* return code */
-                        trigger_config_default_list[j][8]);  /* post action */
-                    weechat_printf_date_tags (NULL, 0, "no_trigger",
-                                              _("Trigger \"%s\" restored"),
-                                              argv[i]);
-                }
-            }
-            else
-            {
-                weechat_printf_date_tags (
-                    NULL, 0, "no_trigger",
-                    _("%sDefault trigger \"%s\" not found"),
-                    weechat_prefix ("error"), argv[i]);
             }
         }
         goto end;
@@ -1324,11 +1291,11 @@ trigger_command_init ()
            " || input|output|recreate <name>"
            " || set <name> <option> <value>"
            " || rename|copy <name> <new_name>"
-           " || enable|disable|toggle [<name>|-all [<name>...]]"
-           " || restart <name>|-all [<name>...]"
+           " || enable|disable|toggle [<name>|<mask> [<name>|<mask>...]]"
+           " || restart <name>|<mask> [<name>|<mask>...]"
            " || show <name>"
-           " || del <name>|-all [<name>...]"
-           " || restore <name> [<name>...]"
+           " || del <name>|<mask> [<name>|<mask>...]"
+           " || restore <name>|<mask> [<name>|<mask>...]"
            " || default -yes"
            " || monitor [<filter>]"),
         N_("       list: list triggers (without argument, this list is displayed)\n"
@@ -1385,18 +1352,15 @@ trigger_command_init ()
            "      value: new value for the option\n"
            "     rename: rename a trigger\n"
            "       copy: copy a trigger\n"
-           "     enable: enable trigger(s) (without arguments: enable triggers "
-           "globally)\n"
-           "    disable: disable trigger(s) (without arguments: disable triggers "
-           "globally)\n"
-           "     toggle: toggle trigger(s) (without arguments: toggle triggers "
-           "globally)\n"
-           "    restart: restart trigger(s) (recreate the hooks)\n"
+           "     enable: enable triggers (without arguments: enable triggers globally)\n"
+           "    disable: disable triggers (without arguments: disable triggers globally)\n"
+           "     toggle: toggle triggers (without arguments: toggle triggers globally)\n"
+           "    restart: restart triggers (recreate the hooks)\n"
            "       show: show detailed info on a trigger (with some stats)\n"
-           "        del: delete a trigger\n"
-           "       -all: do action on all triggers\n"
-           "    restore: restore trigger(s) with the default values (works "
+           "        del: delete triggers\n"
+           "    restore: restore triggers with the default values (works "
            "only for default triggers)\n"
+           "       mask: name where wildcard \"*\" is allowed\n"
            "    default: delete all triggers and restore default ones\n"
            "    monitor: open the trigger monitor buffer, with optional filter:\n"
            "     filter: filter hooks/triggers to display (a hook must start "
@@ -1442,9 +1406,9 @@ trigger_command_init ()
         " || input|output|recreate %(trigger_names)"
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
         " || rename|copy %(trigger_names) %(trigger_names)"
-        " || enable %(trigger_names_disabled)|-all %(trigger_names_disabled)|%*"
-        " || disable %(trigger_names_enabled)|-all %(trigger_names_enabled)|%*"
-        " || toggle|restart|del %(trigger_names)|-all %(trigger_names)|%*"
+        " || enable %(trigger_names_disabled)|%*"
+        " || disable %(trigger_names_enabled)|%*"
+        " || toggle|restart|del %(trigger_names)|%*"
         " || show %(trigger_names)"
         " || restore %(trigger_names_default)|%*"
         " || default"
