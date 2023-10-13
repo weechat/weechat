@@ -3670,8 +3670,8 @@ COMMAND_CALLBACK(input)
 
 COMMAND_CALLBACK(item)
 {
-    struct t_gui_bar_item_custom *ptr_bar_item_custom;
-    char str_command[4096], str_pos[16], **sargv;
+    struct t_gui_bar_item_custom *ptr_bar_item_custom, *ptr_next_bar_item_custom;
+    char str_command[4096], str_pos[16], **sargv, *name;
     int i, update, sargc;
 
     /* make C compiler happy */
@@ -3832,38 +3832,23 @@ COMMAND_CALLBACK(item)
     if (string_strcmp (argv[1], "del") == 0)
     {
         COMMAND_MIN_ARGS(3, "del");
-        if (string_strcmp (argv[2], "-all") == 0)
+        for (i = 2; i < argc; i++)
         {
-            if (gui_custom_bar_items)
+            ptr_bar_item_custom = gui_custom_bar_items;
+            while (ptr_bar_item_custom)
             {
-                gui_bar_item_custom_free_all ();
-                gui_chat_printf (NULL,
-                                 _("All custom bar items have been deleted"));
-            }
-            else
-            {
-                gui_chat_printf (NULL, _("No custom bar item defined"));
-            }
-        }
-        else
-        {
-            for (i = 2; i < argc; i++)
-            {
-                ptr_bar_item_custom = gui_bar_item_custom_search (argv[i]);
-                if (ptr_bar_item_custom)
+                ptr_next_bar_item_custom = ptr_bar_item_custom->next_item;
+                if (string_match (ptr_bar_item_custom->name, argv[i], 1))
                 {
+                    name = strdup (ptr_bar_item_custom->name);
                     gui_bar_item_custom_free (ptr_bar_item_custom);
                     gui_chat_printf (NULL,
                                      _("Custom bar item \"%s\" deleted"),
-                                     argv[i]);
+                                     name);
+                    if (name)
+                        free (name);
                 }
-                else
-                {
-                    gui_chat_printf (NULL,
-                                     _("%sCustom bar item \"%s\" not found"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     argv[i]);
-                }
+                ptr_bar_item_custom = ptr_next_bar_item_custom;
             }
         }
         return WEECHAT_RC_OK;
@@ -8667,7 +8652,7 @@ command_init ()
            " || rename <name> <new_name>"
            " || refresh <name> [<name>...]"
            " || recreate <name>"
-           " || del <name>|-all"),
+           " || del <name>|<mask> [<name>|<mask>...]"),
         N_("      list: list all custom bar items\n"
            "       add: add a custom bar item\n"
            "addreplace: add or replace an existing custom bar item\n"
@@ -8681,8 +8666,8 @@ command_init ()
            "bar items\n"
            "  recreate: set input with the command used to edit the custom "
            "bar item\n"
-           "       del: delete a custom bar item\n"
-           "      -all: delete all custom bar items\n"
+           "       del: delete custom bar items\n"
+           "      mask: name where wildcard \"*\" is allowed\n"
            "\n"
            "Examples:\n"
            "  add item with terminal size, displayed only in buffers with "
@@ -8720,7 +8705,7 @@ command_init ()
         " || rename %(custom_bar_items_names) %(custom_bar_items_names)"
         " || refresh %(custom_bar_items_names)|%*"
         " || recreate %(custom_bar_items_names)"
-        " || del %(custom_bar_items_names)|-all",
+        " || del %(custom_bar_items_names)|%*",
         &command_item, NULL, NULL);
     hook_command (
         NULL, "key",
