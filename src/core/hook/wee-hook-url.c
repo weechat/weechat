@@ -172,7 +172,7 @@ hook_url_timer_cb (const void *pointer, void *data, int remaining_calls)
     {
         hook_url_run_callback (hook);
         ptr_error = hashtable_get (HOOK_URL(hook, output), "error");
-        if (ptr_error && ptr_error[0])
+        if ((weechat_debug_core >= 1) && ptr_error && ptr_error[0])
         {
             gui_chat_printf (
                 NULL,
@@ -242,11 +242,14 @@ hook_url_transfer (struct t_hook *hook)
                        str_error_code_pthread);
         hook_url_run_callback (hook);
 
-        gui_chat_printf (NULL,
-                         _("%sError running thread in hook_url: %s (URL: \"%s\")"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         strerror (rc),
-                         HOOK_URL(hook, url));
+        if (weechat_debug_core >= 1)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError running thread in hook_url: %s (URL: \"%s\")"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             strerror (rc),
+                             HOOK_URL(hook, url));
+        }
         unhook (hook);
         return;
     }
