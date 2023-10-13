@@ -598,7 +598,7 @@ hook_process_timer_cb (const void *pointer, void *data, int remaining_calls)
         if (weechat_debug_core >= 1)
         {
             gui_chat_printf (NULL,
-                             _("End of command '%s', timeout reached (%.1fs)"),
+                             _("End of command '%s', timeout reached (%.3fs)"),
                              HOOK_PROCESS(hook_process, command),
                              ((float)HOOK_PROCESS(hook_process, timeout)) / 1000);
         }

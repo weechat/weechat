@@ -149,6 +149,7 @@ hook_url_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_hook *hook;
     const char *ptr_error;
+    char str_error[1024];
 
     /* make C compiler happy */
     (void) data;
@@ -178,12 +179,19 @@ hook_url_timer_cb (const void *pointer, void *data, int remaining_calls)
 
     if (remaining_calls == 0)
     {
+        if (!hashtable_has_key (HOOK_URL(hook, output), "error"))
+        {
+            snprintf (str_error, sizeof (str_error),
+                      "transfer timeout reached (%.3fs)",
+                      ((float)HOOK_URL(hook, timeout)) / 1000);
+            hashtable_set (HOOK_URL(hook, output), "error", str_error);
+        }
         hook_url_run_callback (hook);
         if (weechat_debug_core >= 1)
         {
             gui_chat_printf (
                 NULL,
-                _("End of URL transfer '%s', timeout reached (%.1fs)"),
+                _("End of URL transfer '%s', timeout reached (%.3fs)"),
                 HOOK_URL(hook, url),
                 ((float)HOOK_URL(hook, timeout)) / 1000);
         }
