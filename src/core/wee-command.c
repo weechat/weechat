@@ -230,7 +230,7 @@ COMMAND_CALLBACK(bar)
     int i, type, position, number;
     long value;
     char *error, *str_type, *pos_condition, *name;
-    struct t_gui_bar *ptr_bar, *ptr_bar2;
+    struct t_gui_bar *ptr_bar, *ptr_bar2, *ptr_next_bar;
     struct t_gui_bar_item *ptr_item;
     struct t_gui_window *ptr_window;
 
@@ -429,29 +429,23 @@ COMMAND_CALLBACK(bar)
     if (string_strcmp (argv[1], "del") == 0)
     {
         COMMAND_MIN_ARGS(3, "del");
-        if (string_strcmp (argv[2], "-all") == 0)
+        for (i = 2; i < argc; i++)
         {
-            gui_bar_free_all ();
-            gui_chat_printf (NULL, _("All bars have been deleted"));
-            gui_bar_create_default_input ();
-        }
-        else
-        {
-            ptr_bar = gui_bar_search (argv[2]);
-            if (!ptr_bar)
+            ptr_bar = gui_bars;
+            while (ptr_bar)
             {
-                gui_chat_printf (NULL,
-                                 _("%sBar \"%s\" not found"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[2]);
-                return WEECHAT_RC_OK;
+                ptr_next_bar = ptr_bar->next_bar;
+                if (string_match (ptr_bar->name, argv[i], 1))
+                {
+                    name = strdup (ptr_bar->name);
+                    gui_bar_free (ptr_bar);
+                    gui_chat_printf (NULL, _("Bar \"%s\" deleted"), name);
+                    if (name)
+                        free (name);
+                    gui_bar_create_default_input ();
+                }
+                ptr_bar = ptr_next_bar;
             }
-            name = strdup (ptr_bar->name);
-            gui_bar_free (ptr_bar);
-            gui_chat_printf (NULL, _("Bar \"%s\" deleted"), name);
-            if (name)
-                free (name);
-            gui_bar_create_default_input ();
         }
         return WEECHAT_RC_OK;
     }
@@ -7863,7 +7857,7 @@ command_init ()
            "<item1>[,<item2>...]"
            " || default [input|title|status|nicklist]"
            " || rename <name> <new_name>"
-           " || del <name>|-all"
+           " || del <name>|<mask> [<name>|<mask>...]"
            " || set <name> <option> <value>"
            " || hide|show|toggle <name>"
            " || scroll <name> <window> <scroll_value>"),
@@ -7891,7 +7885,8 @@ command_init ()
            "      default: create a default bar (all default bars if no bar "
            "name is given)\n"
            "       rename: rename a bar\n"
-           "          del: delete a bar (or all bars with -all)\n"
+           "          del: delete bars\n"
+           "         mask: name where wildcard \"*\" is allowed\n"
            "          set: set a value for a bar property\n"
            "       option: option to change (for options list, look at /set "
            "weechat.bar.<barname>.*)\n"
@@ -7923,7 +7918,7 @@ command_init ()
         " || add %(bars_names) root|window bottom|top|left|right"
         " || default input|title|status|nicklist|%*"
         " || rename %(bars_names)"
-        " || del %(bars_names)|-all"
+        " || del %(bars_names)|%*"
         " || set %(bars_names) name|%(bars_options)"
         " || hide %(bars_names)"
         " || show %(bars_names)"
