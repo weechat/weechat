@@ -220,6 +220,11 @@ hook_url_transfer (struct t_hook *hook)
                          &hook_url_transfer_thread, hook);
     if (rc != 0)
     {
+        snprintf (str_error, sizeof (str_error),
+                  "error calling pthread_create (%d)", rc);
+        hashtable_set (HOOK_URL(hook, output), "error", str_error);
+        hook_url_run_callback (hook);
+
         gui_chat_printf (NULL,
                          _("%sError running thread in hook_url: %s (URL: \"%s\")"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
