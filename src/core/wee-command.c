@@ -5447,10 +5447,10 @@ command_proxy_list ()
 
 COMMAND_CALLBACK(proxy)
 {
-    int type;
+    struct t_proxy *ptr_proxy, *ptr_next_proxy;
+    char *error, *name;
+    int type, i;
     long value;
-    char *error;
-    struct t_proxy *ptr_proxy;
 
     /* make C compiler happy */
     (void) pointer;
@@ -5512,24 +5512,22 @@ COMMAND_CALLBACK(proxy)
     if (string_strcmp (argv[1], "del") == 0)
     {
         COMMAND_MIN_ARGS(3, "del");
-        if (string_strcmp (argv[2], "-all") == 0)
+        for (i = 2; i < argc; i++)
         {
-            proxy_free_all ();
-            gui_chat_printf (NULL, _("All proxies have been deleted"));
-        }
-        else
-        {
-            ptr_proxy = proxy_search (argv[2]);
-            if (!ptr_proxy)
+            ptr_proxy = weechat_proxies;
+            while (ptr_proxy)
             {
-                gui_chat_printf (NULL,
-                                 _("%sProxy \"%s\" not found"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[2]);
-                return WEECHAT_RC_OK;
+                ptr_next_proxy = ptr_proxy->next_proxy;
+                if (string_match (ptr_proxy->name, argv[i], 1))
+                {
+                    name = strdup (ptr_proxy->name);
+                    proxy_free (ptr_proxy);
+                    gui_chat_printf (NULL, _("Proxy \"%s\" deleted"), name);
+                    if (name)
+                        free (name);
+                }
+                ptr_proxy = ptr_next_proxy;
             }
-            proxy_free (ptr_proxy);
-            gui_chat_printf (NULL, _("Proxy deleted"));
         }
         return WEECHAT_RC_OK;
     }
@@ -8999,7 +8997,7 @@ command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list"
            " || add <name> <type> <address> <port> [<username> [<password>]]"
-           " || del <name>|-all"
+           " || del <name>|<mask> [<name>|<mask>...]"
            " || set <name> <option> <value>"),
         N_("    list: list all proxies\n"
            "     add: add a new proxy\n"
@@ -9009,7 +9007,8 @@ command_init ()
            "    port: port\n"
            "username: username (optional)\n"
            "password: password (optional)\n"
-           "     del: delete a proxy (or all proxies with -all)\n"
+           "     del: delete proxies\n"
+           "    mask: name where wildcard \"*\" is allowed\n"
            "     set: set a value for a proxy property\n"
            "  option: option to change (for options list, look at /set "
            "weechat.proxy.<proxyname>.*)\n"
@@ -9027,7 +9026,7 @@ command_init ()
            "    /proxy del myproxy"),
         "list"
         " || add %(proxies_names) http|socks4|socks5"
-        " || del %(proxies_names)"
+        " || del %(proxies_names)|%*"
         " || set %(proxies_names) %(proxies_options)",
         &command_proxy, NULL, NULL);
     hook_command (
