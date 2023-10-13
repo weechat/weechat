@@ -1344,7 +1344,8 @@ weeurl_download (const char *url, struct t_hashtable *options,
     struct t_url_file url_file[2];
     char *url_file_option[2] = { "file_in", "file_out" };
     char *url_file_mode[2] = { "rb", "wb" };
-    char url_error[CURL_ERROR_SIZE + 1], **string_headers, **string_output;
+    char url_error[CURL_ERROR_SIZE + 1], url_error_code[12];
+    char **string_headers, **string_output;
     char str_response_code[32];
     CURLoption url_file_opt_func[2] = { CURLOPT_READFUNCTION, CURLOPT_WRITEFUNCTION };
     CURLoption url_file_opt_data[2] = { CURLOPT_READDATA, CURLOPT_WRITEDATA };
@@ -1358,6 +1359,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
     string_headers = NULL;
     string_output = NULL;
     url_error[0] = '\0';
+    url_error_code[0] = '\0';
 
     for (i = 0; i < 2; i++)
     {
@@ -1465,6 +1467,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
     {
         if (output)
         {
+            snprintf (url_error_code, sizeof (url_error_code), "%d", curl_rc);
             if (!url_error[0])
             {
                 snprintf (url_error, sizeof (url_error),
@@ -1507,6 +1510,8 @@ end:
         }
         if (url_error[0])
             hashtable_set (output, "error", url_error);
+        if (url_error_code[0])
+            hashtable_set (output, "error_code_curl", url_error_code);
     }
     return rc;
 }

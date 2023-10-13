@@ -126,14 +126,22 @@ void *
 hook_url_transfer_thread (void *hook_pointer)
 {
     struct t_hook *hook;
+    int url_rc;
+    char str_error_code[12];
 
     hook = (struct t_hook *)hook_pointer;
 
     pthread_cleanup_push (&hook_url_thread_cleanup, hook);
 
-    (void) weeurl_download (HOOK_URL(hook, url),
-                            HOOK_URL(hook, options),
-                            HOOK_URL(hook, output));
+    url_rc = weeurl_download (HOOK_URL(hook, url),
+                              HOOK_URL(hook, options),
+                              HOOK_URL(hook, output));
+
+    if (url_rc != 0)
+    {
+        snprintf (str_error_code, sizeof (str_error_code), "%d", url_rc);
+        hashtable_set (HOOK_URL(hook, output), "error_code", str_error_code);
+    }
 
     pthread_cleanup_pop (1);
 
@@ -149,7 +157,7 @@ hook_url_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_hook *hook;
     const char *ptr_error;
-    char str_error[1024];
+    char str_error[1024], str_error_code[12];
 
     /* make C compiler happy */
     (void) data;
@@ -179,12 +187,14 @@ hook_url_timer_cb (const void *pointer, void *data, int remaining_calls)
 
     if (remaining_calls == 0)
     {
-        if (!hashtable_has_key (HOOK_URL(hook, output), "error"))
+        if (!hashtable_has_key (HOOK_URL(hook, output), "error_code"))
         {
             snprintf (str_error, sizeof (str_error),
                       "transfer timeout reached (%.3fs)",
                       ((float)HOOK_URL(hook, timeout)) / 1000);
+            snprintf (str_error_code, sizeof (str_error_code), "6");
             hashtable_set (HOOK_URL(hook, output), "error", str_error);
+            hashtable_set (HOOK_URL(hook, output), "error_code", str_error_code);
         }
         hook_url_run_callback (hook);
         if (weechat_debug_core >= 1)
@@ -212,6 +222,7 @@ hook_url_transfer (struct t_hook *hook)
 {
     int rc, timeout, max_calls;
     long interval;
+    char str_error[1024], str_error_code[12], str_error_code_pthread[12];
 
     HOOK_URL(hook, thread_running) = 1;
 
@@ -222,7 +233,13 @@ hook_url_transfer (struct t_hook *hook)
     {
         snprintf (str_error, sizeof (str_error),
                   "error calling pthread_create (%d)", rc);
+        snprintf (str_error_code, sizeof (str_error_code), "5");
+        snprintf (str_error_code_pthread, sizeof (str_error_code_pthread),
+                  "%d", rc);
         hashtable_set (HOOK_URL(hook, output), "error", str_error);
+        hashtable_set (HOOK_URL(hook, output), "error_code", str_error_code);
+        hashtable_set (HOOK_URL(hook, output), "error_code_pthread",
+                       str_error_code_pthread);
         hook_url_run_callback (hook);
 
         gui_chat_printf (NULL,
