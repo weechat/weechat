@@ -62,5 +62,7 @@ extern int weeurl_download (const char *url, struct t_hashtable *options,
                             struct t_hashtable *output);
 extern int weeurl_option_add_to_infolist (struct t_infolist *infolist,
                                           struct t_url_option *option);
+extern void weeurl_init ();
+extern void weeurl_end ();
 
 #endif /* WEECHAT_URL_H */

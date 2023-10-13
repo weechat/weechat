@@ -1573,3 +1573,23 @@ weeurl_option_add_to_infolist (struct t_infolist *infolist,
 
     return 1;
 }
+
+/*
+ * Initializes URL.
+ */
+
+void
+weeurl_init ()
+{
+    curl_global_init (CURL_GLOBAL_ALL);
+}
+
+/*
+ * Ends URL.
+ */
+
+void
+weeurl_end ()
+{
+    curl_global_cleanup ();
+}
