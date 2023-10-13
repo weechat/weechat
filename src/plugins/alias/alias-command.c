@@ -80,8 +80,8 @@ alias_command_cb (const void *pointer, void *data,
                   struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    char *ptr_alias_name, *ptr_alias_name2;
-    struct t_alias *ptr_alias, *ptr_alias2;
+    char *ptr_alias_name, *ptr_alias_name2, *name;
+    struct t_alias *ptr_alias, *ptr_alias2, *ptr_next_alias;
     struct t_config_option *ptr_option;
     int alias_found, i;
 
@@ -200,36 +200,31 @@ alias_command_cb (const void *pointer, void *data,
         {
             ptr_alias_name = (weechat_string_is_command_char (argv[i])) ?
                 (char *)weechat_utf8_next_char (argv[i]) : argv[i];
-            ptr_alias = alias_search (ptr_alias_name);
-            if (!ptr_alias)
+            ptr_alias = alias_list;
+            while (ptr_alias)
             {
-                weechat_printf (NULL,
-                                _("%sAlias \"%s\" not found"),
-                                weechat_prefix ("error"),
-                                ptr_alias_name);
-            }
-            else
-            {
-                /* remove alias */
-                alias_free (ptr_alias);
-
-                /* remove options */
-                ptr_option = weechat_config_search_option (
-                    alias_config_file,
-                    alias_config_section_cmd,
-                    ptr_alias_name);
-                if (ptr_option)
-                    weechat_config_option_free (ptr_option);
-                ptr_option = weechat_config_search_option (
-                    alias_config_file,
-                    alias_config_section_completion,
-                    ptr_alias_name);
-                if (ptr_option)
-                    weechat_config_option_free (ptr_option);
-
-                weechat_printf (NULL,
-                                _("Alias \"%s\" removed"),
-                                ptr_alias_name);
+                ptr_next_alias = ptr_alias->next_alias;
+                if (weechat_string_match (ptr_alias->name, ptr_alias_name, 1))
+                {
+                    name = strdup (ptr_alias->name);
+                    alias_free (ptr_alias);
+                    ptr_option = weechat_config_search_option (
+                        alias_config_file,
+                        alias_config_section_cmd,
+                        ptr_alias_name);
+                    if (ptr_option)
+                        weechat_config_option_free (ptr_option);
+                    ptr_option = weechat_config_search_option (
+                        alias_config_file,
+                        alias_config_section_completion,
+                        ptr_alias_name);
+                    if (ptr_option)
+                        weechat_config_option_free (ptr_option);
+                    weechat_printf (NULL, _("Alias \"%s\" removed"), name);
+                    if (name)
+                        free (name);
+                }
+                ptr_alias = ptr_next_alias;
             }
         }
         return WEECHAT_RC_OK;
@@ -305,25 +300,26 @@ alias_command_init ()
         "alias",
         N_("list, add or remove command aliases"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("list [<alias>]"
-           " || add <alias> [<command>[;<command>...]]"
-           " || addcompletion <completion> <alias> [<command>[;<command>...]]"
-           " || del <alias> [<alias>...]"
-           " || rename <alias> <new_alias>"
+        N_("list [<name>]"
+           " || add <name> [<command>[;<command>...]]"
+           " || addcompletion <completion> <name> [<command>[;<command>...]]"
+           " || del <name>|<mask> [<name>|<mask>...]"
+           " || rename <name> <new_name>"
            " || missing"),
         /* xgettext:no-c-format */
         N_("         list: list aliases (without argument, this list is "
            "displayed)\n"
            "          add: add an alias\n"
+           "         name: name of alias\n"
            "addcompletion: add an alias with a custom completion\n"
-           "          del: delete an alias\n"
+           "          del: delete aliases\n"
+           "         mask: name where wildcard \"*\" is allowed\n"
            "       rename: rename an alias\n"
            "      missing: add missing aliases (using default aliases)\n"
            "   completion: completion for alias: by default completion is "
            "done with target command\n"
            "               note: you can use %%command to use completion of "
            "an existing command\n"
-           "        alias: name of alias\n"
            "      command: command name with arguments (many commands can be "
            "separated by semicolons)\n"
            "\n"
