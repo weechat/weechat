@@ -959,6 +959,9 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", "${window.buffer.local_variables.nonexisting_func)}");
     WEE_CHECK_EVAL("", "${window.buffer.local_variables.keys( )}");
     WEE_CHECK_EVAL("", "${window.buffer.local_variables.()}");
+    WEE_CHECK_EVAL("weechat", "${buffer[gui_buffers].name}");
+    WEE_CHECK_EVAL("weechat", "${buffer[gui_buffers?$(buffer.name) == weechat].name}");
+    WEE_CHECK_EVAL("IRC (Internet Relay Chat) protocol", "${plugin[weechat_plugins?$(plugin.name) == irc].description}");
     hashtable_remove_all (pointers);
 
     /* test with another prefix/suffix */

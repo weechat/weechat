@@ -1345,6 +1345,39 @@ end:
 }
 
 /*
+ * Search for character c that is not enclosed in [] or {}
+ */
+
+const char *
+eval_unbraced_strchr (const char *text, int c)
+{
+    const char *iter;
+    int in_brace, in_bracket;
+
+    iter = text;
+    in_brace = 0;
+    in_bracket = 0;
+
+    for (; *iter; ++iter)
+    {
+        if (*iter == '{')
+            in_brace++;
+        if (*iter == '}')
+            in_brace--;
+        if (*iter == '[')
+            in_bracket++;
+        if (*iter == ']')
+            in_bracket--;
+        if (*iter == c && in_brace == 0 && in_bracket == 0)
+        {
+            return iter;
+        }
+    }
+
+    return NULL;
+}
+
+/*
  * Returns a string using hdata.
  *
  * Note: result must be freed after use.
@@ -1353,19 +1386,22 @@ end:
 char *
 eval_string_hdata (const char *text, struct t_eval_context *eval_context)
 {
-    const char *pos_vars, *pos1, *pos2;
-    char *value, *hdata_name, *pointer_name, *tmp;
+    const char *pos_vars, *pos1, *pos2, *search_operator;
+    char *value, *hdata_name, *pointer_name, *search, *tmp;
     void *pointer;
     struct t_hdata *hdata;
+    struct t_hashtable *options;
     int rc;
     unsigned long ptr;
 
     value = NULL;
     hdata_name = NULL;
     pointer_name = NULL;
+    search = NULL;
     pointer = NULL;
+    options = NULL;
 
-    pos_vars = strchr (text, '.');
+    pos_vars = eval_unbraced_strchr(text, '.');
     if (pos_vars > text)
         hdata_name = string_strndup (text, pos_vars - text);
     else
@@ -1422,7 +1458,28 @@ eval_string_hdata (const char *text, struct t_eval_context *eval_context)
         }
         else
         {
+            search_operator = strchr (pointer_name, '?');
+            if (search_operator)
+            {
+                search = strdup(search_operator + 1);
+                tmp = string_strndup (pointer_name, search_operator - pointer_name);
+                free (pointer_name);
+                pointer_name = tmp;
+            }
+
             pointer = hdata_get_list (hdata, pointer_name);
+            if (pointer && search)
+            {
+                options = hashtable_new (8, WEECHAT_HASHTABLE_STRING, WEECHAT_HASHTABLE_STRING, NULL, NULL);
+                hashtable_set (options, "prefix", "$(");
+                hashtable_set (options, "suffix", ")");
+
+                pointer = hdata_search (hdata, pointer, search, eval_context->pointers, NULL, options, 1);
+                hashtable_free (options);
+                if (!pointer)
+                    goto end;
+            }
+
             if (!pointer)
             {
                 pointer = hashtable_get (eval_context->pointers, pointer_name);
@@ -1450,7 +1507,8 @@ end:
         free (hdata_name);
     if (pointer_name)
         free (pointer_name);
-
+    if (search)
+        free (search);
     return (value) ? value : strdup ("");
 }
 
