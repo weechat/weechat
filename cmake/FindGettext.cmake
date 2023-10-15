@@ -45,26 +45,28 @@ set(CMAKE_REQUIRED_INCLUDES ${LIBINTL_INCLUDE})
 
 check_include_files(libintl.h HAVE_LIBINTL_H)
 
-if(HAVE_LIBINTL_H)
-  check_function_exists(dgettext LIBC_HAS_DGETTEXT)
-  if(LIBC_HAS_DGETTEXT)
-    set(GETTEXT_FOUND TRUE)
-  else()
-    find_library(LIBINTL_LIBRARY NAMES intl
-      PATHS
-      /usr/local/lib
-      /usr/lib
-    )
-    if(LIBINTL_LIBRARY)
-      if(${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD")
-        set(CMAKE_REQUIRED_LIBRARIES "iconv")
-        check_library_exists(${LIBINTL_LIBRARY} "libintl_dgettext" "" LIBINTL_HAS_DGETTEXT)
-      else()
-        check_library_exists(${LIBINTL_LIBRARY} "dgettext" "" LIBINTL_HAS_DGETTEXT)
-      endif()
-      if(LIBINTL_HAS_DGETTEXT)
-        set(GETTEXT_FOUND TRUE)
-      endif()
+if(NOT HAVE_LIBINTL_H)
+  message(SEND_ERROR "Header libintl.h not found, required if ENABLE_NLS is enabled")
+endif()
+
+check_function_exists(dgettext LIBC_HAS_DGETTEXT)
+if(LIBC_HAS_DGETTEXT)
+  set(GETTEXT_FOUND TRUE)
+else()
+  find_library(LIBINTL_LIBRARY NAMES intl
+    PATHS
+    /usr/local/lib
+    /usr/lib
+  )
+  if(LIBINTL_LIBRARY)
+    if(${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD")
+      set(CMAKE_REQUIRED_LIBRARIES "iconv")
+      check_library_exists(${LIBINTL_LIBRARY} "libintl_dgettext" "" LIBINTL_HAS_DGETTEXT)
+    else()
+      check_library_exists(${LIBINTL_LIBRARY} "dgettext" "" LIBINTL_HAS_DGETTEXT)
+    endif()
+    if(LIBINTL_HAS_DGETTEXT)
+      set(GETTEXT_FOUND TRUE)
     endif()
   endif()
 endif()
