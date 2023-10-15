@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-15 15:47+0200\n"
+"POT-Creation-Date: 2023-10-15 16:19+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -290,9 +290,6 @@ msgstr "%sErrore: il layout \"%s\" esiste già per il comando \"%s\""
 msgid "Bar \"%s\" renamed to \"%s\""
 msgstr "Filtro \"%s\" rinominato in \"%s\""
 
-msgid "All bars have been deleted"
-msgstr "Tutte le barre sono state eliminate"
-
 #, c-format
 msgid "Bar \"%s\" deleted"
 msgstr "Barra \"%s\" eliminata"
@@ -441,10 +438,6 @@ msgstr "Nessun filtro per messaggio definito"
 msgid "Filter \"%s\" enabled"
 msgstr "Filtro \"%s\" abilitato"
 
-#, fuzzy, c-format
-msgid "%sFilter \"%s\" not found"
-msgstr "%sTasto \"%s\" non trovato"
-
 #, c-format
 msgid "Filter \"%s\" disabled"
 msgstr "Filtro \"%s\" disabilitato"
@@ -461,6 +454,10 @@ msgstr "Filtro \"%s\" aggiunto:"
 msgid "Filter \"%s\" added:"
 msgstr "Filtro \"%s\" aggiunto:"
 
+#, fuzzy, c-format
+msgid "%sFilter \"%s\" not found"
+msgstr "%sTasto \"%s\" non trovato"
+
 #, c-format
 msgid "Filter \"%s\" renamed to \"%s\""
 msgstr "Filtro \"%s\" rinominato in \"%s\""
@@ -468,9 +465,6 @@ msgstr "Filtro \"%s\" rinominato in \"%s\""
 #, fuzzy, c-format
 msgid "%sUnable to rename filter \"%s\" to \"%s\""
 msgstr "%sErrore: impossibile rinominare il filtro da \"%s\" a \"%s\""
-
-msgid "All filters have been deleted"
-msgstr "Tutti i filtri sono stati eliminati"
 
 #, c-format
 msgid "Filter \"%s\" deleted"
@@ -594,11 +588,6 @@ msgstr "Filtro \"%s\" rinominato in \"%s\""
 #, fuzzy, c-format
 msgid "%sUnable to rename custom bar item \"%s\" to \"%s\""
 msgstr "%sErrore: impossibile rinominare il filtro da \"%s\" a \"%s\""
-
-#, fuzzy
-#| msgid "All bars have been deleted"
-msgid "All custom bar items have been deleted"
-msgstr "Tutte le barre sono state eliminate"
 
 #, fuzzy, c-format
 #| msgid "Bar \"%s\" deleted"
@@ -779,15 +768,14 @@ msgstr "%sErrore: impossibile creare il proxy \"%s\""
 msgid "%sInvalid port \"%s\" for proxy \"%s\""
 msgstr "%sErrore: porta \"%s\" errata per il proxy \"%s\""
 
-msgid "All proxies have been deleted"
-msgstr "Tutti i proxy sono stati eliminati"
+#, fuzzy, c-format
+#| msgid "Proxy deleted"
+msgid "Proxy \"%s\" deleted"
+msgstr "Proxy eliminato"
 
 #, fuzzy, c-format
 msgid "%sProxy \"%s\" not found"
 msgstr "%sTasto \"%s\" non trovato"
-
-msgid "Proxy deleted"
-msgstr "Proxy eliminato"
 
 #, fuzzy, c-format
 msgid "%sUnable to set option \"%s\" for proxy \"%s\""
@@ -1128,9 +1116,9 @@ msgstr "gestione delle barre"
 msgid ""
 "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
 "<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || rename <name> <new_name> || del <name>|-all || set <name> "
-"<option> <value> || hide|show|toggle <name> || scroll <name> <window> "
-"<scroll_value>"
+"nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+"<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
+"scroll <name> <window> <scroll_value>"
 msgstr ""
 "list|listfull|listitems || add <nome> <type>[,<condizione>] <posizione> "
 "<dimensione> <separatore> <item1>[,<item2>...] || default [input|title|"
@@ -1162,7 +1150,8 @@ msgid ""
 "      default: create a default bar (all default bars if no bar name is "
 "given)\n"
 "       rename: rename a bar\n"
-"          del: delete a bar (or all bars with -all)\n"
+"          del: delete bars\n"
+"         mask: name where wildcard \"*\" is allowed\n"
 "          set: set a value for a bar property\n"
 "       option: option to change (for options list, look at /set weechat.bar."
 "<barname>.*)\n"
@@ -1862,9 +1851,9 @@ msgstr ""
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"list || enable|disable|toggle [<name>|@] || add|addreplace <name> <buffer>[,"
-"<buffer>...] <tags> <regex> || rename <name> <new_name> || recreate <name> "
-"|| del <name>|-all [<name>...]"
+"list || enable|disable|toggle [<name>|<mask>|@ [<name>|<mask>|@...]] || add|"
+"addreplace <name> <buffer>[,<buffer>...] <tags> <regex> || rename <name> "
+"<new_name> || recreate <name> || del <name>|<mask> [<name>|<mask>...]"
 msgstr ""
 "list || enable|disable|toggle [<nome>] || add <nome> <buffer>[,<buffer>...] "
 "<tag> <regex>] || del <nome>|-all"
@@ -1874,14 +1863,14 @@ msgid ""
 "    enable: enable filters (filters are enabled by default)\n"
 "   disable: disable filters\n"
 "    toggle: toggle filters\n"
-"      name: filter name (\"@\" = enable/disable all filters in current "
-"buffer)\n"
+"      mask: name where wildcard \"*\" is allowed (\"@\" = enable/disable all "
+"filters in current buffer)\n"
 "       add: add a filter\n"
 "addreplace: add or replace an existing filter\n"
+"      name: filter name\n"
 "    rename: rename a filter\n"
 "  recreate: set input with the command used to edit the filter\n"
-"       del: delete a filter\n"
-"      -all: delete all filters\n"
+"       del: delete filters\n"
 "    buffer: comma separated list of buffers where filter is active:\n"
 "            - this is full name including plugin (example: \"irc.libera."
 "#weechat\" or \"irc.server.libera\")\n"
@@ -2129,7 +2118,7 @@ msgstr "elenco degli elementi barra"
 msgid ""
 "list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
 "<name> <new_name> || refresh <name> [<name>...] || recreate <name> || del "
-"<name>|-all"
+"<name>|<mask> [<name>|<mask>...]"
 msgstr ""
 "list || enable|disable|toggle [<nome>] || add <nome> <buffer>[,<buffer>...] "
 "<tag> <regex>] || del <nome>|-all"
@@ -2146,8 +2135,8 @@ msgid ""
 "   refresh: update content of item in all bars where the item is displayed; "
 "any item can be refreshed: default/plugin/custom bar items\n"
 "  recreate: set input with the command used to edit the custom bar item\n"
-"       del: delete a custom bar item\n"
-"      -all: delete all custom bar items\n"
+"       del: delete custom bar items\n"
+"      mask: name where wildcard \"*\" is allowed\n"
 "\n"
 "Examples:\n"
 "  add item with terminal size, displayed only in buffers with number = 1:\n"
@@ -2545,9 +2534,13 @@ msgid "manage proxies"
 msgstr "gestione dei proxy"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
+#| "del <name>|-all || set <name> <option> <value>"
 msgid ""
 "list || add <name> <type> <address> <port> [<username> [<password>]] || del "
-"<name>|-all || set <name> <option> <value>"
+"<name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
 msgstr ""
 "list || add <nome> <tipo> <indirizzo> <porta> [<nomeutente> [<password>]] || "
 "del <nome>|-all || set <nome> <opzione> <valore>"
@@ -2562,7 +2555,8 @@ msgid ""
 "    port: port\n"
 "username: username (optional)\n"
 "password: password (optional)\n"
-"     del: delete a proxy (or all proxies with -all)\n"
+"     del: delete proxies\n"
+"    mask: name where wildcard \"*\" is allowed\n"
 "     set: set a value for a proxy property\n"
 "  option: option to change (for options list, look at /set weechat.proxy."
 "<proxyname>.*)\n"
@@ -5815,12 +5809,12 @@ msgid "No alias defined"
 msgstr "Nessun alias definito"
 
 #, c-format
-msgid "%sAlias \"%s\" not found"
-msgstr "%sAlias \"%s\" non trovato"
-
-#, c-format
 msgid "Alias \"%s\" removed"
 msgstr "Alias \"%s\" eliminato"
+
+#, c-format
+msgid "%sAlias \"%s\" not found"
+msgstr "%sAlias \"%s\" non trovato"
 
 #, fuzzy, c-format
 msgid "%sAlias \"%s\" already exists"
@@ -5836,25 +5830,32 @@ msgid "list, add or remove command aliases"
 msgstr "elenca, aggiunge o rimuove server IRC"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
+#| "del <name>|-all || set <name> <option> <value>"
 msgid ""
-"list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
-"<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...] "
-"|| rename <alias> <new_alias> || missing"
+"list [<name>] || add <name> [<command>[;<command>...]] || addcompletion "
+"<completion> <name> [<command>[;<command>...]] || del <name>|<mask> [<name>|"
+"<mask>...] || rename <name> <new_name> || missing"
 msgstr ""
+"list || add <nome> <tipo> <indirizzo> <porta> [<nomeutente> [<password>]] || "
+"del <nome>|-all || set <nome> <opzione> <valore>"
 
 #, fuzzy, no-c-format
 msgid ""
 "         list: list aliases (without argument, this list is displayed)\n"
 "          add: add an alias\n"
+"         name: name of alias\n"
 "addcompletion: add an alias with a custom completion\n"
-"          del: delete an alias\n"
+"          del: delete aliases\n"
+"         mask: name where wildcard \"*\" is allowed\n"
 "       rename: rename an alias\n"
 "      missing: add missing aliases (using default aliases)\n"
 "   completion: completion for alias: by default completion is done with "
 "target command\n"
 "               note: you can use %%command to use completion of an existing "
 "command\n"
-"        alias: name of alias\n"
 "      command: command name with arguments (many commands can be separated "
 "by semicolons)\n"
 "\n"
@@ -14358,14 +14359,6 @@ msgid "%s%s: failed to copy trigger \"%s\""
 msgstr "%sErrore: creazione della barra \"%s\" fallita"
 
 #, fuzzy, c-format
-msgid "%sTrigger \"%s\" not found"
-msgstr "%sTasto \"%s\" non trovato"
-
-#, fuzzy, c-format
-msgid "%d triggers removed"
-msgstr "%d rmodifier eliminati"
-
-#, fuzzy, c-format
 msgid "Trigger \"%s\" removed"
 msgstr "Rmodifier \"%s\" eliminato"
 
@@ -14377,8 +14370,8 @@ msgid "Trigger \"%s\" restored"
 msgstr "Barra \"%s\" creata"
 
 #, fuzzy, c-format
-msgid "%sDefault trigger \"%s\" not found"
-msgstr "%sTasto \"%s\" non trovato"
+msgid "Failed to restore trigger \"%s\""
+msgstr "%sErrore: creazione della barra \"%s\" fallita"
 
 #, fuzzy
 msgid "Default triggers restored:"
@@ -14401,10 +14394,10 @@ msgid ""
 "<name> <hook> "
 "[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
-"<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
-"all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
-"<name>|-all [<name>...] || restore <name> [<name>...] || default -yes || "
-"monitor [<filter>]"
+"<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|"
+"<mask> [<name>|<mask>...]] || restart <name>|<mask> [<name>|<mask>...] || "
+"show <name> || del <name>|<mask> [<name>|<mask>...] || restore <name>|<mask> "
+"[<name>|<mask>...] || default -yes || monitor [<filter>]"
 msgstr ""
 
 msgid ""
@@ -14461,18 +14454,16 @@ msgid ""
 "      value: new value for the option\n"
 "     rename: rename a trigger\n"
 "       copy: copy a trigger\n"
-"     enable: enable trigger(s) (without arguments: enable triggers "
+"     enable: enable triggers (without arguments: enable triggers globally)\n"
+"    disable: disable triggers (without arguments: disable triggers "
 "globally)\n"
-"    disable: disable trigger(s) (without arguments: disable triggers "
-"globally)\n"
-"     toggle: toggle trigger(s) (without arguments: toggle triggers "
-"globally)\n"
-"    restart: restart trigger(s) (recreate the hooks)\n"
+"     toggle: toggle triggers (without arguments: toggle triggers globally)\n"
+"    restart: restart triggers (recreate the hooks)\n"
 "       show: show detailed info on a trigger (with some stats)\n"
-"        del: delete a trigger\n"
-"       -all: do action on all triggers\n"
-"    restore: restore trigger(s) with the default values (works only for "
+"        del: delete triggers\n"
+"    restore: restore triggers with the default values (works only for "
 "default triggers)\n"
+"       mask: name where wildcard \"*\" is allowed\n"
 "    default: delete all triggers and restore default ones\n"
 "    monitor: open the trigger monitor buffer, with optional filter:\n"
 "     filter: filter hooks/triggers to display (a hook must start with \"@\", "
@@ -15167,3 +15158,29 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#~ msgid "All bars have been deleted"
+#~ msgstr "Tutte le barre sono state eliminate"
+
+#~ msgid "All filters have been deleted"
+#~ msgstr "Tutti i filtri sono stati eliminati"
+
+#, fuzzy
+#~| msgid "All bars have been deleted"
+#~ msgid "All custom bar items have been deleted"
+#~ msgstr "Tutte le barre sono state eliminate"
+
+#~ msgid "All proxies have been deleted"
+#~ msgstr "Tutti i proxy sono stati eliminati"
+
+#, fuzzy, c-format
+#~ msgid "%sTrigger \"%s\" not found"
+#~ msgstr "%sTasto \"%s\" non trovato"
+
+#, fuzzy, c-format
+#~ msgid "%d triggers removed"
+#~ msgstr "%d rmodifier eliminati"
+
+#, fuzzy, c-format
+#~ msgid "%sDefault trigger \"%s\" not found"
+#~ msgstr "%sTasto \"%s\" non trovato"
