@@ -13,6 +13,10 @@ For a list of important changes that require manual actions, please look at rele
 [[v4.2.0]]
 == Version 4.2.0 (under dev)
 
+New features::
+
+  * core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias` and `/trigger` (issue #1956)
+
 Build::
 
   * core: make libintl.h required if CMake option ENABLE_NLS is enabled (issue #2031)
