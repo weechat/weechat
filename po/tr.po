@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-10 19:22+0200\n"
+"POT-Creation-Date: 2023-10-15 15:47+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -51,8 +51,9 @@ msgstr "%s Bilinmeyen komut \"%s\" (yardım için /help yazın)"
 msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr "%sHatalı dosya açıklayıcısı (%d) hook_fd içinde kullanılmış"
 
-#, c-format
-msgid "End of command '%s', timeout reached (%.1fs)"
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "End of command '%s', timeout reached (%.3fs)"
 msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
 
 #, c-format
@@ -67,7 +68,7 @@ msgstr "curl hatası %d (%s) (URL: \"%s\")\n"
 
 #, fuzzy, c-format
 #| msgid "End of command '%s', timeout reached (%.1fs)"
-msgid "End of URL transfer '%s', timeout reached (%.1fs)"
+msgid "End of URL transfer '%s', timeout reached (%.3fs)"
 msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
 
 #, c-format

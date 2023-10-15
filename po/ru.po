@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-10 19:22+0200\n"
+"POT-Creation-Date: 2023-10-15 15:47+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -54,7 +54,7 @@ msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr ""
 
 #, c-format
-msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "End of command '%s', timeout reached (%.3fs)"
 msgstr ""
 
 #, c-format
@@ -66,7 +66,7 @@ msgid "%sURL transfer error: %s (URL: \"%s\")"
 msgstr ""
 
 #, c-format
-msgid "End of URL transfer '%s', timeout reached (%.1fs)"
+msgid "End of URL transfer '%s', timeout reached (%.3fs)"
 msgstr ""
 
 #, c-format

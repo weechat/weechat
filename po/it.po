@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-10 19:22+0200\n"
+"POT-Creation-Date: 2023-10-15 15:47+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -50,8 +50,9 @@ msgstr "%sErrore: comando \"%s\" sconosciuto (digita /help per l'aiuto)"
 msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr "%sErrore: descrittore file errato (%d) usato in hook_fd"
 
-#, c-format
-msgid "End of command '%s', timeout reached (%.1fs)"
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "End of command '%s', timeout reached (%.3fs)"
 msgstr "Fine comando '%s', timeout raggiunto (%.1fs)"
 
 #, c-format
@@ -66,7 +67,7 @@ msgstr ""
 
 #, fuzzy, c-format
 #| msgid "End of command '%s', timeout reached (%.1fs)"
-msgid "End of URL transfer '%s', timeout reached (%.1fs)"
+msgid "End of URL transfer '%s', timeout reached (%.3fs)"
 msgstr "Fine comando '%s', timeout raggiunto (%.1fs)"
 
 #, c-format

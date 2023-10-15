@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-10 19:22+0200\n"
+"POT-Creation-Date: 2023-10-15 15:47+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -56,8 +56,9 @@ msgstr "%sNieznana komenda \"%s\" (wpisz /help , aby uzyskać pomoc)"
 msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr "%sZły deskryptor pliku (%d) użyty w hook_fd"
 
-#, c-format
-msgid "End of command '%s', timeout reached (%.1fs)"
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "End of command '%s', timeout reached (%.3fs)"
 msgstr "Kończenie komendy '%s', przekroczono dopuszczalny czas (%.1fs)"
 
 #, c-format
@@ -73,7 +74,7 @@ msgstr "błąd curl %d (%s) (URL: \"%s\")\n"
 
 #, fuzzy, c-format
 #| msgid "End of command '%s', timeout reached (%.1fs)"
-msgid "End of URL transfer '%s', timeout reached (%.1fs)"
+msgid "End of URL transfer '%s', timeout reached (%.3fs)"
 msgstr "Kończenie komendy '%s', przekroczono dopuszczalny czas (%.1fs)"
 
 #, c-format
