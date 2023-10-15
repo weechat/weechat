@@ -10,6 +10,13 @@ This document lists all the changes for each version. +
 For a list of important changes that require manual actions, please look at release notes.
 
 
+[[v4.1.1]]
+== Version 4.1.1 (under dev)
+
+Build::
+
+  * core: make libintl.h required if CMake option ENABLE_NLS is enabled (issue #2031)
+
 [[v4.1.0]]
 == Version 4.1.0 (2023-10-15)
 
