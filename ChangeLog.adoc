@@ -21,7 +21,7 @@ Bug fixes::
 
 Build::
 
-  * core: fix build error if CMake option ENABLE_NLS is turned to off or if required dependencies are not found (issue #2026)
+  * core: fix build error if CMake option ENABLE_NLS is turned to off or if required dependencies are not found (issue #2026, issue #2031)
 
 [[v4.0.5]]
 == Version 4.0.5 (2023-09-24)

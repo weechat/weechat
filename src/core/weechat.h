@@ -33,11 +33,7 @@
 #include <locale.h>
 
 #if defined(ENABLE_NLS) && !defined(_)
-    #ifdef HAVE_LIBINTL_H
-        #include <libintl.h>
-    #else
-        #include "../../intl/libintl.h"
-    #endif /* HAVE_LIBINTL_H */
+    #include <libintl.h>
     #define _(string) gettext(string)
     #define NG_(single,plural,number) ngettext(single,plural,number)
     #ifdef gettext_noop
