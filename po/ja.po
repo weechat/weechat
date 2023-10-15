@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-10 19:22+0200\n"
+"POT-Creation-Date: 2023-10-15 15:43+0200\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -53,8 +53,9 @@ msgstr "%sエラー: 未定義のコマンド \"%s\" (ヘルプを見るには /
 msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr "%sエラー: hook_fd で不正なファイルディスクリプタ (%d) が使われました"
 
-#, c-format
-msgid "End of command '%s', timeout reached (%.1fs)"
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "End of command '%s', timeout reached (%.3fs)"
 msgstr "コマンド '%s' の終了、タイムアウトになりました (%.1fs)"
 
 #, c-format
@@ -70,7 +71,7 @@ msgstr "curl エラー %d (%s) (URL: \"%s\")\n"
 
 #, fuzzy, c-format
 #| msgid "End of command '%s', timeout reached (%.1fs)"
-msgid "End of URL transfer '%s', timeout reached (%.1fs)"
+msgid "End of URL transfer '%s', timeout reached (%.3fs)"
 msgstr "コマンド '%s' の終了、タイムアウトになりました (%.1fs)"
 
 #, c-format
