@@ -13,6 +13,10 @@ For a list of important changes that require manual actions, please look at rele
 [[v4.1.1]]
 == Version 4.1.1 (under dev)
 
+Bug fixes::
+
+  * irc: revert compute of nick colors to case sensitive way, deprecate again infos "irc_nick_color" and "irc_nick_color_name" (issue #194, issue #2032)
+
 Build::
 
   * core: make libintl.h required if CMake option ENABLE_NLS is enabled (issue #2031)

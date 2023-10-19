@@ -49,10 +49,8 @@ struct t_irc_nick
 extern int irc_nick_valid (struct t_irc_channel *channel,
                            struct t_irc_nick *nick);
 extern int irc_nick_is_nick (struct t_irc_server *server, const char *string);
-extern char *irc_nick_find_color (struct t_irc_server *server,
-                                  const char *nickname);
-extern char *irc_nick_find_color_name (struct t_irc_server *server,
-                                       const char *nickname);
+extern char *irc_nick_find_color (const char *nickname);
+extern char *irc_nick_find_color_name (const char *nickname);
 extern void irc_nick_set_host (struct t_irc_nick *nick, const char *host);
 extern int irc_nick_is_op_or_higher (struct t_irc_server *server,
                                      struct t_irc_nick *nick);
@@ -103,8 +101,7 @@ extern const char *irc_nick_color_for_msg (struct t_irc_server *server,
                                            int server_message,
                                            struct t_irc_nick *nick,
                                            const char *nickname);
-extern const char * irc_nick_color_for_pv (struct t_irc_server *server,
-                                           struct t_irc_channel *channel,
+extern const char * irc_nick_color_for_pv (struct t_irc_channel *channel,
                                            const char *nickname);
 extern char *irc_nick_default_ban_mask (struct t_irc_nick *nick);
 extern struct t_hdata *irc_nick_hdata_nick_cb (const void *pointer,

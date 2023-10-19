@@ -139,22 +139,9 @@ irc_nick_is_nick (struct t_irc_server *server, const char *string)
  */
 
 char *
-irc_nick_find_color (struct t_irc_server *server, const char *nickname)
+irc_nick_find_color (const char *nickname)
 {
-    char str_args[4096];
-    int casemapping, range;
-
-    casemapping = (server) ? server->casemapping : -1;
-    if ((casemapping < 0) || (casemapping >= IRC_SERVER_NUM_CASEMAPPING))
-        casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
-    range = irc_server_casemapping_range[casemapping];
-
-    snprintf (str_args, sizeof (str_args),
-              "%s;%d",
-              (nickname) ? nickname : "",
-              range);
-
-    return weechat_info_get ("nick_color_ignore_case", str_args);
+    return weechat_info_get ("nick_color", nickname);
 }
 
 /*
@@ -164,22 +151,9 @@ irc_nick_find_color (struct t_irc_server *server, const char *nickname)
  */
 
 char *
-irc_nick_find_color_name (struct t_irc_server *server, const char *nickname)
+irc_nick_find_color_name (const char *nickname)
 {
-    char str_args[4096];
-    int casemapping, range;
-
-    casemapping = (server) ? server->casemapping : -1;
-    if ((casemapping < 0) || (casemapping >= IRC_SERVER_NUM_CASEMAPPING))
-        casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
-    range = irc_server_casemapping_range[casemapping];
-
-    snprintf (str_args, sizeof (str_args),
-              "%s;%d",
-              (nickname) ? nickname: "",
-              range);
-
-    return weechat_info_get ("nick_color_name_ignore_case", str_args);
+    return weechat_info_get ("nick_color_name", nickname);
 }
 
 /*
@@ -422,7 +396,7 @@ irc_nick_get_color_for_nicklist (struct t_irc_server *server,
         if (irc_server_strcasecmp (server, nick->name, server->nick) == 0)
             return strdup (nick_color_self);
         else
-            return irc_nick_find_color_name (server, nick->name);
+            return irc_nick_find_color_name (nick->name);
     }
 
     return strdup (nick_color_bar_fg);
@@ -620,7 +594,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     if (irc_server_strcasecmp (server, new_nick->name, server->nick) == 0)
         new_nick->color = strdup (IRC_COLOR_CHAT_NICK_SELF);
     else
-        new_nick->color = irc_nick_find_color (server, new_nick->name);
+        new_nick->color = irc_nick_find_color (new_nick->name);
 
     /* add nick to end of list */
     new_nick->prev_nick = channel->last_nick;
@@ -669,7 +643,7 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
     if (nick_is_me)
         nick->color = strdup (IRC_COLOR_CHAT_NICK_SELF);
     else
-        nick->color = irc_nick_find_color (server, nick->name);
+        nick->color = irc_nick_find_color (nick->name);
 
     /* add nick in nicklist */
     irc_nick_nicklist_add (server, channel, nick);
@@ -1011,7 +985,7 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
     else if (nick)
         color = strdup (nick->color);
     else if (nickname)
-        color = irc_nick_find_color (server, nickname);
+        color = irc_nick_find_color (nickname);
     else
         color = strdup (IRC_COLOR_CHAT_NICK);
 
@@ -1054,7 +1028,7 @@ irc_nick_color_for_msg (struct t_irc_server *server, int server_message,
         {
             return IRC_COLOR_CHAT_NICK_SELF;
         }
-        color_found = irc_nick_find_color (server, nickname);
+        color_found = irc_nick_find_color (nickname);
         index_color = (index_color + 1) % 16;
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%s",
@@ -1072,13 +1046,12 @@ irc_nick_color_for_msg (struct t_irc_server *server, int server_message,
  */
 
 const char *
-irc_nick_color_for_pv (struct t_irc_server *server,
-                       struct t_irc_channel *channel, const char *nickname)
+irc_nick_color_for_pv (struct t_irc_channel *channel, const char *nickname)
 {
     if (weechat_config_boolean (irc_config_look_color_pv_nick_like_channel))
     {
         if (!channel->pv_remote_nick_color)
-            channel->pv_remote_nick_color = irc_nick_find_color (server, nickname);
+            channel->pv_remote_nick_color = irc_nick_find_color (nickname);
         if (channel->pv_remote_nick_color)
             return channel->pv_remote_nick_color;
     }
