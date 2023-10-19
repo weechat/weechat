@@ -2281,8 +2281,8 @@ IRC_PROTOCOL_CALLBACK(nick)
                         {
                             if (weechat_config_boolean (irc_config_look_color_pv_nick_like_channel))
                             {
-                                old_color = irc_nick_find_color (ctxt->server, ctxt->nick);
-                                new_color = irc_nick_find_color (ctxt->server, ctxt->params[0]);
+                                old_color = irc_nick_find_color (ctxt->nick);
+                                new_color = irc_nick_find_color (ctxt->params[0]);
                             }
                             else
                             {
@@ -3144,7 +3144,6 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 else
                 {
                     color = irc_nick_find_color_name (
-                        ctxt->server,
                         (ptr_nick) ? ptr_nick->name : ctxt->nick);
                     str_color = irc_color_for_tags (color);
                     if (color)
@@ -3257,7 +3256,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         {
             if (weechat_config_boolean (irc_config_look_color_pv_nick_like_channel))
             {
-                color = irc_nick_find_color_name (ctxt->server, ctxt->nick);
+                color = irc_nick_find_color_name (ctxt->nick);
                 str_color = irc_color_for_tags (color);
                 if (color)
                     free (color);
@@ -3310,8 +3309,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 irc_nick_as_prefix (
                     ctxt->server, NULL, ctxt->nick,
                     (ctxt->nick_is_me) ?
-                    IRC_COLOR_CHAT_NICK_SELF : irc_nick_color_for_pv (ctxt->server,
-                                                                      ptr_channel,
+                    IRC_COLOR_CHAT_NICK_SELF : irc_nick_color_for_pv (ptr_channel,
                                                                       ctxt->nick)),
                 (msg_args2) ? msg_args2 : msg_args);
         }
@@ -3404,7 +3402,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                         _("%s%s%s%s%s%s%s%s%s%s has quit %s(%s%s%s)"),
                         weechat_prefix ("quit"),
                         (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE) ?
-                        irc_nick_color_for_pv (ctxt->server, ptr_channel, ctxt->nick) :
+                        irc_nick_color_for_pv (ptr_channel, ctxt->nick) :
                         irc_nick_color_for_msg (ctxt->server, 1, ptr_nick, ctxt->nick),
                         ctxt->nick,
                         IRC_COLOR_CHAT_DELIMITERS,
@@ -3438,7 +3436,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                         _("%s%s%s%s%s%s%s%s%s%s has quit"),
                         weechat_prefix ("quit"),
                         (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE) ?
-                        irc_nick_color_for_pv (ctxt->server, ptr_channel, ctxt->nick) :
+                        irc_nick_color_for_pv (ptr_channel, ctxt->nick) :
                         irc_nick_color_for_msg (ctxt->server, 1, ptr_nick, ctxt->nick),
                         ctxt->nick,
                         IRC_COLOR_CHAT_DELIMITERS,
@@ -6255,7 +6253,7 @@ IRC_PROTOCOL_CALLBACK(353)
                     }
                     else
                     {
-                        color = irc_nick_find_color (ctxt->server, nickname);
+                        color = irc_nick_find_color (nickname);
                         weechat_string_dyn_concat (str_nicks, color, -1);
                         if (color)
                             free (color);
@@ -6543,7 +6541,7 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
                 }
                 else
                 {
-                    color = irc_nick_find_color (server, nickname);
+                    color = irc_nick_find_color (nickname);
                     weechat_string_dyn_concat (str_nicks, color, -1);
                     if (color)
                         free (color);
