@@ -7821,7 +7821,8 @@ command_init ()
                "command does not start with \"/\")"),
             "",
             N_("Example:"),
-            AI("  /allbuf /buffer set unread")),
+            N_("  set read marker on all buffers:"),
+            AI("    /allbuf /buffer set unread")),
         "%(commands:/)", &command_allbuf, NULL, NULL);
     hook_command (
         NULL, "away",
@@ -7886,10 +7887,12 @@ command_init ()
                "number of chars)"),
             "",
             N_("Examples:"),
-            AI("  /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion"),
-            AI("  /bar hide mybar"),
-            AI("  /bar scroll nicklist * y+10"),
-            AI("  /bar scroll nicklist * ye")),
+            N_("  create a bar with time, buffer number + name, and completion:"),
+            AI("    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion"),
+            N_("  scroll nicklist 10 lines down on current buffer:"),
+            AI("    /bar scroll nicklist * y+10"),
+            N_("  scroll to end of nicklist on current buffer:"),
+            AI("    /bar scroll nicklist * ye")),
         "list"
         " || listfull"
         " || listitems"
@@ -8837,12 +8840,18 @@ command_init ()
                "\\Uhhhhhhhh"),
             "",
             N_("Examples:"),
-            AI("  /print -core -tags notify_highlight Reminder: buy milk"),
-            AI("  /print -core -error Some error here"),
-            AI("  /print -core prefix\\tThe message"),
-            AI("  /print -buffer irc.libera.#weechat Message on #weechat"),
-            AI("  /print -escape \\u2603"),
-            AI("  /print -beep")),
+            N_("  display a reminder on core buffer with a highlight:"),
+            N_("    /print -core -tags notify_highlight Reminder: buy milk"),
+            N_("  display an error on core buffer:"),
+            N_("    /print -core -error Some error here"),
+            N_("  display message on core buffer with prefix \"abc\":"),
+            N_("    /print -core abc\\tThe message"),
+            N_("  display a message on channel #weechat:"),
+            N_("    /print -buffer irc.libera.#weechat Message on #weechat"),
+            N_("  display a snowman (U+2603):"),
+            AI("    /print -escape \\u2603"),
+            N_("  send alert (BEL):"),
+            AI("    /print -beep")),
         "-buffer %(buffers_numbers)|%(buffers_plugins_names)"
         " || -newbuffer"
         " || -y -1|0|1|2|3"
@@ -8950,8 +8959,10 @@ command_init ()
                "executed)."),
             "",
             N_("Examples:"),
-            AI("  /repeat 2 /window page_up"),
-            AI("  /repeat -interval 1 6 /print ${if:${repeat_last}?Boom!:${repeat_revindex0}}")),
+            N_("  scroll 2 pages up:"),
+            AI("    /repeat 2 /window page_up"),
+            N_("  print a countdown, starting at 5:"),
+            AI("    /repeat -interval 1 6 /print ${if:${repeat_last}?Boom!:${repeat_revindex0}}")),
         "%- %(commands:/)",
         &command_repeat, NULL, NULL);
     hook_command (
@@ -9028,17 +9039,17 @@ command_init ()
             "",
             N_("Examples:"),
             N_("  set a passphrase:"),
-            AI("    /secure passphrase this is my passphrase"),
+            N_("    /secure passphrase this is my passphrase"),
             N_("  use program \"pass\" to read the passphrase on startup:"),
             AI("    /set sec.crypt.passphrase_command \"/usr/bin/pass show weechat/passphrase\""),
             N_("  encrypt libera SASL password:"),
-            AI("    /secure set libera mypassword"),
+            N_("    /secure set libera mypassword"),
             AI("    /set irc.server.libera.sasl_password \"${sec.data.libera}\""),
             N_("  encrypt oftc password for nickserv:"),
-            AI("    /secure set oftc mypassword"),
+            N_("    /secure set oftc mypassword"),
             AI("    /set irc.server.oftc.command \"/msg nickserv identify ${sec.data.oftc}\""),
             N_("  alias to ghost the nick \"mynick\":"),
-            AI("    /alias add ghost /eval /msg -server libera nickserv ghost mynick "
+            N_("    /alias add ghost /eval /msg -server libera nickserv ghost mynick "
                "${sec.data.libera}")),
         "passphrase -delete"
         " || decrypt -discard"
@@ -9259,9 +9270,12 @@ command_init ()
                "executed)."),
             "",
             N_("Examples:"),
-            AI("  /wait 10 /join #test"),
-            AI("  /wait 15m /away -all I'm away"),
-            AI("  /wait 2m hello")),
+            N_("  join channel #test in 10 seconds:"),
+            AI("    /wait 10 /join #test"),
+            N_("  set away in 15 minutes:"),
+            N_("    /wait 15m /away -all I'm away"),
+            N_("  say \"hello\" in 2 minutes:"),
+            N_("    /wait 2m hello")),
         "%- %(commands:/)",
         &command_wait, NULL, NULL);
     hook_command (
