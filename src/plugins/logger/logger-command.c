@@ -191,11 +191,16 @@ logger_command_init ()
             N_("  9: all other messages"),
             "",
             N_("Examples:"),
-            AI("  /logger set 5"),
-            AI("  /logger disable"),
-            AI("  /set logger.level.irc 3"),
-            AI("  /set logger.level.core.weechat 0"),
-            AI("  /set logger.mask.irc \"$server/$channel.weechatlog\"")),
+            N_("  set level to 5 for current buffer:"),
+            AI("    /logger set 5"),
+            N_("  disable logging for current buffer:"),
+            AI("    /logger disable"),
+            N_("  set level to 3 for all IRC buffers:"),
+            AI("    /set logger.level.irc 3"),
+            N_("  disable logging for main WeeChat buffer:"),
+            AI("    /set logger.level.core.weechat 0"),
+            N_("  use a directory per IRC server and a file per channel inside:"),
+            AI("    /set logger.mask.irc \"$server/$channel.weechatlog\"")),
         "list"
         " || set 1|2|3|4|5|6|7|8|9"
         " || flush"
