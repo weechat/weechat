@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-19 23:57+0200\n"
-"PO-Revision-Date: 2023-10-19 23:59+0200\n"
+"POT-Creation-Date: 2023-10-20 11:17+0200\n"
+"PO-Revision-Date: 2023-10-20 13:09+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -1129,6 +1129,9 @@ msgstr ""
 msgid "Example:"
 msgstr "Exemple :"
 
+msgid "  set read marker on all buffers:"
+msgstr "  définir le marqueur de lecture sur tous les tampons :"
+
 msgid "set or remove away status"
 msgstr "définir ou supprimer le statut d'absence"
 
@@ -1286,6 +1289,18 @@ msgstr ""
 
 msgid "Examples:"
 msgstr "Exemples :"
+
+msgid "  create a bar with time, buffer number + name, and completion:"
+msgstr ""
+"  créer une barre avec l'heure, numéro + nom de tampon, et la complétion :"
+
+msgid "  scroll nicklist 10 lines down on current buffer:"
+msgstr ""
+"  faire défiler la liste des pseudos de 10 lignes vers le bas sur le tampon "
+"courant :"
+
+msgid "  scroll to end of nicklist on current buffer:"
+msgstr "  faire défiler la liste des pseudos à la fin sur le tampon courant :"
 
 msgid "manage buffers"
 msgstr "gestion des tampons"
@@ -2922,6 +2937,36 @@ msgstr ""
 msgid "Following escaped chars are supported:"
 msgstr "Les caractères échappés suivants sont supportés :"
 
+msgid "  display a reminder on core buffer with a highlight:"
+msgstr "  afficher un pense-bête sur le tampon core avec un highlight :"
+
+msgid "    /print -core -tags notify_highlight Reminder: buy milk"
+msgstr "    /print -core -tags notify_highlight Pense-bête : acheter du lait"
+
+msgid "  display an error on core buffer:"
+msgstr "  afficher une erreur sur le tampon core :"
+
+msgid "    /print -core -error Some error here"
+msgstr "    /print -core -error Une erreur ici"
+
+msgid "  display message on core buffer with prefix \"abc\":"
+msgstr "  afficher un message sur le tampon core avec le préfixe \"abc\" :"
+
+msgid "    /print -core abc\\tThe message"
+msgstr "    /print -core abc\\tLe message"
+
+msgid "  display a message on channel #weechat:"
+msgstr "  afficher un message sur le canal #weechat :"
+
+msgid "    /print -buffer irc.libera.#weechat Message on #weechat"
+msgstr "    /print -buffer irc.libera.#weechat Message sur #weechat"
+
+msgid "  display a snowman (U+2603):"
+msgstr "  afficher un bonhomme de neige (U+2603) :"
+
+msgid "  send alert (BEL):"
+msgstr "  envoyer une alerte (BEL) :"
+
 msgid "manage proxies"
 msgstr "gestion des proxies"
 
@@ -3091,6 +3136,12 @@ msgstr ""
 "Note : la commande est exécutée sur le tampon où /repeat a été exécuté (si "
 "le tampon n'existe plus, la commande n'est pas exécutée)."
 
+msgid "  scroll 2 pages up:"
+msgstr "  faire défiler de 2 pages vers le haut :"
+
+msgid "  print a countdown, starting at 5:"
+msgstr "  afficher un compte à rebours, en démarrant à 5 :"
+
 msgid "reset config options"
 msgstr "réinitialiser des options de configuration"
 
@@ -3222,6 +3273,9 @@ msgstr ""
 msgid "  set a passphrase:"
 msgstr "  définir une phrase de chiffrement :"
 
+msgid "    /secure passphrase this is my passphrase"
+msgstr "    /secure passphrase ceci est ma phrase de chiffrement"
+
 msgid "  use program \"pass\" to read the passphrase on startup:"
 msgstr ""
 "  utiliser le programme \"pass\" pour lire la phrase de chiffrement au "
@@ -3230,11 +3284,24 @@ msgstr ""
 msgid "  encrypt libera SASL password:"
 msgstr "  chiffrer le mot de passe libera SASL :"
 
+msgid "    /secure set libera mypassword"
+msgstr "    /secure set libera motdepasse"
+
 msgid "  encrypt oftc password for nickserv:"
 msgstr "  chiffrer le mot de passe oftc pour nickserv :"
 
+msgid "    /secure set oftc mypassword"
+msgstr "    /secure set oftc motdepasse"
+
 msgid "  alias to ghost the nick \"mynick\":"
 msgstr "  alias pour ghost du pseudo \"pseudo\" :"
+
+msgid ""
+"    /alias add ghost /eval /msg -server libera nickserv ghost mynick ${sec."
+"data.libera}"
+msgstr ""
+"    /alias add ghost /eval /msg -server libera nickserv ghost monpseudo "
+"${sec.data.libera}"
 
 msgid "set config options and environment variables"
 msgstr "définir des options de configuration et des variables d'environnement"
@@ -3601,6 +3668,21 @@ msgid ""
 msgstr ""
 "Note : la commande est exécutée sur le tampon où /wait a été exécuté (si le "
 "tampon n'existe plus, la commande n'est pas exécutée)."
+
+msgid "  join channel #test in 10 seconds:"
+msgstr "  rejoindre le canal #test dans 10 secondes :"
+
+msgid "  set away in 15 minutes:"
+msgstr "  passer absent dans 15 minutes :"
+
+msgid "    /wait 15m /away -all I'm away"
+msgstr "    /wait 15m /away -all Je suis absent"
+
+msgid "  say \"hello\" in 2 minutes:"
+msgstr "  dire \"bonjour\" dans 2 minutes :"
+
+msgid "    /wait 2m hello"
+msgstr "    /wait 2m bonjour"
 
 msgid "manage windows"
 msgstr "gestion des fenêtres"
@@ -9016,6 +9098,37 @@ msgstr "  ${irc_server.xxx} : variable xxx dans le serveur"
 msgid "  ${irc_channel.xxx}: variable xxx in channel"
 msgstr "  ${irc_channel.xxx} : variable xxx dans le canal"
 
+msgid "  execute \"/me is testing\" on all channels:"
+msgstr "  exécuter \"/me teste\" sur tous les canaux :"
+
+msgid "    /allchan /me is testing"
+msgstr "    /allchan /me teste"
+
+msgid "  say \"hello\" everywhere but not on #weechat:"
+msgstr "  dire \"bonjour\" partout sauf sur #weechat :"
+
+msgid "    /allchan -exclude=#weechat hello"
+msgstr "    /allchan -exclude=#weechat bonjour"
+
+msgid ""
+"  say \"hello\" everywhere but not on #weechat and channels beginning with "
+"#linux:"
+msgstr ""
+"  dire \"bonjour\" partout sauf sur #weechat et les canaux commençant par "
+"#linux :"
+
+msgid "    /allchan -exclude=#weechat,#linux* hello"
+msgstr "    /allchan -exclude=#weechat,#linux* bonjour"
+
+msgid "  say \"hello\" on all channels beginning with #linux:"
+msgstr "  dire \"bonjour\" sur tous les canaux commençant par #linux :"
+
+msgid "    /allchan -include=#linux* hello"
+msgstr "    /allchan -include=#linux* bonjour"
+
+msgid "  close all buffers with parted channels:"
+msgstr "  fermer tous les tampons avec des canaux quittés :"
+
 msgid "execute a command on all private buffers of all connected servers"
 msgstr ""
 "exécuter une commande sur tous les tampons privés de tous les serveurs "
@@ -9045,6 +9158,36 @@ msgstr ""
 "raw[-include] : inclure seulement certains pseudos (le caractère joker \"*\" "
 "est autorisé)"
 
+msgid "  execute \"/me is testing\" on all private buffers:"
+msgstr "  exécuter \"/me teste\" sur tous les tampons privés :"
+
+msgid "    /allpv /me is testing"
+msgstr "    /allpv /me teste"
+
+msgid "  say \"hello\" everywhere but not for nick foo:"
+msgstr "  dire \"bonjour\" partout sauf sur pour le pseudo foo :"
+
+msgid "    /allpv -exclude=foo hello"
+msgstr "    /allpv -exclude=foo bonjour"
+
+msgid ""
+"  say \"hello\" everywhere but not for nick foo and nicks beginning with bar:"
+msgstr ""
+"  dire \"bonjour\" partout sauf pour le pseudo foo et les pseudos commençant "
+"par bar :"
+
+msgid "    /allpv -exclude=foo,bar* hello"
+msgstr "    /allpv -exclude=foo,bar* bonjour"
+
+msgid "  say \"hello\" for all nicks beginning with bar:"
+msgstr "  dire \"bonjour\" pour tous les pseudos commençant par bar :"
+
+msgid "    /allpv -include=bar* hello"
+msgstr "    /allpv -include=bar* bonjour"
+
+msgid "  close all private buffers:"
+msgstr "  fermer tous les tampons privés :"
+
 msgid "execute a command on all connected servers"
 msgstr "exécuter une commande sur tous les serveurs connectés"
 
@@ -9065,6 +9208,12 @@ msgid "raw[-include]: include only some servers (wildcard \"*\" is allowed)"
 msgstr ""
 "raw[-include] : inclure seulement certains serveurs (le caractère joker "
 "\"*\" est autorisé)"
+
+msgid "  change nick on all servers:"
+msgstr "  changer de pseudo sur tous les serveurs :"
+
+msgid "  do a whois on my nick on all servers:"
+msgstr "  faire un whois sur mon pseudo sur tous les serveurs :"
 
 msgid "authenticate with SASL"
 msgstr "s'authentifier avec SASL"
@@ -12931,6 +13080,22 @@ msgstr "  4 : join/part/quit"
 
 msgid "  9: all other messages"
 msgstr "  9 : tous les autres messages"
+
+msgid "  set level to 5 for current buffer:"
+msgstr "  définir le niveau d'enregistrement à 5 pour le tampon courant :"
+
+msgid "  disable logging for current buffer:"
+msgstr "  désactiver l'enregistrement pour le tampon courant :"
+
+msgid "  set level to 3 for all IRC buffers:"
+msgstr "  définir le niveau à 3 pour les tampons IRC :"
+
+msgid "  disable logging for main WeeChat buffer:"
+msgstr "  désactiver l'enregistrement pour le tampon principal de WeeChat :"
+
+msgid "  use a directory per IRC server and a file per channel inside:"
+msgstr ""
+"  utiliser un répertoire par serveur IRC et un fichier par canal dedans :"
 
 #, c-format
 msgid ""
@@ -16830,25 +16995,3 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
-
-#~ msgid ""
-#~ "get nick color code, ignoring case (this calls the info "
-#~ "\"nick_color_ignore_case\" with appropriate range, according to the value "
-#~ "of CASEMAPPING on the server, defaulting to \"rfc1459\" if the server is "
-#~ "not given)"
-#~ msgstr ""
-#~ "retourne le code couleur du pseudo, en ignorant la casse (cela appelle "
-#~ "l'info \"nick_color_ignore_case\" avec l'intervalle approprié, selon la "
-#~ "valeur de CASEMAPPING sur le serveur, par défaut \"rfc1459\" si le "
-#~ "serveur n'est pas fourni)"
-
-#~ msgid ""
-#~ "get nick color name, ignoring case (this calls the info "
-#~ "\"nick_color_name_ignore_case\" with appropriate range, according to the "
-#~ "value of CASEMAPPING on the server, defaulting to \"rfc1459\" if the "
-#~ "server is not given)"
-#~ msgstr ""
-#~ "retourne le nom de la couleur du pseudo, en ignorant la casse (cela "
-#~ "appelle l'info \"nick_color_name_ignore_case\" avec l'intervalle "
-#~ "approprié, selon la valeur de CASEMAPPING sur le serveur, par défaut "
-#~ "\"rfc1459\" si le serveur n'est pas fourni)"

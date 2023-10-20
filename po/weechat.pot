@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-19 23:57+0200\n"
+"POT-Creation-Date: 2023-10-20 11:17+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1009,6 +1009,9 @@ msgstr ""
 msgid "Example:"
 msgstr ""
 
+msgid "  set read marker on all buffers:"
+msgstr ""
+
 msgid "set or remove away status"
 msgstr ""
 
@@ -1137,6 +1140,15 @@ msgid ""
 msgstr ""
 
 msgid "Examples:"
+msgstr ""
+
+msgid "  create a bar with time, buffer number + name, and completion:"
+msgstr ""
+
+msgid "  scroll nicklist 10 lines down on current buffer:"
+msgstr ""
+
+msgid "  scroll to end of nicklist on current buffer:"
 msgstr ""
 
 msgid "manage buffers"
@@ -2417,6 +2429,36 @@ msgstr ""
 msgid "Following escaped chars are supported:"
 msgstr ""
 
+msgid "  display a reminder on core buffer with a highlight:"
+msgstr ""
+
+msgid "    /print -core -tags notify_highlight Reminder: buy milk"
+msgstr ""
+
+msgid "  display an error on core buffer:"
+msgstr ""
+
+msgid "    /print -core -error Some error here"
+msgstr ""
+
+msgid "  display message on core buffer with prefix \"abc\":"
+msgstr ""
+
+msgid "    /print -core abc\\tThe message"
+msgstr ""
+
+msgid "  display a message on channel #weechat:"
+msgstr ""
+
+msgid "    /print -buffer irc.libera.#weechat Message on #weechat"
+msgstr ""
+
+msgid "  display a snowman (U+2603):"
+msgstr ""
+
+msgid "  send alert (BEL):"
+msgstr ""
+
 msgid "manage proxies"
 msgstr ""
 
@@ -2565,6 +2607,12 @@ msgid ""
 "buffer does not exist any more, the command is not executed)."
 msgstr ""
 
+msgid "  scroll 2 pages up:"
+msgstr ""
+
+msgid "  print a countdown, starting at 5:"
+msgstr ""
+
 msgid "reset config options"
 msgstr ""
 
@@ -2669,16 +2717,30 @@ msgstr ""
 msgid "  set a passphrase:"
 msgstr ""
 
+msgid "    /secure passphrase this is my passphrase"
+msgstr ""
+
 msgid "  use program \"pass\" to read the passphrase on startup:"
 msgstr ""
 
 msgid "  encrypt libera SASL password:"
 msgstr ""
 
+msgid "    /secure set libera mypassword"
+msgstr ""
+
 msgid "  encrypt oftc password for nickserv:"
 msgstr ""
 
+msgid "    /secure set oftc mypassword"
+msgstr ""
+
 msgid "  alias to ghost the nick \"mynick\":"
+msgstr ""
+
+msgid ""
+"    /alias add ghost /eval /msg -server libera nickserv ghost mynick ${sec."
+"data.libera}"
 msgstr ""
 
 msgid "set config options and environment variables"
@@ -2956,6 +3018,21 @@ msgstr ""
 msgid ""
 "Note: the command is executed on buffer where /wait was executed (if the "
 "buffer does not exist any more, the command is not executed)."
+msgstr ""
+
+msgid "  join channel #test in 10 seconds:"
+msgstr ""
+
+msgid "  set away in 15 minutes:"
+msgstr ""
+
+msgid "    /wait 15m /away -all I'm away"
+msgstr ""
+
+msgid "  say \"hello\" in 2 minutes:"
+msgstr ""
+
+msgid "    /wait 2m hello"
 msgstr ""
 
 msgid "manage windows"
@@ -7218,6 +7295,35 @@ msgstr ""
 msgid "  ${irc_channel.xxx}: variable xxx in channel"
 msgstr ""
 
+msgid "  execute \"/me is testing\" on all channels:"
+msgstr ""
+
+msgid "    /allchan /me is testing"
+msgstr ""
+
+msgid "  say \"hello\" everywhere but not on #weechat:"
+msgstr ""
+
+msgid "    /allchan -exclude=#weechat hello"
+msgstr ""
+
+msgid ""
+"  say \"hello\" everywhere but not on #weechat and channels beginning with "
+"#linux:"
+msgstr ""
+
+msgid "    /allchan -exclude=#weechat,#linux* hello"
+msgstr ""
+
+msgid "  say \"hello\" on all channels beginning with #linux:"
+msgstr ""
+
+msgid "    /allchan -include=#linux* hello"
+msgstr ""
+
+msgid "  close all buffers with parted channels:"
+msgstr ""
+
 msgid "execute a command on all private buffers of all connected servers"
 msgstr ""
 
@@ -7237,6 +7343,34 @@ msgstr ""
 msgid "raw[-include]: include only some nicks (wildcard \"*\" is allowed)"
 msgstr ""
 
+msgid "  execute \"/me is testing\" on all private buffers:"
+msgstr ""
+
+msgid "    /allpv /me is testing"
+msgstr ""
+
+msgid "  say \"hello\" everywhere but not for nick foo:"
+msgstr ""
+
+msgid "    /allpv -exclude=foo hello"
+msgstr ""
+
+msgid ""
+"  say \"hello\" everywhere but not for nick foo and nicks beginning with bar:"
+msgstr ""
+
+msgid "    /allpv -exclude=foo,bar* hello"
+msgstr ""
+
+msgid "  say \"hello\" for all nicks beginning with bar:"
+msgstr ""
+
+msgid "    /allpv -include=bar* hello"
+msgstr ""
+
+msgid "  close all private buffers:"
+msgstr ""
+
 msgid "execute a command on all connected servers"
 msgstr ""
 
@@ -7250,6 +7384,12 @@ msgid "raw[-exclude]: exclude some servers (wildcard \"*\" is allowed)"
 msgstr ""
 
 msgid "raw[-include]: include only some servers (wildcard \"*\" is allowed)"
+msgstr ""
+
+msgid "  change nick on all servers:"
+msgstr ""
+
+msgid "  do a whois on my nick on all servers:"
 msgstr ""
 
 msgid "authenticate with SASL"
@@ -10482,6 +10622,21 @@ msgid "  4: join/part/quit"
 msgstr ""
 
 msgid "  9: all other messages"
+msgstr ""
+
+msgid "  set level to 5 for current buffer:"
+msgstr ""
+
+msgid "  disable logging for current buffer:"
+msgstr ""
+
+msgid "  set level to 3 for all IRC buffers:"
+msgstr ""
+
+msgid "  disable logging for main WeeChat buffer:"
+msgstr ""
+
+msgid "  use a directory per IRC server and a file per channel inside:"
 msgstr ""
 
 #, c-format
