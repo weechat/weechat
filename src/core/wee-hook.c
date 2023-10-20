@@ -28,6 +28,7 @@
 #include <string.h>
 #include <time.h>
 #include <sys/socket.h>
+#include <sys/wait.h>
 #include <errno.h>
 
 #include "weechat.h"
@@ -38,7 +39,6 @@
 #include "wee-log.h"
 #include "wee-signal.h"
 #include "wee-string.h"
-#include "wee-sys.h"
 #include "wee-util.h"
 #include "../gui/gui-chat.h"
 #include "../plugins/plugin.h"
@@ -629,20 +629,19 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
 }
 
 /*
- * Callback used to clean all children (forked processes) by acknowledging
- * their end.
+ * Callback used to clean a process (forked processes) by acknowledging its end.
  */
 
 int
-hook_timer_clean_children_cb (const void *pointer, void *data,
-                              int remaining_calls)
+hook_timer_clean_process_cb (const void *pointer, void *data,
+                             int remaining_calls)
 {
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) remaining_calls;
 
-    sys_waitpid ();
+    waitpid (*((pid_t *)data), NULL, WNOHANG);
 
     return WEECHAT_RC_OK;
 }
@@ -652,9 +651,18 @@ hook_timer_clean_children_cb (const void *pointer, void *data,
  */
 
 void
-hook_schedule_clean_children ()
+hook_schedule_clean_process (pid_t pid)
 {
-    hook_timer (NULL, 100, 0, 1, &hook_timer_clean_children_cb, NULL, NULL);
+    pid_t *temp_pid;
+
+    /* temp_pid will be freed when the timer is removed */
+    temp_pid = malloc (sizeof (*temp_pid));
+    if (temp_pid)
+    {
+        *temp_pid = pid;
+        hook_timer (NULL, 100, 0, 1,
+                    &hook_timer_clean_process_cb, NULL, temp_pid);
+    }
 }
 
 /*
