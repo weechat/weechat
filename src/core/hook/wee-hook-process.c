@@ -862,7 +862,7 @@ hook_process_free_data (struct t_hook *hook)
     if (HOOK_PROCESS(hook, child_pid) > 0)
     {
         kill (HOOK_PROCESS(hook, child_pid), SIGKILL);
-        hook_schedule_clean_children ();
+        hook_schedule_clean_process (HOOK_PROCESS(hook, child_pid));
         HOOK_PROCESS(hook, child_pid) = 0;
     }
     if (HOOK_PROCESS(hook, child_read[HOOK_PROCESS_STDIN]) != -1)

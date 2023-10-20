@@ -146,7 +146,7 @@ extern void hook_callback_end (struct t_hook *hook,
 extern char *hook_get_description (struct t_hook *hook);
 extern void hook_set (struct t_hook *hook, const char *property,
                       const char *value);
-extern void hook_schedule_clean_children ();
+extern void hook_schedule_clean_process (pid_t pid);
 extern void unhook (struct t_hook *hook);
 extern void unhook_all_plugin (struct t_weechat_plugin *plugin,
                                const char *subplugin);
