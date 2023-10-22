@@ -6723,6 +6723,9 @@ COMMAND_CALLBACK(set)
 
 COMMAND_CALLBACK(sys)
 {
+    long value;
+    char *error;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
@@ -6732,8 +6735,7 @@ COMMAND_CALLBACK(sys)
 
     if (string_strcmp (argv[1], "get") == 0)
     {
-        COMMAND_MIN_ARGS(2, "get");
-
+        COMMAND_MIN_ARGS(3, "get");
         if (string_strcmp (argv[2], "rlimit") == 0)
             sys_display_rlimit ();
         else if (string_strcmp (argv[2], "rusage") == 0)
@@ -6751,7 +6753,12 @@ COMMAND_CALLBACK(sys)
 
     if (string_strcmp (argv[1], "waitpid") == 0)
     {
-        sys_waitpid ();
+        COMMAND_MIN_ARGS(3, "waitpid");
+        error = NULL;
+        value = strtol (argv[2], &error, 10);
+        if (!error || error[0])
+            COMMAND_ERROR;
+        sys_waitpid ((int)value);
         return WEECHAT_RC_OK;
     }
 
@@ -9094,9 +9101,9 @@ command_init ()
     hook_command (
         NULL, "sys",
         N_("system actions"),
-        "get rlimit|rusage"
-        " || suspend"
-        " || waitpid",
+        N_("get rlimit|rusage"
+           " || suspend"
+           " || waitpid <number>"),
         CMD_ARGS_DESC(
             N_("raw[get]: display system info"),
             N_("raw[rlimit]: display resource limits "
@@ -9105,10 +9112,11 @@ command_init ()
             N_("raw[suspend]: suspend WeeChat and go back to the shell, by sending "
                "signal SIGTSTP to the WeeChat process") ,
             N_("raw[waitpid]: acknowledge the end of children processes "
-               "(to prevent \"zombie\" processes)")),
+               "(to prevent \"zombie\" processes)"),
+            N_("number: number of processes to clean")),
         "get rlimit|rusage"
         " || suspend"
-        " || waitpid",
+        " || waitpid 1|10|100|1000",
         &command_sys, NULL, NULL);
     hook_command (
         NULL, "toggle",

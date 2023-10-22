@@ -484,7 +484,7 @@ xfer_network_child_kill (struct t_xfer *xfer)
     {
         kill (xfer->child_pid, SIGKILL);
         weechat_command (weechat_buffer_search_main (),
-                         "/mute /wait 100ms /sys waitpid");
+                         "/mute /wait 100ms /sys waitpid 10");
         xfer->child_pid = 0;
     }
 

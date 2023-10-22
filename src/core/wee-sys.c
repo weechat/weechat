@@ -349,13 +349,16 @@ sys_display_rusage ()
  */
 
 void
-sys_waitpid ()
+sys_waitpid (int number_processes)
 {
     int i;
 
+    if (number_processes < 1)
+        return;
+
     /* acknowledge the end of up to 42 forked processes */
     i = 0;
-    while ((i < 42) && (waitpid (-1, NULL, WNOHANG) > 0))
+    while ((i < number_processes) && (waitpid (-1, NULL, WNOHANG) > 0))
     {
         i++;
     }

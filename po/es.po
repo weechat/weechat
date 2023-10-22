@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-20 11:17+0200\n"
+"POT-Creation-Date: 2023-10-20 21:02+0200\n"
 "PO-Revision-Date: 2023-10-20 13:09+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3217,6 +3217,9 @@ msgstr ""
 msgid "system actions"
 msgstr "lista de opciones"
 
+msgid "get rlimit|rusage || suspend || waitpid <number>"
+msgstr ""
+
 msgid "raw[get]: display system info"
 msgstr ""
 
@@ -3238,6 +3241,9 @@ msgstr ""
 msgid ""
 "raw[waitpid]: acknowledge the end of children processes (to prevent "
 "\"zombie\" processes)"
+msgstr ""
+
+msgid "number: number of processes to clean"
 msgstr ""
 
 #, fuzzy
