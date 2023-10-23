@@ -464,6 +464,7 @@ TEST(GuiBarItemCustom, Rename)
 
 /*
  * Tests functions:
+ *   gui_bar_item_custom_free_data
  *   gui_bar_item_custom_free
  *   gui_bar_item_custom_free_all
  */

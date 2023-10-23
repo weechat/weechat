@@ -14,6 +14,16 @@ For a complete list of changes, please look at ChangeLog.
 [[v4.1.1]]
 == Version 4.1.1 (under dev)
 
+[[v4.1.1_custom_bar_items]]
+=== Custom bar items
+
+Custom bar items must now have a different name than default bar items
+(for example the custom bar item name `time` is now forbidden).
+
+If you have such names in your config, WeeChat will now fail to load them
+(this should not happen anyway, since such bar items can not be properly used
+or can cause a crash of WeeChat).
+
 [[v4.1.1_nick_color_infos]]
 === Nick color infos
 

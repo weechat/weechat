@@ -55,6 +55,21 @@ TEST(GuiBarItem, Valid)
 
 /*
  * Tests functions:
+ *   gui_bar_item_search_default
+ */
+
+TEST(GuiBarItem, SearchDefault)
+{
+    LONGS_EQUAL(-1, gui_bar_item_search_default (NULL));
+    LONGS_EQUAL(-1, gui_bar_item_search_default (""));
+    LONGS_EQUAL(-1, gui_bar_item_search_default ("zzz"));
+
+    CHECK(gui_bar_item_search_default ("scroll") >= 0);
+    CHECK(gui_bar_item_search_default ("time") >= 0);
+}
+
+/*
+ * Tests functions:
  *   gui_bar_item_search
  */
 

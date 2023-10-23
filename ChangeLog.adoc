@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 Bug fixes::
 
+  * core: fix crash when a custom bar item name is already used by a default bar item (issue #2034)
   * core: fix random timeouts when a lot of concurrent processes are launched with hook_process (issue #2033)
   * irc: revert compute of nick colors to case sensitive way, deprecate again infos "irc_nick_color" and "irc_nick_color_name" (issue #194, issue #2032)
 

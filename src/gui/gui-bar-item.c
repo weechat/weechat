@@ -100,6 +100,30 @@ gui_bar_item_valid (struct t_gui_bar_item *bar_item)
 }
 
 /*
+ * Searches for a default bar item by name.
+ *
+ * Returns index in gui_bar_item_names[], -1 if not found.
+ */
+
+int
+gui_bar_item_search_default (const char *item_name)
+{
+    int i;
+
+    if (!item_name || !item_name[0])
+        return -1;
+
+    for (i = 0; i < GUI_BAR_NUM_ITEMS; i++)
+    {
+        if (strcmp (gui_bar_item_names[i], item_name) == 0)
+            return i;
+    }
+
+    /* default bar item not found */
+    return -1;
+}
+
+/*
  * Searches for a bar item by name.
  */
 

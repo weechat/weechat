@@ -2197,17 +2197,20 @@ config_weechat_custom_bar_item_read_cb (const void *pointer, void *data,
     if (!ptr_temp_item)
     {
         /* create new temporary custom bar item */
-        ptr_temp_item = gui_bar_item_custom_alloc (item_name);
-        if (ptr_temp_item)
+        if (gui_bar_item_search_default (item_name) < 0)
         {
-            /* add new custom bar item at the end */
-            ptr_temp_item->prev_item = last_gui_temp_custom_bar_item;
-            ptr_temp_item->next_item = NULL;
-            if (last_gui_temp_custom_bar_item)
-                last_gui_temp_custom_bar_item->next_item = ptr_temp_item;
-            else
-                gui_temp_custom_bar_items = ptr_temp_item;
-            last_gui_temp_custom_bar_item = ptr_temp_item;
+            ptr_temp_item = gui_bar_item_custom_alloc (item_name);
+            if (ptr_temp_item)
+            {
+                /* add new custom bar item at the end */
+                ptr_temp_item->prev_item = last_gui_temp_custom_bar_item;
+                ptr_temp_item->next_item = NULL;
+                if (last_gui_temp_custom_bar_item)
+                    last_gui_temp_custom_bar_item->next_item = ptr_temp_item;
+                else
+                    gui_temp_custom_bar_items = ptr_temp_item;
+                last_gui_temp_custom_bar_item = ptr_temp_item;
+            }
         }
     }
 
@@ -2227,6 +2230,13 @@ config_weechat_custom_bar_item_read_cb (const void *pointer, void *data,
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              section->name, option_name, value);
         }
+    }
+    else
+    {
+        gui_chat_printf (NULL,
+                         _("%sUnable to add custom bar item \"%s\""),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         item_name);
     }
 
     free (item_name);
