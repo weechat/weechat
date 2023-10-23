@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 Bug fixes::
 
+  * core: fix crash when a custom bar item name is already used by a default bar item (issue #2034)
   * core: fix generation of TOTP on Big Endian systems (issue #2021)
   * irc: move value `-all` at the end of completions for command `/ignore del`
   * irc: fix memory leak when joining channels with keys
