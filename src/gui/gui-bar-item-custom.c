@@ -439,31 +439,46 @@ gui_bar_item_custom_new (const char *name, const char *conditions,
     if (gui_bar_item_custom_search (name))
         return NULL;
 
+    if (gui_bar_item_search_default (name) >= 0)
+        return NULL;
+
+    option_conditions = NULL;
+    option_content = NULL;
+    new_bar_item_custom = NULL;
+
     option_conditions = gui_bar_item_custom_create_option (
         name,
         GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS,
         conditions);
     if (!option_conditions)
-        return NULL;
+        goto error;
 
     option_content = gui_bar_item_custom_create_option (
         name,
         GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT,
         content);
     if (!option_content)
-    {
-        config_file_option_free (option_conditions, 0);
-        return NULL;
-    }
+        goto error;
 
     new_bar_item_custom = gui_bar_item_custom_new_with_options (
         name,
         option_conditions,
         option_content);
+    if (!new_bar_item_custom)
+        goto error;
+
+    gui_bar_item_custom_create_bar_item (new_bar_item_custom);
+    if (!new_bar_item_custom->bar_item)
+        goto error;
+
+    gui_bar_item_update (name);
+
+    return new_bar_item_custom;
+
+error:
     if (new_bar_item_custom)
     {
-        gui_bar_item_custom_create_bar_item (new_bar_item_custom);
-        gui_bar_item_update (name);
+        gui_bar_item_custom_free (new_bar_item_custom);
     }
     else
     {
@@ -472,8 +487,7 @@ gui_bar_item_custom_new (const char *name, const char *conditions,
         if (option_content)
             config_file_option_free (option_content, 0);
     }
-
-    return new_bar_item_custom;
+    return NULL;
 }
 
 /*
@@ -483,12 +497,13 @@ gui_bar_item_custom_new (const char *name, const char *conditions,
 void
 gui_bar_item_custom_use_temp_items ()
 {
-    struct t_gui_bar_item_custom *ptr_temp_item;
+    struct t_gui_bar_item_custom *ptr_temp_item, *ptr_next_temp_item;
     int i;
 
-    for (ptr_temp_item = gui_temp_custom_bar_items; ptr_temp_item;
-         ptr_temp_item = ptr_temp_item->next_item)
+    ptr_temp_item = gui_temp_custom_bar_items;
+    while (ptr_temp_item)
     {
+        ptr_next_temp_item = ptr_temp_item->next_item;
         for (i = 0; i < GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS; i++)
         {
             if (!ptr_temp_item->options[i])
@@ -500,6 +515,20 @@ gui_bar_item_custom_use_temp_items ()
             }
         }
         gui_bar_item_custom_create_bar_item (ptr_temp_item);
+        if (!ptr_temp_item->bar_item)
+        {
+            if (ptr_temp_item->prev_item)
+                (ptr_temp_item->prev_item)->next_item = ptr_temp_item->next_item;
+            if (ptr_temp_item->next_item)
+                (ptr_temp_item->next_item)->prev_item = ptr_temp_item->prev_item;
+            if (gui_temp_custom_bar_items == ptr_temp_item)
+                gui_temp_custom_bar_items = ptr_temp_item->next_item;
+            if (last_gui_temp_custom_bar_item == ptr_temp_item)
+                last_gui_temp_custom_bar_item = ptr_temp_item->prev_item;
+            gui_bar_item_custom_free_data (ptr_temp_item);
+            free (ptr_temp_item);
+        }
+        ptr_temp_item = ptr_next_temp_item;
     }
 
     /* remove any existing custom bar item */
@@ -532,6 +561,9 @@ gui_bar_item_custom_rename (struct t_gui_bar_item_custom *item,
         return 0;
 
     if (gui_bar_item_custom_search (new_name))
+        return 0;
+
+    if (gui_bar_item_search_default (new_name) >= 0)
         return 0;
 
     old_name = strdup (item->name);
@@ -571,6 +603,24 @@ gui_bar_item_custom_rename (struct t_gui_bar_item_custom *item,
 }
 
 /*
+ * Frees data in a custom bar item.*
+ */
+
+void
+gui_bar_item_custom_free_data (struct t_gui_bar_item_custom *item)
+{
+    int i;
+
+    if (item->name)
+        free (item->name);
+    for (i = 0; i < GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS; i++)
+    {
+        if (item->options[i])
+            config_file_option_free (item->options[i], 1);
+    }
+}
+
+/*
  * Deletes a custom bar item.
  */
 
@@ -578,7 +628,6 @@ void
 gui_bar_item_custom_free (struct t_gui_bar_item_custom *item)
 {
     char *name;
-    int i;
 
     if (!item)
         return;
@@ -599,13 +648,7 @@ gui_bar_item_custom_free (struct t_gui_bar_item_custom *item)
         last_gui_custom_bar_item = item->prev_item;
 
     /* free data */
-    if (item->name)
-        free (item->name);
-    for (i = 0; i < GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS; i++)
-    {
-        if (item->options[i])
-            config_file_option_free (item->options[i], 1);
-    }
+    gui_bar_item_custom_free_data (item);
 
     free (item);
 

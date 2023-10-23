@@ -89,6 +89,7 @@ extern char *gui_bar_item_names[];
 /* functions */
 
 extern int gui_bar_item_valid (struct t_gui_bar_item *bar_item);
+extern int gui_bar_item_search_default (const char *item_name);
 extern struct t_gui_bar_item *gui_bar_item_search (const char *name);
 extern int gui_bar_item_used_in_bar (struct t_gui_bar *bar,
                                      const char *item_name,
