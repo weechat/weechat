@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2023-10-20 21:02+0200\n"
-"PO-Revision-Date: 2023-10-23 11:28+0200\n"
+"PO-Revision-Date: 2023-10-24 09:22+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -1274,21 +1274,28 @@ msgstr "size: Größe der Bar (in Zeichen)"
 msgid ""
 "separator: 1 for using separator (line), 0 or nothing means no separator"
 msgstr ""
+"separator: 1 für die Verwendung eines Trennzeichens (pro Zeile), 0 oder keine"
+" Angabe, bedeutet kein Trennzeichen"
 
 msgid ""
 "item1,...: items for this bar (items can be separated by comma (space "
 "between items) or \"+\" (glued items))"
 msgstr ""
+"item1,...: Elemente (Items) für diese Leiste (Elemente können durch Komma"
+" getrennt werden (auf dem Bildschirm wird das Komma durch ein Leerzeichen"
+" ersetzt)  oder „+“ (um die Elemente ohne Leerzeichen darzustellen))"
 
 msgid ""
 "raw[default]: create a default bar (all default bars if no bar name is given)"
 msgstr ""
+"raw[default]: Erstellt eine Standardleiste (alle Standardleisten werden"
+" erstellt, wenn kein Bar-Name angegeben ist)"
 
 msgid "raw[rename]: rename a bar"
-msgstr ""
+msgstr "raw[rename]: Eine Bar umbenennen"
 
 msgid "raw[del]: delete bars"
-msgstr ""
+msgstr "raw[del]: entfernt Bars"
 
 #, fuzzy
 #| msgid "alias name (wildcard \"*\" is allowed) (optional)"
@@ -1296,12 +1303,15 @@ msgid "mask: name where wildcard \"*\" is allowed"
 msgstr "Name des Alias (Platzhalter \"*\" kann verwendet werden) (optional)"
 
 msgid "raw[set]: set a value for a bar property"
-msgstr ""
+msgstr "raw[set]: legt einen Wert für eine Bar-Eigenschaft fest"
 
 msgid ""
 "option: option to change (for options list, look at /set weechat.bar."
 "<barname>.*)"
 msgstr ""
+"option: Option die geändert werden soll (eine Liste der möglichen Optionen"
+" findet man unter /set weechat.bar."
+"<barname>.*)"
 
 #, fuzzy
 #| msgid "value of a trigger option"
@@ -1309,31 +1319,38 @@ msgid "value: new value for option"
 msgstr "Werte für Trigger-Einstellung"
 
 msgid "raw[hide]: hide a bar"
-msgstr ""
+msgstr "raw[hide]: eine Bar verstecken"
 
 msgid "raw[show]: show an hidden bar"
-msgstr ""
+msgstr "raw[show]: eine versteckte Bar anzeigen"
 
 msgid "raw[toggle]: hide/show a bar"
-msgstr ""
+msgstr "raw[toggle]: eine Bar ein-/ausblenden"
 
 msgid "raw[scroll]: scroll bar"
-msgstr ""
+msgstr "raw[scroll]: eine Bar scrollen"
 
 msgid "window: window number (\"*\" for current window or for root bars)"
 msgstr ""
+"window: Nummer eines Fensters (\"*\" für aktuelles Fenster oder für Root-Bars)"
 
 msgid ""
 "scroll_value: value for scroll: \"x\" or \"y\" (optional), followed by \"+"
 "\", \"-\", \"b\" (beginning) or \"e\" (end), value (for +/-), and optional "
 "\"%\" (to scroll by % of width/height, otherwise value is number of chars)"
 msgstr ""
+"scroll_value: Werte für Scroll-Funktion: 'x' oder 'y' (optional), gefolgt von"
+" '+', '-', 'b' (Beginn) oder 'e' (Ende), Wert (für +/-), und optional % (zum"
+" scrollen der Breite/Höhe in %, ansonsten wird dieser Wert als Anzahl der"
+" Zeichen interpretiert um die gescrollt werden soll)"
 
 msgid "Examples:"
-msgstr ""
+msgstr "Beispiele:"
 
 msgid "  create a bar with time, buffer number + name, and completion:"
 msgstr ""
+"  erstellt eine Infobar mit Items für Uhrzeit, Buffernummer + name, und"
+" Vervollständigung:"
 
 #, fuzzy
 #| msgid "nicks in nicklist of current buffer"
@@ -1374,51 +1391,75 @@ msgstr ""
 
 msgid "raw[list]: list buffers (without argument, this list is displayed)"
 msgstr ""
+"raw[list]: Liste von Buffer (ohne Angabe von Argumente, wird diese Liste"
+" ausgegeben)"
 
 msgid ""
 "raw[add]: add a new buffer (it can be closed with \"/buffer close\" or input "
 "\"q\")"
 msgstr ""
+"raw[add]: öffnet einen neuen Buffer (dieser kann mit \"/buffer close\" oder"
+" \"q\" in der Eingabezeile, beendet werden)"
 
 msgid ""
 "raw[clear]: clear buffer content (number for a buffer, \"-merged\" for "
 "merged buffers, \"-all\" for all buffers, or nothing for current buffer)"
 msgstr ""
+"raw[clear]: leert den Inhalt des Buffers (entweder durch Angabe der"
+" entsprechenden Nummer des Buffers oder \"-merged \" für zusammengefügte"
+" Buffer oder \"-all\" für alle Buffer. Ohne Angabe eines Arguments wird der"
+" aktuelle Buffer gelöscht)"
 
 msgid ""
 "raw[move]: move buffer in the list (may be relative, for example -1); \"-\" "
 "= move to first buffer number, \"+\" = move to last buffer number + 1"
 msgstr ""
+"raw[move]: Buffer in der Liste verschieben (kann auch relativ sein, z.B. -1);"
+" \"-\" = auf erste Position verschieben, \"+\" = auf letzte Position + 1"
+" verschieben"
 
 msgid ""
 "raw[swap]: swap two buffers (swap with current buffer if only one number/"
 "name given)"
 msgstr ""
+"raw[swap]: tauscht zwei Buffer miteinander aus (bei Angabe von nur einem"
+" Buffer (Buffernummer/-name), wird der aktuelle Buffer mit dem angegebenen"
+" Buffer getauscht)"
 
 msgid "raw[cycle]: jump loop between a list of buffers"
 msgstr ""
+"raw[cycle]: springt in einer Schleife von einem Buffer zum nächsten, die in"
+" einer Liste angegeben werden"
 
 msgid ""
 "raw[merge]: merge current buffer to another buffer (chat area will be mix of "
 "both buffers); by default ctrl-x switches between merged buffers"
 msgstr ""
+"raw[merge]: fügt den aktuellen Buffer mit einem anderen Buffer zusammen (bei"
+" einem Chat-Buffer werden zwei Buffer zusammengefügt (bei der"
+" Standardtastenbelegung wird mittels \"ctrl-x\" zwischen zusammengefügten"
+" Buffern umgeschaltet)"
 
 msgid "raw[unmerge]: unmerge buffer from other buffers which have same number"
 msgstr ""
+"raw[unmerge]: trennt Buffer wieder voneinander, falls zwei Buffer die selbe"
+" Nummer teilen"
 
 msgid "raw[hide]: hide the buffer"
-msgstr ""
+msgstr "raw[hide]: versteckt einen Buffer"
 
 msgid "raw[unhide]: unhide the buffer"
-msgstr ""
+msgstr "raw[unhide]: Buffer wieder sichtbar machen"
 
 msgid ""
 "raw[switch]: switch to next merged buffer (or to previous buffer with \"-"
 "previous\")"
 msgstr ""
+"raw[switch]: wechselt zum nächsten zusammengeführten Buffer (oder zum"
+" vorherigen Buffer mit \"-previous\")"
 
 msgid "raw[zoom]: zoom on merged buffer"
-msgstr ""
+msgstr "raw[zoom]: zoomen eines zusammengeführten Buffers"
 
 #, fuzzy
 #| msgid ""
@@ -1432,21 +1473,27 @@ msgstr ""
 "buffer_auto_renumber deaktiviert ist"
 
 msgid "raw[close]: close buffer (number/range or name is optional)"
-msgstr ""
+msgstr "raw[close]: Buffer schließen (Nummer oder Bereich ist optional)"
 
 msgid ""
 "raw[notify]: display or set notify level for current buffer: this level "
 "determines whether buffer will be added to hotlist or not:"
 msgstr ""
+"raw[notify]: Benachrichtigungsstufe für den aktuellen Buffer anzeigen oder"
+" einstellen. Folgende Möglichkeiten bestimmen den Grad der Benachrichtigung"
+" und ob der Buffer in der Hotlist angezeigt wird:"
 
 msgid "> raw[none]: never"
-msgstr ""
+msgstr "> raw[none]: keine Benachrichtigung"
 
 msgid "> raw[highlight]: for highlights only"
 msgstr ""
+"> raw[highlight]: Benachrichtigung bei hervorgehobenen Nachrichten"
+" (Highlights)"
 
 msgid "> raw[message]: for messages from users + highlights"
 msgstr ""
+"> raw[message]: Benachrichtigung bei Nachrichten von Usern + Highlights"
 
 #, fuzzy
 #| msgid "Relay raw messages"
@@ -1454,16 +1501,16 @@ msgid "> raw[all]: for all messages"
 msgstr "Relay RAW Nachrichten"
 
 msgid "> raw[reset]: reset to default value (all)"
-msgstr ""
+msgstr "> raw[reset]: Benachrichtigung auf Standardwert zurück setzen (all)"
 
 msgid "raw[listvar]: display local variables in a buffer"
-msgstr ""
+msgstr "raw[listvar]: zeigt die lokalen Variablen für den aktuellen Buffer an"
 
 msgid "raw[setvar]: set a local variable in the current buffer"
-msgstr ""
+msgstr "raw[setvar]: legt eine lokale Variable für den aktuellen Buffer an"
 
 msgid "raw[delvar]: delete a local variable from the current buffer"
-msgstr ""
+msgstr "raw[delvar]: löscht eine lokale Variable des aktuellen Buffers"
 
 #, fuzzy
 #| msgid "change charset for current buffer"
@@ -1475,6 +1522,10 @@ msgid ""
 "<property>\" so that the property is saved in configuration and applied each "
 "time this buffer is opened"
 msgstr ""
+"raw[setauto]: wie „set“ und definiert zusätzlich die Option „weechat.buffer.<"
+"name>.<eigenschaft>“, damit die entsprechende Eigenschaft in der"
+" Konfiguration gespeichert und Anwendung findet, sobald dieser Buffer"
+" geöffnet wird"
 
 #, fuzzy
 #| msgid "change charset for current buffer"
@@ -1482,43 +1533,49 @@ msgid "raw[get]: display a property of current buffer"
 msgstr "Ändert den Zeichensatz für aktuellen Buffer"
 
 msgid "raw[jump]: jump to another buffer:"
-msgstr ""
+msgstr "raw[jump]: springt zu einem anderen Buffer:"
 
 msgid "> raw[smart]: next buffer with activity"
-msgstr ""
+msgstr "> raw[smart]: nächster Buffer mit Aktivität"
 
 msgid ""
 "> raw[last_displayed]: last buffer displayed (before last jump to a buffer)"
 msgstr ""
+"> raw[last_displayed]: letzter angezeigter Buffer (vor dem letzten Sprung zu"
+" einem Buffer)"
 
 msgid "> raw[prev_visited]: previously visited buffer"
-msgstr ""
+msgstr "> raw[prev_visited]: zuvor besuchter Buffer"
 
 msgid "> raw[next_visited]: jump to next visited buffer"
-msgstr ""
+msgstr "> raw[next_visited]: zum nächsten besuchten Buffer springen"
 
 msgid "number: jump to buffer by number, possible prefix:"
-msgstr ""
+msgstr "number: wechsel zu einem Buffer, mittels Nummer, mögliche Optionen:"
 
 msgid "> \"+\": relative jump, add number to current"
-msgstr ""
+msgstr "> \"+\": positiver, relativer Sprung um 'n'-Buffer"
 
 msgid "> \"-\": relative jump, sub number to current"
-msgstr ""
+msgstr "> \"-\": negativer, relativer Sprung, um 'n'-Buffer"
 
 msgid ""
 "> \"*\": jump to number, using option \"weechat.look."
 "jump_current_to_previous_buffer\""
 msgstr ""
+"> \"*\": wechselt zum Buffer mit der Nummer 'n'; nutzt die interne"
+" Einstellung \"weechat.look.jump_current_to_previous_buffer\""
 
 msgid "raw[-]: jump to first buffer number"
-msgstr ""
+msgstr "raw[-]: springt zum ersten Buffer"
 
 msgid "raw[+]: jump to last buffer number"
-msgstr ""
+msgstr "raw[+]: springt zum letzten Buffer"
 
 msgid "name: jump to buffer by (partial) name"
 msgstr ""
+"name: wechselt zum Buffer mit dem angegebenen Namen (Name muss nicht"
+" vollständig sein!)"
 
 msgid "define color aliases and display palette of colors"
 msgstr "definiert Farbaliase und stellt eine Palette der möglichen Farben dar"
@@ -1532,24 +1589,29 @@ msgstr ""
 "rgb2term <rgb> [<limit>] || -o"
 
 msgid "raw[alias]: add an alias for a color"
-msgstr ""
+msgstr "raw[alias]: weist einer Farbzahl einen Namen zu"
 
 msgid "raw[unalias]: delete an alias"
-msgstr ""
+msgstr "raw[unalias]: entfernt einen Namen"
 
 msgid ""
 "color: color number (greater than or equal to 0, max depends on terminal, "
 "commonly 63 or 255)"
 msgstr ""
+"color: Farbnummer (größer oder gleich 0, maximale Anzahl ist abhängig vom"
+" Terminal, üblicherweise 63 oder 255 Farben)"
 
 msgid "name: alias name for color (for example: \"orange\")"
-msgstr ""
+msgstr "name: Alternativname für eine Farbe (zum Beispiel: \"orange\")"
 
 msgid ""
 "raw[reset]: reset all color pairs (required when no more color pairs are "
 "available if automatic reset is disabled, see option \"weechat.look."
 "color_pairs_auto_reset\")"
 msgstr ""
+"raw[reset]: setzt alle Farbpaarungen zurück (nützlich falls keine Farbpaarung"
+" mehr verfügbar sein sollte und die automatische Reset-Option deaktiviert"
+" ist, siehe Einstellung: \"weechat.look.color_pairs_auto_reset\")"
 
 #, fuzzy
 #| msgid "terminal color (0-255) converted to RGB color"
@@ -1565,12 +1627,16 @@ msgid ""
 "limit: number of colors to use in terminal table (starting from 0); default "
 "is 256"
 msgstr ""
+"limit: Anzahl an Farben die aus der Terminalpalette genutzt werden sollen"
+" (beginnend von 0); Standardwert: 256"
 
 msgid "raw[-o]: send terminal/colors info to current buffer as input"
-msgstr ""
+msgstr "raw[-o]: sendet Terminal-/Farbinformationen in den aktuellen Buffer"
 
 msgid "Without argument, this command displays colors in a new buffer."
 msgstr ""
+"Ohne Angabe von Argumenten wird in einem separaten Buffer die darstellbare"
+" Farbpalette angezeigt."
 
 msgid "launch explicit WeeChat or plugin command"
 msgstr "führe explizit einen WeeChat Befehl oder eine Erweiterung aus"
@@ -1608,6 +1674,8 @@ msgid ""
 "command: command to execute (a \"/\" is automatically added if not found at "
 "beginning of command)"
 msgstr ""
+"command: auszuführender Befehl (es wird automatisch ein '/' vorangestellt,"
+" falls dieser nicht angegeben wurde)"
 
 msgid ""
 "free movement of cursor on screen to execute actions on specific areas of "
@@ -1634,7 +1702,7 @@ msgid ""
 msgstr ""
 
 msgid "raw[move]: move cursor with direction"
-msgstr ""
+msgstr "raw[move]: Cursor wird in die entsprechende Richtung bewegt"
 
 msgid "raw[stop]: stop cursor mode"
 msgstr ""
