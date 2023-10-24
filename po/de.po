@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2023-10-20 21:02+0200\n"
-"PO-Revision-Date: 2023-10-24 09:22+0200\n"
+"PO-Revision-Date: 2023-10-24 16:55+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -14559,7 +14559,6 @@ msgid ""
 "see the list here: https://weechat.org/about/interfaces/"
 msgstr ""
 
-#, fuzzy
 #| msgid ""
 #| "    list: list xfer\n"
 #| "listfull: list xfer (verbose)\n"
@@ -14567,11 +14566,8 @@ msgstr ""
 #| "Without argument, this command opens buffer with xfer list."
 msgid "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
-"    list: zeigt Liste der Übertragungen\n"
-"listfull: zeigt eine ausführliche Liste der Übertragungen\n"
-"\n"
-"Ohne Angabe von Argumenten wird der Buffer mit der Übertragungsliste "
-"geöffnet."
+"Ohne Angabe von Argumenten wird ein Buffer mit einer Liste aller"
+" Relay-Clients geöffnet."
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "alle möglichen Protokoll.Name der Relay-Erweiterung"
@@ -15299,10 +15295,9 @@ msgstr ""
 "[<script>...] || install|remove|installremove|hold [-q] <script> "
 "[<script>...] || upgrade || update || -up|-down [<number>] || -go <line>|end"
 
-#, fuzzy
 #| msgid "list of script languages"
 msgid "raw[list]: list loaded scripts (all languages)"
-msgstr "Liste der Skriptsprache"
+msgstr "raw[list]: geladene Skripte auflisten (alle Skriptsprachen)"
 
 msgid "raw[-o]: send list of loaded scripts to buffer (string in English)"
 msgstr ""
@@ -15328,20 +15323,17 @@ msgstr ""
 msgid "raw[show]: show detailed info about a script"
 msgstr ""
 
-#, fuzzy
 #| msgid "list/load/unload scripts"
 msgid "raw[load]: load script(s)"
-msgstr "auflisten/installieren/beenden von Skripten"
+msgstr "raw[load]: Skript(e) laden"
 
-#, fuzzy
 #| msgid "list/load/unload scripts"
 msgid "raw[unload]: unload script(s)"
-msgstr "auflisten/installieren/beenden von Skripten"
+msgstr "raw[unload]: Skript(e) entladen"
 
-#, fuzzy
 #| msgid "list/load/unload scripts"
 msgid "raw[reload]: reload script(s)"
-msgstr "auflisten/installieren/beenden von Skripten"
+msgstr "raw[reload]: Skript(e) neu laden"
 
 msgid "raw[autoload]: autoload the script"
 msgstr ""
@@ -15375,7 +15367,6 @@ msgstr ""
 msgid "raw[update]: update local scripts cache"
 msgstr ""
 
-#, fuzzy
 #| msgid ""
 #| "    list: list xfer\n"
 #| "listfull: list xfer (verbose)\n"
@@ -15383,11 +15374,7 @@ msgstr ""
 #| "Without argument, this command opens buffer with xfer list."
 msgid "Without argument, this command opens a buffer with list of scripts."
 msgstr ""
-"    list: zeigt Liste der Übertragungen\n"
-"listfull: zeigt eine ausführliche Liste der Übertragungen\n"
-"\n"
-"Ohne Angabe von Argumenten wird der Buffer mit der Übertragungsliste "
-"geöffnet."
+"Ohne Argument öffnet dieser Befehl einen Buffer mit einer Liste von Skripten."
 
 msgid "On script buffer, the possible status for each script are:"
 msgstr ""
@@ -15395,15 +15382,13 @@ msgstr ""
 msgid "  `*`: popular script"
 msgstr ""
 
-#, fuzzy
 #| msgid "installed"
 msgid "  `i`: installed"
-msgstr "installiert"
+msgstr "  `i`: installiert"
 
-#, fuzzy
 #| msgid "autoloaded"
 msgid "  `a`: autoloaded"
-msgstr "autom.geladen"
+msgstr "  `a`: automatisch geladen"
 
 msgid "  `H`: held"
 msgstr ""
@@ -15822,12 +15807,10 @@ msgstr ""
 msgid "raw[toggle]: toggle spell checker"
 msgstr ""
 
-#, fuzzy
 #| msgid "list of installed dictionaries"
 msgid "raw[listdict]: show installed dictionaries"
-msgstr "Auflistung der installierten Wörterbücher"
+msgstr "raw[listdict]: Auflistung der installierten Wörterbücher"
 
-#, fuzzy
 #| msgid ""
 #| "comma separated list of dictionaries to use on this buffer (special value "
 #| "\"-\" disables spell checking on this buffer)"
@@ -15836,17 +15819,18 @@ msgid ""
 "be separated by a comma, the special value \"-\" disables spell checking on "
 "current buffer)"
 msgstr ""
-"durch Komma getrennte Liste von Wörterbüchern, die in diesem Buffer "
-"verwendet werden sollen (spezieller Wert \"-\" deaktiviert die "
-"Rechtschreibprüfung für diesen Buffer)"
+"raw[setdict]: Wörterbuch für aktuellen Buffer festlegen (mehrere Wörterbücher"
+" können"
+"durch ein Komma getrennt werden, das Sonderzeichen \"-\" deaktiviert die"
+" Rechtschreibprüfung"
+"für den aktuellen Buffer)"
 
 msgid "raw[deldict]: delete dictionary used on current buffer"
 msgstr ""
 
-#, fuzzy
 #| msgid "%s%s: failed to add word to personal dictionary"
 msgid "raw[addword]: add a word in personal dictionary"
-msgstr "%s%s: Es kann kein Wort zum persönlichen Wörterbuch hinzugefügt werden"
+msgstr "raw[addword]: fügt ein Wort in das persönliche Wörterbuch hinzu"
 
 msgid ""
 "Input line beginning with a \"/\" is not checked, except for some commands "
@@ -15858,13 +15842,12 @@ msgid ""
 "enable spell checker, for example:"
 msgstr ""
 
-#, fuzzy
 #| msgid ""
 #| "delimiter displayed between two dictionaries in bar item \"spell_suggest\""
 msgid "To display a list of suggestions in a bar, use item \"spell_suggest\"."
 msgstr ""
-"Trennzeichen, im Bar-Item \"spell_suggest\", welches zwischen zwei "
-"Wörterbücher dargestellt wird"
+"Um eine Liste mit Vorschlägen in einer Bar anzuzeigen, Item \"spell_suggest\""
+" verwenden."
 
 msgid "Default key to toggle spell checker is alt-s."
 msgstr ""
@@ -16198,10 +16181,10 @@ msgstr "Trigger:"
 msgid "Trigger \"%s\" restored"
 msgstr "Trigger \"%s\" wiederhergestellt"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s%s: failed to create trigger \"%s\""
 msgid "Failed to restore trigger \"%s\""
-msgstr "%s%s: Trigger \"%s\" konnte nicht erstellt werden"
+msgstr "Trigger \"%s\" konnte nicht erstellt werden"
 
 msgid "Default triggers restored:"
 msgstr "Standard-Trigger wiederhergestellt:"
@@ -16218,7 +16201,6 @@ msgid "manage triggers, the Swiss Army knife for WeeChat"
 msgstr "verwaltet Trigger, das Schweizer Armeemesser für WeeChat"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
 #| msgid ""
 #| "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 #| "<name> <hook> "
@@ -16244,10 +16226,10 @@ msgstr ""
 "[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
 "return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
-"<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|-"
-"all [<name>...]] || restart <name>|-all [<name>...] || show <name> || del "
-"<name>|-all [<name>...] || restore <name> [<name>...] || default -yes || "
-"monitor [<filter>]"
+"<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|"
+"<mask> [<name>|<mask>...]] || restart <name>|<mask> [<name>|<mask>...] || "
+"show <name> || del <name>|<mask> [<name>|<mask>...] || restore <name>|<mask> "
+"[<name>|<mask>...] || default -yes || monitor [<filter>]"
 
 msgid "raw[list]: list triggers (without argument, this list is displayed)"
 msgstr ""
@@ -16271,10 +16253,9 @@ msgstr ""
 msgid "raw[listfull]: list triggers with detailed info for each trigger"
 msgstr ""
 
-#, fuzzy
 #| msgid "List of default triggers:"
 msgid "raw[listdefault]: list default triggers"
-msgstr "Liste der standardmäßigen Trigger:"
+msgstr "raw[listdefault]: Liste der standardmäßigen Trigger"
 
 msgid "raw[add]: add a trigger"
 msgstr ""
@@ -16285,24 +16266,22 @@ msgstr ""
 msgid "raw[addreplace]: add or replace an existing trigger"
 msgstr ""
 
-#, fuzzy
 #| msgid "enabled triggers"
 msgid "name: name of trigger"
-msgstr "aktivierte Trigger"
+msgstr "name: Name des Triggers"
 
 msgid ""
 "hook: signal, hsignal, modifier, line, print, command, command_run, timer, "
 "config, focus, info, info_hashtable"
 msgstr ""
 
-#, fuzzy
 #| msgid "arguments for the hook (depend on the hook type, see /help trigger)"
 msgid ""
 "arguments: arguments for the hook, depending on hook (separated by "
 "semicolons):"
 msgstr ""
-"Argumente die durch den Hook genutzt werden (hängt davon ab welcher Hook-Typ "
-"genutzt wird, siehe /help trigger)"
+"arguments: Argumente für den Hook, abhängig welcher Hook genutzt wird"
+" (getrennt durch Semikolons):"
 
 msgid "> type `signal`: name(s) of signal (required)"
 msgstr ""
@@ -16351,15 +16330,13 @@ msgstr ""
 msgid "regex: one or more regular expressions to replace strings in variables"
 msgstr ""
 
-#, fuzzy
 #| msgid ""
 #| "command(s) to run if conditions are OK, after regex replacements (many "
 #| "commands can be separated by semicolons)"
 msgid "command: command to execute (many commands can be separated by \";\")"
 msgstr ""
-"Befehl(e) die ausgeführt werden falls Bedingungen OK sind, nachdem regulärer "
-"Ausdruck durchlaufen wurde (mehrere Befehle müssen durch Semikolon "
-"voneinander getrennt werden)"
+"command: Befehl der ausgeführt werden solle (mehrere Befehle können durch ein"
+" \";\" getrennt werden)"
 
 msgid "return_code: return code in callback (ok (default), ok_eat, error)"
 msgstr ""
@@ -16391,10 +16368,9 @@ msgid ""
 "<option>)"
 msgstr ""
 
-#, fuzzy
 #| msgid "value of a trigger option"
 msgid "value: new value for the option"
-msgstr "Werte für Trigger-Einstellung"
+msgstr "value: neuer Wert für Option"
 
 msgid "raw[rename]: rename a trigger"
 msgstr ""
@@ -16420,10 +16396,9 @@ msgstr ""
 msgid "raw[show]: show detailed info on a trigger (with some stats)"
 msgstr ""
 
-#, fuzzy
 #| msgid "default triggers"
 msgid "raw[del]: delete triggers"
-msgstr "voreingestellte Trigger"
+msgstr "raw[del]: entfernt Trigger"
 
 msgid ""
 "raw[restore]: restore triggers with the default values (works only for "
@@ -16433,12 +16408,10 @@ msgstr ""
 msgid "raw[default]: delete all triggers and restore default ones"
 msgstr ""
 
-#, fuzzy
 #| msgid "auto open relay buffer when a new client is connecting"
 msgid "raw[monitor]: open the trigger monitor buffer, with optional filter"
 msgstr ""
-"öffnet automatisch einen Relay-Buffer, falls eine Verbindung zu einem neuen "
-"Client hergestellt wird"
+"raw[monitor]: öffnet den Trigger-Monitor-Buffer, mit optionaler Filterung"
 
 msgid ""
 "filter: filter hooks/triggers to display (a hook must start with \"@\", for "
@@ -16467,10 +16440,9 @@ msgid ""
 "info_hashtable)"
 msgstr ""
 
-#, fuzzy
 #| msgid "trigger post actions"
 msgid "  5. perform post action"
-msgstr "nachfolgende Aktion für Trigger"
+msgstr "  5. führt eine abschließende Aktion aus"
 
 msgid ""
 "Examples (you can also look at default triggers with /trigger listdefault):"
@@ -16487,10 +16459,11 @@ msgstr ""
 msgid "  silently save config each hour:"
 msgstr ""
 
-#, fuzzy
 #| msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgid "  silently save WeeChat session at midnight (see /help upgrade):"
-msgstr "%sWeechat-Sitzung kann nicht gespeichert werden (Dateien *.upgrade)"
+msgstr ""
+"  speichert die WeeChat-Sitzung stillschweigend um Mitternacht (siehe /help"
+" upgrade):"
 
 msgid ""
 "  open trigger monitor and show only modifiers and triggers whose name "
@@ -16927,15 +16900,13 @@ msgstr "sendet CTCP Aktion an entfernten Host"
 msgid "xfer control"
 msgstr "Kontrolle der Übertragung(en)"
 
-#, fuzzy
 #| msgid "list of xfer"
 msgid "raw[list]: list xfer"
-msgstr "Transferliste"
+msgstr "raw[list]: zeigt Liste der Übertragungen"
 
 msgid "raw[listfull]: list xfer (verbose)"
 msgstr ""
 
-#, fuzzy
 #| msgid ""
 #| "    list: list xfer\n"
 #| "listfull: list xfer (verbose)\n"
@@ -16943,9 +16914,6 @@ msgstr ""
 #| "Without argument, this command opens buffer with xfer list."
 msgid "Without argument, this command opens buffer with xfer list."
 msgstr ""
-"    list: zeigt Liste der Übertragungen\n"
-"listfull: zeigt eine ausführliche Liste der Übertragungen\n"
-"\n"
 "Ohne Angabe von Argumenten wird der Buffer mit der Übertragungsliste "
 "geöffnet."
 
