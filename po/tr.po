@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-20 21:02+0200\n"
+"POT-Creation-Date: 2023-10-26 20:40+0200\n"
 "PO-Revision-Date: 2023-10-20 13:11+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1038,6 +1038,23 @@ msgstr "Seçenek kaldırıldı: %s"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d seçenek sıfırlandı, %d seçenek kaldırıldı"
 
+#. TRANSLATORS: "%d %s" is number of times, eg: "2 times"
+#, fuzzy, c-format
+#| msgid "Upgraded %d %s, first start: %s, last start: %s"
+msgid "WeeChat upgrades: %d %s, first start: %s, last start: %s"
+msgstr "%d %s yükseltildi: %s, son başlatma: %s"
+
+#. TRANSLATORS: text is: "upgraded xx times"
+msgid "time"
+msgid_plural "times"
+msgstr[0] "kez"
+msgstr[1] "kez"
+
+#, fuzzy, c-format
+#| msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgid "WeeChat upgrades: none, started on %s"
+msgstr "WeeChat çalışma süresi: %d %s %02d:%02d:%02d, başlatma: %s"
+
 #, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sWeeChat oturumu kaydedilemiyor (*.upgrade dosyalar)"
@@ -1097,16 +1114,6 @@ msgstr ""
 # noqa
 msgid "compiled on"
 msgstr "derlenme tarihi:"
-
-#, c-format
-msgid "Upgraded %d %s, first start: %s, last start: %s"
-msgstr "%d %s yükseltildi: %s, son başlatma: %s"
-
-#. TRANSLATORS: text is: "upgraded xx times"
-msgid "time"
-msgid_plural "times"
-msgstr[0] "kez"
-msgstr[1] "kez"
 
 msgid "Windows list:"
 msgstr "Pencere listesi:"
@@ -3355,7 +3362,9 @@ msgstr ""
 "yeniden yükle"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "[-yes] [<path_to_binary>|-save|-quit]"
+#, fuzzy
+#| msgid "[-yes] [<path_to_binary>|-save|-quit]"
+msgid "[-yes] [<path_to_binary>|-save|-quit] || -o|-ol"
 msgstr "[-yes] [<ikili_yolu>|-save|-quit]"
 
 msgid ""
@@ -3380,6 +3389,28 @@ msgid ""
 "raw[-quit]: close *ALL* connections, save session and quit WeeChat, which "
 "makes possible a delayed restoration (see below)"
 msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| " -o: send uptime to current buffer as input (English string)\n"
+#| "-ol: send uptime to current buffer as input (translated string)"
+msgid ""
+"raw[-o]: send number of upgrades and date of first/last start to current "
+"buffer as input (English string)"
+msgstr ""
+" -o: açık kalma süresini geçerli arabelleğe girdi olarak gönder (İngilizce)\n"
+"-ol: açık kalma süresini geçerli arabelleğe girdi olarak gönder (çevrilmiş)"
+
+#, fuzzy
+#| msgid ""
+#| " -o: send uptime to current buffer as input (English string)\n"
+#| "-ol: send uptime to current buffer as input (translated string)"
+msgid ""
+"raw[-ol]: send number of upgrades and date of first/last start to current "
+"buffer as input (translated string)"
+msgstr ""
+" -o: açık kalma süresini geçerli arabelleğe girdi olarak gönder (İngilizce)\n"
+"-ol: açık kalma süresini geçerli arabelleğe girdi olarak gönder (çevrilmiş)"
 
 msgid ""
 "This command upgrades and reloads a running WeeChat session. The new WeeChat "

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-20 21:02+0200\n"
+"POT-Creation-Date: 2023-10-26 20:40+0200\n"
 "PO-Revision-Date: 2023-10-20 13:09+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1011,6 +1011,24 @@ msgstr "Volba odebrána: %s"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d volba/volby resetovány, %d volba/volby smazány"
 
+#. TRANSLATORS: "%d %s" is number of times, eg: "2 times"
+#, fuzzy, c-format
+#| msgid "Upgraded %d %s, first start: %s, last start: %s"
+msgid "WeeChat upgrades: %d %s, first start: %s, last start: %s"
+msgstr "Aktualizováno %d %s, první spuštění: %s, poslední spuštění: %s"
+
+#. TRANSLATORS: text is: "upgraded xx times"
+msgid "time"
+msgid_plural "times"
+msgstr[0] "krát"
+msgstr[1] "krát"
+msgstr[2] "krát"
+
+#, fuzzy, c-format
+#| msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgid "WeeChat upgrades: none, started on %s"
+msgstr "Čas běhu WeeChat: %d %s %02d:%02d:%02d, spuštěn %s"
+
 #, fuzzy, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sChyba: nemohu uložit sezení do souboru"
@@ -1070,17 +1088,6 @@ msgstr "Čas běhu WeeChat: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, spuštěn %s%s
 
 msgid "compiled on"
 msgstr "kompilováno"
-
-#, c-format
-msgid "Upgraded %d %s, first start: %s, last start: %s"
-msgstr "Aktualizováno %d %s, první spuštění: %s, poslední spuštění: %s"
-
-#. TRANSLATORS: text is: "upgraded xx times"
-msgid "time"
-msgid_plural "times"
-msgstr[0] "krát"
-msgstr[1] "krát"
-msgstr[2] "krát"
 
 msgid "Windows list:"
 msgstr "Seznam oken:"
@@ -3221,7 +3228,7 @@ msgstr "aktualizovat WeeChat bez odpojení od serveru"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 #| msgid "[-yes] [<path_to_binary>|-quit]"
-msgid "[-yes] [<path_to_binary>|-save|-quit]"
+msgid "[-yes] [<path_to_binary>|-save|-quit] || -o|-ol"
 msgstr "[-yes][<cesta_k_binárce>|-quit]"
 
 msgid ""
@@ -3246,6 +3253,28 @@ msgid ""
 "raw[-quit]: close *ALL* connections, save session and quit WeeChat, which "
 "makes possible a delayed restoration (see below)"
 msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| " -o: send uptime to current buffer as input (English string)\n"
+#| "-ol: send uptime to current buffer as input (translated string)"
+msgid ""
+"raw[-o]: send number of upgrades and date of first/last start to current "
+"buffer as input (English string)"
+msgstr ""
+" -o: poslat čas běhu aktuálnímu bufferu jako vstup (anglický řetězec)\n"
+"-ol: poslat čas běhu aktuálnímu bufferu jako vstup (přeložený řetězec)"
+
+#, fuzzy
+#| msgid ""
+#| " -o: send uptime to current buffer as input (English string)\n"
+#| "-ol: send uptime to current buffer as input (translated string)"
+msgid ""
+"raw[-ol]: send number of upgrades and date of first/last start to current "
+"buffer as input (translated string)"
+msgstr ""
+" -o: poslat čas běhu aktuálnímu bufferu jako vstup (anglický řetězec)\n"
+"-ol: poslat čas běhu aktuálnímu bufferu jako vstup (přeložený řetězec)"
 
 msgid ""
 "This command upgrades and reloads a running WeeChat session. The new WeeChat "

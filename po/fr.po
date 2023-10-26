@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-20 21:02+0200\n"
-"PO-Revision-Date: 2023-10-20 21:02+0200\n"
+"POT-Creation-Date: 2023-10-26 20:40+0200\n"
+"PO-Revision-Date: 2023-10-26 20:39+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -1020,6 +1020,23 @@ msgstr "Option supprimée : %s"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d option(s) réinitialisée(s), %d option(s) supprimée(s)"
 
+#. TRANSLATORS: "%d %s" is number of times, eg: "2 times"
+#, c-format
+msgid "WeeChat upgrades: %d %s, first start: %s, last start: %s"
+msgstr ""
+"Mises à jour de WeeChat : %d %s, premier démarrage : %s, dernier démarrage : "
+"%s"
+
+#. TRANSLATORS: text is: "upgraded xx times"
+msgid "time"
+msgid_plural "times"
+msgstr[0] "fois"
+msgstr[1] "fois"
+
+#, c-format
+msgid "WeeChat upgrades: none, started on %s"
+msgstr "Mises à jour de WeeChat : aucune, démarré le %s"
+
 #, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sImpossible de sauvegarder la session WeeChat (fichiers *.upgrade)"
@@ -1078,16 +1095,6 @@ msgstr ""
 
 msgid "compiled on"
 msgstr "compilé le"
-
-#, c-format
-msgid "Upgraded %d %s, first start: %s, last start: %s"
-msgstr "Mis à jour %d %s, premier démarrage : %s, dernier démarrage : %s"
-
-#. TRANSLATORS: text is: "upgraded xx times"
-msgid "time"
-msgid_plural "times"
-msgstr[0] "fois"
-msgstr[1] "fois"
 
 msgid "Windows list:"
 msgstr "Liste des fenêtres :"
@@ -3484,8 +3491,8 @@ msgstr ""
 "déconnecter des serveurs"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "[-yes] [<path_to_binary>|-save|-quit]"
-msgstr "[-yes] [<chemin_vers_binaire>|-save|-quit]"
+msgid "[-yes] [<path_to_binary>|-save|-quit] || -o|-ol"
+msgstr "[-yes] [<chemin_vers_binaire>|-save|-quit] || -o|-ol"
 
 msgid ""
 "raw[-yes]: required if option \"weechat.look.confirm_upgrade\" is enabled"
@@ -3519,6 +3526,20 @@ msgid ""
 msgstr ""
 "raw[-quit] : fermer *TOUTES* les connexions, sauvegarder la session et "
 "quitter, ce qui rend possible une restauration différée (voir ci-dessous)"
+
+msgid ""
+"raw[-o]: send number of upgrades and date of first/last start to current "
+"buffer as input (English string)"
+msgstr ""
+"raw[-o] : envoyer le nombre de mises à jour et la date de premier/dernier "
+"démarrage de WeeChat sur le tampon courant comme entrée (chaîne en anglais)"
+
+msgid ""
+"raw[-ol]: send number of upgrades and date of first/last start to current "
+"buffer as input (translated string)"
+msgstr ""
+"raw[-ol] : envoyer le nombre de mises à jour et la date de premier/dernier "
+"démarrage de WeeChat sur le tampon courant comme entrée (chaîne traduite)"
 
 msgid ""
 "This command upgrades and reloads a running WeeChat session. The new WeeChat "

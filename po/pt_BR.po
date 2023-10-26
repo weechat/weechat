@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-20 21:02+0200\n"
+"POT-Creation-Date: 2023-10-26 20:40+0200\n"
 "PO-Revision-Date: 2023-10-20 13:11+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1017,6 +1017,22 @@ msgstr "Opção removida: %s"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d opção(ões) restaurada(s), %d opção(ões) removidas"
 
+#. TRANSLATORS: "%d %s" is number of times, eg: "2 times"
+#, fuzzy, c-format
+msgid "WeeChat upgrades: %d %s, first start: %s, last start: %s"
+msgstr "Atualizado %d %s, primeira inicialização: %s"
+
+#. TRANSLATORS: text is: "upgraded xx times"
+msgid "time"
+msgid_plural "times"
+msgstr[0] "vez"
+msgstr[1] "vezes"
+
+#, fuzzy, c-format
+#| msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgid "WeeChat upgrades: none, started on %s"
+msgstr "Tempo de execução do WeeChat: %d %s %02d:%02d:%02d, iniciado em %s"
+
 #, fuzzy, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sErro: incapaz de salvar a sessão em arquivo"
@@ -1078,16 +1094,6 @@ msgstr ""
 
 msgid "compiled on"
 msgstr "compilado em"
-
-#, fuzzy, c-format
-msgid "Upgraded %d %s, first start: %s, last start: %s"
-msgstr "Atualizado %d %s, primeira inicialização: %s"
-
-#. TRANSLATORS: text is: "upgraded xx times"
-msgid "time"
-msgid_plural "times"
-msgstr[0] "vez"
-msgstr[1] "vezes"
 
 msgid "Windows list:"
 msgstr "Lista de janelas:"
@@ -3242,7 +3248,7 @@ msgstr "atualiza o WeeChat sem desconectar dos servidores"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
-msgid "[-yes] [<path_to_binary>|-save|-quit]"
+msgid "[-yes] [<path_to_binary>|-save|-quit] || -o|-ol"
 msgstr "[<caminho_para_o_binário>|-quit]"
 
 msgid ""
@@ -3267,6 +3273,32 @@ msgid ""
 "raw[-quit]: close *ALL* connections, save session and quit WeeChat, which "
 "makes possible a delayed restoration (see below)"
 msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| " -o: send uptime to current buffer as input (English string)\n"
+#| "-ol: send uptime to current buffer as input (translated string)"
+msgid ""
+"raw[-o]: send number of upgrades and date of first/last start to current "
+"buffer as input (English string)"
+msgstr ""
+" -o: envia o tempo de execução para o buffer atual como entrada (string em "
+"inglês)\n"
+"-ol: envia o tempo de execução para o buffer atual como entrada (string "
+"traduzida)"
+
+#, fuzzy
+#| msgid ""
+#| " -o: send uptime to current buffer as input (English string)\n"
+#| "-ol: send uptime to current buffer as input (translated string)"
+msgid ""
+"raw[-ol]: send number of upgrades and date of first/last start to current "
+"buffer as input (translated string)"
+msgstr ""
+" -o: envia o tempo de execução para o buffer atual como entrada (string em "
+"inglês)\n"
+"-ol: envia o tempo de execução para o buffer atual como entrada (string "
+"traduzida)"
 
 msgid ""
 "This command upgrades and reloads a running WeeChat session. The new WeeChat "

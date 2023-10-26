@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-20 21:02+0200\n"
+"POT-Creation-Date: 2023-10-26 20:40+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -913,6 +913,21 @@ msgstr ""
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr ""
 
+#. TRANSLATORS: "%d %s" is number of times, eg: "2 times"
+#, c-format
+msgid "WeeChat upgrades: %d %s, first start: %s, last start: %s"
+msgstr ""
+
+#. TRANSLATORS: text is: "upgraded xx times"
+msgid "time"
+msgid_plural "times"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "WeeChat upgrades: none, started on %s"
+msgstr ""
+
 #, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr ""
@@ -964,16 +979,6 @@ msgstr ""
 
 msgid "compiled on"
 msgstr ""
-
-#, c-format
-msgid "Upgraded %d %s, first start: %s, last start: %s"
-msgstr ""
-
-#. TRANSLATORS: text is: "upgraded xx times"
-msgid "time"
-msgid_plural "times"
-msgstr[0] ""
-msgstr[1] ""
 
 msgid "Windows list:"
 msgstr ""
@@ -2884,7 +2889,7 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "[-yes] [<path_to_binary>|-save|-quit]"
+msgid "[-yes] [<path_to_binary>|-save|-quit] || -o|-ol"
 msgstr ""
 
 msgid ""
@@ -2908,6 +2913,16 @@ msgstr ""
 msgid ""
 "raw[-quit]: close *ALL* connections, save session and quit WeeChat, which "
 "makes possible a delayed restoration (see below)"
+msgstr ""
+
+msgid ""
+"raw[-o]: send number of upgrades and date of first/last start to current "
+"buffer as input (English string)"
+msgstr ""
+
+msgid ""
+"raw[-ol]: send number of upgrades and date of first/last start to current "
+"buffer as input (translated string)"
 msgstr ""
 
 msgid ""

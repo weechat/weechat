@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-20 21:02+0200\n"
+"POT-Creation-Date: 2023-10-26 20:40+0200\n"
 "PO-Revision-Date: 2023-10-20 13:10+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -1026,6 +1026,22 @@ msgstr "削除されたオプション: %s"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d 個のオプションがリセットされ、%d 個のオプションが削除されました"
 
+#. TRANSLATORS: "%d %s" is number of times, eg: "2 times"
+#, fuzzy, c-format
+#| msgid "Upgraded %d %s, first start: %s, last start: %s"
+msgid "WeeChat upgrades: %d %s, first start: %s, last start: %s"
+msgstr "アップグレード回数 %d %s、初回起動日時: %s、最終起動日時: %s"
+
+#. TRANSLATORS: text is: "upgraded xx times"
+msgid "time"
+msgid_plural "times"
+msgstr[0] "回"
+
+#, fuzzy, c-format
+#| msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgid "WeeChat upgrades: none, started on %s"
+msgstr "WeeChat 連続稼働時間: %d %s %02d:%02d:%02d、%s に開始"
+
 #, fuzzy, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sエラー: ファイルにセッションを保存できません"
@@ -1084,15 +1100,6 @@ msgstr ""
 
 msgid "compiled on"
 msgstr "コンパイル日時"
-
-#, c-format
-msgid "Upgraded %d %s, first start: %s, last start: %s"
-msgstr "アップグレード回数 %d %s、初回起動日時: %s、最終起動日時: %s"
-
-#. TRANSLATORS: text is: "upgraded xx times"
-msgid "time"
-msgid_plural "times"
-msgstr[0] "回"
 
 msgid "Windows list:"
 msgstr "ウィンドウリスト:"
@@ -3326,7 +3333,7 @@ msgstr "サーバとの接続を維持して WeeChat 実行バイナリを再読
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 #| msgid "[-yes] [<path_to_binary>|-quit]"
-msgid "[-yes] [<path_to_binary>|-save|-quit]"
+msgid "[-yes] [<path_to_binary>|-save|-quit] || -o|-ol"
 msgstr "[-yes] [<path_to_binary>|-quit]"
 
 msgid ""
@@ -3351,6 +3358,28 @@ msgid ""
 "raw[-quit]: close *ALL* connections, save session and quit WeeChat, which "
 "makes possible a delayed restoration (see below)"
 msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| " -o: send uptime to current buffer as input (English string)\n"
+#| "-ol: send uptime to current buffer as input (translated string)"
+msgid ""
+"raw[-o]: send number of upgrades and date of first/last start to current "
+"buffer as input (English string)"
+msgstr ""
+" -o: 連続稼働時間を現在のバッファの入力に送る (英語で)\n"
+"-ol: 連続稼働時間を現在のバッファの入力に送る (翻訳済み)"
+
+#, fuzzy
+#| msgid ""
+#| " -o: send uptime to current buffer as input (English string)\n"
+#| "-ol: send uptime to current buffer as input (translated string)"
+msgid ""
+"raw[-ol]: send number of upgrades and date of first/last start to current "
+"buffer as input (translated string)"
+msgstr ""
+" -o: 連続稼働時間を現在のバッファの入力に送る (英語で)\n"
+"-ol: 連続稼働時間を現在のバッファの入力に送る (翻訳済み)"
 
 msgid ""
 "This command upgrades and reloads a running WeeChat session. The new WeeChat "
