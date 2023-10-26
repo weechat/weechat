@@ -102,6 +102,20 @@ Build::
   * core: fix build error if CMake option ENABLE_NLS is turned to off or if required dependencies are not found (issue #2026)
   * core, logger, relay: make zstd dependency optional (issue #2024)
 
+[[v4.0.6]]
+== Version 4.0.6 (2023-10-26)
+
+Bug fixes::
+
+  * core: fix crash when a custom bar item name is already used by a default bar item (issue #2034)
+  * core: fix generation of TOTP on Big Endian systems (issue #2021)
+  * irc: move value `-all` at the end of completions for command `/ignore del`
+  * irc: fix memory leak when joining channels with keys
+
+Build::
+
+  * core: fix build error if CMake option ENABLE_NLS is turned to off or if required dependencies are not found (issue #2026, issue #2031)
+
 [[v4.0.5]]
 == Version 4.0.5 (2023-09-24)
 

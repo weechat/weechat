@@ -140,6 +140,19 @@ You can reset it with this command:
 /reset weechat.key_mouse.@chat(fset.fset):button1
 ----
 
+[[v4.0.6]]
+== Version 4.0.6 (2023-10-26)
+
+[[v4.0.6_custom_bar_items]]
+=== Custom bar items
+
+Custom bar items must now have a different name than default bar items
+(for example the custom bar item name `time` is now forbidden).
+
+If you have such names in your config, WeeChat will now fail to load them
+(this should not happen anyway, since such bar items can not be properly used
+and can cause a crash of WeeChat).
+
 [[v4.0.5]]
 == Version 4.0.5 (2023-09-24)
 
