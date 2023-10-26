@@ -12,7 +12,7 @@ For a complete list of changes, please look at ChangeLog.
 
 
 [[v4.1.1]]
-== Version 4.1.1 (under dev)
+== Version 4.1.1 (2023-10-26)
 
 [[v4.1.1_custom_bar_items]]
 === Custom bar items

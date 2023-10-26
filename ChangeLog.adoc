@@ -11,7 +11,7 @@ For a list of important changes that require manual actions, please look at rele
 
 
 [[v4.1.1]]
-== Version 4.1.1 (under dev)
+== Version 4.1.1 (2023-10-26)
 
 Bug fixes::
 
