@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 Bug fixes::
 
+  * core: display an error on startup if environment variable "HOME" is not set
   * ruby: fix use of NULL variable when displaying exception
 
 [[v4.0.6]]

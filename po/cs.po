@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-09-14 20:21+0200\n"
+"POT-Creation-Date: 2023-10-30 23:09+0100\n"
 "PO-Revision-Date: 2023-06-25 00:48+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4537,6 +4537,11 @@ msgstr ""
 msgid ""
 "Error: unable to create a temporary home directory (using template: \"%s\")\n"
 msgstr "%s%s: nemohu vytvořit adresář pro logy (\"%s\")"
+
+#, fuzzy
+#| msgid "Environment variable \"%s\" is not defined"
+msgid "Error: environment variable \"HOME\" is not defined\n"
+msgstr "Proměnná prostředí \"%s\" není definována"
 
 #, fuzzy, c-format
 msgid "Error: \"%s\" is not a directory\n"
