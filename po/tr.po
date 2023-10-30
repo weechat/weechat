@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-19 23:54+0200\n"
+"POT-Creation-Date: 2023-10-30 23:26+0100\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5757,6 +5757,11 @@ msgid ""
 "Error: unable to create a temporary home directory (using template: \"%s\")\n"
 msgstr ""
 "Hata: Geçici bir ev dizini oluşturulamıyor (kullanılan şablon: \"%s\")\n"
+
+#, fuzzy
+#| msgid "Environment variable \"%s\" is not defined"
+msgid "Error: environment variable \"HOME\" is not defined\n"
+msgstr "Ortam değişkeni \"%s\" tanımlanmamış"
 
 #, c-format
 msgid "Error: \"%s\" is not a directory\n"

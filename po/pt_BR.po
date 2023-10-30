@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-19 23:54+0200\n"
+"POT-Creation-Date: 2023-10-30 23:26+0100\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4980,6 +4980,10 @@ msgstr ""
 msgid ""
 "Error: unable to create a temporary home directory (using template: \"%s\")\n"
 msgstr "%s%s: não foi possível criar diretório para registros (\"%s\")"
+
+#, fuzzy
+msgid "Error: environment variable \"HOME\" is not defined\n"
+msgstr "Variáveis"
 
 #, fuzzy, c-format
 msgid "Error: \"%s\" is not a directory\n"

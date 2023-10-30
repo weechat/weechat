@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-19 23:54+0200\n"
+"POT-Creation-Date: 2023-10-30 23:26+0100\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5705,6 +5705,11 @@ msgid ""
 msgstr ""
 "Грешка: не може да се креира привремени почетни директоријум (користећи "
 "шаблон: \"%s\")\n"
+
+#, fuzzy
+#| msgid "Environment variable \"%s\" is not defined"
+msgid "Error: environment variable \"HOME\" is not defined\n"
+msgstr "Није дефинисана променљива окружења „%s”"
 
 #, c-format
 msgid "Error: \"%s\" is not a directory\n"

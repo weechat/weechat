@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-19 23:54+0200\n"
+"POT-Creation-Date: 2023-10-30 23:26+0100\n"
 "PO-Revision-Date: 2023-09-06 19:13+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -6197,6 +6197,11 @@ msgid ""
 msgstr ""
 "Błąd: nie można utworzyć tymczasowego katalogu domowego (używając szablonu: "
 "\"%s\")\n"
+
+#, fuzzy
+#| msgid "Environment variable \"%s\" is not defined"
+msgid "Error: environment variable \"HOME\" is not defined\n"
+msgstr "Zmienna środowiskowa \"%s\" nie jest zdefiniowana"
 
 #, c-format
 msgid "Error: \"%s\" is not a directory\n"
