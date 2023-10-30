@@ -3255,6 +3255,9 @@ config_file_parse_version (const char *version)
     long number;
     char *error;
 
+    if (!version)
+        return -1;
+
     number = strtoll (version, &error, 10);
     if (!error || error[0])
         return -1;

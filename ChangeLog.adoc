@@ -23,6 +23,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix crash when "config_version" is present in a configuration file without a value
   * core: display an error on startup if environment variable "HOME" is not set
   * core: fix crash when a custom bar item name is already used by a default bar item (issue #2034)
   * core: fix random timeouts when a lot of concurrent processes are launched with hook_process (issue #2033)
