@@ -597,6 +597,9 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
     char *modifier_data, *string, *new_string, *pos_newline;
     struct t_gui_line *new_line;
 
+    if (!buffer)
+        return;
+
     new_line = NULL;
     string = NULL;
     modifier_data = NULL;
