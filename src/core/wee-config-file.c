@@ -3670,6 +3670,10 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                     filename, line_number,
                     line);
                 config_file_backup (filename);
+                if (option)
+                    free (option);
+                if (value)
+                    free (value);
                 goto end_file;
             }
             else
@@ -3687,6 +3691,10 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         config_file->version_read,
                         config_file->version);
                     config_file_backup (filename);
+                    if (option)
+                        free (option);
+                    if (value)
+                        free (value);
                     goto end_file;
                 }
             }
