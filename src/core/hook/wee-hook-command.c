@@ -1082,7 +1082,11 @@ hook_command_add_to_infolist (struct t_infolist_item *item,
         HOOK_COMMAND(hook, args_description));
     if (!infolist_new_var_string (item, "args_description_nls",
                                   (args_desc_nls) ? args_desc_nls : ""))
+    {
+        if (args_desc_nls)
+            free (args_desc_nls);
         return 0;
+    }
     if (args_desc_nls)
         free (args_desc_nls);
     if (!infolist_new_var_string (item, "completion", HOOK_COMMAND(hook, completion)))
