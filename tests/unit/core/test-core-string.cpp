@@ -903,6 +903,7 @@ TEST(CoreString, ExpandHome)
     int length_home;
 
     home = getenv ("HOME");
+    CHECK(home);
     length_home = strlen (home);
 
     POINTERS_EQUAL(NULL, string_expand_home (NULL));
@@ -927,6 +928,7 @@ TEST(CoreString, EvalPathHome)
     struct t_hashtable *extra_vars, *options;
 
     home = getenv ("HOME");
+    CHECK(home);
     length_home = strlen (home);
 
     length_weechat_config_dir = strlen (weechat_config_dir);
