@@ -261,7 +261,6 @@ logger_backlog_file (struct t_gui_buffer *buffer, const char *filename,
     struct t_arraylist *last_lines, *messages;
     int i, num_msgs, old_input_multiline;
 
-    num_msgs = 0;
     last_lines = logger_tail_file (filename, lines);
     if (!last_lines)
         return;
