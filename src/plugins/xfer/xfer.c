@@ -1330,7 +1330,7 @@ xfer_add_cb (const void *pointer, void *data,
         }
     }
 
-    if (XFER_IS_FILE(type))
+    if (XFER_IS_FILE(type) && filename2)
     {
         /* extract short filename (without path) */
         pos = strrchr (filename2, DIR_SEPARATOR_CHAR);
