@@ -287,7 +287,7 @@ weechat_ruby_print_exception (VALUE err)
         err_class = StringValuePtr (class_name);
     }
 
-    if (strcmp (err_class, "SyntaxError") == 0)
+    if (err_class && (strcmp (err_class, "SyntaxError") == 0))
     {
         tmp3 = rb_inspect (err);
         weechat_printf (NULL,
