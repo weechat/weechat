@@ -1461,6 +1461,9 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
 
     memset (&ctxt, 0, sizeof (ctxt));
     ctxt.server = server;
+    ctxt.nick = (nick) ? nick->name : NULL;
+    ctxt.nick_is_me = (irc_server_strcasecmp (server, ctxt.nick, server->nick) == 0);
+    ctxt.address = (nick) ? nick->host : NULL;
     ctxt.command = strdup ("nick_back");
 
     for (ptr_channel = server->channels; ptr_channel;
@@ -1475,11 +1478,7 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
                 weechat_printf_date_tags (
                     ptr_channel->buffer,
                     0,
-                    irc_protocol_tags (
-                        &ctxt,
-                        NULL,  /* extra_tags */
-                        (nick) ? nick->name : NULL,
-                        (nick) ? nick->host : NULL),
+                    irc_protocol_tags (&ctxt, NULL),
                     _("%s%s%s %s(%s%s%s)%s is back on server"),
                     weechat_prefix ("join"),
                     irc_nick_color_for_msg (server, 1, nick, nickname),

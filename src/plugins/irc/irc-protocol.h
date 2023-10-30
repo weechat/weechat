@@ -87,9 +87,7 @@ struct t_irc_protocol_msg
 };
 
 extern const char *irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt,
-                                      const char *extra_tags,
-                                      const char *nick,
-                                      const char *address);
+                                      const char *extra_tags);
 extern time_t irc_protocol_parse_time (const char *time);
 extern void irc_protocol_recv_command (struct t_irc_server *server,
                                        const char *irc_message,
