@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-26 20:40+0200\n"
+"POT-Creation-Date: 2023-10-30 08:47+0100\n"
 "PO-Revision-Date: 2023-10-20 13:10+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5274,6 +5274,10 @@ msgstr ""
 msgid ""
 "Error: unable to create a temporary home directory (using template: \"%s\")\n"
 msgstr "%s%s: impossibile creare la directory per i log (\"%s\")"
+
+#, fuzzy
+msgid "Error: environment variable \"HOME\" is not defined\n"
+msgstr "Variabili"
 
 #, fuzzy, c-format
 msgid "Error: \"%s\" is not a directory\n"

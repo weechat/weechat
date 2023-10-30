@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-10-26 20:40+0200\n"
+"POT-Creation-Date: 2023-10-30 08:47+0100\n"
 "PO-Revision-Date: 2023-10-24 16:55+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -5734,6 +5734,11 @@ msgid ""
 msgstr ""
 "Fehler: es kann kein temporäres Heimatverzeichnis angelegt werden (mit "
 "Befehl: \"%s\")\n"
+
+#, fuzzy
+#| msgid "Environment variable \"%s\" is not defined"
+msgid "Error: environment variable \"HOME\" is not defined\n"
+msgstr "Umgebungsvariable \"%s\" ist nicht definiert"
 
 #, c-format
 msgid "Error: \"%s\" is not a directory\n"
