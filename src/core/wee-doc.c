@@ -598,10 +598,13 @@ doc_gen_user_options (const char *path, const char *lang)
             free (default_value);
     }
 
-    string_fprintf (
-        file,
-        "// end::%s_options[]\n",
-        old_config->name);
+    if (old_config)
+    {
+        string_fprintf (
+            file,
+            "// end::%s_options[]\n",
+            old_config->name);
+    }
 
     arraylist_free (list_options);
 
