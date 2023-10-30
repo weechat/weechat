@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 Bug fixes::
 
+  * core: fix memory leak when config version is invalid or not supported
   * core: fix crash when "config_version" is present in a configuration file without a value
   * core: display an error on startup if environment variable "HOME" is not set
   * ruby: fix use of NULL variable when displaying exception
