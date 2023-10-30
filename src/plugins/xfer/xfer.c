@@ -1064,6 +1064,9 @@ xfer_add_cb (const void *pointer, void *data,
     token = weechat_infolist_string (infolist, "token");
     protocol = XFER_NO_PROTOCOL;
 
+    memset (&local_addr_storage, 0, sizeof (local_addr_storage));
+    local_addr_length = sizeof (local_addr_storage);
+
     if (!plugin_name || !plugin_id || !str_type || !remote_nick || !local_nick)
     {
         weechat_printf (NULL,
@@ -1234,8 +1237,6 @@ xfer_add_cb (const void *pointer, void *data,
         {
             /* no own_ip, so bind_addr's family comes from irc connection  */
             /* use the local interface, from the server socket */
-            memset (&local_addr_storage, 0, sizeof (local_addr_storage));
-            local_addr_length = sizeof (local_addr_storage);
             server_sock = weechat_infolist_integer (infolist, "socket");
             if (getsockname (server_sock, (struct sockaddr *)&local_addr_storage, &local_addr_length))
             {
