@@ -20,6 +20,7 @@ New features::
   * core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias` and `/trigger` (issue #1956)
   * irc: add tags "nick_xxx" and "host_xxx" in all messages, including self and server messages
   * irc: add option irc.look.ignore_tag_messages (issue #989)
+  * trigger: rename local variable "trigger_filter" to "filter" on monitor buffer (issue #2037)
 
 Bug fixes::
 

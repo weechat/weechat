@@ -110,7 +110,7 @@ trigger_buffer_set_title ()
     const char *ptr_filter;
     char title[1024];
 
-    ptr_filter = weechat_buffer_get_string (trigger_buffer, "localvar_trigger_filter");
+    ptr_filter = weechat_buffer_get_string (trigger_buffer, "localvar_filter");
     snprintf (title, sizeof (title),
               _("Trigger monitor (filter: %s) | Input: q=close, words=filter"),
               (ptr_filter) ? ptr_filter : "*");
@@ -140,11 +140,11 @@ trigger_buffer_input_cb (const void *pointer, void *data,
 
     /* set filters */
     if (strcmp (input_data, "*") == 0)
-        weechat_buffer_set (buffer, "localvar_del_trigger_filter", "");
+        weechat_buffer_set (buffer, "localvar_del_filter", "");
     else
-        weechat_buffer_set (buffer, "localvar_set_trigger_filter", input_data);
+        weechat_buffer_set (buffer, "localvar_set_filter", input_data);
     trigger_buffer_set_filter (weechat_buffer_get_string (buffer,
-                                                          "localvar_trigger_filter"));
+                                                          "localvar_filter"));
     trigger_buffer_set_title ();
 
     return WEECHAT_RC_OK;
@@ -188,7 +188,7 @@ trigger_buffer_set_callbacks ()
         weechat_buffer_set_pointer (trigger_buffer, "input_callback",
                                     &trigger_buffer_input_cb);
         trigger_buffer_set_filter (weechat_buffer_get_string (trigger_buffer,
-                                                              "localvar_trigger_filter"));
+                                                              "localvar_filter"));
     }
 }
 
@@ -240,15 +240,9 @@ trigger_buffer_open (const char *filter, int switch_to_buffer)
     }
 
     if (filter && filter[0])
-    {
-        weechat_buffer_set (trigger_buffer,
-                            "localvar_set_trigger_filter", filter);
-    }
+        weechat_buffer_set (trigger_buffer, "localvar_set_filter", filter);
     else
-    {
-        weechat_buffer_set (trigger_buffer,
-                            "localvar_del_trigger_filter", "");
-    }
+        weechat_buffer_set (trigger_buffer, "localvar_del_filter", "");
     trigger_buffer_set_filter (filter);
 
     trigger_buffer_set_title ();
