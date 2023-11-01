@@ -3768,11 +3768,11 @@ irc_config_init ()
             irc_config_file, irc_config_section_color,
             "mirc_remap", "string",
             /* TRANSLATORS: please do not translate the list of WeeChat color names at the end of string */
-            N_("remap mirc colors in messages using a hashtable: keys are "
-               "\"fg,bg\" as integers between -1 (not specified) and 15, "
-               "values are WeeChat color names or numbers (format is: "
-               "\"1,-1:color1;2,7:color2\"), example: "
-               "\"1,-1:darkgray;1,2:white,blue\" to remap black to "
+            N_("remap mirc colors in messages using a hashtable (used only "
+               "for standard colors, not RGB colors): keys are \"fg,bg\" as "
+               "integers between -1 (not specified) and 15, values are WeeChat "
+               "color names or numbers (format is: \"1,-1:color1;2,7:color2\"), "
+               "example: \"1,-1:darkgray;1,2:white,blue\" to remap black to "
                "\"darkgray\" and black on blue to \"white,blue\"; default "
                "WeeChat colors for IRC codes: 0=white, 1=black, 2=blue, "
                "3=green, 4=lightred, 5=red, 6=magenta, 7=brown, 8=yellow, "
@@ -3817,11 +3817,11 @@ irc_config_init ()
             irc_config_file, irc_config_section_color,
             "term_remap", "string",
             N_("remap terminal color numbers in messages using a hashtable "
-               "(used for RGB colors as hexadecimal, which are first translated "
-               "to terminal color numbers): keys are \"fg,bg\" as integers "
-               "between -1 (not specified) and 255, values are WeeChat color "
-               "names or numbers (format is: \"1,-1:color1;2,7:color2\"), example: "
-               "\"0,-1:darkgray;0,90:white,blue\" to remap black to "
+               "(used only for RGB colors as hexadecimal, which are first "
+               "translated to terminal color numbers): keys are \"fg,bg\" as "
+               "integers between -1 (not specified) and 255, values are WeeChat "
+               "color names or numbers (format is: \"1,-1:color1;2,7:color2\"), "
+               "example: \"0,-1:darkgray;0,90:white,blue\" to remap black to "
                "\"darkgray\" and black on dark magenta to \"white,blue\""),
             NULL, 0, 0, "0,-1:darkgray", NULL, 0,
             NULL, NULL, NULL,
