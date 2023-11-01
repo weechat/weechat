@@ -877,6 +877,7 @@ plugin_api_info_nick_color_ignore_case_cb (const void *pointer, void *data,
     case_range = -1;
     if (num_items >= 2)
     {
+        error = NULL;
         number = strtol (items[1], &error, 10);
         if (error && !error[0])
             case_range = (int)number;
@@ -916,6 +917,7 @@ plugin_api_info_nick_color_name_ignore_case_cb (const void *pointer, void *data,
     case_range = -1;
     if (num_items >= 2)
     {
+        error = NULL;
         number = strtol (items[1], &error, 10);
         if (error && !error[0])
             case_range = (int)number;
