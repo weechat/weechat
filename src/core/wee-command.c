@@ -3386,6 +3386,7 @@ COMMAND_CALLBACK(history)
 {
     struct t_gui_history *ptr_history;
     int n, n_total, n_user, displayed;
+    char *error;
 
     /* make C compiler happy */
     (void) pointer;
@@ -3402,7 +3403,12 @@ COMMAND_CALLBACK(history)
             return WEECHAT_RC_OK;
         }
         else
-            n_user = atoi (argv[1]);
+        {
+            error = NULL;
+            n_user = (int)strtol (argv[1], &error, 10);
+            if (!error || error[0] || (n_user < 0))
+                COMMAND_ERROR;
+        }
     }
 
     if (buffer->history)
