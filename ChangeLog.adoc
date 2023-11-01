@@ -18,7 +18,7 @@ New features::
   * core: display only version with command `/version`, add options `-o` and `-ol` in command `/upgrade`
   * core: add number of processes in command `/sys waitpid`
   * core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias` and `/trigger` (issue #1956)
-  * irc: add support of RGB colors in messages (issue #2025)
+  * irc: add support of RGB colors in messages, add option irc.color.term_remap (issue #2025)
   * irc: add tags "nick_xxx" and "host_xxx" in all messages, including self and server messages
   * irc: add option irc.look.ignore_tag_messages (issue #989)
   * trigger: rename local variable "trigger_filter" to "filter" on monitor buffer (issue #2037)

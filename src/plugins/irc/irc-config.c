@@ -153,6 +153,7 @@ struct t_config_option *irc_config_color_nick_prefixes = NULL;
 struct t_config_option *irc_config_color_notice = NULL;
 struct t_config_option *irc_config_color_reason_kick = NULL;
 struct t_config_option *irc_config_color_reason_quit = NULL;
+struct t_config_option *irc_config_color_term_remap = NULL;
 struct t_config_option *irc_config_color_topic_current = NULL;
 struct t_config_option *irc_config_color_topic_new = NULL;
 struct t_config_option *irc_config_color_topic_old = NULL;
@@ -188,6 +189,7 @@ struct t_hook *irc_config_hook_config_chat_nick_colors = NULL;
 struct t_hashtable *irc_config_hashtable_display_join_message = NULL;
 struct t_hashtable *irc_config_hashtable_nick_prefixes = NULL;
 struct t_hashtable *irc_config_hashtable_color_mirc_remap = NULL;
+struct t_hashtable *irc_config_hashtable_color_term_remap = NULL;
 char **irc_config_nicks_hide_password = NULL;
 int irc_config_num_nicks_hide_password = 0;
 
@@ -875,6 +877,59 @@ irc_config_change_color_nick_prefixes (const void *pointer, void *data,
     irc_nick_nicklist_set_prefix_color_all ();
 
     weechat_bar_item_update ("input_prompt");
+}
+
+/*
+ * Callback for changes on option "irc.color.term_remap".
+ */
+
+void
+irc_config_change_color_term_remap (const void *pointer, void *data,
+                                    struct t_config_option *option)
+{
+    char **items, *pos;
+    int num_items, i;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (!irc_config_hashtable_color_term_remap)
+    {
+        irc_config_hashtable_color_term_remap = weechat_hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+    }
+    else
+        weechat_hashtable_remove_all (irc_config_hashtable_color_term_remap);
+
+    items = weechat_string_split (
+        weechat_config_string (irc_config_color_term_remap),
+        ";",
+        NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_items);
+    if (items)
+    {
+        for (i = 0; i < num_items; i++)
+        {
+            pos = strchr (items[i], ':');
+            if (pos)
+            {
+                pos[0] = '\0';
+                weechat_hashtable_set (irc_config_hashtable_color_term_remap,
+                                       items[i],
+                                       pos + 1);
+            }
+        }
+        weechat_string_free_split (items);
+    }
 }
 
 /*
@@ -2969,6 +3024,11 @@ irc_config_init ()
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING,
         NULL, NULL);
+    irc_config_hashtable_color_term_remap = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
 
     irc_config_file = weechat_config_new (IRC_CONFIG_PRIO_NAME,
                                           &irc_config_reload, NULL, NULL);
@@ -3753,6 +3813,20 @@ irc_config_init ()
             N_("color for reason in part/quit messages"),
             NULL, -1, 0, "244", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_config_color_term_remap = weechat_config_new_option (
+            irc_config_file, irc_config_section_color,
+            "term_remap", "string",
+            N_("remap terminal color numbers in messages using a hashtable "
+               "(used for RGB colors as hexadecimal, which are first translated "
+               "to terminal color numbers): keys are \"fg,bg\" as integers "
+               "between -1 (not specified) and 255, values are WeeChat color "
+               "names or numbers (format is: \"1,-1:color1;2,7:color2\"), example: "
+               "\"0,-1:darkgray;0,90:white,blue\" to remap black to "
+               "\"darkgray\" and black on dark magenta to \"white,blue\""),
+            NULL, 0, 0, "0,-1:darkgray", NULL, 0,
+            NULL, NULL, NULL,
+            &irc_config_change_color_term_remap, NULL, NULL,
+            NULL, NULL, NULL);
         irc_config_color_topic_current = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
             "topic_current", "color",
@@ -3991,6 +4065,7 @@ irc_config_read ()
         irc_config_change_look_nicks_hide_password (NULL, NULL, NULL);
         irc_config_change_color_nick_prefixes (NULL, NULL, NULL);
         irc_config_change_color_mirc_remap (NULL, NULL, NULL);
+        irc_config_change_color_term_remap (NULL, NULL, NULL);
         irc_config_change_network_notify_check_ison (NULL, NULL, NULL);
         irc_config_change_network_notify_check_whois (NULL, NULL, NULL);
     }
@@ -4054,5 +4129,11 @@ irc_config_free ()
     {
         weechat_hashtable_free (irc_config_hashtable_color_mirc_remap);
         irc_config_hashtable_color_mirc_remap = NULL;
+    }
+
+    if (irc_config_hashtable_color_term_remap)
+    {
+        weechat_hashtable_free (irc_config_hashtable_color_term_remap);
+        irc_config_hashtable_color_term_remap = NULL;
     }
 }

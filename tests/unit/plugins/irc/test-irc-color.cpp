@@ -68,7 +68,7 @@ extern int irc_color_convert_term2irc (int color);
     IRC_COLOR_COLOR_STR "08,02" "bold_underline_yellow/blue"            \
     IRC_COLOR_BOLD_STR IRC_COLOR_UNDERLINE_STR                          \
     "_normal_yellow/blue"
-#define STRING_IRC_COLOR_REMAPPED                                       \
+#define STRING_IRC_COLOR_MIRC_REMAPPED                                  \
     "test_"                                                             \
     IRC_COLOR_COLOR_STR "03,02" "remapped"
 #define STRING_IRC_COLOR_FG_ORANGE                                      \
@@ -78,6 +78,9 @@ extern int irc_color_convert_term2irc (int color);
     "test_" IRC_COLOR_HEX_COLOR_STR "FFFF00,8B008B"                     \
     "yellow/darkmagenta"                                                \
     IRC_COLOR_HEX_COLOR_STR "_end"
+#define STRING_IRC_COLOR_TERM_REMAPPED                                  \
+    "test_"                                                             \
+    IRC_COLOR_HEX_COLOR_STR "FFFF00,8B008B" "remapped"
 
 /* tests on irc_color_encode(): command line -> IRC color */
 #define STRING_USER_BOLD                                                \
@@ -318,11 +321,11 @@ TEST(IrcColor, Decode)
 
     /* color: 03,02 -> green (remapped via option irc.color.mirc_remap) */
     config_file_option_set (irc_config_color_mirc_remap, "3,2:green", 1);
-    WEE_CHECK_DECODE("test_remapped", STRING_IRC_COLOR_REMAPPED, 0);
+    WEE_CHECK_DECODE("test_remapped", STRING_IRC_COLOR_MIRC_REMAPPED, 0);
     snprintf (string, sizeof (string),
               "test_%sremapped",
               gui_color_get_custom ("|green"));
-    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_REMAPPED, 1);
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_MIRC_REMAPPED, 1);
     config_file_option_unset (irc_config_color_mirc_remap);
 
     /* color: hex 0xFF7F00 (orange / 208) */
@@ -342,6 +345,18 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("|11,90"),
               gui_color_get_custom ("resetcolor"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_YELLOW_BG_DARKMAGENTA, 1);
+
+    /*
+     * color: hex 0xFFFF00 (yellow / 11) on 0x8B008B (dark magenta / 90)
+     * -> blue (remapped via option irc.color.term_remap)
+     */
+    config_file_option_set (irc_config_color_term_remap, "11,90:blue", 1);
+    WEE_CHECK_DECODE("test_remapped", STRING_IRC_COLOR_TERM_REMAPPED, 0);
+    snprintf (string, sizeof (string),
+              "test_%sremapped",
+              gui_color_get_custom ("|blue"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_TERM_REMAPPED, 1);
+    config_file_option_unset (irc_config_color_term_remap);
 }
 
 /*

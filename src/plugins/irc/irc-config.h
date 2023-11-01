@@ -186,6 +186,7 @@ extern struct t_config_option *irc_config_color_nick_prefixes;
 extern struct t_config_option *irc_config_color_notice;
 extern struct t_config_option *irc_config_color_reason_kick;
 extern struct t_config_option *irc_config_color_reason_quit;
+extern struct t_config_option *irc_config_color_term_remap;
 extern struct t_config_option *irc_config_color_topic_current;
 extern struct t_config_option *irc_config_color_topic_new;
 extern struct t_config_option *irc_config_color_topic_old;
@@ -211,6 +212,7 @@ extern struct t_config_option *irc_config_server_default[];
 extern struct t_hashtable *irc_config_hashtable_display_join_message;
 extern struct t_hashtable *irc_config_hashtable_nick_prefixes;
 extern struct t_hashtable *irc_config_hashtable_color_mirc_remap;
+extern struct t_hashtable *irc_config_hashtable_color_term_remap;
 extern char **irc_config_nicks_hide_password;
 extern int irc_config_num_nicks_hide_password;
 
