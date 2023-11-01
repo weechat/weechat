@@ -1016,6 +1016,13 @@ Zeichen, genutzt werden:
 | kbd:[Ctrl+c], kbd:[c],
   kbd:[xx], kbd:[,],
   kbd:[yy]               | Textfarbe `xx` und Hintergrundfarbe `yy` (siehe Farbtabelle).
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx]           | Text color `xxxxxx` (RGB as hexadecimal, for example `FF0000` for red).
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx], kbd:[,],
+  kbd:[yyyyyy]           | Text color `xxxxxx` and background `yyyyyy` (RGB as hexadecimal).
 | kbd:[Ctrl+c], kbd:[i]  | Text wird kursiv dargestellt.
 | kbd:[Ctrl+c], kbd:[o]  | deaktiviert Farben und Attribute.
 | kbd:[Ctrl+c], kbd:[v]  | Farben umkehren (kehrt Textfarbe und Hintergrundfarbe um).
@@ -1023,8 +1030,9 @@ Zeichen, genutzt werden:
 |===
 
 [NOTE]
-Der selbe Befehl (ohne den Wert für kbd:[Ctrl+c], kbd:[c]) sollte genutzt werden
-um die Farbkodierungen bzw. Attribute zu deaktivieren.
+// TRANSLATION MISSING
+The same code (without number for kbd:[Ctrl+c], kbd:[c] and kbd:[Ctrl+c], kbd:[d])
+can be used to stop the attribute.
 
 Farbtabelle für kbd:[Ctrl+c], kbd:[c]:
 
@@ -1587,6 +1595,8 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | Taste                 | Beschreibung | Befehl
 | kbd:[Ctrl+c], kbd:[b] | fügt Steuerzeichen für fett geschrieben Text ein. | `+/input insert \x02+`
 | kbd:[Ctrl+c], kbd:[c] | fügt Steuerzeichen für Textfarbe ein. | `+/input insert \x03+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d] | Insert code for colored text (RGB color, as hexadecimal). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | fügt Steuerzeichen für kursiven Text ein. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | fügt Steuerzeichen für Standardfarbe ein. | `+/input insert \x0F+`
 | kbd:[Ctrl+c], kbd:[v] | fügt Steuerzeichen für Hintergrundfarbe ein. | `+/input insert \x16+`

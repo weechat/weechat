@@ -31,7 +31,8 @@ extern "C"
 #include "src/plugins/irc/irc-color.h"
 #include "src/plugins/irc/irc-config.h"
 
-extern int irc_color_convert_rgb2irc (int rgb);
+extern int irc_color_convert_rgb2term (long rgb);
+extern int irc_color_convert_rgb2irc (long rgb);
 extern int irc_color_convert_term2irc (int color);
 }
 
@@ -70,6 +71,13 @@ extern int irc_color_convert_term2irc (int color);
 #define STRING_IRC_COLOR_REMAPPED                                       \
     "test_"                                                             \
     IRC_COLOR_COLOR_STR "03,02" "remapped"
+#define STRING_IRC_COLOR_FG_ORANGE                                      \
+    "test_" IRC_COLOR_HEX_COLOR_STR "FF7F00" "orange"                   \
+    IRC_COLOR_HEX_COLOR_STR "_end"
+#define STRING_IRC_COLOR_FG_YELLOW_BG_DARKMAGENTA                       \
+    "test_" IRC_COLOR_HEX_COLOR_STR "FFFF00,8B008B"                     \
+    "yellow/darkmagenta"                                                \
+    IRC_COLOR_HEX_COLOR_STR "_end"
 
 /* tests on irc_color_encode(): command line -> IRC color */
 #define STRING_USER_BOLD                                                \
@@ -92,6 +100,10 @@ extern int irc_color_convert_term2irc (int color);
 #define STRING_USER_ATTRS_AND_COLORS                                    \
     "test_" "\x02" "\x1F" "\x03" "08,02" "bold_underline_yellow/blue"   \
     "\x02" "\x1F" "_normal_yellow/blue"
+#define STRING_USER_FG_ORANGE                                           \
+    "test_" "\x04" "FF7F00" "orange" "\x04" "_end"
+#define STRING_USER_FG_YELLOW_BG_DARKMAGENTA                            \
+    "test_" "\x04" "FFFF00,8B008B" "yellow/darkmagenta" "\x04" "_end"
 
 /* tests on irc_color_decode_ansi(): ANSI color -> IRC color */
 #define STRING_ANSI_RESET "test_\x1B[mreset"
@@ -143,6 +155,49 @@ extern int irc_color_convert_term2irc (int color);
 TEST_GROUP(IrcColor)
 {
 };
+
+/*
+ * Tests functions:
+ *   irc_color_convert_rgb2term
+ */
+
+TEST(IrcColor, ConvertRgb2Term)
+{
+    LONGS_EQUAL(-1, irc_color_convert_rgb2term (-1));
+    LONGS_EQUAL(0, irc_color_convert_rgb2term (0));
+    LONGS_EQUAL(9, irc_color_convert_rgb2term (0xFF0000));    /* red */
+    LONGS_EQUAL(10, irc_color_convert_rgb2term (0x00FF00));   /* green */
+    LONGS_EQUAL(12, irc_color_convert_rgb2term (0x0000FF));   /* blue */
+    LONGS_EQUAL(11, irc_color_convert_rgb2term (0xFFFF00));   /* yellow */
+    LONGS_EQUAL(208, irc_color_convert_rgb2term (0xFF7F00));  /* orange */
+    LONGS_EQUAL(90, irc_color_convert_rgb2term (0x8B008B));   /* dark magenta */
+}
+
+/*
+ * Tests functions:
+ *   irc_color_convert_rgb2irc
+ */
+
+TEST(IrcColor, ConvertRgb2Irc)
+{
+    LONGS_EQUAL(1, irc_color_convert_rgb2irc (0x000000));
+    LONGS_EQUAL(1, irc_color_convert_rgb2irc (0x010203));
+    LONGS_EQUAL(4, irc_color_convert_rgb2irc (0xFF0033));
+    LONGS_EQUAL(15, irc_color_convert_rgb2irc (0xAABBCC));
+}
+
+/*
+ * Tests functions:
+ *   irc_color_convert_term2irc
+ */
+
+TEST(IrcColor, ConvertTerm2Irc)
+{
+    LONGS_EQUAL(1, irc_color_convert_term2irc (0));
+    LONGS_EQUAL(15, irc_color_convert_term2irc (123));
+    LONGS_EQUAL(13, irc_color_convert_term2irc (200));
+    LONGS_EQUAL(0, irc_color_convert_term2irc (255));
+}
 
 /*
  * Tests functions:
@@ -269,6 +324,24 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("|green"));
     WEE_CHECK_DECODE(string, STRING_IRC_COLOR_REMAPPED, 1);
     config_file_option_unset (irc_config_color_mirc_remap);
+
+    /* color: hex 0xFF7F00 (orange / 208) */
+    WEE_CHECK_DECODE("test_orange_end",
+                     STRING_IRC_COLOR_FG_ORANGE, 0);
+    snprintf (string, sizeof (string),
+              "test_%sorange%s_end",
+              gui_color_get_custom ("|208"),
+              gui_color_get_custom ("resetcolor"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_ORANGE, 1);
+
+    /* color: hex 0xFFFF00 (yellow / 11) on 0x8B008B (dark magenta / 90) */
+    WEE_CHECK_DECODE("test_yellow/darkmagenta_end",
+                     STRING_IRC_COLOR_FG_YELLOW_BG_DARKMAGENTA, 0);
+    snprintf (string, sizeof (string),
+              "test_%syellow/darkmagenta%s_end",
+              gui_color_get_custom ("|11,90"),
+              gui_color_get_custom ("resetcolor"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_YELLOW_BG_DARKMAGENTA, 1);
 }
 
 /*
@@ -375,32 +448,23 @@ TEST(IrcColor, Encode)
               IRC_COLOR_BOLD_STR,
               IRC_COLOR_UNDERLINE_STR);
     WEE_CHECK_ENCODE(string, STRING_USER_ATTRS_AND_COLORS, 1);
-}
 
-/*
- * Tests functions:
- *   irc_color_convert_rgb2irc
- */
+    /* color: hex 0xFF7F00 (orange / 208) */
+    WEE_CHECK_ENCODE("test_orange_end", STRING_USER_FG_ORANGE, 0);
+    snprintf (string, sizeof (string),
+              "test_%sFF7F00orange%s_end",
+              IRC_COLOR_HEX_COLOR_STR,
+              IRC_COLOR_HEX_COLOR_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_FG_ORANGE, 1);
 
-TEST(IrcColor, ConvertRgb2Irc)
-{
-    LONGS_EQUAL(1, irc_color_convert_rgb2irc (0x000000));
-    LONGS_EQUAL(1, irc_color_convert_rgb2irc (0x010203));
-    LONGS_EQUAL(4, irc_color_convert_rgb2irc (0xFF0033));
-    LONGS_EQUAL(15, irc_color_convert_rgb2irc (0xAABBCC));
-}
-
-/*
- * Tests functions:
- *   irc_color_convert_term2irc
- */
-
-TEST(IrcColor, ConvertTerm2Irc)
-{
-    LONGS_EQUAL(1, irc_color_convert_term2irc (0));
-    LONGS_EQUAL(15, irc_color_convert_term2irc (123));
-    LONGS_EQUAL(13, irc_color_convert_term2irc (200));
-    LONGS_EQUAL(0, irc_color_convert_term2irc (255));
+    /* color: hex 0xFFFF00 (yellow / 11) on 0x8B008B (dark magenta / 90) */
+    WEE_CHECK_ENCODE("test_yellow/darkmagenta_end",
+                     STRING_USER_FG_YELLOW_BG_DARKMAGENTA, 0);
+    snprintf (string, sizeof (string),
+              "test_%sFFFF00,8B008Byellow/darkmagenta%s_end",
+              IRC_COLOR_HEX_COLOR_STR,
+              IRC_COLOR_HEX_COLOR_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_FG_YELLOW_BG_DARKMAGENTA, 1);
 }
 
 /*

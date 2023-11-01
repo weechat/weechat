@@ -1077,6 +1077,13 @@ IRC 等のプラグインでは、以下の色コードと属性を利用でき�
 | kbd:[Ctrl+c], kbd:[c],
   kbd:[xx], kbd:[,],
   kbd:[yy]               | テキスト表示色を `xx` に、背景色を `yy` に (以下の色リストを参照)
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx]           | Text color `xxxxxx` (RGB as hexadecimal, for example `FF0000` for red).
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx], kbd:[,],
+  kbd:[yyyyyy]           | Text color `xxxxxx` and background `yyyyyy` (RGB as hexadecimal).
 | kbd:[Ctrl+c], kbd:[i]  | テキストをイタリック体に
 | kbd:[Ctrl+c], kbd:[o]  | テキスト表示色と属性をリセット
 | kbd:[Ctrl+c], kbd:[v]  | テキストを反転 (テキスト表示色と背景色の入れ替え)
@@ -1084,8 +1091,9 @@ IRC 等のプラグインでは、以下の色コードと属性を利用でき�
 |===
 
 [NOTE]
-同じコードで (色コードを入力せずに kbd:[Ctrl+c], kbd:[c]
-を使うことで) 属性をキャンセルすることができます。
+// TRANSLATION MISSING
+The same code (without number for kbd:[Ctrl+c], kbd:[c] and kbd:[Ctrl+c], kbd:[d])
+can be used to stop the attribute.
 
 kbd:[Ctrl+c], kbd:[c] 用の色コード:
 
@@ -1681,6 +1689,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | キー                   | 説明 | コマンド
 | kbd:[Ctrl+c], kbd:[b] | テキストを太字化するコードの挿入 | `+/input insert \x02+`
 | kbd:[Ctrl+c], kbd:[c] | テキストに色をつけるコードの挿入 | `+/input insert \x03+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d] | Insert code for colored text (RGB color, as hexadecimal). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | テキストをイタリック体にするコードの挿入 | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | テキスト色のリセットを行うコードの挿入 | `+/input insert \x0F+`
 | kbd:[Ctrl+c], kbd:[v] | テキスト色の反転を行うコードの挿入 | `+/input insert \x16+`

@@ -1007,6 +1007,11 @@ follow (press kbd:[Ctrl+c] then following letter, with optional value):
 | kbd:[Ctrl+c], kbd:[c],
   kbd:[xx], kbd:[,],
   kbd:[yy]               | Text color `xx` and background `yy` (see list of colors below).
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx]           | Text color `xxxxxx` (RGB as hexadecimal, for example `FF0000` for red).
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx], kbd:[,],
+  kbd:[yyyyyy]           | Text color `xxxxxx` and background `yyyyyy` (RGB as hexadecimal).
 | kbd:[Ctrl+c], kbd:[i]  | Italic text.
 | kbd:[Ctrl+c], kbd:[o]  | Disable color and attributes.
 | kbd:[Ctrl+c], kbd:[v]  | Reverse video (revert text color with background).
@@ -1014,8 +1019,8 @@ follow (press kbd:[Ctrl+c] then following letter, with optional value):
 |===
 
 [NOTE]
-The same code (without number for kbd:[Ctrl+c], kbd:[c]) can be used to stop the
-attribute.
+The same code (without number for kbd:[Ctrl+c], kbd:[c] and kbd:[Ctrl+c], kbd:[d])
+can be used to stop the attribute.
 
 Color codes for kbd:[Ctrl+c], kbd:[c] are:
 
@@ -1574,6 +1579,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | Key                   | Description | Command
 | kbd:[Ctrl+c], kbd:[b] | Insert code for bold text. | `+/input insert \x02+`
 | kbd:[Ctrl+c], kbd:[c] | Insert code for colored text. | `+/input insert \x03+`
+| kbd:[Ctrl+c], kbd:[d] | Insert code for colored text (RGB color, as hexadecimal). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | Insert code for italic text. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | Insert code for color reset. | `+/input insert \x0F+`
 | kbd:[Ctrl+c], kbd:[v] | Insert code for reverse color. | `+/input insert \x16+`

@@ -1022,6 +1022,11 @@ suit et éventuellement une valeur) :
 | kbd:[Ctrl+c], kbd:[c],
   kbd:[xx], kbd:[,],
   kbd:[yy]               | Couleur du texte `xx` et du fond `yy` (voir la liste des couleurs ci-dessous).
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx]           | Couleur du texte `xxxxxx` (RGB en hexadécimal, par exemple `FF0000` pour du rouge).
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx], kbd:[,],
+  kbd:[yyyyyy]           | Couleur du texte `xxxxxx` et du fond `yyyyyy` (RGB en hexadécimal).
 | kbd:[Ctrl+c], kbd:[i]  | Texte en italique.
 | kbd:[Ctrl+c], kbd:[o]  | Désactiver la couleur et tous les attributs.
 | kbd:[Ctrl+c], kbd:[v]  | Vidéo inverse (inversion de la couleur d'écriture et du fond).
@@ -1029,8 +1034,8 @@ suit et éventuellement une valeur) :
 |===
 
 [NOTE]
-Le même code (sans le numéro pour kbd:[Ctrl+c], kbd:[c]) peut être utilisé pour
-stopper l'attribut défini.
+Le même code (sans le numéro pour kbd:[Ctrl+c], kbd:[c] et kbd:[Ctrl+c], kbd:[d])
+peut être utilisé pour stopper l'attribut défini.
 
 Les codes couleur pour kbd:[Ctrl+c], kbd:[c] sont :
 
@@ -1609,6 +1614,7 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 | Touche                | Description | Commande
 | kbd:[Ctrl+c], kbd:[b] | Insérer le code pour mettre le texte en gras. | `+/input insert \x02+`
 | kbd:[Ctrl+c], kbd:[c] | Insérer le code pour écrire en couleur. | `+/input insert \x03+`
+| kbd:[Ctrl+c], kbd:[d] | Insérer le code pour écrire en couleur (couleur RGB, en hexadécimal). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | Insérer le code pour mettre le texte en italique. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | Insérer le code pour réinitialiser la couleur. | `+/input insert \x0F+`
 | kbd:[Ctrl+c], kbd:[v] | Insérer le code pour écrire en couleur inversée. | `+/input insert \x16+`

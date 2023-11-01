@@ -1016,6 +1016,13 @@ Dla niektórych wtyczek jak IRC, można użyć kolorów i atrybutów w następuj
 | kbd:[Ctrl+c], kbd:[c],
   kbd:[xx], kbd:[,],
   kbd:[yy]               | kolor tekstu `xx` i tła `yy` (zgodnie z poniższą listą kolorów)
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx]           | Text color `xxxxxx` (RGB as hexadecimal, for example `FF0000` for red).
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx], kbd:[,],
+  kbd:[yyyyyy]           | Text color `xxxxxx` and background `yyyyyy` (RGB as hexadecimal).
 | kbd:[Ctrl+c], kbd:[i]  | pochyły tekst
 | kbd:[Ctrl+c], kbd:[o]  | wyłącza kolory i atrybuty
 | kbd:[Ctrl+c], kbd:[v]  | odwróć video (przywraca kolor tekstu i tła)
@@ -1023,8 +1030,9 @@ Dla niektórych wtyczek jak IRC, można użyć kolorów i atrybutów w następuj
 |===
 
 [NOTE]
-Ten sam sktót (bez numeru dla kbd:[Ctrl+c], kbd:[c]) może zostać użyty do zatrzymania
-atrybutu.
+// TRANSLATION MISSING
+The same code (without number for kbd:[Ctrl+c], kbd:[c] and kbd:[Ctrl+c], kbd:[d])
+can be used to stop the attribute.
 
 Kody kolorów dla kbd:[Ctrl+c], kbd:[c]:
 
@@ -1590,6 +1598,8 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | Skrót                 | Opis | Komenda
 | kbd:[Ctrl+c], kbd:[b] | Wstaw kod dla pogrubionego tekstu. | `+/input insert \x02+`
 | kbd:[Ctrl+c], kbd:[c] | Wstaw kod dla kolorowego tekstu. | `+/input insert \x03+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d] | Insert code for colored text (RGB color, as hexadecimal). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | Wstaw kod dla pochyłego tekstu. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | Wstaw kod dla zresetowania koloru. | `+/input insert \x0F+`
 | kbd:[Ctrl+c], kbd:[v] | Wstaw kod dla odwrócenia koloru. | `+/input insert \x16+`

@@ -1106,6 +1106,13 @@ opzionale):
   kbd:[xx], kbd:[,],
   kbd:[yy]               | colore del testo `xx` e di sfondo `yy` (consultare la lista di colori che segue).
 // TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx]           | Text color `xxxxxx` (RGB as hexadecimal, for example `FF0000` for red).
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx], kbd:[,],
+  kbd:[yyyyyy]           | Text color `xxxxxx` and background `yyyyyy` (RGB as hexadecimal).
+// TRANSLATION MISSING
 | kbd:[Ctrl+c], kbd:[i]  | italic text.
 | kbd:[Ctrl+c], kbd:[o]  | disabilita colori ed attributi.
 | kbd:[Ctrl+c], kbd:[v]  | video inverso (inverte il colore del testo con quello di sfondo).
@@ -1113,8 +1120,9 @@ opzionale):
 |===
 
 [NOTE]
-Lo stesso codice (senza numero per kbd:[Ctrl+c], kbd:[c]) può essere usato per
-terminare l'attributo.
+// TRANSLATION MISSING
+The same code (without number for kbd:[Ctrl+c], kbd:[c] and kbd:[Ctrl+c], kbd:[d])
+can be used to stop the attribute.
 
 I codici colore per kbd:[Ctrl+c], kbd:[c] sono:
 
@@ -1720,6 +1728,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | Tasti                 | Descrizione | Comando
 | kbd:[Ctrl+c], kbd:[b] | Inserisce il codice per il testo in grassetto. | `+/input insert \x02+`
 | kbd:[Ctrl+c], kbd:[c] | Inserisce il codice per il testo colorato. | `+/input insert \x03+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d] | Insert code for colored text (RGB color, as hexadecimal). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | Inserisce il codice per il testo in corsivo. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | Inserisce il codice per il reset dei colori. | `+/input insert \x0F+`
 | kbd:[Ctrl+c], kbd:[v] | Inserisce il codice per l'inversione dei colori. | `+/input insert \x16+`

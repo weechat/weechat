@@ -140,6 +140,7 @@ gui_key_default_bindings (int context, int create_option)
         BIND("ctrl-s,ctrl-u",     "/allbuf /buffer set unread");
         BIND("ctrl-c,b",          "/input insert \\x02");
         BIND("ctrl-c,c",          "/input insert \\x03");
+        BIND("ctrl-c,d",          "/input insert \\x04");
         BIND("ctrl-c,i",          "/input insert \\x1D");
         BIND("ctrl-c,o",          "/input insert \\x0F");
         BIND("ctrl-c,v",          "/input insert \\x16");

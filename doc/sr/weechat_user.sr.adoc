@@ -950,6 +950,13 @@ WeeChat командна линија (на дну прозора) вам омо
 | kbd:[Ctrl+c], kbd:[c],
   kbd:[xx], kbd:[,],
   kbd:[yy]               | Текст у боји `xx` и позадина у `yy` (погледајте листу боја испод).
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx]           | Text color `xxxxxx` (RGB as hexadecimal, for example `FF0000` for red).
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx], kbd:[,],
+  kbd:[yyyyyy]           | Text color `xxxxxx` and background `yyyyyy` (RGB as hexadecimal).
 | kbd:[Ctrl+c], kbd:[i]  | Текст у курзиву.
 | kbd:[Ctrl+c], kbd:[o]  | Искључивање боје и атрибута.
 | kbd:[Ctrl+c], kbd:[v]  | Обрнути видео (боје текста и позадине се замењују једна са другом).
@@ -957,7 +964,9 @@ WeeChat командна линија (на дну прозора) вам омо
 |===
 
 [NOTE]
-Исти кôд (без броја за kbd:[Ctrl+c], kbd:[c]) може да се употреби за заустављање атрибута.
+// TRANSLATION MISSING
+The same code (without number for kbd:[Ctrl+c], kbd:[c] and kbd:[Ctrl+c], kbd:[d])
+can be used to stop the attribute.
 
 Кодови боја за kbd:[Ctrl+c], kbd:[c] су:
 
@@ -1494,7 +1503,9 @@ WeeChat нуди доста подразумеваних тастерских п
 |===
 | Тастер                | Опис | Команда
 | kbd:[Ctrl+c], kbd:[b] | Уметање кода за подебљани текст. | `+/input insert \x02+`
-| kbd:[Ctrl+c], kbd:[c] | Уметање кода за обојени текст. | `+/input insert \x03+`
+| kbd:[Ctrl+c
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d] | Insert code for colored text (RGB color, as hexadecimal). | `+/input insert \x04+`], kbd:[c] | Уметање кода за обојени текст. | `+/input insert \x03+`
 | kbd:[Ctrl+c], kbd:[i] | Уметање кода за текст у курзиву. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | Уметање кода за ресет боје. | `+/input insert \x0F+`
 | kbd:[Ctrl+c], kbd:[v] | Уметање кода за обрнуту боју. | `+/input insert \x16+`
