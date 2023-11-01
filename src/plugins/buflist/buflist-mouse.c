@@ -62,6 +62,7 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     ptr_bar_item_line = weechat_hashtable_get (info, "_bar_item_line");
     if (!ptr_bar_item_line)
         goto end;
+    error = NULL;
     item_line = strtol (ptr_bar_item_line, &error, 10);
     if (!error || error[0])
         goto end;
@@ -250,9 +251,11 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
         return WEECHAT_RC_OK;
     ptr_buffer = (struct t_gui_buffer *)value;
 
+    error = NULL;
     number = strtol (ptr_number, &error, 10);
     if (!error || error[0])
         return WEECHAT_RC_OK;
+    error = NULL;
     number2 = strtol (ptr_number2, &error, 10);
     if (!error || error[0])
         return WEECHAT_RC_OK;

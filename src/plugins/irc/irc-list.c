@@ -281,6 +281,7 @@ irc_list_channel_match_filter (struct t_irc_server *server,
     else if (strncmp (server->list->filter, "u:>", 3) == 0)
     {
         /* filter by users (> N)*/
+        error = NULL;
         number = strtol (server->list->filter + 3, &error, 10);
         if (error && !error[0] && channel->users > (int)number)
             return 1;
@@ -288,6 +289,7 @@ irc_list_channel_match_filter (struct t_irc_server *server,
     else if (strncmp (server->list->filter, "u:<", 3) == 0)
     {
         /* filter by users (< N)*/
+        error = NULL;
         number = strtol (server->list->filter + 3, &error, 10);
         if (error && !error[0] && channel->users < (int)number)
             return 1;
@@ -295,6 +297,7 @@ irc_list_channel_match_filter (struct t_irc_server *server,
     else if (strncmp (server->list->filter, "u:", 2) == 0)
     {
         /* filter by users */
+        error = NULL;
         number = strtol (server->list->filter + 2, &error, 10);
         if (error && !error[0] && channel->users >= (int)number)
             return 1;
@@ -437,6 +440,7 @@ irc_list_parse_messages (struct t_irc_server *server, const char *output)
                     ptr_name++;
                 }
                 channel->name2 = strdup (ptr_name);
+                error = NULL;
                 number = strtol (params[2], &error, 10);
                 channel->users = (error && !error[0]) ? number : 0;
                 channel->topic = (num_params > 3) ?

@@ -63,6 +63,7 @@ xfer_network_convert_integer_to_ipv4 (const char *str_address)
     if (!str_address || !str_address[0])
         return NULL;
 
+    error = NULL;
     number = strtoll (str_address, &error, 10);
     if (!error || error[0] || (number <= 0) || (number > UINT32_MAX))
         return NULL;

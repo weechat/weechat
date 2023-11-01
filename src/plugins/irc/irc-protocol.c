@@ -421,6 +421,7 @@ irc_protocol_parse_time (const char *time)
             pos = strchr (time2, ',');
             if (pos)
                 pos[0] = '\0';
+            error = NULL;
             value = strtol (time2, &error, 10);
             if (error && !error[0] && (value >= 0))
                 time_value = (int)value;
