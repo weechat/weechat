@@ -736,6 +736,7 @@ COMMAND_CALLBACK(buffer)
                     else
                     {
                         ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+                        error = NULL;
                         (void) strtol (argv[i], &error, 10);
                         clear_number = (error && !error[0]);
                     }
@@ -971,6 +972,7 @@ COMMAND_CALLBACK(buffer)
                     ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
                     if (ptr_buffer)
                     {
+                        error = NULL;
                         (void) strtol (argv[i], &error, 10);
                         if (error && !error[0])
                         {
@@ -1009,6 +1011,7 @@ COMMAND_CALLBACK(buffer)
                     ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
                     if (ptr_buffer)
                     {
+                        error = NULL;
                         (void) strtol (argv[i], &error, 10);
                         if (error && !error[0])
                         {

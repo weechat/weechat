@@ -413,6 +413,7 @@ eval_string_cut (const char *text, int screen)
     if (!tmp)
         return strdup ("");
 
+    error = NULL;
     number = strtol (tmp, &error, 10);
     if (!error || error[0] || (number < 0))
     {
@@ -453,6 +454,7 @@ eval_string_repeat (const char *text)
     if (!tmp)
         return strdup ("");
 
+    error = NULL;
     number = strtol (tmp, &error, 10);
     if (!error || error[0] || (number < 0))
     {
@@ -538,6 +540,7 @@ eval_string_split (const char *text)
     }
     else
     {
+        error = NULL;
         number = strtol (str_number, &error, 10);
         if (!error || error[0] || (number == 0))
             goto end;
@@ -578,6 +581,7 @@ eval_string_split (const char *text)
             }
             else if (strncmp (list_flags[i], "max_items=", 10) == 0)
             {
+                error = NULL;
                 max_items = strtol (list_flags[i] + 10, &error, 10);
                 if (!error || error[0] || (max_items < 0))
                     goto end;
@@ -686,6 +690,7 @@ eval_string_split_shell (const char *text)
     }
     else
     {
+        error = NULL;
         number = strtol (str_number, &error, 10);
         if (!error || error[0] || (number == 0))
             goto end;
@@ -766,6 +771,7 @@ eval_string_regex_group (const char *text, struct t_eval_context *eval_context)
     }
     else
     {
+        error = NULL;
         number = strtol (text, &error, 10);
         if (!error || error[0])
             number = -1;
@@ -897,6 +903,7 @@ eval_string_base_encode (const char *text)
     if (!base)
         goto end;
 
+    error = NULL;
     number = strtol (base, &error, 10);
     if (!error || error[0])
         goto end;
@@ -946,6 +953,7 @@ eval_string_base_decode (const char *text)
     if (!base)
         goto end;
 
+    error = NULL;
     number = strtol (base, &error, 10);
     if (!error || error[0])
         goto end;
@@ -1087,6 +1095,7 @@ eval_string_random (const char *text)
     tmp = string_strndup (text, pos - text);
     if (!tmp)
         goto error;
+    error = NULL;
     min_number = strtoll (tmp, &error, 10);
     if (!error || error[0])
     {
@@ -1095,6 +1104,7 @@ eval_string_random (const char *text)
     }
     free (tmp);
 
+    error = NULL;
     max_number = strtoll (pos + 1, &error, 10);
     if (!error || error[0])
         goto error;
@@ -2618,6 +2628,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         ptr_value = hashtable_get (options, "debug");
         if (ptr_value && ptr_value[0])
         {
+            error = NULL;
             number = strtol (ptr_value, &error, 10);
             if (error && !error[0] && (number >= 1))
             {

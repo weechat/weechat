@@ -3279,6 +3279,7 @@ string_parse_size (const char *size)
     if (!str_number)
         goto end;
 
+    error = NULL;
     number = strtoll (str_number, &error, 10);
     if (!error || error[0])
         goto end;

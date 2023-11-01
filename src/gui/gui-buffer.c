@@ -2145,6 +2145,7 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer, const char *argument)
     else if (argument[0] == '-')
     {
         /* move the unread marker N lines towards the first line */
+        error = NULL;
         number = strtol (argument, &error, 10);
         if (error && !error[0] && (number < 0))
         {
@@ -2172,6 +2173,7 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer, const char *argument)
     else if (argument[0] == '+')
     {
         /* move the unread marker N lines towards the last line */
+        error = NULL;
         number = strtol (argument, &error, 10);
         if (error && !error[0] && (number > 0))
         {
@@ -2197,6 +2199,7 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer, const char *argument)
     else
     {
         /* move the unread marker N lines from the end towards the first line */
+        error = NULL;
         number = strtol (argument, &error, 10);
         if (error && !error[0] && (number > 0))
         {
@@ -2885,6 +2888,7 @@ gui_buffer_search_by_number_or_name (const char *string)
 
     ptr_buffer = NULL;
 
+    error = NULL;
     number = strtol (string, &error, 10);
     if (error && !error[0])
     {

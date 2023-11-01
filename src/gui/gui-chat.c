@@ -1079,6 +1079,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
         hashtable_get (hashtable, "_chat_line_date") : NULL;
     if (date)
     {
+        error = NULL;
         number = strtol (date, &error, 10);
         if (error && !error[0])
         {

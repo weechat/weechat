@@ -146,6 +146,7 @@ hook_process_hashtable (struct t_weechat_plugin *plugin,
         ptr_value = hashtable_get (options, "buffer_flush");
         if (ptr_value && ptr_value[0])
         {
+            error = NULL;
             number = strtol (ptr_value, &error, 10);
             if (error && !error[0]
                 && (number >= 1) && (number <= HOOK_PROCESS_BUFFER_SIZE))
