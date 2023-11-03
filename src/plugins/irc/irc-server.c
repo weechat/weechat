@@ -86,7 +86,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "tls",                  "on"                      },
   { "tls_cert",             ""                        },
   { "tls_password",         ""                        },
-  { "tls_priorities",       "NORMAL:-VERS-SSL3.0"     },
+  { "tls_priorities",       "NORMAL"                  },
   { "tls_dhkey_size",       "2048"                    },
   { "tls_fingerprint",      ""                        },
   { "tls_verify",           "on"                      },
