@@ -22,6 +22,7 @@ New features::
   * irc: add support of RGB colors in messages, add option irc.color.term_remap (issue #2025)
   * irc: add tags "nick_xxx" and "host_xxx" in all messages, including self and server messages
   * irc: add option irc.look.ignore_tag_messages (issue #989)
+  * relay: change default value of option relay.network.tls_priorities to `NORMAL`
   * trigger: rename local variable "trigger_filter" to "filter" on monitor buffer (issue #2037)
 
 Bug fixes::
