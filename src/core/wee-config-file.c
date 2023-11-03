@@ -2232,7 +2232,7 @@ config_file_option_unset (struct t_config_option *option)
         }
         else
         {
-            config_file_option_free (option, 0);
+            config_file_option_free (option, 1);
             rc = WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
         }
 
@@ -3956,7 +3956,7 @@ config_file_section_free_options (struct t_config_section *section)
 
     while (section->options)
     {
-        config_file_option_free (section->options, 0);
+        config_file_option_free (section->options, 1);
     }
 }
 
