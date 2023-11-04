@@ -75,8 +75,8 @@ char *gui_key_modifier_list[] =
 { "meta-", "ctrl-", "shift-", NULL };
 
 char *gui_key_alias_list[] =
-{ "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11",
-  "f12", "f13", "f14", "f15", "f16", "f17", "f18", "f19", "f20",
+{ "f10", "f11", "f12", "f13", "f14", "f15", "f16", "f17", "f18", "f19", "f20",
+  "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9",
   "home", "insert", "delete", "end", "backspace", "pgup", "pgdn",
   "up", "down", "right", "left", "tab", "return", "comma", "space", NULL };
 
