@@ -27,6 +27,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix value of buffer variable "num_history" when the value defined in option weechat.history.max_commands is reached
   * core: remove incorrect warning when binding keys kbd:[F10] to kbd:[F20] (issue #2039)
   * core: call hook config when options are removed
   * core: display an error with command `/history N` when N is not a valid integer

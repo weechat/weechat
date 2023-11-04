@@ -88,7 +88,7 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
                     free (buffer->last_history->text);
                 free (buffer->last_history);
                 buffer->last_history = ptr_history;
-                buffer->num_history++;
+                buffer->num_history--;
             }
         }
     }
