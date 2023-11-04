@@ -616,6 +616,13 @@ relay_irc_signal_irc_disc_cb (const void *pointer, void *data,
 
     if (strcmp ((char *)signal_data, client->protocol_args) == 0)
     {
+        relay_irc_sendf (client,
+                         ":%s ERROR :WeeChat: disconnected from server \"%s\"",
+                         RELAY_IRC_DATA(client, address),
+                         client->protocol_args);
+        relay_irc_sendf (client,
+                         ":%s ERROR :Closing Link",
+                         RELAY_IRC_DATA(client, address));
         relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
     }
 
