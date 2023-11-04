@@ -1053,18 +1053,32 @@ TEST(GuiKey, SeemsValid)
     LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-cb"));
     LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-updown"));
     LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "@chat:button1"));
+    LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-test"));
+    LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "ctrl-test"));
+    LONGS_EQUAL(0, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "shift-test"));
 
     /* valid keys */
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "a"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "A"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "é"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "/"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "f1"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "f10"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "f11"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "f2"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "f20"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-a"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-ctrl-a"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-c,b"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "meta-w,meta-up"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "ctrl-left"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "ctrl-u"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "shift-home"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "shift-f1"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "shift-f10"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "shift-f11"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "shift-f2"));
+    LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_DEFAULT, "shift-f20"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_CURSOR, "@chat:q"));
     LONGS_EQUAL(1, gui_key_seems_valid (GUI_KEY_CONTEXT_MOUSE, "@chat:button1"));
 }
