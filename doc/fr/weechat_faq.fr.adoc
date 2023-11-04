@@ -611,6 +611,24 @@ Pour les réparer, quittez WeeChat, supprimez toutes les sections `[key*]` de
 weechat.conf et démarrez WeeChat à nouveau : toutes les touches par défaut
 seront recréées.
 
+[[key_f11]]
+=== La touche F11 maximise la fenêtre du terminal, comment puis-je faire défiler la liste de pseudos vers le haut ?
+
+La touche kbd:[F11] est fréquemment utilisée par les terminaux pour maximiser
+la fenêtre, et kbd:[F11]/kbd:[F12] sont les touches par défaut dans WeeChat
+pour faire défiler la liste des pseudos.
+
+Vous pouvez associer d'autres touches, par exemple kbd:[Shift+F11] et kbd:[Shift+F12],
+avec WeeChat ≥ 4.0.0 :
+
+----
+/key bind shift-f11 /bar scroll nicklist * -100%
+/key bind shift-f12 /bar scroll nicklist * +100%
+----
+
+Une autre solution est d'activer la souris (touche : kbd:[Alt+m]) et faire défiler
+avec la roulette de la souris (voir aussi les questions sur la <<mouse,souris>>).
+
 [[customize_key_bindings]]
 === Comment puis-je configurer les raccourcis clavier ?
 

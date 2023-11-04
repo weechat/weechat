@@ -621,6 +621,24 @@ die von einer Weechat Version ≥ 4.0.0 erstellt wurde, sind die Tastennamen ung
 Um dies zu reparieren, muss WeeChat beendet und alle Einträge aus dem Abschnitt `[key*]` innerhalb der weechat.conf entfernt werden.
 Wenn WeeChat erneut gestartet wird, wird die Standardtastenbelegung neu erstellt.
 
+// TRANSLATION MISSING
+[[key_f11]]
+=== Key F11 maximizes the terminal window, how can I scroll up the nicklist?
+
+The key kbd:[F11] is commonly used by terminals to maximize the window, and
+kbd:[F11]/kbd:[F12] are the default keys in WeeChat to scroll the nicklist.
+
+You can bind other keys, for example kbd:[Shift+F11] and kbd:[Shift+F12],
+with WeeChat ≥ 4.0.0:
+
+----
+/key bind shift-f11 /bar scroll nicklist * -100%
+/key bind shift-f12 /bar scroll nicklist * +100%
+----
+
+Other solution is to enable mouse (key: kbd:[Alt+m]) and scroll with the mouse
+wheel (see also questions about <<mouse,mouse>>).
+
 [[customize_key_bindings]]
 === Wie kann ich die Tastaturbelegung anpassen?
 
