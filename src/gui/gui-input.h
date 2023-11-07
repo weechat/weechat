@@ -80,6 +80,7 @@ extern void gui_input_history_local_previous (struct t_gui_buffer *buffer);
 extern void gui_input_history_local_next (struct t_gui_buffer *buffer);
 extern void gui_input_history_global_previous (struct t_gui_buffer *buffer);
 extern void gui_input_history_global_next (struct t_gui_buffer *buffer);
+extern void gui_input_history_use_get_next (struct t_gui_buffer *buffer);
 extern void gui_input_grab_key (struct t_gui_buffer *buffer, int command,
                                 const char *delay);
 extern void gui_input_grab_mouse (struct t_gui_buffer *buffer, int area);

@@ -1917,6 +1917,8 @@ search text in commands history).
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Stop search and use matching input. | `+/input search_stop_here+`
 // TRANSLATION MISSING
+| kbd:[Ctrl+o]   | Execute the command found in history and insert the next one in the command line. | `+/input history_use_get_next+`
+// TRANSLATION MISSING
 | kbd:[Ctrl+q]   | Stop search and restore input to its initial value. | `+/input search_stop+`
 |===
 

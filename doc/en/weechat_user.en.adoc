@@ -1583,6 +1583,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]        | Execute command or send message (in search mode: stop search). | `+/input return+`
+| kbd:[Ctrl+o]        | Execute the command found in history and insert the next one in the command line. | `+/input history_use_get_next+`
 | kbd:[Alt+Enter]     | Insert a newline. | `+/input insert \n+`
 | kbd:[Alt+d]         | Delete next word in command line (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
 | kbd:[Alt+k]         | Grab a key and insert its code (and command bound if key exists) in command line. | `+/input grab_key_command+`
@@ -1774,6 +1775,7 @@ search text in commands history).
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Stop search and use matching input. | `+/input search_stop_here+`
+| kbd:[Ctrl+o]   | Execute the command found in history and insert the next one in the command line. | `+/input history_use_get_next+`
 | kbd:[Ctrl+q]   | Stop search and restore input to its initial value. | `+/input search_stop+`
 |===
 

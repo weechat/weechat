@@ -3593,6 +3593,8 @@ COMMAND_CALLBACK(input)
         gui_input_history_global_previous (buffer);
     else if (string_strcmp (argv[1], "history_global_next") == 0)
         gui_input_history_global_next (buffer);
+    else if (string_strcmp (argv[1], "history_use_get_next") == 0)
+        gui_input_history_use_get_next (buffer);
     else if (string_strcmp (argv[1], "grab_key") == 0)
     {
         gui_input_grab_key (buffer,
@@ -8524,6 +8526,9 @@ command_init ()
             N_("> raw[history_next]: recall next command in current buffer history"),
             N_("> raw[history_global_previous]: recall previous command in global history"),
             N_("> raw[history_global_next]: recall next command in global history"),
+            N_("> raw[history_use_get_next]: send the current history entry "
+               "(found with search or recalled with \"up\"key) and insert the "
+               "next history entry in the command line without sending it"),
             N_("> raw[grab_key]: grab a key (optional argument: delay for end of grab, "
                "default is 500 milliseconds)"),
             N_("> raw[grab_key_command]: grab a key with its associated command (optional "
@@ -8554,7 +8559,7 @@ command_init ()
         "move_previous_char || move_next_char || move_previous_word || "
         "move_next_word || move_previous_line || move_next_line || "
         "history_previous || history_next || history_global_previous || "
-        "history_global_next || "
+        "history_global_next || history_use_get_next || "
         "grab_key || grab_key_command || "
         "grab_mouse || grab_mouse_area || "
         "insert || send",

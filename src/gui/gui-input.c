@@ -1804,6 +1804,54 @@ gui_input_history_global_next (struct t_gui_buffer *buffer)
 }
 
 /*
+ * Sends the current history entry (found with search or recalled with
+ * "up" key) and inserts the next one in the command line without sending it
+ * (default key: ctrl-o, in contexts "default" and "histsearch").
+ */
+
+void
+gui_input_history_use_get_next (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *window;
+    struct t_gui_history *ptr_history, **ptr_ptr_history;;
+
+    window = gui_window_search_with_buffer (buffer);
+    if (!window)
+        return;
+
+    ptr_history = NULL;
+    ptr_ptr_history = NULL;
+    if (window->buffer->text_search == GUI_BUFFER_SEARCH_HISTORY)
+    {
+        ptr_history = window->buffer->text_search_ptr_history;
+        if (!ptr_history)
+            return;
+        ptr_ptr_history = (window->buffer->text_search_history == GUI_BUFFER_SEARCH_HISTORY_LOCAL) ?
+            &(window->buffer->ptr_history) : &gui_history_ptr;
+        gui_window_search_stop (window, 1);
+    }
+    else if (window->buffer->ptr_history)
+    {
+        ptr_history = window->buffer->ptr_history;
+        ptr_ptr_history = &(window->buffer->ptr_history);
+    }
+    else if (gui_history_ptr)
+    {
+        ptr_history = gui_history_ptr;
+        ptr_ptr_history = &gui_history_ptr;
+    }
+
+    gui_input_return (buffer);
+
+    if (ptr_history && ptr_history->prev_history)
+    {
+        gui_input_insert_string (buffer, ptr_history->prev_history->text);
+        if (ptr_ptr_history)
+            *ptr_ptr_history = ptr_history->prev_history;
+    }
+}
+
+/*
  * Initializes "grab key mode" (next key will be inserted into input buffer)
  * (default key: alt-k).
  */

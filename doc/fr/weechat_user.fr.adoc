@@ -1810,6 +1810,7 @@ est pressé pour chercher du texte dans l'historique des commandes).
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Arrêter la recherche et utiliser la commande trouvée. | `+/input search_stop_here+`
+| kbd:[Ctrl+o]   | Exécuter la commande trouvée dans l'historique et insérer la suivante sur la ligne de commande. | `+/input history_use_get_next+`
 | kbd:[Ctrl+q]   | Arrêter la recherche et restaurer la ligne de commande à sa valeur initiale. | `+/input search_stop+`
 |===
 

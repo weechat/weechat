@@ -124,6 +124,7 @@ gui_key_default_bindings (int context, int create_option)
         BIND("down",              "/input history_next");
         BIND("ctrl-up",           "/input history_global_previous");
         BIND("ctrl-down",         "/input history_global_next");
+        BIND("ctrl-o",            "/input history_use_get_next");
         BIND("shift-up",          "/input move_previous_line");
         BIND("shift-down",        "/input move_next_line");
         BIND("meta-a",            "/buffer jump smart");
@@ -219,6 +220,10 @@ gui_key_default_bindings (int context, int create_option)
         BIND("up",     "/input search_previous");
         BIND("ctrl-s", "/input search_next");
         BIND("down",   "/input search_next");
+        if (context == GUI_KEY_CONTEXT_HISTSEARCH)
+        {
+            BIND("ctrl-o", "/input history_use_get_next");
+        }
     }
     else if (context == GUI_KEY_CONTEXT_CURSOR)
     {
