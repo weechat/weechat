@@ -661,11 +661,14 @@ inl:
         input_buffer_1st_display: 0
         num_history: 0
         text_search: 0
+        text_search_direction: 0
         text_search_exact: 0
         text_search_regex: 0
         text_search_regex_compiled: '0x0'
         text_search_where: 0
+        text_search_history: 0
         text_search_found: 0
+        text_search_ptr_history: '0x0'
         text_search_input: None
         highlight_words: None
         highlight_disable_regex: None

@@ -1003,10 +1003,32 @@ La barra _input_ ha i seguenti elementi predefiniti:
 | input_prompt | `[@Flashy(i)]`                                  | Prompt per l'input, for irc: nick and modes (mode "+i" means invisible on libera).
 | away         | `(assente)`                                     | Indicatore di assenza.
 // TRANSLATION MISSING
-| input_search | `[Search (~ str,msg)]`                          | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages).
+| input_search | `[Search lines (~ str,msg)]`                    | Search indicator (see below).
 | input_paste  | `[Incollare 7 righe ? [ctrl-y] Sì [ctrl-n] No]` | Chiede all'utente se incollare le righe.
 | input_text   | `ciao peter!`                                   | Testo in input.
 |===
+
+// TRANSLATION MISSING
+There are two search modes:
+
+// TRANSLATION MISSING
+* search in lines, for example `[Search lines (~ str,msg)]`, with the following info:
+** `~`: case insensitive
+** `==`: case sensitive
+** `str`: search string
+** `regex`: search regular expression
+** `msg`: search in messages
+** `pre`: search in prefixes
+** `pre\|msg`: search in prefixes and messages.
+* search in commands history, for example `[Search command (~ str,local)]`,
+  with the following info:
+** `~`: case insensitive
+** `==`: case sensitive
+** `str`: search string
+** `regex`: search regular expression
+** `local`: search in buffer local history
+** `global`: search in global history.
+
 
 La barra _nicklist_ ha i seguenti elementi predefiniti:
 
@@ -1766,7 +1788,10 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Tasti                          | Descrizione | Comando
-| kbd:[Ctrl+r]                   | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>). | `+/input search_text_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
 | kbd:[Ctrl+s], kbd:[Ctrl+u]     | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `+/allbuf /buffer set unread+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/buffer switch+`
@@ -1888,25 +1913,59 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 [[key_bindings_search_context]]
 === Search context
 
-Questi tasti sono usati nel contesto "search" (quando viene digitato
-kbd:[Ctrl+r] per cercare del testo nel buffer).
+// TRANSLATION MISSING
+These keys are used in context "search" (when kbd:[Ctrl+s] is pressed to search
+text in buffer lines).
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Tasti          | Descrizione | Comando
 // TRANSLATION MISSING
-| kbd:[Ctrl+r]   | Switch search type: string (default), regular expression. | `+/input search_switch_regex+`
+| kbd:[Ctrl+x]   | Switch search type: string (default), regular expression. | `+/input search_switch_regex+`
 | kbd:[Alt+c]    | Passa alla ricerca esatta. | `+/input search_switch_case+`
 // TRANSLATION MISSING
 | kbd:[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages. | `+/input search_switch_where+`
-| kbd:[↑]        | Cerca riga precedente. | `+/input search_previous+`
-| kbd:[↓]        | Cerca riga successiva. | `+/input search_next+`
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Cerca riga precedente. | `+/input search_previous+`
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Cerca riga successiva. | `+/input search_next+`
 // TRANSLATION MISSING
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Stop search at current position. | `+/input search_stop_here+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+q]   | Stop search and reset scroll to pre-text search state. | `+/input search_stop+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_histsearch_context]]
+=== History search context
+
+// TRANSLATION MISSING
+These keys are used in context "histsearch" (when kbd:[Ctrl+r] is pressed to
+search text in commands history).
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti          | Descrizione | Comando
+// TRANSLATION MISSING
+| kbd:[Ctrl+x]   | Switch search type: string (default), regular expression. | `+/input search_switch_regex+`
+// TRANSLATION MISSING
+| kbd:[Alt+c]    | Switch exact case for search. | `+/input search_switch_case+`
+// TRANSLATION MISSING
+| kbd:[Tab]      | Switch search in: buffer local history (default), global history. | `+/input search_switch_where+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Search in previous (older) history entries. | `+/input search_previous+`
+  // TRANSLATION MISSING
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Search in next (newer) history entries. | `+/input search_next+`
+// TRANSLATION MISSING
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Stop search and use matching input. | `+/input search_stop_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and restore input to its initial value. | `+/input search_stop+`
 |===
 
 // TRANSLATION MISSING

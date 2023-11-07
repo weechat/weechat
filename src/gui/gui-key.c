@@ -66,7 +66,7 @@ int gui_keys_count[GUI_KEY_NUM_CONTEXTS];            /* keys number         */
 int gui_default_keys_count[GUI_KEY_NUM_CONTEXTS];    /* default keys number */
 
 char *gui_key_context_string[GUI_KEY_NUM_CONTEXTS] =
-{ "default", "search", "cursor", "mouse" };
+{ "default", "search", "histsearch", "cursor", "mouse" };
 
 char *gui_key_focus_string[GUI_KEY_NUM_FOCUS] =
 { "*", "chat", "bar", "item" };
@@ -173,9 +173,13 @@ gui_key_get_current_context ()
     if (gui_cursor_mode)
         return GUI_KEY_CONTEXT_CURSOR;
 
-    if (gui_current_window
-        && (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
-        return GUI_KEY_CONTEXT_SEARCH;
+    if (gui_current_window)
+    {
+        if (gui_current_window->buffer->text_search == GUI_BUFFER_SEARCH_LINES)
+            return GUI_KEY_CONTEXT_SEARCH;
+        if (gui_current_window->buffer->text_search == GUI_BUFFER_SEARCH_HISTORY)
+            return GUI_KEY_CONTEXT_HISTSEARCH;
+    }
 
     return GUI_KEY_CONTEXT_DEFAULT;
 }
@@ -2437,7 +2441,7 @@ gui_key_pressed (const char *key_str)
             /* look for key combo in key table for current buffer */
             ptr_key = gui_key_search_part (
                 gui_current_window->buffer,
-                GUI_KEY_CONTEXT_DEFAULT,
+                context,
                 (const char **)chunks1, chunks1_count,
                 (const char **)chunks2, chunks2_count,
                 &exact_match);
@@ -2446,21 +2450,23 @@ gui_key_pressed (const char *key_str)
             {
                 ptr_key = gui_key_search_part (
                     NULL,
-                    GUI_KEY_CONTEXT_DEFAULT,
+                    context,
                     (const char **)chunks1, chunks1_count,
                     (const char **)chunks2, chunks2_count,
                     &exact_match);
             }
             break;
         case GUI_KEY_CONTEXT_SEARCH:
+        case GUI_KEY_CONTEXT_HISTSEARCH:
             ptr_key = gui_key_search_part (
                 NULL,
-                GUI_KEY_CONTEXT_SEARCH,
+                context,
                 (const char **)chunks1, chunks1_count,
                 (const char **)chunks2, chunks2_count,
                 &exact_match);
             if (!ptr_key)
             {
+                /* fallback to default context */
                 ptr_key = gui_key_search_part (
                     NULL,
                     GUI_KEY_CONTEXT_DEFAULT,
@@ -2472,7 +2478,7 @@ gui_key_pressed (const char *key_str)
         case GUI_KEY_CONTEXT_CURSOR:
             ptr_key = gui_key_search_part (
                 NULL,
-                GUI_KEY_CONTEXT_CURSOR,
+                context,
                 (const char **)chunks1, chunks1_count,
                 (const char **)chunks2, chunks2_count,
                 &exact_match);

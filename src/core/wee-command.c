@@ -3525,6 +3525,8 @@ COMMAND_CALLBACK(input)
         gui_input_search_text_here (buffer);
     else if (string_strcmp (argv[1], "search_text") == 0)
         gui_input_search_text (buffer);
+    else if (string_strcmp (argv[1], "search_history") == 0)
+        gui_input_search_history (buffer);
     else if (string_strcmp (argv[1], "search_previous") == 0)
         gui_input_search_previous (buffer);
     else if (string_strcmp (argv[1], "search_next") == 0)
@@ -8481,6 +8483,7 @@ command_init ()
             N_("> raw[complete_previous]: complete word with previous completion"),
             N_("> raw[search_text_here]: search text in buffer at current position"),
             N_("> raw[search_text]: search text in buffer"),
+            N_("> raw[search_history]: search text in command line history"),
             N_("> raw[search_switch_case]: switch exact case for search"),
             N_("> raw[search_switch_regex]: switch search type: string/regular expression"),
             N_("> raw[search_switch_where]: switch search in messages/prefixes"),
@@ -8535,9 +8538,9 @@ command_init ()
             N_("This command is used by key bindings or plugins.")),
         "return || split_return || "
         "complete_next || complete_previous || search_text_here || "
-        "search_text || search_switch_case || search_switch_regex || "
-        "search_switch_where || search_previous || search_next || "
-        "search_stop_here || search_stop || "
+        "search_text || search_history || search_switch_case || "
+        "search_switch_regex || search_switch_where || search_previous || "
+        "search_next || search_stop_here || search_stop || "
         "delete_previous_char || delete_next_char || delete_previous_word || "
         "delete_previous_word_whitespace || delete_next_word || "
         "delete_beginning_of_line || delete_beginning_of_input || "

@@ -83,7 +83,8 @@ gui_key_default_bindings (int context, int create_option)
         BIND("meta-return",       "/input insert \\n");
         BIND("tab",               "/input complete_next");
         BIND("shift-tab",         "/input complete_previous");
-        BIND("ctrl-r",            "/input search_text_here");
+        BIND("ctrl-r",            "/input search_history");
+        BIND("ctrl-s",            "/input search_text_here");
         BIND("backspace",         "/input delete_previous_char");
         BIND("ctrl-_",            "/input undo");
         BIND("meta-_",            "/input redo");
@@ -206,14 +207,17 @@ gui_key_default_bindings (int context, int create_option)
             BIND(key_str, command);
         }
     }
-    else if (context == GUI_KEY_CONTEXT_SEARCH)
+    else if ((context == GUI_KEY_CONTEXT_SEARCH)
+             || (context == GUI_KEY_CONTEXT_HISTSEARCH))
     {
         BIND("return", "/input search_stop_here");
         BIND("ctrl-q", "/input search_stop");
         BIND("meta-c", "/input search_switch_case");
-        BIND("ctrl-r", "/input search_switch_regex");
+        BIND("ctrl-x", "/input search_switch_regex");
         BIND("tab",    "/input search_switch_where");
+        BIND("ctrl-r", "/input search_previous");
         BIND("up",     "/input search_previous");
+        BIND("ctrl-s", "/input search_next");
         BIND("down",   "/input search_next");
     }
     else if (context == GUI_KEY_CONTEXT_CURSOR)
@@ -414,7 +418,7 @@ gui_key_flush (int paste)
                 gui_key_last_key_pressed_sent = i;
             }
 
-            if (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+            if (gui_current_window->buffer->text_search != GUI_BUFFER_SEARCH_DISABLED)
                 input_old = (gui_current_window->buffer->input_buffer) ?
                     strdup (gui_current_window->buffer->input_buffer) : strdup ("");
             else
@@ -434,17 +438,17 @@ gui_key_flush (int paste)
                 undo_done = 1;
             }
 
-            /* incremental text search in buffer */
+            /* incremental text search in buffer lines or command line history */
             if ((old_buffer == gui_current_window->buffer)
-                && (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+                && ((gui_current_window->buffer->text_search == GUI_BUFFER_SEARCH_LINES)
+                    || (gui_current_window->buffer->text_search == GUI_BUFFER_SEARCH_HISTORY))
                 && ((input_old == NULL)
                     || (gui_current_window->buffer->input_buffer == NULL)
                     || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
             {
                 /*
                  * if following conditions are all true, then do not search
-                 * again (search will not find any result and can take some time
-                 * on a buffer with many lines):
+                 * again (search will not find any result and can take some time):
                  * - old search was not successful
                  * - searching a string (not a regex)
                  * - current input is longer than old input
@@ -460,10 +464,7 @@ gui_key_flush (int paste)
                     && (strncmp (gui_current_window->buffer->input_buffer, input_old,
                                  strlen (input_old)) == 0))
                 {
-                    /*
-                     * do not search text in buffer, just alert about text not
-                     * found
-                     */
+                    /* do not search text, just alert about text not found */
                     if (CONFIG_BOOLEAN(config_look_search_text_not_found_alert))
                     {
                         fprintf (stderr, "\a");

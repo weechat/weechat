@@ -214,7 +214,6 @@ gui_input_search_signal (struct t_gui_buffer *buffer)
     {
         gui_window_bare_display_toggle (NULL);
     }
-
     (void) hook_signal_send ("input_search",
                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
@@ -498,7 +497,7 @@ gui_input_complete (struct t_gui_buffer *buffer)
 void
 gui_input_complete_next (struct t_gui_buffer *buffer)
 {
-    if (!buffer->input ||(buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    if (!buffer->input || (buffer->text_search != GUI_BUFFER_SEARCH_DISABLED))
         return;
 
     gui_buffer_undo_snap (buffer);
@@ -522,7 +521,7 @@ gui_input_complete_next (struct t_gui_buffer *buffer)
 void
 gui_input_complete_previous (struct t_gui_buffer *buffer)
 {
-    if (!buffer->input || (buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    if (!buffer->input || (buffer->text_search != GUI_BUFFER_SEARCH_DISABLED))
         return;
 
     gui_buffer_undo_snap (buffer);
@@ -549,9 +548,10 @@ gui_input_search_text_here (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if (window && (window->buffer->text_search == GUI_BUFFER_SEARCH_DISABLED))
     {
-        gui_window_search_start (window, window->scroll->start_line);
+        gui_window_search_start (window, GUI_BUFFER_SEARCH_LINES,
+                                 window->scroll->start_line);
         gui_input_search_signal (buffer);
     }
 }
@@ -566,9 +566,26 @@ gui_input_search_text (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if (window && (window->buffer->text_search == GUI_BUFFER_SEARCH_DISABLED))
     {
-        gui_window_search_start (window, NULL);
+        gui_window_search_start (window, GUI_BUFFER_SEARCH_LINES, NULL);
+        gui_input_search_signal (buffer);
+    }
+}
+
+/*
+ * Searches for text in buffer/global command line history.
+ */
+
+void
+gui_input_search_history (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *window;
+
+    window = gui_window_search_with_buffer (buffer);
+    if (window && (window->buffer->text_search == GUI_BUFFER_SEARCH_DISABLED))
+    {
+        gui_window_search_start (window, GUI_BUFFER_SEARCH_HISTORY, NULL);
         gui_input_search_signal (buffer);
     }
 }
@@ -619,7 +636,7 @@ gui_input_search_switch_case (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    if (window && (window->buffer->text_search != GUI_BUFFER_SEARCH_DISABLED))
     {
         window->buffer->text_search_exact ^= 1;
         gui_window_search_restart (window);
@@ -638,7 +655,7 @@ gui_input_search_switch_regex (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    if (window && (window->buffer->text_search != GUI_BUFFER_SEARCH_DISABLED))
     {
         window->buffer->text_search_regex ^= 1;
         gui_window_search_restart (window);
@@ -656,20 +673,35 @@ gui_input_search_switch_where (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
-    {
-        /* it's not possible to change that in a buffer not "formatted" */
-        if (window->buffer->type != GUI_BUFFER_TYPE_FORMATTED)
-            return;
+    if (!window)
+        return;
 
-        if (window->buffer->text_search_where == GUI_TEXT_SEARCH_IN_MESSAGE)
-            window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_PREFIX;
-        else if (window->buffer->text_search_where == GUI_TEXT_SEARCH_IN_PREFIX)
-            window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_MESSAGE | GUI_TEXT_SEARCH_IN_PREFIX;
-        else
-            window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_MESSAGE;
-        gui_window_search_restart (window);
-        gui_input_search_signal (buffer);
+    switch (window->buffer->text_search)
+    {
+        case GUI_BUFFER_SEARCH_DISABLED:
+            break;
+        case GUI_BUFFER_SEARCH_LINES:
+            /* it's not possible to change that in a buffer not "formatted" */
+            if (window->buffer->type != GUI_BUFFER_TYPE_FORMATTED)
+                return;
+            if (window->buffer->text_search_where == GUI_BUFFER_SEARCH_IN_MESSAGE)
+                window->buffer->text_search_where = GUI_BUFFER_SEARCH_IN_PREFIX;
+            else if (window->buffer->text_search_where == GUI_BUFFER_SEARCH_IN_PREFIX)
+                window->buffer->text_search_where = GUI_BUFFER_SEARCH_IN_MESSAGE | GUI_BUFFER_SEARCH_IN_PREFIX;
+            else
+                window->buffer->text_search_where = GUI_BUFFER_SEARCH_IN_MESSAGE;
+            gui_window_search_restart (window);
+            gui_input_search_signal (buffer);
+            break;
+        case GUI_BUFFER_SEARCH_HISTORY:
+            window->buffer->text_search_history =
+                (window->buffer->text_search_history == GUI_BUFFER_SEARCH_HISTORY_LOCAL) ?
+                GUI_BUFFER_SEARCH_HISTORY_GLOBAL : GUI_BUFFER_SEARCH_HISTORY_LOCAL;
+            gui_window_search_restart (window);
+            gui_input_search_signal (buffer);
+            break;
+        case GUI_BUFFER_NUM_SEARCH:
+            break;
     }
 }
 
@@ -683,10 +715,24 @@ gui_input_search_previous (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    if (!window)
+        return;
+
+    switch (window->buffer->text_search)
     {
-        window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
-        (void) gui_window_search_text (window);
+        case GUI_BUFFER_SEARCH_DISABLED:
+            break;
+        case GUI_BUFFER_SEARCH_LINES:
+            window->buffer->text_search_direction = GUI_BUFFER_SEARCH_DIR_BACKWARD;
+            (void) gui_window_search_text (window);
+            break;
+        case GUI_BUFFER_SEARCH_HISTORY:
+            window->buffer->text_search_direction = GUI_BUFFER_SEARCH_DIR_BACKWARD;
+            if (gui_window_search_text (window))
+                gui_input_search_signal (buffer);
+            break;
+        case GUI_BUFFER_NUM_SEARCH:
+            break;
     }
 }
 
@@ -700,10 +746,24 @@ gui_input_search_next (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    if (!window)
+        return;
+
+    switch (window->buffer->text_search)
     {
-        window->buffer->text_search = GUI_TEXT_SEARCH_FORWARD;
-        (void) gui_window_search_text (window);
+        case GUI_BUFFER_SEARCH_DISABLED:
+            break;
+        case GUI_BUFFER_SEARCH_LINES:
+            window->buffer->text_search_direction = GUI_BUFFER_SEARCH_DIR_FORWARD;
+            (void) gui_window_search_text (window);
+            break;
+        case GUI_BUFFER_SEARCH_HISTORY:
+            window->buffer->text_search_direction = GUI_BUFFER_SEARCH_DIR_FORWARD;
+            if (gui_window_search_text (window))
+                gui_input_search_signal (buffer);
+            break;
+        case GUI_BUFFER_NUM_SEARCH:
+            break;
     }
 }
 
@@ -717,10 +777,20 @@ gui_input_search_stop_here (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    if (!window)
+        return;
+
+    switch (window->buffer->text_search)
     {
-        gui_window_search_stop_here (window);
-        gui_input_search_signal (buffer);
+        case GUI_BUFFER_SEARCH_DISABLED:
+            break;
+        case GUI_BUFFER_SEARCH_LINES:
+        case GUI_BUFFER_SEARCH_HISTORY:
+            gui_window_search_stop (window, 1);
+            gui_input_search_signal (buffer);
+            break;
+        case GUI_BUFFER_NUM_SEARCH:
+            break;
     }
 }
 
@@ -734,10 +804,20 @@ gui_input_search_stop (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    if (!window)
+        return;
+
+    switch (window->buffer->text_search)
     {
-        gui_window_search_stop (window);
-        gui_input_search_signal (buffer);
+        case GUI_BUFFER_SEARCH_DISABLED:
+            break;
+        case GUI_BUFFER_SEARCH_LINES:
+        case GUI_BUFFER_SEARCH_HISTORY:
+            gui_window_search_stop (window, 0);
+            gui_input_search_signal (buffer);
+            break;
+        case GUI_BUFFER_NUM_SEARCH:
+            break;
     }
 }
 

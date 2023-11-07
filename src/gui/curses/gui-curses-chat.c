@@ -1505,8 +1505,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         ptr_data = (message_with_tags) ?
             message_with_tags : line->data->message;
         message_with_search = NULL;
-        if ((window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
-            && (window->buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE)
+        if ((window->buffer->text_search == GUI_BUFFER_SEARCH_LINES)
+            && (window->buffer->text_search_where & GUI_BUFFER_SEARCH_IN_MESSAGE)
             && (!window->buffer->text_search_regex
                 || window->buffer->text_search_regex_compiled))
         {
@@ -1695,7 +1695,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     else
     {
         /* display marker if line is matching user search */
-        if (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+        if (window->buffer->text_search == GUI_BUFFER_SEARCH_LINES)
         {
             if (gui_line_search_text (window->buffer, line))
             {
@@ -1765,8 +1765,8 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
     }
 
     /* emphasize text (if searching text) */
-    if ((window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
-        && (window->buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE)
+    if ((window->buffer->text_search == GUI_BUFFER_SEARCH_LINES)
+        && (window->buffer->text_search_where & GUI_BUFFER_SEARCH_IN_MESSAGE)
         && (!window->buffer->text_search_regex
             || window->buffer->text_search_regex_compiled))
     {

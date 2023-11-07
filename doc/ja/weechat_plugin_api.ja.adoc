@@ -14294,9 +14294,33 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _num_history_: コマンド履歴の数
 ** _text_search_: テキスト検索タイプ:
 *** 0: 現在検索していない
-*** 1: 後方検索 (検索方向: 最古のメッセージに向かって検索)
-*** 2: 前方検索 (検索方向: 最新のメッセージに向かって検索)
+// TRANSLATION MISSING
+*** 1: search in buffer lines
+// TRANSLATION MISSING
+*** 2: search in commands history
+// TRANSLATION MISSING
+** _text_search_direction_: direction for search:
+// TRANSLATION MISSING
+*** 0: backward search (direction: oldest messages/commands)
+// TRANSLATION MISSING
+*** 1: forward search (direction: newest messages/commands)
 ** _text_search_exact_: テキスト検索で大文字小文字を区別する場合は 1
+// TRANSLATION MISSING
+** _text_search_regex_: 1 if searching with a regular expression
+** _text_search_where_:
+*** 0: 現在検索していない
+// TRANSLATION MISSING
+*** 1: search in message
+// TRANSLATION MISSING
+*** 2: search in prefix
+// TRANSLATION MISSING
+*** 3: search in prefix and message
+** _text_search_history_:
+*** 0: 現在検索していない
+// TRANSLATION MISSING
+*** 1: search in buffer local history
+// TRANSLATION MISSING
+*** 2: search in global history
 ** _text_search_found_: テキストが見つかった場合は 1、そうでない場合は 0
 
 戻り値:
@@ -14402,6 +14426,10 @@ void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
 * _property_: プロパティ名:
 ** _plugin_: このバッファを作ったプラグインへのポインタ
    (WeeChat メインバッファの場合は NULL)
+// TRANSLATION MISSING
+** _text_search_regex_compiled_: compiled regular expression
+// TRANSLATION MISSING
+** _text_search_ptr_history_: history found
 ** _highlight_disable_regex_compiled_: コンパイル済みの正規表現 _highlight_disable_regex_
 ** _highlight_regex_compiled_: コンパイル済みの正規表現 _highlight_regex_
 

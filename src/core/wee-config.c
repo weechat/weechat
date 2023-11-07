@@ -89,7 +89,7 @@ struct t_config_section *weechat_config_section_buffer = NULL;
 struct t_config_section *weechat_config_section_notify = NULL;
 struct t_config_section *weechat_config_section_filter = NULL;
 struct t_config_section *weechat_config_section_key[GUI_KEY_NUM_CONTEXTS] = {
-    NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL, NULL,
 };
 
 /* config, startup section */
@@ -114,6 +114,7 @@ struct t_config_option *config_look_buffer_auto_renumber = NULL;
 struct t_config_option *config_look_buffer_notify_default = NULL;
 struct t_config_option *config_look_buffer_position = NULL;
 struct t_config_option *config_look_buffer_search_case_sensitive = NULL;
+struct t_config_option *config_look_buffer_search_history = NULL;
 struct t_config_option *config_look_buffer_search_force_default = NULL;
 struct t_config_option *config_look_buffer_search_regex = NULL;
 struct t_config_option *config_look_buffer_search_where = NULL;
@@ -3166,6 +3167,14 @@ config_weechat_init_options ()
             "buffer_search_case_sensitive", "boolean",
             N_("default text search in buffer: case sensitive or not"),
             NULL, 0, 0, "off", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        config_look_buffer_search_history = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "buffer_search_history", "enum",
+            N_("default text search command line history: local (buffer) or "
+               "global history"),
+            "local|global", 0, 0, "local",
+            NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_look_buffer_search_force_default = config_file_new_option (
             weechat_config_file, weechat_config_section_look,

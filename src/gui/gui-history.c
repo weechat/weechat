@@ -39,6 +39,7 @@
 #include "../plugins/plugin.h"
 #include "gui-history.h"
 #include "gui-buffer.h"
+#include "gui-input.h"
 
 
 struct t_gui_history *gui_history = NULL;
@@ -48,50 +49,103 @@ int num_gui_history = 0;
 
 
 /*
+ * Removes oldest history entry in a buffer.
+ */
+
+void
+gui_history_buffer_remove_oldest (struct t_gui_buffer *buffer)
+{
+    struct t_gui_history *ptr_history;
+
+    if (buffer->text_search_ptr_history == buffer->last_history)
+    {
+        buffer->text_search_ptr_history = NULL;
+        buffer->text_search_found = 0;
+        gui_input_search_signal (buffer);
+    }
+
+    ptr_history = buffer->last_history->prev_history;
+    if (buffer->ptr_history == buffer->last_history)
+        buffer->ptr_history = ptr_history;
+    ((buffer->last_history)->prev_history)->next_history = NULL;
+    if (buffer->last_history->text)
+        free (buffer->last_history->text);
+    free (buffer->last_history);
+    buffer->last_history = ptr_history;
+
+    buffer->num_history--;
+}
+
+/*
  * Adds a text/command to buffer's history.
  */
 
 void
 gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
 {
-    struct t_gui_history *new_history, *ptr_history;
+    struct t_gui_history *new_history;
 
     if (!string)
         return;
 
-    if (!buffer->history
-        || (buffer->history
-            && (strcmp (buffer->history->text, string) != 0)))
-    {
-        new_history = malloc (sizeof (*new_history));
-        if (new_history)
-        {
-            new_history->text = strdup (string);
-            if (buffer->history)
-                buffer->history->prev_history = new_history;
-            else
-                buffer->last_history = new_history;
-            new_history->next_history = buffer->history;
-            new_history->prev_history = NULL;
-            buffer->history = new_history;
-            buffer->num_history++;
+    if (buffer->history && buffer->history->text
+        && (strcmp (buffer->history->text, string) == 0))
+        return;
 
-            /* remove one command if necessary */
-            if ((CONFIG_INTEGER(config_history_max_commands) > 0)
-                && (buffer->num_history > CONFIG_INTEGER(config_history_max_commands)))
-            {
-                ptr_history = buffer->last_history->prev_history;
-                if (buffer->ptr_history == buffer->last_history)
-                    buffer->ptr_history = ptr_history;
-                ((buffer->last_history)->prev_history)->next_history = NULL;
-                if (buffer->last_history->text)
-                    free (buffer->last_history->text);
-                free (buffer->last_history);
-                buffer->last_history = ptr_history;
-                buffer->num_history--;
-            }
+    new_history = malloc (sizeof (*new_history));
+    if (new_history)
+    {
+        new_history->text = strdup (string);
+        if (buffer->history)
+            buffer->history->prev_history = new_history;
+        else
+            buffer->last_history = new_history;
+        new_history->next_history = buffer->history;
+        new_history->prev_history = NULL;
+        buffer->history = new_history;
+        buffer->num_history++;
+
+        /* remove one command if necessary */
+        if ((CONFIG_INTEGER(config_history_max_commands) > 0)
+            && (buffer->num_history > CONFIG_INTEGER(config_history_max_commands)))
+        {
+            gui_history_buffer_remove_oldest (buffer);
         }
     }
+}
+
+/*
+ * Removes oldest global history entry.
+ */
+
+void
+gui_history_global_remove_oldest ()
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_history *ptr_history;
+
+    /* ensure no buffer is using the last global history entry */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->text_search_ptr_history == last_gui_history)
+        {
+            ptr_buffer->text_search_ptr_history = NULL;
+            ptr_buffer->text_search_found = 0;
+            gui_input_search_signal (ptr_buffer);
+        }
+    }
+
+    ptr_history = last_gui_history->prev_history;
+    if (gui_history_ptr == last_gui_history)
+        gui_history_ptr = ptr_history;
+    (last_gui_history->prev_history)->next_history = NULL;
+    if (last_gui_history->text)
+        free (last_gui_history->text);
+    free (last_gui_history);
+    last_gui_history = ptr_history;
+
+    num_gui_history--;
 }
 
 /*
@@ -101,42 +155,32 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
 void
 gui_history_global_add (const char *string)
 {
-    struct t_gui_history *new_history, *ptr_history;
+    struct t_gui_history *new_history;
 
     if (!string)
         return;
 
-    if (!gui_history
-        || (gui_history
-            && (strcmp (gui_history->text, string) != 0)))
-    {
-        new_history = malloc (sizeof (*new_history));
-        if (new_history)
-        {
-            new_history->text = strdup (string);
-            if (gui_history)
-                gui_history->prev_history = new_history;
-            else
-                last_gui_history = new_history;
-            new_history->next_history = gui_history;
-            new_history->prev_history = NULL;
-            gui_history = new_history;
-            num_gui_history++;
+    if (gui_history && (strcmp (gui_history->text, string) == 0))
+        return;
 
-            /* remove one command if necessary */
-            if ((CONFIG_INTEGER(config_history_max_commands) > 0)
-                && (num_gui_history > CONFIG_INTEGER(config_history_max_commands)))
-            {
-                ptr_history = last_gui_history->prev_history;
-                if (gui_history_ptr == last_gui_history)
-                    gui_history_ptr = ptr_history;
-                (last_gui_history->prev_history)->next_history = NULL;
-                if (last_gui_history->text)
-                    free (last_gui_history->text);
-                free (last_gui_history);
-                last_gui_history = ptr_history;
-                num_gui_history--;
-            }
+    new_history = malloc (sizeof (*new_history));
+    if (new_history)
+    {
+        new_history->text = strdup (string);
+        if (gui_history)
+            gui_history->prev_history = new_history;
+        else
+            last_gui_history = new_history;
+        new_history->next_history = gui_history;
+        new_history->prev_history = NULL;
+        gui_history = new_history;
+        num_gui_history++;
+
+        /* remove one command if necessary */
+        if ((CONFIG_INTEGER(config_history_max_commands) > 0)
+            && (num_gui_history > CONFIG_INTEGER(config_history_max_commands)))
+        {
+            gui_history_global_remove_oldest ();
         }
     }
 }
@@ -166,6 +210,93 @@ gui_history_add (struct t_gui_buffer *buffer, const char *string)
 
     if (string2)
         free (string2);
+}
+
+/*
+ * Searches for text in a history entry.
+ *
+ * Returns:
+ *   1: text found in line
+ *   0: text not found in line
+ */
+
+int
+gui_history_search_text (struct t_gui_buffer *buffer,
+                         struct t_gui_history *history)
+{
+    int rc;
+
+    if (!history || !history->text
+        || !buffer->input_buffer || !buffer->input_buffer[0])
+    {
+        return 0;
+    }
+
+    rc = 0;
+
+    if (buffer->text_search_regex)
+    {
+        if (buffer->text_search_regex_compiled
+            && (regexec (buffer->text_search_regex_compiled,
+                         history->text, 0, NULL, 0) == 0))
+        {
+            rc = 1;
+        }
+    }
+    else if ((buffer->text_search_exact
+              && (strstr (history->text, buffer->input_buffer)))
+             || (!buffer->text_search_exact
+                 && (string_strcasestr (history->text, buffer->input_buffer))))
+    {
+        rc = 1;
+    }
+
+    return rc;
+}
+
+/*
+ * Searches in history using string in buffer input.
+ *
+ * Returns:
+ *   1: an history was found
+ *   0: text not found
+ */
+
+int
+gui_history_search (struct t_gui_buffer *buffer,
+                    struct t_gui_history *history)
+{
+    struct t_gui_history *ptr_history;
+    int direction;
+
+    if (!buffer->input_buffer || !buffer->input_buffer[0])
+        return 0;
+
+    direction = (buffer->text_search_direction == GUI_BUFFER_SEARCH_DIR_BACKWARD) ?
+        1 : -1;
+
+    if (buffer->text_search_ptr_history)
+    {
+        ptr_history = (direction > 0) ?
+            buffer->text_search_ptr_history->next_history :
+            buffer->text_search_ptr_history->prev_history;
+    }
+    else
+    {
+        ptr_history = history;
+    }
+
+    while (ptr_history)
+    {
+        if (gui_history_search_text (buffer, ptr_history))
+        {
+            buffer->text_search_ptr_history = ptr_history;
+            return 1;
+        }
+        ptr_history = (direction > 0) ?
+            ptr_history->next_history : ptr_history->prev_history;
+    }
+    return 0;
 }
 
 /*

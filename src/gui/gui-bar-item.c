@@ -49,6 +49,7 @@
 #include "gui-completion.h"
 #include "gui-cursor.h"
 #include "gui-filter.h"
+#include "gui-history.h"
 #include "gui-hotlist.h"
 #include "gui-key.h"
 #include "gui-line.h"
@@ -847,7 +848,8 @@ gui_bar_item_input_search_cb (const void *pointer, void *data,
                               struct t_gui_buffer *buffer,
                               struct t_hashtable *extra_info)
 {
-    char str_search[1024];
+    char str_search[1024], str_where[256];
+    int text_found;
 
     /* make C compiler happy */
     (void) pointer;
@@ -856,25 +858,52 @@ gui_bar_item_input_search_cb (const void *pointer, void *data,
     (void) window;
     (void) extra_info;
 
-    if (!buffer)
+    if (!buffer || (buffer->text_search == GUI_BUFFER_SEARCH_DISABLED))
         return NULL;
 
-    if (buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
-        return NULL;
+    str_where[0] = '\0';
 
-    snprintf (str_search, sizeof (str_search), "%s%s (%s %s,%s%s%s)",
-              (buffer->text_search_found
-               || !buffer->input_buffer
-               || !buffer->input_buffer[0]) ?
-              GUI_COLOR_CUSTOM_BAR_FG :
-              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_text_not_found))),
-              _("Search"),
-              (buffer->text_search_exact) ? "==" : "~",
-              (buffer->text_search_regex) ? "regex" : "str",
-              (buffer->text_search_where & GUI_TEXT_SEARCH_IN_PREFIX) ? "pre" : "",
-              ((buffer->text_search_where & GUI_TEXT_SEARCH_IN_PREFIX)
-               && (buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE)) ? "|" : "",
-              (buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE) ? "msg" : "");
+    switch (buffer->text_search)
+    {
+        case GUI_BUFFER_SEARCH_DISABLED:
+            return NULL;
+        case GUI_BUFFER_SEARCH_LINES:
+            snprintf (
+                str_where, sizeof (str_where),
+                "%s%s%s",
+                (buffer->text_search_where & GUI_BUFFER_SEARCH_IN_PREFIX) ? "pre" : "",
+                ((buffer->text_search_where & GUI_BUFFER_SEARCH_IN_PREFIX)
+                 && (buffer->text_search_where & GUI_BUFFER_SEARCH_IN_MESSAGE)) ? "|" : "",
+                (buffer->text_search_where & GUI_BUFFER_SEARCH_IN_MESSAGE) ? "msg" : "");
+            break;
+        case GUI_BUFFER_SEARCH_HISTORY:
+            snprintf (str_where, sizeof (str_where),
+                      "%s",
+                      (buffer->text_search_history == GUI_BUFFER_SEARCH_HISTORY_LOCAL) ?
+                      /* TRANSLATORS: search in "local" history */
+                      _("local") :
+                      /* TRANSLATORS: search in "global" history */
+                      _("global"));
+            break;
+        case GUI_BUFFER_NUM_SEARCH:
+            return NULL;
+    }
+
+    text_found = (buffer->text_search_found
+                  || !buffer->input_buffer
+                  || !buffer->input_buffer[0]);
+
+    snprintf (
+        str_search, sizeof (str_search),
+        "%s%s (%s %s,%s)",
+        (text_found) ?
+        GUI_COLOR_CUSTOM_BAR_FG :
+        gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_text_not_found))),
+        (buffer->text_search == GUI_BUFFER_SEARCH_LINES) ?
+        _("Search lines") : _("Search command"),
+        (buffer->text_search_exact) ? "==" : "~",
+        (buffer->text_search_regex) ? "regex" : "str",
+        str_where);
 
     return strdup (str_search);
 }
@@ -991,6 +1020,26 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
         if (ptr_input)
             free (ptr_input);
         ptr_input = ptr_input2;
+    }
+
+    /* add matching text found in history (in history search mode) */
+    if ((buffer->text_search == GUI_BUFFER_SEARCH_HISTORY)
+        && buffer->text_search_ptr_history)
+    {
+        length = strlen (ptr_input) + 16
+            + ((buffer->text_search_ptr_history->text) ?
+               strlen (buffer->text_search_ptr_history->text) : 0);
+        buf = malloc (length);
+        if (buf)
+        {
+            snprintf (buf, length,
+                      "%s  => %s",
+                      ptr_input,
+                      (buffer->text_search_ptr_history->text) ?
+                      buffer->text_search_ptr_history->text : "");
+            free (ptr_input);
+            ptr_input = buf;
+        }
     }
 
     /*
@@ -2275,7 +2324,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT],
                       &gui_bar_item_input_text_cb, NULL, NULL);
-    gui_bar_item_hook_signal ("window_switch;buffer_switch;input_text_*",
+    gui_bar_item_hook_signal ("window_switch;buffer_switch;input_search;"
+                              "input_text_*",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
 
     /* time */

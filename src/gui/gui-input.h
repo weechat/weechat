@@ -34,6 +34,7 @@ extern void gui_input_paste_pending_signal ();
 extern void gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
                                                         int save_undo,
                                                         int stop_completion);
+extern void gui_input_search_signal (struct t_gui_buffer *buffer);
 extern void gui_input_set_pos (struct t_gui_buffer *buffer, int pos);
 extern void gui_input_insert_string (struct t_gui_buffer *buffer,
                                      const char *string);
@@ -44,6 +45,7 @@ extern void gui_input_complete_next (struct t_gui_buffer *buffer);
 extern void gui_input_complete_previous (struct t_gui_buffer *buffer);
 extern void gui_input_search_text_here (struct t_gui_buffer *buffer);
 extern void gui_input_search_text (struct t_gui_buffer *buffer);
+extern void gui_input_search_history (struct t_gui_buffer *buffer);
 extern void gui_input_search_compile_regex (struct t_gui_buffer *buffer);
 extern void gui_input_search_switch_case (struct t_gui_buffer *buffer);
 extern void gui_input_search_switch_regex (struct t_gui_buffer *buffer);

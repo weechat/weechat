@@ -13653,9 +13653,33 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _num_history_: број команди у историји
 ** _text_search_: тип претраге текста:
 *** 0: у овом тренутку нема претраге
-*** 1: претрага уназад (смер: ка најстаријим порукама)
-*** 2: претрага унапред (смер: ка најновијим порукама)
+// TRANSLATION MISSING
+*** 1: search in buffer lines
+// TRANSLATION MISSING
+*** 2: search in commands history
+// TRANSLATION MISSING
+** _text_search_direction_: direction for search:
+// TRANSLATION MISSING
+*** 0: backward search (direction: oldest messages/commands)
+// TRANSLATION MISSING
+*** 1: forward search (direction: newest messages/commands)
 ** _text_search_exact_: 1 ако претрага текста прави разлику у величини слова
+// TRANSLATION MISSING
+** _text_search_regex_: 1 if searching with a regular expression
+** _text_search_where_:
+*** 0: у овом тренутку нема претраге
+// TRANSLATION MISSING
+*** 1: search in message
+// TRANSLATION MISSING
+*** 2: search in prefix
+// TRANSLATION MISSING
+*** 3: search in prefix and message
+** _text_search_history_:
+*** 0: у овом тренутку нема претраге
+// TRANSLATION MISSING
+*** 1: search in buffer local history
+// TRANSLATION MISSING
+*** 2: search in global history
 ** _text_search_found_: 1 ако се текст пронађе, у супротном 0
 
 Повратна вредност:
@@ -13755,6 +13779,10 @@ void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
 * _buffer_: показивач на бафер
 * _property_: име особине:
 ** _plugin_: показивач на додатак који је креирао овај бафер (NULL за главни бафер програма WeeChat)
+// TRANSLATION MISSING
+** _text_search_regex_compiled_: compiled regular expression
+// TRANSLATION MISSING
+** _text_search_ptr_history_: history found
 ** _highlight_disable_regex_compiled_: компајлиран регуларни израз _highlight_disable_regex_
 ** _highlight_regex_compiled_: компајлиран регуларни израз _highlight_regex_
 

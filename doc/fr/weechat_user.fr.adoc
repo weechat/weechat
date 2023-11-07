@@ -928,10 +928,30 @@ La barre _input_ contient les objets (items) suivants par défaut :
 | Objet (item) | Exemple                                         | Description
 | input_prompt | `[@Flashy(i)]`                                  | Prompt, pour irc : pseudo et modes (le mode "+i" signifie invisible sur libera).
 | away         | `(absent)`                                      | Indicateur d'absence.
-| input_search | `[Recherche (~ str,msg)]`                       | Indicateur de recherche de texte ("`~`" : insensible à la casse, "`==`" : sensible à la casse, "`str`" : recherche de chaîne, "`regex`" : recherche d'expression régulière, "`msg`" : recherche dans les messages, "`pre`" : recherche dans les préfixes, "`pre\|msg`" : recherche dans les préfixes et messages).
+| input_search | `[Recherche lignes (~ str,msg)]`                | Indicateur de recherche de texte (voir ci-dessous).
 | input_paste  | `[Coller 7 lignes ? [ctrl-y] Oui [ctrl-n] Non]` | Question à l'utilisateur pour coller des lignes.
 | input_text   | `salut peter !`                                 | Texte entré.
 |===
+
+Il y a deux modes de recherche :
+
+* recherche dans les lignes, par exemple `[Recherche lignes (~ str,msg)]`,
+  avec les informations suivantes :
+** `~` : insensible à la casse
+** `==` : sensible à la casse
+** `str` : recherche de chaîne
+** `regex` : recherche d'expression régulière
+** `msg` : recherche dans les messages
+** `pre` : recherche dans les préfixes
+** `pre\|msg` : recherche dans les préfixes et messages
+* recherche dans l'historique de commandes, par exemple `[Recherche commande (~ str,local)]`,
+  avec les informations suivantes :
+** `~` : insensible à la casse
+** `==` : sensible à la casse
+** `str` : recherche de chaîne
+** `regex` : recherche d'expression régulière
+** `local` : recherche dans l'historique local du tampon
+** `global` : recherche dans l'historique global.
 
 La barre _nicklist_ contient les objets (items) suivants par défaut :
 
@@ -1648,7 +1668,8 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Touche                         | Description | Commande
-| kbd:[Ctrl+r]                   | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>). | `+/input search_text_here+`
+| kbd:[Ctrl+r]                   | Chercher du texte dans l'historique de commandes (voir <<key_bindings_histsearch_context,les touches pour le contexte "histsearch">>). | `+/input search_history+`
+| kbd:[Ctrl+s]                   | Chercher du texte dans les lignes du tampon (voir <<key_bindings_search_context,les touches pour le contexte "search">>). | `+/input search_text_here+`
 | kbd:[Ctrl+s], kbd:[Ctrl+u]     | Positionner le marqueur de données non lues sur tous les tampons. | `+/allbuf /buffer set unread+`
 | kbd:[Ctrl+x]                   | Changer de tampon courant si plusieurs tampons sont mélangés avec le même numéro, par exemple basculer vers un autre tampon serveur IRC. | `+/buffer switch+`
 | kbd:[Alt+x]                    | Zoomer sur le tampon mélangé (kbd:[Alt+x] de nouveau : afficher tous les tampons mélangés). | `+/buffer zoom+`
@@ -1751,21 +1772,45 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 [[key_bindings_search_context]]
 === Contexte de recherche
 
-Ces touches sont utilisées dans le contexte "search" (lorsque kbd:[Ctrl+r] est
-pressé pour chercher du texte dans le tampon).
+Ces touches sont utilisées dans le contexte "search" (lorsque kbd:[Ctrl+s] est
+pressé pour chercher du texte dans les lignes du tampon).
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Touche         | Description | Commande
-| kbd:[Ctrl+r]   | Basculer le type de recherche : chaîne (par défaut), expression régulière. | `+/input search_switch_regex+`
+| kbd:[Ctrl+x]   | Basculer le type de recherche : chaîne (par défaut), expression régulière. | `+/input search_switch_regex+`
 | kbd:[Alt+c]    | Basculer la casse exacte pour la recherche. | `+/input search_switch_case+`
 | kbd:[Tab]      | Basculer la recherche dans : les messages (par défaut), les préfixes, les préfixes + messages. | `+/input search_switch_where+`
-| kbd:[↑]        | Chercher la ligne précédente. | `+/input search_previous+`
-| kbd:[↓]        | Chercher la ligne suivante. | `+/input search_next+`
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Chercher la ligne précédente. | `+/input search_previous+`
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Chercher la ligne suivante. | `+/input search_next+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Arrêter la recherche à la position courante. | `+/input search_stop_here+`
 | kbd:[Ctrl+q]   | Arrêter la recherche et réinitialiser le défilement à l'état antérieur à la recherche de texte. | `+/input search_stop+`
+|===
+
+[[key_bindings_histsearch_context]]
+=== Contexte de recherche dans l'historique
+
+Ces touches sont utilisées dans le contexte "histsearch" (lorsque kbd:[Ctrl+r]
+est pressé pour chercher du texte dans l'historique des commandes).
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Touche         | Description | Commande
+| kbd:[Ctrl+x]   | Basculer le type de recherche : chaîne (par défaut), expression régulière. | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | Basculer la casse exacte pour la recherche. | `+/input search_switch_case+`
+| kbd:[Tab]      | Basculer la recherche dans : l'historique local du tampon (par défaut), l'historique global. | `+/input search_switch_where+`
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Chercher dans les entrées précédentes (plus anciennes) de l'historique. | `+/input search_previous+`
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Chercher dans les entrées suivantes (plus récentes) de l'historique. | `+/input search_next+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Arrêter la recherche et utiliser la commande trouvée. | `+/input search_stop_here+`
+| kbd:[Ctrl+q]   | Arrêter la recherche et restaurer la ligne de commande à sa valeur initiale. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]

@@ -50,6 +50,12 @@ enum t_config_look_buffer_position
     CONFIG_LOOK_BUFFER_POSITION_FIRST_GAP,
 };
 
+enum t_config_look_buffer_search_history
+{
+    CONFIG_LOOK_BUFFER_SEARCH_HISTORY_LOCAL = 0,
+    CONFIG_LOOK_BUFFER_SEARCH_HISTORY_GLOBAL,
+};
+
 enum t_config_look_buffer_search_where
 {
     CONFIG_LOOK_BUFFER_SEARCH_PREFIX = 0,
@@ -165,6 +171,7 @@ extern struct t_config_option *config_look_buffer_auto_renumber;
 extern struct t_config_option *config_look_buffer_notify_default;
 extern struct t_config_option *config_look_buffer_position;
 extern struct t_config_option *config_look_buffer_search_case_sensitive;
+extern struct t_config_option *config_look_buffer_search_history;
 extern struct t_config_option *config_look_buffer_search_force_default;
 extern struct t_config_option *config_look_buffer_search_regex;
 extern struct t_config_option *config_look_buffer_search_where;

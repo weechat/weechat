@@ -865,10 +865,35 @@ _input_ трака садржи следеће подразумеване ста
 | Ставка       | Пример                                           | Опис
 | input_prompt | `[@Flashy(i)]`                                   | Одзив за унос, за irc: надимак и режими (режим „+i” значи невидљив на серверу libera).
 | away         | `(одсутан)`                                      | Индикатор одсутности.
-| input_search | `[Претрага (~ str,msg)]`                         | Индикатор претраге („`~`”: не прави се разлика у величини слова, „`==`”: прави се разлика у величини слова, „`str`”: стринг претраге, „`regex`”: претрага по регуларном изразу, „`msg`”: претрага у порукама, „`pre`”: претрага у префиксима, „`pre\|msg`”: претрага и у префиксима и у порукама).
+// TRANSLATION MISSING
+| input_search | `[Search lines (~ str,msg)]`                     | Search indicator (see below).
 | input_paste  | `[Да налепим 7 линија? [ctrl-y] Да [ctrl-n] Не]` | Питање за корисника пре налељпивања линија.
 | input_text   | `hi peter!`                                      | Текст уноса.
 |===
+
+// TRANSLATION MISSING
+There are two search modes:
+
+// TRANSLATION MISSING
+* search in lines, for example `[Search lines (~ str,msg)]`, with the following info:
+** `~`: не прави се разлика у величини слова
+** `==`: прави се разлика у величини слова
+** `str`: стринг претраге
+** `regex`: претрага по регуларном изразу
+** `msg`: претрага у порукама
+** `pre`: претрага у префиксима
+** `pre\|msg`: претрага и у префиксима и у порукама
+// TRANSLATION MISSING
+* search in commands history, for example `[Search command (~ str,local)]`,
+  with the following info:
+** `~`: не прави се разлика у величини слова
+** `==`: прави се разлика у величини слова
+** `str`: стринг претраге
+** `regex`: претрага по регуларном изразу
+// TRANSLATION MISSING
+** `local`: search in buffer local history
+// TRANSLATION MISSING
+** `global`: search in global history.
 
 _nicklist_ трака садржи следеће подразумеване ставке:
 
@@ -1539,7 +1564,10 @@ WeeChat нуди доста подразумеваних тастерских п
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
 | Тастер                         | Опис | Команда
-| kbd:[Ctrl+r]                   | Претрага на текст у историји бафера (погледајте <<key_bindings_search_context,тастери у „search”>>). | `+/input search_text_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
 | kbd:[Ctrl+s], kbd:[Ctrl+u]     | Поставља маркер непрочитано за све бафере. | `+/allbuf /buffer set unread+`
 | kbd:[Ctrl+x]                   | Мења текући бафер ако су бафери спојени са истим бројем, на пример, прелазак на други IRC сервер бафер. | `+/buffer switch+`
 | kbd:[Alt+x]                    | Зум на спојени бафер (kbd:[Alt+x] поново: приказује све спојене бафере). | `+/buffer zoom+`
@@ -1642,20 +1670,53 @@ WeeChat нуди доста подразумеваних тастерских п
 [[key_bindings_search_context]]
 === Контекст претраге
 
-Следећи тастери се користе у „search” контексту (када се притисне kbd:[Ctrl+r] за претрагу текста у баферу).
+// TRANSLATION MISSING
+These keys are used in context "search" (when kbd:[Ctrl+s] is pressed to search
+text in buffer lines).
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
 | Тастер         | Опис | Команда
-| kbd:[Ctrl+r]   | Пребацивање типа претраге: стринг (подраз.), регуларни израз. | `+/input search_switch_regex+`
+| kbd:[Ctrl+x]   | Пребацивање типа претраге: стринг (подраз.), регуларни израз. | `+/input search_switch_regex+`
 | kbd:[Alt+c]    | Пребацивање разликовања величине слова у претраци. | `+/input search_switch_case+`
 | kbd:[Tab]      | Пребацивање претраге у: порукама (подраз.), префиксима, префиксима + порукама. | `+/input search_switch_where+`
-| kbd:[↑]        | Претрага претходне линије. | `+/input search_previous+`
-| kbd:[↓]        | Претрага наредне линије. | `+/input search_next+`
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Претрага претходне линије. | `+/input search_previous+`
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Претрага наредне линије. | `+/input search_next+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Заустављање претраге на текућој позицији. | `+/input search_stop_here+`
 | kbd:[Ctrl+q]   | Заустављање претраге и ресетовање скрола на стање пре почетка претраге текста. | `+/input search_stop+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_histsearch_context]]
+=== History search context
+
+// TRANSLATION MISSING
+These keys are used in context "histsearch" (when kbd:[Ctrl+r] is pressed to
+search text in commands history).
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Тастер         | Опис | Команда
+| kbd:[Ctrl+x]   | Пребацивање типа претраге: стринг (подраз.), регуларни израз. | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | Пребацивање разликовања величине слова у претраци. | `+/input search_switch_case+`
+// TRANSLATION MISSING
+| kbd:[Tab]      | Switch search in: buffer local history (default), global history. | `+/input search_switch_where+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Search in previous (older) history entries. | `+/input search_previous+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Search in next (newer) history entries. | `+/input search_next+`
+// TRANSLATION MISSING
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Stop search and use matching input. | `+/input search_stop_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and restore input to its initial value. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]

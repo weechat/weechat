@@ -14120,9 +14120,22 @@ Arguments:
 ** _num_history_: number of commands in history
 ** _text_search_: text search type:
 *** 0: no search at this moment
-*** 1: backward search (direction: oldest messages)
-*** 2: forward search (direction: newest messages)
+*** 1: search in buffer lines
+*** 2: search in commands history
+** _text_search_direction_: direction for search:
+*** 0: backward search (direction: oldest messages/commands)
+*** 1: forward search (direction: newest messages/commands)
 ** _text_search_exact_: 1 if text search is case sensitive
+** _text_search_regex_: 1 if searching with a regular expression
+** _text_search_where_:
+*** 0: no search at this moment
+*** 1: search in message
+*** 2: search in prefix
+*** 3: search in prefix and message
+** _text_search_history_:
+*** 0: no search at this moment
+*** 1: search in buffer local history
+*** 2: search in global history
 ** _text_search_found_: 1 if text found, otherwise 0
 
 Return value:
@@ -14227,6 +14240,8 @@ Arguments:
 * _property_: property name:
 ** _plugin_: pointer to plugin which created this buffer (NULL for WeeChat main
    buffer)
+** _text_search_regex_compiled_: compiled regular expression
+** _text_search_ptr_history_: history found
 ** _highlight_disable_regex_compiled_: regular expression _highlight_disable_regex_ compiled
 ** _highlight_regex_compiled_: regular expression _highlight_regex_ compiled
 

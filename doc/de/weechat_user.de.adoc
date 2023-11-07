@@ -920,10 +920,36 @@ In der _input_ Bar lautet die Standardeinstellung:
 | Item         | Beispiel                                      | Beschreibung
 | input_prompt | `[@Flashy(i)]`                                | Input prompt, für irc: Nick und Modi (Modus "+i" bedeutet auf libera, unsichtbar).
 | away         | `(away)`                                      | Abwesenheitsanzeige.
-| input_search | `[Search (~ str,msg)]`                        | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten).
+// TRANSLATION MISSING
+| input_search | `[Search lines (~ str,msg)]`                  | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten).
+// TRANSLATION MISSING
 | input_paste  | `[Paste 7 lines ? [ctrl-y] Ja [ctrl-n] Nein]` | Nachfrage ob sieben Zeilen eingefügt werden sollen.
 | input_text   | `hi peter!`                                   | Text der eingegeben wird.
 |===
+
+// TRANSLATION MISSING
+There are two search modes:
+
+// TRANSLATION MISSING
+* search in lines, for example `[Search lines (~ str,msg)]`, with the following info:
+** `~`: Groß-und Kleinschreibung ignorieren
+** `==`: Groß-und Kleinschreibung berücksichtigen
+** `str`: einfache Textsuche
+** `regex`: suche mit regulären Ausdrücken
+** `msg`: Suche in Nachrichten
+** `pre`: Suche in Präfix
+** `pre\|msg`: Suche in Präfix und Nachrichten
+// TRANSLATION MISSING
+* search in commands history, for example `[Search command (~ str,local)]`,
+  with the following info:
+** `~`: Groß-und Kleinschreibung ignorieren
+** `==`: Groß-und Kleinschreibung berücksichtigen
+** `str`: einfache Textsuche
+** `regex`: suche mit regulären Ausdrücken
+// TRANSLATION MISSING
+** `local`: search in buffer local history
+// TRANSLATION MISSING
+** `global`: search in global history.
 
 In der _nicklist_ Bar lautet die Standardeinstellung:
 
@@ -1630,7 +1656,10 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Taste                          | Beschreibung | Befehl
-| kbd:[Ctrl+r]                   | Textsuche im Verlaufsspeicher des Buffers (siehe <<key_bindings_search_context,Tasten für Such-Kontext>>). | `+/input search_text_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
 | kbd:[Ctrl+s], kbd:[Ctrl+u]     | setzt für alle Buffer die Markierung für ungelesene Nachrichten. | `+/allbuf /buffer set unread+`
 | kbd:[Ctrl+x]                   | Wechseln Sie den aktuellen Buffer, wenn diese zusammengefügt worden sind, z.B. zwischen IRC-Serverbuffer wechseln. | `+/buffer switch+`
 | kbd:[Alt+x]                    | Zoom eines zusammengefügten Buffers (kbd:[Alt+x] ein zweites mal: alle zusammengefügten Buffer werden angezeigt). | `+/buffer zoom+`
@@ -1733,21 +1762,53 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 [[key_bindings_search_context]]
 === Suchkontext
 
-Diese Tasten werden im Kontext "search" verwendet (wenn kbd:[Ctrl+r] genutzt wird um
-in einem Buffer nach einem Text zu suchen).
+// TRANSLATION MISSING
+These keys are used in context "search" (when kbd:[Ctrl+s] is pressed to search
+text in buffer lines).
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Taste          | Beschreibung | Befehl
-| kbd:[Ctrl+r]   | Wechsel des Suchmodus: einfache Textsuche (Standard), reguläre Ausdrücke. | `+/input search_switch_regex+`
+| kbd:[Ctrl+x]   | Wechsel des Suchmodus: einfache Textsuche (Standard), reguläre Ausdrücke. | `+/input search_switch_regex+`
 | kbd:[Alt+c]    | auf Groß-/Kleinschreibung umschalten. | `+/input search_switch_case+`
 | kbd:[Tab]      | wechselt Suche in: Nachricht (Standard), im Präfix, Präfix + Nachricht. | `+/input search_switch_where+`
-| kbd:[↑]        | sucht vorheriger Zeile. | `+/input search_previous+`
-| kbd:[↓]        | sucht nächste Zeile . | `+/input search_next+`
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | sucht vorheriger Zeile. | `+/input search_previous+`
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | sucht nächste Zeile . | `+/input search_next+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | beendet Suche ab aktueller Position. | `+/input search_stop_here+`
 | kbd:[Ctrl+q]   | Suche wird abgebrochen und der Bildlauf wird auf die Vortextsuche zurückgesetzt. | `+/input search_stop+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_histsearch_context]]
+=== History search context
+
+// TRANSLATION MISSING
+These keys are used in context "histsearch" (when kbd:[Ctrl+r] is pressed to
+search text in commands history).
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Taste          | Beschreibung | Befehl
+| kbd:[Ctrl+x]   | Wechsel des Suchmodus: einfache Textsuche (Standard), reguläre Ausdrücke. | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | auf Groß-/Kleinschreibung umschalten. | `+/input search_switch_case+`
+// TRANSLATION MISSING
+| kbd:[Tab]      | Switch search in: buffer local history (default), global history. | `+/input search_switch_where+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Search in previous (older) history entries. | `+/input search_previous+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Search in next (newer) history entries. | `+/input search_next+`
+// TRANSLATION MISSING
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Stop search and use matching input. | `+/input search_stop_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and restore input to its initial value. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]

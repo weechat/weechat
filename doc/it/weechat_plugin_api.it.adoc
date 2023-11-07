@@ -14767,9 +14767,33 @@ Argomenti:
 ** _num_history_: numero di comandi nella cronologia
 ** _text_search_: tipo di ricerca nel testo:
 *** 0: nessuna ricerca in questo momento
-*** 1: ricerca all'indietro (direzione: messaggi più vecchi)
-*** 2: ricerca in avanti (direzione: messaggi più nuovi)
+// TRANSLATION MISSING
+*** 1: search in buffer lines
+// TRANSLATION MISSING
+*** 2: search in commands history
+// TRANSLATION MISSING
+** _text_search_direction_: direction for search:
+// TRANSLATION MISSING
+*** 0: backward search (direction: oldest messages/commands)
+// TRANSLATION MISSING
+*** 1: forward search (direction: newest messages/commands)
 ** _text_search_exact_: 1 se la ricerca testo è esatta
+// TRANSLATION MISSING
+** _text_search_regex_: 1 if searching with a regular expression
+** _text_search_where_:
+*** 0: nessuna ricerca in questo momento
+// TRANSLATION MISSING
+*** 1: search in message
+// TRANSLATION MISSING
+*** 2: search in prefix
+// TRANSLATION MISSING
+*** 3: search in prefix and message
+** _text_search_history_:
+*** 0: nessuna ricerca in questo momento
+// TRANSLATION MISSING
+*** 1: search in buffer local history
+// TRANSLATION MISSING
+*** 2: search in global history
 ** _text_search_found_: 1 se il testo viene trovato, altrimenti 0
 
 Valore restituito:
@@ -14878,6 +14902,10 @@ Argomenti:
 * _property_: nome proprietà:
 ** _plugin_: puntatore al plugin che ha creato questo buffer (NULL
    per il buffer principale di WeeChat)
+// TRANSLATION MISSING
+** _text_search_regex_compiled_: compiled regular expression
+// TRANSLATION MISSING
+** _text_search_ptr_history_: history found
 ** _highlight_disable_regex_compiled_: espressione regolare _highlight_disable_regex_ compilata
 ** _highlight_regex_compiled_: espressione regolare _highlight_regex_ compilata
 

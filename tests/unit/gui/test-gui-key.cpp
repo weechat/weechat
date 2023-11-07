@@ -100,8 +100,9 @@ TEST(GuiKey, SearchContext)
 
     LONGS_EQUAL(0, gui_key_search_context ("default"));
     LONGS_EQUAL(1, gui_key_search_context ("search"));
-    LONGS_EQUAL(2, gui_key_search_context ("cursor"));
-    LONGS_EQUAL(3, gui_key_search_context ("mouse"));
+    LONGS_EQUAL(2, gui_key_search_context ("histsearch"));
+    LONGS_EQUAL(3, gui_key_search_context ("cursor"));
+    LONGS_EQUAL(4, gui_key_search_context ("mouse"));
 }
 
 /*
@@ -125,7 +126,14 @@ TEST(GuiKey, GetCurrentContext)
     input_data (gui_buffers, "/input search_stop", NULL, 0);
     LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
 
+    input_data (gui_buffers, "/input search_history", NULL, 0);
+    LONGS_EQUAL(GUI_KEY_CONTEXT_HISTSEARCH, gui_key_get_current_context ());
+
+    input_data (gui_buffers, "/input search_stop", NULL, 0);
+    LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
+
     gui_buffers->text_search_where = 0;
+    gui_buffers->text_search_history = GUI_BUFFER_SEARCH_HISTORY_NONE;
 }
 
 /*

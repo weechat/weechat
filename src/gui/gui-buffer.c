@@ -101,8 +101,8 @@ char *gui_buffer_properties_get_integer[] =
   "input", "input_get_unknown_commands",
   "input_get_empty", "input_multiline", "input_size", "input_length",
   "input_pos", "input_1st_display", "num_history", "text_search",
-  "text_search_exact", "text_search_regex", "text_search_where",
-  "text_search_found",
+  "text_search_direction", "text_search_exact", "text_search_regex",
+  "text_search_where", "text_search_history", "text_search_found",
   NULL
 };
 char *gui_buffer_properties_get_string[] =
@@ -113,8 +113,8 @@ char *gui_buffer_properties_get_string[] =
   NULL
 };
 char *gui_buffer_properties_get_pointer[] =
-{ "plugin", "text_search_regex_compiled", "highlight_disable_regex_compiled",
-  "highlight_regex_compiled",
+{ "plugin", "text_search_regex_compiled", "text_search_ptr_history",
+  "highlight_disable_regex_compiled", "highlight_regex_compiled",
   NULL
 };
 char *gui_buffer_properties_set[] =
@@ -871,12 +871,15 @@ gui_buffer_new_props (struct t_weechat_plugin *plugin,
     new_buffer->num_history = 0;
 
     /* text search */
-    new_buffer->text_search = GUI_TEXT_SEARCH_DISABLED;
+    new_buffer->text_search = GUI_BUFFER_SEARCH_DISABLED;
+    new_buffer->text_search_direction = GUI_BUFFER_SEARCH_DIR_BACKWARD;
     new_buffer->text_search_exact = 0;
     new_buffer->text_search_regex = 0;
     new_buffer->text_search_regex_compiled = NULL;
     new_buffer->text_search_where = 0;
+    new_buffer->text_search_history = GUI_BUFFER_SEARCH_HISTORY_NONE;
     new_buffer->text_search_found = 0;
+    new_buffer->text_search_ptr_history = NULL;
     new_buffer->text_search_input = NULL;
 
     /* highlight */
@@ -1391,12 +1394,16 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
         return buffer->num_history;
     else if (strcmp (property, "text_search") == 0)
         return buffer->text_search;
+    else if (strcmp (property, "text_search_direction") == 0)
+        return buffer->text_search_direction;
     else if (strcmp (property, "text_search_exact") == 0)
         return buffer->text_search_exact;
     else if (strcmp (property, "text_search_regex") == 0)
         return buffer->text_search_regex;
     else if (strcmp (property, "text_search_where") == 0)
         return buffer->text_search_where;
+    else if (strcmp (property, "text_search_history") == 0)
+        return buffer->text_search_history;
     else if (strcmp (property, "text_search_found") == 0)
         return buffer->text_search_found;
 
@@ -1468,6 +1475,8 @@ gui_buffer_get_pointer (struct t_gui_buffer *buffer, const char *property)
         return buffer->plugin;
     else if (strcmp (property, "text_search_regex_compiled") == 0)
         return buffer->text_search_regex_compiled;
+    else if (strcmp (property, "text_search_ptr_history") == 0)
+        return buffer->text_search_ptr_history;
     else if (strcmp (property, "highlight_disable_regex_compiled") == 0)
         return buffer->highlight_disable_regex_compiled;
     else if (strcmp (property, "highlight_regex_compiled") == 0)
@@ -4981,11 +4990,14 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, ptr_history, POINTER, 0, NULL, "history");
         HDATA_VAR(struct t_gui_buffer, num_history, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, text_search, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, text_search_direction, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, text_search_exact, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, text_search_regex, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, text_search_regex_compiled, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, text_search_where, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, text_search_history, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, text_search_found, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, text_search_ptr_history, POINTER, 0, NULL, "history");
         HDATA_VAR(struct t_gui_buffer, text_search_input, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_words, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_disable_regex, STRING, 0, NULL, NULL);
@@ -5190,6 +5202,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "text_search", buffer->text_search))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "text_search_direction", buffer->text_search_direction))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "text_search_exact", buffer->text_search_exact))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "text_search_regex", buffer->text_search_regex))
@@ -5198,7 +5212,11 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "text_search_where", buffer->text_search_where))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "text_search_history", buffer->text_search_history))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "text_search_found", buffer->text_search_found))
+        return 0;
+    if (!infolist_new_var_pointer (ptr_item, "text_search_ptr_history", buffer->text_search_ptr_history))
         return 0;
     if (!infolist_new_var_string (ptr_item, "text_search_input", buffer->text_search_input))
         return 0;
@@ -5424,11 +5442,14 @@ gui_buffer_print_log ()
         log_printf ("  ptr_history . . . . . . : 0x%lx", ptr_buffer->ptr_history);
         log_printf ("  num_history . . . . . . : %d",    ptr_buffer->num_history);
         log_printf ("  text_search . . . . . . . . . . : %d",    ptr_buffer->text_search);
+        log_printf ("  text_search_direction . . . . . : %d",    ptr_buffer->text_search_direction);
         log_printf ("  text_search_exact . . . . . . . : %d",    ptr_buffer->text_search_exact);
         log_printf ("  text_search_regex . . . . . . . : %d",    ptr_buffer->text_search_regex);
         log_printf ("  text_search_regex_compiled. . . : 0x%lx", ptr_buffer->text_search_regex_compiled);
         log_printf ("  text_search_where . . . . . . . : %d",    ptr_buffer->text_search_where);
+        log_printf ("  text_search_history . . . . . . : %d",    ptr_buffer->text_search_history);
         log_printf ("  text_search_found . . . . . . . : %d",    ptr_buffer->text_search_found);
+        log_printf ("  text_search_ptr_history . . . . : 0x%lx", ptr_buffer->text_search_ptr_history);
         log_printf ("  text_search_input . . . . . . . : '%s'",  ptr_buffer->text_search_input);
         log_printf ("  highlight_words . . . . . . . . : '%s'",  ptr_buffer->highlight_words);
         log_printf ("  highlight_disable_regex . . . . : '%s'",  ptr_buffer->highlight_disable_regex);

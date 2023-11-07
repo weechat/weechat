@@ -583,12 +583,15 @@ TEST(GuiBuffer, NewProps)
     POINTERS_EQUAL(NULL, buffer->last_history);
     POINTERS_EQUAL(NULL, buffer->ptr_history);
     LONGS_EQUAL(0, buffer->num_history);
-    LONGS_EQUAL(GUI_TEXT_SEARCH_DISABLED, buffer->text_search);
+    LONGS_EQUAL(GUI_BUFFER_SEARCH_DISABLED, buffer->text_search);
+    LONGS_EQUAL(GUI_BUFFER_SEARCH_DIR_BACKWARD, buffer->text_search_direction);
     LONGS_EQUAL(0, buffer->text_search_exact);
     LONGS_EQUAL(0, buffer->text_search_regex);
     POINTERS_EQUAL(NULL, buffer->text_search_regex_compiled);
     LONGS_EQUAL(0, buffer->text_search_where);
+    LONGS_EQUAL(0, buffer->text_search_history);
     LONGS_EQUAL(0, buffer->text_search_found);
+    POINTERS_EQUAL(NULL, buffer->text_search_ptr_history);
     POINTERS_EQUAL(NULL, buffer->text_search_input);
     POINTERS_EQUAL(NULL, buffer->highlight_words);
     POINTERS_EQUAL(NULL, buffer->highlight_regex);
@@ -885,9 +888,11 @@ TEST(GuiBuffer, GetInteger)
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_1st_display"));
     CHECK(gui_buffer_get_integer (gui_buffers, "num_history") >= 0);
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_direction"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_exact"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_regex"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_where"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_history"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_found"));
 }
 
@@ -931,6 +936,7 @@ TEST(GuiBuffer, GetPointer)
 
     POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "plugin"));
     POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "text_search_regex_compiled"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "text_search_ptr_history"));
     POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "highlight_disable_regex_compiled"));
     POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "highlight_regex_compiled"));
 }

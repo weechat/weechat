@@ -970,10 +970,35 @@ By default, the screen is divided up into the following areas:
 | 要素         | 例                                           | 説明
 | input_prompt | `[@Flashy]`                                  | 入力プロンプト、irc の場合: ニックネームとモード (libera では "+i" モードは不可視状態を意味します)
 | away         | `(away)`                                     | 離席状態表示
-| input_search | `[Search (~ str,msg)]`                       | 検索インジケータ ("`~`": 大文字小文字を区別しない、"`==`": 大文字小文字を区別する、"`str`": 検索文字列、"`regex`": 検索正規表現、"`msg`": メッセージ部分から検索、"`pre`": プレフィックス部分から検索、"`pre\|msg`": プレフィックス部分とメッセージ部分から検索)
+// TRANSLATION MISSING
+| input_search | `[Search lines (~ str,msg)]`                 | Search indicator (see below).
 | input_paste  | `[Paste 7 lines ? [ctrl-y] Yes [ctrl-n] No]` | 行をペーストする場合にユーザへ行われる質問
 | input_text   | `hi peter!`                                  | 入力テキスト
 |===
+
+// TRANSLATION MISSING
+There are two search modes:
+
+// TRANSLATION MISSING
+* search in lines, for example `[Search lines (~ str,msg)]`, with the following info:
+** `~`: 大文字小文字を区別しない
+** `==`: 大文字小文字を区別する
+** `str`: 検索文字列
+** `regex`: 検索正規表現
+** `msg`: メッセージ部分から検索
+** `pre`: プレフィックス部分から検索
+** `pre\|msg`: プレフィックス部分とメッセージ部分から検索
+// TRANSLATION MISSING
+* search in commands history, for example `[Search command (~ str,local)]`,
+  with the following info:
+** `~`: 大文字小文字を区別しない
+** `==`: 大文字小文字を区別する
+** `str`: 検索文字列
+** `regex`: 検索正規表現
+// TRANSLATION MISSING
+** `local`: search in buffer local history
+// TRANSLATION MISSING
+** `global`: search in global history.
 
 ニックネームリスト (_nicklist_) バーは以下の初期要素を持っています:
 
@@ -1727,7 +1752,10 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | キー                            | 説明 | コマンド
-| kbd:[Ctrl+r]                   | バッファ中の履歴からテキスト検索 (<<key_bindings_search_context,検索モード用のキー>>を参照) | `+/input search_text_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
 | kbd:[Ctrl+s], kbd:[Ctrl+u]     | すべてのバッファに未読マークをセット | `+/allbuf /buffer set unread+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/buffer switch+`
@@ -1842,22 +1870,54 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 [[key_bindings_search_context]]
 === Search context
 
-以下のキーは「検索」検索モード (バッファ内のテキスト検索用に
-kbd:[Ctrl+r] が押された状態) でのみ有効です。
+// TRANSLATION MISSING
+These keys are used in context "search" (when kbd:[Ctrl+s] is pressed to search
+text in buffer lines).
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | キー            | 説明 | コマンド
-| kbd:[Ctrl+r]   | 検索タイプを切り替え: 文字列 (デフォルト)、正規表現 | `+/input search_switch_regex+`
+| kbd:[Ctrl+x]   | 検索タイプを切り替え: 文字列 (デフォルト)、正規表現 | `+/input search_switch_regex+`
 | kbd:[Alt+c]    | 大文字小文字を区別して検索 | `+/input search_switch_case+`
 | kbd:[Tab]      | 検索範囲: メッセージ (デフォルト)、プレフィックス、プレフィックスとメッセージ | `+/input search_switch_where+`
-| kbd:[↑]        | 前のキーワードで検索 | `+/input search_previous+`
-| kbd:[↓]        | 次のキーワードで検索 | `+/input search_next+`
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | 前のキーワードで検索 | `+/input search_previous+`
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | 次のキーワードで検索 | `+/input search_next+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | 現在の位置で検索を終了 | `+/input search_stop_here+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+q]   | Stop search and reset scroll to pre-text search state. | `+/input search_stop+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_histsearch_context]]
+=== History search context
+
+// TRANSLATION MISSING
+These keys are used in context "histsearch" (when kbd:[Ctrl+r] is pressed to
+search text in commands history).
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー            | 説明 | コマンド
+| kbd:[Ctrl+x]   | 検索タイプを切り替え: 文字列 (デフォルト)、正規表現 | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | 大文字小文字を区別して検索 | `+/input search_switch_case+`
+// TRANSLATION MISSING
+| kbd:[Tab]      | Switch search in: buffer local history (default), global history. | `+/input search_switch_where+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Search in previous (older) history entries. | `+/input search_previous+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Search in next (newer) history entries. | `+/input search_next+`
+// TRANSLATION MISSING
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Stop search and use matching input. | `+/input search_stop_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and restore input to its initial value. | `+/input search_stop+`
 |===
 
 // TRANSLATION MISSING

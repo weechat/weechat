@@ -921,10 +921,35 @@ Pasek _input_ posiada następujące domyślne elementy:
 | Element      | Przykład                                       | Opis
 | input_prompt | `[@Flashy(i)]`                                 | Input prompt, dla irc: nick i tryby (tryb "+i" oznacza niewidzialny na libera).
 | away         | `(away)`                                       | Wskaźnik nieobecności.
-| input_search | `[Szukam (~ str,msg)]`                         | Wskaźnik wyszukiwania ("`~`": wielkość liter ma znaczenie, "`==`": wielkość liter nie ma znaczenia, "`str`": wyszukiwanie ciągu, "`regex`": wyszukiwanie wyrażenia regularnego, "`msg`": wyszukiwanie w wiadomościach, "`pre`": wyszukiwanie w prefiksach, "`pre\|msg`": wyszukiwanie w prefiksach i wiadomościach).
+// TRANSLATION MISSING
+| input_search | `[Search lines (~ str,msg)]`                   | Search indicator (see below).
 | input_paste  | `[Wkleić 7 linii ? [ctrl-y] Tak [ctrl-n] Nie]` | Pyta użytkownika podczas wklejania kilku linii tekstu.
 | input_text   | `hi peter!`                                    | Wprowadzony tekst.
 |===
+
+// TRANSLATION MISSING
+There are two search modes:
+
+// TRANSLATION MISSING
+* search in lines, for example `[Search lines (~ str,msg)]`, with the following info:
+** `~`: wielkość liter ma znaczenie
+** `==`: wielkość liter nie ma znaczenia
+** `str`: wyszukiwanie ciągu
+** `regex`: wyszukiwanie wyrażenia regularnego
+** `msg`: wyszukiwanie w wiadomościach
+** `pre`: wyszukiwanie w prefiksach
+** `pre\|msg`: wyszukiwanie w prefiksach i wiadomościach)
+// TRANSLATION MISSING
+* search in commands history, for example `[Search command (~ str,local)]`,
+  with the following info:
+** `~`: wielkość liter ma znaczenie
+** `==`: wielkość liter nie ma znaczenia
+** `str`: wyszukiwanie ciągu
+** `regex`: wyszukiwanie wyrażenia regularnego
+// TRANSLATION MISSING
+** `local`: search in buffer local history
+// TRANSLATION MISSING
+** `global`: search in global history.
 
 Pasek _nicklist_ posiada następujące domyślne elementy:
 
@@ -1634,7 +1659,10 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Skrót                          | Opis | Komenda
-| kbd:[Ctrl+r]                   | Wyszukaj tekst w historii bufora (zobacz <<key_bindings_search_context,skróty dla kontekstu wyszukiwania>>). | `+/input search_text_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
 | kbd:[Ctrl+s], kbd:[Ctrl+u]     | Ustaw znacznik nieprzeczytania we wszystkich buforach. | `+/allbuf /buffer set unread+`
 | kbd:[Ctrl+x]                   | Przełącz obecny bufor jeśli bufory są połączone pod tym samym numerem, na przykład przełącz na bufor innego serwera IRC. | `+/buffer switch+`
 | kbd:[Alt+x]                    | Pokaż wybrany z połączonych buforów (naciśnij kbd:[Alt+x] ponownie: wyświetl wszystkie połączone bufory). | `+/buffer zoom+`
@@ -1737,21 +1765,53 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 [[key_bindings_search_context]]
 === Wyszukiwanie
 
-Te skróty są używane w kontekście wyszukiwania (kiedy kombinacja kbd:[Ctrl+r]
-zostanie wciśnięta w buforze tekstowym).
+// TRANSLATION MISSING
+These keys are used in context "search" (when kbd:[Ctrl+s] is pressed to search
+text in buffer lines).
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Skrót          | Opis | Komenda
-| kbd:[Ctrl+r]   | Przełącz rodzaj wyszukiwania: ciąg (domyślne), wyrażenie regularne. | `+/input search_switch_regex+`
+| kbd:[Ctrl+x]   | Przełącz rodzaj wyszukiwania: ciąg (domyślne), wyrażenie regularne. | `+/input search_switch_regex+`
 | kbd:[Alt+c]    | Przełącz dopasowywanie wielości liter podczas wyszukiwania. | `+/input search_switch_case+`
 | kbd:[Tab]      | Przełącz miejsce wyszukiwania: wiadomości (domyślne), prefiksy, prefiksy + wiadmości. | `+/input search_switch_where+`
-| kbd:[↑]        | Poprzednie wystąpienie. | `+/input search_previous+`
-| kbd:[↓]        | Następne wystąpienie. | `+/input search_next+`
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Poprzednie wystąpienie. | `+/input search_previous+`
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Następne wystąpienie. | `+/input search_next+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | Zatrzymaj wyszukiwanie na obecnej pozycji. | `+/input search_stop_here+`
 | kbd:[Ctrl+q]   | Zatrzymaj wyszukiwanie i przywróć ekran do stanu z przed wyszukiwania. | `+/input search_stop+`
+|===
+
+// TRANSLATION MISSING
+[[key_bindings_histsearch_context]]
+=== History search context
+
+// TRANSLATION MISSING
+These keys are used in context "histsearch" (when kbd:[Ctrl+r] is pressed to
+search text in commands history).
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Skrót          | Opis | Komenda
+| kbd:[Ctrl+x]   | Przełącz rodzaj wyszukiwania: ciąg (domyślne), wyrażenie regularne. | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | Przełącz dopasowywanie wielości liter podczas wyszukiwania. | `+/input search_switch_case+`
+// TRANSLATION MISSING
+| kbd:[Tab]      | Switch search in: buffer local history (default), global history. | `+/input search_switch_where+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Search in previous (older) history entries. | `+/input search_previous+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Search in next (newer) history entries. | `+/input search_next+`
+// TRANSLATION MISSING
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Stop search and use matching input. | `+/input search_stop_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and restore input to its initial value. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]

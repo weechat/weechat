@@ -14427,9 +14427,22 @@ Paramètres :
 ** _num_history_ : nombre de commandes dans l'historique
 ** _text_search_ : type de recherche de texte :
 *** 0 : pas de recherche en cours
-*** 1 : recherche arrière (vers les messages les plus anciens)
-*** 2 : recherche avant (vers les messages les plus récents)
+*** 1 : recherche dans les lignes du tampon
+*** 2 : recherche dans l'historique de commandes
+** _text_search_direction_ : direction pour la recherche :
+*** 0 : recherche arrière (vers les messages/commandes plus anciens)
+*** 1 : recherche avant (vers les messages/commandes plus récents)
 ** _text_search_exact_ : 1 si la recherche de texte est sensible à la casse
+** _text_search_regex_ : 1 si la recherche est avec une expression régulière
+** _text_search_where_ :
+*** 0 : pas de recherche en cours
+*** 1 : recherche dans le message
+*** 2 : recherche dans le préfixe
+*** 3 : recherche dans le préfixe et le message
+** _text_search_history_:
+*** 0 : pas de recherche en cours
+*** 1 : recherche dans l'historique local du tampon
+*** 2 : recherche dans l'historique global
 ** _text_search_found_ : 1 si du texte a été trouvé, sinon 0
 
 Valeur de retour :
@@ -14538,6 +14551,8 @@ Paramètres :
 * _property_ : nom de la propriété :
 ** _plugin_ : pointeur vers l'extension qui a créé le tampon (NULL pour le
    tampon principal WeeChat)
+** _text_search_regex_compiled_ : expression régulière compilée
+** _text_search_ptr_history_ : entrée d'historique trouvée
 ** _highlight_disable_regex_compiled_ : expression régulière _highlight_disable_regex_ compilée
 ** _highlight_regex_compiled_ : expression régulière _highlight_regex_ compilée
 
