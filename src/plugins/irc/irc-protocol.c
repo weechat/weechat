@@ -7844,7 +7844,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(331, 1, 0, 331),            /* no topic for channel            */
         IRCB(332, 0, 1, 332),            /* topic of channel                */
         IRCB(333, 1, 0, 333),            /* topic info (nick/date)          */
-        IRCB(335, 1, 0, whois_nick_msg), /* is a bot on                     */
+        IRCB(335, 1, 0, whois_nick_msg), /* whois (is a bot on)             */
+        IRCB(337, 1, 0, whois_nick_msg), /* whois (is hiding idle time)     */
         IRCB(338, 1, 0, 338),            /* whois (host)                    */
         IRCB(341, 1, 0, 341),            /* inviting                        */
         IRCB(343, 1, 0, 330_343),        /* is opered as                    */
