@@ -3562,7 +3562,8 @@ TEST(IrcProtocolWithServer, 221)
  *   319: whois (channels)
  *   320: whois (identified user)
  *   326: whois (has oper privs)
- *   335: is a bot on
+ *   335: whois (is a bot on)
+ *   337: whois ((is hiding idle time)
  *   378: whois (connecting from)
  *   379: whois (using modes)
  *   671: whois (secure connection)
@@ -3621,6 +3622,10 @@ TEST(IrcProtocolWithServer, whois_nick_msg)
     CHECK_ERROR_PARAMS("335", 0, 2);
     RECV(":server 335 alice");
     CHECK_ERROR_PARAMS("335", 1, 2);
+    RECV(":server 337");
+    CHECK_ERROR_PARAMS("337", 0, 2);
+    RECV(":server 337 alice");
+    CHECK_ERROR_PARAMS("337", 1, 2);
     RECV(":server 378");
     CHECK_ERROR_PARAMS("378", 0, 2);
     RECV(":server 378 alice");
@@ -3687,6 +3692,10 @@ TEST(IrcProtocolWithServer, whois_nick_msg)
     CHECK_SRV("--", "[bob] is a bot", "irc_335,irc_numeric,log3");
     RECV(":server 335 alice bob");
     CHECK_SRV("--", "bob", "irc_335,irc_numeric,log3");
+    RECV(":server 337 alice bob :is hiding their idle time");
+    CHECK_SRV("--", "[bob] is hiding their idle time", "irc_337,irc_numeric,log3");
+    RECV(":server 337 alice bob");
+    CHECK_SRV("--", "bob", "irc_337,irc_numeric,log3");
     RECV(":server 378 alice bob");
     CHECK_SRV("--", "bob", "irc_378,irc_numeric,log3");
     RECV(":server 378 alice bob :connecting from");
