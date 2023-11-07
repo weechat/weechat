@@ -20,6 +20,7 @@ Bug fixes::
   * core: fix memory leak when config version is invalid or not supported
   * core: fix crash when "config_version" is present in a configuration file without a value
   * core: display an error on startup if environment variable "HOME" is not set
+  * irc: fix target buffer of IRC message 337 (whois reply: "is hiding their idle time")
   * relay: close properly connection with the IRC client in case of server disconnection (issue #2038)
   * ruby: fix use of NULL variable when displaying exception
 
