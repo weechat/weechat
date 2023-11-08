@@ -1635,7 +1635,6 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | Key                            | Description | Command
 | kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
 | kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Set unread marker on all buffers. | `+/allbuf /buffer set unread+`
 | kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/buffer switch+`
 | kbd:[Alt+x]                    | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `+/buffer zoom+`
 | kbd:[PgUp]                     | Scroll up one page in buffer history. | `+/window page_up+`
@@ -1661,6 +1660,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+n]                    | Scroll to next highlight. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | Scroll to previous highlight. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | Scroll to first unread line in buffer. | `+/window scroll_unread+`
+| kbd:[Alt+Shift+U]              | Set unread marker on all buffers. | `+/allbuf /buffer set unread+`
 | kbd:[Alt+<]                    | Switch to previous buffer in list of visited buffers. | `+/buffer jump prev_visited+`
 | kbd:[Alt+>]                    | Switch to next buffer in list of visited buffers. | `+/buffer jump next_visited+`
 | kbd:[Alt+/]                    | Switch to last buffer displayed (before last jump to a buffer). | `+/buffer jump last_displayed+`

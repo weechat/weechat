@@ -1792,7 +1792,6 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `+/allbuf /buffer set unread+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/buffer switch+`
 // TRANSLATION MISSING
@@ -1821,6 +1820,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+n]                    | Scorre fino alla notifica successiva. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | Scorre fino alla notifica precedente. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | Scorre fino alla prima riga non letta nel buffer. | `+/window scroll_unread+`
+| kbd:[Alt+Shift+U]              | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `+/allbuf /buffer set unread+`
 | kbd:[Alt+<]                    | Passa al buffer precedente nella lista dei buffer visitati. | `+/buffer jump prev_visited+`
 | kbd:[Alt+>]                    | Passa al buffer successivo nella lista dei buffer visitati. | `+/buffer jump next_visited+`
 | kbd:[Alt+/]                    | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer). | `+/buffer jump last_displayed+`

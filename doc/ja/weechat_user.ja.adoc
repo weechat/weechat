@@ -1756,7 +1756,6 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | すべてのバッファに未読マークをセット | `+/allbuf /buffer set unread+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/buffer switch+`
 | kbd:[Alt+x]                    | マージされたバッファに再ズーム (kbd:[Alt+x]: 全てのマージされたバッファを表示) | `+/buffer zoom+`
@@ -1783,6 +1782,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+n]                    | 次のハイライトまでスクロール | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | 前のハイライトまでスクロール | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | バッファを最初の未読行までスクロール | `+/window scroll_unread+`
+| kbd:[Alt+Shift+U]              | すべてのバッファに未読マークをセット | `+/allbuf /buffer set unread+`
 | kbd:[Alt+<]                    | バッファ訪問履歴で前のバッファに移動 | `+/buffer jump prev_visited+`
 | kbd:[Alt+>]                    | バッファ訪問履歴で次のバッファに移動 | `+/buffer jump next_visited+`
 | kbd:[Alt+/]                    | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `+/buffer jump last_displayed+`

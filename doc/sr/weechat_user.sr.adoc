@@ -1568,7 +1568,6 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Поставља маркер непрочитано за све бафере. | `+/allbuf /buffer set unread+`
 | kbd:[Ctrl+x]                   | Мења текући бафер ако су бафери спојени са истим бројем, на пример, прелазак на други IRC сервер бафер. | `+/buffer switch+`
 | kbd:[Alt+x]                    | Зум на спојени бафер (kbd:[Alt+x] поново: приказује све спојене бафере). | `+/buffer zoom+`
 | kbd:[PgUp]                     | Скролује навише једну страну у историји бафера. | `+/window page_up+`
@@ -1594,6 +1593,7 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Alt+n]                    | Скроловање до наредног истицања. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | Скроловање на претходно истицање. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | Скроловање на прву непрочитану линију у баферу. | `+/window scroll_unread+`
+| kbd:[Alt+Shift+U]              | Поставља маркер непрочитано за све бафере. | `+/allbuf /buffer set unread+`
 | kbd:[Alt+<]                    | Прелаз на претходни бафер у листи посећених бафера. | `+/buffer jump prev_visited+`
 | kbd:[Alt+>]                    | Прелаз на наредни бафер у листи посећених бафера. | `+/buffer jump next_visited+`
 | kbd:[Alt+/]                    | Прелаз на последње приказани бафер. | `+/buffer jump last_displayed+`

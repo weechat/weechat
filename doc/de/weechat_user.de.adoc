@@ -1660,7 +1660,6 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | setzt für alle Buffer die Markierung für ungelesene Nachrichten. | `+/allbuf /buffer set unread+`
 | kbd:[Ctrl+x]                   | Wechseln Sie den aktuellen Buffer, wenn diese zusammengefügt worden sind, z.B. zwischen IRC-Serverbuffer wechseln. | `+/buffer switch+`
 | kbd:[Alt+x]                    | Zoom eines zusammengefügten Buffers (kbd:[Alt+x] ein zweites mal: alle zusammengefügten Buffer werden angezeigt). | `+/buffer zoom+`
 | kbd:[PgUp]                     | eine Seite im Verlaufsspeicher des Buffers nach oben blättern. | `+/window page_up+`
@@ -1686,6 +1685,7 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | kbd:[Alt+n]                    | springt zur nächsten Highlight Nachricht. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | springt zur vorherigen Highlight Nachricht. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | springt zur ersten ungelesenen Zeile im Buffer. | `+/window scroll_unread+`
+| kbd:[Alt+Shift+U]              | setzt für alle Buffer die Markierung für ungelesene Nachrichten. | `+/allbuf /buffer set unread+`
 | kbd:[Alt+<]                    | springt zum letzten besuchten Buffer. | `+/buffer jump prev_visited+`
 | kbd:[Alt+>]                    | springt zum nächsten besuchten Buffer. | `+/buffer jump next_visited+`
 | kbd:[Alt+/]                    | wechselt zum jeweils zuletzt angezeigten Buffern. | `+/buffer jump last_displayed+`

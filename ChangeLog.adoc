@@ -15,7 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
-  * core: move key kbd:[Ctrl+r] to kbd:[Ctrl+s], add key kbd:[Ctrl+r] to search in commands history, add option `search_history` in command `/input`, add key context "histsearch", add option weechat.look.buffer_search_history, add buffer variables "text_search_direction", "text_search_history" and "text_search_ptr_history", add key kbd:[Ctrl+o] to send command found and insert next one in input (issue #2040)
+  * core: move key kbd:[Ctrl+r] to kbd:[Ctrl+s], add key kbd:[Ctrl+r] to search in commands history, move key kbd:[Ctrl+s], kbd:[Ctrl+u] to kbd:[Alt+Shift+U], add option `search_history` in command `/input`, add key context "histsearch", add option weechat.look.buffer_search_history, add buffer variables "text_search_direction", "text_search_history" and "text_search_ptr_history", add key kbd:[Ctrl+o] to send command found and insert next one in input (issue #2040)
   * core: display only version with command `/version`, add options `-o` and `-ol` in command `/upgrade`
   * core: add number of processes in command `/sys waitpid`
   * core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias` and `/trigger` (issue #1956)

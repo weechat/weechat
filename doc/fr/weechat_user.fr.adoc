@@ -1670,7 +1670,6 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 | Touche                         | Description | Commande
 | kbd:[Ctrl+r]                   | Chercher du texte dans l'historique de commandes (voir <<key_bindings_histsearch_context,les touches pour le contexte "histsearch">>). | `+/input search_history+`
 | kbd:[Ctrl+s]                   | Chercher du texte dans les lignes du tampon (voir <<key_bindings_search_context,les touches pour le contexte "search">>). | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Positionner le marqueur de données non lues sur tous les tampons. | `+/allbuf /buffer set unread+`
 | kbd:[Ctrl+x]                   | Changer de tampon courant si plusieurs tampons sont mélangés avec le même numéro, par exemple basculer vers un autre tampon serveur IRC. | `+/buffer switch+`
 | kbd:[Alt+x]                    | Zoomer sur le tampon mélangé (kbd:[Alt+x] de nouveau : afficher tous les tampons mélangés). | `+/buffer zoom+`
 | kbd:[PgUp]                     | Monter d'une page dans l'historique du tampon. | `+/window page_up+`
@@ -1696,6 +1695,7 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 | kbd:[Alt+n]                    | Se positionner sur le highlight suivant. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | Se positionner sur le highlight précédent. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | Se positionner sur la première ligne non lue du tampon. | `+/window scroll_unread+`
+| kbd:[Alt+Shift+U]              | Positionner le marqueur de données non lues sur tous les tampons. | `+/allbuf /buffer set unread+`
 | kbd:[Alt+<]                    | Sauter au tampon précédent dans la liste des tampons visités. | `+/buffer jump prev_visited+`
 | kbd:[Alt+>]                    | Sauter au tampon suivant dans la liste des tampons visités. | `+/buffer jump next_visited+`
 | kbd:[Alt+/]                    | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon). | `+/buffer jump last_displayed+`
