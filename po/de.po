@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2005 Rudolf Polzer <weechat-te@durchnull.de>
 # Copyright (C) 2006-2007 Thomas Schuetz <i18n@internet-villa.de>
-# Copyright (C) 2009-2019 Nils Görs <weechatter@arcor.de>
+# SPDX-FileCopyrightText: 2009-2019, 2023 Nils Görs <weechatter@arcor.de>
 # Copyright (C) 2015 Sven Knurr <zeug@tuxproject.de>
 #
 # This file is part of WeeChat, the extensible chat client.
@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2023-11-06 13:41+0100\n"
-"PO-Revision-Date: 2023-11-03 13:41+0100\n"
+"PO-Revision-Date: 2023-11-09 10:28+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -35,21 +35,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.1\n"
 "X-Poedit-Bookmarks: -1,-1,180,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr ""
-"%sEin anderer Befehl \"%s\" existiert bereits für die Erweiterung \"%s\""
+"%sEin anderer Befehl, \"%s\", existiert bereits für die Erweiterung \"%s\""
 
 #, c-format
 msgid ""
 "%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
 "commands with similar name: %s"
 msgstr ""
-"%sUnbekannter Befehl \"%s\" (Befehle unterscheiden sich in Groß- und "
+"%sUnbekannter Befehl, \"%s\", (Befehle unterscheiden sich in Groß- und "
 "Kleinschreibung, für eine Hilfe nutze /help), Befehl mit ähnlichem Namen: %s"
 
 #, c-format
@@ -57,17 +57,17 @@ msgid ""
 "%sUnknown command \"%s\" (type /help for help), commands with similar name: "
 "%s"
 msgstr ""
-"%sUnbekannter Befehl \"%s\" (für eine Hilfe nutze /help), Befehl mit "
-"ähnlichem Namen: %s"
+"%sUnbekannter Befehl, \"%s\", (für eine Hilfe nutze /help), Befehl mit"
+" ähnlichem Namen: %s"
 
 #, c-format
 msgid "%sBad file descriptor (%d) used in hook_fd"
-msgstr "%sBad file descriptor (%d) wurde in Funktion \"hook_fd\" genutzt"
+msgstr "%sBad file descriptor, (%d) wurde in Funktion \"hook_fd\" genutzt"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "End of command '%s', timeout reached (%.1fs)"
 msgid "End of command '%s', timeout reached (%.3fs)"
-msgstr "Befehl '%s' beendet, Zeit ist verstrichen (%.1fs)"
+msgstr "Befehl '%s' beendet, Zeitüberschreitung erreicht (%.3fs)"
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
@@ -78,10 +78,10 @@ msgstr ""
 msgid "%sURL transfer error: %s (URL: \"%s\")"
 msgstr "%sURL Transferfehler: %s (URL: \"%s\")"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "End of URL transfer '%s', timeout reached (%.1fs)"
 msgid "End of URL transfer '%s', timeout reached (%.3fs)"
-msgstr "Ende der URL-Übertragung „%s“, Zeitüberschreitung erreicht (%.1fs)"
+msgstr "Ende der URL-Übertragung „%s“, Zeitüberschreitung erreicht (%.3fs)"
 
 #, c-format
 msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
@@ -823,10 +823,10 @@ msgstr "%sProxy \"%s\" konnte nicht hinzugefügt werden"
 msgid "%sInvalid port \"%s\" for proxy \"%s\""
 msgstr "%sFalscher Port \"%s\" für den Proxy \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "Proxy deleted"
 msgid "Proxy \"%s\" deleted"
-msgstr "Proxy gelöscht"
+msgstr "Proxy \"%s\" gelöscht"
 
 #, c-format
 msgid "%sProxy \"%s\" not found"
@@ -1042,11 +1042,10 @@ msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d Einstellung(en) wieder hergestellt, %d Einstellung(en) entfernt"
 
 #. TRANSLATORS: "%d %s" is number of times, eg: "2 times"
-#, fuzzy, c-format
+#, c-format
 #| msgid "Upgraded %d %s, first start: %s, last start: %s"
 msgid "WeeChat upgrades: %d %s, first start: %s, last start: %s"
-msgstr ""
-"Es wurde %d %s ein Upgrade durchgeführt, erster Start: %s, letzter Start: %s"
+msgstr "WeeChat Upgrades: %d %s, erster Start: %s, letzter Start: %s"
 
 # nicht als Zeitangabe, sondern wie oft etwas passiert
 #. TRANSLATORS: text is: "upgraded xx times"
@@ -1055,10 +1054,10 @@ msgid_plural "times"
 msgstr[0] "mal"
 msgstr[1] "mal"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgid "WeeChat upgrades: none, started on %s"
-msgstr "WeeChat-Laufzeit: %d %s %02d:%02d:%02d, gestartet am %s"
+msgstr "WeeChat upgrades: keine, gestartet am %s"
 
 #, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
@@ -1148,7 +1147,6 @@ msgstr "führt einen Befehl in allen Buffern aus"
 msgid "<command>"
 msgstr "<Befehl>"
 
-#, fuzzy
 #| msgid ""
 #| "command: command to execute (or text to send to buffer if command does "
 #| "not start with '/')\n"
@@ -1160,20 +1158,15 @@ msgid ""
 "command: command to execute (or text to send to buffer if command does not "
 "start with \"/\")"
 msgstr ""
-"command: Befehl der ausgeführt werden soll (oder Text welcher in den Buffer "
-"gesendet werden soll, sofern dem Befehl kein '/' vorangestellt ist)\n"
-"\n"
-"Beispiele:\n"
-"  setze den ungelesen Marker für alle Buffer:\n"
-"    /allbuf /buffer set unread"
+"Befehl: Befehl der ausgeführt werden soll (oder Text welcher in den Buffer "
+"gesendet werden soll, sofern dem Befehl kein \"/\" vorangestellt ist)"
 
 msgid "Example:"
 msgstr "Beispiel:"
 
-#, fuzzy
 #| msgid "execute a command on all buffers"
 msgid "  set read marker on all buffers:"
-msgstr "führt einen Befehl in allen Buffern aus"
+msgstr "  Lesemarkierung für alle Buffer setzen:"
 
 msgid "set or remove away status"
 msgstr "Abwesenheitsstatus setzen oder entfernen"
@@ -1182,28 +1175,25 @@ msgstr "Abwesenheitsstatus setzen oder entfernen"
 msgid "[-all] [<message>]"
 msgstr "[-all] [<message>]"
 
-#, fuzzy
 #| msgid "execute a command on all connected servers"
 msgid "raw[-all]: set or remove away status on all connected servers"
-msgstr "führt einen Befehl aus, der zu allen verbundenen Server gesendet wird"
+msgstr ""
+"raw[-all]: Abwesenheitsstatus auf allen verbundenen Server setzen oder"
+" entfernen"
 
-#, fuzzy
 #| msgid ""
 #| "   -all: set or remove away status on all connected servers\n"
 #| "message: message for away (if no message is given, away status is removed)"
 msgid ""
 "message: message for away (if no message is given, away status is removed)"
 msgstr ""
-"   -all: Abwesenheitsstatus auf allen verbundenen Server setzen oder "
-"entfernen\n"
-"message: Abwesenheitsnachricht (ohne Angabe einer Nachricht wird der "
-"Abwesenheitszustand entfernt)"
+"Nachricht: Abwesenheitsnachricht (ohne Angabe einer Nachricht wird der"
+" Abwesenheitszustand entfernt)"
 
 msgid "manage bars"
 msgstr "Infobars verwalten"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
 #| msgid ""
 #| "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
 #| "<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
@@ -1219,9 +1209,9 @@ msgid ""
 msgstr ""
 "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
 "<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || rename <name> <new_name> || del <name>|-all || set <name> "
-"<option> <value> || hide|show|toggle <name> || scroll <name> <window> "
-"<scroll_value>"
+"nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+"<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
+"scroll <name> <window> <scroll_value>"
 
 msgid "raw[list]: list all bars"
 msgstr "raw[list]: listet alle Bars auf"
@@ -1269,10 +1259,9 @@ msgid "> other condition: see /help weechat.bar.xxx.conditions and /help eval"
 msgstr ""
 "> andere Bedingungen: siehe /help weechat.bar.xxx.conditions und /help eval"
 
-#, fuzzy
 #| msgid "bar position (bottom, top, left, right)"
 msgid "position: bottom, top, left or right"
-msgstr "Position der Infobar (unten, oben, links, rechts)"
+msgstr "Position: unten, oben, links oder rechts"
 
 msgid "size: size of bar (in chars)"
 msgstr "size: Größe der Bar (in Zeichen)"
@@ -1303,10 +1292,9 @@ msgstr "raw[rename]: Eine Bar umbenennen"
 msgid "raw[del]: delete bars"
 msgstr "raw[del]: entfernt Bars"
 
-#, fuzzy
 #| msgid "alias name (wildcard \"*\" is allowed) (optional)"
 msgid "mask: name where wildcard \"*\" is allowed"
-msgstr "Name des Alias (Platzhalter \"*\" kann verwendet werden) (optional)"
+msgstr "Maske: Name, wobei der Platzhalter \"*\" zulässig ist"
 
 msgid "raw[set]: set a value for a bar property"
 msgstr "raw[set]: legt einen Wert für eine Bar-Eigenschaft fest"
@@ -1318,10 +1306,9 @@ msgstr ""
 "option: Option die geändert werden soll (eine Liste der möglichen Optionen "
 "findet man unter /set weechat.bar.<barname>.*)"
 
-#, fuzzy
 #| msgid "value of a trigger option"
 msgid "value: new value for option"
-msgstr "Werte für Trigger-Einstellung"
+msgstr "Wert: neuer Wert für die Option"
 
 msgid "raw[hide]: hide a bar"
 msgstr "raw[hide]: eine Bar verstecken"
@@ -1358,15 +1345,14 @@ msgstr ""
 "  erstellt eine Infobar mit Items für Uhrzeit, Buffernummer + name, und "
 "Vervollständigung:"
 
-#, fuzzy
 #| msgid "nicks in nicklist of current buffer"
 msgid "  scroll nicklist 10 lines down on current buffer:"
-msgstr "Nicks in Benutzerliste für aktuellen Buffer"
+msgstr ""
+"  scrollt die Benutzerliste im aktuellen Buffer um 10 Zeilen nach unten:"
 
-#, fuzzy
 #| msgid "nicks in nicklist of current buffer"
 msgid "  scroll to end of nicklist on current buffer:"
-msgstr "Nicks in Benutzerliste für aktuellen Buffer"
+msgstr "  scrollt zum Ende der Nicklist im aktuellen Buffer:"
 
 msgid "manage buffers"
 msgstr "Buffer verwalten"
@@ -1467,7 +1453,6 @@ msgstr ""
 msgid "raw[zoom]: zoom on merged buffer"
 msgstr "raw[zoom]: zoomen eines zusammengeführten Buffers"
 
-#, fuzzy
 #| msgid ""
 #| "%sRenumbering is allowed only if option weechat.look.buffer_auto_renumber "
 #| "is off"
@@ -1475,8 +1460,8 @@ msgid ""
 "raw[renumber]: renumber buffers (works only if option weechat.look."
 "buffer_auto_renumber is off)"
 msgstr ""
-"%sUmnummerierung ist nur erlaubt, wenn die Einstellung weechat.look."
-"buffer_auto_renumber deaktiviert ist"
+"raw[renumber]: Buffer werden umnummeriert (Einstellung"
+" weechat.look.buffer_auto_renumber muss deaktiviert sein)"
 
 msgid "raw[close]: close buffer (number/range or name is optional)"
 msgstr "raw[close]: Buffer schließen (Nummer oder Bereich ist optional)"
@@ -1501,10 +1486,9 @@ msgid "> raw[message]: for messages from users + highlights"
 msgstr ""
 "> raw[message]: Benachrichtigung bei Nachrichten von Usern + Highlights"
 
-#, fuzzy
 #| msgid "Relay raw messages"
 msgid "> raw[all]: for all messages"
-msgstr "Relay RAW Nachrichten"
+msgstr "> raw[all]: für alle Nachrichten"
 
 msgid "> raw[reset]: reset to default value (all)"
 msgstr "> raw[reset]: Benachrichtigung auf Standardwert zurück setzen (all)"
@@ -1518,10 +1502,9 @@ msgstr "raw[setvar]: legt eine lokale Variable für den aktuellen Buffer an"
 msgid "raw[delvar]: delete a local variable from the current buffer"
 msgstr "raw[delvar]: löscht eine lokale Variable des aktuellen Buffers"
 
-#, fuzzy
 #| msgid "change charset for current buffer"
 msgid "raw[set]: set a property in the current buffer"
-msgstr "Ändert den Zeichensatz für aktuellen Buffer"
+msgstr "raw[set]: setzt eine Eigenschaft für den aktuellen Buffer"
 
 msgid ""
 "raw[setauto]: like \"set\" and also define option \"weechat.buffer.<name>."
@@ -1533,10 +1516,9 @@ msgstr ""
 "Konfiguration gespeichert und Anwendung findet, sobald dieser Buffer "
 "geöffnet wird"
 
-#, fuzzy
 #| msgid "change charset for current buffer"
 msgid "raw[get]: display a property of current buffer"
-msgstr "Ändert den Zeichensatz für aktuellen Buffer"
+msgstr "raw[get]: zeigt eine Eigenschaft für den aktuellen Buffer an"
 
 msgid "raw[jump]: jump to another buffer:"
 msgstr "raw[jump]: springt zu einem anderen Buffer:"
@@ -1619,15 +1601,15 @@ msgstr ""
 "Farbpaarung mehr verfügbar sein sollte und die automatische Reset-Option "
 "deaktiviert ist, siehe Einstellung: \"weechat.look.color_pairs_auto_reset\")"
 
-#, fuzzy
 #| msgid "terminal color (0-255) converted to RGB color"
 msgid "raw[term2rgb]: convert a terminal color (0-255) to RGB color"
-msgstr "Terminalfarbe (0-255) wurde umgewandelt in RGB Farbe"
+msgstr ""
+"raw[term2rgb]: konvertiert eine Terminalfarbe (0-255) in eine RGB Farbe"
 
-#, fuzzy
 #| msgid "RGB color converted to terminal color (0-255)"
 msgid "raw[rgb2term]: convert a RGB color to terminal color (0-255)"
-msgstr "RGB Farbe wurde umgewandelt in Terminalfarbe (0-255)"
+msgstr ""
+"raw[rgb2term]: konvertiert eine RGB Farbe in eine Terminalfarbe (0-255)"
 
 msgid ""
 "limit: number of colors to use in terminal table (starting from 0); default "
@@ -1651,12 +1633,10 @@ msgstr "führe explizit einen WeeChat Befehl oder eine Erweiterung aus"
 msgid "[-buffer <name>] <plugin> <command>"
 msgstr "[-buffer <name>] <plugin> <command>"
 
-#, fuzzy
 #| msgid "execute a command on all buffers"
 msgid "raw[-buffer]: execute the command on this buffer"
-msgstr "führt einen Befehl in allen Buffern aus"
+msgstr "raw[-buffer]: Befehl wird in diesem Buffer ausgeführt"
 
-#, fuzzy
 #| msgid ""
 #| "-buffer: execute the command on this buffer\n"
 #| " plugin: execute the command from this plugin; 'core' for a WeeChat "
@@ -1669,12 +1649,10 @@ msgid ""
 "command, \"*\" for automatic plugin (it depends on the buffer where the "
 "command is executed)"
 msgstr ""
-"-buffer: Befehl wird in diesem Buffer ausgeführt\n"
-" plugin: Befehl der angegeben Erweiterung wird ausgeführt; 'core' für einen "
-"internen WeeChat Befehl, '*' automatisierte Auswahl (entscheidend ist der "
-"Buffer in welchem der Befehl ausgeführt wird)\n"
-"command: auszuführender Befehl (es wird automatisch ein '/' vorangestellt, "
-"falls dieser nicht angegeben wurde)"
+"Erweiterung: Befehl der angegeben Erweiterung wird ausgeführt; \"core\" für"
+" einen "
+"internen WeeChat Befehl, \"*\" automatisierte Auswahl (entscheidend ist der "
+"Buffer in welchem der Befehl ausgeführt wird)"
 
 msgid ""
 "command: command to execute (a \"/\" is automatically added if not found at "
@@ -1736,7 +1714,6 @@ msgid "debug functions"
 msgstr "Debug-Funktionen"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
 #| msgid ""
 #| "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|"
 #| "color|dirs|infolists|libs|memory|tags|term|url|windows || callbacks "
@@ -1749,7 +1726,7 @@ msgid ""
 "<command> || unicode <string>"
 msgstr ""
 "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|libs|memory|tags|term|url|windows || callbacks "
+"dirs|infolists|key|libs|memory|tags|term|url|windows || callbacks "
 "<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
 "<command> || unicode <string>"
 
@@ -1759,15 +1736,13 @@ msgstr "raw[list]: zeigt alle Erweiterungen mit Debuglevel an"
 msgid "raw[set]: set debug level for plugin"
 msgstr "raw[set]: setzt den Level der Protokollierung für eine Erweiterung"
 
-#, fuzzy
 #| msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgid "plugin: name of plugin (\"core\" for WeeChat core)"
-msgstr "Debug-Level für Erweiterung (\"core\" für den WeeChat Core)"
+msgstr "Erweiterung: Name der Erweiterung (\"core\" for WeeChat core)"
 
-#, fuzzy
 #| msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgid "level: debug level for plugin (0 = disable debug)"
-msgstr "Debug-Level für Erweiterung (\"core\" für den WeeChat Core)"
+msgstr "Level: Debuglevel der Erweiterung (0 = deaktiviert Debug)"
 
 msgid ""
 "raw[dump]: save memory dump in WeeChat log file (same dump is written when "
@@ -1814,10 +1789,11 @@ msgstr "> raw[m]: Minuten"
 msgid "> raw[h]: hours"
 msgstr "> raw[h]: Stunden"
 
-#, fuzzy
 #| msgid "%sWarning: failed to load system certificate authorities"
 msgid "raw[certs]: display number of loaded trusted certificate authorities"
-msgstr "%sWarnung: Systemzertifizierungsstellen konnten nicht geladen werden"
+msgstr ""
+"raw[certs]: gibt die Anzahl geladener vertrauenswürdiger"
+" Zertifizierungsstellen aus"
 
 msgid "raw[color]: display infos about current color pairs"
 msgstr "raw[color]: zeigt Informationen über die aktuellen Farbpaarungen an"
@@ -1825,10 +1801,9 @@ msgstr "raw[color]: zeigt Informationen über die aktuellen Farbpaarungen an"
 msgid "raw[cursor]: toggle debug for cursor mode"
 msgstr "raw[cursor]: umschalten des Debug-Informationen, für den Cursor-Modu"
 
-#, fuzzy
 #| msgid "files in script directories"
 msgid "raw[dirs]: display directories"
-msgstr "Dateien die sich in den Skript-Verzeichnissen befinden"
+msgstr "raw[dirs]: Verzeichnisse werden angezeigt"
 
 msgid ""
 "raw[hdata]: display infos about hdata (with free: remove all hdata in memory)"
@@ -1877,12 +1852,13 @@ msgstr ""
 "raw[time]: misst die Zeit um einen Befehl auszuführen oder um einen Text in "
 "den aktuellen Buffer zu senden"
 
-#, fuzzy
 #| msgid "condition(s) to display the bar item (evaluated, see /help eval)"
 msgid ""
 "raw[unicode]: display information about string and unicode chars (evaluated, "
 "see /help eval)"
-msgstr "Bedingung(en) um das Bar-Item anzuzeigen (evaluiert, siehe /help eval)"
+msgstr ""
+"raw[unicode]: zeigt Informationen über Unicode-Zeichen in der angegebenen"
+" Zeichenkette an (evaluiert, siehe /help eval)"
 
 msgid "evaluate expression"
 msgstr "evaluierter Ausdruck"
@@ -1900,7 +1876,6 @@ msgstr ""
 "raw[-n]: gibt das Ergebnis aus, ohne dass dieses in den Buffer gesendet wird "
 "(Debug Modus)"
 
-#, fuzzy
 #| msgid ""
 #| "command(s) to run if conditions are OK, after regex replacements (many "
 #| "commands can be separated by semicolons)"
@@ -1908,9 +1883,8 @@ msgid ""
 "raw[-s]: split expression before evaluating it (many commands can be "
 "separated by semicolons)"
 msgstr ""
-"Befehl(e) die ausgeführt werden falls Bedingungen OK sind, nachdem regulärer "
-"Ausdruck durchlaufen wurde (mehrere Befehle müssen durch Semikolon "
-"voneinander getrennt werden)"
+"raw[-s]: teilt Ausdrücke, bevor sie evaluiert werden (mehrere Befehle können"
+" durch Semikolon getrennt werden)"
 
 msgid ""
 "raw[-d]: display debug output after evaluation (with two -d: more verbose "
@@ -1935,7 +1909,6 @@ msgstr ""
 "${variable} werden ersetzt (siehe Funktion \"string_eval_expression\" in der "
 "\"Anleitung für API Erweiterung\")"
 
-#, fuzzy
 #| msgid ""
 #| "path to a socket file (path is evaluated, see function "
 #| "string_eval_path_home in plugin API reference)"
@@ -1943,8 +1916,8 @@ msgid ""
 "operator: a logical or comparison operator (see function "
 "\"string_eval_expression\" in \"Plugin API reference\")"
 msgstr ""
-"Pfad zu einer Socket-Datei (Pfad ist evaluiert, siehe Funktion "
-"string_eval_path_home in der Plugin-API-Referenz)"
+"Operand: ein logischer oder vergleichender Operand (siehe Funktion"
+" \"string_eval_expression\" in \"Anleitung für API Erweiterung\")"
 
 msgid ""
 "An expression is considered as \"true\" if it is not NULL, not empty, and "
@@ -1985,7 +1958,6 @@ msgstr ""
 "Schlagwörter oder reguläre Ausdrücke verwendet werden"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
 #| msgid ""
 #| "list || enable|disable|toggle [<name>|@] || add|addreplace <name> "
 #| "<buffer>[,<buffer>...] <tags> <regex> || rename <name> <new_name> || "
@@ -1995,23 +1967,21 @@ msgid ""
 "addreplace <name> <buffer>[,<buffer>...] <tags> <regex> || rename <name> "
 "<new_name> || recreate <name> || del <name>|<mask> [<name>|<mask>...]"
 msgstr ""
-"list || enable|disable|toggle [<name>|@] || add|addreplace <name> <buffer>[,"
-"<buffer>...] <tags> <regex> || rename <name> <new_name> || recreate <name> "
-"|| del <name>|-all [<name>...]"
+"list || enable|disable|toggle [<name>|<mask>|@ [<name>|<mask>|@...]] || add|"
+"addreplace <name> <buffer>[,<buffer>...] <tags> <regex> || rename <name> "
+"<new_name> || recreate <name> || del <name>|<mask> [<name>|<mask>...]"
 
-#, fuzzy
 #| msgid "list of filters"
 msgid "raw[list]: list all filters"
-msgstr "Auflistung der Filter"
+msgstr "raw[list]: alle Filter auflisten"
 
 msgid "raw[enable]: enable filters (filters are enabled by default)"
 msgstr ""
 "raw[enable]: Filter wird aktiviert (Filter werden standardmäßig aktiviert)"
 
-#, fuzzy
 #| msgid "names of disabled filters"
 msgid "raw[disable]: disable filters"
-msgstr "Namen der deaktivierten Filter"
+msgstr "raw[disable]: Filter deaktivieren"
 
 msgid "raw[toggle]: toggle filters"
 msgstr "raw[toggle]: Filter umschalten"
@@ -2031,15 +2001,13 @@ msgstr ""
 "raw[addreplace]: neuen Filter anlegen oder einen schon existierenden Filter "
 "ersetzen"
 
-#, fuzzy
 #| msgid "names of filters"
 msgid "name: filter name"
-msgstr "Liste der Filter"
+msgstr "Name: Name des Filters"
 
-#, fuzzy
 #| msgid "names of enabled filters"
 msgid "raw[rename]: rename a filter"
-msgstr "Namen der aktivierten Filter"
+msgstr "raw[rename]: benennt einen Filter um"
 
 msgid "raw[recreate]: set input with the command used to edit the filter"
 msgstr ""
@@ -2061,19 +2029,17 @@ msgstr ""
 "> - ist der vollständige Name eines Buffer inklusive seiner Erweiterung "
 "(Beispiel: \"irc.libera.#weechat\" oder \"irc.server.libera\")"
 
-#, fuzzy
 #| msgid "manage buffers"
 msgid "> - \"*\" means all buffers"
-msgstr "Buffer verwalten"
+msgstr "> - \"*\" betrifft alle Buffer"
 
 msgid "> - a name starting with \"!\" is excluded"
 msgstr ""
 "> beginnt der Name mit '!', wird für diesen Buffer kein Filter angewendet"
 
-#, fuzzy
 #| msgid "bar name (wildcard \"*\" is allowed) (optional)"
 msgid "> - wildcard \"*\" is allowed"
-msgstr "Name der Bar (Platzhalter \"*\" kann verwendet werden) (optional)"
+msgstr "> - Platzhalter \"*\" kann verwendet werden"
 
 msgid ""
 "tags: comma separated list of tags (for example \"irc_join,irc_part,"
@@ -2095,10 +2061,10 @@ msgstr ""
 "> - wird ein Tag mit '!' eingeleitet, dann muss dieser Tag NICHT in der "
 "Nachricht enthalten sein"
 
-#, fuzzy
 #| msgid "POSIX extended regular expression to search ANSI escape codes"
 msgid "regex: POSIX extended regular expression to search in line:"
-msgstr "Erweiterte reguläre POSIX Ausdrücke um ANSI Escapesequenz zu suchen"
+msgstr ""
+"Regex: Erweiterte reguläre POSIX Ausdrücke nutzen um in Zeilen zu suchen:"
 
 msgid ""
 "> - use \"\\t\" to separate prefix from message, special chars like \"|\" "
@@ -2159,10 +2125,9 @@ msgstr ""
 "Mittels \"/debug tags\" kann man sich die Schlagwörter jeder einzelnen Zeile "
 "darstellen lassen"
 
-#, fuzzy
 #| msgid "execute a command on all buffers"
 msgid "  use IRC smart filter on all buffers:"
-msgstr "führt einen Befehl in allen Buffern aus"
+msgstr "  aktiviert den intelligenten IRC Filter für alle Buffer:"
 
 msgid ""
 "  use IRC smart filter on all buffers except those with \"#weechat\" in name:"
@@ -2170,10 +2135,9 @@ msgstr ""
 "  aktiviert den intelligenten IRC Filter für alle Buffer, außer Buffer die "
 "\"#weechat\" im Namen tragen:"
 
-#, fuzzy
 #| msgid "display host in part/quit messages"
 msgid "  filter all IRC join/part/quit messages:"
-msgstr "zeigt den Host innerhalb einer part/quit Nachricht an"
+msgstr "  filtert alle IRC join/part/quit Nachrichten:"
 
 msgid "  filter nicks displayed when joining channels or with /names:"
 msgstr ""
@@ -2215,16 +2179,13 @@ msgstr "raw[-listfull]: zeigt alle Befehle mit Beschreibung, nach Erweiterung"
 msgid "plugin: list commands for this plugin"
 msgstr "plugin: zeigt Befehle explizit für diese Erweiterung an"
 
-#, fuzzy
 #| msgid "functions for command line"
 msgid "command: a command name"
-msgstr "Funktionen für die Befehlszeile"
+msgstr "Befehl: Name eines Befehls"
 
-#, fuzzy
 #| msgid "option: extra option, for some servers"
 msgid "option: an option name (use /set to see list)"
-msgstr ""
-"option: zusätzliche Einstellung, die von manchen Servern berücksichtigt wird"
+msgstr "Option: Name einer Option (nutze /set um eine Liste zu erhalten)"
 
 msgid "show buffer command history"
 msgstr "Zeigt den Befehlsverlauf des Buffers"
@@ -2236,14 +2197,11 @@ msgstr "clear || <value>"
 msgid "raw[clear]: clear history"
 msgstr "raw[clear]: löscht den Befehlsverlauf"
 
-#, fuzzy
 #| msgid ""
 #| "clear: clear history\n"
 #| "value: number of history entries to show"
 msgid "value: number of history entries to show"
-msgstr ""
-"clear: löscht den Befehlsverlauf\n"
-"value: Anzahl der gewünschten Einträgen im Befehlsverlauf anzeigen"
+msgstr "Wert: Anzahl der gewünschten Einträgen im Befehlsverlauf anzeigen"
 
 msgid "manage hotlist"
 msgstr "Hotlist verwalten"
@@ -2317,10 +2275,9 @@ msgstr ""
 msgid "> raw[search_text_here]: search text in buffer at current position"
 msgstr "> raw[search_text_here]: Textsuche, im Buffer, ab aktueller Position"
 
-#, fuzzy
 #| msgid "check words during text search in buffer"
 msgid "> raw[search_text]: search text in buffer"
-msgstr "Überprüfe Wörter während im Buffer nach einem Text gesucht wird"
+msgstr "> raw[search_text]: Textsuche im Buffer"
 
 msgid "> raw[search_switch_case]: switch exact case for search"
 msgstr "> raw[search_switch_case]: schaltet Groß-/Kleinschreibung ein und aus"
@@ -2508,7 +2465,6 @@ msgid "manage custom bar items"
 msgstr "Verwalten von benutzerdefinierten Bar-Items"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
 #| msgid ""
 #| "list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
 #| "<name> <new_name> || refresh <name> [<name>...] || recreate <name> || del "
@@ -2520,27 +2476,24 @@ msgid ""
 msgstr ""
 "list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
 "<name> <new_name> || refresh <name> [<name>...] || recreate <name> || del "
-"<name>|-all"
+"<name>|<mask> [<name>|<mask>...]"
 
-#, fuzzy
 #| msgid "names of custom bar items"
 msgid "raw[list]: list all custom bar items"
-msgstr "Namen der benutzerdefinierten Bar-Items"
+msgstr "raw[list]: zeigt alle benutzerdefinierten Bar-Elemente an"
 
-#, fuzzy
 #| msgid "manage custom bar items"
 msgid "raw[add]: add a custom bar item"
-msgstr "Verwalten von benutzerdefinierten Bar-Items"
+msgstr "raw[add]: fügt ein benutzerdefiniertes Bar-Element hinzu"
 
 msgid "raw[addreplace]: add or replace an existing custom bar item"
 msgstr ""
 "raw[addreplace]: erzeugt neues Bar-Item oder ersetzt ein schon existierendes "
 "Bar-Item"
 
-#, fuzzy
 #| msgid "names of custom bar items"
 msgid "name: custom bar item name"
-msgstr "Namen der benutzerdefinierten Bar-Items"
+msgstr "Name: Name für benutzerdefiniertes Bar-Element"
 
 msgid ""
 "conditions: evaluated conditions to display the bar item (for example to "
@@ -2549,15 +2502,13 @@ msgstr ""
 "conditions: evaluierte Bedingungen um ein Bar-Item anzuzeigen (zum Beispiel, "
 "um ein Bar-Item nur in einem bestimmten Buffer anzuzeigen)"
 
-#, fuzzy
 #| msgid "content of bar item (evaluated, see /help eval)"
 msgid "content: content (evaluated, see /help eval)"
-msgstr "Inhalt des Bar-Items (evaluiert, siehe /help eval)"
+msgstr "Inhalt: Inhalt (evaluiert, siehe /help eval)"
 
-#, fuzzy
 #| msgid "names of custom bar items"
 msgid "raw[rename]: rename a custom bar item"
-msgstr "Namen der benutzerdefinierten Bar-Items"
+msgstr "raw[rename]: Umbenennen eines benutzerdefinierten Bar-Elementes"
 
 msgid ""
 "raw[refresh]: update content of item in all bars where the item is "
@@ -2573,10 +2524,9 @@ msgstr ""
 "raw[recreate]: kopiert den Befehl in die Eingabezeile, um das "
 "benutzerdefinierte Bar-Item zu editieren"
 
-#, fuzzy
 #| msgid "names of custom bar items"
 msgid "raw[del]: delete custom bar items"
-msgstr "Namen der benutzerdefinierten Bar-Items"
+msgstr "raw[del]: entfernt ein benutzerdefiniertes Bar-Elementes"
 
 msgid ""
 "  add item with terminal size, displayed only in buffers with number = 1:"
@@ -2584,10 +2534,9 @@ msgstr ""
 "  Item welches die Terminalgröße anzeigt wird hinzugefügt, aber nur für "
 "Buffern mit Nummer = 1:"
 
-#, fuzzy
 #| msgid "bar item with list of buffers"
 msgid "  add item with buffer info:"
-msgstr "Bar-Item mit der Liste von Buffern"
+msgstr "  fügt ein Element hinzu, welches Informationen zum Buffer anzeigt:"
 
 msgid ""
 "  add item with date/time using format \"Dec 25, 12:34 +0100\", refreshed "
@@ -2672,19 +2621,19 @@ msgstr ""
 "Anführungszeichen können verwendet werden, um Leerzeichen am Anfang/Ende des "
 "Befehls beizubehalten"
 
-#, fuzzy
 #| msgid "%d default key bindings for context \"%s\":"
 msgid "raw[unbind]: remove a key binding (for context \"default\")"
-msgstr "%d Standardtastenbelegungen für Kontext \"%s\":"
+msgstr "raw[unbind]: hebt eine Tastenbelegung auf (für Kontext \"default\")"
 
 msgid "raw[unbindctxt]: remove a key binding for given context"
 msgstr ""
 "raw[unbindctxt]: hebt eine Tastenbelegung für den angegebenen Kontext auf"
 
-#, fuzzy
 #| msgid "No default key binding for context \"%s\""
 msgid "raw[reset]: reset a key to default binding (for context \"default\")"
-msgstr "Keine Standardtastenbelegungen für Kontext \"%s\" vorhanden"
+msgstr ""
+"raw[reset]: die Tastenbelegung wird für die ausgewählte Taste auf die"
+" Standardeinstellung zurück gesetzt (für Kontext \"default\")"
 
 msgid "raw[resetctxt]: reset a key to default binding, for given context"
 msgstr ""
@@ -2823,10 +2772,10 @@ msgstr ""
 "store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
 "leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
 
-#, fuzzy
 #| msgid "manage buffers/windows layouts"
 msgid "raw[store]: store current buffers/windows in a layout"
-msgstr "Verwaltet Buffer/Fenster Layouts"
+msgstr ""
+"raw[store]: erstellt ein Layout der zur Zeit verwendeten Buffer/Fenster"
 
 msgid "raw[apply]: apply stored layout"
 msgstr "raw[apply]: erstelltes Layout verwenden"
@@ -2965,10 +2914,9 @@ msgstr ""
 "[<arguments>] || autoload [<arguments>] || reload [<name>|* [<arguments>]] "
 "|| unload [<name>]"
 
-#, fuzzy
 #| msgid "list/load/unload plugins"
 msgid "raw[list]: list loaded plugins"
-msgstr "Erweiterungen verwalten (auflisten/installieren/beenden)"
+msgstr "raw[list]: installierte Erweiterungen werden aufgelistet"
 
 msgid "raw[-o]: send list of loaded plugins to buffer (string in English)"
 msgstr ""
@@ -2994,18 +2942,16 @@ msgstr ""
 "raw[-il]: Liste der geladenen Erweiterungen in die Befehlszeile kopieren "
 "(zum Senden an den Buffer) (übersetzte Ausgabe)"
 
-#, fuzzy
 #| msgid "names of plugins installed"
 msgid "name: a plugin name"
-msgstr "Namen der installierten Erweiterungen"
+msgstr "Name: Namen einer Erweiterungen"
 
 msgid "raw[listfull]: list loaded plugins (verbose)"
 msgstr "raw[listfull]: geladene Erweiterungen auflisten (ausführlich)"
 
-#, fuzzy
 #| msgid "list/load/unload plugins"
 msgid "raw[load]: load a plugin"
-msgstr "Erweiterungen verwalten (auflisten/installieren/beenden)"
+msgstr "raw[load]: Laden einer Erweiterung"
 
 msgid "filename: plugin (file) to load"
 msgstr "filename: Erweiterung (Dateiname) welche installiert werden soll"
@@ -3073,10 +3019,9 @@ msgstr "raw[-switch]: wechselt zum Buffer"
 msgid "raw[-core]: alias of \"-buffer core.weechat\""
 msgstr "raw[-core]: Alternativname für \"-buffer core.weechat\""
 
-#, fuzzy
 #| msgid "display text on a buffer"
 msgid "raw[-current]: display text on current buffer"
-msgstr "gibt einen Text in einem Buffer aus"
+msgstr "raw[-current]: Text wird im aktuell genutzten Buffer ausgegeben"
 
 msgid "raw[-y]: display on a custom line (for buffer with free content only)"
 msgstr ""
@@ -3161,10 +3106,9 @@ msgstr "  zeigt eine Erinnerung, mit Highlight, im Core-Buffer an:"
 msgid "    /print -core -tags notify_highlight Reminder: buy milk"
 msgstr "    /print -core -tags notify_highlight Erinnerung: Milch kaufen"
 
-#, fuzzy
 #| msgid "display text on a buffer"
 msgid "  display an error on core buffer:"
-msgstr "gibt einen Text in einem Buffer aus"
+msgstr "  zeigt eine Fehlernachricht im Core-Buffer an:"
 
 msgid "    /print -core -error Some error here"
 msgstr "    /print -core -error Irgendein Fehler hier"
@@ -3175,10 +3119,9 @@ msgstr "  zeigt eine Nachricht im Core-Buffer an, mit Präfix \"abc\":"
 msgid "    /print -core abc\\tThe message"
 msgstr "    /print -core abc\\tMeine Nachricht"
 
-#, fuzzy
 #| msgid "display special message when day changes"
 msgid "  display a message on channel #weechat:"
-msgstr "bei einem Datumswechsel wird eine entsprechende Nachricht angezeigt"
+msgstr "  es wird eine Nachricht im Channel #weechat ausgegeben:"
 
 msgid "    /print -buffer irc.libera.#weechat Message on #weechat"
 msgstr "    /print -buffer irc.libera.#weechat Nachricht an #weechat"
@@ -3193,7 +3136,6 @@ msgid "manage proxies"
 msgstr "Proxys verwalten"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
 #| msgid ""
 #| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
 #| "del <name>|-all || set <name> <option> <value>"
@@ -3202,12 +3144,11 @@ msgid ""
 "<name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
 msgstr ""
 "list || add <name> <type> <address> <port> [<username> [<password>]] || del "
-"<name>|-all || set <name> <option> <value>"
+"<name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
 
-#, fuzzy
 #| msgid "list of proxies"
 msgid "raw[list]: list all proxies"
-msgstr "Liste der Proxys"
+msgstr "raw[list]: Auflistung aller Proxys"
 
 msgid "raw[add]: add a new proxy"
 msgstr "raw[add]: fügt neuen Proxy hinzu"
@@ -3215,30 +3156,25 @@ msgstr "raw[add]: fügt neuen Proxy hinzu"
 msgid "name: name of proxy (must be unique)"
 msgstr "name: Name des neuen Proxy (der Name darf nur einmal genutzt werden)"
 
-#, fuzzy
 #| msgid "proxy type (http (default), socks4, socks5)"
 msgid "type: http, socks4 or socks5"
-msgstr "Proxy-Typ (http (Standard), socks4, socks5)"
+msgstr "Typ: http, socks4 oder socks5"
 
-#, fuzzy
 #| msgid "proxy server address (IP or hostname)"
 msgid "address: IP or hostname"
-msgstr "Adresse des Proxy-Servers (IP oder Hostname)"
+msgstr "Adresse: IP oder Hostname"
 
-#, fuzzy
 #| msgid "not supported"
 msgid "port: port number"
-msgstr "nicht unterstützt"
+msgstr "Port: Nummer des Port"
 
-#, fuzzy
 #| msgid "server,nickname (server is optional)"
 msgid "username: username (optional)"
-msgstr "Server,Nickname (Server ist optional)"
+msgstr "Username: Username (optional)"
 
-#, fuzzy
 #| msgid "bar pointer (optional)"
 msgid "password: password (optional)"
-msgstr "Bar Pointer (optional)"
+msgstr "Passwort: Passwort (optional)"
 
 msgid "raw[del]: delete proxies"
 msgstr "raw[del]: entfernt einen oder mehrere Proxy"
@@ -3286,7 +3222,6 @@ msgstr ""
 "Argumente: Text der beim Signal \"quit\" verschickt wird (zum Beispiel "
 "sendet die IRC Erweiterung diesen Text, als Quit-Nachricht an den Server)"
 
-#, fuzzy
 #| msgid ""
 #| "     -yes: required if option \"weechat.look.confirm_quit\" is enabled\n"
 #| "arguments: text sent with signal \"quit\"\n"
@@ -3301,12 +3236,6 @@ msgid ""
 "\"weechat.look.save_config_on_exit\") and the current layout can be saved "
 "(see option \"weechat.look.save_layout_on_exit\")."
 msgstr ""
-"     -yes: Argument muss genutzt werden falls weechat.look.confirm_quit "
-"aktiviert sein sollte\n"
-"arguments: Text der beim Signal \"quit\" verschickt wird\n"
-"           (zum Beispiel sendet die IRC Erweiterung diesen Text als Quit-"
-"Nachricht an den Server)\n"
-"\n"
 "Standardmäßig werden alle Konfigurationsdateien beim Beenden gespeichert "
 "(siehe Option \"weechat.look.save_config_on_exit\") und das aktuelle Layout "
 "kann gesichert werden (siehe Option \"weechat.look.save_layout_on_exit\")."
@@ -3318,31 +3247,23 @@ msgstr "Konfiguration neu laden"
 msgid "[<file> [<file>...]]"
 msgstr "[<file> [<file>...]]"
 
-#, fuzzy
 #| msgid ""
 #| "file: configuration file to reload (without extension \".conf\")\n"
 #| "\n"
 #| "Without argument, all files (WeeChat and plugins) are reloaded."
 msgid "file: configuration file to reload (without extension \".conf\")"
 msgstr ""
-"file: Konfigurationsdatei die erneut geladen werden soll (ohne "
-"Dateinamenserweiterung \".conf\")\n"
-"\n"
-"Ohne Angabe von Argumenten werden alle Konfigurationen (WeeChat und "
-"Erweiterungen) neu geladen."
+"Datei: Konfigurationsdatei die erneut geladen werden soll (ohne"
+" Dateinamenserweiterung \".conf\")"
 
-#, fuzzy
 #| msgid ""
 #| "file: configuration file to reload (without extension \".conf\")\n"
 #| "\n"
 #| "Without argument, all files (WeeChat and plugins) are reloaded."
 msgid "Without argument, all files (WeeChat and plugins) are reloaded."
 msgstr ""
-"file: Konfigurationsdatei die erneut geladen werden soll (ohne "
-"Dateinamenserweiterung \".conf\")\n"
-"\n"
-"Ohne Angabe von Argumenten werden alle Konfigurationen (WeeChat und "
-"Erweiterungen) neu geladen."
+"Ohne Angabe von Argumenten werden alle Konfigurationen (WeeChat und"
+" Erweiterungen) neu geladen."
 
 msgid "execute a command several times"
 msgstr "führt einen Befehl mehrfach aus"
@@ -3365,12 +3286,10 @@ msgstr "> raw[us]: Mikrosekunden"
 msgid "> raw[s]: seconds (default)"
 msgstr "> raw[s]: Sekunden (Vorgabewert)"
 
-#, fuzzy
 #| msgid "ids (numbers and names) of executed commands"
 msgid "count: number of times to execute command"
-msgstr "IDs (Nummern und Namen) von ausgeführten Befehlen"
+msgstr "Anzahl: Häufigkeit, wie oft der Befehl ausgeführt werden soll"
 
-#, fuzzy
 #| msgid ""
 #| "command: command to execute (or text to send to buffer if command does "
 #| "not start with '/')\n"
@@ -3383,17 +3302,14 @@ msgid ""
 "start with \"/\"), evaluated and the following variables are set each time "
 "the command is executed:"
 msgstr ""
-"command: Befehl der ausgeführt werden soll (oder Text welcher in den Buffer "
-"gesendet werden soll, sofern dem Befehl kein '/' vorangestellt ist)\n"
-"\n"
-"Beispiele:\n"
-"  setze den ungelesen Marker für alle Buffer:\n"
-"    /allbuf /buffer set unread"
+"Befehl: Befehl der ausgeführt werden soll (oder Text welcher in den Buffer "
+"gesendet werden soll, sofern dem Befehl kein '/' vorangestellt ist), dieser"
+" Befehl ist evaluiert und die folgenden Variablen werden zur Laufzeit des"
+" Befehls ausgeführt:"
 
-#, fuzzy
 #| msgid "buffer pointer"
 msgid "> ${buffer}: buffer pointer"
-msgstr "Buffer Pointer"
+msgstr "> ${buffer}: Buffer-Pointer"
 
 msgid "> ${repeat_count}: number of times the command is executed"
 msgstr "> ${repeat_count}: wie oft der Befehl ausgeführt wird"
@@ -3441,10 +3357,9 @@ msgstr "Konfigurationsoptionen zurücksetzen"
 msgid "<option> || -mask <option>"
 msgstr "<option> || -mask <option>"
 
-#, fuzzy
 #| msgid "color for name of parent option"
 msgid "option: name of an option"
-msgstr "Farbe des Namens für übergeordnete Option"
+msgstr "Option: Name einer Option"
 
 msgid ""
 "raw[-mask]: use a mask in option (wildcard \"*\" is allowed to mass-reset "
@@ -3457,25 +3372,21 @@ msgstr ""
 msgid "save configuration files to disk"
 msgstr "Konfiguration abspeichern"
 
-#, fuzzy
 #| msgid "configuration file \"%s\" (options %s.*)"
 msgid "file: configuration file to save (without extension \".conf\")"
-msgstr "Konfigurationsdatei \"%s\" (Einstellungen %s.*)"
+msgstr ""
+"Datei: Konfigurationsdatei welche gesichert werden soll (ohne"
+" Dateinamenserweiterung \".conf\")"
 
-#, fuzzy
 #| msgid ""
 #| "file: configuration file to reload (without extension \".conf\")\n"
 #| "\n"
 #| "Without argument, all files (WeeChat and plugins) are reloaded."
 msgid "Without argument, all files (WeeChat and plugins) are saved."
 msgstr ""
-"file: Konfigurationsdatei die erneut geladen werden soll (ohne "
-"Dateinamenserweiterung \".conf\")\n"
-"\n"
-"Ohne Angabe von Argumenten werden alle Konfigurationen (WeeChat und "
-"Erweiterungen) neu geladen."
+"Ohne Angabe von Argumenten werden alle Konfigurationen (WeeChat und"
+" Erweiterungen) neu geladen."
 
-#, fuzzy
 #| msgid ""
 #| "file: configuration file to save (without extension \".conf\")\n"
 #| "\n"
@@ -3487,14 +3398,8 @@ msgid ""
 "By default all configuration files are saved to disk on /quit command (see "
 "option \"weechat.look.save_config_on_exit\")."
 msgstr ""
-"file: Konfigurationsdatei die gesichert werden soll (ohne "
-"Dateinamenserweiterung \".conf\")\n"
-"\n"
-"Wird keine Datei angegeben dann werden alle Konfigurationen (WeeChat und "
-"Erweiterungen) gesichert.\n"
-"\n"
-"Standardmäßig werden alle Konfigurationsdateien beim Ausführen des /quit "
-"Befehls gespeichert (siehe Option \"weechat.look.save_config_on_exit\")."
+"Standardmäßig werden alle Konfigurationsdateien beim Ausführen des /quit"
+" Befehls gespeichert (siehe Option \"weechat.look.save_config_on_exit\")."
 
 msgid ""
 "manage secured data (passwords or private data encrypted in file sec.conf)"
@@ -3543,10 +3448,9 @@ msgstr ""
 "Ohne Angabe von Argumenten wird ein neuer Buffer geöffnet und die "
 "schutzwürdigen Informationen können dort eingesehen werden."
 
-#, fuzzy
 #| msgid "lines of a buffer"
 msgid "Keys on secure buffer:"
-msgstr "Zeilen des Buffers"
+msgstr "Tastenbefehle für den secure-Buffer:"
 
 msgid "  alt+v  toggle values"
 msgstr "  alt+v, Werte werden in Klartext angezeigt bzw. verborgen"
@@ -3577,10 +3481,9 @@ msgstr ""
 "schutzwürdige Daten können, mit dem Format ${sec.data.xxx}, verwendet werden "
 "bei:"
 
-#, fuzzy
 #| msgid "command /%s"
 msgid "  - command /eval"
-msgstr "Befehl /%s"
+msgstr "  - Befehl /eval"
 
 msgid "  - command line argument \"--run-command\""
 msgstr "  - Argument in der Befehlszeile für \"--run-command\""
@@ -3639,13 +3542,13 @@ msgstr ""
 "[<option> [<value>]] || diff [<option> [<option>...]] || env [<variable> "
 "[<value>]]"
 
-#, fuzzy
 #| msgid "option name (wildcard \"*\" is allowed) (optional)"
 msgid ""
 "option: name of an option (wildcard \"*\" is allowed to list options, if no "
 "value is specified)"
 msgstr ""
-"Name einer Einstellung (Platzhalter \"*\" kann verwendet werden) (optional)"
+"Option: Name einer Option (Platzhalter \"*\" kann verwendet werden um"
+" Optionen anzuzeigen, falls kein Wert angegebenen wurde)"
 
 msgid "value: new value for option, according to type:"
 msgstr ""
@@ -3665,10 +3568,9 @@ msgstr ""
 msgid "> color: color name, ++number or --number"
 msgstr "> Farbe: Farbwert, ++Nummer oder --Nummer"
 
-#, fuzzy
 #| msgid "display help about commands and options"
 msgid "diff: display only changed options"
-msgstr "Zeigt einen Hilfstext für Befehle und Einstellungen an"
+msgstr "Diff: es werden nur Einstellungen angezeigt, die geändert wurden"
 
 msgid "env: display or set an environment variable (\"\" to unset a variable)"
 msgstr ""
@@ -3693,20 +3595,18 @@ msgstr "get rlimit|rusage || suspend || waitpid <number>"
 msgid "raw[get]: display system info"
 msgstr "raw[get]: Systeminformationen anzeigen"
 
-#, fuzzy
 #| msgid ""
 #| "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgid ""
 "raw[rlimit]: display resource limits (see /help weechat.startup.sys_rlimit "
 "and \"man getrlimit\")"
 msgstr ""
-"%sUnbekannte Beschränkung für den Ressourcenbedarf \"%s\" (siehe /help "
-"weechat.startup.sys_rlimit)"
+"raw[rlimit]: Ressourcengrenzen anzeigen (siehe /help"
+" weechat.startup.sys_rlimit und \"man getrlimit\")"
 
-#, fuzzy
 #| msgid "Resource usage (see \"man getrusage\" for help):"
 msgid "raw[rusage]: display resource usage (see \"man getrusage\")"
-msgstr "Ressourcennutzung (siehe „man getrusage“ für Hilfe):"
+msgstr "raw[rusage]: Ressourcennutzung anzeigen (siehe \"man getrusage\")"
 
 msgid ""
 "raw[suspend]: suspend WeeChat and go back to the shell, by sending signal "
@@ -3824,10 +3724,9 @@ msgstr ""
 "Verbindung zu Servern zu trennen"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
 #| msgid "[-yes] [<path_to_binary>|-save|-quit]"
 msgid "[-yes] [<path_to_binary>|-save|-quit] || -o|-ol"
-msgstr "[-yes] [<path_to_binary>|-save|-quit]"
+msgstr "[-yes] [<path_to_binary>|-save|-quit] || -o|-ol"
 
 msgid ""
 "raw[-yes]: required if option \"weechat.look.confirm_upgrade\" is enabled"
@@ -3864,7 +3763,6 @@ msgstr ""
 "beendet WeeChat, um den aktuellen Zustand später wiederherstellen (siehe "
 "unten)"
 
-#, fuzzy
 #| msgid ""
 #| " -o: send uptime to current buffer as input (English string)\n"
 #| "-ol: send uptime to current buffer as input (translated string)"
@@ -3872,12 +3770,10 @@ msgid ""
 "raw[-o]: send number of upgrades and date of first/last start to current "
 "buffer as input (English string)"
 msgstr ""
-" -o: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in "
-"englischer Sprache)\n"
-"-ol: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in "
-"der voreingestellten Landessprache)"
+"raw[-o]: kopiert die Anzahl der durchgeführten Upgrades, sowie Datum des"
+" ersten und letzten Starts in die Eingabezeile den aktuellen Buffers (in "
+"englischer Sprache)"
 
-#, fuzzy
 #| msgid ""
 #| " -o: send uptime to current buffer as input (English string)\n"
 #| "-ol: send uptime to current buffer as input (translated string)"
@@ -3885,10 +3781,9 @@ msgid ""
 "raw[-ol]: send number of upgrades and date of first/last start to current "
 "buffer as input (translated string)"
 msgstr ""
-" -o: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in "
-"englischer Sprache)\n"
-"-ol: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in "
-"der voreingestellten Landessprache)"
+"raw[-ol]: kopiert die Anzahl der durchgeführten Upgrades, sowie Datum des"
+" ersten und letzten Starts in die Eingabezeile den aktuellen Buffers (in der"
+" voreingestellten Landessprache)"
 
 msgid ""
 "This command upgrades and reloads a running WeeChat session. The new WeeChat "
@@ -3931,11 +3826,12 @@ msgstr ""
 "  1. Sicherung der Sitzung, in Dateien für Core und Erweiterungen (buffers, "
 "history, ..)"
 
-#, fuzzy
 #| msgid "reload configuration files from disk"
 msgid ""
 "  2. unload all plugins (configuration files (*.conf) are written on disk)"
-msgstr "Konfiguration neu laden"
+msgstr ""
+"  2. alle Erweiterungen werden entfernt (Konfigurationsdateien (*.conf)"
+" werden dabei gesichert)"
 
 msgid "  3. save WeeChat configuration (weechat.conf)"
 msgstr "  3. Sicherung der WeeChat Konfiguration (weechat.conf)"
@@ -3951,25 +3847,21 @@ msgstr "Nutzt man die \"-quit\" Funktion ist die Abfolge geringfügig anders:"
 msgid "  1. close *ALL* connections (irc, xfer, relay, ...)"
 msgstr "  1. es werden *ALLE* Verbindungen getrennt (irc,xfer,relay, ...)"
 
-#, fuzzy
 #| msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgid "  2. save session into files (*.upgrade)"
-msgstr "%sWeechat-Sitzung kann nicht gespeichert werden (Dateien *.upgrade)"
+msgstr "  2. die Sitzung wird in Dateien gesichert (*.upgrade)"
 
-#, fuzzy
 #| msgid "  (no plugin)"
 msgid "  3. unload all plugins"
-msgstr "  (keine Erweiterung)"
+msgstr "  3. alle Erweiterungen werden entfernt"
 
-#, fuzzy
 #| msgid "WeeChat config directory"
 msgid "  4. save WeeChat configuration"
-msgstr "WeeChat Konfigurationsverzeichnis"
+msgstr "  4. die WeeChat Konfiguration wird gesichert"
 
-#, fuzzy
 #| msgid "quit WeeChat"
 msgid "  5. quit WeeChat"
-msgstr "WeeChat beenden"
+msgstr "  5. WeeChat wird beendet"
 
 msgid "With option \"-save\", the process is:"
 msgstr "Mit der Option \"-save\" ist der Ablauf:"
@@ -4009,27 +3901,21 @@ msgstr ""
 msgid "show WeeChat uptime"
 msgstr "Zeigt die Uptime von WeeChat an"
 
-#, fuzzy
 #| msgid ""
 #| " -o: send uptime to current buffer as input (English string)\n"
 #| "-ol: send uptime to current buffer as input (translated string)"
 msgid "raw[-o]: send uptime to current buffer as input (English string)"
 msgstr ""
-" -o: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in "
-"englischer Sprache)\n"
-"-ol: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in "
-"der voreingestellten Landessprache)"
+"raw[-o]: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben"
+" (in englischer Sprache)"
 
-#, fuzzy
 #| msgid ""
 #| " -o: send uptime to current buffer as input (English string)\n"
 #| "-ol: send uptime to current buffer as input (translated string)"
 msgid "raw[-ol]: send uptime to current buffer as input (translated string)"
 msgstr ""
-" -o: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in "
-"englischer Sprache)\n"
-"-ol: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in "
-"der voreingestellten Landessprache)"
+"raw[-ol]: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben"
+" (in der voreingestellten Landessprache)"
 
 msgid "show WeeChat version and compilation date"
 msgstr "Zeigt die WeeChat-Version und das Datum der Kompilierung an"
@@ -4039,18 +3925,14 @@ msgstr ""
 "raw[-o]: die Version von WeeChat wird in den aktuellen Buffer geschrieben "
 "(in englischer Sprache)"
 
-#, fuzzy
 #| msgid ""
 #| " -o: send uptime to current buffer as input (English string)\n"
 #| "-ol: send uptime to current buffer as input (translated string)"
 msgid "raw[-ol]: send version to current buffer as input (translated string)"
 msgstr ""
-" -o: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in "
-"englischer Sprache)\n"
-"-ol: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in "
-"der voreingestellten Landessprache)"
+"raw[-ol]: die Version von WeeChat wird in den aktuellen Buffer ausgegeben (in"
+" der voreingestellten Landessprache)"
 
-#, fuzzy
 #| msgid ""
 #| " -o: send version to current buffer as input (English string)\n"
 #| "-ol: send version to current buffer as input (translated string)\n"
@@ -4061,14 +3943,9 @@ msgid ""
 "The default alias /v can be used to execute this command on all buffers "
 "(otherwise the irc command /version is used on irc buffers)."
 msgstr ""
-" -o: die Version von WeeChat wird in den aktuellen Buffer ausgegeben (in "
-"englischer Sprache)\n"
-"-ol: die Version von WeeChat wird in den aktuellen Buffer ausgegeben (in der "
-"voreingestellten Landessprache)\n"
-"\n"
-"Um diesen Befehl in jedem Buffer ausführen zu können, kann der "
-"Standardkurzbefehl /v genutzt werden (andernfalls wird der IRC Befehl /"
-"version in einem IRC Buffer ausgeführt)."
+"Um diesen Befehl in jedem Buffer ausführen zu können, kann der"
+" Standardkurzbefehl /v genutzt werden (andernfalls wird der IRC Befehl"
+" /version in einem IRC Buffer ausgeführt)."
 
 msgid "schedule a command execution in future"
 msgstr "Terminiere einen Befehl der ausgeführt werden soll"
@@ -4237,10 +4114,10 @@ msgstr "raw[scroll_previous_highlight]: blättert zum vorherigen Hightlight"
 msgid "raw[scroll_next_highlight]: scroll to next highlight"
 msgstr "raw[scroll_next_highlight]: blättert zum nächsten Highlight"
 
-#, fuzzy
 #| msgid "background color for unread data marker"
 msgid "raw[scroll_unread]: scroll to unread marker"
-msgstr "Hintergrundfarbe für das Lesezeichen"
+msgstr ""
+"raw[scroll_unread]: springt zur ersten ungelesenen Zeile in einem Buffer"
 
 msgid ""
 "raw[swap]: swap buffers of two windows (with optional direction for target "
@@ -6170,10 +6047,9 @@ msgstr ""
 "Fehler: es kann kein temporäres Heimatverzeichnis angelegt werden (mit "
 "Befehl: \"%s\")\n"
 
-#, fuzzy
 #| msgid "Environment variable \"%s\" is not defined"
 msgid "Error: environment variable \"HOME\" is not defined\n"
-msgstr "Umgebungsvariable \"%s\" ist nicht definiert"
+msgstr "Fehler: Umgebungsvariable \"HOME\" ist nicht definiert\n"
 
 #, c-format
 msgid "Error: \"%s\" is not a directory\n"
@@ -7075,7 +6951,6 @@ msgid "list, add or remove command aliases"
 msgstr "auflisten, hinzufügen oder entfernen von Alternativnamen"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
 #| msgid ""
 #| "list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
 #| "<completion> <alias> [<command>[;<command>...]] || del <alias> "
@@ -7085,9 +6960,9 @@ msgid ""
 "<completion> <name> [<command>[;<command>...]] || del <name>|<mask> [<name>|"
 "<mask>...] || rename <name> <new_name> || missing"
 msgstr ""
-"list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
-"<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...] "
-"|| rename <alias> <new_alias> || missing"
+"list [<name>] || add <name> [<command>[;<command>...]] || addcompletion "
+"<completion> <name> [<command>[;<command>...]] || del <name>|<mask> [<name>|"
+"<mask>...] || rename <name> <new_name> || missing"
 
 msgid "raw[list]: list aliases (without argument, this list is displayed)"
 msgstr ""
@@ -7097,10 +6972,9 @@ msgstr ""
 msgid "raw[add]: add an alias"
 msgstr "raw[add]: fügt einen Alternativbefehl hinzu"
 
-#, fuzzy
 #| msgid "value of alias"
 msgid "name: name of alias"
-msgstr "Wert von Alias"
+msgstr "Name: Name des Alternativbefehls"
 
 msgid "raw[addcompletion]: add an alias with a custom completion"
 msgstr ""
@@ -7129,7 +7003,6 @@ msgstr ""
 "\"%%command\" kann eine Vervollständigung eines vorhandenen Befehls "
 "durchgeführt werden)"
 
-#, fuzzy
 #| msgid ""
 #| "command(s) to run if conditions are OK, after regex replacements (many "
 #| "commands can be separated by semicolons)"
@@ -7137,9 +7010,8 @@ msgid ""
 "command: command name with arguments (many commands can be separated by "
 "semicolons)"
 msgstr ""
-"Befehl(e) die ausgeführt werden falls Bedingungen OK sind, nachdem regulärer "
-"Ausdruck durchlaufen wurde (mehrere Befehle müssen durch Semikolon "
-"voneinander getrennt werden)"
+"Befehl: Name des Befehls, mit Argumenten (mehrere Befehle können durch"
+" Semikolon voneinander getrennt werden)"
 
 msgid "In command, special variables are replaced:"
 msgstr ""
@@ -7265,10 +7137,9 @@ msgstr ""
 "  - buflist.format.buffer_current: Format für den aktuell dargestellten "
 "Buffer"
 
-#, fuzzy
 #| msgid "variables that can be used in /eval command"
 msgid "The following variables can be used in these options:"
-msgstr "Variablen die mit dem /eval Befehl genutzt werden können"
+msgstr "Die folgenden Variablen können in den Optionen genutzt werden:"
 
 msgid ""
 "  - bar item data (see hdata \"bar_item\" in API doc for a complete list), "
@@ -7365,7 +7236,6 @@ msgid ""
 msgstr ""
 "    - ${number_displayed}: \"1\" falls Nummer angezeigt wird, ansonsten \"0\""
 
-#, fuzzy
 #| msgid ""
 #| "string displayed to indent channel, private and list buffers (note: "
 #| "content is evaluated, see /help buflist)"
@@ -7373,8 +7243,8 @@ msgid ""
 "    - ${indent}: indentation for name (channel, private and list buffers are "
 "indented) (evaluation of option buflist.format.indent)"
 msgstr ""
-"Zeichen, welches zum Einrücken von Kanal-, Privat- und List-Buffern genutzt "
-"wird (Hinweis: Inhalt ist evaluiert, siehe /help buflist)"
+"    - ${indent}: Einrücken von Name (Kanal, Privaten und List-Buffer werden"
+" eingerückt) (evaluiert aus Option buflist.format.indent)"
 
 msgid ""
 "    - ${format_nick_prefix}: colored nick prefix for a channel (evaluation "
@@ -7779,15 +7649,13 @@ msgstr "raw[decode]: ändere Zeichensatz zum dekodieren"
 msgid "raw[encode]: change encoding charset"
 msgstr "raw[encode]: ändere Zeichensatz zum kodieren"
 
-#, fuzzy
 #| msgid "change charset for current buffer"
 msgid "charset: new charset for current buffer"
-msgstr "Ändert den Zeichensatz für aktuellen Buffer"
+msgstr "Zeichensatz: Ändert den Zeichensatz für aktuellen Buffer"
 
-#, fuzzy
 #| msgid "change charset for current buffer"
 msgid "raw[reset]: reset charsets for current buffer"
-msgstr "Ändert den Zeichensatz für aktuellen Buffer"
+msgstr "raw[reset]: setze im aktuellen Buffer den Zeichensatz zurück"
 
 msgid "Executed commands"
 msgstr "Ausgeführte Befehle"
@@ -7877,10 +7745,9 @@ msgstr ""
 "inclose <id> [<text>] || -signal <id> <signal> || -kill <id> || -killall || -"
 "set <id> <property> <value> || -del <id>|-all [<id>...]"
 
-#, fuzzy
 #| msgid "Alias commands"
 msgid "raw[-list]: list commands"
-msgstr "Alias-Befehle"
+msgstr "raw[-list]: zeigt Befehle an"
 
 msgid ""
 "raw[-sh]: use the shell to execute the command, many commands can be piped "
@@ -8101,12 +7968,13 @@ msgstr "raw[-kill]: Alias für \"-signal <id> kill\""
 msgid "raw[-killall]: kill all running processes"
 msgstr "raw[-killall]: beendet alle laufenden Prozesse"
 
-#, fuzzy
 #| msgid "see function \"hook_focus\" in Plugin API reference"
 msgid ""
 "raw[-set]: set a hook property (see function hook_set in plugin API "
 "reference)"
-msgstr "siehe Funktion \"hook_focus\" in API Dokumentation"
+msgstr ""
+"raw[-set]: setzen einer Hook-Eigenschaft (siehe Funktion \"hook_focus\" in"
+" API Dokumentation)"
 
 msgid "property: hook property"
 msgstr "Fähigkeit: Hook-Fähigkeit"
@@ -8120,11 +7988,11 @@ msgstr "raw[-del]: entfernt einen beendeten Befehl"
 msgid "raw[-all]: delete all terminated commands"
 msgstr "raw[-all]: entfernt alle beendeten Befehle"
 
-#, fuzzy
 #| msgid "%s%s: invalid options in option exec.command.default_options"
 msgid "Default options can be set in the option exec.command.default_options."
 msgstr ""
-"%s%s: ungültige Einstellungen in Einstellung exec.command.default_options"
+"Standardoptionen können in der Einstellung exec.command.default_options"
+" bestimmt werden."
 
 msgid "ids (numbers and names) of executed commands"
 msgstr "IDs (Nummern und Namen) von ausgeführten Befehlen"
@@ -8213,20 +8081,17 @@ msgstr "%s: pipe ist deaktiviert"
 msgid "fifo plugin configuration"
 msgstr "Konfiguration für \"fifo\" Erweiterung"
 
-#, fuzzy
 #| msgid "enable FIFO pipe"
 msgid "raw[enable]: enable FIFO pipe"
-msgstr "FIFO-Pipe aktivieren"
+msgstr "raw[enable]: aktivieren der FIFO Pipe"
 
-#, fuzzy
 #| msgid "enable FIFO pipe"
 msgid "raw[disable]: disable FIFO pipe"
-msgstr "FIFO-Pipe aktivieren"
+msgstr "raw[disable]: deaktivieren der FIFO Pipe"
 
-#, fuzzy
 #| msgid "name of FIFO pipe"
 msgid "raw[toggle]: toggle FIFO pipe"
-msgstr "Name der FIFO-Pipe"
+msgstr "raw[toggle]: Status der FIFO pipe umschalten"
 
 msgid ""
 "FIFO pipe is used as remote control of WeeChat: you can send commands or "
@@ -8348,15 +8213,17 @@ msgid "raw[-down]: move the selected line down by \"number\" lines"
 msgstr ""
 "raw[-down]: bewegt die ausgewählte Zeile um die Anzahl an Zeilen nach unten"
 
-#, fuzzy
 #| msgid "left/right scroll in fset buffer (percent of width)"
 msgid "raw[-left]: scroll the buffer by \"percent\" of width on the left"
-msgstr "links/rechts im fset Buffer scrollen (prozentual zur Breite)"
+msgstr ""
+"raw[-left]: der Buffer wird wird \"prozentual\" entsprechend der"
+" Fensterbreite nach links verschoben"
 
-#, fuzzy
 #| msgid "left/right scroll in fset buffer (percent of width)"
 msgid "raw[-right]: scroll the buffer by \"percent\" of width on the right"
-msgstr "links/rechts im fset Buffer scrollen (prozentual zur Breite)"
+msgstr ""
+"raw[-right]: der Buffer wird wird \"prozentual\" entsprechend der"
+" Fensterbreite nach rechts verschoben"
 
 msgid ""
 "raw[-go]: select a line by number, first line number is 0 (\"end\" to select "
@@ -8450,10 +8317,9 @@ msgstr "> `*`: alle Optionen werden angezeigt (keine Filterung)"
 msgid "> `xxx`: show only options with \"xxx\" in name"
 msgstr "> `xxx`: zeigt nur Optionen mit \"xxx\" im Namen"
 
-#, fuzzy
 #| msgid "Unknown configuration file \"%s\""
 msgid "> `f:xxx`: show only configuration file \"xxx\""
-msgstr "Unbekannte Konfigurationsdatei \"%s\""
+msgstr "> `f:xxx`: zeigt nur Konfigurationsdatei \"xxx\" an"
 
 msgid ""
 "> `t:xxx`: show only type \"xxx\" (bool/int/str/col/enum or boolean/integer/"
@@ -9569,25 +9435,18 @@ msgstr "sendet eine CTCP-Aktion an einen Nick oder Kanal"
 msgid "[-server <server>] <target>[,<target>...] <text>"
 msgstr "[-server <server>] <target>[,<target>...] <text>"
 
-#, fuzzy
 #| msgid ""
 #| "server: send to this server (internal name)\n"
 #| "  data: raw data to send"
 msgid "server: send to this server (internal name)"
-msgstr ""
-"server: an diesen Server senden (interner Name wird genutzt)\n"
-"data: unbearbeitete (RAW) Daten die gesendet werden sollen"
+msgstr "Server: an diesen Server senden (interner Name wird genutzt)"
 
-#, fuzzy
 #| msgid ""
 #| "server: send to this server (internal name)\n"
 #| "target: nick or channel (may be mask, '*' = current channel)\n"
 #| "  text: text to send"
 msgid "target: nick or channel (may be mask, \"*\" = current channel)"
-msgstr ""
-"server: schicke an diesen Server (interner Servername)\n"
-"target: Nick oder Kanal (darf eine Maske sein, '*' = aktueller c)\n"
-"  text: zu sendender Text"
+msgstr "Ziel: Nick oder Kanal (darf eine Maske sein, \"*\" = aktueller Kanal)"
 
 msgid "text: text to send"
 msgstr "text: Text der gesendet werden soll"
@@ -9615,12 +9474,11 @@ msgstr ""
 "[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command> || [-"
 "current] [-parted] -include=<channel>[,<channel>...] <command>"
 
-#, fuzzy
 #| msgid "execute a command on all channels of all connected servers"
 msgid "raw[-current]: execute command for channels of current server only"
 msgstr ""
-"führt einen Befehl aus der an alle Kanäle gesendet wird, die mit einem "
-"Server verbunden sind"
+"raw[-current]: führt einen Befehl aus, der für alle Kanäle, des aktuellen"
+" Servers, Anwendung findet"
 
 msgid "raw[-parted]: execute on parted channels only"
 msgstr "raw[-parted]: wird nur bei vom Server getrennten Kanälen ausgeführt"
@@ -9642,28 +9500,21 @@ msgstr ""
 "Argumente und Befehl werden evaluiert (siehe /help eval), folgende Variablen "
 "können genutzt werden:"
 
-#, fuzzy
 #| msgid "target: server name"
 msgid "  $server: server name"
-msgstr "target: Servername"
+msgstr "  $server: Servername"
 
-#, fuzzy
 #| msgid ""
 #| "   nick: nick\n"
 #| "channel: channel name"
 msgid "  $channel: channel name"
-msgstr ""
-"   nick: Nickname\n"
-"channel: Name des Kanals"
+msgstr "  $channel: Name des Kanals"
 
-#, fuzzy
 #| msgid ""
 #| "  nick: nick\n"
 #| "reason: reason"
 msgid "  $nick: nick on server"
-msgstr ""
-"  nick: Nickname\n"
-"reason: Grund der Abmeldung"
+msgstr "  $nick: Name des Nick, auf dem Server"
 
 msgid "  ${irc_server.xxx}: variable xxx in server"
 msgstr "  ${irc_server.xxx}: Variable xxx von Server"
@@ -9700,10 +9551,10 @@ msgstr "  schickt den Text 'Hallo' an alle Kanäle die mit #linux beginnen:"
 msgid "    /allchan -include=#linux* hello"
 msgstr "    /allchan -include=#linux* Hallo"
 
-#, fuzzy
 #| msgid "close buffer when /part is issued on a channel"
 msgid "  close all buffers with parted channels:"
-msgstr "schließt den Buffer wenn \"/part\" im Kanal ausgeführt wird"
+msgstr ""
+"  schließt alle Buffer, deren Kanäle nicht mit einem Server verbunden sind:"
 
 msgid "execute a command on all private buffers of all connected servers"
 msgstr ""
@@ -9718,29 +9569,29 @@ msgstr ""
 "[-current] [-exclude=<nick>[,<nick>...]] <command> || [-current] -"
 "include=<nick>[,<nick>...] <command>"
 
-#, fuzzy
 #| msgid "execute a command on all private buffers of all connected servers"
 msgid ""
 "raw[-current]: execute command for private buffers of current server only"
 msgstr ""
-"führt einen Befehl aus der an alle privaten Buffer gesendet wird, die mit "
-"einem Server verbunden sind"
+"raw[-current]: führt einen Befehl aus, der für alle privaten Buffer, des"
+" aktuellen Servers, Anwendung findet"
 
 msgid "raw[-exclude]: exclude some nicks (wildcard \"*\" is allowed)"
 msgstr ""
 "raw[-exclude]: dient zum Ausschluss ausgewählter Nicks (Platzhalter \"*\" "
 "kann verwendet werden)"
 
-#, fuzzy
 #| msgid "plugin name (wildcard \"*\" is allowed) (optional)"
 msgid "raw[-include]: include only some nicks (wildcard \"*\" is allowed)"
 msgstr ""
-"Name einer Erweiterung (Platzhalter \"*\" kann verwendet werden) (optional)"
+"raw[-include]: findet Anwendung für ausgewählte Nicks (Platzhalter \"*\" kann"
+" verwendet werden)"
 
-#, fuzzy
 #| msgid "execute a command on all buffers"
 msgid "  execute \"/me is testing\" on all private buffers:"
-msgstr "führt einen Befehl in allen Buffern aus"
+msgstr ""
+"  führe den Befehl '/me Ich teste gerade etwas...' für alle privaten Buffer"
+" aus:"
 
 msgid "    /allpv /me is testing"
 msgstr "    /allpv /me Ich teste gerade etwas"
@@ -9766,10 +9617,9 @@ msgstr "  schicke den Text 'Hallo' an alle Nicks die mit bar beginnen:"
 msgid "    /allpv -include=bar* hello"
 msgstr "    /allpv -include=bar* Hallo"
 
-#, fuzzy
 #| msgid "merge private buffers"
 msgid "  close all private buffers:"
-msgstr "private Buffer zusammenfügen"
+msgstr "  schließe alle privaten Buffer:"
 
 msgid "execute a command on all connected servers"
 msgstr "führt einen Befehl aus, der zu allen verbundenen Server gesendet wird"
@@ -9792,15 +9642,13 @@ msgstr ""
 "raw[-include]: findet Anwendung für ausgewählte Server (Platzhalter \"*\" "
 "kann verwendet werden)"
 
-#, fuzzy
 #| msgid "channels on all IRC servers"
 msgid "  change nick on all servers:"
-msgstr "Kanäle auf allen IRC Servern"
+msgstr "  ändere den Nick auf allen Servern:"
 
-#, fuzzy
 #| msgid "Notify list is empty on all servers"
 msgid "  do a whois on my nick on all servers:"
-msgstr "Es liegt für keinen Server eine Benachrichtigung vor"
+msgstr "  führt ein whois mit meinem nick auf allen Servern aus:"
 
 msgid "authenticate with SASL"
 msgstr "authentifizieren mit SASL"
@@ -9809,7 +9657,6 @@ msgstr "authentifizieren mit SASL"
 msgid "[<username> <password>]"
 msgstr "[<username> <password>]"
 
-#, fuzzy
 #| msgid ""
 #| "real name to use on server (note: content is evaluated, see /help eval; "
 #| "server options are evaluated with ${irc_server.xxx} and ${server} is "
@@ -9819,11 +9666,10 @@ msgid ""
 "options are evaluated with ${irc_server.xxx} and ${server} is replaced by "
 "the server name)"
 msgstr ""
-"Realname welcher für den Server genutzt werden soll (Hinweis: Inhalt wird "
-"evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} "
-"evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)"
+"Username: SASL Username (Inhalt ist evaluiert, siehe /help eval;"
+" Serveroptionen werden mit ${irc_server.xxx} evaluiert und ${server} wird"
+" durch den Servernamen ersetzt)"
 
-#, fuzzy
 #| msgid ""
 #| "password for server (note: content is evaluated, see /help eval; server "
 #| "options are evaluated with ${irc_server.xxx} and ${server} is replaced by "
@@ -9833,9 +9679,9 @@ msgid ""
 "evaluated, see /help eval; server options are evaluated with ${irc_server."
 "xxx} and ${server} is replaced by the server name)"
 msgstr ""
-"Passwort welches für den Server genutzt werden soll (Hinweis: Inhalt wird "
-"evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} "
-"evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)"
+"Passwort: SASL-Passwort oder Pfad zur Datei mit privatem Schlüssel (Inhalt"
+" ist evaluiert, siehe /help eval; Serveroptionen werden mit ${irc_server.xxx}"
+" evaluiert und ${server} wird durch den Servernamen ersetzt)"
 
 msgid ""
 "If username and password are not provided, the values from server options "
@@ -9897,23 +9743,17 @@ msgstr ""
 "raw[del]: Löschen des aktuellen Kanals oder eine Liste von Kanälen aus der "
 "autoJoin-Option"
 
-#, fuzzy
 #| msgid ""
 #| "   nick: nick\n"
 #| "channel: channel name"
 msgid "channel: channel name"
-msgstr ""
-"   nick: Nickname\n"
-"channel: Name des Kanals"
+msgstr "Kanal: Name des Kanals"
 
-#, fuzzy
 #| msgid ""
 #| "channel: channel name\n"
 #| "   mode: mode for channel"
 msgid "key: key for the channel"
-msgstr ""
-"Channel: Name des Kanals\n"
-"   Mode: neuer Modus für Kanal"
+msgstr "Schlüssel: Schlüssel für den Kanal"
 
 msgid "raw[apply]: set currently joined channels in the autojoin option"
 msgstr ""
@@ -9938,12 +9778,10 @@ msgstr "Nicknamen oder Hosts sperren/verbannen"
 msgid "[<channel>] [<nick> [<nick>...]]"
 msgstr "[<channel>] [<nick> [<nick>...]]"
 
-#, fuzzy
 #| msgid "ban nicks or hosts"
 msgid "nick: nick or host"
-msgstr "Nicknamen oder Hosts sperren/verbannen"
+msgstr "Nick: Nick oder Host"
 
-#, fuzzy
 #| msgid ""
 #| "channel: channel name\n"
 #| "   nick: nick or host\n"
@@ -9952,11 +9790,8 @@ msgstr "Nicknamen oder Hosts sperren/verbannen"
 msgid ""
 "Without argument, this command displays the ban list for current channel."
 msgstr ""
-"channel: Name des Kanals\n"
-"   nick: Nick oder Host\n"
-"\n"
-"Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Kanal "
-"angezeigt."
+"Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Kanal"
+" angezeigt."
 
 msgid "client capability negotiation"
 msgstr "Aushandlung der Clientfähigkeit"
@@ -9965,15 +9800,13 @@ msgstr "Aushandlung der Clientfähigkeit"
 msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgstr "ls || list || req|ack [<capability> [<capability>...]] || end"
 
-#, fuzzy
 #| msgid "%s%s: SASL is not supported by the server"
 msgid "raw[ls]: list the capabilities supported by the server"
-msgstr "%s%s: SASL wird vom Server nicht unterstützt"
+msgstr "raw[ls]: führt alle Fähigkeiten auf die vom Server unterstützt werden"
 
-#, fuzzy
 #| msgid "%s%s: client capability, currently enabled: %s"
 msgid "raw[list]: list the capabilities currently enabled"
-msgstr "%s%s: Clientfähigkeiten (CAP), aktuell aktiviert: %s"
+msgstr "raw[list]: führt alle Fähigkeiten auf die aktuell genutzt werden"
 
 msgid ""
 "raw[req]: request a new capability or remove a capability (if starting with "
@@ -9988,10 +9821,9 @@ msgstr ""
 "raw[ack]: bestätigt eine Fähigkeit, die von Serverseite eine Bestätigung "
 "erfordert"
 
-#, fuzzy
 #| msgid "client capability negotiation"
 msgid "raw[end]: end the capability negotiation"
-msgstr "Aushandlung der Clientfähigkeit"
+msgstr "raw[end]: beendet die Übertragung von Fähigkeiten"
 
 msgid "Without argument, \"ls\" and \"list\" are sent."
 msgstr "Ohne Angaben von Argumenten werden \"ls\" und \"list\" gesendet."
@@ -10039,14 +9871,11 @@ msgstr ""
 "[<server> [<server>...]] [-<option>[=<value>]] [-no<option>] [-nojoin] [-"
 "switch] || -all|-auto|-open [-nojoin] [-switch]"
 
-#, fuzzy
 #| msgid ""
 #| "target: server name\n"
 #| "  nick: nick"
 msgid "server: server name, which can be:"
-msgstr ""
-"target: Servername\n"
-"  nick: Nickname"
+msgstr "Server: Name des Server, welcher lauten kann:"
 
 msgid "> - internal server name (added by /server add, recommended usage)"
 msgstr ""
@@ -10088,11 +9917,11 @@ msgstr ""
 "raw[-all]: Verbindung wird zu den Servern hergestellt, für die eine "
 "Konfiguration vorhanden ist"
 
-#, fuzzy
 #| msgid "automatically reconnect to server when disconnected"
 msgid "raw[-auto]: connect to servers with autoconnect enabled"
 msgstr ""
-"Nach einer Trennung vom Server die Verbindung automatisch wiederherstellen"
+"raw[-auto]: Verbindung zu den Servern herstellen, für die die Einstellung"
+" \"autoconnect\" aktiviert ist"
 
 msgid ""
 "raw[-open]: connect to all opened servers that are not currently connected"
@@ -10123,24 +9952,19 @@ msgstr "CTCP-Nachricht verschicken"
 msgid "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
 msgstr "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
 
-#, fuzzy
 #| msgid ""
 #| "server: send to this server (internal name)\n"
 #| "target: nick or channel (may be mask, '*' = current channel)\n"
 #| "  text: text to send"
 msgid "target: nick or channel (\"*\" = current channel)"
-msgstr ""
-"server: schicke an diesen Server (interner Servername)\n"
-"target: Nick oder Kanal (darf eine Maske sein, '*' = aktueller c)\n"
-"  text: zu sendender Text"
+msgstr "Ziel: Nick oder Kanal (\"*\" = aktueller Kanal)"
 
 msgid "type: CTCP type (examples: \"version\", \"ping\", etc.)"
 msgstr "Typ: CTCP-Nachricht (Beispiele: \"version\", \"ping\", usw.)"
 
-#, fuzzy
 #| msgid "default arguments for a hook"
 msgid "arguments: arguments for CTCP"
-msgstr "Standardargumente für einen Hook"
+msgstr "Argumente: Argumente für CTCP"
 
 msgid "leave and rejoin a channel"
 msgstr "Einen Kanal verlassen und wieder betreten"
@@ -10149,14 +9973,13 @@ msgstr "Einen Kanal verlassen und wieder betreten"
 msgid "[<channel>[,<channel>...]] [<message>]"
 msgstr "[<channel>[,<channel>...]] [<message>]"
 
-#, fuzzy
 #| msgid ""
 #| "channel: channel name\n"
 #| "message: part message (displayed to other users)"
 msgid "message: part message (displayed to other users)"
 msgstr ""
-"channel: Name des Kanals\n"
-"message: Abschiedsnachricht (wird anderen Usern angezeigt)"
+"Nachricht: Abschiedsnachricht (wird anderen Usern angezeigt, beim Verlassen"
+" des Kanals)"
 
 msgid "start a DCC (passive file transfer or direct chat)"
 msgstr "Startet DCC Verbindung (passiver Dateitransfer oder direkter Chat)"
@@ -10178,16 +10001,12 @@ msgstr "halb-Operator-Privilegien einem oder mehreren Nick(s) entziehen"
 msgid "<nick> [<nick>...] || * -yes"
 msgstr "<nick> [<nick>...] || * -yes"
 
-#, fuzzy
 #| msgid ""
 #| "nick: nick or mask (wildcard \"*\" is allowed)\n"
 #| "   *: give voice to everybody on channel"
 msgid "nick: nick or mask (wildcard \"*\" is allowed)"
-msgstr ""
-"nick: Nick oder Maske (Platzhalter \"*\" kann verwendet werden)\n"
-"   *: vergibt an alle Nicks im Kanal eine Stimme"
+msgstr "Bick: Nick oder Maske (Platzhalter \"*\" kann verwendet werden)"
 
-#, fuzzy
 #| msgid ""
 #| "nick: nick or mask (wildcard \"*\" is allowed)\n"
 #| "   *: remove channel half-operator status from everybody on channel "
@@ -10196,14 +10015,12 @@ msgid ""
 "*: remove channel half-operator status from everybody on channel except "
 "yourself"
 msgstr ""
-"nick: Nick oder Maske (Platzhalter \"*\" kann verwendet werden)\n"
-"   *: entzieht allen Nicks im Kanal den half-operator-Status, ausgenommen "
-"sich selber"
+"*: entzieht allen Nicks im Kanal den half-operator-Status, ausgenommen der"
+" eigene Nick"
 
 msgid "remove channel operator status from nick(s)"
 msgstr "Operator-Privilegien einem oder mehreren Nicknamen entziehen"
 
-#, fuzzy
 #| msgid ""
 #| "nick: nick or mask (wildcard \"*\" is allowed)\n"
 #| "   *: remove channel operator status from everybody on channel except "
@@ -10211,21 +10028,17 @@ msgstr "Operator-Privilegien einem oder mehreren Nicknamen entziehen"
 msgid ""
 "*: remove channel operator status from everybody on channel except yourself"
 msgstr ""
-"nick: Nick oder Maske (Platzhalter \"*\" kann verwendet werden)\n"
-"   *: entzieht allen Nicks im Kanal den Operator-Status, ausgenommen sich "
-"selber"
+"*: entzieht allen Nicks im Kanal den Operator-Status, ausgenommen der eigene"
+" Nick"
 
 msgid "remove voice from nick(s)"
 msgstr "Voice-Privilegien einem oder mehreren Nicknamen entziehen"
 
-#, fuzzy
 #| msgid ""
 #| "nick: nick or mask (wildcard \"*\" is allowed)\n"
 #| "   *: remove voice from everybody on channel"
 msgid "*: remove voice from everybody on channel"
-msgstr ""
-"nick: Nick oder Maske (Platzhalter \"*\" kann verwendet werden)\n"
-"   *: entzieht allen Nicks im Kanal die Stimme"
+msgstr "*: entzieht allen Nicks im Kanal die Stimme"
 
 msgid "shutdown the server"
 msgstr "Server herunterfahren"
@@ -10237,15 +10050,13 @@ msgstr "Verbindung zu einem oder mehreren IRC-Server(n) trennen"
 msgid "[<server>|-all|-pending [<reason>]]"
 msgstr "[<server>|-all|-pending [<reason>]]"
 
-#, fuzzy
 #| msgid "IRC servers (internal names)"
 msgid "server: internal server name"
-msgstr "IRC-Server (interne Namen)"
+msgstr "Server: interner Name des Servers"
 
-#, fuzzy
 #| msgid "disconnect from one or all IRC servers"
 msgid "raw[-all]: disconnect from all servers"
-msgstr "Verbindung zu einem oder mehreren IRC-Server(n) trennen"
+msgstr "raw[-all]: Verbindung zu allen Servern beenden"
 
 msgid ""
 "raw[-pending]: cancel auto-reconnection on servers currently reconnecting"
@@ -10259,10 +10070,9 @@ msgstr "Begründung: Begründung für die Trennung"
 msgid "give channel half-operator status to nick(s)"
 msgstr "halb-Operator Status an Nick(s) vergeben"
 
-#, fuzzy
 #| msgid "give channel half-operator status to nick(s)"
 msgid "*: give channel half-operator status to everybody on channel"
-msgstr "halb-Operator Status an Nick(s) vergeben"
+msgstr "*: halb-Operator Status an alle Personen im Kanal vergeben"
 
 msgid "ignore nicks/hosts from servers or channels"
 msgstr "Ignoriert Nicks/Hosts von Kanälen oder Servern"
@@ -10271,10 +10081,9 @@ msgstr "Ignoriert Nicks/Hosts von Kanälen oder Servern"
 msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 msgstr "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 
-#, fuzzy
 #| msgid "list of IRC ignores"
 msgid "raw[list]: list all ignores"
-msgstr "Liste von ignorierten IRCs"
+msgstr "raw[list]: zeigt alle Ignorierungen an"
 
 msgid "raw[add]: add an ignore"
 msgstr "raw[add]: fügt eine Ignorierung hinzu"
@@ -10305,14 +10114,11 @@ msgstr ""
 "Server: interner Name des Server auf welchem die Ignorierung statt finden "
 "soll"
 
-#, fuzzy
 #| msgid ""
 #| "channel: channel name\n"
 #| "   text: text to send"
 msgid "channel: channel name where ignore is working"
-msgstr ""
-"channel: Name des Kanals\n"
-"   text: Text der versendet werden soll"
+msgstr "Kanal: Name des Kanals, für welchen die Ignorierung gelten soll"
 
 msgid ""
 "Note: if option irc.look.ignore_tag_messages is enabled, the ignored "
@@ -10367,7 +10173,6 @@ msgstr "wirft einen User aus einem Kanal"
 msgid "[<channel>] <nick> [<reason>]"
 msgstr "[<channel>] <nick> [<reason>]"
 
-#, fuzzy
 #| msgid ""
 #| "channel: channel name\n"
 #| "   nick: nick\n"
@@ -10379,9 +10184,7 @@ msgid ""
 "nick), ${target} (target nick), ${channel} and ${server} are replaced by "
 "their values)"
 msgstr ""
-"channel: Kanalname\n"
-"   nick: Nick der rausgeworfen werden soll\n"
-" reason: Begründung für den Rauswurf (evaluiert, siehe /help eval; besondere "
+"Grund: Begründung für den Rauswurf (evaluiert, siehe /help eval; besondere "
 "Variablen ${nick} (eigener Nick), ${target} (betroffener Nick), ${channel} "
 "und ${server}, werden durch den entsprechenden Wert ersetzt)"
 
@@ -10402,14 +10205,11 @@ msgstr "Beende Client-Server Verbindung"
 msgid "<nick> [<reason>]"
 msgstr "<nick> [<reason>]"
 
-#, fuzzy
 #| msgid ""
 #| "  nick: nick\n"
 #| "reason: reason"
 msgid "reason: reason"
-msgstr ""
-"  nick: Nickname\n"
-"reason: Grund der Abmeldung"
+msgstr "Grund: Begründung"
 
 msgid "send a notice to an invitation-only channel, requesting an invite"
 msgstr ""
@@ -10430,23 +10230,18 @@ msgstr "alle Servernamen auflisten, die dem antwortenden Server bekannt sind"
 msgid "[[<target>] <server_mask>]"
 msgstr "[[<target>] <server_mask>]"
 
-#, fuzzy
 #| msgid ""
 #| "     target: this remote server should answer the query\n"
 #| "server_mask: list of servers must match this mask"
 msgid "target: this remote server should answer the query"
-msgstr ""
-"     target: dieser Remote-Server soll die Anfrage beantworten\n"
-"server_mask: die aufzulistenden Server sollen diesem Muster entsprechen"
+msgstr "Ziel: dieser Remote-Server soll die Anfrage beantworten"
 
-#, fuzzy
 #| msgid ""
 #| "     target: this remote server should answer the query\n"
 #| "server_mask: list of servers must match this mask"
 msgid "server_mask: list of servers must match this mask"
 msgstr ""
-"     target: dieser Remote-Server soll die Anfrage beantworten\n"
-"server_mask: die aufzulistenden Server sollen diesem Muster entsprechen"
+"Server_maske: die aufzulistenden Server sollen diesem Muster entsprechen"
 
 msgid "list channels and their topics"
 msgstr "Kanäle und deren Themen auflisten"
@@ -10471,16 +10266,13 @@ msgstr ""
 "verwendet wird, wird das Ergebnis im entsprechendem Serverbuffer angezeigt, "
 "anstelle in dem zugehörigen Buffer"
 
-#, fuzzy
 #| msgid "color for option if value is changed on the selected line"
 msgid "raw[-join]: join the channel on the selected line"
-msgstr ""
-"Farbe von Option, falls Wert verändert wurde bei der ausgewählten Zeile"
+msgstr "raw[-join]: dem Kanal, in der ausgewählten Zeile, beitreten"
 
-#, fuzzy
 #| msgid "irc channel on /list buffer"
 msgid "Sort keys on /list buffer:"
-msgstr "irc Kanal für /list Buffer"
+msgstr "Sortiertierung im /list Buffer:"
 
 msgid "  raw[name]: channel name (eg: \"##test\")"
 msgstr "  raw[name]: Kanalname (z.B.: \"##test\")"
@@ -10491,10 +10283,9 @@ msgstr "  raw[name2]: Kanalname ohne Präfix (z.B.: \"test\")"
 msgid "  raw[users]: number of users on channel"
 msgstr "  raw[users]: Anzahl an Usern im Kanal"
 
-#, fuzzy
 #| msgid "get/set channel topic"
 msgid "  raw[topic]: channel topic"
-msgstr "Thema des Kanals abfragen/setzen"
+msgstr "  raw[topic]: Thema des Kanals"
 
 msgid ""
 "  list all channels on server and display them in a dedicated buffer (can be "
@@ -10513,10 +10304,9 @@ msgstr ""
 "  liste alle Kanäle auf, die mit \"#weechat\" beginnen (kann bei großen "
 "Netzwerken sehr langsam sein):"
 
-#, fuzzy
 #| msgid "irc channel on /list buffer"
 msgid "  on /list buffer:"
-msgstr "irc Kanal für /list Buffer"
+msgstr "  im /list Buffer:"
 
 msgid "    channels with \"weechat\" in name:"
 msgstr "    Kanäle mit \"weechat\" im Namen:"
@@ -10545,23 +10335,17 @@ msgstr "Statistik über die Größe des IRC-Netzwerks abfragen"
 msgid "[<mask> [<target>]]"
 msgstr "[<mask> [<target>]]"
 
-#, fuzzy
 #| msgid ""
 #| "  mask: servers matching the mask only\n"
 #| "target: server for forwarding request"
 msgid "mask: servers matching the mask only"
-msgstr ""
-"  mask: ausschließlich Server, die diesem Muster entsprechen\n"
-"target: Server, der die Anfrage weiterleiten soll"
+msgstr "Maske: ausschließlich Server, die diesem Muster entsprechen"
 
-#, fuzzy
 #| msgid ""
 #| "  mask: servers matching the mask only\n"
 #| "target: server for forwarding request"
 msgid "target: server for forwarding request"
-msgstr ""
-"  mask: ausschließlich Server, die diesem Muster entsprechen\n"
-"target: Server, der die Anfrage weiterleiten soll"
+msgstr "Ziel: Server, der die Anfrage weiterleiten soll"
 
 msgid "show a graphical map of the IRC network"
 msgstr "Zeigt das IRC Netzwerk, in Form einer Baumstruktur, an"
@@ -10582,42 +10366,34 @@ msgid ""
 msgstr ""
 "[<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>] || <nick> [+|-]i|s|w|o"
 
-#, fuzzy
 #| msgid ""
 #| "channel: channel name\n"
 #| "   mode: mode for channel"
 msgid "channel: channel name to modify (default is current one)"
-msgstr ""
-"Channel: Name des Kanals\n"
-"   Mode: neuer Modus für Kanal"
+msgstr "Kanal: zu ändernder Name des Kanals (standardmäßig der aktuelle Kanal)"
 
-#, fuzzy
 #| msgid "[<channel>] <mode>"
 msgid "Channel modes:"
-msgstr "[<channel>] <mode>"
+msgstr "Kanal-Eigenschaften:"
 
-#, fuzzy
 #| msgid "get operator privileges"
 msgid "  o: give/take channel operator privileges"
-msgstr "Operator Privilegien anfordern"
+msgstr "  o: vergibt/entzieht Operator Privilegien"
 
 msgid "  p: private channel"
 msgstr "  p: privater Kanal"
 
-#, fuzzy
 #| msgid "current IRC channel"
 msgid "  s: secret channel"
-msgstr "aktueller IRC-Kanal"
+msgstr "  s: geheimer Kanal"
 
-#, fuzzy
 #| msgid "invite a nick on a channel"
 msgid "  i: invite-only channel"
-msgstr "Eine Person in einen Kanal einladen"
+msgstr "  i: geschlossener Kanal (Zutritt nur mit Einladung)"
 
-#, fuzzy
 #| msgid "get operator privileges"
 msgid "  t: topic settable by channel operator only"
-msgstr "Operator Privilegien anfordern"
+msgstr "  t: nur Operatoren dürfen das Thema setzen"
 
 msgid "  n: no messages to channel from clients on the outside"
 msgstr "  n: keine Nachrichten von außerhalb des Kanals zulassen"
@@ -10631,10 +10407,9 @@ msgstr "  l: maximale Anzahl an Usern im Kanal festlegen"
 msgid "  b: set a ban mask to keep users out"
 msgstr "  b: Bannmaske setzen, um Anwendern den Zutritt zu verweigern"
 
-#, fuzzy
 #| msgid "%s%s: exception: %s"
 msgid "  e: set exception mask"
-msgstr "%s%s: Ausnahme: %s"
+msgstr "  e: legt Ausnahmemaske fest"
 
 msgid "  v: give/take the ability to speak on a moderated channel"
 msgstr "  v: vergibt/entzieht Schreibrechte (voice) in moderierten Kanälen"
@@ -10642,25 +10417,21 @@ msgstr "  v: vergibt/entzieht Schreibrechte (voice) in moderierten Kanälen"
 msgid "  k: set a channel key (password)"
 msgstr "  k: legt ein Passwort für den Kanal fest"
 
-#, fuzzy
 #| msgid "irc modelist"
 msgid "User modes:"
-msgstr "IRC Modelist"
+msgstr "User-Eigenschaften:"
 
-#, fuzzy
 #| msgid "nick: nick"
 msgid "  nick: nick to modify"
-msgstr "nick: Nickname"
+msgstr "  Nick: zu ändernder Nickname"
 
-#, fuzzy
 #| msgid "installed"
 msgid "  i: invisible"
-msgstr "installiert"
+msgstr "  i: User als unsichtbar kennzeichnen"
 
-#, fuzzy
 #| msgid "target: server name"
 msgid "  s: user receives server notices"
-msgstr "target: Servername"
+msgstr "  s: User empfängt Server-Nachrichten"
 
 msgid "  w: user receives wallops"
 msgstr "  w: User empfängt WALLOPS"
@@ -10692,7 +10463,6 @@ msgstr "[-count | -x] [<channel>[,<channel>...]]"
 msgid "raw[-count]: display only number of users"
 msgstr "raw[-count]: Nur die Anzahl der Benutzer anzeigen"
 
-#, fuzzy
 #| msgid ""
 #| " -count: display only number of users\n"
 #| "     -x: display only users with this mode: -o for ops, -h for halfops, -"
@@ -10702,10 +10472,8 @@ msgid ""
 "raw[-x]: display only users with this mode: -o for ops, -h for halfops, -v "
 "for voiced, etc. and -* for regular users"
 msgstr ""
-" -count: Nur die Anzahl der Benutzer anzeigen\n"
-"     -x: Zeigt nur Benutzer mit diesem Modus an: -o für Ops, -h für Halfops, "
-"-vfür stimmhafte Benutzer usw. und -* für normale Benutzer\n"
-"channel: Kanalname"
+"raw[-x]: zeigt nur Benutzer mit diesem Modus an: -o für Ops, -h für Halfops,"
+" -v für stimmhafte Benutzer usw. und -* für normale Benutzer"
 
 msgid "change current nick"
 msgstr "derzeitigen Nicknamen ändern"
@@ -10714,19 +10482,15 @@ msgstr "derzeitigen Nicknamen ändern"
 msgid "[-all] <nick>"
 msgstr "[-all] <nick>"
 
-#, fuzzy
 #| msgid ""
 #| "-all: set new nick for all connected servers\n"
 #| "nick: new nick"
 msgid "raw[-all]: set new nick for all connected servers"
-msgstr ""
-"-all: Nickname auf allen verbundenen Servern ändern\n"
-"nick: neuer Nickname"
+msgstr "raw[-all]: Name des Nick, auf allen verbundenen Servern ändern"
 
-#, fuzzy
 #| msgid "nick: nick"
 msgid "nick: new nick"
-msgstr "nick: Nickname"
+msgstr "Nick: Neuer Nick"
 
 msgid "send notice message to user"
 msgstr "Mitteilung (notice) an einen User verschicken"
@@ -10735,10 +10499,9 @@ msgstr "Mitteilung (notice) an einen User verschicken"
 msgid "[-server <server>] <target> <text>"
 msgstr "[-server <server>] <target> <text>"
 
-#, fuzzy
 #| msgid "text color for channel names"
 msgid "target: nick or channel name"
-msgstr "Farbe für den Kanalnamen"
+msgstr "Ziel: Nick oder Kanalname"
 
 msgid "add a notification for presence or away status of nicks on servers"
 msgstr ""
@@ -10749,10 +10512,9 @@ msgstr ""
 msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 
-#, fuzzy
 #| msgid "%s%s: error adding notification"
 msgid "raw[add]: add a notification"
-msgstr "%s%s: Fehler beim Erstellen der Benachrichtigung"
+msgstr "raw[add]: fügt eine Benachrichtigung hinzu"
 
 msgid "server: internal server name (by default current server)"
 msgstr "Server: interner Servername (standardmäßig aktueller Server)"
@@ -10780,10 +10542,9 @@ msgstr ""
 msgid "give channel operator status to nick(s)"
 msgstr "Status des Kanal-Operator an Nicknamen vergeben"
 
-#, fuzzy
 #| msgid "give channel operator status to nick(s)"
 msgid "*: give channel operator status to everybody on channel"
-msgstr "Status des Kanal-Operator an Nicknamen vergeben"
+msgstr "*: *: Operator Status an alle Personen im Kanal vergeben"
 
 msgid "get operator privileges"
 msgstr "Operator Privilegien anfordern"
@@ -10795,14 +10556,11 @@ msgstr "<user> <password>"
 msgid "user: user"
 msgstr "Benutzer: Benutzer"
 
-#, fuzzy
 #| msgid ""
 #| "    user: user\n"
 #| "password: password"
 msgid "password: password"
-msgstr ""
-"    user: Username\n"
-"password: Passwort"
+msgstr "Passwort: Passwort"
 
 msgid "leave a channel"
 msgstr "Einen Kanal verlassen"
@@ -10814,19 +10572,15 @@ msgstr "sendet einen Ping an den Server"
 msgid "<target1> [<target2>]"
 msgstr "<target1> [<target2>]"
 
-#, fuzzy
 #| msgid "target: server name"
 msgid "target1: server"
-msgstr "target: Servername"
+msgstr "Ziel1: Servername"
 
-#, fuzzy
 #| msgid ""
 #| "target1: server\n"
 #| "target2: forward ping to this server"
 msgid "target2: forward ping to this server"
-msgstr ""
-"target1: Server\n"
-"target2: Ping an diesen Server weiterleiten"
+msgstr "Ziel2: Ping an diesen Server weiterleiten"
 
 msgid "answer to a ping message"
 msgstr "Auf Ping antworten"
@@ -10835,23 +10589,17 @@ msgstr "Auf Ping antworten"
 msgid "<daemon> [<daemon2>]"
 msgstr "<daemon> [<daemon2>]"
 
-#, fuzzy
 #| msgid ""
 #| " daemon: daemon who has responded to Ping message\n"
 #| "daemon2: forward message to this daemon"
 msgid "daemon: daemon who has responded to Ping message"
-msgstr ""
-" Daemon: Daemon welcher auf die Ping-Nachricht geantwortet hat\n"
-"Daemon2: Nachricht an diesen Daemon weiterleiten"
+msgstr "Daemon: Daemon welcher auf die Ping-Nachricht geantwortet hat"
 
-#, fuzzy
 #| msgid ""
 #| " daemon: daemon who has responded to Ping message\n"
 #| "daemon2: forward message to this daemon"
 msgid "daemon2: forward message to this daemon"
-msgstr ""
-" Daemon: Daemon welcher auf die Ping-Nachricht geantwortet hat\n"
-"Daemon2: Nachricht an diesen Daemon weiterleiten"
+msgstr "Daemon2: Nachricht an diesen Daemon weiterleiten"
 
 msgid "send a private message to a nick"
 msgstr "Eine private Nachricht an einen Nick schicken"
@@ -10865,7 +10613,6 @@ msgstr ""
 "Nicks oder Hosts das Wort entziehen (User können im Kanal erst schreiben, "
 "wenn sie \"+v\" oder höher besitzen)"
 
-#, fuzzy
 #| msgid ""
 #| "channel: channel name\n"
 #| "   nick: nick or host\n"
@@ -10875,11 +10622,8 @@ msgstr ""
 msgid ""
 "Without argument, this command displays the quiet list for current channel."
 msgstr ""
-"channel: Name des Kanals\n"
-"   nick: Nick oder Host\n"
-"\n"
-"Ohne Angabe von Argumenten wird die Quiet-Liste für den aktuellen Kanal "
-"angezeigt."
+"Ohne Angabe von Argumenten wird die Quiet-Liste für den aktuellen Kanal"
+" angezeigt."
 
 msgid "send raw data to server without parsing"
 msgstr "Daten direkt an Server senden (siehe RFC 2812)"
@@ -10888,10 +10632,9 @@ msgstr "Daten direkt an Server senden (siehe RFC 2812)"
 msgid "[-server <server>] <data>"
 msgstr "[-server <server>] <data>"
 
-#, fuzzy
 #| msgid "text: text to send"
 msgid "data: raw data to send"
-msgstr "text: Text der gesendet werden soll"
+msgstr "Daten: Roh-Daten welche versendet werden"
 
 msgid "reconnect to server(s)"
 msgstr "Mit einem oder mehreren Server(n) erneut verbinden"
@@ -10900,10 +10643,9 @@ msgstr "Mit einem oder mehreren Server(n) erneut verbinden"
 msgid "<server> [<server>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 msgstr "<server> [<server>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 
-#, fuzzy
 #| msgid "reconnect to server(s)"
 msgid "raw[-all]: reconnect to all servers"
-msgstr "Mit einem oder mehreren Server(n) erneut verbinden"
+msgstr "raw[-all]: Verbindung zu allen Servern wiederherstellen"
 
 msgid "tell the server to reload its config file"
 msgstr "Den Server auffordern seine Konfigurationsdatei neu zu laden"
@@ -10919,7 +10661,6 @@ msgstr ""
 msgid "force a user to leave a channel"
 msgstr "zwingt einen User einen Kanal zu verlassen"
 
-#, fuzzy
 #| msgid ""
 #| "channel: channel name\n"
 #| "   nick: nick\n"
@@ -10929,10 +10670,8 @@ msgid ""
 "reason: reason (special variables $nick, $channel and $server are replaced "
 "by their values)"
 msgstr ""
-"channel: Kanalname\n"
-"   nick: Nick der rausgeworfen werden soll\n"
-" reason: Begründung für den Rauswurf (Variablen die genutzt werden können: "
-"$nick, $channel und $server)"
+"Grund: Begründung (die Variablen $nick, $channel und $server werden durch den"
+" entsprechenden Wert ersetzt)"
 
 msgid "tell the server to restart itself"
 msgstr "Server dazu bringen sich selbst neu zu starten"
@@ -10954,14 +10693,11 @@ msgstr "ändert den Modus des Kanals ohne das Operator-Privilegien vorliegen"
 msgid "[<channel>] <mode>"
 msgstr "[<channel>] <mode>"
 
-#, fuzzy
 #| msgid ""
 #| "channel: channel name\n"
 #| "   mode: mode for channel"
 msgid "mode: mode for channel"
-msgstr ""
-"Channel: Name des Kanals\n"
-"   Mode: neuer Modus für Kanal"
+msgstr "Modus: neuer Modus für Kanal"
 
 msgid "force a user to use another nick"
 msgstr "zwingt einen User den Nick zu ändern"
@@ -10970,10 +10706,9 @@ msgstr "zwingt einen User den Nick zu ändern"
 msgid "<nick> <new_nick>"
 msgstr "<nick> <new_nick>"
 
-#, fuzzy
 #| msgid "nick: nick"
 msgid "new_nick: new nick"
-msgstr "nick: Nickname"
+msgstr "neuer_nick: neuer Nickname"
 
 msgid "force a user to leave channel(s)"
 msgstr "zwingt einen User den oder die Kanäle zu verlassen"
@@ -10992,14 +10727,11 @@ msgstr "einen neuen Service eintragen"
 msgid "<nick> <reserved> <distribution> <type> <reserved> <info>"
 msgstr "<nick> <reserved> <distribution> <type> <reserved> <info>"
 
-#, fuzzy
 #| msgid ""
 #| "distribution: visibility of service\n"
 #| "        type: reserved for future usage"
 msgid "distribution: visibility of service"
-msgstr ""
-"distribution: Sichtbarkeit des Services\n"
-"       type: für spätere Verwendung reserviert"
+msgstr "Verteilung: Sichtbarkeit des Services"
 
 msgid "type: reserved for future usage"
 msgstr "Typ: für zukünftige Verwendung reserviert"
@@ -11061,12 +10793,9 @@ msgstr "raw[rename]: benennt den Server um"
 msgid "raw[reorder]: reorder list of servers"
 msgstr "raw[reorder]: Anordnung der Server ändern"
 
-#, fuzzy
 #| msgid "auto open relay buffer when a new client is connecting"
 msgid "raw[open]: open the server buffer without connecting"
-msgstr ""
-"öffnet automatisch einen Relay-Buffer, falls eine Verbindung zu einem neuen "
-"Client hergestellt wird"
+msgstr "raw[open]: öffnet den Serverbuffer, ohne eine Verbindung herzustellen"
 
 msgid "raw[keep]: keep server in config file (for temporary servers only)"
 msgstr ""
@@ -11140,23 +10869,17 @@ msgstr "Auflistung von Services die momentan mit dem Netzwerk verbunden sind"
 msgid "[<mask> [<type>]]"
 msgstr "[<mask> [<type>]]"
 
-#, fuzzy
 #| msgid ""
 #| "mask: list only services matching this mask\n"
 #| "type: list only services of this type"
 msgid "mask: list only services matching this mask"
-msgstr ""
-"mask: nur zutreffende Services auflisten\n"
-"type: nur Services von diesem Typ auflisten"
+msgstr "mask: nur zutreffende Services auflisten"
 
-#, fuzzy
 #| msgid ""
 #| "mask: list only services matching this mask\n"
 #| "type: list only services of this type"
 msgid "type: list only services of this type"
-msgstr ""
-"mask: nur zutreffende Services auflisten\n"
-"type: nur Services von diesem Typ auflisten"
+msgstr "Typ: nur Services von diesem Typ auflisten"
 
 msgid "deliver a message to a service"
 msgstr "Nachricht an einen Service senden"
@@ -11165,14 +10888,11 @@ msgstr "Nachricht an einen Service senden"
 msgid "<service> <text>"
 msgstr "<service> <text>"
 
-#, fuzzy
 #| msgid ""
 #| "service: name of service\n"
 #| "   text: text to send"
 msgid "service: name of service"
-msgstr ""
-"service: Name des Service\n"
-"   text: zu sendender Text"
+msgstr "Service: Name des Service"
 
 msgid "set real name"
 msgstr "setze Realnamen"
@@ -11191,14 +10911,11 @@ msgstr "Verbindung zum Server trennen"
 msgid "<target> <comment>"
 msgstr "<target> <comment>"
 
-#, fuzzy
 #| msgid ""
 #| " target: server name\n"
 #| "comment: comment"
 msgid "comment: comment"
-msgstr ""
-" target: Name des Servers\n"
-"comment: Kommentar"
+msgstr "Kommentar: Kommentar"
 
 msgid "query statistics about server"
 msgstr "Serverstatistik abfragen"
@@ -11207,14 +10924,11 @@ msgstr "Serverstatistik abfragen"
 msgid "[<query> [<target>]]"
 msgstr "[<query> [<target>]]"
 
-#, fuzzy
 #| msgid ""
 #| " query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
 #| "target: server name"
 msgid "query: c/h/i/k/l/m/o/y/u (see RFC1459)"
-msgstr ""
-" query: c/h/i/k/l/m/o/y/u (siehe RFC1459)\n"
-"target: Name des Servers"
+msgstr "query: c/h/i/k/l/m/o/y/u (siehe RFC1459)"
 
 msgid ""
 "give users who are on a host running an IRC server a message asking them to "
@@ -11227,10 +10941,9 @@ msgstr ""
 msgid "<user> [<target> [<channel>]]"
 msgstr "<user> [<target> [<channel>]]"
 
-#, fuzzy
 #| msgid "server name"
 msgid "user: username"
-msgstr "Servername"
+msgstr "User: Username"
 
 msgid "query local time from server"
 msgstr "Ortszeit des Servers abfragen"
@@ -11248,10 +10961,9 @@ msgstr "[<channel>] [<topic>|-delete]"
 msgid "topic: new topic"
 msgstr "Thema: neues Thema für den Kanal setzen"
 
-#, fuzzy
 #| msgid "get/set channel topic"
 msgid "raw[-delete]: delete channel topic"
-msgstr "Thema des Kanals abfragen/setzen"
+msgstr "raw[-delete]: Thema des Kanals löschen"
 
 msgid "find the route to specific server"
 msgstr "Route zum angegebenen Server ermitteln"
@@ -11263,30 +10975,22 @@ msgstr "Bann von Nicks oder Hosts aufheben"
 msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgstr "[<channel>] <nick>|<number> [<nick>|<number>...]"
 
-#, fuzzy
 #| msgid ""
 #| "channel: channel name\n"
 #| "   nick: nick or host\n"
 #| " number: ban number (as displayed by command /ban)"
 msgid "number: ban number (as displayed by command /ban)"
-msgstr ""
-"channel: Name des Kanals\n"
-"   nick: Nick oder Host\n"
-" number: ban Nummer (wird beim Befehl /ban angezeigt)"
+msgstr "Nummer: Nummer des Bannes (wird beim Befehl /ban angezeigt)"
 
 msgid "unquiet nicks or hosts"
 msgstr "Nicks oder Hosts das Wort erteilen"
 
-#, fuzzy
 #| msgid ""
 #| "channel: channel name\n"
 #| "   nick: nick or host\n"
 #| " number: quiet number (as displayed by command /quiet)"
 msgid "number: quiet number (as displayed by command /quiet)"
-msgstr ""
-"channel: Name des Kanals\n"
-"   nick: Nick oder Host\n"
-" number: Quiet-Nummer (wird beim Befehl /quiet angezeigt)"
+msgstr "Nummer: Quiet-Nummer (wird beim Befehl /quiet angezeigt)"
 
 msgid "return a list of information about nicks"
 msgstr "zeigt Informationen zu Nicknamen an"
@@ -11306,14 +11010,11 @@ msgstr "[<target>|<nick>]"
 msgid "give voice to nick(s)"
 msgstr "Stimme an Nick(s) vergeben"
 
-#, fuzzy
 #| msgid ""
 #| "nick: nick or mask (wildcard \"*\" is allowed)\n"
 #| "   *: give voice to everybody on channel"
 msgid "*: give voice to everybody on channel"
-msgstr ""
-"nick: Nick oder Maske (Platzhalter \"*\" kann verwendet werden)\n"
-"   *: vergibt an alle Nicks im Kanal eine Stimme"
+msgstr "*: vergibt an alle Nicks im Kanal die Stimme"
 
 msgid "send a notice to channel ops"
 msgstr "Nachricht an Kanal-Operator verschicken"
@@ -11322,14 +11023,13 @@ msgstr "Nachricht an Kanal-Operator verschicken"
 msgid "[<channel>] <text>"
 msgstr "[<channel>] <text>"
 
-#, fuzzy
 #| msgid ""
 #| "send a message to all currently connected users who have set the 'w' user "
 #| "mode for themselves"
 msgid ""
 "send a message to all currently connected users who have set the \"w\" user "
 "mode for themselves"
-msgstr "Nachricht an alle User schicken die den 'w'-Mode gesetzt haben"
+msgstr "versendet eine Nachricht an alle User, die den 'w'-Mode gesetzt haben"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid "<text>"
@@ -11345,14 +11045,11 @@ msgstr "[<mask> [o]]"
 msgid "mask: only information which match this mask"
 msgstr "Maske: nur Informationen, die dieser Maske entsprechen"
 
-#, fuzzy
 #| msgid ""
 #| "mask: only information which match this mask\n"
 #| "   o: only operators are returned according to the mask supplied"
 msgid "o: only operators are returned according to the mask supplied"
-msgstr ""
-"mask: nur Information über betreffende Nicknamen abfragen\n"
-"   o: nur Operatoren ausgeben, die dem Filter entsprechen"
+msgstr "o: nur Operatoren ausgeben, die dem Filter entsprechen"
 
 msgid "query information about user(s)"
 msgstr "Information über User abfragen"
@@ -11391,17 +11088,14 @@ msgstr "Informationen über einen nicht mehr angemeldeten Nicknamen abfragen"
 msgid "<nick>[,<nick>...] [<count> [<target>]]"
 msgstr "<nick>[,<nick>...] [<count> [<target>]]"
 
-#, fuzzy
 #| msgid ""
 #| "  nick: nick\n"
 #| " count: number of replies to return (full search if negative number)\n"
 #| "target: reply should match this mask"
 msgid "count: number of replies to return (full search if negative number)"
 msgstr ""
-"  nick: Nickname\n"
-" count: maximale Anzahl an Antworten (negative Zahl für eine vollständige "
-"Suche)\n"
-"target: Antwort soll auf diese Suchmaske zutreffen"
+"Anzahl: maximale Anzahl an Antworten (negative Zahl für eine vollständige"
+" Suche)"
 
 msgid "target: reply should match this mask"
 msgstr "Ziel: Antwort soll auf diese Suchmaske zutreffen"
@@ -12632,7 +12326,6 @@ msgid "color for text in \"setname\" messages"
 msgstr "Textfarbe in der \"setname\" Nachrichten dargestellt werden"
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
-#, fuzzy
 #| msgid ""
 #| "remap mirc colors in messages using a hashtable: keys are \"fg,bg\" as "
 #| "integers between -1 (not specified) and 15, values are WeeChat color "
@@ -12652,7 +12345,8 @@ msgid ""
 "5=red, 6=magenta, 7=brown, 8=yellow, 9=lightgreen, 10=cyan, 11=lightcyan, "
 "12=lightblue, 13=lightmagenta, 14=darkgray, 15=gray"
 msgstr ""
-"ersetzt mirc Farben in Nachrichten mittels einer Hashtabelle: Schlüssel sind "
+"ersetzt mirc Farben in Nachrichten mittels einer Hashtabelle (findet nur bei"
+" Standardfarben Anwendung, nicht bei RGB Farben): Schlüssel sind "
 "\"fg,bg\" als Ganzzahl zwischen -1 (nicht näher bezeichnet) und 15. Als Wert "
 "ist der Farbname oder die Farbnummer von WeeChat möglich (Format: \"1,-1:"
 "Farbe1;2,7:Farbe2\"), Beispiel: \"1,-1:darkgray;1,2:white,blue\" ersetzt "
@@ -12689,7 +12383,6 @@ msgstr ""
 "Textfarbe in der die Begründung einer part/quit Nachricht angezeigt werden "
 "soll"
 
-#, fuzzy
 #| msgid ""
 #| "remap mirc colors in messages using a hashtable: keys are \"fg,bg\" as "
 #| "integers between -1 (not specified) and 15, values are WeeChat color "
@@ -12707,7 +12400,10 @@ msgid ""
 "color2\"), example: \"0,-1:darkgray;0,90:white,blue\" to remap black to "
 "\"darkgray\" and black on dark magenta to \"white,blue\""
 msgstr ""
-"ersetzt mirc Farben in Nachrichten mittels einer Hashtabelle: Schlüssel sind "
+"ersetzt mirc Farben in Nachrichten mittels einer Hashtabelle (findet nur"
+" Anwendung bei"
+"RGB-Farben als Hexadezimalzahlen, die zunächst in Terminalfarben übersetzt"
+" werden): Schlüssel sind "
 "\"fg,bg\" als Ganzzahl zwischen -1 (nicht näher bezeichnet) und 15. Als Wert "
 "ist der Farbname oder die Farbnummer von WeeChat möglich (Format: \"1,-1:"
 "Farbe1;2,7:Farbe2\"), Beispiel: \"1,-1:darkgray;1,2:white,blue\" ersetzt "
@@ -12916,11 +12612,10 @@ msgstr ""
 "holt den Nick-Farbcode (*veraltet* seit Version 1.5, ersetzt durch "
 "\"nick_color\")"
 
-#, fuzzy
 #| msgid "nick"
 #| msgid_plural "nicks"
 msgid "nickname"
-msgstr "Nick"
+msgstr "Name des Nick"
 
 msgid ""
 "get nick color name (*deprecated* since version 1.5, replaced by "
@@ -14106,7 +13801,6 @@ msgstr ""
 "raw[set]: legt den Level fest, nach dem der aktuelle Buffer protokolliert "
 "werden soll"
 
-#, fuzzy
 #| msgid ""
 #| "logging level for this buffer (0 = logging disabled, 1 = a few messages "
 #| "(most important) .. 9 = all messages)"
@@ -14114,7 +13808,7 @@ msgid ""
 "level: level for messages to be logged (0 = logging disabled, 1 = a few "
 "messages (most important) .. 9 = all messages)"
 msgstr ""
-"Level der Protokollierung für diesen Buffer (0 = nichts protokollieren, 1 = "
+"Level: Level der Protokollierung (0 = nichts protokollieren, 1 = "
 "nur die wichtigsten Nachrichten protokollieren .. 9 = protokolliere alle "
 "Nachrichten)"
 
@@ -14145,10 +13839,9 @@ msgstr ""
 msgid "  2: nick change"
 msgstr "  2: Wechsel von Nicks (/nick)"
 
-#, fuzzy
 #| msgid "server name"
 msgid "  3: server message"
-msgstr "Servername"
+msgstr "  3: Nachrichten vom Server"
 
 msgid "  4: join/part/quit"
 msgstr "  4: join/part/quit Nachrichten"
@@ -14156,25 +13849,22 @@ msgstr "  4: join/part/quit Nachrichten"
 msgid "  9: all other messages"
 msgstr "  9: alle anderen Nachrichten"
 
-#, fuzzy
 #| msgid "change charset for current buffer"
 msgid "  set level to 5 for current buffer:"
-msgstr "Ändert den Zeichensatz für aktuellen Buffer"
+msgstr ""
+"  setzt den Level der Protokollierung, für den aktuellen Buffer, auf 5:"
 
-#, fuzzy
 #| msgid "display text on a buffer"
 msgid "  disable logging for current buffer:"
-msgstr "gibt einen Text in einem Buffer aus"
+msgstr "  deaktiviert die Protokollierung für den aktuellen Buffer:"
 
-#, fuzzy
 #| msgid "execute a command on all buffers"
 msgid "  set level to 3 for all IRC buffers:"
-msgstr "führt einen Befehl in allen Buffern aus"
+msgstr "  setzt den Level der Protokollierung, für alle IRC Buffer, auf 3:"
 
-#, fuzzy
 #| msgid "display text on a buffer"
 msgid "  disable logging for main WeeChat buffer:"
-msgstr "gibt einen Text in einem Buffer aus"
+msgstr "  deaktiviert die Protokollierung für den WeeChat Buffer:"
 
 msgid "  use a directory per IRC server and a file per channel inside:"
 msgstr ""
@@ -14959,20 +14649,18 @@ msgstr ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
 "[-q] [<name>] || eval [-o|-oc] <code> || version"
 
-#, fuzzy
 #| msgid "list/load/unload scripts"
 msgid "raw[list]: list loaded scripts"
-msgstr "auflisten/installieren/beenden von Skripten"
+msgstr "raw[list]: gibt alle geladenen Skripts im Buffer aus"
 
 msgid "raw[listfull]: list loaded scripts (verbose)"
 msgstr ""
 "raw[listfull]: gibt alle geladenen Skripten im Buffer aus (unabhängig der "
 "Programmiersprache)"
 
-#, fuzzy
 #| msgid "list/load/unload scripts"
 msgid "raw[load]: load a script"
-msgstr "auflisten/installieren/beenden von Skripten"
+msgstr "raw[load]: lädt ein Skript"
 
 msgid "raw[autoload]: load all scripts in \"autoload\" directory"
 msgstr ""
@@ -15017,15 +14705,13 @@ msgstr ""
 "raw[-oc]: evaluierter Ergebnis wird im Buffer ausgegeben und Befehle werden "
 "ausgeführt"
 
-#, fuzzy
 #| msgid "source code to execute"
 msgid "code: source code to evaluate"
-msgstr "Quelltext welcher ausgeführt werden soll"
+msgstr "Quelltext: Quelltext welcher evaluiert werden soll"
 
-#, fuzzy
 #| msgid "version of the interpreter used"
 msgid "raw[version]: display the version of interpreter used"
-msgstr "Version des verwendeten Interpreters"
+msgstr "raw[version]: zeigt die Version des verwendeten Interpreters an"
 
 msgid "Without argument, this command lists all loaded scripts."
 msgstr ""
@@ -15403,12 +15089,10 @@ msgstr "raw[stop]: schließt den Server Socket (Clients bleiben verbunden)"
 msgid "name: relay name (see format below)"
 msgstr "Name: Name des Relays (siehe Format weiter unten)"
 
-#, fuzzy
 #| msgid "port for relay"
 msgid "port: port used for relay"
-msgstr "Port für Relay"
+msgstr "Port: Port der für Relay genutzt werden soll"
 
-#, fuzzy
 #| msgid ""
 #| "path to a socket file (path is evaluated, see function "
 #| "string_eval_path_home in plugin API reference)"
@@ -15416,13 +15100,13 @@ msgid ""
 "path: path used for relay (for UNIX domain socket only); path is evaluated "
 "(see function string_eval_path_home in plugin API reference)"
 msgstr ""
-"Pfad zu einer Socket-Datei (Pfad ist evaluiert, siehe Funktion "
-"string_eval_path_home in der Plugin-API-Referenz)"
+"Pfad: Pfad der für Relay genutzt werden soll (ausschließlich für UNIX Domain"
+" Socket); Pfad ist evaluiert (siehe Funktion string_eval_path_home in"
+" Erweiterung API Referenz)"
 
 msgid "raw[raw]: open buffer with raw Relay data"
 msgstr "raw[raw]: öffnet einen Buffer mit den Relay-Roh-Daten"
 
-#, fuzzy
 #| msgid ""
 #| "%s%s: warning: no TLS certificate/key found (option relay.network."
 #| "tls_cert_key)"
@@ -15430,8 +15114,8 @@ msgid ""
 "raw[tlscertkey]: set TLS certificate/key using path in option relay.network."
 "tls_cert_key"
 msgstr ""
-"%s%s: Warnung: kein TLS Zertifikat/Schlüssel gefunden (Einstellung relay."
-"network.tls_cert_key)"
+"raw[tlscertkey]: setzt TLS Zertifikat/Schlüssel mittels Pfad in Einstellung"
+" relay.network.tls_cert_key"
 
 msgid ""
 "Relay name is: [ipv4.][ipv6.][tls.]<protocol.name> or unix.[tls.]<protocol."
@@ -16736,13 +16420,13 @@ msgstr ""
 "|| addword [<dict>] <word>"
 
 msgid "raw[enable]: enable spell checker"
-msgstr ""
+msgstr "raw[enable]: Rechtschreibprüfung wird aktiviert"
 
 msgid "raw[disable]: disable spell checker"
-msgstr ""
+msgstr "raw[disable]: Rechtschreibprüfung wird deaktiviert"
 
 msgid "raw[toggle]: toggle spell checker"
-msgstr ""
+msgstr "raw[toggle]: Funktionalität der Rechtschreibprüfung umschalten"
 
 msgid "raw[listdict]: show installed dictionaries"
 msgstr "raw[listdict]: Auflistung der installierten Wörterbücher"
@@ -16757,7 +16441,7 @@ msgstr ""
 "deaktiviert die Rechtschreibprüfungfür den aktuellen Buffer)"
 
 msgid "raw[deldict]: delete dictionary used on current buffer"
-msgstr ""
+msgstr "raw[deldict]: Wörterbuch für den aktuellen Buffer entfernen"
 
 msgid "raw[addword]: add a word in personal dictionary"
 msgstr "raw[addword]: fügt ein Wort in das persönliche Wörterbuch hinzu"
@@ -16766,11 +16450,16 @@ msgid ""
 "Input line beginning with a \"/\" is not checked, except for some commands "
 "(see /set spell.check.commands)."
 msgstr ""
+"Eingaben die mit '/' beginnen, werden nicht überprüft. Davon ausgenommen sind"
+" einige Befehle (siehe /set spell.check.commands)."
 
 msgid ""
 "To enable spell checker on all buffers, use option \"default_dict\", then "
 "enable spell checker, for example:"
 msgstr ""
+"Um die Rechtschreibprüfung auf allen Buffer anzuwenden, sollte die"
+" Einstellung \"default_dict\" genutzt und die Rechtschreibprüfung aktiviert"
+" werden:"
 
 msgid "To display a list of suggestions in a bar, use item \"spell_suggest\"."
 msgstr ""
@@ -16779,6 +16468,8 @@ msgstr ""
 
 msgid "Default key to toggle spell checker is alt-s."
 msgstr ""
+"Die Standardtastenbelegung, zum Umschalten der Rechtschreibprüfung lautet"
+" alt-s."
 
 msgid "list of all languages supported"
 msgstr "Liste aller Sprachen die unterstützt werden"
@@ -17131,7 +16822,8 @@ msgstr "verwaltet Trigger, das Schweizer Armeemesser für WeeChat"
 msgid ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
+"return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|"
 "<mask> [<name>|<mask>...]] || restart <name>|<mask> [<name>|<mask>...] || "
@@ -17140,7 +16832,8 @@ msgid ""
 msgstr ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<"
+"return_code>\" [\"<post_action>\"]]]]]] "
 "|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
 "<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|"
 "<mask> [<name>|<mask>...]] || restart <name>|<mask> [<name>|<mask>...] || "
@@ -17149,37 +16842,51 @@ msgstr ""
 
 msgid "raw[list]: list triggers (without argument, this list is displayed)"
 msgstr ""
+"raw[list]: zeigt eine Liste aller Trigger (ohne Angabe von Argumente wird"
+" diese Liste standardmäßig ausgegeben)"
 
 msgid "raw[-o]: send list of triggers enabled to buffer (string in English)"
 msgstr ""
+"raw[-o]: gibt eine Liste der aktiven Trigger im Buffer aus (Ausgabe in"
+" englisch)"
 
 msgid "raw[-ol]: send list of triggers enabled to buffer (translated string)"
 msgstr ""
+"raw[-ol]: gibt eine Liste der aktiven Trigger im Buffer aus (Ausgabe ist"
+" übersetzt)"
 
 msgid ""
 "raw[-i]: copy list of triggers enabled in command line (for sending to "
 "buffer) (string in English)"
 msgstr ""
+"raw[-i]: eine Liste der laufenden Trigger wird in die Eingabezeile kopiert"
+" (um sie dann, manuell, in einen Buffer zu senden) (Ausgabe in englisch)"
 
 msgid ""
 "raw[-il]: copy list of triggers enabled in command line (for sending to "
 "buffer) (translated string)"
 msgstr ""
+"raw[-il]: eine Liste der laufenden Trigger wird in die Eingabezeile kopiert"
+" (um sie dann, manuell, in einen Buffer zu senden) (Ausgabe ist übersetzt)"
 
 msgid "raw[listfull]: list triggers with detailed info for each trigger"
 msgstr ""
+"raw[listfull]: zeigt eine detaillierte Liste aller Trigger an, mit"
+" zusätzlichen Informationen"
 
 msgid "raw[listdefault]: list default triggers"
 msgstr "raw[listdefault]: Liste der standardmäßigen Trigger"
 
 msgid "raw[add]: add a trigger"
-msgstr ""
+msgstr "raw[add]: fügt einen Trigger hinzu"
 
 msgid "raw[addoff]: add a trigger (disabled)"
-msgstr ""
+msgstr "raw[addoff]: fügt einen Trigger hinzu (deaktiviert)"
 
 msgid "raw[addreplace]: add or replace an existing trigger"
 msgstr ""
+"raw[addreplace]: erzeugt neuen Trigger oder ersetzt einen schon existierenden"
+" Trigger"
 
 msgid "name: name of trigger"
 msgstr "name: Name des Triggers"
@@ -17188,6 +16895,8 @@ msgid ""
 "hook: signal, hsignal, modifier, line, print, command, command_run, timer, "
 "config, focus, info, info_hashtable"
 msgstr ""
+"Hook: signal, hsignal, modifier, line, print, command, command_run, timer, "
+"config, focus, info, info_hashtable"
 
 msgid ""
 "arguments: arguments for the hook, depending on hook (separated by "
@@ -17197,51 +16906,63 @@ msgstr ""
 "(getrennt durch Semikolons):"
 
 msgid "> type `signal`: name(s) of signal (required)"
-msgstr ""
+msgstr "> type `signal`: Name(en) des Signal (erforderlich)"
 
 msgid "> type `hsignal`: name(s) of hsignal (required)"
-msgstr ""
+msgstr "> type `hsignal`: Name(en) des hsignal (erforderlich)"
 
 msgid "> type `modifier`: name(s) of modifier (required)"
-msgstr ""
+msgstr "> type `modifier`: Name(en) des modifier (erforderlich)"
 
 msgid ""
 "> type `line`: buffer type (\"formatted\", \"free\" or \"*\"), list of "
 "buffer masks, tags"
 msgstr ""
+"> type `line`: Buffertyp (\"formatted\", \"free\" oder \"*\"), Liste von"
+" Buffermasken, Tags"
 
 msgid "> type `print`: buffer, tags, message, strip colors"
-msgstr ""
+msgstr "> type `print`: Buffer, Tags, Nachricht, Farben entfernen"
 
 msgid ""
 "> type `command`: command (required), description, arguments, description of "
 "arguments, completion (all arguments except command are evaluated, "
 "\"${tg_trigger_name}\" is replaced by the trigger name, see /help eval)"
 msgstr ""
+"> type `command`: Befehl (erforderlich), Beschreibung, Argumente,"
+" Beschreibung der Argumente, Vervollständigung (alle Argumente, außer der"
+" Befehl, werden ausgewertet, \"${tg_trigger_name}\" wird durch den"
+" Triggernamen ersetzt, siehe /help eval)"
 
 msgid "> type `command_run`: command(s) (required)"
-msgstr ""
+msgstr "> type `command_run`: Befehl(e) (erforderlich)"
 
 msgid "> type `timer`: interval (required), align on second, max calls"
 msgstr ""
+"> type `timer`: Intervall (erforderlich), an Sekunden anpassen, maximale"
+" Anzahl an Aufrufen"
 
 msgid "> type `config`: name(s) of option (required)"
-msgstr ""
+msgstr "> type `config`: Name der Einstellung (erforderlich)"
 
 msgid "> type `focus`: name(s) of area (required)"
 msgstr ""
+"> type `focus`: Name(n) für sichtbaren Bereich (erforderlich) (z.B. \"chat\""
+" für Chatbereich)"
 
 msgid "> type `info`: name(s) of info (required)"
-msgstr ""
+msgstr "> type `info`: Name(n) der Information (erforderlich)"
 
 msgid "> type `info_hashtable`: name(s) of info (required)"
-msgstr ""
+msgstr "> type `info_hashtable`: Name(n) der Information (erforderlich)"
 
 msgid "conditions: evaluated conditions for the trigger"
-msgstr ""
+msgstr "Bedingungen: evaluierte Bedingungen für den Trigger"
 
 msgid "regex: one or more regular expressions to replace strings in variables"
 msgstr ""
+"regex: einer oder mehrere reguläre Ausdrücke um Zeichenketten in Variablen zu"
+" ersetzen"
 
 msgid "command: command to execute (many commands can be separated by \";\")"
 msgstr ""
@@ -17249,61 +16970,80 @@ msgstr ""
 "ein \";\" getrennt werden)"
 
 msgid "return_code: return code in callback (ok (default), ok_eat, error)"
-msgstr ""
+msgstr "Rückgabewert: Rückgabewert für Callback (ok (standard), ok_eat, error)"
 
 msgid ""
 "post_action: action to take after execution (none (default), disable, delete)"
 msgstr ""
+"post_action: Aktion welche nach der Abarbeitung des Triggers ausgeführt"
+" werden soll (none (Standardwert), disable, delete)"
 
 msgid "raw[addinput]: set input with default arguments to create a trigger"
 msgstr ""
+"raw[addinput]: in die Eingabezeile wird ein Trigger, mit einer"
+" standardmäßigen Mustervorlage, kopiert"
 
 msgid "raw[input]: set input with the command used to create the trigger"
-msgstr ""
+msgstr "raw[input]: kopiert den kompletten Trigger-Befehl in die Eingabezeile"
 
 msgid "raw[output]: send the command to create the trigger on the buffer"
-msgstr ""
+msgstr "raw[output]: versendet den Trigger-Befehl als Text in den Buffer"
 
 msgid ""
 "raw[recreate]: same as \"input\", with option \"addreplace\" instead of "
 "\"add\""
 msgstr ""
+"raw[recreate]: wie \"input\", allerdings wird die Einstellung \"addreplace\""
+" anstelle von \"add\" genutzt"
 
 msgid "raw[set]: set an option in a trigger"
-msgstr ""
+msgstr "raw[set]: definiert, innerhalb eines Triggers, eine Einstellung neu"
 
 msgid ""
 "option: name of option: name, hook, arguments, conditions, regex, command, "
 "return_code (for help on option, you can type: /help trigger.trigger.<name>."
 "<option>)"
 msgstr ""
+"Option: Name einer Einstellung:name, hook, arguments, conditions, regex,"
+" command, "
+"return_code (um Hilfe über eine Einstellung zu erhalten: /help"
+" trigger.trigger.<name>."
+"<option>)"
 
 msgid "value: new value for the option"
 msgstr "value: neuer Wert für Option"
 
 msgid "raw[rename]: rename a trigger"
-msgstr ""
+msgstr "raw[rename]: benennt einen Trigger um"
 
 msgid "raw[copy]: copy a trigger"
-msgstr ""
+msgstr "raw[copy]: kopiert einen Trigger"
 
 msgid ""
 "raw[enable]: enable triggers (without arguments: enable triggers globally)"
 msgstr ""
+"raw[enable]: aktiviert einen Trigger (ohne Angabe von Argumenten: alle"
+" Trigger werden aktiviert)"
 
 msgid ""
 "raw[disable]: disable triggers (without arguments: disable triggers globally)"
 msgstr ""
+"raw[disable]: deaktiviert einen Trigger (ohne Angabe von Argumenten: alle"
+" Trigger werden deaktiviert)"
 
 msgid ""
 "raw[toggle]: toggle triggers (without arguments: toggle triggers globally)"
 msgstr ""
+"raw[toggle]: umschalten von Trigger (ohne Angabe von Argumenten: werden alle"
+" Trigger umgeschaltet)"
 
 msgid "raw[restart]: restart triggers (recreate the hooks)"
-msgstr ""
+msgstr "raw[restart]: startet Trigger neu (Hook(s) werden neu erstellt)"
 
 msgid "raw[show]: show detailed info on a trigger (with some stats)"
 msgstr ""
+"raw[show]: zeigt detaillierte Informationen zu einem Trigger (inklusive einer"
+" kleinen Statistik)"
 
 msgid "raw[del]: delete triggers"
 msgstr "raw[del]: entfernt Trigger"
@@ -17312,9 +17052,11 @@ msgid ""
 "raw[restore]: restore triggers with the default values (works only for "
 "default triggers)"
 msgstr ""
+"raw[restore]: stellt Trigger mit Standardwerten wieder her (funktioniert nur"
+" bei vorgegebenen Triggern)"
 
 msgid "raw[default]: delete all triggers and restore default ones"
-msgstr ""
+msgstr "raw[default]: stellt die standardmäßigen Trigger wieder her"
 
 msgid "raw[monitor]: open the trigger monitor buffer, with optional filter"
 msgstr ""
@@ -17325,27 +17067,37 @@ msgid ""
 "example \"@signal\"), many filters can be separated by commas; wildcard "
 "\"*\" is allowed in each trigger name"
 msgstr ""
+"Filter: filtert Hooks/Trigger zum Anzeigen (ein Hook muss mit \"@\" beginnen,"
+" zum Beispiel \"@signal\"), mehrere Filter können durch Kommata voneinander"
+" getrennt werden; Platzhalter \"*\" kann im Namen des Trigger verwendet werden"
 
 msgid ""
 "When a trigger callback is called, following actions are performed, in this "
 "order:"
 msgstr ""
+"Wenn ein Trigger-Callback aufgerufen wird, dann wird folgende"
+" Befehlsreihenfolge ausgeführt:"
 
 msgid "  1. check conditions; if false, exit"
-msgstr ""
+msgstr "  1. Überprüfung von Bedingungen; falls unwahr, beenden"
 
 msgid ""
 "  2. replace text using POSIX extended regular expression(s) (if defined in "
 "trigger)"
 msgstr ""
+"  2. ersetze Text mittels einem oder mehreren erweiterten regulären POSIX"
+" Ausdrücken (sofern im Trigger definiert)"
 
 msgid "  3. execute command(s) (if defined in trigger)"
 msgstr ""
+"  3. ein oder mehrere Befehle werden ausgeführt (sofern im Trigger definiert)"
 
 msgid ""
 "  4. exit with a return code (except for modifier, line, focus, info and "
 "info_hashtable)"
 msgstr ""
+"  4. Beendigung mit einem Rückgabewert (ausgenommen sind modifiers, line,"
+" focus, info und info_hashtable)"
 
 msgid "  5. perform post action"
 msgstr "  5. führt eine abschließende Aktion aus"
@@ -17353,17 +17105,21 @@ msgstr "  5. führt eine abschließende Aktion aus"
 msgid ""
 "Examples (you can also look at default triggers with /trigger listdefault):"
 msgstr ""
+"Beispiele (die standardmäßig verfügbaren Trigger kann man sich mit \"/trigger"
+" listdefault\" anzeigen lassen):"
 
 msgid ""
 "  add text attributes *bold*, _underline_ and /italic/ (only in user "
 "messages):"
 msgstr ""
+"  fügt einer Nachricht die Textattribute *fett*, _unterstrichen_ und /kursiv/"
+" hinzu (nur in User-Nachrichten):"
 
 msgid "  hide nicklist bar on small terminals:"
-msgstr ""
+msgstr "  verbirgt die Nicklist auf kleineren Terminals:"
 
 msgid "  silently save config each hour:"
-msgstr ""
+msgstr "  speichert die Konfiguration jede Stunde ab:"
 
 msgid "  silently save WeeChat session at midnight (see /help upgrade):"
 msgstr ""
@@ -17374,6 +17130,8 @@ msgid ""
 "  open trigger monitor and show only modifiers and triggers whose name "
 "starts with \"resize\":"
 msgstr ""
+"  öffnet den Trigger Monitor und zeigt ausschließlich modifier und Trigger"
+" an, die mit \"resize\" im Namen beginnen:"
 
 msgid "triggers"
 msgstr "trigger"
@@ -17809,7 +17567,7 @@ msgid "raw[list]: list xfer"
 msgstr "raw[list]: zeigt Liste der Übertragungen"
 
 msgid "raw[listfull]: list xfer (verbose)"
-msgstr ""
+msgstr "raw[listfull]: zeigt eine ausführliche Liste der Übertragungen"
 
 msgid "Without argument, this command opens buffer with xfer list."
 msgstr ""
@@ -18074,3 +17832,4 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
