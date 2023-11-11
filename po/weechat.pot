@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-01 14:25+0100\n"
+"POT-Creation-Date: 2023-11-11 08:54+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1827,6 +1827,9 @@ msgstr ""
 msgid "> raw[search_text]: search text in buffer"
 msgstr ""
 
+msgid "> raw[search_history]: search text in command line history"
+msgstr ""
+
 msgid "> raw[search_switch_case]: switch exact case for search"
 msgstr ""
 
@@ -1940,6 +1943,12 @@ msgid ""
 msgstr ""
 
 msgid "> raw[history_global_next]: recall next command in global history"
+msgstr ""
+
+msgid ""
+"> raw[history_use_get_next]: send the current history entry (found with "
+"search or recalled with \"up\"key) and insert the next history entry in the "
+"command line without sending it"
 msgstr ""
 
 msgid ""
@@ -3477,6 +3486,10 @@ msgid ""
 msgstr ""
 
 msgid "default text search in buffer: case sensitive or not"
+msgstr ""
+
+msgid ""
+"default text search command line history: local (buffer) or global history"
 msgstr ""
 
 msgid ""
@@ -5124,7 +5137,18 @@ msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "Search"
+#. TRANSLATORS: search in "local" history
+msgid "local"
+msgstr ""
+
+#. TRANSLATORS: search in "global" history
+msgid "global"
+msgstr ""
+
+msgid "Search lines"
+msgstr ""
+
+msgid "Search command"
 msgstr ""
 
 msgid "keyboard and mouse debug ('q' to quit debug mode)"

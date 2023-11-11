@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-01 14:25+0100\n"
+"POT-Creation-Date: 2023-11-11 08:54+0100\n"
 "PO-Revision-Date: 2023-10-20 13:10+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -2097,6 +2097,11 @@ msgstr ""
 msgid "> raw[search_text]: search text in buffer"
 msgstr "verificar ortografia ao procurar texto no buffer"
 
+#, fuzzy
+#| msgid "check words during text search in buffer"
+msgid "> raw[search_history]: search text in command line history"
+msgstr "verificar ortografia ao procurar texto no buffer"
+
 msgid "> raw[search_switch_case]: switch exact case for search"
 msgstr ""
 
@@ -2210,6 +2215,12 @@ msgid ""
 msgstr ""
 
 msgid "> raw[history_global_next]: recall next command in global history"
+msgstr ""
+
+msgid ""
+"> raw[history_use_get_next]: send the current history entry (found with "
+"search or recalled with \"up\"key) and insert the next history entry in the "
+"command line without sending it"
 msgstr ""
 
 msgid ""
@@ -4065,6 +4076,10 @@ msgid "default text search in buffer: case sensitive or not"
 msgstr ""
 "texto predefinido a procurar no buffer: com ou sem distinção de maiúsculas e "
 "minúsculas"
+
+msgid ""
+"default text search command line history: local (buffer) or global history"
+msgstr ""
 
 msgid ""
 "force default values for text search in buffer (instead of using values from "
@@ -6166,8 +6181,23 @@ msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
 msgstr[0] "%sColar %d linha ? [ctrl-Y] Sim [ctrl-N] Não"
 msgstr[1] "%sColar %d linhas ? [ctrl-Y] Sim [ctrl-N] Não"
 
-msgid "Search"
+#. TRANSLATORS: search in "local" history
+msgid "local"
+msgstr ""
+
+#. TRANSLATORS: search in "global" history
+msgid "global"
+msgstr ""
+
+#, fuzzy
+#| msgid "Search"
+msgid "Search lines"
 msgstr "Procurar"
+
+#, fuzzy
+#| msgid "default command:"
+msgid "Search command"
+msgstr "comando predefinido:"
 
 msgid "keyboard and mouse debug ('q' to quit debug mode)"
 msgstr ""

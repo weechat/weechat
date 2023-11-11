@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-01 14:25+0100\n"
-"PO-Revision-Date: 2023-11-01 14:28+0100\n"
+"POT-Creation-Date: 2023-11-11 08:54+0100\n"
+"PO-Revision-Date: 2023-11-11 08:57+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -2166,6 +2166,11 @@ msgstr ""
 msgid "> raw[search_text]: search text in buffer"
 msgstr "> raw[search_text] : chercher du texte dans le tampon"
 
+msgid "> raw[search_history]: search text in command line history"
+msgstr ""
+"> raw[search_history] : chercher du texte dans l'historique de la ligne de "
+"commande"
+
 msgid "> raw[search_switch_case]: switch exact case for search"
 msgstr "> raw[search_switch_case] : basculer la casse exacte pour la recherche"
 
@@ -2307,6 +2312,15 @@ msgid "> raw[history_global_next]: recall next command in global history"
 msgstr ""
 "> raw[history_global_next] : rappeler la commande suivante dans l'historique "
 "global"
+
+msgid ""
+"> raw[history_use_get_next]: send the current history entry (found with "
+"search or recalled with \"up\"key) and insert the next history entry in the "
+"command line without sending it"
+msgstr ""
+"> raw[history_use_get_next] : envoyer l'entrée d'historique courante "
+"(trouvée avec la recherche ou rappelée avec la touche \"haut\") et insérer "
+"l'entrée suivante de l'historique dans la ligne de commande sans l'envoyer"
 
 msgid ""
 "> raw[grab_key]: grab a key (optional argument: delay for end of grab, "
@@ -4238,6 +4252,12 @@ msgstr ""
 
 msgid "default text search in buffer: case sensitive or not"
 msgstr "recherche par défaut dans le tampon : sensible à la casse ou non"
+
+msgid ""
+"default text search command line history: local (buffer) or global history"
+msgstr ""
+"recherche par défaut dans l'historique de la ligne de commande : local "
+"(tampon) ou historique global"
 
 msgid ""
 "force default values for text search in buffer (instead of using values from "
@@ -6430,8 +6450,19 @@ msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
 msgstr[0] "%sColler %d ligne ? [ctrl-y] Oui [ctrl-n] Non"
 msgstr[1] "%sColler %d lignes ? [ctrl-y] Oui [ctrl-n] Non"
 
-msgid "Search"
-msgstr "Recherche"
+#. TRANSLATORS: search in "local" history
+msgid "local"
+msgstr "local"
+
+#. TRANSLATORS: search in "global" history
+msgid "global"
+msgstr "global"
+
+msgid "Search lines"
+msgstr "Recherche lignes"
+
+msgid "Search command"
+msgstr "Recherche commande"
 
 msgid "keyboard and mouse debug ('q' to quit debug mode)"
 msgstr "debug clavier et souris ('q' pour quitter le mode de debug)"

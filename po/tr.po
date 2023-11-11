@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-01 14:25+0100\n"
+"POT-Creation-Date: 2023-11-11 08:54+0100\n"
 "PO-Revision-Date: 2023-10-20 13:11+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2135,6 +2135,11 @@ msgstr ""
 msgid "> raw[search_text]: search text in buffer"
 msgstr "arabellekte metin arama sırasında sözcükleri denetle"
 
+#, fuzzy
+#| msgid "check words during text search in buffer"
+msgid "> raw[search_history]: search text in command line history"
+msgstr "arabellekte metin arama sırasında sözcükleri denetle"
+
 msgid "> raw[search_switch_case]: switch exact case for search"
 msgstr ""
 
@@ -2248,6 +2253,12 @@ msgid ""
 msgstr ""
 
 msgid "> raw[history_global_next]: recall next command in global history"
+msgstr ""
+
+msgid ""
+"> raw[history_use_get_next]: send the current history entry (found with "
+"search or recalled with \"up\"key) and insert the next history entry in the "
+"command line without sending it"
 msgstr ""
 
 msgid ""
@@ -4078,6 +4089,10 @@ msgstr ""
 msgid "default text search in buffer: case sensitive or not"
 msgstr ""
 "arabellekteki öntanımlı metin arama: BÜYÜK/küçük harf uyumlu veya değil"
+
+msgid ""
+"default text search command line history: local (buffer) or global history"
+msgstr ""
 
 msgid ""
 "force default values for text search in buffer (instead of using values from "
@@ -6163,8 +6178,23 @@ msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
 msgstr[0] "%s%d satır yapıştırılsın mı? [ctrl-Y] Evet [ctrl-N] Hayır"
 msgstr[1] "%s%d satır yapıştırılsın mı? [ctrl-Y] Evet [ctrl-N] Hayır"
 
-msgid "Search"
+#. TRANSLATORS: search in "local" history
+msgid "local"
+msgstr ""
+
+#. TRANSLATORS: search in "global" history
+msgid "global"
+msgstr ""
+
+#, fuzzy
+#| msgid "Search"
+msgid "Search lines"
 msgstr "Arama"
+
+#, fuzzy
+#| msgid "default command:"
+msgid "Search command"
+msgstr "öntanımlı komut:"
 
 msgid "keyboard and mouse debug ('q' to quit debug mode)"
 msgstr ""

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-01 14:25+0100\n"
+"POT-Creation-Date: 2023-11-11 08:54+0100\n"
 "PO-Revision-Date: 2023-10-20 13:10+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -2100,6 +2100,11 @@ msgstr ""
 msgid "> raw[search_text]: search text in buffer"
 msgstr "バッファ内のテキスト検索中に単語チェックを行う"
 
+#, fuzzy
+#| msgid "check words during text search in buffer"
+msgid "> raw[search_history]: search text in command line history"
+msgstr "バッファ内のテキスト検索中に単語チェックを行う"
+
 msgid "> raw[search_switch_case]: switch exact case for search"
 msgstr ""
 
@@ -2213,6 +2218,12 @@ msgid ""
 msgstr ""
 
 msgid "> raw[history_global_next]: recall next command in global history"
+msgstr ""
+
+msgid ""
+"> raw[history_use_get_next]: send the current history entry (found with "
+"search or recalled with \"up\"key) and insert the next history entry in the "
+"command line without sending it"
 msgstr ""
 
 msgid ""
@@ -4052,6 +4063,10 @@ msgstr ""
 
 msgid "default text search in buffer: case sensitive or not"
 msgstr "デフォルトのバッファテキスト検索: 大文字小文字を区別するかしないか"
+
+msgid ""
+"default text search command line history: local (buffer) or global history"
+msgstr ""
 
 msgid ""
 "force default values for text search in buffer (instead of using values from "
@@ -6096,8 +6111,23 @@ msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
 msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
 msgstr[0] "%s %d 行をペーストしますか? [ctrl-Y] はい [ctrl-N] いいえ"
 
-msgid "Search"
+#. TRANSLATORS: search in "local" history
+msgid "local"
+msgstr ""
+
+#. TRANSLATORS: search in "global" history
+msgid "global"
+msgstr ""
+
+#, fuzzy
+#| msgid "Search"
+msgid "Search lines"
 msgstr "検索"
+
+#, fuzzy
+#| msgid "default command:"
+msgid "Search command"
+msgstr "デフォルトコマンド:"
 
 msgid "keyboard and mouse debug ('q' to quit debug mode)"
 msgstr ""
