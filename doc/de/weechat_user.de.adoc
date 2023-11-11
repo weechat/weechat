@@ -920,18 +920,14 @@ In der _input_ Bar lautet die Standardeinstellung:
 | Item         | Beispiel                                      | Beschreibung
 | input_prompt | `[@Flashy(i)]`                                | Input prompt, für irc: Nick und Modi (Modus "+i" bedeutet auf libera, unsichtbar).
 | away         | `(away)`                                      | Abwesenheitsanzeige.
-// TRANSLATION MISSING
 | input_search | `[Search lines (~ str,msg)]`                  | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten).
-// TRANSLATION MISSING
-| input_paste  | `[Paste 7 lines ? [ctrl-y] Ja [ctrl-n] Nein]` | Nachfrage ob sieben Zeilen eingefügt werden sollen.
+| input_paste  | `[Paste 7 lines ? [ctrl-y] Ja [ctrl-n] Nein]` | Nachfrage, ob sieben Zeilen eingefügt werden sollen.
 | input_text   | `hi peter!`                                   | Text der eingegeben wird.
 |===
 
-// TRANSLATION MISSING
-There are two search modes:
+Es existieren zwei Suchmodi:
 
-// TRANSLATION MISSING
-* search in lines, for example `[Search lines (~ str,msg)]`, with the following info:
+* Suche in Zeilen, zum Beispiel `[Search lines (~ str,msg)]`, mit folgenden Infos:
 ** `~`: Groß-und Kleinschreibung ignorieren
 ** `==`: Groß-und Kleinschreibung berücksichtigen
 ** `str`: einfache Textsuche
@@ -939,17 +935,14 @@ There are two search modes:
 ** `msg`: Suche in Nachrichten
 ** `pre`: Suche in Präfix
 ** `pre\|msg`: Suche in Präfix und Nachrichten
-// TRANSLATION MISSING
-* search in commands history, for example `[Search command (~ str,local)]`,
-  with the following info:
+* Suche im Befehlsverlauf, zum Beispiel `[Search command (~ str,local)]`,
+  mit den folgenden Informationen:
 ** `~`: Groß-und Kleinschreibung ignorieren
 ** `==`: Groß-und Kleinschreibung berücksichtigen
 ** `str`: einfache Textsuche
 ** `regex`: suche mit regulären Ausdrücken
-// TRANSLATION MISSING
-** `local`: search in buffer local history
-// TRANSLATION MISSING
-** `global`: search in global history.
+** `local`: suche im lokalen Bufferverlauf
+** `global`: suche im globalen Verlauf
 
 In der _nicklist_ Bar lautet die Standardeinstellung:
 
@@ -1042,13 +1035,11 @@ Zeichen, genutzt werden:
 | kbd:[Ctrl+c], kbd:[c],
   kbd:[xx], kbd:[,],
   kbd:[yy]               | Textfarbe `xx` und Hintergrundfarbe `yy` (siehe Farbtabelle).
-// TRANSLATION MISSING
 | kbd:[Ctrl+c], kbd:[d],
-  kbd:[xxxxxx]           | Text color `xxxxxx` (RGB as hexadecimal, for example `FF0000` for red).
-// TRANSLATION MISSING
+  kbd:[xxxxxx]           | Textfarbe `xxxxxx` (RGB als hexadezimale Zahl, zum Beispiel `FF0000` für rot).
 | kbd:[Ctrl+c], kbd:[d],
   kbd:[xxxxxx], kbd:[,],
-  kbd:[yyyyyy]           | Text color `xxxxxx` and background `yyyyyy` (RGB as hexadecimal).
+  kbd:[yyyyyy]           | Textfarbe `xxxxxx` und Hintergrundfarbe `yyyyyy` (RGB als hexadezimale Zahl).
 | kbd:[Ctrl+c], kbd:[i]  | Text wird kursiv dargestellt.
 | kbd:[Ctrl+c], kbd:[o]  | deaktiviert Farben und Attribute.
 | kbd:[Ctrl+c], kbd:[v]  | Farben umkehren (kehrt Textfarbe und Hintergrundfarbe um).
@@ -1056,9 +1047,8 @@ Zeichen, genutzt werden:
 |===
 
 [NOTE]
-// TRANSLATION MISSING
-The same code (without number for kbd:[Ctrl+c], kbd:[c] and kbd:[Ctrl+c], kbd:[d])
-can be used to stop the attribute.
+Der selbe Code (ohne Nummer für kbd:[Ctrl+c], kbd:[c] und kbd:[Ctrl+c], kbd:[d])
+kann verwendet werden, um das Attribut zu stoppen.
 
 Farbtabelle für kbd:[Ctrl+c], kbd:[c]:
 
@@ -1621,8 +1611,7 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | Taste                 | Beschreibung | Befehl
 | kbd:[Ctrl+c], kbd:[b] | fügt Steuerzeichen für fett geschrieben Text ein. | `+/input insert \x02+`
 | kbd:[Ctrl+c], kbd:[c] | fügt Steuerzeichen für Textfarbe ein. | `+/input insert \x03+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+c], kbd:[d] | Insert code for colored text (RGB color, as hexadecimal). | `+/input insert \x04+`
+| kbd:[Ctrl+c], kbd:[d] | fügt Steuerzeichen für Textfarbe ein (RGB Farbe, als hexadezimale Zahl). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | fügt Steuerzeichen für kursiven Text ein. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | fügt Steuerzeichen für Standardfarbe ein. | `+/input insert \x0F+`
 | kbd:[Ctrl+c], kbd:[v] | fügt Steuerzeichen für Hintergrundfarbe ein. | `+/input insert \x16+`
@@ -1656,10 +1645,8 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Taste                          | Beschreibung | Befehl
-// TRANSLATION MISSING
-| kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
+| kbd:[Ctrl+r]                   | sucht nach Text im Befehlsverlauf (siehe <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
+| kbd:[Ctrl+s]                   | sucht nach Text in Bufferzeilen (siehe <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
 | kbd:[Ctrl+x]                   | Wechseln Sie den aktuellen Buffer, wenn diese zusammengefügt worden sind, z.B. zwischen IRC-Serverbuffer wechseln. | `+/buffer switch+`
 | kbd:[Alt+x]                    | Zoom eines zusammengefügten Buffers (kbd:[Alt+x] ein zweites mal: alle zusammengefügten Buffer werden angezeigt). | `+/buffer zoom+`
 | kbd:[PgUp]                     | eine Seite im Verlaufsspeicher des Buffers nach oben blättern. | `+/window page_up+`
@@ -1762,9 +1749,8 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 [[key_bindings_search_context]]
 === Suchkontext
 
-// TRANSLATION MISSING
-These keys are used in context "search" (when kbd:[Ctrl+s] is pressed to search
-text in buffer lines).
+Diese Tasten werden im Kontext "search" verwendet (wenn kbd:[Ctrl+s] gedrückt wird, um Text
+in Bufferzeilen zu suchen).
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1782,35 +1768,27 @@ text in buffer lines).
 | kbd:[Ctrl+q]   | Suche wird abgebrochen und der Bildlauf wird auf die Vortextsuche zurückgesetzt. | `+/input search_stop+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_histsearch_context]]
-=== History search context
+=== Kontext der Verlaufssuche
 
-// TRANSLATION MISSING
-These keys are used in context "histsearch" (when kbd:[Ctrl+r] is pressed to
-search text in commands history).
+Diese Tasten werden im Kontext "histsearch" verwendet (wenn kbd:[Ctrl+r] gedrückt wird, um Text
+im Befehlsverlauf zu suchen).
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Taste          | Beschreibung | Befehl
 | kbd:[Ctrl+x]   | Wechsel des Suchmodus: einfache Textsuche (Standard), reguläre Ausdrücke. | `+/input search_switch_regex+`
 | kbd:[Alt+c]    | auf Groß-/Kleinschreibung umschalten. | `+/input search_switch_case+`
-// TRANSLATION MISSING
-| kbd:[Tab]      | Switch search in: buffer local history (default), global history. | `+/input search_switch_where+`
-// TRANSLATION MISSING
+| kbd:[Tab]      | umschalten der Suche für: lokaler Bufferverlauf (Standard), globaler Verlauf. | `+/input search_switch_where+`
 | kbd:[Ctrl+r] +
-  kbd:[↑]        | Search in previous (older) history entries. | `+/input search_previous+`
-// TRANSLATION MISSING
+  kbd:[↑]        | Suche in vorherigen (älteren) Verlaufseinträgen. | `+/input search_previous+`
 | kbd:[Ctrl+s] +
-  kbd:[↓]        | Search in next (newer) history entries. | `+/input search_next+`
-// TRANSLATION MISSING
+  kbd:[↓]        | Suche in nachfolgenden (neueren) Verlaufseinträgen. | `+/input search_next+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | Stop search and use matching input. | `+/input search_stop_here+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+o]   | Execute the command found in history and insert the next one in the command line. | `+/input history_use_get_next+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+q]   | Stop search and restore input to its initial value. | `+/input search_stop+`
+  kbd:[Ctrl+m]   | Suche stoppen und übereinstimmende Eingaben verwenden. | `+/input search_stop_here+`
+| kbd:[Ctrl+o]   | führt den im Verlauf gefundenen Befehl aus und fügt den nächsten in die Befehlszeile ein. | `+/input history_use_get_next+`
+| kbd:[Ctrl+q]   | stoppt die Suche und stellt die Eingabe auf ihren ursprünglichen Wert zurück. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]
