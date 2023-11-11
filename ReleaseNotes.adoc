@@ -49,8 +49,7 @@ You can add this key with this command:
 === Custom bar items
 
 Custom bar items must now have a different name than default bar items
-(for example the custom bar item name `time` is now forbidden).
-
+(for example the custom bar item name `time` is now forbidden). +
 If you have such names in your config, WeeChat will now fail to load them
 (this should not happen anyway, since such bar items can not be properly used
 or can cause a crash of WeeChat).
@@ -69,8 +68,7 @@ The server name has been removed from arguments.
 === Custom bar items
 
 Custom bar items must now have a different name than default bar items
-(for example the custom bar item name `time` is now forbidden).
-
+(for example the custom bar item name `time` is now forbidden). +
 If you have such names in your config, WeeChat will now fail to load them
 (this should not happen anyway, since such bar items can not be properly used
 or can cause a crash of WeeChat).
