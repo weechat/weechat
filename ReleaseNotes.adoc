@@ -14,7 +14,7 @@ For a complete list of changes, please look at ChangeLog.
 [[v4.2.0]]
 == Version 4.2.0 (under dev)
 
-[[4.2.0_search_commands_history]]
+[[v4.2.0_search_commands_history]]
 === Search in commands history
 
 Search in commands history has been added with new keys and a new key context
@@ -33,7 +33,7 @@ from an old WeeChat version:
 /key bindctxt search ctrl-r /input search_previous
 ----
 
-[[4.2.0_irc_rgb_colors]]
+[[v4.2.0_irc_rgb_colors]]
 === RGB colors in IRC messages
 
 Support for RGB colors in IRC messages has been added and a new key
