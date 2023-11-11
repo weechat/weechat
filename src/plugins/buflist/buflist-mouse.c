@@ -214,6 +214,106 @@ buflist_mouse_move_buffer (const char *key, struct t_gui_buffer *buffer,
 }
 
 /*
+ * Switches to previous/next buffer displayed in an item, starting from
+ * current buffer.
+ */
+
+void
+buflist_mouse_move_current_buffer (const char *item_name, int direction)
+{
+    struct t_gui_buffer *ptr_current_buffer, *ptr_buffer, *gui_buffers;
+    char str_command[1024];
+    int i, size, index_item, index_current, index2, number_current;
+    int number, number2;
+
+    if (!item_name)
+        return;
+
+    index_item = buflist_bar_item_get_index (item_name);
+    if (index_item < 0)
+        return;
+
+    if (!buflist_list_buffers[index_item])
+        return;
+
+    size = weechat_arraylist_size (buflist_list_buffers[index_item]);
+    if (size <= 0)
+        return;
+
+    ptr_current_buffer = weechat_current_buffer ();
+    if (!ptr_current_buffer)
+        return;
+
+    index_current = -1;
+    for (i = 0; i < size; i++)
+    {
+        if ((struct t_gui_buffer *)weechat_arraylist_get (
+                buflist_list_buffers[index_item], i) == ptr_current_buffer)
+        {
+            index_current = i;
+            break;
+        }
+    }
+
+    if (index_current < 0)
+        return;
+
+    number_current = weechat_buffer_get_integer (ptr_current_buffer, "number");
+
+    gui_buffers = weechat_hdata_get_list (buflist_hdata_buffer, "gui_buffers");
+
+    /* search previous/next buffer with a different number */
+    index2 = index_current;
+    while (1)
+    {
+        if (direction < 0)
+        {
+            index2--;
+            if (index2 < 0)
+                index2 = size - 1;
+        }
+        else
+        {
+            index2++;
+            if (index2 >= size)
+                index2 = 0;
+        }
+        if (index2 == index_current)
+            return;
+        ptr_buffer = (struct t_gui_buffer *)weechat_arraylist_get (
+            buflist_list_buffers[index_item], index2);
+        if (!ptr_buffer)
+            return;
+        if (!weechat_hdata_check_pointer (buflist_hdata_buffer,
+                                          gui_buffers, ptr_buffer))
+            return;
+        number2 = weechat_buffer_get_integer (ptr_buffer, "number");
+        if (number2 != number_current)
+            break;
+    }
+
+    /* search first buffer with the number found */
+    for (i = 0; i < size; i++)
+    {
+        ptr_buffer = (struct t_gui_buffer *)weechat_arraylist_get (
+            buflist_list_buffers[index_item], i);
+        if (!ptr_buffer)
+            break;
+        number = weechat_buffer_get_integer (ptr_buffer, "number");
+        if (number == number2)
+            break;
+    }
+    if (i >= size)
+        return;
+
+    /* switch to the buffer found */
+    snprintf (str_command, sizeof (str_command),
+              "/buffer %s",
+              weechat_buffer_get_string (ptr_buffer, "full_name"));
+    weechat_command (NULL, str_command);
+}
+
+/*
  * Callback called when a mouse action occurs in buflist bar or bar item.
  */
 
@@ -300,14 +400,18 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
     {
         if (weechat_config_boolean (buflist_config_look_mouse_wheel))
         {
-            weechat_command (NULL, "/buffer -1");
+            buflist_mouse_move_current_buffer (
+                (const char *)weechat_hashtable_get (hashtable, "_bar_item_name"),
+                -1);  /* previous buffer */
         }
     }
     else if (weechat_string_match (ptr_key, "*wheeldown", 1))
     {
         if (weechat_config_boolean (buflist_config_look_mouse_wheel))
         {
-            weechat_command (NULL, "/buffer +1");
+            buflist_mouse_move_current_buffer (
+                (const char *)weechat_hashtable_get (hashtable, "_bar_item_name"),
+                +1);  /* next buffer */
         }
     }
     else

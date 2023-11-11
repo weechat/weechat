@@ -74,6 +74,9 @@ buflist_bar_item_get_index (const char *item_name)
     int i;
     const char *ptr_item_name;
 
+    if (!item_name)
+        return -1;
+
     for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
     {
         ptr_item_name = buflist_bar_item_get_name (i);

@@ -24,6 +24,7 @@ New features::
   * core: display only version with command `/version`, add options `-o` and `-ol` in command `/upgrade`
   * core: add number of processes in command `/sys waitpid`
   * core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias` and `/trigger` (issue #1956)
+  * buflist: jump to previous/next buffer displayed in buflist item with ctrl+wheel up/down on a buflist item (issue #1473)
   * irc: change default value of server option "tls_priorities" to `NORMAL`
   * irc: add support of RGB colors in messages, add option irc.color.term_remap (issue #2025)
   * irc: add tags "nick_xxx" and "host_xxx" in all messages, including self and server messages
