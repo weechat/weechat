@@ -3361,8 +3361,7 @@ weechat_string_dyn_free (string, 1);
 
 _WeeChat ≥ 4.2.0._
 
-// TRANSLATION MISSING
-Concatenate multiple strings using a separator.
+Спаја више стрингова користећи граничник.
 
 Прототип:
 
@@ -3373,30 +3372,26 @@ const char *weechat_string_concat (const char *separator, ...);
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _separator_: the separator string which is inserted between concatenated
-  strings (can be NULL or empty string)
+* _separator_: стринг граничник који се умеће између спојених стрингова
+  (може да буде NULL или празан стринг)
 
-// TRANSLATION MISSING
 [NOTE]
-Last argument *MUST* always be NULL. +
-A macro called `WEECHAT_STR_CONCAT` can be used, where the final NULL value is
-not needed (usage of this macro is recommended).
+Последњи аргумент *MUST* увек да буде NULL. +
+Може да се употреби макро `WEECHAT_STR_CONCAT`, тамо где није потребна 
+завршна NULL вредност (препоручује се уптореба овог макроа).
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-* concatenated string
+* спојени стринг
 
 C пример:
 
-// TRANSLATION MISSING
 [source,c]
 ----
-const char *result = weechat_string_concat (" / ", "abc", "def", "ghi", NULL);  /* result == "abc / def / ghi" */
+const char *result = weechat_string_concat (" / ", "абв", "гдђ", "ежз", NULL);  /* резултат == "абв / гдђ / ежз" */
 
-/* with macro */
-const char *result = WEECHAT_STR_CONCAT(" / ", "abc", "def", "ghi");  /* result == "abc / def / ghi" */
+/* са макроом */
+const char *result = WEECHAT_STR_CONCAT(" / ", "абв", "гдђ", "ежз");  /* резултат == "абв / гдђ / ежз" */
 ----
 
 [NOTE]
@@ -4391,9 +4386,8 @@ int weechat_file_compress (const char *from, const char *to,
 * _to_: одредишни фајл
 * _compressor_: компресор који треба да се користи, једно од:
 ** _gzip_: gzip компресија
-// TRANSLATION MISSING
-** _zstd_: zstandard компресија (available only if zstd was enabled when
-   WeeChat was compiled)
+** _zstd_: zstandard компресија (доступно само ако је zstd било укључено
+   у време када је WeeChat компајлиран)
 * _compression_level_: ниво компресије, између 1 (брзо, ниска компресија) и
   100 (споро, најбоља компресија)
 
@@ -10002,8 +9996,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   _/dev/null_.
 |===
 
-// TRANSLATION MISSING
-For command "url:...", see available options in function <<_hook_url,hook_url>>.
+За команду "url:...", погледајте доступне опције у функцији <<_hook_url,hook_url>>.
 
 Повратна вредност:
 
@@ -10163,12 +10156,11 @@ hook4 = weechat.hook_process_hashtable("sh",
                                        20000, "my_process_cb", "")
 ----
 
-// TRANSLATION MISSING
 ==== hook_url
 
 _WeeChat ≥ 4.1.0._
 
-URL transfer.
+URL трансфер.
 
 Прототип:
 
@@ -10189,29 +10181,29 @@ struct t_hook *weechat_hook_url (const char *url,
 Аргументи:
 
 * _url_: URL
-* _options_: options for URL transfer (see below); хеш табела се дуплира у функцији, тако да након овог позива безбедно можете да ослободите меморију коју заузима
-* _timeout_: timeout for URL transfer (in milliseconds): after this timeout,
-  the transfer is stopped (0 means no timeout)
-* _callback_: function called when the transfer has ended, arguments and return
-  value:
-** _const void *pointer_: pointer
-** _void *data_: pointer
+* _options_: опције URL трансфера (погледајте испод); хеш табела се дуплира у функцији, тако да након овог позива безбедно можете да ослободите меморију коју заузима
+* _timeout_: истек времена URL трансфера (у милисекундама): након овог периода,
+  трансфер се зауставља (0 значи без истека времена)
+* _callback_: функција која се позива када се заврши трансфер, аргументи и повратна
+  вредност:
+** _const void *pointer_: показивач
+** _void *data_: показивач
 ** _const char *url_: URL
-** _struct t_hashtable *options_: options
-** _struct t_hashtable *output_: result (keys and values are strings), which may
-   contain the following keys:
-*** _response_code_: HTTP response code
-*** _headers_: HTTP headers in response
-*** _output_: standard output (set only if _file_out_ was not set in options)
-*** _error_: error message (set only in case of error)
-** return value:
+** _struct t_hashtable *options_: опције
+** _struct t_hashtable *output_: резултат (кључеви и вредности су стрингови), који може
+   да садржи следеће кључеве:
+*** _response_code_: HTTP кôд одзива
+*** _headers_: HTTP заглавља у одзиву
+*** _output_: стандардни излаз (поставља се само ако у опцијама није постављено _file_out_)
+*** _error_: порука о грешки (поставља се само у случају грешке)
+** повратна вредност:
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
 * _callback_pointer_: показивач који се прослеђује функцији повратног позива када је позове програм WeeChat
 * _callback_data_: показивач који се прослеђује функцији повратног позива када је позове програм WeeChat; ако није NULL, алоцирала га је malloc (или нека слична функција) и аутоматски се ослобађа када се кука обрише
 
-The following Curl options are available (see `+man curl_easy_setopt+` for
-a description of each option):
+Доступне су следеће Curl опције (погледајте `+man curl_easy_setopt+` за
+опис сваке од опција):
 
 include::{autogendir}/autogen_api_url_options.sr.adoc[tag=url_options]
 
@@ -10219,11 +10211,11 @@ include::{autogendir}/autogen_api_url_options.sr.adoc[tag=url_options]
 ^(1)^ За опције типа „mask”, формат је: „вредност1+вредност2+вредност3”; за опције типа „list”, ставке листе морају да се раздвоје преломом линије (`\n`). +
 ^(2)^ Ако су доступне константе, оне морају да се користе као вредност опције.
 
-These two extra options (strings) are allowed for input/output file:
+За улазни/излазни фајл су дозвољене следеће две додатне опције (стрингови):
 
 [width="100%",cols="2,^1,7",options="header"]
 |===
-| Option   | Type   | Description
+| Опција   | Тип    | Опис
 | file_in  | string | фајл који се чита и шаље URL адресама (post фајл)
 | file_out | string | преузети URL/фајл се уписује у овај фајл (уместо на стандардни излаз)
 |===
@@ -10294,12 +10286,12 @@ def my_url_cb(data: str, url: str, options: Dict[str, str], output: Dict[str, st
     weechat.prnt("", "output: %s" % output)
     return weechat.WEECHAT_RC_OK
 
-# example 1: output to a file
+# пример 1: излаз у фајл
 hook1 = weechat.hook_url("https://weechat.org/",
                          {"file_out": "/tmp/weechat.org.html"},
                          20000, "my_url_cb", "")
 
-# example 2: custom HTTP headers, output sent to callback
+# пример 2: произвољна HTTP заглавља, излаз се шаље функцији повратног позива
 options = {
     "httpheader": "\n".join([
         "Header1: value1",
@@ -13653,33 +13645,22 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _num_history_: број команди у историји
 ** _text_search_: тип претраге текста:
 *** 0: у овом тренутку нема претраге
-// TRANSLATION MISSING
-*** 1: search in buffer lines
-// TRANSLATION MISSING
-*** 2: search in commands history
-// TRANSLATION MISSING
-** _text_search_direction_: direction for search:
-// TRANSLATION MISSING
-*** 0: backward search (direction: oldest messages/commands)
-// TRANSLATION MISSING
-*** 1: forward search (direction: newest messages/commands)
+*** 1: претрага у линијама бафера
+*** 2: претрага у историји команди
+** _text_search_direction_: смер претраге:
+*** 0: претрага уназад (смер: најстарије поруке/команде)
+*** 1: претрага унапред (смер: најновије поруке/команде)
 ** _text_search_exact_: 1 ако претрага текста прави разлику у величини слова
-// TRANSLATION MISSING
-** _text_search_regex_: 1 if searching with a regular expression
+** _text_search_regex_: 1 ако се претражује регуларним изразом
 ** _text_search_where_:
 *** 0: у овом тренутку нема претраге
-// TRANSLATION MISSING
-*** 1: search in message
-// TRANSLATION MISSING
-*** 2: search in prefix
-// TRANSLATION MISSING
-*** 3: search in prefix and message
+*** 1: претрага у поруци
+*** 2: претрага у префиксу
+*** 3: претрага у префиксу и поруци
 ** _text_search_history_:
 *** 0: у овом тренутку нема претраге
-// TRANSLATION MISSING
-*** 1: search in buffer local history
-// TRANSLATION MISSING
-*** 2: search in global history
+*** 1: претрага у локалној историји бафера
+*** 2: претрага у глобалној историји
 ** _text_search_found_: 1 ако се текст пронађе, у супротном 0
 
 Повратна вредност:
@@ -13779,10 +13760,8 @@ void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
 * _buffer_: показивач на бафер
 * _property_: име особине:
 ** _plugin_: показивач на додатак који је креирао овај бафер (NULL за главни бафер програма WeeChat)
-// TRANSLATION MISSING
-** _text_search_regex_compiled_: compiled regular expression
-// TRANSLATION MISSING
-** _text_search_ptr_history_: history found
+** _text_search_regex_compiled_: компајлирани регуларни израз
+** _text_search_ptr_history_: пронађена историја
 ** _highlight_disable_regex_compiled_: компајлиран регуларни израз _highlight_disable_regex_
 ** _highlight_regex_compiled_: компајлиран регуларни израз _highlight_regex_
 

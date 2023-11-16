@@ -517,32 +517,30 @@ UXTerm*metaSendsEscape: true
 
 Ако користите macOS Terminal апликацију, укључите опцију „Use option as meta key” у менију Settings/Keyboard након чега можете користити тастер kbd:[Option] као meta тастер.
 
-// TRANSLATION MISSING
 [[enter_key]]
-=== Some keys including Enter are not working, why?
+=== Зашто неки тастери, укључујући Ентер, не функционишу?
 
-If you run a WeeChat < 4.0.0 with configuration files created by any
-version ≥ 4.0.0, the keys names become invalid and many keys won't work at all. +
-To repair them, exit WeeChat, remove all sections `[key*]` from weechat.conf
-and start WeeChat again: all default keys will be created.
+Ако извршавате WeeChat < 4.0.0 са конфигурационим фајловима које је креирала било
+која верзија ≥ 4.0.0, имена тастера постану неисправна и многи тастери уопште неће радити. +
+Да бисте их поправили, напустите WeeChat, уклоните из weechat.conf све одељке `[key*]` 
+и поново покрените WeeChat: креираће се сви подразумевани тастери.
 
-// TRANSLATION MISSING
 [[key_f11]]
-=== Key F11 maximizes the terminal window, how can I scroll up the nicklist?
+=== Тастер F11 максимизира прозор терминала, како могу да скролујем навише листу надимака?
 
-The key kbd:[F11] is commonly used by terminals to maximize the window, and
-kbd:[F11]/kbd:[F12] are the default keys in WeeChat to scroll the nicklist.
+Терминало обично користе тастер kbd:[F11] да максимизују прозор, а у програму WeeChat
+тастери kbd:[F11]/kbd:[F12] су подразумевани тастери за скроловање листе надимака.
 
-You can bind other keys, for example kbd:[Shift+F11] and kbd:[Shift+F12],
-with WeeChat ≥ 4.0.0:
+Можете да вежете остале тастере, на пример kbd:[Shift+F11] и kbd:[Shift+F12],
+у WeeChat ≥ 4.0.0:
 
 ----
 /key bind shift-f11 /bar scroll nicklist * -100%
 /key bind shift-f12 /bar scroll nicklist * +100%
 ----
 
-Other solution is to enable mouse (key: kbd:[Alt+m]) and scroll with the mouse
-wheel (see also questions about <<mouse,mouse>>).
+Још једно решење је да укључите миша (тастер: kbd:[Alt+m]) и да скролујете точкићем
+миша (погледајте такође питање у вези са <<mouse,мишем>>).
 
 [[customize_key_bindings]]
 === Како могу да прилагодим тастерске пречице?
@@ -1040,34 +1038,33 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 Погледајте link:weechat_user.sr.html#files_and_directories[Корисничко упутство / Фајлови и директоријуми ^↗^^] за више информација о конфигурационим фајловима.
 
-// TRANSLATION MISSING
 [[move_to_another_device]]
-=== I want to move my WeeChat to another device and keep my config, what should I copy?
+=== Желим да преместим свој WeeChat на други уређај и да задржим текућу конфигурацију, шта би требало да копирам?
 
-First check directories used by WeeChat with this command: `/debug dirs`. +
-Directories home/config and home/data must be copied (all files and sub-directories).
+Следећом командом најпре проверите које директоријуме користи WeeChat: `/debug dirs`. +
+Морају да се копирају директоријуми home/config и home/data (сви фајлови и поддиректоријуми).
 
-For example if you're using XDG directories (default with WeeChat ≥ 3.2),
-the directories should be `$HOME/.config/weechat` and `$HOME/.local/share/weechat`. +
-If you're using a single directory (default with WeeChat < 3.2), the directory
-should be `$HOME/.weechat`.
+На пример, ако користите XDG директоријуме (подразумевано са WeeChat ≥ 3.2),
+директоријуми би требало да буду `$HOME/.config/weechat` и `$HOME/.local/share/weechat`. +
+Ако користите један директоријум (подразумевано са WeeChat < 3.2), директоријум би
+требало да буде `$HOME/.weechat`.
 
 [IMPORTANT]
-The WeeChat version on the new device must be greater than or equal to the version
-on the initial device. +
-Downgrading WeeChat configuration is *NOT SUPPORTED* and can break it,
-leading to unusable WeeChat.
+WeeChat верзија на новом уређају мора да буде већа или једнака од верзије на почетном
+уређају. +
+Враћање WeeChat конфигурације уназад *НИЈЕ ПОДРЖАНО* и може да је поквари,
+па на тај начин WeeChat постаје неупотребљив.
 
-Steps:
+Кораци:
 
-. Quit Weechat: `/quit` (or `/upgrade -quit` if you want to resume the session,
-  which includes content of all buffers).
-. Copy all directories, sub-directories and files to the new device, keeping
-  same names and permissions.
-. Optional: copy any file outside these directories that you refer to in your
-  configuration (it's not recommended to use files outside WeeChat directories).
-. Start WeeChat on the new device: `weechat` (or `weechat --upgrade` if you
-  saved the session).
+. Напустите Weechat: `/quit` (или `/upgrade -quit` ако желите могућност да наставите сесију,
+  што укључује садржај свих бафера).
+. Копирајте све директоријуме, поддиректоријуме и фајлове на нови уређај, задржавајући
+  иста имена и дозволе.
+. Није обавезно: копирајте све фајлове ван ових директоријума на које указује ваша
+  конфигурација (не препоручује се употреба фајлова ван WeeChat директоријума).
+. Покрените WeeChat на новом уређају: `weechat` (или `weechat --upgrade` у случају да сте
+  сачували сесију).
 
 [[development]]
 == Развој

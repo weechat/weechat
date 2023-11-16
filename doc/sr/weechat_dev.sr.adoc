@@ -240,8 +240,7 @@ WeeChat „језгро” се налази у следећим директо�
 |       buflist.c                   | Главне buflist функције.
 |       buflist-bar-item.c          | Buflist ставке траке.
 |       buflist-command.c           | Buflist команде.
-// TRANSLATION MISSING
-|       buflist-completion.c        | Buflist completions.
+|       buflist-completion.c        | Buflist довршавања.
 |       buflist-config.c            | Buflist опције кофиг (фајл buflist.conf).
 |       buflist-info.c              | Buflist info/infolists/hdata.
 |       buflist-mouse.c             | Buflist акције мишем.
@@ -427,10 +426,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-core-utf8.cpp         | Тестови: UTF-8.
 |          test-core-util.cpp         | Тестови: помоћне функције.
 |          test-core-sys.cpp          | Тестови: системске функције.
-// TRANSLATION MISSING
-|          hook/                      | Root of unit tests for hooks.
-// TRANSLATION MISSING
-|             test-hook-command.cpp   | Tests: hooks "command".
+|          hook/                      | Корен unit тестова за куке.
+|             test-hook-command.cpp   | Тестови: куке „command”.
 >>>>>>> 94c43287a (core: add a way to format and translate description of command arguments line by line)
 |       gui/                          | Корен unit тестова интерфејса.
 |          test-gui-bar-window.cpp    | Тестови: функције прозора траке.
