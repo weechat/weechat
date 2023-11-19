@@ -1,0 +1,31 @@
+name: Question
+description: "Ask a question (please read the FAQ and docs first and ask in #weechat)."
+labels: ["question"]
+
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: A clear and concise question.
+      placeholder: How do I…
+    validations:
+      required: true
+
+  - type: input
+    id: weechat-version
+    attributes:
+      label: WeeChat version
+      description: "Use `weechat --version`"
+      placeholder: 4.1.1
+    validations:
+      required: true
+
+  - type: input
+    id: os-version
+    attributes:
+      label: "What OS and what version of it you run:"
+      description: Unsure? Go to https://whatsmyos.com/
+      placeholder: Debian 11
+    validations:
+      required: true
