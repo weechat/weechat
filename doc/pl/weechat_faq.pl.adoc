@@ -582,32 +582,30 @@ Jeśli używasz aplikacji Terminal na macOS włącz opcję
 "Use option as meta key" w menu Settings/Keyboard. Następnie możesz używać klawisza
 kbd:[Option] jako klawisza meta.
 
-// TRANSLATION MISSING
 [[enter_key]]
-=== Some keys including Enter are not working, why?
+=== Niektóre przyciski w tym Enter nie działają, dlatego?
 
-If you run a WeeChat < 4.0.0 with configuration files created by any
-version ≥ 4.0.0, the keys names become invalid and many keys won't work at all. +
-To repair them, exit WeeChat, remove all sections `[key*]` from weechat.conf
-and start WeeChat again: all default keys will be created.
+Jeśli używasz WeeChat < 4.0.0 z plikami konfiguracyjnymi stworzonymi przez dowolną
+wersję ≥ 4.0.0, nazwy przycisków stały się nieprawidłowe i wiele z nich nie będzie działać. +
+Żeby to naprawić zamknij WeeChat, usuń wszystkie sekcje `[key*]` z pliku weechat.conf
+i uruchom WeeChat ponownie: przywróci to domyślną konfigurację skrótów klawiszowych.
 
-// TRANSLATION MISSING
 [[key_f11]]
-=== Key F11 maximizes the terminal window, how can I scroll up the nicklist?
+=== F11 maksymalizuje okno terminala, jak mogę przewijać listę nicków?
 
-The key kbd:[F11] is commonly used by terminals to maximize the window, and
-kbd:[F11]/kbd:[F12] are the default keys in WeeChat to scroll the nicklist.
+Klawisz kbd:[F11] jest często używany przez terminale do maksymalizacji okna, oraz
+kbd:[F11]/kbd:[F12] są domyślnie używane przez WeeChat do przewijania listy nicków.
 
-You can bind other keys, for example kbd:[Shift+F11] and kbd:[Shift+F12],
-with WeeChat ≥ 4.0.0:
+Możesz przypisać inne klawisze, na przykład kbd:[Shift+F11] i kbd:[Shift+F12],
+w WeeChat ≥ 4.0.0:
 
 ----
 /key bind shift-f11 /bar scroll nicklist * -100%
 /key bind shift-f12 /bar scroll nicklist * +100%
 ----
 
-Other solution is to enable mouse (key: kbd:[Alt+m]) and scroll with the mouse
-wheel (see also questions about <<mouse,mouse>>).
+Innym rozwiązaniem jest włączenie obsługi myszy (kbd:[Alt+m]) i przewijanie listy za
+pomocą kółka myszy (zobacz pytania na temat <<mouse,obsługi myszy>>).
 
 [[customize_key_bindings]]
 === Jak mogę zmienić przypisania klawiszy?
@@ -639,8 +637,7 @@ komendy w stylu `/123` żeby przejść do bufora #123:
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
 ----
 
-// TRANSLATION MISSING
-For an easy jump to buffers, you can also install the _go.py_ script:
+Dla łatwego przechodzenia między buforami możesz również zainstalować skrypt _go.py_:
 
 ----
 /script install go.py
@@ -956,15 +953,13 @@ lub grup buforów (jak serwery IRC).
 
 W celu wyłączenia tylko podświetleń wystarczy ustawić ja na 2.
 
-// TRANSLATION MISSING
-For the current buffer:
+Dla obecnego bufora:
 
 ----
 /buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-// TRANSLATION MISSING
-For all channels on server "libera":
+Dla wszystkich kanałów na serwerze "libera":
 
 ----
 /set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
@@ -1098,10 +1093,8 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 
 Możesz skorzystać z tych samych porad jak dla  <<memory_usage,memory>>, oraz tych:
 
-// TRANSLATION MISSING
-* schowaj pasek "nicklist": `/bar hide nicklist` (key: kbd:[Alt+Shift+N]).
-// TRANSLATION MISSING
-* Disable "buflist": `/buflist disable` (key: kbd:[Alt+Shift+B]).
+* schowaj pasek "nicklist": `/bar hide nicklist` (kbd:[Alt+Shift+N]).
+* wyłącz "buflist": `/buflist disable` (kbd:[Alt+Shift+B]).
 * usuń wyświetlanie sekund w czasie na pasku statusu:
   `+/set weechat.look.item_time_format "%H:%M"+` (domyślna wartość)
 * wyłącz automatyczne sprawdzanie poprawności wpisywanych słów w linii poleceń (o ile je włączyłeś):
@@ -1129,9 +1122,8 @@ Wyłącz odpowiedzi na wszystkie zapytania CTCP:
 /set irc.ctcp.ping ""
 ----
 
-// TRANSLATION MISSING
-With WeeChat < 4.1.0, other CTCP queries were replied by default and must be
-disabled as well:
+Dla WeeChat < 4.1.0, automatyczne odpowiedzi są również domyślnie wysyłane dla innch zapytań CTCP i muszą zostać
+również wyłączone:
 
 ----
 /set irc.ctcp.finger ""
@@ -1172,34 +1164,32 @@ w _sec.conf_ za pomocą komendy `/secure`).
 Przejrzyj link:weechat_user.pl.html#files_and_directories[Poradnik użytkownika / Pliki i foldery ^↗^^],
 gdzie znajdziesz więcej informacji o plikach konfiguracyjnych.
 
-// TRANSLATION MISSING
 [[move_to_another_device]]
-=== I want to move my WeeChat to another device and keep my config, what should I copy?
+=== Chcę przenieść WeeChat na inne urządzenie i zachować swoją konfigurację, co powinienem skompilować?
 
-First check directories used by WeeChat with this command: `/debug dirs`. +
-Directories home/config and home/data must be copied (all files and sub-directories).
+Najpierw sprawdź katalogi używane przez WeeChat za pomocą polecenia: `/debug dirs`. +
+Katalogi home/config i home/data muszą zostać skopiowane (wszystkie pliki i podkatalogi).
 
-For example if you're using XDG directories (default with WeeChat ≥ 3.2),
-the directories should be `$HOME/.config/weechat` and `$HOME/.local/share/weechat`. +
-If you're using a single directory (default with WeeChat < 3.2), the directory
-should be `$HOME/.weechat`.
+Na przykład jeśli używasz katalogów XDG (domyślnie dla WeeChat ≥ 3.2), katalogi te to
+`$HOME/.config/weechat` i `$HOME/.local/share/weechat`. +
+Jeśli używasz pojedynczego katalogu (domyślne dla WeeChat < 3.2) jest to katalog
+`$HOME/.weechat`.
 
 [IMPORTANT]
-The WeeChat version on the new device must be greater than or equal to the version
-on the initial device. +
-Downgrading WeeChat configuration is *NOT SUPPORTED* and can break it,
-leading to unusable WeeChat.
+Wersja WeeChat na nowym urządzeniu musi być wyższa lub taka sama jak na obecnym. +
+Przenoszenie konfiguracji do starszej wersji WeeChat *NIE JEST WSPIERANE* i może ją zepsuć,
+prowadząć do niestabilnego działania WeeChat.
 
-Steps:
+Kroki:
 
-. Quit Weechat: `/quit` (or `/upgrade -quit` if you want to resume the session,
-  which includes content of all buffers).
-. Copy all directories, sub-directories and files to the new device, keeping
-  same names and permissions.
-. Optional: copy any file outside these directories that you refer to in your
-  configuration (it's not recommended to use files outside WeeChat directories).
-. Start WeeChat on the new device: `weechat` (or `weechat --upgrade` if you
-  saved the session).
+. Zamknij Weechat: `/quit` (lub `/upgrade -quit` jeśli chcesz przywrócić sesję,
+  co zawiera zawartość wszystkich buforów).
+. Skopiuj wszystkie katalogi, podkatalogi i pliki na nowe urządzenie, zachowując ich
+  nazwy i uprawnienia.
+. Opcjonalne: skopiuj dowolne pliki z poza tych katalogów, do których odnosisz się w swojej
+  konfiguracji (nie zaleca się używania plików z poza katalogów WeeChat).
+. Uruchom WeeChat na nowym urządzeniu: `weechat` (lub `weechat --upgrade` jeśli zapisywałeś
+  sesje).
 
 [[development]]
 == Rozwój

@@ -248,8 +248,7 @@ $ make install
 
 Opcje mogą zostać przekazane do CMake, format `-DOPCJA=WARTOŚĆ`.
 
-// TRANSLATION MISSING
-List of available options:
+Lista dostępnych opcji:
 
 [width="100%",cols="3m,3,3m,10",options="header"]
 |===
@@ -303,9 +302,8 @@ List of available options:
 | ENABLE_GUILE | `ON`, `OFF` | ON
 | Kompilacja <<scripting_plugins,wtyczki guile>> (Scheme).
 
-// TRANSLATION MISSING
 | ENABLE_HEADLESS | `ON`, `OFF` | ON
-| Compile headless binary.
+| Kompilacja pliku binarnego w trybie headless.
 
 | ENABLE_IRC | `ON`, `OFF` | ON
 | Kompilacja <<irc,wtyczki IRC>>.
@@ -365,9 +363,8 @@ List of available options:
 | ENABLE_XFER | `ON`, `OFF` | ON
 | Kompilacja <<xfer,wtyczki xfer>>.
 
-// TRANSLATION MISSING
 | ENABLE_ZSTD | `ON`, `OFF` | ON
-| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
+| Włącza kompresje https://facebook.github.io/zstd/[Zstandard ^↗^^].
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF
 | Kompiluje testy.
@@ -921,17 +918,14 @@ Pasek _input_ posiada następujące domyślne elementy:
 | Element      | Przykład                                       | Opis
 | input_prompt | `[@Flashy(i)]`                                 | Input prompt, dla irc: nick i tryby (tryb "+i" oznacza niewidzialny na libera).
 | away         | `(away)`                                       | Wskaźnik nieobecności.
-// TRANSLATION MISSING
-| input_search | `[Search lines (~ str,msg)]`                   | Search indicator (see below).
+| input_search | `[Search lines (~ str,msg)]`                   | Wskaźnik wyszukiwania (zobacz poniżej).
 | input_paste  | `[Wkleić 7 linii ? [ctrl-y] Tak [ctrl-n] Nie]` | Pyta użytkownika podczas wklejania kilku linii tekstu.
 | input_text   | `hi peter!`                                    | Wprowadzony tekst.
 |===
 
-// TRANSLATION MISSING
-There are two search modes:
+Dostępne są dwa tryby wyszukiwania:
 
-// TRANSLATION MISSING
-* search in lines, for example `[Search lines (~ str,msg)]`, with the following info:
+* wyszukiwanie w liniach, na przydład `[Search lines (~ str,msg)]`, z następującymi informacjami:
 ** `~`: wielkość liter ma znaczenie
 ** `==`: wielkość liter nie ma znaczenia
 ** `str`: wyszukiwanie ciągu
@@ -939,17 +933,14 @@ There are two search modes:
 ** `msg`: wyszukiwanie w wiadomościach
 ** `pre`: wyszukiwanie w prefiksach
 ** `pre\|msg`: wyszukiwanie w prefiksach i wiadomościach)
-// TRANSLATION MISSING
-* search in commands history, for example `[Search command (~ str,local)]`,
-  with the following info:
+* wyszukiwanie w historii komend, na przydład `[Search command (~ str,local)]`,
+  z następującymi informacjami:
 ** `~`: wielkość liter ma znaczenie
 ** `==`: wielkość liter nie ma znaczenia
 ** `str`: wyszukiwanie ciągu
 ** `regex`: wyszukiwanie wyrażenia regularnego
-// TRANSLATION MISSING
-** `local`: search in buffer local history
-// TRANSLATION MISSING
-** `global`: search in global history.
+** `local`: wyszukiwanie w lokalnej historii bufora
+** `global`: wyszukiwanie w globalnej historii.
 
 Pasek _nicklist_ posiada następujące domyślne elementy:
 
@@ -971,10 +962,8 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 | buffer_short_name            | `#test`                  | Skrócona nazwa obecnego buforu.
 | buflist2                     | `1.weechat`              | Lista buforów, drugi element paska (zobacz opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
 | buflist3                     | `1.weechat`              | Lista buforów, trzeci element paska (zobac opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
-// TRANSLATION MISSING
-| buflist4                     | `1.weechat`              | List of buffers, fourth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
-// TRANSLATION MISSING
-| buflist5                     | `1.weechat`              | List of buffers, fifth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist4                     | `1.weechat`              | Lista buforów, czwarty element paska (zobacz opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist5                     | `1.weechat`              | Lista buforów, piąty element paska (zobacz opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
 | fset                         | `+buflist.look.sort: …+` | Pomoc dla obecnie wybranej opcji w buforze fset.
 | irc_channel                  | `#test`                  | Nazwa bieżącego kanału IRC.
 | irc_host                     | `+user@host.com+`        | Aktualny host IRC.
@@ -1035,29 +1024,26 @@ Dla niektórych wtyczek jak IRC, można użyć kolorów i atrybutów w następuj
 [width="100%",cols="1,2",options="header"]
 |===
 | Klawisz                | Opis
-| kbd:[Ctrl+c], kbd:[b]  | pogrubiony tekst
+| kbd:[Ctrl+c], kbd:[b]  | Pogrubiony tekst
 | kbd:[Ctrl+c], kbd:[c],
-  kbd:[xx]               | kolor tekstu `xx` (zgodnie z poniższą listą kolorów)
+  kbd:[xx]               | Kolor tekstu `xx` (zgodnie z poniższą listą kolorów)
 | kbd:[Ctrl+c], kbd:[c],
   kbd:[xx], kbd:[,],
-  kbd:[yy]               | kolor tekstu `xx` i tła `yy` (zgodnie z poniższą listą kolorów)
-// TRANSLATION MISSING
+  kbd:[yy]               | Kolor tekstu `xx` i tła `yy` (zgodnie z poniższą listą kolorów)
 | kbd:[Ctrl+c], kbd:[d],
-  kbd:[xxxxxx]           | Text color `xxxxxx` (RGB as hexadecimal, for example `FF0000` for red).
-// TRANSLATION MISSING
+  kbd:[xxxxxx]           | Kolor tekstu `xxxxxx` (RGB jako wartości szesnastkowe, na przykład `FF0000` dla czerwonego).
 | kbd:[Ctrl+c], kbd:[d],
   kbd:[xxxxxx], kbd:[,],
-  kbd:[yyyyyy]           | Text color `xxxxxx` and background `yyyyyy` (RGB as hexadecimal).
-| kbd:[Ctrl+c], kbd:[i]  | pochyły tekst
-| kbd:[Ctrl+c], kbd:[o]  | wyłącza kolory i atrybuty
-| kbd:[Ctrl+c], kbd:[v]  | odwróć video (przywraca kolor tekstu i tła)
-| kbd:[Ctrl+c], kbd:[_]  | podkreślony tekst
+  kbd:[yyyyyy]           | Kolor tekstu `xxxxxx` i tła `yyyyyy` (RGB jako wartości szesnastkowe).
+| kbd:[Ctrl+c], kbd:[i]  | Kursywa
+| kbd:[Ctrl+c], kbd:[o]  | Wyłącza kolory i atrybuty
+| kbd:[Ctrl+c], kbd:[v]  | Odwróć video (przywraca kolor tekstu i tła)
+| kbd:[Ctrl+c], kbd:[_]  | Podkreślony tekst
 |===
 
 [NOTE]
-// TRANSLATION MISSING
-The same code (without number for kbd:[Ctrl+c], kbd:[c] and kbd:[Ctrl+c], kbd:[d])
-can be used to stop the attribute.
+Te same skróty (bez numeru kbd:[Ctrl+c], kbd:[c] i kbd:[Ctrl+c], kbd:[d])
+mogą zostać użyte dla zatrzymania atrybutu.
 
 Kody kolorów dla kbd:[Ctrl+c], kbd:[c]:
 
@@ -1314,7 +1300,7 @@ Linie wyświetlane w formatowanych buforach maja następujące pola:
 | tagi                    | Przez `/debug tags` | Tagi powiązane z linią (zobacz <<lines_tags,tagi linii>>).
 |===
 
-Wyświetlanie linni może być zmienione za pomoćą wielu opcji wyglądu
+Wyświetlanie linni może być zmienione za pomocą wielu opcji wyglądu
 (_pass:[weechat.look.*]_) oraz koloru (_pass:[weechat.color.chat_*]_).
 
 [[lines_tags]]
@@ -1420,9 +1406,8 @@ WeeChat i jego wtyczki domyślnie tworzą następujące zmienne:
 
 | filter
 | dowolny ciąg
-// TRANSLATION MISSING
-| Filter defined on some buffers like `/fset`, `/list` (irc), `/server raw` (irc)
-  and `/script`.
+| Filtr zdefiniowany w niektórych buforach jak `/fset`, `/list` (irc), `/server raw` (irc)
+  i `/script`.
 
 | host
 | dowolny ciąg
@@ -1505,10 +1490,9 @@ External plugins and scripts can define and use other local variables.
 [[buflist]]
 === Lista buforów
 
-// TRANSLATION MISSING
 Wtyczka buflist wyświetla listę buforów w elemencie paska nazwanym "buflist"
-(four other bar items "buflist2", "buflist3", "buflist4" and "buflist5" are
-available as well). +
+(cztery dodatkowe elementy "buflist2", "buflist3", "buflist4" i "buflist5" są
+również dostępne). +
 Domyślny pasek "buflist" jest tworzony podczas uruchomieina z włączoną wtyczką.
 
 [[buflist_commands]]
@@ -1532,21 +1516,21 @@ Opcje:
 
 include::{autogendir}/autogen_user_options.pl.adoc[tag=buflist_options]
 
-// TRANSLATION MISSING
 [[cursor_mode]]
-=== Cursor mode
+=== Tryb kursora
 
-The cursor mode allows you to move freely the cursor anywhere on screen, in chat
-area and bars, and lets you perform actions at the given position. +
-You can enter in cursor mode either with the command `/cursor` or with a mouse
-middle click (mouse must have been enabled with key kbd:[Alt+m] or command
-`/mouse enable`).
+Tryb kursora pozwala na przesuwanie kurdsora w dowolne miejsce na ekranie,
+w obszarze czatu i paskach, i pozwala na wykonywanie akcji w danym miejscu. +
+Możesz wejść w tryb kursora za pomocą komendy `/cursor` lub za pomocą środkowego
+przycisku myszy (obsługa myszy musi być włączona za pomocą kbd:[Alt+m] lub
+komendy `/mouse enable`).
 
-Typical use is to quote messages (chat area) or interact with nicks (nicklist bar).
+Typowym użyciem jest cytowanie wiadomości (obszar czatu) i interakcja z nickami
+(pasek z listą nicków).
 
-See command <<command_weechat_cursor,/cursor>> and
-<<key_bindings_cursor_context,key bindings in cursor context>> for the list
-of actions you can perform in this mode.
+Zobacz komendę <<command_weechat_cursor,/cursor>> i
+<<key_bindings_cursor_context,skróty klawiszowe w trybie kursora>> dla listy akcji
+dostępnych w tym trybie.
 
 [[key_bindings]]
 == Skróty klawiszowe
@@ -1623,8 +1607,7 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | Skrót                 | Opis | Komenda
 | kbd:[Ctrl+c], kbd:[b] | Wstaw kod dla pogrubionego tekstu. | `+/input insert \x02+`
 | kbd:[Ctrl+c], kbd:[c] | Wstaw kod dla kolorowego tekstu. | `+/input insert \x03+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+c], kbd:[d] | Insert code for colored text (RGB color, as hexadecimal). | `+/input insert \x04+`
+| kbd:[Ctrl+c], kbd:[d] | Wstaw kod dla kolorowego tekstu (kolor RGB jaki liczba szesnastkowa). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | Wstaw kod dla pochyłego tekstu. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | Wstaw kod dla zresetowania koloru. | `+/input insert \x0F+`
 | kbd:[Ctrl+c], kbd:[v] | Wstaw kod dla odwrócenia koloru. | `+/input insert \x16+`
@@ -1643,14 +1626,13 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | kbd:[Ctrl+↓] | Pokaż następną komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów). | `+/input history_global_next+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_cmdline_system]]
 ==== System
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Skrót        | Opis | Komenda
-| kbd:[Ctrl+z] | Suspend WeeChat process. | `+/sys suspend+`
+| kbd:[Ctrl+z] | Uśpij proces WeeChat. | `+/sys suspend+`
 |===
 
 [[key_bindings_buffers]]
@@ -1659,10 +1641,8 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Skrót                          | Opis | Komenda
-// TRANSLATION MISSING
-| kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
+| kbd:[Ctrl+r]                   | Szukaj tekstu w historii komend (zobacz <<key_bindings_histsearch_context,skróty w kontekscie "histsearch">>). | `+/input search_history+`
+| kbd:[Ctrl+s]                   | Szukaj tekstu w liniach bufora (zobacz <<key_bindings_search_context,skróty w kontekscie "search">>). | `+/input search_text_here+`
 | kbd:[Ctrl+x]                   | Przełącz obecny bufor jeśli bufory są połączone pod tym samym numerem, na przykład przełącz na bufor innego serwera IRC. | `+/buffer switch+`
 | kbd:[Alt+x]                    | Pokaż wybrany z połączonych buforów (naciśnij kbd:[Alt+x] ponownie: wyświetl wszystkie połączone bufory). | `+/buffer zoom+`
 | kbd:[PgUp]                     | Przewiń jedną stronę w górę w historii bufora. | `+/window page_up+`
@@ -1763,11 +1743,10 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 |===
 
 [[key_bindings_search_context]]
-=== Wyszukiwanie
+=== Wyszukiwanie tekstu
 
-// TRANSLATION MISSING
-These keys are used in context "search" (when kbd:[Ctrl+s] is pressed to search
-text in buffer lines).
+Te skróty można użyć w kontskście "search" (kiedy kbd:[Ctrl+s] zostało wciśnięte do wyszukiwania
+tekstu w liniach bufora).
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
@@ -1785,43 +1764,34 @@ text in buffer lines).
 | kbd:[Ctrl+q]   | Zatrzymaj wyszukiwanie i przywróć ekran do stanu z przed wyszukiwania. | `+/input search_stop+`
 |===
 
-// TRANSLATION MISSING
 [[key_bindings_histsearch_context]]
-=== History search context
+=== Wyszukiwanie w historii komend
 
-// TRANSLATION MISSING
-These keys are used in context "histsearch" (when kbd:[Ctrl+r] is pressed to
-search text in commands history).
+Te skróty można użyć w kontskście "histsearch" (kiedy kbd:[Ctrl+r] zostało wciśnięte do wyszukiwania
+tekstu w historii komend).
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Skrót          | Opis | Komenda
 | kbd:[Ctrl+x]   | Przełącz rodzaj wyszukiwania: ciąg (domyślne), wyrażenie regularne. | `+/input search_switch_regex+`
 | kbd:[Alt+c]    | Przełącz dopasowywanie wielości liter podczas wyszukiwania. | `+/input search_switch_case+`
-// TRANSLATION MISSING
-| kbd:[Tab]      | Switch search in: buffer local history (default), global history. | `+/input search_switch_where+`
-// TRANSLATION MISSING
+| kbd:[Tab]      | Przełącz przeszukiwanie w: lokalnej histori (domyślne), historia globalna. | `+/input search_switch_where+`
 | kbd:[Ctrl+r] +
-  kbd:[↑]        | Search in previous (older) history entries. | `+/input search_previous+`
-// TRANSLATION MISSING
+  kbd:[↑]        | Szukaj we wcześniejszych (starszych) wpisach w historii. | `+/input search_previous+`
 | kbd:[Ctrl+s] +
-  kbd:[↓]        | Search in next (newer) history entries. | `+/input search_next+`
-// TRANSLATION MISSING
+  kbd:[↓]        | Szukaj w następnych (nowszych) wpisach w historii. | `+/input search_next+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | Stop search and use matching input. | `+/input search_stop_here+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+o]   | Execute the command found in history and insert the next one in the command line. | `+/input history_use_get_next+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+q]   | Stop search and restore input to its initial value. | `+/input search_stop+`
+  kbd:[Ctrl+m]   | Zatrzymaj wyszukiwanie i użyj znalezionej komendy. | `+/input search_stop_here+`
+| kbd:[Ctrl+o]   | Wykonaj komende znaleziona w historii i wstaw kolejna do linii poleceń. | `+/input history_use_get_next+`
+| kbd:[Ctrl+q]   | Zatrzymaj wyszukiwanie i przywróć linię poleceń do początkowej wartości. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]
 === Kursor
 
-// TRANSLATION MISSING
 Te skróty są używane w kontekście kursora (dowolne przemieszczanie kursora na
-ekranie), see <<cursor_mode,Cursor mode>>.
+ekranie), zobacz <<cursor_mode,tryb kursora>>.
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
@@ -1830,18 +1800,12 @@ ekranie), see <<cursor_mode,Cursor mode>>.
 | kbd:[↓]           | -        | Przesuń kursor linię niżej. | `+/cursor move down+`
 | kbd:[←]           | -        | Przesuń kursor kolumnę w lewo. | `+/cursor move left+`
 | kbd:[→]           | -        | Przesuń kursor kolumnę w prawo. | `+/cursor move right+`
-// TRANSLATION MISSING
-| kbd:[Alt+↑]       | -        | Move cursor to the first line of the area. | `+/cursor move edge_top+`
-// TRANSLATION MISSING
-| kbd:[Alt+↓]       | -        | Move cursor to the last line of the area. | `+/cursor move edge_bottom+`
-// TRANSLATION MISSING
-| kbd:[Alt+←]       | -        | Move cursor to the first column of the area. | `+/cursor move edge_left+`
-// TRANSLATION MISSING
-| kbd:[Alt+→]       | -        | Move cursor to the last column of the area. | `+/cursor move edge_right+`
-// TRANSLATION MISSING
-| kbd:[Alt+Home]    | -        | Move cursor to the top left corner of the area. | `+/cursor move top_left+`
-// TRANSLATION MISSING
-| kbd:[Alt+End]     | -        | Move cursor to the bottom right corner of the area. | `+/cursor move bottom_right+`
+| kbd:[Alt+↑]       | -        | Przesuń kursor do pierwszej linii w obszarze. | `+/cursor move edge_top+`
+| kbd:[Alt+↓]       | -        | Przesuń kursor do ostatniej linii w obszarze. | `+/cursor move edge_bottom+`
+| kbd:[Alt+←]       | -        | Przesuń kursor do pierwszej kolumny w obszarze. | `+/cursor move edge_left+`
+| kbd:[Alt+→]       | -        | Przesuń kursor do ostatniej kolumny w obszarze. | `+/cursor move edge_right+`
+| kbd:[Alt+Home]    | -        | Przesuń kursor w górny lewy róg obszaru. | `+/cursor move top_left+`
+| kbd:[Alt+End]     | -        | Przesuń kursor w dolny prawy róg obszaru. | `+/cursor move bottom_right+`
 | kbd:[Alt+Shift+↑] | -        | Przesuń kursor obszar do góry. | `+/cursor move area_up+`
 | kbd:[Alt+Shift+↓] | -        | Przesuń kursor obszar w dół. | `+/cursor move area_down+`
 | kbd:[Alt+Shift+←] | -        | Przesuń kursor obszar w lewo. | `+/cursor move area_left+`
@@ -1882,19 +1846,13 @@ za pomocą skrótu kbd:[Alt+m] (komenda: `+/mouse toggle+`).
 | kbd:[▼]             | -             | chat: bufor fset     | Przewiń pięć linii w dół w buforze fset. | `+/fset -down 5+`
 | kbd:[■ □ □]         | -             | chat: bufor fset     | Zaznacz linię b buforze fset. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
 | kbd:[□ □ ■]         | -             | chat: bufor fset     | Przełącz (włącz/wyłącz) lub edytuj wartośc opcji. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| kbd:[□ □ ■]         | left          | chat: bufor fset     | Zmniejsz wartość zmiennej liczbowej / koloru / enum, ustaw/rozszerz wartośc innego typu. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| kbd:[□ □ ■]         | right         | chat: bufor fset     | Zwiększ wartość zmiennej liczbowej / koloru / enum, ustaw/rozszerz wartośc innego typu. | `+hsignal:fset_mouse+`
-| kbd:[□ □ ■]         | up / down     | chat: bufor fset     | Zaznacz/odznacz wiele opcji. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| kbd:[▲]             | -             | chat: /list buffer   | Move five lines up in /list buffer. | `+/list -up 5+`
-// TRANSLATION MISSING
-| kbd:[▼]             | -             | chat: /list buffer   | Move five lines down in /list buffer. | `+/list -down 5+`
-// TRANSLATION MISSING
-| kbd:[■ □ □]         | -             | chat: /list buffer   | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
-// TRANSLATION MISSING
-| kbd:[□ □ ■]         | -             | chat: /list buffer   | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
+| kbd:[□ □ ■]         | lewo          | chat: bufor fset     | Zmniejsz wartość zmiennej liczbowej / koloru / enum, ustaw/rozszerz wartośc innego typu. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]         | prawo         | chat: bufor fset     | Zwiększ wartość zmiennej liczbowej / koloru / enum, ustaw/rozszerz wartośc innego typu. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]         | góra / dół    | chat: bufor fset     | Zaznacz/odznacz wiele opcji. | `+hsignal:fset_mouse+`
+| kbd:[▲]             | -             | chat: /list buffer   | Przesuń pięć linii w górę w buforze /list. | `+/list -up 5+`
+| kbd:[▼]             | -             | chat: /list buffer   | Przesuń pięć linii w dół w buforze /list. | `+/list -down 5+`
+| kbd:[■ □ □]         | -             | chat: /list buffer   | Wybierz linię w buforze /list. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+| kbd:[□ □ ■]         | -             | chat: /list buffer   | Wejdź na kanał IRC w zaznaczonej linii. | `+hsignal:irc_list_mouse+`
 | kbd:[▲]             | -             | chat: bufor skryptów | Przejdź 5 linii w górę w buforze skryptów. | `+/script up 5+`
 | kbd:[▼]             | -             | chat: bufor skryptów | Przejdź 5 linii w dół w buforze skryptów. | `+/script down 5+`
 | kbd:[■ □ □]         | -             | chat: bufor skryptów | Zaznacz linię w buforze skryptów. | `+/script go ${_chat_line_y}+`
@@ -1921,14 +1879,13 @@ za pomocą skrótu kbd:[Alt+m] (komenda: `+/mouse toggle+`).
 |===
 
 [NOTE]
-// TRANSLATION MISSING
-^(1)^ Buttons: +
-kbd:[◼ □ □]: click on left button +
-kbd:[□ ◼ □]: click on middle button +
-kbd:[□ □ ◼]: click on right button +
-Wheel: +
-kbd:[▲]: wheel up +
-kbd:[▼]: wheel down
+^(1)^ Przyciski: +
+kbd:[◼ □ □]: kliknięcie lewym przyciskiem +
+kbd:[□ ◼ □]: kliknięcie środkowym przyciskiem +
+kbd:[□ □ ◼]: kliknięcie prawym przyciskiem +
+Kółko: +
+kbd:[▲]: w górę +
+kbd:[▼]: w dół
 
 [[key_bindings_fset_buffer]]
 === Bufor fset
@@ -1947,9 +1904,7 @@ Poniższe skróty i akcje mogą zostać użyte w buforze fset (zobacz <<fset,wty
 | kbd:[F11]                | `pass:[<]`   | Przewiń poziomo w lewo. | `+/fset -left+`
 | kbd:[F12]                | `pass:[>]`   | Przewiń poziomo w prawo. | `+/fset -right+`
 | kbd:[Alt+Space]          | `t`          | Przełącz zmienną boolowską. | `+/fset -toggle+`
-// TRANSLATION MISSING
 | kbd:[Alt+-]              | `-`          | Odejmij 1 od wartości liczbowej/koloru/enum, ustaw wartość pozostałych typów. | `+/fset -del -1+`
-// TRANSLATION MISSING
 | kbd:[Alt++]              | `+`          | Dodaj 1 do wartości liczbowej/koloru/enum, dodaj to wartości pozostałych typów. | `+/fset -add 1+`
 | kbd:[Alt+f], kbd:[Alt+r] | `r`          | Zresetuj wartość. | `+/fset -reset+`
 | kbd:[Alt+f], kbd:[Alt+u] | `u`          | Skasuj wartość. | `+/fset -unset+`
@@ -1978,11 +1933,10 @@ Poniższe skróty i akcje mogą zostać użyte w buforze fset (zobacz <<fset,wty
 [NOTE]
 ^(1)^ Akcja musi zostać wprowadzona z linii poleceń i potwierdzona przez kbd:[Enter].
 
-// TRANSLATION MISSING
 [[key_bindings_irc_list_buffer]]
-=== IRC /list buffer
+=== Bufor IRC /list
 
-These keys and actions are used on the IRC /list buffer (see command <<command_irc_list,/list>>).
+Te skróty i akcje mogą zostać użyte w buforze IRC /list (zobacz komendę <<command_irc_list,/list>>).
 
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
@@ -1995,18 +1949,18 @@ These keys and actions are used on the IRC /list buffer (see command <<command_i
 | kbd:[Alt+End]  | `pass:[>>]`  | Przejdź do ostatniej linii. | `+/list -go end+`
 | kbd:[F11]      | `pass:[<]`   | Przewiń poziomo w lewo. | `+/list -left+`
 | kbd:[F12]      | `pass:[>]`   | Przewiń poziomo w prawo. | `+/list -right+`
-| kbd:[Ctrl+j]   | `j`          | Join IRC channel on selected line. | `+/list -join+`
-|                | `xxx`        | Show only channels with "xxx" in name or topic (case insensitive). |
-|                | `n:xxx`      | Show only channels with "xxx" in name (case insensitive). |
-|                | `t:xxx`      | Show only channels with "xxx" in topic (case insensitive). |
-|                | `u:n`        | Show only channels with at least "n" users. |
-|                | `u:>n`       | Show only channels with more than "n" users. |
-|                | `u:<n`       | Show only channels with less than "n" users. |
-|                | `c:xxx`      | Show only channels matching the evaluated condition "xxx", using following variables: name, name2, users, topic. |
-|                | `s:x,y`      | Sort channels by fields x,y (see command <<command_irc_list,/list>>). |
-|                | `s:`         | Reset sort to its default value (see command <<command_irc_list,/list>>). |
-|                | `$`          | Refresh list (run again command <<command_irc_list,/list>>). |
-|                | `q`          | Close buffer. | `+/buffer close+`
+| kbd:[Ctrl+j]   | `j`          | Wejdź na kanał IRC z zaznaczonej linii. | `+/list -join+`
+|                | `xxx`        | Pokaż tylko kanały z "xxx" w nazwie lub temacie (wielkość liter nie jest uwzględniana). |
+|                | `n:xxx`      | Pokaż tylko kanały z "xxx" w nazwie (wielkość liter nie jest uwzględniana). |
+|                | `t:xxx`      | Pokaż tylko kanały z "xxx" w temacie (wielkość liter nie jest uwzględniana). |
+|                | `u:n`        | Pokaż tylko kanały z przynajmniej "n" użytkownikami. |
+|                | `u:>n`       | Pokaż tylko kanały z więcej niż "n" użytkownikami. |
+|                | `u:<n`       | Pokaż tylko kanały z mniej niż "n" użytkownikami. |
+|                | `c:xxx`      | Pokaż tylko kanały pasujące do przetworzonego warunku "xxx", z użyciem następujących zmiennych: name, name2, users, topic. |
+|                | `s:x,y`      | Sortuj kanały po polach x,y (zobacz komendę <<command_irc_list,/list>>). |
+|                | `s:`         | Zresetuj sortowanie do domyślnej wartości (zobacz komendę <<command_irc_list,/list>>). |
+|                | `$`          | Odświerz listę (wykonaj ponownie komendę <<command_irc_list,/list>>). |
+|                | `q`          | Zamknij bufor. | `+/buffer close+`
 |===
 
 [NOTE]
@@ -2027,20 +1981,15 @@ Te skróty klawiszowe i akcje mogą zostać użyte w buforze skryptów (zobacz <
 | kbd:[Alt+i]       | `i`          | Zainstaluj skrypt. | `+/script install+`
 | kbd:[Alt+r]       | `r`          | Usuń skrypt. | `+/script remove+`
 | kbd:[Alt+l]       | `l`          | Załaduj skrypt. | `+/script load+`
-// TRANSLATION MISSING
-| kbd:[Alt+L]       | `L`          | Reload script. | `+/script reload+`
+| kbd:[Alt+L]       | `L`          | Przeładuj skrypt. | `+/script reload+`
 | kbd:[Alt+u]       | `u`          | Wyładuj skrypt. | `+/script unload+`
 | kbd:[Alt+Shift+A] | `A`          | Automatycznie ładuj skrypt. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Zablokuj/odblokuj skrypt. | `+/script hold+`
 | kbd:[Alt+v]       | `v`          | Pokarz skrypt. | `+/script show+`
-// TRANSLATION MISSING
-|                   | `s:x,y`      | Sort scripts by fields x,y (see option <<option_script.look.sort,script.look.sort>>). |
-// TRANSLATION MISSING
-|                   | `s:`         | Reset sort to its default value (see option <<option_script.look.sort,script.look.sort>>). |
-// TRANSLATION MISSING
-|                   | `$`          | Refresh list. |
-// TRANSLATION MISSING
-|                   | `q`          | Close buffer. | `+/buffer close+`
+|                   | `s:x,y`      | Sortuj skrypty po polach x,y (zobacz opcję <<option_script.look.sort,script.look.sort>>). |
+|                   | `s:`         | Zresetuj sortowanie do domyślnej wartości (zobacz opcję <<option_script.look.sort,script.look.sort>>). |
+|                   | `$`          | Odświerza listę. |
+|                   | `q`          | Zamyka bufor. | `+/buffer close+`
 |===
 
 [NOTE]
@@ -3389,8 +3338,7 @@ Sekcje w pliku _weechat.conf_:
 | bar        | <<command_weechat_bar,/bar>>               +
                /set weechat.bar.*                         | Opcje pasków.
 | layout     | <<command_weechat_layout,/layout>>         | Układy.
-// TRANSLATION MISSING
-| buffer     | <<command_weechat_buffer,/buffer setauto>> | Properties auto-applied on buffers when they are opened.
+| buffer     | <<command_weechat_buffer,/buffer setauto>> | Właściwości automatycznie nanoszne na bufory podczas otwierania.
 | notify     | <<command_weechat_buffer,/buffer notify>>  | Poziomy powiadomień dla buforów (opcje mogą być dodawane/usuwane w sekcji).
 | filter     | <<command_weechat_filter,/filter>>         | Filtry.
 | key        | <<command_weechat_key,/key>>               | Skróty klawiszowe dla domyślnego kontekstu.
@@ -4268,14 +4216,12 @@ Jeśli chcesz przywrócić standardowe odpowiedzi dla CTCP usuń opcję:
 /unset irc.ctcp.version
 ----
 
-// TRANSLATION MISSING
-The CTCP replies are evaluated (see command <<command_weechat_eval,/eval>>) and
-the following extra variables are available:
+Odpowiedzi CTCP są przetwarzane (zobacz komendę <<command_weechat_eval,/eval>>),
+można użyć następujących zmiennych:
 
 [width="100%",cols="2,4,8",options="header"]
 |===
-// TRANSLATION MISSING
-| Variable           | Opis                              | Wartość/Przykład
+| Zmienna            | Opis                              | Wartość/Przykład
 | `+${clientinfo}+`  | Lista wspieranych CTCP            | `+ACTION DCC CLIENTINFO PING SOURCE TIME VERSION+`
 | `+${version}+`     | Wersja WeeChat                    | `+4.1.0-dev+`
 | `+${versiongit}+`  | Wersja WeeChat + wersja Git ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
@@ -4293,8 +4239,7 @@ the following extra variables are available:
 ^(1)^ Wersja git jest wynikiem komendy `git describe`. Jest dostępna tylko jeśli
 WeeChat został skompilowany wewnątrz repozytorium Git i Git był zainstalowany.
 
-// TRANSLATION MISSING
-The default CTCP replies are:
+Domyślne odpowiedzi CTCP:
 
 [width="100%",cols="2,4,8",options="header"]
 |===
