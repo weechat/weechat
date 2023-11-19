@@ -1,0 +1,13 @@
+name: Feature request
+description: Request a new feature / enhancement
+labels: ["feature"]
+
+body:
+  - type: textarea
+    id: feature
+    attributes:
+      label: Feature description
+      description: A description of your feature.
+      placeholder: It would be really handy if WeeChat had…
+    validations:
+      required: true

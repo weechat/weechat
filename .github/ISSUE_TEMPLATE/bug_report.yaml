@@ -1,0 +1,100 @@
+name: Bug report
+description: Create a bug report (please do not report security issues here)
+labels: ["bug"]
+
+body:
+  - type: markdown
+    attributes:
+      value: "Please do not report any security issue here, see [Contributing.adoc](../../Contributing.adoc)"
+
+  - type: textarea
+    id: summary-of-bug
+    attributes:
+      label: Summary of the bug
+      description: A clear and concise description of what the bug is.
+      placeholder: WeeChat crashes when doing a specific thing.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: Current behavior
+      description: What currently happens.
+      placeholder: WeeChat crashes with an error:…
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What is actually supposed to happen.
+      placeholder: WeeChat does not crash.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested-solutions
+    attributes:
+      label: Suggested solutions
+      description: How you think this issue can be resolved.
+      placeholder: This is caused by a faulty assertion in file.c, line 123, so maybe…
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional information
+      description: Any additional information you deem relevant.
+      placeholder: "Sounds like the same cause as issue #12345"
+    validations:
+      required: false
+
+  - type: input
+    id: weechat-version
+    attributes:
+      label: WeeChat version
+      description: "Use `weechat --version`"
+      placeholder: 4.1.1
+    validations:
+      required: true
+
+  - type: input
+    id: os-version
+    attributes:
+      label: "What OS and what version of it you run:"
+      description: Unsure? Go to https://whatsmyos.com/
+      placeholder: Debian 11
+    validations:
+      required: true
+
+  - type: input
+    id: terminal
+    attributes:
+      label: "What terminal you run WeeChat in:"
+      placeholder: xterm
+    validations:
+      required: true
+
+  - type: input
+    id: terminal-multiplexer
+    attributes:
+      label: "Specify what terminal multiplexer you run WeeChat in if any:"
+      placeholder: tmux/screen/…/none
+    validations:
+      required: true
+
