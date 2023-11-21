@@ -1054,14 +1054,14 @@ plugin_script_remove (struct t_weechat_plugin *weechat_plugin,
 {
     script->unloading = 1;
 
+    /* remove all hooks created by this script */
+    weechat_unhook_all (script->name);
+
     plugin_script_close_buffers (weechat_plugin, script);
 
     plugin_script_remove_bar_items (weechat_plugin, script);
 
     plugin_script_remove_configs (weechat_plugin, script);
-
-    /* remove all hooks created by this script */
-    weechat_unhook_all (script->name);
 
     /* remove script from list */
     if (script->prev_script)
