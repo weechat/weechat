@@ -4139,7 +4139,10 @@ string_replace_with_callback (const char *string,
                               const char *prefix,
                               const char *suffix,
                               const char **list_prefix_no_replace,
-                              char *(*callback)(void *data, const char *text),
+                              char *(*callback)(void *data,
+                                                const char *prefix,
+                                                const char *text,
+                                                const char *suffix),
                               void *callback_data,
                               int *errors)
 {
@@ -4196,14 +4199,6 @@ string_replace_with_callback (const char *string,
                     }
                     pos_end_name++;
                 }
-                /* prefix without matching suffix => error! */
-                if (!pos_end_name[0])
-                {
-                    result[index_result] = '\0';
-                    if (errors)
-                        (*errors)++;
-                    return result;
-                }
                 key = string_strndup (string + index_string + length_prefix,
                                       pos_end_name - (string + index_string + length_prefix));
                 if (key)
@@ -4241,7 +4236,10 @@ string_replace_with_callback (const char *string,
                             key = key2;
                         }
                     }
-                    value = (*callback) (callback_data, (key) ? key : "");
+                    value = (*callback) (callback_data,
+                                         prefix,
+                                         (key) ? key : "",
+                                         (pos_end_name[0]) ? suffix : "");
                     if (value)
                     {
                         length_value = strlen (value);
@@ -4262,7 +4260,10 @@ string_replace_with_callback (const char *string,
                             strcpy (result + index_result, value);
                             index_result += length_value;
                         }
-                        index_string = pos_end_name - string + length_suffix;
+                        if (pos_end_name[0])
+                            index_string = pos_end_name - string + length_suffix;
+                        else
+                            index_string = pos_end_name - string;
                         free (value);
                     }
                     else

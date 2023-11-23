@@ -1308,20 +1308,23 @@ TEST(CoreString, Highlight)
 /*
  * Test callback for function string_replace_with_callback.
  *
- * It replaces "abc" by "def", "xxx" by empty string, and for any other value
+ * It replaces "abc" by "def", "empty" by empty string, and for any other value
  * it returns NULL (so the value is kept as-is).
  */
 
 char *
-test_replace_cb (void *data, const char *text)
+test_replace_cb (void *data,
+                 const char *prefix, const char *text, const char *suffix)
 {
     /* make C++ compiler happy */
     (void) data;
+    (void) prefix;
+    (void) suffix;
 
     if (strcmp (text, "abc") == 0)
         return strdup ("def");
 
-    if (strcmp (text, "xxx") == 0)
+    if (strcmp (text, "empty") == 0)
         return strdup ("");
 
     if (strncmp (text, "no_replace:", 11) == 0)
@@ -1446,13 +1449,17 @@ TEST(CoreString, ReplaceWithCallback)
                    &test_replace_cb, NULL, &errors);
     WEE_REPLACE_CB("test def", 0, "test ${abc}", "${", "}", NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("test ", 0, "test ${xxx}", "${", "}", NULL,
+    WEE_REPLACE_CB("test ", 0, "test ${empty}", "${", "}", NULL,
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test ${aaa", 1, "test ${aaa", "${", "}", NULL,
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test ", 0, "test ${empty", "${", "}", NULL,
                    &test_replace_cb, NULL, &errors);
     WEE_REPLACE_CB("test ${aaa}", 1, "test ${aaa}", "${", "}", NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("test def  ${aaa}", 1, "test ${abc} ${xxx} ${aaa}",
+    WEE_REPLACE_CB("test def  ${aaa}", 1, "test ${abc} ${empty} ${aaa}",
                    "${", "}", NULL, &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("test ", 1, "test ${abc", "${", "}", NULL,
+    WEE_REPLACE_CB("test def", 0, "test ${abc", "${", "}", NULL,
                    &test_replace_cb, NULL, &errors);
     WEE_REPLACE_CB("test abc}", 0, "test abc}", "${", "}", NULL,
                    &test_replace_cb, NULL, &errors);
@@ -1462,7 +1469,7 @@ TEST(CoreString, ReplaceWithCallback)
                    &test_replace_cb, NULL, &errors);
     WEE_REPLACE_CB("def", 0, "${abc}", "${", "}", NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("", 0, "${xxx}", "${", "}", NULL,
+    WEE_REPLACE_CB("", 0, "${empty}", "${", "}", NULL,
                    &test_replace_cb, NULL, &errors);
     WEE_REPLACE_CB("${aaa}", 1, "${aaa}", "${", "}", NULL,
                    &test_replace_cb, NULL, &errors);

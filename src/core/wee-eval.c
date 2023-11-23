@@ -1472,8 +1472,8 @@ end:
  */
 
 char *
-eval_syntax_highlight_add_markers (const char *text,
-                                   struct t_eval_context *eval_context)
+eval_syntax_highlight_add_markers (const char *prefix, const char *text,
+                                   const char *suffix)
 {
     char **value;
 
@@ -1482,10 +1482,10 @@ eval_syntax_highlight_add_markers (const char *text,
         return NULL;
 
     string_dyn_concat (value, EVAL_SYNTAX_HL_INC, -1);
-    string_dyn_concat (value, eval_context->prefix, -1);
+    string_dyn_concat (value, prefix, -1);
     if (text)
         string_dyn_concat (value, text, -1);
-    string_dyn_concat (value, eval_context->suffix, -1);
+    string_dyn_concat (value, suffix, -1);
     string_dyn_concat (value, EVAL_SYNTAX_HL_DEC, -1);
 
     return string_dyn_free (value, 0);
@@ -1625,7 +1625,8 @@ eval_syntax_highlight (const char *text, struct t_eval_context *eval_context)
  */
 
 char *
-eval_replace_vars_cb (void *data, const char *text)
+eval_replace_vars_cb (void *data,
+                      const char *prefix, const char *text, const char *suffix)
 {
     struct t_eval_context *eval_context;
     struct t_config_option *ptr_option;
@@ -1641,7 +1642,7 @@ eval_replace_vars_cb (void *data, const char *text)
     EVAL_DEBUG_MSG(1, "eval_replace_vars_cb(\"%s\")", text);
 
     if (eval_context->syntax_highlight)
-        return eval_syntax_highlight_add_markers (text, eval_context);
+        return eval_syntax_highlight_add_markers (prefix, text, suffix);
 
     /* raw text (no evaluation at all), with syntax highlighting */
     if (strncmp (text, "raw_hl:", 7) == 0)

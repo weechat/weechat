@@ -988,7 +988,8 @@ TEST(CoreEval, EvalExpression)
     hashtable_set (pointers, "my_null_pointer", (const void *)0x0);
     hashtable_set (pointers, "my_buffer_pointer", gui_buffers);
     hashtable_set (pointers, "my_other_pointer", (const void *)0x1234abcd);
-    WEE_CHECK_EVAL("x", "x${buffer.number");
+    WEE_CHECK_EVAL("x", "x${buffer.numbe");
+    WEE_CHECK_EVAL("x1", "x${buffer.number");
     WEE_CHECK_EVAL("x${buffer.number}1",
                    "x\\${buffer.number}${buffer.number}");
     WEE_CHECK_EVAL("1", "${buffer.number}");
