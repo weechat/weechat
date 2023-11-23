@@ -4122,6 +4122,11 @@ string_levenshtein (const char *string1, const char *string2,
  *
  * Nested variables are supported, for example: "${var1:${var2}}".
  *
+ * If allow_escape == 1, the prefix/suffix can be escaped with a backslash
+ * (which is then omitted in the result).
+ * If allow_escape == 0, the backslash is kept as-is and can not be
+ * used to escape the prefix/suffix.
+ *
  * Argument "list_prefix_no_replace" is a list to prevent replacements in
  * string if beginning with one of the prefixes. For example if the list is
  * { "if:", NULL } and string is: "${if:cond?true:false}${test${abc}}"
@@ -4138,6 +4143,7 @@ char *
 string_replace_with_callback (const char *string,
                               const char *prefix,
                               const char *suffix,
+                              int allow_escape,
                               const char **list_prefix_no_replace,
                               char *(*callback)(void *data,
                                                 const char *prefix,
@@ -4171,8 +4177,16 @@ string_replace_with_callback (const char *string,
             if ((string[index_string] == '\\')
                 && (string[index_string + 1] == prefix[0]))
             {
-                index_string++;
-                result[index_result++] = string[index_string++];
+                if (allow_escape)
+                {
+                    index_string++;
+                    result[index_result++] = string[index_string++];
+                }
+                else
+                {
+                    result[index_result++] = string[index_string++];
+                    result[index_result++] = string[index_string++];
+                }
             }
             else if (strncmp (string + index_string, prefix, length_prefix) == 0)
             {
@@ -4187,7 +4201,8 @@ string_replace_with_callback (const char *string,
                             break;
                         sub_level--;
                     }
-                    if ((pos_end_name[0] == '\\')
+                    if (allow_escape
+                        && (pos_end_name[0] == '\\')
                         && (pos_end_name[1] == prefix[0]))
                     {
                         pos_end_name++;
@@ -4226,6 +4241,7 @@ string_replace_with_callback (const char *string,
                                 key,
                                 prefix,
                                 suffix,
+                                1,
                                 list_prefix_no_replace,
                                 callback,
                                 callback_data,

@@ -2033,6 +2033,7 @@ eval_replace_vars (const char *expr, struct t_eval_context *eval_context)
             expr,
             eval_context->prefix,
             eval_context->suffix,
+            (eval_context->syntax_highlight) ? 0 : 1,
             (eval_context->syntax_highlight) ?
             no_replace_prefix_list_col : no_replace_prefix_list_std,
             &eval_replace_vars_cb,
