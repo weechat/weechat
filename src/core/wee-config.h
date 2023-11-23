@@ -321,6 +321,7 @@ extern struct t_config_option *config_color_chat_value;
 extern struct t_config_option *config_color_chat_value_null;
 extern struct t_config_option *config_color_emphasized;
 extern struct t_config_option *config_color_emphasized_bg;
+extern struct t_config_option *config_color_eval_syntax_colors;
 extern struct t_config_option *config_color_input_actions;
 extern struct t_config_option *config_color_input_text_not_found;
 extern struct t_config_option *config_color_item_away;
@@ -400,6 +401,8 @@ extern int config_word_chars_input_count;
 extern char **config_nick_colors;
 extern int config_num_nick_colors;
 extern struct t_hashtable *config_hashtable_nick_color_force;
+extern char **config_eval_syntax_colors;
+extern int config_num_eval_syntax_colors;
 extern char *config_buffer_time_same_evaluated;
 extern struct t_hashtable *config_hashtable_completion_partial_templates;
 

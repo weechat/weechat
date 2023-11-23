@@ -32,7 +32,7 @@
 #include "weechat.h"
 #include "wee-eval.h"
 #include "wee-calc.h"
-#include "wee-config-file.h"
+#include "wee-config.h"
 #include "wee-hashtable.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
@@ -1465,12 +1465,121 @@ end:
 }
 
 /*
+ * Returns text with syntax highlighting (using markers, to be replaced by
+ * colors later).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_syntax_highlight_add_markers (const char *text,
+                                   struct t_eval_context *eval_context)
+{
+    char **value;
+
+    value = string_dyn_alloc (128);
+    if (!value)
+        return NULL;
+
+    string_dyn_concat (value, EVAL_SYNTAX_HL_INC, -1);
+    string_dyn_concat (value, eval_context->prefix, -1);
+    if (text)
+        string_dyn_concat (value, text, -1);
+    string_dyn_concat (value, eval_context->suffix, -1);
+    string_dyn_concat (value, EVAL_SYNTAX_HL_DEC, -1);
+
+    return string_dyn_free (value, 0);
+}
+
+/*
+ * Replaces raw highlight markers with color codes defined in option
+ * weechat.color.eval_syntax_colors.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_syntax_highlight_colorize (const char *value)
+{
+    const char *ptr_value;
+    char **result, *pos;
+    int color;
+
+    if (!value)
+        return NULL;
+
+    result = string_dyn_alloc (128);
+    if (!result)
+        return NULL;
+
+    color = -1;
+    ptr_value = value;
+    while (ptr_value && ptr_value[0])
+    {
+        pos = strstr (ptr_value, EVAL_SYNTAX_HL_MARKER);
+        if (!pos)
+        {
+            string_dyn_concat (result, ptr_value, -1);
+            break;
+        }
+        string_dyn_concat (result, ptr_value, pos - ptr_value);
+        ptr_value = pos + strlen (EVAL_SYNTAX_HL_MARKER);
+        if (config_num_eval_syntax_colors > 0)
+        {
+            if (ptr_value[0] == '+')
+                color++;
+            else if (ptr_value[0] == '-')
+                color--;
+        }
+        ptr_value++;
+        if (config_num_eval_syntax_colors > 0)
+        {
+            string_dyn_concat (
+                result,
+                gui_color_get_custom (
+                    (color >= 0) ?
+                    config_eval_syntax_colors[color % config_num_eval_syntax_colors] :
+                    "reset"),
+                -1);
+        }
+    }
+
+    return string_dyn_free (result, 0);
+}
+
+/*
+ * Adds syntax highlighting in text.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_syntax_highlight (const char *text, struct t_eval_context *eval_context)
+{
+    char *value, *value2;
+
+    eval_context->syntax_highlight++;
+
+    value = eval_replace_vars (text, eval_context);
+    value2 = eval_syntax_highlight_colorize (value);
+    if (value)
+        free (value);
+
+    eval_context->syntax_highlight--;
+
+    return value2;
+}
+
+/*
  * Replaces variables, which can be, by order of priority:
+ *  - the string itself without evaluation but with syntax highlighting
+ *    (format: raw_hl:xxx)
  *  - the string itself without evaluation (format: raw:xxx)
+ *  - a string with syntax highlighting (format: hl:xxx)
  *  - a variable from hashtable "user_vars" or "extra_vars"
  *  - a WeeChat home directory, one of: "weechat_config_dir",
  *    "weechat_data_dir", "weechat_cache_dir", "weechat_runtime_dir"
- *  - a string to evaluate (format: eval:xxx)
+ *  - an evaluated string (format: eval:xxx)
  *  - a condition to evaluate (format: eval_cond:xxx)
  *  - a string with escaped chars (format: esc:xxx or \xxx)
  *  - a string with a range of chars (format: chars:range)
@@ -1531,10 +1640,27 @@ eval_replace_vars_cb (void *data, const char *text)
 
     EVAL_DEBUG_MSG(1, "eval_replace_vars_cb(\"%s\")", text);
 
+    if (eval_context->syntax_highlight)
+        return eval_syntax_highlight_add_markers (text, eval_context);
+
+    /* raw text (no evaluation at all), with syntax highlighting */
+    if (strncmp (text, "raw_hl:", 7) == 0)
+    {
+        value = eval_syntax_highlight (text + 7, eval_context);
+        goto end;
+    }
+
     /* raw text (no evaluation at all) */
     if (strncmp (text, "raw:", 4) == 0)
     {
         value = strdup (text + 4);
+        goto end;
+    }
+
+    /* syntax highlighting */
+    if (strncmp (text, "hl:", 3) == 0)
+    {
+        value = eval_syntax_highlight (text + 3, eval_context);
         goto end;
     }
 
@@ -1891,7 +2017,8 @@ end:
 char *
 eval_replace_vars (const char *expr, struct t_eval_context *eval_context)
 {
-    const char *no_replace_prefix_list[] = { "if:", "raw:", NULL };
+    const char *no_replace_prefix_list_std[] = { "if:", "raw:", "raw_hl:", NULL };
+    const char *no_replace_prefix_list_col[] = { "raw:", "raw_hl:", NULL };
     char *result;
     int debug_id;
 
@@ -1901,13 +2028,15 @@ eval_replace_vars (const char *expr, struct t_eval_context *eval_context)
 
     if (eval_context->recursion_count < EVAL_RECURSION_MAX)
     {
-        result = string_replace_with_callback (expr,
-                                               eval_context->prefix,
-                                               eval_context->suffix,
-                                               no_replace_prefix_list,
-                                               &eval_replace_vars_cb,
-                                               eval_context,
-                                               NULL);
+        result = string_replace_with_callback (
+            expr,
+            eval_context->prefix,
+            eval_context->suffix,
+            (eval_context->syntax_highlight) ?
+            no_replace_prefix_list_col : no_replace_prefix_list_std,
+            &eval_replace_vars_cb,
+            eval_context,
+            NULL);
     }
     else
     {
@@ -2542,6 +2671,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     eval_context->regex = NULL;
     eval_context->regex_replacement_index = 1;
     eval_context->recursion_count = 0;
+    eval_context->syntax_highlight = 0;
     eval_context->debug_level = 0;
     eval_context->debug_depth = 0;
     eval_context->debug_id = 0;

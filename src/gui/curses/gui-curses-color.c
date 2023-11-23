@@ -870,8 +870,8 @@ gui_color_info_term_colors (char *buffer, int size)
 void
 gui_color_buffer_display ()
 {
-    int y, i, lines, columns, line, col, color, max_color, num_items;
-    char str_line[1024], str_color[64], str_rgb[64], **items;
+    int y, i, lines, columns, line, col, color, max_color;
+    char str_line[1024], str_color[64], str_rgb[64];
     struct t_gui_color_palette *color_palette;
 
     if (!gui_color_buffer)
@@ -1011,47 +1011,70 @@ gui_color_buffer_display ()
         y++;
         gui_chat_printf_y (gui_color_buffer, y++,
                            _("Nick colors:"));
-        items = string_split (CONFIG_STRING(config_color_chat_nick_colors),
-                              ",",
-                              NULL,
-                              WEECHAT_STRING_SPLIT_STRIP_LEFT
-                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                              0,
-                              &num_items);
-        if (items)
+        if (config_num_nick_colors > 0)
         {
             str_line[0] = '\0';
-            for (i = 0; i < num_items; i++)
+            for (i = 0; i < config_num_nick_colors; i++)
             {
                 if (gui_color_use_term_colors)
                 {
                     snprintf (str_color, sizeof (str_color),
                               " %s",
-                              items[i]);
+                              config_nick_colors[i]);
                 }
                 else
                 {
                     snprintf (str_color, sizeof (str_color),
                               "%c %s%s",
                               GUI_COLOR_RESET_CHAR,
-                              gui_color_get_custom (items[i]),
-                              items[i]);
+                              gui_color_get_custom (config_nick_colors[i]),
+                              config_nick_colors[i]);
                 }
-                if (gui_chat_strlen_screen (str_line) + gui_chat_strlen_screen (str_color) > 80)
+                if (gui_chat_strlen_screen (str_line)
+                    + gui_chat_strlen_screen (str_color) > 80)
                 {
-                    gui_chat_printf_y (gui_color_buffer, y++,
-                                       " %s", str_line);
+                    gui_chat_printf_y (gui_color_buffer, y++, " %s", str_line);
                     str_line[0] = '\0';
                 }
                 strcat (str_line, str_color);
             }
             if (str_line[0])
+                gui_chat_printf_y (gui_color_buffer, y++, " %s", str_line);
+        }
+
+        /* display eval syntax highlighting colors */
+        y++;
+        gui_chat_printf_y (gui_color_buffer, y++,
+                           _("Syntax highlighting colors in evaluated strings:"));
+        if (config_num_eval_syntax_colors > 0)
+        {
+            str_line[0] = '\0';
+            for (i = 0; i < config_num_eval_syntax_colors; i++)
             {
-                gui_chat_printf_y (gui_color_buffer, y++,
-                                   " %s", str_line);
+                if (gui_color_use_term_colors)
+                {
+                    snprintf (str_color, sizeof (str_color),
+                              " %s",
+                              config_eval_syntax_colors[i]);
+                }
+                else
+                {
+                    snprintf (str_color, sizeof (str_color),
+                              "%c %s%s",
+                              GUI_COLOR_RESET_CHAR,
+                              gui_color_get_custom (config_eval_syntax_colors[i]),
+                              config_eval_syntax_colors[i]);
+                }
+                if (gui_chat_strlen_screen (str_line)
+                    + gui_chat_strlen_screen (str_color) > 80)
+                {
+                    gui_chat_printf_y (gui_color_buffer, y++, " %s", str_line);
+                    str_line[0] = '\0';
+                }
+                strcat (str_line, str_color);
             }
-            string_free_split (items);
+            if (str_line[0])
+                gui_chat_printf_y (gui_color_buffer, y++, " %s", str_line);
         }
 
         /* display palette colors */

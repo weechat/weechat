@@ -269,6 +269,7 @@ struct t_config_option *config_color_chat_value = NULL;
 struct t_config_option *config_color_chat_value_null = NULL;
 struct t_config_option *config_color_emphasized = NULL;
 struct t_config_option *config_color_emphasized_bg = NULL;
+struct t_config_option *config_color_eval_syntax_colors = NULL;
 struct t_config_option *config_color_input_actions = NULL;
 struct t_config_option *config_color_input_text_not_found = NULL;
 struct t_config_option *config_color_item_away = NULL;
@@ -364,6 +365,8 @@ int config_word_chars_input_count = 0;
 char **config_nick_colors = NULL;
 int config_num_nick_colors = 0;
 struct t_hashtable *config_hashtable_nick_color_force = NULL;
+char **config_eval_syntax_colors = NULL;
+int config_num_eval_syntax_colors = 0;
 char *config_item_time_evaluated = NULL;
 char *config_buffer_time_same_evaluated = NULL;
 struct t_hashtable *config_hashtable_completion_partial_templates = NULL;
@@ -820,6 +823,31 @@ config_change_look_nick_color_force (const void *pointer, void *data,
         }
         string_free_split (items);
     }
+}
+
+/*
+ * Sets eval syntax highlighting colors using option
+ * "weechat.color.eval_syntax_colors".
+ */
+
+void
+config_set_eval_syntax_colors ()
+{
+    if (config_eval_syntax_colors)
+    {
+        string_free_split (config_eval_syntax_colors);
+        config_eval_syntax_colors = NULL;
+        config_num_eval_syntax_colors = 0;
+    }
+
+    config_eval_syntax_colors = string_split (
+        CONFIG_STRING(config_color_eval_syntax_colors),
+        ",",
+        NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0, &config_num_eval_syntax_colors);
 }
 
 /*
@@ -1296,6 +1324,23 @@ config_change_nick_colors (const void *pointer, void *data,
 }
 
 /*
+ * Callback for changes on option "weechat.color.eval_syntax_colors".
+ */
+
+void
+config_change_eval_syntax_colors (const void *pointer, void *data,
+                                  struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    config_set_eval_syntax_colors ();
+    gui_color_buffer_display ();
+}
+
+/*
  * Callback for changes on option
  * "weechat.completion.partial_completion_templates".
  */
@@ -1516,7 +1561,9 @@ config_weechat_init_after_read ()
     /* apply filters on all buffers */
     gui_filter_all_buffers (NULL);
 
+    config_set_nick_colors ();
     config_change_look_nick_color_force (NULL, NULL, NULL);
+    config_set_eval_syntax_colors ();
 }
 
 /*
@@ -4611,6 +4658,21 @@ config_weechat_init_options ()
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
+        /* eval syntax highlighting colors (for "${raw_hl:xxx}" and "${hl:xxx}") */
+        config_color_eval_syntax_colors = config_file_new_option (
+            weechat_config_file, weechat_config_section_color,
+            "eval_syntax_colors", "string",
+            /* TRANSLATORS: please do not translate "lightred:blue" */
+            N_("text color for syntax highlighting in evaluated strings, "
+               "with \"${raw_hl:...}\" and \"${hl:...}\" (comma separated "
+               "list of colors, background is allowed with format: \"fg:bg\", "
+               "for example: \"lightred:blue\")"),
+            NULL, 0, 0,
+            "green,lightred,lightblue,lightmagenta,yellow,cyan",
+            NULL, 0,
+            NULL, NULL, NULL,
+            &config_change_eval_syntax_colors, NULL, NULL,
+            NULL, NULL, NULL);
         /* input bar */
         config_color_input_actions = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
@@ -4654,7 +4716,7 @@ config_weechat_init_options ()
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);
-        /* general color settings */
+        /* separator */
         config_color_separator = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "separator", "color",
@@ -5372,6 +5434,13 @@ config_weechat_free ()
         string_free_split (config_nick_colors);
         config_nick_colors = NULL;
         config_num_nick_colors = 0;
+    }
+
+    if (config_eval_syntax_colors)
+    {
+        string_free_split (config_eval_syntax_colors);
+        config_eval_syntax_colors = NULL;
+        config_num_eval_syntax_colors = 0;
     }
 
     if (config_hashtable_nick_color_force)

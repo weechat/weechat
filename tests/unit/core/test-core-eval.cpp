@@ -489,11 +489,86 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", "${}");
     WEE_CHECK_EVAL("", "${xyz}");
 
+    /* test raw string with syntax highlighting */
+    WEE_CHECK_EVAL("", "${raw_hl:}");
+    WEE_CHECK_EVAL("test", "${raw_hl:test}");
+    snprintf (str_value, sizeof (str_value),
+              "%s${info:version}%s",
+              gui_color_get_custom (config_eval_syntax_colors[0]),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_EVAL(str_value, "${raw_hl:${info:version}}");
+    snprintf (str_value, sizeof (str_value),
+              "test_%s${info:version}%s_end",
+              gui_color_get_custom (config_eval_syntax_colors[0]),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_EVAL(str_value, "test_${raw_hl:${info:version}}_end");
+    snprintf (str_value, sizeof (str_value),
+              "test_%s${cut:3,,%s${rev:%s${info:version}%s}%s}%s_end",
+              gui_color_get_custom (config_eval_syntax_colors[0]),
+              gui_color_get_custom (config_eval_syntax_colors[1]),
+              gui_color_get_custom (config_eval_syntax_colors[2]),
+              gui_color_get_custom (config_eval_syntax_colors[1]),
+              gui_color_get_custom (config_eval_syntax_colors[0]),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_EVAL(str_value, "test_${raw_hl:${cut:3,,${rev:${info:version}}}}_end");
+    snprintf (str_value, sizeof (str_value),
+              "test_%s${raw:${test}}%s_end",
+              gui_color_get_custom (config_eval_syntax_colors[0]),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_EVAL(str_value, "test_${raw_hl:${raw:${test}}}_end");
+    snprintf (str_value, sizeof (str_value),
+              "test_%s${if:a==1?%s${yes}%s:%s${no}%s}%s_end",
+              gui_color_get_custom (config_eval_syntax_colors[0]),
+              gui_color_get_custom (config_eval_syntax_colors[1]),
+              gui_color_get_custom (config_eval_syntax_colors[0]),
+              gui_color_get_custom (config_eval_syntax_colors[1]),
+              gui_color_get_custom (config_eval_syntax_colors[0]),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_EVAL(str_value, "test_${raw_hl:${if:a==1?${yes}:${no}}}_end");
+    snprintf (str_value, sizeof (str_value),
+              "test_%s${a:%s${b:%s${c:%s${d:%s${e:%s${f:%s${g:%s${h:%s${i:}%s}%s}%s}%s}%s}%s}%s}%s}%s_end",
+              gui_color_get_custom (config_eval_syntax_colors[0 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[1 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[2 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[3 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[4 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[5 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[6 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[7 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[8 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[7 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[6 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[5 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[4 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[3 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[2 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[1 % config_num_eval_syntax_colors]),
+              gui_color_get_custom (config_eval_syntax_colors[0 % config_num_eval_syntax_colors]),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_EVAL(str_value,
+                   "test_${raw_hl:${a:${b:${c:${d:${e:${f:${g:${h:${i:}}}}}}}}}}_end");
+
     /* test raw string */
+    WEE_CHECK_EVAL("", "${raw:}");
+    WEE_CHECK_EVAL("test", "${raw:test}");
     WEE_CHECK_EVAL("${info:version}", "${raw:${info:version}}");
     WEE_CHECK_EVAL("yes", "${if:${raw:test?}==${raw:test?}?yes:no}");
     WEE_CHECK_EVAL("no", "${if:${raw:test?}==${raw:test}?yes:no}");
     WEE_CHECK_EVAL("16", "${length:${raw:${buffer.number}}}");
+
+    /* test string with syntax highlighting */
+    WEE_CHECK_EVAL("", "${hl:}");
+    WEE_CHECK_EVAL("test", "${hl:test}");
+    snprintf (str_value, sizeof (str_value),
+              "%s${info:version}%s",
+              gui_color_get_custom (config_eval_syntax_colors[0]),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_EVAL("test_weechat_end", "test_${hl:${buffer.name}}_end");
+    snprintf (str_value, sizeof (str_value),
+              "test_%s${buffer.name}%s_end",
+              gui_color_get_custom (config_eval_syntax_colors[0]),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_EVAL(str_value, "test_${hl:${raw:${buffer.name}}}_end");
 
     /* test eval of substring */
     WEE_CHECK_EVAL("\t", "${eval:${\\t}}");

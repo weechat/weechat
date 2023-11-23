@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-11 08:54+0100\n"
+"POT-Creation-Date: 2023-11-23 08:13+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4206,6 +4206,13 @@ msgid ""
 "(default value)"
 msgstr ""
 
+#. TRANSLATORS: please do not translate "lightred:blue"
+msgid ""
+"text color for syntax highlighting in evaluated strings, with "
+"\"${raw_hl:...}\" and \"${hl:...}\" (comma separated list of colors, "
+"background is allowed with format: \"fg:bg\", for example: \"lightred:blue\")"
+msgstr ""
+
 msgid "text color for actions in input line"
 msgstr ""
 
@@ -5017,6 +5024,9 @@ msgid "WeeChat basic colors:"
 msgstr ""
 
 msgid "Nick colors:"
+msgstr ""
+
+msgid "Syntax highlighting colors in evaluated strings:"
 msgstr ""
 
 msgid "Color aliases:"

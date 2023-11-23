@@ -37,6 +37,10 @@
 #define EVAL_RANGE_ALPHA    EVAL_RANGE_LOWER EVAL_RANGE_UPPER
 #define EVAL_RANGE_ALNUM    EVAL_RANGE_ALPHA EVAL_RANGE_DIGIT
 
+#define EVAL_SYNTAX_HL_MARKER  "\xef\xbf\xbf\xef\xbf\xbf"
+#define EVAL_SYNTAX_HL_INC     (EVAL_SYNTAX_HL_MARKER "+")
+#define EVAL_SYNTAX_HL_DEC     (EVAL_SYNTAX_HL_MARKER "-")
+
 struct t_hashtable;
 
 enum t_eval_logical_op
@@ -89,6 +93,8 @@ struct t_eval_context
     struct t_eval_regex *regex;        /* in case of replace with regex     */
     int regex_replacement_index;       /* replacement index (≥ 1)           */
     int recursion_count;               /* to prevent infinite recursion     */
+    int syntax_highlight;              /* syntax highlight: ${raw_hl:...}   */
+                                       /* or ${hl:...}                      */
     int debug_level;                   /* 0: no debug, 1: debug, 2: extra   */
     int debug_depth;                   /* used for debug indentation        */
     int debug_id;                      /* operation id in debug output      */

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-11 08:54+0100\n"
+"POT-Creation-Date: 2023-11-23 08:13+0100\n"
 "PO-Revision-Date: 2023-10-20 13:10+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -5090,6 +5090,19 @@ msgstr ""
 "só é utilizada se a opção weechat.look.emphasized_attributes for uma cadeia "
 "vazia (valor predefinido)"
 
+#. TRANSLATORS: please do not translate "lightred:blue"
+#, fuzzy
+#| msgid ""
+#| "text color for nicks (comma separated list of colors, background is "
+#| "allowed with format: \"fg:bg\", for example: \"lightred:blue\")"
+msgid ""
+"text color for syntax highlighting in evaluated strings, with "
+"\"${raw_hl:...}\" and \"${hl:...}\" (comma separated list of colors, "
+"background is allowed with format: \"fg:bg\", for example: \"lightred:blue\")"
+msgstr ""
+"cor do texto dos nicks (lista de cores separadas por vírgula, o fundo pode "
+"ser indicado com o formato: \"texto:fundo\", por exemplo: \"lightred:blue\")"
+
 msgid "text color for actions in input line"
 msgstr "cor do texto de ações na linha de entrada"
 
@@ -6044,6 +6057,9 @@ msgstr "Cores WeeChat básicas:"
 
 msgid "Nick colors:"
 msgstr "Cores dos nicks:"
+
+msgid "Syntax highlighting colors in evaluated strings:"
+msgstr ""
 
 msgid "Color aliases:"
 msgstr "Alias de cores:"

@@ -2717,7 +2717,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0, 4.2.0._
 
 Evaluate an expression and return result as a string.
 Special variables with format `+${variable}+` are expanded (see table below).
@@ -3050,10 +3050,20 @@ expanded to last):
 |===
 | Format | Min WeeChat | Description | Examples
 
+| `+${raw_hl:xxx}+` | 4.2.0
+| Raw string (not evaluated), with syntax highlighting (using colors).
+| >> `+${raw_hl:${cut:1,,${rev:hello}}}+` +
+  == `+${cut:1,,${rev:hello}}+` (with colors)
+
 | `+${raw:xxx}+` | 3.1
 | Raw string (not evaluated).
 | >> `+${raw:${info:version}}+` +
   == `+${info:version}+`
+
+| `+${hl:xxx}+` | 4.2.0
+| String with syntax highlighting (using colors).
+| >> `+${hl:${file.section.option}}+` +
+  == `+test ${variable}+` (with colors)
 
 | `+${name}+` | 3.4
 | User variable (defined with `+${define:name,value}+`).

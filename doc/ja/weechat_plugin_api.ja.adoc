@@ -2637,7 +2637,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 // TRANSLATION MISSING
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0, 4.2.0._
 
 式を評価して文字列として返す。`+${variable}+`
 という書式で書かれた特殊変数は展開されます (以下の表を参照)。
@@ -2980,11 +2980,23 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 // TRANSLATION MISSING
 | 書式 | Min WeeChat | 説明 | 例
 
+// TRANLSATION MISSING
+| `+${raw_hl:xxx}+` | 4.2.0
+| Raw string (not evaluated), with syntax highlighting (using colors).
+| >> `+${raw_hl:${cut:1,,${rev:hello}}}+` +
+  == `+${cut:1,,${rev:hello}}+` (with colors)
+
 // TRANSLATION MISSING
 | `+${raw:xxx}+` | 3.1
 | Raw string (not evaluated).
 | >> `+${raw:${info:version}}+` +
   == `+${info:version}+`
+
+// TRANSLATION MISSING
+| `+${hl:xxx}+` | 4.2.0
+| String with syntax highlighting (using colors).
+| >> `+${hl:${file.section.option}}+` +
+  == `+test ${variable}+` (with colors)
 
 // TRANSLATION MISSING
 | `+${name}+` | 3.4

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-11 08:54+0100\n"
+"POT-Creation-Date: 2023-11-23 08:13+0100\n"
 "PO-Revision-Date: 2023-10-20 13:09+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4515,6 +4515,14 @@ msgid ""
 "(default value)"
 msgstr ""
 
+#. TRANSLATORS: please do not translate "lightred:blue"
+#, fuzzy
+msgid ""
+"text color for syntax highlighting in evaluated strings, with "
+"\"${raw_hl:...}\" and \"${hl:...}\" (comma separated list of colors, "
+"background is allowed with format: \"fg:bg\", for example: \"lightred:blue\")"
+msgstr "idő színe a beszédablakban"
+
 #, fuzzy
 msgid "text color for actions in input line"
 msgstr "kilépési nyíl színe"
@@ -5405,6 +5413,9 @@ msgstr "WeeChat Hiba:"
 #, fuzzy
 msgid "Nick colors:"
 msgstr "üzenetek színe"
+
+msgid "Syntax highlighting colors in evaluated strings:"
+msgstr ""
 
 #, fuzzy
 msgid "Color aliases:"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-11 08:54+0100\n"
+"POT-Creation-Date: 2023-11-23 08:13+0100\n"
 "PO-Revision-Date: 2023-10-20 13:11+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5088,6 +5088,19 @@ msgstr ""
 "yalnızca weechat.look.emphasized_attributes seçeneği boş bir diziyse "
 "kullanılır (öntanımlı değer)"
 
+#. TRANSLATORS: please do not translate "lightred:blue"
+#, fuzzy
+#| msgid ""
+#| "text color for nicks (comma separated list of colors, background is "
+#| "allowed with format: \"fg:bg\", for example: \"lightred:blue\")"
+msgid ""
+"text color for syntax highlighting in evaluated strings, with "
+"\"${raw_hl:...}\" and \"${hl:...}\" (comma separated list of colors, "
+"background is allowed with format: \"fg:bg\", for example: \"lightred:blue\")"
+msgstr ""
+"takma ad metin rengi (renklerin virgülle ayrılmış bir listesi, arka plan "
+"için \"fg:bg\" biçimiyle izin verilir; örneğin \"lightred:blue\""
+
 msgid "text color for actions in input line"
 msgstr "girdi satırındaki eylemler metin rengi"
 
@@ -6037,6 +6050,9 @@ msgstr "WeeChat temel renkleri:"
 
 msgid "Nick colors:"
 msgstr "Takma ad renkleri:"
+
+msgid "Syntax highlighting colors in evaluated strings:"
+msgstr ""
 
 msgid "Color aliases:"
 msgstr "Renk armaları:"

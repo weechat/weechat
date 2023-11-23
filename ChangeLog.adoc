@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
+  * core: add syntax highlighting in evaluation of expressions with `raw_hl:string` and `hl:string`, add option weechat.color.eval_syntax_colors (issue #2042)
   * core: add option `search_history` in command `/input`, add key kbd:[Ctrl+r] to search in commands history, add key context "histsearch" (issue #2040)
   * core: add option weechat.look.buffer_search_history (issue #2040)
   * core: add key kbd:[Ctrl+o] to send command found and insert next one in input (issue #2040)

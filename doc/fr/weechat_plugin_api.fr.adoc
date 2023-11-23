@@ -2613,7 +2613,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 _WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8,
-2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0._
+2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0, 4.2.0._
 
 Évaluer l'expression et retourner le résultat sous forme de chaîne.
 Les variables spéciales avec le format `+${variable}+` sont étendues (voir le
@@ -2952,10 +2952,21 @@ première étendue à la dernière) :
 |===
 | Format | WeeChat mini | Description | Exemples
 
+| `+${raw_hl:xxx}+` | 4.2.0
+| Chaîne brute (non évaluée), avec mise en évidence de la syntaxe (en utilisant
+  des couleurs).
+| >> `+${raw_hl:${cut:1,,${rev:hello}}}+` +
+  == `+${cut:1,,${rev:hello}}+` (avec des couleurs)
+
 | `+${raw:xxx}+` | 3.1
 | Chaîne brute (non évaluée).
 | >> `+${raw:${info:version}}+` +
   == `+${info:version}+`
+
+| `+${hl:xxx}+` | 4.2.0
+| Chaîne avec mise en évidence de la syntaxe (en utilisant des couleurs).
+| >> `+${hl:${fichier.section.option}}+` +
+  == `+test ${variable}+` (avec des couleurs)
 
 | `+${nom}+` | 3.4
 | Variable définie par l'utilisateur (avec `+${define:nom,valeur}+`).

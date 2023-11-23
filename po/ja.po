@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-11 08:54+0100\n"
+"POT-Creation-Date: 2023-11-23 08:13+0100\n"
 "PO-Revision-Date: 2023-10-20 13:10+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5053,6 +5053,19 @@ msgstr ""
 "emphasized_attributes オプションが空文字列 (デフォルト値) の場合のみ使われま"
 "す"
 
+#. TRANSLATORS: please do not translate "lightred:blue"
+#, fuzzy
+#| msgid ""
+#| "text color for nicks (comma separated list of colors, background is "
+#| "allowed with format: \"fg:bg\", for example: \"lightred:blue\")"
+msgid ""
+"text color for syntax highlighting in evaluated strings, with "
+"\"${raw_hl:...}\" and \"${hl:...}\" (comma separated list of colors, "
+"background is allowed with format: \"fg:bg\", for example: \"lightred:blue\")"
+msgstr ""
+"ニックネームのテキスト色 (コンマ区切りの色リスト、背景色は以下の書式で指定: "
+"\"fg:bg\"、例: \"lightred:blue\")"
+
 msgid "text color for actions in input line"
 msgstr "入力がアクションの場合のテキスト色"
 
@@ -5977,6 +5990,9 @@ msgstr "WeeChat 基本色:"
 
 msgid "Nick colors:"
 msgstr "ニックネーム色:"
+
+msgid "Syntax highlighting colors in evaluated strings:"
+msgstr ""
 
 msgid "Color aliases:"
 msgstr "色別名:"

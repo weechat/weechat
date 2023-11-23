@@ -2479,7 +2479,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6 и 3.8, 4.0.0._
+_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6 и 3.8, 4.0.0, 4.2.0._
 
 Израчунава израз и враћа вредност као стринг. Специјалне променљиве у формату `+${променљива}+` се развијају (погледајте табелу испод).
 
@@ -2789,10 +2789,22 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 |===
 | Формат | Мин WeeChat | Опис | Примери
 
+// TRANLSATION MISSING
+| `+${raw_hl:xxx}+` | 4.2.0
+| Raw string (not evaluated), with syntax highlighting (using colors).
+| >> `+${raw_hl:${cut:1,,${rev:hello}}}+` +
+  == `+${cut:1,,${rev:hello}}+` (with colors)
+
 | `+${raw:xxx}+` | 3.1
 | Сирови стринг (не израчунава се).
 | >> `+${raw:${info:version}}+` +
   == `+${info:version}+`
+
+// TRANSLATION MISSING
+| `+${hl:xxx}+` | 4.2.0
+| String with syntax highlighting (using colors).
+| >> `+${hl:${file.section.option}}+` +
+  == `+test ${variable}+` (with colors)
 
 | `+${име}+` | 3.4
 | Корисничка променљива (дефинисана са `+${define:име,вредност}+`).
