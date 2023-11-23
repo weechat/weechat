@@ -83,13 +83,14 @@ extern "C"
         regfree(&regex);
 
 #define WEE_REPLACE_CB(__result_replace, __result_errors,               \
-                       __str, __prefix, __suffix,                       \
+                       __str, __prefix, __suffix, __allow_escape,       \
                        __list_prefix_no_replace,                        \
                        __callback, __callback_data, __errors)           \
     errors = -1;                                                        \
     result = string_replace_with_callback (                             \
-        __str, __prefix, __suffix, __list_prefix_no_replace,            \
-        __callback, __callback_data, __errors);                         \
+        __str, __prefix, __suffix, __allow_escape,                      \
+        __list_prefix_no_replace, __callback, __callback_data,          \
+        __errors);                                                      \
     if (__result_replace == NULL)                                       \
     {                                                                   \
         POINTERS_EQUAL(NULL, result);                                   \
@@ -1429,55 +1430,59 @@ TEST(CoreString, ReplaceWithCallback)
     int errors;
 
     /* tests with invalid arguments */
-    WEE_REPLACE_CB(NULL, -1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    WEE_REPLACE_CB(NULL, -1, "", NULL, NULL, NULL, NULL, NULL, NULL);
-    WEE_REPLACE_CB(NULL, -1, NULL, "", NULL, NULL, NULL, NULL, NULL);
-    WEE_REPLACE_CB(NULL, -1, NULL, NULL, "", NULL, NULL, NULL, NULL);
-    WEE_REPLACE_CB(NULL, -1, NULL, NULL, NULL, NULL, &test_replace_cb, NULL, NULL);
-    WEE_REPLACE_CB(NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, &errors);
-    WEE_REPLACE_CB(NULL, -1, "test", NULL, NULL, NULL, NULL, NULL, NULL);
-    WEE_REPLACE_CB(NULL, -1, "test", "${", NULL, NULL, NULL, NULL, NULL);
-    WEE_REPLACE_CB(NULL, -1, "test", NULL, "}", NULL, NULL, NULL, NULL);
-    WEE_REPLACE_CB(NULL, -1, "test", NULL, NULL, NULL, &test_replace_cb, NULL, NULL);
-    WEE_REPLACE_CB(NULL, 0, "test", NULL, NULL, NULL, NULL, NULL, &errors);
-    WEE_REPLACE_CB(NULL, -1, "test", "${", "}", NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, "", NULL, NULL, 1, NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, NULL, "", NULL, 1, NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, NULL, NULL, "", 1, NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, NULL, NULL, NULL, 1, NULL, &test_replace_cb, NULL, NULL);
+    WEE_REPLACE_CB(NULL, 0, NULL, NULL, NULL, 1, NULL, NULL, NULL, &errors);
+    WEE_REPLACE_CB(NULL, -1, "test", NULL, NULL, 1, NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, "test", "${", NULL, 1, NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, "test", NULL, "}", 1, NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, "test", NULL, NULL, 1, NULL, &test_replace_cb, NULL, NULL);
+    WEE_REPLACE_CB(NULL, 0, "test", NULL, NULL, 1, NULL, NULL, NULL, &errors);
+    WEE_REPLACE_CB(NULL, -1, "test", "${", "}", 1, NULL, NULL, NULL, NULL);
 
     /* valid arguments */
-    WEE_REPLACE_CB("test", -1, "test", "${", "}", NULL,
+    WEE_REPLACE_CB("test", -1, "test", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, NULL);
-    WEE_REPLACE_CB("test", 0, "test", "${", "}", NULL,
+    WEE_REPLACE_CB("test", 0, "test", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("test def", 0, "test ${abc}", "${", "}", NULL,
+    WEE_REPLACE_CB("test def", 0, "test ${abc}", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("test ", 0, "test ${empty}", "${", "}", NULL,
+    WEE_REPLACE_CB("test ", 0, "test ${empty}", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("test ${aaa", 1, "test ${aaa", "${", "}", NULL,
+    WEE_REPLACE_CB("test ${aaa", 1, "test ${aaa", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("test ", 0, "test ${empty", "${", "}", NULL,
+    WEE_REPLACE_CB("test ", 0, "test ${empty", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("test ${aaa}", 1, "test ${aaa}", "${", "}", NULL,
+    WEE_REPLACE_CB("test ${empty", 0, "test \\${empty", "${", "}", 1, NULL,
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test \\${empty", 0, "test \\${empty", "${", "}", 0, NULL,
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test ${aaa}", 1, "test ${aaa}", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
     WEE_REPLACE_CB("test def  ${aaa}", 1, "test ${abc} ${empty} ${aaa}",
-                   "${", "}", NULL, &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("test def", 0, "test ${abc", "${", "}", NULL,
+                   "${", "}", 1, NULL, &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test def", 0, "test ${abc", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("test abc}", 0, "test abc}", "${", "}", NULL,
+    WEE_REPLACE_CB("test abc}", 0, "test abc}", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("test ${}", 1, "test ${}", "${", "}", NULL,
+    WEE_REPLACE_CB("test ${}", 1, "test ${}", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("test ${ }", 1, "test ${ }", "${", "}", NULL,
+    WEE_REPLACE_CB("test ${ }", 1, "test ${ }", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("def", 0, "${abc}", "${", "}", NULL,
+    WEE_REPLACE_CB("def", 0, "${abc}", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("", 0, "${empty}", "${", "}", NULL,
+    WEE_REPLACE_CB("", 0, "${empty}", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
-    WEE_REPLACE_CB("${aaa}", 1, "${aaa}", "${", "}", NULL,
+    WEE_REPLACE_CB("${aaa}", 1, "${aaa}", "${", "}", 1, NULL,
                    &test_replace_cb, NULL, &errors);
     WEE_REPLACE_CB("no_replace:def", 0, "${no_replace:${abc}}", "${", "}",
-                   NULL,
+                   1, NULL,
                    &test_replace_cb, NULL, &errors);
     WEE_REPLACE_CB("no_replace:${abc}", 0, "${no_replace:${abc}}", "${", "}",
-                   list_prefix_no_replace,
+                   1, list_prefix_no_replace,
                    &test_replace_cb, NULL, &errors);
 }
 
