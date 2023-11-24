@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-23 08:13+0100\n"
+"POT-Creation-Date: 2023-11-24 16:35+0100\n"
 "PO-Revision-Date: 2023-10-20 13:10+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -11065,6 +11065,9 @@ msgstr ""
 "が付けられていなかった場合、チャンネル名の前にチャンネルタイプを自動追加す"
 "る; 例: \"/join weechat\" とした場合、実際に送信されるコマンドは \"/join "
 "#weechat\" になります"
+
+msgid "use a dedicated buffer for the output of /list"
+msgstr ""
 
 #, fuzzy
 #| msgid "left/right scroll in fset buffer (percent of width)"

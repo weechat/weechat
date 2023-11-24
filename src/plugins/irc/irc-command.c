@@ -3391,7 +3391,7 @@ IRC_COMMAND_CALLBACK(list)
     struct t_hashtable *hashtable;
     char buf[512], *ptr_channel_name, *ptr_server_name, *ptr_regex;
     regex_t *new_regexp;
-    int i, ret, value;
+    int i, ret, value, use_list_buffer;
 
     IRC_BUFFER_GET_SERVER(buffer);
 
@@ -3403,6 +3403,7 @@ IRC_COMMAND_CALLBACK(list)
     ptr_server_name = NULL;
     ptr_regex = NULL;
     new_regexp = NULL;
+    use_list_buffer = weechat_config_boolean (irc_config_look_list_buffer);
 
     if ((argc > 0) && (weechat_strcmp (argv[1], "-up") == 0))
     {
@@ -3483,6 +3484,7 @@ IRC_COMMAND_CALLBACK(list)
             if (argc <= i + 1)
                 WEECHAT_COMMAND_ERROR;
             ptr_regex = argv_eol[i + 1];
+            use_list_buffer = 0;
             i++;
         }
         else if (!ptr_channel_name)
@@ -3535,7 +3537,7 @@ IRC_COMMAND_CALLBACK(list)
         ptr_server->cmd_list_regexp = NULL;
     }
 
-    if (ptr_server->list && !ptr_server->cmd_list_regexp)
+    if (ptr_server->list && use_list_buffer)
     {
         hashtable = weechat_hashtable_new (32,
                                            WEECHAT_HASHTABLE_STRING,

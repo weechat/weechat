@@ -93,6 +93,7 @@ struct t_config_option *irc_config_look_item_display_server = NULL;
 struct t_config_option *irc_config_look_item_nick_modes = NULL;
 struct t_config_option *irc_config_look_item_nick_prefix = NULL;
 struct t_config_option *irc_config_look_join_auto_add_chantype = NULL;
+struct t_config_option *irc_config_look_list_buffer = NULL;
 struct t_config_option *irc_config_look_list_buffer_scroll_horizontal = NULL;
 struct t_config_option *irc_config_look_list_buffer_sort = NULL;
 struct t_config_option *irc_config_look_list_buffer_topic_strip_colors = NULL;
@@ -3332,6 +3333,14 @@ irc_config_init ()
                "will in fact send: \"/join #weechat\""),
             NULL, 0, 0, "off", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_config_look_list_buffer = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "list_buffer", "boolean",
+            N_("use a dedicated buffer for the output of /list"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
         irc_config_look_list_buffer_scroll_horizontal = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "list_buffer_scroll_horizontal", "integer",

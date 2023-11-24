@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-23 08:13+0100\n"
+"POT-Creation-Date: 2023-11-24 16:35+0100\n"
 "PO-Revision-Date: 2023-10-20 13:11+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11211,6 +11211,9 @@ msgstr ""
 "eğer kanal adı sunucu için geçerli bir kanal türüyle başlamıyorsa /join "
 "komutundaki kanal adının önüne kendiliğinden kanal türünü ekle; örneğin: \"/"
 "join weechat\" komutu \"/join #weechat\" olarak algılanacaktır"
+
+msgid "use a dedicated buffer for the output of /list"
+msgstr ""
 
 #, fuzzy
 #| msgid "left/right scroll in fset buffer (percent of width)"
