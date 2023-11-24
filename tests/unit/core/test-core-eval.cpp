@@ -492,6 +492,7 @@ TEST(CoreEval, EvalExpression)
     /* test raw string with syntax highlighting */
     WEE_CHECK_EVAL("", "${raw_hl:}");
     WEE_CHECK_EVAL("test", "${raw_hl:test}");
+    WEE_CHECK_EVAL("\\${", "${raw_hl:\\${");
     snprintf (str_value, sizeof (str_value),
               "%s${info:version}%s",
               gui_color_get_custom (config_eval_syntax_colors[0]),
@@ -551,6 +552,7 @@ TEST(CoreEval, EvalExpression)
     /* test raw string */
     WEE_CHECK_EVAL("", "${raw:}");
     WEE_CHECK_EVAL("test", "${raw:test}");
+    WEE_CHECK_EVAL("\\${", "${raw:\\${");
     WEE_CHECK_EVAL("${info:version}", "${raw:${info:version}}");
     WEE_CHECK_EVAL("yes", "${if:${raw:test?}==${raw:test?}?yes:no}");
     WEE_CHECK_EVAL("no", "${if:${raw:test?}==${raw:test}?yes:no}");
