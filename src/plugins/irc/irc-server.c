@@ -2818,11 +2818,10 @@ irc_server_outqueue_send (struct t_irc_server *server)
                               '\r');
                 if (pos)
                     pos[0] = '\0';
+
                 irc_raw_print (server, IRC_RAW_FLAG_SEND |
                                ((server->outqueue[priority]->modified) ? IRC_RAW_FLAG_MODIFIED : 0),
                                server->outqueue[priority]->message_after_mod);
-                if (pos)
-                    pos[0] = '\r';
 
                 /* send signal with command that will be sent to server */
                 (void) irc_server_send_signal (
@@ -2839,6 +2838,9 @@ irc_server_outqueue_send (struct t_irc_server *server)
                     (tags_to_send) ? tags_to_send : "");
                 if (tags_to_send)
                     free (tags_to_send);
+
+                if (pos)
+                    pos[0] = '\r';
 
                 /* send command */
                 irc_server_send (
