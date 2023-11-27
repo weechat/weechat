@@ -2965,7 +2965,8 @@ IRC_PROTOCOL_CALLBACK(ping)
 
     str_params = irc_protocol_string_params (ctxt->params, 0, ctxt->num_params - 1);
 
-    irc_server_sendf (ctxt->server, 0, NULL, "PONG :%s", str_params);
+    irc_server_sendf (ctxt->server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
+                      "PONG :%s", str_params);
 
     if (str_params)
         free (str_params);
@@ -7060,7 +7061,7 @@ IRC_PROTOCOL_CALLBACK(432)
         irc_server_set_nick (ctxt->server, alternate_nick);
 
         irc_server_sendf (
-            ctxt->server, 0, NULL,
+            ctxt->server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
             "NICK %s%s",
             (ctxt->server->nick && strchr (ctxt->server->nick, ':')) ? ":" : "",
             ctxt->server->nick);
@@ -7111,7 +7112,7 @@ IRC_PROTOCOL_CALLBACK(433)
         irc_server_set_nick (ctxt->server, alternate_nick);
 
         irc_server_sendf (
-            ctxt->server, 0, NULL,
+            ctxt->server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
             "NICK %s%s",
             (ctxt->server->nick && strchr (ctxt->server->nick, ':')) ? ":" : "",
             ctxt->server->nick);
@@ -7168,7 +7169,7 @@ IRC_PROTOCOL_CALLBACK(437)
             irc_server_set_nick (ctxt->server, alternate_nick);
 
             irc_server_sendf (
-                ctxt->server, 0, NULL,
+                ctxt->server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
                 "NICK %s%s",
                 (ctxt->server->nick && strchr (ctxt->server->nick, ':')) ? ":" : "",
                 ctxt->server->nick);

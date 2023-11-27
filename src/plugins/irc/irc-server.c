@@ -116,8 +116,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "autorejoin",           "off"                     },
   { "autorejoin_delay",     "30"                      },
   { "connection_timeout",   "60"                      },
-  { "anti_flood_prio_high", "2"                       },
-  { "anti_flood_prio_low",  "2"                       },
+  { "anti_flood",           "2000"                    },
   { "away_check",           "0"                       },
   { "away_check_max_nicks", "25"                      },
   { "msg_kick",             ""                        },
@@ -153,6 +152,7 @@ int irc_fingerprint_digest_algos_size[IRC_FINGERPRINT_NUM_ALGOS] =
 { 160, 256, 512 };
 
 
+void irc_server_outqueue_send (struct t_irc_server *server);
 void irc_server_reconnect (struct t_irc_server *server);
 void irc_server_free_data (struct t_irc_server *server);
 void irc_server_autojoin_create_buffers (struct t_irc_server *server);
@@ -1697,6 +1697,7 @@ irc_server_alloc (const char *name)
     new_server->hook_fd = NULL;
     new_server->hook_timer_connection = NULL;
     new_server->hook_timer_sasl = NULL;
+    new_server->hook_timer_anti_flood = NULL;
     new_server->sasl_scram_client_first = NULL;
     new_server->sasl_scram_salted_pwd = NULL;
     new_server->sasl_scram_salted_pwd_size = 0;
@@ -1768,7 +1769,6 @@ irc_server_alloc (const char *name)
     new_server->lag_last_refresh = 0;
     new_server->cmd_list_regexp = NULL;
     new_server->list = irc_list_alloc (new_server);
-    new_server->last_user_message = 0;
     new_server->last_away_check = 0;
     new_server->last_data_purge = 0;
     for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
@@ -2323,6 +2323,8 @@ irc_server_free_data (struct t_irc_server *server)
         weechat_unhook (server->hook_timer_connection);
     if (server->hook_timer_sasl)
         weechat_unhook (server->hook_timer_sasl);
+    if (server->hook_timer_anti_flood)
+        weechat_unhook (server->hook_timer_anti_flood);
     irc_server_free_sasl_data (server);
     if (server->unterminated_message)
         free (server->unterminated_message);
@@ -2798,101 +2800,188 @@ irc_server_get_tags_to_send (const char *tags)
 }
 
 /*
- * Sends a message from out queue.
+ * Checks if all out queues are empty.
+ *
+ * Returns:
+ *   1: all out queues are empty
+ *   0: at least one out queue contains a message
+ */
+
+int
+irc_server_outqueue_all_empty (struct t_irc_server *server)
+{
+    int priority;
+
+    for (priority = 0; priority < IRC_SERVER_NUM_OUTQUEUES_PRIO; priority++)
+    {
+        if (server->outqueue[priority])
+            return 0;
+    }
+    return 1;
+}
+
+/*
+ * Timer called to send out queue (anti-flood).
+ */
+
+int
+irc_server_outqueue_timer_cb (const void *pointer, void *data, int remaining_calls)
+{
+    struct t_irc_server *server;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) remaining_calls;
+
+    server = (struct t_irc_server *)pointer;
+
+    irc_server_outqueue_send (server);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Removes anti-flood timer form a server (if set).
+ */
+
+void
+irc_server_outqueue_timer_remove (struct t_irc_server *server)
+{
+    if (!server)
+        return;
+
+    if (server->hook_timer_anti_flood)
+    {
+        weechat_unhook (server->hook_timer_anti_flood);
+        server->hook_timer_anti_flood = NULL;
+    }
+}
+
+/*
+ * Adds anti-flood timer in a server (removes it first if already set).
+ */
+
+void
+irc_server_outqueue_timer_add (struct t_irc_server *server)
+{
+    if (!server)
+        return;
+
+    if (server->hook_timer_anti_flood)
+        irc_server_outqueue_timer_remove (server);
+
+    server->hook_timer_anti_flood = weechat_hook_timer (
+        IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD),
+        0, 0,
+        &irc_server_outqueue_timer_cb,
+        server, NULL);
+}
+
+/*
+ * Sends one message from out queue.
+ */
+
+void
+irc_server_outqueue_send_one_msg (struct t_irc_server *server,
+                                  struct t_irc_outqueue *message)
+{
+    char *pos, *tags_to_send;
+
+    if (!server || !message)
+        return;
+
+    if (message->message_before_mod)
+    {
+        pos = strchr (message->message_before_mod, '\r');
+        if (pos)
+            pos[0] = '\0';
+        irc_raw_print (server, IRC_RAW_FLAG_SEND, message->message_before_mod);
+        if (pos)
+            pos[0] = '\r';
+    }
+
+    if (message->message_after_mod)
+    {
+        pos = strchr (message->message_after_mod, '\r');
+        if (pos)
+            pos[0] = '\0';
+
+        irc_raw_print (
+            server,
+            IRC_RAW_FLAG_SEND | ((message->modified) ? IRC_RAW_FLAG_MODIFIED : 0),
+            message->message_after_mod);
+
+        /* send signal with command that will be sent to server */
+        (void) irc_server_send_signal (
+            server,
+            "irc_out",
+            message->command,
+            message->message_after_mod,
+            NULL);
+        tags_to_send = irc_server_get_tags_to_send (message->tags);
+        (void) irc_server_send_signal (
+            server,
+            "irc_outtags",
+            message->command,
+            message->message_after_mod,
+            (tags_to_send) ? tags_to_send : "");
+        if (tags_to_send)
+            free (tags_to_send);
+
+        if (pos)
+            pos[0] = '\r';
+
+        /* send command */
+        irc_server_send (server,
+                         message->message_after_mod,
+                         strlen (message->message_after_mod));
+
+        /* start redirection if redirect is set */
+        if (message->redirect)
+        {
+            irc_redirect_init_command (message->redirect,
+                                       message->message_after_mod);
+        }
+    }
+}
+
+/*
+ * Sends one or multiple message from out queues, by order of priority
+ * (immediate/high/low), then from oldest message to newest in queue.
  */
 
 void
 irc_server_outqueue_send (struct t_irc_server *server)
 {
-    time_t time_now;
-    char *pos, *tags_to_send;
     int priority, anti_flood;
 
-    time_now = time (NULL);
+    if (irc_server_outqueue_all_empty (server))
+    {
+        irc_server_outqueue_timer_remove (server);
+        return;
+    }
 
-    /* detect if system clock has been changed (now lower than before) */
-    if (server->last_user_message > time_now)
-        server->last_user_message = time_now;
+    anti_flood = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD);
 
     for (priority = 0; priority < IRC_SERVER_NUM_OUTQUEUES_PRIO; priority++)
     {
-        switch (priority)
-        {
-            case 0: /* immediate send */
-                anti_flood = 0;
-                break;
-            case 1: /* high priority */
-                anti_flood = IRC_SERVER_OPTION_INTEGER(
-                    server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH);
-                break;
-            default: /* low priority */
-                anti_flood = IRC_SERVER_OPTION_INTEGER(
-                    server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW);
-                break;
-        }
-        if (server->outqueue[priority]
-            && (time_now >= server->last_user_message + anti_flood))
-        {
-            if (server->outqueue[priority]->message_before_mod)
-            {
-                pos = strchr (server->outqueue[priority]->message_before_mod,
-                              '\r');
-                if (pos)
-                    pos[0] = '\0';
-                irc_raw_print (server, IRC_RAW_FLAG_SEND,
-                               server->outqueue[priority]->message_before_mod);
-                if (pos)
-                    pos[0] = '\r';
-            }
-            if (server->outqueue[priority]->message_after_mod)
-            {
-                pos = strchr (server->outqueue[priority]->message_after_mod,
-                              '\r');
-                if (pos)
-                    pos[0] = '\0';
+        if (!server->outqueue[priority])
+            continue;
 
-                irc_raw_print (server, IRC_RAW_FLAG_SEND |
-                               ((server->outqueue[priority]->modified) ? IRC_RAW_FLAG_MODIFIED : 0),
-                               server->outqueue[priority]->message_after_mod);
+        irc_server_outqueue_send_one_msg (server, server->outqueue[priority]);
+        irc_server_outqueue_free (server, priority, server->outqueue[priority]);
 
-                /* send signal with command that will be sent to server */
-                (void) irc_server_send_signal (
-                    server, "irc_out",
-                    server->outqueue[priority]->command,
-                    server->outqueue[priority]->message_after_mod,
-                    NULL);
-                tags_to_send = irc_server_get_tags_to_send (
-                    server->outqueue[priority]->tags);
-                (void) irc_server_send_signal (
-                    server, "irc_outtags",
-                    server->outqueue[priority]->command,
-                    server->outqueue[priority]->message_after_mod,
-                    (tags_to_send) ? tags_to_send : "");
-                if (tags_to_send)
-                    free (tags_to_send);
-
-                if (pos)
-                    pos[0] = '\r';
-
-                /* send command */
-                irc_server_send (
-                    server, server->outqueue[priority]->message_after_mod,
-                    strlen (server->outqueue[priority]->message_after_mod));
-                server->last_user_message = time_now;
-
-                /* start redirection if redirect is set */
-                if (server->outqueue[priority]->redirect)
-                {
-                    irc_redirect_init_command (
-                        server->outqueue[priority]->redirect,
-                        server->outqueue[priority]->message_after_mod);
-                }
-            }
-            irc_server_outqueue_free (server, priority,
-                                      server->outqueue[priority]);
+        /*
+         * continue to send for immediate priority (= 0),
+         * exit loop now for high/low priorities (> 0) if anti flood is enabled
+         */
+        if ((priority > 0) && (anti_flood > 0))
             break;
-        }
     }
+
+    /* schedule next send if anti-flood is enabled */
+    if ((anti_flood > 0) && !server->hook_timer_anti_flood)
+        irc_server_outqueue_timer_add (server);
 }
 
 /*
@@ -2903,13 +2992,9 @@ irc_server_outqueue_send (struct t_irc_server *server)
  * queue_msg is priority:
  *   1 = higher priority, for user messages
  *   2 = lower priority, for other messages (like auto reply to CTCP queries)
- *
- * Returns:
- *   1: OK
- *   0: error
  */
 
-int
+void
 irc_server_send_one_msg (struct t_irc_server *server, int flags,
                          const char *message, const char *nick,
                          const char *command, const char *channel,
@@ -2919,12 +3004,8 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
     const char *ptr_msg, *ptr_chan_nick;
     char *new_msg, *pos, *tags_to_send, *msg_encoded;
     char str_modifier[128], modifier_data[1024];
-    int rc, queue_msg, add_to_queue, first_message, anti_flood;
-    int pos_channel, pos_text, pos_encode;
-    time_t time_now;
+    int first_message, queue_msg, pos_channel, pos_text, pos_encode;
     struct t_irc_redirect *ptr_redirect;
-
-    rc = 1;
 
     /* run modifier "irc_out_xxx" */
     snprintf (str_modifier, sizeof (str_modifier),
@@ -3017,7 +3098,7 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
         if (msg_encoded)
             ptr_msg = msg_encoded;
 
-        while (rc && ptr_msg && ptr_msg[0])
+        while (ptr_msg && ptr_msg[0])
         {
             pos = strchr (ptr_msg, '\n');
             if (pos)
@@ -3025,101 +3106,41 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
 
             snprintf (buffer, sizeof (buffer), "%s\r\n", ptr_msg);
 
-            /* anti-flood: look whether we should queue outgoing message or not */
-            time_now = time (NULL);
-
-            /* detect if system clock has been changed (now lower than before) */
-            if (server->last_user_message > time_now)
-                server->last_user_message = time_now;
-
-            /* get queue from flags */
-            queue_msg = 0;
             if (flags & IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE)
-                queue_msg = 1;
+                queue_msg = 0;
             else if (flags & IRC_SERVER_SEND_OUTQ_PRIO_HIGH)
-                queue_msg = 2;
+                queue_msg = 1;
             else if (flags & IRC_SERVER_SEND_OUTQ_PRIO_LOW)
-                queue_msg = 3;
-
-            switch (queue_msg - 1)
+                queue_msg = 2;
+            else
             {
-                case 0:
-                    anti_flood = 0;
-                    break;
-                case 1:
-                    anti_flood = IRC_SERVER_OPTION_INTEGER(
-                        server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH);
-                    break;
-                default:
-                    anti_flood = IRC_SERVER_OPTION_INTEGER(
-                        server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW);
-                    break;
-            }
-
-            add_to_queue = 0;
-            if ((queue_msg > 0)
-                && (server->outqueue[queue_msg - 1]
-                    || ((anti_flood > 0)
-                        && (time_now - server->last_user_message < anti_flood))))
-            {
-                add_to_queue = queue_msg;
+                /*
+                 * if connected to server (message 001 received), consider
+                 * it's low priority (otherwise send immediately)
+                 */
+                queue_msg = (server->is_connected) ? 2 : 0;
             }
 
             tags_to_send = irc_server_get_tags_to_send (tags);
 
             ptr_redirect = irc_redirect_search_available (server);
 
-            if (add_to_queue > 0)
-            {
-                /* queue message (do not send anything now) */
-                irc_server_outqueue_add (server, add_to_queue - 1, command,
-                                         (new_msg && first_message) ? message : NULL,
-                                         buffer,
-                                         (new_msg) ? 1 : 0,
-                                         tags_to_send,
-                                         ptr_redirect);
-                /* mark redirect as "used" */
-                if (ptr_redirect)
-                    ptr_redirect->assigned_to_command = 1;
-            }
-            else
-            {
-                if (first_message)
-                {
-                    irc_raw_print (server, IRC_RAW_FLAG_SEND, message);
-                }
-                if (new_msg)
-                {
-                    irc_raw_print (server,
-                                   IRC_RAW_FLAG_SEND | IRC_RAW_FLAG_MODIFIED,
-                                   ptr_msg);
-                }
+            /* queue message (do not send anything now) */
+            irc_server_outqueue_add (server,
+                                     queue_msg,
+                                     command,
+                                     (new_msg && first_message) ? message : NULL,
+                                     buffer,
+                                     (new_msg) ? 1 : 0,
+                                     tags_to_send,
+                                     ptr_redirect);
 
-                /* send signal with command that will be sent to server */
-                (void) irc_server_send_signal (
-                    server, "irc_out",
-                    (command) ? command : "unknown",
-                    ptr_msg,
-                    NULL);
-                (void) irc_server_send_signal (
-                    server, "irc_outtags",
-                    (command) ? command : "unknown",
-                    ptr_msg,
-                    (tags_to_send) ? tags_to_send : "");
-
-                if (irc_server_send (server, buffer, strlen (buffer)) <= 0)
-                    rc = 0;
-                else
-                {
-                    if (queue_msg > 0)
-                        server->last_user_message = time_now;
-                }
-                if (ptr_redirect)
-                    irc_redirect_init_command (ptr_redirect, buffer);
-            }
+            /* mark redirect as "used" */
+            if (ptr_redirect)
+                ptr_redirect->assigned_to_command = 1;
 
             if (tags_to_send)
-                    free (tags_to_send);
+                free (tags_to_send);
 
             if (pos)
             {
@@ -3142,8 +3163,6 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
 
     if (new_msg)
         free (new_msg);
-
-    return rc;
 }
 
 /*
@@ -3293,9 +3312,8 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
                 str_message = weechat_hashtable_get (hashtable, hash_key);
                 if (!str_message)
                     break;
-                if (!irc_server_send_one_msg (server, flags, str_message,
-                                              nick, command, channel, tags))
-                    break;
+                irc_server_send_one_msg (server, flags, str_message,
+                                         nick, command, channel, tags);
                 if (!multiline && list_messages)
                 {
                     snprintf (hash_key, sizeof (hash_key), "args%d", number);
@@ -3318,6 +3336,17 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
     if (new_msg)
         free (new_msg);
     free (vbuffer);
+
+    /* send all messages with "immediate" priority */
+    while (server->outqueue[0])
+    {
+        irc_server_outqueue_send_one_msg (server, server->outqueue[0]);
+        irc_server_outqueue_free (server, 0, server->outqueue[0]);
+    }
+
+    /* send any other messages, if any, possibly with anti-flood */
+    if (!server->hook_timer_anti_flood)
+        irc_server_outqueue_send (server);
 
     return list_messages;
 }
@@ -4008,15 +4037,15 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
             if (!ptr_server->is_connected)
                 continue;
 
-            /* send queued messages */
-            irc_server_outqueue_send (ptr_server);
-
             /* check for lag */
             if ((weechat_config_integer (irc_config_network_lag_check) > 0)
                 && (ptr_server->lag_check_time.tv_sec == 0)
                 && (current_time >= ptr_server->lag_next_check))
             {
-                irc_server_sendf (ptr_server, 0, NULL, "PING %s",
+                irc_server_sendf (ptr_server,
+                                  IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE,
+                                  NULL,  /* tags */
+                                  "PING %s",
                                   (ptr_server->current_address) ?
                                   ptr_server->current_address : "weechat");
                 gettimeofday (&(ptr_server->lag_check_time), NULL);
@@ -4202,6 +4231,12 @@ irc_server_close_connection (struct t_irc_server *server)
     }
     irc_server_free_sasl_data (server);
 
+    if (server->hook_timer_anti_flood)
+    {
+        weechat_unhook (server->hook_timer_anti_flood);
+        server->hook_timer_anti_flood = NULL;
+    }
+
     if (server->hook_fd)
     {
         weechat_unhook (server->hook_fd);
@@ -4364,7 +4399,7 @@ irc_server_login (struct t_irc_server *server)
     if (password && password[0])
     {
         irc_server_sendf (
-            server, 0, NULL,
+            server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
             "PASS %s%s",
             ((password[0] == ':') || (strchr (password, ' '))) ? ":" : "",
             password);
@@ -4384,18 +4419,19 @@ irc_server_login (struct t_irc_server *server)
 
     if (irc_server_sasl_enabled (server) || (capabilities && capabilities[0]))
     {
-        irc_server_sendf (server, 0, NULL, "CAP LS " IRC_SERVER_VERSION_CAP);
+        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
+                          "CAP LS " IRC_SERVER_VERSION_CAP);
     }
 
     username2 = (username && username[0]) ?
         weechat_string_replace (username, " ", "_") : strdup ("weechat");
     irc_server_sendf (
-        server, 0, NULL,
+        server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
         "NICK %s%s",
         (server->nick && strchr (server->nick, ':')) ? ":" : "",
         server->nick);
     irc_server_sendf (
-        server, 0, NULL,
+        server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
         "USER %s 0 * :%s",
         (username2) ? username2 : "weechat",
         (realname && realname[0]) ? realname : ((username2) ? username2 : "weechat"));
@@ -6482,6 +6518,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, hook_fd, POINTER, 0, NULL, "hook");
         WEECHAT_HDATA_VAR(struct t_irc_server, hook_timer_connection, POINTER, 0, NULL, "hook");
         WEECHAT_HDATA_VAR(struct t_irc_server, hook_timer_sasl, POINTER, 0, NULL, "hook");
+        WEECHAT_HDATA_VAR(struct t_irc_server, hook_timer_anti_flood, POINTER, 0, NULL, "hook");
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_client_first, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_salted_pwd, OTHER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sasl_scram_salted_pwd_size, INTEGER, 0, NULL, NULL);
@@ -6542,7 +6579,6 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, lag_last_refresh, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, cmd_list_regexp, POINTER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, list, POINTER, 0, NULL, "irc_list");
-        WEECHAT_HDATA_VAR(struct t_irc_server, last_user_message, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, last_away_check, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, last_data_purge, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, outqueue, POINTER, 0, NULL, NULL);
@@ -6711,11 +6747,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "connection_timeout",
                                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_CONNECTION_TIMEOUT)))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "anti_flood_prio_high",
-                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH)))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "anti_flood_prio_low",
-                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW)))
+    if (!weechat_infolist_new_var_integer (ptr_item, "anti_flood",
+                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD)))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "away_check",
                                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK)))
@@ -6919,8 +6952,6 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "autojoin_done", server->autojoin_done))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "disable_autojoin", server->disable_autojoin))
-        return 0;
-    if (!weechat_infolist_new_var_time (ptr_item, "last_user_message", server->last_user_message))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "last_away_check", server->last_away_check))
         return 0;
@@ -7185,20 +7216,13 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  connection_timeout. . . . : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT]));
-        /* anti_flood_prio_high */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH]))
-            weechat_log_printf ("  anti_flood_prio_high. . . : null (%d)",
-                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH));
+        /* anti_flood */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD]))
+            weechat_log_printf ("  anti_flood. . . . . . . . : null (%d)",
+                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_ANTI_FLOOD));
         else
-            weechat_log_printf ("  anti_flood_prio_high. . . : %d",
-                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH]));
-        /* anti_flood_prio_low */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW]))
-            weechat_log_printf ("  anti_flood_prio_low . . . : null (%d)",
-                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW));
-        else
-            weechat_log_printf ("  anti_flood_prio_low . . . : %d",
-                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW]));
+            weechat_log_printf ("  anti_flood. . . . . . . . : %d",
+                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_ANTI_FLOOD]));
         /* away_check */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AWAY_CHECK]))
             weechat_log_printf ("  away_check. . . . . . . . : null (%d)",
@@ -7254,6 +7278,7 @@ irc_server_print_log ()
         weechat_log_printf ("  hook_fd . . . . . . . . . : 0x%lx", ptr_server->hook_fd);
         weechat_log_printf ("  hook_timer_connection . . : 0x%lx", ptr_server->hook_timer_connection);
         weechat_log_printf ("  hook_timer_sasl . . . . . : 0x%lx", ptr_server->hook_timer_sasl);
+        weechat_log_printf ("  hook_timer_anti_flood . . : 0x%lx", ptr_server->hook_timer_anti_flood);
         weechat_log_printf ("  sasl_scram_client_first . : '%s'",  ptr_server->sasl_scram_client_first);
         weechat_log_printf ("  sasl_scram_salted_pwd . . : (hidden)");
         weechat_log_printf ("  sasl_scram_salted_pwd_size: %d",    ptr_server->sasl_scram_salted_pwd_size);
@@ -7331,7 +7356,6 @@ irc_server_print_log ()
             weechat_log_printf ("    channels. . . . . . . . : 0x%lx", ptr_server->list->channels);
             weechat_log_printf ("    filter_channels . . . . : 0x%lx", ptr_server->list->filter_channels);
         }
-        weechat_log_printf ("  last_user_message . . . . : %lld",  (long long)ptr_server->last_user_message);
         weechat_log_printf ("  last_away_check . . . . . : %lld",  (long long)ptr_server->last_away_check);
         weechat_log_printf ("  last_data_purge . . . . . : %lld",  (long long)ptr_server->last_data_purge);
         for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)

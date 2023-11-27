@@ -2366,11 +2366,13 @@ irc_command_quit_server (struct t_irc_server *server, const char *arguments)
     if (ptr_arg && ptr_arg[0])
     {
         msg = irc_server_get_default_msg (ptr_arg, server, NULL, NULL);
-        irc_server_sendf (server, 0, NULL, "QUIT :%s", msg);
+        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
+                          "QUIT :%s", msg);
     }
     else
     {
-        irc_server_sendf (server, 0, NULL, "QUIT");
+        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
+                          "QUIT");
     }
 
     if (msg)
@@ -5495,26 +5497,16 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_integer (server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT]),
                             NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT])));
-        /* anti_flood_prio_high */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH]))
-            weechat_printf (NULL, "  anti_flood_prio_high :   (%d %s)",
-                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH),
-                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH)));
+        /* anti_flood */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ANTI_FLOOD]))
+            weechat_printf (NULL, "  anti_flood . . . . . :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD)));
         else
-            weechat_printf (NULL, "  anti_flood_prio_high : %s%d %s",
+            weechat_printf (NULL, "  anti_flood . . . . . : %s%d %s",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH]),
-                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH])));
-        /* anti_flood_prio_low */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW]))
-            weechat_printf (NULL, "  anti_flood_prio_low. :   (%d %s)",
-                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW),
-                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW)));
-        else
-            weechat_printf (NULL, "  anti_flood_prio_low. : %s%d %s",
-                            IRC_COLOR_CHAT_VALUE,
-                            weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW]),
-                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW])));
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD])));
         /* away_check */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AWAY_CHECK]))
             weechat_printf (NULL, "  away_check . . . . . :   (%d %s)",
@@ -6176,7 +6168,8 @@ IRC_COMMAND_CALLBACK(squit)
 
     WEECHAT_COMMAND_MIN_ARGS(2, "");
 
-    irc_server_sendf (ptr_server, 0, NULL, "SQUIT %s", argv_eol[1]);
+    irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
+                      "SQUIT %s", argv_eol[1]);
 
     return WEECHAT_RC_OK;
 }

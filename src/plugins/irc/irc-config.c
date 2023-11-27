@@ -179,12 +179,7 @@ struct t_config_option *irc_config_network_whois_double_nick = NULL;
 
 /* IRC config, server section */
 
-struct t_config_option *irc_config_server_default[IRC_SERVER_NUM_OPTIONS] = {
-    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-};
+struct t_config_option *irc_config_server_default[IRC_SERVER_NUM_OPTIONS];
 struct t_hook *irc_config_hook_config_nick_color_options = NULL;
 struct t_hook *irc_config_hook_config_chat_nick_colors = NULL;
 struct t_hashtable *irc_config_hashtable_display_join_message = NULL;
@@ -1102,6 +1097,13 @@ irc_config_server_default_change_cb (const void *pointer, void *data,
                         irc_server_set_nicks (ptr_server,
                                               weechat_config_string (option));
                         break;
+                    case IRC_SERVER_OPTION_ANTI_FLOOD:
+                        if (ptr_server->hook_timer_anti_flood)
+                        {
+                            irc_server_outqueue_timer_remove (ptr_server);
+                            irc_server_outqueue_timer_add (ptr_server);
+                        }
+                        break;
                     case IRC_SERVER_OPTION_AWAY_CHECK:
                     case IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS:
                         if (IRC_SERVER_OPTION_INTEGER(
@@ -1400,6 +1402,13 @@ irc_config_server_change_cb (const void *pointer, void *data,
                         ptr_server,
                         IRC_SERVER_OPTION_STRING(ptr_server,
                                                  IRC_SERVER_OPTION_NICKS));
+                    break;
+                case IRC_SERVER_OPTION_ANTI_FLOOD:
+                    if (ptr_server->hook_timer_anti_flood)
+                    {
+                        irc_server_outqueue_timer_remove (ptr_server);
+                        irc_server_outqueue_timer_add (ptr_server);
+                    }
                     break;
                 case IRC_SERVER_OPTION_AWAY_CHECK:
                 case IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS:
@@ -2503,32 +2512,19 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH:
+        case IRC_SERVER_OPTION_ANTI_FLOOD:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "integer",
-                N_("anti-flood for high priority queue: number of seconds "
-                   "between two user messages or commands sent to IRC server "
-                   "(0 = no anti-flood)"),
-                NULL, 0, 60,
-                default_value, value,
-                null_value_allowed,
-                callback_check_value,
-                callback_check_value_pointer,
-                callback_check_value_data,
-                callback_change,
-                callback_change_pointer,
-                callback_change_data,
-                NULL, NULL, NULL);
-            break;
-        case IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW:
-            new_option = weechat_config_new_option (
-                config_file, section,
-                option_name, "integer",
-                N_("anti-flood for low priority queue: number of seconds "
-                   "between two messages sent to IRC server (messages like "
-                   "automatic CTCP replies) (0 = no anti-flood)"),
-                NULL, 0, 60,
+                N_("delay in milliseconds between two messages sent to server "
+                   "(anti-flood); 0 = disable anti-flood and always send "
+                   "all messages immediately (not recommended as you can be "
+                   "quickly killed by the server); "
+                   "internally there are queues with different priorities: "
+                   "when connecting to the server all messages are sent "
+                   "immediately and your messages have higher priority than "
+                   "some automatic messages that are sent in background"),
+                NULL, 0, 60000,
                 default_value, value,
                 null_value_allowed,
                 callback_check_value,
@@ -3010,6 +3006,8 @@ irc_config_update_cb (const void *pointer, void *data,
 int
 irc_config_init ()
 {
+    int i;
+
     irc_config_hashtable_display_join_message = weechat_hashtable_new (
         32,
         WEECHAT_HASHTABLE_STRING,
@@ -3030,6 +3028,11 @@ irc_config_init ()
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING,
         NULL, NULL);
+
+    for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
+    {
+        irc_config_server_default[i] = NULL;
+    }
 
     irc_config_file = weechat_config_new (IRC_CONFIG_PRIO_NAME,
                                           &irc_config_reload, NULL, NULL);

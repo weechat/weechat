@@ -83,8 +83,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_AUTOREJOIN,    /* auto rejoin channels when kicked     */
     IRC_SERVER_OPTION_AUTOREJOIN_DELAY,     /* delay before auto rejoin      */
     IRC_SERVER_OPTION_CONNECTION_TIMEOUT,   /* timeout for connection        */
-    IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH, /* anti-flood (high priority)    */
-    IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW,  /* anti-flood (low priority)     */
+    IRC_SERVER_OPTION_ANTI_FLOOD,           /* anti-flood (in ms)            */
     IRC_SERVER_OPTION_AWAY_CHECK,           /* delay between away checks     */
     IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS, /* max nicks for away check      */
     IRC_SERVER_OPTION_MSG_KICK,             /* default kick message          */
@@ -217,6 +216,7 @@ struct t_irc_server
     struct t_hook *hook_fd;         /* hook for server socket                */
     struct t_hook *hook_timer_connection; /* timer for connection            */
     struct t_hook *hook_timer_sasl; /* timer for SASL authentication         */
+    struct t_hook *hook_timer_anti_flood; /* anti-flood timer                */
     char *sasl_scram_client_first;  /* first message sent for SASL SCRAM     */
     char *sasl_scram_salted_pwd;    /* salted password for SASL SCRAM        */
     int sasl_scram_salted_pwd_size; /* size of salted password for SASL SCRAM*/
@@ -282,7 +282,6 @@ struct t_irc_server
     time_t lag_last_refresh;        /* last refresh of lag item              */
     regex_t *cmd_list_regexp;       /* compiled Regular Expression for /list */
     struct t_irc_list *list;        /* /list buffer management               */
-    time_t last_user_message;       /* time of last user message (anti flood)*/
     time_t last_away_check;         /* time of last away check on server     */
     time_t last_data_purge;         /* time of last purge (some hashtables)  */
     struct t_irc_outqueue *outqueue[IRC_SERVER_NUM_OUTQUEUES_PRIO];
@@ -413,6 +412,8 @@ extern int irc_server_send_signal (struct t_irc_server *server,
                                    const char *full_message,
                                    const char *tags);
 extern void irc_server_set_send_default_tags (const char *tags);
+extern void irc_server_outqueue_timer_remove (struct t_irc_server *server);
+extern void irc_server_outqueue_timer_add (struct t_irc_server *server);
 extern struct t_arraylist *irc_server_sendf (struct t_irc_server *server,
                                              int flags,
                                              const char *tags,
