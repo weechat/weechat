@@ -28,15 +28,18 @@
 #include <string.h>
 #include <time.h>
 #include <sys/socket.h>
+#include <sys/wait.h>
 #include <errno.h>
 
 #include "weechat.h"
+#include "wee-debug.h"
 #include "wee-hook.h"
 #include "wee-hashtable.h"
 #include "wee-infolist.h"
 #include "wee-log.h"
 #include "wee-signal.h"
 #include "wee-string.h"
+#include "wee-util.h"
 #include "../gui/gui-chat.h"
 #include "../plugins/plugin.h"
 
@@ -44,7 +47,7 @@
 char *hook_type_string[HOOK_NUM_TYPES] =
 { "command", "command_run", "timer", "fd", "process", "connect", "line",
   "print", "signal", "hsignal", "config", "completion", "modifier",
-  "info", "info_hashtable", "infolist", "hdata", "focus" };
+  "info", "info_hashtable", "infolist", "hdata", "focus", "url" };
 struct t_hook *weechat_hooks[HOOK_NUM_TYPES];     /* list of hooks          */
 struct t_hook *last_weechat_hook[HOOK_NUM_TYPES]; /* last hook              */
 int hooks_count[HOOK_NUM_TYPES];                  /* number of hooks        */
@@ -57,50 +60,98 @@ int hook_socketpair_ok = 0;            /* 1 if socketpair() is OK           */
 /* hook callbacks */
 t_callback_hook *hook_callback_add[HOOK_NUM_TYPES] =
 { NULL, NULL, NULL, &hook_fd_add_cb, NULL, NULL, NULL, NULL, NULL, NULL,
-  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 t_callback_hook *hook_callback_remove[HOOK_NUM_TYPES] =
 { NULL, NULL, NULL, &hook_fd_remove_cb, NULL, NULL, NULL, NULL, NULL, NULL,
-  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 t_callback_hook *hook_callback_free_data[HOOK_NUM_TYPES] =
-{ &hook_command_free_data, &hook_command_run_free_data,
-  &hook_timer_free_data, &hook_fd_free_data,
-  &hook_process_free_data, &hook_connect_free_data,
-  &hook_line_free_data, &hook_print_free_data,
-  &hook_signal_free_data, &hook_hsignal_free_data,
-  &hook_config_free_data, &hook_completion_free_data,
-  &hook_modifier_free_data, &hook_info_free_data,
-  &hook_info_hashtable_free_data, &hook_infolist_free_data,
-  &hook_hdata_free_data, &hook_focus_free_data };
+{
+    &hook_command_free_data,
+    &hook_command_run_free_data,
+    &hook_timer_free_data,
+    &hook_fd_free_data,
+    &hook_process_free_data,
+    &hook_connect_free_data,
+    &hook_line_free_data,
+    &hook_print_free_data,
+    &hook_signal_free_data,
+    &hook_hsignal_free_data,
+    &hook_config_free_data,
+    &hook_completion_free_data,
+    &hook_modifier_free_data,
+    &hook_info_free_data,
+    &hook_info_hashtable_free_data,
+    &hook_infolist_free_data,
+    &hook_hdata_free_data,
+    &hook_focus_free_data,
+    &hook_url_free_data,
+};
 t_callback_hook_get_desc *hook_callback_get_desc[HOOK_NUM_TYPES] =
-{ &hook_command_get_description, &hook_command_run_get_description,
-  &hook_timer_get_description, &hook_fd_get_description,
-  &hook_process_get_description, &hook_connect_get_description,
-  &hook_line_get_description, &hook_print_get_description,
-  &hook_signal_get_description, &hook_hsignal_get_description,
-  &hook_config_get_description, &hook_completion_get_description,
-  &hook_modifier_get_description, &hook_info_get_description,
-  &hook_info_hashtable_get_description, &hook_infolist_get_description,
-  &hook_hdata_get_description, &hook_focus_get_description };
+{
+    &hook_command_get_description,
+    &hook_command_run_get_description,
+    &hook_timer_get_description,
+    &hook_fd_get_description,
+    &hook_process_get_description,
+    &hook_connect_get_description,
+    &hook_line_get_description,
+    &hook_print_get_description,
+    &hook_signal_get_description,
+    &hook_hsignal_get_description,
+    &hook_config_get_description,
+    &hook_completion_get_description,
+    &hook_modifier_get_description,
+    &hook_info_get_description,
+    &hook_info_hashtable_get_description,
+    &hook_infolist_get_description,
+    &hook_hdata_get_description,
+    &hook_focus_get_description,
+    &hook_url_get_description,
+};
 t_callback_hook_infolist *hook_callback_add_to_infolist[HOOK_NUM_TYPES] =
-{ &hook_command_add_to_infolist, &hook_command_run_add_to_infolist,
-  &hook_timer_add_to_infolist, &hook_fd_add_to_infolist,
-  &hook_process_add_to_infolist, &hook_connect_add_to_infolist,
-  &hook_line_add_to_infolist, &hook_print_add_to_infolist,
-  &hook_signal_add_to_infolist, &hook_hsignal_add_to_infolist,
-  &hook_config_add_to_infolist, &hook_completion_add_to_infolist,
-  &hook_modifier_add_to_infolist, &hook_info_add_to_infolist,
-  &hook_info_hashtable_add_to_infolist, &hook_infolist_add_to_infolist,
-  &hook_hdata_add_to_infolist, &hook_focus_add_to_infolist };
+{
+    &hook_command_add_to_infolist,
+    &hook_command_run_add_to_infolist,
+    &hook_timer_add_to_infolist,
+    &hook_fd_add_to_infolist,
+    &hook_process_add_to_infolist,
+    &hook_connect_add_to_infolist,
+    &hook_line_add_to_infolist,
+    &hook_print_add_to_infolist,
+    &hook_signal_add_to_infolist,
+    &hook_hsignal_add_to_infolist,
+    &hook_config_add_to_infolist,
+    &hook_completion_add_to_infolist,
+    &hook_modifier_add_to_infolist,
+    &hook_info_add_to_infolist,
+    &hook_info_hashtable_add_to_infolist,
+    &hook_infolist_add_to_infolist,
+    &hook_hdata_add_to_infolist,
+    &hook_focus_add_to_infolist,
+    &hook_url_add_to_infolist,
+};
 t_callback_hook *hook_callback_print_log[HOOK_NUM_TYPES] =
-{ &hook_command_print_log, &hook_command_run_print_log,
-  &hook_timer_print_log, &hook_fd_print_log,
-  &hook_process_print_log, &hook_connect_print_log,
-  &hook_line_print_log, &hook_print_print_log,
-  &hook_signal_print_log, &hook_hsignal_print_log,
-  &hook_config_print_log, &hook_completion_print_log,
-  &hook_modifier_print_log, &hook_info_print_log,
-  &hook_info_hashtable_print_log, &hook_infolist_print_log,
-  &hook_hdata_print_log, &hook_focus_print_log };
+{
+    &hook_command_print_log,
+    &hook_command_run_print_log,
+    &hook_timer_print_log,
+    &hook_fd_print_log,
+    &hook_process_print_log,
+    &hook_connect_print_log,
+    &hook_line_print_log,
+    &hook_print_print_log,
+    &hook_signal_print_log,
+    &hook_hsignal_print_log,
+    &hook_config_print_log,
+    &hook_completion_print_log,
+    &hook_modifier_print_log,
+    &hook_info_print_log,
+    &hook_info_hashtable_print_log,
+    &hook_infolist_print_log,
+    &hook_hdata_print_log,
+    &hook_focus_print_log,
+    &hook_url_print_log,
+};
 
 
 /*
@@ -427,6 +478,67 @@ hook_exec_end ()
 }
 
 /*
+ * Starts execution of a hook callback.
+ */
+
+void
+hook_callback_start (struct t_hook *hook, struct t_hook_exec_cb *hook_exec_cb)
+{
+    if (hook->type == HOOK_TYPE_COMMAND)
+        hook->running++;
+    else
+        hook->running = 1;
+
+    if (debug_long_callbacks > 0)
+    {
+        gettimeofday (&hook_exec_cb->start_time, NULL);
+    }
+    else
+    {
+        hook_exec_cb->start_time.tv_sec = 0;
+        hook_exec_cb->start_time.tv_usec = 0;
+    }
+}
+
+/*
+ * Ends execution of a hook callback.
+ */
+
+void
+hook_callback_end (struct t_hook *hook, struct t_hook_exec_cb *hook_exec_cb)
+{
+    struct timeval end_time;
+    long long time_diff;
+    char *str_diff;
+
+    if (hook->type == HOOK_TYPE_COMMAND)
+        hook->running--;
+    else
+        hook->running = 0;
+
+    if ((debug_long_callbacks > 0)
+        && (hook_exec_cb->start_time.tv_sec > 0))
+    {
+        gettimeofday (&end_time, NULL);
+        time_diff = util_timeval_diff (&hook_exec_cb->start_time, &end_time);
+        if (time_diff >= debug_long_callbacks)
+        {
+            str_diff = util_get_microseconds_string (time_diff);
+            log_printf (
+                _("debug: long callback: hook %s (%s), plugin: %s, "
+                  "subplugin: %s, time elapsed: %s"),
+                hook_type_string[hook->type],
+                hook_get_description (hook),
+                plugin_get_name (hook->plugin),
+                (hook->subplugin) ? hook->subplugin : "-",
+                str_diff);
+            if (str_diff)
+                free (str_diff);
+        }
+    }
+}
+
+/*
  * Returns description of hook.
  *
  * Note: result must be freed after use.
@@ -513,6 +625,43 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
                 }
             }
         }
+    }
+}
+
+/*
+ * Callback used to clean a process (forked processes) by acknowledging its end.
+ */
+
+int
+hook_timer_clean_process_cb (const void *pointer, void *data,
+                             int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) remaining_calls;
+
+    waitpid (*((pid_t *)data), NULL, WNOHANG);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Schedule a cleanup timer to clean children (forked processes).
+ */
+
+void
+hook_schedule_clean_process (pid_t pid)
+{
+    pid_t *temp_pid;
+
+    /* temp_pid will be freed when the timer is removed */
+    temp_pid = malloc (sizeof (*temp_pid));
+    if (temp_pid)
+    {
+        *temp_pid = pid;
+        hook_timer (NULL, 100, 0, 1,
+                    &hook_timer_clean_process_cb, NULL, temp_pid);
     }
 }
 

@@ -1085,12 +1085,17 @@ script_buffer_set_callbacks ()
 
 /*
  * Sets keys on script buffer.
+ *
+ * If hashtable is not NULL, it is used to set keys, otherwise keys are directly
+ * set in the script buffer.
  */
 
 void
-script_buffer_set_keys ()
+script_buffer_set_keys (struct t_hashtable *hashtable)
 {
     char *keys[][2] = {
+        { "up",     "-up"            },
+        { "down",   "-down"          },
         { "meta-A", "toggleautoload" },
         { "meta-l", "load"           },
         { "meta-u", "unload"         },
@@ -1105,20 +1110,26 @@ script_buffer_set_keys ()
     char str_key[64], str_command[64];
     int i;
 
-    weechat_buffer_set (script_buffer, "key_bind_up", "/script up");
-    weechat_buffer_set (script_buffer, "key_bind_down", "/script down");
     for (i = 0; keys[i][0]; i++)
     {
-        if (weechat_config_boolean (script_config_look_use_keys))
+        if (weechat_config_boolean (script_config_look_use_keys)
+            || (strcmp (keys[i][1], "-up") == 0)
+            || (strcmp (keys[i][1], "-down") == 0))
         {
             snprintf (str_key, sizeof (str_key), "key_bind_%s", keys[i][0]);
             snprintf (str_command, sizeof (str_command), "/script %s", keys[i][1]);
-            weechat_buffer_set (script_buffer, str_key, str_command);
+            if (hashtable)
+                weechat_hashtable_set (hashtable, str_key, str_command);
+            else
+                weechat_buffer_set (script_buffer, str_key, str_command);
         }
         else
         {
             snprintf (str_key, sizeof (str_key), "key_unbind_%s", keys[i][0]);
-            weechat_buffer_set (script_buffer, str_key, "");
+            if (hashtable)
+                weechat_hashtable_set (hashtable, str_key, "");
+            else
+                weechat_buffer_set (script_buffer, str_key, "");
         }
     }
 }
@@ -1159,6 +1170,7 @@ script_buffer_open ()
         weechat_hashtable_set (buffer_props, "type", "free");
         weechat_hashtable_set (buffer_props, "title", _("Scripts"));
         weechat_hashtable_set (buffer_props, "localvar_set_type", "script");
+        script_buffer_set_keys (buffer_props);
     }
 
     script_buffer = weechat_buffer_new_props (
@@ -1173,7 +1185,6 @@ script_buffer_open ()
     if (!script_buffer)
         return;
 
-    script_buffer_set_keys ();
     script_buffer_set_localvar_filter ();
 
     script_buffer_selected_line = 0;

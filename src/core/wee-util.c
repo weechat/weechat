@@ -46,176 +46,6 @@
 #include "../plugins/plugin.h"
 
 
-#ifdef HAVE_SYS_RESOURCE_H
-struct t_rlimit_resource rlimit_resource[] =
-{
-#ifdef RLIMIT_AS
-    { "as", RLIMIT_AS },
-#endif
-#ifdef RLIMIT_CORE
-    { "core", RLIMIT_CORE },
-#endif
-#ifdef RLIMIT_CPU
-    { "cpu", RLIMIT_CPU },
-#endif
-#ifdef RLIMIT_DATA
-    { "data", RLIMIT_DATA },
-#endif
-#ifdef RLIMIT_FSIZE
-    { "fsize", RLIMIT_FSIZE },
-#endif
-#ifdef RLIMIT_LOCKS
-    { "locks", RLIMIT_LOCKS },
-#endif
-#ifdef RLIMIT_MEMLOCK
-    { "memlock", RLIMIT_MEMLOCK },
-#endif
-#ifdef RLIMIT_MSGQUEUE
-    { "msgqueue", RLIMIT_MSGQUEUE },
-#endif
-#ifdef RLIMIT_NICE
-    { "nice", RLIMIT_NICE },
-#endif
-#ifdef RLIMIT_NOFILE
-    { "nofile", RLIMIT_NOFILE },
-#endif
-#ifdef RLIMIT_NPROC
-    { "nproc", RLIMIT_NPROC },
-#endif
-#ifdef RLIMIT_RSS
-    { "rss", RLIMIT_RSS },
-#endif
-#ifdef RLIMIT_RTPRIO
-    { "rtprio", RLIMIT_RTPRIO },
-#endif
-#ifdef RLIMIT_RTTIME
-    { "rttime", RLIMIT_RTTIME },
-#endif
-#ifdef RLIMIT_SIGPENDING
-    { "sigpending", RLIMIT_SIGPENDING },
-#endif
-#ifdef RLIMIT_STACK
-    { "stack", RLIMIT_STACK },
-#endif
-    { NULL, 0 },
-};
-#endif /* HAVE_SYS_RESOURCE_H */
-
-
-/*
- * Sets resource limit.
- */
-
-#ifdef HAVE_SYS_RESOURCE_H
-void
-util_setrlimit_resource (const char *resource_name, long limit)
-{
-    int i;
-    struct rlimit rlim;
-    char str_limit[64];
-
-    if (!resource_name)
-        return;
-
-    if (limit == -1)
-        snprintf (str_limit, sizeof (str_limit), "unlimited");
-    else
-        snprintf (str_limit, sizeof (str_limit), "%ld", limit);
-
-    for (i = 0; rlimit_resource[i].name; i++)
-    {
-        if (strcmp (rlimit_resource[i].name, resource_name) == 0)
-        {
-            if (limit < -1)
-            {
-                gui_chat_printf (NULL,
-                                 _("%sInvalid limit for resource \"%s\": %s "
-                                   "(must be >= -1)"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 resource_name, str_limit);
-                return;
-            }
-            rlim.rlim_cur = (limit >= 0) ? (rlim_t)limit : RLIM_INFINITY;
-            rlim.rlim_max = rlim.rlim_cur;
-            if (setrlimit (rlimit_resource[i].resource, &rlim) == 0)
-            {
-                log_printf (_("Limit for resource \"%s\" has been set to %s"),
-                            resource_name, str_limit);
-                if (gui_init_ok)
-                {
-                    gui_chat_printf (NULL,
-                                     _("Limit for resource \"%s\" has been set "
-                                       "to %s"),
-                                     resource_name, str_limit);
-                }
-            }
-            else
-            {
-                gui_chat_printf (NULL,
-                                 _("%sUnable to set resource limit \"%s\" to "
-                                   "%s: error %d %s"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 resource_name, str_limit,
-                                 errno, strerror (errno));
-            }
-            return;
-        }
-    }
-
-    gui_chat_printf (NULL,
-                     _("%sUnknown resource limit \"%s\" (see /help "
-                       "weechat.startup.sys_rlimit)"),
-                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                     resource_name);
-}
-#endif /* HAVE_SYS_RESOURCE_H */
-
-/*
- * Sets resource limits using value of option "weechat.startup.sys_rlimit".
- */
-
-void
-util_setrlimit ()
-{
-#ifdef HAVE_SYS_RESOURCE_H
-    char **items, *pos, *error;
-    int num_items, i;
-    long number;
-
-    items = string_split (CONFIG_STRING(config_startup_sys_rlimit), ",", NULL,
-                          WEECHAT_STRING_SPLIT_STRIP_LEFT
-                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                          0, &num_items);
-    if (items)
-    {
-        for (i = 0; i < num_items; i++)
-        {
-            pos = strchr (items[i], ':');
-            if (pos)
-            {
-                pos[0] = '\0';
-                error = NULL;
-                number = strtol (pos + 1, &error, 10);
-                if (error && !error[0])
-                {
-                    util_setrlimit_resource (items[i], number);
-                }
-                else
-                {
-                    gui_chat_printf (NULL,
-                                     _("%sInvalid limit for resource \"%s\": "
-                                       "%s (must be >= -1)"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     items[i], pos + 1);
-                }
-            }
-        }
-        string_free_split (items);
-    }
-#endif /* HAVE_SYS_RESOURCE_H */
-}
-
 /*
  * Compares two timeval structures.
  *
@@ -286,6 +116,31 @@ util_timeval_add (struct timeval *tv, long long interval)
 }
 
 /*
+ * Converts microseconds to a string, using format: "H:MM:SS.mmmmmm"
+ * where: H=hours, MM=minutes, SS=seconds, mmmmmm=microseconds
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+util_get_microseconds_string (long long microseconds)
+{
+    long long hour, min, sec, usec;
+    char result[128];
+
+    usec = microseconds % 1000000;
+    sec = (microseconds / 1000000) % 60;
+    min = ((microseconds / 1000000) / 60) % 60;
+    hour = (microseconds / 1000000) / 3600;
+
+    snprintf (result, sizeof (result),
+              "%lld:%02lld:%02lld.%06lld",
+              hour, min, sec, usec);
+
+    return strdup (result);
+}
+
+/*
  * Converts date to a string, using format of option "weechat.look.time_format"
  * (can be localized).
  */
@@ -339,32 +194,34 @@ util_get_time_diff (time_t time1, time_t time2,
 
 /*
  * Parses a string with a delay and optional unit, returns the delay in
- * milliseconds.
+ * microseconds.
  *
  * The delay is a number followed by a unit which can be:
+ *   - "us": microseconds
  *   - "ms": milliseconds
  *   - "s": seconds
  *   - "m": minutes
  *   - "h": hours
  *
  * The default factor sets the default unit:
- *   - 1: milliseconds
- *   - 1000: seconds
- *   - 60000: minutes
- *   - 3600000: hours
+ *   - 1: microseconds
+ *   - 1000: milliseconds
+ *   - 1000000: seconds
+ *   - 60000000: minutes
+ *   - 3600000000: hours
  *
- * Returns the delay in milliseconds, -1 if error.
+ * Returns the delay in microseconds, -1 if error.
  */
 
-long
-util_parse_delay (const char *string_delay, long default_factor)
+long long
+util_parse_delay (const char *string_delay, long long default_factor)
 {
     const char *pos;
     char *str_number, *error;
-    long factor, delay;
+    long long factor, delay;
 
     if (!string_delay || !string_delay[0] || (default_factor < 1))
-        return -1;
+        return -1LL;
 
     factor = default_factor;
 
@@ -377,16 +234,18 @@ util_parse_delay (const char *string_delay, long default_factor)
     if ((pos > string_delay) && pos[0])
     {
         str_number = string_strndup (string_delay, pos - string_delay);
-        if (strcmp (pos, "ms") == 0)
-            factor = 1;
+        if (strcmp (pos, "us") == 0)
+            factor = 1LL;
+        else if (strcmp (pos, "ms") == 0)
+            factor = 1000LL;
         else if (strcmp (pos, "s") == 0)
-            factor = 1000;
+            factor = 1000LL * 1000LL;
         else if (strcmp (pos, "m") == 0)
-            factor = 1000 * 60;
+            factor = 1000LL * 1000LL * 60LL;
         else if (strcmp (pos, "h") == 0)
-            factor = 1000 * 60 * 60;
+            factor = 1000LL * 1000LL * 60LL * 60LL;
         else
-            return -1;
+            return -1LL;
     }
     else
     {
@@ -394,14 +253,14 @@ util_parse_delay (const char *string_delay, long default_factor)
     }
 
     if (!str_number)
-        return -1;
+        return -1LL;
 
     error = NULL;
-    delay = strtol (str_number, &error, 10);
+    delay = strtoll (str_number, &error, 10);
     if (!error || error[0] || (delay < 0))
     {
         free (str_number);
-        return -1;
+        return -1LL;
     }
 
     free (str_number);

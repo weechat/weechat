@@ -876,7 +876,7 @@ weechat_guile_command_cb (const void *pointer, void *data,
             {
                 /* load guile script */
                 path_script = plugin_script_search_path (weechat_guile_plugin,
-                                                         ptr_name);
+                                                         ptr_name, 1);
                 weechat_guile_load ((path_script) ? path_script : ptr_name,
                                     NULL);
                 if (path_script)

@@ -597,6 +597,9 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
     char *modifier_data, *string, *new_string, *pos_newline;
     struct t_gui_line *new_line;
 
+    if (!buffer)
+        return;
+
     new_line = NULL;
     string = NULL;
     modifier_data = NULL;
@@ -862,7 +865,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 {
     time_t date_printed;
     char *pos, *pos_end;
-    int one_line = 0;
+    int one_line;
 
     if (!message)
         return;
@@ -885,9 +888,11 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     if (date <= 0)
         date = date_printed;
 
+    one_line = 0;
     pos = vbuffer;
     while (pos)
     {
+        pos_end = NULL;
         if (!buffer || !buffer->input_multiline)
         {
             /* display until next end of line */
@@ -911,9 +916,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         }
 
         if (one_line)
-        {
             break;
-        }
 
         pos = (pos_end && pos_end[1]) ? pos_end + 1 : NULL;
     }
@@ -1076,6 +1079,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
         hashtable_get (hashtable, "_chat_line_date") : NULL;
     if (date)
     {
+        error = NULL;
         number = strtol (date, &error, 10);
         if (error && !error[0])
         {

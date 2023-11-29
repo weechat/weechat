@@ -43,6 +43,8 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/core/test-core-url.cpp
   unit/core/test-core-utf8.cpp
   unit/core/test-core-util.cpp
+  unit/core/test-core-sys.cpp
+  unit/core/hook/test-hook-command.cpp
   unit/gui/test-gui-bar.cpp
   unit/gui/test-gui-bar-item.cpp
   unit/gui/test-gui-bar-item-custom.cpp
@@ -75,8 +77,10 @@ if(ENABLE_IRC)
     unit/plugins/irc/test-irc-channel.cpp
     unit/plugins/irc/test-irc-color.cpp
     unit/plugins/irc/test-irc-config.cpp
+    unit/plugins/irc/test-irc-ctcp.cpp
     unit/plugins/irc/test-irc-ignore.cpp
     unit/plugins/irc/test-irc-join.cpp
+    unit/plugins/irc/test-irc-list.cpp
     unit/plugins/irc/test-irc-message.cpp
     unit/plugins/irc/test-irc-mode.cpp
     unit/plugins/irc/test-irc-nick.cpp
@@ -134,6 +138,10 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
   if(HAVE_BACKTRACE)
     list(APPEND EXTRA_LIBS "execinfo")
   endif()
+endif()
+
+if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
+  list(APPEND EXTRA_LIBS "pthread")
 endif()
 
 # binary to run tests

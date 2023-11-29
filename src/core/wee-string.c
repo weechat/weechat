@@ -66,6 +66,8 @@
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 
 struct t_hashtable *string_hashtable_shared = NULL;
+int string_concat_index = 0;
+char **string_concat_buffer[STRING_NUM_CONCAT_BUFFERS];
 
 
 /*
@@ -392,6 +394,70 @@ string_toupper (const char *string)
         }
     }
     return string_dyn_free (result, 0);
+}
+
+/*
+ * Converts string to lower case (using a range of chars).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_tolower_range (const char *string, int range)
+{
+    char *result, *ptr_result;
+
+    if (!string)
+        return NULL;
+
+    if (range <= 0)
+        return string_tolower (string);
+
+    result = strdup (string);
+    if (!result)
+        return NULL;
+
+    ptr_result = result;
+    while (ptr_result && ptr_result[0])
+    {
+        if ((ptr_result[0] >= 'A') && (ptr_result[0] < 'A' + range))
+            ptr_result[0] += ('a' - 'A');
+        ptr_result = (char *)utf8_next_char (ptr_result);
+    }
+
+    return result;
+}
+
+/*
+ * Converts string to upper case (using a range of char).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_toupper_range (const char *string, int range)
+{
+    char *result, *ptr_result;
+
+    if (!string)
+        return NULL;
+
+    if (range <= 0)
+        return string_toupper (string);
+
+    result = strdup (string);
+    if (!result)
+        return NULL;
+
+    ptr_result = result;
+    while (ptr_result && ptr_result[0])
+    {
+        if ((ptr_result[0] >= 'a') && (ptr_result[0] < 'a' + range))
+            ptr_result[0] -= ('a' - 'A');
+        ptr_result = (char *)utf8_next_char (ptr_result);
+    }
+
+    return result;
 }
 
 /*
@@ -3279,6 +3345,7 @@ string_parse_size (const char *size)
     if (!str_number)
         goto end;
 
+    error = NULL;
     number = strtoll (str_number, &error, 10);
     if (!error || error[0])
         goto end;
@@ -4055,6 +4122,11 @@ string_levenshtein (const char *string1, const char *string2,
  *
  * Nested variables are supported, for example: "${var1:${var2}}".
  *
+ * If allow_escape == 1, the prefix/suffix can be escaped with a backslash
+ * (which is then omitted in the result).
+ * If allow_escape == 0, the backslash is kept as-is and can not be
+ * used to escape the prefix/suffix.
+ *
  * Argument "list_prefix_no_replace" is a list to prevent replacements in
  * string if beginning with one of the prefixes. For example if the list is
  * { "if:", NULL } and string is: "${if:cond?true:false}${test${abc}}"
@@ -4071,8 +4143,12 @@ char *
 string_replace_with_callback (const char *string,
                               const char *prefix,
                               const char *suffix,
+                              int allow_escape,
                               const char **list_prefix_no_replace,
-                              char *(*callback)(void *data, const char *text),
+                              char *(*callback)(void *data,
+                                                const char *prefix,
+                                                const char *text,
+                                                const char *suffix),
                               void *callback_data,
                               int *errors)
 {
@@ -4101,8 +4177,16 @@ string_replace_with_callback (const char *string,
             if ((string[index_string] == '\\')
                 && (string[index_string + 1] == prefix[0]))
             {
-                index_string++;
-                result[index_result++] = string[index_string++];
+                if (allow_escape)
+                {
+                    index_string++;
+                    result[index_result++] = string[index_string++];
+                }
+                else
+                {
+                    result[index_result++] = string[index_string++];
+                    result[index_result++] = string[index_string++];
+                }
             }
             else if (strncmp (string + index_string, prefix, length_prefix) == 0)
             {
@@ -4117,7 +4201,8 @@ string_replace_with_callback (const char *string,
                             break;
                         sub_level--;
                     }
-                    if ((pos_end_name[0] == '\\')
+                    if (allow_escape
+                        && (pos_end_name[0] == '\\')
                         && (pos_end_name[1] == prefix[0]))
                     {
                         pos_end_name++;
@@ -4128,14 +4213,6 @@ string_replace_with_callback (const char *string,
                         sub_level++;
                     }
                     pos_end_name++;
-                }
-                /* prefix without matching suffix => error! */
-                if (!pos_end_name[0])
-                {
-                    result[index_result] = '\0';
-                    if (errors)
-                        (*errors)++;
-                    return result;
                 }
                 key = string_strndup (string + index_string + length_prefix,
                                       pos_end_name - (string + index_string + length_prefix));
@@ -4164,6 +4241,7 @@ string_replace_with_callback (const char *string,
                                 key,
                                 prefix,
                                 suffix,
+                                1,
                                 list_prefix_no_replace,
                                 callback,
                                 callback_data,
@@ -4174,7 +4252,10 @@ string_replace_with_callback (const char *string,
                             key = key2;
                         }
                     }
-                    value = (*callback) (callback_data, (key) ? key : "");
+                    value = (*callback) (callback_data,
+                                         prefix,
+                                         (key) ? key : "",
+                                         (pos_end_name[0]) ? suffix : "");
                     if (value)
                     {
                         length_value = strlen (value);
@@ -4195,7 +4276,10 @@ string_replace_with_callback (const char *string,
                             strcpy (result + index_result, value);
                             index_result += length_value;
                         }
-                        index_string = pos_end_name - string + length_suffix;
+                        if (pos_end_name[0])
+                            index_string = pos_end_name - string + length_suffix;
+                        else
+                            index_string = pos_end_name - string;
                         free (value);
                     }
                     else
@@ -4630,15 +4714,87 @@ string_dyn_free (char **string, int free_string)
 }
 
 /*
+ * Concatenates strings, using a separator (which can be NULL or empty string
+ * to not use any separator).
+ *
+ * Last argument must be NULL to terminate the variable list of arguments.
+ */
+
+const char *
+string_concat (const char *separator, ...)
+{
+    va_list args;
+    const char *str;
+    int index;
+
+    string_concat_index = (string_concat_index + 1) % 8;
+
+    if (string_concat_buffer[string_concat_index])
+    {
+        string_dyn_copy (string_concat_buffer[string_concat_index], NULL);
+    }
+    else
+    {
+        string_concat_buffer[string_concat_index] = string_dyn_alloc (128);
+        if (!string_concat_buffer[string_concat_index])
+            return NULL;
+    }
+
+    index = 0;
+    va_start (args, separator);
+    while (1)
+    {
+        str = va_arg (args, const char *);
+        if (!str)
+            break;
+        if ((index > 0) && separator && separator[0])
+        {
+            string_dyn_concat (string_concat_buffer[string_concat_index],
+                               separator, -1);
+        }
+        string_dyn_concat (string_concat_buffer[string_concat_index], str, -1);
+        index++;
+    }
+    va_end (args);
+
+    return (const char *)(*string_concat_buffer[string_concat_index]);
+}
+
+/*
+ * Initializes string.
+ */
+
+void
+string_init ()
+{
+    int i;
+
+    for (i = 0; i < STRING_NUM_CONCAT_BUFFERS; i++)
+    {
+        string_concat_buffer[i] = NULL;
+    }
+}
+
+/*
  * Frees all allocated data.
  */
 
 void
 string_end ()
 {
+    int i;
+
     if (string_hashtable_shared)
     {
         hashtable_free (string_hashtable_shared);
         string_hashtable_shared = NULL;
+    }
+    for (i = 0; i < STRING_NUM_CONCAT_BUFFERS; i++)
+    {
+        if (string_concat_buffer[i])
+        {
+            string_dyn_free (string_concat_buffer[i], 1);
+            string_concat_buffer[i] = NULL;
+        }
     }
 }

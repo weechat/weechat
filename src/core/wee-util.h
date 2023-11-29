@@ -23,23 +23,13 @@
 #include <time.h>
 #include <sys/time.h>
 
-#ifdef HAVE_SYS_RESOURCE_H
-struct t_rlimit_resource
-{
-    char *name;                        /* name of resource                  */
-    int resource;                      /* value of resource                 */
-};
-#endif /* HAVE_SYS_RESOURCE_H */
-
-/* limits */
-extern void util_setrlimit ();
-
 /* timeval */
 extern int util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 extern long long util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 extern void util_timeval_add (struct timeval *tv, long long interval);
 
 /* time */
+extern char *util_get_microseconds_string (long long diff);
 extern const char *util_get_time_string (const time_t *date);
 extern void util_get_time_diff (time_t time1, time_t time2,
                                 time_t *total_seconds,
@@ -48,7 +38,8 @@ extern void util_get_time_diff (time_t time1, time_t time2,
 
 /* delay */
 
-extern long util_parse_delay (const char *string_delay, long default_factor);
+extern long long util_parse_delay (const char *string_delay,
+                                   long long default_factor);
 
 /* version */
 extern int util_version_number (const char *version);

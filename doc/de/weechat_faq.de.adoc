@@ -613,6 +613,30 @@ Sollte die macOS Terminal Applikation genutzt werden, empfiehlt es sich,
 die Option "Use option as meta key" in den Menü-Einstellungen zu aktivieren.
 Dadurch kann man die kbd:[Option] Taste als Meta-Taste verwenden.
 
+[[enter_key]]
+=== Einige Tasten, einschließlich Enter, funktionieren nicht. Weshalb?
+
+Wenn eine WeeChat Version < 4.0.0 mit Konfigurationsdateien ausgeführt wird,
+die von einer Weechat Version ≥ 4.0.0 erstellt wurde, sind die Tastennamen ungültig und viele Tasten funktionieren überhaupt nicht mehr. +
+Um dies zu reparieren, muss WeeChat beendet und alle Einträge aus dem Abschnitt `[key*]` innerhalb der weechat.conf entfernt werden.
+Wenn WeeChat erneut gestartet wird, wird die Standardtastenbelegung neu erstellt.
+
+[[key_f11]]
+=== Die Taste F11 maximiert das Terminalfenster. Wie kann ich aber in der Nicklist nach oben scrollen?
+
+Die kbd:[F11] Taste wird häufig von Terminals verwendet, um das Fenster zu maximieren. Aber
+kbd:[F11]/kbd:[F12] sind ebenso die Standardtasten, in WeeChat, um in der Nickliste zu scrollen.
+
+Man kann andere Tasten nutzen, zum Beispiel kbd:[Shift+F11] und kbd:[Shift+F12],
+mit WeeChat ≥ 4.0.0:
+
+----
+/key bind shift-f11 /bar scroll nicklist * -100%
+/key bind shift-f12 /bar scroll nicklist * +100%
+----
+
+Eine andere Möglichkeit besteht darin, die Maus zu aktivieren (Taste: kbd:[Alt+m]) und mit dem Mausrad zu scrollen (siehe auch Fragen zu <<mouse,mouse>>).
+
 [[customize_key_bindings]]
 === Wie kann ich die Tastaturbelegung anpassen?
 
@@ -993,34 +1017,18 @@ die Buffer-Eigenschaft genutzt werden, um das maximale Hotlist-Level für einige
 oder pro Gruppe von Buffern (wie IRC-Server).
 
 Um nun Highlights (Hervorhebungen) für bestimmte Nicks zu deaktivieren, muss
-man die entsprechende Eigenschaft auf 2 setzen:
+man die entsprechende Eigenschaft auf 2 setzen.
 
+Für den aktuellen Buffer:
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
-----
-
-Diese Buffereigenschaft wird aber nicht permanent in der Konfiguration
-gespeichert. Um diese Eigenschaften permanent zu verwenden, muss man
-das Skript _buffer_autoset.py_ nutzen:
-
-----
-/script install buffer_autoset.py
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-Um zum Beispiel Highlights (Hervorhebungen) von Nick "mike" im Kanal
-#weechat auf dem IRC Server libera zu deaktivieren:
+Für alle Kanäle auf dem Server "libera":
 
 ----
-/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-Um dies auf den kompletten libera Server anzuwenden:
-
-----
-/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
-----
-
-Für weitere Beispiele, siehe `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === Wie kann ich bei zusammengefügten Buffern den Zielbuffer ändern (z.B. bei einem Server-Buffer)?
@@ -1154,7 +1162,8 @@ Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
 Man sollte sich die Tipps zum <<memory_usage,Speicherverbrauch>> ansehen
 und zusätzlich diese Tipps beherzigen:
 
-* "nicklist"-Bar sollte versteckt werden: `/bar hide nicklist`
+* "nicklist"-Bar sollte versteckt werden: `/bar hide nicklist` (Taste: kbd:[Alt+Shift+N]).
+* deaktiviere "buflist": `/buflist disable` (Taste: kbd:[Alt+Shift+B]).
 * die Sekundenanzeigen in der Statusbar sollte deaktiviert werden:
   `+/set weechat.look.item_time_format "%H:%M"+` (dies ist die Standardeinstellung)
 * die Echtzeit Rechtschreibkorrektur sollte deaktiviert werden (falls sie aktiviert wurde):
@@ -1176,12 +1185,17 @@ Deaktiviere die automatische Antwort für alle CTCP Anfragen:
 
 ----
 /set irc.ctcp.clientinfo ""
-/set irc.ctcp.finger ""
 /set irc.ctcp.source ""
 /set irc.ctcp.time ""
-/set irc.ctcp.userinfo ""
 /set irc.ctcp.version ""
 /set irc.ctcp.ping ""
+----
+
+Mit WeeChat < 4.1.0 wurden andere CTCP-Anfragen standardmäßig beantwortet und müssen ebenfalls deaktiviert werden:
+
+----
+/set irc.ctcp.finger ""
+/set irc.ctcp.userinfo ""
 ----
 
 Entferne und deaktiviere das automatische Ausführen der "xfer"-Erweiterung, die beispielsweise für "IRC DCC" verantwortlich ist:
@@ -1218,6 +1232,32 @@ Kennwörter (sofern sie nicht mit dem Befehl `/secure` in _sec.conf_ gesichert w
 
 Siehe link:weechat_user.de.html#files_and_directories[Benutzerhandbuch / Dateien und Verzeichnisse ^↗^^]
 für weitere Informationen über Konfigurationsdateien.
+
+[[move_to_another_device]]
+=== Ich möchte mein WeeChat auf ein anderes Gerät verschieben und meine Konfiguration behalten. Was muss ich kopieren?
+
+Überprüfen Sie zunächst die von WeeChat verwendeten Verzeichnisse mit diesem Befehl: `/debug dirs`. +
+Die Verzeichnisse home/config und home/data müssen kopiert werden (alle Dateien und Unterverzeichnisse).
+
+Falls beispielsweise XDG-Verzeichnisse verwendet werden (Standard bei WeeChat ≥ 3.2), sollten die
+Verzeichnisse `$HOME/.config/weechat` und `$HOME/.local/share/weechat` lauten. +
+Sollte ein einzelnes Verzeichnis verwenden werden (Standard bei WeeChat < 3.2), sollte das Verzeichnis
+`$HOME/.weechat` lauuten.
+
+[IMPORTANT]
+Die WeeChat-Version auf dem Zielgerät muss größer oder gleich der Version sein des Ausganggerätes. +
+Ein Downgrade der WeeChat-Konfiguration wird *NICHT UNTERSTÜTZT* und kann zu Schäden führen und ein
+unbrauchbares WeeChat verursachen.
+
+Schritte:
+
+. Weechat beenden: `/quit` (oder `/upgrade -quit`, falls eine Sitzung fortgesetzt werden soll,
+  einschließlich des Inhalts aller Buffer).
+. Kopieren Sie alle Verzeichnisse, Unterverzeichnisse und Dateien auf das neue Gerät und behalten Sie die
+  Namen und Berechtigungen bei.
+. Optional: Kopieren Sie alle Dateien außerhalb dieser Verzeichnisse, die auf Ihre Konfiguration verweisen
+  (es wird nicht empfohlen, Dateien außerhalb von WeeChat-Verzeichnissen zu verwenden).
+. WeeChat auf dem neuen Gerät starten: `weechat` (oder `weechat --upgrade`, falls die Sitzung gesichert wurde).
 
 [[development]]
 == Entwicklung

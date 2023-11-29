@@ -102,6 +102,7 @@ struct t_hdata *
 hook_hdata_get (struct t_weechat_plugin *plugin, const char *hdata_name)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
     struct t_hdata *value;
 
     /* make C compiler happy */
@@ -128,12 +129,12 @@ hook_hdata_get (struct t_weechat_plugin *plugin, const char *hdata_name)
             && !ptr_hook->running
             && (strcmp (HOOK_HDATA(ptr_hook, hdata_name), hdata_name) == 0))
         {
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             value = (HOOK_HDATA(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
                  HOOK_HDATA(ptr_hook, hdata_name));
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
 
             hook_exec_end ();
             return value;

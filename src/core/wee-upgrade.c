@@ -546,16 +546,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
         }
     }
 
-    /* text search */
-    ptr_buffer->text_search = infolist_integer (infolist, "text_search");
-    ptr_buffer->text_search_exact = infolist_integer (infolist,
-                                                      "text_search_exact");
-    ptr_buffer->text_search_found = infolist_integer (infolist,
-                                                      "text_search_found");
-    if (ptr_buffer->text_search_input)
-        free (ptr_buffer->text_search_input);
-    str = infolist_string (infolist, "text_search_input");
-    ptr_buffer->text_search_input = (str) ? strdup (str) : NULL;
+    /* text search is disabled after upgrade */
 
     /* highlight options */
     gui_buffer_set_highlight_words (

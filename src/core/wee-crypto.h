@@ -24,6 +24,7 @@
 #define WEECRYPTO_TOTP_MAX_DIGITS    10
 
 extern int weecrypto_get_hash_algo (const char *hash_algo);
+extern int weecrypto_get_cipher (const char *cipher);
 extern int weecrypto_hash (const void *data, int data_size, int hash_algo,
                            void *hash, int *hash_size);
 extern int weecrypto_hash_file (const char *filename, int hash_algo,

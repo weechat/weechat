@@ -64,7 +64,7 @@ struct t_irc_channel;
 
 /* list of supported CTCPs (for completion in command /ctcp) */
 #define IRC_COMMAND_CTCP_SUPPORTED_COMPLETION \
-    "action|clientinfo|finger|ping|source|time|userinfo|version"
+    "action|clientinfo|ping|source|time|version"
 
 extern void irc_command_away_server (struct t_irc_server *server,
                                      const char *arguments,

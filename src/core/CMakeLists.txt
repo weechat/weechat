@@ -47,6 +47,7 @@ set(LIB_CORE_SRC
   wee-secure-config.c wee-secure-config.h
   wee-signal.c wee-signal.h
   wee-string.c wee-string.h
+  wee-sys.c wee-sys.h
   wee-upgrade.c wee-upgrade.h
   wee-upgrade-file.c wee-upgrade-file.h
   wee-url.c wee-url.h
@@ -71,6 +72,7 @@ set(LIB_CORE_SRC
   hook/wee-hook-process.c hook/wee-hook-process.h
   hook/wee-hook-signal.c hook/wee-hook-signal.h
   hook/wee-hook-timer.c hook/wee-hook-timer.h
+  hook/wee-hook-url.c hook/wee-hook-url.h
 )
 
 # Check for flock support
@@ -89,7 +91,9 @@ include_directories(${GNUTLS_INCLUDE_PATH})
 
 include_directories(${CURL_INCLUDE_DIRS})
 
-include_directories(${ZSTD_INCLUDE_DIRS})
+if(ENABLE_ZSTD)
+  include_directories(${ZSTD_INCLUDE_DIRS})
+endif()
 
 include_directories("${CMAKE_BINARY_DIR}")
 add_library(weechat_core STATIC ${LIB_CORE_SRC})

@@ -46,7 +46,7 @@ extern int script_buffer_input_cb (const void *pointer, void *data,
 extern int script_buffer_close_cb (const void *pointer, void *data,
                                    struct t_gui_buffer *buffer);
 extern void script_buffer_set_callbacks ();
-extern void script_buffer_set_keys ();
+extern void script_buffer_set_keys (struct t_hashtable *hashtable);
 extern void script_buffer_set_localvar_filter ();
 extern void script_buffer_open ();
 

@@ -100,7 +100,7 @@ logger_tail_lines_free_cb (void *data, struct t_arraylist *arraylist,
 struct t_arraylist *
 logger_tail_file (const char *filename, int lines)
 {
-    int fd;
+    int fd, count_read;
     off_t file_length, file_pos;
     size_t to_read;
     ssize_t bytes_read;
@@ -108,21 +108,30 @@ logger_tail_file (const char *filename, int lines)
     char *ptr_buf, *pos_eol, *part_of_line, *new_part_of_line, *line;
     struct t_arraylist *list_lines;
 
-    if (!filename || (lines < 1))
+    if (!filename || !filename[0] || (lines < 1))
         return NULL;
+
+    fd = -1;
+    part_of_line = 0;
+    list_lines = NULL;
+
+    /* allocate arraylist */
+    list_lines = weechat_arraylist_new (lines, 0, 1,
+                                        &logger_tail_lines_cmp_cb, NULL,
+                                        &logger_tail_lines_free_cb, NULL);
+    if (!list_lines)
+        goto error;
 
     /* open file */
     fd = open (filename, O_RDONLY);
     if (fd == -1)
-        return NULL;
+        goto error;
 
     /* seek to the end of file */
+    count_read = 0;
     file_length = lseek (fd, (off_t)0, SEEK_END);
     if (file_length <= 0)
-    {
-        close (fd);
-        return NULL;
-    }
+        goto error;
     to_read = file_length;
     file_pos = file_length - LOGGER_TAIL_BUFSIZE;
     if (file_pos < 0)
@@ -132,71 +141,51 @@ logger_tail_file (const char *filename, int lines)
     lseek (fd, file_pos, SEEK_SET);
 
     /* loop until we have "lines" lines in list */
-    part_of_line = NULL;
-    list_lines = weechat_arraylist_new (lines, 0, 1,
-                                        &logger_tail_lines_cmp_cb, NULL,
-                                        &logger_tail_lines_free_cb, NULL);
     while (lines > 0)
     {
         lseek (fd, file_pos, SEEK_SET);
         bytes_read = read (fd, buf, to_read);
         if (bytes_read <= 0)
-        {
-            if (part_of_line)
-                free (part_of_line);
-            weechat_arraylist_free (list_lines);
-            close (fd);
-            return NULL;
-        }
+            goto error;
+        count_read++;
         buf[bytes_read] = '\0';
+        if ((count_read == 1)
+            && ((buf[bytes_read - 1] == '\n') || (buf[bytes_read - 1] == '\r')))
+        {
+            /* ignore last new line of the file (on first block read only) */
+            buf[bytes_read - 1] = '\0';
+            bytes_read--;
+        }
         ptr_buf = buf + bytes_read - 1;
         while (ptr_buf && (ptr_buf >= buf))
         {
             pos_eol = (char *)logger_tail_last_eol (buf, ptr_buf);
-            if ((pos_eol && (pos_eol[1] || part_of_line)) || (file_pos == 0))
+            if (pos_eol)
             {
-                /* use data and part_of_line (if existing) to build a new line */
-                if (!pos_eol)
+                ptr_buf = pos_eol - 1;
+                pos_eol[0] = '\0';
+                pos_eol++;
+                if (part_of_line)
                 {
-                    ptr_buf = NULL;
-                    pos_eol = buf;
+                    line = malloc ((strlen (pos_eol) +
+                                    strlen (part_of_line) + 1));
+                    if (!line)
+                        goto error;
+                    strcpy (line, pos_eol);
+                    strcat (line, part_of_line);
+                    free (part_of_line);
+                    part_of_line = NULL;
+                    weechat_arraylist_insert (list_lines, 0, line);
                 }
                 else
                 {
-                    ptr_buf = pos_eol - 1;
-                    pos_eol[0] = '\0';
-                    pos_eol++;
+                    weechat_arraylist_insert (list_lines, 0, strdup (pos_eol));
                 }
-                if (part_of_line || pos_eol[0])
-                {
-                    if (part_of_line)
-                    {
-                        line = malloc ((strlen (pos_eol) +
-                                        strlen (part_of_line) + 1));
-                        if (!line)
-                        {
-                            free (part_of_line);
-                            weechat_arraylist_free (list_lines);
-                            close (fd);
-                            return NULL;
-                        }
-                        strcpy (line, pos_eol);
-                        strcat (line, part_of_line);
-                        free (part_of_line);
-                        part_of_line = NULL;
-                        weechat_arraylist_insert (list_lines, 0, line);
-                    }
-                    else
-                    {
-                        weechat_arraylist_insert (list_lines, 0,
-                                                  strdup (pos_eol));
-                    }
-                    lines--;
-                    if (lines <= 0)
-                        break;
-                }
+                lines--;
+                if (lines <= 0)
+                    break;
             }
-            else if (!pos_eol)
+            else
             {
                 /*
                  * beginning of read buffer reached without EOL, then we
@@ -206,12 +195,7 @@ logger_tail_file (const char *filename, int lines)
                 {
                     new_part_of_line = malloc (strlen (buf) + strlen (part_of_line) + 1);
                     if (!new_part_of_line)
-                    {
-                        free (part_of_line);
-                        weechat_arraylist_free (list_lines);
-                        close (fd);
-                        return NULL;
-                    }
+                        goto error;
                     strcpy (new_part_of_line, buf);
                     strcat (new_part_of_line, part_of_line);
                     free (part_of_line);
@@ -220,12 +204,12 @@ logger_tail_file (const char *filename, int lines)
                 else
                 {
                     part_of_line = malloc (strlen (buf) + 1);
+                    if (!part_of_line)
+                        goto error;
                     strcpy (part_of_line, buf);
                 }
                 ptr_buf = NULL;
             }
-            else
-                ptr_buf = pos_eol - 1;
         }
         if (file_pos == 0)
             break;
@@ -238,9 +222,21 @@ logger_tail_file (const char *filename, int lines)
     }
 
     if (part_of_line)
-        free (part_of_line);
+    {
+        /* add part of line (will be freed when arraylist is destroyed) */
+        weechat_arraylist_insert (list_lines, 0, part_of_line);
+    }
 
     close (fd);
 
     return list_lines;
+
+error:
+    if (part_of_line)
+        free (part_of_line);
+    if (list_lines)
+        weechat_arraylist_free (list_lines);
+    if (fd >= 0)
+        close (fd);
+    return NULL;
 }

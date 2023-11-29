@@ -45,7 +45,9 @@
 #include <dirent.h>
 #include <ftw.h>
 #include <zlib.h>
+#ifdef HAVE_ZSTD
 #include <zstd.h>
+#endif
 
 #include "weechat.h"
 #include "wee-config.h"
@@ -440,6 +442,9 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **cache_dir,
     *runtime_dir = NULL;
 
     ptr_home = getenv ("HOME");
+    if (!ptr_home)
+        goto error_home;
+
     xdg_config_home = getenv ("XDG_CONFIG_HOME");
     xdg_data_home = getenv ("XDG_DATA_HOME");
     xdg_cache_home = getenv ("XDG_CACHE_HOME");
@@ -460,7 +465,7 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **cache_dir,
     }
     *config_dir = strdup (path);
     if (!*config_dir)
-        goto error;
+        goto error_memory;
 
     /* set data dir: $XDG_DATA_HOME/weechat or $HOME/.local/share/weechat */
     if (xdg_data_home && xdg_data_home[0])
@@ -478,7 +483,7 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **cache_dir,
     }
     *data_dir = strdup (path);
     if (!*data_dir)
-        goto error;
+        goto error_memory;
 
     /* set cache dir: $XDG_CACHE_HOME/weechat or $HOME/.cache/weechat */
     if (xdg_cache_home && xdg_cache_home[0])
@@ -495,7 +500,7 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **cache_dir,
     }
     *cache_dir = strdup (path);
     if (!*cache_dir)
-        goto error;
+        goto error_memory;
 
     /* set runtime dir: $XDG_RUNTIME_DIR/weechat or same as cache dir */
     if (xdg_runtime_dir && xdg_runtime_dir[0])
@@ -510,9 +515,18 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **cache_dir,
         *runtime_dir = strdup (*cache_dir);
     }
     if (!*runtime_dir)
-        goto error;
+        goto error_memory;
 
     return 1;
+
+error_home:
+    string_fprintf (stderr,
+                    _("Error: environment variable \"HOME\" is not defined\n"));
+    goto error;
+
+error_memory:
+    string_fprintf (stderr, _("Error: not enough memory\n"));
+    goto error;
 
 error:
     if (*config_dir)
@@ -535,7 +549,6 @@ error:
         free (*runtime_dir);
         *runtime_dir = NULL;
     }
-    string_fprintf (stderr, _("Error: not enough memory\n"));
     return 0;
 }
 
@@ -1135,6 +1148,7 @@ int
 dir_file_compress_zstd (const char *from, const char *to,
                         int compression_level)
 {
+#ifdef HAVE_ZSTD
     FILE *source, *dest;
     void *buffer_in, *buffer_out;
     size_t buffer_in_size, buffer_out_size, num_read, remaining;
@@ -1297,6 +1311,14 @@ end:
         fclose (dest);
 
     return rc;
+#else
+    /* make C compiler happy */
+    (void) from;
+    (void) to;
+    (void) compression_level;
+
+    return 0;
+#endif /* HAVE_ZSTD */
 }
 
 /*
@@ -1306,7 +1328,7 @@ end:
  *
  * Supported values for parameter "compressor":
  *   - "gzip": gzip compression (via zlib)
- *   - "zstd": zstandard compression
+ *   - "zstd": zstandard compression (it must be enabled at build time)
  *
  * Parameter "compression_level" is the compression level as percentage:
  * from 1 (fast, low compression) to 100 (slow, best compression).

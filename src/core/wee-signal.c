@@ -24,6 +24,7 @@
 #endif
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 #include <signal.h>
 
@@ -37,6 +38,7 @@
 #include "wee-log.h"
 #include "wee-string.h"
 #include "../gui/gui-buffer.h"
+#include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
 
 
@@ -291,6 +293,17 @@ signal_handle ()
     signal_handle_number (SIGTERM, signal_sigterm_count,
                           CONFIG_STRING(config_signal_sigterm));
     signal_sigterm_count = 0;
+}
+
+/*
+ * Suspends WeeChat process.
+ */
+
+void
+signal_suspend ()
+{
+    kill (getpid (), SIGTSTP);
+    gui_window_ask_refresh (2);
 }
 
 /*

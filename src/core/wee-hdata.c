@@ -28,6 +28,7 @@
 
 #include "weechat.h"
 #include "wee-hdata.h"
+#include "wee-hook.h"
 #include "wee-eval.h"
 #include "wee-hashtable.h"
 #include "wee-log.h"
@@ -955,12 +956,14 @@ int
 hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
                const char *name, int case_sensitive)
 {
-    int rc, int_value1, int_value2;
+    int rc, type, type1, type2, int_value1, int_value2;
     long long_value1, long_value2;
-    char char_value1, char_value2;
-    const char *ptr_name, *str_value1, *str_value2;
+    char *var_name, *property, char_value1, char_value2;
+    const char *ptr_var_name, *pos, *pos_open_paren, *hdata_name;
+    const char *str_value1, *str_value2;
     void *ptr_value1, *ptr_value2;
     time_t time_value1, time_value2;
+    struct t_hashtable *hashtable1, *hashtable2;
 
     if (!hdata || !name)
         return 0;
@@ -973,32 +976,47 @@ hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
         return 0;
 
     rc = 0;
+    ptr_value1 = NULL;
+    ptr_value2 = NULL;
 
-    hdata_get_index_and_name (name, NULL, &ptr_name);
-    switch (hdata_get_var_type (hdata, ptr_name))
+    pos = strchr (name, '.');
+    if (pos > name)
+        var_name = string_strndup (name, pos - name);
+    else
+        var_name = strdup (name);
+
+    if (!var_name)
+        goto end;
+
+    hdata_get_index_and_name (var_name, NULL, &ptr_var_name);
+    type = hdata_get_var_type (hdata, ptr_var_name);
+    if (type < 0)
+        goto end;
+
+    switch (type)
     {
         case WEECHAT_HDATA_CHAR:
-            char_value1 = hdata_char (hdata, pointer1, name);
-            char_value2 = hdata_char (hdata, pointer2, name);
+            char_value1 = hdata_char (hdata, pointer1, var_name);
+            char_value2 = hdata_char (hdata, pointer2, var_name);
             rc = (char_value1 < char_value2) ?
                 -1 : ((char_value1 > char_value2) ? 1 : 0);
             break;
         case WEECHAT_HDATA_INTEGER:
-            int_value1 = hdata_integer (hdata, pointer1, name);
-            int_value2 = hdata_integer (hdata, pointer2, name);
+            int_value1 = hdata_integer (hdata, pointer1, var_name);
+            int_value2 = hdata_integer (hdata, pointer2, var_name);
             rc = (int_value1 < int_value2) ?
                 -1 : ((int_value1 > int_value2) ? 1 : 0);
             break;
         case WEECHAT_HDATA_LONG:
-            long_value1 = hdata_long (hdata, pointer1, name);
-            long_value2 = hdata_long (hdata, pointer2, name);
+            long_value1 = hdata_long (hdata, pointer1, var_name);
+            long_value2 = hdata_long (hdata, pointer2, var_name);
             rc = (long_value1 < long_value2) ?
                 -1 : ((long_value1 > long_value2) ? 1 : 0);
             break;
         case WEECHAT_HDATA_STRING:
         case WEECHAT_HDATA_SHARED_STRING:
-            str_value1 = hdata_string (hdata, pointer1, name);
-            str_value2 = hdata_string (hdata, pointer2, name);
+            str_value1 = hdata_string (hdata, pointer1, var_name);
+            str_value2 = hdata_string (hdata, pointer2, var_name);
             if (!str_value1 && !str_value2)
                 rc = 0;
             else if (str_value1 && !str_value2)
@@ -1018,20 +1036,105 @@ hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
             }
             break;
         case WEECHAT_HDATA_POINTER:
-            ptr_value1 = hdata_pointer (hdata, pointer1, name);
-            ptr_value2 = hdata_pointer (hdata, pointer2, name);
+            ptr_value1 = hdata_pointer (hdata, pointer1, var_name);
+            ptr_value2 = hdata_pointer (hdata, pointer2, var_name);
             rc = (ptr_value1 < ptr_value2) ?
                 -1 : ((ptr_value1 > ptr_value2) ? 1 : 0);
             break;
         case WEECHAT_HDATA_TIME:
-            time_value1 = hdata_time (hdata, pointer1, name);
-            time_value2 = hdata_time (hdata, pointer2, name);
+            time_value1 = hdata_time (hdata, pointer1, var_name);
+            time_value2 = hdata_time (hdata, pointer2, var_name);
             rc = (time_value1 < time_value2) ?
                 -1 : ((time_value1 > time_value2) ? 1 : 0);
             break;
         case WEECHAT_HDATA_HASHTABLE:
-            /* no comparison for hashtables */
-            rc = 0;
+            ptr_value1 = hdata_hashtable (hdata, pointer1, var_name);
+            ptr_value2 = hdata_hashtable (hdata, pointer2, var_name);
+            if (pos)
+            {
+                /*
+                 * for a hashtable, if there is a "." after name of hdata:
+                 * 1) If "()" is at the end, it is a function call to
+                 *    hashtable_get_string().
+                 * 2) Otherwise, get the value for this key in hashtable.
+                 */
+                hashtable1 = ptr_value1;
+                hashtable2 = ptr_value2;
+
+                pos_open_paren = strchr (pos, '(');
+                if (pos_open_paren
+                    && (pos_open_paren > pos + 1)
+                    && (pos_open_paren[1] == ')'))
+                {
+                    property = string_strndup (pos + 1,
+                                               pos_open_paren - pos - 1);
+                    ptr_value1 = (void *)hashtable_get_string (hashtable1, property);
+                    ptr_value2 = (void *)hashtable_get_string (hashtable2, property);
+                    if (property)
+                        free (property);
+                    type1 = HASHTABLE_STRING;
+                    type2 = HASHTABLE_STRING;
+                }
+                else
+                {
+                    ptr_value1 = hashtable_get (hashtable1, pos + 1);
+                    ptr_value2 = hashtable_get (hashtable2, pos + 1);
+                    type1 = hashtable1->type_values;
+                    type2 = hashtable2->type_values;
+                }
+
+                if (!ptr_value1 && ptr_value2)
+                    rc = -1;
+                else if (ptr_value1 && !ptr_value2)
+                    rc = 1;
+                else if (!ptr_value1 && !ptr_value2)
+                    rc = 0;
+                else if (type1 != type2)
+                    rc = 0;
+                else
+                {
+                    switch (type1)
+                    {
+                        case HASHTABLE_INTEGER:
+                            int_value1 = *((int *)ptr_value1);
+                            int_value2 = *((int *)ptr_value2);
+                            rc = (int_value1 < int_value2) ?
+                                -1 : ((int_value1 > int_value2) ? 1 : 0);
+                            break;
+                        case HASHTABLE_STRING:
+                            if (case_sensitive)
+                                rc = strcmp ((const char *)ptr_value1,
+                                             (const char *)ptr_value2);
+                            else
+                                rc = string_strcasecmp ((const char *)ptr_value1,
+                                                        (const char *)ptr_value2);
+                            if (rc < 0)
+                                rc = -1;
+                            else if (rc > 0)
+                                rc = 1;
+                            break;
+                        case HASHTABLE_POINTER:
+                        case HASHTABLE_BUFFER:
+                            rc = (ptr_value1 < ptr_value2) ?
+                                -1 : ((ptr_value1 > ptr_value2) ? 1 : 0);
+                            break;
+                        case HASHTABLE_TIME:
+                            time_value1 = (long long)(*((time_t *)ptr_value1));
+                            time_value2 = (long long)(*((time_t *)ptr_value2));
+                            rc = (time_value1 < time_value2) ?
+                                -1 : ((time_value1 > time_value2) ? 1 : 0);
+                            break;
+                        case HASHTABLE_NUM_TYPES:
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                /* compare hashtables by pointer */
+                rc = (ptr_value1 < ptr_value2) ?
+                    -1 : ((ptr_value1 > ptr_value2) ? 1 : 0);
+            }
             break;
         case WEECHAT_HDATA_OTHER:
             /* no comparison for other types */
@@ -1039,6 +1142,23 @@ hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
             break;
     }
 
+    /*
+     * if we are on a pointer and that something else is in path (after "."),
+     * go on with this pointer and remaining path
+     */
+    if ((type == WEECHAT_HDATA_POINTER) && pos)
+    {
+        hdata_name = hdata_get_var_hdata (hdata, var_name);
+        if (!hdata_name)
+            goto end;
+        hdata = hook_hdata_get (NULL, hdata_name);
+        rc = hdata_compare (hdata, ptr_value1, ptr_value2, pos + 1,
+                            case_sensitive);
+    }
+
+end:
+    if (var_name)
+        free (var_name);
     return rc;
 }
 

@@ -2048,6 +2048,9 @@ TEST(CoreHdataWithList, Hashtable)
 
 TEST(CoreHdataWithList, Compare)
 {
+    struct t_gui_buffer *test_buffer;
+    struct t_hdata *ptr_hdata_buffer;
+
     LONGS_EQUAL(0, hdata_compare (NULL, NULL, NULL, NULL, 0));
     LONGS_EQUAL(0, hdata_compare (ptr_hdata, NULL, NULL, NULL, 0));
 
@@ -2114,13 +2117,32 @@ TEST(CoreHdataWithList, Compare)
     LONGS_EQUAL(1, hdata_compare (ptr_hdata, ptr_item2, ptr_item1,
                                   "test_time", 0));
 
-    /* compare hashtables: not possible */
-    LONGS_EQUAL(0, hdata_compare (ptr_hdata, ptr_item1, ptr_item2,
-                                  "test_hashtable", 0));
+    /* compare hashtables: pointer comparison */
+    CHECK(hdata_compare (ptr_hdata, ptr_item1, ptr_item2,
+                         "test_hashtable", 0) != 0);
 
     /* compare "other" type: not possible */
     LONGS_EQUAL(0, hdata_compare (ptr_hdata, ptr_item1, ptr_item2,
                                   "test_other", 0));
+
+    /* create a test buffer */
+    test_buffer = gui_buffer_new (NULL, "test",
+                                  NULL, NULL, NULL,
+                                  NULL, NULL, NULL);
+    CHECK(test_buffer);
+    ptr_hdata_buffer = hook_hdata_get (NULL, "buffer");
+
+    /* compare two sub-fields of buffers: test recursive path traversal */
+    LONGS_EQUAL(1, hdata_compare (ptr_hdata_buffer, gui_buffers, test_buffer,
+                                  "own_lines.lines_count", 0));
+    gui_buffer_set (gui_buffers, "localvar_set_myvar", "def");
+    gui_buffer_set (test_buffer, "localvar_set_myvar", "abc");
+    CHECK(ptr_hdata_buffer);
+    LONGS_EQUAL(1, hdata_compare (ptr_hdata_buffer, gui_buffers, test_buffer,
+                                  "local_variables.myvar", 0));
+    gui_buffer_set (gui_buffers, "localvar_del_myvar", "");
+
+    gui_buffer_close (test_buffer);
 }
 
 /*

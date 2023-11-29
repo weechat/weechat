@@ -19,7 +19,7 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 
 project(weechat C)
 
@@ -99,6 +99,7 @@ option(ENABLE_NCURSES        "Compile the Ncurses interface"            ON)
 option(ENABLE_HEADLESS       "Compile the headless binary"              ON)
 option(ENABLE_NLS            "Enable Native Language Support"           ON)
 option(ENABLE_LARGEFILE      "Enable Large File Support"                ON)
+option(ENABLE_ZSTD           "Enable Zstandard compression"             ON)
 option(ENABLE_ALIAS          "Enable Alias plugin"                      ON)
 option(ENABLE_BUFLIST        "Enable Buflist plugin"                    ON)
 option(ENABLE_CHARSET        "Enable Charset plugin"                    ON)
@@ -200,20 +201,6 @@ if(ENABLE_LARGEFILE)
   add_definitions(-D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_LARGE_FILES)
 endif()
 
-# Check for Gettext
-if(ENABLE_NLS)
-  find_package(Gettext)
-  if(GETTEXT_FOUND)
-    add_definitions(-DENABLE_NLS)
-    find_package(Intl)
-    if(Intl_FOUND)
-      list(APPEND EXTRA_LIBS "${Intl_LIBRARIES}")
-    endif()
-  else()
-    message(SEND_ERROR "Gettext not found")
-  endif()
-endif()
-
 # Check for libgcrypt
 find_package(GCRYPT REQUIRED)
 add_definitions(-DHAVE_GCRYPT)
@@ -230,7 +217,10 @@ list(APPEND EXTRA_LIBS gnutls)
 find_package(ZLIB REQUIRED)
 
 # Check for zstd
-pkg_check_modules(LIBZSTD REQUIRED libzstd)
+if(ENABLE_ZSTD)
+  pkg_check_modules(LIBZSTD REQUIRED libzstd)
+  add_definitions(-DHAVE_ZSTD)
+endif()
 
 # Check for iconv
 find_package(Iconv)
@@ -258,7 +248,13 @@ endif()
 add_subdirectory(icons)
 
 if(ENABLE_NLS)
+  find_package(Gettext REQUIRED)
+  add_definitions(-DENABLE_NLS)
+  find_package(Intl REQUIRED)
+  list(APPEND EXTRA_LIBS "${Intl_LIBRARIES}")
   add_subdirectory(po)
+else()
+  add_custom_target(translations COMMAND true)
 endif()
 
 add_subdirectory(src)

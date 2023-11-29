@@ -144,20 +144,6 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcmp (argv[1], "go") == 0)
-    {
-        if ((argc > 2) && script_buffer && !script_buffer_detail_script)
-        {
-            error = NULL;
-            value = strtol (argv[2], &error, 10);
-            if (error && !error[0])
-            {
-                script_buffer_set_current_line (value);
-            }
-        }
-        return WEECHAT_RC_OK;
-    }
-
     if (weechat_strcmp (argv[1], "search") == 0)
     {
         if (scripts_repo)
@@ -216,7 +202,32 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcmp (argv[1], "up") == 0)
+    if (weechat_strcmp (argv[1], "-go") == 0)
+    {
+        if ((argc > 2) && script_buffer && !script_buffer_detail_script)
+        {
+            line = -1;
+            if (weechat_strcmp (argv[2], "end") == 0)
+            {
+                line = script_repo_count_displayed - 1;
+            }
+            else
+            {
+                error = NULL;
+                value = strtol (argv[2], &error, 10);
+                if (error && !error[0])
+                    line = value;
+            }
+            if (line >= 0)
+            {
+                script_buffer_set_current_line (line);
+                script_buffer_check_line_outside_window ();
+            }
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcmp (argv[1], "-up") == 0)
     {
         if (script_buffer)
         {
@@ -250,7 +261,7 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcmp (argv[1], "down") == 0)
+    if (weechat_strcmp (argv[1], "-down") == 0)
     {
         if (script_buffer)
         {
@@ -297,6 +308,7 @@ script_command_init ()
     weechat_hook_command (
         "script",
         N_("WeeChat script manager"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list [-o|-ol|-i|-il]"
            " || search <text>"
            " || show <script>"
@@ -304,92 +316,70 @@ script_command_init ()
            " || autoload|noautoload|toggleautoload <script> [<script>...]"
            " || install|remove|installremove|hold [-q] <script> [<script>...]"
            " || upgrade"
-           " || update"),
-        N_("          list: list loaded scripts (all languages)\n"
-           "            -o: send list of loaded scripts to buffer "
-           "(string in English)\n"
-           "           -ol: send list of loaded scripts to buffer "
-           "(translated string)\n"
-           "            -i: copy list of loaded scripts in command line (for "
-           "sending to buffer) (string in English)\n"
-           "           -il: copy list of loaded scripts in command line (for "
-           "sending to buffer) (translated string)\n"
-           "        search: search scripts by tags, language (python, "
-           "perl, ...), filename extension (py, pl, ...) or text; result is "
-           "displayed on scripts buffer\n"
-           "          show: show detailed info about a script\n"
-           "          load: load script(s)\n"
-           "        unload: unload script(s)\n"
-           "        reload: reload script(s)\n"
-           "      autoload: autoload the script\n"
-           "    noautoload: do not autoload the script\n"
-           "toggleautoload: toggle autoload\n"
-           "       install: install/upgrade script(s)\n"
-           "        remove: remove script(s)\n"
-           " installremove: install or remove script(s), depending on current "
-           "state\n"
-           "          hold: hold/unhold script(s) (a script held will not be "
-           "upgraded any more and cannot be removed)\n"
-           "            -q: quiet mode: do not display messages\n"
-           "       upgrade: upgrade all installed scripts which are obsolete "
-           "(new version available)\n"
-           "        update: update local scripts cache\n"
-           "\n"
-           "Without argument, this command opens a buffer with list of scripts.\n"
-           "\n"
-           "On script buffer, the possible status for each script are:\n"
-           "  * i a H r N\n"
-           "  | | | | | |\n"
-           "  | | | | | obsolete (new version available)\n"
-           "  | | | | running (loaded)\n"
-           "  | | | held\n"
-           "  | | autoloaded\n"
-           "  | installed\n"
-           "  popular script\n"
-           "\n"
-           "In output of /script list, the possible status for each script are:\n"
-           "  * ? i a H N\n"
-           "  | | | | | |\n"
-           "  | | | | | obsolete (new version available)\n"
-           "  | | | | held\n"
-           "  | | | autoloaded\n"
-           "  | | installed\n"
-           "  | unknown script (can not be downloaded/updated)\n"
-           "  popular script\n"
-           "\n"
-           "Keys on script buffer:\n"
-           "  alt+i  install script\n"
-           "  alt+r  remove script\n"
-           "  alt+l  load script\n"
-           "  alt+L  reload script\n"
-           "  alt+u  unload script\n"
-           "  alt+A  autoload script\n"
-           "  alt+h  (un)hold script\n"
-           "  alt+v  view script\n"
-           "\n"
-           "Input allowed on script buffer:\n"
-           "  i/r/l/L/u/A/h/v  action on script (same as keys above)\n"
-           "  q                close buffer\n"
-           "  $                refresh buffer\n"
-           "  s:x,y            sort buffer using keys x and y (see /help "
-           "script.look.sort)\n"
-           "  s:               reset sort (use default sort)\n"
-           "  word(s)          filter scripts: search word(s) in scripts "
-           "(description, tags, ...)\n"
-           "  *                remove filter\n"
-           "\n"
-           "Mouse actions on script buffer:\n"
-           "  wheel         scroll list\n"
-           "  left button   select script\n"
-           "  right button  install/remove script\n"
-           "\n"
-           "Examples:\n"
-           "  /script search url\n"
-           "  /script install go.py urlserver.py\n"
-           "  /script remove go.py\n"
-           "  /script hold urlserver.py\n"
-           "  /script reload urlserver\n"
-           "  /script upgrade"),
+           " || update"
+           " || -up|-down [<number>]"
+           " || -go <line>|end"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[list]: list loaded scripts (all languages)"),
+            N_("raw[-o]: send list of loaded scripts to buffer "
+               "(string in English)"),
+            N_("raw[-ol]: send list of loaded scripts to buffer "
+               "(translated string)"),
+            N_("raw[-i]: copy list of loaded scripts in command line (for "
+               "sending to buffer) (string in English)"),
+            N_("raw[-il]: copy list of loaded scripts in command line (for "
+               "sending to buffer) (translated string)"),
+            N_("raw[search]: search scripts by tags, language (python, "
+               "perl, ...), filename extension (py, pl, ...) or text; result is "
+               "displayed on scripts buffer"),
+            N_("raw[show]: show detailed info about a script"),
+            N_("raw[load]: load script(s)"),
+            N_("raw[unload]: unload script(s)"),
+            N_("raw[reload]: reload script(s)"),
+            N_("raw[autoload]: autoload the script"),
+            N_("raw[noautoload]: do not autoload the script"),
+            N_("raw[toggleautoload]: toggle autoload"),
+            N_("raw[install]: install/upgrade script(s)"),
+            N_("raw[remove]: remove script(s)"),
+            N_("raw[installremove]: install or remove script(s), depending on current "
+               "state"),
+            N_("raw[hold]: hold/unhold script(s) (a script held will not be "
+               "upgraded any more and cannot be removed)"),
+            N_("raw[-q]: quiet mode: do not display messages"),
+            N_("raw[upgrade]: upgrade all installed scripts which are obsolete "
+               "(new version available)"),
+            N_("raw[update]: update local scripts cache"),
+            N_("raw[-up]: move the selected line up by \"number\" lines"),
+            N_("raw[-down]: move the selected line down by \"number\" lines"),
+            N_("raw[-go]: select a line by number, first line number is 0 "
+               "(\"end\" to select the last line)"),
+            "",
+            N_("Without argument, this command opens a buffer with list of scripts."),
+            "",
+            N_("On script buffer, the possible status for each script are:"),
+            N_("  `*`: popular script"),
+            N_("  `i`: installed"),
+            N_("  `a`: autoloaded"),
+            N_("  `H`: held"),
+            N_("  `r`: running (loaded)"),
+            N_("  `N`: obsolete (new version available)"),
+            "",
+            N_("In output of /script list, this additional status can be displayed:"),
+            N_("  `?`: unknown script (can not be downloaded/updated)"),
+            "",
+            N_("In input of script buffer, word(s) are used to filter scripts "
+               "on description, tags, ...). The input \"*\" removes the filter."),
+            "",
+            N_("For keys, input and mouse actions on the buffer, "
+               "see key bindings in User's guide."),
+            "",
+            N_("Examples:"),
+            AI("  /script search url"),
+            AI("  /script install go.py urlserver.py"),
+            AI("  /script remove go.py"),
+            AI("  /script hold urlserver.py"),
+            AI("  /script reload urlserver"),
+            AI("  /script upgrade")),
         "list -i|-il|-o|-ol"
         " || search %(script_tags)|%(script_languages)|%(script_extensions)"
         " || show %(script_scripts)"
@@ -400,14 +390,17 @@ script_command_init ()
         " || reload %(python_script)|%(perl_script)|%(ruby_script)|"
         "%(tcl_script)|%(lua_script)|%(guile_script)|%(javascript_script)|"
         "%(php_script)|%*"
-        " || autoload %(script_scripts_installed)|%*"
-        " || noautoload %(script_scripts_installed)|%*"
-        " || toggleautoload %(script_scripts_installed)|%*"
+        " || autoload %(script_files)|%*"
+        " || noautoload %(script_files)|%*"
+        " || toggleautoload %(script_files)|%*"
         " || install %(script_scripts)|%*"
         " || remove %(script_scripts_installed)|%*"
         " || installremove %(script_scripts)|%*"
         " || hold %(script_scripts)|%*"
         " || update"
-        " || upgrade",
+        " || upgrade"
+        " || -up 1|2|3|4|5"
+        " || -down 1|2|3|4|5"
+        " || -go 0|end",
         &script_command_script, NULL, NULL);
 }

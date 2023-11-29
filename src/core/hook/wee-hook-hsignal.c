@@ -129,6 +129,7 @@ int
 hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
     int rc;
 
     rc = WEECHAT_RC_OK;
@@ -144,13 +145,13 @@ hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
             && !ptr_hook->running
             && (hook_hsignal_match (signal, ptr_hook)))
         {
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             rc = (HOOK_HSIGNAL(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
                  signal,
                  hashtable);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
 
             if (rc == WEECHAT_RC_OK_EAT)
                 break;

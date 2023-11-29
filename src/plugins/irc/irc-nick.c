@@ -256,16 +256,15 @@ irc_nick_set_host (struct t_irc_nick *nick, const char *host)
 }
 
 /*
- * Checks if nick is "op" (or better than "op", for example channel admin or
- * channel owner).
+ * Checks if nick is "op" or higher than "op", like channel admin/owner.
  *
  * Returns:
- *   1: nick is "op" (or better)
+ *   1: nick is "op" or higher
  *   0: nick is not op
  */
 
 int
-irc_nick_is_op (struct t_irc_server *server, struct t_irc_nick *nick)
+irc_nick_is_op_or_higher (struct t_irc_server *server, struct t_irc_nick *nick)
 {
     int index;
 
@@ -834,44 +833,66 @@ irc_nick_search (struct t_irc_server *server, struct t_irc_channel *channel,
 }
 
 /*
- * Returns number of nicks (total, ops, halfops, voiced, regular) on a channel.
+ * Returns number of nicks per mode on a channel, as an array of integers
+ * whose size is the number of modes + 1 (for regular users).
+ *
+ * For example if modes == "ohv", the array returned has a size of 4, with:
+ *   - array[0] = number of nicks with mode "o"
+ *   - array[1] = number of nicks with mode "h"
+ *   - array[2] = number of nicks with mode "v"
+ *   - array[3] = number of nicks with no mode (regular users)
+ *
+ * The parameter *size is set with the array size (number of integers in the
+ * array, NOT the size in bytes).
+ *
+ * Note: result must be freed after use (if not NULL).
  */
 
-void
+int *
 irc_nick_count (struct t_irc_server *server, struct t_irc_channel *channel,
-                int *total, int *count_ops, int *count_halfops,
-                int *count_voiced, int *count_regular)
+                int *size)
 {
     struct t_irc_nick *ptr_nick;
+    const char *ptr_prefix_modes;
+    int i, *nicks_by_mode, mode_found;
 
-    (*total) = 0;
-    (*count_ops) = 0;
-    (*count_halfops) = 0;
-    (*count_voiced) = 0;
-    (*count_regular) = 0;
-    for (ptr_nick = channel->nicks; ptr_nick;
-         ptr_nick = ptr_nick->next_nick)
+    if (!server || !channel || !size)
+        return NULL;
+
+    *size = 0;
+
+    ptr_prefix_modes = irc_server_get_prefix_modes (server);
+    if (!ptr_prefix_modes)
+        return NULL;
+
+    *size = strlen (ptr_prefix_modes) + 1;
+    nicks_by_mode = (int *)calloc (*size, sizeof (*nicks_by_mode));
+    if (!nicks_by_mode)
     {
-        (*total)++;
-        if (irc_nick_is_op (server, ptr_nick))
+        *size = 0;
+        return NULL;
+    }
+
+    for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+        mode_found = 0;
+        for (i = 0; ptr_prefix_modes[i]; i++)
         {
-            (*count_ops)++;
+            if (irc_nick_has_prefix_mode (server, ptr_nick, ptr_prefix_modes[i]))
+            {
+                nicks_by_mode[i]++;
+                mode_found = 1;
+                break;
+            }
         }
-        else
+        if (!mode_found)
         {
-            if (irc_nick_has_prefix_mode (server, ptr_nick, 'h'))
-            {
-                (*count_halfops)++;
-            }
-            else
-            {
-                if (irc_nick_has_prefix_mode (server, ptr_nick, 'v'))
-                    (*count_voiced)++;
-                else
-                    (*count_regular)++;
-            }
+            /* regular user */
+            nicks_by_mode[*size - 1]++;
         }
     }
+
+    return nicks_by_mode;
 }
 
 /*

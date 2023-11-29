@@ -517,6 +517,31 @@ UXTerm*metaSendsEscape: true
 
 Ако користите macOS Terminal апликацију, укључите опцију „Use option as meta key” у менију Settings/Keyboard након чега можете користити тастер kbd:[Option] као meta тастер.
 
+[[enter_key]]
+=== Зашто неки тастери, укључујући Ентер, не функционишу?
+
+Ако извршавате WeeChat < 4.0.0 са конфигурационим фајловима које је креирала било
+која верзија ≥ 4.0.0, имена тастера постану неисправна и многи тастери уопште неће радити. +
+Да бисте их поправили, напустите WeeChat, уклоните из weechat.conf све одељке `[key*]` 
+и поново покрените WeeChat: креираће се сви подразумевани тастери.
+
+[[key_f11]]
+=== Тастер F11 максимизира прозор терминала, како могу да скролујем навише листу надимака?
+
+Терминало обично користе тастер kbd:[F11] да максимизују прозор, а у програму WeeChat
+тастери kbd:[F11]/kbd:[F12] су подразумевани тастери за скроловање листе надимака.
+
+Можете да вежете остале тастере, на пример kbd:[Shift+F11] и kbd:[Shift+F12],
+у WeeChat ≥ 4.0.0:
+
+----
+/key bind shift-f11 /bar scroll nicklist * -100%
+/key bind shift-f12 /bar scroll nicklist * +100%
+----
+
+Још једно решење је да укључите миша (тастер: kbd:[Alt+m]) и да скролујете точкићем
+миша (погледајте такође питање у вези са <<mouse,мишем>>).
+
 [[customize_key_bindings]]
 === Како могу да прилагодим тастерске пречице?
 
@@ -543,8 +568,7 @@ UXTerm*metaSendsEscape: true
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
 ----
 
-// TRANSLATION MISSING
-For an easy jump to buffers, you can also install the _go.py_ script:
+За једноставно скакање на бафере, можете такође да инсталирате и _go.py_ скрипту:
 
 ----
 /script install go.py
@@ -822,31 +846,19 @@ link:weechat_user.sr.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 можете користити да за неке надимке подесите максимални ниво вруће листе, по баферу, или по
 групи бафера (као на пример IRC сервери).
 
-Ако само желите да искључите истицања, треба да је поставите на 2:
+Ако само желите да искључите истицања, треба да је поставите на 2.
+
+За текући бафер:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add пера:2,мика:2
 ----
 
-Међутим, ова особина бафера се не чува у конфигурацији. Ако желите да се ове особине бафера аутоматски поново примене, биће вам потребна скрипта _buffer_autoset.py_:
+За све канале на серверу „libera”:
 
 ----
-/script install buffer_autoset.py
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add пера:2,мика:2
 ----
-
-На пример, ако за стално желите да искључите истицања од надимка „mike” са #weechat на IRC серверу libera:
-
-----
-/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
-----
-
-Ако уместо овога желите да се примени на комплетан libera сервер:
-
-----
-/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
-----
-
-За још примера, погледајте `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === Како могу да променим циљни бафер за команде над спојеним баферима (као што је бафер са серверима)?
@@ -964,7 +976,8 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 Можете да следите исте савете као за <<memory_usage,меморију>>, као и следеће:
 
-* Сакријте „nicklist” траку: `/bar hide nicklist`.
+* Сакријте „nicklist” траку: `/bar hide nicklist` (тастер: kbd:[Alt+Shift+N]).
+* Искључите „buflist”: `/buflist disable` (тастер: kbd:[Alt+Shift+B]).
 * Уклоните приказ секунди из времена у статусној траци: `+/set weechat.look.item_time_format "%H:%M"+` (ово је и подразумевана вредност).
 * Искључите проверу неисправно написаних речи у командној линији у реалном времену (ако сте је укључили): `+/set spell.check.real_time off+`.
 * Поставите променљиву _TZ_ (на пример: `export TZ="Europe/Paris"`), тиме спречавате чест приступ фајлу _/etc/localtime_.
@@ -983,12 +996,18 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 ----
 /set irc.ctcp.clientinfo ""
-/set irc.ctcp.finger ""
 /set irc.ctcp.source ""
 /set irc.ctcp.time ""
-/set irc.ctcp.userinfo ""
 /set irc.ctcp.version ""
 /set irc.ctcp.ping ""
+----
+
+Са WeeChat < 4.1.0, на остале CTCP упите се подразумевано одговарало и такође морају
+да се искључе:
+
+----
+/set irc.ctcp.finger ""
+/set irc.ctcp.userinfo ""
 ----
 
 Уклоните из меморије и искључите ауто учитавање „xfer” додатка (користи се за IRC DCC):
@@ -1018,6 +1037,34 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 И неки други фајлови могу да садрже осетљиве осетљиве информације као што су лозинке (у случају да нису сачуване у _sec.conf_ командом `/secure`).
 
 Погледајте link:weechat_user.sr.html#files_and_directories[Корисничко упутство / Фајлови и директоријуми ^↗^^] за више информација о конфигурационим фајловима.
+
+[[move_to_another_device]]
+=== Желим да преместим свој WeeChat на други уређај и да задржим текућу конфигурацију, шта би требало да копирам?
+
+Следећом командом најпре проверите које директоријуме користи WeeChat: `/debug dirs`. +
+Морају да се копирају директоријуми home/config и home/data (сви фајлови и поддиректоријуми).
+
+На пример, ако користите XDG директоријуме (подразумевано са WeeChat ≥ 3.2),
+директоријуми би требало да буду `$HOME/.config/weechat` и `$HOME/.local/share/weechat`. +
+Ако користите један директоријум (подразумевано са WeeChat < 3.2), директоријум би
+требало да буде `$HOME/.weechat`.
+
+[IMPORTANT]
+WeeChat верзија на новом уређају мора да буде већа или једнака од верзије на почетном
+уређају. +
+Враћање WeeChat конфигурације уназад *НИЈЕ ПОДРЖАНО* и може да је поквари,
+па на тај начин WeeChat постаје неупотребљив.
+
+Кораци:
+
+. Напустите Weechat: `/quit` (или `/upgrade -quit` ако желите могућност да наставите сесију,
+  што укључује садржај свих бафера).
+. Копирајте све директоријуме, поддиректоријуме и фајлове на нови уређај, задржавајући
+  иста имена и дозволе.
+. Није обавезно: копирајте све фајлове ван ових директоријума на које указује ваша
+  конфигурација (не препоручује се употреба фајлова ван WeeChat директоријума).
+. Покрените WeeChat на новом уређају: `weechat` (или `weechat --upgrade` у случају да сте
+  сачували сесију).
 
 [[development]]
 == Развој

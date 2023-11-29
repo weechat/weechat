@@ -37,6 +37,7 @@
 #include "wee-config-file.h"
 #include "wee-arraylist.h"
 #include "wee-config.h"
+#include "wee-dir.h"
 #include "wee-hashtable.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
@@ -1491,22 +1492,22 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     {
                         error = NULL;
                         number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (error && !error[0]
+                            && (long)old_value + number <= (long)(option->max))
                         {
                             value_int = old_value + number;
-                            if (value_int <= option->max)
-                                new_value_ok = 1;
+                            new_value_ok = 1;
                         }
                     }
                     else if (strncmp (value, "--", 2) == 0)
                     {
                         error = NULL;
                         number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (error && !error[0]
+                            && (long)old_value - number >= (long)(option->min))
                         {
                             value_int = old_value - number;
-                            if (value_int >= option->min)
-                                new_value_ok = 1;
+                            new_value_ok = 1;
                         }
                     }
                     else
@@ -3254,11 +3255,75 @@ config_file_parse_version (const char *version)
     long number;
     char *error;
 
+    if (!version)
+        return -1;
+
+    error = NULL;
     number = strtoll (version, &error, 10);
     if (!error || error[0])
         return -1;
 
     return (number < 1) ? -1 : (int)number;
+}
+
+/*
+ * Backups a configuration file if its version is unsupported and cannot be
+ * loaded.
+ */
+
+void
+config_file_backup (const char *filename)
+{
+    char *filename_backup, str_time[32], str_index[32];
+    int length, index;
+    struct tm *local_time;
+    time_t date;
+
+    if (!filename)
+        return;
+
+    length = strlen (filename) + 128;
+
+    filename_backup = malloc (length);
+    if (!filename_backup)
+        return;
+
+    date = time (NULL);
+    local_time = localtime (&date);
+    if (strftime (str_time, sizeof (str_time), ".%Y%m%d.%H%M%S", local_time) == 0)
+        str_time[0] = '\0';
+
+    index = 1;
+    while (1)
+    {
+        if (index == 1)
+            str_index[0] = '\0';
+        else
+            snprintf (str_index, sizeof (str_index), ".%d", index);
+        snprintf (filename_backup, length,
+                  "%s.backup%s%s",
+                  filename, str_time, str_index);
+        if (access (filename_backup, F_OK) != 0)
+            break;
+        index++;
+    }
+
+    if (dir_file_copy (filename, filename_backup))
+    {
+        gui_chat_printf (NULL,
+                         _("%sFile %s has been backed up as %s"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         filename, filename_backup);
+    }
+    else
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: unable to backup file %s"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         filename);
+    }
+
+    free (filename_backup);
 }
 
 /*
@@ -3273,16 +3338,22 @@ config_file_parse_version (const char *version)
  *
  * Section can be updated only if option and value are NULL (ie if we are
  * reading a section line like "[section]").
+ *
+ * Integer warning_update_displayed is set to 1 if a warning is displayed,
+ * when the file is updated to a newer version (then it's not compatible any
+ * more with previous versions).
  */
 
 void
 config_file_update_data_read (struct t_config_file *config_file,
+                              const char *filename,
                               const char *section,
                               const char *option,
                               const char *value,
                               char **ret_section,
                               char **ret_option,
-                              char **ret_value)
+                              char **ret_value,
+                              int *warning_update_displayed)
 {
     struct t_hashtable *data_read, *hashtable;
     const char *ptr_section, *ptr_option, *ptr_value;
@@ -3291,6 +3362,21 @@ config_file_update_data_read (struct t_config_file *config_file,
     /* do nothing if config is already the latest version */
     if (config_file->version_read >= config_file->version)
         return;
+
+    if (!*warning_update_displayed
+        && (config_file->version_read < config_file->version))
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sImportant: file %s has been updated from version %d to %d, "
+              "it is not compatible and can not be loaded any more with any "
+              "older version"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            filename,
+            config_file->version_read,
+            config_file->version);
+        *warning_update_displayed = 1;
+    }
 
     /* do nothing if there's no update callback */
     if (!config_file->callback_update)
@@ -3389,6 +3475,7 @@ int
 config_file_read_internal (struct t_config_file *config_file, int reload)
 {
     int filename_length, line_number, rc, length, version;
+    int warning_update_displayed;
     char *filename, *section, *option, *value;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
@@ -3398,6 +3485,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
 
     config_file->version_read = 1;
+    warning_update_displayed = 0;
 
     /* build filename */
     filename_length = strlen (weechat_config_dir) + strlen (DIR_SEPARATOR) +
@@ -3496,18 +3584,20 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                 section = string_strndup (ptr_line + 1, pos - ptr_line - 1);
                 if (section)
                 {
-                    config_file_update_data_read (config_file,
+                    config_file_update_data_read (config_file, filename,
                                                   section, NULL, NULL,
-                                                  &section, NULL, NULL);
+                                                  &section, NULL, NULL,
+                                                  &warning_update_displayed);
                     ptr_section = config_file_search_section (config_file,
                                                               section);
                     if (!ptr_section)
                     {
-                        gui_chat_printf (NULL,
-                                         _("%sWarning: %s, line %d: unknown "
-                                           "section identifier (\"%s\")"),
-                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         filename, line_number, section);
+                        gui_chat_printf (
+                            NULL,
+                            _("%sWarning: %s, line %d: ignoring unknown "
+                              "section identifier (\"%s\")"),
+                            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                            filename, line_number, section);
                     }
                     free (section);
                 }
@@ -3580,6 +3670,11 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                     filename, line_number,
                     line);
+                config_file_backup (filename);
+                if (option)
+                    free (option);
+                if (value)
+                    free (value);
                 goto end_file;
             }
             else
@@ -3596,6 +3691,11 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         filename,
                         config_file->version_read,
                         config_file->version);
+                    config_file_backup (filename);
+                    if (option)
+                        free (option);
+                    if (value)
+                        free (value);
                     goto end_file;
                 }
             }
@@ -3606,16 +3706,17 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
         {
             gui_chat_printf (NULL,
                              _("%sWarning: %s, line %d: "
-                               "option outside section: %s"),
+                               "ignoring option outside section: %s"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              filename, line_number,
                              line);
             goto end_line;
         }
 
-        config_file_update_data_read (config_file,
+        config_file_update_data_read (config_file, filename,
                                       ptr_section->name, option, value,
-                                      NULL, &option, &value);
+                                      NULL, &option, &value,
+                                      &warning_update_displayed);
 
         /* option has been ignored by the update callback? */
         if (!option || !option[0])
@@ -3661,21 +3762,24 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
         switch (rc)
         {
             case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
-                gui_chat_printf (NULL,
-                                 _("%sWarning: %s, line %d: "
-                                   "unknown option for section \"%s\": %s"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 filename, line_number,
-                                 ptr_section->name,
-                                 line);
+                gui_chat_printf (
+                    NULL,
+                    _("%sWarning: %s, line %d: "
+                      "ignoring unknown option for section \"%s\": %s"),
+                    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                    filename, line_number,
+                    ptr_section->name,
+                    line);
                 break;
             case WEECHAT_CONFIG_OPTION_SET_ERROR:
-                gui_chat_printf (NULL,
-                                 _("%sWarning: %s, line %d: "
-                                   "invalid value for option: %s"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 filename, line_number,
-                                 line);
+                gui_chat_printf (
+                    NULL,
+                    _("%sWarning: %s, line %d: "
+                      "ignoring invalid value for option in section \"%s\": %s"),
+                    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                    filename, line_number,
+                    ptr_section->name,
+                    line);
                 break;
         }
 
@@ -3852,7 +3956,7 @@ config_file_section_free_options (struct t_config_section *section)
 
     while (section->options)
     {
-        config_file_option_free (section->options, 0);
+        config_file_option_free (section->options, 1);
     }
 }
 

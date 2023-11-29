@@ -375,6 +375,7 @@ logger_buffer_compress_file (struct t_logger_buffer *logger_buffer)
                 unlink (filename);
             }
             break;
+#ifdef HAVE_ZSTD
         case LOGGER_BUFFER_COMPRESSION_ZSTD:
             if (weechat_file_compress (filename, new_filename,
                                        "zstd", compression_level))
@@ -382,6 +383,7 @@ logger_buffer_compress_file (struct t_logger_buffer *logger_buffer)
                 unlink (filename);
             }
             break;
+#endif
         default:
             break;
     }
@@ -477,6 +479,12 @@ logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
 
     compression_type = weechat_config_enum (
         logger_config_file_rotation_compression_type);
+
+#ifndef HAVE_ZSTD
+    if (compression_type == LOGGER_BUFFER_COMPRESSION_ZSTD)
+        compression_type = LOGGER_BUFFER_COMPRESSION_NONE;
+#endif
+
     ptr_extension = logger_buffer_compression_extension[compression_type];
 
     /* find the highest existing extension index */

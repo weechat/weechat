@@ -26,9 +26,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <gcrypt.h>
 
 #include "weechat.h"
 #include "wee-config-file.h"
+#include "wee-crypto.h"
 #include "wee-hashtable.h"
 #include "wee-secure.h"
 #include "wee-secure-buffer.h"
@@ -85,7 +87,8 @@ secure_buffer_display_data (void *data,
 void
 secure_buffer_display ()
 {
-    int line, count, count_encrypted;
+    int line, count, count_encrypted, hash_algo;
+    char str_supported[1024];
 
     if (!secure_buffer)
         return;
@@ -99,10 +102,22 @@ secure_buffer_display ()
 
     line = 0;
 
+    str_supported[0] = '\0';
+    hash_algo = weecrypto_get_hash_algo (
+        config_file_option_string (secure_config_crypt_hash_algo));
+    if (hash_algo == GCRY_MD_NONE)
+    {
+        snprintf (str_supported, sizeof (str_supported),
+                  " (%s)",
+                  /* TRANSLATORS: "hash algorithm not supported" */
+                  _("not supported"));
+    }
+
     gui_chat_printf_y (secure_buffer, line++,
-                       "Hash algo: %s  Cipher: %s  Salt: %s",
-                       secure_hash_algo_string[CONFIG_ENUM(secure_config_crypt_hash_algo)],
-                       secure_cipher_string[CONFIG_ENUM(secure_config_crypt_cipher)],
+                       "Hash algo: %s%s  Cipher: %s  Salt: %s",
+                       config_file_option_string (secure_config_crypt_hash_algo),
+                       str_supported,
+                       config_file_option_string (secure_config_crypt_cipher),
                        (CONFIG_BOOLEAN(secure_config_crypt_salt)) ? _("on") : _("off"));
 
     /* display passphrase */

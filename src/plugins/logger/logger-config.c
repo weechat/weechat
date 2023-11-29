@@ -94,6 +94,32 @@ logger_config_change_file_option_restart_log (const void *pointer, void *data,
 }
 
 /*
+ * Callback for changes on compression type option.
+ */
+
+void
+logger_config_change_file_rotation_comp_type (const void *pointer,
+                                              void *data,
+                                              struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+#ifndef HAVE_ZSTD
+    if (weechat_config_enum (option) == LOGGER_BUFFER_COMPRESSION_ZSTD)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: zstd compression is not available, "
+                          "logger files will not be compressed"),
+                        weechat_prefix ("error"),
+                        LOGGER_PLUGIN_NAME);
+    }
+#endif
+}
+
+/*
  * Callback for changes on option "logger.file.color_lines".
  */
 
@@ -666,7 +692,9 @@ logger_config_init ()
                "new type (or decompress files), then change the option in "
                "logger.conf, then load the logger plugin"),
             "none|gzip|zstd", 0, 0, "none", NULL, 0,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            NULL, NULL, NULL,
+            &logger_config_change_file_rotation_comp_type, NULL, NULL,
+            NULL, NULL, NULL);
         logger_config_file_rotation_size_max = weechat_config_new_option (
             logger_config_file, logger_config_section_file,
             "rotation_size_max", "string",

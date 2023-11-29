@@ -34,6 +34,7 @@ enum t_gui_key_context
 {
     GUI_KEY_CONTEXT_DEFAULT = 0,
     GUI_KEY_CONTEXT_SEARCH,
+    GUI_KEY_CONTEXT_HISTSEARCH,
     GUI_KEY_CONTEXT_CURSOR,
     GUI_KEY_CONTEXT_MOUSE,
     /* number of key contexts */

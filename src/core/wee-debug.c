@@ -33,7 +33,9 @@
 #include <gcrypt.h>
 #include <curl/curl.h>
 #include <zlib.h>
+#ifdef HAVE_ZSTD
 #include <zstd.h>
+#endif
 
 #include <gnutls/gnutls.h>
 
@@ -66,6 +68,9 @@
 
 
 int debug_dump_active = 0;
+
+long long debug_long_callbacks = 0;    /* callbacks taking more than        */
+                                       /* N microseconds will be traced     */
 
 
 /*
@@ -680,11 +685,13 @@ debug_libs_cb (const void *pointer, void *data,
     gui_chat_printf (NULL, "    zlib: (?)");
 #endif /* ZLIB_VERSION */
 
+#ifdef HAVE_ZSTD
     /* display zstd version */
     gui_chat_printf (NULL, "    zstd: %d.%d.%d",
                     ZSTD_VERSION_MAJOR,
                     ZSTD_VERSION_MINOR,
                     ZSTD_VERSION_RELEASE);
+#endif /* HAVE_ZSTD */
 
     return WEECHAT_RC_OK;
 }
@@ -736,29 +743,29 @@ debug_display_time_elapsed (struct timeval *time1, struct timeval *time2,
                             const char *message, int display)
 {
     struct timeval debug_timeval_end;
-    long long diff, diff_hour, diff_min, diff_sec, diff_usec;
+    char *str_diff;
+    long long diff;
 
     gettimeofday (&debug_timeval_end, NULL);
     diff = util_timeval_diff (time1, time2);
-
-    diff_usec = diff % 1000000;
-    diff_sec = (diff / 1000000) % 60;
-    diff_min = ((diff / 1000000) / 60) % 60;
-    diff_hour = (diff / 1000000) / 3600;
+    str_diff = util_get_microseconds_string (diff);
 
     if (display)
     {
         gui_chat_printf (NULL,
-                         "debug: time[%s] -> %lld:%02lld:%02lld.%06lld",
+                         "debug: time[%s] -> %s",
                          (message) ? message : "?",
-                         diff_hour, diff_min, diff_sec, diff_usec);
+                         (str_diff) ? str_diff : "?");
     }
     else
     {
-        log_printf ("debug: time[%s] -> %lld:%02lld:%02lld.%06lld",
+        log_printf ("debug: time[%s] -> %s",
                     (message) ? message : "?",
-                    diff_hour, diff_min, diff_sec, diff_usec);
+                    (str_diff) ? str_diff : "?");
     }
+
+    if (str_diff)
+        free (str_diff);
 }
 
 /*

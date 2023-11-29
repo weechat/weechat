@@ -30,6 +30,7 @@
 #include "../core/weechat.h"
 #include "../core/wee-arraylist.h"
 #include "../core/wee-config.h"
+#include "../core/wee-debug.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
@@ -37,6 +38,7 @@
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
+#include "../core/wee-util.h"
 #include "../plugins/plugin.h"
 #include "gui-bar-item.h"
 #include "gui-bar.h"
@@ -47,6 +49,7 @@
 #include "gui-completion.h"
 #include "gui-cursor.h"
 #include "gui-filter.h"
+#include "gui-history.h"
 #include "gui-hotlist.h"
 #include "gui-key.h"
 #include "gui-line.h"
@@ -95,6 +98,30 @@ gui_bar_item_valid (struct t_gui_bar_item *bar_item)
 
     /* bar item not found */
     return 0;
+}
+
+/*
+ * Searches for a default bar item by name.
+ *
+ * Returns index in gui_bar_item_names[], -1 if not found.
+ */
+
+int
+gui_bar_item_search_default (const char *item_name)
+{
+    int i;
+
+    if (!item_name || !item_name[0])
+        return -1;
+
+    for (i = 0; i < GUI_BAR_NUM_ITEMS; i++)
+    {
+        if (strcmp (gui_bar_item_names[i], item_name) == 0)
+            return i;
+    }
+
+    /* default bar item not found */
+    return -1;
 }
 
 /*
@@ -359,9 +386,11 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
                         int item, int subitem)
 {
     char *item_value, delimiter_color[32], bar_color[32];
-    char **result, str_attr[8];
+    char **result, str_attr[8], *str_diff;
     struct t_gui_buffer *buffer;
     struct t_gui_bar_item *ptr_item;
+    struct timeval start_time, end_time;
+    long long time_diff;
 
     if (!bar || !bar->items_array[item][subitem])
         return NULL;
@@ -383,6 +412,15 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
                                                     bar->items_name[item][subitem]);
         if (ptr_item && ptr_item->build_callback)
         {
+            if (debug_long_callbacks > 0)
+            {
+                gettimeofday (&start_time, NULL);
+            }
+            else
+            {
+                start_time.tv_sec = 0;
+                start_time.tv_usec = 0;
+            }
             item_value = (ptr_item->build_callback) (
                 ptr_item->build_callback_pointer,
                 ptr_item->build_callback_data,
@@ -390,6 +428,24 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
                 window,
                 buffer,
                 NULL);
+            if ((debug_long_callbacks > 0) && (start_time.tv_sec > 0))
+            {
+                gettimeofday (&end_time, NULL);
+                time_diff = util_timeval_diff (&start_time, &end_time);
+                if (time_diff >= debug_long_callbacks)
+                {
+                    str_diff = util_get_microseconds_string (time_diff);
+                    log_printf (
+                        _("debug: long callback: bar: %s, item: %s, plugin: %s, "
+                          "time elapsed: %s"),
+                        bar->name,
+                        ptr_item->name,
+                        plugin_get_name (ptr_item->plugin),
+                        str_diff);
+                    if (str_diff)
+                        free (str_diff);
+                }
+            }
         }
         if (item_value && !item_value[0])
         {
@@ -792,7 +848,8 @@ gui_bar_item_input_search_cb (const void *pointer, void *data,
                               struct t_gui_buffer *buffer,
                               struct t_hashtable *extra_info)
 {
-    char str_search[1024];
+    char str_search[1024], str_where[256];
+    int text_found;
 
     /* make C compiler happy */
     (void) pointer;
@@ -801,25 +858,52 @@ gui_bar_item_input_search_cb (const void *pointer, void *data,
     (void) window;
     (void) extra_info;
 
-    if (!buffer)
+    if (!buffer || (buffer->text_search == GUI_BUFFER_SEARCH_DISABLED))
         return NULL;
 
-    if (buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
-        return NULL;
+    str_where[0] = '\0';
 
-    snprintf (str_search, sizeof (str_search), "%s%s (%s %s,%s%s%s)",
-              (buffer->text_search_found
-               || !buffer->input_buffer
-               || !buffer->input_buffer[0]) ?
-              GUI_COLOR_CUSTOM_BAR_FG :
-              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_text_not_found))),
-              _("Search"),
-              (buffer->text_search_exact) ? "==" : "~",
-              (buffer->text_search_regex) ? "regex" : "str",
-              (buffer->text_search_where & GUI_TEXT_SEARCH_IN_PREFIX) ? "pre" : "",
-              ((buffer->text_search_where & GUI_TEXT_SEARCH_IN_PREFIX)
-               && (buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE)) ? "|" : "",
-              (buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE) ? "msg" : "");
+    switch (buffer->text_search)
+    {
+        case GUI_BUFFER_SEARCH_DISABLED:
+            return NULL;
+        case GUI_BUFFER_SEARCH_LINES:
+            snprintf (
+                str_where, sizeof (str_where),
+                "%s%s%s",
+                (buffer->text_search_where & GUI_BUFFER_SEARCH_IN_PREFIX) ? "pre" : "",
+                ((buffer->text_search_where & GUI_BUFFER_SEARCH_IN_PREFIX)
+                 && (buffer->text_search_where & GUI_BUFFER_SEARCH_IN_MESSAGE)) ? "|" : "",
+                (buffer->text_search_where & GUI_BUFFER_SEARCH_IN_MESSAGE) ? "msg" : "");
+            break;
+        case GUI_BUFFER_SEARCH_HISTORY:
+            snprintf (str_where, sizeof (str_where),
+                      "%s",
+                      (buffer->text_search_history == GUI_BUFFER_SEARCH_HISTORY_LOCAL) ?
+                      /* TRANSLATORS: search in "local" history */
+                      _("local") :
+                      /* TRANSLATORS: search in "global" history */
+                      _("global"));
+            break;
+        case GUI_BUFFER_NUM_SEARCH:
+            return NULL;
+    }
+
+    text_found = (buffer->text_search_found
+                  || !buffer->input_buffer
+                  || !buffer->input_buffer[0]);
+
+    snprintf (
+        str_search, sizeof (str_search),
+        "%s%s (%s %s,%s)",
+        (text_found) ?
+        GUI_COLOR_CUSTOM_BAR_FG :
+        gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_text_not_found))),
+        (buffer->text_search == GUI_BUFFER_SEARCH_LINES) ?
+        _("Search lines") : _("Search command"),
+        (buffer->text_search_exact) ? "==" : "~",
+        (buffer->text_search_regex) ? "regex" : "str",
+        str_where);
 
     return strdup (str_search);
 }
@@ -936,6 +1020,26 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
         if (ptr_input)
             free (ptr_input);
         ptr_input = ptr_input2;
+    }
+
+    /* add matching text found in history (in history search mode) */
+    if ((buffer->text_search == GUI_BUFFER_SEARCH_HISTORY)
+        && buffer->text_search_ptr_history)
+    {
+        length = strlen (ptr_input) + 16
+            + ((buffer->text_search_ptr_history->text) ?
+               strlen (buffer->text_search_ptr_history->text) : 0);
+        buf = malloc (length);
+        if (buf)
+        {
+            snprintf (buf, length,
+                      "%s  => %s",
+                      ptr_input,
+                      (buffer->text_search_ptr_history->text) ?
+                      buffer->text_search_ptr_history->text : "");
+            free (ptr_input);
+            ptr_input = buf;
+        }
     }
 
     /*
@@ -2220,7 +2324,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT],
                       &gui_bar_item_input_text_cb, NULL, NULL);
-    gui_bar_item_hook_signal ("window_switch;buffer_switch;input_text_*",
+    gui_bar_item_hook_signal ("window_switch;buffer_switch;input_search;"
+                              "input_text_*",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
 
     /* time */

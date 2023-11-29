@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 5c460494eac0e2ed6729ab210df6679f990070d6 */
+ * Stub hash: 614392b6be26030a5d7b12437562aec08ad7052c */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_register, 0, 7, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)
@@ -181,6 +181,10 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_config_color_default arginfo_weechat_plugin_get_name
 
+#define arginfo_weechat_config_enum arginfo_weechat_charset_set
+
+#define arginfo_weechat_config_enum_default arginfo_weechat_charset_set
+
 #define arginfo_weechat_config_write_option arginfo_weechat_string_has_highlight
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_config_write_line, 0, 3, IS_LONG, 0)
@@ -310,6 +314,8 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_hook_process_hashtable, 
 	ZEND_ARG_TYPE_INFO(0, p3, IS_MIXED, 0)
 	ZEND_ARG_TYPE_INFO(0, p4, IS_STRING, 0)
 ZEND_END_ARG_INFO()
+
+#define arginfo_weechat_hook_url arginfo_weechat_hook_process_hashtable
 
 #define arginfo_weechat_hook_connect arginfo_weechat_list_new
 

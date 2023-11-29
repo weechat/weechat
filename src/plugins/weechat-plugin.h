@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20230706-01"
+#define WEECHAT_PLUGIN_API_VERSION "20231017-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -215,6 +215,23 @@ struct timeval;
             vbuffer = vaa_buffer2;                                      \
         }                                                               \
     }
+
+/* macro to concatenate strings */
+#define WEECHAT_STR_CONCAT(separator, argz...)                          \
+    weechat_string_concat (separator, ##argz, NULL)
+
+/*
+ * string used at beginning of arguments description to format the help text
+ * and translate it line by line
+ */
+#define WEECHAT_HOOK_COMMAND_STR_FORMATTED "[fmt]"
+
+/* macro to concatenate strings for description of command arguments */
+#define WEECHAT_CMD_ARGS_DESC(args...)                                  \
+    WEECHAT_STR_CONCAT(                                                 \
+        "\n",                                                           \
+        WEECHAT_HOOK_COMMAND_STR_FORMATTED,                             \
+        ##args)
 
 /*
  * macro to return error in case of missing arguments in callback of
@@ -367,6 +384,7 @@ struct t_weechat_plugin
     int (*string_dyn_copy) (char **string, const char *new_string);
     int (*string_dyn_concat) (char **string, const char *add, int bytes);
     char *(*string_dyn_free) (char **string, int free_string);
+    const char *(*string_concat) (const char *separator, ...);
 
     /* UTF-8 strings */
     int (*utf8_has_8bits) (const char *string);
@@ -748,6 +766,17 @@ struct t_weechat_plugin
                                                               const char *err),
                                               const void *callback_pointer,
                                               void *callback_data);
+    struct t_hook *(*hook_url) (struct t_weechat_plugin *plugin,
+                                const char *url,
+                                struct t_hashtable *options,
+                                int timeout,
+                                int (*callback)(const void *pointer,
+                                                void *data,
+                                                const char *url,
+                                                struct t_hashtable *options,
+                                                struct t_hashtable *output),
+                                const void *callback_pointer,
+                                void *callback_data);
     struct t_hook *(*hook_connect) (struct t_weechat_plugin *plugin,
                                     const char *proxy,
                                     const char *address,
@@ -1232,6 +1261,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define NG_(single,plural,number)                                       \
     (weechat_plugin->ngettext)(single, plural, number)
 #endif /* NG_ */
+#define AI(string) (string)
 #endif /* WEECHAT_H */
 #define weechat_gettext(string) (weechat_plugin->gettext)(string)
 #define weechat_ngettext(single,plural,number)                          \
@@ -1368,6 +1398,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->string_dyn_concat)(__string, __add, __bytes)
 #define weechat_string_dyn_free(__string, __free_string)                \
     (weechat_plugin->string_dyn_free)(__string, __free_string)
+#define weechat_string_concat(__separator, __argz...)                   \
+    (weechat_plugin->string_concat)(__separator, ##__argz)
 
 /* UTF-8 strings */
 #define weechat_utf8_has_8bits(__string)                                \
@@ -1810,6 +1842,12 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                              __callback,                \
                                              __callback_pointer,        \
                                              __callback_data)
+#define weechat_hook_url(__command, __options, __timeout,               \
+                         __callback, __callback_pointer,                \
+                         __callback_data)                               \
+    (weechat_plugin->hook_url)(weechat_plugin, __command, __options,    \
+                               __timeout, __callback,                   \
+                               __callback_pointer, __callback_data)
 #define weechat_hook_connect(__proxy, __address, __port, __ipv6,        \
                              __retry, __gnutls_sess, __gnutls_cb,       \
                              __gnutls_dhkey_size, __gnutls_priorities,  \

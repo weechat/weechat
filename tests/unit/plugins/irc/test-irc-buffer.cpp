@@ -101,3 +101,13 @@ TEST(IrcBuffer, SearchPrivateLowestNumber)
 {
     /* TODO: write tests */
 }
+
+/*
+ * Tests functions:
+ *   irc_buffer_move_near_server
+ */
+
+TEST(IrcBuffer, IrcBufferMoveNearServer)
+{
+    /* TODO: write tests */
+}

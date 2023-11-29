@@ -247,6 +247,7 @@ relay_auth_parse_pbkdf2 (const char *parameters,
     }
 
     /* parameter 2: iterations */
+    error = NULL;
     *iterations = (int)strtol (argv[1], &error, 10);
     if (!error || error[0])
         *iterations = 0;

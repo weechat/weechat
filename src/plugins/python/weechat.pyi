@@ -3,7 +3,7 @@
 # DO NOT EDIT BY HAND!
 #
 
-from typing import Dict
+from typing import Dict, Union
 
 WEECHAT_RC_OK: int = 0
 WEECHAT_RC_OK_EAT: int = 1
@@ -539,7 +539,7 @@ def config_new_section(config_file: str, name: str,
     ::
 
         # example
-        def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
+        def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: Union[str, None]) -> int:
             # ...
             return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
             # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
@@ -558,7 +558,7 @@ def config_new_section(config_file: str, name: str,
             # return weechat.WEECHAT_CONFIG_WRITE_ERROR
             # return weechat.WEECHAT_CONFIG_WRITE_MEMORY_ERROR
 
-        def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
+        def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: Union[str, None]) -> int:
             # ...
             return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
             # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
@@ -594,7 +594,7 @@ def config_search_section(config_file: str, section_name: str) -> str:
 
 def config_new_option(config_file: str, section: str, name: str, type: str, description: str,
                       string_values: str, min: int, max: int,
-                      default_value: str | None, value: str | None, null_value_allowed: int,
+                      default_value: Union[str, None], value: Union[str, None], null_value_allowed: int,
                       callback_check_value: str, callback_check_value_data: str,
                       callback_change: str, callback_change_data: str,
                       callback_delete: str, callback_delete_data: str) -> str:
@@ -1358,6 +1358,32 @@ def hook_process_hashtable(command: str, options: Dict[str, str], timeout: int, 
                                                {"arg1": "-c",
                                                 "arg2": "ls -l /tmp | grep something"},
                                                20000, "my_process_cb", "")
+    """
+    ...
+
+
+def hook_url(url: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str:
+    """`hook_url in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_hook_url>`_
+    ::
+
+        # example
+        def my_url_cb(data: str, url: str, options: Dict[str, str], output: Dict[str, str]) -> int:
+            weechat.prnt("", "output: %s" % output)
+            return weechat.WEECHAT_RC_OK
+
+        # example 1: output to a file
+        hook1 = weechat.hook_url("https://weechat.org/",
+                                 {"file_out": "/tmp/weechat.org.html"},
+                                 20000, "my_url_cb", "")
+
+        # example 2: custom HTTP headers, output sent to callback
+        options = {
+            "httpheader": "\n".join([
+                "Header1: value1",
+                "Header2: value2",
+            ]),
+        }
+        hook2 = weechat.hook_url("http://localhost:8080/", options, 20000, "my_url_cb", "")
     """
     ...
 
@@ -2661,7 +2687,9 @@ def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sens
         hdata = weechat.hdata_get("buffer")
         buffer1 = weechat.buffer_search("irc", "libera.#weechat")
         buffer2 = weechat.buffer_search("irc", "libera.#weechat-fr")
-        weechat.prnt("", "number comparison = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+        weechat.prnt("", "comparison of buffer number = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+        weechat.prnt("", "comparison of number of lines = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "own_lines.lines_count", 0))
+        weechat.prnt("", "comparison of local variable = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "local_variables.myvar", 0))
     """
     ...
 

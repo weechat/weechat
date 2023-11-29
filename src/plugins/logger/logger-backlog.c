@@ -168,7 +168,7 @@ struct t_arraylist *
 logger_backlog_group_messages (struct t_arraylist *lines)
 {
     int i, size, time_found;
-    char **message, **old_message, *str_date, *error;
+    char *message, *new_message, *str_date, *error;
     const char *ptr_line, *pos_message;
     struct tm tm_line;
     struct t_arraylist *messages;
@@ -176,27 +176,37 @@ logger_backlog_group_messages (struct t_arraylist *lines)
     if (!lines)
         return NULL;
 
+    message = NULL;
+
     size = weechat_arraylist_size (lines);
 
     messages = weechat_arraylist_new (size, 0, 1,
                                       &logger_backlog_msg_cmp_cb, NULL,
                                       &logger_backlog_msg_free_cb, NULL);
     if (!messages)
-        return NULL;
-
-    message = weechat_string_dyn_alloc (256);
-    old_message = weechat_string_dyn_alloc (256);
+        goto error;
 
     for (i = size - 1; i >= 0; i--)
     {
         ptr_line = (const char *)weechat_arraylist_get (lines, i);
 
-        weechat_string_dyn_copy (old_message, *message);
-        weechat_string_dyn_copy (message, ptr_line);
-        if ((*old_message)[0])
+        if (message)
         {
-            weechat_string_dyn_concat (message, "\n", -1);
-            weechat_string_dyn_concat (message, *old_message, -1);
+            new_message = malloc (strlen (ptr_line) + 1 + strlen (message) + 1);
+            if (!new_message)
+                goto error;
+            strcpy (new_message, ptr_line);
+            strcat (new_message, "\n");
+            strcat (new_message, message);
+            free (message);
+            message = new_message;
+        }
+        else
+        {
+            message = malloc (strlen (ptr_line) + 1);
+            if (!message)
+                goto error;
+            strcpy (message, ptr_line);
         }
 
         time_found = 0;
@@ -218,18 +228,26 @@ logger_backlog_group_messages (struct t_arraylist *lines)
         }
         if (time_found)
         {
-            weechat_arraylist_insert (messages, 0, strdup (*message));
-            weechat_string_dyn_copy (message, NULL);
+            /* add message (will be freed when arraylist is destroyed) */
+            weechat_arraylist_insert (messages, 0, message);
+            message = NULL;
         }
     }
 
-    if ((*message)[0])
-        weechat_arraylist_insert (messages, 0, strdup (*message));
-
-    weechat_string_dyn_free (message, 1);
-    weechat_string_dyn_free (old_message, 1);
+    if (message)
+    {
+        /* add message (will be freed when arraylist is destroyed) */
+        weechat_arraylist_insert (messages, 0, message);
+    }
 
     return messages;
+
+error:
+    if (message)
+        free (message);
+    if (messages)
+        weechat_arraylist_free (messages);
+    return NULL;
 }
 
 /*
@@ -243,7 +261,6 @@ logger_backlog_file (struct t_gui_buffer *buffer, const char *filename,
     struct t_arraylist *last_lines, *messages;
     int i, num_msgs, old_input_multiline;
 
-    num_msgs = 0;
     last_lines = logger_tail_file (filename, lines);
     if (!last_lines)
         return;

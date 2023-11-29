@@ -55,7 +55,7 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *        stop: 323: end of /list
        *       extra: -
        */
-      "321",
+      "321,322",
       "323",
       NULL,
       NULL, NULL,
@@ -462,6 +462,7 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
                     if (pos)
                     {
                         pos[0] = '\0';
+                        error = NULL;
                         value = strtol (pos + 1, &error, 10);
                         if (!error || error[0])
                             value = -1;
@@ -1309,6 +1310,7 @@ irc_redirect_pattern_hsignal_cb (const void *pointer, void *data,
     timeout = 0;
     if (str_timeout && str_timeout[0])
     {
+        error = NULL;
         number = (int)strtol (str_timeout, &error, 10);
         if (error && !error[0])
             timeout = number;
@@ -1379,6 +1381,7 @@ irc_redirect_command_hsignal_cb (const void *pointer, void *data,
     count = 1;
     if (str_count && str_count[0])
     {
+        error = NULL;
         number = (int)strtol (str_count, &error, 10);
         if (error && !error[0])
             count = number;
@@ -1387,6 +1390,7 @@ irc_redirect_command_hsignal_cb (const void *pointer, void *data,
     timeout = 0;
     if (str_timeout && str_timeout[0])
     {
+        error = NULL;
         number = (int)strtol (str_timeout, &error, 10);
         if (error && !error[0])
             timeout = number;

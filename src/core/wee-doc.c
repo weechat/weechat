@@ -126,7 +126,7 @@ doc_gen_open_file (const char *path, const char *doc, const char *name,
     if (!file)
     {
         string_fprintf (stderr,
-                        "doc generator: ERROR: unable to write file \"%s\"",
+                        "doc generator: ERROR: unable to write file \"%s\"\n",
                         filename);
         return NULL;
     }
@@ -144,7 +144,7 @@ doc_gen_open_file (const char *path, const char *doc, const char *name,
 
 /*
  * Closes the file and renames it without ".temp" suffix, if the target name
- * does not exist of if it exists with a different (obsolete) content.
+ * does not exist or if it exists with a different (obsolete) content.
  *
  * If the target name exists with same content it's kept as-is (so the
  * timestamp does not change) and the temporary file is just deleted.
@@ -256,7 +256,7 @@ doc_gen_user_commands (const char *path, const char *lang)
     struct t_hook *ptr_hook;
     struct t_arraylist *list_hooks;
     int i, list_size, length, first_cmd_plugin, first_line;
-    char old_plugin[1024], format[32], *value;
+    char old_plugin[1024], format[32], *value, *args_desc;
     const char *ptr_args, *pos_pipes, *pos_next;
 
     file = doc_gen_open_file (path, "user", "commands", lang);
@@ -317,7 +317,7 @@ doc_gen_user_commands (const char *path, const char *lang)
             HOOK_COMMAND(ptr_hook, command),
             TRANS(HOOK_COMMAND(ptr_hook, description)));
 
-        length = 1 + utf8_strlen (HOOK_COMMAND(ptr_hook, command)) + 2;
+        length = 1 + utf8_strlen_screen (HOOK_COMMAND(ptr_hook, command)) + 2;
         snprintf (format, sizeof (format), "%%-%ds%%s\n", length);
         ptr_args = TRANS(HOOK_COMMAND(ptr_hook, args));
         first_line = 1;
@@ -365,12 +365,12 @@ doc_gen_user_commands (const char *path, const char *lang)
             }
             ptr_args = pos_next;
         }
-        if (HOOK_COMMAND(ptr_hook, args_description)
-            && HOOK_COMMAND(ptr_hook, args_description[0]))
+        args_desc = hook_command_format_args_description (
+            HOOK_COMMAND(ptr_hook, args_description));
+        if (args_desc)
         {
-            string_fprintf (file,
-                            "\n%s\n",
-                            TRANS(HOOK_COMMAND(ptr_hook, args_description)));
+            string_fprintf (file, "\n%s\n", args_desc);
+            free (args_desc);
         }
     }
 
@@ -598,10 +598,13 @@ doc_gen_user_options (const char *path, const char *lang)
             free (default_value);
     }
 
-    string_fprintf (
-        file,
-        "// end::%s_options[]\n",
-        old_config->name);
+    if (old_config)
+    {
+        string_fprintf (
+            file,
+            "// end::%s_options[]\n",
+            old_config->name);
+    }
 
     arraylist_free (list_options);
 
@@ -1648,7 +1651,7 @@ doc_generate (const char *path)
     {
         string_fprintf (
             stderr,
-            "doc generator: ERROR: failed to create directory \"%s\")",
+            "doc generator: ERROR: failed to create directory \"%s\")\n",
             path);
         goto end;
     }
@@ -1658,14 +1661,26 @@ doc_generate (const char *path)
      * (this is used to generate documentation without installing WeeChat,
      * that means no need to run `make install`)
      */
+#ifdef ENABLE_NLS
     localedir = getenv ("WEECHAT_DOCGEN_LOCALEDIR");
     if (localedir && localedir[0])
         bindtextdomain (PACKAGE, localedir);
+#endif /* ENABLE_NLS */
 
     for (i = 0; locales[i]; i++)
     {
         setenv ("LANGUAGE", locales[i], 1);
-        setlocale (LC_ALL, locales[i]);
+        if (!setlocale (LC_ALL, locales[i]))
+        {
+            /* warning on missing locale */
+            string_fprintf (
+                stderr,
+                "doc generator: WARNING: failed to set locale \"%s\", "
+                "docs will include auto-generated English content\n",
+                locales[i]);
+            /* fallback to English */
+            setlocale (LC_ALL, "C");
+        }
         memcpy (lang, locales[i], 2);
         lang[2] = '\0';
         for (j = 0; doc_gen_functions[j]; j++)

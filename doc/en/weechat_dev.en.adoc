@@ -140,6 +140,7 @@ WeeChat "core" is located in following directories:
 |    wee-secure-config.c          | Secured data options (file sec.conf).
 |    wee-signal.c                 | Signal functions.
 |    wee-string.c                 | Functions on strings.
+|    wee-sys.c                    | System functions.
 |    wee-upgrade-file.c           | Internal upgrade system.
 |    wee-upgrade.c                | Upgrade for WeeChat core (buffers, lines, history, ...).
 |    wee-url.c                    | URL transfer (using libcurl).
@@ -166,6 +167,7 @@ WeeChat "core" is located in following directories:
 |       wee-hook-process.c        | Hook "process".
 |       wee-hook-signal.c         | Hook "signal".
 |       wee-hook-timer.c          | Hook "timer".
+|       wee-hook-url.c            | Hook "url".
 | gui/                            | Functions for buffers, windows, ... (used by all interfaces).
 |    gui-bar-item.c               | Bar items.
 |    gui-bar-window.c             | Bar windows.
@@ -236,6 +238,7 @@ WeeChat "core" is located in following directories:
 |       buflist.c                   | Main buflist functions.
 |       buflist-bar-item.c          | Buflist bar items.
 |       buflist-command.c           | Buflist commands.
+|       buflist-completion.c        | Buflist completions.
 |       buflist-config.c            | Buflist config options (file buflist.conf).
 |       buflist-info.c              | Buflist info/infolists/hdata.
 |       buflist-mouse.c             | Buflist mouse actions.
@@ -281,6 +284,7 @@ WeeChat "core" is located in following directories:
 |       irc-info.c                  | IRC info/infolists/hdata.
 |       irc-input.c                 | Input of commands/text.
 |       irc-join.c                  | Functions for list of channels to join.
+|       irc-list.c                  | Buffer for reply to /list command.
 |       irc-message.c               | Functions to manipulate IRC messages.
 |       irc-mode.c                  | Functions about channel/nick modes.
 |       irc-modelist.c              | IRC channel mode lists (+b, +e, +I, ...).
@@ -419,6 +423,9 @@ WeeChat "core" is located in following directories:
 |          test-core-url.cpp          | Tests: URLs.
 |          test-core-utf8.cpp         | Tests: UTF-8.
 |          test-core-util.cpp         | Tests: utility functions.
+|          test-core-sys.cpp          | Tests: system functions.
+|          hook/                      | Root of unit tests for hooks.
+|             test-hook-command.cpp   | Tests: hooks "command".
 |       gui/                          | Root of unit tests for interfaces.
 |          test-gui-bar-window.cpp    | Tests: bar window functions.
 |          test-gui-buffer.cpp        | Tests: buffer functions.
@@ -436,8 +443,10 @@ WeeChat "core" is located in following directories:
 |             test-irc-channel.cpp    | Tests: IRC channels.
 |             test-irc-color.cpp      | Tests: IRC colors.
 |             test-irc-config.cpp     | Tests: IRC configuration.
+|             test-irc-ctcp.cpp       | Tests: IRC CTCP.
 |             test-irc-ignore.cpp     | Tests: IRC ignores.
 |             test-irc-join.cpp       | Tests: IRC join functions.
+|             test-irc-list.cpp       | Tests: IRC buffer for reply to /list command.
 |             test-irc-message.cpp    | Tests: IRC messages.
 |             test-irc-mode.cpp       | Tests: IRC modes.
 |             test-irc-nick.cpp       | Tests: IRC nicks.

@@ -582,6 +582,31 @@ Jeśli używasz aplikacji Terminal na macOS włącz opcję
 "Use option as meta key" w menu Settings/Keyboard. Następnie możesz używać klawisza
 kbd:[Option] jako klawisza meta.
 
+[[enter_key]]
+=== Niektóre przyciski w tym Enter nie działają, dlatego?
+
+Jeśli używasz WeeChat < 4.0.0 z plikami konfiguracyjnymi stworzonymi przez dowolną
+wersję ≥ 4.0.0, nazwy przycisków stały się nieprawidłowe i wiele z nich nie będzie działać. +
+Żeby to naprawić zamknij WeeChat, usuń wszystkie sekcje `[key*]` z pliku weechat.conf
+i uruchom WeeChat ponownie: przywróci to domyślną konfigurację skrótów klawiszowych.
+
+[[key_f11]]
+=== F11 maksymalizuje okno terminala, jak mogę przewijać listę nicków?
+
+Klawisz kbd:[F11] jest często używany przez terminale do maksymalizacji okna, oraz
+kbd:[F11]/kbd:[F12] są domyślnie używane przez WeeChat do przewijania listy nicków.
+
+Możesz przypisać inne klawisze, na przykład kbd:[Shift+F11] i kbd:[Shift+F12],
+w WeeChat ≥ 4.0.0:
+
+----
+/key bind shift-f11 /bar scroll nicklist * -100%
+/key bind shift-f12 /bar scroll nicklist * +100%
+----
+
+Innym rozwiązaniem jest włączenie obsługi myszy (kbd:[Alt+m]) i przewijanie listy za
+pomocą kółka myszy (zobacz pytania na temat <<mouse,obsługi myszy>>).
+
 [[customize_key_bindings]]
 === Jak mogę zmienić przypisania klawiszy?
 
@@ -612,8 +637,7 @@ komendy w stylu `/123` żeby przejść do bufora #123:
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
 ----
 
-// TRANSLATION MISSING
-For an easy jump to buffers, you can also install the _go.py_ script:
+Dla łatwego przechodzenia między buforami możesz również zainstalować skrypt _go.py_:
 
 ----
 /script install go.py
@@ -927,33 +951,19 @@ link:weechat_user.pl.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 do ustawienia maksymalnego poziomu hotlisty dla niektórych nicków, dla buforów
 lub grup buforów (jak serwery IRC).
 
-W celu wyłączenia tylko podświetleń wystarczy ustawić ja na 2:
+W celu wyłączenia tylko podświetleń wystarczy ustawić ja na 2.
+
+Dla obecnego bufora:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-To utawienie nie jest zapisywane jednak w konfiguracji.
-W celu automatycznego ustawiania tej właściwości należy użyć skryptu _buffer_autoset.py_:
+Dla wszystkich kanałów na serwerze "libera":
 
 ----
-/script install buffer_autoset.py
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-Na przykład w celu wyłączenia powiadomień od "mike" na #weechat w sieci libera:
-on the IRC server libera:
-
-----
-/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
-----
-
-Dla całego serwera libera:
-
-----
-/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
-----
-
-Więcej przykładów można znaleźć wykonując komende `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === Jak mogę zmienić docelowy bufor dla komendy w połączonym buforze (jak bufor z serwerami)?
@@ -1083,7 +1093,8 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 
 Możesz skorzystać z tych samych porad jak dla  <<memory_usage,memory>>, oraz tych:
 
-* schowaj pasek "nicklist": `/bar hide nicklist`
+* schowaj pasek "nicklist": `/bar hide nicklist` (kbd:[Alt+Shift+N]).
+* wyłącz "buflist": `/buflist disable` (kbd:[Alt+Shift+B]).
 * usuń wyświetlanie sekund w czasie na pasku statusu:
   `+/set weechat.look.item_time_format "%H:%M"+` (domyślna wartość)
 * wyłącz automatyczne sprawdzanie poprawności wpisywanych słów w linii poleceń (o ile je włączyłeś):
@@ -1105,12 +1116,18 @@ Wyłącz odpowiedzi na wszystkie zapytania CTCP:
 
 ----
 /set irc.ctcp.clientinfo ""
-/set irc.ctcp.finger ""
 /set irc.ctcp.source ""
 /set irc.ctcp.time ""
-/set irc.ctcp.userinfo ""
 /set irc.ctcp.version ""
 /set irc.ctcp.ping ""
+----
+
+Dla WeeChat < 4.1.0, automatyczne odpowiedzi są również domyślnie wysyłane dla innch zapytań CTCP i muszą zostać
+również wyłączone:
+
+----
+/set irc.ctcp.finger ""
+/set irc.ctcp.userinfo ""
 ----
 
 Wyładuj i wyłącz automatyczne ładowanie wtyczki "xfer" (używanej przez IRC DCC):
@@ -1146,6 +1163,33 @@ w _sec.conf_ za pomocą komendy `/secure`).
 
 Przejrzyj link:weechat_user.pl.html#files_and_directories[Poradnik użytkownika / Pliki i foldery ^↗^^],
 gdzie znajdziesz więcej informacji o plikach konfiguracyjnych.
+
+[[move_to_another_device]]
+=== Chcę przenieść WeeChat na inne urządzenie i zachować swoją konfigurację, co powinienem skompilować?
+
+Najpierw sprawdź katalogi używane przez WeeChat za pomocą polecenia: `/debug dirs`. +
+Katalogi home/config i home/data muszą zostać skopiowane (wszystkie pliki i podkatalogi).
+
+Na przykład jeśli używasz katalogów XDG (domyślnie dla WeeChat ≥ 3.2), katalogi te to
+`$HOME/.config/weechat` i `$HOME/.local/share/weechat`. +
+Jeśli używasz pojedynczego katalogu (domyślne dla WeeChat < 3.2) jest to katalog
+`$HOME/.weechat`.
+
+[IMPORTANT]
+Wersja WeeChat na nowym urządzeniu musi być wyższa lub taka sama jak na obecnym. +
+Przenoszenie konfiguracji do starszej wersji WeeChat *NIE JEST WSPIERANE* i może ją zepsuć,
+prowadząć do niestabilnego działania WeeChat.
+
+Kroki:
+
+. Zamknij Weechat: `/quit` (lub `/upgrade -quit` jeśli chcesz przywrócić sesję,
+  co zawiera zawartość wszystkich buforów).
+. Skopiuj wszystkie katalogi, podkatalogi i pliki na nowe urządzenie, zachowując ich
+  nazwy i uprawnienia.
+. Opcjonalne: skopiuj dowolne pliki z poza tych katalogów, do których odnosisz się w swojej
+  konfiguracji (nie zaleca się używania plików z poza katalogów WeeChat).
+. Uruchom WeeChat na nowym urządzeniu: `weechat` (lub `weechat --upgrade` jeśli zapisywałeś
+  sesje).
 
 [[development]]
 == Rozwój

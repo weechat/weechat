@@ -50,8 +50,10 @@ list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
 
 list(APPEND LINK_LIBS ${ZLIB_LIBRARY})
 
-include_directories(${ZSTD_INCLUDE_DIRS})
-list(APPEND LINK_LIBS ${LIBZSTD_LDFLAGS})
+if(ENABLE_ZSTD)
+  include_directories(${ZSTD_INCLUDE_DIRS})
+  list(APPEND LINK_LIBS ${LIBZSTD_LDFLAGS})
+endif()
 
 target_link_libraries(relay ${LINK_LIBS} coverage_config)
 

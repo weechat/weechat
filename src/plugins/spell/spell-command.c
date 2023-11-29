@@ -479,33 +479,35 @@ spell_command_init ()
     weechat_hook_command (
         "spell",
         N_("spell plugin configuration"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("enable|disable|toggle"
            " || listdict"
            " || setdict -|<dict>[,<dict>...]"
            " || deldict"
            " || addword [<dict>] <word>"),
-        N_("  enable: enable spell checker\n"
-           " disable: disable spell checker\n"
-           "  toggle: toggle spell checker\n"
-           "listdict: show installed dictionaries\n"
-           " setdict: set dictionary for current buffer (multiple dictionaries "
-           "can be separated by a comma, the special value \"-\" disables "
-           "spell checking on current buffer)\n"
-           " deldict: delete dictionary used on current buffer\n"
-           " addword: add a word in personal dictionary\n"
-           "\n"
-           "Input line beginning with a '/' is not checked, except for some "
-           "commands (see /set spell.check.commands).\n"
-           "\n"
-           "To enable spell checker on all buffers, use option \"default_dict\", "
-           "then enable spell checker, for example:\n"
-           "  /set spell.check.default_dict \"en\"\n"
-           "  /spell enable\n"
-           "\n"
-           "To display a list of suggestions in a bar, use item "
-           "\"spell_suggest\".\n"
-           "\n"
-           "Default key to toggle spell checker is alt-s."),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[enable]: enable spell checker"),
+            N_("raw[disable]: disable spell checker"),
+            N_("raw[toggle]: toggle spell checker"),
+            N_("raw[listdict]: show installed dictionaries"),
+            N_("raw[setdict]: set dictionary for current buffer (multiple dictionaries "
+               "can be separated by a comma, the special value \"-\" disables "
+               "spell checking on current buffer)"),
+            N_("raw[deldict]: delete dictionary used on current buffer"),
+            N_("raw[addword]: add a word in personal dictionary"),
+            "",
+            N_("Input line beginning with a \"/\" is not checked, except for some "
+               "commands (see /set spell.check.commands)."),
+            "",
+            N_("To enable spell checker on all buffers, use option \"default_dict\", "
+               "then enable spell checker, for example:"),
+            AI("  /set spell.check.default_dict \"en\""),
+            AI("  /spell enable"),
+            "",
+            N_("To display a list of suggestions in a bar, use item "
+               "\"spell_suggest\"."),
+            "",
+            N_("Default key to toggle spell checker is alt-s.")),
         "enable"
         " || disable"
         " || toggle"

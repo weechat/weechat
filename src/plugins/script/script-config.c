@@ -279,7 +279,7 @@ script_config_change_use_keys_cb (const void *pointer, void *data,
     (void) option;
 
     if (script_buffer)
-        script_buffer_set_keys ();
+        script_buffer_set_keys (NULL);
 }
 
 /*

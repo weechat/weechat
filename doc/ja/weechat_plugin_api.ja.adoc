@@ -2430,7 +2430,6 @@ _WeeChat バージョン 2.4 以上で利用可。_
 
 base 16、32、64 で文字列をエンコード。
 
-
 プロトタイプ:
 
 [source,c]
@@ -2638,7 +2637,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 // TRANSLATION MISSING
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0, 4.2.0._
 
 式を評価して文字列として返す。`+${variable}+`
 という書式で書かれた特殊変数は展開されます (以下の表を参照)。
@@ -2981,11 +2980,23 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 // TRANSLATION MISSING
 | 書式 | Min WeeChat | 説明 | 例
 
+// TRANLSATION MISSING
+| `+${raw_hl:xxx}+` | 4.2.0
+| Raw string (not evaluated), with syntax highlighting (using colors).
+| >> `+${raw_hl:${cut:1,,${rev:hello}}}+` +
+  == `+${cut:1,,${rev:hello}}+` (with colors)
+
 // TRANSLATION MISSING
 | `+${raw:xxx}+` | 3.1
 | Raw string (not evaluated).
 | >> `+${raw:${info:version}}+` +
   == `+${info:version}+`
+
+// TRANSLATION MISSING
+| `+${hl:xxx}+` | 4.2.0
+| String with syntax highlighting (using colors).
+| >> `+${hl:${file.section.option}}+` +
+  == `+test ${variable}+` (with colors)
 
 // TRANSLATION MISSING
 | `+${name}+` | 3.4
@@ -3580,6 +3591,51 @@ weechat_string_dyn_free (string, 1);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
+==== string_concat
+
+_WeeChat ≥ 4.2.0._
+
+// TRANSLATION MISSING
+Concatenate multiple strings using a separator.
+
+プロトタイプ:
+
+[source,c]
+----
+const char *weechat_string_concat (const char *separator, ...);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _separator_: the separator string which is inserted between concatenated
+  strings (can be NULL or empty string)
+
+// TRANSLATION MISSING
+[NOTE]
+Last argument *MUST* always be NULL. +
+A macro called `WEECHAT_STR_CONCAT` can be used, where the final NULL value is
+not needed (usage of this macro is recommended).
+
+戻り値:
+
+// TRANSLATION MISSING
+* concatenated string
+
+C 言語での使用例:
+
+// TRANSLATION MISSING
+[source,c]
+----
+const char *result = weechat_string_concat (" / ", "abc", "def", "ghi", NULL);  /* result == "abc / def / ghi" */
+
+/* with macro */
+const char *result = WEECHAT_STR_CONCAT(" / ", "abc", "def", "ghi");  /* result == "abc / def / ghi" */
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 [[utf-8]]
 === UTF-8
 
@@ -4141,18 +4197,28 @@ Supported hash algorithms:
 
 [width="100%",cols="2,2,3,6",options="header"]
 |===
-| Value        | Algorithm | Hash size           | Notes
-| `+crc32+`    | CRC32     | 4 bytes (32 bits)   | Not a hash algorithm in the cryptographic sense.
-| `+md5+`      | MD5       | 16 bytes (128 bits) | *Weak*, not recommended for cryptography usage.
-| `+sha1+`     | SHA-1     | 20 bytes (160 bits) | *Weak*, not recommended for cryptography usage.
-| `+sha224+`   | SHA-224   | 28 bytes (224 bits) |
-| `+sha256+`   | SHA-256   | 32 bytes (256 bits) |
-| `+sha384+`   | SHA-384   | 48 bytes (384 bits) |
-| `+sha512+`   | SHA-512   | 64 bytes (512 bits) |
-| `+sha3-224+` | SHA3-224  | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
-| `+sha3-256+` | SHA3-256  | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
-| `+sha3-384+` | SHA3-384  | 48 bytes (384 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
-| `+sha3-512+` | SHA3-512  | 64 bytes (512 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| Value           | Algorithm   | Hash size           | Notes
+| `+crc32+`       | CRC32       | 4 bytes (32 bits)   | Not a hash algorithm in the cryptographic sense.
+| `+md5+`         | MD5         | 16 bytes (128 bits) | *Weak*, not recommended for cryptography usage.
+| `+sha1+`        | SHA-1       | 20 bytes (160 bits) | *Weak*, not recommended for cryptography usage.
+| `+sha224+`      | SHA-224     | 28 bytes (224 bits) |
+| `+sha256+`      | SHA-256     | 32 bytes (256 bits) |
+| `+sha384+`      | SHA-384     | 48 bytes (384 bits) |
+| `+sha512+`      | SHA-512     | 64 bytes (512 bits) |
+| `+sha512-224+`  | SHA-512/224 | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.9.4.
+| `+sha512-256+`  | SHA-512/256 | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.9.4.
+| `+sha3-224+`    | SHA3-224    | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+sha3-256+`    | SHA3-256    | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+sha3-384+`    | SHA3-384    | 48 bytes (384 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+sha3-512+`    | SHA3-512    | 64 bytes (512 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+blake2b-160+` | BLAKE2B-160 | 20 bytes (160 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2b-256+` | BLAKE2B-256 | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2b-384+` | BLAKE2B-384 | 48 bytes (384 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2b-512+` | BLAKE2B-512 | 64 bytes (512 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2s-128+` | BLAKE2S-128 | 16 bytes (128 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2s-160+` | BLAKE2S-160 | 20 bytes (160 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2s-224+` | BLAKE2S-224 | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2s-256+` | BLAKE2S-256 | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
 |===
 
 戻り値:
@@ -4592,7 +4658,8 @@ int weechat_file_compress (const char *from, const char *to,
 * _to_: destination file
 * _compressor_: the compressor to use, one of:
 ** _gzip_: gzip compression
-** _zstd_: zstandard compression
+** _zstd_: zstandard compression (available only if zstd was enabled when
+   WeeChat was compiled)
 * _compression_level_: compression level, between 1 (fast, low compression) to
   100 (slow, best compression)
 
@@ -6784,9 +6851,10 @@ my_section_read_cb (const void *pointer, void *data,
 {
     /* ... */
 
-    return WEECHAT_CONFIG_READ_OK;
-    /* return WEECHAT_CONFIG_READ_MEMORY_ERROR; */
-    /* return WEECHAT_CONFIG_READ_FILE_NOT_FOUND; */
+    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+    /* return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE; */
+    /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
 }
 
 int
@@ -6876,7 +6944,7 @@ def config_new_section(config_file: str, name: str,
                        callback_delete_option: str, callback_delete_option_data: str) -> str: ...
 
 # 例
-def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
+def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: Union[str, None]) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
     # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
@@ -6895,7 +6963,7 @@ def my_section_write_default_cb(data: str, config_file: str, section_name: str) 
     # return weechat.WEECHAT_CONFIG_WRITE_ERROR
     # return weechat.WEECHAT_CONFIG_WRITE_MEMORY_ERROR
 
-def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
+def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: Union[str, None]) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
     # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
@@ -7140,7 +7208,7 @@ struct t_config_option *option_enum =
 # プロトタイプ
 def config_new_option(config_file: str, section: str, name: str, type: str, description: str,
                       string_values: str, min: int, max: int,
-                      default_value: str | None, value: str | None, null_value_allowed: int,
+                      default_value: Union[str, None], value: Union[str, None], null_value_allowed: int,
                       callback_check_value: str, callback_check_value_data: str,
                       callback_change: str, callback_change_data: str,
                       callback_delete: str, callback_delete_data: str) -> str: ...
@@ -7199,7 +7267,6 @@ Ruby では、3 組のコールバックとデータ (6 つの文字列変数) �
 1 つ渡してください (これは Ruby が関数に 15 個以上の引数を渡せないことが原因です)、より詳しい内容は
 link:++weechat_scripting.ja.html#_ruby++[WeeChat スクリプト作成ガイド ^↗^^]を参照してください
 _(WeeChat バージョン 0.4.1 で修正済み)_。
-
 
 ==== config_search_option
 
@@ -10123,7 +10190,6 @@ struct t_hook *weechat_hook_process (const char *command,
                                      void *callback_data);
 ----
 
-
 引数:
 
 * _command_: 子プロセスで実行するコマンド、URL _(WeeChat バージョン 0.3.7 以上で利用可)_
@@ -10379,22 +10445,8 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   _/dev/null_ にリダイレクトする
 |===
 
-"url:..." 型のコマンドでは、以下のコマンドを使うことができます
-(それぞれのオプションについては `+man curl_easy_setopt+` を参照):
-
-include::{autogendir}/autogen_api_url_options.ja.adoc[tag=url_options]
-
-[NOTE]
-^(1)^ "mask" タイプのオプションでは、フォーマットは "value1+value2+value3" です。
-"list" タイプのオプションでは、リスト要素を改行で区切ってください。
-(`\n`). +
-^(2)^ 定数が利用可能な場合、定数は必ずオプションの値に含めてください。
-
-URL では、入力/出力ファイル用に 2 つのオプション (文字列) を使うことができます:
-
-* _file_in_: 読み込んで URL に送信するファイル (ファイルを送信)
-* _file_out_: ダウンロードした URL/ファイルをこのファイルに書き込む
-  (標準出力を使わない)
+// TRANSLATION MISSING
+For command "url:...", see available options in function <<_hook_url,hook_url>>.
 
 戻り値:
 
@@ -10552,6 +10604,157 @@ hook4 = weechat.hook_process_hashtable("sh",
                                        {"arg1": "-c",
                                         "arg2": "ls -l /tmp | grep something"},
                                        20000, "my_process_cb", "")
+----
+
+// TRANSLATION MISSING
+==== hook_url
+
+_WeeChat ≥ 4.1.0._
+
+URL transfer.
+
+プロトタイプ:
+
+[source,c]
+----
+struct t_hook *weechat_hook_url (const char *url,
+                                 struct t_hashtable *options,
+                                 int timeout,
+                                 int (*callback)(const void *pointer,
+                                                 void *data,
+                                                 const char *url,
+                                                 struct t_hashtable *options,
+                                                 struct t_hashtable *output),
+                                 const void *callback_pointer,
+                                 void *callback_data);
+----
+
+引数:
+
+* _url_: URL
+* _options_: options for URL transfer (see below);
+  ハッシュテーブルは関数の中で複製されるため、この関数を呼び出した後にハッシュテーブルを安全に開放できます。
+* _timeout_: timeout for URL transfer (in milliseconds): after this timeout,
+  the transfer is stopped (0 means no timeout)
+* _callback_: function called when the transfer has ended, arguments and return
+  value:
+** _const void *pointer_: pointer
+** _void *data_: pointer
+** _const char *url_: URL
+** _struct t_hashtable *options_: options
+** _struct t_hashtable *output_: result (keys and values are strings), which may
+   contain the following keys:
+*** _response_code_: HTTP response code
+*** _headers_: HTTP headers in response
+*** _output_: standard output (set only if _file_out_ was not set in options)
+*** _error_: error message (set only in case of error)
+** return value:
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
+
+The following Curl options are available (see `+man curl_easy_setopt+` for
+a description of each option):
+
+include::{autogendir}/autogen_api_url_options.ja.adoc[tag=url_options]
+
+[NOTE]
+^(1)^ "mask" タイプのオプションでは、フォーマットは "value1+value2+value3" です。
+"list" タイプのオプションでは、リスト要素を改行で区切ってください。
+(`\n`). +
+^(2)^ 定数が利用可能な場合、定数は必ずオプションの値に含めてください。
+
+These two extra options (strings) are allowed for input/output file:
+
+[width="100%",cols="2,^1,7",options="header"]
+|===
+| Option   | Type   | Description
+| file_in  | string | 読み込んで URL に送信するファイル (ファイルを送信)
+| file_out | string | ダウンロードした URL/ファイルをこのファイルに書き込む (標準出力を使わない)
+|===
+
+戻り値:
+
+* 新しいフックへのポインタ、エラーが起きた場合は NULL
+
+C 言語での使用例:
+
+[source,c]
+----
+int
+my_url_cb (const void *pointer, void *data, const char *url,
+           struct t_hashtable *options, struct t_hashtable *output)
+{
+    weechat_printf (NULL, "response_code: %s", weechat_hashtable_get (output, "response_code"));
+    weechat_printf (NULL, "headers: %s", weechat_hashtable_get (output, "headers"));
+    weechat_printf (NULL, "output: %s", weechat_hashtable_get (output, "output"));
+    weechat_printf (NULL, "error: %s", weechat_hashtable_get (output, "error"));
+    return WEECHAT_RC_OK;
+}
+
+/* example 1: output to a file */
+struct t_hashtable *options_url1 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url1)
+{
+    weechat_hashtable_set (options_url1, "file_out", "/tmp/weechat.org.html");
+    struct t_hook *my_url_hook = weechat_hook_url ("https://weechat.org/",
+                                                   options_url1,
+                                                   20000,
+                                                   &my_url_cb, NULL, NULL);
+    weechat_hashtable_free (options_url1);
+}
+
+/* example 2: custom HTTP headers, output sent to callback */
+struct t_hashtable *options_url2 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url2)
+{
+    weechat_hashtable_set (options_url2, "httpheader",
+                           "Header1: value1\n"
+                           "Header2: value2");
+    struct t_hook *my_url_hook = weechat_hook_url ("http://localhost:8080/",
+                                                   options_url2,
+                                                   20000,
+                                                   &my_url_cb, NULL, NULL);
+    weechat_hashtable_free (options_url2);
+}
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+def hook_url(url: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str: ...
+
+# 例
+def my_url_cb(data: str, url: str, options: Dict[str, str], output: Dict[str, str]) -> int:
+    weechat.prnt("", "output: %s" % output)
+    return weechat.WEECHAT_RC_OK
+
+# example 1: output to a file
+hook1 = weechat.hook_url("https://weechat.org/",
+                         {"file_out": "/tmp/weechat.org.html"},
+                         20000, "my_url_cb", "")
+
+# example 2: custom HTTP headers, output sent to callback
+options = {
+    "httpheader": "\n".join([
+        "Header1: value1",
+        "Header2: value2",
+    ]),
+}
+hook2 = weechat.hook_url("http://localhost:8080/", options, 20000, "my_url_cb", "")
 ----
 
 ==== hook_connect
@@ -14103,9 +14306,33 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _num_history_: コマンド履歴の数
 ** _text_search_: テキスト検索タイプ:
 *** 0: 現在検索していない
-*** 1: 後方検索 (検索方向: 最古のメッセージに向かって検索)
-*** 2: 前方検索 (検索方向: 最新のメッセージに向かって検索)
+// TRANSLATION MISSING
+*** 1: search in buffer lines
+// TRANSLATION MISSING
+*** 2: search in commands history
+// TRANSLATION MISSING
+** _text_search_direction_: direction for search:
+// TRANSLATION MISSING
+*** 0: backward search (direction: oldest messages/commands)
+// TRANSLATION MISSING
+*** 1: forward search (direction: newest messages/commands)
 ** _text_search_exact_: テキスト検索で大文字小文字を区別する場合は 1
+// TRANSLATION MISSING
+** _text_search_regex_: 1 if searching with a regular expression
+** _text_search_where_:
+*** 0: 現在検索していない
+// TRANSLATION MISSING
+*** 1: search in message
+// TRANSLATION MISSING
+*** 2: search in prefix
+// TRANSLATION MISSING
+*** 3: search in prefix and message
+** _text_search_history_:
+*** 0: 現在検索していない
+// TRANSLATION MISSING
+*** 1: search in buffer local history
+// TRANSLATION MISSING
+*** 2: search in global history
 ** _text_search_found_: テキストが見つかった場合は 1、そうでない場合は 0
 
 戻り値:
@@ -14211,6 +14438,10 @@ void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
 * _property_: プロパティ名:
 ** _plugin_: このバッファを作ったプラグインへのポインタ
    (WeeChat メインバッファの場合は NULL)
+// TRANSLATION MISSING
+** _text_search_regex_compiled_: compiled regular expression
+// TRANSLATION MISSING
+** _text_search_ptr_history_: history found
 ** _highlight_disable_regex_compiled_: コンパイル済みの正規表現 _highlight_disable_regex_
 ** _highlight_regex_compiled_: コンパイル済みの正規表現 _highlight_regex_
 
@@ -16730,7 +16961,6 @@ if (hashtable_in)
 "irc_message_parse" の出力に関するより詳しい情報は
 link:weechat_scripting.ja.html#irc_message_parse[WeeChat スクリプト作成ガイド / メッセージの構文解析 ^↗^^]を参照してください。
 
-
 スクリプト (Python) での使用例:
 
 [source,python]
@@ -17868,7 +18098,7 @@ int weechat_hdata_get_var_offset (struct t_hdata *hdata, const char *name);
 
 戻り値:
 
-* オフセットの値、エラーが起きた場合は 0
+* オフセットの値、エラーが起きた場合は -1
 
 C 言語での使用例:
 
@@ -18778,7 +19008,8 @@ for key in hash:
 
 ==== hdata_compare
 
-_WeeChat バージョン 1.9 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat ≥ 1.9, updated in 4.1.0._
 
 2 つのオブジェクトの hdata 変数を比較。
 
@@ -18794,8 +19025,9 @@ int weechat_hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2
 * _hdata_: hdata へのポインタ
 * _pointer1_: 1 番目の WeeChat およびプラグインオブジェクトへのポインタ
 * _pointer2_: 2 番目の WeeChat およびプラグインオブジェクトへのポインタ
-* _name_: 変数名; 配列の場合、変数名を "N|name" のように指定できます。ここで
-  N は配列のインデックス番号です (番号は 0 から始まります)。例: "2|name"
+// TRANSLATION MISSING
+* _name_: variable name or path to a variable name; 配列の場合、変数名を "N|name"
+  のように指定できます。ここで N は配列のインデックス番号です (番号は 0 から始まります)。例: "2|name"
 * _case_sensitive_: 大文字小文字を区別する場合 1、それ以外の場合 0
 
 戻り値:
@@ -18811,8 +19043,12 @@ C 言語での使用例:
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
 struct t_gui_buffer *buffer2 = weechat_buffer_search ("irc", "libera.#weechat-fr");
-weechat_printf (NULL, "number comparison = %d",
+weechat_printf (NULL, "comparison of buffer number = %d",
                 weechat_hdata_compare (hdata, buffer1, buffer2, "number", 0));
+weechat_printf (NULL, "comparison of number of lines = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "own_lines.lines_count", 0));
+weechat_printf (NULL, "comparison of local variable = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "local_variables.myvar", 0));
 ----
 
 スクリプト (Python) での使用例:
@@ -18826,7 +19062,9 @@ def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sens
 hdata = weechat.hdata_get("buffer")
 buffer1 = weechat.buffer_search("irc", "libera.#weechat")
 buffer2 = weechat.buffer_search("irc", "libera.#weechat-fr")
-weechat.prnt("", "number comparison = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+weechat.prnt("", "comparison of buffer number = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+weechat.prnt("", "comparison of number of lines = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "own_lines.lines_count", 0))
+weechat.prnt("", "comparison of local variable = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "local_variables.myvar", 0))
 ----
 
 ==== hdata_set

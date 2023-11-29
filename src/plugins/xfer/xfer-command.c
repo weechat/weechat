@@ -256,18 +256,21 @@ xfer_command_init ()
     weechat_hook_command (
         "me",
         N_("send a CTCP action to remote host"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("<message>"),
-        N_("message: message to send"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("message: message to send")),
         NULL,
         &xfer_command_me, NULL, NULL);
     weechat_hook_command (
         "xfer",
         N_("xfer control"),
         "[list|listfull]",
-        N_("    list: list xfer\n"
-           "listfull: list xfer (verbose)\n"
-           "\n"
-           "Without argument, this command opens buffer with xfer list."),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[list]: list xfer"),
+            N_("raw[listfull]: list xfer (verbose)"),
+            "",
+            N_("Without argument, this command opens buffer with xfer list.")),
         "list|listfull",
         &xfer_command_xfer, NULL, NULL);
 }

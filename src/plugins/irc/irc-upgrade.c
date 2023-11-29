@@ -30,6 +30,7 @@
 #include "irc-channel.h"
 #include "irc-config.h"
 #include "irc-input.h"
+#include "irc-list.h"
 #include "irc-modelist.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
@@ -322,6 +323,15 @@ irc_upgrade_set_buffer_callbacks ()
                                                     "nickcmp_callback_pointer",
                                                     ptr_server);
                     }
+                }
+                if (type && (strcmp (type, "list") == 0))
+                {
+                    ptr_server = irc_server_search (
+                        weechat_buffer_get_string (ptr_buffer,
+                                                   "localvar_server"));
+                    if (ptr_server)
+                        ptr_server->list->buffer = ptr_buffer;
+                    irc_list_buffer_refresh (ptr_server, 1);
                 }
                 if (strcmp (weechat_infolist_string (infolist, "name"),
                             IRC_RAW_BUFFER_NAME) == 0)
@@ -653,7 +663,6 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                         memcpy (&(irc_upgrade_current_server->lag_check_time), buf, size);
                     irc_upgrade_current_server->lag_next_check = weechat_infolist_time (infolist, "lag_next_check");
                     irc_upgrade_current_server->lag_last_refresh = weechat_infolist_time (infolist, "lag_last_refresh");
-                    irc_upgrade_current_server->last_user_message = weechat_infolist_time (infolist, "last_user_message");
                     irc_upgrade_current_server->last_away_check = weechat_infolist_time (infolist, "last_away_check");
                     irc_upgrade_current_server->last_data_purge = weechat_infolist_time (infolist, "last_data_purge");
                 }

@@ -121,6 +121,7 @@ void
 hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
     char *prefix_no_color, *message_no_color;
 
     if (!weechat_hooks[HOOK_TYPE_PRINT])
@@ -161,7 +162,7 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
                                         HOOK_PRINT(ptr_hook, tags_array))))
         {
             /* run callback */
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             (void) (HOOK_PRINT(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
@@ -172,7 +173,7 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
                  (int)line->data->displayed, (int)line->data->highlight,
                  (HOOK_PRINT(ptr_hook, strip_colors)) ? prefix_no_color : line->data->prefix,
                  (HOOK_PRINT(ptr_hook, strip_colors)) ? message_no_color : line->data->message);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
         }
 
         ptr_hook = next_hook;

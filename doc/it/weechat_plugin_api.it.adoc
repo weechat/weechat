@@ -2717,7 +2717,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0._
+2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6, 3.8, 4.0.0, 4.2.0._
 
 Evaluate an expression and return result as a string.
 Special variables with format `+${variable}+` are expanded (see table below).
@@ -3050,10 +3050,20 @@ expanded to last):
 |===
 | Format | Min WeeChat | Description | Examples
 
+| `+${raw_hl:xxx}+` | 4.2.0
+| Raw string (not evaluated), with syntax highlighting (using colors).
+| >> `+${raw_hl:${cut:1,,${rev:hello}}}+` +
+  == `+${cut:1,,${rev:hello}}+` (with colors)
+
 | `+${raw:xxx}+` | 3.1
 | Raw string (not evaluated).
 | >> `+${raw:${info:version}}+` +
   == `+${info:version}+`
+
+| `+${hl:xxx}+` | 4.2.0
+| String with syntax highlighting (using colors).
+| >> `+${hl:${file.section.option}}+` +
+  == `+test ${variable}+` (with colors)
 
 | `+${name}+` | 3.4
 | User variable (defined with `+${define:name,value}+`).
@@ -3641,6 +3651,51 @@ weechat_string_dyn_free (string, 1);
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
+==== string_concat
+
+_WeeChat ≥ 4.2.0._
+
+// TRANSLATION MISSING
+Concatenate multiple strings using a separator.
+
+Prototipo:
+
+[source,c]
+----
+const char *weechat_string_concat (const char *separator, ...);
+----
+
+Argomenti:
+
+// TRANSLATION MISSING
+* _separator_: the separator string which is inserted between concatenated
+  strings (can be NULL or empty string)
+
+// TRANSLATION MISSING
+[NOTE]
+Last argument *MUST* always be NULL. +
+A macro called `WEECHAT_STR_CONCAT` can be used, where the final NULL value is
+not needed (usage of this macro is recommended).
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* concatenated string
+
+Esempio in C:
+
+// TRANSLATION MISSING
+[source,c]
+----
+const char *result = weechat_string_concat (" / ", "abc", "def", "ghi", NULL);  /* result == "abc / def / ghi" */
+
+/* with macro */
+const char *result = WEECHAT_STR_CONCAT(" / ", "abc", "def", "ghi");  /* result == "abc / def / ghi" */
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 [[utf-8]]
 === UTF-8
 
@@ -4219,18 +4274,28 @@ Supported hash algorithms:
 
 [width="100%",cols="2,2,3,6",options="header"]
 |===
-| Value        | Algorithm | Hash size           | Notes
-| `+crc32+`    | CRC32     | 4 bytes (32 bits)   | Not a hash algorithm in the cryptographic sense.
-| `+md5+`      | MD5       | 16 bytes (128 bits) | *Weak*, not recommended for cryptography usage.
-| `+sha1+`     | SHA-1     | 20 bytes (160 bits) | *Weak*, not recommended for cryptography usage.
-| `+sha224+`   | SHA-224   | 28 bytes (224 bits) |
-| `+sha256+`   | SHA-256   | 32 bytes (256 bits) |
-| `+sha384+`   | SHA-384   | 48 bytes (384 bits) |
-| `+sha512+`   | SHA-512   | 64 bytes (512 bits) |
-| `+sha3-224+` | SHA3-224  | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
-| `+sha3-256+` | SHA3-256  | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
-| `+sha3-384+` | SHA3-384  | 48 bytes (384 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
-| `+sha3-512+` | SHA3-512  | 64 bytes (512 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| Value           | Algorithm   | Hash size           | Notes
+| `+crc32+`       | CRC32       | 4 bytes (32 bits)   | Not a hash algorithm in the cryptographic sense.
+| `+md5+`         | MD5         | 16 bytes (128 bits) | *Weak*, not recommended for cryptography usage.
+| `+sha1+`        | SHA-1       | 20 bytes (160 bits) | *Weak*, not recommended for cryptography usage.
+| `+sha224+`      | SHA-224     | 28 bytes (224 bits) |
+| `+sha256+`      | SHA-256     | 32 bytes (256 bits) |
+| `+sha384+`      | SHA-384     | 48 bytes (384 bits) |
+| `+sha512+`      | SHA-512     | 64 bytes (512 bits) |
+| `+sha512-224+`  | SHA-512/224 | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.9.4.
+| `+sha512-256+`  | SHA-512/256 | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.9.4.
+| `+sha3-224+`    | SHA3-224    | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+sha3-256+`    | SHA3-256    | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+sha3-384+`    | SHA3-384    | 48 bytes (384 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+sha3-512+`    | SHA3-512    | 64 bytes (512 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+blake2b-160+` | BLAKE2B-160 | 20 bytes (160 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2b-256+` | BLAKE2B-256 | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2b-384+` | BLAKE2B-384 | 48 bytes (384 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2b-512+` | BLAKE2B-512 | 64 bytes (512 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2s-128+` | BLAKE2S-128 | 16 bytes (128 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2s-160+` | BLAKE2S-160 | 20 bytes (160 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2s-224+` | BLAKE2S-224 | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
+| `+blake2s-256+` | BLAKE2S-256 | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.8.0.
 |===
 
 Valore restituito:
@@ -4675,7 +4740,8 @@ Argomenti:
 * _to_: destination file
 * _compressor_: the compressor to use, one of:
 ** _gzip_: gzip compression
-** _zstd_: zstandard compression
+** _zstd_: zstandard compression (available only if zstd was enabled when
+   WeeChat was compiled)
 * _compression_level_: compression level, between 1 (fast, low compression) to
   100 (slow, best compression)
 
@@ -6980,9 +7046,10 @@ my_section_read_cb (const void *pointer, void *data,
 {
     /* ... */
 
-    return WEECHAT_CONFIG_READ_OK;
-    /* return WEECHAT_CONFIG_READ_MEMORY_ERROR; */
-    /* return WEECHAT_CONFIG_READ_FILE_NOT_FOUND; */
+    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+    /* return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE; */
+    /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
 }
 
 int
@@ -7072,7 +7139,7 @@ def config_new_section(config_file: str, name: str,
                        callback_delete_option: str, callback_delete_option_data: str) -> str: ...
 
 # esempio
-def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
+def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: Union[str, None]) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
     # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
@@ -7091,7 +7158,7 @@ def my_section_write_default_cb(data: str, config_file: str, section_name: str) 
     # return weechat.WEECHAT_CONFIG_WRITE_ERROR
     # return weechat.WEECHAT_CONFIG_WRITE_MEMORY_ERROR
 
-def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
+def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: Union[str, None]) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
     # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
@@ -7340,7 +7407,7 @@ Script (Python):
 # prototipo
 def config_new_option(config_file: str, section: str, name: str, type: str, description: str,
                       string_values: str, min: int, max: int,
-                      default_value: str | None, value: str | None, null_value_allowed: int,
+                      default_value: Union[str, None], value: Union[str, None], null_value_allowed: int,
                       callback_check_value: str, callback_check_value_data: str,
                       callback_change: str, callback_change_data: str,
                       callback_delete: str, callback_delete_data: str) -> str: ...
@@ -10374,7 +10441,6 @@ struct t_hook *weechat_hook_process (const char *command,
                                      void *callback_data);
 ----
 
-
 Argomenti:
 
 // TRANSLATION MISSING
@@ -10644,25 +10710,8 @@ available:
   _/dev/null_.
 |===
 
-Per il comando "url:..." sono disponibili le seguenti opzioni (consultare
-`+man curl_easy_setopt+` per la descrizione di ogni opzione):
-
-include::{autogendir}/autogen_api_url_options.it.adoc[tag=url_options]
-
 // TRANSLATION MISSING
-[NOTE]
-^(1)^ Per le opzioni con il tipo "mask" il formato è: "value1+value2+value3";
-for options with type "list", the list items must be separated by a newline
-(`\n`). +
-^(2)^ Quando sono disponibili le costanti, esse vanno usate come valore per
-l'opzione.
-
-Per un URL, sono consentite due opzioni aggiuntive (stringhe) per il file in
-input/output:
-
-* _file_in_: file da leggere e inviare con gli URL (invio del file "post")
-* _file_out_: scrive URL scaricato/file in questo file (invece dello standard
-* output)
+For command "url:...", see available options in function <<_hook_url,hook_url>>.
 
 Valore restituito:
 
@@ -10820,6 +10869,159 @@ hook4 = weechat.hook_process_hashtable("sh",
                                        {"arg1": "-c",
                                         "arg2": "ls -l /tmp | grep something"},
                                        20000, "my_process_cb", "")
+----
+
+// TRANSLATION MISSING
+==== hook_url
+
+_WeeChat ≥ 4.1.0._
+
+URL transfer.
+
+Prototipo:
+
+[source,c]
+----
+struct t_hook *weechat_hook_url (const char *url,
+                                 struct t_hashtable *options,
+                                 int timeout,
+                                 int (*callback)(const void *pointer,
+                                                 void *data,
+                                                 const char *url,
+                                                 struct t_hashtable *options,
+                                                 struct t_hashtable *output),
+                                 const void *callback_pointer,
+                                 void *callback_data);
+----
+
+Argomenti:
+
+* _url_: URL
+* _options_: options for URL transfer (see below); la tabella hash è duplicata
+  nella funzione, per cui è possibile liberarla dopo questa chiamata
+* _timeout_: timeout for URL transfer (in milliseconds): after this timeout,
+  the transfer is stopped (0 means no timeout)
+* _callback_: function called when the transfer has ended, arguments and return
+  value:
+** _const void *pointer_: pointer
+** _void *data_: pointer
+** _const char *url_: URL
+** _struct t_hashtable *options_: options
+** _struct t_hashtable *output_: result (keys and values are strings), which may
+   contain the following keys:
+*** _response_code_: HTTP response code
+*** _headers_: HTTP headers in response
+*** _output_: standard output (set only if _file_out_ was not set in options)
+*** _error_: error message (set only in case of error)
+** return value:
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: puntatore fornito alla callback quando chiamata da WeeChat
+* _callback_data_: puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it is automatically freed when the hook is deleted
+
+The following Curl options are available (see `+man curl_easy_setopt+` for
+a description of each option):
+
+include::{autogendir}/autogen_api_url_options.it.adoc[tag=url_options]
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ Per le opzioni con il tipo "mask" il formato è: "value1+value2+value3";
+for options with type "list", the list items must be separated by a newline
+(`\n`). +
+^(2)^ Quando sono disponibili le costanti, esse vanno usate come valore per
+l'opzione.
+
+These two extra options (strings) are allowed for input/output file:
+
+[width="100%",cols="2,^1,7",options="header"]
+|===
+| Option   | Type   | Description
+| file_in  | string | file da leggere e inviare con gli URL (invio del file "post")
+| file_out | string | scrive URL scaricato/file in questo file (invece dello standard output)
+|===
+
+Valore restituito:
+
+* puntatore al nuovo hook, NULL in caso di errore
+
+Esempio in C:
+
+[source,c]
+----
+int
+my_url_cb (const void *pointer, void *data, const char *url,
+           struct t_hashtable *options, struct t_hashtable *output)
+{
+    weechat_printf (NULL, "response_code: %s", weechat_hashtable_get (output, "response_code"));
+    weechat_printf (NULL, "headers: %s", weechat_hashtable_get (output, "headers"));
+    weechat_printf (NULL, "output: %s", weechat_hashtable_get (output, "output"));
+    weechat_printf (NULL, "error: %s", weechat_hashtable_get (output, "error"));
+    return WEECHAT_RC_OK;
+}
+
+/* example 1: output to a file */
+struct t_hashtable *options_url1 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url1)
+{
+    weechat_hashtable_set (options_url1, "file_out", "/tmp/weechat.org.html");
+    struct t_hook *my_url_hook = weechat_hook_url ("https://weechat.org/",
+                                                   options_url1,
+                                                   20000,
+                                                   &my_url_cb, NULL, NULL);
+    weechat_hashtable_free (options_url1);
+}
+
+/* example 2: custom HTTP headers, output sent to callback */
+struct t_hashtable *options_url2 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url2)
+{
+    weechat_hashtable_set (options_url2, "httpheader",
+                           "Header1: value1\n"
+                           "Header2: value2");
+    struct t_hook *my_url_hook = weechat_hook_url ("http://localhost:8080/",
+                                                   options_url2,
+                                                   20000,
+                                                   &my_url_cb, NULL, NULL);
+    weechat_hashtable_free (options_url2);
+}
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+def hook_url(url: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str: ...
+
+# esempio
+def my_url_cb(data: str, url: str, options: Dict[str, str], output: Dict[str, str]) -> int:
+    weechat.prnt("", "output: %s" % output)
+    return weechat.WEECHAT_RC_OK
+
+# example 1: output to a file
+hook1 = weechat.hook_url("https://weechat.org/",
+                         {"file_out": "/tmp/weechat.org.html"},
+                         20000, "my_url_cb", "")
+
+# example 2: custom HTTP headers, output sent to callback
+options = {
+    "httpheader": "\n".join([
+        "Header1: value1",
+        "Header2: value2",
+    ]),
+}
+hook2 = weechat.hook_url("http://localhost:8080/", options, 20000, "my_url_cb", "")
 ----
 
 ==== hook_connect
@@ -14575,9 +14777,33 @@ Argomenti:
 ** _num_history_: numero di comandi nella cronologia
 ** _text_search_: tipo di ricerca nel testo:
 *** 0: nessuna ricerca in questo momento
-*** 1: ricerca all'indietro (direzione: messaggi più vecchi)
-*** 2: ricerca in avanti (direzione: messaggi più nuovi)
+// TRANSLATION MISSING
+*** 1: search in buffer lines
+// TRANSLATION MISSING
+*** 2: search in commands history
+// TRANSLATION MISSING
+** _text_search_direction_: direction for search:
+// TRANSLATION MISSING
+*** 0: backward search (direction: oldest messages/commands)
+// TRANSLATION MISSING
+*** 1: forward search (direction: newest messages/commands)
 ** _text_search_exact_: 1 se la ricerca testo è esatta
+// TRANSLATION MISSING
+** _text_search_regex_: 1 if searching with a regular expression
+** _text_search_where_:
+*** 0: nessuna ricerca in questo momento
+// TRANSLATION MISSING
+*** 1: search in message
+// TRANSLATION MISSING
+*** 2: search in prefix
+// TRANSLATION MISSING
+*** 3: search in prefix and message
+** _text_search_history_:
+*** 0: nessuna ricerca in questo momento
+// TRANSLATION MISSING
+*** 1: search in buffer local history
+// TRANSLATION MISSING
+*** 2: search in global history
 ** _text_search_found_: 1 se il testo viene trovato, altrimenti 0
 
 Valore restituito:
@@ -14686,6 +14912,10 @@ Argomenti:
 * _property_: nome proprietà:
 ** _plugin_: puntatore al plugin che ha creato questo buffer (NULL
    per il buffer principale di WeeChat)
+// TRANSLATION MISSING
+** _text_search_regex_compiled_: compiled regular expression
+// TRANSLATION MISSING
+** _text_search_ptr_history_: history found
 ** _highlight_disable_regex_compiled_: espressione regolare _highlight_disable_regex_ compilata
 ** _highlight_regex_compiled_: espressione regolare _highlight_regex_ compilata
 
@@ -18464,7 +18694,7 @@ Argomenti:
 
 Valore restituito:
 
-* offset della variabile, 0 in caso di errore
+* offset della variabile, -1 in caso di errore
 
 Esempio in C:
 
@@ -19408,7 +19638,7 @@ for key in hash:
 // TRANSLATION MISSING
 ==== hdata_compare
 
-_WeeChat ≥ 1.9._
+_WeeChat ≥ 1.9, updated in 4.1.0._
 
 Compare a hdata variable of two objects.
 
@@ -19424,8 +19654,8 @@ Argomenti:
 * _hdata_: hdata pointer
 * _pointer1_: pointer to first WeeChat/plugin object
 * _pointer2_: pointer to second WeeChat/plugin object
-* _name_: variable name; for arrays, the name can be "N|name" where N is
-  the index in array (starting at 0), for example: "2|name"
+* _name_: variable name or path to a variable name; for arrays, the name can be
+  "N|name" where N is the index in array (starting at 0), for example: "2|name"
 * _case_sensitive_: 1 for case sensitive comparison of strings, otherwise 0
 
 Valore restituito:
@@ -19441,8 +19671,12 @@ Esempio in C:
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
 struct t_gui_buffer *buffer2 = weechat_buffer_search ("irc", "libera.#weechat-fr");
-weechat_printf (NULL, "number comparison = %d",
+weechat_printf (NULL, "comparison of buffer number = %d",
                 weechat_hdata_compare (hdata, buffer1, buffer2, "number", 0));
+weechat_printf (NULL, "comparison of number of lines = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "own_lines.lines_count", 0));
+weechat_printf (NULL, "comparison of local variable = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "local_variables.myvar", 0));
 ----
 
 Script (Python):
@@ -19456,7 +19690,9 @@ def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sens
 hdata = weechat.hdata_get("buffer")
 buffer1 = weechat.buffer_search("irc", "libera.#weechat")
 buffer2 = weechat.buffer_search("irc", "libera.#weechat-fr")
-weechat.prnt("", "number comparison = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+weechat.prnt("", "comparison of buffer number = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+weechat.prnt("", "comparison of number of lines = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "own_lines.lines_count", 0))
+weechat.prnt("", "comparison of local variable = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "local_variables.myvar", 0))
 ----
 
 // TRANSLATION MISSING

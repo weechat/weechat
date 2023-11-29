@@ -601,6 +601,34 @@ Si vous utilisez l'application Terminal sous macOS, activez l'option
 "Use option as meta key" dans le menu Réglages/Clavier. Vous pouvez alors
 utiliser la touche kbd:[Option] comme touche meta.
 
+[[enter_key]]
+=== Quelques touches comme Entrée ne fonctionnent pas, pourquoi ?
+
+Si vous lancez WeeChat < 4.0.0 avec des fichiers de configuration créés par toute
+version ≥ 4.0.0, les noms des touches sont invalides et de nombreuses touches
+ne fonctionneront plus. +
+Pour les réparer, quittez WeeChat, supprimez toutes les sections `[key*]` de
+weechat.conf et démarrez WeeChat à nouveau : toutes les touches par défaut
+seront recréées.
+
+[[key_f11]]
+=== La touche F11 maximise la fenêtre du terminal, comment puis-je faire défiler la liste de pseudos vers le haut ?
+
+La touche kbd:[F11] est fréquemment utilisée par les terminaux pour maximiser
+la fenêtre, et kbd:[F11]/kbd:[F12] sont les touches par défaut dans WeeChat
+pour faire défiler la liste des pseudos.
+
+Vous pouvez associer d'autres touches, par exemple kbd:[Shift+F11] et kbd:[Shift+F12],
+avec WeeChat ≥ 4.0.0 :
+
+----
+/key bind shift-f11 /bar scroll nicklist * -100%
+/key bind shift-f12 /bar scroll nicklist * +100%
+----
+
+Une autre solution est d'activer la souris (touche : kbd:[Alt+m]) et faire défiler
+avec la roulette de la souris (voir aussi les questions sur la <<mouse,souris>>).
+
 [[customize_key_bindings]]
 === Comment puis-je configurer les raccourcis clavier ?
 
@@ -955,34 +983,19 @@ link:weechat_user.fr.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 pour définir le niveau maximum de hotlist pour certains pseudos, par tampon,
 ou groupe de tampons (comme des serveurs IRC).
 
-Pour désactiver seulement les highlights, vous pouvez positionner la valeur à 2 :
+Pour désactiver seulement les highlights, vous pouvez positionner la valeur à 2.
+
+Pour le tampon courant :
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-Cependant, cette propriété de tampon n'est pas sauvegardée dans la configuration.
-Pour automatiquement réappliquer ces propriétés de tampons, vous aurez besoin
-du script _buffer_autoset.py_ :
+Pour tous les canaux sur le serveur "libera":
 
 ----
-/script install buffer_autoset.py
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-Par exemple, pour désactiver de manière permanente les highlights de "mike" sur
-#weechat sur le serveur IRC libera :
-
-----
-/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
-----
-
-Pour l'appliquer à l'ensemble du serveur libera :
-
-----
-/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
-----
-
-Pour plus d'exemples, voir `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === Comment puis-je changer le serveur cible pour les commandes avec des tampons mélangés (comme le tampon avec les serveurs) ?
@@ -1120,7 +1133,8 @@ Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
 Vous pouvez suivre les mêmes astuces que pour la <<memory_usage,mémoire>>, et
 celles-ci :
 
-* Cacher la barre "nicklist" : `/bar hide nicklist`.
+* Cacher la barre "nicklist" : `/bar hide nicklist` (touche : kbd:[Alt+Shift+N]).
+* Désactiver "buflist" : `/buflist disable` (touche : kbd:[Alt+Shift+B]).
 * Supprimer l'affichage des secondes dans l'heure de la barre de statut :
   `+/set weechat.look.item_time_format "%H:%M"+` (ceci est la valeur par défaut).
 * Désactiver la vérification en temps réel des mots mal orthographiés dans la
@@ -1142,12 +1156,18 @@ Désactivez les réponses à toutes les demandes CTCP :
 
 ----
 /set irc.ctcp.clientinfo ""
-/set irc.ctcp.finger ""
 /set irc.ctcp.source ""
 /set irc.ctcp.time ""
-/set irc.ctcp.userinfo ""
 /set irc.ctcp.version ""
 /set irc.ctcp.ping ""
+----
+
+Avec WeeChat < 4.1.0, d'autres demandes CTCP étaient répondues par défaut et
+doivent être désactivées également :
+
+----
+/set irc.ctcp.finger ""
+/set irc.ctcp.userinfo ""
 ----
 
 Déchargez et désactivez le chargement automatique de l'extension "xfer"
@@ -1187,6 +1207,37 @@ des mots de passes (s'ils ne sont pas stockés dans _sec.conf_ avec la commande
 
 Voir le link:weechat_user.fr.html#files_and_directories[Guide utilisateur / Fichiers et répertoires ^↗^^]
 pour plus d'informations sur les fichiers de configuration.
+
+[[move_to_another_device]]
+=== Je souhaite déplacer mon WeeChat vers une autre machine et garder ma configuration, que dois-je copier ?
+
+Premièrement, vérifiez les répertoires utilisés par WeeChat avec cette commande :
+`/debug dirs`. +
+Les répertoires home/config et home/data doivent être copiés (tous les fichiers
+et sous-répertoires).
+
+Par exemple si vous utilisez les répertoires XDG (par défaut avec WeeChat ≥ 3.2),
+les répertoires devraient être `$HOME/.config/weechat` et `$HOME/.local/share/weechat`. +
+Si vous utilisez un répertoire unique (par défaut avec WeeChat < 3.2), le répertoire
+devrait être `$HOME/.weechat`.
+
+[IMPORTANT]
+La version de WeeChat sur la nouvelle machine doit être supérieure ou égale
+à celle de la machine initiale. +
+La rétrogradation de la configuration n'est *PAS SUPPORTÉE* et pourrait la casser,
+rendant WeeChat inutilisable.
+
+Étapes :
+
+. Quitter Weechat : `/quit` (ou `/upgrade -quit` si vous souhaitez restaurer
+  la session, qui inclut le contenu de tous les tampons).
+. Copier tous les répertoires, fichiers et sous-répertoires vers la nouvelle machine
+  au même endroit, en préservant les noms et les permissions.
+. Facultatif : copier tout fichier en dehors de ces répertoires que vous référencez
+  dans votre configuration (il n'est pas recommandé d'utiliser des fichiers en
+  dehors des répertoires WeeChat).
+. Démarrer WeeChat sur la nouvelle machine : `weechat` (ou `weechat --upgrade`
+  si vous avez sauvé la session).
 
 [[development]]
 == Développement

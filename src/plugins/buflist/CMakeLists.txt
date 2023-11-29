@@ -21,6 +21,7 @@ add_library(buflist MODULE
   buflist.c buflist.h
   buflist-bar-item.c buflist-bar-item.h
   buflist-command.c buflist-command.h
+  buflist-completion.c buflist-completion.h
   buflist-config.c buflist-config.h
   buflist-info.c buflist-info.h
   buflist-mouse.c buflist-mouse.h

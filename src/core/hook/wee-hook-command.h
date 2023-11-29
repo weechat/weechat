@@ -76,6 +76,7 @@ struct t_hook_command_similar
 };
 
 extern char *hook_command_get_description (struct t_hook *hook);
+extern char *hook_command_format_args_description (const char *args_description);
 extern struct t_hook *hook_command (struct t_weechat_plugin *plugin,
                                     const char *command,
                                     const char *description,

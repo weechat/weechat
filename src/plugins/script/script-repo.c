@@ -112,7 +112,7 @@ script_repo_search_displayed_by_number (int number)
 }
 
 /*
- * Searches for a script by name (example: "iset").
+ * Searches for a script by name (example: "go").
  *
  * Returns pointer to script found, NULL if not found.
  */
@@ -1431,42 +1431,41 @@ script_repo_file_read (int quiet)
  */
 
 int
-script_repo_file_update_process_cb (const void *pointer, void *data,
-                                    const char *command,
-                                    int return_code, const char *out,
-                                    const char *err)
+script_repo_file_update_url_cb (const void *pointer, void *data,
+                                const char *url,
+                                struct t_hashtable *options,
+                                struct t_hashtable *output)
 {
+    const char *ptr_error;
     int quiet;
 
     /* make C compiler happy */
     (void) data;
-    (void) command;
-    (void) out;
+    (void) url;
+    (void) options;
 
     quiet = (pointer) ? 1 : 0;
 
-    if (return_code >= 0)
+    ptr_error = weechat_hashtable_get (output, "error");
+    if (ptr_error && ptr_error[0])
     {
-        if (err && err[0])
-        {
-            weechat_printf (NULL,
-                            _("%s%s: error downloading list of scripts: %s"),
-                            weechat_prefix ("error"),
-                            SCRIPT_PLUGIN_NAME,
-                            err);
-            return WEECHAT_RC_OK;
-        }
+        weechat_printf (NULL,
+                        _("%s%s: error downloading list of scripts: %s"),
+                        weechat_prefix ("error"),
+                        SCRIPT_PLUGIN_NAME,
+                        ptr_error);
+        return WEECHAT_RC_OK;
+    }
 
-        if (script_repo_file_read (quiet) && scripts_repo)
-        {
-            if (script_buffer)
-                script_buffer_refresh (1);
-            if (!script_action_run_all ())
-                script_buffer_refresh (1);
-        }
-        else
+    if (script_repo_file_read (quiet) && scripts_repo)
+    {
+        if (script_buffer)
+            script_buffer_refresh (1);
+        if (!script_action_run_all ())
             script_buffer_refresh (1);
     }
+    else
+        script_buffer_refresh (1);
 
     return WEECHAT_RC_OK;
 }
@@ -1482,7 +1481,7 @@ script_repo_file_update_process_cb (const void *pointer, void *data,
 int
 script_repo_file_update (int quiet)
 {
-    char *filename, *url;
+    char *filename;
     struct t_hashtable *options;
 
     if (!script_download_enabled (1))
@@ -1500,26 +1499,20 @@ script_repo_file_update (int quiet)
                                      NULL, NULL);
     if (options)
     {
-        url = script_build_download_url (
-            weechat_config_string (script_config_scripts_url));
-        if (url)
+        if (!quiet)
         {
-            if (!quiet)
-            {
-                weechat_printf (NULL,
-                                _("%s: downloading list of scripts..."),
-                                SCRIPT_PLUGIN_NAME);
-            }
-            weechat_hashtable_set (options, "file_out", filename);
-            weechat_hook_process_hashtable (
-                url,
-                options,
-                weechat_config_integer (script_config_scripts_download_timeout) * 1000,
-                &script_repo_file_update_process_cb,
-                (quiet) ? (void *)1 : (void *)0,
-                NULL);
-            free (url);
+            weechat_printf (NULL,
+                            _("%s: downloading list of scripts..."),
+                            SCRIPT_PLUGIN_NAME);
         }
+        weechat_hashtable_set (options, "file_out", filename);
+        weechat_hook_url (
+            weechat_config_string (script_config_scripts_url),
+            options,
+            weechat_config_integer (script_config_scripts_download_timeout) * 1000,
+            &script_repo_file_update_url_cb,
+            (quiet) ? (void *)1 : (void *)0,
+            NULL);
         weechat_hashtable_free (options);
     }
 

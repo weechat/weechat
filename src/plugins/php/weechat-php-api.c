@@ -1740,6 +1740,40 @@ API_FUNC(config_color_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_enum)
+{
+    zend_string *z_option;
+    struct t_config_option *option;
+    int result;
+
+    API_INIT_FUNC(1, "config_enum", API_RETURN_INT(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
+    result = weechat_config_enum (option);
+
+    API_RETURN_INT(result);
+}
+
+API_FUNC(config_enum_default)
+{
+    zend_string *z_option;
+    struct t_config_option *option;
+    int result;
+
+    API_INIT_FUNC(1, "config_enum_default", API_RETURN_INT(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
+    result = weechat_config_enum_default (option);
+
+    API_RETURN_INT(result);
+}
+
 API_FUNC(config_write_option)
 {
     zend_string *z_config_file, *z_option;
@@ -2642,6 +2676,68 @@ API_FUNC(hook_process_hashtable)
             options,
             timeout,
             &weechat_php_api_hook_process_hashtable_cb,
+            (const char *)callback_name,
+            (const char *)data));
+
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_STRING(result);
+}
+
+static int
+weechat_php_api_hook_url_cb (const void *pointer, void *data,
+                             const char *url,
+                             struct t_hashtable *options,
+                             struct t_hashtable *output)
+{
+    int rc;
+    void *func_argv[4];
+
+    func_argv[1] = url ? (char *)url : weechat_php_empty_arg;
+    func_argv[2] = options;
+    func_argv[3] = output;
+
+    weechat_php_cb (pointer, data, func_argv, "sshh",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    return rc;
+}
+
+API_FUNC(hook_url)
+{
+    zend_string *z_url, *z_data;
+    zval *z_options, *z_callback;
+    zend_long z_timeout;
+    char *url, *data;
+    struct t_hashtable *options;
+    int timeout;
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_url", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SalzS", &z_url,
+                               &z_options, &z_timeout, &z_callback,
+                               &z_data) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    url = ZSTR_VAL(z_url);
+    options = weechat_php_array_to_hashtable (
+        z_options,
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+    timeout = (int)z_timeout;
+    weechat_php_get_function_name (z_callback, callback_name);
+    data = ZSTR_VAL(z_data);
+
+    result = API_PTR2STR(
+        plugin_script_api_hook_url (
+            weechat_php_plugin,
+            php_current_script,
+            (const char *)url,
+            options,
+            timeout,
+            &weechat_php_api_hook_url_cb,
             (const char *)callback_name,
             (const char *)data));
 

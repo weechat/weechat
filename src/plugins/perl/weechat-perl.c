@@ -22,6 +22,7 @@
 
 #undef _
 
+#include <locale.h>
 #include <EXTERN.h>
 #include <perl.h>
 #include <XSUB.h>
@@ -567,6 +568,10 @@ weechat_perl_load (const char *filename, const char *code)
     temp_script.interpreter = (PerlInterpreter *) perl_current_interpreter;
     perl_parse (perl_current_interpreter, weechat_perl_api_init,
                 perl_args_count, perl_args, NULL);
+#if PERL_REVISION >= 6 || (PERL_REVISION == 5 && PERL_VERSION >= 38)
+    /* restore the locale that could be changed by Perl >= 5.38 */
+    Perl_setlocale (LC_CTYPE, "");
+#endif
     length = strlen (perl_weechat_code) + strlen (str_warning) +
         strlen (str_error) - 2 + 4 + strlen ((code) ? code : filename) + 4 + 1;
     perl_code = malloc (length);
@@ -958,7 +963,7 @@ weechat_perl_command_cb (const void *pointer, void *data,
             {
                 /* load perl script */
                 path_script = plugin_script_search_path (weechat_perl_plugin,
-                                                         ptr_name);
+                                                         ptr_name, 1);
                 weechat_perl_load ((path_script) ? path_script : ptr_name,
                                    NULL);
                 if (path_script)
@@ -1290,6 +1295,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     perl_construct (perl_main);
     perl_parse (perl_main, weechat_perl_api_init, perl_args_count,
                 perl_args, NULL);
+#if PERL_REVISION >= 6 || (PERL_REVISION == 5 && PERL_VERSION >= 38)
+    /* restore the locale that could be changed by Perl >= 5.38 */
+    Perl_setlocale (LC_CTYPE, "");
+#endif
 #endif /* MULTIPLICITY */
 
     perl_data.config_file = &perl_config_file;

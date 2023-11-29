@@ -26,9 +26,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <gcrypt.h>
 
 #include "weechat.h"
 #include "wee-config-file.h"
+#include "wee-crypto.h"
 #include "wee-hashtable.h"
 #include "wee-secure.h"
 #include "wee-secure-config.h"
@@ -47,6 +49,8 @@ struct t_config_option *secure_config_crypt_cipher = NULL;
 struct t_config_option *secure_config_crypt_hash_algo = NULL;
 struct t_config_option *secure_config_crypt_passphrase_command = NULL;
 struct t_config_option *secure_config_crypt_salt = NULL;
+
+int secure_config_loading = 0;
 
 
 /*
@@ -173,6 +177,39 @@ secure_config_reload_cb (const void *pointer, void *data,
 }
 
 /*
+ * Callback for changes on some options "weechat.crypt.*" (that can not be
+ * changed if there are encrypted data.
+ */
+
+int
+secure_config_check_crypt_option_cb (const void *pointer, void *data,
+                                     struct t_config_option *option,
+                                     const char *value)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) value;
+
+    /* any value allowed while reading config */
+    if (secure_config_loading)
+        return 1;
+
+    /* no encrypted data => changes allowed */
+    if (secure_hashtable_data_encrypted->items_count == 0)
+        return 1;
+
+    gui_chat_printf (NULL,
+                     _("%sOption %s.%s.%s can not be changed because there "
+                       "are still encrypted data"),
+                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                     option->config_file->name,
+                     option->section->name,
+                     option->name);
+    return 0;
+}
+
+/*
  * Reads a data option in secured data configuration file.
  */
 
@@ -183,7 +220,7 @@ secure_config_data_read_cb (const void *pointer, void *data,
                             const char *option_name, const char *value)
 {
     char *buffer, *decrypted, str_error[1024];
-    int length_buffer, length_decrypted, rc;
+    int length_buffer, length_decrypted, rc, hash_algo, cipher;
 
     /* make C compiler happy */
     (void) pointer;
@@ -237,6 +274,38 @@ secure_config_data_read_cb (const void *pointer, void *data,
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
 
+    /* get hash algorithm */
+    hash_algo = weecrypto_get_hash_algo (
+        config_file_option_string (secure_config_crypt_hash_algo));
+    if (hash_algo == GCRY_MD_NONE)
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sFailed to decrypt data \"%s\": hash algorithm \"%s\" is not "
+              "available (ligbcrypt version is too old?)"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            option_name,
+            config_file_option_string (secure_config_crypt_hash_algo));
+        hashtable_set (secure_hashtable_data_encrypted, option_name, value);
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    }
+
+    /* get cipher */
+    cipher = weecrypto_get_cipher (
+        config_file_option_string (secure_config_crypt_cipher));
+    if (cipher == GCRY_CIPHER_NONE)
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sFailed to decrypt data \"%s\": cipher \"%s\" is not "
+              "available (ligbcrypt version is too old?)"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            option_name,
+            config_file_option_string (secure_config_crypt_cipher));
+        hashtable_set (secure_hashtable_data_encrypted, option_name, value);
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    }
+
     /* decrypt data */
     buffer = malloc (strlen (value) + 1);
     if (!buffer)
@@ -250,8 +319,8 @@ secure_config_data_read_cb (const void *pointer, void *data,
         rc = secure_decrypt_data (
             buffer,
             length_buffer,
-            secure_hash_algo[CONFIG_ENUM(secure_config_crypt_hash_algo)],
-            secure_cipher[CONFIG_ENUM(secure_config_crypt_cipher)],
+            hash_algo,
+            cipher,
             secure_passphrase,
             &decrypted,
             &length_decrypted);
@@ -311,12 +380,40 @@ secure_config_data_write_map_cb (void *data,
 {
     struct t_config_file *config_file;
     char *buffer, *buffer_base16;
-    int length_buffer, rc;
+    int length_buffer, rc, hash_algo, cipher;
 
     /* make C compiler happy */
     (void) hashtable;
 
     config_file = (struct t_config_file *)data;
+
+    hash_algo = weecrypto_get_hash_algo (
+        config_file_option_string (secure_config_crypt_hash_algo));
+    if (hash_algo == GCRY_MD_NONE)
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sFailed to encrypt data \"%s\": hash algorithm \"%s\" is not "
+              "available (ligbcrypt version is too old?)"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            key,
+            config_file_option_string (secure_config_crypt_hash_algo));
+        return;
+    }
+
+    cipher = weecrypto_get_cipher (
+        config_file_option_string (secure_config_crypt_cipher));
+    if (cipher == GCRY_CIPHER_NONE)
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sFailed to encrypt data \"%s\": cipher \"%s\" is not "
+              "available (ligbcrypt version is too old?)"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            key,
+            config_file_option_string (secure_config_crypt_cipher));
+        return;
+    }
 
     buffer = NULL;
     length_buffer = 0;
@@ -326,8 +423,8 @@ secure_config_data_write_map_cb (void *data,
         /* encrypt password using passphrase */
         rc = secure_encrypt_data (
             value, strlen (value) + 1,
-            secure_hash_algo[CONFIG_ENUM(secure_config_crypt_hash_algo)],
-            secure_cipher[CONFIG_ENUM(secure_config_crypt_cipher)],
+            hash_algo,
+            cipher,
             secure_passphrase,
             &buffer,
             &length_buffer);
@@ -352,7 +449,7 @@ secure_config_data_write_map_cb (void *data,
         else
         {
             gui_chat_printf (NULL,
-                             _("%sError encrypting data \"%s\" (%d)"),
+                             _("%sFailed to encrypt data \"%s\" (%d)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              key, rc);
         }
@@ -469,13 +566,26 @@ secure_config_init_options ()
             N_("cipher used to crypt data (the number after algorithm is the "
                "size of the key in bits)"),
             "aes128|aes192|aes256", 0, 0, "aes256", NULL, 0,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            &secure_config_check_crypt_option_cb, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
         secure_config_crypt_hash_algo = config_file_new_option (
             secure_config_file, secure_config_section_crypt,
             "hash_algo", "enum",
-            N_("hash algorithm used to check the decrypted data"),
-            "sha224|sha256|sha384|sha512", 0, 0, "sha256", NULL, 0,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            N_("hash algorithm used to check the decrypted data; "
+               "some of them require a specific libgcrypt version: "
+               "sha3-*: libgcrypt >= 1.7.0, "
+               "blake2*: libgcrypt >= 1.8.0, "
+               "sha512-*: libgcrypt >= 1.9.4"),
+            "sha224|sha256|sha384|sha512"
+            "|sha512-224|sha512-256"
+            "|sha3-224|sha3-256|sha3-384|sha3-512"
+            "|blake2b-160|blake2b-256|blake2b-384|blake2b-512"
+            "|blake2s-128|blake2s-160|blake2s-224|blake2s-256",
+            0, 0, "sha256", NULL, 0,
+            &secure_config_check_crypt_option_cb, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
         secure_config_crypt_passphrase_command = config_file_new_option (
             secure_config_file, secure_config_section_crypt,
             "passphrase_command", "string",
@@ -500,7 +610,9 @@ secure_config_init_options ()
                "then you can turn off this option to have always same content "
                "in file"),
             NULL, 0, 0, "on", NULL, 0,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            &secure_config_check_crypt_option_cb, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
     }
 
     /* data */
@@ -532,7 +644,9 @@ secure_config_read ()
 
     secure_data_encrypted = 0;
 
+    secure_config_loading = 1;
     rc = config_file_read (secure_config_file);
+    secure_config_loading = 0;
 
     return rc;
 }

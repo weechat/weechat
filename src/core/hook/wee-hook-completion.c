@@ -107,6 +107,7 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
                       struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
     const char *pos;
     char *item;
 
@@ -134,14 +135,14 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
             && !ptr_hook->running
             && (strcmp (HOOK_COMPLETION(ptr_hook, completion_item), item) == 0))
         {
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             (void) (HOOK_COMPLETION(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
                  completion_item,
                  buffer,
                  completion);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
         }
 
         ptr_hook = next_hook;

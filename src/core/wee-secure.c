@@ -46,17 +46,6 @@ struct t_hashtable *secure_hashtable_data = NULL;
 /* data still encrypted (if passphrase not set) */
 struct t_hashtable *secure_hashtable_data_encrypted = NULL;
 
-/* hash algorithms */
-char *secure_hash_algo_string[] = { "sha224", "sha256", "sha384", "sha512",
-                                    NULL };
-int secure_hash_algo[] = { GCRY_MD_SHA224, GCRY_MD_SHA256, GCRY_MD_SHA384,
-                           GCRY_MD_SHA512 };
-
-/* ciphers */
-char *secure_cipher_string[] = { "aes128", "aes192", "aes256", NULL };
-int secure_cipher[] = { GCRY_CIPHER_AES128, GCRY_CIPHER_AES192,
-                        GCRY_CIPHER_AES256 };
-
 char *secure_decrypt_error[] = { "memory", "buffer", "key", "cipher", "setkey",
                                  "decrypt", "hash", "hash mismatch" };
 
@@ -427,8 +416,10 @@ decrypt_end:
  * secured data configuration file (because no passphrase was given).
  *
  * Returns:
- *   > 0: number of decrypted data
- *     0: error decrypting data
+ *   >= 0: number of decrypted data
+ *     -1: error decrypting data (bad passphrase)
+ *     -2: unsupported hash algorithm
+ *     -3: unsupported cipher
  */
 
 int
@@ -436,11 +427,22 @@ secure_decrypt_data_not_decrypted (const char *passphrase)
 {
     char **keys, *buffer, *decrypted;
     const char *value;
-    int num_ok, num_keys, i, length_buffer, length_decrypted, rc;
+    int num_ok, num_keys, i, hash_algo, cipher, rc;
+    int length_buffer, length_decrypted;
 
     /* we need a passphrase to decrypt data! */
     if (!passphrase || !passphrase[0])
-        return 0;
+        return -1;
+
+    hash_algo = weecrypto_get_hash_algo (
+        config_file_option_string (secure_config_crypt_hash_algo));
+    if (hash_algo == GCRY_MD_NONE)
+        return -2;
+
+    cipher = weecrypto_get_cipher (
+        config_file_option_string (secure_config_crypt_cipher));
+    if (cipher == GCRY_CIPHER_NONE)
+        return -3;
 
     num_ok = 0;
 
@@ -469,8 +471,8 @@ secure_decrypt_data_not_decrypted (const char *passphrase)
                     rc = secure_decrypt_data (
                         buffer,
                         length_buffer,
-                        secure_hash_algo[CONFIG_ENUM(secure_config_crypt_hash_algo)],
-                        secure_cipher[CONFIG_ENUM(secure_config_crypt_cipher)],
+                        hash_algo,
+                        cipher,
                         passphrase,
                         &decrypted,
                         &length_decrypted);

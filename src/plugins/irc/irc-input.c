@@ -32,6 +32,7 @@
 #include "irc-nick.h"
 #include "irc-color.h"
 #include "irc-config.h"
+#include "irc-list.h"
 #include "irc-msgbuffer.h"
 #include "irc-protocol.h"
 #include "irc-raw.h"
@@ -62,6 +63,7 @@
 
 void
 irc_input_user_message_display (struct t_irc_server *server,
+                                time_t date,
                                 const char *target,
                                 const char *address,
                                 const char *command,
@@ -72,6 +74,7 @@ irc_input_user_message_display (struct t_irc_server *server,
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_protocol_ctxt ctxt;
     const char *ptr_target;
     char *text2, *text_decoded, str_tags[256], *str_color;
     const char *ptr_text;
@@ -79,6 +82,12 @@ irc_input_user_message_display (struct t_irc_server *server,
 
     if (!server || !target)
         return;
+
+    memset (&ctxt, 0, sizeof (ctxt));
+    ctxt.server = server;
+    ctxt.date = date;
+    ctxt.address = (char *)address;
+    ctxt.command = (char *)command;
 
     is_notice = (weechat_strcasecmp (command, "notice") == 0);
     is_action = (ctcp_type && (weechat_strcasecmp (ctcp_type, "action") == 0));
@@ -127,6 +136,9 @@ irc_input_user_message_display (struct t_irc_server *server,
     if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL))
         ptr_nick = irc_nick_search (server, ptr_channel, server->nick);
 
+    ctxt.nick = (ptr_nick) ? ptr_nick->name : server->nick;
+    ctxt.nick_is_me = (irc_server_strcasecmp (server, ctxt.nick, server->nick) == 0);
+
     if (is_action)
     {
         snprintf (str_tags, sizeof (str_tags),
@@ -162,14 +174,8 @@ irc_input_user_message_display (struct t_irc_server *server,
         {
             weechat_printf_date_tags (
                 ptr_buffer,
-                0,
-                irc_protocol_tags (
-                    server,
-                    command,
-                    NULL,
-                    str_tags,
-                    (ptr_nick) ? ptr_nick->name : server->nick,
-                    address),
+                date,
+                irc_protocol_tags (&ctxt, str_tags),
                 "%s%s -> %s%s%s: %s%s%s%s%s%s",
                 weechat_prefix ("network"),
                 /* TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action */
@@ -189,14 +195,8 @@ irc_input_user_message_display (struct t_irc_server *server,
         {
             weechat_printf_date_tags (
                 ptr_buffer,
-                0,
-                irc_protocol_tags (
-                    server,
-                    command,
-                    NULL,
-                    str_tags,
-                    (ptr_nick) ? ptr_nick->name : server->nick,
-                    address),
+                date,
+                irc_protocol_tags (&ctxt, str_tags),
                 "%s%s%s%s%s%s%s",
                 weechat_prefix ("action"),
                 irc_nick_mode_for_display (server, ptr_nick, 0),
@@ -211,14 +211,8 @@ irc_input_user_message_display (struct t_irc_server *server,
     {
         weechat_printf_date_tags (
             ptr_buffer,
-            0,
-            irc_protocol_tags (
-                server,
-                command,
-                NULL,
-                str_tags,
-                (ptr_nick) ? ptr_nick->name : server->nick,
-                address),
+            date,
+            irc_protocol_tags (&ctxt, str_tags),
             _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
             weechat_prefix ("network"),
             (is_channel) ?
@@ -235,14 +229,8 @@ irc_input_user_message_display (struct t_irc_server *server,
     {
         weechat_printf_date_tags (
             ptr_buffer,
-            0,
-            irc_protocol_tags (
-                server,
-                command,
-                NULL,
-                str_tags,
-                (ptr_nick) ? ptr_nick->name : server->nick,
-                address),
+            date,
+            irc_protocol_tags (&ctxt, str_tags),
             "%s%s%s%s%s(%s%s%s%s)%s -> %s%s%s: %s",
             weechat_prefix ("network"),
             (is_notice) ? IRC_COLOR_NOTICE : "",
@@ -267,14 +255,8 @@ irc_input_user_message_display (struct t_irc_server *server,
     {
         weechat_printf_date_tags (
             ptr_buffer,
-            0,
-            irc_protocol_tags (
-                server,
-                command,
-                NULL,
-                str_tags,
-                (ptr_nick) ? ptr_nick->name : server->nick,
-                address),
+            date,
+            irc_protocol_tags (&ctxt, str_tags),
             "%s%s",
             irc_nick_as_prefix (
                 server,
@@ -317,7 +299,8 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
         return;
     }
     list_messages = irc_server_sendf (ptr_server,
-                                      flags | IRC_SERVER_SEND_RETURN_LIST,
+                                      flags | IRC_SERVER_SEND_RETURN_LIST
+                                      | IRC_SERVER_SEND_MULTILINE,
                                       tags,
                                       "PRIVMSG %s :%s",
                                       ptr_channel->name, message);
@@ -333,6 +316,7 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
             {
                 irc_input_user_message_display (
                     ptr_server,
+                    0,  /* date */
                     ptr_channel->name,
                     NULL,  /* address */
                     "privmsg",
@@ -365,6 +349,12 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags,
         else
             irc_raw_filter_options (input_data);
     }
+    else if (weechat_strcmp (
+                 weechat_buffer_get_string (buffer,
+                                            "localvar_type"), "list") == 0)
+    {
+        irc_list_buffer_input_data (buffer, input_data);
+    }
     else
     {
         /*
@@ -377,7 +367,9 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags,
         {
             if (ptr_server)
             {
-                irc_server_sendf (ptr_server, flags, NULL,
+                irc_server_sendf (ptr_server,
+                                  flags | IRC_SERVER_SEND_MULTILINE,
+                                  NULL,
                                   "%s", weechat_utf8_next_char (input_data));
             }
             return WEECHAT_RC_OK;

@@ -23,7 +23,7 @@
 #define IRC_CONFIG_NAME "irc"
 #define IRC_CONFIG_PRIO_NAME (TO_STR(IRC_PLUGIN_PRIORITY) "|" IRC_CONFIG_NAME)
 
-#define IRC_CONFIG_VERSION 2
+#define IRC_CONFIG_VERSION 3
 
 enum t_irc_config_look_server_buffer
 {
@@ -122,13 +122,19 @@ extern struct t_config_option *irc_config_look_highlight_channel;
 extern struct t_config_option *irc_config_look_highlight_pv;
 extern struct t_config_option *irc_config_look_highlight_server;
 extern struct t_config_option *irc_config_look_highlight_tags_restrict;
+extern struct t_config_option *irc_config_look_ignore_tag_messages;
 extern struct t_config_option *irc_config_look_item_channel_modes_hide_args;
 extern struct t_config_option *irc_config_look_item_display_server;
 extern struct t_config_option *irc_config_look_item_nick_modes;
 extern struct t_config_option *irc_config_look_item_nick_prefix;
 extern struct t_config_option *irc_config_look_join_auto_add_chantype;
+extern struct t_config_option *irc_config_look_list_buffer;
+extern struct t_config_option *irc_config_look_list_buffer_scroll_horizontal;
+extern struct t_config_option *irc_config_look_list_buffer_sort;
+extern struct t_config_option *irc_config_look_list_buffer_topic_strip_colors;
 extern struct t_config_option *irc_config_look_msgbuffer_fallback;
 extern struct t_config_option *irc_config_look_new_channel_position;
+extern struct t_config_option *irc_config_look_new_list_position;
 extern struct t_config_option *irc_config_look_new_pv_position;
 extern struct t_config_option *irc_config_look_nick_completion_smart;
 extern struct t_config_option *irc_config_look_nick_mode;
@@ -139,6 +145,7 @@ extern struct t_config_option *irc_config_look_notice_welcome_redirect;
 extern struct t_config_option *irc_config_look_notice_welcome_tags;
 extern struct t_config_option *irc_config_look_notify_tags_ison;
 extern struct t_config_option *irc_config_look_notify_tags_whois;
+extern struct t_config_option *irc_config_look_open_pv_buffer_echo_msg;
 extern struct t_config_option *irc_config_look_part_closes_buffer;
 extern struct t_config_option *irc_config_look_pv_buffer;
 extern struct t_config_option *irc_config_look_pv_tags;
@@ -167,6 +174,8 @@ extern struct t_config_option *irc_config_color_item_nick_modes;
 extern struct t_config_option *irc_config_color_item_tls_version_deprecated;
 extern struct t_config_option *irc_config_color_item_tls_version_insecure;
 extern struct t_config_option *irc_config_color_item_tls_version_ok;
+extern struct t_config_option *irc_config_color_list_buffer_line_selected;
+extern struct t_config_option *irc_config_color_list_buffer_line_selected_bg;
 extern struct t_config_option *irc_config_color_message_account;
 extern struct t_config_option *irc_config_color_message_chghost;
 extern struct t_config_option *irc_config_color_message_join;
@@ -178,6 +187,7 @@ extern struct t_config_option *irc_config_color_nick_prefixes;
 extern struct t_config_option *irc_config_color_notice;
 extern struct t_config_option *irc_config_color_reason_kick;
 extern struct t_config_option *irc_config_color_reason_quit;
+extern struct t_config_option *irc_config_color_term_remap;
 extern struct t_config_option *irc_config_color_topic_current;
 extern struct t_config_option *irc_config_color_topic_new;
 extern struct t_config_option *irc_config_color_topic_old;
@@ -203,6 +213,7 @@ extern struct t_config_option *irc_config_server_default[];
 extern struct t_hashtable *irc_config_hashtable_display_join_message;
 extern struct t_hashtable *irc_config_hashtable_nick_prefixes;
 extern struct t_hashtable *irc_config_hashtable_color_mirc_remap;
+extern struct t_hashtable *irc_config_hashtable_color_term_remap;
 extern char **irc_config_nicks_hide_password;
 extern int irc_config_num_nicks_hide_password;
 

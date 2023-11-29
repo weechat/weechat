@@ -28,28 +28,9 @@
 #define SECURE_DATA_PASSPHRASE_FLAG  "__passphrase__"
 #define SECURE_SALT_SIZE             8
 
-enum t_secure_config_hash_algo
-{
-    SECURE_CONFIG_HASH_SHA224 = 0,
-    SECURE_CONFIG_HASH_SHA256,
-    SECURE_CONFIG_HASH_SHA384,
-    SECURE_CONFIG_HASH_SHA512,
-};
-
-enum t_secure_config_cipher
-{
-    SECURE_CONFIG_CIPHER_AES128 = 0,
-    SECURE_CONFIG_CIPHER_AES192,
-    SECURE_CONFIG_CIPHER_AES256,
-};
-
 extern char *secure_passphrase;
 extern struct t_hashtable *secure_hashtable_data;
 extern struct t_hashtable *secure_hashtable_data_encrypted;
-extern char *secure_hash_algo_string[];
-extern int secure_hash_algo[];
-extern char *secure_cipher_string[];
-extern int secure_cipher[];
 extern int secure_data_encrypted;
 extern char *secure_decrypt_error[];
 

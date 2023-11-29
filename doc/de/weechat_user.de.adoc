@@ -118,7 +118,7 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 | pkg-config |
 | entdeckt installierte Bibliotheken.
 
-| libncursesw5-dev ^(2)^ |
+| libncurses-dev |
 | Ncurses Oberfläche.
 
 | libcurl4-gnutls-dev |
@@ -127,7 +127,7 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 | libgcrypt20-dev |
 | Geschützte Daten, IRC SASL Authentifikation.
 
-| libgnutls28-dev | ≥ 2.2.0 ^(3)^
+| libgnutls28-dev | ≥ 2.2.0 ^(2)^
 | IRC-Erweiterung: Unterstützung von TLS Verbindungen, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE). +
   Relay-Erweiterung: Untersützung von TLS Verbindungen.
 
@@ -135,20 +135,12 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 | Logger-Erweitertung: Kompression von rotierenden Protokolldateien (gzip). +
   Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://zlib.net/[zlib ^↗^^] (weechat protocol). +
   Script-Erweiterung: Lesen der Repository-Indexdatei (gzip).
-
-| libzstd-dev | ≥ 0.8.1
-| Logger-Erweiterung: Kompression von rotierenden Protokolldateien. +
-  Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
 |===
 
 [NOTE]
 ^(1)^ Der Name stammt von der Debian GNU/Linux Bookworm-Distribution,
 Version und Name können in anderen Distributionen anders lauten. +
-^(2)^ Es wird empfohlen WeeChat mit libncurses**w**5-dev (das *w* ist
-entscheidend) zu kompilieren. Eine Kompilierung kann auch mit libncurses5-dev erfolgen,
-aber dies wird *NICHT* empfohlen:
-Es können Darstellungsfehler mit breiten Zeichen auftreten. +
-^(3)^ GnuTLS ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
+^(2)^ GnuTLS ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
 ECDSA-NIST256P-CHALLENGE durchzuführen.
 
 Die folgende Tabelle zeigt die Liste der Pakete, die zum Kompilieren von
@@ -156,26 +148,68 @@ WeeChat optional sind:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paket ^(1)^                           | Version  | Funktionen
-| {cpp} compiler (pass:[g++ / clang++]) |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
-| gettext                               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
-| ca-certificates                       |          | Zertifikate für TLS Verbindungen.
-| libaspell-dev / libenchant-dev        |          | Spell Erweiterung.
-| python3-dev                           | ≥ 3.0    | Python Erweiterung.
-| libperl-dev                           |          | Perl Erweiterung.
-| ruby3.1, ruby3.1-dev                  | ≥ 1.9.1  | Ruby Erweiterung.
-| liblua5.4-dev                         |          | Lua Erweiterung.
-| tcl-dev                               | ≥ 8.5    | Tcl Erweiterung.
-| guile-3.0-dev                         | ≥ 2.0    | Guile (scheme) Erweiterung.
-| libv8-dev                             | ≤ 3.24.3 | JavaScript Erweiterung.
-| php-dev                               | ≥ 7.0    | PHP Erweiterung.
-| libphp-embed                          | ≥ 7.0    | PHP Erweiterung.
-| libxml2-dev                           |          | PHP Erweiterung.
-| libargon2-dev                         |          | PHP Erweiterung (wenn PHP ≥ 7.2).
-| libsodium-dev                         |          | PHP Erweiterung (wenn PHP ≥ 7.2).
-| asciidoctor                           | ≥ 1.5.4  | zum Erstellen der man page und der Dokumentation.
-| ruby-pygments.rb                      |          | Build Dokumentation.
-| libcpputest-dev                       | ≥ 3.4    | zum Erstellen und um Test auszuführen.
+| Paket ^(1)^ | Version | Funktionen
+
+| {cpp} compiler (pass:[g++ / clang++]) |
+| zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
+
+| gettext |
+| Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
+
+| ca-certificates |
+| Zertifikate für TLS Verbindungen.
+
+| libzstd-dev | ≥ 0.8.1
+| Logger-Erweiterung: Kompression von rotierenden Protokolldateien (zstandard). +
+  Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
+
+| libaspell-dev / libenchant-dev |
+| Spell Erweiterung.
+
+| python3-dev | ≥ 3.0
+| Python Erweiterung.
+
+| libperl-dev |
+| Perl Erweiterung.
+
+| ruby3.1, ruby3.1-dev | ≥ 1.9.1
+| Ruby Erweiterung.
+
+| liblua5.4-dev |
+| Lua Erweiterung.
+
+| tcl-dev | ≥ 8.5
+| Tcl Erweiterung.
+
+| guile-3.0-dev | ≥ 2.0
+| Guile (scheme) Erweiterung.
+
+| libv8-dev | ≤ 3.24.3
+| JavaScript Erweiterung.
+
+| php-dev | ≥ 7.0
+| PHP Erweiterung.
+
+| libphp-embed | ≥ 7.0
+| PHP Erweiterung.
+
+| libxml2-dev |
+| PHP Erweiterung.
+
+| libargon2-dev |
+| PHP Erweiterung (wenn PHP ≥ 7.2).
+
+| libsodium-dev |
+| PHP Erweiterung (wenn PHP ≥ 7.2).
+
+| asciidoctor | ≥ 1.5.4
+| zum Erstellen der man page und der Dokumentation.
+
+| ruby-pygments.rb |
+| Build Dokumentation.
+
+| libcpputest-dev | ≥ 3.4
+| zum Erstellen und um Test auszuführen.
 |===
 
 [NOTE]
@@ -216,7 +250,7 @@ $ make install
 
 Optionen für CMake können mit dem Format, `-DOPTION=VALUE`, genutzt werden.
 
-Liste von häufig verwendeten Optionen:
+Liste der verfügbaren Optionen:
 
 [width="100%",cols="3m,3,3m,10",options="header"]
 |===
@@ -269,6 +303,9 @@ Liste von häufig verwendeten Optionen:
 
 | ENABLE_GUILE | `ON`, `OFF` | ON
 | kompiliert <<scripting_plugins,Guile Erweiterung>> (Scheme).
+
+| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| Kompilieren der headless Binärdatei.
 
 | ENABLE_IRC | `ON`, `OFF` | ON
 | kompiliert <<irc,IRC Erweiterung>>.
@@ -327,6 +364,9 @@ Liste von häufig verwendeten Optionen:
 
 | ENABLE_XFER | `ON`, `OFF` | ON
 | kompiliert <<xfer,Xfer Erweiterung>>.
+
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| aktiviere https://facebook.github.io/zstd/[Zstandard ^↗^^] Kompression.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF
 | kompiliert Testumgebung.
@@ -880,10 +920,29 @@ In der _input_ Bar lautet die Standardeinstellung:
 | Item         | Beispiel                                      | Beschreibung
 | input_prompt | `[@Flashy(i)]`                                | Input prompt, für irc: Nick und Modi (Modus "+i" bedeutet auf libera, unsichtbar).
 | away         | `(away)`                                      | Abwesenheitsanzeige.
-| input_search | `[Search (~ str,msg)]`                        | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten).
-| input_paste  | `[Paste 7 lines ? [ctrl-y] Ja [ctrl-n] Nein]` | Nachfrage ob sieben Zeilen eingefügt werden sollen.
+| input_search | `[Search lines (~ str,msg)]`                  | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten).
+| input_paste  | `[Paste 7 lines ? [ctrl-y] Ja [ctrl-n] Nein]` | Nachfrage, ob sieben Zeilen eingefügt werden sollen.
 | input_text   | `hi peter!`                                   | Text der eingegeben wird.
 |===
+
+Es existieren zwei Suchmodi:
+
+* Suche in Zeilen, zum Beispiel `[Search lines (~ str,msg)]`, mit folgenden Infos:
+** `~`: Groß-und Kleinschreibung ignorieren
+** `==`: Groß-und Kleinschreibung berücksichtigen
+** `str`: einfache Textsuche
+** `regex`: suche mit regulären Ausdrücken
+** `msg`: Suche in Nachrichten
+** `pre`: Suche in Präfix
+** `pre\|msg`: Suche in Präfix und Nachrichten
+* Suche im Befehlsverlauf, zum Beispiel `[Search command (~ str,local)]`,
+  mit den folgenden Informationen:
+** `~`: Groß-und Kleinschreibung ignorieren
+** `==`: Groß-und Kleinschreibung berücksichtigen
+** `str`: einfache Textsuche
+** `regex`: suche mit regulären Ausdrücken
+** `local`: suche im lokalen Bufferverlauf
+** `global`: suche im globalen Verlauf
 
 In der _nicklist_ Bar lautet die Standardeinstellung:
 
@@ -903,8 +962,10 @@ andere Items die zur Verfügung stehen (die aber nicht standardmäßig in einer 
 | buffer_nicklist_count_all    | `4`                      | Anzahl der sichtbaren Gruppen und Nicks in der Nickliste.
 | buffer_nicklist_count_groups | `0`                      | Anzahl der sichtbaren Gruppen in der Nickliste.
 | buffer_short_name            | `#test`                  | Kurzname des aktuellen Buffers.
-| buflist2                     | `1.weechat`              | List der Buffer, zweites Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
-| buflist3                     | `1.weechat`              | List der Buffer, drittes Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist2                     | `1.weechat`              | Liste der Buffer, zweites Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist3                     | `1.weechat`              | Liste der Buffer, drittes Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist4                     | `1.weechat`              | Liste der Buffer, viertes Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist5                     | `1.weechat`              | Liste der Buffer, fünftes Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
 | fset                         | `+buflist.look.sort: …+` | Hilfstext zur aktuell ausgewählten Option im Fset-Buffer.
 | irc_channel                  | `#test`                  | aktueller Name des IRC Kanals.
 | irc_host                     | `+user@host.com+`        | aktueller IRC Host.
@@ -974,6 +1035,11 @@ Zeichen, genutzt werden:
 | kbd:[Ctrl+c], kbd:[c],
   kbd:[xx], kbd:[,],
   kbd:[yy]               | Textfarbe `xx` und Hintergrundfarbe `yy` (siehe Farbtabelle).
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx]           | Textfarbe `xxxxxx` (RGB als hexadezimale Zahl, zum Beispiel `FF0000` für rot).
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx], kbd:[,],
+  kbd:[yyyyyy]           | Textfarbe `xxxxxx` und Hintergrundfarbe `yyyyyy` (RGB als hexadezimale Zahl).
 | kbd:[Ctrl+c], kbd:[i]  | Text wird kursiv dargestellt.
 | kbd:[Ctrl+c], kbd:[o]  | deaktiviert Farben und Attribute.
 | kbd:[Ctrl+c], kbd:[v]  | Farben umkehren (kehrt Textfarbe und Hintergrundfarbe um).
@@ -981,8 +1047,8 @@ Zeichen, genutzt werden:
 |===
 
 [NOTE]
-Der selbe Befehl (ohne den Wert für kbd:[Ctrl+c], kbd:[c]) sollte genutzt werden
-um die Farbkodierungen bzw. Attribute zu deaktivieren.
+Der selbe Code (ohne Nummer für kbd:[Ctrl+c], kbd:[c] und kbd:[Ctrl+c], kbd:[d])
+kann verwendet werden, um das Attribut zu stoppen.
 
 Farbtabelle für kbd:[Ctrl+c], kbd:[c]:
 
@@ -1348,7 +1414,8 @@ Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese V
 
 | filter
 | beliebige Zeichenkette
-| Filter definiert für einige Buffer `/fset`, `/server raw` (irc) und `/script`.
+| Filter für einige Buffer definiert, zum Beispiel`/fset`, `/list` (irc), `/server raw` (irc)
+  und `/script`.
 
 | host
 | beliebige Zeichenkette
@@ -1430,7 +1497,8 @@ Externe Erweitertungen und Skripte können andere lokale Variablen definieren un
 === Liste der Buffer
 
 Die Buflist-Erweiterung dient dazu eine Liste der geöffneten Buffer in einer Bar-Item, mit Namen
-"buflist", darzustellen (zwei weiere Bar-Items "buflist2" und "buflist3" sind zusätzlich verfügbar). +
+"buflist", darzustellen (vier weitere Bar-Items sind dabei verfügbar "buflist2", "buflist3", "buflist4"
+und "buflist5"). +
 Eine Standardbar, "buflist", wird beim Programmstart automatisch mit folgendem Inhalt erstellt.
 
 [[buflist_commands]]
@@ -1453,6 +1521,20 @@ Sektionen in Datei _buflist.conf_:
 Optionen:
 
 include::{autogendir}/autogen_user_options.de.adoc[tag=buflist_options]
+
+[[cursor_mode]]
+=== Cursor-Modus
+
+Mit dem Cursormodus können Sie den Cursor frei an eine beliebige Stelle auf dem Bildschirm bewegen,
+sowohl im Chatbereich als auch in Bars und ermöglicht das Ausführen von Aktionen an der angegebenen Position. +
+Sie können den Cursormodus entweder mit dem Befehl `/cursor` oder mit der mittleren Maustaste aktivieren
+(Maus muss mit der Taste kbd:[Alt+m] oder dem Befehl `/mouse enable` aktiviert worden sein).
+
+Typischer Anwendungszweck ist das Zitieren von Nachrichten (Chat-Bereich) oder die Interaktion mit Nicks (Nicklist-Leiste).
+
+Siehe Befehl <<command_weechat_cursor,/cursor>> und
+<<key_bindings_cursor_context,key bindings in cursor context>>, für die Liste
+der Aktionen, die in diesem Modus ausgeführt werden können.
 
 [[key_bindings]]
 == Tastenbelegungen
@@ -1529,6 +1611,7 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | Taste                 | Beschreibung | Befehl
 | kbd:[Ctrl+c], kbd:[b] | fügt Steuerzeichen für fett geschrieben Text ein. | `+/input insert \x02+`
 | kbd:[Ctrl+c], kbd:[c] | fügt Steuerzeichen für Textfarbe ein. | `+/input insert \x03+`
+| kbd:[Ctrl+c], kbd:[d] | fügt Steuerzeichen für Textfarbe ein (RGB Farbe, als hexadezimale Zahl). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | fügt Steuerzeichen für kursiven Text ein. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | fügt Steuerzeichen für Standardfarbe ein. | `+/input insert \x0F+`
 | kbd:[Ctrl+c], kbd:[v] | fügt Steuerzeichen für Hintergrundfarbe ein. | `+/input insert \x16+`
@@ -1547,14 +1630,23 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | kbd:[Ctrl+↓] | ruft nächsten Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer). | `+/input history_global_next+`
 |===
 
+[[key_bindings_cmdline_system]]
+==== System
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Taste        | Beschreibung | Befehl
+| kbd:[Ctrl+z] | Breche den Weechat-Prozess ab | `+/sys suspend+`
+|===
+
 [[key_bindings_buffers]]
 === Buffer
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Taste                          | Beschreibung | Befehl
-| kbd:[Ctrl+r]                   | Textsuche im Verlaufsspeicher des Buffers (siehe <<key_bindings_search_context,Tasten für Such-Kontext>>). | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | setzt für alle Buffer die Markierung für ungelesene Nachrichten. | `+/allbuf /buffer set unread+`
+| kbd:[Ctrl+r]                   | sucht nach Text im Befehlsverlauf (siehe <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
+| kbd:[Ctrl+s]                   | sucht nach Text in Bufferzeilen (siehe <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
 | kbd:[Ctrl+x]                   | Wechseln Sie den aktuellen Buffer, wenn diese zusammengefügt worden sind, z.B. zwischen IRC-Serverbuffer wechseln. | `+/buffer switch+`
 | kbd:[Alt+x]                    | Zoom eines zusammengefügten Buffers (kbd:[Alt+x] ein zweites mal: alle zusammengefügten Buffer werden angezeigt). | `+/buffer zoom+`
 | kbd:[PgUp]                     | eine Seite im Verlaufsspeicher des Buffers nach oben blättern. | `+/window page_up+`
@@ -1580,6 +1672,7 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | kbd:[Alt+n]                    | springt zur nächsten Highlight Nachricht. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | springt zur vorherigen Highlight Nachricht. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | springt zur ersten ungelesenen Zeile im Buffer. | `+/window scroll_unread+`
+| kbd:[Alt+Shift+U]              | setzt für alle Buffer die Markierung für ungelesene Nachrichten. | `+/allbuf /buffer set unread+`
 | kbd:[Alt+<]                    | springt zum letzten besuchten Buffer. | `+/buffer jump prev_visited+`
 | kbd:[Alt+>]                    | springt zum nächsten besuchten Buffer. | `+/buffer jump next_visited+`
 | kbd:[Alt+/]                    | wechselt zum jeweils zuletzt angezeigten Buffern. | `+/buffer jump last_displayed+`
@@ -1656,51 +1749,83 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 [[key_bindings_search_context]]
 === Suchkontext
 
-Diese Tasten werden im Kontext "search" verwendet (wenn kbd:[Ctrl+r] genutzt wird um
-in einem Buffer nach einem Text zu suchen).
+Diese Tasten werden im Kontext "search" verwendet (wenn kbd:[Ctrl+s] gedrückt wird, um Text
+in Bufferzeilen zu suchen).
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Taste          | Beschreibung | Befehl
-| kbd:[Ctrl+r]   | Wechsel des Suchmodus: einfache Textsuche (Standard), reguläre Ausdrücke. | `+/input search_switch_regex+`
+| kbd:[Ctrl+x]   | Wechsel des Suchmodus: einfache Textsuche (Standard), reguläre Ausdrücke. | `+/input search_switch_regex+`
 | kbd:[Alt+c]    | auf Groß-/Kleinschreibung umschalten. | `+/input search_switch_case+`
 | kbd:[Tab]      | wechselt Suche in: Nachricht (Standard), im Präfix, Präfix + Nachricht. | `+/input search_switch_where+`
-| kbd:[↑]        | sucht vorheriger Zeile. | `+/input search_previous+`
-| kbd:[↓]        | sucht nächste Zeile . | `+/input search_next+`
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | sucht vorheriger Zeile. | `+/input search_previous+`
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | sucht nächste Zeile . | `+/input search_next+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | beendet Suche ab aktueller Position. | `+/input search_stop_here+`
 | kbd:[Ctrl+q]   | Suche wird abgebrochen und der Bildlauf wird auf die Vortextsuche zurückgesetzt. | `+/input search_stop+`
 |===
 
+[[key_bindings_histsearch_context]]
+=== Kontext der Verlaufssuche
+
+Diese Tasten werden im Kontext "histsearch" verwendet (wenn kbd:[Ctrl+r] gedrückt wird, um Text
+im Befehlsverlauf zu suchen).
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Taste          | Beschreibung | Befehl
+| kbd:[Ctrl+x]   | Wechsel des Suchmodus: einfache Textsuche (Standard), reguläre Ausdrücke. | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | auf Groß-/Kleinschreibung umschalten. | `+/input search_switch_case+`
+| kbd:[Tab]      | umschalten der Suche für: lokaler Bufferverlauf (Standard), globaler Verlauf. | `+/input search_switch_where+`
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Suche in vorherigen (älteren) Verlaufseinträgen. | `+/input search_previous+`
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Suche in nachfolgenden (neueren) Verlaufseinträgen. | `+/input search_next+`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Suche stoppen und übereinstimmende Eingaben verwenden. | `+/input search_stop_here+`
+| kbd:[Ctrl+o]   | führt den im Verlauf gefundenen Befehl aus und fügt den nächsten in die Befehlszeile ein. | `+/input history_use_get_next+`
+| kbd:[Ctrl+q]   | stoppt die Suche und stellt die Eingabe auf ihren ursprünglichen Wert zurück. | `+/input search_stop+`
+|===
+
 [[key_bindings_cursor_context]]
 === Cursor-Kontext
 
-Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bildschirm bewegt werden)
+Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bildschirm bewegt werden),
+see <<cursor_mode,Cursor mode>>.
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
-| Taste          | Bereich       | Beschreibung | Befehl
-| kbd:[↑]        | -             | bewegt Cursor eine Zeile nach oben. | `+/cursor move up+`
-| kbd:[↓]        | -             | bewegt Cursor eine Zeile nach unten. | `+/cursor move down+`
-| kbd:[←]        | -             | bewegt Cursor eine Spalte nach links. | `+/cursor move left+`
-| kbd:[→]        | -             | bewegt Cursor eine Spalte nach rechts. | `+/cursor move right+`
-| kbd:[Alt+↑]    | -             | bewegt Cursor einen Bereich nach oben. | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -             | bewegt Cursor einen Bereich nach unten. | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -             | bewegt Cursor einen Bereich nach links. | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -             | bewegt Cursor einen Bereich nach rechts. | `+/cursor move area_right+`
-| kbd:[m]        | Chat          | zitiert Nachricht. | `+hsignal:chat_quote_message;/cursor stop+`
-| kbd:[l]        | Chat          | zitiert aktuelle Zeile. | `+hsignal:chat_quote_focused_line;/cursor stop+`
-| kbd:[q]        | Chat          | zitiert prefix + Nachricht. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | Chat          | zitiert Uhrzeit + prefix + Nachricht. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | Benutzerliste | verbannt nick (Ban). | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | Benutzerliste | kickt nick. | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | Benutzerliste | kickt und verbannt nick. | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | Benutzerliste | öffnet privaten Chat mit Nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | Benutzerliste | führt einen whois für Nick aus. | `+/window ${_window_number};/whois ${nick}+`
+| Taste             | Bereich       | Beschreibung | Befehl
+| kbd:[↑]           | -             | bewegt den Cursor eine Zeile nach oben. | `+/cursor move up+`
+| kbd:[↓]           | -             | bewegt den Cursor eine Zeile nach unten. | `+/cursor move down+`
+| kbd:[←]           | -             | bewegt den Cursor eine Spalte nach links. | `+/cursor move left+`
+| kbd:[→]           | -             | bewegt den Cursor eine Spalte nach rechts. | `+/cursor move right+`
+| kbd:[Alt+↑]       | -             | bewegt den Cursor zur ersten Zeile des Bereichs. | `+/cursor move edge_top+`
+| kbd:[Alt+↓]       | -             | bewegt den Cursor zur letzten Zeile des Bereichs. | `+/cursor move edge_bottom+`
+| kbd:[Alt+←]       | -             | bewegt den Cursor zur ersten Spalte des Bereichs. | `+/cursor move edge_left+`
+| kbd:[Alt+→]       | -             | bewegt den Cursor zur letzten Spalte des Bereichs. | `+/cursor move edge_right+`
+| kbd:[Alt+Home]    | -             | bewegt den Cursor in die obere linke Ecke des Bereichs. | `+/cursor move top_left+`
+| kbd:[Alt+End]     | -             | bewegt den Cursor in die untere rechte Ecke des Bereichs. | `+/cursor move bottom_right+`
+| kbd:[Alt+Shift+↑] | -             | bewegt den Cursor einen Bereich nach oben. | `+/cursor move area_up+`
+| kbd:[Alt+Shift+↓] | -             | bewegt den Cursor einen Bereich nach unten. | `+/cursor move area_down+`
+| kbd:[Alt+Shift+←] | -             | bewegt den Cursor einen Bereich nach links. | `+/cursor move area_left+`
+| kbd:[Alt+Shift+→] | -             | bewegt den Cursor einen Bereich nach rechts. | `+/cursor move area_right+`
+| kbd:[m]           | Chat          | zitiert Nachricht. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[l]           | Chat          | zitiert aktuelle Zeile. | `+hsignal:chat_quote_focused_line;/cursor stop+`
+| kbd:[q]           | Chat          | zitiert prefix + Nachricht. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]           | Chat          | zitiert Uhrzeit + prefix + Nachricht. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]           | Benutzerliste | verbannt nick (Ban). | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]           | Benutzerliste | kickt nick. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]           | Benutzerliste | kickt und verbannt nick. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]           | Benutzerliste | öffnet privaten Chat mit Nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]           | Benutzerliste | führt einen whois für Nick aus. | `+/window ${_window_number};/whois ${nick}+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -             | beendet den Cursor-Modus. | `+/cursor stop+`
+  kbd:[Ctrl+m]      | -             | beendet den Cursor-Modus. | `+/cursor stop+`
 |===
 
 [[key_bindings_mouse]]
@@ -1712,51 +1837,59 @@ wurde (Befehl: `+/mouse toggle+`).
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
 | Maustaste/Mausrad ^(1)^ | Mausgeste    | Bereich             | Beschreibung | Befehl
-| ◾◽◽                     | -            | Chat                | wechselt zum Fenster. | `+/window ${_window_number}+`
-| ◾◽◽                     | links        | Chat                | zum vorherigen Buffer springen. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                     | rechts       | Chat                | zum nächsten Buffer springen. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                     | links(lang)  | Chat                | wechselt zum ersten Buffer. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                     | rechts(lang) | Chat                | wechselt zum letzten Buffer. | `+/window ${_window_number};/buffer ++`
+| kbd:[■ □ □]             | -            | Chat                | wechselt zum Fenster. | `+/window ${_window_number}+`
+| kbd:[■ □ □]             | links        | Chat                | zum vorherigen Buffer springen. | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]             | rechts       | Chat                | zum nächsten Buffer springen. | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]             | links(lang)  | Chat                | wechselt zum ersten Buffer. | `+/window ${_window_number};/buffer 1+`
+| kbd:[■ □ □]             | rechts(lang) | Chat                | wechselt zum letzten Buffer. | `+/window ${_window_number};/buffer ++`
 | kbd:[▲]                 | -            | Chat                | mehrere Zeilen im Verlaufsspeicher des Buffer nach oben blättern. | `+/window scroll_up -window ${_window_number}+`
 | kbd:[▼]                 | -            | Chat                | mehrere Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `+/window scroll_down -window ${_window_number}+`
 | kbd:[Ctrl+▲]            | -            | Chat                | horizontal, nach links scrollen. | `+/window scroll_horiz -window ${_window_number} -10%+`
 | kbd:[Ctrl+▼]            | -            | Chat                | horizontal, nach rechts scrollen. | `+/window scroll_horiz -window ${_window_number} +10%+`
 | kbd:[▲]                 | -            | chat: fset Buffer   | Auswahl wird fünf Einträge nach oben bewegt, im fset Buffer. | `+/fset -up 5+`
 | kbd:[▼]                 | -            | chat: fset buffer   | Auswahl wird fünf Einträge nach unten bewegt, im fset Buffer. | `+/fset -down 5+`
-| ◾◽◽                     | -            | chat: fset buffer   | springt zu einem Eintrag im fset Buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
-| ◽◽◾                     | -            | chat: fset buffer   | Boolean-Wert wird umgeschaltet (an/aus) oder editiere den Wert einer Option. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| ◽◽◾                     | left         | chat: fset buffer   | Integer/Farbwerte/enum werden verringert, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
-// TRANSLATION MISSING
-| ◽◽◾                     | right        | chat: fset buffer   | Integer/Farbwerte/enum werden erhöht, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
-| ◽◽◾                     | up / down    | chat: fset buffer   | markieren/demarkieren von mehreren Optionen. | `+hsignal:fset_mouse+`
+| kbd:[■ □ □]             | -            | chat: fset buffer   | springt zu einem Eintrag im fset Buffer. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
+| kbd:[□ □ ■]             | -            | chat: fset buffer   | Boolean-Wert wird umgeschaltet (an/aus) oder editiere den Wert einer Option. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]             | left         | chat: fset buffer   | Integer/Farbwerte/Aufzählung werden verringert, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]             | right        | chat: fset buffer   | Integer/Farbwerte/Aufzählung werden erhöht, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]             | up / down    | chat: fset buffer   | markieren/demarkieren von mehreren Optionen. | `+hsignal:fset_mouse+`
+| kbd:[▲]                 | -            | chat: /list buffer  | gehe fünf Zeilen im /list-Buffer nach oben. | `+/list -up 5+`
+| kbd:[▼]                 | -            | chat: /list buffer  | gehe fünf Zeilen im /list-Buffer nach unten. | `+/list -down 5+`
+| kbd:[■ □ □]             | -            | chat: /list buffer  | Zeile im /list-Buffer auswählen. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+| kbd:[□ □ ■]             | -            | chat: /list buffer  | tritt dem IRC-Kanal, in der ausgewählten Zeile, bei. | `+hsignal:irc_list_mouse+`
 | kbd:[▲]                 | -            | chat: script buffer | fünf Zeilen nach oben blättern, im Script-Buffer. | `+/script up 5+`
 | kbd:[▼]                 | -            | chat: script buffer | fünf Zeilen nach unten blättern, im Script-Buffer. | `+/script down 5+`
-| ◾◽◽                     | -            | chat: script buffer | wählt einen Eintrag im Script-Buffer aus. | `+/script go ${_chat_line_y}+`
-| ◽◽◾                     | -            | chat: script buffer | installiert/entfernt ein Skript. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
-| ◾◽◽                     | up / left    | buflist             | verschiebt Buffer in der Reihenfolge nach unten. | Signal `+buflist_mouse+`.
-| ◾◽◽                     | down / right | buflist             | verschiebt Buffer in der Reihenfolge nach oben. | Signal `+buflist_mouse+`.
-| ◾◽◽                     | -            | buflist             | wechselt zum Buffer (oder zum vorherigen Buffer, falls der aktuell genutzte Buffer angewählt wurde). | Signal `+buflist_mouse+`.
-| ◽◽◾                     | -            | buflist             | wechselt zum nächsten Buffer, falls der aktuell genutzte Buffer angewählt wurde. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]             | -            | chat: script buffer | wählt einen Eintrag im Script-Buffer aus. | `+/script go ${_chat_line_y}+`
+| kbd:[□ □ ■]             | -            | chat: script buffer | installiert/entfernt ein Skript. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| kbd:[■ □ □]             | up / left    | buflist             | verschiebt Buffer in der Reihenfolge nach unten. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]             | down / right | buflist             | verschiebt Buffer in der Reihenfolge nach oben. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]             | -            | buflist             | wechselt zum Buffer (oder zum vorherigen Buffer, falls der aktuell genutzte Buffer angewählt wurde). | Signal `+buflist_mouse+`.
+| kbd:[□ □ ■]             | -            | buflist             | wechselt zum nächsten Buffer, falls der aktuell genutzte Buffer angewählt wurde. | Signal `+buflist_mouse+`.
 | kbd:[Ctrl+▲]            | -            | buflist             | wechselt zum vorherigen Buffer. | Signal `+buflist_mouse+`.
 | kbd:[Ctrl+▼]            | -            | buflist             | wechselt zum nächsten Buffer. | Signal `+buflist_mouse+`.
-| ◾◽◽                     | hoch         | Benutzerliste       | Benutzerliste um eine Seite nach oben blättern. | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽                     | runter       | Benutzerliste       | Benutzerliste um eine Seite nach unten blättern. | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽                     | hoch(lang)   | Benutzerliste       | springt zum Anfang der Benutzerliste. | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽                     | runter(lang) | Benutzerliste       | springt zum Ende der Benutzerliste. | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽                     | -            | Benutzerliste       | öffnet privaten Chat mit Nick. | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾                     | -            | Benutzerliste       | führt einen whois für Nick aus. | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽                     | links        | Benutzerliste       | kickt Nick. | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽                     | links(lang)  | Benutzerliste       | kickt und verbannt Nick. | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾                     | links        | Benutzerliste       | verbannt Nick. | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾                     | -            | Input               | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein. | `+/input grab_mouse_area+`
+| kbd:[■ □ □]             | hoch         | Benutzerliste       | Benutzerliste um eine Seite nach oben blättern. | `+/bar scroll nicklist ${_window_number} -100%+`
+| kbd:[■ □ □]             | runter       | Benutzerliste       | Benutzerliste um eine Seite nach unten blättern. | `+/bar scroll nicklist ${_window_number} +100%+`
+| kbd:[■ □ □]             | hoch(lang)   | Benutzerliste       | springt zum Anfang der Benutzerliste. | `+/bar scroll nicklist ${_window_number} b+`
+| kbd:[■ □ □]             | runter(lang) | Benutzerliste       | springt zum Ende der Benutzerliste. | `+/bar scroll nicklist ${_window_number} e+`
+| kbd:[■ □ □]             | -            | Benutzerliste       | öffnet privaten Chat mit Nick. | `+/window ${_window_number};/query ${nick}+`
+| kbd:[□ □ ■]             | -            | Benutzerliste       | führt einen whois für Nick aus. | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[■ □ □]             | links        | Benutzerliste       | kickt Nick. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[■ □ □]             | links(lang)  | Benutzerliste       | kickt und verbannt Nick. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[□ □ ■]             | links        | Benutzerliste       | verbannt Nick. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[□ □ ■]             | -            | Input               | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein. | `+/input grab_mouse_area+`
 | kbd:[▲]                 | -            | jede Bar            | blättert Bar um 20% nach oben. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
 | kbd:[▼]                 | -            | jede Bar            | blättert Bar um 20% nach unten. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽                     | -            | überall             | aktiviert den Cursor-Modus an dieser Position. | `+/cursor go ${_x},${_y}+`
+| kbd:[□ ■ □]             | -            | überall             | aktiviert den Cursor-Modus an dieser Position. | `+/cursor go ${_x},${_y}+`
 |===
 
 [NOTE]
-^(1)^ kbd:[▲] und kbd:[▼] sind Symbole für Mausrad hoch/runter.
+^(1)^ Buttons: +
+kbd:[◼ □ □]: Klicke linke Maustaste +
+kbd:[□ ◼ □]: Klicke mittlere Maustaste +
+kbd:[□ □ ◼]: Klicke rechte Maustaste +
+Mausrad: +
+kbd:[▲]: Mausrad hoch +
+kbd:[▼]: Mausrad runter
 
 [[key_bindings_fset_buffer]]
 === Fset Buffer
@@ -1775,10 +1908,8 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<fset,Fset Erw
 | kbd:[F11]                | `pass:[<]`   | scrollt horizontal nach links. | `+/fset -left+`
 | kbd:[F12]                | `pass:[>]`   | scrollt horizontal nach rechts. | `+/fset -right+`
 | kbd:[Alt+Space]          | `t`          | Boolean Wert ein/ausschalten. | `+/fset -toggle+`
-// TRANSLATION MISSING
-| kbd:[Alt+-]              | `-`          | subtrahiert 1 vom Wert bei Integer/Farboptionen/enum, bei anderen Typen kann der Wert editiert werden. | `+/fset -add -1+`
-// TRANSLATION MISSING
-| kbd:[Alt++]              | `+`          | addiert 1 zum Wert bei Integer/Farboptionen/enum, bei anderen Typen kann der Wert editiert werden. | `+/fset -add 1+`
+| kbd:[Alt+-]              | `-`          | subtrahiert 1 vom Wert bei Integer/Farboptionen/Aufzählung, bei anderen Typen kann der Wert editiert werden. | `+/fset -add -1+`
+| kbd:[Alt++]              | `+`          | addiert 1 zum Wert bei Integer/Farboptionen/Aufzählung, bei anderen Typen kann der Wert editiert werden. | `+/fset -add 1+`
 | kbd:[Alt+f], kbd:[Alt+r] | `r`          | Wert resetten. | `+/fset -reset+`
 | kbd:[Alt+f], kbd:[Alt+u] | `u`          | Wert zurücksetzen. | `+/fset -unset+`
 | kbd:[Alt+Enter]          | `s`          | Wert setzen. | `+/fset -set+`
@@ -1792,8 +1923,8 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<fset,Fset Erw
 | kbd:[Ctrl+l] (`L`)       |              | der Bildschirm wird neu gezeichnet. | `+/fset -refresh+`
 |                          | `$`          | Optionen neu einlesen (markierte Optionen werden beibehalten). |
 |                          | `$$`         | Optionen neu einlesen (Markierungen von Optionen werden dabei gelöscht). |
-| kbd:[Alt+p]              |              | Umschalten der Beschreibung von Erweiterungen (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]              |              | Hilfe-Bar Ein-/Ausschalten. | `+/bar toggle fset+`
+| kbd:[Alt+p]              | `p`          | Umschalten der Beschreibung von Erweiterungen (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              | `v`          | Hilfe-Bar Ein-/Ausschalten. | `+/bar toggle fset+`
 |                          | `s:x,y`      | sortiert Optionen nach Bereichen x,y (siehe Option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
 |                          | `s:`         | setzt Sortierung wieder auf Standardwerte (siehe Option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
 |                          | `w:xxx`      | exportiert Optionen in Datei "xxx". | `+/fset -export xxx+`
@@ -1801,6 +1932,39 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<fset,Fset Erw
 |                          | `w+:xxx`     | exportiert Optionen in Datei "xxx", mit Hilfstext. | `+/fset -export -help xxx+`
 | kbd:[Ctrl+x]             | `x`          | Umschalten zwischen der Darstellung von Optionen. | `+/fset -format+`
 |                          | `q`          | fset Buffer schließen. | `+/buffer close+`
+|===
+
+[NOTE]
+^(1)^ Die Aktion muss als Eingabe in die Befehlszeile eingegeben werden, gefolgt von kbd:[Enter].
+
+[[key_bindings_irc_list_buffer]]
+=== IRC /list Buffer
+
+Diese Tastenbefehle und Aktionen können im IRC /list-Buffer genutzt werden (siehe Befehl <<command_irc_list,/list>>).
+
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Taste          | Action ^(1)^ | Beschreibung | Befehl
+| kbd:[↑]        |              | einen Eintrag nach oben. | `+/list -up+`
+| kbd:[↓]        |              | einen Eintrag nach unten. | `+/list -down+`
+| kbd:[PgUp]     |              | eine Seite hoch blättern. | `+/window page_up+`
+| kbd:[PgDn]     |              | eine Seite runter blättern. | `+/window page_down+`
+| kbd:[Alt+Home] | `pass:[<<]`  | springt zum ersten Eintrag. | `+/list -go 0+`
+| kbd:[Alt+End]  | `pass:[>>]`  | springt zum letzten Eintrag. | `+/list -go end+`
+| kbd:[F11]      | `pass:[<]`   | scrollt horizontal nach links. | `+/list -left+`
+| kbd:[F12]      | `pass:[>]`   | scrollt horizontal nach rechts. | `+/list -right+`
+| kbd:[Ctrl+j]   | `j`          | Join IRC channel on selected line. | `+/list -join+`
+|                | `xxx`        | zeigt nur Kanäle an mit "xxx" im Namen oder Thema (Groß- und Kleinschreibung wird ignoriert). |
+|                | `n:xxx`      | zeigt nur Kanäle mit im Namen (Groß- und Kleinschreibung wird ignoriert). |
+|                | `t:xxx`      | zeigt nur Kanäle mit "xxx" im Thema (Groß- und Kleinschreibung wird ignoriert). |
+|                | `u:n`        | zeigt nur Kanäle mit wenigstens "n" Usern. |
+|                | `u:>n`       | zeigt nur Kanäle mit mehr als "n" Usern |
+|                | `u:<n`       | zeigt nur Kanäle mit weniger als "n" Usern |
+|                | `c:xxx`      | zeigt nur Kanäle an, die der ausgewerteten Bedingung, "xxx", entsprechen , unter Verwendung folgender Variablen: name, name2, users, topic |
+|                | `s:x,y`      | sortiert Kanäle nach Feldern x,y (siehe Befehl <<command_irc_list,/list>>). |
+|                | `s:`         | Sortierung auf den Standardwert zurücksetzen (siehe Befehl <<command_irc_list,/list>>). |
+|                | `$`          | Liste aktualisieren (Der Befehl <<command_irc_list,/list>> wird erneut ausgeführt). |
+|                | `q`          | Buffer schließen. | `+/buffer close+`
 |===
 
 [NOTE]
@@ -1820,11 +1984,16 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<script_manage
 | kbd:[PgDn]        |              | eine Seite nach unten blättern. | `+/window page_down+`
 | kbd:[Alt+i]       | `i`          | Skript installieren. | `+/script install+`
 | kbd:[Alt+r]       | `r`          | Skript entfernen. | `+/script remove+`
-| kbd:[Alt+l] (`L`) | `l`          | Skript laden. | `+/script load+`
+| kbd:[Alt+l]       | `l`          | Skript laden. | `+/script load+`
+| kbd:[Alt+L]       | `L`          | Skript neu laden. | `+/script reload+`
 | kbd:[Alt+u]       | `u`          | Skript wird beendet. | `+/script unload+`
 | kbd:[Alt+Shift+A] | `A`          | das Skript wird in das autoload-Verzeichnis eingebunden. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Skript wird gehalten bzw. freigegeben. | `+/script hold+`
 | kbd:[Alt+v]       | `v`          | Skript Quelltext anzeigen. | `+/script show+`
+|                   | `s:x,y`      | Sortiert Skrips nach Feldern x,y (siehe Option <<option_script.look.sort,script.look.sort>>). |
+|                   | `s:`         | Sortierung auf den Standardwert zurücksetzen (siehe Option <<option_script.look.sort,script.look.sort>>). |
+|                   | `$`          | Liste aktualisieren. |
+|                   | `q`          | Buffer schließen. | `+/buffer close+`
 |===
 
 [NOTE]
@@ -2189,14 +2358,8 @@ und für jeden einzelen Nick kann ein maximler Hotlist-Level eingestellt wertden
 Um zum Beispiel Highlights von "joe" und "mike" im aktuellen Buffer zu deaktivieren:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-[NOTE]
-Die Buffer-Eigenschaft "hotlist_max_level_nicks" ist keine permanente Einstellung und wird nicht
-in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
-das Skript _buffer_autoset.py_: Um das Skript zu installieren `+/script install buffer_autoset.py+`
-und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 
 [[highlights]]
 === Hervorhebungen
@@ -2222,14 +2385,8 @@ Dies kann auch mit der Buffereigenschaft „highlight_disable_regex“ eingestel
 Gleiches Beispiel, spezifisch für den aktuellen Buffer:
 
 ----
-/buffer set highlight_disable_regex <flash.*>
+/buffer setauto highlight_disable_regex <flash.*>
 ----
-
-[NOTE]
-Die Buffer-Eigenschaft "highlight_disable_regex" ist keine permanente Einstellung und wird nicht
-in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
-das Skript _buffer_autoset.py_: Um das Skript zu installieren `+/script install buffer_autoset.py+`
-und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 
 [[highlights_words]]
 ==== Worte als Highlights hinzufügen
@@ -2289,14 +2446,8 @@ die Eigenschaft des Buffers mittels "highlight_regex" anpasst.
 Um zum Beispiel jede Nachricht im aktuellen Buffer als Highlight-Nachricht einzustufen:
 
 ----
-/buffer set highlight_regex .*
+/buffer setauto highlight_regex .*
 ----
-
-[NOTE]
-Die Buffer-Eigenschaft "highlight_regex" ist keine permanente Einstellung und wird nicht
-in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
-das Skript _buffer_autoset.py_: Um das Skript zu installieren `+/script install buffer_autoset.py+`
-und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 
 [[buffer_logging]]
 === Bufferprotokollierung
@@ -3204,30 +3355,31 @@ Sektion in Datei _weechat.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Sektion    | Steuerbefehl                              | Beschreibung
-| debug      | <<command_weechat_debug,/debug set>>      +
-               /set weechat.debug.*                      | Debug level, für Core und Erweitertungen (Optionen können in Sektion hinzugefügt/entfernt werden).
-| startup    | /set weechat.startup.*                    | Optionen die nach dem Programmstart ausgeführt werden.
-| look       | /set weechat.look.*                       | Erscheinungsbild.
-| palette    | <<command_weechat_color,/color alias>>    +
-               /set weechat.palette.*                    | Alternativnamen für Farben (Optionen können in Sektion hinzugefügt/entfernt werden).
-| color      | /set weechat.color.*                      | Farben.
-| completion | /set weechat.completion.*                 | Optionen für Vervollständigung.
-| history    | /set weechat.history.*                    | Optionen für Befehlsverlauf (Befehle und Buffer).
-| proxy      | <<command_weechat_proxy,/proxy>>          +
-               /set weechat.proxy.*                      | Proxy Optionen.
-| network    | /set weechat.network.*                    | Netzwerk/TLS Optionen.
-| plugin     | /set weechat.plugin.*                     | Optionen für Erweiterungen.
-| signal     | /set weechat.signal.*                     | Optionen für Signale.
-| bar        | <<command_weechat_bar,/bar>>              +
-               /set weechat.bar.*                        | Optionen für die Bars.
-| layout     | <<command_weechat_layout,/layout>>        | Layouts.
-| notify     | <<command_weechat_buffer,/buffer notify>> | Benachrichtigungsstufe für Buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
-| filter     | <<command_weechat_filter,/filter>>        | Filter.
-| key        | <<command_weechat_key,/key>>              | Tastenbefehle in default context.
-| key_search | <<command_weechat_key,/key>>              | Tastenbefehle in search context.
-| key_cursor | <<command_weechat_key,/key>>              | Tastenbefehle in cursor context.
-| key_mouse  | <<command_weechat_key,/key>>              | Tastenbefehle in mouse context.
+| Sektion    | Steuerbefehl                               | Beschreibung
+| debug      | <<command_weechat_debug,/debug set>>       +
+               /set weechat.debug.*                       | Debug level, für Core und Erweitertungen (Optionen können in Sektion hinzugefügt/entfernt werden).
+| startup    | /set weechat.startup.*                     | Optionen die nach dem Programmstart ausgeführt werden.
+| look       | /set weechat.look.*                        | Erscheinungsbild.
+| palette    | <<command_weechat_color,/color alias>>     +
+               /set weechat.palette.*                     | Alternativnamen für Farben (Optionen können in Sektion hinzugefügt/entfernt werden).
+| color      | /set weechat.color.*                       | Farben.
+| completion | /set weechat.completion.*                  | Optionen für Vervollständigung.
+| history    | /set weechat.history.*                     | Optionen für Befehlsverlauf (Befehle und Buffer).
+| proxy      | <<command_weechat_proxy,/proxy>>           +
+               /set weechat.proxy.*                       | Proxy Optionen.
+| network    | /set weechat.network.*                     | Netzwerk/TLS Optionen.
+| plugin     | /set weechat.plugin.*                      | Optionen für Erweiterungen.
+| signal     | /set weechat.signal.*                      | Optionen für Signale.
+| bar        | <<command_weechat_bar,/bar>>               +
+               /set weechat.bar.*                         | Optionen für die Bars.
+| layout     | <<command_weechat_layout,/layout>>         | Layouts.
+| buffer     | <<command_weechat_buffer,/buffer setauto>> | Eigenschaften, die beim Öffnen des Buffers automatisch angewendet werden.
+| notify     | <<command_weechat_buffer,/buffer notify>>  | Benachrichtigungsstufe für Buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
+| filter     | <<command_weechat_filter,/filter>>         | Filter.
+| key        | <<command_weechat_key,/key>>               | Tastenbefehle in default context.
+| key_search | <<command_weechat_key,/key>>               | Tastenbefehle in search context.
+| key_cursor | <<command_weechat_key,/key>>               | Tastenbefehle in cursor context.
+| key_mouse  | <<command_weechat_key,/key>>               | Tastenbefehle in mouse context.
 |===
 
 Optionen:
@@ -4070,7 +4222,7 @@ Beispiel: Um eine Antwort auf die CTCP Anfrage "VERSION" anzupassen nutzen Sie
 folgenden Befehl:
 
 ----
-/set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
+/set irc.ctcp.version "I'm running WeeChat ${version}, it rocks!"
 ----
 
 [NOTE]
@@ -4095,7 +4247,7 @@ Auch kann man CTCP Antworten für jeden einzelnen Server anpassen. Dazu muss
 man lediglich den internen Servernamen vor die CTCP Anfrage setzen:
 
 ----
-/set irc.ctcp.libera.version "WeeChat $version (for libera)"
+/set irc.ctcp.libera.version "WeeChat ${version} (for libera)"
 ----
 
 Sollen die CTCP Antworten wieder auf die Standardeinstellungen zurück gesetzt werden
@@ -4105,23 +4257,23 @@ dann müssen Sie lediglich die Option löschen:
 /unset irc.ctcp.version
 ----
 
-Folgende Platzhalter können in den CTCP-Antworten genutzt werden. Diese werden dann
-mit dem entsprechenden Wert ersetzt:
+Die CTCP Antworten sind evaluiert (siehe Befehl <<command_weechat_eval,/eval>>) und
+die folgenden zusätzlichen Variablen sind verfügbar:
 
-[width="100%",cols="2l,4,8",options="header"]
+[width="100%",cols="2,4,8",options="header"]
 |===
-| Platzhalter  | Beschreibung                        | Wert/Beispiel
-| $clientinfo  | Liste der CTCP Antworten            | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| $version     | WeeChat Version                     | `+4.1.0-dev+`
-| $versiongit  | WeeChat Version + Git version ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
-| $git         | Git Version ^(1)^                   | `+v4.0.0-51-g8f98b922a+`
-| $compilation | Datum der Kompilierung              | `+Jul  8 2023 20:14:23+`
-| $osinfo      | Info über das genutzte OS           | `+Linux 5.10.0-23-amd64 / x86_64+`
-| $site        | WeeChat Seite                       | `+https://weechat.org/+`
-| $download    | WeeChat, Download Seite             | `+https://weechat.org/download/+`
-| $time        | Aktuelle Uhrzeit/Datum              | `+Sat, 08 Jul 2023 21:11:19 +0200+`
-| $username    | Username beim IRC Server            | `+Name+`
-| $realname    | Realname beim IRC Server            | `+John Doe+`
+| Variable           | Beschreibung                        | Wert/Beispiel
+| `+${clientinfo}+`  | Liste der CTCP Antworten            | `+ACTION DCC CLIENTINFO PING SOURCE TIME VERSION+`
+| `+${version}+`     | WeeChat Version                     | `+4.1.0-dev+`
+| `+${versiongit}+`  | WeeChat Version + Git version ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
+| `+${git}+`         | Git Version ^(1)^                   | `+v4.0.0-51-g8f98b922a+`
+| `+${compilation}+` | Datum der Kompilierung              | `+Jul  8 2023 20:14:23+`
+| `+${osinfo}+`      | Info über das genutzte OS           | `+Linux 5.10.0-23-amd64 / x86_64+`
+| `+${site}+`        | WeeChat Seite                       | `+https://weechat.org/+`
+| `+${download}+`    | WeeChat, Download Seite             | `+https://weechat.org/download/+`
+| `+${time}+`        | Aktuelle Uhrzeit/Datum              | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| `+${username}+`    | Username beim IRC Server            | `+Name+`
+| `+${realname}+`    | Realname beim IRC Server            | `+John Doe+`
 |===
 
 [NOTE]
@@ -4129,17 +4281,15 @@ mit dem entsprechenden Wert ersetzt:
 Dies erfordert, dass WeeChat aus dem Git Repository heraus kompiliert wurde
 und das Git überhaupt installiert ist.
 
-Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
+Die Standard-CTCP-Antworten sind:
 
 [width="100%",cols="2,4,8",options="header"]
 |===
-| CTCP       | Antwortformat             | Beispiel
-| CLIENTINFO | `+$clientinfo+`           | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
-| SOURCE     | `+$download+`             | `+https://weechat.org/download/+`
-| TIME       | `+$time+`                 | `+Sat, 08 Jul 2023 21:11:19 +0200+`
-| USERINFO   | `+$username ($realname)+` | `+Name (John Doe)+`
-| VERSION    | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
+| CTCP       | Antwortformat                 | Beispiel
+| CLIENTINFO | `+${clientinfo}+`             | `+ACTION DCC CLIENTINFO PING SOURCE TIME VERSION+`
+| SOURCE     | `+${download}+`               | `+https://weechat.org/download/+`
+| TIME       | `+${time}+`                   | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| VERSION    | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
 |===
 
 [[irc_target_buffer]]

@@ -74,6 +74,7 @@
 #include "wee-signal.h"
 #include "wee-string.h"
 #include "wee-upgrade.h"
+#include "wee-url.h"
 #include "wee-utf8.h"
 #include "wee-util.h"
 #include "wee-version.h"
@@ -640,6 +641,8 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
             * weechat_current_start_timeval.tv_usec)
            ^ getpid ());
 
+    weeurl_init ();                     /* initialize URL                   */
+    string_init ();                     /* initialize string                */
     signal_init ();                     /* initialize signals               */
     hdata_init ();                      /* initialize hdata                 */
     hook_init ();                       /* initialize hooks                 */
@@ -720,5 +723,6 @@ weechat_end (void (*gui_end_cb)(int clean_exit))
     hdata_end ();                       /* end hdata                        */
     secure_end ();                      /* end secured data                 */
     string_end ();                      /* end string                       */
+    weeurl_end ();
     weechat_shutdown (-1, 0);           /* end other things                 */
 }

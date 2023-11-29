@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -57,17 +58,18 @@ char *
 xfer_network_convert_integer_to_ipv4 (const char *str_address)
 {
     char *error, result[128];
-    long number;
+    long long number;
 
     if (!str_address || !str_address[0])
         return NULL;
 
-    number = strtol (str_address, &error, 10);
-    if (!error || error[0] || (number <= 0))
+    error = NULL;
+    number = strtoll (str_address, &error, 10);
+    if (!error || error[0] || (number <= 0) || (number > UINT32_MAX))
         return NULL;
 
     snprintf (result, sizeof (result),
-              "%ld.%ld.%ld.%ld",
+              "%lld.%lld.%lld.%lld",
               (number >> 24) & 0xFF,
               (number >> 16) & 0xFF,
               (number >> 8) & 0xFF,
@@ -330,6 +332,18 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
 
     xfer->file = open (xfer->local_filename, O_RDONLY | O_NONBLOCK, 0644);
 
+    if (xfer->file < 0)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: unable to read file \"%s\": %s"),
+                        weechat_prefix ("error"),
+                        XFER_PLUGIN_NAME,
+                        xfer->local_filename,
+                        strerror (errno));
+        xfer_close (xfer, XFER_STATUS_FAILED);
+        xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+    }
+
     switch (pid = fork ())
     {
         case -1:  /* fork failed */
@@ -407,6 +421,19 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
                            0644);
     }
 
+    if (xfer->file < 0)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: unable to write file \"%s\": %s"),
+                        weechat_prefix ("error"),
+                        XFER_PLUGIN_NAME,
+                        xfer->temp_local_filename,
+                        strerror (errno));
+        xfer_close (xfer, XFER_STATUS_FAILED);
+        xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+        return;
+    }
+
     switch (pid = fork ())
     {
         case -1:  /* fork failed */
@@ -457,7 +484,8 @@ xfer_network_child_kill (struct t_xfer *xfer)
     if (xfer->child_pid > 0)
     {
         kill (xfer->child_pid, SIGKILL);
-        waitpid (xfer->child_pid, NULL, 0);
+        weechat_command (weechat_buffer_search_main (),
+                         "/mute /wait 100ms /sys waitpid 10");
         xfer->child_pid = 0;
     }
 
@@ -497,7 +525,7 @@ xfer_network_fd_cb (const void *pointer, void *data, int fd)
 
     if (xfer->status == XFER_STATUS_CONNECTING)
     {
-        if (xfer->type == XFER_TYPE_FILE_SEND)
+        if (XFER_IS_FILE_PASSIVE(xfer->type))
         {
             xfer->last_activity = time (NULL);
             sock = accept (xfer->sock,
@@ -545,7 +573,22 @@ xfer_network_fd_cb (const void *pointer, void *data, int fd)
             xfer->status = XFER_STATUS_ACTIVE;
             xfer->start_transfer = time (NULL);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
-            xfer_network_send_file_fork (xfer);
+            switch (xfer->type)
+            {
+                case XFER_TYPE_FILE_SEND_PASSIVE:
+                    xfer_network_send_file_fork (xfer);
+                    break;
+                case XFER_TYPE_FILE_RECV_PASSIVE:
+                    xfer_network_recv_file_fork (xfer);
+                    break;
+                default:
+                    weechat_printf (NULL,
+                                    _("%s%s: encountered unexpected xfer type (%d)"),
+                                    weechat_prefix ("error"), XFER_PLUGIN_NAME, xfer->type);
+                    xfer_close (xfer, XFER_STATUS_FAILED);
+                    xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+                    return WEECHAT_RC_OK;
+            }
         }
     }
 
@@ -786,7 +829,7 @@ xfer_network_connect (struct t_xfer *xfer)
     else
         xfer->status = XFER_STATUS_CONNECTING;
 
-    if (XFER_IS_SEND(xfer->type))
+    if (XFER_IS_SEND(xfer->type) || (xfer->type == XFER_TYPE_FILE_RECV_PASSIVE))
     {
         /* create socket */
         if (xfer->sock < 0)
@@ -821,6 +864,10 @@ xfer_network_connect (struct t_xfer *xfer)
                                                    &xfer_network_timer_cb,
                                                    xfer, NULL);
         }
+
+        /* send signal if type is file or chat "send" */
+        if ((xfer->type == XFER_TYPE_FILE_RECV_PASSIVE) && !XFER_HAS_ENDED(xfer->status))
+            xfer_send_signal (xfer, "xfer_send_ready");
     }
 
     /* for chat receiving, connect to listening host */
@@ -852,11 +899,10 @@ xfer_network_connect_init (struct t_xfer *xfer)
     }
     else
     {
-        /* for a file: launch child process */
-        if (XFER_IS_FILE(xfer->type))
-            xfer_network_recv_file_fork (xfer);
-
         xfer->status = XFER_STATUS_CONNECTING;
+        /* for a file: launch child process */
+        if (XFER_IS_FILE(xfer->type) && XFER_IS_ACTIVE(xfer->type))
+            xfer_network_recv_file_fork (xfer);
     }
     xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
 }

@@ -2479,7 +2479,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6 и 3.8, 4.0.0._
+_WeeChat ≥ 0.4.0, ажурирано у верзијама 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3, 2.7, 2.9, 3.1, 3.2, 3.3, 3.4, 3.6 и 3.8, 4.0.0, 4.2.0._
 
 Израчунава израз и враћа вредност као стринг. Специјалне променљиве у формату `+${променљива}+` се развијају (погледајте табелу испод).
 
@@ -2789,10 +2789,22 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 |===
 | Формат | Мин WeeChat | Опис | Примери
 
+// TRANLSATION MISSING
+| `+${raw_hl:xxx}+` | 4.2.0
+| Raw string (not evaluated), with syntax highlighting (using colors).
+| >> `+${raw_hl:${cut:1,,${rev:hello}}}+` +
+  == `+${cut:1,,${rev:hello}}+` (with colors)
+
 | `+${raw:xxx}+` | 3.1
 | Сирови стринг (не израчунава се).
 | >> `+${raw:${info:version}}+` +
   == `+${info:version}+`
+
+// TRANSLATION MISSING
+| `+${hl:xxx}+` | 4.2.0
+| String with syntax highlighting (using colors).
+| >> `+${hl:${file.section.option}}+` +
+  == `+test ${variable}+` (with colors)
 
 | `+${име}+` | 3.4
 | Корисничка променљива (дефинисана са `+${define:име,вредност}+`).
@@ -3357,6 +3369,46 @@ weechat_string_dyn_free (string, 1);
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
+==== string_concat
+
+_WeeChat ≥ 4.2.0._
+
+Спаја више стрингова користећи граничник.
+
+Прототип:
+
+[source,c]
+----
+const char *weechat_string_concat (const char *separator, ...);
+----
+
+Аргументи:
+
+* _separator_: стринг граничник који се умеће између спојених стрингова
+  (може да буде NULL или празан стринг)
+
+[NOTE]
+Последњи аргумент *MUST* увек да буде NULL. +
+Може да се употреби макро `WEECHAT_STR_CONCAT`, тамо где није потребна 
+завршна NULL вредност (препоручује се уптореба овог макроа).
+
+Повратна вредност:
+
+* спојени стринг
+
+C пример:
+
+[source,c]
+----
+const char *result = weechat_string_concat (" / ", "абв", "гдђ", "ежз", NULL);  /* резултат == "абв / гдђ / ежз" */
+
+/* са макроом */
+const char *result = WEECHAT_STR_CONCAT(" / ", "абв", "гдђ", "ежз");  /* резултат == "абв / гдђ / ежз" */
+----
+
+[NOTE]
+Ова функција није доступна у API скриптовања.
+
 [[utf-8]]
 === UTF-8
 
@@ -3901,18 +3953,28 @@ int weechat_crypto_hash (const void *data, int data_size, const char *hash_algo,
 
 [width="100%", cols="2,2,3,6", options="header"]
 |===
-| Вредност     | Алгоритам | Величина хеша         | Напомене
-| `+crc32+`    | CRC32     | 4 бајта (32 бита)     | Није хеш алгоритам у криптографском смислу.
-| `+md5+`      | MD5       | 16 бајтова (128 бита) | *Слаб*, не препоручује се за криптографску употребу.
-| `+sha1+`     | SHA-1     | 20 бајтова (160 бита) | *Слаб*, не препоручује се за криптографску употребу.
-| `+sha224+`   | SHA-224   | 28 бајтова (224 бита) |
-| `+sha256+`   | SHA-256   | 32 бајта (256 бита)   |
-| `+sha384+`   | SHA-384   | 48 бајтова (384 бита) |
-| `+sha512+`   | SHA-512   | 64 бајта (512 бита)   |
-| `+sha3-224+` | SHA3-224  | 28 бајтова (224 бита) | Алгоритам је доступан у libgcrypt ≥ 1.7.0.
-| `+sha3-256+` | SHA3-256  | 32 бајта (256 бита)   | Алгоритам је доступан у libgcrypt ≥ 1.7.0.
-| `+sha3-384+` | SHA3-384  | 48 бајтова (384 бита) | Алгоритам је доступан у libgcrypt ≥ 1.7.0.
-| `+sha3-512+` | SHA3-512  | 64 бајта (512 бита)   | Алгоритам је доступан у libgcrypt ≥ 1.7.0.
+| Вредност        | Алгоритам   | Величина хеша         | Напомене
+| `+crc32+`       | CRC32       | 4 бајта (32 бита)     | Није хеш алгоритам у криптографском смислу.
+| `+md5+`         | MD5         | 16 бајтова (128 бита) | *Слаб*, не препоручује се за криптографску употребу.
+| `+sha1+`        | SHA-1       | 20 бајтова (160 бита) | *Слаб*, не препоручује се за криптографску употребу.
+| `+sha224+`      | SHA-224     | 28 бајтова (224 бита) |
+| `+sha256+`      | SHA-256     | 32 бајта (256 бита)   |
+| `+sha384+`      | SHA-384     | 48 бајтова (384 бита) |
+| `+sha512+`      | SHA-512     | 64 бајта (512 бита)   |
+| `+sha512-224+`  | SHA-512/224 | 28 бајтова (224 бита) | Алгоритам је доступан у libgcrypt ≥ 1.9.4.
+| `+sha512-256+`  | SHA-512/256 | 32 бајта (256 бита)   | Алгоритам је доступан у libgcrypt ≥ 1.9.4.
+| `+sha3-224+`    | SHA3-224    | 28 бајтова (224 бита) | Алгоритам је доступан у libgcrypt ≥ 1.7.0.
+| `+sha3-256+`    | SHA3-256    | 32 бајта (256 бита)   | Алгоритам је доступан у libgcrypt ≥ 1.7.0.
+| `+sha3-384+`    | SHA3-384    | 48 бајтова (384 бита) | Алгоритам је доступан у libgcrypt ≥ 1.7.0.
+| `+sha3-512+`    | SHA3-512    | 64 бајта (512 бита)   | Алгоритам је доступан у libgcrypt ≥ 1.7.0.
+| `+blake2b-160+` | BLAKE2B-160 | 20 бајтова (160 бита) | Алгоритам је доступан у libgcrypt ≥ 1.8.0.
+| `+blake2b-256+` | BLAKE2B-256 | 32 бајта (256 бита)   | Алгоритам је доступан у libgcrypt ≥ 1.8.0.
+| `+blake2b-384+` | BLAKE2B-384 | 48 бајтова (384 бита) | Алгоритам је доступан у libgcrypt ≥ 1.8.0.
+| `+blake2b-512+` | BLAKE2B-512 | 64 бајта (512 бита)   | Алгоритам је доступан у libgcrypt ≥ 1.8.0.
+| `+blake2s-128+` | BLAKE2S-128 | 16 бајтова (128 бита) | Алгоритам је доступан у libgcrypt ≥ 1.8.0.
+| `+blake2s-160+` | BLAKE2S-160 | 20 бајтова (160 бита) | Алгоритам је доступан у libgcrypt ≥ 1.8.0.
+| `+blake2s-224+` | BLAKE2S-224 | 28 бајтова (224 бита) | Алгоритам је доступан у libgcrypt ≥ 1.8.0.
+| `+blake2s-256+` | BLAKE2S-256 | 32 бајта (256 бита) ) | Алгоритам је доступан у libgcrypt ≥ 1.8.0.
 |===
 
 Повратна вредност:
@@ -4316,11 +4378,6 @@ if (weechat_file_copy ("/tmp/test.txt", "/path/to/test2.txt"))
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
-[[util]]
-=== Алати
-
-Неке корисне функције.
-
 ==== file_compress
 
 _WeeChat ≥ 3.7._
@@ -4341,7 +4398,8 @@ int weechat_file_compress (const char *from, const char *to,
 * _to_: одредишни фајл
 * _compressor_: компресор који треба да се користи, једно од:
 ** _gzip_: gzip компресија
-** _zstd_: zstandard компресија
+** _zstd_: zstandard компресија (доступно само ако је zstd било укључено
+   у време када је WeeChat компајлиран)
 * _compression_level_: ниво компресије, између 1 (брзо, ниска компресија) и
   100 (споро, најбоља компресија)
 
@@ -4361,6 +4419,11 @@ if (weechat_file_compress ("/tmp/test.txt", "/tmp/test.txt.zst", "zstd", 50))
 
 [NOTE]
 Ова функција није доступна у API скриптовања.
+
+[[util]]
+=== Алати
+
+Неке корисне функције.
 
 ==== util_timeval_cmp
 
@@ -6509,9 +6572,10 @@ my_section_read_cb (const void *pointer, void *data,
 {
     /* ... */
 
-    return WEECHAT_CONFIG_READ_OK;
-    /* return WEECHAT_CONFIG_READ_MEMORY_ERROR; */
-    /* return WEECHAT_CONFIG_READ_FILE_NOT_FOUND; */
+    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+    /* return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE; */
+    /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
 }
 
 int
@@ -6601,7 +6665,7 @@ def config_new_section(config_file: str, name: str,
                        callback_delete_option: str, callback_delete_option_data: str) -> str: ...
 
 # пример
-def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
+def my_section_read_cb(data: str, config_file: str, section: str, option_name: str, value: Union[str, None]) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
     # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
@@ -6620,7 +6684,7 @@ def my_section_write_default_cb(data: str, config_file: str, section_name: str) 
     # return weechat.WEECHAT_CONFIG_WRITE_ERROR
     # return weechat.WEECHAT_CONFIG_WRITE_MEMORY_ERROR
 
-def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: str | None) -> int:
+def my_section_create_option_cb(data: str, config_file: str, section: str, option_name: str, value: Union[str, None]) -> int:
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
     # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
@@ -6733,12 +6797,10 @@ struct t_config_option *weechat_config_new_option (
 ** _integer_: целобројна вредност
 ** _string_: стринг вредност
 ** _color_: боја
-// TRANSLATION MISSING
-** _enum_: list of string values (stored as integer internally)
+** _enum_: листа стринг вредности (интерно се чува као цео број)
 * _description_: опис опције
-// TRANSLATION MISSING
-* _string_values_: вредности као стринг (раздвојене са `+|+`) (optional, required
-  for type _enum_)
+* _string_values_: вредности као стринг (раздвојене са `+|+`) (није обавезно, потребно је
+  за тип _enum_)
 * _min_: минимална вредност (за _integer_ тип)
 * _max_: максимална вредност (за _integer_ тип)
 * _default_value_: подразумевана вредност опције (користи се када се опција ресетује)
@@ -6848,7 +6910,7 @@ struct t_config_option *option_enum =
 # прототип
 def config_new_option(config_file: str, section: str, name: str, type: str, description: str,
                       string_values: str, min: int, max: int,
-                      default_value: str | None, value: str | None, null_value_allowed: int,
+                      default_value: Union[str, None], value: Union[str, None], null_value_allowed: int,
                       callback_check_value: str, callback_check_value_data: str,
                       callback_change: str, callback_change_data: str,
                       callback_delete: str, callback_delete_data: str) -> str: ...
@@ -7168,8 +7230,7 @@ int weechat_config_option_set (struct t_config_option *option,
 * _value_: нова вредност опције, могуће су и специјалне вредности које зависе од типа опције:
 ** _boolean_:
 *** `toggle`: пребацује текућу вредност
-// TRANSLATION MISSING
-** _integer_, _color_ or _enum_:
+** _integer_, _color_ или _enum_:
 *** `++N`: додаје `N` (било који цео број) на текућу вредност
 *** `--N`: одузима `N` (било који цео број) од текуће вредности
 * _run_callback_: 1 за позив change функције повратног позива ако је вредност измењена, у супротном 0
@@ -7677,8 +7738,7 @@ int weechat_config_integer (struct t_config_option *option);
 * _integer_: целобројна вредност опције
 * _string_: 0
 * _color_: индекс боје
-// TRANSLATION MISSING
-* _enum_: integer value of option (index of enum value)
+* _enum_: целобројна вредност опције (индекс enum вредности)
 
 C пример:
 
@@ -7721,8 +7781,7 @@ int weechat_config_integer_default (struct t_config_option *option);
 * _integer_: подразумевана целобројна вредност опције
 * _string_: 0
 * _color_: подразумевани индекс боје
-// TRANSLATION MISSING
-* _enum_: default integer value of option (index of enum value)
+* _enum_: подразумевана целобројна вредност опције (индекс enum вредности)
 
 C пример:
 
@@ -7765,8 +7824,7 @@ const char *weechat_config_string (struct t_config_option *option);
 * _integer_: NULL
 * _string_: стринг вредност опције
 * _color_: име боје
-// TRANSLATION MISSING
-* _enum_: string value of option
+* _enum_: стринг вредност опције
 
 C пример:
 
@@ -7809,8 +7867,7 @@ const char *weechat_config_string_default (struct t_config_option *option);
 * _integer_: NULL
 * _string_: подразумевана стринг вредност опције
 * _color_: име подразумеване боје
-// TRANSLATION MISSING
-* _enum_: default string value of option
+* _enum_: подразумевана стринг вредност опције
 
 C пример:
 
@@ -7918,33 +7975,32 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_color_default(option)
 ----
 
-// TRANSLATION MISSING
 ==== config_enum
 
 _WeeChat ≥ 4.1.0._
 
-Return enum value of option, as integer.
+Враћа enum вредност опције, као цео број.
 
-Prototype:
+Прототип:
 
 [source,c]
 ----
 int weechat_config_enum (struct t_config_option *option);
 ----
 
-Arguments:
+Аргументи:
 
-* _option_: option pointer
+* _option_: показивач на опцију
 
-Return value, depending on the option type:
+Враћена вредност, у зависности од типа опције:
 
-* _boolean_: boolean value of option (0 or 1)
-* _integer_: integer value of option
+* _boolean_: логичка вредност опције (0 или 1)
+* _integer_: целобројна вредност опције
 * _string_: 0
-* _color_: color index
-* _enum_: integer value of option (index of enum value)
+* _color_: индекс боје
+* _enum_: целобројна вредност опције (индекс enum вредности)
 
-C example:
+C пример:
 
 [source,c]
 ----
@@ -7952,45 +8008,44 @@ struct t_config_option *option = weechat_config_get ("plugin.section.option");
 int value = weechat_config_enum (option);
 ----
 
-Script (Python):
+Скрипта (Python):
 
 [source,python]
 ----
-# prototype
+# прототип
 def config_enum(option: str) -> int: ...
 
-# example
+# пример
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum(option)
 ----
 
-// TRANSLATION MISSING
 ==== config_enum_default
 
 _WeeChat ≥ 4.1.0._
 
-Return default enum value of option, as integer.
+Враћа подразумевану enum вредност опције, као цео број.
 
-Prototype:
+Прототип:
 
 [source,c]
 ----
 int weechat_config_enum_default (struct t_config_option *option);
 ----
 
-Arguments:
+Аргументи:
 
-* _option_: option pointer
+* _option_: показивач на опцију
 
-Return value, depending on the option type:
+Повратна вредност, у зависности од типа опције:
 
-* _boolean_: default boolean value of option (0 or 1)
-* _integer_: default integer value of option
+* _boolean_: подразумевана логичка вредност опције (0 или 1)
+* _integer_: подразумевана целобројна вредност опције
 * _string_: 0
-* _color_: default color index
-* _enum_: integer value of option (index of enum value)
+* _color_: подразумевани индекс боје
+* _enum_: подразумевана целобројна вредност опције (индекс enum вредности)
 
-C example:
+C пример:
 
 [source,c]
 ----
@@ -7998,14 +8053,14 @@ struct t_config_option *option = weechat_config_get ("plugin.section.option");
 int value = weechat_config_enum_default (option);
 ----
 
-Script (Python):
+Скрипта (Python):
 
 [source,python]
 ----
-# prototype
+# прототип
 def config_enum_default(option: str) -> int: ...
 
-# example
+# пример
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum_default(option)
 ----
@@ -9723,7 +9778,6 @@ struct t_hook *weechat_hook_process (const char *command,
                                      void *callback_data);
 ----
 
-
 Аргументи:
 
 * _command_: команда која се покреће у дете процесу, URL _(WeeChat ≥ 0.3.7)_ или функција _(WeeChat ≥ 1.5)_ (погледајте испод)
@@ -9954,18 +10008,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   _/dev/null_.
 |===
 
-За команду „url:...” су доступне следеће опције (за опис сваке опције погледајте `+man curl_easy_setopt+`):
-
-include::{autogendir}/autogen_api_url_options.sr.adoc[tag=url_options]
-
-[NOTE]
-^(1)^ За опције типа „mask”, формат је: „вредност1+вредност2+вредност3”; за опције типа „list”, ставке листе морају да се раздвоје преломом линије (`\n`). +
-^(2)^ Ако су доступне константе, оне морају да се користе као вредност опције.
-
-За URL су дозвољене две додатне опције (стрингови) за улазни/излазни фајл:
-
-* _file_in_: фајл који се чита и шаље URL адресама (post фајл)
-* _file_out_: преузети URL/фајл се уписује у овај фајл (уместо на стандардни излаз)
+За команду "url:...", погледајте доступне опције у функцији <<_hook_url,hook_url>>.
 
 Повратна вредност:
 
@@ -10123,6 +10166,151 @@ hook4 = weechat.hook_process_hashtable("sh",
                                        {"arg1": "-c",
                                         "arg2": "ls -l /tmp | grep something"},
                                        20000, "my_process_cb", "")
+----
+
+==== hook_url
+
+_WeeChat ≥ 4.1.0._
+
+URL трансфер.
+
+Прототип:
+
+[source,c]
+----
+struct t_hook *weechat_hook_url (const char *url,
+                                 struct t_hashtable *options,
+                                 int timeout,
+                                 int (*callback)(const void *pointer,
+                                                 void *data,
+                                                 const char *url,
+                                                 struct t_hashtable *options,
+                                                 struct t_hashtable *output),
+                                 const void *callback_pointer,
+                                 void *callback_data);
+----
+
+Аргументи:
+
+* _url_: URL
+* _options_: опције URL трансфера (погледајте испод); хеш табела се дуплира у функцији, тако да након овог позива безбедно можете да ослободите меморију коју заузима
+* _timeout_: истек времена URL трансфера (у милисекундама): након овог периода,
+  трансфер се зауставља (0 значи без истека времена)
+* _callback_: функција која се позива када се заврши трансфер, аргументи и повратна
+  вредност:
+** _const void *pointer_: показивач
+** _void *data_: показивач
+** _const char *url_: URL
+** _struct t_hashtable *options_: опције
+** _struct t_hashtable *output_: резултат (кључеви и вредности су стрингови), који може
+   да садржи следеће кључеве:
+*** _response_code_: HTTP кôд одзива
+*** _headers_: HTTP заглавља у одзиву
+*** _output_: стандардни излаз (поставља се само ако у опцијама није постављено _file_out_)
+*** _error_: порука о грешки (поставља се само у случају грешке)
+** повратна вредност:
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: показивач који се прослеђује функцији повратног позива када је позове програм WeeChat
+* _callback_data_: показивач који се прослеђује функцији повратног позива када је позове програм WeeChat; ако није NULL, алоцирала га је malloc (или нека слична функција) и аутоматски се ослобађа када се кука обрише
+
+Доступне су следеће Curl опције (погледајте `+man curl_easy_setopt+` за
+опис сваке од опција):
+
+include::{autogendir}/autogen_api_url_options.sr.adoc[tag=url_options]
+
+[NOTE]
+^(1)^ За опције типа „mask”, формат је: „вредност1+вредност2+вредност3”; за опције типа „list”, ставке листе морају да се раздвоје преломом линије (`\n`). +
+^(2)^ Ако су доступне константе, оне морају да се користе као вредност опције.
+
+За улазни/излазни фајл су дозвољене следеће две додатне опције (стрингови):
+
+[width="100%",cols="2,^1,7",options="header"]
+|===
+| Опција   | Тип    | Опис
+| file_in  | string | фајл који се чита и шаље URL адресама (post фајл)
+| file_out | string | преузети URL/фајл се уписује у овај фајл (уместо на стандардни излаз)
+|===
+
+Повратна вредност:
+
+* показивач на нову куку, NULL у случају грешке
+
+C пример:
+
+[source,c]
+----
+int
+my_url_cb (const void *pointer, void *data, const char *url,
+           struct t_hashtable *options, struct t_hashtable *output)
+{
+    weechat_printf (NULL, "response_code: %s", weechat_hashtable_get (output, "response_code"));
+    weechat_printf (NULL, "headers: %s", weechat_hashtable_get (output, "headers"));
+    weechat_printf (NULL, "output: %s", weechat_hashtable_get (output, "output"));
+    weechat_printf (NULL, "error: %s", weechat_hashtable_get (output, "error"));
+    return WEECHAT_RC_OK;
+}
+
+/* example 1: output to a file */
+struct t_hashtable *options_url1 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url1)
+{
+    weechat_hashtable_set (options_url1, "file_out", "/tmp/weechat.org.html");
+    struct t_hook *my_url_hook = weechat_hook_url ("https://weechat.org/",
+                                                   options_url1,
+                                                   20000,
+                                                   &my_url_cb, NULL, NULL);
+    weechat_hashtable_free (options_url1);
+}
+
+/* example 2: custom HTTP headers, output sent to callback */
+struct t_hashtable *options_url2 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url2)
+{
+    weechat_hashtable_set (options_url2, "httpheader",
+                           "Header1: value1\n"
+                           "Header2: value2");
+    struct t_hook *my_url_hook = weechat_hook_url ("http://localhost:8080/",
+                                                   options_url2,
+                                                   20000,
+                                                   &my_url_cb, NULL, NULL);
+    weechat_hashtable_free (options_url2);
+}
+----
+
+Скрипта (Python):
+
+[source,python]
+----
+# прототип
+def hook_url(url: str, options: Dict[str, str], timeout: int, callback: str, callback_data: str) -> str: ...
+
+# пример
+def my_url_cb(data: str, url: str, options: Dict[str, str], output: Dict[str, str]) -> int:
+    weechat.prnt("", "output: %s" % output)
+    return weechat.WEECHAT_RC_OK
+
+# пример 1: излаз у фајл
+hook1 = weechat.hook_url("https://weechat.org/",
+                         {"file_out": "/tmp/weechat.org.html"},
+                         20000, "my_url_cb", "")
+
+# пример 2: произвољна HTTP заглавља, излаз се шаље функцији повратног позива
+options = {
+    "httpheader": "\n".join([
+        "Header1: value1",
+        "Header2: value2",
+    ]),
+}
+hook2 = weechat.hook_url("http://localhost:8080/", options, 20000, "my_url_cb", "")
 ----
 
 ==== hook_connect
@@ -12070,25 +12258,22 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
   (да стане у 512 подразумевано).
 | Нови садржај поруке.
 
-// TRANSLATION MISSING
 | [[hook_modifier_relay_client_irc_in]] relay_client_irc_in | 4.0.0
-| String with relay client pointer (eg: "0x1234abcd")
-| Content of message received from relay IRC client.
-| New content of message.
+| Стринг са показивачем на релеј клијента (нпр. "0x1234abcd")
+| Садржај поруке примљене од релеј IRC клијента.
+| Нови садржај поруке.
 
-// TRANSLATION MISSING
 | [[hook_modifier_relay_client_irc_out1]] relay_client_irc_out1 | 4.0.0
-| String with relay client pointer (eg: "0x1234abcd")
-| Content of message about to be sent to relay IRC client before automatic split
-  (to fit in 512 bytes by default).
-| New content of message.
+| Стринг са показивачем на релеј клијента (нпр. "0x1234abcd")
+| Садржај поруке која треба да се пошаље релеј IRC клијенту пре аутоматске поделе
+  (тако да стане у подразумевано 512 бајтова).
+| Нови садржај поруке.
 
-// TRANSLATION MISSING
 | [[hook_modifier_relay_client_irc_out]] relay_client_irc_out | 4.0.0
-| String with relay client pointer (eg: "0x1234abcd")
-| Content of message about to be sent to relay IRC client after automatic split
-  (to fit in 512 bytes by default).
-| New content of message.
+| Стринг са показивачем на релеј клијента (нпр. "0x1234abcd")
+| Садржај поруке која треба да се пошаље релеј IRC клијенту након аутоматске поделе
+  (тако да стане у подразумевано 512 бајтова).
+| Нови садржај поруке.
 
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
 | Стринг са показивачем на прозор (нпр: "0x1234abcd")
@@ -12697,23 +12882,19 @@ struct t_hook *weechat_hook_focus (const char *area,
 | _chat_focused_line | Линија на (x, y) _(WeeChat ≥ 4.0.0)_.
 | "Здраво свима!" | ""
 
-// TRANSLATION MISSING
-| _chat_focused_line_bol | Text from beginning of line to (x-1, y) _(WeeChat ≥ 4.1.0)_.
-| "Hello" | ""
+| _chat_focused_line_bol | Текст од почетка линије до (x-1, y) _(WeeChat ≥ 4.1.0)_.
+| "Здраво" | ""
 
-// TRANSLATION MISSING
-| _chat_focused_line_eol | Text from (x, y) to end of line _(WeeChat ≥ 4.1.0)_.
-| "llo world!" | ""
+| _chat_focused_line_eol | Текст од (x, y) до краја линије _(WeeChat ≥ 4.1.0)_.
+| "аво свима!" | ""
 
 | _chat_word | Реч на (x,y).
 | "Здраво" | ""
 
-// TRANSLATION MISSING
-| _chat_bol | Text from beginning of message to (x-1, y).
+| _chat_bol | Текст од почетка поруке до (x-1, y).
 | "Зд" | ""
 
-// TRANSLATION MISSING
-| _chat_eol | Text from (x, y) to the end of message.
+| _chat_eol | Текст од (x, y) до краја поруке.
 | "раво свете!" | ""
 
 | _bar_name | Име траке.
@@ -13476,9 +13657,22 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _num_history_: број команди у историји
 ** _text_search_: тип претраге текста:
 *** 0: у овом тренутку нема претраге
-*** 1: претрага уназад (смер: ка најстаријим порукама)
-*** 2: претрага унапред (смер: ка најновијим порукама)
+*** 1: претрага у линијама бафера
+*** 2: претрага у историји команди
+** _text_search_direction_: смер претраге:
+*** 0: претрага уназад (смер: најстарије поруке/команде)
+*** 1: претрага унапред (смер: најновије поруке/команде)
 ** _text_search_exact_: 1 ако претрага текста прави разлику у величини слова
+** _text_search_regex_: 1 ако се претражује регуларним изразом
+** _text_search_where_:
+*** 0: у овом тренутку нема претраге
+*** 1: претрага у поруци
+*** 2: претрага у префиксу
+*** 3: претрага у префиксу и поруци
+** _text_search_history_:
+*** 0: у овом тренутку нема претраге
+*** 1: претрага у локалној историји бафера
+*** 2: претрага у глобалној историји
 ** _text_search_found_: 1 ако се текст пронађе, у супротном 0
 
 Повратна вредност:
@@ -13578,6 +13772,8 @@ void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
 * _buffer_: показивач на бафер
 * _property_: име особине:
 ** _plugin_: показивач на додатак који је креирао овај бафер (NULL за главни бафер програма WeeChat)
+** _text_search_regex_compiled_: компајлирани регуларни израз
+** _text_search_ptr_history_: пронађена историја
 ** _highlight_disable_regex_compiled_: компајлиран регуларни израз _highlight_disable_regex_
 ** _highlight_regex_compiled_: компајлиран регуларни израз _highlight_regex_
 
@@ -17138,7 +17334,7 @@ int weechat_hdata_get_var_offset (struct t_hdata *hdata, const char *name);
 
 Повратна вредност:
 
-* померај променљиве, 0 у случају да је дошло до грешке
+* померај променљиве, -1 у случају да је дошло до грешке
 
 C пример:
 
@@ -18027,7 +18223,7 @@ for key in hash:
 
 ==== hdata_compare
 
-_WeeChat ≥ 1.9._
+_WeeChat ≥ 1.9, ажурирано у верзији 4.1.0._
 
 Пореди hdata променљиву два објекта.
 
@@ -18043,7 +18239,8 @@ int weechat_hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2
 * _hdata_: показивач на hdata
 * _pointer1_: показивач на први објекат програма WeeChat/додатка
 * _pointer2_: показивач на други објекат програма WeeChat/додатка
-* _name_: име променљиве; у случају низова, име може бити „N|име” где је N индекс низа (који почиње од 0), на пример: „2|име”
+* _name_: назив променљиве или путања до назива променљиве; у случају низова, име може
+  бити „N|име” где је N индекс низа (који почиње од 0), на пример: „2|име”
 * _case_sensitive_: 1 за поређење стрингова које разликује величину слова, у супротном 0
 
 Повратна вредност:
@@ -18059,8 +18256,12 @@ C пример:
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
 struct t_gui_buffer *buffer2 = weechat_buffer_search ("irc", "libera.#weechat-fr");
-weechat_printf (NULL, "number comparison = %d",
+weechat_printf (NULL, "comparison of buffer number = %d",
                 weechat_hdata_compare (hdata, buffer1, buffer2, "number", 0));
+weechat_printf (NULL, "comparison of number of lines = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "own_lines.lines_count", 0));
+weechat_printf (NULL, "comparison of local variable = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "local_variables.myvar", 0));
 ----
 
 Скрипта (Python):
@@ -18074,7 +18275,9 @@ def hdata_compare(hdata: str, pointer1: str, pointer2: str, name: str, case_sens
 hdata = weechat.hdata_get("buffer")
 buffer1 = weechat.buffer_search("irc", "libera.#weechat")
 buffer2 = weechat.buffer_search("irc", "libera.#weechat-fr")
-weechat.prnt("", "бројно поређење = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+weechat.prnt("", "comparison of buffer number = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+weechat.prnt("", "comparison of number of lines = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "own_lines.lines_count", 0))
+weechat.prnt("", "comparison of local variable = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "local_variables.myvar", 0))
 ----
 
 ==== hdata_set

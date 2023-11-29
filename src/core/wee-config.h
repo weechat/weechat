@@ -50,6 +50,12 @@ enum t_config_look_buffer_position
     CONFIG_LOOK_BUFFER_POSITION_FIRST_GAP,
 };
 
+enum t_config_look_buffer_search_history
+{
+    CONFIG_LOOK_BUFFER_SEARCH_HISTORY_LOCAL = 0,
+    CONFIG_LOOK_BUFFER_SEARCH_HISTORY_GLOBAL,
+};
+
 enum t_config_look_buffer_search_where
 {
     CONFIG_LOOK_BUFFER_SEARCH_PREFIX = 0,
@@ -142,6 +148,7 @@ extern struct t_config_section *weechat_config_section_signal;
 extern struct t_config_section *weechat_config_section_bar;
 extern struct t_config_section *weechat_config_section_custom_bar_item;
 extern struct t_config_section *weechat_config_section_layout;
+extern struct t_config_section *weechat_config_section_buffer;
 extern struct t_config_section *weechat_config_section_notify;
 extern struct t_config_section *weechat_config_section_filter;
 extern struct t_config_section *weechat_config_section_key[];
@@ -164,6 +171,7 @@ extern struct t_config_option *config_look_buffer_auto_renumber;
 extern struct t_config_option *config_look_buffer_notify_default;
 extern struct t_config_option *config_look_buffer_position;
 extern struct t_config_option *config_look_buffer_search_case_sensitive;
+extern struct t_config_option *config_look_buffer_search_history;
 extern struct t_config_option *config_look_buffer_search_force_default;
 extern struct t_config_option *config_look_buffer_search_regex;
 extern struct t_config_option *config_look_buffer_search_where;
@@ -313,6 +321,7 @@ extern struct t_config_option *config_color_chat_value;
 extern struct t_config_option *config_color_chat_value_null;
 extern struct t_config_option *config_color_emphasized;
 extern struct t_config_option *config_color_emphasized_bg;
+extern struct t_config_option *config_color_eval_syntax_colors;
 extern struct t_config_option *config_color_input_actions;
 extern struct t_config_option *config_color_input_text_not_found;
 extern struct t_config_option *config_color_item_away;
@@ -392,6 +401,8 @@ extern int config_word_chars_input_count;
 extern char **config_nick_colors;
 extern int config_num_nick_colors;
 extern struct t_hashtable *config_hashtable_nick_color_force;
+extern char **config_eval_syntax_colors;
+extern int config_num_eval_syntax_colors;
 extern char *config_buffer_time_same_evaluated;
 extern struct t_hashtable *config_hashtable_completion_partial_templates;
 
@@ -400,6 +411,8 @@ extern struct t_config_option *config_weechat_debug_get (const char *plugin_name
 extern int config_weechat_debug_set (const char *plugin_name,
                                      const char *value);
 extern void config_weechat_debug_set_all ();
+extern int config_weechat_buffer_set (struct t_gui_buffer *buffer,
+                                      const char *property, const char *value);
 extern int config_weechat_notify_set (struct t_gui_buffer *buffer,
                                       const char *notify);
 extern void config_get_item_time (char *text_time, int max_length);

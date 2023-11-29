@@ -29,7 +29,9 @@
 #include <errno.h>
 #include <arpa/inet.h>
 #include <zlib.h>
+#ifdef HAVE_ZSTD
 #include <zstd.h>
+#endif
 
 #include "../../weechat-plugin.h"
 #include "../relay.h"
@@ -1111,6 +1113,7 @@ int
 relay_weechat_msg_compress_zstd (struct t_relay_client *client,
                                  struct t_relay_weechat_msg *msg)
 {
+#ifdef HAVE_ZSTD
     char raw_message[1024];
     uint32_t size32;
     Bytef *dest;
@@ -1169,6 +1172,13 @@ error:
         free (dest);
 
     return rc;
+#else
+    /* make C compiler happy */
+    (void) client;
+    (void) msg;
+
+    return 0;
+#endif /* HAVE_ZSTD */
 }
 
 /*
@@ -1190,10 +1200,12 @@ relay_weechat_msg_send (struct t_relay_client *client,
                 if (relay_weechat_msg_compress_zlib (client, msg))
                     return;
                 break;
+#ifdef HAVE_ZSTD
             case RELAY_WEECHAT_COMPRESSION_ZSTD:
                 if (relay_weechat_msg_compress_zstd (client, msg))
                     return;
                 break;
+#endif
             default:
                 break;
         }

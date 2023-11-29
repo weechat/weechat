@@ -658,6 +658,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_dyn_copy = &string_dyn_copy;
         new_plugin->string_dyn_concat = &string_dyn_concat;
         new_plugin->string_dyn_free = &string_dyn_free;
+        new_plugin->string_concat = &string_concat;
 
         new_plugin->utf8_has_8bits = &utf8_has_8bits;
         new_plugin->utf8_is_valid = &utf8_is_valid;
@@ -798,6 +799,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hook_fd = &hook_fd;
         new_plugin->hook_process = &hook_process;
         new_plugin->hook_process_hashtable = &hook_process_hashtable;
+        new_plugin->hook_url = &hook_url;
         new_plugin->hook_connect = &hook_connect;
         new_plugin->hook_line = &hook_line;
         new_plugin->hook_print = &hook_print;

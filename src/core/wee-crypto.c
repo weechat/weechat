@@ -42,9 +42,29 @@ char *weecrypto_hash_algo_string[] = {
     "crc32",
     "md5",
     "sha1",
-    "sha224", "sha256", "sha384", "sha512",
+    "sha224",
+    "sha256",
+    "sha384",
+    "sha512",
 #if GCRYPT_VERSION_NUMBER >= 0x010700
-    "sha3-224", "sha3-256", "sha3-384", "sha3-512",
+    "sha3-224",
+    "sha3-256",
+    "sha3-384",
+    "sha3-512",
+#endif
+#if GCRYPT_VERSION_NUMBER >= 0x010800
+    "blake2b-160",
+    "blake2b-256",
+    "blake2b-384",
+    "blake2b-512",
+    "blake2s-128",
+    "blake2s-160",
+    "blake2s-224",
+    "blake2s-256",
+#endif
+#if GCRYPT_VERSION_NUMBER >= 0x010904
+    "sha512-224",
+    "sha512-256",
 #endif
     NULL,
 };
@@ -52,10 +72,42 @@ int weecrypto_hash_algo[] = {
     GCRY_MD_CRC32,
     GCRY_MD_MD5,
     GCRY_MD_SHA1,
-    GCRY_MD_SHA224, GCRY_MD_SHA256, GCRY_MD_SHA384, GCRY_MD_SHA512,
+    GCRY_MD_SHA224,
+    GCRY_MD_SHA256,
+    GCRY_MD_SHA384,
+    GCRY_MD_SHA512,
 #if GCRYPT_VERSION_NUMBER >= 0x010700
-    GCRY_MD_SHA3_224, GCRY_MD_SHA3_256, GCRY_MD_SHA3_384, GCRY_MD_SHA3_512,
+    GCRY_MD_SHA3_224,
+    GCRY_MD_SHA3_256,
+    GCRY_MD_SHA3_384,
+    GCRY_MD_SHA3_512,
 #endif
+#if GCRYPT_VERSION_NUMBER >= 0x010800
+    GCRY_MD_BLAKE2B_160,
+    GCRY_MD_BLAKE2B_256,
+    GCRY_MD_BLAKE2B_384,
+    GCRY_MD_BLAKE2B_512,
+    GCRY_MD_BLAKE2S_128,
+    GCRY_MD_BLAKE2S_160,
+    GCRY_MD_BLAKE2S_224,
+    GCRY_MD_BLAKE2S_256,
+#endif
+#if GCRYPT_VERSION_NUMBER >= 0x010904
+    GCRY_MD_SHA512_224,
+    GCRY_MD_SHA512_256,
+#endif
+};
+
+char *weecrypto_cipher_string[] = {
+    "aes128",
+    "aes192",
+    "aes256",
+    NULL,
+};
+int weecrypto_cipher[] = {
+    GCRY_CIPHER_AES128,
+    GCRY_CIPHER_AES192,
+    GCRY_CIPHER_AES256,
 };
 
 
@@ -81,21 +133,52 @@ weecrypto_get_hash_algo (const char *hash_algo)
 }
 
 /*
+ * Returns the cipher with the name, or GCRY_CIPHER_NONE if not found.
+ */
+
+int
+weecrypto_get_cipher (const char *cipher)
+{
+    int i;
+
+    if (!cipher)
+        return GCRY_CIPHER_NONE;
+
+    for (i = 0; weecrypto_cipher_string[i]; i++)
+    {
+        if (strcmp (weecrypto_cipher_string[i], cipher) == 0)
+            return weecrypto_cipher[i];
+    }
+
+    return GCRY_CIPHER_NONE;
+}
+
+/*
  * Computes hash of data using the given hash algorithm.
  *
  * The hash size depends on the algorithm, common ones are:
  *
- *   GCRY_MD_CRC32      32 bits ==  4 bytes
- *   GCRY_MD_MD5       128 bits == 16 bytes
- *   GCRY_MD_SHA1      160 bits == 20 bytes
- *   GCRY_MD_SHA224    224 bits == 28 bytes
- *   GCRY_MD_SHA256    256 bits == 32 bytes
- *   GCRY_MD_SHA384    384 bits == 48 bytes
- *   GCRY_MD_SHA512    512 bits == 64 bytes
- *   GCRY_MD_SHA3_224  224 bits == 28 bytes (libgcrypt ≥ 1.7.0)
- *   GCRY_MD_SHA3_256  256 bits == 32 bytes (libgcrypt ≥ 1.7.0)
- *   GCRY_MD_SHA3_384  384 bits == 48 bytes (libgcrypt ≥ 1.7.0)
- *   GCRY_MD_SHA3_512  512 bits == 64 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_CRC32         32 bits ==  4 bytes
+ *   GCRY_MD_MD5          128 bits == 16 bytes
+ *   GCRY_MD_SHA1         160 bits == 20 bytes
+ *   GCRY_MD_SHA224       224 bits == 28 bytes
+ *   GCRY_MD_SHA256       256 bits == 32 bytes
+ *   GCRY_MD_SHA384       384 bits == 48 bytes
+ *   GCRY_MD_SHA512       512 bits == 64 bytes
+ *   GCRY_MD_SHA512_256   256 bits == 32 bytes (libgcrypt ≥ 1.9.4)
+ *   GCRY_MD_SHA512_224   224 bits == 28 bytes (libgcrypt ≥ 1.9.4)
+ *   GCRY_MD_SHA3_224     224 bits == 28 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_256     256 bits == 32 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_384     384 bits == 48 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_512     512 bits == 64 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_BLAKE2B_160  160 bits == 20 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2B_256  256 bits == 32 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2B_384  384 bits == 48 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2B_512  512 bits == 64 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2S_128  128 bits == 16 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2S_160  160 bits == 20 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2S_224  224 bits == 28 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2S_256  256 bits == 32 bytes (libgcrypt ≥ 1.8.0)
  *
  * The result hash is stored in "hash" (the buffer must be large enough).
  *
@@ -165,17 +248,27 @@ hash_end:
  *
  * The hash size depends on the algorithm, common ones are:
  *
- *   GCRY_MD_CRC32      32 bits ==  4 bytes
- *   GCRY_MD_MD5       128 bits == 16 bytes
- *   GCRY_MD_SHA1      160 bits == 20 bytes
- *   GCRY_MD_SHA224    224 bits == 28 bytes
- *   GCRY_MD_SHA256    256 bits == 32 bytes
- *   GCRY_MD_SHA384    384 bits == 48 bytes
- *   GCRY_MD_SHA512    512 bits == 64 bytes
- *   GCRY_MD_SHA3_224  224 bits == 28 bytes (libgcrypt ≥ 1.7.0)
- *   GCRY_MD_SHA3_256  256 bits == 32 bytes (libgcrypt ≥ 1.7.0)
- *   GCRY_MD_SHA3_384  384 bits == 48 bytes (libgcrypt ≥ 1.7.0)
- *   GCRY_MD_SHA3_512  512 bits == 64 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_CRC32         32 bits ==  4 bytes
+ *   GCRY_MD_MD5          128 bits == 16 bytes
+ *   GCRY_MD_SHA1         160 bits == 20 bytes
+ *   GCRY_MD_SHA224       224 bits == 28 bytes
+ *   GCRY_MD_SHA256       256 bits == 32 bytes
+ *   GCRY_MD_SHA384       384 bits == 48 bytes
+ *   GCRY_MD_SHA512       512 bits == 64 bytes
+ *   GCRY_MD_SHA512_224   224 bits == 28 bytes (libgcrypt ≥ 1.9.4)
+ *   GCRY_MD_SHA512_256   256 bits == 32 bytes (libgcrypt ≥ 1.9.4)
+ *   GCRY_MD_SHA3_224     224 bits == 28 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_256     256 bits == 32 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_384     384 bits == 48 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_512     512 bits == 64 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_BLAKE2B_160  160 bits == 20 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2B_256  256 bits == 32 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2B_384  384 bits == 48 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2B_512  512 bits == 64 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2S_128  128 bits == 16 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2S_160  160 bits == 20 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2S_224  224 bits == 28 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2S_256  256 bits == 32 bytes (libgcrypt ≥ 1.8.0)
  *
  * The result hash is stored in "hash" (the buffer must be large enough).
  *
@@ -322,17 +415,27 @@ hash_pbkdf2_end:
  *
  * The hash size depends on the algorithm, common ones are:
  *
- *   GCRY_MD_CRC32      32 bits ==  4 bytes
- *   GCRY_MD_MD5       128 bits == 16 bytes
- *   GCRY_MD_SHA1      160 bits == 20 bytes
- *   GCRY_MD_SHA224    224 bits == 28 bytes
- *   GCRY_MD_SHA256    256 bits == 32 bytes
- *   GCRY_MD_SHA384    384 bits == 48 bytes
- *   GCRY_MD_SHA512    512 bits == 64 bytes
- *   GCRY_MD_SHA3_224  224 bits == 28 bytes (libgcrypt ≥ 1.7.0)
- *   GCRY_MD_SHA3_256  256 bits == 32 bytes (libgcrypt ≥ 1.7.0)
- *   GCRY_MD_SHA3_384  384 bits == 48 bytes (libgcrypt ≥ 1.7.0)
- *   GCRY_MD_SHA3_512  512 bits == 64 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_CRC32         32 bits ==  4 bytes
+ *   GCRY_MD_MD5          128 bits == 16 bytes
+ *   GCRY_MD_SHA1         160 bits == 20 bytes
+ *   GCRY_MD_SHA224       224 bits == 28 bytes
+ *   GCRY_MD_SHA256       256 bits == 32 bytes
+ *   GCRY_MD_SHA384       384 bits == 48 bytes
+ *   GCRY_MD_SHA512       512 bits == 64 bytes
+ *   GCRY_MD_SHA512_224   224 bits == 28 bytes (libgcrypt ≥ 1.9.4)
+ *   GCRY_MD_SHA512_256   256 bits == 32 bytes (libgcrypt ≥ 1.9.4)
+ *   GCRY_MD_SHA3_224     224 bits == 28 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_256     256 bits == 32 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_384     384 bits == 48 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_512     512 bits == 64 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_BLAKE2B_160  160 bits == 20 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2B_256  256 bits == 32 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2B_384  384 bits == 48 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2B_512  512 bits == 64 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2S_128  128 bits == 16 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2S_160  160 bits == 20 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2S_224  224 bits == 28 bytes (libgcrypt ≥ 1.8.0)
+ *   GCRY_MD_BLAKE2S_256  256 bits == 32 bytes (libgcrypt ≥ 1.8.0)
  *
  * The result hash is stored in "hash" (the buffer must be large enough).
  *
@@ -421,6 +524,10 @@ weecrypto_totp_generate_internal (const char *secret, int length_secret,
     int rc, offset, length;
     unsigned long bin_code;
 
+#if __BYTE_ORDER == __BIG_ENDIAN
+    /* Big endian does not need to swap bytes here! */
+    moving_factor_swapped = moving_factor;
+#else
     moving_factor_swapped = (moving_factor >> 56)
         | ((moving_factor << 40) & 0x00FF000000000000)
         | ((moving_factor << 24) & 0x0000FF0000000000)
@@ -429,6 +536,7 @@ weecrypto_totp_generate_internal (const char *secret, int length_secret,
         | ((moving_factor >> 24) & 0x0000000000FF0000)
         | ((moving_factor >> 40) & 0x000000000000FF00)
         | (moving_factor << 56);
+#endif
 
     rc = weecrypto_hmac (secret, length_secret,
                          &moving_factor_swapped, sizeof (moving_factor_swapped),

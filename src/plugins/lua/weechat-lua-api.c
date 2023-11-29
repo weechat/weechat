@@ -1708,6 +1708,38 @@ API_FUNC(config_color_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_enum)
+{
+    const char *option;
+    int value;
+
+    API_INIT_FUNC(1, "config_enum", API_RETURN_INT(0));
+    if (lua_gettop (L) < 1)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    option = lua_tostring (L, -1);
+
+    value = weechat_config_enum (API_STR2PTR(option));
+
+    API_RETURN_INT(value);
+}
+
+API_FUNC(config_enum_default)
+{
+    const char *option;
+    int value;
+
+    API_INIT_FUNC(1, "config_enum_default", API_RETURN_INT(0));
+    if (lua_gettop (L) < 1)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    option = lua_tostring (L, -1);
+
+    value = weechat_config_enum_default (API_STR2PTR(option));
+
+    API_RETURN_INT(value);
+}
+
 API_FUNC(config_write_option)
 {
     const char *config_file, *option;
@@ -2638,6 +2670,82 @@ API_FUNC(hook_process_hashtable)
                                                                    &weechat_lua_api_hook_process_cb,
                                                                    function,
                                                                    data));
+
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_STRING(result);
+}
+
+int
+weechat_lua_api_hook_url_cb (const void *pointer, void *data,
+                             const char *url,
+                             struct t_hashtable *options,
+                             struct t_hashtable *output)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    int *rc, ret;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (url) ? (char *)url : empty_arg;
+        func_argv[2] = options;
+        func_argv[3] = output;
+
+        rc = (int *) weechat_lua_exec (script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       ptr_function,
+                                       "sshh", func_argv);
+
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+
+        return ret;
+    }
+
+    return WEECHAT_RC_ERROR;
+}
+
+API_FUNC(hook_url)
+{
+    const char *url, *function, *data;
+    struct t_hashtable *options;
+    int timeout;
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_url", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 5)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    url = lua_tostring (L, -5);
+    options = weechat_lua_tohashtable (L, -4,
+                                       WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING);
+    timeout = lua_tonumber (L, -3);
+    function = lua_tostring (L, -2);
+    data = lua_tostring (L, -1);
+
+    result = API_PTR2STR(plugin_script_api_hook_url (weechat_lua_plugin,
+                                                     lua_current_script,
+                                                     url,
+                                                     options,
+                                                     timeout,
+                                                     &weechat_lua_api_hook_url_cb,
+                                                     function,
+                                                     data));
 
     if (options)
         weechat_hashtable_free (options);
@@ -5531,6 +5639,8 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(config_string_default),
     API_DEF_FUNC(config_color),
     API_DEF_FUNC(config_color_default),
+    API_DEF_FUNC(config_enum),
+    API_DEF_FUNC(config_enum_default),
     API_DEF_FUNC(config_write_option),
     API_DEF_FUNC(config_write_line),
     API_DEF_FUNC(config_write),
@@ -5564,6 +5674,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(hook_fd),
     API_DEF_FUNC(hook_process),
     API_DEF_FUNC(hook_process_hashtable),
+    API_DEF_FUNC(hook_url),
     API_DEF_FUNC(hook_connect),
     API_DEF_FUNC(hook_line),
     API_DEF_FUNC(hook_print),

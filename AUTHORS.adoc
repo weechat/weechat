@@ -81,10 +81,12 @@ Alphabetically:
 * Lázaro A.
 * Leonid Evdokimov
 * Linus Heckemann
+* LuK1337
 * Maarten de Vries
 * Mantas Mikulėnas (grawity)
 * Marco Paolone
 * Marco Sirabella
+* Mario Campos
 * Mateusz Poszwa
 * Matt Robinson
 * Matthew Horan

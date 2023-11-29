@@ -5,7 +5,7 @@ on:
   - pull_request
 
 env:
-  WEECHAT_DEPENDENCIES: devscripts equivs python3-pip cmake ninja-build lcov pkg-config libncursesw5-dev gem2deb libperl-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-3.0-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev libzstd-dev zlib1g-dev curl libcpputest-dev php-dev libphp-embed libargon2-dev libsodium-dev flake8 pylint python3-bandit asciidoctor ruby-pygments.rb shellcheck
+  WEECHAT_DEPENDENCIES: devscripts equivs python3-pip cmake ninja-build lcov pkg-config libncurses-dev gem2deb libperl-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-3.0-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev libzstd-dev zlib1g-dev curl libcpputest-dev php-dev libphp-embed libargon2-dev libsodium-dev flake8 pylint python3-bandit asciidoctor ruby-pygments.rb shellcheck
 
 jobs:
 
@@ -19,6 +19,7 @@ jobs:
           - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
           - { name: "gcc_ninja", cc: "gcc", cxx: "g++", buildargs: "-G Ninja" }
           - { name: "gcc_no_nls", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_NLS=OFF -DENABLE_DOC=OFF" }
+          - { name: "gcc_no_zstd", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_ZSTD=OFF -DENABLE_DOC=OFF" }
           - { name: "gcc_coverage", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_CODE_COVERAGE=ON" }
           - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
 
@@ -33,6 +34,8 @@ jobs:
       run: |
         sudo apt-get update -qq
         sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPENDENCIES }}
+        # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
+        sudo apt-get --yes purge php8.1-imagick
         sudo -H pip3 install --ignore-installed msgcheck
 
     - name: Check gettext files

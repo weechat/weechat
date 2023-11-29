@@ -42,32 +42,32 @@ error ()
 }
 
 # check git repository
-ROOT_DIR=$(git rev-parse --show-toplevel)
-if [ -z "${ROOT_DIR}" ] || [ ! -d "${ROOT_DIR}/.git" ]; then
+root_dir=$(git rev-parse --show-toplevel)
+if [ -z "${root_dir}" ] || [ ! -d "${root_dir}/.git" ]; then
     error "this script must be run from WeeChat git repository."
 fi
-cd "${ROOT_DIR}"
+cd "${root_dir}"
 
 # default values
-VERSION="$("${ROOT_DIR}/version.sh" devel-full)"
-TREEISH="HEAD"
-OUTPATH="$(pwd)"
+version="$("${root_dir}/version.sh" devel-full)"
+treeish="HEAD"
+outpath="$(pwd)"
 
 if [ $# -ge 1 ]; then
-    VERSION=$1
+    version=$1
 fi
 if [ $# -ge 2 ]; then
-    TREEISH=$2
+    treeish=$2
 fi
 if [ $# -ge 3 ]; then
-    OUTPATH=$(cd "$3"; pwd)
+    outpath=$(cd "$3"; pwd)
 fi
 
-PREFIX="weechat-${VERSION}/"
-FILE="${OUTPATH}/weechat-${VERSION}.tar"
+prefix="weechat-${version}/"
+file="${outpath}/weechat-${version}.tar"
 
-echo "Building package ${FILE}.gz"
-git archive --prefix="${PREFIX}" "${TREEISH}" | gzip -c >"${FILE}.gz"
+echo "Building package ${file}.gz"
+git archive --prefix="${prefix}" "${treeish}" | gzip -c >"${file}.gz"
 
-echo "Building package ${FILE}.xz"
-git archive --prefix="${PREFIX}" "${TREEISH}" | xz -c >"${FILE}.xz"
+echo "Building package ${file}.xz"
+git archive --prefix="${prefix}" "${treeish}" | xz -c >"${file}.xz"

@@ -92,8 +92,7 @@ _клијенти_ су повезани са _релејем_ као што ј�
 [[command_handshake]]
 === handshake
 
-// TRANSLATION MISSING
-_WeeChat ≥ 2.9, updated in versions 3.5, 4.0.0._
+_WeeChat ≥ 2.9, ажурирано у верзијама 3.5, 4.0.0._
 
 Извршава руковање између клијента и програма WeeChat: ово је у већини случајева неопходно како би се сазнале поставке сесије и припремила аутентификација командом _init_.
 
@@ -123,11 +122,10 @@ _WeeChat ≥ 2.9, updated in versions 3.5, 4.0.0._
 *** _zstd_: компресија са https://facebook.github.io/zstd/[Zstandard ^↗^^]: боља
     компресија, као и много бржа компресија и декомпресија у односу на _zlib_
     _(WeeChat ≥ 3.5)_
-// TRANSLATION MISSING
-** _escape_commands_: commands sent by the client to relay must be escaped:
-   all backslashes are interpreted and a single backslash must be escaped (`\\`);
-   this allows for example the client to send multiline messages (chars `\n` are
-   converted to newlines, see <<command_input,input command>>)
+** _escape_commands_: команде које клијент шаље релеју морају да се означе:
+   све обрнуте косе црте се интерпретирају и једна обрнута коса црта мора да се означи (`\\`);
+   на овај начин клијент, на пример, може да шаље вишелинијске поруке (карактери `\n` се
+   претварају у преломе редова, погледајте <<command_input,input команду>>)
    _(WeeChat ≥ 4.0.0)_
 
 Напомене у вези опције _password_hash_algo_:
@@ -158,10 +156,9 @@ _WeeChat ≥ 2.9, updated in versions 3.5, 4.0.0._
 ** _off_: поруке се не компресују
 ** _zlib_: поруке су компресоване са https://zlib.net/[zlib ^↗^^]
 ** _zstd_: поруке су компресоване са https://facebook.github.io/zstd/[Zstandard ^↗^^]
-// TRANSLATION MISSING
 * _escape_commands_:
-** _on_: all backslashes are interpreted in the client messages
-** _off_: backslashes are *NOT* interpreted in the client messages and used as-is
+** _on_: све обрнуте косе црте у порукама клијента се интерпретирају
+** _off_: обрнуте косе црте у порукама клијента се *НЕ* интерпретирају и користе се онакве какве су
 
 [TIP]
 У програму WeeChat верзије ≤ 2.8, команда _handshake_ није имплементирана, програм WeeChat једноставно игнорише ову команду, чак и ако се пошаље пре _init_ команде. +
@@ -664,11 +661,14 @@ inl:
         input_buffer_1st_display: 0
         num_history: 0
         text_search: 0
+        text_search_direction: 0
         text_search_exact: 0
         text_search_regex: 0
         text_search_regex_compiled: '0x0'
         text_search_where: 0
+        text_search_history: 0
         text_search_found: 0
+        text_search_ptr_history: '0x0'
         text_search_input: None
         highlight_words: None
         highlight_disable_regex: None
@@ -947,9 +947,8 @@ input core.weechat /help filter
 input irc.libera.#weechat здраво!
 ----
 
-// TRANSLATION MISSING
-* Send multiline message to #test channel (option _escape_commands_ must have
-  been enabled in <<command_handshake,handshake command>> and requires
+* Шаље вишелинијску поруку на #test канал (опција _escape_commands_ мора да буде
+  укључена у <<command_handshake,handshake команди>> и потребан је
   WeeChat ≥ 4.0.0):
 
 ----

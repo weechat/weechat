@@ -10,36 +10,223 @@ This document lists all the changes for each version. +
 For a list of important changes that require manual actions, please look at release notes.
 
 
-[[v4.1.0]]
-== Version 4.1.0 (under dev)
+[[v4.2.0]]
+== Version 4.2.0 (under dev)
 
 New features::
 
+  * core: evaluate expressions even when the suffix is missing ("}" by default) (issue #2042, issue #1714)
+  * core: add syntax highlighting in evaluation of expressions with `raw_hl:string` and `hl:string`, add option weechat.color.eval_syntax_colors (issue #2042)
+  * core: add option `search_history` in command `/input`, add key kbd:[Ctrl+r] to search in commands history, add key context "histsearch" (issue #2040)
+  * core: add option weechat.look.buffer_search_history (issue #2040)
+  * core: add key kbd:[Ctrl+o] to send command found and insert next one in input (issue #2040)
+  * core: add buffer variables "text_search_direction", "text_search_history" and "text_search_ptr_history" (issue #2040)
+  * core: move key kbd:[Ctrl+r] to kbd:[Ctrl+s] (issue #2040)
+  * core: move key kbd:[Ctrl+s], kbd:[Ctrl+u] to kbd:[Alt+Shift+U] (issue #2040)
+  * core: display only version with command `/version`, add options `-o` and `-ol` in command `/upgrade`
+  * core: add number of processes in command `/sys waitpid`
+  * core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias` and `/trigger` (issue #1956)
+  * buflist: jump to previous/next buffer displayed in buflist item with ctrl+wheel up/down on a buflist item (issue #1473)
+  * irc: add server option "anti_flood" (now in milliseconds), remove server options "anti_flood_prio_{high|low}" (issue #1039)
+  * irc: add option irc.look.list_buffer
+  * irc: change default value of server option "tls_priorities" to `NORMAL`
+  * irc: add support of RGB colors in messages, add option irc.color.term_remap (issue #2025)
+  * irc: add tags "nick_xxx" and "host_xxx" in all messages, including self and server messages
+  * irc: add option irc.look.ignore_tag_messages (issue #989)
+  * relay: change default value of option relay.network.tls_priorities to `NORMAL`
+  * trigger: rename local variable "trigger_filter" to "filter" on monitor buffer (issue #2037)
+
+Bug fixes::
+
+  * core: fix value of buffer variable "num_history" when the value defined in option weechat.history.max_commands is reached
+  * core: remove incorrect warning when binding keys kbd:[F10] to kbd:[F20] (issue #2039)
+  * core: call hook config when options are removed
+  * core: display an error with command `/history N` when N is not a valid integer
+  * core: fix memory leak when config version is invalid or not supported
+  * core: fix crash when "config_version" is present in a configuration file without a value
+  * core: display an error on startup if environment variable "HOME" is not set
+  * core: fix crash when a custom bar item name is already used by a default bar item (issue #2034)
+  * core: fix random timeouts when a lot of concurrent processes are launched with hook_process (issue #2033)
+  * irc: remove trailing "\r\n" in signals "irc_out" and "irc_outtags" when messages are queued
+  * irc: fix target buffer of IRC message 337 (whois reply: "is hiding their idle time")
+  * irc: revert compute of nick colors to case sensitive way, deprecate again infos "irc_nick_color" and "irc_nick_color_name" (issue #194, issue #2032)
+  * relay: close properly connection with the IRC client in case of server disconnection (issue #2038)
+  * ruby: fix use of NULL variable when displaying exception
+
+Build::
+
+  * core: make libintl.h required if CMake option ENABLE_NLS is enabled (issue #2031)
+
+[[v4.1.1]]
+== Version 4.1.1 (2023-10-26)
+
+Bug fixes::
+
+  * core: fix crash when a custom bar item name is already used by a default bar item (issue #2034)
+  * core: fix random timeouts when a lot of concurrent processes are launched with hook_process (issue #2033)
+  * irc: revert compute of nick colors to case sensitive way, deprecate again infos "irc_nick_color" and "irc_nick_color_name" (issue #194, issue #2032)
+
+Build::
+
+  * core: make libintl.h required if CMake option ENABLE_NLS is enabled (issue #2031)
+
+[[v4.1.0]]
+== Version 4.1.0 (2023-10-15)
+
+New features::
+
+  * core: add completion "eval_variables", used in completion of `/eval`
+  * core: add command `/sys` to show resource limits/usage and suspend WeeChat process, add key kbd:[Ctrl+z] to suspend WeeChat (issue #985)
+  * core: ignore key bindings with empty command
+  * core: add support of quotes in commands `/key bind` and `/key bindctxt`
+  * core: evaluate command given to `/repeat` with contextual variables (issue #2007)
+  * core: add option `callbacks` in command `/debug`
   * core: add option type "enum" (issue #1973)
+  * core: add options weechat.buffer.* to save buffer properties set by user, add option `setauto` in command `/buffer` (issue #352)
+  * core: add parameters and key bindings to move to edges of current area with commands `/cursor go` and `/cursor move` (issue #1282)
   * core: add variables "_chat_focused_line_bol" and "_chat_focused_line_eol" in focus data (issue #1955)
+  * api: add support of format/translation of command arguments description line by line (issue #2005)
+  * api: add function string_concat (issue #2005)
+  * api: add support of path to variable and hashtable comparison in function hdata_compare (issue #1066)
+  * api: add infos "nick_color_ignore_case" and "nick_color_name_ignore_case" (issue #194)
   * api: add info "buffer" (issue #1962)
+  * buflist: add support of item names in command `/buflist refresh`, add completions "buflist_items" and "buflist_items_used"
   * buflist: increase max number of buflist items from 3 to 5 (issue #1703)
   * fset: add variable `allowed_values` in options, add options fset.color.allowed_values and fset.color.allowed_values_selected
   * fset: allow long type name in type filter
+  * irc: add count for all nick modes in output of `/names` (issue #97, issue #2020)
+  * irc: add count and mode filter in command `/names` (issue #98)
+  * irc: compute color in case insensitive way, reintroduce infos "irc_nick_color" and "irc_nick_color_name", add support of server name (issue #194)
+  * irc: add buffer for /list reply, add options irc.color.list_buffer_line_selected, irc.color.list_buffer_line_selected_bg, irc.look.list_buffer_sort, irc.look.list_buffer_scroll_horizontal, irc.look.new_list_position, irc.look.list_buffer_topic_strip_colors (issue #1972)
   * irc: display commands 716/717 in private buffer (if present) (issue #146)
-  * irc: remove Git revision and compilation date from CTCP VERSION/FINGER reply (issue #1974)
+  * irc: create default options irc.ctcp.* when file irc.conf is created (issue #1974)
+  * irc: evaluate options irc.ctcp.* (issue #1974)
+  * irc: build dynamically the list of CTCPs supported in reply to "CTCP CLIENTINFO" (issue #1974)
+  * irc: remove Git revision and compilation date from CTCP VERSION reply (issue #1974)
+  * irc: remove default CTCP replies FINGER and USERINFO (issue #1974)
+  * irc, xfer: add support of passive DCC (issue #2004, issue #487)
+  * script: rename parameters up/down/go to -up/-down/-go in command `/script`
+  * script: allow jump to the last script with command `/script -go end`
+  * script: allow commands `/script autoload`, `/script noautoload`, `/script toggleautoload` with scripts not present in the repository (issue #1980)
   * trigger: add options `-o`, `-ol`, `-i` and `-il` in command `/trigger list` (issue #1953)
+
+Bug fixes::
+
+  * core: fix zombie processes after fork (hook process or connect) (issue #1994)
+  * core: fix generation of TOTP on Big Endian systems (issue #2021)
+  * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
+  * core: display focus hashtable for debug even if no key is matching
+  * fset: add local key bindings during the buffer creation
+  * fset: remove extra spaces between min and max values when second format is used
+  * fset: fix mouse actions when second format is used
+  * fset: apply option fset.color.help_description (issue #1988)
+  * irc: move value `-all` at the end of completions for command `/ignore del`
+  * irc: fix memory leak when joining channels with keys
+  * irc: fix unexpected message sent to server when part of the second line of an IRC command (issue #1992)
+  * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
+  * irc: add missing "account-tag" in list of supported capabilities
+  * irc: add channel in "autojoin" server option only when the channel is actually joined (issue #1990)
+  * relay: synchronize nick modes with IRC client upon connection (issue #1984)
+  * script: add local key bindings during the buffer creation
+  * script: add parameters up/down/go in `/help script` and command completion
+  * script: fix cursor position after `/script list -i` or `/script list -il`
+  * script: fix buffer used by command `/script list -i|-il|-o|-ol`
+  * xfer: display an error message when opening file for read or write fails (issue #2010)
+
+Tests::
+
+  * core: add tests on GUI buffer functions
+
+Build::
+
+  * core: fix build error if CMake option ENABLE_NLS is turned to off or if required dependencies are not found (issue #2026)
+  * core, logger, relay: make zstd dependency optional (issue #2024)
+
+[[v4.0.6]]
+== Version 4.0.6 (2023-10-26)
+
+Bug fixes::
+
+  * core: fix crash when a custom bar item name is already used by a default bar item (issue #2034)
+  * core: fix generation of TOTP on Big Endian systems (issue #2021)
+  * irc: move value `-all` at the end of completions for command `/ignore del`
+  * irc: fix memory leak when joining channels with keys
+
+Build::
+
+  * core: fix build error if CMake option ENABLE_NLS is turned to off or if required dependencies are not found (issue #2026, issue #2031)
+
+[[v4.0.5]]
+== Version 4.0.5 (2023-09-24)
+
+New features::
+
+  * core: automatically backup config file read if it has an unsupported version (issue #2013)
+  * core: display a message when a configuration file is updated to a newer version
+  * python: make stub (weechat.pyi) compatible with Python 3.8 and 3.9 (issue #2006)
+
+Bug fixes::
+
+  * irc: add option irc.look.open_pv_buffer_echo_msg to open private buffer on self message when capability echo-message is enabled (issue #2016)
+  * irc: fix title of private buffers wrongly set to own address when capability echo-message is enabled (issue #2016)
+  * irc: fix autojoin of channels when private buffers are opened (issue #2012)
+  * irc: fix string comparison when CASEMAPPING is set to "ascii"
+  * script: fix removal of script in system directory while trying to install a script (issue #2019)
+  * script: fix autoload of multiple scripts at once with `/script autoload` (issue #2018)
+  * script: fix crash when a `/script` command triggers another `/script` command (issue #923)
+  * xfer: fix memory leak on plugin unload
+
+Tests::
+
+  * irc: add tests on server functions
+
+[[v4.0.4]]
+== Version 4.0.4 (2023-08-22)
+
+Bug fixes::
+
+  * core: fix integer overflow when setting integer option with `++N` or `--N`
+  * core: fix increment/decrement of options weechat.notify.*
+  * irc: add missing tags on multiline messages (issue #1987)
+  * irc: fix redirection of command `/list` when the reply doesn't start with message 321 (start of /list)
+  * irc: fix wrong time displayed for CTCP messages received from self nick (issue #2000)
+  * logger: remove trailing empty line in display of backlog (issue #2002)
+  * perl: fix display of non-ASCII chars after load of a script with Perl >= 5.38 (issue #1996)
+  * script: adjust scroll after command `/script go N`
+  * scripts: fix function string_parse_size on 32-bit systems (python and ruby) (issue #1999)
+  * xfer: fix conversion of string to IPv4 on 32-bit systems (issue #1999)
+
+Tests::
+
+  * irc: fix tests on function irc_join_compare_join_channel (issue #1997)
+  * scripts: fix tests of functions print_date_tag, print_y_date_tags and hook_timer on 32-bit systems (issue #1999)
+
+[[v4.0.3]]
+== Version 4.0.3 (2023-08-08)
+
+Bug fixes::
+
+  * core: fix input length and crash after delete of line (issue #1989)
+  * irc: fix display of self CTCP message containing bold attribute (issue #1981)
+  * irc: fix memory leak in IRC message parser
+  * irc: fix switch to channel manually joined when server option autojoin_dynamic is on and option irc.look.buffer_switch_autojoin is off (issue #1982)
+  * irc: fix display of outgoing notice with channel when capability "echo-message" is enabled (issue #1991)
+  * relay: fix display of IRC CTCP messages received from client (issue #1986)
+
+Build::
+
+  * doc: display a warning if a locale is missing with fallback to English for auto-generated content (issue #1985)
+
+[[v4.0.2]]
+== Version 4.0.2 (2023-07-12)
 
 Bug fixes::
 
   * core: fix renaming of options with command `/item rename` (issue #1978)
   * core: don't send "key_pressed" signal again for the same key press (issue #1976)
   * core: don't send "key_combo_*" signals for incomplete keys (issue #1976)
-  * core: add key ctrl-backspace in /help key (issue #1975)
-  * core: keep keys ctrl-H and ctrl-? (in lower case) if they were manually bound to custom commands in a previous version
-  * core: fix cursor position after `/plugin list -i` or `/plugin list -il`
-  * core: display focus hashtable for debug even if no key is matching
-  * fset: remove extra spaces between min and max values when second format is used
-  * fset: fix mouse actions when second format is used
-  * irc: fix display of country code in message 344 received as whois geo info (issue #1736)
-  * irc: add missing "account-tag" in list of supported capabilities
-  * script: fix cursor position after `/script list -i` or `/script list -il`
-  * script: fix buffer used by command `/script list -i|-il|-o|-ol`
+  * core: add key kbd:[Ctrl+Backspace] in /help key (issue #1975)
+  * core: keep keys `ctrl-H` and `ctrl-?` (in lower case) if they were manually bound to custom commands in a previous version
 
 Tests::
 
@@ -75,7 +262,7 @@ New features::
   * core: insert multiple pasted lines in input instead of sending immediately, add keys to move and delete in a single line and whole input, add option weechat.look.input_multiline_lead_linebreak (issue #1502, issue #1503, issue #1504)
   * core: render newline characters in chat line messages (issue #1908)
   * core: don't split on newline characters in printf_date_tags when input_multiline is set (issue #1909)
-  * core: add key @kbd:[l] in cursor mode to quote line, add variable "_chat_focused_line" in function hashtable sent to hook_focus callback (issue #1913, issue #1914)
+  * core: add key kbd:[l] (lower `L`) in cursor mode to quote line, add variable "_chat_focused_line" in function hashtable sent to hook_focus callback (issue #1913, issue #1914)
   * core: add option `split_return` in command `/input` (issue #1916)
   * core: send all command line parameters not beginning with a dash to all plugins
   * core: add command `/reset` to reset options to their default values
@@ -192,7 +379,7 @@ Build::
   * core: remove obsolete cpack config
   * core: add "stable-number" and "devel-number" in script version.sh
   * core: add quotes around paths in CMake files (issue #29)
-  * doc: convert docgen.py to C, remove autogen files from repository, add parameter `--doc-gen` to `weechat-headless` binary, add CMake option `ENABLE_DOC_INCOMPLETE`
+  * doc: convert docgen.py to C, remove autogen files from repository, add parameter `--doc-gen` to `weechat-headless` binary, add CMake option "ENABLE_DOC_INCOMPLETE"
 
 [[v3.8]]
 == Version 3.8 (2023-01-08)
@@ -1689,7 +1876,7 @@ New features::
   * core: add option weechat.look.hotlist_add_conditions, remove option weechat.look.hotlist_add_buffer_if_away
   * core: add option weechat.look.hotlist_remove (issue #99)
   * core: add options `-beep` and `-current` in command `/print`
-  * core: add bare display mode for easy text selection and click on URLs, new key: kbd:[Alt+l] (`L`), new option "bare" in command `/window`, new options: weechat.look.bare_display_exit_on_input and weechat.look.bare_display_time_format
+  * core: add bare display mode for easy text selection and click on URLs, new key: kbd:[Alt+l] (lower `L`), new option "bare" in command `/window`, new options: weechat.look.bare_display_exit_on_input and weechat.look.bare_display_time_format
   * core: add signals "key_combo_{default|search|cursor}"
   * core: add terabyte unit for size displayed
   * core: display a warning in case of inconsistency between the options weechat.look.save_{config|layout}_on_exit
@@ -2013,7 +2200,7 @@ Documentation::
 Build::
 
   * core: add CA_FILE option in CMake and configure to setup default value of option weechat.network.gnutls_ca_file (default is "/etc/ssl/certs/ca-certificates.crt") (task #12725)
-  * core: disable build of doc by default, add CMake option ENABLE_MAN to compile man page (off by default)
+  * core: disable build of doc by default, add CMake option "ENABLE_MAN" to compile man page (off by default)
   * xfer: fix compilation on OpenBSD (bug #39071)
 
 [[v0.4.1]]

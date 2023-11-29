@@ -44,6 +44,7 @@
     { #__name, CURLOPT_##__name, URL_TYPE_##__type, __constants }
 
 
+int url_debug = 0;
 char *url_type_string[] = { "string", "long", "long long", "mask", "list" };
 
 /*
@@ -1013,8 +1014,6 @@ struct t_url_option url_options[] =
     { NULL, 0, 0, NULL },
 };
 
-char url_error[CURL_ERROR_SIZE + 1];
-
 
 /*
  * Searches for a constant in array of constants.
@@ -1116,7 +1115,7 @@ weeurl_search_option (const char *name)
  */
 
 size_t
-weeurl_read (void *buffer, size_t size, size_t nmemb, void *stream)
+weeurl_read_stream (void *buffer, size_t size, size_t nmemb, void *stream)
 {
     return (stream) ? fread (buffer, size, nmemb, stream) : 0;
 }
@@ -1126,9 +1125,24 @@ weeurl_read (void *buffer, size_t size, size_t nmemb, void *stream)
  */
 
 size_t
-weeurl_write (void *buffer, size_t size, size_t nmemb, void *stream)
+weeurl_write_stream (void *buffer, size_t size, size_t nmemb, void *stream)
 {
     return (stream) ? fwrite (buffer, size, nmemb, stream) : 0;
+}
+
+/*
+ * Adds data to a dynamic string (callback called to catch stdout).
+ */
+
+size_t
+weeurl_write_string (void *buffer, size_t size, size_t nmemb, void *string)
+{
+    if (!string)
+        return 0;
+
+    string_dyn_concat ((char **)string, buffer, size * nmemb);
+
+    return size * nmemb;
 }
 
 /*
@@ -1303,6 +1317,17 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
 /*
  * Downloads URL using options.
  *
+ * If output is not NULL, it must be a hashtable with keys and values of type
+ * "string". The following keys may be added in the hashtable,
+ * depending on the success or error of the URL transfer:
+ *
+ *   key           | description
+ *   --------------|--------------------------------------------------------
+ *   response_code | HTTP response code (as string)
+ *   headers       | HTTP headers in response
+ *   output        | stdout (set only if "file_out" was not set in options)
+ *   error         | error message (set only in case of error)
+ *
  * Returns:
  *   0: OK
  *   1: invalid URL
@@ -1312,19 +1337,29 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
  */
 
 int
-weeurl_download (const char *url, struct t_hashtable *options)
+weeurl_download (const char *url, struct t_hashtable *options,
+                 struct t_hashtable *output)
 {
     CURL *curl;
     struct t_url_file url_file[2];
     char *url_file_option[2] = { "file_in", "file_out" };
     char *url_file_mode[2] = { "rb", "wb" };
+    char url_error[CURL_ERROR_SIZE + 1], url_error_code[12];
+    char **string_headers, **string_output;
+    char str_response_code[32];
     CURLoption url_file_opt_func[2] = { CURLOPT_READFUNCTION, CURLOPT_WRITEFUNCTION };
     CURLoption url_file_opt_data[2] = { CURLOPT_READDATA, CURLOPT_WRITEDATA };
-    void *url_file_opt_cb[2] = { &weeurl_read, &weeurl_write };
+    void *url_file_opt_cb[2] = { &weeurl_read_stream, &weeurl_write_stream };
     struct t_proxy *ptr_proxy;
-    int rc, curl_rc, i;
+    int rc, curl_rc, i, output_to_file;
+    long response_code;
 
     rc = 0;
+
+    string_headers = NULL;
+    string_output = NULL;
+    url_error[0] = '\0';
+    url_error_code[0] = '\0';
 
     for (i = 0; i < 2; i++)
     {
@@ -1334,6 +1369,7 @@ weeurl_download (const char *url, struct t_hashtable *options)
 
     if (!url || !url[0])
     {
+        snprintf (url_error, sizeof (url_error), "%s", _("invalid URL"));
         rc = 1;
         goto end;
     }
@@ -1341,6 +1377,7 @@ weeurl_download (const char *url, struct t_hashtable *options)
     curl = curl_easy_init ();
     if (!curl)
     {
+        snprintf (url_error, sizeof (url_error), "%s", _("not enough memory"));
         rc = 3;
         goto end;
     }
@@ -1358,7 +1395,19 @@ weeurl_download (const char *url, struct t_hashtable *options)
             weeurl_set_proxy (curl, ptr_proxy);
     }
 
+    /* set callback to retrieve HTTP headers */
+    if (output)
+    {
+        string_headers = string_dyn_alloc (1024);
+        if (string_headers)
+        {
+            curl_easy_setopt (curl, CURLOPT_HEADERFUNCTION, &weeurl_write_string);
+            curl_easy_setopt (curl, CURLOPT_HEADERDATA, string_headers);
+        }
+    }
+
     /* set file in/out from options in hashtable */
+    output_to_file = 0;
     if (options)
     {
         for (i = 0; i < 2; i++)
@@ -1369,12 +1418,30 @@ weeurl_download (const char *url, struct t_hashtable *options)
                 url_file[i].stream = fopen (url_file[i].filename, url_file_mode[i]);
                 if (!url_file[i].stream)
                 {
+                    snprintf (url_error, sizeof (url_error),
+                              (i == 0) ?
+                              _("file \"%s\" not found") :
+                              _("can not write file \"%s\""),
+                              url_file[i].filename);
                     rc = 4;
                     goto end;
                 }
                 curl_easy_setopt (curl, url_file_opt_func[i], url_file_opt_cb[i]);
                 curl_easy_setopt (curl, url_file_opt_data[i], url_file[i].stream);
+                if (i == 1)
+                    output_to_file = 1;
             }
+        }
+    }
+
+    /* redirect stdout if no filename was given (via key "file_out") */
+    if (output && !output_to_file)
+    {
+        string_output = string_dyn_alloc (1024);
+        if (string_output)
+        {
+            curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, &weeurl_write_string);
+            curl_easy_setopt (curl, CURLOPT_WRITEDATA, string_output);
         }
     }
 
@@ -1386,11 +1453,37 @@ weeurl_download (const char *url, struct t_hashtable *options)
 
     /* perform action! */
     curl_rc = curl_easy_perform (curl);
-    if (curl_rc != CURLE_OK)
+    if (curl_rc == CURLE_OK)
     {
-        fprintf (stderr,
-                 _("curl error %d (%s) (URL: \"%s\")\n"),
-                 curl_rc, url_error, url);
+        if (output)
+        {
+            curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &response_code);
+            snprintf (str_response_code, sizeof (str_response_code),
+                      "%ld", response_code);
+            hashtable_set (output, "response_code", str_response_code);
+        }
+    }
+    else
+    {
+        if (output)
+        {
+            snprintf (url_error_code, sizeof (url_error_code), "%d", curl_rc);
+            if (!url_error[0])
+            {
+                snprintf (url_error, sizeof (url_error),
+                          "%s", _("transfer error"));
+            }
+        }
+        else
+        {
+            /*
+             * URL transfer done in a forked process: display error on stderr,
+             * which will be sent to the hook_process callback
+             */
+            fprintf (stderr,
+                     _("curl error %d (%s) (URL: \"%s\")\n"),
+                     curl_rc, url_error, url);
+        }
         rc = 2;
     }
 
@@ -1402,6 +1495,23 @@ end:
     {
         if (url_file[i].stream)
             fclose (url_file[i].stream);
+    }
+    if (output)
+    {
+        if (string_headers)
+        {
+            hashtable_set (output, "headers", *string_headers);
+            string_dyn_free (string_headers, 1);
+        }
+        if (string_output)
+        {
+            hashtable_set (output, "output", *string_output);
+            string_dyn_free (string_output, 1);
+        }
+        if (url_error[0])
+            hashtable_set (output, "error", url_error);
+        if (url_error_code[0])
+            hashtable_set (output, "error_code_curl", url_error_code);
     }
     return rc;
 }
@@ -1462,4 +1572,24 @@ weeurl_option_add_to_infolist (struct t_infolist *infolist,
     }
 
     return 1;
+}
+
+/*
+ * Initializes URL.
+ */
+
+void
+weeurl_init ()
+{
+    curl_global_init (CURL_GLOBAL_ALL);
+}
+
+/*
+ * Ends URL.
+ */
+
+void
+weeurl_end ()
+{
+    curl_global_cleanup ();
 }

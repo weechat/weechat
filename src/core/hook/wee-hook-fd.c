@@ -203,8 +203,9 @@ hook_fd (struct t_weechat_plugin *plugin, int fd, int flag_read,
 void
 hook_fd_exec ()
 {
-    int i, num_fd, timeout, ready, found;
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
+    int i, num_fd, timeout, ready, found;
 
     if (!weechat_hooks[HOOK_TYPE_FD])
         return;
@@ -279,12 +280,12 @@ hook_fd_exec ()
             }
             if (found)
             {
-                ptr_hook->running = 1;
+                hook_callback_start (ptr_hook, &hook_exec_cb);
                 (void) (HOOK_FD(ptr_hook, callback)) (
                     ptr_hook->callback_pointer,
                     ptr_hook->callback_data,
                     HOOK_FD(ptr_hook, fd));
-                ptr_hook->running = 0;
+                hook_callback_end (ptr_hook, &hook_exec_cb);
             }
         }
 

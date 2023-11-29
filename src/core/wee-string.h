@@ -24,6 +24,9 @@
 #include <stdint.h>
 #include <regex.h>
 
+#define STRING_NUM_CONCAT_BUFFERS 8
+#define STR_CONCAT(separator, argz...) string_concat (separator, ##argz, NULL)
+
 typedef uint32_t string_shared_count_t;
 
 typedef uint32_t string_dyn_size_t;
@@ -44,6 +47,8 @@ extern char *string_reverse_screen (const char *string);
 extern char *string_repeat (const char *string, int count);
 extern char *string_tolower (const char *string);
 extern char *string_toupper (const char *string);
+extern char *string_tolower_range (const char *string, int range);
+extern char *string_toupper_range (const char *string, int range);
 extern int string_charcmp (const char *string1, const char *string2);
 extern int string_charcasecmp (const char *string1, const char *string2);
 extern int string_charcasecmp_range (const char *string1, const char *string2,
@@ -141,8 +146,12 @@ extern int string_levenshtein (const char *string1, const char *string2,
 extern char *string_replace_with_callback (const char *string,
                                            const char *prefix,
                                            const char *suffix,
+                                           int allow_escpae,
                                            const char **list_prefix_no_replace,
-                                           char *(*callback)(void *data, const char *text),
+                                           char *(*callback)(void *data,
+                                                             const char *prefix,
+                                                             const char *text,
+                                                             const char *suffix),
                                            void *callback_data,
                                            int *errors);
 extern void string_get_priority_and_name (const char *string,
@@ -155,6 +164,8 @@ extern char **string_dyn_alloc (int size_alloc);
 extern int string_dyn_copy (char **string, const char *new_string);
 extern int string_dyn_concat (char **string, const char *add, int bytes);
 extern char *string_dyn_free (char **string, int free_string);
+extern const char *string_concat (const char *separator, ...);
+extern void string_init ();
 extern void string_end ();
 
 #endif /* WEECHAT_STRING_H */

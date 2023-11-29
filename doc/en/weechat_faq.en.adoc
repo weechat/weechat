@@ -583,6 +583,31 @@ If you are using the macOS Terminal app, enable the option
 "Use option as meta key" in menu Settings/Keyboard after which you can use the
 kbd:[Option] key as meta key.
 
+[[enter_key]]
+=== Some keys including Enter are not working, why?
+
+If you run a WeeChat < 4.0.0 with configuration files created by any
+version ≥ 4.0.0, the keys names become invalid and many keys won't work at all. +
+To repair them, exit WeeChat, remove all sections `[key*]` from weechat.conf
+and start WeeChat again: all default keys will be created.
+
+[[key_f11]]
+=== Key F11 maximizes the terminal window, how can I scroll up the nicklist?
+
+The key kbd:[F11] is commonly used by terminals to maximize the window, and
+kbd:[F11]/kbd:[F12] are the default keys in WeeChat to scroll the nicklist.
+
+You can bind other keys, for example kbd:[Shift+F11] and kbd:[Shift+F12],
+with WeeChat ≥ 4.0.0:
+
+----
+/key bind shift-f11 /bar scroll nicklist * -100%
+/key bind shift-f12 /bar scroll nicklist * +100%
+----
+
+Other solution is to enable mouse (key: kbd:[Alt+m]) and scroll with the mouse
+wheel (see also questions about <<mouse,mouse>>).
+
 [[customize_key_bindings]]
 === How can I customize key bindings?
 
@@ -925,34 +950,19 @@ link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 buffer property to set the max hotlist level for some nicks, per buffer,
 or per group of buffers (like IRC servers).
 
-To only disable highlights, you'd have to set it to 2:
+To only disable highlights, you'd have to set it to 2.
+
+For the current buffer:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-This buffer property isn't stored in the configuration though.
-To automatically reapply these buffer properties, you would need the
-_buffer_autoset.py_ script:
+For all channels on server "libera":
 
 ----
-/script install buffer_autoset.py
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-For example, to permanently disable highlights from "mike" on #weechat
-on the IRC server libera:
-
-----
-/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
-----
-
-To apply it to the entire libera server instead:
-
-----
-/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
-----
-
-For more examples, see `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === How can I change target buffer for commands on merged buffers (like buffer with servers)?
@@ -1080,7 +1090,8 @@ You can try following tips to consume less memory:
 
 You can follow same tips as for <<memory_usage,memory>>, and these ones:
 
-* Hide "nicklist" bar: `/bar hide nicklist`.
+* Hide "nicklist" bar: `/bar hide nicklist` (key: kbd:[Alt+Shift+N]).
+* Disable "buflist": `/buflist disable` (key: kbd:[Alt+Shift+B]).
 * Remove display of seconds in status bar time:
   `+/set weechat.look.item_time_format "%H:%M"+` (this is the default value).
 * Disable real time check of misspelled words in command line (if you enabled it):
@@ -1102,12 +1113,18 @@ Disable answers to all CTCP queries:
 
 ----
 /set irc.ctcp.clientinfo ""
-/set irc.ctcp.finger ""
 /set irc.ctcp.source ""
 /set irc.ctcp.time ""
-/set irc.ctcp.userinfo ""
 /set irc.ctcp.version ""
 /set irc.ctcp.ping ""
+----
+
+With WeeChat < 4.1.0, other CTCP queries were replied by default and must be
+disabled as well:
+
+----
+/set irc.ctcp.finger ""
+/set irc.ctcp.userinfo ""
 ----
 
 Unload and disable auto-loading of "xfer" plugin (used for IRC DCC):
@@ -1143,6 +1160,34 @@ stored in _sec.conf_ with the `/secure` command).
 
 See the link:weechat_user.en.html#files_and_directories[User's guide / Files and directories ^↗^^]
 for more information about configuration files.
+
+[[move_to_another_device]]
+=== I want to move my WeeChat to another device and keep my config, what should I copy?
+
+First check directories used by WeeChat with this command: `/debug dirs`. +
+Directories home/config and home/data must be copied (all files and sub-directories).
+
+For example if you're using XDG directories (default with WeeChat ≥ 3.2),
+the directories should be `$HOME/.config/weechat` and `$HOME/.local/share/weechat`. +
+If you're using a single directory (default with WeeChat < 3.2), the directory
+should be `$HOME/.weechat`.
+
+[IMPORTANT]
+The WeeChat version on the new device must be greater than or equal to the version
+on the initial device. +
+Downgrading WeeChat configuration is *NOT SUPPORTED* and can break it,
+leading to unusable WeeChat.
+
+Steps:
+
+. Quit Weechat: `/quit` (or `/upgrade -quit` if you want to resume the session,
+  which includes content of all buffers).
+. Copy all directories, sub-directories and files to the new device, keeping
+  same names and permissions.
+. Optional: copy any file outside these directories that you refer to in your
+  configuration (it's not recommended to use files outside WeeChat directories).
+. Start WeeChat on the new device: `weechat` (or `weechat --upgrade` if you
+  saved the session).
 
 [[development]]
 == Development

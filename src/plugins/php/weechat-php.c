@@ -164,6 +164,8 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_config_string_default, arginfo_weechat_config_string_default)
     PHP_FE(weechat_config_color, arginfo_weechat_config_color)
     PHP_FE(weechat_config_color_default, arginfo_weechat_config_color_default)
+    PHP_FE(weechat_config_enum, arginfo_weechat_config_enum)
+    PHP_FE(weechat_config_enum_default, arginfo_weechat_config_enum_default)
     PHP_FE(weechat_config_write_option, arginfo_weechat_config_write_option)
     PHP_FE(weechat_config_write_line, arginfo_weechat_config_write_line)
     PHP_FE(weechat_config_write, arginfo_weechat_config_write)
@@ -197,6 +199,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_hook_fd, arginfo_weechat_hook_fd)
     PHP_FE(weechat_hook_process, arginfo_weechat_hook_process)
     PHP_FE(weechat_hook_process_hashtable, arginfo_weechat_hook_process_hashtable)
+    PHP_FE(weechat_hook_url, arginfo_weechat_hook_url)
     PHP_FE(weechat_hook_connect, arginfo_weechat_hook_connect)
     PHP_FE(weechat_hook_line, arginfo_weechat_hook_line)
     PHP_FE(weechat_hook_print, arginfo_weechat_hook_print)
@@ -977,7 +980,7 @@ weechat_php_command_cb (const void *pointer, void *data,
             {
                 /* load PHP script */
                 path_script = plugin_script_search_path (weechat_php_plugin,
-                                                         ptr_name);
+                                                         ptr_name, 1);
                 weechat_php_load ((path_script) ? path_script : ptr_name,
                                   NULL);
                 if (path_script)

@@ -142,6 +142,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    wee-secure-config.c          | Options des données sécurisées (fichier sec.conf).
 |    wee-signal.c                 | Fonctions sur les signaux.
 |    wee-string.c                 | Fonctions sur les chaînes de caractères.
+|    wee-sys.c                    | Fonctions système.
 |    wee-upgrade-file.c           | Système de mise à jour interne.
 |    wee-upgrade.c                | Mise à jour du cœur de WeeChat (tampons, lignes, historique, ...).
 |    wee-url.c                    | Transfert d'URL (en utilisant libcurl).
@@ -149,7 +150,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    wee-util.c                   | Quelques autres fonctions utilitaires.
 |    wee-version.c                | Fonctions pour la version de WeeChat.
 |    weechat.c                    | Fonctions principales : options de ligne de commande, démarrage.
-|    hook/                        | Hook functions.
+|    hook/                        | Fonctions "hook".
 |       wee-hook-command-run.c    | Hook "command_run".
 |       wee-hook-command.c        | Hook "command".
 |       wee-hook-completion.c     | Hook "completion".
@@ -168,6 +169,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       wee-hook-process.c        | Hook "process".
 |       wee-hook-signal.c         | Hook "signal".
 |       wee-hook-timer.c          | Hook "timer".
+|       wee-hook-url.c            | Hook "url".
 | gui/                            | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces).
 |    gui-bar-item.c               | Objets de barre.
 |    gui-bar-window.c             | Fenêtres de barre.
@@ -238,6 +240,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       buflist.c                   | Fonctions principales de Buflist.
 |       buflist-bar-item.c          | Objets de barre Buflist.
 |       buflist-command.c           | Commandes pour Buflist.
+|       buflist-completion.c        | Complétions pour Buflist.
 |       buflist-config.c            | Options de configuration pour Buflist (fichier buflist.conf).
 |       buflist-info.c              | Info/infolists/hdata pour Buflist.
 |       buflist-mouse.c             | Actions souris pour Buflist.
@@ -283,6 +286,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       irc-info.c                  | Info/infolists/hdata pour IRC.
 |       irc-input.c                 | Entrée de commandes/texte.
 |       irc-join.c                  | Fonctions pour les listes de canaux à rejoindre.
+|       irc-list.c                  | Tampon pour la réponse à la commande /list.
 |       irc-message.c               | Fonctions pour manipuler les messages IRC.
 |       irc-mode.c                  | Fonctions pour les modes de canal/pseudo.
 |       irc-modelist.c              | Listes de modes de canaux IRC (+b, +e, +I, ...).
@@ -421,6 +425,9 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-core-url.cpp          | Tests : URLs.
 |          test-core-utf8.cpp         | Tests : UTF-8.
 |          test-core-util.cpp         | Tests : fonctions utiles.
+|          test-core-sys.cpp          | Tests : fonctions système.
+|          hook/                      | Racine des tests pour les hooks.
+|             test-hook-command.cpp   | Tests : hooks "command".
 |       gui/                          | Racine des tests unitaires pour les interfaces.
 |          test-gui-bar-window.cpp    | Tests : fonctions de fenêtres de barre.
 |          test-gui-buffer.cpp        | Tests : fonctions de tampons.
@@ -438,8 +445,10 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-irc-channel.cpp    | Tests : canaux IRC.
 |             test-irc-color.cpp      | Tests : couleurs IRC.
 |             test-irc-config.cpp     | Tests : configuration IRC.
+|             test-irc-ctcp.cpp       | Tests : CTCP IRC.
 |             test-irc-ignore.cpp     | Tests : ignores IRC.
 |             test-irc-join.cpp       | Tests : fonctions de join IRC.
+|             test-irc-list.cpp       | Tests : tampon IRC pour la réponse à la commande /list.
 |             test-irc-message.cpp    | Tests : messages IRC.
 |             test-irc-mode.cpp       | Tests : modes IRC.
 |             test-irc-nick.cpp       | Tests : pseudos IRC.

@@ -27,23 +27,23 @@
 set -o errexit
 
 # check git repository
-ROOT_DIR=$(git rev-parse --show-toplevel)
-cd "${ROOT_DIR}"
+root_dir=$(git rev-parse --show-toplevel)
+cd "${root_dir}"
 
-SHELL_SCRIPTS=$(git ls-files "*.sh")
-PYTHON_SCRIPTS=$(git ls-files "*.py")
+shell_scripts=$(git ls-files "*.sh")
+python_scripts=$(git ls-files "*.py")
 
 # display commands
 set -x
 
 # check shell scripts
-for script in $SHELL_SCRIPTS; do
-    shellcheck "${ROOT_DIR}/$script"
+for script in ${shell_scripts}; do
+    shellcheck "${root_dir}/$script"
 done
 
 # check Python scripts
-for script in $PYTHON_SCRIPTS; do
-    flake8 --max-line-length=100 --builtins=_ "${ROOT_DIR}/$script"
-    pylint --additional-builtins=_ "${ROOT_DIR}/$script"
-    bandit "${ROOT_DIR}/$script"
+for script in ${python_scripts}; do
+    flake8 --max-line-length=100 --builtins=_ "${root_dir}/$script"
+    pylint --additional-builtins=_ "${root_dir}/$script"
+    bandit "${root_dir}/$script"
 done

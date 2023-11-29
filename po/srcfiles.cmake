@@ -35,6 +35,8 @@ SET(WEECHAT_SOURCES
 ./src/core/hook/wee-hook-signal.h
 ./src/core/hook/wee-hook-timer.c
 ./src/core/hook/wee-hook-timer.h
+./src/core/hook/wee-hook-url.c
+./src/core/hook/wee-hook-url.h
 ./src/core/wee-arraylist.c
 ./src/core/wee-arraylist.h
 ./src/core/wee-backtrace.c
@@ -89,6 +91,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-signal.h
 ./src/core/wee-string.c
 ./src/core/wee-string.h
+./src/core/wee-sys.c
+./src/core/wee-sys.h
 ./src/core/wee-upgrade.c
 ./src/core/wee-upgrade-file.c
 ./src/core/wee-upgrade-file.h
@@ -179,6 +183,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/buflist/buflist.c
 ./src/plugins/buflist/buflist-command.c
 ./src/plugins/buflist/buflist-command.h
+./src/plugins/buflist/buflist-completion.c
+./src/plugins/buflist/buflist-completion.h
 ./src/plugins/buflist/buflist-config.c
 ./src/plugins/buflist/buflist-config.h
 ./src/plugins/buflist/buflist.h
@@ -258,6 +264,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-input.h
 ./src/plugins/irc/irc-join.c
 ./src/plugins/irc/irc-join.h
+./src/plugins/irc/irc-list.c
+./src/plugins/irc/irc-list.h
 ./src/plugins/irc/irc-message.c
 ./src/plugins/irc/irc-message.h
 ./src/plugins/irc/irc-mode.c

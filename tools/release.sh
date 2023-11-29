@@ -36,93 +36,93 @@ release_error ()
 
 release_start ()
 {
-    ROOT_DIR="$(git rev-parse --show-toplevel)"
+    root_dir="$(git rev-parse --show-toplevel)"
     if [ -n "$(git status --porcelain)" ]; then
         release_error "working directory not clean"
     fi
-    VERSION=$("${ROOT_DIR}/version.sh" devel)
-    if git rev-parse "v${VERSION}" 2>/dev/null; then
-        release_error "tag v${VERSION} already exists"
+    version=$("${root_dir}/version.sh" devel)
+    if git rev-parse "v${version}" 2>/dev/null; then
+        release_error "tag v${version} already exists"
     fi
-    MSG=$(git log -1 --pretty=%B | tr -d "\n")
-    if [ "${MSG}" = "Version ${VERSION}" ]; then
+    msg=$(git log -1 --pretty=%B | tr -d "\n")
+    if [ "${msg}" = "Version ${version}" ]; then
         release_error "commit for version already exists"
     fi
-    DATE=$(date +"%Y-%m-%d")
-    BUILD_DIR="${ROOT_DIR}/release/${VERSION}"
-    if [ -d "${BUILD_DIR}" ]; then
-        release_error "directory ${BUILD_DIR} already exists"
+    date=$(date +"%Y-%m-%d")
+    build_dir="${root_dir}/release/${version}"
+    if [ -d "${build_dir}" ]; then
+        release_error "directory ${build_dir} already exists"
     fi
-    mkdir -p "${BUILD_DIR}"
-    PKG_TAR="${BUILD_DIR}/weechat-${VERSION}.tar"
-    CHGLOG="${BUILD_DIR}/doc/ChangeLog.html"
-    RN="${BUILD_DIR}/doc/ReleaseNotes.html"
+    mkdir -p "${build_dir}"
+    pkg_tar="${build_dir}/weechat-${version}.tar"
+    chglog="${build_dir}/doc/ChangeLog.html"
+    rn="${build_dir}/doc/ReleaseNotes.html"
 }
 
 release_bump_version ()
 {
-    "${ROOT_DIR}/tools/bump_version.sh" stable
+    "${root_dir}/tools/bump_version.sh" stable
     sed -i \
-        -e "s/^\(== Version ${VERSION}\) (under dev)$/\1 (${DATE})/" \
-        "${ROOT_DIR}/ChangeLog.adoc" \
-        "${ROOT_DIR}/ReleaseNotes.adoc"
+        -e "s/^\(== Version ${version}\) (under dev)$/\1 (${date})/" \
+        "${root_dir}/ChangeLog.adoc" \
+        "${root_dir}/ReleaseNotes.adoc"
 }
 
 release_commit_tag ()
 {
-    cd "${ROOT_DIR}"
-    git commit -m "Version ${VERSION}" version.sh ChangeLog.adoc ReleaseNotes.adoc || release_error "git commit error, release already done?"
-    git tag -a "v${VERSION}" -m "WeeChat ${VERSION}"
+    cd "${root_dir}"
+    git commit -m "Version ${version}" version.sh ChangeLog.adoc ReleaseNotes.adoc || release_error "git commit error, release already done?"
+    git tag -a "v${version}" -m "WeeChat ${version}"
 }
 
 release_build ()
 {
-    cd "${BUILD_DIR}"
+    cd "${build_dir}"
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX="${BUILD_DIR}/install" \
-        -DWEECHAT_HOME="${BUILD_DIR}/home" \
+        -DCMAKE_INSTALL_PREFIX="${build_dir}/install" \
+        -DWEECHAT_HOME="${build_dir}/home" \
         -DENABLE_DOC=ON \
         -DENABLE_MAN=ON \
         -DENABLE_TESTS=ON \
-        "${ROOT_DIR}"
+        "${root_dir}"
     make install
     make changelog
     make rn
     make test CTEST_OUTPUT_ON_FAILURE=TRUE
     make dist
-    VERSION_WEECHAT=$("${BUILD_DIR}/install/bin/weechat" --version)
-    if [ "${VERSION_WEECHAT}" != "${VERSION}" ]; then
-        release_error "unexpected version \"${VERSION_WEECHAT}\" (expected: \"${VERSION}\")"
+    version_weechat=$("${build_dir}/install/bin/weechat" --version)
+    if [ "${version_weechat}" != "${version}" ]; then
+        release_error "unexpected version \"${version_weechat}\" (expected: \"${version}\")"
     fi
 }
 
 release_test_pkg ()
 {
-    cd "${BUILD_DIR}"
-    tar axvf "weechat-${VERSION}.tar.xz"
-    cd "weechat-${VERSION}"
-    PKG_DIR="$(pwd)"
-    SCRIPT_VERSION="${PKG_DIR}/version.sh"
-    [ "$("${SCRIPT_VERSION}" stable)" = "${VERSION}" ] || release_error "wrong stable version in ${SCRIPT_VERSION}"
-    [ "$("${SCRIPT_VERSION}" devel)" = "${VERSION}" ] || release_error "wrong devel version in ${SCRIPT_VERSION}"
-    [ "$("${SCRIPT_VERSION}" devel-full)" = "${VERSION}" ] || release_error "wrong devel-full version in ${SCRIPT_VERSION}"
+    cd "${build_dir}"
+    tar axvf "weechat-${version}.tar.xz"
+    cd "weechat-${version}"
+    pkg_dir="$(pwd)"
+    script_version="${pkg_dir}/version.sh"
+    [ "$("${script_version}" stable)" = "${version}" ] || release_error "wrong stable version in ${script_version}"
+    [ "$("${script_version}" devel)" = "${version}" ] || release_error "wrong devel version in ${script_version}"
+    [ "$("${script_version}" devel-full)" = "${version}" ] || release_error "wrong devel-full version in ${script_version}"
     mkdir build
     cd build
-    PKG_BUILD_DIR="$(pwd)"
+    pkg_build_dir="$(pwd)"
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX="${PKG_BUILD_DIR}/install" \
-        -DWEECHAT_HOME="${PKG_BUILD_DIR}/home" \
+        -DCMAKE_INSTALL_PREFIX="${pkg_build_dir}/install" \
+        -DWEECHAT_HOME="${pkg_build_dir}/home" \
         -DENABLE_DOC=ON \
         -DENABLE_MAN=ON \
         -DENABLE_TESTS=ON \
-        "${PKG_DIR}"
+        "${pkg_dir}"
     make install
     make test CTEST_OUTPUT_ON_FAILURE=TRUE
-    VERSION_WEECHAT=$("${PKG_BUILD_DIR}/install/bin/weechat" --version)
-    if [ "${VERSION_WEECHAT}" != "${VERSION}" ]; then
-        release_error "unexpected version \"${VERSION_WEECHAT}\" (expected: \"${VERSION}\")"
+    version_weechat=$("${pkg_build_dir}/install/bin/weechat" --version)
+    if [ "${version_weechat}" != "${version}" ]; then
+        release_error "unexpected version \"${version_weechat}\" (expected: \"${version}\")"
     fi
 }
 
@@ -131,16 +131,16 @@ release_end ()
     # display a report about the release made
     echo
     echo "========================= WeeChat release status ========================="
-    echo "  version  : ${VERSION}"
-    echo "  date     : ${DATE}"
-    echo "  build dir: ${BUILD_DIR}"
+    echo "  version  : ${version}"
+    echo "  date     : ${date}"
+    echo "  build dir: ${build_dir}"
     echo "  packages :"
-    for PKG in "${PKG_TAR}".*; do
-        echo "    $PKG"
+    for pkg in "${pkg_tar}".*; do
+        echo "    $pkg"
     done
     echo "  chglog/rn:"
-    echo "    $CHGLOG"
-    echo "    $RN"
+    echo "    $chglog"
+    echo "    $rn"
     echo "=========================================================================="
     echo
     echo "*** SUCCESS! ***"

@@ -83,7 +83,7 @@ def test_strings():
     check(weechat.string_parse_size('123 b') == 123)
     check(weechat.string_parse_size('120k') == 120000)
     check(weechat.string_parse_size('1500m') == 1500000000)
-    check(weechat.string_parse_size('3g') == 3000000000)
+    check(weechat.string_parse_size('2g') == 2000000000)
     check(weechat.string_color_code_size('') == 0)
     check(weechat.string_color_code_size('test') == 0)
     str_color = weechat.color('yellow,red')
@@ -327,16 +327,20 @@ def test_config():
         'option_delete_cb', '',
     )
     check(ptr_opt_enum != '')
+    check(weechat.config_enum(ptr_opt_enum) == 1)
     check(weechat.config_integer(ptr_opt_enum) == 1)
     check(weechat.config_string(ptr_opt_enum) == 'val2')
     check(weechat.config_option_set(ptr_opt_enum, 'val1', 1) == 2)  # SET_OK_CHANGED
     check(weechat.config_option_set(ptr_opt_enum, 'val1', 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_enum(ptr_opt_enum) == 0)
     check(weechat.config_integer(ptr_opt_enum) == 0)
     check(weechat.config_string(ptr_opt_enum) == 'val1')
+    check(weechat.config_enum_default(ptr_opt_enum) == 1)
     check(weechat.config_integer_default(ptr_opt_enum) == 1)
     check(weechat.config_string_default(ptr_opt_enum) == 'val2')
     check(weechat.config_option_reset(ptr_opt_enum, 1) == 2)  # SET_OK_CHANGED
     check(weechat.config_option_reset(ptr_opt_enum, 1) == 1)  # SET_OK_SAME_VALUE
+    check(weechat.config_enum(ptr_opt_enum) == 1)
     check(weechat.config_integer(ptr_opt_enum) == 1)
     check(weechat.config_string(ptr_opt_enum) == 'val2')
     # search option
@@ -418,8 +422,8 @@ def test_display():
     weechat.prnt('', '## test print core buffer')
     weechat.prnt_date_tags('', 946681200, 'tag1,tag2',
                            '## test print_date_tags core buffer')
-    weechat.prnt_date_tags('', 5680744830, 'tag1,tag2',
-                           '## test print_date_tags core buffer, year 2150')
+    weechat.prnt_date_tags('', 2146383600, 'tag1,tag2',
+                           '## test print_date_tags core buffer, January, 6th 2038')
     hdata_buffer = weechat.hdata_get('buffer')
     hdata_lines = weechat.hdata_get('lines')
     hdata_line = weechat.hdata_get('line')
@@ -428,7 +432,7 @@ def test_display():
     own_lines = weechat.hdata_pointer(hdata_buffer, buffer, 'own_lines')
     line = weechat.hdata_pointer(hdata_lines, own_lines, 'last_line')
     data = weechat.hdata_pointer(hdata_line, line, 'data')
-    check(weechat.hdata_time(hdata_line_data, data, 'date') == 5680744830)
+    check(weechat.hdata_time(hdata_line_data, data, 'date') == 2146383600)
     buffer = weechat.buffer_new('test_formatted',
                                 'buffer_input_cb', '', 'buffer_close_cb', '')
     check(buffer != '')
@@ -444,8 +448,8 @@ def test_display():
     weechat.prnt_y(buffer, 0, '## test print_y free buffer')
     weechat.prnt_y_date_tags(buffer, 0, 946681200, 'tag1,tag2',
                              '## test print_y_date_tags free buffer')
-    weechat.prnt_y_date_tags(buffer, 1, 5680744830, 'tag1,tag2',
-                             '## test print_y_date_tags free buffer, year 2150')
+    weechat.prnt_y_date_tags(buffer, 1, 2146383600, 'tag1,tag2',
+                             '## test print_y_date_tags free buffer, January, 6th 2038')
     weechat.buffer_close(buffer)
 
 
@@ -497,12 +501,12 @@ def test_hooks():
     weechat.unhook(hook_cmd)
     weechat.unhook(hook_cmplt)
     # hook_timer
-    hook_timer = weechat.hook_timer(5000111000, 0, 1,
+    hook_timer = weechat.hook_timer(2000111000, 0, 1,
                                     'timer_cb', 'timer_cb_data')
     ptr_infolist = weechat.infolist_get('hook', hook_timer, '')
     check(ptr_infolist != '')
     check(weechat.infolist_next(ptr_infolist) == 1)
-    check(weechat.infolist_string(ptr_infolist, 'interval') == '5000111000')
+    check(weechat.infolist_string(ptr_infolist, 'interval') == '2000111000')
     weechat.infolist_free(ptr_infolist)
     weechat.unhook(hook_timer)
 
@@ -525,8 +529,8 @@ def infolist_cb(data, infolist_name, pointer, arguments):
     check(weechat.infolist_new_var_pointer(item, 'pointer', '0xabcdef') != '')
     # Tue Jan 06 2009 08:40:30 GMT+0000
     check(weechat.infolist_new_var_time(item, 'time1', 1231231230) != '')
-    # Tue Jan 06 2150 08:40:30 GMT+0000
-    check(weechat.infolist_new_var_time(item, 'time2', 5680744830) != '')
+    # Wed Jan 06 2038 09:40:00 GMT+0000
+    check(weechat.infolist_new_var_time(item, 'time2', 2146383600) != '')
     return infolist
 
 
@@ -543,7 +547,7 @@ def test_infolist():
     check(weechat.infolist_string(ptr_infolist, 'string') == 'test string')
     check(weechat.infolist_pointer(ptr_infolist, 'pointer') == '0xabcdef')
     check(weechat.infolist_time(ptr_infolist, 'time1') == 1231231230)
-    check(weechat.infolist_time(ptr_infolist, 'time2') == 5680744830)
+    check(weechat.infolist_time(ptr_infolist, 'time2') == 2146383600)
     check(weechat.infolist_fields(ptr_infolist) == 'i:integer,s:string,p:pointer,t:time1,t:time2')
     check(weechat.infolist_next(ptr_infolist) == 0)
     weechat.infolist_free(ptr_infolist)
@@ -570,9 +574,9 @@ def test_hdata():
     check(hdata_irc_server != '')
     # create a test buffer with 3 messages
     buffer2 = weechat.buffer_new('test', 'buffer_input_cb', '', 'buffer_close_cb', '')
-    weechat.prnt_date_tags(buffer2, 5680744830, 'tag1,tag2', 'prefix1\t## msg1')
-    weechat.prnt_date_tags(buffer2, 5680744831, 'tag3,tag4', 'prefix2\t## msg2')
-    weechat.prnt_date_tags(buffer2, 5680744832, 'tag5,tag6', 'prefix3\t## msg3')
+    weechat.prnt_date_tags(buffer2, 2146383600, 'tag1,tag2', 'prefix1\t## msg1')
+    weechat.prnt_date_tags(buffer2, 2146383601, 'tag3,tag4', 'prefix2\t## msg2')
+    weechat.prnt_date_tags(buffer2, 2146383602, 'tag5,tag6', 'prefix3\t## msg3')
     own_lines = weechat.hdata_pointer(hdata_buffer, buffer2, 'own_lines')
     line1 = weechat.hdata_pointer(hdata_lines, own_lines, 'first_line')
     line1_data = weechat.hdata_pointer(hdata_line, line1, 'data')
@@ -620,7 +624,7 @@ def test_hdata():
     # hdata_char
     check(weechat.hdata_char(hdata_line_data, line1_data, 'displayed') == 1)
     # hdata_integer
-    check(weechat.hdata_char(hdata_buffer, buffer2, 'number') == 2)
+    check(weechat.hdata_integer(hdata_buffer, buffer2, 'number') == 2)
     # hdata_long
     weechat.buffer_set(buffer, 'hotlist', weechat.WEECHAT_HOTLIST_MESSAGE)
     gui_hotlist = weechat.hdata_get_list(hdata_hotlist, 'gui_hotlist')
@@ -640,16 +644,16 @@ def test_hdata():
     check(weechat.hdata_compare(hdata_buffer, buffer2, buffer, 'name', 0) < 0)
     check(weechat.hdata_compare(hdata_buffer, buffer, buffer, 'name', 0) == 0)
     # hdata_update
-    check(weechat.hdata_time(hdata_line_data, line1_data, 'date') == 5680744830)
+    check(weechat.hdata_time(hdata_line_data, line1_data, 'date') == 2146383600)
     check(weechat.hdata_string(hdata_line_data, line1_data, 'prefix') == 'prefix1')
     check(weechat.hdata_string(hdata_line_data, line1_data, 'message') == '## msg1')
     update = {
-        'date': '5680744835',
+        'date': '2146383605',
         'prefix': 'new_prefix1',
         'message': 'new_message1'
     }
     check(weechat.hdata_update(hdata_line_data, line1_data, update) == 3)
-    check(weechat.hdata_time(hdata_line_data, line1_data, 'date') == 5680744835)
+    check(weechat.hdata_time(hdata_line_data, line1_data, 'date') == 2146383605)
     check(weechat.hdata_string(hdata_line_data, line1_data, 'prefix') == 'new_prefix1')
     check(weechat.hdata_string(hdata_line_data, line1_data, 'message') == 'new_message1')
     # hdata_get_string

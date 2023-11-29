@@ -283,3 +283,159 @@ irc_tag_parse (const char *tags,
 
     return num_tags;
 }
+
+/*
+ * Adds tags to a dynamic string, separated by semicolons, with escaped
+ * tag values.
+ */
+
+void
+irc_tag_add_to_string_cb (void *data,
+                          struct t_hashtable *hashtable,
+                          const void *key,
+                          const void *value)
+{
+    char **string, *escaped;
+
+    /* make C compiler happy */
+    (void) hashtable;
+
+    string = (char **)data;
+
+    if (*string[0])
+        weechat_string_dyn_concat (string, ";", -1);
+
+    weechat_string_dyn_concat (string, key, -1);
+
+    if (value)
+    {
+        weechat_string_dyn_concat (string, "=", -1);
+        escaped = irc_tag_escape_value ((const char *)value);
+        weechat_string_dyn_concat (string,
+                                   (escaped) ? escaped : (const char *)value,
+                                   -1);
+        if (escaped)
+            free (escaped);
+    }
+}
+
+/*
+ * Converts hashtable with tags to a string (tags and values are escaped).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_tag_hashtable_to_string (struct t_hashtable *tags)
+{
+    char **string;
+
+    if (!tags)
+        return NULL;
+
+    string = weechat_string_dyn_alloc (64);
+    if (!string)
+        return NULL;
+
+    weechat_hashtable_map (tags, &irc_tag_add_to_string_cb, string);
+
+    return weechat_string_dyn_free (string, 0);
+}
+
+/*
+ * Adds tags to another hashtable.
+ */
+
+void
+irc_tag_add_to_hashtable_cb (void *data,
+                             struct t_hashtable *hashtable,
+                             const void *key,
+                             const void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+
+    if (!weechat_hashtable_has_key ((struct t_hashtable *)data, key))
+        weechat_hashtable_set ((struct t_hashtable *)data, key, value);
+}
+
+/*
+ * Adds tags to an IRC message.
+ * Existing tags in message are kept unchanged.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_tag_add_tags_to_message (const char *message, struct t_hashtable *tags)
+{
+    char *msg_str_tags, **result, *new_tags;
+    const char *pos_space, *ptr_message;
+    struct t_hashtable *msg_hash_tags;
+
+    if (!message)
+        return NULL;
+
+    if (!tags)
+        return strdup (message);
+
+    result = NULL;
+    msg_str_tags = NULL;
+    msg_hash_tags = NULL;
+    new_tags = NULL;
+
+    if (message[0] == '@')
+    {
+        pos_space = strchr (message, ' ');
+        if (!pos_space)
+            goto end;
+        msg_str_tags = weechat_strndup (message + 1, pos_space - message - 1);
+        ptr_message = pos_space + 1;
+        while (ptr_message[0] == ' ')
+        {
+            ptr_message++;
+        }
+    }
+    else
+    {
+        ptr_message = message;
+    }
+
+    msg_hash_tags = weechat_hashtable_new (32,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           NULL, NULL);
+    if (!msg_hash_tags)
+        goto end;
+
+    if (msg_str_tags)
+        irc_tag_parse (msg_str_tags, msg_hash_tags, NULL);
+
+    weechat_hashtable_map (tags, &irc_tag_add_to_hashtable_cb, msg_hash_tags);
+
+    result = weechat_string_dyn_alloc (64);
+    if (!result)
+        goto end;
+
+    new_tags = irc_tag_hashtable_to_string (msg_hash_tags);
+    if (!new_tags)
+        goto end;
+
+    if (new_tags[0])
+    {
+        weechat_string_dyn_concat (result, "@", -1);
+        weechat_string_dyn_concat (result, new_tags, -1);
+        weechat_string_dyn_concat (result, " ", -1);
+    }
+    weechat_string_dyn_concat (result, ptr_message, -1);
+
+end:
+    if (msg_str_tags)
+        free (msg_str_tags);
+    if (msg_hash_tags)
+        weechat_hashtable_free (msg_hash_tags);
+    if (new_tags)
+        free (new_tags);
+
+    return (result) ? weechat_string_dyn_free (result, 0) : NULL;
+}

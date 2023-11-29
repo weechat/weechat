@@ -146,6 +146,7 @@ hook_process_hashtable (struct t_weechat_plugin *plugin,
         ptr_value = hashtable_get (options, "buffer_flush");
         if (ptr_value && ptr_value[0])
         {
+            error = NULL;
             number = strtol (ptr_value, &error, 10);
             if (error && !error[0]
                 && (number >= 1) && (number <= HOOK_PROCESS_BUFFER_SIZE))
@@ -278,7 +279,9 @@ hook_process_child (struct t_hook *hook_process)
         {
             ptr_url++;
         }
-        rc = weeurl_download (ptr_url, HOOK_PROCESS(hook_process, options));
+        rc = weeurl_download (ptr_url,
+                              HOOK_PROCESS(hook_process, options),
+                              NULL);  /* output */
     }
     else if (strncmp (HOOK_PROCESS(hook_process, command), "func:", 5) == 0)
     {
@@ -596,12 +599,11 @@ hook_process_timer_cb (const void *pointer, void *data, int remaining_calls)
         if (weechat_debug_core >= 1)
         {
             gui_chat_printf (NULL,
-                             _("End of command '%s', timeout reached (%.1fs)"),
+                             _("End of command '%s', timeout reached (%.3fs)"),
                              HOOK_PROCESS(hook_process, command),
                              ((float)HOOK_PROCESS(hook_process, timeout)) / 1000);
         }
         kill (HOOK_PROCESS(hook_process, child_pid), SIGKILL);
-        usleep (1000);
         unhook (hook_process);
     }
     else
@@ -792,6 +794,7 @@ void
 hook_process_exec ()
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
 
     hook_exec_start ();
 
@@ -804,9 +807,9 @@ hook_process_exec ()
             && !ptr_hook->running
             && (HOOK_PROCESS(ptr_hook, child_pid) == 0))
         {
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             hook_process_run (ptr_hook);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
         }
 
         ptr_hook = next_hook;
@@ -860,7 +863,7 @@ hook_process_free_data (struct t_hook *hook)
     if (HOOK_PROCESS(hook, child_pid) > 0)
     {
         kill (HOOK_PROCESS(hook, child_pid), SIGKILL);
-        waitpid (HOOK_PROCESS(hook, child_pid), NULL, 0);
+        hook_schedule_clean_process (HOOK_PROCESS(hook, child_pid));
         HOOK_PROCESS(hook, child_pid) = 0;
     }
     if (HOOK_PROCESS(hook, child_read[HOOK_PROCESS_STDIN]) != -1)

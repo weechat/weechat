@@ -815,6 +815,7 @@ plugin_api_info_nick_color_cb (const void *pointer, void *data,
 
     result = gui_nick_find_color (
         (num_items >= 1) ? items[0] : NULL,
+        -1,
         (num_items >= 2) ? items[1] : NULL);
 
     if (items)
@@ -844,7 +845,88 @@ plugin_api_info_nick_color_name_cb (const void *pointer, void *data,
 
     result = gui_nick_find_color_name (
         (num_items >= 1) ? items[0] : NULL,
+        -1,
         (num_items >= 2) ? items[1] : NULL);
+
+    if (items)
+        string_free_split (items);
+
+    return result;
+}
+
+/*
+ * Returns nick color code for a nickname (case ignored using a range of chars).
+ */
+
+char *
+plugin_api_info_nick_color_ignore_case_cb (const void *pointer, void *data,
+                                           const char *info_name,
+                                           const char *arguments)
+{
+    char **items, *result, *error;
+    int num_items, case_range;
+    long number;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    items = string_split (arguments, ";", NULL, 0, 3, &num_items);
+
+    case_range = -1;
+    if (num_items >= 2)
+    {
+        error = NULL;
+        number = strtol (items[1], &error, 10);
+        if (error && !error[0])
+            case_range = (int)number;
+    }
+
+    result = gui_nick_find_color (
+        (num_items >= 1) ? items[0] : NULL,
+        case_range,
+        (num_items >= 3) ? items[2] : NULL);
+
+    if (items)
+        string_free_split (items);
+
+    return result;
+}
+
+/*
+ * Returns nick color name for a nickname (case ignored using a range of chars).
+ */
+
+char *
+plugin_api_info_nick_color_name_ignore_case_cb (const void *pointer, void *data,
+                                                const char *info_name,
+                                                const char *arguments)
+{
+    char **items, *result, *error;
+    int num_items, case_range;
+    long number;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    items = string_split (arguments, ";", NULL, 0, 3, &num_items);
+
+    case_range = -1;
+    if (num_items >= 2)
+    {
+        error = NULL;
+        number = strtol (items[1], &error, 10);
+        if (error && !error[0])
+            case_range = (int)number;
+    }
+
+    result = gui_nick_find_color_name (
+        (num_items >= 1) ? items[0] : NULL,
+        case_range,
+        (num_items >= 3) ? items[2] : NULL);
 
     if (items)
         string_free_split (items);
@@ -2083,6 +2165,26 @@ plugin_api_info_init ()
                   "options with nick colors and forced nick colors are "
                   "ignored)"),
                &plugin_api_info_nick_color_name_cb, NULL, NULL);
+    hook_info (NULL, "nick_color_ignore_case",
+               N_("get nick color code, ignoring case"),
+               N_("nickname;range;colors (range is a number of chars (see "
+                  "function strcasecmp_range, 0 = convert to lower case without "
+                   "using a range), colors is an optional comma-separated list "
+                  "of colors to use; background is allowed for a color with "
+                  "format text:background; if colors is present, WeeChat "
+                  "options with nick colors and forced nick colors are "
+                  "ignored)"),
+               &plugin_api_info_nick_color_ignore_case_cb, NULL, NULL);
+    hook_info (NULL, "nick_color_name_ignore_case",
+               N_("get nick color name, ignoring case"),
+               N_("nickname;range;colors (range is a number of chars (see "
+                  "function strcasecmp_range, 0 = convert to lower case without "
+                   "using a range), colors is an optional comma-separated list "
+                  "of colors to use; background is allowed for a color with "
+                  "format text:background; if colors is present, WeeChat "
+                  "options with nick colors and forced nick colors are "
+                  "ignored)"),
+               &plugin_api_info_nick_color_name_ignore_case_cb, NULL, NULL);
     hook_info (NULL, "uptime",
                N_("WeeChat uptime (format: \"days:hh:mm:ss\")"),
                N_("\"days\" (number of days) or \"seconds\" (number of "

@@ -106,6 +106,7 @@ hook_infolist_get (struct t_weechat_plugin *plugin, const char *infolist_name,
                    void *pointer, const char *arguments)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
     struct t_infolist *value;
 
     /* make C compiler happy */
@@ -125,14 +126,14 @@ hook_infolist_get (struct t_weechat_plugin *plugin, const char *infolist_name,
             && !ptr_hook->running
             && (strcmp (HOOK_INFOLIST(ptr_hook, infolist_name), infolist_name) == 0))
         {
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             value = (HOOK_INFOLIST(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
                  infolist_name,
                  pointer,
                  arguments);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
 
             hook_exec_end ();
             return value;

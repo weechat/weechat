@@ -1,4 +1,3 @@
-#cmakedefine HAVE_LIBINTL_H
 #cmakedefine HAVE_SYS_RESOURCE_H
 #cmakedefine HAVE_FLOCK
 #cmakedefine HAVE_LANGINFO_CODESET

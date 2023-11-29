@@ -38,26 +38,26 @@ if [ $# -lt 1 ]; then
     exit 1
 fi
 
-ROOT_DIR=$(git rev-parse --show-toplevel)
+root_dir=$(git rev-parse --show-toplevel)
 
-NEW_STABLE=$("${ROOT_DIR}/version.sh" stable)
-NEW_DEVEL=$("${ROOT_DIR}/version.sh" devel)
-NEW_DEVEL_FULL=$("${ROOT_DIR}/version.sh" devel-full)
+new_stable=$("${root_dir}/version.sh" stable)
+new_devel=$("${root_dir}/version.sh" devel)
+new_devel_full=$("${root_dir}/version.sh" devel-full)
 
 case "$1" in
-    stable ) NEW_STABLE="${NEW_DEVEL}"
-             NEW_DEVEL_FULL="${NEW_DEVEL}" ;;
-    major ) NEW_DEVEL=$(echo "${NEW_DEVEL}" | awk -F. '{$(NF-2) = $(NF-2) + 1; $(NF-1) = 0; $NF = 0; print}' OFS=.)
-            NEW_DEVEL_FULL="${NEW_DEVEL}-dev" ;;
-    minor ) NEW_DEVEL=$(echo "$NEW_DEVEL" | awk -F. '{$(NF-1) = $(NF-1) + 1; $NF = 0; print}' OFS=.)
-            NEW_DEVEL_FULL="${NEW_DEVEL}-dev" ;;
-    patch ) NEW_DEVEL=$(echo "$NEW_DEVEL" | awk -F. '{$NF = $NF + 1; print} ' OFS=.)
-            NEW_DEVEL_FULL="${NEW_DEVEL}-dev" ;;
+    stable ) new_stable="${new_devel}"
+             new_devel_full="${new_devel}" ;;
+    major ) new_devel=$(echo "${new_devel}" | awk -F. '{$(NF-2) = $(NF-2) + 1; $(NF-1) = 0; $NF = 0; print}' OFS=.)
+            new_devel_full="${new_devel}-dev" ;;
+    minor ) new_devel=$(echo "$new_devel" | awk -F. '{$(NF-1) = $(NF-1) + 1; $NF = 0; print}' OFS=.)
+            new_devel_full="${new_devel}-dev" ;;
+    patch ) new_devel=$(echo "$new_devel" | awk -F. '{$NF = $NF + 1; print} ' OFS=.)
+            new_devel_full="${new_devel}-dev" ;;
     * ) echo >&2 "ERROR: unknown version."
         exit 1 ;;
 esac
 
 sed -i \
-    -e "s/^\(WEECHAT_STABLE\)=.*/\1=\"${NEW_STABLE}\"/" \
-    -e "s/^\(WEECHAT_DEVEL\)=.*/\1=\"${NEW_DEVEL_FULL}\"/" \
-    "${ROOT_DIR}/version.sh"
+    -e "s/^\(weechat_stable\)=.*/\1=\"${new_stable}\"/" \
+    -e "s/^\(weechat_devel\)=.*/\1=\"${new_devel_full}\"/" \
+    "${root_dir}/version.sh"

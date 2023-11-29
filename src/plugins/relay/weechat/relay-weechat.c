@@ -40,8 +40,14 @@
 #include "../relay-raw.h"
 
 
-char *relay_weechat_compression_string[] = /* strings for compression       */
-{ "off", "zlib", "zstd" };
+/* strings for compression */
+char *relay_weechat_compression_string[RELAY_WEECHAT_NUM_COMPRESSIONS] = {
+    "off",
+    "zlib",
+#ifdef HAVE_ZSTD
+    "zstd",
+#endif
+};
 
 
 /*

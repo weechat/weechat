@@ -593,7 +593,7 @@ gui_line_search_text (struct t_gui_buffer *buffer, struct t_gui_line *line)
 
     rc = 0;
 
-    if ((buffer->text_search_where & GUI_TEXT_SEARCH_IN_PREFIX)
+    if ((buffer->text_search_where & GUI_BUFFER_SEARCH_IN_PREFIX)
         && line->data->prefix)
     {
         prefix = gui_color_decode (line->data->prefix, NULL);
@@ -621,7 +621,7 @@ gui_line_search_text (struct t_gui_buffer *buffer, struct t_gui_line *line)
         }
     }
 
-    if (!rc && (buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE))
+    if (!rc && (buffer->text_search_where & GUI_BUFFER_SEARCH_IN_MESSAGE))
     {
         if (gui_chat_display_tags)
         {

@@ -139,7 +139,7 @@ WeeChat:
 | pkg-config |
 | Detect installed libraries.
 
-| libncursesw5-dev ^(2)^ |
+| libncurses-dev |
 | Interfaccia ncurses.
 
 | libcurl4-gnutls-dev |
@@ -150,7 +150,7 @@ WeeChat:
 | Secured data, IRC SASL authentication.
 
 // TRANSLATION MISSING
-| libgnutls28-dev | ≥ 2.2.0 ^(3)^
+| libgnutls28-dev | ≥ 2.2.0 ^(2)^
 | IRC plugin: support of TLS connections, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE). +
   Relay plugin: support of TLS connections.
 
@@ -159,11 +159,6 @@ WeeChat:
 | Logger plugin: compression of rotated log files (gzip). +
   Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^^] (weechat protocol). +
   Script plugin: read of repository index file (gzip).
-
-// TRANSLATION MISSING
-| libzstd-dev | ≥ 0.8.1
-| Logger plugin: compression of rotated log files. +
-  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
 |===
 
 [NOTE]
@@ -171,11 +166,7 @@ WeeChat:
 ^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
 name can be different in other distributions. +
 // TRANSLATION MISSING
-^(2)^ It is recommended to compile with libncurses**w**5-dev (the *w* is
-important). WeeChat can compile with libncurses5-dev, but it is *NOT* recommended:
-you may experience display bugs with wide chars. +
-// TRANSLATION MISSING
-^(3)^ GnuTLS ≥ 3.0.21 is required for IRC SASL authentication with mechanism
+^(2)^ GnuTLS ≥ 3.0.21 is required for IRC SASL authentication with mechanism
 ECDSA-NIST256P-CHALLENGE.
 
 // TRANSLATION MISSING
@@ -185,32 +176,75 @@ WeeChat:
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
 // TRANSLATION MISSING
-| Pacchetto ^(1)^                       | Versione | Features
+| Pacchetto ^(1)^ | Versione | Features
+
 // TRANSLATION MISSING
-| {cpp} compiler (pass:[g++ / clang++]) |          | Build and run tests, plugin JavaScript.
-| gettext                               |          | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
-| ca-certificates                       |          | Certificati per le connessioni TLS.
-| libaspell-dev / libenchant-dev        |          | Plugin spell.
-| python3-dev                           | ≥ 3.0    | Plugin python.
-| libperl-dev                           |          | Plugin perl.
-| ruby3.1, ruby3.1-dev                  | ≥ 1.9.1  | Plugin ruby.
-| liblua5.4-dev                         |          | Plugin lua.
-| tcl-dev                               | ≥ 8.5    | Plugin tcl.
-| guile-3.0-dev                         | ≥ 2.0    | Plugin guile (scheme).
-| libv8-dev                             | ≤ 3.24.3 | Plugin javascript.
-| php-dev                               | ≥ 7.0    | Plugin php.
-| libphp-embed                          | ≥ 7.0    | Plugin php.
-| libxml2-dev                           |          | Plugin php.
+| {cpp} compiler (pass:[g++ / clang++]) |
+| Build and run tests, plugin JavaScript.
+
+| gettext |
+| Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
+
+| ca-certificates |
+| Certificati per le connessioni TLS.
+
 // TRANSLATION MISSING
-| libargon2-dev                         |          | Plugin php (if PHP ≥ 7.2).
+| libzstd-dev | ≥ 0.8.1
+| Logger plugin: compression of rotated log files (zstandard). +
+  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
+
+| libaspell-dev / libenchant-dev |
+| Plugin spell.
+
+| python3-dev | ≥ 3.0
+| Plugin python.
+
+| libperl-dev |
+| Plugin perl.
+
+| ruby3.1, ruby3.1-dev | ≥ 1.9.1
+| Plugin ruby.
+
+| liblua5.4-dev |
+| Plugin lua.
+
+| tcl-dev | ≥ 8.5
+| Plugin tcl.
+
+| guile-3.0-dev | ≥ 2.0
+| Plugin guile (scheme).
+
+| libv8-dev | ≤ 3.24.3
+| Plugin javascript.
+
+| php-dev | ≥ 7.0
+| Plugin php.
+
+| libphp-embed | ≥ 7.0
+| Plugin php.
+
+| libxml2-dev |
+| Plugin php.
+
 // TRANSLATION MISSING
-| libsodium-dev                         |          | Plugin php (if PHP ≥ 7.2).
+| libargon2-dev |
+| Plugin php (if PHP ≥ 7.2).
+
 // TRANSLATION MISSING
-| asciidoctor                           | ≥ 1.5.4  | Build man page and documentation.
+| libsodium-dev |
+| Plugin php (if PHP ≥ 7.2).
+
 // TRANSLATION MISSING
-| ruby-pygments.rb                      |          | Build documentation.
+| asciidoctor | ≥ 1.5.4
+| Build man page and documentation.
+
 // TRANSLATION MISSING
-| libcpputest-dev                       | ≥ 3.4    | Build and run tests.
+| ruby-pygments.rb |
+| Build documentation.
+
+// TRANSLATION MISSING
+| libcpputest-dev | ≥ 3.4
+| Build and run tests.
 |===
 
 [NOTE]
@@ -256,7 +290,7 @@ $ make install
 Options can be used for CMake, with format: `-DOPTION=VALUE`.
 
 // TRANSLATION MISSING
-List of commonly used options:
+List of available options:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,3,3m,10",options="header"]
@@ -270,7 +304,6 @@ List of commonly used options:
 | CMAKE_INSTALL_PREFIX | directory | /usr/local
 | The directory where WeeChat will be installed.
 
-// TRANSLATION MISSING
 | WEECHAT_HOME | directory | (empty string)
 | The default home directory when running WeeChat. +
   With an empty value (recommended), XDG directories are used by default.
@@ -293,7 +326,6 @@ List of commonly used options:
 | ENABLE_DOC | `ON`, `OFF` | OFF
 | Build HTML documentation.
 
-// TRANSLATION MISSING
 | ENABLE_DOC_INCOMPLETE | `ON`, `OFF` | OFF
 | Force build of documentation even if some plugins are not compiled
   (not recommended: docs will be incomplete).
@@ -312,6 +344,9 @@ List of commonly used options:
 
 | ENABLE_GUILE | `ON`, `OFF` | ON
 | Compile <<scripting_plugins,Guile plugin>> (Scheme).
+
+| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| Compile headless binary.
 
 | ENABLE_IRC | `ON`, `OFF` | ON
 | Compile <<irc,IRC plugin>>.
@@ -370,6 +405,10 @@ List of commonly used options:
 
 | ENABLE_XFER | `ON`, `OFF` | ON
 | Compile <<xfer,Xfer plugin>>.
+
+// TRANSLATION MISSING
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF
 | Compile tests.
@@ -964,10 +1003,32 @@ La barra _input_ ha i seguenti elementi predefiniti:
 | input_prompt | `[@Flashy(i)]`                                  | Prompt per l'input, for irc: nick and modes (mode "+i" means invisible on libera).
 | away         | `(assente)`                                     | Indicatore di assenza.
 // TRANSLATION MISSING
-| input_search | `[Search (~ str,msg)]`                          | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages).
+| input_search | `[Search lines (~ str,msg)]`                    | Search indicator (see below).
 | input_paste  | `[Incollare 7 righe ? [ctrl-y] Sì [ctrl-n] No]` | Chiede all'utente se incollare le righe.
 | input_text   | `ciao peter!`                                   | Testo in input.
 |===
+
+// TRANSLATION MISSING
+There are two search modes:
+
+// TRANSLATION MISSING
+* search in lines, for example `[Search lines (~ str,msg)]`, with the following info:
+** `~`: case insensitive
+** `==`: case sensitive
+** `str`: search string
+** `regex`: search regular expression
+** `msg`: search in messages
+** `pre`: search in prefixes
+** `pre\|msg`: search in prefixes and messages.
+* search in commands history, for example `[Search command (~ str,local)]`,
+  with the following info:
+** `~`: case insensitive
+** `==`: case sensitive
+** `str`: search string
+** `regex`: search regular expression
+** `local`: search in buffer local history
+** `global`: search in global history.
+
 
 La barra _nicklist_ ha i seguenti elementi predefiniti:
 
@@ -992,6 +1053,10 @@ Other items available (not used in bars by default):
 | buffer_short_name            | `#test`                  | Current buffer short name.
 | buflist2                     | `1.weechat`              | List of buffers, second bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
 | buflist3                     | `1.weechat`              | List of buffers, third bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist4                     | `1.weechat`              | List of buffers, fourth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist5                     | `1.weechat`              | List of buffers, fifth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
 | fset                         | `+buflist.look.sort: …+` | Help on currently selected option on fset buffer.
 | irc_channel                  | `#test`                  | Current IRC channel name.
 | irc_host                     | `+user@host.com+`        | Current IRC host.
@@ -1063,6 +1128,13 @@ opzionale):
   kbd:[xx], kbd:[,],
   kbd:[yy]               | colore del testo `xx` e di sfondo `yy` (consultare la lista di colori che segue).
 // TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx]           | Text color `xxxxxx` (RGB as hexadecimal, for example `FF0000` for red).
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx], kbd:[,],
+  kbd:[yyyyyy]           | Text color `xxxxxx` and background `yyyyyy` (RGB as hexadecimal).
+// TRANSLATION MISSING
 | kbd:[Ctrl+c], kbd:[i]  | italic text.
 | kbd:[Ctrl+c], kbd:[o]  | disabilita colori ed attributi.
 | kbd:[Ctrl+c], kbd:[v]  | video inverso (inverte il colore del testo con quello di sfondo).
@@ -1070,8 +1142,9 @@ opzionale):
 |===
 
 [NOTE]
-Lo stesso codice (senza numero per kbd:[Ctrl+c], kbd:[c]) può essere usato per
-terminare l'attributo.
+// TRANSLATION MISSING
+The same code (without number for kbd:[Ctrl+c], kbd:[c] and kbd:[Ctrl+c], kbd:[d])
+can be used to stop the attribute.
 
 I codici colore per kbd:[Ctrl+c], kbd:[c] sono:
 
@@ -1450,7 +1523,8 @@ By default WeeChat and its default plugins interpret these variables:
 
 | filter
 | any string
-| Filter defined on some buffers like `/fset`, `/server raw` (irc) and `/script`.
+| Filter defined on some buffers like `/fset`, `/list` (irc), `/server raw` (irc)
+  and `/script`.
 
 | host
 | any string
@@ -1535,7 +1609,8 @@ External plugins and scripts can define and use other local variables.
 
 // TRANSLATION MISSING
 Buflist plugin displays a list of buffers in a bar item called "buflist"
-(two other bar items "buflist2" and "buflist3" are available as well). +
+(four other bar items "buflist2", "buflist3", "buflist4" and "buflist5" are
+available as well). +
 A default bar "buflist" is created on startup with this item.
 
 [[buflist_commands]]
@@ -1561,6 +1636,22 @@ Sections in file _buflist.conf_:
 Options:
 
 include::{autogendir}/autogen_user_options.it.adoc[tag=buflist_options]
+
+// TRANSLATION MISSING
+[[cursor_mode]]
+=== Cursor mode
+
+The cursor mode allows you to move freely the cursor anywhere on screen, in chat
+area and bars, and lets you perform actions at the given position. +
+You can enter in cursor mode either with the command `/cursor` or with a mouse
+middle click (mouse must have been enabled with key kbd:[Alt+m] or command
+`/mouse enable`).
+
+Typical use is to quote messages (chat area) or interact with nicks (nicklist bar).
+
+See command <<command_weechat_cursor,/cursor>> and
+<<key_bindings_cursor_context,key bindings in cursor context>> for the list
+of actions you can perform in this mode.
 
 // TRANSLATION MISSING
 [[key_bindings]]
@@ -1659,6 +1750,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | Tasti                 | Descrizione | Comando
 | kbd:[Ctrl+c], kbd:[b] | Inserisce il codice per il testo in grassetto. | `+/input insert \x02+`
 | kbd:[Ctrl+c], kbd:[c] | Inserisce il codice per il testo colorato. | `+/input insert \x03+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d] | Insert code for colored text (RGB color, as hexadecimal). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | Inserisce il codice per il testo in corsivo. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | Inserisce il codice per il reset dei colori. | `+/input insert \x0F+`
 | kbd:[Ctrl+c], kbd:[v] | Inserisce il codice per l'inversione dei colori. | `+/input insert \x16+`
@@ -1679,14 +1772,26 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 |===
 
 // TRANSLATION MISSING
+[[key_bindings_cmdline_system]]
+==== System
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti        | Descrizione | Comando
+| kbd:[Ctrl+z] | Suspend WeeChat process. | `+/sys suspend+`
+|===
+
+// TRANSLATION MISSING
 [[key_bindings_buffers]]
 === Buffers
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Tasti                          | Descrizione | Comando
-| kbd:[Ctrl+r]                   | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>). | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `+/allbuf /buffer set unread+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/buffer switch+`
 // TRANSLATION MISSING
@@ -1715,6 +1820,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+n]                    | Scorre fino alla notifica successiva. | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | Scorre fino alla notifica precedente. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | Scorre fino alla prima riga non letta nel buffer. | `+/window scroll_unread+`
+| kbd:[Alt+Shift+U]              | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `+/allbuf /buffer set unread+`
 | kbd:[Alt+<]                    | Passa al buffer precedente nella lista dei buffer visitati. | `+/buffer jump prev_visited+`
 | kbd:[Alt+>]                    | Passa al buffer successivo nella lista dei buffer visitati. | `+/buffer jump next_visited+`
 | kbd:[Alt+/]                    | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer). | `+/buffer jump last_displayed+`
@@ -1807,19 +1913,22 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 [[key_bindings_search_context]]
 === Search context
 
-Questi tasti sono usati nel contesto "search" (quando viene digitato
-kbd:[Ctrl+r] per cercare del testo nel buffer).
+// TRANSLATION MISSING
+These keys are used in context "search" (when kbd:[Ctrl+s] is pressed to search
+text in buffer lines).
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Tasti          | Descrizione | Comando
 // TRANSLATION MISSING
-| kbd:[Ctrl+r]   | Switch search type: string (default), regular expression. | `+/input search_switch_regex+`
+| kbd:[Ctrl+x]   | Switch search type: string (default), regular expression. | `+/input search_switch_regex+`
 | kbd:[Alt+c]    | Passa alla ricerca esatta. | `+/input search_switch_case+`
 // TRANSLATION MISSING
 | kbd:[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages. | `+/input search_switch_where+`
-| kbd:[↑]        | Cerca riga precedente. | `+/input search_previous+`
-| kbd:[↓]        | Cerca riga successiva. | `+/input search_next+`
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Cerca riga precedente. | `+/input search_previous+`
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Cerca riga successiva. | `+/input search_next+`
 // TRANSLATION MISSING
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
@@ -1829,36 +1938,82 @@ kbd:[Ctrl+r] per cercare del testo nel buffer).
 |===
 
 // TRANSLATION MISSING
+[[key_bindings_histsearch_context]]
+=== History search context
+
+// TRANSLATION MISSING
+These keys are used in context "histsearch" (when kbd:[Ctrl+r] is pressed to
+search text in commands history).
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| Tasti          | Descrizione | Comando
+// TRANSLATION MISSING
+| kbd:[Ctrl+x]   | Switch search type: string (default), regular expression. | `+/input search_switch_regex+`
+// TRANSLATION MISSING
+| kbd:[Alt+c]    | Switch exact case for search. | `+/input search_switch_case+`
+// TRANSLATION MISSING
+| kbd:[Tab]      | Switch search in: buffer local history (default), global history. | `+/input search_switch_where+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Search in previous (older) history entries. | `+/input search_previous+`
+  // TRANSLATION MISSING
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Search in next (newer) history entries. | `+/input search_next+`
+// TRANSLATION MISSING
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Stop search and use matching input. | `+/input search_stop_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+o]   | Execute the command found in history and insert the next one in the command line. | `+/input history_use_get_next+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and restore input to its initial value. | `+/input search_stop+`
+|===
+
+// TRANSLATION MISSING
 [[key_bindings_cursor_context]]
 === Cursor context
 
+// TRANSLATION MISSING
 Questi tasti sono usati nel contesto "cursor" (movimento libero del cursore
-sullo schermo.
+sullo schermo, see <<cursor_mode,Cursor mode>>.
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
-| Tasto          | Zona       | Descrizione | Comando
-| kbd:[↑]        | -          | Sposta il cursore di una riga in alto. | `+/cursor move up+`
-| kbd:[↓]        | -          | Sposta il cursore di una riga in basso. | `+/cursor move down+`
-| kbd:[←]        | -          | Sposta il cursore di una colonna a sinistra. | `+/cursor move left+`
-| kbd:[→]        | -          | Sposta il cursore di una colonna a destra. | `+/cursor move right+`
-| kbd:[Alt+↑]    | -          | Sposta il cursore nell'area in alto. | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -          | Sposta il cursore nell'area in basso. | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -          | Sposta il cursore nell'area a sinistra. | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -          | Sposta il cursore nell'area a destra. | `+/cursor move area_right+`
-| kbd:[m]        | chat       | Cita messaggio. | `+hsignal:chat_quote_message;/cursor stop+`
+| Tasto             | Zona       | Descrizione | Comando
+| kbd:[↑]           | -          | Sposta il cursore di una riga in alto. | `+/cursor move up+`
+| kbd:[↓]           | -          | Sposta il cursore di una riga in basso. | `+/cursor move down+`
+| kbd:[←]           | -          | Sposta il cursore di una colonna a sinistra. | `+/cursor move left+`
+| kbd:[→]           | -          | Sposta il cursore di una colonna a destra. | `+/cursor move right+`
 // TRANSLATION MISSING
-| kbd:[l]        | chat       | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
-| kbd:[q]        | chat       | Cita prefisso + messaggio. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | chat       | Cita ora + prefisso + messaggio. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | lista nick | Ban di un nick. | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | lista nick | Kick di un nick. | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | lista nick | Kick e ban di un nick. | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | lista nick | Apri query con il nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | lista nick | Effettua un whois sul nick. | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[Alt+↑]       | -         | Move cursor to the first line of the area. | `+/cursor move edge_top+`
+// TRANSLATION MISSING
+| kbd:[Alt+↓]       | -         | Move cursor to the last line of the area. | `+/cursor move edge_bottom+`
+// TRANSLATION MISSING
+| kbd:[Alt+←]       | -         | Move cursor to the first column of the area. | `+/cursor move edge_left+`
+// TRANSLATION MISSING
+| kbd:[Alt+→]       | -         | Move cursor to the last column of the area. | `+/cursor move edge_right+`
+// TRANSLATION MISSING
+| kbd:[Alt+Home]    | -         | Move cursor to the top left corner of the area. | `+/cursor move top_left+`
+// TRANSLATION MISSING
+| kbd:[Alt+End]     | -         | Move cursor to the bottom right corner of the area. | `+/cursor move bottom_right+`
+| kbd:[Alt+Shift+↑] | -         | Sposta il cursore nell'area in alto. | `+/cursor move area_up+`
+| kbd:[Alt+Shift+↓] | -         | Sposta il cursore nell'area in basso. | `+/cursor move area_down+`
+| kbd:[Alt+Shift+←] | -         | Sposta il cursore nell'area a sinistra. | `+/cursor move area_left+`
+| kbd:[Alt+Shift+→] | -         | Sposta il cursore nell'area a destra. | `+/cursor move area_right+`
+| kbd:[m]           | chat      | Cita messaggio. | `+hsignal:chat_quote_message;/cursor stop+`
+// TRANSLATION MISSING
+| kbd:[l]           | chat       | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
+| kbd:[q]           | chat       | Cita prefisso + messaggio. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]           | chat       | Cita ora + prefisso + messaggio. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]           | lista nick | Ban di un nick. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]           | lista nick | Kick di un nick. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]           | lista nick | Kick e ban di un nick. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]           | lista nick | Apri query con il nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]           | lista nick | Effettua un whois sul nick. | `+/window ${_window_number};/whois ${nick}+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -          | Ferma la modalità cursore. | `+/cursor stop+`
+  kbd:[Ctrl+m]      | -          | Ferma la modalità cursore. | `+/cursor stop+`
 |===
 
 // TRANSLATION MISSING
@@ -1874,11 +2029,11 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 |===
 // TRANSLATION MISSING
 | Tasto/Wheel ^(1)^ | Azione           | Zona                | Descrizione | Comando
-| ◾◽◽               | -                | chat                | Passa alla finestra. | `+/window ${_window_number}+`
-| ◾◽◽               | sinistra         | chat                | Passa al buffer precedente. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽               | destra           | chat                | Passa al buffer successivo. | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽               | sinistra (lungo) | chat                | Switch to first buffer. | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽               | destra (lungo)   | chat                | Passa all'ultimo buffer. | `+/window ${_window_number};/buffer ++`
+| kbd:[■ □ □]       | -                | chat                | Passa alla finestra. | `+/window ${_window_number}+`
+| kbd:[■ □ □]       | sinistra         | chat                | Passa al buffer precedente. | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]       | destra           | chat                | Passa al buffer successivo. | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]       | sinistra (lungo) | chat                | Switch to first buffer. | `+/window ${_window_number};/buffer 1+`
+| kbd:[■ □ □]       | destra (lungo)   | chat                | Passa all'ultimo buffer. | `+/window ${_window_number};/buffer ++`
 | kbd:[▲]           | -                | chat                | Scorre di qualche riga in alto nella cronologia del buffer. | `+/window scroll_up -window ${_window_number}+`
 | kbd:[▼]           | -                | chat                | Scorre di qualche riga in basso nella cronologia del buffer. | `+/window scroll_down -window ${_window_number}+`
 | kbd:[Ctrl+▲]      | -                | chat                | Scroll horizontally to the left. | `+/window scroll_horiz -window ${_window_number} -10%+`
@@ -1888,53 +2043,67 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 // TRANSLATION MISSING
 | kbd:[▼]           | -                | chat: fset buffer   | Move five lines down in fset buffer. | `+/fset -down 5+`
 // TRANSLATION MISSING
-| ◾◽◽               | -                | chat: fset buffer   | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| kbd:[■ □ □]       | -                | chat: fset buffer   | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
 // TRANSLATION MISSING
-| ◽◽◾               | -                | chat: fset buffer   | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]       | -                | chat: fset buffer   | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾               | left             | chat: fset buffer   | Decrease value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]       | left             | chat: fset buffer   | Decrease value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾               | right            | chat: fset buffer   | Increase value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]       | right            | chat: fset buffer   | Increase value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾               | up / down        | chat: fset buffer   | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]       | up / down        | chat: fset buffer   | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| kbd:[▲]           | -                | chat: /list buffer  | Move five lines up in /list buffer. | `+/list -up 5+`
+// TRANSLATION MISSING
+| kbd:[▼]           | -                | chat: /list buffer  | Move five lines down in /list buffer. | `+/list -down 5+`
+// TRANSLATION MISSING
+| kbd:[■ □ □]       | -                | chat: /list buffer  | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+// TRANSLATION MISSING
+| kbd:[□ □ ■]       | -                | chat: /list buffer  | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
 // TRANSLATION MISSING
 | kbd:[▲]           | -                | chat: script buffer | Move 5 lines up in script buffer. | `+/script up 5+`
 // TRANSLATION MISSING
 | kbd:[▼]           | -                | chat: script buffer | Move 5 lines down in script buffer. | `+/script down 5+`
 // TRANSLATION MISSING
-| ◾◽◽               | -                | chat: script buffer | Select line in script buffer. | `+/script go ${_chat_line_y}+`
+| kbd:[■ □ □]       | -                | chat: script buffer | Select line in script buffer. | `+/script go ${_chat_line_y}+`
 // TRANSLATION MISSING
-| ◽◽◾               | -                | chat: script buffer | Install/remove script. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| kbd:[□ □ ■]       | -                | chat: script buffer | Install/remove script. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
 // TRANSLATION MISSING
-| ◾◽◽               | up / left        | buflist             | Move buffer to a lower number. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]       | up / left        | buflist             | Move buffer to a lower number. | Signal `+buflist_mouse+`.
 // TRANSLATION MISSING
-| ◾◽◽               | down / right     | buflist             | Move buffer to a higher number. | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]       | down / right     | buflist             | Move buffer to a higher number. | Signal `+buflist_mouse+`.
 // TRANSLATION MISSING
-| ◾◽◽               | -                | buflist             | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `+buflist_mouse+`.
+| kbd:[■ □ □]       | -                | buflist             | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `+buflist_mouse+`.
 // TRANSLATION MISSING
-| ◽◽◾               | -                | buflist             | Switch to next visited buffer if the buffer is the current one. | Signal `+buflist_mouse+`.
+| kbd:[□ □ ■]       | -                | buflist             | Switch to next visited buffer if the buffer is the current one. | Signal `+buflist_mouse+`.
 // TRANSLATION MISSING
 | kbd:[Ctrl+▲]      | -                | buflist             | Switch to previous buffer. | Signal `+buflist_mouse+`.
 // TRANSLATION MISSING
 | kbd:[Ctrl+▼]      | -                | buflist             | Switch to next buffer. | Signal `+buflist_mouse+`.
-| ◾◽◽               | su               | lista nick          | Scorre di una pagina in alto nella lista nick. | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽               | giù              | lista nick          | Scorre di una pagina in basso nella lista nick. | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽               | up (lungo)       | lista nick          | Sposta all'inizio della lista nick. | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽               | giù (lungo)      | lista nick          | Sposta alla fine della lista nick. | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽               | -                | lista nick          | Apre una query con un nick. | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾               | -                | lista nick          | Effettua un whois su un nick. | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽               | sinistra         | lista nick          | Kick di un nick. | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽               | sinistra (lungo) | lista nick          | Kick e ban di un nick. | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾               | sinistra         | lista nick          | Ban di un nick. | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾               | -                | input               | Cattura un evento del mouse e inserisce il codice nella riga di comando. | `+/input grab_mouse_area+`
+| kbd:[■ □ □]       | su               | lista nick          | Scorre di una pagina in alto nella lista nick. | `+/bar scroll nicklist ${_window_number} -100%+`
+| kbd:[■ □ □]       | giù              | lista nick          | Scorre di una pagina in basso nella lista nick. | `+/bar scroll nicklist ${_window_number} +100%+`
+| kbd:[■ □ □]       | up (lungo)       | lista nick          | Sposta all'inizio della lista nick. | `+/bar scroll nicklist ${_window_number} b+`
+| kbd:[■ □ □]       | giù (lungo)      | lista nick          | Sposta alla fine della lista nick. | `+/bar scroll nicklist ${_window_number} e+`
+| kbd:[■ □ □]       | -                | lista nick          | Apre una query con un nick. | `+/window ${_window_number};/query ${nick}+`
+| kbd:[□ □ ■]       | -                | lista nick          | Effettua un whois su un nick. | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[■ □ □]       | sinistra         | lista nick          | Kick di un nick. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[■ □ □]       | sinistra (lungo) | lista nick          | Kick e ban di un nick. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[□ □ ■]       | sinistra         | lista nick          | Ban di un nick. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[□ □ ■]       | -                | input               | Cattura un evento del mouse e inserisce il codice nella riga di comando. | `+/input grab_mouse_area+`
 | kbd:[▲]           | -                | ogni barra          | Scorre la barra del -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
 | kbd:[▼]           | -                | ogni barra          | Scorre la barra del +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽               | -                | ovunque             | Avvia la modalità cursore in questo punto. | `+/cursor go ${_x},${_y}+`
+| kbd:[□ ■ □]       | -                | ovunque             | Avvia la modalità cursore in questo punto. | `+/cursor go ${_x},${_y}+`
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ kbd:[▲] and kbd:[▼] are wheel up and down.
+// TRANSLATION MISSING
+^(1)^ Buttons: +
+kbd:[◼ □ □]: click on left button +
+kbd:[□ ◼ □]: click on middle button +
+kbd:[□ □ ◼]: click on right button +
+Wheel: +
+kbd:[▲]: wheel up +
+kbd:[▼]: wheel down
 
 // TRANSLATION MISSING
 [[key_bindings_fset_buffer]]
@@ -1971,8 +2140,8 @@ These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 | kbd:[Ctrl+l] (`L`)       |              | Refresh options and whole screen. | `+/fset -refresh+`
 |                          | `$`          | Refresh options (keep marked options). |
 |                          | `$$`         | Refresh options (unmark all options). |
-| kbd:[Alt+p]              |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]              |              | Toggle help bar. | `+/bar toggle fset+`
+| kbd:[Alt+p]              | `p`          | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              | `v`          | Toggle help bar. | `+/bar toggle fset+`
 |                          | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
 |                          | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
 |                          | `w:xxx`      | Export options in file "xxx". | `+/fset -export xxx+`
@@ -1983,6 +2152,40 @@ These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 |===
 
 // TRANSLATION MISSING
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
+
+// TRANSLATION MISSING
+[[key_bindings_irc_list_buffer]]
+=== IRC /list buffer
+
+These keys and actions are used on the IRC /list buffer (see command <<command_irc_list,/list>>).
+
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key            | Action ^(1)^ | Description | Command
+| kbd:[↑]        |              | Move one line up. | `+/list -up+`
+| kbd:[↓]        |              | Move one line down. | `+/list -down+`
+| kbd:[PgUp]     |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]     |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+Home] | `pass:[<<]`  | Move to first line. | `+/list -go 0+`
+| kbd:[Alt+End]  | `pass:[>>]`  | Move to last line. | `+/list -go end+`
+| kbd:[F11]      | `pass:[<]`   | Scroll horizontally on the left. | `+/list -left+`
+| kbd:[F12]      | `pass:[>]`   | Scroll horizontally on the right. | `+/list -right+`
+| kbd:[Ctrl+j]   | `j`          | Join IRC channel on selected line. | `+/list -join+`
+|                | `xxx`        | Show only channels with "xxx" in name or topic (case insensitive). |
+|                | `n:xxx`      | Show only channels with "xxx" in name (case insensitive). |
+|                | `t:xxx`      | Show only channels with "xxx" in topic (case insensitive). |
+|                | `u:n`        | Show only channels with at least "n" users. |
+|                | `u:>n`       | Show only channels with more than "n" users. |
+|                | `u:<n`       | Show only channels with less than "n" users. |
+|                | `c:xxx`      | Show only channels matching the evaluated condition "xxx", using following variables: name, name2, users, topic. |
+|                | `s:x,y`      | Sort channels by fields x,y (see command <<command_irc_list,/list>>). |
+|                | `s:`         | Reset sort to its default value (see command <<command_irc_list,/list>>). |
+|                | `$`          | Refresh list (run again command <<command_irc_list,/list>>). |
+|                | `q`          | Close buffer. | `+/buffer close+`
+|===
+
 [NOTE]
 ^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
 
@@ -2003,11 +2206,16 @@ These keys and actions are used on the script buffer (see <<script_manager,scrip
 | kbd:[PgDn]        |              | Move one page down. | `+/window page_down+`
 | kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`
 | kbd:[Alt+r]       | `r`          | Remove script. | `+/script remove+`
-| kbd:[Alt+l] (`L`) | `l`          | Load script. | `+/script load+`
+| kbd:[Alt+l]       | `l`          | Load script. | `+/script load+`
+| kbd:[Alt+L]       | `L`          | Reload script. | `+/script reload+`
 | kbd:[Alt+u]       | `u`          | Unload script. | `+/script unload+`
 | kbd:[Alt+Shift+A] | `A`          | Autoload script. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Hold/unhold script. | `+/script hold+`
 | kbd:[Alt+v]       | `v`          | View script. | `+/script show+`
+|                   | `s:x,y`      | Sort scripts by fields x,y (see option <<option_script.look.sort,script.look.sort>>). |
+|                   | `s:`         | Reset sort to its default value (see option <<option_script.look.sort,script.look.sort>>). |
+|                   | `$`          | Refresh list. |
+|                   | `q`          | Close buffer. | `+/buffer close+`
 |===
 
 // TRANSLATION MISSING
@@ -2386,13 +2594,8 @@ and for each nick the max hotlist level to trigger, possible levels are:
 For example to disable highlights from "joe" and "mike" on current buffer:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-[NOTE]
-The buffer property "hotlist_max_level_nicks" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `+/script install buffer_autoset.py+` and get help with `+/help buffer_autoset+`.
 
 // TRANSLATION MISSING
 [[highlights]]
@@ -2420,14 +2623,8 @@ This can also be set with the buffer property "highlight_disable_regex".
 Same example, specific to the current buffer:
 
 ----
-/buffer set highlight_disable_regex <flash.*>
+/buffer setauto highlight_disable_regex <flash.*>
 ----
-
-[NOTE]
-The buffer property "highlight_disable_regex" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `+/script install buffer_autoset.py+` and get help with
-`+/help buffer_autoset+`.
 
 [[highlights_words]]
 ==== Add words to highlight
@@ -2483,13 +2680,8 @@ You can force highlight using a regular expression with the buffer property
 For example to force the highlight on all messages in the current buffer:
 
 ----
-/buffer set highlight_regex .*
+/buffer setauto highlight_regex .*
 ----
-
-[NOTE]
-The buffer property "highlight_regex" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `+/script install buffer_autoset.py+` and get help with `+/help buffer_autoset+`.
 
 // TRANSLATION MISSING
 [[buffer_logging]]
@@ -3415,32 +3607,34 @@ Sections in file _weechat.conf_:
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section    | Control command                           | Description
-| debug      | <<command_weechat_debug,/debug set>>      +
-               /set weechat.debug.*                      | Debug level, for core and plugins (options can be added/removed in section).
-| startup    | /set weechat.startup.*                    | Startup options.
-| look       | /set weechat.look.*                       | Look and feel.
-| palette    | <<command_weechat_color,/color alias>>    +
-               /set weechat.palette.*                    | Color aliases (options can be added/removed in section).
-| color      | /set weechat.color.*                      | Colors.
-| completion | /set weechat.completion.*                 | Completion options.
-| history    | /set weechat.history.*                    | History options (commands and buffers).
-| proxy      | <<command_weechat_proxy,/proxy>>          +
-               /set weechat.proxy.*                      | Proxy options.
-| network    | /set weechat.network.*                    | Network/TLS options.
+| Section    | Control command                            | Description
+| debug      | <<command_weechat_debug,/debug set>>       +
+               /set weechat.debug.*                       | Debug level, for core and plugins (options can be added/removed in section).
+| startup    | /set weechat.startup.*                     | Startup options.
+| look       | /set weechat.look.*                        | Look and feel.
+| palette    | <<command_weechat_color,/color alias>>     +
+               /set weechat.palette.*                     | Color aliases (options can be added/removed in section).
+| color      | /set weechat.color.*                       | Colors.
+| completion | /set weechat.completion.*                  | Completion options.
+| history    | /set weechat.history.*                     | History options (commands and buffers).
+| proxy      | <<command_weechat_proxy,/proxy>>           +
+               /set weechat.proxy.*                       | Proxy options.
+| network    | /set weechat.network.*                     | Network/TLS options.
 // TRANSLATION MISSING
-| plugin     | /set weechat.plugin.*                     | Options on plugins.
+| plugin     | /set weechat.plugin.*                      | Options on plugins.
 // TRANSLATION MISSING
-| signal     | /set weechat.signal.*                     | Options on signals.
-| bar        | <<command_weechat_bar,/bar>>              +
-               /set weechat.bar.*                        | Bar options.
-| layout     | <<command_weechat_layout,/layout>>        | Layouts.
-| notify     | <<command_weechat_buffer,/buffer notify>> | Notify levels for buffers (options can be added/removed in section).
-| filter     | <<command_weechat_filter,/filter>>        | Filters.
-| key        | <<command_weechat_key,/key>>              | Keys in default context.
-| key_search | <<command_weechat_key,/key>>              | Keys in search context.
-| key_cursor | <<command_weechat_key,/key>>              | Keys in cursor context.
-| key_mouse  | <<command_weechat_key,/key>>              | Keys in mouse context.
+| signal     | /set weechat.signal.*                      | Options on signals.
+| bar        | <<command_weechat_bar,/bar>>               +
+               /set weechat.bar.*                         | Bar options.
+| layout     | <<command_weechat_layout,/layout>>         | Layouts.
+// TRANSLATION MISSING
+| buffer     | <<command_weechat_buffer,/buffer setauto>> | Properties auto-applied on buffers when they are opened.
+| notify     | <<command_weechat_buffer,/buffer notify>>  | Notify levels for buffers (options can be added/removed in section).
+| filter     | <<command_weechat_filter,/filter>>         | Filters.
+| key        | <<command_weechat_key,/key>>               | Keys in default context.
+| key_search | <<command_weechat_key,/key>>               | Keys in search context.
+| key_cursor | <<command_weechat_key,/key>>               | Keys in cursor context.
+| key_mouse  | <<command_weechat_key,/key>>               | Keys in mouse context.
 |===
 
 // TRANSLATION MISSING
@@ -4302,7 +4496,7 @@ Ad esempio, per personalizzare la richiesta CTCP "VERSIONE", utilizzare il
 seguente comando:
 
 ----
-/set irc.ctcp.version "Uso WeeChat $version, fico!"
+/set irc.ctcp.version "Uso WeeChat ${version}, fico!"
 ----
 
 // TRANSLATION MISSING
@@ -4328,7 +4522,7 @@ può rispondere "BLABLA":
 interno prima del nome CTCP:
 
 ----
-/set irc.ctcp.libera.version "WeeChat $version (per libera)"
+/set irc.ctcp.libera.version "WeeChat ${version} (per libera)"
 ----
 
 Se si desidera ripristinare la risposta CTCP standard, allora disabilitare
@@ -4338,24 +4532,27 @@ l'opzione:
 /unset irc.ctcp.version
 ----
 
-I codici seguenti possono essere utilizzati nelle stringhe e vengono estese
-automaticamente da WeeChat quando si risponde alle CTCP
+// TRANSLATION MISSING
+The CTCP replies are evaluated (see command <<command_weechat_eval,/eval>>) and
+the following extra variables are available:
 
-// TRANSLATION MISSING ($versiongit + $git + $username (name))
-[width="100%",cols="2l,4,8",options="header"]
+[width="100%",cols="2,4,8",options="header"]
 |===
-| Codice       | Descrizione                             | Valore/esempio
-| $clientinfo  | Elenco di CTCP supportate               | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| $version     | Versione di WeeChat                     | `+4.1.0-dev+`
-| $versiongit  | Versione di WeeChat + Git version ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
-| $git         | Git version ^(1)^                       | `+v4.0.0-51-g8f98b922a+`
-| $compilation | Data di compilazione di WeeChat         | `+Jul  8 2023 20:14:23+`
-| $osinfo      | Informazioni sull'OS                    | `+Linux 5.10.0-23-amd64 / x86_64+`
-| $site        | Sito di WeeChat                         | `+https://weechat.org/+`
-| $download    | Sito di WeeChat, pagina di download     | `+https://weechat.org/download/+`
-| $time        | Data/ora correnti                       | `+Sat, 08 Jul 2023 21:11:19 +0200+`
-| $username    | Nome utente sul server IRC              | `+name+`
-| $realname    | Nome reale sul server IRC               | `+John Doe+`
+// TRANSLATION MISSING
+| Variable           | Descrizione                             | Valore/esempio
+| `+${clientinfo}+`  | Elenco di CTCP supportate               | `+ACTION DCC CLIENTINFO PING SOURCE TIME VERSION+`
+| `+${version}+`     | Versione di WeeChat                     | `+4.1.0-dev+`
+// TRANSLATION MISSING
+| `+${versiongit}+`  | Versione di WeeChat + Git version ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
+// TRANSLATION MISSING
+| `+${git}+`         | Git version ^(1)^                       | `+v4.0.0-51-g8f98b922a+`
+| `+${compilation}+` | Data di compilazione di WeeChat         | `+Jul  8 2023 20:14:23+`
+| `+${osinfo}+`      | Informazioni sull'OS                    | `+Linux 5.10.0-23-amd64 / x86_64+`
+| `+${site}+`        | Sito di WeeChat                         | `+https://weechat.org/+`
+| `+${download}+`    | Sito di WeeChat, pagina di download     | `+https://weechat.org/download/+`
+| `+${time}+`        | Data/ora correnti                       | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| `+${username}+`    | Nome utente sul server IRC              | `+name+`
+| `+${realname}+`    | Nome reale sul server IRC               | `+John Doe+`
 |===
 
 // TRANSLATION MISSING
@@ -4363,19 +4560,16 @@ automaticamente da WeeChat quando si risponde alle CTCP
 ^(1)^ The Git version is the output of command `git describe`. It is known only
 if WeeChat has been compiled inside the Git repository and if Git was installed.
 
-Se le opzioni CTCP non sono definite (comportamento predefinito),
-le risposte CTCP sono:
+// TRANSLATION MISSING
+The default CTCP replies are:
 
-// TRANSLATION MISSING ($username (name))
 [width="100%",cols="2,4,8",options="header"]
 |===
-| CTCP       | Formato risposta          | Esempio
-| CLIENTINFO | `+$clientinfo+`           | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
-| SOURCE     | `+$download+`             | `+https://weechat.org/download/+`
-| TIME       | `+$time+`                 | `+Sat, 08 Jul 2023 21:11:19 +0200+`
-| USERINFO   | `+$username ($realname)+` | `+name (John Doe)+`
-| VERSION    | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
+| CTCP       | Formato risposta              | Esempio
+| CLIENTINFO | `+${clientinfo}+`             | `+ACTION DCC CLIENTINFO PING SOURCE TIME VERSION+`
+| SOURCE     | `+${download}+`               | `+https://weechat.org/download/+`
+| TIME       | `+${time}+`                   | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| VERSION    | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
 |===
 
 [[irc_target_buffer]]

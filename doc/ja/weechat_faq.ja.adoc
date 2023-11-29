@@ -598,6 +598,33 @@ macOS のターミナル.app を使っている場合、設定メニューのキ
 キーを使用」を有効化してください。こうすることで、kbd:[Option]
 キーをメタキーとして使うことが可能です。
 
+// TRANSLATION MISSING
+[[enter_key]]
+=== Some keys including Enter are not working, why?
+
+If you run a WeeChat < 4.0.0 with configuration files created by any
+version ≥ 4.0.0, the keys names become invalid and many keys won't work at all. +
+To repair them, exit WeeChat, remove all sections `[key*]` from weechat.conf
+and start WeeChat again: all default keys will be created.
+
+// TRANSLATION MISSING
+[[key_f11]]
+=== Key F11 maximizes the terminal window, how can I scroll up the nicklist?
+
+The key kbd:[F11] is commonly used by terminals to maximize the window, and
+kbd:[F11]/kbd:[F12] are the default keys in WeeChat to scroll the nicklist.
+
+You can bind other keys, for example kbd:[Shift+F11] and kbd:[Shift+F12],
+with WeeChat ≥ 4.0.0:
+
+----
+/key bind shift-f11 /bar scroll nicklist * -100%
+/key bind shift-f12 /bar scroll nicklist * +100%
+----
+
+Other solution is to enable mouse (key: kbd:[Alt+m]) and scroll with the mouse
+wheel (see also questions about <<mouse,mouse>>).
+
 [[customize_key_bindings]]
 === どうすればキー割り当てをカスタマイズできますか。
 
@@ -953,33 +980,21 @@ link:weechat_user.ja.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add ^
 buffer property to set the max hotlist level for some nicks, per buffer,
 or per group of buffers (like IRC servers).
 
-ハイライトを無効化するだけなら、このプロパティを 2 に設定してください:
+ハイライトを無効化するだけなら、このプロパティを 2 に設定してください.
+
+// TRANSLATION MISSING
+For the current buffer:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-このバッファプロパティは設定に保存されません。このバッファプロパティを自動的に適用するには、_buffer_autoset.py_
-スクリプトが必要です:
+// TRANSLATION MISSING
+For all channels on server "libera":
 
 ----
-/script install buffer_autoset.py
+/set weechat.buffer.irc.libera.*.hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-例えば、IRC サーバ libera のチャンネル #weechat に参加している "mike"
-の発言に対してハイライトを永久的に無効化するには以下のように設定します:
-
-----
-/buffer_autoset add irc.libera.#weechat hotlist_max_level_nicks_add mike:2
-----
-
-この設定をすべての libera サーバのバッファに対して適用するには以下のように設定します:
-
-----
-/buffer_autoset add irc.libera hotlist_max_level_nicks_add mike:2
-----
-
-これ以外の例は `+/help buffer_autoset+` を参照してください。
 
 [[irc_target_buffer]]
 === どうすればマージされたバッファ内であるコマンドを発行するターゲットバッファを変更できますか。
@@ -1111,7 +1126,10 @@ spell プラグインをリロードしてください:
 
 以下に挙げる <<memory_usage,memory>> に関するヒントに従ってください:
 
-* "nicklist" バーを非表示にする: `/bar hide nicklist`
+// TRANSLATION MISSING
+* "nicklist" バーを非表示にする: `/bar hide nicklist` (key: kbd:[Alt+Shift+N]).
+// TRANSLATION MISSING
+* Disable "buflist": `/buflist disable` (key: kbd:[Alt+Shift+B]).
 * ステータスバー時間に秒の表示を止める:
   `+/set weechat.look.item_time_format "%H:%M"+` (これはデフォルト値です)
 * コマンドライン内の単語スペルミスのリアルタイムチェックを無効にする (有効にしていた場合):
@@ -1133,12 +1151,19 @@ IRC の退出および終了メッセージを無効化します:
 
 ----
 /set irc.ctcp.clientinfo ""
-/set irc.ctcp.finger ""
 /set irc.ctcp.source ""
 /set irc.ctcp.time ""
-/set irc.ctcp.userinfo ""
 /set irc.ctcp.version ""
 /set irc.ctcp.ping ""
+----
+
+// TRANSLATION MISSING
+With WeeChat < 4.1.0, other CTCP queries were replied by default and must be
+disabled as well:
+
+----
+/set irc.ctcp.finger ""
+/set irc.ctcp.userinfo ""
 ----
 
 "xfer" プラグイン (これは IRC DCC 機能を使うためのものです) をアンロードして自動ロードを無効化します:
@@ -1175,6 +1200,35 @@ Some other files may contain sensitive info like passwords (if they are not
 stored in _sec.conf_ with the `/secure` command).
 
 設定ファイルに関する詳しい情報はlink:weechat_user.ja.html#files_and_directories[ユーザーズガイド / ファイルとディレクトリ ^↗^^]を参照してください。
+
+// TRANSLATION MISSING
+[[move_to_another_device]]
+=== I want to move my WeeChat to another device and keep my config, what should I copy?
+
+First check directories used by WeeChat with this command: `/debug dirs`. +
+Directories home/config and home/data must be copied (all files and sub-directories).
+
+For example if you're using XDG directories (default with WeeChat ≥ 3.2),
+the directories should be `$HOME/.config/weechat` and `$HOME/.local/share/weechat`. +
+If you're using a single directory (default with WeeChat < 3.2), the directory
+should be `$HOME/.weechat`.
+
+[IMPORTANT]
+The WeeChat version on the new device must be greater than or equal to the version
+on the initial device. +
+Downgrading WeeChat configuration is *NOT SUPPORTED* and can break it,
+leading to unusable WeeChat.
+
+Steps:
+
+. Quit Weechat: `/quit` (or `/upgrade -quit` if you want to resume the session,
+  which includes content of all buffers).
+. Copy all directories, sub-directories and files to the new device, keeping
+  same names and permissions.
+. Optional: copy any file outside these directories that you refer to in your
+  configuration (it's not recommended to use files outside WeeChat directories).
+. Start WeeChat on the new device: `weechat` (or `weechat --upgrade` if you
+  saved the session).
 
 [[development]]
 == 開発

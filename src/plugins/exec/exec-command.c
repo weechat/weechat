@@ -838,6 +838,7 @@ exec_command_init ()
     weechat_hook_command (
         "exec",
         N_("execute external commands"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("-list"
            " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] "
            "[-l|-o|-oc|-n|-nf] [-oerr] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] "
@@ -851,93 +852,94 @@ exec_command_init ()
            " || -killall"
            " || -set <id> <property> <value>"
            " || -del <id>|-all [<id>...]"),
-        N_("   -list: list commands\n"
-           "     -sh: use the shell to execute the command, many commands can "
-           "be piped (WARNING: use this option ONLY if all arguments are "
-           "safe, see option -nosh)\n"
-           "   -nosh: do not use the shell to execute the command (required if "
-           "the command has some unsafe data, for example the content of a "
-            "message from another user) (default)\n"
-           "     -bg: run process in background: do not display process output "
-           "neither return code (not compatible with options "
-           "-o/-oc/-n/-nf/-pipe/-hsignal)\n"
-           "   -nobg: catch process output and display return code (default)\n"
-           "  -stdin: create a pipe for sending data to the process (with "
-           "/exec -in/-inclose)\n"
-           "-nostdin: do not create a pipe for stdin (default)\n"
-           " -buffer: display/send output of command on this buffer (if the "
-           "buffer is not found, a new buffer with name \"exec.exec.xxx\" is "
-           "created)\n"
-           "      -l: display locally output of command on buffer (default)\n"
-           "      -o: send output of command to the buffer without executing "
-           "commands (not compatible with options -bg/-pipe/-hsignal)\n"
-           "     -oc: send output of command to the buffer and execute commands "
-           "(lines starting with \"/\" or another custom command char) "
-           "(not compatible with options -bg/-pipe/-hsignal)\n"
-           "      -n: display output of command in a new buffer (not compatible "
-           "with options -bg/-pipe/-hsignal)\n"
-           "     -nf: display output of command in a new buffer with free "
-           "content (no word-wrap, no limit on number of lines) (not compatible "
-           "with options -bg/-pipe/-hsignal)\n"
-           "   -oerr: also send stderr (error output) to the buffer (can be "
-           "used only with options -o and -oc)\n"
-           "     -cl: clear the new buffer before displaying output\n"
-           "   -nocl: append to the new buffer without clear (default)\n"
-           "     -sw: switch to the output buffer (default)\n"
-           "   -nosw: don't switch to the output buffer\n"
-           "     -ln: display line numbers (default in new buffer only)\n"
-           "   -noln: don't display line numbers\n"
-           "  -flush: display output of command in real time (default)\n"
-           "-noflush: display output of command after its end\n"
-           "  -color: action on ANSI colors in output:\n"
-           "             ansi: keep ANSI codes as-is\n"
-           "             auto: convert ANSI colors to WeeChat/IRC (default)\n"
-           "              irc: convert ANSI colors to IRC colors\n"
-           "          weechat: convert ANSI colors to WeeChat colors\n"
-           "            strip: remove ANSI colors\n"
-           "     -rc: display return code (default)\n"
-           "   -norc: don't display return code\n"
-           "-timeout: set a timeout for the command (in seconds)\n"
-           "   -name: set a name for the command (to name it later with /exec)\n"
-           "   -pipe: send the output to a WeeChat/plugin command (line by "
-           "line); if there are spaces in command/arguments, enclose them with "
-           "double quotes; variable $line is replaced by the line (by default "
-           "the line is added after the command, separated by a space) "
-           "(not compatible with options -bg/-o/-oc/-n/-nf)\n"
-           "-hsignal: send the output as a hsignal (to be used for example in "
-           "a trigger) (not compatible with options -bg/-o/-oc/-n/-nf)\n"
-           " command: the command to execute; if beginning with \"url:\", the "
-           "shell is disabled and the content of URL is downloaded and sent as "
-           "output\n"
-           "      id: command identifier: either its number or name (if set "
-           "with \"-name xxx\")\n"
-           "     -in: send text on standard input of process\n"
-           "-inclose: same as -in, but stdin is closed after (and text is "
-           "optional: without text, the stdin is just closed)\n"
-           " -signal: send a signal to the process; the signal can be an integer "
-           "or one of these names: hup, int, quit, kill, term, usr1, usr2\n"
-           "   -kill: alias of \"-signal <id> kill\"\n"
-           "-killall: kill all running processes\n"
-           "    -set: set a hook property (see function hook_set in plugin API "
-           "reference)\n"
-           "property: hook property\n"
-           "   value: new value for hook property\n"
-           "    -del: delete a terminated command\n"
-           "    -all: delete all terminated commands\n"
-           "\n"
-           "Default options can be set in the option "
-           "exec.command.default_options.\n"
-           "\n"
-           "Examples:\n"
-           "  /exec -n ls -l /tmp\n"
-           "  /exec -sh -n ps xu | grep weechat\n"
-           "  /exec -n -norc url:https://pastebin.com/raw.php?i=xxxxxxxx\n"
-           "  /exec -nf -noln links -dump "
-           "https://weechat.org/files/doc/weechat/devel/weechat_user.en.html\n"
-           "  /exec -o uptime\n"
-           "  /exec -pipe \"/print Machine uptime:\" uptime\n"
-           "  /exec -n tail -f /var/log/messages\n"
-           "  /exec -kill 0"),
+        WEECHAT_CMD_ARGS_DESC(
+            N_("raw[-list]: list commands"),
+            N_("raw[-sh]: use the shell to execute the command, many commands can "
+               "be piped (WARNING: use this option ONLY if all arguments are "
+               "safe, see option -nosh)"),
+            N_("raw[-nosh]: do not use the shell to execute the command (required if "
+               "the command has some unsafe data, for example the content of a "
+               "message from another user) (default)"),
+            N_("raw[-bg]: run process in background: do not display process output "
+               "neither return code (not compatible with options "
+               "-o/-oc/-n/-nf/-pipe/-hsignal)"),
+            N_("raw[-nobg]: catch process output and display return code (default)"),
+            N_("raw[-stdin]: create a pipe for sending data to the process (with "
+               "/exec -in/-inclose)"),
+            N_("raw[-nostdin]: do not create a pipe for stdin (default)"),
+            N_("raw[-buffer]: display/send output of command on this buffer (if the "
+               "buffer is not found, a new buffer with name \"exec.exec.xxx\" is "
+               "created)"),
+            N_("raw[-l]: display locally output of command on buffer (default)"),
+            N_("raw[-o]: send output of command to the buffer without executing "
+               "commands (not compatible with options -bg/-pipe/-hsignal)"),
+            N_("raw[-oc]: send output of command to the buffer and execute commands "
+               "(lines starting with \"/\" or another custom command char) "
+               "(not compatible with options -bg/-pipe/-hsignal)"),
+            N_("raw[-n]: display output of command in a new buffer (not compatible "
+               "with options -bg/-pipe/-hsignal)"),
+            N_("raw[-nf]: display output of command in a new buffer with free "
+               "content (no word-wrap, no limit on number of lines) (not compatible "
+               "with options -bg/-pipe/-hsignal)"),
+            N_("raw[-oerr]: also send stderr (error output) to the buffer (can be "
+               "used only with options -o and -oc)"),
+            N_("raw[-cl]: clear the new buffer before displaying output"),
+            N_("raw[-nocl]: append to the new buffer without clear (default)"),
+            N_("raw[-sw]: switch to the output buffer (default)"),
+            N_("raw[-nosw]: don't switch to the output buffer"),
+            N_("raw[-ln]: display line numbers (default in new buffer only)"),
+            N_("raw[-noln]: don't display line numbers"),
+            N_("raw[-flush]: display output of command in real time (default)"),
+            N_("raw[-noflush]: display output of command after its end"),
+            N_("raw[-color]: action on ANSI colors in output:"),
+            N_("> raw[ansi]: keep ANSI codes as-is"),
+            N_("> raw[auto]: convert ANSI colors to WeeChat/IRC (default)"),
+            N_("> raw[irc]: convert ANSI colors to IRC colors"),
+            N_("> raw[weechat]: convert ANSI colors to WeeChat colors"),
+            N_("> raw[strip]: remove ANSI colors"),
+            N_("raw[-rc]: display return code (default)"),
+            N_("raw[-norc]: don't display return code"),
+            N_("raw[-timeout]: set a timeout for the command (in seconds)"),
+            N_("raw[-name]: set a name for the command (to name it later with /exec)"),
+            N_("raw[-pipe]: send the output to a WeeChat/plugin command (line by "
+               "line); if there are spaces in command/arguments, enclose them with "
+               "double quotes; variable $line is replaced by the line (by default "
+               "the line is added after the command, separated by a space) "
+               "(not compatible with options -bg/-o/-oc/-n/-nf)"),
+            N_("raw[-hsignal]: send the output as a hsignal (to be used for example in "
+               "a trigger) (not compatible with options -bg/-o/-oc/-n/-nf)"),
+            N_("command: the command to execute; if beginning with \"url:\", the "
+               "shell is disabled and the content of URL is downloaded and sent as "
+               "output"),
+            N_("id: command identifier: either its number or name (if set "
+               "with \"-name xxx\")"),
+            N_("raw[-in]: send text on standard input of process"),
+            N_("raw[-inclose]: same as -in, but stdin is closed after (and text is "
+               "optional: without text, the stdin is just closed)"),
+            N_("raw[-signal]: send a signal to the process; the signal can be an integer "
+               "or one of these names: hup, int, quit, kill, term, usr1, usr2"),
+            N_("raw[-kill]: alias of \"-signal <id> kill\""),
+            N_("raw[-killall]: kill all running processes"),
+            N_("raw[-set]: set a hook property (see function hook_set in plugin API "
+               "reference)"),
+            N_("property: hook property"),
+            N_("value: new value for hook property"),
+            N_("raw[-del]: delete a terminated command"),
+            N_("raw[-all]: delete all terminated commands"),
+            "",
+            N_("Default options can be set in the option "
+               "exec.command.default_options."),
+            "",
+            N_("Examples:"),
+            AI("  /exec -n ls -l /tmp"),
+            AI("  /exec -sh -n ps xu | grep weechat"),
+            AI("  /exec -n -norc url:https://pastebin.com/raw.php?i=xxxxxxxx"),
+            AI("  /exec -nf -noln links -dump "
+               "https://weechat.org/files/doc/weechat/devel/weechat_user.en.html"),
+            AI("  /exec -o uptime"),
+            AI("  /exec -pipe \"/print Machine uptime:\" uptime"),
+            AI("  /exec -n tail -f /var/log/messages"),
+            AI("  /exec -kill 0")),
         "-list"
         " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-buffer|-l|-o|-n|-nf|"
         "-cl|-nocl|-sw|-nosw|-ln|-noln|-flush|-noflush|-color|-timeout|-name|"

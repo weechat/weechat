@@ -129,6 +129,7 @@ int
 hook_signal_send (const char *signal, const char *type_data, void *signal_data)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook_exec_cb hook_exec_cb;
     int rc;
 
     rc = WEECHAT_RC_OK;
@@ -144,14 +145,14 @@ hook_signal_send (const char *signal, const char *type_data, void *signal_data)
             && !ptr_hook->running
             && hook_signal_match (signal, ptr_hook))
         {
-            ptr_hook->running = 1;
+            hook_callback_start (ptr_hook, &hook_exec_cb);
             rc = (HOOK_SIGNAL(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
                  signal,
                  type_data,
                  signal_data);
-            ptr_hook->running = 0;
+            hook_callback_end (ptr_hook, &hook_exec_cb);
 
             if (rc == WEECHAT_RC_OK_EAT)
                 break;

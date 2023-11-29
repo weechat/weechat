@@ -21,6 +21,8 @@
 #ifndef WEECHAT_COMMAND_H
 #define WEECHAT_COMMAND_H
 
+struct t_gui_buffer;
+
 #define COMMAND_CALLBACK(__command)                                     \
     int                                                                 \
     command_##__command (const void *pointer, void *data,               \
@@ -80,7 +82,17 @@
         return WEECHAT_RC_ERROR;                                        \
     }
 
-struct t_gui_buffer;
+#define CMD_ARGS_DESC(args...)                                          \
+    STR_CONCAT("\n", WEECHAT_HOOK_COMMAND_STR_FORMATTED, ##args)
+
+struct t_command_repeat
+{
+    char *buffer_name;                 /* full buffer name                  */
+    char *command;                     /* cmd to exec (or text for buffer)  */
+    char *commands_allowed;            /* commands currently allowed        */
+    int count;                         /* number of times the cmd is exec.  */
+    int index;                         /* current index (starts at 1)       */
+};
 
 extern const char *command_help_option_color_values ();
 extern void command_version_display (struct t_gui_buffer *buffer,

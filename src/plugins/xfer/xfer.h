@@ -33,8 +33,10 @@
 
 enum t_xfer_type
 {
-    XFER_TYPE_FILE_RECV = 0,
-    XFER_TYPE_FILE_SEND,
+    XFER_TYPE_FILE_RECV_ACTIVE = 0,
+    XFER_TYPE_FILE_RECV_PASSIVE,
+    XFER_TYPE_FILE_SEND_ACTIVE,
+    XFER_TYPE_FILE_SEND_PASSIVE,
     XFER_TYPE_CHAT_RECV,
     XFER_TYPE_CHAT_SEND,
     /* number of xfer types */
@@ -117,14 +119,22 @@ enum t_xfer_hash_status
 
 /* macros for type/status */
 
-#define XFER_IS_FILE(type) ((type == XFER_TYPE_FILE_RECV) ||    \
-                            (type == XFER_TYPE_FILE_SEND))
+#define XFER_IS_FILE(type) ((type == XFER_TYPE_FILE_RECV_ACTIVE) ||  \
+                            (type == XFER_TYPE_FILE_RECV_PASSIVE) || \
+                            (type == XFER_TYPE_FILE_SEND_ACTIVE) ||  \
+                            (type == XFER_TYPE_FILE_SEND_PASSIVE))
 #define XFER_IS_CHAT(type) ((type == XFER_TYPE_CHAT_RECV) ||    \
                             (type == XFER_TYPE_CHAT_SEND))
-#define XFER_IS_RECV(type) ((type == XFER_TYPE_FILE_RECV) ||    \
+#define XFER_IS_RECV(type) ((type == XFER_TYPE_FILE_RECV_ACTIVE) ||  \
+                            (type == XFER_TYPE_FILE_RECV_PASSIVE) || \
                             (type == XFER_TYPE_CHAT_RECV))
-#define XFER_IS_SEND(type) ((type == XFER_TYPE_FILE_SEND) ||    \
+#define XFER_IS_SEND(type) ((type == XFER_TYPE_FILE_SEND_ACTIVE) ||  \
+                            (type == XFER_TYPE_FILE_SEND_PASSIVE) || \
                             (type == XFER_TYPE_CHAT_SEND))
+#define XFER_IS_ACTIVE(type) ((type == XFER_TYPE_FILE_RECV_ACTIVE) || \
+                              (type == XFER_TYPE_FILE_SEND_ACTIVE))
+#define XFER_IS_FILE_PASSIVE(type) ((type == XFER_TYPE_FILE_RECV_PASSIVE) || \
+                                    (type == XFER_TYPE_FILE_SEND_PASSIVE))
 
 #define XFER_HAS_ENDED(status) ((status == XFER_STATUS_DONE) ||      \
                                 (status == XFER_STATUS_FAILED) ||    \
@@ -150,6 +160,7 @@ struct t_xfer
     socklen_t remote_address_length;   /* remote sockaddr length            */
     char *remote_address_str;          /* remote IP address as string       */
     int port;                          /* remote port                       */
+    char *token;                       /* remote passive-DCC token          */
 
     /* internal data */
     enum t_xfer_status status;         /* xfer status (waiting, sending,..) */

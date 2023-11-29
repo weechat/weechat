@@ -363,7 +363,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
 {
     struct t_gui_filter *new_filter;
     regex_t *regex1, *regex2;
-    char *pos_tab, *regex_prefix, buf[512], str_error[512];
+    char *pos_tab, *regex_prefix, buf[512], str_error[1024];
     const char *ptr_start_regex, *pos_regex_message;
     int rc;
 

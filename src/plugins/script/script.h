@@ -36,7 +36,6 @@ extern struct t_hashtable *script_loaded;
 extern int script_language_search (const char *language);
 extern int script_language_search_by_extension (const char *extension);
 extern int script_download_enabled (int display_error);
-extern char *script_build_download_url (const char *url);
 extern void script_get_loaded_plugins ();
 extern void script_get_scripts ();
 

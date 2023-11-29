@@ -127,7 +127,7 @@ WeeChat:
 | pkg-config |
 | インストール済みライブラリを検出
 
-| libncursesw5-dev ^(2)^ |
+| libncurses-dev |
 | ncurses インターフェース
 
 | libcurl4-gnutls-dev |
@@ -137,7 +137,7 @@ WeeChat:
 | 保護データ、IRC SASL 認証
 
 // TRANSLATION MISSING
-| libgnutls28-dev | ≥ 2.2.0 ^(3)^
+| libgnutls28-dev | ≥ 2.2.0 ^(2)^
 | IRC plugin: support of TLS connections, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE). +
   Relay plugin: support of TLS connections.
 
@@ -146,21 +146,13 @@ WeeChat:
 | Logger plugin: compression of rotated log files (gzip). +
   Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^^] (weechat protocol). +
   Script plugin: read of repository index file (gzip).
-
-// TRANSLATION MISSING
-| libzstd-dev | ≥ 0.8.1
-| Logger plugin: compression of rotated log files. +
-  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
 |===
 
 [NOTE]
 // TRANSLATION MISSING
 ^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
 name can be different in other distributions. +
-^(2)^ WeeChat は libncurses**w**5-dev でコンパイルすることを推奨します
-(*w* が重要です)。libncurses5-dev でもコンパイル可能ですが、これは推奨
-*されません* (ワイドキャラクタの表示にバグを生じるでしょう)。 +
-^(3)^ IRC SASL 認証で ECDSA-NIST256P-CHALLENGE を使うには、GnuTLS
+^(2)^ IRC SASL 認証で ECDSA-NIST256P-CHALLENGE を使うには、GnuTLS
 バージョン 3.0.21 以上が必要です。
 
 // TRANSLATION MISSING
@@ -170,27 +162,70 @@ WeeChat:
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
 // TRANSLATION MISSING
-| パッケージ ^(1)^                        | バージョン  | Features
-| {cpp} コンパイラ (pass:[g++ / clang++]) |             | ビルドとテストの実行、JavaScript プラグイン
-| gettext                                 |             | 国際化 (メッセージの翻訳; ベース言語は英語です)
-| ca-certificates                         |             | TLS 接続に必要な証明書、relay プラグインで TLS サポート
-| libaspell-dev / libenchant-dev          |             | spell プラグイン
-| python3-dev                             | 3.0 以上    | python プラグイン
-| libperl-dev                             |             | perl プラグイン
-| ruby3.1, ruby3.1-dev                    | 1.9.1 以上  | ruby プラグイン
-| liblua5.4-dev                           |             | lua プラグイン
-| tcl-dev                                 | 8.5 以上    | tcl プラグイン
-| guile-3.0-dev                           | 2.0 以上    | guile (scheme) プラグイン
-| libv8-dev                               | 3.24.3 以下 | javascript プラグイン
-| php-dev                                 | 7.0 以上    | PHP プラグイン
-| libphp-embed                            | 7.0 以上    | PHP プラグイン
-| libxml2-dev                             |             | PHP プラグイン
-| libargon2-dev                           |             | PHP プラグイン (PHP 7.2 以上の場合)
-| libsodium-dev                           |             | PHP プラグイン (PHP 7.2 以上の場合)
-| asciidoctor                             | 1.5.4 以上  | man ページと文書のビルド
+| パッケージ ^(1)^ | バージョン | Features
+
+| {cpp} コンパイラ (pass:[g++ / clang++]) |
+| ビルドとテストの実行、JavaScript プラグイン
+
+| gettext |
+| 国際化 (メッセージの翻訳; ベース言語は英語です)
+
+| ca-certificates |
+| TLS 接続に必要な証明書、relay プラグインで TLS サポート
+
 // TRANSLATION MISSING
-| ruby-pygments.rb                        |          | Build documentation.
-| libcpputest-dev                         | 3.4 以上    | ビルドとテストの実行
+| libzstd-dev | ≥ 0.8.1
+| Logger plugin: compression of rotated log files (zstandard). +
+  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
+
+| libaspell-dev / libenchant-dev |
+| spell プラグイン
+
+| python3-dev | 3.0 以上
+| python プラグイン
+
+| libperl-dev |
+| perl プラグイン
+
+| ruby3.1, ruby3.1-dev | 1.9.1 以上
+| ruby プラグイン
+
+| liblua5.4-dev |
+| lua プラグイン
+
+| tcl-dev | 8.5 以上
+| tcl プラグイン
+
+| guile-3.0-dev | 2.0 以上
+| guile (scheme) プラグイン
+
+| libv8-dev | 3.24.3 以下
+| javascript プラグイン
+
+| php-dev | 7.0 以上
+| PHP プラグイン
+
+| libphp-embed | 7.0 以上
+| PHP プラグイン
+
+| libxml2-dev |
+| PHP プラグイン
+
+| libargon2-dev |
+| PHP プラグイン (PHP 7.2 以上の場合)
+
+| libsodium-dev |
+| PHP プラグイン (PHP 7.2 以上の場合)
+
+| asciidoctor | 1.5.4 以上
+| man ページと文書のビルド
+
+// TRANSLATION MISSING
+| ruby-pygments.rb |
+| Build documentation.
+
+| libcpputest-dev | 3.4 以上
+| ビルドとテストの実行
 |===
 
 [NOTE]
@@ -232,7 +267,8 @@ $ make install
 
 CMake に対するオプションを指定するには、以下の書式を使ってください: `-DOPTION=VALUE`。
 
-よく利用されるオプションのリスト:
+// TRANSLATION MISSING
+List of available options:
 
 [width="100%",cols="3m,3,3m,10",options="header"]
 |===
@@ -287,6 +323,10 @@ CMake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_GUILE | `ON`, `OFF` | ON
 | <<scripting_plugins,Guile プラグイン>> (Scheme) のコンパイル。
+
+// TRANSLATION MISSING
+| ENABLE_HEADLESS | `ON`, `OFF` | ON
+| Compile headless binary.
 
 | ENABLE_IRC | `ON`, `OFF` | ON
 | <<irc,IRC プラグイン>>のコンパイル
@@ -345,6 +385,10 @@ CMake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_XFER | `ON`, `OFF` | ON
 | <<xfer,Xfer プラグイン>>のコンパイル。
+
+// TRANSLATION MISSING
+| ENABLE_ZSTD | `ON`, `OFF` | ON
+| Enable https://facebook.github.io/zstd/[Zstandard ^↗^^] compression.
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF
 | コンパイルテスト。
@@ -926,10 +970,35 @@ By default, the screen is divided up into the following areas:
 | 要素         | 例                                           | 説明
 | input_prompt | `[@Flashy]`                                  | 入力プロンプト、irc の場合: ニックネームとモード (libera では "+i" モードは不可視状態を意味します)
 | away         | `(away)`                                     | 離席状態表示
-| input_search | `[Search (~ str,msg)]`                       | 検索インジケータ ("`~`": 大文字小文字を区別しない、"`==`": 大文字小文字を区別する、"`str`": 検索文字列、"`regex`": 検索正規表現、"`msg`": メッセージ部分から検索、"`pre`": プレフィックス部分から検索、"`pre\|msg`": プレフィックス部分とメッセージ部分から検索)
+// TRANSLATION MISSING
+| input_search | `[Search lines (~ str,msg)]`                 | Search indicator (see below).
 | input_paste  | `[Paste 7 lines ? [ctrl-y] Yes [ctrl-n] No]` | 行をペーストする場合にユーザへ行われる質問
 | input_text   | `hi peter!`                                  | 入力テキスト
 |===
+
+// TRANSLATION MISSING
+There are two search modes:
+
+// TRANSLATION MISSING
+* search in lines, for example `[Search lines (~ str,msg)]`, with the following info:
+** `~`: 大文字小文字を区別しない
+** `==`: 大文字小文字を区別する
+** `str`: 検索文字列
+** `regex`: 検索正規表現
+** `msg`: メッセージ部分から検索
+** `pre`: プレフィックス部分から検索
+** `pre\|msg`: プレフィックス部分とメッセージ部分から検索
+// TRANSLATION MISSING
+* search in commands history, for example `[Search command (~ str,local)]`,
+  with the following info:
+** `~`: 大文字小文字を区別しない
+** `==`: 大文字小文字を区別する
+** `str`: 検索文字列
+** `regex`: 検索正規表現
+// TRANSLATION MISSING
+** `local`: search in buffer local history
+// TRANSLATION MISSING
+** `global`: search in global history.
 
 ニックネームリスト (_nicklist_) バーは以下の初期要素を持っています:
 
@@ -956,6 +1025,10 @@ By default, the screen is divided up into the following areas:
 | buflist2                     | `1.weechat`              | List of buffers, second bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
 // TRANSLATION MISSING
 | buflist3                     | `1.weechat`              | List of buffers, third bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist4                     | `1.weechat`              | List of buffers, fourth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist5                     | `1.weechat`              | List of buffers, fifth bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
 // TRANSLATION MISSING
 | fset                         | `+buflist.look.sort: …+` | Help on currently selected option on fset buffer.
 | irc_channel                  | `#test`                  | 現在の IRC チャンネル名
@@ -1029,6 +1102,13 @@ IRC 等のプラグインでは、以下の色コードと属性を利用でき�
 | kbd:[Ctrl+c], kbd:[c],
   kbd:[xx], kbd:[,],
   kbd:[yy]               | テキスト表示色を `xx` に、背景色を `yy` に (以下の色リストを参照)
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx]           | Text color `xxxxxx` (RGB as hexadecimal, for example `FF0000` for red).
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d],
+  kbd:[xxxxxx], kbd:[,],
+  kbd:[yyyyyy]           | Text color `xxxxxx` and background `yyyyyy` (RGB as hexadecimal).
 | kbd:[Ctrl+c], kbd:[i]  | テキストをイタリック体に
 | kbd:[Ctrl+c], kbd:[o]  | テキスト表示色と属性をリセット
 | kbd:[Ctrl+c], kbd:[v]  | テキストを反転 (テキスト表示色と背景色の入れ替え)
@@ -1036,8 +1116,9 @@ IRC 等のプラグインでは、以下の色コードと属性を利用でき�
 |===
 
 [NOTE]
-同じコードで (色コードを入力せずに kbd:[Ctrl+c], kbd:[c]
-を使うことで) 属性をキャンセルすることができます。
+// TRANSLATION MISSING
+The same code (without number for kbd:[Ctrl+c], kbd:[c] and kbd:[Ctrl+c], kbd:[d])
+can be used to stop the attribute.
 
 kbd:[Ctrl+c], kbd:[c] 用の色コード:
 
@@ -1412,7 +1493,8 @@ By default WeeChat and its default plugins interpret these variables:
 
 | filter
 | any string
-| Filter defined on some buffers like `/fset`, `/server raw` (irc) and `/script`.
+| Filter defined on some buffers like `/fset`, `/list` (irc), `/server raw` (irc)
+  and `/script`.
 
 | host
 | any string
@@ -1495,8 +1577,10 @@ External plugins and scripts can define and use other local variables.
 [[buflist]]
 === List of buffers
 
+// TRANSLATION MISSING
 Buflist プラグインを使うことで、"buflist" と呼ばれるバー要素の中にバッファリストを表示させることが可能になります
-(それ以外に "buflist2" と "buflist3" と呼ばれるバー要素も利用可能です)。 +
+(four other bar items "buflist2", "buflist3", "buflist4" and "buflist5" are
+available as well)。 +
 プラグインは開始時にバー要素 "buflist" を持つデフォルトバー "buflist" を作成します。
 
 [[buflist_commands]]
@@ -1519,6 +1603,22 @@ _buflist.conf_ ファイル内のセクション:
 オプション:
 
 include::{autogendir}/autogen_user_options.ja.adoc[tag=buflist_options]
+
+// TRANSLATION MISSING
+[[cursor_mode]]
+=== Cursor mode
+
+The cursor mode allows you to move freely the cursor anywhere on screen, in chat
+area and bars, and lets you perform actions at the given position. +
+You can enter in cursor mode either with the command `/cursor` or with a mouse
+middle click (mouse must have been enabled with key kbd:[Alt+m] or command
+`/mouse enable`).
+
+Typical use is to quote messages (chat area) or interact with nicks (nicklist bar).
+
+See command <<command_weechat_cursor,/cursor>> and
+<<key_bindings_cursor_context,key bindings in cursor context>> for the list
+of actions you can perform in this mode.
 
 // TRANSLATION MISSING
 [[key_bindings]]
@@ -1614,6 +1714,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | キー                   | 説明 | コマンド
 | kbd:[Ctrl+c], kbd:[b] | テキストを太字化するコードの挿入 | `+/input insert \x02+`
 | kbd:[Ctrl+c], kbd:[c] | テキストに色をつけるコードの挿入 | `+/input insert \x03+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[d] | Insert code for colored text (RGB color, as hexadecimal). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | テキストをイタリック体にするコードの挿入 | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | テキスト色のリセットを行うコードの挿入 | `+/input insert \x0F+`
 | kbd:[Ctrl+c], kbd:[v] | テキスト色の反転を行うコードの挿入 | `+/input insert \x16+`
@@ -1634,14 +1736,26 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 |===
 
 // TRANSLATION MISSING
+[[key_bindings_cmdline_system]]
+==== System
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー         | 説明 | コマンド
+| kbd:[Ctrl+z] | Suspend WeeChat process. | `+/sys suspend+`
+|===
+
+// TRANSLATION MISSING
 [[key_bindings_buffers]]
 === Buffers
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | キー                            | 説明 | コマンド
-| kbd:[Ctrl+r]                   | バッファ中の履歴からテキスト検索 (<<key_bindings_search_context,検索モード用のキー>>を参照) | `+/input search_text_here+`
-| kbd:[Ctrl+s], kbd:[Ctrl+u]     | すべてのバッファに未読マークをセット | `+/allbuf /buffer set unread+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r]                   | Search for text in commands history (see <<key_bindings_histsearch_context,keys for context "histsearch">>). | `+/input search_history+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+s]                   | Search for text in buffer lines (see <<key_bindings_search_context,keys for context "search">>). | `+/input search_text_here+`
 // TRANSLATION MISSING
 | kbd:[Ctrl+x]                   | Switch current buffer if buffers are merged with same number, for example switch to another IRC server buffer. | `+/buffer switch+`
 | kbd:[Alt+x]                    | マージされたバッファに再ズーム (kbd:[Alt+x]: 全てのマージされたバッファを表示) | `+/buffer zoom+`
@@ -1668,6 +1782,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Alt+n]                    | 次のハイライトまでスクロール | `+/window scroll_next_highlight+`
 | kbd:[Alt+p]                    | 前のハイライトまでスクロール | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]                    | バッファを最初の未読行までスクロール | `+/window scroll_unread+`
+| kbd:[Alt+Shift+U]              | すべてのバッファに未読マークをセット | `+/allbuf /buffer set unread+`
 | kbd:[Alt+<]                    | バッファ訪問履歴で前のバッファに移動 | `+/buffer jump prev_visited+`
 | kbd:[Alt+>]                    | バッファ訪問履歴で次のバッファに移動 | `+/buffer jump next_visited+`
 | kbd:[Alt+/]                    | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `+/buffer jump last_displayed+`
@@ -1755,17 +1870,20 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 [[key_bindings_search_context]]
 === Search context
 
-以下のキーは「検索」検索モード (バッファ内のテキスト検索用に
-kbd:[Ctrl+r] が押された状態) でのみ有効です。
+// TRANSLATION MISSING
+These keys are used in context "search" (when kbd:[Ctrl+s] is pressed to search
+text in buffer lines).
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | キー            | 説明 | コマンド
-| kbd:[Ctrl+r]   | 検索タイプを切り替え: 文字列 (デフォルト)、正規表現 | `+/input search_switch_regex+`
+| kbd:[Ctrl+x]   | 検索タイプを切り替え: 文字列 (デフォルト)、正規表現 | `+/input search_switch_regex+`
 | kbd:[Alt+c]    | 大文字小文字を区別して検索 | `+/input search_switch_case+`
 | kbd:[Tab]      | 検索範囲: メッセージ (デフォルト)、プレフィックス、プレフィックスとメッセージ | `+/input search_switch_where+`
-| kbd:[↑]        | 前のキーワードで検索 | `+/input search_previous+`
-| kbd:[↓]        | 次のキーワードで検索 | `+/input search_next+`
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | 前のキーワードで検索 | `+/input search_previous+`
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | 次のキーワードで検索 | `+/input search_next+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]   | 現在の位置で検索を終了 | `+/input search_stop_here+`
@@ -1774,35 +1892,80 @@ kbd:[Ctrl+r] が押された状態) でのみ有効です。
 |===
 
 // TRANSLATION MISSING
+[[key_bindings_histsearch_context]]
+=== History search context
+
+// TRANSLATION MISSING
+These keys are used in context "histsearch" (when kbd:[Ctrl+r] is pressed to
+search text in commands history).
+
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
+|===
+| キー            | 説明 | コマンド
+| kbd:[Ctrl+x]   | 検索タイプを切り替え: 文字列 (デフォルト)、正規表現 | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | 大文字小文字を区別して検索 | `+/input search_switch_case+`
+// TRANSLATION MISSING
+| kbd:[Tab]      | Switch search in: buffer local history (default), global history. | `+/input search_switch_where+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+r] +
+  kbd:[↑]        | Search in previous (older) history entries. | `+/input search_previous+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+s] +
+  kbd:[↓]        | Search in next (newer) history entries. | `+/input search_next+`
+// TRANSLATION MISSING
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Stop search and use matching input. | `+/input search_stop_here+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+o]   | Execute the command found in history and insert the next one in the command line. | `+/input history_use_get_next+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+q]   | Stop search and restore input to its initial value. | `+/input search_stop+`
+|===
+
+// TRANSLATION MISSING
 [[key_bindings_cursor_context]]
 === Cursor context
 
-以下のキーは「カーソル」モード (画面上でカーソルを自由に動かせる状態) でのみ有効です。
+// TRANSLATION MISSING
+以下のキーは「カーソル」モード (画面上でカーソルを自由に動かせる状態) でのみ有効です,
+see <<cursor_mode,Cursor mode>>.
 
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
-| キー            | エリア            | 説明 | コマンド
-| kbd:[↑]        | -                 | カーソルを上の行に移動 | `+/cursor move up+`
-| kbd:[↓]        | -                 | カーソルを下の行に移動 | `+/cursor move down+`
-| kbd:[←]        | -                 | カーソルを左の列に移動 | `+/cursor move left+`
-| kbd:[→]        | -                 | カーソルを右の列に移動 | `+/cursor move right+`
-| kbd:[Alt+↑]    | -                 | カーソルを上のエリアに移動 | `+/cursor move area_up+`
-| kbd:[Alt+↓]    | -                 | カーソルを下のエリアに移動 | `+/cursor move area_down+`
-| kbd:[Alt+←]    | -                 | カーソルを左のエリアに移動 | `+/cursor move area_left+`
-| kbd:[Alt+→]    | -                 | カーソルを右のエリアに移動 | `+/cursor move area_right+`
-| kbd:[m]        | チャット          | メッセージを引用 | `+hsignal:chat_quote_message;/cursor stop+`
+| キー              | エリア             | 説明 | コマンド
+| kbd:[↑]           | -                  | カーソルを上の行に移動 | `+/cursor move up+`
+| kbd:[↓]           | -                  | カーソルを下の行に移動 | `+/cursor move down+`
+| kbd:[←]           | -                  | カーソルを左の列に移動 | `+/cursor move left+`
+| kbd:[→]           | -                  | カーソルを右の列に移動 | `+/cursor move right+`
 // TRANSLATION MISSING
-| kbd:[l]        | チャット          | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
-| kbd:[q]        | チャット          | プレフィックスとメッセージを引用 | `+hsignal:chat_quote_prefix_message;/cursor stop+`
-| kbd:[Q]        | チャット          | 時間、プレフィックス、メッセージを引用 | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
-| kbd:[b]        | ニックネームリスト| ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`
-| kbd:[k]        | ニックネームリスト| ニックネームをキックする | `+/window ${_window_number};/kick ${nick}+`
-| kbd:[K]        | ニックネームリスト| ニックネームをバンとキックする | `+/window ${_window_number};/kickban ${nick}+`
-| kbd:[q]        | ニックネームリスト| ニックネームに対するクエリを開く | `+/window ${_window_number};/query ${nick};/cursor stop+`
-| kbd:[w]        | ニックネームリスト| ニックネームに対して whois を行う | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[Alt+↑]       | -                  | Move cursor to the first line of the area. | `+/cursor move edge_top+`
+// TRANSLATION MISSING
+| kbd:[Alt+↓]       | -                  | Move cursor to the last line of the area. | `+/cursor move edge_bottom+`
+// TRANSLATION MISSING
+| kbd:[Alt+←]       | -                  | Move cursor to the first column of the area. | `+/cursor move edge_left+`
+// TRANSLATION MISSING
+| kbd:[Alt+→]       | -                  | Move cursor to the last column of the area. | `+/cursor move edge_right+`
+// TRANSLATION MISSING
+| kbd:[Alt+Home]    | -                  | Move cursor to the top left corner of the area. | `+/cursor move top_left+`
+// TRANSLATION MISSING
+| kbd:[Alt+End]     | -                  | Move cursor to the bottom right corner of the area. | `+/cursor move bottom_right+`
+| kbd:[Alt+Shift+↑] | -                  | カーソルを上のエリアに移動 | `+/cursor move area_up+`
+| kbd:[Alt+Shift+↓] | -                  | カーソルを下のエリアに移動 | `+/cursor move area_down+`
+| kbd:[Alt+Shift+←] | -                  | カーソルを左のエリアに移動 | `+/cursor move area_left+`
+| kbd:[Alt+Shift+→] | -                  | カーソルを右のエリアに移動 | `+/cursor move area_right+`
+| kbd:[m]           | チャット           | メッセージを引用 | `+hsignal:chat_quote_message;/cursor stop+`
+// TRANSLATION MISSING
+| kbd:[l]           | チャット           | Quote focused line. | `+hsignal:chat_quote_focused_line;/cursor stop+`
+| kbd:[q]           | チャット           | プレフィックスとメッセージを引用 | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]           | チャット           | 時間、プレフィックス、メッセージを引用 | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]           | ニックネームリスト | ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]           | ニックネームリスト | ニックネームをキックする | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]           | ニックネームリスト | ニックネームをバンとキックする | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]           | ニックネームリスト | ニックネームに対するクエリを開く | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]           | ニックネームリスト | ニックネームに対して whois を行う | `+/window ${_window_number};/whois ${nick}+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -                 | カーソルモードを終了 | `+/cursor stop+`
+  kbd:[Ctrl+m]      | -                  | カーソルモードを終了 | `+/cursor stop+`
 |===
 
 // TRANSLATION MISSING
@@ -1816,56 +1979,71 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
 | ボタン/ホイール ^(1)^ | ジェスチャー | エリア                       | 説明 | コマンド
-| ◾◽◽                | -            | チャット                     | ウィンドウに移動 | `+/window ${_window_number}+`
-| ◾◽◽                | 左           | チャット                     | 前のバッファに移動 | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                | 右           | チャット                     | 次のバッファに移動 | `+/window ${_window_number};/buffer +1+`
-| ◾◽◽                | 左 (長く)    | チャット                     | 最初のバッファに移動 | `+/window ${_window_number};/buffer 1+`
-| ◾◽◽                | 右 (長く)    | チャット                     | 最後のバッファに移動 | `+/window ${_window_number};/buffer ++`
-| kbd:[▲]            | -            | チャット                     | バッファ履歴を上方向にスクロール | `+/window scroll_up -window ${_window_number}+`
-| kbd:[▼]            | -            | チャット                     | バッファ履歴を下方向にスクロール | `+/window scroll_down -window ${_window_number}+`
-| kbd:[Ctrl+▲]       | -            | チャット                     | 水平左方向にスクロール | `+/window scroll_horiz -window ${_window_number} -10%+`
-| kbd:[Ctrl+▼]       | -            | チャット                     | 水平右方向にスクロール | `+/window scroll_horiz -window ${_window_number} +10%+`
+| kbd:[■ □ □]           | -            | チャット                     | ウィンドウに移動 | `+/window ${_window_number}+`
+| kbd:[■ □ □]           | 左           | チャット                     | 前のバッファに移動 | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]           | 右           | チャット                     | 次のバッファに移動 | `+/window ${_window_number};/buffer +1+`
+| kbd:[■ □ □]           | 左 (長く)    | チャット                     | 最初のバッファに移動 | `+/window ${_window_number};/buffer 1+`
+| kbd:[■ □ □]           | 右 (長く)    | チャット                     | 最後のバッファに移動 | `+/window ${_window_number};/buffer ++`
+| kbd:[▲]               | -            | チャット                     | バッファ履歴を上方向にスクロール | `+/window scroll_up -window ${_window_number}+`
+| kbd:[▼]               | -            | チャット                     | バッファ履歴を下方向にスクロール | `+/window scroll_down -window ${_window_number}+`
+| kbd:[Ctrl+▲]          | -            | チャット                     | 水平左方向にスクロール | `+/window scroll_horiz -window ${_window_number} -10%+`
+| kbd:[Ctrl+▼]          | -            | チャット                     | 水平右方向にスクロール | `+/window scroll_horiz -window ${_window_number} +10%+`
 // TRANSLATION MISSING
-| kbd:[▲]            | -            | chat: fset buffer       | Move five lines up in fset buffer. | `+/fset -up 5+`
+| kbd:[▲]               | -            | chat: fset buffer            | Move five lines up in fset buffer. | `+/fset -up 5+`
 // TRANSLATION MISSING
-| kbd:[▼]            | -            | chat: fset buffer       | Move five lines down in fset buffer. | `+/fset -down 5+`
+| kbd:[▼]               | -            | chat: fset buffer            | Move five lines down in fset buffer. | `+/fset -down 5+`
 // TRANSLATION MISSING
-| ◾◽◽                | -            | chat: fset buffer       | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| kbd:[■ □ □]           | -            | chat: fset buffer            | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${fset_option_index}+`
 // TRANSLATION MISSING
-| ◽◽◾                | -            | chat: fset buffer       | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]           | -            | chat: fset buffer            | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾                | left         | chat: fset buffer       | Decrease value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]           | left         | chat: fset buffer            | Decrease value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾                | right        | chat: fset buffer       | Increase value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
+| kbd:[□ □ ■]           | right        | chat: fset buffer            | Increase value for integer/color/enum, set/append to value for other types. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾                | up / down    | chat: fset buffer       | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
-| kbd:[▲]            | -            | チャット: スクリプトバッファ | スクリプトバッファを 5 行上方向にスクロール | `+/script up 5+`
-| kbd:[▼]            | -            | チャット: スクリプトバッファ | スクリプトバッファで 5 行下方向にスクロール | `+/script down 5+`
-| ◾◽◽                | -            | チャット: スクリプトバッファ | スクリプトバッファで行選択 | `+/script go ${_chat_line_y}+`
-| ◽◽◾                | -            | チャット: スクリプトバッファ | スクリプトのインストール `+/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}+`
-| ◾◽◽                | 上 / 左      | バッファリスト               | 指定したバッファを下の番号に移動 | `+buflist_mouse+` シグナル
-| ◾◽◽                | 下 / 右      | バッファリスト               | 指定したバッファを上の番号に移動 | `+buflist_mouse+` シグナル
-| ◾◽◽                | -            | バッファリスト               | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `+buflist_mouse+` シグナル
-| ◽◽◾                | -            | バッファリスト               | 現在のバッファを指定した場合、バッファ切り替え履歴で次のバッファに切り替える | `+buflist_mouse+` シグナル
-| kbd:[Ctrl+▲]       | -            | バッファリスト               | バッファ切り替え履歴で前のバッファに切り替える | `+buflist_mouse+` シグナル
-| kbd:[Ctrl+▼]       | -            | バッファリスト               | バッファ切り替え履歴で次のバッファに切り替える | `+buflist_mouse+` シグナル
-| ◾◽◽                | 上           | ニックネームリスト           | ニックネームリストを 1 ページ分上方向にスクロール | `+/bar scroll nicklist ${_window_number} -100%+`
-| ◾◽◽                | 下           | ニックネームリスト           | ニックネームリストを 1 ページ分下方向にスクロール | `+/bar scroll nicklist ${_window_number} +100%+`
-| ◾◽◽                | 上 (長く)    | ニックネームリスト           | ニックネームリストの最初に移動 | `+/bar scroll nicklist ${_window_number} b+`
-| ◾◽◽                | 下 (長く)    | ニックネームリスト           | ニックネームリストの最後に移動 | `+/bar scroll nicklist ${_window_number} e+`
-| ◾◽◽                | -            | ニックネームリスト           | ニックネームに対するクエリを開く | `+/window ${_window_number};/query ${nick}+`
-| ◽◽◾                | -            | ニックネームリスト           | ニックネームに対する whois を行う | `+/window ${_window_number};/whois ${nick}+`
-| ◾◽◽                | 左           | ニックネームリスト           | ニックネームをキックする | `+/window ${_window_number};/kick ${nick}+`
-| ◾◽◽                | 左 (長く)    | ニックネームリスト           | ニックネームをキックとバンする | `+/window ${_window_number};/kickban ${nick}+`
-| ◽◽◾                | 左           | ニックネームリスト           | ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`
-| ◽◽◾                | -            | 入力                         | マウスイベントを奪ってコマンドラインにコードを入力 | `+/input grab_mouse_area+`
-| kbd:[▲]            | -            | 任意のバー                   | バーを -20% スクロール | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
-| kbd:[▼]            | -            | 任意のバー                   | バーを +20% スクロール | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
-| ◽◾◽                | -            | 任意の場所                   | この場所でカーソルモードを開始 | `+/cursor go ${_x},${_y}+`
+| kbd:[□ □ ■]           | up / down    | chat: fset buffer            | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
+// TRANSLATION MISSING
+| kbd:[▲]               | -            | chat: /list buffer           | Move five lines up in /list buffer. | `+/list -up 5+`
+// TRANSLATION MISSING
+| kbd:[▼]               | -            | chat: /list buffer           | Move five lines down in /list buffer. | `+/list -down 5+`
+// TRANSLATION MISSING
+| kbd:[■ □ □]           | -            | chat: /list buffer           | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
+// TRANSLATION MISSING
+| kbd:[□ □ ■]           | -            | chat: /list buffer           | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
+| kbd:[▲]               | -            | チャット: スクリプトバッファ | スクリプトバッファを 5 行上方向にスクロール | `+/script up 5+`
+| kbd:[▼]               | -            | チャット: スクリプトバッファ | スクリプトバッファで 5 行下方向にスクロール | `+/script down 5+`
+| kbd:[■ □ □]           | -            | チャット: スクリプトバッファ | スクリプトバッファで行選択 | `+/script go ${_chat_line_y}+`
+| kbd:[□ □ ■]           | -            | チャット: スクリプトバッファ | スクリプトのインストール `+/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}+`
+| kbd:[■ □ □]           | 上 / 左      | バッファリスト               | 指定したバッファを下の番号に移動 | `+buflist_mouse+` シグナル
+| kbd:[■ □ □]           | 下 / 右      | バッファリスト               | 指定したバッファを上の番号に移動 | `+buflist_mouse+` シグナル
+| kbd:[■ □ □]           | -            | バッファリスト               | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `+buflist_mouse+` シグナル
+| kbd:[□ □ ■]           | -            | バッファリスト               | 現在のバッファを指定した場合、バッファ切り替え履歴で次のバッファに切り替える | `+buflist_mouse+` シグナル
+| kbd:[Ctrl+▲]          | -            | バッファリスト               | バッファ切り替え履歴で前のバッファに切り替える | `+buflist_mouse+` シグナル
+| kbd:[Ctrl+▼]          | -            | バッファリスト               | バッファ切り替え履歴で次のバッファに切り替える | `+buflist_mouse+` シグナル
+| kbd:[■ □ □]           | 上           | ニックネームリスト           | ニックネームリストを 1 ページ分上方向にスクロール | `+/bar scroll nicklist ${_window_number} -100%+`
+| kbd:[■ □ □]           | 下           | ニックネームリスト           | ニックネームリストを 1 ページ分下方向にスクロール | `+/bar scroll nicklist ${_window_number} +100%+`
+| kbd:[■ □ □]           | 上 (長く)    | ニックネームリスト           | ニックネームリストの最初に移動 | `+/bar scroll nicklist ${_window_number} b+`
+| kbd:[■ □ □]           | 下 (長く)    | ニックネームリスト           | ニックネームリストの最後に移動 | `+/bar scroll nicklist ${_window_number} e+`
+| kbd:[■ □ □]           | -            | ニックネームリスト           | ニックネームに対するクエリを開く | `+/window ${_window_number};/query ${nick}+`
+| kbd:[□ □ ■]           | -            | ニックネームリスト           | ニックネームに対する whois を行う | `+/window ${_window_number};/whois ${nick}+`
+| kbd:[■ □ □]           | 左           | ニックネームリスト           | ニックネームをキックする | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[■ □ □]           | 左 (長く)    | ニックネームリスト           | ニックネームをキックとバンする | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[□ □ ■]           | 左           | ニックネームリスト           | ニックネームをバンする | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[□ □ ■]           | -            | 入力                         | マウスイベントを奪ってコマンドラインにコードを入力 | `+/input grab_mouse_area+`
+| kbd:[▲]               | -            | 任意のバー                   | バーを -20% スクロール | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
+| kbd:[▼]               | -            | 任意のバー                   | バーを +20% スクロール | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
+| kbd:[□ ■ □]           | -            | 任意の場所                   | この場所でカーソルモードを開始 | `+/cursor go ${_x},${_y}+`
 |===
 
 [NOTE]
-^(1)^ kbd:[▲] と kbd:[▼] はホイールの上方向回転と下方向回転に対応します。
+// TRANSLATION MISSING
+^(1)^ Buttons: +
+kbd:[◼ □ □]: click on left button +
+kbd:[□ ◼ □]: click on middle button +
+kbd:[□ □ ◼]: click on right button +
+Wheel: +
+kbd:[▲]: wheel up +
+kbd:[▼]: wheel down
 
 // TRANSLATION MISSING
 [[key_bindings_fset_buffer]]
@@ -1902,8 +2080,8 @@ These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 | kbd:[Ctrl+l] (`L`)       |              | Refresh options and whole screen. | `+/fset -refresh+`
 |                          | `$`          | Refresh options (keep marked options). |
 |                          | `$$`         | Refresh options (unmark all options). |
-| kbd:[Alt+p]              |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
-| kbd:[Alt+v]              |              | Toggle help bar. | `+/bar toggle fset+`
+| kbd:[Alt+p]              | `p`          | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]              | `v`          | Toggle help bar. | `+/bar toggle fset+`
 |                          | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
 |                          | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
 |                          | `w:xxx`      | Export options in file "xxx". | `+/fset -export xxx+`
@@ -1914,6 +2092,40 @@ These keys and actions are used on the fset buffer (see <<fset,Fset plugin>>).
 |===
 
 // TRANSLATION MISSING
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
+
+// TRANSLATION MISSING
+[[key_bindings_irc_list_buffer]]
+=== IRC /list buffer
+
+These keys and actions are used on the IRC /list buffer (see command <<command_irc_list,/list>>).
+
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key            | Action ^(1)^ | Description | Command
+| kbd:[↑]        |              | Move one line up. | `+/list -up+`
+| kbd:[↓]        |              | Move one line down. | `+/list -down+`
+| kbd:[PgUp]     |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]     |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+Home] | `pass:[<<]`  | Move to first line. | `+/list -go 0+`
+| kbd:[Alt+End]  | `pass:[>>]`  | Move to last line. | `+/list -go end+`
+| kbd:[F11]      | `pass:[<]`   | Scroll horizontally on the left. | `+/list -left+`
+| kbd:[F12]      | `pass:[>]`   | Scroll horizontally on the right. | `+/list -right+`
+| kbd:[Ctrl+j]   | `j`          | Join IRC channel on selected line. | `+/list -join+`
+|                | `xxx`        | Show only channels with "xxx" in name or topic (case insensitive). |
+|                | `n:xxx`      | Show only channels with "xxx" in name (case insensitive). |
+|                | `t:xxx`      | Show only channels with "xxx" in topic (case insensitive). |
+|                | `u:n`        | Show only channels with at least "n" users. |
+|                | `u:>n`       | Show only channels with more than "n" users. |
+|                | `u:<n`       | Show only channels with less than "n" users. |
+|                | `c:xxx`      | Show only channels matching the evaluated condition "xxx", using following variables: name, name2, users, topic. |
+|                | `s:x,y`      | Sort channels by fields x,y (see command <<command_irc_list,/list>>). |
+|                | `s:`         | Reset sort to its default value (see command <<command_irc_list,/list>>). |
+|                | `$`          | Refresh list (run again command <<command_irc_list,/list>>). |
+|                | `q`          | Close buffer. | `+/buffer close+`
+|===
+
 [NOTE]
 ^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
 
@@ -1934,11 +2146,16 @@ These keys and actions are used on the script buffer (see <<script_manager,scrip
 | kbd:[PgDn]        |              | Move one page down. | `+/window page_down+`
 | kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`
 | kbd:[Alt+r]       | `r`          | Remove script. | `+/script remove+`
-| kbd:[Alt+l] (`L`) | `l`          | Load script. | `+/script load+`
+| kbd:[Alt+l]       | `l`          | Load script. | `+/script load+`
+| kbd:[Alt+L]       | `L`          | Reload script. | `+/script reload+`
 | kbd:[Alt+u]       | `u`          | Unload script. | `+/script unload+`
 | kbd:[Alt+Shift+A] | `A`          | Autoload script. | `+/script toggleautoload+`
 | kbd:[Alt+h]       | `h`          | Hold/unhold script. | `+/script hold+`
 | kbd:[Alt+v]       | `v`          | View script. | `+/script show+`
+|                   | `s:x,y`      | Sort scripts by fields x,y (see option <<option_script.look.sort,script.look.sort>>). |
+|                   | `s:`         | Reset sort to its default value (see option <<option_script.look.sort,script.look.sort>>). |
+|                   | `$`          | Refresh list. |
+|                   | `q`          | Close buffer. | `+/buffer close+`
 |===
 
 // TRANSLATION MISSING
@@ -2296,13 +2513,8 @@ irc サーバ "libera" に含まれる全てのバッファに対して設定す
 例えば現在のバッファで "joe" と "mike" からのメッセージに対するハイライトを無効化するには以下のように設定します:
 
 ----
-/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+/buffer setauto hotlist_max_level_nicks_add joe:2,mike:2
 ----
-
-[NOTE]
-バッファプロパティ "hotlist_max_level_nicks" は設定ファイルに保存されません。 +
-これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
-`+/script install buffer_autoset.py+` コマンドを使い、ヘルプを見るには `+/help buffer_autoset+` コマンドを使ってください。
 
 [[highlights]]
 === ハイライト
@@ -2329,13 +2541,8 @@ This can also be set with the buffer property "highlight_disable_regex".
 Same example, specific to the current buffer:
 
 ----
-/buffer set highlight_disable_regex <flash.*>
+/buffer setauto highlight_disable_regex <flash.*>
 ----
-
-[NOTE]
-バッファプロパティ "highlight_disable_regex" は設定ファイルに保存されません。 +
-これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
-`+/script install buffer_autoset.py+` コマンドを使い、ヘルプを見るには `+/help buffer_autoset+` コマンドを使ってください。
 
 [[highlights_words]]
 ==== ハイライトする単語の追加
@@ -2391,13 +2598,8 @@ Same example, specific to the current buffer:
 例えば現在のバッファ宛のすべてのメッセージをハイライトするには以下のように設定します:
 
 ----
-/buffer set highlight_regex .*
+/buffer setauto highlight_regex .*
 ----
-
-[NOTE]
-バッファプロパティ "highlight_regex" は設定ファイルに保存されません。 +
-これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
-`+/script install buffer_autoset.py+` コマンドを使い、ヘルプを見るには `+/help buffer_autoset+` コマンドを使ってください。
 
 // TRANSLATION MISSING
 [[buffer_logging]]
@@ -3288,32 +3490,34 @@ _weechat.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| セクション | 操作コマンド                              | 説明
-| debug      | <<command_weechat_debug,/debug set>>      +
-               /set weechat.debug.*                      | core とプラグインのデバッグレベル (オプションをセクションに追加/削除出来ます)
-| startup    | /set weechat.startup.*                    | 起動オプション
-| look       | /set weechat.look.*                       | 外観
-| palette    | <<command_weechat_color,/color alias>>    +
-               /set weechat.palette.*                    | 色の別名 (オプションをセクションに追加/削除出来ます)
-| color      | /set weechat.color.*                      | 色
-| completion | /set weechat.completion.*                 | 補完オプション
-| history    | /set weechat.history.*                    | 履歴オプション (コマンドとバッファ)
-| proxy      | <<command_weechat_proxy,/proxy>>          +
-               /set weechat.proxy.*                      | プロキシオプション
-| network    | /set weechat.network.*                    | ネットワーク/TLS オプション
+| セクション | 操作コマンド                               | 説明
+| debug      | <<command_weechat_debug,/debug set>>       +
+               /set weechat.debug.*                       | core とプラグインのデバッグレベル (オプションをセクションに追加/削除出来ます)
+| startup    | /set weechat.startup.*                     | 起動オプション
+| look       | /set weechat.look.*                        | 外観
+| palette    | <<command_weechat_color,/color alias>>     +
+               /set weechat.palette.*                     | 色の別名 (オプションをセクションに追加/削除出来ます)
+| color      | /set weechat.color.*                       | 色
+| completion | /set weechat.completion.*                  | 補完オプション
+| history    | /set weechat.history.*                     | 履歴オプション (コマンドとバッファ)
+| proxy      | <<command_weechat_proxy,/proxy>>           +
+               /set weechat.proxy.*                       | プロキシオプション
+| network    | /set weechat.network.*                     | ネットワーク/TLS オプション
 // TRANSLATION MISSING
-| plugin     | /set weechat.plugin.*                     | Options on plugins.
+| plugin     | /set weechat.plugin.*                      | Options on plugins.
 // TRANSLATION MISSING
-| signal     | /set weechat.signal.*                     | Options on signals.
-| bar        | <<command_weechat_bar,/bar>>              +
-               /set weechat.bar.*                        | バーオプション
-| layout     | <<command_weechat_layout,/layout>>        | レイアウト
-| notify     | <<command_weechat_buffer,/buffer notify>> | バッファに対する通知レベル (オプションをセクションに追加/削除出来ます)
-| filter     | <<command_weechat_filter,/filter>>        | フィルタ
-| key        | <<command_weechat_key,/key>>              | デフォルトコンテキストのキー
-| key_search | <<command_weechat_key,/key>>              | 検索コンテキストのキー
-| key_cursor | <<command_weechat_key,/key>>              | カーソルコンテキストのキー
-| key_mouse  | <<command_weechat_key,/key>>              | マウスコンテキストのキー
+| signal     | /set weechat.signal.*                      | Options on signals.
+| bar        | <<command_weechat_bar,/bar>>               +
+               /set weechat.bar.*                         | バーオプション
+| layout     | <<command_weechat_layout,/layout>>         | レイアウト
+// TRANSLATION MISSING
+| buffer     | <<command_weechat_buffer,/buffer setauto>> | Properties auto-applied on buffers when they are opened.
+| notify     | <<command_weechat_buffer,/buffer notify>>  | バッファに対する通知レベル (オプションをセクションに追加/削除出来ます)
+| filter     | <<command_weechat_filter,/filter>>         | フィルタ
+| key        | <<command_weechat_key,/key>>               | デフォルトコンテキストのキー
+| key_search | <<command_weechat_key,/key>>               | 検索コンテキストのキー
+| key_cursor | <<command_weechat_key,/key>>               | カーソルコンテキストのキー
+| key_mouse  | <<command_weechat_key,/key>>               | マウスコンテキストのキー
 |===
 
 オプション:
@@ -4161,7 +4365,7 @@ CTCP 応答をカスタマイズしたり、いくつかの CTCP
 例えば、CTCP "VERSION" 要求に対する応答をカスタマイズするには、以下のコマンドを使ってください:
 
 ----
-/set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
+/set irc.ctcp.version "I'm running WeeChat ${version}, it rocks!"
 ----
 
 // TRANSLATION MISSING
@@ -4187,7 +4391,7 @@ CTCP "BLABLA" 要求に対する応答を以下のように設定できます:
 名の前に内部サーバ名をつけてください:
 
 ----
-/set irc.ctcp.libera.version "WeeChat $version (for libera)"
+/set irc.ctcp.libera.version "WeeChat ${version} (for libera)"
 ----
 
 標準の CTCP 応答を復元するには、オプションを削除してください:
@@ -4196,40 +4400,41 @@ CTCP "BLABLA" 要求に対する応答を以下のように設定できます:
 /unset irc.ctcp.version
 ----
 
-以下のコードを設定値に含めることが可能です。これらのコードは
-CTCP 応答時に自動的に WeeChat によって展開されます:
+// TRANSLATION MISSING
+The CTCP replies are evaluated (see command <<command_weechat_eval,/eval>>) and
+the following extra variables are available:
 
-[width="100%",cols="2l,4,8",options="header"]
+[width="100%",cols="2,4,8",options="header"]
 |===
-| コード       | 説明                                      | 値/例
-| $clientinfo  | サポートしている CTCP オプションのリスト  | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| $version     | WeeChat バージョン                        | `+4.1.0-dev+`
-| $versiongit  | WeeChat バージョン + Git バージョン ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
-| $git         | Git バージョン ^(1)^                      | `+v4.0.0-51-g8f98b922a+`
-| $compilation | WeeChat コンパイル日時                    | `+Jul  8 2023 20:14:23+`
-| $osinfo      | OS に関する情報                           | `+Linux 5.10.0-23-amd64 / x86_64+`
-| $site        | WeeChat ウェブサイト                      | `+https://weechat.org/+`
-| $download    | WeeChat ウェブサイトのダウンロードページ  | `+https://weechat.org/download/+`
-| $time        | 現在の日時                                | `+Sat, 08 Jul 2023 21:11:19 +0200+`
-| $username    | IRC サーバ上で使うユーザ名                | `+name+`
-| $realname    | IRC サーバ上で使う実名                    | `+John Doe+`
+// TRANSLATION MISSING
+| Variable           | 説明                                      | 値/例
+| `+${clientinfo}+`  | サポートしている CTCP オプションのリスト  | `+ACTION DCC CLIENTINFO PING SOURCE TIME VERSION+`
+| `+${version}+`     | WeeChat バージョン                        | `+4.1.0-dev+`
+| `+${versiongit}+`  | WeeChat バージョン + Git バージョン ^(1)^ | `+4.1.0-dev (git: v4.0.0-51-g8f98b922a)+`
+| `+${git}+`         | Git バージョン ^(1)^                      | `+v4.0.0-51-g8f98b922a+`
+| `+${compilation}+` | WeeChat コンパイル日時                    | `+Jul  8 2023 20:14:23+`
+| `+${osinfo}+`      | OS に関する情報                           | `+Linux 5.10.0-23-amd64 / x86_64+`
+| `+${site}+`        | WeeChat ウェブサイト                      | `+https://weechat.org/+`
+| `+${download}+`    | WeeChat ウェブサイトのダウンロードページ  | `+https://weechat.org/download/+`
+| `+${time}+`        | 現在の日時                                | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| `+${username}+`    | IRC サーバ上で使うユーザ名                | `+name+`
+| `+${realname}+`    | IRC サーバ上で使う実名                    | `+John Doe+`
 |===
 
 [NOTE]
 ^(1)^ git バージョンとは `git describe` コマンドの出力です。Git リポジトリで
 WeeChat をコンパイルし、Git がインストールされている場合のみ値が設定されます。
 
-CTCP オプションが設定されていない (デフォルトの) 場合、CTCP 応答は以下のようになります:
+// TRANSLATION MISSING
+The default CTCP replies are:
 
 [width="100%",cols="2,4,8",options="header"]
 |===
-| CTCP       | 応答書式                  | 例
-| CLIENTINFO | `+$clientinfo+`           | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
-| FINGER     | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
-| SOURCE     | `+$download+`             | `+https://weechat.org/download/+`
-| TIME       | `+$time+`                 | `+Sat, 08 Jul 2023 21:11:19 +0200+`
-| USERINFO   | `+$username ($realname)+` | `+name (John Doe)+`
-| VERSION    | `+WeeChat $version+`      | `+WeeChat 4.1.0-dev+`
+| CTCP       | 応答書式                      | 例
+| CLIENTINFO | `+${clientinfo}+`             | `+ACTION DCC CLIENTINFO PING SOURCE TIME VERSION+`
+| SOURCE     | `+${download}+`               | `+https://weechat.org/download/+`
+| TIME       | `+${time}+`                   | `+Sat, 08 Jul 2023 21:11:19 +0200+`
+| VERSION    | `+WeeChat ${version}+`        | `+WeeChat 4.1.0-dev+`
 |===
 
 [[irc_target_buffer]]

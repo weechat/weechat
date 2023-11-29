@@ -23,8 +23,9 @@
 #include <limits.h>
 #include <regex.h>
 
-struct t_hashtable;
+struct t_config_option;
 struct t_gui_window;
+struct t_hashtable;
 struct t_infolist;
 
 enum t_gui_buffer_type
@@ -45,6 +46,32 @@ enum t_gui_buffer_notify
     GUI_BUFFER_NUM_NOTIFY,
 };
 
+enum t_gui_buffer_search
+{
+    GUI_BUFFER_SEARCH_DISABLED = 0,
+    GUI_BUFFER_SEARCH_LINES,    /* search in buffer lines */
+    GUI_BUFFER_SEARCH_HISTORY,  /* search in buffer command line history */
+    /* number of search modes */
+    GUI_BUFFER_NUM_SEARCH,
+};
+
+enum t_gui_buffer_search_dir
+{
+    GUI_BUFFER_SEARCH_DIR_BACKWARD = 0,
+    GUI_BUFFER_SEARCH_DIR_FORWARD,
+    /* number of search directions */
+    GUI_BUFFER_NUM_SEARCH_DIR,
+};
+
+enum t_gui_buffer_search_history
+{
+    GUI_BUFFER_SEARCH_HISTORY_NONE = 0,
+    GUI_BUFFER_SEARCH_HISTORY_LOCAL,
+    GUI_BUFFER_SEARCH_HISTORY_GLOBAL,
+    /* number of search history */
+    GUI_BUFFER_NUM_SEARCH_HISTORY,
+};
+
 #define GUI_BUFFER_TYPE_DEFAULT GUI_BUFFER_TYPE_FORMATTED
 
 #define GUI_BUFFER_MAIN "weechat"
@@ -53,12 +80,9 @@ enum t_gui_buffer_notify
 
 #define GUI_BUFFER_NUMBER_MAX (INT_MAX - 10000)
 
-#define GUI_TEXT_SEARCH_DISABLED 0
-#define GUI_TEXT_SEARCH_BACKWARD 1
-#define GUI_TEXT_SEARCH_FORWARD  2
-
-#define GUI_TEXT_SEARCH_IN_MESSAGE 1
-#define GUI_TEXT_SEARCH_IN_PREFIX  2
+/* search where in buffer lines? */
+#define GUI_BUFFER_SEARCH_IN_MESSAGE        (1 << 0)
+#define GUI_BUFFER_SEARCH_IN_PREFIX         (1 << 1)
 
 #define GUI_BUFFER_INPUT_BLOCK_SIZE 256
 
@@ -188,14 +212,18 @@ struct t_gui_buffer
     struct t_gui_history *ptr_history; /* current command in history        */
     int num_history;                   /* number of commands in history     */
 
-    /* text search */
-    int text_search;                   /* text search type                  */
-    int text_search_exact;             /* exact search (case sensitive) ?   */
-    int text_search_regex;             /* search with a regex               */
-    regex_t *text_search_regex_compiled; /* regex used to search            */
-    int text_search_where;             /* search where? prefix and/or msg   */
-    int text_search_found;             /* 1 if text found, otherwise 0      */
-    char *text_search_input;           /* input saved before text search    */
+    /* text search (in buffer lines or command line history) */
+    enum t_gui_buffer_search text_search; /* text search type               */
+    enum t_gui_buffer_search_dir text_search_direction;
+                                          /* search dir.: backward/forward  */
+    int text_search_exact;                /* case sensitive search?         */
+    int text_search_regex;                /* search with a regex            */
+    regex_t *text_search_regex_compiled;  /* regex used to search           */
+    int text_search_where;                /* prefix and/or msg              */
+    enum t_gui_buffer_search_history text_search_history; /* local/global   */
+    int text_search_found;                /* 1 if text found, otherwise 0   */
+    struct t_gui_history *text_search_ptr_history; /* ptr to history found  */
+    char *text_search_input;              /* input saved before text search */
 
     /* highlight settings for buffer */
     char *highlight_words;             /* list of words to highlight        */
@@ -269,6 +297,8 @@ extern void gui_buffer_local_var_remove (struct t_gui_buffer *buffer,
                                          const char *name);
 extern void gui_buffer_notify_set_all ();
 extern int gui_buffer_is_reserved_name (const char *name);
+extern void gui_buffer_apply_config_option_property (struct t_gui_buffer *buffer,
+                                                     struct t_config_option *option);
 extern struct t_gui_buffer *gui_buffer_new_props (struct t_weechat_plugin *plugin,
                                                   const char *name,
                                                   struct t_hashtable *properties,

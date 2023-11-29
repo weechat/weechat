@@ -24,20 +24,29 @@
 extern "C"
 {
 #include <string.h>
+#include "src/core/wee-config.h"
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-hook.h"
 #include "src/core/wee-input.h"
+#include "src/core/wee-list.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-key.h"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-nicklist.h"
 #include "src/plugins/plugin.h"
 
+extern void gui_buffer_local_var_remove_all (struct t_gui_buffer *buffer);
+extern int gui_buffer_notify_get (struct t_gui_buffer *buffer);
 extern int gui_buffer_user_input_cb (const void *pointer, void *data,
                                      struct t_gui_buffer *buffer,
                                      const char *input_data);
 extern int gui_buffer_user_close_cb (const void *pointer, void *data,
                                      struct t_gui_buffer *buffer);
+extern void gui_buffer_set_short_name (struct t_gui_buffer *buffer,
+                                       const char *short_name);
+extern void gui_buffer_set_highlight_words_list (struct t_gui_buffer *buffer,
+                                                 struct t_weelist *list);
+
 }
 
 #define TEST_BUFFER_NAME "test"
@@ -145,17 +154,56 @@ TEST(GuiBuffer, SearchNotify)
 
 TEST(GuiBuffer, GetPluginName)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    POINTERS_EQUAL(NULL, gui_buffer_get_plugin_name (NULL));
+
+    STRCMP_EQUAL("core", gui_buffer_get_plugin_name (buffer));
+
+    buffer->plugin_name_for_upgrade = strdup ("test");
+    STRCMP_EQUAL("test", gui_buffer_get_plugin_name (buffer));
+
+    gui_buffer_close (buffer);
 }
 
 /*
  * Tests functions:
  *   gui_buffer_get_short_name
+ *   gui_buffer_set_short_name
  */
 
-TEST(GuiBuffer, GetShortName)
+TEST(GuiBuffer, GetSetShortName)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    POINTERS_EQUAL(NULL, gui_buffer_get_short_name (NULL));
+
+    POINTERS_EQUAL(NULL, buffer->short_name);
+    STRCMP_EQUAL(TEST_BUFFER_NAME, gui_buffer_get_short_name (buffer));
+
+    gui_buffer_set_short_name (buffer, NULL);
+    POINTERS_EQUAL(NULL, buffer->short_name);
+    STRCMP_EQUAL(TEST_BUFFER_NAME, gui_buffer_get_short_name (buffer));
+
+    gui_buffer_set_short_name (buffer, "short");
+    STRCMP_EQUAL("short", buffer->short_name);
+    STRCMP_EQUAL("short", gui_buffer_get_short_name (buffer));
+
+    gui_buffer_set_short_name (buffer, "");
+    POINTERS_EQUAL(NULL, buffer->short_name);
+    STRCMP_EQUAL(TEST_BUFFER_NAME, gui_buffer_get_short_name (buffer));
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -165,37 +213,77 @@ TEST(GuiBuffer, GetShortName)
 
 TEST(GuiBuffer, BuildFullName)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    gui_buffer_build_full_name (NULL);
+
+    STRCMP_EQUAL("core." TEST_BUFFER_NAME, buffer->full_name);
+
+    buffer->plugin_name_for_upgrade = strdup ("test");
+    gui_buffer_build_full_name (buffer);
+    STRCMP_EQUAL("test." TEST_BUFFER_NAME, buffer->full_name);
+
+    free (buffer->plugin_name_for_upgrade);
+    buffer->plugin_name_for_upgrade = NULL;
+    gui_buffer_build_full_name (buffer);
+    STRCMP_EQUAL("core." TEST_BUFFER_NAME, buffer->full_name);
+
+    gui_buffer_close (buffer);
 }
 
 /*
  * Tests functions:
  *   gui_buffer_local_var_add
- */
-
-TEST(GuiBuffer, LocalVarAdd)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_buffer_local_var_remove
- */
-
-TEST(GuiBuffer, LocalVarRemove)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_buffer_local_var_remove_all
  */
 
-TEST(GuiBuffer, LocalVarRemoveAll)
+TEST(GuiBuffer, LocalVarAddRemove)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    gui_buffer_local_var_add (NULL, NULL, NULL);
+
+    STRCMP_EQUAL("plugin:core,name:" TEST_BUFFER_NAME,
+                 hashtable_get_string (buffer->local_variables, "keys_values"));
+
+    gui_buffer_local_var_add (buffer, NULL, NULL);
+    STRCMP_EQUAL("plugin:core,name:" TEST_BUFFER_NAME,
+                 hashtable_get_string (buffer->local_variables, "keys_values"));
+
+    gui_buffer_local_var_add (buffer, "test_var", NULL);
+    STRCMP_EQUAL("plugin:core,name:" TEST_BUFFER_NAME,
+                 hashtable_get_string (buffer->local_variables, "keys_values"));
+
+    gui_buffer_local_var_add (buffer, "test_var", "value");
+    STRCMP_EQUAL("plugin:core,name:" TEST_BUFFER_NAME ",test_var:value",
+                 hashtable_get_string (buffer->local_variables, "keys_values"));
+
+    gui_buffer_local_var_remove (buffer, "no_such_var");
+    STRCMP_EQUAL("plugin:core,name:" TEST_BUFFER_NAME ",test_var:value",
+                 hashtable_get_string (buffer->local_variables, "keys_values"));
+
+    gui_buffer_local_var_remove (buffer, "test_var");
+    STRCMP_EQUAL("plugin:core,name:" TEST_BUFFER_NAME,
+                 hashtable_get_string (buffer->local_variables, "keys_values"));
+
+    gui_buffer_local_var_remove_all (NULL);
+
+    gui_buffer_local_var_remove_all (buffer);
+    POINTERS_EQUAL(NULL,
+                   hashtable_get_string (buffer->local_variables, "keys_values"));
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -205,7 +293,44 @@ TEST(GuiBuffer, LocalVarRemoveAll)
 
 TEST(GuiBuffer, NotifyGet)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_config_option *ptr_option;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    LONGS_EQUAL(CONFIG_ENUM(config_look_buffer_notify_default),
+                gui_buffer_notify_get (NULL));
+
+    LONGS_EQUAL(CONFIG_ENUM(config_look_buffer_notify_default),
+                gui_buffer_notify_get (buffer));
+
+    config_file_option_set_with_string (
+        "weechat.notify.core." TEST_BUFFER_NAME ".abc",
+        "highlight");
+    LONGS_EQUAL(CONFIG_ENUM(config_look_buffer_notify_default),
+                gui_buffer_notify_get (buffer));
+    config_file_search_with_string ("weechat.notify.core." TEST_BUFFER_NAME ".abc",
+                                    NULL, NULL, &ptr_option, NULL);
+    config_file_option_unset (ptr_option);
+
+    config_file_option_set_with_string (
+        "weechat.notify.core." TEST_BUFFER_NAME,
+        "highlight");
+    LONGS_EQUAL(GUI_BUFFER_NOTIFY_HIGHLIGHT,gui_buffer_notify_get (buffer));
+    config_file_search_with_string ("weechat.notify.core." TEST_BUFFER_NAME,
+                                    NULL, NULL, &ptr_option, NULL);
+    config_file_option_unset (ptr_option);
+
+    config_file_option_set_with_string ("weechat.notify.core", "message");
+    LONGS_EQUAL(GUI_BUFFER_NOTIFY_MESSAGE, gui_buffer_notify_get (buffer));
+    config_file_search_with_string ("weechat.notify.core",
+                                    NULL, NULL, &ptr_option, NULL);
+    config_file_option_unset (ptr_option);
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -275,7 +400,13 @@ TEST(GuiBuffer, InputBufferInit)
 
 TEST(GuiBuffer, IsReservedName)
 {
-    /* TODO: write tests */
+    LONGS_EQUAL(0, gui_buffer_is_reserved_name (NULL));
+    LONGS_EQUAL(0, gui_buffer_is_reserved_name (""));
+    LONGS_EQUAL(0, gui_buffer_is_reserved_name ("zzz"));
+
+    LONGS_EQUAL(1, gui_buffer_is_reserved_name ("weechat"));
+    LONGS_EQUAL(1, gui_buffer_is_reserved_name ("secured_data"));
+    LONGS_EQUAL(1, gui_buffer_is_reserved_name ("color"));
 }
 
 /*
@@ -286,6 +417,43 @@ TEST(GuiBuffer, IsReservedName)
 TEST(GuiBuffer, ApplyPropertiesCb)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_apply_config_properties
+ */
+
+TEST(GuiBuffer, ApplyConfigProperties)
+{
+    struct t_gui_buffer *buffer;
+    struct t_config_option *ptr_option;
+
+    config_file_option_set_with_string (
+        "weechat.buffer.core." TEST_BUFFER_NAME ".short_name", "t1");
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    STRCMP_EQUAL("t1", buffer->short_name);
+
+    gui_buffer_close (buffer);
+
+    config_file_search_with_string (
+        "weechat.buffer.core." TEST_BUFFER_NAME ".short_name",
+        NULL, NULL, &ptr_option, NULL);
+    config_file_option_unset (ptr_option);
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    POINTERS_EQUAL(NULL, buffer->short_name);
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -415,12 +583,15 @@ TEST(GuiBuffer, NewProps)
     POINTERS_EQUAL(NULL, buffer->last_history);
     POINTERS_EQUAL(NULL, buffer->ptr_history);
     LONGS_EQUAL(0, buffer->num_history);
-    LONGS_EQUAL(GUI_TEXT_SEARCH_DISABLED, buffer->text_search);
+    LONGS_EQUAL(GUI_BUFFER_SEARCH_DISABLED, buffer->text_search);
+    LONGS_EQUAL(GUI_BUFFER_SEARCH_DIR_BACKWARD, buffer->text_search_direction);
     LONGS_EQUAL(0, buffer->text_search_exact);
     LONGS_EQUAL(0, buffer->text_search_regex);
     POINTERS_EQUAL(NULL, buffer->text_search_regex_compiled);
     LONGS_EQUAL(0, buffer->text_search_where);
+    LONGS_EQUAL(0, buffer->text_search_history);
     LONGS_EQUAL(0, buffer->text_search_found);
+    POINTERS_EQUAL(NULL, buffer->text_search_ptr_history);
     POINTERS_EQUAL(NULL, buffer->text_search_input);
     POINTERS_EQUAL(NULL, buffer->highlight_words);
     POINTERS_EQUAL(NULL, buffer->highlight_regex);
@@ -674,7 +845,55 @@ TEST(GuiBuffer, PropertyInList)
 
 TEST(GuiBuffer, GetInteger)
 {
-    /* TODO: write tests */
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, NULL));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, ""));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "zzz"));
+
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "number"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "layout_number"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "layout_number_merge_order"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "short_name_is_set"));
+    LONGS_EQUAL(GUI_BUFFER_TYPE_FORMATTED, gui_buffer_get_integer (gui_buffers, "type"));
+    LONGS_EQUAL(GUI_BUFFER_NOTIFY_ALL, gui_buffer_get_integer (gui_buffers, "notify"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "num_displayed"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "active"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "hidden"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "zoomed"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "print_hooks_enabled"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "day_change"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "clear"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "filter"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "closing"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "lines_hidden"));
+    LONGS_EQUAL(12, gui_buffer_get_integer (gui_buffers, "prefix_max_length"));
+    CHECK(gui_buffer_get_integer (gui_buffers, "next_line_id") > 0);
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "time_for_each_line"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_case_sensitive"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_max_length"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "nicklist_display_groups"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_count"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_visible_count"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_groups_count"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_groups_visible_count"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_nicks_count"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_nicks_visible_count"));
+    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "input"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_get_unknown_commands"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_get_empty"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_multiline"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_size"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_length"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_pos"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "input_1st_display"));
+    CHECK(gui_buffer_get_integer (gui_buffers, "num_history") >= 0);
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_direction"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_exact"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_regex"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_where"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_history"));
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "text_search_found"));
 }
 
 /*
@@ -684,7 +903,24 @@ TEST(GuiBuffer, GetInteger)
 
 TEST(GuiBuffer, GetString)
 {
-    /* TODO: write tests */
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, NULL));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, ""));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "zzz"));
+
+    STRCMP_EQUAL("core", gui_buffer_get_string (gui_buffers, "plugin"));
+    STRCMP_EQUAL("weechat", gui_buffer_get_string (gui_buffers, "name"));
+    STRCMP_EQUAL("core.weechat", gui_buffer_get_string (gui_buffers, "full_name"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "old_full_name"));
+    STRCMP_EQUAL("weechat", gui_buffer_get_string (gui_buffers, "short_name"));
+    STRNCMP_EQUAL("WeeChat ", gui_buffer_get_string (gui_buffers, "title"), 8);
+    STRCMP_EQUAL("", gui_buffer_get_string (gui_buffers, "input"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "text_search_input"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "highlight_words"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "highlight_disable_regex"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "highlight_regex"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "highlight_tags_restrict"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "highlight_tags"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "hotlist_max_level_nicks"));
 }
 
 /*
@@ -694,7 +930,15 @@ TEST(GuiBuffer, GetString)
 
 TEST(GuiBuffer, GetPointer)
 {
-    /* TODO: write tests */
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, NULL));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, ""));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "zzz"));
+
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "plugin"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "text_search_regex_compiled"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "text_search_ptr_history"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "highlight_disable_regex_compiled"));
+    POINTERS_EQUAL(NULL, gui_buffer_get_pointer (gui_buffers, "highlight_regex_compiled"));
 }
 
 /*
@@ -713,16 +957,6 @@ TEST(GuiBuffer, AskChatRefresh)
  */
 
 TEST(GuiBuffer, SetName)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_set_short_name
- */
-
-TEST(GuiBuffer, SetShortName)
 {
     /* TODO: write tests */
 }
@@ -794,7 +1028,25 @@ TEST(GuiBuffer, SetNicklistDisplayGroups)
 
 TEST(GuiBuffer, SetHighlightWords)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    gui_buffer_set_highlight_words (NULL, NULL);
+
+    gui_buffer_set_highlight_words (buffer, NULL);
+    POINTERS_EQUAL(NULL, buffer->highlight_words);
+
+    gui_buffer_set_highlight_words (buffer, "");
+    POINTERS_EQUAL(NULL, buffer->highlight_words);
+
+    gui_buffer_set_highlight_words (buffer, "test");
+    STRCMP_EQUAL("test", buffer->highlight_words);
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -804,7 +1056,35 @@ TEST(GuiBuffer, SetHighlightWords)
 
 TEST(GuiBuffer, SetHighlightWordsList)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_weelist *list;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    gui_buffer_set_highlight_words_list (buffer, NULL);
+    POINTERS_EQUAL(NULL, buffer->highlight_words);
+
+    list = weelist_new ();
+
+    gui_buffer_set_highlight_words_list (buffer, list);
+    POINTERS_EQUAL(NULL, buffer->highlight_words);
+
+    /* add "word1" */
+    weelist_add (list, "word1", WEECHAT_LIST_POS_END, NULL);
+    gui_buffer_set_highlight_words_list (buffer, list);
+    STRCMP_EQUAL("word1", buffer->highlight_words);
+
+    /* add "word1" and "abc" ("word1" already there, ignored) */
+    weelist_add (list, "abc", WEECHAT_LIST_POS_END, NULL);
+    gui_buffer_set_highlight_words_list (buffer, list);
+    STRCMP_EQUAL("word1,abc", buffer->highlight_words);
+
+    weelist_free (list);
+
+    gui_buffer_close (buffer);
 }
 
 /*
