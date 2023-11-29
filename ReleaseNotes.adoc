@@ -64,7 +64,7 @@ from an old WeeChat version:
 === RGB colors in IRC messages
 
 Support for RGB colors in IRC messages has been added and a new key
-[Ctrl+c], kbd:[d] is available to insert this color code in command line.
+kbd:[Ctrl+c], kbd:[d] is available to insert this color code in command line.
 
 You can add this key with this command:
 
