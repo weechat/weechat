@@ -2799,14 +2799,6 @@ irc_config_server_read_cb (const void *pointer, void *data,
         }
     }
 
-    if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
-    {
-        weechat_printf (
-            NULL,
-            _("%s%s: error creating server option \"%s\""),
-            weechat_prefix ("error"), IRC_PLUGIN_NAME, option_name);
-    }
-
     return rc;
 }
 
