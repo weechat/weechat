@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-24 16:35+0100\n"
-"PO-Revision-Date: 2023-10-20 13:09+0200\n"
+"POT-Creation-Date: 2023-11-29 09:58+0100\n"
+"PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -9787,17 +9787,15 @@ msgid ""
 "will disconnect from server"
 msgstr ""
 
-#, fuzzy
 msgid ""
-"anti-flood for high priority queue: number of seconds between two user "
-"messages or commands sent to IRC server (0 = no anti-flood)"
-msgstr "anti-flood: # másodperc két üzenet között (0 = anti-flood kikapcsolva)"
-
-#, fuzzy
-msgid ""
-"anti-flood for low priority queue: number of seconds between two messages "
-"sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
-msgstr "anti-flood: # másodperc két üzenet között (0 = anti-flood kikapcsolva)"
+"delay in milliseconds between two messages sent to server (anti-flood "
+"protection); 0 = disable protection and always send messages immediately "
+"(not recommended because the server can close the connection if you send "
+"several messages in a short time); internally there are queues with "
+"different priorities: when connecting to the server all messages are sent "
+"immediately and your messages have higher priority than some automatic "
+"messages that are sent in background by WeeChat"
+msgstr ""
 
 msgid "interval between two checks for away (in minutes, 0 = never check)"
 msgstr "két távollétellenőrzés közti idő (percben, 0 = nincs ellenőrzés)"
@@ -9871,10 +9869,6 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: error adding server \"%s\""
-msgstr "%s nincs elég memória az információs pult üzenethez\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error creating server option \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 #, c-format

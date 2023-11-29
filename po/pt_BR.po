@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-24 16:35+0100\n"
+"POT-Creation-Date: 2023-11-29 09:58+0100\n"
 "PO-Revision-Date: 2023-10-20 13:11+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10089,13 +10089,13 @@ msgstr ""
 "\"001 message\", o WeeChat se desconectará do servidor"
 
 msgid ""
-"anti-flood for high priority queue: number of seconds between two user "
-"messages or commands sent to IRC server (0 = no anti-flood)"
-msgstr ""
-
-msgid ""
-"anti-flood for low priority queue: number of seconds between two messages "
-"sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
+"delay in milliseconds between two messages sent to server (anti-flood "
+"protection); 0 = disable protection and always send messages immediately "
+"(not recommended because the server can close the connection if you send "
+"several messages in a short time); internally there are queues with "
+"different priorities: when connecting to the server all messages are sent "
+"immediately and your messages have higher priority than some automatic "
+"messages that are sent in background by WeeChat"
 msgstr ""
 
 msgid "interval between two checks for away (in minutes, 0 = never check)"
@@ -10167,10 +10167,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: error adding server \"%s\""
 msgstr "%s%s: erro ao criar servidor \"%s\""
-
-#, c-format
-msgid "%s%s: error creating server option \"%s\""
-msgstr "%s%s: erro ao criar opção do servidor \"%s\""
 
 #, c-format
 msgid "IRC option renamed: \"irc.%s.%s\" => \"irc.%s.%s\""
@@ -15679,3 +15675,7 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
+
+#, c-format
+#~ msgid "%s%s: error creating server option \"%s\""
+#~ msgstr "%s%s: erro ao criar opção do servidor \"%s\""

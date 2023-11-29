@@ -2517,13 +2517,15 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "integer",
                 N_("delay in milliseconds between two messages sent to server "
-                   "(anti-flood); 0 = disable anti-flood and always send "
-                   "all messages immediately (not recommended as you can be "
-                   "quickly killed by the server); "
+                   "(anti-flood protection); 0 = disable protection and always "
+                   "send messages immediately (not recommended because the "
+                   "server can close the connection if you send several "
+                   "messages in a short time); "
                    "internally there are queues with different priorities: "
                    "when connecting to the server all messages are sent "
                    "immediately and your messages have higher priority than "
-                   "some automatic messages that are sent in background"),
+                   "some automatic messages that are sent in background by "
+                   "WeeChat"),
                 NULL, 0, 60000,
                 default_value, value,
                 null_value_allowed,
