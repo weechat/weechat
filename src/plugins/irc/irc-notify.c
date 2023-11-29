@@ -672,6 +672,45 @@ irc_notify_send_signal (struct t_irc_notify *notify,
 }
 
 /*
+ * Display message about nick: "is connected", "is offline", "has connected",
+ * "has quit".
+ *
+ * If "notify" is NULL, only "is connected" or "is offline" can be displayed.
+ */
+
+void
+irc_notify_display_is_on (struct t_irc_server *server,
+                          const char *nick,
+                          const char *host,
+                          struct t_irc_notify *notify,
+                          int is_on_server)
+{
+    weechat_printf_date_tags (
+        server->buffer,
+        0,
+        irc_notify_get_tags (irc_config_look_notify_tags_ison,
+                             (is_on_server) ? "join" : "quit",
+                             nick),
+        (!notify || (notify->is_on_server < 0)) ?
+        ((is_on_server) ?
+         _("%snotify: %s%s%s%s%s%s%s%s%s is connected") :
+         _("%snotify: %s%s%s%s%s%s%s%s%s is offline")) :
+        ((is_on_server) ?
+         _("%snotify: %s%s%s%s%s%s%s%s%s has connected") :
+         _("%snotify: %s%s%s%s%s%s%s%s%s has quit")),
+        weechat_prefix ("network"),
+        irc_nick_color_for_msg (server, 1, NULL, nick),
+        nick,
+        (host && host[0]) ? IRC_COLOR_CHAT_DELIMITERS : "",
+        (host && host[0]) ? " (" : "",
+        (host && host[0]) ? IRC_COLOR_CHAT_HOST : "",
+        (host && host[0]) ? host : "",
+        (host && host[0]) ? IRC_COLOR_CHAT_DELIMITERS : "",
+        (host && host[0]) ? ")" : "",
+        (is_on_server) ? IRC_COLOR_MESSAGE_JOIN : IRC_COLOR_MESSAGE_QUIT);
+}
+
+/*
  * Sets flag "is_on_server" for a notify and display message if user was not on
  * server.
  */
@@ -687,29 +726,9 @@ irc_notify_set_is_on_server (struct t_irc_notify *notify, const char *host,
     if (notify->is_on_server == is_on_server)
         return;
 
-    weechat_printf_date_tags (
-        notify->server->buffer,
-        0,
-        irc_notify_get_tags (irc_config_look_notify_tags_ison,
-                             (is_on_server) ? "join" : "quit",
-                             notify->nick),
-        (notify->is_on_server < 0) ?
-        ((is_on_server) ?
-         _("%snotify: %s%s%s%s%s%s%s%s%s is connected") :
-         _("%snotify: %s%s%s%s%s%s%s%s%s is offline")) :
-        ((is_on_server) ?
-         _("%snotify: %s%s%s%s%s%s%s%s%s has connected") :
-         _("%snotify: %s%s%s%s%s%s%s%s%s has quit")),
-        weechat_prefix ("network"),
-        irc_nick_color_for_msg (notify->server, 1, NULL, notify->nick),
-        notify->nick,
-        (host && host[0]) ? IRC_COLOR_CHAT_DELIMITERS : "",
-        (host && host[0]) ? " (" : "",
-        (host && host[0]) ? IRC_COLOR_CHAT_HOST : "",
-        (host && host[0]) ? host : "",
-        (host && host[0]) ? IRC_COLOR_CHAT_DELIMITERS : "",
-        (host && host[0]) ? ")" : "",
-        (is_on_server) ? IRC_COLOR_MESSAGE_JOIN : IRC_COLOR_MESSAGE_QUIT);
+    irc_notify_display_is_on (notify->server, notify->nick, host,
+                              notify, is_on_server);
+
     irc_notify_send_signal (notify, (is_on_server) ? "join" : "quit", NULL);
 
     notify->is_on_server = is_on_server;

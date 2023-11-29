@@ -7640,7 +7640,17 @@ IRC_PROTOCOL_CALLBACK(730)
                 monitor_host++;
             ptr_notify = irc_notify_search (ctxt->server, monitor_nick);
             if (ptr_notify)
+            {
                 irc_notify_set_is_on_server (ptr_notify, monitor_host, 1);
+            }
+            else
+            {
+                irc_notify_display_is_on (ctxt->server,
+                                          monitor_nick,
+                                          monitor_host,
+                                          NULL,  /* notify */
+                                          1);
+            }
         }
         weechat_string_free_split (nicks);
     }
@@ -7688,7 +7698,17 @@ IRC_PROTOCOL_CALLBACK(731)
                 monitor_host++;
             ptr_notify = irc_notify_search (ctxt->server, monitor_nick);
             if (ptr_notify)
+            {
                 irc_notify_set_is_on_server (ptr_notify, monitor_host, 0);
+            }
+            else
+            {
+                irc_notify_display_is_on (ctxt->server,
+                                          monitor_nick,
+                                          monitor_host,
+                                          NULL,  /* notify */
+                                          0);
+            }
         }
         weechat_string_free_split (nicks);
     }
