@@ -108,6 +108,8 @@ relay_weechat_protocol_sync_flag (const char *flag)
         return RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS;
     if (strcmp (flag, "upgrade") == 0)
         return RELAY_WEECHAT_PROTOCOL_SYNC_UPGRADE;
+    if (strcmp (flag, "hotlist") == 0)
+        return RELAY_WEECHAT_PROTOCOL_SYNC_HOTLIST;
 
     /* unknown flag */
     return 0;
@@ -125,6 +127,7 @@ relay_weechat_protocol_sync_flag (const char *flag)
  *   RELAY_WEECHAT_PROTOCOL_SYNC_NICKLIST
  *   RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS
  *   RELAY_WEECHAT_PROTOCOL_SYNC_UPGRADE
+ *   RELAY_WEECHAT_PROTOCOL_SYNC_HOTLIST
  *
  * Returns:
  *   1: buffer is synchronized with at least one flag given
@@ -855,6 +858,71 @@ error:
         /* send message */
         relay_weechat_msg_send (client, msg);
         relay_weechat_msg_free (msg);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for signals "hotlist_*".
+ */
+
+int
+relay_weechat_protocol_signal_hotlist_cb (const void *pointer, void *data,
+                                          const char *signal,
+                                          const char *type_data,
+                                          void *signal_data)
+{
+    struct t_relay_client *ptr_client;
+    struct t_hdata *ptr_hdata_buffer;
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_hotlist *ptr_hotlist;
+    char cmd_hdata[64], str_signal[128];
+    struct t_relay_weechat_msg *msg;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) type_data;
+
+    ptr_client = (struct t_relay_client *)pointer;
+    if (!ptr_client || !relay_client_valid (ptr_client))
+        return WEECHAT_RC_OK;
+
+    snprintf (str_signal, sizeof (str_signal), "_%s", signal);
+
+    if (strcmp (signal, "hotlist_changed") == 0)
+    {
+        ptr_buffer = (struct t_gui_buffer *)signal_data;
+
+        /* ignore relay raw buffer (to avoid loops) */
+        if (!ptr_buffer || ptr_buffer == relay_raw_buffer)
+            return WEECHAT_RC_OK;
+
+        ptr_hdata_buffer = weechat_hdata_get ("buffer");
+        if (!ptr_hdata_buffer)
+            return WEECHAT_RC_OK;
+
+        ptr_hotlist = weechat_hdata_pointer (ptr_hdata_buffer, ptr_buffer, "hotlist");
+        if (!ptr_hotlist)
+            return WEECHAT_RC_OK;
+
+        /* send signal only if sync with flag "hotlist" */
+        if (relay_weechat_protocol_is_sync (ptr_client, NULL,
+                                            RELAY_WEECHAT_PROTOCOL_SYNC_HOTLIST))
+        {
+            msg = relay_weechat_msg_new (str_signal);
+            if (msg)
+            {
+                snprintf (cmd_hdata, sizeof (cmd_hdata),
+                          "hotlist:0x%lx", (unsigned long)ptr_hotlist);
+                relay_weechat_msg_add_hdata (msg, cmd_hdata,
+                                             "priority,creation_time.tv_sec,"
+                                             "creation_time.tv_usec,buffer,"
+                                             "count");
+                relay_weechat_msg_send (ptr_client, msg);
+                relay_weechat_msg_free (msg);
+            }
+        }
     }
 
     return WEECHAT_RC_OK;

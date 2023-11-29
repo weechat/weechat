@@ -24,12 +24,14 @@
 #define RELAY_WEECHAT_PROTOCOL_SYNC_NICKLIST (1 << 1)
 #define RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS  (1 << 2)
 #define RELAY_WEECHAT_PROTOCOL_SYNC_UPGRADE  (1 << 3)
+#define RELAY_WEECHAT_PROTOCOL_SYNC_HOTLIST  (1 << 4)
 
 #define RELAY_WEECHAT_PROTOCOL_SYNC_ALL         \
     (RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER |       \
      RELAY_WEECHAT_PROTOCOL_SYNC_NICKLIST |     \
      RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |      \
-     RELAY_WEECHAT_PROTOCOL_SYNC_UPGRADE)
+     RELAY_WEECHAT_PROTOCOL_SYNC_UPGRADE |      \
+     RELAY_WEECHAT_PROTOCOL_SYNC_HOTLIST)
 
 #define RELAY_WEECHAT_PROTOCOL_SYNC_FOR_BUFFER  \
     (RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER |       \
@@ -81,6 +83,10 @@ struct t_relay_weechat_protocol_cb
     t_relay_weechat_cmd_func *cmd_function; /* callback                     */
 };
 
+extern int relay_weechat_protocol_signal_hotlist_cb (const void *pointer, void *data,
+                                                     const char *signal,
+                                                     const char *type_data,
+                                                     void *signal_data);
 extern int relay_weechat_protocol_signal_buffer_cb (const void *pointer,
                                                     void *data,
                                                     const char *signal,
