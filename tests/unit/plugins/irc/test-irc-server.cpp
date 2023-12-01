@@ -1120,6 +1120,56 @@ TEST(IrcServer, GetTagsToSend)
 
 /*
  * Tests functions:
+ *   irc_server_outqueue_all_empty
+ */
+
+TEST(IrcServer, OutqueueAllEmpty)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_server_outqueue_timer_cb
+ */
+
+TEST(IrcServer, OutqueueTimerCb)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_server_outqueue_timer_remove
+ */
+
+TEST(IrcServer, OutqueueTimerRemove)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_server_outqueue_timer_add
+ */
+
+TEST(IrcServer, OutqueueTimerAdd)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   irc_server_outqueue_send_one_msg
+ */
+
+TEST(IrcServer, OutqueueSendOneMsg)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   irc_server_outqueue_send
  */
 
