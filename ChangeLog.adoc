@@ -56,6 +56,10 @@ Bug fixes::
   * relay: close properly connection with the IRC client in case of server disconnection (issue #2038)
   * ruby: fix use of NULL variable when displaying exception
 
+Tests::
+
+  * core: add tests on plugin API info functions
+
 Build::
 
   * core: make libintl.h required if CMake option ENABLE_NLS is enabled (issue #2031)
