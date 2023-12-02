@@ -197,7 +197,7 @@ plugin_api_info_absolute_path (const char *directory)
 {
     char absolute_path[PATH_MAX];
 
-    if (!realpath (directory, absolute_path))
+    if (!directory || !realpath (directory, absolute_path))
         return NULL;
     return strdup ((absolute_path[0]) ? absolute_path : directory);
 }
