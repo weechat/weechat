@@ -1645,24 +1645,24 @@ plugin_api_infolist_key_cb (const void *pointer, void *data,
     (void) infolist_name;
     (void) obj_pointer;
 
-    ptr_infolist = infolist_new (NULL);
-    if (!ptr_infolist)
-        return NULL;
-
     if (arguments && arguments[0])
         context = gui_key_search_context (arguments);
     else
         context = GUI_KEY_CONTEXT_DEFAULT;
-    if (context >= 0)
+    if (context < 0)
+        return NULL;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    for (ptr_key = gui_keys[context]; ptr_key;
+         ptr_key = ptr_key->next_key)
     {
-        for (ptr_key = gui_keys[context]; ptr_key;
-             ptr_key = ptr_key->next_key)
+        if (!gui_key_add_to_infolist (ptr_infolist, ptr_key))
         {
-            if (!gui_key_add_to_infolist (ptr_infolist, ptr_key))
-            {
-                infolist_free (ptr_infolist);
-                return NULL;
-            }
+            infolist_free (ptr_infolist);
+            return NULL;
         }
     }
     return ptr_infolist;
