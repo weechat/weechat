@@ -45,7 +45,7 @@ TEST_GROUP(LoggerTail)
  *   logger_tail_last_eol
  */
 
-TEST(LoggerTail, LoggerTailLastEol)
+TEST(LoggerTail, LastEol)
 {
     const char *str = "abc\ndef\rghi";
 
@@ -77,7 +77,7 @@ TEST(LoggerTail, LoggerTailLastEol)
  *   logger_tail_file
  */
 
-TEST(LoggerTail, LoggerTailFile)
+TEST(LoggerTail, File)
 {
     const char *content_3_lines = "line 1\nline 2\nline 3\n";
     const char *content_5_lines = "line 1\nline 2\n\nline 3\n\n";

@@ -367,7 +367,7 @@ TEST_GROUP(RelayIrcWithClient)
  *   relay_irc_command_relayed
  */
 
-TEST(RelayIrc, RelayIrcCommandRelayed)
+TEST(RelayIrc, CommandRelayed)
 {
     LONGS_EQUAL(0, relay_irc_command_relayed (NULL));
     LONGS_EQUAL(0, relay_irc_command_relayed (""));
@@ -384,7 +384,7 @@ TEST(RelayIrc, RelayIrcCommandRelayed)
  *   relay_irc_command_ignored
  */
 
-TEST(RelayIrc, RelayIrcCommandIgnored)
+TEST(RelayIrc, CommandIgnored)
 {
     LONGS_EQUAL(0, relay_irc_command_ignored (NULL));
     LONGS_EQUAL(0, relay_irc_command_ignored (""));
@@ -402,7 +402,7 @@ TEST(RelayIrc, RelayIrcCommandIgnored)
  *   relay_irc_search_backlog_commands_tags
  */
 
-TEST(RelayIrc, RelayIrcSearchBacklogCommandsTags)
+TEST(RelayIrc, SearchBacklogCommandsTags)
 {
     LONGS_EQUAL(-1, relay_irc_search_backlog_commands_tags (NULL));
     LONGS_EQUAL(-1, relay_irc_search_backlog_commands_tags (""));
@@ -418,7 +418,7 @@ TEST(RelayIrc, RelayIrcSearchBacklogCommandsTags)
  *   relay_irc_search_server_capability
  */
 
-TEST(RelayIrc, RelayIrcSearchServerCapability)
+TEST(RelayIrc, SearchServerCapability)
 {
     LONGS_EQUAL(-1, relay_irc_search_server_capability (NULL));
     LONGS_EQUAL(-1, relay_irc_search_server_capability (""));
@@ -433,7 +433,7 @@ TEST(RelayIrc, RelayIrcSearchServerCapability)
  *   relay_irc_message_parse
  */
 
-TEST(RelayIrc, RelayIrcMessageParse)
+TEST(RelayIrc, MessageParse)
 {
     struct t_hashtable *hashtable;
 
@@ -487,7 +487,7 @@ TEST(RelayIrc, RelayIrcMessageParse)
  *   relay_irc_sendf
  */
 
-TEST(RelayIrcWithClient, RelayIrcSendf)
+TEST(RelayIrcWithClient, Sendf)
 {
     relay_irc_sendf (NULL, NULL);
     relay_irc_sendf (NULL, "test");
@@ -505,7 +505,7 @@ TEST(RelayIrcWithClient, RelayIrcSendf)
  *   relay_irc_parse_cap_message
  */
 
-TEST(RelayIrcWithClient, RelayIrcParseCapMessage)
+TEST(RelayIrcWithClient, ParseCapMessage)
 {
     struct t_hashtable *hashtable;
 
@@ -541,7 +541,7 @@ TEST(RelayIrcWithClient, RelayIrcParseCapMessage)
  *   relay_irc_signal_irc_in2_cb
  */
 
-TEST(RelayIrc, RelayIrcSignalIrcIn2Cb)
+TEST(RelayIrc, SignalIrcIn2Cb)
 {
     /* TODO: write tests */
 }
@@ -551,7 +551,7 @@ TEST(RelayIrc, RelayIrcSignalIrcIn2Cb)
  *   relay_irc_tag_relay_client_id
  */
 
-TEST(RelayIrc, RelayIrcTagRelayClientId)
+TEST(RelayIrc, TagRelayClientId)
 {
     LONGS_EQUAL(-1, relay_irc_tag_relay_client_id (NULL));
     LONGS_EQUAL(-1, relay_irc_tag_relay_client_id (""));
@@ -567,7 +567,7 @@ TEST(RelayIrc, RelayIrcTagRelayClientId)
  *   relay_irc_signal_irc_outtags_cb
  */
 
-TEST(RelayIrc, RelayIrcSignalIrcOuttagsCb)
+TEST(RelayIrc, SignalIrcOuttagsCb)
 {
     /* TODO: write tests */
 }
@@ -577,7 +577,7 @@ TEST(RelayIrc, RelayIrcSignalIrcOuttagsCb)
  *   relay_irc_signal_irc_disc_cb
  */
 
-TEST(RelayIrc, RelayIrcSignalIrcDiscCb)
+TEST(RelayIrc, SignalIrcDiscCb)
 {
     /* TODO: write tests */
 }
@@ -587,7 +587,7 @@ TEST(RelayIrc, RelayIrcSignalIrcDiscCb)
  *   relay_irc_hsignal_irc_redir_cb
  */
 
-TEST(RelayIrc, RelayIrcHsignalIrcRedirCb)
+TEST(RelayIrc, HsignalIrcRedirCb)
 {
     /* TODO: write tests */
 }
@@ -597,7 +597,7 @@ TEST(RelayIrc, RelayIrcHsignalIrcRedirCb)
  *   relay_irc_get_line_info
  */
 
-TEST(RelayIrc, RelayIrcGetLineInfo)
+TEST(RelayIrc, GetLineInfo)
 {
     /* TODO: write tests */
 }
@@ -607,7 +607,7 @@ TEST(RelayIrc, RelayIrcGetLineInfo)
  *   relay_irc_send_channel_backlog
  */
 
-TEST(RelayIrc, RelayIrcSendChannelBacklog)
+TEST(RelayIrc, SendChannelBacklog)
 {
     /* TODO: write tests */
 }
@@ -617,7 +617,7 @@ TEST(RelayIrc, RelayIrcSendChannelBacklog)
  *   relay_irc_send_join
  */
 
-TEST(RelayIrc, RelayIrcSendJoin)
+TEST(RelayIrc, SendJoin)
 {
     /* TODO: write tests */
 }
@@ -627,7 +627,7 @@ TEST(RelayIrc, RelayIrcSendJoin)
  *   relay_irc_send_join_channels
  */
 
-TEST(RelayIrc, RelayIrcSendJoinChannels)
+TEST(RelayIrc, SendJoinChannels)
 {
     /* TODO: write tests */
 }
@@ -637,7 +637,7 @@ TEST(RelayIrc, RelayIrcSendJoinChannels)
  *   relay_irc_input_send
  */
 
-TEST(RelayIrcWithClient, RelayIrcInputSend)
+TEST(RelayIrcWithClient, InputSend)
 {
     arraylist_clear (sent_messages_irc);
     relay_irc_input_send (ptr_relay_client, "#test", "priority_high",
@@ -650,7 +650,7 @@ TEST(RelayIrcWithClient, RelayIrcInputSend)
  *   relay_irc_hook_signals
  */
 
-TEST(RelayIrc, RelayIrcHookSignals)
+TEST(RelayIrc, HookSignals)
 {
     /* TODO: write tests */
 }
@@ -660,7 +660,7 @@ TEST(RelayIrc, RelayIrcHookSignals)
  *   relay_irc_capability_compare_cb
  */
 
-TEST(RelayIrc, RelayIrcCapabilityCompareCb)
+TEST(RelayIrc, CapabilityCompareCb)
 {
     /* TODO: write tests */
 }
@@ -670,7 +670,7 @@ TEST(RelayIrc, RelayIrcCapabilityCompareCb)
  *   relay_irc_capability_free_db
  */
 
-TEST(RelayIrc, RelayIrcCapabilityFreeDb)
+TEST(RelayIrc, CapabilityFreeDb)
 {
     /* TODO: write tests */
 }
@@ -680,7 +680,7 @@ TEST(RelayIrc, RelayIrcCapabilityFreeDb)
  *   relay_irc_cap_enabled
  */
 
-TEST(RelayIrcWithClient, RelayIrcCapEnabled)
+TEST(RelayIrcWithClient, CapEnabled)
 {
     LONGS_EQUAL(0, relay_irc_cap_enabled (NULL, NULL));
     LONGS_EQUAL(0, relay_irc_cap_enabled (NULL, "echo-message"));
@@ -701,7 +701,7 @@ TEST(RelayIrcWithClient, RelayIrcCapEnabled)
  *   relay_irc_get_supported_caps
  */
 
-TEST(RelayIrcWithClient, RelayIrcGetSupportedCaps)
+TEST(RelayIrcWithClient, GetSupportedCaps)
 {
     int supported_caps;
 
@@ -746,7 +746,7 @@ TEST(RelayIrc, RelayGetListCaps)
  *   relay_irc_recv_command_capab
  */
 
-TEST(RelayIrcWithClient, RelayIrcRecvCommandCapab)
+TEST(RelayIrcWithClient, RecvCommandCapab)
 {
     relay_client_set_status (ptr_relay_client, RELAY_STATUS_CONNECTING);
 
@@ -819,7 +819,7 @@ TEST(RelayIrcWithClient, RelayIrcRecvCommandCapab)
  *   relay_irc_parse_ctcp
  */
 
-TEST(RelayIrcWithClient, RelayIrcParseCtcp)
+TEST(RelayIrcWithClient, ParseCtcp)
 {
     char *ctcp_type, *ctcp_params;
 
@@ -885,7 +885,7 @@ TEST(RelayIrcWithClient, RelayIrcParseCtcp)
  *   relay_irc_recv
  */
 
-TEST(RelayIrcWithClient, RelayIrcRecv)
+TEST(RelayIrcWithClient, Recv)
 {
     relay_client_set_status (ptr_relay_client, RELAY_STATUS_CONNECTING);
 
@@ -964,7 +964,7 @@ TEST(RelayIrcWithClient, RelayIrcRecv)
  *   relay_irc_close_connection
  */
 
-TEST(RelayIrc, RelayIrcCloseConnection)
+TEST(RelayIrc, CloseConnection)
 {
     /* TODO: write tests */
 }
@@ -974,7 +974,7 @@ TEST(RelayIrc, RelayIrcCloseConnection)
  *   relay_irc_alloc
  */
 
-TEST(RelayIrc, RelayIrcAlloc)
+TEST(RelayIrc, Alloc)
 {
     /* TODO: write tests */
 }
@@ -984,7 +984,7 @@ TEST(RelayIrc, RelayIrcAlloc)
  *   relay_irc_alloc_with_infolist
  */
 
-TEST(RelayIrc, RelayIrcAllocWithInfolist)
+TEST(RelayIrc, AllocWithInfolist)
 {
     /* TODO: write tests */
 }
@@ -994,7 +994,7 @@ TEST(RelayIrc, RelayIrcAllocWithInfolist)
  *   relay_irc_get_initial_status
  */
 
-TEST(RelayIrc, RelayIrcGetInitialStatus)
+TEST(RelayIrc, GetInitialStatus)
 {
     /* TODO: write tests */
 }
@@ -1004,7 +1004,7 @@ TEST(RelayIrc, RelayIrcGetInitialStatus)
  *   relay_irc_free
  */
 
-TEST(RelayIrc, RelayIrcFree)
+TEST(RelayIrc, Free)
 {
     /* TODO: write tests */
 }
@@ -1014,7 +1014,7 @@ TEST(RelayIrc, RelayIrcFree)
  *   relay_irc_add_to_infolist
  */
 
-TEST(RelayIrc, RelayIrcAddToInfolist)
+TEST(RelayIrc, AddToInfolist)
 {
     /* TODO: write tests */
 }
@@ -1024,7 +1024,7 @@ TEST(RelayIrc, RelayIrcAddToInfolist)
  *   relay_irc_print_log
  */
 
-TEST(RelayIrc, RelayIrcPrintLog)
+TEST(RelayIrc, PrintLog)
 {
     /* TODO: write tests */
 }

@@ -182,7 +182,7 @@ TEST(IrcNick, IsNick)
  *   irc_nick_find_color_name
  */
 
-TEST(IrcNick, IrcNickFindColor)
+TEST(IrcNick, FindColor)
 {
     /* TODO: write tests */
 }
@@ -192,7 +192,7 @@ TEST(IrcNick, IrcNickFindColor)
  *   irc_nick_set_current_prefix
  */
 
-TEST(IrcNick, IrcNickSetCurrentPrefix)
+TEST(IrcNick, SetCurrentPrefix)
 {
     /* TODO: write tests */
 }
@@ -202,7 +202,7 @@ TEST(IrcNick, IrcNickSetCurrentPrefix)
  *   irc_nick_set_prefix
  */
 
-TEST(IrcNick, IrcNickSetPrefix)
+TEST(IrcNick, SetPrefix)
 {
     /* TODO: write tests */
 }
@@ -212,7 +212,7 @@ TEST(IrcNick, IrcNickSetPrefix)
  *   irc_nick_set_prefixes
  */
 
-TEST(IrcNick, IrcNickSetPrefixes)
+TEST(IrcNick, SetPrefixes)
 {
     /* TODO: write tests */
 }
@@ -222,7 +222,7 @@ TEST(IrcNick, IrcNickSetPrefixes)
  *   irc_nick_set_host
  */
 
-TEST(IrcNick, IrcNickSetHost)
+TEST(IrcNick, SetHost)
 {
     /* TODO: write tests */
 }
@@ -232,7 +232,7 @@ TEST(IrcNick, IrcNickSetHost)
  *   irc_nick_is_op_or_higher
  */
 
-TEST(IrcNick, IrcNickIsOpOrHigher)
+TEST(IrcNick, IsOpOrHigher)
 {
     /* TODO: write tests */
 }
@@ -242,7 +242,7 @@ TEST(IrcNick, IrcNickIsOpOrHigher)
  *   irc_nick_has_prefix_mode
  */
 
-TEST(IrcNick, IrcNickHasPrefixMode)
+TEST(IrcNick, HasPrefixMode)
 {
     /* TODO: write tests */
 }
@@ -252,7 +252,7 @@ TEST(IrcNick, IrcNickHasPrefixMode)
  *   irc_nick_get_nicklist_group
  */
 
-TEST(IrcNick, IrcNickGetNicklistGroup)
+TEST(IrcNick, GetNicklistGroup)
 {
     /* TODO: write tests */
 }
@@ -262,7 +262,7 @@ TEST(IrcNick, IrcNickGetNicklistGroup)
  *   irc_nick_get_prefix_color_name
  */
 
-TEST(IrcNick, IrcNickGetPrefixColorName)
+TEST(IrcNick, GetPrefixColorName)
 {
     /* TODO: write tests */
 }
@@ -272,7 +272,7 @@ TEST(IrcNick, IrcNickGetPrefixColorName)
  *   irc_nick_get_color_for_nicklist
  */
 
-TEST(IrcNick, IrcNickGetColorForNicklist)
+TEST(IrcNick, GetColorForNicklist)
 {
     /* TODO: write tests */
 }
@@ -282,7 +282,7 @@ TEST(IrcNick, IrcNickGetColorForNicklist)
  *   irc_nick_nicklist_add
  */
 
-TEST(IrcNick, IrcNickNicklistAdd)
+TEST(IrcNick, NicklistAdd)
 {
     /* TODO: write tests */
 }
@@ -292,7 +292,7 @@ TEST(IrcNick, IrcNickNicklistAdd)
  *   irc_nick_nicklist_remove
  */
 
-TEST(IrcNick, IrcNickNicklistRemove)
+TEST(IrcNick, NicklistRemove)
 {
     /* TODO: write tests */
 }
@@ -302,7 +302,7 @@ TEST(IrcNick, IrcNickNicklistRemove)
  *   irc_nick_nicklist_set
  */
 
-TEST(IrcNick, IrcNickNicklistSet)
+TEST(IrcNick, NicklistSet)
 {
     /* TODO: write tests */
 }
@@ -312,7 +312,7 @@ TEST(IrcNick, IrcNickNicklistSet)
  *   irc_nick_nicklist_set_prefix_color_all
  */
 
-TEST(IrcNick, IrcNickNicklistSetPrefixColorAll)
+TEST(IrcNick, NicklistSetPrefixColorAll)
 {
     /* TODO: write tests */
 }
@@ -322,7 +322,7 @@ TEST(IrcNick, IrcNickNicklistSetPrefixColorAll)
  *   irc_nick_nicklist_set_color_all
  */
 
-TEST(IrcNick, IrcNickNicklistSetColorAll)
+TEST(IrcNick, NicklistSetColorAll)
 {
     /* TODO: write tests */
 }
@@ -332,7 +332,7 @@ TEST(IrcNick, IrcNickNicklistSetColorAll)
  *   irc_nick_new
  */
 
-TEST(IrcNick, IrcNickNew)
+TEST(IrcNick, New)
 {
     /* TODO: write tests */
 }
@@ -342,7 +342,7 @@ TEST(IrcNick, IrcNickNew)
  *   irc_nick_change
  */
 
-TEST(IrcNick, IrcNickChange)
+TEST(IrcNick, Change)
 {
     /* TODO: write tests */
 }
@@ -352,7 +352,7 @@ TEST(IrcNick, IrcNickChange)
  *   irc_nick_set_mode
  */
 
-TEST(IrcNick, IrcNickSetMode)
+TEST(IrcNick, SetMode)
 {
     /* TODO: write tests */
 }
@@ -362,7 +362,7 @@ TEST(IrcNick, IrcNickSetMode)
  *   irc_nick_realloc_prefixes
  */
 
-TEST(IrcNick, IrcNickReallocPrefixes)
+TEST(IrcNick, ReallocPrefixes)
 {
     /* TODO: write tests */
 }
@@ -372,7 +372,7 @@ TEST(IrcNick, IrcNickReallocPrefixes)
  *   irc_nick_free
  */
 
-TEST(IrcNick, IrcNickFree)
+TEST(IrcNick, Free)
 {
     /* TODO: write tests */
 }
@@ -382,7 +382,7 @@ TEST(IrcNick, IrcNickFree)
  *   irc_nick_free_all
  */
 
-TEST(IrcNick, IrcNickFreeAll)
+TEST(IrcNick, FreeAll)
 {
     /* TODO: write tests */
 }
@@ -392,7 +392,7 @@ TEST(IrcNick, IrcNickFreeAll)
  *   irc_nick_search
  */
 
-TEST(IrcNick, IrcNickSearch)
+TEST(IrcNick, Search)
 {
     /* TODO: write tests */
 }
@@ -402,7 +402,7 @@ TEST(IrcNick, IrcNickSearch)
  *   irc_nick_count
  */
 
-TEST(IrcNick, IrcNickCount)
+TEST(IrcNick, Count)
 {
     /* TODO: write tests */
 }
@@ -412,7 +412,7 @@ TEST(IrcNick, IrcNickCount)
  *   irc_nick_set_away
  */
 
-TEST(IrcNick, IrcNickSetAway)
+TEST(IrcNick, SetAway)
 {
     /* TODO: write tests */
 }
@@ -422,7 +422,7 @@ TEST(IrcNick, IrcNickSetAway)
  *   irc_nick_mode_for_display
  */
 
-TEST(IrcNick, IrcNickModeForDisplay)
+TEST(IrcNick, ModeForDisplay)
 {
     /* TODO: write tests */
 }
@@ -432,7 +432,7 @@ TEST(IrcNick, IrcNickModeForDisplay)
  *   irc_nick_as_prefix
  */
 
-TEST(IrcNick, IrcNickAsPrefix)
+TEST(IrcNick, AsPrefix)
 {
     /* TODO: write tests */
 }
@@ -442,7 +442,7 @@ TEST(IrcNick, IrcNickAsPrefix)
  *   irc_nick_color_for_msg
  */
 
-TEST(IrcNick, IrcNickColorForMsg)
+TEST(IrcNick, ColorForMsg)
 {
     /* TODO: write tests */
 }
@@ -452,7 +452,7 @@ TEST(IrcNick, IrcNickColorForMsg)
  *   irc_nick_color_for_pv
  */
 
-TEST(IrcNick, IrcNickColorForPv)
+TEST(IrcNick, ColorForPv)
 {
     /* TODO: write tests */
 }
@@ -462,7 +462,7 @@ TEST(IrcNick, IrcNickColorForPv)
  *   irc_nick_default_ban_mask
  */
 
-TEST(IrcNick, IrcNickDefaultBanMask)
+TEST(IrcNick, DefaultBanMask)
 {
     /* TODO: write tests */
 }
@@ -472,7 +472,7 @@ TEST(IrcNick, IrcNickDefaultBanMask)
  *   irc_nick_hdata_nick_cb
  */
 
-TEST(IrcNick, IrcNickHdataNickCb)
+TEST(IrcNick, HdataNickCb)
 {
     /* TODO: write tests */
 }
@@ -482,7 +482,7 @@ TEST(IrcNick, IrcNickHdataNickCb)
  *   irc_nick_add_to_infolist
  */
 
-TEST(IrcNick, IrcNickAddToInfolist)
+TEST(IrcNick, AddToInfolist)
 {
     /* TODO: write tests */
 }
@@ -492,7 +492,7 @@ TEST(IrcNick, IrcNickAddToInfolist)
  *   irc_nick_print_log
  */
 
-TEST(IrcNick, IrcNickPrintLog)
+TEST(IrcNick, PrintLog)
 {
     /* TODO: write tests */
 }

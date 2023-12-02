@@ -45,7 +45,7 @@ TEST_GROUP(IrcCtcp)
  *   irc_ctcp_convert_legacy_format
  */
 
-TEST(IrcCtcp, IrcCtcpConvertLegacyFormat)
+TEST(IrcCtcp, ConvertLegacyFormat)
 {
     char *str;
 
@@ -67,7 +67,7 @@ TEST(IrcCtcp, IrcCtcpConvertLegacyFormat)
  *   irc_ctcp_get_default_reply
  */
 
-TEST(IrcCtcp, IrcCtcpGetDefaultReply)
+TEST(IrcCtcp, GetDefaultReply)
 {
     /* TODO: write tests */
 }
@@ -77,7 +77,7 @@ TEST(IrcCtcp, IrcCtcpGetDefaultReply)
  *   irc_ctcp_get_reply
  */
 
-TEST(IrcCtcp, IrcCtcpGetReply)
+TEST(IrcCtcp, GetReply)
 {
     /* TODO: write tests */
 }
@@ -87,7 +87,7 @@ TEST(IrcCtcp, IrcCtcpGetReply)
  *   irc_ctcp_display_request
  */
 
-TEST(IrcCtcp, IrcCtcpDisplayRequest)
+TEST(IrcCtcp, DisplayRequest)
 {
     /* TODO: write tests */
 }
@@ -97,7 +97,7 @@ TEST(IrcCtcp, IrcCtcpDisplayRequest)
  *   irc_ctcp_display_reply_from_nick
  */
 
-TEST(IrcCtcp, IrcCtcpDisplayReplyFromNick)
+TEST(IrcCtcp, DisplayReplyFromNick)
 {
     /* TODO: write tests */
 }
@@ -107,7 +107,7 @@ TEST(IrcCtcp, IrcCtcpDisplayReplyFromNick)
  *   irc_ctcp_reply_to_nick
  */
 
-TEST(IrcCtcp, IrcCtcpReplyToNick)
+TEST(IrcCtcp, ReplyToNick)
 {
     /* TODO: write tests */
 }
@@ -117,7 +117,7 @@ TEST(IrcCtcp, IrcCtcpReplyToNick)
  *   irc_ctcp_get_supported_ctcp
  */
 
-TEST(IrcCtcp, IrcCtcpGetSupportedCtcp)
+TEST(IrcCtcp, GetSupportedCtcp)
 {
     struct t_irc_server *server;
     struct t_config_option *ptr_option;
@@ -155,7 +155,7 @@ TEST(IrcCtcp, IrcCtcpGetSupportedCtcp)
  *   irc_ctcp_eval_reply
  */
 
-TEST(IrcCtcp, IrcCtcpEvalReply)
+TEST(IrcCtcp, EvalReply)
 {
     struct t_irc_server *server;
     char *str, *info_version, *info_version_git, *info_date, *info_site;
@@ -252,7 +252,7 @@ TEST(IrcCtcp, IrcCtcpEvalReply)
  *   irc_ctcp_dcc_filename_without_quotes
  */
 
-TEST(IrcCtcp, IrcCtcpDccFilenameWithoutQuotes)
+TEST(IrcCtcp, DccFilenameWithoutQuotes)
 {
     /* TODO: write tests */
 }
@@ -262,7 +262,7 @@ TEST(IrcCtcp, IrcCtcpDccFilenameWithoutQuotes)
  *   irc_ctcp_recv_dcc
  */
 
-TEST(IrcCtcp, IrcCtcpRecvDcc)
+TEST(IrcCtcp, RecvDcc)
 {
     /* TODO: write tests */
 }
@@ -272,7 +272,7 @@ TEST(IrcCtcp, IrcCtcpRecvDcc)
  *   irc_ctcp_recv
  */
 
-TEST(IrcCtcp, IrcCtcpRecv)
+TEST(IrcCtcp, Recv)
 {
     /* TODO: write tests */
 }
@@ -282,7 +282,7 @@ TEST(IrcCtcp, IrcCtcpRecv)
  *   irc_ctcp_send
  */
 
-TEST(IrcCtcp, IrcCtcpSend)
+TEST(IrcCtcp, Send)
 {
     /* TODO: write tests */
 }

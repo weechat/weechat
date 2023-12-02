@@ -37,7 +37,7 @@ TEST_GROUP(IrcList)
  *   irc_list_compare_cb
  */
 
-TEST(IrcList, IrcListCompareCb)
+TEST(IrcList, CompareCb)
 {
     /* TODO: write tests */
 }
@@ -47,7 +47,7 @@ TEST(IrcList, IrcListCompareCb)
  *   irc_list_free_cb
  */
 
-TEST(IrcList, IrcListFreeCb)
+TEST(IrcList, FreeCb)
 {
     /* TODO: write tests */
 }
@@ -57,7 +57,7 @@ TEST(IrcList, IrcListFreeCb)
  *   irc_list_buffer_set_localvar_filter
  */
 
-TEST(IrcList, IrcListBufferSetLocalvarFilter)
+TEST(IrcList, BufferSetLocalvarFilter)
 {
     /* TODO: write tests */
 }
@@ -67,7 +67,7 @@ TEST(IrcList, IrcListBufferSetLocalvarFilter)
  *   irc_list_set_filter
  */
 
-TEST(IrcList, IrcListSetFilter)
+TEST(IrcList, SetFilter)
 {
     /* TODO: write tests */
 }
@@ -77,7 +77,7 @@ TEST(IrcList, IrcListSetFilter)
  *   irc_list_set_sort
  */
 
-TEST(IrcList, IrcListSetSort)
+TEST(IrcList, SetSort)
 {
     /* TODO: write tests */
 }
@@ -87,7 +87,7 @@ TEST(IrcList, IrcListSetSort)
  *   irc_list_add_channel_in_hashtable
  */
 
-TEST(IrcList, IrcListAddChannelInHashtable)
+TEST(IrcList, AddChannelInHashtable)
 {
     /* TODO: write tests */
 }
@@ -97,7 +97,7 @@ TEST(IrcList, IrcListAddChannelInHashtable)
  *   irc_list_string_match
  */
 
-TEST(IrcList, IrcListStringMatch)
+TEST(IrcList, StringMatch)
 {
     /* TODO: write tests */
 }
@@ -107,7 +107,7 @@ TEST(IrcList, IrcListStringMatch)
  *   irc_list_channel_match_filter
  */
 
-TEST(IrcList, IrcListChannelMatchFilter)
+TEST(IrcList, ChannelMatchFilter)
 {
     /* TODO: write tests */
 }
@@ -117,7 +117,7 @@ TEST(IrcList, IrcListChannelMatchFilter)
  *   irc_list_filter_channels
  */
 
-TEST(IrcList, IrcListFilterChannels)
+TEST(IrcList, FilterChannels)
 {
     /* TODO: write tests */
 }
@@ -127,7 +127,7 @@ TEST(IrcList, IrcListFilterChannels)
  *   irc_list_parse_messages
  */
 
-TEST(IrcList, IrcListParseMessages)
+TEST(IrcList, ParseMessages)
 {
     /* TODO: write tests */
 }
@@ -137,7 +137,7 @@ TEST(IrcList, IrcListParseMessages)
  *   irc_list_buffer_set_title
  */
 
-TEST(IrcList, IrcListBufferSetTitle)
+TEST(IrcList, BufferSetTitle)
 {
     /* TODO: write tests */
 }
@@ -147,7 +147,7 @@ TEST(IrcList, IrcListBufferSetTitle)
  *   irc_list_display_line
  */
 
-TEST(IrcList, IrcListDisplayLine)
+TEST(IrcList, DisplayLine)
 {
     /* TODO: write tests */
 }
@@ -157,7 +157,7 @@ TEST(IrcList, IrcListDisplayLine)
  *   irc_list_buffer_refresh
  */
 
-TEST(IrcList, IrcListBufferRefresh)
+TEST(IrcList, BufferRefresh)
 {
     /* TODO: write tests */
 }
@@ -167,7 +167,7 @@ TEST(IrcList, IrcListBufferRefresh)
  *   irc_list_set_current_line
  */
 
-TEST(IrcList, IrcListSetCurrentLine)
+TEST(IrcList, SetCurrentLine)
 {
     /* TODO: write tests */
 }
@@ -177,7 +177,7 @@ TEST(IrcList, IrcListSetCurrentLine)
  *   irc_list_get_window_info
  */
 
-TEST(IrcList, IrcListGetWindowInfo)
+TEST(IrcList, GetWindowInfo)
 {
     /* TODO: write tests */
 }
@@ -187,7 +187,7 @@ TEST(IrcList, IrcListGetWindowInfo)
  *   irc_list_check_line_outside_window
  */
 
-TEST(IrcList, IrcListCheckLineOutsideWindow)
+TEST(IrcList, CheckLineOutsideWindow)
 {
     /* TODO: write tests */
 }
@@ -197,7 +197,7 @@ TEST(IrcList, IrcListCheckLineOutsideWindow)
  *   irc_list_window_scrolled_cb
  */
 
-TEST(IrcList, IrcListWindowScrolledCb)
+TEST(IrcList, WindowScrolledCb)
 {
     /* TODO: write tests */
 }
@@ -207,7 +207,7 @@ TEST(IrcList, IrcListWindowScrolledCb)
  *   irc_list_move_line_relative
  */
 
-TEST(IrcList, IrcListMoveLineRelative)
+TEST(IrcList, MoveLineRelative)
 {
     /* TODO: write tests */
 }
@@ -217,7 +217,7 @@ TEST(IrcList, IrcListMoveLineRelative)
  *   irc_list_move_line_absolute
  */
 
-TEST(IrcList, IrcListMoveLineAbsolute)
+TEST(IrcList, MoveLineAbsolute)
 {
     /* TODO: write tests */
 }
@@ -227,7 +227,7 @@ TEST(IrcList, IrcListMoveLineAbsolute)
  *   irc_list_join_channel
  */
 
-TEST(IrcList, IrcListJoinChannel)
+TEST(IrcList, JoinChannel)
 {
     /* TODO: write tests */
 }
@@ -237,7 +237,7 @@ TEST(IrcList, IrcListJoinChannel)
  *   irc_list_buffer_input_data_cb
  */
 
-TEST(IrcList, IrcListBufferInputDataCb)
+TEST(IrcList, BufferInputDataCb)
 {
     /* TODO: write tests */
 }
@@ -247,7 +247,7 @@ TEST(IrcList, IrcListBufferInputDataCb)
  *   irc_list_create_buffer
  */
 
-TEST(IrcList, IrcListCreateBuffer)
+TEST(IrcList, CreateBuffer)
 {
     /* TODO: write tests */
 }
@@ -257,7 +257,7 @@ TEST(IrcList, IrcListCreateBuffer)
  *   irc_list_hsignal_redirect_list_cb
  */
 
-TEST(IrcList, IrcListHsignalRedirectListCb)
+TEST(IrcList, HsignalRedirectListCb)
 {
     /* TODO: write tests */
 }
@@ -267,7 +267,7 @@ TEST(IrcList, IrcListHsignalRedirectListCb)
  *   irc_list_alloc
  */
 
-TEST(IrcList, IrcListAlloc)
+TEST(IrcList, Alloc)
 {
     struct t_irc_list *list;
 
@@ -289,7 +289,7 @@ TEST(IrcList, IrcListAlloc)
  *   irc_list_free_data
  */
 
-TEST(IrcList, IrcListFreeData)
+TEST(IrcList, FreeData)
 {
     /* TODO: write tests */
 }
@@ -299,7 +299,7 @@ TEST(IrcList, IrcListFreeData)
  *   irc_list_free
  */
 
-TEST(IrcList, IrcListFree)
+TEST(IrcList, Free)
 {
     /* TODO: write tests */
 }
@@ -309,7 +309,7 @@ TEST(IrcList, IrcListFree)
  *   irc_list_hdata_list_channel_cb
  */
 
-TEST(IrcList, IrcListHdataListChannelCb)
+TEST(IrcList, HdataListChannelCb)
 {
     /* TODO: write tests */
 }
@@ -319,7 +319,7 @@ TEST(IrcList, IrcListHdataListChannelCb)
  *   irc_list_hdata_list_cb
  */
 
-TEST(IrcList, IrcListHdataListCb)
+TEST(IrcList, HdataListCb)
 {
     /* TODO: write tests */
 }
