@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-29 09:58+0100\n"
+"POT-Creation-Date: 2023-12-01 22:04+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11063,6 +11063,9 @@ msgid "1 if filters are enabled"
 msgstr ""
 
 msgid "1 if cursor mode is enabled"
+msgstr ""
+
+msgid "1 if mouse is enabled"
 msgstr ""
 
 msgid "width of terminal"

@@ -54,6 +54,7 @@
 #include "../gui/gui-key.h"
 #include "../gui/gui-layout.h"
 #include "../gui/gui-line.h"
+#include "../gui/gui-mouse.h"
 #include "../gui/gui-nick.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
@@ -621,6 +622,27 @@ plugin_api_info_cursor_mode_cb (const void *pointer, void *data,
     (void) arguments;
 
     snprintf (value, sizeof (value), "%d", gui_cursor_mode);
+    return strdup (value);
+}
+
+/*
+ * Returns WeeChat info "mouse".
+ */
+
+char *
+plugin_api_info_mouse_cb (const void *pointer, void *data,
+                          const char *info_name,
+                          const char *arguments)
+{
+    char value[32];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", gui_mouse_enabled);
     return strdup (value);
 }
 
@@ -2125,6 +2147,9 @@ plugin_api_info_init ()
     hook_info (NULL, "cursor_mode",
                N_("1 if cursor mode is enabled"),
                NULL, &plugin_api_info_cursor_mode_cb, NULL, NULL);
+    hook_info (NULL, "mouse",
+               N_("1 if mouse is enabled"),
+               NULL, &plugin_api_info_mouse_cb, NULL, NULL);
     hook_info (NULL, "term_width",
                N_("width of terminal"),
                NULL, &plugin_api_info_term_width_cb, NULL, NULL);

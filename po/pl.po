@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-11-29 09:58+0100\n"
+"POT-Creation-Date: 2023-12-01 22:04+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -12626,6 +12626,11 @@ msgstr "1 jeśli filtry są aktywne"
 
 msgid "1 if cursor mode is enabled"
 msgstr "1 jeśli tryb kursora jest aktywny"
+
+#, fuzzy
+#| msgid "Mouse is enabled"
+msgid "1 if mouse is enabled"
+msgstr "Obsługa myszy włączona"
 
 msgid "width of terminal"
 msgstr "szerokość terminala"

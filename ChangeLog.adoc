@@ -26,6 +26,7 @@ New features::
   * core: display only version with command `/version`, add options `-o` and `-ol` in command `/upgrade`
   * core: add number of processes in command `/sys waitpid`
   * core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias` and `/trigger` (issue #1956)
+  * api: add info "mouse"
   * buflist: jump to previous/next buffer displayed in buflist item with ctrl+wheel up/down on a buflist item (issue #1473)
   * irc: add server option "anti_flood" (now in milliseconds), remove server options "anti_flood_prio_{high|low}" (issue #1039)
   * irc: add option irc.look.list_buffer
