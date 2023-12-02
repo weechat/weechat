@@ -58,7 +58,7 @@ Bug fixes::
 
 Tests::
 
-  * core: add tests on plugin API info functions
+  * core: add tests on plugin config and plugin API info functions
 
 Build::
 
