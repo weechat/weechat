@@ -33,7 +33,6 @@ extern "C"
 
 #define SECURE_PASSPHRASE "this_is_a_secret_passphrase"
 #define SECURE_PASSWORD "this_is_a_secret_password"
-#define TOTP_SECRET "secretpasswordbase32"
 
 extern int secure_derive_key (const char *salt, const char *passphrase,
                               unsigned char *key, int length_key);
