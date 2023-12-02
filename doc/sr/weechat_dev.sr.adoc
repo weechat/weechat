@@ -406,7 +406,7 @@ WeeChat „језгро” се налази у следећим директо�
 |    unit/                            | Корен unit тестова.
 |       test-plugins.cpp              | Тестови: plugins.
 // TRANSLATION MISSING
-|       test-plugins-api-info.cpp     | Tests: plugins API info functions.
+|       test-plugin-api-info.cpp      | Tests: plugin API info functions.
 |       core/                         | Корен unit тестова језгра.
 |          test-core-arraylist.cpp    | Тестови: arraylists.
 |          test-core-calc.cpp         | Тестови: калкулација израза.

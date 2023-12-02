@@ -64,7 +64,7 @@ add_library(weechat_unit_tests_core STATIC ${LIB_WEECHAT_UNIT_TESTS_CORE_SRC})
 # unit tests (plugins)
 set(LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
   unit/plugins/test-plugins.cpp
-  unit/plugins/test-plugins-api-info.cpp
+  unit/plugins/test-plugin-api-info.cpp
 )
 
 if(ENABLE_ALIAS)

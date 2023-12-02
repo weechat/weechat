@@ -1,5 +1,5 @@
 /*
- * test-plugins-api-info.cpp - tests API info functions
+ * test-plugin-api-info.cpp - tests API info functions
  *
  * Copyright (C) 2023 Sébastien Helleu <flashcode@flashtux.org>
  *
@@ -52,7 +52,7 @@ extern "C"
 extern char *plugin_api_info_absolute_path (const char *directory);
 }
 
-TEST_GROUP(PluginsApiInfo)
+TEST_GROUP(PluginApiInfo)
 {
 };
 
@@ -61,7 +61,7 @@ TEST_GROUP(PluginsApiInfo)
  *   plugin_api_info_version_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoVersionCb)
+TEST(PluginApiInfo, PluginApiInfoVersionCb)
 {
     const char *version;
     char *str;
@@ -75,7 +75,7 @@ TEST(PluginsApiInfo, PluginApiInfoVersionCb)
  *   plugin_api_info_version_number_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoVersionNumberCb)
+TEST(PluginApiInfo, PluginApiInfoVersionNumberCb)
 {
     char *str, str_version_number[128];
 
@@ -94,7 +94,7 @@ TEST(PluginsApiInfo, PluginApiInfoVersionNumberCb)
  *   plugin_api_info_version_git_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoVersionGitCb)
+TEST(PluginApiInfo, PluginApiInfoVersionGitCb)
 {
     const char *version_git;
     char *str;
@@ -108,7 +108,7 @@ TEST(PluginsApiInfo, PluginApiInfoVersionGitCb)
  *   plugin_api_info_date_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoDateCb)
+TEST(PluginApiInfo, PluginApiInfoDateCb)
 {
     const char *compilation_date;
     char *str;
@@ -122,7 +122,7 @@ TEST(PluginsApiInfo, PluginApiInfoDateCb)
  *   plugin_api_info_pid_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoPidCb)
+TEST(PluginApiInfo, PluginApiInfoPidCb)
 {
     char *str, str_pid[64];
 
@@ -135,7 +135,7 @@ TEST(PluginsApiInfo, PluginApiInfoPidCb)
  *   plugin_api_info_dir_separator_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoDirSeparatorCb)
+TEST(PluginApiInfo, PluginApiInfoDirSeparatorCb)
 {
     char *str;
 
@@ -147,7 +147,7 @@ TEST(PluginsApiInfo, PluginApiInfoDirSeparatorCb)
  *   plugin_api_info_absolute_path
  */
 
-TEST(PluginsApiInfo, PluginApiInfoAbsolutePath)
+TEST(PluginApiInfo, PluginApiInfoAbsolutePath)
 {
     char *str;
 
@@ -167,7 +167,7 @@ TEST(PluginsApiInfo, PluginApiInfoAbsolutePath)
  *   plugin_api_info_weechat_cache_dir_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoWeechatDir)
+TEST(PluginApiInfo, PluginApiInfoWeechatDir)
 {
     char *str;
 
@@ -205,7 +205,7 @@ TEST(PluginsApiInfo, PluginApiInfoWeechatDir)
  *   plugin_api_info_weechat_libdir_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoWeechatLibdirCb)
+TEST(PluginApiInfo, PluginApiInfoWeechatLibdirCb)
 {
     char *str;
 
@@ -217,7 +217,7 @@ TEST(PluginsApiInfo, PluginApiInfoWeechatLibdirCb)
  *   plugin_api_info_weechat_sharedir_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoWeechatSharedirCb)
+TEST(PluginApiInfo, PluginApiInfoWeechatSharedirCb)
 {
     char *str;
 
@@ -230,7 +230,7 @@ TEST(PluginsApiInfo, PluginApiInfoWeechatSharedirCb)
  *   plugin_api_info_weechat_localedir_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoWeechatLocaledirCb)
+TEST(PluginApiInfo, PluginApiInfoWeechatLocaledirCb)
 {
     char *str;
 
@@ -242,7 +242,7 @@ TEST(PluginsApiInfo, PluginApiInfoWeechatLocaledirCb)
  *   plugin_api_info_weechat_site_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoWeechatSiteCb)
+TEST(PluginApiInfo, PluginApiInfoWeechatSiteCb)
 {
     char *str;
 
@@ -254,7 +254,7 @@ TEST(PluginsApiInfo, PluginApiInfoWeechatSiteCb)
  *   plugin_api_info_weechat_site_download_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoWeechatSiteDownloadCb)
+TEST(PluginApiInfo, PluginApiInfoWeechatSiteDownloadCb)
 {
     char *str;
 
@@ -267,7 +267,7 @@ TEST(PluginsApiInfo, PluginApiInfoWeechatSiteDownloadCb)
  *   plugin_api_info_weechat_upgrading_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoWeechatUpgradingCb)
+TEST(PluginApiInfo, PluginApiInfoWeechatUpgradingCb)
 {
     char *str;
 
@@ -279,7 +279,7 @@ TEST(PluginsApiInfo, PluginApiInfoWeechatUpgradingCb)
  *   plugin_api_info_weechat_headless_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoWeechatHeadlessCb)
+TEST(PluginApiInfo, PluginApiInfoWeechatHeadlessCb)
 {
     char *str;
 
@@ -291,7 +291,7 @@ TEST(PluginsApiInfo, PluginApiInfoWeechatHeadlessCb)
  *   plugin_api_info_weechat_daemon_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoWeechatDaemonCb)
+TEST(PluginApiInfo, PluginApiInfoWeechatDaemonCb)
 {
     char *str;
 
@@ -303,7 +303,7 @@ TEST(PluginsApiInfo, PluginApiInfoWeechatDaemonCb)
  *   plugin_api_info_auto_connect_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoAutoConnectCb)
+TEST(PluginApiInfo, PluginApiInfoAutoConnectCb)
 {
     char *str;
 
@@ -315,7 +315,7 @@ TEST(PluginsApiInfo, PluginApiInfoAutoConnectCb)
  *   plugin_api_info_auto_load_scripts_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoAutoLoadScriptsCb)
+TEST(PluginApiInfo, PluginApiInfoAutoLoadScriptsCb)
 {
     char *str;
 
@@ -327,7 +327,7 @@ TEST(PluginsApiInfo, PluginApiInfoAutoLoadScriptsCb)
  *   plugin_api_info_buffer_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoBufferCb)
+TEST(PluginApiInfo, PluginApiInfoBufferCb)
 {
     char *str, str_buffer[64];
 
@@ -345,7 +345,7 @@ TEST(PluginsApiInfo, PluginApiInfoBufferCb)
  *   plugin_api_info_charset_terminal_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoCharsetTerminalCb)
+TEST(PluginApiInfo, PluginApiInfoCharsetTerminalCb)
 {
     char *str;
 
@@ -358,7 +358,7 @@ TEST(PluginsApiInfo, PluginApiInfoCharsetTerminalCb)
  *   plugin_api_info_charset_internal_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoCharsetInternalCb)
+TEST(PluginApiInfo, PluginApiInfoCharsetInternalCb)
 {
     char *str;
 
@@ -371,7 +371,7 @@ TEST(PluginsApiInfo, PluginApiInfoCharsetInternalCb)
  *   plugin_api_info_locale_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoLocaleCb)
+TEST(PluginApiInfo, PluginApiInfoLocaleCb)
 {
     char *str;
 
@@ -384,7 +384,7 @@ TEST(PluginsApiInfo, PluginApiInfoLocaleCb)
  *   plugin_api_info_inactivity_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoInactivityCb)
+TEST(PluginApiInfo, PluginApiInfoInactivityCb)
 {
     char *str, *error;
     long long inactivity;
@@ -401,7 +401,7 @@ TEST(PluginsApiInfo, PluginApiInfoInactivityCb)
  *   plugin_api_info_filters_enabled_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoFiltersEnabledCb)
+TEST(PluginApiInfo, PluginApiInfoFiltersEnabledCb)
 {
     char *str;
 
@@ -419,7 +419,7 @@ TEST(PluginsApiInfo, PluginApiInfoFiltersEnabledCb)
  *   plugin_api_info_cursor_mode_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoCursorModeCb)
+TEST(PluginApiInfo, PluginApiInfoCursorModeCb)
 {
     char *str;
 
@@ -431,7 +431,7 @@ TEST(PluginsApiInfo, PluginApiInfoCursorModeCb)
  *   plugin_api_info_mouse_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoMouseCb)
+TEST(PluginApiInfo, PluginApiInfoMouseCb)
 {
     char *str;
 
@@ -449,7 +449,7 @@ TEST(PluginsApiInfo, PluginApiInfoMouseCb)
  *   plugin_api_info_term_width_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoTermWidthCb)
+TEST(PluginApiInfo, PluginApiInfoTermWidthCb)
 {
     char *str, str_width[64];
 
@@ -462,7 +462,7 @@ TEST(PluginsApiInfo, PluginApiInfoTermWidthCb)
  *   plugin_api_info_term_height_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoTermHeightCb)
+TEST(PluginApiInfo, PluginApiInfoTermHeightCb)
 {
     char *str, str_height[64];
 
@@ -475,7 +475,7 @@ TEST(PluginsApiInfo, PluginApiInfoTermHeightCb)
  *   plugin_api_info_term_colors_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoTermColorsCb)
+TEST(PluginApiInfo, PluginApiInfoTermColorsCb)
 {
     char *str, str_colors[64];
 
@@ -489,7 +489,7 @@ TEST(PluginsApiInfo, PluginApiInfoTermColorsCb)
  *   plugin_api_info_term_color_pairs_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoTermColorPairsCb)
+TEST(PluginApiInfo, PluginApiInfoTermColorPairsCb)
 {
     char *str, str_color_pairs[64];
 
@@ -503,7 +503,7 @@ TEST(PluginsApiInfo, PluginApiInfoTermColorPairsCb)
  *   plugin_api_info_color_ansi_regex_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoColorAnsiRegexCb)
+TEST(PluginApiInfo, PluginApiInfoColorAnsiRegexCb)
 {
     char *str;
 
@@ -516,7 +516,7 @@ TEST(PluginsApiInfo, PluginApiInfoColorAnsiRegexCb)
  *   plugin_api_info_color_term2rgb_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoColorTerm2rgbCb)
+TEST(PluginApiInfo, PluginApiInfoColorTerm2rgbCb)
 {
     char *str;
 
@@ -532,7 +532,7 @@ TEST(PluginsApiInfo, PluginApiInfoColorTerm2rgbCb)
  *   plugin_api_info_color_rgb2term_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoColorRgb2termCb)
+TEST(PluginApiInfo, PluginApiInfoColorRgb2termCb)
 {
     char *str;
 
@@ -552,7 +552,7 @@ TEST(PluginsApiInfo, PluginApiInfoColorRgb2termCb)
  *   plugin_api_info_nick_color_name_ignore_case_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoNickColor)
+TEST(PluginApiInfo, PluginApiInfoNickColor)
 {
     char *str, str_color[64];
 
@@ -594,7 +594,7 @@ TEST(PluginsApiInfo, PluginApiInfoNickColor)
  *   plugin_api_info_uptime_current_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoUptime)
+TEST(PluginApiInfo, PluginApiInfoUptime)
 {
     char *str, *error;
     long long seconds;
@@ -627,7 +627,7 @@ TEST(PluginsApiInfo, PluginApiInfoUptime)
  *   plugin_api_info_totp_validate_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoTotpGenerateCb)
+TEST(PluginApiInfo, PluginApiInfoTotpGenerateCb)
 {
     char *str;
 
@@ -667,7 +667,7 @@ TEST(PluginsApiInfo, PluginApiInfoTotpGenerateCb)
  *   plugin_api_info_hashtable_secured_data_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfoHashtableSecuredDataCb)
+TEST(PluginApiInfo, PluginApiInfoHashtableSecuredDataCb)
 {
     struct t_hashtable *hashtable;
 
@@ -690,7 +690,7 @@ TEST(PluginsApiInfo, PluginApiInfoHashtableSecuredDataCb)
  *   plugin_api_infolist_bar_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistBarCb)
+TEST(PluginApiInfo, PluginApiInfolistBarCb)
 {
     struct t_infolist *infolist;
 
@@ -729,7 +729,7 @@ TEST(PluginsApiInfo, PluginApiInfolistBarCb)
  *   plugin_api_infolist_bar_item_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistBarItemCb)
+TEST(PluginApiInfo, PluginApiInfolistBarItemCb)
 {
     struct t_infolist *infolist;
 
@@ -768,7 +768,7 @@ TEST(PluginsApiInfo, PluginApiInfolistBarItemCb)
  *   plugin_api_infolist_bar_window_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistBarWindowCb)
+TEST(PluginApiInfo, PluginApiInfolistBarWindowCb)
 {
     struct t_infolist *infolist;
     struct t_gui_bar *ptr_bar;
@@ -806,7 +806,7 @@ TEST(PluginsApiInfo, PluginApiInfolistBarWindowCb)
  *   plugin_api_infolist_buffer_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistBufferCb)
+TEST(PluginApiInfo, PluginApiInfolistBufferCb)
 {
     struct t_infolist *infolist;
 
@@ -843,7 +843,7 @@ TEST(PluginsApiInfo, PluginApiInfolistBufferCb)
  *   plugin_api_infolist_buffer_lines_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistBufferLinesCb)
+TEST(PluginApiInfo, PluginApiInfolistBufferLinesCb)
 {
     struct t_infolist *infolist;
     time_t date;
@@ -874,7 +874,7 @@ TEST(PluginsApiInfo, PluginApiInfolistBufferLinesCb)
  *   plugin_api_infolist_filter_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistFilterCb)
+TEST(PluginApiInfo, PluginApiInfolistFilterCb)
 {
     struct t_infolist *infolist;
     struct t_gui_filter *ptr_filter1, *ptr_filter2;
@@ -924,7 +924,7 @@ TEST(PluginsApiInfo, PluginApiInfolistFilterCb)
  *   plugin_api_infolist_history_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistHistoryCb)
+TEST(PluginApiInfo, PluginApiInfolistHistoryCb)
 {
     struct t_infolist *infolist;
 
@@ -955,7 +955,7 @@ TEST(PluginsApiInfo, PluginApiInfolistHistoryCb)
  *   plugin_api_infolist_hook_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistHookCb)
+TEST(PluginApiInfo, PluginApiInfolistHookCb)
 {
     struct t_infolist *infolist;
     const char *ptr_name;
@@ -1012,7 +1012,7 @@ TEST(PluginsApiInfo, PluginApiInfolistHookCb)
  *   plugin_api_infolist_hotlist_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistHotlistCb)
+TEST(PluginApiInfo, PluginApiInfolistHotlistCb)
 {
     struct t_infolist *infolist;
 
@@ -1042,7 +1042,7 @@ TEST(PluginsApiInfo, PluginApiInfolistHotlistCb)
  *   plugin_api_infolist_key_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistKeyCb)
+TEST(PluginApiInfo, PluginApiInfolistKeyCb)
 {
     struct t_infolist *infolist;
 
@@ -1071,7 +1071,7 @@ TEST(PluginsApiInfo, PluginApiInfolistKeyCb)
  *   plugin_api_infolist_layout_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistLayoutCb)
+TEST(PluginApiInfo, PluginApiInfolistLayoutCb)
 {
     struct t_infolist *infolist;
     struct t_gui_layout *ptr_layout;
@@ -1103,7 +1103,7 @@ TEST(PluginsApiInfo, PluginApiInfolistLayoutCb)
  *   plugin_api_infolist_nicklist_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistNicklistCb)
+TEST(PluginApiInfo, PluginApiInfolistNicklistCb)
 {
     struct t_infolist *infolist;
 
@@ -1128,7 +1128,7 @@ TEST(PluginsApiInfo, PluginApiInfolistNicklistCb)
  *   plugin_api_infolist_option_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistOptionCb)
+TEST(PluginApiInfo, PluginApiInfolistOptionCb)
 {
     struct t_infolist *infolist;
 
@@ -1161,7 +1161,7 @@ TEST(PluginsApiInfo, PluginApiInfolistOptionCb)
  *   plugin_api_infolist_plugin_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistPluginCb)
+TEST(PluginApiInfo, PluginApiInfolistPluginCb)
 {
     struct t_infolist *infolist;
     struct t_weechat_plugin *ptr_plugin;
@@ -1207,7 +1207,7 @@ TEST(PluginsApiInfo, PluginApiInfolistPluginCb)
  *   plugin_api_infolist_proxy_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistProxyCb)
+TEST(PluginApiInfo, PluginApiInfolistProxyCb)
 {
     struct t_infolist *infolist;
     struct t_proxy *ptr_proxy1, *ptr_proxy2;
@@ -1255,7 +1255,7 @@ TEST(PluginsApiInfo, PluginApiInfolistProxyCb)
  *   plugin_api_infolist_url_options_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistUrlOptionsCb)
+TEST(PluginApiInfo, PluginApiInfolistUrlOptionsCb)
 {
     struct t_infolist *infolist;
 
@@ -1273,7 +1273,7 @@ TEST(PluginsApiInfo, PluginApiInfolistUrlOptionsCb)
  *   plugin_api_infolist_window_cb
  */
 
-TEST(PluginsApiInfo, PluginApiInfolistWindowCb)
+TEST(PluginApiInfo, PluginApiInfolistWindowCb)
 {
     struct t_infolist *infolist;
 
@@ -1321,7 +1321,7 @@ TEST(PluginsApiInfo, PluginApiInfolistWindowCb)
  *   plugin_api_info_init
  */
 
-TEST(PluginsApiInfo, PluginApiInfoInit)
+TEST(PluginApiInfo, PluginApiInfoInit)
 {
     /* TODO: write tests */
 }
