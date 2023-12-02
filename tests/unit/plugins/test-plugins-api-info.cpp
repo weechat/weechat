@@ -1165,6 +1165,8 @@ TEST(PluginsApiInfo, PluginApiInfolistPluginCb)
 {
     struct t_infolist *infolist;
     struct t_weechat_plugin *ptr_plugin;
+    const char *ptr_name;
+    char *name;
 
     /* invalid plugin pointer */
     infolist = hook_infolist_get (NULL, "plugin", (void *)0x1, NULL);
@@ -1174,7 +1176,10 @@ TEST(PluginsApiInfo, PluginApiInfolistPluginCb)
     CHECK(infolist);
     CHECK(infolist_next (infolist));
     ptr_plugin = (struct t_weechat_plugin *)infolist_pointer (infolist, "pointer");
-    STRCMP_EQUAL("charset", infolist_string (infolist, "name"));
+    CHECK(infolist_integer (infolist, "priority") > 0);
+    ptr_name = infolist_string (infolist, "name");
+    CHECK(ptr_name);
+    name = strdup (ptr_name);
     CHECK(infolist_next (infolist));
     infolist_free (infolist);
 
@@ -1182,7 +1187,7 @@ TEST(PluginsApiInfo, PluginApiInfolistPluginCb)
     infolist = hook_infolist_get (NULL, "plugin", ptr_plugin, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));
-    STRCMP_EQUAL("charset", infolist_string (infolist, "name"));
+    STRCMP_EQUAL(name, infolist_string (infolist, "name"));
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
 
@@ -1193,6 +1198,8 @@ TEST(PluginsApiInfo, PluginApiInfolistPluginCb)
     STRCMP_EQUAL("spell", infolist_string (infolist, "name"));
     POINTERS_EQUAL(NULL, infolist_next (infolist));
     infolist_free (infolist);
+
+    free (name);
 }
 
 /*
