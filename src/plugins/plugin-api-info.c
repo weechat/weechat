@@ -135,7 +135,7 @@ plugin_api_info_date_cb (const void *pointer, void *data,
                          const char *info_name,
                          const char *arguments)
 {
-    const char *version;
+    const char *compilation_date;
 
     /* make C compiler happy */
     (void) pointer;
@@ -143,8 +143,8 @@ plugin_api_info_date_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    version = version_get_compilation_date_time ();
-    return (version) ? strdup (version) : NULL;
+    compilation_date = version_get_compilation_date_time ();
+    return (compilation_date) ? strdup (compilation_date) : NULL;
 }
 
 /*
