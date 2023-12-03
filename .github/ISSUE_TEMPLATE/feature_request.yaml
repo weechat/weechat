@@ -3,11 +3,15 @@ description: Request a new feature / enhancement
 labels: ["feature"]
 
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Before submitting a feature request, please check that it has not already been reported by searching in [open and closed feature requests](https://github.com/weechat/weechat/issues?q=is%3Aissue+label%3Afeature).
+
   - type: textarea
     id: feature
     attributes:
       label: Feature description
-      description: A description of your feature.
-      placeholder: It would be really handy if WeeChat had…
+      description: A description of the feature you would like.
     validations:
       required: true

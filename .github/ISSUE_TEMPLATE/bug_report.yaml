@@ -1,18 +1,21 @@
 name: Bug report
-description: Create a bug report (please do not report security issues here)
+description: Create a bug report
 labels: ["bug"]
 
 body:
   - type: markdown
     attributes:
-      value: "Please do not report any security issue here, see [Contributing.adoc](../../Contributing.adoc)"
+      value: |
+        Before submitting a bug, please check that it has not already been reported by searching in [open and closed bugs](https://github.com/weechat/weechat/issues?q=is%3Aissue+label%3Abug).
+        If you don't use the latest version, please try if possible with the latest stable release to be sure the issue is still present and report the issue on this version.
+
+        **IMPORTANT**: please do not report any security issue here, see [Contributing.adoc](https://github.com/weechat/weechat/blob/master/Contributing.adoc#security-reports).
 
   - type: textarea
-    id: summary-of-bug
+    id: bug-description
     attributes:
-      label: Summary of the bug
+      label: Describe the bug
       description: A clear and concise description of what the bug is.
-      placeholder: WeeChat crashes when doing a specific thing.
     validations:
       required: true
 
@@ -20,8 +23,11 @@ body:
     id: steps-to-reproduce
     attributes:
       label: Steps to reproduce
-      description: Steps to reproduce the behavior.
+      description: |
+        Steps to reproduce the issue.
+        If possible, please try to reproduce with a default configuration and no scripts loaded (`weechat -t`). If the issue is related to a script, please mention the list of all scripts loaded.
       placeholder: |
+
         1.
         2.
         3.
@@ -32,8 +38,8 @@ body:
     id: current-behavior
     attributes:
       label: Current behavior
-      description: What currently happens.
-      placeholder: WeeChat crashes with an error:…
+      description: |
+        What currently happens.
     validations:
       required: true
 
@@ -42,7 +48,6 @@ body:
     attributes:
       label: Expected behavior
       description: What is actually supposed to happen.
-      placeholder: WeeChat does not crash.
     validations:
       required: true
 
@@ -51,7 +56,6 @@ body:
     attributes:
       label: Suggested solutions
       description: How you think this issue can be resolved.
-      placeholder: This is caused by a faulty assertion in file.c, line 123, so maybe…
     validations:
       required: false
 
@@ -59,8 +63,11 @@ body:
     id: additional-information
     attributes:
       label: Additional information
-      description: Any additional information you deem relevant.
-      placeholder: "Sounds like the same cause as issue #12345"
+      description: |
+        For a crash, please include a backtrace from gdb, see the [User's guide](https://weechat.org/doc/weechat/user/#report_crashes).
+        For a display issue, please add a screenshot if it makes sense.
+        Please mention if other versions are affected as well and if some versions are not affected (regression?).
+        And any additional information you deem relevant.
     validations:
       required: false
 
@@ -68,33 +75,36 @@ body:
     id: weechat-version
     attributes:
       label: WeeChat version
-      description: "Use `weechat --version`"
-      placeholder: 4.1.1
+      description: |
+        For a stable release: output of `weechat --version`.
+        For the development version: output of command `/v` in WeeChat.
+      placeholder: "4.1.1"
     validations:
       required: true
 
   - type: input
     id: os-version
     attributes:
-      label: "What OS and what version of it you run:"
-      description: Unsure? Go to https://whatsmyos.com/
-      placeholder: Debian 11
+      label: What OS are you using?
+      description: Name of the operating system and its version.
+      placeholder: Debian 12, Ubuntu 23.10, MacOS 14, ...
     validations:
       required: true
 
   - type: input
     id: terminal
     attributes:
-      label: "What terminal you run WeeChat in:"
-      placeholder: xterm
+      label: On which terminal are you running WeeChat?
+      description: The name of terminal if you think it can be related to the issue (mainly for display issues).
+      placeholder: Terminator, Xterm, GNOME Terminal, Urxvt, ...
     validations:
-      required: true
+      required: false
 
   - type: input
     id: terminal-multiplexer
     attributes:
-      label: "Specify what terminal multiplexer you run WeeChat in if any:"
-      placeholder: tmux/screen/…/none
+      label: Which terminal multiplexer are you using?
+      description: The name of the terminal multiplexer if you think it can be related to the issue (mainly for display issues).
+      placeholder: none, tmux, screen, ...
     validations:
-      required: true
-
+      required: false

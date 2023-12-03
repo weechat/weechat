@@ -1,31 +1,19 @@
 name: Question
-description: "Ask a question (please read the FAQ and docs first and ask in #weechat)."
+description: Ask a question
 labels: ["question"]
 
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening an issue with a question:
+        - please read the [FAQ](https://weechat.org/doc/weechat/faq) and [documentation](https://weechat.org/doc/weechat/)
+        - please ask on #weechat channel (on server irc.libera.chat).
+
   - type: textarea
     id: question
     attributes:
       label: Question
-      description: A clear and concise question.
-      placeholder: How do I…
-    validations:
-      required: true
-
-  - type: input
-    id: weechat-version
-    attributes:
-      label: WeeChat version
-      description: "Use `weechat --version`"
-      placeholder: 4.1.1
-    validations:
-      required: true
-
-  - type: input
-    id: os-version
-    attributes:
-      label: "What OS and what version of it you run:"
-      description: Unsure? Go to https://whatsmyos.com/
-      placeholder: Debian 11
+      description: Your question.
     validations:
       required: true
