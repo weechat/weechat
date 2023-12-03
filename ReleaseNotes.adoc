@@ -88,6 +88,11 @@ The infos irc_nick_color and irc_nick_color_name are deprecated again, and the
 algorithm to compute IRC nick colors has been reverted to case sensitive. +
 The server name has been removed from arguments.
 
+[[v4.1.2]]
+== Version 4.1.2 (2023-12-03)
+
+No release notes.
+
 [[v4.1.1]]
 == Version 4.1.1 (2023-10-26)
 
@@ -208,6 +213,11 @@ You can reset it with this command:
 ----
 /reset weechat.key_mouse.@chat(fset.fset):button1
 ----
+
+[[v4.0.7]]
+== Version 4.0.7 (2023-12-03)
+
+No release notes.
 
 [[v4.0.6]]
 == Version 4.0.6 (2023-10-26)
