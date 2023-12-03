@@ -109,6 +109,21 @@ Build::
   * core: fix build error if CMake option ENABLE_NLS is turned to off or if required dependencies are not found (issue #2026)
   * core, logger, relay: make zstd dependency optional (issue #2024)
 
+[[v4.0.7]]
+== Version 4.0.7 (2023-12-03)
+
+Bug fixes::
+
+  * core: fix value of buffer variable "num_history" when the value defined in option weechat.history.max_commands is reached
+  * core: remove incorrect warning when binding keys kbd:[F10] to kbd:[F20] (issue #2039)
+  * core: fix memory leak when config version is invalid or not supported
+  * core: fix crash when "config_version" is present in a configuration file without a value
+  * core: display an error on startup if environment variable "HOME" is not set
+  * irc: remove trailing "\r\n" in signals "irc_out" and "irc_outtags" when messages are queued
+  * irc: fix target buffer of IRC message 337 (whois reply: "is hiding their idle time")
+  * relay: close properly connection with the IRC client in case of server disconnection (issue #2038)
+  * ruby: fix use of NULL variable when displaying exception
+
 [[v4.0.6]]
 == Version 4.0.6 (2023-10-26)
 

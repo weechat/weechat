@@ -145,6 +145,11 @@ You can reset it with this command:
 /reset weechat.key_mouse.@chat(fset.fset):button1
 ----
 
+[[v4.0.7]]
+== Version 4.0.7 (2023-12-03)
+
+No release notes.
+
 [[v4.0.6]]
 == Version 4.0.6 (2023-10-26)
 
