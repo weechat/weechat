@@ -62,7 +62,6 @@ Tests::
 
 Build::
 
-  * core: fix detection of gettext headers on Darwin (issue #2031)
   * core: make libintl.h required if CMake option ENABLE_NLS is enabled (issue #2031)
 
 [[v4.1.2]]

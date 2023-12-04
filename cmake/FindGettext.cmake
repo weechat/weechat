@@ -43,10 +43,6 @@ find_path(LIBINTL_INCLUDE
 
 set(CMAKE_REQUIRED_INCLUDES ${LIBINTL_INCLUDE})
 
-if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  set(CMAKE_REQUIRED_FLAGS "-lintl")
-endif()
-
 check_include_files(libintl.h HAVE_LIBINTL_H)
 
 if(NOT HAVE_LIBINTL_H)
