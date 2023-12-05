@@ -2789,22 +2789,20 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 |===
 | Формат | Мин WeeChat | Опис | Примери
 
-// TRANLSATION MISSING
 | `+${raw_hl:xxx}+` | 4.2.0
-| Raw string (not evaluated), with syntax highlighting (using colors).
+| Сирови стринг (не израчунава се), са истицањем синтаксе (употребом боја).
 | >> `+${raw_hl:${cut:1,,${rev:hello}}}+` +
-  == `+${cut:1,,${rev:hello}}+` (with colors)
+  == `+${cut:1,,${rev:hello}}+` (са бојама)
 
 | `+${raw:xxx}+` | 3.1
 | Сирови стринг (не израчунава се).
 | >> `+${raw:${info:version}}+` +
   == `+${info:version}+`
 
-// TRANSLATION MISSING
 | `+${hl:xxx}+` | 4.2.0
-| String with syntax highlighting (using colors).
+| Стринг са истицањем синтаксе (употребом боја).
 | >> `+${hl:${file.section.option}}+` +
-  == `+test ${variable}+` (with colors)
+  == `+test ${variable}+` (са бојама)
 
 | `+${име}+` | 3.4
 | Корисничка променљива (дефинисана са `+${define:име,вредност}+`).
