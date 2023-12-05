@@ -405,10 +405,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          unparse.py                 | Конверзија Python кода у остале језике, користи је скрипта testapigen.py.
 |    unit/                            | Корен unit тестова.
 |       test-plugins.cpp              | Тестови: plugins.
-// TRANSLATION MISSING
-|       test-plugin-api-info.cpp      | Tests: plugin API info functions.
-// TRANSLATION MISSING
-|       test-plugin-config.cpp        | Tests: plugin config functions.
+|       test-plugin-api-info.cpp      | Тестови: инфо функције API додатака.
+|       test-plugin-config.cpp        | Тестови: функције конфигурације додатка.
 |       core/                         | Корен unit тестова језгра.
 |          test-core-arraylist.cpp    | Тестови: arraylists.
 |          test-core-calc.cpp         | Тестови: калкулација израза.
