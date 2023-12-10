@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-12-01 22:04+0100\n"
+"POT-Creation-Date: 2023-12-10 21:05+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10584,6 +10584,11 @@ msgstr "visualizza l'host nei messaggi di entrata"
 
 msgid "display host in part/quit messages"
 msgstr "visualizza host nei messaggi di uscita/abbandono"
+
+#, fuzzy
+#| msgid "display host in join messages"
+msgid "display host in wallops messages"
+msgstr "visualizza l'host nei messaggi di entrata"
 
 #, fuzzy
 msgid ""

@@ -3404,6 +3404,13 @@ TEST(IrcProtocolWithServer, wallops)
     RECV(":alice!user@host WALLOPS :message from admin ");
     CHECK_SRV("--", "Wallops from alice (user@host): message from admin ",
               "irc_wallops,notify_private,nick_alice,host_user@host,log3");
+
+    /* wallops with option irc.look.display_host_wallops set to off */
+    config_file_option_set (irc_config_look_display_host_wallops, "off", 1);
+    RECV(":alice!user@host WALLOPS :message from admin ");
+    CHECK_SRV("--", "Wallops from alice: message from admin ",
+              "irc_wallops,notify_private,nick_alice,host_user@host,log3");
+    config_file_option_reset (irc_config_look_display_host_wallops, 1);
 }
 
 /*

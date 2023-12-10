@@ -28,6 +28,7 @@ New features::
   * core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias` and `/trigger` (issue #1956)
   * api: add info "mouse"
   * buflist: jump to previous/next buffer displayed in buflist item with ctrl+wheel up/down on a buflist item (issue #1473)
+  * irc: add option irc.look.display_host_wallops
   * irc: add server option "anti_flood" (now in milliseconds), remove server options "anti_flood_prio_{high|low}" (issue #1039)
   * irc: add option irc.look.list_buffer
   * irc: change default value of server option "tls_priorities" to `NORMAL`

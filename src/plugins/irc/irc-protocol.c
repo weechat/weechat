@@ -3936,13 +3936,20 @@ IRC_PROTOCOL_CALLBACK(wallops)
 {
     const char *nick_address;
     char *str_message;
+    int display_host;
 
     IRC_PROTOCOL_MIN_PARAMS(1);
 
     if (ctxt->ignore_remove)
         return WEECHAT_RC_OK;
 
-    nick_address = irc_protocol_nick_address (ctxt->server, 0, NULL, ctxt->nick, ctxt->address);
+    display_host = weechat_config_boolean (irc_config_look_display_host_wallops);
+    nick_address = irc_protocol_nick_address (
+        ctxt->server,
+        0,
+        NULL,
+        ctxt->nick,
+        (display_host) ? ctxt->address : NULL);
 
     str_message = irc_protocol_string_params (ctxt->params, 0, ctxt->num_params - 1);
 

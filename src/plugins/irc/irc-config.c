@@ -77,6 +77,7 @@ struct t_config_option *irc_config_look_display_host_join = NULL;
 struct t_config_option *irc_config_look_display_host_join_local = NULL;
 struct t_config_option *irc_config_look_display_host_notice = NULL;
 struct t_config_option *irc_config_look_display_host_quit = NULL;
+struct t_config_option *irc_config_look_display_host_wallops = NULL;
 struct t_config_option *irc_config_look_display_join_message = NULL;
 struct t_config_option *irc_config_look_display_old_topic = NULL;
 struct t_config_option *irc_config_look_display_pv_away_once = NULL;
@@ -3180,6 +3181,12 @@ irc_config_init ()
             irc_config_file, irc_config_section_look,
             "display_host_quit", "boolean",
             N_("display host in part/quit messages"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_config_look_display_host_wallops = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "display_host_wallops", "boolean",
+            N_("display host in wallops messages"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_display_join_message = weechat_config_new_option (
