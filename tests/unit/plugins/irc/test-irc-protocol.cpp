@@ -2094,6 +2094,22 @@ TEST(IrcProtocolWithServer, join)
     STRCMP_EQUAL("carol_account", ptr_nick->account);
     STRCMP_EQUAL("Carol Name", ptr_nick->realname);
     CHECK(ptr_nick->color);
+
+    /* join with option irc.look.display_host_join set to off */
+    config_file_option_set (irc_config_look_display_host_join, "off", 1);
+    RECV(":dan!user@host JOIN #test");
+    CHECK_CHAN("-->",
+               "dan has joined #test",
+               "irc_join,irc_smart_filter,nick_dan,host_user@host,log4");
+    config_file_option_reset (irc_config_look_display_host_join, 1);
+
+    /* join with option irc.look.display_host_join_local set to off */
+    config_file_option_set (irc_config_look_display_host_join_local, "off", 1);
+    RECV(":alice!user@host PART #test");
+    RECV(":alice!user@host JOIN #test");
+    CHECK_CHAN("-->", "alice has joined #test",
+               "irc_join,nick_alice,host_user@host,log4");
+    config_file_option_reset (irc_config_look_display_host_join_local, 1);
 }
 
 /*
@@ -2488,6 +2504,22 @@ TEST(IrcProtocolWithServer, notice)
         RECV(":bob!user@host NOTICE alice :a notice ");
         CHECK_SRV("--", "bob (user@host): a notice ",
                   "irc_notice,notify_private,nick_bob,host_user@host,log1");
+
+        /* notice to channel/user with option irc.look.display_host_notice set to off */
+        config_file_option_set (irc_config_look_display_host_notice, "off", 1);
+        RECV(":server.address NOTICE #test :a notice ");
+        CHECK_CHAN("--", "Notice(server.address) -> #test: a notice ",
+                   "irc_notice,notify_message,nick_server.address,log1");
+        RECV(":server.address NOTICE alice :a notice ");
+        CHECK_SRV("--", "server.address: a notice ",
+                  "irc_notice,notify_private,nick_server.address,log1");
+        RECV(":bob!user@host NOTICE #test :a notice ");
+        CHECK_CHAN("--", "Notice(bob) -> #test: a notice ",
+                   "irc_notice,notify_message,nick_bob,host_user@host,log1");
+        RECV(":bob!user@host NOTICE alice :a notice ");
+        CHECK_SRV("--", "bob: a notice ",
+                  "irc_notice,notify_private,nick_bob,host_user@host,log1");
+        config_file_option_reset (irc_config_look_display_host_notice, 1);
 
         /*
          * notice to channel/user from self nick
@@ -3148,6 +3180,14 @@ TEST(IrcProtocolWithServer, quit)
     LONGS_EQUAL(1, ptr_channel->nicks_count);
     STRCMP_EQUAL("alice", ptr_channel->nicks->name);
     POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick);
+
+    /* quit with option irc.look.display_host_quit set to off */
+    config_file_option_set (irc_config_look_display_host_quit, "off", 1);
+    RECV(":bob!user@host JOIN #test");
+    RECV(":bob!user@host QUIT :quit message ");
+    CHECK_CHAN("<--", "bob has quit (quit message )",
+               "irc_quit,irc_smart_filter,nick_bob,host_user@host,log4");
+    config_file_option_reset (irc_config_look_display_host_quit, 1);
 }
 
 /*
