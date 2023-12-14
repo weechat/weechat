@@ -274,7 +274,7 @@ weechat_ruby_print_exception (VALUE err)
     backtrace = rb_protect_funcall (err, rb_intern ("backtrace"),
                                     &ruby_error, 0, NULL);
 
-    message = rb_protect_funcall(err, rb_intern ("message"), &ruby_error, 0, NULL);
+    message = rb_protect_funcall (err, rb_intern ("message"), &ruby_error, 0, NULL);
     err_msg = StringValueCStr (message);
 
     err_class = NULL;

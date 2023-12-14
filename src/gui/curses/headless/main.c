@@ -50,7 +50,7 @@ daemonize ()
     printf (_("Running WeeChat in background..."));
     printf (" ");
 
-    pid = fork();
+    pid = fork ();
 
     if (pid < 0)
     {
@@ -73,7 +73,7 @@ daemonize ()
     setsid ();
 
     /* close all file descriptors */
-    for (i = sysconf(_SC_OPEN_MAX); i >= 0; --i)
+    for (i = sysconf (_SC_OPEN_MAX); i >= 0; --i)
     {
         close (i);
     }

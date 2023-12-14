@@ -80,7 +80,7 @@ irc_batch_generate_random_ref (char *string, int size)
     length_chars = strlen (chars);
     for (i = 0; i < size; i++)
     {
-        string[i] = chars[rand() % length_chars];
+        string[i] = chars[rand () % length_chars];
     }
     string[size] = '\0';
 }

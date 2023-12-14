@@ -60,8 +60,8 @@
                            GUILE_CURRENT_SCRIPT_NAME,                   \
                            guile_function_name, __string)
 #define API_SCM_TO_STRING(__str)                                        \
-    weechat_guile_api_scm_to_string(__str,                              \
-                                    guile_strings, &guile_num_strings)
+    weechat_guile_api_scm_to_string (__str,                             \
+                                     guile_strings, &guile_num_strings)
 #define API_FREE_STRINGS                                                \
     if (guile_num_strings > 0)                                          \
     {                                                                   \
@@ -76,7 +76,7 @@
     return scm_from_int (0)
 #define API_RETURN_EMPTY                                                \
     API_FREE_STRINGS;                                                   \
-    return scm_from_locale_string("")
+    return scm_from_locale_string ("")
 #define API_RETURN_STRING(__string)                                     \
     return_value = scm_from_locale_string ((__string) ? __string : ""); \
     API_FREE_STRINGS;                                                   \

@@ -261,7 +261,7 @@ fifo_exec (const char *text)
 
     free (text2);
     if (command_unescaped)
-        free(command_unescaped);
+        free (command_unescaped);
 }
 
 /*

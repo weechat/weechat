@@ -59,7 +59,7 @@
     plugin_script_str2ptr (weechat_python_plugin,                       \
                            PYTHON_CURRENT_SCRIPT_NAME,                  \
                            python_function_name, __string)
-#define API_RETURN_OK return PyLong_FromLong((long)1)
+#define API_RETURN_OK return PyLong_FromLong ((long)1)
 #define API_RETURN_ERROR return PyLong_FromLong ((long)0)
 #define API_RETURN_EMPTY                                                \
     Py_INCREF (Py_None);                                                \
@@ -77,11 +77,11 @@
     }                                                                   \
     return Py_BuildValue ("s", "")
 #define API_RETURN_INT(__int)                                           \
-    return PyLong_FromLong((long)__int)
+    return PyLong_FromLong ((long)__int)
 #define API_RETURN_LONG(__long)                                         \
-    return PyLong_FromLong(__long)
+    return PyLong_FromLong (__long)
 #define API_RETURN_LONGLONG(__longlong)                                 \
-    return PyLong_FromLongLong(__longlong)
+    return PyLong_FromLongLong (__longlong)
 
 
 /*

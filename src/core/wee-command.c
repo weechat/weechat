@@ -7117,7 +7117,7 @@ COMMAND_CALLBACK(upgrade)
         (void) hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING,
                                  "save");
         /* save WeeChat session */
-        if (!upgrade_weechat_save())
+        if (!upgrade_weechat_save ())
         {
             gui_chat_printf (NULL,
                              _("%sUnable to save WeeChat session "

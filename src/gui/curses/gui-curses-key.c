@@ -46,7 +46,7 @@
 #include "gui-curses.h"
 
 #define BIND(key, command)                                      \
-    gui_key_default_bind(context, key, command, create_option)
+    gui_key_default_bind (context, key, command, create_option)
 
 
 /*

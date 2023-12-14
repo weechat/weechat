@@ -1504,9 +1504,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* PyEval_InitThreads(); */
     /* python_mainThreadState = PyThreadState_Swap(NULL); */
 #if PY_VERSION_HEX >= 0x03070000
-    python_mainThreadState = PyThreadState_Get();
+    python_mainThreadState = PyThreadState_Get ();
 #else
-    python_mainThreadState = PyEval_SaveThread();
+    python_mainThreadState = PyEval_SaveThread ();
 #endif
     /* PyEval_ReleaseLock (); */
 

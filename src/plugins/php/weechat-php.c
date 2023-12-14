@@ -708,7 +708,7 @@ weechat_php_load (const char *filename, const char *code)
     memset (&file_handle, 0, sizeof (file_handle));
     file_handle.type = ZEND_HANDLE_FILENAME;
 #if PHP_VERSION_ID >= 80100
-    file_handle.filename = zend_string_init(filename, strlen(filename), 0);
+    file_handle.filename = zend_string_init (filename, strlen(filename), 0);
 #else
     file_handle.filename = filename;
 #endif

@@ -1135,7 +1135,7 @@ relay_weechat_msg_compress_zstd (struct t_relay_client *client,
     compression_level = (((compression - 1) * 19) / 100) + 1;
 
     gettimeofday (&tv1, NULL);
-    comp_size = ZSTD_compress(
+    comp_size = ZSTD_compress (
         dest + 5,
         dest_size,
         (void *)(msg->data + 5),

@@ -607,14 +607,16 @@ gui_chat_display_word (struct t_gui_window *window,
     ptr_data = data;
     while (ptr_data && ptr_data[0])
     {
-        chars_displayed += gui_chat_display_prefix_suffix(window, line,
-                                                          word + (ptr_data - data),
-                                                          pre_lines_displayed,
-                                                          lines_displayed,
-                                                          chars_displayed,
-                                                          simulate,
-                                                          apply_style_inactive,
-                                                          nick_offline);
+        chars_displayed += gui_chat_display_prefix_suffix (
+            window,
+            line,
+            word + (ptr_data - data),
+            pre_lines_displayed,
+            lines_displayed,
+            chars_displayed,
+            simulate,
+            apply_style_inactive,
+            nick_offline);
 
         chars_to_display = gui_chat_strlen_screen (ptr_data);
 
@@ -1528,13 +1530,16 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 gui_chat_display_new_line (window, num_lines, count,
                                            &lines_displayed, simulate);
                 ptr_data++;
-                gui_chat_display_prefix_suffix(window, line,
-                                               ptr_data,
-                                               pre_lines_displayed, &lines_displayed,
-                                               0,
-                                               simulate,
-                                               CONFIG_BOOLEAN(config_look_color_inactive_message),
-                                               0);
+                gui_chat_display_prefix_suffix (
+                    window,
+                    line,
+                    ptr_data,
+                    pre_lines_displayed,
+                    &lines_displayed,
+                    0,
+                    simulate,
+                    CONFIG_BOOLEAN(config_look_color_inactive_message),
+                    0);
             }
 
             gui_chat_get_word_info (window,

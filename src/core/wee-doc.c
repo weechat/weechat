@@ -208,9 +208,9 @@ doc_gen_check_command (const char *plugin, const char *command)
         return 1;
 
     /* document other options only for weechat, irc, xfer */
-    return((strcmp (plugin, "weechat") == 0)
-           || (strcmp (plugin, "irc") == 0)
-           || (strcmp (plugin, "xfer") == 0)) ?
+    return ((strcmp (plugin, "weechat") == 0)
+            || (strcmp (plugin, "irc") == 0)
+            || (strcmp (plugin, "xfer") == 0)) ?
         1 : 0;
 }
 
@@ -644,11 +644,11 @@ doc_gen_user_default_aliases (const char *path, const char *lang)
     ptr_infolist = hook_infolist_get (NULL, "alias_default", NULL, NULL);
     while (infolist_next (ptr_infolist))
     {
-        ptr_completion = infolist_string(ptr_infolist, "completion");
+        ptr_completion = infolist_string (ptr_infolist, "completion");
         string_fprintf (file,
                         "| /%s | /%s | %s\n",
-                        ESCAPE_TABLE(infolist_string(ptr_infolist, "name")),
-                        ESCAPE_TABLE(infolist_string(ptr_infolist, "command")),
+                        ESCAPE_TABLE(infolist_string (ptr_infolist, "name")),
+                        ESCAPE_TABLE(infolist_string (ptr_infolist, "command")),
                         (ptr_completion && ptr_completion[0]) ?
                         ESCAPE_TABLE(ptr_completion) : "-");
     }
@@ -695,8 +695,8 @@ doc_gen_user_irc_colors (const char *path, const char *lang)
         string_fprintf (
             file,
             "| %s | %s\n",
-            ESCAPE_TABLE(infolist_string(ptr_infolist, "color_irc")),
-            ESCAPE_TABLE(infolist_string(ptr_infolist, "color_weechat")));
+            ESCAPE_TABLE(infolist_string (ptr_infolist, "color_irc")),
+            ESCAPE_TABLE(infolist_string (ptr_infolist, "color_weechat")));
     }
     infolist_free (ptr_infolist);
 
@@ -1156,11 +1156,11 @@ doc_gen_api_hdata_content (FILE *file, struct t_hdata *hdata)
             }
             hashtable_remove_all (hashtable);
             hashtable_set (hashtable, "__create_allowed", "");
-            if (hdata_update(hdata, NULL, hashtable))
+            if (hdata_update (hdata, NULL, hashtable))
                 arraylist_add (list_vars_update, "{hdata_update_create}");
             hashtable_remove_all (hashtable);
             hashtable_set (hashtable, "__delete_allowed", "");
-            if (hdata_update(hdata, NULL, hashtable))
+            if (hdata_update (hdata, NULL, hashtable))
                 arraylist_add (list_vars_update, "{hdata_update_delete}");
             list_size = arraylist_size (list_vars_update);
             if (list_size > 0)

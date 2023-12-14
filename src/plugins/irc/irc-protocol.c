@@ -4075,7 +4075,7 @@ IRC_PROTOCOL_CALLBACK(001)
                         }
                         else
                         {
-                            length = 1 + strlen(command3) + 1;
+                            length = 1 + strlen (command3) + 1;
                             slash_command = malloc (length);
                             if (slash_command)
                             {

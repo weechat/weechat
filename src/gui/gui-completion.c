@@ -1351,7 +1351,7 @@ gui_completion_command (struct t_gui_completion *completion)
  */
 
 char *
-gui_completion_get_default_template(struct t_gui_completion *completion)
+gui_completion_get_default_template (struct t_gui_completion *completion)
 {
     const char *ptr_default_template;
     char *value;

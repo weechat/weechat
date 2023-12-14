@@ -366,16 +366,16 @@ weechat_perl_exec (struct t_plugin_script *script,
             {
                 case 's': /* string or null */
                     if (argv[i])
-                        XPUSHs (sv_2mortal(newSVpv((char *)argv[i], 0)));
+                        XPUSHs (sv_2mortal (newSVpv((char *)argv[i], 0)));
                     else
-                        XPUSHs (sv_2mortal(&PL_sv_undef));
+                        XPUSHs (sv_2mortal (&PL_sv_undef));
                     break;
                 case 'i': /* integer */
-                    XPUSHs (sv_2mortal(newSViv(*((int *)argv[i]))));
+                    XPUSHs (sv_2mortal (newSViv (*((int *)argv[i]))));
                     break;
                 case 'h': /* hash */
                     hash = weechat_perl_hashtable_to_hash (argv[i]);
-                    XPUSHs (sv_2mortal(newRV_inc((SV *)hash)));
+                    XPUSHs (sv_2mortal (newRV_inc ((SV *)hash)));
                     break;
             }
         }
