@@ -643,6 +643,8 @@ gui_chat_display_word (struct t_gui_window *window,
                                                               nick_offline);
             }
             ptr_data[pos_saved_char] = saved_char;
+            if (pos_saved_char == 0)
+                break;
             ptr_data += pos_saved_char;
         }
         else
@@ -664,6 +666,8 @@ gui_chat_display_word (struct t_gui_window *window,
                                                               apply_style_inactive,
                                                               nick_offline);
             }
+            if (!ptr_data[0])
+                break;
             ptr_data += strlen (ptr_data);
         }
 
