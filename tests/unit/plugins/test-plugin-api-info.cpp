@@ -29,6 +29,7 @@ extern "C"
 #define HAVE_CONFIG_H
 #endif
 #include <unistd.h>
+#include <string.h>
 #include "src/core/weechat.h"
 #include "src/core/wee-config.h"
 #include "src/core/wee-config-file.h"
