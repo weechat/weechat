@@ -840,4 +840,5 @@ void
 script_config_free ()
 {
     weechat_config_free (script_config_file);
+    script_config_file = NULL;
 }

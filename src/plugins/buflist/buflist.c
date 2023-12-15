@@ -532,5 +532,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     buflist_config_write ();
     buflist_config_free ();
 
+    buflist_hdata_window = NULL;
+    buflist_hdata_buffer = NULL;
+    buflist_hdata_hotlist = NULL;
+    buflist_hdata_bar = NULL;
+    buflist_hdata_bar_item = NULL;
+    buflist_hdata_bar_window = NULL;
+
     return WEECHAT_RC_OK;
 }

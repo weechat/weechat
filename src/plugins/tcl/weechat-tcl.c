@@ -56,7 +56,6 @@ struct t_plugin_script *tcl_script_eval = NULL;
 int tcl_eval_mode = 0;
 int tcl_eval_send_input = 0;
 int tcl_eval_exec_commands = 0;
-struct t_gui_buffer *tcl_eval_buffer = NULL;
 
 struct t_plugin_script *tcl_scripts = NULL;
 struct t_plugin_script *last_tcl_script = NULL;
@@ -928,6 +927,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_tcl_plugin = plugin;
 
+    tcl_quiet = 0;
+    tcl_eval_mode = 0;
+    tcl_eval_send_input = 0;
+    tcl_eval_exec_commands = 0;
+
     /* set interpreter name and version */
     weechat_hashtable_set (plugin->variables, "interpreter_name",
                            plugin->name);
@@ -984,11 +988,20 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     /* free some data */
     if (tcl_action_install_list)
+    {
         free (tcl_action_install_list);
+        tcl_action_install_list = NULL;
+    }
     if (tcl_action_remove_list)
+    {
         free (tcl_action_remove_list);
+        tcl_action_remove_list = NULL;
+    }
     if (tcl_action_autoload_list)
+    {
         free (tcl_action_autoload_list);
+        tcl_action_autoload_list = NULL;
+    }
     /* weechat_string_dyn_free (tcl_buffer_output, 1); */
 
     return WEECHAT_RC_OK;

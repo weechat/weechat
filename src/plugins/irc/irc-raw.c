@@ -673,6 +673,11 @@ irc_raw_end ()
 {
     irc_raw_message_free_all ();
 
+    if (irc_raw_buffer)
+    {
+        weechat_buffer_close (irc_raw_buffer);
+        irc_raw_buffer = NULL;
+    }
     if (irc_raw_filter)
     {
         free (irc_raw_filter);

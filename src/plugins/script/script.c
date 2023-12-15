@@ -412,6 +412,27 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* make C compiler happy */
     (void) plugin;
 
+    if (script_loaded)
+    {
+        weechat_hashtable_free (script_loaded);
+        script_loaded = NULL;
+    }
+    if (script_timer_refresh)
+    {
+        weechat_unhook (script_timer_refresh);
+        script_timer_refresh = NULL;
+    }
+
+    if (script_buffer)
+    {
+        weechat_buffer_close (script_buffer);
+        script_buffer = NULL;
+    }
+    script_buffer_selected_line = 0;
+    script_buffer_detail_script = NULL;
+    script_buffer_detail_script_last_line = 0;
+    script_buffer_detail_script_line_diff = -1;
+
     script_mouse_end ();
 
     script_config_write ();
@@ -419,10 +440,16 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     script_repo_remove_all ();
 
     if (script_repo_filter)
+    {
         free (script_repo_filter);
+        script_repo_filter = NULL;
+    }
 
     if (script_loaded)
+    {
         weechat_hashtable_free (script_loaded);
+        script_loaded = NULL;
+    }
 
     script_config_free ();
 

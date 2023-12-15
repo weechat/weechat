@@ -157,4 +157,5 @@ void
 fifo_config_free ()
 {
     weechat_config_free (fifo_config_file);
+    fifo_config_file = NULL;
 }

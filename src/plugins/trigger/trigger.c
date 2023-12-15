@@ -1391,6 +1391,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_plugin = plugin;
 
+    trigger_enabled = 1;
+
     trigger_callback_init ();
 
     trigger_command_init ();
@@ -1427,6 +1429,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     trigger_free_all ();
     trigger_config_free ();
     trigger_callback_end ();
+    trigger_context_id = 0;
 
     return WEECHAT_RC_OK;
 }

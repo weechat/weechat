@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 Bug fixes::
 
+  * core: fix crash on plugin reload when using musl libc (issue #2052)
   * core: fix infinite loop in display when the chat area is too small (issue #2053)
 
 [[v4.0.7]]

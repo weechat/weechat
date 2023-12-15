@@ -1626,9 +1626,21 @@ fset_buffer_init ()
 void
 fset_buffer_end ()
 {
-    weechat_hashtable_free (fset_buffer_hashtable_pointers);
-    fset_buffer_hashtable_pointers = NULL;
+    if (fset_buffer)
+    {
+        weechat_buffer_close (fset_buffer);
+        fset_buffer = NULL;
+    }
 
-    weechat_hashtable_free (fset_buffer_hashtable_extra_vars);
-    fset_buffer_hashtable_extra_vars = NULL;
+    if (fset_buffer_hashtable_pointers)
+    {
+        weechat_hashtable_free (fset_buffer_hashtable_pointers);
+        fset_buffer_hashtable_pointers = NULL;
+    }
+
+    if (fset_buffer_hashtable_extra_vars)
+    {
+        weechat_hashtable_free (fset_buffer_hashtable_extra_vars);
+        fset_buffer_hashtable_extra_vars = NULL;
+    }
 }

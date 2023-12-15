@@ -1243,6 +1243,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_lua_plugin = plugin;
 
+    lua_quiet = 0;
+    lua_eval_mode = 0;
+    lua_eval_send_input = 0;
+    lua_eval_exec_commands = 0;
+
     /* set interpreter name and version */
     weechat_hashtable_set (plugin->variables, "interpreter_name",
                            plugin->name);
@@ -1304,12 +1309,22 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     /* free some data */
     if (lua_action_install_list)
+    {
         free (lua_action_install_list);
+        lua_action_install_list = NULL;
+    }
     if (lua_action_remove_list)
+    {
         free (lua_action_remove_list);
+        lua_action_remove_list = NULL;
+    }
     if (lua_action_autoload_list)
+    {
         free (lua_action_autoload_list);
+        lua_action_autoload_list = NULL;
+    }
     weechat_string_dyn_free (lua_buffer_output, 1);
+    lua_buffer_output = NULL;
 
     return WEECHAT_RC_OK;
 }

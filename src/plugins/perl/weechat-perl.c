@@ -1264,6 +1264,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_perl_plugin = plugin;
 
+    perl_quiet = 0;
+    perl_eval_mode = 0;
+    perl_eval_send_input = 0;
+    perl_eval_exec_commands = 0;
+
     /* set interpreter name and version */
     weechat_hashtable_set (plugin->variables, "interpreter_name",
                            plugin->name);
@@ -1368,12 +1373,22 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     /* free some data */
     if (perl_action_install_list)
+    {
         free (perl_action_install_list);
+        perl_action_install_list = NULL;
+    }
     if (perl_action_remove_list)
+    {
         free (perl_action_remove_list);
+        perl_action_remove_list = NULL;
+    }
     if (perl_action_autoload_list)
+    {
         free (perl_action_autoload_list);
+        perl_action_autoload_list = NULL;
+    }
     weechat_string_dyn_free (perl_buffer_output, 1);
+    perl_buffer_output = NULL;
 
     return WEECHAT_RC_OK;
 }

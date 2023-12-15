@@ -842,6 +842,7 @@ buflist_config_free ()
     int i;
 
     weechat_config_free (buflist_config_file);
+    buflist_config_file = NULL;
 
     if (buflist_config_signals_refresh)
         buflist_config_free_signals_refresh ();
@@ -857,9 +858,18 @@ buflist_config_free ()
     }
 
     if (buflist_config_format_buffer_eval)
+    {
         free (buflist_config_format_buffer_eval);
+        buflist_config_format_buffer_eval = NULL;
+    }
     if (buflist_config_format_buffer_current_eval)
+    {
         free (buflist_config_format_buffer_current_eval);
+        buflist_config_format_buffer_current_eval = NULL;
+    }
     if (buflist_config_format_hotlist_eval)
+    {
         free (buflist_config_format_hotlist_eval);
+        buflist_config_format_hotlist_eval = NULL;
+    }
 }

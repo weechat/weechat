@@ -1534,5 +1534,8 @@ void
 trigger_callback_end ()
 {
     if (trigger_callback_hashtable_options_conditions)
+    {
         weechat_hashtable_free (trigger_callback_hashtable_options_conditions);
+        trigger_callback_hashtable_options_conditions = NULL;
+    }
 }

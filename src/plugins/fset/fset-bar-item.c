@@ -241,4 +241,5 @@ void
 fset_bar_item_end ()
 {
     weechat_bar_item_remove (fset_bar_item_fset);
+    fset_bar_item_fset = NULL;
 }

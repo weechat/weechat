@@ -1258,6 +1258,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_guile_plugin = plugin;
 
+    guile_quiet = 0;
+    guile_eval_mode = 0;
+    guile_eval_send_input = 0;
+    guile_eval_exec_commands = 0;
+
     /* set interpreter name and version */
     weechat_hashtable_set (plugin->variables, "interpreter_name",
                            plugin->name);
@@ -1354,12 +1359,22 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     /* free some data */
     if (guile_action_install_list)
+    {
         free (guile_action_install_list);
+        guile_action_install_list = NULL;
+    }
     if (guile_action_remove_list)
+    {
         free (guile_action_remove_list);
+        guile_action_remove_list = NULL;
+    }
     if (guile_action_autoload_list)
+    {
         free (guile_action_autoload_list);
+        guile_action_autoload_list = NULL;
+    }
     weechat_string_dyn_free (guile_buffer_output, 1);
+    guile_buffer_output = NULL;
 
     return WEECHAT_RC_OK;
 }

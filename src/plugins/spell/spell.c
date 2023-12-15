@@ -1188,6 +1188,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_plugin = plugin;
 
+    spell_enabled = 0;
+
     spell_warning_aspell_config ();
 
 #ifdef USE_ENCHANT
@@ -1260,10 +1262,15 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 #ifdef USE_ENCHANT
     /* release enchant broker */
     enchant_broker_free (broker);
+    broker = NULL;
 #endif /* USE_ENCHANT */
 
     if (spell_nick_completer)
+    {
         free (spell_nick_completer);
+        spell_nick_completer = NULL;
+    }
+    spell_len_nick_completer = 0;
 
     return WEECHAT_RC_OK;
 }

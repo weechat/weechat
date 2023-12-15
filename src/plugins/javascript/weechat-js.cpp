@@ -930,6 +930,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_js_plugin = plugin;
 
+    js_quiet = 0;
+    js_eval_mode = 0;
+    js_eval_send_input = 0;
+    js_eval_exec_commands = 0;
+
     /* set interpreter name and version */
     snprintf (str_interpreter, sizeof (str_interpreter),
               "%s (v8)", plugin->name);
@@ -980,11 +985,20 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     /* free some data */
     if (js_action_install_list)
+    {
         free (js_action_install_list);
+        js_action_install_list = NULL;
+    }
     if (js_action_remove_list)
+    {
         free (js_action_remove_list);
+        js_action_remove_list = NULL;
+    }
     if (js_action_autoload_list)
+    {
         free (js_action_autoload_list);
+        js_action_autoload_list = NULL;
+    }
     /* weechat_string_dyn_free (js_buffer_output, 1); */
 
     return WEECHAT_RC_OK;
