@@ -206,6 +206,7 @@ void
 exec_config_free ()
 {
     weechat_config_free (exec_config_file);
+    exec_config_file = NULL;
 
     if (exec_config_cmd_options)
     {

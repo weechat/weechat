@@ -4106,6 +4106,7 @@ void
 irc_config_free ()
 {
     weechat_config_free (irc_config_file);
+    irc_config_file = NULL;
 
     if (irc_config_hook_config_nick_color_options)
     {

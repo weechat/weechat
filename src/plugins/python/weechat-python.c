@@ -1471,6 +1471,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_python_plugin = plugin;
 
+    python_quiet = 0;
+    python_eval_mode = 0;
+    python_eval_send_input = 0;
+    python_eval_exec_commands = 0;
+
     /* set interpreter name and version */
     weechat_hashtable_set (plugin->variables, "interpreter_name",
                            plugin->name);
@@ -1582,12 +1587,22 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     /* free some data */
     if (python_action_install_list)
+    {
         free (python_action_install_list);
+        python_action_install_list = NULL;
+    }
     if (python_action_remove_list)
+    {
         free (python_action_remove_list);
+        python_action_remove_list = NULL;
+    }
     if (python_action_autoload_list)
+    {
         free (python_action_autoload_list);
+        python_action_autoload_list = NULL;
+    }
     weechat_string_dyn_free (python_buffer_output, 1);
+    python_buffer_output = NULL;
 
     return WEECHAT_RC_OK;
 }

@@ -1186,6 +1186,7 @@ void
 fset_config_free ()
 {
     weechat_config_free (fset_config_file);
+    fset_config_file = NULL;
 
     if (fset_config_auto_refresh)
     {

@@ -388,6 +388,12 @@ trigger_buffer_display_trigger (struct t_trigger *trigger,
 void
 trigger_buffer_end ()
 {
+    if (trigger_buffer)
+    {
+        weechat_buffer_close (trigger_buffer);
+        trigger_buffer = NULL;
+    }
+
     if (trigger_buffer_filters)
     {
         weechat_string_free_split (trigger_buffer_filters);

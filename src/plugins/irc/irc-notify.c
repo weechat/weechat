@@ -1307,9 +1307,18 @@ void
 irc_notify_end ()
 {
     if (irc_notify_timer_ison)
+    {
         weechat_unhook (irc_notify_timer_ison);
+        irc_notify_timer_ison = NULL;
+    }
     if (irc_notify_timer_whois)
+    {
         weechat_unhook (irc_notify_timer_whois);
+        irc_notify_timer_whois = NULL;
+    }
     if (irc_notify_hsignal)
+    {
         weechat_unhook (irc_notify_hsignal);
+        irc_notify_hsignal = NULL;
+    }
 }

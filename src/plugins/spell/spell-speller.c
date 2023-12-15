@@ -501,5 +501,8 @@ void
 spell_speller_end ()
 {
     weechat_hashtable_free (spell_spellers);
+    spell_spellers = NULL;
+
     weechat_hashtable_free (spell_speller_buffer);
+    spell_speller_buffer = NULL;
 }

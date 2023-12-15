@@ -218,4 +218,5 @@ void
 typing_config_free ()
 {
     weechat_config_free (typing_config_file);
+    typing_config_file = NULL;
 }

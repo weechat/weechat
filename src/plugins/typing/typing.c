@@ -581,6 +581,45 @@ typing_setup_hooks ()
 }
 
 /*
+ * Removes all hooks.
+ */
+
+void
+typing_remove_hooks ()
+{
+    if (typing_signal_buffer_closing)
+    {
+        weechat_unhook (typing_signal_buffer_closing);
+        typing_signal_buffer_closing = NULL;
+    }
+    if (typing_signal_input_text_changed)
+    {
+        weechat_unhook (typing_signal_input_text_changed);
+        typing_signal_input_text_changed = NULL;
+    }
+    if (typing_modifier_input_text_for_buffer)
+    {
+        weechat_unhook (typing_modifier_input_text_for_buffer);
+        typing_modifier_input_text_for_buffer = NULL;
+    }
+    if (typing_timer)
+    {
+        weechat_unhook (typing_timer);
+        typing_timer = NULL;
+    }
+    if (typing_signal_typing_set_nick)
+    {
+        weechat_unhook (typing_signal_typing_set_nick);
+        typing_signal_typing_set_nick = NULL;
+    }
+    if (typing_signal_typing_reset_buffer)
+    {
+        weechat_unhook (typing_signal_typing_reset_buffer);
+        typing_signal_typing_reset_buffer = NULL;
+    }
+}
+
+/*
  * Initializes typing plugin.
  */
 
@@ -614,6 +653,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
     (void) plugin;
+
+    typing_remove_hooks ();
 
     typing_config_write ();
     typing_config_free ();

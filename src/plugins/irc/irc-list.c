@@ -1340,4 +1340,5 @@ irc_list_end ()
         weechat_hashtable_free (irc_list_filter_hashtable_options);
         irc_list_filter_hashtable_options = NULL;
     }
+    irc_list_hdata_list_channel = NULL;
 }

@@ -105,6 +105,8 @@ struct t_trigger_context
     }                                                           \
     return __rc;
 
+extern unsigned long trigger_context_id;
+
 extern int trigger_callback_signal_cb (const void *pointer, void *data,
                                        const char *signal,
                                        const char *type_data,

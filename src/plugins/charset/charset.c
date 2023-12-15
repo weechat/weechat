@@ -639,11 +639,18 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     charset_config_write ();
 
     weechat_config_free (charset_config_file);
+    charset_config_file = NULL;
 
     if (charset_terminal)
+    {
         free (charset_terminal);
+        charset_terminal = NULL;
+    }
     if (charset_internal)
+    {
         free (charset_internal);
+        charset_internal = NULL;
+    }
 
     return WEECHAT_RC_OK;
 }
