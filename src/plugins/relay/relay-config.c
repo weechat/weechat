@@ -1460,6 +1460,7 @@ void
 relay_config_free ()
 {
     weechat_config_free (relay_config_file);
+    relay_config_file = NULL;
 
     if (relay_config_regex_allowed_ips)
     {

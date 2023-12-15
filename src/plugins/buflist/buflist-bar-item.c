@@ -765,6 +765,7 @@ buflist_bar_item_end ()
     for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
     {
         weechat_bar_item_remove (buflist_bar_item_buflist[i]);
+        buflist_bar_item_buflist[i] = NULL;
     }
 
     weechat_hashtable_free (buflist_hashtable_pointers);

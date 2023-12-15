@@ -1311,6 +1311,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_php_plugin = plugin;
 
+    php_quiet = 0;
+    php_eval_mode = 0;
+    php_eval_send_input = 0;
+    php_eval_exec_commands = 0;
+
     /* set interpreter name and version */
     weechat_hashtable_set (plugin->variables, "interpreter_name",
                            plugin->name);
@@ -1385,11 +1390,20 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     php_embed_shutdown ();
 
     if (php_action_install_list)
+    {
         free (php_action_install_list);
+        php_action_install_list = NULL;
+    }
     if (php_action_remove_list)
+    {
         free (php_action_remove_list);
+        php_action_remove_list = NULL;
+    }
     if (php_action_autoload_list)
+    {
         free (php_action_autoload_list);
+        php_action_autoload_list = NULL;
+    }
     /* weechat_string_dyn_free (php_buffer_output, 1); */
 
     return WEECHAT_RC_OK;

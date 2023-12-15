@@ -780,4 +780,5 @@ void
 logger_config_free ()
 {
     weechat_config_free (logger_config_file);
+    logger_config_file = NULL;
 }

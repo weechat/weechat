@@ -193,6 +193,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_plugin = plugin;
 
+    irc_signal_quit_received = 0;
+    irc_signal_upgrade_received = 0;
+
     if (!irc_config_init ())
         return WEECHAT_RC_ERROR;
 
@@ -314,7 +317,10 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     (void) plugin;
 
     if (irc_hook_timer)
+    {
         weechat_unhook (irc_hook_timer);
+        irc_hook_timer = NULL;
+    }
 
     if (irc_signal_upgrade_received)
     {

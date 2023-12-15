@@ -1934,4 +1934,9 @@ fset_option_end ()
         weechat_hashtable_free (fset_option_timer_options_changed);
         fset_option_timer_options_changed = NULL;
     }
+    if (fset_option_timer_hook)
+    {
+        weechat_unhook (fset_option_timer_hook);
+        fset_option_timer_hook = NULL;
+    }
 }

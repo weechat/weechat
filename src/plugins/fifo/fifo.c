@@ -367,6 +367,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_plugin = plugin;
 
+    fifo_quiet = 0;
+    fifo_fd = -1;
+
     if (!fifo_config_init ())
         return WEECHAT_RC_ERROR;
 

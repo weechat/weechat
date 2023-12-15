@@ -203,6 +203,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_plugin = plugin;
 
+    relay_signal_upgrade_received = 0;
+
     if (!relay_config_init ())
         return WEECHAT_RC_ERROR;
 
@@ -240,7 +242,10 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     (void) plugin;
 
     if (relay_hook_timer)
+    {
         weechat_unhook (relay_hook_timer);
+        relay_hook_timer = NULL;
+    }
 
     relay_config_write ();
 
@@ -254,7 +259,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     relay_server_free_all ();
 
     if (relay_buffer)
+    {
         weechat_buffer_close (relay_buffer);
+        relay_buffer = NULL;
+    }
+    relay_buffer_selected_line = 0;
 
     relay_client_free_all ();
 

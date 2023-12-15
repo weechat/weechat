@@ -1838,6 +1838,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_plugin = plugin;
 
+    xfer_signal_upgrade_received = 0;
+
     if (!xfer_config_init ())
         return WEECHAT_RC_ERROR;
 
@@ -1880,6 +1882,13 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* make C compiler happy */
     (void) plugin;
 
+    if (xfer_buffer)
+    {
+        weechat_buffer_close (xfer_buffer);
+        xfer_buffer = NULL;
+    }
+    xfer_buffer_selected_line = 0;
+
     xfer_config_write ();
 
     if (xfer_signal_upgrade_received)
@@ -1890,6 +1899,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     xfer_free_all ();
 
     weechat_config_free (xfer_config_file);
+    xfer_config_file = NULL;
 
     return WEECHAT_RC_OK;
 }

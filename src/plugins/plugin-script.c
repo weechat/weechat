@@ -1796,6 +1796,7 @@ plugin_script_end (struct t_weechat_plugin *weechat_plugin,
     /* write config file (file: "<language>.conf") */
     weechat_config_write (*(plugin_data->config_file));
     weechat_config_free (*(plugin_data->config_file));
+    *(plugin_data->config_file) = NULL;
 }
 
 /*

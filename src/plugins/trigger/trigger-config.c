@@ -831,4 +831,5 @@ void
 trigger_config_free ()
 {
     weechat_config_free (trigger_config_file);
+    trigger_config_file = NULL;
 }

@@ -162,6 +162,9 @@ relay_network_set_priority ()
 void
 relay_network_init ()
 {
+    relay_network_init_ok = 0;
+    relay_network_init_tls_cert_key_ok = 0;
+
     /* credentials */
     gnutls_certificate_allocate_credentials (&relay_gnutls_x509_cred);
     relay_network_set_tls_cert_key (0);

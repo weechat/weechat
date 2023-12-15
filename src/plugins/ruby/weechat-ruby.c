@@ -1336,6 +1336,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_ruby_plugin = plugin;
 
+    ruby_quiet = 0;
+    ruby_eval_mode = 0;
+    ruby_eval_send_input = 0;
+    ruby_eval_exec_commands = 0;
+
     /* set interpreter name and version */
     weechat_hashtable_set (plugin->variables, "interpreter_name",
                            plugin->name);
@@ -1439,12 +1444,22 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     /* free some data */
     if (ruby_action_install_list)
+    {
         free (ruby_action_install_list);
+        ruby_action_install_list = NULL;
+    }
     if (ruby_action_remove_list)
+    {
         free (ruby_action_remove_list);
+        ruby_action_remove_list = NULL;
+    }
     if (ruby_action_autoload_list)
+    {
         free (ruby_action_autoload_list);
+        ruby_action_autoload_list = NULL;
+    }
     weechat_string_dyn_free (ruby_buffer_output, 1);
+    ruby_buffer_output = NULL;
 
     return WEECHAT_RC_OK;
 }
