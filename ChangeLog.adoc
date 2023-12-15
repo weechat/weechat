@@ -40,7 +40,7 @@ New features::
 
 Bug fixes::
 
-  * core: fix crash on plugin reload when using musl libs (issue #2052)
+  * core: fix crash on plugin reload when using musl libc (issue #2052)
   * core: fix infinite loop in display when the chat area is too small (issue #2053)
   * core: fix value of buffer variable "num_history" when the value defined in option weechat.history.max_commands is reached
   * core: remove incorrect warning when binding keys kbd:[F10] to kbd:[F20] (issue #2039)
