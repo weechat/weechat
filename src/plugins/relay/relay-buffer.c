@@ -37,6 +37,21 @@ int relay_buffer_selected_line = 0;
 
 
 /*
+ * Checks if the buffer pointer is a relay buffer (relay raw/list).
+ *
+ * Returns:
+ *   1: buffer is a relay buffer (raw/list)
+ *   0: buffer is NOT a relay buffer
+ */
+
+int
+relay_buffer_is_relay (struct t_gui_buffer *buffer)
+{
+    return ((relay_raw_buffer && (buffer == relay_raw_buffer))
+            || (relay_buffer && (buffer == relay_buffer))) ? 1 : 0;
+}
+
+/*
  * Updates a client in buffer and updates hotlist for relay buffer.
  */
 
