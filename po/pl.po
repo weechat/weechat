@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-12-10 21:05+0100\n"
+"POT-Creation-Date: 2023-12-24 16:45+0100\n"
 "PO-Revision-Date: 2023-12-04 21:07+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -5543,6 +5543,14 @@ msgstr "Zużycie pamięci (zobacz \"man mallinfo\"):"
 
 msgid "Memory usage not available (function \"mallinfo\" not found)"
 msgstr "Zużycie pamięci niedostępne (nie znaleziono funkcji \"mallinfo\")"
+
+msgid "not initialized"
+msgstr ""
+
+#, fuzzy
+#| msgid "no variable"
+msgid "not available"
+msgstr "brak zmiennej"
 
 msgid "TEMPORARY, deleted on exit"
 msgstr "TYMCZASOWY, usuwany przy wyjściu"

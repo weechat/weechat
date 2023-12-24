@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-12-10 21:05+0100\n"
+"POT-Creation-Date: 2023-12-24 16:45+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5428,6 +5428,14 @@ msgstr "メモリ使用量 (ヘルプを見るには \"man mallinfo\" を参照�
 
 msgid "Memory usage not available (function \"mallinfo\" not found)"
 msgstr "メモリ使用量は利用できません (\"mallinfo\" 関数が見つかりません)"
+
+msgid "not initialized"
+msgstr ""
+
+#, fuzzy
+#| msgid "no variable"
+msgid "not available"
+msgstr "変数がありません"
 
 #, fuzzy
 msgid "TEMPORARY, deleted on exit"

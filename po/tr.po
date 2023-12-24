@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-12-10 21:05+0100\n"
+"POT-Creation-Date: 2023-12-24 16:45+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5482,6 +5482,14 @@ msgstr "Bellek kullanımı (yardım için bkz. \"man mallinfo\"):"
 
 msgid "Memory usage not available (function \"mallinfo\" not found)"
 msgstr "Bellek kullanımı mevcut değil (\"mallinfo\" işlevi bulunamadı)"
+
+msgid "not initialized"
+msgstr ""
+
+#, fuzzy
+#| msgid "no variable"
+msgid "not available"
+msgstr "değişken yok"
 
 msgid "TEMPORARY, deleted on exit"
 msgstr "GEÇİCİ, çıkışta silinir"
