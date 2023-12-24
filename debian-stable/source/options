@@ -1,0 +1,3 @@
+tar-ignore = ".git"
+tar-ignore = "build"
+tar-ignore = "release"
