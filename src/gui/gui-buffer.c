@@ -1432,6 +1432,8 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
         return buffer->old_full_name;
     else if (strcmp (property, "short_name") == 0)
         return gui_buffer_get_short_name (buffer);
+    else if (strcmp (property, "type") == 0)
+       return gui_buffer_type_string[buffer->type];
     else if (strcmp (property, "title") == 0)
         return buffer->title;
     else if (strcmp (property, "input") == 0)

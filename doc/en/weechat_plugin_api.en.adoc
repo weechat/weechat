@@ -14194,6 +14194,7 @@ Arguments:
 ** _short_name_: short name of buffer (note: used for display only and can be
    changed by user, this must not be used to find name of buffer, use instead
    _name_, _full_name_ or local variable _channel_)
+** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: title of buffer
 ** _input_: input text
 ** _text_search_input_: input saved before text search

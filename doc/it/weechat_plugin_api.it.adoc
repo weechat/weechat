@@ -14852,6 +14852,8 @@ Argomenti:
 ** _short_name_: nome breve del buffer (nota: usato solo per il display e può
    essere cambiato dall'utente, questo nome non va usato per trovare il nome del
    buffer, utilizzare invece _name_, _fullname_ o la variabile locale _channel_)
+// TRANSLATION MISSING
+** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: titolo del buffer
 ** _input_: testo in ingresso
 ** _text_search_input_: input salvato prima della ricerca nel testo

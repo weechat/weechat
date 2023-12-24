@@ -14381,6 +14381,8 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _short_name_: バッファの短縮名 (注意:
    表示目的以外に使用するのは禁止、ユーザは書き換えることが可能、バッファを検索する際にこれを使ってはいけない、_name_、_full_name_、またはローカル変数
    _channel_ を使うこと)
+// TRANSLATION MISSING
+** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: バッファのタイトル
 ** _input_: 入力テキスト
 ** _text_search_input_: テキスト検索前に保存した入力テキスト

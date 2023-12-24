@@ -14503,6 +14503,8 @@ Paramètres :
    seulement et peut être changé par l'utilisateur, il ne doit pas être utilisé
    pour trouver le nom du tampon, utilisez à la place _name_, _full_name_ ou
    bien la variable locale _channel_)
+** _type_ : type de tampon : "formatted" (formaté) ou "free" (contenu libre)
+   _(WeeChat ≥ 4.2.0)_
 ** _title_ : titre du tampon
 ** _input_ : texte saisi
 ** _text_search_input_ : texte saisi sauvegardé avant la recherche de texte

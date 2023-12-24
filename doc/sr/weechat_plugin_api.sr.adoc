@@ -13716,6 +13716,8 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _name_: име бафера
 ** _full_name_: пуно име бафера („додатак.име”) _(WeeChat ≥ 0.3.7)_
 ** _short_name_: кратко име бафера (напомена: користи се само за приказ и корисник може да га промени, ово не сме да се употребљава за проналажење имена бафера, уместо њега употребите _name_, _full_name_ или локалну променљиву _channel_)
+// TRANSLATION MISSING
+** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: наслов бафера
 ** _input_: текст уноса
 ** _text_search_input_: сачувани унос пре претраге текста
