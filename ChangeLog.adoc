@@ -10,6 +10,13 @@ This document lists all the changes for each version. +
 For a list of important changes that require manual actions, please look at release notes.
 
 
+[[v4.0.9]]
+== Version 4.0.9 (under dev)
+
+Build::
+
+  * ruby: add detection of Ruby 3.3
+
 [[v4.0.8]]
 == Version 4.0.8 (2024-01-20)
 
