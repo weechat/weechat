@@ -218,7 +218,9 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         HASHTABLE_SET_INT("_chat_line_x", focus_info->chat_line_x);
         HASHTABLE_SET_INT("_chat_line_y", ((focus_info->chat_line)->data)->y);
         HASHTABLE_SET_TIME("_chat_line_date", ((focus_info->chat_line)->data)->date);
+        HASHTABLE_SET_INT("_chat_line_date_usec", ((focus_info->chat_line)->data)->date_usec);
         HASHTABLE_SET_TIME("_chat_line_date_printed", ((focus_info->chat_line)->data)->date_printed);
+        HASHTABLE_SET_INT("_chat_line_date_usec_printed", ((focus_info->chat_line)->data)->date_usec_printed);
         HASHTABLE_SET_STR_NOT_NULL("_chat_line_time", str_time);
         HASHTABLE_SET_STR_NOT_NULL("_chat_line_tags", str_tags);
         HASHTABLE_SET_STR_NOT_NULL("_chat_line_nick", nick);
@@ -239,7 +241,9 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         HASHTABLE_SET_STR("_chat_line_x", "-1");
         HASHTABLE_SET_STR("_chat_line_y", "-1");
         HASHTABLE_SET_STR("_chat_line_date", "-1");
+        HASHTABLE_SET_STR("_chat_line_date_usec", "-1");
         HASHTABLE_SET_STR("_chat_line_date_printed", "-1");
+        HASHTABLE_SET_STR("_chat_line_date_usec_printed", "-1");
         HASHTABLE_SET_STR("_chat_line_time", "");
         HASHTABLE_SET_STR("_chat_line_tags", "");
         HASHTABLE_SET_STR("_chat_line_nick", "");

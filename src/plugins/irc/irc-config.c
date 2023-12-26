@@ -3114,7 +3114,8 @@ irc_config_init ()
             irc_config_file, irc_config_section_look,
             "ctcp_time_format", "string",
             N_("time format used in answer to message CTCP TIME (see man "
-               "strftime for date/time specifiers)"),
+               "strftime for date/time specifiers, extra specifiers are supported, "
+               "see function util_strftimeval in Plugin API reference)"),
             NULL, 0, 0, "%a, %d %b %Y %T %z", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_display_account_message = weechat_config_new_option (

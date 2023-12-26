@@ -35,6 +35,7 @@
 #include "../../core/wee-hook.h"
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
+#include "../../core/wee-util.h"
 #include "../../plugins/plugin.h"
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
@@ -2103,7 +2104,7 @@ gui_chat_get_bare_line (struct t_gui_line *line)
 {
     char *prefix, *message, str_time[256], *str_line;
     const char *tag_prefix_nick;
-    struct tm *local_time;
+    struct timeval tv;
     int length;
 
     prefix = NULL;
@@ -2125,11 +2126,11 @@ gui_chat_get_bare_line (struct t_gui_line *line)
         && CONFIG_STRING(config_look_bare_display_time_format)
         && CONFIG_STRING(config_look_bare_display_time_format)[0])
     {
-        local_time = localtime (&line->data->date);
-        if (strftime (str_time, sizeof (str_time),
-                      CONFIG_STRING(config_look_bare_display_time_format),
-                      local_time) == 0)
-            str_time[0] = '\0';
+        tv.tv_sec = line->data->date;
+        tv.tv_usec = line->data->date_usec;
+        util_strftimeval (str_time, sizeof (str_time),
+                          CONFIG_STRING(config_look_bare_display_time_format),
+                          &tv);
     }
     tag_prefix_nick = gui_line_search_tag_starting_with (line, "prefix_nick_");
 

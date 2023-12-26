@@ -1903,6 +1903,31 @@ API_FUNC(print_date_tags)
     API_RETURN_OK;
 }
 
+API_FUNC(print_datetime_tags)
+{
+    long date;
+    int date_usec;
+
+    API_INIT_FUNC(1, "print_datetime_tags", "sniss", API_RETURN_ERROR);
+
+    v8::String::Utf8Value buffer(args[0]);
+    date = args[1]->IntegerValue();
+    date_usec = args[2]->IntegerValue();
+    v8::String::Utf8Value tags(args[3]);
+    v8::String::Utf8Value message(args[4]);
+
+    plugin_script_api_printf_datetime_tags (
+        weechat_js_plugin,
+        js_current_script,
+        (struct t_gui_buffer *)API_STR2PTR(*buffer),
+        (time_t)date,
+        date_usec,
+        *tags,
+        "%s", *message);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(print_y)
 {
     int y;
@@ -1913,11 +1938,12 @@ API_FUNC(print_y)
     y = args[1]->IntegerValue();
     v8::String::Utf8Value message(args[2]);
 
-    plugin_script_api_printf_y (weechat_js_plugin,
-                                js_current_script,
-                                (struct t_gui_buffer *)API_STR2PTR(*buffer),
-                                y,
-                                "%s", *message);
+    plugin_script_api_printf_y (
+        weechat_js_plugin,
+        js_current_script,
+        (struct t_gui_buffer *)API_STR2PTR(*buffer),
+        y,
+        "%s", *message);
 
     API_RETURN_OK;
 }
@@ -1935,13 +1961,41 @@ API_FUNC(print_y_date_tags)
     v8::String::Utf8Value tags(args[3]);
     v8::String::Utf8Value message(args[4]);
 
-    plugin_script_api_printf_y_date_tags (weechat_js_plugin,
-                                          js_current_script,
-                                          (struct t_gui_buffer *)API_STR2PTR(*buffer),
-                                          y,
-                                          (time_t)date,
-                                          *tags,
-                                          "%s", *message);
+    plugin_script_api_printf_y_date_tags (
+        weechat_js_plugin,
+        js_current_script,
+        (struct t_gui_buffer *)API_STR2PTR(*buffer),
+        y,
+        (time_t)date,
+        *tags,
+        "%s", *message);
+
+    API_RETURN_OK;
+}
+
+API_FUNC(print_y_datetime_tags)
+{
+    int y, date_usec;
+    long date;
+
+    API_INIT_FUNC(1, "print_y_datetime_tags", "siniss", API_RETURN_ERROR);
+
+    v8::String::Utf8Value buffer(args[0]);
+    y = args[1]->IntegerValue();
+    date = args[2]->IntegerValue();
+    date_usec = args[3]->IntegerValue();
+    v8::String::Utf8Value tags(args[4]);
+    v8::String::Utf8Value message(args[5]);
+
+    plugin_script_api_printf_y_datetime_tags (
+        weechat_js_plugin,
+        js_current_script,
+        (struct t_gui_buffer *)API_STR2PTR(*buffer),
+        y,
+        (time_t)date,
+        date_usec,
+        *tags,
+        "%s", *message);
 
     API_RETURN_OK;
 }
@@ -2667,7 +2721,7 @@ API_FUNC(hook_line)
 int
 weechat_js_api_hook_print_cb (const void *pointer, void *data,
                               struct t_gui_buffer *buffer,
-                              time_t date,
+                              time_t date, int date_usec,
                               int tags_count, const char **tags,
                               int displayed, int highlight,
                               const char *prefix, const char *message)
@@ -2680,6 +2734,7 @@ weechat_js_api_hook_print_cb (const void *pointer, void *data,
     int *rc, ret;
 
     /* make C compiler happy */
+    (void) date_usec;
     (void) tags_count;
 
     script = (struct t_plugin_script *)pointer;
@@ -5297,8 +5352,10 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(color);
     API_DEF_FUNC(print);
     API_DEF_FUNC(print_date_tags);
+    API_DEF_FUNC(print_datetime_tags);
     API_DEF_FUNC(print_y);
     API_DEF_FUNC(print_y_date_tags);
+    API_DEF_FUNC(print_y_datetime_tags);
     API_DEF_FUNC(log_print);
     API_DEF_FUNC(hook_command);
     API_DEF_FUNC(hook_completion);

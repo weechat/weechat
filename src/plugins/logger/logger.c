@@ -25,6 +25,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include <sys/time.h>
 
 #include "../weechat-plugin.h"
 #include "logger.h"
@@ -150,7 +151,7 @@ logger_get_file_path ()
     seconds = time (NULL);
     date_tmp = localtime (&seconds);
     path2[0] = '\0';
-    if (strftime (path2, length - 1, path, date_tmp) == 0)
+    if (strftime (path2, length, path, date_tmp) == 0)
         path2[0] = '\0';
 
     if (weechat_logger_plugin->debug)
@@ -378,7 +379,7 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
     seconds = time (NULL);
     date_tmp = localtime (&seconds);
     mask2[0] = '\0';
-    if (strftime (mask2, length - 1, mask, date_tmp) == 0)
+    if (strftime (mask2, length, mask, date_tmp) == 0)
         mask2[0] = '\0';
 
     /*
@@ -695,13 +696,13 @@ logger_get_line_tag_info (int tags_count, const char **tags,
 
 int
 logger_print_cb (const void *pointer, void *data,
-                 struct t_gui_buffer *buffer, time_t date,
+                 struct t_gui_buffer *buffer, time_t date, int date_usec,
                  int tags_count, const char **tags,
                  int displayed, int highlight,
                  const char *prefix, const char *message)
 {
     struct t_logger_buffer *ptr_logger_buffer;
-    struct tm *date_tmp;
+    struct timeval tv;
     char buf_time[256], *prefix_ansi, *message_ansi;
     const char *ptr_prefix, *ptr_message;
     int line_log_level, prefix_is_nick, color_lines;
@@ -740,15 +741,12 @@ logger_print_cb (const void *pointer, void *data,
             ptr_prefix = prefix;
             ptr_message = message;
         }
-        buf_time[0] = '\0';
-        date_tmp = localtime (&date);
-        if (date_tmp)
-        {
-            if (strftime (buf_time, sizeof (buf_time) - 1,
-                          weechat_config_string (logger_config_file_time_format),
-                          date_tmp) == 0)
-                buf_time[0] = '\0';
-        }
+        tv.tv_sec = date;
+        tv.tv_usec = date_usec;
+        weechat_util_strftimeval (
+            buf_time, sizeof (buf_time),
+            weechat_config_string (logger_config_file_time_format),
+            &tv);
 
         logger_buffer_write_line (
             ptr_logger_buffer,

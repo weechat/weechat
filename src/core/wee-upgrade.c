@@ -636,13 +636,16 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
     switch (upgrade_current_buffer->type)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
-            new_line = gui_line_new (upgrade_current_buffer,
-                                     -1,
-                                     infolist_time (infolist, "date"),
-                                     infolist_time (infolist, "date_printed"),
-                                     infolist_string (infolist, "tags"),
-                                     infolist_string (infolist, "prefix"),
-                                     infolist_string (infolist, "message"));
+            new_line = gui_line_new (
+                upgrade_current_buffer,
+                -1,
+                infolist_time (infolist, "date"),
+                infolist_integer (infolist, "date_usec"),
+                infolist_time (infolist, "date_printed"),
+                infolist_integer (infolist, "date_usec_printed"),
+                infolist_string (infolist, "tags"),
+                infolist_string (infolist, "prefix"),
+                infolist_string (infolist, "message"));
             if (new_line)
             {
                 new_line->data->id = infolist_integer (infolist, "id");
@@ -654,13 +657,16 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
             }
             break;
         case GUI_BUFFER_TYPE_FREE:
-            new_line = gui_line_new (upgrade_current_buffer,
-                                     infolist_integer (infolist, "y"),
-                                     infolist_time (infolist, "date"),
-                                     infolist_time (infolist, "date_printed"),
-                                     infolist_string (infolist, "tags"),
-                                     NULL,
-                                     infolist_string (infolist, "message"));
+            new_line = gui_line_new (
+                upgrade_current_buffer,
+                infolist_integer (infolist, "y"),
+                infolist_time (infolist, "date"),
+                infolist_integer (infolist, "date_usec"),
+                infolist_time (infolist, "date_printed"),
+                infolist_integer (infolist, "date_usec_printed"),
+                infolist_string (infolist, "tags"),
+                NULL,
+                infolist_string (infolist, "message"));
             if (new_line)
             {
                 new_line->data->id = infolist_integer (infolist, "id");

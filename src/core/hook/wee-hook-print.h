@@ -31,10 +31,10 @@ struct t_gui_line;
 
 typedef int (t_hook_callback_print)(const void *pointer, void *data,
                                     struct t_gui_buffer *buffer,
-                                    time_t date, int tags_count,
-                                    const char **tags, int displayed,
-                                    int highlight, const char *prefix,
-                                    const char *message);
+                                    time_t date, int date_usec,
+                                    int tags_count, const char **tags,
+                                    int displayed, int highlight,
+                                    const char *prefix, const char *message);
 
 struct t_hook_print
 {

@@ -142,6 +142,95 @@ TEST(CoreUtil, GetTimeString)
 
 /*
  * Tests functions:
+ *   util_strftimeval
+ */
+
+TEST(CoreUtil, Strftimeval)
+{
+    struct timeval tv;
+    char str_time[256];
+
+    /* test date: 2023-12-25T10:29:09.456789Z */
+    tv.tv_sec = 1703500149;
+    tv.tv_usec = 456789;
+
+    LONGS_EQUAL(0, util_strftimeval (NULL, 0, NULL, NULL));
+    LONGS_EQUAL(0, util_strftimeval (str_time, 0, NULL, NULL));
+    LONGS_EQUAL(0, util_strftimeval (str_time, 0, "", NULL));
+    LONGS_EQUAL(0, util_strftimeval (str_time, -1, "", &tv));
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(0, util_strftimeval (str_time, sizeof (str_time), "", &tv));
+    STRCMP_EQUAL("", str_time);
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(8, util_strftimeval (str_time, sizeof (str_time),
+                                     "%H:%M:%S", &tv));
+    STRCMP_EQUAL("10:29:09", str_time);
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(19, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09", str_time);
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(19, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09", str_time);
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(21, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %% %H:%M:%S", &tv));
+    STRCMP_EQUAL("2023-12-25 % 10:29:09", str_time);
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(21, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S.%.1", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09.4", str_time);
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(22, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S.%.2", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09.45", str_time);
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(23, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S.%.3", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09.456", str_time);
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(24, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S.%.4", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09.4567", str_time);
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(25, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S.%.5", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09.45678", str_time);
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(26, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S.%.6", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09.456789", str_time);
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(26, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S.%f", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09.456789", str_time);
+
+    /* invalid microseconds digits (must be 1-6) */
+    strcpy (str_time, "test");
+    LONGS_EQUAL(23, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S.%.0", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09.%.0", str_time);
+    strcpy (str_time, "test");
+    LONGS_EQUAL(23, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S.%.7", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09.%.7", str_time);
+}
+
+/*
+ * Tests functions:
  *   util_get_time_diff
  */
 

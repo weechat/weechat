@@ -716,7 +716,8 @@ logger_config_init ()
             logger_config_file, logger_config_section_file,
             "time_format", "string",
             N_("timestamp used in log files (see man strftime for date/time "
-               "specifiers)"),
+               "specifiers, extra specifiers are supported, see function "
+               "util_strftimeval in Plugin API reference)"),
             NULL, 0, 0, "%Y-%m-%d %H:%M:%S", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }

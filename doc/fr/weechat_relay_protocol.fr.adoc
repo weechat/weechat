@@ -503,7 +503,9 @@ hda:
         'buffer': 'ptr',
         'y': 'int',
         'date': 'tim',
+        'date_usec': 'int',
         'date_printed': 'tim',
+        'date_usec_printed': 'int',
         'str_time': 'str',
         'tags_count': 'int',
         'tags_array': 'arr',
@@ -521,7 +523,9 @@ hda:
         buffer: '0x558d61ea3e60'
         y: -1
         date: 1588404926
+        date_usec: 118712
         date_printed: 1588404926
+        date_usec_printed: 118712
         str_time: 'F@0025209F@0024535F@0024026'
         tags_count: 0
         tags_array: []
@@ -537,7 +541,9 @@ hda:
         buffer: '0x558d61ea3e60'
         y: -1
         date: 1588404930
+        date_usec: 25
         date_printed: 1588404930
+        date_usec_printed: 25
         str_time: 'F@0025209F@0024535F@0024030'
         tags_count: 0
         tags_array: []
@@ -2078,16 +2084,18 @@ Données envoyées dans le hdata :
 
 [width="100%",cols="3m,2,10",options="header"]
 |===
-| Nom          | Type               | Description
-| buffer       | pointeur           | Pointeur vers le tampon.
-| date         | date/heure         | Date du message.
-| date_printed | date/heure         | Date d'affichage du message.
-| displayed    | caractère          | 1 si le message est affiché, 0 si le message est filtré (caché).
-| notify_level | caractère          | Niveau de notification : -1 = notification désactivée, 0 = bas, 1 = message, 2 = privé, 3 = highlight.
-| highlight    | caractère          | 1 si la ligne a un highlight, sinon 0.
-| tags_array   | tableau de chaînes | Liste des étiquettes de la ligne.
-| prefix       | chaîne             | Préfixe.
-| message      | chaîne             | Message.
+| Nom               | Type               | Description
+| buffer            | pointeur           | Pointeur vers le tampon.
+| date              | date/heure         | Date du message.
+| date_usec         | entier             | Microsecondes de la date.
+| date_printed      | date/heure         | Date d'affichage du message.
+| date_usec_printed | entier             | Microsecondes de la date d'affichage du message.
+| displayed         | caractère          | 1 si le message est affiché, 0 si le message est filtré (caché).
+| notify_level      | caractère          | Niveau de notification : -1 = notification désactivée, 0 = bas, 1 = message, 2 = privé, 3 = highlight.
+| highlight         | caractère          | 1 si la ligne a un highlight, sinon 0.
+| tags_array        | tableau de chaînes | Liste des étiquettes de la ligne.
+| prefix            | chaîne             | Préfixe.
+| message           | chaîne             | Message.
 |===
 
 Exemple : nouveau message _hello!_ du pseudo _FlashCode_ sur le tampon
@@ -2100,7 +2108,9 @@ hda:
     keys: {
         'buffer': 'ptr',
         'date': 'tim',
+        'date_usec': 'int',
         'date_printed': 'tim',
+        'date_usec_printed': 'int',
         'displayed': 'chr',
         'notify_level': 'chr',
         'highlight': 'chr',
@@ -2113,7 +2123,9 @@ hda:
         __path: ['0x4a49600']
         buffer: '0x4a715d0'
         date: 1362728993
+        date_usec: 902765
         date_printed: 1362728993
+        date_usec_printed: 902765
         displayed: 1
         notify_level: 1
         highlight: 0

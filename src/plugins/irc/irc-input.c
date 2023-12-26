@@ -64,6 +64,7 @@
 void
 irc_input_user_message_display (struct t_irc_server *server,
                                 time_t date,
+                                int date_usec,
                                 const char *target,
                                 const char *address,
                                 const char *command,
@@ -86,6 +87,7 @@ irc_input_user_message_display (struct t_irc_server *server,
     memset (&ctxt, 0, sizeof (ctxt));
     ctxt.server = server;
     ctxt.date = date;
+    ctxt.date_usec = date_usec;
     ctxt.address = (char *)address;
     ctxt.command = (char *)command;
 
@@ -317,6 +319,7 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
                 irc_input_user_message_display (
                     ptr_server,
                     0,  /* date */
+                    0,  /* date_usec */
                     ptr_channel->name,
                     NULL,  /* address */
                     "privmsg",

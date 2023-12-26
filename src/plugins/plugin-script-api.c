@@ -391,6 +391,34 @@ plugin_script_api_printf_date_tags (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * Prints a message, with optional date/time (with microseconds) and tags.
+ */
+
+void
+plugin_script_api_printf_datetime_tags (struct t_weechat_plugin *weechat_plugin,
+                                        struct t_plugin_script *script,
+                                        struct t_gui_buffer *buffer,
+                                        time_t date, int date_usec,
+                                        const char *tags,
+                                        const char *format, ...)
+{
+    char *buf2;
+
+    weechat_va_format (format);
+    if (!vbuffer)
+        return;
+
+    buf2 = (script && script->charset && script->charset[0]) ?
+        weechat_iconv_to_internal (script->charset, vbuffer) : NULL;
+    weechat_printf_datetime_tags (buffer, date, date_usec, tags,
+                                  "%s", (buf2) ? buf2 : vbuffer);
+    if (buf2)
+        free (buf2);
+
+    free (vbuffer);
+}
+
+/*
  * Prints a message on a buffer with free content.
  */
 
@@ -436,6 +464,35 @@ plugin_script_api_printf_y_date_tags (struct t_weechat_plugin *weechat_plugin,
         weechat_iconv_to_internal (script->charset, vbuffer) : NULL;
     weechat_printf_y_date_tags (buffer, y, date, tags,
                                 "%s", (buf2) ? buf2 : vbuffer);
+    if (buf2)
+        free (buf2);
+
+    free (vbuffer);
+}
+
+/*
+ * Prints a message on a buffer with free content, with optional date/time
+ * (with microseconds) and tags.
+ */
+
+void
+plugin_script_api_printf_y_datetime_tags (struct t_weechat_plugin *weechat_plugin,
+                                          struct t_plugin_script *script,
+                                          struct t_gui_buffer *buffer, int y,
+                                          time_t date, int date_usec,
+                                          const char *tags,
+                                          const char *format, ...)
+{
+    char *buf2;
+
+    weechat_va_format (format);
+    if (!vbuffer)
+        return;
+
+    buf2 = (script && script->charset && script->charset[0]) ?
+        weechat_iconv_to_internal (script->charset, vbuffer) : NULL;
+    weechat_printf_y_datetime_tags (buffer, y, date, date_usec, tags,
+                                    "%s", (buf2) ? buf2 : vbuffer);
     if (buf2)
         free (buf2);
 
@@ -857,6 +914,7 @@ plugin_script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
                                               void *data,
                                               struct t_gui_buffer *buffer,
                                               time_t date,
+                                              int date_usec,
                                               int tags_count,
                                               const char **tags,
                                               int displayed, int highlight,

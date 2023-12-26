@@ -5334,7 +5334,7 @@ du type de hook :
 | signal         | tg_signal_data      |
 | hsignal        |                     |
 | modifier       | tg_string           | tg_string
-| line           | message             | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| line           | message             | buffer, buffer_name, y, date, date_usec, date_printed, date_usec_printed, str_time, tags, notify_level, highlight, prefix, message
 | print          | tg_message          |
 | command        | tg_argv_eol1        |
 | command_run    | tg_command          |
@@ -5505,7 +5505,9 @@ de hachage :
 | buffer_type        | chaîne   | Type de tampon ("formatted" ou "free").
 | y                  | chaîne   | Numéro de ligne pour un tampon avec contenu libre (≥ 0), -1 pour un tampon avec contenu formaté.
 | date               | chaîne   | Date de la ligne (horodatage).
+| date_usec          | chaîne   | Microsecondes de la date de la ligne.
 | date_printed       | chaîne   | Date d'affichage de la ligne (horodatage).
+| date_usec_printed  | chaîne   | Microsecondes de la date d'affichage de la ligne.
 | str_time           | chaîne   | Date pour l'affichage. Elle peut contenir des codes couleur.
 | tags               | chaîne   | Étiquettes du message (avec une virgule en début/fin de chaîne).
 | displayed          | chaîne   | "1" si affichée, "0" si la ligne est filtrée.
@@ -5546,7 +5548,7 @@ hachage :
 |===
 | Variable           | Type     | Description
 | buffer             | pointeur | Tampon.
-| tg_date            | chaîne   | Date/heure du message (format : `YYYY-MM-DD hh:mm:ss`).
+| tg_date            | chaîne   | Date/heure du message (format : `%FT%T.%f`, voir la link:weechat_plugin_api.fr.html#_util_strftimeval[Référence API extension WeeChat / util_strftimeval ^↗^^]).
 | tg_displayed       | chaîne   | "1" si affiché, "0" si ligne filtrée.
 | tg_highlight       | chaîne   | "1" si highlight, sinon "0".
 | tg_prefix          | chaîne   | Préfixe.
@@ -5615,7 +5617,7 @@ hachage :
 |===
 | Variable           | Type   | Description
 | tg_remaining_calls | chaîne | Nombre d'appels restants.
-| tg_date            | chaîne | Date/heure courante (format : `YYYY-MM-DD hh:mm:ss`).
+| tg_date            | chaîne | Date/heure courante (format : `%FT%T.%f`, voir la link:weechat_plugin_api.fr.html#_util_strftimeval[Référence API extension WeeChat / util_strftimeval ^↗^^]).
 |===
 
 [[trigger_data_config]]

@@ -388,6 +388,7 @@ irc_command_me_channel_message (struct t_irc_server *server,
                 irc_input_user_message_display (
                     server,
                     0,  /* date */
+                    0,  /* date_usec */
                     channel_name,
                     NULL,  /* address */
                     "privmsg",
@@ -1974,6 +1975,7 @@ IRC_COMMAND_CALLBACK(ctcp)
                 irc_input_user_message_display (
                     ptr_server,
                     0,  /* date */
+                    0,  /* date_usec */
                     ctcp_target,
                     NULL,  /* address */
                     "privmsg",
@@ -3841,6 +3843,7 @@ IRC_COMMAND_CALLBACK(msg)
                     irc_input_user_message_display (
                         ptr_server,
                         0,  /* date */
+                        0,  /* date_usec */
                         ptr_channel->name,
                         NULL,  /* address */
                         "privmsg",
@@ -3864,6 +3867,7 @@ IRC_COMMAND_CALLBACK(msg)
                 irc_input_user_message_display (
                     ptr_server,
                     0,  /* date */
+                    0,  /* date_usec */
                     targets[i],
                     NULL,  /* address */
                     "privmsg",
@@ -4065,6 +4069,7 @@ IRC_COMMAND_CALLBACK(notice)
                 irc_input_user_message_display (
                     ptr_server,
                     0,  /* date */
+                    0,  /* date_usec */
                     argv[arg_target],
                     NULL,  /* address */
                     "notice",
@@ -4595,6 +4600,7 @@ IRC_COMMAND_CALLBACK(query)
                     irc_input_user_message_display (
                         ptr_server,
                         0,  /* date */
+                        0,  /* date_usec */
                         ptr_channel->name,
                         NULL,  /* address */
                         "privmsg",
@@ -7799,8 +7805,9 @@ irc_command_init ()
                "condition \"xxx\", using following variables: output of function "
                "irc_message_parse (like nick, command, channel, text, etc., see "
                "function info_get_hashtable in plugin API reference for the list "
-               "of all variables), date (format: \"yyyy-mm-dd hh:mm:ss\"), server, "
-               "recv, sent, modified, redirected"),
+               "of all variables), date (format: \"%FT%T.%f\", see function "
+               "util_strftimeval in Plugin API reference), server, recv, sent, "
+               "modified, redirected"),
             "",
             N_("Examples:"),
             AI("  /server listfull"),

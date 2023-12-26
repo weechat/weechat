@@ -2015,6 +2015,30 @@ API_FUNC(print_date_tags)
     API_RETURN_OK;
 }
 
+API_FUNC(print_datetime_tags)
+{
+    char *buffer, *tags, *message;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "print_datetime_tags", API_RETURN_ERROR);
+    if (items < 5)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    buffer = SvPV_nolen (ST (0));
+    tags = SvPV_nolen (ST (3));
+    message = SvPV_nolen (ST (4));
+
+    plugin_script_api_printf_datetime_tags (weechat_perl_plugin,
+                                            perl_current_script,
+                                            API_STR2PTR(buffer),
+                                            (time_t)(SvIV (ST (1))), /* date */
+                                            SvIV (ST (2)), /* date_usec */
+                                            tags,
+                                            "%s", message);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(print_y)
 {
     char *buffer, *message;
@@ -2030,7 +2054,7 @@ API_FUNC(print_y)
     plugin_script_api_printf_y (weechat_perl_plugin,
                                 perl_current_script,
                                 API_STR2PTR(buffer),
-                                SvIV (ST (1)),
+                                SvIV (ST (1)), /* y */
                                 "%s", message);
 
     API_RETURN_OK;
@@ -2056,6 +2080,31 @@ API_FUNC(print_y_date_tags)
                                           (time_t)(SvIV (ST (2))), /* date */
                                           tags,
                                           "%s", message);
+
+    API_RETURN_OK;
+}
+
+API_FUNC(print_y_datetime_tags)
+{
+    char *buffer, *tags, *message;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "print_y_datetime_tags", API_RETURN_ERROR);
+    if (items < 5)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    buffer = SvPV_nolen (ST (0));
+    tags = SvPV_nolen (ST (4));
+    message = SvPV_nolen (ST (5));
+
+    plugin_script_api_printf_y_datetime_tags (weechat_perl_plugin,
+                                              perl_current_script,
+                                              API_STR2PTR(buffer),
+                                              SvIV (ST (1)), /* y */
+                                              (time_t)(SvIV (ST (2))), /* date */
+                                              SvIV (ST (3)), /* date_usec */
+                                              tags,
+                                              "%s", message);
 
     API_RETURN_OK;
 }
@@ -2777,7 +2826,7 @@ API_FUNC(hook_line)
 int
 weechat_perl_api_hook_print_cb (const void *pointer, void *data,
                                 struct t_gui_buffer *buffer,
-                                time_t date,
+                                time_t date, int date_usec,
                                 int tags_count, const char **tags,
                                 int displayed, int highlight,
                                 const char *prefix, const char *message)
@@ -2790,6 +2839,7 @@ weechat_perl_api_hook_print_cb (const void *pointer, void *data,
     int *rc, ret;
 
     /* make C compiler happy */
+    (void) date_usec;
     (void) tags_count;
 
     script = (struct t_plugin_script *)pointer;
@@ -5606,8 +5656,10 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(color);
     API_DEF_FUNC(print);
     API_DEF_FUNC(print_date_tags);
+    API_DEF_FUNC(print_datetime_tags);
     API_DEF_FUNC(print_y);
     API_DEF_FUNC(print_y_date_tags);
+    API_DEF_FUNC(print_y_datetime_tags);
     API_DEF_FUNC(log_print);
     API_DEF_FUNC(hook_command);
     API_DEF_FUNC(hook_completion);

@@ -95,8 +95,10 @@ function weechat_prefix(string $p0): string {}
 function weechat_color(string $p0): string {}
 function weechat_print(string $p0, string $p1): int {}
 function weechat_print_date_tags(string $p0, int $p1, string $p2, string $p3): int {}
+function weechat_print_datetime_tags(string $p0, int $p1, int $p2, string $p3, string $p4): int {}
 function weechat_print_y(string $p0, int $p1, string $p2): int {}
 function weechat_print_y_date_tags(string $p0, int $p1, int $p2, string $p3, string $p4): int {}
+function weechat_print_y_datetime_tags(string $p0, int $p1, int $p2, int $p3, string $p4, string $p5): int {}
 function weechat_log_print(string $p0): int {}
 function weechat_hook_command(string $p0, string $p1, string $p2, string $p3, string $p4, mixed $p5, string $p6): string {}
 function weechat_hook_completion(string $p0, string $p1, mixed $p2, string $p3): string {}

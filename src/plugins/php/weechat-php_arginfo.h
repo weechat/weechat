@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 614392b6be26030a5d7b12437562aec08ad7052c */
+ * Stub hash: b6e9e3f12ed24566eb77aa0c08bf3e7c5d866b76 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_register, 0, 7, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)
@@ -239,18 +239,29 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_print_date_tags, 0, 4, I
 	ZEND_ARG_TYPE_INFO(0, p3, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_print_datetime_tags, 0, 5, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, p1, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, p2, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, p3, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, p4, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_print_y, 0, 3, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, p1, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, p2, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_print_y_date_tags, 0, 5, IS_LONG, 0)
+#define arginfo_weechat_print_y_date_tags arginfo_weechat_print_datetime_tags
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_print_y_datetime_tags, 0, 6, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, p1, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, p2, IS_LONG, 0)
-	ZEND_ARG_TYPE_INFO(0, p3, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, p3, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, p4, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, p5, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_log_print arginfo_weechat_charset_set

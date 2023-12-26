@@ -3170,8 +3170,9 @@ config_weechat_init_options ()
         config_look_bare_display_time_format = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "bare_display_time_format", "string",
-            N_("time format in bare display mode (see man strftime for "
-               "date/time specifiers)"),
+            N_("time format in bare display mode (see API man strftime for "
+               "date/time specifiers, extra specifiers are supported, see "
+               "function util_strftimeval in Plugin API reference)"),
             NULL, 0, 0, "%H:%M", NULL, 0,
             NULL, NULL, NULL,
             &config_change_buffer_content, NULL, NULL,
@@ -3250,10 +3251,14 @@ config_weechat_init_options ()
             "buffer_time_format", "string",
             /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
             N_("time format for each line displayed in buffers (see man "
-               "strftime for date/time specifiers) (note: content is evaluated, "
-               "so you can use colors with format \"${color:xxx}\", see /help "
-               "eval); for example time using grayscale: "
-               "\"${color:252}%H${color:243}%M${color:237}%S\""),
+               "strftime for date/time specifiers, extra specifiers are "
+               "supported, see function util_strftimeval in Plugin API reference) "
+               "(note: content is evaluated, so you can use colors with format "
+               "\"${color:xxx}\", see /help eval); "
+               "for example time using grayscale: "
+               "\"${color:252}%H${color:243}%M${color:237}%S\", "
+               "the same with milliseconds: "
+               "\"${color:252}%H${color:243}%M${color:237}%S.%.3\""),
             NULL, 0, 0, "%H:%M:%S", NULL, 0,
             NULL, NULL, NULL,
             &config_change_buffer_time_format, NULL, NULL,
@@ -4060,7 +4065,9 @@ config_weechat_init_options ()
         config_look_quote_time_format = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "quote_time_format", "string",
-            N_("time format when quoting a message (see /help cursor)"),
+            N_("time format when quoting a message (see /help cursor) "
+               "(see man strftime for date/time specifiers, extra specifiers "
+               "are supported, see function util_strftimeval in Plugin API reference)"),
             NULL, 0, 0, "%H:%M:%S", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_look_read_marker = config_file_new_option (

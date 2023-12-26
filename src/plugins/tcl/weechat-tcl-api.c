@@ -2277,6 +2277,38 @@ API_FUNC(print_date_tags)
     API_RETURN_OK;
 }
 
+API_FUNC(print_datetime_tags)
+{
+    Tcl_Obj *objp;
+    char *buffer, *tags, *message;
+    int i, date_usec;
+    long date;
+
+    API_INIT_FUNC(1, "print_datetime_tags", API_RETURN_ERROR);
+    if (objc < 6)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    if (Tcl_GetLongFromObj (interp, objv[2], &date) != TCL_OK)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    if (Tcl_GetIntFromObj (interp, objv[3], &date_usec) != TCL_OK)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    tags = Tcl_GetStringFromObj (objv[4], &i);
+    message = Tcl_GetStringFromObj (objv[5], &i);
+
+    plugin_script_api_printf_datetime_tags (weechat_tcl_plugin,
+                                            tcl_current_script,
+                                            API_STR2PTR(buffer),
+                                            (time_t)date,
+                                            date_usec,
+                                            tags,
+                                            "%s", message);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(print_y)
 {
     Tcl_Obj *objp;
@@ -2330,6 +2362,42 @@ API_FUNC(print_y_date_tags)
                                           (time_t)date,
                                           tags,
                                           "%s", message);
+
+    API_RETURN_OK;
+}
+
+API_FUNC(print_y_datetime_tags)
+{
+    Tcl_Obj *objp;
+    char *buffer, *tags, *message;
+    int i, y, date_usec;
+    long date;
+
+    API_INIT_FUNC(1, "print_y_datetime_tags", API_RETURN_ERROR);
+    if (objc < 7)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    if (Tcl_GetIntFromObj (interp, objv[2], &y) != TCL_OK)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    if (Tcl_GetLongFromObj (interp, objv[3], &date) != TCL_OK)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    if (Tcl_GetIntFromObj (interp, objv[4], &date_usec) != TCL_OK)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    tags = Tcl_GetStringFromObj (objv[5], &i);
+    message = Tcl_GetStringFromObj (objv[6], &i);
+
+    plugin_script_api_printf_y_datetime_tags (weechat_tcl_plugin,
+                                              tcl_current_script,
+                                              API_STR2PTR(buffer),
+                                              y,
+                                              (time_t)date,
+                                              date_usec,
+                                              tags,
+                                              "%s", message);
 
     API_RETURN_OK;
 }
@@ -3097,7 +3165,7 @@ API_FUNC(hook_line)
 int
 weechat_tcl_api_hook_print_cb (const void *pointer, void *data,
                                struct t_gui_buffer *buffer,
-                               time_t date,
+                               time_t date, int date_usec,
                                int tags_count, const char **tags,
                                int displayed, int highlight,
                                const char *prefix, const char *message)
@@ -3110,6 +3178,7 @@ weechat_tcl_api_hook_print_cb (const void *pointer, void *data,
     int *rc, ret;
 
     /* make C compiler happy */
+    (void) date_usec;
     (void) tags_count;
 
     script = (struct t_plugin_script *)pointer;
@@ -6118,8 +6187,10 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(color);
     API_DEF_FUNC(print);
     API_DEF_FUNC(print_date_tags);
+    API_DEF_FUNC(print_datetime_tags);
     API_DEF_FUNC(print_y);
     API_DEF_FUNC(print_y_date_tags);
+    API_DEF_FUNC(print_y_datetime_tags);
     API_DEF_FUNC(log_print);
     API_DEF_FUNC(hook_command);
     API_DEF_FUNC(hook_completion);

@@ -2107,6 +2107,33 @@ API_FUNC(print_date_tags)
     API_RETURN_OK;
 }
 
+API_FUNC(print_datetime_tags)
+{
+    const char *buffer, *tags, *message;
+    long date;
+    int date_usec;
+
+    API_INIT_FUNC(1, "print_datetime_tags", API_RETURN_ERROR);
+    if (lua_gettop (L) < 5)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    buffer = lua_tostring (L, -5);
+    date = lua_tonumber (L, -4);
+    date_usec = lua_tonumber (L, -3);
+    tags = lua_tostring (L, -2);
+    message = lua_tostring (L, -1);
+
+    plugin_script_api_printf_datetime_tags (weechat_lua_plugin,
+                                            lua_current_script,
+                                            API_STR2PTR(buffer),
+                                            (time_t)date,
+                                            date_usec,
+                                            tags,
+                                            "%s", message);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(print_y)
 {
     const char *buffer, *message;
@@ -2152,6 +2179,35 @@ API_FUNC(print_y_date_tags)
                                           (time_t)date,
                                           tags,
                                           "%s", message);
+
+    API_RETURN_OK;
+}
+
+API_FUNC(print_y_datetime_tags)
+{
+    const char *buffer, *tags, *message;
+    int y, date_usec;
+    long date;
+
+    API_INIT_FUNC(1, "print_y_datetime_tags", API_RETURN_ERROR);
+    if (lua_gettop (L) < 6)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    buffer = lua_tostring (L, -6);
+    y = lua_tonumber (L, -5);
+    date = lua_tonumber (L, -4);
+    date_usec = lua_tonumber (L, -3);
+    tags = lua_tostring (L, -2);
+    message = lua_tostring (L, -1);
+
+    plugin_script_api_printf_y_datetime_tags (weechat_lua_plugin,
+                                              lua_current_script,
+                                              API_STR2PTR(buffer),
+                                              y,
+                                              (time_t)date,
+                                              date_usec,
+                                              tags,
+                                              "%s", message);
 
     API_RETURN_OK;
 }
@@ -2891,7 +2947,7 @@ API_FUNC(hook_line)
 int
 weechat_lua_api_hook_print_cb (const void *pointer, void *data,
                                struct t_gui_buffer *buffer,
-                               time_t date,
+                               time_t date, int date_usec,
                                int tags_count, const char **tags,
                                int displayed, int highlight,
                                const char *prefix, const char *message)
@@ -2904,6 +2960,7 @@ weechat_lua_api_hook_print_cb (const void *pointer, void *data,
     int *rc, ret;
 
     /* make C compiler happy */
+    (void) date_usec;
     (void) tags_count;
 
     script = (struct t_plugin_script *)pointer;
@@ -5662,8 +5719,10 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(color),
     API_DEF_FUNC(print),
     API_DEF_FUNC(print_date_tags),
+    API_DEF_FUNC(print_datetime_tags),
     API_DEF_FUNC(print_y),
     API_DEF_FUNC(print_y_date_tags),
+    API_DEF_FUNC(print_y_datetime_tags),
     API_DEF_FUNC(log_print),
     API_DEF_FUNC(hook_command),
     API_DEF_FUNC(hook_completion),

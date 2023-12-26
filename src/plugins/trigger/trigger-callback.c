@@ -1143,13 +1143,14 @@ end:
 int
 trigger_callback_print_cb  (const void *pointer, void *data,
                             struct t_gui_buffer *buffer,
-                            time_t date, int tags_count, const char **tags,
+                            time_t date, int date_usec,
+                            int tags_count, const char **tags,
                             int displayed, int highlight, const char *prefix,
                             const char *message)
 {
     char *str_tags, *str_tags2, str_temp[128], *str_no_color;
     int length;
-    struct tm *date_tmp;
+    struct timeval tv;
 
     TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
@@ -1166,14 +1167,10 @@ trigger_callback_print_cb  (const void *pointer, void *data,
     /* add data in hashtables used for conditions/replace/command */
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     weechat_hashtable_set (ctx.pointers, "buffer", buffer);
-    date_tmp = localtime (&date);
-    if (date_tmp)
-    {
-        if (strftime (str_temp, sizeof (str_temp),
-                      "%Y-%m-%d %H:%M:%S", date_tmp) == 0)
-            str_temp[0] = '\0';
-        weechat_hashtable_set (ctx.extra_vars, "tg_date", str_temp);
-    }
+    tv.tv_sec = date;
+    tv.tv_usec = date_usec;
+    weechat_util_strftimeval (str_temp, sizeof (str_temp), "%FT%T.%f", &tv);
+    weechat_hashtable_set (ctx.extra_vars, "tg_date", str_temp);
     snprintf (str_temp, sizeof (str_temp), "%d", displayed);
     weechat_hashtable_set (ctx.extra_vars, "tg_displayed", str_temp);
     snprintf (str_temp, sizeof (str_temp), "%d", highlight);
@@ -1313,8 +1310,7 @@ trigger_callback_timer_cb  (const void *pointer, void *data,
 {
     char str_temp[128];
     int i;
-    time_t date;
-    struct tm *date_tmp;
+    struct timeval tv_now;
 
     TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
@@ -1337,15 +1333,9 @@ trigger_callback_timer_cb  (const void *pointer, void *data,
     trigger_callback_set_common_vars (trigger, ctx.extra_vars);
     snprintf (str_temp, sizeof (str_temp), "%d", remaining_calls);
     weechat_hashtable_set (ctx.extra_vars, "tg_remaining_calls", str_temp);
-    date = time (NULL);
-    date_tmp = localtime (&date);
-    if (date_tmp)
-    {
-        if (strftime (str_temp, sizeof (str_temp),
-                      "%Y-%m-%d %H:%M:%S", date_tmp) == 0)
-            str_temp[0] = '\0';
-        weechat_hashtable_set (ctx.extra_vars, "tg_date", str_temp);
-    }
+    gettimeofday (&tv_now, NULL);
+    weechat_util_strftimeval (str_temp, sizeof (str_temp), "%FT%T.%f", &tv_now);
+    weechat_hashtable_set (ctx.extra_vars, "tg_date", str_temp);
 
     /* execute the trigger (conditions, regex, command) */
     if (!trigger_callback_execute (trigger, &ctx))

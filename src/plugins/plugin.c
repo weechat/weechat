@@ -694,6 +694,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->util_timeval_diff = &util_timeval_diff;
         new_plugin->util_timeval_add = &util_timeval_add;
         new_plugin->util_get_time_string = &util_get_time_string;
+        new_plugin->util_strftimeval = &util_strftimeval;
         new_plugin->util_version_number = &util_version_number;
 
         new_plugin->list_new = &weelist_new;
@@ -789,8 +790,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
 
         new_plugin->prefix = &plugin_api_prefix;
         new_plugin->color = &plugin_api_color;
-        new_plugin->printf_date_tags = &gui_chat_printf_date_tags;
-        new_plugin->printf_y_date_tags = &gui_chat_printf_y_date_tags;
+        new_plugin->printf_datetime_tags = &gui_chat_printf_datetime_tags;
+        new_plugin->printf_y_datetime_tags = &gui_chat_printf_y_datetime_tags;
         new_plugin->log_printf = &log_printf;
 
         new_plugin->hook_command = &hook_command;

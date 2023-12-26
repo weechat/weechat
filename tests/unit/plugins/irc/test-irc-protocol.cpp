@@ -28,6 +28,7 @@ extern "C"
 {
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include "src/core/wee-arraylist.h"
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-hashtable.h"
@@ -56,6 +57,8 @@ extern const char *irc_protocol_nick_address (struct t_irc_server *server,
                                               struct t_irc_nick *nick,
                                               const char *nickname,
                                               const char *address);
+extern void irc_protocol_parse_time (const char *time, time_t *date,
+                                     int *date_usec);
 extern char *irc_protocol_string_params (const char **params,
                                          int arg_start, int arg_end);
 extern char *irc_protocol_cap_to_enable (const char *capabilities,
@@ -88,6 +91,14 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
         STRCMP_EQUAL(__result, irc_protocol_tags (&ctxt,                \
                                                       __extra_tags));   \
     }
+
+#define WEE_CHECK_PARSE_TIME(__result_date, __result_date_usec,         \
+                             __time)                                    \
+    date = 1;                                                           \
+    date_usec = 1;                                                      \
+    irc_protocol_parse_time (__time, &date, &date_usec);                \
+    LONGS_EQUAL(__result_date, date);                                   \
+    LONGS_EQUAL(__result_date_usec, date_usec);
 
 #define WEE_CHECK_CAP_TO_ENABLE(__result, __string, __sasl_requested)   \
     str = irc_protocol_cap_to_enable (__string, __sasl_requested);      \
@@ -589,25 +600,36 @@ TEST(IrcProtocolWithServer, Tags)
 
 TEST(IrcProtocol, ParseTime)
 {
+    time_t date;
+    int date_usec;
+
     /* invalid time formats */
-    LONGS_EQUAL(0, irc_protocol_parse_time (NULL));
-    LONGS_EQUAL(0, irc_protocol_parse_time (""));
-    LONGS_EQUAL(0, irc_protocol_parse_time ("invalid"));
+    WEE_CHECK_PARSE_TIME(0, 0, NULL);
+    WEE_CHECK_PARSE_TIME(0, 0, "");
+    WEE_CHECK_PARSE_TIME(0, 0, "invalid");
 
     /* incomplete time formats */
-    LONGS_EQUAL(0, irc_protocol_parse_time ("2019-01"));
-    LONGS_EQUAL(0, irc_protocol_parse_time ("2019-01-13"));
-    LONGS_EQUAL(0, irc_protocol_parse_time ("2019-01-13T14"));
-    LONGS_EQUAL(0, irc_protocol_parse_time ("2019-01-13T14:37"));
+    WEE_CHECK_PARSE_TIME(0, 0, "2019-01");
+    WEE_CHECK_PARSE_TIME(0, 0, "2019-01-13");
+    WEE_CHECK_PARSE_TIME(0, 0, "2019-01-13T14");
+    WEE_CHECK_PARSE_TIME(0, 0, "2019-01-13T14:37");
 
     /* valid time with ISO 8601 format*/
-    LONGS_EQUAL(1547386699, irc_protocol_parse_time ("2019-01-13T13:38:19.123Z"));
-    LONGS_EQUAL(1547386699, irc_protocol_parse_time ("2019-01-13T13:38:19.123"));
-    LONGS_EQUAL(1547386699, irc_protocol_parse_time ("2019-01-13T13:38:19"));
+    WEE_CHECK_PARSE_TIME(1547386699, 0, "2019-01-13T13:38:19");
+    WEE_CHECK_PARSE_TIME(1547386699, 0, "2019-01-13T13:38:19Z");
+    WEE_CHECK_PARSE_TIME(1547386699, 123, "2019-01-13T13:38:19.000123");
+    WEE_CHECK_PARSE_TIME(1547386699, 123, "2019-01-13T13:38:19.000123Z");
+    WEE_CHECK_PARSE_TIME(1547386699, 123000, "2019-01-13T13:38:19.123");
+    WEE_CHECK_PARSE_TIME(1547386699, 123000, "2019-01-13T13:38:19.123Z");
+    WEE_CHECK_PARSE_TIME(1547386699, 123456, "2019-01-13T13:38:19.123456");
+    WEE_CHECK_PARSE_TIME(1547386699, 123456, "2019-01-13T13:38:19.123456789");
 
     /* valid time as timestamp */
-    LONGS_EQUAL(1547386699, irc_protocol_parse_time ("1547386699.123"));
-    LONGS_EQUAL(1547386699, irc_protocol_parse_time ("1547386699"));
+    WEE_CHECK_PARSE_TIME(1547386699, 0, "1547386699");
+    WEE_CHECK_PARSE_TIME(1547386699, 123, "1547386699.000123");
+    WEE_CHECK_PARSE_TIME(1547386699, 123000, "1547386699.123");
+    WEE_CHECK_PARSE_TIME(1547386699, 123456, "1547386699.123456");
+    WEE_CHECK_PARSE_TIME(1547386699, 123456, "1547386699.123456789");
 }
 
 /*

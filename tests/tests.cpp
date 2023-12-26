@@ -118,14 +118,16 @@ exec_on_files_cb (void *data, const char *filename)
 
 int
 test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
-               time_t date, int tags_count, const char **tags, int displayed,
-               int highlight, const char *prefix, const char *message)
+               time_t date, int date_usec, int tags_count, const char **tags,
+               int displayed, int highlight,
+               const char *prefix, const char *message)
 {
     /* make C++ compiler happy */
     (void) pointer;
     (void) data;
     (void) buffer;
     (void) date;
+    (void) date_usec;
     (void) tags_count;
     (void) tags;
     (void) displayed;

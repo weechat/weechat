@@ -5415,7 +5415,7 @@ type:
 | signal         | tg_signal_data     |
 | hsignal        |                    |
 | modifier       | tg_string          | tg_string
-| line           | message            | buffer、buffer_name、y、date、date_printed、str_time、tags、notify_level、highlight、prefix、message
+| line           | message            | buffer、buffer_name、y、date、date_usec、date_printed、date_usec_printed、str_time、tags、notify_level、highlight、prefix、message
 | print          | tg_message         |
 | command        | tg_argv_eol1       |
 | command_run    | tg_command         |
@@ -5575,7 +5575,11 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 | buffer_type        | string  | バッファ型 ("formatted" または "free")
 | y                  | string  | 自由内容バッファの行番号 (≥ 0)、-1 はフォーマット済みバッファ用
 | date               | string  | 行の日付 (タイムスタンプ)
+// TRANSLATION MISSING
+| date_usec          | string  | Microseconds of line date.
 | date_printed       | string  | 行が表示される日付 (タイムスタンプ).
+// TRANSLATION MISSING
+| date_usec_printed  | string  | Microseconds of date when line was displayed.
 | str_time           | string  | 表示に使う日付、色コードを含めることも可能
 | tags               | string  | メッセージのタグ (文字列の最初と最後にコンマが追加されます)
 | displayed          | string  | "1" の場合は表示、"0" の場合は非表示
@@ -5617,7 +5621,8 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 |===
 | 変数               | 型      | 説明
 | buffer             | pointer | メッセージが表示されたバッファ
-| tg_date            | string  | メッセージの日付と時間 (書式: `YYYY-MM-DD hh:mm:ss`)
+// TRANSLATION MISSING
+| tg_date            | string  | メッセージの日付と時間 (書式: `%FT%T.%f`, see link:weechat_plugin_api.ja.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]).
 | tg_displayed       | string  | 表示された場合 "1"、フィルタされた場合 "0"
 | tg_highlight       | string  | ハイライトされた場合 "1"、それ以外は "0"
 | tg_prefix          | string  | プレフィックス
@@ -5689,7 +5694,8 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 |===
 | 変数               | 型     | 説明
 | tg_remaining_calls | string | 残り呼び出し回数
-| tg_date            | string | 現在の日付および時間 (書式: `YYYY-MM-DD hh:mm:ss`)
+// TRANSLATION MISSING
+| tg_date            | string | 現在の日付および時間 (書式: `%FT%T.%f`, see link:weechat_plugin_api.ja.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]).
 |===
 
 [[trigger_data_config]]

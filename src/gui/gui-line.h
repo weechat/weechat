@@ -35,7 +35,9 @@ struct t_gui_line_data
                                        /* free buffer: equals to "y"        */
     int y;                             /* line position (for free buffer)   */
     time_t date;                       /* date/time of line (may be past)   */
+    int date_usec;                     /* microseconds for date             */
     time_t date_printed;               /* date/time when weechat print it   */
+    int date_usec_printed;             /* microseconds for date printed     */
     char *str_time;                    /* time string (for display)         */
     int tags_count;                    /* number of tags for line           */
     char **tags_array;                 /* tags for line                     */
@@ -124,7 +126,9 @@ extern void gui_line_set_highlight (struct t_gui_line *line,
 extern struct t_gui_line *gui_line_new (struct t_gui_buffer *buffer,
                                         int y,
                                         time_t date,
+                                        int date_usec,
                                         time_t date_printed,
+                                        int date_usec_printed,
                                         const char *tags,
                                         const char *prefix,
                                         const char *message);

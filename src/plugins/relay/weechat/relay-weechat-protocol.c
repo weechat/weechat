@@ -1143,11 +1143,11 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
                           "line_data:0x%lx",
                           (unsigned long)ptr_line_data);
-                relay_weechat_msg_add_hdata (msg, cmd_hdata,
-                                             "buffer,date,date_printed,"
-                                             "displayed,notify_level,"
-                                             "highlight,tags_array,prefix,"
-                                             "message");
+                relay_weechat_msg_add_hdata (
+                    msg, cmd_hdata,
+                    "buffer,date,date_usec,date_printed,date_usec_printed,"
+                    "displayed,notify_level,highlight,tags_array,"
+                    "prefix,message");
                 relay_weechat_msg_send (ptr_client, msg);
                 relay_weechat_msg_free (msg);
             }

@@ -122,10 +122,10 @@ extern struct t_hashtable *trigger_callback_line_cb  (const void *pointer, void 
                                                       struct t_hashtable *line);
 extern int trigger_callback_print_cb  (const void *pointer, void *data,
                                        struct t_gui_buffer *buffer,
-                                       time_t date, int tags_count,
-                                       const char **tags, int displayed,
-                                       int highlight, const char *prefix,
-                                       const char *message);
+                                       time_t date, int date_usec,
+                                       int tags_count, const char **tags,
+                                       int displayed, int highlight,
+                                       const char *prefix, const char *message);
 extern int trigger_callback_command_cb  (const void *pointer,
                                          void *data,
                                          struct t_gui_buffer *buffer,

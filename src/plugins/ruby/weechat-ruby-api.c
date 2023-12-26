@@ -2487,6 +2487,43 @@ weechat_ruby_api_print_date_tags (VALUE class, VALUE buffer, VALUE date,
 }
 
 static VALUE
+weechat_ruby_api_print_datetime_tags (VALUE class, VALUE buffer, VALUE date,
+                                      VALUE date_usec, VALUE tags,
+                                      VALUE message)
+{
+    char *c_buffer, *c_tags, *c_message;
+    time_t c_date;
+    int c_date_usec;
+
+    API_INIT_FUNC(1, "print_datetime_tags", API_RETURN_ERROR);
+    if (NIL_P (buffer) || NIL_P (date) || NIL_P (date_usec) || NIL_P (tags)
+        || NIL_P (message))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    Check_Type (buffer, T_STRING);
+    CHECK_INTEGER(date);
+    CHECK_INTEGER(date_usec);
+    Check_Type (tags, T_STRING);
+    Check_Type (message, T_STRING);
+
+    c_buffer = StringValuePtr (buffer);
+    c_date = NUM2ULONG (date);
+    c_date_usec = NUM2INT (date_usec);
+    c_tags = StringValuePtr (tags);
+    c_message = StringValuePtr (message);
+
+    plugin_script_api_printf_datetime_tags (weechat_ruby_plugin,
+                                            ruby_current_script,
+                                            API_STR2PTR(c_buffer),
+                                            c_date,
+                                            c_date_usec,
+                                            c_tags,
+                                            "%s", c_message);
+
+    API_RETURN_OK;
+}
+
+static VALUE
 weechat_ruby_api_print_y (VALUE class, VALUE buffer, VALUE y, VALUE message)
 {
     char *c_buffer, *c_message;
@@ -2545,6 +2582,46 @@ weechat_ruby_api_print_y_date_tags (VALUE class, VALUE buffer, VALUE y,
                                           c_date,
                                           c_tags,
                                           "%s", c_message);
+
+    API_RETURN_OK;
+}
+
+static VALUE
+weechat_ruby_api_print_y_datetime_tags (VALUE class, VALUE buffer, VALUE y,
+                                        VALUE date, VALUE date_usec, VALUE tags,
+                                        VALUE message)
+{
+    char *c_buffer, *c_tags, *c_message;
+    int c_y, c_date_usec;
+    time_t c_date;
+
+    API_INIT_FUNC(1, "print_y_datetime_tags", API_RETURN_ERROR);
+    if (NIL_P (buffer) || NIL_P (y) || NIL_P (date) || NIL_P (date_usec)
+        || NIL_P (tags) || NIL_P (message))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    Check_Type (buffer, T_STRING);
+    CHECK_INTEGER(y);
+    CHECK_INTEGER(date);
+    CHECK_INTEGER(date_usec);
+    Check_Type (tags, T_STRING);
+    Check_Type (message, T_STRING);
+
+    c_buffer = StringValuePtr (buffer);
+    c_y = NUM2INT (y);
+    c_date = NUM2ULONG (date);
+    c_date_usec = NUM2INT (date_usec);
+    c_tags = StringValuePtr (tags);
+    c_message = StringValuePtr (message);
+
+    plugin_script_api_printf_y_datetime_tags (weechat_ruby_plugin,
+                                              ruby_current_script,
+                                              API_STR2PTR(c_buffer),
+                                              c_y,
+                                              c_date,
+                                              c_date_usec,
+                                              c_tags,
+                                              "%s", c_message);
 
     API_RETURN_OK;
 }
@@ -3400,7 +3477,7 @@ weechat_ruby_api_hook_line (VALUE class, VALUE buffer_type, VALUE buffer_name,
 int
 weechat_ruby_api_hook_print_cb (const void *pointer, void *data,
                                 struct t_gui_buffer *buffer,
-                                time_t date,
+                                time_t date, int date_usec,
                                 int tags_count, const char **tags,
                                 int displayed, int highlight,
                                 const char *prefix, const char *message)
@@ -3413,6 +3490,7 @@ weechat_ruby_api_hook_print_cb (const void *pointer, void *data,
     int *rc, ret;
 
     /* make C compiler happy */
+    (void) date_usec;
     (void) tags_count;
 
     script = (struct t_plugin_script *)pointer;
@@ -6838,8 +6916,10 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(color, 1);
     API_DEF_FUNC(print, 2);
     API_DEF_FUNC(print_date_tags, 4);
+    API_DEF_FUNC(print_datetime_tags, 5);
     API_DEF_FUNC(print_y, 3);
     API_DEF_FUNC(print_y_date_tags, 5);
+    API_DEF_FUNC(print_y_datetime_tags, 6);
     API_DEF_FUNC(log_print, 1);
     API_DEF_FUNC(hook_command, 7);
     API_DEF_FUNC(hook_completion, 4);

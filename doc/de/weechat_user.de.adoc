@@ -5284,7 +5284,7 @@ Wenn _var_ nicht angegeben ist, wird die Standardvariable verwendet, sie hängt 
 | signal         | tg_signal_data     |
 | hsignal        |                    |
 | modifier       | tg_string          | tg_string
-| line           | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| line           | message            | buffer, buffer_name, y, date, date_usec, date_printed, date_usec_printed, str_time, tags, notify_level, highlight, prefix, message
 | print          | tg_message         |
 | command        | tg_argv_eol1       |
 | command_run    | tg_command         |
@@ -5447,7 +5447,11 @@ Der Callback von "line" legt folgende Variablen in der Hashtable an:
 | buffer_type        | string  | Buffertyp ("formatted" oder "free").
 | y                  | string  | Zeilennummer bei einem Buffer mit freier Einteilung (≥ 0), -1 für einen Buffer mit formatiertem Inhalt.
 | date               | string  | Datum der Zeile (Zeitstempel).
+// TRANSLATION MISSING
+| date_usec          | string  | Microseconds of line date.
 | date_printed       | string  | Datum wann die Zeile dargestellt wurde (Zeitstempel).
+// TRANSLATION MISSING
+| date_usec_printed  | string  | Microseconds of date when line was displayed.
 | str_time           | string  | Datum für Darstellung. Kann Farbkodierungen erhalten.
 | tags               | string  | Tags einer Nachricht (Komma wird automatisch zu Beginn und Ende den Tags hinzugefügt).
 | displayed          | string  | "1" wenn Zeile dargestellt wird, "0" wenn Zeile gefiltert wird.
@@ -5486,7 +5490,8 @@ Der Callback von "print" legt folgende Variablen in der Hashtable an:
 |===
 | Variable           | Typ     | Beschreibung
 | buffer             | pointer | Buffer.
-| tg_date            | string  | Datum/Uhrzeit der Nachricht (Format: `YYYY-MM-DD hh:mm:ss`).
+// TRANSLATION MISSING
+| tg_date            | string  | Datum/Uhrzeit der Nachricht (Format: `%FT%T.%f`, see link:weechat_plugin_api.en.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]).
 | tg_displayed       | string  | "1" wenn Nachricht dargestellt wird, "0" falls Nachricht gefiltert wird.
 | tg_highlight       | string  | "1" falls es sich um eine Highlight-Nachricht handelt, andernfalls "0".
 | tg_prefix          | string  | Präfix.
@@ -5551,7 +5556,8 @@ Der Callback von "timer" legt folgende Variablen in der Hashtable an:
 |===
 | Variable           | Typ    | Beschreibung
 | tg_remaining_calls | string | Anzahl der noch ausstehenden Aufrufe.
-| tg_date            | string | aktuelles Datum und Uhrzeit (Format: `YYYY-MM-DD hh:mm:ss`).
+// TRANSLATION MISSING
+| tg_date            | string | aktuelles Datum und Uhrzeit (Format: `%FT%T.%f`, see link:weechat_plugin_api.en.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]).
 |===
 
 [[trigger_data_config]]

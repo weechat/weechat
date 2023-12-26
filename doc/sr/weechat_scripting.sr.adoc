@@ -610,8 +610,10 @@ weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
   color +
   print (за python: prnt) +
   print_date_tags (за python: prnt_date_tags) +
+  print_datetime_tags (за python: prnt_datetime_tags) +
   print_y (за python: prnt_y) +
   print_y_date_tags (за python: prnt_y_date_tags) +
+  print_y_datetime_tags (за python: prnt_y_datetime_tags) +
   log_print
 
 | куке

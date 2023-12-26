@@ -168,7 +168,9 @@ hook_line_exec (struct t_gui_line *line)
                               gui_buffer_type_string[line->data->buffer->type]);
             HASHTABLE_SET_INT("y", line->data->y);
             HASHTABLE_SET_TIME("date", line->data->date);
+            HASHTABLE_SET_INT("date_usec", line->data->date_usec);
             HASHTABLE_SET_TIME("date_printed", line->data->date_printed);
+            HASHTABLE_SET_INT("date_usec_printed", line->data->date_usec_printed);
             HASHTABLE_SET_STR_NOT_NULL("str_time", line->data->str_time);
             HASHTABLE_SET_INT("tags_count", line->data->tags_count);
             str_tags = string_rebuild_split_string (
