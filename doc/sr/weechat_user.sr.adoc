@@ -4915,7 +4915,7 @@ y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
 | signal         | tg_signal_data     |
 | hsignal        |                    |
 | modifier       | tg_string          | tg_string
-| line           | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| line           | message            | buffer, buffer_name, y, date, date_usec, date_printed, date_usec_printed, str_time, tags, notify_level, highlight, prefix, message
 | print          | tg_message         |
 | command        | tg_argv_eol1       |
 | command_run    | tg_command         |
@@ -5064,7 +5064,11 @@ ${buffer[${tg_signal_data}].full_name}
 | buffer_type        | стринг    | Тип бафера („formatted” или „free”).
 | y                  | стринг    | Број линије за бафер са слободним садржајем (≥ 0), -1 за бафер са форматираним садржајем.
 | date               | стринг    | Датум линије (временска ознака).
+// TRANSLATION MISSING
+| date_usec          | стринг    | Microseconds of line date.
 | date_printed       | стринг    | Датум када је линија била приказана (временска ознака).
+// TRANSLATION MISSING
+| date_usec_printed  | стринг    | Microseconds of date when line was displayed.
 | str_time           | стринг    | Датум за приказ. Може да садржи кодове боја.
 | tags               | стринг    | Ознаке поруке (са запетом додатом на почетак/крај стринга).
 | displayed          | стринг    | „1” ако се приказује, „0” ако је линија филтрирана.
@@ -5103,7 +5107,8 @@ ${buffer[${tg_signal_data}].full_name}
 |===
 | Променљива         | Тип       | Опис
 | buffer             | показивач | Бафер.
-| tg_date            | стринг    | Датум/време поруке (формат: `ГГГГ-ММ-ДД чч:мм:сс`).
+// TRANSLATION MISSING
+| tg_date            | стринг    | Датум/време поруке (формат: `%FT%T.%f`, see link:weechat_plugin_api.sr.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]).
 | tg_displayed       | стринг    | „1” ако се приказује, „0” ако се линија филтрира.
 | tg_highlight       | стринг    | „1” ако је истакнута, у супротном „0”.
 | tg_prefix          | стринг    | Префикс.
@@ -5168,7 +5173,8 @@ ${buffer[${tg_signal_data}].full_name}
 |===
 | Променљива         | Тип    | Опис
 | tg_remaining_calls | стринг | Број преосталих позива.
-| tg_date            | стринг | Текући датум/време (формат: `ГГГГ-ММ-ДД чч:мм:сс`).
+// TRANSLATION MISSING
+| tg_date            | стринг | Текући датум/време (формат: `%FT%T.%f`, see link:weechat_plugin_api.sr.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]).
 |===
 
 [[trigger_data_config]]

@@ -4696,6 +4696,47 @@ weechat_printf (NULL, "date: %s",
 [NOTE]
 This function is not available in scripting API.
 
+==== util_strftimeval
+
+_WeeChat ≥ 4.2.0._
+
+Format date and time like function `strftime` in C library, using `struct timeval`
+as input, and supporting extra specifiers for microseconds.
+
+Prototype:
+
+[source,c]
+----
+int weechat_util_strftimeval (char *string, int max, const char *format, struct timeval *tv);
+----
+
+Arguments:
+
+* _string_: buffer where the formatted string is stored
+* _max_: string size
+* _format_: format, the same as _strftime_ function, with these extra specifiers:
+** `%.N` where `N` is between 1 and 6: zero-padded microseconds on N digits
+   (for example `%.3` for milliseconds)
+** `%f`: alias of `%.6`
+
+Return value:
+
+* number of bytes put in _string_ (value returned from _strftime_ function)
+
+C example:
+
+[source,c]
+----
+char time[256];
+struct timeval tv;
+gettimeofday (&tv, NULL);
+weechat_util_strftimeval (time, sizeof (time), "%FT%T.%f", &tv);
+/* result: 2023-12-26T18:10:04.460509 */
+----
+
+[NOTE]
+This function is not available in scripting API.
+
 ==== util_version_number
 
 _WeeChat ≥ 0.3.9._
@@ -9270,13 +9311,13 @@ Prototype:
 void weechat_printf (struct t_gui_buffer *buffer, const char *message, ...);
 ----
 
-This function is a shortcut for function printf_date_tags. These two calls give
-exactly same result:
+This function is a shortcut for function printf_datetime_tags. +
+These two calls give exactly same result:
 
 [source,c]
 ----
 weechat_printf (buffer, "message");
-weechat_printf_date_tags (buffer, 0, NULL, "message");
+weechat_printf_datetime_tags (buffer, 0, 0, NULL, "message");
 ----
 
 Arguments:
@@ -9338,6 +9379,15 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                                const char *tags, const char *message, ...);
 ----
 
+This function is a shortcut for function printf_datetime_tags. +
+These two calls give exactly same result:
+
+[source,c]
+----
+weechat_printf_date_tags (buffer, 0, NULL, "message");
+weechat_printf_datetime_tags (buffer, 0, 0, NULL, "message");
+----
+
 Arguments:
 
 * _buffer_: buffer pointer, if NULL, message is displayed on WeeChat buffer
@@ -9372,6 +9422,62 @@ weechat.prnt_date_tags("", time - 120, "notify_message",
 [NOTE]
 Function is called "print_date_tags" in scripts ("prnt_date_tags" in Python).
 
+==== printf_datetime_tags
+
+_WeeChat ≥ 4.2.0._
+
+Display a message on a buffer, using a custom date/time (with microseconds)
+and tags.
+
+Prototype:
+
+[source,c]
+----
+void weechat_printf_datetime_tags (struct t_gui_buffer *buffer, time_t date,
+                                   int date_usec, const char *tags, const char *message, ...);
+----
+
+Arguments:
+
+* _buffer_: buffer pointer, if NULL, message is displayed on WeeChat buffer
+* _date_: date for message (0 means current date/time)
+* _date_usec_: microseconds of date (between 0 and 999999)
+* _tags_: comma separated list of tags (NULL means no tags)
+* _message_: message to display
+
+See the link:weechat_user.en.html#lines_tags[WeeChat user's guide / Lines tags ^↗^^]
+for a list of commonly used tags in WeeChat.
+
+C example:
+
+[source,c]
+----
+struct timeval tv_now;
+
+gettimeofday (&tv_now, NULL);
+weechat_printf_datetime_tags (NULL, tv_now.tv_sec - 120, tv_now.tv_usec,
+                              "notify_message",
+                              "Message 2 minutes ago, with a tag 'notify_message'");
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+def prnt_datetime_tags(buffer: str, date: int, date_usec: int, tags: str, message: str) -> int: ...
+
+# example
+now = time.time()
+time_sec = int(now)
+time_usec = int((now * 1000000) % 1000000)
+weechat.prnt_datetime_tags("", time_sec - 120, time_usec, "notify_message",
+                           "Message 2 minutes ago, with a tag 'notify_message'")
+----
+
+[NOTE]
+Function is called "print_datetime_tags" in scripts ("prnt_datetime_tags" in Python).
+
 ==== printf_y
 
 Display a message on a line of a buffer with free content.
@@ -9380,8 +9486,16 @@ Prototype:
 
 [source,c]
 ----
-void weechat_printf_y (struct t_gui_buffer *buffer, int y,
-                       const char *message, ...);
+void weechat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...);
+----
+
+This function is a shortcut for function printf_y_datetime_tags. +
+These two calls give exactly same result:
+
+[source,c]
+----
+weechat_printf_y (buffer, 0, "message");
+weechat_printf_y_datetime_tags (buffer, 0, 0, 0, NULL, "message");
 ----
 
 Arguments:
@@ -9429,6 +9543,15 @@ void weechat_printf_y_date_tags (struct t_gui_buffer *buffer, int y, time_t date
                                  const char *tags, const char *message, ...);
 ----
 
+This function is a shortcut for function printf_y_datetime_tags. +
+These two calls give exactly same result:
+
+[source,c]
+----
+weechat_printf_y_date_tags (buffer, 0, 0, NULL, "message");
+weechat_printf_y_datetime_tags (buffer, 0, 0, 0, NULL, "message");
+----
+
 Arguments:
 
 * _buffer_: buffer pointer
@@ -9459,6 +9582,53 @@ weechat.prnt_y_date_tags("", 2, 0, "my_tag", "My message on third line with a ta
 
 [NOTE]
 Function is called "print_y_date_tags" in scripts ("prnt_y_date_tags" in Python).
+
+==== printf_y_datetime_tags
+
+_WeeChat ≥ 4.2.0._
+
+Display a message on a line of a buffer with free content, using a custom
+date/time (with microseconds) and tags.
+
+Prototype:
+
+[source,c]
+----
+void weechat_printf_y_datetime_tags (struct t_gui_buffer *buffer, int y, time_t date,
+                                     int date_usec, const char *tags, const char *message, ...);
+----
+
+Arguments:
+
+* _buffer_: buffer pointer
+* _y_: line number (first line is 0); a negative value adds a line after last
+  line displayed: absolute value of _y_ is the number of lines after last line
+  (for example -1 is immediately after last line, -2 is 2 lines after last line)
+* _date_: date for message (0 means current date/time)
+* _date_usec_: microseconds of date (between 0 and 999999)
+* _tags_: comma separated list of tags (NULL means no tags)
+* _message_: message to display
+
+C example:
+
+[source,c]
+----
+weechat_printf_y_datetime_tags (buffer, 2, 0, 0, "my_tag", "My message on third line with a tag");
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+def prnt_y_datetime_tags(buffer: str, y: int, date: int, date_usec: int, tags: str, message: str) -> int: ...
+
+# example
+weechat.prnt_y_datetime_tags("", 2, 0, 0, "my_tag", "My message on third line with a tag")
+----
+
+[NOTE]
+Function is called "print_y_datetime_tags" in scripts ("prnt_y_datetime_tags" in Python).
 
 ==== log_printf
 
@@ -10823,7 +10993,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== hook_line
 
-_WeeChat ≥ 2.3, updated in 3.7._
+_WeeChat ≥ 2.3, updated in 4.2.0._
 
 Hook a line to be printed in a buffer.
 
@@ -10922,10 +11092,20 @@ Line data sent to the callback is a hashtable, with following values
 | N/A ("0").
 | `+1533792000+`
 
+| date_usec
+| Microseconds of line date (between 0 and 999999).
+| N/A ("0").
+| `+123456+`
+
 | date_printed
 | Date when line was displayed (timestamp).
 | N/A ("0").
 | `+1533792012+`
+
+| date_usec_printed
+| Microseconds of date when line was displayed (between 0 and 999999).
+| N/A ("0").
+| `+654321+`
 
 | str_time
 | Date for display (possible color codes inside).
@@ -11013,10 +11193,21 @@ in this hashtable):
 | The date is set to this value. +
   The value of `+str_time+` is updated accordingly.
 
+| date_usec
+| Integer ("0" to "999999").
+| N/A.
+| The microseconds of line date is set to this value. +
+  The value of `+str_time+` is updated accordingly.
+
 | date_printed
 | Timestamp.
 | N/A.
 | The printed date is set to this timestamp (not displayed).
+
+| date_usec_printed
+| Integer ("0" to "999999").
+| N/A.
+| The microseconds of printed date is set to this value.
 
 | str_time
 | String.
@@ -11098,7 +11289,7 @@ hook = weechat.hook_line("", "", "irc_join", "my_line_cb", "")
 
 ==== hook_print
 
-_Updated in 0.4.3, 1.0, 1.5._
+_Updated in 0.4.3, 1.0, 1.5, 4.2.0._
 
 Hook a message printed. It is called when a line has been added in a buffer
 with formatted content.
@@ -11118,6 +11309,7 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
                                                    void *data,
                                                    struct t_gui_buffer *buffer,
                                                    time_t date,
+                                                   int date_usec,
                                                    int tags_count,
                                                    const char **tags,
                                                    int displayed,
@@ -11147,6 +11339,7 @@ Arguments:
 ** _void *data_: pointer
 ** _struct t_gui_buffer *buffer_: buffer pointer
 ** _time_t date_: date
+** _int date_usec_: microseconds of date
 ** _int tags_count_: number of tags for line
 ** _const char **tags_: array with tags for line
 ** _int displayed_: 1 if line is displayed, 0 if it is filtered (hidden)
@@ -11177,7 +11370,7 @@ C example:
 ----
 int
 my_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
-             time_t date, int tags_count, const char **tags,
+             time_t date, int date_usec, int tags_count, const char **tags,
              int displayed, int highlight,
              const char *prefix, const char *message)
 {
@@ -13292,8 +13485,14 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 | _chat_line_date | Line date/time.
 | "1313237175" | "0"
 
+| _chat_line_date_usec | Microseconds of line date/time.
+| "123456" | "0"
+
 | _chat_line_date_printed | Line date/time ^(4)^.
 | "1313237175" | "0"
+
+| _chat_line_date_usec_printed | Microseconds of line printed date/time ^(4)^.
+| "123456" | "0"
 
 | _chat_line_time | Time displayed.
 | "14:06:15" | ""

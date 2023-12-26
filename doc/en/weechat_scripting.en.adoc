@@ -649,8 +649,10 @@ List of functions in script API:
   color +
   print (for python: prnt) +
   print_date_tags (for python: prnt_date_tags) +
+  print_datetime_tags (for python: prnt_datetime_tags) +
   print_y (for python: prnt_y) +
   print_y_date_tags (for python: prnt_y_date_tags) +
+  print_y_datetime_tags (for python: prnt_y_datetime_tags) +
   log_print
 
 | hooks

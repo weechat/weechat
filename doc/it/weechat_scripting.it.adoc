@@ -682,9 +682,13 @@ Elenco di funzioni nelle API per gli script:
 // TRANSLATION MISSING
   print_date_tags (for python: prnt_date_tags) +
 // TRANSLATION MISSING
+  print_datetime_tags (for python: prnt_datetime_tags) +
+// TRANSLATION MISSING
   print_y (for python: prnt_y) +
 // TRANSLATION MISSING
   print_y_date_tags (for python: prnt_y_date_tags) +
+// TRANSLATION MISSING
+  print_y_datetime_tags (for python: prnt_y_datetime_tags) +
   log_print
 
 | hook

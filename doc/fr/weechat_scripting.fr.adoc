@@ -670,8 +670,10 @@ Liste des fonctions de l'API script :
   color +
   print (pour python : prnt) +
   print_date_tags (pour python : prnt_date_tags) +
+  print_datetime_tags (pour python : prnt_datetime_tags) +
   print_y (pour python : prnt_y) +
   print_y_date_tags (pour python : prnt_y_date_tags) +
+  print_y_datetime_tags (pour python : prnt_y_datetime_tags) +
   log_print
 
 | hooks

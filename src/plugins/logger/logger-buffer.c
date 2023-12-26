@@ -27,6 +27,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <errno.h>
+#include <time.h>
+#include <sys/time.h>
 #include <sys/stat.h>
 
 #include "../weechat-plugin.h"
@@ -236,8 +238,7 @@ logger_buffer_create_log_file (struct t_logger_buffer *logger_buffer)
 {
     char *charset, *message, buf_time[256], buf_beginning[1024];
     int log_level, rc;
-    time_t seconds;
-    struct tm *date_tmp;
+    struct timeval tv_now;
     struct stat statbuf;
 
     if (logger_buffer->log_file)
@@ -311,16 +312,11 @@ logger_buffer_create_log_file (struct t_logger_buffer *logger_buffer)
     if (weechat_config_boolean (logger_config_file_info_lines)
         && logger_buffer->write_start_info_line)
     {
-        buf_time[0] = '\0';
-        seconds = time (NULL);
-        date_tmp = localtime (&seconds);
-        if (date_tmp)
-        {
-            if (strftime (buf_time, sizeof (buf_time) - 1,
-                          weechat_config_string (logger_config_file_time_format),
-                          date_tmp) == 0)
-                buf_time[0] = '\0';
-        }
+        gettimeofday (&tv_now, NULL);
+        weechat_util_strftimeval (
+            buf_time, sizeof (buf_time),
+            weechat_config_string (logger_config_file_time_format),
+            &tv_now);
         snprintf (buf_beginning, sizeof (buf_beginning),
                   _("%s\t****  Beginning of log  ****"),
                   buf_time);
@@ -663,8 +659,7 @@ logger_buffer_write_line (struct t_logger_buffer *logger_buffer,
 void
 logger_buffer_stop (struct t_logger_buffer *logger_buffer, int write_info_line)
 {
-    time_t seconds;
-    struct tm *date_tmp;
+    struct timeval tv_now;
     char buf_time[256];
 
     if (!logger_buffer)
@@ -674,16 +669,11 @@ logger_buffer_stop (struct t_logger_buffer *logger_buffer, int write_info_line)
     {
         if (write_info_line && weechat_config_boolean (logger_config_file_info_lines))
         {
-            buf_time[0] = '\0';
-            seconds = time (NULL);
-            date_tmp = localtime (&seconds);
-            if (date_tmp)
-            {
-                if (strftime (buf_time, sizeof (buf_time) - 1,
-                              weechat_config_string (logger_config_file_time_format),
-                              date_tmp) == 0)
-                    buf_time[0] = '\0';
-            }
+            gettimeofday (&tv_now, NULL);
+            weechat_util_strftimeval (
+                buf_time, sizeof (buf_time),
+                weechat_config_string (logger_config_file_time_format),
+                &tv_now);
             logger_buffer_write_line (logger_buffer,
                                       _("%s\t****  End of log  ****"),
                                       buf_time);

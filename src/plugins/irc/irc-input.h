@@ -26,6 +26,7 @@ struct t_gui_buffer;
 
 extern void irc_input_user_message_display (struct t_irc_server *server,
                                             time_t date,
+                                            int date_usec,
                                             const char *target,
                                             const char *address,
                                             const char *command,

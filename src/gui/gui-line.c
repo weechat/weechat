@@ -1480,8 +1480,10 @@ gui_line_set_highlight (struct t_gui_line *line, int max_notify_level)
  */
 
 struct t_gui_line *
-gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
-              time_t date_printed, const char *tags,
+gui_line_new (struct t_gui_buffer *buffer, int y,
+              time_t date, int date_usec,
+              time_t date_printed, int date_usec_printed,
+              const char *tags,
               const char *prefix, const char *message)
 {
     struct t_gui_line *new_line;
@@ -1523,8 +1525,10 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
             0 : buffer->next_line_id + 1;
         new_line->data->y = -1;
         new_line->data->date = date;
+        new_line->data->date_usec = date_usec;
         new_line->data->date_printed = date_printed;
-        new_line->data->str_time = gui_chat_get_time_string (date);
+        new_line->data->date_usec_printed = date_usec_printed;
+        new_line->data->str_time = gui_chat_get_time_string (date, date_usec);
         gui_line_tags_alloc (new_line->data, tags);
         new_line->data->refresh_needed = 0;
         new_line->data->prefix = (prefix) ?
@@ -1542,7 +1546,9 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
         new_line->data->id = y;
         new_line->data->y = y;
         new_line->data->date = date;
+        new_line->data->date_usec = date_usec;
         new_line->data->date_printed = date_printed;
+        new_line->data->date_usec_printed = date_usec_printed;
         new_line->data->str_time = NULL;
         gui_line_tags_alloc (new_line->data, tags);
         new_line->data->refresh_needed = 1;
@@ -1646,7 +1652,25 @@ gui_line_hook_update (struct t_gui_line *line,
             line->data->date = (time_t)value;
             if (line->data->str_time)
                 free (line->data->str_time);
-            line->data->str_time = gui_chat_get_time_string (line->data->date);
+            line->data->str_time = gui_chat_get_time_string (
+                line->data->date,
+                line->data->date_usec);
+        }
+    }
+
+    ptr_value2 = hashtable_get (hashtable2, "date_usec");
+    if (ptr_value2)
+    {
+        error = NULL;
+        value = strtol (ptr_value2, &error, 10);
+        if (error && !error[0] && (value >= 0) && (value <= 999999))
+        {
+            line->data->date_usec = (int)value;
+            if (line->data->str_time)
+                free (line->data->str_time);
+            line->data->str_time = gui_chat_get_time_string (
+                line->data->date,
+                line->data->date_usec);
         }
     }
 
@@ -1657,6 +1681,15 @@ gui_line_hook_update (struct t_gui_line *line,
         value = strtol (ptr_value2, &error, 10);
         if (error && !error[0] && (value >= 0))
             line->data->date_printed = (time_t)value;
+    }
+
+    ptr_value2 = hashtable_get (hashtable2, "date_usec_printed");
+    if (ptr_value2)
+    {
+        error = NULL;
+        value = strtol (ptr_value2, &error, 10);
+        if (error && !error[0] && (value >= 0) && (value <= 999999))
+            line->data->date_usec_printed = (int)value;
     }
 
     ptr_value = hashtable_get (hashtable, "str_time");
@@ -1977,7 +2010,9 @@ void
 gui_line_clear (struct t_gui_line *line)
 {
     line->data->date = 0;
+    line->data->date_usec = 0;
     line->data->date_printed = 0;
+    line->data->date_usec_printed = 0;
     if (line->data->str_time)
     {
         free (line->data->str_time);
@@ -2178,7 +2213,25 @@ gui_line_hdata_line_data_update_cb (void *data,
             hdata_set (hdata, pointer, "date", value);
             if (line_data->str_time)
                 free (line_data->str_time);
-            line_data->str_time = gui_chat_get_time_string (line_data->date);
+            line_data->str_time = gui_chat_get_time_string (
+                line_data->date,
+                line_data->date_usec);
+            rc++;
+            update_coords = 1;
+        }
+    }
+
+    if (hashtable_has_key (hashtable, "date_usec"))
+    {
+        value = hashtable_get (hashtable, "date_usec");
+        if (value)
+        {
+            hdata_set (hdata, pointer, "date_usec", value);
+            if (line_data->str_time)
+                free (line_data->str_time);
+            line_data->str_time = gui_chat_get_time_string (
+                line_data->date,
+                line_data->date_usec);
             rc++;
             update_coords = 1;
         }
@@ -2190,6 +2243,16 @@ gui_line_hdata_line_data_update_cb (void *data,
         if (value)
         {
             hdata_set (hdata, pointer, "date_printed", value);
+            rc++;
+        }
+    }
+
+    if (hashtable_has_key (hashtable, "date_usec_printed"))
+    {
+        value = hashtable_get (hashtable, "date_usec_printed");
+        if (value)
+        {
+            hdata_set (hdata, pointer, "date_usec_printed", value);
             rc++;
         }
     }
@@ -2269,7 +2332,9 @@ gui_line_hdata_line_data_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_line_data, id, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, y, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, date, TIME, 1, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, date_usec, INTEGER, 1, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, date_printed, TIME, 1, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, date_usec_printed, INTEGER, 1, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, str_time, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, tags_count, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, tags_array, SHARED_STRING, 1, "*,tags_count", NULL);
@@ -2314,7 +2379,11 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_time (ptr_item, "date", line->data->date))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "date_usec", line->data->date_usec))
+        return 0;
     if (!infolist_new_var_time (ptr_item, "date_printed", line->data->date_printed))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "date_usec_printed", line->data->date_usec_printed))
         return 0;
     if (!infolist_new_var_string (ptr_item, "str_time", line->data->str_time))
         return 0;

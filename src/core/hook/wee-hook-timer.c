@@ -415,9 +415,7 @@ hook_timer_add_to_infolist (struct t_infolist_item *item,
 void
 hook_timer_print_log (struct t_hook *hook)
 {
-    struct tm *local_time;
-    time_t seconds;
-    char text_time[1024];
+    char text_time[128];
 
     if (!hook || !hook->hook_data)
         return;
@@ -427,30 +425,18 @@ hook_timer_print_log (struct t_hook *hook)
     log_printf ("    interval. . . . . . . : %ld", HOOK_TIMER(hook, interval));
     log_printf ("    align_second. . . . . : %d", HOOK_TIMER(hook, align_second));
     log_printf ("    remaining_calls . . . : %d", HOOK_TIMER(hook, remaining_calls));
-    text_time[0] = '\0';
-    seconds = HOOK_TIMER(hook, last_exec).tv_sec;
-    local_time = localtime (&seconds);
-    if (local_time)
-    {
-        if (strftime (text_time, sizeof (text_time),
-                      "%d/%m/%Y %H:%M:%S", local_time) == 0)
-            text_time[0] = '\0';
-    }
-    log_printf ("    last_exec.tv_sec. . . : %lld (%s)",
-                (long long)(HOOK_TIMER(hook, last_exec.tv_sec)),
-                text_time);
-    log_printf ("    last_exec.tv_usec . . : %ld", HOOK_TIMER(hook, last_exec.tv_usec));
-    text_time[0] = '\0';
-    seconds = HOOK_TIMER(hook, next_exec).tv_sec;
-    local_time = localtime (&seconds);
-    if (local_time)
-    {
-        if (strftime (text_time, sizeof (text_time),
-                      "%d/%m/%Y %H:%M:%S", local_time) == 0)
-            text_time[0] = '\0';
-    }
-    log_printf ("    next_exec.tv_sec. . . : %lld (%s)",
-                (long long)(HOOK_TIMER(hook, next_exec.tv_sec)),
-                text_time);
-    log_printf ("    next_exec.tv_usec . . : %ld", HOOK_TIMER(hook, next_exec.tv_usec));
+    util_strftimeval (text_time, sizeof (text_time),
+                      "%Y-%m-%dT%H:%M:%S.%f", &(HOOK_TIMER(hook, last_exec)));
+    log_printf ("    last_exec . . . . . . : %s", text_time);
+    log_printf ("      tv_sec. . . . . . . : %lld",
+                (long long)(HOOK_TIMER(hook, last_exec.tv_sec)));
+    log_printf ("      tv_usec. . . .  . . : %ld",
+                HOOK_TIMER(hook, last_exec.tv_usec));
+    util_strftimeval (text_time, sizeof (text_time),
+                      "%Y-%m-%dT%H:%M:%S.%f", &(HOOK_TIMER(hook, next_exec)));
+    log_printf ("    last_exec . . . . . . : %s", text_time);
+    log_printf ("      tv_sec. . . . . . . : %lld",
+                (long long)(HOOK_TIMER(hook, next_exec.tv_sec)));
+    log_printf ("      tv_usec. . . .  . . : %ld",
+                HOOK_TIMER(hook, next_exec.tv_usec));
 }

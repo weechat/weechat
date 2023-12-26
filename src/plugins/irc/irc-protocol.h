@@ -63,6 +63,7 @@ struct t_irc_protocol_ctxt
 {
     struct t_irc_server *server;       /* IRC server                        */
     time_t date;                       /* message date                      */
+    int date_usec;                     /* microseconds of date              */
     char *irc_message;                 /* whole raw IRC message             */
     struct t_hashtable *tags;          /* IRC tags                          */
     char *nick;                        /* nick of sender                    */
@@ -88,7 +89,6 @@ struct t_irc_protocol_msg
 
 extern const char *irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt,
                                       const char *extra_tags);
-extern time_t irc_protocol_parse_time (const char *time);
 extern void irc_protocol_recv_command (struct t_irc_server *server,
                                        const char *irc_message,
                                        const char *msg_command,

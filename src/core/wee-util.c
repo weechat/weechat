@@ -164,6 +164,79 @@ util_get_time_string (const time_t *date)
 }
 
 /*
+ * Formats date and time like strftime and adds additional formats for support
+ * of microseconds: "%.N" where N is an integer between 1 and 6: first N
+ * digits of microseconds (for example "%.3" is milliseconds, on 3 digits).
+ * Format "%f" is an alias of "%.6" (microseconds, zero-padded to 6 digits).
+ */
+
+int
+util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
+{
+    char **format2, str_usec[32];
+    const char *ptr_format;
+    struct tm *local_time;
+    int length, bytes;
+
+    if (!string || (max <= 0) || !format || !tv)
+        return 0;
+
+    string[0] = '\0';
+
+    if (!format[0])
+        return 0;
+
+    format2 = string_dyn_alloc (strlen (format) + 1);
+    if (!format2)
+        return 0;
+
+    ptr_format = format;
+    while (ptr_format && ptr_format[0])
+    {
+        if ((ptr_format[0] == '%') && (ptr_format[1] == '%'))
+        {
+            string_dyn_concat (format2, "%%", -1);
+            ptr_format += 2;
+        }
+        else if ((ptr_format[0] == '%') && (ptr_format[1] == '.')
+                 && (ptr_format[2] >= '1') && (ptr_format[2] <= '6'))
+        {
+            snprintf (str_usec, sizeof (str_usec),
+                      "%06ld", (long)(tv->tv_usec));
+            length = ptr_format[2] - '1' + 1;
+            str_usec[length] = '\0';
+            string_dyn_concat (format2, str_usec, -1);
+            ptr_format += 3;
+        }
+        else if ((ptr_format[0] == '%') && (ptr_format[1] == 'f'))
+        {
+            snprintf (str_usec, sizeof (str_usec),
+                      "%06ld", (long)(tv->tv_usec));
+            string_dyn_concat (format2, str_usec, -1);
+            ptr_format += 2;
+        }
+        else
+        {
+            string_dyn_concat (format2, ptr_format, 1);
+            ptr_format++;
+        }
+    }
+
+    local_time = localtime (&(tv->tv_sec));
+    if (!local_time)
+    {
+        string_dyn_free (format2, 1);
+        return 0;
+    }
+
+    bytes = strftime (string, max, *format2, local_time);
+
+    string_dyn_free (format2, 1);
+
+    return bytes;
+}
+
+/*
  * Returns difference between two times.
  *
  * The following variables are set, if pointer is not NULL:

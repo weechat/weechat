@@ -5229,7 +5229,7 @@ od typu hooka:
 | signal         | tg_signal_data     |
 | hsignal        |                    |
 | modifier       | tg_string          | tg_string
-| line           | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| line           | message            | buffer, buffer_name, y, date, date_usec, date_printed, date_usec_printed, str_time, tags, notify_level, highlight, prefix, message
 | print          | tg_message         |
 | command        | tg_argv_eol1       |
 | command_run    | tg_command         |
@@ -5388,7 +5388,11 @@ Callback "line" ustawia następujące zmienne w tablicy hashy:
 | buffer_type        | ciąg     | Typ bufora ("formatted" lub "free").
 | y                  | ciąg     | Numer linii bufora z wolną zawartością (≥ 0), -1 dla bufora ze sformatowaną zawartością.
 | date               | ciąg     | Linia z datą (timestamp).
+// TRANSLATION MISSING
+| date_usec          | ciąg     | Microseconds of line date.
 | date_printed       | ciąg     | Data, kiedy linia została wyświetlona (timestamp).
+// TRANSLATION MISSING
+| date_usec_printed  | ciąg     | Microseconds of date when line was displayed.
 | str_time           | ciąg     | Date do wyświetlenia. Może zawierać kody kolorów.
 | tags               | ciąg     | Tagi wiadomości (z przecinkiem dodanym na początku/końcu ciągu).
 | displayed          | ciąg     | "1" jeśli wyświetlono, "0" jeśli nie wyświetlono.
@@ -5427,7 +5431,8 @@ Callback "print" ustawia następujące zmienne w tablicy hashy:
 |===
 | Zmienna            | Typ      | Opis
 | buffer             | wskaźnik | Bufor.
-| tg_date            | ciąg     | Data/czas wiadomości (format: `YYYY-MM-DD hh:mm:ss`).
+// TRANSLATION MISSING
+| tg_date            | ciąg     | Data/czas wiadomości (format: `%FT%T.%f`, see link:weechat_plugin_api.en.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]).
 | tg_displayed       | ciąg     | "1" jeśli wyświetlone, "0" jeśli linia odfiltrowana.
 | tg_highlight       | ciąg     | "1" jeśli higlight, inaczej "0".
 | tg_prefix          | ciąg     | Prefiks.
@@ -5492,7 +5497,8 @@ Callback "timer" ustawia następujące zmienne w tablicy hashy:
 |===
 | Zmienna            | Typ  | Opis
 | tg_remaining_calls | ciąg | Liczba pozostałych wywołań.
-| tg_date            | ciąg | Obecna data/czas (format: `YYYY-MM-DD hh:mm:ss`).
+// TRANSLATION MISSING
+| tg_date            | ciąg | Obecna data/czas `%FT%T.%f`, see link:weechat_plugin_api.en.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]).
 |===
 
 [[trigger_data_config]]

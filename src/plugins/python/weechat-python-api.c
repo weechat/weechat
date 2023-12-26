@@ -2012,6 +2012,33 @@ API_FUNC(prnt_date_tags)
     API_RETURN_OK;
 }
 
+API_FUNC(prnt_datetime_tags)
+{
+    char *buffer, *tags, *message;
+    long date;
+    int date_usec;
+
+    API_INIT_FUNC(1, "prnt_datetime_tags", API_RETURN_ERROR);
+    buffer = NULL;
+    date = 0;
+    date_usec = 0;
+    tags = NULL;
+    message = NULL;
+    if (!PyArg_ParseTuple (args, "sliss", &buffer, &date, &date_usec, &tags,
+                           &message))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    plugin_script_api_printf_datetime_tags (weechat_python_plugin,
+                                            python_current_script,
+                                            API_STR2PTR(buffer),
+                                            (time_t)date,
+                                            date_usec,
+                                            tags,
+                                            "%s", message);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(prnt_y)
 {
     char *buffer, *message;
@@ -2055,6 +2082,36 @@ API_FUNC(prnt_y_date_tags)
                                           (time_t)date,
                                           tags,
                                           "%s", message);
+
+    API_RETURN_OK;
+}
+
+API_FUNC(prnt_y_datetime_tags)
+{
+    char *buffer, *tags, *message;
+    int y;
+    long date;
+    int date_usec;
+
+    API_INIT_FUNC(1, "prnt_y_datetime_tags", API_RETURN_ERROR);
+    buffer = NULL;
+    y = 0;
+    date = 0;
+    date_usec = 0;
+    tags = NULL;
+    message = NULL;
+    if (!PyArg_ParseTuple (args, "siliss", &buffer, &y, &date, &date_usec,
+                           &tags, &message))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    plugin_script_api_printf_y_datetime_tags (weechat_python_plugin,
+                                              python_current_script,
+                                              API_STR2PTR(buffer),
+                                              y,
+                                              (time_t)date,
+                                              date_usec,
+                                              tags,
+                                              "%s", message);
 
     API_RETURN_OK;
 }
@@ -2797,7 +2854,7 @@ API_FUNC(hook_line)
 int
 weechat_python_api_hook_print_cb (const void *pointer, void *data,
                                   struct t_gui_buffer *buffer,
-                                  time_t date,
+                                  time_t date, int date_usec,
                                   int tags_count, const char **tags,
                                   int displayed, int highlight,
                                   const char *prefix, const char *message)
@@ -2810,6 +2867,7 @@ weechat_python_api_hook_print_cb (const void *pointer, void *data,
     int *rc, ret;
 
     /* make C compiler happy */
+    (void) date_usec;
     (void) tags_count;
 
     script = (struct t_plugin_script *)pointer;
@@ -5527,8 +5585,10 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(color),
     API_DEF_FUNC(prnt),
     API_DEF_FUNC(prnt_date_tags),
+    API_DEF_FUNC(prnt_datetime_tags),
     API_DEF_FUNC(prnt_y),
     API_DEF_FUNC(prnt_y_date_tags),
+    API_DEF_FUNC(prnt_y_datetime_tags),
     API_DEF_FUNC(log_print),
     API_DEF_FUNC(hook_command),
     API_DEF_FUNC(hook_completion),

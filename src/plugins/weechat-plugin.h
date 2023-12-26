@@ -68,7 +68,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20231017-01"
+#define WEECHAT_PLUGIN_API_VERSION "20231226-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -240,8 +240,8 @@ struct timeval;
 #define WEECHAT_COMMAND_MIN_ARGS(__min_args, __option)                  \
     if (argc < __min_args)                                              \
     {                                                                   \
-        weechat_printf_date_tags (                                      \
-            NULL, 0, "no_filter",                                       \
+        weechat_printf_datetime_tags (                                  \
+            NULL, 0, 0, "no_filter",                                    \
             _("%sToo few arguments for command \"%s%s%s\" "             \
               "(help on command: /help %s)"),                           \
             weechat_prefix ("error"),                                   \
@@ -255,8 +255,8 @@ struct timeval;
 /* macro to return error in callback of hook_command */
 #define WEECHAT_COMMAND_ERROR                                           \
     {                                                                   \
-        weechat_printf_date_tags (                                      \
-            NULL, 0, "no_filter",                                       \
+        weechat_printf_datetime_tags (                                  \
+            NULL, 0, 0, "no_filter",                                    \
             _("%sError with command \"%s\" "                            \
               "(help on command: /help %s)"),                           \
             weechat_prefix ("error"),                                   \
@@ -437,6 +437,8 @@ struct t_weechat_plugin
     long long (*util_timeval_diff) (struct timeval *tv1, struct timeval *tv2);
     void (*util_timeval_add) (struct timeval *tv, long long interval);
     const char *(*util_get_time_string) (const time_t *date);
+    int (*util_strftimeval) (char *string, int max, const char *format,
+                             struct timeval *tv);
     int (*util_version_number) (const char *version);
 
     /* sorted lists */
@@ -695,11 +697,13 @@ struct t_weechat_plugin
     /* display */
     const char *(*prefix) (const char *prefix);
     const char *(*color) (const char *color_name);
-    void (*printf_date_tags) (struct t_gui_buffer *buffer, time_t date,
-                              const char *tags, const char *message, ...);
-    void (*printf_y_date_tags) (struct t_gui_buffer *buffer, int y,
-                                time_t date, const char *tags,
-                                const char *message, ...);
+    void (*printf_datetime_tags) (struct t_gui_buffer *buffer,
+                                  time_t date, int date_usec,
+                                  const char *tags, const char *message, ...);
+    void (*printf_y_datetime_tags) (struct t_gui_buffer *buffer, int y,
+                                    time_t date, int date_usec,
+                                    const char *tags,
+                                    const char *message, ...);
     void (*log_printf) (const char *message, ...);
 
     /* hooks */
@@ -814,6 +818,7 @@ struct t_weechat_plugin
                                                   void *data,
                                                   struct t_gui_buffer *buffer,
                                                   time_t date,
+                                                  int date_usec,
                                                   int tags_count,
                                                   const char **tags,
                                                   int displayed,
@@ -1492,6 +1497,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->util_timeval_add)(__time, __interval)
 #define weechat_util_get_time_string(__date)                            \
     (weechat_plugin->util_get_time_string)(__date)
+#define weechat_util_strftimeval(__string, __max, __format, __tv)       \
+    (weechat_plugin->util_strftimeval)(__string, __max, __format, __tv)
 #define weechat_util_version_number(__version)                          \
     (weechat_plugin->util_version_number)(__version)
 
@@ -1790,19 +1797,32 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_color(__color_name)                                     \
     (weechat_plugin->color)(__color_name)
 #define weechat_printf(__buffer, __message, __argz...)                  \
-    (weechat_plugin->printf_date_tags)(__buffer, 0, NULL, __message,    \
-                                       ##__argz)
+    (weechat_plugin->printf_datetime_tags)(__buffer, 0, 0, NULL,        \
+                                           __message, ##__argz)
 #define weechat_printf_date_tags(__buffer, __date, __tags, __message,   \
                                  __argz...)                             \
-    (weechat_plugin->printf_date_tags)(__buffer, __date, __tags,        \
-                                       __message, ##__argz)
+    (weechat_plugin->printf_datetime_tags)(__buffer, __date, 0, __tags, \
+                                           __message, ##__argz)
+
+#define weechat_printf_datetime_tags(__buffer, __date, __date_usec,     \
+                                     __tags, __message, __argz...)      \
+    (weechat_plugin->printf_datetime_tags)(__buffer, __date,            \
+                                           __date_usec, __tags,         \
+                                           __message, ##__argz)
 #define weechat_printf_y(__buffer, __y, __message, __argz...)           \
-    (weechat_plugin->printf_y_date_tags)(__buffer, __y, 0, NULL,        \
-                                         __message, ##__argz)
+    (weechat_plugin->printf_y_datetime_tags)(__buffer, __y, 0, 0, NULL, \
+                                             __message, ##__argz)
 #define weechat_printf_y_date_tags(__buffer, __y, __date, __tags,       \
                                    __message, __argz...)                \
-    (weechat_plugin->printf_y_date_tags)(__buffer, __y, __date, __tags, \
-                                         __message, ##__argz)
+    (weechat_plugin->printf_y_datetime_tags)(__buffer, __y, __date, 0,  \
+                                             __tags, __message,         \
+                                             ##__argz)
+#define weechat_printf_y_datetime_tags(__buffer, __y, __date,           \
+                                       __date_usec, __tags,             \
+                                       __message, __argz...)            \
+    (weechat_plugin->printf_y_datetime_tags)(__buffer, __y, __date,     \
+                                             __date_usec, __tags,       \
+                                             __message, ##__argz)
 #define weechat_log_printf(__message, __argz...)                        \
     (weechat_plugin->log_printf)(__message, ##__argz)
 

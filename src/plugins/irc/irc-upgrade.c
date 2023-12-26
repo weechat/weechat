@@ -969,6 +969,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     {
                         irc_raw_message_add_to_list (
                             weechat_infolist_time (infolist, "date"),
+                            weechat_infolist_integer (infolist, "date_usec"),
                             ptr_server,
                             weechat_infolist_integer (infolist, "flags"),
                             weechat_infolist_string (infolist, "message"));

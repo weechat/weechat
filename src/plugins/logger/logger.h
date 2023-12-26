@@ -41,7 +41,8 @@ extern char *logger_build_option_name (struct t_gui_buffer *buffer);
 extern int logger_get_level_for_buffer (struct t_gui_buffer *buffer);
 extern char *logger_get_filename (struct t_gui_buffer *buffer);
 extern int logger_print_cb (const void *pointer, void *data,
-                            struct t_gui_buffer *buffer, time_t date,
+                            struct t_gui_buffer *buffer,
+                            time_t date, int date_usec,
                             int tags_count, const char **tags,
                             int displayed, int highlight,
                             const char *prefix, const char *message);

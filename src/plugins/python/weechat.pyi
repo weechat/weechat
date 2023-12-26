@@ -1156,6 +1156,20 @@ def prnt_date_tags(buffer: str, date: int, tags: str, message: str) -> int:
     ...
 
 
+def prnt_datetime_tags(buffer: str, date: int, date_usec: int, tags: str, message: str) -> int:
+    """`prnt_datetime_tags in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_prnt_datetime_tags>`_
+    ::
+
+        # example
+        now = time.time()
+        time_sec = int(now)
+        time_usec = int((now * 1000000) % 1000000)
+        weechat.prnt_datetime_tags("", time_sec - 120, time_usec, "notify_message",
+                                   "Message 2 minutes ago, with a tag 'notify_message'")
+    """
+    ...
+
+
 def prnt_y(buffer: str, y: int, message: str) -> int:
     """`prnt_y in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_prnt_y>`_
     ::
@@ -1172,6 +1186,16 @@ def prnt_y_date_tags(buffer: str, y: int, date: int, tags: str, message: str) ->
 
         # example
         weechat.prnt_y_date_tags("", 2, 0, "my_tag", "My message on third line with a tag")
+    """
+    ...
+
+
+def prnt_y_datetime_tags(buffer: str, y: int, date: int, date_usec: int, tags: str, message: str) -> int:
+    """`prnt_y_datetime_tags in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_prnt_y_datetime_tags>`_
+    ::
+
+        # example
+        weechat.prnt_y_datetime_tags("", 2, 0, 0, "my_tag", "My message on third line with a tag")
     """
     ...
 

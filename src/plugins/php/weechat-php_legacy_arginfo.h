@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 614392b6be26030a5d7b12437562aec08ad7052c */
+ * Stub hash: b6e9e3f12ed24566eb77aa0c08bf3e7c5d866b76 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_weechat_register, 0, 0, 7)
 	ZEND_ARG_INFO(0, p0)
@@ -192,14 +192,25 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_print_date_tags arginfo_weechat_string_eval_expression
 
-#define arginfo_weechat_print_y arginfo_weechat_ngettext
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_weechat_print_y_date_tags, 0, 0, 5)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_weechat_print_datetime_tags, 0, 0, 5)
 	ZEND_ARG_INFO(0, p0)
 	ZEND_ARG_INFO(0, p1)
 	ZEND_ARG_INFO(0, p2)
 	ZEND_ARG_INFO(0, p3)
 	ZEND_ARG_INFO(0, p4)
+ZEND_END_ARG_INFO()
+
+#define arginfo_weechat_print_y arginfo_weechat_ngettext
+
+#define arginfo_weechat_print_y_date_tags arginfo_weechat_print_datetime_tags
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_weechat_print_y_datetime_tags, 0, 0, 6)
+	ZEND_ARG_INFO(0, p0)
+	ZEND_ARG_INFO(0, p1)
+	ZEND_ARG_INFO(0, p2)
+	ZEND_ARG_INFO(0, p3)
+	ZEND_ARG_INFO(0, p4)
+	ZEND_ARG_INFO(0, p5)
 ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_log_print arginfo_weechat_plugin_get_name
@@ -214,28 +225,21 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_hook_command_run arginfo_weechat_ngettext
 
-#define arginfo_weechat_hook_timer arginfo_weechat_print_y_date_tags
+#define arginfo_weechat_hook_timer arginfo_weechat_print_datetime_tags
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_weechat_hook_fd, 0, 0, 6)
-	ZEND_ARG_INFO(0, p0)
-	ZEND_ARG_INFO(0, p1)
-	ZEND_ARG_INFO(0, p2)
-	ZEND_ARG_INFO(0, p3)
-	ZEND_ARG_INFO(0, p4)
-	ZEND_ARG_INFO(0, p5)
-ZEND_END_ARG_INFO()
+#define arginfo_weechat_hook_fd arginfo_weechat_print_y_datetime_tags
 
 #define arginfo_weechat_hook_process arginfo_weechat_string_eval_expression
 
-#define arginfo_weechat_hook_process_hashtable arginfo_weechat_print_y_date_tags
+#define arginfo_weechat_hook_process_hashtable arginfo_weechat_print_datetime_tags
 
-#define arginfo_weechat_hook_url arginfo_weechat_print_y_date_tags
+#define arginfo_weechat_hook_url arginfo_weechat_print_datetime_tags
 
 #define arginfo_weechat_hook_connect arginfo_weechat_list_new
 
-#define arginfo_weechat_hook_line arginfo_weechat_print_y_date_tags
+#define arginfo_weechat_hook_line arginfo_weechat_print_datetime_tags
 
-#define arginfo_weechat_hook_print arginfo_weechat_hook_fd
+#define arginfo_weechat_hook_print arginfo_weechat_print_y_datetime_tags
 
 #define arginfo_weechat_hook_signal arginfo_weechat_ngettext
 
@@ -251,11 +255,11 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_hook_modifier_exec arginfo_weechat_ngettext
 
-#define arginfo_weechat_hook_info arginfo_weechat_print_y_date_tags
+#define arginfo_weechat_hook_info arginfo_weechat_print_datetime_tags
 
 #define arginfo_weechat_hook_info_hashtable arginfo_weechat_register
 
-#define arginfo_weechat_hook_infolist arginfo_weechat_hook_fd
+#define arginfo_weechat_hook_infolist arginfo_weechat_print_y_datetime_tags
 
 #define arginfo_weechat_hook_focus arginfo_weechat_ngettext
 
@@ -265,9 +269,9 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_unhook_all arginfo_weechat_plugin_get_name
 
-#define arginfo_weechat_buffer_new arginfo_weechat_print_y_date_tags
+#define arginfo_weechat_buffer_new arginfo_weechat_print_datetime_tags
 
-#define arginfo_weechat_buffer_new_props arginfo_weechat_hook_fd
+#define arginfo_weechat_buffer_new_props arginfo_weechat_print_y_datetime_tags
 
 #define arginfo_weechat_buffer_search arginfo_weechat_iconv_to_internal
 
@@ -307,7 +311,7 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_window_set_title arginfo_weechat_plugin_get_name
 
-#define arginfo_weechat_nicklist_add_group arginfo_weechat_print_y_date_tags
+#define arginfo_weechat_nicklist_add_group arginfo_weechat_print_datetime_tags
 
 #define arginfo_weechat_nicklist_search_group arginfo_weechat_ngettext
 
@@ -441,7 +445,7 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_hdata_hashtable arginfo_weechat_ngettext
 
-#define arginfo_weechat_hdata_compare arginfo_weechat_print_y_date_tags
+#define arginfo_weechat_hdata_compare arginfo_weechat_print_datetime_tags
 
 #define arginfo_weechat_hdata_update arginfo_weechat_ngettext
 

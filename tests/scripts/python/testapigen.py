@@ -110,8 +110,10 @@ class WeechatScript(object):  # pylint: disable=too-many-instance-attributes
         functions = {
             'prnt': 'print',
             'prnt_date_tags': 'print_date_tags',
+            'prnt_datetime_tags': 'print_datetime_tags',
             'prnt_y': 'print_y',
             'prnt_y_date_tags': 'print_y_date_tags',
+            'prnt_y_datetime_tags': 'print_y_datetime_tags',
         }
         tests_count = 0
         for node in ast.walk(self.tree):

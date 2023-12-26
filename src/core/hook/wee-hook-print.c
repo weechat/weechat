@@ -168,6 +168,7 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
                  ptr_hook->callback_data,
                  buffer,
                  line->data->date,
+                 line->data->date_usec,
                  line->data->tags_count,
                  (const char **)line->data->tags_array,
                  (int)line->data->displayed, (int)line->data->highlight,

@@ -55,8 +55,9 @@ TEST_GROUP(Scripts)
 
     static int
     test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
-                   time_t date, int tags_count, const char **tags, int displayed,
-                   int highlight, const char *prefix, const char *message)
+                   time_t date, int date_usec, int tags_count, const char **tags,
+                   int displayed, int highlight,
+                   const char *prefix, const char *message)
     {
         const char *pos;
         char *error;
@@ -67,6 +68,7 @@ TEST_GROUP(Scripts)
         (void) data;
         (void) buffer;
         (void) date;
+        (void) date_usec;
         (void) tags_count;
         (void) tags;
         (void) displayed;

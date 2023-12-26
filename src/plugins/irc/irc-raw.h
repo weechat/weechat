@@ -41,6 +41,7 @@ struct t_irc_server;
 struct t_irc_raw_message
 {
     time_t date;                       /* date/time of message              */
+    int date_usec;                     /* microseconds of date              */
     struct t_irc_server *server;       /* server                            */
     int flags;                         /* flags                             */
     char *message;                     /* message                           */
@@ -59,6 +60,7 @@ extern void irc_raw_open (int switch_to_buffer);
 extern void irc_raw_set_filter (const char *filter);
 extern void irc_raw_filter_options (const char *filter);
 extern struct t_irc_raw_message *irc_raw_message_add_to_list (time_t date,
+                                                              int date_usec,
                                                               struct t_irc_server *server,
                                                               int flags,
                                                               const char *message);

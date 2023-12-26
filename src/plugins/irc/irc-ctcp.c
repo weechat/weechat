@@ -185,11 +185,12 @@ irc_ctcp_display_request (struct t_irc_protocol_ctxt *ctxt,
         && !weechat_config_boolean (irc_config_look_display_ctcp_blocked))
         return;
 
-    weechat_printf_date_tags (
+    weechat_printf_datetime_tags (
         irc_msgbuffer_get_target_buffer (
             ctxt->server, ctxt->nick, NULL, "ctcp",
             (channel) ? channel->buffer : NULL),
         ctxt->date,
+        ctxt->date_usec,
         irc_protocol_tags (ctxt, "irc_ctcp"),
         _("%sCTCP requested by %s%s%s: %s%s%s%s%s%s"),
         weechat_prefix ("network"),
@@ -252,10 +253,11 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
 
                     difftime = ((sec2 * 1000000) + usec2) -
                         ((sec1 * 1000000) + usec1);
-                    weechat_printf_date_tags (
+                    weechat_printf_datetime_tags (
                         irc_msgbuffer_get_target_buffer (
                             ctxt->server, ctxt->nick, NULL, "ctcp", NULL),
                         ctxt->date,
+                        ctxt->date_usec,
                         irc_protocol_tags (ctxt, "irc_ctcp"),
                         /* TRANSLATORS: %.3fs is a float number + "s" ("seconds") */
                         _("%sCTCP reply from %s%s%s: %s%s%s %.3fs"),
@@ -272,10 +274,11 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
             }
             else
             {
-                weechat_printf_date_tags (
+                weechat_printf_datetime_tags (
                     irc_msgbuffer_get_target_buffer (
                         ctxt->server, ctxt->nick, NULL, "ctcp", NULL),
                     ctxt->date,
+                    ctxt->date_usec,
                     irc_protocol_tags (ctxt, "irc_ctcp"),
                     _("%sCTCP reply from %s%s%s: %s%s%s%s%s"),
                     weechat_prefix ("network"),
@@ -291,10 +294,11 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
         }
         else
         {
-            weechat_printf_date_tags (
+            weechat_printf_datetime_tags (
                 irc_msgbuffer_get_target_buffer (
                     ctxt->server, ctxt->nick, NULL, "ctcp", NULL),
                 ctxt->date,
+                ctxt->date_usec,
                 irc_protocol_tags (ctxt, NULL),
                 _("%sCTCP reply from %s%s%s: %s%s%s%s%s"),
                 weechat_prefix ("network"),
@@ -545,8 +549,7 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
     struct t_hashtable *extra_vars;
     char *info, *info_version, *info_version_git, *username, *realname;
     char buf[4096], *value;
-    time_t now;
-    struct tm *local_time;
+    struct timeval tv_now;
     struct utsname *buf_uname;
 
     if (!server || !format)
@@ -661,13 +664,12 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
      * ${time}: local date/time of user, example:
      *   Sat, 08 Jul 2023 21:11:19 +0200
      */
-    now = time (NULL);
-    local_time = localtime (&now);
+    gettimeofday (&tv_now, NULL);
     setlocale (LC_ALL, "C");
-    if (strftime (buf, sizeof (buf),
-                  weechat_config_string (irc_config_look_ctcp_time_format),
-                  local_time) == 0)
-        buf[0] = '\0';
+    weechat_util_strftimeval (
+        buf, sizeof (buf),
+        weechat_config_string (irc_config_look_ctcp_time_format),
+        &tv_now);
     setlocale (LC_ALL, "");
     weechat_hashtable_set (extra_vars, "time", buf);
 
@@ -1389,9 +1391,10 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                                                          ctxt->params[0][0]))
                 {
                     /* STATUSMSG action */
-                    weechat_printf_date_tags (
+                    weechat_printf_datetime_tags (
                         channel->buffer,
                         ctxt->date,
+                        ctxt->date_usec,
                         irc_protocol_tags (
                             ctxt,
                             (ctxt->nick_is_me) ?
@@ -1414,9 +1417,10 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                 else
                 {
                     /* standard action */
-                    weechat_printf_date_tags (
+                    weechat_printf_datetime_tags (
                         channel->buffer,
                         ctxt->date,
+                        ctxt->date_usec,
                         irc_protocol_tags (
                             ctxt,
                             (ctxt->nick_is_me) ?
@@ -1456,9 +1460,10 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                     if (!ptr_channel->topic)
                         irc_channel_set_topic (ptr_channel, ctxt->address);
 
-                    weechat_printf_date_tags (
+                    weechat_printf_datetime_tags (
                         ptr_channel->buffer,
                         ctxt->date,
+                        ctxt->date_usec,
                         irc_protocol_tags (
                             ctxt,
                             (ctxt->nick_is_me) ?
@@ -1535,11 +1540,12 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
             {
                 if (weechat_config_boolean (irc_config_look_display_ctcp_unknown))
                 {
-                    weechat_printf_date_tags (
+                    weechat_printf_datetime_tags (
                         irc_msgbuffer_get_target_buffer (
                             ctxt->server, ctxt->nick, NULL, "ctcp",
                             (channel) ? channel->buffer : NULL),
                         ctxt->date,
+                        ctxt->date_usec,
                         irc_protocol_tags (ctxt, "irc_ctcp"),
                         _("%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"),
                         weechat_prefix ("network"),

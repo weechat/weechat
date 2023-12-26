@@ -2183,6 +2183,38 @@ API_FUNC(print_date_tags)
     API_RETURN_OK;
 }
 
+API_FUNC(print_datetime_tags)
+{
+    zend_string *z_buffer, *z_tags, *z_message;
+    zend_long z_date, z_date_usec;
+    struct t_gui_buffer *buffer;
+    time_t date;
+    int date_usec;
+    char *tags, *message;
+
+    API_INIT_FUNC(1, "print_datetime_tags", API_RETURN_ERROR);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SllSS", &z_buffer, &z_date,
+                               &z_date_usec, &z_tags, &z_message) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
+    date = (time_t)z_date;
+    date_usec = (int)z_date_usec;
+    tags = ZSTR_VAL(z_tags);
+    message = ZSTR_VAL(z_message);
+
+    plugin_script_api_printf_datetime_tags (weechat_php_plugin,
+                                            php_current_script,
+                                            buffer,
+                                            date,
+                                            date_usec,
+                                            (const char *)tags,
+                                            "%s",
+                                            message);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(print_y)
 {
     zend_string *z_buffer, *z_message;
@@ -2238,6 +2270,41 @@ API_FUNC(print_y_date_tags)
                                           (const char *)tags,
                                           "%s",
                                           message);
+
+    API_RETURN_OK;
+}
+
+API_FUNC(print_y_datetime_tags)
+{
+    zend_string *z_buffer, *z_tags, *z_message;
+    zend_long z_y, z_date, z_date_usec;
+    struct t_gui_buffer *buffer;
+    int y, date_usec;
+    time_t date;
+    char *tags, *message;
+
+    API_INIT_FUNC(1, "print_y_datetime_tags", API_RETURN_ERROR);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SlllSS", &z_buffer, &z_y,
+                               &z_date, &z_date_usec, &z_tags,
+                               &z_message) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
+    y = (int)z_y;
+    date = (time_t)z_date;
+    date_usec = (int)z_date_usec;
+    tags = ZSTR_VAL(z_tags);
+    message = ZSTR_VAL(z_message);
+
+    plugin_script_api_printf_y_datetime_tags (weechat_php_plugin,
+                                              php_current_script,
+                                              buffer,
+                                              y,
+                                              date,
+                                              date_usec,
+                                              (const char *)tags,
+                                              "%s",
+                                              message);
 
     API_RETURN_OK;
 }
@@ -2871,13 +2938,17 @@ API_FUNC(hook_line)
 
 static int
 weechat_php_api_hook_print_cb (const void *pointer, void *data,
-                               struct t_gui_buffer *buffer, time_t date,
+                               struct t_gui_buffer *buffer,
+                               time_t date, int date_usec,
                                int tags_count, const char **tags,
                                int displayed, int highlight,
                                const char *prefix, const char *message)
 {
     int rc;
     void *func_argv[9];
+
+    /* make C compiler happy */
+    (void) date_usec;
 
     func_argv[1] = (char *)API_PTR2STR(buffer);
     func_argv[2] = &date;

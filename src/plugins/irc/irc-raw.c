@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <sys/time.h>
 
 #include "../weechat-plugin.h"
 #include "irc.h"
@@ -80,7 +81,7 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
     int match;
     char *command, *result, str_date[128];
     struct t_hashtable *hashtable;
-    struct tm *date_tmp;
+    struct timeval tv;
 
     if (!filter || !filter[0])
         return 1;
@@ -92,12 +93,10 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
                                                     raw_message->message);
         if (hashtable)
         {
-            date_tmp = localtime (&(raw_message->date));
-            if (strftime (str_date, sizeof (str_date),
-                      "%Y-%m-%d %H:%M:%S", date_tmp) == 0)
-            {
-                str_date[0] = '\0';
-            }
+            tv.tv_sec = raw_message->date;
+            tv.tv_usec = raw_message->date_usec;
+            weechat_util_strftimeval (str_date, sizeof (str_date),
+                                      "%FT%T.%f", &tv);
             weechat_hashtable_set (hashtable, "date", str_date);
             weechat_hashtable_set (hashtable,
                                    "server", raw_message->server->name);
@@ -301,9 +300,11 @@ irc_raw_message_print (struct t_irc_raw_message *raw_message)
                   (raw_message->server) ? (raw_message->server)->name : "");
     }
 
-    weechat_printf_date_tags (
+    weechat_printf_datetime_tags (
         irc_raw_buffer,
-        raw_message->date, NULL,
+        raw_message->date,
+        raw_message->date_usec,
+        NULL,
         "%s\t%s",
         prefix,
         (buf2) ? buf2 : ((buf) ? buf : raw_message->message));
@@ -532,7 +533,8 @@ irc_raw_message_remove_old ()
  */
 
 struct t_irc_raw_message *
-irc_raw_message_add_to_list (time_t date, struct t_irc_server *server,
+irc_raw_message_add_to_list (time_t date, int date_usec,
+                             struct t_irc_server *server,
                              int flags, const char *message)
 {
     struct t_irc_raw_message *new_raw_message;
@@ -546,6 +548,7 @@ irc_raw_message_add_to_list (time_t date, struct t_irc_server *server,
     if (new_raw_message)
     {
         new_raw_message->date = date;
+        new_raw_message->date_usec = date_usec;
         new_raw_message->server = server;
         new_raw_message->flags = flags;
         new_raw_message->message = strdup (message);
@@ -574,7 +577,7 @@ irc_raw_print (struct t_irc_server *server, int flags,
                const char *message)
 {
     struct t_irc_raw_message *new_raw_message;
-    time_t now;
+    struct timeval tv_now;
 
     if (!message)
         return;
@@ -583,10 +586,9 @@ irc_raw_print (struct t_irc_server *server, int flags,
     if (!irc_raw_buffer && (weechat_irc_plugin->debug >= 1))
         irc_raw_open (0);
 
-    now = time (NULL);
-
-    new_raw_message = irc_raw_message_add_to_list (now, server, flags,
-                                                   message);
+    gettimeofday (&tv_now, NULL);
+    new_raw_message = irc_raw_message_add_to_list (
+        tv_now.tv_sec, tv_now.tv_usec, server, flags, message);
     if (new_raw_message)
     {
         if (irc_raw_buffer)
@@ -598,7 +600,8 @@ irc_raw_print (struct t_irc_server *server, int flags,
     if (weechat_irc_plugin->debug >= 2)
     {
         new_raw_message = irc_raw_message_add_to_list (
-            now,
+            tv_now.tv_sec,
+            tv_now.tv_usec,
             server,
             flags | IRC_RAW_FLAG_BINARY,
             message);
@@ -634,6 +637,8 @@ irc_raw_add_to_infolist (struct t_infolist *infolist,
         return 0;
 
     if (!weechat_infolist_new_var_time (ptr_item, "date", raw_message->date))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "date_usec", raw_message->date_usec))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "server", raw_message->server->name))
         return 0;
