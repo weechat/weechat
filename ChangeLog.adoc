@@ -25,6 +25,7 @@ Bug fixes::
 Build::
 
   * core: fix detection of libgcrypt ≥ 1.11 (debian #1071960)
+  * ruby: add detection of Ruby 3.3
 
 [[v3.8]]
 == Version 3.8 (2023-01-08)
