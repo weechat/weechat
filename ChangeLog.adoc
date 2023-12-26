@@ -71,6 +71,7 @@ Tests::
 Build::
 
   * core: make libintl.h required if CMake option ENABLE_NLS is enabled (issue #2031)
+  * ruby: add detection of Ruby 3.3
 
 [[v4.1.2]]
 == Version 4.1.2 (2023-12-03)
