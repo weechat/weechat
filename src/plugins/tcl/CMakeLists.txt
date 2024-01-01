@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2008-2010 Dmitry Kobylin <fnfal@academ.tsc.ru>
 # Copyright (C) 2008 Julien Louis <ptitlouis@sysif.net>
-# Copyright (C) 2008-2023 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2008-2024 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #

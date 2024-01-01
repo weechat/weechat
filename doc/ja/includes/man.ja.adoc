@@ -100,7 +100,7 @@ $HOME/.local/share/weechat/weechat.log::
 WeeChat は Sébastien Helleu さんと貢献者によって作成されています
 (完全なリストは AUTHORS.adoc ファイルを参照してください)。
 
-著作権 (C) 2003-2023 {author}
+著作権 (C) 2003-2024 {author}
 
 WeeChat はフリーソフトウェアです。あなたはこれを、フリーソフトウェア財団によって発行された
 GNU 一般公衆利用許諾契約書 (バージョン 2 か、希望によってはそれ以降のバージョンのうちどれか)

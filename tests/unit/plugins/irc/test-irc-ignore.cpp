@@ -1,7 +1,7 @@
 /*
  * test-irc-ignore.cpp - test IRC ignore functions
  *
- * Copyright (C) 2019-2023 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2019-2024 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

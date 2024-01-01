@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2021-2023 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2021-2024 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #

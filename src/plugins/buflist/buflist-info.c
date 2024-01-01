@@ -2,7 +2,7 @@
  * buflist-info.c - infolist hook for buflist plugin
  *
  * Copyright (C) 2019 Simmo Saan <simmo.saan@gmail.com>
- * Copyright (C) 2019-2023 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2019-2024 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

@@ -101,7 +101,7 @@ $HOME/.local/share/weechat/weechat.log::
 WeeChat jest tworzony przez Sébastien Helleu i społeczność (pełna lista dostępna
 jest w pliku AUTHORS.adoc).
 
-Copyright (C) 2003-2023 {author}
+Copyright (C) 2003-2024 {author}
 
 WeeChat is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

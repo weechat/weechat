@@ -1,7 +1,7 @@
 /*
  * test-gui-bar-item-custom.cpp - test custom bar item functions
  *
- * Copyright (C) 2022-2023 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2022-2024 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

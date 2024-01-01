@@ -100,7 +100,7 @@ $HOME/.local/share/weechat/weechat.log::
 WeeChat wird programmiert von Sébastien Helleu und weiteren Beteiligten (eine vollständige Auflistung
 findet man in der AUTHORS.adoc Datei).
 
-Copyright (C) 2003-2023 {author}
+Copyright (C) 2003-2024 {author}
 
 WeeChat is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
