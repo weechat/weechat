@@ -5388,11 +5388,9 @@ Callback "line" ustawia następujące zmienne w tablicy hashy:
 | buffer_type        | ciąg     | Typ bufora ("formatted" lub "free").
 | y                  | ciąg     | Numer linii bufora z wolną zawartością (≥ 0), -1 dla bufora ze sformatowaną zawartością.
 | date               | ciąg     | Linia z datą (timestamp).
-// TRANSLATION MISSING
-| date_usec          | ciąg     | Microseconds of line date.
+| date_usec          | ciąg     | Mikrosekundy w linii z datą.
 | date_printed       | ciąg     | Data, kiedy linia została wyświetlona (timestamp).
-// TRANSLATION MISSING
-| date_usec_printed  | ciąg     | Microseconds of date when line was displayed.
+| date_usec_printed  | ciąg     | Mikrosekundy w dacie wyświetlenia linii.
 | str_time           | ciąg     | Date do wyświetlenia. Może zawierać kody kolorów.
 | tags               | ciąg     | Tagi wiadomości (z przecinkiem dodanym na początku/końcu ciągu).
 | displayed          | ciąg     | "1" jeśli wyświetlono, "0" jeśli nie wyświetlono.
@@ -5431,8 +5429,7 @@ Callback "print" ustawia następujące zmienne w tablicy hashy:
 |===
 | Zmienna            | Typ      | Opis
 | buffer             | wskaźnik | Bufor.
-// TRANSLATION MISSING
-| tg_date            | ciąg     | Data/czas wiadomości (format: `%FT%T.%f`, see link:weechat_plugin_api.en.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]).
+| tg_date            | ciąg     | Data/czas wiadomości (format: `%FT%T.%f`, zobacz link:weechat_plugin_api.en.html#_util_strftimeval[Opis API wtyczek WeeChat / util_strftimeval ^↗^^]).
 | tg_displayed       | ciąg     | "1" jeśli wyświetlone, "0" jeśli linia odfiltrowana.
 | tg_highlight       | ciąg     | "1" jeśli higlight, inaczej "0".
 | tg_prefix          | ciąg     | Prefiks.
@@ -5497,8 +5494,7 @@ Callback "timer" ustawia następujące zmienne w tablicy hashy:
 |===
 | Zmienna            | Typ  | Opis
 | tg_remaining_calls | ciąg | Liczba pozostałych wywołań.
-// TRANSLATION MISSING
-| tg_date            | ciąg | Obecna data/czas `%FT%T.%f`, see link:weechat_plugin_api.en.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]).
+| tg_date            | ciąg | Obecna data/czas `%FT%T.%f`, zobacz link:weechat_plugin_api.en.html#_util_strftimeval[Opis API wtyczek WeeChat / util_strftimeval ^↗^^]).
 |===
 
 [[trigger_data_config]]
