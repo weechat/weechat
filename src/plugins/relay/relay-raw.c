@@ -49,11 +49,12 @@ relay_raw_message_print (struct t_relay_raw_message *raw_message)
 {
     if (relay_raw_buffer && raw_message)
     {
-        weechat_printf_date_tags (relay_raw_buffer,
-                                  raw_message->date, NULL,
-                                  "%s\t%s",
-                                  raw_message->prefix,
-                                  raw_message->message);
+        weechat_printf_datetime_tags (relay_raw_buffer,
+                                      raw_message->date,
+                                      raw_message->date_usec,
+                                      "%s\t%s",
+                                      raw_message->prefix,
+                                      raw_message->message);
     }
 }
 
@@ -199,8 +200,8 @@ relay_raw_message_remove_old ()
  */
 
 struct t_relay_raw_message *
-relay_raw_message_add_to_list (time_t date, const char *prefix,
-                               const char *message)
+relay_raw_message_add_to_list (time_t date, int date_usec,
+                               const char *prefix, const char *message)
 {
     struct t_relay_raw_message *new_raw_message;
 
@@ -213,6 +214,7 @@ relay_raw_message_add_to_list (time_t date, const char *prefix,
     if (new_raw_message)
     {
         new_raw_message->date = date;
+        new_raw_message->date_usec = date_usec;
         new_raw_message->prefix = strdup (prefix);
         new_raw_message->message = strdup (message);
 
@@ -246,6 +248,7 @@ relay_raw_message_add (struct t_relay_client *client,
     const char *hexa = "0123456789ABCDEF";
     int pos_buf, pos_buf2, char_size, i, length;
     struct t_relay_raw_message *new_raw_message;
+    struct timeval tv_now;
 
     buf = NULL;
     buf2 = NULL;
@@ -356,8 +359,10 @@ relay_raw_message_add (struct t_relay_client *client,
                   (buf2) ? buf2 : ((buf) ? buf : data));
     }
 
+    gettimeofday (&tv_now, NULL);
     new_raw_message = relay_raw_message_add_to_list (
-        time (NULL),
+        tv_now.tv_sec,
+        tv_now.tv_usec,
         prefix,
         (buf3) ? buf3 : ((buf2) ? buf2 : ((buf) ? buf : data)));
 
@@ -415,6 +420,8 @@ relay_raw_add_to_infolist (struct t_infolist *infolist,
         return 0;
 
     if (!weechat_infolist_new_var_time (ptr_item, "date", raw_message->date))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "date_usec", raw_message->date_usec))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "prefix", raw_message->prefix))
         return 0;

@@ -217,9 +217,11 @@ relay_upgrade_read_cb (const void *pointer, void *data,
                 relay_client_new_with_infolist (infolist);
                 break;
             case RELAY_UPGRADE_TYPE_RAW_MESSAGE:
-                relay_raw_message_add_to_list (weechat_infolist_time (infolist, "date"),
-                                               weechat_infolist_string (infolist, "prefix"),
-                                               weechat_infolist_string (infolist, "message"));
+                relay_raw_message_add_to_list (
+                    weechat_infolist_time (infolist, "date"),
+                    weechat_infolist_integer (infolist, "date_usec"),
+                    weechat_infolist_string (infolist, "prefix"),
+                    weechat_infolist_string (infolist, "message"));
                 break;
         }
     }

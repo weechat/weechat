@@ -35,6 +35,7 @@
 struct t_relay_raw_message
 {
     time_t date;                       /* date/time of message              */
+    int date_usec;                     /* microseconds of date              */
     char *prefix;                      /* prefix                            */
     char *message;                     /* message                           */
     struct t_relay_raw_message *prev_message; /* pointer to prev. message   */
@@ -49,6 +50,7 @@ extern struct t_relay_raw_message *relay_raw_messages, *last_relay_raw_message;
 
 extern void relay_raw_open (int switch_to_buffer);
 extern struct t_relay_raw_message *relay_raw_message_add_to_list (time_t date,
+                                                                  int date_usec,
                                                                   const char *prefix,
                                                                   const char *message);
 extern void relay_raw_print (struct t_relay_client *client,
