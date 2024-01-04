@@ -174,9 +174,10 @@ irc_input_user_message_display (struct t_irc_server *server,
     {
         if (display_target)
         {
-            weechat_printf_date_tags (
+            weechat_printf_datetime_tags (
                 ptr_buffer,
                 date,
+                date_usec,
                 irc_protocol_tags (&ctxt, str_tags),
                 "%s%s -> %s%s%s: %s%s%s%s%s%s",
                 weechat_prefix ("network"),
@@ -195,9 +196,10 @@ irc_input_user_message_display (struct t_irc_server *server,
         }
         else
         {
-            weechat_printf_date_tags (
+            weechat_printf_datetime_tags (
                 ptr_buffer,
                 date,
+                date_usec,
                 irc_protocol_tags (&ctxt, str_tags),
                 "%s%s%s%s%s%s%s",
                 weechat_prefix ("action"),
@@ -211,9 +213,10 @@ irc_input_user_message_display (struct t_irc_server *server,
     }
     else if (ctcp_type)
     {
-        weechat_printf_date_tags (
+        weechat_printf_datetime_tags (
             ptr_buffer,
             date,
+            date_usec,
             irc_protocol_tags (&ctxt, str_tags),
             _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
             weechat_prefix ("network"),
@@ -229,9 +232,10 @@ irc_input_user_message_display (struct t_irc_server *server,
     }
     else if (display_target)
     {
-        weechat_printf_date_tags (
+        weechat_printf_datetime_tags (
             ptr_buffer,
             date,
+            date_usec,
             irc_protocol_tags (&ctxt, str_tags),
             "%s%s%s%s%s(%s%s%s%s)%s -> %s%s%s: %s",
             weechat_prefix ("network"),
@@ -255,9 +259,10 @@ irc_input_user_message_display (struct t_irc_server *server,
     }
     else
     {
-        weechat_printf_date_tags (
+        weechat_printf_datetime_tags (
             ptr_buffer,
             date,
+            date_usec,
             irc_protocol_tags (&ctxt, str_tags),
             "%s%s",
             irc_nick_as_prefix (
