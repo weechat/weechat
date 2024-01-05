@@ -52,6 +52,7 @@ relay_raw_message_print (struct t_relay_raw_message *raw_message)
         weechat_printf_datetime_tags (relay_raw_buffer,
                                       raw_message->date,
                                       raw_message->date_usec,
+                                      NULL,
                                       "%s\t%s",
                                       raw_message->prefix,
                                       raw_message->message);
