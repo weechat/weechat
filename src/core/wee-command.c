@@ -36,6 +36,7 @@
 #include <ctype.h>
 #include <regex.h>
 #include <time.h>
+#include <sys/time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
@@ -5155,8 +5156,7 @@ COMMAND_CALLBACK(print)
     struct t_gui_buffer *ptr_buffer;
     int i, y, escape, to_stdout, to_stderr, arg_new_buffer_name;
     int new_buffer_type_free, free_content, switch_to_buffer;
-    time_t date, date_now;
-    struct tm tm_date;
+    struct timeval tv_date;
     char *tags, *pos, *text, *text2, *error, empty_string[1] = { '\0' };
     const char *prefix, *ptr_text;
     long value;
@@ -5170,7 +5170,8 @@ COMMAND_CALLBACK(print)
     new_buffer_type_free = 0;
     switch_to_buffer = 0;
     y = -1;
-    date = 0;
+    tv_date.tv_sec = 0;
+    tv_date.tv_usec = 0;
     tags = NULL;
     prefix = NULL;
     escape = 0;
@@ -5238,38 +5239,12 @@ COMMAND_CALLBACK(print)
                 value = strtol (argv[i] + 1, &error, 10);
                 if (!error || error[0])
                     COMMAND_ERROR;
-                date = (argv[i][0] == '-') ?
-                    time (NULL) - value : time (NULL) + value;
+                gettimeofday (&tv_date, NULL);
+                tv_date.tv_sec += (argv[i][0] == '+') ? value : value * -1;
             }
             else
             {
-                error = NULL;
-                value = strtol (argv[i], &error, 10);
-                if (error && !error[0])
-                {
-                    date = value;
-                }
-                else
-                {
-                    memset (&tm_date, 0, sizeof (struct tm));
-                    if (strchr (argv[i], '-'))
-                    {
-                        /* ISO 8601 (date/time) */
-                        if (strptime (argv[i], "%Y-%m-%dT%H:%M:%S", &tm_date))
-                        {
-                            if (tm_date.tm_year > 0)
-                                date = mktime (&tm_date);
-                        }
-                    }
-                    else
-                    {
-                        /* time only (use current date) */
-                        date_now = time (NULL);
-                        localtime_r (&date_now, &tm_date);
-                        if (strptime (argv[i], "%H:%M:%S", &tm_date))
-                            date = mktime (&tm_date);
-                    }
-                }
+                util_parse_time (argv[i], &tv_date);
             }
         }
         else if (string_strcmp (argv[i], "-tags") == 0)
@@ -5393,15 +5368,23 @@ COMMAND_CALLBACK(print)
         {
             if (free_content)
             {
-                gui_chat_printf_y_date_tags (ptr_buffer, y, date, tags,
-                                             "%s%s",
-                                             (prefix) ? prefix : "",
-                                             text2);
+                gui_chat_printf_y_datetime_tags (
+                    ptr_buffer,
+                    y,
+                    tv_date.tv_sec,
+                    tv_date.tv_usec,
+                    tags,
+                    "%s%s",
+                    (prefix) ? prefix : "",
+                    text2);
             }
             else
             {
-                gui_chat_printf_date_tags (
-                    ptr_buffer, date, tags,
+                gui_chat_printf_datetime_tags (
+                    ptr_buffer,
+                    tv_date.tv_sec,
+                    tv_date.tv_usec,
+                    tags,
                     "%s%s",
                     (prefix) ? prefix : ((!prefix && !pos) ? "\t" : ""),
                     text2);
@@ -8869,9 +8852,9 @@ command_init ()
             N_("> -n: \"n\" seconds before now"),
             N_("> +n: \"n\" seconds in the future"),
             N_("> n: \"n\" seconds since the Epoch (see man time)"),
-            N_("> date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: "
-               "2014-01-19T04:32:55"),
-            N_("> time: hh:mm:ss (example: 04:32:55)"),
+            N_("> date and/or time (ISO 8601): see function \"util_parse_time\" "
+               "in Plugin API reference "
+               "(examples: \"11:29:09\", \"2023-12-25T10:29:09.456789Z\")"),
             N_("raw[-tags]: comma-separated list of tags (see /help filter for a "
                "list of tags most commonly used)"),
             N_("text: text to display (prefix and message must be separated by "

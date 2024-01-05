@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-12-26 18:55+0100\n"
+"POT-Creation-Date: 2024-01-05 19:29+0100\n"
 "PO-Revision-Date: 2024-01-01 16:06+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -2838,12 +2838,9 @@ msgid "> n: \"n\" seconds since the Epoch (see man time)"
 msgstr "> n: „n” sekund od Epoch (zobacz man time)"
 
 msgid ""
-"> date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55"
+"> date and/or time (ISO 8601): see function \"util_parse_time\" in Plugin "
+"API reference (examples: \"11:29:09\", \"2023-12-25T10:29:09.456789Z\")"
 msgstr ""
-"> date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, przykład: 2014-01-19T04:32:55"
-
-msgid "> time: hh:mm:ss (example: 04:32:55)"
-msgstr "> time: hh:mm:ss (ptzykład: 04:32:55)"
 
 msgid ""
 "raw[-tags]: comma-separated list of tags (see /help filter for a list of "
@@ -16648,6 +16645,14 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid ""
+#~ "> date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55"
+#~ msgstr ""
+#~ "> date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, przykład: 2014-01-19T04:32:55"
+
+#~ msgid "> time: hh:mm:ss (example: 04:32:55)"
+#~ msgstr "> time: hh:mm:ss (ptzykład: 04:32:55)"
 
 #~ msgid "time format when quoting a message (see /help cursor)"
 #~ msgstr "format czasu podczas cytowania wiadomości (zobacz /help cursor)"

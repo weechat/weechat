@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2023-12-26 18:55+0100\n"
+"POT-Creation-Date: 2024-01-05 19:29+0100\n"
 "PO-Revision-Date: 2023-12-05 14:55+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2828,12 +2828,9 @@ msgid "> n: \"n\" seconds since the Epoch (see man time)"
 msgstr "> n: „n” секунди од почетка Епохе (погледајте man time)"
 
 msgid ""
-"> date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55"
+"> date and/or time (ISO 8601): see function \"util_parse_time\" in Plugin "
+"API reference (examples: \"11:29:09\", \"2023-12-25T10:29:09.456789Z\")"
 msgstr ""
-"> датум/време (ISO 8601): гггг-мм-ддTчч:мм:сс, пример: 2021-01-23T04:32:55"
-
-msgid "> time: hh:mm:ss (example: 04:32:55)"
-msgstr "> време: чч:мм:сс (пример: 04:32:55)"
 
 msgid ""
 "raw[-tags]: comma-separated list of tags (see /help filter for a list of "
@@ -16625,6 +16622,14 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+#~ msgid ""
+#~ "> date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55"
+#~ msgstr ""
+#~ "> датум/време (ISO 8601): гггг-мм-ддTчч:мм:сс, пример: 2021-01-23T04:32:55"
+
+#~ msgid "> time: hh:mm:ss (example: 04:32:55)"
+#~ msgstr "> време: чч:мм:сс (пример: 04:32:55)"
 
 #~ msgid "time format when quoting a message (see /help cursor)"
 #~ msgstr "формат времена када се цитира порука (погледајте /help cursor)"
