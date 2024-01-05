@@ -4818,6 +4818,40 @@ weechat_util_strftimeval (time, sizeof (time), "%FT%T.%f", &tv);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== util_parse_time
+
+_WeeChat ≥ 4.2.0._
+
+Analyser la date/heure avec le support des microsecondes.
+
+Prototype :
+
+[source,c]
+----
+int util_parse_time (const char *datetime, struct timeval *tv);
+----
+
+Paramètres :
+
+* _date_ : date/heure
+* _tv_: date/heure analysée (structure "timeval")
+
+Valeur de retour :
+
+* 1 si OK, 0 si erreur
+
+Exemple en C :
+
+[source,c]
+----
+struct timeval tv;
+weechat_util_parse_time ("2023-12-25T10:29:09.456789Z", &tv);  /* == 1 */
+/* result: tv.tv_sec == 1703500149, tv.tv_usec = 456789 */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== util_version_number
 
 _WeeChat ≥ 0.3.9._
@@ -5756,7 +5790,7 @@ Paramètres :
 
 Valeur de retour :
 
-* 1 if OK, 0 if error
+* 1 si OK, 0 si erreur
 
 Exemple en C :
 

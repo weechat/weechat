@@ -4955,6 +4955,41 @@ weechat_util_strftimeval (time, sizeof (time), "%FT%T.%f", &tv);
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
+// TRANSLATION MISSING
+==== util_parse_time
+
+_WeeChat ≥ 4.2.0._
+
+Parse date/time with support of microseconds.
+
+Prototype:
+
+[source,c]
+----
+int util_parse_time (const char *datetime, struct timeval *tv);
+----
+
+Arguments:
+
+* _date_: date/time
+* _tv_: parsed date/time ("timeval" structure)
+
+Return value:
+
+* 1 if OK, 0 if error
+
+C example:
+
+[source,c]
+----
+struct timeval tv;
+weechat_util_parse_time ("2023-12-25T10:29:09.456789Z", &tv);  /* == 1 */
+/* result: tv.tv_sec == 1703500149, tv.tv_usec = 456789 */
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 ==== util_version_number
 
 _WeeChat ≥ 0.3.9._

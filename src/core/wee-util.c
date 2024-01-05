@@ -237,6 +237,243 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
 }
 
 /*
+ * Parses a date/time string, which can be one of these formats:
+ *   "2024-01-04"                  -> date at midnight
+ *   "2024-01-04T22:01:02"         -> ISO 8601, local time
+ *   "2024-01-04T22:01:02.123"     -> ISO 8601, local time, with milliseconds
+ *   "2024-01-04T22:01:02.123456"  -> ISO 8601, local time, with microseconds
+ *   "2024-01-04T21:01:02Z"        -> ISO 8601, UTC
+ *   "2024-01-04T21:01:02.123Z"    -> ISO 8601, UTC, with milliseconds
+ *   "2024-01-04T21:01:02.123456Z" -> ISO 8601, UTC, with microseconds
+ *   "22:01:02"                    -> current date, local time
+ *   "22:01:02.123"                -> current date, local time with milliseconds
+ *   "22.01:02.123456"             -> current date, local time with microseconds
+ *   "21:01:02Z"                   -> current date, UTC
+ *   "21:01:02.123Z"               -> current date, UTC, with milliseconds
+ *   "21.01:02.123456Z"            -> current date, UTC, with microseconds
+ *   "1704402062"                  -> timestamp date
+ *   "1704402062.123"              -> timestamp date, with milliseconds
+ *   "1704402062,123"              -> timestamp date, with milliseconds
+ *   "1704402062.123456"           -> timestamp date, with microseconds
+ *   "1704402062,123456"           -> timestamp date, with microseconds
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+util_parse_time (const char *datetime, struct timeval *tv)
+{
+    char *string, *pos, *pos2, str_usec[16], *error, str_date[128];
+    struct tm tm_date, tm_date_gm, tm_date_local, *local_time;
+    time_t time_now, time_gm, time_local;
+    long value;
+    int rc, length, use_local_time, timezone_offset, offset_factor, hour, min;
+
+    if (!datetime || !datetime[0] || !tv)
+        return 0;
+
+    rc = 0;
+
+    tv->tv_sec = 0;
+    tv->tv_usec = 0;
+
+    use_local_time = 1;
+    timezone_offset = 0;
+    offset_factor = 1;
+
+    string = strdup (datetime);
+    if (!string)
+        return 0;
+
+    /* extract microseconds and remove them from string2 */
+    pos = strchr (string, '.');
+    if (!pos)
+        pos = strchr (string, ',');
+    if (pos)
+    {
+        pos2 = pos + 1;
+        while (isdigit ((unsigned char)pos2[0]))
+        {
+            pos2++;
+        }
+        length = pos2 - pos - 1;
+        if (length > 0)
+        {
+            if (length > 6)
+                length = 6;
+            memcpy (str_usec, pos + 1, length);
+            str_usec[length] = '\0';
+            while (strlen (str_usec) < 6)
+            {
+                strcat (str_usec, "0");
+            }
+            error = NULL;
+            value = strtol (str_usec, &error, 10);
+            if (error && !error[0])
+            {
+                if (value < 0)
+                    value = 0;
+                else if (value > 999999)
+                    value = 999999;
+                tv->tv_usec = (int)value;
+            }
+        }
+        memmove (pos, pos2, strlen (pos2) + 1);
+    }
+
+    /* extract timezone and remove it from string2 */
+    pos = strchr (string, 'Z');
+    if (pos)
+    {
+        pos[0] = '\0';
+        use_local_time = 0;
+        timezone_offset = 0;
+    }
+    else
+    {
+        pos = strchr (string, 'T');
+        if (pos)
+        {
+            pos2 = strchr (pos, '+');
+            if (pos2)
+            {
+                pos2[0] = '\0';
+                pos2++;
+                offset_factor = 1;
+            }
+            else
+            {
+                pos2 = strchr (pos, '-');
+                if (pos2)
+                {
+                    pos2[0] = '\0';
+                    pos2++;
+                    offset_factor = -1;
+                }
+            }
+            if (pos2)
+            {
+                use_local_time = 0;
+                hour = 0;
+                min = 0;
+                if (isdigit ((unsigned char)pos2[0])
+                    && isdigit ((unsigned char)pos2[1]))
+                {
+                    hour = ((pos2[0] - '0') * 10) + (pos2[1] - '0');
+                    pos2 += 2;
+                    if (pos2[0] == ':')
+                        pos2++;
+                    if (isdigit ((unsigned char)pos2[0])
+                        && isdigit ((unsigned char)pos2[1]))
+                    {
+                        min = ((pos2[0] - '0') * 10) + (pos2[1] - '0');
+                    }
+                }
+                timezone_offset = offset_factor * ((hour * 3600) + (min * 60));
+            }
+        }
+    }
+
+    if (strchr (string, '-'))
+    {
+        if (strchr (string, ':'))
+        {
+            /* ISO 8601 format like: "2024-01-04T21:01:02.123Z" */
+            /* initialize structure, because strptime does not do it */
+            memset (&tm_date, 0, sizeof (struct tm));
+            pos = strptime (string, "%Y-%m-%dT%H:%M:%S", &tm_date);
+            if (pos && (tm_date.tm_year > 0))
+            {
+                if (use_local_time)
+                {
+                    tv->tv_sec = mktime (&tm_date);
+                }
+                else
+                {
+                    /* convert to UTC and add timezone_offset */
+                    time_now = mktime (&tm_date);
+                    gmtime_r (&time_now, &tm_date_gm);
+                    localtime_r (&time_now, &tm_date_local);
+                    time_gm = mktime (&tm_date_gm);
+                    time_local = mktime (&tm_date_local);
+                    tv->tv_sec = mktime (&tm_date_local)
+                        + (time_local - time_gm)
+                        + timezone_offset;
+                }
+                rc = 1;
+            }
+        }
+        else
+        {
+            /* ISO 8601 format like: "2024-01-04" */
+            /* initialize structure, because strptime does not do it */
+            memset (&tm_date, 0, sizeof (struct tm));
+            pos = strptime (string, "%Y-%m-%d", &tm_date);
+            if (pos && (tm_date.tm_year > 0))
+            {
+                tv->tv_sec = mktime (&tm_date);
+                rc = 1;
+            }
+        }
+    }
+    else if (strchr (string, ':'))
+    {
+        /* hour format like: "21:01:02" */
+        time_now = time (NULL);
+        local_time = localtime (&time_now);
+        strftime (str_date, sizeof (str_date),
+                  "%Y-%m-%dT", local_time);
+        strcat (str_date, string);
+        /* initialize structure, because strptime does not do it */
+        memset (&tm_date, 0, sizeof (struct tm));
+        pos = strptime (str_date, "%Y-%m-%dT%H:%M:%S", &tm_date);
+        if (pos)
+        {
+            if (use_local_time)
+            {
+                tv->tv_sec = mktime (&tm_date);
+            }
+            else
+            {
+                /* convert to UTC and add timezone_offset */
+                time_now = mktime (&tm_date);
+                gmtime_r (&time_now, &tm_date_gm);
+                localtime_r (&time_now, &tm_date_local);
+                time_gm = mktime (&tm_date_gm);
+                time_local = mktime (&tm_date_local);
+                tv->tv_sec = mktime (&tm_date_local)
+                    + (time_local - time_gm)
+                    + timezone_offset;
+            }
+            rc = 1;
+        }
+    }
+    else
+    {
+        /* timestamp format: "1704402062" */
+        error = NULL;
+        value = strtol (string, &error, 10);
+        if (error && !error[0] && (value >= 0))
+        {
+            tv->tv_sec = (time_t)value;
+            rc = 1;
+        }
+    }
+
+    free (string);
+
+    if (!rc)
+    {
+        tv->tv_sec = 0;
+        tv->tv_usec = 0;
+    }
+
+    return rc;
+}
+
+/*
  * Returns difference between two times.
  *
  * The following variables are set, if pointer is not NULL:

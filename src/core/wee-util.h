@@ -33,6 +33,7 @@ extern char *util_get_microseconds_string (long long diff);
 extern const char *util_get_time_string (const time_t *date);
 extern int util_strftimeval (char *string, int max, const char *format,
                              struct timeval *tv);
+extern int util_parse_time (const char *datetime, struct timeval *tv);
 extern void util_get_time_diff (time_t time1, time_t time2,
                                 time_t *total_seconds,
                                 int *days, int *hours, int *minutes,

@@ -695,6 +695,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->util_timeval_add = &util_timeval_add;
         new_plugin->util_get_time_string = &util_get_time_string;
         new_plugin->util_strftimeval = &util_strftimeval;
+        new_plugin->util_parse_time = &util_parse_time;
         new_plugin->util_version_number = &util_version_number;
 
         new_plugin->list_new = &weelist_new;

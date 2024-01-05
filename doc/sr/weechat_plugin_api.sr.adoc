@@ -4565,14 +4565,14 @@ _WeeChat ≥ 4.2.0._
 Format date and time like function `strftime` in C library, using `struct timeval`
 as input, and supporting extra specifiers for microseconds.
 
-Prototype:
+Прототип:
 
 [source,c]
 ----
 int weechat_util_strftimeval (char *string, int max, const char *format, struct timeval *tv);
 ----
 
-Arguments:
+Аргументи:
 
 * _string_: buffer where the formatted string is stored
 * _max_: string size
@@ -4581,11 +4581,11 @@ Arguments:
    (for example `%.3` for milliseconds)
 ** `%f`: alias of `%.6`
 
-Return value:
+Повратна вредност:
 
 * number of bytes put in _string_ (value returned from _strftime_ function)
 
-C example:
+C пример:
 
 [source,c]
 ----
@@ -4594,6 +4594,41 @@ struct timeval tv;
 gettimeofday (&tv, NULL);
 weechat_util_strftimeval (time, sizeof (time), "%FT%T.%f", &tv);
 /* result: 2023-12-26T18:10:04.460509 */
+----
+
+[NOTE]
+Ова функција није доступна у API скриптовања.
+
+// TRANSLATION MISSING
+==== util_parse_time
+
+_WeeChat ≥ 4.2.0._
+
+Parse date/time with support of microseconds.
+
+Прототип:
+
+[source,c]
+----
+int util_parse_time (const char *datetime, struct timeval *tv);
+----
+
+Аргументи:
+
+* _date_: date/time
+* _tv_: parsed date/time ("timeval" structure)
+
+Повратна вредност:
+
+* 1 if OK, 0 if error
+
+C пример:
+
+[source,c]
+----
+struct timeval tv;
+weechat_util_parse_time ("2023-12-25T10:29:09.456789Z", &tv);  /* == 1 */
+/* result: tv.tv_sec == 1703500149, tv.tv_usec = 456789 */
 ----
 
 [NOTE]
