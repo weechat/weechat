@@ -1137,6 +1137,7 @@ TEST(IrcMessage, Split)
     struct t_hashtable *hashtable;
     const char *ptr_msg, *pos1, *pos2;
     char batch_ref[512], msg[4096];
+    int old_nick_max_length;
 
     server = irc_server_alloc ("test_split_msg");
     CHECK(server);
@@ -1551,6 +1552,21 @@ TEST(IrcMessage, Split)
     STRCMP_EQUAL("test",
                  (const char *)hashtable_get (hashtable, "args1"));
     hashtable_free (hashtable);
+
+    /* PRIVMSG with small content but inconsistent max length: no split */
+    old_nick_max_length = server->nick_max_length;
+    server->nick_max_length = 4096;
+    hashtable = irc_message_split (server, "PRIVMSG #channel :test");
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #channel :test",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("test",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+    server->nick_max_length = old_nick_max_length;
 
     /* PRIVMSG with 512 bytes of content: 1 split */
     hashtable = irc_message_split (server,

@@ -1055,9 +1055,6 @@ irc_message_split_string (struct t_irc_message_split_context *context,
     if (suffix)
         max_length -= strlen (suffix);
 
-    if (max_length < 2)
-        return 0;
-
     /* debug message */
     if (weechat_irc_plugin->debug >= 2)
     {
@@ -1069,17 +1066,23 @@ irc_message_split_string (struct t_irc_message_split_context *context,
                         max_length);
     }
 
-    if (!arguments || !arguments[0])
+    if ((max_length < 2) || !arguments || !arguments[0])
     {
-        snprintf (message, sizeof (message), "%s%s%s %s%s%s%s",
+        /*
+         * max length is not known (server probably sent values that are not
+         * consistent), or no arguments => in this case, we just return message
+         * as-is (no split)
+         */
+        snprintf (message, sizeof (message), "%s%s%s %s%s%s%s%s",
                   (host) ? host : "",
                   (host) ? " " : "",
                   command,
                   (target) ? target : "",
                   (target && target[0]) ? " " : "",
                   (prefix) ? prefix : "",
+                  (arguments) ? arguments : "",
                   (suffix) ? suffix : "");
-        irc_message_split_add (context, tags, message, "");
+        irc_message_split_add (context, tags, message, (arguments) ? arguments : "");
         (context->number)++;
         return 1;
     }
