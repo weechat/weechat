@@ -373,108 +373,6 @@ irc_protocol_nick_address (struct t_irc_server *server,
 }
 
 /*
- * Parses date/time received in a "time" tag and sets *date to the date/time
- * and *date_usec to the microseconds of date (value is set to 0 for both in
- * case of error).
- */
-
-void
-irc_protocol_parse_time (const char *time, time_t *date, int *date_usec)
-{
-    time_t time_msg, time_gm, time_local;
-    struct tm tm_date, tm_date_gm, tm_date_local;
-    char *time2, *pos, *pos2, *pos_msec, *error, str_msec[16];
-    long value;
-    int length;
-
-    if (!date || !date_usec)
-        return;
-
-    *date = 0;
-    *date_usec = 0;
-
-    if (!time || !time[0])
-        return;
-
-    time2 = strdup (time);
-    if (!time2)
-        return;
-
-    pos_msec = NULL;
-
-    if (strchr (time2, '-'))
-    {
-        /* date is with ISO 8601 format: "2012-11-24T07:41:02.018Z" */
-        /* initialize structure, because strptime does not do it */
-        memset (&tm_date, 0, sizeof (struct tm));
-        pos = strptime (time2, "%Y-%m-%dT%H:%M:%S", &tm_date);
-        if (pos && (tm_date.tm_year > 0))
-        {
-            time_msg = mktime (&tm_date);
-            gmtime_r (&time_msg, &tm_date_gm);
-            localtime_r (&time_msg, &tm_date_local);
-            time_gm = mktime (&tm_date_gm);
-            time_local = mktime (&tm_date_local);
-            *date = mktime (&tm_date_local) + (time_local - time_gm);
-            if (pos[0] == '.')
-            {
-                pos++;
-                pos2 = strchr (pos, 'Z');
-                if (pos2)
-                    pos2[0] = '\0';
-                pos_msec = pos;
-            }
-        }
-    }
-    else
-    {
-        /* date is with timestamp format: "1353403519.478" or "1353403519,478" */
-        pos = strchr (time2, '.');
-        if (pos)
-        {
-            pos[0] = '\0';
-        }
-        else
-        {
-            pos = strchr (time2, ',');
-            if (pos)
-                pos[0] = '\0';
-        }
-        error = NULL;
-        value = strtol (time2, &error, 10);
-        if (error && !error[0] && (value >= 0))
-            *date = (int)value;
-        if (pos && pos[1])
-            pos_msec = pos + 1;
-    }
-
-    if (pos_msec)
-    {
-        length = strlen (pos_msec);
-        if (length > 6)
-            length = 6;
-        memcpy (str_msec, pos_msec, length);
-        str_msec[length] = '\0';
-        while (strlen (str_msec) < 6)
-        {
-            strcat (str_msec, "0");
-        }
-        error = NULL;
-        value = strtol (str_msec, &error, 10);
-        if (error && !error[0])
-        {
-            if (value < 0)
-                value = 0;
-            else if (value > 999999)
-                value = 999999;
-            *date_usec = (int)value;
-        }
-    }
-
-    free (time2);
-}
-
-/*
  * Builds a string with concatenation of IRC command parameters, from
  * arg_start to arg_end.
  *
@@ -8191,6 +8089,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
     const char *nick1, *address1, *host1;
     char *address, *host, *host_no_color;
     struct t_irc_protocol_ctxt ctxt;
+    struct timeval tv;
 
     struct t_irc_protocol_msg irc_protocol_messages[] = {
         /* format: "command", decode_color, keep_trailing_spaces, func_cb   */
@@ -8409,10 +8308,11 @@ irc_protocol_recv_command (struct t_irc_server *server,
                 if (ctxt.tags)
                 {
                     irc_tag_parse (tags, ctxt.tags, NULL);
-                    irc_protocol_parse_time (
+                    weechat_util_parse_time (
                         weechat_hashtable_get (ctxt.tags, "time"),
-                        &(ctxt.date),
-                        &(ctxt.date_usec));
+                        &tv);
+                    ctxt.date = tv.tv_sec;
+                    ctxt.date_usec = tv.tv_usec;
                 }
                 free (tags);
             }

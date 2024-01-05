@@ -57,8 +57,6 @@ extern const char *irc_protocol_nick_address (struct t_irc_server *server,
                                               struct t_irc_nick *nick,
                                               const char *nickname,
                                               const char *address);
-extern void irc_protocol_parse_time (const char *time, time_t *date,
-                                     int *date_usec);
 extern char *irc_protocol_string_params (const char **params,
                                          int arg_start, int arg_end);
 extern char *irc_protocol_cap_to_enable (const char *capabilities,
@@ -91,14 +89,6 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
         STRCMP_EQUAL(__result, irc_protocol_tags (&ctxt,                \
                                                       __extra_tags));   \
     }
-
-#define WEE_CHECK_PARSE_TIME(__result_date, __result_date_usec,         \
-                             __time)                                    \
-    date = 1;                                                           \
-    date_usec = 1;                                                      \
-    irc_protocol_parse_time (__time, &date, &date_usec);                \
-    LONGS_EQUAL(__result_date, date);                                   \
-    LONGS_EQUAL(__result_date_usec, date_usec);
 
 #define WEE_CHECK_CAP_TO_ENABLE(__result, __string, __sasl_requested)   \
     str = irc_protocol_cap_to_enable (__string, __sasl_requested);      \
@@ -591,45 +581,6 @@ TEST(IrcProtocolWithServer, Tags)
 
     free (ctxt.nick);
     free (ctxt.address);
-}
-
-/*
- * Tests functions:
- *   irc_protocol_parse_time
- */
-
-TEST(IrcProtocol, ParseTime)
-{
-    time_t date;
-    int date_usec;
-
-    /* invalid time formats */
-    WEE_CHECK_PARSE_TIME(0, 0, NULL);
-    WEE_CHECK_PARSE_TIME(0, 0, "");
-    WEE_CHECK_PARSE_TIME(0, 0, "invalid");
-
-    /* incomplete time formats */
-    WEE_CHECK_PARSE_TIME(0, 0, "2019-01");
-    WEE_CHECK_PARSE_TIME(0, 0, "2019-01-13");
-    WEE_CHECK_PARSE_TIME(0, 0, "2019-01-13T14");
-    WEE_CHECK_PARSE_TIME(0, 0, "2019-01-13T14:37");
-
-    /* valid time with ISO 8601 format*/
-    WEE_CHECK_PARSE_TIME(1547386699, 0, "2019-01-13T13:38:19");
-    WEE_CHECK_PARSE_TIME(1547386699, 0, "2019-01-13T13:38:19Z");
-    WEE_CHECK_PARSE_TIME(1547386699, 123, "2019-01-13T13:38:19.000123");
-    WEE_CHECK_PARSE_TIME(1547386699, 123, "2019-01-13T13:38:19.000123Z");
-    WEE_CHECK_PARSE_TIME(1547386699, 123000, "2019-01-13T13:38:19.123");
-    WEE_CHECK_PARSE_TIME(1547386699, 123000, "2019-01-13T13:38:19.123Z");
-    WEE_CHECK_PARSE_TIME(1547386699, 123456, "2019-01-13T13:38:19.123456");
-    WEE_CHECK_PARSE_TIME(1547386699, 123456, "2019-01-13T13:38:19.123456789");
-
-    /* valid time as timestamp */
-    WEE_CHECK_PARSE_TIME(1547386699, 0, "1547386699");
-    WEE_CHECK_PARSE_TIME(1547386699, 123, "1547386699.000123");
-    WEE_CHECK_PARSE_TIME(1547386699, 123000, "1547386699.123");
-    WEE_CHECK_PARSE_TIME(1547386699, 123456, "1547386699.123456");
-    WEE_CHECK_PARSE_TIME(1547386699, 123456, "1547386699.123456789");
 }
 
 /*
