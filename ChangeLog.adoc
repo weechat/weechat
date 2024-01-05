@@ -17,6 +17,7 @@ Bug fixes::
 
   * core: fix crash on plugin reload when using musl libc (issue #2052)
   * core: fix infinite loop in display when the chat area is too small (issue #2053)
+  * irc: fix display of self messages when the message split fails due to inconsistent max lengths sent by the server in message 005
 
 [[v4.1.2]]
 == Version 4.1.2 (2023-12-03)
