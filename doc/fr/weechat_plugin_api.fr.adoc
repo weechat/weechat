@@ -14631,6 +14631,7 @@ Paramètres :
 
 * _buffer_ : pointeur vers le tampon
 * _property_ : nom de la propriété :
+** _opening_ : 1 si le tampon est en cours d'ouverture, sinon 0 _(WeeChat ≥ 4.2.0)_
 ** _number_ : numéro du tampon (commence à 1)
 ** _layout_number_ : numéro du tampon sauvegardé dans le "layout"
 ** _layout_number_merge_order_ : ordre du tampon mélangé pour le "layout"

@@ -13863,6 +13863,8 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 
 * _buffer_: показивач на бафер
 * _property_: име особине:
+// TRANSLATION MISSING
+** _opening_: 1 if buffer is opening, otherwise 0 _(WeeChat ≥ 4.2.0)_
 ** _number_: број бафера (почиње се од 1)
 ** _layout_number_: број бафера сачуван у распореду
 ** _layout_number_merge_order_: редослед у спајању за распоред

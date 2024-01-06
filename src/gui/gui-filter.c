@@ -155,8 +155,9 @@ gui_filter_buffer (struct t_gui_buffer *buffer,
     if (buffer->lines->lines_hidden != lines_hidden)
     {
         buffer->lines->lines_hidden = lines_hidden;
-        (void) hook_signal_send ("buffer_lines_hidden",
-                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+        (void) gui_buffer_send_signal (buffer,
+                                       "buffer_lines_hidden",
+                                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 
     if (lines_changed)

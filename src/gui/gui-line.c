@@ -1878,9 +1878,10 @@ gui_line_add (struct t_gui_line *line)
     }
     else
     {
-        (void) hook_signal_send ("buffer_lines_hidden",
-                                 WEECHAT_HOOK_SIGNAL_POINTER,
-                                 line->data->buffer);
+        (void) gui_buffer_send_signal (line->data->buffer,
+                                       "buffer_lines_hidden",
+                                       WEECHAT_HOOK_SIGNAL_POINTER,
+                                       line->data->buffer);
     }
 
     /* add mixed line, if buffer is attached to at least one other buffer */
@@ -1907,8 +1908,9 @@ gui_line_add (struct t_gui_line *line)
         }
     }
 
-    (void) hook_signal_send ("buffer_line_added",
-                             WEECHAT_HOOK_SIGNAL_POINTER, line);
+    (void) gui_buffer_send_signal (line->data->buffer,
+                                   "buffer_line_added",
+                                   WEECHAT_HOOK_SIGNAL_POINTER, line);
 }
 
 /*
@@ -1987,9 +1989,10 @@ gui_line_add_y (struct t_gui_line *line)
     if (old_line_displayed && !ptr_line->data->displayed)
     {
         (ptr_line->data->buffer->own_lines->lines_hidden)++;
-        (void) hook_signal_send ("buffer_lines_hidden",
-                                 WEECHAT_HOOK_SIGNAL_POINTER,
-                                 ptr_line->data->buffer);
+        (void) gui_buffer_send_signal (ptr_line->data->buffer,
+                                       "buffer_lines_hidden",
+                                       WEECHAT_HOOK_SIGNAL_POINTER,
+                                       ptr_line->data->buffer);
     }
     else if (!old_line_displayed && ptr_line->data->displayed)
     {

@@ -584,8 +584,8 @@ def test_hdata():
     line2 = weechat.hdata_pointer(hdata_line, line1, 'next_line')
     line3 = weechat.hdata_pointer(hdata_line, line2, 'next_line')
     # hdata_get_var_offset
-    check(weechat.hdata_get_var_offset(hdata_buffer, 'plugin') == 0)
-    check(weechat.hdata_get_var_offset(hdata_buffer, 'number') > 0)
+    check(weechat.hdata_get_var_offset(hdata_buffer, 'opening') == 0)
+    check(weechat.hdata_get_var_offset(hdata_buffer, 'plugin') > 0)
     # hdata_get_var_type_string
     check(weechat.hdata_get_var_type_string(hdata_buffer, 'plugin') == 'pointer')
     check(weechat.hdata_get_var_type_string(hdata_buffer, 'number') == 'integer')

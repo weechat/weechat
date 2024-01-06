@@ -98,6 +98,7 @@ struct t_gui_input_undo
 
 struct t_gui_buffer
 {
+    int opening;                       /* 1 if buffer is being opened       */
     struct t_weechat_plugin *plugin;   /* plugin which created this buffer  */
                                        /* (NULL for a WeeChat buffer)       */
     /*
@@ -287,6 +288,9 @@ extern char *gui_buffer_properties_set[];
 
 extern int gui_buffer_search_type (const char *type);
 extern int gui_buffer_search_notify (const char *notify);
+extern int gui_buffer_send_signal (struct t_gui_buffer *buffer,
+                                   const char *signal,
+                                   const char *type_data, void *signal_data);
 extern const char *gui_buffer_get_plugin_name (struct t_gui_buffer *buffer);
 extern const char *gui_buffer_get_short_name (struct t_gui_buffer *buffer);
 extern void gui_buffer_build_full_name (struct t_gui_buffer *buffer);

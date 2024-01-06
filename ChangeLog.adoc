@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
+  * core: add variable "opening" in buffer, do not send buffer signals when the buffer is opening
   * core: store microseconds in buffer lines (issue #649)
   * core: evaluate expressions even when the suffix is missing ("}" by default) (issue #2042, issue #1714)
   * core: add syntax highlighting in evaluation of expressions with `raw_hl:string` and `hl:string`, add option weechat.color.eval_syntax_colors (issue #2042)

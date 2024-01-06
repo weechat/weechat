@@ -14315,6 +14315,7 @@ Arguments:
 
 * _buffer_: buffer pointer
 * _property_: property name:
+** _opening_: 1 if buffer is opening, otherwise 0 _(WeeChat ≥ 4.2.0)_
 ** _number_: number of buffer (starts to 1)
 ** _layout_number_: number of buffer saved in layout
 ** _layout_number_merge_order_: order in merge for layout

@@ -2537,7 +2537,8 @@ COMMAND_CALLBACK(filter)
                     {
                         buffer->filter = 1;
                         gui_filter_buffer (buffer, NULL);
-                        (void) hook_signal_send (
+                        (void) gui_buffer_send_signal (
+                            buffer,
                             "buffer_filters_enabled",
                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
                     }
@@ -2589,7 +2590,8 @@ COMMAND_CALLBACK(filter)
                     {
                         buffer->filter = 0;
                         gui_filter_buffer (buffer, NULL);
-                        (void) hook_signal_send (
+                        (void) gui_buffer_send_signal (
+                            buffer,
                             "buffer_filters_disabled",
                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
                     }
@@ -2639,7 +2641,8 @@ COMMAND_CALLBACK(filter)
                     /* toggle filters in buffer */
                     buffer->filter ^= 1;
                     gui_filter_buffer (buffer, NULL);
-                    (void) hook_signal_send (
+                    (void) gui_buffer_send_signal (
+                        buffer,
                         (buffer->filter) ?
                         "buffer_filters_enabled" : "buffer_filters_disabled",
                         WEECHAT_HOOK_SIGNAL_POINTER, buffer);
@@ -7097,8 +7100,7 @@ COMMAND_CALLBACK(upgrade)
         && (string_strcmp (argv[index_args], "-save") == 0))
     {
         /* send "upgrade" signal to plugins */
-        (void) hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING,
-                                 "save");
+        (void) hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING, "save");
         /* save WeeChat session */
         if (!upgrade_weechat_save ())
         {

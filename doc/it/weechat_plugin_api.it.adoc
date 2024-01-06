@@ -14969,6 +14969,8 @@ Argomenti:
 
 * _buffer_: puntatore al buffer
 * _property_: nome della proprietà:
+// TRANSLATION MISSING
+** _opening_: 1 if buffer is opening, otherwise 0 _(WeeChat ≥ 4.2.0)_
 ** _number_: numero del buffer (inizia da 1)
 ** _layout_number_: numero del buffer salvato nel layout
 ** _layout_number_merge_order_: ordine di unione per i layout

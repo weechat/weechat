@@ -14507,6 +14507,8 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 
 * _buffer_: バッファへのポインタ
 * _property_: プロパティ名:
+// TRANSLATION MISSING
+** _opening_: 1 if buffer is opening, otherwise 0 _(WeeChat ≥ 4.2.0)_
 ** _number_: バッファの番号 (1 以上)
 ** _layout_number_: レイアウトに保存されたバッファの番号
 ** _layout_number_merge_order_: レイアウトのマージをする際の順番
