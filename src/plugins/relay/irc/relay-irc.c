@@ -703,8 +703,7 @@ relay_irc_hsignal_irc_redir_cb (const void *pointer, void *data,
  *   - host
  *   - message (without colors).
  *
- * Arguments hdata_line_data and line_data must be non NULL, the other arguments
- * can be NULL.
+ * Argument line_data must be non NULL, the other arguments can be NULL.
  *
  * Note: tags and message (if given and filled) must be freed after use.
  */
@@ -712,7 +711,7 @@ relay_irc_hsignal_irc_redir_cb (const void *pointer, void *data,
 void
 relay_irc_get_line_info (struct t_relay_client *client,
                          struct t_gui_buffer *buffer,
-                         struct t_hdata *hdata_line_data, void *line_data,
+                         struct t_gui_line_data *line_data,
                          int *irc_command, int *irc_action, time_t *date,
                          const char **nick, const char **nick1,
                          const char **nick2, const char **host,
@@ -744,10 +743,10 @@ relay_irc_get_line_info (struct t_relay_client *client,
     if (message)
         *message = NULL;
 
-    msg_date = weechat_hdata_time (hdata_line_data, line_data, "date");
-    num_tags = weechat_hdata_get_var_array_size (hdata_line_data, line_data,
+    msg_date = weechat_hdata_time (relay_hdata_line_data, line_data, "date");
+    num_tags = weechat_hdata_get_var_array_size (relay_hdata_line_data, line_data,
                                                  "tags_array");
-    ptr_message = weechat_hdata_pointer (hdata_line_data, line_data, "message");
+    ptr_message = weechat_hdata_pointer (relay_hdata_line_data, line_data, "message");
 
     /* no tag found, or no message? just exit */
     if ((num_tags <= 0) || !ptr_message)
@@ -764,7 +763,7 @@ relay_irc_get_line_info (struct t_relay_client *client,
     for (i = 0; i < num_tags; i++)
     {
         snprintf (str_tag, sizeof (str_tag), "%d|tags_array", i);
-        ptr_tag = weechat_hdata_string (hdata_line_data, line_data, str_tag);
+        ptr_tag = weechat_hdata_string (relay_hdata_line_data, line_data, str_tag);
         if (ptr_tag)
         {
             if (strcmp (ptr_tag, "irc_action") == 0)
@@ -885,33 +884,24 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
                                 struct t_gui_buffer *buffer)
 {
     struct t_relay_server *ptr_server;
-    void *ptr_own_lines, *ptr_line, *ptr_line_data;
-    void *ptr_hdata_line, *ptr_hdata_line_data;
+    struct t_gui_lines *ptr_own_lines;
+    struct t_gui_line *ptr_line;
+    struct t_gui_line_data *ptr_line_data;
     char *tags, *message;
     const char *ptr_nick, *ptr_nick1, *ptr_nick2, *ptr_host, *localvar_nick;
     int irc_command, irc_action, count, max_number, max_minutes;
     time_t date_min, date_min2, date;
 
     /* get pointer on "own_lines" in buffer */
-    ptr_own_lines = weechat_hdata_pointer (weechat_hdata_get ("buffer"),
+    ptr_own_lines = weechat_hdata_pointer (relay_hdata_buffer,
                                            buffer, "own_lines");
     if (!ptr_own_lines)
         return;
 
     /* get pointer on "last_line" in lines */
-    ptr_line = weechat_hdata_pointer (weechat_hdata_get ("lines"),
+    ptr_line = weechat_hdata_pointer (relay_hdata_lines,
                                       ptr_own_lines, "last_line");
     if (!ptr_line)
-        return;
-
-    /* get hdata "line" */
-    ptr_hdata_line = weechat_hdata_get ("line");
-    if (!ptr_hdata_line)
-        return;
-
-    /* get hdata "line_data" */
-    ptr_hdata_line_data = weechat_hdata_get ("line_data");
-    if (!ptr_hdata_line_data)
         return;
 
     localvar_nick = NULL;
@@ -939,12 +929,13 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
     count = 0;
     while (ptr_line)
     {
-        ptr_line_data = weechat_hdata_pointer (ptr_hdata_line,
+        ptr_line_data = weechat_hdata_pointer (relay_hdata_line,
                                                ptr_line, "data");
         if (ptr_line_data)
         {
-            relay_irc_get_line_info (client, buffer,
-                                     ptr_hdata_line_data, ptr_line_data,
+            relay_irc_get_line_info (client,
+                                     buffer,
+                                     ptr_line_data,
                                      &irc_command,
                                      NULL, /* irc_action */
                                      &date,
@@ -972,23 +963,23 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
                  * stop when we find a line sent by the current nick
                  * (and include this line)
                  */
-                ptr_line = weechat_hdata_move (ptr_hdata_line, ptr_line, -1);
+                ptr_line = weechat_hdata_move (relay_hdata_line, ptr_line, -1);
                 break;
             }
         }
-        ptr_line = weechat_hdata_move (ptr_hdata_line, ptr_line, -1);
+        ptr_line = weechat_hdata_move (relay_hdata_line, ptr_line, -1);
     }
 
     if (!ptr_line)
     {
         /* if we have reached beginning of buffer, start from first line */
-        ptr_line = weechat_hdata_pointer (weechat_hdata_get ("lines"),
+        ptr_line = weechat_hdata_pointer (relay_hdata_lines,
                                           ptr_own_lines, "first_line");
     }
     else
     {
         /* start from line + 1 (the current line must not be sent) */
-        ptr_line = weechat_hdata_move (ptr_hdata_line, ptr_line, 1);
+        ptr_line = weechat_hdata_move (relay_hdata_line, ptr_line, 1);
     }
 
     /*
@@ -997,12 +988,12 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
      */
     while (ptr_line)
     {
-        ptr_line_data = weechat_hdata_pointer (ptr_hdata_line,
+        ptr_line_data = weechat_hdata_pointer (relay_hdata_line,
                                                ptr_line, "data");
         if (ptr_line_data)
         {
             relay_irc_get_line_info (client, buffer,
-                                     ptr_hdata_line_data, ptr_line_data,
+                                     ptr_line_data,
                                      &irc_command,
                                      &irc_action,
                                      &date,
@@ -1074,7 +1065,7 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
             if (message)
                 free (message);
         }
-        ptr_line = weechat_hdata_move (ptr_hdata_line, ptr_line, 1);
+        ptr_line = weechat_hdata_move (relay_hdata_line, ptr_line, 1);
     }
 }
 

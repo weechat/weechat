@@ -46,10 +46,19 @@ WEECHAT_PLUGIN_PRIORITY(RELAY_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_relay_plugin = NULL;
 
-int relay_signal_upgrade_received = 0; /* signal "upgrade" received ?       */
-
 char *relay_protocol_string[] =        /* strings for protocols             */
 { "weechat", "irc" };
+
+struct t_hdata *relay_hdata_buffer = NULL;
+struct t_hdata *relay_hdata_lines = NULL;
+struct t_hdata *relay_hdata_line = NULL;
+struct t_hdata *relay_hdata_line_data = NULL;
+struct t_hdata *relay_hdata_nick_group = NULL;
+struct t_hdata *relay_hdata_nick = NULL;
+struct t_hdata *relay_hdata_completion = NULL;
+struct t_hdata *relay_hdata_completion_word = NULL;
+
+int relay_signal_upgrade_received = 0; /* signal "upgrade" received ?       */
 
 struct t_hook *relay_hook_timer = NULL;
 
@@ -202,6 +211,15 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     (void) argv;
 
     weechat_plugin = plugin;
+
+    relay_hdata_buffer = weechat_hdata_get ("buffer");
+    relay_hdata_lines = weechat_hdata_get ("lines");
+    relay_hdata_line = weechat_hdata_get ("line");
+    relay_hdata_line_data = weechat_hdata_get ("line_data");
+    relay_hdata_nick_group = weechat_hdata_get ("nick_group");
+    relay_hdata_nick = weechat_hdata_get ("nick");
+    relay_hdata_completion = weechat_hdata_get ("completion");
+    relay_hdata_completion_word = weechat_hdata_get ("completion_word");
 
     relay_signal_upgrade_received = 0;
 

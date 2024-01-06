@@ -882,7 +882,6 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                                        struct t_relay_weechat_nicklist *nicklist)
 {
     int count, i;
-    struct t_hdata *ptr_hdata_group, *ptr_hdata_nick;
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
 
@@ -909,9 +908,6 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
     else
     {
         /* send full nicklist */
-        ptr_hdata_group = weechat_hdata_get ("nick_group");
-        ptr_hdata_nick = weechat_hdata_get ("nick");
-
         ptr_group = NULL;
         ptr_nick = NULL;
         weechat_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
@@ -922,27 +918,32 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                 relay_weechat_msg_add_pointer (msg, buffer);
                 relay_weechat_msg_add_pointer (msg, ptr_nick);
                 relay_weechat_msg_add_char (msg, 0); /* group */
-                relay_weechat_msg_add_char (msg,
-                                            (char)weechat_hdata_integer (ptr_hdata_nick,
-                                                                         ptr_nick,
-                                                                         "visible"));
+                relay_weechat_msg_add_char (
+                    msg,
+                    (char)weechat_hdata_integer (relay_hdata_nick,
+                                                 ptr_nick,
+                                                 "visible"));
                 relay_weechat_msg_add_int (msg, 0); /* level */
-                relay_weechat_msg_add_string (msg,
-                                              weechat_hdata_string (ptr_hdata_nick,
-                                                                    ptr_nick,
-                                                                    "name"));
-                relay_weechat_msg_add_string (msg,
-                                              weechat_hdata_string (ptr_hdata_nick,
-                                                                    ptr_nick,
-                                                                    "color"));
-                relay_weechat_msg_add_string (msg,
-                                              weechat_hdata_string (ptr_hdata_nick,
-                                                                    ptr_nick,
-                                                                    "prefix"));
-                relay_weechat_msg_add_string (msg,
-                                              weechat_hdata_string (ptr_hdata_nick,
-                                                                    ptr_nick,
-                                                                    "prefix_color"));
+                relay_weechat_msg_add_string (
+                    msg,
+                    weechat_hdata_string (relay_hdata_nick,
+                                          ptr_nick,
+                                          "name"));
+                relay_weechat_msg_add_string (
+                    msg,
+                    weechat_hdata_string (relay_hdata_nick,
+                                          ptr_nick,
+                                          "color"));
+                relay_weechat_msg_add_string (
+                    msg,
+                    weechat_hdata_string (relay_hdata_nick,
+                                          ptr_nick,
+                                          "prefix"));
+                relay_weechat_msg_add_string (
+                    msg,
+                    weechat_hdata_string (relay_hdata_nick,
+                                          ptr_nick,
+                                          "prefix_color"));
                 count++;
             }
             else
@@ -950,22 +951,26 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                 relay_weechat_msg_add_pointer (msg, buffer);
                 relay_weechat_msg_add_pointer (msg, ptr_group);
                 relay_weechat_msg_add_char (msg, 1); /* group */
-                relay_weechat_msg_add_char (msg,
-                                            (char)weechat_hdata_integer (ptr_hdata_group,
-                                                                         ptr_group,
-                                                                         "visible"));
-                relay_weechat_msg_add_int (msg,
-                                           weechat_hdata_integer (ptr_hdata_group,
-                                                                  ptr_group,
-                                                                  "level"));
-                relay_weechat_msg_add_string (msg,
-                                              weechat_hdata_string (ptr_hdata_group,
-                                                                    ptr_group,
-                                                                    "name"));
-                relay_weechat_msg_add_string (msg,
-                                              weechat_hdata_string (ptr_hdata_group,
-                                                                    ptr_group,
-                                                                    "color"));
+                relay_weechat_msg_add_char (
+                    msg,
+                    (char)weechat_hdata_integer (relay_hdata_nick_group,
+                                                 ptr_group,
+                                                 "visible"));
+                relay_weechat_msg_add_int (
+                    msg,
+                    weechat_hdata_integer (relay_hdata_nick_group,
+                                           ptr_group,
+                                           "level"));
+                relay_weechat_msg_add_string (
+                    msg,
+                    weechat_hdata_string (relay_hdata_nick_group,
+                                          ptr_group,
+                                          "name"));
+                relay_weechat_msg_add_string (
+                    msg,
+                    weechat_hdata_string (relay_hdata_nick_group,
+                                          ptr_group,
+                                          "color"));
                 relay_weechat_msg_add_string (msg, NULL); /* prefix */
                 relay_weechat_msg_add_string (msg, NULL); /* prefix_color */
                 count++;
@@ -990,7 +995,6 @@ relay_weechat_msg_add_nicklist (struct t_relay_weechat_msg *msg,
                                 struct t_relay_weechat_nicklist *nicklist)
 {
     char str_vars[512];
-    struct t_hdata *ptr_hdata;
     struct t_gui_buffer *ptr_buffer;
     int pos_count, count;
     uint32_t count32;
@@ -1016,12 +1020,11 @@ relay_weechat_msg_add_nicklist (struct t_relay_weechat_msg *msg,
     }
     else
     {
-        ptr_hdata = weechat_hdata_get ("buffer");
-        ptr_buffer = weechat_hdata_get_list (ptr_hdata, "gui_buffers");
+        ptr_buffer = weechat_hdata_get_list (relay_hdata_buffer, "gui_buffers");
         while (ptr_buffer)
         {
             count += relay_weechat_msg_add_nicklist_buffer (msg, ptr_buffer, NULL);
-            ptr_buffer = weechat_hdata_move (ptr_hdata, ptr_buffer, 1);
+            ptr_buffer = weechat_hdata_move (relay_hdata_buffer, ptr_buffer, 1);
         }
     }
 

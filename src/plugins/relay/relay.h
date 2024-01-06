@@ -26,6 +26,15 @@
 
 extern struct t_weechat_plugin *weechat_relay_plugin;
 
+extern struct t_hdata *relay_hdata_buffer;
+extern struct t_hdata *relay_hdata_lines;
+extern struct t_hdata *relay_hdata_line;
+extern struct t_hdata *relay_hdata_line_data;
+extern struct t_hdata *relay_hdata_nick_group;
+extern struct t_hdata *relay_hdata_nick;
+extern struct t_hdata *relay_hdata_completion;
+extern struct t_hdata *relay_hdata_completion_word;
+
 extern int relay_signal_upgrade_received;
 
 /* relay protocol */

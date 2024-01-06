@@ -51,7 +51,6 @@ relay_weechat_protocol_get_buffer (const char *arg)
     struct t_gui_buffer *ptr_buffer;
     unsigned long value;
     int rc;
-    struct t_hdata *ptr_hdata;
 
     ptr_buffer = NULL;
 
@@ -62,10 +61,10 @@ relay_weechat_protocol_get_buffer (const char *arg)
             ptr_buffer = (struct t_gui_buffer *)value;
         if (ptr_buffer)
         {
-            ptr_hdata = weechat_hdata_get ("buffer");
-            if (!weechat_hdata_check_pointer (ptr_hdata,
-                                              weechat_hdata_get_list (ptr_hdata, "gui_buffers"),
-                                              ptr_buffer))
+            if (!weechat_hdata_check_pointer (
+                    relay_hdata_buffer,
+                    weechat_hdata_get_list (relay_hdata_buffer, "gui_buffers"),
+                    ptr_buffer))
             {
                 /* invalid pointer! */
                 ptr_buffer = NULL;
@@ -658,6 +657,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
             "commands",
             weechat_config_string (relay_config_weechat_commands));
     }
+
     /*
      * delay the execution of command after we go back in the WeeChat
      * main loop (some commands like /upgrade executed now can cause
@@ -687,7 +687,6 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(completion)
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_completion *completion;
     struct t_gui_completion_word *word;
-    struct t_hdata *ptr_hdata_completion, *ptr_hdata_completion_word;
     struct t_arraylist *ptr_list;
     struct t_relay_weechat_msg *msg;
     char *error, *pos_data;
@@ -740,15 +739,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(completion)
         goto error;
     }
 
-    ptr_hdata_completion = weechat_hdata_get ("completion");
-    if (!ptr_hdata_completion)
-        goto error;
-
-    ptr_hdata_completion_word = weechat_hdata_get ("completion_word");
-    if (!ptr_hdata_completion_word)
-        goto error;
-
-    ptr_list = weechat_hdata_pointer (ptr_hdata_completion, completion, "list");
+    ptr_list = weechat_hdata_pointer (relay_hdata_completion, completion, "list");
     if (!ptr_list)
         goto error;
 
@@ -767,7 +758,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(completion)
         relay_weechat_msg_add_int (msg, 1); /* count */
         relay_weechat_msg_add_pointer (msg, completion);
         /* context */
-        context = weechat_hdata_integer (ptr_hdata_completion, completion,
+        context = weechat_hdata_integer (relay_hdata_completion, completion,
                                          "context");
         switch (context)
         {
@@ -787,10 +778,10 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(completion)
         /* base_word */
         relay_weechat_msg_add_string (
             msg,
-            weechat_hdata_string (ptr_hdata_completion,
+            weechat_hdata_string (relay_hdata_completion,
                                   completion, "base_word"));
         /* pos_start */
-        pos_start = weechat_hdata_integer (ptr_hdata_completion,
+        pos_start = weechat_hdata_integer (relay_hdata_completion,
                                            completion, "position_replace");
         relay_weechat_msg_add_int (msg, pos_start);
 
@@ -801,7 +792,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(completion)
         /* add_space */
         relay_weechat_msg_add_int (
             msg,
-            weechat_hdata_integer (ptr_hdata_completion,
+            weechat_hdata_integer (relay_hdata_completion,
                                    completion, "add_space"));
         /* list */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);
@@ -813,7 +804,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(completion)
                 ptr_list, i);
             relay_weechat_msg_add_string (
                 msg,
-                weechat_hdata_string (ptr_hdata_completion_word, word, "word"));
+                weechat_hdata_string (relay_hdata_completion_word, word, "word"));
         }
 
         /* send message */
@@ -857,7 +848,6 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
 {
     struct t_relay_client *ptr_client;
     struct t_gui_line *ptr_line;
-    struct t_hdata *ptr_hdata_line, *ptr_hdata_line_data;
     struct t_gui_line_data *ptr_line_data;
     struct t_gui_buffer *ptr_buffer;
     struct t_relay_weechat_msg *msg;
@@ -1116,19 +1106,11 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
         if (!ptr_line)
             return WEECHAT_RC_OK;
 
-        ptr_hdata_line = weechat_hdata_get ("line");
-        if (!ptr_hdata_line)
-            return WEECHAT_RC_OK;
-
-        ptr_hdata_line_data = weechat_hdata_get ("line_data");
-        if (!ptr_hdata_line_data)
-            return WEECHAT_RC_OK;
-
-        ptr_line_data = weechat_hdata_pointer (ptr_hdata_line, ptr_line, "data");
+        ptr_line_data = weechat_hdata_pointer (relay_hdata_line, ptr_line, "data");
         if (!ptr_line_data)
             return WEECHAT_RC_OK;
 
-        ptr_buffer = weechat_hdata_pointer (ptr_hdata_line_data, ptr_line_data,
+        ptr_buffer = weechat_hdata_pointer (relay_hdata_line_data, ptr_line_data,
                                             "buffer");
         if (!ptr_buffer || relay_buffer_is_relay (ptr_buffer))
             return WEECHAT_RC_OK;
@@ -1202,7 +1184,6 @@ relay_weechat_protocol_nicklist_map_cb (void *data,
     struct t_relay_client *ptr_client;
     struct t_gui_buffer *ptr_buffer;
     struct t_relay_weechat_nicklist *ptr_nicklist;
-    struct t_hdata *ptr_hdata;
     struct t_relay_weechat_msg *msg;
 
     /* make C compiler happy */
@@ -1212,32 +1193,29 @@ relay_weechat_protocol_nicklist_map_cb (void *data,
     ptr_buffer = (struct t_gui_buffer *)key;
     ptr_nicklist = (struct t_relay_weechat_nicklist *)value;
 
-    ptr_hdata = weechat_hdata_get ("buffer");
-    if (ptr_hdata)
+    if (weechat_hdata_check_pointer (
+            relay_hdata_buffer,
+            weechat_hdata_get_list (relay_hdata_buffer, "gui_buffers"),
+            ptr_buffer))
     {
-        if (weechat_hdata_check_pointer (ptr_hdata,
-                                         weechat_hdata_get_list (ptr_hdata, "gui_buffers"),
-                                         ptr_buffer))
+        /*
+         * if no diff at all, or if diffs are bigger than nicklist:
+         * send whole nicklist
+         */
+        if (ptr_nicklist
+            && ((ptr_nicklist->items_count == 0)
+                || (ptr_nicklist->items_count >= weechat_buffer_get_integer (ptr_buffer, "nicklist_count") + 1)))
         {
-            /*
-             * if no diff at all, or if diffs are bigger than nicklist:
-             * send whole nicklist
-             */
-            if (ptr_nicklist
-                && ((ptr_nicklist->items_count == 0)
-                    || (ptr_nicklist->items_count >= weechat_buffer_get_integer (ptr_buffer, "nicklist_count") + 1)))
-            {
-                ptr_nicklist = NULL;
-            }
+            ptr_nicklist = NULL;
+        }
 
-            /* send nicklist diffs or full nicklist */
-            msg = relay_weechat_msg_new ((ptr_nicklist) ? "_nicklist_diff" : "_nicklist");
-            if (msg)
-            {
-                relay_weechat_msg_add_nicklist (msg, ptr_buffer, ptr_nicklist);
-                relay_weechat_msg_send (ptr_client, msg);
-                relay_weechat_msg_free (msg);
-            }
+        /* send nicklist diffs or full nicklist */
+        msg = relay_weechat_msg_new ((ptr_nicklist) ? "_nicklist_diff" : "_nicklist");
+        if (msg)
+        {
+            relay_weechat_msg_add_nicklist (msg, ptr_buffer, ptr_nicklist);
+            relay_weechat_msg_send (ptr_client, msg);
+            relay_weechat_msg_free (msg);
         }
     }
 }

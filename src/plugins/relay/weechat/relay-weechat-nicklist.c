@@ -91,12 +91,12 @@ relay_weechat_nicklist_add_item (struct t_relay_weechat_nicklist *nicklist,
     ptr_item = &(nicklist->items[nicklist->items_count]);
     if (group)
     {
-        hdata = weechat_hdata_get ("nick_group");
+        hdata = relay_hdata_nick_group;
         ptr_item->pointer = group;
     }
     else
     {
-        hdata = weechat_hdata_get ("nick");
+        hdata = relay_hdata_nick;
         ptr_item->pointer = nick;
     }
     ptr_item->diff = diff;
