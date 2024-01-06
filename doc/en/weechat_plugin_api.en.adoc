@@ -14323,24 +14323,18 @@ Arguments:
 ** _type_: buffer type (0: formatted, 1: free content)
 ** _notify_: notify level for buffer
 ** _num_displayed_: number of windows displaying buffer
-** _active_: 2 if buffer is the only active (merged), 1 if buffer is active,
-   0 if buffer is merged and not selected
-** _hidden_: 1 if buffer is hidden, otherwise 0
-   _(WeeChat ≥ 1.0)_
-** _zoomed_: 1 if buffer is merged and zoomed, otherwise 0
-   _(WeeChat ≥ 1.0)_
+** _active_: 2 if buffer is the only active (merged), 1 if buffer is active, 0 if buffer is merged and not selected
+** _hidden_: 1 if buffer is hidden, otherwise 0 _(WeeChat ≥ 1.0)_
+** _zoomed_: 1 if buffer is merged and zoomed, otherwise 0 _(WeeChat ≥ 1.0)_
 ** _print_hooks_enabled_: 1 if print hooks are enabled, otherwise 0
-** _day_change_: 1 if messages for the day change are displayed, otherwise 0
-   _(WeeChat ≥ 0.4.3)_
-** _clear_: 1 if buffer can be cleared with command `/buffer clear`, otherwise 0
-   _(WeeChat ≥ 1.0)_
-** _filter_: 1 if filters are enabled on buffer, otherwise 0
-   _(WeeChat ≥ 1.0)_
-** _lines_hidden_: 1 if at least one line is hidden on buffer (filtered), or 0
-   if all lines are displayed
+** _day_change_: 1 if messages for the day change are displayed, otherwise 0 _(WeeChat ≥ 0.4.3)_
+** _clear_: 1 if buffer can be cleared with command `/buffer clear`, otherwise 0 _(WeeChat ≥ 1.0)_
+** _filter_: 1 if filters are enabled on buffer, otherwise 0 _(WeeChat ≥ 1.0)_
+** _closing_: 1 if buffer is closing, otherwise 0 _(WeeChat ≥ 1.0)_
+** _lines_hidden_: 1 if at least one line is hidden on buffer (filtered), or 0 if all lines are displayed
 ** _prefix_max_length_: max length for prefix in this buffer
-** _time_for_each_line_: 1 if time is displayed for each line in buffer
-   (default), otherwise 0
+** _next_line_id_: next line id in buffer _(WeeChat ≥ 3.8)_
+** _time_for_each_line_: 1 if time is displayed for each line in buffer (default), otherwise 0
 ** _nicklist_: 1 if nicklist is enabled, otherwise 0
 ** _nicklist_case_sensitive_: 1 if nicks are case sensitive, otherwise 0
 ** _nicklist_max_length_: max length for a nick
@@ -14348,15 +14342,13 @@ Arguments:
 ** _nicklist_count_: number of nicks and groups in nicklist
 ** _nicklist_visible_count_: number of nicks/groups displayed
 ** _nicklist_groups_count_: number of groups in nicklist
-** _nicklist_visible_groups_count_: number of groups displayed
+** _nicklist_groups_visible_count_: number of groups displayed
 ** _nicklist_nicks_count_: number of nicks in nicklist
-** _nicklist_visible_nicks_count_: number of nicks displayed
+** _nicklist_nicks_visible_count_: number of nicks displayed
 ** _input_: 1 if input is enabled, otherwise 0
-** _input_get_unknown_commands_: 1 if unknown commands are sent to input
-   callback, otherwise 0
+** _input_get_unknown_commands_: 1 if unknown commands are sent to input callback, otherwise 0
 ** _input_get_empty_: 1 if empty input is sent to input callback, otherwise 0
-** _input_multiline_: 1 if multiple lines are sent as one message to input
-   callback, otherwise 0
+** _input_multiline_: 1 if multiple lines are sent as one message to input callback, otherwise 0
 ** _input_size_: input size (in bytes)
 ** _input_length_: input length (number of chars)
 ** _input_pos_: cursor position in buffer input
@@ -14421,13 +14413,11 @@ Arguments:
 
 * _buffer_: buffer pointer
 * _property_: property name:
-** _plugin_: name of plugin which created this buffer ("core" for WeeChat main
-   buffer)
+** _plugin_: name of plugin which created this buffer ("core" for WeeChat main buffer)
 ** _name_: name of buffer
 ** _full_name_: full name of buffer ("plugin.name") _(WeeChat ≥ 0.3.7)_
-** _short_name_: short name of buffer (note: used for display only and can be
-   changed by user, this must not be used to find name of buffer, use instead
-   _name_, _full_name_ or local variable _channel_)
+** _old_full_name_: old full name of buffer ("plugin.name"), set before the buffer is renamed _(WeeChat ≥ 2.8)_
+** _short_name_: short name of buffer (note: used for display only and can be changed by user, this must not be used to find name of buffer, use instead _name_, _full_name_ or local variable _channel_)
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: title of buffer
 ** _input_: input text
@@ -14438,8 +14428,7 @@ Arguments:
 ** _highlight_tags_restrict_: restrict highlights to messages with these tags
 ** _highlight_tags_: force highlight on messages with these tags
 ** _hotlist_max_level_nicks_: max hotlist level for some nicks
-** _localvar_xxx_: get content of local variable "xxx" (replace "xxx" by the
-   name of variable to read)
+** _localvar_xxx_: get content of local variable "xxx" (replace "xxx" by the name of variable to read)
 
 Return value:
 
@@ -14483,8 +14472,7 @@ Arguments:
 
 * _buffer_: buffer pointer
 * _property_: property name:
-** _plugin_: pointer to plugin which created this buffer (NULL for WeeChat main
-   buffer)
+** _plugin_: pointer to plugin which created this buffer (NULL for WeeChat main buffer)
 ** _text_search_regex_compiled_: compiled regular expression
 ** _text_search_ptr_history_: history found
 ** _highlight_disable_regex_compiled_: regular expression _highlight_disable_regex_ compiled

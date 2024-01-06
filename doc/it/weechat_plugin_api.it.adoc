@@ -14979,50 +14979,46 @@ Argomenti:
 ** _notify_: livello di notifica per il buffer
 ** _num_displayed_: numero delle finestre che visualizzano il buffer
 // TRANSLATION MISSING
-** _active_: 2 if buffer is the only active (merged), 1 se il buffer è attivo,
-   0 se il buffer è unito e non selezionato
+** _active_: 2 if buffer is the only active (merged), 1 se il buffer è attivo, 0 se il buffer è unito e non selezionato
 // TRANSLATION MISSING
-** _hidden_: 1 if buffer is hidden, otherwise 0
-   _(WeeChat ≥ 1.0)_
+** _hidden_: 1 if buffer is hidden, otherwise 0 _(WeeChat ≥ 1.0)_
 // TRANSLATION MISSING
-** _zoomed_: 1 if buffer is merged and zoomed, otherwise 0
-   _(WeeChat ≥ 1.0)_
-** _print_hooks_enabled_: 1 se gli hook sulla stampa sono abilitati,
-   altrimenti 0
+** _zoomed_: 1 if buffer is merged and zoomed, otherwise 0 _(WeeChat ≥ 1.0)_
+** _print_hooks_enabled_: 1 se gli hook sulla stampa sono abilitati, altrimenti 0
 // TRANSLATION MISSING
-** _day_change_: 1 if messages for the day change are displayed, otherwise 0
-   _(WeeChat ≥ 0.4.3)_
+** _day_change_: 1 if messages for the day change are displayed, otherwise 0 _(WeeChat ≥ 0.4.3)_
 // TRANSLATION MISSING
-** _clear_: 1 if buffer can be cleared with command `/buffer clear`, otherwise 0
-   _(WeeChat ≥ 1.0)_
+** _clear_: 1 if buffer can be cleared with command `/buffer clear`, otherwise 0 _(WeeChat ≥ 1.0)_
 // TRANSLATION MISSING
-** _filter_: 1 if filters are enabled on buffer, otherwise 0
-   _(WeeChat ≥ 1.0)_
-** _lines_hidden_: 1 se almeno una riga è nascosta sul buffer (filtrata),
-   oppure 0 se vengono visualizzate tutte le righe
+** _filter_: 1 if filters are enabled on buffer, otherwise 0 _(WeeChat ≥ 1.0)_
+// TRANSLATION MISSING
+** _closing_: 1 if buffer is closing, otherwise 0 _(WeeChat ≥ 1.0)_
+** _lines_hidden_: 1 se almeno una riga è nascosta sul buffer (filtrata), oppure 0 se vengono visualizzate tutte le righe
 ** _prefix_max_length_: lunghezza massima del prefisso in questo buffer
-** _time_for_each_line_: 1 se l'ora è visualizzata per ogni riga nel buffer
-   (predefinito), altrimenti 0
+// TRANSLATION MISSING
+** _next_line_id_: next line id in buffer _(WeeChat ≥ 3.8)_
+** _time_for_each_line_: 1 se l'ora è visualizzata per ogni riga nel buffer (predefinito), altrimenti 0
 ** _nicklist_: 1 se la lista nick è abilitata, altrimenti 0
-** _nicklist_case_sensitive_: 1 se i nick sono sensibili alle maiuscole,
-   altrimenti 0
+** _nicklist_case_sensitive_: 1 se i nick sono sensibili alle maiuscole, altrimenti 0
 ** _nicklist_max_length_: lunghezza massima per un nick
 ** _nicklist_display_groups_: 1 se i gruppi vengono visualizzati, altrimenti 0
 // TRANSLATION MISSING
 ** _nicklist_count_: number of nicks and groups in nicklist
 // TRANSLATION MISSING
+** _nicklist_visible_count_: numero di nick/gruppi visualizzati
 ** _nicklist_groups_count_: number of groups in nicklist
 // TRANSLATION MISSING
+** _nicklist_groups_visible_count_: number of groups displayed
+// TRANSLATION MISSING
 ** _nicklist_nicks_count_: number of nicks in nicklist
-** _nicklist_visible_count_: numero di nick/gruppi visualizzati
+// TRANSLATION MISSING
+** _nicklist_nicks_visible_count_: number of nicks displayed
 ** _input_: 1 se l'input è abilitato, altrimenti 0
-** _input_get_unknown_commands_: 1 se i comandi sconosciuti vengono inviati
-   alla callback di input, altrimenti 0
+** _input_get_unknown_commands_: 1 se i comandi sconosciuti vengono inviati alla callback di input, altrimenti 0
 // TRANSLATION MISSING
 ** _input_get_empty_: 1 if empty input is sent to input callback, otherwise 0
 // TRANSLATION MISSING
-** _input_multiline_: 1 if multiple lines are sent as one message to input
-   callback, otherwise 0
+** _input_multiline_: 1 if multiple lines are sent as one message to input callback, otherwise 0
 ** _input_size_: dimensione per l'input (in byte)
 ** _input_length_: lunghezza dell'input (numero di caratteri)
 ** _input_pos_: posizione del cursore nell'input del buffer
@@ -15098,13 +15094,12 @@ Argomenti:
 
 * _buffer_: puntatore al buffer
 * _property_: nome proprietà:
-** _plugin_: nome del plugin che ha creato questo buffer ("core"
-   per il buffer principale di WeeChat)
+** _plugin_: nome del plugin che ha creato questo buffer ("core" per il buffer principale di WeeChat)
 ** _name_: nome del buffer
 ** _full_name_: nome completo del buffer ("plugin.nome") _(WeeChat ≥ 0.3.7)_
-** _short_name_: nome breve del buffer (nota: usato solo per il display e può
-   essere cambiato dall'utente, questo nome non va usato per trovare il nome del
-   buffer, utilizzare invece _name_, _fullname_ o la variabile locale _channel_)
+// TRANSLATION MISSING
+** _old_full_name_: old full name of buffer ("plugin.name"), set before the buffer is renamed _(WeeChat ≥ 2.8)_
+** _short_name_: nome breve del buffer (nota: usato solo per il display e può essere cambiato dall'utente, questo nome non va usato per trovare il nome del buffer, utilizzare invece _name_, _fullname_ o la variabile locale _channel_)
 // TRANSLATION MISSING
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: titolo del buffer
@@ -15120,8 +15115,7 @@ Argomenti:
 // TRANSLATION MISSING
 ** _highlight_tags_: force highlight on messages with these tags
 ** _hotlist_max_level_nicks_: livello massimo della hotlist per alcuni nick
-** _localvar_xxx_: ottiene il contenuto della variabile locale "xxx"
-   (sostituire "xxx" con il nome della variabile da leggere)
+** _localvar_xxx_: ottiene il contenuto della variabile locale "xxx" (sostituire "xxx" con il nome della variabile da leggere)
 
 Valore restituito:
 
@@ -15165,8 +15159,7 @@ Argomenti:
 
 * _buffer_: puntatore al buffer
 * _property_: nome proprietà:
-** _plugin_: puntatore al plugin che ha creato questo buffer (NULL
-   per il buffer principale di WeeChat)
+** _plugin_: puntatore al plugin che ha creato questo buffer (NULL per il buffer principale di WeeChat)
 // TRANSLATION MISSING
 ** _text_search_regex_compiled_: compiled regular expression
 // TRANSLATION MISSING

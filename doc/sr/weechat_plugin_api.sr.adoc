@@ -13879,8 +13879,12 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _day_change_: 1 ако су приказују поруке о промени дана, у супротном 0 _(WeeChat ≥ 0.4.3)_
 ** _clear_: 1 ако бафер може да се очисти командом `/buffer clear`, у супротном 0 _(WeeChat ≥ 1.0)_
 ** _filter_: 1 ако су у баферу укључени филтери, у успротном 0 _(WeeChat ≥ 1.0)_
+// TRANSLATION MISSING
+** _closing_: 1 if buffer is closing, otherwise 0 _(WeeChat ≥ 1.0)_
 ** _lines_hidden_: 1 ако је у баферу скривена бар једна линија (филтрирана), или 0 ако се приказују све линије
 ** _prefix_max_length_: максимална дужина префикса у овом баферу
+// TRANSLATION MISSING
+** _next_line_id_: next line id in buffer _(WeeChat ≥ 3.8)_
 ** _time_for_each_line_: 1 ако се време приказује са сваку линију у баферу (подразумевано), у супротном 0
 ** _nicklist_: 1 ако је укључена листа надимака, у супротном 0
 ** _nicklist_case_sensitive_: 1 ако се у надимцима прави разлика у величини слова, у супротном 0
@@ -13889,9 +13893,9 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _nicklist_count_: број надимака и група у листи надимака
 ** _nicklist_visible_count_: број приказаних надимака/група
 ** _nicklist_groups_count_: број група у листи надимака
-** _nicklist_visible_groups_count_: број приказаних група
+** _nicklist_groups_visible_count_: број приказаних група
 ** _nicklist_nicks_count_: број надимака у листи надимака
-** _nicklist_visible_nicks_count_: број приказаних надимака
+** _nicklist_nicks_visible_count_: број приказаних надимака
 ** _input_: 1 ако је укључен унос, у супротном 0
 ** _input_get_unknown_commands_: 1 ако се непознате команде шаљу функцији повратног позива уноса, у супротном 0
 ** _input_get_empty_: 1 ако се функцији повратног позива уноса шаље празан унос, у супротном 0
@@ -13963,6 +13967,8 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _plugin_: име додатка који је креирао овај бафер („core” за главни бафер програма WeeChat)
 ** _name_: име бафера
 ** _full_name_: пуно име бафера („додатак.име”) _(WeeChat ≥ 0.3.7)_
+// TRANSLATION MISSING
+** _old_full_name_: old full name of buffer ("plugin.name"), set before the buffer is renamed _(WeeChat ≥ 2.8)_
 ** _short_name_: кратко име бафера (напомена: користи се само за приказ и корисник може да га промени, ово не сме да се употребљава за проналажење имена бафера, уместо њега употребите _name_, _full_name_ или локалну променљиву _channel_)
 // TRANSLATION MISSING
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_

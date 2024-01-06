@@ -14639,40 +14639,32 @@ Paramètres :
 ** _type_ : type de tampon (0 : formaté, 1 : contenu libre)
 ** _notify_ : niveau de notification du tampon
 ** _num_displayed_ : nombre de fenêtres affichant ce tampon
-** _active_ : 2 si le tampon est le seul actif (mélangé), 1 si le tampon est
-   actif, 0 si le tampon est mélangé et n'est pas sélectionné
-** _hidden_ : 1 si le tampon est caché, sinon 0
-   _(WeeChat ≥ 1.0)_
-** _zoomed_ : 1 si le tampon est mélangé et zoomé, sinon 0
-   _(WeeChat ≥ 1.0)_
+** _active_ : 2 si le tampon est le seul actif (mélangé), 1 si le tampon est actif, 0 si le tampon est mélangé et n'est pas sélectionné
+** _hidden_ : 1 si le tampon est caché, sinon 0 _(WeeChat ≥ 1.0)_
+** _zoomed_ : 1 si le tampon est mélangé et zoomé, sinon 0 _(WeeChat ≥ 1.0)_
 ** _print_hooks_enabled_ : 1 si les hooks "print" sont activés, sinon 0
-** _day_change_ : 1 si les messages de changement de jour sont affichés, sinon 0
-   _(WeeChat ≥ 0.4.3)_
-** _clear_ : 1 si le tampon peut être effacé avec la commande `/buffer clear`,
-   sinon 0 _(WeeChat ≥ 1.0)_
-** _filter_ : 1 si les filtres sont activés sur le tampon, sinon 0
-   _(WeeChat ≥ 1.0)_
-** _lines_hidden_ : 1 si au moins une ligne est cachée dans le tampon
-   (filtrée), ou 0 si toutes les lignes sont affichées
+** _day_change_ : 1 si les messages de changement de jour sont affichés, sinon 0 _(WeeChat ≥ 0.4.3)_
+** _clear_ : 1 si le tampon peut être effacé avec la commande `/buffer clear`, sinon 0 _(WeeChat ≥ 1.0)_
+** _filter_ : 1 si les filtres sont activés sur le tampon, sinon 0 _(WeeChat ≥ 1.0)_
+** _closing_ : 1 si le tampon est en cours de fermeture, sinon 0 _(WeeChat ≥ 1.0)_
+** _lines_hidden_ : 1 si au moins une ligne est cachée dans le tampon (filtrée), ou 0 si toutes les lignes sont affichées
 ** _prefix_max_length_ : longueur maximale du préfixe dans ce tampon
-** _time_for_each_line_ : 1 si l'heure est affichée pour chaque ligne du tampon
-   (par défaut), sinon 0
+** _next_line_id_ : prochain identifiant de ligne dans le tampon _(WeeChat ≥ 3.8)_
+** _time_for_each_line_ : 1 si l'heure est affichée pour chaque ligne du tampon (par défaut), sinon 0
 ** _nicklist_ : 1 si la liste de pseudos est activée, sinon 0
-** _nicklist_case_sensitive_ : 1 si les pseudos sont sensibles à la casse,
-   sinon 0
+** _nicklist_case_sensitive_ : 1 si les pseudos sont sensibles à la casse, sinon 0
 ** _nicklist_max_length_ : longueur maximale d'un pseudo
 ** _nicklist_display_groups_ : 1 si les groupes sont affichés, sinon 0
 ** _nicklist_count_ : nombre de pseudos et groupes dans la liste de pseudos
-** _nicklist_groups_count_ : nombre de groupes dans la liste de pseudos
-** _nicklist_nicks_count_ : nombre de pseudos dans la liste de pseudos
 ** _nicklist_visible_count_ : nombre de pseudos/groupes affichés
+** _nicklist_groups_count_ : nombre de groupes dans la liste de pseudos
+** _nicklist_groups_visible_count_ : nombre de groupes affichés
+** _nicklist_nicks_count_ : nombre de pseudos dans la liste de pseudos
+** _nicklist_nicks_visible_count_ : nombre de pseudos affichés
 ** _input_ : 1 si la zone de saisie est activée, sinon 0
-** _input_get_unknown_commands_ : 1 si les commandes inconnues sont envoyées
-   à la fonction de rappel "input", sinon 0
-** _input_get_empty_ : 1 si une entrée vide est envoyée à la fonction de rappel
-   "input", sinon 0
-** _input_multiline_ : 1 si plusieurs lignes sont envoyées comme un seul message
-   à la fonction de rappel "input", sinon 0
+** _input_get_unknown_commands_ : 1 si les commandes inconnues sont envoyées à la fonction de rappel "input", sinon 0
+** _input_get_empty_ : 1 si une entrée vide est envoyée à la fonction de rappel "input", sinon 0
+** _input_multiline_ : 1 si plusieurs lignes sont envoyées comme un seul message à la fonction de rappel "input", sinon 0
 ** _input_size_ : taille de la zone de saisie (en octets)
 ** _input_length_ : longueur de la zone de saisie (nombre de caractères)
 ** _input_pos_ : position du curseur dans la zone de saisie
@@ -14737,30 +14729,22 @@ Paramètres :
 
 * _buffer_ : pointeur vers le tampon
 * _property_ : nom de la propriété :
-** _plugin_ : nom de l'extension qui a créé ce tampon ("core" pour le tampon
-   principal WeeChat)
+** _plugin_ : nom de l'extension qui a créé ce tampon ("core" pour le tampon principal WeeChat)
 ** _name_ : nom du tampon
 ** _full_name_ : nom complet du tampon ("extension.nom") _(WeeChat ≥ 0.3.7)_
-** _short_name_ : nom court du tampon (note : utilisé pour l'affichage
-   seulement et peut être changé par l'utilisateur, il ne doit pas être utilisé
-   pour trouver le nom du tampon, utilisez à la place _name_, _full_name_ ou
-   bien la variable locale _channel_)
-** _type_ : type de tampon : "formatted" (formaté) ou "free" (contenu libre)
-   _(WeeChat ≥ 4.2.0)_
+** _old_full_name_ : ancien nom complet du tampon ("extension.nom"), défini avant que le tampon ne soit renommé _(WeeChat ≥ 2.8)_
+** _short_name_ : nom court du tampon (note : utilisé pour l'affichage seulement et peut être changé par l'utilisateur, il ne doit pas être utilisé pour trouver le nom du tampon, utilisez à la place _name_, _full_name_ ou bien la variable locale _channel_)
+** _type_ : type de tampon : "formatted" (formaté) ou "free" (contenu libre) _(WeeChat ≥ 4.2.0)_
 ** _title_ : titre du tampon
 ** _input_ : texte saisi
 ** _text_search_input_ : texte saisi sauvegardé avant la recherche de texte
 ** _highlight_words_ : liste des mots pour le highlight
-** _highlight_disable_regex_ : expression régulière POSIX étendue pour désactiver
-   le highlight
+** _highlight_disable_regex_ : expression régulière POSIX étendue pour désactiver le highlight
 ** _highlight_regex_ : expression régulière POSIX étendue pour le highlight
-** _highlight_tags_restrict_ : restreindre les highlights aux messages
-   comportant ces étiquettes
+** _highlight_tags_restrict_ : restreindre les highlights aux messages comportant ces étiquettes
 ** _highlight_tags_ : forcer le highlight pour les messages avec ces étiquettes
-** _hotlist_max_level_nicks_ : niveau maximum pour la hotlist pour certains
-   pseudos
-** _localvar_xxx_ : contenu de la variable locale "xxx" (remplacer "xxx" par le
-   nom de la variable locale à lire)
+** _hotlist_max_level_nicks_ : niveau maximum pour la hotlist pour certains pseudos
+** _localvar_xxx_ : contenu de la variable locale "xxx" (remplacer "xxx" par le nom de la variable locale à lire)
 
 Valeur de retour :
 
@@ -14804,8 +14788,7 @@ Paramètres :
 
 * _buffer_ : pointeur vers le tampon
 * _property_ : nom de la propriété :
-** _plugin_ : pointeur vers l'extension qui a créé le tampon (NULL pour le
-   tampon principal WeeChat)
+** _plugin_ : pointeur vers l'extension qui a créé le tampon (NULL pour le tampon principal WeeChat)
 ** _text_search_regex_compiled_ : expression régulière compilée
 ** _text_search_ptr_history_ : entrée d'historique trouvée
 ** _highlight_disable_regex_compiled_ : expression régulière _highlight_disable_regex_ compilée

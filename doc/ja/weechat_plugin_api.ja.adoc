@@ -14516,39 +14516,38 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _type_: バッファタイプ (0: 書式あり、1: 自由内容)
 ** _notify_: バッファの通知レベル
 ** _num_displayed_: バッファを表示しているウィンドウの数
-** _active_: バッファがマージされて選択されている場合は 2、バッファが選択されている場合は
-   1、バッファがマージされ選択されていない場合は 0
-** _hidden_: バッファが隠されている場合は 1、そうでない場合は 0
-   _(WeeChat バージョン 1.0 以上で利用可)_
-** _zoomed_: バッファがマージとズームされている場合は 1、そうでない場合は 0
-   _(WeeChat バージョン 1.0 以上で利用可)_
+** _active_: バッファがマージされて選択されている場合は 2、バッファが選択されている場合は 1、バッファがマージされ選択されていない場合は 0
+** _hidden_: バッファが隠されている場合は 1、そうでない場合は 0 _(WeeChat バージョン 1.0 以上で利用可)_
+** _zoomed_: バッファがマージとズームされている場合は 1、そうでない場合は 0 _(WeeChat バージョン 1.0 以上で利用可)_
 ** _print_hooks_enabled_: プリントフックが有効化されている場合は 1、そうでない場合は 0
-** _day_change_: 日付変更メッセージを表示する場合は 1、そうでない場合は 0
-   _(WeeChat バージョン 0.4.3 以上で利用可)_
-** _clear_: コマンド `/buffer clear` でバッファをクリアできる場合は 1、そうでない場合は 0
-   _(WeeChat バージョン 1.0 以上で利用可)_
-** _filter_: バッファでフィルタが有効な場合は 1、そうでない場合は 0
-   _(WeeChat バージョン 1.0 以上で利用可)_
-** _lines_hidden_: バッファに非表示 (フィルタされた) メッセージが 1
-   行以上含まれる場合は 1、すべてのメッセージが表示冴えている場合は 0
+** _day_change_: 日付変更メッセージを表示する場合は 1、そうでない場合は 0 _(WeeChat バージョン 0.4.3 以上で利用可)_
+** _clear_: コマンド `/buffer clear` でバッファをクリアできる場合は 1、そうでない場合は 0 _(WeeChat バージョン 1.0 以上で利用可)_
+** _filter_: バッファでフィルタが有効な場合は 1、そうでない場合は 0 _(WeeChat バージョン 1.0 以上で利用可)_
+// TRANSLATION MISSING
+** _closing_: 1 if buffer is closing, otherwise 0 _(WeeChat ≥ 1.0)_
+** _lines_hidden_: バッファに非表示 (フィルタされた) メッセージが 1 行以上含まれる場合は 1、すべてのメッセージが表示冴えている場合は 0
 ** _prefix_max_length_: バッファプレフィックスの最大長
-** _time_for_each_line_: バッファの各行に時間を表示する場合は
-   1 (デフォルト)、そうでない場合は 0
+// TRANSLATION MISSING
+** _next_line_id_: next line id in buffer _(WeeChat ≥ 3.8)_
+** _time_for_each_line_: バッファの各行に時間を表示する場合は 1 (デフォルト)、そうでない場合は 0
 ** _nicklist_: ニックネームリストが有効化されている場合は 1、そうでない場合は 0
 ** _nicklist_case_sensitive_: ニックネームの大文字小文字を区別する場合は 1、そうでない場合は 0
 ** _nicklist_max_length_: ニックネームの最大長
 ** _nicklist_display_groups_: グループを表示する場合 1、そうでない場合は 0
 ** _nicklist_count_: ニックネームリストに含まれるニックネームとグループの数
+// TRANSLATION MISSING
+** _nicklist_visible_count_: number of nicks/groups displayed
 ** _nicklist_groups_count_: ニックネームリストに含まれるグループの数
+// TRANSLATION MISSING
+** _nicklist_groups_visible_count_: number of groups displayed
 ** _nicklist_nicks_count_: ニックネームリストに含まれるニックネームの数
-** _nicklist_visible_count_: 表示されているニックネームとグループの数
+// TRANSLATION MISSING
+** _nicklist_nicks_visible_count_: number of nicks displayed
 ** _input_: 入力可能な場合は 1、そうでない場合は 0
-** _input_get_unknown_commands_: 未定義のコマンドを入力コールバックに送信する場合は
-   1、そうでない場合は 0
+** _input_get_unknown_commands_: 未定義のコマンドを入力コールバックに送信する場合は 1、そうでない場合は 0
 ** _input_get_empty_: 入力コールバックに何も送信されなかった場合は 1、そうでない場合は 0
 // TRANSLATION MISSING
-** _input_multiline_: 1 if multiple lines are sent as one message to input
-   callback, otherwise 0
+** _input_multiline_: 1 if multiple lines are sent as one message to input callback, otherwise 0
 ** _input_size_: 入力サイズ (バイト単位)
 ** _input_length_: 入力長 (文字数)
 ** _input_pos_: バッファ入力におけるカーソル位置
@@ -14624,13 +14623,12 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 
 * _buffer_: バッファへのポインタ
 * _property_: プロパティ名:
-** _plugin_: バッファを作成したプラグインの名前
-   ("core" は WeeChat メインバッファ)
+** _plugin_: バッファを作成したプラグインの名前 ("core" は WeeChat メインバッファ)
 ** _name_: バッファの名前
 ** _full_name_: バッファの完全な名前 ("plugin.name") _(WeeChat バージョン 0.3.7 以上で利用可)_
-** _short_name_: バッファの短縮名 (注意:
-   表示目的以外に使用するのは禁止、ユーザは書き換えることが可能、バッファを検索する際にこれを使ってはいけない、_name_、_full_name_、またはローカル変数
-   _channel_ を使うこと)
+// TRANSLATION MISSING
+** _old_full_name_: old full name of buffer ("plugin.name"), set before the buffer is renamed _(WeeChat ≥ 2.8)_
+** _short_name_: バッファの短縮名 (注意: 表示目的以外に使用するのは禁止、ユーザは書き換えることが可能、バッファを検索する際にこれを使ってはいけない、_name_、_full_name_、またはローカル変数 _channel_ を使うこと)
 // TRANSLATION MISSING
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: バッファのタイトル
@@ -14643,8 +14641,7 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _highlight_tags_restrict_: これらのタグを付けられたメッセージだけにハイライトを制限する
 ** _highlight_tags_: これらのタグを付けられたメッセージを強制的にハイライトする
 ** _hotlist_max_level_nicks_: 一部のニックネームに対するホットリストレベルの最大値
-** _localvar_xxx_: ローカル変数 "xxx" の値
-   ("xxx" は読み出す変数の名前)
+** _localvar_xxx_: ローカル変数 "xxx" の値 ("xxx" は読み出す変数の名前)
 
 戻り値:
 
@@ -14688,8 +14685,7 @@ void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
 
 * _buffer_: バッファへのポインタ
 * _property_: プロパティ名:
-** _plugin_: このバッファを作ったプラグインへのポインタ
-   (WeeChat メインバッファの場合は NULL)
+** _plugin_: このバッファを作ったプラグインへのポインタ (WeeChat メインバッファの場合は NULL)
 // TRANSLATION MISSING
 ** _text_search_regex_compiled_: compiled regular expression
 // TRANSLATION MISSING
