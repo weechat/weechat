@@ -118,6 +118,11 @@ relay_weechat_unhook_signals (struct t_relay_client *client)
         weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_upgrade));
         RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
     }
+    if (RELAY_WEECHAT_DATA(client, hook_timer_nicklist))
+    {
+        weechat_unhook (RELAY_WEECHAT_DATA(client, hook_timer_nicklist));
+        RELAY_WEECHAT_DATA(client, hook_timer_nicklist) = NULL;
+    }
 }
 
 /*
@@ -227,68 +232,62 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
     const char *key;
 
     client->protocol_data = malloc (sizeof (struct t_relay_weechat_data));
-    if (client->protocol_data)
+    if (!client->protocol_data)
+        return;
+
+    /* general stuff */
+    /* "handshake_done" is new in WeeChat 2.9 */
+    if (weechat_infolist_search_var (infolist, "handshake_done"))
+        RELAY_WEECHAT_DATA(client, handshake_done) = weechat_infolist_integer (infolist, "handshake_done");
+    else
+        RELAY_WEECHAT_DATA(client, handshake_done) = 0;
+    RELAY_WEECHAT_DATA(client, password_ok) = weechat_infolist_integer (
+        infolist, "password_ok");
+    /* "totp_ok" is new in WeeChat 2.4 */
+    if (weechat_infolist_search_var (infolist, "totp_ok"))
+        RELAY_WEECHAT_DATA(client, totp_ok) = weechat_infolist_integer (infolist, "totp_ok");
+    else
+        RELAY_WEECHAT_DATA(client, totp_ok) = 1;
+    RELAY_WEECHAT_DATA(client, compression) = weechat_infolist_integer (
+        infolist, "compression");
+    RELAY_WEECHAT_DATA(client, escape_commands) = weechat_infolist_integer (
+        infolist, "escape_commands");
+
+    /* sync of buffers */
+    RELAY_WEECHAT_DATA(client, buffers_sync) = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_INTEGER,
+        NULL, NULL);
+    index = 0;
+    while (1)
     {
-        /* general stuff */
-        /* "handshake_done" is new in WeeChat 2.9 */
-        if (weechat_infolist_search_var (infolist, "handshake_done"))
-            RELAY_WEECHAT_DATA(client, handshake_done) = weechat_infolist_integer (infolist, "handshake_done");
-        else
-            RELAY_WEECHAT_DATA(client, handshake_done) = 0;
-        RELAY_WEECHAT_DATA(client, password_ok) = weechat_infolist_integer (
-            infolist, "password_ok");
-        /* "totp_ok" is new in WeeChat 2.4 */
-        if (weechat_infolist_search_var (infolist, "totp_ok"))
-            RELAY_WEECHAT_DATA(client, totp_ok) = weechat_infolist_integer (infolist, "totp_ok");
-        else
-            RELAY_WEECHAT_DATA(client, totp_ok) = 1;
-        RELAY_WEECHAT_DATA(client, compression) = weechat_infolist_integer (
-            infolist, "compression");
-        RELAY_WEECHAT_DATA(client, escape_commands) = weechat_infolist_integer (
-            infolist, "escape_commands");
-
-        /* sync of buffers */
-        RELAY_WEECHAT_DATA(client, buffers_sync) = weechat_hashtable_new (
-            32,
-            WEECHAT_HASHTABLE_STRING,
-            WEECHAT_HASHTABLE_INTEGER,
-            NULL, NULL);
-        index = 0;
-        while (1)
-        {
-            snprintf (name, sizeof (name), "buffers_sync_name_%05d", index);
-            key = weechat_infolist_string (infolist, name);
-            if (!key)
-                break;
-            snprintf (name, sizeof (name), "buffers_sync_value_%05d", index);
-            value = weechat_infolist_integer (infolist, name);
-            weechat_hashtable_set (RELAY_WEECHAT_DATA(client, buffers_sync),
-                                   key,
-                                   &value);
-            index++;
-        }
-        RELAY_WEECHAT_DATA(client, hook_signal_buffer) = NULL;
-        RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist) = NULL;
-        RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
-        RELAY_WEECHAT_DATA(client, buffers_nicklist) =
-            weechat_hashtable_new (32,
-                                   WEECHAT_HASHTABLE_POINTER,
-                                   WEECHAT_HASHTABLE_POINTER,
-                                   NULL, NULL);
-        weechat_hashtable_set_pointer (RELAY_WEECHAT_DATA(client, buffers_nicklist),
-                                       "callback_free_value",
-                                       &relay_weechat_free_buffers_nicklist);
-        RELAY_WEECHAT_DATA(client, hook_timer_nicklist) = NULL;
-
-        if (RELAY_CLIENT_HAS_ENDED(client))
-        {
-            RELAY_WEECHAT_DATA(client, hook_signal_buffer) = NULL;
-            RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist) = NULL;
-            RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
-        }
-        else
-            relay_weechat_hook_signals (client);
+        snprintf (name, sizeof (name), "buffers_sync_name_%05d", index);
+        key = weechat_infolist_string (infolist, name);
+        if (!key)
+            break;
+        snprintf (name, sizeof (name), "buffers_sync_value_%05d", index);
+        value = weechat_infolist_integer (infolist, name);
+        weechat_hashtable_set (RELAY_WEECHAT_DATA(client, buffers_sync),
+                               key,
+                               &value);
+        index++;
     }
+    RELAY_WEECHAT_DATA(client, hook_signal_buffer) = NULL;
+    RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist) = NULL;
+    RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
+    RELAY_WEECHAT_DATA(client, buffers_nicklist) =
+        weechat_hashtable_new (32,
+                               WEECHAT_HASHTABLE_POINTER,
+                               WEECHAT_HASHTABLE_POINTER,
+                               NULL, NULL);
+    weechat_hashtable_set_pointer (RELAY_WEECHAT_DATA(client, buffers_nicklist),
+                                   "callback_free_value",
+                                   &relay_weechat_free_buffers_nicklist);
+    RELAY_WEECHAT_DATA(client, hook_timer_nicklist) = NULL;
+
+    if (!RELAY_CLIENT_HAS_ENDED(client))
+        relay_weechat_hook_signals (client);
 }
 
 /*
@@ -328,6 +327,8 @@ relay_weechat_free (struct t_relay_client *client)
             weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_upgrade));
         if (RELAY_WEECHAT_DATA(client, buffers_nicklist))
             weechat_hashtable_free (RELAY_WEECHAT_DATA(client, buffers_nicklist));
+        if (RELAY_WEECHAT_DATA(client, hook_timer_nicklist))
+            weechat_unhook (RELAY_WEECHAT_DATA(client, hook_timer_nicklist));
 
         free (client->protocol_data);
 
