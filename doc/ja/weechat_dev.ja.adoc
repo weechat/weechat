@@ -352,15 +352,26 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       relay-command.c             | relay コマンド
 |       relay-completion.c          | relay 補完
 |       relay-config.c              | relay 設定オプション (relay.conf ファイル)
+// TRANSLATION MISSING
+|       relay-http.c                | HTTP functions.
 |       relay-info.c                | relay の情報/インフォリスト/hdata
 |       relay-network.c             | relay 用のネットワーク関数
 |       relay-raw.c                 | relay 生バッファ
 |       relay-server.c              | relay サーバ
 |       relay-upgrade.c             | WeeChat をアップグレードする際にデータを保存/回復
 |       relay-websocket.c           | リレー用の websocket サーバ関数 (RFC 6455)
+// TRANSLATION MISSING
+|       api/                        | Relay for remote interfaces (using HTTP REST API).
+// TRANSLATION MISSING
+|          relay-api.c              | Main API functions for HTTP REST API.
+// TRANSLATION MISSING
+|          relay-api-msg.c          | Send JSON messages to clients.
+// TRANSLATION MISSING
+|          relay-api-protocol.c     | HTTP REST API protocol.
 |       irc/                        | IRC プロキシ
 |          relay-irc.c              | IRC プロキシの主要関数
-|       weechat/                    | リモートインターフェースへの中継
+// TRANSLATION MISSING
+|       weechat/                    | Relay for remote interfaces (using "weechat" binary protocol).
 |          relay-weechat.c          | リモートインターフェースへの中継 (主要関数)
 |          relay-weechat-msg.c      | クライアントにバイナリメッセージを送信
 |          relay-weechat-nicklist.c | ニックネームリスト関数
@@ -542,6 +553,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          relay/                     | Root of unit tests for Relay plugin.
 // TRANSLATION MISSING
 |             test-relay-auth.cpp     | Tests: clients authentication.
+// TRANSLATION MISSING
+|             test-relay-http.cpp     | Tests: HTTP functions for Relay plugin.
 // TRANSLATION MISSING
 |             irc/                    | Root of unit tests for Relay "irc" protocol.
 // TRANSLATION MISSING

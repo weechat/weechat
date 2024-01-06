@@ -153,6 +153,9 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 | ca-certificates |
 | Certificats pour les connexions TLS.
 
+| libcjson-dev |
+| Extension Relay : protocole "api" (API REST HTTP).
+
 | libzstd-dev | ≥ 0.8.1
 | Extension Logger : compression des fichiers de log qui tournent (zstandard). +
   Extension Relay : compression des messages (WeeChat -> client) avec https://facebook.github.io/zstd/[Zstandard ^↗^^] (protocole weechat).
@@ -271,6 +274,9 @@ Liste des options disponibles :
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON
 | Compiler <<charset,l'extension Charset>>.
+
+| ENABLE_CJSON | `ON`, `OFF` | ON
+| Support du JSON avec la bibliothèque https://github.com/DaveGamble/cJSON[cJSON ^↗^^].
 
 | ENABLE_MAN | `ON`, `OFF` | OFF
 | Construire la page man.

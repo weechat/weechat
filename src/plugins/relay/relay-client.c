@@ -37,10 +37,14 @@
 #include "relay-auth.h"
 #include "relay-config.h"
 #include "relay-buffer.h"
+#include "relay-http.h"
 #include "relay-network.h"
 #include "relay-raw.h"
 #include "relay-server.h"
 #include "relay-websocket.h"
+#ifdef HAVE_CJSON
+#include "api/relay-api.h"
+#endif
 #include "irc/relay-irc.h"
 #include "weechat/relay-weechat.h"
 
@@ -55,7 +59,7 @@ char *relay_client_status_name[] =     /* name of status (for signal/info)  */
 };
 
 char *relay_client_data_type_string[] = /* strings for data types           */
-{ "text", "binary" };
+{ "text", "binary", "http" };
 
 char *relay_client_msg_type_string[] = /* prefix in raw buffer for message  */
 { "", "[PING]\n", "[PONG]\n", "[CLOSE]\n" };
@@ -266,6 +270,13 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
                     client,
                     relay_irc_get_initial_status (client));
                 break;
+            case RELAY_PROTOCOL_API:
+#ifdef HAVE_CJSON
+                relay_client_set_status (
+                    client,
+                    relay_api_get_initial_status (client));
+#endif /* HAVE_CJSON */
+                break;
             case RELAY_NUM_PROTOCOLS:
                 break;
         }
@@ -313,6 +324,124 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
 }
 
 /*
+ * Reads text data from a client (messages on a single line): splits data on
+ * '\n' and keeps a partial message if data does not end with '\n'.
+ */
+
+void
+relay_client_recv_text_single_line (struct t_relay_client *client)
+{
+    char *pos, *raw_msg, **lines, *tmp;
+    int i, num_lines, length;
+
+    if (!client->partial_message)
+        return;
+
+    pos = strrchr (client->partial_message, '\n');
+    if (!pos)
+        return;
+
+    /* print message in raw buffer */
+    raw_msg = weechat_strndup (client->partial_message,
+                               pos - client->partial_message + 1);
+    if (raw_msg)
+    {
+        relay_raw_print (client, RELAY_CLIENT_MSG_STANDARD,
+                         RELAY_RAW_FLAG_RECV,
+                         raw_msg, strlen (raw_msg) + 1);
+        free (raw_msg);
+    }
+
+    pos[0] = '\0';
+
+    lines = weechat_string_split (client->partial_message, "\n", NULL,
+                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                  0, &num_lines);
+    if (lines)
+    {
+        for (i = 0; i < num_lines; i++)
+        {
+            /* remove final '\r' */
+            length = strlen (lines[i]);
+            if ((length > 0) && (lines[i][length - 1] == '\r'))
+                lines[i][length - 1] = '\0';
+
+            /*
+             * interpret text from client, according to the relay
+             * protocol used
+             */
+            switch (client->protocol)
+            {
+                case RELAY_PROTOCOL_WEECHAT:
+                    relay_weechat_recv (client, lines[i]);
+                    break;
+                case RELAY_PROTOCOL_IRC:
+                    relay_irc_recv (client, lines[i]);
+                    break;
+                case RELAY_PROTOCOL_API:
+                    /* api is multi-line only (JSON) */
+                    break;
+                case RELAY_NUM_PROTOCOLS:
+                    break;
+            }
+        }
+        weechat_string_free_split (lines);
+    }
+    if (pos[1])
+    {
+        tmp = strdup (pos + 1);
+        free (client->partial_message);
+        client->partial_message = tmp;
+    }
+    else
+    {
+        free (client->partial_message);
+        client->partial_message = NULL;
+    }
+}
+
+/*
+ * Reads text data from a client (multi-line messages).
+ */
+
+void
+relay_client_recv_text_multi_line (struct t_relay_client *client)
+{
+    if (!client->partial_message)
+        return;
+
+    /* print message in raw buffer */
+    relay_raw_print (client, RELAY_CLIENT_MSG_STANDARD,
+                     RELAY_RAW_FLAG_RECV,
+                     client->partial_message,
+                     strlen (client->partial_message) + 1);
+
+    /*
+     * interpret text from client, according to the relay
+     * protocol used
+     */
+    switch (client->protocol)
+    {
+        case RELAY_PROTOCOL_WEECHAT:
+            /* weechat is single line only */
+            break;
+        case RELAY_PROTOCOL_IRC:
+            /* irc is single line only */
+            break;
+        case RELAY_PROTOCOL_API:
+            relay_api_recv_json (client, client->partial_message);
+            break;
+        case RELAY_NUM_PROTOCOLS:
+            break;
+    }
+
+    free (client->partial_message);
+    client->partial_message = NULL;
+}
+
+/*
  * Reads text data from a client: splits data on '\n' and keeps a partial
  * message if data does not end with '\n'.
  */
@@ -320,9 +449,7 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
 void
 relay_client_recv_text (struct t_relay_client *client, const char *data)
 {
-    char *new_partial, *raw_msg, **lines, *pos, *tmp, *handshake;
-    const char *ptr_real_ip;
-    int i, num_lines, length, rc;
+    char *new_partial;
 
     if (client->partial_message)
     {
@@ -337,172 +464,12 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
     else
         client->partial_message = strdup (data);
 
-    pos = strrchr (client->partial_message, '\n');
-    if (pos)
+    if (client->partial_message)
     {
-        /* print message in raw buffer */
-        raw_msg = weechat_strndup (client->partial_message,
-                                   pos - client->partial_message + 1);
-        if (raw_msg)
-        {
-            relay_raw_print (client, RELAY_CLIENT_MSG_STANDARD,
-                             RELAY_RAW_FLAG_RECV,
-                             raw_msg, strlen (raw_msg) + 1);
-            free (raw_msg);
-        }
-
-        pos[0] = '\0';
-
-        lines = weechat_string_split (client->partial_message, "\n", NULL,
-                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
-                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                                      0, &num_lines);
-        if (lines)
-        {
-            for (i = 0; i < num_lines; i++)
-            {
-                /* remove final '\r' */
-                length = strlen (lines[i]);
-                if ((length > 0) && (lines[i][length - 1] == '\r'))
-                    lines[i][length - 1] = '\0';
-
-                /* if websocket is initializing */
-                if (client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
-                {
-                    if (lines[i][0])
-                    {
-                        /* web socket is initializing, read HTTP headers */
-                        relay_websocket_save_header (client, lines[i]);
-                    }
-                    else
-                    {
-                        /*
-                         * empty line means that we have received all HTTP
-                         * headers: then we check the validity of websocket, and
-                         * if it is OK, we'll do the handshake and answer to the
-                         * client
-                         */
-                        rc = relay_websocket_client_handshake_valid (client);
-                        if (rc == 0)
-                        {
-                            /* handshake from client is valid */
-                            handshake  = relay_websocket_build_handshake (client);
-                            if (handshake)
-                            {
-                                relay_client_send (client,
-                                                   RELAY_CLIENT_MSG_STANDARD,
-                                                   handshake,
-                                                   strlen (handshake), NULL);
-                                free (handshake);
-                                client->websocket = RELAY_CLIENT_WEBSOCKET_READY;
-                            }
-                        }
-                        else
-                        {
-                            switch (rc)
-                            {
-                                case -1:
-                                    relay_websocket_send_http (client,
-                                                               "400 Bad Request");
-                                    if (weechat_relay_plugin->debug >= 1)
-                                    {
-                                        weechat_printf_date_tags (
-                                            NULL, 0, "relay_client",
-                                            _("%s%s: invalid websocket "
-                                              "handshake received for client "
-                                              "%s%s%s"),
-                                            weechat_prefix ("error"),
-                                            RELAY_PLUGIN_NAME,
-                                            RELAY_COLOR_CHAT_CLIENT,
-                                            client->desc,
-                                            RELAY_COLOR_CHAT);
-                                    }
-                                    break;
-                                case -2:
-                                    relay_websocket_send_http (client,
-                                                               "403 Forbidden");
-                                    if (weechat_relay_plugin->debug >= 1)
-                                    {
-                                        weechat_printf_date_tags (
-                                            NULL, 0, "relay_client",
-                                            _("%s%s: origin \"%s\" "
-                                              "not allowed for websocket"),
-                                            weechat_prefix ("error"),
-                                            RELAY_PLUGIN_NAME,
-                                            weechat_hashtable_get (client->http_headers,
-                                                                   "origin"));
-                                    }
-                                    break;
-                            }
-                            relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
-                        }
-
-                        ptr_real_ip = weechat_hashtable_get (
-                            client->http_headers, "x-real-ip");
-                        if (ptr_real_ip)
-                        {
-                            if (client->real_ip)
-                                free (client->real_ip);
-                            client->real_ip = strdup (ptr_real_ip);
-                            relay_client_set_desc (client);
-                            weechat_printf_date_tags (
-                                NULL, 0, "relay_client",
-                                _("%s: websocket client %s%s%s has real IP "
-                                  "address \"%s\""),
-                                RELAY_PLUGIN_NAME,
-                                RELAY_COLOR_CHAT_CLIENT,
-                                client->desc,
-                                RELAY_COLOR_CHAT,
-                                ptr_real_ip);
-                        }
-
-                        /* remove HTTP headers */
-                        weechat_hashtable_free (client->http_headers);
-                        client->http_headers = NULL;
-
-                        /*
-                         * discard all received data after the handshake
-                         * received from client, and return immediately
-                         */
-                        free (client->partial_message);
-                        client->partial_message = NULL;
-                        weechat_string_free_split (lines);
-                        return;
-                    }
-                }
-                else
-                {
-                    /*
-                     * interpret text from client, according to the relay
-                     * protocol used
-                     */
-                    switch (client->protocol)
-                    {
-                        case RELAY_PROTOCOL_WEECHAT:
-                            relay_weechat_recv (client, lines[i]);
-                            break;
-                        case RELAY_PROTOCOL_IRC:
-                            relay_irc_recv (client, lines[i]);
-                            break;
-                        case RELAY_NUM_PROTOCOLS:
-                            break;
-                    }
-                }
-            }
-            weechat_string_free_split (lines);
-        }
-        if (pos[1])
-        {
-            tmp = strdup (pos + 1);
-            free (client->partial_message);
-            client->partial_message = tmp;
-        }
-        else
-        {
-            free (client->partial_message);
-            client->partial_message = NULL;
-        }
+        if (client->recv_data_type == RELAY_CLIENT_DATA_TEXT_LINE)
+            relay_client_recv_text_single_line (client);
+        else if (client->recv_data_type == RELAY_CLIENT_DATA_TEXT_MULTILINE)
+            relay_client_recv_text_multi_line (client);
     }
 }
 
@@ -566,7 +533,17 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
         }
 
         if (msg_type == RELAY_CLIENT_MSG_STANDARD)
-            relay_client_recv_text (client, buffer + index);
+        {
+            if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
+                || (client->recv_data_type == RELAY_CLIENT_DATA_HTTP))
+            {
+                relay_http_recv (client, buffer + index);
+            }
+            else
+            {
+                relay_client_recv_text (client, buffer + index);
+            }
+        }
 
         index += strlen (buffer + index) + 1;
     }
@@ -622,7 +599,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
          */
         if (client->bytes_recv == 0)
         {
-            if (relay_websocket_is_http_get_weechat (buffer))
+            if (relay_websocket_is_valid_http_get (client, buffer))
             {
                 /*
                  * web socket is just initializing for now, it's not accepted
@@ -630,11 +607,6 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
                  * valid or not)
                  */
                 client->websocket = RELAY_CLIENT_WEBSOCKET_INITIALIZING;
-                client->http_headers = weechat_hashtable_new (
-                    32,
-                    WEECHAT_HASHTABLE_STRING,
-                    WEECHAT_HASHTABLE_STRING,
-                    NULL, NULL);
             }
         }
 
@@ -679,9 +651,11 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
         }
 
         if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
-            || (client->recv_data_type == RELAY_CLIENT_DATA_TEXT))
+            || (client->recv_data_type == RELAY_CLIENT_DATA_TEXT_LINE)
+            || (client->recv_data_type == RELAY_CLIENT_DATA_TEXT_MULTILINE)
+            || (client->recv_data_type == RELAY_CLIENT_DATA_HTTP))
         {
-            /* websocket initializing or text data for this client */
+            /* websocket initializing or text/HTTP data for this client */
             relay_client_recv_text_buffer (client, ptr_buffer, length_buffer);
         }
         else
@@ -698,17 +672,20 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
             if ((num_read == 0)
                 || ((num_read != GNUTLS_E_AGAIN) && (num_read != GNUTLS_E_INTERRUPTED)))
             {
-                weechat_printf_date_tags (
-                    NULL, 0, "relay_client",
-                    _("%s%s: reading data on socket for client %s%s%s: "
-                      "error %d %s"),
-                    weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                    RELAY_COLOR_CHAT_CLIENT,
-                    client->desc,
-                    RELAY_COLOR_CHAT,
-                    num_read,
-                    (num_read == 0) ? _("(connection closed by peer)") :
-                    gnutls_strerror (num_read));
+                if (relay_config_display_clients[client->protocol])
+                {
+                    weechat_printf_date_tags (
+                        NULL, 0, "relay_client",
+                        _("%s%s: reading data on socket for client %s%s%s: "
+                          "error %d %s"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT,
+                        num_read,
+                        (num_read == 0) ? _("(connection closed by peer)") :
+                        gnutls_strerror (num_read));
+                }
                 relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
             }
         }
@@ -717,17 +694,20 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
             if ((num_read == 0)
                 || ((errno != EAGAIN) && (errno != EWOULDBLOCK)))
             {
-                weechat_printf_date_tags (
-                    NULL, 0, "relay_client",
-                    _("%s%s: reading data on socket for client %s%s%s: "
-                      "error %d %s"),
-                    weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                    RELAY_COLOR_CHAT_CLIENT,
-                    client->desc,
-                    RELAY_COLOR_CHAT,
-                    errno,
-                    (num_read == 0) ? _("(connection closed by peer)") :
-                    strerror (errno));
+                if (relay_config_display_clients[client->protocol])
+                {
+                    weechat_printf_date_tags (
+                        NULL, 0, "relay_client",
+                        _("%s%s: reading data on socket for client %s%s%s: "
+                          "error %d %s"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT,
+                        errno,
+                        (num_read == 0) ? _("(connection closed by peer)") :
+                        strerror (errno));
+                }
                 relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
             }
         }
@@ -1067,7 +1047,8 @@ relay_client_send (struct t_relay_client *client,
             raw_size[1] = data_size;
             raw_flags[1] |= RELAY_RAW_FLAG_BINARY;
             if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
-                || (client->send_data_type == RELAY_CLIENT_DATA_TEXT))
+                || (client->send_data_type == RELAY_CLIENT_DATA_TEXT_LINE)
+                || (client->send_data_type == RELAY_CLIENT_DATA_TEXT_MULTILINE))
             {
                 raw_size[1]--;
             }
@@ -1117,7 +1098,8 @@ relay_client_send (struct t_relay_client *client,
                 opcode = WEBSOCKET_FRAME_OPCODE_CLOSE;
                 break;
             default:
-                opcode = (client->send_data_type == RELAY_CLIENT_DATA_TEXT) ?
+                opcode = ((client->send_data_type == RELAY_CLIENT_DATA_TEXT_LINE)
+                          || (client->send_data_type == RELAY_CLIENT_DATA_TEXT_MULTILINE)) ?
                     WEBSOCKET_FRAME_OPCODE_TEXT : WEBSOCKET_FRAME_OPCODE_BINARY;
                 break;
         }
@@ -1325,7 +1307,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->hook_timer_handshake = NULL;
         new_client->gnutls_handshake_ok = 0;
         new_client->websocket = RELAY_CLIENT_WEBSOCKET_NOT_USED;
-        new_client->http_headers = NULL;
+        new_client->http_req = relay_http_request_alloc ();
         new_client->address = strdup ((address && address[0]) ?
                                       address : "local");
         new_client->real_ip = NULL;
@@ -1353,16 +1335,20 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         switch (new_client->protocol)
         {
             case RELAY_PROTOCOL_WEECHAT:
-                new_client->recv_data_type = RELAY_CLIENT_DATA_TEXT;
+                new_client->recv_data_type = RELAY_CLIENT_DATA_TEXT_LINE;
                 new_client->send_data_type = RELAY_CLIENT_DATA_BINARY;
                 break;
             case RELAY_PROTOCOL_IRC:
-                new_client->recv_data_type = RELAY_CLIENT_DATA_TEXT;
-                new_client->send_data_type = RELAY_CLIENT_DATA_TEXT;
+                new_client->recv_data_type = RELAY_CLIENT_DATA_TEXT_LINE;
+                new_client->send_data_type = RELAY_CLIENT_DATA_TEXT_LINE;
+                break;
+            case RELAY_PROTOCOL_API:
+                new_client->recv_data_type = RELAY_CLIENT_DATA_HTTP;
+                new_client->send_data_type = RELAY_CLIENT_DATA_HTTP;
                 break;
             default:
-                new_client->recv_data_type = RELAY_CLIENT_DATA_TEXT;
-                new_client->send_data_type = RELAY_CLIENT_DATA_TEXT;
+                new_client->recv_data_type = RELAY_CLIENT_DATA_TEXT_MULTILINE;
+                new_client->send_data_type = RELAY_CLIENT_DATA_TEXT_MULTILINE;
                 break;
         }
         new_client->partial_message = NULL;
@@ -1439,6 +1425,16 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                         relay_irc_get_initial_status (new_client);
                 }
                 break;
+            case RELAY_PROTOCOL_API:
+#ifdef HAVE_CJSON
+                relay_api_alloc (new_client);
+                if (!new_client->tls)
+                {
+                    new_client->status =
+                        relay_api_get_initial_status (new_client);
+                }
+#endif /* HAVE_CJSON */
+                break;
             case RELAY_NUM_PROTOCOLS:
                 break;
         }
@@ -1454,29 +1450,32 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
             last_relay_client = new_client;
         relay_clients = new_client;
 
-        if (server->unix_socket)
+        if (relay_config_display_clients[new_client->protocol])
         {
-            weechat_printf_date_tags (
-                NULL, 0, "relay_client",
-                _("%s: new client on path %s: %s%s%s (%s)"),
-                RELAY_PLUGIN_NAME,
-                server->path,
-                RELAY_COLOR_CHAT_CLIENT,
-                new_client->desc,
-                RELAY_COLOR_CHAT,
-                _(relay_client_status_string[new_client->status]));
-        }
-        else
-        {
-            weechat_printf_date_tags (
-                NULL, 0, "relay_client",
-                _("%s: new client on port %s: %s%s%s (%s)"),
-                RELAY_PLUGIN_NAME,
-                server->path,
-                RELAY_COLOR_CHAT_CLIENT,
-                new_client->desc,
-                RELAY_COLOR_CHAT,
-                _(relay_client_status_string[new_client->status]));
+            if (server->unix_socket)
+            {
+                weechat_printf_date_tags (
+                    NULL, 0, "relay_client",
+                    _("%s: new client on path %s: %s%s%s (%s)"),
+                    RELAY_PLUGIN_NAME,
+                    server->path,
+                    RELAY_COLOR_CHAT_CLIENT,
+                    new_client->desc,
+                    RELAY_COLOR_CHAT,
+                    _(relay_client_status_string[new_client->status]));
+            }
+            else
+            {
+                weechat_printf_date_tags (
+                    NULL, 0, "relay_client",
+                    _("%s: new client on port %s: %s%s%s (%s)"),
+                    RELAY_PLUGIN_NAME,
+                    server->path,
+                    RELAY_COLOR_CHAT_CLIENT,
+                    new_client->desc,
+                    RELAY_COLOR_CHAT,
+                    _(relay_client_status_string[new_client->status]));
+            }
         }
 
         if (new_client->sock >= 0)
@@ -1489,11 +1488,8 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
 
         relay_client_count++;
 
-        if (!relay_buffer
-            && weechat_config_boolean (relay_config_look_auto_open_buffer))
-        {
+        if (!relay_buffer && relay_config_auto_open_buffer[new_client->protocol])
             relay_buffer_open ();
-        }
 
         relay_client_send_signal (new_client);
 
@@ -1537,7 +1533,7 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->hook_timer_handshake = NULL;
         new_client->gnutls_handshake_ok = 0;
         new_client->websocket = weechat_infolist_integer (infolist, "websocket");
-        new_client->http_headers = NULL;
+        new_client->http_req = relay_http_request_alloc ();
         new_client->address = strdup (weechat_infolist_string (infolist, "address"));
         str = weechat_infolist_string (infolist, "real_ip");
         new_client->real_ip = (str) ? strdup (str) : NULL;
@@ -1597,12 +1593,15 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         switch (new_client->protocol)
         {
             case RELAY_PROTOCOL_WEECHAT:
-                relay_weechat_alloc_with_infolist (new_client,
-                                                   infolist);
+                relay_weechat_alloc_with_infolist (new_client, infolist);
                 break;
             case RELAY_PROTOCOL_IRC:
-                relay_irc_alloc_with_infolist (new_client,
-                                               infolist);
+                relay_irc_alloc_with_infolist (new_client, infolist);
+                break;
+            case RELAY_PROTOCOL_API:
+#ifdef HAVE_CJSON
+                relay_api_alloc_with_infolist (new_client, infolist);
+#endif /* HAVE_CJSON */
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;
@@ -1644,7 +1643,8 @@ relay_client_set_status (struct t_relay_client *client,
 
     client->status = status;
 
-    if (client->status == RELAY_STATUS_CONNECTED)
+    if ((client->status == RELAY_STATUS_CONNECTED)
+        && relay_config_display_clients[client->protocol])
     {
         weechat_printf_date_tags (
                     NULL, 0, "relay_client",
@@ -1688,6 +1688,11 @@ relay_client_set_status (struct t_relay_client *client,
             case RELAY_PROTOCOL_IRC:
                 relay_irc_close_connection (client);
                 break;
+            case RELAY_PROTOCOL_API:
+#ifdef HAVE_CJSON
+                relay_api_close_connection (client);
+#endif /* HAVE_CJSON */
+                break;
             case RELAY_NUM_PROTOCOLS:
                 break;
         }
@@ -1704,13 +1709,16 @@ relay_client_set_status (struct t_relay_client *client,
                                           RELAY_COLOR_CHAT);
                 break;
             case RELAY_STATUS_DISCONNECTED:
-                weechat_printf_date_tags (
-                    NULL, 0, "relay_client",
-                    _("%s: disconnected from client %s%s%s"),
-                    RELAY_PLUGIN_NAME,
-                    RELAY_COLOR_CHAT_CLIENT,
-                    client->desc,
-                    RELAY_COLOR_CHAT);
+                if (relay_config_display_clients[client->protocol])
+                {
+                    weechat_printf_date_tags (
+                        NULL, 0, "relay_client",
+                        _("%s: disconnected from client %s%s%s"),
+                        RELAY_PLUGIN_NAME,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT);
+                }
                 break;
             default:
                 break;
@@ -1772,8 +1780,7 @@ relay_client_free (struct t_relay_client *client)
         free (client->nonce);
     if (client->hook_timer_handshake)
         weechat_unhook (client->hook_timer_handshake);
-    if (client->http_headers)
-        weechat_hashtable_free (client->http_headers);
+    relay_http_request_free (client->http_req);
     if (client->hook_fd)
         weechat_unhook (client->hook_fd);
     if (client->hook_timer_send)
@@ -1789,6 +1796,11 @@ relay_client_free (struct t_relay_client *client)
                 break;
             case RELAY_PROTOCOL_IRC:
                 relay_irc_free (client);
+                break;
+            case RELAY_PROTOCOL_API:
+#ifdef HAVE_CJSON
+                relay_api_free (client);
+#endif /* HAVE_CJSON */
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;
@@ -1968,6 +1980,12 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
             relay_irc_add_to_infolist (ptr_item, client,
                                        force_disconnected_state);
             break;
+        case RELAY_PROTOCOL_API:
+#ifdef HAVE_CJSON
+            relay_api_add_to_infolist (ptr_item, client,
+                                       force_disconnected_state);
+#endif /* HAVE_CJSON */
+            break;
         case RELAY_NUM_PROTOCOLS:
             break;
     }
@@ -1989,20 +2007,18 @@ relay_client_print_log ()
     {
         weechat_log_printf ("");
         weechat_log_printf ("[relay client (addr:0x%lx)]", ptr_client);
-        weechat_log_printf ("  id. . . . . . . . . . . . : %d",   ptr_client->id);
-        weechat_log_printf ("  desc. . . . . . . . . . . : '%s'", ptr_client->desc);
-        weechat_log_printf ("  sock. . . . . . . . . . . : %d",   ptr_client->sock);
-        weechat_log_printf ("  server_port . . . . . . . : %d",   ptr_client->server_port);
-        weechat_log_printf ("  tls . . . . . . . . . . . : %d",   ptr_client->tls);
+        weechat_log_printf ("  id. . . . . . . . . . . . : %d",    ptr_client->id);
+        weechat_log_printf ("  desc. . . . . . . . . . . : '%s'",  ptr_client->desc);
+        weechat_log_printf ("  sock. . . . . . . . . . . : %d",    ptr_client->sock);
+        weechat_log_printf ("  server_port . . . . . . . : %d",    ptr_client->server_port);
+        weechat_log_printf ("  tls . . . . . . . . . . . : %d",    ptr_client->tls);
         weechat_log_printf ("  gnutls_sess . . . . . . . : 0x%lx", ptr_client->gnutls_sess);
         weechat_log_printf ("  hook_timer_handshake. . . : 0x%lx", ptr_client->hook_timer_handshake);
         weechat_log_printf ("  gnutls_handshake_ok . . . : 0x%lx", ptr_client->gnutls_handshake_ok);
-        weechat_log_printf ("  websocket . . . . . . . . : %d",   ptr_client->websocket);
-        weechat_log_printf ("  http_headers. . . . . . . : 0x%lx (hashtable: '%s')",
-                            ptr_client->http_headers,
-                            weechat_hashtable_get_string (ptr_client->http_headers, "keys_values"));
-        weechat_log_printf ("  address . . . . . . . . . : '%s'", ptr_client->address);
-        weechat_log_printf ("  real_ip . . . . . . . . . : '%s'", ptr_client->real_ip);
+        weechat_log_printf ("  websocket . . . . . . . . : %d",    ptr_client->websocket);
+        relay_http_print_log (ptr_client->http_req);
+        weechat_log_printf ("  address . . . . . . . . . : '%s'",  ptr_client->address);
+        weechat_log_printf ("  real_ip . . . . . . . . . : '%s'",  ptr_client->real_ip);
         weechat_log_printf ("  status. . . . . . . . . . : %d (%s)",
                             ptr_client->status,
                             relay_client_status_string[ptr_client->status]);
@@ -2040,6 +2056,11 @@ relay_client_print_log ()
                 break;
             case RELAY_PROTOCOL_IRC:
                 relay_irc_print_log (ptr_client);
+                break;
+            case RELAY_PROTOCOL_API:
+#ifdef HAVE_CJSON
+                relay_api_print_log (ptr_client);
+#endif /* HAVE_CJSON */
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;

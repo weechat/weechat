@@ -27,13 +27,10 @@
 #define WEBSOCKET_FRAME_OPCODE_PING         0x09
 #define WEBSOCKET_FRAME_OPCODE_PONG         0x0A
 
-extern int relay_websocket_is_http_get_weechat (const char *message);
-extern void relay_websocket_save_header (struct t_relay_client *client,
-                                         const char *message);
+extern int relay_websocket_is_valid_http_get (struct t_relay_client *client,
+                                              const char *message);
 extern int relay_websocket_client_handshake_valid (struct t_relay_client *client);
 extern char *relay_websocket_build_handshake (struct t_relay_client *client);
-extern void relay_websocket_send_http (struct t_relay_client *client,
-                                       const char *http);
 extern int relay_websocket_decode_frame (const unsigned char *buffer,
                                          unsigned long long length,
                                          unsigned char *decoded,

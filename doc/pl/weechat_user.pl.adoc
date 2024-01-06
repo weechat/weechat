@@ -158,6 +158,10 @@ WeeChat:
 | ca-certificates |
 | Certyfikaty dla połączeń TLS.
 
+// TRANSLATION MISSING
+| libcjson-dev |
+| Relay plugin: protocol "api" (HTTP REST API).
+
 | libzstd-dev | ≥ 0.8.1
 | Wtyczka logger: kompresja rotowanych plików z logami (zstandard). +
   Wtyczka Relay: kompresja wiadomości (WeeChat -> klient) za pomocą https://facebook.github.io/zstd/[Zstandard ^↗^^] (protokół weechat).
@@ -276,6 +280,10 @@ Lista dostępnych opcji:
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON
 | Kompilacja <<charset,wtyczki charset>>.
+
+// TRANSLATION MISSING
+| ENABLE_CJSON | `ON`, `OFF` | ON
+| Support of JSON with https://github.com/DaveGamble/cJSON[cJSON ^↗^^] library.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF
 | Generowanie strony manuala.

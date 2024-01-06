@@ -331,15 +331,20 @@ WeeChat "core" is located in following directories:
 |       relay-command.c             | Relay commands.
 |       relay-completion.c          | Relay completions.
 |       relay-config.c              | Relay config options (file relay.conf).
+|       relay-http.c                | HTTP functions.
 |       relay-info.c                | Relay info/infolists/hdata.
 |       relay-network.c             | Network functions for relay.
 |       relay-raw.c                 | Relay raw buffer.
 |       relay-server.c              | Relay server.
 |       relay-upgrade.c             | Save/restore of relay data when upgrading WeeChat.
 |       relay-websocket.c           | WebSocket server functions (RFC 6455).
+|       api/                        | Relay for remote interfaces (using HTTP REST API).
+|          relay-api.c              | Main API functions for HTTP REST API.
+|          relay-api-msg.c          | Send JSON messages to clients.
+|          relay-api-protocol.c     | HTTP REST API protocol.
 |       irc/                        | IRC proxy.
 |          relay-irc.c              | Main IRC proxy functions.
-|       weechat/                    | Relay for remote interfaces.
+|       weechat/                    | Relay for remote interfaces (using "weechat" binary protocol).
 |          relay-weechat.c          | Relay for remote interfaces (main functions).
 |          relay-weechat-msg.c      | Send binary messages to clients.
 |          relay-weechat-nicklist.c | Nicklist functions.
@@ -469,6 +474,7 @@ WeeChat "core" is located in following directories:
 |             test-typing-status.cpp  | Tests: typing status.
 |          relay/                     | Root of unit tests for Relay plugin.
 |             test-relay-auth.cpp     | Tests: clients authentication.
+|             test-relay-http.cpp     | Tests: HTTP functions for Relay plugin.
 |             irc/                    | Root of unit tests for Relay "irc" protocol.
 |                test-relay-irc.cpp   | Tests: Relay "irc" protocol.
 |          xfer/                      | Root of unit tests for Xfer plugin.

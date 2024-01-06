@@ -61,7 +61,10 @@ zlib-devel"
 #   1. set prefix to /usr
 #   2. enable build of man pages and documentation
 #
-CYGCMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=/usr -DENABLE_MAN=ON -DENABLE_DOC=ON"
+CYGCMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=/usr \
+-DENABLE_CJSON=OFF \
+-DENABLE_MAN=ON \
+-DENABLE_DOC=ON"
 
 PKG_IGNORE="
     etc/postinstall/weechat.sh

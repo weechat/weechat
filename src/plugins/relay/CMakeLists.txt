@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-add_library(relay MODULE
+set(RELAY_SRC
   relay.c relay.h
   relay-auth.c relay-auth.h
   relay-buffer.c relay-buffer.h
@@ -25,6 +25,7 @@ add_library(relay MODULE
   relay-command.c relay-command.h
   relay-completion.c relay-completion.h
   relay-config.c relay-config.h
+  relay-http.c relay-http.h
   relay-info.c relay-info.h
   relay-network.c relay-network.h
   relay-raw.c relay-raw.h
@@ -38,7 +39,19 @@ add_library(relay MODULE
   weechat/relay-weechat-msg.c weechat/relay-weechat-msg.h
   weechat/relay-weechat-nicklist.c weechat/relay-weechat-nicklist.h
   weechat/relay-weechat-protocol.c weechat/relay-weechat-protocol.h
+
 )
+
+if(ENABLE_CJSON)
+  list(APPEND RELAY_SRC
+    # API relay
+    api/relay-api.c api/relay-api.h
+    api/relay-api-msg.c api/relay-api-msg.h
+    api/relay-api-protocol.c api/relay-api-protocol.h
+  )
+endif()
+
+add_library(relay MODULE ${RELAY_SRC})
 set_target_properties(relay PROPERTIES PREFIX "")
 
 set(LINK_LIBS)
@@ -53,6 +66,11 @@ list(APPEND LINK_LIBS ${ZLIB_LIBRARY})
 if(ENABLE_ZSTD)
   include_directories(${ZSTD_INCLUDE_DIRS})
   list(APPEND LINK_LIBS ${LIBZSTD_LDFLAGS})
+endif()
+
+if(ENABLE_CJSON)
+  include_directories(${CJSON_INCLUDE_DIRS})
+  list(APPEND LINK_LIBS ${LIBCJSON_LDFLAGS})
 endif()
 
 target_link_libraries(relay ${LINK_LIBS} coverage_config)

@@ -21,7 +21,8 @@ Build-Depends:
     libgcrypt20-dev,
     libgnutls28-dev,
     libzstd-dev,
-    zlib1g-dev
+    zlib1g-dev,
+    libcjson-dev
 Standards-Version: 4.6.2
 Homepage: https://weechat.org/
 Vcs-Git: https://salsa.debian.org/kolter/weechat.git

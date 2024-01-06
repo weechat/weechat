@@ -43,6 +43,7 @@ enum t_relay_protocol
 {
     RELAY_PROTOCOL_WEECHAT = 0,        /* WeeChat protocol                  */
     RELAY_PROTOCOL_IRC,                /* IRC protocol (IRC proxy)          */
+    RELAY_PROTOCOL_API,                /* HTTP REST API                     */
     /* number of relay protocols */
     RELAY_NUM_PROTOCOLS,
 };

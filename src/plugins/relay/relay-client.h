@@ -25,6 +25,7 @@
 #include <gnutls/gnutls.h>
 
 struct t_relay_server;
+struct t_relay_http_request;
 
 /* relay status */
 
@@ -43,8 +44,10 @@ enum t_relay_status
 
 enum t_relay_client_data_type
 {
-    RELAY_CLIENT_DATA_TEXT = 0,        /* text messages                     */
+    RELAY_CLIENT_DATA_TEXT_LINE = 0,   /* text messages (on one line)       */
     RELAY_CLIENT_DATA_BINARY,          /* binary messages                   */
+    RELAY_CLIENT_DATA_HTTP,            /* HTTP messages (mostly text)       */
+    RELAY_CLIENT_DATA_TEXT_MULTILINE,  /* multi-line text (eg: JSON)        */
     /* number of data types */
     RELAY_NUM_CLIENT_DATA_TYPES,
 };
@@ -53,7 +56,6 @@ enum t_relay_client_data_type
 
 enum t_relay_client_websocket_status
 {
-    /* 0=not a ws, 1=init ws, 2=ws ready */
     RELAY_CLIENT_WEBSOCKET_NOT_USED = 0, /* no webseocket or not yet init.  */
     RELAY_CLIENT_WEBSOCKET_INITIALIZING, /* websocket used, initializing    */
     RELAY_CLIENT_WEBSOCKET_READY,        /* websocket used, ready           */
@@ -106,7 +108,7 @@ struct t_relay_client
     struct t_hook *hook_timer_handshake; /* timer for doing gnutls handshake*/
     int gnutls_handshake_ok;           /* 1 if handshake was done and OK    */
     enum t_relay_client_websocket_status websocket; /* websocket status     */
-    struct t_hashtable *http_headers;  /* HTTP headers for websocket        */
+    struct t_relay_http_request *http_req; /* HTTP request                  */
     char *address;                     /* string with IP address            */
     char *real_ip;                     /* real IP (X-Real-IP HTTP header)   */
     enum t_relay_status status;        /* status (connecting, active,..)    */

@@ -54,6 +54,7 @@ struct t_config_section *relay_config_section_path = NULL;
 /* relay config, look section */
 
 struct t_config_option *relay_config_look_auto_open_buffer = NULL;
+struct t_config_option *relay_config_look_display_clients = NULL;
 struct t_config_option *relay_config_look_raw_messages = NULL;
 
 /* relay config, color section */
@@ -101,11 +102,102 @@ struct t_config_option *relay_config_weechat_commands = NULL;
 
 /* other */
 
+int relay_config_auto_open_buffer[RELAY_NUM_PROTOCOLS];
+int relay_config_display_clients[RELAY_NUM_PROTOCOLS];
 regex_t *relay_config_regex_allowed_ips = NULL;
 regex_t *relay_config_regex_websocket_allowed_origins = NULL;
 struct t_hashtable *relay_config_hashtable_irc_backlog_tags = NULL;
 char **relay_config_network_password_hash_algo_list = NULL;
 
+
+/*
+ * Callback for changes on option "relay.look.auto_open_buffer".
+ */
+
+void
+relay_config_change_auto_open_buffer_cb (const void *pointer, void *data,
+                                         struct t_config_option *option)
+{
+    const char *auto_open_buffer;
+    const char *value_on = "irc,weechat", *value_off = "";
+    char **items;
+    int i, num_items, protocol;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    auto_open_buffer = weechat_config_string (relay_config_look_auto_open_buffer);
+
+    /* old option was a boolean, use these values for compatibility */
+    if (strcmp (auto_open_buffer, "on") == 0)
+        auto_open_buffer = value_on;
+    else if (strcmp (auto_open_buffer, "off") == 0)
+        auto_open_buffer = value_off;
+
+    for (i = 0; i < RELAY_NUM_PROTOCOLS; i++)
+    {
+        relay_config_auto_open_buffer[i] = 0;
+    }
+
+    if (auto_open_buffer[0])
+    {
+        items = weechat_string_split (auto_open_buffer, ",", NULL, 0, 0,
+                                      &num_items);
+        if (items)
+        {
+            for (i = 0; i < num_items; i++)
+            {
+                protocol = relay_protocol_search (items[i]);
+                if (protocol >= 0)
+                    relay_config_auto_open_buffer[protocol] = 1;
+            }
+            weechat_string_free_split (items);
+        }
+    }
+}
+
+/*
+ * Callback for changes on option "relay.look.display_clients".
+ */
+
+void
+relay_config_change_display_clients_cb (const void *pointer, void *data,
+                                        struct t_config_option *option)
+{
+    const char *display_clients;
+    char **items;
+    int i, num_items, protocol;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    display_clients = weechat_config_string (relay_config_look_display_clients);
+
+    for (i = 0; i < RELAY_NUM_PROTOCOLS; i++)
+    {
+        relay_config_display_clients[i] = 0;
+    }
+
+    if (display_clients[0])
+    {
+        items = weechat_string_split (display_clients, ",", NULL, 0, 0,
+                                      &num_items);
+        if (items)
+        {
+            for (i = 0; i < num_items; i++)
+            {
+                protocol = relay_protocol_search (items[i]);
+                if (protocol >= 0)
+                    relay_config_display_clients[protocol] = 1;
+            }
+            weechat_string_free_split (items);
+        }
+    }
+}
 
 /*
  * Callback for changes on options that require a refresh of relay list.
@@ -1030,10 +1122,24 @@ relay_config_init ()
     {
         relay_config_look_auto_open_buffer = weechat_config_new_option (
             relay_config_file, relay_config_section_look,
-            "auto_open_buffer", "boolean",
-            N_("auto open relay buffer when a new client is connecting"),
-            NULL, 0, 0, "on", NULL, 0,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            "auto_open_buffer", "string",
+            N_("auto open relay buffer when a new client is connecting "
+               "using one of these protocols (comma-separated list); "
+               "allowed protocols: \"irc\", \"weechat\", \"api\""),
+            NULL, 0, 0, "irc,weechat", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_change_auto_open_buffer_cb, NULL, NULL,
+            NULL, NULL, NULL);
+        relay_config_look_display_clients = weechat_config_new_option (
+            relay_config_file, relay_config_section_look,
+            "display_clients", "string",
+            N_("display messages when clients connect/disconnect from relay "
+               "using one of these protocols (comma-separated list); "
+               "allowed protocols: \"irc\", \"weechat\", \"api\""),
+            NULL, 0, 0, "irc,weechat", NULL, 0,
+            NULL, NULL, NULL,
+            &relay_config_change_display_clients_cb, NULL, NULL,
+            NULL, NULL, NULL);
         relay_config_look_raw_messages = weechat_config_new_option (
             relay_config_file, relay_config_section_look,
             "raw_messages", "integer",
@@ -1185,11 +1291,11 @@ relay_config_init ()
         relay_config_network_compression = weechat_config_new_option (
             relay_config_file, relay_config_section_network,
             "compression", "integer",
-            N_("compression of messages sent to clients with \"weechat\" "
-               "protocol: 0 = disable compression, 1 = low compression / fast "
-               "... 100 = best compression / slow; the value is a percentage "
-               "converted to 1-9 for zlib and 1-19 for zstd; "
-               "the default value is recommended, it offers a good "
+            N_("compression of messages sent to clients with weechat and "
+               "api protocols: 0 = disable compression, "
+               "1 = low compression / fast ... 100 = best compression / slow; "
+               "the value is a percentage converted to 1-9 for zlib and 1-19 "
+               "for zstd; the default value is recommended, it offers a good "
                "compromise between compression and speed"),
             NULL, 0, 100, "20", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -1279,8 +1385,8 @@ relay_config_init ()
             "totp_secret", "string",
             N_("secret for the generation of the Time-based One-Time Password "
                "(TOTP), encoded in base32 (only letters and digits from 2 to 7); "
-               "it is used as second factor in weechat protocol, in addition to "
-               "the password, which must not be empty "
+               "it is used as second factor in weechat and api protocols, "
+               "in addition to the password, which must not be empty "
                "(empty value means no TOTP is required) "
                "(note: content is evaluated, see /help eval)"),
             NULL, 0, 0, "", NULL, 0,
@@ -1435,6 +1541,8 @@ relay_config_read ()
     rc = weechat_config_read (relay_config_file);
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
+        relay_config_change_auto_open_buffer_cb (NULL, NULL, NULL);
+        relay_config_change_display_clients_cb (NULL, NULL, NULL);
         relay_config_change_network_allowed_ips (NULL, NULL, NULL);
         relay_config_change_network_password_hash_algo (NULL, NULL, NULL);
         relay_config_change_irc_backlog_tags (NULL, NULL, NULL);

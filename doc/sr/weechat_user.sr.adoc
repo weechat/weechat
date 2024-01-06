@@ -151,6 +151,10 @@ WeeChat мора да се изгради са CMake.
 | ca-certificates |
 | Сертификати за TLS везе.
 
+// TRANSLATION MISSING
+| libcjson-dev |
+| Relay plugin: protocol "api" (HTTP REST API).
+
 | libzstd-dev | ≥ 0.8.1
 | Logger додатак: компресија ротирајућих лог фајлова (zstandard). +
   Relay додатак: компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat протокол).
@@ -267,6 +271,10 @@ $ make install
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON
 | Компајлира <<charset,Charset додатак>>.
+
+// TRANSLATION MISSING
+| ENABLE_CJSON | `ON`, `OFF` | ON
+| Support of JSON with https://github.com/DaveGamble/cJSON[cJSON ^↗^^] library.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF
 | Изграђује man страницу.

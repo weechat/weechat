@@ -333,15 +333,26 @@ WeeChat „језгро” се налази у следећим директо�
 |       relay-command.c             | Релеј команде.
 |       relay-completion.c          | Релеј довршавања.
 |       relay-config.c              | Релеј опције конфиг (фајл relay.conf).
+// TRANSLATION MISSING
+|       relay-http.c                | HTTP functions.
 |       relay-info.c                | Релеј info/infolists/hdata.
 |       relay-network.c             | Мрежне функције за релеј.
 |       relay-raw.c                 | Релеј сирови бафер.
 |       relay-server.c              | Релеј сервер.
 |       relay-upgrade.c             | Save/restore of relay data when upgrading WeeChat.
 |       relay-websocket.c           | WebSocket сервер функције (RFC 6455).
+// TRANSLATION MISSING
+|       api/                        | Relay for remote interfaces (using HTTP REST API).
+// TRANSLATION MISSING
+|          relay-api.c              | Main API functions for HTTP REST API.
+// TRANSLATION MISSING
+|          relay-api-msg.c          | Send JSON messages to clients.
+// TRANSLATION MISSING
+|          relay-api-protocol.c     | HTTP REST API protocol.
 |       irc/                        | IRC прокси.
 |          relay-irc.c              | Главне IRC прокси функције.
-|       weechat/                    | Релеј за удаљене интерфејсе.
+// TRANSLATION MISSING
+|       weechat/                    | Relay for remote interfaces (using "weechat" binary protocol).
 |          relay-weechat.c          | Релеј за удаљене интерфејсе (главне функције).
 |          relay-weechat-msg.c      | Слање бинарних порука клијентима.
 |          relay-weechat-nicklist.c | Функције листе надимака.
@@ -471,6 +482,8 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-typing-status.cpp  | Тестови: typing статус.
 |          relay/                     | Корен unit тестова за Релеј додатак.
 |             test-relay-auth.cpp     | Тестови: аутентификација клијената.
+// TRANSLATION MISSING
+|             test-relay-http.cpp     | Tests: HTTP functions for Relay plugin.
 |             irc/                    | Корен unit тестова за Релеј „irc” протокол.
 |                test-relay-irc.cpp   | Тестови: РЕлеј „irc” протокол.
 |          xfer/                      | Корен unit тестова за Xfer додатак.

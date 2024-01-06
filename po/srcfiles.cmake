@@ -344,6 +344,12 @@ SET(WEECHAT_SOURCES
 ./src/plugins/python/weechat-python-api.h
 ./src/plugins/python/weechat-python.c
 ./src/plugins/python/weechat-python.h
+./src/plugins/relay/api/relay-api.c
+./src/plugins/relay/api/relay-api.h
+./src/plugins/relay/api/relay-api-msg.c
+./src/plugins/relay/api/relay-api-msg.h
+./src/plugins/relay/api/relay-api-protocol.c
+./src/plugins/relay/api/relay-api-protocol.h
 ./src/plugins/relay/irc/relay-irc.c
 ./src/plugins/relay/irc/relay-irc.h
 ./src/plugins/relay/relay-auth.c
@@ -360,6 +366,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/relay/relay-config.c
 ./src/plugins/relay/relay-config.h
 ./src/plugins/relay/relay.h
+./src/plugins/relay/relay-http.c
+./src/plugins/relay/relay-http.h
 ./src/plugins/relay/relay-info.c
 ./src/plugins/relay/relay-info.h
 ./src/plugins/relay/relay-network.c

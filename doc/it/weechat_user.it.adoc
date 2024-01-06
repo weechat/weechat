@@ -189,6 +189,10 @@ WeeChat:
 | Certificati per le connessioni TLS.
 
 // TRANSLATION MISSING
+| libcjson-dev |
+| Relay plugin: protocol "api" (HTTP REST API).
+
+// TRANSLATION MISSING
 | libzstd-dev | ≥ 0.8.1
 | Logger plugin: compression of rotated log files (zstandard). +
   Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
@@ -319,6 +323,10 @@ List of available options:
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON
 | Compile <<charset,Charset plugin>>.
+
+// TRANSLATION MISSING
+| ENABLE_CJSON | `ON`, `OFF` | ON
+| Support of JSON with https://github.com/DaveGamble/cJSON[cJSON ^↗^^] library.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF
 | Build man page.

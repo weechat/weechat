@@ -52,7 +52,7 @@ struct t_relay_server *last_relay_server = NULL;
  * Examples:
  *
  *   string                    ipv4 ipv6 tls unix protocol protocol_args
- *   ---------------------------------------------------------------
+ *   -------------------------------------------------------------------
  *   irc.libera                1    1    0   0    irc      libera
  *   tls.irc.libera            1    1    1   0    irc      libera
  *   ipv4.irc.libera           1    0    0   0    irc      libera
@@ -63,6 +63,9 @@ struct t_relay_server *last_relay_server = NULL;
  *   tls.weechat               1    1    1   0    weechat
  *   ipv6.tls.weechat          0    1    1   0    weechat
  *   unix.weechat              0    0    0   1    weechat
+ *   tls.api                   1    1    1   0    api
+ *   ipv6.tls.api              0    1    1   0    api
+ *   unix.api                  0    0    0   1    api
  *
  * Note: *protocol and *protocol_args must be freed after use.
  */
@@ -800,6 +803,18 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
 
     if (!protocol_string)
         return NULL;
+
+#ifndef HAVE_CJSON
+    if (protocol == RELAY_PROTOCOL_API)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: error: unable to add relay \"%s\" "
+                          "(cJSON support is not enabled)"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                        protocol_string);
+        return NULL;
+    }
+#endif /* HAVE_CJSON */
 
     /* look for duplicate ports/paths */
     dup_server = (unix_socket) ?

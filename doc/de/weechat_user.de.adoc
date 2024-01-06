@@ -159,6 +159,10 @@ WeeChat optional sind:
 | ca-certificates |
 | Zertifikate für TLS Verbindungen.
 
+// TRANSLATION MISSING
+| libcjson-dev |
+| Relay plugin: protocol "api" (HTTP REST API).
+
 | libzstd-dev | ≥ 0.8.1
 | Logger-Erweiterung: Kompression von rotierenden Protokolldateien (zstandard). +
   Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
@@ -278,6 +282,10 @@ Liste der verfügbaren Optionen:
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON
 | kompiliert <<charset,Charset Erweiterung>>.
+
+// TRANSLATION MISSING
+| ENABLE_CJSON | `ON`, `OFF` | ON
+| Support of JSON with https://github.com/DaveGamble/cJSON[cJSON ^↗^^] library.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF
 | erstellt die man page.

@@ -47,7 +47,7 @@ WEECHAT_PLUGIN_PRIORITY(RELAY_PLUGIN_PRIORITY);
 struct t_weechat_plugin *weechat_relay_plugin = NULL;
 
 char *relay_protocol_string[] =        /* strings for protocols             */
-{ "weechat", "irc" };
+{ "weechat", "irc", "api" };
 
 struct t_hdata *relay_hdata_buffer = NULL;
 struct t_hdata *relay_hdata_lines = NULL;

@@ -28,6 +28,7 @@
 #include "relay.h"
 #include "relay-client.h"
 #include "relay-config.h"
+#include "relay-http.h"
 #include "relay-websocket.h"
 
 
@@ -39,81 +40,44 @@
 
 
 /*
- * Checks if a message is a HTTP GET with resource "/weechat".
+ * Checks if a message is a HTTP GET with resource "/weechat" (for weechat
+ * protocol) or "/api" (for api protocol).
  *
  * Returns:
- *   1: message is a HTTP GET with resource "/weechat"
- *   0: message is NOT a HTTP GET with resource "/weechat"
+ *   1: message is a HTTP GET with appropriate resource
+ *   0: message is NOT a HTTP GET with appropriate resource
  */
 
 int
-relay_websocket_is_http_get_weechat (const char *message)
+relay_websocket_is_valid_http_get (struct t_relay_client *client,
+                                   const char *message)
 {
-    /* the message must start with "GET /weechat" */
-    if (strncmp (message, "GET /weechat", 12) != 0)
+    char string[128];
+    int length;
+
+    /* the message must start with "GET /weechat" or "GET /api" */
+    snprintf (string, sizeof (string),
+              "GET /%s", relay_protocol_string[client->protocol]);
+    length = strlen (string);
+
+    if (strncmp (message, string, length) != 0)
         return 0;
 
-    /* after "GET /weechat", only a new line or " HTTP" is allowed */
-    if ((message[12] != '\r') && (message[12] != '\n')
-        && (strncmp (message + 12, " HTTP", 5) != 0))
+    /* after "GET /weechat" or "GET /api", only a new line or " HTTP" is allowed */
+    if ((message[length] != '\r') && (message[length] != '\n')
+        && (strncmp (message + length, " HTTP", 5) != 0))
     {
         return 0;
     }
 
-    /* valid HTTP GET for resource "/weechat" */
+    /* valid HTTP GET */
     return 1;
-}
-
-/*
- * Saves a HTTP header in hashtable "http_header" of client.
- */
-
-void
-relay_websocket_save_header (struct t_relay_client *client,
-                             const char *message)
-{
-    char *pos, *name, *name_lower;
-    const char *ptr_value;
-
-    /* ignore the "GET" request */
-    if (strncmp (message, "GET ", 4) == 0)
-        return;
-
-    pos = strchr (message, ':');
-
-    /* not a valid header */
-    if (!pos || (pos == message))
-        return;
-
-    /* get header name, which is case-insensitive */
-    name = weechat_strndup (message, pos - message);
-    if (!name)
-        return;
-    name_lower = weechat_string_tolower (name);
-    if (!name_lower)
-    {
-        free (name);
-        return;
-    }
-
-    /* get pointer on header value */
-    ptr_value = pos + 1;
-    while (ptr_value[0] == ' ')
-    {
-        ptr_value++;
-    }
-
-    /* add header in the hashtable */
-    weechat_hashtable_set (client->http_headers, name_lower, ptr_value);
-
-    free (name);
-    free (name_lower);
 }
 
 /*
  * Checks if a client handshake is valid.
  *
- * A websocket query looks like:
+ * A websocket query looks like (weechat protocol):
  *   GET /weechat HTTP/1.1
  *   Upgrade: websocket
  *   Connection: Upgrade
@@ -125,6 +89,20 @@ relay_websocket_save_header (struct t_relay_client *client,
  *   Sec-WebSocket-Version: 13
  *   Sec-WebSocket-Extensions: x-webkit-deflate-frame
  *   Cookie: csrftoken=acb65377798f32dc377ebb50316a12b5
+ *
+ * A websocket query looks like (api protocol):
+ *   GET /api HTTP/1.1
+ *   Upgrade: websocket
+ *   Connection: Upgrade
+ *   Host: myhost:5000
+ *   Origin: https://example.org
+ *   Pragma: no-cache
+ *   Cache-Control: no-cache
+ *   Sec-WebSocket-Key: fo1J9uHSsrfDP3BkwUylzQ==
+ *   Sec-WebSocket-Version: 13
+ *   Sec-WebSocket-Extensions: x-webkit-deflate-frame
+ *   Cookie: csrftoken=acb65377798f32dc377ebb50316a12b5
+ *
  *
  * Expected HTTP headers with values are:
  *
@@ -149,20 +127,20 @@ relay_websocket_client_handshake_valid (struct t_relay_client *client)
     const char *value;
 
     /* check if we have header "Upgrade" with value "websocket" */
-    value = weechat_hashtable_get (client->http_headers, "upgrade");
+    value = weechat_hashtable_get (client->http_req->headers, "upgrade");
     if (!value)
         return -1;
     if (weechat_strcasecmp (value, "websocket") != 0)
         return -1;
 
     /* check if we have header "Sec-WebSocket-Key" with non-empty value */
-    value = weechat_hashtable_get (client->http_headers, "sec-websocket-key");
+    value = weechat_hashtable_get (client->http_req->headers, "sec-websocket-key");
     if (!value || !value[0])
         return -1;
 
     if (relay_config_regex_websocket_allowed_origins)
     {
-        value = weechat_hashtable_get (client->http_headers, "origin");
+        value = weechat_hashtable_get (client->http_req->headers, "origin");
         if (!value || !value[0])
             return -2;
         if (regexec (relay_config_regex_websocket_allowed_origins, value, 0,
@@ -196,7 +174,7 @@ relay_websocket_build_handshake (struct t_relay_client *client)
     char *key, sec_websocket_accept[128], handshake[1024], hash[160 / 8];
     int length, hash_size;
 
-    sec_websocket_key = weechat_hashtable_get (client->http_headers,
+    sec_websocket_key = weechat_hashtable_get (client->http_req->headers,
                                                "sec-websocket-key");
     if (!sec_websocket_key || !sec_websocket_key[0])
         return NULL;
@@ -236,31 +214,6 @@ relay_websocket_build_handshake (struct t_relay_client *client)
               sec_websocket_accept);
 
     return strdup (handshake);
-}
-
-/*
- * Sends a HTTP message to client.
- *
- * Argument "http" is a HTTP code + message, for example:
- * "403 Forbidden".
- */
-
-void
-relay_websocket_send_http (struct t_relay_client *client,
-                           const char *http)
-{
-    char *message;
-    int length;
-
-    length = 32 + strlen (http) + 1;
-    message = malloc (length);
-    if (message)
-    {
-        snprintf (message, length, "HTTP/1.1 %s\r\n\r\n", http);
-        relay_client_send (client, RELAY_CLIENT_MSG_STANDARD,
-                           message, strlen (message), NULL);
-        free (message);
-    }
 }
 
 /*

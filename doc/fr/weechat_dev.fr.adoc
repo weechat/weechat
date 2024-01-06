@@ -333,15 +333,20 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       relay-command.c             | Commandes de Relay.
 |       relay-completion.c          | Complétions de Relay.
 |       relay-config.c              | Options de configuration pour Relay (fichier relay.conf).
+|       relay-http.c                | Fonctions HTTP.
 |       relay-info.c                | Info/infolists/hdata pour Relay.
 |       relay-network.c             | Fonctions de réseau pour Relay.
 |       relay-raw.c                 | Tampon des données brutes de Relay.
 |       relay-server.c              | Serveur Relay.
 |       relay-upgrade.c             | Sauvegarde/restauration des données Relay lors de la mise à jour de WeeChat.
 |       relay-websocket.c           | Fonctions pour le serveur WebSocket (RFC 6455).
+|       api/                        | Relai pour les interfaces distantes (en utilisant une API REST HTTP).
+|          relay-api.c              | Fonctions principales pour l'API REST HTTP.
+|          relay-api-msg.c          | Envoi de messages JSON aux clients.
+|          relay-api-protocol.c     | Protocole HTTP REST API.
 |       irc/                        | Proxy IRC.
 |          relay-irc.c              | Fonctions principales pour le proxy IRC.
-|       weechat/                    | Relai pour les interfaces distantes.
+|       weechat/                    | Relai pour les interfaces distantes (en utilisant le protocole binaire "weechat").
 |          relay-weechat.c          | Relai pour les interfaces distantes (fonctions principales).
 |          relay-weechat-msg.c      | Envoi de messages binaires aux clients.
 |          relay-weechat-nicklist.c | Fonctions pour la liste de pseudos.
@@ -471,6 +476,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-typing-status.cpp  | Tests : statut d'écriture.
 |          relay/                     | Racine des tests unitaires pour l'extension Relay.
 |             test-relay-auth.cpp     | Tests : authentification des clients.
+|             test-relay-http.cpp     | Tests : fonctions HTTP pour l'extension Relay.
 |             irc/                    | Racine des tests unitaires pour le protocole relay "irc".
 |                test-relay-irc.cpp   | Tests : Protocole relay "irc".
 |          xfer/                      | Racine des tests unitaires pour l'extension Xfer.

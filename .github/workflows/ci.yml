@@ -5,7 +5,41 @@ on:
   - pull_request
 
 env:
-  WEECHAT_DEPENDENCIES: devscripts equivs python3-pip cmake ninja-build lcov pkg-config libncurses-dev gem2deb libperl-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-3.0-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev libzstd-dev zlib1g-dev curl libcpputest-dev php-dev libphp-embed libargon2-dev libsodium-dev flake8 pylint python3-bandit asciidoctor ruby-pygments.rb shellcheck
+  WEECHAT_DEPENDENCIES: >-
+    asciidoctor
+    cmake
+    curl
+    devscripts
+    equivs
+    flake8
+    gem2deb
+    guile-3.0-dev
+    lcov
+    libargon2-dev
+    libaspell-dev
+    libcjson-dev
+    libcpputest-dev
+    libcurl4-gnutls-dev
+    libgcrypt20-dev
+    libgnutls28-dev
+    liblua5.3-dev
+    libncurses-dev
+    libperl-dev
+    libphp-embed
+    libsodium-dev
+    libv8-dev
+    libzstd-dev
+    ninja-build
+    php-dev
+    pkg-config
+    pylint
+    python3-bandit
+    python3-dev
+    python3-pip
+    ruby-pygments.rb
+    shellcheck
+    tcl8.6-dev
+    zlib1g-dev
 
 jobs:
 
@@ -20,6 +54,7 @@ jobs:
           - { name: "gcc_ninja", cc: "gcc", cxx: "g++", buildargs: "-G Ninja" }
           - { name: "gcc_no_nls", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_NLS=OFF -DENABLE_DOC=OFF" }
           - { name: "gcc_no_zstd", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_ZSTD=OFF -DENABLE_DOC=OFF" }
+          - { name: "gcc_no_cjson", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_CJSON=OFF -DENABLE_DOC=OFF" }
           - { name: "gcc_coverage", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_CODE_COVERAGE=ON" }
           - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
 
@@ -115,7 +150,7 @@ jobs:
           /usr/local/bin/python3.11 \
           /usr/local/bin/python3.11-config \
         ;
-        brew install asciidoctor guile lua pkg-config ruby
+        brew install asciidoctor cjson guile lua pkg-config ruby
 
     - uses: actions/checkout@v2
 
