@@ -6,7 +6,7 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2022
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2024
 
 Ten dokument opisuje klienta rozmów WeeChat, który jest częścią WeeChat.
 

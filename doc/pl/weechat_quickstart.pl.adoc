@@ -6,7 +6,7 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2022
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2024
 
 [[start]]
 == Uruchamianie WeeChat
