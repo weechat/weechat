@@ -1261,7 +1261,7 @@ irc_info_init ()
         "irc_is_message_ignored",
         N_("1 if the nick is ignored (message is not displayed)"),
         N_("server,message (message is the raw IRC message)"),
-        &irc_info_info_irc_is_channel_cb, NULL, NULL);
+        &irc_info_info_irc_is_message_ignored_cb, NULL, NULL);
 
     /* info_hashtable hooks */
     weechat_hook_info_hashtable (
