@@ -344,6 +344,9 @@ irc_info_info_irc_server_isupport_cb (const void *pointer, void *data,
     (void) data;
     (void) info_name;
 
+    if (!arguments || !arguments[0])
+        return NULL;
+
     isupport_value = NULL;
     pos_comma = strchr (arguments, ',');
     if (pos_comma)
@@ -381,6 +384,9 @@ irc_info_info_irc_server_isupport_value_cb (const void *pointer, void *data,
     (void) pointer;
     (void) data;
     (void) info_name;
+
+    if (!arguments || !arguments[0])
+        return NULL;
 
     isupport_value = NULL;
     pos_comma = strchr (arguments, ',');
@@ -420,6 +426,9 @@ irc_info_info_irc_server_cap_cb (const void *pointer, void *data,
     (void) data;
     (void) info_name;
 
+    if (!arguments || !arguments[0])
+        return NULL;
+
     has_cap = 0;
     pos_comma = strchr (arguments, ',');
     if (pos_comma)
@@ -457,6 +466,9 @@ irc_info_info_irc_server_cap_value_cb (const void *pointer, void *data,
     (void) pointer;
     (void) data;
     (void) info_name;
+
+    if (!arguments || !arguments[0])
+        return NULL;
 
     cap_value = NULL;
     pos_comma = strchr (arguments, ',');
