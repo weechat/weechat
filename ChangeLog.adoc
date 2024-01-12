@@ -58,6 +58,7 @@ Bug fixes::
   * core: fix crash when a custom bar item name is already used by a default bar item (issue #2034)
   * core: fix random timeouts when a lot of concurrent processes are launched with hook_process (issue #2033)
   * api: return NULL instead of empty infolist "key" when context is not found
+  * irc: fix info "irc_is_message_ignored" (issue #2059)
   * irc: fix display of self messages when the message split fails due to inconsistent max lengths sent by the server in message 005
   * irc: display messages 730/731 (monitored nicks online/offline) even if command `/notify` was not used (issue #2049)
   * irc: remove trailing "\r\n" in signals "irc_out" and "irc_outtags" when messages are queued
