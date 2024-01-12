@@ -82,6 +82,7 @@ if(ENABLE_IRC)
     unit/plugins/irc/test-irc-color.cpp
     unit/plugins/irc/test-irc-config.cpp
     unit/plugins/irc/test-irc-ctcp.cpp
+    unit/plugins/irc/test-irc-info.cpp
     unit/plugins/irc/test-irc-ignore.cpp
     unit/plugins/irc/test-irc-join.cpp
     unit/plugins/irc/test-irc-list.cpp
