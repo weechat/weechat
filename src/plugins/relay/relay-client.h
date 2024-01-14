@@ -108,6 +108,7 @@ struct t_relay_client
     struct t_hook *hook_timer_handshake; /* timer for doing gnutls handshake*/
     int gnutls_handshake_ok;           /* 1 if handshake was done and OK    */
     enum t_relay_client_websocket_status websocket; /* websocket status     */
+    struct t_relay_websocket_deflate *ws_deflate; /* websocket deflate data */
     struct t_relay_http_request *http_req; /* HTTP request                  */
     char *address;                     /* string with IP address            */
     char *real_ip;                     /* real IP (X-Real-IP HTTP header)   */

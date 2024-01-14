@@ -32,6 +32,7 @@
 #include "../relay.h"
 #include "../relay-client.h"
 #include "../relay-http.h"
+#include "../relay-websocket.h"
 #include "relay-api.h"
 #include "relay-api-msg.h"
 #include "relay-api-protocol.h"

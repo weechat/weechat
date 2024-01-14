@@ -28,8 +28,8 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-
 #include <gnutls/gnutls.h>
+#include <zlib.h>
 
 #include "../weechat-plugin.h"
 #include "relay.h"
@@ -550,6 +550,85 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
 }
 
 /*
+ * Reads websocket frames.
+ */
+
+void
+relay_client_read_websocket_frames (struct t_relay_client *client,
+                                    struct t_relay_websocket_frame *frames,
+                                    int num_frames)
+{
+    int i;
+
+    if (!frames || (num_frames <= 0))
+        return;
+
+    for (i = 0; i < num_frames; i++)
+    {
+        if (frames[i].payload_size == 0)
+        {
+            /*
+             * When decoded length is 0, assume client sent a PONG frame.
+             *
+             * RFC 6455 Section 5.5.3:
+             *
+             *   "A Pong frame MAY be sent unsolicited.  This serves as a
+             *   unidirectional heartbeat.  A response to an unsolicited
+             *   Pong frame is not expected."
+             */
+            continue;
+        }
+        switch (frames[i].opcode)
+        {
+            case RELAY_CLIENT_MSG_PING:
+                /* print message in raw buffer */
+                relay_raw_print (client, RELAY_CLIENT_MSG_PING,
+                                 RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
+                                 frames[i].payload,
+                                 frames[i].payload_size);
+                /* answer with a PONG */
+                relay_client_send (client,
+                                   RELAY_CLIENT_MSG_PONG,
+                                   frames[i].payload,
+                                   frames[i].payload_size,
+                                   NULL);
+                break;
+            case RELAY_CLIENT_MSG_CLOSE:
+                /* print message in raw buffer */
+                relay_raw_print (client, RELAY_CLIENT_MSG_CLOSE,
+                                 RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
+                                 frames[i].payload,
+                                 frames[i].payload_size);
+                /* answer with a CLOSE */
+                relay_client_send (client,
+                                   RELAY_CLIENT_MSG_CLOSE,
+                                   frames[i].payload,
+                                   frames[i].payload_size,
+                                   NULL);
+                /* close the connection */
+                relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+                /* ignore any other message after the close */
+                return;
+            default:
+                if (frames[i].payload)
+                {
+                    if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
+                        || (client->recv_data_type == RELAY_CLIENT_DATA_HTTP))
+                    {
+                        relay_http_recv (client, frames[i].payload);
+                    }
+                    else if ((client->recv_data_type == RELAY_CLIENT_DATA_TEXT_LINE)
+                             || (client->recv_data_type == RELAY_CLIENT_DATA_TEXT_MULTILINE))
+                    {
+                        relay_client_recv_text (client, frames[i].payload);
+                    }
+                }
+                break;
+        }
+    }
+}
+
+/*
  * Reads data from a client.
  */
 
@@ -557,10 +636,9 @@ int
 relay_client_recv_cb (const void *pointer, void *data, int fd)
 {
     struct t_relay_client *client;
-    static char buffer[4096], decoded[8192 + 1];
-    const char *ptr_buffer;
-    int num_read, rc;
-    unsigned long long decoded_length, length_buffer;
+    static char buffer[4096];
+    int i, num_read, rc, num_frames;
+    struct t_relay_websocket_frame *frames;
 
     /* make C compiler happy */
     (void) data;
@@ -590,8 +668,6 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
     if (num_read > 0)
     {
         buffer[num_read] = '\0';
-        ptr_buffer = buffer;
-        length_buffer = num_read;
 
         /*
          * if we are receiving the first message from client, check if it looks
@@ -599,7 +675,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
          */
         if (client->bytes_recv == 0)
         {
-            if (relay_websocket_is_valid_http_get (client, buffer))
+            if (relay_websocket_is_valid_http_get (client->protocol, buffer))
             {
                 /*
                  * web socket is just initializing for now, it's not accepted
@@ -615,23 +691,12 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
         if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
         {
             /* websocket used, decode message */
-            rc = relay_websocket_decode_frame ((unsigned char *)buffer,
+            frames = NULL;
+            num_frames = 0;
+            rc = relay_websocket_decode_frame (client,
+                                               (unsigned char *)buffer,
                                                (unsigned long long)num_read,
-                                               (unsigned char *)decoded,
-                                               &decoded_length);
-            if (decoded_length == 0)
-            {
-                /*
-                 * When decoded length is 0, assume client sent a PONG frame.
-                 *
-                 * RFC 6455 Section 5.5.3:
-                 *
-                 *   "A Pong frame MAY be sent unsolicited.  This serves as a
-                 *   unidirectional heartbeat.  A response to an unsolicited
-                 *   Pong frame is not expected."
-                 */
-                return WEECHAT_RC_OK;
-            }
+                                               &frames, &num_frames);
             if (!rc)
             {
                 /* error when decoding frame: close connection */
@@ -646,22 +711,26 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
                 relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
                 return WEECHAT_RC_OK;
             }
-            ptr_buffer = decoded;
-            length_buffer = decoded_length;
-        }
-
-        if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
-            || (client->recv_data_type == RELAY_CLIENT_DATA_TEXT_LINE)
-            || (client->recv_data_type == RELAY_CLIENT_DATA_TEXT_MULTILINE)
-            || (client->recv_data_type == RELAY_CLIENT_DATA_HTTP))
-        {
-            /* websocket initializing or text/HTTP data for this client */
-            relay_client_recv_text_buffer (client, ptr_buffer, length_buffer);
+            relay_client_read_websocket_frames (client, frames, num_frames);
+            for (i = 0; i < num_frames; i++)
+            {
+                if (frames[i].payload)
+                    free (frames[i].payload);
+            }
+            free (frames);
         }
         else
         {
-            /* receive buffer as-is (binary data) */
-            /* currently, all supported protocols receive only text, no binary */
+            if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
+                || (client->recv_data_type == RELAY_CLIENT_DATA_HTTP))
+            {
+                relay_http_recv (client, buffer);
+            }
+            else if ((client->recv_data_type == RELAY_CLIENT_DATA_TEXT_LINE)
+                     || (client->recv_data_type == RELAY_CLIENT_DATA_TEXT_MULTILINE))
+            {
+                relay_client_recv_text (client, buffer);
+            }
         }
         relay_buffer_refresh (NULL);
     }
@@ -1103,9 +1172,8 @@ relay_client_send (struct t_relay_client *client,
                     WEBSOCKET_FRAME_OPCODE_TEXT : WEBSOCKET_FRAME_OPCODE_BINARY;
                 break;
         }
-        websocket_frame = relay_websocket_encode_frame (opcode, data,
-                                                        data_size,
-                                                        &length_frame);
+        websocket_frame = relay_websocket_encode_frame (
+            client, opcode, data, data_size, &length_frame);
         if (websocket_frame)
         {
             ptr_data = websocket_frame;
@@ -1307,6 +1375,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->hook_timer_handshake = NULL;
         new_client->gnutls_handshake_ok = 0;
         new_client->websocket = RELAY_CLIENT_WEBSOCKET_NOT_USED;
+        new_client->ws_deflate = relay_websocket_deflate_alloc ();
         new_client->http_req = relay_http_request_alloc ();
         new_client->address = strdup ((address && address[0]) ?
                                       address : "local");
@@ -1516,6 +1585,8 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
 {
     struct t_relay_client *new_client;
     const char *str;
+    Bytef *ptr_dict;
+    int dict_size;
 
     new_client = malloc (sizeof (*new_client));
     if (new_client)
@@ -1533,6 +1604,46 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->hook_timer_handshake = NULL;
         new_client->gnutls_handshake_ok = 0;
         new_client->websocket = weechat_infolist_integer (infolist, "websocket");
+        new_client->ws_deflate = relay_websocket_deflate_alloc ();
+        new_client->ws_deflate->enabled = weechat_infolist_integer (infolist, "ws_deflate_enabled");
+        new_client->ws_deflate->server_context_takeover = weechat_infolist_integer (infolist, "ws_deflate_server_context_takeover");
+        new_client->ws_deflate->client_context_takeover = weechat_infolist_integer (infolist, "ws_deflate_client_context_takeover");
+        new_client->ws_deflate->window_bits_deflate = weechat_infolist_integer (infolist, "ws_deflate_window_bits_deflate");
+        new_client->ws_deflate->window_bits_inflate = weechat_infolist_integer (infolist, "ws_deflate_window_bits_inflate");
+        new_client->ws_deflate->strm_deflate = NULL;
+        new_client->ws_deflate->strm_inflate = NULL;
+        if (weechat_infolist_search_var (infolist, "ws_deflate_strm_deflate_dict"))
+        {
+            ptr_dict = weechat_infolist_buffer (infolist, "ws_deflate_strm_deflate_dict", &dict_size);
+            if (ptr_dict)
+            {
+                new_client->ws_deflate->strm_deflate = calloc (1, sizeof (*new_client->ws_deflate->strm_deflate));
+                if (new_client->ws_deflate->strm_deflate)
+                {
+                    if (relay_websocket_deflate_init_stream_deflate (new_client->ws_deflate))
+                    {
+                        deflateSetDictionary (new_client->ws_deflate->strm_deflate,
+                                              ptr_dict, dict_size);
+                    }
+                }
+            }
+        }
+        if (weechat_infolist_search_var (infolist, "ws_deflate_strm_inflate_dict"))
+        {
+            ptr_dict = weechat_infolist_buffer (infolist, "ws_deflate_strm_inflate_dict", &dict_size);
+            if (ptr_dict)
+            {
+                new_client->ws_deflate->strm_inflate = calloc (1, sizeof (*new_client->ws_deflate->strm_inflate));
+                if (new_client->ws_deflate->strm_inflate)
+                {
+                    if (relay_websocket_deflate_init_stream_inflate (new_client->ws_deflate))
+                    {
+                        inflateSetDictionary (new_client->ws_deflate->strm_inflate,
+                                              ptr_dict, dict_size);
+                    }
+                }
+            }
+        }
         new_client->http_req = relay_http_request_alloc ();
         new_client->address = strdup (weechat_infolist_string (infolist, "address"));
         str = weechat_infolist_string (infolist, "real_ip");
@@ -1780,6 +1891,7 @@ relay_client_free (struct t_relay_client *client)
         free (client->nonce);
     if (client->hook_timer_handshake)
         weechat_unhook (client->hook_timer_handshake);
+    relay_websocket_deflate_free (client->ws_deflate);
     relay_http_request_free (client->http_req);
     if (client->hook_fd)
         weechat_unhook (client->hook_fd);
@@ -1881,6 +1993,8 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
 {
     struct t_infolist_item *ptr_item;
     char value[128];
+    Bytef *dict;
+    uInt dict_size;
 
     if (!infolist || !client)
         return 0;
@@ -1929,6 +2043,47 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "websocket", client->websocket))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ws_deflate_enabled", client->ws_deflate->enabled))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ws_deflate_server_context_takeover", client->ws_deflate->server_context_takeover))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ws_deflate_client_context_takeover", client->ws_deflate->client_context_takeover))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ws_deflate_window_bits_deflate", client->ws_deflate->window_bits_deflate))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ws_deflate_window_bits_inflate", client->ws_deflate->window_bits_inflate))
+        return 0;
+    if (!weechat_infolist_new_var_pointer (ptr_item, "ws_deflate_strm_deflate", client->ws_deflate->strm_deflate))
+        return 0;
+    if (!weechat_infolist_new_var_pointer (ptr_item, "ws_deflate_strm_inflate", client->ws_deflate->strm_inflate))
+        return 0;
+    if (client->ws_deflate->strm_deflate || client->ws_deflate->strm_inflate)
+    {
+        /* save the deflate/inflate dictionary, as it's required after /upgrade */
+        dict = malloc (32768);
+        if (dict)
+        {
+            if (client->ws_deflate->strm_deflate)
+            {
+                if (deflateGetDictionary (client->ws_deflate->strm_deflate, dict, &dict_size) == Z_OK)
+                {
+                    weechat_infolist_new_var_buffer (ptr_item,
+                                                     "ws_deflate_strm_deflate_dict",
+                                                     dict, dict_size);
+                }
+            }
+            if (client->ws_deflate->strm_inflate)
+            {
+                if (inflateGetDictionary (client->ws_deflate->strm_inflate, dict, &dict_size) == Z_OK)
+                {
+                    weechat_infolist_new_var_buffer (ptr_item,
+                                                     "ws_deflate_strm_inflate_dict",
+                                                     dict, dict_size);
+                }
+            }
+            free (dict);
+        }
+    }
     if (!weechat_infolist_new_var_string (ptr_item, "address", client->address))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "real_ip", client->real_ip))
@@ -2015,7 +2170,8 @@ relay_client_print_log ()
         weechat_log_printf ("  gnutls_sess . . . . . . . : 0x%lx", ptr_client->gnutls_sess);
         weechat_log_printf ("  hook_timer_handshake. . . : 0x%lx", ptr_client->hook_timer_handshake);
         weechat_log_printf ("  gnutls_handshake_ok . . . : 0x%lx", ptr_client->gnutls_handshake_ok);
-        weechat_log_printf ("  websocket . . . . . . . . : %d",    ptr_client->websocket);
+        weechat_log_printf ("  websocket . . . . . . . . ; %d",    ptr_client->websocket);
+        relay_websocket_deflate_print_log (ptr_client->ws_deflate, "");
         relay_http_print_log (ptr_client->http_req);
         weechat_log_printf ("  address . . . . . . . . . : '%s'",  ptr_client->address);
         weechat_log_printf ("  real_ip . . . . . . . . . : '%s'",  ptr_client->real_ip);

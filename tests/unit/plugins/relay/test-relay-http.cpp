@@ -34,6 +34,7 @@ extern "C"
 #include "src/core/wee-string.h"
 #include "src/plugins/relay/relay-config.h"
 #include "src/plugins/relay/relay-http.h"
+#include "src/plugins/relay/relay-websocket.h"
 #include "src/plugins/weechat-plugin.h"
 
 extern char *relay_http_url_decode (const char *url);
@@ -89,6 +90,14 @@ TEST(RelayHttp, AllocReinitFree)
     LONGS_EQUAL(0, request->headers->items_count);
     CHECK(request->accept_encoding);
     LONGS_EQUAL(0, request->accept_encoding->items_count);
+    CHECK(request->ws_deflate);
+    LONGS_EQUAL(0, request->ws_deflate->enabled);
+    LONGS_EQUAL(0, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(0, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(0, request->ws_deflate->window_bits_deflate);
+    LONGS_EQUAL(0, request->ws_deflate->window_bits_inflate);
+    POINTERS_EQUAL(NULL, request->ws_deflate->strm_deflate);
+    POINTERS_EQUAL(NULL, request->ws_deflate->strm_inflate);
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
     POINTERS_EQUAL(NULL, request->body);
@@ -102,6 +111,7 @@ TEST(RelayHttp, AllocReinitFree)
     request->http_version = strdup ("HTTP/1.1");
     hashtable_set (request->headers, "x-test", "value");
     hashtable_set (request->accept_encoding, "gzip", "");
+    request->ws_deflate->enabled = 1;
     request->content_length = 100;
     request->body_size = 16;
     request->body = (char *)malloc (16);
@@ -123,6 +133,14 @@ TEST(RelayHttp, AllocReinitFree)
     LONGS_EQUAL(0, request->headers->items_count);
     CHECK(request->accept_encoding);
     LONGS_EQUAL(0, request->accept_encoding->items_count);
+    CHECK(request->ws_deflate);
+    LONGS_EQUAL(0, request->ws_deflate->enabled);
+    LONGS_EQUAL(0, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(0, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(0, request->ws_deflate->window_bits_deflate);
+    LONGS_EQUAL(0, request->ws_deflate->window_bits_inflate);
+    POINTERS_EQUAL(NULL, request->ws_deflate->strm_deflate);
+    POINTERS_EQUAL(NULL, request->ws_deflate->strm_inflate);
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
     POINTERS_EQUAL(NULL, request->body);
@@ -476,6 +494,29 @@ TEST(RelayHttp, ParseHeader)
                  *(request->raw));
     LONGS_EQUAL(1, request->headers->items_count);
     LONGS_EQUAL(123, request->content_length);
+    free (request);
+
+    /* websocket request */
+    request = relay_http_request_alloc ();
+    CHECK(request);
+    relay_http_parse_method_path (request, "GET /api HTTP/1.1");
+    relay_http_parse_header (
+        request,
+        "Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits");
+    LONGS_EQUAL(RELAY_HTTP_HEADERS, request->status);
+    STRCMP_EQUAL(
+        "GET /api HTTP/1.1\n"
+        "Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits\n",
+        *(request->raw));
+    LONGS_EQUAL(1, request->headers->items_count);
+    CHECK(request->ws_deflate);
+    LONGS_EQUAL(1, request->ws_deflate->enabled);
+    LONGS_EQUAL(1, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(1, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(15, request->ws_deflate->window_bits_deflate);
+    LONGS_EQUAL(15, request->ws_deflate->window_bits_inflate);
+    POINTERS_EQUAL(NULL, request->ws_deflate->strm_deflate);
+    POINTERS_EQUAL(NULL, request->ws_deflate->strm_inflate);
     free (request);
 }
 

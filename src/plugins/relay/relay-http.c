@@ -78,6 +78,11 @@ relay_http_request_reinit (struct t_relay_http_request *request)
     }
     weechat_hashtable_remove_all (request->headers);
     weechat_hashtable_remove_all (request->accept_encoding);
+    if (request->ws_deflate)
+    {
+        relay_websocket_deflate_free (request->ws_deflate);
+        request->ws_deflate = relay_websocket_deflate_alloc ();
+    }
     request->content_length = 0;
     request->body_size = 0;
     if (request->body)
@@ -122,6 +127,7 @@ relay_http_request_alloc ()
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING,
         NULL, NULL);
+    new_request->ws_deflate = relay_websocket_deflate_alloc ();
     new_request->content_length = 0;
     new_request->body_size = 0;
     new_request->body = NULL;
@@ -400,18 +406,12 @@ relay_http_parse_header (struct t_relay_http_request *request,
     /* if header is "Accept-Encoding", save the allowed encoding */
     if (strcmp (name_lower, "accept-encoding") == 0)
     {
-        items = weechat_string_split (ptr_value, ",", NULL, 0, 0, &num_items);
+        items = weechat_string_split (ptr_value, ",", " ", 0, 0, &num_items);
         if (items)
         {
             for (i = 0; i < num_items; i++)
             {
-                pos = items[i];
-                while (pos[0] == ' ')
-                {
-                    pos++;
-                }
-                weechat_hashtable_set (request->accept_encoding,
-                                       pos, NULL);
+                weechat_hashtable_set (request->accept_encoding, items[i], NULL);
             }
             weechat_string_free_split (items);
         }
@@ -425,6 +425,13 @@ relay_http_parse_header (struct t_relay_http_request *request,
         if (error && !error[0])
             request->content_length = (int)number;
     }
+
+    /*
+     * if header is "Sec-WebSocket-Extensions", save supported websocket
+     * extensions
+     */
+    if (strcmp (name_lower, "sec-websocket-extensions") == 0)
+        relay_websocket_parse_extensions (ptr_value, request->ws_deflate);
 
     free (name);
     free (name_lower);
@@ -635,7 +642,7 @@ relay_http_process_websocket (struct t_relay_client *client)
     char *handshake;
     int rc;
 
-    rc = relay_websocket_client_handshake_valid (client);
+    rc = relay_websocket_client_handshake_valid (client->http_req);
 
     if (rc == -1)
     {
@@ -712,7 +719,7 @@ relay_http_process_websocket (struct t_relay_client *client)
         }
     }
 
-    handshake = relay_websocket_build_handshake (client);
+    handshake = relay_websocket_build_handshake (client->http_req);
     if (handshake)
     {
         relay_client_send (client,
@@ -721,6 +728,8 @@ relay_http_process_websocket (struct t_relay_client *client)
                            strlen (handshake), NULL);
         free (handshake);
         client->websocket = RELAY_CLIENT_WEBSOCKET_READY;
+        memcpy (client->ws_deflate, client->http_req->ws_deflate,
+                sizeof (*(client->ws_deflate)));
         if (client->protocol == RELAY_PROTOCOL_API)
         {
             /* "api" protocol uses JSON in input/output (multi-line text) */
@@ -977,6 +986,7 @@ relay_http_compress (struct t_relay_http_request *request,
         dest = malloc (dest_size);
         if (dest)
         {
+            memset (&strm, 0, sizeof (strm));
             strm.zalloc = Z_NULL;
             strm.zfree = Z_NULL;
             strm.opaque = Z_NULL;
@@ -1252,7 +1262,7 @@ relay_http_print_log (struct t_relay_http_request *request)
 {
     int i;
 
-    weechat_log_printf ("  [http_request]");
+    weechat_log_printf ("  http_request:");
     weechat_log_printf ("    raw . . . . . . . . . . : '%s'",
                         (request->raw) ? *(request->raw) : NULL);
     weechat_log_printf ("    status. . . . . . . . . : %d", request->status);
@@ -1278,6 +1288,7 @@ relay_http_print_log (struct t_relay_http_request *request)
                         request->accept_encoding,
                         weechat_hashtable_get_string (request->accept_encoding,
                                                       "keys_values"));
+    relay_websocket_deflate_print_log (request->ws_deflate, "  ");
     weechat_log_printf ("    content_length. . . . . : %d", request->content_length);
     weechat_log_printf ("    body_size . . . . . . . : %d", request->body_size);
     weechat_log_printf ("    body. . . . . . . . . . : '%s'", request->body);

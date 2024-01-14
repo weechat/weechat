@@ -61,6 +61,7 @@ struct t_relay_http_request
     struct t_hashtable *headers;       /* HTTP headers for websocket        */
                                        /* and API protocol                  */
     struct t_hashtable *accept_encoding; /* allowed encoding for response   */
+    struct t_relay_websocket_deflate *ws_deflate; /* websocket deflate data */
     int content_length;                /* value of header "Content-Length"  */
     int body_size;                     /* size of HTTP body read so far     */
     char *body;                        /* HTTP body (can be NULL)           */
