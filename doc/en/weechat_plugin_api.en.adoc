@@ -2357,7 +2357,7 @@ str = weechat.string_remove_color(my_string, "?")
 
 ==== string_base_encode
 
-_WeeChat ≥ 2.4._
+_WeeChat ≥ 2.4, updated in 4.3.0._
 
 Encode a string in base 16, 32, or 64.
 
@@ -2365,12 +2365,12 @@ Prototype:
 
 [source,c]
 ----
-int weechat_string_base_encode (int base, const char *from, int length, char *to);
+int weechat_string_base_encode (const char *base, const char *from, int length, char *to);
 ----
 
 Arguments:
 
-* _base_: 16, 32, or 64
+* _base_: "16", "32", "64" or "64url"
 * _from_: string to encode
 * _length_: length of string to encode (for example `strlen(from)`)
 * _to_: pointer to string to store result (must be long enough, result is
@@ -2386,11 +2386,11 @@ C example:
 ----
 char *string = "abcdefgh", result[128];
 int length;
-length = weechat_string_base_encode (16, string, strlen (string), result);
+length = weechat_string_base_encode ("16", string, strlen (string), result);
 /* length == 16, result == "6162636465666768" */
-length = weechat_string_base_encode (32, string, strlen (string), result);
+length = weechat_string_base_encode ("32", string, strlen (string), result);
 /* length == 16, result == "MFRGGZDFMZTWQ===" */
-length = weechat_string_base_encode (64, string, strlen (string), result);
+length = weechat_string_base_encode ("64", string, strlen (string), result);
 /* length == 12, result == "YWJjZGVmZ2g=" */
 ----
 
@@ -2399,7 +2399,7 @@ This function is not available in scripting API.
 
 ==== string_base_decode
 
-_WeeChat ≥ 2.4._
+_WeeChat ≥ 2.4, updated in 4.3.0._
 
 Decode a string encoded in base 16, 32, or 64.
 
@@ -2407,12 +2407,12 @@ Prototype:
 
 [source,c]
 ----
-int weechat_string_base_decode (int base, const char *from, char *to);
+int weechat_string_base_decode (const char *base, const char *from, char *to);
 ----
 
 Arguments:
 
-* _base_: 16, 32, or 64
+* _base_: "16", "32", "64" or "64url"
 * _from_: string to decode
 * _to_: pointer to string to store result (must be long enough, result is
   shorter than initial string)
@@ -2427,11 +2427,11 @@ C example:
 ----
 char result[128];
 int length;
-length = weechat_string_base_decode (16, "6162636465666768", result);
+length = weechat_string_base_decode ("16", "6162636465666768", result);
 /* length == 8, result == "abcdefgh" */
-length = weechat_string_base_decode (32, "MFRGGZDFMZTWQ===", result);
+length = weechat_string_base_decode ("32", "MFRGGZDFMZTWQ===", result);
 /* length == 8, result == "abcdefgh" */
-length = weechat_string_base_decode (64, "YWJjZGVmZ2g=", result);
+length = weechat_string_base_decode ("64", "YWJjZGVmZ2g=", result);
 /* length == 8, result == "abcdefgh" */
 ----
 

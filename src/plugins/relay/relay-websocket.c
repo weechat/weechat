@@ -404,7 +404,7 @@ relay_websocket_build_handshake (struct t_relay_http_request *request)
         free (key);
         return NULL;
     }
-    if (weechat_string_base_encode (64, hash, hash_size,
+    if (weechat_string_base_encode ("64", hash, hash_size,
                                     sec_websocket_accept) < 0)
     {
         sec_websocket_accept[0] = '\0';

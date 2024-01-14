@@ -92,7 +92,7 @@ relay_auth_generate_nonce (int size)
     }
 
     gcry_create_nonce ((unsigned char *)nonce, size);
-    weechat_string_base_encode (16, nonce, size, nonce_hexa);
+    weechat_string_base_encode ("16", nonce, size, nonce_hexa);
 
     free (nonce);
 
@@ -177,7 +177,7 @@ relay_auth_parse_sha (const char *parameters,
     *salt = malloc (strlen (argv[0]) + 1);
     if (*salt)
     {
-        *salt_size = weechat_string_base_decode (16, argv[0], *salt);
+        *salt_size = weechat_string_base_decode ("16", argv[0], *salt);
         if (*salt_size > 0)
             *salt_hexa = strdup (argv[0]);
         else
@@ -236,7 +236,7 @@ relay_auth_parse_pbkdf2 (const char *parameters,
     *salt = malloc (strlen (argv[0]) + 1);
     if (*salt)
     {
-        *salt_size = weechat_string_base_decode (16, argv[0], *salt);
+        *salt_size = weechat_string_base_decode ("16", argv[0], *salt);
         if (*salt_size > 0)
             *salt_hexa = strdup (argv[0]);
         else
@@ -315,7 +315,7 @@ relay_auth_check_hash_sha (const char *hash_algo,
                                      hash_algo,
                                      hash, &hash_size))
             {
-                weechat_string_base_encode (16, hash, hash_size,
+                weechat_string_base_encode ("16", hash, hash_size,
                                             hash_hexa);
                 if (weechat_strcasecmp (hash_hexa, hash_sha) == 0)
                     rc = 1;
@@ -357,7 +357,7 @@ relay_auth_check_hash_pbkdf2 (const char *hash_pbkdf2_algo,
                                         iterations,
                                         hash, &hash_size))
         {
-            weechat_string_base_encode (16, hash, hash_size, hash_hexa);
+            weechat_string_base_encode ("16", hash, hash_size, hash_hexa);
             if (weechat_strcasecmp (hash_hexa, hash_pbkdf2) == 0)
                 rc = 1;
         }

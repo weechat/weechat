@@ -80,7 +80,7 @@ TEST(IrcSasl, MechanismScram)
     str = irc_sasl_mechanism_scram (server, "sha256", "+",
                                     "user1", "secret", &error);
     POINTERS_EQUAL(NULL, error);
-    CHECK(string_base64_decode (str, str_decoded) > 0);
+    CHECK(string_base64_decode (0, str, str_decoded) > 0);
     CHECK(strncmp (str_decoded, "n,,n=user1,r=", 13) == 0);
     free (str);
 

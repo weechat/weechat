@@ -890,8 +890,7 @@ char *
 eval_string_base_encode (const char *text)
 {
     const char *ptr_string;
-    char *value, *base, *error, *result;
-    long number;
+    char *value, *base, *result;
     int length;
 
     base = NULL;
@@ -905,18 +904,13 @@ eval_string_base_encode (const char *text)
     if (!base)
         goto end;
 
-    error = NULL;
-    number = strtol (base, &error, 10);
-    if (!error || error[0])
-        goto end;
-
     ptr_string++;
     length = strlen (ptr_string);
     result = malloc ((length * 4) + 1);
     if (!result)
         goto end;
 
-    if (string_base_encode (number, ptr_string, length, result) < 0)
+    if (string_base_encode (base, ptr_string, length, result) < 0)
     {
         free (result);
         result = NULL;
@@ -941,8 +935,7 @@ char *
 eval_string_base_decode (const char *text)
 {
     const char *ptr_string;
-    char *value, *base, *error, *result;
-    long number;
+    char *value, *base, *result;
 
     base = NULL;
     result = NULL;
@@ -955,17 +948,12 @@ eval_string_base_decode (const char *text)
     if (!base)
         goto end;
 
-    error = NULL;
-    number = strtol (base, &error, 10);
-    if (!error || error[0])
-        goto end;
-
     ptr_string++;
     result = malloc (strlen (ptr_string) + 1);
     if (!result)
         goto end;
 
-    if (string_base_decode (number, ptr_string, result) < 0)
+    if (string_base_decode (base, ptr_string, result) < 0)
     {
         free (result);
         result = NULL;

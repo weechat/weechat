@@ -2347,68 +2347,87 @@ TEST(CoreString, Base64)
 {
     int i, length;
     char str[1024];
-    const char *str_base64[][2] =
-        { { "", "" },
-          { "A", "QQ==" },
-          { "B", "Qg==" },
-          { "C", "Qw==" },
-          { "D", "RA==" },
-          { "abc", "YWJj" },
-          { "This is a test.", "VGhpcyBpcyBhIHRlc3Qu" },
-          { "This is a test..", "VGhpcyBpcyBhIHRlc3QuLg==" },
-          { "This is a test...", "VGhpcyBpcyBhIHRlc3QuLi4=" },
-          { "This is a test....", "VGhpcyBpcyBhIHRlc3QuLi4u" },
+    const char *str_base64[][3] =
+        { { "", "", "" },
+          { "A", "QQ==", "QQ" },
+          { "B", "Qg==", "Qg" },
+          { "C", "Qw==", "Qw" },
+          { "D", "RA==", "RA" },
+          { "abc", "YWJj", "YWJj" },
+          { "<<?!!>>", "PDw/ISE+Pg==", "PDw_ISE-Pg" },
+          { "This is a test.",
+            "VGhpcyBpcyBhIHRlc3Qu", "VGhpcyBpcyBhIHRlc3Qu" },
+          { "This is a test..",
+            "VGhpcyBpcyBhIHRlc3QuLg==", "VGhpcyBpcyBhIHRlc3QuLg" },
+          { "This is a test...",
+            "VGhpcyBpcyBhIHRlc3QuLi4=", "VGhpcyBpcyBhIHRlc3QuLi4" },
+          { "This is a test....",
+            "VGhpcyBpcyBhIHRlc3QuLi4u", "VGhpcyBpcyBhIHRlc3QuLi4u" },
           { "This is a long long long sentence here...",
-            "VGhpcyBpcyBhIGxvbmcgbG9uZyBsb25nIHNlbnRlbmNlIGhlcmUuLi4=" },
+            "VGhpcyBpcyBhIGxvbmcgbG9uZyBsb25nIHNlbnRlbmNlIGhlcmUuLi4=",
+            "VGhpcyBpcyBhIGxvbmcgbG9uZyBsb25nIHNlbnRlbmNlIGhlcmUuLi4" },
           { "Another example for base64",
-            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQ=" },
+            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQ=",
+            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQ" },
           { "Another example for base64.",
+            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQu",
             "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQu" },
           { "Another example for base64..",
-            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQuLg==" },
+            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQuLg==",
+            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQuLg" },
           { "Another example for base64...",
-            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQuLi4=" },
+            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQuLi4=",
+            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQuLi4" },
           { NULL, NULL } };
 
     /* string_base64_encode */
-    LONGS_EQUAL(-1, string_base64_encode (NULL, 0, NULL));
-    LONGS_EQUAL(-1, string_base64_encode (NULL, 0, str));
-    LONGS_EQUAL(-1, string_base64_encode ("", 0, NULL));
+    LONGS_EQUAL(-1, string_base64_encode (0, NULL, 0, NULL));
+    LONGS_EQUAL(-1, string_base64_encode (0, NULL, 0, str));
+    LONGS_EQUAL(-1, string_base64_encode (0, "", 0, NULL));
     str[0] = 0xAA;
-    LONGS_EQUAL(0, string_base64_encode ("", -1, str));
+    LONGS_EQUAL(0, string_base64_encode (0, "", -1, str));
     BYTES_EQUAL(0x0, str[0]);
     str[0] = 0xAA;
-    LONGS_EQUAL(0, string_base64_encode ("", 0, str));
+    LONGS_EQUAL(0, string_base64_encode (0, "", 0, str));
     BYTES_EQUAL(0x0, str[0]);
     for (i = 0; str_base64[i][0]; i++)
     {
         length = strlen (str_base64[i][1]);
-        LONGS_EQUAL(length, string_base64_encode (str_base64[i][0],
+        LONGS_EQUAL(length, string_base64_encode (0,
+                                                  str_base64[i][0],
                                                   strlen (str_base64[i][0]),
                                                   str));
         STRCMP_EQUAL(str_base64[i][1], str);
+        length = strlen (str_base64[i][2]);
+        LONGS_EQUAL(length, string_base64_encode (1,
+                                                  str_base64[i][0],
+                                                  strlen (str_base64[i][0]),
+                                                  str));
+        STRCMP_EQUAL(str_base64[i][2], str);
     }
     /* test with a \0 in string */
-    LONGS_EQUAL(20, string_base64_encode ("This is\0a test.", 15, str));
+    LONGS_EQUAL(20, string_base64_encode (0, "This is\0a test.", 15, str));
     STRCMP_EQUAL("VGhpcyBpcwBhIHRlc3Qu", str);
 
     /* string_base64_decode */
-    LONGS_EQUAL(-1, string_base64_decode (NULL, NULL));
-    LONGS_EQUAL(-1, string_base64_decode (NULL, str));
-    LONGS_EQUAL(-1, string_base64_decode ("", NULL));
-    LONGS_EQUAL(0, string_base64_decode ("", str));
+    LONGS_EQUAL(-1, string_base64_decode (0, NULL, NULL));
+    LONGS_EQUAL(-1, string_base64_decode (0, NULL, str));
+    LONGS_EQUAL(-1, string_base64_decode (0, "", NULL));
+    LONGS_EQUAL(0, string_base64_decode (0, "", str));
     for (i = 0; str_base64[i][0]; i++)
     {
         length = strlen (str_base64[i][0]);
-        LONGS_EQUAL(length, string_base64_decode (str_base64[i][1], str));
+        LONGS_EQUAL(length, string_base64_decode (0, str_base64[i][1], str));
+        STRCMP_EQUAL(str_base64[i][0], str);
+        LONGS_EQUAL(length, string_base64_decode (1, str_base64[i][2], str));
         STRCMP_EQUAL(str_base64[i][0], str);
     }
     /* test with a \0 in string */
-    LONGS_EQUAL(15, string_base64_decode ("VGhpcyBpcwBhIHRlc3Qu", str));
+    LONGS_EQUAL(15, string_base64_decode (0, "VGhpcyBpcwBhIHRlc3Qu", str));
     MEMCMP_EQUAL("This is\0a test.", str, 15);
 
     /* invalid base64 string, missing two "=" at the end */
-    LONGS_EQUAL(4, string_base64_decode ("dGVzdA", str));
+    LONGS_EQUAL(4, string_base64_decode (0, "dGVzdA", str));
     STRCMP_EQUAL("test", str);
 }
 
@@ -2421,23 +2440,31 @@ TEST(CoreString, BaseEncode)
 {
     char str[1024];
 
-    LONGS_EQUAL(-1, string_base_encode (0, NULL, 0, NULL));
-    LONGS_EQUAL(-1, string_base_encode (0, "", 0, str));
-    LONGS_EQUAL(-1, string_base_encode (16, NULL, 0, str));
-    LONGS_EQUAL(-1, string_base_encode (32, NULL, 0, str));
-    LONGS_EQUAL(-1, string_base_encode (64, NULL, 0, str));
+    LONGS_EQUAL(-1, string_base_encode ("0", NULL, 0, NULL));
+    LONGS_EQUAL(-1, string_base_encode ("0", "", 0, str));
+    LONGS_EQUAL(-1, string_base_encode ("16", NULL, 0, str));
+    LONGS_EQUAL(-1, string_base_encode ("32", NULL, 0, str));
+    LONGS_EQUAL(-1, string_base_encode ("64", NULL, 0, str));
 
     str[0] = 0xAA;
-    LONGS_EQUAL(16, string_base_encode (16, "abcdefgh", 8, str));
+    LONGS_EQUAL(16, string_base_encode ("16", "abcdefgh", 8, str));
     STRCMP_EQUAL("6162636465666768", str);
 
     str[0] = 0xAA;
-    LONGS_EQUAL(16, string_base_encode (32, "abcdefgh", 8, str));
+    LONGS_EQUAL(16, string_base_encode ("32", "abcdefgh", 8, str));
     STRCMP_EQUAL("MFRGGZDFMZTWQ===", str);
 
     str[0] = 0xAA;
-    LONGS_EQUAL(20, string_base_encode (64, "This is a test.", 15, str));
+    LONGS_EQUAL(20, string_base_encode ("64", "This is a test.", 15, str));
     STRCMP_EQUAL("VGhpcyBpcyBhIHRlc3Qu", str);
+
+    str[0] = 0xAA;
+    LONGS_EQUAL(12, string_base_encode ("64", "<<" "???" ">>", 7, str));
+    STRCMP_EQUAL("PDw/Pz8+Pg==", str);
+
+    str[0] = 0xAA;
+    LONGS_EQUAL(10, string_base_encode ("64url", "<<" "???" ">>", 7, str));
+    STRCMP_EQUAL("PDw_Pz8-Pg", str);
 }
 
 /*
@@ -2449,23 +2476,31 @@ TEST(CoreString, BaseDecode)
 {
     char str[1024];
 
-    LONGS_EQUAL(-1, string_base_decode (0, NULL, NULL));
-    LONGS_EQUAL(-1, string_base_decode (0, "", str));
-    LONGS_EQUAL(-1, string_base_decode (16, NULL, str));
-    LONGS_EQUAL(-1, string_base_decode (32, NULL, str));
-    LONGS_EQUAL(-1, string_base_decode (64, NULL, str));
+    LONGS_EQUAL(-1, string_base_decode ("0", NULL, NULL));
+    LONGS_EQUAL(-1, string_base_decode ("0", "", str));
+    LONGS_EQUAL(-1, string_base_decode ("16", NULL, str));
+    LONGS_EQUAL(-1, string_base_decode ("32", NULL, str));
+    LONGS_EQUAL(-1, string_base_decode ("64", NULL, str));
 
     str[0] = 0xAA;
-    LONGS_EQUAL(8, string_base_decode (16, "6162636465666768", str));
+    LONGS_EQUAL(8, string_base_decode ("16", "6162636465666768", str));
     STRCMP_EQUAL("abcdefgh", str);
 
     str[0] = 0xAA;
-    LONGS_EQUAL(8, string_base_decode (32, "MFRGGZDFMZTWQ===", str));
+    LONGS_EQUAL(8, string_base_decode ("32", "MFRGGZDFMZTWQ===", str));
     STRCMP_EQUAL("abcdefgh", str);
 
     str[0] = 0xAA;
-    LONGS_EQUAL(15, string_base_decode (64, "VGhpcyBpcyBhIHRlc3Qu", str));
+    LONGS_EQUAL(15, string_base_decode ("64", "VGhpcyBpcyBhIHRlc3Qu", str));
     STRCMP_EQUAL("This is a test.", str);
+
+    str[0] = 0xAA;
+    LONGS_EQUAL(7, string_base_decode ("64", "PDw/Pz8+Pg==", str));
+    STRCMP_EQUAL("<<" "???" ">>", str);
+
+    str[0] = 0xAA;
+    LONGS_EQUAL(7, string_base_decode ("64url", "PDw_Pz8-Pg", str));
+    STRCMP_EQUAL("<<" "???" ">>", str);
 }
 
 /*

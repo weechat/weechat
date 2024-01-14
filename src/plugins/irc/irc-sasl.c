@@ -75,7 +75,7 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
         answer_base64 = malloc (length * 4);
         if (answer_base64)
         {
-            if (weechat_string_base_encode (64, string, length - 1,
+            if (weechat_string_base_encode ("64", string, length - 1,
                                             answer_base64) < 0)
             {
                 free (answer_base64);
@@ -148,7 +148,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
         /* send username and nonce with form: "n,,n=username,r=nonce" */
         gcry_create_nonce (nonce_client, sizeof (nonce_client));
         length = weechat_string_base_encode (
-            64,
+            "64",
             nonce_client, sizeof (nonce_client),
             nonce_client_base64);
         if (length != sizeof (nonce_client_base64) - 1)
@@ -176,7 +176,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
         data = malloc (strlen (data_base64) + 1);
         if (!data)
             goto memory_error;
-        if (weechat_string_base_decode (64, data_base64, data) <= 0)
+        if (weechat_string_base_decode ("64", data_base64, data) <= 0)
             goto base64_decode_error;
 
         /* split attributes */
@@ -239,7 +239,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
             verifier = malloc (strlen (verifier_base64) + 1);
             if (!verifier)
                 goto memory_error;
-            verifier_size = weechat_string_base_decode (64, verifier_base64,
+            verifier_size = weechat_string_base_decode ("64", verifier_base64,
                                                         verifier);
             if (verifier_size <= 0)
                 goto base64_decode_error;
@@ -292,7 +292,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
             salt = malloc (strlen (salt_base64) + 1);
             if (!salt)
                 goto memory_error;
-            salt_size = weechat_string_base_decode (64, salt_base64, salt);
+            salt_size = weechat_string_base_decode ("64", salt_base64, salt);
             if (salt_size <= 0)
                 goto base64_decode_error;
             /* RFC: SaltedPassword := Hi(Normalize(password), salt, i) */
@@ -370,7 +370,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
                 client_proof[i] = ((unsigned char)client_key[i] ^
                                    (unsigned char)client_signature[i]);
             }
-            if (weechat_string_base_encode (64, client_proof, client_key_size,
+            if (weechat_string_base_encode ("64", client_proof, client_key_size,
                                             client_proof_base64) < 0)
                 goto base64_encode_error;
             /* final message: auth_no_proof + "," + proof */
@@ -422,7 +422,7 @@ end:
             answer_base64 = malloc ((length + 1) * 4);
             if (answer_base64)
             {
-                if (weechat_string_base_encode (64, string, length,
+                if (weechat_string_base_encode ("64", string, length,
                                                 answer_base64) < 0)
                 {
                     free (answer_base64);
@@ -565,7 +565,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
         data = malloc (strlen (data_base64) + 1);
         if (!data)
             return NULL;
-        length_data = weechat_string_base_decode (64, data_base64, data);
+        length_data = weechat_string_base_decode ("64", data_base64, data);
 
         /* read file with private key */
         str_privkey = irc_sasl_get_key_content (sasl_key, sasl_error);
@@ -613,7 +613,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
                 pubkey_base64 = malloc ((x.size + 1 + 1) * 4);
                 if (pubkey_base64)
                 {
-                    if (weechat_string_base_encode (64, pubkey, x.size + 1,
+                    if (weechat_string_base_encode ("64", pubkey, x.size + 1,
                                                     pubkey_base64) >= 0)
                     {
                         weechat_printf (
@@ -690,7 +690,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
         answer_base64 = malloc ((length + 1) * 4);
         if (answer_base64)
         {
-            if (weechat_string_base_encode (64, string, length,
+            if (weechat_string_base_encode ("64", string, length,
                                             answer_base64) < 0)
             {
                 free (answer_base64);

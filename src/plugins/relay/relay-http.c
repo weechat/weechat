@@ -558,7 +558,7 @@ relay_http_check_auth (struct t_relay_http_request *request)
         rc = -5;
         goto end;
     }
-    length = weechat_string_base_decode (64, pos, user_pass);
+    length = weechat_string_base_decode ("64", pos, user_pass);
     if (length < 0)
     {
         rc = -2;

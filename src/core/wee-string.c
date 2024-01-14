@@ -3635,19 +3635,31 @@ string_base32_decode (const char *from, char *to)
  */
 
 void
-string_convbase64_8x3_to_6x4 (const char *from, char *to)
+string_convbase64_8x3_to_6x4 (int url, const char *from, char *to)
 {
     unsigned char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz0123456789+/";
+    unsigned char base64_table_url[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz0123456789-_";
+    const unsigned char *ptr_table;
 
-    to[0] = base64_table [ (from[0] & 0xfc) >> 2 ];
-    to[1] = base64_table [ ((from[0] & 0x03) << 4) + ((from[1] & 0xf0) >> 4) ];
-    to[2] = base64_table [ ((from[1] & 0x0f) << 2) + ((from[2] & 0xc0) >> 6) ];
-    to[3] = base64_table [ from[2] & 0x3f ];
+    ptr_table = (url) ? base64_table_url : base64_table;
+
+    to[0] = ptr_table [ (from[0] & 0xfc) >> 2 ];
+    to[1] = ptr_table [ ((from[0] & 0x03) << 4) + ((from[1] & 0xf0) >> 4) ];
+    to[2] = ptr_table [ ((from[1] & 0x0f) << 2) + ((from[2] & 0xc0) >> 6) ];
+    to[3] = ptr_table [ from[2] & 0x3f ];
 }
 
 /*
  * Encodes a string in base64.
+ *
+ * If url == 1, base64url is decoded, otherwise standard base64.
+ *
+ * Base64url is the same as base64 with these chars replaced:
+ *   “+” --> “-” (minus)
+ *   "/" --> “_” (underline)
+ *   no padding char ("=")
  *
  * Argument "length" is number of bytes in "from" to convert (commonly
  * strlen(from)).
@@ -3657,7 +3669,7 @@ string_convbase64_8x3_to_6x4 (const char *from, char *to)
  */
 
 int
-string_base64_encode (const char *from, int length, char *to)
+string_base64_encode (int url, const char *from, int length, char *to)
 {
     const char *ptr_from;
     char rest[3];
@@ -3671,7 +3683,7 @@ string_base64_encode (const char *from, int length, char *to)
 
     while (length >= 3)
     {
-        string_convbase64_8x3_to_6x4 (ptr_from, to + count);
+        string_convbase64_8x3_to_6x4 (url, ptr_from, to + count);
         ptr_from += 3;
         count += 4;
         length -= 3;
@@ -3686,21 +3698,28 @@ string_base64_encode (const char *from, int length, char *to)
         {
             case 1 :
                 rest[0] = ptr_from[0];
-                string_convbase64_8x3_to_6x4 (rest, to + count);
+                string_convbase64_8x3_to_6x4 (url, rest, to + count);
                 count += 2;
-                to[count] = '=';
-                count++;
-                to[count] = '=';
+                if (!url)
+                {
+                    to[count] = '=';
+                    count++;
+                    to[count] = '=';
+                    count++;
+                }
                 break;
             case 2 :
                 rest[0] = ptr_from[0];
                 rest[1] = ptr_from[1];
-                string_convbase64_8x3_to_6x4 (rest, to + count);
+                string_convbase64_8x3_to_6x4 (url, rest, to + count);
                 count += 3;
-                to[count] = '=';
+                if (!url)
+                {
+                    to[count] = '=';
+                    count++;
+                }
                 break;
         }
-        count++;
         to[count] = '\0';
     }
     else
@@ -3724,18 +3743,25 @@ string_convbase64_6x4_to_8x3 (const unsigned char *from, unsigned char *to)
 /*
  * Decodes a base64 string.
  *
+ * If url == 1, base64url is decoded, otherwise standard base64.
+ *
+ * Base64url is the same as base64 with these chars replaced:
+ *   “+” --> “-” (minus)
+ *   "/" --> “_” (underline)
+ *   no padding char ("=")
+ *
  * Returns length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
 
 int
-string_base64_decode (const char *from, char *to)
+string_base64_decode (int url, const char *from, char *to)
 {
     const char *ptr_from;
     int length, to_length, i;
     char *ptr_to;
     unsigned char c, in[4], out[3];
-    unsigned char base64_table[]="|$$$}rstuvwxyz{$$$$$$$>?"
+    unsigned char base64_table[] = "|$$$}rstuvwxyz{$$$$$$$>?"
         "@ABCDEFGHIJKLMNOPQRSTUVW$$$$$$XYZ[\\]^_`abcdefghijklmnopq";
 
     if (!from || !to)
@@ -3759,6 +3785,10 @@ string_base64_decode (const char *from, char *to)
             if (!ptr_from[0])
                 break;
             c = (unsigned char) ptr_from[0];
+            if (url && (c == '-'))
+                c = '+';
+            else if (url && (c == '_'))
+                c = '/';
             ptr_from++;
             c = ((c < 43) || (c > 122)) ? 0 : base64_table[c - 43];
             if (c)
@@ -3789,46 +3819,68 @@ string_base64_decode (const char *from, char *to)
 }
 
 /*
- * Encodes a string in base 16, 32, or 64.
+ * Encodes a string, according to "base" parameter:
+ *   - "16": base16
+ *   - "32": base32
+ *   - "64": base64
+ *   - "64url": base64url: same as base64 with no padding ("="), chars replaced:
+ *              “+” --> “-” and "/" --> “_”
  *
  * Returns length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
 
 int
-string_base_encode (int base, const char *from, int length, char *to)
+string_base_encode (const char *base, const char *from, int length, char *to)
 {
-    switch (base)
-    {
-        case 16:
-            return string_base16_encode (from, length, to);
-        case 32:
-            return string_base32_encode (from, length, to);
-        case 64:
-            return string_base64_encode (from, length, to);
-    }
+    if (!base || !from || (length <= 0) || !to)
+        return -1;
+
+    if (strcmp (base, "16") == 0)
+        return string_base16_encode (from, length, to);
+
+    if (strcmp (base, "32") == 0)
+        return string_base32_encode (from, length, to);
+
+    if (strcmp (base, "64") == 0)
+        return string_base64_encode (0, from, length, to);
+
+    if (strcmp (base, "64url") == 0)
+        return string_base64_encode (1, from, length, to);
+
     return -1;
 }
 
 /*
- * Decodes a string encoded in base 16, 32, or 64.
+ * Decodes a string, according to "base" parameter:
+ *   - "16": base16
+ *   - "32": base32
+ *   - "64": base64
+ *   - "64url": base64url: same as base64 with no padding ("="), chars replaced:
+ *              “+” --> “-” and "/" --> “_”
  *
  * Returns length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
 
 int
-string_base_decode (int base, const char *from, char *to)
+string_base_decode (const char *base, const char *from, char *to)
 {
-    switch (base)
-    {
-        case 16:
-            return string_base16_decode (from, to);
-        case 32:
-            return string_base32_decode (from, to);
-        case 64:
-            return string_base64_decode (from, to);
-    }
+    if (!base || !from || !to)
+        return -1;
+
+    if (strcmp (base, "16") == 0)
+        return string_base16_decode (from, to);
+
+    if (strcmp (base, "32") == 0)
+        return string_base32_decode (from, to);
+
+    if (strcmp (base, "64") == 0)
+        return string_base64_decode (0, from, to);
+
+    if (strcmp (base, "64url") == 0)
+        return string_base64_decode (1, from, to);
+
     return -1;
 }
 

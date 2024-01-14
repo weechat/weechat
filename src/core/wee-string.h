@@ -129,11 +129,11 @@ extern int string_base16_encode (const char *from, int length, char *to);
 extern int string_base16_decode (const char *from, char *to);
 extern int string_base32_encode (const char *from, int length, char *to);
 extern int string_base32_decode (const char *from, char *to);
-extern int string_base64_encode (const char *from, int length, char *to);
-extern int string_base64_decode (const char *from, char *to);
-extern int string_base_encode (int base, const char *from, int length,
+extern int string_base64_encode (int url, const char *from, int length, char *to);
+extern int string_base64_decode (int url, const char *from, char *to);
+extern int string_base_encode (const char *base, const char *from, int length,
                                char *to);
-extern int string_base_decode (int base, const char *from, char *to);
+extern int string_base_decode (const char *base, const char *from, char *to);
 extern char *string_hex_dump (const char *data, int data_size,
                               int bytes_per_line,
                               const char *prefix, const char *suffix);

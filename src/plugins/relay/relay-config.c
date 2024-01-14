@@ -382,7 +382,7 @@ relay_config_check_network_totp_secret (const void *pointer, void *data,
         secret = malloc (strlen (totp_secret) + 1);
         if (!secret)
             goto error;
-        length = weechat_string_base_decode (32, totp_secret, secret);
+        length = weechat_string_base_decode ("32", totp_secret, secret);
         if (length < 0)
             goto error;
     }

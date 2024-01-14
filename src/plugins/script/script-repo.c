@@ -765,7 +765,7 @@ script_repo_sha512sum_file (const char *filename)
     if (!weechat_crypto_hash_file (filename, "sha512", hash, &hash_size))
         return NULL;
 
-    weechat_string_base_encode (16, hash, hash_size, hash_hexa);
+    weechat_string_base_encode ("16", hash, hash_size, hash_hexa);
 
     return weechat_string_tolower (hash_hexa);
 }
