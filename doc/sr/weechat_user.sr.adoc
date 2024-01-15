@@ -5064,11 +5064,9 @@ ${buffer[${tg_signal_data}].full_name}
 | buffer_type        | стринг    | Тип бафера („formatted” или „free”).
 | y                  | стринг    | Број линије за бафер са слободним садржајем (≥ 0), -1 за бафер са форматираним садржајем.
 | date               | стринг    | Датум линије (временска ознака).
-// TRANSLATION MISSING
-| date_usec          | стринг    | Microseconds of line date.
+| date_usec          | стринг    | Microseconds датума линије.
 | date_printed       | стринг    | Датум када је линија била приказана (временска ознака).
-// TRANSLATION MISSING
-| date_usec_printed  | стринг    | Microseconds of date when line was displayed.
+| date_usec_printed  | стринг    | Microseconds датума када је линија била приказана.
 | str_time           | стринг    | Датум за приказ. Може да садржи кодове боја.
 | tags               | стринг    | Ознаке поруке (са запетом додатом на почетак/крај стринга).
 | displayed          | стринг    | „1” ако се приказује, „0” ако је линија филтрирана.
@@ -5107,8 +5105,7 @@ ${buffer[${tg_signal_data}].full_name}
 |===
 | Променљива         | Тип       | Опис
 | buffer             | показивач | Бафер.
-// TRANSLATION MISSING
-| tg_date            | стринг    | Датум/време поруке (формат: `%FT%T.%f`, see link:weechat_plugin_api.sr.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]).
+| tg_date            | стринг    | Датум/време поруке (формат: `%FT%T.%f`, погледајте link:weechat_plugin_api.sr.html#_util_strftimeval[WeeChat референтни прикучник API додатака / util_strftimeval ^↗^^]).
 | tg_displayed       | стринг    | „1” ако се приказује, „0” ако се линија филтрира.
 | tg_highlight       | стринг    | „1” ако је истакнута, у супротном „0”.
 | tg_prefix          | стринг    | Префикс.
@@ -5173,8 +5170,7 @@ ${buffer[${tg_signal_data}].full_name}
 |===
 | Променљива         | Тип    | Опис
 | tg_remaining_calls | стринг | Број преосталих позива.
-// TRANSLATION MISSING
-| tg_date            | стринг | Текући датум/време (формат: `%FT%T.%f`, see link:weechat_plugin_api.sr.html#_util_strftimeval[WeeChat plugin API reference / util_strftimeval ^↗^^]).
+| tg_date            | стринг | Текући датум/време (формат: `%FT%T.%f`, погледајте link:weechat_plugin_api.sr.html#_util_strftimeval[WeeChat референтни приручник API додатака / util_strftimeval ^↗^^]).
 |===
 
 [[trigger_data_config]]

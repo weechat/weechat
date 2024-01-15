@@ -1955,11 +1955,9 @@ hda:
 | Име               | Тип              | Опис
 | buffer            | показивач        | Показивач на бафер.
 | date              | време            | Датум поруке.
-// TRANSLATION MISSING
-| date_usec         | integer          | Microseconds of date.
+| date_usec         | цео број         | Микросекунде датума.
 | date_printed      | време            | Датум када је програм WeeChat приказао поруку.
-// TRANSLATION MISSING
-| date_usec_printed | integer          | Microseconds of date when WeeChat displayed message.
+| date_usec_printed | цео број         | Микросекунде датума када је WeeChat приказао поруку.
 | displayed         | карактер         | 1 ако је порука приказана, 0 ако је порука филтрирана (скривена).
 | notify_level      | карактер         | Ниво обавештења: -1 = обавештење искључено, 0 = ниски, 1 = порука, 2 = приватно, 3 = истицање.
 | highlight         | карактер         | 1 ако се у линији налази истицање, у супротном 0.
