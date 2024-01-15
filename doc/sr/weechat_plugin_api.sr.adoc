@@ -4557,13 +4557,12 @@ weechat_printf (NULL, "date: %s",
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
-// TRANSLATION MISSING
 ==== util_strftimeval
 
 _WeeChat ≥ 4.2.0._
 
-Format date and time like function `strftime` in C library, using `struct timeval`
-as input, and supporting extra specifiers for microseconds.
+Форматира датум и време као функција `strftime` у C библиотеци, користећи `struct timeval`
+као улаз и уз подршку додатних спецификатора за микросекунде.
 
 Прототип:
 
@@ -4574,16 +4573,16 @@ int weechat_util_strftimeval (char *string, int max, const char *format, struct 
 
 Аргументи:
 
-* _string_: buffer where the formatted string is stored
-* _max_: string size
-* _format_: format, the same as _strftime_ function, with these extra specifiers:
-** `%.N` where `N` is between 1 and 6: zero-padded microseconds on N digits
-   (for example `%.3` for milliseconds)
-** `%f`: alias of `%.6`
+* _string_: бафер у који се смешта форматирани стринг
+* _max_: величина стринга
+* _format_: формат, исто као за _strftime_ функцију, са следећим додатним спецификаторима:
+** `%.N` где је `N` између 1 и 6: микросекунде допуњене нулама на N цифара
+   (на пример `%.3` за милисекунде)
+** `%f`: алијас за `%.6`
 
 Повратна вредност:
 
-* number of bytes put in _string_ (value returned from _strftime_ function)
+* број бајтова постављен у _string_ (вредност враћена из функције _strftime_)
 
 C пример:
 
@@ -4593,18 +4592,17 @@ char time[256];
 struct timeval tv;
 gettimeofday (&tv, NULL);
 weechat_util_strftimeval (time, sizeof (time), "%FT%T.%f", &tv);
-/* result: 2023-12-26T18:10:04.460509 */
+/* резултат: 2023-12-26T18:10:04.460509 */
 ----
 
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
-// TRANSLATION MISSING
 ==== util_parse_time
 
 _WeeChat ≥ 4.2.0._
 
-Parse date/time with support of microseconds.
+Парсира датум/време са подршком за милисекунде.
 
 Прототип:
 
@@ -4615,12 +4613,12 @@ int util_parse_time (const char *datetime, struct timeval *tv);
 
 Аргументи:
 
-* _date_: date/time
-* _tv_: parsed date/time ("timeval" structure)
+* _date_: датум/време
+* _tv_: парсиран датум/време („timeval” структура)
 
 Повратна вредност:
 
-* 1 if OK, 0 if error
+* 1 ако је OK, 0 у случају грешке
 
 C пример:
 
@@ -4628,7 +4626,7 @@ C пример:
 ----
 struct timeval tv;
 weechat_util_parse_time ("2023-12-25T10:29:09.456789Z", &tv);  /* == 1 */
-/* result: tv.tv_sec == 1703500149, tv.tv_usec = 456789 */
+/* резултат: tv.tv_sec == 1703500149, tv.tv_usec = 456789 */
 ----
 
 [NOTE]
@@ -9214,9 +9212,8 @@ weechat.prnt_date_tags("", time - 120, "notify_message",
 
 _WeeChat ≥ 4.2.0._
 
-// TRANSLATION MISSING
-Display a message on a buffer, using a custom date/time (with microseconds)
-and tags.
+Приказује поруку у баферу, користећи произвољни датум/време (са микросекундама)
+и ознаке.
 
 Прототип:
 
@@ -9230,8 +9227,7 @@ void weechat_printf_datetime_tags (struct t_gui_buffer *buffer, time_t date,
 
 * _buffer_: показивач на бафер, ако је NULL, порука се приказује у WeeChat баферу
 * _date_: датум за поруку (0 значи текући датум/време)
-// TRANSLATION MISSING
-* _date_usec_: microseconds of date (between 0 and 999999)
+* _date_usec_: микросекунде датума (између 0 и 999999)
 * _tags_: листа ознака раздвојених запетама (NULL значи да нема ознака)
 * _message_: порука која треба да се прикаже
 
@@ -9278,14 +9274,13 @@ weechat.prnt_datetime_tags("", time_sec - 120, time_usec, "notify_message",
 void weechat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...);
 ----
 
-// TRANSLATION MISSING
-This function is a shortcut for function printf_y_datetime_tags. +
-These two calls give exactly same result:
+Ова функција је скраћеница за функцију printf_y_datetime_tags. +
+Следећа два позива враћају потпуно исти резултат:
 
 [source,c]
 ----
-weechat_printf_y (buffer, 0, "message");
-weechat_printf_y_datetime_tags (buffer, 0, 0, 0, NULL, "message");
+weechat_printf_y (buffer, 0, "порука");
+weechat_printf_y_datetime_tags (buffer, 0, 0, 0, NULL, "порука");
 ----
 
 Аргументи:
@@ -9298,7 +9293,7 @@ C пример:
 
 [source,c]
 ----
-weechat_printf_y (buffer, 2, "My message on third line");
+weechat_printf_y (buffer, 2, "Моја порука на трећој линији");
 ----
 
 Скрипта (Python):
@@ -9309,7 +9304,7 @@ weechat_printf_y (buffer, 2, "My message on third line");
 def prnt_y(buffer: str, y: int, message: str) -> int: ...
 
 # пример
-weechat.prnt_y("", 2, "My message on third line")
+weechat.prnt_y("", 2, "Моја порука на трећој линији")
 ----
 
 [NOTE]
@@ -9330,14 +9325,13 @@ void weechat_printf_y_date_tags (struct t_gui_buffer *buffer, int y, time_t date
                                  const char *tags, const char *message, ...);
 ----
 
-// TRANSLATION MISSING
-This function is a shortcut for function printf_y_datetime_tags. +
-These two calls give exactly same result:
+Ова функција је скраћеница за функцију printf_y_datetime_tags. +
+Следећа два позива враћају потпуно исти резултат:
 
 [source,c]
 ----
-weechat_printf_y_date_tags (buffer, 0, 0, NULL, "message");
-weechat_printf_y_datetime_tags (buffer, 0, 0, 0, NULL, "message");
+weechat_printf_y_date_tags (buffer, 0, 0, NULL, "порука");
+weechat_printf_y_datetime_tags (buffer, 0, 0, 0, NULL, "порука");
 ----
 
 Аргументи:
@@ -9373,9 +9367,8 @@ weechat.prnt_y_date_tags("", 2, 0, "my_tag", "My message on third line with a ta
 
 _WeeChat ≥ 4.2.0._
 
-// TRANSLATION MISSING
-Display a message on a line of a buffer with free content, using a custom
-date/time (with microseconds) and tags.
+Приказује поруку на линији бафера са произвољним садржајем, користећи произвољни
+датум/време (са микросекундама) и ознакама.
 
 Прототип:
 
@@ -9390,8 +9383,7 @@ void weechat_printf_y_datetime_tags (struct t_gui_buffer *buffer, int y, time_t 
 * _buffer_: показивач на бафер
 * _y_: број линије (прва линија је 0); негативна вредност додаје линију иза последње приказане линије: апсолутна вредност _y_ је број линија након последње линије (на пример -1 је непосредно након последње линије, -2 је 2 линије након последње линије)
 * _date_: датум за поруку (0 значи текући датум/време)
-// TRANSLATION MISSING
-* _date_usec_: microseconds of date (between 0 and 999999)
+* _date_usec_: микросекунде датума (између 0 и 999999)
 * _tags_: листа ознака раздвојених запетама (NULL значи да нема ознака)
 * _message_: порука која треба да се прикаже
 
@@ -10783,9 +10775,8 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 | Нема ("0").
 | `+1533792000+`
 
-// TRANSLATION MISSING
 | date_usec
-| Microseconds of line date (between 0 and 999999).
+| Микросекунде датума линије (између 0 и 999999).
 | N/A ("0").
 | `+123456+`
 
@@ -10794,9 +10785,8 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 | Нема ("0").
 | `+1533792012+`
 
-// TRANSLATION MISSING
 | date_usec_printed
-| Microseconds of date when line was displayed (between 0 and 999999).
+| Микросекунде датума када је линија била приказана (између 0 и 999999).
 | N/A ("0").
 | `+654321+`
 
@@ -10884,11 +10874,10 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 | Датум се поставља на ову вредност. +
   Сагласно овоме се поставља и вредност `+str_time+`.
 
-// TRANSLATION MISSING
 | date_usec
-| Integer ("0" to "999999").
+| Цео број ("0" до "999999").
 | Нема.
-| The microseconds of line date is set to this value. +
+| Микросекунде датума линије се постављају на ову вредност. +
   Сагласно овоме се поставља и вредност `+str_time+`.
 
 | date_printed
@@ -10896,11 +10885,10 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 | Нема.
 | Датум се поставља на ову временску ознаку (не приказује се).
 
-// TRANSLATION MISSING
 | date_usec_printed
-| Integer ("0" to "999999").
+| Цео број ("0" до "999999").
 | Нема.
-| The microseconds of printed date is set to this value.
+| Микросекунде исписаног датума се постављају на ову вредност.
 
 | str_time
 | Стринг.
@@ -11024,8 +11012,7 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 ** _void *data_: показивач
 ** _struct t_gui_buffer *buffer_: показивач на бафер
 ** _time_t date_: датум
-// TRANSLATION MISSING
-** _int date_usec_: microseconds of date
+** _int date_usec_: микросекунде датума
 ** _int tags_count_: број ознака за линију
 ** _const char **tags_: низ са ознакама за линију
 ** _int displayed_: 1 ако се линија приказује, 0 ако је филтрирана (скривена)
@@ -13097,15 +13084,13 @@ struct t_hook *weechat_hook_focus (const char *area,
 | _chat_line_date | Датум/време линије.
 | "1313237175" | "0"
 
-// TRANSLATION MISSING
-| _chat_line_date_usec | Microseconds of line date/time.
+| _chat_line_date_usec | Микросекунде датума/времена линије.
 | "123456" | "0"
 
 | _chat_line_date_printed | Датум/време линије ^(4)^.
 | "1313237175" | "0"
 
-// TRANSLATION MISSING
-| _chat_line_date_usec_printed | Microseconds of line printed date/time ^(4)^.
+| _chat_line_date_usec_printed | Микросекунде датума/времемна приказа линије ^(4)^.
 | "123456" | "0"
 
 | _chat_line_time | Приказано време.
@@ -13863,8 +13848,7 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 
 * _buffer_: показивач на бафер
 * _property_: име особине:
-// TRANSLATION MISSING
-** _opening_: 1 if buffer is opening, otherwise 0 _(WeeChat ≥ 4.2.0)_
+** _opening_: 1 ако се бафер отвара, у супротном 0 _(WeeChat ≥ 4.2.0)_
 ** _number_: број бафера (почиње се од 1)
 ** _layout_number_: број бафера сачуван у распореду
 ** _layout_number_merge_order_: редослед у спајању за распоред
@@ -13879,12 +13863,10 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _day_change_: 1 ако су приказују поруке о промени дана, у супротном 0 _(WeeChat ≥ 0.4.3)_
 ** _clear_: 1 ако бафер може да се очисти командом `/buffer clear`, у супротном 0 _(WeeChat ≥ 1.0)_
 ** _filter_: 1 ако су у баферу укључени филтери, у успротном 0 _(WeeChat ≥ 1.0)_
-// TRANSLATION MISSING
-** _closing_: 1 if buffer is closing, otherwise 0 _(WeeChat ≥ 1.0)_
+** _closing_: 1 ако се бафер затвара, у супротном 0 _(WeeChat ≥ 1.0)_
 ** _lines_hidden_: 1 ако је у баферу скривена бар једна линија (филтрирана), или 0 ако се приказују све линије
 ** _prefix_max_length_: максимална дужина префикса у овом баферу
-// TRANSLATION MISSING
-** _next_line_id_: next line id in buffer _(WeeChat ≥ 3.8)_
+** _next_line_id_: id следеће линије у баферу _(WeeChat ≥ 3.8)_
 ** _time_for_each_line_: 1 ако се време приказује са сваку линију у баферу (подразумевано), у супротном 0
 ** _nicklist_: 1 ако је укључена листа надимака, у супротном 0
 ** _nicklist_case_sensitive_: 1 ако се у надимцима прави разлика у величини слова, у супротном 0
@@ -13967,11 +13949,9 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _plugin_: име додатка који је креирао овај бафер („core” за главни бафер програма WeeChat)
 ** _name_: име бафера
 ** _full_name_: пуно име бафера („додатак.име”) _(WeeChat ≥ 0.3.7)_
-// TRANSLATION MISSING
-** _old_full_name_: old full name of buffer ("plugin.name"), set before the buffer is renamed _(WeeChat ≥ 2.8)_
+** _old_full_name_: старо пуно име бафера („додатак.име”), постављено пре промене имена бафера _(WeeChat ≥ 2.8)_
 ** _short_name_: кратко име бафера (напомена: користи се само за приказ и корисник може да га промени, ово не сме да се употребљава за проналажење имена бафера, уместо њега употребите _name_, _full_name_ или локалну променљиву _channel_)
-// TRANSLATION MISSING
-** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
+** _type_: тип бафера: „formatted” или „free” _(WeeChat ≥ 4.2.0)_
 ** _title_: наслов бафера
 ** _input_: текст уноса
 ** _text_search_input_: сачувани унос пре претраге текста
