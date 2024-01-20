@@ -78,6 +78,17 @@ Build::
   * core: make libintl.h required if CMake option ENABLE_NLS is enabled (issue #2031)
   * ruby: add detection of Ruby 3.3
 
+[[v4.1.3]]
+== Version 4.1.3 (2024-01-20)
+
+Bug fixes::
+
+  * core: fix crash on plugin reload when using musl libc (issue #2052)
+  * core: fix infinite loop in display when the chat area is too small (issue #2053)
+  * irc: check if arguments are not NULL in some infos
+  * irc: fix info "irc_is_message_ignored" (issue #2059)
+  * irc: fix display of self messages when the message split fails due to inconsistent max lengths sent by the server in message 005
+
 [[v4.1.2]]
 == Version 4.1.2 (2023-12-03)
 
@@ -177,6 +188,17 @@ Build::
 
   * core: fix build error if CMake option ENABLE_NLS is turned to off or if required dependencies are not found (issue #2026)
   * core, logger, relay: make zstd dependency optional (issue #2024)
+
+[[v4.0.8]]
+== Version 4.0.8 (2024-01-20)
+
+Bug fixes::
+
+  * core: fix crash on plugin reload when using musl libc (issue #2052)
+  * core: fix infinite loop in display when the chat area is too small (issue #2053)
+  * irc: check if arguments are not NULL in some infos
+  * irc: fix info "irc_is_message_ignored" (issue #2059)
+  * irc: fix display of self messages when the message split fails due to inconsistent max lengths sent by the server in message 005
 
 [[v4.0.7]]
 == Version 4.0.7 (2023-12-03)
