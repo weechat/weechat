@@ -198,7 +198,7 @@ TEST(IrcInfo, InfoIrcNickColorCb)
     WEE_TEST_STR(NULL, hook_info_get (NULL, "irc_nick_color_name", NULL));
     WEE_TEST_STR(NULL, hook_info_get (NULL, "irc_nick_color_name", ""));
 
-    snprintf (str_color, sizeof (str_color), gui_color_get_custom ("186"));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("186"));
     WEE_TEST_STR(str_color, hook_info_get (NULL, "irc_nick_color", "Nick"));
     WEE_TEST_STR("186", hook_info_get (NULL, "irc_nick_color_name", "Nick"));
 }

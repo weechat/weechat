@@ -558,14 +558,14 @@ TEST(PluginApiInfo, NickColor)
     char *str, str_color[64];
 
     WEE_TEST_STR("186", hook_info_get (NULL, "nick_color_name", "Nick"));
-    snprintf (str_color, sizeof (str_color), gui_color_get_custom ("186"));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("186"));
     WEE_TEST_STR(str_color, hook_info_get (NULL, "nick_color", "Nick"));
 
     WEE_TEST_STR("blue",
                  hook_info_get (NULL,
                                 "nick_color_name",
                                 "Nick;green,blue,red,yellow,cyan,magenta"));
-    snprintf (str_color, sizeof (str_color), gui_color_get_custom ("blue"));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("blue"));
     WEE_TEST_STR(str_color,
                  hook_info_get (NULL,
                                 "nick_color",
@@ -574,14 +574,14 @@ TEST(PluginApiInfo, NickColor)
     WEE_TEST_STR("212",
                  hook_info_get (NULL,
                                 "nick_color_name_ignore_case", "Nick;26"));
-    snprintf (str_color, sizeof (str_color), gui_color_get_custom ("212"));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("212"));
     WEE_TEST_STR(str_color, hook_info_get (NULL, "nick_color_ignore_case", "Nick;26"));
 
     WEE_TEST_STR("green",
                  hook_info_get (NULL,
                                 "nick_color_name_ignore_case",
                                 "Nick;26;green,blue,red,yellow,cyan,magenta"));
-    snprintf (str_color, sizeof (str_color), gui_color_get_custom ("green"));
+    snprintf (str_color, sizeof (str_color), "%s", gui_color_get_custom ("green"));
     WEE_TEST_STR(str_color,
                  hook_info_get (NULL,
                                 "nick_color_ignore_case",
