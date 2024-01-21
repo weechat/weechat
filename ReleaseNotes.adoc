@@ -12,7 +12,7 @@ For a complete list of changes, please look at ChangeLog.
 
 
 [[v4.2.0]]
-== Version 4.2.0 (under dev)
+== Version 4.2.0 (2024-01-21)
 
 [[v4.2.0_lines_microseconds]]
 === Microseconds in buffer lines
