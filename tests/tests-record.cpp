@@ -173,18 +173,16 @@ record_match (struct t_hashtable *recorded_msg,
 /*
  * Searches if a prefix/message has been displayed in a buffer.
  *
- * Returns index of message displayed (≥ 0), -1 if message has NOT been
- * displayed.
+ * Returns pointer to hashtable with the message found, NULL if the message
+ * has NOT been displayed.
  */
 
-int
+struct t_hashtable *
 record_search (const char *buffer, const char *prefix, const char *message,
                const char *tags)
 {
-    int i, rc, size;
+    int i, size;
     struct t_hashtable *rec_msg;
-
-    rc = -1;
 
     size = arraylist_size (recorded_messages);
 
@@ -198,12 +196,12 @@ record_search (const char *buffer, const char *prefix, const char *message,
             && record_match (rec_msg, "message_no_color", message)
             && (!tags || !tags[0] || record_match (rec_msg, "tags", tags)))
         {
-            rc = i;
-            break;
+            return rec_msg;
         }
     }
 
-    return rc;
+    /* message not displayed */
+    return NULL;
 }
 
 /*

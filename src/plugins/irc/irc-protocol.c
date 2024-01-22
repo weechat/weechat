@@ -8085,7 +8085,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
     char *message_colors_decoded, *pos_space, *tags;
     struct t_irc_channel *ptr_channel;
     t_irc_recv_func *cmd_recv_func;
-    const char *ptr_msg_after_tags, *ptr_batch_ref;
+    const char *ptr_msg_after_tags, *ptr_batch_ref, *ptr_tag_time;
     const char *nick1, *address1, *host1;
     char *address, *host, *host_no_color;
     struct t_irc_protocol_ctxt ctxt;
@@ -8308,11 +8308,15 @@ irc_protocol_recv_command (struct t_irc_server *server,
                 if (ctxt.tags)
                 {
                     irc_tag_parse (tags, ctxt.tags, NULL);
-                    weechat_util_parse_time (
-                        weechat_hashtable_get (ctxt.tags, "time"),
-                        &tv);
-                    ctxt.date = tv.tv_sec;
-                    ctxt.date_usec = tv.tv_usec;
+                    ptr_tag_time = weechat_hashtable_get (ctxt.tags, "time");
+                    if (ptr_tag_time)
+                    {
+                        if (weechat_util_parse_time (ptr_tag_time, &tv))
+                        {
+                            ctxt.date = tv.tv_sec;
+                            ctxt.date_usec = tv.tv_usec;
+                        }
+                    }
                 }
                 free (tags);
             }

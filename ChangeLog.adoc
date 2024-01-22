@@ -10,6 +10,13 @@ This document lists all the changes for each version. +
 For a list of important changes that require manual actions, please look at release notes.
 
 
+[[v4.3.0]]
+== Version 4.3.0 (under dev)
+
+Bug fixes::
+
+  * irc: fix random date displayed when a received message contains tags but no "time" (issue #2064)
+
 [[v4.2.0]]
 == Version 4.2.0 (2024-01-21)
 
