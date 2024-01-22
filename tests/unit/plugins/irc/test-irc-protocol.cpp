@@ -29,6 +29,7 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <sys/time.h>
 #include "src/core/wee-arraylist.h"
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-hashtable.h"
@@ -99,7 +100,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     server_recv (__irc_msg);
 
 #define CHECK_CORE(__prefix, __message)                                 \
-    if (record_search ("core.weechat", __prefix, __message, NULL) < 0)  \
+    if (!record_search ("core.weechat", __prefix, __message, NULL))     \
     {                                                                   \
         char **msg = build_error (                                      \
             "Core message not displayed",                               \
@@ -112,8 +113,8 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     }
 
 #define CHECK_SRV(__prefix, __message, __tags)                          \
-    if (record_search ("irc.server." IRC_FAKE_SERVER, __prefix,         \
-                       __message, __tags) < 0)                          \
+    if (!record_search ("irc.server." IRC_FAKE_SERVER, __prefix,        \
+                        __message, __tags))                             \
     {                                                                   \
         char **msg = build_error (                                      \
             "Server message not displayed",                             \
@@ -144,8 +145,8 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
               "");
 
 #define CHECK_CHAN(__prefix, __message, __tags)                         \
-    if (record_search ("irc." IRC_FAKE_SERVER ".#test", __prefix,       \
-                       __message, __tags) < 0)                          \
+    if (!record_search ("irc." IRC_FAKE_SERVER ".#test", __prefix,      \
+                        __message, __tags))                             \
     {                                                                   \
         char **msg = build_error (                                      \
             "Channel message not displayed",                            \
@@ -157,9 +158,72 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
         FAIL(string_dyn_free (msg, 0));                                 \
     }
 
+#define CHECK_CHAN_DATE_VALUE(__prefix, __message, __tags,              \
+                              __date_sec, __date_usec)                  \
+    {                                                                   \
+        struct timeval tv_now;                                          \
+        const char *ptr_date;                                           \
+        long value;                                                     \
+        char *error;                                                    \
+        gettimeofday (&tv_now, NULL);                                   \
+        struct t_hashtable *record = record_search (                    \
+            "irc." IRC_FAKE_SERVER ".#test",                            \
+            __prefix, __message, __tags);                               \
+        if (!record)                                                    \
+        {                                                               \
+            char **msg = build_error (                                  \
+                "Channel message not displayed",                        \
+                __prefix,                                               \
+                __message,                                              \
+                __tags,                                                 \
+                "All messages displayed");                              \
+            record_dump (msg);                                          \
+            FAIL(string_dyn_free (msg, 0));                             \
+        }                                                               \
+        ptr_date = (const char *)hashtable_get (record, "date");        \
+        CHECK(ptr_date);                                                \
+        value = strtol (ptr_date, &error, 10);                          \
+        CHECK(error && !error[0]);                                      \
+        LONGS_EQUAL(__date_sec, value);                                 \
+        ptr_date = (const char *)hashtable_get (record, "date_usec");   \
+        CHECK(ptr_date);                                                \
+        value = strtol (ptr_date, &error, 10);                          \
+        CHECK(error && !error[0]);                                      \
+        LONGS_EQUAL(__date_usec, value);                                \
+    }
+
+#define CHECK_CHAN_DATE_NOW(__prefix, __message, __tags)                \
+    {                                                                   \
+        struct timeval tv_now;                                          \
+        const char *ptr_date;                                           \
+        long value;                                                     \
+        char *error;                                                    \
+        gettimeofday (&tv_now, NULL);                                   \
+        struct t_hashtable *record = record_search (                    \
+            "irc." IRC_FAKE_SERVER ".#test",                            \
+            __prefix, __message, __tags);                               \
+        if (!record)                                                    \
+        {                                                               \
+            char **msg = build_error (                                  \
+                "Channel message not displayed",                        \
+                __prefix,                                               \
+                __message,                                              \
+                __tags,                                                 \
+                "All messages displayed");                              \
+            record_dump (msg);                                          \
+            FAIL(string_dyn_free (msg, 0));                             \
+        }                                                               \
+        ptr_date = (const char *)hashtable_get (record, "date");        \
+        CHECK(ptr_date);                                                \
+        value = strtol (ptr_date, &error, 10);                          \
+        CHECK(error && !error[0]);                                      \
+        CHECK(value >= tv_now.tv_sec - 5);                              \
+        CHECK(value <= tv_now.tv_sec + 5);                              \
+    }
+
 #define CHECK_PV(__nick, __prefix, __message, __tags)                   \
-    if (record_search ("irc." IRC_FAKE_SERVER "." __nick,               \
-                       __prefix, __message, __tags) < 0)                \
+    if (!record_search ("irc." IRC_FAKE_SERVER "." __nick,              \
+                        __prefix, __message, __tags))                   \
     {                                                                   \
         char **msg = build_error (                                      \
             "Private message not displayed",                            \
@@ -2802,9 +2866,9 @@ TEST(IrcProtocolWithServer, privmsg)
 
         /* message to channel/user */
         RECV(":bob!user@host PRIVMSG #test :this is the message ");
-        CHECK_CHAN("bob", "this is the message ",
-                   "irc_privmsg,notify_message,prefix_nick_248,nick_bob,"
-                   "host_user@host,log1");
+        CHECK_CHAN_DATE_NOW("bob", "this is the message ",
+                            "irc_privmsg,notify_message,prefix_nick_248,nick_bob,"
+                            "host_user@host,log1");
         RECV(":bob!user@host PRIVMSG alice :this is the message ");
         CHECK_PV_CLOSE("bob", "bob", "this is the message ",
                        "irc_privmsg,notify_private,prefix_nick_248,nick_bob,"
@@ -2813,14 +2877,59 @@ TEST(IrcProtocolWithServer, privmsg)
         /* message with tags to channel/user */
         RECV("@tag1=value1;tag2=value2 :bob!user@host PRIVMSG #test "
              ":this is the message ");
-        CHECK_CHAN("bob", "this is the message ",
-                   "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
-                   "notify_message,prefix_nick_248,nick_bob,host_user@host,log1");
+        CHECK_CHAN_DATE_NOW("bob", "this is the message ",
+                            "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
+                            "notify_message,prefix_nick_248,nick_bob,host_user@host,log1");
         RECV("@tag1=value1;tag2=value2 :bob!user@host PRIVMSG alice "
              ":this is the message ");
         CHECK_PV_CLOSE("bob", "bob", "this is the message ",
                        "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
                        "notify_private,prefix_nick_248,nick_bob,host_user@host,log1");
+
+        /* message with tags + time as timestamp  to channel/user */
+        RECV("@tag1=value1;tag2=value2;time=1703500149 :bob!user@host PRIVMSG #test "
+             ":this is the message ");
+        CHECK_CHAN_DATE_VALUE(
+            "bob",
+            "this is the message ",
+            "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
+            "irc_tag_time=1703500149,notify_message,prefix_nick_248,nick_bob,"
+            "host_user@host,log1",
+            1703500149, 0);
+
+        /* message with tags + time as timestamp with milliseconds to channel/user */
+        RECV("@tag1=value1;tag2=value2;time=1703500149.456 :bob!user@host PRIVMSG #test "
+             ":this is the message ");
+        CHECK_CHAN_DATE_VALUE(
+            "bob",
+            "this is the message ",
+            "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
+            "irc_tag_time=1703500149.456,notify_message,prefix_nick_248,nick_bob,"
+            "host_user@host,log1",
+            1703500149, 456000);
+
+        /* message with tags + time as timestamp with microseconds to channel/user */
+        RECV("@tag1=value1;tag2=value2;time=1703500149.456789 :bob!user@host PRIVMSG #test "
+             ":this is the message ");
+        CHECK_CHAN_DATE_VALUE(
+            "bob",
+            "this is the message ",
+            "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
+            "irc_tag_time=1703500149.456789,notify_message,prefix_nick_248,nick_bob,"
+            "host_user@host,log1",
+            1703500149, 456789);
+
+        /* message with tags + time as ISO 8601 with microseconds to channel/user */
+        RECV("@tag1=value1;tag2=value2;time=2023-12-25T10:29:09.456789Z "
+             ":bob!user@host PRIVMSG #test :this is the message ");
+        CHECK_CHAN_DATE_VALUE(
+            "bob",
+            "this is the message ",
+            "irc_privmsg,irc_tag_tag1=value1,irc_tag_tag2=value2,"
+            "irc_tag_time=2023-12-25T10:29:09.456789Z,notify_message,"
+            "prefix_nick_248,nick_bob,"
+            "host_user@host,log1",
+            1703500149, 456789);
 
         /*
          * message to channel/user from self nick
