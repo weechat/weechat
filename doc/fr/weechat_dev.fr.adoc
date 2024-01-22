@@ -559,8 +559,7 @@ Exemple en C :
 
 Quelques règles basiques que vous *devez* suivre quand vous écrivez du code C :
 
-* Utilisez 4 espaces pour l'indentation. N'utilisez pas de tabulations, c'est le
-  mal.
+* Utilisez 4 espaces pour l'indentation (pas de tabulations).
 * Essayez de ne pas dépasser 80 caractères par ligne, sauf si cela est
   nécessaire pour améliorer la lisibilité.
 * Utilisez les commentaires `+/* comment */+` (pas de style C99 comme

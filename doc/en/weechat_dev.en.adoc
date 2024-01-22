@@ -557,9 +557,8 @@ Example in C:
 
 Some basic rules you *must* follow when you write C code:
 
-* Use 4 spaces for indentation. Don't use tabs, they are evil.
-* Try to not exceed 80 chars by line, except if this is needed to increase
-  readability.
+* Use 4 spaces for indentation (no tabs).
+* Try to not exceed 80 chars by line, except if this is needed to increase readability.
 * Use comments `+/* comment */+` (not C99-style comments like `+// comment+`).
 * Add a comment before any function, to explain what it does (always use a
   multi-line comment, even if description is very short).
