@@ -2931,7 +2931,6 @@ TEST(IrcProtocolWithServer, privmsg)
             "host_user@host,log1",
             1703500149, 456789);
 
-
         /*
          * message to channel/user from self nick
          * (case of bouncer or if echo-message capability is enabled)
