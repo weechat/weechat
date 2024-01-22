@@ -16,6 +16,11 @@ For a complete list of changes, please look at ChangeLog.
 
 No release notes.
 
+[[v4.2.1]]
+== Version 4.2.1 (2024-01-22)
+
+No release notes.
+
 [[v4.2.0]]
 == Version 4.2.0 (2024-01-21)
 
