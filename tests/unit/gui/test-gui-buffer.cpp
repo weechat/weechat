@@ -849,6 +849,7 @@ TEST(GuiBuffer, GetInteger)
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, ""));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "zzz"));
 
+    LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "opening"));
     LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "number"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "layout_number"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "layout_number_merge_order"));
@@ -912,6 +913,7 @@ TEST(GuiBuffer, GetString)
     STRCMP_EQUAL("core.weechat", gui_buffer_get_string (gui_buffers, "full_name"));
     POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "old_full_name"));
     STRCMP_EQUAL("weechat", gui_buffer_get_string (gui_buffers, "short_name"));
+    STRCMP_EQUAL("formatted", gui_buffer_get_string (gui_buffers, "type"));
     STRNCMP_EQUAL("WeeChat ", gui_buffer_get_string (gui_buffers, "title"), 8);
     STRCMP_EQUAL("", gui_buffer_get_string (gui_buffers, "input"));
     POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "text_search_input"));
