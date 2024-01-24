@@ -8014,7 +8014,9 @@ command_init ()
                "jump_current_to_previous_buffer\""),
             N_("raw[-]: jump to first buffer number"),
             N_("raw[+]: jump to last buffer number"),
-            N_("name: jump to buffer by (partial) name"),
+            N_("name: jump to buffer by (partial) name; if the name starts with "
+               "\"(?i)\", the search is case insensitive (for example \"(?i)upper\" "
+               "will find buffer \"irc.libera.#UPPERCASE\")"),
             "",
             N_("Examples:"),
             AI("  /buffer move 5"),
