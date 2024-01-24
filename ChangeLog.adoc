@@ -13,6 +13,10 @@ For a list of important changes that require manual actions, please look at rele
 [[v4.3.0]]
 == Version 4.3.0 (under dev)
 
+New features::
+
+  * core: allow case insensitive search of partial buffer name with `(?i)name` in command `/buffer`
+
 Bug fixes::
 
   * irc: fix random date displayed when a received message contains tags but no "time" (issue #2064)

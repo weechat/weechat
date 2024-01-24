@@ -2785,6 +2785,9 @@ gui_buffer_search_main ()
 
 /*
  * Searches for a buffer by full name (example: "irc.libera.#weechat").
+ *
+ * If full_name starts with "(?i)", the search starts after this string
+ * and the search is case insensitive.
  */
 
 struct t_gui_buffer *
@@ -2792,6 +2795,9 @@ gui_buffer_search_by_full_name (const char *full_name)
 {
     struct t_gui_buffer *ptr_buffer;
     int case_sensitive;
+
+    if (!full_name)
+        return NULL;
 
     case_sensitive = 1;
     if (strncmp (full_name, "(?i)", 4) == 0)
@@ -2825,7 +2831,7 @@ struct t_gui_buffer *
 gui_buffer_search_by_name (const char *plugin, const char *name)
 {
     struct t_gui_buffer *ptr_buffer;
-    int plugin_match, case_sensitive;
+    int plugin_match, plugin_case_sensitive, name_case_sensitive;
 
     if (!name || !name[0])
         return gui_current_window->buffer;
@@ -2833,12 +2839,22 @@ gui_buffer_search_by_name (const char *plugin, const char *name)
     if (plugin && (strcmp (plugin, "==") == 0))
         return gui_buffer_search_by_full_name (name);
 
-    case_sensitive = 1;
+    plugin_case_sensitive = 1;
+    name_case_sensitive = 1;
+
+    if (plugin && (strncmp (plugin, "(?i)", 4) == 0))
+    {
+        plugin_case_sensitive = 0;
+        plugin += 4;
+    }
     if (strncmp (name, "(?i)", 4) == 0)
     {
-        case_sensitive = 0;
+        name_case_sensitive = 0;
         name += 4;
     }
+
+    if (!name[0])
+        return gui_current_window->buffer;
 
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -2848,14 +2864,19 @@ gui_buffer_search_by_name (const char *plugin, const char *name)
             plugin_match = 1;
             if (plugin && plugin[0])
             {
-                if (strcmp (plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0)
+                if ((plugin_case_sensitive
+                     && (strcmp (plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0))
+                    || (!plugin_case_sensitive
+                        && (string_strcasecmp (plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0)))
+                {
                     plugin_match = 0;
+                }
             }
             if (plugin_match
-                && ((case_sensitive
-                     && strcmp (ptr_buffer->name, name) == 0)
-                    || (!case_sensitive
-                        && string_strcasecmp (ptr_buffer->name, name) == 0)))
+                && ((name_case_sensitive
+                     && (strcmp (ptr_buffer->name, name) == 0))
+                    || (!name_case_sensitive
+                        && (string_strcasecmp (ptr_buffer->name, name) == 0))))
             {
                 return ptr_buffer;
             }
@@ -2868,16 +2889,36 @@ gui_buffer_search_by_name (const char *plugin, const char *name)
 
 /*
  * Searches for a buffer by plugin and partial name.
+ *
+ * If plugin or name starts with "(?i)", the search starts after this string
+ * and the search is case insensitive.
  */
 
 struct t_gui_buffer *
 gui_buffer_search_by_partial_name (const char *plugin, const char *name)
 {
     struct t_gui_buffer *ptr_start_buffer, *ptr_buffer, *buffer_partial_match[3];
-    int plugin_match, length_name;
+    int plugin_case_sensitive, name_case_sensitive, plugin_match, length_name;
     const char *pos;
 
     if (!name || !name[0])
+        return gui_current_window->buffer;
+
+    plugin_case_sensitive = 1;
+    name_case_sensitive = 1;
+
+    if (plugin && (strncmp (plugin, "(?i)", 4) == 0))
+    {
+        plugin_case_sensitive = 0;
+        plugin += 4;
+    }
+    if (strncmp (name, "(?i)", 4) == 0)
+    {
+        name_case_sensitive = 0;
+        name += 4;
+    }
+
+    if (!name[0])
         return gui_current_window->buffer;
 
     /* 0: matches beginning of buffer name, 1: in the middle, 2: the end */
@@ -2899,12 +2940,20 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
             plugin_match = 1;
             if (plugin && plugin[0])
             {
-                if (strcmp (plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0)
+                if ((plugin_case_sensitive
+                     && (strcmp (plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0))
+                    || (!plugin_case_sensitive
+                        && (string_strcasecmp (plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0)))
+                {
                     plugin_match = 0;
+                }
             }
             if (plugin_match)
             {
-                pos = strstr (ptr_buffer->name, name);
+                if (name_case_sensitive)
+                    pos = strstr (ptr_buffer->name, name);
+                else
+                    pos = string_strcasestr (ptr_buffer->name, name);
                 if (pos)
                 {
                     if (pos == ptr_buffer->name)
@@ -2914,7 +2963,7 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
                             /* matches full name, return it immediately */
                             return ptr_buffer;
                         }
-                        /* matches beginning of name */
+                        /* matches beginning of buffer name */
                         if (!buffer_partial_match[0])
                             buffer_partial_match[0] = ptr_buffer;
                     }
