@@ -2750,11 +2750,11 @@ int
 gui_buffer_is_main (const char *plugin_name, const char *name)
 {
     /* if plugin is set and is not "core", then it's NOT main buffer */
-    if (plugin_name && (strcmp (plugin_name, plugin_get_name (NULL)) != 0))
+    if (!plugin_name || (strcmp (plugin_name, plugin_get_name (NULL)) != 0))
         return 0;
 
     /* if name is set and is not "weechat", then it's NOT main buffer */
-    if (name && (strcmp (name, GUI_BUFFER_MAIN) != 0))
+    if (!name || (strcmp (name, GUI_BUFFER_MAIN) != 0))
         return 0;
 
     /* it's main buffer */
