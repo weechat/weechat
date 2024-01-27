@@ -4777,11 +4777,11 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== util_strftimeval
 
-_WeeChat ≥ 4.2.0._
+_WeeChat ≥ 4.2.0, mis à jour dans la 4.3.0._
 
 Formatter la date et l'heure comme la fonction `strftime` de la bibliothèque C,
 en utilisant un `struct timeval` en entrée et en supportant des caractères de
-conversion pour les microsecondes.
+conversion supplémentaires.
 
 Prototype :
 
@@ -4799,6 +4799,7 @@ Paramètres :
 ** `%.N` où `N` est entre 1 and 6: microsecondes remplies avec des zéros sur
    N chiffres (par exemple `%.3` pour les millisecondes)
 ** `%f` : alias de `%.6`
+** `%!` : horodatage sous forme d'entier, en secondes (valeur de tv->tv_sec)
 
 Valeur de retour :
 

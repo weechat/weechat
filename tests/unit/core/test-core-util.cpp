@@ -236,6 +236,14 @@ TEST(CoreUtil, Strftimeval)
     LONGS_EQUAL(23, util_strftimeval (str_time, sizeof (str_time),
                                       "%Y-%m-%d %H:%M:%S.%.7", &tv));
     STRCMP_EQUAL("2023-12-25 10:29:09.%.7", str_time);
+
+    /* timestamp */
+    strcpy (str_time, "test");
+    LONGS_EQUAL(10, util_strftimeval (str_time, sizeof (str_time), "%!", &tv));
+    STRCMP_EQUAL("1703500149", str_time);
+    strcpy (str_time, "test");
+    LONGS_EQUAL(17, util_strftimeval (str_time, sizeof (str_time), "%!.%f", &tv));
+    STRCMP_EQUAL("1703500149.456789", str_time);
 }
 
 /*

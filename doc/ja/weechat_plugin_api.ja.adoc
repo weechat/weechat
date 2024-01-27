@@ -4823,10 +4823,10 @@ weechat_printf (NULL, "date: %s",
 // TRANSLATION MISSING
 ==== util_strftimeval
 
-_WeeChat ≥ 4.2.0._
+_WeeChat ≥ 4.2.0, updated in 4.3.0._
 
 Format date and time like function `strftime` in C library, using `struct timeval`
-as input, and supporting extra specifiers for microseconds.
+as input, and supporting extra specifiers.
 
 Prototype:
 
@@ -4843,6 +4843,7 @@ Arguments:
 ** `%.N` where `N` is between 1 and 6: zero-padded microseconds on N digits
    (for example `%.3` for milliseconds)
 ** `%f`: alias of `%.6`
+** `%!`: timestamp as integer, in seconds (value of tv->tv_sec)
 
 Return value:
 

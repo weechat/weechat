@@ -164,16 +164,17 @@ util_get_time_string (const time_t *date)
 }
 
 /*
- * Formats date and time like strftime and adds additional formats for support
- * of microseconds: "%.N" where N is an integer between 1 and 6: first N
- * digits of microseconds (for example "%.3" is milliseconds, on 3 digits).
- * Format "%f" is an alias of "%.6" (microseconds, zero-padded to 6 digits).
+ * Formats date and time like strftime (but with timeval structure as input)
+ * and adds extra specifiers:
+ *   - "%.1" to "%.6": first N digits of microseconds, zero-padded
+ *   - "%f": alias of "%.6" (microseconds, zero-padded to 6 digits)
+ *   - "%!": timestamp as integer, in seconds (value of tv->tv_sec)
  */
 
 int
 util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
 {
-    char **format2, str_usec[32];
+    char **format2, str_temp[32];
     const char *ptr_format;
     struct tm *local_time;
     int length, bytes;
@@ -201,18 +202,23 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
         else if ((ptr_format[0] == '%') && (ptr_format[1] == '.')
                  && (ptr_format[2] >= '1') && (ptr_format[2] <= '6'))
         {
-            snprintf (str_usec, sizeof (str_usec),
+            snprintf (str_temp, sizeof (str_temp),
                       "%06ld", (long)(tv->tv_usec));
             length = ptr_format[2] - '1' + 1;
-            str_usec[length] = '\0';
-            string_dyn_concat (format2, str_usec, -1);
+            str_temp[length] = '\0';
+            string_dyn_concat (format2, str_temp, -1);
             ptr_format += 3;
         }
         else if ((ptr_format[0] == '%') && (ptr_format[1] == 'f'))
         {
-            snprintf (str_usec, sizeof (str_usec),
-                      "%06ld", (long)(tv->tv_usec));
-            string_dyn_concat (format2, str_usec, -1);
+            snprintf (str_temp, sizeof (str_temp), "%06ld", (long)(tv->tv_usec));
+            string_dyn_concat (format2, str_temp, -1);
+            ptr_format += 2;
+        }
+        else if ((ptr_format[0] == '%') && (ptr_format[1] == '!'))
+        {
+            snprintf (str_temp, sizeof (str_temp), "%ld", (long)(tv->tv_sec));
+            string_dyn_concat (format2, str_temp, -1);
             ptr_format += 2;
         }
         else

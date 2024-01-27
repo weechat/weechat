@@ -16,6 +16,7 @@ For a list of important changes that require manual actions, please look at rele
 New features::
 
   * core: allow case insensitive search of partial buffer name with `(?i)name` in command `/buffer`
+  * api: add support of specifier `%!` for timestamp in function util_strftimeval
 
 Bug fixes::
 
