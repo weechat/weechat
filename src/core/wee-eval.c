@@ -28,6 +28,7 @@
 #include <stdarg.h>
 #include <regex.h>
 #include <time.h>
+#include <sys/time.h>
 
 #include "weechat.h"
 #include "wee-eval.h"
@@ -39,6 +40,7 @@
 #include "wee-secure.h"
 #include "wee-string.h"
 #include "wee-utf8.h"
+#include "wee-util.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
@@ -988,19 +990,13 @@ char *
 eval_string_date (const char *text)
 {
     char str_value[512];
-    time_t date;
-    struct tm *date_tmp;
+    struct timeval tv_now;
     int rc;
 
-    date = time (NULL);
-    date_tmp = localtime (&date);
-    if (!date_tmp)
-        return strdup ("");
-
-    rc = (int) strftime (str_value, sizeof (str_value),
-                         (text[0] == ':') ? text + 1 : "%F %T",
-                         date_tmp);
-
+    gettimeofday (&tv_now, NULL);
+    rc = util_strftimeval (str_value, sizeof (str_value),
+                           (text[0] == ':') ? text + 1 : "%F %T",
+                           &tv_now);
     return strdup ((rc > 0) ? str_value : "");
 }
 

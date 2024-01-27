@@ -26,6 +26,7 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <regex.h>
+#include <time.h>
 #include "src/core/wee-eval.h"
 #include "src/core/wee-config.h"
 #include "src/core/wee-config-file.h"
@@ -453,8 +454,10 @@ TEST(CoreEval, EvalExpression)
 {
     struct t_hashtable *pointers, *extra_vars, *options;
     struct t_config_option *ptr_option;
-    char *value, str_value[256], str_expr[256];
+    char *value, str_value[256], str_expr[256], *error;
     const char *ptr_debug_output;
+    long number;
+    time_t time_now;
 
     pointers = hashtable_new (32,
                               WEECHAT_HASHTABLE_STRING,
@@ -898,6 +901,13 @@ TEST(CoreEval, EvalExpression)
                              pointers, extra_vars, options);
     LONGS_EQUAL(8, strlen (value));
     free (value);
+    value = eval_expression ("${date:%!}", pointers, extra_vars, options);
+    CHECK(value);
+    error = NULL;
+    number = strtol (value, &error, 10);
+    CHECK(error && !error[0]);
+    time_now = time (NULL);
+    CHECK((number >= time_now - 10) && (number <= time_now + 10));
 
     /* test ternary operator */
     WEE_CHECK_EVAL("1", "${if:5>2}");
