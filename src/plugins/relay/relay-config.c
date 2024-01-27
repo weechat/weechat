@@ -47,7 +47,6 @@ struct t_config_section *relay_config_section_look = NULL;
 struct t_config_section *relay_config_section_color = NULL;
 struct t_config_section *relay_config_section_network = NULL;
 struct t_config_section *relay_config_section_irc = NULL;
-struct t_config_section *relay_config_section_weechat = NULL;
 struct t_config_section *relay_config_section_port = NULL;
 struct t_config_section *relay_config_section_path = NULL;
 
@@ -74,6 +73,7 @@ struct t_config_option *relay_config_network_allowed_ips = NULL;
 struct t_config_option *relay_config_network_auth_timeout = NULL;
 struct t_config_option *relay_config_network_bind_address = NULL;
 struct t_config_option *relay_config_network_clients_purge_delay = NULL;
+struct t_config_option *relay_config_network_commands = NULL;
 struct t_config_option *relay_config_network_compression = NULL;
 struct t_config_option *relay_config_network_ipv6 = NULL;
 struct t_config_option *relay_config_network_max_clients = NULL;
@@ -95,10 +95,6 @@ struct t_config_option *relay_config_irc_backlog_since_last_disconnect = NULL;
 struct t_config_option *relay_config_irc_backlog_since_last_message = NULL;
 struct t_config_option *relay_config_irc_backlog_tags = NULL;
 struct t_config_option *relay_config_irc_backlog_time_format = NULL;
-
-/* relay config, weechat section */
-
-struct t_config_option *relay_config_weechat_commands = NULL;
 
 /* other */
 
@@ -1288,6 +1284,22 @@ relay_config_init ()
                "clients immediately, -1 = never purge)"),
             NULL, -1, 60 * 24 * 30, "0", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_network_commands = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "commands", "string",
+            N_("comma-separated list of commands allowed/denied when input "
+               "data (text or command) is received from a client (weechat "
+               "and api protocols); "
+               "\"*\" means any command, a name beginning with \"!\" is "
+               "a negative value to prevent a command from being executed, "
+               "wildcard \"*\" is allowed in names; this option should be set "
+               "if the relay client is not safe (someone could use it to run "
+               "commands); for example \"*,!exec,!quit\" allows any command "
+               "except /exec and /quit"),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
         relay_config_network_compression = weechat_config_new_option (
             relay_config_file, relay_config_section_network,
             "compression", "integer",
@@ -1476,34 +1488,6 @@ relay_config_init ()
                "string = disable time in backlog messages"),
             NULL, 0, 0, "[%H:%M] ", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    }
-
-    /* section weechat */
-    relay_config_section_weechat = weechat_config_new_section (
-        relay_config_file, "weechat",
-        0, 0,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL);
-    if (relay_config_section_weechat)
-    {
-        relay_config_weechat_commands = weechat_config_new_option (
-            relay_config_file, relay_config_section_weechat,
-            "commands", "string",
-            N_("comma-separated list of commands allowed/denied when input "
-               "data (text or command) is received from a client; "
-               "\"*\" means any command, a name beginning with \"!\" is "
-               "a negative value to prevent a command from being executed, "
-               "wildcard \"*\" is allowed in names; this option should be set "
-               "if the relay client is not safe (someone could use it to run "
-               "commands); for example \"*,!exec,!quit\" allows any command "
-               "except /exec and /quit"),
-            NULL, 0, 0, "", NULL, 0,
-            NULL, NULL, NULL,
-            NULL, NULL, NULL,
-            NULL, NULL, NULL);
     }
 
     /* section port */

@@ -612,7 +612,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *options;
-    const char *ptr_weechat_commands;
+    const char *ptr_commands;
     char *pos;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(1);
@@ -648,15 +648,9 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
         return WEECHAT_RC_OK;
     }
 
-    ptr_weechat_commands = weechat_config_string (
-        relay_config_weechat_commands);
-    if (ptr_weechat_commands && ptr_weechat_commands[0])
-    {
-        weechat_hashtable_set (
-            options,
-            "commands",
-            weechat_config_string (relay_config_weechat_commands));
-    }
+    ptr_commands = weechat_config_string (relay_config_network_commands);
+    if (ptr_commands && ptr_commands[0])
+        weechat_hashtable_set (options, "commands", ptr_commands);
 
     /*
      * delay the execution of command after we go back in the WeeChat

@@ -480,7 +480,7 @@ error:
 RELAY_API_PROTOCOL_CALLBACK(input)
 {
     cJSON *json_body, *json_buffer, *json_command;
-    const char *ptr_buffer_name, *ptr_command, *ptr_weechat_commands;
+    const char *ptr_buffer_name, *ptr_command, *ptr_commands;
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *options;
 
@@ -541,15 +541,9 @@ RELAY_API_PROTOCOL_CALLBACK(input)
         return WEECHAT_RC_OK;
     }
 
-    ptr_weechat_commands = weechat_config_string (
-        relay_config_weechat_commands);
-    if (ptr_weechat_commands && ptr_weechat_commands[0])
-    {
-        weechat_hashtable_set (
-            options,
-            "commands",
-            weechat_config_string (relay_config_weechat_commands));
-    }
+    ptr_commands = weechat_config_string (relay_config_network_commands);
+    if (ptr_commands && ptr_commands[0])
+        weechat_hashtable_set (options, "commands", ptr_commands);
 
     /*
      * delay the execution of command after we go back in the WeeChat

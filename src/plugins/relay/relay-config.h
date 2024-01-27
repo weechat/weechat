@@ -45,6 +45,7 @@ extern struct t_config_option *relay_config_network_allowed_ips;
 extern struct t_config_option *relay_config_network_auth_timeout;
 extern struct t_config_option *relay_config_network_bind_address;
 extern struct t_config_option *relay_config_network_clients_purge_delay;
+extern struct t_config_option *relay_config_network_commands;
 extern struct t_config_option *relay_config_network_compression;
 extern struct t_config_option *relay_config_network_ipv6;
 extern struct t_config_option *relay_config_network_max_clients;
@@ -64,8 +65,6 @@ extern struct t_config_option *relay_config_irc_backlog_since_last_disconnect;
 extern struct t_config_option *relay_config_irc_backlog_since_last_message;
 extern struct t_config_option *relay_config_irc_backlog_tags;
 extern struct t_config_option *relay_config_irc_backlog_time_format;
-
-extern struct t_config_option *relay_config_weechat_commands;
 
 extern int relay_config_auto_open_buffer[];
 extern int relay_config_display_clients[];
