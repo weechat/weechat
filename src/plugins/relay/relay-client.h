@@ -119,7 +119,6 @@ struct t_relay_client
                                        /* example: server for irc protocol  */
     char *nonce;                       /* nonce used in salt of hashed pwd  */
     int password_hash_algo;            /* password hash algo (negotiated)   */
-    int password_hash_iterations;      /* password hash iterations          */
     time_t listen_start_time;          /* when listening started            */
     time_t start_time;                 /* time of client connection         */
     time_t end_time;                   /* time of client disconnection      */

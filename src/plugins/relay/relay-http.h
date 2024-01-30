@@ -41,11 +41,15 @@ enum t_relay_client_http_status
 #define RELAY_HTTP_500_INTERNAL_SERVER_ERROR  500, "Internal Server Error"
 #define RELAY_HTTP_503_SERVICE_UNAVAILABLE    503, "Service Unvavailable"
 
-#define RELAY_HTTP_ERROR_MISSING_PASSWORD  "Missing password"
-#define RELAY_HTTP_ERROR_INVALID_PASSWORD  "Invalid password"
-#define RELAY_HTTP_ERROR_MISSING_TOTP      "Missing TOTP"
-#define RELAY_HTTP_ERROR_INVALID_TOTP      "Invalid TOTP"
-#define RELAY_HTTP_ERROR_OUT_OF_MEMORY     "Out of memory"
+#define RELAY_HTTP_ERROR_MISSING_PASSWORD     "Missing password"
+#define RELAY_HTTP_ERROR_INVALID_PASSWORD     "Invalid password"
+#define RELAY_HTTP_ERROR_MISSING_TOTP         "Missing TOTP"
+#define RELAY_HTTP_ERROR_INVALID_TOTP         "Invalid TOTP"
+#define RELAY_HTTP_ERROR_INVALID_HASH_ALGO    "Invalid hash algorithm " \
+    "(not found or not supported)"
+#define RELAY_HTTP_ERROR_INVALID_SALT         "Invalid salt"
+#define RELAY_HTTP_ERROR_INVALID_ITERATIONS   "Invalid number of iterations"
+#define RELAY_HTTP_ERROR_OUT_OF_MEMORY        "Out of memory"
 
 struct t_relay_http_request
 {
@@ -71,7 +75,8 @@ extern void relay_http_request_reinit (struct t_relay_http_request *request);
 extern struct t_relay_http_request *relay_http_request_alloc ();
 extern int relay_http_parse_method_path (struct t_relay_http_request *request,
                                          const char *method_path);
-extern int relay_http_check_auth (struct t_relay_http_request *request);
+extern int relay_http_check_auth (struct t_relay_client *client,
+                                  struct t_relay_http_request *request);
 extern void relay_http_recv (struct t_relay_client *client, const char *data);
 extern int relay_http_send (struct t_relay_client *client,
                             int return_code, const char *message,

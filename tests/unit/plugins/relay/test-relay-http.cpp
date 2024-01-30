@@ -28,10 +28,15 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
+#include <gcrypt.h>
 #include "src/core/wee-config-file.h"
+#include "src/core/wee-crypto.h"
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-hook.h"
 #include "src/core/wee-string.h"
+#include "src/plugins/relay/relay.h"
+#include "src/plugins/relay/relay-client.h"
 #include "src/plugins/relay/relay-config.h"
 #include "src/plugins/relay/relay-http.h"
 #include "src/plugins/relay/relay-websocket.h"
@@ -45,6 +50,8 @@ extern int relay_http_parse_header (struct t_relay_http_request *request,
                                     const char *header);
 extern void relay_http_add_to_body (struct t_relay_http_request *request,
                                     char **partial_message);
+extern int relay_http_get_auth_status (struct t_relay_client *client,
+                                       struct t_relay_http_request *request);
 extern char *relay_http_compress (struct t_relay_http_request *request,
                                   const char *data, int data_size,
                                   int *compressed_size,
@@ -589,51 +596,244 @@ TEST(RelayHttp, AddToBody)
 
 /*
  * Tests functions:
- *   relay_http_check_auth
+ *   relay_http_get_auth_status
  */
 
-TEST(RelayHttp, CheckAuth)
+TEST(RelayHttp, GetAuthStatus)
 {
+    struct t_relay_client *client;
     struct t_relay_http_request *request;
-    char *totp, *totp2;
+    const char *good_pwd = "secret_password";
+    const char *bad_pwd = "test";
+    char *totp, *totp2, salt[1024], salt_pass[1024], hash[1024], hash_hexa[2048];
+    char auth[4096], auth_base64[4096], auth_header[8192];
+    time_t time_now;
+    int hash_size;
 
-    config_file_option_set (relay_config_network_password, "secret_password", 1);
+    config_file_option_set (relay_config_network_password, good_pwd, 1);
+
+    client = (struct t_relay_client *)calloc (1, sizeof (*client));
+    CHECK(client);
+    client->protocol = RELAY_PROTOCOL_API;
 
     request = relay_http_request_alloc ();
     CHECK(request);
 
-    /* test password */
-    LONGS_EQUAL(-1, relay_http_check_auth (request));
+    LONGS_EQUAL(-1, relay_http_get_auth_status (client, request));
     hashtable_set (request->headers, "authorization", "Basic    ");
-    LONGS_EQUAL(-2, relay_http_check_auth (request));
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client, request));
     hashtable_set (request->headers, "authorization", "Basic \u26c4");
-    LONGS_EQUAL(-2, relay_http_check_auth (request));
-    /* set invalid user/password: "weechat:test" */
-    hashtable_set (request->headers, "authorization", "Basic  d2VlY2hhdDp0ZXN0");
-    LONGS_EQUAL(-2, relay_http_check_auth (request));
-    /* set valid user/password: "weechat:secret_password" */
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client, request));
+
+    /* test invalid plain-text password ("test") */
+    hashtable_set (request->headers, "authorization", "Basic cGxhaW46dGVzdA==");
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client, request));
+
+    /* test valid plain-text password ("secret_password") */
     hashtable_set (request->headers,
-                   "authorization", "Basic d2VlY2hhdDpzZWNyZXRfcGFzc3dvcmQ");
-    LONGS_EQUAL(0, relay_http_check_auth (request));
+                   "authorization",
+                   "Basic  cGxhaW46c2VjcmV0X3Bhc3N3b3Jk");
+    LONGS_EQUAL(0, relay_http_get_auth_status (client, request));
+
+    /* test invalid hash: "SHA128" */
+    time_now = time (NULL);
+    snprintf (salt_pass, sizeof (salt_pass),
+              "%ld%s", time_now, bad_pwd);
+    LONGS_EQUAL(1, weecrypto_hash (salt_pass, strlen (salt_pass),
+                                   GCRY_MD_SHA256, hash, &hash_size));
+    LONGS_EQUAL(64, string_base_encode ("16", hash, hash_size, hash_hexa));
+    snprintf (auth, sizeof (auth),
+              "hash:sha128:%ld:%s",
+              time_now,
+              hash_hexa);
+    string_base_encode ("64", auth, strlen (auth), auth_base64);
+    snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
+    hashtable_set (request->headers, "authorization", auth_header);
+    LONGS_EQUAL(-5, relay_http_get_auth_status (client, request));
+
+    /* test invalid password hashed with SHA256: "test" */
+    time_now = time (NULL);
+    snprintf (salt_pass, sizeof (salt_pass),
+              "%ld%s", time_now, bad_pwd);
+    LONGS_EQUAL(1, weecrypto_hash (salt_pass, strlen (salt_pass),
+                                   GCRY_MD_SHA256, hash, &hash_size));
+    LONGS_EQUAL(64, string_base_encode ("16", hash, hash_size, hash_hexa));
+    snprintf (auth, sizeof (auth),
+              "hash:sha256:%ld:%s",
+              time_now,
+              hash_hexa);
+    string_base_encode ("64", auth, strlen (auth), auth_base64);
+    snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
+    hashtable_set (request->headers, "authorization", auth_header);
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client, request));
+
+    /* test invalid password hashed with SHA512: "test" */
+    time_now = time (NULL);
+    snprintf (salt_pass, sizeof (salt_pass),
+              "%ld%s", time_now, bad_pwd);
+    LONGS_EQUAL(1, weecrypto_hash (salt_pass, strlen (salt_pass),
+                                   GCRY_MD_SHA512, hash, &hash_size));
+    LONGS_EQUAL(128, string_base_encode ("16", hash, hash_size, hash_hexa));
+    snprintf (auth, sizeof (auth),
+              "hash:sha512:%ld:%s",
+              time_now,
+              hash_hexa);
+    string_base_encode ("64", auth, strlen (auth), auth_base64);
+    snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
+    hashtable_set (request->headers, "authorization", auth_header);
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client, request));
+
+    /* test valid password hashed with SHA256: "secret_password" but too old time (salt) */
+    time_now = time (NULL) - 10;
+    snprintf (salt_pass, sizeof (salt_pass),
+              "%ld%s", time_now, good_pwd);
+    LONGS_EQUAL(1, weecrypto_hash (salt_pass, strlen (salt_pass),
+                                   GCRY_MD_SHA256, hash, &hash_size));
+    LONGS_EQUAL(64, string_base_encode ("16", hash, hash_size, hash_hexa));
+    snprintf (auth, sizeof (auth),
+              "hash:sha256:%ld:%s",
+              time_now,
+              hash_hexa);
+    string_base_encode ("64", auth, strlen (auth), auth_base64);
+    snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
+    hashtable_set (request->headers, "authorization", auth_header);
+    LONGS_EQUAL(-6, relay_http_get_auth_status (client, request));
+
+    /* test valid password hashed with SHA256: "secret_password" */
+    time_now = time (NULL);
+    snprintf (salt_pass, sizeof (salt_pass),
+              "%ld%s", time_now, good_pwd);
+    LONGS_EQUAL(1, weecrypto_hash (salt_pass, strlen (salt_pass),
+                                   GCRY_MD_SHA256, hash, &hash_size));
+    LONGS_EQUAL(64, string_base_encode ("16", hash, hash_size, hash_hexa));
+    snprintf (auth, sizeof (auth),
+              "hash:sha256:%ld:%s",
+              time_now,
+              hash_hexa);
+    string_base_encode ("64", auth, strlen (auth), auth_base64);
+    snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
+    hashtable_set (request->headers, "authorization", auth_header);
+    LONGS_EQUAL(0, relay_http_get_auth_status (client, request));
+
+    /* test valid password hashed with SHA512: "secret_password" */
+    time_now = time (NULL);
+    snprintf (salt_pass, sizeof (salt_pass),
+              "%ld%s", time_now, good_pwd);
+    LONGS_EQUAL(1, weecrypto_hash (salt_pass, strlen (salt_pass),
+                                   GCRY_MD_SHA512, hash, &hash_size));
+    LONGS_EQUAL(128, string_base_encode ("16", hash, hash_size, hash_hexa));
+    snprintf (auth, sizeof (auth),
+              "hash:sha512:%ld:%s",
+              time_now,
+              hash_hexa);
+    string_base_encode ("64", auth, strlen (auth), auth_base64);
+    snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
+    hashtable_set (request->headers, "authorization", auth_header);
+    LONGS_EQUAL(0, relay_http_get_auth_status (client, request));
+
+    /* test invalid number of iterations */
+    time_now = time (NULL);
+    snprintf (salt, sizeof (salt), "%ld", time_now);
+    LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (good_pwd, strlen (good_pwd),
+                                          GCRY_MD_SHA256,
+                                          salt, strlen (salt),
+                                          123,
+                                          hash, &hash_size));
+    LONGS_EQUAL(64, string_base_encode ("16", hash, hash_size, hash_hexa));
+    snprintf (auth, sizeof (auth),
+              "hash:pbkdf2+sha256:%ld:123:%s",
+              time_now,
+              hash_hexa);
+    string_base_encode ("64", auth, strlen (auth), auth_base64);
+    snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
+    hashtable_set (request->headers, "authorization", auth_header);
+    LONGS_EQUAL(-7, relay_http_get_auth_status (client, request));
+
+    /* test invalid password hashed with PBKDF2+SHA256: "test" */
+    time_now = time (NULL);
+    snprintf (salt, sizeof (salt), "%ld", time_now);
+    LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (bad_pwd, strlen (bad_pwd),
+                                          GCRY_MD_SHA256,
+                                          salt, strlen (salt),
+                                          100000,
+                                          hash, &hash_size));
+    LONGS_EQUAL(64, string_base_encode ("16", hash, hash_size, hash_hexa));
+    snprintf (auth, sizeof (auth),
+              "hash:pbkdf2+sha256:%ld:100000:%s",
+              time_now,
+              hash_hexa);
+    string_base_encode ("64", auth, strlen (auth), auth_base64);
+    snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
+    hashtable_set (request->headers, "authorization", auth_header);
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client, request));
+
+    /* test valid password hashed with PBKDF2+SHA256: "secret_password" */
+    time_now = time (NULL);
+    snprintf (salt, sizeof (salt), "%ld", time_now);
+    LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (good_pwd, strlen (good_pwd),
+                                          GCRY_MD_SHA256,
+                                          salt, strlen (salt),
+                                          100000,
+                                          hash, &hash_size));
+    LONGS_EQUAL(64, string_base_encode ("16", hash, hash_size, hash_hexa));
+    snprintf (auth, sizeof (auth),
+              "hash:pbkdf2+sha256:%ld:100000:%s",
+              time_now,
+              hash_hexa);
+    string_base_encode ("64", auth, strlen (auth), auth_base64);
+    snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
+    hashtable_set (request->headers, "authorization", auth_header);
+    LONGS_EQUAL(0, relay_http_get_auth_status (client, request));
+
+    /* test valid password hashed with PBKDF2+SHA512: "secret_password" */
+    time_now = time (NULL);
+    snprintf (salt, sizeof (salt), "%ld", time_now);
+    LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (good_pwd, strlen (good_pwd),
+                                          GCRY_MD_SHA512,
+                                          salt, strlen (salt),
+                                          100000,
+                                          hash, &hash_size));
+    LONGS_EQUAL(128, string_base_encode ("16", hash, hash_size, hash_hexa));
+    snprintf (auth, sizeof (auth),
+              "hash:pbkdf2+sha512:%ld:100000:%s",
+              time_now,
+              hash_hexa);
+    string_base_encode ("64", auth, strlen (auth), auth_base64);
+    snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
+    hashtable_set (request->headers, "authorization", auth_header);
+    LONGS_EQUAL(0, relay_http_get_auth_status (client, request));
 
     /* test missing/invalid TOTP */
     config_file_option_set (relay_config_network_totp_secret, "secretbase32", 1);
     config_file_option_set (relay_config_network_totp_window, "1", 1);
-    LONGS_EQUAL(-3, relay_http_check_auth (request));
+    LONGS_EQUAL(-3, relay_http_get_auth_status (client, request));
     totp = hook_info_get (NULL, "totp_generate", "secretbase32");
     CHECK(totp);
     totp2 = strdup (totp);
     totp2[0] = (totp2[0] == '1') ? '2' : '1';
     hashtable_set (request->headers, "x-weechat-totp", totp2);
-    LONGS_EQUAL(-4, relay_http_check_auth (request));
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client, request));
     hashtable_set (request->headers, "x-weechat-totp", totp);
-    LONGS_EQUAL(0, relay_http_check_auth (request));
+    LONGS_EQUAL(0, relay_http_get_auth_status (client, request));
     free (totp);
     free (totp2);
     config_file_option_reset (relay_config_network_totp_secret, 1);
     config_file_option_reset (relay_config_network_totp_window, 1);
 
     config_file_option_reset (relay_config_network_password, 1);
+
+    relay_http_request_free (request);
+    free (client);
+}
+
+/*
+ * Tests functions:
+ *   relay_http_check_auth
+ */
+
+TEST(RelayHttp, CheckAuth)
+{
+    /* TODO: write tests */
 }
 
 /*

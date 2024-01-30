@@ -134,7 +134,7 @@ relay_api_unhook_signals (struct t_relay_client *client)
 
 void
 relay_api_recv_http (struct t_relay_client *client,
-                struct t_relay_http_request *request)
+                     struct t_relay_http_request *request)
 {
     relay_api_protocol_recv_http (client, request);
 }

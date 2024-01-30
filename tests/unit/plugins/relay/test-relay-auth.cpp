@@ -26,7 +26,16 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
+#include "src/core/wee-config-file.h"
+#include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-auth.h"
+#include "src/plugins/relay/relay-client.h"
+#include "src/plugins/relay/relay-config.h"
+
+extern int relay_auth_check_salt (struct t_relay_client *client,
+                                  const char *salt_hexa,
+                                  const char *salt, int salt_size);
 }
 
 #define WEE_CHECK_PARSE_SHA(__parameters)                               \
@@ -96,6 +105,38 @@ TEST(RelayAuth, GenerateNonce)
     CHECK(isxdigit ((int)nonce[2]));
     CHECK(isxdigit ((int)nonce[3]));
     free (nonce);
+}
+
+/*
+ * Tests functions:
+ *   relay_auth_check_password_plain
+ */
+
+TEST(RelayAuth, CheckPasswordPlain)
+{
+    struct t_relay_client *client;
+
+    client = (struct t_relay_client *)calloc (1, sizeof (*client));
+    CHECK(client);
+    client->protocol = RELAY_PROTOCOL_API;
+
+    /* invalid arguments */
+    LONGS_EQUAL(-2, relay_auth_check_password_plain (client, NULL, NULL));
+    LONGS_EQUAL(-2, relay_auth_check_password_plain (client, "abcd", NULL));
+    LONGS_EQUAL(-2, relay_auth_check_password_plain (client, NULL, "password"));
+
+    /* wrong password */
+    LONGS_EQUAL(-2, relay_auth_check_password_plain (client, "test", "password"));
+    LONGS_EQUAL(-2, relay_auth_check_password_plain (client, "Password", "password"));
+
+    /* good password */
+    LONGS_EQUAL(0, relay_auth_check_password_plain (client, "", ""));
+    LONGS_EQUAL(0, relay_auth_check_password_plain (client, "password", "password"));
+
+    /* test with "plain" disabled */
+    config_file_option_set (relay_config_network_password_hash_algo, "*,!plain", 1);
+    LONGS_EQUAL(-1, relay_auth_check_password_plain (client, "password", "password"));
+    config_file_option_reset (relay_config_network_password_hash_algo, 1);
 }
 
 /*
@@ -241,23 +282,53 @@ TEST(RelayAuth, ParsePbkdf2)
 
 /*
  * Tests functions:
- *   relay_auth_check_password_plain
+ *   relay_auth_check_salt
  */
 
-TEST(RelayAuth, CheckPasswordPlain)
+TEST(RelayAuth, CheckSalt)
 {
-    /* invalid arguments */
-    LONGS_EQUAL(0, relay_auth_check_password_plain (NULL, NULL));
-    LONGS_EQUAL(0, relay_auth_check_password_plain ("abcd", NULL));
-    LONGS_EQUAL(0, relay_auth_check_password_plain (NULL, "password"));
+    struct t_relay_client *client;
+    time_t time_now;
+    char salt[128];
 
-    /* wrong password */
-    LONGS_EQUAL(0, relay_auth_check_password_plain ("test", "password"));
-    LONGS_EQUAL(0, relay_auth_check_password_plain ("Password", "password"));
+    client = (struct t_relay_client *)calloc (1, sizeof (*client));
+    CHECK(client);
+    client->nonce = strdup ("01aa03bb");
 
-    /* good password */
-    LONGS_EQUAL(1, relay_auth_check_password_plain ("", ""));
-    LONGS_EQUAL(1, relay_auth_check_password_plain ("password", "password"));
+    client->protocol = RELAY_PROTOCOL_API;
+
+    LONGS_EQUAL(0, relay_auth_check_salt (NULL, NULL, NULL, 0));
+    LONGS_EQUAL(0, relay_auth_check_salt (client, NULL, NULL, 0));
+    LONGS_EQUAL(0, relay_auth_check_salt (client, NULL, "test", 4));
+    LONGS_EQUAL(0, relay_auth_check_salt (client, NULL, "1234", 4));
+
+    time_now = time (NULL);
+    snprintf (salt, sizeof (salt), "%ld", time_now);
+    LONGS_EQUAL(1, relay_auth_check_salt (client, NULL, salt, strlen (salt)));
+    time_now = time (NULL) - 2;
+    snprintf (salt, sizeof (salt), "%ld", time_now);
+    LONGS_EQUAL(1, relay_auth_check_salt (client, NULL, salt, strlen (salt)));
+    time_now = time (NULL) + 2;
+    snprintf (salt, sizeof (salt), "%ld", time_now);
+    LONGS_EQUAL(1, relay_auth_check_salt (client, NULL, salt, strlen (salt)));
+    time_now = time (NULL) - 10;
+    snprintf (salt, sizeof (salt), "%ld", time_now);
+    LONGS_EQUAL(0, relay_auth_check_salt (client, NULL, salt, strlen (salt)));
+
+    client->protocol = RELAY_PROTOCOL_WEECHAT;
+
+    LONGS_EQUAL(0, relay_auth_check_salt (NULL, NULL, NULL, 0));
+    LONGS_EQUAL(0, relay_auth_check_salt (client, NULL, NULL, 0));
+    LONGS_EQUAL(0, relay_auth_check_salt (client, NULL, "test", 4));
+    LONGS_EQUAL(0, relay_auth_check_salt (client, NULL, "1234", 4));
+
+    LONGS_EQUAL(0, relay_auth_check_salt (client, "01aa", "\x01\xaa", 2));
+    LONGS_EQUAL(0, relay_auth_check_salt (client, "01aa03bb", "\x01\xaa\x03\xbb", 4));
+    LONGS_EQUAL(1, relay_auth_check_salt (client, "01aa03bbcc", "\x01\xaa\x03\xbb\xcc", 5));
+    LONGS_EQUAL(1, relay_auth_check_salt (client, "01AA03BBCC", "\x01\xaa\x03\xbb\xcc", 5));
+
+    free (client->nonce);
+    free (client);
 }
 
 /*
@@ -402,4 +473,14 @@ TEST(RelayAuth, CheckHashPbkdf2)
                     "b635d9b1e461273c3a8ad179cb5285b32f0c5ed0360e37b31713977e"
                     "f53326c3729ffd12",
                     "password"));
+}
+
+/*
+ * Tests functions:
+ *   relay_auth_password_hash
+ */
+
+TEST(RelayAuth, PasswordHash)
+{
+    /* TODO: write tests */
 }

@@ -170,7 +170,9 @@ relay_weechat_protocol_handshake_reply (struct t_relay_client *client,
             "password_hash_algo",
             (client->password_hash_algo >= 0) ?
             relay_auth_password_hash_algo_name[client->password_hash_algo] : "");
-        snprintf (string, sizeof (string), "%d", client->password_hash_iterations);
+        snprintf (string, sizeof (string),
+                  "%d",
+                  weechat_config_integer (relay_config_network_password_hash_iterations));
         weechat_hashtable_set (
             hashtable,
             "password_hash_iterations",
@@ -388,13 +390,16 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                 if (strcmp (options[i], "password") == 0)
                 {
                     password_received = 1;
-                    if (relay_auth_password (client, pos, relay_password))
+                    if ((client->password_hash_algo == RELAY_AUTH_PASSWORD_HASH_PLAIN)
+                        && (relay_auth_check_password_plain (client, pos, relay_password) == 0))
+                    {
                         RELAY_WEECHAT_DATA(client, password_ok) = 1;
+                    }
                 }
                 else if (strcmp (options[i], "password_hash") == 0)
                 {
                     password_received = 1;
-                    if (relay_auth_password_hash (client, pos, relay_password))
+                    if (relay_auth_password_hash (client, pos, relay_password) == 0)
                         RELAY_WEECHAT_DATA(client, password_ok) = 1;
                 }
                 else if (strcmp (options[i], "totp") == 0)

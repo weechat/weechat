@@ -81,6 +81,7 @@ struct t_config_option *relay_config_network_nonce_size = NULL;
 struct t_config_option *relay_config_network_password = NULL;
 struct t_config_option *relay_config_network_password_hash_algo = NULL;
 struct t_config_option *relay_config_network_password_hash_iterations = NULL;
+struct t_config_option *relay_config_network_time_window = NULL;
 struct t_config_option *relay_config_network_tls_cert_key = NULL;
 struct t_config_option *relay_config_network_tls_priorities = NULL;
 struct t_config_option *relay_config_network_totp_secret = NULL;
@@ -1369,6 +1370,13 @@ relay_config_init ()
                "but is slower to compute; this number should not be too high "
                "if your CPU is slow"),
             NULL, 1, 1000000, "100000", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_network_time_window = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "time_window", "integer",
+            N_("number of seconds to allow before and after the current time "
+               "for salted password in api protocol"),
+            NULL, 0, 256, "5", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         relay_config_network_tls_cert_key = weechat_config_new_option (
             relay_config_file, relay_config_section_network,

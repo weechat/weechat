@@ -37,11 +37,9 @@ extern char *relay_auth_password_hash_algo_name[];
 
 extern int relay_auth_password_hash_algo_search (const char *name);
 extern char *relay_auth_generate_nonce (int size);
-extern int relay_auth_check_password_plain (const char *password,
+extern int relay_auth_check_password_plain (struct t_relay_client *client,
+                                            const char *password,
                                             const char *relay_password);
-extern int relay_auth_password (struct t_relay_client *client,
-                                const char *password,
-                                const char *relay_password);
 extern void relay_auth_parse_sha (const char *parameters,
                                   char **salt_hexa,
                                   char **salt,
@@ -53,8 +51,6 @@ extern void relay_auth_parse_pbkdf2 (const char *parameters,
                                      int *salt_size,
                                      int *iterations,
                                      char **hash);
-extern int relay_auth_check_salt (struct t_relay_client *client,
-                                  const char *salt_hexa);
 extern int relay_auth_check_hash_sha (const char *hash_algo,
                                       const char *salt,
                                       int salt_size,

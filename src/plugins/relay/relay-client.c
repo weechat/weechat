@@ -1391,8 +1391,6 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
             (const char **)relay_config_network_password_hash_algo_list,
             1);
         new_client->password_hash_algo = (plain_text_password) ? 0 : -1;
-        new_client->password_hash_iterations = weechat_config_integer (
-            relay_config_network_password_hash_iterations);
         new_client->listen_start_time = server->start_time;
         new_client->start_time = time (NULL);
         new_client->end_time = 0;
@@ -1665,12 +1663,6 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
             new_client->password_hash_algo = weechat_infolist_integer (infolist, "password_hash_algo");
         else
             new_client->password_hash_algo = RELAY_AUTH_PASSWORD_HASH_PLAIN;
-        /* "password_hash_iterations" is new in WeeChat 2.9 */
-        if (weechat_infolist_search_var (infolist, "password_hash_iterations"))
-            new_client->password_hash_iterations = weechat_infolist_integer (infolist, "password_hash_iterations");
-        else
-            new_client->password_hash_iterations = weechat_config_integer (
-                relay_config_network_password_hash_iterations);
         new_client->listen_start_time = weechat_infolist_time (infolist, "listen_start_time");
         new_client->start_time = weechat_infolist_time (infolist, "start_time");
         new_client->end_time = weechat_infolist_time (infolist, "end_time");
@@ -2102,8 +2094,6 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "password_hash_algo", client->password_hash_algo))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "password_hash_iterations", client->password_hash_iterations))
-        return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "listen_start_time", client->listen_start_time))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "start_time", client->start_time))
@@ -2188,7 +2178,6 @@ relay_client_print_log ()
                             ptr_client->password_hash_algo,
                             (ptr_client->password_hash_algo >= 0) ?
                             relay_auth_password_hash_algo_name[ptr_client->password_hash_algo] : "");
-        weechat_log_printf ("  password_hash_iterations. : %d",    ptr_client->password_hash_iterations);
         weechat_log_printf ("  listen_start_time . . . . : %lld",  (long long)ptr_client->listen_start_time);
         weechat_log_printf ("  start_time. . . . . . . . : %lld",  (long long)ptr_client->start_time);
         weechat_log_printf ("  end_time. . . . . . . . . : %lld",  (long long)ptr_client->end_time);

@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include <gcrypt.h>
 
 #include "../weechat-plugin.h"
@@ -103,37 +104,28 @@ relay_auth_generate_nonce (int size)
  * Checks if password received as plain text is valid.
  *
  * Returns:
- *   1: password is valid
- *   0: password is not valid
+ *    0: password is valid
+ *   -1: (plain-text password ("plain") is not allowed
+ *   -2: password is not valid
  */
 
 int
-relay_auth_check_password_plain (const char *password,
+relay_auth_check_password_plain (struct t_relay_client *client,
+                                 const char *password,
                                  const char *relay_password)
 {
-    if (!password || !relay_password)
-        return 0;
+    if (!client || !password || !relay_password)
+        return -2;
 
-    return (strcmp (password, relay_password) == 0) ? 1 : 0;
-}
+    if (!weechat_string_match_list (
+            "plain",
+            (const char **)relay_config_network_password_hash_algo_list,
+            1))
+    {
+        return -1;
+    }
 
-/*
- * Authenticates with password (plain text).
- *
- * Returns:
- *   1: authentication OK
- *   0: authentication failed
- */
-
-int
-relay_auth_password (struct t_relay_client *client,
-                     const char *password, const char *relay_password)
-{
-    if (client->password_hash_algo != RELAY_AUTH_PASSWORD_HASH_PLAIN)
-        return 0;
-
-    return relay_auth_check_password_plain (password, relay_password);
-
+    return (strcmp (password, relay_password) == 0) ? 0 : -2;
 }
 
 /*
@@ -145,6 +137,11 @@ relay_auth_password (struct t_relay_client *client,
  *
  *   salt is the salt in hexadecimal
  *   hash is the hashed password with the parameters above, in hexadecimal
+ *
+ * If salt_hexa is not NULL, it is set with salt as hexadecimal, and the parsed
+ * salt is decoded and put in salt.
+ * If salt_hexa is NULL, parsed salt is considered not encoded and is put
+ * directly in salt.
  */
 
 void
@@ -155,7 +152,8 @@ relay_auth_parse_sha (const char *parameters,
     char **argv;
     int argc;
 
-    *salt_hexa = NULL;
+    if (salt_hexa)
+        *salt_hexa = NULL;
     *salt = NULL;
     *salt_size = 0;
     *hash = NULL;
@@ -174,17 +172,26 @@ relay_auth_parse_sha (const char *parameters,
     }
 
     /* parameter 1: salt */
-    *salt = malloc (strlen (argv[0]) + 1);
-    if (*salt)
+    if (salt_hexa)
     {
-        *salt_size = weechat_string_base_decode ("16", argv[0], *salt);
-        if (*salt_size > 0)
-            *salt_hexa = strdup (argv[0]);
-        else
+        *salt = malloc (strlen (argv[0]) + 1);
+        if (*salt)
         {
-            free (*salt);
-            *salt = NULL;
+            *salt_size = weechat_string_base_decode ("16", argv[0], *salt);
+            if (*salt_size > 0)
+                *salt_hexa = strdup (argv[0]);
+            else
+            {
+                free (*salt);
+                *salt = NULL;
+            }
         }
+    }
+    else
+    {
+        *salt = strdup (argv[0]);
+        if (*salt)
+            *salt_size = strlen (*salt);
     }
 
     /* parameter 2: the SHA256 or SHA512 hash */
@@ -203,6 +210,11 @@ relay_auth_parse_sha (const char *parameters,
  *   salt is the salt in hexadecimal
  *   iterations it the number of iterations (≥ 1)
  *   hash is the hashed password with the parameters above, in hexadecimal
+ *
+ * If salt_hexa is not NULL, it is set with salt as hexadecimal, and the parsed
+ * salt is decoded and put in salt.
+ * If salt_hexa is NULL, parsed salt is considered not encoded and is put
+ * directly in salt.
  */
 
 void
@@ -213,7 +225,8 @@ relay_auth_parse_pbkdf2 (const char *parameters,
     char **argv, *error;
     int argc;
 
-    *salt_hexa = NULL;
+    if (salt_hexa)
+        *salt_hexa = NULL;
     *salt = NULL;
     *salt_size = 0;
     *iterations = 0;
@@ -233,17 +246,26 @@ relay_auth_parse_pbkdf2 (const char *parameters,
     }
 
     /* parameter 1: salt */
-    *salt = malloc (strlen (argv[0]) + 1);
-    if (*salt)
+    if (salt_hexa)
     {
-        *salt_size = weechat_string_base_decode ("16", argv[0], *salt);
-        if (*salt_size > 0)
-            *salt_hexa = strdup (argv[0]);
-        else
+        *salt = malloc (strlen (argv[0]) + 1);
+        if (*salt)
         {
-            free (*salt);
-            *salt = NULL;
+            *salt_size = weechat_string_base_decode ("16", argv[0], *salt);
+            if (*salt_size > 0)
+                *salt_hexa = strdup (argv[0]);
+            else
+            {
+                free (*salt);
+                *salt = NULL;
+            }
         }
+    }
+    else
+    {
+        *salt = strdup (argv[0]);
+        if (*salt)
+            *salt_size = strlen (*salt);
     }
 
     /* parameter 2: iterations */
@@ -261,7 +283,12 @@ relay_auth_parse_pbkdf2 (const char *parameters,
 /*
  * Checks if the salt received from the client is valid.
  *
- * It is valid if both conditions are true:
+ * For "api" protocol, it is valid if both conditions are true:
+ *   1. the salt is a valid integer (unix timestamp)
+ *   2. the timestamp value is current timestamp (or +/- seconds, according to
+ *      the option relay.network.time_window)
+ *
+ * For other protocols, it is valid if both conditions are true:
  *   1. the salt is longer than the server nonce, so it means it includes a
  *      client nonce
  *   2. the salt begins with the server nonce (client->nonce)
@@ -272,8 +299,31 @@ relay_auth_parse_pbkdf2 (const char *parameters,
  */
 
 int
-relay_auth_check_salt (struct t_relay_client *client, const char *salt_hexa)
+relay_auth_check_salt (struct t_relay_client *client,
+                       const char *salt_hexa, const char *salt, int salt_size)
 {
+    long number;
+    int time_window;
+    char *error;
+    time_t time_now;
+
+    if (!client)
+        return 0;
+
+    if (client->protocol == RELAY_PROTOCOL_API)
+    {
+        if (!salt || (salt_size < 1))
+            return 0;
+        error = NULL;
+        number = strtol (salt, &error, 10);
+        if (!error || error[0])
+            return 0;
+        time_now = time (NULL);
+        time_window = weechat_config_integer (relay_config_network_time_window);
+        return ((number >= time_now - time_window)
+                && (number <= time_now + time_window)) ? 1 : 0;
+    }
+
     return (salt_hexa
             && client->nonce
             && (strlen (salt_hexa) > strlen (client->nonce))
@@ -370,8 +420,11 @@ relay_auth_check_hash_pbkdf2 (const char *hash_pbkdf2_algo,
  * Authenticates with password hash.
  *
  * Returns:
- *   1: authentication OK
- *   0: authentication failed
+ *    0: authentication OK
+ *   -1: invalid hash algorithm
+ *   -2: invalid salt
+ *   -3: invalid number of iterations
+ *   -4: invalid password (hash)
  */
 
 int
@@ -387,40 +440,83 @@ relay_auth_password_hash (struct t_relay_client *client,
 
     str_hash_algo = NULL;
 
-    /* no authentication supported at all? */
-    if (client->password_hash_algo < 0)
+    /* no authentication supported at all with weechat protocol? */
+    if ((client->protocol == RELAY_PROTOCOL_WEECHAT)
+        && (client->password_hash_algo < 0))
+    {
+        rc = -1;
         goto end;
+    }
 
     if (!hashed_password || !relay_password)
+    {
+        rc = -4;
         goto end;
+    }
 
     pos_hash = strchr (hashed_password, ':');
     if (!pos_hash)
+    {
+        rc = -4;
         goto end;
+    }
 
     str_hash_algo = weechat_strndup (hashed_password,
                                      pos_hash - hashed_password);
     if (!str_hash_algo)
+    {
+        rc = -1;
         goto end;
+    }
 
     pos_hash++;
 
     hash_algo = relay_auth_password_hash_algo_search (str_hash_algo);
-
-    if (hash_algo != client->password_hash_algo)
+    if (hash_algo < 0)
+    {
+        rc = -1;
         goto end;
+    }
+
+    /* only algo negotiated in handshake is allowed for protocol "weechat" */
+    if ((client->protocol == RELAY_PROTOCOL_WEECHAT)
+        && (hash_algo != client->password_hash_algo))
+    {
+        rc = -1;
+        goto end;
+    }
+
+    /* only algos matching allowed algos are allowed for protocol "api" */
+    if ((client->protocol == RELAY_PROTOCOL_API)
+        && (!weechat_string_match_list (
+                relay_auth_password_hash_algo_name[hash_algo],
+                (const char **)relay_config_network_password_hash_algo_list,
+                1)))
+    {
+        rc = -1;
+        goto end;
+    }
+
+    salt_hexa = NULL;
 
     switch (hash_algo)
     {
         case RELAY_AUTH_PASSWORD_HASH_SHA256:
         case RELAY_AUTH_PASSWORD_HASH_SHA512:
-            relay_auth_parse_sha (pos_hash, &salt_hexa, &salt, &salt_size,
-                                  &hash_sha);
-            if (relay_auth_check_salt (client, salt_hexa)
-                && relay_auth_check_hash_sha (str_hash_algo, salt, salt_size,
-                                              hash_sha, relay_password))
+            relay_auth_parse_sha (
+                pos_hash,
+                (client->protocol == RELAY_PROTOCOL_API) ? NULL : &salt_hexa,
+                &salt,
+                &salt_size,
+                &hash_sha);
+            if (!relay_auth_check_salt (client, salt_hexa, salt, salt_size))
             {
-                rc = 1;
+                rc = -2;
+            }
+            else if (!relay_auth_check_hash_sha (str_hash_algo, salt, salt_size,
+                                                 hash_sha, relay_password))
+            {
+                rc = -4;;
             }
             if (salt_hexa)
                 free (salt_hexa);
@@ -432,15 +528,26 @@ relay_auth_password_hash (struct t_relay_client *client,
         case RELAY_AUTH_PASSWORD_HASH_PBKDF2_SHA256:
         case RELAY_AUTH_PASSWORD_HASH_PBKDF2_SHA512:
             hash_pbkdf2_algo = strdup (str_hash_algo + 7);
-            relay_auth_parse_pbkdf2 (pos_hash, &salt_hexa, &salt, &salt_size,
-                                     &iterations, &hash_pbkdf2);
-            if ((iterations == client->password_hash_iterations)
-                && relay_auth_check_salt (client, salt_hexa)
-                && relay_auth_check_hash_pbkdf2 (hash_pbkdf2_algo, salt,
-                                                 salt_size, iterations,
-                                                 hash_pbkdf2, relay_password))
+            relay_auth_parse_pbkdf2 (
+                pos_hash,
+                (client->protocol == RELAY_PROTOCOL_API) ? NULL : &salt_hexa,
+                &salt,
+                &salt_size,
+                &iterations,
+                &hash_pbkdf2);
+            if (iterations != weechat_config_integer (relay_config_network_password_hash_iterations))
             {
-                rc = 1;
+                rc = -3;
+            }
+            else if (!relay_auth_check_salt (client, salt_hexa, salt, salt_size))
+            {
+                rc = -2;
+            }
+            else if (!relay_auth_check_hash_pbkdf2 (hash_pbkdf2_algo, salt,
+                                                    salt_size, iterations,
+                                                    hash_pbkdf2, relay_password))
+            {
+                rc = -4;
             }
             if (hash_pbkdf2_algo)
                 free (hash_pbkdf2_algo);
@@ -452,6 +559,7 @@ relay_auth_password_hash (struct t_relay_client *client,
                 free (hash_pbkdf2);
             break;
         case RELAY_NUM_PASSWORD_HASH_ALGOS:
+            rc = -4;
             break;
     }
 

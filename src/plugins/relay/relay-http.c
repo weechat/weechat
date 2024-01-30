@@ -31,6 +31,7 @@
 
 #include "../weechat-plugin.h"
 #include "relay.h"
+#include "relay-auth.h"
 #include "relay-client.h"
 #include "relay-config.h"
 #include "relay-http.h"
@@ -514,7 +515,7 @@ relay_http_add_to_body (struct t_relay_http_request *request,
 }
 
 /*
- * Checks if authentication is OK.
+ * Gets authentication status according to headers in the request.
  *
  * Returns:
  *    0: authentication OK (password + TOTP if enabled)
@@ -522,11 +523,15 @@ relay_http_add_to_body (struct t_relay_http_request *request,
  *   -2: invalid password
  *   -3: missing TOTP
  *   -4: invalid TOTP
- *   -5: out of memory
+ *   -5: invalid hash algorithm
+ *   -6: invalid salt
+ *   -7: invalid number of iterations (PBKDF2)
+ *   -8: out of memory
  */
 
 int
-relay_http_check_auth (struct t_relay_http_request *request)
+relay_http_get_auth_status (struct t_relay_client *client,
+                            struct t_relay_http_request *request)
 {
     const char *auth, *client_totp, *pos;
     char *relay_password, *totp_secret, *info_totp_args, *info_totp;
@@ -537,6 +542,15 @@ relay_http_check_auth (struct t_relay_http_request *request)
     relay_password = NULL;
     totp_secret = NULL;
     user_pass = NULL;
+
+    relay_password = weechat_string_eval_expression (
+        weechat_config_string (relay_config_network_password),
+        NULL, NULL, NULL);
+    if (!relay_password)
+    {
+        rc = -8;
+        goto end;
+    }
 
     auth = weechat_hashtable_get (request->headers, "authorization");
     if (!auth || (weechat_strncasecmp (auth, "basic ", 6) != 0))
@@ -555,7 +569,7 @@ relay_http_check_auth (struct t_relay_http_request *request)
     user_pass = malloc (length + 1);
     if (!user_pass)
     {
-        rc = -5;
+        rc = -8;
         goto end;
     }
     length = weechat_string_base_decode ("64", pos, user_pass);
@@ -564,23 +578,43 @@ relay_http_check_auth (struct t_relay_http_request *request)
         rc = -2;
         goto end;
     }
-    if (strncmp (user_pass, "weechat:", 8) != 0)
+    if (strncmp (user_pass, "plain:", 6) == 0)
     {
-        rc = -2;
-        goto end;
+        switch (relay_auth_check_password_plain (client, user_pass + 6, relay_password))
+        {
+            case 0: /* password OK */
+                break;
+            case -1: /* "plain" is not allowed */
+                rc = -5;
+                goto end;
+            case -2: /* invalid password */
+            default:
+                rc = -2;
+                goto end;
+        }
     }
-
-    relay_password = weechat_string_eval_expression (
-        weechat_config_string (relay_config_network_password),
-        NULL, NULL, NULL);
-
-    if (!relay_password)
+    else if (strncmp (user_pass, "hash:", 5) == 0)
     {
-        rc = -5;
-        goto end;
+        switch (relay_auth_password_hash (client, user_pass + 5, relay_password))
+        {
+            case 0: /* password OK */
+                break;
+            case -1: /* invalid hash algorithm */
+                rc = -5;
+                goto end;
+            case -2: /* invalid salt */
+                rc = -6;
+                goto end;
+            case -3: /* invalid iterations */
+                rc = -7;
+                goto end;
+            case -4: /* invalid password */
+            default:
+                rc = -2;
+                goto end;
+        }
     }
-
-    if (strcmp (user_pass + 8, relay_password) != 0)
+    else
     {
         rc = -2;
         goto end;
@@ -629,6 +663,69 @@ end:
     if (user_pass)
         free (user_pass);
     return rc;
+}
+
+/*
+ * Checks authentication in HTTP request.
+ *
+ * Returns:
+ *   1: authentication OK
+ *   0: authentication failed
+ */
+
+int
+relay_http_check_auth (struct t_relay_client *client,
+                       struct t_relay_http_request *request)
+{
+    int rc;
+
+    rc = relay_http_get_auth_status (client, request);
+    switch (rc)
+    {
+        case 0: /* authentication OK */
+            break;
+        case -1: /* missing password */
+            relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
+                                        NULL,
+                                        RELAY_HTTP_ERROR_MISSING_PASSWORD);
+            break;
+        case -2: /* invalid password */
+            relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
+                                        NULL,
+                                        RELAY_HTTP_ERROR_INVALID_PASSWORD);
+            break;
+        case -3: /* missing TOTP */
+            relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
+                                        NULL,
+                                        RELAY_HTTP_ERROR_MISSING_TOTP);
+            break;
+        case -4: /* invalid TOTP */
+            relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
+                                        NULL,
+                                        RELAY_HTTP_ERROR_INVALID_TOTP);
+            break;
+        case -5: /* invalid hash algorithm */
+            relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
+                                        NULL,
+                                        RELAY_HTTP_ERROR_INVALID_HASH_ALGO);
+            break;
+        case -6: /* invalid salt */
+            relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
+                                        NULL,
+                                        RELAY_HTTP_ERROR_INVALID_SALT);
+            break;
+        case -7: /* invalid iterations */
+            relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
+                                        NULL,
+                                        RELAY_HTTP_ERROR_INVALID_ITERATIONS);
+            break;
+        case -8: /* out of memory */
+            relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
+                                        NULL,
+                                        RELAY_HTTP_ERROR_OUT_OF_MEMORY);
+            break;
+    }
+    return (rc == 0) ? 1 : 0;
 }
 
 /*
@@ -681,41 +778,14 @@ relay_http_process_websocket (struct t_relay_client *client)
     /* handshake from client is valid, auth is mandatory for "api" protocol */
     if (client->protocol == RELAY_PROTOCOL_API)
     {
-        switch (relay_http_check_auth (client->http_req))
+        if (relay_http_check_auth (client, client->http_req))
         {
-            case 0: /* authentication OK */
-                relay_client_set_status (client, RELAY_STATUS_CONNECTED);
-                break;
-            case -1: /* missing password */
-                relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
-                                            NULL,
-                                            RELAY_HTTP_ERROR_MISSING_PASSWORD);
-                relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
-                return;
-            case -2: /* invalid password */
-                relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
-                                            NULL,
-                                            RELAY_HTTP_ERROR_INVALID_PASSWORD);
-                relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
-                return;
-            case -3: /* missing TOTP */
-                relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
-                                            NULL,
-                                            RELAY_HTTP_ERROR_MISSING_TOTP);
-                relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
-                return;
-            case -4: /* invalid TOTP */
-                relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
-                                            NULL,
-                                            RELAY_HTTP_ERROR_INVALID_TOTP);
-                relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
-                return;
-            case -5: /* out of memory */
-                relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
-                                            NULL,
-                                            RELAY_HTTP_ERROR_OUT_OF_MEMORY);
-                relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
-                return;
+            relay_client_set_status (client, RELAY_STATUS_CONNECTED);
+        }
+        else
+        {
+            relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
+            return;
         }
     }
 

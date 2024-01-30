@@ -39,60 +39,6 @@
 
 
 /*
- * Checks authentication from client.
- *
- * Returns:
- *   1: OK, client authenticated
- *   0: client NOT authenticated
- */
-
-int
-relay_api_protocol_check_auth (struct t_relay_client *client,
-                               struct t_relay_http_request *request)
-{
-    if (client->status == RELAY_STATUS_CONNECTED)
-        return 1;
-
-    switch (relay_http_check_auth (request))
-    {
-        case 0: /* OK */
-            return 1;
-        case -1: /* missing password */
-            relay_api_msg_send_error_json (client,
-                                           RELAY_HTTP_401_UNAUTHORIZED,
-                                           "WWW-Authenticate: Basic realm=Password",
-                                           RELAY_HTTP_ERROR_MISSING_PASSWORD);
-            break;
-        case -2: /* invalid password */
-            relay_api_msg_send_error_json (client,
-                                           RELAY_HTTP_401_UNAUTHORIZED,
-                                           NULL,
-                                           RELAY_HTTP_ERROR_INVALID_PASSWORD);
-            break;
-        case -3: /* missing TOTP */
-            relay_api_msg_send_error_json (client,
-                                           RELAY_HTTP_401_UNAUTHORIZED,
-                                           NULL,
-                                           RELAY_HTTP_ERROR_MISSING_TOTP);
-            break;
-        case -4: /* invalid TOTP */
-            relay_api_msg_send_error_json (client,
-                                           RELAY_HTTP_401_UNAUTHORIZED,
-                                           NULL,
-                                           RELAY_HTTP_ERROR_INVALID_TOTP);
-            break;
-        case -5: /* out of memory */
-            relay_api_msg_send_error_json (client,
-                                           RELAY_HTTP_503_SERVICE_UNAVAILABLE,
-                                           NULL,
-                                           RELAY_HTTP_ERROR_OUT_OF_MEMORY);
-            break;
-    }
-
-    return 0;
-}
-
-/*
  * Returns value of an URL parameter as boolean (0 or 1), using a default value
  * if the parameter is not set or if it's not a valid boolean.
  */
@@ -677,7 +623,8 @@ relay_api_protocol_recv_http (struct t_relay_client *client,
     if (!request || RELAY_CLIENT_HAS_ENDED(client))
         return;
 
-    if (!relay_api_protocol_check_auth (client, request))
+    if ((client->status != RELAY_STATUS_CONNECTED)
+        && !relay_http_check_auth (client, request))
     {
         relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
         return;
