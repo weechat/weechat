@@ -1217,7 +1217,7 @@ relay_http_send_json (struct t_relay_client *client,
     int num_bytes, length;
     char *headers2;
 
-    if (!client || !message || !json_string)
+    if (!client || !message)
         return -1;
 
     num_bytes = -1;
@@ -1234,8 +1234,12 @@ relay_http_send_json (struct t_relay_client *client,
                   "Content-Type: application/json; charset=utf-8");
     }
 
-    num_bytes = relay_http_send (client, return_code, message, headers2,
-                                 json_string, strlen (json_string));
+    num_bytes = relay_http_send (client,
+                                 return_code,
+                                 message,
+                                 headers2,
+                                 json_string,
+                                 (json_string) ? strlen (json_string) : 0);
 
     if (headers2)
         free (headers2);
