@@ -50,8 +50,7 @@ extern int relay_http_parse_header (struct t_relay_http_request *request,
                                     const char *header);
 extern void relay_http_add_to_body (struct t_relay_http_request *request,
                                     char **partial_message);
-extern int relay_http_get_auth_status (struct t_relay_client *client,
-                                       struct t_relay_http_request *request);
+extern int relay_http_get_auth_status (struct t_relay_client *client);
 extern char *relay_http_compress (struct t_relay_http_request *request,
                                   const char *data, int data_size,
                                   int *compressed_size,
@@ -602,7 +601,6 @@ TEST(RelayHttp, AddToBody)
 TEST(RelayHttp, GetAuthStatus)
 {
     struct t_relay_client *client;
-    struct t_relay_http_request *request;
     const char *good_pwd = "secret_password";
     const char *bad_pwd = "test";
     char *totp, *totp2, salt[1024], salt_pass[1024], hash[1024], hash_hexa[2048];
@@ -614,26 +612,26 @@ TEST(RelayHttp, GetAuthStatus)
 
     client = (struct t_relay_client *)calloc (1, sizeof (*client));
     CHECK(client);
+
     client->protocol = RELAY_PROTOCOL_API;
 
-    request = relay_http_request_alloc ();
-    CHECK(request);
+    client->http_req = relay_http_request_alloc ();
 
-    LONGS_EQUAL(-1, relay_http_get_auth_status (client, request));
-    hashtable_set (request->headers, "authorization", "Basic    ");
-    LONGS_EQUAL(-2, relay_http_get_auth_status (client, request));
-    hashtable_set (request->headers, "authorization", "Basic \u26c4");
-    LONGS_EQUAL(-2, relay_http_get_auth_status (client, request));
+    LONGS_EQUAL(-1, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "authorization", "Basic    ");
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "authorization", "Basic \u26c4");
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
     /* test invalid plain-text password ("test") */
-    hashtable_set (request->headers, "authorization", "Basic cGxhaW46dGVzdA==");
-    LONGS_EQUAL(-2, relay_http_get_auth_status (client, request));
+    hashtable_set (client->http_req->headers, "authorization", "Basic cGxhaW46dGVzdA==");
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
     /* test valid plain-text password ("secret_password") */
-    hashtable_set (request->headers,
+    hashtable_set (client->http_req->headers,
                    "authorization",
                    "Basic  cGxhaW46c2VjcmV0X3Bhc3N3b3Jk");
-    LONGS_EQUAL(0, relay_http_get_auth_status (client, request));
+    LONGS_EQUAL(0, relay_http_get_auth_status (client));
 
     /* test invalid hash: "SHA128" */
     time_now = time (NULL);
@@ -648,8 +646,8 @@ TEST(RelayHttp, GetAuthStatus)
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
     snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
-    hashtable_set (request->headers, "authorization", auth_header);
-    LONGS_EQUAL(-5, relay_http_get_auth_status (client, request));
+    hashtable_set (client->http_req->headers, "authorization", auth_header);
+    LONGS_EQUAL(-5, relay_http_get_auth_status (client));
 
     /* test invalid password hashed with SHA256: "test" */
     time_now = time (NULL);
@@ -664,8 +662,8 @@ TEST(RelayHttp, GetAuthStatus)
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
     snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
-    hashtable_set (request->headers, "authorization", auth_header);
-    LONGS_EQUAL(-2, relay_http_get_auth_status (client, request));
+    hashtable_set (client->http_req->headers, "authorization", auth_header);
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
     /* test invalid password hashed with SHA512: "test" */
     time_now = time (NULL);
@@ -680,8 +678,8 @@ TEST(RelayHttp, GetAuthStatus)
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
     snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
-    hashtable_set (request->headers, "authorization", auth_header);
-    LONGS_EQUAL(-2, relay_http_get_auth_status (client, request));
+    hashtable_set (client->http_req->headers, "authorization", auth_header);
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
     /* test valid password hashed with SHA256: "secret_password" but too old time (salt) */
     time_now = time (NULL) - 10;
@@ -696,8 +694,8 @@ TEST(RelayHttp, GetAuthStatus)
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
     snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
-    hashtable_set (request->headers, "authorization", auth_header);
-    LONGS_EQUAL(-6, relay_http_get_auth_status (client, request));
+    hashtable_set (client->http_req->headers, "authorization", auth_header);
+    LONGS_EQUAL(-6, relay_http_get_auth_status (client));
 
     /* test valid password hashed with SHA256: "secret_password" */
     time_now = time (NULL);
@@ -712,8 +710,8 @@ TEST(RelayHttp, GetAuthStatus)
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
     snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
-    hashtable_set (request->headers, "authorization", auth_header);
-    LONGS_EQUAL(0, relay_http_get_auth_status (client, request));
+    hashtable_set (client->http_req->headers, "authorization", auth_header);
+    LONGS_EQUAL(0, relay_http_get_auth_status (client));
 
     /* test valid password hashed with SHA512: "secret_password" */
     time_now = time (NULL);
@@ -728,8 +726,8 @@ TEST(RelayHttp, GetAuthStatus)
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
     snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
-    hashtable_set (request->headers, "authorization", auth_header);
-    LONGS_EQUAL(0, relay_http_get_auth_status (client, request));
+    hashtable_set (client->http_req->headers, "authorization", auth_header);
+    LONGS_EQUAL(0, relay_http_get_auth_status (client));
 
     /* test invalid number of iterations */
     time_now = time (NULL);
@@ -746,8 +744,8 @@ TEST(RelayHttp, GetAuthStatus)
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
     snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
-    hashtable_set (request->headers, "authorization", auth_header);
-    LONGS_EQUAL(-7, relay_http_get_auth_status (client, request));
+    hashtable_set (client->http_req->headers, "authorization", auth_header);
+    LONGS_EQUAL(-7, relay_http_get_auth_status (client));
 
     /* test invalid password hashed with PBKDF2+SHA256: "test" */
     time_now = time (NULL);
@@ -764,8 +762,8 @@ TEST(RelayHttp, GetAuthStatus)
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
     snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
-    hashtable_set (request->headers, "authorization", auth_header);
-    LONGS_EQUAL(-2, relay_http_get_auth_status (client, request));
+    hashtable_set (client->http_req->headers, "authorization", auth_header);
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
     /* test valid password hashed with PBKDF2+SHA256: "secret_password" */
     time_now = time (NULL);
@@ -782,8 +780,8 @@ TEST(RelayHttp, GetAuthStatus)
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
     snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
-    hashtable_set (request->headers, "authorization", auth_header);
-    LONGS_EQUAL(0, relay_http_get_auth_status (client, request));
+    hashtable_set (client->http_req->headers, "authorization", auth_header);
+    LONGS_EQUAL(0, relay_http_get_auth_status (client));
 
     /* test valid password hashed with PBKDF2+SHA512: "secret_password" */
     time_now = time (NULL);
@@ -800,21 +798,21 @@ TEST(RelayHttp, GetAuthStatus)
               hash_hexa);
     string_base_encode ("64", auth, strlen (auth), auth_base64);
     snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
-    hashtable_set (request->headers, "authorization", auth_header);
-    LONGS_EQUAL(0, relay_http_get_auth_status (client, request));
+    hashtable_set (client->http_req->headers, "authorization", auth_header);
+    LONGS_EQUAL(0, relay_http_get_auth_status (client));
 
     /* test missing/invalid TOTP */
     config_file_option_set (relay_config_network_totp_secret, "secretbase32", 1);
     config_file_option_set (relay_config_network_totp_window, "1", 1);
-    LONGS_EQUAL(-3, relay_http_get_auth_status (client, request));
+    LONGS_EQUAL(-3, relay_http_get_auth_status (client));
     totp = hook_info_get (NULL, "totp_generate", "secretbase32");
     CHECK(totp);
     totp2 = strdup (totp);
     totp2[0] = (totp2[0] == '1') ? '2' : '1';
-    hashtable_set (request->headers, "x-weechat-totp", totp2);
-    LONGS_EQUAL(-4, relay_http_get_auth_status (client, request));
-    hashtable_set (request->headers, "x-weechat-totp", totp);
-    LONGS_EQUAL(0, relay_http_get_auth_status (client, request));
+    hashtable_set (client->http_req->headers, "x-weechat-totp", totp2);
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "x-weechat-totp", totp);
+    LONGS_EQUAL(0, relay_http_get_auth_status (client));
     free (totp);
     free (totp2);
     config_file_option_reset (relay_config_network_totp_secret, 1);
@@ -822,7 +820,7 @@ TEST(RelayHttp, GetAuthStatus)
 
     config_file_option_reset (relay_config_network_password, 1);
 
-    relay_http_request_free (request);
+    relay_http_request_free (client->http_req);
     free (client);
 }
 

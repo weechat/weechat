@@ -22,19 +22,9 @@
 
 #define RELAY_API_PROTOCOL_CALLBACK(__command)                          \
     int                                                                 \
-    relay_api_protocol_cb_##__command (                                 \
-        struct t_relay_client *client,                                  \
-        struct t_relay_http_request *request)
+    relay_api_protocol_cb_##__command (struct t_relay_client *client)
 
-struct t_relay_api_protocol_ctxt
-{
-    struct t_relay_client *client;
-    struct t_relay_http_request *request;
-    char *resource;
-};
-
-typedef int (t_relay_api_cmd_func)(struct t_relay_client *client,
-                                   struct t_relay_http_request *request);
+typedef int (t_relay_api_cmd_func)(struct t_relay_client *client);
 
 struct t_relay_api_protocol_cb
 {
@@ -59,8 +49,7 @@ extern int relay_api_protocol_signal_upgrade_cb (const void *pointer,
                                                  const char *signal,
                                                  const char *type_data,
                                                  void *signal_data);
-extern void relay_api_protocol_recv_http (struct t_relay_client *client,
-                                          struct t_relay_http_request *request);
+extern void relay_api_protocol_recv_http (struct t_relay_client *client);
 extern void relay_api_protocol_recv_json (struct t_relay_client *client,
                                           const char *json);
 

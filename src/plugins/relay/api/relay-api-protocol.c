@@ -276,9 +276,6 @@ RELAY_API_PROTOCOL_CALLBACK(version)
     char *version, *error;
     long number;
 
-    /* make C compiler happy */
-    (void) request;
-
     json = cJSON_CreateObject ();
     if (!json)
         return WEECHAT_RC_ERROR;
@@ -337,31 +334,31 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     enum t_relay_api_colors colors;
 
     ptr_buffer = NULL;
-    if (request->num_path_items > 2)
+    if (client->http_req->num_path_items > 2)
     {
-        ptr_buffer = weechat_buffer_search ("==", request->path_items[2]);
+        ptr_buffer = weechat_buffer_search ("==", client->http_req->path_items[2]);
         if (!ptr_buffer)
         {
             relay_api_msg_send_error_json (client, RELAY_HTTP_404_NOT_FOUND, NULL,
                                            "Buffer \"%s\" not found",
-                                           request->path_items[2]);
+                                           client->http_req->path_items[2]);
             return WEECHAT_RC_OK;
         }
     }
 
-    nicks = relay_api_protocol_get_param_boolean (request, "nicks", 0);
+    nicks = relay_api_protocol_get_param_boolean (client->http_req, "nicks", 0);
     colors = relay_api_search_colors (
-        weechat_hashtable_get (request->params, "colors"));
+        weechat_hashtable_get (client->http_req->params, "colors"));
 
-    if (request->num_path_items > 3)
+    if (client->http_req->num_path_items > 3)
     {
         /* sub-resource of buffers */
-        if (strcmp (request->path_items[3], "lines") == 0)
+        if (strcmp (client->http_req->path_items[3], "lines") == 0)
         {
-            lines = relay_api_protocol_get_param_long (request, "lines", -100L);
+            lines = relay_api_protocol_get_param_long (client->http_req, "lines", -100L);
             json = relay_api_msg_lines_to_json (ptr_buffer, lines, colors);
         }
-        else if (strcmp (request->path_items[3], "nicks") == 0)
+        else if (strcmp (client->http_req->path_items[3], "nicks") == 0)
         {
             json = relay_api_msg_nick_group_to_json (
                 weechat_hdata_pointer (relay_hdata_buffer,
@@ -372,13 +369,13 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
             relay_api_msg_send_error_json (
                 client, RELAY_HTTP_404_NOT_FOUND, NULL,
                 "Sub-resource of buffers not found: \"%s\"",
-                request->path_items[3]);
+                client->http_req->path_items[3]);
             return WEECHAT_RC_OK;
         }
     }
     else
     {
-        lines = relay_api_protocol_get_param_long (request, "lines", 0L);
+        lines = relay_api_protocol_get_param_long (client->http_req, "lines", 0L);
         if (ptr_buffer)
         {
             json = relay_api_msg_buffer_to_json (ptr_buffer, lines, nicks, colors);
@@ -430,7 +427,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *options;
 
-    json_body = cJSON_Parse(request->body);
+    json_body = cJSON_Parse(client->http_req->body);
     if (!json_body)
         return WEECHAT_RC_ERROR;
 
@@ -522,7 +519,7 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
     const char *ptr_data;
 
     ptr_data = NULL;
-    json_body = cJSON_Parse(request->body);
+    json_body = cJSON_Parse(client->http_req->body);
     if (json_body)
     {
         json_data = cJSON_GetObjectItem (json_body, "data");
@@ -577,7 +574,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
     RELAY_API_DATA(client, sync_nicks) = 1;
     RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
 
-    json_body = cJSON_Parse(request->body);
+    json_body = cJSON_Parse(client->http_req->body);
     if (json_body)
     {
         json_sync = cJSON_GetObjectItem (json_body, "sync");
@@ -607,8 +604,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
  */
 
 void
-relay_api_protocol_recv_http (struct t_relay_client *client,
-                              struct t_relay_http_request *request)
+relay_api_protocol_recv_http (struct t_relay_client *client)
 {
     int i, return_code, num_args;
     struct t_relay_api_protocol_cb protocol_cb[] =
@@ -620,11 +616,11 @@ relay_api_protocol_recv_http (struct t_relay_client *client,
           { NULL, NULL, 0, 0, NULL },
         };
 
-    if (!request || RELAY_CLIENT_HAS_ENDED(client))
+    if (!client->http_req || RELAY_CLIENT_HAS_ENDED(client))
         return;
 
     if ((client->status != RELAY_STATUS_CONNECTED)
-        && !relay_http_check_auth (client, request))
+        && !relay_http_check_auth (client))
     {
         relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
         return;
@@ -639,26 +635,26 @@ relay_api_protocol_recv_http (struct t_relay_client *client,
                         RELAY_COLOR_CHAT_CLIENT,
                         client->desc,
                         RELAY_COLOR_CHAT,
-                        request->method,
-                        request->path,
-                        request->body);
+                        client->http_req->method,
+                        client->http_req->path,
+                        client->http_req->body);
     }
 
-    if ((request->num_path_items < 2) || !request->path_items
-        || !request->path_items[0] || !request->path_items[1])
+    if ((client->http_req->num_path_items < 2) || !client->http_req->path_items
+        || !client->http_req->path_items[0] || !client->http_req->path_items[1])
     {
         goto error404;
     }
 
-    if (strcmp (request->path_items[0], "api") != 0)
+    if (strcmp (client->http_req->path_items[0], "api") != 0)
         goto error404;
 
-    num_args = request->num_path_items - 2;
+    num_args = client->http_req->num_path_items - 2;
 
     for (i = 0; protocol_cb[i].resource; i++)
     {
-        if ((strcmp (protocol_cb[i].method, request->method) == 0)
-            && (strcmp (protocol_cb[i].resource, request->path_items[1]) == 0))
+        if ((strcmp (protocol_cb[i].method, client->http_req->method) == 0)
+            && (strcmp (protocol_cb[i].resource, client->http_req->path_items[1]) == 0))
         {
             if (num_args < protocol_cb[i].min_args)
             {
@@ -674,7 +670,7 @@ relay_api_protocol_recv_http (struct t_relay_client *client,
                         RELAY_COLOR_CHAT_CLIENT,
                         client->desc,
                         RELAY_COLOR_CHAT,
-                        request->path_items[1],
+                        client->http_req->path_items[1],
                         num_args,
                         protocol_cb[i].min_args);
                 }
@@ -694,14 +690,13 @@ relay_api_protocol_recv_http (struct t_relay_client *client,
                         RELAY_COLOR_CHAT_CLIENT,
                         client->desc,
                         RELAY_COLOR_CHAT,
-                        request->path_items[1],
+                        client->http_req->path_items[1],
                         num_args,
                         protocol_cb[i].max_args);
                 }
                 goto error404;
             }
-            return_code = (int) (protocol_cb[i].cmd_function) (
-                client, request);
+            return_code = (int) (protocol_cb[i].cmd_function) (client);
             if (return_code == WEECHAT_RC_OK)
                 return;
             else
@@ -727,8 +722,8 @@ error:
                           "for client %s%s%s"),
                         weechat_prefix ("error"),
                         RELAY_PLUGIN_NAME,
-                        request->method,
-                        request->path,
+                        client->http_req->method,
+                        client->http_req->path,
                         RELAY_COLOR_CHAT_CLIENT,
                         client->desc,
                         RELAY_COLOR_CHAT);
@@ -766,9 +761,8 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
     cJSON *json_obj, *json_request, *json_body;
     char *string_body;
     int length;
-    struct t_relay_http_request *request;
 
-    request = NULL;
+    relay_http_request_reinit (client->http_req);
 
     json_obj = cJSON_Parse(json);
     if (!json_obj)
@@ -778,11 +772,7 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
     if (!json_request)
         goto error;
 
-    request = relay_http_request_alloc ();
-    if (!request)
-        goto error;
-
-    if (!relay_http_parse_method_path (request,
+    if (!relay_http_parse_method_path (client->http_req,
                                        cJSON_GetStringValue (json_request)))
     {
         goto error;
@@ -795,18 +785,18 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
         if (string_body)
         {
             length = strlen (string_body);
-            request->body = malloc (length + 1);
-            if (request->body)
+            client->http_req->body = malloc (length + 1);
+            if (client->http_req->body)
             {
-                memcpy (request->body, string_body, length + 1);
-                request->content_length = length;
-                request->body_size = length;
+                memcpy (client->http_req->body, string_body, length + 1);
+                client->http_req->content_length = length;
+                client->http_req->body_size = length;
             }
             free (string_body);
         }
     }
 
-    relay_api_protocol_recv_http (client, request);
+    relay_api_protocol_recv_http (client);
     goto end;
 
 error:
@@ -815,6 +805,4 @@ error:
 end:
     if (json_obj)
         cJSON_Delete (json_obj);
-    if (request)
-        relay_http_request_free (request);
 }

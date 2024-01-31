@@ -530,8 +530,7 @@ relay_http_add_to_body (struct t_relay_http_request *request,
  */
 
 int
-relay_http_get_auth_status (struct t_relay_client *client,
-                            struct t_relay_http_request *request)
+relay_http_get_auth_status (struct t_relay_client *client)
 {
     const char *auth, *client_totp, *pos;
     char *relay_password, *totp_secret, *info_totp_args, *info_totp;
@@ -552,7 +551,7 @@ relay_http_get_auth_status (struct t_relay_client *client,
         goto end;
     }
 
-    auth = weechat_hashtable_get (request->headers, "authorization");
+    auth = weechat_hashtable_get (client->http_req->headers, "authorization");
     if (!auth || (weechat_strncasecmp (auth, "basic ", 6) != 0))
     {
         rc = -1;
@@ -625,7 +624,7 @@ relay_http_get_auth_status (struct t_relay_client *client,
         NULL, NULL, NULL);
     if (totp_secret && totp_secret[0])
     {
-        client_totp = weechat_hashtable_get (request->headers, "x-weechat-totp");
+        client_totp = weechat_hashtable_get (client->http_req->headers, "x-weechat-totp");
         if (!client_totp || !client_totp[0])
         {
             rc = -3;
@@ -674,12 +673,11 @@ end:
  */
 
 int
-relay_http_check_auth (struct t_relay_client *client,
-                       struct t_relay_http_request *request)
+relay_http_check_auth (struct t_relay_client *client)
 {
     int rc;
 
-    rc = relay_http_get_auth_status (client, request);
+    rc = relay_http_get_auth_status (client);
     switch (rc)
     {
         case 0: /* authentication OK */
@@ -778,7 +776,7 @@ relay_http_process_websocket (struct t_relay_client *client)
     /* handshake from client is valid, auth is mandatory for "api" protocol */
     if (client->protocol == RELAY_PROTOCOL_API)
     {
-        if (relay_http_check_auth (client, client->http_req))
+        if (relay_http_check_auth (client))
         {
             relay_client_set_status (client, RELAY_STATUS_CONNECTED);
         }
@@ -852,7 +850,7 @@ relay_http_process_request (struct t_relay_client *client)
     {
 #ifdef HAVE_CJSON
         if (client->protocol == RELAY_PROTOCOL_API)
-            relay_api_recv_http (client, client->http_req);
+            relay_api_recv_http (client);
 #endif /* HAVE_CJSON */
     }
 }

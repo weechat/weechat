@@ -21,7 +21,6 @@
 #define WEECHAT_PLUGIN_RELAY_API_H
 
 struct t_relay_client;
-struct t_relay_http_request;
 enum t_relay_status;
 
 #define RELAY_API_VERSION_MAJOR 0
@@ -65,8 +64,7 @@ struct t_relay_api_data
 extern enum t_relay_api_colors relay_api_search_colors (const char *colors);
 extern void relay_api_hook_signals (struct t_relay_client *client);
 extern void relay_api_unhook_signals (struct t_relay_client *client);
-extern void relay_api_recv_http (struct t_relay_client *client,
-                                 struct t_relay_http_request *request);
+extern void relay_api_recv_http (struct t_relay_client *client);
 extern void relay_api_recv_json (struct t_relay_client *client,
                                  const char *json);
 extern void relay_api_close_connection (struct t_relay_client *client);
