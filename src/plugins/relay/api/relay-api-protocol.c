@@ -28,6 +28,7 @@
 
 #include "../../weechat-plugin.h"
 #include "../relay.h"
+#include "../relay-auth.h"
 #include "../relay-buffer.h"
 #include "../relay-client.h"
 #include "../relay-config.h"
@@ -259,6 +260,83 @@ relay_api_protocol_signal_upgrade_cb (const void *pointer, void *data,
     {
         relay_api_msg_send_event (ptr_client, signal, NULL, NULL, NULL);
     }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for resource "handshake".
+ *
+ * Routes:
+ *   POST /api/handshake
+ */
+
+RELAY_API_PROTOCOL_CALLBACK(handshake)
+{
+    cJSON *json_body, *json_algos, *json_algo, *json;
+    const char *ptr_algo;
+    char *totp_secret;
+    int hash_algo_found, index_hash_algo;
+
+    json_body = cJSON_Parse(client->http_req->body);
+    if (!json_body)
+        return WEECHAT_RC_ERROR;
+
+    hash_algo_found = -1;
+
+    json_algos = cJSON_GetObjectItem (json_body, "password_hash_algo");
+    if (json_algos)
+    {
+        cJSON_ArrayForEach(json_algo, json_algos)
+        {
+            ptr_algo = cJSON_GetStringValue (json_algo);
+            if (ptr_algo)
+            {
+                index_hash_algo = relay_auth_password_hash_algo_search (ptr_algo);
+                if ((index_hash_algo >= 0) && (index_hash_algo > hash_algo_found))
+                {
+                    if (weechat_string_match_list (
+                            relay_auth_password_hash_algo_name[index_hash_algo],
+                            (const char **)relay_config_network_password_hash_algo_list,
+                            1))
+                    {
+                        hash_algo_found = index_hash_algo;
+                    }
+                }
+            }
+        }
+    }
+
+    json = cJSON_CreateObject ();
+    if (!json)
+    {
+        cJSON_Delete (json_body);
+        return WEECHAT_RC_ERROR;
+    }
+
+    totp_secret = weechat_string_eval_expression (
+        weechat_config_string (relay_config_network_totp_secret),
+        NULL, NULL, NULL);
+
+    cJSON_AddItemToObject (
+        json,
+        "password_hash_algo",
+        (hash_algo_found >= 0) ?
+        cJSON_CreateString (relay_auth_password_hash_algo_name[hash_algo_found]) :
+        cJSON_CreateNull ());
+    cJSON_AddItemToObject (
+        json,
+        "password_hash_iterations",
+        cJSON_CreateNumber (
+            weechat_config_integer (relay_config_network_password_hash_iterations)));
+    cJSON_AddItemToObject (json, "totp",
+                           cJSON_CreateBool ((totp_secret && totp_secret[0]) ? 1 : 0));
+
+    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, json);
+
+    free (totp_secret);
+    cJSON_Delete (json);
+    cJSON_Delete (json_body);
 
     return WEECHAT_RC_OK;
 }
@@ -600,137 +678,6 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
 }
 
 /*
- * Reads a HTTP request from a client.
- */
-
-void
-relay_api_protocol_recv_http (struct t_relay_client *client)
-{
-    int i, return_code, num_args;
-    struct t_relay_api_protocol_cb protocol_cb[] =
-        { { "GET",  "version", 0, 0, &relay_api_protocol_cb_version },
-          { "GET",  "buffers", 0, 3, &relay_api_protocol_cb_buffers },
-          { "POST", "input",   0, 0, &relay_api_protocol_cb_input   },
-          { "POST", "ping",    0, 0, &relay_api_protocol_cb_ping    },
-          { "POST", "sync",    0, 0, &relay_api_protocol_cb_sync    },
-          { NULL, NULL, 0, 0, NULL },
-        };
-
-    if (!client->http_req || RELAY_CLIENT_HAS_ENDED(client))
-        return;
-
-    if ((client->status != RELAY_STATUS_CONNECTED)
-        && !relay_http_check_auth (client))
-    {
-        relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
-        return;
-    }
-
-    /* display debug message */
-    if (weechat_relay_plugin->debug >= 2)
-    {
-        weechat_printf (NULL,
-                        "%s: recv from client %s%s%s: \"%s %s\", body: \"%s\"",
-                        RELAY_PLUGIN_NAME,
-                        RELAY_COLOR_CHAT_CLIENT,
-                        client->desc,
-                        RELAY_COLOR_CHAT,
-                        client->http_req->method,
-                        client->http_req->path,
-                        client->http_req->body);
-    }
-
-    if ((client->http_req->num_path_items < 2) || !client->http_req->path_items
-        || !client->http_req->path_items[0] || !client->http_req->path_items[1])
-    {
-        goto error404;
-    }
-
-    if (strcmp (client->http_req->path_items[0], "api") != 0)
-        goto error404;
-
-    num_args = client->http_req->num_path_items - 2;
-
-    for (i = 0; protocol_cb[i].resource; i++)
-    {
-        if ((strcmp (protocol_cb[i].method, client->http_req->method) == 0)
-            && (strcmp (protocol_cb[i].resource, client->http_req->path_items[1]) == 0))
-        {
-            if (num_args < protocol_cb[i].min_args)
-            {
-                if (weechat_relay_plugin->debug >= 1)
-                {
-                    weechat_printf (
-                        NULL,
-                        _("%s%s: too few arguments received from client "
-                          "%s%s%s for resource \"%s\" "
-                          "(received: %d arguments, expected: at least %d)"),
-                        weechat_prefix ("error"),
-                        RELAY_PLUGIN_NAME,
-                        RELAY_COLOR_CHAT_CLIENT,
-                        client->desc,
-                        RELAY_COLOR_CHAT,
-                        client->http_req->path_items[1],
-                        num_args,
-                        protocol_cb[i].min_args);
-                }
-                goto error404;
-            }
-            if (num_args > protocol_cb[i].max_args)
-            {
-                if (weechat_relay_plugin->debug >= 1)
-                {
-                    weechat_printf (
-                        NULL,
-                        _("%s%s: too many arguments received from client "
-                          "%s%s%s for resource \"%s\" "
-                          "(received: %d arguments, expected: at most %d)"),
-                        weechat_prefix ("error"),
-                        RELAY_PLUGIN_NAME,
-                        RELAY_COLOR_CHAT_CLIENT,
-                        client->desc,
-                        RELAY_COLOR_CHAT,
-                        client->http_req->path_items[1],
-                        num_args,
-                        protocol_cb[i].max_args);
-                }
-                goto error404;
-            }
-            return_code = (int) (protocol_cb[i].cmd_function) (client);
-            if (return_code == WEECHAT_RC_OK)
-                return;
-            else
-                goto error400;
-        }
-    }
-
-    goto error404;
-
-error400:
-    relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL);
-    goto error;
-
-error404:
-    relay_api_msg_send_json (client, RELAY_HTTP_404_NOT_FOUND, NULL);
-    goto error;
-
-error:
-    if (weechat_relay_plugin->debug >= 1)
-    {
-        weechat_printf (NULL,
-                        _("%s%s: failed to execute route \"%s %s\" "
-                          "for client %s%s%s"),
-                        weechat_prefix ("error"),
-                        RELAY_PLUGIN_NAME,
-                        client->http_req->method,
-                        client->http_req->path,
-                        RELAY_COLOR_CHAT_CLIENT,
-                        client->desc,
-                        RELAY_COLOR_CHAT);
-    }
-}
-
-/*
  * Reads JSON string from a client: when connected via websocket (persistent
  * connection), the client is sending JSON data as a request, which is
  * converted to HTTP request by this function, before calling the function
@@ -805,4 +752,140 @@ error:
 end:
     if (json_obj)
         cJSON_Delete (json_obj);
+}
+
+/*
+ * Reads a HTTP request from a client.
+ */
+
+void
+relay_api_protocol_recv_http (struct t_relay_client *client)
+{
+    int i, return_code, num_args;
+    struct t_relay_api_protocol_cb protocol_cb[] = {
+        /* method, resource, auth, min args, max args, callback */
+        { "POST", "handshake", 0, 0, 0, &relay_api_protocol_cb_handshake },
+        { "GET",  "version",   1, 0, 0, &relay_api_protocol_cb_version   },
+        { "GET",  "buffers",   1, 0, 3, &relay_api_protocol_cb_buffers   },
+        { "POST", "input",     1, 0, 0, &relay_api_protocol_cb_input     },
+        { "POST", "ping",      1, 0, 0, &relay_api_protocol_cb_ping      },
+        { "POST", "sync",      1, 0, 0, &relay_api_protocol_cb_sync      },
+        { NULL,   NULL,        0, 0, 0, NULL                             },
+    };
+
+    if (!client->http_req || RELAY_CLIENT_HAS_ENDED(client))
+        return;
+
+    /* display debug message */
+    if (weechat_relay_plugin->debug >= 2)
+    {
+        weechat_printf (NULL,
+                        "%s: recv from client %s%s%s: \"%s %s\", body: \"%s\"",
+                        RELAY_PLUGIN_NAME,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT,
+                        client->http_req->method,
+                        client->http_req->path,
+                        client->http_req->body);
+    }
+
+    if ((client->http_req->num_path_items < 2) || !client->http_req->path_items
+        || !client->http_req->path_items[0] || !client->http_req->path_items[1])
+    {
+        goto error404;
+    }
+
+    if (strcmp (client->http_req->path_items[0], "api") != 0)
+        goto error404;
+
+    num_args = client->http_req->num_path_items - 2;
+
+    for (i = 0; protocol_cb[i].resource; i++)
+    {
+        if ((strcmp (protocol_cb[i].method, client->http_req->method) != 0)
+            || (strcmp (protocol_cb[i].resource, client->http_req->path_items[1]) != 0))
+            continue;
+
+        if (protocol_cb[i].auth_required
+            && (client->status != RELAY_STATUS_CONNECTED)
+            && !relay_http_check_auth (client))
+        {
+            relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
+            return;
+        }
+
+        if (num_args < protocol_cb[i].min_args)
+        {
+            if (weechat_relay_plugin->debug >= 1)
+            {
+                weechat_printf (
+                    NULL,
+                    _("%s%s: too few arguments received from client "
+                      "%s%s%s for resource \"%s\" "
+                      "(received: %d arguments, expected: at least %d)"),
+                    weechat_prefix ("error"),
+                    RELAY_PLUGIN_NAME,
+                    RELAY_COLOR_CHAT_CLIENT,
+                    client->desc,
+                    RELAY_COLOR_CHAT,
+                    client->http_req->path_items[1],
+                    num_args,
+                    protocol_cb[i].min_args);
+            }
+            goto error404;
+        }
+
+        if (num_args > protocol_cb[i].max_args)
+        {
+            if (weechat_relay_plugin->debug >= 1)
+            {
+                weechat_printf (
+                    NULL,
+                    _("%s%s: too many arguments received from client "
+                      "%s%s%s for resource \"%s\" "
+                      "(received: %d arguments, expected: at most %d)"),
+                    weechat_prefix ("error"),
+                    RELAY_PLUGIN_NAME,
+                    RELAY_COLOR_CHAT_CLIENT,
+                    client->desc,
+                    RELAY_COLOR_CHAT,
+                    client->http_req->path_items[1],
+                    num_args,
+                    protocol_cb[i].max_args);
+            }
+            goto error404;
+        }
+
+        return_code = (int) (protocol_cb[i].cmd_function) (client);
+        if (return_code == WEECHAT_RC_OK)
+            return;
+        else
+            goto error400;
+    }
+
+    goto error404;
+
+error400:
+    relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL);
+    goto error;
+
+error404:
+    relay_api_msg_send_json (client, RELAY_HTTP_404_NOT_FOUND, NULL);
+    goto error;
+
+error:
+    if (weechat_relay_plugin->debug >= 1)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: failed to execute route \"%s %s\" "
+                          "for client %s%s%s"),
+                        weechat_prefix ("error"),
+                        RELAY_PLUGIN_NAME,
+                        client->http_req->method,
+                        client->http_req->path,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT);
+    }
 }
