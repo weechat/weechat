@@ -977,6 +977,9 @@ relay_http_compress (struct t_relay_http_request *request,
     size_t zstd_comp_size;
 #endif
 
+    if (!request)
+        return NULL;
+
     if (compressed_size)
         *compressed_size = 0;
     if (http_content_encoding)
