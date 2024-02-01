@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-01-24 20:56+0100\n"
+"POT-Creation-Date: 2024-02-01 21:36+0100\n"
 "PO-Revision-Date: 2024-01-15 10:23+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13793,6 +13793,33 @@ msgstr "%s%s: није успело добијање тренутног стањ
 msgid "%s%s: unable to free interpreter"
 msgstr "%s%s: не може да се пронађе слободан интерпретер"
 
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: too few arguments received from client %s%s%s for command "
+#| "\"%s\" (received: %d arguments, expected: at least %d)"
+msgid ""
+"%s%s: too few arguments received from client %s%s%s for resource "
+"\"%s\" (received: %d arguments, expected: at least %d)"
+msgstr ""
+"%s%s: од клијента %s%s%s је примљено премало аргумената за команду "
+"„%s” (примљено: %d аргумената, очекује се: барем %d)"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: too few arguments received from client %s%s%s for command "
+#| "\"%s\" (received: %d arguments, expected: at least %d)"
+msgid ""
+"%s%s: too many arguments received from client %s%s%s for resource "
+"\"%s\" (received: %d arguments, expected: at most %d)"
+msgstr ""
+"%s%s: од клијента %s%s%s је примљено премало аргумената за команду "
+"„%s” (примљено: %d аргумената, очекује се: барем %d)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
+msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
+msgstr "%s%s: није успело извршавање команде „%s” за клијента %s%s%s"
+
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: нема довољно слободне меморије за парсирање поруке"
@@ -13866,18 +13893,6 @@ msgstr "%s%s: TLS руковање са клијентом %s%s%s није ус�
 #, c-format
 msgid "%s%s: TLS handshake timeout for client %s%s%s"
 msgstr "%s%s: тајмаут при TLS руковању са клијентом %s%s%s"
-
-#, c-format
-msgid "%s%s: invalid websocket handshake received for client %s%s%s"
-msgstr "%s%s: примљено је неважеће вебсокет руковање од клијента %s%s%s"
-
-#, c-format
-msgid "%s%s: origin \"%s\" not allowed for websocket"
-msgstr "%s%s: за вебсокет није дозвољено порекло „%s”"
-
-#, c-format
-msgid "%s: websocket client %s%s%s has real IP address \"%s\""
-msgstr "%s: вебсокет клијент %s%s%s има реалну IP адресу „%s”"
 
 #, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"
@@ -14157,8 +14172,17 @@ msgstr ""
 msgid "Relay option renamed: \"relay.%s.%s\" => \"relay.%s.%s\""
 msgstr "Промењено је име Релеј опције: „relay.%s.%s” => „relay.%s.%s”"
 
-msgid "auto open relay buffer when a new client is connecting"
-msgstr "ауто отварање релеј бафера када се повезује нови корисник"
+msgid ""
+"auto open relay buffer when a new client is connecting using one of these "
+"protocols (comma-separated list); allowed protocols: \"irc\", \"weechat\", "
+"\"api\""
+msgstr ""
+
+msgid ""
+"display messages when clients connect/disconnect from relay using one of "
+"these protocols (comma-separated list); allowed protocols: \"irc\", "
+"\"weechat\", \"api\""
+msgstr ""
 
 msgid "text color for client description"
 msgstr "боја текста за опис клијента"
@@ -14229,8 +14253,40 @@ msgstr ""
 "време за чишћење клијената који су прекинули везу (у минутима, 0 = клијенти "
 "се чисте тренутно, -1 = никада се не чисти)"
 
+#, fuzzy
+#| msgid ""
+#| "comma-separated list of commands allowed/denied when input data (text or "
+#| "command) is received from a client; \"*\" means any command, a name "
+#| "beginning with \"!\" is a negative value to prevent a command from being "
+#| "executed, wildcard \"*\" is allowed in names; this option should be set "
+#| "if the relay client is not safe (someone could use it to run commands); "
+#| "for example \"*,!exec,!quit\" allows any command except /exec and /quit"
 msgid ""
-"compression of messages sent to clients with \"weechat\" protocol: 0 = "
+"comma-separated list of commands allowed/denied when input data (text or "
+"command) is received from a client (weechat and api protocols); \"*\" means "
+"any command, a name beginning with \"!\" is a negative value to prevent a "
+"command from being executed, wildcard \"*\" is allowed in names; this option "
+"should be set if the relay client is not safe (someone could use it to run "
+"commands); for example \"*,!exec,!quit\" allows any command except /exec "
+"and /quit"
+msgstr ""
+"листа команди раздвојених запетама које су дозвољене/забрањене када се од "
+"клијента приме улазни подаци (текст или команда); „*” значи било која "
+"команда, име које почиње са „!” је негативна вредност којом се спречава да "
+"се команда изврши, у именима је дозвољен џокер „*”; ова опција би требало да "
+"се постави ако релеј клијент није безбедан (неко би могао да га користи за "
+"покретање команди); на пример „*,!exec,!quit” дозвољава све команде осим /"
+"exec и /quit"
+
+#, fuzzy
+#| msgid ""
+#| "compression of messages sent to clients with \"weechat\" protocol: 0 = "
+#| "disable compression, 1 = low compression / fast ... 100 = best "
+#| "compression / slow; the value is a percentage converted to 1-9 for zlib "
+#| "and 1-19 for zstd; the default value is recommended, it offers a good "
+#| "compromise between compression and speed"
+msgid ""
+"compression of messages sent to clients with weechat and api protocols: 0 = "
 "disable compression, 1 = low compression / fast ... 100 = best compression / "
 "slow; the value is a percentage converted to 1-9 for zlib and 1-19 for zstd; "
 "the default value is recommended, it offers a good compromise between "
@@ -14301,6 +14357,11 @@ msgstr ""
 "спор, овај број не би требало да буде сувише велики"
 
 msgid ""
+"number of seconds to allow before and after the current time for salted "
+"password in api protocol"
+msgstr ""
+
+msgid ""
 "file with TLS certificate and private key (for serving clients with TLS) "
 "(path is evaluated, see function string_eval_path_home in plugin API "
 "reference)"
@@ -14309,12 +14370,19 @@ msgstr ""
 "TLS) (путања се израчунава, погледајте функцију string_eval_path_home у "
 "референтном приручнику API додатака)"
 
+#, fuzzy
+#| msgid ""
+#| "secret for the generation of the Time-based One-Time Password (TOTP), "
+#| "encoded in base32 (only letters and digits from 2 to 7); it is used as "
+#| "second factor in weechat protocol, in addition to the password, which "
+#| "must not be empty (empty value means no TOTP is required) (note: content "
+#| "is evaluated, see /help eval)"
 msgid ""
 "secret for the generation of the Time-based One-Time Password (TOTP), "
 "encoded in base32 (only letters and digits from 2 to 7); it is used as "
-"second factor in weechat protocol, in addition to the password, which must "
-"not be empty (empty value means no TOTP is required) (note: content is "
-"evaluated, see /help eval)"
+"second factor in weechat and api protocols, in addition to the password, "
+"which must not be empty (empty value means no TOTP is required) (note: "
+"content is evaluated, see /help eval)"
 msgstr ""
 "тајна за генерисање Time-based One-Time Password (TOTP), кодирана у base32 "
 "(само слова и цифре од 2 до 7); у weechat протоколу се, уз лозинку, користи "
@@ -14382,21 +14450,18 @@ msgstr ""
 "сервера, јер се време шаље као irc ознака); празан стринг = време је "
 "искључено у линијама старијих порука"
 
-msgid ""
-"comma-separated list of commands allowed/denied when input data (text or "
-"command) is received from a client; \"*\" means any command, a name "
-"beginning with \"!\" is a negative value to prevent a command from being "
-"executed, wildcard \"*\" is allowed in names; this option should be set if "
-"the relay client is not safe (someone could use it to run commands); for "
-"example \"*,!exec,!quit\" allows any command except /exec and /quit"
-msgstr ""
-"листа команди раздвојених запетама које су дозвољене/забрањене када се од "
-"клијента приме улазни подаци (текст или команда); „*” значи било која "
-"команда, име које почиње са „!” је негативна вредност којом се спречава да "
-"се команда изврши, у именима је дозвољен џокер „*”; ова опција би требало да "
-"се постави ако релеј клијент није безбедан (неко би могао да га користи за "
-"покретање команди); на пример „*,!exec,!quit” дозвољава све команде осим /"
-"exec и /quit"
+#, c-format
+msgid "%s%s: invalid websocket handshake received for client %s%s%s"
+msgstr "%s%s: примљено је неважеће вебсокет руковање од клијента %s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: origin \"%s\" not allowed for websocket"
+msgid "%s%s: origin \"%s\" is not allowed for websocket"
+msgstr "%s%s: за вебсокет није дозвољено порекло „%s”"
+
+#, c-format
+msgid "%s: websocket client %s%s%s has real IP address \"%s\""
+msgstr "%s: вебсокет клијент %s%s%s има реалну IP адресу „%s”"
 
 msgid "number of clients for relay"
 msgstr "број клијената за релеј"
@@ -14553,6 +14618,10 @@ msgstr "%s: слуша се на путањи %s (релеј: %s, %s)"
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: слуша се на порту %d (релеј: %s, %s)"
+
+#, c-format
+msgid "%s%s: error: unable to add relay \"%s\" (cJSON support is not enabled)"
+msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
@@ -16611,6 +16680,9 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+#~ msgid "auto open relay buffer when a new client is connecting"
+#~ msgstr "ауто отварање релеј бафера када се повезује нови корисник"
 
 #~ msgid "name: jump to buffer by (partial) name"
 #~ msgstr "име: скок на бафер под (делимичним) именом"

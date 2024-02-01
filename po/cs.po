@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-01-24 20:56+0100\n"
+"POT-Creation-Date: 2024-02-01 21:36+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13157,6 +13157,26 @@ msgstr "%s%s: nemohu získat aktuální status interpretru"
 msgid "%s%s: unable to free interpreter"
 msgstr "%s%s: nemohu uvolnit interpreter"
 
+#, fuzzy, c-format
+msgid ""
+"%s%s: too few arguments received from client %s%s%s for resource "
+"\"%s\" (received: %d arguments, expected: at least %d)"
+msgstr ""
+"%s%s: přijato příliš málo argumentů od IRC serveru pro příkaz "
+"\"%s\" (obdrženo: %d argumentů, očekáváno: alespoň %d)"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: too many arguments received from client %s%s%s for resource "
+"\"%s\" (received: %d arguments, expected: at most %d)"
+msgstr ""
+"%s%s: přijato příliš málo argumentů od IRC serveru pro příkaz "
+"\"%s\" (obdrženo: %d argumentů, očekáváno: alespoň %d)"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
+msgstr "%s%s: selhalo parsování příkazu \"%s\" (prosím oznamte to vývojárům):"
+
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: nedostatek paměti pro rozdělení zprávy"
@@ -13232,18 +13252,6 @@ msgstr "%s%s: čtu data ze soketu: chyba %d %s"
 #, fuzzy, c-format
 msgid "%s%s: TLS handshake timeout for client %s%s%s"
 msgstr "%s%s: TLS handshake selhal"
-
-#, fuzzy, c-format
-msgid "%s%s: invalid websocket handshake received for client %s%s%s"
-msgstr "%s%s: TLS handshake selhal"
-
-#, fuzzy, c-format
-msgid "%s%s: origin \"%s\" not allowed for websocket"
-msgstr "%s%s: adresa \"%s\" nenalezena"
-
-#, c-format
-msgid "%s: websocket client %s%s%s has real IP address \"%s\""
-msgstr "%s: websocket klient %s%s%s má skutečnou IP addresu \"%s\""
 
 #, fuzzy, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"
@@ -13527,8 +13535,17 @@ msgstr ""
 msgid "Relay option renamed: \"relay.%s.%s\" => \"relay.%s.%s\""
 msgstr ""
 
-msgid "auto open relay buffer when a new client is connecting"
-msgstr "automaticky otevřít buffer přesměrování, když připojuje nový klient"
+msgid ""
+"auto open relay buffer when a new client is connecting using one of these "
+"protocols (comma-separated list); allowed protocols: \"irc\", \"weechat\", "
+"\"api\""
+msgstr ""
+
+msgid ""
+"display messages when clients connect/disconnect from relay using one of "
+"these protocols (comma-separated list); allowed protocols: \"irc\", "
+"\"weechat\", \"api\""
+msgstr ""
 
 #, fuzzy
 msgid "text color for client description"
@@ -13597,7 +13614,17 @@ msgid ""
 msgstr ""
 
 msgid ""
-"compression of messages sent to clients with \"weechat\" protocol: 0 = "
+"comma-separated list of commands allowed/denied when input data (text or "
+"command) is received from a client (weechat and api protocols); \"*\" means "
+"any command, a name beginning with \"!\" is a negative value to prevent a "
+"command from being executed, wildcard \"*\" is allowed in names; this option "
+"should be set if the relay client is not safe (someone could use it to run "
+"commands); for example \"*,!exec,!quit\" allows any command except /exec "
+"and /quit"
+msgstr ""
+
+msgid ""
+"compression of messages sent to clients with weechat and api protocols: 0 = "
 "disable compression, 1 = low compression / fast ... 100 = best compression / "
 "slow; the value is a percentage converted to 1-9 for zlib and 1-19 for zstd; "
 "the default value is recommended, it offers a good compromise between "
@@ -13650,6 +13677,11 @@ msgid ""
 "not be too high if your CPU is slow"
 msgstr ""
 
+msgid ""
+"number of seconds to allow before and after the current time for salted "
+"password in api protocol"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "file with TLS certificate and private key (for serving clients with TLS) "
@@ -13660,9 +13692,9 @@ msgstr "soubor s SSL certifikátem a soukromý klíč (pro obsluhu klientů s SS
 msgid ""
 "secret for the generation of the Time-based One-Time Password (TOTP), "
 "encoded in base32 (only letters and digits from 2 to 7); it is used as "
-"second factor in weechat protocol, in addition to the password, which must "
-"not be empty (empty value means no TOTP is required) (note: content is "
-"evaluated, see /help eval)"
+"second factor in weechat and api protocols, in addition to the password, "
+"which must not be empty (empty value means no TOTP is required) (note: "
+"content is evaluated, see /help eval)"
 msgstr ""
 
 msgid ""
@@ -13709,14 +13741,17 @@ msgid ""
 "sent as irc tag); empty string = disable time in backlog messages"
 msgstr ""
 
-msgid ""
-"comma-separated list of commands allowed/denied when input data (text or "
-"command) is received from a client; \"*\" means any command, a name "
-"beginning with \"!\" is a negative value to prevent a command from being "
-"executed, wildcard \"*\" is allowed in names; this option should be set if "
-"the relay client is not safe (someone could use it to run commands); for "
-"example \"*,!exec,!quit\" allows any command except /exec and /quit"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: invalid websocket handshake received for client %s%s%s"
+msgstr "%s%s: TLS handshake selhal"
+
+#, fuzzy, c-format
+msgid "%s%s: origin \"%s\" is not allowed for websocket"
+msgstr "%s%s: adresa \"%s\" nenalezena"
+
+#, c-format
+msgid "%s: websocket client %s%s%s has real IP address \"%s\""
+msgstr "%s: websocket klient %s%s%s má skutečnou IP addresu \"%s\""
 
 #, fuzzy
 msgid "number of clients for relay"
@@ -13885,6 +13920,10 @@ msgstr "%s: poslouchám na portu %d (přesměrování %s.%s, maximálně %d klie
 #, fuzzy, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: poslouchám na portu %d (přesměrování %s.%s, maximálně %d klientů)"
+
+#, c-format
+msgid "%s%s: error: unable to add relay \"%s\" (cJSON support is not enabled)"
+msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
@@ -15884,6 +15923,9 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid "auto open relay buffer when a new client is connecting"
+#~ msgstr "automaticky otevřít buffer přesměrování, když připojuje nový klient"
 
 #~ msgid "time format when quoting a message (see /help cursor)"
 #~ msgstr "formát času při citování zprávy (viz /help cursor)"

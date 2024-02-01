@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-01-24 20:56+0100\n"
+"POT-Creation-Date: 2024-02-01 21:36+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -13873,6 +13873,34 @@ msgstr "%s%s: 現在のインタプリタの状態の取得に失敗"
 msgid "%s%s: unable to free interpreter"
 msgstr "%s%s: インタプリタの開放に失敗"
 
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: too few arguments received from client %s%s%s for command "
+#| "\"%s\" (received: %d arguments, expected: at least %d)"
+msgid ""
+"%s%s: too few arguments received from client %s%s%s for resource "
+"\"%s\" (received: %d arguments, expected: at least %d)"
+msgstr ""
+"%s%s: クライアント %s%s%s から受け付けたコマンド \"%s\" に対する引数が足りま"
+"せん (受信: %d 個の引数、必要数: 少なくとも %d 個)"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: too few arguments received from client %s%s%s for command "
+#| "\"%s\" (received: %d arguments, expected: at least %d)"
+msgid ""
+"%s%s: too many arguments received from client %s%s%s for resource "
+"\"%s\" (received: %d arguments, expected: at most %d)"
+msgstr ""
+"%s%s: クライアント %s%s%s から受け付けたコマンド \"%s\" に対する引数が足りま"
+"せん (受信: %d 個の引数、必要数: 少なくとも %d 個)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
+msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
+msgstr ""
+"%1$s%2$s: クライアント %4$s%5$s%6$s に対するコマンド \"%3$s\" の実行に失敗"
+
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: メッセージ解析用のメモリが足りません"
@@ -13950,21 +13978,6 @@ msgstr "%s%s: クライアント %s%s%s との TLS ハンドシェイクが失�
 #, c-format
 msgid "%s%s: TLS handshake timeout for client %s%s%s"
 msgstr "%s%s: クライアント %s%s%s との TLS ハンドシェイクがタイムアウト"
-
-#, c-format
-msgid "%s%s: invalid websocket handshake received for client %s%s%s"
-msgstr ""
-"%s%s: クライアント %s%s%s から受け取った不正なウェブソケットハンドシェイク"
-
-#, c-format
-msgid "%s%s: origin \"%s\" not allowed for websocket"
-msgstr "%s%s: \"%s\" はウェブソケットの origin に使うことを許可されていません"
-
-#, c-format
-msgid "%s: websocket client %s%s%s has real IP address \"%s\""
-msgstr ""
-"%s: ウェブソケットクライアント %s%s%s は真の IP アドレス \"%s\" を持っていま"
-"す"
 
 #, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"
@@ -14254,8 +14267,17 @@ msgstr ""
 msgid "Relay option renamed: \"relay.%s.%s\" => \"relay.%s.%s\""
 msgstr ""
 
-msgid "auto open relay buffer when a new client is connecting"
-msgstr "新しいクライアントが接続したらリレーバッファを自動的に開く"
+msgid ""
+"auto open relay buffer when a new client is connecting using one of these "
+"protocols (comma-separated list); allowed protocols: \"irc\", \"weechat\", "
+"\"api\""
+msgstr ""
+
+msgid ""
+"display messages when clients connect/disconnect from relay using one of "
+"these protocols (comma-separated list); allowed protocols: \"irc\", "
+"\"weechat\", \"api\""
+msgstr ""
 
 msgid "text color for client description"
 msgstr "クライアント説明用のテキスト色"
@@ -14325,8 +14347,32 @@ msgstr ""
 "接続を切ったクライアントを追い出すまでの遅延時間 (分単位、0 = すぐにクライア"
 "ントを追い出す、-1 = 追い出さない)"
 
+#, fuzzy
+#| msgid ""
+#| "comma-separated list of commands allowed/denied when input data (text or "
+#| "command) is received from a client; \"*\" means any command, a name "
+#| "beginning with \"!\" is a negative value to prevent a command from being "
+#| "executed, wildcard \"*\" is allowed in names; this option should be set "
+#| "if the relay client is not safe (someone could use it to run commands); "
+#| "for example \"*,!exec,!quit\" allows any command except /exec and /quit"
 msgid ""
-"compression of messages sent to clients with \"weechat\" protocol: 0 = "
+"comma-separated list of commands allowed/denied when input data (text or "
+"command) is received from a client (weechat and api protocols); \"*\" means "
+"any command, a name beginning with \"!\" is a negative value to prevent a "
+"command from being executed, wildcard \"*\" is allowed in names; this option "
+"should be set if the relay client is not safe (someone could use it to run "
+"commands); for example \"*,!exec,!quit\" allows any command except /exec "
+"and /quit"
+msgstr ""
+"クライアントからデータ (テキストまたはコマンド) を受け取った時に許可/拒否する"
+"コマンドのカンマ区切りリスト。\"*\" は任意のコマンド、\"!\" から始まるコマン"
+"ド名は拒否したいコマンド、ワイルドカード \"*\" をコマンド名に使うことも可能で"
+"す。このオプションはリレークライアントを信用できない (他人にコマンドを実行さ"
+"れては困る) 場合に使ってください。例えば \"*,!exec,!quit\" は/exec と /quit "
+"を除いたすべてのコマンドを許可します"
+
+msgid ""
+"compression of messages sent to clients with weechat and api protocols: 0 = "
 "disable compression, 1 = low compression / fast ... 100 = best compression / "
 "slow; the value is a percentage converted to 1-9 for zlib and 1-19 for zstd; "
 "the default value is recommended, it offers a good compromise between "
@@ -14380,6 +14426,11 @@ msgid ""
 "not be too high if your CPU is slow"
 msgstr ""
 
+msgid ""
+"number of seconds to allow before and after the current time for salted "
+"password in api protocol"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "file with TLS certificate and private key (for serving clients with TLS) "
@@ -14387,12 +14438,19 @@ msgid ""
 "reference)"
 msgstr "SSL 証明書と秘密鍵のファイル (SSL 接続を利用するクライアント用)"
 
+#, fuzzy
+#| msgid ""
+#| "secret for the generation of the Time-based One-Time Password (TOTP), "
+#| "encoded in base32 (only letters and digits from 2 to 7); it is used as "
+#| "second factor in weechat protocol, in addition to the password, which "
+#| "must not be empty (empty value means no TOTP is required) (note: content "
+#| "is evaluated, see /help eval)"
 msgid ""
 "secret for the generation of the Time-based One-Time Password (TOTP), "
 "encoded in base32 (only letters and digits from 2 to 7); it is used as "
-"second factor in weechat protocol, in addition to the password, which must "
-"not be empty (empty value means no TOTP is required) (note: content is "
-"evaluated, see /help eval)"
+"second factor in weechat and api protocols, in addition to the password, "
+"which must not be empty (empty value means no TOTP is required) (note: "
+"content is evaluated, see /help eval)"
 msgstr ""
 "時間ベースのワンタイムパスワード (TOTP) の生成に使う secret、base32 でエン"
 "コード (文字と 2 から 7 までの数字); これは weechat プロトコルにおけるパス"
@@ -14459,20 +14517,21 @@ msgstr ""
 "\"server-time\" 機能を利用可能にした場合、これは利用されません); 空文字列 = "
 "バックログメッセージで時間を表示しない"
 
-msgid ""
-"comma-separated list of commands allowed/denied when input data (text or "
-"command) is received from a client; \"*\" means any command, a name "
-"beginning with \"!\" is a negative value to prevent a command from being "
-"executed, wildcard \"*\" is allowed in names; this option should be set if "
-"the relay client is not safe (someone could use it to run commands); for "
-"example \"*,!exec,!quit\" allows any command except /exec and /quit"
+#, c-format
+msgid "%s%s: invalid websocket handshake received for client %s%s%s"
 msgstr ""
-"クライアントからデータ (テキストまたはコマンド) を受け取った時に許可/拒否する"
-"コマンドのカンマ区切りリスト。\"*\" は任意のコマンド、\"!\" から始まるコマン"
-"ド名は拒否したいコマンド、ワイルドカード \"*\" をコマンド名に使うことも可能で"
-"す。このオプションはリレークライアントを信用できない (他人にコマンドを実行さ"
-"れては困る) 場合に使ってください。例えば \"*,!exec,!quit\" は/exec と /quit "
-"を除いたすべてのコマンドを許可します"
+"%s%s: クライアント %s%s%s から受け取った不正なウェブソケットハンドシェイク"
+
+#, fuzzy, c-format
+#| msgid "%s%s: origin \"%s\" not allowed for websocket"
+msgid "%s%s: origin \"%s\" is not allowed for websocket"
+msgstr "%s%s: \"%s\" はウェブソケットの origin に使うことを許可されていません"
+
+#, c-format
+msgid "%s: websocket client %s%s%s has real IP address \"%s\""
+msgstr ""
+"%s: ウェブソケットクライアント %s%s%s は真の IP アドレス \"%s\" を持っていま"
+"す"
 
 msgid "number of clients for relay"
 msgstr "中継するクライアントのリスト"
@@ -14638,6 +14697,10 @@ msgstr "%s: パス %s をリッスンしています (リレー: %s、%s)"
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: ポート %d をリッスンしています (リレー: %s、%s)"
+
+#, c-format
+msgid "%s%s: error: unable to add relay \"%s\" (cJSON support is not enabled)"
+msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
@@ -16679,6 +16742,9 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "auto open relay buffer when a new client is connecting"
+#~ msgstr "新しいクライアントが接続したらリレーバッファを自動的に開く"
 
 #~ msgid "time format when quoting a message (see /help cursor)"
 #~ msgstr "メッセージを引用する際の時間書式 (/help cursor を参照してください)"

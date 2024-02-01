@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-01-24 20:56+0100\n"
+"POT-Creation-Date: 2024-02-01 21:36+0100\n"
 "PO-Revision-Date: 2024-01-31 21:16+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13812,6 +13812,33 @@ msgstr "%s%s: nie można pobrać obecnego stanu interpretera"
 msgid "%s%s: unable to free interpreter"
 msgstr "%s%s: nie można zwolnić interpretera"
 
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: too few arguments received from client %s%s%s for command "
+#| "\"%s\" (received: %d arguments, expected: at least %d)"
+msgid ""
+"%s%s: too few arguments received from client %s%s%s for resource "
+"\"%s\" (received: %d arguments, expected: at least %d)"
+msgstr ""
+"%s%s: otrzymano za mało argumentów od klienta %s%s%s dla komendy "
+"\"%s\" (otrzymano: %d argumentów, spodziewano się: przynajmniej %d)"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: too few arguments received from client %s%s%s for command "
+#| "\"%s\" (received: %d arguments, expected: at least %d)"
+msgid ""
+"%s%s: too many arguments received from client %s%s%s for resource "
+"\"%s\" (received: %d arguments, expected: at most %d)"
+msgstr ""
+"%s%s: otrzymano za mało argumentów od klienta %s%s%s dla komendy "
+"\"%s\" (otrzymano: %d argumentów, spodziewano się: przynajmniej %d)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
+msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
+msgstr "%s%s: nie udało się wykonać komendy \"%s\" dla klienta %s%s%s"
+
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: za mało pamięci na przetworzenie otrzymanych wiadomości"
@@ -13888,19 +13915,6 @@ msgstr ""
 #, c-format
 msgid "%s%s: TLS handshake timeout for client %s%s%s"
 msgstr "%s%s: upłynął czas na nawiązanie połączenia TLS dla klienta %s%s%s"
-
-#, c-format
-msgid "%s%s: invalid websocket handshake received for client %s%s%s"
-msgstr ""
-"%s%s: otrzymano niepoprawny pakiet dla gniazda webowego od klienta %s%s%s"
-
-#, c-format
-msgid "%s%s: origin \"%s\" not allowed for websocket"
-msgstr "%s%s: źródło \"%s\" niedozwolone dla gniazda webowego"
-
-#, c-format
-msgid "%s: websocket client %s%s%s has real IP address \"%s\""
-msgstr "%s: klient websocket %s%s%s posiada adres IP \"%s\""
 
 #, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"
@@ -14182,8 +14196,17 @@ msgstr ""
 msgid "Relay option renamed: \"relay.%s.%s\" => \"relay.%s.%s\""
 msgstr "Zmieniono nazwę opcji pośrednika: \"relay.%s.%s\" => \"relay.%s.%s\""
 
-msgid "auto open relay buffer when a new client is connecting"
-msgstr "automatycznie otwiera bufor kiedy podłącza się nowy klient"
+msgid ""
+"auto open relay buffer when a new client is connecting using one of these "
+"protocols (comma-separated list); allowed protocols: \"irc\", \"weechat\", "
+"\"api\""
+msgstr ""
+
+msgid ""
+"display messages when clients connect/disconnect from relay using one of "
+"these protocols (comma-separated list); allowed protocols: \"irc\", "
+"\"weechat\", \"api\""
+msgstr ""
 
 msgid "text color for client description"
 msgstr "kolor tekstu dla opisu klienta"
@@ -14254,8 +14277,39 @@ msgstr ""
 "opóźnienie, z jakim zostaną skasowane rozłączone klienty (w minutach, 0 = "
 "natychmiast, -1 nigdy)"
 
+#, fuzzy
+#| msgid ""
+#| "comma-separated list of commands allowed/denied when input data (text or "
+#| "command) is received from a client; \"*\" means any command, a name "
+#| "beginning with \"!\" is a negative value to prevent a command from being "
+#| "executed, wildcard \"*\" is allowed in names; this option should be set "
+#| "if the relay client is not safe (someone could use it to run commands); "
+#| "for example \"*,!exec,!quit\" allows any command except /exec and /quit"
 msgid ""
-"compression of messages sent to clients with \"weechat\" protocol: 0 = "
+"comma-separated list of commands allowed/denied when input data (text or "
+"command) is received from a client (weechat and api protocols); \"*\" means "
+"any command, a name beginning with \"!\" is a negative value to prevent a "
+"command from being executed, wildcard \"*\" is allowed in names; this option "
+"should be set if the relay client is not safe (someone could use it to run "
+"commands); for example \"*,!exec,!quit\" allows any command except /exec "
+"and /quit"
+msgstr ""
+"oddzielona przecinkami lista poleceń dozwolonych/zakazanych kiedy dane "
+"(tekst lub polecenia) zostaną odebrane od klienta; \"*\" oznacza dowolną "
+"komendę, nazwa zaczynająca się od \"!\" oznacza nie dozwoloną komendę, znak "
+"\"*\" dozwolony jest w nazwach; ta opcja powinna być ustawiona jeśli "
+"pośrednik nie jest bezpieczny (ktoś może go użyć do wykonywania poleceń); na "
+"przykład \"*,!exec,!quit\" zezwala na wszystkie polecenia poza /exec i /quit"
+
+#, fuzzy
+#| msgid ""
+#| "compression of messages sent to clients with \"weechat\" protocol: 0 = "
+#| "disable compression, 1 = low compression / fast ... 100 = best "
+#| "compression / slow; the value is a percentage converted to 1-9 for zlib "
+#| "and 1-19 for zstd; the default value is recommended, it offers a good "
+#| "compromise between compression and speed"
+msgid ""
+"compression of messages sent to clients with weechat and api protocols: 0 = "
 "disable compression, 1 = low compression / fast ... 100 = best compression / "
 "slow; the value is a percentage converted to 1-9 for zlib and 1-19 for zstd; "
 "the default value is recommended, it offers a good compromise between "
@@ -14325,6 +14379,11 @@ msgstr ""
 "liczba nie powinna być zbyt wysoka jeśli masz słabe CPU"
 
 msgid ""
+"number of seconds to allow before and after the current time for salted "
+"password in api protocol"
+msgstr ""
+
+msgid ""
 "file with TLS certificate and private key (for serving clients with TLS) "
 "(path is evaluated, see function string_eval_path_home in plugin API "
 "reference)"
@@ -14333,12 +14392,19 @@ msgstr ""
 "(ścieżka jest przetwarzana, zobacz funkcję string_eval_path_home w opisie "
 "API wtyczek)"
 
+#, fuzzy
+#| msgid ""
+#| "secret for the generation of the Time-based One-Time Password (TOTP), "
+#| "encoded in base32 (only letters and digits from 2 to 7); it is used as "
+#| "second factor in weechat protocol, in addition to the password, which "
+#| "must not be empty (empty value means no TOTP is required) (note: content "
+#| "is evaluated, see /help eval)"
 msgid ""
 "secret for the generation of the Time-based One-Time Password (TOTP), "
 "encoded in base32 (only letters and digits from 2 to 7); it is used as "
-"second factor in weechat protocol, in addition to the password, which must "
-"not be empty (empty value means no TOTP is required) (note: content is "
-"evaluated, see /help eval)"
+"second factor in weechat and api protocols, in addition to the password, "
+"which must not be empty (empty value means no TOTP is required) (note: "
+"content is evaluated, see /help eval)"
 msgstr ""
 "sekret do generowania Time-based One-Time Password (TOTP), zakodowany w "
 "base32 (tylko litery i cyfry od 2 do 7); używany jako drugi składnik "
@@ -14409,20 +14475,19 @@ msgstr ""
 "czas jest wysyłany jako tag irc); pusty ciąg = wyłącza znacznik czasu w "
 "backlogu"
 
-msgid ""
-"comma-separated list of commands allowed/denied when input data (text or "
-"command) is received from a client; \"*\" means any command, a name "
-"beginning with \"!\" is a negative value to prevent a command from being "
-"executed, wildcard \"*\" is allowed in names; this option should be set if "
-"the relay client is not safe (someone could use it to run commands); for "
-"example \"*,!exec,!quit\" allows any command except /exec and /quit"
+#, c-format
+msgid "%s%s: invalid websocket handshake received for client %s%s%s"
 msgstr ""
-"oddzielona przecinkami lista poleceń dozwolonych/zakazanych kiedy dane "
-"(tekst lub polecenia) zostaną odebrane od klienta; \"*\" oznacza dowolną "
-"komendę, nazwa zaczynająca się od \"!\" oznacza nie dozwoloną komendę, znak "
-"\"*\" dozwolony jest w nazwach; ta opcja powinna być ustawiona jeśli "
-"pośrednik nie jest bezpieczny (ktoś może go użyć do wykonywania poleceń); na "
-"przykład \"*,!exec,!quit\" zezwala na wszystkie polecenia poza /exec i /quit"
+"%s%s: otrzymano niepoprawny pakiet dla gniazda webowego od klienta %s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: origin \"%s\" not allowed for websocket"
+msgid "%s%s: origin \"%s\" is not allowed for websocket"
+msgstr "%s%s: źródło \"%s\" niedozwolone dla gniazda webowego"
+
+#, c-format
+msgid "%s: websocket client %s%s%s has real IP address \"%s\""
+msgstr "%s: klient websocket %s%s%s posiada adres IP \"%s\""
 
 msgid "number of clients for relay"
 msgstr "liczba podłączonych klientów"
@@ -14582,6 +14647,10 @@ msgstr "%s: nasłuchuję na ścieżce %s (pośrednik: %s, %s)"
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: nasłuchuję na porcie %d (pośrednik: %s, %s)"
+
+#, c-format
+msgid "%s%s: error: unable to add relay \"%s\" (cJSON support is not enabled)"
+msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
@@ -16653,6 +16722,9 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid "auto open relay buffer when a new client is connecting"
+#~ msgstr "automatycznie otwiera bufor kiedy podłącza się nowy klient"
 
 #~ msgid "name: jump to buffer by (partial) name"
 #~ msgstr "nazwa: skocz do bufora o (częściowej) nazwie"

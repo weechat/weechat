@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-01-24 20:56+0100\n"
+"POT-Creation-Date: 2024-02-01 21:36+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14021,6 +14021,33 @@ msgstr "%s%s: Geçerli yorumlayıcı durumu alınamıyor"
 msgid "%s%s: unable to free interpreter"
 msgstr "%s%s: yorumlayıcı serbest bırakılamıyor"
 
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: too few arguments received from client %s%s%s for command "
+#| "\"%s\" (received: %d arguments, expected: at least %d)"
+msgid ""
+"%s%s: too few arguments received from client %s%s%s for resource "
+"\"%s\" (received: %d arguments, expected: at least %d)"
+msgstr ""
+"%s%s: %s%s%s istemcisinden \"%s\" komutu için pek az argüman alındı (%d "
+"argüman alındı, en az %d bekleniyordu)"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: too few arguments received from client %s%s%s for command "
+#| "\"%s\" (received: %d arguments, expected: at least %d)"
+msgid ""
+"%s%s: too many arguments received from client %s%s%s for resource "
+"\"%s\" (received: %d arguments, expected: at most %d)"
+msgstr ""
+"%s%s: %s%s%s istemcisinden \"%s\" komutu için pek az argüman alındı (%d "
+"argüman alındı, en az %d bekleniyordu)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
+msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
+msgstr "%s%s: \"%s\" komutu yürütülemedi, %s%s%s istemcisi için"
+
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: ayrıştırma iletisi için bellek yetersiz"
@@ -14099,18 +14126,6 @@ msgstr "%s%s: %s%s%s istemcisi için TLS el sıkışması başarısız: %d %s ha
 #, c-format
 msgid "%s%s: TLS handshake timeout for client %s%s%s"
 msgstr "%s%s: %s%s%s istemcisi için TLS el sıkışması zaman aşımı"
-
-#, c-format
-msgid "%s%s: invalid websocket handshake received for client %s%s%s"
-msgstr "%s%s: %s%s%s istemcisi için geçersiz web soketi el sıkışması alındı"
-
-#, c-format
-msgid "%s%s: origin \"%s\" not allowed for websocket"
-msgstr "%s%s: \"%s\" kökenine web soketi için izin verilmiyor"
-
-#, c-format
-msgid "%s: websocket client %s%s%s has real IP address \"%s\""
-msgstr "%s: %s%s%s web soketi istemcisinin gerçek \"%s\" IP adresi var"
 
 #, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"
@@ -14405,8 +14420,17 @@ msgstr ""
 msgid "Relay option renamed: \"relay.%s.%s\" => \"relay.%s.%s\""
 msgstr ""
 
-msgid "auto open relay buffer when a new client is connecting"
-msgstr "yeni bir istemci bağlanırken iletim arabelleğini kendiliğinden aç"
+msgid ""
+"auto open relay buffer when a new client is connecting using one of these "
+"protocols (comma-separated list); allowed protocols: \"irc\", \"weechat\", "
+"\"api\""
+msgstr ""
+
+msgid ""
+"display messages when clients connect/disconnect from relay using one of "
+"these protocols (comma-separated list); allowed protocols: \"irc\", "
+"\"weechat\", \"api\""
+msgstr ""
 
 msgid "text color for client description"
 msgstr "istemci açıklaması için metin rengi"
@@ -14479,8 +14503,40 @@ msgstr ""
 "bağlantısı kesilmiş istemcileri temizleme gecikmesi (dakika, 0 = istemcileri "
 "anında temizle, -1 = hiçbir zaman temizleme)"
 
+#, fuzzy
+#| msgid ""
+#| "comma-separated list of commands allowed/denied when input data (text or "
+#| "command) is received from a client; \"*\" means any command, a name "
+#| "beginning with \"!\" is a negative value to prevent a command from being "
+#| "executed, wildcard \"*\" is allowed in names; this option should be set "
+#| "if the relay client is not safe (someone could use it to run commands); "
+#| "for example \"*,!exec,!quit\" allows any command except /exec and /quit"
 msgid ""
-"compression of messages sent to clients with \"weechat\" protocol: 0 = "
+"comma-separated list of commands allowed/denied when input data (text or "
+"command) is received from a client (weechat and api protocols); \"*\" means "
+"any command, a name beginning with \"!\" is a negative value to prevent a "
+"command from being executed, wildcard \"*\" is allowed in names; this option "
+"should be set if the relay client is not safe (someone could use it to run "
+"commands); for example \"*,!exec,!quit\" allows any command except /exec "
+"and /quit"
+msgstr ""
+"bir istemciden girdi verisi alınırken izin verilen/reddedilen komutların "
+"virgülle ayrılmış listesi (metin vey komut); \"*\" herhangi bir komut "
+"anlamına gelir, \"!\" bir komutun yürütülmesini önleyen negatif bir "
+"değerdir, adlarda \"*\" jokerine izin verilir; iletim istemcisi güvenli "
+"değilse bu seçenek ayarlanmalıdır (başka birisi komut çalıştırmak için "
+"kullanabilir); örneğin \"*,!exec,!quit\", /exec ve /quit dışında herhangi "
+"bir komuta izin verir"
+
+#, fuzzy
+#| msgid ""
+#| "compression of messages sent to clients with \"weechat\" protocol: 0 = "
+#| "disable compression, 1 = low compression / fast ... 100 = best "
+#| "compression / slow; the value is a percentage converted to 1-9 for zlib "
+#| "and 1-19 for zstd; the default value is recommended, it offers a good "
+#| "compromise between compression and speed"
+msgid ""
+"compression of messages sent to clients with weechat and api protocols: 0 = "
 "disable compression, 1 = low compression / fast ... 100 = best compression / "
 "slow; the value is a percentage converted to 1-9 for zlib and 1-19 for zstd; "
 "the default value is recommended, it offers a good compromise between "
@@ -14549,6 +14605,11 @@ msgstr ""
 "yineleme güvenlik açısından daha iyidir; ancak hesaplaması daha yavaştır; "
 "eğer CPU'nuz yavaşsa bu sayı çok yüksek olmamalıdır"
 
+msgid ""
+"number of seconds to allow before and after the current time for salted "
+"password in api protocol"
+msgstr ""
+
 #, fuzzy
 #| msgid ""
 #| "file with SSL certificate and private key (for serving clients with SSL) "
@@ -14563,12 +14624,19 @@ msgstr ""
 "için) (yol değerlendirilir, eklenti API başvurusunda string_eval_path_home "
 "işlevine bakın)"
 
+#, fuzzy
+#| msgid ""
+#| "secret for the generation of the Time-based One-Time Password (TOTP), "
+#| "encoded in base32 (only letters and digits from 2 to 7); it is used as "
+#| "second factor in weechat protocol, in addition to the password, which "
+#| "must not be empty (empty value means no TOTP is required) (note: content "
+#| "is evaluated, see /help eval)"
 msgid ""
 "secret for the generation of the Time-based One-Time Password (TOTP), "
 "encoded in base32 (only letters and digits from 2 to 7); it is used as "
-"second factor in weechat protocol, in addition to the password, which must "
-"not be empty (empty value means no TOTP is required) (note: content is "
-"evaluated, see /help eval)"
+"second factor in weechat and api protocols, in addition to the password, "
+"which must not be empty (empty value means no TOTP is required) (note: "
+"content is evaluated, see /help eval)"
 msgstr ""
 "zaman tabanlı bir kerelik parola (TOTP) için gizem, base32 ile kodlanmıştır "
 "(yalnızca harfler ve 2-7 arası basamaklar); parolaya ek olarak weechat "
@@ -14635,21 +14703,18 @@ msgstr ""
 "çünkü zaman irc etiketi olarak gönderilir); boş dizi = biriken günlük "
 "iletilerinde zamanı devre dışı bırak"
 
-msgid ""
-"comma-separated list of commands allowed/denied when input data (text or "
-"command) is received from a client; \"*\" means any command, a name "
-"beginning with \"!\" is a negative value to prevent a command from being "
-"executed, wildcard \"*\" is allowed in names; this option should be set if "
-"the relay client is not safe (someone could use it to run commands); for "
-"example \"*,!exec,!quit\" allows any command except /exec and /quit"
-msgstr ""
-"bir istemciden girdi verisi alınırken izin verilen/reddedilen komutların "
-"virgülle ayrılmış listesi (metin vey komut); \"*\" herhangi bir komut "
-"anlamına gelir, \"!\" bir komutun yürütülmesini önleyen negatif bir "
-"değerdir, adlarda \"*\" jokerine izin verilir; iletim istemcisi güvenli "
-"değilse bu seçenek ayarlanmalıdır (başka birisi komut çalıştırmak için "
-"kullanabilir); örneğin \"*,!exec,!quit\", /exec ve /quit dışında herhangi "
-"bir komuta izin verir"
+#, c-format
+msgid "%s%s: invalid websocket handshake received for client %s%s%s"
+msgstr "%s%s: %s%s%s istemcisi için geçersiz web soketi el sıkışması alındı"
+
+#, fuzzy, c-format
+#| msgid "%s%s: origin \"%s\" not allowed for websocket"
+msgid "%s%s: origin \"%s\" is not allowed for websocket"
+msgstr "%s%s: \"%s\" kökenine web soketi için izin verilmiyor"
+
+#, c-format
+msgid "%s: websocket client %s%s%s has real IP address \"%s\""
+msgstr "%s: %s%s%s web soketi istemcisinin gerçek \"%s\" IP adresi var"
 
 msgid "number of clients for relay"
 msgstr "iletim istemci sayısı"
@@ -14815,6 +14880,10 @@ msgstr "%s: %s yolunda dinleniyor (aktarım: %s, %s)"
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: %d kapısında dinleniyor (aktarım: %s, %s)"
+
+#, c-format
+msgid "%s%s: error: unable to add relay \"%s\" (cJSON support is not enabled)"
+msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
@@ -16889,6 +16958,9 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
+
+#~ msgid "auto open relay buffer when a new client is connecting"
+#~ msgstr "yeni bir istemci bağlanırken iletim arabelleğini kendiliğinden aç"
 
 #~ msgid "time format when quoting a message (see /help cursor)"
 #~ msgstr ""
