@@ -431,7 +431,9 @@ relay_client_recv_text_multi_line (struct t_relay_client *client)
             /* irc is single line only */
             break;
         case RELAY_PROTOCOL_API:
+#ifdef HAVE_CJSON
             relay_api_recv_json (client, client->partial_message);
+#endif /* HAVE_CJSON */
             break;
         case RELAY_NUM_PROTOCOLS:
             break;
