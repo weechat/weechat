@@ -1322,6 +1322,8 @@ relay_http_request_free (struct t_relay_http_request *request)
         weechat_hashtable_free (request->headers);
     if (request->accept_encoding)
         weechat_hashtable_free (request->accept_encoding);
+    if (request->ws_deflate)
+        relay_websocket_deflate_free (request->ws_deflate);
     if (request->body)
         free (request->body);
 
