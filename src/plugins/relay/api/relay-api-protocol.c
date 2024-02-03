@@ -289,7 +289,8 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
     {
         cJSON_ArrayForEach(json_algo, json_algos)
         {
-            ptr_algo = cJSON_GetStringValue (json_algo);
+            ptr_algo = (cJSON_IsString (json_algo)) ?
+                cJSON_GetStringValue (json_algo) : NULL;
             if (ptr_algo)
             {
                 index_hash_algo = relay_auth_password_hash_algo_search (ptr_algo);
@@ -512,16 +513,19 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     json_buffer = cJSON_GetObjectItem (json_body, "buffer");
     if (json_buffer)
     {
-        ptr_buffer_name = cJSON_GetStringValue (json_buffer);
-        ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
-        if (!ptr_buffer)
+        if (cJSON_IsString (json_buffer))
         {
-            cJSON_Delete (json_body);
-            relay_api_msg_send_error_json (client,
-                                           RELAY_HTTP_404_NOT_FOUND, NULL,
-                                           "Buffer \"%s\" not found",
-                                           ptr_buffer_name);
-            return WEECHAT_RC_OK;
+            ptr_buffer_name = cJSON_GetStringValue (json_buffer);
+            ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
+            if (!ptr_buffer)
+            {
+                cJSON_Delete (json_body);
+                relay_api_msg_send_error_json (client,
+                                               RELAY_HTTP_404_NOT_FOUND, NULL,
+                                               "Buffer \"%s\" not found",
+                                               ptr_buffer_name);
+                return WEECHAT_RC_OK;
+            }
         }
     }
     else
@@ -535,7 +539,8 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     }
 
     json_command = cJSON_GetObjectItem (json_body, "command");
-    if (!json_command)
+    if (!json_command || !cJSON_IsString (json_command))
+
     {
         cJSON_Delete (json_body);
         return WEECHAT_RC_ERROR;
