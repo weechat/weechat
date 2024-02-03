@@ -120,7 +120,6 @@ jobs:
       matrix:
         os:
           - macos-12
-          - macos-11
         config:
           - { name: "gcc", cc: "gcc", cxx: "g++" }
           - { name: "clang", cc: "clang", cxx: "clang++" }
