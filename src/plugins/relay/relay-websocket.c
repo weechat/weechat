@@ -547,7 +547,7 @@ error:
  * is used).
  *
  * Returns:
- *   1: frame decoded successfully
+ *   1: frame(s) decoded successfully
  *   0: error decoding frame (connection must be closed if it happens)
  */
 
@@ -558,11 +558,13 @@ relay_websocket_decode_frame (struct t_relay_client *client,
                               struct t_relay_websocket_frame **frames,
                               int *num_frames)
 {
-    unsigned long long i, index_buffer, length_frame_size, length_frame;
+    unsigned long long i, index_buffer, index_buffer_start_frame;
+    unsigned long long length_frame_size, length_frame;
     unsigned char opcode;
     size_t size_decompressed;
     char *payload_decompressed;
     struct t_relay_websocket_frame *frames2, *ptr_frame;
+    int size;
 
     if (!buffer || !frames || !num_frames)
         return 0;
@@ -571,10 +573,61 @@ relay_websocket_decode_frame (struct t_relay_client *client,
     *num_frames = 0;
 
     index_buffer = 0;
+    index_buffer_start_frame = 0;
 
     /* loop to decode all frames in message */
-    while (index_buffer + 1 < buffer_length)
+    while (index_buffer < buffer_length)
     {
+        index_buffer_start_frame = index_buffer;
+
+        if (index_buffer + 1 >= buffer_length)
+            goto missing_data;
+
+        opcode = buffer[index_buffer] & 15;
+
+        /*
+         * check if frame is masked: client MUST send a masked frame; if frame is
+         * not masked, we MUST reject it and close the connection (see RFC 6455)
+         */
+        if (!(buffer[index_buffer + 1] & 128))
+            return 0;
+
+        /* decode frame length */
+        length_frame = buffer[index_buffer + 1] & 127;
+        index_buffer += 2;
+        if (index_buffer >= buffer_length)
+            goto missing_data;
+        if ((length_frame == 126) || (length_frame == 127))
+        {
+            length_frame_size = (length_frame == 126) ? 2 : 8;
+            if (index_buffer + length_frame_size > buffer_length)
+                goto missing_data;
+            length_frame = 0;
+            for (i = 0; i < length_frame_size; i++)
+            {
+                length_frame += (unsigned long long)buffer[index_buffer + i] << ((length_frame_size - i - 1) * 8);
+            }
+            index_buffer += length_frame_size;
+        }
+
+        /* read masks (4 bytes) */
+        if (index_buffer + 4 > buffer_length)
+            goto missing_data;
+        int masks[4];
+        for (i = 0; i < 4; i++)
+        {
+            masks[i] = (int)((unsigned char)buffer[index_buffer + i]);
+        }
+        index_buffer += 4;
+
+        /* check if we have enough data */
+        if ((length_frame > buffer_length)
+            || (index_buffer + length_frame > buffer_length))
+        {
+            goto missing_data;
+        }
+
+        /* add a new frame in array */
         (*num_frames)++;
 
         frames2 = realloc (*frames, sizeof (**frames) * (*num_frames));
@@ -587,43 +640,6 @@ relay_websocket_decode_frame (struct t_relay_client *client,
         ptr_frame->opcode = 0;
         ptr_frame->payload_size = 0;
         ptr_frame->payload = NULL;
-
-        opcode = buffer[index_buffer] & 15;
-
-        /*
-         * check if frame is masked: client MUST send a masked frame; if frame is
-         * not masked, we MUST reject it and close the connection (see RFC 6455)
-         */
-        if (!(buffer[index_buffer + 1] & 128))
-            return 0;
-
-        /* decode frame */
-        length_frame = buffer[index_buffer + 1] & 127;
-        index_buffer += 2;
-        if (index_buffer >= buffer_length)
-            return 0;
-        if ((length_frame == 126) || (length_frame == 127))
-        {
-            length_frame_size = (length_frame == 126) ? 2 : 8;
-            if (index_buffer + length_frame_size > buffer_length)
-                return 0;
-            length_frame = 0;
-            for (i = 0; i < length_frame_size; i++)
-            {
-                length_frame += (unsigned long long)buffer[index_buffer + i] << ((length_frame_size - i - 1) * 8);
-            }
-            index_buffer += length_frame_size;
-        }
-
-        /* read masks (4 bytes) */
-        if (index_buffer + 4 > buffer_length)
-            return 0;
-        int masks[4];
-        for (i = 0; i < 4; i++)
-        {
-            masks[i] = (int)((unsigned char)buffer[index_buffer + i]);
-        }
-        index_buffer += 4;
 
         /* save opcode */
         switch (opcode)
@@ -639,13 +655,7 @@ relay_websocket_decode_frame (struct t_relay_client *client,
                 break;
         }
 
-        /* decode data using masks */
-        if ((length_frame > buffer_length)
-            || (index_buffer + length_frame > buffer_length))
-        {
-            return 0;
-        }
-
+        /* allocate payload */
         ptr_frame->payload = malloc (length_frame + 1);
         if (!ptr_frame->payload)
             return 0;
@@ -690,6 +700,31 @@ relay_websocket_decode_frame (struct t_relay_client *client,
         index_buffer += length_frame;
     }
 
+    if (client->partial_ws_frame)
+    {
+        free (client->partial_ws_frame);
+        client->partial_ws_frame = NULL;
+        client->partial_ws_frame_size = 0;
+    }
+
+    return 1;
+
+missing_data:
+    if (client->partial_ws_frame)
+    {
+        free (client->partial_ws_frame);
+        client->partial_ws_frame = NULL;
+        client->partial_ws_frame_size = 0;
+    }
+    size = buffer_length - index_buffer_start_frame;
+    if (size >= 0)
+    {
+        client->partial_ws_frame = malloc (size);
+        if (!client->partial_ws_frame)
+            return 0;
+        memcpy (client->partial_ws_frame, buffer + index_buffer_start_frame, size);
+        client->partial_ws_frame_size = size;
+    }
     return 1;
 }
 

@@ -129,6 +129,8 @@ struct t_relay_client
     unsigned long long bytes_sent;     /* bytes sent to client              */
     enum t_relay_client_data_type recv_data_type; /* type recv from client  */
     enum t_relay_client_data_type send_data_type; /* type sent to client    */
+    char *partial_ws_frame;            /* part. binary websocket frame recv */
+    int partial_ws_frame_size;         /* size of partial websocket frame   */
     char *partial_message;             /* partial text message received     */
     void *protocol_data;               /* data depending on protocol used   */
     struct t_relay_client_outqueue *outqueue; /* queue for outgoing msgs    */

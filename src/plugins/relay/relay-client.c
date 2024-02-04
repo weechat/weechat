@@ -638,8 +638,8 @@ int
 relay_client_recv_cb (const void *pointer, void *data, int fd)
 {
     struct t_relay_client *client;
-    static char buffer[4096];
-    int i, num_read, rc, num_frames;
+    static char buffer[4096], *buffer2;
+    int i, num_read, rc, num_frames, buffer2_size;
     struct t_relay_websocket_frame *frames;
 
     /* make C compiler happy */
@@ -693,15 +693,44 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
         if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
         {
             /* websocket used, decode message */
+            buffer2 = NULL;
+            buffer2_size = 0;
+            if (client->partial_ws_frame)
+            {
+                buffer2_size = num_read + client->partial_ws_frame_size;
+                buffer2 = malloc (buffer2_size);
+                if (!buffer2)
+                {
+                    weechat_printf_date_tags (
+                        NULL, 0, "relay_client",
+                        _("%s%s: not enough memory for received data"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+                    return WEECHAT_RC_OK;
+                }
+                memcpy (buffer2, client->partial_ws_frame,
+                        client->partial_ws_frame_size);
+                memcpy (buffer2 + client->partial_ws_frame_size,
+                        buffer, num_read);
+            }
             frames = NULL;
             num_frames = 0;
-            rc = relay_websocket_decode_frame (client,
-                                               (unsigned char *)buffer,
-                                               (unsigned long long)num_read,
-                                               &frames, &num_frames);
+            rc = relay_websocket_decode_frame (
+                client,
+                (buffer2) ? (unsigned char *)buffer2 : (unsigned char *)buffer,
+                (buffer2) ? (unsigned long long)buffer2_size : (unsigned long long)num_read,
+                &frames,
+                &num_frames);
+            if (buffer2)
+                free (buffer2);
             if (!rc)
             {
-                /* error when decoding frame: close connection */
+                /* fatal error when decoding frame: close connection */
+                for (i = 0; i < num_frames; i++)
+                {
+                    if (frames[i].payload)
+                        free (frames[i].payload);
+                }
+                free (frames);
                 weechat_printf_date_tags (
                     NULL, 0, "relay_client",
                     _("%s%s: error decoding websocket frame for client "
@@ -1420,6 +1449,8 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                 new_client->send_data_type = RELAY_CLIENT_DATA_TEXT_MULTILINE;
                 break;
         }
+        new_client->partial_ws_frame = NULL;
+        new_client->partial_ws_frame_size = 0;
         new_client->partial_message = NULL;
 
         relay_client_set_desc (new_client);
@@ -1586,7 +1617,8 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
     struct t_relay_client *new_client;
     const char *str;
     Bytef *ptr_dict;
-    int dict_size;
+    int dict_size, ws_frame_size;
+    void *ptr_ws_frame;
 
     new_client = malloc (sizeof (*new_client));
     if (new_client)
@@ -1686,6 +1718,16 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
                 "%llu", &(new_client->bytes_sent));
         new_client->recv_data_type = weechat_infolist_integer (infolist, "recv_data_type");
         new_client->send_data_type = weechat_infolist_integer (infolist, "send_data_type");
+        ptr_ws_frame = weechat_infolist_buffer (infolist, "partial_ws_frame", &ws_frame_size);
+        if (ptr_ws_frame && (ws_frame_size > 0))
+        {
+            new_client->partial_ws_frame = malloc (ws_frame_size);
+            if (new_client->partial_ws_frame)
+            {
+                memcpy (new_client->partial_ws_frame, ptr_ws_frame, ws_frame_size);
+                new_client->partial_ws_frame_size = ws_frame_size;
+            }
+        }
         str = weechat_infolist_string (infolist, "partial_message");
         new_client->partial_message = (str) ? strdup (str) : NULL;
 
@@ -1891,6 +1933,8 @@ relay_client_free (struct t_relay_client *client)
         weechat_unhook (client->hook_fd);
     if (client->hook_timer_send)
         weechat_unhook (client->hook_timer_send);
+    if (client->partial_ws_frame)
+        free (client->partial_ws_frame);
     if (client->partial_message)
         free (client->partial_message);
     if (client->protocol_data)
@@ -2013,6 +2057,8 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
             return 0;
         if (!weechat_infolist_new_var_time (ptr_item, "end_time", time (NULL)))
             return 0;
+        if (!weechat_infolist_new_var_buffer (ptr_item, "partial_ws_frame", NULL, 0))
+            return 0;
         if (!weechat_infolist_new_var_string (ptr_item, "partial_message", NULL))
             return 0;
     }
@@ -2027,6 +2073,8 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         if (!weechat_infolist_new_var_integer (ptr_item, "status", client->status))
             return 0;
         if (!weechat_infolist_new_var_time (ptr_item, "end_time", client->end_time))
+            return 0;
+        if (!weechat_infolist_new_var_buffer (ptr_item, "partial_ws_frame", client->partial_ws_frame, client->partial_ws_frame_size))
             return 0;
         if (!weechat_infolist_new_var_string (ptr_item, "partial_message", client->partial_message))
             return 0;
@@ -2194,6 +2242,9 @@ relay_client_print_log ()
         weechat_log_printf ("  send_data_type. . . . . . : %d (%s)",
                             ptr_client->send_data_type,
                             relay_client_data_type_string[ptr_client->send_data_type]);
+        weechat_log_printf ("  partial_ws_frame. . . . . : 0x%lx (%d bytes)",
+                            ptr_client->partial_ws_frame,
+                            ptr_client->partial_ws_frame_size);
         weechat_log_printf ("  partial_message . . . . . : '%s'",  ptr_client->partial_message);
         weechat_log_printf ("  protocol_data . . . . . . : 0x%lx", ptr_client->protocol_data);
         switch (ptr_client->protocol)
