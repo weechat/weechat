@@ -1063,6 +1063,12 @@ plugin_script_remove (struct t_weechat_plugin *weechat_plugin,
 
     plugin_script_remove_configs (weechat_plugin, script);
 
+    /*
+     * remove again all hooks created by this script (just in case new hooks
+     * were created by the calls above)
+     */
+    weechat_unhook_all (script->name);
+
     /* remove script from list */
     if (script->prev_script)
         (script->prev_script)->next_script = script->next_script;
