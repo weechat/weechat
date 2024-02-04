@@ -497,14 +497,18 @@ relay_websocket_inflate (const void *data, size_t size, z_stream *strm,
     while (1)
     {
         rc = inflate (strm, Z_SYNC_FLUSH);
-        if ((rc == Z_STREAM_END) || (rc == Z_OK))
+        if (((rc == Z_STREAM_END) || (rc == Z_OK))
+            && (strm->avail_in == 0))
         {
             /* data successfully decompressed */
             *size_decompressed = strm->total_out;
             break;
         }
-        else if (rc == Z_BUF_ERROR)
+        if ((rc == Z_BUF_ERROR)
+            || (((rc == Z_STREAM_END) || (rc == Z_OK))
+                && (strm->avail_in > 0)))
         {
+            /* output buffer is not large enough */
             strm->avail_out += dest_size;
             dest_size *= 2;
             dest2 = realloc (dest, dest_size);
