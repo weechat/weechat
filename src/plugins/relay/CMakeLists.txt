@@ -29,6 +29,7 @@ set(RELAY_SRC
   relay-info.c relay-info.h
   relay-network.c relay-network.h
   relay-raw.c relay-raw.h
+  relay-remote.c relay-remote.h
   relay-server.c relay-server.h
   relay-upgrade.c relay-upgrade.h
   relay-websocket.c relay-websocket.h

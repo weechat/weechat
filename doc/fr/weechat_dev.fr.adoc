@@ -337,6 +337,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       relay-info.c                | Info/infolists/hdata pour Relay.
 |       relay-network.c             | Fonctions de réseau pour Relay.
 |       relay-raw.c                 | Tampon des données brutes de Relay.
+|       relay-remote.c              | Relai distant.
 |       relay-server.c              | Serveur Relay.
 |       relay-upgrade.c             | Sauvegarde/restauration des données Relay lors de la mise à jour de WeeChat.
 |       relay-websocket.c           | Fonctions pour le serveur WebSocket (RFC 6455).

@@ -32,6 +32,7 @@
 #include "relay-info.h"
 #include "relay-network.h"
 #include "relay-raw.h"
+#include "relay-remote.h"
 #include "relay-server.h"
 #include "relay-upgrade.h"
 
@@ -48,6 +49,15 @@ struct t_weechat_plugin *weechat_relay_plugin = NULL;
 
 char *relay_protocol_string[] =        /* strings for protocols             */
 { "weechat", "irc", "api" };
+
+char *relay_status_string[] =          /* status strings for display        */
+{ N_("connecting"), N_("authenticating"),
+  N_("connected"), N_("authentication failed"), N_("disconnected")
+};
+char *relay_status_name[] =            /* name of status (for signal/info)  */
+{ "connecting", "waiting_auth",
+  "connected", "auth_failed", "disconnected"
+};
 
 struct t_hdata *relay_hdata_buffer = NULL;
 struct t_hdata *relay_hdata_lines = NULL;
@@ -86,6 +96,30 @@ relay_protocol_search (const char *name)
     }
 
     /* protocol not found */
+    return -1;
+}
+
+/*
+ * Searches for a status.
+ *
+ * Returns index of status in enum t_relay_status, -1 if status is not found.
+ */
+
+int
+relay_status_search (const char *name)
+{
+    int i;
+
+    if (!name)
+        return -1;
+
+    for (i = 0; i < RELAY_NUM_STATUS; i++)
+    {
+        if (strcmp (relay_status_name[i], name) == 0)
+            return i;
+    }
+
+    /* status not found */
     return -1;
 }
 
@@ -191,6 +225,7 @@ relay_debug_dump_cb (const void *pointer, void *data,
 
         relay_server_print_log ();
         relay_client_print_log ();
+        relay_remote_print_log ();
 
         weechat_log_printf ("");
         weechat_log_printf ("***** End of \"%s\" plugin dump *****",

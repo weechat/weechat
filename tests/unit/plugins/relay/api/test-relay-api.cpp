@@ -126,7 +126,7 @@ TEST(RelayApi, AllocWithInfolist)
 
 TEST(RelayApi, GetInitialStatus)
 {
-    LONGS_EQUAL(RELAY_STATUS_WAITING_AUTH, relay_api_get_initial_status (NULL));
+    LONGS_EQUAL(RELAY_STATUS_AUTHENTICATING, relay_api_get_initial_status (NULL));
 }
 
 /*

@@ -24,6 +24,7 @@
 
 #define RELAY_CONFIG_NAME "relay"
 #define RELAY_CONFIG_PRIO_NAME (TO_STR(RELAY_PLUGIN_PRIORITY) "|" RELAY_CONFIG_NAME)
+#define RELAY_CONFIG_SECTION_REMOTE "remote"
 
 #define RELAY_CONFIG_VERSION 2
 
@@ -85,6 +86,9 @@ extern int relay_config_create_option_port_path (const void *pointer, void *data
                                                  const char *value);
 extern int relay_config_check_path_length (const char *path);
 extern int relay_config_check_path_available (const char *path);
+extern struct t_config_option *relay_config_create_remote_option (const char *remote_name,
+                                                                  int index_option,
+                                                                  const char *value);
 extern int relay_config_init ();
 extern int relay_config_read ();
 extern int relay_config_write ();

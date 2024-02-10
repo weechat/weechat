@@ -49,13 +49,33 @@ enum t_relay_protocol
     RELAY_NUM_PROTOCOLS,
 };
 
+/* client/remote status */
+
+enum t_relay_status
+{
+    RELAY_STATUS_CONNECTING = 0,       /* network connection in progress    */
+    RELAY_STATUS_AUTHENTICATING,       /* authentication in progress        */
+    RELAY_STATUS_CONNECTED,            /* connected and authenticated       */
+    RELAY_STATUS_AUTH_FAILED,          /* authentication failed             */
+    RELAY_STATUS_DISCONNECTED,         /* disconnected                      */
+    /* number of relay status */
+    RELAY_NUM_STATUS,
+};
+
+#define RELAY_STATUS_HAS_ENDED(status)                                  \
+    ((status == RELAY_STATUS_AUTH_FAILED) ||                            \
+     (status == RELAY_STATUS_DISCONNECTED))
+
 #define RELAY_COLOR_CHAT weechat_color("chat")
 #define RELAY_COLOR_CHAT_HOST weechat_color("chat_host")
 #define RELAY_COLOR_CHAT_BUFFER weechat_color("chat_buffer")
 #define RELAY_COLOR_CHAT_CLIENT weechat_color(weechat_config_string(relay_config_color_client))
 
 extern char *relay_protocol_string[];
+extern char *relay_status_string[];
+extern char *relay_status_name[];
 
 extern int relay_protocol_search (const char *name);
+extern int relay_status_search (const char *name);
 
 #endif /* WEECHAT_PLUGIN_RELAY_H */

@@ -335,6 +335,7 @@ WeeChat "core" is located in following directories:
 |       relay-info.c                | Relay info/infolists/hdata.
 |       relay-network.c             | Network functions for relay.
 |       relay-raw.c                 | Relay raw buffer.
+|       relay-remote.c              | Relay remote.
 |       relay-server.c              | Relay server.
 |       relay-upgrade.c             | Save/restore of relay data when upgrading WeeChat.
 |       relay-websocket.c           | WebSocket server functions (RFC 6455).

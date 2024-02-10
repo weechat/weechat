@@ -21,6 +21,7 @@
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <limits.h>
 #include <regex.h>
@@ -31,10 +32,11 @@
 
 #include "../weechat-plugin.h"
 #include "relay.h"
-#include "relay-config.h"
 #include "relay-client.h"
+#include "relay-config.h"
 #include "relay-buffer.h"
 #include "relay-network.h"
+#include "relay-remote.h"
 #include "relay-server.h"
 #include "irc/relay-irc.h"
 
@@ -49,6 +51,7 @@ struct t_config_section *relay_config_section_network = NULL;
 struct t_config_section *relay_config_section_irc = NULL;
 struct t_config_section *relay_config_section_port = NULL;
 struct t_config_section *relay_config_section_path = NULL;
+struct t_config_section *relay_config_section_remote = NULL;
 
 /* relay config, look section */
 
@@ -960,6 +963,217 @@ relay_config_create_option_port_path (const void *pointer, void *data,
 }
 
 /*
+ * Creates an option for a remote.
+ *
+ * Returns pointer to new option, NULL if error.
+ */
+
+struct t_config_option *
+relay_config_create_remote_option (const char *remote_name, int index_option,
+                                   const char *value)
+{
+    struct t_config_option *ptr_option;
+    int length;
+    char *option_name;
+
+    ptr_option = NULL;
+
+    length = strlen (remote_name) + 1 +
+        strlen (relay_remote_option_string[index_option]) + 1;
+    option_name = malloc (length);
+    if (!option_name)
+        return NULL;
+
+    snprintf (option_name, length, "%s.%s",
+              remote_name, relay_remote_option_string[index_option]);
+
+    switch (index_option)
+    {
+        case RELAY_REMOTE_OPTION_URL:
+            ptr_option = weechat_config_new_option (
+                relay_config_file, relay_config_section_remote,
+                option_name, "string",
+                N_("remote URL"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
+        case RELAY_REMOTE_OPTION_PASSWORD:
+            ptr_option = weechat_config_new_option (
+                relay_config_file, relay_config_section_remote,
+                option_name, "string",
+                N_("password"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
+        case RELAY_REMOTE_OPTION_TOTP_SECRET:
+            ptr_option = weechat_config_new_option (
+                relay_config_file, relay_config_section_remote,
+                option_name, "string",
+                N_("TOTP secret"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
+        case RELAY_REMOTE_NUM_OPTIONS:
+            break;
+    }
+
+    free (option_name);
+
+    return ptr_option;
+}
+
+/*
+ * Creates option for a temporary remote (when reading configuration file).
+ */
+
+void
+relay_config_create_option_temp (struct t_relay_remote *temp_remote,
+                                 int index_option, const char *value)
+{
+    struct t_config_option *new_option;
+
+    new_option = relay_config_create_remote_option (temp_remote->name,
+                                                    index_option, value);
+    if (new_option
+        && (index_option >= 0) && (index_option < RELAY_REMOTE_NUM_OPTIONS))
+    {
+        temp_remote->options[index_option] = new_option;
+    }
+}
+
+/*
+ * Uses temporary remotes (created by reading configuration file).
+ */
+
+void
+relay_config_use_temp_remotes ()
+{
+    struct t_relay_remote *ptr_temp_remote, *next_temp_remote;
+    int i, num_options_ok;
+
+    for (ptr_temp_remote = relay_remotes_temp; ptr_temp_remote;
+         ptr_temp_remote = ptr_temp_remote->next_remote)
+    {
+        num_options_ok = 0;
+        for (i = 0; i < RELAY_REMOTE_NUM_OPTIONS; i++)
+        {
+            if (!ptr_temp_remote->options[i])
+            {
+                ptr_temp_remote->options[i] =
+                    relay_config_create_remote_option (
+                        ptr_temp_remote->name,
+                        i,
+                        relay_remote_option_default[i]);
+            }
+            if (ptr_temp_remote->options[i])
+                num_options_ok++;
+        }
+
+        if (num_options_ok == RELAY_REMOTE_NUM_OPTIONS)
+        {
+            relay_remote_new_with_options (ptr_temp_remote->name,
+                                           ptr_temp_remote->options);
+        }
+        else
+        {
+            for (i = 0; i < RELAY_REMOTE_NUM_OPTIONS; i++)
+            {
+                if (ptr_temp_remote->options[i])
+                {
+                    weechat_config_option_free (ptr_temp_remote->options[i]);
+                    ptr_temp_remote->options[i] = NULL;
+                }
+            }
+        }
+    }
+
+    /* free all temporary remotes */
+    while (relay_remotes_temp)
+    {
+        next_temp_remote = relay_remotes_temp->next_remote;
+
+        if (relay_remotes_temp->name)
+            free (relay_remotes_temp->name);
+        free (relay_remotes_temp);
+
+        relay_remotes_temp = next_temp_remote;
+    }
+    last_relay_remote_temp = NULL;
+}
+
+/*
+ * Reads a remote option in relay configuration file.
+ */
+
+int
+relay_config_remote_read_cb (const void *pointer, void *data,
+                             struct t_config_file *config_file,
+                             struct t_config_section *section,
+                             const char *option_name, const char *value)
+{
+    char *pos_option, *remote_name;
+    struct t_relay_remote *ptr_temp_remote;
+    int index_option;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) config_file;
+    (void) section;
+
+    if (!option_name)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    pos_option = strchr (option_name, '.');
+    if (!pos_option)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    remote_name = weechat_strndup (option_name, pos_option - option_name);
+    if (!remote_name)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    pos_option++;
+
+    /* search temporary remote */
+    for (ptr_temp_remote = relay_remotes_temp; ptr_temp_remote;
+         ptr_temp_remote = ptr_temp_remote->next_remote)
+    {
+        if (strcmp (ptr_temp_remote->name, remote_name) == 0)
+            break;
+    }
+    if (!ptr_temp_remote)
+    {
+        /* create new temporary remote */
+        ptr_temp_remote = relay_remote_alloc (remote_name);
+        if (ptr_temp_remote)
+            relay_remote_add (ptr_temp_remote, &relay_remotes_temp, &last_relay_remote_temp);
+    }
+
+    if (ptr_temp_remote)
+    {
+        index_option = relay_remote_search_option (pos_option);
+        if (index_option >= 0)
+        {
+            relay_config_create_option_temp (ptr_temp_remote, index_option,
+                                             value);
+        }
+        else
+        {
+            weechat_printf (NULL,
+                            _("%sWarning: unknown option for section \"%s\": "
+                              "%s (value: \"%s\")"),
+                            weechat_prefix ("error"),
+                            RELAY_CONFIG_SECTION_REMOTE,
+                            option_name, value);
+        }
+    }
+
+    free (remote_name);
+
+    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+}
+
+/*
  * Reloads relay configuration file.
  */
 
@@ -1196,10 +1410,10 @@ relay_config_init ()
             NULL, NULL, NULL,
             &relay_config_refresh_cb, NULL, NULL,
             NULL, NULL, NULL);
-        relay_config_color_status[RELAY_STATUS_WAITING_AUTH] = weechat_config_new_option (
+        relay_config_color_status[RELAY_STATUS_AUTHENTICATING] = weechat_config_new_option (
             relay_config_file, relay_config_section_color,
-            "status_waiting_auth", "color",
-            N_("text color for \"waiting authentication\" status"),
+            "status_authenticating", "color",
+            N_("text color for \"authenticating\" status"),
             NULL, 0, 0, "yellow", NULL, 0,
             NULL, NULL, NULL,
             &relay_config_refresh_cb, NULL, NULL,
@@ -1518,6 +1732,17 @@ relay_config_init ()
         &relay_config_create_option_port_path, NULL, NULL,
         NULL, NULL, NULL);
 
+    /* remote */
+    relay_config_section_remote = weechat_config_new_section (
+        relay_config_file,
+        RELAY_CONFIG_SECTION_REMOTE,
+        0, 0,
+        &relay_config_remote_read_cb, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+
     return 1;
 }
 
@@ -1538,6 +1763,7 @@ relay_config_read ()
         relay_config_change_network_allowed_ips (NULL, NULL, NULL);
         relay_config_change_network_password_hash_algo (NULL, NULL, NULL);
         relay_config_change_irc_backlog_tags (NULL, NULL, NULL);
+        relay_config_use_temp_remotes ();
     }
     return rc;
 }

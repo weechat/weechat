@@ -337,6 +337,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       relay-info.c                | Релеј info/infolists/hdata.
 |       relay-network.c             | Мрежне функције за релеј.
 |       relay-raw.c                 | Релеј сирови бафер.
+// TRANSLATION MISSING
+|       relay-remote.c              | Relay remote.
 |       relay-server.c              | Релеј сервер.
 |       relay-upgrade.c             | Save/restore of relay data when upgrading WeeChat.
 |       relay-websocket.c           | WebSocket сервер функције (RFC 6455).

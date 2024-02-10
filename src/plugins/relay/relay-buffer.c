@@ -77,11 +77,11 @@ relay_buffer_refresh (const char *hotlist)
                       weechat_color ("lightgreen"),
                       /* disconnect */
                       (client_selected
-                       && !RELAY_CLIENT_HAS_ENDED(client_selected)) ?
+                       && !RELAY_STATUS_HAS_ENDED(client_selected->status)) ?
                       _("  [D] Disconnect") : "",
                       /* remove */
                       (client_selected
-                       && RELAY_CLIENT_HAS_ENDED(client_selected)) ?
+                       && RELAY_STATUS_HAS_ENDED(client_selected->status)) ?
                       _("  [R] Remove") : "",
                       /* purge old */
                       _("  [P] Purge finished"),
@@ -98,7 +98,7 @@ relay_buffer_refresh (const char *hotlist)
                   weechat_config_string (relay_config_color_text_bg));
 
         snprintf (str_status, sizeof (str_status),
-                  "%s", _(relay_client_status_string[ptr_client->status]));
+                  "%s", _(relay_status_string[ptr_client->status]));
         length = weechat_utf8_strlen_screen (str_status);
         if (length < 20)
         {
@@ -191,7 +191,7 @@ relay_buffer_input_cb (const void *pointer, void *data,
         /* disconnect client */
         if (weechat_strcmp (input_data, "d") == 0)
         {
-            if (client && !RELAY_CLIENT_HAS_ENDED(client))
+            if (client && !RELAY_STATUS_HAS_ENDED(client->status))
             {
                 relay_client_disconnect (client);
                 relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
@@ -204,7 +204,7 @@ relay_buffer_input_cb (const void *pointer, void *data,
             while (ptr_client)
             {
                 next_client = ptr_client->next_client;
-                if (RELAY_CLIENT_HAS_ENDED(ptr_client))
+                if (RELAY_STATUS_HAS_ENDED(ptr_client->status))
                     relay_client_free (ptr_client);
                 ptr_client = next_client;
             }
@@ -218,7 +218,7 @@ relay_buffer_input_cb (const void *pointer, void *data,
         /* remove client */
         else if (weechat_strcmp (input_data, "r") == 0)
         {
-            if (client && RELAY_CLIENT_HAS_ENDED(client))
+            if (client && RELAY_STATUS_HAS_ENDED(client->status))
             {
                 relay_client_free (client);
                 relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);

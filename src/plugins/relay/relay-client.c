@@ -49,15 +49,6 @@
 #include "weechat/relay-weechat.h"
 
 
-char *relay_client_status_string[] =   /* status strings for display        */
-{ N_("connecting"), N_("waiting auth"),
-  N_("connected"), N_("auth failed"), N_("disconnected")
-};
-char *relay_client_status_name[] =     /* name of status (for signal/info)  */
-{ "connecting", "waiting_auth",
-  "connected", "auth_failed", "disconnected"
-};
-
 char *relay_client_data_type_string[] = /* strings for data types           */
 { "text", "binary", "http" };
 
@@ -144,30 +135,6 @@ relay_client_search_by_id (int id)
 }
 
 /*
- * Searches for a client status.
- *
- * Returns index of status in enum t_relay_status, -1 if status is not found.
- */
-
-int
-relay_client_status_search (const char *name)
-{
-    int i;
-
-    if (!name)
-        return -1;
-
-    for (i = 0; i < RELAY_NUM_STATUS; i++)
-    {
-        if (strcmp (relay_client_status_name[i], name) == 0)
-            return i;
-    }
-
-    /* status not found */
-    return -1;
-}
-
-/*
  * Returns the number of active clients (connecting or connected) on a given
  * server port.
  */
@@ -183,7 +150,7 @@ relay_client_count_active_by_port (int server_port)
          ptr_client = ptr_client->next_client)
     {
         if ((ptr_client->server_port == server_port)
-            && !RELAY_CLIENT_HAS_ENDED(ptr_client))
+            && !RELAY_STATUS_HAS_ENDED(ptr_client->status))
         {
             count++;
         }
@@ -203,7 +170,7 @@ relay_client_send_signal (struct t_relay_client *client)
 
     snprintf (signal, sizeof (signal),
               "relay_client_%s",
-              relay_client_status_name[client->status]);
+              relay_status_name[client->status]);
     weechat_hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_POINTER, client);
 }
 
@@ -761,7 +728,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
      * data can be received only during authentication
      * or if connected (authentication was OK)
      */
-    if ((client->status != RELAY_STATUS_WAITING_AUTH)
+    if ((client->status != RELAY_STATUS_AUTHENTICATING)
         && (client->status != RELAY_STATUS_CONNECTED))
     {
         return WEECHAT_RC_OK;
@@ -1361,7 +1328,7 @@ relay_client_timer_cb (const void *pointer, void *data, int remaining_calls)
     {
         ptr_next_client = ptr_client->next_client;
 
-        if (RELAY_CLIENT_HAS_ENDED(ptr_client))
+        if (RELAY_STATUS_HAS_ENDED(ptr_client->status))
         {
             if ((purge_delay >= 0)
                 && (current_time >= ptr_client->end_time + (purge_delay * 60)))
@@ -1377,7 +1344,7 @@ relay_client_timer_cb (const void *pointer, void *data, int remaining_calls)
 
             /* disconnect clients not authenticated */
             if ((auth_timeout > 0)
-                && (ptr_client->status == RELAY_STATUS_WAITING_AUTH))
+                && (ptr_client->status == RELAY_STATUS_AUTHENTICATING))
             {
                 if (current_time - ptr_client->start_time > auth_timeout)
                 {
@@ -1576,7 +1543,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                     RELAY_COLOR_CHAT_CLIENT,
                     new_client->desc,
                     RELAY_COLOR_CHAT,
-                    _(relay_client_status_string[new_client->status]));
+                    _(relay_status_string[new_client->status]));
             }
             else
             {
@@ -1588,7 +1555,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                     RELAY_COLOR_CHAT_CLIENT,
                     new_client->desc,
                     RELAY_COLOR_CHAT,
-                    _(relay_client_status_string[new_client->status]));
+                    _(relay_status_string[new_client->status]));
             }
         }
 
@@ -1818,7 +1785,7 @@ relay_client_set_status (struct t_relay_client *client,
                     client->desc,
                     RELAY_COLOR_CHAT);
     }
-    else if (RELAY_CLIENT_HAS_ENDED(client))
+    else if (RELAY_STATUS_HAS_ENDED(client->status))
     {
         client->end_time = time (NULL);
 
@@ -2069,7 +2036,7 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "desc", client->desc))
         return 0;
-    if (!RELAY_CLIENT_HAS_ENDED(client) && force_disconnected_state)
+    if (!RELAY_STATUS_HAS_ENDED(client->status) && force_disconnected_state)
     {
         if (!weechat_infolist_new_var_integer (ptr_item, "sock", -1))
             return 0;
@@ -2156,7 +2123,7 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "real_ip", client->real_ip))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "status_string", relay_client_status_string[client->status]))
+    if (!weechat_infolist_new_var_string (ptr_item, "status_string", relay_status_string[client->status]))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "protocol", client->protocol))
         return 0;
@@ -2244,7 +2211,7 @@ relay_client_print_log ()
         weechat_log_printf ("  real_ip . . . . . . . . . : '%s'", ptr_client->real_ip);
         weechat_log_printf ("  status. . . . . . . . . . : %d (%s)",
                             ptr_client->status,
-                            relay_client_status_string[ptr_client->status]);
+                            relay_status_string[ptr_client->status]);
         weechat_log_printf ("  protocol. . . . . . . . . : %d (%s)",
                             ptr_client->protocol,
                             relay_protocol_string[ptr_client->protocol]);

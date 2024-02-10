@@ -374,6 +374,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/relay/relay-network.h
 ./src/plugins/relay/relay-raw.c
 ./src/plugins/relay/relay-raw.h
+./src/plugins/relay/relay-remote.c
+./src/plugins/relay/relay-remote.h
 ./src/plugins/relay/relay-server.c
 ./src/plugins/relay/relay-server.h
 ./src/plugins/relay/relay-upgrade.c

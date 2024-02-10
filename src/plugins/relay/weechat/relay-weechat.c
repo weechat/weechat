@@ -286,12 +286,12 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
                                    &relay_weechat_free_buffers_nicklist);
     RELAY_WEECHAT_DATA(client, hook_timer_nicklist) = NULL;
 
-    if (!RELAY_CLIENT_HAS_ENDED(client))
+    if (!RELAY_STATUS_HAS_ENDED(client->status))
         relay_weechat_hook_signals (client);
 }
 
 /*
- * Returns the client initial status: it is always  "waiting_auth" for weechat
+ * Returns the client initial status: it is always "authenticating" for weechat
  * protocol because we always expect the "init" command, even without any
  * password.
  */
@@ -302,7 +302,7 @@ relay_weechat_get_initial_status (struct t_relay_client *client)
     /* make C compiler happy */
     (void) client;
 
-    return RELAY_STATUS_WAITING_AUTH;
+    return RELAY_STATUS_AUTHENTICATING;
 }
 
 /*

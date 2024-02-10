@@ -69,7 +69,7 @@ relay_info_info_relay_client_count_cb (const void *pointer, void *data,
             protocol = relay_protocol_search (items[0]);
             if (protocol < 0)
             {
-                status = relay_client_status_search (items[0]);
+                status = relay_status_search (items[0]);
                 if (status < 0)
                     goto end;
             }
@@ -86,7 +86,7 @@ relay_info_info_relay_client_count_cb (const void *pointer, void *data,
         }
         if (strcmp (items[1], "*") != 0)
         {
-            status = relay_client_status_search (items[1]);
+            status = relay_status_search (items[1]);
             if (status < 0)
                 goto end;
         }

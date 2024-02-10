@@ -225,7 +225,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
-    if (client->status != RELAY_STATUS_WAITING_AUTH)
+    if (client->status != RELAY_STATUS_AUTHENTICATING)
         return WEECHAT_RC_OK;
 
     /* only one handshake is allowed */
@@ -1724,7 +1724,7 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
           { NULL, NULL }
         };
 
-    if (!data || !data[0] || RELAY_CLIENT_HAS_ENDED(client))
+    if (!data || !data[0] || RELAY_STATUS_HAS_ENDED(client->status))
         return;
 
     /* display debug message */

@@ -808,7 +808,7 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
         { NULL,   NULL,        0, 0, 0, NULL                             },
     };
 
-    if (!client->http_req || RELAY_CLIENT_HAS_ENDED(client))
+    if (!client->http_req || RELAY_STATUS_HAS_ENDED(client->status))
         return;
 
     /* display debug message */

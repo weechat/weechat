@@ -2298,7 +2298,7 @@ relay_irc_alloc_with_infolist (struct t_relay_client *client,
 }
 
 /*
- * Returns the client initial status: it can be "waiting_auth" or "connected",
+ * Returns the client initial status: it can be "authenticating" or "connected",
  * depending if a password is expected or not.
  */
 
@@ -2306,7 +2306,7 @@ enum t_relay_status
 relay_irc_get_initial_status (struct t_relay_client *client)
 {
     return (RELAY_IRC_DATA(client, password_ok)) ?
-        RELAY_STATUS_CONNECTED : RELAY_STATUS_WAITING_AUTH;
+        RELAY_STATUS_CONNECTED : RELAY_STATUS_AUTHENTICATING;
 }
 
 /*
@@ -2360,7 +2360,7 @@ relay_irc_add_to_infolist (struct t_infolist_item *item,
     if (!item || !client)
         return 0;
 
-    if (!RELAY_CLIENT_HAS_ENDED(client) && force_disconnected_state)
+    if (!RELAY_STATUS_HAS_ENDED(client->status) && force_disconnected_state)
     {
         if (!weechat_infolist_new_var_integer (item, "connected", 0))
             return 0;

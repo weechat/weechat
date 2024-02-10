@@ -25,6 +25,7 @@
 
 #include "../weechat-plugin.h"
 #include "relay.h"
+#include "relay-remote.h"
 #include "relay-server.h"
 
 
@@ -156,6 +157,35 @@ relay_completion_free_port_cb (const void *pointer, void *data,
 }
 
 /*
+ * Adds relay remotes to completion list.
+ */
+
+int
+relay_completion_remotes_cb (const void *pointer, void *data,
+                             const char *completion_item,
+                             struct t_gui_buffer *buffer,
+                             struct t_gui_completion *completion)
+{
+    struct t_relay_remote *ptr_remote;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) buffer;
+    (void) completion_item;
+
+    for (ptr_remote = relay_remotes; ptr_remote;
+         ptr_remote = ptr_remote->next_remote)
+    {
+        weechat_completion_list_add (completion,
+                                     ptr_remote->name,
+                                     0, WEECHAT_LIST_POS_SORT);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Hooks completions.
  */
 
@@ -172,4 +202,7 @@ relay_completion_init ()
     weechat_hook_completion ("relay_free_port",
                              N_("first free port for relay plugin"),
                              &relay_completion_free_port_cb, NULL, NULL);
+    weechat_hook_completion ("relay_remotes",
+                             N_("relay remotes"),
+                             &relay_completion_remotes_cb, NULL, NULL);
 }

@@ -27,19 +27,6 @@
 struct t_relay_server;
 struct t_relay_http_request;
 
-/* relay status */
-
-enum t_relay_status
-{
-    RELAY_STATUS_CONNECTING = 0,       /* connecting to client              */
-    RELAY_STATUS_WAITING_AUTH,         /* waiting AUTH from client          */
-    RELAY_STATUS_CONNECTED,            /* connected to client               */
-    RELAY_STATUS_AUTH_FAILED,          /* AUTH failed with client           */
-    RELAY_STATUS_DISCONNECTED,         /* disconnected from client          */
-    /* number of relay status */
-    RELAY_NUM_STATUS,
-};
-
 /* type of data exchanged with client */
 
 enum t_relay_client_data_type
@@ -74,12 +61,6 @@ enum t_relay_client_msg_type
     /* number of message types */
     RELAY_NUM_CLIENT_MSG_TYPES,
 };
-
-/* macros for status */
-
-#define RELAY_CLIENT_HAS_ENDED(client)                                  \
-    ((client->status == RELAY_STATUS_AUTH_FAILED) ||                    \
-     (client->status == RELAY_STATUS_DISCONNECTED))
 
 /* fake send function (for tests) */
 
@@ -146,8 +127,6 @@ struct t_relay_client
     struct t_relay_client *next_client;/* link to next client               */
 };
 
-extern char *relay_client_status_string[];
-extern char *relay_client_status_name[];
 extern char *relay_client_msg_type_string[];
 extern struct t_relay_client *relay_clients;
 extern struct t_relay_client *last_relay_client;
@@ -156,7 +135,6 @@ extern int relay_client_count;
 extern int relay_client_valid (struct t_relay_client *client);
 extern struct t_relay_client *relay_client_search_by_number (int number);
 extern struct t_relay_client *relay_client_search_by_id (int id);
-extern int relay_client_status_search (const char *name);
 extern int relay_client_count_active_by_port (int server_port);
 extern void relay_client_set_desc (struct t_relay_client *client);
 extern void relay_client_recv_buffer (struct t_relay_client *client,
