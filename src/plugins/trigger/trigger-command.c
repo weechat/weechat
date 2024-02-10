@@ -773,16 +773,6 @@ trigger_command_trigger (const void *pointer, void *data,
                 goto end;
             }
         }
-        ptr_trigger = trigger_alloc (sargv[0]);
-        if (!ptr_trigger)
-        {
-            weechat_printf_date_tags (
-                NULL, 0, "no_trigger",
-                _("%s%s: failed to create trigger \"%s\""),
-                weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                sargv[0]);
-            goto end;
-        }
         ptr_trigger = trigger_new (
             sargv[0],                      /* name */
             (weechat_strcmp (argv[1], "addoff") == 0) ? "off" : "on",

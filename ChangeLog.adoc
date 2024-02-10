@@ -13,6 +13,10 @@ For a list of important changes that require manual actions, please look at rele
 [[v4.1.4]]
 == Version 4.1.4 (under dev)
 
+Bug fixes::
+
+  * trigger: fix memory leak when adding a new trigger with `/trigger` command
+
 Build::
 
   * ruby: add detection of Ruby 3.3
