@@ -175,7 +175,7 @@ TEST(CoreDir, RemoveTrailingSeparators)
 
     dir_remove_trailing_separators (NULL);
 
-    snprintf (path, sizeof (path), "");
+    path[0] = '\0';
     dir_remove_trailing_separators (path);
     STRCMP_EQUAL("", path);
 
