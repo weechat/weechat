@@ -630,6 +630,29 @@ use_xdg:
 }
 
 /*
+ * Removes trailing separators in path, which is modified in place
+ * (each trailing separator is replaced by NUL char).
+ *
+ * Example on Linux: "/home/xxx/" => "/home/xxx".
+ */
+
+void
+dir_remove_trailing_separators (char *path)
+{
+    int length;
+
+    if (!path || !path[0])
+        return;
+
+    length = strlen (path);
+    while ((length > 1) && (path[length - 1] == DIR_SEPARATOR_CHAR))
+    {
+        path[length - 1] = '\0';
+        length--;
+    }
+}
+
+/*
  * Creates a home directory.
  *
  * Returns:
@@ -680,6 +703,11 @@ dir_create_home_dirs ()
 
     if (!dir_find_home_dirs ())
         goto error;
+
+    dir_remove_trailing_separators (weechat_config_dir);
+    dir_remove_trailing_separators (weechat_data_dir);
+    dir_remove_trailing_separators (weechat_cache_dir);
+    dir_remove_trailing_separators (weechat_runtime_dir);
 
     rc = dir_create_home_dir (weechat_config_dir);
     if (rc && (strcmp (weechat_config_dir, weechat_data_dir) != 0))

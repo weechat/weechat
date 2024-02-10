@@ -29,6 +29,8 @@ extern "C"
 #include <sys/time.h>
 #include "src/core/wee-dir.h"
 #include "src/core/wee-string.h"
+
+extern void dir_remove_trailing_separators (char *path);
 }
 
 TEST_GROUP(CoreDir)
@@ -160,6 +162,42 @@ TEST(CoreDir, FileGetContentCopy)
 TEST(CoreDir, SetHomePath)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_remove_trailing_separators
+ */
+
+TEST(CoreDir, RemoveTrailingSeparators)
+{
+    char path[128];
+
+    dir_remove_trailing_separators (NULL);
+
+    snprintf (path, sizeof (path), "");
+    dir_remove_trailing_separators (path);
+    STRCMP_EQUAL("", path);
+
+    snprintf (path, sizeof (path), "/");
+    dir_remove_trailing_separators (path);
+    STRCMP_EQUAL("/", path);
+
+    snprintf (path, sizeof (path), "///");
+    dir_remove_trailing_separators (path);
+    STRCMP_EQUAL("/", path);
+
+    snprintf (path, sizeof (path), "/tmp");
+    dir_remove_trailing_separators (path);
+    STRCMP_EQUAL("/tmp", path);
+
+    snprintf (path, sizeof (path), "/tmp/");
+    dir_remove_trailing_separators (path);
+    STRCMP_EQUAL("/tmp", path);
+
+    snprintf (path, sizeof (path), "/tmp///////");
+    dir_remove_trailing_separators (path);
+    STRCMP_EQUAL("/tmp", path);
 }
 
 /*
