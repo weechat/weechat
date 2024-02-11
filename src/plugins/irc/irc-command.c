@@ -5421,6 +5421,16 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  usermode . . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[IRC_SERVER_OPTION_USERMODE]));
+        /* command_delay */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_COMMAND_DELAY]))
+            weechat_printf (NULL, "  command_delay. . . . :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_COMMAND_DELAY),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_COMMAND_DELAY)));
+        else
+            weechat_printf (NULL, "  command_delay. . . . : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_COMMAND_DELAY]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_COMMAND_DELAY])));
         /* command */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_COMMAND]))
         {
@@ -5443,16 +5453,16 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             if (cmd_pwd_hidden)
                 free (cmd_pwd_hidden);
         }
-        /* command_delay */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_COMMAND_DELAY]))
-            weechat_printf (NULL, "  command_delay. . . . :   (%d %s)",
-                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_COMMAND_DELAY),
-                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_COMMAND_DELAY)));
+        /* autojoin_delay */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOJOIN_DELAY]))
+            weechat_printf (NULL, "  autojoin_delay . . . :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOJOIN_DELAY),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOJOIN_DELAY)));
         else
-            weechat_printf (NULL, "  command_delay. . . . : %s%d %s",
+            weechat_printf (NULL, "  autojoin_delay . . . : %s%d %s",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_integer (server->options[IRC_SERVER_OPTION_COMMAND_DELAY]),
-                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_COMMAND_DELAY])));
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_AUTOJOIN_DELAY]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_AUTOJOIN_DELAY])));
         /* autojoin */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOJOIN]))
             weechat_printf (NULL, "  autojoin . . . . . . :   ('%s')",

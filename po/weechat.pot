@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-01 21:36+0100\n"
+"POT-Creation-Date: 2024-02-11 08:54+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8863,6 +8863,9 @@ msgid ""
 "name)"
 msgstr ""
 
+msgid "delay (in seconds) before execution of command"
+msgstr ""
+
 msgid ""
 "command(s) to run after connection to server and before auto-join of "
 "channels (many commands can be separated by \";\", use \"\\;\" for a "
@@ -8873,8 +8876,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"delay (in seconds) after execution of command and before auto-join of "
-"channels (example: give some time for authentication before joining channels)"
+"delay (in seconds) before auto-join of channels (example: give some time for "
+"authentication before joining channels)"
 msgstr ""
 
 msgid ""
@@ -13139,11 +13142,11 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s%s: failed to create trigger \"%s\""
+msgid "Trigger \"%s\" created"
 msgstr ""
 
 #, c-format
-msgid "Trigger \"%s\" created"
+msgid "%s%s: failed to create trigger \"%s\""
 msgstr ""
 
 #, c-format

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-01 21:36+0100\n"
+"POT-Creation-Date: 2024-02-11 08:54+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -10661,6 +10661,13 @@ msgstr ""
 "conteúdo é avaliado, ver /help eval)"
 
 #, fuzzy
+#| msgid "delay (in seconds) before autorejoin (after kick)"
+msgid "delay (in seconds) before execution of command"
+msgstr ""
+"atraso (em segundos) antes de se voltar a juntar (depois de ser expulso "
+"(kick))"
+
+#, fuzzy
 msgid ""
 "command(s) to run after connection to server and before auto-join of "
 "channels (many commands can be separated by \";\", use \"\\;\" for a "
@@ -10675,9 +10682,14 @@ msgstr ""
 "$server são substituídas pelos respetivos valores) (nota: o conteúdo é "
 "avaliado, ver /help eval)"
 
+#, fuzzy
+#| msgid ""
+#| "delay (in seconds) after execution of command and before auto-join of "
+#| "channels (example: give some time for authentication before joining "
+#| "channels)"
 msgid ""
-"delay (in seconds) after execution of command and before auto-join of "
-"channels (example: give some time for authentication before joining channels)"
+"delay (in seconds) before auto-join of channels (example: give some time for "
+"authentication before joining channels)"
 msgstr ""
 "atraso (em segundos) depois de executar os comandos e antes de se juntar "
 "automaticamente aos canais (exemplo: dar algum tempo à autenticação antes de "
@@ -15683,12 +15695,12 @@ msgstr ""
 "\"addreplace\" para o substituir)"
 
 #, c-format
-msgid "%s%s: failed to create trigger \"%s\""
-msgstr "%s%s: falha ao criar o acionador \"%s\""
-
-#, c-format
 msgid "Trigger \"%s\" created"
 msgstr "Acionador \"%s\" criado"
+
+#, c-format
+msgid "%s%s: failed to create trigger \"%s\""
+msgstr "%s%s: falha ao criar o acionador \"%s\""
 
 #, c-format
 msgid "%s%s: trigger \"%s\" not found"

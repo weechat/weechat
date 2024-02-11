@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-01 21:36+0100\n"
+"POT-Creation-Date: 2024-02-11 08:54+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10823,6 +10823,12 @@ msgstr ""
 "değerlendirilir, bkz. /help eval; sunucu seçenekleri ${irc_server.xxx} ile "
 "değerlendirilir ve ${server} sunucu adı ile değiştirilir"
 
+#, fuzzy
+#| msgid "delay (in seconds) before autorejoin (after kick)"
+msgid "delay (in seconds) before execution of command"
+msgstr ""
+"kendiliğinden yeniden katılma öncesi gecikme (saniye) (kovulma sonrası)"
+
 msgid ""
 "command(s) to run after connection to server and before auto-join of "
 "channels (many commands can be separated by \";\", use \"\\;\" for a "
@@ -10838,9 +10844,14 @@ msgstr ""
 "eval; sunucu seçenekleri ${irc_server.xxx} ile değerlendirilir ve ${server} "
 "sunucu adı ile değiştirilir"
 
+#, fuzzy
+#| msgid ""
+#| "delay (in seconds) after execution of command and before auto-join of "
+#| "channels (example: give some time for authentication before joining "
+#| "channels)"
 msgid ""
-"delay (in seconds) after execution of command and before auto-join of "
-"channels (example: give some time for authentication before joining channels)"
+"delay (in seconds) before auto-join of channels (example: give some time for "
+"authentication before joining channels)"
 msgstr ""
 "komut yürütüldükten sonra ve kanallara kendiliğinden katılma sonrası gecikme "
 "(örnek: kanallara katılma öncesi kimlik doğrulama için zaman ver)"
@@ -15942,12 +15953,12 @@ msgstr ""
 "yazmak için \"addreplace\" seçeneğini kullanın)"
 
 #, c-format
-msgid "%s%s: failed to create trigger \"%s\""
-msgstr "%s%s: \"%s\" tetiği oluşturulamadı"
-
-#, c-format
 msgid "Trigger \"%s\" created"
 msgstr "\"%s\" tetiği oluşturuldu"
+
+#, c-format
+msgid "%s%s: failed to create trigger \"%s\""
+msgstr "%s%s: \"%s\" tetiği oluşturulamadı"
 
 #, c-format
 msgid "%s%s: trigger \"%s\" not found"

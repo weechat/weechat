@@ -2376,6 +2376,22 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_COMMAND_DELAY:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "integer",
+                N_("delay (in seconds) before execution of command"),
+                NULL, 0, 3600,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value,
+                callback_check_value_pointer,
+                callback_check_value_data,
+                callback_change,
+                callback_change_pointer,
+                callback_change_data,
+                NULL, NULL, NULL);
+            break;
         case IRC_SERVER_OPTION_COMMAND:
             new_option = weechat_config_new_option (
                 config_file, section,
@@ -2398,13 +2414,13 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_COMMAND_DELAY:
+        case IRC_SERVER_OPTION_AUTOJOIN_DELAY:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "integer",
-                N_("delay (in seconds) after execution of command and before "
-                   "auto-join of channels (example: give some time for "
-                   "authentication before joining channels)"),
+                N_("delay (in seconds) before auto-join of channels "
+                   "(example: give some time for authentication before joining "
+                   "channels)"),
                 NULL, 0, 3600,
                 default_value, value,
                 null_value_allowed,
@@ -2880,8 +2896,9 @@ irc_config_update_cb (const void *pointer, void *data,
                       struct t_hashtable *data_read)
 {
     const char *ptr_section, *ptr_option, *ptr_value;
+    const char *option_autojoin_delay = "autojoin_delay";
     char *new_option, *pos_option, *new_value;
-    int changes;
+    int changes, length;
 
     /* make C compiler happy */
     (void) pointer;
@@ -2984,6 +3001,57 @@ irc_config_update_cb (const void *pointer, void *data,
             }
             if (new_value)
                 free (new_value);
+        }
+    }
+
+    if (version_read < 4)
+    {
+        /*
+         * changes in v4 (WeeChat 4.3.0):
+         *   - server option "command_delay" is renamed to "autojoin_delay"
+         *     ("command_delay" is a new option that sets the delay before
+         *     the command, while "autojoin_delay" sets the delay before the
+         *     autojoin)
+         */
+        ptr_section = weechat_hashtable_get (data_read, "section");
+        ptr_option = weechat_hashtable_get (data_read, "option");
+        if (ptr_section
+            && ptr_option
+            && (strcmp (ptr_section, "server_default") == 0)
+            && (strcmp (ptr_option, "command_delay") == 0))
+        {
+            weechat_printf (
+                NULL,
+                _("IRC option renamed: \"irc.%s.%s\" => \"irc.%s.%s\""),
+                ptr_section, ptr_option,
+                ptr_section, option_autojoin_delay);
+            weechat_hashtable_set (data_read, "option", option_autojoin_delay);
+            changes++;
+        }
+        else if (ptr_section
+                 && ptr_option
+                 && (strcmp (ptr_section, "server") == 0))
+        {
+            pos_option = strrchr (ptr_option, '.');
+            if (pos_option && (strcmp (pos_option + 1, "command_delay") == 0))
+            {
+                length = (pos_option - ptr_option + 1) + strlen (option_autojoin_delay) + 1;
+                new_option = malloc (length);
+                if (new_option)
+                {
+                    memcpy (new_option, ptr_option, pos_option - ptr_option + 1);
+                    new_option[pos_option - ptr_option + 1] = '\0';
+                    strcat (new_option, option_autojoin_delay);
+                    weechat_printf (
+                        NULL,
+                        _("IRC option renamed: \"irc.%s.%s\" => \"irc.%s.%s\""),
+                        ptr_section, ptr_option,
+                        ptr_section, new_option);
+                    weechat_hashtable_set (data_read, "option", new_option);
+                    changes++;
+                    free (new_option);
+                }
+            }
         }
     }
 

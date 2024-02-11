@@ -1480,6 +1480,16 @@ TEST(IrcServer, DisconnectAll)
 
 /*
  * Tests functions:
+ *   irc_server_execute_command
+ */
+
+TEST(IrcServer, ExecuteCommand)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   irc_server_autojoin_create_buffers
  */
 

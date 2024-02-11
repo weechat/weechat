@@ -109,8 +109,9 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "realname",             ""                        },
   { "local_hostname",       ""                        },
   { "usermode",             ""                        },
-  { "command",              ""                        },
   { "command_delay",        "0"                       },
+  { "command",              ""                        },
+  { "autojoin_delay",       "0"                       },
   { "autojoin",             ""                        },
   { "autojoin_dynamic",     "off"                     },
   { "autorejoin",           "off"                     },
@@ -1755,6 +1756,7 @@ irc_server_alloc (const char *name)
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
+    new_server->autojoin_time = 0;
     new_server->autojoin_done = 0;
     new_server->disable_autojoin = 0;
     new_server->is_away = 0;
@@ -4067,13 +4069,22 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                 }
             }
 
-            /* check if it's time to autojoin channels (after command delay) */
+            /* check if it's time to execute command (after command_delay) */
             if ((ptr_server->command_time != 0)
                 && (current_time >= ptr_server->command_time +
                     IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_COMMAND_DELAY)))
             {
-                irc_server_autojoin_channels (ptr_server);
+                irc_server_execute_command (ptr_server);
                 ptr_server->command_time = 0;
+            }
+
+            /* check if it's time to auto-join channels (after autojoin_delay) */
+            if ((ptr_server->autojoin_time != 0)
+                && (current_time >= ptr_server->autojoin_time +
+                    IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AUTOJOIN_DELAY)))
+            {
+                irc_server_autojoin_channels (ptr_server);
+                ptr_server->autojoin_time = 0;
             }
 
             /* check if it's time to send MONITOR command */
@@ -5898,6 +5909,58 @@ irc_server_disconnect_all ()
 }
 
 /*
+ * Executes command on server (using server option ".command").
+ */
+
+void
+irc_server_execute_command (struct t_irc_server *server)
+{
+    char **commands, **ptr_command, *command2, *command3, *slash_command;
+    const char *ptr_server_command;
+    int length;
+
+    ptr_server_command = IRC_SERVER_OPTION_STRING(server,
+                                                  IRC_SERVER_OPTION_COMMAND);
+    if (!ptr_server_command || !ptr_server_command[0])
+        return;
+
+    /* split command on ';' which can be escaped with '\;' */
+    commands = weechat_string_split_command (ptr_server_command, ';');
+    if (!commands)
+        return;
+
+    for (ptr_command = commands; *ptr_command; ptr_command++)
+    {
+        command2 = irc_server_eval_expression (server, *ptr_command);
+        if (command2)
+        {
+            command3 = irc_message_replace_vars (server, NULL, command2);
+            if (command3)
+            {
+                if (weechat_string_is_command_char (command3))
+                {
+                    weechat_command (server->buffer, command3);
+                }
+                else
+                {
+                    length = 1 + strlen (command3) + 1;
+                    slash_command = malloc (length);
+                    if (slash_command)
+                    {
+                        snprintf (slash_command, length, "/%s", command3);
+                        weechat_command (server->buffer, slash_command);
+                        free (slash_command);
+                    }
+                }
+                free (command3);
+            }
+            free (command2);
+        }
+    }
+    weechat_string_free_split_command (commands);
+}
+
+/*
  * Creates buffers for auto-joined channels on a server.
  */
 
@@ -6567,6 +6630,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_delay, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_start, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, command_time, TIME, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, autojoin_time, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, autojoin_done, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, disable_autojoin, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, is_away, INTEGER, 0, NULL, NULL);
@@ -6726,11 +6790,14 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "usermode",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERMODE)))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "command_delay",
+                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_COMMAND_DELAY)))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "command",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND)))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "command_delay",
-                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_COMMAND_DELAY)))
+    if (!weechat_infolist_new_var_integer (ptr_item, "autojoin_delay",
+                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOJOIN_DELAY)))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "autojoin",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN)))
@@ -6949,6 +7016,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "command_time", server->command_time))
         return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "autojoin_time", server->autojoin_time))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "autojoin_done", server->autojoin_done))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "disable_autojoin", server->disable_autojoin))
@@ -7165,11 +7234,6 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  usermode. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_USERMODE]));
-        /* command */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_COMMAND]))
-            weechat_log_printf ("  command . . . . . . . . . : null");
-        else
-            weechat_log_printf ("  command . . . . . . . . . : (hidden)");
         /* command_delay */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_COMMAND_DELAY]))
             weechat_log_printf ("  command_delay . . . . . . : null (%d)",
@@ -7177,6 +7241,18 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  command_delay . . . . . . : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_COMMAND_DELAY]));
+        /* command */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_COMMAND]))
+            weechat_log_printf ("  command . . . . . . . . . : null");
+        else
+            weechat_log_printf ("  command . . . . . . . . . : (hidden)");
+        /* autojoin_delay */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN_DELAY]))
+            weechat_log_printf ("  autojoin_delay. . . . . . : null (%d)",
+                                IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AUTOJOIN_DELAY));
+        else
+            weechat_log_printf ("  autojoin_delay. . . . . . : %d",
+                                weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN_DELAY]));
         /* autojoin */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOJOIN]))
             weechat_log_printf ("  autojoin. . . . . . . . . : null ('%s')",
@@ -7336,6 +7412,7 @@ irc_server_print_log ()
         weechat_log_printf ("  reconnect_delay . . . . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start . . . . . : %lld",  (long long)ptr_server->reconnect_start);
         weechat_log_printf ("  command_time. . . . . . . : %lld",  (long long)ptr_server->command_time);
+        weechat_log_printf ("  autojoin_time . . . . . . : %lld",  (long long)ptr_server->autojoin_time);
         weechat_log_printf ("  autojoin_done . . . . . . : %d",    ptr_server->autojoin_done);
         weechat_log_printf ("  disable_autojoin. . . . . : %d",    ptr_server->disable_autojoin);
         weechat_log_printf ("  is_away . . . . . . . . . : %d",    ptr_server->is_away);

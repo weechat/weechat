@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-01 21:36+0100\n"
-"PO-Revision-Date: 2024-02-01 21:36+0100\n"
+"POT-Creation-Date: 2024-02-11 08:54+0100\n"
+"PO-Revision-Date: 2024-02-11 08:55+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -10997,6 +10997,9 @@ msgstr ""
 "sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du "
 "serveur)"
 
+msgid "delay (in seconds) before execution of command"
+msgstr "délai (en secondes) avant l'exécution de la commande"
+
 msgid ""
 "command(s) to run after connection to server and before auto-join of "
 "channels (many commands can be separated by \";\", use \"\\;\" for a "
@@ -11013,12 +11016,11 @@ msgstr ""
 "${irc_server.xxx} et ${server} est remplacé par le nom du serveur)"
 
 msgid ""
-"delay (in seconds) after execution of command and before auto-join of "
-"channels (example: give some time for authentication before joining channels)"
+"delay (in seconds) before auto-join of channels (example: give some time for "
+"authentication before joining channels)"
 msgstr ""
-"délai (en secondes) après exécution de la commande et avant le \"join\" "
-"automatique des canaux (exemple : donner du temps pour l'authentification "
-"avant de rejoindre les canaux)"
+"délai (en secondes) avant le \"join\" automatique des canaux (exemple : "
+"donner du temps pour l'authentification avant de rejoindre les canaux)"
 
 msgid ""
 "comma separated list of channels to join after connection to server (and "
@@ -16116,12 +16118,12 @@ msgstr ""
 "l'option \"addreplace\" pour l'écraser)"
 
 #, c-format
-msgid "%s%s: failed to create trigger \"%s\""
-msgstr "%s%s : impossible de créer le trigger \"%s\""
-
-#, c-format
 msgid "Trigger \"%s\" created"
 msgstr "Trigger \"%s\" créé"
+
+#, c-format
+msgid "%s%s: failed to create trigger \"%s\""
+msgstr "%s%s : impossible de créer le trigger \"%s\""
 
 #, c-format
 msgid "%s%s: trigger \"%s\" not found"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-01 21:36+0100\n"
+"POT-Creation-Date: 2024-02-11 08:54+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -10692,6 +10692,11 @@ msgstr ""
 "xxx} はサーバオプション、${server} はサーバ名を意味します)"
 
 #, fuzzy
+#| msgid "delay (in seconds) before autorejoin (after kick)"
+msgid "delay (in seconds) before execution of command"
+msgstr "自動再参加前の遅延時間 (秒単位) (キック後)"
+
+#, fuzzy
 msgid ""
 "command(s) to run after connection to server and before auto-join of "
 "channels (many commands can be separated by \";\", use \"\\;\" for a "
@@ -10706,9 +10711,14 @@ msgstr ""
 "は評価されます、/help eval を参照してください; ここで ${irc_server.xxx} は"
 "サーバオプション、${server} はサーバ名を意味します)"
 
+#, fuzzy
+#| msgid ""
+#| "delay (in seconds) after execution of command and before auto-join of "
+#| "channels (example: give some time for authentication before joining "
+#| "channels)"
 msgid ""
-"delay (in seconds) after execution of command and before auto-join of "
-"channels (example: give some time for authentication before joining channels)"
+"delay (in seconds) before auto-join of channels (example: give some time for "
+"authentication before joining channels)"
 msgstr ""
 "コマンドを実行して、チャンネルに自動参加するまでの遅延時間 (秒単位) (例: 認証"
 "に時間がかかる場合にチャンネル参加前に少し時間を空ける)"
@@ -15745,12 +15755,12 @@ msgstr ""
 "プションで上書きを有効化してください)"
 
 #, c-format
-msgid "%s%s: failed to create trigger \"%s\""
-msgstr "%s%s: トリガ \"%s\" の作成に失敗しました"
-
-#, c-format
 msgid "Trigger \"%s\" created"
 msgstr "トリガ \"%s\" が作成されました"
+
+#, c-format
+msgid "%s%s: failed to create trigger \"%s\""
+msgstr "%s%s: トリガ \"%s\" の作成に失敗しました"
 
 #, c-format
 msgid "%s%s: trigger \"%s\" not found"

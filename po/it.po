@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-01 21:36+0100\n"
+"POT-Creation-Date: 2024-02-11 08:54+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10361,6 +10361,11 @@ msgstr ""
 "il contenuto viene valutato, consultare /help eval)"
 
 #, fuzzy
+#| msgid "delay (in seconds) before autorejoin (after kick)"
+msgid "delay (in seconds) before execution of command"
+msgstr "ritardo (in secondi) prima di rientrare automaticamente (dopo il kick)"
+
+#, fuzzy
 msgid ""
 "command(s) to run after connection to server and before auto-join of "
 "channels (many commands can be separated by \";\", use \"\\;\" for a "
@@ -10376,8 +10381,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"delay (in seconds) after execution of command and before auto-join of "
-"channels (example: give some time for authentication before joining channels)"
+"delay (in seconds) before auto-join of channels (example: give some time for "
+"authentication before joining channels)"
 msgstr ""
 "ritardo (in secondi) dopo l'esecuzione del comando (esempio: fornire il "
 "tempo per l'autenticazione)"
@@ -15310,12 +15315,12 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: failed to create trigger \"%s\""
-msgstr "%sErrore: creazione della barra \"%s\" fallita"
-
-#, fuzzy, c-format
 msgid "Trigger \"%s\" created"
 msgstr "Barra \"%s\" creata"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to create trigger \"%s\""
+msgstr "%sErrore: creazione della barra \"%s\" fallita"
 
 #, fuzzy, c-format
 msgid "%s%s: trigger \"%s\" not found"

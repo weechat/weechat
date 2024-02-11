@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-01 21:36+0100\n"
+"POT-Creation-Date: 2024-02-11 08:54+0100\n"
 "PO-Revision-Date: 2024-01-15 10:23+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10647,6 +10647,13 @@ msgstr ""
 "израчунава, погледајте /help eval; опције сервера се израчунавају са "
 "${irc_server.xxx} и ${server} се замењује са именом сервера)"
 
+#, fuzzy
+#| msgid "delay (in seconds) before autorejoin (after kick)"
+msgid "delay (in seconds) before execution of command"
+msgstr ""
+"време (у секундама) пре него што се обави аутоматско поновно приступање "
+"каналу (након избацивања)"
+
 msgid ""
 "command(s) to run after connection to server and before auto-join of "
 "channels (many commands can be separated by \";\", use \"\\;\" for a "
@@ -10662,9 +10669,14 @@ msgstr ""
 "eval; опције сервера се израчунавају са ${irc_server.xxx} и ${server} се "
 "замењује са именом сервера)"
 
+#, fuzzy
+#| msgid ""
+#| "delay (in seconds) after execution of command and before auto-join of "
+#| "channels (example: give some time for authentication before joining "
+#| "channels)"
 msgid ""
-"delay (in seconds) after execution of command and before auto-join of "
-"channels (example: give some time for authentication before joining channels)"
+"delay (in seconds) before auto-join of channels (example: give some time for "
+"authentication before joining channels)"
 msgstr ""
 "време (у секундама) након извршавања команде и пре ауто-приступа каналима "
 "(пример: давање мало времена за аутентификацију пре него што се приступи "
@@ -15664,12 +15676,12 @@ msgstr ""
 "опцију „addreplace” да га препишете)"
 
 #, c-format
-msgid "%s%s: failed to create trigger \"%s\""
-msgstr "%s%s: није успело креирање окидача „%s”"
-
-#, c-format
 msgid "Trigger \"%s\" created"
 msgstr "Окидач „%s” је креиран"
+
+#, c-format
+msgid "%s%s: failed to create trigger \"%s\""
+msgstr "%s%s: није успело креирање окидача „%s”"
 
 #, c-format
 msgid "%s%s: trigger \"%s\" not found"

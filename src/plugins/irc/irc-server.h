@@ -76,9 +76,10 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_REALNAME,      /* real name                            */
     IRC_SERVER_OPTION_LOCAL_HOSTNAME,/* custom local hostname                */
     IRC_SERVER_OPTION_USERMODE,      /* usermode to set once connected       */
+    IRC_SERVER_OPTION_COMMAND_DELAY, /* delay before execution of command    */
     IRC_SERVER_OPTION_COMMAND,       /* command to run once connected        */
-    IRC_SERVER_OPTION_COMMAND_DELAY, /* delay after execution of command     */
-    IRC_SERVER_OPTION_AUTOJOIN,      /* channels to automatically join       */
+    IRC_SERVER_OPTION_AUTOJOIN_DELAY, /* delay before autojoin               */
+    IRC_SERVER_OPTION_AUTOJOIN,       /* channels to automatically join      */
     IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC, /* auto set autojoin option          */
     IRC_SERVER_OPTION_AUTOREJOIN,    /* auto rejoin channels when kicked     */
     IRC_SERVER_OPTION_AUTOREJOIN_DELAY,     /* delay before auto rejoin      */
@@ -269,7 +270,9 @@ struct t_irc_server
     int reconnect_delay;            /* current reconnect delay (growing)     */
     time_t reconnect_start;         /* this time + delay = reconnect time    */
     time_t command_time;            /* this time + command_delay = time to   */
-                                    /* autojoin channels                     */
+                                    /* execute command                       */
+    time_t autojoin_time;           /* this time + autojoin_delay = time to  */
+                                    /* auto-join channels                    */
     int autojoin_done;              /* 1 if autojoin has been done           */
     int disable_autojoin;           /* 1 if user asked to not autojoin chans */
     int is_away;                    /* 1 is user is marked as away           */
@@ -445,6 +448,7 @@ extern void irc_server_switch_address (struct t_irc_server *server,
 extern void irc_server_disconnect (struct t_irc_server *server,
                                    int switch_address, int reconnect);
 extern void irc_server_disconnect_all ();
+extern void irc_server_execute_command (struct t_irc_server *server);
 extern void irc_server_free_sasl_data (struct t_irc_server *server);
 extern void irc_server_free (struct t_irc_server *server);
 extern int irc_server_xfer_send_ready_cb (const void *pointer, void *data,

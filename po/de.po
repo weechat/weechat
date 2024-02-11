@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-01 21:36+0100\n"
+"POT-Creation-Date: 2024-02-11 08:54+0100\n"
 "PO-Revision-Date: 2024-01-27 14:34+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -11201,6 +11201,13 @@ msgstr ""
 "wird evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server."
 "xxx} evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)"
 
+#, fuzzy
+#| msgid "delay (in seconds) before autorejoin (after kick)"
+msgid "delay (in seconds) before execution of command"
+msgstr ""
+"Wartezeit, in Sekunden, die verstreichen soll bevor man den Kanal "
+"automatisch erneut betritt (nachdem man rausgeworfen wurde)"
+
 msgid ""
 "command(s) to run after connection to server and before auto-join of "
 "channels (many commands can be separated by \";\", use \"\\;\" for a "
@@ -11217,9 +11224,14 @@ msgstr ""
 "eval; Serveroptionen sind mittels ${irc_server.xxx} evaluiert und ${server} "
 "wird durch den eigentlichen Servernamen ersetzt)"
 
+#, fuzzy
+#| msgid ""
+#| "delay (in seconds) after execution of command and before auto-join of "
+#| "channels (example: give some time for authentication before joining "
+#| "channels)"
 msgid ""
-"delay (in seconds) after execution of command and before auto-join of "
-"channels (example: give some time for authentication before joining channels)"
+"delay (in seconds) before auto-join of channels (example: give some time for "
+"authentication before joining channels)"
 msgstr ""
 "Wartezeit (in Sekunden) nach Ausführung des Befehls und bevor Kanäle "
 "automatisch betreten werden (Beispiel: es wird eine gewisse Zeit gewartet, "
@@ -16470,12 +16482,12 @@ msgstr ""
 "die Option \"addreplace\" um vorhandenen Trigger zu überschreiben)"
 
 #, c-format
-msgid "%s%s: failed to create trigger \"%s\""
-msgstr "%s%s: Trigger \"%s\" konnte nicht erstellt werden"
-
-#, c-format
 msgid "Trigger \"%s\" created"
 msgstr "Trigger \"%s\" erstellt"
+
+#, c-format
+msgid "%s%s: failed to create trigger \"%s\""
+msgstr "%s%s: Trigger \"%s\" konnte nicht erstellt werden"
 
 #, c-format
 msgid "%s%s: trigger \"%s\" not found"
