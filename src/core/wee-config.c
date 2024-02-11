@@ -1613,7 +1613,7 @@ config_weechat_update_cb (const void *pointer, void *data,
     if (version_read < 2)
     {
         /*
-         * changes in v2:
+         * changes in v2 (WeeChat 4.0.0):
          *   - new format for keys (eg: meta2-1;3D -> meta-left)
          *   - keys removed: "meta2-200~" and "meta2-201~"
          */
