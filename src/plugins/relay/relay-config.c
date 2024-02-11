@@ -1005,7 +1005,7 @@ relay_config_update_cb (const void *pointer, void *data,
     if (version_read < 2)
     {
         /*
-         * changes in v2:
+         * changes in v2 (WeeChat 4.0.0):
          *   - options "ssl*" renamed to "tls*"
          *   - protocol "ssl" renamed to "tls" in port/path sections
          */
