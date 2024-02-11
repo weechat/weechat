@@ -55,6 +55,8 @@ New features::
   * core: display only version with command `/version`, add options `-o` and `-ol` in command `/upgrade`
   * core: add number of processes in command `/sys waitpid`
   * core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias` and `/trigger` (issue #1956)
+  * api: add support of format/translation of command arguments description line by line (issue #2005)
+  * api: add function string_concat (issue #2005)
   * api: add functions util_strftimeval, util_parse_time, printf_datetime_tags, printf_y_datetime_tags (issue #649)
   * api: add argument "date_usec" in hook_print callback (issue #649)
   * api: add property "type" in function buffer_get_string
@@ -160,8 +162,6 @@ New features::
   * core: add parameters and key bindings to move to edges of current area with commands `/cursor go` and `/cursor move` (issue #1282)
   * core: add variables "_chat_focused_line_bol" and "_chat_focused_line_eol" in focus data (issue #1955)
   * api: add function hook_url, add option `url` in command `/debug` (issue #1723)
-  * api: add support of format/translation of command arguments description line by line (issue #2005)
-  * api: add function string_concat (issue #2005)
   * api: add support of path to variable and hashtable comparison in function hdata_compare (issue #1066)
   * api: add infos "nick_color_ignore_case" and "nick_color_name_ignore_case" (issue #194)
   * api: add info "buffer" (issue #1962)
