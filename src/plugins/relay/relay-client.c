@@ -703,7 +703,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
                 {
                     weechat_printf_date_tags (
                         NULL, 0, "relay_client",
-                        _("%s%s: not enough memory for received data"),
+                        _("%s%s: not enough memory for received message"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME);
                     return WEECHAT_RC_OK;
                 }
