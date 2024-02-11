@@ -369,7 +369,7 @@ New features::
   * core: add relative move of read marker with `/buffer set unread [+/-]N` (issue #1895)
   * core: add access to hashtable properties in evaluation of expressions (issue #1888)
   * core: display similar command names when a command is unknown (issue #1877)
-  * core: rename option weechat.color.status_name_ssl to weechat.color.status_name_tls
+  * core: rename option weechat.color.status_name_ssl to weechat.color.status_name_tls (issue #1903)
   * core: add option weechat.color.status_name_insecure to display buffer name with a specific color when not connected with TLS to the server
   * core, plugins: make many identifiers case sensitive (issue #1872, issue #398, bug #32213)
   * core: add item "mouse_status" in default status bar, change default color to lightgreen
@@ -384,7 +384,7 @@ New features::
   * alias: add options `missing` and `rename` in command `/alias`
   * fifo: add support of escaped chars in text or commands sent (issue #1950)
   * fset: add options fset.color.color_name and fset.color.color_name_selected (issue #1920)
-  * irc: rename "ssl" options to "tls", connect with TLS and port 6697 by default
+  * irc: rename "ssl" options to "tls", connect with TLS and port 6697 by default (issue #1903)
   * irc: add support of capabilities "batch" and "draft/multiline" (issue #1292, issue #1923)
   * irc: add support of capability "echo-message" (issue #139)
   * irc: display CTCP ACTION to channel on the channel buffer (issue #207)
@@ -405,7 +405,7 @@ New features::
   * irc: add tag "new_host_xxx" in message displayed for command CHGHOST (issue #1808)
   * logger: add option logger.file.log_conditions (issue #1942)
   * logger: add info "logger_log_file"
-  * relay: rename "ssl" options and protocol to "tls"
+  * relay: rename "ssl" options and protocol to "tls" (issue #1903)
   * relay: make TLS certificate/key loading error handling more verbose (issue #1558)
   * relay: add modifiers "relay_client_irc_in", "relay_client_irc_out1" and "relay_client_irc_out" in irc protocol
   * relay: add support of capability "echo-message" in irc protocol (issue #1949)
