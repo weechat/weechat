@@ -384,7 +384,7 @@ alias_config_update_cb (const void *pointer, void *data,
     if (version_read < 2)
     {
         /*
-         * changes in v2:
+         * changes in v2 (WeeChat 4.0.0):
          *   - aliases are in lower case by default
          *     (default aliases and those created by users are automatically
          *     converted to lower case)
