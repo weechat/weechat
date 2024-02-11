@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-11 08:54+0100\n"
+"POT-Creation-Date: 2024-02-11 21:44+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1595,7 +1595,9 @@ msgid "launch explicit WeeChat or plugin command"
 msgstr "lanza explícitamente un comando de WeeChat o un comando de plugin"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "[-buffer <name>] <plugin> <command>"
+#, fuzzy
+#| msgid "[-buffer <name>] <plugin> <command>"
+msgid "[-buffer <name>] <plugin> <command> || -s <command>[;<command>...]"
 msgstr "[-buffer <nombre>] <plugin> <comando>"
 
 #, fuzzy
@@ -1617,6 +1619,12 @@ msgid ""
 "command: command to execute (a \"/\" is automatically added if not found at "
 "beginning of command)"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"raw[-s]: execute one or multiple commands separated by semicolons (the "
+"semicolon can be escaped with \"\\;\")"
+msgstr "comando ejecutado cuando WeeChat inicia, después de cargar los plugins"
 
 msgid ""
 "free movement of cursor on screen to execute actions on specific areas of "

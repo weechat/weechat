@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-11 08:54+0100\n"
+"POT-Creation-Date: 2024-02-11 21:44+0100\n"
 "PO-Revision-Date: 2024-01-27 14:34+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -1598,7 +1598,9 @@ msgid "launch explicit WeeChat or plugin command"
 msgstr "führe explizit einen WeeChat Befehl oder eine Erweiterung aus"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "[-buffer <name>] <plugin> <command>"
+#, fuzzy
+#| msgid "[-buffer <name>] <plugin> <command>"
+msgid "[-buffer <name>] <plugin> <command> || -s <command>[;<command>...]"
 msgstr "[-buffer <name>] <plugin> <command>"
 
 msgid "raw[-buffer]: execute the command on this buffer"
@@ -1619,6 +1621,17 @@ msgid ""
 msgstr ""
 "command: auszuführender Befehl (es wird automatisch ein '/' vorangestellt, "
 "falls dieser nicht angegeben wurde)"
+
+#, fuzzy
+#| msgid ""
+#| "raw[-s]: split expression before evaluating it (many commands can be "
+#| "separated by semicolons)"
+msgid ""
+"raw[-s]: execute one or multiple commands separated by semicolons (the "
+"semicolon can be escaped with \"\\;\")"
+msgstr ""
+"raw[-s]: teilt Ausdrücke, bevor sie evaluiert werden (mehrere Befehle können "
+"durch Semikolon getrennt werden)"
 
 msgid ""
 "free movement of cursor on screen to execute actions on specific areas of "

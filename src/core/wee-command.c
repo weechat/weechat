@@ -1811,8 +1811,8 @@ COMMAND_CALLBACK(color)
 
 COMMAND_CALLBACK(command)
 {
-    int length, index_args, any_plugin;
-    char *command;
+    int i, length, index_args, any_plugin;
+    char *command, **commands;
     struct t_weechat_plugin *ptr_plugin;
     struct t_gui_buffer *ptr_buffer;
 
@@ -1826,6 +1826,20 @@ COMMAND_CALLBACK(command)
     index_args = 1;
     any_plugin = 0;
     ptr_plugin = NULL;
+
+    if (string_strcmp (argv[1], "-s") == 0)
+    {
+        commands = string_split_command (argv_eol[2], ';');
+        if (commands)
+        {
+            for (i = 0; commands[i]; i++)
+            {
+                (void) input_data (buffer, commands[i], NULL, 0);
+            }
+            string_free_split_command (commands);
+        }
+        return WEECHAT_RC_OK;
+    }
 
     if ((argc >= 5) && (string_strcmp (argv[1], "-buffer") == 0))
     {
@@ -8103,16 +8117,20 @@ command_init ()
         NULL, "50000|command",
         N_("launch explicit WeeChat or plugin command"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[-buffer <name>] <plugin> <command>"),
+        N_("[-buffer <name>] <plugin> <command>"
+           " || -s <command>[;<command>...]"),
         CMD_ARGS_DESC(
             N_("raw[-buffer]: execute the command on this buffer"),
             N_("plugin: execute the command from this plugin; \"core\" for a "
                "WeeChat command, \"*\" for automatic plugin (it depends on the "
                "buffer where the command is executed)"),
             N_("command: command to execute (a \"/\" is automatically added if not "
-               "found at beginning of command)")),
+               "found at beginning of command)"),
+            N_("raw[-s]: execute one or multiple commands separated by semicolons "
+               "(the semicolon can be escaped with \"\\;\")")),
         "-buffer %(buffers_plugins_names) "
         "%(plugins_names)|" PLUGIN_CORE " %(plugins_commands:/)"
+        " || -s"
         " || %(plugins_names)|" PLUGIN_CORE " %(plugins_commands:/)",
         &command_command, NULL, NULL);
     hook_command (
