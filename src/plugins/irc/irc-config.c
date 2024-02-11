@@ -2897,7 +2897,7 @@ irc_config_update_cb (const void *pointer, void *data,
     if (version_read < 2)
     {
         /*
-         * changes in v2:
+         * changes in v2 (WeeChat 4.0.0):
          *   - options "ssl*" renamed to "tls*"
          */
         ptr_section = weechat_hashtable_get (data_read, "section");
@@ -2957,7 +2957,7 @@ irc_config_update_cb (const void *pointer, void *data,
     if (version_read < 3)
     {
         /*
-         * changes in v3:
+         * changes in v3 (WeeChat 4.1.0):
          *   - options "irc.ctcp.*" are now evaluated
          *     (eg: "$version" -> "${version"})
          */
