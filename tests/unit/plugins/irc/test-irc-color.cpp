@@ -41,8 +41,6 @@ extern int irc_color_convert_term2irc (int color);
     "test_" IRC_COLOR_BOLD_STR "bold" IRC_COLOR_BOLD_STR "_end"
 #define STRING_IRC_RESET                                                \
     "test_" IRC_COLOR_RESET_STR "reset" IRC_COLOR_RESET_STR "_end"
-#define STRING_IRC_FIXED                                                \
-    "test_" IRC_COLOR_FIXED_STR "fixed" IRC_COLOR_FIXED_STR "_end"
 #define STRING_IRC_REVERSE                                              \
     "test_" IRC_COLOR_REVERSE_STR "reverse" IRC_COLOR_REVERSE_STR "_end"
 #define STRING_IRC_ITALIC                                               \
@@ -57,11 +55,16 @@ extern int irc_color_convert_term2irc (int color);
     "test_" IRC_COLOR_COLOR_STR "11,05" "lightcyan/red"                 \
     IRC_COLOR_COLOR_STR "_end"
 #define STRING_IRC_ONLY_ATTRS_AND_COLORS                                \
-    IRC_COLOR_COLOR_STR IRC_COLOR_RESET_STR                             \
-    IRC_COLOR_BOLD_STR IRC_COLOR_FIXED_STR IRC_COLOR_REVERSE_STR        \
-    IRC_COLOR_ITALIC_STR IRC_COLOR_UNDERLINE_STR                        \
-    IRC_COLOR_UNDERLINE_STR IRC_COLOR_ITALIC_STR                        \
-    IRC_COLOR_REVERSE_STR IRC_COLOR_FIXED_STR IRC_COLOR_BOLD_STR
+    IRC_COLOR_COLOR_STR                                                 \
+    IRC_COLOR_RESET_STR                                                 \
+    IRC_COLOR_BOLD_STR                                                  \
+    IRC_COLOR_REVERSE_STR                                               \
+    IRC_COLOR_ITALIC_STR                                                \
+    IRC_COLOR_UNDERLINE_STR                                             \
+    IRC_COLOR_UNDERLINE_STR                                             \
+    IRC_COLOR_ITALIC_STR                                                \
+    IRC_COLOR_REVERSE_STR                                               \
+    IRC_COLOR_BOLD_STR
 #define STRING_IRC_ATTRS_AND_COLORS                                     \
     "test_"                                                             \
     IRC_COLOR_BOLD_STR IRC_COLOR_UNDERLINE_STR                          \
@@ -236,10 +239,6 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("reset"),
               gui_color_get_custom ("reset"));
     WEE_CHECK_DECODE(string, STRING_IRC_RESET, 1);
-
-    /* fixed */
-    WEE_CHECK_DECODE("test_fixed_end", STRING_IRC_FIXED, 0);
-    WEE_CHECK_DECODE("test_fixed_end", STRING_IRC_FIXED, 1);
 
     /* reverse */
     WEE_CHECK_DECODE("test_reverse_end", STRING_IRC_REVERSE, 0);

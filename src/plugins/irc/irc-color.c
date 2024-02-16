@@ -258,9 +258,6 @@ irc_color_decode (const char *string, int keep_colors)
                 underline = 0;
                 ptr_string++;
                 break;
-            case IRC_COLOR_FIXED_CHAR:
-                ptr_string++;
-                break;
             case IRC_COLOR_REVERSE_CHAR:
                 if (keep_colors)
                 {

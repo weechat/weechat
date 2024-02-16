@@ -50,9 +50,6 @@
 #define IRC_COLOR_RESET_CHAR     '\x0F'  /* reset color/attributes          */
 #define IRC_COLOR_RESET_STR      "\x0F"  /*   [0F]...                       */
 
-#define IRC_COLOR_FIXED_CHAR     '\x11'  /* monospaced font (ignored)       */
-#define IRC_COLOR_FIXED_STR      "\x11"  /*   [11]...[11]                   */
-
 #define IRC_COLOR_REVERSE_CHAR   '\x16'  /* reverse video (fg <--> bg)      */
 #define IRC_COLOR_REVERSE_STR    "\x16"  /*   [16]...[16]                   */
 
