@@ -27,6 +27,7 @@ New features::
 Bug fixes::
 
   * core: remove trailing directory separators in home directories (issue #2070)
+  * irc: add missing tags on self action messages when capability echo-message is enabled (issue #2074)
   * irc: don't strip monospace color code 0x11 from incoming messages (issue #2073)
   * irc: fix random date displayed when a received message contains tags but no "time" (issue #2064)
   * scripts: fix crash on script unload when a hook is created in a buffer close callback (issue #2067)
