@@ -22,11 +22,13 @@
 
 #include <time.h>
 
+struct t_hashtable;
 struct t_gui_buffer;
 
 extern void irc_input_user_message_display (struct t_irc_server *server,
                                             time_t date,
                                             int date_usec,
+                                            struct t_hashtable *tags,
                                             const char *target,
                                             const char *address,
                                             const char *command,

@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 Bug fixes::
 
+  * irc: add missing tags on self action messages when capability echo-message is enabled (issue #2074)
   * scripts: fix crash on script unload when a hook is created in a buffer close callback (issue #2067)
   * trigger: fix memory leak when adding a new trigger with `/trigger` command
 

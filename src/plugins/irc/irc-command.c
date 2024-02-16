@@ -389,6 +389,7 @@ irc_command_me_channel_message (struct t_irc_server *server,
                     server,
                     0,  /* date */
                     0,  /* date_usec */
+                    NULL,  /* tags */
                     channel_name,
                     NULL,  /* address */
                     "privmsg",
@@ -1976,6 +1977,7 @@ IRC_COMMAND_CALLBACK(ctcp)
                     ptr_server,
                     0,  /* date */
                     0,  /* date_usec */
+                    NULL,  /* tags */
                     ctcp_target,
                     NULL,  /* address */
                     "privmsg",
@@ -3844,6 +3846,7 @@ IRC_COMMAND_CALLBACK(msg)
                         ptr_server,
                         0,  /* date */
                         0,  /* date_usec */
+                        NULL,  /* tags */
                         ptr_channel->name,
                         NULL,  /* address */
                         "privmsg",
@@ -3868,6 +3871,7 @@ IRC_COMMAND_CALLBACK(msg)
                     ptr_server,
                     0,  /* date */
                     0,  /* date_usec */
+                    NULL,  /* tags */
                     targets[i],
                     NULL,  /* address */
                     "privmsg",
@@ -4070,6 +4074,7 @@ IRC_COMMAND_CALLBACK(notice)
                     ptr_server,
                     0,  /* date */
                     0,  /* date_usec */
+                    NULL,  /* tags */
                     argv[arg_target],
                     NULL,  /* address */
                     "notice",
@@ -4601,6 +4606,7 @@ IRC_COMMAND_CALLBACK(query)
                         ptr_server,
                         0,  /* date */
                         0,  /* date_usec */
+                        NULL,  /* tags */
                         ptr_channel->name,
                         NULL,  /* address */
                         "privmsg",
