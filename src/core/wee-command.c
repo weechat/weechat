@@ -8312,10 +8312,14 @@ command_init ()
             N_("  - ${length:string}: the length of the string (number of UTF-8 chars)"),
             N_("  - ${lengthscr:string}: the length of the string on screen "
                "(sum of the width of each UTF-8 char displayed on screen, colors codes are ignored)"),
-            N_("  - ${split:n,separators,flags,string}: split of the string "
-               "(n can be an integer ≥ 1, an integer ≤ -1, \"count\" or \"random\")"),
-            N_("  - ${split_shell:n,string}: split of shell arguments "
-               "(n can be an integer ≥ 1, an integer ≤ -1, \"count\" or \"random\")"),
+            N_("  - ${split:N,separators,flags,string}: Nth item of the split string "
+               "(N is an integer ≥ 1 or ≤ -1, if negative, counts from the last item)"),
+            N_("  - ${split:random,separators,flags,string}: random item of the split string"),
+            N_("  - ${split:count,separators,flags,string}: number of items of the split string"),
+            N_("  - ${split_shell:N,string}: Nth item of the split shell arguments "
+               "(N is an integer ≥ 1 or ≤ -1, if negative, counts from the last item)"),
+            N_("  - ${split_shell:random,string}: random item of the split shell arguments"),
+            N_("  - ${split_shell:count,string}: number of items of the split shell arguments"),
             N_("  - ${color:name}: the color (see \"Plugin API reference\", function \"color\")"),
             N_("  - ${modifier:name,data,string}: the modifier"),
             N_("  - ${info:name,arguments}: the info (arguments are optional)"),
