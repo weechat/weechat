@@ -8281,6 +8281,84 @@ command_init ()
             N_("To force a string comparison, you can add double quotes around "
                "each expression, for example: 50 > 100 == 0 and \"50\" > \"100\" == 1"),
             "",
+            N_("Some variables are replaced in expression, using the format "
+               "${variable}, which can be, by order of priority:"),
+            N_("  - ${raw_hl:string}: the string itself without evaluation but "
+               "with syntax highlighting"),
+            N_("  - ${raw:string}: the string itself without evaluation"),
+            N_("  - ${hl:string}: the string with syntax highlighting"),
+            N_("  - ${name}: the user-defined variable"),
+            N_("  - ${weechat_config_dir}: WeeChat config directory"),
+            N_("  - ${weechat_data_dir}: WeeChat data directory"),
+            N_("  - ${weechat_cache_dir}: WeeChat cache directory"),
+            N_("  - ${weechat_runtmie_dir}: WeeChat runtime directory"),
+            N_("  - ${eval:string}: the evaluated string"),
+            N_("  - ${eval_cond:string}: the evaluated condition"),
+            N_("  - ${esc:string} or ${\\string}: the string with escaped chars"),
+            N_("  - ${chars:range}: the string with a range of chars, "
+               "\"range\" is one of: \"digit\", \"xdigit\", \"lower\", "
+               "\"upper\", \"alpha\", \"alnum\" or \"c1-c2\" (\"c1\" and \"c2\" "
+               "are code points with c1 ≤ c2)"),
+            N_("  - ${lower:string}: the string converted to lower case"),
+            N_("  - ${upper:string}: the string converted to upper case"),
+            N_("  - ${hide:char,string}: the string with hidden chars"),
+            N_("  - ${cut:max,suffix,string}: the string with max chars (excluding the suffix)"),
+            N_("  - ${cut:+max,suffix,string}: the string with max chars (including the suffix)"),
+            N_("  - ${cutscr:max,suffix,string}: the string with max chars displayed on screen "
+               "(excluding the suffix)"),
+            N_("  - ${cutscr:+max,suffix,string}: the string with max chars displayed on screen "
+               "(including the suffix)"),
+            N_("  - ${rev:string}: the reversed string"),
+            N_("  - ${revscr:string}: the reversed string for display (color codes are not reversed)"),
+            N_("  - ${repeat:count,string}: the repeated string"),
+            N_("  - ${length:string}: the length of the string (number of UTF-8 chars)"),
+            N_("  - ${lengthscr:string}: the length of the string on screen "
+               "(sum of the width of each UTF-8 char displayed on screen, colors codes are ignored)"),
+            N_("  - ${split:n,separators,flags,string}: split of the string "
+               "(n can be an integer ≥ 1, an integer ≤ -1, \"count\" or \"random\")"),
+            N_("  - ${split_shell:n,string}: split of shell arguments "
+               "(n can be an integer ≥ 1, an integer ≤ -1, \"count\" or \"random\")"),
+            N_("  - ${color:name}: the color (see \"Plugin API reference\", function \"color\")"),
+            N_("  - ${modifier:name,data,string}: the modifier"),
+            N_("  - ${info:name,arguments}: the info (arguments are optional)"),
+            N_("  - ${base_encode:base,string}: the string encoded to base: 16, 32, 64 or 64url"),
+            N_("  - ${base_decode:base,string}: the string decoded from base: 16, 32, 64 or 64url"),
+            N_("  - ${date} or ${date:format}: current date/time"),
+            N_("  - ${env:NAME}: the environment variable"),
+            N_("  - ${if:condition?value_if_true:value_if_false}: the result of ternary operator"),
+            N_("  - ${calc:expression}: the result of the expression with parentheses and operators "
+               "(+, -, *, /, //, %, **)"),
+            N_("  - ${random:min,max}: a random integer number between \"min\" and \"max\" (inclusive)"),
+            N_("  - ${translate:string}: the translated string"),
+            N_("  - ${define:name,value}: declaration of a user variable (return an empty string)"),
+            N_("  - ${sec.data.xxx}: the value of the secured data \"xxx\""),
+            N_("  - ${file.section.option}: the value of the config option"),
+            N_("  - ${name}: the local variable in buffer"),
+            N_("  - the hdata name/variable (the value is automatically converted "
+               "to string), by default \"window\" and \"buffer\" point to current "
+               "window/buffer."),
+            "",
+            N_("Format for hdata can be one of following:"),
+            N_("  - ${hdata.var1.var2...}: start with a hdata (pointer must be known), "
+               "and ask variables one after one (other hdata can be followed)"),
+            N_("  - ${hdata[list].var1.var2...}: start with a hdata using a "
+               "list/pointer/pointer name, for example:"),
+            N_("    - ${buffer[gui_buffers].full_name}: full name of first buffer "
+               "in linked list of buffers"),
+            N_("    - ${plugin[weechat_plugins].name}: name of first plugin in "
+               "linked list of plugins"),
+            N_("  - ${hdata[pointer].var1.var2...}: start with a hdata using a "
+               "pointer, for example:"),
+            N_("    - ${buffer[0x1234abcd].full_name}: full name of the buffer "
+               "with this pointer (can be used in triggers)"),
+            N_("    - ${buffer[my_pointer].full_name}: full name of the buffer "
+               "with this pointer name (can be used in triggers)"),
+            N_("  - ${hdata[pointer].var1.method()}: when var1 is a hashtable, "
+               "methods can be called: \"keys()\", \"values()\", \"keys_sorted()\", "
+               "\"keys_values()\" and \"keys_values_sorted()\""),
+            N_("For name of hdata and variables, please look at \"Plugin API "
+               "reference\", function \"weechat_hdata_get\"."),
+            "",
             N_("Examples (simple strings):"),
             AI("  /eval -n ${raw:${info:version}}                  ==> ${info:version}"),
             AI("  /eval -n ${eval_cond:${window.win_width}>100}    ==> 1"),

@@ -1556,54 +1556,63 @@ eval_syntax_highlight (const char *text, struct t_eval_context *eval_context)
 
 /*
  * Replaces variables, which can be, by order of priority:
- *  - the string itself without evaluation but with syntax highlighting
- *    (format: raw_hl:xxx)
- *  - the string itself without evaluation (format: raw:xxx)
- *  - a string with syntax highlighting (format: hl:xxx)
- *  - a variable from hashtable "user_vars" or "extra_vars"
- *  - a WeeChat home directory, one of: "weechat_config_dir",
- *    "weechat_data_dir", "weechat_cache_dir", "weechat_runtime_dir"
- *  - an evaluated string (format: eval:xxx)
- *  - a condition to evaluate (format: eval_cond:xxx)
- *  - a string with escaped chars (format: esc:xxx or \xxx)
- *  - a string with a range of chars (format: chars:range)
- *  - a string converted to lower case (format: lower:xxx)
- *  - a string converted to upper case (format: upper:xxx)
- *  - a string with chars to hide (format: hide:char,string)
- *  - a string with max chars (format: cut:max,suffix,string or
- *    cut:+max,suffix,string) or max chars on screen
- *    (format: cutscr:max,suffix,string or cutscr:+max,suffix,string)
- *  - a reversed string (format: rev:xxx) or reversed string for screen,
- *    color codes are not reversed (format: revscr:xxx)
- *  - a repeated string (format: repeat:count,string)
- *  - length of a string (format: length:xxx) or length of a string on screen
- *    (format: lengthscr:xxx); color codes are ignored
- *  - split string (format: split:number,separators,flags,xxx
- *    or split:count,separators,flags,xxx
- *    or split:random,separators,flags,xxx)
- *  - split shell arguments (format: split_shell:number,xxx or
- *    split_shell:count,xxx or split_shell:random,xxx)
- *  - a regex group captured (format: re:N (0.99) or re:+)
- *  - a color (format: color:xxx)
- *  - a modifier (format: modifier:name,data,xxx)
- *  - an info (format: info:name,arguments)
- *  - a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
- *    or base_decode:base,xxx)
- *  - current date/time (format: date or date:format)
- *  - an environment variable (format: env:XXX)
- *  - a ternary operator (format: if:condition?value_if_true:value_if_false)
- *  - calculate result of an expression (format: calc:xxx)
- *  - a random integer number in the range from "min" to "max"
- *    (format: random:min,max)
- *  - a translated string (format: translate:xxx)
- *  - define a new variable (format: define:name,value)
- *  - an option (format: file.section.option)
- *  - a buffer local variable
- *  - a pointer name from hashtable "pointers"
- *  - a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
- *                      or hdata[ptr].var1.var2 or hdata[ptr_name].var1.var2)
+ *   - ${raw_hl:string}: the string itself without evaluation but with syntax highlighting
+ *   - ${raw:string}: the string itself without evaluation
+ *   - ${hl:string}: the string with syntax highlighting
+ *   - ${name}: the variable from hashtable "user_vars" or "extra_vars"
+ *   - ${weechat_config_dir}: WeeChat config directory
+ *   - ${weechat_data_dir}: WeeChat data directory
+ *   - ${weechat_cache_dir}: WeeChat cache directory
+ *   - ${weechat_runtmie_dir}: WeeChat runtime directory
+ *   - ${eval:string}: the evaluated string
+ *   - ${eval_cond:string}: the evaluated condition
+ *   - ${esc:string} or ${\\string}: the string with escaped chars
+ *   - ${chars:range}: the string with a range of chars, "range" is one of:
+ *     "digit", "xdigit", "lower", "upper", "alpha", "alnum" or "c1-c2"
+ *     ("c1" and "c2" are code points with c1 ≤ c2)
+ *   - ${lower:string}: the string converted to lower case
+ *   - ${upper:string}: the string converted to upper case
+ *   - ${hide:char,string}: the string with hidden chars
+ *   - ${cut:max,suffix,string}: the string with max chars (excluding the suffix)
+ *   - ${cut:+max,suffix,string}: the string with max chars (including the suffix)
+ *   - ${cutscr:max,suffix,string}: the string with max chars displayed on screen
+ *     (excluding the suffix)
+ *   - ${cutscr:+max,suffix,string}: the string with max chars displayed on screen
+ *     (including the suffix)
+ *   - ${rev:string}: the reversed string
+ *   - ${revscr:string}: the reversed string for display (color codes are not reversed)
+ *   - ${repeat:count,string}: the repeated string
+ *   - ${length:string}: the length of the string (number of UTF-8 chars)
+ *   - ${lengthscr:string}: the length of the string on screen (sum of the width
+ *     of each UTF-8 char displayed on screen, colors codes are ignored)
+ *   - ${split:n,separators,flags,string}: split of the string
+ *     (n can be an integer ≥ 1, an integer ≤ -1, "count" or "random")
+ *   - ${split_shell:n,string}: split of shell arguments
+ *     (n can be an integer ≥ 1, an integer ≤ -1, "count" or "random")
+ *   - ${re:N} or ${re:+}: a regex group captured (0 ≤ N ≤ 99)
+ *   - ${color:name}: the color
+ *   - ${modifier:name,data,string}: the modifier
+ *   - ${info:name,arguments}: the info (arguments are optional)
+ *   - ${base_encode:base,string}: the string encoded to base: 16, 32, 64 or 64url
+ *   - ${base_decode:base,string}: the string decoded from base: 16, 32, 64 or 64url
+ *   - ${date} or ${date:format}: current date/time
+ *   - ${env:NAME}: the environment variable
+ *   - ${if:condition?value_if_true:value_if_false}: the result of ternary operator
+ *   - ${calc:expression}: the result of the expression with parentheses and operators
+ *     (+, -, *, /, //, %, **)
+ *   - ${random:min,max}: a random integer number between "min" and "max" (inclusive)
+ *   - ${translate:string}: the translated string
+ *   - ${define:name,value}: declaration of a user variable (return an empty string)
+ *   - ${sec.data.xxx}: the value of the secured data "xxx"
+ *   - ${file.section.option}: the value of the config option
+ *   - ${name}: the local variable in buffer
+ *   - ${name}: the pointer name from hashtable "pointers"
+ *   - ${hdata.var1.var2}: hdata with name
+ *   - ${hdata[list].var1.var2}: hdata with list
+ *   - ${hdata[ptr].var1.var2}: hdata with pointer
+ *   - ${hdata[ptr_name].var1.var2}: hdata with name of pointer
  *
- * See /help in WeeChat for examples.
+ * See `/help eval` in WeeChat for examples.
  *
  * Note: result must be freed after use.
  */

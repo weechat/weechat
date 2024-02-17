@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-11 21:44+0100\n"
-"PO-Revision-Date: 2023-11-29 09:59+0100\n"
+"POT-Creation-Date: 2024-02-17 09:40+0100\n"
+"PO-Revision-Date: 2024-02-17 10:07+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -1828,6 +1828,235 @@ msgstr ""
 msgid ""
 "To force a string comparison, you can add double quotes around each "
 "expression, for example: 50 > 100 == 0 and \"50\" > \"100\" == 1"
+msgstr ""
+
+msgid ""
+"Some variables are replaced in expression, using the format ${variable}, "
+"which can be, by order of priority:"
+msgstr ""
+
+msgid ""
+"  - ${raw_hl:string}: the string itself without evaluation but with syntax "
+"highlighting"
+msgstr ""
+
+msgid "  - ${raw:string}: the string itself without evaluation"
+msgstr ""
+
+msgid "  - ${hl:string}: the string with syntax highlighting"
+msgstr ""
+
+msgid "  - ${name}: the user-defined variable"
+msgstr ""
+
+#, fuzzy
+msgid "  - ${weechat_config_dir}: WeeChat config directory"
+msgstr "diretório do WeeChat"
+
+#, fuzzy
+msgid "  - ${weechat_data_dir}: WeeChat data directory"
+msgstr "diretório do WeeChat"
+
+#, fuzzy
+msgid "  - ${weechat_cache_dir}: WeeChat cache directory"
+msgstr "diretório \"locale\" do WeeChat"
+
+#, fuzzy
+msgid "  - ${weechat_runtmie_dir}: WeeChat runtime directory"
+msgstr "diretório do WeeChat"
+
+msgid "  - ${eval:string}: the evaluated string"
+msgstr ""
+
+#, fuzzy
+#| msgid "values for a configuration option"
+msgid "  - ${eval_cond:string}: the evaluated condition"
+msgstr "valores de uma opção de configuração"
+
+msgid "  - ${esc:string} or ${\\string}: the string with escaped chars"
+msgstr ""
+
+msgid ""
+"  - ${chars:range}: the string with a range of chars, \"range\" is one of: "
+"\"digit\", \"xdigit\", \"lower\", \"upper\", \"alpha\", \"alnum\" or \"c1-"
+"c2\" (\"c1\" and \"c2\" are code points with c1 ≤ c2)"
+msgstr ""
+
+msgid "  - ${lower:string}: the string converted to lower case"
+msgstr ""
+
+msgid "  - ${upper:string}: the string converted to upper case"
+msgstr ""
+
+msgid "  - ${hide:char,string}: the string with hidden chars"
+msgstr ""
+
+msgid ""
+"  - ${cut:max,suffix,string}: the string with max chars (excluding the "
+"suffix)"
+msgstr ""
+
+msgid ""
+"  - ${cut:+max,suffix,string}: the string with max chars (including the "
+"suffix)"
+msgstr ""
+
+msgid ""
+"  - ${cutscr:max,suffix,string}: the string with max chars displayed on "
+"screen (excluding the suffix)"
+msgstr ""
+
+msgid ""
+"  - ${cutscr:+max,suffix,string}: the string with max chars displayed on "
+"screen (including the suffix)"
+msgstr ""
+
+msgid "  - ${rev:string}: the reversed string"
+msgstr ""
+
+msgid ""
+"  - ${revscr:string}: the reversed string for display (color codes are not "
+"reversed)"
+msgstr ""
+
+msgid "  - ${repeat:count,string}: the repeated string"
+msgstr ""
+
+msgid "  - ${length:string}: the length of the string (number of UTF-8 chars)"
+msgstr ""
+
+msgid ""
+"  - ${lengthscr:string}: the length of the string on screen (sum of the "
+"width of each UTF-8 char displayed on screen, colors codes are ignored)"
+msgstr ""
+
+msgid ""
+"  - ${split:n,separators,flags,string}: split of the string (n can be an "
+"integer ≥ 1, an integer ≤ -1, \"count\" or \"random\")"
+msgstr ""
+
+msgid ""
+"  - ${split_shell:n,string}: split of shell arguments (n can be an integer ≥ "
+"1, an integer ≤ -1, \"count\" or \"random\")"
+msgstr ""
+
+msgid ""
+"  - ${color:name}: the color (see \"Plugin API reference\", function "
+"\"color\")"
+msgstr ""
+
+msgid "  - ${modifier:name,data,string}: the modifier"
+msgstr ""
+
+msgid "  - ${info:name,arguments}: the info (arguments are optional)"
+msgstr ""
+
+msgid ""
+"  - ${base_encode:base,string}: the string encoded to base: 16, 32, 64 or "
+"64url"
+msgstr ""
+
+msgid ""
+"  - ${base_decode:base,string}: the string decoded from base: 16, 32, 64 or "
+"64url"
+msgstr ""
+
+msgid "  - ${date} or ${date:format}: current date/time"
+msgstr ""
+
+#, fuzzy
+#| msgid "value of an environment variable"
+msgid "  - ${env:NAME}: the environment variable"
+msgstr "valor de uma variável de ambiente"
+
+msgid ""
+"  - ${if:condition?value_if_true:value_if_false}: the result of ternary "
+"operator"
+msgstr ""
+
+msgid ""
+"  - ${calc:expression}: the result of the expression with parentheses and "
+"operators (+, -, *, /, //, %, **)"
+msgstr ""
+
+msgid ""
+"  - ${random:min,max}: a random integer number between \"min\" and "
+"\"max\" (inclusive)"
+msgstr ""
+
+msgid "  - ${translate:string}: the translated string"
+msgstr ""
+
+msgid ""
+"  - ${define:name,value}: declaration of a user variable (return an empty "
+"string)"
+msgstr ""
+
+msgid "  - ${sec.data.xxx}: the value of the secured data \"xxx\""
+msgstr ""
+
+#, fuzzy
+#| msgid "values for a configuration option"
+msgid "  - ${file.section.option}: the value of the config option"
+msgstr "valores de uma opção de configuração"
+
+#, fuzzy
+#| msgid "No local variable defined for buffer \"%s\""
+msgid "  - ${name}: the local variable in buffer"
+msgstr "Nenhuma variável local definida no buffer \"%s\""
+
+msgid ""
+"  - the hdata name/variable (the value is automatically converted to "
+"string), by default \"window\" and \"buffer\" point to current window/buffer."
+msgstr ""
+
+msgid "Format for hdata can be one of following:"
+msgstr ""
+
+msgid ""
+"  - ${hdata.var1.var2...}: start with a hdata (pointer must be known), and "
+"ask variables one after one (other hdata can be followed)"
+msgstr ""
+
+msgid ""
+"  - ${hdata[list].var1.var2...}: start with a hdata using a list/pointer/"
+"pointer name, for example:"
+msgstr ""
+
+msgid ""
+"    - ${buffer[gui_buffers].full_name}: full name of first buffer in linked "
+"list of buffers"
+msgstr ""
+
+msgid ""
+"    - ${plugin[weechat_plugins].name}: name of first plugin in linked list "
+"of plugins"
+msgstr ""
+
+msgid ""
+"  - ${hdata[pointer].var1.var2...}: start with a hdata using a pointer, for "
+"example:"
+msgstr ""
+
+msgid ""
+"    - ${buffer[0x1234abcd].full_name}: full name of the buffer with this "
+"pointer (can be used in triggers)"
+msgstr ""
+
+msgid ""
+"    - ${buffer[my_pointer].full_name}: full name of the buffer with this "
+"pointer name (can be used in triggers)"
+msgstr ""
+
+msgid ""
+"  - ${hdata[pointer].var1.method()}: when var1 is a hashtable, methods can "
+"be called: \"keys()\", \"values()\", \"keys_sorted()\", \"keys_values()\" "
+"and \"keys_values_sorted()\""
+msgstr ""
+
+msgid ""
+"For name of hdata and variables, please look at \"Plugin API reference\", "
+"function \"weechat_hdata_get\"."
 msgstr ""
 
 msgid "Examples (simple strings):"
@@ -16718,11 +16947,3 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
-
-#~ msgid "auto open relay buffer when a new client is connecting"
-#~ msgstr ""
-#~ "abrir automaticamente o buffer de reencaminhamento quando um novo cliente "
-#~ "se conecta"
-
-#~ msgid "time format when quoting a message (see /help cursor)"
-#~ msgstr "formato de data/hora ao citar uma mensagem (ver /help cursor)"
