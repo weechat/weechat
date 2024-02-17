@@ -8267,10 +8267,8 @@ command_init ()
             N_("raw[-c]: evaluate as condition: use operators and parentheses, "
                "return a boolean value (\"0\" or \"1\")"),
             N_("expression: expression to evaluate, variables with format ${variable} "
-               "are replaced "
-               "(see function \"string_eval_expression\" in \"Plugin API reference\")"),
-            N_("operator: a logical or comparison operator "
-               "(see function \"string_eval_expression\" in \"Plugin API reference\")"),
+               "are replaced (see below)"),
+            N_("operator: a logical or comparison operator (see below)"),
             "",
             N_("An expression is considered as \"true\" if it is not NULL, not "
                "empty, and different from \"0\"."),
@@ -8358,6 +8356,28 @@ command_init ()
                "\"keys_values()\" and \"keys_values_sorted()\""),
             N_("For name of hdata and variables, please look at \"Plugin API "
                "reference\", function \"weechat_hdata_get\"."),
+            "",
+            N_("Logical operators:"),
+            N_("  &&   boolean \"and\""),
+            N_("  ||   boolean \"or\""),
+            "",
+            N_("Comparison operators:"),
+            N_("  ==   equal"),
+            N_("  !=   not equal"),
+            N_("  <=   less or equal"),
+            N_("  <    less"),
+            N_("  >=   greater or equal"),
+            N_("  >    greater"),
+            N_("  =~   is matching POSIX extended regex"),
+            N_("  !~   is NOT matching POSIX extended regex"),
+            N_("  ==*  is matching mask, case sensitive (wildcard \"*\" is allowed)"),
+            N_("  !!*  is NOT matching mask, case sensitive (wildcard \"*\" is allowed)"),
+            N_("  =*   is matching mask, case insensitive (wildcard \"*\" is allowed)"),
+            N_("  !*   is NOT matching mask, case insensitive (wildcard \"*\" is allowed)"),
+            N_("  ==-  is included, case sensitive"),
+            N_("  !!-  is NOT included, case sensitive"),
+            N_("  =-   is included, case insensitive"),
+            N_("  !-   is NOT included, case insensitive"),
             "",
             N_("Examples (simple strings):"),
             AI("  /eval -n ${raw:${info:version}}                  ==> ${info:version}"),

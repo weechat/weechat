@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-17 09:40+0100\n"
+"POT-Creation-Date: 2024-02-17 10:47+0100\n"
 "PO-Revision-Date: 2024-02-17 10:07+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -1806,14 +1806,11 @@ msgstr ""
 
 msgid ""
 "expression: expression to evaluate, variables with format ${variable} are "
-"replaced (see function \"string_eval_expression\" in \"Plugin API "
-"reference\")"
+"replaced (see below)"
 msgstr ""
 
 #, fuzzy
-msgid ""
-"operator: a logical or comparison operator (see function "
-"\"string_eval_expression\" in \"Plugin API reference\")"
+msgid "operator: a logical or comparison operator (see below)"
 msgstr ""
 "自動的にニックネームの身元確認を行うために使われる SSL 証明書ファイル "
 "(\"%h\" は WeeChat ホームで置換、デフォルトは \"~/.weechat\" です)"
@@ -2062,6 +2059,77 @@ msgstr ""
 msgid ""
 "For name of hdata and variables, please look at \"Plugin API reference\", "
 "function \"weechat_hdata_get\"."
+msgstr ""
+
+msgid "Logical operators:"
+msgstr ""
+
+msgid "  &&   boolean \"and\""
+msgstr ""
+
+msgid "  ||   boolean \"or\""
+msgstr ""
+
+msgid "Comparison operators:"
+msgstr ""
+
+msgid "  ==   equal"
+msgstr ""
+
+msgid "  !=   not equal"
+msgstr ""
+
+msgid "  <=   less or equal"
+msgstr ""
+
+#, fuzzy
+#| msgid "    file: %s"
+msgid "  <    less"
+msgstr "    ファイル: %s"
+
+msgid "  >=   greater or equal"
+msgstr ""
+
+msgid "  >    greater"
+msgstr ""
+
+msgid "  =~   is matching POSIX extended regex"
+msgstr ""
+
+msgid "  !~   is NOT matching POSIX extended regex"
+msgstr ""
+
+#, fuzzy
+#| msgid "alias name (wildcard \"*\" is allowed) (optional)"
+msgid "  ==*  is matching mask, case sensitive (wildcard \"*\" is allowed)"
+msgstr "別名の名前 (ワイルドカード \"*\" を使うことができます) (任意)"
+
+#, fuzzy
+#| msgid "alias name (wildcard \"*\" is allowed) (optional)"
+msgid "  !!*  is NOT matching mask, case sensitive (wildcard \"*\" is allowed)"
+msgstr "別名の名前 (ワイルドカード \"*\" を使うことができます) (任意)"
+
+#, fuzzy
+#| msgid "alias name (wildcard \"*\" is allowed) (optional)"
+msgid "  =*   is matching mask, case insensitive (wildcard \"*\" is allowed)"
+msgstr "別名の名前 (ワイルドカード \"*\" を使うことができます) (任意)"
+
+#, fuzzy
+#| msgid "alias name (wildcard \"*\" is allowed) (optional)"
+msgid ""
+"  !*   is NOT matching mask, case insensitive (wildcard \"*\" is allowed)"
+msgstr "別名の名前 (ワイルドカード \"*\" を使うことができます) (任意)"
+
+msgid "  ==-  is included, case sensitive"
+msgstr ""
+
+msgid "  !!-  is NOT included, case sensitive"
+msgstr ""
+
+msgid "  =-   is included, case insensitive"
+msgstr ""
+
+msgid "  !-   is NOT included, case insensitive"
 msgstr ""
 
 msgid "Examples (simple strings):"

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-17 09:40+0100\n"
-"PO-Revision-Date: 2024-02-17 10:07+0100\n"
+"POT-Creation-Date: 2024-02-17 10:47+0100\n"
+"PO-Revision-Date: 2024-02-17 10:52+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -1831,19 +1831,13 @@ msgstr ""
 
 msgid ""
 "expression: expression to evaluate, variables with format ${variable} are "
-"replaced (see function \"string_eval_expression\" in \"Plugin API "
-"reference\")"
+"replaced (see below)"
 msgstr ""
 "expression : expression à évaluer, les variables avec le format ${variable} "
-"sont remplacées (voir la fonction \"string_eval_expression\" dans la "
-"\"Référence API extension WeeChat\")"
+"sont remplacées (voir ci-dessous)"
 
-msgid ""
-"operator: a logical or comparison operator (see function "
-"\"string_eval_expression\" in \"Plugin API reference\")"
-msgstr ""
-"opérateur : un opérateur logique ou de comparaison (voir la fonction "
-"\"string_eval_expression\" dans la \"Référence API extension WeeChat\")"
+msgid "operator: a logical or comparison operator (see below)"
+msgstr "opérateur : un opérateur logique ou de comparaison (voir ci-dessous)"
 
 msgid ""
 "An expression is considered as \"true\" if it is not NULL, not empty, and "
@@ -2151,6 +2145,75 @@ msgid ""
 msgstr ""
 "Pour le nom du hdata et des variables, voir la \"Référence API extension\", "
 "fonction \"weechat_hdata_get\"."
+
+msgid "Logical operators:"
+msgstr "Opérateurs logiques :"
+
+msgid "  &&   boolean \"and\""
+msgstr "  &&   \"et\" booléen"
+
+msgid "  ||   boolean \"or\""
+msgstr "  ||   \"ou\" booléen"
+
+msgid "Comparison operators:"
+msgstr "Opérateurs de comparaison :"
+
+msgid "  ==   equal"
+msgstr "  ==   égal"
+
+msgid "  !=   not equal"
+msgstr "  !=   non égal"
+
+msgid "  <=   less or equal"
+msgstr "  <=   inférieur ou égal"
+
+msgid "  <    less"
+msgstr "  <    inférieur"
+
+msgid "  >=   greater or equal"
+msgstr "  >=   supérieur ou égal"
+
+msgid "  >    greater"
+msgstr "  >    supérieur"
+
+msgid "  =~   is matching POSIX extended regex"
+msgstr "  =~   correspond à l'expression régulière POSIX étendue"
+
+msgid "  !~   is NOT matching POSIX extended regex"
+msgstr "  !~   ne correspond PAS à l'expression régulière POSIX étendue"
+
+msgid "  ==*  is matching mask, case sensitive (wildcard \"*\" is allowed)"
+msgstr ""
+"  ==*  correspond au masque, sensible à la casse (le caractère joker \"*\" "
+"est autorisé)"
+
+msgid "  !!*  is NOT matching mask, case sensitive (wildcard \"*\" is allowed)"
+msgstr ""
+"  !!*  ne correspond PAS au masque, sensible à la casse (le caractère joker "
+"\"*\" est autorisé)"
+
+msgid "  =*   is matching mask, case insensitive (wildcard \"*\" is allowed)"
+msgstr ""
+"  =*   correspond au masque, insensible à la casse (le caractère joker \"*\" "
+"est autorisé)"
+
+msgid ""
+"  !*   is NOT matching mask, case insensitive (wildcard \"*\" is allowed)"
+msgstr ""
+"  !*   ne correspond PAS au masque, insensible à la casse (le caractère "
+"joker \"*\" est autorisé)"
+
+msgid "  ==-  is included, case sensitive"
+msgstr "  ==-  est inclus, sensible à la casse"
+
+msgid "  !!-  is NOT included, case sensitive"
+msgstr "  !!-  n'est PAS inclus, sensible à la casse"
+
+msgid "  =-   is included, case insensitive"
+msgstr "  =-   est inclus, insensible à la casse"
+
+msgid "  !-   is NOT included, case insensitive"
+msgstr "  !-   n'est PAS inclus, insensible à la casse"
 
 msgid "Examples (simple strings):"
 msgstr "Exemples (chaînes simples) :"

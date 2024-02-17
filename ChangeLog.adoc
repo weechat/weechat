@@ -15,7 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
-  * core: reintroduce help on the variables in `/help eval` (issue #2005)
+  * core: reintroduce help on the variables and operators in `/help eval` (issue #2005)
   * core: add option `-s` in command `/command` to execute multiple commands separated by semicolons
   * core: allow case insensitive search of partial buffer name with `(?i)name` in command `/buffer`
   * core: use function util_strftimeval in evaluation of expression `date:xxx`
