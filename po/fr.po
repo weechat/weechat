@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-17 10:47+0100\n"
-"PO-Revision-Date: 2024-02-17 10:52+0100\n"
+"POT-Creation-Date: 2024-02-17 10:57+0100\n"
+"PO-Revision-Date: 2024-02-17 10:57+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -2146,8 +2146,8 @@ msgstr ""
 "Pour le nom du hdata et des variables, voir la \"Référence API extension\", "
 "fonction \"weechat_hdata_get\"."
 
-msgid "Logical operators:"
-msgstr "Opérateurs logiques :"
+msgid "Logical operators (by order of priority):"
+msgstr "Opérateurs logiques (par ordre de priorité) :"
 
 msgid "  &&   boolean \"and\""
 msgstr "  &&   \"et\" booléen"
@@ -2155,26 +2155,8 @@ msgstr "  &&   \"et\" booléen"
 msgid "  ||   boolean \"or\""
 msgstr "  ||   \"ou\" booléen"
 
-msgid "Comparison operators:"
-msgstr "Opérateurs de comparaison :"
-
-msgid "  ==   equal"
-msgstr "  ==   égal"
-
-msgid "  !=   not equal"
-msgstr "  !=   non égal"
-
-msgid "  <=   less or equal"
-msgstr "  <=   inférieur ou égal"
-
-msgid "  <    less"
-msgstr "  <    inférieur"
-
-msgid "  >=   greater or equal"
-msgstr "  >=   supérieur ou égal"
-
-msgid "  >    greater"
-msgstr "  >    supérieur"
+msgid "Comparison operators (by order of priority):"
+msgstr "Opérateurs de comparaison (par ordre de priorité) :"
 
 msgid "  =~   is matching POSIX extended regex"
 msgstr "  =~   correspond à l'expression régulière POSIX étendue"
@@ -2214,6 +2196,24 @@ msgstr "  =-   est inclus, insensible à la casse"
 
 msgid "  !-   is NOT included, case insensitive"
 msgstr "  !-   n'est PAS inclus, insensible à la casse"
+
+msgid "  ==   equal"
+msgstr "  ==   égal"
+
+msgid "  !=   not equal"
+msgstr "  !=   non égal"
+
+msgid "  <=   less or equal"
+msgstr "  <=   inférieur ou égal"
+
+msgid "  <    less"
+msgstr "  <    inférieur"
+
+msgid "  >=   greater or equal"
+msgstr "  >=   supérieur ou égal"
+
+msgid "  >    greater"
+msgstr "  >    supérieur"
 
 msgid "Examples (simple strings):"
 msgstr "Exemples (chaînes simples) :"

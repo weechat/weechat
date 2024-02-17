@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-17 10:47+0100\n"
+"POT-Creation-Date: 2024-02-17 10:57+0100\n"
 "PO-Revision-Date: 2024-02-17 10:07+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -2140,7 +2140,7 @@ msgstr ""
 
 #, fuzzy
 #| msgid "  o: operator"
-msgid "Logical operators:"
+msgid "Logical operators (by order of priority):"
 msgstr "  o: User ist Channel-Operator"
 
 msgid "  &&   boolean \"and\""
@@ -2149,27 +2149,7 @@ msgstr ""
 msgid "  ||   boolean \"or\""
 msgstr ""
 
-msgid "Comparison operators:"
-msgstr ""
-
-msgid "  ==   equal"
-msgstr ""
-
-msgid "  !=   not equal"
-msgstr ""
-
-msgid "  <=   less or equal"
-msgstr ""
-
-#, fuzzy
-#| msgid "    file: %s"
-msgid "  <    less"
-msgstr "    Datei: %s"
-
-msgid "  >=   greater or equal"
-msgstr ""
-
-msgid "  >    greater"
+msgid "Comparison operators (by order of priority):"
 msgstr ""
 
 msgid "  =~   is matching POSIX extended regex"
@@ -2209,6 +2189,26 @@ msgid "  =-   is included, case insensitive"
 msgstr ""
 
 msgid "  !-   is NOT included, case insensitive"
+msgstr ""
+
+msgid "  ==   equal"
+msgstr ""
+
+msgid "  !=   not equal"
+msgstr ""
+
+msgid "  <=   less or equal"
+msgstr ""
+
+#, fuzzy
+#| msgid "    file: %s"
+msgid "  <    less"
+msgstr "    Datei: %s"
+
+msgid "  >=   greater or equal"
+msgstr ""
+
+msgid "  >    greater"
 msgstr ""
 
 msgid "Examples (simple strings):"

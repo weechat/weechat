@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-17 10:47+0100\n"
+"POT-Creation-Date: 2024-02-17 10:57+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1803,7 +1803,7 @@ msgid ""
 "function \"weechat_hdata_get\"."
 msgstr ""
 
-msgid "Logical operators:"
+msgid "Logical operators (by order of priority):"
 msgstr ""
 
 msgid "  &&   boolean \"and\""
@@ -1812,25 +1812,7 @@ msgstr ""
 msgid "  ||   boolean \"or\""
 msgstr ""
 
-msgid "Comparison operators:"
-msgstr ""
-
-msgid "  ==   equal"
-msgstr ""
-
-msgid "  !=   not equal"
-msgstr ""
-
-msgid "  <=   less or equal"
-msgstr ""
-
-msgid "  <    less"
-msgstr ""
-
-msgid "  >=   greater or equal"
-msgstr ""
-
-msgid "  >    greater"
+msgid "Comparison operators (by order of priority):"
 msgstr ""
 
 msgid "  =~   is matching POSIX extended regex"
@@ -1862,6 +1844,24 @@ msgid "  =-   is included, case insensitive"
 msgstr ""
 
 msgid "  !-   is NOT included, case insensitive"
+msgstr ""
+
+msgid "  ==   equal"
+msgstr ""
+
+msgid "  !=   not equal"
+msgstr ""
+
+msgid "  <=   less or equal"
+msgstr ""
+
+msgid "  <    less"
+msgstr ""
+
+msgid "  >=   greater or equal"
+msgstr ""
+
+msgid "  >    greater"
 msgstr ""
 
 msgid "Examples (simple strings):"
