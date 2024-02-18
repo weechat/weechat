@@ -317,7 +317,7 @@ TEST(RelayHttp, ParseMethodPath)
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
     POINTERS_EQUAL(NULL, request->body);
-    free (request);
+    relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
     CHECK(request);
@@ -334,7 +334,7 @@ TEST(RelayHttp, ParseMethodPath)
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
     POINTERS_EQUAL(NULL, request->body);
-    free (request);
+    relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
     CHECK(request);
@@ -351,7 +351,7 @@ TEST(RelayHttp, ParseMethodPath)
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
     POINTERS_EQUAL(NULL, request->body);
-    free (request);
+    relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
     CHECK(request);
@@ -370,7 +370,7 @@ TEST(RelayHttp, ParseMethodPath)
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
     POINTERS_EQUAL(NULL, request->body);
-    free (request);
+    relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
     CHECK(request);
@@ -390,7 +390,7 @@ TEST(RelayHttp, ParseMethodPath)
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
     POINTERS_EQUAL(NULL, request->body);
-    free (request);
+    relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
     CHECK(request);
@@ -416,7 +416,7 @@ TEST(RelayHttp, ParseMethodPath)
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
     POINTERS_EQUAL(NULL, request->body);
-    free (request);
+    relay_http_request_free (request);
 }
 
 /*
@@ -437,7 +437,7 @@ TEST(RelayHttp, ParseHeader)
                  "\n",
                  *(request->raw));
     LONGS_EQUAL(0, request->headers->items_count);
-    free (request);
+    relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
     CHECK(request);
@@ -448,7 +448,7 @@ TEST(RelayHttp, ParseHeader)
                  "\n",
                  *(request->raw));
     LONGS_EQUAL(0, request->headers->items_count);
-    free (request);
+    relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
     CHECK(request);
@@ -459,7 +459,7 @@ TEST(RelayHttp, ParseHeader)
                  "Test\n",
                  *(request->raw));
     LONGS_EQUAL(0, request->headers->items_count);
-    free (request);
+    relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
     CHECK(request);
@@ -471,7 +471,7 @@ TEST(RelayHttp, ParseHeader)
                  *(request->raw));
     LONGS_EQUAL(1, request->headers->items_count);
     STRCMP_EQUAL("value", (const char *)hashtable_get (request->headers, "x-test"));
-    free (request);
+    relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
     CHECK(request);
@@ -488,7 +488,7 @@ TEST(RelayHttp, ParseHeader)
     CHECK(hashtable_has_key (request->accept_encoding, "gzip"));
     CHECK(hashtable_has_key (request->accept_encoding, "zstd"));
     CHECK(hashtable_has_key (request->accept_encoding, "br"));
-    free (request);
+    relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
     CHECK(request);
@@ -500,7 +500,7 @@ TEST(RelayHttp, ParseHeader)
                  *(request->raw));
     LONGS_EQUAL(1, request->headers->items_count);
     LONGS_EQUAL(123, request->content_length);
-    free (request);
+    relay_http_request_free (request);
 
     /* websocket request */
     request = relay_http_request_alloc ();
@@ -523,7 +523,7 @@ TEST(RelayHttp, ParseHeader)
     LONGS_EQUAL(15, request->ws_deflate->window_bits_inflate);
     POINTERS_EQUAL(NULL, request->ws_deflate->strm_deflate);
     POINTERS_EQUAL(NULL, request->ws_deflate->strm_inflate);
-    free (request);
+    relay_http_request_free (request);
 }
 
 /*
@@ -562,7 +562,7 @@ TEST(RelayHttp, AddToBody)
     MEMCMP_EQUAL("abcdefghij", request->body, 10);
     POINTERS_EQUAL(NULL, partial_message);
 
-    free (request);
+    relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
     CHECK(request);
@@ -590,7 +590,7 @@ TEST(RelayHttp, AddToBody)
     STRCMP_EQUAL("fghij", partial_message);
     free (partial_message);
 
-    free (request);
+    relay_http_request_free (request);
 }
 
 /*
