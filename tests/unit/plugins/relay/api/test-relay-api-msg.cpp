@@ -1,0 +1,369 @@
+/*
+ * test-relay-api-msg.cpp - test relay API protocol (messages)
+ *
+ * Copyright (C) 2024 Sébastien Helleu <flashcode@flashtux.org>
+ *
+ * This file is part of WeeChat, the extensible chat client.
+ *
+ * WeeChat is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * WeeChat is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "CppUTest/TestHarness.h"
+
+extern "C"
+{
+#include <time.h>
+#include <sys/time.h>
+#include <cjson/cJSON.h>
+#include "src/core/wee-util.h"
+#include "src/gui/gui-buffer.h"
+#include "src/gui/gui-chat.h"
+#include "src/gui/gui-color.h"
+#include "src/gui/gui-line.h"
+#include "src/gui/gui-nicklist.h"
+#include "src/plugins/relay/relay.h"
+#include "src/plugins/relay/relay-client.h"
+#include "src/plugins/relay/api/relay-api.h"
+#include "src/plugins/relay/api/relay-api-msg.h"
+}
+
+#define WEE_CHECK_OBJ_STR(__expected, __json, __name)                   \
+    json_obj = cJSON_GetObjectItem (__json, __name);                    \
+    CHECK(json_obj);                                                    \
+    CHECK(cJSON_IsString (json_obj));                                   \
+    STRCMP_EQUAL(__expected, cJSON_GetStringValue (json_obj));
+
+#define WEE_CHECK_OBJ_STRN(__expected, __length, __json, __name)        \
+    json_obj = cJSON_GetObjectItem (__json, __name);                    \
+    CHECK(json_obj);                                                    \
+    CHECK(cJSON_IsString (json_obj));                                   \
+    STRNCMP_EQUAL(__expected, cJSON_GetStringValue (json_obj),          \
+                  __length);
+
+#define WEE_CHECK_OBJ_INT(__expected, __json, __name)                   \
+    json_obj = cJSON_GetObjectItem (__json, __name);                    \
+    CHECK(json_obj);                                                    \
+    CHECK(cJSON_IsNumber (json_obj));                                   \
+    LONGS_EQUAL(__expected, cJSON_GetNumberValue (json_obj));
+
+#define WEE_CHECK_OBJ_BOOL(__expected, __json, __name)                  \
+    json_obj = cJSON_GetObjectItem (__json, __name);                    \
+    CHECK(json_obj);                                                    \
+    CHECK(cJSON_IsBool (json_obj));                                     \
+    LONGS_EQUAL(__expected, cJSON_IsTrue (json_obj) ? 1 : 0);
+
+TEST_GROUP(RelayApiMsg)
+{
+};
+
+/*
+ * Tests functions:
+ *   relay_api_msg_send_json_internal
+ */
+
+TEST(RelayApiMsg, SendJsonInternal)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_api_msg_send_json
+ */
+
+TEST(RelayApiMsg, SendJson)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_api_msg_send_error_json
+ */
+
+TEST(RelayApiMsg, SendErrorJson)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_api_msg_send_event
+ */
+
+TEST(RelayApiMsg, SendEvent)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_api_msg_buffer_add_local_vars_cb
+ *   relay_api_msg_buffer_to_json
+ *   relay_api_msg_nick_to_json
+ *   relay_api_msg_nick_group_to_json
+ */
+
+TEST(RelayApiMsg, BufferToJson)
+{
+    cJSON *json, *json_obj, *json_local_vars, *json_lines;
+    cJSON *json_nicks, *json_groups, *json_group, *json_group_nicks, *json_nick;
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group;
+
+    json = relay_api_msg_buffer_to_json (NULL, 0, 0, RELAY_API_COLORS_ANSI);
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    POINTERS_EQUAL(NULL, cJSON_GetObjectItem (json, "name"));
+    cJSON_Delete (json);
+
+    /* buffer without lines and nicks */
+    json = relay_api_msg_buffer_to_json (gui_buffers, 0, 0, RELAY_API_COLORS_ANSI);
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    WEE_CHECK_OBJ_STR("core.weechat", json, "name");
+    WEE_CHECK_OBJ_STR("weechat", json, "short_name");
+    WEE_CHECK_OBJ_INT(1, json, "number");
+    WEE_CHECK_OBJ_STR("formatted", json, "type");
+    WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    json_local_vars = cJSON_GetObjectItem (json, "local_variables");
+    CHECK(json_local_vars);
+    CHECK(cJSON_IsObject (json_local_vars));
+    WEE_CHECK_OBJ_STR("core", json_local_vars, "plugin");
+    WEE_CHECK_OBJ_STR("weechat", json_local_vars, "name");
+    POINTERS_EQUAL(NULL, cJSON_GetObjectItem (json, "lines"));
+    POINTERS_EQUAL(NULL, cJSON_GetObjectItem (json, "nicks"));
+    cJSON_Delete (json);
+
+    /* buffer with 2 lines, without nicks */
+    json = relay_api_msg_buffer_to_json (gui_buffers, 2, 0, RELAY_API_COLORS_ANSI);
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    json_lines = cJSON_GetObjectItem (json, "lines");
+    CHECK(json_lines);
+    CHECK(cJSON_IsArray (json_lines));
+    LONGS_EQUAL(2, cJSON_GetArraySize (json_lines));
+    cJSON_Delete (json);
+
+    /* create a user buffer with 1 group / 4 nicks */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+    group = gui_nicklist_add_group (buffer, NULL, "group1", "magenta", 1);
+    CHECK(group);
+    CHECK(gui_nicklist_add_nick (buffer, group, "nick1", "blue", "@", "lightred", 1));
+    CHECK(gui_nicklist_add_nick (buffer, group, "nick2", "green", NULL, NULL, 1));
+    CHECK(gui_nicklist_add_nick (buffer, group, "nick3", "yellow", NULL, NULL, 1));
+    CHECK(gui_nicklist_add_nick (buffer, NULL, "root_nick_hidden", "cyan", "+", "yellow", 0));
+
+    /* buffer with no lines and 1 group / 4 nicks */
+    json = relay_api_msg_buffer_to_json (buffer, 1, 1, RELAY_API_COLORS_ANSI);
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    json_lines = cJSON_GetObjectItem (json, "lines");
+    CHECK(json_lines);
+    CHECK(cJSON_IsArray (json_lines));
+    LONGS_EQUAL(0, cJSON_GetArraySize (json_lines));
+    json_nicks = cJSON_GetObjectItem (json, "nicks");
+    CHECK(json_nicks);
+    CHECK(cJSON_IsObject (json_nicks));
+    WEE_CHECK_OBJ_STR("root", json_nicks, "name");
+    WEE_CHECK_OBJ_STR("", json_nicks, "color");
+    json_groups = cJSON_GetObjectItem (json_nicks, "groups");
+    CHECK(json_groups);
+    CHECK(cJSON_IsArray (json_groups));
+    LONGS_EQUAL(1, cJSON_GetArraySize (json_groups));
+    json_group = cJSON_GetArrayItem (json_groups, 0);
+    CHECK(json_group);
+    CHECK(cJSON_IsObject (json_group));
+    WEE_CHECK_OBJ_STR("group1", json_group, "name");
+    WEE_CHECK_OBJ_STR("magenta", json_group, "color");
+    json_group_nicks = cJSON_GetObjectItem (json_group, "nicks");
+    CHECK(json_group_nicks);
+    CHECK(cJSON_IsArray (json_group_nicks));
+    LONGS_EQUAL(3, cJSON_GetArraySize (json_group_nicks));
+    json_nick = cJSON_GetArrayItem (json_group_nicks, 0);
+    CHECK(json_nick);
+    CHECK(cJSON_IsObject (json_nick));
+    WEE_CHECK_OBJ_STR("@", json_nick, "prefix");
+    WEE_CHECK_OBJ_STR("lightred", json_nick, "prefix_color");
+    WEE_CHECK_OBJ_STR("nick1", json_nick, "name");
+    WEE_CHECK_OBJ_STR("blue", json_nick, "color");
+    WEE_CHECK_OBJ_BOOL(1, json_nick, "visible");
+    json_nick = cJSON_GetArrayItem (json_group_nicks, 1);
+    CHECK(json_nick);
+    CHECK(cJSON_IsObject (json_nick));
+    WEE_CHECK_OBJ_STR("", json_nick, "prefix");
+    WEE_CHECK_OBJ_STR("", json_nick, "prefix_color");
+    WEE_CHECK_OBJ_STR("nick2", json_nick, "name");
+    WEE_CHECK_OBJ_STR("green", json_nick, "color");
+    WEE_CHECK_OBJ_BOOL(1, json_nick, "visible");
+    json_nick = cJSON_GetArrayItem (json_group_nicks, 2);
+    CHECK(json_nick);
+    CHECK(cJSON_IsObject (json_nick));
+    WEE_CHECK_OBJ_STR("", json_nick, "prefix");
+    WEE_CHECK_OBJ_STR("", json_nick, "prefix_color");
+    WEE_CHECK_OBJ_STR("nick3", json_nick, "name");
+    WEE_CHECK_OBJ_STR("yellow", json_nick, "color");
+    WEE_CHECK_OBJ_BOOL(1, json_nick, "visible");
+    json_nicks = cJSON_GetObjectItem (json_nicks, "nicks");
+    CHECK(json_nicks);
+    CHECK(cJSON_IsArray (json_nicks));
+    LONGS_EQUAL(1, cJSON_GetArraySize (json_nicks));
+    json_nick = cJSON_GetArrayItem (json_nicks, 0);
+    CHECK(json_nick);
+    CHECK(cJSON_IsObject (json_nick));
+    WEE_CHECK_OBJ_STR("+", json_nick, "prefix");
+    WEE_CHECK_OBJ_STR("yellow", json_nick, "prefix_color");
+    WEE_CHECK_OBJ_STR("root_nick_hidden", json_nick, "name");
+    WEE_CHECK_OBJ_STR("cyan", json_nick, "color");
+    WEE_CHECK_OBJ_BOOL(0, json_nick, "visible");
+    cJSON_Delete (json);
+
+    gui_buffer_close (buffer);
+}
+
+/*
+ * Tests functions:
+ *   relay_api_msg_line_data_to_json
+ *   relay_api_msg_lines_to_json
+ */
+
+TEST(RelayApiMsg, LinesToJson)
+{
+    char str_msg1[1024], str_msg2[1024], *str_msg_ansi, str_date[128];
+    cJSON *json, *json_line, *json_obj, *json_tags, *json_tag;
+    struct timeval tv;
+    struct tm gm_time;
+
+    snprintf (str_msg1, sizeof (str_msg1), "%s", "this is the first line");
+    gui_chat_printf_date_tags (NULL, 0, "tag1,tag2,tag3",
+                               "%s\t%s", "nick1", str_msg1);
+
+    snprintf (str_msg2, sizeof (str_msg2),
+              "this is the second line with %s" "green",
+              gui_color_get_custom ("green"));
+    gui_chat_printf (NULL, "%s", str_msg2);
+
+    /* two lines with ANSI colors */
+    json = relay_api_msg_lines_to_json (gui_buffers, -2, RELAY_API_COLORS_ANSI);
+    CHECK(json);
+    CHECK(cJSON_IsArray (json));
+    LONGS_EQUAL(2, cJSON_GetArraySize (json));
+    /* first line */
+    json_line = cJSON_GetArrayItem (json, 0);
+    CHECK(json_line);
+    CHECK(cJSON_IsObject (json_line));
+    WEE_CHECK_OBJ_INT(gui_buffers->own_lines->last_line->prev_line->data->id,
+                      json_line, "id");
+    WEE_CHECK_OBJ_INT(-1, json_line, "y");
+    gmtime_r (&(gui_buffers->own_lines->last_line->prev_line->data->date), &gm_time);
+    tv.tv_sec = mktime (&gm_time);
+    tv.tv_usec = gui_buffers->own_lines->last_line->prev_line->data->date_usec;
+    util_strftimeval (str_date, sizeof (str_date), "%FT%T.%fZ", &tv);
+    WEE_CHECK_OBJ_STR(str_date, json_line, "date");
+    gmtime_r (&(gui_buffers->own_lines->last_line->prev_line->data->date_printed), &gm_time);
+    tv.tv_sec = mktime (&gm_time);
+    tv.tv_usec = gui_buffers->own_lines->last_line->prev_line->data->date_usec_printed;
+    util_strftimeval (str_date, sizeof (str_date), "%FT%T.%fZ", &tv);
+    WEE_CHECK_OBJ_STR(str_date, json_line, "date_printed");
+    WEE_CHECK_OBJ_BOOL(0, json_line, "highlight");
+    WEE_CHECK_OBJ_STR("nick1", json_line, "prefix");
+    WEE_CHECK_OBJ_STR(str_msg1, json_line, "message");
+    json_tags = cJSON_GetObjectItem (json_line, "tags");
+    CHECK(json_tags);
+    CHECK(cJSON_IsArray (json_tags));
+    LONGS_EQUAL(3, cJSON_GetArraySize (json_tags));
+    json_tag = cJSON_GetArrayItem (json_tags, 0);
+    CHECK(json_tag);
+    CHECK(cJSON_IsString (json_tag));
+    STRCMP_EQUAL("tag1", cJSON_GetStringValue (json_tag));
+    json_tag = cJSON_GetArrayItem (json_tags, 1);
+    CHECK(json_tag);
+    CHECK(cJSON_IsString (json_tag));
+    STRCMP_EQUAL("tag2", cJSON_GetStringValue (json_tag));
+    json_tag = cJSON_GetArrayItem (json_tags, 2);
+    CHECK(json_tag);
+    CHECK(cJSON_IsString (json_tag));
+    STRCMP_EQUAL("tag3", cJSON_GetStringValue (json_tag));
+    /* second line */
+    json_line = cJSON_GetArrayItem (json, 1);
+    CHECK(json_line);
+    CHECK(cJSON_IsObject (json_line));
+    WEE_CHECK_OBJ_INT(gui_buffers->own_lines->last_line->data->id,
+                      json_line, "id");
+    WEE_CHECK_OBJ_INT(-1, json_line, "y");
+    gmtime_r (&(gui_buffers->own_lines->last_line->data->date), &gm_time);
+    tv.tv_sec = mktime (&gm_time);
+    tv.tv_usec = gui_buffers->own_lines->last_line->data->date_usec;
+    util_strftimeval (str_date, sizeof (str_date), "%FT%T.%fZ", &tv);
+    WEE_CHECK_OBJ_STR(str_date, json_line, "date");
+    gmtime_r (&(gui_buffers->own_lines->last_line->data->date_printed), &gm_time);
+    tv.tv_sec = mktime (&gm_time);
+    tv.tv_usec = gui_buffers->own_lines->last_line->data->date_usec_printed;
+    util_strftimeval (str_date, sizeof (str_date), "%FT%T.%fZ", &tv);
+    WEE_CHECK_OBJ_STR(str_date, json_line, "date_printed");
+    WEE_CHECK_OBJ_BOOL(0, json_line, "highlight");
+    WEE_CHECK_OBJ_STR("", json_line, "prefix");
+        str_msg_ansi = gui_color_encode_ansi (str_msg2);
+    CHECK(str_msg_ansi);
+    WEE_CHECK_OBJ_STR(str_msg_ansi, json_line, "message");
+    free (str_msg_ansi);
+    json_tags = cJSON_GetObjectItem (json_line, "tags");
+    CHECK(json_tags);
+    CHECK(cJSON_IsArray (json_tags));
+    LONGS_EQUAL(0, cJSON_GetArraySize (json_tags));
+    cJSON_Delete (json);
+
+    /* with ANSI colors */
+    json = relay_api_msg_lines_to_json (gui_buffers, -1, RELAY_API_COLORS_ANSI);
+    CHECK(json);
+    CHECK(cJSON_IsArray (json));
+    LONGS_EQUAL(1, cJSON_GetArraySize (json));
+    json_line = cJSON_GetArrayItem (json, 0);
+    CHECK(json_line);
+    CHECK(cJSON_IsObject (json_line));
+    WEE_CHECK_OBJ_INT(gui_buffers->own_lines->last_line->data->id,
+                      json_line, "id");
+    str_msg_ansi = gui_color_encode_ansi (str_msg2);
+    CHECK(str_msg_ansi);
+    WEE_CHECK_OBJ_STR(str_msg_ansi, json_line, "message");
+    free (str_msg_ansi);
+    cJSON_Delete (json);
+
+    /* one line with WeeChat colors */
+    json = relay_api_msg_lines_to_json (gui_buffers, -1, RELAY_API_COLORS_WEECHAT);
+    CHECK(json);
+    CHECK(cJSON_IsArray (json));
+    LONGS_EQUAL(1, cJSON_GetArraySize (json));
+    json_line = cJSON_GetArrayItem (json, 0);
+    CHECK(json_line);
+    CHECK(cJSON_IsObject (json_line));
+    WEE_CHECK_OBJ_INT(gui_buffers->own_lines->last_line->data->id,
+                      json_line, "id");
+    WEE_CHECK_OBJ_STR(str_msg2, json_line, "message");
+    cJSON_Delete (json);
+
+    /* one line without colors */
+    json = relay_api_msg_lines_to_json (gui_buffers, -1, RELAY_API_COLORS_STRIP);
+    CHECK(json);
+    CHECK(cJSON_IsArray (json));
+    LONGS_EQUAL(1, cJSON_GetArraySize (json));
+    json_line = cJSON_GetArrayItem (json, 0);
+    CHECK(json_line);
+    CHECK(cJSON_IsObject (json_line));
+    WEE_CHECK_OBJ_INT(gui_buffers->own_lines->last_line->data->id,
+                      json_line, "id");
+    WEE_CHECK_OBJ_STR("this is the second line with green", json_line, "message");
+    cJSON_Delete (json);
+}

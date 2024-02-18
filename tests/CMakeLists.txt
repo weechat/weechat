@@ -111,6 +111,13 @@ if (ENABLE_RELAY)
     unit/plugins/relay/test-relay-websocket.cpp
     unit/plugins/relay/irc/test-relay-irc.cpp
   )
+  if (ENABLE_CJSON)
+    list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+      unit/plugins/relay/api/test-relay-api.cpp
+      unit/plugins/relay/api/test-relay-api-msg.cpp
+      unit/plugins/relay/api/test-relay-api-protocol.cpp
+    )
+  endif()
 endif()
 
 if(ENABLE_TRIGGER)

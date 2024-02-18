@@ -1,5 +1,5 @@
 /*
- * test-relay-irc.cpp - test IRC protocol for relay to client
+ * test-relay-irc.cpp - test relay IRC protocol
  *
  * Copyright (C) 2023-2024 Sébastien Helleu <flashcode@flashtux.org>
  *

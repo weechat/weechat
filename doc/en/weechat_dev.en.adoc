@@ -396,91 +396,95 @@ WeeChat "core" is located in following directories:
 
 [width="100%",cols="2m,3",options="header"]
 |===
-| Path/file                            | Description
-| tests/                               | Root of tests.
-|    tests.cpp                         | Program used to run all tests.
-|    tests-record.cpp                  | Record and search in messages displayed.
-|    scripts/                          | Root of scripting API tests.
-|       test-scripts.cpp               | Program used to run the scripting API tests.
-|       python/                        | Python scripts to generate and run the scripting API tests.
-|          testapigen.py               | Python script generating scripts in all languages to test the scripting API.
-|          testapi.py                  | Python script with scripting API tests, used by script testapigen.py.
-|          unparse.py                  | Convert Python code to other languages, used by script testapigen.py.
-|    unit/                             | Root of unit tests.
-|       test-plugins.cpp               | Tests: plugins.
-|       test-plugin-api-info.cpp       | Tests: plugin API info functions.
-|       test-plugin-config.cpp         | Tests: plugin config functions.
-|       core/                          | Root of unit tests for core.
-|          test-core-arraylist.cpp     | Tests: arraylists.
-|          test-core-calc.cpp          | Tests: calculation of expressions.
-|          test-core-command.cpp       | Tests: commands.
-|          test-core-config-file.cpp   | Tests: configuration files.
-|          test-core-crypto.cpp        | Tests: cryptographic functions.
-|          test-core-dir.cpp           | Tests: directory/file functions.
-|          test-core-eval.cpp          | Tests: evaluation of expressions.
-|          test-core-hashtble.cpp      | Tests: hashtables.
-|          test-core-hdata.cpp         | Tests: hdata.
-|          test-core-hook.cpp          | Tests: hooks.
-|          test-core-infolist.cpp      | Tests: infolists.
-|          test-core-list.cpp          | Tests: lists.
-|          test-core-network.cpp       | Tests: network functions.
-|          test-core-secure.cpp        | Tests: secured data.
-|          test-core-signal.cpp        | Tests: signals.
-|          test-core-string.cpp        | Tests: strings.
-|          test-core-url.cpp           | Tests: URLs.
-|          test-core-utf8.cpp          | Tests: UTF-8.
-|          test-core-util.cpp          | Tests: utility functions.
-|          test-core-sys.cpp           | Tests: system functions.
-|          hook/                       | Root of unit tests for hooks.
-|             test-hook-command.cpp    | Tests: hooks "command".
-|       gui/                           | Root of unit tests for interfaces.
-|          test-gui-bar-window.cpp     | Tests: bar window functions.
-|          test-gui-buffer.cpp         | Tests: buffer functions.
-|          test-gui-chat.cpp           | Tests: chat functions.
-|          test-gui-color.cpp          | Tests: colors.
-|          test-gui-filter.cpp         | Tests: filters.
-|          test-gui-input.cpp          | Tests: input functions.
-|          test-gui-key.cpp            | Tests: keys.
-|          test-gui-line.cpp           | Tests: lines.
-|          test-gui-nick.cpp           | Tests: nicks.
-|       plugins/                       | Root of unit tests for plugins.
-|          irc/                        | Root of unit tests for IRC plugin.
-|             test-irc-batch.cpp       | Tests: IRC batched events.
-|             test-irc-buffer.cpp      | Tests: IRC buffers.
-|             test-irc-channel.cpp     | Tests: IRC channels.
-|             test-irc-color.cpp       | Tests: IRC colors.
-|             test-irc-config.cpp      | Tests: IRC configuration.
-|             test-irc-ctcp.cpp        | Tests: IRC CTCP.
-|             test-irc-ignore.cpp      | Tests: IRC ignores.
-|             test-irc-info.cpp        | Tests: IRC info.
-|             test-irc-join.cpp        | Tests: IRC join functions.
-|             test-irc-list.cpp        | Tests: IRC buffer for reply to /list command.
-|             test-irc-message.cpp     | Tests: IRC messages.
-|             test-irc-mode.cpp        | Tests: IRC modes.
-|             test-irc-nick.cpp        | Tests: IRC nicks.
-|             test-irc-protocol.cpp    | Tests: IRC protocol.
-|             test-irc-sasl.cpp        | Tests: SASL authentication with IRC protocol.
-|             test-irc-server.cpp      | Tests: IRC server.
-|             test-irc-tag.cpp         | Tests: IRC message tags.
-|          logger/                     | Root of unit tests for logger plugin.
-|             test-logger.cpp          | Tests: logger.
-|             test-logger-backlog.cpp  | Tests: logger backlog.
-|             test-logger-tail.cpp     | Tests: logger tail functions.
-|          trigger/                    | Root of unit tests for trigger plugin.
-|             test-trigger.cpp         | Tests: triggers.
-|             test-trigger-config.cpp  | Tests: trigger configuration.
-|          typing/                     | Root of unit tests for typing plugin.
-|             test-typing.cpp          | Tests: typing.
-|             test-typing-status.cpp   | Tests: typing status.
-|          relay/                      | Root of unit tests for Relay plugin.
-|             test-relay-auth.cpp      | Tests: clients authentication.
-|             test-relay-http.cpp      | Tests: HTTP functions for Relay plugin.
-|             test-relay-websocket.cpp | Tests: websocket functions for Relay plugin.
-|             irc/                     | Root of unit tests for Relay "irc" protocol.
-|                test-relay-irc.cpp    | Tests: Relay "irc" protocol.
-|          xfer/                       | Root of unit tests for Xfer plugin.
-|             test-xfer-file.cpp       | Tests: file functions.
-|             test-xfer-network.cpp    | Tests: network functions.
+| Path/file                                  | Description
+| tests/                                     | Root of tests.
+|    tests.cpp                               | Program used to run all tests.
+|    tests-record.cpp                        | Record and search in messages displayed.
+|    scripts/                                | Root of scripting API tests.
+|       test-scripts.cpp                     | Program used to run the scripting API tests.
+|       python/                              | Python scripts to generate and run the scripting API tests.
+|          testapigen.py                     | Python script generating scripts in all languages to test the scripting API.
+|          testapi.py                        | Python script with scripting API tests, used by script testapigen.py.
+|          unparse.py                        | Convert Python code to other languages, used by script testapigen.py.
+|    unit/                                   | Root of unit tests.
+|       test-plugins.cpp                     | Tests: plugins.
+|       test-plugin-api-info.cpp             | Tests: plugin API info functions.
+|       test-plugin-config.cpp               | Tests: plugin config functions.
+|       core/                                | Root of unit tests for core.
+|          test-core-arraylist.cpp           | Tests: arraylists.
+|          test-core-calc.cpp                | Tests: calculation of expressions.
+|          test-core-command.cpp             | Tests: commands.
+|          test-core-config-file.cpp         | Tests: configuration files.
+|          test-core-crypto.cpp              | Tests: cryptographic functions.
+|          test-core-dir.cpp                 | Tests: directory/file functions.
+|          test-core-eval.cpp                | Tests: evaluation of expressions.
+|          test-core-hashtble.cpp            | Tests: hashtables.
+|          test-core-hdata.cpp               | Tests: hdata.
+|          test-core-hook.cpp                | Tests: hooks.
+|          test-core-infolist.cpp            | Tests: infolists.
+|          test-core-list.cpp                | Tests: lists.
+|          test-core-network.cpp             | Tests: network functions.
+|          test-core-secure.cpp              | Tests: secured data.
+|          test-core-signal.cpp              | Tests: signals.
+|          test-core-string.cpp              | Tests: strings.
+|          test-core-url.cpp                 | Tests: URLs.
+|          test-core-utf8.cpp                | Tests: UTF-8.
+|          test-core-util.cpp                | Tests: utility functions.
+|          test-core-sys.cpp                 | Tests: system functions.
+|          hook/                             | Root of unit tests for hooks.
+|             test-hook-command.cpp          | Tests: hooks "command".
+|       gui/                                 | Root of unit tests for interfaces.
+|          test-gui-bar-window.cpp           | Tests: bar window functions.
+|          test-gui-buffer.cpp               | Tests: buffer functions.
+|          test-gui-chat.cpp                 | Tests: chat functions.
+|          test-gui-color.cpp                | Tests: colors.
+|          test-gui-filter.cpp               | Tests: filters.
+|          test-gui-input.cpp                | Tests: input functions.
+|          test-gui-key.cpp                  | Tests: keys.
+|          test-gui-line.cpp                 | Tests: lines.
+|          test-gui-nick.cpp                 | Tests: nicks.
+|       plugins/                             | Root of unit tests for plugins.
+|          irc/                              | Root of unit tests for IRC plugin.
+|             test-irc-batch.cpp             | Tests: IRC batched events.
+|             test-irc-buffer.cpp            | Tests: IRC buffers.
+|             test-irc-channel.cpp           | Tests: IRC channels.
+|             test-irc-color.cpp             | Tests: IRC colors.
+|             test-irc-config.cpp            | Tests: IRC configuration.
+|             test-irc-ctcp.cpp              | Tests: IRC CTCP.
+|             test-irc-ignore.cpp            | Tests: IRC ignores.
+|             test-irc-info.cpp              | Tests: IRC info.
+|             test-irc-join.cpp              | Tests: IRC join functions.
+|             test-irc-list.cpp              | Tests: IRC buffer for reply to /list command.
+|             test-irc-message.cpp           | Tests: IRC messages.
+|             test-irc-mode.cpp              | Tests: IRC modes.
+|             test-irc-nick.cpp              | Tests: IRC nicks.
+|             test-irc-protocol.cpp          | Tests: IRC protocol.
+|             test-irc-sasl.cpp              | Tests: SASL authentication with IRC protocol.
+|             test-irc-server.cpp            | Tests: IRC server.
+|             test-irc-tag.cpp               | Tests: IRC message tags.
+|          logger/                           | Root of unit tests for logger plugin.
+|             test-logger.cpp                | Tests: logger.
+|             test-logger-backlog.cpp        | Tests: logger backlog.
+|             test-logger-tail.cpp           | Tests: logger tail functions.
+|          trigger/                          | Root of unit tests for trigger plugin.
+|             test-trigger.cpp               | Tests: triggers.
+|             test-trigger-config.cpp        | Tests: trigger configuration.
+|          typing/                           | Root of unit tests for typing plugin.
+|             test-typing.cpp                | Tests: typing.
+|             test-typing-status.cpp         | Tests: typing status.
+|          relay/                            | Root of unit tests for Relay plugin.
+|             test-relay-auth.cpp            | Tests: clients authentication.
+|             test-relay-http.cpp            | Tests: HTTP functions for Relay plugin.
+|             test-relay-websocket.cpp       | Tests: websocket functions for Relay plugin.
+|             api/                           | Root of unit tests for Relay "api" protocol.
+|                test-relay-api.cpp          | Tests: Relay "api" protocol: general functions.
+|                test-relay-api-msg.cpp      | Tests: Relay "api" protocol: messages.
+|                test-relay-api-protocol.cpp | Tests: Relay "api" protocol: protocol.
+|             irc/                           | Root of unit tests for Relay "irc" protocol.
+|                test-relay-irc.cpp          | Tests: Relay "irc" protocol.
+|          xfer/                             | Root of unit tests for Xfer plugin.
+|             test-xfer-file.cpp             | Tests: file functions.
+|             test-xfer-network.cpp          | Tests: network functions.
 |===
 
 [[documentation_translations]]
