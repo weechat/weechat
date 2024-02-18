@@ -413,7 +413,7 @@ relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
         return json;
 
     MSG_ADD_HDATA_VAR(Number, "id", integer, "id");
-    MSG_ADD_HDATA_VAR(Number, "index", integer, "y");
+    MSG_ADD_HDATA_VAR(Number, "y", integer, "y");
     MSG_ADD_HDATA_TIME_USEC("date", "date", "date_usec");
     MSG_ADD_HDATA_TIME_USEC("date_printed", "date_printed", "date_usec_printed");
     MSG_ADD_HDATA_VAR(Bool, "highlight", char, "highlight");
