@@ -41,7 +41,7 @@
 
 /*
  * Returns value of an URL parameter as boolean (0 or 1), using a default value
- * if the parameter is not set or if it's not a valid boolean.
+ * if the parameter is not set.
  */
 
 int
