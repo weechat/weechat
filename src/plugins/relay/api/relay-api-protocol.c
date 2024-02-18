@@ -40,50 +40,6 @@
 
 
 /*
- * Returns value of an URL parameter as boolean (0 or 1), using a default value
- * if the parameter is not set.
- */
-
-int
-relay_api_protocol_get_param_boolean (struct t_relay_http_request *request,
-                                      const char *name,
-                                      int default_value)
-{
-    const char *ptr_value;
-
-    ptr_value = weechat_hashtable_get (request->params, name);
-    if (!ptr_value)
-        return default_value;
-
-    return weechat_config_string_to_boolean (ptr_value);
-}
-
-/*
- * Returns value of an URL parameter as long, using a default value if the
- * parameter is not set or if it's not a valid long integer.
- */
-
-long
-relay_api_protocol_get_param_long (struct t_relay_http_request *request,
-                                   const char *name,
-                                   long default_value)
-{
-    const char *ptr_value;
-    char *error;
-    long number;
-
-    ptr_value = weechat_hashtable_get (request->params, name);
-    if (!ptr_value)
-        return default_value;
-
-    number = strtol (ptr_value, &error, 10);
-    if (error && !error[0])
-        return number;
-
-    return default_value;
-}
-
-/*
  * Callback for signals "buffer_*".
  */
 
@@ -425,7 +381,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         }
     }
 
-    nicks = relay_api_protocol_get_param_boolean (client->http_req, "nicks", 0);
+    nicks = relay_http_get_param_boolean (client->http_req, "nicks", 0);
     colors = relay_api_search_colors (
         weechat_hashtable_get (client->http_req->params, "colors"));
 
@@ -434,7 +390,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         /* sub-resource of buffers */
         if (strcmp (client->http_req->path_items[3], "lines") == 0)
         {
-            lines = relay_api_protocol_get_param_long (client->http_req, "lines", -100L);
+            lines = relay_http_get_param_long (client->http_req, "lines", -100L);
             json = relay_api_msg_lines_to_json (ptr_buffer, lines, colors);
         }
         else if (strcmp (client->http_req->path_items[3], "nicks") == 0)
@@ -454,7 +410,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     }
     else
     {
-        lines = relay_api_protocol_get_param_long (client->http_req, "lines", 0L);
+        lines = relay_http_get_param_long (client->http_req, "lines", 0L);
         if (ptr_buffer)
         {
             json = relay_api_msg_buffer_to_json (ptr_buffer, lines, nicks, colors);

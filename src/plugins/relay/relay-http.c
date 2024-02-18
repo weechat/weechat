@@ -183,6 +183,48 @@ relay_http_url_decode (const char *url)
 }
 
 /*
+ * Returns value of an URL parameter as boolean (0 or 1), using a default value
+ * if the parameter is not set.
+ */
+
+int
+relay_http_get_param_boolean (struct t_relay_http_request *request,
+                              const char *name, int default_value)
+{
+    const char *ptr_value;
+
+    ptr_value = weechat_hashtable_get (request->params, name);
+    if (!ptr_value)
+        return default_value;
+
+    return weechat_config_string_to_boolean (ptr_value);
+}
+
+/*
+ * Returns value of an URL parameter as long, using a default value if the
+ * parameter is not set or if it's not a valid long integer.
+ */
+
+long
+relay_http_get_param_long (struct t_relay_http_request *request,
+                           const char *name, long default_value)
+{
+    const char *ptr_value;
+    char *error;
+    long number;
+
+    ptr_value = weechat_hashtable_get (request->params, name);
+    if (!ptr_value)
+        return default_value;
+
+    number = strtol (ptr_value, &error, 10);
+    if (error && !error[0])
+        return number;
+
+    return default_value;
+}
+
+/*
  * Get decoded path items from path.
  */
 
