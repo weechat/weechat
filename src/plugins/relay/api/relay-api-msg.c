@@ -533,6 +533,7 @@ relay_api_msg_nick_to_json (struct t_gui_nick *nick)
     MSG_ADD_HDATA_STR("prefix_color", "prefix_color");
     MSG_ADD_HDATA_STR("name", "name");
     MSG_ADD_HDATA_STR("color", "color");
+    MSG_ADD_HDATA_VAR(Bool, "visible", integer, "visible");
 
     return json;
 }
@@ -563,6 +564,7 @@ relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group)
 
     MSG_ADD_HDATA_STR("name", "name");
     MSG_ADD_HDATA_STR("color", "color");
+    MSG_ADD_HDATA_VAR(Bool, "visible", integer, "visible");
 
     json_groups = cJSON_CreateArray ();
     if (json_groups)
