@@ -29,6 +29,57 @@
 
 
 /*
+ * Returns script info "script_loaded".
+ */
+
+char *
+script_info_info_script_loaded_cb (const void *pointer, void *data,
+                                   const char *info_name,
+                                   const char *arguments)
+{
+    int i, length;
+    char hdata_name[128];
+    const char *ptr_name;
+    struct t_hdata *hdata;
+    void *ptr_script;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
+    {
+        snprintf (hdata_name, sizeof (hdata_name),
+                  "%s_script", script_language[i]);
+        hdata = weechat_hdata_get (hdata_name);
+        ptr_script = weechat_hdata_get_list (hdata, "scripts");
+        while (ptr_script)
+        {
+            ptr_name = weechat_hdata_string (hdata, ptr_script, "name");
+            if (ptr_name)
+            {
+                length = strlen (ptr_name);
+                if ((strncmp (arguments, ptr_name, length) == 0)
+                    && (arguments[length] == '.')
+                    && (strcmp (arguments + length + 1, script_extension[i]) == 0))
+                {
+                    /* script loaded */
+                    return strdup ("1");
+                }
+            }
+            ptr_script = weechat_hdata_move (hdata, ptr_script, 1);
+        }
+    }
+
+    /* script not loaded */
+    return NULL;
+}
+
+/*
  * Returns script infolist "script_script".
  */
 
@@ -93,6 +144,13 @@ script_info_infolist_script_script_cb (const void *pointer, void *data,
 void
 script_info_init ()
 {
+    /* info hooks */
+    weechat_hook_info (
+        "script_loaded",
+        N_("1 if script is loaded"),
+        N_("script name with extension"),
+        &script_info_info_script_loaded_cb, NULL, NULL);
+
     /* infolist hooks */
     weechat_hook_infolist (
         "script_script",

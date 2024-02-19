@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-19 18:27+0100\n"
+"POT-Creation-Date: 2024-02-19 18:30+0100\n"
 "PO-Revision-Date: 2024-02-17 10:07+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14824,6 +14824,14 @@ msgstr ""
 
 msgid "URL for file with list of scripts"
 msgstr "URL souboru s seznamem skriptů"
+
+#, fuzzy
+msgid "1 if script is loaded"
+msgstr "načteny %s skripty:"
+
+#, fuzzy
+msgid "script name with extension"
+msgstr "seznam skriptů"
 
 #, fuzzy
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-19 18:27+0100\n"
+"POT-Creation-Date: 2024-02-19 18:30+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14287,6 +14287,14 @@ msgstr ""
 #, fuzzy
 msgid "URL for file with list of scripts"
 msgstr "%s ошибка при отправке данных IRC серверу\n"
+
+#, fuzzy
+msgid "1 if script is loaded"
+msgstr "FIFO pipe закрыт\n"
+
+#, fuzzy
+msgid "script name with extension"
+msgstr "Список сокращений:\n"
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr ""

@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-19 18:27+0100\n"
+"POT-Creation-Date: 2024-02-19 18:30+0100\n"
 "PO-Revision-Date: 2024-02-17 17:31+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -16356,6 +16356,16 @@ msgstr ""
 
 msgid "URL for file with list of scripts"
 msgstr "URL für Datei mit der Auflistung aller Skripten"
+
+#, fuzzy
+#| msgid "No scripts loaded"
+msgid "1 if script is loaded"
+msgstr "Keine Skripten geladen"
+
+#, fuzzy
+#| msgid "list of script extensions"
+msgid "script name with extension"
+msgstr "Liste der Skripterweiterungen"
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr ""
