@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-17 12:56+0100\n"
+"POT-Creation-Date: 2024-02-19 18:27+0100\n"
 "PO-Revision-Date: 2024-02-17 10:07+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -13803,6 +13803,16 @@ msgid ""
 msgstr ""
 "secret (base32)、ワンタイムパスワード、タイムスタンプ (任意、デフォルトで現在"
 "時刻)、テスト前後のパスワードの数 (任意、デフォルトで 0)"
+
+#, fuzzy
+#| msgid "Plugins loaded:"
+msgid "1 if plugin is loaded"
+msgstr "ロード済みプラグイン:"
+
+#, fuzzy
+#| msgid "names of plugins installed"
+msgid "plugin name"
+msgstr "インストールされたプラグインの名前"
 
 msgid "get focus info"
 msgstr ""

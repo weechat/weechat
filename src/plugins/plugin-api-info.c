@@ -1180,6 +1180,39 @@ error:
 }
 
 /*
+ * Returns WeeChat info "plugin_loaded".
+ */
+
+char *
+plugin_api_info_plugin_loaded_cb (const void *pointer, void *data,
+                                  const char *info_name,
+                                  const char *arguments)
+{
+    struct t_weechat_plugin *ptr_plugin;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        if (strcmp (ptr_plugin->name, arguments) == 0)
+        {
+            /* plugin loaded */
+            return strdup ("1");
+        }
+    }
+
+    /* plugin not loaded */
+    return NULL;
+}
+
+/*
  * Returns secured data hashtable.
  */
 
@@ -2234,6 +2267,10 @@ plugin_api_info_init ()
                   "timestamp (optional, current time by default), number of "
                   "passwords before/after to test (optional, 0 by default)"),
                &plugin_api_info_totp_validate_cb, NULL, NULL);
+    hook_info (NULL, "plugin_loaded",
+               N_("1 if plugin is loaded"),
+               N_("plugin name"),
+               &plugin_api_info_plugin_loaded_cb, NULL, NULL);
 
     /* WeeChat core info_hashtable hooks */
     hook_info_hashtable (NULL,

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-17 12:56+0100\n"
+"POT-Creation-Date: 2024-02-19 18:27+0100\n"
 "PO-Revision-Date: 2024-02-17 10:08+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13959,6 +13959,16 @@ msgstr ""
 "gizli (base32), tek kerelik parola, zaman damgası (isteğe bağlı, öntanımlı "
 "olarak geçerli zaman, öncesinde/sonrasında sınanacak parolaların sayısı "
 "(isteğe bağlı, öntanımlı 0)"
+
+#, fuzzy
+#| msgid "No plugins loaded"
+msgid "1 if plugin is loaded"
+msgstr "Hiçbir eklenti yüklü değil"
+
+#, fuzzy
+#| msgid "names of plugins installed"
+msgid "plugin name"
+msgstr "yüklü eklentilerin adları"
 
 msgid "get focus info"
 msgstr "odak bilgisi al"

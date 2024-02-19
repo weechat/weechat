@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-17 12:56+0100\n"
+"POT-Creation-Date: 2024-02-19 18:27+0100\n"
 "PO-Revision-Date: 2024-02-17 10:08+0100\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13742,6 +13742,16 @@ msgstr ""
 "secret (у base32), one-time password, timestamp (није обавезно, "
 "подразумевано је текуће време), број лозинки пре/након које се тестирају "
 "(није обавезно, подразумевано је 0)"
+
+#, fuzzy
+#| msgid "No plugins loaded"
+msgid "1 if plugin is loaded"
+msgstr "Није учитан ниједан додатак"
+
+#, fuzzy
+#| msgid "name: a plugin name"
+msgid "plugin name"
+msgstr "име: име додатка"
 
 msgid "get focus info"
 msgstr "враћање инфо о фокусу"

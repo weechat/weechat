@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-17 12:56+0100\n"
+"POT-Creation-Date: 2024-02-19 18:27+0100\n"
 "PO-Revision-Date: 2024-02-17 10:07+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13371,6 +13371,16 @@ msgid ""
 "secret (in base32), one-time password, timestamp (optional, current time by "
 "default), number of passwords before/after to test (optional, 0 by default)"
 msgstr ""
+
+#, fuzzy
+#| msgid "No plugins loaded"
+msgid "1 if plugin is loaded"
+msgstr "Sin plugins cargados"
+
+#, fuzzy
+#| msgid "names of plugins installed"
+msgid "plugin name"
+msgstr "nombres de los plugins instalados"
 
 msgid "get focus info"
 msgstr ""

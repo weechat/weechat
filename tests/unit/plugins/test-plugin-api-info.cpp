@@ -665,6 +665,24 @@ TEST(PluginApiInfo, TotpGenerateCb)
 
 /*
  * Tests functions:
+ *   plugin_api_info_plugin_loaded_cb
+ */
+
+TEST(PluginApiInfo, PluginLoadedCb)
+{
+    char *str;
+
+    POINTERS_EQUAL(NULL, hook_info_get (NULL, "plugin_loaded", NULL));
+    POINTERS_EQUAL(NULL, hook_info_get (NULL, "plugin_loaded", ""));
+
+    POINTERS_EQUAL(NULL, hook_info_get (NULL, "plugin_loaded", "xxx"));
+
+    WEE_TEST_STR("1", hook_info_get (NULL, "plugin_loaded", "alias"));
+    WEE_TEST_STR("1", hook_info_get (NULL, "plugin_loaded", "irc"));
+}
+
+/*
+ * Tests functions:
  *   plugin_api_info_hashtable_secured_data_cb
  */
 

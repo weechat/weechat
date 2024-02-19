@@ -19,6 +19,7 @@ New features::
   * core: add option `-s` in command `/command` to execute multiple commands separated by semicolons
   * core: allow case insensitive search of partial buffer name with `(?i)name` in command `/buffer`
   * core: use function util_strftimeval in evaluation of expression `date:xxx`
+  * api: add info "plugin_loaded"
   * api: add support of specifier `%!` for timestamp in function util_strftimeval
   * api: add support of base64url in encode/decode functions
   * irc: add server option "autojoin_delay" (delay before autojoin), use option "command_delay" before execution of the command (issue #862)
