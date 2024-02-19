@@ -197,7 +197,7 @@ weechat_tcl_exec (struct t_plugin_script *script,
                   int ret_type, const char *function,
                   const char *format, void **argv)
 {
-    int argc, i, llength;
+    int argc, i;
     int *ret_i;
     char *ret_cv;
     void *ret_val;
@@ -244,18 +244,13 @@ weechat_tcl_exec (struct t_plugin_script *script,
         }
     }
 
-    if (Tcl_ListObjLength (interp, cmdlist, &llength) != TCL_OK)
-        llength = 0;
-
     if (Tcl_EvalObjEx (interp, cmdlist, TCL_EVAL_DIRECT) == TCL_OK)
     {
-        /* remove elements, decrement their ref count */
-        Tcl_ListObjReplace (interp, cmdlist, 0, llength, 0, NULL);
         Tcl_DecrRefCount (cmdlist);  /* -1 */
         ret_val = NULL;
         if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
         {
-            ret_cv = Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i);
+            ret_cv = Tcl_GetString (Tcl_GetObjResult (interp));
             if (ret_cv)
                 ret_val = (void *)strdup (ret_cv);
             else
@@ -263,7 +258,7 @@ weechat_tcl_exec (struct t_plugin_script *script,
         }
         else if (ret_type == WEECHAT_SCRIPT_EXEC_POINTER)
         {
-            ret_cv = Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i);
+            ret_cv = Tcl_GetString (Tcl_GetObjResult (interp));
             if (ret_cv)
             {
                 ret_val = plugin_script_str2ptr (weechat_tcl_plugin,
@@ -306,13 +301,11 @@ weechat_tcl_exec (struct t_plugin_script *script,
         return NULL;
     }
 
-    /* remove elements, decrement their ref count */
-    Tcl_ListObjReplace (interp, cmdlist, 0, llength, 0, NULL);
     Tcl_DecrRefCount (cmdlist);  /* -1 */
     weechat_printf (NULL,
                     weechat_gettext ("%s%s: unable to run function \"%s\": %s"),
                     weechat_prefix ("error"), TCL_PLUGIN_NAME, function,
-                    Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i));
+                    Tcl_GetString (Tcl_GetObjResult (interp)));
     tcl_current_script = old_tcl_script;
 
     return NULL;
@@ -330,7 +323,6 @@ weechat_tcl_exec (struct t_plugin_script *script,
 struct t_plugin_script *
 weechat_tcl_load (const char *filename, const char *code)
 {
-    int i;
     Tcl_Interp *interp;
     struct stat buf;
 
@@ -373,7 +365,7 @@ weechat_tcl_load (const char *filename, const char *code)
                         weechat_gettext ("%s%s: error occurred while "
                                          "parsing file \"%s\": %s"),
                         weechat_prefix ("error"), TCL_PLUGIN_NAME, filename,
-                        Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i));
+                        Tcl_GetString (Tcl_GetObjResult (interp)));
 
         /* if script was registered, remove it from list */
         if (tcl_current_script)

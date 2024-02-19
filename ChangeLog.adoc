@@ -39,6 +39,10 @@ Bug fixes::
   * scripts: fix crash on script unload when a hook is created in a buffer close callback (issue #2067)
   * trigger: fix memory leak when adding a new trigger with `/trigger` command
 
+Build::
+
+  * tcl: make plugin compatible with Tcl 9.0 (issue #2075)
+
 [[v4.2.1]]
 == Version 4.2.1 (2024-01-22)
 
