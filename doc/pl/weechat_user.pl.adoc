@@ -1853,10 +1853,10 @@ za pomocą skrótu kbd:[Alt+m] (komenda: `+/mouse toggle+`).
 | kbd:[▼]             | -             | chat: /list buffer   | Przesuń pięć linii w dół w buforze /list. | `+/list -down 5+`
 | kbd:[■ □ □]         | -             | chat: /list buffer   | Wybierz linię w buforze /list. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
 | kbd:[□ □ ■]         | -             | chat: /list buffer   | Wejdź na kanał IRC w zaznaczonej linii. | `+hsignal:irc_list_mouse+`
-| kbd:[▲]             | -             | chat: bufor skryptów | Przejdź 5 linii w górę w buforze skryptów. | `+/script up 5+`
-| kbd:[▼]             | -             | chat: bufor skryptów | Przejdź 5 linii w dół w buforze skryptów. | `+/script down 5+`
-| kbd:[■ □ □]         | -             | chat: bufor skryptów | Zaznacz linię w buforze skryptów. | `+/script go ${_chat_line_y}+`
-| kbd:[□ □ ■]         | -             | chat: bufor skryptów | Zainstaluj/usuń skrypt. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| kbd:[▲]             | -             | chat: bufor skryptów | Przejdź 5 linii w górę w buforze skryptów. | `+/script -up 5+`
+| kbd:[▼]             | -             | chat: bufor skryptów | Przejdź 5 linii w dół w buforze skryptów. | `+/script -down 5+`
+| kbd:[■ □ □]         | -             | chat: bufor skryptów | Zaznacz linię w buforze skryptów. | `+/script -go ${_chat_line_y}+`
+| kbd:[□ □ ■]         | -             | chat: bufor skryptów | Zainstaluj/usuń skrypt. | `+/script -go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
 | kbd:[■ □ □]         | góra / lewo   | buflist              | Przenieś bufor na niższy numer. | Sygnał `+buflist_mouse+`.
 | kbd:[■ □ □]         | dół / prawo   | buflist              | Przenieś bufor na wyższy numer. | Sygnał `+buflist_mouse+`.
 | kbd:[■ □ □]         | -             | buflist              | Przełącz na bufor (poprzednio odwiedzony bufor, jeśli jest to obecny bufor). | Sygnał `+buflist_mouse+`.
@@ -1974,8 +1974,8 @@ Te skróty klawiszowe i akcje mogą zostać użyte w buforze skryptów (zobacz <
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
 | Skrót             | Akcja ^(1)^  | Opis | Komenda
-| kbd:[↑]           |              | Przejdź linię wyżej. | `+/script up+`
-| kbd:[↓]           |              | Przejdź linię niżej. | `+/script down+`
+| kbd:[↑]           |              | Przejdź linię wyżej. | `+/script -up+`
+| kbd:[↓]           |              | Przejdź linię niżej. | `+/script -down+`
 | kbd:[PgUp]        |              | Przewiń stronę do góry. | `+/window page_up+`
 | kbd:[PgDn]        |              | Przewiń stronę w dół. | `+/window page_down+`
 | kbd:[Alt+i]       | `i`          | Zainstaluj skrypt. | `+/script install+`

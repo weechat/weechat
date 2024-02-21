@@ -2061,13 +2061,13 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 // TRANSLATION MISSING
 | kbd:[□ □ ■]       | -                | chat: /list buffer  | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
 // TRANSLATION MISSING
-| kbd:[▲]           | -                | chat: script buffer | Move 5 lines up in script buffer. | `+/script up 5+`
+| kbd:[▲]           | -                | chat: script buffer | Move 5 lines up in script buffer. | `+/script -up 5+`
 // TRANSLATION MISSING
-| kbd:[▼]           | -                | chat: script buffer | Move 5 lines down in script buffer. | `+/script down 5+`
+| kbd:[▼]           | -                | chat: script buffer | Move 5 lines down in script buffer. | `+/script -down 5+`
 // TRANSLATION MISSING
-| kbd:[■ □ □]       | -                | chat: script buffer | Select line in script buffer. | `+/script go ${_chat_line_y}+`
+| kbd:[■ □ □]       | -                | chat: script buffer | Select line in script buffer. | `+/script -go ${_chat_line_y}+`
 // TRANSLATION MISSING
-| kbd:[□ □ ■]       | -                | chat: script buffer | Install/remove script. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| kbd:[□ □ ■]       | -                | chat: script buffer | Install/remove script. | `+/script -go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
 // TRANSLATION MISSING
 | kbd:[■ □ □]       | up / left        | buflist             | Move buffer to a lower number. | Signal `+buflist_mouse+`.
 // TRANSLATION MISSING
@@ -2200,8 +2200,8 @@ These keys and actions are used on the script buffer (see <<script_manager,scrip
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
 | Key               | Action ^(1)^ | Description | Command
-| kbd:[↑]           |              | Move one line up. | `+/script up+`
-| kbd:[↓]           |              | Move one line down. | `+/script down+`
+| kbd:[↑]           |              | Move one line up. | `+/script -up+`
+| kbd:[↓]           |              | Move one line down. | `+/script -down+`
 | kbd:[PgUp]        |              | Move one page up. | `+/window page_up+`
 | kbd:[PgDn]        |              | Move one page down. | `+/window page_down+`
 | kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`

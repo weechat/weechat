@@ -11,6 +11,25 @@ It is recommended to read it when upgrading to a new stable version. +
 For a complete list of changes, please look at ChangeLog.
 
 
+[[v4.2.2]]
+== Version 4.2.2 (under dev)
+
+[[v4.2.2_script_keys]]
+=== Script keys
+
+Some arguments to the `/script` command were renamed in version 4.1.0, but the
+keys using these arguments were not changed at same time.
+
+They're now using the new arguments by default, but you must reset manually
+the keys with the following commands:
+
+----
+/reset weechat.key_mouse.@chat(script.scripts):button1
+/reset weechat.key_mouse.@chat(script.scripts):button2
+/reset weechat.key_mouse.@chat(script.scripts):wheeldown
+/reset weechat.key_mouse.@chat(script.scripts):wheelup
+----
+
 [[v4.2.1]]
 == Version 4.2.1 (2024-01-22)
 
