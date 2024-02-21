@@ -1938,10 +1938,10 @@ These mouse actions are possible only if mouse is enabled with key kbd:[Alt+m]
 | kbd:[■ □ □]           | -            | chat: /list buffer           | Select line in /list buffer. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
 // TRANSLATION MISSING
 | kbd:[□ □ ■]           | -            | chat: /list buffer           | Join IRC channel on selected line. | `+hsignal:irc_list_mouse+`
-| kbd:[▲]               | -            | チャット: スクリプトバッファ | スクリプトバッファを 5 行上方向にスクロール | `+/script up 5+`
-| kbd:[▼]               | -            | チャット: スクリプトバッファ | スクリプトバッファで 5 行下方向にスクロール | `+/script down 5+`
-| kbd:[■ □ □]           | -            | チャット: スクリプトバッファ | スクリプトバッファで行選択 | `+/script go ${_chat_line_y}+`
-| kbd:[□ □ ■]           | -            | チャット: スクリプトバッファ | スクリプトのインストール `+/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}+`
+| kbd:[▲]               | -            | チャット: スクリプトバッファ | スクリプトバッファを 5 行上方向にスクロール | `+/script -up 5+`
+| kbd:[▼]               | -            | チャット: スクリプトバッファ | スクリプトバッファで 5 行下方向にスクロール | `+/script -down 5+`
+| kbd:[■ □ □]           | -            | チャット: スクリプトバッファ | スクリプトバッファで行選択 | `+/script -go ${_chat_line_y}+`
+| kbd:[□ □ ■]           | -            | チャット: スクリプトバッファ | スクリプトのインストール `+/ 削除 | /script -go ${_chat_line_y};/script installremove ${script_name_with_extension}+`
 | kbd:[■ □ □]           | 上 / 左      | バッファリスト               | 指定したバッファを下の番号に移動 | `+buflist_mouse+` シグナル
 | kbd:[■ □ □]           | 下 / 右      | バッファリスト               | 指定したバッファを上の番号に移動 | `+buflist_mouse+` シグナル
 | kbd:[■ □ □]           | -            | バッファリスト               | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `+buflist_mouse+` シグナル
@@ -2068,8 +2068,8 @@ These keys and actions are used on the script buffer (see <<script_manager,scrip
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
 | Key               | Action ^(1)^ | Description | Command
-| kbd:[↑]           |              | Move one line up. | `+/script up+`
-| kbd:[↓]           |              | Move one line down. | `+/script down+`
+| kbd:[↑]           |              | Move one line up. | `+/script -up+`
+| kbd:[↓]           |              | Move one line down. | `+/script -down+`
 | kbd:[PgUp]        |              | Move one page up. | `+/window page_up+`
 | kbd:[PgDn]        |              | Move one page down. | `+/window page_down+`
 | kbd:[Alt+i]       | `i`          | Install script. | `+/script install+`

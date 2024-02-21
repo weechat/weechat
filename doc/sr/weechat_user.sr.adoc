@@ -1713,10 +1713,10 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[▼]             | -             | чет: /list бафер   | Помера за пет линија наниже у /list баферу. | `+/list -down 5+`
 | kbd:[■ □ □]         | -             | чет: /list бафер   | Бира линију у /list баферу. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
 | kbd:[□ □ ■]         | -             | чет: /list бафер   | Приступа IRC каналу на изабраној линији. | `+hsignal:irc_list_mouse+`
-| kbd:[▲]             | -             | чет: script бафер  | Помера за пет линија навише у script баферу. | `+/script up 5+`
-| kbd:[▼]             | -             | чет: script бафер  | Помера за пет линија наниже у script баферу. | `+/script down 5+`
-| kbd:[■ □ □]         | -             | чет: script бафер  | Бира линију у script баферу. | `+/script go ${_chat_line_y}+`
-| kbd:[□ □ ■]         | -             | чет: script бафер  | Инсталира/уклања скрипту. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| kbd:[▲]             | -             | чет: script бафер  | Помера за пет линија навише у script баферу. | `+/script -up 5+`
+| kbd:[▼]             | -             | чет: script бафер  | Помера за пет линија наниже у script баферу. | `+/script -down 5+`
+| kbd:[■ □ □]         | -             | чет: script бафер  | Бира линију у script баферу. | `+/script -go ${_chat_line_y}+`
+| kbd:[□ □ ■]         | -             | чет: script бафер  | Инсталира/уклања скрипту. | `+/script -go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
 | kbd:[■ □ □]         | горе / лево   | листа бафера       | Помера бафер на нижи број. | Signal `+buflist_mouse+`.
 | kbd:[■ □ □]         | доле / десно  | листа бафера       | Помера бафер на виши број. | Signal `+buflist_mouse+`.
 | kbd:[■ □ □]         | -             | листа бафера       | Пребацивање на бафер (претходно посећени багер ако је бафер текући). | Signal `+buflist_mouse+`.
@@ -1834,8 +1834,8 @@ kbd:[▼]: точкић доле
 [width="100%", cols="^.^3,^.^2,.^8,.^5", options="header"]
 |===
 | Тастер            | Акција ^(1)^ | Опис | Команда
-| kbd:[↑]           |              | Помера једну линију навише. | `+/script up+`
-| kbd:[↓]           |              | Помера једну линију наниже. | `+/script down+`
+| kbd:[↑]           |              | Помера једну линију навише. | `+/script -up+`
+| kbd:[↓]           |              | Помера једну линију наниже. | `+/script -down+`
 | kbd:[PgUp]        |              | Помера једну страну навише. | `+/window page_up+`
 | kbd:[PgDn]        |              | Помера једну страну наниже. | `+/window page_down+`
 | kbd:[Alt+i]       | `i`          | Инсталира скрипту. | `+/script install+`

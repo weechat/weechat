@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 Bug fixes::
 
+  * script: fix default mouse keys (issue #2076)
   * trigger: fix memory leak when adding a new trigger with `/trigger` command
 
 Build::
