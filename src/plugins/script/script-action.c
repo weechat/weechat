@@ -1314,6 +1314,11 @@ script_action_run_all ()
                         script_buffer_open ();
                         script_buffer_refresh (1);
                     }
+                    if (script_buffer_detail_script)
+                    {
+                        /* back to list of scripts */
+                        script_buffer_show_detail_script (NULL);
+                    }
                     weechat_buffer_set (script_buffer, "display", "1");
                 }
                 else if (weechat_strcmp (argv[0], "list") == 0)

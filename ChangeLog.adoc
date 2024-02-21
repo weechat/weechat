@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 Bug fixes::
 
+  * script: always display list of scripts when searching scripts with `/script search` (issue #2077)
   * trigger: fix memory leak when adding a new trigger with `/trigger` command
 
 Build::
