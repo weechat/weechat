@@ -1392,16 +1392,23 @@ int
 fset_option_export (const char *filename, int with_help)
 {
     int num_options, i;
-    char *line;
+    char *filename2, *line;
     FILE *file;
     struct t_fset_option *ptr_fset_option;
     struct t_hashtable *hashtable_pointers, *hashtable_extra_vars;
 
-    file = fopen (filename, "w");
-    if (!file)
+    filename2 = weechat_string_expand_home (filename);
+    if (!filename2)
         return 0;
 
-    chmod (filename, 0600);
+    file = fopen (filename2, "w");
+    if (!file)
+    {
+        free (filename2);
+        return 0;
+    }
+
+    chmod (filename2, 0600);
 
     hashtable_pointers = weechat_hashtable_new (
         8,
@@ -1458,6 +1465,7 @@ fset_option_export (const char *filename, int with_help)
         weechat_hashtable_free (hashtable_pointers);
     if (hashtable_extra_vars)
         weechat_hashtable_free (hashtable_extra_vars);
+    free (filename2);
 
     return 1;
 }
