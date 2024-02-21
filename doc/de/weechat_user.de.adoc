@@ -1863,10 +1863,10 @@ wurde (Befehl: `+/mouse toggle+`).
 | kbd:[▼]                 | -            | chat: /list buffer  | gehe fünf Zeilen im /list-Buffer nach unten. | `+/list -down 5+`
 | kbd:[■ □ □]             | -            | chat: /list buffer  | Zeile im /list-Buffer auswählen. | `+/window ${_window_number};/list -go ${_chat_line_y}+`
 | kbd:[□ □ ■]             | -            | chat: /list buffer  | tritt dem IRC-Kanal, in der ausgewählten Zeile, bei. | `+hsignal:irc_list_mouse+`
-| kbd:[▲]                 | -            | chat: script buffer | fünf Zeilen nach oben blättern, im Script-Buffer. | `+/script up 5+`
-| kbd:[▼]                 | -            | chat: script buffer | fünf Zeilen nach unten blättern, im Script-Buffer. | `+/script down 5+`
-| kbd:[■ □ □]             | -            | chat: script buffer | wählt einen Eintrag im Script-Buffer aus. | `+/script go ${_chat_line_y}+`
-| kbd:[□ □ ■]             | -            | chat: script buffer | installiert/entfernt ein Skript. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| kbd:[▲]                 | -            | chat: script buffer | fünf Zeilen nach oben blättern, im Script-Buffer. | `+/script -up 5+`
+| kbd:[▼]                 | -            | chat: script buffer | fünf Zeilen nach unten blättern, im Script-Buffer. | `+/script -down 5+`
+| kbd:[■ □ □]             | -            | chat: script buffer | wählt einen Eintrag im Script-Buffer aus. | `+/script -go ${_chat_line_y}+`
+| kbd:[□ □ ■]             | -            | chat: script buffer | installiert/entfernt ein Skript. | `+/script -go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
 | kbd:[■ □ □]             | up / left    | buflist             | verschiebt Buffer in der Reihenfolge nach unten. | Signal `+buflist_mouse+`.
 | kbd:[■ □ □]             | down / right | buflist             | verschiebt Buffer in der Reihenfolge nach oben. | Signal `+buflist_mouse+`.
 | kbd:[■ □ □]             | -            | buflist             | wechselt zum Buffer (oder zum vorherigen Buffer, falls der aktuell genutzte Buffer angewählt wurde). | Signal `+buflist_mouse+`.
@@ -1984,8 +1984,8 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<script_manage
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
 | Taste             | Action ^(1)^ | Beschreibung | Befehl
-| kbd:[↑]           |              | eine Zeile nach oben. | `+/script up+`
-| kbd:[↓]           |              | eine Zeile nach unten. | `+/script down+`
+| kbd:[↑]           |              | eine Zeile nach oben. | `+/script -up+`
+| kbd:[↓]           |              | eine Zeile nach unten. | `+/script -down+`
 | kbd:[PgUp]        |              | eine Seite hoch blättern. | `+/window page_up+`
 | kbd:[PgDn]        |              | eine Seite nach unten blättern. | `+/window page_down+`
 | kbd:[Alt+i]       | `i`          | Skript installieren. | `+/script install+`
