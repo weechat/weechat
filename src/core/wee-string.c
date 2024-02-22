@@ -2244,7 +2244,7 @@ string_translate_chars (const char *string,
  *   num_items: if not NULL, the variable is set with the number of items
  *              returned
  *   shared: 1 if the strings are "shared strings" (created with the function
- *           string_share_get), otherwise 0 for allocated strings
+ *           string_shared_get), otherwise 0 for allocated strings
  *
  * The flags is a combination of flags:
  *   - WEECHAT_STRING_SPLIT_STRIP_LEFT: strip separators on the left
