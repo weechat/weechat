@@ -298,7 +298,7 @@ buflist_bar_item_auto_scroll (const char *item_name, int line_number)
 }
 
 /*
- * Returns content of bar item "buffer_plugin": bar item with buffer plugin.
+ * Returns the content of the bar item.
  */
 
 char *
