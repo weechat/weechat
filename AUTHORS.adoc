@@ -67,6 +67,7 @@ Alphabetically:
 * Jiri Golembiovsky (GolemJ)
 * Joey Pabalinas (alyptik)
 * Johan Rylander
+* Johannes Kuhn
 * Joram Schrijver
 * Jos Ahrens
 * Joseph Kichline
