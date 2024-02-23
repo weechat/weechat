@@ -2275,8 +2275,7 @@ str = weechat.string_remove_color(my_string, "?")
 
 ==== string_base_encode
 
-// TRANSLATION MISSING
-_WeeChat ≥ 2.4, updated in 4.3.0._
+_WeeChat ≥ 2.4, ажурирано у 4.3.0._
 
 Кодира стринг као base 16, 32, или 64.
 
@@ -2317,8 +2316,7 @@ length = weechat_string_base_encode ("64", string, strlen (string), result);
 
 ==== string_base_decode
 
-// TRANSLATION MISSING
-_WeeChat ≥ 2.4, updated in 4.3.0._
+_WeeChat ≥ 2.4, ажурирано у 4.3.0._
 
 Декодира стринг кодиран у base 16, 32, или 64.
 
@@ -3096,7 +3094,6 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   >> `+${base_decode:64,dGVzdCBzdHJpbmc=}+` +
   == `+test string+`
 
-// TRANSLATION MISSING
 | `+${date}+` +
   `+${date:xxx}+` | 1.3
 | Текући датум/време, у прилагођеном формату (see function <<_util_strftimeval,util_strftimeval>>),
@@ -4567,9 +4564,8 @@ weechat_printf (NULL, "date: %s",
 
 _WeeChat ≥ 4.2.0, ажурирано у 4.3.0._
 
-// TRANSLATION MISSING
-Format date and time like function `strftime` in C library, using `struct timeval`
-as input, and supporting extra specifiers.
+Форматира датум и време као функција `strftime` из C библиотеке, користећи `struct timeval`
+као улаз уз подршку за додатне спецификаторе.
 
 Прототип:
 
@@ -4586,8 +4582,7 @@ int weechat_util_strftimeval (char *string, int max, const char *format, struct 
 ** `%.N` где је `N` између 1 и 6: микросекунде допуњене нулама на N цифара
    (на пример `%.3` за милисекунде)
 ** `%f`: алијас за `%.6`
-// TRANSLATION MISSING
-** `%!`: timestamp as integer, in seconds (value of tv->tv_sec)
+** `%!`: временска ознака као цео број, у секундама (вредност од tv->tv_sec)
 
 Повратна вредност:
 
