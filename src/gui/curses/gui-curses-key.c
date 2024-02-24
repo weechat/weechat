@@ -331,14 +331,7 @@ gui_key_flush (int paste)
         insert_ok = 1;
         utf_partial_char[0] = '\0';
 
-        if (!paste && gui_mouse_event_pending)
-        {
-            insert_ok = 0;
-            key_str[0] = (char)key;
-            key_str[1] = '\0';
-            length_key_str = 1;
-        }
-        else if (!paste && (key < 32))
+        if (!paste && (key < 32))
         {
             insert_ok = 0;
             key_str[0] = '\x01';
@@ -352,6 +345,13 @@ gui_key_flush (int paste)
                 key_str[1] += 'a' - 'A';
             key_str[2] = '\0';
             length_key_str = 2;
+        }
+        else if (!paste && gui_mouse_event_pending)
+        {
+            insert_ok = 0;
+            key_str[0] = (char)key;
+            key_str[1] = '\0';
+            length_key_str = 1;
         }
         else if (!paste && (key == 127))
         {

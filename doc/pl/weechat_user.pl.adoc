@@ -2697,27 +2697,40 @@ Możesz zmienić lub dodać przypisania za pomocą komendy `/key` używając kon
 Nazwa zdarzenia zawiera modyfikator (opcjonalny), nazwę klawisza/rolki i gest
 (opcjonalny). Różne elementy są rozdzielane przez `+-+`.
 
-Lista modyfikatorów:
+// TRANSLATION MISSING
+List of modifiers (by order in the event name):
 
 [width="100%",cols="1m,4",options="header"]
 |===
 | Modyfikator | Opis
 | alt         | Klawisz kbd:[Alt]
 | ctrl        | Klawisz kbd:[Ctrl]
-| alt-ctrl    | Klawisze kbd:[Alt] + kbd:[Ctrl]
+| shift       | Klawisz kbd:[Shift] ^(1)^
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The `shift` modifier can rarely be used in WeeChat because many terminals
+use this modifier to catch directly mouse events.
+
+// TRANSLATION MISSING
+Several modifiers can be combined, for example:
+
+* `alt-ctrl`
+* `ctrl-shift`
+* `alt-ctrl-shift`
 
 Lista klawiszy/rolek:
 
 [width="100%",cols="1m,4",options="header"]
 |===
-| Klawisz/rolka       | Opis
-| button1             | Lewy klawisz myszy
-| button2             | Prawy klawisz myszy
-| button3             | Środkowy klawisz myszy (często naciśnięcie rolki)
-| button4 ... button9 | Dodatkowe klawisze
-| wheelup             | Rolka (w górę)
-| wheeldown           | Rolka (w dół)
+| Klawisz/rolka        | Opis
+| button1              | Lewy klawisz myszy
+| button2              | Prawy klawisz myszy
+| button3              | Środkowy klawisz myszy (często naciśnięcie rolki)
+| button4 ... button11 | Dodatkowe klawisze
+| wheelup              | Rolka (w górę)
+| wheeldown            | Rolka (w dół)
 |===
 
 Lista gestów (tylko dla klawiszy, nie rolki):

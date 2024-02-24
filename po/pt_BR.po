@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-05 19:56+0100\n"
+"POT-Creation-Date: 2024-03-06 20:32+0100\n"
 "PO-Revision-Date: 2024-02-17 10:07+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4689,11 +4689,6 @@ msgstr ""
 
 msgid "enable mouse support"
 msgstr "habilita suporte à mouse"
-
-msgid ""
-"delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay "
-"before processing event"
-msgstr ""
 
 #, fuzzy
 msgid ""

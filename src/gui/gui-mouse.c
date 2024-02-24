@@ -36,8 +36,6 @@ int gui_mouse_grab = 0;                /* 1 if grab mode enabled            */
 
 /* mouse event */
 int gui_mouse_event_pending = 0;       /* 1 if mouse event has started      */
-struct t_hook *gui_mouse_event_timer = NULL;  /* timer to detect entire     */
-                                              /* mouse event                */
 int gui_mouse_event_index = 0;         /* index for x/y in array (0 or 1)   */
 int gui_mouse_event_x[2] = { 0, 0 };   /* position of latest mouse event:   */
                                        /* (on click, on release)            */

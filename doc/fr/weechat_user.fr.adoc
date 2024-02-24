@@ -2743,27 +2743,38 @@ utilisant le contexte "mouse" (pour la syntaxe voir la commande
 Un nom d'évènement consiste en un modificateur (facultatif), un bouton/roulette
 et un geste (facultatif). Les différents éléments sont séparés par `+-+`.
 
-Liste des modificateurs :
+Liste des modificateurs (par ordre dans le nom de l'évènement) :
 
 [width="100%",cols="1m,4",options="header"]
 |===
 | Modificateur | Description
 | alt          | Touche kbd:[Alt]
 | ctrl         | Touche kbd:[Ctrl]
-| alt-ctrl     | Touches kbd:[Alt] + kbd:[Ctrl]
+| shift        | Touche kbd:[Shift] ^(1)^
 |===
+
+[NOTE]
+^(1)^ Le modificateur `shift` peut rarement être utilisé dans WeeChat car
+beaucoup de terminaux utilisent ce modificateur pour attraper directement les
+évènements souris.
+
+Plusieurs modificateurs peuvent être combinés, par exemple :
+
+* `alt-ctrl`
+* `ctrl-shift`
+* `alt-ctrl-shift`
 
 Liste des boutons/roulette :
 
 [width="100%",cols="1m,4",options="header"]
 |===
-| Bouton/roulette     | Description
-| button1             | Clic sur le bouton gauche
-| button2             | Clic sur le bouton droit
-| button3             | Clic sur le bouton du milieu (souvent clic sur la roulette)
-| button4 ... button9 | Clic sur un bouton additionnel
-| wheelup             | Roulette (haut)
-| wheeldown           | Roulette (bas)
+| Bouton/roulette      | Description
+| button1              | Clic sur le bouton gauche
+| button2              | Clic sur le bouton droit
+| button3              | Clic sur le bouton du milieu (souvent clic sur la roulette)
+| button4 ... button11 | Clic sur un bouton additionnel
+| wheelup              | Roulette (haut)
+| wheeldown            | Roulette (bas)
 |===
 
 Liste des gestes (seulement pour les boutons, pas la roulette) :

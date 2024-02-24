@@ -175,7 +175,6 @@ struct t_config_option *config_look_jump_smart_back_to_buffer = NULL;
 struct t_config_option *config_look_key_bind_safe = NULL;
 struct t_config_option *config_look_key_grab_delay = NULL;
 struct t_config_option *config_look_mouse = NULL;
-struct t_config_option *config_look_mouse_timer_delay = NULL;
 struct t_config_option *config_look_nick_color_force = NULL;
 struct t_config_option *config_look_nick_color_hash = NULL;
 struct t_config_option *config_look_nick_color_hash_salt = NULL;
@@ -3788,13 +3787,6 @@ config_weechat_init_options ()
             NULL, NULL, NULL,
             &config_change_mouse, NULL, NULL,
             NULL, NULL, NULL);
-        config_look_mouse_timer_delay = config_file_new_option (
-            weechat_config_file, weechat_config_section_look,
-            "mouse_timer_delay", "integer",
-            N_("delay (in milliseconds) to grab a mouse event: WeeChat will "
-               "wait this delay before processing event"),
-            NULL, 1, 10000, "100", NULL, 0,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_look_nick_color_force = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "nick_color_force", "string",

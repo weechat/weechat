@@ -93,6 +93,8 @@ IMPORT_TEST_GROUP(GuiInput);
 IMPORT_TEST_GROUP(GuiKey);
 IMPORT_TEST_GROUP(GuiLine);
 IMPORT_TEST_GROUP(GuiNick);
+/* GUI - Curses */
+IMPORT_TEST_GROUP(GuiCursesMouse);
 /* scripts */
 IMPORT_TEST_GROUP(Scripts);
 

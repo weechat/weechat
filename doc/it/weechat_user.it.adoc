@@ -2955,27 +2955,40 @@ contesto "mouse" (per la sintassi, consultare comando
 Il nome dell'evento consiste di un modificatore (opzionale), il nome di un
 pulsante/rotellina e un'azione (opzionale). Elementi diversi sono separati da `+-+`.
 
-Elenco di modificatori
+// TRANSLATION MISSING
+List of modifiers (by order in the event name):
 
 [width="100%",cols="1m,4",options="header"]
 |===
 | Modificatore | Descrizione
 | alt          | Tasto kbd:[Alt]
 | ctrl         | Tasto kbd:[Ctrl]
-| alt-ctrl     | Tasto kbd:[Alt] + kbd:[Ctrl]
+| shift        | Tasto kbd:[Shift] ^(1)^
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The `shift` modifier can rarely be used in WeeChat because many terminals
+use this modifier to catch directly mouse events.
+
+// TRANSLATION MISSING
+Several modifiers can be combined, for example:
+
+* `alt-ctrl`
+* `ctrl-shift`
+* `alt-ctrl-shift`
 
 Elenco di pulsanti/rotellina:
 
 [width="100%",cols="1m,4",options="header"]
 |===
-| Pulsante/rotellina  | Descrizione
-| button1             | Click sul tasto sinistro
-| button2             | Click sul tasto destro
-| button3             | Click sul tasto centrale (spesso click sulla rotellina)
-| button4 ... button9 | Click sui pulsanti extra
-| wheelup             | Rotellina (su)
-| wheeldown           | Rotellina (giù)
+| Pulsante/rotellina   | Descrizione
+| button1              | Click sul tasto sinistro
+| button2              | Click sul tasto destro
+| button3              | Click sul tasto centrale (spesso click sulla rotellina)
+| button4 ... button11 | Click sui pulsanti extra
+| wheelup              | Rotellina (su)
+| wheeldown            | Rotellina (giù)
 |===
 
 Elenco di azioni (solo per i pulsanti, non la rotellina):

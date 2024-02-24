@@ -2865,27 +2865,40 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 イベント名には修飾キー (任意)、ボタン/ホイール名、ジェスチャー (任意)
 を利用できます。異なるイベントは `+-+` で分割してください。
 
-修飾キーリスト:
+// TRANSLATION MISSING
+List of modifiers (by order in the event name):
 
 [width="100%",cols="1m,4",options="header"]
 |===
 | 修飾キー | 説明
 | alt      | kbd:[Alt] キー
 | ctrl     | kbd:[Ctrl] キー
-| alt-ctrl | kbd:[Alt] キー + kbd:[Ctrl]
+| shift    | kbd:[Shift] キー ^(1)^
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The `shift` modifier can rarely be used in WeeChat because many terminals
+use this modifier to catch directly mouse events.
+
+// TRANSLATION MISSING
+Several modifiers can be combined, for example:
+
+* `alt-ctrl`
+* `ctrl-shift`
+* `alt-ctrl-shift`
 
 ボタン/ホイールのリスト:
 
 [width="100%",cols="1m,4",options="header"]
 |===
-| ボタン/ホイール     | 説明
-| button1             | 左ボタンクリック
-| button2             | 右ボタンクリック
-| button3             | 中ボタンクリック (多くの場合ホイールクリック)
-| button4 ... button9 | その他のボタンクリック
-| wheelup             | ホイール (上方向)
-| wheeldown           | ホイール (下方向)
+| ボタン/ホイール      | 説明
+| button1              | 左ボタンクリック
+| button2              | 右ボタンクリック
+| button3              | 中ボタンクリック (多くの場合ホイールクリック)
+| button4 ... button11 | その他のボタンクリック
+| wheelup              | ホイール (上方向)
+| wheeldown            | ホイール (下方向)
 |===
 
 ジェスチャーのリスト (ボタンのみ対応、ホイール未対応):

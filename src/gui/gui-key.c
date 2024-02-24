@@ -2353,9 +2353,9 @@ int
 gui_key_pressed (const char *key_str)
 {
     int i, insert_into_input, context, length, length_key, signal_sent;
-    int rc, rc_expand, exact_match, chunks1_count, chunks2_count;
+    int rc, rc_expand, exact_match, chunks1_count, chunks2_count, event_size;
     struct t_gui_key *ptr_key;
-    char *pos, signal_name[128], **commands;
+    char saved_char, signal_name[128], **commands;
     char *key_name, *key_name_alias, **chunks1, **chunks2;
 
     signal_sent = 0;
@@ -2392,27 +2392,42 @@ gui_key_pressed (const char *key_str)
         goto end_no_input;
     }
 
+    /* check if we have a mouse event */
+    if (!gui_mouse_event_pending)
+    {
+        /* "<" = SGR event, "M" = UTF-8 event */
+        if ((strncmp (gui_key_combo, "\x01[[<", 4) == 0)
+            || (strncmp (gui_key_combo, "\x01[[M", 4) == 0))
+        {
+            gui_mouse_event_pending = 1;
+        }
+    }
+
     /* mouse event pending */
     if (gui_mouse_event_pending)
     {
-        pos = strstr (gui_key_combo, "\x1B[M");
-        if (pos)
+        event_size = gui_mouse_event_size (gui_key_combo);
+        if (event_size == 0)
         {
-            pos[0] = '\0';
-            if (!gui_window_bare_display)
-                gui_mouse_event_end ();
-            gui_mouse_event_init ();
+            /* incomplete event */
+            goto end_no_input;
         }
-        goto end_no_input;
-    }
-
-    if (strstr (gui_key_combo, "\x01[[M"))
-    {
-        if (gui_key_debug)
-            gui_key_debug_print_key (gui_key_combo, NULL, NULL, NULL, 1);
-        gui_key_combo[0] = '\0';
-        gui_mouse_event_init ();
-        goto end_no_input;
+        if (event_size > 0)
+        {
+            /* complete event */
+            saved_char = gui_key_combo[event_size];
+            gui_key_combo[event_size] = '\0';
+            if (gui_key_debug)
+                gui_key_debug_print_key (gui_key_combo, NULL, NULL, NULL, 1);
+            if (!gui_window_bare_display)
+                gui_mouse_event_process (gui_key_combo);
+            gui_key_combo[event_size] = saved_char;
+            memmove (gui_key_combo, gui_key_combo + event_size,
+                     strlen (gui_key_combo + event_size) + 1);
+            gui_mouse_event_pending = 0;
+            goto end_no_input;
+        }
+        /* not a mouse event, just go on and process gui_key_combo */
     }
 
     rc_expand = gui_key_expand (gui_key_combo, &key_name, &key_name_alias);

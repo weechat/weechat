@@ -2718,27 +2718,40 @@ und löschen (für die Syntax, siehe Befehl <<command_weechat_key,/key>>).
 Der Name eines Ereignisses besteht aus einem Modifier (optional), einer Maustaste/Mausrad
 und der Mausgeste (optional). Die unterschiedlichen Elemente werden durch ein `+-+` getrennt.
 
-Liste der Modifiers:
+// TRANSLATION MISSING
+List of modifiers (by order in the event name):
 
 [width="100%",cols="1m,4",options="header"]
 |===
 | Modifier | Beschreibung
 | alt      | Taste kbd:[Alt]
 | ctrl     | Taste kbd:[Ctrl]
-| alt-ctrl | Taste kbd:[Alt] + kbd:[Ctrl]
+| shift    | Taste kbd:[Shift] ^(1)^
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The `shift` modifier can rarely be used in WeeChat because many terminals
+use this modifier to catch directly mouse events.
+
+// TRANSLATION MISSING
+Several modifiers can be combined, for example:
+
+* `alt-ctrl`
+* `ctrl-shift`
+* `alt-ctrl-shift`
 
 Liste der Maustasten/Mausrad:
 
 [width="100%",cols="1m,4",options="header"]
 |===
-| Maustaste/-rad      | Beschreibung
-| button1             | Linker Mausknopf wird gedrückt
-| button2             | Rechter Mausknopf wird gedrückt
-| button3             | Mittlerer Mausknopf wird gedrückt (häufig der Druck auf das Mausrad)
-| button4 ... button9 | Ein zusätzlicher Mausknopf wird gedrückt
-| wheelup             | Mausrad wird nach oben gescrollt
-| wheeldown           | Mausrad wird nach unten gescrollt
+| Maustaste/-rad       | Beschreibung
+| button1              | Linker Mausknopf wird gedrückt
+| button2              | Rechter Mausknopf wird gedrückt
+| button3              | Mittlerer Mausknopf wird gedrückt (häufig der Druck auf das Mausrad)
+| button4 ... button11 | Ein zusätzlicher Mausknopf wird gedrückt
+| wheelup              | Mausrad wird nach oben gescrollt
+| wheeldown            | Mausrad wird nach unten gescrollt
 |===
 
 Liste der Mausgesten (nur für Maustasten, nicht für das Mausrad, anwendbar):

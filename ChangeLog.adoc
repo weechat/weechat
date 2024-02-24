@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
+  * core: add support of SGR mouse events (issue #2082)
   * core: reintroduce help on the variables and operators in `/help eval` (issue #2005)
   * core: add option `-s` in command `/command` to execute multiple commands separated by semicolons
   * core: allow case insensitive search of partial buffer name with `(?i)name` in command `/buffer`
@@ -45,6 +46,7 @@ Bug fixes::
 
 Tests::
 
+  * core: add tests on mouse events (issue #2082)
   * scripts: add tests on constants
 
 Build::

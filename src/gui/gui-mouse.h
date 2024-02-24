@@ -26,7 +26,6 @@ extern int gui_mouse_enabled;
 extern int gui_mouse_debug;
 extern int gui_mouse_grab;
 extern int gui_mouse_event_pending;
-extern struct t_hook *gui_mouse_event_timer;
 extern int gui_mouse_event_index;
 extern int gui_mouse_event_x[2];
 extern int gui_mouse_event_y[2];
@@ -43,7 +42,7 @@ extern void gui_mouse_enable ();
 extern void gui_mouse_disable ();
 extern void gui_mouse_display_state ();
 extern void gui_mouse_grab_init (int area);
-extern void gui_mouse_event_init ();
-extern void gui_mouse_event_end ();
+extern int gui_mouse_event_size (const char *key);
+extern void gui_mouse_event_process (const char *key);
 
 #endif /* WEECHAT_GUI_MOUSE_H */
