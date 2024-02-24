@@ -879,7 +879,7 @@ gui_key_legacy_to_alias (const char *key)
  *   - transform "ctrl-alt-" to "alt-ctrl-"
  *
  * Example:
- *   "@chat:ctrl-alt-button1" => "@chat:meta-ctrl-wheelup"
+ *   "@chat:ctrl-alt-button1" => "@chat:alt-ctrl-button1"
  */
 
 char *
@@ -933,7 +933,7 @@ gui_key_fix_mouse (const char *key)
  *   " "                      => "space"
  *   "meta- "                 => "meta-space"
  *   "meta2-A"                => "meta-[A"
- *   "@chat:ctrl-alt-button1" => "@chat:alt-ctrl-wheelup"
+ *   "@chat:ctrl-alt-button1" => "@chat:alt-ctrl-button1"
  *
  * Note: result must be freed after use.
  */
