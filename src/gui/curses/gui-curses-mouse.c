@@ -74,6 +74,7 @@ char *gui_mouse_button_codes[][2] =
   { "*",  "alt-button2"        },
   { ")",  "alt-button3"        },
   { "8",  "alt-ctrl-button1"   },
+  { ":",  "alt-ctrl-button2"   },
   { NULL, NULL                 } };
 
 
