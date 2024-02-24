@@ -2870,9 +2870,9 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 [width="100%",cols="1m,4",options="header"]
 |===
 | 修飾キー | 説明
-| ctrl     | kbd:[Ctrl] キー
 | alt      | kbd:[Alt] キー
-| ctrl-alt | kbd:[Ctrl] + kbd:[Alt] キー
+| ctrl     | kbd:[Ctrl] キー
+| alt-ctrl | kbd:[Alt] キー + kbd:[Ctrl]
 |===
 
 ボタン/ホイールのリスト:
@@ -2921,7 +2921,7 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 * `button1-event-drag`
 * `alt-button2-gesture-down-long`
 * `wheelup`
-* `ctrl-alt-wheeldown`
+* `alt-ctrl-wheeldown`
 * ...
 
 [TIP]

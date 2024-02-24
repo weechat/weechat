@@ -2541,9 +2541,9 @@ link:weechat_faq.sr.html#mouse[WeeChat ЧПП / Миш ^↗^^].
 [width="100%", cols="1m,4", options="header"]
 |===
 | Модификатор | Опис
-| ctrl        | Тастер kbd:[Ctrl]
 | alt         | Тастер kbd:[Alt]
-| ctrl-alt    | Тастери kbd:[Ctrl] + kbd:[Alt]
+| ctrl        | Тастер kbd:[Ctrl]
+| alt-ctrl    | Тастери kbd:[Alt] + kbd:[Ctrl]
 |===
 
 Листа тастера/точкића:
@@ -2592,7 +2592,7 @@ link:weechat_faq.sr.html#mouse[WeeChat ЧПП / Миш ^↗^^].
 * `button1-event-drag`
 * `alt-button2-gesture-down-long`
 * `wheelup`
-* `ctrl-alt-wheeldown`
+* `alt-ctrl-wheeldown`
 * ...
 
 [TIP]

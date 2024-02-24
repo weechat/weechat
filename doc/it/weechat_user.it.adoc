@@ -2960,9 +2960,9 @@ Elenco di modificatori
 [width="100%",cols="1m,4",options="header"]
 |===
 | Modificatore | Descrizione
-| ctrl         | Tasto kbd:[Ctrl]
 | alt          | Tasto kbd:[Alt]
-| ctrl-alt     | Tasto kbd:[Ctrl] + kbd:[Alt]
+| ctrl         | Tasto kbd:[Ctrl]
+| alt-ctrl     | Tasto kbd:[Alt] + kbd:[Ctrl]
 |===
 
 Elenco di pulsanti/rotellina:
@@ -3012,7 +3012,7 @@ Esempio di eventi:
 * `button1-event-drag`
 * `alt-button2-gesture-down-long`
 * `wheelup`
-* `ctrl-alt-wheeldown`
+* `alt-ctrl-wheeldown`
 * ...
 
 [TIP]

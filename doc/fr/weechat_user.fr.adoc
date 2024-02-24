@@ -2748,9 +2748,9 @@ Liste des modificateurs :
 [width="100%",cols="1m,4",options="header"]
 |===
 | Modificateur | Description
-| ctrl         | Touche kbd:[Ctrl]
 | alt          | Touche kbd:[Alt]
-| ctrl-alt     | Touches kbd:[Ctrl] + kbd:[Alt]
+| ctrl         | Touche kbd:[Ctrl]
+| alt-ctrl     | Touches kbd:[Alt] + kbd:[Ctrl]
 |===
 
 Liste des boutons/roulette :
@@ -2800,7 +2800,7 @@ Exemples d'évènements :
 * `button1-event-drag`
 * `alt-button2-gesture-down-long`
 * `wheelup`
-* `ctrl-alt-wheeldown`
+* `alt-ctrl-wheeldown`
 * ...
 
 [TIP]

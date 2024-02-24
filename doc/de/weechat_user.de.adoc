@@ -2723,9 +2723,9 @@ Liste der Modifiers:
 [width="100%",cols="1m,4",options="header"]
 |===
 | Modifier | Beschreibung
-| ctrl     | Taste kbd:[Ctrl]
 | alt      | Taste kbd:[Alt]
-| ctrl-alt | Taste kbd:[Ctrl] + kbd:[Alt]
+| ctrl     | Taste kbd:[Ctrl]
+| alt-ctrl | Taste kbd:[Alt] + kbd:[Ctrl]
 |===
 
 Liste der Maustasten/Mausrad:
@@ -2774,7 +2774,7 @@ Bespiele von Ereignissen:
 * `button1-event-drag`
 * `alt-button2-gesture-down-long`
 * `wheelup`
-* `ctrl-alt-wheeldown`
+* `alt-ctrl-wheeldown`
 
 [TIP]
 Wird eine Funktion im "mouse"-Kontext hinzufügt ist es möglich, mehrere

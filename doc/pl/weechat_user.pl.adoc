@@ -2702,9 +2702,9 @@ Lista modyfikatorów:
 [width="100%",cols="1m,4",options="header"]
 |===
 | Modyfikator | Opis
-| ctrl        | Klawisz kbd:[Ctrl]
 | alt         | Klawisz kbd:[Alt]
-| ctrl-alt    | Klawisze kbd:[Ctrl] + kbd:[Alt]
+| ctrl        | Klawisz kbd:[Ctrl]
+| alt-ctrl    | Klawisze kbd:[Alt] + kbd:[Ctrl]
 |===
 
 Lista klawiszy/rolek:
@@ -2753,7 +2753,7 @@ Przykłady zdarzeń:
 * `button1-event-drag`
 * `alt-button2-gesture-down-long`
 * `wheelup`
-* `ctrl-alt-wheeldown`
+* `alt-ctrl-wheeldown`
 * ...
 
 [TIP]

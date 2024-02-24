@@ -2684,9 +2684,9 @@ List of modifiers:
 [width="100%",cols="1m,4",options="header"]
 |===
 | Modifier | Description
-| ctrl     | Key kbd:[Ctrl]
 | alt      | Key kbd:[Alt]
-| ctrl-alt | Keys kbd:[Ctrl] + kbd:[Alt]
+| ctrl     | Key kbd:[Ctrl]
+| alt-ctrl | Keys kbd:[Alt] + kbd:[Ctrl]
 |===
 
 List of buttons/wheel:
@@ -2735,7 +2735,7 @@ Example of events:
 * `button1-event-drag`
 * `alt-button2-gesture-down-long`
 * `wheelup`
-* `ctrl-alt-wheeldown`
+* `alt-ctrl-wheeldown`
 * ...
 
 [TIP]
