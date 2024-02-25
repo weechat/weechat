@@ -5617,7 +5617,8 @@ API_FUNC(hdata_long)
 {
     Tcl_Obj *objp;
     char *hdata, *pointer, *name;
-    int result, i;
+    long result;
+    int i;
 
     API_INIT_FUNC(1, "hdata_long", API_RETURN_LONG(0));
     if (objc < 4)
