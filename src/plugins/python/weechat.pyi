@@ -2475,7 +2475,7 @@ def infolist_time(infolist: str, var: str) -> int:
     ::
 
         # example
-        weechat.prnt("", "time = %ld" % weechat.infolist_time(infolist, "my_time"))
+        weechat.prnt("", "time = %d" % weechat.infolist_time(infolist, "my_time"))
     """
     ...
 
@@ -2641,7 +2641,7 @@ def hdata_long(hdata: str, pointer: str, name: str) -> int:
     ::
 
         # example
-        weechat.prnt("", "longvar = %ld" % weechat.hdata_long(hdata, pointer, "longvar"))
+        weechat.prnt("", "longvar = %d" % weechat.hdata_long(hdata, pointer, "longvar"))
     """
     ...
 
@@ -2665,7 +2665,7 @@ def hdata_pointer(hdata: str, pointer: str, name: str) -> str:
         # example
         hdata = weechat.hdata_get("buffer")
         buffer = weechat.buffer_search_main()
-        weechat.prnt("", "lines = %lx" % weechat.hdata_pointer(hdata, buffer, "lines"))
+        weechat.prnt("", "lines = %x" % weechat.hdata_pointer(hdata, buffer, "lines"))
     """
     ...
 
