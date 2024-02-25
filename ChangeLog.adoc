@@ -16,6 +16,7 @@ For a list of important changes that require manual actions, please look at rele
 Bug fixes::
 
   * core: add missing mouse events "alt-ctrl-button2" and "alt-ctrl-button3"
+  * python: fix truncation of unsigned long long integer returned by function string_parse_size
   * script: always display list of scripts when searching scripts with `/script search` (issue #2077)
   * tcl: fix truncation of long integer returned by function hdata_long
   * trigger: fix memory leak when adding a new trigger with `/trigger` command
