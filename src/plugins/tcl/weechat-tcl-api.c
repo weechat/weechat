@@ -5882,8 +5882,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_RC_OK_EAT", NULL, Tcl_NewIntObj (WEECHAT_RC_OK_EAT), 0);
     Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_RC_ERROR", NULL, Tcl_NewIntObj (WEECHAT_RC_ERROR), 0);
 
-    Tcl_SetStringObj (objp, WEECHAT_NULL_STRING, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_NULL", Tcl_GetString (objp), 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_NULL", WEECHAT_NULL_STRING, 0);
 
     Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_READ_OK", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_READ_OK), 0);
     Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_READ_MEMORY_ERROR", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_READ_MEMORY_ERROR), 0);
@@ -5900,21 +5899,14 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED), 0);
     Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_UNSET_ERROR", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_UNSET_ERROR), 0);
 
-    Tcl_SetStringObj (objp, WEECHAT_LIST_POS_SORT, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_LIST_POS_SORT", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_LIST_POS_BEGINNING, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_LIST_POS_BEGINNING", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_LIST_POS_END, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_LIST_POS_END", Tcl_GetString (objp), 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_LIST_POS_SORT", WEECHAT_LIST_POS_SORT, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_LIST_POS_BEGINNING", WEECHAT_LIST_POS_BEGINNING, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_LIST_POS_END", WEECHAT_LIST_POS_END, 0);
 
-    Tcl_SetStringObj (objp, WEECHAT_HOTLIST_LOW, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_LOW", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_HOTLIST_MESSAGE, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_MESSAGE", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_HOTLIST_PRIVATE, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_PRIVATE", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_HOTLIST_HIGHLIGHT, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_HIGHLIGHT", Tcl_GetString (objp), 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOTLIST_LOW", WEECHAT_HOTLIST_LOW, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOTLIST_MESSAGE", WEECHAT_HOTLIST_MESSAGE, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOTLIST_PRIVATE", WEECHAT_HOTLIST_PRIVATE, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOTLIST_HIGHLIGHT", WEECHAT_HOTLIST_HIGHLIGHT, 0);
 
     Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_PROCESS_RUNNING", NULL, Tcl_NewIntObj (WEECHAT_HOOK_PROCESS_RUNNING), 0);
     Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_PROCESS_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_PROCESS_ERROR), 0);
@@ -5931,12 +5923,9 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_TIMEOUT", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_TIMEOUT), 0);
     Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_SOCKET_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_SOCKET_ERROR), 0);
 
-    Tcl_SetStringObj (objp, WEECHAT_HOOK_SIGNAL_STRING, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_STRING", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_HOOK_SIGNAL_INT, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_INT", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_HOOK_SIGNAL_POINTER, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_POINTER", Tcl_GetString (objp), 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOOK_SIGNAL_STRING", WEECHAT_HOOK_SIGNAL_STRING, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOOK_SIGNAL_INT", WEECHAT_HOOK_SIGNAL_INT, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOOK_SIGNAL_POINTER", WEECHAT_HOOK_SIGNAL_POINTER, 0);
 
     Tcl_DecrRefCount (objp);
 
