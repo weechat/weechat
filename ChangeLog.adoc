@@ -38,6 +38,7 @@ Bug fixes::
   * script: always display list of scripts when searching scripts with `/script search` (issue #2077)
   * script: fix default mouse keys (issue #2076)
   * scripts: fix crash on script unload when a hook is created in a buffer close callback (issue #2067)
+  * tcl: fix truncation of long integer returned by function hdata_long
   * trigger: fix memory leak when adding a new trigger with `/trigger` command
 
 Build::
