@@ -5865,8 +5865,6 @@ API_FUNC(upgrade_close)
 
 void weechat_tcl_api_init (Tcl_Interp *interp)
 {
-    Tcl_Obj *objp;
-
     /* standard initializer */
     Tcl_Init (interp);
 
@@ -5875,10 +5873,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     /* interface constants */
     /* set variables, TODO: make them unmodifiable (thru Tcl_TraceVar) ? */
     /* NOTE: it is not good for performance to convert "defines" to Tcl_Obj */
-    objp = Tcl_NewIntObj (WEECHAT_RC_OK);
-    Tcl_IncrRefCount (objp);
-
-    Tcl_SetVar (interp, "weechat::WEECHAT_RC_OK", Tcl_GetString (objp), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_RC_OK", NULL, Tcl_NewIntObj (WEECHAT_RC_OK), 0);
     Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_RC_OK_EAT", NULL, Tcl_NewIntObj (WEECHAT_RC_OK_EAT), 0);
     Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_RC_ERROR", NULL, Tcl_NewIntObj (WEECHAT_RC_ERROR), 0);
 
@@ -5926,8 +5921,6 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     Tcl_SetVar (interp, "::weechat::WEECHAT_HOOK_SIGNAL_STRING", WEECHAT_HOOK_SIGNAL_STRING, 0);
     Tcl_SetVar (interp, "::weechat::WEECHAT_HOOK_SIGNAL_INT", WEECHAT_HOOK_SIGNAL_INT, 0);
     Tcl_SetVar (interp, "::weechat::WEECHAT_HOOK_SIGNAL_POINTER", WEECHAT_HOOK_SIGNAL_POINTER, 0);
-
-    Tcl_DecrRefCount (objp);
 
     /* interface functions */
     API_DEF_FUNC(register);
