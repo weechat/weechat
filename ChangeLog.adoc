@@ -35,6 +35,7 @@ Bug fixes::
   * irc: add missing tags on self action messages when capability echo-message is enabled (issue #2074)
   * irc: don't strip monospace color code 0x11 from incoming messages (issue #2073)
   * irc: fix random date displayed when a received message contains tags but no "time" (issue #2064)
+  * python: fix truncation of unsigned long long integer returned by function string_parse_size
   * script: always display list of scripts when searching scripts with `/script search` (issue #2077)
   * script: fix default mouse keys (issue #2076)
   * scripts: fix crash on script unload when a hook is created in a buffer close callback (issue #2067)
