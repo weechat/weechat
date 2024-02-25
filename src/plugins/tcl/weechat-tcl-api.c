@@ -5865,8 +5865,6 @@ API_FUNC(upgrade_close)
 
 void weechat_tcl_api_init (Tcl_Interp *interp)
 {
-    Tcl_Obj *objp;
-
     /* standard initializer */
     Tcl_Init (interp);
 
@@ -5875,99 +5873,54 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     /* interface constants */
     /* set variables, TODO: make them unmodifiable (thru Tcl_TraceVar) ? */
     /* NOTE: it is not good for performance to convert "defines" to Tcl_Obj */
-    objp = Tcl_NewIntObj (WEECHAT_RC_OK);
-    Tcl_IncrRefCount (objp);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_RC_OK", NULL, Tcl_NewIntObj (WEECHAT_RC_OK), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_RC_OK_EAT", NULL, Tcl_NewIntObj (WEECHAT_RC_OK_EAT), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_RC_ERROR", NULL, Tcl_NewIntObj (WEECHAT_RC_ERROR), 0);
 
-    Tcl_SetVar (interp, "weechat::WEECHAT_RC_OK", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_RC_OK_EAT);
-    Tcl_SetVar (interp, "weechat::WEECHAT_RC_OK_EAT", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_RC_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_RC_ERROR", Tcl_GetString (objp), 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_NULL", WEECHAT_NULL_STRING, 0);
 
-    Tcl_SetStringObj (objp, WEECHAT_NULL_STRING, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_NULL", Tcl_GetString (objp), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_READ_OK", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_READ_OK), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_READ_MEMORY_ERROR", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_READ_MEMORY_ERROR), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_READ_FILE_NOT_FOUND", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_READ_FILE_NOT_FOUND), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_WRITE_OK", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_WRITE_OK), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_WRITE_ERROR", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_WRITE_ERROR), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_WRITE_MEMORY_ERROR", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_WRITE_MEMORY_ERROR), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_SET_OK_CHANGED", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_SET_OK_CHANGED), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_SET_ERROR", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_SET_ERROR), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_RESET", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_UNSET_OK_RESET), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_UNSET_ERROR", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_UNSET_ERROR), 0);
 
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_READ_OK);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_READ_OK", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_READ_MEMORY_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_READ_MEMORY_ERROR", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_READ_FILE_NOT_FOUND);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_READ_FILE_NOT_FOUND", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_WRITE_OK);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_WRITE_OK", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_WRITE_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_WRITE_ERROR", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_WRITE_MEMORY_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_WRITE_MEMORY_ERROR", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_SET_OK_CHANGED);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_SET_OK_CHANGED", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_SET_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_SET_ERROR", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_UNSET_OK_RESET);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_RESET", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_CONFIG_OPTION_UNSET_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_CONFIG_OPTION_UNSET_ERROR", Tcl_GetString (objp), 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_LIST_POS_SORT", WEECHAT_LIST_POS_SORT, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_LIST_POS_BEGINNING", WEECHAT_LIST_POS_BEGINNING, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_LIST_POS_END", WEECHAT_LIST_POS_END, 0);
 
-    Tcl_SetStringObj (objp, WEECHAT_LIST_POS_SORT, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_LIST_POS_SORT", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_LIST_POS_BEGINNING, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_LIST_POS_BEGINNING", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_LIST_POS_END, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_LIST_POS_END", Tcl_GetString (objp), 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOTLIST_LOW", WEECHAT_HOTLIST_LOW, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOTLIST_MESSAGE", WEECHAT_HOTLIST_MESSAGE, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOTLIST_PRIVATE", WEECHAT_HOTLIST_PRIVATE, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOTLIST_HIGHLIGHT", WEECHAT_HOTLIST_HIGHLIGHT, 0);
 
-    Tcl_SetStringObj (objp, WEECHAT_HOTLIST_LOW, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_LOW", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_HOTLIST_MESSAGE, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_MESSAGE", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_HOTLIST_PRIVATE, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_PRIVATE", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_HOTLIST_HIGHLIGHT, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOTLIST_HIGHLIGHT", Tcl_GetString (objp), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_PROCESS_RUNNING", NULL, Tcl_NewIntObj (WEECHAT_HOOK_PROCESS_RUNNING), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_PROCESS_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_PROCESS_ERROR), 0);
 
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_PROCESS_RUNNING);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_PROCESS_RUNNING", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_PROCESS_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_PROCESS_ERROR", Tcl_GetString (objp), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_OK", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_OK), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_PROXY_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_PROXY_ERROR), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_MEMORY_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_MEMORY_ERROR), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_TIMEOUT", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_TIMEOUT), 0);
+    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_SOCKET_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_SOCKET_ERROR), 0);
 
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_OK);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_OK", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_PROXY_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_PROXY_ERROR", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_MEMORY_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_MEMORY_ERROR", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_TIMEOUT);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_TIMEOUT", Tcl_GetString (objp), 0);
-    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_SOCKET_ERROR);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_SOCKET_ERROR", Tcl_GetString (objp), 0);
-
-    Tcl_SetStringObj (objp, WEECHAT_HOOK_SIGNAL_STRING, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_STRING", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_HOOK_SIGNAL_INT, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_INT", Tcl_GetString (objp), 0);
-    Tcl_SetStringObj (objp, WEECHAT_HOOK_SIGNAL_POINTER, -1);
-    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_POINTER", Tcl_GetString (objp), 0);
-
-    Tcl_DecrRefCount (objp);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOOK_SIGNAL_STRING", WEECHAT_HOOK_SIGNAL_STRING, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOOK_SIGNAL_INT", WEECHAT_HOOK_SIGNAL_INT, 0);
+    Tcl_SetVar (interp, "::weechat::WEECHAT_HOOK_SIGNAL_POINTER", WEECHAT_HOOK_SIGNAL_POINTER, 0);
 
     /* interface functions */
     API_DEF_FUNC(register);
