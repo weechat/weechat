@@ -77,137 +77,52 @@
                            tcl_function_name, __string)
 #define API_RETURN_OK                                                   \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
-        {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            Tcl_SetIntObj (objp, 1);                                    \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
-        }                                                               \
-        else                                                            \
-            Tcl_SetIntObj (objp, 1);                                    \
+        Tcl_SetObjResult (interp, Tcl_NewIntObj (1));                   \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_ERROR                                                \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
-        {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            Tcl_SetIntObj (objp, 0);                                    \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
-        }                                                               \
-        else                                                            \
-            Tcl_SetIntObj (objp, 0);                                    \
+        Tcl_SetObjResult (interp, Tcl_NewIntObj (0));                   \
         return TCL_ERROR;                                               \
     }
 #define API_RETURN_EMPTY                                                \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
-        {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            Tcl_SetStringObj (objp, "", -1);                            \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
-        }                                                               \
-        else                                                            \
-            Tcl_SetStringObj (objp, "", -1);                            \
+        Tcl_SetObjResult (interp, Tcl_NewObj ());                       \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_STRING(__string)                                     \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
+        if (__string)                                                   \
         {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            if (__string)                                               \
-            {                                                           \
-                Tcl_SetStringObj (objp, __string, -1);                  \
-                Tcl_SetObjResult (interp, objp);                        \
-                Tcl_DecrRefCount (objp);                                \
-                return TCL_OK;                                          \
-            }                                                           \
-            Tcl_SetStringObj (objp, "", -1);                            \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
+            Tcl_SetObjResult (interp, Tcl_NewStringObj(__string, -1));  \
         }                                                               \
         else                                                            \
         {                                                               \
-            if (__string)                                               \
-            {                                                           \
-                Tcl_SetStringObj (objp, __string, -1);                  \
-                return TCL_OK;                                          \
-            }                                                           \
-            Tcl_SetStringObj (objp, "", -1);                            \
+            Tcl_SetObjResult (interp, Tcl_NewObj ());                   \
         }                                                               \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_STRING_FREE(__string)                                \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
+        if (__string)                                                   \
         {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            if (__string)                                               \
-            {                                                           \
-                Tcl_SetStringObj (objp, __string, -1);                  \
-                Tcl_SetObjResult (interp, objp);                        \
-                Tcl_DecrRefCount (objp);                                \
-                free (__string);                                        \
-                return TCL_OK;                                          \
-            }                                                           \
-            Tcl_SetStringObj (objp, "", -1);                            \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
+            Tcl_SetObjResult (interp, Tcl_NewStringObj(__string, -1));  \
+            free (__string);                                            \
         }                                                               \
         else                                                            \
         {                                                               \
-            if (__string)                                               \
-            {                                                           \
-                Tcl_SetStringObj (objp, __string, -1);                  \
-                free (__string);                                        \
-                return TCL_OK;                                          \
-            }                                                           \
-            Tcl_SetStringObj (objp, "", -1);                            \
+            Tcl_SetObjResult (interp, Tcl_NewObj ());                   \
         }                                                               \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_INT(__int)                                           \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
-        {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            Tcl_SetIntObj (objp, __int);                                \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
-        }                                                               \
-        else                                                            \
-            Tcl_SetIntObj (objp, __int);                                \
+        Tcl_SetObjResult (interp, Tcl_NewIntObj (__int));               \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_LONG(__long)                                         \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
-        {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            Tcl_SetLongObj (objp, __long);                              \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
-        }                                                               \
-        else                                                            \
-            Tcl_SetLongObj (objp, __long);                              \
+        Tcl_SetObjResult (interp, Tcl_NewLongObj (__long));             \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_OBJ(__obj)                                           \
@@ -223,7 +138,6 @@
 
 API_FUNC(register)
 {
-    Tcl_Obj *objp;
     char *name, *author, *version, *license, *description, *shutdown_func;
     char *charset;
 
@@ -299,7 +213,6 @@ API_FUNC(register)
 
 API_FUNC(plugin_get_name)
 {
-    Tcl_Obj *objp;
     char *plugin;
     const char *result;
 
@@ -316,8 +229,6 @@ API_FUNC(plugin_get_name)
 
 API_FUNC(charset_set)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "charset_set", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -330,7 +241,6 @@ API_FUNC(charset_set)
 
 API_FUNC(iconv_to_internal)
 {
-    Tcl_Obj *objp;
     char *result, *charset, *string;
 
     API_INIT_FUNC(1, "iconv_to_internal", API_RETURN_EMPTY);
@@ -347,7 +257,6 @@ API_FUNC(iconv_to_internal)
 
 API_FUNC(iconv_from_internal)
 {
-    Tcl_Obj *objp;
     char *result, *charset, *string;
 
     API_INIT_FUNC(1, "iconv_from_internal", API_RETURN_EMPTY);
@@ -364,7 +273,6 @@ API_FUNC(iconv_from_internal)
 
 API_FUNC(gettext)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "gettext", API_RETURN_EMPTY);
@@ -378,7 +286,6 @@ API_FUNC(gettext)
 
 API_FUNC(ngettext)
 {
-    Tcl_Obj *objp;
     char *single, *plural;
     const char *result;
     int count;
@@ -400,7 +307,6 @@ API_FUNC(ngettext)
 
 API_FUNC(strlen_screen)
 {
-    Tcl_Obj *objp;
     char *string;
     int result;
 
@@ -417,7 +323,6 @@ API_FUNC(strlen_screen)
 
 API_FUNC(string_match)
 {
-    Tcl_Obj *objp;
     char *string, *mask;
     int case_sensitive, result;
 
@@ -438,7 +343,6 @@ API_FUNC(string_match)
 
 API_FUNC(string_match_list)
 {
-    Tcl_Obj *objp;
     char *string, *masks;
     int case_sensitive, result;
 
@@ -462,7 +366,6 @@ API_FUNC(string_match_list)
 
 API_FUNC(string_has_highlight)
 {
-    Tcl_Obj *objp;
     char *string, *highlight_words;
     int result;
 
@@ -480,7 +383,6 @@ API_FUNC(string_has_highlight)
 
 API_FUNC(string_has_highlight_regex)
 {
-    Tcl_Obj *objp;
     char *string, *regex;
     int result;
 
@@ -498,7 +400,6 @@ API_FUNC(string_has_highlight_regex)
 
 API_FUNC(string_mask_to_regex)
 {
-    Tcl_Obj *objp;
     char *result, *mask;
 
     API_INIT_FUNC(1, "string_mask_to_regex", API_RETURN_EMPTY);
@@ -514,7 +415,6 @@ API_FUNC(string_mask_to_regex)
 
 API_FUNC(string_format_size)
 {
-    Tcl_Obj *objp;
     char *result;
     long size;
 
@@ -532,7 +432,6 @@ API_FUNC(string_format_size)
 
 API_FUNC(string_parse_size)
 {
-    Tcl_Obj *objp;
     char *size;
     unsigned long long value;
 
@@ -549,7 +448,6 @@ API_FUNC(string_parse_size)
 
 API_FUNC(string_color_code_size)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "string_color_code_size", API_RETURN_INT(0));
@@ -563,7 +461,6 @@ API_FUNC(string_color_code_size)
 
 API_FUNC(string_remove_color)
 {
-    Tcl_Obj *objp;
     char *result, *replacement, *string;
 
     API_INIT_FUNC(1, "string_remove_color", API_RETURN_EMPTY);
@@ -580,7 +477,6 @@ API_FUNC(string_remove_color)
 
 API_FUNC(string_is_command_char)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "string_is_command_char", API_RETURN_INT(0));
@@ -594,7 +490,6 @@ API_FUNC(string_is_command_char)
 
 API_FUNC(string_input_for_buffer)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "string_input_for_buffer", API_RETURN_EMPTY);
@@ -608,7 +503,6 @@ API_FUNC(string_input_for_buffer)
 
 API_FUNC(string_eval_expression)
 {
-    Tcl_Obj *objp;
     char *expr, *result;
     struct t_hashtable *pointers, *extra_vars, *options;
 
@@ -645,7 +539,6 @@ API_FUNC(string_eval_expression)
 
 API_FUNC(string_eval_path_home)
 {
-    Tcl_Obj *objp;
     char *path, *result;
     struct t_hashtable *pointers, *extra_vars, *options;
 
@@ -685,7 +578,6 @@ API_FUNC(string_eval_path_home)
 
 API_FUNC(mkdir_home)
 {
-    Tcl_Obj *objp;
     int mode;
 
     API_INIT_FUNC(1, "mkdir_home", API_RETURN_ERROR);
@@ -704,7 +596,6 @@ API_FUNC(mkdir_home)
 
 API_FUNC(mkdir)
 {
-    Tcl_Obj *objp;
     int mode;
 
     API_INIT_FUNC(1, "mkdir", API_RETURN_ERROR);
@@ -723,7 +614,6 @@ API_FUNC(mkdir)
 
 API_FUNC(mkdir_parents)
 {
-    Tcl_Obj *objp;
     int mode;
 
     API_INIT_FUNC(1, "mkdir_parents", API_RETURN_ERROR);
@@ -742,7 +632,6 @@ API_FUNC(mkdir_parents)
 
 API_FUNC(list_new)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     /* make C compiler happy */
@@ -759,7 +648,6 @@ API_FUNC(list_new)
 
 API_FUNC(list_add)
 {
-    Tcl_Obj *objp;
     char *weelist, *data, *where, *user_data;
     const char *result;
 
@@ -783,7 +671,6 @@ API_FUNC(list_add)
 
 API_FUNC(list_search)
 {
-    Tcl_Obj *objp;
     char *weelist, *data;
     const char *result;
 
@@ -802,7 +689,6 @@ API_FUNC(list_search)
 
 API_FUNC(list_search_pos)
 {
-    Tcl_Obj *objp;
     char *weelist, *data;
     int pos;
 
@@ -820,7 +706,6 @@ API_FUNC(list_search_pos)
 
 API_FUNC(list_casesearch)
 {
-    Tcl_Obj *objp;
     char *weelist, *data;
     const char *result;
 
@@ -839,7 +724,6 @@ API_FUNC(list_casesearch)
 
 API_FUNC(list_casesearch_pos)
 {
-    Tcl_Obj *objp;
     char *weelist, *data;
     int pos;
 
@@ -857,7 +741,6 @@ API_FUNC(list_casesearch_pos)
 
 API_FUNC(list_get)
 {
-    Tcl_Obj *objp;
     const char *result;
     int position;
 
@@ -876,7 +759,6 @@ API_FUNC(list_get)
 
 API_FUNC(list_set)
 {
-    Tcl_Obj *objp;
     char *item, *new_value;
 
     API_INIT_FUNC(1, "list_set", API_RETURN_ERROR);
@@ -893,7 +775,6 @@ API_FUNC(list_set)
 
 API_FUNC(list_next)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "list_next", API_RETURN_EMPTY);
@@ -907,7 +788,6 @@ API_FUNC(list_next)
 
 API_FUNC(list_prev)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "list_prev", API_RETURN_EMPTY);
@@ -921,7 +801,6 @@ API_FUNC(list_prev)
 
 API_FUNC(list_string)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "list_string", API_RETURN_EMPTY);
@@ -935,7 +814,6 @@ API_FUNC(list_string)
 
 API_FUNC(list_size)
 {
-    Tcl_Obj *objp;
     int size;
 
     API_INIT_FUNC(1, "list_size", API_RETURN_INT(0));
@@ -949,7 +827,6 @@ API_FUNC(list_size)
 
 API_FUNC(list_remove)
 {
-    Tcl_Obj *objp;
     char *weelist, *item;
 
     API_INIT_FUNC(1, "list_remove", API_RETURN_ERROR);
@@ -967,10 +844,6 @@ API_FUNC(list_remove)
 
 API_FUNC(list_remove_all)
 {
-    Tcl_Obj *objp;
-
-    (void) clientData;
-
     API_INIT_FUNC(1, "list_remove_all", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -982,8 +855,6 @@ API_FUNC(list_remove_all)
 
 API_FUNC(list_free)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "list_free", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -1033,7 +904,6 @@ weechat_tcl_api_config_reload_cb (const void *pointer, void *data,
 
 API_FUNC(config_new)
 {
-    Tcl_Obj *objp;
     char *name, *function, *data;
     const char *result;
 
@@ -1091,7 +961,6 @@ weechat_tcl_api_config_update_cb (const void *pointer, void *data,
 
 API_FUNC(config_set_version)
 {
-    Tcl_Obj *objp;
     char *config_file, *function, *data;
     int rc, version;
 
@@ -1324,7 +1193,6 @@ weechat_tcl_api_config_section_delete_option_cb (const void *pointer, void *data
 
 API_FUNC(config_new_section)
 {
-    Tcl_Obj *objp;
     char *config_file, *name, *function_read, *data_read;
     char *function_write, *data_write, *function_write_default;
     char *data_write_default, *function_create_option, *data_create_option;
@@ -1385,7 +1253,6 @@ API_FUNC(config_new_section)
 
 API_FUNC(config_search_section)
 {
-    Tcl_Obj *objp;
     char *config_file, *section_name;
     const char *result;
 
@@ -1498,7 +1365,6 @@ weechat_tcl_api_config_option_delete_cb (const void *pointer, void *data,
 
 API_FUNC(config_new_option)
 {
-    Tcl_Obj *objp;
     char *config_file, *section, *name, *type;
     char *description, *string_values, *default_value, *value;
     char *function_check_value, *data_check_value, *function_change;
@@ -1562,7 +1428,6 @@ API_FUNC(config_new_option)
 
 API_FUNC(config_search_option)
 {
-    Tcl_Obj *objp;
     char *config_file, *section, *option_name;
     const char *result;
 
@@ -1583,7 +1448,6 @@ API_FUNC(config_search_option)
 
 API_FUNC(config_string_to_boolean)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "config_string_to_boolean", API_RETURN_INT(0));
@@ -1597,7 +1461,6 @@ API_FUNC(config_string_to_boolean)
 
 API_FUNC(config_option_reset)
 {
-    Tcl_Obj *objp;
     int rc;
     char *option;
     int run_callback;
@@ -1619,7 +1482,6 @@ API_FUNC(config_option_reset)
 
 API_FUNC(config_option_set)
 {
-    Tcl_Obj *objp;
     int rc;
     char *option, *new_value;
     int run_callback;
@@ -1643,7 +1505,6 @@ API_FUNC(config_option_set)
 
 API_FUNC(config_option_set_null)
 {
-    Tcl_Obj *objp;
     int rc;
     char *option;
     int run_callback;
@@ -1665,7 +1526,6 @@ API_FUNC(config_option_set_null)
 
 API_FUNC(config_option_unset)
 {
-    Tcl_Obj *objp;
     int rc;
     char *option;
 
@@ -1682,7 +1542,6 @@ API_FUNC(config_option_unset)
 
 API_FUNC(config_option_rename)
 {
-    Tcl_Obj *objp;
     char *option, *new_name;
 
     API_INIT_FUNC(1, "config_option_rename", API_RETURN_ERROR);
@@ -1700,7 +1559,6 @@ API_FUNC(config_option_rename)
 
 API_FUNC(config_option_is_null)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "config_option_is_null", API_RETURN_INT(1));
@@ -1714,7 +1572,6 @@ API_FUNC(config_option_is_null)
 
 API_FUNC(config_option_default_is_null)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "config_option_default_is_null", API_RETURN_INT(1));
@@ -1728,7 +1585,6 @@ API_FUNC(config_option_default_is_null)
 
 API_FUNC(config_boolean)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "config_boolean", API_RETURN_INT(0));
@@ -1742,7 +1598,6 @@ API_FUNC(config_boolean)
 
 API_FUNC(config_boolean_default)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "config_boolean_default", API_RETURN_INT(0));
@@ -1756,7 +1611,6 @@ API_FUNC(config_boolean_default)
 
 API_FUNC(config_integer)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "config_integer", API_RETURN_INT(0));
@@ -1770,7 +1624,6 @@ API_FUNC(config_integer)
 
 API_FUNC(config_integer_default)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "config_integer_default", API_RETURN_INT(0));
@@ -1784,7 +1637,6 @@ API_FUNC(config_integer_default)
 
 API_FUNC(config_string)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "config_string", API_RETURN_EMPTY);
@@ -1798,7 +1650,6 @@ API_FUNC(config_string)
 
 API_FUNC(config_string_default)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "config_string_default", API_RETURN_EMPTY);
@@ -1812,7 +1663,6 @@ API_FUNC(config_string_default)
 
 API_FUNC(config_color)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "config_color", API_RETURN_EMPTY);
@@ -1826,7 +1676,6 @@ API_FUNC(config_color)
 
 API_FUNC(config_color_default)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "config_color_default", API_RETURN_EMPTY);
@@ -1840,7 +1689,6 @@ API_FUNC(config_color_default)
 
 API_FUNC(config_enum)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "config_enum", API_RETURN_INT(0));
@@ -1854,7 +1702,6 @@ API_FUNC(config_enum)
 
 API_FUNC(config_enum_default)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "config_enum_default", API_RETURN_INT(0));
@@ -1868,7 +1715,6 @@ API_FUNC(config_enum_default)
 
 API_FUNC(config_write_option)
 {
-    Tcl_Obj *objp;
     char *config_file, *option;
 
     API_INIT_FUNC(1, "config_write_option", API_RETURN_ERROR);
@@ -1886,7 +1732,6 @@ API_FUNC(config_write_option)
 
 API_FUNC(config_write_line)
 {
-    Tcl_Obj *objp;
     char *config_file, *option_name, *value;
 
     API_INIT_FUNC(1, "config_write_line", API_RETURN_ERROR);
@@ -1905,7 +1750,6 @@ API_FUNC(config_write_line)
 
 API_FUNC(config_write)
 {
-    Tcl_Obj *objp;
     int rc;
 
     API_INIT_FUNC(1, "config_write", API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
@@ -1919,7 +1763,6 @@ API_FUNC(config_write)
 
 API_FUNC(config_read)
 {
-    Tcl_Obj *objp;
     int rc;
 
     API_INIT_FUNC(1, "config_read", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
@@ -1933,7 +1776,6 @@ API_FUNC(config_read)
 
 API_FUNC(config_reload)
 {
-    Tcl_Obj *objp;
     int rc;
 
     API_INIT_FUNC(1, "config_reload", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
@@ -1947,8 +1789,6 @@ API_FUNC(config_reload)
 
 API_FUNC(config_option_free)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "config_option_free", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -1961,8 +1801,6 @@ API_FUNC(config_option_free)
 
 API_FUNC(config_section_free_options)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "config_section_free_options", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -1975,8 +1813,6 @@ API_FUNC(config_section_free_options)
 
 API_FUNC(config_section_free)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "config_section_free", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -1989,8 +1825,6 @@ API_FUNC(config_section_free)
 
 API_FUNC(config_free)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "config_free", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -2003,7 +1837,6 @@ API_FUNC(config_free)
 
 API_FUNC(config_get)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "config_get", API_RETURN_EMPTY);
@@ -2017,7 +1850,6 @@ API_FUNC(config_get)
 
 API_FUNC(config_get_plugin)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "config_get_plugin", API_RETURN_EMPTY);
@@ -2033,7 +1865,6 @@ API_FUNC(config_get_plugin)
 
 API_FUNC(config_is_set_plugin)
 {
-    Tcl_Obj *objp;
     char *option;
     int rc;
 
@@ -2052,7 +1883,6 @@ API_FUNC(config_is_set_plugin)
 
 API_FUNC(config_set_plugin)
 {
-    Tcl_Obj *objp;
     char *option, *value;
     int rc;
 
@@ -2073,7 +1903,6 @@ API_FUNC(config_set_plugin)
 
 API_FUNC(config_set_desc_plugin)
 {
-    Tcl_Obj *objp;
     char *option, *description;
 
     API_INIT_FUNC(1, "config_set_desc_plugin", API_RETURN_ERROR);
@@ -2093,7 +1922,6 @@ API_FUNC(config_set_desc_plugin)
 
 API_FUNC(config_unset_plugin)
 {
-    Tcl_Obj *objp;
     char *option;
     int rc;
 
@@ -2112,7 +1940,6 @@ API_FUNC(config_unset_plugin)
 
 API_FUNC(key_bind)
 {
-    Tcl_Obj *objp;
     char *context;
     struct t_hashtable *hashtable;
     int num_keys;
@@ -2137,7 +1964,6 @@ API_FUNC(key_bind)
 
 API_FUNC(key_unbind)
 {
-    Tcl_Obj *objp;
     char *context, *key;
     int num_keys;
 
@@ -2155,7 +1981,6 @@ API_FUNC(key_unbind)
 
 API_FUNC(prefix)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(0, "prefix", API_RETURN_EMPTY);
@@ -2169,7 +1994,6 @@ API_FUNC(prefix)
 
 API_FUNC(color)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(0, "color", API_RETURN_EMPTY);
@@ -2183,7 +2007,6 @@ API_FUNC(color)
 
 API_FUNC(print)
 {
-    Tcl_Obj *objp;
     char *buffer, *message;
 
     API_INIT_FUNC(0, "print", API_RETURN_ERROR);
@@ -2203,7 +2026,6 @@ API_FUNC(print)
 
 API_FUNC(print_date_tags)
 {
-    Tcl_Obj *objp;
     char *buffer, *tags, *message;
     long date;
 
@@ -2230,7 +2052,6 @@ API_FUNC(print_date_tags)
 
 API_FUNC(print_datetime_tags)
 {
-    Tcl_Obj *objp;
     char *buffer, *tags, *message;
     int date_usec;
     long date;
@@ -2262,7 +2083,6 @@ API_FUNC(print_datetime_tags)
 
 API_FUNC(print_y)
 {
-    Tcl_Obj *objp;
     char *buffer, *message;
     int y;
 
@@ -2287,7 +2107,6 @@ API_FUNC(print_y)
 
 API_FUNC(print_y_date_tags)
 {
-    Tcl_Obj *objp;
     char *buffer, *tags, *message;
     int y;
     long date;
@@ -2319,7 +2138,6 @@ API_FUNC(print_y_date_tags)
 
 API_FUNC(print_y_datetime_tags)
 {
-    Tcl_Obj *objp;
     char *buffer, *tags, *message;
     int y, date_usec;
     long date;
@@ -2355,8 +2173,6 @@ API_FUNC(print_y_datetime_tags)
 
 API_FUNC(log_print)
 {
-    Tcl_Obj *objp;
-
     /* make C compiler happy */
     (void) clientData;
 
@@ -2416,7 +2232,6 @@ weechat_tcl_api_hook_command_cb (const void *pointer, void *data,
 
 API_FUNC(hook_command)
 {
-    Tcl_Obj *objp;
     char *command, *description, *args, *args_description;
     char *completion, *function, *data;
     const char *result;
@@ -2490,7 +2305,6 @@ weechat_tcl_api_hook_completion_cb (const void *pointer, void *data,
 
 API_FUNC(hook_completion)
 {
-    Tcl_Obj *objp;
     char *completion, *description, *function, *data;
     const char *result;
 
@@ -2521,7 +2335,6 @@ API_FUNC(hook_completion)
 
 API_FUNC(hook_completion_get_string)
 {
-    Tcl_Obj *objp;
     char *completion, *property;
     const char *result;
 
@@ -2545,7 +2358,6 @@ API_FUNC(hook_completion_get_string)
 
 API_FUNC(hook_completion_list_add)
 {
-    Tcl_Obj *objp;
     char *completion, *word, *where;
     int nick_completion;
 
@@ -2609,7 +2421,6 @@ weechat_tcl_api_hook_command_run_cb (const void *pointer, void *data,
 
 API_FUNC(hook_command_run)
 {
-    Tcl_Obj *objp;
     char *command, *function, *data;
     const char *result;
 
@@ -2670,7 +2481,6 @@ weechat_tcl_api_hook_timer_cb (const void *pointer, void *data,
 
 API_FUNC(hook_timer)
 {
-    Tcl_Obj *objp;
     const char *result;
     long interval;
     int align_second, max_calls;
@@ -2735,7 +2545,6 @@ weechat_tcl_api_hook_fd_cb (const void *pointer, void *data, int fd)
 
 API_FUNC(hook_fd)
 {
-    Tcl_Obj *objp;
     const char *result;
     int fd, read, write, exception;
 
@@ -2824,7 +2633,6 @@ weechat_tcl_api_hook_process_cb (const void *pointer, void *data,
 
 API_FUNC(hook_process)
 {
-    Tcl_Obj *objp;
     char *command, *function, *data;
     const char *result;
     int timeout;
@@ -2853,7 +2661,6 @@ API_FUNC(hook_process)
 
 API_FUNC(hook_process_hashtable)
 {
-    Tcl_Obj *objp;
     char *command, *function, *data;
     const char *result;
     struct t_hashtable *options;
@@ -2932,7 +2739,6 @@ weechat_tcl_api_hook_url_cb (const void *pointer, void *data,
 
 API_FUNC(hook_url)
 {
-    Tcl_Obj *objp;
     char *url, *function, *data;
     const char *result;
     struct t_hashtable *options;
@@ -3013,7 +2819,6 @@ weechat_tcl_api_hook_connect_cb (const void *pointer, void *data,
 
 API_FUNC(hook_connect)
 {
-    Tcl_Obj *objp;
     char *proxy, *address, *local_hostname, *function, *data;
     const char *result;
     int port, ipv6, retry;
@@ -3081,7 +2886,6 @@ weechat_tcl_api_hook_line_cb (const void *pointer, void *data,
 
 API_FUNC(hook_line)
 {
-    Tcl_Obj *objp;
     char *buffer_type, *buffer_name, *tags, *function, *data;
     const char *result;
 
@@ -3167,7 +2971,6 @@ weechat_tcl_api_hook_print_cb (const void *pointer, void *data,
 
 API_FUNC(hook_print)
 {
-    Tcl_Obj *objp;
     char *buffer, *tags, *message, *function, *data;
     const char *result;
     int strip_colors;
@@ -3259,7 +3062,6 @@ weechat_tcl_api_hook_signal_cb (const void *pointer, void *data,
 
 API_FUNC(hook_signal)
 {
-    Tcl_Obj *objp;
     char *signal, *function, *data;
     const char *result;
 
@@ -3283,7 +3085,6 @@ API_FUNC(hook_signal)
 
 API_FUNC(hook_signal_send)
 {
-    Tcl_Obj *objp;
     char *signal, *type_data;
     int number, rc;
 
@@ -3363,7 +3164,6 @@ weechat_tcl_api_hook_hsignal_cb (const void *pointer, void *data,
 
 API_FUNC(hook_hsignal)
 {
-    Tcl_Obj *objp;
     char *signal, *function, *data;
     const char *result;
 
@@ -3387,7 +3187,6 @@ API_FUNC(hook_hsignal)
 
 API_FUNC(hook_hsignal_send)
 {
-    Tcl_Obj *objp;
     char *signal;
     struct t_hashtable *hashtable;
     int rc;
@@ -3450,7 +3249,6 @@ weechat_tcl_api_hook_config_cb (const void *pointer, void *data,
 
 API_FUNC(hook_config)
 {
-    Tcl_Obj *objp;
     char *option, *function, *data;
     const char *result;
 
@@ -3504,7 +3302,6 @@ weechat_tcl_api_hook_modifier_cb (const void *pointer, void *data,
 
 API_FUNC(hook_modifier)
 {
-    Tcl_Obj *objp;
     char *modifier, *function, *data;
     const char *result;
 
@@ -3528,7 +3325,6 @@ API_FUNC(hook_modifier)
 
 API_FUNC(hook_modifier_exec)
 {
-    Tcl_Obj *objp;
     char *result, *modifier, *modifier_data, *string;
 
     API_INIT_FUNC(1, "hook_modifier_exec", API_RETURN_EMPTY);
@@ -3574,7 +3370,6 @@ weechat_tcl_api_hook_info_cb (const void *pointer, void *data,
 
 API_FUNC(hook_info)
 {
-    Tcl_Obj *objp;
     char *info_name, *description, *args_description, *function, *data;
     const char *result;
 
@@ -3631,7 +3426,6 @@ weechat_tcl_api_hook_info_hashtable_cb (const void *pointer, void *data,
 
 API_FUNC(hook_info_hashtable)
 {
-    Tcl_Obj *objp;
     char *info_name, *description, *args_description;
     char *output_description, *function, *data;
     const char *result;
@@ -3695,7 +3489,6 @@ weechat_tcl_api_hook_infolist_cb (const void *pointer, void *data,
 
 API_FUNC(hook_infolist)
 {
-    Tcl_Obj *objp;
     char *infolist_name, *description, *pointer_description;
     char *args_description, *function, *data;
     const char *result;
@@ -3753,7 +3546,6 @@ weechat_tcl_api_hook_focus_cb (const void *pointer, void *data,
 
 API_FUNC(hook_focus)
 {
-    Tcl_Obj *objp;
     char *area, *function, *data;
     const char *result;
 
@@ -3777,7 +3569,6 @@ API_FUNC(hook_focus)
 
 API_FUNC(hook_set)
 {
-    Tcl_Obj *objp;
     char *hook, *property, *value;
 
     API_INIT_FUNC(1, "hook_set", API_RETURN_ERROR);
@@ -3795,8 +3586,6 @@ API_FUNC(hook_set)
 
 API_FUNC(unhook)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "unhook", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -3809,8 +3598,6 @@ API_FUNC(unhook)
 
 API_FUNC(unhook_all)
 {
-    Tcl_Obj *objp;
-
     /* make C compiler happy */
     (void) clientData;
     (void) objc;
@@ -3899,7 +3686,6 @@ weechat_tcl_api_buffer_close_cb (const void *pointer,
 
 API_FUNC(buffer_new)
 {
-    Tcl_Obj *objp;
     char *name, *function_input, *data_input, *function_close, *data_close;
     const char *result;
 
@@ -3928,7 +3714,6 @@ API_FUNC(buffer_new)
 
 API_FUNC(buffer_new_props)
 {
-    Tcl_Obj *objp;
     char *name, *function_input, *data_input, *function_close, *data_close;
     struct t_hashtable *properties;
     const char *result;
@@ -3968,7 +3753,6 @@ API_FUNC(buffer_new_props)
 
 API_FUNC(buffer_search)
 {
-    Tcl_Obj *objp;
     char *plugin, *name;
     const char *result;
 
@@ -3986,7 +3770,6 @@ API_FUNC(buffer_search)
 
 API_FUNC(buffer_search_main)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     /* make C compiler happy */
@@ -4003,7 +3786,6 @@ API_FUNC(buffer_search_main)
 
 API_FUNC(current_buffer)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     /* make C compiler happy */
@@ -4020,8 +3802,6 @@ API_FUNC(current_buffer)
 
 API_FUNC(buffer_clear)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "buffer_clear", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -4033,8 +3813,6 @@ API_FUNC(buffer_clear)
 
 API_FUNC(buffer_close)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "buffer_close", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -4047,8 +3825,6 @@ API_FUNC(buffer_close)
 
 API_FUNC(buffer_merge)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "buffer_merge", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -4061,7 +3837,6 @@ API_FUNC(buffer_merge)
 
 API_FUNC(buffer_unmerge)
 {
-    Tcl_Obj *objp;
     int number;
 
     API_INIT_FUNC(1, "buffer_unmerge", API_RETURN_ERROR);
@@ -4079,7 +3854,6 @@ API_FUNC(buffer_unmerge)
 
 API_FUNC(buffer_get_integer)
 {
-    Tcl_Obj *objp;
     char *buffer, *property;
     int result;
 
@@ -4097,7 +3871,6 @@ API_FUNC(buffer_get_integer)
 
 API_FUNC(buffer_get_string)
 {
-    Tcl_Obj *objp;
     char *buffer, *property;
     const char *result;
 
@@ -4115,7 +3888,6 @@ API_FUNC(buffer_get_string)
 
 API_FUNC(buffer_get_pointer)
 {
-    Tcl_Obj *objp;
     char *buffer, *property;
     const char *result;
 
@@ -4134,7 +3906,6 @@ API_FUNC(buffer_get_pointer)
 
 API_FUNC(buffer_set)
 {
-    Tcl_Obj *objp;
     char *buffer, *property, *value;
 
     API_INIT_FUNC(1, "buffer_set", API_RETURN_ERROR);
@@ -4152,7 +3923,6 @@ API_FUNC(buffer_set)
 
 API_FUNC(buffer_string_replace_local_var)
 {
-    Tcl_Obj *objp;
     char *buffer, *string, *result;
 
     API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_EMPTY);
@@ -4169,7 +3939,6 @@ API_FUNC(buffer_string_replace_local_var)
 
 API_FUNC(buffer_match_list)
 {
-    Tcl_Obj *objp;
     char *buffer, *string;
     int result;
 
@@ -4187,7 +3956,6 @@ API_FUNC(buffer_match_list)
 
 API_FUNC(current_window)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     /* make C compiler happy */
@@ -4204,7 +3972,6 @@ API_FUNC(current_window)
 
 API_FUNC(window_search_with_buffer)
 {
-    Tcl_Obj *objp;
     char *buffer;
     const char *result;
 
@@ -4221,7 +3988,6 @@ API_FUNC(window_search_with_buffer)
 
 API_FUNC(window_get_integer)
 {
-    Tcl_Obj *objp;
     char *window, *property;
     int result;
 
@@ -4239,7 +4005,6 @@ API_FUNC(window_get_integer)
 
 API_FUNC(window_get_string)
 {
-    Tcl_Obj *objp;
     char *window, *property;
     const char *result;
 
@@ -4257,7 +4022,6 @@ API_FUNC(window_get_string)
 
 API_FUNC(window_get_pointer)
 {
-    Tcl_Obj *objp;
     char *window, *property;
     const char *result;
 
@@ -4276,7 +4040,6 @@ API_FUNC(window_get_pointer)
 
 API_FUNC(window_set_title)
 {
-    Tcl_Obj *objp;
     char *title;
 
     API_INIT_FUNC(1, "window_set_title", API_RETURN_ERROR);
@@ -4292,7 +4055,6 @@ API_FUNC(window_set_title)
 
 API_FUNC(nicklist_add_group)
 {
-    Tcl_Obj *objp;
     char *buffer, *parent_group, *name, *color;
     const char *result;
     int visible;
@@ -4320,7 +4082,6 @@ API_FUNC(nicklist_add_group)
 
 API_FUNC(nicklist_search_group)
 {
-    Tcl_Obj *objp;
     char *buffer, *from_group, *name;
     const char *result;
 
@@ -4341,7 +4102,6 @@ API_FUNC(nicklist_search_group)
 
 API_FUNC(nicklist_add_nick)
 {
-    Tcl_Obj *objp;
     char *buffer, *group, *name, *color, *prefix, *prefix_color;
     const char *result;
     int visible;
@@ -4373,7 +4133,6 @@ API_FUNC(nicklist_add_nick)
 
 API_FUNC(nicklist_search_nick)
 {
-    Tcl_Obj *objp;
     char *buffer, *from_group, *name;
     const char *result;
 
@@ -4394,7 +4153,6 @@ API_FUNC(nicklist_search_nick)
 
 API_FUNC(nicklist_remove_group)
 {
-    Tcl_Obj *objp;
     char *buffer, *group;
 
     API_INIT_FUNC(1, "nicklist_remove_group", API_RETURN_ERROR);
@@ -4412,7 +4170,6 @@ API_FUNC(nicklist_remove_group)
 
 API_FUNC(nicklist_remove_nick)
 {
-    Tcl_Obj *objp;
     char *buffer, *nick;
 
     API_INIT_FUNC(1, "nicklist_remove_nick", API_RETURN_ERROR);
@@ -4430,8 +4187,6 @@ API_FUNC(nicklist_remove_nick)
 
 API_FUNC(nicklist_remove_all)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "nicklist_remove_all", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -4443,7 +4198,6 @@ API_FUNC(nicklist_remove_all)
 
 API_FUNC(nicklist_group_get_integer)
 {
-    Tcl_Obj *objp;
     char *buffer, *group, *property;
     int result;
 
@@ -4464,7 +4218,6 @@ API_FUNC(nicklist_group_get_integer)
 
 API_FUNC(nicklist_group_get_string)
 {
-    Tcl_Obj *objp;
     char *buffer, *group, *property;
     const char *result;
 
@@ -4485,7 +4238,6 @@ API_FUNC(nicklist_group_get_string)
 
 API_FUNC(nicklist_group_get_pointer)
 {
-    Tcl_Obj *objp;
     char *buffer, *group, *property;
     const char *result;
 
@@ -4506,7 +4258,6 @@ API_FUNC(nicklist_group_get_pointer)
 
 API_FUNC(nicklist_group_set)
 {
-    Tcl_Obj *objp;
     char *buffer, *group, *property, *value;
 
     API_INIT_FUNC(1, "nicklist_group_set", API_RETURN_ERROR);
@@ -4528,7 +4279,6 @@ API_FUNC(nicklist_group_set)
 
 API_FUNC(nicklist_nick_get_integer)
 {
-    Tcl_Obj *objp;
     char *buffer, *nick, *property;
     int result;
 
@@ -4549,7 +4299,6 @@ API_FUNC(nicklist_nick_get_integer)
 
 API_FUNC(nicklist_nick_get_string)
 {
-    Tcl_Obj *objp;
     char *buffer, *nick, *property;
     const char *result;
 
@@ -4570,7 +4319,6 @@ API_FUNC(nicklist_nick_get_string)
 
 API_FUNC(nicklist_nick_get_pointer)
 {
-    Tcl_Obj *objp;
     char *buffer, *nick, *property;
     const char *result;
 
@@ -4591,7 +4339,6 @@ API_FUNC(nicklist_nick_get_pointer)
 
 API_FUNC(nicklist_nick_set)
 {
-    Tcl_Obj *objp;
     char *buffer, *nick, *property, *value;
 
     API_INIT_FUNC(1, "nicklist_nick_set", API_RETURN_ERROR);
@@ -4613,7 +4360,6 @@ API_FUNC(nicklist_nick_set)
 
 API_FUNC(bar_item_search)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "bar_item_search", API_RETURN_EMPTY);
@@ -4677,7 +4423,6 @@ weechat_tcl_api_bar_item_build_cb (const void *pointer, void *data,
 
 API_FUNC(bar_item_new)
 {
-    Tcl_Obj *objp;
     char *name, *function, *data;
     const char *result;
 
@@ -4701,8 +4446,6 @@ API_FUNC(bar_item_new)
 
 API_FUNC(bar_item_update)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "bar_item_update", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -4714,8 +4457,6 @@ API_FUNC(bar_item_update)
 
 API_FUNC(bar_item_remove)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "bar_item_remove", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -4728,7 +4469,6 @@ API_FUNC(bar_item_remove)
 
 API_FUNC(bar_search)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "bar_search", API_RETURN_EMPTY);
@@ -4742,7 +4482,6 @@ API_FUNC(bar_search)
 
 API_FUNC(bar_new)
 {
-    Tcl_Obj *objp;
     char *name, *hidden, *priority, *type, *conditions, *position;
     char *filling_top_bottom, *filling_left_right, *size, *size_max, *color_fg;
     char *color_delim, *color_bg, *color_bg_inactive, *separator, *bar_items;
@@ -4791,7 +4530,6 @@ API_FUNC(bar_new)
 
 API_FUNC(bar_set)
 {
-    Tcl_Obj *objp;
     char *bar, *property, *value;
     int rc;
 
@@ -4810,8 +4548,6 @@ API_FUNC(bar_set)
 
 API_FUNC(bar_update)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "bar_update", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -4823,8 +4559,6 @@ API_FUNC(bar_update)
 
 API_FUNC(bar_remove)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "bar_remove", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -4836,7 +4570,6 @@ API_FUNC(bar_remove)
 
 API_FUNC(command)
 {
-    Tcl_Obj *objp;
     char *buffer, *command;
     int rc;
 
@@ -4857,7 +4590,6 @@ API_FUNC(command)
 
 API_FUNC(command_options)
 {
-    Tcl_Obj *objp;
     char *buffer, *command;
     struct t_hashtable *options;
     int rc;
@@ -4887,7 +4619,6 @@ API_FUNC(command_options)
 
 API_FUNC(completion_new)
 {
-    Tcl_Obj *objp;
     char *buffer;
     const char *result;
 
@@ -4904,7 +4635,6 @@ API_FUNC(completion_new)
 
 API_FUNC(completion_search)
 {
-    Tcl_Obj *objp;
     char *completion, *data;
     int position, direction, rc;
 
@@ -4927,7 +4657,6 @@ API_FUNC(completion_search)
 
 API_FUNC(completion_get_string)
 {
-    Tcl_Obj *objp;
     char *completion, *property;
     const char *result;
 
@@ -4946,7 +4675,6 @@ API_FUNC(completion_get_string)
 
 API_FUNC(completion_list_add)
 {
-    Tcl_Obj *objp;
     char *completion, *word, *where;
     int nick_completion;
 
@@ -4971,7 +4699,6 @@ API_FUNC(completion_list_add)
 
 API_FUNC(info_get)
 {
-    Tcl_Obj *objp;
     char *result;
 
     API_INIT_FUNC(1, "info_get", API_RETURN_EMPTY);
@@ -4986,7 +4713,7 @@ API_FUNC(info_get)
 
 API_FUNC(info_get_hashtable)
 {
-    Tcl_Obj *objp, *result_dict;
+    Tcl_Obj *result_dict;
     struct t_hashtable *hashtable, *result_hashtable;
 
     API_INIT_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
@@ -5012,7 +4739,6 @@ API_FUNC(info_get_hashtable)
 
 API_FUNC(infolist_new)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     /* make C compiler happy */
@@ -5029,7 +4755,6 @@ API_FUNC(infolist_new)
 
 API_FUNC(infolist_new_item)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "infolist_new_item", API_RETURN_EMPTY);
@@ -5043,7 +4768,6 @@ API_FUNC(infolist_new_item)
 
 API_FUNC(infolist_new_var_integer)
 {
-    Tcl_Obj *objp;
     const char *result;
     int value;
 
@@ -5063,7 +4787,6 @@ API_FUNC(infolist_new_var_integer)
 
 API_FUNC(infolist_new_var_string)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
@@ -5079,7 +4802,6 @@ API_FUNC(infolist_new_var_string)
 
 API_FUNC(infolist_new_var_pointer)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
@@ -5095,7 +4817,6 @@ API_FUNC(infolist_new_var_pointer)
 
 API_FUNC(infolist_new_var_time)
 {
-    Tcl_Obj *objp;
     const char *result;
     long value;
 
@@ -5115,7 +4836,6 @@ API_FUNC(infolist_new_var_time)
 
 API_FUNC(infolist_search_var)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "infolist_search_var", API_RETURN_EMPTY);
@@ -5130,7 +4850,6 @@ API_FUNC(infolist_search_var)
 
 API_FUNC(infolist_get)
 {
-    Tcl_Obj *objp;
     char *name, *pointer, *arguments;
     const char *result;
 
@@ -5151,7 +4870,6 @@ API_FUNC(infolist_get)
 
 API_FUNC(infolist_next)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "infolist_next", API_RETURN_INT(0));
@@ -5165,7 +4883,6 @@ API_FUNC(infolist_next)
 
 API_FUNC(infolist_prev)
 {
-    Tcl_Obj *objp;
     int result;
 
     API_INIT_FUNC(1, "infolist_prev", API_RETURN_INT(0));
@@ -5179,8 +4896,6 @@ API_FUNC(infolist_prev)
 
 API_FUNC(infolist_reset_item_cursor)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "infolist_reset_item_cursor", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -5192,7 +4907,6 @@ API_FUNC(infolist_reset_item_cursor)
 
 API_FUNC(infolist_fields)
 {
-    Tcl_Obj *objp;
     const char *result;
 
     API_INIT_FUNC(1, "infolist_fields", API_RETURN_EMPTY);
@@ -5206,7 +4920,6 @@ API_FUNC(infolist_fields)
 
 API_FUNC(infolist_integer)
 {
-    Tcl_Obj *objp;
     char *infolist, *variable;
     int result;
 
@@ -5224,7 +4937,6 @@ API_FUNC(infolist_integer)
 
 API_FUNC(infolist_string)
 {
-    Tcl_Obj *objp;
     char *infolist, *variable;
     const char *result;
 
@@ -5242,7 +4954,6 @@ API_FUNC(infolist_string)
 
 API_FUNC(infolist_pointer)
 {
-    Tcl_Obj *objp;
     char *infolist, *variable;
     const char *result;
 
@@ -5260,7 +4971,6 @@ API_FUNC(infolist_pointer)
 
 API_FUNC(infolist_time)
 {
-    Tcl_Obj *objp;
     time_t time;
     char *infolist, *variable;
 
@@ -5278,8 +4988,6 @@ API_FUNC(infolist_time)
 
 API_FUNC(infolist_free)
 {
-    Tcl_Obj *objp;
-
     API_INIT_FUNC(1, "infolist_free", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -5291,7 +4999,6 @@ API_FUNC(infolist_free)
 
 API_FUNC(hdata_get)
 {
-    Tcl_Obj *objp;
     char *name;
     const char *result;
 
@@ -5308,7 +5015,6 @@ API_FUNC(hdata_get)
 
 API_FUNC(hdata_get_var_offset)
 {
-    Tcl_Obj *objp;
     char *hdata, *name;
     int result;
 
@@ -5326,7 +5032,6 @@ API_FUNC(hdata_get_var_offset)
 
 API_FUNC(hdata_get_var_type_string)
 {
-    Tcl_Obj *objp;
     char *hdata, *name;
     const char *result;
 
@@ -5344,7 +5049,6 @@ API_FUNC(hdata_get_var_type_string)
 
 API_FUNC(hdata_get_var_array_size)
 {
-    Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     int result;
 
@@ -5365,7 +5069,6 @@ API_FUNC(hdata_get_var_array_size)
 
 API_FUNC(hdata_get_var_array_size_string)
 {
-    Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     const char *result;
 
@@ -5386,7 +5089,6 @@ API_FUNC(hdata_get_var_array_size_string)
 
 API_FUNC(hdata_get_var_hdata)
 {
-    Tcl_Obj *objp;
     char *hdata, *name;
     const char *result;
 
@@ -5404,7 +5106,6 @@ API_FUNC(hdata_get_var_hdata)
 
 API_FUNC(hdata_get_list)
 {
-    Tcl_Obj *objp;
     char *hdata, *name;
     const char *result;
 
@@ -5423,7 +5124,6 @@ API_FUNC(hdata_get_list)
 
 API_FUNC(hdata_check_pointer)
 {
-    Tcl_Obj *objp;
     char *hdata, *list, *pointer;
     int result;
 
@@ -5444,7 +5144,6 @@ API_FUNC(hdata_check_pointer)
 
 API_FUNC(hdata_move)
 {
-    Tcl_Obj *objp;
     char *hdata, *pointer;
     const char *result;
     int count;
@@ -5468,7 +5167,6 @@ API_FUNC(hdata_move)
 
 API_FUNC(hdata_search)
 {
-    Tcl_Obj *objp;
     char *hdata, *pointer, *search;
     const char *result;
     struct t_hashtable *pointers, *extra_vars, *options;
@@ -5517,7 +5215,6 @@ API_FUNC(hdata_search)
 
 API_FUNC(hdata_char)
 {
-    Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     int result;
 
@@ -5538,7 +5235,6 @@ API_FUNC(hdata_char)
 
 API_FUNC(hdata_integer)
 {
-    Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     int result;
 
@@ -5559,7 +5255,6 @@ API_FUNC(hdata_integer)
 
 API_FUNC(hdata_long)
 {
-    Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     long result;
 
@@ -5580,7 +5275,6 @@ API_FUNC(hdata_long)
 
 API_FUNC(hdata_string)
 {
-    Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     const char *result;
 
@@ -5601,7 +5295,6 @@ API_FUNC(hdata_string)
 
 API_FUNC(hdata_pointer)
 {
-    Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     const char *result;
 
@@ -5622,7 +5315,6 @@ API_FUNC(hdata_pointer)
 
 API_FUNC(hdata_time)
 {
-    Tcl_Obj *objp;
     time_t time;
     char *hdata, *pointer, *name;
 
@@ -5643,7 +5335,7 @@ API_FUNC(hdata_time)
 
 API_FUNC(hdata_hashtable)
 {
-    Tcl_Obj *objp, *result_dict;
+    Tcl_Obj *result_dict;
     char *hdata, *pointer, *name;
 
     API_INIT_FUNC(1, "hdata_hashtable", API_RETURN_EMPTY);
@@ -5665,7 +5357,6 @@ API_FUNC(hdata_hashtable)
 
 API_FUNC(hdata_compare)
 {
-    Tcl_Obj *objp;
     char *hdata, *pointer1, *pointer2, *name;
     int case_sensitive, rc;
 
@@ -5692,7 +5383,6 @@ API_FUNC(hdata_compare)
 
 API_FUNC(hdata_update)
 {
-    Tcl_Obj *objp;
     char *hdata, *pointer;
     struct t_hashtable *hashtable;
     int value;
@@ -5720,7 +5410,6 @@ API_FUNC(hdata_update)
 
 API_FUNC(hdata_get_string)
 {
-    Tcl_Obj *objp;
     char *hdata, *property;
     const char *result;
 
@@ -5779,7 +5468,6 @@ weechat_tcl_api_upgrade_read_cb (const void *pointer, void *data,
 
 API_FUNC(upgrade_new)
 {
-    Tcl_Obj *objp;
     char *filename, *function, *data;
     const char *result;
 
@@ -5805,7 +5493,6 @@ API_FUNC(upgrade_new)
 
 API_FUNC(upgrade_write_object)
 {
-    Tcl_Obj *objp;
     char *upgrade_file, *infolist;
     int rc, object_id;
 
@@ -5828,7 +5515,6 @@ API_FUNC(upgrade_write_object)
 
 API_FUNC(upgrade_read)
 {
-    Tcl_Obj *objp;
     char *upgrade_file;
     int rc;
 
@@ -5845,7 +5531,6 @@ API_FUNC(upgrade_read)
 
 API_FUNC(upgrade_close)
 {
-    Tcl_Obj *objp;
     char *upgrade_file;
 
     API_INIT_FUNC(1, "upgrade_close", API_RETURN_ERROR);
