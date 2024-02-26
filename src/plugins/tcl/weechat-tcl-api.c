@@ -92,27 +92,27 @@
     }
 #define API_RETURN_STRING(__string)                                     \
     {                                                                   \
-	    if (__string)                                                   \
+        if (__string)                                                   \
         {                                                               \
-		    Tcl_SetObjResult (interp, Tcl_NewStringObj(__string, -1));  \
-	    }                                                               \
-	    else                                                            \
-		{                                                               \
-		    Tcl_SetObjResult (interp, Tcl_NewObj ());                   \
-		}                                                               \
+            Tcl_SetObjResult (interp, Tcl_NewStringObj(__string, -1));  \
+        }                                                               \
+        else                                                            \
+        {                                                               \
+            Tcl_SetObjResult (interp, Tcl_NewObj ());                   \
+        }                                                               \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_STRING_FREE(__string)                                \
     {                                                                   \
-	    if (__string)                                                   \
+        if (__string)                                                   \
         {                                                               \
-		    Tcl_SetObjResult (interp, Tcl_NewStringObj(__string, -1));  \
-			free (__string);                                            \
-	    }                                                               \
-	    else                                                            \
-		{                                                               \
-		    Tcl_SetObjResult (interp, Tcl_NewObj ());                   \
-		}                                                               \
+            Tcl_SetObjResult (interp, Tcl_NewStringObj(__string, -1));  \
+            free (__string);                                            \
+        }                                                               \
+        else                                                            \
+        {                                                               \
+            Tcl_SetObjResult (interp, Tcl_NewObj ());                   \
+        }                                                               \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_INT(__int)                                           \
