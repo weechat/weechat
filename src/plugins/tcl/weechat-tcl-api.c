@@ -77,137 +77,52 @@
                            tcl_function_name, __string)
 #define API_RETURN_OK                                                   \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
-        {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            Tcl_SetIntObj (objp, 1);                                    \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
-        }                                                               \
-        else                                                            \
-            Tcl_SetIntObj (objp, 1);                                    \
+        Tcl_SetObjResult (interp, Tcl_NewIntObj (1));                   \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_ERROR                                                \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
-        {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            Tcl_SetIntObj (objp, 0);                                    \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
-        }                                                               \
-        else                                                            \
-            Tcl_SetIntObj (objp, 0);                                    \
+        Tcl_SetObjResult (interp, Tcl_NewIntObj (0));                   \
         return TCL_ERROR;                                               \
     }
 #define API_RETURN_EMPTY                                                \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
-        {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            Tcl_SetStringObj (objp, "", -1);                            \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
-        }                                                               \
-        else                                                            \
-            Tcl_SetStringObj (objp, "", -1);                            \
+        Tcl_SetObjResult (interp, Tcl_NewObj ());                       \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_STRING(__string)                                     \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
+	    if (__string)                                                   \
         {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            if (__string)                                               \
-            {                                                           \
-                Tcl_SetStringObj (objp, __string, -1);                  \
-                Tcl_SetObjResult (interp, objp);                        \
-                Tcl_DecrRefCount (objp);                                \
-                return TCL_OK;                                          \
-            }                                                           \
-            Tcl_SetStringObj (objp, "", -1);                            \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
-        }                                                               \
-        else                                                            \
-        {                                                               \
-            if (__string)                                               \
-            {                                                           \
-                Tcl_SetStringObj (objp, __string, -1);                  \
-                return TCL_OK;                                          \
-            }                                                           \
-            Tcl_SetStringObj (objp, "", -1);                            \
-        }                                                               \
+		    Tcl_SetObjResult (interp, Tcl_NewStringObj(__string, -1));  \
+	    }                                                               \
+	    else                                                            \
+		{                                                               \
+		    Tcl_SetObjResult (interp, Tcl_NewObj ());                   \
+		}                                                               \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_STRING_FREE(__string)                                \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
+	    if (__string)                                                   \
         {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            if (__string)                                               \
-            {                                                           \
-                Tcl_SetStringObj (objp, __string, -1);                  \
-                Tcl_SetObjResult (interp, objp);                        \
-                Tcl_DecrRefCount (objp);                                \
-                free (__string);                                        \
-                return TCL_OK;                                          \
-            }                                                           \
-            Tcl_SetStringObj (objp, "", -1);                            \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
-        }                                                               \
-        else                                                            \
-        {                                                               \
-            if (__string)                                               \
-            {                                                           \
-                Tcl_SetStringObj (objp, __string, -1);                  \
-                free (__string);                                        \
-                return TCL_OK;                                          \
-            }                                                           \
-            Tcl_SetStringObj (objp, "", -1);                            \
-        }                                                               \
+		    Tcl_SetObjResult (interp, Tcl_NewStringObj(__string, -1));  \
+			free (__string);                                            \
+	    }                                                               \
+	    else                                                            \
+		{                                                               \
+		    Tcl_SetObjResult (interp, Tcl_NewObj ());                   \
+		}                                                               \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_INT(__int)                                           \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
-        {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            Tcl_SetIntObj (objp, __int);                                \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
-        }                                                               \
-        else                                                            \
-            Tcl_SetIntObj (objp, __int);                                \
+        Tcl_SetObjResult (interp, Tcl_NewIntObj (__int));               \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_LONG(__long)                                         \
     {                                                                   \
-        objp = Tcl_GetObjResult (interp);                               \
-        if (Tcl_IsShared (objp))                                        \
-        {                                                               \
-            objp = Tcl_DuplicateObj (objp);                             \
-            Tcl_IncrRefCount (objp);                                    \
-            Tcl_SetLongObj (objp, __long);                              \
-            Tcl_SetObjResult (interp, objp);                            \
-            Tcl_DecrRefCount (objp);                                    \
-        }                                                               \
-        else                                                            \
-            Tcl_SetLongObj (objp, __long);                              \
+        Tcl_SetObjResult (interp, Tcl_NewLongObj (__long));             \
         return TCL_OK;                                                  \
     }
 #define API_RETURN_OBJ(__obj)                                           \
