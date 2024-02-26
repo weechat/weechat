@@ -5392,6 +5392,27 @@ API_FUNC(hdata_long)
     API_RETURN_LONG(value);
 }
 
+API_FUNC(hdata_longlong)
+{
+    char *hdata, *pointer, *name;
+    long long value;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONG(0));
+    if (items < 3)
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    hdata = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
+
+    value = weechat_hdata_longlong (API_STR2PTR(hdata),
+                                    API_STR2PTR(pointer),
+                                    name);
+
+    API_RETURN_LONG(value);
+}
+
 API_FUNC(hdata_string)
 {
     char *hdata, *pointer, *name;
@@ -5888,6 +5909,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(hdata_char);
     API_DEF_FUNC(hdata_integer);
     API_DEF_FUNC(hdata_long);
+    API_DEF_FUNC(hdata_longlong);
     API_DEF_FUNC(hdata_string);
     API_DEF_FUNC(hdata_pointer);
     API_DEF_FUNC(hdata_time);

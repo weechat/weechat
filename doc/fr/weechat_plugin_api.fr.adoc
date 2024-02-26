@@ -18476,7 +18476,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== hdata_new_var
 
-_WeeChat ≥ 0.3.6, mis à jour dans la 0.3.7, 0.3.9, 0.4.3, 3.4._
+_WeeChat ≥ 0.3.6, mis à jour dans la 0.3.7, 0.3.9, 0.4.3, 3.4, 4.3.0._
 
 Créer une nouvelle variable dans le hdata.
 
@@ -18497,6 +18497,7 @@ Paramètres :
 ** _WEECHAT_HDATA_CHAR_
 ** _WEECHAT_HDATA_INTEGER_
 ** _WEECHAT_HDATA_LONG_
+** _WEECHAT_HDATA_LONGLONG_ (_WeeChat ≥ 4.3.0_)
 ** _WEECHAT_HDATA_STRING_
 ** _WEECHAT_HDATA_SHARED_STRING_ (_WeeChat ≥ 0.4.3_)
 ** _WEECHAT_HDATA_POINTER_
@@ -18779,6 +18780,9 @@ switch (type)
         /* ... */
         break;
     case WEECHAT_HDATA_LONG:
+        /* ... */
+        break;
+    case WEECHAT_HDATA_LONGLONG:
         /* ... */
         break;
     case WEECHAT_HDATA_STRING:
@@ -19392,7 +19396,7 @@ weechat.prnt("", "number = %d" % weechat.hdata_integer(hdata, buffer, "number"))
 _WeeChat ≥ 0.3.6._
 
 Retourner la valeur de la variable dans la structure en utilisant le hdata, sous
-forme d'entier long.
+forme d'entier "long".
 
 Prototype :
 
@@ -19429,6 +19433,50 @@ def hdata_long(hdata: str, pointer: str, name: str) -> int: ...
 
 # exemple
 weechat.prnt("", "longvar = %d" % weechat.hdata_long(hdata, pointer, "longvar"))
+----
+
+==== hdata_longlong
+
+_WeeChat ≥ 4.3.0._
+
+Retourner la valeur de la variable dans la structure en utilisant le hdata, sous
+forme d'entier "long long".
+
+Prototype :
+
+[source,c]
+----
+long long weechat_hdata_longlong (struct t_hdata *hdata, void *pointer, const char *name);
+----
+
+Paramètres :
+
+* _hdata_ : pointeur vers le hdata
+* _pointer_ : pointeur vers un objet WeeChat ou d'une extension
+* _name_ : nom de la variable (doit être de type "long long"); pour les tableaux,
+  le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
+  par exemple : "2|name"
+
+Valeur de retour :
+
+* valeur de la variable, sous forme d'entier "long long".
+
+Exemple en C :
+
+[source,c]
+----
+weechat_printf (NULL, "longlongvar = %llu", weechat_hdata_longlong (hdata, pointer, "longlongvar"));
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def hdata_longlong(hdata: str, pointer: str, name: str) -> int: ...
+
+# exemple
+weechat.prnt("", "longlongvar = %d" % weechat.hdata_longlong(hdata, pointer, "longlongvar"))
 ----
 
 ==== hdata_string

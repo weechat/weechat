@@ -2701,6 +2701,16 @@ def hdata_long(hdata: str, pointer: str, name: str) -> int:
     ...
 
 
+def hdata_longlong(hdata: str, pointer: str, name: str) -> int:
+    """`hdata_longlong in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_hdata_longlong>`_
+    ::
+
+        # example
+        weechat.prnt("", "longlongvar = %d" % weechat.hdata_longlong(hdata, pointer, "longlongvar"))
+    """
+    ...
+
+
 def hdata_string(hdata: str, pointer: str, name: str) -> str:
     """`hdata_string in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_hdata_string>`_
     ::

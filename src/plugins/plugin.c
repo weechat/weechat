@@ -932,6 +932,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hdata_char = &hdata_char;
         new_plugin->hdata_integer = &hdata_integer;
         new_plugin->hdata_long = &hdata_long;
+        new_plugin->hdata_longlong = &hdata_longlong;
         new_plugin->hdata_string = &hdata_string;
         new_plugin->hdata_pointer = &hdata_pointer;
         new_plugin->hdata_time = &hdata_time;

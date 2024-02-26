@@ -5544,6 +5544,28 @@ API_FUNC(hdata_long)
     API_RETURN_LONG(result);
 }
 
+API_FUNC(hdata_longlong)
+{
+    zend_string *z_hdata, *z_pointer, *z_name;
+    struct t_hdata *hdata;
+    void *pointer;
+    char *name;
+    long long result;
+
+    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONG(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hdata, &z_pointer,
+                               &z_name) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
+    pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
+    name = ZSTR_VAL(z_name);
+
+    result = weechat_hdata_longlong (hdata, pointer, (const char *)name);
+
+    API_RETURN_LONG(result);
+}
+
 API_FUNC(hdata_string)
 {
     zend_string *z_hdata, *z_pointer, *z_name;

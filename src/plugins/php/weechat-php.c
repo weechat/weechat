@@ -310,6 +310,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_hdata_char, arginfo_weechat_hdata_char)
     PHP_FE(weechat_hdata_integer, arginfo_weechat_hdata_integer)
     PHP_FE(weechat_hdata_long, arginfo_weechat_hdata_long)
+    PHP_FE(weechat_hdata_longlong, arginfo_weechat_hdata_longlong)
     PHP_FE(weechat_hdata_string, arginfo_weechat_hdata_string)
     PHP_FE(weechat_hdata_pointer, arginfo_weechat_hdata_pointer)
     PHP_FE(weechat_hdata_time, arginfo_weechat_hdata_time)

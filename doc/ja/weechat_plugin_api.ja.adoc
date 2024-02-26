@@ -18338,7 +18338,7 @@ struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next", 0, 0
 ==== hdata_new_var
 
 // TRANSLATION MISSING
-_WeeChat ≥ 0.3.6, updated in 0.3.7, 0.3.9, 0.4.3, 3.4._
+_WeeChat ≥ 0.3.6, updated in 0.3.7, 0.3.9, 0.4.3, 3.4, 4.3.0._
 
 hdata に新しい変数を作成。
 
@@ -18359,6 +18359,7 @@ void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset,
 ** _WEECHAT_HDATA_CHAR_
 ** _WEECHAT_HDATA_INTEGER_
 ** _WEECHAT_HDATA_LONG_
+** _WEECHAT_HDATA_LONGLONG_ (_WeeChat ≥ 4.3.0_)
 ** _WEECHAT_HDATA_STRING_
 ** _WEECHAT_HDATA_SHARED_STRING_ (_WeeChat ≥ 0.4.3_)
 ** _WEECHAT_HDATA_POINTER_
@@ -18640,6 +18641,9 @@ switch (type)
         /* ... */
         break;
     case WEECHAT_HDATA_LONG:
+        /* ... */
+        break;
+    case WEECHAT_HDATA_LONGLONG:
         /* ... */
         break;
     case WEECHAT_HDATA_STRING:
@@ -19243,7 +19247,7 @@ weechat.prnt("", "number = %d" % weechat.hdata_integer(hdata, buffer, "number"))
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
-hdata を使って構造体に含まれる long 型変数の値を返す。
+hdata を使って構造体に含まれる "long" 型変数の値を返す。
 
 プロトタイプ:
 
@@ -19279,6 +19283,50 @@ def hdata_long(hdata: str, pointer: str, name: str) -> int: ...
 
 # 例
 weechat.prnt("", "longvar = %d" % weechat.hdata_long(hdata, pointer, "longvar"))
+----
+
+==== hdata_longlong
+
+_WeeChat バージョン 4.3.0 以上で利用可。_
+
+// TRANSLATION MISSING
+Return value of "long long" variable in structure using hdata.
+
+プロトタイプ:
+
+[source,c]
+----
+long long weechat_hdata_longlong (struct t_hdata *hdata, void *pointer, const char *name);
+----
+
+引数:
+
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名 (必ず「long long 型」であること); 配列の場合、"N|name"
+  のように名前を指定することが可能。ここで N は配列のインデックス (1 番目は 0)、例: "2|name"
+
+戻り値:
+
+// TRANSLATION MISSING
+* "long long" value of variable
+
+C 言語での使用例:
+
+[source,c]
+----
+weechat_printf (NULL, "longlongvar = %lld", weechat_hdata_longlong (hdata, pointer, "longlongvar"));
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+def hdata_longlong(hdata: str, pointer: str, name: str) -> int: ...
+
+# 例
+weechat.prnt("", "longlongvar = %d" % weechat.hdata_longlong(hdata, pointer, "longlongvar"))
 ----
 
 ==== hdata_string

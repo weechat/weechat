@@ -62,6 +62,8 @@ extern void relay_weechat_msg_add_int (struct t_relay_weechat_msg *msg,
                                        int value);
 extern void relay_weechat_msg_add_long (struct t_relay_weechat_msg *msg,
                                         long value);
+extern void relay_weechat_msg_add_longlong (struct t_relay_weechat_msg *msg,
+                                            long long value);
 extern void relay_weechat_msg_add_string (struct t_relay_weechat_msg *msg,
                                           const char *string);
 extern void relay_weechat_msg_add_buffer (struct t_relay_weechat_msg *msg,

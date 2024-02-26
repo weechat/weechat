@@ -252,6 +252,7 @@ PHP_FUNCTION(weechat_hdata_search);
 PHP_FUNCTION(weechat_hdata_char);
 PHP_FUNCTION(weechat_hdata_integer);
 PHP_FUNCTION(weechat_hdata_long);
+PHP_FUNCTION(weechat_hdata_longlong);
 PHP_FUNCTION(weechat_hdata_string);
 PHP_FUNCTION(weechat_hdata_pointer);
 PHP_FUNCTION(weechat_hdata_time);

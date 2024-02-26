@@ -24,6 +24,7 @@ New features::
   * api: add modifier "color_decode" to decode WeeChat colors with a replacement string
   * api: use whole replacement string instead of first char in function string_remove_color
   * api: add functions config_option_get_{string|pointer} and config_{boolean|integer|string|color|enum}_inherited in scripting API
+  * api: add function "hdata_longlong" (issue #2081)
   * api: add info "plugin_loaded"
   * api: add support of specifier `%!` for timestamp in function util_strftimeval
   * api: add support of base64url in encode/decode functions

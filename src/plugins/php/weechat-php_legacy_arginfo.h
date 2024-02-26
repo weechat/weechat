@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 59292da89eab98ef1f615c173d9722b9fdafad80 */
+ * Stub hash: cf4a06ff974bca04f671e75e22f7d16534ca643f */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_weechat_register, 0, 0, 7)
 	ZEND_ARG_INFO(0, p0)
@@ -450,6 +450,8 @@ ZEND_END_ARG_INFO()
 #define arginfo_weechat_hdata_integer arginfo_weechat_ngettext
 
 #define arginfo_weechat_hdata_long arginfo_weechat_ngettext
+
+#define arginfo_weechat_hdata_longlong arginfo_weechat_ngettext
 
 #define arginfo_weechat_hdata_string arginfo_weechat_ngettext
 

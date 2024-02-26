@@ -5475,6 +5475,26 @@ API_FUNC(hdata_long)
     API_RETURN_LONG(value);
 }
 
+API_FUNC(hdata_longlong)
+{
+    const char *hdata, *pointer, *name;
+    long long value;
+
+    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONG(0));
+    if (lua_gettop (L) < 3)
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    hdata = lua_tostring (L, -3);
+    pointer = lua_tostring (L, -2);
+    name = lua_tostring (L, -1);
+
+    value = weechat_hdata_longlong (API_STR2PTR(hdata),
+                                    API_STR2PTR(pointer),
+                                    name);
+
+    API_RETURN_LONG(value);
+}
+
 API_FUNC(hdata_string)
 {
     const char *hdata, *pointer, *name, *result;
@@ -5951,6 +5971,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(hdata_char),
     API_DEF_FUNC(hdata_integer),
     API_DEF_FUNC(hdata_long),
+    API_DEF_FUNC(hdata_longlong),
     API_DEF_FUNC(hdata_string),
     API_DEF_FUNC(hdata_pointer),
     API_DEF_FUNC(hdata_time),

@@ -17607,7 +17607,7 @@ struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next", 0, 0
 
 ==== hdata_new_var
 
-_WeeChat ≥ 0.3.6, ажурирано у верзијама 0.3.7, 0.3.9, 0.4.3 и 3.4._
+_WeeChat ≥ 0.3.6, ажурирано у верзијама 0.3.7, 0.3.9, 0.4.3, 3.4 и 4.3.0._
 
 Креира нову променљиву у hdata.
 
@@ -17628,6 +17628,7 @@ void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset,
 ** _WEECHAT_HDATA_CHAR_
 ** _WEECHAT_HDATA_INTEGER_
 ** _WEECHAT_HDATA_LONG_
+** _WEECHAT_HDATA_LONGLONG_ (_WeeChat ≥ 4.3.0_)
 ** _WEECHAT_HDATA_STRING_
 ** _WEECHAT_HDATA_SHARED_STRING_ (_WeeChat ≥ 0.4.3_)
 ** _WEECHAT_HDATA_POINTER_
@@ -17900,6 +17901,9 @@ switch (type)
         /* ... */
         break;
     case WEECHAT_HDATA_LONG:
+        /* ... */
+        break;
+    case WEECHAT_HDATA_LONGLONG:
         /* ... */
         break;
     case WEECHAT_HDATA_STRING:
@@ -18522,6 +18526,49 @@ def hdata_long(hdata: str, pointer: str, name: str) -> int: ...
 
 # пример
 weechat.prnt("", "longvar = %d" % weechat.hdata_long(hdata, pointer, "longvar"))
+----
+
+==== hdata_longlong
+
+_WeeChat ≥ 4.3.0._
+
+// TRANSLATION MISSING
+Return value of "long long" variable in structure using hdata.
+
+Прототип:
+
+[source,c]
+----
+long long weechat_hdata_longlong (struct t_hdata *hdata, void *pointer, const char *name);
+----
+
+Аргументи:
+
+* _hdata_: показивач на hdata
+* _pointer_: показивач на објекат програма WeeChat/додатка
+* _name_: име променљиве (мора бити типа „long long”); у случају низова, име може да буде „N|име” где је N индекс низа (који почиње од 0), на пример: „2|име”
+
+Повратна вредност:
+
+// TRANSLATION MISSING
+* "long long" value of variable
+
+C пример:
+
+[source,c]
+----
+weechat_printf (NULL, "longlongvar = %lld", weechat_hdata_longlong (hdata, pointer, "longlongvar"));
+----
+
+Скрипта (Python):
+
+[source,python]
+----
+# прототип
+def hdata_longlong(hdata: str, pointer: str, name: str) -> int: ...
+
+# пример
+weechat.prnt("", "longlongvar = %d" % weechat.hdata_longlong(hdata, pointer, "longlongvar"))
 ----
 
 ==== hdata_string

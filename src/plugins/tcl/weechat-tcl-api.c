@@ -5373,6 +5373,26 @@ API_FUNC(hdata_long)
     API_RETURN_LONG(result);
 }
 
+API_FUNC(hdata_longlong)
+{
+    char *hdata, *pointer, *name;
+    long long result;
+
+    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONG(0));
+    if (objc < 4)
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    hdata = Tcl_GetString (objv[1]);
+    pointer = Tcl_GetString (objv[2]);
+    name = Tcl_GetString (objv[3]);
+
+    result = weechat_hdata_longlong (API_STR2PTR(hdata),
+                                     API_STR2PTR(pointer),
+                                     name);
+
+    API_RETURN_LONG(result);
+}
+
 API_FUNC(hdata_string)
 {
     char *hdata, *pointer, *name;
@@ -5887,6 +5907,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(hdata_char);
     API_DEF_FUNC(hdata_integer);
     API_DEF_FUNC(hdata_long);
+    API_DEF_FUNC(hdata_longlong);
     API_DEF_FUNC(hdata_string);
     API_DEF_FUNC(hdata_pointer);
     API_DEF_FUNC(hdata_time);

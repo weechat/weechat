@@ -125,6 +125,14 @@ end:
                                               ptr_buffer, list_keys[i]) : -1);
                 weechat_hashtable_set (info, list_keys[i], str_value);
                 break;
+            case WEECHAT_HDATA_LONGLONG:
+                snprintf (str_value, sizeof (str_value),
+                          "%lld",
+                          (ptr_buffer) ?
+                          weechat_hdata_longlong (buflist_hdata_buffer,
+                                                  ptr_buffer, list_keys[i]) : 0);
+                weechat_hashtable_set (info, list_keys[i], str_value);
+                break;
             case WEECHAT_HDATA_STRING:
             case WEECHAT_HDATA_SHARED_STRING:
                 ptr_value = weechat_hdata_string (buflist_hdata_buffer,

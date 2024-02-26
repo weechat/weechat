@@ -93,6 +93,9 @@
 #define API_RETURN_LONG(__long)                                         \
     API_FREE_STRINGS;                                                   \
     return scm_from_long (__long)
+#define API_RETURN_LONGLONG(__long)                                     \
+    API_FREE_STRINGS;                                                   \
+    return scm_from_long_long (__long)
 #define API_RETURN_OTHER(__scm)                                         \
     API_FREE_STRINGS;                                                   \
     return __scm
@@ -5149,6 +5152,23 @@ weechat_guile_api_hdata_long (SCM hdata, SCM pointer, SCM name)
 }
 
 SCM
+weechat_guile_api_hdata_longlong (SCM hdata, SCM pointer, SCM name)
+{
+    long long value;
+
+    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONGLONG(0));
+    if (!scm_is_string (hdata) || !scm_is_string (pointer)
+        || !scm_is_string (name))
+        API_WRONG_ARGS(API_RETURN_LONGLONG(0));
+
+    value = weechat_hdata_longlong (API_STR2PTR(API_SCM_TO_STRING(hdata)),
+                                    API_STR2PTR(API_SCM_TO_STRING(pointer)),
+                                    API_SCM_TO_STRING(name));
+
+    API_RETURN_LONGLONG(value);
+}
+
+SCM
 weechat_guile_api_hdata_string (SCM hdata, SCM pointer, SCM name)
 {
     const char *result;
@@ -5631,6 +5651,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(hdata_char, 3);
     API_DEF_FUNC(hdata_integer, 3);
     API_DEF_FUNC(hdata_long, 3);
+    API_DEF_FUNC(hdata_longlong, 3);
     API_DEF_FUNC(hdata_string, 3);
     API_DEF_FUNC(hdata_pointer, 3);
     API_DEF_FUNC(hdata_time, 3);

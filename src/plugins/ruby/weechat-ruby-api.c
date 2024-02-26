@@ -6592,6 +6592,32 @@ weechat_ruby_api_hdata_long (VALUE class, VALUE hdata, VALUE pointer,
 }
 
 static VALUE
+weechat_ruby_api_hdata_longlong (VALUE class, VALUE hdata, VALUE pointer,
+                                 VALUE name)
+{
+    char *c_hdata, *c_pointer, *c_name;
+    long long value;
+
+    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONG(0));
+    if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
+        API_WRONG_ARGS(API_RETURN_LONGLONG(0));
+
+    Check_Type (hdata, T_STRING);
+    Check_Type (pointer, T_STRING);
+    Check_Type (name, T_STRING);
+
+    c_hdata = StringValuePtr (hdata);
+    c_pointer = StringValuePtr (pointer);
+    c_name = StringValuePtr (name);
+
+    value = weechat_hdata_longlong (API_STR2PTR(c_hdata),
+                                    API_STR2PTR(c_pointer),
+                                    c_name);
+
+    API_RETURN_LONGLONG(value);
+}
+
+static VALUE
 weechat_ruby_api_hdata_string (VALUE class, VALUE hdata, VALUE pointer,
                                VALUE name)
 {
@@ -7147,6 +7173,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(hdata_char, 3);
     API_DEF_FUNC(hdata_integer, 3);
     API_DEF_FUNC(hdata_long, 3);
+    API_DEF_FUNC(hdata_longlong, 3);
     API_DEF_FUNC(hdata_string, 3);
     API_DEF_FUNC(hdata_pointer, 3);
     API_DEF_FUNC(hdata_time, 3);

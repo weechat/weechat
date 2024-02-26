@@ -218,6 +218,7 @@ function weechat_hdata_search(string $p0, string $p1, string $p2, array $p3, arr
 function weechat_hdata_char(string $p0, string $p1, string $p2): int {}
 function weechat_hdata_integer(string $p0, string $p1, string $p2): int {}
 function weechat_hdata_long(string $p0, string $p1, string $p2): int {}
+function weechat_hdata_longlong(string $p0, string $p1, string $p2): int {}
 function weechat_hdata_string(string $p0, string $p1, string $p2): string {}
 function weechat_hdata_pointer(string $p0, string $p1, string $p2): string {}
 function weechat_hdata_time(string $p0, string $p1, string $p2): int {}

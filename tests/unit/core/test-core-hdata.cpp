@@ -54,6 +54,12 @@ struct t_test_item
     long test_array_2_long_fixed_size[2];
     long *test_ptr_2_long;
 
+    /* long long */
+    long long test_longlong;
+    long long test_count_longlong;
+    long long test_array_2_longlong_fixed_size[2];
+    long long *test_ptr_2_longlong;
+
     /* string */
     char *test_string;
     char *test_string2;
@@ -374,6 +380,16 @@ TEST_GROUP(CoreHdataWithList)
         item->test_ptr_2_long[0] = 123456L;
         item->test_ptr_2_long[1] = 234567L;
 
+        /* long long */
+        item->test_longlong = 123456789123456L;
+        item->test_count_longlong = 2;
+        item->test_array_2_longlong_fixed_size[0] = 111L;
+        item->test_array_2_longlong_fixed_size[1] = 222L;
+        item->test_ptr_2_longlong = (long long *)malloc (
+            2 * sizeof (item->test_ptr_2_longlong[0]));
+        item->test_ptr_2_longlong[0] = 123456L;
+        item->test_ptr_2_longlong[1] = 234567L;
+
         /* string */
         item->test_string = strdup ("item1");
         item->test_string2 = strdup ("STRING2");
@@ -522,6 +538,16 @@ TEST_GROUP(CoreHdataWithList)
         item->test_ptr_2_long[0] = 789123L;
         item->test_ptr_2_long[1] = 891234L;
 
+        /* long long */
+        item->test_longlong = 987654321987654L;
+        item->test_count_longlong = 2;
+        item->test_array_2_longlong_fixed_size[0] = 333L;
+        item->test_array_2_longlong_fixed_size[1] = 444L;
+        item->test_ptr_2_longlong = (long long *)malloc (
+            2 * sizeof (item->test_ptr_2_longlong[0]));
+        item->test_ptr_2_longlong[0] = 789123L;
+        item->test_ptr_2_longlong[1] = 891234L;
+
         /* string */
         item->test_string = strdup ("item2");
         item->test_string2 = strdup ("string2");
@@ -657,6 +683,12 @@ TEST_GROUP(CoreHdataWithList)
         HDATA_VAR(struct t_test_item, test_array_2_long_fixed_size, LONG, 0, "2", NULL);
         HDATA_VAR(struct t_test_item, test_ptr_2_long, LONG, 0, "*,test_count_long", NULL);
 
+        /* long long */
+        HDATA_VAR(struct t_test_item, test_longlong, LONGLONG, 1, NULL, NULL);
+        HDATA_VAR(struct t_test_item, test_count_longlong, LONGLONG, 0, NULL, NULL);
+        HDATA_VAR(struct t_test_item, test_array_2_longlong_fixed_size, LONGLONG, 0, "2", NULL);
+        HDATA_VAR(struct t_test_item, test_ptr_2_longlong, LONGLONG, 0, "*,test_count_longlong", NULL);
+
         /* string */
         HDATA_VAR(struct t_test_item, test_string, STRING, 1, NULL, NULL);
         HDATA_VAR(struct t_test_item, test_string2, STRING, 0, NULL, NULL);
@@ -740,6 +772,9 @@ TEST_GROUP(CoreHdataWithList)
         /* long */
         free (item->test_ptr_2_long);
 
+        /* long long */
+        free (item->test_ptr_2_longlong);
+
         /* string */
         free (item->test_string);
         free (item->test_string2);
@@ -821,6 +856,8 @@ TEST(CoreHdataWithList, GetVarType)
                 hdata_get_var_type (ptr_hdata, "test_int"));
     LONGS_EQUAL(WEECHAT_HDATA_LONG,
                 hdata_get_var_type (ptr_hdata, "test_long"));
+    LONGS_EQUAL(WEECHAT_HDATA_LONGLONG,
+                hdata_get_var_type (ptr_hdata, "test_longlong"));
     LONGS_EQUAL(WEECHAT_HDATA_STRING,
                 hdata_get_var_type (ptr_hdata, "test_string"));
     LONGS_EQUAL(WEECHAT_HDATA_SHARED_STRING,
@@ -853,6 +890,8 @@ TEST(CoreHdataWithList, GetVarTypeString)
                  hdata_get_var_type_string (ptr_hdata, "test_int"));
     STRCMP_EQUAL("long",
                  hdata_get_var_type_string (ptr_hdata, "test_long"));
+    STRCMP_EQUAL("longlong",
+                 hdata_get_var_type_string (ptr_hdata, "test_longlong"));
     STRCMP_EQUAL("string",
                  hdata_get_var_type_string (ptr_hdata, "test_string"));
     STRCMP_EQUAL("shared_string",
@@ -899,6 +938,10 @@ TEST(CoreHdataWithList, GetVarArraySize)
     LONGS_EQUAL(2, hdata_get_var_array_size (ptr_hdata, ptr_item1,
                                              "test_ptr_2_long"));
     LONGS_EQUAL(2, hdata_get_var_array_size (ptr_hdata, ptr_item1,
+                                             "test_array_2_longlong_fixed_size"));
+    LONGS_EQUAL(2, hdata_get_var_array_size (ptr_hdata, ptr_item1,
+                                             "test_ptr_2_longlong"));
+    LONGS_EQUAL(2, hdata_get_var_array_size (ptr_hdata, ptr_item1,
                                              "test_array_2_words_fixed_size"));
     LONGS_EQUAL(3, hdata_get_var_array_size (ptr_hdata, ptr_item1,
                                              "test_ptr_words"));
@@ -944,6 +987,10 @@ TEST(CoreHdataWithList, GetVarArraySize)
                                              "test_array_2_long_fixed_size"));
     LONGS_EQUAL(2, hdata_get_var_array_size (ptr_hdata, ptr_item2,
                                              "test_ptr_2_long"));
+    LONGS_EQUAL(2, hdata_get_var_array_size (ptr_hdata, ptr_item2,
+                                             "test_array_2_longlong_fixed_size"));
+    LONGS_EQUAL(2, hdata_get_var_array_size (ptr_hdata, ptr_item2,
+                                             "test_ptr_2_longlong"));
     LONGS_EQUAL(2, hdata_get_var_array_size (ptr_hdata, ptr_item2,
                                              "test_array_2_words_fixed_size"));
     LONGS_EQUAL(4, hdata_get_var_array_size (ptr_hdata, ptr_item2,
@@ -1022,6 +1069,12 @@ TEST(CoreHdataWithList, GetVarArraySizeString)
                                                   "test_ptr_2_long"));
     STRCMP_EQUAL("2",
                  hdata_get_var_array_size_string (ptr_hdata, ptr_item1,
+                                                  "test_array_2_longlong_fixed_size"));
+    STRCMP_EQUAL("test_count_longlong",
+                 hdata_get_var_array_size_string (ptr_hdata, ptr_item1,
+                                                  "test_ptr_2_longlong"));
+    STRCMP_EQUAL("2",
+                 hdata_get_var_array_size_string (ptr_hdata, ptr_item1,
                                                   "test_array_2_words_fixed_size"));
     STRCMP_EQUAL("test_count_words",
                  hdata_get_var_array_size_string (ptr_hdata, ptr_item1,
@@ -1084,6 +1137,12 @@ TEST(CoreHdataWithList, GetVarArraySizeString)
     STRCMP_EQUAL("test_count_long",
                  hdata_get_var_array_size_string (ptr_hdata, ptr_item2,
                                                   "test_ptr_2_long"));
+    STRCMP_EQUAL("2",
+                 hdata_get_var_array_size_string (ptr_hdata, ptr_item2,
+                                                  "test_array_2_longlong_fixed_size"));
+    STRCMP_EQUAL("test_count_longlong",
+                 hdata_get_var_array_size_string (ptr_hdata, ptr_item2,
+                                                  "test_ptr_2_longlong"));
     STRCMP_EQUAL("2",
                  hdata_get_var_array_size_string (ptr_hdata, ptr_item2,
                                                   "test_array_2_words_fixed_size"));
@@ -1441,6 +1500,39 @@ TEST(CoreHdataWithList, Search)
                       "${test_item.test_long} == ${value}",
                       NULL, extra_vars, NULL, 1));
 
+    /* search long long */
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_longlong} == 999",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        NULL,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_longlong} == 987654321987654",
+                      NULL, NULL, NULL, 2));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_longlong} == 123456789123456",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_longlong} == 987654321987654",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, last_item,
+                      "${test_item.test_longlong} == 123456789123456",
+                      NULL, NULL, NULL, -1));
+    hashtable_set (extra_vars, "value", "987654321987654");
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_longlong} == ${value}",
+                      NULL, extra_vars, NULL, 1));
+
     /* search string */
     POINTERS_EQUAL(
         NULL,
@@ -1746,6 +1838,48 @@ TEST(CoreHdataWithList, Long)
                                      "0|test_ptr_2_long"));
     LONGS_EQUAL(891234L, hdata_long (ptr_hdata, ptr_item2,
                                      "1|test_ptr_2_long"));
+}
+
+/*
+ * Tests functions:
+ *   hdata_longlong
+ */
+
+TEST(CoreHdataWithList, LongLong)
+{
+    LONGS_EQUAL(0, hdata_longlong (NULL, NULL, NULL));
+    LONGS_EQUAL(0, hdata_longlong (ptr_hdata, NULL, NULL));
+    LONGS_EQUAL(0, hdata_longlong (NULL, ptr_item1, NULL));
+    LONGS_EQUAL(0, hdata_longlong (NULL, NULL, "test_longlong"));
+    LONGS_EQUAL(0, hdata_longlong (ptr_hdata, ptr_item1, NULL));
+    LONGS_EQUAL(0, hdata_longlong (ptr_hdata, NULL, "test_longlong"));
+    LONGS_EQUAL(0, hdata_longlong (NULL, ptr_item1, "test_longlong"));
+
+    /* variable not found */
+    LONGS_EQUAL(0, hdata_longlong (ptr_hdata, ptr_item1, "zzz"));
+    LONGS_EQUAL(0, hdata_longlong (ptr_hdata, ptr_item1, "1|zzz"));
+
+    /* item 1 */
+    LONGS_EQUAL(123456789123456L, hdata_longlong (ptr_hdata, ptr_item1, "test_longlong"));
+    LONGS_EQUAL(111L, hdata_longlong (ptr_hdata, ptr_item1,
+                                      "0|test_array_2_longlong_fixed_size"));
+    LONGS_EQUAL(222L, hdata_longlong (ptr_hdata, ptr_item1,
+                                      "1|test_array_2_longlong_fixed_size"));
+    LONGS_EQUAL(123456L, hdata_longlong (ptr_hdata, ptr_item1,
+                                         "0|test_ptr_2_longlong"));
+    LONGS_EQUAL(234567L, hdata_longlong (ptr_hdata, ptr_item1,
+                                         "1|test_ptr_2_longlong"));
+
+    /* item 2 */
+    LONGS_EQUAL(987654321987654L, hdata_longlong (ptr_hdata, ptr_item2, "test_longlong"));
+    LONGS_EQUAL(333L, hdata_longlong (ptr_hdata, ptr_item2,
+                                      "0|test_array_2_longlong_fixed_size"));
+    LONGS_EQUAL(444L, hdata_longlong (ptr_hdata, ptr_item2,
+                                      "1|test_array_2_longlong_fixed_size"));
+    LONGS_EQUAL(789123L, hdata_longlong (ptr_hdata, ptr_item2,
+                                         "0|test_ptr_2_longlong"));
+    LONGS_EQUAL(891234L, hdata_longlong (ptr_hdata, ptr_item2,
+                                         "1|test_ptr_2_longlong"));
 }
 
 /*
@@ -2101,6 +2235,14 @@ TEST(CoreHdataWithList, Compare)
     LONGS_EQUAL(1, hdata_compare (ptr_hdata, ptr_item2, ptr_item1,
                                   "test_long", 0));
 
+    /* compare long long integers: 123456789123456ULL and 987654321987654ULL */
+    LONGS_EQUAL(0, hdata_compare (ptr_hdata, ptr_item1, ptr_item1,
+                                  "test_longlong", 0));
+    LONGS_EQUAL(-1, hdata_compare (ptr_hdata, ptr_item1, ptr_item2,
+                                   "test_longlong", 0));
+    LONGS_EQUAL(1, hdata_compare (ptr_hdata, ptr_item2, ptr_item1,
+                                  "test_longlong", 0));
+
     /* compare pointers: 0x123 and 0x456 */
     LONGS_EQUAL(0, hdata_compare (ptr_hdata, ptr_item1, ptr_item1,
                                   "test_pointer", 0));
@@ -2291,6 +2433,24 @@ TEST(CoreHdataWithList, Update)
     LONGS_EQUAL(1, hdata_update (ptr_hdata, ptr_item1, hashtable));
     LONGS_EQUAL(777, ptr_item1->test_long);
 
+    /* set long long to invalid value */
+    hashtable_remove_all (hashtable);
+    hashtable_set (hashtable, "test_longlong", "abc");
+    LONGS_EQUAL(0, hdata_update (ptr_hdata, ptr_item1, hashtable));
+    LONGS_EQUAL(123456789123456L, ptr_item1->test_longlong);
+
+    /* set long long to -55 */
+    hashtable_remove_all (hashtable);
+    hashtable_set (hashtable, "test_longlong", "-55");
+    LONGS_EQUAL(1, hdata_update (ptr_hdata, ptr_item1, hashtable));
+    LONGS_EQUAL(-55, ptr_item1->test_longlong);
+
+    /* set long long to 777 */
+    hashtable_remove_all (hashtable);
+    hashtable_set (hashtable, "test_longlong", "777");
+    LONGS_EQUAL(1, hdata_update (ptr_hdata, ptr_item1, hashtable));
+    LONGS_EQUAL(777, ptr_item1->test_longlong);
+
     /* set pointer to invalid value */
     hashtable_remove_all (hashtable);
     hashtable_set (hashtable, "test_pointer", "zzz");
@@ -2357,9 +2517,11 @@ TEST(CoreHdataWithList, GetString)
         "test_char,test_count_char,test_array_2_char_fixed_size,"
         "test_ptr_2_char,test_int,test_count_int,test_array_2_int_fixed_size,"
         "test_ptr_3_int,test_ptr_1_int_fixed_size,test_long,test_count_long,"
-        "test_array_2_long_fixed_size,test_ptr_2_long,test_string,"
-        "test_string2,test_string3,test_string_null,test_shared_string,"
-        "test_count_words,test_array_2_words_fixed_size,test_ptr_words,"
+        "test_array_2_long_fixed_size,test_ptr_2_long,test_longlong,"
+        "test_count_longlong,test_array_2_longlong_fixed_size,"
+        "test_ptr_2_longlong,test_string,test_string2,test_string3,"
+        "test_string_null,test_shared_string,test_count_words,"
+        "test_array_2_words_fixed_size,test_ptr_words,"
         "test_ptr_words_dyn,test_ptr_words_dyn_shared,test_pointer,"
         "test_count_pointer,test_array_2_pointer_fixed_size,"
         "test_ptr_3_pointer,test_ptr_0_pointer_dyn,test_ptr_1_pointer_dyn,"
@@ -2373,12 +2535,12 @@ TEST(CoreHdataWithList, GetString)
 
     prop = hdata_get_string (ptr_hdata, "var_values");
     items = string_split (prop, ",", NULL, 0, 0, &num_items);
-    LONGS_EQUAL(45, num_items);
+    LONGS_EQUAL(49, num_items);
     string_free_split (items);
 
     prop = hdata_get_string (ptr_hdata, "var_keys_values");
     items = string_split (prop, ",", NULL, 0, 0, &num_items);
-    LONGS_EQUAL(45, num_items);
+    LONGS_EQUAL(49, num_items);
     string_free_split (items);
 
     STRCMP_EQUAL("prev_item", hdata_get_string (ptr_hdata, "var_prev"));

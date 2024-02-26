@@ -80,6 +80,8 @@
     return PyLong_FromLong ((long)__int)
 #define API_RETURN_LONG(__long)                                         \
     return PyLong_FromLong (__long)
+#define API_RETURN_LONGLONG(__longlong)                                 \
+    return PyLong_FromLongLong (__longlong)
 #define API_RETURN_ULONGLONG(__ulonglong)                               \
     return PyLong_FromUnsignedLongLong (__ulonglong)
 
@@ -5345,6 +5347,25 @@ API_FUNC(hdata_long)
     API_RETURN_LONG(value);
 }
 
+API_FUNC(hdata_longlong)
+{
+    char *hdata, *pointer, *name;
+    long long value;
+
+    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONGLONG(0));
+    hdata = NULL;
+    pointer = NULL;
+    name = NULL;
+    if (!PyArg_ParseTuple (args, "sss", &hdata, &pointer, &name))
+        API_WRONG_ARGS(API_RETURN_LONGLONG(0));
+
+    value = weechat_hdata_longlong (API_STR2PTR(hdata),
+                                    API_STR2PTR(pointer),
+                                    name);
+
+    API_RETURN_LONGLONG(value);
+}
+
 API_FUNC(hdata_string)
 {
     char *hdata, *pointer, *name;
@@ -5816,6 +5837,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(hdata_char),
     API_DEF_FUNC(hdata_integer),
     API_DEF_FUNC(hdata_long),
+    API_DEF_FUNC(hdata_longlong),
     API_DEF_FUNC(hdata_string),
     API_DEF_FUNC(hdata_pointer),
     API_DEF_FUNC(hdata_time),

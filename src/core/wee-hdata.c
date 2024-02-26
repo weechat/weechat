@@ -38,8 +38,8 @@
 
 struct t_hashtable *weechat_hdata = NULL;
 
-char *hdata_type_string[9] =
-{ "other", "char", "integer", "long", "string", "pointer", "time",
+char *hdata_type_string[WEECHAT_NUM_HDATA_TYPES] =
+{ "other", "char", "integer", "long", "longlong", "string", "pointer", "time",
   "hashtable", "shared_string" };
 
 
@@ -331,6 +331,8 @@ hdata_get_var_array_size (struct t_hdata *hdata, void *pointer,
                     return *((int *)(pointer + offset));
                 case WEECHAT_HDATA_LONG:
                     return (int)(*((long *)(pointer + offset)));
+                case WEECHAT_HDATA_LONGLONG:
+                    return (int)(*((long long *)(pointer + offset)));
                 default:
                     break;
             }
@@ -799,7 +801,41 @@ hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
         }
     }
 
-    return 0;
+    return 0L;
+}
+
+/*
+ * Gets "long long" value of a variable in hdata.
+ */
+
+long long
+hdata_longlong (struct t_hdata *hdata, void *pointer, const char *name)
+{
+    int index;
+    const char *ptr_name;
+    struct t_hdata_var *var;
+
+    if (!hdata || !pointer || !name)
+        return 0;
+
+    hdata_get_index_and_name (name, &index, &ptr_name);
+    var = hashtable_get (hdata->hash_var, ptr_name);
+    if (var && (var->offset >= 0))
+    {
+        if (var->array_size && (index >= 0))
+        {
+            if (var->array_pointer)
+                return (*((long long **)(pointer + var->offset)))[index];
+            else
+                return ((long long *)(pointer + var->offset))[index];
+        }
+        else
+        {
+            return *((long long *)(pointer + var->offset));
+        }
+    }
+
+    return 0LL;
 }
 
 /*
@@ -904,7 +940,7 @@ hdata_time (struct t_hdata *hdata, void *pointer, const char *name)
         }
     }
 
-    return 0;
+    return (time_t)0;
 }
 
 /*
@@ -958,6 +994,7 @@ hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
 {
     int rc, type, type1, type2, int_value1, int_value2;
     long long_value1, long_value2;
+    long long longlong_value1, longlong_value2;
     char *var_name, *property, char_value1, char_value2;
     const char *ptr_var_name, *pos, *pos_open_paren, *hdata_name;
     const char *str_value1, *str_value2;
@@ -1012,6 +1049,12 @@ hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
             long_value2 = hdata_long (hdata, pointer2, var_name);
             rc = (long_value1 < long_value2) ?
                 -1 : ((long_value1 > long_value2) ? 1 : 0);
+            break;
+        case WEECHAT_HDATA_LONGLONG:
+            longlong_value1 = hdata_longlong (hdata, pointer1, var_name);
+            longlong_value2 = hdata_longlong (hdata, pointer2, var_name);
+            rc = (longlong_value1 < longlong_value2) ?
+                -1 : ((longlong_value1 > longlong_value2) ? 1 : 0);
             break;
         case WEECHAT_HDATA_STRING:
         case WEECHAT_HDATA_SHARED_STRING:
@@ -1181,6 +1224,7 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
     struct t_hdata_var *var;
     char **ptr_string, *error;
     long number;
+    long long number_longlong;
     unsigned long ptr;
     int rc;
 
@@ -1217,6 +1261,15 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
             if (error && !error[0])
             {
                 *((long *)(pointer + var->offset)) = number;
+                return 1;
+            }
+            break;
+        case WEECHAT_HDATA_LONGLONG:
+            error = NULL;
+            number_longlong = strtoll (value, &error, 10);
+            if (error && !error[0])
+            {
+                *((long long *)(pointer + var->offset)) = number_longlong;
                 return 1;
             }
             break;

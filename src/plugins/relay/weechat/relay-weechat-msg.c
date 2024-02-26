@@ -176,6 +176,23 @@ relay_weechat_msg_add_long (struct t_relay_weechat_msg *msg, long value)
 }
 
 /*
+ * Adds a long long integer to a message.
+ */
+
+void
+relay_weechat_msg_add_longlong (struct t_relay_weechat_msg *msg,
+                                long long value)
+{
+    char str_longlong[128];
+    unsigned char length;
+
+    snprintf (str_longlong, sizeof (str_longlong), "%lld", value);
+    length = strlen (str_longlong);
+    relay_weechat_msg_add_bytes (msg, &length, 1);
+    relay_weechat_msg_add_bytes (msg, str_longlong, length);
+}
+
+/*
  * Adds length + string to a message.
  */
 
@@ -434,6 +451,7 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
                                 relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_INT);
                                 break;
                             case WEECHAT_HDATA_LONG:
+                            case WEECHAT_HDATA_LONGLONG:
                                 relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_LONG);
                                 break;
                             case WEECHAT_HDATA_STRING:
@@ -479,6 +497,12 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
                                                                 weechat_hdata_long (hdata,
                                                                                     pointer,
                                                                                     name));
+                                    break;
+                                case WEECHAT_HDATA_LONGLONG:
+                                    relay_weechat_msg_add_longlong (msg,
+                                                                    weechat_hdata_longlong (hdata,
+                                                                                            pointer,
+                                                                                            name));
                                     break;
                                 case WEECHAT_HDATA_STRING:
                                 case WEECHAT_HDATA_SHARED_STRING:
@@ -694,6 +718,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
                         strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_INT);
                         break;
                     case WEECHAT_HDATA_LONG:
+                    case WEECHAT_HDATA_LONGLONG:
                         strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_LONG);
                         break;
                     case WEECHAT_HDATA_STRING:

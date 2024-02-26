@@ -122,6 +122,8 @@ extern int hdata_integer (struct t_hdata *hdata, void *pointer,
                           const char *name);
 extern long hdata_long (struct t_hdata *hdata, void *pointer,
                         const char *name);
+extern long long hdata_longlong (struct t_hdata *hdata, void *pointer,
+                                 const char *name);
 extern const char *hdata_string (struct t_hdata *hdata, void *pointer,
                                  const char *name);
 extern void *hdata_pointer (struct t_hdata *hdata, void *pointer,
