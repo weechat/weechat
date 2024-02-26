@@ -47,7 +47,7 @@ enum t_relay_client_http_status
 #define RELAY_HTTP_ERROR_INVALID_TOTP         "Invalid TOTP"
 #define RELAY_HTTP_ERROR_INVALID_HASH_ALGO    "Invalid hash algorithm " \
     "(not found or not supported)"
-#define RELAY_HTTP_ERROR_INVALID_SALT         "Invalid salt"
+#define RELAY_HTTP_ERROR_INVALID_TIMESTAMP    "Invalid timestamp"
 #define RELAY_HTTP_ERROR_INVALID_ITERATIONS   "Invalid number of iterations"
 #define RELAY_HTTP_ERROR_OUT_OF_MEMORY        "Out of memory"
 

@@ -1375,7 +1375,7 @@ relay_config_init ()
             relay_config_file, relay_config_section_network,
             "time_window", "integer",
             N_("number of seconds to allow before and after the current time "
-               "for salted password in api protocol"),
+               "for the hash of time + password in api protocol"),
             NULL, 0, 256, "5", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         relay_config_network_tls_cert_key = weechat_config_new_option (

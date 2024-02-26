@@ -566,7 +566,7 @@ relay_http_add_to_body (struct t_relay_http_request *request,
  *   -3: missing TOTP
  *   -4: invalid TOTP
  *   -5: invalid hash algorithm
- *   -6: invalid salt
+ *   -6: invalid timestamp (used as salt)
  *   -7: invalid number of iterations (PBKDF2)
  *   -8: out of memory
  */
@@ -643,7 +643,7 @@ relay_http_get_auth_status (struct t_relay_client *client)
             case -1: /* invalid hash algorithm */
                 rc = -5;
                 goto end;
-            case -2: /* invalid salt */
+            case -2: /* invalid timestamp */
                 rc = -6;
                 goto end;
             case -3: /* invalid iterations */
@@ -749,10 +749,10 @@ relay_http_check_auth (struct t_relay_client *client)
                                         NULL,
                                         RELAY_HTTP_ERROR_INVALID_HASH_ALGO);
             break;
-        case -6: /* invalid salt */
+        case -6: /* invalid timestamp */
             relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
                                         NULL,
-                                        RELAY_HTTP_ERROR_INVALID_SALT);
+                                        RELAY_HTTP_ERROR_INVALID_TIMESTAMP);
             break;
         case -7: /* invalid iterations */
             relay_http_send_error_json (client, RELAY_HTTP_401_UNAUTHORIZED,
