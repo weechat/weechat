@@ -35,6 +35,10 @@
 struct t_infolist *weechat_infolists = NULL;
 struct t_infolist *last_weechat_infolist = NULL;
 
+char *infolist_type_char_string[INFOLIST_NUM_TYPES] = {
+    "i", "s", "p", "b", "t",
+};
+
 
 /*
  * Creates a new infolist.
@@ -391,7 +395,7 @@ const char *
 infolist_fields (struct t_infolist *infolist)
 {
     struct t_infolist_var *ptr_var;
-    int length;
+    char **fields;
 
     if (!infolist || !infolist->ptr_item)
         return NULL;
@@ -400,44 +404,20 @@ infolist_fields (struct t_infolist *infolist)
     if (infolist->ptr_item->fields)
         return infolist->ptr_item->fields;
 
-    length = 0;
-    for (ptr_var = infolist->ptr_item->vars;
-         ptr_var; ptr_var = ptr_var->next_var)
-    {
-        length += strlen (ptr_var->name) + 3;
-    }
-
-    infolist->ptr_item->fields = malloc (length + 1);
-    if (!infolist->ptr_item->fields)
+    fields = string_dyn_alloc (256);
+    if (!fields)
         return NULL;
 
-    infolist->ptr_item->fields[0] = '\0';
-    for (ptr_var = infolist->ptr_item->vars; ptr_var;
-         ptr_var = ptr_var->next_var)
+    for (ptr_var = infolist->ptr_item->vars; ptr_var; ptr_var = ptr_var->next_var)
     {
-        switch (ptr_var->type)
-        {
-            case INFOLIST_INTEGER:
-                strcat (infolist->ptr_item->fields, "i:");
-                break;
-            case INFOLIST_STRING:
-                strcat (infolist->ptr_item->fields, "s:");
-                break;
-            case INFOLIST_POINTER:
-                strcat (infolist->ptr_item->fields, "p:");
-                break;
-            case INFOLIST_BUFFER:
-                strcat (infolist->ptr_item->fields, "b:");
-                break;
-            case INFOLIST_TIME:
-                strcat (infolist->ptr_item->fields, "t:");
-                break;
-        }
-        strcat (infolist->ptr_item->fields, ptr_var->name);
-        if (ptr_var->next_var)
-            strcat (infolist->ptr_item->fields, ",");
+        if (*fields[0])
+            string_dyn_concat (fields, ",", -1);
+        string_dyn_concat (fields, infolist_type_char_string[ptr_var->type], -1);
+        string_dyn_concat (fields, ":", -1);
+        string_dyn_concat (fields, ptr_var->name, -1);
     }
 
+    infolist->ptr_item->fields = string_dyn_free (fields, 0);
     return infolist->ptr_item->fields;
 }
 
@@ -784,6 +764,8 @@ infolist_print_log ()
                         break;
                     case INFOLIST_TIME:
                         log_printf ("        value (time) . . . . : %lld", (long long)(*((time_t *)ptr_var->value)));
+                        break;
+                    case INFOLIST_NUM_TYPES:
                         break;
                 }
                 log_printf ("        prev_var . . . . . . : 0x%lx", ptr_var->prev_var);

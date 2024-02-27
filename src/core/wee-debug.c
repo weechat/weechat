@@ -611,6 +611,8 @@ debug_infolists ()
                             case INFOLIST_TIME:
                                 size_data += sizeof (time_t);
                                 break;
+                            case INFOLIST_NUM_TYPES:
+                                break;
                         }
                     }
                 }

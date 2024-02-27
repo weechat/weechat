@@ -33,6 +33,8 @@ enum t_infolist_type
     INFOLIST_POINTER,
     INFOLIST_BUFFER,
     INFOLIST_TIME,
+    /* number of infolist types */
+    INFOLIST_NUM_TYPES,
 };
 
 struct t_infolist_var
