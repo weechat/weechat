@@ -96,6 +96,8 @@ PHP_FUNCTION(weechat_config_option_set);
 PHP_FUNCTION(weechat_config_option_set_null);
 PHP_FUNCTION(weechat_config_option_unset);
 PHP_FUNCTION(weechat_config_option_rename);
+PHP_FUNCTION(weechat_config_option_get_string);
+PHP_FUNCTION(weechat_config_option_get_pointer);
 PHP_FUNCTION(weechat_config_option_is_null);
 PHP_FUNCTION(weechat_config_option_default_is_null);
 PHP_FUNCTION(weechat_config_boolean);

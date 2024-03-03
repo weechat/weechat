@@ -1811,6 +1811,52 @@ weechat_ruby_api_config_option_rename (VALUE class, VALUE option,
 }
 
 static VALUE
+weechat_ruby_api_config_option_get_string (VALUE class, VALUE option,
+                                           VALUE property)
+{
+    char *c_option, *c_property;
+    const char *result;
+
+    API_INIT_FUNC(1, "config_option_get_string", API_RETURN_EMPTY);
+    if (NIL_P (option) || NIL_P (property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (option, T_STRING);
+    Check_Type (property, T_STRING);
+
+    c_option = StringValuePtr (option);
+    c_property = StringValuePtr (property);
+
+    result = weechat_config_option_get_string (API_STR2PTR(c_option),
+                                               c_property);
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
+weechat_ruby_api_config_option_get_pointer (VALUE class, VALUE option,
+                                            VALUE property)
+{
+    char *c_option, *c_property;
+    const char *result;
+
+    API_INIT_FUNC(1, "config_option_get_pointer", API_RETURN_EMPTY);
+    if (NIL_P (option) || NIL_P (property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (option, T_STRING);
+    Check_Type (property, T_STRING);
+
+    c_option = StringValuePtr (option);
+    c_property = StringValuePtr (property);
+
+    result = API_PTR2STR(weechat_config_option_get_pointer (API_STR2PTR(c_option),
+                                                            c_property));
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
 weechat_ruby_api_config_option_is_null (VALUE class, VALUE option)
 {
     char *c_option;
@@ -6883,6 +6929,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(config_option_set_null, 2);
     API_DEF_FUNC(config_option_unset, 1);
     API_DEF_FUNC(config_option_rename, 2);
+    API_DEF_FUNC(config_option_get_string, 2);
+    API_DEF_FUNC(config_option_get_pointer, 2);
     API_DEF_FUNC(config_option_is_null, 1);
     API_DEF_FUNC(config_option_default_is_null, 1);
     API_DEF_FUNC(config_boolean, 1);

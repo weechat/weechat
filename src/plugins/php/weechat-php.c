@@ -154,6 +154,8 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_config_option_set_null, arginfo_weechat_config_option_set_null)
     PHP_FE(weechat_config_option_unset, arginfo_weechat_config_option_unset)
     PHP_FE(weechat_config_option_rename, arginfo_weechat_config_option_rename)
+    PHP_FE(weechat_config_option_get_string, arginfo_weechat_config_option_get_string)
+    PHP_FE(weechat_config_option_get_pointer, arginfo_weechat_config_option_get_pointer)
     PHP_FE(weechat_config_option_is_null, arginfo_weechat_config_option_is_null)
     PHP_FE(weechat_config_option_default_is_null, arginfo_weechat_config_option_default_is_null)
     PHP_FE(weechat_config_boolean, arginfo_weechat_config_boolean)

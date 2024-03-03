@@ -355,6 +355,12 @@ def test_config():
     check(weechat.config_string_to_boolean('1') == 1)
     # rename option
     weechat.config_option_rename(ptr_opt_bool, 'option_bool_renamed')
+    # get string property of option
+    check(weechat.config_option_get_string(ptr_opt_bool, 'type') == 'boolean')
+    check(weechat.config_option_get_string(ptr_opt_bool, 'name') == 'option_bool_renamed')
+    # get pointer property of option
+    check(weechat.config_option_get_pointer(ptr_opt_bool, 'config_file') == ptr_config)
+    check(weechat.config_option_get_pointer(ptr_opt_bool, 'section') == ptr_section)
     # read config (create it because it does not exist yet)
     check(weechat.config_read(ptr_config) == 0)  # CONFIG_READ_OK
     # write config

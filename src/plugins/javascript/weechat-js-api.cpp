@@ -1425,6 +1425,39 @@ API_FUNC(config_option_rename)
     API_RETURN_OK;
 }
 
+API_FUNC(config_option_get_string)
+{
+    const char *result;
+
+    API_INIT_FUNC(1, "config_option_get_string", "ss", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value property(args[1]);
+
+    result = weechat_config_option_get_string (
+        (struct t_config_option *)API_STR2PTR(*option),
+        *property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(config_option_get_pointer)
+{
+    const char *result;
+
+    API_INIT_FUNC(1, "config_option_get_pointer", "ss", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value option(args[0]);
+    v8::String::Utf8Value property(args[1]);
+
+    result = API_PTR2STR(
+        weechat_config_option_get_pointer (
+            (struct t_config_option *)API_STR2PTR(*option),
+            *property));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(config_option_is_null)
 {
     int value;
@@ -5319,6 +5352,8 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(config_option_set_null);
     API_DEF_FUNC(config_option_unset);
     API_DEF_FUNC(config_option_rename);
+    API_DEF_FUNC(config_option_get_string);
+    API_DEF_FUNC(config_option_get_pointer);
     API_DEF_FUNC(config_option_is_null);
     API_DEF_FUNC(config_option_default_is_null);
     API_DEF_FUNC(config_boolean);

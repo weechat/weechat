@@ -1557,6 +1557,41 @@ API_FUNC(config_option_rename)
     API_RETURN_OK;
 }
 
+API_FUNC(config_option_get_string)
+{
+    char *option, *property;
+    const char *result;
+
+    API_INIT_FUNC(1, "config_option_get_string", API_RETURN_EMPTY);
+    if (objc < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    option = Tcl_GetString (objv[1]);
+    property = Tcl_GetString (objv[2]);
+
+    result = weechat_config_option_get_string (API_STR2PTR(option), property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(config_option_get_pointer)
+{
+    char *option, *property;
+    const char *result;
+
+    API_INIT_FUNC(1, "config_option_get_pointer", API_RETURN_EMPTY);
+    if (objc < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    option = Tcl_GetString (objv[1]);
+    property = Tcl_GetString (objv[2]);
+
+    result = API_PTR2STR(weechat_config_option_get_pointer (API_STR2PTR(option),
+                                                            property));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(config_option_is_null)
 {
     int result;
@@ -5659,6 +5694,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(config_option_set_null);
     API_DEF_FUNC(config_option_unset);
     API_DEF_FUNC(config_option_rename);
+    API_DEF_FUNC(config_option_get_string);
+    API_DEF_FUNC(config_option_get_pointer);
     API_DEF_FUNC(config_option_is_null);
     API_DEF_FUNC(config_option_default_is_null);
     API_DEF_FUNC(config_boolean);

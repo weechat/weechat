@@ -1491,6 +1491,43 @@ API_FUNC(config_option_rename)
     API_RETURN_OK;
 }
 
+API_FUNC(config_option_get_string)
+{
+    char *option, *property;
+    const char *result;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "config_option_get_string", API_RETURN_EMPTY);
+    if (items < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    option = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
+
+    result = weechat_config_option_get_string (API_STR2PTR(option), property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(config_option_get_pointer)
+{
+    char *option, *property;
+    const char *result;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "config_option_get_pointer", API_RETURN_EMPTY);
+    if (items < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    option = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
+
+    result = API_PTR2STR(weechat_config_option_get_pointer (API_STR2PTR(option),
+                                                            property));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(config_option_is_null)
 {
     int value;
@@ -5623,6 +5660,8 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(config_option_set_null);
     API_DEF_FUNC(config_option_unset);
     API_DEF_FUNC(config_option_rename);
+    API_DEF_FUNC(config_option_get_string);
+    API_DEF_FUNC(config_option_get_pointer);
     API_DEF_FUNC(config_option_is_null);
     API_DEF_FUNC(config_option_default_is_null);
     API_DEF_FUNC(config_boolean);

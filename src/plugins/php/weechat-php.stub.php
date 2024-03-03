@@ -62,6 +62,8 @@ function weechat_config_option_set(string $p0, string $p1, int $p2): int {}
 function weechat_config_option_set_null(string $p0, int $p1): int {}
 function weechat_config_option_unset(string $p0): int {}
 function weechat_config_option_rename(string $p0, string $p1): int {}
+function weechat_config_option_get_string(string $p0, string $p1): string {}
+function weechat_config_option_get_pointer(string $p0, string $p1): string {}
 function weechat_config_option_is_null(string $p0): int {}
 function weechat_config_option_default_is_null(string $p0): int {}
 function weechat_config_boolean(string $p0): int {}

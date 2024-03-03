@@ -1570,6 +1570,47 @@ API_FUNC(config_option_rename)
     API_RETURN_OK;
 }
 
+API_FUNC(config_option_get_string)
+{
+    zend_string *z_option, *z_property;
+    struct t_config_option *option;
+    char *property;
+    const char *result;
+
+    API_INIT_FUNC(1, "config_option_get_string", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_option,
+                               &z_property) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+    property = ZSTR_VAL(z_property);
+
+    result = weechat_config_option_get_string (option, (const char *)property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(config_option_get_pointer)
+{
+    zend_string *z_option, *z_property;
+    struct t_config_option *option;
+    char *property;
+    const char *result;
+
+    API_INIT_FUNC(1, "config_option_get_pointer", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_option,
+                               &z_property) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+    property = ZSTR_VAL(z_property);
+
+    result = API_PTR2STR(
+        weechat_config_option_get_pointer (option, (const char *)property));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(config_option_is_null)
 {
     zend_string *z_option;
@@ -3764,9 +3805,9 @@ API_FUNC(buffer_get_integer)
 API_FUNC(buffer_get_string)
 {
     zend_string *z_buffer, *z_property;
-    const char *result;
     struct t_gui_buffer *buffer;
     char *property;
+    const char *result;
 
     API_INIT_FUNC(1, "buffer_get_string", API_RETURN_EMPTY);
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_buffer,

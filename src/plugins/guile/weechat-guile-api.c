@@ -1516,6 +1516,41 @@ weechat_guile_api_config_option_rename (SCM option, SCM new_name)
 }
 
 SCM
+weechat_guile_api_config_option_get_string (SCM option, SCM property)
+{
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "config_option_get_string", API_RETURN_EMPTY);
+    if (!scm_is_string (option) || !scm_is_string (property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_config_option_get_string (
+        API_STR2PTR(API_SCM_TO_STRING(option)),
+        API_SCM_TO_STRING(property));
+
+    API_RETURN_STRING(result);
+}
+
+SCM
+weechat_guile_api_config_option_get_pointer (SCM option, SCM property)
+{
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "config_option_get_pointer", API_RETURN_EMPTY);
+    if (!scm_is_string (option) || !scm_is_string (property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(
+        weechat_config_option_get_pointer (
+            API_STR2PTR(API_SCM_TO_STRING(option)),
+            API_SCM_TO_STRING(property)));
+
+    API_RETURN_STRING(result);
+}
+
+SCM
 weechat_guile_api_config_option_is_null (SCM option)
 {
     int value;
@@ -5366,6 +5401,8 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(config_option_set_null, 2);
     API_DEF_FUNC(config_option_unset, 1);
     API_DEF_FUNC(config_option_rename, 2);
+    API_DEF_FUNC(config_option_get_string, 2);
+    API_DEF_FUNC(config_option_get_pointer, 2);
     API_DEF_FUNC(config_option_is_null, 1);
     API_DEF_FUNC(config_option_default_is_null, 1);
     API_DEF_FUNC(config_boolean, 1);

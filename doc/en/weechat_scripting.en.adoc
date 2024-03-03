@@ -614,6 +614,8 @@ List of functions in script API:
   config_option_set_null +
   config_option_unset +
   config_option_rename +
+  config_option_get_string +
+  config_option_get_pointer +
   config_option_is_null +
   config_option_default_is_null +
   config_boolean +
