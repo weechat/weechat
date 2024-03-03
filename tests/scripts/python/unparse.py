@@ -406,6 +406,8 @@ class UnparsePerl(UnparsePython):
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
             self.add('"%s"' % node.s.replace('$', '\\$').replace('@', '\\@'))
+        elif node.value is None:
+            self.add('undef')
         else:
             self.add(repr(node.s))
 
@@ -547,6 +549,8 @@ class UnparseRuby(UnparsePython):
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
             self.add('"%s"' % node.s.replace('#{', '\\#{'))
+        elif node.value is None:
+            self.add('nil')
         else:
             self.add(repr(node.s))
 
@@ -653,6 +657,13 @@ class UnparseLua(UnparsePython):
             ' %s ' % str_op,
             node.right,
         )
+
+    def _ast_constant(self, node):
+        """Add an AST Constant in output."""
+        if node.value is None:
+            self.add('nil')
+        else:
+            self.add(repr(node.s))
 
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
@@ -811,6 +822,8 @@ class UnparseTcl(UnparsePython):
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
             self.add('"%s"' % node.s.replace('$', '\\$'))
+        elif node.value is None:
+            self.add('$::weechat::WEECHAT_NULL')
         else:
             self.add(repr(node.s))
 
@@ -1003,6 +1016,8 @@ class UnparseGuile(UnparsePython):
         """Add an AST Constant in output."""
         if isinstance(node.s, str):
             self.add('"%s"' % node.s)
+        elif node.value is None:
+            self.add('#nil')
         else:
             self.add(repr(node.s))
 
@@ -1129,6 +1144,13 @@ class UnparseJavascript(UnparsePython):
             '}',
         )
 
+    def _ast_constant(self, node):
+        """Add an AST Constant in output."""
+        if node.value is None:
+            self.add('null')
+        else:
+            self.add(repr(node.s))
+
     def _ast_functiondef(self, node):
         """Add an AST FunctionDef in output."""
         self.add(
@@ -1233,6 +1255,8 @@ class UnparsePhp(UnparsePython):
         """Add an AST Constant in output."""
         if isinstance(node.s, str):
             self.add('"%s"' % node.s.replace('$', '\\$'))
+        elif node.value is None:
+            self.add('NULL')
         else:
             self.add(repr(node.s))
 
