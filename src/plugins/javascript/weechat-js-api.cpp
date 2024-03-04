@@ -1514,6 +1514,20 @@ API_FUNC(config_boolean_default)
     API_RETURN_INT(value);
 }
 
+API_FUNC(config_boolean_inherited)
+{
+    int value;
+
+    API_INIT_FUNC(1, "config_boolean_inherited", "s", API_RETURN_INT(0));
+
+    v8::String::Utf8Value option(args[0]);
+
+    value = weechat_config_boolean_inherited (
+        (struct t_config_option *)API_STR2PTR(*option));
+
+    API_RETURN_INT(value);
+}
+
 API_FUNC(config_integer)
 {
     int value;
@@ -1537,6 +1551,20 @@ API_FUNC(config_integer_default)
     v8::String::Utf8Value option(args[0]);
 
     value = weechat_config_integer_default (
+        (struct t_config_option *)API_STR2PTR(*option));
+
+    API_RETURN_INT(value);
+}
+
+API_FUNC(config_integer_inherited)
+{
+    int value;
+
+    API_INIT_FUNC(1, "config_integer_inherited", "s", API_RETURN_INT(0));
+
+    v8::String::Utf8Value option(args[0]);
+
+    value = weechat_config_integer_inherited (
         (struct t_config_option *)API_STR2PTR(*option));
 
     API_RETURN_INT(value);
@@ -1570,6 +1598,20 @@ API_FUNC(config_string_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_string_inherited)
+{
+    const char *result;
+
+    API_INIT_FUNC(1, "config_string_inherited", "s", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value option(args[0]);
+
+    result = weechat_config_string_inherited (
+        (struct t_config_option *)API_STR2PTR(*option));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(config_color)
 {
     const char *result;
@@ -1598,6 +1640,20 @@ API_FUNC(config_color_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_color_inherited)
+{
+    const char *result;
+
+    API_INIT_FUNC(1, "config_color_inherited", "s", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value option(args[0]);
+
+    result = weechat_config_color_inherited (
+        (struct t_config_option *)API_STR2PTR(*option));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(config_enum)
 {
     int value;
@@ -1621,6 +1677,20 @@ API_FUNC(config_enum_default)
     v8::String::Utf8Value option(args[0]);
 
     value = weechat_config_enum_default (
+        (struct t_config_option *)API_STR2PTR(*option));
+
+    API_RETURN_INT(value);
+}
+
+API_FUNC(config_enum_inherited)
+{
+    int value;
+
+    API_INIT_FUNC(1, "config_enum_inherited", "s", API_RETURN_INT(0));
+
+    v8::String::Utf8Value option(args[0]);
+
+    value = weechat_config_enum_inherited (
         (struct t_config_option *)API_STR2PTR(*option));
 
     API_RETURN_INT(value);
@@ -5358,14 +5428,19 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(config_option_default_is_null);
     API_DEF_FUNC(config_boolean);
     API_DEF_FUNC(config_boolean_default);
+    API_DEF_FUNC(config_boolean_inherited);
     API_DEF_FUNC(config_integer);
     API_DEF_FUNC(config_integer_default);
+    API_DEF_FUNC(config_integer_inherited);
     API_DEF_FUNC(config_string);
     API_DEF_FUNC(config_string_default);
+    API_DEF_FUNC(config_string_inherited);
     API_DEF_FUNC(config_color);
     API_DEF_FUNC(config_color_default);
+    API_DEF_FUNC(config_color_inherited);
     API_DEF_FUNC(config_enum);
     API_DEF_FUNC(config_enum_default);
+    API_DEF_FUNC(config_enum_inherited);
     API_DEF_FUNC(config_write_option);
     API_DEF_FUNC(config_write_line);
     API_DEF_FUNC(config_write);

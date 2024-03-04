@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 2c52caa5a78009856a6e6ced63555d1b1e2be0fe */
+ * Stub hash: 59292da89eab98ef1f615c173d9722b9fdafad80 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_register, 0, 7, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)
@@ -173,21 +173,31 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_config_boolean_default arginfo_weechat_charset_set
 
+#define arginfo_weechat_config_boolean_inherited arginfo_weechat_charset_set
+
 #define arginfo_weechat_config_integer arginfo_weechat_charset_set
 
 #define arginfo_weechat_config_integer_default arginfo_weechat_charset_set
+
+#define arginfo_weechat_config_integer_inherited arginfo_weechat_charset_set
 
 #define arginfo_weechat_config_string arginfo_weechat_plugin_get_name
 
 #define arginfo_weechat_config_string_default arginfo_weechat_plugin_get_name
 
+#define arginfo_weechat_config_string_inherited arginfo_weechat_plugin_get_name
+
 #define arginfo_weechat_config_color arginfo_weechat_plugin_get_name
 
 #define arginfo_weechat_config_color_default arginfo_weechat_plugin_get_name
 
+#define arginfo_weechat_config_color_inherited arginfo_weechat_plugin_get_name
+
 #define arginfo_weechat_config_enum arginfo_weechat_charset_set
 
 #define arginfo_weechat_config_enum_default arginfo_weechat_charset_set
+
+#define arginfo_weechat_config_enum_inherited arginfo_weechat_charset_set
 
 #define arginfo_weechat_config_write_option arginfo_weechat_string_has_highlight
 

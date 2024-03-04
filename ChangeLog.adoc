@@ -19,7 +19,7 @@ New features::
   * core: add option `-s` in command `/command` to execute multiple commands separated by semicolons
   * core: allow case insensitive search of partial buffer name with `(?i)name` in command `/buffer`
   * core: use function util_strftimeval in evaluation of expression `date:xxx`
-  * api: add functions config_option_get_string and config_option_get_pointer in scripting API
+  * api: add functions config_option_get_{string|pointer} and config_{boolean|integer|string|color|enum}_inherited in scripting API
   * api: add info "plugin_loaded"
   * api: add support of specifier `%!` for timestamp in function util_strftimeval
   * api: add support of base64url in encode/decode functions

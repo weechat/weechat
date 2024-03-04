@@ -1651,6 +1651,22 @@ API_FUNC(config_boolean_default)
     API_RETURN_INT(value);
 }
 
+API_FUNC(config_boolean_inherited)
+{
+    const char *option;
+    int value;
+
+    API_INIT_FUNC(1, "config_boolean_inherited", API_RETURN_INT(0));
+    if (lua_gettop (L) < 1)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    option = lua_tostring (L, -1);
+
+    value = weechat_config_boolean_inherited (API_STR2PTR(option));
+
+    API_RETURN_INT(value);
+}
+
 API_FUNC(config_integer)
 {
     const char *option;
@@ -1679,6 +1695,22 @@ API_FUNC(config_integer_default)
     option = lua_tostring (L, -1);
 
     value = weechat_config_integer_default (API_STR2PTR(option));
+
+    API_RETURN_INT(value);
+}
+
+API_FUNC(config_integer_inherited)
+{
+    const char *option;
+    int value;
+
+    API_INIT_FUNC(1, "config_integer_inherited", API_RETURN_INT(0));
+    if (lua_gettop (L) < 1)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    option = lua_tostring (L, -1);
+
+    value = weechat_config_integer_inherited (API_STR2PTR(option));
 
     API_RETURN_INT(value);
 }
@@ -1713,6 +1745,21 @@ API_FUNC(config_string_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_string_inherited)
+{
+    const char *option, *result;
+
+    API_INIT_FUNC(1, "config_string_inherited", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 1)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    option = lua_tostring (L, -1);
+
+    result = weechat_config_string_inherited (API_STR2PTR(option));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(config_color)
 {
     const char *option, *result;
@@ -1739,6 +1786,21 @@ API_FUNC(config_color_default)
     option = lua_tostring (L, -1);
 
     result = weechat_config_color_default (API_STR2PTR(option));
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(config_color_inherited)
+{
+    const char *option, *result;
+
+    API_INIT_FUNC(1, "config_color_inherited", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 1)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    option = lua_tostring (L, -1);
+
+    result = weechat_config_color_inherited (API_STR2PTR(option));
 
     API_RETURN_STRING(result);
 }
@@ -1771,6 +1833,22 @@ API_FUNC(config_enum_default)
     option = lua_tostring (L, -1);
 
     value = weechat_config_enum_default (API_STR2PTR(option));
+
+    API_RETURN_INT(value);
+}
+
+API_FUNC(config_enum_inherited)
+{
+    const char *option;
+    int value;
+
+    API_INIT_FUNC(1, "config_enum_inherited", API_RETURN_INT(0));
+    if (lua_gettop (L) < 1)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    option = lua_tostring (L, -1);
+
+    value = weechat_config_enum_inherited (API_STR2PTR(option));
 
     API_RETURN_INT(value);
 }
@@ -5727,14 +5805,19 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(config_option_default_is_null),
     API_DEF_FUNC(config_boolean),
     API_DEF_FUNC(config_boolean_default),
+    API_DEF_FUNC(config_boolean_inherited),
     API_DEF_FUNC(config_integer),
     API_DEF_FUNC(config_integer_default),
+    API_DEF_FUNC(config_integer_inherited),
     API_DEF_FUNC(config_string),
     API_DEF_FUNC(config_string_default),
+    API_DEF_FUNC(config_string_inherited),
     API_DEF_FUNC(config_color),
     API_DEF_FUNC(config_color_default),
+    API_DEF_FUNC(config_color_inherited),
     API_DEF_FUNC(config_enum),
     API_DEF_FUNC(config_enum_default),
+    API_DEF_FUNC(config_enum_inherited),
     API_DEF_FUNC(config_write_option),
     API_DEF_FUNC(config_write_line),
     API_DEF_FUNC(config_write),

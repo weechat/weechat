@@ -8329,6 +8329,49 @@ if weechat.config_boolean_default(option):
     # ...
 ----
 
+==== config_boolean_inherited
+
+_WeeChat ≥ 4.3.0._
+
+Return inherited boolean value of option: value of option if not NULL,
+or value of the parent option (if option inherits from another option). +
+If the parent option is not found, return the default value of the option. +
+If the parent value is NULL, return the default value of the parent option.
+
+Prototipo:
+
+[source,c]
+----
+int weechat_config_boolean_inherited (struct t_config_option *option);
+----
+
+Argomenti:
+
+* _option_: puntatore all'opzione
+
+Return value: see functions <<_config_boolean,config_boolean>> and
+<<_config_boolean_default,config_boolean_default>>.
+
+Esempio in C:
+
+[source,c]
+----
+struct t_config_option *option = weechat_config_get ("irc.server.libera.autoconnect");
+int autoconnect = weechat_config_boolean_inherited (option);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+def config_boolean_inherited(option: str) -> int: ...
+
+# esempio
+option = weechat.config_get("irc.server.libera.autoconnect")
+autoconect = weechat.config_boolean_inherited(option)
+----
+
 ==== config_integer
 
 Restituisce il valore intero di un'opzione.
@@ -8415,6 +8458,49 @@ def config_integer_default(option: str) -> int: ...
 # esempio
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_integer_default(option)
+----
+
+==== config_integer_inherited
+
+_WeeChat ≥ 4.3.0._
+
+Return inherited integer value of option: value of option if not NULL,
+or value of the parent option (if option inherits from another option). +
+If the parent option is not found, return the default value of the option. +
+If the parent value is NULL, return the default value of the parent option.
+
+Prototipo:
+
+[source,c]
+----
+int weechat_config_integer_inherited (struct t_config_option *option);
+----
+
+Argomenti:
+
+* _option_: puntatore all'opzione
+
+Return value: see functions <<_config_integer,config_integer>> and
+<<_config_integer_default,config_integer_default>>.
+
+Esempio in C:
+
+[source,c]
+----
+struct t_config_option *option = weechat_config_get ("irc.server.libera.autojoin_delay");
+int delay = weechat_config_integer_inherited (option);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+def config_integer_inherited(option: str) -> int: ...
+
+# esempio
+option = weechat.config_get("irc.server.libera.autojoin_delay")
+delay = weechat.config_integer_inherited(option)
 ----
 
 ==== config_string
@@ -8505,6 +8591,49 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_string_default(option)
 ----
 
+==== config_string_inherited
+
+_WeeChat ≥ 4.3.0._
+
+Return inherited string value of option: value of option if not NULL,
+or value of the parent option (if option inherits from another option). +
+If the parent option is not found, return the default value of the option. +
+If the parent value is NULL, return the default value of the parent option.
+
+Prototipo:
+
+[source,c]
+----
+const char *weechat_config_string_inherited (struct t_config_option *option);
+----
+
+Argomenti:
+
+* _option_: puntatore all'opzione
+
+Return value: see functions <<_config_string,config_string>> and
+<<_config_string_default,config_string_default>>.
+
+Esempio in C:
+
+[source,c]
+----
+struct t_config_option *option = weechat_config_get ("irc.server.libera.msg_quit");
+const char *msg_quit = weechat_config_string_inherited (option);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+def config_string_inherited(option: str) -> str: ...
+
+# esempio
+option = weechat.config_get("irc.server.libera.msg_quit")
+msg_quit = weechat.config_string_inherited(option)
+----
+
 ==== config_color
 
 Restituisce il valore colore di un'opzione.
@@ -8546,7 +8675,7 @@ def config_color(option: str) -> str: ...
 
 # esempio
 option = weechat.config_get("plugin.section.option")
-value = weechat.config_color(option)
+color = weechat.config_color(option)
 ----
 
 ==== config_color_default
@@ -8590,7 +8719,50 @@ def config_color_default(option: str) -> str: ...
 
 # esempio
 option = weechat.config_get("plugin.section.option")
-value = weechat.config_color_default(option)
+color = weechat.config_color_default(option)
+----
+
+==== config_color_inherited
+
+_WeeChat ≥ 4.3.0._
+
+Return inherited color value of option: value of option if not NULL,
+or value of the parent option (if option inherits from another option). +
+If the parent option is not found, return the default value of the option. +
+If the parent value is NULL, return the default value of the parent option.
+
+Prototipo:
+
+[source,c]
+----
+const char *weechat_config_color_inherited (struct t_config_option *option);
+----
+
+Argomenti:
+
+* _option_: puntatore all'opzione
+
+Return value: see functions <<_config_color,config_color>> and
+<<_config_color_default,config_color_default>>.
+
+Esempio in C:
+
+[source,c]
+----
+struct t_config_option *option = weechat_config_get ("plugin.section.option");
+const char *color = weechat_config_color_inherited (option);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+def config_color_inherited(option: str) -> str: ...
+
+# esempio
+option = weechat.config_get("plugin.section.option")
+color = weechat.config_color_inherited(option)
 ----
 
 // TRANSLATION MISSING
@@ -8683,6 +8855,49 @@ def config_enum_default(option: str) -> int: ...
 # example
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum_default(option)
+----
+
+==== config_enum_inherited
+
+_WeeChat ≥ 4.3.0._
+
+Return inherited enum value of option: value of option if not NULL,
+or value of the parent option (if option inherits from another option). +
+If the parent option is not found, return the default value of the option. +
+If the parent value is NULL, return the default value of the parent option.
+
+Prototipo:
+
+[source,c]
+----
+int weechat_config_enum_inherited (struct t_config_option *option);
+----
+
+Argomenti:
+
+* _option_: puntatore all'opzione
+
+Return value: see functions <<_config_enum,config_enum>> and
+<<_config_enum_default,config_enum_default>>.
+
+Esempio in C:
+
+[source,c]
+----
+struct t_config_option *option = weechat_config_get ("irc.server.libera.sasl_fail");
+int sasl_fail = weechat_config_enum_inherited (option);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+def config_enum_inherited(option: str) -> int: ...
+
+# esempio
+option = weechat.config_get("irc.server.libera.sasl_fail")
+sasl_fail = weechat.config_enum_inherited(option)
 ----
 
 ==== config_write_option

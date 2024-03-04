@@ -68,14 +68,19 @@ function weechat_config_option_is_null(string $p0): int {}
 function weechat_config_option_default_is_null(string $p0): int {}
 function weechat_config_boolean(string $p0): int {}
 function weechat_config_boolean_default(string $p0): int {}
+function weechat_config_boolean_inherited(string $p0): int {}
 function weechat_config_integer(string $p0): int {}
 function weechat_config_integer_default(string $p0): int {}
+function weechat_config_integer_inherited(string $p0): int {}
 function weechat_config_string(string $p0): string {}
 function weechat_config_string_default(string $p0): string {}
+function weechat_config_string_inherited(string $p0): string {}
 function weechat_config_color(string $p0): string {}
 function weechat_config_color_default(string $p0): string {}
+function weechat_config_color_inherited(string $p0): string {}
 function weechat_config_enum(string $p0): int {}
 function weechat_config_enum_default(string $p0): int {}
+function weechat_config_enum_inherited(string $p0): int {}
 function weechat_config_write_option(string $p0, string $p1): int {}
 function weechat_config_write_line(string $p0, string $p1, string $p2): int {}
 function weechat_config_write(string $p0): int {}

@@ -1573,6 +1573,21 @@ API_FUNC(config_boolean_default)
     API_RETURN_INT(value);
 }
 
+API_FUNC(config_boolean_inherited)
+{
+    char *option;
+    int value;
+
+    API_INIT_FUNC(1, "config_boolean_inherited", API_RETURN_INT(0));
+    option = NULL;
+    if (!PyArg_ParseTuple (args, "s", &option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_config_boolean_inherited (API_STR2PTR(option));
+
+    API_RETURN_INT(value);
+}
+
 API_FUNC(config_integer)
 {
     char *option;
@@ -1599,6 +1614,21 @@ API_FUNC(config_integer_default)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     value = weechat_config_integer_default (API_STR2PTR(option));
+
+    API_RETURN_INT(value);
+}
+
+API_FUNC(config_integer_inherited)
+{
+    char *option;
+    int value;
+
+    API_INIT_FUNC(1, "config_integer_inherited", API_RETURN_INT(0));
+    option = NULL;
+    if (!PyArg_ParseTuple (args, "s", &option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_config_integer_inherited (API_STR2PTR(option));
 
     API_RETURN_INT(value);
 }
@@ -1633,6 +1663,21 @@ API_FUNC(config_string_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_string_inherited)
+{
+    char *option;
+    const char *result;
+
+    API_INIT_FUNC(1, "config_string_inherited", API_RETURN_EMPTY);
+    option = NULL;
+    if (!PyArg_ParseTuple (args, "s", &option))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_config_string_inherited (API_STR2PTR(option));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(config_color)
 {
     char *option;
@@ -1663,6 +1708,21 @@ API_FUNC(config_color_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_color_inherited)
+{
+    char *option;
+    const char *result;
+
+    API_INIT_FUNC(1, "config_color_inherited", API_RETURN_EMPTY);
+    option = NULL;
+    if (!PyArg_ParseTuple (args, "s", &option))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_config_color_inherited (API_STR2PTR(option));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(config_enum)
 {
     char *option;
@@ -1689,6 +1749,21 @@ API_FUNC(config_enum_default)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     value = weechat_config_enum_default (API_STR2PTR(option));
+
+    API_RETURN_INT(value);
+}
+
+API_FUNC(config_enum_inherited)
+{
+    char *option;
+    int value;
+
+    API_INIT_FUNC(1, "config_enum_inherited", API_RETURN_INT(0));
+    option = NULL;
+    if (!PyArg_ParseTuple (args, "s", &option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_config_enum_inherited (API_STR2PTR(option));
 
     API_RETURN_INT(value);
 }
@@ -5591,14 +5666,19 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(config_option_default_is_null),
     API_DEF_FUNC(config_boolean),
     API_DEF_FUNC(config_boolean_default),
+    API_DEF_FUNC(config_boolean_inherited),
     API_DEF_FUNC(config_integer),
     API_DEF_FUNC(config_integer_default),
+    API_DEF_FUNC(config_integer_inherited),
     API_DEF_FUNC(config_string),
     API_DEF_FUNC(config_string_default),
+    API_DEF_FUNC(config_string_inherited),
     API_DEF_FUNC(config_color),
     API_DEF_FUNC(config_color_default),
+    API_DEF_FUNC(config_color_inherited),
     API_DEF_FUNC(config_enum),
     API_DEF_FUNC(config_enum_default),
+    API_DEF_FUNC(config_enum_inherited),
     API_DEF_FUNC(config_write_option),
     API_DEF_FUNC(config_write_line),
     API_DEF_FUNC(config_write),

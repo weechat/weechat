@@ -71,7 +71,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20240114-01"
+#define WEECHAT_PLUGIN_API_VERSION "20240304-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -660,14 +660,19 @@ struct t_weechat_plugin
     int (*config_option_is_null) (struct t_config_option *option);
     int (*config_option_default_is_null) (struct t_config_option *option);
     int (*config_boolean) (struct t_config_option *option);
+    int (*config_boolean_inherited) (struct t_config_option *option);
     int (*config_boolean_default) (struct t_config_option *option);
     int (*config_integer) (struct t_config_option *option);
+    int (*config_integer_inherited) (struct t_config_option *option);
     int (*config_integer_default) (struct t_config_option *option);
     int (*config_enum) (struct t_config_option *option);
+    int (*config_enum_inherited) (struct t_config_option *option);
     int (*config_enum_default) (struct t_config_option *option);
     const char *(*config_string) (struct t_config_option *option);
+    const char *(*config_string_inherited) (struct t_config_option *option);
     const char *(*config_string_default) (struct t_config_option *option);
     const char *(*config_color) (struct t_config_option *option);
+    const char *(*config_color_inherited) (struct t_config_option *option);
     const char *(*config_color_default) (struct t_config_option *option);
     int (*config_write_option) (struct t_config_file *config_file,
                                 struct t_config_option *option);
@@ -1740,22 +1745,32 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->config_option_default_is_null)(__option)
 #define weechat_config_boolean(__option)                                \
     (weechat_plugin->config_boolean)(__option)
+#define weechat_config_boolean_inherited(__option)                      \
+    (weechat_plugin->config_boolean_inherited)(__option)
 #define weechat_config_boolean_default(__option)                        \
     (weechat_plugin->config_boolean_default)(__option)
 #define weechat_config_integer(__option)                                \
     (weechat_plugin->config_integer)(__option)
+#define weechat_config_integer_inherited(__option)                      \
+    (weechat_plugin->config_integer_inherited)(__option)
 #define weechat_config_integer_default(__option)                        \
     (weechat_plugin->config_integer_default)(__option)
 #define weechat_config_enum(__option)                                   \
     (weechat_plugin->config_enum)(__option)
+#define weechat_config_enum_inherited(__option)                         \
+    (weechat_plugin->config_enum_inherited)(__option)
 #define weechat_config_enum_default(__option)                           \
     (weechat_plugin->config_enum_default)(__option)
 #define weechat_config_string(__option)                                 \
     (weechat_plugin->config_string)(__option)
+#define weechat_config_string_inherited(__option)                       \
+    (weechat_plugin->config_string_inherited)(__option)
 #define weechat_config_string_default(__option)                         \
     (weechat_plugin->config_string_default)(__option)
 #define weechat_config_color(__option)                                  \
     (weechat_plugin->config_color)(__option)
+#define weechat_config_color_inherited(__option)                        \
+    (weechat_plugin->config_color_inherited)(__option)
 #define weechat_config_color_default(__option)                          \
     (weechat_plugin->config_color_default)(__option)
 #define weechat_config_write_option(__config, __option)                 \

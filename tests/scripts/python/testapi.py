@@ -199,10 +199,8 @@ def option_delete_cb(data, option):
 def test_config():
     """Test config functions."""
     # config
-    ptr_config = weechat.config_new(
-        'test_config_' + '{SCRIPT_LANGUAGE}',
-        'config_reload_cb', 'config_reload_data',
-    )
+    ptr_config = weechat.config_new('test_config_' + '{SCRIPT_LANGUAGE}',
+                                    'config_reload_cb', 'config_reload_data')
     check(ptr_config != '')
     # set version
     weechat.config_set_version(ptr_config, 2,
@@ -237,6 +235,18 @@ def test_config():
     check(weechat.config_option_reset(ptr_opt_bool, 1) == 2)  # SET_OK_CHANGED
     check(weechat.config_option_reset(ptr_opt_bool, 1) == 1)  # SET_OK_SAME_VALUE
     check(weechat.config_boolean(ptr_opt_bool) == 1)
+    # boolean option with parent option
+    ptr_opt_bool_child = weechat.config_new_option(
+        ptr_config, ptr_section,
+        'option_bool_child << test_config_' + '{SCRIPT_LANGUAGE}' + '.section1.option_bool',
+        'boolean', 'bool option', '', 0, 0, None, None, 1,
+        'option_check_value_cb', '',
+        'option_change_cb', '',
+        'option_delete_cb', '',
+    )
+    check(ptr_opt_bool_child != '')
+    check(weechat.config_boolean(ptr_opt_bool_child) == 0)
+    check(weechat.config_boolean_inherited(ptr_opt_bool_child) == 1)
     # integer option
     ptr_opt_int = weechat.config_new_option(
         ptr_config, ptr_section, 'option_int', 'integer', 'int option',
@@ -254,6 +264,18 @@ def test_config():
     check(weechat.config_option_reset(ptr_opt_int, 1) == 2)  # SET_OK_CHANGED
     check(weechat.config_option_reset(ptr_opt_int, 1) == 1)  # SET_OK_SAME_VALUE
     check(weechat.config_integer(ptr_opt_int) == 2)
+    # integer option with parent option
+    ptr_opt_int_child = weechat.config_new_option(
+        ptr_config, ptr_section,
+        'option_int_child << test_config_' + '{SCRIPT_LANGUAGE}' + '.section1.option_int',
+        'integer', 'int option', '', 0, 256, None, None, 1,
+        'option_check_value_cb', '',
+        'option_change_cb', '',
+        'option_delete_cb', '',
+    )
+    check(ptr_opt_int_child != '')
+    check(weechat.config_integer(ptr_opt_int_child) == 0)
+    check(weechat.config_integer_inherited(ptr_opt_int_child) == 2)
     # integer option (with string values: enum with WeeChat >= 4.1.0)
     ptr_opt_int_str = weechat.config_new_option(
         ptr_config, ptr_section, 'option_int_str', 'integer', 'int option str',
@@ -275,6 +297,19 @@ def test_config():
     check(weechat.config_option_reset(ptr_opt_int_str, 1) == 1)  # SET_OK_SAME_VALUE
     check(weechat.config_integer(ptr_opt_int_str) == 1)
     check(weechat.config_string(ptr_opt_int_str) == 'val2')
+    # integer option with parent option (with string values: enum with WeeChat >= 4.1.0)
+    ptr_opt_int_str_child = weechat.config_new_option(
+        ptr_config, ptr_section,
+        'option_int_str_child << test_config_' + '{SCRIPT_LANGUAGE}' + '.section1.option_int_str',
+        'integer', 'int option str',
+        'val1|val2|val3', 0, 0, None, None, 1,
+        'option_check_value_cb', '',
+        'option_change_cb', '',
+        'option_delete_cb', '',
+    )
+    check(ptr_opt_int_str_child != '')
+    check(weechat.config_integer(ptr_opt_int_str_child) == 0)
+    check(weechat.config_integer_inherited(ptr_opt_int_str_child) == 1)
     # string option
     ptr_opt_str = weechat.config_new_option(
         ptr_config, ptr_section, 'option_str', 'string', 'str option',
@@ -301,6 +336,18 @@ def test_config():
     check(weechat.config_option_unset(ptr_opt_str) == 0)  # UNSET_OK_NO_RESET
     check(weechat.config_string(ptr_opt_str) == 'value')
     check(weechat.config_option_default_is_null(ptr_opt_str) == 0)
+    # string option with parent option
+    ptr_opt_str_child = weechat.config_new_option(
+        ptr_config, ptr_section,
+        'option_str_child << test_config_' + '{SCRIPT_LANGUAGE}' + '.section1.option_str',
+        'string', 'str option', '', 0, 0, None, None, 1,
+        'option_check_value_cb', '',
+        'option_change_cb', '',
+        'option_delete_cb', '',
+    )
+    check(ptr_opt_str_child != '')
+    check(weechat.config_string(ptr_opt_str_child) == '')
+    check(weechat.config_string_inherited(ptr_opt_str_child) == 'value')
     # color option
     ptr_opt_col = weechat.config_new_option(
         ptr_config, ptr_section, 'option_col', 'color', 'col option',
@@ -318,6 +365,18 @@ def test_config():
     check(weechat.config_option_reset(ptr_opt_col, 1) == 2)  # SET_OK_CHANGED
     check(weechat.config_option_reset(ptr_opt_col, 1) == 1)  # SET_OK_SAME_VALUE
     check(weechat.config_color(ptr_opt_col) == 'lightgreen')
+    # color option with parent option
+    ptr_opt_col_child = weechat.config_new_option(
+        ptr_config, ptr_section,
+        'option_col_child << test_config_' + '{SCRIPT_LANGUAGE}' + '.section1.option_col',
+        'color', 'col option', '', 0, 0, None, None, 1,
+        'option_check_value_cb', '',
+        'option_change_cb', '',
+        'option_delete_cb', '',
+    )
+    check(ptr_opt_col_child != '')
+    check(weechat.config_color(ptr_opt_col_child) == '')
+    check(weechat.config_color_inherited(ptr_opt_col_child) == 'lightgreen')
     # enum option
     ptr_opt_enum = weechat.config_new_option(
         ptr_config, ptr_section, 'option_enum', 'enum', 'enum option',
@@ -343,6 +402,18 @@ def test_config():
     check(weechat.config_enum(ptr_opt_enum) == 1)
     check(weechat.config_integer(ptr_opt_enum) == 1)
     check(weechat.config_string(ptr_opt_enum) == 'val2')
+    # enum option with parent option
+    ptr_opt_enum_child = weechat.config_new_option(
+        ptr_config, ptr_section,
+        'option_enum_child << test_config_' + '{SCRIPT_LANGUAGE}' + '.section1.option_enum',
+        'enum', 'enum option', 'val1|val2|val3', 0, 0, None, None, 1,
+        'option_check_value_cb', '',
+        'option_change_cb', '',
+        'option_delete_cb', '',
+    )
+    check(ptr_opt_enum_child != '')
+    check(weechat.config_enum(ptr_opt_enum_child) == 0)
+    check(weechat.config_enum_inherited(ptr_opt_enum_child) == 1)
     # search option
     ptr_opt_bool2 = weechat.config_search_option(ptr_config, ptr_section,
                                                  'option_bool')

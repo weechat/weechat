@@ -1933,6 +1933,25 @@ weechat_ruby_api_config_boolean_default (VALUE class, VALUE option)
 }
 
 static VALUE
+weechat_ruby_api_config_boolean_inherited (VALUE class, VALUE option)
+{
+    char *c_option;
+    int value;
+
+    API_INIT_FUNC(1, "config_boolean_inherited", API_RETURN_INT(0));
+    if (NIL_P (option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    Check_Type (option, T_STRING);
+
+    c_option = StringValuePtr (option);
+
+    value = weechat_config_boolean_inherited (API_STR2PTR(c_option));
+
+    API_RETURN_INT(value);
+}
+
+static VALUE
 weechat_ruby_api_config_integer (VALUE class, VALUE option)
 {
     char *c_option;
@@ -1966,6 +1985,25 @@ weechat_ruby_api_config_integer_default (VALUE class, VALUE option)
     c_option = StringValuePtr (option);
 
     value = weechat_config_integer_default (API_STR2PTR(c_option));
+
+    API_RETURN_INT(value);
+}
+
+static VALUE
+weechat_ruby_api_config_integer_inherited (VALUE class, VALUE option)
+{
+    char *c_option;
+    int value;
+
+    API_INIT_FUNC(1, "config_integer_inherited", API_RETURN_INT(0));
+    if (NIL_P (option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    Check_Type (option, T_STRING);
+
+    c_option = StringValuePtr (option);
+
+    value = weechat_config_integer_inherited (API_STR2PTR(c_option));
 
     API_RETURN_INT(value);
 }
@@ -2009,6 +2047,25 @@ weechat_ruby_api_config_string_default (VALUE class, VALUE option)
 }
 
 static VALUE
+weechat_ruby_api_config_string_inherited (VALUE class, VALUE option)
+{
+    char *c_option;
+    const char *result;
+
+    API_INIT_FUNC(1, "config_string_inherited", API_RETURN_EMPTY);
+    if (NIL_P (option))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (option, T_STRING);
+
+    c_option = StringValuePtr (option);
+
+    result = weechat_config_string_inherited (API_STR2PTR(c_option));
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
 weechat_ruby_api_config_color (VALUE class, VALUE option)
 {
     char *c_option;
@@ -2047,6 +2104,25 @@ weechat_ruby_api_config_color_default (VALUE class, VALUE option)
 }
 
 static VALUE
+weechat_ruby_api_config_color_inherited (VALUE class, VALUE option)
+{
+    char *c_option;
+    const char *result;
+
+    API_INIT_FUNC(1, "config_color_inherited", API_RETURN_EMPTY);
+    if (NIL_P (option))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (option, T_STRING);
+
+    c_option = StringValuePtr (option);
+
+    result = weechat_config_color_inherited (API_STR2PTR(c_option));
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
 weechat_ruby_api_config_enum (VALUE class, VALUE option)
 {
     char *c_option;
@@ -2080,6 +2156,25 @@ weechat_ruby_api_config_enum_default (VALUE class, VALUE option)
     c_option = StringValuePtr (option);
 
     value = weechat_config_enum_default (API_STR2PTR(c_option));
+
+    API_RETURN_INT(value);
+}
+
+static VALUE
+weechat_ruby_api_config_enum_inherited (VALUE class, VALUE option)
+{
+    char *c_option;
+    int value;
+
+    API_INIT_FUNC(1, "config_enum_inherited", API_RETURN_INT(0));
+    if (NIL_P (option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    Check_Type (option, T_STRING);
+
+    c_option = StringValuePtr (option);
+
+    value = weechat_config_enum_inherited (API_STR2PTR(c_option));
 
     API_RETURN_INT(value);
 }
@@ -6935,13 +7030,18 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(config_option_default_is_null, 1);
     API_DEF_FUNC(config_boolean, 1);
     API_DEF_FUNC(config_boolean_default, 1);
+    API_DEF_FUNC(config_boolean_inherited, 1);
     API_DEF_FUNC(config_integer, 1);
     API_DEF_FUNC(config_integer_default, 1);
+    API_DEF_FUNC(config_integer_inherited, 1);
     API_DEF_FUNC(config_string, 1);
     API_DEF_FUNC(config_string_default, 1);
+    API_DEF_FUNC(config_string_inherited, 1);
     API_DEF_FUNC(config_color, 1);
     API_DEF_FUNC(config_color_default, 1);
+    API_DEF_FUNC(config_color_inherited, 1);
     API_DEF_FUNC(config_enum, 1);
+    API_DEF_FUNC(config_enum_inherited, 1);
     API_DEF_FUNC(config_enum_default, 1);
     API_DEF_FUNC(config_write_option, 2);
     API_DEF_FUNC(config_write_line, 3);

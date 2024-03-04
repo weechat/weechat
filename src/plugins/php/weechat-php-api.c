@@ -1679,6 +1679,23 @@ API_FUNC(config_boolean_default)
     API_RETURN_INT(result);
 }
 
+API_FUNC(config_boolean_inherited)
+{
+    zend_string *z_option;
+    struct t_config_option *option;
+    int result;
+
+    API_INIT_FUNC(1, "config_boolean_inherited", API_RETURN_INT(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
+    result = weechat_config_boolean_inherited (option);
+
+    API_RETURN_INT(result);
+}
+
 API_FUNC(config_integer)
 {
     zend_string *z_option;
@@ -1709,6 +1726,23 @@ API_FUNC(config_integer_default)
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
 
     result = weechat_config_integer_default (option);
+
+    API_RETURN_INT(result);
+}
+
+API_FUNC(config_integer_inherited)
+{
+    zend_string *z_option;
+    struct t_config_option *option;
+    int result;
+
+    API_INIT_FUNC(1, "config_integer_inherited", API_RETURN_INT(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
+    result = weechat_config_integer_inherited (option);
 
     API_RETURN_INT(result);
 }
@@ -1747,6 +1781,23 @@ API_FUNC(config_string_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_string_inherited)
+{
+    zend_string *z_option;
+    struct t_config_option *option;
+    const char *result;
+
+    API_INIT_FUNC(1, "config_string_inherited", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
+    result = weechat_config_string_inherited (option);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(config_color)
 {
     zend_string *z_option;
@@ -1781,6 +1832,23 @@ API_FUNC(config_color_default)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(config_color_inherited)
+{
+    zend_string *z_option;
+    struct t_config_option *option;
+    const char *result;
+
+    API_INIT_FUNC(1, "config_color_inherited", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
+    result = weechat_config_color_inherited (option);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(config_enum)
 {
     zend_string *z_option;
@@ -1811,6 +1879,23 @@ API_FUNC(config_enum_default)
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
 
     result = weechat_config_enum_default (option);
+
+    API_RETURN_INT(result);
+}
+
+API_FUNC(config_enum_inherited)
+{
+    zend_string *z_option;
+    struct t_config_option *option;
+    int result;
+
+    API_INIT_FUNC(1, "config_enum_inherited", API_RETURN_INT(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
+    result = weechat_config_enum_inherited (option);
 
     API_RETURN_INT(result);
 }

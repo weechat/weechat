@@ -1607,6 +1607,20 @@ weechat_guile_api_config_boolean_default (SCM option)
 }
 
 SCM
+weechat_guile_api_config_boolean_inherited (SCM option)
+{
+    int value;
+
+    API_INIT_FUNC(1, "config_boolean_inherited", API_RETURN_INT(0));
+    if (!scm_is_string (option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_config_boolean_inherited (API_STR2PTR(API_SCM_TO_STRING(option)));
+
+    API_RETURN_INT(value);
+}
+
+SCM
 weechat_guile_api_config_integer (SCM option)
 {
     int value;
@@ -1630,6 +1644,20 @@ weechat_guile_api_config_integer_default (SCM option)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     value = weechat_config_integer_default (API_STR2PTR(API_SCM_TO_STRING(option)));
+
+    API_RETURN_INT(value);
+}
+
+SCM
+weechat_guile_api_config_integer_inherited (SCM option)
+{
+    int value;
+
+    API_INIT_FUNC(1, "config_integer_inherited", API_RETURN_INT(0));
+    if (!scm_is_string (option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_config_integer_inherited (API_STR2PTR(API_SCM_TO_STRING(option)));
 
     API_RETURN_INT(value);
 }
@@ -1665,6 +1693,21 @@ weechat_guile_api_config_string_default (SCM option)
 }
 
 SCM
+weechat_guile_api_config_string_inherited (SCM option)
+{
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "config_string_inherited", API_RETURN_EMPTY);
+    if (!scm_is_string (option))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_config_string_inherited (API_STR2PTR(API_SCM_TO_STRING(option)));
+
+    API_RETURN_STRING(result);
+}
+
+SCM
 weechat_guile_api_config_color (SCM option)
 {
     const char *result;
@@ -1695,6 +1738,21 @@ weechat_guile_api_config_color_default (SCM option)
 }
 
 SCM
+weechat_guile_api_config_color_inherited (SCM option)
+{
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "config_color_inherited", API_RETURN_EMPTY);
+    if (!scm_is_string (option))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_config_color_inherited (API_STR2PTR(API_SCM_TO_STRING(option)));
+
+    API_RETURN_STRING(result);
+}
+
+SCM
 weechat_guile_api_config_enum (SCM option)
 {
     int value;
@@ -1718,6 +1776,20 @@ weechat_guile_api_config_enum_default (SCM option)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     value = weechat_config_enum_default (API_STR2PTR(API_SCM_TO_STRING(option)));
+
+    API_RETURN_INT(value);
+}
+
+SCM
+weechat_guile_api_config_enum_inherited (SCM option)
+{
+    int value;
+
+    API_INIT_FUNC(1, "config_enum_inherited", API_RETURN_INT(0));
+    if (!scm_is_string (option))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_config_enum_inherited (API_STR2PTR(API_SCM_TO_STRING(option)));
 
     API_RETURN_INT(value);
 }
@@ -5407,14 +5479,19 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(config_option_default_is_null, 1);
     API_DEF_FUNC(config_boolean, 1);
     API_DEF_FUNC(config_boolean_default, 1);
+    API_DEF_FUNC(config_boolean_inherited, 1);
     API_DEF_FUNC(config_integer, 1);
     API_DEF_FUNC(config_integer_default, 1);
+    API_DEF_FUNC(config_integer_inherited, 1);
     API_DEF_FUNC(config_string, 1);
     API_DEF_FUNC(config_string_default, 1);
+    API_DEF_FUNC(config_string_inherited, 1);
     API_DEF_FUNC(config_color, 1);
     API_DEF_FUNC(config_color_default, 1);
+    API_DEF_FUNC(config_color_inherited, 1);
     API_DEF_FUNC(config_enum, 1);
     API_DEF_FUNC(config_enum_default, 1);
+    API_DEF_FUNC(config_enum_inherited, 1);
     API_DEF_FUNC(config_write_option, 2);
     API_DEF_FUNC(config_write_line, 3);
     API_DEF_FUNC(config_write, 1);

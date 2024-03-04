@@ -795,6 +795,17 @@ def config_boolean_default(option: str) -> int:
     ...
 
 
+def config_boolean_inherited(option: str) -> int:
+    """`config_boolean_inherited in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_config_boolean_inherited>`_
+    ::
+
+        # example
+        option = weechat.config_get("irc.server.libera.autoconnect")
+        autoconect = weechat.config_boolean_inherited(option)
+    """
+    ...
+
+
 def config_integer(option: str) -> int:
     """`config_integer in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_config_integer>`_
     ::
@@ -813,6 +824,17 @@ def config_integer_default(option: str) -> int:
         # example
         option = weechat.config_get("plugin.section.option")
         value = weechat.config_integer_default(option)
+    """
+    ...
+
+
+def config_integer_inherited(option: str) -> int:
+    """`config_integer_inherited in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_config_integer_inherited>`_
+    ::
+
+        # example
+        option = weechat.config_get("irc.server.libera.autojoin_delay")
+        delay = weechat.config_integer_inherited(option)
     """
     ...
 
@@ -839,13 +861,24 @@ def config_string_default(option: str) -> str:
     ...
 
 
+def config_string_inherited(option: str) -> str:
+    """`config_string_inherited in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_config_string_inherited>`_
+    ::
+
+        # example
+        option = weechat.config_get("irc.server.libera.msg_quit")
+        msg_quit = weechat.config_string_inherited(option)
+    """
+    ...
+
+
 def config_color(option: str) -> str:
     """`config_color in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_config_color>`_
     ::
 
         # example
         option = weechat.config_get("plugin.section.option")
-        value = weechat.config_color(option)
+        color = weechat.config_color(option)
     """
     ...
 
@@ -856,7 +889,18 @@ def config_color_default(option: str) -> str:
 
         # example
         option = weechat.config_get("plugin.section.option")
-        value = weechat.config_color_default(option)
+        color = weechat.config_color_default(option)
+    """
+    ...
+
+
+def config_color_inherited(option: str) -> str:
+    """`config_color_inherited in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_config_color_inherited>`_
+    ::
+
+        # example
+        option = weechat.config_get("plugin.section.option")
+        color = weechat.config_color_inherited(option)
     """
     ...
 
@@ -879,6 +923,17 @@ def config_enum_default(option: str) -> int:
         # example
         option = weechat.config_get("plugin.section.option")
         value = weechat.config_enum_default(option)
+    """
+    ...
+
+
+def config_enum_inherited(option: str) -> int:
+    """`config_enum_inherited in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_config_enum_inherited>`_
+    ::
+
+        # example
+        option = weechat.config_get("irc.server.libera.sasl_fail")
+        sasl_fail = weechat.config_enum_inherited(option)
     """
     ...
 

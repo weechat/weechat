@@ -41,11 +41,17 @@ extern const char *config_file_option_escape (const char *name);
 }
 
 struct t_config_option *ptr_option_bool = NULL;
+struct t_config_option *ptr_option_bool_child = NULL;
 struct t_config_option *ptr_option_int = NULL;
+struct t_config_option *ptr_option_int_child = NULL;
 struct t_config_option *ptr_option_int_str = NULL;
+struct t_config_option *ptr_option_int_str_child = NULL;
 struct t_config_option *ptr_option_str = NULL;
+struct t_config_option *ptr_option_str_child = NULL;
 struct t_config_option *ptr_option_col = NULL;
+struct t_config_option *ptr_option_col_child = NULL;
 struct t_config_option *ptr_option_enum = NULL;
+struct t_config_option *ptr_option_enum_child = NULL;
 
 TEST_GROUP(CoreConfigFile)
 {
@@ -74,9 +80,23 @@ TEST_GROUP(CoreConfigFileWithNewOptions)
             NULL, NULL, NULL,
             NULL, NULL, NULL,
             NULL, NULL, NULL);
+        ptr_option_bool_child = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "test_boolean_child << weechat.look.test_boolean",
+            "boolean", "", NULL, 0, 0, NULL, NULL, 1,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
         ptr_option_int = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "test_integer", "integer", "", NULL, 0, 123456, "100", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+        ptr_option_int_child = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "test_integer_child << weechat.look.test_integer",
+            "integer", "", NULL, 0, 123456, NULL, NULL, 1,
             NULL, NULL, NULL,
             NULL, NULL, NULL,
             NULL, NULL, NULL);
@@ -87,9 +107,23 @@ TEST_GROUP(CoreConfigFileWithNewOptions)
             NULL, NULL, NULL,
             NULL, NULL, NULL,
             NULL, NULL, NULL);
+        ptr_option_int_str_child = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "test_integer_values_child << weechat.look.test_integer_values",
+            "integer", "", "v1|v2|v3", 0, 0, NULL, NULL, 1,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
         ptr_option_str = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "test_string", "string", "", NULL, 0, 0, "value", NULL, 0,
+            &option_str_check_cb, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+        ptr_option_str_child = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "test_string_child << weechat.look.test_string",
+            "string", "", NULL, 0, 0, NULL, NULL, 1,
             &option_str_check_cb, NULL, NULL,
             NULL, NULL, NULL,
             NULL, NULL, NULL);
@@ -99,9 +133,23 @@ TEST_GROUP(CoreConfigFileWithNewOptions)
             NULL, NULL, NULL,
             NULL, NULL, NULL,
             NULL, NULL, NULL);
+        ptr_option_col_child = config_file_new_option (
+            weechat_config_file, weechat_config_section_color,
+            "test_color_child << weechat.color.test_color",
+            "color", "", NULL, 0, 0, NULL, NULL, 1,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
         ptr_option_enum = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "test_enum", "enum", "", "v1|v2|v3", 0, 0, "v2", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
+        ptr_option_enum_child = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "test_enum_child << weechat.look.test_enum",
+            "enum", "", "v1|v2|v3", 0, 0, NULL, NULL, 1,
             NULL, NULL, NULL,
             NULL, NULL, NULL,
             NULL, NULL, NULL);
@@ -111,16 +159,28 @@ TEST_GROUP(CoreConfigFileWithNewOptions)
     {
         config_file_option_free (ptr_option_bool, 0);
         ptr_option_bool = NULL;
+        config_file_option_free (ptr_option_bool_child, 0);
+        ptr_option_bool_child = NULL;
         config_file_option_free (ptr_option_int, 0);
         ptr_option_int = NULL;
+        config_file_option_free (ptr_option_int_child, 0);
+        ptr_option_int_child = NULL;
         config_file_option_free (ptr_option_int_str, 0);
         ptr_option_int_str = NULL;
+        config_file_option_free (ptr_option_int_str_child, 0);
+        ptr_option_int_str_child = NULL;
         config_file_option_free (ptr_option_str, 0);
         ptr_option_str = NULL;
+        config_file_option_free (ptr_option_str_child, 0);
+        ptr_option_str_child = NULL;
         config_file_option_free (ptr_option_col, 0);
         ptr_option_col = NULL;
+        config_file_option_free (ptr_option_col_child, 0);
+        ptr_option_col_child = NULL;
         config_file_option_free (ptr_option_enum, 0);
         ptr_option_enum = NULL;
+        config_file_option_free (ptr_option_enum_child, 0);
+        ptr_option_enum_child = NULL;
     }
 };
 
@@ -1148,6 +1208,22 @@ TEST(CoreConfigFileWithNewOptions, OptionBoolean)
 
 /*
  * Tests functions:
+ *   config_file_option_boolean_inherited
+ */
+
+TEST(CoreConfigFileWithNewOptions, OptionBooleanInherited)
+{
+    LONGS_EQUAL(0, config_file_option_boolean_inherited (NULL));
+
+    LONGS_EQUAL(0, config_file_option_boolean_inherited (ptr_option_bool_child));
+    config_file_option_set (ptr_option_bool, "on", 1);
+    LONGS_EQUAL(1, config_file_option_boolean_inherited (ptr_option_bool_child));
+    config_file_option_reset (ptr_option_bool, 1);
+    LONGS_EQUAL(0, config_file_option_boolean_inherited (ptr_option_bool_child));
+}
+
+/*
+ * Tests functions:
  *   config_file_option_integer
  *   config_file_option_integer_default
  */
@@ -1181,6 +1257,22 @@ TEST(CoreConfigFileWithNewOptions, OptionInteger)
     LONGS_EQUAL(9, config_file_option_integer_default (ptr_option_col));
     LONGS_EQUAL(1, config_file_option_integer (ptr_option_enum));
     LONGS_EQUAL(1, config_file_option_integer_default (ptr_option_enum));
+}
+
+/*
+ * Tests functions:
+ *   config_file_option_integer_inherited
+ */
+
+TEST(CoreConfigFileWithNewOptions, OptionIntegerInherited)
+{
+    LONGS_EQUAL(0, config_file_option_integer_inherited (NULL));
+
+    LONGS_EQUAL(100, config_file_option_integer_inherited (ptr_option_int_child));
+    config_file_option_set (ptr_option_int, "123", 1);
+    LONGS_EQUAL(123, config_file_option_integer_inherited (ptr_option_int_child));
+    config_file_option_reset (ptr_option_int, 1);
+    LONGS_EQUAL(100, config_file_option_integer_inherited (ptr_option_int_child));
 }
 
 /*
@@ -1228,6 +1320,28 @@ TEST(CoreConfigFileWithNewOptions, OptionString)
 
 /*
  * Tests functions:
+ *   config_file_option_string_inherited
+ */
+
+TEST(CoreConfigFileWithNewOptions, OptionStringInherited)
+{
+    POINTERS_EQUAL(NULL, config_file_option_string_inherited (NULL));
+
+    STRCMP_EQUAL("v2", config_file_option_string_inherited (ptr_option_int_str_child));
+    config_file_option_set (ptr_option_int_str, "v3", 1);
+    STRCMP_EQUAL("v3", config_file_option_string_inherited (ptr_option_int_str_child));
+    config_file_option_reset (ptr_option_int_str, 1);
+    STRCMP_EQUAL("v2", config_file_option_string_inherited (ptr_option_int_str_child));
+
+    STRCMP_EQUAL("value", config_file_option_string_inherited (ptr_option_str_child));
+    config_file_option_set (ptr_option_str, "test", 1);
+    STRCMP_EQUAL("test", config_file_option_string_inherited (ptr_option_str_child));
+    config_file_option_reset (ptr_option_str, 1);
+    STRCMP_EQUAL("value", config_file_option_string_inherited (ptr_option_str_child));
+}
+
+/*
+ * Tests functions:
  *   config_file_option_color
  *   config_file_option_color_default
  */
@@ -1257,6 +1371,22 @@ TEST(CoreConfigFileWithNewOptions, OptionColor)
     POINTERS_EQUAL(NULL, config_file_option_color_default (ptr_option_str));
     POINTERS_EQUAL(NULL, config_file_option_color (ptr_option_enum));
     POINTERS_EQUAL(NULL, config_file_option_color_default (ptr_option_enum));
+}
+
+/*
+ * Tests functions:
+ *   config_file_option_color_inherited
+ */
+
+TEST(CoreConfigFileWithNewOptions, OptionColorInherited)
+{
+    POINTERS_EQUAL(NULL, config_file_option_color_inherited (NULL));
+
+    STRCMP_EQUAL("blue", config_file_option_color_inherited (ptr_option_col_child));
+    config_file_option_set (ptr_option_col, "red", 1);
+    STRCMP_EQUAL("red", config_file_option_color_inherited (ptr_option_col_child));
+    config_file_option_reset (ptr_option_col, 1);
+    STRCMP_EQUAL("blue", config_file_option_color_inherited (ptr_option_col_child));
 }
 
 /*
@@ -1296,6 +1426,22 @@ TEST(CoreConfigFileWithNewOptions, OptionEnum)
     LONGS_EQUAL(9, config_file_option_enum_default (ptr_option_col));
     LONGS_EQUAL(1, config_file_option_enum (ptr_option_enum));
     LONGS_EQUAL(1, config_file_option_enum_default (ptr_option_enum));
+}
+
+/*
+ * Tests functions:
+ *   config_file_option_enum_inherited
+ */
+
+TEST(CoreConfigFileWithNewOptions, OptionEnumInherited)
+{
+    LONGS_EQUAL(0, config_file_option_enum_inherited (NULL));
+
+    LONGS_EQUAL(1, config_file_option_enum_inherited (ptr_option_enum_child));
+    config_file_option_set (ptr_option_enum, "v3", 1);
+    LONGS_EQUAL(2, config_file_option_enum_inherited (ptr_option_enum_child));
+    config_file_option_reset (ptr_option_enum, 1);
+    LONGS_EQUAL(1, config_file_option_enum_inherited (ptr_option_enum_child));
 }
 
 /*

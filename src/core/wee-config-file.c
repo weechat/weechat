@@ -1184,6 +1184,28 @@ config_file_search_with_string (const char *option_name,
 }
 
 /*
+ * Gets pointer to parent option, NULL if the option has no parent.
+ */
+
+struct t_config_option *
+config_file_get_parent_option (struct t_config_option *option)
+{
+    struct t_config_option *ptr_parent_option;
+
+    if (!option || !option->parent_name)
+        return NULL;
+
+    config_file_search_with_string (
+        option->parent_name,
+        NULL,  /* config_file */
+        NULL,  /* section */
+        &ptr_parent_option,
+        NULL);  /* pos_option_name */
+
+    return ptr_parent_option;
+}
+
+/*
  * Checks if a string with boolean value is valid.
  *
  * Returns:
@@ -2686,6 +2708,34 @@ config_file_option_boolean_default (struct t_config_option *option)
 }
 
 /*
+ * Returns inherited boolean value of an option: value of option if not NULL,
+ * or value of the parent option (if option inherits from another option).
+ *
+ * If the parent option is not found, returns the default value of the option.
+ * If the parent value is NULL, returns the default value of the parent option.
+ */
+
+int
+config_file_option_boolean_inherited (struct t_config_option *option)
+{
+    struct t_config_option *ptr_parent_option;
+
+    if (option && option->value)
+    {
+        return config_file_option_boolean (option);
+    }
+    else
+    {
+        ptr_parent_option = config_file_get_parent_option (option);
+        if (!ptr_parent_option)
+            return config_file_option_boolean_default (option);
+        if (!ptr_parent_option->value)
+            return config_file_option_boolean_default (ptr_parent_option);
+        return config_file_option_boolean (ptr_parent_option);
+    }
+}
+
+/*
  * Returns integer value of an option.
  */
 
@@ -2745,6 +2795,34 @@ config_file_option_integer_default (struct t_config_option *option)
             break;
     }
     return 0;
+}
+
+/*
+ * Returns inherited integer value of an option: value of option if not NULL,
+ * or value of the parent option (if option inherits from another option).
+ *
+ * If the parent option is not found, returns the default value of the option.
+ * If the parent value is NULL, returns the default value of the parent option.
+ */
+
+int
+config_file_option_integer_inherited (struct t_config_option *option)
+{
+    struct t_config_option *ptr_parent_option;
+
+    if (option && option->value)
+    {
+        return config_file_option_integer (option);
+    }
+    else
+    {
+        ptr_parent_option = config_file_get_parent_option (option);
+        if (!ptr_parent_option)
+            return config_file_option_integer_default (option);
+        if (!ptr_parent_option->value)
+            return config_file_option_integer_default (ptr_parent_option);
+        return config_file_option_integer (ptr_parent_option);
+    }
 }
 
 /*
@@ -2810,6 +2888,34 @@ config_file_option_string_default (struct t_config_option *option)
 }
 
 /*
+ * Returns inherited string value of an option: value of option if not NULL,
+ * or value of the parent option (if option inherits from another option).
+ *
+ * If the parent option is not found, returns the default value of the option.
+ * If the parent value is NULL, returns the default value of the parent option.
+ */
+
+const char *
+config_file_option_string_inherited (struct t_config_option *option)
+{
+    struct t_config_option *ptr_parent_option;
+
+    if (option && option->value)
+    {
+        return config_file_option_string (option);
+    }
+    else
+    {
+        ptr_parent_option = config_file_get_parent_option (option);
+        if (!ptr_parent_option)
+            return config_file_option_string_default (option);
+        if (!ptr_parent_option->value)
+            return config_file_option_string_default (ptr_parent_option);
+        return config_file_option_string (ptr_parent_option);
+    }
+}
+
+/*
  * Returns color value of an option.
  */
 
@@ -2833,6 +2939,32 @@ config_file_option_color_default (struct t_config_option *option)
         return NULL;
 
     return gui_color_get_name (CONFIG_COLOR_DEFAULT(option));
+}
+
+/*
+ * Returns inherited color value of an option: value of option if not NULL,
+ * or value of the parent option (if option inherits from another option).
+ *
+ * If the parent option is not found, returns the default value of the option.
+ * If the parent value is NULL, returns the default value of the parent option.
+ */
+
+const char *
+config_file_option_color_inherited (struct t_config_option *option)
+{
+    struct t_config_option *ptr_parent_option;
+
+    if (option && option->value)
+        return config_file_option_color (option);
+    else
+    {
+        ptr_parent_option = config_file_get_parent_option (option);
+        if (!ptr_parent_option)
+            return config_file_option_color_default (option);
+        if (!ptr_parent_option->value)
+            return config_file_option_color_default (ptr_parent_option);
+        return config_file_option_color (ptr_parent_option);
+    }
 }
 
 /*
@@ -2895,6 +3027,34 @@ config_file_option_enum_default (struct t_config_option *option)
             break;
     }
     return 0;
+}
+
+/*
+ * Returns inherited enum value of an option: value of option if not NULL,
+ * or value of the parent option (if option inherits from another option).
+ *
+ * If the parent option is not found, returns the default value of the option.
+ * If the parent value is NULL, returns the default value of the parent option.
+ */
+
+int
+config_file_option_enum_inherited (struct t_config_option *option)
+{
+    struct t_config_option *ptr_parent_option;
+
+    if (option && option->value)
+    {
+        return config_file_option_enum (option);
+    }
+    else
+    {
+        ptr_parent_option = config_file_get_parent_option (option);
+        if (!ptr_parent_option)
+            return config_file_option_enum_default (option);
+        if (!ptr_parent_option->value)
+            return config_file_option_enum_default (ptr_parent_option);
+        return config_file_option_enum (ptr_parent_option);
+    }
 }
 
 /*
