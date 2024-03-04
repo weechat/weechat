@@ -5650,6 +5650,9 @@ API_FUNC(upgrade_close)
 
 void weechat_tcl_api_init (Tcl_Interp *interp)
 {
+    char str_const[256];
+    int i;
+
     /* standard initializer */
     Tcl_Init (interp);
 
@@ -5658,54 +5661,24 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     /* interface constants */
     /* set variables, TODO: make them unmodifiable (thru Tcl_TraceVar) ? */
     /* NOTE: it is not good for performance to convert "defines" to Tcl_Obj */
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_RC_OK", NULL, Tcl_NewIntObj (WEECHAT_RC_OK), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_RC_OK_EAT", NULL, Tcl_NewIntObj (WEECHAT_RC_OK_EAT), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_RC_ERROR", NULL, Tcl_NewIntObj (WEECHAT_RC_ERROR), 0);
+    for (i = 0; weechat_script_constants[i].name; i++)
+    {
+        snprintf (str_const, sizeof (str_const),
+                  "::weechat::%s", weechat_script_constants[i].name);
+        if (weechat_script_constants[i].value_string)
+        {
+            Tcl_SetVar (interp, str_const,
+                        weechat_script_constants[i].value_string, 0);
+        }
+        else
+        {
+            Tcl_SetVar2Ex (interp, str_const, NULL,
+                           Tcl_NewIntObj (weechat_script_constants[i].value_integer), 0);
+        }
+    }
 
+    /* add specific constant for `NULL` in tcl */
     Tcl_SetVar (interp, "::weechat::WEECHAT_NULL", WEECHAT_NULL_STRING, 0);
-
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_READ_OK", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_READ_OK), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_READ_MEMORY_ERROR", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_READ_MEMORY_ERROR), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_READ_FILE_NOT_FOUND", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_READ_FILE_NOT_FOUND), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_WRITE_OK", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_WRITE_OK), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_WRITE_ERROR", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_WRITE_ERROR), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_WRITE_MEMORY_ERROR", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_WRITE_MEMORY_ERROR), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_SET_OK_CHANGED", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_SET_OK_CHANGED), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_SET_ERROR", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_SET_ERROR), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_RESET", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_UNSET_OK_RESET), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_CONFIG_OPTION_UNSET_ERROR", NULL, Tcl_NewIntObj (WEECHAT_CONFIG_OPTION_UNSET_ERROR), 0);
-
-    Tcl_SetVar (interp, "::weechat::WEECHAT_LIST_POS_SORT", WEECHAT_LIST_POS_SORT, 0);
-    Tcl_SetVar (interp, "::weechat::WEECHAT_LIST_POS_BEGINNING", WEECHAT_LIST_POS_BEGINNING, 0);
-    Tcl_SetVar (interp, "::weechat::WEECHAT_LIST_POS_END", WEECHAT_LIST_POS_END, 0);
-
-    Tcl_SetVar (interp, "::weechat::WEECHAT_HOTLIST_LOW", WEECHAT_HOTLIST_LOW, 0);
-    Tcl_SetVar (interp, "::weechat::WEECHAT_HOTLIST_MESSAGE", WEECHAT_HOTLIST_MESSAGE, 0);
-    Tcl_SetVar (interp, "::weechat::WEECHAT_HOTLIST_PRIVATE", WEECHAT_HOTLIST_PRIVATE, 0);
-    Tcl_SetVar (interp, "::weechat::WEECHAT_HOTLIST_HIGHLIGHT", WEECHAT_HOTLIST_HIGHLIGHT, 0);
-
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_PROCESS_RUNNING", NULL, Tcl_NewIntObj (WEECHAT_HOOK_PROCESS_RUNNING), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_PROCESS_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_PROCESS_ERROR), 0);
-
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_OK", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_OK), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_PROXY_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_PROXY_ERROR), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_MEMORY_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_MEMORY_ERROR), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_TIMEOUT", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_TIMEOUT), 0);
-    Tcl_SetVar2Ex (interp, "::weechat::WEECHAT_HOOK_CONNECT_SOCKET_ERROR", NULL, Tcl_NewIntObj (WEECHAT_HOOK_CONNECT_SOCKET_ERROR), 0);
-
-    Tcl_SetVar (interp, "::weechat::WEECHAT_HOOK_SIGNAL_STRING", WEECHAT_HOOK_SIGNAL_STRING, 0);
-    Tcl_SetVar (interp, "::weechat::WEECHAT_HOOK_SIGNAL_INT", WEECHAT_HOOK_SIGNAL_INT, 0);
-    Tcl_SetVar (interp, "::weechat::WEECHAT_HOOK_SIGNAL_POINTER", WEECHAT_HOOK_SIGNAL_POINTER, 0);
 
     /* interface functions */
     API_DEF_FUNC(register);

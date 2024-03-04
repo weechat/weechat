@@ -5674,6 +5674,8 @@ void
 weechat_perl_api_init (pTHX)
 {
     HV *stash;
+    int i;
+    char str_const[256];
 
     newXS ("DynaLoader::boot_DynaLoader", boot_DynaLoader, __FILE__);
     newXS ("weechat::__output__", weechat_perl_output, "weechat");
@@ -5900,50 +5902,15 @@ weechat_perl_api_init (pTHX)
 
     /* interface constants */
     stash = gv_stashpv ("weechat", TRUE);
-    newCONSTSUB (stash, "weechat::WEECHAT_RC_OK", newSViv (WEECHAT_RC_OK));
-    newCONSTSUB (stash, "weechat::WEECHAT_RC_OK_EAT", newSViv (WEECHAT_RC_OK_EAT));
-    newCONSTSUB (stash, "weechat::WEECHAT_RC_ERROR", newSViv (WEECHAT_RC_ERROR));
-
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_READ_OK", newSViv (WEECHAT_CONFIG_READ_OK));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_READ_MEMORY_ERROR", newSViv (WEECHAT_CONFIG_READ_MEMORY_ERROR));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_READ_FILE_NOT_FOUND", newSViv (WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_WRITE_OK", newSViv (WEECHAT_CONFIG_WRITE_OK));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_WRITE_ERROR", newSViv (WEECHAT_CONFIG_WRITE_ERROR));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_WRITE_MEMORY_ERROR", newSViv (WEECHAT_CONFIG_WRITE_MEMORY_ERROR));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_OPTION_SET_OK_CHANGED", newSViv (WEECHAT_CONFIG_OPTION_SET_OK_CHANGED));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE", newSViv (WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_OPTION_SET_ERROR", newSViv (WEECHAT_CONFIG_OPTION_SET_ERROR));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND", newSViv (WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET", newSViv (WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_RESET", newSViv (WEECHAT_CONFIG_OPTION_UNSET_OK_RESET));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED", newSViv (WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED));
-    newCONSTSUB (stash, "weechat::WEECHAT_CONFIG_OPTION_UNSET_ERROR", newSViv (WEECHAT_CONFIG_OPTION_UNSET_ERROR));
-
-    newCONSTSUB (stash, "weechat::WEECHAT_LIST_POS_SORT", newSVpv (WEECHAT_LIST_POS_SORT, PL_na));
-    newCONSTSUB (stash, "weechat::WEECHAT_LIST_POS_BEGINNING", newSVpv (WEECHAT_LIST_POS_BEGINNING, PL_na));
-    newCONSTSUB (stash, "weechat::WEECHAT_LIST_POS_END", newSVpv (WEECHAT_LIST_POS_END, PL_na));
-
-    newCONSTSUB (stash, "weechat::WEECHAT_HOTLIST_LOW", newSVpv (WEECHAT_HOTLIST_LOW, PL_na));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOTLIST_MESSAGE", newSVpv (WEECHAT_HOTLIST_MESSAGE, PL_na));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOTLIST_PRIVATE", newSVpv (WEECHAT_HOTLIST_PRIVATE, PL_na));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOTLIST_HIGHLIGHT", newSVpv (WEECHAT_HOTLIST_HIGHLIGHT, PL_na));
-
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_PROCESS_RUNNING", newSViv (WEECHAT_HOOK_PROCESS_RUNNING));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_PROCESS_ERROR", newSViv (WEECHAT_HOOK_PROCESS_ERROR));
-
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_OK", newSViv (WEECHAT_HOOK_CONNECT_OK));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", newSViv (WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", newSViv (WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED", newSViv (WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_PROXY_ERROR", newSViv (WEECHAT_HOOK_CONNECT_PROXY_ERROR));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR", newSViv (WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", newSViv (WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", newSViv (WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_MEMORY_ERROR", newSViv (WEECHAT_HOOK_CONNECT_MEMORY_ERROR));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_TIMEOUT", newSViv (WEECHAT_HOOK_CONNECT_TIMEOUT));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_SOCKET_ERROR", newSViv (WEECHAT_HOOK_CONNECT_SOCKET_ERROR));
-
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_SIGNAL_STRING", newSVpv (WEECHAT_HOOK_SIGNAL_STRING, PL_na));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_SIGNAL_INT", newSVpv (WEECHAT_HOOK_SIGNAL_INT, PL_na));
-    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_SIGNAL_POINTER", newSVpv (WEECHAT_HOOK_SIGNAL_POINTER, PL_na));
+    for (i = 0; weechat_script_constants[i].name; i++)
+    {
+        snprintf (str_const, sizeof (str_const),
+                  "weechat::%s", weechat_script_constants[i].name);
+        newCONSTSUB (
+            stash,
+            str_const,
+            (weechat_script_constants[i].value_string) ?
+            newSVpv (weechat_script_constants[i].value_string, PL_na) :
+            newSViv (weechat_script_constants[i].value_integer));
+    }
 }

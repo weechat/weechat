@@ -41,8 +41,7 @@ from typing import Dict, Union
 """
 
 CONSTANT_RE = (
-    r"( |\|) `(?P<constant>WEECHAT_[A-Z0-9_]+)` "
-    r"\((?P<type>(string|integer))\)(?: \+)?"
+    r"WEECHAT_SCRIPT_CONST_(?P<type>(INT|STR))\((?P<constant>WEECHAT_[A-Z0-9_]+)\)"
 )
 
 FUNCTION_RE = r"""\[source,python\]
@@ -53,25 +52,20 @@ def (?P<function>\w+)(?P<args>[^)]*)(?P<return>\) -> [^:]+:) \.\.\.(?P<example>.
 
 
 def print_stub_constants() -> None:
-    """Print constants, extracted from the Scripting guide."""
-    types = {
-        "integer": "int",
-        "string": "str",
-    }
+    """Print constants, extracted from the plugin-script.c."""
     constant_pattern = re.compile(CONSTANT_RE)
     with open(
-        DOC_DIR / "weechat_scripting.en.adoc", encoding="utf-8"
-    ) as scripting_file, open(
+        SRC_DIR / "plugins" / "plugin-script.c", encoding="utf-8"
+    ) as plugin_script_file, open(
         SRC_DIR / "plugins" / "weechat-plugin.h", encoding="utf-8"
-    ) as plugin_header_file:
-        scripting = scripting_file.read()
-        plugin_header = plugin_header_file.read()
-        for match in constant_pattern.finditer(scripting):
+    ) as plugin_public_header_file:
+        plugin_script = plugin_script_file.read()
+        plugin_public_header = plugin_public_header_file.read()
+        for match in constant_pattern.finditer(plugin_script):
             value_re = rf'^#define {match["constant"]} +(?P<value>[\w"-]+)$'
-            value_match = re.search(value_re, plugin_header, re.MULTILINE)
+            value_match = re.search(value_re, plugin_public_header, re.MULTILINE)
             value = f' = {value_match["value"]}' if value_match else ""
-
-            print(f'{match["constant"]}: {types[match["type"]]}{value}')
+            print(f'{match["constant"]}: {match["type"].lower()}{value}')
 
 
 def print_stub_functions() -> None:

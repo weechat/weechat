@@ -609,6 +609,7 @@ end:
 static PyObject *weechat_python_init_module_weechat ()
 {
     PyObject *weechat_module, *weechat_dict;
+    int i;
 
     weechat_module = PyModule_Create (&moduleDef);
 
@@ -623,52 +624,23 @@ static PyObject *weechat_python_init_module_weechat ()
 
     /* define some constants */
     weechat_dict = PyModule_GetDict (weechat_module);
-    PyDict_SetItemString (weechat_dict, "WEECHAT_RC_OK", PyLong_FromLong ((long)WEECHAT_RC_OK));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_RC_OK_EAT", PyLong_FromLong ((long)WEECHAT_RC_OK_EAT));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_RC_ERROR", PyLong_FromLong ((long)WEECHAT_RC_ERROR));
-
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_READ_OK", PyLong_FromLong ((long)WEECHAT_CONFIG_READ_OK));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_READ_MEMORY_ERROR", PyLong_FromLong ((long)WEECHAT_CONFIG_READ_MEMORY_ERROR));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_READ_FILE_NOT_FOUND", PyLong_FromLong ((long)WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_WRITE_OK", PyLong_FromLong ((long)WEECHAT_CONFIG_WRITE_OK));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_WRITE_ERROR", PyLong_FromLong ((long)WEECHAT_CONFIG_WRITE_ERROR));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_WRITE_MEMORY_ERROR", PyLong_FromLong ((long)WEECHAT_CONFIG_WRITE_MEMORY_ERROR));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_OPTION_SET_OK_CHANGED", PyLong_FromLong ((long)WEECHAT_CONFIG_OPTION_SET_OK_CHANGED));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE", PyLong_FromLong ((long)WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_OPTION_SET_ERROR", PyLong_FromLong ((long)WEECHAT_CONFIG_OPTION_SET_ERROR));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND", PyLong_FromLong ((long)WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET", PyLong_FromLong ((long)WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_OPTION_UNSET_OK_RESET", PyLong_FromLong ((long)WEECHAT_CONFIG_OPTION_UNSET_OK_RESET));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED", PyLong_FromLong ((long)WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_CONFIG_OPTION_UNSET_ERROR", PyLong_FromLong ((long)WEECHAT_CONFIG_OPTION_UNSET_ERROR));
-
-    PyDict_SetItemString (weechat_dict, "WEECHAT_LIST_POS_SORT", PyUnicode_FromString (WEECHAT_LIST_POS_SORT));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_LIST_POS_BEGINNING", PyUnicode_FromString (WEECHAT_LIST_POS_BEGINNING));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_LIST_POS_END", PyUnicode_FromString (WEECHAT_LIST_POS_END));
-
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOTLIST_LOW", PyUnicode_FromString (WEECHAT_HOTLIST_LOW));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOTLIST_MESSAGE", PyUnicode_FromString (WEECHAT_HOTLIST_MESSAGE));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOTLIST_PRIVATE", PyUnicode_FromString (WEECHAT_HOTLIST_PRIVATE));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOTLIST_HIGHLIGHT", PyUnicode_FromString (WEECHAT_HOTLIST_HIGHLIGHT));
-
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_PROCESS_RUNNING", PyLong_FromLong ((long)WEECHAT_HOOK_PROCESS_RUNNING));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_PROCESS_ERROR", PyLong_FromLong ((long)WEECHAT_HOOK_PROCESS_ERROR));
-
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_CONNECT_OK", PyLong_FromLong ((long)WEECHAT_HOOK_CONNECT_OK));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", PyLong_FromLong ((long)WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", PyLong_FromLong ((long)WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED", PyLong_FromLong ((long)WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_CONNECT_PROXY_ERROR", PyLong_FromLong ((long)WEECHAT_HOOK_CONNECT_PROXY_ERROR));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR", PyLong_FromLong ((long)WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", PyLong_FromLong ((long)WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", PyLong_FromLong ((long)WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_CONNECT_MEMORY_ERROR", PyLong_FromLong ((long)WEECHAT_HOOK_CONNECT_MEMORY_ERROR));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_CONNECT_TIMEOUT", PyLong_FromLong ((long)WEECHAT_HOOK_CONNECT_TIMEOUT));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_CONNECT_SOCKET_ERROR", PyLong_FromLong ((long)WEECHAT_HOOK_CONNECT_SOCKET_ERROR));
-
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_SIGNAL_STRING", PyUnicode_FromString (WEECHAT_HOOK_SIGNAL_STRING));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_SIGNAL_INT", PyUnicode_FromString (WEECHAT_HOOK_SIGNAL_INT));
-    PyDict_SetItemString (weechat_dict, "WEECHAT_HOOK_SIGNAL_POINTER", PyUnicode_FromString (WEECHAT_HOOK_SIGNAL_POINTER));
+    for (i = 0; weechat_script_constants[i].name; i++)
+    {
+        if (weechat_script_constants[i].value_string)
+        {
+            PyDict_SetItemString (
+                weechat_dict,
+                weechat_script_constants[i].name,
+                PyUnicode_FromString (weechat_script_constants[i].value_string));
+        }
+        else
+        {
+            PyDict_SetItemString (
+                weechat_dict,
+                weechat_script_constants[i].name,
+                PyLong_FromLong ((long)weechat_script_constants[i].value_integer));
+        }
+    }
 
     return weechat_module;
 }

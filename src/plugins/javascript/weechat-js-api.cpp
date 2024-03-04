@@ -43,12 +43,6 @@ extern "C"
     weechat_obj->Set(                                                   \
         v8::String::New(#__name),                                       \
         v8::FunctionTemplate::New(weechat_js_api_##__name));
-#define API_DEF_CONST_INT(__name)                                       \
-    weechat_obj->Set(v8::String::New(#__name),                          \
-                     v8::Integer::New(__name));
-#define API_DEF_CONST_STR(__name)                                       \
-    weechat_obj->Set(v8::String::New(#__name),                          \
-                     v8::String::New(__name));
 #define API_FUNC(__name)                                                \
     static v8::Handle<v8::Value>                                        \
     weechat_js_api_##__name(const v8::Arguments &args)
@@ -5320,57 +5314,28 @@ API_FUNC(upgrade_close)
 void
 WeechatJsV8::loadLibs()
 {
+    int i;
+
     v8::Local<v8::ObjectTemplate> weechat_obj = v8::ObjectTemplate::New();
 
-    /* constants */
-    API_DEF_CONST_INT(WEECHAT_RC_OK);
-    API_DEF_CONST_INT(WEECHAT_RC_OK_EAT);
-    API_DEF_CONST_INT(WEECHAT_RC_ERROR);
+    /* interface constants */
+    for (i = 0; weechat_script_constants[i].name; i++)
+    {
+        if (weechat_script_constants[i].value_string)
+        {
+            weechat_obj->Set(
+                v8::String::New(weechat_script_constants[i].name),
+                v8::String::New(weechat_script_constants[i].value_string));
+        }
+        else
+        {
+            weechat_obj->Set(
+                v8::String::New(weechat_script_constants[i].name),
+                v8::Integer::New(weechat_script_constants[i].value_integer));
+        }
+    }
 
-    API_DEF_CONST_INT(WEECHAT_CONFIG_READ_OK);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_READ_MEMORY_ERROR);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_WRITE_OK);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_WRITE_ERROR);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_WRITE_MEMORY_ERROR);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_OPTION_SET_OK_CHANGED);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_OPTION_UNSET_OK_RESET);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED);
-    API_DEF_CONST_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
-
-    API_DEF_CONST_STR(WEECHAT_LIST_POS_SORT);
-    API_DEF_CONST_STR(WEECHAT_LIST_POS_BEGINNING);
-    API_DEF_CONST_STR(WEECHAT_LIST_POS_END);
-
-    API_DEF_CONST_STR(WEECHAT_HOTLIST_LOW);
-    API_DEF_CONST_STR(WEECHAT_HOTLIST_MESSAGE);
-    API_DEF_CONST_STR(WEECHAT_HOTLIST_PRIVATE);
-    API_DEF_CONST_STR(WEECHAT_HOTLIST_HIGHLIGHT);
-
-    API_DEF_CONST_INT(WEECHAT_HOOK_PROCESS_RUNNING);
-    API_DEF_CONST_INT(WEECHAT_HOOK_PROCESS_ERROR);
-
-    API_DEF_CONST_INT(WEECHAT_HOOK_CONNECT_OK);
-    API_DEF_CONST_INT(WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
-    API_DEF_CONST_INT(WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND);
-    API_DEF_CONST_INT(WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED);
-    API_DEF_CONST_INT(WEECHAT_HOOK_CONNECT_PROXY_ERROR);
-    API_DEF_CONST_INT(WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR);
-    API_DEF_CONST_INT(WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR);
-    API_DEF_CONST_INT(WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR);
-    API_DEF_CONST_INT(WEECHAT_HOOK_CONNECT_MEMORY_ERROR);
-    API_DEF_CONST_INT(WEECHAT_HOOK_CONNECT_TIMEOUT);
-    API_DEF_CONST_INT(WEECHAT_HOOK_CONNECT_SOCKET_ERROR);
-
-    API_DEF_CONST_STR(WEECHAT_HOOK_SIGNAL_STRING);
-    API_DEF_CONST_STR(WEECHAT_HOOK_SIGNAL_INT);
-    API_DEF_CONST_STR(WEECHAT_HOOK_SIGNAL_POINTER);
-
-    /* functions */
+    /* interface functions */
     API_DEF_FUNC(register);
     API_DEF_FUNC(plugin_get_name);
     API_DEF_FUNC(charset_set);

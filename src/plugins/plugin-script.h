@@ -20,17 +20,6 @@
 #ifndef WEECHAT_PLUGIN_PLUGIN_SCRIPT_H
 #define WEECHAT_PLUGIN_PLUGIN_SCRIPT_H
 
-/* constants which defines return types for weechat_<lang>_exec functions */
-
-enum t_weechat_script_exec_type
-{
-    WEECHAT_SCRIPT_EXEC_INT = 0,
-    WEECHAT_SCRIPT_EXEC_STRING,
-    WEECHAT_SCRIPT_EXEC_POINTER,
-    WEECHAT_SCRIPT_EXEC_HASHTABLE,
-    WEECHAT_SCRIPT_EXEC_IGNORE,
-};
-
 #define WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE 16
 
 #define WEECHAT_SCRIPT_EVAL_NAME "__eval__"
@@ -52,6 +41,29 @@ enum t_weechat_script_exec_type
                     weechat_prefix ("error"), weechat_plugin->name,     \
                     __function,                                         \
                     (__current_script) ? __current_script : "-");
+
+#define WEECHAT_SCRIPT_CONST_INT(__name)                                \
+    { #__name, __name, NULL }
+#define WEECHAT_SCRIPT_CONST_STR(__name)                                \
+    { #__name, 0, __name }
+                                    \
+/* constants which defines return types for weechat_<lang>_exec functions */
+
+enum t_weechat_script_exec_type
+{
+    WEECHAT_SCRIPT_EXEC_INT = 0,
+    WEECHAT_SCRIPT_EXEC_STRING,
+    WEECHAT_SCRIPT_EXEC_POINTER,
+    WEECHAT_SCRIPT_EXEC_HASHTABLE,
+    WEECHAT_SCRIPT_EXEC_IGNORE,
+};
+
+struct t_weechat_script_constant
+{
+    char *name;                     /* constant name                        */
+    int value_integer;              /* value as integer                     */
+    char *value_string;             /* value as string                      */
+};
 
 struct t_plugin_script
 {
@@ -112,6 +124,8 @@ struct t_plugin_script_data
     /* functions */
     void (*unload_all) ();
 };
+
+extern struct t_weechat_script_constant weechat_script_constants[];
 
 extern void plugin_script_display_interpreter (struct t_weechat_plugin *plugin,
                                                int indent);

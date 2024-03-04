@@ -5395,6 +5395,8 @@ weechat_guile_api_upgrade_close (SCM upgrade_file)
 void
 weechat_guile_api_module_init (void *data)
 {
+    char str_const[256];
+    int i;
 #if SCM_MAJOR_VERSION >= 3 || (SCM_MAJOR_VERSION == 2 && SCM_MINOR_VERSION >= 2)
     /* Guile >= 2.2 */
     scm_t_port_type *port_type;
@@ -5642,92 +5644,15 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(upgrade_close, 1);
 
     /* interface constants */
-    scm_c_define ("weechat:WEECHAT_RC_OK", scm_from_int (WEECHAT_RC_OK));
-    scm_c_define ("weechat:WEECHAT_RC_OK_EAT", scm_from_int (WEECHAT_RC_OK_EAT));
-    scm_c_define ("weechat:WEECHAT_RC_ERROR", scm_from_int (WEECHAT_RC_ERROR));
-
-    scm_c_define ("weechat:WEECHAT_CONFIG_READ_OK", scm_from_int (WEECHAT_CONFIG_READ_OK));
-    scm_c_define ("weechat:WEECHAT_CONFIG_READ_MEMORY_ERROR", scm_from_int (WEECHAT_CONFIG_READ_MEMORY_ERROR));
-    scm_c_define ("weechat:WEECHAT_CONFIG_READ_FILE_NOT_FOUND", scm_from_int (WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
-    scm_c_define ("weechat:WEECHAT_CONFIG_WRITE_OK", scm_from_int (WEECHAT_CONFIG_WRITE_OK));
-    scm_c_define ("weechat:WEECHAT_CONFIG_WRITE_ERROR", scm_from_int (WEECHAT_CONFIG_WRITE_ERROR));
-    scm_c_define ("weechat:WEECHAT_CONFIG_WRITE_MEMORY_ERROR", scm_from_int (WEECHAT_CONFIG_WRITE_MEMORY_ERROR));
-    scm_c_define ("weechat:WEECHAT_CONFIG_OPTION_SET_OK_CHANGED", scm_from_int (WEECHAT_CONFIG_OPTION_SET_OK_CHANGED));
-    scm_c_define ("weechat:WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE", scm_from_int (WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE));
-    scm_c_define ("weechat:WEECHAT_CONFIG_OPTION_SET_ERROR", scm_from_int (WEECHAT_CONFIG_OPTION_SET_ERROR));
-    scm_c_define ("weechat:WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND", scm_from_int (WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND));
-    scm_c_define ("weechat:WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET", scm_from_int (WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET));
-    scm_c_define ("weechat:WEECHAT_CONFIG_OPTION_UNSET_OK_RESET", scm_from_int (WEECHAT_CONFIG_OPTION_UNSET_OK_RESET));
-    scm_c_define ("weechat:WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED", scm_from_int (WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED));
-    scm_c_define ("weechat:WEECHAT_CONFIG_OPTION_UNSET_ERROR", scm_from_int (WEECHAT_CONFIG_OPTION_UNSET_ERROR));
-
-    scm_c_define ("weechat:WEECHAT_LIST_POS_SORT", scm_from_locale_string (WEECHAT_LIST_POS_SORT));
-    scm_c_define ("weechat:WEECHAT_LIST_POS_BEGINNING", scm_from_locale_string (WEECHAT_LIST_POS_BEGINNING));
-    scm_c_define ("weechat:WEECHAT_LIST_POS_END", scm_from_locale_string (WEECHAT_LIST_POS_END));
-
-    scm_c_define ("weechat:WEECHAT_HOTLIST_LOW", scm_from_locale_string (WEECHAT_HOTLIST_LOW));
-    scm_c_define ("weechat:WEECHAT_HOTLIST_MESSAGE", scm_from_locale_string (WEECHAT_HOTLIST_MESSAGE));
-    scm_c_define ("weechat:WEECHAT_HOTLIST_PRIVATE", scm_from_locale_string (WEECHAT_HOTLIST_PRIVATE));
-    scm_c_define ("weechat:WEECHAT_HOTLIST_HIGHLIGHT", scm_from_locale_string (WEECHAT_HOTLIST_HIGHLIGHT));
-
-    scm_c_define ("weechat:WEECHAT_HOOK_PROCESS_RUNNING", scm_from_int (WEECHAT_HOOK_PROCESS_RUNNING));
-    scm_c_define ("weechat:WEECHAT_HOOK_PROCESS_ERROR", scm_from_int (WEECHAT_HOOK_PROCESS_ERROR));
-
-    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_OK", scm_from_int (WEECHAT_HOOK_CONNECT_OK));
-    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", scm_from_int (WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND));
-    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", scm_from_int (WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND));
-    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED", scm_from_int (WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED));
-    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_PROXY_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_PROXY_ERROR));
-    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR));
-    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR));
-    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR));
-    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_MEMORY_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_MEMORY_ERROR));
-    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_TIMEOUT", scm_from_int (WEECHAT_HOOK_CONNECT_TIMEOUT));
-    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_SOCKET_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_SOCKET_ERROR));
-
-    scm_c_define ("weechat:WEECHAT_HOOK_SIGNAL_STRING", scm_from_locale_string (WEECHAT_HOOK_SIGNAL_STRING));
-    scm_c_define ("weechat:WEECHAT_HOOK_SIGNAL_INT", scm_from_locale_string (WEECHAT_HOOK_SIGNAL_INT));
-    scm_c_define ("weechat:WEECHAT_HOOK_SIGNAL_POINTER", scm_from_locale_string (WEECHAT_HOOK_SIGNAL_POINTER));
-
-    scm_c_export ("weechat:WEECHAT_RC_OK",
-                  "weechat:WEECHAT_RC_OK_EAT",
-                  "weechat:WEECHAT_RC_ERROR",
-                  "weechat:WEECHAT_CONFIG_READ_OK",
-                  "weechat:WEECHAT_CONFIG_READ_MEMORY_ERROR",
-                  "weechat:WEECHAT_CONFIG_READ_FILE_NOT_FOUND",
-                  "weechat:WEECHAT_CONFIG_WRITE_OK",
-                  "weechat:WEECHAT_CONFIG_WRITE_ERROR",
-                  "weechat:WEECHAT_CONFIG_WRITE_MEMORY_ERROR",
-                  "weechat:WEECHAT_CONFIG_OPTION_SET_OK_CHANGED",
-                  "weechat:WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE",
-                  "weechat:WEECHAT_CONFIG_OPTION_SET_ERROR",
-                  "weechat:WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND",
-                  "weechat:WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET",
-                  "weechat:WEECHAT_CONFIG_OPTION_UNSET_OK_RESET",
-                  "weechat:WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED",
-                  "weechat:WEECHAT_CONFIG_OPTION_UNSET_ERROR",
-                  "weechat:WEECHAT_LIST_POS_SORT",
-                  "weechat:WEECHAT_LIST_POS_BEGINNING",
-                  "weechat:WEECHAT_LIST_POS_END",
-                  "weechat:WEECHAT_HOTLIST_LOW",
-                  "weechat:WEECHAT_HOTLIST_MESSAGE",
-                  "weechat:WEECHAT_HOTLIST_PRIVATE",
-                  "weechat:WEECHAT_HOTLIST_HIGHLIGHT",
-                  "weechat:WEECHAT_HOOK_PROCESS_RUNNING",
-                  "weechat:WEECHAT_HOOK_PROCESS_ERROR",
-                  "weechat:WEECHAT_HOOK_CONNECT_OK",
-                  "weechat:WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND",
-                  "weechat:WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND",
-                  "weechat:WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED",
-                  "weechat:WEECHAT_HOOK_CONNECT_PROXY_ERROR",
-                  "weechat:WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR",
-                  "weechat:WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR",
-                  "weechat:WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR",
-                  "weechat:WEECHAT_HOOK_CONNECT_MEMORY_ERROR",
-                  "weechat:WEECHAT_HOOK_CONNECT_TIMEOUT",
-                  "weechat:WEECHAT_HOOK_CONNECT_SOCKET_ERROR",
-                  "weechat:WEECHAT_HOOK_SIGNAL_STRING",
-                  "weechat:WEECHAT_HOOK_SIGNAL_INT",
-                  "weechat:WEECHAT_HOOK_SIGNAL_POINTER",
-                  NULL);
+    for (i = 0; weechat_script_constants[i].name; i++)
+    {
+        snprintf (str_const, sizeof (str_const),
+                  "weechat:%s", weechat_script_constants[i].name);
+        scm_c_define (
+            str_const,
+            (weechat_script_constants[i].value_string) ?
+            scm_from_locale_string (weechat_script_constants[i].value_string) :
+            scm_from_int (weechat_script_constants[i].value_integer));
+        scm_c_export (str_const, NULL);
+    }
 }

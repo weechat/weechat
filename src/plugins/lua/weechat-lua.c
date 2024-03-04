@@ -423,25 +423,6 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
 }
 
 /*
- * Adds a constant.
- */
-
-void
-weechat_lua_add_constant (lua_State *L, struct t_lua_const *ptr_const)
-{
-    lua_pushstring (L, ptr_const->name);
-    if (ptr_const->str_value)
-        lua_pushstring (L, ptr_const->str_value);
-    else
-#if LUA_VERSION_NUM >= 503
-        lua_pushinteger (L, ptr_const->int_value);
-#else
-        lua_pushnumber (L, ptr_const->int_value);
-#endif /* LUA_VERSION_NUM >= 503 */
-    lua_settable (L, -3);
-}
-
-/*
  * Called when a constant is modified.
  */
 
@@ -459,8 +440,7 @@ weechat_lua_newindex (lua_State *L)
 
 void
 weechat_lua_register_lib (lua_State *L, const char *libname,
-                          const luaL_Reg *lua_api_funcs,
-                          struct t_lua_const lua_api_consts[])
+                          const luaL_Reg *lua_api_funcs)
 {
     int i;
 
@@ -482,10 +462,21 @@ weechat_lua_register_lib (lua_State *L, const char *libname,
     lua_pushliteral (L, "__index");
     lua_newtable (L);
 
-    for (i= 0; lua_api_consts[i].name; i++)
+    /* define constants */
+    for (i = 0; weechat_script_constants[i].name; i++)
     {
-        weechat_lua_add_constant (L, &lua_api_consts[i]);
+        lua_pushstring (L, weechat_script_constants[i].name);
+        if (weechat_script_constants[i].value_string)
+            lua_pushstring (L, weechat_script_constants[i].value_string);
+        else
+#if LUA_VERSION_NUM >= 503
+            lua_pushinteger (L, weechat_script_constants[i].value_integer);
+#else
+            lua_pushnumber (L, weechat_script_constants[i].value_integer);
+#endif /* LUA_VERSION_NUM >= 503 */
+        lua_settable (L, -3);
     }
+
     lua_settable (L, -3);
 
     lua_pushliteral (L, "__newindex");
@@ -572,8 +563,7 @@ weechat_lua_load (const char *filename, const char *code)
 #endif /* LUA_VERSION_NUM */
 
     weechat_lua_register_lib (lua_current_interpreter, "weechat",
-                              weechat_lua_api_funcs,
-                              weechat_lua_api_consts);
+                              weechat_lua_api_funcs);
 
 #ifdef LUA_VERSION_NUM
     if (luaL_dostring (lua_current_interpreter, lua_redirect_output) != 0)
