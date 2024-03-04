@@ -43,6 +43,10 @@ Bug fixes::
   * tcl: fix truncation of long integer returned by function hdata_long
   * trigger: fix memory leak when adding a new trigger with `/trigger` command
 
+Tests::
+
+  * scripts: add tests on constants
+
 Build::
 
   * tcl: make plugin compatible with Tcl 9.0 (issue #2075)
