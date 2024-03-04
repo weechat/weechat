@@ -177,6 +177,9 @@ if(ENABLE_MAN OR ENABLE_DOC)
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_default_aliases.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_irc_colors.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_options.${lang}.adoc"
+          # scripting duide
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_scripting_functions.${lang}.adoc"
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_scripting_constants.${lang}.adoc"
         )
       endforeach()
       add_custom_target(doc-autogen ALL
@@ -283,6 +286,9 @@ if(ENABLE_MAN OR ENABLE_DOC)
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_scripting.${lang}.adoc"
+          doc-autogen
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_scripting_functions.${lang}.adoc"
+          "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_scripting_constants.${lang}.adoc"
           WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
           COMMENT "Building weechat_scripting.${lang}.html"
         )

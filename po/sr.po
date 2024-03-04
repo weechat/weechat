@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-05 19:55+0100\n"
+"POT-Creation-Date: 2024-03-05 19:56+0100\n"
 "PO-Revision-Date: 2024-02-23 09:16+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6045,6 +6045,16 @@ msgstr "Приоритет"
 
 msgid "File"
 msgstr "Фајл"
+
+#, fuzzy
+#| msgid "Constants"
+msgid "Constant"
+msgstr "Константе"
+
+#, fuzzy
+#| msgid "values"
+msgid "Value"
+msgstr "вредности"
 
 #, c-format
 msgid ""

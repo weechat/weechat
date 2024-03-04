@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-05 19:55+0100\n"
+"POT-Creation-Date: 2024-03-05 19:56+0100\n"
 "PO-Revision-Date: 2024-02-26 15:16+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -6379,6 +6379,16 @@ msgstr "Priorität"
 
 msgid "File"
 msgstr "Datei"
+
+#, fuzzy
+#| msgid "Constants"
+msgid "Constant"
+msgstr "Konstanten"
+
+#, fuzzy
+#| msgid "values"
+msgid "Value"
+msgstr "Werte"
 
 #, c-format
 msgid ""

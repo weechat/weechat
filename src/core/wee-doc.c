@@ -1595,6 +1595,101 @@ doc_gen_api_config_priority (const char *path, const char *lang)
 }
 
 /*
+ * Generates files with scripting API functions.
+ *
+ * Returns:
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
+ */
+
+int
+doc_gen_scripting_functions (const char *path, const char *lang)
+{
+    FILE *file;
+    struct t_infolist *ptr_infolist;
+
+    file = doc_gen_open_file (path, "scripting", "functions", lang);
+    if (!file)
+        return -1;
+
+    string_fprintf (file, "// tag::functions[]\n");
+
+    ptr_infolist = hook_infolist_get (NULL, "python_function", NULL, NULL);
+    while (infolist_next (ptr_infolist))
+    {
+        string_fprintf (file, "* %s\n", infolist_string (ptr_infolist, "name"));
+    }
+    infolist_free (ptr_infolist);
+
+    string_fprintf (file, "// end::functions[]\n");
+
+    return doc_gen_close_file (path, "scripting", "functions", lang, file);
+}
+
+/*
+ * Generates files with scripting API constants.
+ *
+ * Returns:
+ *    1: OK, target file updated
+ *    0: OK, target file unchanged
+ *   -1: error
+ */
+
+int
+doc_gen_scripting_constants (const char *path, const char *lang)
+{
+    FILE *file;
+    struct t_infolist *ptr_infolist;
+    const char *ptr_type;
+
+    file = doc_gen_open_file (path, "scripting", "constants", lang);
+    if (!file)
+        return -1;
+
+    string_fprintf (
+        file,
+        "// tag::constants[]\n"
+        "[width=\"60%\",cols=\"8,1,3m\",options=\"header\"]\n"
+        "|===\n"
+        "| %s | %s | %s\n",
+        ESCAPE_TABLE(_("Constant")),
+        ESCAPE_TABLE(_("Type")),
+        ESCAPE_TABLE(_("Value")));
+
+    ptr_infolist = hook_infolist_get (NULL, "python_constant", NULL, NULL);
+    while (infolist_next (ptr_infolist))
+    {
+        ptr_type = infolist_string (ptr_infolist, "type");
+        if (!ptr_type)
+            continue;
+        if (strcmp (ptr_type, "integer") == 0)
+        {
+            string_fprintf (file,
+                            "| %s | %s | %d\n",
+                            ESCAPE_TABLE(infolist_string (ptr_infolist, "name")),
+                            ESCAPE_TABLE(_("integer")),
+                            infolist_integer (ptr_infolist, "value_integer"));
+        }
+        else if (strcmp (ptr_type, "string") == 0)
+        {
+            string_fprintf (file,
+                            "| %s | %s | %s\n",
+                            ESCAPE_TABLE(infolist_string (ptr_infolist, "name")),
+                            ESCAPE_TABLE(_("string")),
+                            ESCAPE_TABLE(infolist_string (ptr_infolist, "value_string")));
+        }
+    }
+    infolist_free (ptr_infolist);
+
+    string_fprintf (file,
+                    "|===\n"
+                    "// end::constants[]\n");
+
+    return doc_gen_close_file (path, "scripting", "constants", lang, file);
+}
+
+/*
  * Generates WeeChat files used to build documentation.
  *
  * Returns:
@@ -1629,6 +1724,8 @@ doc_generate (const char *path)
         doc_gen_api_url_options,
         doc_gen_api_plugins_priority,
         doc_gen_api_config_priority,
+        doc_gen_scripting_functions,
+        doc_gen_scripting_constants,
         NULL,
     };
     char lang[3], *localedir;
