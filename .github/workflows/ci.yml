@@ -80,7 +80,7 @@ jobs:
       run: ./tools/check_scripts.sh
 
     - name: Check Python stub file
-      run: ./doc/python_stub.py | diff src/plugins/python/weechat.pyi -
+      run: ./tools/generate_python_stub.py | diff src/plugins/python/weechat.pyi -
 
     - name: Check Curl symbols
       run: curl --silent --show-error --fail --retry 10 https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/symbols-in-versions | ./tools/check_curl_symbols.py
