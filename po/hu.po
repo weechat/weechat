@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-26 12:54+0100\n"
+"POT-Creation-Date: 2024-03-05 19:55+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12961,6 +12961,14 @@ msgstr "%s nem sikerült a szervert létrehozni\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to get current interpreter state"
 msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy
+msgid "list of scripting API functions"
+msgstr "konfigurációs paraméterek beállítása"
+
+#, fuzzy
+msgid "list of scripting API constants"
+msgstr "konfigurációs paraméterek beállítása"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to free interpreter"

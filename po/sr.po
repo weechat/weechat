@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-26 12:54+0100\n"
+"POT-Creation-Date: 2024-03-05 19:55+0100\n"
 "PO-Revision-Date: 2024-02-23 09:16+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14165,6 +14165,16 @@ msgstr "%s%s: није успело покретање глобалног инт
 #, c-format
 msgid "%s%s: unable to get current interpreter state"
 msgstr "%s%s: није успело добијање тренутног стања интерпретера"
+
+#, fuzzy
+#| msgid "list of options"
+msgid "list of scripting API functions"
+msgstr "листа опција"
+
+#, fuzzy
+#| msgid "list of options"
+msgid "list of scripting API constants"
+msgstr "листа опција"
 
 #, c-format
 msgid "%s%s: unable to free interpreter"

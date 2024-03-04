@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-26 12:54+0100\n"
-"PO-Revision-Date: 2024-02-26 12:54+0100\n"
+"POT-Creation-Date: 2024-03-05 19:55+0100\n"
+"PO-Revision-Date: 2024-03-05 19:56+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -14591,6 +14591,12 @@ msgstr "%s%s : impossible de lancer l'interpréteur global"
 #, c-format
 msgid "%s%s: unable to get current interpreter state"
 msgstr "%s%s : impossible de lire l'état courant de l'interpréteur"
+
+msgid "list of scripting API functions"
+msgstr "liste des fonctions de l'API script"
+
+msgid "list of scripting API constants"
+msgstr "liste des constantes de l'API script"
 
 #, c-format
 msgid "%s%s: unable to free interpreter"

@@ -1293,6 +1293,83 @@ weechat_python_info_eval_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns infolist with list of functions in python scripting API.
+ */
+
+struct t_infolist *
+weechat_python_infolist_functions ()
+{
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
+    int i;
+
+    infolist = weechat_infolist_new ();
+    if (!infolist)
+        return NULL;
+
+    for (i = 0; weechat_python_funcs[i].ml_name; i++)
+    {
+        item = weechat_infolist_new_item (infolist);
+        if (!item)
+        {
+            weechat_infolist_free (infolist);
+            return NULL;
+        }
+        if (!weechat_infolist_new_var_string (item, "name", weechat_python_funcs[i].ml_name))
+        {
+            weechat_infolist_free (infolist);
+            return NULL;
+        }
+    }
+    return infolist;
+}
+
+/*
+ * Returns infolist with list of constants in python scripting API.
+ */
+
+struct t_infolist *
+weechat_python_infolist_constants ()
+{
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
+    int i;
+
+    infolist = weechat_infolist_new ();
+    if (!infolist)
+        goto error;
+
+    for (i = 0; weechat_script_constants[i].name; i++)
+    {
+        item = weechat_infolist_new_item (infolist);
+        if (!item)
+            goto error;
+        if (!weechat_infolist_new_var_string (item, "name", weechat_script_constants[i].name))
+            goto error;
+        if (weechat_script_constants[i].value_string)
+        {
+            if (!weechat_infolist_new_var_string (item, "type", "string"))
+                goto error;
+            if (!weechat_infolist_new_var_string (item, "value_string", weechat_script_constants[i].value_string))
+                goto error;
+        }
+        else
+        {
+            if (!weechat_infolist_new_var_string (item, "type", "integer"))
+                goto error;
+            if (!weechat_infolist_new_var_integer (item, "value_integer", weechat_script_constants[i].value_integer))
+                goto error;
+        }
+    }
+    return infolist;
+
+error:
+    if (infolist)
+        weechat_infolist_free (infolist);
+    return NULL;
+}
+
+/*
  * Returns infolist with python scripts.
  */
 
@@ -1315,6 +1392,12 @@ weechat_python_infolist_cb (const void *pointer, void *data,
                                                     obj_pointer,
                                                     arguments);
     }
+
+    if (strcmp (infolist_name, "python_function") == 0)
+        return weechat_python_infolist_functions ();
+
+    if (strcmp (infolist_name, "python_constant") == 0)
+        return weechat_python_infolist_constants ();
 
     return NULL;
 }
@@ -1518,6 +1601,17 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     plugin_script_display_short_list (weechat_python_plugin,
                                       python_scripts);
+
+    weechat_hook_infolist ("python_function",
+                           N_("list of scripting API functions"),
+                           "",
+                           "",
+                           &weechat_python_infolist_cb, NULL, NULL);
+    weechat_hook_infolist ("python_constant",
+                           N_("list of scripting API constants"),
+                           "",
+                           "",
+                           &weechat_python_infolist_cb, NULL, NULL);
 
     /* init OK */
     return WEECHAT_RC_OK;

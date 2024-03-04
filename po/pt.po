@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-02-26 12:54+0100\n"
+"POT-Creation-Date: 2024-03-05 19:55+0100\n"
 "PO-Revision-Date: 2024-02-17 10:07+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -14153,6 +14153,16 @@ msgstr "%s%s: não foi possível iniciar o interpretador global"
 #, c-format
 msgid "%s%s: unable to get current interpreter state"
 msgstr "%s%s: não foi possível obter o estado atual do interpretador"
+
+#, fuzzy
+#| msgid "list of options"
+msgid "list of scripting API functions"
+msgstr "lista de opções"
+
+#, fuzzy
+#| msgid "list of options"
+msgid "list of scripting API constants"
+msgstr "lista de opções"
 
 #, c-format
 msgid "%s%s: unable to free interpreter"
