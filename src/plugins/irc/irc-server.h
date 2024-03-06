@@ -99,33 +99,17 @@ enum t_irc_server_option
     IRC_SERVER_NUM_OPTIONS,
 };
 
-#define IRC_SERVER_OPTION_BOOLEAN(__server, __index)                          \
-    ((!weechat_config_option_is_null(__server->options[__index])) ?           \
-     weechat_config_boolean(__server->options[__index]) :                     \
-     ((!weechat_config_option_is_null(irc_config_server_default[__index])) ?  \
-      weechat_config_boolean(irc_config_server_default[__index])              \
-      : weechat_config_boolean_default(irc_config_server_default[__index])))
+#define IRC_SERVER_OPTION_BOOLEAN(__server, __index)                    \
+    weechat_config_boolean_inherited (__server->options[__index])
 
-#define IRC_SERVER_OPTION_INTEGER(__server, __index)                          \
-    ((!weechat_config_option_is_null(__server->options[__index])) ?           \
-     weechat_config_integer(__server->options[__index]) :                     \
-     ((!weechat_config_option_is_null(irc_config_server_default[__index])) ?  \
-      weechat_config_integer(irc_config_server_default[__index])              \
-      : weechat_config_integer_default(irc_config_server_default[__index])))
+#define IRC_SERVER_OPTION_INTEGER(__server, __index)                    \
+    weechat_config_integer_inherited (__server->options[__index])
 
-#define IRC_SERVER_OPTION_STRING(__server, __index)                           \
-    ((!weechat_config_option_is_null(__server->options[__index])) ?           \
-     weechat_config_string(__server->options[__index]) :                      \
-     ((!weechat_config_option_is_null(irc_config_server_default[__index])) ?  \
-      weechat_config_string(irc_config_server_default[__index])               \
-      : weechat_config_string_default(irc_config_server_default[__index])))
+#define IRC_SERVER_OPTION_STRING(__server, __index)                     \
+    weechat_config_string_inherited (__server->options[__index])
 
-#define IRC_SERVER_OPTION_ENUM(__server, __index)                             \
-    ((!weechat_config_option_is_null(__server->options[__index])) ?           \
-     weechat_config_enum(__server->options[__index]) :                        \
-     ((!weechat_config_option_is_null(irc_config_server_default[__index])) ?  \
-      weechat_config_enum(irc_config_server_default[__index])                 \
-      : weechat_config_enum_default(irc_config_server_default[__index])))
+#define IRC_SERVER_OPTION_ENUM(__server, __index)                       \
+    weechat_config_enum_inherited (__server->options[__index])
 
 #define IRC_SERVER_DEFAULT_PORT_CLEARTEXT 6667
 #define IRC_SERVER_DEFAULT_PORT_TLS       6697
