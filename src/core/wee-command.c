@@ -40,7 +40,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
+#ifdef HAVE_MALLOC_TRIM
 #include <malloc.h>
+#endif
 
 #include "weechat.h"
 #include "wee-command.h"
