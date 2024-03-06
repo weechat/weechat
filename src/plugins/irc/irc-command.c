@@ -623,6 +623,7 @@ irc_command_exec_buffers (struct t_weelist *list_buffers,
 void
 irc_command_exec_all_channels (struct t_irc_server *server,
                                int channel_type,
+                               int all_channels,
                                int parted_channels,
                                int inclusive,
                                const char *str_channels,
@@ -663,7 +664,9 @@ irc_command_exec_all_channels (struct t_irc_server *server,
                     parted = ((ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
                               && !ptr_channel->nicks) ?
                         1 : 0;
-                    state_ok = (!parted_channels || parted);
+                    state_ok = (all_channels
+                                || (parted_channels && parted)
+                                || (!parted_channels && !parted));
 
                     if ((ptr_channel->type == channel_type) && state_ok)
                     {
@@ -716,7 +719,7 @@ irc_command_exec_all_channels (struct t_irc_server *server,
 
 IRC_COMMAND_CALLBACK(allchan)
 {
-    int i, current_server, parted_channels, inclusive;
+    int i, current_server, all_channels, parted_channels, inclusive;
     const char *ptr_channels, *ptr_command;
 
     IRC_BUFFER_GET_SERVER(buffer);
@@ -728,6 +731,7 @@ IRC_COMMAND_CALLBACK(allchan)
     WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     current_server = 0;
+    all_channels = 0;
     parted_channels = 0;
     ptr_channels = NULL;
     inclusive = 0;
@@ -749,9 +753,16 @@ IRC_COMMAND_CALLBACK(allchan)
             current_server = 1;
             ptr_command = argv_eol[i + 1];
         }
+        else if (weechat_strcmp (argv[i], "-all") == 0)
+        {
+            all_channels = 1;
+            parted_channels = 0;
+            ptr_command = argv_eol[i + 1];
+        }
         else if (weechat_strcmp (argv[i], "-parted") == 0)
         {
             parted_channels = 1;
+            all_channels = 0;
             ptr_command = argv_eol[i + 1];
         }
         else if (weechat_strncmp (argv[i], "-exclude=", 9) == 0)
@@ -775,6 +786,7 @@ IRC_COMMAND_CALLBACK(allchan)
         weechat_buffer_set (NULL, "hotlist", "-");
         irc_command_exec_all_channels ((current_server) ? ptr_server : NULL,
                                        IRC_CHANNEL_TYPE_CHANNEL,
+                                       all_channels,
                                        parted_channels,
                                        inclusive,
                                        ptr_channels,
@@ -845,6 +857,7 @@ IRC_COMMAND_CALLBACK(allpv)
         weechat_buffer_set (NULL, "hotlist", "-");
         irc_command_exec_all_channels ((current_server) ? ptr_server : NULL,
                                        IRC_CHANNEL_TYPE_PRIVATE,
+                                       1,  /* all channels */
                                        0,  /* parted channels */
                                        inclusive,
                                        ptr_channels,
@@ -6894,11 +6907,13 @@ irc_command_init ()
         "allchan",
         N_("execute a command on all channels of all connected servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command>"
-           " || [-current] [-parted] -include=<channel>[,<channel>...] <command>"),
+        N_("[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command>"
+           " || [-current] [-parted|-all] -include=<channel>[,<channel>...] <command>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[-current]: execute command for channels of current server only"),
-            N_("raw[-parted]: execute on parted channels only"),
+            N_("raw[-parted]: execute command on parted channels "
+               "(by default: execute command on active channels only)"),
+            N_("raw[-all]: execute command on all channels (active and parted)"),
             N_("raw[-exclude]: exclude some channels (wildcard \"*\" is allowed)"),
             N_("raw[-include]: include only some channels (wildcard \"*\" is allowed)"),
             N_("command: command to execute (or text to send to buffer if "
@@ -6924,7 +6939,7 @@ irc_command_init ()
             N_("    /allchan -include=#linux* hello"),
             N_("  close all buffers with parted channels:"),
             AI("    /allchan -parted /close")),
-        "-current|-parted", &irc_command_allchan, NULL, NULL);
+        "-current|-parted|-all", &irc_command_allchan, NULL, NULL);
     weechat_hook_command (
         "allpv",
         N_("execute a command on all private buffers of all connected servers"),

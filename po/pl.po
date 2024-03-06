@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 22:39+0100\n"
+"POT-Creation-Date: 2024-03-06 22:50+0100\n"
 "PO-Revision-Date: 2024-03-06 20:32+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9242,9 +9242,13 @@ msgid "execute a command on all channels of all connected servers"
 msgstr "wykonuje komendę na wszystkich kanałach na połączonych serwerach"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command> || [-"
+#| "current] [-parted] -include=<channel>[,<channel>...] <command>"
 msgid ""
-"[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command> || [-"
-"current] [-parted] -include=<channel>[,<channel>...] <command>"
+"[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command> || [-"
+"current] [-parted|-all] -include=<channel>[,<channel>...] <command>"
 msgstr ""
 "[-current] [-parted] [-exclude=<kanał>[,<kanał>...]] <komenda> || [-current] "
 "[-parted] -include=<kanał>[,<kanał>...] <komenda>"
@@ -9253,7 +9257,16 @@ msgid "raw[-current]: execute command for channels of current server only"
 msgstr ""
 "raw[-current]: wykonuje komendę na wszystkich kanałach na obecnego serwera"
 
-msgid "raw[-parted]: execute on parted channels only"
+#, fuzzy
+#| msgid "raw[-parted]: execute on parted channels only"
+msgid ""
+"raw[-parted]: execute command on parted channels (by default: execute "
+"command on active channels only)"
+msgstr "raw[-parted]: wykonaj tylko na opuszczonych kanałach"
+
+#, fuzzy
+#| msgid "raw[-parted]: execute on parted channels only"
+msgid "raw[-all]: execute command on all channels (active and parted)"
 msgstr "raw[-parted]: wykonaj tylko na opuszczonych kanałach"
 
 msgid "raw[-exclude]: exclude some channels (wildcard \"*\" is allowed)"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 22:39+0100\n"
+"POT-Creation-Date: 2024-03-06 22:50+0100\n"
 "PO-Revision-Date: 2024-03-06 20:32+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -8992,8 +8992,8 @@ msgstr ""
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command> || [-"
-"current] [-parted] -include=<channel>[,<channel>...] <command>"
+"[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command> || [-"
+"current] [-parted|-all] -include=<channel>[,<channel>...] <command>"
 msgstr "[-current] [-exclude=<canal>[,<canal>...]] <comando> [<argumentos>]"
 
 #, fuzzy
@@ -9002,8 +9002,22 @@ msgid "raw[-current]: execute command for channels of current server only"
 msgstr ""
 "executar um comando em todos os canais de todos os servidores conectados"
 
-msgid "raw[-parted]: execute on parted channels only"
+#, fuzzy
+#| msgid "execute a command on all channels of all connected servers"
+msgid ""
+"raw[-parted]: execute command on parted channels (by default: execute "
+"command on active channels only)"
 msgstr ""
+"executar um comando em todos os canais de todos os servidores conectados"
+
+#, fuzzy
+#| msgid ""
+#| "-all: set new nick for all connected servers\n"
+#| "nick: new nick"
+msgid "raw[-all]: execute command on all channels (active and parted)"
+msgstr ""
+"-all: definir novo nick em todos os servidores conectados\n"
+"nick: novo nick"
 
 msgid "raw[-exclude]: exclude some channels (wildcard \"*\" is allowed)"
 msgstr ""

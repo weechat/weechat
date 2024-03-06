@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 22:39+0100\n"
+"POT-Creation-Date: 2024-03-06 22:50+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7646,14 +7646,19 @@ msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command> || [-"
-"current] [-parted] -include=<channel>[,<channel>...] <command>"
+"[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command> || [-"
+"current] [-parted|-all] -include=<channel>[,<channel>...] <command>"
 msgstr ""
 
 msgid "raw[-current]: execute command for channels of current server only"
 msgstr ""
 
-msgid "raw[-parted]: execute on parted channels only"
+msgid ""
+"raw[-parted]: execute command on parted channels (by default: execute "
+"command on active channels only)"
+msgstr ""
+
+msgid "raw[-all]: execute command on all channels (active and parted)"
 msgstr ""
 
 msgid "raw[-exclude]: exclude some channels (wildcard \"*\" is allowed)"

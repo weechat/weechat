@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 22:39+0100\n"
+"POT-Creation-Date: 2024-03-06 22:50+0100\n"
 "PO-Revision-Date: 2024-02-17 10:07+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8601,8 +8601,8 @@ msgstr ""
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command> || [-"
-"current] [-parted] -include=<channel>[,<channel>...] <command>"
+"[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command> || [-"
+"current] [-parted|-all] -include=<channel>[,<channel>...] <command>"
 msgstr "<apelido>[,<apelido>...] [<contador> [<target>]]"
 
 #, fuzzy
@@ -8610,8 +8610,17 @@ msgstr "<apelido>[,<apelido>...] [<contador> [<target>]]"
 msgid "raw[-current]: execute command for channels of current server only"
 msgstr "apelidos em todos os canais do servidor IRC atual"
 
-msgid "raw[-parted]: execute on parted channels only"
-msgstr ""
+#, fuzzy
+#| msgid "nicks on all channels of current IRC server"
+msgid ""
+"raw[-parted]: execute command on parted channels (by default: execute "
+"command on active channels only)"
+msgstr "apelidos em todos os canais do servidor IRC atual"
+
+#, fuzzy
+#| msgid "nicks on all channels of current IRC server"
+msgid "raw[-all]: execute command on all channels (active and parted)"
+msgstr "apelidos em todos os canais do servidor IRC atual"
 
 msgid "raw[-exclude]: exclude some channels (wildcard \"*\" is allowed)"
 msgstr ""

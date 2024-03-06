@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 22:39+0100\n"
+"POT-Creation-Date: 2024-03-06 22:50+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8190,16 +8190,25 @@ msgstr "CTCP üzenet küldése az összes csatlakoztatott szerver összes szobá
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command> || [-"
-"current] [-parted] -include=<channel>[,<channel>...] <command>"
+"[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command> || [-"
+"current] [-parted|-all] -include=<channel>[,<channel>...] <command>"
 msgstr "[alias_név [parancs [paraméterek]]]"
 
 #, fuzzy
 msgid "raw[-current]: execute command for channels of current server only"
 msgstr "CTCP üzenet küldése az összes csatlakoztatott szerver összes szobájába"
 
-msgid "raw[-parted]: execute on parted channels only"
+#, fuzzy
+msgid ""
+"raw[-parted]: execute command on parted channels (by default: execute "
+"command on active channels only)"
+msgstr "CTCP üzenet küldése az összes csatlakoztatott szerver összes szobájába"
+
+#, fuzzy
+msgid "raw[-all]: execute command on all channels (active and parted)"
 msgstr ""
+"-all: új név beállítása minden csatlakozott szerveren\n"
+" név: új név"
 
 msgid "raw[-exclude]: exclude some channels (wildcard \"*\" is allowed)"
 msgstr ""
