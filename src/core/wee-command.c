@@ -40,7 +40,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
-#ifdef HAVE_MALLOC_TRIM
+#ifdef HAVE_MALLOC_H
 #include <malloc.h>
 #endif
 
