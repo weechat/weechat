@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 21:53+0100\n"
+"POT-Creation-Date: 2024-03-06 22:39+0100\n"
 "PO-Revision-Date: 2024-03-06 20:32+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -1013,6 +1013,11 @@ msgstr "変更されたオプション: "
 
 msgid "Option created: "
 msgstr "作成されたオプション: "
+
+#, fuzzy, c-format
+#| msgid "%s: warning: dictionary \"%s\" is not available on your system"
+msgid "%sFunction \"%s\" is not available on this system"
+msgstr "%s: 警告: 辞書 \"%s\" がこのシステム上では利用できません"
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 21:53+0100\n"
+"POT-Creation-Date: 2024-03-06 22:39+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -965,6 +965,10 @@ msgstr "nincs a szobában"
 #, fuzzy
 msgid "Option created: "
 msgstr "nincs a szobában"
+
+#, fuzzy, c-format
+msgid "%sFunction \"%s\" is not available on this system"
+msgstr "%s a \"%s\" modul nem található\n"
 
 #, fuzzy, c-format
 msgid "%sFailed to unset option \"%s\""

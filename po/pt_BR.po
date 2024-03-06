@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 21:53+0100\n"
+"POT-Creation-Date: 2024-03-06 22:39+0100\n"
 "PO-Revision-Date: 2024-02-17 10:07+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1004,6 +1004,11 @@ msgstr "Opção mudada: "
 
 msgid "Option created: "
 msgstr "Opção criada: "
+
+#, fuzzy, c-format
+#| msgid "%s: warning: dictionary \"%s\" is not available on your system"
+msgid "%sFunction \"%s\" is not available on this system"
+msgstr "%s: aviso: dicionário \"%s\" não está disponível em seu sistema"
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
