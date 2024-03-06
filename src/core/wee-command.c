@@ -6767,6 +6767,7 @@ COMMAND_CALLBACK(sys)
 
     if (string_strcmp (argv[1], "malloc_trim") == 0)
     {
+#ifdef HAVE_MALLOC_TRIM
         error = NULL;
         value = 0;
         if (argc > 2)
@@ -6776,6 +6777,13 @@ COMMAND_CALLBACK(sys)
                 COMMAND_ERROR;
         }
         malloc_trim ((size_t)value);
+#else
+        gui_chat_printf (NULL,
+                         _("%sFunction \"%s\" is not available on "
+                           "this system"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         "malloc_trim");
+#endif
         return WEECHAT_RC_OK;
     }
 

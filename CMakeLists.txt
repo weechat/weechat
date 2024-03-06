@@ -192,6 +192,7 @@ include(CheckSymbolExists)
 check_include_files("langinfo.h" HAVE_LANGINFO_CODESET)
 check_include_files("sys/resource.h" HAVE_SYS_RESOURCE_H)
 
+check_symbol_exists("malloc_trim" "malloc.h" HAVE_MALLOC_TRIM)
 check_function_exists(mallinfo HAVE_MALLINFO)
 check_function_exists(mallinfo2 HAVE_MALLINFO2)
 
