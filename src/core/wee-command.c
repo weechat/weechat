@@ -40,6 +40,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <malloc.h>
 
 #include "weechat.h"
 #include "wee-command.h"
@@ -6764,6 +6765,20 @@ COMMAND_CALLBACK(sys)
         return WEECHAT_RC_OK;
     }
 
+    if (string_strcmp (argv[1], "malloc_trim") == 0)
+    {
+        error = NULL;
+        value = 0;
+        if (argc > 2)
+        {
+            value = strtol (argv[2], &error, 10);
+            if (!error || error[0] || (value < 0))
+                COMMAND_ERROR;
+        }
+        malloc_trim ((size_t)value);
+        return WEECHAT_RC_OK;
+    }
+
     if (string_strcmp (argv[1], "waitpid") == 0)
     {
         COMMAND_MIN_ARGS(3, "waitpid");
@@ -6773,8 +6788,8 @@ COMMAND_CALLBACK(sys)
             COMMAND_ERROR;
         sys_waitpid ((int)value);
         return WEECHAT_RC_OK;
-    }
 
+    }
     COMMAND_ERROR;
 }
 
@@ -9250,6 +9265,7 @@ command_init ()
         NULL, "sys",
         N_("system actions"),
         N_("get rlimit|rusage"
+           " || malloc_trim [<size>]"
            " || suspend"
            " || waitpid <number>"),
         CMD_ARGS_DESC(
@@ -9257,12 +9273,18 @@ command_init ()
             N_("raw[rlimit]: display resource limits "
                "(see /help weechat.startup.sys_rlimit and \"man getrlimit\")"),
             N_("raw[rusage]: display resource usage (see \"man getrusage\")"),
+            N_("raw[malloc_trim]: call function malloc_trim to release free "
+               "memory from the heap"),
+            N_("size: amount of free space to leave untrimmed at the top of "
+               "the heap (default is 0: only the minimum amount of memory is "
+               "maintained at the top of the heap)"),
             N_("raw[suspend]: suspend WeeChat and go back to the shell, by sending "
                "signal SIGTSTP to the WeeChat process") ,
             N_("raw[waitpid]: acknowledge the end of children processes "
                "(to prevent \"zombie\" processes)"),
             N_("number: number of processes to clean")),
         "get rlimit|rusage"
+        " || malloc_trim"
         " || suspend"
         " || waitpid 1|10|100|1000",
         &command_sys, NULL, NULL);
