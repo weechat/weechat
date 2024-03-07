@@ -350,10 +350,11 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
         {
             snprintf (str_number, sizeof (str_number),
                       "%d. ", exec_cmd->output_line_nb);
-            weechat_printf_y (buffer, -1,
-                              "%s%s",
-                              (exec_cmd->line_numbers) ? str_number : " ",
-                              line_color);
+            weechat_printf_y_date_tags (
+                buffer, -1, 0, str_tags,
+                "%s%s",
+                (exec_cmd->line_numbers) ? str_number : " ",
+                line_color);
         }
         else
         {
@@ -505,11 +506,12 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
             {
                 if (buffer_type == 1)
                 {
-                    weechat_printf_y (ptr_buffer, -1,
-                                      _("%s: end of command %ld (\"%s\"), "
-                                        "return code: %d"),
-                                      EXEC_PLUGIN_NAME, exec_cmd->number,
-                                      exec_cmd->command, return_code);
+                    weechat_printf_y_date_tags (
+                        ptr_buffer, -1, 0, "exec_rc",
+                        _("%s: end of command %ld (\"%s\"), "
+                          "return code: %d"),
+                        EXEC_PLUGIN_NAME, exec_cmd->number,
+                        exec_cmd->command, return_code);
                 }
                 else
                 {
@@ -525,11 +527,12 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
             {
                 if (buffer_type == 1)
                 {
-                    weechat_printf_y (ptr_buffer, -1,
-                                      _("%s: unexpected end of command %ld "
-                                        "(\"%s\")"),
-                                      EXEC_PLUGIN_NAME, exec_cmd->number,
-                                      exec_cmd->command);
+                    weechat_printf_y_date_tags (
+                        ptr_buffer, -1, 0, "exec_rc",
+                        _("%s: unexpected end of command %ld "
+                          "(\"%s\")"),
+                        EXEC_PLUGIN_NAME, exec_cmd->number,
+                        exec_cmd->command);
                 }
                 else
                 {
