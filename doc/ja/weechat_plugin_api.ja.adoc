@@ -14495,9 +14495,10 @@ weechat.prnt(weechat.current_buffer(), "Text on current buffer")
 
 ==== buffer_search
 
-_WeeChat バージョン 1.0 で更新。_
+_WeeChat バージョン 1.0, 4.3.0 で更新。_
 
-プラグインおよび名前でバッファを検索。
+// TRANSLATION MISSING
+Search a buffer by plugin/name, full name or unique identifier (`id`).
 
 プロトタイプ:
 
@@ -14509,10 +14510,13 @@ struct t_gui_buffer *weechat_buffer_search (const char *plugin,
 
 引数:
 
-* _plugin_: プラグインの名前、以下の特殊値を使うことができます:
+// TRANSLATION MISSING
+* _plugin_: name of plugin, following special values are allowed:
 ** `+==+`: name 引数でバッファの完全な名前を使う (例:
    `libera.#weechat` ではなく `irc.libera.#weechat`)
    _(WeeChat バージョン 1.0 以上で利用可)_
+// TRANSLATION MISSING
+** `+==id+`: the name used is the buffer unique identifier (`id`) _(WeeChat ≥ 4.3.0)_
 * _name_: バッファの名前、NULL または空文字列の場合、現在のバッファ
   (現在のウィンドウに表示されているバッファ) を返す; 名前が `(?i)`
   で始まる場合、検索は大文字小文字を区別せずに検索 _(WeeChat バージョン 1.0 以上で利用可)_
@@ -14527,6 +14531,7 @@ C 言語での使用例:
 ----
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
 struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.libera.#test");  /* WeeChat バージョン 1.0 以上で利用可 */
+struct t_gui_buffer *buffer3 = weechat_buffer_search ("==id", "1709797810942688");  /* WeeChat バージョン 4.3.0 以上で利用可 */
 ----
 
 スクリプト (Python) での使用例:

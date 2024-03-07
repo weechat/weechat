@@ -13882,9 +13882,10 @@ weechat.prnt(weechat.current_buffer(), "Текст у текућем бафер�
 
 ==== buffer_search
 
-_Ажурирано у верзији 1.0._
+_Ажурирано у верзији 1.0, 4.3.0._
 
-Тражи бафер по додатку и/или имену.
+// TRANSLATION MISSING
+Search a buffer by plugin/name, full name or unique identifier (`id`).
 
 Прототип:
 
@@ -13896,8 +13897,11 @@ struct t_gui_buffer *weechat_buffer_search (const char *plugin,
 
 Аргументи:
 
-* _plugin_: име додатка, дозвољене су следеће специјалне вредности:
+// TRANSLATION MISSING
+* _plugin_: name of plugin, following special values are allowed:
 ** `+==+`: име које се користи је пуно име бафера (на пример: `irc.libera.#weechat` уместо `libera.#weechat`) _(WeeChat ≥ 1.0)_
+// TRANSLATION MISSING
+** `+==id+`: the name used is the buffer unique identifier (`id`) _(WeeChat ≥ 4.3.0)_
 * _name_: име бафера, ако је NULL или празан стринг, враћа се текући бафер (бафер који се приказује у текућем прозору); ако име почиње са `(?i)`, претрага не прави разлику у величини слова _(WeeChat ≥ 1.0)_
 
 Повратна вредност:
@@ -13910,6 +13914,7 @@ C примери:
 ----
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
 struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.libera.#test");  /* WeeChat ≥ 1.0 */
+struct t_gui_buffer *buffer3 = weechat_buffer_search ("==id", "1709797810942688");  /* WeeChat ≥ 4.3.0 */
 ----
 
 Скрипта (Python):

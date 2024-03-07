@@ -14291,9 +14291,9 @@ weechat.prnt(weechat.current_buffer(), "Text on current buffer")
 
 ==== buffer_search
 
-_Updated in 1.0._
+_Updated in 1.0, 4.3.0._
 
-Search a buffer by plugin and/or name.
+Search a buffer by plugin/name, full name or unique identifier (`id`).
 
 Prototype:
 
@@ -14305,10 +14305,11 @@ struct t_gui_buffer *weechat_buffer_search (const char *plugin,
 
 Arguments:
 
-* _plugin_: name of plugin, following special value is allowed:
+* _plugin_: name of plugin, following special values are allowed:
 ** `+==+`: the name used is the buffer full name (for example:
    `irc.libera.#weechat` instead of `libera.#weechat`)
    _(WeeChat ≥ 1.0)_
+** `+==id+`: the name used is the buffer unique identifier (`id`) _(WeeChat ≥ 4.3.0)_
 * _name_: name of buffer, if it is NULL or empty string, the current buffer is
   returned (buffer displayed by current window); if the name starts with
   `(?i)`, the search is case insensitive _(WeeChat ≥ 1.0)_
@@ -14323,6 +14324,7 @@ C examples:
 ----
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "libera.#weechat");
 struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.libera.#test");  /* WeeChat ≥ 1.0 */
+struct t_gui_buffer *buffer3 = weechat_buffer_search ("==id", "1709797810942688");  /* WeeChat ≥ 4.3.0 */
 ----
 
 Script (Python):

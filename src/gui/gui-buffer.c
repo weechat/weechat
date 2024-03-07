@@ -2924,6 +2924,7 @@ gui_buffer_search_by_full_name (const char *full_name)
  * Searches for a buffer by plugin and name, full name or id.
  *
  * If plugin is "==", the name is used to search by full name.
+ * If plugin is "==id", the name is used to search by id (which must be numeric).
  */
 
 struct t_gui_buffer *
@@ -2931,12 +2932,21 @@ gui_buffer_search (const char *plugin, const char *name)
 {
     struct t_gui_buffer *ptr_buffer;
     int plugin_match, plugin_case_sensitive, name_case_sensitive;
+    long long id;
+    char *error;
 
     if (!name || !name[0])
         return gui_current_window->buffer;
 
     if (plugin && (strcmp (plugin, "==") == 0))
         return gui_buffer_search_by_full_name (name);
+
+    if (plugin && (strcmp (plugin, "==id") == 0))
+    {
+        error = NULL;
+        id = strtoll (name, &error, 10);
+        return (error && !error[0]) ? gui_buffer_search_by_id (id) : NULL;
+    }
 
     plugin_case_sensitive = 1;
     name_case_sensitive = 1;

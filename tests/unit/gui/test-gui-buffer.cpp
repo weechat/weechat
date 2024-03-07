@@ -1375,6 +1375,7 @@ TEST(GuiBuffer, SearchByFullName)
 TEST(GuiBuffer, Search)
 {
     struct t_gui_buffer *buffer;
+    char str_id[128];
 
     buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                              NULL, NULL, NULL,
@@ -1388,11 +1389,19 @@ TEST(GuiBuffer, Search)
     POINTERS_EQUAL(gui_buffers, gui_buffer_search ("==", NULL));
     POINTERS_EQUAL(gui_buffers, gui_buffer_search ("==", ""));
     POINTERS_EQUAL(NULL, gui_buffer_search ("==", "(?i)"));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("==id", NULL));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("==id", ""));
 
     POINTERS_EQUAL(NULL, gui_buffer_search ("==", "xxx"));
     POINTERS_EQUAL(NULL, gui_buffer_search ("==", "weechat"));
     POINTERS_EQUAL(gui_buffers, gui_buffer_search ("==", "core.weechat"));
     POINTERS_EQUAL(buffer, gui_buffer_search ("==", "core." TEST_BUFFER_NAME));
+
+    POINTERS_EQUAL(NULL, gui_buffer_search ("==id", "xxx"));
+    POINTERS_EQUAL(NULL, gui_buffer_search ("==id", "-1"));
+    POINTERS_EQUAL(NULL, gui_buffer_search ("==id", "0"));
+    snprintf (str_id, sizeof (str_id), "%lld", gui_buffers->id);
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("==id", str_id));
 
     POINTERS_EQUAL(gui_buffers, gui_buffer_search ("", ""));
     POINTERS_EQUAL(gui_buffers, gui_buffer_search ("", "(?i)"));
