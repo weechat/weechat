@@ -17,6 +17,7 @@ Bug fixes::
 
   * core: fix reset to initial scroll position after search of text in buffer (issue #2093)
   * core: add missing mouse events "alt-ctrl-button2" and "alt-ctrl-button3"
+  * exec: add missing exec tags in lines of buffers with free content (issue #2086)
   * irc: add missing tags on self action messages when capability echo-message is enabled (issue #2074)
   * python: fix truncation of unsigned long long integer returned by function string_parse_size
   * script: always display list of scripts when searching scripts with `/script search` (issue #2077)
