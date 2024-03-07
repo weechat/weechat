@@ -8115,6 +8115,7 @@ if weechat.config_boolean_default(option):
     # ...
 ----
 
+// TRANSLATION MISSING
 ==== config_boolean_inherited
 
 _WeeChat ≥ 4.3.0._
@@ -8246,6 +8247,7 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_integer_default(option)
 ----
 
+// TRANSLATION MISSING
 ==== config_integer_inherited
 
 _WeeChat ≥ 4.3.0._
@@ -8377,6 +8379,7 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_string_default(option)
 ----
 
+// TRANSLATION MISSING
 ==== config_string_inherited
 
 _WeeChat ≥ 4.3.0._
@@ -8506,6 +8509,7 @@ option = weechat.config_get("plugin.section.option")
 color = weechat.config_color_default(option)
 ----
 
+// TRANSLATION MISSING
 ==== config_color_inherited
 
 _WeeChat ≥ 4.3.0._
@@ -8641,6 +8645,7 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum_default(option)
 ----
 
+// TRANSLATION MISSING
 ==== config_enum_inherited
 
 _WeeChat ≥ 4.3.0._
