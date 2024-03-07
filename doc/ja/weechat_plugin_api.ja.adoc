@@ -14861,6 +14861,8 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 
 * _buffer_: バッファへのポインタ
 * _property_: プロパティ名:
+// TRANSLATION MISSING
+** _id_: unique identifier _(WeeChat ≥ 4.3.0)_
 ** _plugin_: バッファを作成したプラグインの名前 ("core" は WeeChat メインバッファ)
 ** _name_: バッファの名前
 ** _full_name_: バッファの完全な名前 ("plugin.name") _(WeeChat バージョン 0.3.7 以上で利用可)_

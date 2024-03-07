@@ -14955,6 +14955,7 @@ Paramètres :
 
 * _buffer_ : pointeur vers le tampon
 * _property_ : nom de la propriété :
+** _id_ : identifiant unique _(WeeChat ≥ 4.3.0)_
 ** _plugin_ : nom de l'extension qui a créé ce tampon ("core" pour le tampon principal WeeChat)
 ** _name_ : nom du tampon
 ** _full_name_ : nom complet du tampon ("extension.nom") _(WeeChat ≥ 0.3.7)_

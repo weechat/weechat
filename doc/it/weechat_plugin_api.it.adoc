@@ -15327,6 +15327,8 @@ Argomenti:
 
 * _buffer_: puntatore al buffer
 * _property_: nome proprietà:
+// TRANSLATION MISSING
+** _id_: unique identifier _(WeeChat ≥ 4.3.0)_
 ** _plugin_: nome del plugin che ha creato questo buffer ("core" per il buffer principale di WeeChat)
 ** _name_: nome del buffer
 ** _full_name_: nome completo del buffer ("plugin.nome") _(WeeChat ≥ 0.3.7)_

@@ -385,6 +385,23 @@ TEST(GuiBuffer, Insert)
 
 /*
  * Tests functions:
+ *   gui_buffer_generate_id
+ */
+
+TEST(GuiBuffer, GenerateId)
+{
+    long long id;
+
+    id = gui_buffer_generate_id ();
+    CHECK(id > gui_buffer_last_id_assigned);
+    id = gui_buffer_generate_id ();
+    CHECK(id > gui_buffer_last_id_assigned);
+    id = gui_buffer_generate_id ();
+    CHECK(id > gui_buffer_last_id_assigned);
+}
+
+/*
+ * Tests functions:
  *   gui_buffer_input_buffer_init
  */
 
@@ -492,6 +509,7 @@ test_buffer_close_cb (const void *pointer, void *data,
 
 /*
  * Tests functions:
+ *   gui_buffer_new_props_with_id
  *   gui_buffer_new_props
  */
 

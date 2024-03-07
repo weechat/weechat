@@ -14639,6 +14639,7 @@ Arguments:
 
 * _buffer_: buffer pointer
 * _property_: property name:
+** _id_: unique identifier _(WeeChat ≥ 4.3.0)_
 ** _plugin_: name of plugin which created this buffer ("core" for WeeChat main buffer)
 ** _name_: name of buffer
 ** _full_name_: full name of buffer ("plugin.name") _(WeeChat ≥ 0.3.7)_

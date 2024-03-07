@@ -405,10 +405,27 @@ void
 upgrade_weechat_read_buffer (struct t_infolist *infolist)
 {
     struct t_gui_buffer *ptr_buffer;
-    const char *key, *var_name, *name, *plugin_name;
+    const char *key, *var_name, *name, *plugin_name, *ptr_id;
     const char *str;
-    char option_name[64], *option_key, *option_var;
+    char option_name[64], *option_key, *option_var, *error;
     int index, length, main_buffer;
+    long long id;
+
+    /* "id" is new in WeeChat 4.3.0 */
+    id = -1;
+    if (infolist_search_var (infolist, "id"))
+    {
+        ptr_id = infolist_string (infolist, "id");
+        if (ptr_id)
+        {
+            error = NULL;
+            id = strtoll (ptr_id, &error, 10);
+            if (!error || error[0])
+                id = -1;
+        }
+    }
+    if (id < 0)
+        id = gui_buffer_generate_id ();
 
     plugin_name = infolist_string (infolist, "plugin_name");
     name = infolist_string (infolist, "name");
@@ -420,18 +437,24 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     {
         /* use WeeChat main buffer */
         upgrade_current_buffer = gui_buffers;
+        upgrade_current_buffer->id = id;
     }
     else
     {
         /* create buffer it it's not main buffer */
-        upgrade_current_buffer = gui_buffer_new (NULL,
-                                                 infolist_string (infolist,
-                                                                  "name"),
-                                                 NULL, NULL, NULL,
-                                                 NULL, NULL, NULL);
+        upgrade_current_buffer = gui_buffer_new_props_with_id (
+            id,
+            NULL,  /* plugin */
+            infolist_string (infolist, "name"),
+            NULL,  /* properties */
+            NULL, NULL, NULL,  /* input callback */
+            NULL, NULL, NULL);  /* close callback */
     }
     if (!upgrade_current_buffer)
         return;
+
+    if (upgrade_current_buffer->id > gui_buffer_last_id_assigned)
+        gui_buffer_last_id_assigned = upgrade_current_buffer->id;
 
     ptr_buffer = upgrade_current_buffer;
 
@@ -798,6 +821,8 @@ upgrade_weechat_read_cb (const void *pointer, void *data,
     (void) pointer;
     (void) data;
     (void) upgrade_file;
+
+    gui_buffer_last_id_assigned = -1;
 
     infolist_reset_item_cursor (infolist);
     while (infolist_next (infolist))

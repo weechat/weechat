@@ -705,7 +705,7 @@ def test_hdata():
     line2 = weechat.hdata_pointer(hdata_line, line1, 'next_line')
     line3 = weechat.hdata_pointer(hdata_line, line2, 'next_line')
     # hdata_get_var_offset
-    check(weechat.hdata_get_var_offset(hdata_buffer, 'opening') == 0)
+    check(weechat.hdata_get_var_offset(hdata_buffer, 'id') == 0)
     check(weechat.hdata_get_var_offset(hdata_buffer, 'plugin') > 0)
     # hdata_get_var_type_string
     check(weechat.hdata_get_var_type_string(hdata_buffer, 'plugin') == 'pointer')
@@ -751,6 +751,8 @@ def test_hdata():
     weechat.buffer_set(buffer, 'hotlist', weechat.WEECHAT_HOTLIST_MESSAGE)
     gui_hotlist = weechat.hdata_get_list(hdata_hotlist, 'gui_hotlist')
     check(weechat.hdata_long(hdata_hotlist, gui_hotlist, 'creation_time.tv_usec') >= 0)
+    # hdata_longlong
+    check(weechat.hdata_longlong(hdata_buffer, buffer2, 'id') > 1708874542000000)
     # hdata_string
     check(weechat.hdata_string(hdata_buffer, buffer2, 'name') == 'test')
     # hdata_pointer

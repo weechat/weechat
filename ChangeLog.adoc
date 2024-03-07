@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
+  * core: add unique identifier "id" in buffer (issue #2081)
   * core: add option `malloc_trim` in command `/sys`
   * core: add support of SGR mouse events (issue #2082)
   * core: reintroduce help on the variables and operators in `/help eval` (issue #2005)

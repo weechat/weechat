@@ -98,6 +98,8 @@ struct t_gui_input_undo
 
 struct t_gui_buffer
 {
+    long long id;                      /* unique id for buffer              */
+                                       /* (timestamp with microseconds)     */
     int opening;                       /* 1 if buffer is being opened       */
     struct t_weechat_plugin *plugin;   /* plugin which created this buffer  */
                                        /* (NULL for a WeeChat buffer)       */
@@ -276,6 +278,7 @@ extern int gui_buffers_visited_index;
 extern int gui_buffers_visited_count;
 extern int gui_buffers_visited_frozen;
 extern struct t_gui_buffer *gui_buffer_last_displayed;
+extern long long gui_buffer_last_id_assigned;
 extern char *gui_buffer_reserved_names[];
 extern char *gui_buffer_type_string[];
 extern char *gui_buffer_notify_string[];
@@ -300,9 +303,25 @@ extern void gui_buffer_local_var_add (struct t_gui_buffer *buffer,
 extern void gui_buffer_local_var_remove (struct t_gui_buffer *buffer,
                                          const char *name);
 extern void gui_buffer_notify_set_all ();
+extern long long gui_buffer_generate_id ();
 extern int gui_buffer_is_reserved_name (const char *name);
 extern void gui_buffer_apply_config_option_property (struct t_gui_buffer *buffer,
                                                      struct t_config_option *option);
+extern struct t_gui_buffer *gui_buffer_new_props_with_id (long long id,
+                                                          struct t_weechat_plugin *plugin,
+                                                          const char *name,
+                                                          struct t_hashtable *properties,
+                                                          int (*input_callback)(const void *pointer,
+                                                                                void *data,
+                                                                                struct t_gui_buffer *buffer,
+                                                                                const char *input_data),
+                                                          const void *input_callback_pointer,
+                                                          void *input_callback_data,
+                                                          int (*close_callback)(const void *pointer,
+                                                                                void *data,
+                                                                                struct t_gui_buffer *buffer),
+                                                          const void *close_callback_pointer,
+                                                          void *close_callback_data);
 extern struct t_gui_buffer *gui_buffer_new_props (struct t_weechat_plugin *plugin,
                                                   const char *name,
                                                   struct t_hashtable *properties,

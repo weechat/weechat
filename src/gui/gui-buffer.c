@@ -32,6 +32,7 @@
 #include <string.h>
 #include <signal.h>
 #include <time.h>
+#include <sys/time.h>
 #include <ctype.h>
 
 #include "../core/weechat.h"
@@ -75,6 +76,8 @@ int gui_buffers_visited_count = 0;              /* number of visited buffers*/
 int gui_buffers_visited_frozen = 0;             /* 1 to forbid list updates */
 struct t_gui_buffer *gui_buffer_last_displayed = NULL; /* last b. displayed */
 
+long long gui_buffer_last_id_assigned = -1;      /* last id assigned         */
+
 char *gui_buffer_reserved_names[] =
 { GUI_BUFFER_MAIN, SECURE_BUFFER_NAME, GUI_COLOR_BUFFER_NAME,
   NULL
@@ -106,7 +109,7 @@ char *gui_buffer_properties_get_integer[] =
   NULL
 };
 char *gui_buffer_properties_get_string[] =
-{ "plugin", "name", "full_name", "old_full_name", "short_name", "title",
+{ "id", "plugin", "name", "full_name", "old_full_name", "short_name", "title",
   "input", "text_search_input", "highlight_words", "highlight_disable_regex",
   "highlight_regex", "highlight_tags_restrict", "highlight_tags",
   "hotlist_max_level_nicks",
@@ -606,6 +609,34 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
 }
 
 /*
+ * Returns a new unique id for a buffer.
+ *
+ * The id is the current time with microseconds precision.
+ * The same time (including microseconds) can be used only one time, so that
+ * all buffer ids are guaranteed to be unique.
+ */
+
+long long
+gui_buffer_generate_id ()
+{
+    struct timeval tv;
+    long long id;
+
+    gettimeofday (&tv, NULL);
+
+    id = ((long long)tv.tv_sec * 1000000LL) + (long long)(tv.tv_usec);
+
+    /*
+     * ensure we never use the same id for two buffers and that the returned
+     * id is strictly greater than the last assigned one
+     */
+    if (id <= gui_buffer_last_id_assigned)
+        id = gui_buffer_last_id_assigned + 1;
+
+    return id;
+}
+
+/*
  * Initializes input_buffer_* variables in a buffer.
  */
 
@@ -746,26 +777,28 @@ gui_buffer_apply_config_properties (struct t_gui_buffer *buffer)
 }
 
 /*
- * Creates a new buffer in current window with some optional properties.
+ * Creates a new buffer in current window with some optional properties,
+ * using id (this function is for internal use only).
  *
  * Returns pointer to new buffer, NULL if error.
  */
 
 struct t_gui_buffer *
-gui_buffer_new_props (struct t_weechat_plugin *plugin,
-                      const char *name,
-                      struct t_hashtable *properties,
-                      int (*input_callback)(const void *pointer,
-                                            void *data,
-                                            struct t_gui_buffer *buffer,
-                                            const char *input_data),
-                      const void *input_callback_pointer,
-                      void *input_callback_data,
-                      int (*close_callback)(const void *pointer,
-                                            void *data,
-                                            struct t_gui_buffer *buffer),
-                      const void *close_callback_pointer,
-                      void *close_callback_data)
+gui_buffer_new_props_with_id (long long id,
+                              struct t_weechat_plugin *plugin,
+                              const char *name,
+                              struct t_hashtable *properties,
+                              int (*input_callback)(const void *pointer,
+                                                    void *data,
+                                                    struct t_gui_buffer *buffer,
+                                                    const char *input_data),
+                              const void *input_callback_pointer,
+                              void *input_callback_data,
+                              int (*close_callback)(const void *pointer,
+                                                    void *data,
+                                                    struct t_gui_buffer *buffer),
+                              const void *close_callback_pointer,
+                              void *close_callback_data)
 {
     struct t_gui_buffer *new_buffer;
     int first_buffer_creation;
@@ -797,6 +830,9 @@ gui_buffer_new_props (struct t_weechat_plugin *plugin,
         return NULL;
 
     /* init buffer */
+    new_buffer->id = id;
+    if (new_buffer->id > gui_buffer_last_id_assigned)
+        gui_buffer_last_id_assigned = new_buffer->id;
     new_buffer->opening = 1;
     new_buffer->plugin = plugin;
     new_buffer->plugin_name_for_upgrade = NULL;
@@ -969,6 +1005,41 @@ gui_buffer_new_props (struct t_weechat_plugin *plugin,
     }
 
     return new_buffer;
+}
+
+/*
+ * Creates a new buffer in current window with some optional properties.
+ *
+ * Returns pointer to new buffer, NULL if error.
+ */
+
+struct t_gui_buffer *
+gui_buffer_new_props (struct t_weechat_plugin *plugin,
+                      const char *name,
+                      struct t_hashtable *properties,
+                      int (*input_callback)(const void *pointer,
+                                            void *data,
+                                            struct t_gui_buffer *buffer,
+                                            const char *input_data),
+                      const void *input_callback_pointer,
+                      void *input_callback_data,
+                      int (*close_callback)(const void *pointer,
+                                            void *data,
+                                            struct t_gui_buffer *buffer),
+                      const void *close_callback_pointer,
+                      void *close_callback_data)
+{
+    return gui_buffer_new_props_with_id (
+        gui_buffer_generate_id (),
+        plugin,
+        name,
+        properties,
+        input_callback,
+        input_callback_pointer,
+        input_callback_data,
+        close_callback,
+        close_callback_pointer,
+        close_callback_data);
 }
 
 /*
@@ -1441,11 +1512,17 @@ const char *
 gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 {
     const char *ptr_value;
+    static char str_value[64];
 
     if (!buffer || !property)
         return NULL;
 
-    if (strcmp (property, "plugin") == 0)
+    if (strcmp (property, "id") == 0)
+    {
+        snprintf (str_value, sizeof (str_value), "%lld", buffer->id);
+        return str_value;
+    }
+    else if (strcmp (property, "plugin") == 0)
         return gui_buffer_get_plugin_name (buffer);
     else if (strcmp (property, "name") == 0)
         return buffer->name;
@@ -5012,6 +5089,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
                        0, 0, NULL, NULL);
     if (hdata)
     {
+        HDATA_VAR(struct t_gui_buffer, id, LONGLONG, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, opening, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, plugin, POINTER, 0, NULL, "plugin");
         HDATA_VAR(struct t_gui_buffer, plugin_name_for_upgrade, STRING, 0, NULL, NULL);
@@ -5183,7 +5261,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
 {
     struct t_infolist_item *ptr_item;
     struct t_gui_key *ptr_key;
-    char option_name[64];
+    char option_name[64], str_value[64];
     int i;
 
     if (!infolist || !buffer)
@@ -5197,6 +5275,9 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "current_buffer",
                                    (gui_current_window->buffer == buffer) ? 1 : 0))
+        return 0;
+    snprintf (str_value, sizeof (str_value), "%lld", buffer->id);
+    if (!infolist_new_var_string (ptr_item, "id", str_value))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "opening", buffer->opening))
         return 0;
@@ -5457,6 +5538,7 @@ gui_buffer_print_log ()
     {
         log_printf ("");
         log_printf ("[buffer (addr:0x%lx)]", ptr_buffer);
+        log_printf ("  id. . . . . . . . . . . : %lld",  ptr_buffer->id);
         log_printf ("  opening . . . . . . . . : %d",    ptr_buffer->opening);
         log_printf ("  plugin. . . . . . . . . : 0x%lx ('%s')",
                     ptr_buffer->plugin, gui_buffer_get_plugin_name (ptr_buffer));
