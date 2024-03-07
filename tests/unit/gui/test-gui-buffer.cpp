@@ -1315,6 +1315,29 @@ TEST(GuiBuffer, SearchMain)
 
 /*
  * Tests functions:
+ *   gui_buffer_search_by_id
+ */
+
+TEST(GuiBuffer, SearchById)
+{
+    struct t_gui_buffer *buffer;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_id (-1));
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_id (0));
+
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_id (gui_buffers->id));
+    POINTERS_EQUAL(buffer, gui_buffer_search_by_id (buffer->id));
+
+    gui_buffer_close (buffer);
+}
+
+/*
+ * Tests functions:
  *   gui_buffer_search_by_full_name
  */
 

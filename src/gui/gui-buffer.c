@@ -2861,6 +2861,26 @@ gui_buffer_search_main ()
 }
 
 /*
+ * Searches for a buffer by id (unique identifier).
+ */
+
+struct t_gui_buffer *
+gui_buffer_search_by_id (long long id)
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->id == id)
+            return ptr_buffer;
+    }
+
+    /* buffer not found */
+    return NULL;
+}
+
+/*
  * Searches for a buffer by full name (example: "irc.libera.#weechat").
  *
  * If full_name starts with "(?i)", the search starts after this string
