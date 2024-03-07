@@ -346,6 +346,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     if (!buffer)
         return json;
 
+    MSG_ADD_HDATA_VAR(Number, "id", longlong, "id");
     MSG_ADD_HDATA_STR("name", "full_name");
     MSG_ADD_HDATA_STR("short_name", "short_name");
     MSG_ADD_HDATA_VAR(Number, "number", integer, "number");
