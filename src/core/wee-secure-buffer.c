@@ -201,7 +201,7 @@ secure_buffer_assign ()
 {
     if (!secure_buffer)
     {
-        secure_buffer = gui_buffer_search_by_name (NULL, SECURE_BUFFER_NAME);
+        secure_buffer = gui_buffer_search (NULL, SECURE_BUFFER_NAME);
         if (secure_buffer)
         {
             secure_buffer->input_callback = &secure_buffer_input_cb;

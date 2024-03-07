@@ -392,8 +392,7 @@ extern void gui_buffer_add_value_num_displayed (struct t_gui_buffer *buffer,
 extern int gui_buffer_is_main (const char *plugin_name, const char *name);
 extern struct t_gui_buffer *gui_buffer_search_main ();
 extern struct t_gui_buffer *gui_buffer_search_by_full_name (const char *full_name);
-extern struct t_gui_buffer *gui_buffer_search_by_name (const char *plugin,
-                                                       const char *name);
+extern struct t_gui_buffer *gui_buffer_search (const char *plugin, const char *name);
 extern struct t_gui_buffer *gui_buffer_search_by_partial_name (const char *plugin,
                                                                const char *name);
 extern struct t_gui_buffer *gui_buffer_search_by_number (int number);

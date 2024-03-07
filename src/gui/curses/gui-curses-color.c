@@ -1297,8 +1297,7 @@ gui_color_buffer_assign ()
 {
     if (!gui_color_buffer)
     {
-        gui_color_buffer = gui_buffer_search_by_name (NULL,
-                                                      GUI_COLOR_BUFFER_NAME);
+        gui_color_buffer = gui_buffer_search (NULL, GUI_COLOR_BUFFER_NAME);
         if (gui_color_buffer)
         {
             gui_color_buffer->input_callback = &gui_color_buffer_input_cb;

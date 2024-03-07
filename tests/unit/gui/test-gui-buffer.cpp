@@ -1346,10 +1346,10 @@ TEST(GuiBuffer, SearchByFullName)
 
 /*
  * Tests functions:
- *   gui_buffer_search_by_name
+ *   gui_buffer_search
  */
 
-TEST(GuiBuffer, SearchByName)
+TEST(GuiBuffer, Search)
 {
     struct t_gui_buffer *buffer;
 
@@ -1358,32 +1358,32 @@ TEST(GuiBuffer, SearchByName)
                              NULL, NULL, NULL);
     CHECK(buffer);
 
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name (NULL, NULL));
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name (NULL, ""));
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name ("", NULL));
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name ("", ""));
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name ("==", NULL));
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name ("==", ""));
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_name ("==", "(?i)"));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search (NULL, NULL));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search (NULL, ""));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("", NULL));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("", ""));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("==", NULL));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("==", ""));
+    POINTERS_EQUAL(NULL, gui_buffer_search ("==", "(?i)"));
 
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_name ("==", "xxx"));
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_name ("==", "weechat"));
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name ("==", "core.weechat"));
-    POINTERS_EQUAL(buffer, gui_buffer_search_by_name ("==", "core." TEST_BUFFER_NAME));
+    POINTERS_EQUAL(NULL, gui_buffer_search ("==", "xxx"));
+    POINTERS_EQUAL(NULL, gui_buffer_search ("==", "weechat"));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("==", "core.weechat"));
+    POINTERS_EQUAL(buffer, gui_buffer_search ("==", "core." TEST_BUFFER_NAME));
 
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name ("", ""));
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name ("", "(?i)"));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("", ""));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("", "(?i)"));
 
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name ("core", "weechat"));
-    POINTERS_EQUAL(buffer, gui_buffer_search_by_name ("core", TEST_BUFFER_NAME));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("core", "weechat"));
+    POINTERS_EQUAL(buffer, gui_buffer_search ("core", TEST_BUFFER_NAME));
 
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_name ("CORE", "WEECHAT"));
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name ("(?i)CORE", "weechat"));
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name ("core", "(?i)WEECHAT"));
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_name ("(?i)CORE", "(?i)WEECHAT"));
+    POINTERS_EQUAL(NULL, gui_buffer_search ("CORE", "WEECHAT"));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("(?i)CORE", "weechat"));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("core", "(?i)WEECHAT"));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search ("(?i)CORE", "(?i)WEECHAT"));
 
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_name ("CORE", TEST_BUFFER_NAME));
-    POINTERS_EQUAL(buffer, gui_buffer_search_by_name ("(?i)CORE", TEST_BUFFER_NAME));
+    POINTERS_EQUAL(NULL, gui_buffer_search ("CORE", TEST_BUFFER_NAME));
+    POINTERS_EQUAL(buffer, gui_buffer_search ("(?i)CORE", TEST_BUFFER_NAME));
 
     gui_buffer_close (buffer);
 }

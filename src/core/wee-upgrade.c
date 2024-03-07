@@ -779,8 +779,7 @@ upgrade_weechat_read_hotlist (struct t_infolist *infolist)
     buffer_name = infolist_string (infolist, "buffer_name");
     if (plugin_name && buffer_name)
     {
-        ptr_buffer = gui_buffer_search_by_name (plugin_name,
-                                                buffer_name);
+        ptr_buffer = gui_buffer_search (plugin_name, buffer_name);
         if (ptr_buffer)
         {
             buf = infolist_buffer (infolist, "creation_time", &size);

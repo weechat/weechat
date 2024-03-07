@@ -706,7 +706,7 @@ COMMAND_CALLBACK(buffer)
                              argv[arg_name]);
             return WEECHAT_RC_OK;
         }
-        ptr_buffer = gui_buffer_search_by_name (PLUGIN_CORE, argv[arg_name]);
+        ptr_buffer = gui_buffer_search (PLUGIN_CORE, argv[arg_name]);
         if (!ptr_buffer)
         {
             ptr_buffer = gui_buffer_new_user (
@@ -5351,8 +5351,7 @@ COMMAND_CALLBACK(print)
                              argv[arg_new_buffer_name]);
             return WEECHAT_RC_OK;
         }
-        ptr_buffer = gui_buffer_search_by_name (PLUGIN_CORE,
-                                                argv[arg_new_buffer_name]);
+        ptr_buffer = gui_buffer_search (PLUGIN_CORE, argv[arg_new_buffer_name]);
         if (!ptr_buffer)
         {
             ptr_buffer = gui_buffer_new_user (

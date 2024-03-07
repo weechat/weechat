@@ -806,7 +806,7 @@ gui_buffer_new_props_with_id (long long id,
     if (!name || !name[0])
         return NULL;
 
-    if (gui_buffer_search_by_name (plugin_get_name (plugin), name))
+    if (gui_buffer_search (plugin_get_name (plugin), name))
     {
         gui_chat_printf (NULL,
                          _("%sA buffer with same name (%s) already exists"),
@@ -2901,11 +2901,13 @@ gui_buffer_search_by_full_name (const char *full_name)
 }
 
 /*
- * Searches for a buffer by plugin and name.
+ * Searches for a buffer by plugin and name, full name or id.
+ *
+ * If plugin is "==", the name is used to search by full name.
  */
 
 struct t_gui_buffer *
-gui_buffer_search_by_name (const char *plugin, const char *name)
+gui_buffer_search (const char *plugin, const char *name)
 {
     struct t_gui_buffer *ptr_buffer;
     int plugin_match, plugin_case_sensitive, name_case_sensitive;
