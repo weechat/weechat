@@ -35,6 +35,7 @@ Bug fixes::
 
   * core: add missing mouse events "alt-ctrl-button2" and "alt-ctrl-button3"
   * core: remove trailing directory separators in home directories (issue #2070)
+  * exec: remove trailing space on buffers with free content when line numbers are not displayed
   * exec: add missing exec tags in lines of buffers with free content (issue #2086)
   * fset: allow filename starting with "~" in command `/fset -export`
   * irc: add missing tags on self action messages when capability echo-message is enabled (issue #2074)
