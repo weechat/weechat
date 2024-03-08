@@ -353,7 +353,7 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
             weechat_printf_y_date_tags (
                 buffer, -1, 0, str_tags,
                 "%s%s",
-                (exec_cmd->line_numbers) ? str_number : " ",
+                (exec_cmd->line_numbers) ? str_number : "",
                 line_color);
         }
         else
