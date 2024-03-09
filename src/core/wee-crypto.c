@@ -285,7 +285,6 @@ weecrypto_hash_file (const char *filename, int hash_algo,
                      void *hash, int *hash_size)
 {
     gcry_md_hd_t *hd_md;
-    struct stat st;
     FILE *file;
     size_t num_read;
     int rc, hd_md_opened, algo_size;
@@ -304,9 +303,6 @@ weecrypto_hash_file (const char *filename, int hash_algo,
         *hash_size = 0;
 
     if (!filename || !filename[0] || !hash)
-        goto hash_end;
-
-    if (stat (filename, &st) == -1)
         goto hash_end;
 
     file = fopen (filename, "r");

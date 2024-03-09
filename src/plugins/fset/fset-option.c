@@ -1408,7 +1408,7 @@ fset_option_export (const char *filename, int with_help)
         return 0;
     }
 
-    chmod (filename2, 0600);
+    fchmod (fileno (file), 0600);
 
     hashtable_pointers = weechat_hashtable_new (
         8,
