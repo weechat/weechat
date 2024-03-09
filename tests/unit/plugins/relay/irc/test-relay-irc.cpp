@@ -22,7 +22,6 @@
 #include "CppUTest/TestHarness.h"
 
 #include "tests/tests.h"
-#include "tests/tests-record.h"
 
 extern "C"
 {
@@ -138,26 +137,18 @@ TEST_GROUP(RelayIrcWithClient)
 
     void test_client_recv (const char *data)
     {
-        record_start ();
-
         arraylist_clear (sent_messages_client);
         arraylist_clear (sent_messages_irc);
 
         relay_irc_recv (ptr_relay_client, data);
-
-        record_stop ();
     }
 
     void test_client_send (const char *data)
     {
-        record_start ();
-
         arraylist_clear (sent_messages_client);
         arraylist_clear (sent_messages_irc);
 
         relay_irc_sendf (ptr_relay_client, "%s", data);
-
-        record_stop ();
     }
 
     char **test_build_error (const char *msg1,
