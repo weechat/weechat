@@ -475,11 +475,11 @@ RELAY_API_PROTOCOL_CALLBACK(input)
             ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
             if (!ptr_buffer)
             {
-                cJSON_Delete (json_body);
                 relay_api_msg_send_error_json (client,
                                                RELAY_HTTP_404_NOT_FOUND, NULL,
                                                "Buffer \"%s\" not found",
                                                ptr_buffer_name);
+                cJSON_Delete (json_body);
                 return WEECHAT_RC_OK;
             }
         }
