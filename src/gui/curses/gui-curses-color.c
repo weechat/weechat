@@ -669,7 +669,7 @@ gui_color_init_vars ()
         gui_color_num_pairs = (gui_color_term_color_pairs >= 32768) ?
             32767 : gui_color_term_color_pairs - 1;
         gui_color_pairs = calloc (
-            (gui_color_term_colors + 2) * (gui_color_term_colors + 2),
+            (size_t)(gui_color_term_colors + 2) * (gui_color_term_colors + 2),
             sizeof (gui_color_pairs[0]));
         gui_color_pairs_used = 0;
 
@@ -1226,7 +1226,7 @@ gui_color_reset_pairs ()
     if (gui_color_pairs)
     {
         memset (gui_color_pairs, 0,
-                (gui_color_term_colors + 2)
+                (size_t)(gui_color_term_colors + 2)
                 * (gui_color_term_colors + 2)
                 * sizeof (gui_color_pairs[0]));
         gui_color_pairs_used = 0;
