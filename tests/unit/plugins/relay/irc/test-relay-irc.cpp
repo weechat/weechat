@@ -316,7 +316,7 @@ TEST_GROUP(RelayIrcWithClient)
                        "/server fakerecv "
                        "\":server 001 alice :Welcome on this server, nick1!\"");
 
-        /* create a fake server (no I/O) */
+        /* create a relay server */
         ptr_relay_server = relay_server_new (
             "irc.test",
             RELAY_PROTOCOL_IRC,
@@ -328,7 +328,7 @@ TEST_GROUP(RelayIrcWithClient)
             0,  /* tls */
             0);  /* unix_socket */
 
-        /* create a fake client (no I/O) */
+        /* create a fake relay client (no I/O) */
         ptr_relay_client = relay_client_new (-1, "test", ptr_relay_server);
     }
 
