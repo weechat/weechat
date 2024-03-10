@@ -13471,6 +13471,13 @@ WeeChat とプラグインが定義する修飾子のリスト:
 | String with IRC tag value unescaped,
   see https://ircv3.net/specs/extensions/message-tags#escaping-values[this page ^↗^^].
 
+// TRANSLATION MISSING
+| [[hook_modifier_color_decode]] color_decode | 4.3.0
+| Replacement string for colors removed
+| Any string.
+| String with WeeChat colors converted to a replacement string
+  (colors stripped if the replacement string is empty).
+
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0
 | 色を保持する場合は "1"、削除する場合は "0"
 | 任意の文字列

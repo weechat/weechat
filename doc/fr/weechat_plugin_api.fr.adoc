@@ -13574,6 +13574,12 @@ utilisés :
 | Chaîne avec la valeur de l'étiquette IRC sans échappements,
   voir https://ircv3.net/specs/extensions/message-tags#escaping-values[cette page ^↗^^].
 
+| [[hook_modifier_color_decode]] color_decode | 4.3.0
+| Chaîne de remplacement pour les couleurs supprimées
+| Toute chaîne.
+| Chaîne avec les couleurs WeeChat converties vers la chaîne de remplacement
+  (couleurs supprimées si la chaîne de remplacement est vide).
+
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0
 | "1" pour garder les couleurs, "0" pour les supprimer
 | Toute chaîne.

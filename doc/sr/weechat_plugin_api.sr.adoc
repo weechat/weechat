@@ -12930,6 +12930,13 @@ char *weechat_hook_modifier_exec (const char *modifier,
 | Стринг са неозначеном вредности IRC ознаке,
   погледајте https://ircv3.net/specs/extensions/message-tags#escaping-values[ову страницу ^↗^^].
 
+// TRANSLATION MISSING
+| [[hook_modifier_color_decode]] color_decode | 4.3.0
+| Replacement string for colors removed
+| Any string.
+| String with WeeChat colors converted to a replacement string
+  (colors stripped if the replacement string is empty).
+
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0
 | "1" да се боје задрже, "0" да се боје уклоне
 | Било који стринг.

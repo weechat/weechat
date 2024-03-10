@@ -451,6 +451,25 @@ plugin_api_command (struct t_weechat_plugin *plugin,
 }
 
 /*
+ * Modifier callback: decodes WeeChat colors: converts WeeChat color codes to
+ * WeeChat a replacement string.
+ */
+
+char *
+plugin_api_modifier_color_decode_cb (const void *pointer, void *data,
+                                     const char *modifier,
+                                     const char *modifier_data,
+                                     const char *string)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) modifier;
+
+    return gui_color_decode (string, modifier_data);
+}
+
+/*
  * Modifier callback: decodes ANSI colors: converts ANSI color codes to WeeChat
  * colors (or removes them).
  */
@@ -681,6 +700,8 @@ void
 plugin_api_init ()
 {
     /* WeeChat core modifiers */
+    hook_modifier (NULL, "color_decode",
+                   &plugin_api_modifier_color_decode_cb, NULL, NULL);
     hook_modifier (NULL, "color_decode_ansi",
                    &plugin_api_modifier_color_decode_ansi_cb, NULL, NULL);
     hook_modifier (NULL, "color_encode_ansi",
