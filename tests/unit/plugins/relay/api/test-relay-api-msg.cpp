@@ -132,6 +132,7 @@ TEST(RelayApiMsg, BufferToJson)
     json = relay_api_msg_buffer_to_json (gui_buffers, 0, 0, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
+    WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "id");
     WEE_CHECK_OBJ_STR("core.weechat", json, "name");
     WEE_CHECK_OBJ_STR("weechat", json, "short_name");
     WEE_CHECK_OBJ_NUM(1, json, "number");
