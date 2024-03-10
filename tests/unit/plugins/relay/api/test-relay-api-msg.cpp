@@ -51,11 +51,11 @@ extern "C"
     STRNCMP_EQUAL(__expected, cJSON_GetStringValue (json_obj),          \
                   __length);
 
-#define WEE_CHECK_OBJ_INT(__expected, __json, __name)                   \
+#define WEE_CHECK_OBJ_NUM(__expected, __json, __name)                   \
     json_obj = cJSON_GetObjectItem (__json, __name);                    \
     CHECK(json_obj);                                                    \
     CHECK(cJSON_IsNumber (json_obj));                                   \
-    LONGS_EQUAL(__expected, cJSON_GetNumberValue (json_obj));
+    CHECK(__expected == cJSON_GetNumberValue (json_obj));
 
 #define WEE_CHECK_OBJ_BOOL(__expected, __json, __name)                  \
     json_obj = cJSON_GetObjectItem (__json, __name);                    \
@@ -134,7 +134,7 @@ TEST(RelayApiMsg, BufferToJson)
     CHECK(cJSON_IsObject (json));
     WEE_CHECK_OBJ_STR("core.weechat", json, "name");
     WEE_CHECK_OBJ_STR("weechat", json, "short_name");
-    WEE_CHECK_OBJ_INT(1, json, "number");
+    WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
     json_local_vars = cJSON_GetObjectItem (json, "local_variables");
@@ -264,9 +264,9 @@ TEST(RelayApiMsg, LinesToJson)
     json_line = cJSON_GetArrayItem (json, 0);
     CHECK(json_line);
     CHECK(cJSON_IsObject (json_line));
-    WEE_CHECK_OBJ_INT(gui_buffers->own_lines->last_line->prev_line->data->id,
+    WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->prev_line->data->id,
                       json_line, "id");
-    WEE_CHECK_OBJ_INT(-1, json_line, "y");
+    WEE_CHECK_OBJ_NUM(-1, json_line, "y");
     gmtime_r (&(gui_buffers->own_lines->last_line->prev_line->data->date), &gm_time);
     tv.tv_sec = mktime (&gm_time);
     tv.tv_usec = gui_buffers->own_lines->last_line->prev_line->data->date_usec;
@@ -300,9 +300,9 @@ TEST(RelayApiMsg, LinesToJson)
     json_line = cJSON_GetArrayItem (json, 1);
     CHECK(json_line);
     CHECK(cJSON_IsObject (json_line));
-    WEE_CHECK_OBJ_INT(gui_buffers->own_lines->last_line->data->id,
+    WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->data->id,
                       json_line, "id");
-    WEE_CHECK_OBJ_INT(-1, json_line, "y");
+    WEE_CHECK_OBJ_NUM(-1, json_line, "y");
     gmtime_r (&(gui_buffers->own_lines->last_line->data->date), &gm_time);
     tv.tv_sec = mktime (&gm_time);
     tv.tv_usec = gui_buffers->own_lines->last_line->data->date_usec;
@@ -333,7 +333,7 @@ TEST(RelayApiMsg, LinesToJson)
     json_line = cJSON_GetArrayItem (json, 0);
     CHECK(json_line);
     CHECK(cJSON_IsObject (json_line));
-    WEE_CHECK_OBJ_INT(gui_buffers->own_lines->last_line->data->id,
+    WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->data->id,
                       json_line, "id");
     str_msg_ansi = gui_color_encode_ansi (str_msg2);
     CHECK(str_msg_ansi);
@@ -349,7 +349,7 @@ TEST(RelayApiMsg, LinesToJson)
     json_line = cJSON_GetArrayItem (json, 0);
     CHECK(json_line);
     CHECK(cJSON_IsObject (json_line));
-    WEE_CHECK_OBJ_INT(gui_buffers->own_lines->last_line->data->id,
+    WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->data->id,
                       json_line, "id");
     WEE_CHECK_OBJ_STR(str_msg2, json_line, "message");
     cJSON_Delete (json);
@@ -362,7 +362,7 @@ TEST(RelayApiMsg, LinesToJson)
     json_line = cJSON_GetArrayItem (json, 0);
     CHECK(json_line);
     CHECK(cJSON_IsObject (json_line));
-    WEE_CHECK_OBJ_INT(gui_buffers->own_lines->last_line->data->id,
+    WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->data->id,
                       json_line, "id");
     WEE_CHECK_OBJ_STR("this is the second line with green", json_line, "message");
     cJSON_Delete (json);
