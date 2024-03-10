@@ -234,30 +234,30 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
     char *totp_secret;
     int hash_algo_found, index_hash_algo;
 
-    json_body = cJSON_Parse(client->http_req->body);
-    if (!json_body)
-        return WEECHAT_RC_ERROR;
-
     hash_algo_found = -1;
 
-    json_algos = cJSON_GetObjectItem (json_body, "password_hash_algo");
-    if (json_algos)
+    json_body = cJSON_Parse(client->http_req->body);
+    if (json_body)
     {
-        cJSON_ArrayForEach(json_algo, json_algos)
+        json_algos = cJSON_GetObjectItem (json_body, "password_hash_algo");
+        if (json_algos)
         {
-            ptr_algo = (cJSON_IsString (json_algo)) ?
-                cJSON_GetStringValue (json_algo) : NULL;
-            if (ptr_algo)
+            cJSON_ArrayForEach(json_algo, json_algos)
             {
-                index_hash_algo = relay_auth_password_hash_algo_search (ptr_algo);
-                if ((index_hash_algo >= 0) && (index_hash_algo > hash_algo_found))
+                ptr_algo = (cJSON_IsString (json_algo)) ?
+                    cJSON_GetStringValue (json_algo) : NULL;
+                if (ptr_algo)
                 {
-                    if (weechat_string_match_list (
-                            relay_auth_password_hash_algo_name[index_hash_algo],
-                            (const char **)relay_config_network_password_hash_algo_list,
-                            1))
+                    index_hash_algo = relay_auth_password_hash_algo_search (ptr_algo);
+                    if ((index_hash_algo >= 0) && (index_hash_algo > hash_algo_found))
                     {
-                        hash_algo_found = index_hash_algo;
+                        if (weechat_string_match_list (
+                                relay_auth_password_hash_algo_name[index_hash_algo],
+                                (const char **)relay_config_network_password_hash_algo_list,
+                                1))
+                        {
+                            hash_algo_found = index_hash_algo;
+                        }
                     }
                 }
             }
@@ -267,7 +267,8 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
     json = cJSON_CreateObject ();
     if (!json)
     {
-        cJSON_Delete (json_body);
+        if (json_body)
+            cJSON_Delete (json_body);
         return WEECHAT_RC_ERROR;
     }
 
@@ -293,7 +294,8 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
 
     free (totp_secret);
     cJSON_Delete (json);
-    cJSON_Delete (json_body);
+    if (json_body)
+        cJSON_Delete (json_body);
 
     return WEECHAT_RC_OK;
 }
