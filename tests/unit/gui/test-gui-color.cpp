@@ -398,7 +398,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("reset"));
     WEE_CHECK_DECODE("test_reset", string, NULL);
     WEE_CHECK_DECODE("test_reset", string, "");
-    WEE_CHECK_DECODE("test_?reset", string, "?");
+    WEE_CHECK_DECODE("test_[color]reset", string, "[color]");
 
     /* resetcolor */
     snprintf (string, sizeof (string),
@@ -406,7 +406,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("resetcolor"));
     WEE_CHECK_DECODE("test_resetcolor", string, NULL);
     WEE_CHECK_DECODE("test_resetcolor", string, "");
-    WEE_CHECK_DECODE("test_?resetcolor", string, "?");
+    WEE_CHECK_DECODE("test_[color]resetcolor", string, "[color]");
 
     /* emphasis */
     snprintf (string, sizeof (string),
@@ -414,7 +414,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("emphasis"));
     WEE_CHECK_DECODE("test_emphasis", string, NULL);
     WEE_CHECK_DECODE("test_emphasis", string, "");
-    WEE_CHECK_DECODE("test_?emphasis", string, "?");
+    WEE_CHECK_DECODE("test_[color]emphasis", string, "[color]");
 
     /* blink */
     snprintf (string, sizeof (string),
@@ -423,7 +423,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("-blink"));
     WEE_CHECK_DECODE("test_blink_end", string, NULL);
     WEE_CHECK_DECODE("test_blink_end", string, "");
-    WEE_CHECK_DECODE("test_?blink?_end", string, "?");
+    WEE_CHECK_DECODE("test_[color]blink[color]_end", string, "[color]");
 
     /* dim */
     snprintf (string, sizeof (string),
@@ -432,7 +432,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("-dim"));
     WEE_CHECK_DECODE("test_dim_end", string, NULL);
     WEE_CHECK_DECODE("test_dim_end", string, "");
-    WEE_CHECK_DECODE("test_?dim?_end", string, "?");
+    WEE_CHECK_DECODE("test_[color]dim[color]_end", string, "[color]");
 
     /* bold */
     snprintf (string, sizeof (string),
@@ -441,7 +441,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("-bold"));
     WEE_CHECK_DECODE("test_bold_end", string, NULL);
     WEE_CHECK_DECODE("test_bold_end", string, "");
-    WEE_CHECK_DECODE("test_?bold?_end", string, "?");
+    WEE_CHECK_DECODE("test_[color]bold[color]_end", string, "[color]");
 
     /* reverse */
     snprintf (string, sizeof (string),
@@ -450,7 +450,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("-reverse"));
     WEE_CHECK_DECODE("test_reverse_end", string, NULL);
     WEE_CHECK_DECODE("test_reverse_end", string, "");
-    WEE_CHECK_DECODE("test_?reverse?_end", string, "?");
+    WEE_CHECK_DECODE("test_[color]reverse[color]_end", string, "[color]");
 
     /* italic */
     snprintf (string, sizeof (string),
@@ -459,7 +459,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("-italic"));
     WEE_CHECK_DECODE("test_italic_end", string, NULL);
     WEE_CHECK_DECODE("test_italic_end", string, "");
-    WEE_CHECK_DECODE("test_?italic?_end", string, "?");
+    WEE_CHECK_DECODE("test_[color]italic[color]_end", string, "[color]");
 
     /* underline */
     snprintf (string, sizeof (string),
@@ -468,7 +468,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("-underline"));
     WEE_CHECK_DECODE("test_underline_end", string, NULL);
     WEE_CHECK_DECODE("test_underline_end", string, "");
-    WEE_CHECK_DECODE("test_?underline?_end", string, "?");
+    WEE_CHECK_DECODE("test_[color]underline[color]_end", string, "[color]");
 
     /* bar_fg */
     snprintf (string, sizeof (string),
@@ -476,7 +476,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("bar_fg"));
     WEE_CHECK_DECODE("test_bar_fg", string, NULL);
     WEE_CHECK_DECODE("test_bar_fg", string, "");
-    WEE_CHECK_DECODE("test_?bar_fg", string, "?");
+    WEE_CHECK_DECODE("test_[color]bar_fg", string, "[color]");
 
     /* bar_delim */
     snprintf (string, sizeof (string),
@@ -484,7 +484,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("bar_delim"));
     WEE_CHECK_DECODE("test_bar_delim", string, NULL);
     WEE_CHECK_DECODE("test_bar_delim", string, "");
-    WEE_CHECK_DECODE("test_?bar_delim", string, "?");
+    WEE_CHECK_DECODE("test_[color]bar_delim", string, "[color]");
 
     /* bar_bg */
     snprintf (string, sizeof (string),
@@ -492,7 +492,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("bar_bg"));
     WEE_CHECK_DECODE("test_bar_bg", string, NULL);
     WEE_CHECK_DECODE("test_bar_bg", string, "");
-    WEE_CHECK_DECODE("test_?bar_bg", string, "?");
+    WEE_CHECK_DECODE("test_[color]bar_bg", string, "[color]");
 
     /* fg color */
     snprintf (string, sizeof (string),
@@ -500,7 +500,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("blue"));
     WEE_CHECK_DECODE("test_blue", string, NULL);
     WEE_CHECK_DECODE("test_blue", string, "");
-    WEE_CHECK_DECODE("test_?blue", string, "?");
+    WEE_CHECK_DECODE("test_[color]blue", string, "[color]");
 
     /* bg color */
     snprintf (string, sizeof (string),
@@ -508,7 +508,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom (",blue"));
     WEE_CHECK_DECODE("test_blue", string, NULL);
     WEE_CHECK_DECODE("test_blue", string, "");
-    WEE_CHECK_DECODE("test_?blue", string, "?");
+    WEE_CHECK_DECODE("test_[color]blue", string, "[color]");
 
     /* fg+bg color */
     snprintf (string, sizeof (string),
@@ -516,7 +516,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("yellow,blue"));
     WEE_CHECK_DECODE("test_yellow_blue", string, NULL);
     WEE_CHECK_DECODE("test_yellow_blue", string, "");
-    WEE_CHECK_DECODE("test_?yellow_blue", string, "?");
+    WEE_CHECK_DECODE("test_[color]yellow_blue", string, "[color]");
 
     /* fg terminal color */
     snprintf (string, sizeof (string),
@@ -524,7 +524,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("214"));
     WEE_CHECK_DECODE("test_214", string, NULL);
     WEE_CHECK_DECODE("test_214", string, "");
-    WEE_CHECK_DECODE("test_?214", string, "?");
+    WEE_CHECK_DECODE("test_[color]214", string, "[color]");
 
     /* bg terminal color */
     snprintf (string, sizeof (string),
@@ -532,7 +532,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom (",214"));
     WEE_CHECK_DECODE("test_,214", string, NULL);
     WEE_CHECK_DECODE("test_,214", string, "");
-    WEE_CHECK_DECODE("test_?,214", string, "?");
+    WEE_CHECK_DECODE("test_[color],214", string, "[color]");
 
     /* fg+bg terminal color */
     snprintf (string, sizeof (string),
@@ -540,7 +540,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("227,240"));
     WEE_CHECK_DECODE("test_227,240", string, NULL);
     WEE_CHECK_DECODE("test_227,240", string, "");
-    WEE_CHECK_DECODE("test_?227,240", string, "?");
+    WEE_CHECK_DECODE("test_[color]227,240", string, "[color]");
 
     /* fg terminal color + bg color */
     snprintf (string, sizeof (string),
@@ -548,7 +548,7 @@ TEST(GuiColor, Decode)
               gui_color_get_custom ("227,blue"));
     WEE_CHECK_DECODE("test_227,blue", string, NULL);
     WEE_CHECK_DECODE("test_227,blue", string, "");
-    WEE_CHECK_DECODE("test_?227,blue", string, "?");
+    WEE_CHECK_DECODE("test_[color]227,blue", string, "[color]");
 
     /* WeeChat color */
     snprintf (string, sizeof (string),
@@ -556,7 +556,7 @@ TEST(GuiColor, Decode)
               GUI_COLOR(GUI_COLOR_CHAT_HOST));
     WEE_CHECK_DECODE("test_option_weechat.color.chat_host", string, NULL);
     WEE_CHECK_DECODE("test_option_weechat.color.chat_host", string, "");
-    WEE_CHECK_DECODE("test_?option_weechat.color.chat_host", string, "?");
+    WEE_CHECK_DECODE("test_[color]option_weechat.color.chat_host", string, "[color]");
 }
 
 /*

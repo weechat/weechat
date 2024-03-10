@@ -2377,22 +2377,24 @@ size = weechat.string_color_code_size(weechat.color("yellow,red"))  # size == 7
 
 ==== string_remove_color
 
+_WeeChat バージョン 4.3.0 で更新。_
+
 文字列から WeeChat 色コードを削除。
 
 プロトタイプ:
 
 [source,c]
 ----
-char *weechat_string_remove_color (const char *string,
-                                   const char *replacement);
+char *weechat_string_remove_color (const char *string, const char *replacement);
 ----
 
 引数:
 
 * _string_: 文字列
-* _replacement_: NULL または空文字列でなければ、WeeChat
-  色コードを指定した文字列の 1 文字目で置換、そうでなければ WeeChat
-  色コードとそれに続く (色に関連する) 文字を文字列から削除
+// TRANSLATION MISSING
+* _replacement_: if not NULL and not empty, WeeChat color codes are replaced by
+  this string, otherwise WeeChat color codes and following chars (if related
+  to color) are removed from string
 
 戻り値:
 
@@ -2408,7 +2410,7 @@ char *str = weechat_string_remove_color (my_string1, NULL);
 free (str);
 
 /* replace color codes by "?" */
-char *str = weechat_string_remove_color (my_string2, "?");
+char *str = weechat_string_remove_color (my_string2, "[color]");
 /* ... */
 free (str);
 ----
@@ -2421,7 +2423,7 @@ free (str);
 def string_remove_color(string: str, replacement: str) -> str: ...
 
 # 例
-str = weechat.string_remove_color(my_string, "?")
+str = weechat.string_remove_color(my_string, "[color]")
 ----
 
 ==== string_base_encode

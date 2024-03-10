@@ -2228,20 +2228,22 @@ size = weechat.string_color_code_size(weechat.color("yellow,red"))  # size == 7
 
 ==== string_remove_color
 
+_Ажурирано у верзији 4.3.0._
+
 Уклања WeeChat боје из стринга.
 
 Прототип:
 
 [source,c]
 ----
-char *weechat_string_remove_color (const char *string,
-                                   const char *replacement);
+char *weechat_string_remove_color (const char *string, const char *replacement);
 ----
 
 Аргументи:
 
 * _string_: стринг
-* _replacement_: ако није NULL и није празно, WeeChat кодови боје се замењују првим карактером овог стринга, у супротном се из стринга уклањају WeeChat кодови боја и карактери који следе (ако су у вези боје)
+// TRANSLATION MISSING
+* _replacement_: if not NULL and not empty, WeeChat color codes are replaced by this string, otherwise WeeChat color codes and following chars (if related to color) are removed from string
 
 Повратна вредност:
 
@@ -2257,7 +2259,7 @@ char *str = weechat_string_remove_color (my_string1, NULL);
 free (str);
 
 /* replace color codes by "?" */
-char *str = weechat_string_remove_color (my_string2, "?");
+char *str = weechat_string_remove_color (my_string2, "[color]");
 /* ... */
 free (str);
 ----
@@ -2270,7 +2272,7 @@ free (str);
 def string_remove_color(string: str, replacement: str) -> str: ...
 
 # пример
-str = weechat.string_remove_color(my_string, "?")
+str = weechat.string_remove_color(my_string, "[color]")
 ----
 
 ==== string_base_encode

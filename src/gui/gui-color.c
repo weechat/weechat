@@ -780,12 +780,8 @@ gui_color_code_size (const char *string)
 }
 
 /*
- * Removes WeeChat color codes from a message.
- *
- * If replacement is not NULL and not empty, it is used to replace color codes
- * by first char of replacement (and next chars in string are NOT removed).
- * If replacement is NULL or empty, color codes are removed, with following
- * chars if they are related to color code.
+ * Removes WeeChat color codes from a message and optionally replaces them
+ * by a string.
  *
  * Note: result must be freed after use.
  */
@@ -794,20 +790,18 @@ char *
 gui_color_decode (const char *string, const char *replacement)
 {
     const unsigned char *ptr_string;
-    unsigned char *out;
-    int out_length, out_pos, length;
+    char **out;
+    int length;
 
     if (!string)
         return NULL;
 
-    out_length = (strlen ((char *)string) * 2) + 1;
-    out = malloc (out_length);
+    out = string_dyn_alloc (strlen (string) + 1);
     if (!out)
         return NULL;
 
     ptr_string = (unsigned char *)string;
-    out_pos = 0;
-    while (ptr_string && ptr_string[0] && (out_pos < out_length - 1))
+    while (ptr_string && ptr_string[0])
     {
         switch (ptr_string[0])
         {
@@ -945,10 +939,7 @@ gui_color_decode (const char *string, const char *replacement)
                         break;
                 }
                 if (replacement && replacement[0])
-                {
-                    out[out_pos] = replacement[0];
-                    out_pos++;
-                }
+                    string_dyn_concat (out, replacement, -1);
                 break;
             case GUI_COLOR_SET_ATTR_CHAR:
             case GUI_COLOR_REMOVE_ATTR_CHAR:
@@ -956,32 +947,24 @@ gui_color_decode (const char *string, const char *replacement)
                 if (ptr_string[0])
                     ptr_string++;
                 if (replacement && replacement[0])
-                {
-                    out[out_pos] = replacement[0];
-                    out_pos++;
-                }
+                    string_dyn_concat (out, replacement, -1);
                 break;
             case GUI_COLOR_RESET_CHAR:
                 ptr_string++;
                 if (replacement && replacement[0])
-                {
-                    out[out_pos] = replacement[0];
-                    out_pos++;
-                }
+                    string_dyn_concat (out, replacement, -1);
                 break;
             default:
                 length = utf8_char_size ((char *)ptr_string);
                 if (length == 0)
                     length = 1;
-                memcpy (out + out_pos, ptr_string, length);
-                out_pos += length;
+                string_dyn_concat (out, (const char *)ptr_string, length);
                 ptr_string += length;
                 break;
         }
     }
-    out[out_pos] = '\0';
 
-    return (char *)out;
+    return string_dyn_free (out, 0);
 }
 
 /*
@@ -1317,6 +1300,8 @@ gui_color_encode_ansi (const char *string)
         return NULL;
 
     out = string_dyn_alloc (((strlen (string) * 3) / 2) + 1);
+    if (!out)
+        return NULL;
 
     ptr_string = (unsigned char *)string;
     while (ptr_string && ptr_string[0])

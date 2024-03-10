@@ -229,7 +229,7 @@ def string_remove_color(string: str, replacement: str) -> str:
     ::
 
         # example
-        str = weechat.string_remove_color(my_string, "?")
+        str = weechat.string_remove_color(my_string, "[color]")
     """
     ...
 

@@ -2308,22 +2308,23 @@ size = weechat.string_color_code_size(weechat.color("yellow,red"))  # size == 7
 
 ==== string_remove_color
 
+_Updated in 4.3.0._
+
 Remove WeeChat colors from a string.
 
 Prototype:
 
 [source,c]
 ----
-char *weechat_string_remove_color (const char *string,
-                                   const char *replacement);
+char *weechat_string_remove_color (const char *string, const char *replacement);
 ----
 
 Arguments:
 
 * _string_: string
 * _replacement_: if not NULL and not empty, WeeChat color codes are replaced by
-  first char of this string, otherwise WeeChat color codes and following chars
-  (if related to color) are removed from string
+  this string, otherwise WeeChat color codes and following chars (if related
+  to color) are removed from string
 
 Return value:
 
@@ -2339,7 +2340,7 @@ char *str = weechat_string_remove_color (my_string1, NULL);
 free (str);
 
 /* replace color codes by "?" */
-char *str = weechat_string_remove_color (my_string2, "?");
+char *str = weechat_string_remove_color (my_string2, "[color]");
 /* ... */
 free (str);
 ----
@@ -2352,7 +2353,7 @@ Script (Python):
 def string_remove_color(string: str, replacement: str) -> str: ...
 
 # example
-str = weechat.string_remove_color(my_string, "?")
+str = weechat.string_remove_color(my_string, "[color]")
 ----
 
 ==== string_base_encode
