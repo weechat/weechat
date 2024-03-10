@@ -321,7 +321,7 @@ TEST_GROUP(RelayIrcWithClient)
             "irc.test",
             RELAY_PROTOCOL_IRC,
             "test",
-            9000,
+            9001,
             NULL,  /* path */
             1,  /* ipv4 */
             0,  /* ipv6 */
