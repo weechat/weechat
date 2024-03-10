@@ -38,6 +38,8 @@
 #include "relay-api-msg.h"
 #include "relay-api-protocol.h"
 
+int relay_api_protocol_command_delay = 1; /* delay to execute command       */
+
 
 /*
  * Callback for signals "buffer_*".
@@ -463,6 +465,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     const char *ptr_buffer_name, *ptr_command, *ptr_commands;
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *options;
+    char str_delay[32];
 
     json_body = cJSON_Parse(client->http_req->body);
     if (!json_body)
@@ -534,7 +537,9 @@ RELAY_API_PROTOCOL_CALLBACK(input)
      * main loop (some commands like /upgrade executed now can cause
      * a crash)
      */
-    weechat_hashtable_set (options, "delay", "1");
+    snprintf (str_delay, sizeof (str_delay),
+              "%d", relay_api_protocol_command_delay);
+    weechat_hashtable_set (options, "delay", str_delay);
 
     /* execute the command, with the delay */
     weechat_command_options (ptr_buffer, ptr_command, options);
