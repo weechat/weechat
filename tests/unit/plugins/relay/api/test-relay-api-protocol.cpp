@@ -338,6 +338,7 @@ TEST(RelayApiProtocolWithClient, CbVersion)
 TEST(RelayApiProtocolWithClient, CbBuffers)
 {
     cJSON *json, *json_obj, *json_var, *json_groups;
+    char str_http[256];
 
     /* error: invalid buffer name */
     test_client_recv_http ("GET /api/buffers/invalid", NULL);
@@ -346,6 +347,15 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  "Content-Length: 41\r\n"
                  "\r\n"
                  "{\"error\": \"Buffer \\\"invalid\\\" not found\"}",
+                 data_sent);
+
+    /* error: invalid buffer id */
+    test_client_recv_http ("GET /api/buffers/123", NULL);
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 37\r\n"
+                 "\r\n"
+                 "{\"error\": \"Buffer \\\"123\\\" not found\"}",
                  data_sent);
 
     /* error: invalid sub-resource */
@@ -385,8 +395,28 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_STR("core", json_var, "plugin");
     WEE_CHECK_OBJ_STR("weechat", json_var, "name");
 
-    /* get one buffer */
+    /* get one buffer by name */
     test_client_recv_http ("GET /api/buffers/core.weechat", NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    CHECK(json_body_sent);
+    CHECK(cJSON_IsObject (json_body_sent));
+    json = json_body_sent;
+    WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "id");
+    WEE_CHECK_OBJ_STR("core.weechat", json, "name");
+    WEE_CHECK_OBJ_STR("weechat", json, "short_name");
+    WEE_CHECK_OBJ_NUM(1, json, "number");
+    WEE_CHECK_OBJ_STR("formatted", json, "type");
+    WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    json_var = cJSON_GetObjectItem (json, "local_variables");
+    CHECK(json_var);
+    CHECK(cJSON_IsObject (json_var));
+    WEE_CHECK_OBJ_STR("core", json_var, "plugin");
+    WEE_CHECK_OBJ_STR("weechat", json_var, "name");
+
+    /* get one buffer by id */
+    snprintf (str_http, sizeof (str_http),
+              "GET /api/buffers/%lld", gui_buffers->id);
+    test_client_recv_http (str_http, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent);
     CHECK(cJSON_IsObject (json_body_sent));

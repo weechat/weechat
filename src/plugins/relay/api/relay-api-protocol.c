@@ -42,6 +42,21 @@ int relay_api_protocol_command_delay = 1; /* delay to execute command       */
 
 
 /*
+ * Searches buffer by id or full name.
+ */
+
+struct t_gui_buffer *
+relay_api_search_buffer_id_name (const char *string)
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    ptr_buffer = weechat_buffer_search ("==id", string);
+    if (ptr_buffer)
+        return ptr_buffer;
+    return weechat_buffer_search ("==", string);
+}
+
+/*
  * Callback for signals "buffer_*".
  */
 
@@ -358,6 +373,10 @@ RELAY_API_PROTOCOL_CALLBACK(version)
  *
  * Routes:
  *   GET /api/buffers
+ *   GET /api/buffers/{buffer_id}
+ *   GET /api/buffers/{buffer_id}/lines
+ *   GET /api/buffers/{buffer_id}/lines/{line_id}
+ *   GET /api/buffers/{buffer_id}/nicks
  *   GET /api/buffers/{buffer_name}
  *   GET /api/buffers/{buffer_name}/lines
  *   GET /api/buffers/{buffer_name}/lines/{line_id}
@@ -375,7 +394,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     ptr_buffer = NULL;
     if (client->http_req->num_path_items > 2)
     {
-        ptr_buffer = weechat_buffer_search ("==", client->http_req->path_items[2]);
+        ptr_buffer = relay_api_search_buffer_id_name (client->http_req->path_items[2]);
         if (!ptr_buffer)
         {
             relay_api_msg_send_error_json (client, RELAY_HTTP_404_NOT_FOUND, NULL,
