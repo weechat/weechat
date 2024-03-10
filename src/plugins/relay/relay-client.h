@@ -81,6 +81,11 @@ enum t_relay_client_msg_type
     ((client->status == RELAY_STATUS_AUTH_FAILED) ||                    \
      (client->status == RELAY_STATUS_DISCONNECTED))
 
+/* fake send function (for tests) */
+
+typedef void (t_relay_fake_send_func)(void *client,
+                                      const char *data, int data_size);
+
 /* output queue of messages to client */
 
 struct t_relay_client_outqueue
@@ -105,6 +110,8 @@ struct t_relay_client
     int server_port;                   /* port used for connection          */
     int tls;                           /* 1 if TLS is enabled               */
     gnutls_session_t gnutls_sess;      /* gnutls session (only if TLS used) */
+    t_relay_fake_send_func *fake_send_func; /* function called for fake send*/
+                                       /* (used in tests only)              */
     struct t_hook *hook_timer_handshake; /* timer for doing gnutls handshake*/
     int gnutls_handshake_ok;           /* 1 if handshake was done and OK    */
     enum t_relay_client_websocket_status websocket; /* websocket status     */
@@ -152,6 +159,8 @@ extern struct t_relay_client *relay_client_search_by_id (int id);
 extern int relay_client_status_search (const char *name);
 extern int relay_client_count_active_by_port (int server_port);
 extern void relay_client_set_desc (struct t_relay_client *client);
+extern void relay_client_recv_buffer (struct t_relay_client *client,
+                                      const char *buffer, int buffer_size);
 extern int relay_client_recv_cb (const void *pointer, void *data, int fd);
 extern int relay_client_send (struct t_relay_client *client,
                               enum t_relay_client_msg_type msg_type,
