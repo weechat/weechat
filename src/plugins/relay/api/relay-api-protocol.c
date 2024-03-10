@@ -475,13 +475,14 @@ error:
  * Callback for resource "input".
  *
  * Routes:
- *   POST /api/input/{buffer_name}
+ *   POST /api/input
  */
 
 RELAY_API_PROTOCOL_CALLBACK(input)
 {
-    cJSON *json_body, *json_buffer, *json_command;
+    cJSON *json_body, *json_buffer_id, *json_buffer_name, *json_command;
     const char *ptr_buffer_name, *ptr_command, *ptr_commands;
+    char str_id[64];
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *options;
     char str_delay[32];
@@ -490,19 +491,21 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     if (!json_body)
         return WEECHAT_RC_ERROR;
 
-    json_buffer = cJSON_GetObjectItem (json_body, "buffer");
-    if (json_buffer)
+    json_buffer_id = cJSON_GetObjectItem (json_body, "buffer_id");
+    if (json_buffer_id)
     {
-        if (cJSON_IsString (json_buffer))
+        if (cJSON_IsNumber (json_buffer_id))
         {
-            ptr_buffer_name = cJSON_GetStringValue (json_buffer);
-            ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
+            snprintf (str_id, sizeof (str_id),
+                      "%lld", (long long)json_buffer_id->valuedouble);
+            ptr_buffer = weechat_buffer_search ("==id", str_id);
             if (!ptr_buffer)
             {
-                relay_api_msg_send_error_json (client,
-                                               RELAY_HTTP_404_NOT_FOUND, NULL,
-                                               "Buffer \"%s\" not found",
-                                               ptr_buffer_name);
+                relay_api_msg_send_error_json (
+                    client,
+                    RELAY_HTTP_404_NOT_FOUND, NULL,
+                    "Buffer \"%lld\" not found",
+                    (long long)json_buffer_id->valuedouble);
                 cJSON_Delete (json_body);
                 return WEECHAT_RC_OK;
             }
@@ -510,7 +513,29 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     }
     else
     {
-        ptr_buffer = weechat_buffer_search_main ();
+        json_buffer_name = cJSON_GetObjectItem (json_body, "buffer_name");
+        if (json_buffer_name)
+        {
+            if (cJSON_IsString (json_buffer_name))
+            {
+                ptr_buffer_name = cJSON_GetStringValue (json_buffer_name);
+                ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
+                if (!ptr_buffer)
+                {
+                    relay_api_msg_send_error_json (
+                        client,
+                        RELAY_HTTP_404_NOT_FOUND, NULL,
+                        "Buffer \"%s\" not found",
+                        ptr_buffer_name);
+                    cJSON_Delete (json_body);
+                    return WEECHAT_RC_OK;
+                }
+            }
+        }
+        else
+        {
+            ptr_buffer = weechat_buffer_search_main ();
+        }
     }
     if (!ptr_buffer)
     {

@@ -482,6 +482,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
 
 TEST(RelayApiProtocolWithClient, CbInput)
 {
+    char str_body[1024];
     int old_delay;
 
     /* error: no body */
@@ -494,7 +495,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
 
     /* error: invalid buffer name */
     test_client_recv_http ("POST /api/input",
-                           "{\"buffer\": \"invalid\", "
+                           "{\"buffer_name\": \"invalid\", "
                            "\"command\": \"/print test\"}");
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -519,12 +520,26 @@ TEST(RelayApiProtocolWithClient, CbInput)
     old_delay = relay_api_protocol_command_delay;
     relay_api_protocol_command_delay = 0;
     test_client_recv_http ("POST /api/input",
-                           "{\"buffer\": \"core.weechat\", "
+                           "{\"buffer_name\": \"core.weechat\", "
                            "\"command\": \"/print test from relay 2\"}");
     relay_api_protocol_command_delay = old_delay;
     record_stop ();
     WEE_CHECK_HTTP_CODE(204, "No Content");
     CHECK(record_search ("core.weechat", "", "test from relay 2", NULL));
+
+    /* on core buffer, with buffer id */
+    record_start ();
+    old_delay = relay_api_protocol_command_delay;
+    relay_api_protocol_command_delay = 0;
+    snprintf (str_body, sizeof (str_body),
+              "{\"buffer_id\": %lld, "
+              "\"command\": \"/print test from relay 3\"}",
+              gui_buffers->id);
+    test_client_recv_http ("POST /api/input", str_body);
+    relay_api_protocol_command_delay = old_delay;
+    record_stop ();
+    WEE_CHECK_HTTP_CODE(204, "No Content");
+    CHECK(record_search ("core.weechat", "", "test from relay 3", NULL));
 }
 
 /*
