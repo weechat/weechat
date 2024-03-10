@@ -103,7 +103,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
             ptr_buffer, lines, 0, RELAY_API_DATA(ptr_client, sync_colors));
         if (json)
         {
-            relay_api_msg_send_event (ptr_client, signal, "buffer", "", json);
+            relay_api_msg_send_event (ptr_client, signal, "buffer", NULL, json);
             cJSON_Delete (json);
         }
     }
@@ -127,12 +127,8 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
             ptr_line_data, RELAY_API_DATA(ptr_client, sync_colors));
         if (json)
         {
-            relay_api_msg_send_event (
-                ptr_client,
-                signal,
-                "line",
-                weechat_buffer_get_string (ptr_buffer, "full_name"),
-                json);
+            relay_api_msg_send_event (ptr_client, signal, "line", ptr_buffer,
+                                      json);
             cJSON_Delete (json);
         }
     }
@@ -178,12 +174,8 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
         json = relay_api_msg_nick_group_to_json (ptr_group);
         if (json)
         {
-            relay_api_msg_send_event (
-                ptr_client,
-                signal,
-                "nick_group",
-                weechat_buffer_get_string (ptr_buffer, "full_name"),
-                json);
+            relay_api_msg_send_event (ptr_client, signal, "nick_group",
+                                      ptr_buffer, json);
             cJSON_Delete (json);
         }
     }
@@ -194,12 +186,8 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
         json = relay_api_msg_nick_to_json (ptr_nick);
         if (json)
         {
-            relay_api_msg_send_event (
-                ptr_client,
-                signal,
-                "nick",
-                weechat_buffer_get_string (ptr_buffer, "full_name"),
-                json);
+            relay_api_msg_send_event (ptr_client, signal, "nick", ptr_buffer,
+                                      json);
             cJSON_Delete (json);
         }
     }
