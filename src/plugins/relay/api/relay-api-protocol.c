@@ -682,6 +682,9 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
     if (!json_request)
         goto error;
 
+    if (!cJSON_IsString (json_request))
+        goto error;
+
     if (!relay_http_parse_method_path (client->http_req,
                                        cJSON_GetStringValue (json_request)))
     {
