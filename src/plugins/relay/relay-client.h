@@ -120,6 +120,7 @@ struct t_relay_client
     char *address;                     /* string with IP address            */
     char *real_ip;                     /* real IP (X-Real-IP HTTP header)   */
     enum t_relay_status status;        /* status (connecting, active,..)    */
+    int ever_connected;                /* 1 if ever successfully connected  */
     enum t_relay_protocol protocol;    /* protocol (irc,..)                 */
     char *protocol_string;             /* example: "ipv6.tls.irc.libera"    */
     char *protocol_args;               /* arguments used for protocol       */

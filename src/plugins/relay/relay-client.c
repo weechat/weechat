@@ -1426,6 +1426,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                                       address : "local");
         new_client->real_ip = NULL;
         new_client->status = RELAY_STATUS_CONNECTING;
+        new_client->ever_connected = 0;
         new_client->protocol = server->protocol;
         new_client->protocol_string = (server->protocol_string) ? strdup (server->protocol_string) : NULL;
         new_client->protocol_args = (server->protocol_args) ? strdup (server->protocol_args) : NULL;
@@ -1808,6 +1809,7 @@ relay_client_set_status (struct t_relay_client *client,
     if ((client->status == RELAY_STATUS_CONNECTED)
         && relay_config_display_clients[client->protocol])
     {
+        client->ever_connected = 1;
         weechat_printf_date_tags (
                     NULL, 0, "relay_client",
                     _("%s: client %s%s%s connected/authenticated"),
@@ -1822,7 +1824,10 @@ relay_client_set_status (struct t_relay_client *client,
 
         ptr_server = relay_server_search (client->protocol_string);
         if (ptr_server)
-            ptr_server->last_client_disconnect = client->end_time;
+        {
+            if (client->ever_connected)
+                ptr_server->last_client_disconnect = client->end_time;
+        }
 
         relay_client_outqueue_free_all (client);
 
