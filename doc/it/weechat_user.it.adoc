@@ -5677,7 +5677,7 @@ is added in hashtable:
 | server               | string  | Name of server (example: "libera").
 | tags                 | string  | Tags in message (rarely used).
 | message_without_tags | string  | Message without tags.
-| nick                 | string  | Nick.
+| nick                 | string  | Nick. ^(1)^
 | host                 | string  | Hostname.
 | command              | string  | IRC command (example: "PRIVMSG", "NOTICE", ...).
 | channel              | string  | IRC channel.
@@ -5688,6 +5688,11 @@ is added in hashtable:
 | pos_channel          | string  | The index of _channel_ in message ("-1" if _channel_ was not found).
 | pos_text             | string  | The index of _text_ in message ("-1" if _text_ was not found).
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The nick is the sender of the message. +
+Your own nick on the server is `${irc_server.nick}`.
 
 When the data is a pointer, the variable `+tg_signal_data+` can be used like this
 to read a hdata property (in this example this is a pointer on a buffer):

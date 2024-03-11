@@ -5438,7 +5438,7 @@ suivantes sont ajoutées dans la table de hachage :
 | server               | chaîne   | Nom du serveur (exemple : "libera").
 | tags                 | chaîne   | Étiquettes dans le message (rarement utilisées).
 | message_without_tags | chaîne   | Message sans les étiquettes.
-| nick                 | chaîne   | Pseudo.
+| nick                 | chaîne   | Pseudo. ^(1)^
 | host                 | chaîne   | Nom d'hôte.
 | command              | chaîne   | Commande IRC (exemple : "PRIVMSG", "NOTICE", ...).
 | channel              | chaîne   | Canal IRC.
@@ -5449,6 +5449,10 @@ suivantes sont ajoutées dans la table de hachage :
 | pos_channel          | chaîne   | L'index de _channel_ dans le message ("-1" si _channel_ n'a pas été trouvé).
 | pos_text             | chaîne   | L'index de _text_ dans le message ("-1" si _text_ n'a pas été trouvé).
 |===
+
+[NOTE]
+^(1)^ Le pseudo est l'expéditeur du message. +
+Votre propre pseudo sur le serveur est `${irc_server.nick}`.
 
 Lorsque la donnée est un pointeur, la variable `+tg_signal_data+` peut être
 utilisée comme ceci pour lire une propriété hdata (dans cet exemple il s'agit

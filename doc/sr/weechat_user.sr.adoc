@@ -5009,7 +5009,7 @@ y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
 | server               | стринг    | Име сервера (пример: „libera”).
 | tags                 | стринг    | Ознаке у поруци (ретко се користе).
 | message_without_tags | стринг    | Порука без ознака.
-| nick                 | стринг    | Надимак.
+| nick                 | стринг    | Надимак. ^(1)^
 | host                 | стринг    | Име хоста.
 | command              | стринг    | IRC команда (пример: „PRIVMSG”, „NOTICE”, ...).
 | channel              | стринг    | IRC канал.
@@ -5020,6 +5020,11 @@ y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
 | pos_channel          | стринг    | Индекс _channel_ у поруци („-1” ако се _channel_ не пронађе).
 | pos_text             | стринг    | Индекс _text_ у поруци („-1” ако се _text_ не пронађе).
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The nick is the sender of the message. +
+Your own nick on the server is `${irc_server.nick}`.
 
 Када су подаци показивач, за читање hdata особине може да се употреби променљива `+tg_signal_data+` на следећи начин (у овом примеру је то показивач на бафер):
 

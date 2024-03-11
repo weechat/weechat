@@ -5331,7 +5331,7 @@ są dodawane do tablicy hashy:
 | server               | ciąg    | Nazwa serwera (przykład: "libera").
 | tags                 | ciąg    | Tagi w wiadomości (rzadko używane).
 | message_without_tags | ciąg    | Wiadomość bez tagów.
-| nick                 | ciąg    | Nick.
+| nick                 | ciąg    | Nick. ^(1)^
 | host                 | ciąg    | Nazwa hosta.
 | command              | ciąg    | Komendy IRC (na przykład: "PRIVMSG", "NOTICE", ...).
 | channel              | ciąg    | Kanał IRC.
@@ -5342,6 +5342,11 @@ są dodawane do tablicy hashy:
 | pos_channel          | ciąg    | Indeks _channel_ w wiadomości ("-1" jeśli _channel_ nie został znaleziony).
 | pos_text             | ciąg    | Indeks _text_ w wiadomości ("-1" jeśli _text_ nie został znaleziony).
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The nick is the sender of the message. +
+Your own nick on the server is `${irc_server.nick}`.
 
 Kiedy dane są wskaźnikiem, zmienna `+tg_signal_data+` może zostać użyta do
 odczytania pola w hdata (w tym przypadku jest to wskaźnik na bufor):

@@ -5518,7 +5518,7 @@ All callbacks set following variables in hashtable:
 | server               | string  | サーバの名前 (例: "libera")
 | tags                 | string  | メッセージ内のタグ (使われることはまれです)
 | message_without_tags | string  | タグを含まないメッセージ
-| nick                 | string  | ニックネーム
+| nick                 | string  | ニックネーム ^(1)^
 | host                 | string  | ホスト名
 | command              | string  | IRC コマンド (例: "PRIVMSG"、"NOTICE"、...)
 | channel              | string  | IRC チャンネル
@@ -5529,6 +5529,11 @@ All callbacks set following variables in hashtable:
 | pos_channel          | string  | メッセージ内における _channel_ のインデックス (_channel_ が見つからない場合 "-1")
 | pos_text             | string  | メッセージ内における _text_ のインデックス (_text_ が見つからない場合 "-1")
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The nick is the sender of the message. +
+Your own nick on the server is `${irc_server.nick}`.
 
 データがポインタの場合、hdata の属性を読むために変数 `+tg_signal_data+`
 を以下のようにして使うことが可能です (以下の例では、バッファのポインタとして使っています):
