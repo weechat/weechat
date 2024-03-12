@@ -24,9 +24,9 @@
 extern "C"
 {
 #include <stdio.h>
-#include "src/core/wee-config-file.h"
-#include "src/core/wee-hook.h"
-#include "src/core/wee-infolist.h"
+#include "src/core/core-config-file.h"
+#include "src/core/core-hook.h"
+#include "src/core/core-infolist.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/irc/irc-color.h"
 #include "src/plugins/irc/irc-config.h"

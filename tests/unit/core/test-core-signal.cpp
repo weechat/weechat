@@ -29,7 +29,7 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
-#include "src/core/wee-signal.h"
+#include "src/core/core-signal.h"
 }
 
 TEST_GROUP(CoreSignal)

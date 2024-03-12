@@ -27,10 +27,10 @@ extern "C"
 {
 #include <unistd.h>
 #include <cjson/cJSON.h>
-#include "src/core/wee-config-file.h"
-#include "src/core/wee-string.h"
-#include "src/core/wee-util.h"
-#include "src/core/wee-version.h"
+#include "src/core/core-config-file.h"
+#include "src/core/core-string.h"
+#include "src/core/core-util.h"
+#include "src/core/core-version.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-line.h"

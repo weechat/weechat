@@ -26,7 +26,7 @@
 extern "C"
 {
 #include <stdio.h>
-#include "src/core/wee-hook.h"
+#include "src/core/core-hook.h"
 #include "src/plugins/trigger/trigger.h"
 }
 

@@ -27,8 +27,8 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <sys/time.h>
-#include "src/core/wee-dir.h"
-#include "src/core/wee-string.h"
+#include "src/core/core-dir.h"
+#include "src/core/core-string.h"
 
 extern void dir_remove_trailing_separators (char *path);
 }

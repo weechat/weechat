@@ -25,11 +25,11 @@ extern "C"
 {
 #include <string.h>
 #include <gcrypt.h>
-#include "src/core/wee-config-file.h"
-#include "src/core/wee-crypto.h"
-#include "src/core/wee-secure.h"
-#include "src/core/wee-secure-config.h"
-#include "src/core/wee-string.h"
+#include "src/core/core-config-file.h"
+#include "src/core/core-crypto.h"
+#include "src/core/core-secure.h"
+#include "src/core/core-secure-config.h"
+#include "src/core/core-string.h"
 
 #define SECURE_PASSPHRASE "this_is_a_secret_passphrase"
 #define SECURE_PASSWORD "this_is_a_secret_password"

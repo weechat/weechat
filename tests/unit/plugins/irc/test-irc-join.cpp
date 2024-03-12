@@ -26,10 +26,10 @@
 extern "C"
 {
 #include <string.h>
-#include "src/core/wee-arraylist.h"
-#include "src/core/wee-config-file.h"
-#include "src/core/wee-hashtable.h"
-#include "src/core/wee-secure.h"
+#include "src/core/core-arraylist.h"
+#include "src/core/core-config-file.h"
+#include "src/core/core-hashtable.h"
+#include "src/core/core-secure.h"
 #include "src/gui/gui-buffer.h"
 #include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-join.h"

@@ -29,12 +29,12 @@
 #include <time.h>
 
 #include "../../core/weechat.h"
-#include "../../core/wee-config.h"
-#include "../../core/wee-hashtable.h"
-#include "../../core/wee-hook.h"
-#include "../../core/wee-list.h"
-#include "../../core/wee-string.h"
-#include "../../core/wee-utf8.h"
+#include "../../core/core-config.h"
+#include "../../core/core-hashtable.h"
+#include "../../core/core-hook.h"
+#include "../../core/core-list.h"
+#include "../../core/core-string.h"
+#include "../../core/core-utf8.h"
 #include "../../plugins/plugin.h"
 #include "../gui-buffer.h"
 #include "../gui-color.h"

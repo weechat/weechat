@@ -31,8 +31,8 @@ extern "C"
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
-#include "src/core/wee-string.h"
-#include "src/core/wee-util.h"
+#include "src/core/core-string.h"
+#include "src/core/core-util.h"
 }
 
 #define WEE_PARSE_DATE(__result, __sec, __usec, __datetime)    \

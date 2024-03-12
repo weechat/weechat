@@ -27,11 +27,11 @@ extern "C"
 {
 #include <stdio.h>
 #include <string.h>
-#include "src/core/wee-arraylist.h"
-#include "src/core/wee-config-file.h"
-#include "src/core/wee-hashtable.h"
-#include "src/core/wee-hook.h"
-#include "src/core/wee-string.h"
+#include "src/core/core-arraylist.h"
+#include "src/core/core-config-file.h"
+#include "src/core/core-hashtable.h"
+#include "src/core/core-hook.h"
+#include "src/core/core-string.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-server.h"
 #include "src/plugins/relay/relay.h"

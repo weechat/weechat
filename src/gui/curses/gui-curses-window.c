@@ -34,11 +34,11 @@
 #include <termios.h>
 
 #include "../../core/weechat.h"
-#include "../../core/wee-config.h"
-#include "../../core/wee-eval.h"
-#include "../../core/wee-hook.h"
-#include "../../core/wee-log.h"
-#include "../../core/wee-string.h"
+#include "../../core/core-config.h"
+#include "../../core/core-eval.h"
+#include "../../core/core-hook.h"
+#include "../../core/core-log.h"
+#include "../../core/core-string.h"
 #include "../../plugins/plugin.h"
 #include "../gui-window.h"
 #include "../gui-bar.h"

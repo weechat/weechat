@@ -24,11 +24,11 @@
 extern "C"
 {
 #include <string.h>
-#include "src/core/wee-config.h"
-#include "src/core/wee-hashtable.h"
-#include "src/core/wee-hook.h"
-#include "src/core/wee-input.h"
-#include "src/core/wee-list.h"
+#include "src/core/core-config.h"
+#include "src/core/core-hashtable.h"
+#include "src/core/core-hook.h"
+#include "src/core/core-input.h"
+#include "src/core/core-list.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-key.h"
 #include "src/gui/gui-line.h"

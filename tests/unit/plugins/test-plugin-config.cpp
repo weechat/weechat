@@ -25,7 +25,7 @@
 
 extern "C"
 {
-#include "src/core/wee-config-file.h"
+#include "src/core/core-config-file.h"
 #include "src/plugins/weechat-plugin.h"
 #include "src/plugins/plugin-config.h"
 }

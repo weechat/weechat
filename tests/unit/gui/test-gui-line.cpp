@@ -26,8 +26,8 @@ extern "C"
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
-#include "src/core/wee-config.h"
-#include "src/core/wee-string.h"
+#include "src/core/core-config.h"
+#include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-color.h"

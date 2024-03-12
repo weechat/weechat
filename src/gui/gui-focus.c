@@ -27,9 +27,9 @@
 #include <stdio.h>
 
 #include "../core/weechat.h"
-#include "../core/wee-hashtable.h"
-#include "../core/wee-hook.h"
-#include "../core/wee-string.h"
+#include "../core/core-hashtable.h"
+#include "../core/core-hook.h"
+#include "../core/core-string.h"
 #include "../plugins/plugin.h"
 #include "gui-bar.h"
 #include "gui-bar-window.h"

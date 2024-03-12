@@ -32,10 +32,10 @@ extern "C"
 #include <string.h>
 #include <sys/time.h>
 #include "src/core/weechat.h"
-#include "src/core/wee-hdata.h"
-#include "src/core/wee-string.h"
-#include "src/core/wee-hook.h"
-#include "src/core/wee-util.h"
+#include "src/core/core-hdata.h"
+#include "src/core/core-string.h"
+#include "src/core/core-hook.h"
+#include "src/core/core-util.h"
 #include "src/plugins/plugin.h"
 }
 

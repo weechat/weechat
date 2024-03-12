@@ -30,9 +30,9 @@ extern "C"
 #define HAVE_CONFIG_H
 #endif
 #include "src/core/weechat.h"
-#include "src/core/wee-command.h"
-#include "src/core/wee-input.h"
-#include "src/core/wee-string.h"
+#include "src/core/core-command.h"
+#include "src/core/core-input.h"
+#include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
 }
 

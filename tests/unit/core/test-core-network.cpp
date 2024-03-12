@@ -23,7 +23,7 @@
 
 extern "C"
 {
-#include "src/core/wee-network.h"
+#include "src/core/core-network.h"
 
 extern int network_is_ip_address (const char *address);
 }

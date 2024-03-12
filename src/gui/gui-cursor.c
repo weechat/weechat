@@ -28,7 +28,7 @@
 #include <string.h>
 
 #include "../core/weechat.h"
-#include "../core/wee-hook.h"
+#include "../core/core-hook.h"
 #include "../plugins/plugin.h"
 #include "gui-cursor.h"
 #include "gui-bar.h"

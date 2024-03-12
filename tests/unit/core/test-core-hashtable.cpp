@@ -25,9 +25,9 @@ extern "C"
 {
 #include <stdio.h>
 #include <string.h>
-#include "src/core/wee-hashtable.h"
-#include "src/core/wee-infolist.h"
-#include "src/core/wee-list.h"
+#include "src/core/core-hashtable.h"
+#include "src/core/core-infolist.h"
+#include "src/core/core-list.h"
 #include "src/plugins/plugin.h"
 }
 

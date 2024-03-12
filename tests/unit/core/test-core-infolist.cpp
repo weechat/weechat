@@ -24,8 +24,8 @@
 
 extern "C"
 {
-#include "src/core/wee-hook.h"
-#include "src/core/wee-infolist.h"
+#include "src/core/core-hook.h"
+#include "src/core/core-infolist.h"
 }
 
 struct t_hook *hook_test_infolist = NULL;

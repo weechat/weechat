@@ -28,8 +28,8 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <wctype.h>
-#include "src/core/wee-utf8.h"
-#include "src/core/wee-config.h"
+#include "src/core/core-utf8.h"
+#include "src/core/core-config.h"
 }
 
 #define TEST_STRNCPY(__result, __dest, __string, __length)              \

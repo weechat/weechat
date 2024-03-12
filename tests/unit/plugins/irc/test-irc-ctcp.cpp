@@ -27,8 +27,8 @@ extern "C"
 {
 #include <string.h>
 #include <sys/utsname.h>
-#include "src/core/wee-config-file.h"
-#include "src/core/wee-hook.h"
+#include "src/core/core-config-file.h"
+#include "src/core/core-hook.h"
 #include "src/plugins/irc/irc-config.h"
 #include "src/plugins/irc/irc-ctcp.h"
 #include "src/plugins/irc/irc-server.h"

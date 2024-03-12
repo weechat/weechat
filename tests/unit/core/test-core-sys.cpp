@@ -29,8 +29,8 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <sys/time.h>
-#include "src/core/wee-string.h"
-#include "src/core/wee-util.h"
+#include "src/core/core-string.h"
+#include "src/core/core-util.h"
 }
 
 TEST_GROUP(CoreSys)

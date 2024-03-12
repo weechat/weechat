@@ -23,7 +23,7 @@
 
 extern "C"
 {
-#include "src/core/wee-url.h"
+#include "src/core/core-url.h"
 
 extern struct t_url_constant url_proxy_types[];
 extern struct t_url_constant url_protocols[];

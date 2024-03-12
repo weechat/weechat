@@ -26,8 +26,8 @@
 extern "C"
 {
 #include <stdio.h>
-#include "src/core/wee-hashtable.h"
-#include "src/core/wee-hook.h"
+#include "src/core/core-hashtable.h"
+#include "src/core/core-hook.h"
 #include "src/plugins/irc/irc-tag.h"
 #include "src/plugins/plugin.h"
 

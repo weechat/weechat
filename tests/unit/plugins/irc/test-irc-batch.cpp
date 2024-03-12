@@ -26,7 +26,7 @@
 extern "C"
 {
 #include <string.h>
-#include "src/core/wee-hashtable.h"
+#include "src/core/core-hashtable.h"
 #include "src/plugins/weechat-plugin.h"
 #include "src/plugins/irc/irc-batch.h"
 #include "src/plugins/irc/irc-server.h"

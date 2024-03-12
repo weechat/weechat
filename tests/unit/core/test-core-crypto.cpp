@@ -28,8 +28,8 @@ extern "C"
 #include <string.h>
 #include <ctype.h>
 #include <gcrypt.h>
-#include "src/core/wee-crypto.h"
-#include "src/core/wee-string.h"
+#include "src/core/core-crypto.h"
+#include "src/core/core-string.h"
 
 /* Hash */
 #define DATA_HASH_MSG "this is a test of hash function"

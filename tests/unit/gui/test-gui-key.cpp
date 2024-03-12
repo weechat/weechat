@@ -25,9 +25,9 @@
 
 extern "C"
 {
-#include "src/core/wee-config.h"
-#include "src/core/wee-input.h"
-#include "src/core/wee-string.h"
+#include "src/core/core-config.h"
+#include "src/core/core-input.h"
+#include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-key.h"
 

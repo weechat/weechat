@@ -508,11 +508,11 @@ Copying output to /tmp/crash.txt.
     at /some_path/src/core/weechat.c:351
 #3  <signal handler called>
 #4  0x000000000044cb24 in hook_process_timer_cb (arg_hook_process=0x254eb90,
-    remaining_calls=<value optimized out>) at /some_path/src/core/wee-hook.c:1364
+    remaining_calls=<value optimized out>) at /some_path/src/core/core-hook.c:1364
         hook_process = 0x254eb90
         status = <value optimized out>
 #5  0x000000000044cc7d in hook_timer_exec ()
-    at /some_path/src/core/wee-hook.c:1025
+    at /some_path/src/core/core-hook.c:1025
         tv_time = {tv_sec = 1272693881, tv_usec = 212665}
         ptr_hook = 0x2811f40
         next_hook = 0x0

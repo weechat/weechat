@@ -30,11 +30,11 @@
 #include <sys/stat.h>
 
 #include "../core/weechat.h"
-#include "../core/wee-config.h"
-#include "../core/wee-hook.h"
-#include "../core/wee-list.h"
-#include "../core/wee-log.h"
-#include "../core/wee-string.h"
+#include "../core/core-config.h"
+#include "../core/core-hook.h"
+#include "../core/core-list.h"
+#include "../core/core-log.h"
+#include "../core/core-string.h"
 #include "plugin-config.h"
 #include "weechat-plugin.h"
 

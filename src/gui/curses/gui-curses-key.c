@@ -29,11 +29,11 @@
 #include <time.h>
 
 #include "../../core/weechat.h"
-#include "../../core/wee-config.h"
-#include "../../core/wee-hook.h"
-#include "../../core/wee-log.h"
-#include "../../core/wee-utf8.h"
-#include "../../core/wee-string.h"
+#include "../../core/core-config.h"
+#include "../../core/core-hook.h"
+#include "../../core/core-log.h"
+#include "../../core/core-utf8.h"
+#include "../../core/core-string.h"
 #include "../../plugins/plugin.h"
 #include "../gui-key.h"
 #include "../gui-buffer.h"

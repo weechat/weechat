@@ -26,8 +26,8 @@
 extern "C"
 {
 #include <stdio.h>
-#include "src/core/wee-config.h"
-#include "src/core/wee-config-file.h"
+#include "src/core/core-config.h"
+#include "src/core/core-config-file.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/trigger/trigger.h"
 }

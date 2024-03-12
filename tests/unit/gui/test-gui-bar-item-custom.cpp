@@ -24,7 +24,7 @@
 extern "C"
 {
 #include <string.h>
-#include "src/core/wee-config.h"
+#include "src/core/core-config.h"
 #include "src/gui/gui-bar-item.h"
 #include "src/gui/gui-bar-item-custom.h"
 #include "src/gui/gui-buffer.h"

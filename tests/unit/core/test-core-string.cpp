@@ -34,9 +34,9 @@ extern "C"
 #include <string.h>
 #include <regex.h>
 #include "src/core/weechat.h"
-#include "src/core/wee-config.h"
-#include "src/core/wee-string.h"
-#include "src/core/wee-hashtable.h"
+#include "src/core/core-config.h"
+#include "src/core/core-string.h"
+#include "src/core/core-hashtable.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
 }

@@ -27,7 +27,7 @@ extern "C"
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
-#include "src/core/wee-config-file.h"
+#include "src/core/core-config-file.h"
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-auth.h"
 #include "src/plugins/relay/relay-client.h"

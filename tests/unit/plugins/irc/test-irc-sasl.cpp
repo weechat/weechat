@@ -24,7 +24,7 @@
 extern "C"
 {
 #include <string.h>
-#include "src/core/wee-string.h"
+#include "src/core/core-string.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-sasl.h"
 #include "src/plugins/irc/irc-server.h"

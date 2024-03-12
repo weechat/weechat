@@ -24,8 +24,8 @@
 extern "C"
 {
 #include <string.h>
-#include "src/core/wee-hook.h"
-#include "src/core/wee-string.h"
+#include "src/core/core-hook.h"
+#include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-line.h"

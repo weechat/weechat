@@ -30,11 +30,11 @@ extern "C"
 #include <ctype.h>
 #include <time.h>
 #include <gcrypt.h>
-#include "src/core/wee-config-file.h"
-#include "src/core/wee-crypto.h"
-#include "src/core/wee-hashtable.h"
-#include "src/core/wee-hook.h"
-#include "src/core/wee-string.h"
+#include "src/core/core-config-file.h"
+#include "src/core/core-crypto.h"
+#include "src/core/core-hashtable.h"
+#include "src/core/core-hook.h"
+#include "src/core/core-string.h"
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-client.h"
 #include "src/plugins/relay/relay-config.h"

@@ -27,8 +27,8 @@ extern "C"
 {
 #include <string.h>
 #include <zlib.h>
-#include "src/core/wee-config-file.h"
-#include "src/core/wee-hashtable.h"
+#include "src/core/core-config-file.h"
+#include "src/core/core-hashtable.h"
 #include "src/plugins/relay/relay-config.h"
 #include "src/plugins/relay/relay-http.h"
 #include "src/plugins/relay/relay-websocket.h"

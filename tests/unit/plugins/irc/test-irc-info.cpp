@@ -26,9 +26,9 @@
 extern "C"
 {
 #include "string.h"
-#include "src/core/wee-hashtable.h"
-#include "src/core/wee-hook.h"
-#include "src/core/wee-infolist.h"
+#include "src/core/core-hashtable.h"
+#include "src/core/core-hook.h"
+#include "src/core/core-infolist.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"

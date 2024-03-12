@@ -28,8 +28,8 @@ extern "C"
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include "src/core/wee-arraylist.h"
-#include "src/core/wee-string.h"
+#include "src/core/core-arraylist.h"
+#include "src/core/core-string.h"
 #include "src/plugins/logger/logger-tail.h"
 
 extern const char *logger_tail_last_eol (const char *string_start,

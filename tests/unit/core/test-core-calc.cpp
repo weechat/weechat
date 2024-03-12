@@ -26,8 +26,8 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <locale.h>
-#include "src/core/wee-arraylist.h"
-#include "src/core/wee-calc.h"
+#include "src/core/core-arraylist.h"
+#include "src/core/core-calc.h"
 
 extern void calc_list_free_cb (void *data, struct t_arraylist *arraylist,
                                void *pointer);

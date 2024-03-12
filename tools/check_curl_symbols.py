@@ -17,7 +17,7 @@
 #
 
 """
-Check if Curl symbols defined in src/core/wee-url.c are matching symbols
+Check if Curl symbols defined in src/core/core-url.c are matching symbols
 defined in Curl (introduced/deprecated/last versions), using this file:
 https://github.com/curl/curl/blob/master/docs/libcurl/symbols-in-versions.
 
@@ -47,7 +47,7 @@ import re
 import sys
 
 SRC_PATH = (
-    Path(__file__).resolve().parent.parent / "src" / "core" / "wee-url.c"
+    Path(__file__).resolve().parent.parent / "src" / "core" / "core-url.c"
 )
 
 WEECHAT_CURL_MIN_VERSION_RE = (
@@ -143,7 +143,7 @@ def get_curl_symbols(symbols_file: TextIO) -> Dict[str, Tuple[int, int]]:
 
 def get_weechat_curl_symbols() -> Tuple[List[WeechatCurlSymbol], int]:
     """
-    Parse Curl symbols declared in src/core/wee-url.c.
+    Parse Curl symbols declared in src/core/core-url.c.
 
     :return: tuple (list_symbols, errors)
     """

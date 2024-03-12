@@ -23,7 +23,7 @@
 
 extern "C"
 {
-#include "src/core/wee-list.h"
+#include "src/core/core-list.h"
 #include "src/plugins/plugin.h"
 }
 

@@ -29,7 +29,7 @@ extern "C"
 #define HAVE_CONFIG_H
 #endif
 #include "src/core/weechat.h"
-#include "src/core/hook/wee-hook-command.h"
+#include "src/core/hook/hook-command.h"
 #include "src/plugins/plugin.h"
 
 extern char *hook_command_remove_raw_markers (const char *string);

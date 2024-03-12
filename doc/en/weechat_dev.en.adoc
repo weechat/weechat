@@ -112,97 +112,97 @@ WeeChat "core" is located in following directories:
 
 [width="100%",cols="2m,3",options="header"]
 |===
-| Path/file                       | Description
-| core/                           | Core functions: entry point, internal structures.
-|    wee-arraylist.c              | Array lists.
-|    wee-backtrace.c              | Display a backtrace after a crash.
-|    wee-calc.c                   | Calculate result of expressions.
-|    wee-command.c                | WeeChat core commands.
-|    wee-completion.c             | Default completions.
-|    wee-config-file.c            | Configuration file management.
-|    wee-config.c                 | Configuration options for WeeChat core (file weechat.conf).
-|    wee-crypto.c                 | Cryptographic functions.
-|    wee-debug.c                  | Some debug functions.
-|    wee-doc.c                    | Build of files for documentation.
-|    wee-dir.c                    | Directory/file functions.
-|    wee-eval.c                   | Evaluation of expressions with references to internal vars.
-|    wee-hashtable.c              | Hashtables.
-|    wee-hdata.c                  | Hdata (direct access to data using hashtables).
-|    wee-hook.c                   | Hooks.
-|    wee-infolist.c               | Infolists (lists with objects data).
-|    wee-input.c                  | Input of commands/text.
-|    wee-list.c                   | Sorted lists.
-|    wee-log.c                    | Write to WeeChat log file (weechat.log).
-|    wee-network.c                | Network functions (connection to servers/proxies).
-|    wee-proxy.c                  | Proxy management.
-|    wee-secure.c                 | Secured data functions.
-|    wee-secure-buffer.c          | Secured data buffer.
-|    wee-secure-config.c          | Secured data options (file sec.conf).
-|    wee-signal.c                 | Signal functions.
-|    wee-string.c                 | Functions on strings.
-|    wee-sys.c                    | System functions.
-|    wee-upgrade-file.c           | Internal upgrade system.
-|    wee-upgrade.c                | Upgrade for WeeChat core (buffers, lines, history, ...).
-|    wee-url.c                    | URL transfer (using libcurl).
-|    wee-utf8.c                   | UTF-8 functions.
-|    wee-util.c                   | Some other functions.
-|    wee-version.c                | Functions for WeeChat version.
-|    weechat.c                    | Main functions: command line options, startup.
-|    hook/                        | Hook functions.
-|       wee-hook-command-run.c    | Hook "command_run".
-|       wee-hook-command.c        | Hook "command".
-|       wee-hook-completion.c     | Hook "completion".
-|       wee-hook-config.c         | Hook "config".
-|       wee-hook-connect.c        | Hook "connect".
-|       wee-hook-fd.c             | Hook "fd".
-|       wee-hook-focus.c          | Hook "focus".
-|       wee-hook-hdata.c          | Hook "hdata".
-|       wee-hook-hsignal.c        | Hook "hsignal".
-|       wee-hook-info-hashtable.c | Hook "info_hashtable".
-|       wee-hook-info.c           | Hook "info".
-|       wee-hook-infolist.c       | Hook "infolist".
-|       wee-hook-line.c           | Hook "line".
-|       wee-hook-modifier.c       | Hook "modifier".
-|       wee-hook-print.c          | Hook "print".
-|       wee-hook-process.c        | Hook "process".
-|       wee-hook-signal.c         | Hook "signal".
-|       wee-hook-timer.c          | Hook "timer".
-|       wee-hook-url.c            | Hook "url".
-| gui/                            | Functions for buffers, windows, ... (used by all interfaces).
-|    gui-bar-item.c               | Bar items.
-|    gui-bar-window.c             | Bar windows.
-|    gui-bar.c                    | Bars.
-|    gui-buffer.c                 | Buffers.
-|    gui-chat.c                   | Chat functions (display message, ...).
-|    gui-color.c                  | Color functions.
-|    gui-completion.c             | Completion on command line.
-|    gui-cursor.c                 | Cursor mode (free movement of cursor).
-|    gui-filter.c                 | Filters.
-|    gui-focus.c                  | Functions about focus (for cursor mode and mouse).
-|    gui-history.c                | Commands/text saved in buffers.
-|    gui-hotlist.c                | Hotlist management (list of buffers with activity).
-|    gui-input.c                  | Input functions (input bar).
-|    gui-key.c                    | Keyboard functions.
-|    gui-layout.c                 | Layout.
-|    gui-line.c                   | Lines in buffers.
-|    gui-mouse.c                  | Mouse.
-|    gui-nick.c                   | Nick functions.
-|    gui-nicklist.c               | Nicklist in buffers.
-|    gui-window.c                 | Windows.
-|    curses/                      | Curses interface.
-|       gui-curses-bar-window.c   | Display in bar windows.
-|       gui-curses-chat.c         | Display in chat area (messages).
-|       gui-curses-color.c        | Color functions.
-|       gui-curses-key.c          | Keyboard functions (default keys, read of input).
-|       gui-curses-main.c         | WeeChat main loop (waiting for keyboard/network events).
-|       gui-curses-mouse.c        | Mouse.
-|       gui-curses-term.c         | Functions about terminal.
-|       gui-curses-window.c       | Windows.
-|       headless/                 | Headless mode (no interface).
-|          main.c                 | Entry point for headless mode.
-|          ncurses-fake.c         | Fake ncurses library.
-|       normal/                   | Curses interface.
-|          main.c                 | Entry point for Curses interface.
+| Path/file                     | Description
+| core/                         | Core functions: entry point, internal structures.
+|    core-arraylist.c           | Array lists.
+|    core-backtrace.c           | Display a backtrace after a crash.
+|    core-calc.c                | Calculate result of expressions.
+|    core-command.c             | WeeChat core commands.
+|    core-completion.c          | Default completions.
+|    core-config-file.c         | Configuration file management.
+|    core-config.c              | Configuration options for WeeChat core (file weechat.conf).
+|    core-crypto.c              | Cryptographic functions.
+|    core-debug.c               | Some debug functions.
+|    core-doc.c                 | Build of files for documentation.
+|    core-dir.c                 | Directory/file functions.
+|    core-eval.c                | Evaluation of expressions with references to internal vars.
+|    core-hashtable.c           | Hashtables.
+|    core-hdata.c               | Hdata (direct access to data using hashtables).
+|    core-hook.c                | Hooks.
+|    core-infolist.c            | Infolists (lists with objects data).
+|    core-input.c               | Input of commands/text.
+|    core-list.c                | Sorted lists.
+|    core-log.c                 | Write to WeeChat log file (weechat.log).
+|    core-network.c             | Network functions (connection to servers/proxies).
+|    core-proxy.c               | Proxy management.
+|    core-secure.c              | Secured data functions.
+|    core-secure-buffer.c       | Secured data buffer.
+|    core-secure-config.c       | Secured data options (file sec.conf).
+|    core-signal.c              | Signal functions.
+|    core-string.c              | Functions on strings.
+|    core-sys.c                 | System functions.
+|    core-upgrade-file.c        | Internal upgrade system.
+|    core-upgrade.c             | Upgrade for WeeChat core (buffers, lines, history, ...).
+|    core-url.c                 | URL transfer (using libcurl).
+|    core-utf8.c                | UTF-8 functions.
+|    core-util.c                | Some other functions.
+|    core-version.c             | Functions for WeeChat version.
+|    weechat.c                  | Main functions: command line options, startup.
+|    hook/                      | Hook functions.
+|       hook-command-run.c      | Hook "command_run".
+|       hook-command.c          | Hook "command".
+|       hook-completion.c       | Hook "completion".
+|       hook-config.c           | Hook "config".
+|       hook-connect.c          | Hook "connect".
+|       hook-fd.c               | Hook "fd".
+|       hook-focus.c            | Hook "focus".
+|       hook-hdata.c            | Hook "hdata".
+|       hook-hsignal.c          | Hook "hsignal".
+|       hook-info-hashtable.c   | Hook "info_hashtable".
+|       hook-info.c             | Hook "info".
+|       hook-infolist.c         | Hook "infolist".
+|       hook-line.c             | Hook "line".
+|       hook-modifier.c         | Hook "modifier".
+|       hook-print.c            | Hook "print".
+|       hook-process.c          | Hook "process".
+|       hook-signal.c           | Hook "signal".
+|       hook-timer.c            | Hook "timer".
+|       hook-url.c              | Hook "url".
+| gui/                          | Functions for buffers, windows, ... (used by all interfaces).
+|    gui-bar-item.c             | Bar items.
+|    gui-bar-window.c           | Bar windows.
+|    gui-bar.c                  | Bars.
+|    gui-buffer.c               | Buffers.
+|    gui-chat.c                 | Chat functions (display message, ...).
+|    gui-color.c                | Color functions.
+|    gui-completion.c           | Completion on command line.
+|    gui-cursor.c               | Cursor mode (free movement of cursor).
+|    gui-filter.c               | Filters.
+|    gui-focus.c                | Functions about focus (for cursor mode and mouse).
+|    gui-history.c              | Commands/text saved in buffers.
+|    gui-hotlist.c              | Hotlist management (list of buffers with activity).
+|    gui-input.c                | Input functions (input bar).
+|    gui-key.c                  | Keyboard functions.
+|    gui-layout.c               | Layout.
+|    gui-line.c                 | Lines in buffers.
+|    gui-mouse.c                | Mouse.
+|    gui-nick.c                 | Nick functions.
+|    gui-nicklist.c             | Nicklist in buffers.
+|    gui-window.c               | Windows.
+|    curses/                    | Curses interface.
+|       gui-curses-bar-window.c | Display in bar windows.
+|       gui-curses-chat.c       | Display in chat area (messages).
+|       gui-curses-color.c      | Color functions.
+|       gui-curses-key.c        | Keyboard functions (default keys, read of input).
+|       gui-curses-main.c       | WeeChat main loop (waiting for keyboard/network events).
+|       gui-curses-mouse.c      | Mouse.
+|       gui-curses-term.c       | Functions about terminal.
+|       gui-curses-window.c     | Windows.
+|       headless/               | Headless mode (no interface).
+|          main.c               | Entry point for headless mode.
+|          ncurses-fake.c       | Fake ncurses library.
+|       normal/                 | Curses interface.
+|          main.c               | Entry point for Curses interface.
 |===
 
 [[sources_plugins]]
@@ -783,7 +783,7 @@ Examples:
 [width="100%",cols="2m,3",options="header"]
 |===
 | Directory           | Files
-| src/core/           | weechat.c, wee-backtrace.c, wee-command.c, ...
+| src/core/           | weechat.c, core-backtrace.c, core-command.c, ...
 | src/gui/            | gui-bar.c, gui-bar-item.c, gui-bar-window.c, ...
 | src/gui/curses/     | gui-curses-bar.c, gui-curses-bar-window.c, gui-curses-chat.c, ...
 | src/plugins/        | plugin.c, plugin-api.c, plugin-api-info.c, plugin-config.c, plugin-script.c, ...
@@ -791,8 +791,8 @@ Examples:
 | src/plugins/python/ | weechat-python.c, weechat-python-api.c, ...
 |===
 
-The headers of C files have same name as file, for example _wee-command.h_ for
-file _wee-command.c_.
+The headers of C files have same name as file, for example _core-command.h_ for
+file _core-command.c_.
 
 [[naming_convention_structures]]
 ==== Structures

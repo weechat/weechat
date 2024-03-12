@@ -7,23 +7,23 @@ Files: *
 Copyright: 2003-2024, Sébastien Helleu <flashcode@flashtux.org>
 License: GPL-3+
 
-Files: src/core/wee-command.c
-       src/core/wee-command.h
+Files: src/core/core-command.c
+       src/core/core-command.h
 Copyright: 2005-2006, Emmanuel Bouthenot <kolter@openics.org>
 License: GPL-3+
 
-Files: src/core/wee-config-file.c
-       src/core/wee-config-file.h
-       src/core/wee-config.c
-       src/core/wee-config.h
+Files: src/core/core-config-file.c
+       src/core/core-config-file.h
+       src/core/core-config.c
+       src/core/core-config.h
 Copyright: 2005-2006, Emmanuel Bouthenot <kolter@openics.org>
 License: GPL-3+
 
-Files: src/core/hook/wee-hook-connect.c
+Files: src/core/hook/hook-connect.c
 Copyright: 2012, Simon Arlott
 License: GPL-3+
 
-Files: src/core/hook/wee-hook-connect.h
+Files: src/core/hook/hook-connect.h
 Copyright: 2012, Simon Arlott
 License: GPL-3+
 
@@ -31,9 +31,9 @@ Files: src/gui/gui-history.c
 Copyright: 2005, Emmanuel Bouthenot <kolter@openics.org>
 License: GPL-3+
 
-Files: src/core/wee-completion.c
-       src/core/wee-log.c
-       src/core/wee-utf8.c
+Files: src/core/core-completion.c
+       src/core/core-log.c
+       src/core/core-utf8.c
        src/core/weechat.h
        src/plugins/spell/spell-config.c
        src/plugins/spell/spell-config.h
@@ -45,7 +45,7 @@ Files: src/core/wee-completion.c
 Copyright: 2006, Emmanuel Bouthenot <kolter@openics.org>
 License: GPL-3+
 
-Files: src/core/wee-network.c
+Files: src/core/core-network.c
 Copyright: 2005-2010, Emmanuel Bouthenot <kolter@openics.org>
            2010, Gu1ll4um3r0m41n <aeroxteam@gmail.com>
            2012, Simon Arlott
