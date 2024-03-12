@@ -5397,10 +5397,9 @@ und die Daten in einer Hashtable gesichert:
 | pos_text             | string  | Index von _text_ innerhalb einer Nachricht ("-1" falls _text_ nicht gefunden wird).
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ The nick is the sender of the message. +
-Your own nick on the server is `${irc_server.nick}`.
+^(1)^ Der Nick, ist der Absender der Nachricht. +
+Der eigene Nick für den Server ist `${irc_server.nick}`.
 
 Sofern es sich bei den Daten um einen Pointer handelt, kann die Variable `+tg_signal_data+`
 wie im folgenden Beispiel genutzt werden um den Inhalt von hdata zu lesen (im Beispiel
