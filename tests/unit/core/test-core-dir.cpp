@@ -61,10 +61,127 @@ TEST(CoreDir, Mkdir)
 
 /*
  * Tests functions:
+ *   dir_unlink_cb
  *   dir_rmtree
  */
 
 TEST(CoreDir, Rmtree)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_set_home_path
+ */
+
+TEST(CoreDir, SetHomePath)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_create_home_temp_dir
+ */
+
+TEST(CoreDir, CreateHomeTempDir)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_find_xdg_dirs
+ */
+
+TEST(CoreDir, FindXdgDirs)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_find_home_dirs
+ */
+
+TEST(CoreDir, FindHomeDirs)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_remove_trailing_separators
+ */
+
+TEST(CoreDir, RemoveTrailingSeparators)
+{
+    char path[128];
+
+    dir_remove_trailing_separators (NULL);
+
+    path[0] = '\0';
+    dir_remove_trailing_separators (path);
+    STRCMP_EQUAL("", path);
+
+    snprintf (path, sizeof (path), "/");
+    dir_remove_trailing_separators (path);
+    STRCMP_EQUAL("/", path);
+
+    snprintf (path, sizeof (path), "///");
+    dir_remove_trailing_separators (path);
+    STRCMP_EQUAL("/", path);
+
+    snprintf (path, sizeof (path), "/tmp");
+    dir_remove_trailing_separators (path);
+    STRCMP_EQUAL("/tmp", path);
+
+    snprintf (path, sizeof (path), "/tmp/");
+    dir_remove_trailing_separators (path);
+    STRCMP_EQUAL("/tmp", path);
+
+    snprintf (path, sizeof (path), "/tmp///////");
+    dir_remove_trailing_separators (path);
+    STRCMP_EQUAL("/tmp", path);
+}
+
+/*
+ * Tests functions:
+ *   dir_create_home_dir
+ */
+
+TEST(CoreDir, CreateHomeDir)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_create_home_dirs
+ */
+
+TEST(CoreDir, CreateHomeDirs)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_remove_home_dirs
+ */
+
+TEST(CoreDir, RemoveHomeDirs)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_get_string_home_dirs
+ */
+
+TEST(CoreDir, GetStringHomeDirs)
 {
     /* TODO: write tests */
 }
@@ -81,6 +198,7 @@ TEST(CoreDir, ExecOnFiles)
 
 /*
  * Tests functions:
+ *   dir_search_full_lib_name_ext
  *   dir_search_full_lib_name
  */
 
@@ -156,116 +274,30 @@ TEST(CoreDir, FileGetContentCopy)
 
 /*
  * Tests functions:
- *   dir_set_home_path
+ *   dir_file_compress_gzip
  */
 
-TEST(CoreDir, SetHomePath)
+TEST(CoreDir, FileCompressGzip)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   dir_remove_trailing_separators
+ *   dir_file_compress_zstd
  */
 
-TEST(CoreDir, RemoveTrailingSeparators)
-{
-    char path[128];
-
-    dir_remove_trailing_separators (NULL);
-
-    path[0] = '\0';
-    dir_remove_trailing_separators (path);
-    STRCMP_EQUAL("", path);
-
-    snprintf (path, sizeof (path), "/");
-    dir_remove_trailing_separators (path);
-    STRCMP_EQUAL("/", path);
-
-    snprintf (path, sizeof (path), "///");
-    dir_remove_trailing_separators (path);
-    STRCMP_EQUAL("/", path);
-
-    snprintf (path, sizeof (path), "/tmp");
-    dir_remove_trailing_separators (path);
-    STRCMP_EQUAL("/tmp", path);
-
-    snprintf (path, sizeof (path), "/tmp/");
-    dir_remove_trailing_separators (path);
-    STRCMP_EQUAL("/tmp", path);
-
-    snprintf (path, sizeof (path), "/tmp///////");
-    dir_remove_trailing_separators (path);
-    STRCMP_EQUAL("/tmp", path);
-}
-
-/*
- * Tests functions:
- *   dir_create_home_temp_dir
- */
-
-TEST(CoreDir, CreateHomeTempDir)
+TEST(CoreDir, FileCompressZstd)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   dir_find_xdg_dirs
+ *   dir_file_compress
  */
 
-TEST(CoreDir, FindXdgDirs)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   dir_find_home_dirs
- */
-
-TEST(CoreDir, FindHomeDirs)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   dir_create_home_dir
- */
-
-TEST(CoreDir, CreateHomeDir)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   dir_create_home_dirs
- */
-
-TEST(CoreDir, CreateHomeDirs)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   dir_remove_home_dirs
- */
-
-TEST(CoreDir, RemoveHomeDirs)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   dir_get_string_home_dirs
- */
-
-TEST(CoreDir, GetStringHomeDirs)
+TEST(CoreDir, FileCompress)
 {
     /* TODO: write tests */
 }
