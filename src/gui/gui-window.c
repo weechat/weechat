@@ -1872,13 +1872,13 @@ gui_window_search_stop (struct t_gui_window *window, int stop_here)
 
     if (search == GUI_BUFFER_SEARCH_LINES)
     {
-        window->scroll->text_search_start_line = NULL;
         if (!stop_here)
         {
             window->scroll->start_line = window->scroll->text_search_start_line;
             window->scroll->start_line_pos = 0;
             gui_hotlist_remove_buffer (window->buffer, 0);
         }
+        window->scroll->text_search_start_line = NULL;
         gui_buffer_ask_chat_refresh (window->buffer, 2);
     }
 }
