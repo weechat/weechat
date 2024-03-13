@@ -1080,9 +1080,6 @@ dir_file_compress_gzip (const char *from, const char *to,
     if (!from || !to || (compression_level < 1) || (compression_level > 9))
         goto end;
 
-    if (access (to, F_OK) == 0)
-        goto end;
-
     buffer_in = malloc (buffer_size);
     if (!buffer_in)
         goto end;
@@ -1093,7 +1090,7 @@ dir_file_compress_gzip (const char *from, const char *to,
     source = fopen (from, "rb");
     if (!source)
         goto end;
-    dest = fopen (to, "wb");
+    dest = fopen (to, "wbx");
     if (!dest)
         goto end;
 
@@ -1201,9 +1198,6 @@ dir_file_compress_zstd (const char *from, const char *to,
     if (!from || !to || (compression_level < 1) || (compression_level > 19))
         goto end;
 
-    if (access (to, F_OK) == 0)
-        goto end;
-
     buffer_in_size = ZSTD_CStreamInSize ();
     buffer_in = malloc (buffer_in_size);
     if (!buffer_in)
@@ -1216,7 +1210,7 @@ dir_file_compress_zstd (const char *from, const char *to,
     source = fopen (from, "rb");
     if (!source)
         goto end;
-    dest = fopen (to, "wb");
+    dest = fopen (to, "wbx");
     if (!dest)
         goto end;
 
