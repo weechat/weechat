@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 Bug fixes::
 
+  * core: fix reset to initial scroll position after search of text in buffer (issue #2093)
   * core: add missing mouse events "alt-ctrl-button2" and "alt-ctrl-button3"
   * irc: add missing tags on self action messages when capability echo-message is enabled (issue #2074)
   * python: fix truncation of unsigned long long integer returned by function string_parse_size
