@@ -38,6 +38,7 @@ New features::
 
 Bug fixes::
 
+  * core: add missing hdata name "buffer" in hdata "hotlist"
   * core: fix reset to initial scroll position after search of text in buffer (issue #2093)
   * core: add missing mouse events "alt-ctrl-button2" and "alt-ctrl-button3"
   * core: remove trailing directory separators in home directories (issue #2070)

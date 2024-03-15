@@ -748,7 +748,7 @@ gui_hotlist_hdata_hotlist_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_hotlist, priority, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_hotlist, creation_time.tv_sec, TIME, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_hotlist, creation_time.tv_usec, LONG, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_hotlist, buffer, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_hotlist, buffer, POINTER, 0, NULL, "buffer");
         HDATA_VAR(struct t_gui_hotlist, count, INTEGER, 0, GUI_HOTLIST_NUM_PRIORITIES_STR, NULL);
         HDATA_VAR(struct t_gui_hotlist, prev_hotlist, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_hotlist, next_hotlist, POINTER, 0, NULL, hdata_name);
