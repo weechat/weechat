@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 22:50+0100\n"
+"POT-Creation-Date: 2024-03-15 19:13+0100\n"
 "PO-Revision-Date: 2024-03-06 20:32+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4352,6 +4352,11 @@ msgstr "Zmieniono stary skrót: „%s” => „%s”"
 msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
 msgstr "Komenda skonwertowana dla klawiszy \"%s\": \"%s\" => \"%s\""
 
+#, fuzzy, c-format
+#| msgid "Legacy key converted: \"%s\" => \"%s\""
+msgid "Value of option \"%s.%s.%s\" has been converted: \"%s\" => \"%s\""
+msgstr "Zmieniono stary skrót: „%s” => „%s”"
+
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "poziom debugowania dla wtyczki (\"core\" dla rdzenia WeeChat)"
 
@@ -4868,17 +4873,25 @@ msgstr ""
 "jeśli ustawione, używa krótkich nazw do wyświetlania nazw buforów w "
 "hotliście (zaczyna po pierwszym wystąpieniu '.' w nazwie)"
 
+#, fuzzy
+#| msgid ""
+#| "comma-separated list of fields to sort options (see /help fset for a list "
+#| "of fields); char \"-\" can be used before field to reverse order, char "
+#| "\"~\" can be used to do a case insensitive comparison; example: \"-"
+#| "~name\" for case insensitive and reverse sort on option name"
 msgid ""
-"sort of hotlist: group_time_*: group by notify level (highlights first) then "
-"sort by time, group_number_*: group by notify level (highlights first) then "
-"sort by number, number_*: sort by number; asc = ascending sort, desc = "
-"descending sort"
+"comma-separated list of fields to sort hotlist; each field is a hdata "
+"variable of hotlist (\"var\") or a hdata variable of buffer (\"buffer."
+"var\"); char \"-\" can be used before field to reverse order, char \"~\" can "
+"be used to do a case insensitive comparison; examples: \"-priority,buffer."
+"number\" for sort on hotlist priority then by buffer number, \"-~buffer."
+"full_name\" for case insensitive and reverse sort on buffer full name"
 msgstr ""
-"sortowanie hotlisty: group_time_*: grupuj po poziomie powiadomień "
-"(powiadomienia pierwsze) następnie sortuj po czasie, group_number_*: grupuj "
-"po poziomie powiadomień (powiadomienia pierwsze) następnie sortuj po "
-"numerze, number_*: sortuj po numerze; asc = sortowanie rosnące, desc = "
-"sortowanie malejące"
+"oddzielona przecinkami lista pól do sortowania opcji (listę pól można "
+"znaleźć w wyniku polecenia /help fset); znak \"-\" użyty przed nazwą pola "
+"odwraca kolejność , znak \"~\" może zostać użyty do porównania bez "
+"uwzględniania wielkości znaków; na przykład: \"-~name\" dla odwrócenia "
+"wyniku sortowania z porównaniem nazwy bez uwzględnienia wielkości znaków"
 
 msgid "text displayed at the end of the hotlist"
 msgstr "ciąg znaków wyświetlany na końcu hotlisty"
@@ -13460,10 +13473,6 @@ msgid "Support of lua scripts"
 msgstr "Wsparcie dla skryptów lua"
 
 #, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: nie można przekierować standardowego wyjścia i wyjścia błędu"
-
-#, c-format
 msgid "%s%s: unable to load source code"
 msgstr "%s%s: nie można wczytać kodu źródłowego"
 
@@ -14200,6 +14209,10 @@ msgstr "%s%s: nie można przekierować wyjścia"
 #, c-format
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s: nie można przekierować wyjścia błędu"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: nie można przekierować standardowego wyjścia i wyjścia błędu"
 
 #, c-format
 msgid "%s%s: unable to launch global interpreter"
@@ -17143,3 +17156,15 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid ""
+#~ "sort of hotlist: group_time_*: group by notify level (highlights first) "
+#~ "then sort by time, group_number_*: group by notify level (highlights "
+#~ "first) then sort by number, number_*: sort by number; asc = ascending "
+#~ "sort, desc = descending sort"
+#~ msgstr ""
+#~ "sortowanie hotlisty: group_time_*: grupuj po poziomie powiadomień "
+#~ "(powiadomienia pierwsze) następnie sortuj po czasie, group_number_*: "
+#~ "grupuj po poziomie powiadomień (powiadomienia pierwsze) następnie sortuj "
+#~ "po numerze, number_*: sortuj po numerze; asc = sortowanie rosnące, desc = "
+#~ "sortowanie malejące"

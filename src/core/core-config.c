@@ -369,6 +369,8 @@ int config_num_eval_syntax_colors = 0;
 char *config_item_time_evaluated = NULL;
 char *config_buffer_time_same_evaluated = NULL;
 struct t_hashtable *config_hashtable_completion_partial_templates = NULL;
+char **config_hotlist_sort_fields = NULL;
+int config_num_hotlist_sort_fields = 0;
 
 
 /*
@@ -1085,6 +1087,23 @@ config_change_hotlist_sort (const void *pointer, void *data,
     (void) data;
     (void) option;
 
+    if (config_hotlist_sort_fields)
+    {
+        string_free_split (config_hotlist_sort_fields);
+        config_hotlist_sort_fields = NULL;
+    }
+    config_num_hotlist_sort_fields = 0;
+
+    config_hotlist_sort_fields = string_split (
+        CONFIG_STRING(config_look_hotlist_sort),
+        ",",
+        NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &config_num_hotlist_sort_fields);
+
     gui_hotlist_resort ();
 }
 
@@ -1563,6 +1582,8 @@ config_weechat_init_after_read ()
     config_set_nick_colors ();
     config_change_look_nick_color_force (NULL, NULL, NULL);
     config_set_eval_syntax_colors ();
+
+    config_change_hotlist_sort (NULL, NULL, NULL);
 }
 
 /*
@@ -1575,7 +1596,7 @@ config_weechat_update_cb (const void *pointer, void *data,
                           int version_read,
                           struct t_hashtable *data_read)
 {
-    const char *ptr_section, *ptr_option, *ptr_value;
+    const char *ptr_config, *ptr_section, *ptr_option, *ptr_value;
     char *new_commands[][2] = {
         /* old command, new command */
         { "/input jump_smart", "/buffer jump smart" },
@@ -1593,6 +1614,16 @@ config_weechat_update_cb (const void *pointer, void *data,
         { "/input switch_active_buffer", "/buffer switch" },
         { "/input switch_active_buffer_previous", "/buffer switch -previous" },
         { "/input zoom_merged_buffer", "/buffer zoom" },
+        { NULL, NULL },
+    };
+    char *new_hotlist_sort[][2] = {
+        /* old hotlist sort (enum), new sort with fields */
+        { "group_time_asc", "-priority,time,time.usec" },
+        { "group_time_desc", "-priority,-time,-time.usec" },
+        { "group_number_asc", "-priority,buffer.number" },
+        { "group_number_desc", "-priority,-buffer.number" },
+        { "number_asc", "buffer.number" },
+        { "number_desc" "-buffer.number" },
         { NULL, NULL },
     };
     char *new_option;
@@ -1615,6 +1646,7 @@ config_weechat_update_cb (const void *pointer, void *data,
          * changes in v2 (WeeChat 4.0.0):
          *   - new format for keys (eg: meta2-1;3D -> meta-left)
          *   - keys removed: "meta2-200~" and "meta2-201~"
+         *   - arguments changed in /input command
          */
         ptr_section = hashtable_get (data_read, "section");
         ptr_option = hashtable_get (data_read, "option");
@@ -1705,6 +1737,42 @@ config_weechat_update_cb (const void *pointer, void *data,
                         new_commands[i][0],
                         new_commands[i][1]);
                     hashtable_set (data_read, "value", new_commands[i][1]);
+                    changes++;
+                    break;
+                }
+            }
+        }
+    }
+
+    if (version_read < 3)
+    {
+        /*
+         * changes in v3 (WeeChat 4.3.0):
+         *   - new format for option "weechat.look.hotlist_sort"
+         */
+        ptr_config = hashtable_get (data_read, "config");
+        ptr_section = hashtable_get (data_read, "section");
+        ptr_option = hashtable_get (data_read, "option");
+        ptr_value = hashtable_get (data_read, "value");
+        if (ptr_config
+            && ptr_section
+            && ptr_option
+            && (strcmp (ptr_section, "look") == 0)
+            && (strcmp (ptr_option, "hotlist_sort") == 0))
+        {
+            for (i = 0; new_hotlist_sort[i][0]; i++)
+            {
+                if (ptr_value && (strcmp (ptr_value, new_hotlist_sort[i][0]) == 0))
+                {
+                    gui_chat_printf (
+                        NULL,
+                        _("Value of option \"%s.%s.%s\" has been converted: \"%s\" => \"%s\""),
+                        ptr_config,
+                        ptr_section,
+                        ptr_option,
+                        new_hotlist_sort[i][0],
+                        new_hotlist_sort[i][1]);
+                    hashtable_set (data_read, "value", new_hotlist_sort[i][1]);
                     changes++;
                     break;
                 }
@@ -3626,15 +3694,18 @@ config_weechat_init_options ()
             NULL, NULL, NULL);
         config_look_hotlist_sort = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
-            "hotlist_sort", "enum",
-            N_("sort of hotlist: group_time_*: group by notify level "
-               "(highlights first) then sort by time, group_number_*: group "
-               "by notify level (highlights first) then sort by number, "
-               "number_*: sort by number; asc = ascending sort, desc = "
-               "descending sort"),
-            "group_time_asc|group_time_desc|group_number_asc|"
-            "group_number_desc|number_asc|number_desc",
-            0, 0, "group_time_asc", NULL, 0,
+            "hotlist_sort", "string",
+            N_("comma-separated list of fields to sort hotlist; each field is "
+               "a hdata variable of hotlist (\"var\") or a hdata variable of "
+               "buffer (\"buffer.var\"); "
+               "char \"-\" can be used before field to reverse order, "
+               "char \"~\" can be used to do a case insensitive comparison; "
+               "examples: "
+               "\"-priority,buffer.number\" for sort on hotlist priority then by "
+               "buffer number, "
+               "\"-~buffer.full_name\" for case insensitive and reverse "
+               "sort on buffer full name"),
+            NULL, 0, 0, "-priority,time,time.usec", NULL, 0,
             NULL, NULL, NULL,
             &config_change_hotlist_sort, NULL, NULL,
             NULL, NULL, NULL);
@@ -5464,5 +5535,12 @@ config_weechat_free ()
     {
         hashtable_free (config_hashtable_completion_partial_templates);
         config_hashtable_completion_partial_templates = NULL;
+    }
+
+    if (config_hotlist_sort_fields)
+    {
+        string_free_split (config_hotlist_sort_fields);
+        config_hotlist_sort_fields = NULL;
+        config_num_hotlist_sort_fields = 0;
     }
 }

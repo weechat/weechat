@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 22:50+0100\n"
+"POT-Creation-Date: 2024-03-15 19:13+0100\n"
 "PO-Revision-Date: 2024-03-06 20:32+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4226,6 +4226,10 @@ msgstr ""
 msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
 msgstr "Comando para el atajo: \"%s\""
 
+#, c-format
+msgid "Value of option \"%s.%s.%s\" has been converted: \"%s\" => \"%s\""
+msgstr ""
+
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "nivel de depurado para el plugin (\"core\" para el núcleo de WeeChat)"
 
@@ -4689,10 +4693,12 @@ msgstr ""
 "en la lista de actividad (empieza después del primer '.' en el nombre)"
 
 msgid ""
-"sort of hotlist: group_time_*: group by notify level (highlights first) then "
-"sort by time, group_number_*: group by notify level (highlights first) then "
-"sort by number, number_*: sort by number; asc = ascending sort, desc = "
-"descending sort"
+"comma-separated list of fields to sort hotlist; each field is a hdata "
+"variable of hotlist (\"var\") or a hdata variable of buffer (\"buffer."
+"var\"); char \"-\" can be used before field to reverse order, char \"~\" can "
+"be used to do a case insensitive comparison; examples: \"-priority,buffer."
+"number\" for sort on hotlist priority then by buffer number, \"-~buffer."
+"full_name\" for case insensitive and reverse sort on buffer full name"
 msgstr ""
 
 #, fuzzy
@@ -13068,10 +13074,6 @@ msgstr "puntero del registro (opcional)"
 msgid "Support of lua scripts"
 msgstr "Soporte para scripts en lua"
 
-#, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: no es posible redirigir stdout y stderr"
-
 #, fuzzy, c-format
 msgid "%s%s: unable to load source code"
 msgstr "%s%s: no es posible cargar el archivo \"%s\""
@@ -13825,6 +13827,10 @@ msgstr "%s%s: no es posible redirigir la salida stdout"
 #, c-format
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s: no es posible redirigir la salida stderr"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: no es posible redirigir stdout y stderr"
 
 #, c-format
 msgid "%s%s: unable to launch global interpreter"

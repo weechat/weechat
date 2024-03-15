@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 22:50+0100\n"
+"POT-Creation-Date: 2024-03-15 19:13+0100\n"
 "PO-Revision-Date: 2024-03-06 20:32+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -4256,6 +4256,10 @@ msgstr ""
 msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
 msgstr "キーに対するコマンド: \"%s\""
 
+#, c-format
+msgid "Value of option \"%s.%s.%s\" has been converted: \"%s\" => \"%s\""
+msgstr ""
+
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "プラグイン (\"core\" は WeeChat コア) のデバッグレベル"
 
@@ -4764,16 +4768,25 @@ msgstr ""
 "セットされた場合、ホットリストではバッファ名に短い名前を使う (名前に含まれる"
 "最初の \".\" 以降)"
 
+#, fuzzy
+#| msgid ""
+#| "comma-separated list of fields to sort options (see /help fset for a list "
+#| "of fields); char \"-\" can be used before field to reverse order, char "
+#| "\"~\" can be used to do a case insensitive comparison; example: \"-"
+#| "~name\" for case insensitive and reverse sort on option name"
 msgid ""
-"sort of hotlist: group_time_*: group by notify level (highlights first) then "
-"sort by time, group_number_*: group by notify level (highlights first) then "
-"sort by number, number_*: sort by number; asc = ascending sort, desc = "
-"descending sort"
+"comma-separated list of fields to sort hotlist; each field is a hdata "
+"variable of hotlist (\"var\") or a hdata variable of buffer (\"buffer."
+"var\"); char \"-\" can be used before field to reverse order, char \"~\" can "
+"be used to do a case insensitive comparison; examples: \"-priority,buffer."
+"number\" for sort on hotlist priority then by buffer number, \"-~buffer."
+"full_name\" for case insensitive and reverse sort on buffer full name"
 msgstr ""
-"ホットリストのソート: group_time_*: 通知レベルでグループ化した (ハイライトを"
-"前にした) 後に時間でソート、group_number_*: 通知レベルでグループ化した (ハイ"
-"ライトを前にした) 後に番号でソート、number_*: 番号でソート; asc = 昇順、desc "
-"= 降順"
+"ソートオプションのコンマ区切りリスト (フィールドのリストは /help fset を参照"
+"してください); フィールドの先頭に \"-\" 文字を付けることでソート順を逆にする"
+"ことも可能です。大文字小文字を区別せずに比較を行うには \"~\" 文字を使います; "
+"例: \"-~name\" オプション名を基準に大文字小文字を区別せずにソートして、順番を"
+"逆にします"
 
 msgid "text displayed at the end of the hotlist"
 msgstr "ホットリストの最後に表示されるテキスト"
@@ -13498,10 +13511,6 @@ msgid "Support of lua scripts"
 msgstr "lua スクリプトサポート"
 
 #, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: 標準出力と標準エラーをリダイレクトできません"
-
-#, c-format
 msgid "%s%s: unable to load source code"
 msgstr "%s%s: ソースコードをロードできません"
 
@@ -14240,6 +14249,10 @@ msgstr "%s%s: 標準入力のリダイレクトに失敗"
 #, c-format
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s: 標準エラーのリダイレクトに失敗"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: 標準出力と標準エラーをリダイレクトできません"
 
 #, c-format
 msgid "%s%s: unable to launch global interpreter"
@@ -17141,3 +17154,14 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid ""
+#~ "sort of hotlist: group_time_*: group by notify level (highlights first) "
+#~ "then sort by time, group_number_*: group by notify level (highlights "
+#~ "first) then sort by number, number_*: sort by number; asc = ascending "
+#~ "sort, desc = descending sort"
+#~ msgstr ""
+#~ "ホットリストのソート: group_time_*: 通知レベルでグループ化した (ハイライト"
+#~ "を前にした) 後に時間でソート、group_number_*: 通知レベルでグループ化した "
+#~ "(ハイライトを前にした) 後に番号でソート、number_*: 番号でソート; asc = 昇"
+#~ "順、desc = 降順"

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 22:50+0100\n"
-"PO-Revision-Date: 2024-03-06 22:50+0100\n"
+"POT-Creation-Date: 2024-03-15 19:13+0100\n"
+"PO-Revision-Date: 2024-03-15 19:18+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -4495,6 +4495,10 @@ msgstr "Ancienne touche convertie : \"%s\" => \"%s\""
 msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
 msgstr "Commande convertie pour la touche \"%s\" : \"%s\" => \"%s\""
 
+#, c-format
+msgid "Value of option \"%s.%s.%s\" has been converted: \"%s\" => \"%s\""
+msgstr "Valeur de l'option \"%s.%s.%s\" convertie : \"%s\" => \"%s\""
+
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "niveau de debug pour l'extension (\"core\" pour le cœur de WeeChat)"
 
@@ -5029,16 +5033,21 @@ msgstr ""
 "hotlist (commence après le premier \".\" dans le nom)"
 
 msgid ""
-"sort of hotlist: group_time_*: group by notify level (highlights first) then "
-"sort by time, group_number_*: group by notify level (highlights first) then "
-"sort by number, number_*: sort by number; asc = ascending sort, desc = "
-"descending sort"
+"comma-separated list of fields to sort hotlist; each field is a hdata "
+"variable of hotlist (\"var\") or a hdata variable of buffer (\"buffer."
+"var\"); char \"-\" can be used before field to reverse order, char \"~\" can "
+"be used to do a case insensitive comparison; examples: \"-priority,buffer."
+"number\" for sort on hotlist priority then by buffer number, \"-~buffer."
+"full_name\" for case insensitive and reverse sort on buffer full name"
 msgstr ""
-"type de tri pour la liste d'activité : group_time_* : grouper par niveau de "
-"notification (les highlights en premier) puis tri par date, group_number_* : "
-"grouper par niveau de notification (les highlights en premier) puis tri par "
-"numéro, number_* : tri par numéro ; asc = tri ascendant, desc = tri "
-"descendant"
+"liste de champs séparés par des virgules pour trier la hotlist ; chaque "
+"champ est une variable hdata de la hotlist (\"var\") ou une variable hdata "
+"du tampon (\"buffer.var\") ; le caractère \"-\" peut être utilisé pour "
+"inverser l'ordre, le caractère \"~\" peut être utilisé pour effectuer une "
+"comparaison insensible à la casse ; exemples : \"-priority,buffer.number\" "
+"pour un tri sur la priorité de la hotlist puis par numéro de tampon, \"-"
+"~buffer.full_name\" pour un tri insensible à la casse et inversé sur le nom "
+"complet du tampon"
 
 msgid "text displayed at the end of the hotlist"
 msgstr "chaîne affichée à la fin de la hotlist"
@@ -13856,10 +13865,6 @@ msgid "Support of lua scripts"
 msgstr "Support des scripts lua"
 
 #, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s : impossible de rediriger stdout et stderr"
-
-#, c-format
 msgid "%s%s: unable to load source code"
 msgstr "%s%s : impossible de charger le code source"
 
@@ -14612,6 +14617,10 @@ msgstr "%s%s : impossible de rediriger stdout"
 #, c-format
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s : impossible de rediriger stderr"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s : impossible de rediriger stdout et stderr"
 
 #, c-format
 msgid "%s%s: unable to launch global interpreter"
@@ -17609,3 +17618,15 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#~ msgid ""
+#~ "sort of hotlist: group_time_*: group by notify level (highlights first) "
+#~ "then sort by time, group_number_*: group by notify level (highlights "
+#~ "first) then sort by number, number_*: sort by number; asc = ascending "
+#~ "sort, desc = descending sort"
+#~ msgstr ""
+#~ "type de tri pour la liste d'activité : group_time_* : grouper par niveau "
+#~ "de notification (les highlights en premier) puis tri par date, "
+#~ "group_number_* : grouper par niveau de notification (les highlights en "
+#~ "premier) puis tri par numéro, number_* : tri par numéro ; asc = tri "
+#~ "ascendant, desc = tri descendant"

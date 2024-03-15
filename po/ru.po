@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 22:50+0100\n"
+"POT-Creation-Date: 2024-03-15 19:13+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3957,6 +3957,10 @@ msgstr ""
 msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
 msgstr ""
 
+#, c-format
+msgid "Value of option \"%s.%s.%s\" has been converted: \"%s\" => \"%s\""
+msgstr ""
+
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr ""
 
@@ -4333,10 +4337,12 @@ msgid ""
 msgstr ""
 
 msgid ""
-"sort of hotlist: group_time_*: group by notify level (highlights first) then "
-"sort by time, group_number_*: group by notify level (highlights first) then "
-"sort by number, number_*: sort by number; asc = ascending sort, desc = "
-"descending sort"
+"comma-separated list of fields to sort hotlist; each field is a hdata "
+"variable of hotlist (\"var\") or a hdata variable of buffer (\"buffer."
+"var\"); char \"-\" can be used before field to reverse order, char \"~\" can "
+"be used to do a case insensitive comparison; examples: \"-priority,buffer."
+"number\" for sort on hotlist priority then by buffer number, \"-~buffer."
+"full_name\" for case insensitive and reverse sort on buffer full name"
 msgstr ""
 
 #, fuzzy
@@ -12278,10 +12284,6 @@ msgid "Support of lua scripts"
 msgstr "Список сокращений:\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s не могу создать сервер\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to load source code"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
@@ -13030,6 +13032,10 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to redirect stderr"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s не могу создать сервер\n"
 
 #, fuzzy, c-format

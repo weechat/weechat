@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
+  * core: convert option weechat.look.hotlist_sort to a list of fields (issue #2097)
   * core: rename variables with creation time in hdata "hotlist": "creation_time.tv_sec" to "time" and "creation_time.tv_usec" to "time_usec"
   * core: add unique identifier "id" in buffer (issue #2081)
   * core: add option `malloc_trim` in command `/sys`

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 22:50+0100\n"
+"POT-Creation-Date: 2024-03-15 19:13+0100\n"
 "PO-Revision-Date: 2024-03-06 20:32+0100\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4365,6 +4365,11 @@ msgstr "Конвертовани тастер старе верзије: „%s�
 msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
 msgstr "Команда конвертована за тастер: „%s”: „%s” => „%s”"
 
+#, fuzzy, c-format
+#| msgid "Legacy key converted: \"%s\" => \"%s\""
+msgid "Value of option \"%s.%s.%s\" has been converted: \"%s\" => \"%s\""
+msgstr "Конвертовани тастер старе верзије: „%s” => „%s”"
+
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "дибаг ниво за додатак („core” за WeeChat језгро)"
 
@@ -4877,16 +4882,25 @@ msgstr ""
 "ако је постављено, користи кратка имена за приказ имена бафера у врућој "
 "листи (почињу након првог „.” у имену)"
 
+#, fuzzy
+#| msgid ""
+#| "comma-separated list of fields to sort options (see /help fset for a list "
+#| "of fields); char \"-\" can be used before field to reverse order, char "
+#| "\"~\" can be used to do a case insensitive comparison; example: \"-"
+#| "~name\" for case insensitive and reverse sort on option name"
 msgid ""
-"sort of hotlist: group_time_*: group by notify level (highlights first) then "
-"sort by time, group_number_*: group by notify level (highlights first) then "
-"sort by number, number_*: sort by number; asc = ascending sort, desc = "
-"descending sort"
+"comma-separated list of fields to sort hotlist; each field is a hdata "
+"variable of hotlist (\"var\") or a hdata variable of buffer (\"buffer."
+"var\"); char \"-\" can be used before field to reverse order, char \"~\" can "
+"be used to do a case insensitive comparison; examples: \"-priority,buffer."
+"number\" for sort on hotlist priority then by buffer number, \"-~buffer."
+"full_name\" for case insensitive and reverse sort on buffer full name"
 msgstr ""
-"сортирање вруће листе: group_time_*: груписање по нивоу обавештавања (прво "
-"истицања) па онда сортирање по времену, group_number_*: груписање по нивоу "
-"обавештавања (прво истицања) па онда сортирање по броју, number_*: сортирање "
-"по броју; asc = растући редослед, desc = опадајући редослед"
+"листа поља за сортирање опција раздвојених запетама (погледајте /help fset "
+"за листу поља); карактер „-” може да се користи испред поља чиме се обрће "
+"редослед, карактер „~” може да се употреби за поређење које не прави разлику "
+"у величини слова; пример: „-~name” за поређење које не прави разлику у "
+"величини слова и обрнуто сортирање по имену опције"
 
 msgid "text displayed at the end of the hotlist"
 msgstr "текст који се приказује на крају вруће листе"
@@ -13450,10 +13464,6 @@ msgid "Support of lua scripts"
 msgstr "Подршка за lua скрипте"
 
 #, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: није могуће преусмеравање stdout и stderr"
-
-#, c-format
 msgid "%s%s: unable to load source code"
 msgstr "%s%s: није успело учитавање изворног кода"
 
@@ -14192,6 +14202,10 @@ msgstr "%s%s: није могуће преусмеравање stdout"
 #, c-format
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s: није могуће преусмеравање stderr"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: није могуће преусмеравање stdout и stderr"
 
 #, c-format
 msgid "%s%s: unable to launch global interpreter"
@@ -17090,3 +17104,15 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+#~ msgid ""
+#~ "sort of hotlist: group_time_*: group by notify level (highlights first) "
+#~ "then sort by time, group_number_*: group by notify level (highlights "
+#~ "first) then sort by number, number_*: sort by number; asc = ascending "
+#~ "sort, desc = descending sort"
+#~ msgstr ""
+#~ "сортирање вруће листе: group_time_*: груписање по нивоу обавештавања "
+#~ "(прво истицања) па онда сортирање по времену, group_number_*: груписање "
+#~ "по нивоу обавештавања (прво истицања) па онда сортирање по броју, "
+#~ "number_*: сортирање по броју; asc = растући редослед, desc = опадајући "
+#~ "редослед"

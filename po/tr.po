@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-06 22:50+0100\n"
+"POT-Creation-Date: 2024-03-15 19:13+0100\n"
 "PO-Revision-Date: 2024-03-06 20:33+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4284,6 +4284,10 @@ msgstr ""
 msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
 msgstr "Düğme komutu: \"%s\""
 
+#, c-format
+msgid "Value of option \"%s.%s.%s\" has been converted: \"%s\" => \"%s\""
+msgstr ""
+
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "eklenti hata ayıklama düzeyi (WeeChat çekirdeği için \"core\")"
 
@@ -4791,16 +4795,25 @@ msgstr ""
 "ayarlıysa sıcak listede arabellek adlarını görüntülemek için kısa adlar "
 "kullanır (addaki ilk \".\" sonrasında başlar)"
 
+#, fuzzy
+#| msgid ""
+#| "comma-separated list of fields to sort options (see /help fset for a list "
+#| "of fields); char \"-\" can be used before field to reverse order, char "
+#| "\"~\" can be used to do a case insensitive comparison; example: \"-"
+#| "~name\" for case insensitive and reverse sort on option name"
 msgid ""
-"sort of hotlist: group_time_*: group by notify level (highlights first) then "
-"sort by time, group_number_*: group by notify level (highlights first) then "
-"sort by number, number_*: sort by number; asc = ascending sort, desc = "
-"descending sort"
+"comma-separated list of fields to sort hotlist; each field is a hdata "
+"variable of hotlist (\"var\") or a hdata variable of buffer (\"buffer."
+"var\"); char \"-\" can be used before field to reverse order, char \"~\" can "
+"be used to do a case insensitive comparison; examples: \"-priority,buffer."
+"number\" for sort on hotlist priority then by buffer number, \"-~buffer."
+"full_name\" for case insensitive and reverse sort on buffer full name"
 msgstr ""
-"sıcak listeyi sırala: group_time_*: bildirim düzeyine göre grupla (önce "
-"vurgulamalar), sonra zamana göre sırala; group_number_*: bildirim düzeyine "
-"göre grupla (önce vurgulamalar), sonra numaraya göre sırala; number_*: "
-"numaraya göre sırala; asc = artan sıralama, desc = azalan sıralama"
+"seçenekleri sıralamak için kullanılan alanların virgülle ayrılmış listesi "
+"(alanların bir listesi için bkz. /help fset); sıralamayı tersine çevirmek "
+"için \"-\" karakteri, BÜYÜK/küçük harf duyarsız bir kıyaslama yapmak için "
+"\"~\" karakteri kullanılabilir; örnek: seçenek adında BÜYÜK/küçük harf "
+"duyarsız ve ters sıralama yapmak için \"-~ad\" kullanın"
 
 msgid "text displayed at the end of the hotlist"
 msgstr "sıcak listenin sonunda görüntülenen metin"
@@ -13645,10 +13658,6 @@ msgid "Support of lua scripts"
 msgstr "lua betikleri desteği"
 
 #, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: stdout ve stderr yeniden yönlendirilemiyor"
-
-#, c-format
 msgid "%s%s: unable to load source code"
 msgstr "%s%s: Kaynak kod yüklenemiyor"
 
@@ -14397,6 +14406,10 @@ msgstr "%s%s: stdout yeniden yönlendirilemiyor"
 #, c-format
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s: stderr yeniden yönlendirilemiyor"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: stdout ve stderr yeniden yönlendirilemiyor"
 
 #, c-format
 msgid "%s%s: unable to launch global interpreter"
@@ -17367,3 +17380,15 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
+
+#~ msgid ""
+#~ "sort of hotlist: group_time_*: group by notify level (highlights first) "
+#~ "then sort by time, group_number_*: group by notify level (highlights "
+#~ "first) then sort by number, number_*: sort by number; asc = ascending "
+#~ "sort, desc = descending sort"
+#~ msgstr ""
+#~ "sıcak listeyi sırala: group_time_*: bildirim düzeyine göre grupla (önce "
+#~ "vurgulamalar), sonra zamana göre sırala; group_number_*: bildirim "
+#~ "düzeyine göre grupla (önce vurgulamalar), sonra numaraya göre sırala; "
+#~ "number_*: numaraya göre sırala; asc = artan sıralama, desc = azalan "
+#~ "sıralama"

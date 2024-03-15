@@ -229,6 +229,61 @@ gui_hotlist_check_buffer_notify (struct t_gui_buffer *buffer,
 }
 
 /*
+ * Compares two hotlists in order to add them in the sorted list.
+ *
+ * The comparison is made using the list of fields defined in the option
+ * "weechat.look.hotlist_sort".
+ *
+ * Returns:
+ *   -1: hotlist1 < hotlist2
+ *    0: hotlist1 == hotlist2
+ *    1: hotlist1 > hotlist2
+ */
+
+int
+gui_hotlist_compare_hotlists (struct t_hdata *hdata_hotlist,
+                              struct t_gui_hotlist *hotlist1,
+                              struct t_gui_hotlist *hotlist2)
+{
+    int i, reverse, case_sensitive, rc;
+    const char *ptr_field;
+
+    for (i = 0; i < config_num_hotlist_sort_fields; i++)
+    {
+        rc = 0;
+        reverse = 1;
+        case_sensitive = 1;
+        ptr_field = config_hotlist_sort_fields[i];
+        while ((ptr_field[0] == '-') || (ptr_field[0] == '~'))
+        {
+            if (ptr_field[0] == '-')
+                reverse *= -1;
+            else if (ptr_field[0] == '~')
+                case_sensitive ^= 1;
+            ptr_field++;
+        }
+        if (!hotlist1 && !hotlist2)
+            rc = 0;
+        else if (hotlist1 && !hotlist2)
+            rc = 1;
+        else if (!hotlist1 && hotlist2)
+            rc = -1;
+        else
+        {
+            rc = hdata_compare (hdata_hotlist,
+                                hotlist1, hotlist2,
+                                ptr_field,
+                                case_sensitive);
+        }
+        rc *= reverse;
+        if (rc != 0)
+            return rc;
+    }
+
+    return 0;
+}
+
+/*
  * Searches for position of hotlist (to keep hotlist sorted).
  */
 
@@ -236,69 +291,20 @@ struct t_gui_hotlist *
 gui_hotlist_find_pos (struct t_gui_hotlist *hotlist,
                       struct t_gui_hotlist *new_hotlist)
 {
+    struct t_hdata *hdata_hotlist;
     struct t_gui_hotlist *ptr_hotlist;
 
-    switch (CONFIG_ENUM(config_look_hotlist_sort))
+    hdata_hotlist = hook_hdata_get (NULL, "hotlist");
+    for (ptr_hotlist = hotlist; ptr_hotlist;
+         ptr_hotlist = ptr_hotlist->next_hotlist)
     {
-        case CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_ASC:
-            for (ptr_hotlist = hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if ((new_hotlist->priority > ptr_hotlist->priority)
-                    || ((new_hotlist->priority == ptr_hotlist->priority)
-                        && (util_timeval_diff (&(new_hotlist->creation_time),
-                                               &(ptr_hotlist->creation_time)) > 0)))
-                    return ptr_hotlist;
-            }
-            break;
-        case CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_DESC:
-            for (ptr_hotlist = hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if ((new_hotlist->priority > ptr_hotlist->priority)
-                    || ((new_hotlist->priority == ptr_hotlist->priority)
-                        && (util_timeval_diff (&(new_hotlist->creation_time),
-                                               &(ptr_hotlist->creation_time)) < 0)))
-                    return ptr_hotlist;
-            }
-            break;
-        case CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_ASC:
-            for (ptr_hotlist = hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if ((new_hotlist->priority > ptr_hotlist->priority)
-                    || ((new_hotlist->priority == ptr_hotlist->priority)
-                        && (new_hotlist->buffer->number < ptr_hotlist->buffer->number)))
-                    return ptr_hotlist;
-            }
-            break;
-        case CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_DESC:
-            for (ptr_hotlist = hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if ((new_hotlist->priority > ptr_hotlist->priority)
-                    || ((new_hotlist->priority == ptr_hotlist->priority)
-                        && (new_hotlist->buffer->number > ptr_hotlist->buffer->number)))
-                    return ptr_hotlist;
-            }
-            break;
-        case CONFIG_LOOK_HOTLIST_SORT_NUMBER_ASC:
-            for (ptr_hotlist = hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if (new_hotlist->buffer->number < ptr_hotlist->buffer->number)
-                    return ptr_hotlist;
-            }
-            break;
-        case CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC:
-            for (ptr_hotlist = hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
-            {
-                if (new_hotlist->buffer->number > ptr_hotlist->buffer->number)
-                    return ptr_hotlist;
-            }
-            break;
+        if (gui_hotlist_compare_hotlists (hdata_hotlist,
+                                          new_hotlist, ptr_hotlist) < 0)
+        {
+            return ptr_hotlist;
+        }
     }
+
     return NULL;
 }
 

@@ -31,7 +31,7 @@ struct t_gui_buffer;
 #define WEECHAT_CONFIG_NAME "weechat"
 #define WEECHAT_CONFIG_PRIO_NAME "110000|weechat"
 
-#define WEECHAT_CONFIG_VERSION 2
+#define WEECHAT_CONFIG_VERSION 3
 
 #define TAB_MAX_WIDTH 64
 
@@ -404,6 +404,8 @@ extern char **config_eval_syntax_colors;
 extern int config_num_eval_syntax_colors;
 extern char *config_buffer_time_same_evaluated;
 extern struct t_hashtable *config_hashtable_completion_partial_templates;
+extern char **config_hotlist_sort_fields;
+extern int config_num_hotlist_sort_fields;
 
 extern void config_set_nick_colors ();
 extern struct t_config_option *config_weechat_debug_get (const char *plugin_name);
