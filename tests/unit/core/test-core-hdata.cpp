@@ -24,6 +24,8 @@
 extern "C"
 {
 #include <string.h>
+#include <time.h>
+#include <sys/time.h>
 #include "src/core/core-hdata.h"
 #include "src/core/core-config.h"
 #include "src/core/core-hashtable.h"
@@ -82,6 +84,7 @@ struct t_test_item
 
     /* time */
     time_t test_time;
+    struct timeval test_time_tv;
     int test_count_time;
     time_t test_array_2_time_fixed_size[2];
     time_t *test_ptr_2_time;
@@ -423,6 +426,8 @@ TEST_GROUP(CoreHdataWithList)
 
         /* time */
         item->test_time = 123456;
+        item->test_time_tv.tv_sec = 1710485123;
+        item->test_time_tv.tv_usec = 123456;
         item->test_count_time = 2;
         item->test_array_2_time_fixed_size[0] = 112;
         item->test_array_2_time_fixed_size[1] = 334;
@@ -581,6 +586,8 @@ TEST_GROUP(CoreHdataWithList)
 
         /* time */
         item->test_time = 789123;
+        item->test_time_tv.tv_sec = 1710485456;
+        item->test_time_tv.tv_usec = 456789;
         item->test_count_time = 2;
         item->test_array_2_time_fixed_size[0] = 556;
         item->test_array_2_time_fixed_size[1] = 778;
@@ -711,6 +718,8 @@ TEST_GROUP(CoreHdataWithList)
 
         /* time */
         HDATA_VAR(struct t_test_item, test_time, TIME, 1, NULL, NULL);
+        HDATA_VAR_NAME(struct t_test_item, test_time_tv.tv_sec, "test_time_tv_sec", TIME, 1, NULL, NULL);
+        HDATA_VAR_NAME(struct t_test_item, test_time_tv.tv_usec, "test_time_tv_usec", LONG, 1, NULL, NULL);
         HDATA_VAR(struct t_test_item, test_count_time, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_test_item, test_array_2_time_fixed_size, TIME, 0, "2", NULL);
         HDATA_VAR(struct t_test_item, test_ptr_2_time, TIME, 0, "*,test_count_time", NULL);
@@ -866,6 +875,10 @@ TEST(CoreHdataWithList, GetVarType)
                 hdata_get_var_type (ptr_hdata, "test_pointer"));
     LONGS_EQUAL(WEECHAT_HDATA_TIME,
                 hdata_get_var_type (ptr_hdata, "test_time"));
+    LONGS_EQUAL(WEECHAT_HDATA_TIME,
+                hdata_get_var_type (ptr_hdata, "test_time_tv_sec"));
+    LONGS_EQUAL(WEECHAT_HDATA_LONG,
+                hdata_get_var_type (ptr_hdata, "test_time_tv_usec"));
     LONGS_EQUAL(WEECHAT_HDATA_HASHTABLE,
                 hdata_get_var_type (ptr_hdata, "test_hashtable"));
     LONGS_EQUAL(WEECHAT_HDATA_OTHER,
@@ -900,6 +913,10 @@ TEST(CoreHdataWithList, GetVarTypeString)
                  hdata_get_var_type_string (ptr_hdata, "test_pointer"));
     STRCMP_EQUAL("time",
                  hdata_get_var_type_string (ptr_hdata, "test_time"));
+    STRCMP_EQUAL("time",
+                 hdata_get_var_type_string (ptr_hdata, "test_time_tv_sec"));
+    STRCMP_EQUAL("long",
+                 hdata_get_var_type_string (ptr_hdata, "test_time_tv_usec"));
     STRCMP_EQUAL("hashtable",
                  hdata_get_var_type_string (ptr_hdata, "test_hashtable"));
     STRCMP_EQUAL("other",
@@ -1655,20 +1672,56 @@ TEST(CoreHdataWithList, Search)
                       "${test_item.test_time} == 123456",
                       NULL, NULL, NULL, 1));
     POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_time_tv_sec} == 1710485123",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_time_tv_usec} == 123456",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
         ptr_item2,
         hdata_search (ptr_hdata, items,
                       "${test_item.test_time} == 789123",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_time_tv_sec} == 1710485456",
+                      NULL, NULL, NULL, 1));
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_time_tv_usec} == 456789",
                       NULL, NULL, NULL, 1));
     POINTERS_EQUAL(
         ptr_item1,
         hdata_search (ptr_hdata, last_item,
                       "${test_item.test_time} == 123456",
                       NULL, NULL, NULL, -1));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, last_item,
+                      "${test_item.test_time_tv_sec} == 1710485123",
+                      NULL, NULL, NULL, -1));
+    POINTERS_EQUAL(
+        ptr_item1,
+        hdata_search (ptr_hdata, last_item,
+                      "${test_item.test_time_tv_usec} == 123456",
+                      NULL, NULL, NULL, -1));
     hashtable_set (extra_vars, "value", "789123");
     POINTERS_EQUAL(
         ptr_item2,
         hdata_search (ptr_hdata, items,
                       "${test_item.test_time} == ${value}",
+                      NULL, extra_vars, NULL, 1));
+    hashtable_set (extra_vars, "value", "1710485456");
+    POINTERS_EQUAL(
+        ptr_item2,
+        hdata_search (ptr_hdata, items,
+                      "${test_item.test_time_tv_sec} == ${value}",
                       NULL, extra_vars, NULL, 1));
 
     hashtable_free (pointers);
@@ -2072,9 +2125,12 @@ TEST(CoreHdataWithList, Time)
     LONGS_EQUAL(0, hdata_time (ptr_hdata, NULL, NULL));
     LONGS_EQUAL(0, hdata_time (NULL, ptr_item1, NULL));
     LONGS_EQUAL(0, hdata_time (NULL, NULL, "test_time"));
+    LONGS_EQUAL(0, hdata_time (NULL, NULL, "test_time_tv_sec"));
     LONGS_EQUAL(0, hdata_time (ptr_hdata, ptr_item1, NULL));
     LONGS_EQUAL(0, hdata_time (ptr_hdata, NULL, "test_time"));
+    LONGS_EQUAL(0, hdata_time (ptr_hdata, NULL, "test_time_tv_sec"));
     LONGS_EQUAL(0, hdata_time (NULL, ptr_item1, "test_time"));
+    LONGS_EQUAL(0, hdata_time (NULL, ptr_item1, "test_time_tv_sec"));
 
     /* variable not found */
     LONGS_EQUAL(0, hdata_time (ptr_hdata, ptr_item1, "zzz"));
@@ -2082,6 +2138,8 @@ TEST(CoreHdataWithList, Time)
 
     /* item 1 */
     LONGS_EQUAL(123456, hdata_time (ptr_hdata, ptr_item1, "test_time"));
+    LONGS_EQUAL(1710485123, hdata_time (ptr_hdata, ptr_item1, "test_time_tv_sec"));
+    LONGS_EQUAL(123456, hdata_time (ptr_hdata, ptr_item1, "test_time_tv_usec"));
     LONGS_EQUAL(112,
                 hdata_time (ptr_hdata, ptr_item1, "0|test_array_2_time_fixed_size"));
     LONGS_EQUAL(334,
@@ -2093,6 +2151,8 @@ TEST(CoreHdataWithList, Time)
 
     /* item 2 */
     LONGS_EQUAL(789123, hdata_time (ptr_hdata, ptr_item2, "test_time"));
+    LONGS_EQUAL(1710485456, hdata_time (ptr_hdata, ptr_item2, "test_time_tv_sec"));
+    LONGS_EQUAL(456789, hdata_time (ptr_hdata, ptr_item2, "test_time_tv_usec"));
     LONGS_EQUAL(556,
                 hdata_time (ptr_hdata, ptr_item2, "0|test_array_2_time_fixed_size"));
     LONGS_EQUAL(778,
@@ -2258,6 +2318,22 @@ TEST(CoreHdataWithList, Compare)
                                    "test_time", 0));
     LONGS_EQUAL(1, hdata_compare (ptr_hdata, ptr_item2, ptr_item1,
                                   "test_time", 0));
+
+    /* compare times: 1710485123 and 1710485456 */
+    LONGS_EQUAL(0, hdata_compare (ptr_hdata, ptr_item1, ptr_item1,
+                                  "test_time_tv_sec", 0));
+    LONGS_EQUAL(-1, hdata_compare (ptr_hdata, ptr_item1, ptr_item2,
+                                   "test_time_tv_sec", 0));
+    LONGS_EQUAL(1, hdata_compare (ptr_hdata, ptr_item2, ptr_item1,
+                                  "test_time_tv_sec", 0));
+
+    /* compare microseconds (long): 123456 and 456789 */
+    LONGS_EQUAL(0, hdata_compare (ptr_hdata, ptr_item1, ptr_item1,
+                                  "test_time_tv_usec", 0));
+    LONGS_EQUAL(-1, hdata_compare (ptr_hdata, ptr_item1, ptr_item2,
+                                   "test_time_tv_usec", 0));
+    LONGS_EQUAL(1, hdata_compare (ptr_hdata, ptr_item2, ptr_item1,
+                                  "test_time_tv_usec", 0));
 
     /* compare hashtables: pointer comparison */
     CHECK(hdata_compare (ptr_hdata, ptr_item1, ptr_item2,
@@ -2475,11 +2551,23 @@ TEST(CoreHdataWithList, Update)
     LONGS_EQUAL(0, hdata_update (ptr_hdata, ptr_item1, hashtable));
     LONGS_EQUAL(123456, ptr_item1->test_time);
 
+    /* set time to invalid value */
+    hashtable_remove_all (hashtable);
+    hashtable_set (hashtable, "test_time_tv_sec", "-15");
+    LONGS_EQUAL(0, hdata_update (ptr_hdata, ptr_item1, hashtable));
+    LONGS_EQUAL(1710485123, ptr_item1->test_time_tv.tv_sec);
+
     /* set time to 112233 */
     hashtable_remove_all (hashtable);
     hashtable_set (hashtable, "test_time", "112233");
     LONGS_EQUAL(1, hdata_update (ptr_hdata, ptr_item1, hashtable));
     LONGS_EQUAL(112233, ptr_item1->test_time);
+
+    /* set time to 111222333 */
+    hashtable_remove_all (hashtable);
+    hashtable_set (hashtable, "test_time_tv_sec", "111222333");
+    LONGS_EQUAL(1, hdata_update (ptr_hdata, ptr_item1, hashtable));
+    LONGS_EQUAL(111222333, ptr_item1->test_time_tv.tv_sec);
 
     /* set hashtable to NULL (not possible) */
     ptr_old_hashtable = ptr_item1->test_hashtable;
@@ -2525,22 +2613,22 @@ TEST(CoreHdataWithList, GetString)
         "test_ptr_words_dyn,test_ptr_words_dyn_shared,test_pointer,"
         "test_count_pointer,test_array_2_pointer_fixed_size,"
         "test_ptr_3_pointer,test_ptr_0_pointer_dyn,test_ptr_1_pointer_dyn,"
-        "test_time,test_count_time,test_array_2_time_fixed_size,"
-        "test_ptr_2_time,test_hashtable,test_count_hashtable,"
-        "test_array_2_hashtable_fixed_size,test_ptr_2_hashtable,"
-        "test_ptr_1_hashtable_dyn,test_other,test_count_other,"
-        "test_ptr_3_other,test_count_invalid,test_ptr_invalid,prev_item,"
-        "next_item",
+        "test_time,test_time_tv_sec,test_time_tv_usec,test_count_time,"
+        "test_array_2_time_fixed_size,test_ptr_2_time,test_hashtable,"
+        "test_count_hashtable,test_array_2_hashtable_fixed_size,"
+        "test_ptr_2_hashtable,test_ptr_1_hashtable_dyn,test_other,"
+        "test_count_other,test_ptr_3_other,test_count_invalid,"
+        "test_ptr_invalid,prev_item,next_item",
         hdata_get_string (ptr_hdata, "var_keys"));
 
     prop = hdata_get_string (ptr_hdata, "var_values");
     items = string_split (prop, ",", NULL, 0, 0, &num_items);
-    LONGS_EQUAL(49, num_items);
+    LONGS_EQUAL(51, num_items);
     string_free_split (items);
 
     prop = hdata_get_string (ptr_hdata, "var_keys_values");
     items = string_split (prop, ",", NULL, 0, 0, &num_items);
-    LONGS_EQUAL(49, num_items);
+    LONGS_EQUAL(51, num_items);
     string_free_split (items);
 
     STRCMP_EQUAL("prev_item", hdata_get_string (ptr_hdata, "var_prev"));
