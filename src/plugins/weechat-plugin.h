@@ -2263,9 +2263,17 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->hdata_new_var)(__hdata, __name, __offset, __type,  \
                                     __update_allowed, __array_size,     \
                                     __hdata_name)
-#define WEECHAT_HDATA_VAR(__struct, __name, __type, __update_allowed,   \
+#define WEECHAT_HDATA_VAR(__struct, __field, __type, __update_allowed,  \
                           __array_size, __hdata_name)                   \
-    weechat_hdata_new_var (hdata, #__name, offsetof (__struct, __name), \
+    weechat_hdata_new_var (hdata, #__field,                             \
+                           offsetof (__struct, __field),                \
+                           WEECHAT_HDATA_##__type, __update_allowed,    \
+                           __array_size, __hdata_name)
+#define WEECHAT_HDATA_VAR_NAME(__struct, __field, __name, __type,       \
+                               __update_allowed, __array_size,          \
+                               __hdata_name)                            \
+    weechat_hdata_new_var (hdata, __name,                               \
+                           offsetof (__struct, __field),                \
                            WEECHAT_HDATA_##__type, __update_allowed,    \
                            __array_size, __hdata_name)
 #define weechat_hdata_new_list(__hdata, __name, __pointer, __flags)     \
