@@ -2269,8 +2269,11 @@ gui_bar_item_signal_cb (const void *pointer, void *data,
     item = (const char *)pointer;
     if (item)
     {
-        if (strcmp (item, "hotlist") == 0)
+        if ((strcmp (item, "hotlist") == 0)
+            && (strcmp (signal, "hotlist_changed") != 0))
+        {
             gui_hotlist_resort ();
+        }
         gui_bar_item_update (item);
     }
 
