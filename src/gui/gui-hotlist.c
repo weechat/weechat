@@ -538,40 +538,34 @@ gui_hotlist_restore_all_buffers ()
     }
 }
 
-
 /*
- * Resorts hotlist with new sort type.
+ * Resorts hotlist.
  */
 
 void
 gui_hotlist_resort ()
 {
     struct t_gui_hotlist *new_hotlist, *last_new_hotlist;
-    struct t_gui_hotlist *ptr_hotlist, *element;
+    struct t_gui_hotlist *ptr_hotlist, *ptr_next_hotlist;
 
-    /* copy and resort hotlist in new linked list */
+    /* sort is not needed if hotlist has less than 2 entries */
+    if (!gui_hotlist || !gui_hotlist->next_hotlist)
+        return;
+
+    /* resort hotlist in new linked list */
     new_hotlist = NULL;
     last_new_hotlist = NULL;
-    for (ptr_hotlist = gui_hotlist; ptr_hotlist;
-         ptr_hotlist = ptr_hotlist->next_hotlist)
+    ptr_hotlist = gui_hotlist;
+    while (ptr_hotlist)
     {
-        element = gui_hotlist_dup (ptr_hotlist);
-        gui_hotlist_add_hotlist (&new_hotlist, &last_new_hotlist, element);
+        ptr_next_hotlist = ptr_hotlist->next_hotlist;
+        gui_hotlist_add_hotlist (&new_hotlist, &last_new_hotlist, ptr_hotlist);
+        ptr_hotlist = ptr_next_hotlist;
     }
-
-    /* clear whole hotlist */
-    gui_hotlist_free_all (&gui_hotlist, &last_gui_hotlist);
 
     /* switch to new sorted hotlist */
     gui_hotlist = new_hotlist;
     last_gui_hotlist = last_new_hotlist;
-
-    /* reassign hotlist in buffers */
-    for (ptr_hotlist = gui_hotlist; ptr_hotlist;
-         ptr_hotlist = ptr_hotlist->next_hotlist)
-    {
-        ptr_hotlist->buffer->hotlist = ptr_hotlist;
-    }
 
     gui_hotlist_changed_signal (NULL);
 }
