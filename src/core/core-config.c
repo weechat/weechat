@@ -1619,8 +1619,8 @@ config_weechat_update_cb (const void *pointer, void *data,
     };
     char *new_hotlist_sort[][2] = {
         /* old hotlist sort (enum), new sort with fields */
-        { "group_time_asc", "-priority,time,time.usec" },
-        { "group_time_desc", "-priority,-time,-time.usec" },
+        { "group_time_asc", "-priority,time,time_usec" },
+        { "group_time_desc", "-priority,-time,-time_usec" },
         { "group_number_asc", "-priority,buffer.number" },
         { "group_number_desc", "-priority,-buffer.number" },
         { "number_asc", "buffer.number" },
@@ -3722,7 +3722,7 @@ config_weechat_init_options ()
                "buffer number, "
                "\"-~buffer.full_name\" for case insensitive and reverse "
                "sort on buffer full name"),
-            NULL, 0, 0, "-priority,time,time.usec", NULL, 0,
+            NULL, 0, 0, "-priority,time,time_usec", NULL, 0,
             NULL, NULL, NULL,
             &config_change_hotlist_sort, NULL, NULL,
             NULL, NULL, NULL);
