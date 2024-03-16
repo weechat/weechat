@@ -609,7 +609,7 @@ buflist_config_init ()
                "char \"~\" can be used to do a case insensitive comparison; "
                "examples: \"-~short_name\" for case insensitive and reverse "
                "sort on buffer short name, "
-               "\"-hotlist.priority,hotlist.creation_time.tv_sec,number,-active\" "
+               "\"-hotlist.priority,hotlist.time,hotlist.time_usec,number,-active\" "
                "for sort like the hotlist then by buffer number for buffers "
                "without activity "
                "(note: the content is evaluated, before being split into "
