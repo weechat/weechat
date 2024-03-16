@@ -199,6 +199,7 @@ extern struct t_config_option *config_look_eat_newline_glitch;
 extern struct t_config_option *config_look_emphasized_attributes;
 extern struct t_config_option *config_look_highlight;
 extern struct t_config_option *config_look_highlight_disable_regex;
+extern struct t_config_option *config_look_highlight_prefix;
 extern struct t_config_option *config_look_highlight_regex;
 extern struct t_config_option *config_look_highlight_tags;
 extern struct t_config_option *config_look_hotlist_add_conditions;

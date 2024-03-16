@@ -1155,7 +1155,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             && gui_line_has_offline_nick (line);
 
         prefix_highlighted = NULL;
-        if (line->data->highlight)
+        if (line->data->highlight
+            && CONFIG_BOOLEAN(config_look_highlight_prefix))
         {
             prefix_no_color = gui_color_decode (ptr_prefix, NULL);
             if (prefix_no_color)

@@ -142,6 +142,7 @@ struct t_config_option *config_look_eat_newline_glitch = NULL;
 struct t_config_option *config_look_emphasized_attributes = NULL;
 struct t_config_option *config_look_highlight = NULL;
 struct t_config_option *config_look_highlight_disable_regex = NULL;
+struct t_config_option *config_look_highlight_prefix = NULL;
 struct t_config_option *config_look_highlight_regex = NULL;
 struct t_config_option *config_look_highlight_tags = NULL;
 struct t_config_option *config_look_hotlist_add_conditions = NULL;
@@ -3323,7 +3324,7 @@ config_weechat_init_options ()
                "(note: content is evaluated, so you can use colors with format "
                "\"${color:xxx}\", see /help eval); variable \"${highlight}\" "
                "can be used in a condition to have a format specific to lines "
-               "with highlight; "
+               "with highlight (see also option weechat.look.highlight_prefix); "
                "for example time using grayscale: "
                "\"${color:252}%H${color:243}%M${color:237}%S\", "
                "the same with milliseconds: "
@@ -3567,6 +3568,15 @@ config_weechat_init_options ()
             NULL, 0, 0, "", NULL, 0,
             NULL, NULL, NULL,
             &config_change_highlight_disable_regex, NULL, NULL,
+            NULL, NULL, NULL);
+        config_look_highlight_prefix = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "highlight_prefix", "boolean",
+            N_("use a specific color for prefix of line in case of highlight "
+               "(see also option weechat.look.buffer_time_format)"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL,
+            &config_change_buffers, NULL, NULL,
             NULL, NULL, NULL);
         config_look_highlight_regex = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
