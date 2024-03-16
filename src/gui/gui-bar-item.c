@@ -2258,13 +2258,21 @@ gui_bar_item_signal_cb (const void *pointer, void *data,
                         const char *signal,
                         const char *type_data, void *signal_data)
 {
+    const char *item;
+
     /* make C compiler happy */
     (void) data;
     (void) signal;
     (void) type_data;
     (void) signal_data;
 
-    gui_bar_item_update ((char *)pointer);
+    item = (const char *)pointer;
+    if (item)
+    {
+        if (strcmp (item, "hotlist") == 0)
+            gui_hotlist_resort ();
+        gui_bar_item_update (item);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -2437,7 +2445,7 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_HOTLIST],
                       &gui_bar_item_hotlist_cb, NULL, NULL);
-    gui_bar_item_hook_signal ("hotlist_changed;buffer_moved;buffer_closed",
+    gui_bar_item_hook_signal ("hotlist_changed;buffer_*",
                               gui_bar_item_names[GUI_BAR_ITEM_HOTLIST]);
 
     /* completion (possible words when a partial completion occurs) */
