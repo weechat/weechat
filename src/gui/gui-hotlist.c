@@ -549,6 +549,9 @@ gui_hotlist_resort ()
     struct t_gui_hotlist *new_hotlist, *last_new_hotlist;
     struct t_gui_hotlist *ptr_hotlist, *element;
 
+    if (weechat_upgrading)
+        return;
+
     /* copy and resort hotlist in new linked list */
     new_hotlist = NULL;
     last_new_hotlist = NULL;
