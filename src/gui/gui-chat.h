@@ -90,7 +90,8 @@ extern void gui_chat_get_word_info (struct t_gui_window *window,
                                     int *word_end_offset,
                                     int *word_length_with_spaces,
                                     int *word_length);
-extern char *gui_chat_get_time_string (time_t date, int date_usec);
+extern char *gui_chat_get_time_string (time_t date, int date_usec,
+                                       int highlight);
 extern int gui_chat_get_time_length ();
 extern void gui_chat_change_time_format ();
 extern int gui_chat_buffer_valid (struct t_gui_buffer *buffer,

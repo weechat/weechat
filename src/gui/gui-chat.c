@@ -390,12 +390,13 @@ gui_chat_get_word_info (struct t_gui_window *window,
  */
 
 char *
-gui_chat_get_time_string (time_t date, int date_usec)
+gui_chat_get_time_string (time_t date, int date_usec, int highlight)
 {
     char text_time[128], text_time2[(128*3)+16], text_time_char[2];
     char *text_with_color;
     int i, time_first_digit, time_last_digit, last_color;
     struct timeval tv;
+    struct t_hashtable *extra_vars;
 
     if (date == 0)
         return NULL;
@@ -413,7 +414,15 @@ gui_chat_get_time_string (time_t date, int date_usec)
 
     if (strstr (text_time, "${"))
     {
-        text_with_color = eval_expression (text_time, NULL, NULL, NULL);
+        extra_vars = hashtable_new (32,
+                                    WEECHAT_HASHTABLE_STRING,
+                                    WEECHAT_HASHTABLE_STRING,
+                                    NULL, NULL);
+        if (extra_vars)
+            hashtable_set (extra_vars, "highlight", (highlight) ? "1" : "0");
+        text_with_color = eval_expression (text_time, NULL, extra_vars, NULL);
+        if (extra_vars)
+            hashtable_free (extra_vars);
         if (text_with_color)
         {
             if (strcmp (text_time, text_with_color) != 0)
@@ -510,7 +519,7 @@ gui_chat_get_time_length ()
 
     length = 0;
     gettimeofday (&tv_now, NULL);
-    text_time = gui_chat_get_time_string (tv_now.tv_sec, tv_now.tv_usec);
+    text_time = gui_chat_get_time_string (tv_now.tv_sec, tv_now.tv_usec, 0);
 
     if (text_time)
     {
@@ -543,7 +552,8 @@ gui_chat_change_time_format ()
                     free (ptr_line->data->str_time);
                 ptr_line->data->str_time = gui_chat_get_time_string (
                     ptr_line->data->date,
-                    ptr_line->data->date_usec);
+                    ptr_line->data->date_usec,
+                    ptr_line->data->highlight);
             }
         }
     }

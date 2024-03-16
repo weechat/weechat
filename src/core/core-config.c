@@ -3321,11 +3321,18 @@ config_weechat_init_options ()
                "strftime for date/time specifiers, extra specifiers are "
                "supported, see function util_strftimeval in Plugin API reference) "
                "(note: content is evaluated, so you can use colors with format "
-               "\"${color:xxx}\", see /help eval); "
+               "\"${color:xxx}\", see /help eval); variable \"${highlight}\" "
+               "can be used in a condition to have a format specific to lines "
+               "with highlight; "
                "for example time using grayscale: "
                "\"${color:252}%H${color:243}%M${color:237}%S\", "
                "the same with milliseconds: "
-               "\"${color:252}%H${color:243}%M${color:237}%S.%.3\""),
+               "\"${color:252}%H${color:243}%M${color:237}%S.%.3\", "
+               "red background in case of highlight: "
+               "\"${if:${highlight}?${color:,red}}%H:%M:%S\", "
+               "red background in case of highlight with grayscale: "
+               "${if:${highlight}?${color:yellow,124}%H${color:187}%M${color:181}%S.%.3:"
+               "${color:252}%H${color:243}%M${color:237}%S.%.3}"),
             NULL, 0, 0, "%H:%M:%S", NULL, 0,
             NULL, NULL, NULL,
             &config_change_buffer_time_format, NULL, NULL,

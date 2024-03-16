@@ -854,7 +854,7 @@ TEST(GuiLine, New)
     gettimeofday (&date_printed, NULL);
     date.tv_sec = date_printed.tv_sec - 1;
     date.tv_usec = date_printed.tv_usec;
-    str_time = gui_chat_get_time_string (date.tv_sec, date.tv_usec);
+    str_time = gui_chat_get_time_string (date.tv_sec, date.tv_usec, 0);
 
     POINTERS_EQUAL(NULL,
                    gui_line_new (

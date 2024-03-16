@@ -1528,7 +1528,6 @@ gui_line_new (struct t_gui_buffer *buffer, int y,
         new_line->data->date_usec = date_usec;
         new_line->data->date_printed = date_printed;
         new_line->data->date_usec_printed = date_usec_printed;
-        new_line->data->str_time = gui_chat_get_time_string (date, date_usec);
         gui_line_tags_alloc (new_line->data, tags);
         new_line->data->refresh_needed = 0;
         new_line->data->prefix = (prefix) ?
@@ -1540,6 +1539,8 @@ gui_line_new (struct t_gui_buffer *buffer, int y,
         gui_line_set_highlight (new_line, max_notify_level);
         if (new_line->data->highlight && (new_line->data->notify_level >= 0))
             new_line->data->notify_level = GUI_HOTLIST_HIGHLIGHT;
+        new_line->data->str_time = gui_chat_get_time_string (
+            date, date_usec, new_line->data->highlight);
     }
     else
     {
@@ -1642,6 +1643,30 @@ gui_line_hook_update (struct t_gui_line *line,
         }
     }
 
+    ptr_value2 = hashtable_get (hashtable2, "notify_level");
+    if (ptr_value2)
+    {
+        error = NULL;
+        value = strtol (ptr_value2, &error, 10);
+        if (error && !error[0] && (value >= -1) && (value <= GUI_HOTLIST_MAX))
+        {
+            notify_level_updated = 1;
+            line->data->notify_level = value;
+        }
+    }
+
+    ptr_value2 = hashtable_get (hashtable2, "highlight");
+    if (ptr_value2)
+    {
+        error = NULL;
+        value = strtol (ptr_value2, &error, 10);
+        if (error && !error[0])
+        {
+            highlight_updated = 1;
+            line->data->highlight = (value) ? 1 : 0;
+        }
+    }
+
     ptr_value2 = hashtable_get (hashtable2, "date");
     if (ptr_value2)
     {
@@ -1654,7 +1679,8 @@ gui_line_hook_update (struct t_gui_line *line,
                 free (line->data->str_time);
             line->data->str_time = gui_chat_get_time_string (
                 line->data->date,
-                line->data->date_usec);
+                line->data->date_usec,
+                line->data->highlight);
         }
     }
 
@@ -1670,7 +1696,8 @@ gui_line_hook_update (struct t_gui_line *line,
                 free (line->data->str_time);
             line->data->str_time = gui_chat_get_time_string (
                 line->data->date,
-                line->data->date_usec);
+                line->data->date_usec,
+                line->data->highlight);
         }
     }
 
@@ -1708,30 +1735,6 @@ gui_line_hook_update (struct t_gui_line *line,
         tags_updated = 1;
         gui_line_tags_free (line->data);
         gui_line_tags_alloc (line->data, ptr_value2);
-    }
-
-    ptr_value2 = hashtable_get (hashtable2, "notify_level");
-    if (ptr_value2)
-    {
-        error = NULL;
-        value = strtol (ptr_value2, &error, 10);
-        if (error && !error[0] && (value >= -1) && (value <= GUI_HOTLIST_MAX))
-        {
-            notify_level_updated = 1;
-            line->data->notify_level = value;
-        }
-    }
-
-    ptr_value2 = hashtable_get (hashtable2, "highlight");
-    if (ptr_value2)
-    {
-        error = NULL;
-        value = strtol (ptr_value2, &error, 10);
-        if (error && !error[0])
-        {
-            highlight_updated = 1;
-            line->data->highlight = (value) ? 1 : 0;
-        }
     }
 
     ptr_value = hashtable_get (hashtable, "prefix");
@@ -2218,7 +2221,8 @@ gui_line_hdata_line_data_update_cb (void *data,
                 free (line_data->str_time);
             line_data->str_time = gui_chat_get_time_string (
                 line_data->date,
-                line_data->date_usec);
+                line_data->date_usec,
+                line_data->highlight);
             rc++;
             update_coords = 1;
         }
@@ -2234,7 +2238,8 @@ gui_line_hdata_line_data_update_cb (void *data,
                 free (line_data->str_time);
             line_data->str_time = gui_chat_get_time_string (
                 line_data->date,
-                line_data->date_usec);
+                line_data->date_usec,
+                line_data->highlight);
             rc++;
             update_coords = 1;
         }
