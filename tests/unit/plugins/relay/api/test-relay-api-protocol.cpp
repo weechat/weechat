@@ -26,6 +26,7 @@
 extern "C"
 {
 #include <unistd.h>
+#include <string.h>
 #include <cjson/cJSON.h>
 #include "src/core/core-config-file.h"
 #include "src/core/core-string.h"
