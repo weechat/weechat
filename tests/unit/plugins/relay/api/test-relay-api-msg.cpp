@@ -30,6 +30,7 @@ extern "C"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-color.h"
+#include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-nicklist.h"
 #include "src/plugins/relay/relay.h"
@@ -367,4 +368,67 @@ TEST(RelayApiMsg, LinesToJson)
                       json_line, "id");
     WEE_CHECK_OBJ_STR("this is the second line with green", json_line, "message");
     cJSON_Delete (json);
+}
+
+/*
+ * Tests functions:
+ *   relay_api_msg_hotlist_to_json
+ */
+
+TEST(RelayApiMsg, HotlistToJson)
+{
+    char str_date[128];
+    cJSON *json, *json_obj, *json_count;
+    struct timeval tv;
+    struct tm gm_time;
+
+    json = relay_api_msg_hotlist_to_json (NULL);
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    POINTERS_EQUAL(NULL, cJSON_GetObjectItem (json, "priority"));
+    cJSON_Delete (json);
+
+    gui_hotlist_add (gui_buffers, GUI_HOTLIST_LOW, NULL, 0);
+    gui_hotlist_add (gui_buffers, GUI_HOTLIST_MESSAGE, NULL, 0);
+    gui_hotlist_add (gui_buffers, GUI_HOTLIST_MESSAGE, NULL, 0);
+    gui_hotlist_add (gui_buffers, GUI_HOTLIST_PRIVATE, NULL, 0);
+    gui_hotlist_add (gui_buffers, GUI_HOTLIST_PRIVATE, NULL, 0);
+    gui_hotlist_add (gui_buffers, GUI_HOTLIST_PRIVATE, NULL, 0);
+    gui_hotlist_add (gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
+    gui_hotlist_add (gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
+    gui_hotlist_add (gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
+    gui_hotlist_add (gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
+
+    json = relay_api_msg_hotlist_to_json (gui_hotlist);
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    WEE_CHECK_OBJ_NUM(GUI_HOTLIST_HIGHLIGHT, json, "priority");
+    gmtime_r (&(gui_hotlist->creation_time.tv_sec), &gm_time);
+    tv.tv_sec = mktime (&gm_time);
+    tv.tv_usec = gui_hotlist->creation_time.tv_usec;
+    util_strftimeval (str_date, sizeof (str_date), "%FT%T.%fZ", &tv);
+    WEE_CHECK_OBJ_STR(str_date, json, "date");
+    WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "buffer_id");
+    json_count = cJSON_GetObjectItem (json, "count");
+    CHECK(json_count);
+    CHECK(cJSON_IsArray (json_count));
+    json_obj = cJSON_GetArrayItem (json_count, 0);
+    CHECK(json_obj);
+    CHECK(cJSON_IsNumber (json_obj));
+    CHECK(1 == cJSON_GetNumberValue (json_obj));
+    json_obj = cJSON_GetArrayItem (json_count, 1);
+    CHECK(json_obj);
+    CHECK(cJSON_IsNumber (json_obj));
+    CHECK(2 == cJSON_GetNumberValue (json_obj));
+    json_obj = cJSON_GetArrayItem (json_count, 2);
+    CHECK(json_obj);
+    CHECK(cJSON_IsNumber (json_obj));
+    CHECK(3 == cJSON_GetNumberValue (json_obj));
+    json_obj = cJSON_GetArrayItem (json_count, 3);
+    CHECK(json_obj);
+    CHECK(cJSON_IsNumber (json_obj));
+    CHECK(4 == cJSON_GetNumberValue (json_obj));
+    cJSON_Delete (json);
+
+    gui_hotlist_remove_buffer (gui_buffers, 1);
 }

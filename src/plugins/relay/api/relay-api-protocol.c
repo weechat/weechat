@@ -460,6 +460,36 @@ error:
 }
 
 /*
+ * Callback for resource "hotlist".
+ *
+ * Routes:
+ *   GET /api/hotlist
+ */
+
+RELAY_API_PROTOCOL_CALLBACK(hotlist)
+{
+    cJSON *json;
+    struct t_gui_hotlist *ptr_hotlist;
+
+    json = cJSON_CreateArray ();
+    if (!json)
+        return WEECHAT_RC_ERROR;
+
+    ptr_hotlist = weechat_hdata_get_list (relay_hdata_hotlist, "gui_hotlist");
+    while (ptr_hotlist)
+    {
+        cJSON_AddItemToArray (
+            json,
+            relay_api_msg_hotlist_to_json (ptr_hotlist));
+        ptr_hotlist = weechat_hdata_move (relay_hdata_hotlist, ptr_hotlist, 1);
+    }
+
+    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, json);
+    cJSON_Delete (json);
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for resource "input".
  *
  * Routes:
@@ -770,6 +800,7 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
         { "POST", "handshake", 0, 0, 0, &relay_api_protocol_cb_handshake },
         { "GET",  "version",   1, 0, 0, &relay_api_protocol_cb_version   },
         { "GET",  "buffers",   1, 0, 3, &relay_api_protocol_cb_buffers   },
+        { "GET",  "hotlist",   1, 0, 3, &relay_api_protocol_cb_hotlist   },
         { "POST", "input",     1, 0, 0, &relay_api_protocol_cb_input     },
         { "POST", "ping",      1, 0, 0, &relay_api_protocol_cb_ping      },
         { "POST", "sync",      1, 0, 0, &relay_api_protocol_cb_sync      },

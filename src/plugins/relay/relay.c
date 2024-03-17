@@ -57,6 +57,7 @@ struct t_hdata *relay_hdata_nick_group = NULL;
 struct t_hdata *relay_hdata_nick = NULL;
 struct t_hdata *relay_hdata_completion = NULL;
 struct t_hdata *relay_hdata_completion_word = NULL;
+struct t_hdata *relay_hdata_hotlist = NULL;
 
 int relay_signal_upgrade_received = 0; /* signal "upgrade" received ?       */
 
@@ -220,6 +221,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     relay_hdata_nick = weechat_hdata_get ("nick");
     relay_hdata_completion = weechat_hdata_get ("completion");
     relay_hdata_completion_word = weechat_hdata_get ("completion_word");
+    relay_hdata_hotlist = weechat_hdata_get ("hotlist");
 
     relay_signal_upgrade_received = 0;
 

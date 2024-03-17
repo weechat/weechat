@@ -614,3 +614,55 @@ relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group)
 
     return json;
 }
+
+/*
+ * Creates a JSON object with a hotlist entry.
+ */
+
+cJSON *
+relay_api_msg_hotlist_to_json (struct t_gui_hotlist *hotlist)
+{
+    struct t_hdata *hdata;
+    struct t_gui_hotlist *pointer;
+    struct t_gui_buffer *buffer;
+    cJSON *json, *json_count;
+    time_t time_value;
+    struct timeval tv;
+    struct tm gm_time;
+    char str_time[256], str_key[32];
+    int i, array_size;
+    long long buffer_id;
+
+    hdata = relay_hdata_hotlist;
+    pointer = hotlist;
+
+    json = cJSON_CreateObject ();
+    if (!json)
+        return NULL;
+
+    if (!hotlist)
+        return json;
+
+    MSG_ADD_HDATA_VAR(Number, "priority", integer, "priority");
+    MSG_ADD_HDATA_TIME_USEC("date", "time", "time_usec");
+    buffer = weechat_hdata_pointer (hdata, hotlist, "buffer");
+    buffer_id = (buffer) ?
+        weechat_hdata_longlong (relay_hdata_buffer, buffer, "id") : -1;
+    cJSON_AddItemToObject (json, "buffer_id", cJSON_CreateNumber (buffer_id));
+
+    json_count = cJSON_CreateArray ();
+    if (json_count)
+    {
+        array_size = weechat_hdata_get_var_array_size (hdata, hotlist, "count");
+        for (i = 0; i < array_size; i++)
+        {
+            snprintf (str_key, sizeof (str_key), "%d|count", i);
+            cJSON_AddItemToArray (
+                json_count,
+                cJSON_CreateNumber (weechat_hdata_integer (hdata, hotlist, str_key)));
+        }
+    }
+    cJSON_AddItemToObject (json, "count", json_count);
+
+    return json;
+}

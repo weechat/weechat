@@ -37,29 +37,31 @@ extern "C" {
     #define PATH_MAX 4096
 #endif /* PATH_MAX */
 
+struct timeval;
+
+struct t_arraylist;
 struct t_config_option;
 struct t_config_section;
 struct t_config_file;
-struct t_gui_window;
-struct t_gui_buffer;
-struct t_gui_lines;
-struct t_gui_line;
-struct t_gui_line_data;
 struct t_gui_bar;
 struct t_gui_bar_item;
 struct t_gui_bar_window;
+struct t_gui_buffer;
 struct t_gui_completion;
+struct t_gui_hotlist;
+struct t_gui_line;
+struct t_gui_line_data;
+struct t_gui_lines;
 struct t_gui_nick;
 struct t_gui_nick_group;
+struct t_gui_window;
+struct t_hashtable;
+struct t_hdata;
 struct t_infolist;
 struct t_infolist_item;
 struct t_upgrade_file;
 struct t_weelist;
 struct t_weelist_item;
-struct t_arraylist;
-struct t_hashtable;
-struct t_hdata;
-struct timeval;
 
 /*
  * IMPORTANT NOTE for WeeChat developers: if you update, add or remove
