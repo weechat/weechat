@@ -63,6 +63,7 @@ Bug fixes::
 Tests::
 
   * core: add tests on mouse events (issue #2082)
+  * gui: add tests on hotlist functions
   * scripts: make tests fail if a compiled scripting plugin fails to load
   * scripts: add tests on constants
 
