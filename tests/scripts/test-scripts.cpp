@@ -127,25 +127,40 @@ TEST(Scripts, API)
 {
     char path_testapigen[PATH_MAX], path_testapi[PATH_MAX];
     char *path_testapi_output_dir, str_command[(PATH_MAX * 2) + 128];
-    char *test_scripts_dir, str_condition[128];
+    char *test_scripts_dir, str_condition[128], str_error[128];
     struct timeval time_start, time_end;
     long long diff;
     const char *ptr_test_scripts_dir;
     const char *languages[][2] = {
+#ifdef HAVE_PYTHON
         { "python",     "py"  },
+#endif
+#ifdef HAVE_PERL
         { "perl",       "pl"  },
+#endif
+#ifdef HAVE_RUBY
         { "ruby",       "rb"  },
+#endif
+#ifdef HAVE_LUA
         { "lua",        "lua" },
+#endif
+#ifdef HAVE_TCL
         { "tcl",        "tcl" },
+#endif
+#ifdef HAVE_GUILE
         { "guile",      "scm" },
+#endif
+#ifdef HAVE_JAVASCRIPT
         { "javascript", "js"  },
+#endif
+#ifdef HAVE_PYTHON
         { "php",        "php" },
+#endif
         { NULL,         NULL  }
     };
     int i, turnoff_memleak;
     struct t_hdata *hdata;
     void *plugins;
-
 
     printf ("...\n");
 
@@ -199,12 +214,18 @@ TEST(Scripts, API)
     /* test the scripting API */
     for (i = 0; languages[i][0]; i++)
     {
-        /* test if the plugin is loaded; if not, tests are skipped */
+        /* test if the plugin is loaded */
         snprintf (str_condition, sizeof (str_condition),
                   "${plugin.name} == %s",
                   languages[i][0]);
         if (!hdata_search (hdata, plugins, str_condition, NULL, NULL, NULL, 1))
-            continue;
+        {
+            /* plugin not loaded */
+            snprintf (str_error, sizeof (str_error),
+                      "Plugin \"%s\" is not loaded",
+                      languages[i][0]);
+            FAIL(str_error);
+        }
 
         /*
          * TODO: fix memory leaks in javascript plugin
