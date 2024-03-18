@@ -2448,7 +2448,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_HOTLIST],
                       &gui_bar_item_hotlist_cb, NULL, NULL);
-    gui_bar_item_hook_signal ("hotlist_changed;buffer_*",
+    gui_bar_item_hook_signal ("hotlist_changed;buffer_moved;buffer_closed;"
+                              "buffer_localvar_*",
                               gui_bar_item_names[GUI_BAR_ITEM_HOTLIST]);
 
     /* completion (possible words when a partial completion occurs) */
