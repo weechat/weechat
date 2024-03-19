@@ -154,6 +154,18 @@ script_command_script (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
+    if (weechat_strcmp (argv[1], "enable") == 0)
+    {
+        if (!weechat_config_boolean (script_config_scripts_download_enabled))
+        {
+            weechat_config_option_set (script_config_scripts_download_enabled, "on", 1);
+            weechat_printf (NULL,
+                            _("%s: download of scripts enabled"),
+                            SCRIPT_PLUGIN_NAME);
+        }
+        return WEECHAT_RC_OK;
+    }
+
     if (weechat_strcmp (argv[1], "list") == 0)
     {
         script_action_schedule (buffer, argv_eol[1], 1, 0, 0);
@@ -309,7 +321,8 @@ script_command_init ()
         "script",
         N_("WeeChat script manager"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("list [-o|-ol|-i|-il]"
+        N_("enable"
+           " || list [-o|-ol|-i|-il]"
            " || search <text>"
            " || show <script>"
            " || load|unload|reload <script> [<script>...]"
@@ -320,6 +333,8 @@ script_command_init ()
            " || -up|-down [<number>]"
            " || -go <line>|end"),
         WEECHAT_CMD_ARGS_DESC(
+            N_("raw[enable]: enable download of scripts "
+               "(turn on option script.scripts.download_enabled)"),
             N_("raw[list]: list loaded scripts (all languages)"),
             N_("raw[-o]: send list of loaded scripts to buffer "
                "(string in English)"),
@@ -380,7 +395,8 @@ script_command_init ()
             AI("  /script hold urlserver.py"),
             AI("  /script reload urlserver"),
             AI("  /script upgrade")),
-        "list -i|-il|-o|-ol"
+        "enable"
+        " || list -i|-il|-o|-ol"
         " || search %(script_tags)|%(script_languages)|%(script_extensions)"
         " || show %(script_scripts)"
         " || load %(script_files)|%*"

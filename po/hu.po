@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-16 14:13+0100\n"
+"POT-Creation-Date: 2024-03-19 20:38+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13961,9 +13961,13 @@ msgstr "WeeChat szlogen"
 
 #, c-format
 msgid ""
-"%s%s: download of scripts is disabled by default; see /help script.scripts."
-"download_enabled"
+"%s%s: download of scripts is disabled by default; to enable it, type /script "
+"enable"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: download of scripts enabled"
+msgstr "folyamat: \"%s\" szerver betöltése\n"
 
 #, fuzzy
 msgid "WeeChat script manager"
@@ -13971,10 +13975,15 @@ msgstr "WeeChat szlogen"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"list [-o|-ol|-i|-il] || search <text> || show <script> || load|unload|reload "
-"<script> [<script>...] || autoload|noautoload|toggleautoload <script> "
-"[<script>...] || install|remove|installremove|hold [-q] <script> "
+"enable || list [-o|-ol|-i|-il] || search <text> || show <script> || load|"
+"unload|reload <script> [<script>...] || autoload|noautoload|toggleautoload "
+"<script> [<script>...] || install|remove|installremove|hold [-q] <script> "
 "[<script>...] || upgrade || update || -up|-down [<number>] || -go <line>|end"
+msgstr ""
+
+msgid ""
+"raw[enable]: enable download of scripts (turn on option script.scripts."
+"download_enabled)"
 msgstr ""
 
 #, fuzzy

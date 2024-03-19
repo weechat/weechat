@@ -123,7 +123,7 @@ script_download_enabled (int display_error)
         /* download not enabled: display an error */
         weechat_printf (NULL,
                         _("%s%s: download of scripts is disabled by default; "
-                          "see /help script.scripts.download_enabled"),
+                          "to enable it, type /script enable"),
                         weechat_prefix ("error"),
                         SCRIPT_PLUGIN_NAME);
     }

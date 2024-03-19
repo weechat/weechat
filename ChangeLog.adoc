@@ -38,6 +38,7 @@ New features::
   * irc: add server option "autojoin_delay" (delay before autojoin), use option "command_delay" before execution of the command (issue #862)
   * relay: add "api" protocol (HTTP REST API), add option relay.look.display_clients, change option type relay.look.auto_open_buffer to string, rename option relay.weechat.commands to relay.network.commands, add option relay.network.time_window (issue #2066)
   * relay: add support of websocket extension "permessage-deflate" (issue #1549)
+  * script: add option `enable` in command `/script`
   * script: add info "script_loaded"
 
 Bug fixes::

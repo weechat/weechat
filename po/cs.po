@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-16 14:13+0100\n"
+"POT-Creation-Date: 2024-03-19 20:38+0100\n"
 "PO-Revision-Date: 2024-03-06 20:32+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14539,9 +14539,14 @@ msgstr "Správce skriptů"
 
 #, c-format
 msgid ""
-"%s%s: download of scripts is disabled by default; see /help script.scripts."
-"download_enabled"
+"%s%s: download of scripts is disabled by default; to enable it, type /script "
+"enable"
 msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s: downloading list of scripts..."
+msgid "%s: download of scripts enabled"
+msgstr "%s: stahuji seznam skriptů..."
 
 #, fuzzy
 msgid "WeeChat script manager"
@@ -14550,15 +14555,20 @@ msgstr "správce skriptů WeeChatu"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"list [-o|-ol|-i|-il] || search <text> || show <script> || load|unload|reload "
-"<script> [<script>...] || autoload|noautoload|toggleautoload <script> "
-"[<script>...] || install|remove|installremove|hold [-q] <script> "
+"enable || list [-o|-ol|-i|-il] || search <text> || show <script> || load|"
+"unload|reload <script> [<script>...] || autoload|noautoload|toggleautoload "
+"<script> [<script>...] || install|remove|installremove|hold [-q] <script> "
 "[<script>...] || upgrade || update || -up|-down [<number>] || -go <line>|end"
 msgstr ""
 "seznam [-o|-i] || hledej <text> || ukaž <script> || načti|uvolni|znovu načís "
 "<script> [<script>...] || automaticky načti|nenačítejtej automaticky|přepni "
 "automatické načtení <script> [<script>...] || instaluj|smaž|installremove|"
 "drž [-q] <script> [<script>...] || upgradni || aktualizuj"
+
+msgid ""
+"raw[enable]: enable download of scripts (turn on option script.scripts."
+"download_enabled)"
+msgstr ""
 
 #, fuzzy
 msgid "raw[list]: list loaded scripts (all languages)"
