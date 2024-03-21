@@ -5183,6 +5183,8 @@ Dopasowanie grup może być także użyte:
 * `+${re:0}+` do `+${re:99}+`: `+${re:0}+` to pełne dopasowanie, `+${re:1}+` do
   `+${re:99}+` to złapane grupy
 * `+${re:+}+`: ostatnie dopasowanie (z najwyższym numerem)
+* `+${re:#}+`: index of last group captured
+* `+${re:repl_index}+`: index of replacement being done (starts to 1)
 * `+${hide:c,${re:N}}+`: dopasuje "N" ze wszystkimi znakami zastąpionymi przez "c"
   (przykład: `+${hide:*,${re:2}}+` to grupa #2 ze wszystkimi znakami zastąpionymi przez
   `+*+`).
