@@ -5233,7 +5233,7 @@ Zutreffende Gruppen können in _replace_ verwendet werden:
 
 * `+${re:0}+` nach `+${re:99}+`: `+${re:0}+` ist die ganze Trefferanzahl, `+${re:1}+` nach
   `+${re:99}+` sind als Gruppen erfasst.
-* `+${re:+}+`: das letzte Treffer (mit der höchsten Zahl)
+* `pass:[${re:+}]`: das letzte Treffer (mit der höchsten Zahl)
 * `+${re:#}+`: index of last group captured
 * `+${re:repl_index}+`: index of replacement being done (starts to 1)
 * `+${hide:c,${re:N}}+`: Treffer "N" mit allen Zeichen die durch "c" ersetzt wurden

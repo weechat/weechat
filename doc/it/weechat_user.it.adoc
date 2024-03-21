@@ -5528,7 +5528,7 @@ Matching groups can be used in _replace_:
 
 * `+${re:0}+` to `+${re:99}+`: `+${re:0}+` is the whole match, `+${re:1}+` to
   `+${re:99}+` are groups captured
-* `+${re:+}+`: the last match (with highest number)
+* `pass:[${re:+}]`: the last match (with highest number)
 * `+${re:#}+`: index of last group captured
 * `+${re:repl_index}+`: index of replacement being done (starts to 1)
 * `+${hide:c,${re:N}}+`: match "N" with all chars replaced by "c"
