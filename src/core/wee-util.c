@@ -198,15 +198,23 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
             string_dyn_concat (format2, "%%", -1);
             ptr_format += 2;
         }
-        else if ((ptr_format[0] == '%') && (ptr_format[1] == '.')
-                 && (ptr_format[2] >= '1') && (ptr_format[2] <= '6'))
+        else if ((ptr_format[0] == '%') && (ptr_format[1] == '.'))
         {
-            snprintf (str_usec, sizeof (str_usec),
-                      "%06ld", (long)(tv->tv_usec));
-            length = ptr_format[2] - '1' + 1;
-            str_usec[length] = '\0';
-            string_dyn_concat (format2, str_usec, -1);
-            ptr_format += 3;
+            if ((ptr_format[2] >= '1') && (ptr_format[2] <= '6'))
+            {
+                snprintf (str_usec, sizeof (str_usec),
+                          "%06ld", (long)(tv->tv_usec));
+                length = ptr_format[2] - '1' + 1;
+                str_usec[length] = '\0';
+                string_dyn_concat (format2, str_usec, -1);
+                ptr_format += 3;
+            }
+            else
+            {
+                ptr_format += 2;
+                if (ptr_format[0])
+                    ptr_format++;
+            }
         }
         else if ((ptr_format[0] == '%') && (ptr_format[1] == 'f'))
         {

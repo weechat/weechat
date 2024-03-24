@@ -25,6 +25,10 @@ Bug fixes::
   * tcl: fix truncation of long integer returned by function hdata_long
   * trigger: fix memory leak when adding a new trigger with `/trigger` command
 
+Tests::
+
+  * core: fix tests on function strftimeval on Alpine
+
 [[v4.2.1]]
 == Version 4.2.1 (2024-01-22)
 
