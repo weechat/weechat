@@ -297,6 +297,7 @@ struct t_config_option *config_color_status_time = NULL;
 /* config, completion section */
 
 struct t_config_option *config_completion_base_word_until_cursor = NULL;
+struct t_config_option *config_completion_case_sensitive = NULL;
 struct t_config_option *config_completion_command_inline = NULL;
 struct t_config_option *config_completion_default_template = NULL;
 struct t_config_option *config_completion_nick_add_space = NULL;
@@ -4973,6 +4974,12 @@ config_weechat_init_options ()
             "base_word_until_cursor", "boolean",
             N_("if enabled, the base word to complete ends at char before cursor; "
                "otherwise the base word ends at first space after cursor"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        config_completion_case_sensitive = config_file_new_option (
+            weechat_config_file, weechat_config_section_completion,
+            "case_sensitive", "boolean",
+            N_("if enabled, the completion is case sensitive by default"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_completion_command_inline = config_file_new_option (

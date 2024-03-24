@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
+  * core: add option weechat.completion.case_sensitive
   * core: add option weechat.look.highlight_prefix (issue #2079)
   * core: add variable `${highlight}` in option weechat.look.buffer_time_format (issue #2079)
   * core: convert option weechat.look.hotlist_sort to a list of fields (issue #2097)

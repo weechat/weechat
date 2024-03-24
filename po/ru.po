@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-19 20:38+0100\n"
+"POT-Creation-Date: 2024-03-24 15:38+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -798,8 +798,8 @@ msgstr "%s неизвестный параметр для команды \"%s\"\
 msgid ""
 "%sYou must confirm /%s command with extra argument \"-yes\" (see /help %s)"
 msgstr ""
-"%sНеобходимо подтвердить команду выхода дополнительным аргументом \"-"
-"yes\" (см. /help quit)"
+"%sНеобходимо подтвердить команду выхода дополнительным аргументом \"-yes\" "
+"(см. /help quit)"
 
 #, fuzzy, c-format
 msgid "Options reloaded from %s"
@@ -1884,8 +1884,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"  - ${random:min,max}: a random integer number between \"min\" and "
-"\"max\" (inclusive)"
+"  - ${random:min,max}: a random integer number between \"min\" and \"max\" "
+"(inclusive)"
 msgstr ""
 
 msgid "  - ${translate:string}: the translated string"
@@ -4207,11 +4207,11 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"if set, /upgrade command must be confirmed with extra argument \"-"
-"yes\" (see /help upgrade)"
+"if set, /upgrade command must be confirmed with extra argument \"-yes\" "
+"(see /help upgrade)"
 msgstr ""
-"%sНеобходимо подтвердить команду выхода дополнительным аргументом \"-"
-"yes\" (см. /help quit)"
+"%sНеобходимо подтвердить команду выхода дополнительным аргументом \"-yes\" "
+"(см. /help quit)"
 
 msgid "display special message when day changes"
 msgstr "отображать специальное сообщение  при смене дня"
@@ -5002,6 +5002,9 @@ msgstr "цвет строки состояния"
 msgid ""
 "if enabled, the base word to complete ends at char before cursor; otherwise "
 "the base word ends at first space after cursor"
+msgstr ""
+
+msgid "if enabled, the completion is case sensitive by default"
 msgstr ""
 
 msgid ""
@@ -5879,13 +5882,13 @@ msgstr ""
 "расположение списка пользователей (top, left, right(по умолчанию), bottom)"
 
 msgid ""
-"bar filling direction (\"horizontal\" (from left to right) or "
-"\"vertical\" (from top to bottom)) when bar position is top or bottom"
+"bar filling direction (\"horizontal\" (from left to right) or \"vertical\" "
+"(from top to bottom)) when bar position is top or bottom"
 msgstr ""
 
 msgid ""
-"bar filling direction (\"horizontal\" (from left to right) or "
-"\"vertical\" (from top to bottom)) when bar position is left or right"
+"bar filling direction (\"horizontal\" (from left to right) or \"vertical\" "
+"(from top to bottom)) when bar position is left or right"
 msgstr ""
 
 msgid ""
@@ -5921,9 +5924,9 @@ msgid "separator line between bar and other bars/windows"
 msgstr "разделитель чата и никлиста"
 
 msgid ""
-"items of bar, they can be separated by comma (space between items) or \"+"
-"\" (glued items); special syntax \"@buffer:item\" can be used to force "
-"buffer used when displaying the bar item"
+"items of bar, they can be separated by comma (space between items) or \"+\" "
+"(glued items); special syntax \"@buffer:item\" can be used to force buffer "
+"used when displaying the bar item"
 msgstr ""
 
 #, fuzzy, c-format
@@ -7309,8 +7312,8 @@ msgid "    - ${description}: option description (translated)"
 msgstr ""
 
 msgid ""
-"    - ${description2}: option description (translated), \"(no "
-"description)\" (translated) if there's no description"
+"    - ${description2}: option description (translated), \"(no description)\" "
+"(translated) if there's no description"
 msgstr ""
 
 msgid "    - ${description_en}: option description (in English)"
@@ -7943,8 +7946,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: if you want to add a standard server, use the command \"/server "
-"add\" (see /help server); if you really want to add a temporary server (NOT "
+"%s%s: if you want to add a standard server, use the command \"/server add\" "
+"(see /help server); if you really want to add a temporary server (NOT "
 "SAVED), turn on the option irc.look.temporary_servers"
 msgstr ""
 
@@ -13071,14 +13074,14 @@ msgstr "%s не могу создать сервер\n"
 
 #, c-format
 msgid ""
-"%s%s: too few arguments received from client %s%s%s for resource "
-"\"%s\" (received: %d arguments, expected: at least %d)"
+"%s%s: too few arguments received from client %s%s%s for resource \"%s\" "
+"(received: %d arguments, expected: at least %d)"
 msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: too many arguments received from client %s%s%s for resource "
-"\"%s\" (received: %d arguments, expected: at most %d)"
+"%s%s: too many arguments received from client %s%s%s for resource \"%s\" "
+"(received: %d arguments, expected: at most %d)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -13803,8 +13806,8 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, c-format
 msgid ""
-"%s%s: too few arguments received from client %s%s%s for command "
-"\"%s\" (received: %d arguments, expected: at least %d)"
+"%s%s: too few arguments received from client %s%s%s for command \"%s\" "
+"(received: %d arguments, expected: at least %d)"
 msgstr ""
 
 #, fuzzy
@@ -14860,13 +14863,13 @@ msgstr ""
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
-"<name> <hook> "
-"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
-"|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
-"<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|"
-"<mask> [<name>|<mask>...]] || restart <name>|<mask> [<name>|<mask>...] || "
-"show <name> || del <name>|<mask> [<name>|<mask>...] || restore <name>|<mask> "
-"[<name>|<mask>...] || default -yes || monitor [<filter>]"
+"<name> <hook> [\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" "
+"[\"<return_code>\" [\"<post_action>\"]]]]]] || addinput [<hook>] || input|"
+"output|recreate <name> || set <name> <option> <value> || rename|copy <name> "
+"<new_name> || enable|disable|toggle [<name>|<mask> [<name>|<mask>...]] || "
+"restart <name>|<mask> [<name>|<mask>...] || show <name> || del <name>|<mask> "
+"[<name>|<mask>...] || restore <name>|<mask> [<name>|<mask>...] || default -"
+"yes || monitor [<filter>]"
 msgstr ""
 
 msgid "raw[list]: list triggers (without argument, this list is displayed)"

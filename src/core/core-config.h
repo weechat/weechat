@@ -346,6 +346,7 @@ extern struct t_config_option *config_color_status_number;
 extern struct t_config_option *config_color_status_time;
 
 extern struct t_config_option *config_completion_base_word_until_cursor;
+extern struct t_config_option *config_completion_case_sensitive;
 extern struct t_config_option *config_completion_command_inline;
 extern struct t_config_option *config_completion_default_template;
 extern struct t_config_option *config_completion_nick_add_space;
