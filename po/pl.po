@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-24 15:38+0100\n"
+"POT-Creation-Date: 2024-03-25 12:05+0100\n"
 "PO-Revision-Date: 2024-03-06 20:32+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -997,6 +997,11 @@ msgstr "%sNie powiodło się ustawienie opcji \"%s\""
 #, c-format
 msgid "%sOption \"%s\" not found"
 msgstr "%sNie znaleziono opcji \"%s\""
+
+#, fuzzy
+#| msgid "Option changed: "
+msgid "Option unchanged: "
+msgstr "Opcja zmieniona: "
 
 msgid "Option changed: "
 msgstr "Opcja zmieniona: "

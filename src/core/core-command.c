@@ -6721,10 +6721,12 @@ COMMAND_CALLBACK(set)
                                             &ptr_option, NULL);
             if (ptr_option)
             {
-                command_set_display_option (ptr_option,
-                                            (ptr_option_before) ?
-                                            _("Option changed: ") :
-                                            _("Option created: "));
+                command_set_display_option (
+                    ptr_option,
+                    (ptr_option_before) ?
+                    ((rc == WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE) ?
+                     _("Option unchanged: ") : _("Option changed: ")) :
+                    _("Option created: "));
             }
             break;
     }
