@@ -423,6 +423,15 @@ fset_command_fset (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
+        if (weechat_strcmp (argv[1], "-import") == 0)
+        {
+            if (argc < 3)
+                WEECHAT_COMMAND_ERROR;
+            if (!fset_option_import (argv_eol[2]))
+                WEECHAT_COMMAND_ERROR;
+            return WEECHAT_RC_OK;
+        }
+
         WEECHAT_COMMAND_ERROR;
     }
     else
@@ -639,6 +648,7 @@ fset_command_init ()
            " || -mark"
            " || -format"
            " || -export [-help|-nohelp] <filename>"
+           " || -import <filename>"
            " || <filter>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[-bar]: add the help bar"),
@@ -666,6 +676,8 @@ fset_command_init ()
             N_("raw[-format]: switch to the next available format"),
             N_("raw[-export]: export the options and values displayed in a file "
                "(each line has format: \"/set name value\" or \"/unset name\")"),
+            N_("raw[-import]: import the options from a file "
+               "(all lines containing commands are are executed)"),
             N_("raw[-help]: force writing of help on options in exported file "
                "(see /help fset.look.export_help_default)"),
             N_("raw[-nohelp]: do not write help on options in exported file "
@@ -784,6 +796,7 @@ fset_command_init ()
         " || -mark"
         " || -format"
         " || -export -help|-nohelp|%(filename) %(filename)"
+        " || -import %(filename)"
         " || *|c:|f:|s:|d|d:|d=|d==|=|==|%(fset_options)",
         &fset_command_fset, NULL, NULL);
     weechat_hook_command_run ("/set", &fset_command_run_set_cb, NULL, NULL);

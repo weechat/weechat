@@ -1471,6 +1471,63 @@ fset_option_export (const char *filename, int with_help)
 }
 
 /*
+ * Imports options from a file: all lines starting with "/" are executed.
+ *
+ * Returns:
+ *   1: export OK
+ *   0: error
+ */
+
+int
+fset_option_import (const char *filename)
+{
+    char *filename2, line[4096], *ptr_line;
+    FILE *file;
+    int length;
+
+    filename2 = weechat_string_expand_home (filename);
+    if (!filename2)
+        return 0;
+
+    file = fopen (filename2, "r");
+    if (!file)
+    {
+        free (filename2);
+        return 0;
+    }
+
+    while (!feof (file))
+    {
+        ptr_line = fgets (line, sizeof (line) - 1, file);
+        if (!ptr_line)
+            continue;
+        /* ignore comments */
+        if (ptr_line[0] == '#')
+            continue;
+        /* execute command (if it's a valid command) */
+        if (!weechat_string_input_for_buffer (ptr_line))
+        {
+            /* remove trailing '\r' and '\n' */
+            length = strlen (line) - 1;
+            while ((length >= 0)
+                   && ((line[length] == '\n')
+                       || (line[length] == '\r')))
+            {
+                line[length] = '\0';
+                length--;
+            }
+            weechat_command (NULL, ptr_line);
+        }
+    }
+
+    fclose (file);
+
+    free (filename2);
+
+    return 1;
+}
+
+/*
  * Refreshes the fset buffer after the change of an option.
  */
 

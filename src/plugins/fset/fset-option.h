@@ -121,6 +121,7 @@ extern void fset_option_mark_options_matching_filter (const char *filter,
                                                       int mark);
 extern void fset_option_unmark_all ();
 extern int fset_option_export (const char *filename, int with_help);
+extern int fset_option_import (const char *filename);
 extern int fset_option_config_cb (const void *pointer,
                                   void *data,
                                   const char *option,
