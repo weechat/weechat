@@ -1797,8 +1797,6 @@ relay_client_set_status (struct t_relay_client *client,
     struct t_relay_server *ptr_server;
     int old_status;
 
-    old_status = client->status;
-
     /*
      * IMPORTANT: if changes are made in this function or sub-functions called,
      * please also update the function relay_client_add_to_infolist:
@@ -1806,6 +1804,7 @@ relay_client_set_status (struct t_relay_client *client,
      * a disconnected state for client in infolist (used on /upgrade -save)
      */
 
+    old_status = client->status;
     client->status = status;
 
     if ((client->status == RELAY_STATUS_CONNECTED)
