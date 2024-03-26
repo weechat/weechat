@@ -68,7 +68,7 @@ relay_auth_password_hash_algo_search (const char *name)
 }
 
 /*
- * Generates a nonce: a buffer of unpredictable bytes
+ * Generates a nonce: a buffer of unpredictable bytes.
  *
  * Note: result must be freed after use.
  */
