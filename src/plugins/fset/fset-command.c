@@ -697,7 +697,7 @@ fset_command_init ()
             N_("raw[-export]: export the options and values displayed in a file "
                "(each line has format: \"/set name value\" or \"/unset name\")"),
             N_("raw[-import]: import the options from a file "
-               "(all lines containing commands are are executed)"),
+               "(all lines containing commands are executed)"),
             N_("raw[-help]: force writing of help on options in exported file "
                "(see /help fset.look.export_help_default)"),
             N_("raw[-nohelp]: do not write help on options in exported file "
