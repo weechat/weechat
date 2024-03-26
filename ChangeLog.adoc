@@ -21,6 +21,7 @@ Bug fixes::
   * exec: add missing exec tags in lines of buffers with free content (issue #2086)
   * irc: add missing tags on self action messages when capability echo-message is enabled (issue #2074)
   * python: fix truncation of unsigned long long integer returned by function string_parse_size
+  * relay: set the last IRC client disconnection time only after a successful connection (issue #2103)
   * script: always display list of scripts when searching scripts with `/script search` (issue #2077)
   * script: fix default mouse keys (issue #2076)
   * scripts: fix crash on script unload when a hook is created in a buffer close callback (issue #2067)

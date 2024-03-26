@@ -1634,6 +1634,9 @@ relay_client_set_status (struct t_relay_client *client,
                          enum t_relay_status status)
 {
     struct t_relay_server *ptr_server;
+    int old_status;
+
+    old_status = client->status;
 
     /*
      * IMPORTANT: if changes are made in this function or sub-functions called,
@@ -1658,9 +1661,16 @@ relay_client_set_status (struct t_relay_client *client,
     {
         client->end_time = time (NULL);
 
-        ptr_server = relay_server_search (client->protocol_string);
-        if (ptr_server)
-            ptr_server->last_client_disconnect = client->end_time;
+        if (old_status == RELAY_STATUS_CONNECTED)
+        {
+            /*
+             * set the last client disconnect time
+             * (only if the client was connected)
+             */
+            ptr_server = relay_server_search (client->protocol_string);
+            if (ptr_server)
+                ptr_server->last_client_disconnect = client->end_time;
+        }
 
         relay_client_outqueue_free_all (client);
 
