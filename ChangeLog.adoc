@@ -58,6 +58,7 @@ Bug fixes::
   * irc: fix random date displayed when a received message contains tags but no "time" (issue #2064)
   * lua: fix freeze on call to "debug.debug" (issue #1906, issue #1907)
   * python: fix truncation of unsigned long long integer returned by function string_parse_size
+  * relay: set the last IRC client disconnection time only after a successful connection (issue #2103)
   * script: always display list of scripts when searching scripts with `/script search` (issue #2077)
   * script: fix default mouse keys (issue #2076)
   * scripts: fix crash on script unload when a hook is created in a buffer close callback (issue #2067)
