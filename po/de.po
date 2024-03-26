@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2024-03-26 09:18+0100\n"
-"PO-Revision-Date: 2024-03-25 11:43+0100\n"
+"PO-Revision-Date: 2024-03-26 09:26+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -1020,10 +1020,9 @@ msgstr "%sEinstellung \"%s\" konnte nicht gesetzt werden"
 msgid "%sOption \"%s\" not found"
 msgstr "%sEinstellung \"%s\" wurde nicht gefunden"
 
-#, fuzzy
 #| msgid "Option changed: "
 msgid "Option unchanged: "
-msgstr "Einstellung geändert: "
+msgstr "Einstellung unverändert: "
 
 msgid "Option changed: "
 msgstr "Einstellung geändert: "
@@ -8497,23 +8496,22 @@ msgstr ""
 msgid "%s%s: not enough memory"
 msgstr "%s%s: nicht genügend Speicher"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s%s: buffer \"%s\" not found"
 msgid "%s%s: file \"%s\" not found"
-msgstr "%s%s: Buffer \"%s\" nicht gefunden"
+msgstr "%s%s: Datei \"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s%s: unable to execute file \"%s\""
 msgid "%d command executed in file \"%s\""
 msgid_plural "%d commands executed in file \"%s\""
-msgstr[0] "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
-msgstr[1] "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
+msgstr[0] "%d Befehl in Datei \"%s\" ausgeführt"
+msgstr[1] "%d Befehle in Datei \"%s\" ausgeführt"
 
 msgid "fast set WeeChat and plugins options"
 msgstr "Optionen von WeeChat und Erweiterungen schnell anpassen"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
 #| msgid ""
 #| "-bar || -refresh || -up|-down [<number>] || -left|-right [<percent>] || -"
 #| "go <line>|end || -toggle || -add [<value>] || -reset || -unset || -set || "
@@ -8528,7 +8526,7 @@ msgstr ""
 "-bar || -refresh || -up|-down [<number>] || -left|-right [<percent>] || -go "
 "<line>|end || -toggle || -add [<value>] || -reset || -unset || -set || -"
 "setnew || -append || -mark || -format || -export [-help|-nohelp] <filename> "
-"|| <filter>"
+"|| -import <filename> || <filter>"
 
 msgid "raw[-bar]: add the help bar"
 msgstr "raw[-bar]: fügt eine Hilfebar hinzu"
@@ -8625,6 +8623,8 @@ msgid ""
 "raw[-import]: import the options from a file (all lines containing commands "
 "are executed)"
 msgstr ""
+"raw[-import]: importiert Einstellungen aus einer Datei (Zeilen, die Befehle"
+" enthalten, werden ausgeführt)"
 
 msgid ""
 "raw[-help]: force writing of help on options in exported file (see /help "
@@ -18043,3 +18043,5 @@ msgstr ""
 #~ "Benachrichtigungstufe (Highlights zuerst) und dann nach Buffer-Nummer, "
 #~ "number_*: sortiert nach Buffer-Nummer; asc = aufsteigende Sortierung, "
 #~ "desc = absteigende Sortierung"
+
+
