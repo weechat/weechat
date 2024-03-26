@@ -885,7 +885,7 @@ relay_client_outqueue_free_all (struct t_relay_client *client)
 /*
  * Sends data to a client.
  *
- * Returns the number of bytes send to the client.
+ * Returns the number of bytes sent to the client.
  */
 
 int
