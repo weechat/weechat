@@ -4685,9 +4685,8 @@ irc_server_connect_cb (const void *pointer, void *data,
         case WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
             weechat_printf (
                 server->buffer,
-                _("%s%s: not enough memory (%s)"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                (error) ? error : "-");
+                _("%s%s: not enough memory"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME);
             if (error && error[0])
             {
                 weechat_printf (
