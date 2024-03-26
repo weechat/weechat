@@ -38,7 +38,7 @@
  * during negotiation with the client, the highest value in this list matching
  * the client supported values is used
  */
-char *relay_auth_password_hash_algo_name[] =
+char *relay_auth_password_hash_algo_name[RELAY_NUM_PASSWORD_HASH_ALGOS] =
 { "plain", "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512" };
 
 
