@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-25 20:59+0100\n"
+"POT-Creation-Date: 2024-03-26 07:44+0100\n"
 "PO-Revision-Date: 2024-03-25 11:43+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -8493,6 +8493,22 @@ msgstr ""
 "%s%s: es werden keine Optionen angezeigt, deshalb ist ein Export nicht "
 "möglich."
 
+#, c-format
+msgid "%s%s: not enough memory"
+msgstr "%s%s: nicht genügend Speicher"
+
+#, fuzzy, c-format
+#| msgid "%s%s: buffer \"%s\" not found"
+msgid "%s%s: file \"%s\" not found"
+msgstr "%s%s: Buffer \"%s\" nicht gefunden"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to execute file \"%s\""
+msgid "%d command executed in file \"%s\""
+msgid_plural "%d commands executed in file \"%s\""
+msgstr[0] "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
+msgstr[1] "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
+
 msgid "fast set WeeChat and plugins options"
 msgstr "Optionen von WeeChat und Erweiterungen schnell anpassen"
 
@@ -13836,10 +13852,6 @@ msgstr "%s%s: Ausnahme: %s"
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== Ende des Verlaufspeichers (%d Zeilen) =========="
-
-#, c-format
-msgid "%s%s: not enough memory"
-msgstr "%s%s: nicht genügend Speicher"
 
 #, c-format
 msgid ""

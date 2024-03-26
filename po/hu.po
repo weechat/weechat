@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-25 20:59+0100\n"
+"POT-Creation-Date: 2024-03-26 07:44+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7060,6 +7060,20 @@ msgstr ""
 msgid "%s%s: there are no options displayed, unable to export."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "%s%s: not enough memory"
+msgstr "Nincs elég memória az új sorhoz\n"
+
+#, fuzzy, c-format
+msgid "%s%s: file \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%d command executed in file \"%s\""
+msgid_plural "%d commands executed in file \"%s\""
+msgstr[0] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+msgstr[1] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
 msgid "fast set WeeChat and plugins options"
 msgstr ""
 
@@ -11980,10 +11994,6 @@ msgstr "%sSzerver: %s%s\n"
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: not enough memory"
-msgstr "Nincs elég memória az új sorhoz\n"
 
 #, c-format
 msgid ""

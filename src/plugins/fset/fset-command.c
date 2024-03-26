@@ -81,7 +81,7 @@ fset_command_fset (const void *pointer, void *data,
                    struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    int num_options, line, value, i, with_help, min, max, format_number;
+    int num_options, line, value, i, with_help, min, max, format_number, count;
     char str_command[512], str_number[64];
     const char *ptr_filename;
     struct t_fset_option *ptr_fset_option;
@@ -427,8 +427,28 @@ fset_command_fset (const void *pointer, void *data,
         {
             if (argc < 3)
                 WEECHAT_COMMAND_ERROR;
-            if (!fset_option_import (argv_eol[2]))
-                WEECHAT_COMMAND_ERROR;
+            count = fset_option_import (argv_eol[2]);
+            switch (count)
+            {
+                case -2:
+                    weechat_printf (NULL,
+                        _("%s%s: not enough memory"),
+                        weechat_prefix ("error"), FSET_PLUGIN_NAME);
+                    break;
+                case -1:
+                    weechat_printf (NULL,
+                                    _("%s%s: file \"%s\" not found"),
+                                    weechat_prefix ("error"), FSET_PLUGIN_NAME,
+                                    argv_eol[2]);
+                    break;
+                default:
+                    weechat_printf (NULL,
+                                    NG_("%d command executed in file \"%s\"",
+                                        "%d commands executed in file \"%s\"",
+                                        count),
+                                    count, argv_eol[2]);
+                    break;
+            }
             return WEECHAT_RC_OK;
         }
 

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-25 20:59+0100\n"
+"POT-Creation-Date: 2024-03-26 07:44+0100\n"
 "PO-Revision-Date: 2023-11-29 09:59+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7101,6 +7101,21 @@ msgstr ""
 msgid "%s%s: there are no options displayed, unable to export."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "%s%s: not enough memory"
+msgstr "Недостаточно памяти для новой строчки\n"
+
+#, fuzzy, c-format
+msgid "%s%s: file \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%d command executed in file \"%s\""
+msgid_plural "%d commands executed in file \"%s\""
+msgstr[0] "Не могу записать лог-файл \"%s\"\n"
+msgstr[1] "Не могу записать лог-файл \"%s\"\n"
+msgstr[2] "Не могу записать лог-файл \"%s\"\n"
+
 msgid "fast set WeeChat and plugins options"
 msgstr ""
 
@@ -12033,10 +12048,6 @@ msgstr "%sСервер: %s%s\n"
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: not enough memory"
-msgstr "Недостаточно памяти для новой строчки\n"
 
 #, c-format
 msgid ""

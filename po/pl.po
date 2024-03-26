@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-25 20:59+0100\n"
+"POT-Creation-Date: 2024-03-26 07:44+0100\n"
 "PO-Revision-Date: 2024-03-06 20:32+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8077,6 +8077,23 @@ msgstr "Szybkie utawianie opcji WeeChat i wtyczek"
 msgid "%s%s: there are no options displayed, unable to export."
 msgstr "%s%s: brak opcji do wyświetlenia, eksport niemożliwy."
 
+#, c-format
+msgid "%s%s: not enough memory"
+msgstr "%s%s: za mało pamięci"
+
+#, fuzzy, c-format
+#| msgid "%s%s: buffer \"%s\" not found"
+msgid "%s%s: file \"%s\" not found"
+msgstr "%s%s: bufor \"%s\" nie został znaleziony"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to execute file \"%s\""
+msgid "%d command executed in file \"%s\""
+msgid_plural "%d commands executed in file \"%s\""
+msgstr[0] "%s%s: nie można wykonać pliku \"%s\""
+msgstr[1] "%s%s: nie można wykonać pliku \"%s\""
+msgstr[2] "%s%s: nie można wykonać pliku \"%s\""
+
 msgid "fast set WeeChat and plugins options"
 msgstr "szybkie ustawianie opcji WeeChat i wtyczek"
 
@@ -13190,10 +13207,6 @@ msgstr "%s%s: wyjątek: %s"
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== Koniec backloga (%d linii) =========="
-
-#, c-format
-msgid "%s%s: not enough memory"
-msgstr "%s%s: za mało pamięci"
 
 #, c-format
 msgid ""

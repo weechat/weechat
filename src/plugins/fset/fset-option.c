@@ -1474,8 +1474,9 @@ fset_option_export (const char *filename, int with_help)
  * Imports options from a file: all lines starting with "/" are executed.
  *
  * Returns:
- *   1: export OK
- *   0: error
+ *     -2: not enough memory
+ *     -1: file not found
+ *   >= 0: number of commands executed in file
  */
 
 int
@@ -1483,17 +1484,19 @@ fset_option_import (const char *filename)
 {
     char *filename2, line[4096], *ptr_line;
     FILE *file;
-    int length;
+    int length, count;
+
+    count = 0;
 
     filename2 = weechat_string_expand_home (filename);
     if (!filename2)
-        return 0;
+        return -2;
 
     file = fopen (filename2, "r");
     if (!file)
     {
         free (filename2);
-        return 0;
+        return -1;
     }
 
     while (!feof (file))
@@ -1516,7 +1519,11 @@ fset_option_import (const char *filename)
                 line[length] = '\0';
                 length--;
             }
-            weechat_command (NULL, ptr_line);
+            if (ptr_line[0])
+            {
+                weechat_command (NULL, ptr_line);
+                count++;
+            }
         }
     }
 
@@ -1524,7 +1531,7 @@ fset_option_import (const char *filename)
 
     free (filename2);
 
-    return 1;
+    return count;
 }
 
 /*

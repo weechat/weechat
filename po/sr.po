@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-25 20:59+0100\n"
+"POT-Creation-Date: 2024-03-26 07:44+0100\n"
 "PO-Revision-Date: 2024-03-06 20:32+0100\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8103,6 +8103,23 @@ msgstr "Брзо постављање WeeChat и опција додатака"
 msgid "%s%s: there are no options displayed, unable to export."
 msgstr "%s%s: није приказана ниједна опција, извоз није могућ."
 
+#, c-format
+msgid "%s%s: not enough memory"
+msgstr "%s%s: нема довољно слободне меморије"
+
+#, fuzzy, c-format
+#| msgid "%s%s: buffer \"%s\" not found"
+msgid "%s%s: file \"%s\" not found"
+msgstr "%s%s: није пронађен бафер „%s”"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to execute file \"%s\""
+msgid "%d command executed in file \"%s\""
+msgid_plural "%d commands executed in file \"%s\""
+msgstr[0] "%s%s: фајл „%s” не може да се изврши"
+msgstr[1] "%s%s: фајл „%s” не може да се изврши"
+msgstr[2] "%s%s: фајл „%s” не може да се изврши"
+
 msgid "fast set WeeChat and plugins options"
 msgstr "брзо постављање опција за програм WeeChat и додатке"
 
@@ -13180,10 +13197,6 @@ msgstr "%s%s: изузетак: %s"
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== Крај старијих уноса (%d линија) =========="
-
-#, c-format
-msgid "%s%s: not enough memory"
-msgstr "%s%s: нема довољно слободне меморије"
 
 #, c-format
 msgid ""
