@@ -1,9 +1,9 @@
 name: CI
 
 on:
-  - push
-  - pull_request
-  - schedule:
+  push:
+  pull_request:
+  schedule:
     - cron: '22 9 * * 2'
 
 env:
