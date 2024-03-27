@@ -3,6 +3,8 @@ name: CI
 on:
   - push
   - pull_request
+  - schedule:
+    - cron: '22 9 * * 2'
 
 env:
   WEECHAT_DEPENDENCIES: >-
@@ -210,3 +212,39 @@ jobs:
         weechat-curses --help
         weechat --version
         weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+
+  codeql-analysis:
+
+    name: CodeQL
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPENDENCIES }}
+        # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
+        sudo apt-get --yes purge php8.1-imagick
+        sudo -H pip3 install --ignore-installed msgcheck
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: cpp
+
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v3
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:cpp"
