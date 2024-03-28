@@ -14174,7 +14174,7 @@ msgstr ""
 "(Standard, wenn keine Einheit angegeben ist), k = Kilobytes, m =Megabyte, g "
 "= Gigabyte, t = Terabyte; Beispiel: \"2g\" bewirkt eine Rotationsobald die "
 "Dateigröße > 2.000.000.000 Byte ist; wenn auf „0“ gesetzt, erfolgt keine "
-"Rotationder Dateien (unbegrenzte Protokollgröße); WARNUNG: Bevor Sie diese "
+"Rotation der Dateien (unbegrenzte Protokollgröße); WARNUNG: Bevor Sie diese "
 "Option ändern,sollte sie zuerst den Komprimierungstyp über die Option logger."
 "file festlegen.rotation_compression_type"
 
