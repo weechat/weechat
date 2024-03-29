@@ -46,7 +46,7 @@ int relay_api_protocol_command_delay = 1; /* delay to execute command       */
  */
 
 struct t_gui_buffer *
-relay_api_search_buffer_id_name (const char *string)
+relay_api_protocol_search_buffer_id_name (const char *string)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -382,7 +382,8 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     ptr_buffer = NULL;
     if (client->http_req->num_path_items > 2)
     {
-        ptr_buffer = relay_api_search_buffer_id_name (client->http_req->path_items[2]);
+        ptr_buffer = relay_api_protocol_search_buffer_id_name (
+            client->http_req->path_items[2]);
         if (!ptr_buffer)
         {
             relay_api_msg_send_error_json (client, RELAY_HTTP_404_NOT_FOUND, NULL,
