@@ -241,13 +241,13 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
 
     hash_algo_found = -1;
 
-    json_body = cJSON_Parse(client->http_req->body);
+    json_body = cJSON_Parse (client->http_req->body);
     if (json_body)
     {
         json_algos = cJSON_GetObjectItem (json_body, "password_hash_algo");
         if (json_algos)
         {
-            cJSON_ArrayForEach(json_algo, json_algos)
+            cJSON_ArrayForEach (json_algo, json_algos)
             {
                 ptr_algo = (cJSON_IsString (json_algo)) ?
                     cJSON_GetStringValue (json_algo) : NULL;
@@ -506,7 +506,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     struct t_hashtable *options;
     char str_delay[32];
 
-    json_body = cJSON_Parse(client->http_req->body);
+    json_body = cJSON_Parse (client->http_req->body);
     if (!json_body)
         return WEECHAT_RC_ERROR;
 
@@ -628,7 +628,7 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
     const char *ptr_data;
 
     ptr_data = NULL;
-    json_body = cJSON_Parse(client->http_req->body);
+    json_body = cJSON_Parse (client->http_req->body);
     if (json_body)
     {
         json_data = cJSON_GetObjectItem (json_body, "data");
@@ -683,7 +683,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
     RELAY_API_DATA(client, sync_nicks) = 1;
     RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
 
-    json_body = cJSON_Parse(client->http_req->body);
+    json_body = cJSON_Parse (client->http_req->body);
     if (json_body)
     {
         json_sync = cJSON_GetObjectItem (json_body, "sync");
@@ -742,7 +742,7 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
 
     relay_http_request_reinit (client->http_req);
 
-    json_obj = cJSON_Parse(json);
+    json_obj = cJSON_Parse (json);
     if (!json_obj)
         goto error;
 
