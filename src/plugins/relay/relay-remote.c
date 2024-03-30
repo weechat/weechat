@@ -38,9 +38,9 @@
 
 
 char *relay_remote_option_string[RELAY_REMOTE_NUM_OPTIONS] =
-{ "url", "password", "totp_secret" };
+{ "url", "proxy", "password", "totp_secret" };
 char *relay_remote_option_default[RELAY_REMOTE_NUM_OPTIONS] =
-{ "", "", "" };
+{ "", "", "", "" };
 
 struct t_relay_remote *relay_remotes = NULL;
 struct t_relay_remote *last_relay_remote = NULL;
@@ -362,8 +362,8 @@ relay_remote_new_with_options (const char *name, struct t_config_option **option
  */
 
 struct t_relay_remote *
-relay_remote_new (const char *name, const char *url, const char *password,
-                  const char *totp_secret)
+relay_remote_new (const char *name, const char *url, const char *proxy,
+                  const char *password, const char *totp_secret)
 {
     struct t_config_option *option[RELAY_REMOTE_NUM_OPTIONS];
     const char *value[RELAY_REMOTE_NUM_OPTIONS];
@@ -378,6 +378,7 @@ relay_remote_new (const char *name, const char *url, const char *password,
         return NULL;
 
     value[RELAY_REMOTE_OPTION_URL] = url;
+    value[RELAY_REMOTE_OPTION_PROXY] = proxy;
     value[RELAY_REMOTE_OPTION_PASSWORD] = password;
     value[RELAY_REMOTE_OPTION_TOTP_SECRET] = totp_secret;
 
@@ -659,6 +660,8 @@ relay_remote_print_log ()
         weechat_log_printf ("  name. . . . . . . . . : '%s'", ptr_remote->name);
         weechat_log_printf ("  url . . . . . . . . . : '%s'",
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_URL]));
+        weechat_log_printf ("  proxy . . . . . . . . : '%s'",
+                            weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_PROXY]));
         weechat_log_printf ("  password. . . . . . . : '%s'",
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_PASSWORD]));
         weechat_log_printf ("  totp_secret . . . . . : '%s'",

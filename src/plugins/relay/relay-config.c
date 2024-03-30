@@ -997,6 +997,15 @@ relay_config_create_remote_option (const char *remote_name, int index_option,
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             break;
+        case RELAY_REMOTE_OPTION_PROXY:
+            ptr_option = weechat_config_new_option (
+                relay_config_file, relay_config_section_remote,
+                option_name, "string",
+                N_("name of proxy used for this remote (optional, proxy must "
+                   "be defined with command /proxy)"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
         case RELAY_REMOTE_OPTION_PASSWORD:
             ptr_option = weechat_config_new_option (
                 relay_config_file, relay_config_section_remote,

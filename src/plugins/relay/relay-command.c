@@ -427,7 +427,7 @@ relay_command_remote (const void *pointer, void *data,
 {
     struct t_relay_remote *ptr_remote, *ptr_remote2;
     int i, detailed_list, one_remote_found;
-    const char *ptr_password, *ptr_totp_secret;
+    const char *ptr_proxy, *ptr_password, *ptr_totp_secret;
     char *remote_name;
 
     /* make C compiler happy */
@@ -533,12 +533,17 @@ relay_command_remote (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
+        ptr_proxy = NULL;
         ptr_password = NULL;
         ptr_totp_secret = NULL;
 
         for (i = 4; i < argc; i++)
         {
-            if (strncmp (argv[i], "-password=", 10) == 0)
+            if (strncmp (argv[i], "-proxy=", 7) == 0)
+            {
+                ptr_proxy = argv[i] + 7;
+            }
+            else if (strncmp (argv[i], "-password=", 10) == 0)
             {
                 ptr_password = argv[i] + 10;
             }
@@ -557,12 +562,8 @@ relay_command_remote (const void *pointer, void *data,
             }
         }
 
-        ptr_remote = relay_remote_new (
-            argv[2],
-            argv[3],
-            (ptr_password) ? ptr_password : "",
-            (ptr_totp_secret) ? ptr_totp_secret : "");
-
+        ptr_remote = relay_remote_new (argv[2], argv[3], ptr_proxy,
+                                       ptr_password, ptr_totp_secret);
         if (ptr_remote)
         {
             weechat_printf (NULL, _("Remote \"%s\" created"), argv[2]);
@@ -790,7 +791,7 @@ relay_command_init ()
                "options: relay.remote.name.xxx"),
             N_("url: URL of the remote, format is https://example.com:9000 "
                "or http://example.com:9000 (plain-text connection, not recommended)"),
-            N_("option: set option for remote: password or totp_secret"),
+            N_("option: set option for remote: proxy, password or totp_secret"),
             N_("raw[connect]: connect to a remote relay server"),
             N_("raw[rename]: rename a remote relay server"),
             N_("raw[del]: delete a remote relay server"),
@@ -806,7 +807,7 @@ relay_command_init ()
         "list %(relay_remotes)"
         " || listfull %(relay_remotes)"
         " || add %(relay_remotes) https://localhost:9000 "
-        "-password=${xxx}|-totp_secret=${xxx}|%*"
+        "-password=${xxx}|-proxy=xxx|-totp_secret=${xxx}|%*"
         " || connect %(relay_remotes)"
         " || rename %(relay_remotes) %(relay_remotes)"
         " || del %(relay_remotes)",
