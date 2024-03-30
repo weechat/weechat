@@ -56,6 +56,10 @@ extern char *relay_http_compress (struct t_relay_http_request *request,
                                   int *compressed_size,
                                   char *http_content_encoding,
                                   int http_content_encoding_size);
+extern int relay_http_parse_response_code (struct t_relay_http_response *response,
+                                           const char *response_code);
+extern int relay_http_parse_response_header (struct t_relay_http_response *response,
+                                             const char *header);
 }
 
 #define WEE_PARSE_PATH(__path)                                  \
@@ -75,7 +79,7 @@ TEST_GROUP(RelayHttp)
  *   relay_http_request_free
  */
 
-TEST(RelayHttp, AllocReinitFree)
+TEST(RelayHttp, RequestAllocReinitFree)
 {
     struct t_relay_http_request *request;
 
@@ -346,6 +350,7 @@ TEST(RelayHttp, ParseMethodPath)
 
     request = relay_http_request_alloc ();
     CHECK(request);
+    relay_http_parse_method_path (NULL, NULL);
     relay_http_parse_method_path (request, NULL);
     LONGS_EQUAL(RELAY_HTTP_METHOD, request->status);
     STRCMP_EQUAL("", *(request->raw));
@@ -1014,10 +1019,283 @@ TEST(RelayHttp, SendErrorJson)
 
 /*
  * Tests functions:
- *   relay_http_print_log
+ *   relay_http_response_alloc
+ *   relay_http_response_free
  */
 
-TEST(RelayHttp, PrintLog)
+TEST(RelayHttp, ResponseAllocFree)
+{
+    struct t_relay_http_response *response;
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+
+    LONGS_EQUAL(RELAY_HTTP_METHOD, response->status);
+    POINTERS_EQUAL(NULL, response->http_version);
+    LONGS_EQUAL(0, response->return_code);
+    POINTERS_EQUAL(NULL, response->message);
+    CHECK(response->headers);
+    LONGS_EQUAL(0, response->headers->items_count);
+    LONGS_EQUAL(0, response->content_length);
+    LONGS_EQUAL(0, response->body_size);
+    POINTERS_EQUAL(NULL, response->body);
+
+    relay_http_response_free (response);
+}
+
+/*
+ * Tests functions:
+ *   relay_http_parse_response_code
+ */
+
+TEST(RelayHttp, ParseResponseCode)
+{
+    struct t_relay_http_response *response;
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+    relay_http_parse_response_code (NULL, NULL);
+    LONGS_EQUAL(RELAY_HTTP_METHOD, response->status);
+    POINTERS_EQUAL(NULL, response->http_version);
+    LONGS_EQUAL(0, response->return_code);
+    POINTERS_EQUAL(NULL, response->message);
+    CHECK(response->headers);
+    LONGS_EQUAL(0, response->headers->items_count);
+    LONGS_EQUAL(0, response->content_length);
+    LONGS_EQUAL(0, response->body_size);
+    POINTERS_EQUAL(NULL, response->body);
+    relay_http_response_free (response);
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+    relay_http_parse_response_code (response, NULL);
+    relay_http_parse_response_code (response, "");
+    LONGS_EQUAL(RELAY_HTTP_END, response->status);
+    POINTERS_EQUAL(NULL, response->http_version);
+    LONGS_EQUAL(0, response->return_code);
+    POINTERS_EQUAL(NULL, response->message);
+    CHECK(response->headers);
+    LONGS_EQUAL(0, response->headers->items_count);
+    LONGS_EQUAL(0, response->content_length);
+    LONGS_EQUAL(0, response->body_size);
+    POINTERS_EQUAL(NULL, response->body);
+    relay_http_response_free (response);
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+    relay_http_parse_response_code (response, "HTTP/1.1");
+    LONGS_EQUAL(RELAY_HTTP_END, response->status);
+    POINTERS_EQUAL(NULL, response->http_version);
+    LONGS_EQUAL(0, response->return_code);
+    POINTERS_EQUAL(NULL, response->message);
+    CHECK(response->headers);
+    LONGS_EQUAL(0, response->headers->items_count);
+    LONGS_EQUAL(0, response->content_length);
+    LONGS_EQUAL(0, response->body_size);
+    POINTERS_EQUAL(NULL, response->body);
+    relay_http_response_free (response);
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+    relay_http_parse_response_code (response, "HTTP/1.1 200");
+    LONGS_EQUAL(RELAY_HTTP_HEADERS, response->status);
+    STRCMP_EQUAL("HTTP/1.1", response->http_version);
+    LONGS_EQUAL(200, response->return_code);
+    POINTERS_EQUAL(NULL, response->message);
+    CHECK(response->headers);
+    LONGS_EQUAL(0, response->headers->items_count);
+    LONGS_EQUAL(0, response->content_length);
+    LONGS_EQUAL(0, response->body_size);
+    POINTERS_EQUAL(NULL, response->body);
+    relay_http_response_free (response);
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+    relay_http_parse_response_code (response, "HTTP/1.1 200 OK");
+    LONGS_EQUAL(RELAY_HTTP_HEADERS, response->status);
+    STRCMP_EQUAL("HTTP/1.1", response->http_version);
+    LONGS_EQUAL(200, response->return_code);
+    STRCMP_EQUAL("OK", response->message);
+    CHECK(response->headers);
+    LONGS_EQUAL(0, response->headers->items_count);
+    LONGS_EQUAL(0, response->content_length);
+    LONGS_EQUAL(0, response->body_size);
+    POINTERS_EQUAL(NULL, response->body);
+    relay_http_response_free (response);
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+    relay_http_parse_response_code (response, "HTTP/1.1 101 Switching Protocols");
+    LONGS_EQUAL(RELAY_HTTP_HEADERS, response->status);
+    STRCMP_EQUAL("HTTP/1.1", response->http_version);
+    LONGS_EQUAL(101, response->return_code);
+    STRCMP_EQUAL("Switching Protocols", response->message);
+    CHECK(response->headers);
+    LONGS_EQUAL(0, response->headers->items_count);
+    LONGS_EQUAL(0, response->content_length);
+    LONGS_EQUAL(0, response->body_size);
+    POINTERS_EQUAL(NULL, response->body);
+    relay_http_response_free (response);
+
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+    relay_http_parse_response_code (response, "HTTP/1.1 401 Unauthorized");
+    LONGS_EQUAL(RELAY_HTTP_HEADERS, response->status);
+    STRCMP_EQUAL("HTTP/1.1", response->http_version);
+    LONGS_EQUAL(401, response->return_code);
+    STRCMP_EQUAL("Unauthorized", response->message);
+    CHECK(response->headers);
+    LONGS_EQUAL(0, response->headers->items_count);
+    LONGS_EQUAL(0, response->content_length);
+    LONGS_EQUAL(0, response->body_size);
+    POINTERS_EQUAL(NULL, response->body);
+    relay_http_response_free (response);
+}
+
+/*
+ * Tests functions:
+ *   relay_http_parse_response_header
+ */
+
+TEST(RelayHttp, ParseResponseHeader)
+{
+    struct t_relay_http_response *response;
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+    relay_http_parse_response_code (response, "HTTP/1.1 200 OK");
+    relay_http_parse_response_header (response, NULL);
+    LONGS_EQUAL(RELAY_HTTP_END, response->status);
+    STRCMP_EQUAL("HTTP/1.1", response->http_version);
+    LONGS_EQUAL(200, response->return_code);
+    STRCMP_EQUAL("OK", response->message);
+    LONGS_EQUAL(0, response->headers->items_count);
+    relay_http_response_free (response);
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+    relay_http_parse_response_code (response, "HTTP/1.1 200 OK");
+    relay_http_parse_response_header (response, "");
+    LONGS_EQUAL(RELAY_HTTP_END, response->status);
+    STRCMP_EQUAL("HTTP/1.1", response->http_version);
+    LONGS_EQUAL(200, response->return_code);
+    STRCMP_EQUAL("OK", response->message);
+    LONGS_EQUAL(0, response->headers->items_count);
+    relay_http_response_free (response);
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+    relay_http_parse_response_code (response, "HTTP/1.1 200 OK");
+    relay_http_parse_response_header (response, "Test");
+    LONGS_EQUAL(RELAY_HTTP_HEADERS, response->status);
+    STRCMP_EQUAL("HTTP/1.1", response->http_version);
+    LONGS_EQUAL(200, response->return_code);
+    STRCMP_EQUAL("OK", response->message);
+    LONGS_EQUAL(0, response->headers->items_count);
+    relay_http_response_free (response);
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+    relay_http_parse_response_code (response, "HTTP/1.1 200 OK");
+    relay_http_parse_response_header (response, "X-Test: value");
+    LONGS_EQUAL(RELAY_HTTP_HEADERS, response->status);
+    STRCMP_EQUAL("HTTP/1.1", response->http_version);
+    LONGS_EQUAL(200, response->return_code);
+    STRCMP_EQUAL("OK", response->message);
+    LONGS_EQUAL(1, response->headers->items_count);
+    STRCMP_EQUAL("value", (const char *)hashtable_get (response->headers, "x-test"));
+    relay_http_response_free (response);
+
+    response = relay_http_response_alloc ();
+    CHECK(response);
+    relay_http_parse_response_code (response, "HTTP/1.1 200 OK");
+    relay_http_parse_response_header (response, "Content-Length: 123");
+    LONGS_EQUAL(RELAY_HTTP_HEADERS, response->status);
+    STRCMP_EQUAL("HTTP/1.1", response->http_version);
+    LONGS_EQUAL(200, response->return_code);
+    STRCMP_EQUAL("OK", response->message);
+    LONGS_EQUAL(1, response->headers->items_count);
+    LONGS_EQUAL(123, response->content_length);
+    relay_http_response_free (response);
+}
+
+/*
+ * Tests functions:
+ *   relay_http_parse_response
+ */
+
+TEST(RelayHttp, ParseResponse)
+{
+    struct t_relay_http_response *response;
+
+    POINTERS_EQUAL(NULL, relay_http_parse_response (NULL));
+    POINTERS_EQUAL(NULL, relay_http_parse_response (""));
+
+    response = relay_http_parse_response ("invalid");
+    CHECK(response);
+    LONGS_EQUAL(RELAY_HTTP_METHOD, response->status);
+    POINTERS_EQUAL(NULL, response->http_version);
+    LONGS_EQUAL(0, response->return_code);
+    POINTERS_EQUAL(NULL, response->message);
+    CHECK(response->headers);
+    LONGS_EQUAL(0, response->headers->items_count);
+    LONGS_EQUAL(0, response->content_length);
+    LONGS_EQUAL(0, response->body_size);
+    POINTERS_EQUAL(NULL, response->body);
+    relay_http_response_free (response);
+
+    response = relay_http_parse_response ("invalid\r\n");
+    CHECK(response);
+    LONGS_EQUAL(RELAY_HTTP_END, response->status);
+    POINTERS_EQUAL(NULL, response->http_version);
+    LONGS_EQUAL(0, response->return_code);
+    POINTERS_EQUAL(NULL, response->message);
+    CHECK(response->headers);
+    LONGS_EQUAL(0, response->headers->items_count);
+    LONGS_EQUAL(0, response->content_length);
+    LONGS_EQUAL(0, response->body_size);
+    POINTERS_EQUAL(NULL, response->body);
+    relay_http_response_free (response);
+
+    response = relay_http_parse_response ("HTTP/1.1 200 OK\r\n"
+                                          "Content-Type: application/json\r\n"
+                                          "Content-Length: 13\r\n"
+                                          "\r\n"
+                                          "{\"test\": 123}");
+    CHECK(response);
+    LONGS_EQUAL(RELAY_HTTP_END, response->status);
+    STRCMP_EQUAL("HTTP/1.1", response->http_version);
+    LONGS_EQUAL(200, response->return_code);
+    STRCMP_EQUAL("OK", response->message);
+    CHECK(response->headers);
+    LONGS_EQUAL(2, response->headers->items_count);
+    STRCMP_EQUAL("application/json", (const char *)hashtable_get (response->headers,
+                                                                  "content-type"));
+    STRCMP_EQUAL("13", (const char *)hashtable_get (response->headers,
+                                                    "content-length"));
+    LONGS_EQUAL(13, response->content_length);
+    LONGS_EQUAL(13, response->body_size);
+    STRCMP_EQUAL("{\"test\": 123}", response->body);
+    relay_http_response_free (response);
+}
+
+/*
+ * Tests functions:
+ *   relay_http_print_log_request
+ */
+
+TEST(RelayHttp, PrintLogRequest)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_http_print_log_response
+ */
+
+TEST(RelayHttp, PrintLogResponse)
 {
     /* TODO: write tests */
 }

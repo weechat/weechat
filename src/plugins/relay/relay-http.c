@@ -344,7 +344,7 @@ relay_http_parse_method_path (struct t_relay_http_request *request,
     char **items;
     int num_items;
 
-    if (!method_path || !method_path[0])
+    if (!request || !method_path || !method_path[0])
         return 0;
 
     weechat_string_dyn_concat (request->raw, method_path, -1);
@@ -1373,18 +1373,264 @@ relay_http_request_free (struct t_relay_http_request *request)
 }
 
 /*
+ * Allocates a t_relay_http_response structure.
+ */
+
+struct t_relay_http_response *
+relay_http_response_alloc ()
+{
+    struct t_relay_http_response *new_response;
+
+    new_response = (struct t_relay_http_response *)malloc (sizeof (*new_response));
+    if (!new_response)
+        return NULL;
+
+    new_response->status = RELAY_HTTP_METHOD;
+    new_response->http_version = NULL;
+    new_response->return_code = 0;
+    new_response->message = NULL;
+    new_response->headers = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    new_response->content_length = 0;
+    new_response->body_size = 0;
+    new_response->body = NULL;
+
+    return new_response;
+}
+
+/*
+ * Parses and saves response code.
+ *
+ * Returns:
+ *   1: OK, response code and HTTP version saved
+ *   0: error: invalid format
+ */
+
+int
+relay_http_parse_response_code (struct t_relay_http_response *response,
+                                const char *response_code)
+{
+    const char *pos, *pos2;
+    char *error, *return_code;
+    long value;
+
+    if (!response)
+        return 0;
+
+    if (!response_code || !response_code[0])
+    {
+        response->status = RELAY_HTTP_END;
+        return 0;
+    }
+
+    pos = strchr (response_code, ' ');
+    if (!pos)
+        goto error;
+
+    if (response->http_version)
+        free (response->http_version);
+    response->http_version = weechat_strndup (response_code, pos - response_code);
+
+    while (pos[0] == ' ')
+    {
+        pos++;
+    }
+
+    pos2 = strchr (pos, ' ');
+    if (pos2)
+        return_code = weechat_strndup (pos, pos2 - pos);
+    else
+        return_code = strdup (pos);
+    if (!return_code)
+        goto error;
+
+    error = NULL;
+    value = strtol (return_code, &error, 10);
+    if (error && !error[0])
+        response->return_code = (int)value;
+
+    free (return_code);
+
+    if (pos2)
+    {
+        while (pos2[0] == ' ')
+        {
+            pos2++;
+        }
+        if (response->message)
+            free (response->message);
+        response->message = strdup (pos2);
+    }
+
+    response->status = RELAY_HTTP_HEADERS;
+
+    return 1;
+
+error:
+    response->status = RELAY_HTTP_END;
+    return 0;
+}
+
+/*
+ * Parses and saves a header of a HTTP response in hashtable "headers".
+ *
+ * Returns:
+ *   1: OK, header saved
+ *   0: error: invalid format
+ */
+
+int
+relay_http_parse_response_header (struct t_relay_http_response *response,
+                                  const char *header)
+{
+    char *pos, *name, *name_lower, *error;
+    const char *ptr_value;
+    long number;
+
+    /* empty line => end of headers */
+    if (!header || !header[0])
+    {
+        response->status = (response->content_length > 0) ?
+            RELAY_HTTP_BODY : RELAY_HTTP_END;
+        return 1;
+    }
+
+    pos = strchr (header, ':');
+
+    /* not a valid header */
+    if (!pos || (pos == header))
+        return 0;
+
+    /* get header name, which is case-insensitive */
+    name = weechat_strndup (header, pos - header);
+    if (!name)
+        return 0;
+    name_lower = weechat_string_tolower (name);
+    if (!name_lower)
+    {
+        free (name);
+        return 0;
+    }
+
+    /* get pointer on header value */
+    ptr_value = pos + 1;
+    while (ptr_value[0] == ' ')
+    {
+        ptr_value++;
+    }
+
+    /* add header in the hashtable */
+    weechat_hashtable_set (response->headers, name_lower, ptr_value);
+
+    /* if header is "Content-Length", save the length */
+    if (strcmp (name_lower, "content-length") == 0)
+    {
+        error = NULL;
+        number = strtol (ptr_value, &error, 10);
+        if (error && !error[0])
+            response->content_length = (int)number;
+    }
+
+    free (name);
+    free (name_lower);
+
+    return 1;
+}
+
+/*
+ * Parses HTTP response with a string.
+ *
+ * Returns HTTP request structure, NULL if error.
+ */
+
+struct t_relay_http_response *
+relay_http_parse_response (const char *data)
+{
+    struct t_relay_http_response *http_resp;
+    const char *ptr_data, *pos;
+    char *line;
+
+    if (!data || !data[0])
+        return NULL;
+
+    http_resp = relay_http_response_alloc ();
+    if (!http_resp)
+        return NULL;
+
+    ptr_data = data;
+    while (ptr_data && ptr_data[0])
+    {
+        if ((http_resp->status == RELAY_HTTP_METHOD)
+            || (http_resp->status == RELAY_HTTP_HEADERS))
+        {
+            pos = strchr (ptr_data, '\r');
+            if (!pos)
+                break;
+            line = weechat_strndup (ptr_data, pos - ptr_data);
+            if (!line)
+                break;
+            if (http_resp->status == RELAY_HTTP_METHOD)
+                relay_http_parse_response_code (http_resp, line);
+            else
+                relay_http_parse_response_header (http_resp, line);
+            free (line);
+            ptr_data = pos + 1;
+            if (ptr_data[0] == '\n')
+                ptr_data++;
+        }
+        else if (http_resp->status == RELAY_HTTP_BODY)
+        {
+            http_resp->body_size = strlen (ptr_data);
+            http_resp->body = malloc (http_resp->body_size);
+            if (http_resp->body)
+                memcpy (http_resp->body, ptr_data, http_resp->body_size);
+            http_resp->status = RELAY_HTTP_END;
+        }
+        else
+            break;
+
+        if (http_resp->status == RELAY_HTTP_END)
+            break;
+    }
+
+    return http_resp;
+}
+
+/*
+ * Frees a HTTP response.
+ */
+
+void
+relay_http_response_free (struct t_relay_http_response *response)
+{
+    if (response->http_version)
+        free (response->http_version);
+    if (response->message)
+        free (response->message);
+    if (response->headers)
+        weechat_hashtable_free (response->headers);
+    if (response->body)
+        free (response->body);
+
+    free (response);
+}
+
+/*
  * Prints HTTP request in WeeChat log file (usually for crash dump).
  */
 
 void
-relay_http_print_log (struct t_relay_http_request *request)
+relay_http_print_log_request (struct t_relay_http_request *request)
 {
     int i;
 
     weechat_log_printf ("  http_request:");
+    weechat_log_printf ("    status. . . . . . . . . : %d", request->status);
     weechat_log_printf ("    raw . . . . . . . . . . : '%s'",
                         (request->raw) ? *(request->raw) : NULL);
-    weechat_log_printf ("    status. . . . . . . . . : %d", request->status);
     weechat_log_printf ("    method. . . . . . . . . : '%s'", request->method);
     weechat_log_printf ("    path. . . . . . . . . . : '%s'", request->path);
     weechat_log_printf ("    path_items. . . . . . . : %p", request->path_items);
@@ -1411,4 +1657,24 @@ relay_http_print_log (struct t_relay_http_request *request)
     weechat_log_printf ("    content_length. . . . . : %d", request->content_length);
     weechat_log_printf ("    body_size . . . . . . . : %d", request->body_size);
     weechat_log_printf ("    body. . . . . . . . . . : '%s'", request->body);
+}
+
+/*
+ * Prints HTTP response in WeeChat log file (usually for crash dump).
+ */
+
+void
+relay_http_print_log_response (struct t_relay_http_response *response)
+{
+    weechat_log_printf ("  http_response:");
+    weechat_log_printf ("    status. . . . . . . . . : %d", response->status);
+    weechat_log_printf ("    http_version. . . . . . : '%s'", response->http_version);
+    weechat_log_printf ("    return_code . . . . . . : %d", response->return_code);
+    weechat_log_printf ("    message . . . . . . . . : '%s'", response->message);
+    weechat_log_printf ("    headers . . . . . . . . : 0x%lx (hashtable: '%s')",
+                        response->headers,
+                        weechat_hashtable_get_string (response->headers, "keys_values"));
+    weechat_log_printf ("    content_length. . . . . : %d", response->content_length);
+    weechat_log_printf ("    body_size . . . . . . . : %d", response->body_size);
+    weechat_log_printf ("    body. . . . . . . . . . : '%s'", response->body);
 }

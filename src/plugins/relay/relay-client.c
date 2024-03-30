@@ -2206,7 +2206,7 @@ relay_client_print_log ()
         weechat_log_printf ("  gnutls_handshake_ok . . . : %p", ptr_client->gnutls_handshake_ok);
         weechat_log_printf ("  websocket . . . . . . . . ; %d", ptr_client->websocket);
         relay_websocket_deflate_print_log (ptr_client->ws_deflate, "");
-        relay_http_print_log (ptr_client->http_req);
+        relay_http_print_log_request (ptr_client->http_req);
         weechat_log_printf ("  address . . . . . . . . . : '%s'", ptr_client->address);
         weechat_log_printf ("  real_ip . . . . . . . . . : '%s'", ptr_client->real_ip);
         weechat_log_printf ("  status. . . . . . . . . . : %d (%s)",

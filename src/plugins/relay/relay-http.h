@@ -71,6 +71,19 @@ struct t_relay_http_request
     char *body;                        /* HTTP body (can be NULL)           */
 };
 
+struct t_relay_http_response
+{
+    enum t_relay_client_http_status status; /* HTTP status                  */
+    char *http_version;                /* HTTP version (eg: "HTTP/1.1")     */
+    int return_code;                   /* HTTP return code (eg: 200, 401)   */
+    char *message;                     /* message after return code         */
+    struct t_hashtable *headers;       /* HTTP headers for websocket        */
+                                       /* and API protocol                  */
+    int content_length;                /* value of header "Content-Length"  */
+    int body_size;                     /* size of HTTP body read so far     */
+    char *body;                        /* HTTP body (can be NULL)           */
+};
+
 extern void relay_http_request_reinit (struct t_relay_http_request *request);
 extern struct t_relay_http_request *relay_http_request_alloc ();
 extern int relay_http_get_param_boolean (struct t_relay_http_request *request,
@@ -96,6 +109,10 @@ extern int relay_http_send_error_json (struct t_relay_client *client,
                                        const char *headers,
                                        const char *format, ...);
 extern void relay_http_request_free (struct t_relay_http_request *request);
-extern void relay_http_print_log (struct t_relay_http_request *request);
+extern struct t_relay_http_response *relay_http_response_alloc ();
+extern struct t_relay_http_response *relay_http_parse_response (const char *data);
+extern void relay_http_response_free (struct t_relay_http_response *response);
+extern void relay_http_print_log_request (struct t_relay_http_request *request);
+extern void relay_http_print_log_response (struct t_relay_http_response *response);
 
 #endif /* WEECHAT_PLUGIN_RELAY_HTTP_H */
