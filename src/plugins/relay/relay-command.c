@@ -647,6 +647,26 @@ relay_command_remote (const void *pointer, void *data,
         WEECHAT_COMMAND_ERROR;
     }
 
+    if (weechat_strcmp (argv[1], "disconnect") == 0)
+    {
+        WEECHAT_COMMAND_MIN_ARGS(3, "disconnect");
+
+        ptr_remote = relay_remote_search (argv[2]);
+        if (!ptr_remote)
+        {
+            weechat_printf (
+                NULL,
+                _("%s%s: remote \"%s\" not found for \"%s\" command"),
+                weechat_prefix ("error"),
+                RELAY_PLUGIN_NAME,
+                argv[2],
+                "remote disconnect");
+            return WEECHAT_RC_OK;
+        }
+
+        WEECHAT_COMMAND_ERROR;
+    }
+
     if (weechat_strcmp (argv[1], "del") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "del");
@@ -780,6 +800,7 @@ relay_command_init ()
         N_("list|listfull [<name>]"
            " || add <name> <url> [-<option>[=<value>]]"
            " || connect <name>"
+           " || disconnect <name>"
            " || rename <name> <new_name>"
            " || del <name>"),
         WEECHAT_CMD_ARGS_DESC(
@@ -793,6 +814,7 @@ relay_command_init ()
                "or http://example.com:9000 (plain-text connection, not recommended)"),
             N_("option: set option for remote: proxy, password or totp_secret"),
             N_("raw[connect]: connect to a remote relay server"),
+            N_("raw[disconnect]: disconnect from a remote relay server"),
             N_("raw[rename]: rename a remote relay server"),
             N_("raw[del]: delete a remote relay server"),
             "",
@@ -809,6 +831,7 @@ relay_command_init ()
         " || add %(relay_remotes) https://localhost:9000 "
         "-password=${xxx}|-proxy=xxx|-totp_secret=${xxx}|%*"
         " || connect %(relay_remotes)"
+        " || disconnect %(relay_remotes)"
         " || rename %(relay_remotes) %(relay_remotes)"
         " || del %(relay_remotes)",
         &relay_command_remote, NULL, NULL);
