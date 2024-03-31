@@ -121,9 +121,9 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                                   cJSON *json_body)
 {
     cJSON *json, *json_event;
-    int num_bytes;
+    int num_bytes, length;
     const char *ptr_id;
-    char *string, *error;
+    char *string, *error, *request;
     long long id;
 
     if (!client || !message)
@@ -163,6 +163,30 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                         json_event, "buffer_id",
                         cJSON_CreateNumber (id));
                     cJSON_AddItemToObject (json, "event", json_event);
+                }
+            }
+            else
+            {
+                length = ((client->http_req->method) ? strlen (client->http_req->method) : 0)
+                    + 1
+                    + ((client->http_req->path) ? strlen (client->http_req->path) : 0)
+                    + 1;
+                request = malloc (length);
+                if (request)
+                {
+                    snprintf (
+                        request, length,
+                        "%s%s%s",
+                        (client->http_req->method) ? client->http_req->method : "",
+                        (client->http_req->method) ? " " : "",
+                        (client->http_req->path) ? client->http_req->path : "");
+                    cJSON_AddItemToObject (json, "request",
+                                           cJSON_CreateString (request));
+                    cJSON_AddItemToObject (
+                        json, "request_body",
+                        (client->http_req->body) ?
+                        cJSON_Parse (client->http_req->body) :cJSON_CreateNull ());
+                    free (request);
                 }
             }
             if (json_body)

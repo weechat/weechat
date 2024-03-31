@@ -54,9 +54,12 @@ extern int relay_api_protocol_command_delay;
                   data_sent,                                            \
                   strlen ("HTTP/1.1 " #__code " " __message "\r\n"));
 
-#define WEE_CHECK_TEXT(__code, __message)                               \
+#define WEE_CHECK_TEXT(__code, __message, __request, __body)            \
     STRCMP_EQUAL("{\"code\":" #__code ","                               \
-                 "\"message\":\"" __message "\"}",                      \
+                 "\"message\":\"" __message "\","                       \
+                 "\"request\":\"" __request "\","                       \
+                 "\"request_body\":" __body ""                          \
+                 "}",                                                   \
                  data_sent);
 
 #define WEE_CHECK_OBJ_STR(__expected, __json, __name)                   \
@@ -671,7 +674,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
                  data_sent);
 
     test_client_recv_text ("{\"request\": \"POST /api/sync\"}");
-    WEE_CHECK_TEXT(204, "No Content");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "null");
 
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_enabled));
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_nicks));
@@ -679,7 +682,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
 
     test_client_recv_text ("{\"request\": \"POST /api/sync\", "
                            "\"body\": {\"sync\": false}}");
-    WEE_CHECK_TEXT(204, "No Content");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "{\"sync\":false}");
 
     LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_enabled));
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_nicks));
@@ -687,7 +690,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
 
     test_client_recv_text ("{\"request\": \"POST /api/sync\", "
                            "\"body\": {\"sync\": true, \"nicks\": false}}");
-    WEE_CHECK_TEXT(204, "No Content");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "{\"sync\":true,\"nicks\":false}");
 
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_enabled));
     LONGS_EQUAL(0, RELAY_API_DATA(ptr_relay_client, sync_nicks));
@@ -695,7 +698,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
 
     test_client_recv_text ("{\"request\": \"POST /api/sync\", "
                            "\"body\": {\"sync\": true, \"nicks\": true, \"colors\": \"weechat\"}}");
-    WEE_CHECK_TEXT(204, "No Content");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "{\"sync\":true,\"nicks\":true,\"colors\":\"weechat\"}");
 
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_enabled));
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_nicks));
@@ -703,7 +706,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
 
     test_client_recv_text ("{\"request\": \"POST /api/sync\", "
                            "\"body\": {\"sync\": true, \"nicks\": true, \"colors\": \"strip\"}}");
-    WEE_CHECK_TEXT(204, "No Content");
+    WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "{\"sync\":true,\"nicks\":true,\"colors\":\"strip\"}");
 
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_enabled));
     LONGS_EQUAL(1, RELAY_API_DATA(ptr_relay_client, sync_nicks));
@@ -735,27 +738,31 @@ TEST(RelayApiProtocolWithClient, RecvJson)
 
     /* error: empty string */
     test_client_recv_text ("");
-    WEE_CHECK_TEXT(400, "Bad Request");
+    WEE_CHECK_TEXT(400, "Bad Request", "", "null");
 
     /* error: empty body */
     test_client_recv_text ("{}");
-    WEE_CHECK_TEXT(400, "Bad Request");
+    WEE_CHECK_TEXT(400, "Bad Request", "", "null");
 
     /* error: empty request */
     test_client_recv_text ("{\"request\": \"\"}");
-    WEE_CHECK_TEXT(400, "Bad Request");
+    WEE_CHECK_TEXT(400, "Bad Request", "", "null");
 
     /* error: invalid request (number) */
     test_client_recv_text ("{\"request\": 123}");
-    WEE_CHECK_TEXT(400, "Bad Request");
+    WEE_CHECK_TEXT(400, "Bad Request", "", "null");
 
     /* error: invalid request (string, not a valid request) */
     test_client_recv_text ("{\"request\": \"abc\"}");
-    WEE_CHECK_TEXT(400, "Bad Request");
+    WEE_CHECK_TEXT(400, "Bad Request", "", "null");
 
     /* error: invalid request (string, resource not found) */
     test_client_recv_text ("{\"request\": \"GET /api/unknown\"}");
-    WEE_CHECK_TEXT(404, "Not Found");
+    WEE_CHECK_TEXT(404, "Not Found", "GET /api/unknown", "null");
+
+    /* error: invalid request (string, resource not found) */
+    test_client_recv_text ("{\"request\": \"GET /api/unknown\", \"body\": {\"test\": 123}}");
+    WEE_CHECK_TEXT(404, "Not Found", "GET /api/unknown", "{\"test\":123}");
 }
 
 /*
