@@ -252,6 +252,9 @@ relay_remote_get_address (const char *url)
         return NULL;
 
     pos = strchr (ptr_start, ':');
+    if (!pos)
+        pos = strchr (ptr_start, '?');
+
     return (pos) ?
         weechat_strndup (ptr_start, pos - ptr_start) : strdup (ptr_start);
 }

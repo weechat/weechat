@@ -127,6 +127,8 @@ TEST(RelayRemote, GetAddress)
     STRCMP_EQUAL("example.com", relay_remote_get_address ("https://example.com"));
     STRCMP_EQUAL("example.com", relay_remote_get_address ("https://example.com:8000"));
     STRCMP_EQUAL("example.com", relay_remote_get_address ("https://example.com:8000/"));
+    STRCMP_EQUAL("example.com", relay_remote_get_address ("https://example.com:8000/?option=1"));
+    STRCMP_EQUAL("example.com", relay_remote_get_address ("https://example.com?option=1"));
 }
 
 /*
