@@ -143,9 +143,12 @@ relay_websocket_deflate_free_stream_inflate (struct t_relay_websocket_deflate *w
 void
 relay_websocket_deflate_free (struct t_relay_websocket_deflate *ws_deflate)
 {
-    relay_websocket_deflate_free_stream_deflate (ws_deflate);
-    relay_websocket_deflate_free_stream_inflate (ws_deflate);
-    free (ws_deflate);
+    if (ws_deflate)
+    {
+        relay_websocket_deflate_free_stream_deflate (ws_deflate);
+        relay_websocket_deflate_free_stream_inflate (ws_deflate);
+        free (ws_deflate);
+    }
 }
 
 /*
