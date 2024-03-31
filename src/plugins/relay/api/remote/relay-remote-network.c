@@ -905,7 +905,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
             /* hash iterations */
             json_hash_iterations = cJSON_GetObjectItem (json_body, "password_hash_iterations");
             if (json_hash_iterations && cJSON_IsNumber (json_hash_iterations))
-                remote->password_hash_iterations = json_hash_iterations->valueint;
+                remote->password_hash_iterations = (int)cJSON_GetNumberValue (json_hash_iterations);
             /* TOTP */
             json_totp = cJSON_GetObjectItem (json_body, "totp");
             if (json_totp && cJSON_IsBool (json_totp))

@@ -516,7 +516,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
         if (cJSON_IsNumber (json_buffer_id))
         {
             snprintf (str_id, sizeof (str_id),
-                      "%lld", (long long)json_buffer_id->valuedouble);
+                      "%lld", (long long)cJSON_GetNumberValue (json_buffer_id));
             ptr_buffer = weechat_buffer_search ("==id", str_id);
             if (!ptr_buffer)
             {
@@ -524,7 +524,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
                     client,
                     RELAY_HTTP_404_NOT_FOUND, NULL,
                     "Buffer \"%lld\" not found",
-                    (long long)json_buffer_id->valuedouble);
+                    (long long)cJSON_GetNumberValue (json_buffer_id));
                 cJSON_Delete (json_body);
                 return WEECHAT_RC_OK;
             }
