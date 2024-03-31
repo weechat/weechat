@@ -115,9 +115,9 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                                   int return_code,
                                   const char *message,
                                   const char *event_name,
-                                  const char *event_type,
                                   struct t_gui_buffer *event_buffer,
                                   const char *headers,
+                                  const char *body_type,
                                   cJSON *json_body)
 {
     cJSON *json, *json_event;
@@ -150,9 +150,6 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                     cJSON_AddItemToObject (
                         json_event, "name",
                         cJSON_CreateString ((event_name) ? event_name : ""));
-                    cJSON_AddItemToObject (
-                        json_event, "type",
-                        cJSON_CreateString ((event_type) ? event_type : ""));
                     id = -1;
                     if (event_buffer)
                     {
@@ -168,7 +165,12 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                     cJSON_AddItemToObject (json, "event", json_event);
                 }
             }
-            cJSON_AddItemToObject (json, "body", json_body);
+            if (json_body)
+            {
+                cJSON_AddItemToObject (json, "body_type",
+                                       cJSON_CreateString ((body_type) ? body_type : ""));
+                cJSON_AddItemToObject (json, "body", json_body);
+            }
             string = cJSON_PrintUnformatted (json);
             num_bytes = relay_client_send (
                 client,
@@ -204,15 +206,16 @@ int
 relay_api_msg_send_json (struct t_relay_client *client,
                          int return_code,
                          const char *message,
+                         const char *body_type,
                          cJSON *json_body)
 {
     return relay_api_msg_send_json_internal (client,
                                              return_code,
                                              message,
                                              NULL,  /* event_name */
-                                             NULL,  /* event_type */
                                              NULL,  /* event_buffer */
                                              NULL,  /* headers */
+                                             body_type,
                                              json_body);
 }
 
@@ -257,9 +260,9 @@ relay_api_msg_send_error_json (struct t_relay_client *client,
                 return_code,
                 message,
                 NULL,  /* event_name */
-                NULL,  /* event_type */
                 NULL,  /* event_buffer */
                 headers,
+                NULL,  /* body_type */
                 json);
             cJSON_Delete (json);
         }
@@ -295,16 +298,16 @@ relay_api_msg_send_error_json (struct t_relay_client *client,
 int
 relay_api_msg_send_event (struct t_relay_client *client,
                           const char *name,
-                          const char *type,
                           struct t_gui_buffer *buffer,
+                          const char *body_type,
                           cJSON *json_body)
 {
     return relay_api_msg_send_json_internal (client,
                                              RELAY_API_HTTP_0_EVENT,
                                              name,
-                                             type,
                                              buffer,
                                              NULL,  /* headers */
+                                             body_type,
                                              json_body);
 }
 
