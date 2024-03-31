@@ -489,6 +489,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          relay/                            | Корен unit тестова за Релеј додатак.
 |             test-relay-auth.cpp            | Тестови: аутентификација клијената.
 |             test-relay-http.cpp            | Тестови: HTTP функције за Релеј додатак.
+// TRANSLATION MISSING
+|             test-relay-remote.cpp          | Tests: remote functions for Relay plugin.
 |             test-relay-websocket.cpp       | Тестови: websocket функције за Релеј додатак.
 |             api/                           | Root of unit tests for Relay "api" protocol.
 |                test-relay-api.cpp          | Tests: Relay "api" protocol: general functions.

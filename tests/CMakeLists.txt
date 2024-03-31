@@ -135,6 +135,7 @@ if (ENABLE_RELAY)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     unit/plugins/relay/test-relay-auth.cpp
     unit/plugins/relay/test-relay-http.cpp
+    unit/plugins/relay/test-relay-remote.cpp
     unit/plugins/relay/test-relay-websocket.cpp
     unit/plugins/relay/irc/test-relay-irc.cpp
   )
