@@ -22,6 +22,8 @@
 
 #include <gnutls/gnutls.h>
 
+#define RELAY_REMOTE_DEFAULT_PORT 9000
+
 enum t_relay_remote_option
 {
     RELAY_REMOTE_OPTION_URL = 0,       /* remote URL                        */
@@ -42,8 +44,17 @@ struct t_relay_remote
     int port;                          /* port number                       */
     int tls;                           /* 1 if TLS is enabled               */
     enum t_relay_status status;        /* status (connecting, active,..)    */
+    int password_hash_algo;            /* hash algo (from handshake)        */
+    int password_hash_iterations;      /* hash iterations (from handshake)  */
+    int totp;                          /* TOTP enabled (from handshake)     */
+    char *websocket_key;               /* random key sent to the remote     */
+                                       /* in the websocket handshake        */
     int sock;                          /* connected socket                  */
+    struct t_hook *hook_url_handshake; /* URL hook for the handshake        */
+    struct t_hook *hook_connect;       /* connection hook                   */
+    struct t_hook *hook_fd;            /* hook for socket                   */
     gnutls_session_t gnutls_sess;      /* gnutls session (only if TLS used) */
+    struct t_relay_websocket_deflate *ws_deflate; /* websocket deflate data */
     struct t_relay_remote *prev_remote;/* link to previous remote           */
     struct t_relay_remote *next_remote;/* link to next remote               */
 };
@@ -76,6 +87,7 @@ extern struct t_relay_remote *relay_remote_new (const char *name,
 extern struct t_relay_remote *relay_remote_new_with_infolist (struct t_infolist *infolist);
 extern void relay_remote_set_status (struct t_relay_remote *remote,
                                      enum t_relay_status status);
+extern int relay_remote_connect (struct t_relay_remote *remote);
 extern int relay_remote_rename (struct t_relay_remote *remote, const char *name);
 extern void relay_remote_free (struct t_relay_remote *remote);
 extern void relay_remote_free_all ();

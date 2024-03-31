@@ -350,6 +350,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/relay/api/relay-api-msg.h
 ./src/plugins/relay/api/relay-api-protocol.c
 ./src/plugins/relay/api/relay-api-protocol.h
+./src/plugins/relay/api/remote/relay-remote-network.c
+./src/plugins/relay/api/remote/relay-remote-network.h
 ./src/plugins/relay/irc/relay-irc.c
 ./src/plugins/relay/irc/relay-irc.h
 ./src/plugins/relay/relay-auth.c

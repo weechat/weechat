@@ -35,6 +35,10 @@
 #include "relay.h"
 #include "relay-config.h"
 #include "relay-remote.h"
+#include "relay-websocket.h"
+#ifdef HAVE_CJSON
+#include "api/remote/relay-remote-network.h"
+#endif
 
 
 char *relay_remote_option_string[RELAY_REMOTE_NUM_OPTIONS] =
@@ -226,6 +230,59 @@ relay_remote_send_signal (struct t_relay_remote *remote)
 }
 
 /*
+ * Extracts address from URL.
+ *
+ * Note: result must be free after use.
+ */
+
+char *
+relay_remote_get_address (const char *url)
+{
+    const char *ptr_start;
+    char *pos;
+
+    if (!url)
+        return NULL;
+
+    if (strncmp (url, "http://", 7) == 0)
+        ptr_start = url + 7;
+    else if (strncmp (url, "https://", 8) == 0)
+        ptr_start = url + 8;
+    else
+        return NULL;
+
+    pos = strchr (ptr_start, ':');
+    return (pos) ?
+        weechat_strndup (ptr_start, pos - ptr_start) : strdup (ptr_start);
+}
+
+/*
+ * Extracts port from URL.
+ */
+
+int
+relay_remote_get_port (const char *url)
+{
+    char *pos, *error;
+    long port;
+
+    if (!url)
+        goto error;
+
+    pos = strrchr (url, ':');
+    if (!pos)
+        goto error;
+
+    error = NULL;
+    port = strtol (pos + 1, &error, 10);
+    if (error && !error[0])
+        return (int)port;
+
+error:
+    return RELAY_REMOTE_DEFAULT_PORT;
+}
+
+/*
  * Allocates and initializes new remote structure.
  *
  * Returns pointer to new remote, NULL if error.
@@ -256,8 +313,16 @@ relay_remote_alloc (const char *name)
     new_remote->port = 0;
     new_remote->tls = 0;
     new_remote->status = RELAY_STATUS_DISCONNECTED;
+    new_remote->password_hash_algo = -1;
+    new_remote->password_hash_iterations = -1;
+    new_remote->totp = -1;
+    new_remote->websocket_key = NULL;
     new_remote->sock = -1;
+    new_remote->hook_url_handshake = NULL;
+    new_remote->hook_connect = NULL;
+    new_remote->hook_fd = NULL;
     new_remote->gnutls_sess = NULL;
+    new_remote->ws_deflate = relay_websocket_deflate_alloc ();
     new_remote->prev_remote = NULL;
     new_remote->next_remote = NULL;
 
@@ -348,6 +413,11 @@ relay_remote_new_with_options (const char *name, struct t_config_option **option
         new_remote->options[i] = options[i];
     }
     relay_remote_add (new_remote, &relay_remotes, &last_relay_remote);
+    new_remote->address = relay_remote_get_address (
+        weechat_config_string (new_remote->options[RELAY_REMOTE_OPTION_URL]));
+    new_remote->port = relay_remote_get_port (
+        weechat_config_string (new_remote->options[RELAY_REMOTE_OPTION_URL]));
+
     relay_remotes_count++;
 
     relay_remote_send_signal (new_remote);
@@ -409,6 +479,8 @@ struct t_relay_remote *
 relay_remote_new_with_infolist (struct t_infolist *infolist)
 {
     struct t_relay_remote *new_remote;
+    Bytef *ptr_dict;
+    int dict_size;
 
     new_remote = malloc (sizeof (*new_remote));
     if (!new_remote)
@@ -419,8 +491,57 @@ relay_remote_new_with_infolist (struct t_infolist *infolist)
     new_remote->port = weechat_infolist_integer (infolist, "port");
     new_remote->tls = weechat_infolist_integer (infolist, "tls");
     new_remote->status = weechat_infolist_integer (infolist, "status");
+    new_remote->password_hash_algo = weechat_infolist_integer (
+        infolist, "password_hash_algo");
+    new_remote->password_hash_iterations = weechat_infolist_integer (
+        infolist, "password_hash_iterations");
+    new_remote->totp = weechat_infolist_integer (infolist, "totp");
+    new_remote->websocket_key = strdup (weechat_infolist_string (infolist, "websocket_key"));
     new_remote->sock = weechat_infolist_integer (infolist, "sock");
+    new_remote->hook_url_handshake = NULL;
+    new_remote->hook_connect = NULL;
+    new_remote->hook_fd = NULL;
     new_remote->gnutls_sess = NULL;
+    new_remote->ws_deflate = relay_websocket_deflate_alloc ();
+    new_remote->ws_deflate->enabled = weechat_infolist_integer (infolist, "ws_deflate_enabled");
+    new_remote->ws_deflate->server_context_takeover = weechat_infolist_integer (infolist, "ws_deflate_server_context_takeover");
+    new_remote->ws_deflate->client_context_takeover = weechat_infolist_integer (infolist, "ws_deflate_client_context_takeover");
+    new_remote->ws_deflate->window_bits_deflate = weechat_infolist_integer (infolist, "ws_deflate_window_bits_deflate");
+    new_remote->ws_deflate->window_bits_inflate = weechat_infolist_integer (infolist, "ws_deflate_window_bits_inflate");
+    new_remote->ws_deflate->strm_deflate = NULL;
+    new_remote->ws_deflate->strm_inflate = NULL;
+    if (weechat_infolist_search_var (infolist, "ws_deflate_strm_deflate_dict"))
+    {
+        ptr_dict = weechat_infolist_buffer (infolist, "ws_deflate_strm_deflate_dict", &dict_size);
+        if (ptr_dict)
+        {
+            new_remote->ws_deflate->strm_deflate = calloc (1, sizeof (*new_remote->ws_deflate->strm_deflate));
+            if (new_remote->ws_deflate->strm_deflate)
+            {
+                if (relay_websocket_deflate_init_stream_deflate (new_remote->ws_deflate))
+                {
+                    deflateSetDictionary (new_remote->ws_deflate->strm_deflate,
+                                          ptr_dict, dict_size);
+                }
+            }
+        }
+    }
+    if (weechat_infolist_search_var (infolist, "ws_deflate_strm_inflate_dict"))
+    {
+        ptr_dict = weechat_infolist_buffer (infolist, "ws_deflate_strm_inflate_dict", &dict_size);
+        if (ptr_dict)
+        {
+            new_remote->ws_deflate->strm_inflate = calloc (1, sizeof (*new_remote->ws_deflate->strm_inflate));
+            if (new_remote->ws_deflate->strm_inflate)
+            {
+                if (relay_websocket_deflate_init_stream_inflate (new_remote->ws_deflate))
+                {
+                    inflateSetDictionary (new_remote->ws_deflate->strm_inflate,
+                                          ptr_dict, dict_size);
+                }
+            }
+        }
+    }
     new_remote->prev_remote = NULL;
     new_remote->next_remote = relay_remotes;
     if (relay_remotes)
@@ -449,9 +570,37 @@ relay_remote_set_status (struct t_relay_remote *remote,
      * a disconnected state for remote in infolist (used on /upgrade -save)
      */
 
+    if (remote->status == status)
+        return;
+
     remote->status = status;
 
     relay_remote_send_signal (remote);
+}
+
+/*
+ * Connects to a remote WeeChat relay/api.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+relay_remote_connect (struct t_relay_remote *remote)
+{
+#ifndef HAVE_CJSON
+    weechat_printf (NULL,
+                    _("%s%s: error: unable to connect to remote relay via API "
+                      "(cJSON support is not enabled)"),
+                    weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+    return 0;
+#endif /* HAVE_CJSON */
+
+    if (!remote)
+        return 0;
+
+    return relay_remote_network_connect (remote);
 }
 
 /*
@@ -543,6 +692,7 @@ relay_remote_free (struct t_relay_remote *remote)
     }
     if (remote->address)
         free (remote->address);
+    relay_websocket_deflate_free (remote->ws_deflate);
 
     free (remote);
 
@@ -570,9 +720,7 @@ void
 relay_remote_disconnect (struct t_relay_remote *remote)
 {
     if (remote->sock >= 0)
-    {
-        relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
-    }
+        relay_remote_network_disconnect (remote);
 }
 
 /*
@@ -609,6 +757,8 @@ relay_remote_add_to_infolist (struct t_infolist *infolist,
                               int force_disconnected_state)
 {
     struct t_infolist_item *ptr_item;
+    Bytef *dict;
+    uInt dict_size;
 
     if (!infolist || !remote)
         return 0;
@@ -625,6 +775,14 @@ relay_remote_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "tls", remote->tls))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "password_hash_algo", remote->password_hash_algo))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "password_hash_iterations", remote->password_hash_iterations))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "totp", remote->totp))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "websocket_key", remote->websocket_key))
+        return 0;
     if (!RELAY_STATUS_HAS_ENDED(remote->status) && force_disconnected_state)
     {
         if (!weechat_infolist_new_var_integer (ptr_item, "status", RELAY_STATUS_DISCONNECTED))
@@ -638,6 +796,33 @@ relay_remote_add_to_infolist (struct t_infolist *infolist,
             return 0;
         if (!weechat_infolist_new_var_integer (ptr_item, "sock", remote->sock))
             return 0;
+    }
+    if (remote->ws_deflate->strm_deflate || remote->ws_deflate->strm_inflate)
+    {
+        /* save the deflate/inflate dictionary, as it's required after /upgrade */
+        dict = malloc (32768);
+        if (dict)
+        {
+            if (remote->ws_deflate->strm_deflate)
+            {
+                if (deflateGetDictionary (remote->ws_deflate->strm_deflate, dict, &dict_size) == Z_OK)
+                {
+                    weechat_infolist_new_var_buffer (ptr_item,
+                                                     "ws_deflate_strm_deflate_dict",
+                                                     dict, dict_size);
+                }
+            }
+            if (remote->ws_deflate->strm_inflate)
+            {
+                if (inflateGetDictionary (remote->ws_deflate->strm_inflate, dict, &dict_size) == Z_OK)
+                {
+                    weechat_infolist_new_var_buffer (ptr_item,
+                                                     "ws_deflate_strm_inflate_dict",
+                                                     dict, dict_size);
+                }
+            }
+            free (dict);
+        }
     }
 
     return 1;
@@ -657,24 +842,32 @@ relay_remote_print_log ()
     {
         weechat_log_printf ("");
         weechat_log_printf ("[relay remote (addr:0x%lx)]", ptr_remote);
-        weechat_log_printf ("  name. . . . . . . . . : '%s'", ptr_remote->name);
-        weechat_log_printf ("  url . . . . . . . . . : '%s'",
+        weechat_log_printf ("  name. . . . . . . . . . : '%s'", ptr_remote->name);
+        weechat_log_printf ("  url . . . . . . . . . . : '%s'",
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_URL]));
-        weechat_log_printf ("  proxy . . . . . . . . : '%s'",
+        weechat_log_printf ("  proxy . . . . . . . . . : '%s'",
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_PROXY]));
-        weechat_log_printf ("  password. . . . . . . : '%s'",
+        weechat_log_printf ("  password. . . . . . . . : '%s'",
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_PASSWORD]));
-        weechat_log_printf ("  totp_secret . . . . . : '%s'",
+        weechat_log_printf ("  totp_secret . . . . . . : '%s'",
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_TOTP_SECRET]));
-        weechat_log_printf ("  address . . . . . . . : '%s'", ptr_remote->address);
-        weechat_log_printf ("  port. . . . . . . . . : %d", ptr_remote->port);
-        weechat_log_printf ("  tls . . . . . . . . . : %d", ptr_remote->tls);
-        weechat_log_printf ("  status. . . . . . . . : %d (%s)",
+        weechat_log_printf ("  address . . . . . . . . : '%s'", ptr_remote->address);
+        weechat_log_printf ("  port. . . . . . . . . . : %d", ptr_remote->port);
+        weechat_log_printf ("  tls . . . . . . . . . . : %d", ptr_remote->tls);
+        weechat_log_printf ("  status. . . . . . . . . : %d (%s)",
                             ptr_remote->status,
                             relay_status_string[ptr_remote->status]);
-        weechat_log_printf ("  sock. . . . . . . . . : %d", ptr_remote->sock);
-        weechat_log_printf ("  gnutls_sess . . . . . : 0x%lx", ptr_remote->gnutls_sess);
-        weechat_log_printf ("  prev_remote . . . . . : 0x%lx", ptr_remote->prev_remote);
-        weechat_log_printf ("  next_remote . . . . . : 0x%lx", ptr_remote->next_remote);
+        weechat_log_printf ("  password_hash_algo. . . : %d", ptr_remote->password_hash_algo);
+        weechat_log_printf ("  password_hash_iterations: %d", ptr_remote->password_hash_iterations);
+        weechat_log_printf ("  totp. . . . . . . . . . : %d", ptr_remote->totp);
+        weechat_log_printf ("  websocket_key . . . . . : 0x%ls", ptr_remote->websocket_key);
+        weechat_log_printf ("  sock. . . . . . . . . . : %d", ptr_remote->sock);
+        weechat_log_printf ("  hook_url_handshake. . . : 0x%lx", ptr_remote->hook_url_handshake);
+        weechat_log_printf ("  hook_connect. . . . . . : 0x%lx", ptr_remote->hook_connect);
+        weechat_log_printf ("  hook_fd . . . . . . . . : 0x%lx", ptr_remote->hook_fd);
+        weechat_log_printf ("  gnutls_sess . . . . . . : 0x%lx", ptr_remote->gnutls_sess);
+        relay_websocket_deflate_print_log (ptr_remote->ws_deflate, "");
+        weechat_log_printf ("  prev_remote . . . . . . : 0x%lx", ptr_remote->prev_remote);
+        weechat_log_printf ("  next_remote . . . . . . : 0x%lx", ptr_remote->next_remote);
     }
 }

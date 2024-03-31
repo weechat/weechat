@@ -223,206 +223,211 @@ WeeChat "core" は以下のディレクトリに配置されています:
 
 [width="100%",cols="2m,3",options="header"]
 |===
-| パス/ファイル名                   | 説明
-| plugins/                          | プラグインのルートディレクトリ
-|    plugin.c                       | プラグイン管理 (動的 C 言語ライブラリのロード/アンロード)
-|    plugin-api.c                   | プラグイン API の追加関数 (WeeChat コア関数のラッパー)
-|    plugin-api-info.c              | プラグイン API 用のインフォ/インフォリストに関する追加関数
-|    plugin-config.c                | プラグイン設定オプション (plugins.conf ファイル)
-|    plugin-script.c                | スクリプトプラグインの共用関数
-|    plugin-script-api.c            | スクリプト API 関数: 一部のプラグイン API 関数のラッパー
-|    plugin-script-config.c         | スクリプトプラグインの設定オプション (python.conf、perl.conf 等のファイル)
-|    weechat-plugin.h               | WeeChat プラグインと一緒に配布されるヘッダファイル、プラグインのコンパイルに必要
-|    alias/                         | alias プラグイン
-|       alias.c                     | alias の主要関数
-|       alias-command.c             | alias コマンド
-|       alias-completion.c          | alias 補完
-|       alias-config.c              | alias 設定オプション (alias.conf ファイル)
-|       alias-info.c                | alias の情報/インフォリスト/hdata
-|    spell/                         | spell プラグイン
-|       spell.c                     | spell の主関数
-|       spell-bar-item.c            | spell バー要素
-|       spell-command.c             | spell コマンド
-|       spell-completion.c          | spell 補完
-|       spell-config.c              | spell 設定オプション (spell.conf ファイル)
-|       spell-info.c                | spell の情報/インフォリスト/hdata
-|       spell-speller.c             | spell のスペラー管理
-|    buflist/                       | buflist プラグイン
-|       buflist.c                   | buflist の主要関数
-|       buflist-bar-item.c          | buflist バー要素
-|       buflist-command.c           | buflist コマンド
+| パス/ファイル名                    | 説明
+| plugins/                           | プラグインのルートディレクトリ
+|    plugin.c                        | プラグイン管理 (動的 C 言語ライブラリのロード/アンロード)
+|    plugin-api.c                    | プラグイン API の追加関数 (WeeChat コア関数のラッパー)
+|    plugin-api-info.c               | プラグイン API 用のインフォ/インフォリストに関する追加関数
+|    plugin-config.c                 | プラグイン設定オプション (plugins.conf ファイル)
+|    plugin-script.c                 | スクリプトプラグインの共用関数
+|    plugin-script-api.c             | スクリプト API 関数: 一部のプラグイン API 関数のラッパー
+|    plugin-script-config.c          | スクリプトプラグインの設定オプション (python.conf、perl.conf 等のファイル)
+|    weechat-plugin.h                | WeeChat プラグインと一緒に配布されるヘッダファイル、プラグインのコンパイルに必要
+|    alias/                          | alias プラグイン
+|       alias.c                      | alias の主要関数
+|       alias-command.c              | alias コマンド
+|       alias-completion.c           | alias 補完
+|       alias-config.c               | alias 設定オプション (alias.conf ファイル)
+|       alias-info.c                 | alias の情報/インフォリスト/hdata
+|    spell/                          | spell プラグイン
+|       spell.c                      | spell の主関数
+|       spell-bar-item.c             | spell バー要素
+|       spell-command.c              | spell コマンド
+|       spell-completion.c           | spell 補完
+|       spell-config.c               | spell 設定オプション (spell.conf ファイル)
+|       spell-info.c                 | spell の情報/インフォリスト/hdata
+|       spell-speller.c              | spell のスペラー管理
+|    buflist/                        | buflist プラグイン
+|       buflist.c                    | buflist の主要関数
+|       buflist-bar-item.c           | buflist バー要素
+|       buflist-command.c            | buflist コマンド
 // TRANSLATION MISSING
-|       buflist-completion.c        | Buflist completions.
-|       buflist-config.c            | buflist 設定オプション (buflist.conf ファイル)
-|       buflist-info.c              | buflist の情報/インフォリスト/hdata
-|       buflist-mouse.c             | buflist マウス動作
-|    charset/                       | charset プラグイン
-|       charset.c                   | charset 関数
-|    exec/                          | exec プラグイン
-|       exec.c                      | exec の主要関数
-|       exec-buffer.c               | exec バッファ
-|       exec-command.c              | exec コマンド
-|       exec-completion.c           | exec 補完
-|       exec-config.c               | exec 設定オプション (exec.conf ファイル)
-|    fifo/                          | fifo プラグイン
-|       fifo.c                      | fifo の主要関数
-|       fifo-command.c              | fifo コマンド
-|       fifo-config.c               | fifo 設定オプション (fifo.conf ファイル)
-|       fifo-info.c                 | fifo の情報/インフォリスト/hdata
-|    fset/                          | fset プラグイン
-|       fset.c                      | fset の主要関数
-|       fset-bar-item.c             | fset バー要素
-|       fset-buffer.c               | fset バッファ
-|       fset-command.c              | fset コマンド
-|       fset-completion.c           | fset 補完
-|       fset-config.c               | fset 設定オプション (fset.conf ファイル)
-|       fset-info.c                 | fset の情報/インフォリスト/hdata
-|       fset-mouse.c                | fset マウス動作
-|       fset-option.c               | fset オプション管理
-|    guile/                         | guile (scheme) プラグイン
-|       weechat-guile.c             | guile の主要関数 (スクリプトのロード/アンロード、guile コードの実行)
-|       weechat-guile-api.c         | guile スクリプト作成 API 関数
-|    irc/                           | IRC (Internet Relay Chat) プラグイン
-|       irc.c                       | IRC の主要関数
-|       irc-bar-item.c              | IRC バー要素
+|       buflist-completion.c         | Buflist completions.
+|       buflist-config.c             | buflist 設定オプション (buflist.conf ファイル)
+|       buflist-info.c               | buflist の情報/インフォリスト/hdata
+|       buflist-mouse.c              | buflist マウス動作
+|    charset/                        | charset プラグイン
+|       charset.c                    | charset 関数
+|    exec/                           | exec プラグイン
+|       exec.c                       | exec の主要関数
+|       exec-buffer.c                | exec バッファ
+|       exec-command.c               | exec コマンド
+|       exec-completion.c            | exec 補完
+|       exec-config.c                | exec 設定オプション (exec.conf ファイル)
+|    fifo/                           | fifo プラグイン
+|       fifo.c                       | fifo の主要関数
+|       fifo-command.c               | fifo コマンド
+|       fifo-config.c                | fifo 設定オプション (fifo.conf ファイル)
+|       fifo-info.c                  | fifo の情報/インフォリスト/hdata
+|    fset/                           | fset プラグイン
+|       fset.c                       | fset の主要関数
+|       fset-bar-item.c              | fset バー要素
+|       fset-buffer.c                | fset バッファ
+|       fset-command.c               | fset コマンド
+|       fset-completion.c            | fset 補完
+|       fset-config.c                | fset 設定オプション (fset.conf ファイル)
+|       fset-info.c                  | fset の情報/インフォリスト/hdata
+|       fset-mouse.c                 | fset マウス動作
+|       fset-option.c                | fset オプション管理
+|    guile/                          | guile (scheme) プラグイン
+|       weechat-guile.c              | guile の主要関数 (スクリプトのロード/アンロード、guile コードの実行)
+|       weechat-guile-api.c          | guile スクリプト作成 API 関数
+|    irc/                            | IRC (Internet Relay Chat) プラグイン
+|       irc.c                        | IRC の主要関数
+|       irc-bar-item.c               | IRC バー要素
 // TRANSLATION MISSING
-|       irc-batch.c                 | IRC batched events.
-|       irc-buffer.c                | IRC バッファ
-|       irc-channel.c               | IRC チャンネル
-|       irc-color.c                 | IRC 色
-|       irc-command.c               | IRC コマンド
-|       irc-completion.c            | IRC 補完
-|       irc-config.c                | IRC 設定オプション (irc.conf ファイル)
-|       irc-ctcp.c                  | IRC CTCP
-|       irc-debug.c                 | IRC デバッグ関数
-|       irc-ignore.c                | IRC 無視
-|       irc-info.c                  | IRC の情報/インフォリスト/hdata
-|       irc-input.c                 | コマンドおよびテキストの入力
+|       irc-batch.c                  | IRC batched events.
+|       irc-buffer.c                 | IRC バッファ
+|       irc-channel.c                | IRC チャンネル
+|       irc-color.c                  | IRC 色
+|       irc-command.c                | IRC コマンド
+|       irc-completion.c             | IRC 補完
+|       irc-config.c                 | IRC 設定オプション (irc.conf ファイル)
+|       irc-ctcp.c                   | IRC CTCP
+|       irc-debug.c                  | IRC デバッグ関数
+|       irc-ignore.c                 | IRC 無視
+|       irc-info.c                   | IRC の情報/インフォリスト/hdata
+|       irc-input.c                  | コマンドおよびテキストの入力
 // TRANSLATION MISSING
-|       irc-join.c                  | Functions for list of channels to join.
+|       irc-join.c                   | Functions for list of channels to join.
 // TRANSLATION MISSING
-|       irc-list.c                  | Buffer for reply to /list command.
-|       irc-message.c               | IRC メッセージを操作する関数
-|       irc-mode.c                  | チャンネルおよびニックネームのモードを操作する関数
-|       irc-modelist.c              | IRC チャンネルモードリスト (+b、+e、+I、...).
-|       irc-msgbuffer.c             | IRC メッセージを送るバッファ
-|       irc-nick.c                  | IRC ニックネーム
-|       irc-notify.c                | IRC 通知リスト
-|       irc-protocol.c              | IRC プロトコル (RFC 1459/2810/2811/2812/2813/7194)
-|       irc-raw.c                   | IRC 生バッファ
-|       irc-redirect.c              | IRC コマンド出力のリダイレクト
-|       irc-sasl.c                  | IRC サーバに対する SASL 認証
-|       irc-server.c                | IRC サーバとの入出力通信
+|       irc-list.c                   | Buffer for reply to /list command.
+|       irc-message.c                | IRC メッセージを操作する関数
+|       irc-mode.c                   | チャンネルおよびニックネームのモードを操作する関数
+|       irc-modelist.c               | IRC チャンネルモードリスト (+b、+e、+I、...).
+|       irc-msgbuffer.c              | IRC メッセージを送るバッファ
+|       irc-nick.c                   | IRC ニックネーム
+|       irc-notify.c                 | IRC 通知リスト
+|       irc-protocol.c               | IRC プロトコル (RFC 1459/2810/2811/2812/2813/7194)
+|       irc-raw.c                    | IRC 生バッファ
+|       irc-redirect.c               | IRC コマンド出力のリダイレクト
+|       irc-sasl.c                   | IRC サーバに対する SASL 認証
+|       irc-server.c                 | IRC サーバとの入出力通信
 // TRANSLATION MISSING
-|       irc-tag.c                   | Functions to manipulate IRC message tags.
+|       irc-tag.c                    | Functions to manipulate IRC message tags.
 // TRANSLATION MISSING
-|       irc-typing.c                | Typing status.
-|       irc-upgrade.c               | WeeChat をアップグレードする際の IRC データの保存およびロード
-|    javascript/                    | JavaScript プラグイン
-|       weechat-js.cpp              | JavaScript の主要関数 (スクリプトのロード/アンロード、JavaScript コードの実行)
-|       weechat-js-api.cpp          | JavaScript スクリプト作成 API 関数
-|       weechat-js-v8.cpp           | JavaScript v8 関数
-|    logger/                        | logger プラグイン
-|       logger.c                    | logger の主要関数
+|       irc-typing.c                 | Typing status.
+|       irc-upgrade.c                | WeeChat をアップグレードする際の IRC データの保存およびロード
+|    javascript/                     | JavaScript プラグイン
+|       weechat-js.cpp               | JavaScript の主要関数 (スクリプトのロード/アンロード、JavaScript コードの実行)
+|       weechat-js-api.cpp           | JavaScript スクリプト作成 API 関数
+|       weechat-js-v8.cpp            | JavaScript v8 関数
+|    logger/                         | logger プラグイン
+|       logger.c                     | logger の主要関数
 // TRANSLATION MISSING
-|       logger-backlog.c            | Logger backlog functions.
-|       logger-buffer.c             | logger バッファリスト管理
-|       logger-command.c            | logger コマンド
-|       logger-config.c             | logger 設定オプション (logger.conf ファイル)
-|       logger-info.c               | logger の情報/インフォリスト/hdata
-|       logger-tail.c               | ファイル末尾の行を返す
-|    lua/                           | lua プラグイン
-|       weechat-lua.c               | lua の主要関数 (スクリプトのロード/アンロード、lua コードの実行)
-|       weechat-lua-api.c           | lua スクリプト作成 API 関数
-|    perl/                          | perl プラグイン
-|       weechat-perl.c              | perl の主要関数 (スクリプトのロード/アンロード、perl コードの実行)
-|       weechat-perl-api.c          | perl スクリプト作成 API 関数
-|    php/                           | php プラグイン
-|       weechat-php.c               | php の主要関数 (スクリプトのロード/アンロード、php コードの実行)
-|       weechat-php-api.c           | php スクリプト作成 API 関数
-|    python/                        | python プラグイン
-|       weechat-python.c            | python の主要関数 (スクリプトのロード/アンロード、python コードの実行)
-|       weechat-python-api.c        | python スクリプト作成 API 関数
-|    relay/                         | relay プラグイン (IRC プロキシとリモートインターフェースへの中継)
-|       relay.c                     | relay の主要関数
+|       logger-backlog.c             | Logger backlog functions.
+|       logger-buffer.c              | logger バッファリスト管理
+|       logger-command.c             | logger コマンド
+|       logger-config.c              | logger 設定オプション (logger.conf ファイル)
+|       logger-info.c                | logger の情報/インフォリスト/hdata
+|       logger-tail.c                | ファイル末尾の行を返す
+|    lua/                            | lua プラグイン
+|       weechat-lua.c                | lua の主要関数 (スクリプトのロード/アンロード、lua コードの実行)
+|       weechat-lua-api.c            | lua スクリプト作成 API 関数
+|    perl/                           | perl プラグイン
+|       weechat-perl.c               | perl の主要関数 (スクリプトのロード/アンロード、perl コードの実行)
+|       weechat-perl-api.c           | perl スクリプト作成 API 関数
+|    php/                            | php プラグイン
+|       weechat-php.c                | php の主要関数 (スクリプトのロード/アンロード、php コードの実行)
+|       weechat-php-api.c            | php スクリプト作成 API 関数
+|    python/                         | python プラグイン
+|       weechat-python.c             | python の主要関数 (スクリプトのロード/アンロード、python コードの実行)
+|       weechat-python-api.c         | python スクリプト作成 API 関数
+|    relay/                          | relay プラグイン (IRC プロキシとリモートインターフェースへの中継)
+|       relay.c                      | relay の主要関数
 // TRANSLATION MISSING
-|       relay-auth.c                | Clients authentification.
-|       relay-buffer.c              | relay バッファ
-|       relay-client.c              | relay クライアント
-|       relay-command.c             | relay コマンド
-|       relay-completion.c          | relay 補完
-|       relay-config.c              | relay 設定オプション (relay.conf ファイル)
+|       relay-auth.c                 | Clients authentification.
+|       relay-buffer.c               | relay バッファ
+|       relay-client.c               | relay クライアント
+|       relay-command.c              | relay コマンド
+|       relay-completion.c           | relay 補完
+|       relay-config.c               | relay 設定オプション (relay.conf ファイル)
 // TRANSLATION MISSING
-|       relay-http.c                | HTTP functions.
-|       relay-info.c                | relay の情報/インフォリスト/hdata
-|       relay-network.c             | relay 用のネットワーク関数
-|       relay-raw.c                 | relay 生バッファ
+|       relay-http.c                 | HTTP functions.
+|       relay-info.c                 | relay の情報/インフォリスト/hdata
+|       relay-network.c              | relay 用のネットワーク関数
+|       relay-raw.c                  | relay 生バッファ
 // TRANSLATION MISSING
-|       relay-remote.c              | Relay remote.
-|       relay-server.c              | relay サーバ
-|       relay-upgrade.c             | WeeChat をアップグレードする際にデータを保存/回復
-|       relay-websocket.c           | リレー用の websocket サーバ関数 (RFC 6455)
+|       relay-remote.c               | Relay remote.
+|       relay-server.c               | relay サーバ
+|       relay-upgrade.c              | WeeChat をアップグレードする際にデータを保存/回復
+|       relay-websocket.c            | リレー用の websocket サーバ関数 (RFC 6455)
 // TRANSLATION MISSING
-|       api/                        | Relay for remote interfaces (using HTTP REST API).
+|       api/                         | Relay for remote interfaces (using HTTP REST API).
 // TRANSLATION MISSING
-|          relay-api.c              | Main API functions for HTTP REST API.
+|          relay-api.c               | Main API functions for HTTP REST API.
 // TRANSLATION MISSING
-|          relay-api-msg.c          | Send JSON messages to clients.
+|          relay-api-msg.c           | Send JSON messages to clients.
 // TRANSLATION MISSING
-|          relay-api-protocol.c     | HTTP REST API protocol.
-|       irc/                        | IRC プロキシ
-|          relay-irc.c              | IRC プロキシの主要関数
+|          relay-api-protocol.c      | HTTP REST API protocol.
 // TRANSLATION MISSING
-|       weechat/                    | Relay for remote interfaces (using "weechat" binary protocol).
-|          relay-weechat.c          | リモートインターフェースへの中継 (主要関数)
-|          relay-weechat-msg.c      | クライアントにバイナリメッセージを送信
-|          relay-weechat-nicklist.c | ニックネームリスト関数
-|          relay-weechat-protocol.c | クライアントからのコマンドを読み取る
-|    ruby/                          | ruby プラグイン
-|       weechat-ruby.c              | ruby の主要関数 (スクリプトのロード/アンロード、ruby コードの実行)
-|       weechat-ruby-api.c          | ruby スクリプト作成 API 関数
-|    script/                        | スクリプトマネージャ
-|       script.c                    | スクリプトマネージャの主要関数
-|       script-action.c             | スクリプトに対する操作 (ロード/アンロード、インストール/削除、...)
-|       script-buffer.c             | スクリプトマネージャ用のバッファ
-|       script-command.c            | スクリプトマネージャ用のコマンド
-|       script-completion.c         | スクリプトマネージャ用の補完
-|       script-config.c             | スクリプトマネージャ用の設定オプション (script.conf ファイル)
-|       script-info.c               | スクリプトマネージャの情報/インフォリスト/hdata
-|       script-mouse.c              | スクリプトマネージャのマウス動作
-|       script-repo.c               | リポジトリファイルのダウンロードとロード
-|    tcl/                           | tcl プラグイン
-|       weechat-tcl.c               | tcl の主要関数 (スクリプトのロード/アンロード、tcl コードの実行)
-|       weechat-tcl-api.c           | tcl スクリプト作成 API 関数
-|    trigger/                       | trigger プラグイン
-|       trigger.c                   | trigger の主要関数
-|       trigger-buffer.c            | trigger バッファ
-|       trigger-callback.c          | trigger コールバック
-|       trigger-command.c           | trigger コマンド
-|       trigger-completion.c        | trigger 補完
-|       trigger-config.c            | trigger 設定オプション (trigger.conf ファイル)
 // TRANSLATION MISSING
-|    typing/                        | Typing plugin.
+|          remote/                   | Relay remote functions, specific to API.
 // TRANSLATION MISSING
-|       typing.c                    | Main typing functions.
+|             relay-remote-network.c | Network functions for relay remote.
+|       irc/                         | IRC プロキシ
+|          relay-irc.c               | IRC プロキシの主要関数
 // TRANSLATION MISSING
-|       typing-bar-item.c           | Typing bar items.
+|       weechat/                     | Relay for remote interfaces (using "weechat" binary protocol).
+|          relay-weechat.c           | リモートインターフェースへの中継 (主要関数)
+|          relay-weechat-msg.c       | クライアントにバイナリメッセージを送信
+|          relay-weechat-nicklist.c  | ニックネームリスト関数
+|          relay-weechat-protocol.c  | クライアントからのコマンドを読み取る
+|    ruby/                           | ruby プラグイン
+|       weechat-ruby.c               | ruby の主要関数 (スクリプトのロード/アンロード、ruby コードの実行)
+|       weechat-ruby-api.c           | ruby スクリプト作成 API 関数
+|    script/                         | スクリプトマネージャ
+|       script.c                     | スクリプトマネージャの主要関数
+|       script-action.c              | スクリプトに対する操作 (ロード/アンロード、インストール/削除、...)
+|       script-buffer.c              | スクリプトマネージャ用のバッファ
+|       script-command.c             | スクリプトマネージャ用のコマンド
+|       script-completion.c          | スクリプトマネージャ用の補完
+|       script-config.c              | スクリプトマネージャ用の設定オプション (script.conf ファイル)
+|       script-info.c                | スクリプトマネージャの情報/インフォリスト/hdata
+|       script-mouse.c               | スクリプトマネージャのマウス動作
+|       script-repo.c                | リポジトリファイルのダウンロードとロード
+|    tcl/                            | tcl プラグイン
+|       weechat-tcl.c                | tcl の主要関数 (スクリプトのロード/アンロード、tcl コードの実行)
+|       weechat-tcl-api.c            | tcl スクリプト作成 API 関数
+|    trigger/                        | trigger プラグイン
+|       trigger.c                    | trigger の主要関数
+|       trigger-buffer.c             | trigger バッファ
+|       trigger-callback.c           | trigger コールバック
+|       trigger-command.c            | trigger コマンド
+|       trigger-completion.c         | trigger 補完
+|       trigger-config.c             | trigger 設定オプション (trigger.conf ファイル)
 // TRANSLATION MISSING
-|       typing-config.c             | Typing config options (file typing.conf).
+|    typing/                         | Typing plugin.
 // TRANSLATION MISSING
-|       typing-status.c             | Messages typing status on buffers.
-|    xfer/                          | xfer プラグイン (IRC DCC ファイル/チャット)
-|       xfer.c                      | xfer の主要関数
-|       xfer-buffer.c               | xfer バッファ
-|       xfer-chat.c                 | xfer DCC チャット
-|       xfer-command.c              | xfer コマンド
-|       xfer-completion.c           | xfer 補完
-|       xfer-config.c               | xfer 設定オプション (xfer.conf ファイル)
-|       xfer-dcc.c                  | DCC ファイル転送
-|       xfer-file.c                 | xfer のファイル関数
-|       xfer-info.c                 | xfer の情報/インフォリスト/hdata
-|       xfer-network.c              | xfer のネットワーク関数
-|       xfer-upgrade.c              | WeeChat をアップグレードする際の xfer データの保存および回復
+|       typing.c                     | Main typing functions.
+// TRANSLATION MISSING
+|       typing-bar-item.c            | Typing bar items.
+// TRANSLATION MISSING
+|       typing-config.c              | Typing config options (file typing.conf).
+// TRANSLATION MISSING
+|       typing-status.c              | Messages typing status on buffers.
+|    xfer/                           | xfer プラグイン (IRC DCC ファイル/チャット)
+|       xfer.c                       | xfer の主要関数
+|       xfer-buffer.c                | xfer バッファ
+|       xfer-chat.c                  | xfer DCC チャット
+|       xfer-command.c               | xfer コマンド
+|       xfer-completion.c            | xfer 補完
+|       xfer-config.c                | xfer 設定オプション (xfer.conf ファイル)
+|       xfer-dcc.c                   | DCC ファイル転送
+|       xfer-file.c                  | xfer のファイル関数
+|       xfer-info.c                  | xfer の情報/インフォリスト/hdata
+|       xfer-network.c               | xfer のネットワーク関数
+|       xfer-upgrade.c               | WeeChat をアップグレードする際の xfer データの保存および回復
 |===
 
 [[sources_tests]]

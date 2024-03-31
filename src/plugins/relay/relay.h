@@ -62,6 +62,18 @@ enum t_relay_status
     RELAY_NUM_STATUS,
 };
 
+/* type of message exchanged with the peer (client/remote) */
+
+enum t_relay_msg_type
+{
+    RELAY_MSG_STANDARD,
+    RELAY_MSG_PING,
+    RELAY_MSG_PONG,
+    RELAY_MSG_CLOSE,
+    /* number of message types */
+    RELAY_NUM_MSG_TYPES,
+};
+
 #define RELAY_STATUS_HAS_ENDED(status)                                  \
     ((status == RELAY_STATUS_AUTH_FAILED) ||                            \
      (status == RELAY_STATUS_DISCONNECTED))
@@ -74,6 +86,7 @@ enum t_relay_status
 extern char *relay_protocol_string[];
 extern char *relay_status_string[];
 extern char *relay_status_name[];
+extern char *relay_msg_type_string[];
 
 extern int relay_protocol_search (const char *name);
 extern int relay_status_search (const char *name);

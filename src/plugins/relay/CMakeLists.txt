@@ -49,6 +49,8 @@ if(ENABLE_CJSON)
     api/relay-api.c api/relay-api.h
     api/relay-api-msg.c api/relay-api-msg.h
     api/relay-api-protocol.c api/relay-api-protocol.h
+    # API relay remote
+    api/remote/relay-remote-network.c api/remote/relay-remote-network.h
   )
 endif()
 

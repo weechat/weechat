@@ -50,18 +50,6 @@ enum t_relay_client_websocket_status
     RELAY_NUM_CLIENT_WEBSOCKET_STATUS,
 };
 
-/* type of message exchanged with the client (used for websockets) */
-
-enum t_relay_client_msg_type
-{
-    RELAY_CLIENT_MSG_STANDARD,
-    RELAY_CLIENT_MSG_PING,
-    RELAY_CLIENT_MSG_PONG,
-    RELAY_CLIENT_MSG_CLOSE,
-    /* number of message types */
-    RELAY_NUM_CLIENT_MSG_TYPES,
-};
-
 /* fake send function (for tests) */
 
 typedef void (t_relay_fake_send_func)(void *client,
@@ -127,7 +115,6 @@ struct t_relay_client
     struct t_relay_client *next_client;/* link to next client               */
 };
 
-extern char *relay_client_msg_type_string[];
 extern struct t_relay_client *relay_clients;
 extern struct t_relay_client *last_relay_client;
 extern int relay_client_count;
@@ -141,7 +128,7 @@ extern void relay_client_recv_buffer (struct t_relay_client *client,
                                       const char *buffer, int buffer_size);
 extern int relay_client_recv_cb (const void *pointer, void *data, int fd);
 extern int relay_client_send (struct t_relay_client *client,
-                              enum t_relay_client_msg_type msg_type,
+                              enum t_relay_msg_type msg_type,
                               const char *data,
                               int data_size, const char *message_raw_buffer);
 extern int relay_client_timer_cb (const void *pointer, void *data,

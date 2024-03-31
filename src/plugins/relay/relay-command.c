@@ -501,7 +501,6 @@ relay_command_remote (const void *pointer, void *data,
     if (weechat_strcmp (argv[1], "add") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, "add");
-
         ptr_remote = relay_remote_search (argv[2]);
         if (ptr_remote)
         {
@@ -511,7 +510,6 @@ relay_command_remote (const void *pointer, void *data,
                 weechat_prefix ("error"), RELAY_PLUGIN_NAME, ptr_remote->name);
             return WEECHAT_RC_OK;
         }
-
         if (!relay_remote_name_valid (argv[2]))
         {
             weechat_printf (NULL,
@@ -521,8 +519,6 @@ relay_command_remote (const void *pointer, void *data,
                             argv[2]);
             return WEECHAT_RC_OK;
         }
-
-
         if (!relay_remote_url_valid (argv[3]))
         {
             weechat_printf (NULL,
@@ -532,11 +528,9 @@ relay_command_remote (const void *pointer, void *data,
                             argv[3]);
             return WEECHAT_RC_OK;
         }
-
         ptr_proxy = NULL;
         ptr_password = NULL;
         ptr_totp_secret = NULL;
-
         for (i = 4; i < argc; i++)
         {
             if (strncmp (argv[i], "-proxy=", 7) == 0)
@@ -561,7 +555,6 @@ relay_command_remote (const void *pointer, void *data,
                 return WEECHAT_RC_OK;
             }
         }
-
         ptr_remote = relay_remote_new (argv[2], argv[3], ptr_proxy,
                                        ptr_password, ptr_totp_secret);
         if (ptr_remote)
@@ -576,14 +569,12 @@ relay_command_remote (const void *pointer, void *data,
                 weechat_prefix ("error"), RELAY_PLUGIN_NAME,
                 argv[2]);
         }
-
         return WEECHAT_RC_OK;
     }
 
     if (weechat_strcmp (argv[1], "connect") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "connect");
-
         ptr_remote = relay_remote_search (argv[2]);
         if (!ptr_remote)
         {
@@ -596,14 +587,13 @@ relay_command_remote (const void *pointer, void *data,
                 "remote connect");
             return WEECHAT_RC_OK;
         }
-
-        WEECHAT_COMMAND_ERROR;
+        relay_remote_connect (ptr_remote);
+        return WEECHAT_RC_OK;
     }
 
     if (weechat_strcmp (argv[1], "rename") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, "rename");
-
         /* look for remote by name */
         ptr_remote = relay_remote_search (argv[2]);
         if (!ptr_remote)
@@ -617,7 +607,6 @@ relay_command_remote (const void *pointer, void *data,
                 "remote rename");
             return WEECHAT_RC_OK;
         }
-
         /* check if target name already exists */
         ptr_remote2 = relay_remote_search (argv[3]);
         if (ptr_remote2)
@@ -631,7 +620,6 @@ relay_command_remote (const void *pointer, void *data,
                 "server rename");
             return WEECHAT_RC_OK;
         }
-
         /* rename remote */
         if (relay_remote_rename (ptr_remote, argv[3]))
         {
@@ -643,14 +631,12 @@ relay_command_remote (const void *pointer, void *data,
                 argv[3]);
             return WEECHAT_RC_OK;
         }
-
         WEECHAT_COMMAND_ERROR;
     }
 
     if (weechat_strcmp (argv[1], "disconnect") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "disconnect");
-
         ptr_remote = relay_remote_search (argv[2]);
         if (!ptr_remote)
         {
@@ -663,14 +649,13 @@ relay_command_remote (const void *pointer, void *data,
                 "remote disconnect");
             return WEECHAT_RC_OK;
         }
-
-        WEECHAT_COMMAND_ERROR;
+        relay_remote_disconnect (ptr_remote);
+        return WEECHAT_RC_OK;
     }
 
     if (weechat_strcmp (argv[1], "del") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "del");
-
         /* look for remote by name */
         ptr_remote = relay_remote_search (argv[2]);
         if (!ptr_remote)
@@ -705,7 +690,6 @@ relay_command_remote (const void *pointer, void *data,
             (remote_name) ? remote_name : "???");
         if (remote_name)
             free (remote_name);
-
         return WEECHAT_RC_OK;
     }
 

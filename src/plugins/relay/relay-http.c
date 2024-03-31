@@ -833,7 +833,7 @@ relay_http_process_websocket (struct t_relay_client *client)
     if (handshake)
     {
         relay_client_send (client,
-                           RELAY_CLIENT_MSG_STANDARD,
+                           RELAY_MSG_STANDARD,
                            handshake,
                            strlen (handshake), NULL);
         free (handshake);
@@ -877,10 +877,10 @@ relay_http_process_request (struct t_relay_client *client)
 {
     if (client->http_req->raw)
     {
-        relay_raw_print (client, RELAY_CLIENT_MSG_STANDARD,
-                         RELAY_RAW_FLAG_RECV,
-                         *(client->http_req->raw),
-                         strlen (*(client->http_req->raw)) + 1);
+        relay_raw_print_client (client, RELAY_MSG_STANDARD,
+                                RELAY_RAW_FLAG_RECV,
+                                *(client->http_req->raw),
+                                strlen (*(client->http_req->raw)) + 1);
     }
 
     /* if websocket is initializing */
@@ -1199,7 +1199,7 @@ relay_http_send (struct t_relay_client *client,
 
     if (!ptr_body || (*ptr_body_size <= 0))
     {
-        num_bytes = relay_client_send (client, RELAY_CLIENT_MSG_STANDARD,
+        num_bytes = relay_client_send (client, RELAY_MSG_STANDARD,
                                        str_header, length_header, NULL);
     }
     else
@@ -1227,7 +1227,7 @@ relay_http_send (struct t_relay_client *client,
             {
                 raw_message = NULL;
             }
-            num_bytes = relay_client_send (client, RELAY_CLIENT_MSG_STANDARD,
+            num_bytes = relay_client_send (client, RELAY_MSG_STANDARD,
                                            http_message, length_msg,
                                            raw_message);
             if (raw_message)

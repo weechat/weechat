@@ -58,6 +58,8 @@ char *relay_status_name[] =            /* name of status (for signal/info)  */
 { "connecting", "waiting_auth",
   "connected", "auth_failed", "disconnected"
 };
+char *relay_msg_type_string[] =        /* prefix in raw buffer for msg      */
+{ "", "[PING]\n", "[PONG]\n", "[CLOSE]\n" };
 
 struct t_hdata *relay_hdata_buffer = NULL;
 struct t_hdata *relay_hdata_lines = NULL;

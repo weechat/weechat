@@ -279,7 +279,7 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
             if (message)
             {
                 snprintf (message, length, "%s\r\n", ptr_msg2);
-                relay_client_send (client, RELAY_CLIENT_MSG_STANDARD,
+                relay_client_send (client, RELAY_MSG_STANDARD,
                                    message, strlen (message), NULL);
                 free (message);
             }

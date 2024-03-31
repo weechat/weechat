@@ -52,9 +52,6 @@
 char *relay_client_data_type_string[] = /* strings for data types           */
 { "text", "binary", "http" };
 
-char *relay_client_msg_type_string[] = /* prefix in raw buffer for message  */
-{ "", "[PING]\n", "[PONG]\n", "[CLOSE]\n" };
-
 struct t_relay_client *relay_clients = NULL;
 struct t_relay_client *last_relay_client = NULL;
 int relay_client_count = 0;            /* number of clients                 */
@@ -313,9 +310,9 @@ relay_client_recv_text_single_line (struct t_relay_client *client)
                                pos - client->partial_message + 1);
     if (raw_msg)
     {
-        relay_raw_print (client, RELAY_CLIENT_MSG_STANDARD,
-                         RELAY_RAW_FLAG_RECV,
-                         raw_msg, strlen (raw_msg) + 1);
+        relay_raw_print_client (client, RELAY_MSG_STANDARD,
+                                RELAY_RAW_FLAG_RECV,
+                                raw_msg, strlen (raw_msg) + 1);
         free (raw_msg);
     }
 
@@ -380,10 +377,10 @@ relay_client_recv_text_multi_line (struct t_relay_client *client)
         return;
 
     /* print message in raw buffer */
-    relay_raw_print (client, RELAY_CLIENT_MSG_STANDARD,
-                     RELAY_RAW_FLAG_RECV,
-                     client->partial_message,
-                     strlen (client->partial_message) + 1);
+    relay_raw_print_client (client, RELAY_MSG_STANDARD,
+                            RELAY_RAW_FLAG_RECV,
+                            client->partial_message,
+                            strlen (client->partial_message) + 1);
 
     /*
      * interpret text from client, according to the relay
@@ -457,7 +454,7 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
     index = 0;
     while (index < length_buffer)
     {
-        msg_type = RELAY_CLIENT_MSG_STANDARD;
+        msg_type = RELAY_MSG_STANDARD;
 
         /*
          * in case of websocket, we can receive PING from client:
@@ -466,30 +463,30 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
         if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
         {
             msg_type = (unsigned char)buffer[index];
-            if (msg_type == RELAY_CLIENT_MSG_PING)
+            if (msg_type == RELAY_MSG_PING)
             {
                 /* print message in raw buffer */
-                relay_raw_print (client, RELAY_CLIENT_MSG_PING,
-                                 RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
-                                 buffer + index + 1,
-                                 strlen (buffer + index + 1));
+                relay_raw_print_client (client, RELAY_MSG_PING,
+                                        RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
+                                        buffer + index + 1,
+                                        strlen (buffer + index + 1));
                 /* answer with a PONG */
                 relay_client_send (client,
-                                   RELAY_CLIENT_MSG_PONG,
+                                   RELAY_MSG_PONG,
                                    buffer + index + 1,
                                    strlen (buffer + index + 1),
                                    NULL);
             }
-            else if (msg_type == RELAY_CLIENT_MSG_CLOSE)
+            else if (msg_type == RELAY_MSG_CLOSE)
             {
                 /* print message in raw buffer */
-                relay_raw_print (client, RELAY_CLIENT_MSG_CLOSE,
-                                 RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
-                                 buffer + index + 1,
-                                 strlen (buffer + index + 1));
+                relay_raw_print_client (client, RELAY_MSG_CLOSE,
+                                        RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
+                                        buffer + index + 1,
+                                        strlen (buffer + index + 1));
                 /* answer with a CLOSE */
                 relay_client_send (client,
-                                   RELAY_CLIENT_MSG_CLOSE,
+                                   RELAY_MSG_CLOSE,
                                    buffer + index + 1,
                                    strlen (buffer + index + 1),
                                    NULL);
@@ -501,7 +498,7 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
             index++;
         }
 
-        if (msg_type == RELAY_CLIENT_MSG_STANDARD)
+        if (msg_type == RELAY_MSG_STANDARD)
         {
             if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
                 || (client->recv_data_type == RELAY_CLIENT_DATA_HTTP))
@@ -549,28 +546,28 @@ relay_client_read_websocket_frames (struct t_relay_client *client,
         }
         switch (frames[i].opcode)
         {
-            case RELAY_CLIENT_MSG_PING:
+            case RELAY_MSG_PING:
                 /* print message in raw buffer */
-                relay_raw_print (client, RELAY_CLIENT_MSG_PING,
-                                 RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
-                                 frames[i].payload,
-                                 frames[i].payload_size);
+                relay_raw_print_client (client, RELAY_MSG_PING,
+                                        RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
+                                        frames[i].payload,
+                                        frames[i].payload_size);
                 /* answer with a PONG */
                 relay_client_send (client,
-                                   RELAY_CLIENT_MSG_PONG,
+                                   RELAY_MSG_PONG,
                                    frames[i].payload,
                                    frames[i].payload_size,
                                    NULL);
                 break;
-            case RELAY_CLIENT_MSG_CLOSE:
+            case RELAY_MSG_CLOSE:
                 /* print message in raw buffer */
-                relay_raw_print (client, RELAY_CLIENT_MSG_CLOSE,
-                                 RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
-                                 frames[i].payload,
-                                 frames[i].payload_size);
+                relay_raw_print_client (client, RELAY_MSG_CLOSE,
+                                        RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
+                                        frames[i].payload,
+                                        frames[i].payload_size);
                 /* answer with a CLOSE */
                 relay_client_send (client,
-                                   RELAY_CLIENT_MSG_CLOSE,
+                                   RELAY_MSG_CLOSE,
                                    frames[i].payload,
                                    frames[i].payload_size,
                                    NULL);
@@ -653,11 +650,14 @@ relay_client_recv_buffer (struct t_relay_client *client,
         frames = NULL;
         num_frames = 0;
         rc = relay_websocket_decode_frame (
-            client,
             (buffer2) ? (unsigned char *)buffer2 : (unsigned char *)buffer,
             (buffer2) ? (unsigned long long)buffer2_size : (unsigned long long)buffer_size,
+            1,  /* expect_masked_frame */
+            client->ws_deflate,
             &frames,
-            &num_frames);
+            &num_frames,
+            &client->partial_ws_frame,
+            &client->partial_ws_frame_size);
         if (buffer2)
             free (buffer2);
         if (!rc)
@@ -899,7 +899,7 @@ relay_client_send_outqueue (struct t_relay_client *client)
                      * (so that it is displayed only one time, even if
                      * message is sent in many chunks)
                      */
-                    relay_raw_print (
+                    relay_raw_print_client (
                         client,
                         client->outqueue->raw_msg_type[i],
                         client->outqueue->raw_flags[i],
@@ -1033,7 +1033,7 @@ relay_client_timer_send_cb (const void *pointer, void *data,
 void
 relay_client_outqueue_add (struct t_relay_client *client,
                            const char *data, int data_size,
-                           enum t_relay_client_msg_type raw_msg_type[2],
+                           enum t_relay_msg_type raw_msg_type[2],
                            int raw_flags[2],
                            const char *raw_message[2],
                            int raw_size[2])
@@ -1059,7 +1059,7 @@ relay_client_outqueue_add (struct t_relay_client *client,
     new_outqueue->data_size = data_size;
     for (i = 0; i < 2; i++)
     {
-        new_outqueue->raw_msg_type[i] = RELAY_CLIENT_MSG_STANDARD;
+        new_outqueue->raw_msg_type[i] = RELAY_MSG_STANDARD;
         new_outqueue->raw_flags[i] = 0;
         new_outqueue->raw_message[i] = NULL;
         new_outqueue->raw_size[i] = 0;
@@ -1104,12 +1104,12 @@ relay_client_outqueue_add (struct t_relay_client *client,
 
 int
 relay_client_send (struct t_relay_client *client,
-                   enum t_relay_client_msg_type msg_type,
+                   enum t_relay_msg_type msg_type,
                    const char *data, int data_size,
                    const char *message_raw_buffer)
 {
     int num_sent, raw_size[2], raw_flags[2], opcode, i;
-    enum t_relay_client_msg_type raw_msg_type[2];
+    enum t_relay_msg_type raw_msg_type[2];
     char *websocket_frame;
     unsigned long long length_frame;
     const char *ptr_data, *raw_msg[2];
@@ -1154,9 +1154,9 @@ relay_client_send (struct t_relay_client *client,
     {
         raw_msg[0] = data;
         raw_size[0] = data_size;
-        if ((msg_type == RELAY_CLIENT_MSG_PING)
-            || (msg_type == RELAY_CLIENT_MSG_PONG)
-            || (msg_type == RELAY_CLIENT_MSG_CLOSE)
+        if ((msg_type == RELAY_MSG_PING)
+            || (msg_type == RELAY_MSG_PONG)
+            || (msg_type == RELAY_MSG_CLOSE)
             || ((client->websocket != RELAY_CLIENT_WEBSOCKET_INITIALIZING)
                 && (client->send_data_type == RELAY_CLIENT_DATA_BINARY)))
         {
@@ -1179,13 +1179,13 @@ relay_client_send (struct t_relay_client *client,
     {
         switch (msg_type)
         {
-            case RELAY_CLIENT_MSG_PING:
+            case RELAY_MSG_PING:
                 opcode = WEBSOCKET_FRAME_OPCODE_PING;
                 break;
-            case RELAY_CLIENT_MSG_PONG:
+            case RELAY_MSG_PONG:
                 opcode = WEBSOCKET_FRAME_OPCODE_PONG;
                 break;
-            case RELAY_CLIENT_MSG_CLOSE:
+            case RELAY_MSG_CLOSE:
                 opcode = WEBSOCKET_FRAME_OPCODE_CLOSE;
                 break;
             default:
@@ -1195,7 +1195,7 @@ relay_client_send (struct t_relay_client *client,
                 break;
         }
         websocket_frame = relay_websocket_encode_frame (
-            client, opcode, data, data_size, &length_frame);
+            client->ws_deflate, opcode, 0, data, data_size, &length_frame);
         if (websocket_frame)
         {
             ptr_data = websocket_frame;
@@ -1223,8 +1223,9 @@ relay_client_send (struct t_relay_client *client,
             {
                 if (raw_msg[i])
                 {
-                    relay_raw_print (client, raw_msg_type[i], raw_flags[i],
-                                     raw_msg[i], raw_size[i]);
+                    relay_raw_print_client (client, raw_msg_type[i],
+                                            raw_flags[i],
+                                            raw_msg[i], raw_size[i]);
                 }
             }
             if (num_sent > 0)

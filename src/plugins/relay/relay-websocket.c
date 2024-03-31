@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <gcrypt.h>
 #include <zlib.h>
 
 #include "../weechat-plugin.h"
@@ -31,13 +32,6 @@
 #include "relay-config.h"
 #include "relay-http.h"
 #include "relay-websocket.h"
-
-
-/*
- * globally unique identifier that is concatenated to HTTP header
- * "Sec-WebSocket-Key"
- */
-#define WEBSOCKET_GUID "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 
 
 /*
@@ -547,17 +541,23 @@ error:
  * frame is first decompressed if "permessage-deflate" websocket extension
  * is used).
  *
+ * If argument "expect_masked_frame" is 1 and a frame is not masked,
+ * the function returns an error.
+ *
  * Returns:
  *   1: frame(s) decoded successfully
  *   0: error decoding frame (connection must be closed if it happens)
  */
 
 int
-relay_websocket_decode_frame (struct t_relay_client *client,
-                              const unsigned char *buffer,
+relay_websocket_decode_frame (const unsigned char *buffer,
                               unsigned long long buffer_length,
+                              int expect_masked_frame,
+                              struct t_relay_websocket_deflate *ws_deflate,
                               struct t_relay_websocket_frame **frames,
-                              int *num_frames)
+                              int *num_frames,
+                              char **partial_ws_frame,
+                              int *partial_ws_frame_size)
 {
     unsigned long long i, index_buffer, index_buffer_start_frame;
     unsigned long long length_frame_size, length_frame;
@@ -565,7 +565,7 @@ relay_websocket_decode_frame (struct t_relay_client *client,
     size_t size_decompressed;
     char *payload_decompressed;
     struct t_relay_websocket_frame *frames2, *ptr_frame;
-    int size;
+    int size, masked_frame, mask[4];
 
     if (!buffer || !frames || !num_frames)
         return 0;
@@ -586,11 +586,15 @@ relay_websocket_decode_frame (struct t_relay_client *client,
 
         opcode = buffer[index_buffer] & 15;
 
+        /* check if frame is masked */
+        masked_frame = (buffer[index_buffer + 1] & 128) ? 1 : 0;
+
         /*
-         * check if frame is masked: client MUST send a masked frame; if frame is
-         * not masked, we MUST reject it and close the connection (see RFC 6455)
+         * error if the frame is not masked and we expect it to be masked,
+         * in this case we must reject it and close the connection
+         * (see RFC 6455)
          */
-        if (!(buffer[index_buffer + 1] & 128))
+        if (!masked_frame && expect_masked_frame)
             return 0;
 
         /* decode frame length */
@@ -611,15 +615,17 @@ relay_websocket_decode_frame (struct t_relay_client *client,
             index_buffer += length_frame_size;
         }
 
-        /* read masks (4 bytes) */
-        if (index_buffer + 4 > buffer_length)
-            goto missing_data;
-        int masks[4];
-        for (i = 0; i < 4; i++)
+        if (masked_frame)
         {
-            masks[i] = (int)((unsigned char)buffer[index_buffer + i]);
+            /* read mask (4 bytes) */
+            if (index_buffer + 4 > buffer_length)
+                goto missing_data;
+            for (i = 0; i < 4; i++)
+            {
+                mask[i] = (int)((unsigned char)buffer[index_buffer + i]);
+            }
+            index_buffer += 4;
         }
-        index_buffer += 4;
 
         /* check if we have enough data */
         if ((length_frame > buffer_length)
@@ -646,13 +652,13 @@ relay_websocket_decode_frame (struct t_relay_client *client,
         switch (opcode)
         {
             case WEBSOCKET_FRAME_OPCODE_PING:
-                ptr_frame->opcode = RELAY_CLIENT_MSG_PING;
+                ptr_frame->opcode = RELAY_MSG_PING;
                 break;
             case WEBSOCKET_FRAME_OPCODE_CLOSE:
-                ptr_frame->opcode = RELAY_CLIENT_MSG_CLOSE;
+                ptr_frame->opcode = RELAY_MSG_CLOSE;
                 break;
             default:
-                ptr_frame->opcode = RELAY_CLIENT_MSG_STANDARD;
+                ptr_frame->opcode = RELAY_MSG_STANDARD;
                 break;
         }
 
@@ -663,9 +669,16 @@ relay_websocket_decode_frame (struct t_relay_client *client,
         ptr_frame->payload_size = length_frame;
 
         /* fill payload */
-        for (i = 0; i < length_frame; i++)
+        if (masked_frame)
         {
-            ptr_frame->payload[i] = (int)((unsigned char)buffer[index_buffer + i]) ^ masks[i % 4];
+            for (i = 0; i < length_frame; i++)
+            {
+                ptr_frame->payload[i] = (int)((unsigned char)buffer[index_buffer + i]) ^ mask[i % 4];
+            }
+        }
+        else
+        {
+            memcpy (ptr_frame->payload, buffer + index_buffer, length_frame);
         }
         ptr_frame->payload[length_frame] = '\0';
 
@@ -673,58 +686,58 @@ relay_websocket_decode_frame (struct t_relay_client *client,
          * decompress data if frame is not empty and if "permessage-deflate"
          * is enabled
          */
-        if ((length_frame > 0) && client->ws_deflate->enabled)
+        if ((length_frame > 0) && ws_deflate && ws_deflate->enabled)
         {
-            if (!client->ws_deflate->strm_inflate)
+            if (!ws_deflate->strm_inflate)
             {
-                client->ws_deflate->strm_inflate = calloc (
-                    1, sizeof (*client->ws_deflate->strm_inflate));
-                if (!client->ws_deflate->strm_inflate)
+                ws_deflate->strm_inflate = calloc (
+                    1, sizeof (*ws_deflate->strm_inflate));
+                if (!ws_deflate->strm_inflate)
                     return 0;
-                if (!relay_websocket_deflate_init_stream_inflate (client->ws_deflate))
+                if (!relay_websocket_deflate_init_stream_inflate (ws_deflate))
                     return 0;
             }
             payload_decompressed = relay_websocket_inflate (
                 ptr_frame->payload,
                 ptr_frame->payload_size,
-                client->ws_deflate->strm_inflate,
+                ws_deflate->strm_inflate,
                 &size_decompressed);
             if (!payload_decompressed)
                 return 0;
             free (ptr_frame->payload);
             ptr_frame->payload = payload_decompressed;
             ptr_frame->payload_size = size_decompressed;
-            if (!client->ws_deflate->client_context_takeover)
-                relay_websocket_deflate_free_stream_inflate (client->ws_deflate);
+            if (!ws_deflate->client_context_takeover)
+                relay_websocket_deflate_free_stream_inflate (ws_deflate);
         }
 
         index_buffer += length_frame;
     }
 
-    if (client->partial_ws_frame)
+    if (*partial_ws_frame)
     {
-        free (client->partial_ws_frame);
-        client->partial_ws_frame = NULL;
-        client->partial_ws_frame_size = 0;
+        free (*partial_ws_frame);
+        *partial_ws_frame = NULL;
+        *partial_ws_frame_size = 0;
     }
 
     return 1;
 
 missing_data:
-    if (client->partial_ws_frame)
+    if (*partial_ws_frame)
     {
-        free (client->partial_ws_frame);
-        client->partial_ws_frame = NULL;
-        client->partial_ws_frame_size = 0;
+        free (*partial_ws_frame);
+        *partial_ws_frame = NULL;
+        *partial_ws_frame_size = 0;
     }
     size = buffer_length - index_buffer_start_frame;
     if (size >= 0)
     {
-        client->partial_ws_frame = malloc (size);
-        if (!client->partial_ws_frame)
+        *partial_ws_frame = malloc (size);
+        if (!*partial_ws_frame)
             return 0;
-        memcpy (client->partial_ws_frame, buffer + index_buffer_start_frame, size);
-        client->partial_ws_frame_size = size;
+        memcpy (*partial_ws_frame, buffer + index_buffer_start_frame, size);
+        *partial_ws_frame_size = size;
     }
     return 1;
 }
@@ -779,12 +792,16 @@ relay_websocket_deflate (const void *data, size_t size, z_stream *strm,
  * Returns websocket frame, NULL if error.
  * Argument "length_frame" is set with the length of frame built.
  *
+ * Argument "mask_frame" must be 1 when sending to server (remote) and 0 when
+ * sending to a client.
+ *
  * Note: result must be freed after use.
  */
 
 char *
-relay_websocket_encode_frame (struct t_relay_client *client,
+relay_websocket_encode_frame (struct t_relay_websocket_deflate *ws_deflate,
                               int opcode,
+                              int mask_frame,
                               const char *payload,
                               unsigned long long payload_size,
                               unsigned long long *length_frame)
@@ -792,8 +809,8 @@ relay_websocket_encode_frame (struct t_relay_client *client,
     const char *ptr_data;
     char *payload_compressed;
     size_t size_compressed;
-    unsigned char *frame;
-    unsigned long long index, data_size;
+    unsigned char *frame, *ptr_mask;
+    unsigned long long i, index, data_size;
 
     *length_frame = 0;
 
@@ -810,21 +827,22 @@ relay_websocket_encode_frame (struct t_relay_client *client,
     if (((opcode == WEBSOCKET_FRAME_OPCODE_TEXT)
          || (opcode == WEBSOCKET_FRAME_OPCODE_BINARY))
         && (payload_size > 0)
-        && client->ws_deflate->enabled)
+        && ws_deflate
+        && ws_deflate->enabled)
     {
-        if (!client->ws_deflate->strm_deflate)
+        if (!ws_deflate->strm_deflate)
         {
-            client->ws_deflate->strm_deflate = calloc (
-                1, sizeof (*client->ws_deflate->strm_deflate));
-            if (!client->ws_deflate->strm_deflate)
+            ws_deflate->strm_deflate = calloc (
+                1, sizeof (*ws_deflate->strm_deflate));
+            if (!ws_deflate->strm_deflate)
                 return NULL;
-            if (!relay_websocket_deflate_init_stream_deflate (client->ws_deflate))
+            if (!relay_websocket_deflate_init_stream_deflate (ws_deflate))
                 return NULL;
         }
         payload_compressed = relay_websocket_deflate (
             payload,
             payload_size,
-            client->ws_deflate->strm_deflate,
+            ws_deflate->strm_deflate,
             &size_compressed);
         if (!payload_compressed)
             return NULL;
@@ -838,13 +856,13 @@ relay_websocket_encode_frame (struct t_relay_client *client,
         {
             data_size -= 4;
         }
-        if (!client->ws_deflate->server_context_takeover)
-            relay_websocket_deflate_free_stream_deflate (client->ws_deflate);
+        if (!ws_deflate->server_context_takeover)
+            relay_websocket_deflate_free_stream_deflate (ws_deflate);
         /* set bit RSV1: indicate permessage-deflate compressed data */
         opcode |= 0x40;
     }
 
-    frame = malloc (data_size + 10);
+    frame = malloc (data_size + 14);
     if (!frame)
     {
         if (payload_compressed)
@@ -884,8 +902,25 @@ relay_websocket_encode_frame (struct t_relay_client *client,
         index = 10;
     }
 
+    if (mask_frame)
+    {
+        frame[1] |= 128;
+        ptr_mask = frame + index;
+        gcry_create_nonce (ptr_mask, 4);
+        index += 4;
+    }
+
     /* copy buffer after data_size */
     memcpy (frame + index, ptr_data, data_size);
+
+    /* mask frame */
+    if (mask_frame)
+    {
+        for (i = 0; i < data_size; i++)
+        {
+            frame[index + i] = frame[index + i] ^ ptr_mask[i % 4];
+        }
+    }
 
     *length_frame = index + data_size;
 

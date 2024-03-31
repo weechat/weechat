@@ -172,7 +172,7 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
             string = cJSON_PrintUnformatted (json);
             num_bytes = relay_client_send (
                 client,
-                RELAY_CLIENT_MSG_STANDARD,
+                RELAY_MSG_STANDARD,
                 string,
                 (string) ? strlen (string) : 0,
                 NULL);  /* raw_message */

@@ -143,6 +143,7 @@ if (ENABLE_RELAY)
       unit/plugins/relay/api/test-relay-api.cpp
       unit/plugins/relay/api/test-relay-api-msg.cpp
       unit/plugins/relay/api/test-relay-api-protocol.cpp
+      unit/plugins/relay/api/remote/test-relay-remote-network.cpp
     )
   endif()
 endif()

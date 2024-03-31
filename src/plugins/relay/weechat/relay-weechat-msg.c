@@ -1116,7 +1116,7 @@ relay_weechat_msg_compress_zlib (struct t_relay_client *client,
               msg->id);
 
     /* send compressed data */
-    relay_client_send (client, RELAY_CLIENT_MSG_STANDARD,
+    relay_client_send (client, RELAY_MSG_STANDARD,
                        (const char *)dest, dest_size + 5,
                        raw_message);
 
@@ -1189,7 +1189,7 @@ relay_weechat_msg_compress_zstd (struct t_relay_client *client,
               msg->id);
 
     /* send compressed data */
-    relay_client_send (client, RELAY_CLIENT_MSG_STANDARD,
+    relay_client_send (client, RELAY_MSG_STANDARD,
                        (const char *)dest, comp_size + 5,
                        raw_message);
 
@@ -1250,7 +1250,7 @@ relay_weechat_msg_send (struct t_relay_client *client,
     /* send uncompressed data */
     snprintf (raw_message, sizeof (raw_message),
               "obj: %d bytes, id: %s", msg->data_size, msg->id);
-    relay_client_send (client, RELAY_CLIENT_MSG_STANDARD,
+    relay_client_send (client, RELAY_MSG_STANDARD,
                        msg->data, msg->data_size, raw_message);
 }
 

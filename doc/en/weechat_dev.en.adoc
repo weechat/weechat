@@ -210,186 +210,188 @@ WeeChat "core" is located in following directories:
 
 [width="100%",cols="2m,3",options="header"]
 |===
-| Path/file                         | Description
-| plugins/                          | Root of plugins.
-|    plugin.c                       | Plugins management (load/unload dynamic C libraries).
-|    plugin-api.c                   | Extra functions for plugin API (wrapper around WeeChat core functions).
-|    plugin-api-info.c              | Extra info/infolist functions for plugin API.
-|    plugin-config.c                | Plugin configuration options (file plugins.conf).
-|    plugin-script.c                | Common functions used by script plugins.
-|    plugin-script-api.c            | Script API functions: wrappers around some plugin API functions.
-|    plugin-script-config.c         | Script plugin configuration options (files python.conf, perl.conf, ...).
-|    weechat-plugin.h               | Header designed to be distributed with WeeChat plugins, in order to compile them.
-|    alias/                         | Alias plugin.
-|       alias.c                     | Main alias functions.
-|       alias-command.c             | Alias commands.
-|       alias-completion.c          | Alias completions.
-|       alias-config.c              | Alias config options (file alias.conf).
-|       alias-info.c                | Alias info/infolists/hdata.
-|    spell/                         | Spell checker plugin.
-|       spell.c                     | Main spell checker functions.
-|       spell-bar-item.c            | Spell checker bar items.
-|       spell-command.c             | Spell checker commands.
-|       spell-completion.c          | Spell checker completions.
-|       spell-config.c              | Spell checker config options (file spell.conf).
-|       spell-info.c                | Spell checker info/infolists/hdata.
-|       spell-speller.c             | Spellers management.
-|    buflist/                       | Buflist plugin.
-|       buflist.c                   | Main buflist functions.
-|       buflist-bar-item.c          | Buflist bar items.
-|       buflist-command.c           | Buflist commands.
-|       buflist-completion.c        | Buflist completions.
-|       buflist-config.c            | Buflist config options (file buflist.conf).
-|       buflist-info.c              | Buflist info/infolists/hdata.
-|       buflist-mouse.c             | Buflist mouse actions.
-|    charset/                       | Charset plugin.
-|       charset.c                   | Charset functions.
-|    exec/                          | Exec plugin.
-|       exec.c                      | Main exec functions.
-|       exec-buffer.c               | Exec buffer.
-|       exec-command.c              | Exec commands.
-|       exec-completion.c           | Exec completions.
-|       exec-config.c               | Exec config options (file exec.conf).
-|    fifo/                          | Fifo plugin.
-|       fifo.c                      | Main fifo functions.
-|       fifo-command.c              | Fifo commands.
-|       fifo-config.c               | Fifo config options (file fifo.conf).
-|       fifo-info.c                 | Fifo info/infolists/hdata.
-|    fset/                          | Fset plugin.
-|       fset.c                      | Main fset functions.
-|       fset-bar-item.c             | Fset bar items.
-|       fset-buffer.c               | Fset buffer.
-|       fset-command.c              | Fset commands.
-|       fset-completion.c           | Fset completions.
-|       fset-config.c               | Fset config options (file fset.conf).
-|       fset-info.c                 | Fset info/infolists/hdata.
-|       fset-mouse.c                | Fset mouse actions.
-|       fset-option.c               | Fset options management.
-|    guile/                         | Guile (scheme) plugin.
-|       weechat-guile.c             | Main guile functions (load/unload scripts, execute guile code).
-|       weechat-guile-api.c         | Guile scripting API functions.
-|    irc/                           | IRC (Internet Relay Chat) plugin.
-|       irc.c                       | Main IRC functions.
-|       irc-bar-item.c              | IRC bar items.
-|       irc-batch.c                 | IRC batched events.
-|       irc-buffer.c                | IRC buffers.
-|       irc-channel.c               | IRC channels.
-|       irc-color.c                 | IRC colors.
-|       irc-command.c               | IRC commands.
-|       irc-completion.c            | IRC completions.
-|       irc-config.c                | IRC config options (file irc.conf).
-|       irc-ctcp.c                  | IRC CTCP.
-|       irc-debug.c                 | IRC debug functions.
-|       irc-ignore.c                | IRC Ignore.
-|       irc-info.c                  | IRC info/infolists/hdata.
-|       irc-input.c                 | Input of commands/text.
-|       irc-join.c                  | Functions for list of channels to join.
-|       irc-list.c                  | Buffer for reply to /list command.
-|       irc-message.c               | Functions to manipulate IRC messages.
-|       irc-mode.c                  | Functions about channel/nick modes.
-|       irc-modelist.c              | IRC channel mode lists (+b, +e, +I, ...).
-|       irc-msgbuffer.c             | Target buffer for IRC messages.
-|       irc-nick.c                  | IRC nicks.
-|       irc-notify.c                | IRC notify lists.
-|       irc-protocol.c              | IRC protocol (RFCs 1459/2810/2811/2812/2813/7194).
-|       irc-raw.c                   | IRC raw buffer.
-|       irc-redirect.c              | Redirection of IRC command output.
-|       irc-sasl.c                  | SASL authentication with IRC server.
-|       irc-server.c                | I/O communication with IRC server.
-|       irc-tag.c                   | Functions to manipulate IRC message tags.
-|       irc-typing.c                | Typing status.
-|       irc-upgrade.c               | Save/restore of IRC data when upgrading WeeChat.
-|    javascript/                    | JavaScript plugin.
-|       weechat-js.cpp              | Main JavaScript functions (load/unload scripts, execute JavaScript code).
-|       weechat-js-api.cpp          | JavaScript scripting API functions.
-|       weechat-js-v8.cpp           | JavaScript v8 functions.
-|    logger/                        | Logger plugin.
-|       logger.c                    | Main logger functions.
-|       logger-backlog.c            | Logger backlog functions.
-|       logger-buffer.c             | Logger buffer list management.
-|       logger-command.c            | Logger commands.
-|       logger-config.c             | Logger config options (file logger.conf).
-|       logger-info.c               | Logger info/infolists/hdata.
-|       logger-tail.c               | Functions to get last lines of a file.
-|    lua/                           | Lua plugin.
-|       weechat-lua.c               | Main lua functions (load/unload scripts, execute lua code).
-|       weechat-lua-api.c           | Lua scripting API functions.
-|    perl/                          | Perl plugin.
-|       weechat-perl.c              | Main perl functions (load/unload scripts, execute perl code).
-|       weechat-perl-api.c          | Perl scripting API functions.
-|    php/                           | PHP plugin.
-|       weechat-php.c               | Main PHP functions (load/unload scripts, execute PHP code).
-|       weechat-php-api.c           | PHP scripting API functions.
-|    python/                        | Python plugin.
-|       weechat-python.c            | Main python functions (load/unload scripts, execute python code).
-|       weechat-python-api.c        | Python scripting API functions.
-|    relay/                         | Relay plugin (IRC proxy and relay for remote interfaces).
-|       relay.c                     | Main relay functions.
-|       relay-auth.c                | Clients authentication.
-|       relay-buffer.c              | Relay buffer.
-|       relay-client.c              | Clients of relay.
-|       relay-command.c             | Relay commands.
-|       relay-completion.c          | Relay completions.
-|       relay-config.c              | Relay config options (file relay.conf).
-|       relay-http.c                | HTTP functions.
-|       relay-info.c                | Relay info/infolists/hdata.
-|       relay-network.c             | Network functions for relay.
-|       relay-raw.c                 | Relay raw buffer.
-|       relay-remote.c              | Relay remote.
-|       relay-server.c              | Relay server.
-|       relay-upgrade.c             | Save/restore of relay data when upgrading WeeChat.
-|       relay-websocket.c           | WebSocket server functions (RFC 6455).
-|       api/                        | Relay for remote interfaces (using HTTP REST API).
-|          relay-api.c              | Main API functions for HTTP REST API.
-|          relay-api-msg.c          | Send JSON messages to clients.
-|          relay-api-protocol.c     | HTTP REST API protocol.
-|       irc/                        | IRC proxy.
-|          relay-irc.c              | Main IRC proxy functions.
-|       weechat/                    | Relay for remote interfaces (using "weechat" binary protocol).
-|          relay-weechat.c          | Relay for remote interfaces (main functions).
-|          relay-weechat-msg.c      | Send binary messages to clients.
-|          relay-weechat-nicklist.c | Nicklist functions.
-|          relay-weechat-protocol.c | Read commands from clients.
-|    ruby/                          | Ruby plugin.
-|       weechat-ruby.c              | Main ruby functions (load/unload scripts, execute ruby code).
-|       weechat-ruby-api.c          | Ruby scripting API functions.
-|    script/                        | Script manager.
-|       script.c                    | Main functions for script manager.
-|       script-action.c             | Actions on scripts (load/unload, install/remove, ...).
-|       script-buffer.c             | Buffer for script manager.
-|       script-command.c            | Commands for script manager.
-|       script-completion.c         | Completions for script manager.
-|       script-config.c             | Config options for script manager (file script.conf).
-|       script-info.c               | Script manager info/infolists/hdata.
-|       script-mouse.c              | Script mouse actions.
-|       script-repo.c               | Download and read repository file.
-|    tcl/                           | Tcl plugin.
-|       weechat-tcl.c               | Main tcl functions (load/unload scripts, execute tcl code).
-|       weechat-tcl-api.c           | Tcl scripting API functions.
-|    trigger/                       | Trigger plugin.
-|       trigger.c                   | Main trigger functions.
-|       trigger-buffer.c            | Trigger buffer.
-|       trigger-callback.c          | Trigger callbacks.
-|       trigger-command.c           | Trigger commands.
-|       trigger-completion.c        | Trigger completions.
-|       trigger-config.c            | Trigger config options (file trigger.conf).
-|    typing/                        | Typing plugin.
-|       typing.c                    | Main typing functions.
-|       typing-bar-item.c           | Typing bar items.
-|       typing-config.c             | Typing config options (file typing.conf).
-|       typing-status.c             | Messages typing status on buffers.
-|    xfer/                          | Xfer plugin (IRC DCC file/chat).
-|       xfer.c                      | Main xfer functions.
-|       xfer-buffer.c               | Xfer buffer.
-|       xfer-chat.c                 | DCC chat.
-|       xfer-command.c              | Xfer commands.
-|       xfer-completion.c           | Xfer completions.
-|       xfer-config.c               | Xfer config options (file xfer.conf).
-|       xfer-dcc.c                  | DCC file transfer.
-|       xfer-file.c                 | File functions for xfer.
-|       xfer-info.c                 | Xfer info/infolists/hdata.
-|       xfer-network.c              | Network functions for xfer.
-|       xfer-upgrade.c              | Save/restore of xfer data when upgrading WeeChat.
+| Path/file                          | Description
+| plugins/                           | Root of plugins.
+|    plugin.c                        | Plugins management (load/unload dynamic C libraries).
+|    plugin-api.c                    | Extra functions for plugin API (wrapper around WeeChat core functions).
+|    plugin-api-info.c               | Extra info/infolist functions for plugin API.
+|    plugin-config.c                 | Plugin configuration options (file plugins.conf).
+|    plugin-script.c                 | Common functions used by script plugins.
+|    plugin-script-api.c             | Script API functions: wrappers around some plugin API functions.
+|    plugin-script-config.c          | Script plugin configuration options (files python.conf, perl.conf, ...).
+|    weechat-plugin.h                | Header designed to be distributed with WeeChat plugins, in order to compile them.
+|    alias/                          | Alias plugin.
+|       alias.c                      | Main alias functions.
+|       alias-command.c              | Alias commands.
+|       alias-completion.c           | Alias completions.
+|       alias-config.c               | Alias config options (file alias.conf).
+|       alias-info.c                 | Alias info/infolists/hdata.
+|    spell/                          | Spell checker plugin.
+|       spell.c                      | Main spell checker functions.
+|       spell-bar-item.c             | Spell checker bar items.
+|       spell-command.c              | Spell checker commands.
+|       spell-completion.c           | Spell checker completions.
+|       spell-config.c               | Spell checker config options (file spell.conf).
+|       spell-info.c                 | Spell checker info/infolists/hdata.
+|       spell-speller.c              | Spellers management.
+|    buflist/                        | Buflist plugin.
+|       buflist.c                    | Main buflist functions.
+|       buflist-bar-item.c           | Buflist bar items.
+|       buflist-command.c            | Buflist commands.
+|       buflist-completion.c         | Buflist completions.
+|       buflist-config.c             | Buflist config options (file buflist.conf).
+|       buflist-info.c               | Buflist info/infolists/hdata.
+|       buflist-mouse.c              | Buflist mouse actions.
+|    charset/                        | Charset plugin.
+|       charset.c                    | Charset functions.
+|    exec/                           | Exec plugin.
+|       exec.c                       | Main exec functions.
+|       exec-buffer.c                | Exec buffer.
+|       exec-command.c               | Exec commands.
+|       exec-completion.c            | Exec completions.
+|       exec-config.c                | Exec config options (file exec.conf).
+|    fifo/                           | Fifo plugin.
+|       fifo.c                       | Main fifo functions.
+|       fifo-command.c               | Fifo commands.
+|       fifo-config.c                | Fifo config options (file fifo.conf).
+|       fifo-info.c                  | Fifo info/infolists/hdata.
+|    fset/                           | Fset plugin.
+|       fset.c                       | Main fset functions.
+|       fset-bar-item.c              | Fset bar items.
+|       fset-buffer.c                | Fset buffer.
+|       fset-command.c               | Fset commands.
+|       fset-completion.c            | Fset completions.
+|       fset-config.c                | Fset config options (file fset.conf).
+|       fset-info.c                  | Fset info/infolists/hdata.
+|       fset-mouse.c                 | Fset mouse actions.
+|       fset-option.c                | Fset options management.
+|    guile/                          | Guile (scheme) plugin.
+|       weechat-guile.c              | Main guile functions (load/unload scripts, execute guile code).
+|       weechat-guile-api.c          | Guile scripting API functions.
+|    irc/                            | IRC (Internet Relay Chat) plugin.
+|       irc.c                        | Main IRC functions.
+|       irc-bar-item.c               | IRC bar items.
+|       irc-batch.c                  | IRC batched events.
+|       irc-buffer.c                 | IRC buffers.
+|       irc-channel.c                | IRC channels.
+|       irc-color.c                  | IRC colors.
+|       irc-command.c                | IRC commands.
+|       irc-completion.c             | IRC completions.
+|       irc-config.c                 | IRC config options (file irc.conf).
+|       irc-ctcp.c                   | IRC CTCP.
+|       irc-debug.c                  | IRC debug functions.
+|       irc-ignore.c                 | IRC Ignore.
+|       irc-info.c                   | IRC info/infolists/hdata.
+|       irc-input.c                  | Input of commands/text.
+|       irc-join.c                   | Functions for list of channels to join.
+|       irc-list.c                   | Buffer for reply to /list command.
+|       irc-message.c                | Functions to manipulate IRC messages.
+|       irc-mode.c                   | Functions about channel/nick modes.
+|       irc-modelist.c               | IRC channel mode lists (+b, +e, +I, ...).
+|       irc-msgbuffer.c              | Target buffer for IRC messages.
+|       irc-nick.c                   | IRC nicks.
+|       irc-notify.c                 | IRC notify lists.
+|       irc-protocol.c               | IRC protocol (RFCs 1459/2810/2811/2812/2813/7194).
+|       irc-raw.c                    | IRC raw buffer.
+|       irc-redirect.c               | Redirection of IRC command output.
+|       irc-sasl.c                   | SASL authentication with IRC server.
+|       irc-server.c                 | I/O communication with IRC server.
+|       irc-tag.c                    | Functions to manipulate IRC message tags.
+|       irc-typing.c                 | Typing status.
+|       irc-upgrade.c                | Save/restore of IRC data when upgrading WeeChat.
+|    javascript/                     | JavaScript plugin.
+|       weechat-js.cpp               | Main JavaScript functions (load/unload scripts, execute JavaScript code).
+|       weechat-js-api.cpp           | JavaScript scripting API functions.
+|       weechat-js-v8.cpp            | JavaScript v8 functions.
+|    logger/                         | Logger plugin.
+|       logger.c                     | Main logger functions.
+|       logger-backlog.c             | Logger backlog functions.
+|       logger-buffer.c              | Logger buffer list management.
+|       logger-command.c             | Logger commands.
+|       logger-config.c              | Logger config options (file logger.conf).
+|       logger-info.c                | Logger info/infolists/hdata.
+|       logger-tail.c                | Functions to get last lines of a file.
+|    lua/                            | Lua plugin.
+|       weechat-lua.c                | Main lua functions (load/unload scripts, execute lua code).
+|       weechat-lua-api.c            | Lua scripting API functions.
+|    perl/                           | Perl plugin.
+|       weechat-perl.c               | Main perl functions (load/unload scripts, execute perl code).
+|       weechat-perl-api.c           | Perl scripting API functions.
+|    php/                            | PHP plugin.
+|       weechat-php.c                | Main PHP functions (load/unload scripts, execute PHP code).
+|       weechat-php-api.c            | PHP scripting API functions.
+|    python/                         | Python plugin.
+|       weechat-python.c             | Main python functions (load/unload scripts, execute python code).
+|       weechat-python-api.c         | Python scripting API functions.
+|    relay/                          | Relay plugin (IRC proxy and relay for remote interfaces).
+|       relay.c                      | Main relay functions.
+|       relay-auth.c                 | Clients authentication.
+|       relay-buffer.c               | Relay buffer.
+|       relay-client.c               | Clients of relay.
+|       relay-command.c              | Relay commands.
+|       relay-completion.c           | Relay completions.
+|       relay-config.c               | Relay config options (file relay.conf).
+|       relay-http.c                 | HTTP functions.
+|       relay-info.c                 | Relay info/infolists/hdata.
+|       relay-network.c              | Network functions for relay.
+|       relay-raw.c                  | Relay raw buffer.
+|       relay-remote.c               | Relay remote.
+|       relay-server.c               | Relay server.
+|       relay-upgrade.c              | Save/restore of relay data when upgrading WeeChat.
+|       relay-websocket.c            | WebSocket server functions (RFC 6455).
+|       api/                         | Relay for remote interfaces (using HTTP REST API).
+|          relay-api.c               | Main API functions for HTTP REST API.
+|          relay-api-msg.c           | Send JSON messages to clients.
+|          relay-api-protocol.c      | HTTP REST API protocol.
+|          remote/                   | Relay remote functions, specific to API.
+|             relay-remote-network.c | Network functions for relay remote.
+|       irc/                         | IRC proxy.
+|          relay-irc.c               | Main IRC proxy functions.
+|       weechat/                     | Relay for remote interfaces (using "weechat" binary protocol).
+|          relay-weechat.c           | Relay for remote interfaces (main functions).
+|          relay-weechat-msg.c       | Send binary messages to clients.
+|          relay-weechat-nicklist.c  | Nicklist functions.
+|          relay-weechat-protocol.c  | Read commands from clients.
+|    ruby/                           | Ruby plugin.
+|       weechat-ruby.c               | Main ruby functions (load/unload scripts, execute ruby code).
+|       weechat-ruby-api.c           | Ruby scripting API functions.
+|    script/                         | Script manager.
+|       script.c                     | Main functions for script manager.
+|       script-action.c              | Actions on scripts (load/unload, install/remove, ...).
+|       script-buffer.c              | Buffer for script manager.
+|       script-command.c             | Commands for script manager.
+|       script-completion.c          | Completions for script manager.
+|       script-config.c              | Config options for script manager (file script.conf).
+|       script-info.c                | Script manager info/infolists/hdata.
+|       script-mouse.c               | Script mouse actions.
+|       script-repo.c                | Download and read repository file.
+|    tcl/                            | Tcl plugin.
+|       weechat-tcl.c                | Main tcl functions (load/unload scripts, execute tcl code).
+|       weechat-tcl-api.c            | Tcl scripting API functions.
+|    trigger/                        | Trigger plugin.
+|       trigger.c                    | Main trigger functions.
+|       trigger-buffer.c             | Trigger buffer.
+|       trigger-callback.c           | Trigger callbacks.
+|       trigger-command.c            | Trigger commands.
+|       trigger-completion.c         | Trigger completions.
+|       trigger-config.c             | Trigger config options (file trigger.conf).
+|    typing/                         | Typing plugin.
+|       typing.c                     | Main typing functions.
+|       typing-bar-item.c            | Typing bar items.
+|       typing-config.c              | Typing config options (file typing.conf).
+|       typing-status.c              | Messages typing status on buffers.
+|    xfer/                           | Xfer plugin (IRC DCC file/chat).
+|       xfer.c                       | Main xfer functions.
+|       xfer-buffer.c                | Xfer buffer.
+|       xfer-chat.c                  | DCC chat.
+|       xfer-command.c               | Xfer commands.
+|       xfer-completion.c            | Xfer completions.
+|       xfer-config.c                | Xfer config options (file xfer.conf).
+|       xfer-dcc.c                   | DCC file transfer.
+|       xfer-file.c                  | File functions for xfer.
+|       xfer-info.c                  | Xfer info/infolists/hdata.
+|       xfer-network.c               | Network functions for xfer.
+|       xfer-upgrade.c               | Save/restore of xfer data when upgrading WeeChat.
 |===
 
 [[sources_tests]]
