@@ -591,6 +591,54 @@ relay_command_remote (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
+    if (weechat_strcmp (argv[1], "send") == 0)
+    {
+        WEECHAT_COMMAND_MIN_ARGS(4, "send");
+        ptr_remote = relay_remote_search (argv[2]);
+        if (!ptr_remote)
+        {
+            weechat_printf (
+                NULL,
+                _("%s%s: remote \"%s\" not found for \"%s\" command"),
+                weechat_prefix ("error"),
+                RELAY_PLUGIN_NAME,
+                argv[2],
+                "remote send");
+            return WEECHAT_RC_OK;
+        }
+        if (ptr_remote->status != RELAY_STATUS_CONNECTED)
+        {
+            weechat_printf (
+                NULL,
+                _("%s%s: no connection to remote \"%s\""),
+                weechat_prefix ("error"),
+                RELAY_PLUGIN_NAME,
+                argv[2]);
+            return WEECHAT_RC_OK;
+        }
+        relay_remote_send (ptr_remote, argv_eol[3]);
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcmp (argv[1], "disconnect") == 0)
+    {
+        WEECHAT_COMMAND_MIN_ARGS(3, "disconnect");
+        ptr_remote = relay_remote_search (argv[2]);
+        if (!ptr_remote)
+        {
+            weechat_printf (
+                NULL,
+                _("%s%s: remote \"%s\" not found for \"%s\" command"),
+                weechat_prefix ("error"),
+                RELAY_PLUGIN_NAME,
+                argv[2],
+                "remote disconnect");
+            return WEECHAT_RC_OK;
+        }
+        relay_remote_disconnect (ptr_remote);
+        return WEECHAT_RC_OK;
+    }
+
     if (weechat_strcmp (argv[1], "rename") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, "rename");
@@ -632,25 +680,6 @@ relay_command_remote (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
         WEECHAT_COMMAND_ERROR;
-    }
-
-    if (weechat_strcmp (argv[1], "disconnect") == 0)
-    {
-        WEECHAT_COMMAND_MIN_ARGS(3, "disconnect");
-        ptr_remote = relay_remote_search (argv[2]);
-        if (!ptr_remote)
-        {
-            weechat_printf (
-                NULL,
-                _("%s%s: remote \"%s\" not found for \"%s\" command"),
-                weechat_prefix ("error"),
-                RELAY_PLUGIN_NAME,
-                argv[2],
-                "remote disconnect");
-            return WEECHAT_RC_OK;
-        }
-        relay_remote_disconnect (ptr_remote);
-        return WEECHAT_RC_OK;
     }
 
     if (weechat_strcmp (argv[1], "del") == 0)
@@ -784,6 +813,7 @@ relay_command_init ()
         N_("list|listfull [<name>]"
            " || add <name> <url> [-<option>[=<value>]]"
            " || connect <name>"
+           " || send <name> <json>"
            " || disconnect <name>"
            " || rename <name> <new_name>"
            " || del <name>"),
@@ -798,6 +828,7 @@ relay_command_init ()
                "or http://example.com:9000 (plain-text connection, not recommended)"),
             N_("option: set option for remote: proxy, password or totp_secret"),
             N_("raw[connect]: connect to a remote relay server"),
+            N_("raw[send]: send JSON data to a remote"),
             N_("raw[disconnect]: disconnect from a remote relay server"),
             N_("raw[rename]: rename a remote relay server"),
             N_("raw[del]: delete a remote relay server"),
@@ -815,6 +846,7 @@ relay_command_init ()
         " || add %(relay_remotes) https://localhost:9000 "
         "-password=${xxx}|-proxy=xxx|-totp_secret=${xxx}|%*"
         " || connect %(relay_remotes)"
+        " || send %(relay_remotes) {\"request\":\"\"}"
         " || disconnect %(relay_remotes)"
         " || rename %(relay_remotes) %(relay_remotes)"
         " || del %(relay_remotes)",

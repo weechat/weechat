@@ -88,11 +88,12 @@ extern struct t_relay_remote *relay_remote_new_with_infolist (struct t_infolist 
 extern void relay_remote_set_status (struct t_relay_remote *remote,
                                      enum t_relay_status status);
 extern int relay_remote_connect (struct t_relay_remote *remote);
+extern int relay_remote_send (struct t_relay_remote *remote, const char *json);
+extern void relay_remote_disconnect (struct t_relay_remote *remote);
+extern void relay_remote_disconnect_all ();
 extern int relay_remote_rename (struct t_relay_remote *remote, const char *name);
 extern void relay_remote_free (struct t_relay_remote *remote);
 extern void relay_remote_free_all ();
-extern void relay_remote_disconnect (struct t_relay_remote *remote);
-extern void relay_remote_disconnect_all ();
 extern int relay_remote_add_to_infolist (struct t_infolist *infolist,
                                          struct t_relay_remote *remote,
                                          int force_disconnected_state);

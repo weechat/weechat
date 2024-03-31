@@ -607,6 +607,25 @@ relay_remote_connect (struct t_relay_remote *remote)
 }
 
 /*
+ * Sends JSON data to a remote WeeChat relay/api.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+relay_remote_send (struct t_relay_remote *remote, const char *json)
+{
+    if (!remote || (remote->status != RELAY_STATUS_CONNECTED) || !json)
+        return 0;
+
+    return (relay_remote_network_send (remote, RELAY_MSG_STANDARD,
+                                       json, strlen (json)) > 0) ?
+        1 : 0;
+}
+
+/*
  * Renames a remote.
  *
  * Returns:
@@ -664,6 +683,33 @@ relay_remote_rename (struct t_relay_remote *remote, const char *name)
 }
 
 /*
+ * Disconnects one remote.
+ */
+
+void
+relay_remote_disconnect (struct t_relay_remote *remote)
+{
+    if (remote->sock >= 0)
+        relay_remote_network_disconnect (remote);
+}
+
+/*
+ * Disconnects all remotes.
+ */
+
+void
+relay_remote_disconnect_all ()
+{
+    struct t_relay_remote *ptr_remote;
+
+    for (ptr_remote = relay_remotes; ptr_remote;
+         ptr_remote = ptr_remote->next_remote)
+    {
+        relay_remote_disconnect (ptr_remote);
+    }
+}
+
+/*
  * Deletes a remote.
  */
 
@@ -712,33 +758,6 @@ relay_remote_free_all ()
     while (relay_remotes)
     {
         relay_remote_free (relay_remotes);
-    }
-}
-
-/*
- * Disconnects one remote.
- */
-
-void
-relay_remote_disconnect (struct t_relay_remote *remote)
-{
-    if (remote->sock >= 0)
-        relay_remote_network_disconnect (remote);
-}
-
-/*
- * Disconnects all remotes.
- */
-
-void
-relay_remote_disconnect_all ()
-{
-    struct t_relay_remote *ptr_remote;
-
-    for (ptr_remote = relay_remotes; ptr_remote;
-         ptr_remote = ptr_remote->next_remote)
-    {
-        relay_remote_disconnect (ptr_remote);
     }
 }
 
