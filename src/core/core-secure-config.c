@@ -422,7 +422,7 @@ secure_config_data_write_map_cb (void *data,
     {
         /* encrypt password using passphrase */
         rc = secure_encrypt_data (
-            value, strlen (value) + 1,
+            (const char *)value, strlen ((const char *)value) + 1,
             hash_algo,
             cipher,
             secure_passphrase,
@@ -457,7 +457,8 @@ secure_config_data_write_map_cb (void *data,
     else
     {
         /* store password as plain text */
-        config_file_write_line (config_file, key, "\"%s\"", value);
+        config_file_write_line (config_file, key,
+                                "\"%s\"", (const char *)value);
     }
 }
 
@@ -478,7 +479,7 @@ secure_config_data_write_map_encrypted_cb (void *data,
     config_file = (struct t_config_file *)data;
 
     /* store data as-is (it is already encrypted) */
-    config_file_write_line (config_file, key, "\"%s\"", value);
+    config_file_write_line (config_file, key, "\"%s\"", (const char *)value);
 }
 
 /*
