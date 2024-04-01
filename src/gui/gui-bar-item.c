@@ -2608,7 +2608,7 @@ gui_bar_item_print_log ()
         log_printf ("[bar item (addr:%p)]", ptr_item);
         log_printf ("  plugin . . . . . . . . : %p ('%s')",
                     ptr_item->plugin, plugin_get_name (ptr_item->plugin));
-        log_printf ("  name . . . . . . . . . : '%s'",  ptr_item->name);
+        log_printf ("  name . . . . . . . . . : '%s'", ptr_item->name);
         log_printf ("  build_callback . . . . : %p", ptr_item->build_callback);
         log_printf ("  build_callback_pointer : %p", ptr_item->build_callback_pointer);
         log_printf ("  build_callback_data. . : %p", ptr_item->build_callback_data);

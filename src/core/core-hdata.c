@@ -1479,9 +1479,9 @@ hdata_print_log_var_map_cb (void *data, struct t_hashtable *hashtable,
 
     log_printf ("");
     log_printf ("  [hdata var '%s']", (const char *)key);
-    log_printf ("    offset . . . . . . . . : %d",   var->offset);
+    log_printf ("    offset . . . . . . . . : %d", var->offset);
     log_printf ("    type . . . . . . . . . : %d ('%s')", var->type, hdata_type_string[(int)var->type]);
-    log_printf ("    update_allowed . . . . : %d",   (int)var->update_allowed);
+    log_printf ("    update_allowed . . . . : %d", (int)var->update_allowed);
     log_printf ("    array_size . . . . . . : '%s'", var->array_size);
     log_printf ("    hdata_name . . . . . . : '%s'", var->hdata_name);
 }

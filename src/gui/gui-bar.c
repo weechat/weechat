@@ -2425,13 +2425,13 @@ gui_bar_print_log ()
     {
         log_printf ("");
         log_printf ("[bar (addr:%p)]", ptr_bar);
-        log_printf ("  name . . . . . . . . . : '%s'",  ptr_bar->name);
-        log_printf ("  hidden . . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]));
-        log_printf ("  priority . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_PRIORITY]));
+        log_printf ("  name . . . . . . . . . : '%s'", ptr_bar->name);
+        log_printf ("  hidden . . . . . . . . : %d", CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]));
+        log_printf ("  priority . . . . . . . : %d", CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_PRIORITY]));
         log_printf ("  type . . . . . . . . . : %d (%s)",
                     CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE]),
                     gui_bar_type_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_TYPE])]);
-        log_printf ("  conditions . . . . . . : '%s'",  CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS]));
+        log_printf ("  conditions . . . . . . : '%s'", CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS]));
         log_printf ("  position . . . . . . . : %d (%s)",
                     CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION]),
                     gui_bar_position_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_POSITION])]);
@@ -2441,8 +2441,8 @@ gui_bar_print_log ()
         log_printf ("  filling_left_right . . : %d (%s)",
                     CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT]),
                     gui_bar_filling_string[CONFIG_ENUM(ptr_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT])]);
-        log_printf ("  size . . . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]));
-        log_printf ("  size_max . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE_MAX]));
+        log_printf ("  size . . . . . . . . . : %d", CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]));
+        log_printf ("  size_max . . . . . . . : %d", CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE_MAX]));
         log_printf ("  color_fg . . . . . . . : %d (%s)",
                     CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_FG]),
                     gui_color_get_name (CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_FG])));
@@ -2455,9 +2455,9 @@ gui_bar_print_log ()
         log_printf ("  color_bg_inactive. . . : %d (%s)",
                     CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_BG_INACTIVE]),
                     gui_color_get_name (CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_BG_INACTIVE])));
-        log_printf ("  separator. . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SEPARATOR]));
-        log_printf ("  items. . . . . . . . . : '%s'",  CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_ITEMS]));
-        log_printf ("  items_count. . . . . . : %d",    ptr_bar->items_count);
+        log_printf ("  separator. . . . . . . : %d", CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SEPARATOR]));
+        log_printf ("  items. . . . . . . . . : '%s'", CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_ITEMS]));
+        log_printf ("  items_count. . . . . . : %d", ptr_bar->items_count);
         for (i = 0; i < ptr_bar->items_count; i++)
         {
             log_printf ("    items_subcount[%03d]. : %d",

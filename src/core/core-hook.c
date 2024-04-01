@@ -932,7 +932,7 @@ hook_print_log ()
             log_printf ("[hook (addr:%p)]", ptr_hook);
             log_printf ("  plugin. . . . . . . . . : %p ('%s')",
                         ptr_hook->plugin, plugin_get_name (ptr_hook->plugin));
-            log_printf ("  subplugin . . . . . . . : '%s'",  ptr_hook->subplugin);
+            log_printf ("  subplugin . . . . . . . : '%s'", ptr_hook->subplugin);
             log_printf ("  type. . . . . . . . . . : %d (%s)",
                         ptr_hook->type, hook_type_string[ptr_hook->type]);
             log_printf ("  deleted . . . . . . . . : %d", ptr_hook->deleted);
