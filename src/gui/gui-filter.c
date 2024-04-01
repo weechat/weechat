@@ -692,21 +692,21 @@ gui_filter_print_log ()
          ptr_filter = ptr_filter->next_filter)
     {
         log_printf ("");
-        log_printf ("[filter (addr:0x%lx)]", ptr_filter);
-        log_printf ("  enabled. . . . . . . . : %d",    ptr_filter->enabled);
-        log_printf ("  name . . . . . . . . . : '%s'",  ptr_filter->name);
-        log_printf ("  buffer_name. . . . . . : '%s'",  ptr_filter->buffer_name);
-        log_printf ("  num_buffers. . . . . . : %d",    ptr_filter->num_buffers);
-        log_printf ("  buffers. . . . . . . . : 0x%lx", ptr_filter->buffers);
+        log_printf ("[filter (addr:%p)]", ptr_filter);
+        log_printf ("  enabled. . . . . . . . : %d", ptr_filter->enabled);
+        log_printf ("  name . . . . . . . . . : '%s'", ptr_filter->name);
+        log_printf ("  buffer_name. . . . . . : '%s'", ptr_filter->buffer_name);
+        log_printf ("  num_buffers. . . . . . : %d", ptr_filter->num_buffers);
+        log_printf ("  buffers. . . . . . . . : %p", ptr_filter->buffers);
         for (i = 0; i < ptr_filter->num_buffers; i++)
         {
             log_printf ("  buffers[%03d] . . . . . : '%s'", i, ptr_filter->buffers[i]);
         }
-        log_printf ("  tags . . . . . . . . . : '%s'",  ptr_filter->tags);
-        log_printf ("  regex. . . . . . . . . : '%s'",  ptr_filter->regex);
-        log_printf ("  regex_prefix . . . . . : 0x%lx", ptr_filter->regex_prefix);
-        log_printf ("  regex_message. . . . . : 0x%lx", ptr_filter->regex_message);
-        log_printf ("  prev_filter. . . . . . : 0x%lx", ptr_filter->prev_filter);
-        log_printf ("  next_filter. . . . . . : 0x%lx", ptr_filter->next_filter);
+        log_printf ("  tags . . . . . . . . . : '%s'", ptr_filter->tags);
+        log_printf ("  regex. . . . . . . . . : '%s'", ptr_filter->regex);
+        log_printf ("  regex_prefix . . . . . : %p", ptr_filter->regex_prefix);
+        log_printf ("  regex_message. . . . . : %p", ptr_filter->regex_message);
+        log_printf ("  prev_filter. . . . . . : %p", ptr_filter->prev_filter);
+        log_printf ("  next_filter. . . . . . : %p", ptr_filter->next_filter);
     }
 }

@@ -494,7 +494,7 @@ plugin_api_info_buffer_cb (const void *pointer, void *data,
     if (!ptr_buffer)
         return NULL;
 
-    snprintf (value, sizeof (value), "0x%lx", (unsigned long)ptr_buffer);
+    snprintf (value, sizeof (value), "%p", ptr_buffer);
     return strdup (value);
 }
 

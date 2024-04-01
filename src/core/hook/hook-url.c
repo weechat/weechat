@@ -444,17 +444,17 @@ hook_url_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  url data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_URL(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_URL(hook, callback));
     log_printf ("    url . . . . . . . . . : '%s'", HOOK_URL(hook, url));
-    log_printf ("    options . . . . . . . : 0x%lx (hashtable: '%s')",
+    log_printf ("    options . . . . . . . : %p (hashtable: '%s')",
                 HOOK_URL(hook, options),
                 hashtable_get_string (HOOK_URL(hook, options),
                                       "keys_values"));
     log_printf ("    timeout . . . . . . . : %ld", HOOK_URL(hook, timeout));
     log_printf ("    thread_created. . . . : %d", (int)HOOK_URL(hook, thread_created));
     log_printf ("    thread_running. . . . : %d", (int)HOOK_URL(hook, thread_running));
-    log_printf ("    hook_timer. . . . . . : 0x%lx", HOOK_URL(hook, hook_timer));
-    log_printf ("    output. . . . . . . . : 0x%lx (hashtable: '%s')",
+    log_printf ("    hook_timer. . . . . . : %p", HOOK_URL(hook, hook_timer));
+    log_printf ("    output. . . . . . . . : %p (hashtable: '%s')",
                 HOOK_URL(hook, output),
                 hashtable_get_string (HOOK_URL(hook, output),
                                       "keys_values"));

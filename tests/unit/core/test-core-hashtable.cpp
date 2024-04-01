@@ -540,8 +540,8 @@ TEST(CoreHashtable, MapString)
                              value_buffer, sizeof (value_buffer));
     hashtable_map_string (hashtable, &test_hashtable_map_string_cb, NULL);
     snprintf (result, sizeof (result),
-              "1624693124:0x%lx",
-              (unsigned long)(hashtable->newest_item->value));
+              "1624693124:%p",
+              hashtable->newest_item->value);
     STRCMP_EQUAL(result, test_map_string);
 
     free (test_map_string);

@@ -851,18 +851,18 @@ gui_hotlist_print_log ()
     for (ptr_hotlist = gui_hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
     {
-        log_printf ("[hotlist (addr:0x%lx)]", ptr_hotlist);
-        log_printf ("  priority . . . . . . . : %d",    ptr_hotlist->priority);
+        log_printf ("[hotlist (addr:%p)]", ptr_hotlist);
+        log_printf ("  priority . . . . . . . : %d", ptr_hotlist->priority);
         log_printf ("  creation_time. . . . . : tv_sec:%ld, tv_usec:%ld",
                     ptr_hotlist->creation_time.tv_sec,
                     ptr_hotlist->creation_time.tv_usec);
-        log_printf ("  buffer . . . . . . . . : 0x%lx", ptr_hotlist->buffer);
+        log_printf ("  buffer . . . . . . . . : %p", ptr_hotlist->buffer);
         for (i = 0; i < GUI_HOTLIST_NUM_PRIORITIES; i++)
         {
             log_printf ("  count[%02d]. . . . . . . : %d", i, ptr_hotlist->count[i]);
         }
-        log_printf ("  prev_hotlist . . . . . : 0x%lx", ptr_hotlist->prev_hotlist);
-        log_printf ("  next_hotlist . . . . . : 0x%lx", ptr_hotlist->next_hotlist);
+        log_printf ("  prev_hotlist . . . . . : %p", ptr_hotlist->prev_hotlist);
+        log_printf ("  next_hotlist . . . . . : %p", ptr_hotlist->next_hotlist);
     }
 }
 

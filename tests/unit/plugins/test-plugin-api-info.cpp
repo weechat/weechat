@@ -337,7 +337,7 @@ TEST(PluginApiInfo, BufferCb)
 
     POINTERS_EQUAL(NULL, hook_info_get (NULL, "buffer", "zzz"));
 
-    snprintf (str_buffer, sizeof (str_buffer), "0x%lx", (unsigned long)gui_buffers);
+    snprintf (str_buffer, sizeof (str_buffer), "%p", gui_buffers);
     WEE_TEST_STR(str_buffer, hook_info_get (NULL, "buffer", "core.weechat"));
 }
 

@@ -2227,53 +2227,53 @@ relay_client_print_log ()
          ptr_client = ptr_client->next_client)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[relay client (addr:0x%lx)]", ptr_client);
-        weechat_log_printf ("  id. . . . . . . . . . . . : %d",    ptr_client->id);
-        weechat_log_printf ("  desc. . . . . . . . . . . : '%s'",  ptr_client->desc);
-        weechat_log_printf ("  sock. . . . . . . . . . . : %d",    ptr_client->sock);
-        weechat_log_printf ("  server_port . . . . . . . : %d",    ptr_client->server_port);
-        weechat_log_printf ("  tls . . . . . . . . . . . : %d",    ptr_client->tls);
-        weechat_log_printf ("  gnutls_sess . . . . . . . : 0x%lx", ptr_client->gnutls_sess);
-        weechat_log_printf ("  fake_send_func. . . . . . : 0x%lx", ptr_client->fake_send_func);
-        weechat_log_printf ("  hook_timer_handshake. . . : 0x%lx", ptr_client->hook_timer_handshake);
-        weechat_log_printf ("  gnutls_handshake_ok . . . : 0x%lx", ptr_client->gnutls_handshake_ok);
-        weechat_log_printf ("  websocket . . . . . . . . ; %d",    ptr_client->websocket);
+        weechat_log_printf ("[relay client (addr:%p)]", ptr_client);
+        weechat_log_printf ("  id. . . . . . . . . . . . : %d", ptr_client->id);
+        weechat_log_printf ("  desc. . . . . . . . . . . : '%s'", ptr_client->desc);
+        weechat_log_printf ("  sock. . . . . . . . . . . : %d", ptr_client->sock);
+        weechat_log_printf ("  server_port . . . . . . . : %d", ptr_client->server_port);
+        weechat_log_printf ("  tls . . . . . . . . . . . : %d", ptr_client->tls);
+        weechat_log_printf ("  gnutls_sess . . . . . . . : %p", ptr_client->gnutls_sess);
+        weechat_log_printf ("  fake_send_func. . . . . . : %p", ptr_client->fake_send_func);
+        weechat_log_printf ("  hook_timer_handshake. . . : %p", ptr_client->hook_timer_handshake);
+        weechat_log_printf ("  gnutls_handshake_ok . . . : %p", ptr_client->gnutls_handshake_ok);
+        weechat_log_printf ("  websocket . . . . . . . . ; %d", ptr_client->websocket);
         relay_websocket_deflate_print_log (ptr_client->ws_deflate, "");
         relay_http_print_log (ptr_client->http_req);
-        weechat_log_printf ("  address . . . . . . . . . : '%s'",  ptr_client->address);
-        weechat_log_printf ("  real_ip . . . . . . . . . : '%s'",  ptr_client->real_ip);
+        weechat_log_printf ("  address . . . . . . . . . : '%s'", ptr_client->address);
+        weechat_log_printf ("  real_ip . . . . . . . . . : '%s'", ptr_client->real_ip);
         weechat_log_printf ("  status. . . . . . . . . . : %d (%s)",
                             ptr_client->status,
                             relay_client_status_string[ptr_client->status]);
         weechat_log_printf ("  protocol. . . . . . . . . : %d (%s)",
                             ptr_client->protocol,
                             relay_protocol_string[ptr_client->protocol]);
-        weechat_log_printf ("  protocol_string . . . . . : '%s'",  ptr_client->protocol_string);
-        weechat_log_printf ("  protocol_args . . . . . . : '%s'",  ptr_client->protocol_args);
-        weechat_log_printf ("  nonce . . . . . . . . . . : '%s'",  ptr_client->nonce);
+        weechat_log_printf ("  protocol_string . . . . . : '%s'", ptr_client->protocol_string);
+        weechat_log_printf ("  protocol_args . . . . . . : '%s'", ptr_client->protocol_args);
+        weechat_log_printf ("  nonce . . . . . . . . . . : '%s'", ptr_client->nonce);
         weechat_log_printf ("  password_hash_algo. . . . : %d (%s)",
                             ptr_client->password_hash_algo,
                             (ptr_client->password_hash_algo >= 0) ?
                             relay_auth_password_hash_algo_name[ptr_client->password_hash_algo] : "");
-        weechat_log_printf ("  listen_start_time . . . . : %lld",  (long long)ptr_client->listen_start_time);
-        weechat_log_printf ("  start_time. . . . . . . . : %lld",  (long long)ptr_client->start_time);
-        weechat_log_printf ("  end_time. . . . . . . . . : %lld",  (long long)ptr_client->end_time);
-        weechat_log_printf ("  hook_fd . . . . . . . . . : 0x%lx", ptr_client->hook_fd);
-        weechat_log_printf ("  hook_timer_send . . . . . : 0x%lx", ptr_client->hook_timer_send);
-        weechat_log_printf ("  last_activity . . . . . . : %lld",  (long long)ptr_client->last_activity);
-        weechat_log_printf ("  bytes_recv. . . . . . . . : %llu",  ptr_client->bytes_recv);
-        weechat_log_printf ("  bytes_sent. . . . . . . . : %llu",  ptr_client->bytes_sent);
+        weechat_log_printf ("  listen_start_time . . . . : %lld", (long long)ptr_client->listen_start_time);
+        weechat_log_printf ("  start_time. . . . . . . . : %lld", (long long)ptr_client->start_time);
+        weechat_log_printf ("  end_time. . . . . . . . . : %lld", (long long)ptr_client->end_time);
+        weechat_log_printf ("  hook_fd . . . . . . . . . : %p", ptr_client->hook_fd);
+        weechat_log_printf ("  hook_timer_send . . . . . : %p", ptr_client->hook_timer_send);
+        weechat_log_printf ("  last_activity . . . . . . : %lld", (long long)ptr_client->last_activity);
+        weechat_log_printf ("  bytes_recv. . . . . . . . : %llu", ptr_client->bytes_recv);
+        weechat_log_printf ("  bytes_sent. . . . . . . . : %llu", ptr_client->bytes_sent);
         weechat_log_printf ("  recv_data_type. . . . . . : %d (%s)",
                             ptr_client->recv_data_type,
                             relay_client_data_type_string[ptr_client->recv_data_type]);
         weechat_log_printf ("  send_data_type. . . . . . : %d (%s)",
                             ptr_client->send_data_type,
                             relay_client_data_type_string[ptr_client->send_data_type]);
-        weechat_log_printf ("  partial_ws_frame. . . . . : 0x%lx (%d bytes)",
+        weechat_log_printf ("  partial_ws_frame. . . . . : %p (%d bytes)",
                             ptr_client->partial_ws_frame,
                             ptr_client->partial_ws_frame_size);
-        weechat_log_printf ("  partial_message . . . . . : '%s'",  ptr_client->partial_message);
-        weechat_log_printf ("  protocol_data . . . . . . : 0x%lx", ptr_client->protocol_data);
+        weechat_log_printf ("  partial_message . . . . . : '%s'", ptr_client->partial_message);
+        weechat_log_printf ("  protocol_data . . . . . . : %p", ptr_client->protocol_data);
         switch (ptr_client->protocol)
         {
             case RELAY_PROTOCOL_WEECHAT:
@@ -2290,9 +2290,9 @@ relay_client_print_log ()
             case RELAY_NUM_PROTOCOLS:
                 break;
         }
-        weechat_log_printf ("  outqueue. . . . . . . . . : 0x%lx", ptr_client->outqueue);
-        weechat_log_printf ("  last_outqueue . . . . . . : 0x%lx", ptr_client->last_outqueue);
-        weechat_log_printf ("  prev_client . . . . . . . : 0x%lx", ptr_client->prev_client);
-        weechat_log_printf ("  next_client . . . . . . . : 0x%lx", ptr_client->next_client);
+        weechat_log_printf ("  outqueue. . . . . . . . . : %p", ptr_client->outqueue);
+        weechat_log_printf ("  last_outqueue . . . . . . : %p", ptr_client->last_outqueue);
+        weechat_log_printf ("  prev_client . . . . . . . : %p", ptr_client->prev_client);
+        weechat_log_printf ("  next_client . . . . . . . : %p", ptr_client->next_client);
     }
 }

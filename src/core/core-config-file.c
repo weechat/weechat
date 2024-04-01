@@ -4572,63 +4572,63 @@ config_file_print_log ()
          ptr_config_file = ptr_config_file->next_config)
     {
         log_printf ("");
-        log_printf ("[config (addr:0x%lx)]", ptr_config_file);
-        log_printf ("  plugin . . . . . . . . : 0x%lx ('%s')",
+        log_printf ("[config (addr:%p)]", ptr_config_file);
+        log_printf ("  plugin . . . . . . . . : %p ('%s')",
                     ptr_config_file->plugin,
                     plugin_get_name (ptr_config_file->plugin));
-        log_printf ("  priority . . . . . . . : %d",    ptr_config_file->priority);
-        log_printf ("  name . . . . . . . . . : '%s'",  ptr_config_file->name);
-        log_printf ("  filename . . . . . . . : '%s'",  ptr_config_file->filename);
-        log_printf ("  file . . . . . . . . . : 0x%lx", ptr_config_file->file);
-        log_printf ("  callback_reload. . . . : 0x%lx", ptr_config_file->callback_reload);
-        log_printf ("  callback_reload_pointer: 0x%lx", ptr_config_file->callback_reload_pointer);
-        log_printf ("  callback_reload_data . : 0x%lx", ptr_config_file->callback_reload_data);
-        log_printf ("  sections . . . . . . . : 0x%lx", ptr_config_file->sections);
-        log_printf ("  last_section . . . . . : 0x%lx", ptr_config_file->last_section);
-        log_printf ("  prev_config. . . . . . : 0x%lx", ptr_config_file->prev_config);
-        log_printf ("  next_config. . . . . . : 0x%lx", ptr_config_file->next_config);
+        log_printf ("  priority . . . . . . . : %d", ptr_config_file->priority);
+        log_printf ("  name . . . . . . . . . : '%s'", ptr_config_file->name);
+        log_printf ("  filename . . . . . . . : '%s'", ptr_config_file->filename);
+        log_printf ("  file . . . . . . . . . : %p", ptr_config_file->file);
+        log_printf ("  callback_reload. . . . : %p", ptr_config_file->callback_reload);
+        log_printf ("  callback_reload_pointer: %p", ptr_config_file->callback_reload_pointer);
+        log_printf ("  callback_reload_data . : %p", ptr_config_file->callback_reload_data);
+        log_printf ("  sections . . . . . . . : %p", ptr_config_file->sections);
+        log_printf ("  last_section . . . . . : %p", ptr_config_file->last_section);
+        log_printf ("  prev_config. . . . . . : %p", ptr_config_file->prev_config);
+        log_printf ("  next_config. . . . . . : %p", ptr_config_file->next_config);
 
         for (ptr_section = ptr_config_file->sections; ptr_section;
              ptr_section = ptr_section->next_section)
         {
             log_printf ("");
-            log_printf ("    [section (addr:0x%lx)]", ptr_section);
-            log_printf ("      config_file . . . . . . . . . : 0x%lx", ptr_section->config_file);
-            log_printf ("      name. . . . . . . . . . . . . : '%s'",  ptr_section->name);
-            log_printf ("      callback_read . . . . . . . . : 0x%lx", ptr_section->callback_read);
-            log_printf ("      callback_read_pointer . . . . : 0x%lx", ptr_section->callback_read_pointer);
-            log_printf ("      callback_read_data. . . . . . : 0x%lx", ptr_section->callback_read_data);
-            log_printf ("      callback_write. . . . . . . . : 0x%lx", ptr_section->callback_write);
-            log_printf ("      callback_write_pointer. . . . : 0x%lx", ptr_section->callback_write_pointer);
-            log_printf ("      callback_write_data . . . . . : 0x%lx", ptr_section->callback_write_data);
-            log_printf ("      callback_write_default. . . . : 0x%lx", ptr_section->callback_write_default);
-            log_printf ("      callback_write_default_pointer: 0x%lx", ptr_section->callback_write_default_pointer);
-            log_printf ("      callback_write_default_data . : 0x%lx", ptr_section->callback_write_default_data);
-            log_printf ("      callback_create_option. . . . : 0x%lx", ptr_section->callback_create_option);
-            log_printf ("      callback_create_option_pointer: 0x%lx", ptr_section->callback_create_option_pointer);
-            log_printf ("      callback_create_option_data . : 0x%lx", ptr_section->callback_create_option_data);
-            log_printf ("      callback_delete_option. . . . : 0x%lx", ptr_section->callback_delete_option);
-            log_printf ("      callback_delete_option_pointer: 0x%lx", ptr_section->callback_delete_option_pointer);
-            log_printf ("      callback_delete_option_data . : 0x%lx", ptr_section->callback_delete_option_data);
-            log_printf ("      options . . . . . . . . . . . : 0x%lx", ptr_section->options);
-            log_printf ("      last_option . . . . . . . . . : 0x%lx", ptr_section->last_option);
-            log_printf ("      prev_section. . . . . . . . . : 0x%lx", ptr_section->prev_section);
-            log_printf ("      next_section. . . . . . . . . : 0x%lx", ptr_section->next_section);
+            log_printf ("    [section (addr:%p)]", ptr_section);
+            log_printf ("      config_file . . . . . . . . . : %p", ptr_section->config_file);
+            log_printf ("      name. . . . . . . . . . . . . : '%s'", ptr_section->name);
+            log_printf ("      callback_read . . . . . . . . : %p", ptr_section->callback_read);
+            log_printf ("      callback_read_pointer . . . . : %p", ptr_section->callback_read_pointer);
+            log_printf ("      callback_read_data. . . . . . : %p", ptr_section->callback_read_data);
+            log_printf ("      callback_write. . . . . . . . : %p", ptr_section->callback_write);
+            log_printf ("      callback_write_pointer. . . . : %p", ptr_section->callback_write_pointer);
+            log_printf ("      callback_write_data . . . . . : %p", ptr_section->callback_write_data);
+            log_printf ("      callback_write_default. . . . : %p", ptr_section->callback_write_default);
+            log_printf ("      callback_write_default_pointer: %p", ptr_section->callback_write_default_pointer);
+            log_printf ("      callback_write_default_data . : %p", ptr_section->callback_write_default_data);
+            log_printf ("      callback_create_option. . . . : %p", ptr_section->callback_create_option);
+            log_printf ("      callback_create_option_pointer: %p", ptr_section->callback_create_option_pointer);
+            log_printf ("      callback_create_option_data . : %p", ptr_section->callback_create_option_data);
+            log_printf ("      callback_delete_option. . . . : %p", ptr_section->callback_delete_option);
+            log_printf ("      callback_delete_option_pointer: %p", ptr_section->callback_delete_option_pointer);
+            log_printf ("      callback_delete_option_data . : %p", ptr_section->callback_delete_option_data);
+            log_printf ("      options . . . . . . . . . . . : %p", ptr_section->options);
+            log_printf ("      last_option . . . . . . . . . : %p", ptr_section->last_option);
+            log_printf ("      prev_section. . . . . . . . . : %p", ptr_section->prev_section);
+            log_printf ("      next_section. . . . . . . . . : %p", ptr_section->next_section);
 
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {
                 log_printf ("");
-                log_printf ("      [option (addr:0x%lx)]", ptr_option);
-                log_printf ("        config_file. . . . . . . . . : 0x%lx", ptr_option->config_file);
-                log_printf ("        section. . . . . . . . . . . : 0x%lx", ptr_option->section);
-                log_printf ("        name . . . . . . . . . . . . : '%s'",  ptr_option->name);
-                log_printf ("        parent_name. . . . . . . . . : '%s'",  ptr_option->parent_name);
-                log_printf ("        type . . . . . . . . . . . . : %d",    ptr_option->type);
-                log_printf ("        description. . . . . . . . . : '%s'",  ptr_option->description);
-                log_printf ("        string_values. . . . . . . . : 0x%lx", ptr_option->string_values);
-                log_printf ("        min. . . . . . . . . . . . . : %d",    ptr_option->min);
-                log_printf ("        max. . . . . . . . . . . . . : %d",    ptr_option->max);
+                log_printf ("      [option (addr:%p)]", ptr_option);
+                log_printf ("        config_file. . . . . . . . . : %p", ptr_option->config_file);
+                log_printf ("        section. . . . . . . . . . . : %p", ptr_option->section);
+                log_printf ("        name . . . . . . . . . . . . : '%s'", ptr_option->name);
+                log_printf ("        parent_name. . . . . . . . . : '%s'", ptr_option->parent_name);
+                log_printf ("        type . . . . . . . . . . . . : %d", ptr_option->type);
+                log_printf ("        description. . . . . . . . . : '%s'", ptr_option->description);
+                log_printf ("        string_values. . . . . . . . : %p", ptr_option->string_values);
+                log_printf ("        min. . . . . . . . . . . . . : %d", ptr_option->min);
+                log_printf ("        max. . . . . . . . . . . . . : %d", ptr_option->max);
                 switch (ptr_option->type)
                 {
                     case CONFIG_OPTION_TYPE_BOOLEAN:
@@ -4690,19 +4690,19 @@ config_file_print_log ()
                     case CONFIG_NUM_OPTION_TYPES:
                         break;
                 }
-                log_printf ("        null_value_allowed . . . . . : %d",    ptr_option->null_value_allowed);
-                log_printf ("        callback_check_value . . . . : 0x%lx", ptr_option->callback_check_value);
-                log_printf ("        callback_check_value_pointer : 0x%lx", ptr_option->callback_check_value_pointer);
-                log_printf ("        callback_check_value_data. . : 0x%lx", ptr_option->callback_check_value_data);
-                log_printf ("        callback_change. . . . . . . : 0x%lx", ptr_option->callback_change);
-                log_printf ("        callback_change_pointer. . . : 0x%lx", ptr_option->callback_change_pointer);
-                log_printf ("        callback_change_data . . . . : 0x%lx", ptr_option->callback_change_data);
-                log_printf ("        callback_delete. . . . . . . : 0x%lx", ptr_option->callback_delete);
-                log_printf ("        callback_delete_pointer. . . : 0x%lx", ptr_option->callback_delete_pointer);
-                log_printf ("        callback_delete_data . . . . : 0x%lx", ptr_option->callback_delete_data);
-                log_printf ("        loaded . . . . . . . . . . . : %d",    ptr_option->loaded);
-                log_printf ("        prev_option. . . . . . . . . : 0x%lx", ptr_option->prev_option);
-                log_printf ("        next_option. . . . . . . . . : 0x%lx", ptr_option->next_option);
+                log_printf ("        null_value_allowed . . . . . : %d", ptr_option->null_value_allowed);
+                log_printf ("        callback_check_value . . . . : %p", ptr_option->callback_check_value);
+                log_printf ("        callback_check_value_pointer : %p", ptr_option->callback_check_value_pointer);
+                log_printf ("        callback_check_value_data. . : %p", ptr_option->callback_check_value_data);
+                log_printf ("        callback_change. . . . . . . : %p", ptr_option->callback_change);
+                log_printf ("        callback_change_pointer. . . : %p", ptr_option->callback_change_pointer);
+                log_printf ("        callback_change_data . . . . : %p", ptr_option->callback_change_data);
+                log_printf ("        callback_delete. . . . . . . : %p", ptr_option->callback_delete);
+                log_printf ("        callback_delete_pointer. . . : %p", ptr_option->callback_delete_pointer);
+                log_printf ("        callback_delete_data . . . . : %p", ptr_option->callback_delete_data);
+                log_printf ("        loaded . . . . . . . . . . . : %d", ptr_option->loaded);
+                log_printf ("        prev_option. . . . . . . . . : %p", ptr_option->prev_option);
+                log_printf ("        next_option. . . . . . . . . : %p", ptr_option->next_option);
             }
         }
     }

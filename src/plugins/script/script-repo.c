@@ -1648,24 +1648,24 @@ script_repo_print_log ()
          ptr_script = ptr_script->next_script)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[script (addr:0x%lx)]", ptr_script);
-        weechat_log_printf ("  name. . . . . . . . . : '%s'",  ptr_script->name);
-        weechat_log_printf ("  name_with_extension . : '%s'",  ptr_script->name_with_extension);
-        weechat_log_printf ("  language. . . . . . . : %d",    ptr_script->language);
-        weechat_log_printf ("  author. . . . . . . . : '%s'",  ptr_script->author);
-        weechat_log_printf ("  mail. . . . . . . . . : '%s'",  ptr_script->mail);
-        weechat_log_printf ("  version . . . . . . . : '%s'",  ptr_script->version);
-        weechat_log_printf ("  license . . . . . . . : '%s'",  ptr_script->license);
-        weechat_log_printf ("  description . . . . . : '%s'",  ptr_script->description);
-        weechat_log_printf ("  tags. . . . . . . . . : '%s'",  ptr_script->tags);
-        weechat_log_printf ("  requirements. . . . . : '%s'",  ptr_script->requirements);
-        weechat_log_printf ("  min_weechat . . . . . : '%s'",  ptr_script->min_weechat);
-        weechat_log_printf ("  max_weechat . . . . . : '%s'",  ptr_script->max_weechat);
-        weechat_log_printf ("  sha512sum . . . . . . : '%s'",  ptr_script->sha512sum);
-        weechat_log_printf ("  url . . . . . . . . . : '%s'",  ptr_script->url);
-        weechat_log_printf ("  popularity. . . . . . : %d",    ptr_script->popularity);
-        weechat_log_printf ("  date_added. . . . . . : %lld",  (long long)ptr_script->date_added);
-        weechat_log_printf ("  date_updated. . . . . : %lld",  (long long)ptr_script->date_updated);
+        weechat_log_printf ("[script (addr:%p)]", ptr_script);
+        weechat_log_printf ("  name. . . . . . . . . : '%s'", ptr_script->name);
+        weechat_log_printf ("  name_with_extension . : '%s'", ptr_script->name_with_extension);
+        weechat_log_printf ("  language. . . . . . . : %d", ptr_script->language);
+        weechat_log_printf ("  author. . . . . . . . : '%s'", ptr_script->author);
+        weechat_log_printf ("  mail. . . . . . . . . : '%s'", ptr_script->mail);
+        weechat_log_printf ("  version . . . . . . . : '%s'", ptr_script->version);
+        weechat_log_printf ("  license . . . . . . . : '%s'", ptr_script->license);
+        weechat_log_printf ("  description . . . . . : '%s'", ptr_script->description);
+        weechat_log_printf ("  tags. . . . . . . . . : '%s'", ptr_script->tags);
+        weechat_log_printf ("  requirements. . . . . : '%s'", ptr_script->requirements);
+        weechat_log_printf ("  min_weechat . . . . . : '%s'", ptr_script->min_weechat);
+        weechat_log_printf ("  max_weechat . . . . . : '%s'", ptr_script->max_weechat);
+        weechat_log_printf ("  sha512sum . . . . . . : '%s'", ptr_script->sha512sum);
+        weechat_log_printf ("  url . . . . . . . . . : '%s'", ptr_script->url);
+        weechat_log_printf ("  popularity. . . . . . : %d", ptr_script->popularity);
+        weechat_log_printf ("  date_added. . . . . . : %lld", (long long)ptr_script->date_added);
+        weechat_log_printf ("  date_updated. . . . . : %lld", (long long)ptr_script->date_updated);
         weechat_log_printf ("  status. . . . . . . . : %d (%s%s%s%s%s )",
                             ptr_script->status,
                             (ptr_script->status & SCRIPT_STATUS_INSTALLED) ? " installed": "",
@@ -1673,10 +1673,10 @@ script_repo_print_log ()
                             (ptr_script->status & SCRIPT_STATUS_HELD) ? " held": "",
                             (ptr_script->status & SCRIPT_STATUS_RUNNING) ? " running": "",
                             (ptr_script->status & SCRIPT_STATUS_NEW_VERSION) ? " new_version": "");
-        weechat_log_printf ("  version_loaded. . . . : '%s'",  ptr_script->version_loaded);
-        weechat_log_printf ("  displayed . . . . . . : %d",    ptr_script->displayed);
-        weechat_log_printf ("  install_order . . . . : %d",    ptr_script->install_order);
-        weechat_log_printf ("  prev_script . . . . . : 0x%lx", ptr_script->prev_script);
-        weechat_log_printf ("  next_script . . . . . : 0x%lx", ptr_script->next_script);
+        weechat_log_printf ("  version_loaded. . . . : '%s'", ptr_script->version_loaded);
+        weechat_log_printf ("  displayed . . . . . . : %d", ptr_script->displayed);
+        weechat_log_printf ("  install_order . . . . : %d", ptr_script->install_order);
+        weechat_log_printf ("  prev_script . . . . . : %p", ptr_script->prev_script);
+        weechat_log_printf ("  next_script . . . . . : %p", ptr_script->next_script);
     }
 }

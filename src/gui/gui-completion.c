@@ -1657,10 +1657,10 @@ gui_completion_list_words_print_log (struct t_arraylist *list,
     for (i = 0; i < list->size; i++)
     {
         ptr_completion_word = (struct t_gui_completion_word *)(list->data[i]);
-        log_printf ("[%s (addr:0x%lx)]", name, ptr_completion_word);
+        log_printf ("[%s (addr:%p)]", name, ptr_completion_word);
         log_printf ("  word. . . . . . . . . . : '%s'", ptr_completion_word->word);
-        log_printf ("  nicklist_completion . . : %d",   ptr_completion_word->nick_completion);
-        log_printf ("  count . . . . . . . . . : %d",   ptr_completion_word->count);
+        log_printf ("  nicklist_completion . . : %d", ptr_completion_word->nick_completion);
+        log_printf ("  count . . . . . . . . . : %d", ptr_completion_word->count);
     }
 }
 
@@ -1676,31 +1676,31 @@ gui_completion_print_log ()
     for (ptr_completion = weechat_completions; ptr_completion;
          ptr_completion = ptr_completion->next_completion)
     {
-        log_printf ("[completion (addr:0x%lx)]", ptr_completion);
-        log_printf ("  plugin. . . . . . . . . . : 0x%lx", ptr_completion->plugin);
-        log_printf ("  buffer. . . . . . . . . . : 0x%lx ('%s')",
+        log_printf ("[completion (addr:%p)]", ptr_completion);
+        log_printf ("  plugin. . . . . . . . . . : %p", ptr_completion->plugin);
+        log_printf ("  buffer. . . . . . . . . . : %p ('%s')",
                     ptr_completion->buffer,
                     ptr_completion->buffer->full_name);
-        log_printf ("  context . . . . . . . . . : %d",    ptr_completion->context);
-        log_printf ("  case_sensitive. . . . . . : %d",    ptr_completion->case_sensitive);
-        log_printf ("  base_command. . . . . . . : '%s'",  ptr_completion->base_command);
-        log_printf ("  base_command_arg_index. . : %d",    ptr_completion->base_command_arg_index);
-        log_printf ("  base_word . . . . . . . . : '%s'",  ptr_completion->base_word);
-        log_printf ("  base_word_pos . . . . . . : %d",    ptr_completion->base_word_pos);
-        log_printf ("  position. . . . . . . . . : %d",    ptr_completion->position);
-        log_printf ("  args. . . . . . . . . . . : '%s'",  ptr_completion->args);
-        log_printf ("  direction . . . . . . . . : %d",    ptr_completion->direction);
-        log_printf ("  add_space . . . . . . . . : %d",    ptr_completion->add_space);
-        log_printf ("  force_partial_completion. : %d",    ptr_completion->force_partial_completion);
-        log_printf ("  reverse_partial_completion: %d",    ptr_completion->reverse_partial_completion);
-        log_printf ("  list. . . . . . . . . . . : 0x%lx", ptr_completion->list);
-        log_printf ("  word_found. . . . . . . . : '%s'",  ptr_completion->word_found);
-        log_printf ("  word_found_is_nick. . . . : %d",    ptr_completion->word_found_is_nick);
-        log_printf ("  position_replace. . . . . : %d",    ptr_completion->position_replace);
-        log_printf ("  diff_size . . . . . . . . : %d",    ptr_completion->diff_size);
-        log_printf ("  diff_length . . . . . . . : %d",    ptr_completion->diff_length);
-        log_printf ("  prev_completion . . . . . : 0x%lx", ptr_completion->prev_completion);
-        log_printf ("  next_completion . . . . . : 0x%lx", ptr_completion->next_completion);
+        log_printf ("  context . . . . . . . . . : %d", ptr_completion->context);
+        log_printf ("  case_sensitive. . . . . . : %d", ptr_completion->case_sensitive);
+        log_printf ("  base_command. . . . . . . : '%s'", ptr_completion->base_command);
+        log_printf ("  base_command_arg_index. . : %d", ptr_completion->base_command_arg_index);
+        log_printf ("  base_word . . . . . . . . : '%s'", ptr_completion->base_word);
+        log_printf ("  base_word_pos . . . . . . : %d", ptr_completion->base_word_pos);
+        log_printf ("  position. . . . . . . . . : %d", ptr_completion->position);
+        log_printf ("  args. . . . . . . . . . . : '%s'", ptr_completion->args);
+        log_printf ("  direction . . . . . . . . : %d", ptr_completion->direction);
+        log_printf ("  add_space . . . . . . . . : %d", ptr_completion->add_space);
+        log_printf ("  force_partial_completion. : %d", ptr_completion->force_partial_completion);
+        log_printf ("  reverse_partial_completion: %d", ptr_completion->reverse_partial_completion);
+        log_printf ("  list. . . . . . . . . . . : %p", ptr_completion->list);
+        log_printf ("  word_found. . . . . . . . : '%s'", ptr_completion->word_found);
+        log_printf ("  word_found_is_nick. . . . : %d", ptr_completion->word_found_is_nick);
+        log_printf ("  position_replace. . . . . : %d", ptr_completion->position_replace);
+        log_printf ("  diff_size . . . . . . . . : %d", ptr_completion->diff_size);
+        log_printf ("  diff_length . . . . . . . : %d", ptr_completion->diff_length);
+        log_printf ("  prev_completion . . . . . : %p", ptr_completion->prev_completion);
+        log_printf ("  next_completion . . . . . : %p", ptr_completion->next_completion);
         if (ptr_completion->list && (ptr_completion->list->size > 0))
         {
             log_printf ("");

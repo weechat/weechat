@@ -388,15 +388,15 @@ hook_connect_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  connect data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_CONNECT(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_CONNECT(hook, callback));
     log_printf ("    proxy . . . . . . . . : '%s'", HOOK_CONNECT(hook, proxy));
     log_printf ("    address . . . . . . . : '%s'", HOOK_CONNECT(hook, address));
     log_printf ("    port. . . . . . . . . : %d", HOOK_CONNECT(hook, port));
     log_printf ("    sock. . . . . . . . . : %d", HOOK_CONNECT(hook, sock));
     log_printf ("    ipv6. . . . . . . . . : %d", HOOK_CONNECT(hook, ipv6));
     log_printf ("    retry . . . . . . . . : %d", HOOK_CONNECT(hook, retry));
-    log_printf ("    gnutls_sess . . . . . : 0x%lx", HOOK_CONNECT(hook, gnutls_sess));
-    log_printf ("    gnutls_cb . . . . . . : 0x%lx", HOOK_CONNECT(hook, gnutls_cb));
+    log_printf ("    gnutls_sess . . . . . : %p", HOOK_CONNECT(hook, gnutls_sess));
+    log_printf ("    gnutls_cb . . . . . . : %p", HOOK_CONNECT(hook, gnutls_cb));
     log_printf ("    gnutls_dhkey_size . . : %d", HOOK_CONNECT(hook, gnutls_dhkey_size));
     log_printf ("    gnutls_priorities . . : '%s'", HOOK_CONNECT(hook, gnutls_priorities));
     log_printf ("    local_hostname. . . . : '%s'", HOOK_CONNECT(hook, local_hostname));
@@ -405,10 +405,10 @@ hook_connect_print_log (struct t_hook *hook)
     log_printf ("    child_recv. . . . . . : %d", HOOK_CONNECT(hook, child_recv));
     log_printf ("    child_send. . . . . . : %d", HOOK_CONNECT(hook, child_send));
     log_printf ("    child_pid . . . . . . : %d", HOOK_CONNECT(hook, child_pid));
-    log_printf ("    hook_child_timer. . . : 0x%lx", HOOK_CONNECT(hook, hook_child_timer));
-    log_printf ("    hook_fd . . . . . . . : 0x%lx", HOOK_CONNECT(hook, hook_fd));
-    log_printf ("    handshake_hook_fd . . : 0x%lx", HOOK_CONNECT(hook, handshake_hook_fd));
-    log_printf ("    handshake_hook_timer. : 0x%lx", HOOK_CONNECT(hook, handshake_hook_timer));
+    log_printf ("    hook_child_timer. . . : %p", HOOK_CONNECT(hook, hook_child_timer));
+    log_printf ("    hook_fd . . . . . . . : %p", HOOK_CONNECT(hook, hook_fd));
+    log_printf ("    handshake_hook_fd . . : %p", HOOK_CONNECT(hook, handshake_hook_fd));
+    log_printf ("    handshake_hook_timer. : %p", HOOK_CONNECT(hook, handshake_hook_timer));
     log_printf ("    handshake_fd_flags. . : %d", HOOK_CONNECT(hook, handshake_fd_flags));
     log_printf ("    handshake_ip_address. : '%s'", HOOK_CONNECT(hook, handshake_ip_address));
     if (!hook_socketpair_ok)

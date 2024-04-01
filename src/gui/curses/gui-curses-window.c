@@ -2716,7 +2716,7 @@ void
 gui_window_objects_print_log (struct t_gui_window *window)
 {
     log_printf ("  window specific objects for Curses:");
-    log_printf ("    win_chat. . . . . . . : 0x%lx", GUI_WINDOW_OBJECTS(window)->win_chat);
-    log_printf ("    win_separator_horiz . : 0x%lx", GUI_WINDOW_OBJECTS(window)->win_separator_horiz);
-    log_printf ("    win_separator_vertic. : 0x%lx", GUI_WINDOW_OBJECTS(window)->win_separator_vertic);
+    log_printf ("    win_chat. . . . . . . : %p", GUI_WINDOW_OBJECTS(window)->win_chat);
+    log_printf ("    win_separator_horiz . : %p", GUI_WINDOW_OBJECTS(window)->win_separator_horiz);
+    log_printf ("    win_separator_vertic. : %p", GUI_WINDOW_OBJECTS(window)->win_separator_vertic);
 }

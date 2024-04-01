@@ -234,12 +234,10 @@ TEST(IrcInfo, InfoIrcBufferCb)
 
     WEE_TEST_STR(NULL, hook_info_get (NULL, "irc_buffer", "local"));
 
-    snprintf (str_pointer, sizeof (str_pointer),
-              "0x%lx", (unsigned long)channel->buffer);
+    snprintf (str_pointer, sizeof (str_pointer), "%p", channel->buffer);
     WEE_TEST_STR(str_pointer, hook_info_get (NULL, "irc_buffer", "local,#test"));
 
-    snprintf (str_pointer, sizeof (str_pointer),
-              "0x%lx", (unsigned long)channel->buffer);
+    snprintf (str_pointer, sizeof (str_pointer), "%p", channel->buffer);
     WEE_TEST_STR(str_pointer, hook_info_get (NULL, "irc_buffer", "local,#test,bob"));
 
     irc_nick_free (server, channel, nick);

@@ -331,6 +331,6 @@ hook_focus_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  focus data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_FOCUS(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_FOCUS(hook, callback));
     log_printf ("    area. . . . . . . . . : '%s'", HOOK_FOCUS(hook, area));
 }

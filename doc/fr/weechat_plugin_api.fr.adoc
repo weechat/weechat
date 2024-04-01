@@ -5347,7 +5347,7 @@ Exemple en C :
 
 [source,c]
 ----
-weechat_printf (NULL, "données utilisateur de l'élément : 0x%lx", weechat_list_user_data (item));
+weechat_printf (NULL, "données utilisateur de l'élément : %p", weechat_list_user_data (item));
 ----
 
 [NOTE]
@@ -18270,8 +18270,7 @@ Exemple en C :
 
 [source,c]
 ----
-weechat_printf (NULL, "pointeur = 0x%lx",
-                weechat_infolist_pointer (infolist, "mon_pointeur"));
+weechat_printf (NULL, "pointeur = %p", weechat_infolist_pointer (infolist, "mon_pointeur"));
 ----
 
 Script (Python) :
@@ -18315,8 +18314,7 @@ Exemple en C :
 ----
 int size;
 void *pointer = weechat_infolist_buffer (infolist, "mon_buffer", &size);
-weechat_printf (NULL, "buffer = 0x%lx, taille = %d",
-                pointer, size);
+weechat_printf (NULL, "buffer = %p, taille = %d", pointer, size);
 ----
 
 [NOTE]

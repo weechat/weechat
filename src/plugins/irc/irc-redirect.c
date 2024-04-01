@@ -1201,15 +1201,15 @@ irc_redirect_pattern_print_log ()
          ptr_redirect_pattern = ptr_redirect_pattern->next_redirect)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[redirect_pattern (addr:0x%lx)]", ptr_redirect_pattern);
-        weechat_log_printf ("  name . . . . . . . . : '%s'",  ptr_redirect_pattern->name);
-        weechat_log_printf ("  temp_pattern . . . . : %d",    ptr_redirect_pattern->temp_pattern);
-        weechat_log_printf ("  timeout. . . . . . . : %d",    ptr_redirect_pattern->timeout);
-        weechat_log_printf ("  cmd_start. . . . . . : '%s'",  ptr_redirect_pattern->cmd_start);
-        weechat_log_printf ("  cmd_stop . . . . . . : '%s'",  ptr_redirect_pattern->cmd_stop);
-        weechat_log_printf ("  cmd_extra. . . . . . : '%s'",  ptr_redirect_pattern->cmd_extra);
-        weechat_log_printf ("  prev_redirect. . . . : 0x%lx", ptr_redirect_pattern->prev_redirect);
-        weechat_log_printf ("  next_redirect. . . . : 0x%lx", ptr_redirect_pattern->next_redirect);
+        weechat_log_printf ("[redirect_pattern (addr:%p)]", ptr_redirect_pattern);
+        weechat_log_printf ("  name . . . . . . . . : '%s'", ptr_redirect_pattern->name);
+        weechat_log_printf ("  temp_pattern . . . . : %d", ptr_redirect_pattern->temp_pattern);
+        weechat_log_printf ("  timeout. . . . . . . : %d", ptr_redirect_pattern->timeout);
+        weechat_log_printf ("  cmd_start. . . . . . : '%s'", ptr_redirect_pattern->cmd_start);
+        weechat_log_printf ("  cmd_stop . . . . . . : '%s'", ptr_redirect_pattern->cmd_stop);
+        weechat_log_printf ("  cmd_extra. . . . . . : '%s'", ptr_redirect_pattern->cmd_extra);
+        weechat_log_printf ("  prev_redirect. . . . : %p", ptr_redirect_pattern->prev_redirect);
+        weechat_log_printf ("  next_redirect. . . . : %p", ptr_redirect_pattern->next_redirect);
     }
 }
 
@@ -1226,36 +1226,36 @@ irc_redirect_print_log (struct t_irc_server *server)
          ptr_redirect = ptr_redirect->next_redirect)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("  => redirect (addr:0x%lx):", ptr_redirect);
-        weechat_log_printf ("       server. . . . . . . : 0x%lx ('%s')",
+        weechat_log_printf ("  => redirect (addr:%p):", ptr_redirect);
+        weechat_log_printf ("       server. . . . . . . : %p ('%s')",
                             ptr_redirect->server, ptr_redirect->server->name);
-        weechat_log_printf ("       pattern . . . . . . : '%s'",  ptr_redirect->pattern);
-        weechat_log_printf ("       signal. . . . . . . : '%s'",  ptr_redirect->signal);
-        weechat_log_printf ("       count . . . . . . . : %d",    ptr_redirect->count);
-        weechat_log_printf ("       current_count . . . : %d",    ptr_redirect->current_count);
-        weechat_log_printf ("       string. . . . . . . : '%s'",  ptr_redirect->string);
-        weechat_log_printf ("       timeout . . . . . . : %d",    ptr_redirect->timeout);
-        weechat_log_printf ("       command . . . . . . : '%s'",  ptr_redirect->command);
-        weechat_log_printf ("       assigned_to_command : %d",    ptr_redirect->assigned_to_command);
-        weechat_log_printf ("       start_time. . . . . : %lld",  (long long)ptr_redirect->start_time);
-        weechat_log_printf ("       cmd_start . . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("       pattern . . . . . . : '%s'", ptr_redirect->pattern);
+        weechat_log_printf ("       signal. . . . . . . : '%s'", ptr_redirect->signal);
+        weechat_log_printf ("       count . . . . . . . : %d", ptr_redirect->count);
+        weechat_log_printf ("       current_count . . . : %d", ptr_redirect->current_count);
+        weechat_log_printf ("       string. . . . . . . : '%s'", ptr_redirect->string);
+        weechat_log_printf ("       timeout . . . . . . : %d", ptr_redirect->timeout);
+        weechat_log_printf ("       command . . . . . . : '%s'", ptr_redirect->command);
+        weechat_log_printf ("       assigned_to_command : %d", ptr_redirect->assigned_to_command);
+        weechat_log_printf ("       start_time. . . . . : %lld", (long long)ptr_redirect->start_time);
+        weechat_log_printf ("       cmd_start . . . . . : %p (hashtable: '%s')",
                             ptr_redirect->cmd_start,
                             weechat_hashtable_get_string (ptr_redirect->cmd_start, "keys_values"));
-        weechat_log_printf ("       cmd_stop. . . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("       cmd_stop. . . . . . : %p (hashtable: '%s')",
                             ptr_redirect->cmd_stop,
                             weechat_hashtable_get_string (ptr_redirect->cmd_stop, "keys_values"));
-        weechat_log_printf ("       cmd_extra . . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("       cmd_extra . . . . . : %p (hashtable: '%s')",
                             ptr_redirect->cmd_extra,
                             weechat_hashtable_get_string (ptr_redirect->cmd_extra, "keys_values"));
-        weechat_log_printf ("       cmd_start_received. : %d",    ptr_redirect->cmd_start_received);
-        weechat_log_printf ("       cmd_stop_received . : %d",    ptr_redirect->cmd_stop_received);
-        weechat_log_printf ("       cmd_filter. . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("       cmd_start_received. : %d", ptr_redirect->cmd_start_received);
+        weechat_log_printf ("       cmd_stop_received . : %d", ptr_redirect->cmd_stop_received);
+        weechat_log_printf ("       cmd_filter. . . . . : %p (hashtable: '%s')",
                             ptr_redirect->cmd_filter,
                             weechat_hashtable_get_string (ptr_redirect->cmd_filter, "keys_values"));
-        weechat_log_printf ("       output. . . . . . . : '%s'",  ptr_redirect->output);
-        weechat_log_printf ("       output_size . . . . : %d",    ptr_redirect->output_size);
-        weechat_log_printf ("       prev_redirect . . . : 0x%lx", ptr_redirect->prev_redirect);
-        weechat_log_printf ("       next_redirect . . . : 0x%lx", ptr_redirect->next_redirect);
+        weechat_log_printf ("       output. . . . . . . : '%s'", ptr_redirect->output);
+        weechat_log_printf ("       output_size . . . . : %d", ptr_redirect->output_size);
+        weechat_log_printf ("       prev_redirect . . . : %p", ptr_redirect->prev_redirect);
+        weechat_log_printf ("       next_redirect . . . : %p", ptr_redirect->next_redirect);
     }
 }
 

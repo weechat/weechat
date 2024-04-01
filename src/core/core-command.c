@@ -1395,7 +1395,7 @@ COMMAND_CALLBACK(buffer)
         if (gui_buffer_property_in_list (gui_buffer_properties_get_pointer,
                                          argv[2]))
         {
-            gui_chat_printf (NULL, "%s%s%s: (ptr) %s = 0x%lx",
+            gui_chat_printf (NULL, "%s%s%s: (ptr) %s = %p",
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                              buffer->full_name,
                              GUI_COLOR(GUI_COLOR_CHAT),

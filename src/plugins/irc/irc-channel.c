@@ -1790,43 +1790,43 @@ irc_channel_print_log (struct t_irc_channel *channel)
     struct t_irc_modelist *ptr_modelist;
 
     weechat_log_printf ("");
-    weechat_log_printf ("  => channel %s (addr:0x%lx):", channel->name, channel);
-    weechat_log_printf ("       type . . . . . . . . . . : %d",    channel->type);
-    weechat_log_printf ("       topic. . . . . . . . . . : '%s'",  channel->topic);
-    weechat_log_printf ("       modes. . . . . . . . . . : '%s'",  channel->modes);
-    weechat_log_printf ("       limit. . . . . . . . . . : %d",    channel->limit);
-    weechat_log_printf ("       key. . . . . . . . . . . : '%s'",  channel->key);
-    weechat_log_printf ("       join_msg_received. . . . : 0x%lx (hashtable: '%s')",
+    weechat_log_printf ("  => channel %s (addr:%p):", channel->name, channel);
+    weechat_log_printf ("       type . . . . . . . . . . : %d", channel->type);
+    weechat_log_printf ("       topic. . . . . . . . . . : '%s'", channel->topic);
+    weechat_log_printf ("       modes. . . . . . . . . . : '%s'", channel->modes);
+    weechat_log_printf ("       limit. . . . . . . . . . : %d", channel->limit);
+    weechat_log_printf ("       key. . . . . . . . . . . : '%s'", channel->key);
+    weechat_log_printf ("       join_msg_received. . . . : %p (hashtable: '%s')",
                         channel->join_msg_received,
                         weechat_hashtable_get_string (channel->join_msg_received,
                                                       "keys_values"));
-    weechat_log_printf ("       checking_whox. . . . . . : %d",    channel->checking_whox);
-    weechat_log_printf ("       away_message . . . . . . : '%s'",  channel->away_message);
-    weechat_log_printf ("       has_quit_server. . . . . : %d",    channel->has_quit_server);
-    weechat_log_printf ("       cycle. . . . . . . . . . : %d",    channel->cycle);
-    weechat_log_printf ("       part . . . . . . . . . . : %d",    channel->part);
-    weechat_log_printf ("       nick_completion_reset. . : %d",    channel->nick_completion_reset);
-    weechat_log_printf ("       pv_remote_nick_color . . : '%s'",  channel->pv_remote_nick_color);
-    weechat_log_printf ("       hook_autorejoin. . . . . : 0x%lx", channel->hook_autorejoin);
-    weechat_log_printf ("       nicks_count. . . . . . . : %d",    channel->nicks_count);
-    weechat_log_printf ("       nicks. . . . . . . . . . : 0x%lx", channel->nicks);
-    weechat_log_printf ("       last_nick. . . . . . . . : 0x%lx", channel->last_nick);
-    weechat_log_printf ("       nicks_speaking[0]. . . . : 0x%lx", channel->nicks_speaking[0]);
-    weechat_log_printf ("       nicks_speaking[1]. . . . : 0x%lx", channel->nicks_speaking[1]);
-    weechat_log_printf ("       nicks_speaking_time. . . : 0x%lx", channel->nicks_speaking_time);
-    weechat_log_printf ("       last_nick_speaking_time. : 0x%lx", channel->last_nick_speaking_time);
-    weechat_log_printf ("       modelists. . . . . . . . : 0x%lx", channel->modelists);
-    weechat_log_printf ("       last_modelist. . . . . . : 0x%lx", channel->last_modelist);
-    weechat_log_printf ("       join_smart_filtered. . . : 0x%lx (hashtable: '%s')",
+    weechat_log_printf ("       checking_whox. . . . . . : %d", channel->checking_whox);
+    weechat_log_printf ("       away_message . . . . . . : '%s'", channel->away_message);
+    weechat_log_printf ("       has_quit_server. . . . . : %d", channel->has_quit_server);
+    weechat_log_printf ("       cycle. . . . . . . . . . : %d", channel->cycle);
+    weechat_log_printf ("       part . . . . . . . . . . : %d", channel->part);
+    weechat_log_printf ("       nick_completion_reset. . : %d", channel->nick_completion_reset);
+    weechat_log_printf ("       pv_remote_nick_color . . : '%s'", channel->pv_remote_nick_color);
+    weechat_log_printf ("       hook_autorejoin. . . . . : %p", channel->hook_autorejoin);
+    weechat_log_printf ("       nicks_count. . . . . . . : %d", channel->nicks_count);
+    weechat_log_printf ("       nicks. . . . . . . . . . : %p", channel->nicks);
+    weechat_log_printf ("       last_nick. . . . . . . . : %p", channel->last_nick);
+    weechat_log_printf ("       nicks_speaking[0]. . . . : %p", channel->nicks_speaking[0]);
+    weechat_log_printf ("       nicks_speaking[1]. . . . : %p", channel->nicks_speaking[1]);
+    weechat_log_printf ("       nicks_speaking_time. . . : %p", channel->nicks_speaking_time);
+    weechat_log_printf ("       last_nick_speaking_time. : %p", channel->last_nick_speaking_time);
+    weechat_log_printf ("       modelists. . . . . . . . : %p", channel->modelists);
+    weechat_log_printf ("       last_modelist. . . . . . : %p", channel->last_modelist);
+    weechat_log_printf ("       join_smart_filtered. . . : %p (hashtable: '%s')",
                         channel->join_smart_filtered,
                         weechat_hashtable_get_string (channel->join_smart_filtered,
                                                       "keys_values"));
-    weechat_log_printf ("       typing_state . . . . . . : %d",    channel->typing_state);
-    weechat_log_printf ("       typing_status_sent . . . : %lld",  (long long)channel->typing_status_sent);
-    weechat_log_printf ("       buffer . . . . . . . . . : 0x%lx", channel->buffer);
-    weechat_log_printf ("       buffer_as_string . . . . : '%s'",  channel->buffer_as_string);
-    weechat_log_printf ("       prev_channel . . . . . . : 0x%lx", channel->prev_channel);
-    weechat_log_printf ("       next_channel . . . . . . : 0x%lx", channel->next_channel);
+    weechat_log_printf ("       typing_state . . . . . . : %d", channel->typing_state);
+    weechat_log_printf ("       typing_status_sent . . . : %lld", (long long)channel->typing_status_sent);
+    weechat_log_printf ("       buffer . . . . . . . . . : %p", channel->buffer);
+    weechat_log_printf ("       buffer_as_string . . . . : '%s'", channel->buffer_as_string);
+    weechat_log_printf ("       prev_channel . . . . . . : %p", channel->prev_channel);
+    weechat_log_printf ("       next_channel . . . . . . : %p", channel->next_channel);
     for (i = 0; i < 2; i++)
     {
         if (channel->nicks_speaking[i])

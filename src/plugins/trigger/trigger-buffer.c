@@ -294,7 +294,7 @@ trigger_buffer_hashtable_map_cb (void *data,
     {
         weechat_printf_date_tags (
             trigger_buffer, 0, "no_trigger",
-            "%s%lu\t    %s: 0x%lx",
+            "%s%lu\t    %s: %p",
             weechat_color (weechat_config_string (trigger_config_color_identifier)),
             context->id,
             (char *)key,

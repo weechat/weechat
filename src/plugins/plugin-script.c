@@ -381,7 +381,7 @@ plugin_script_ptr2str (void *pointer)
         return str_pointer[index_pointer];
 
     snprintf (str_pointer[index_pointer], sizeof (str_pointer[index_pointer]),
-              "0x%lx", (unsigned long)pointer);
+              "%p", pointer);
 
     return str_pointer[index_pointer];
 }
@@ -1869,19 +1869,19 @@ plugin_script_print_log (struct t_weechat_plugin *weechat_plugin,
          ptr_script = ptr_script->next_script)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[script %s (addr:0x%lx)]",      ptr_script->name, ptr_script);
-        weechat_log_printf ("  filename. . . . . . : '%s'",  ptr_script->filename);
-        weechat_log_printf ("  interpreter . . . . : 0x%lx", ptr_script->interpreter);
-        weechat_log_printf ("  name. . . . . . . . : '%s'",  ptr_script->name);
-        weechat_log_printf ("  author. . . . . . . : '%s'",  ptr_script->author);
-        weechat_log_printf ("  version . . . . . . : '%s'",  ptr_script->version);
-        weechat_log_printf ("  license . . . . . . : '%s'",  ptr_script->license);
-        weechat_log_printf ("  description . . . . : '%s'",  ptr_script->description);
-        weechat_log_printf ("  shutdown_func . . . : '%s'",  ptr_script->shutdown_func);
-        weechat_log_printf ("  charset . . . . . . : '%s'",  ptr_script->charset);
-        weechat_log_printf ("  unloading . . . . . : %d",    ptr_script->unloading);
-        weechat_log_printf ("  prev_script . . . . : 0x%lx", ptr_script->prev_script);
-        weechat_log_printf ("  next_script . . . . : 0x%lx", ptr_script->next_script);
+        weechat_log_printf ("[script %s (addr:%p)]", ptr_script->name, ptr_script);
+        weechat_log_printf ("  filename. . . . . . : '%s'", ptr_script->filename);
+        weechat_log_printf ("  interpreter . . . . : %p", ptr_script->interpreter);
+        weechat_log_printf ("  name. . . . . . . . : '%s'", ptr_script->name);
+        weechat_log_printf ("  author. . . . . . . : '%s'", ptr_script->author);
+        weechat_log_printf ("  version . . . . . . : '%s'", ptr_script->version);
+        weechat_log_printf ("  license . . . . . . : '%s'", ptr_script->license);
+        weechat_log_printf ("  description . . . . : '%s'", ptr_script->description);
+        weechat_log_printf ("  shutdown_func . . . : '%s'", ptr_script->shutdown_func);
+        weechat_log_printf ("  charset . . . . . . : '%s'", ptr_script->charset);
+        weechat_log_printf ("  unloading . . . . . : %d", ptr_script->unloading);
+        weechat_log_printf ("  prev_script . . . . : %p", ptr_script->prev_script);
+        weechat_log_printf ("  next_script . . . . : %p", ptr_script->next_script);
     }
 
     weechat_log_printf ("");

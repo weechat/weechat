@@ -1861,25 +1861,25 @@ fset_option_print_log ()
         if (!ptr_fset_option)
             continue;
         weechat_log_printf ("");
-        weechat_log_printf ("[fset option (addr:0x%lx)]", ptr_fset_option);
-        weechat_log_printf ("  index . . . . . . . . : %d",    ptr_fset_option->index);
-        weechat_log_printf ("  file. . . . . . . . . : '%s'",  ptr_fset_option->file);
-        weechat_log_printf ("  section . . . . . . . : '%s'",  ptr_fset_option->section);
-        weechat_log_printf ("  option. . . . . . . . : '%s'",  ptr_fset_option->option);
-        weechat_log_printf ("  name. . . . . . . . . : '%s'",  ptr_fset_option->name);
-        weechat_log_printf ("  parent_name . . . . . : '%s'",  ptr_fset_option->parent_name);
+        weechat_log_printf ("[fset option (addr:%p)]", ptr_fset_option);
+        weechat_log_printf ("  index . . . . . . . . : %d", ptr_fset_option->index);
+        weechat_log_printf ("  file. . . . . . . . . : '%s'", ptr_fset_option->file);
+        weechat_log_printf ("  section . . . . . . . : '%s'", ptr_fset_option->section);
+        weechat_log_printf ("  option. . . . . . . . : '%s'", ptr_fset_option->option);
+        weechat_log_printf ("  name. . . . . . . . . : '%s'", ptr_fset_option->name);
+        weechat_log_printf ("  parent_name . . . . . : '%s'", ptr_fset_option->parent_name);
         weechat_log_printf ("  type. . . . . . . . . : %d ('%s')",
                             ptr_fset_option->type,
                             fset_option_type_string[ptr_fset_option->type]);
-        weechat_log_printf ("  default_value . . . . : '%s'",  ptr_fset_option->default_value);
-        weechat_log_printf ("  value . . . . . . . . : '%s'",  ptr_fset_option->value);
-        weechat_log_printf ("  parent_value. . . . . : '%s'",  ptr_fset_option->parent_value);
-        weechat_log_printf ("  min . . . . . . . . . : '%s'",  ptr_fset_option->min);
-        weechat_log_printf ("  max . . . . . . . . . : '%s'",  ptr_fset_option->max);
-        weechat_log_printf ("  description . . . . . : '%s'",  ptr_fset_option->description);
-        weechat_log_printf ("  string_values . . . . : '%s'",  ptr_fset_option->string_values);
-        weechat_log_printf ("  allowed_values. . . . : '%s'",  ptr_fset_option->allowed_values);
-        weechat_log_printf ("  marked. . . . . . . . : %d",    ptr_fset_option->marked);
+        weechat_log_printf ("  default_value . . . . : '%s'", ptr_fset_option->default_value);
+        weechat_log_printf ("  value . . . . . . . . : '%s'", ptr_fset_option->value);
+        weechat_log_printf ("  parent_value. . . . . : '%s'", ptr_fset_option->parent_value);
+        weechat_log_printf ("  min . . . . . . . . . : '%s'", ptr_fset_option->min);
+        weechat_log_printf ("  max . . . . . . . . . : '%s'", ptr_fset_option->max);
+        weechat_log_printf ("  description . . . . . : '%s'", ptr_fset_option->description);
+        weechat_log_printf ("  string_values . . . . : '%s'", ptr_fset_option->string_values);
+        weechat_log_printf ("  allowed_values. . . . : '%s'", ptr_fset_option->allowed_values);
+        weechat_log_printf ("  marked. . . . . . . . : %d", ptr_fset_option->marked);
     }
 }
 

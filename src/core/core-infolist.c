@@ -722,45 +722,45 @@ infolist_print_log ()
          ptr_infolist = ptr_infolist->next_infolist)
     {
         log_printf ("");
-        log_printf ("[infolist (addr:0x%lx)]", ptr_infolist);
-        log_printf ("  plugin . . . . . . . . : 0x%lx", ptr_infolist->plugin);
-        log_printf ("  items. . . . . . . . . : 0x%lx", ptr_infolist->items);
-        log_printf ("  last_item. . . . . . . : 0x%lx", ptr_infolist->last_item);
-        log_printf ("  ptr_item . . . . . . . : 0x%lx", ptr_infolist->ptr_item);
-        log_printf ("  prev_infolist. . . . . : 0x%lx", ptr_infolist->prev_infolist);
-        log_printf ("  next_infolist. . . . . : 0x%lx", ptr_infolist->next_infolist);
+        log_printf ("[infolist (addr:%p)]", ptr_infolist);
+        log_printf ("  plugin . . . . . . . . : %p", ptr_infolist->plugin);
+        log_printf ("  items. . . . . . . . . : %p", ptr_infolist->items);
+        log_printf ("  last_item. . . . . . . : %p", ptr_infolist->last_item);
+        log_printf ("  ptr_item . . . . . . . : %p", ptr_infolist->ptr_item);
+        log_printf ("  prev_infolist. . . . . : %p", ptr_infolist->prev_infolist);
+        log_printf ("  next_infolist. . . . . : %p", ptr_infolist->next_infolist);
 
         for (ptr_item = ptr_infolist->items; ptr_item;
              ptr_item = ptr_item->next_item)
         {
             log_printf ("");
-            log_printf ("    [item (addr:0x%lx)]", ptr_item);
-            log_printf ("      vars . . . . . . . . . : 0x%lx", ptr_item->vars);
-            log_printf ("      last_var . . . . . . . : 0x%lx", ptr_item->last_var);
-            log_printf ("      prev_item. . . . . . . : 0x%lx", ptr_item->prev_item);
-            log_printf ("      next_item. . . . . . . : 0x%lx", ptr_item->next_item);
+            log_printf ("    [item (addr:%p)]", ptr_item);
+            log_printf ("      vars . . . . . . . . . : %p", ptr_item->vars);
+            log_printf ("      last_var . . . . . . . : %p", ptr_item->last_var);
+            log_printf ("      prev_item. . . . . . . : %p", ptr_item->prev_item);
+            log_printf ("      next_item. . . . . . . : %p", ptr_item->next_item);
 
             for (ptr_var = ptr_item->vars; ptr_var;
                  ptr_var = ptr_var->next_var)
             {
                 log_printf ("");
-                log_printf ("      [var (addr:0x%lx)]", ptr_var);
+                log_printf ("      [var (addr:%p)]", ptr_var);
                 log_printf ("        name . . . . . . . . : '%s'", ptr_var->name);
-                log_printf ("        type . . . . . . . . : %d",   ptr_var->type);
+                log_printf ("        type . . . . . . . . : %d", ptr_var->type);
                 switch (ptr_var->type)
                 {
                     case INFOLIST_INTEGER:
-                        log_printf ("        value (integer). . . : %d",    *((int *)ptr_var->value));
+                        log_printf ("        value (integer). . . : %d", *((int *)ptr_var->value));
                         break;
                     case INFOLIST_STRING:
-                        log_printf ("        value (string) . . . : '%s'",  (char *)ptr_var->value);
+                        log_printf ("        value (string) . . . : '%s'", (char *)ptr_var->value);
                         break;
                     case INFOLIST_POINTER:
-                        log_printf ("        value (pointer). . . : 0x%lx", ptr_var->value);
+                        log_printf ("        value (pointer). . . : %p", ptr_var->value);
                         break;
                     case INFOLIST_BUFFER:
-                        log_printf ("        value (buffer) . . . : 0x%lx", ptr_var->value);
-                        log_printf ("        size of buffer . . . : %d",    ptr_var->size);
+                        log_printf ("        value (buffer) . . . : %p", ptr_var->value);
+                        log_printf ("        size of buffer . . . : %d", ptr_var->size);
                         break;
                     case INFOLIST_TIME:
                         log_printf ("        value (time) . . . . : %lld", (long long)(*((time_t *)ptr_var->value)));
@@ -768,8 +768,8 @@ infolist_print_log ()
                     case INFOLIST_NUM_TYPES:
                         break;
                 }
-                log_printf ("        prev_var . . . . . . : 0x%lx", ptr_var->prev_var);
-                log_printf ("        next_var . . . . . . : 0x%lx", ptr_var->next_var);
+                log_printf ("        prev_var . . . . . . : %p", ptr_var->prev_var);
+                log_printf ("        next_var . . . . . . : %p", ptr_var->next_var);
             }
         }
     }

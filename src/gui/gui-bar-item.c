@@ -956,8 +956,7 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
     }
 
     /* for modifiers */
-    snprintf (str_buffer, sizeof (str_buffer),
-              "0x%lx", (unsigned long)buffer);
+    snprintf (str_buffer, sizeof (str_buffer), "%p", buffer);
 
     /* execute modifier with basic string (without cursor tag) */
     ptr_input = NULL;
@@ -2606,14 +2605,14 @@ gui_bar_item_print_log ()
     for (ptr_item = gui_bar_items; ptr_item; ptr_item = ptr_item->next_item)
     {
         log_printf ("");
-        log_printf ("[bar item (addr:0x%lx)]", ptr_item);
-        log_printf ("  plugin . . . . . . . . : 0x%lx ('%s')",
+        log_printf ("[bar item (addr:%p)]", ptr_item);
+        log_printf ("  plugin . . . . . . . . : %p ('%s')",
                     ptr_item->plugin, plugin_get_name (ptr_item->plugin));
         log_printf ("  name . . . . . . . . . : '%s'",  ptr_item->name);
-        log_printf ("  build_callback . . . . : 0x%lx", ptr_item->build_callback);
-        log_printf ("  build_callback_pointer : 0x%lx", ptr_item->build_callback_pointer);
-        log_printf ("  build_callback_data. . : 0x%lx", ptr_item->build_callback_data);
-        log_printf ("  prev_item. . . . . . . : 0x%lx", ptr_item->prev_item);
-        log_printf ("  next_item. . . . . . . : 0x%lx", ptr_item->next_item);
+        log_printf ("  build_callback . . . . : %p", ptr_item->build_callback);
+        log_printf ("  build_callback_pointer : %p", ptr_item->build_callback_pointer);
+        log_printf ("  build_callback_data. . : %p", ptr_item->build_callback_data);
+        log_printf ("  prev_item. . . . . . . : %p", ptr_item->prev_item);
+        log_printf ("  next_item. . . . . . . : %p", ptr_item->next_item);
     }
 }

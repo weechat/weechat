@@ -233,7 +233,7 @@ hook_hsignal_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  signal data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_HSIGNAL(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_HSIGNAL(hook, callback));
     log_printf ("    signals:");
     for (i = 0; i < HOOK_HSIGNAL(hook, num_signals); i++)
     {

@@ -1285,8 +1285,8 @@ trigger_print_log ()
          ptr_trigger = ptr_trigger->next_trigger)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[trigger (addr:0x%lx)]", ptr_trigger);
-        weechat_log_printf ("  name. . . . . . . . . . : '%s'",  ptr_trigger->name);
+        weechat_log_printf ("[trigger (addr:%p)]", ptr_trigger);
+        weechat_log_printf ("  name. . . . . . . . . . : '%s'", ptr_trigger->name);
         weechat_log_printf ("  enabled . . . . . . . . : %d",
                             weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_ENABLED]));
         weechat_log_printf ("  hook . .  . . . . . . . : %d ('%s')",
@@ -1306,34 +1306,34 @@ trigger_print_log ()
         weechat_log_printf ("  post_action . . . . . . : %d ('%s')",
                             weechat_config_enum (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION]),
                             trigger_post_action_string[weechat_config_enum (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION])]);
-        weechat_log_printf ("  hooks_count . . . . . . : %d",    ptr_trigger->hooks_count);
-        weechat_log_printf ("  hooks . . . . . . . . . : 0x%lx", ptr_trigger->hooks);
+        weechat_log_printf ("  hooks_count . . . . . . : %d", ptr_trigger->hooks_count);
+        weechat_log_printf ("  hooks . . . . . . . . . : %p", ptr_trigger->hooks);
         for (i = 0; i < ptr_trigger->hooks_count; i++)
         {
-            weechat_log_printf ("    hooks[%03d]. . . . . . : 0x%lx",
+            weechat_log_printf ("    hooks[%03d]. . . . . . : %p",
                                 i, ptr_trigger->hooks[i]);
         }
-        weechat_log_printf ("  hook_count_cb . . . . . : %llu",  ptr_trigger->hook_count_cb);
-        weechat_log_printf ("  hook_count_cmd. . . . . : %llu",  ptr_trigger->hook_count_cmd);
-        weechat_log_printf ("  hook_running. . . . . . : %d",    ptr_trigger->hook_running);
-        weechat_log_printf ("  hook_print_buffers. . . : '%s'",  ptr_trigger->hook_print_buffers);
-        weechat_log_printf ("  regex_count . . . . . . : %d",    ptr_trigger->regex_count);
-        weechat_log_printf ("  regex . . . . . . . . . : 0x%lx", ptr_trigger->regex);
+        weechat_log_printf ("  hook_count_cb . . . . . : %llu", ptr_trigger->hook_count_cb);
+        weechat_log_printf ("  hook_count_cmd. . . . . : %llu", ptr_trigger->hook_count_cmd);
+        weechat_log_printf ("  hook_running. . . . . . : %d", ptr_trigger->hook_running);
+        weechat_log_printf ("  hook_print_buffers. . . : '%s'", ptr_trigger->hook_print_buffers);
+        weechat_log_printf ("  regex_count . . . . . . : %d", ptr_trigger->regex_count);
+        weechat_log_printf ("  regex . . . . . . . . . : %p", ptr_trigger->regex);
         for (i = 0; i < ptr_trigger->regex_count; i++)
         {
             weechat_log_printf ("    regex[%03d].variable . . . : '%s'",
                                 i, ptr_trigger->regex[i].variable);
             weechat_log_printf ("    regex[%03d].str_regex. . . : '%s'",
                                 i, ptr_trigger->regex[i].str_regex);
-            weechat_log_printf ("    regex[%03d].regex. . . . . : 0x%lx",
+            weechat_log_printf ("    regex[%03d].regex. . . . . : %p",
                                 i, ptr_trigger->regex[i].regex);
             weechat_log_printf ("    regex[%03d].replace. . . . : '%s'",
                                 i, ptr_trigger->regex[i].replace);
             weechat_log_printf ("    regex[%03d].replace_escaped: '%s'",
                                 i, ptr_trigger->regex[i].replace_escaped);
         }
-        weechat_log_printf ("  commands_count. . . . . : %d",    ptr_trigger->commands_count);
-        weechat_log_printf ("  commands. . . . . . . . : 0x%lx", ptr_trigger->commands);
+        weechat_log_printf ("  commands_count. . . . . : %d", ptr_trigger->commands_count);
+        weechat_log_printf ("  commands. . . . . . . . : %p", ptr_trigger->commands);
         if (ptr_trigger->commands)
         {
             for (i = 0; ptr_trigger->commands[i]; i++)
@@ -1342,8 +1342,8 @@ trigger_print_log ()
                                     i, ptr_trigger->commands[i]);
             }
         }
-        weechat_log_printf ("  prev_trigger. . . . . . : 0x%lx", ptr_trigger->prev_trigger);
-        weechat_log_printf ("  next_trigger. . . . . . : 0x%lx", ptr_trigger->next_trigger);
+        weechat_log_printf ("  prev_trigger. . . . . . : %p", ptr_trigger->prev_trigger);
+        weechat_log_printf ("  next_trigger. . . . . . : %p", ptr_trigger->next_trigger);
     }
 }
 

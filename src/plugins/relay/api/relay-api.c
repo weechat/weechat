@@ -300,11 +300,11 @@ relay_api_print_log (struct t_relay_client *client)
 {
     if (client->protocol_data)
     {
-        weechat_log_printf ("    hook_signal_buffer. . . : 0x%lx", RELAY_API_DATA(client, hook_signal_buffer));
-        weechat_log_printf ("    hook_hsignal_nicklist . : 0x%lx", RELAY_API_DATA(client, hook_hsignal_nicklist));
-        weechat_log_printf ("    hook_signal_upgrade . . : 0x%lx", RELAY_API_DATA(client, hook_signal_upgrade));
-        weechat_log_printf ("    sync_enabled. . . . . . : %d",    RELAY_API_DATA(client, sync_enabled));
-        weechat_log_printf ("    sync_nicks. . . . . . . : %d",    RELAY_API_DATA(client, sync_nicks));
-        weechat_log_printf ("    sync_colors . . . . . . : %d",    RELAY_API_DATA(client, sync_colors));
+        weechat_log_printf ("    hook_signal_buffer. . . : %p", RELAY_API_DATA(client, hook_signal_buffer));
+        weechat_log_printf ("    hook_hsignal_nicklist . : %p", RELAY_API_DATA(client, hook_hsignal_nicklist));
+        weechat_log_printf ("    hook_signal_upgrade . . : %p", RELAY_API_DATA(client, hook_signal_upgrade));
+        weechat_log_printf ("    sync_enabled. . . . . . : %d", RELAY_API_DATA(client, sync_enabled));
+        weechat_log_printf ("    sync_nicks. . . . . . . : %d", RELAY_API_DATA(client, sync_nicks));
+        weechat_log_printf ("    sync_colors . . . . . . : %d", RELAY_API_DATA(client, sync_colors));
     }
 }

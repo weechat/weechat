@@ -425,13 +425,13 @@ irc_ignore_print_log ()
          ptr_ignore = ptr_ignore->next_ignore)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[ignore (addr:0x%lx)]", ptr_ignore);
-        weechat_log_printf ("  number . . . . . . . : %d",    ptr_ignore->number);
-        weechat_log_printf ("  mask . . . . . . . . : '%s'",  ptr_ignore->mask);
-        weechat_log_printf ("  regex_mask . . . . . : 0x%lx", ptr_ignore->regex_mask);
-        weechat_log_printf ("  server . . . . . . . : '%s'",  ptr_ignore->server);
-        weechat_log_printf ("  channel. . . . . . . : '%s'",  ptr_ignore->channel);
-        weechat_log_printf ("  prev_ignore. . . . . : 0x%lx", ptr_ignore->prev_ignore);
-        weechat_log_printf ("  next_ignore. . . . . : 0x%lx", ptr_ignore->next_ignore);
+        weechat_log_printf ("[ignore (addr:%p)]", ptr_ignore);
+        weechat_log_printf ("  number . . . . . . . : %d", ptr_ignore->number);
+        weechat_log_printf ("  mask . . . . . . . . : '%s'", ptr_ignore->mask);
+        weechat_log_printf ("  regex_mask . . . . . : %p", ptr_ignore->regex_mask);
+        weechat_log_printf ("  server . . . . . . . : '%s'", ptr_ignore->server);
+        weechat_log_printf ("  channel. . . . . . . : '%s'", ptr_ignore->channel);
+        weechat_log_printf ("  prev_ignore. . . . . : %p", ptr_ignore->prev_ignore);
+        weechat_log_printf ("  next_ignore. . . . . : %p", ptr_ignore->next_ignore);
     }
 }

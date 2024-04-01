@@ -217,8 +217,7 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
     hashtable_in = NULL;
     hashtable_out = NULL;
 
-    snprintf (modifier_data, sizeof (modifier_data),
-              "0x%lx", (unsigned long)client);
+    snprintf (modifier_data, sizeof (modifier_data), "%p", client);
     new_msg1 = weechat_hook_modifier_exec ("relay_client_irc_out1",
                                            modifier_data, vbuffer);
 
@@ -1659,8 +1658,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                         data);
     }
 
-    snprintf (modifier_data, sizeof (modifier_data),
-              "0x%lx", (unsigned long)client);
+    snprintf (modifier_data, sizeof (modifier_data), "%p", client);
     new_data = weechat_hook_modifier_exec ("relay_client_irc_in",
                                            modifier_data, data);
 
@@ -2409,18 +2407,18 @@ relay_irc_print_log (struct t_relay_client *client)
 {
     if (client->protocol_data)
     {
-        weechat_log_printf ("    address . . . . . . . . : '%s'",  RELAY_IRC_DATA(client, address));
-        weechat_log_printf ("    password_ok . . . . . . : %d",    RELAY_IRC_DATA(client, password_ok));
-        weechat_log_printf ("    nick. . . . . . . . . . : '%s'",  RELAY_IRC_DATA(client, nick));
-        weechat_log_printf ("    user_received . . . . . : %d",    RELAY_IRC_DATA(client, user_received));
-        weechat_log_printf ("    cap_ls_received . . . . : %d",    RELAY_IRC_DATA(client, cap_ls_received));
-        weechat_log_printf ("    cap_end_received. . . . : %d",    RELAY_IRC_DATA(client, cap_end_received));
-        weechat_log_printf ("    connected . . . . . . . : %d",    RELAY_IRC_DATA(client, connected));
-        weechat_log_printf ("    irc_cap_echo_message. . : %d",    RELAY_IRC_DATA(client, irc_cap_echo_message));
-        weechat_log_printf ("    server_capabilities . . : %d",    RELAY_IRC_DATA(client, server_capabilities));
-        weechat_log_printf ("    hook_signal_irc_in2 . . : 0x%lx", RELAY_IRC_DATA(client, hook_signal_irc_in2));
-        weechat_log_printf ("    hook_signal_irc_outtags : 0x%lx", RELAY_IRC_DATA(client, hook_signal_irc_outtags));
-        weechat_log_printf ("    hook_signal_irc_disc. . : 0x%lx", RELAY_IRC_DATA(client, hook_signal_irc_disc));
-        weechat_log_printf ("    hook_hsignal_irc_redir. : 0x%lx", RELAY_IRC_DATA(client, hook_hsignal_irc_redir));
+        weechat_log_printf ("    address . . . . . . . . : '%s'", RELAY_IRC_DATA(client, address));
+        weechat_log_printf ("    password_ok . . . . . . : %d", RELAY_IRC_DATA(client, password_ok));
+        weechat_log_printf ("    nick. . . . . . . . . . : '%s'", RELAY_IRC_DATA(client, nick));
+        weechat_log_printf ("    user_received . . . . . : %d", RELAY_IRC_DATA(client, user_received));
+        weechat_log_printf ("    cap_ls_received . . . . : %d", RELAY_IRC_DATA(client, cap_ls_received));
+        weechat_log_printf ("    cap_end_received. . . . : %d", RELAY_IRC_DATA(client, cap_end_received));
+        weechat_log_printf ("    connected . . . . . . . : %d", RELAY_IRC_DATA(client, connected));
+        weechat_log_printf ("    irc_cap_echo_message. . : %d", RELAY_IRC_DATA(client, irc_cap_echo_message));
+        weechat_log_printf ("    server_capabilities . . : %d", RELAY_IRC_DATA(client, server_capabilities));
+        weechat_log_printf ("    hook_signal_irc_in2 . . : %p", RELAY_IRC_DATA(client, hook_signal_irc_in2));
+        weechat_log_printf ("    hook_signal_irc_outtags : %p", RELAY_IRC_DATA(client, hook_signal_irc_outtags));
+        weechat_log_printf ("    hook_signal_irc_disc. . : %p", RELAY_IRC_DATA(client, hook_signal_irc_disc));
+        weechat_log_printf ("    hook_hsignal_irc_redir. : %p", RELAY_IRC_DATA(client, hook_hsignal_irc_redir));
     }
 }

@@ -561,8 +561,7 @@ hashtable_to_string (enum t_hashtable_type type, const void *value)
             break;
         case HASHTABLE_POINTER:
         case HASHTABLE_BUFFER:
-            snprintf (str_value, sizeof (str_value),
-                      "0x%lx", (unsigned long)value);
+            snprintf (str_value, sizeof (str_value), "%p", value);
             return str_value;
             break;
         case HASHTABLE_TIME:
@@ -1302,31 +1301,31 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
     int i;
 
     log_printf ("");
-    log_printf ("[hashtable %s (addr:0x%lx)]", name, hashtable);
-    log_printf ("  size . . . . . . . . . : %d",    hashtable->size);
-    log_printf ("  htable . . . . . . . . : 0x%lx", hashtable->htable);
-    log_printf ("  items_count. . . . . . : %d",    hashtable->items_count);
-    log_printf ("  oldest_item. . . . . . : 0x%lx", hashtable->oldest_item);
-    log_printf ("  newest_item. . . . . . : 0x%lx", hashtable->newest_item);
+    log_printf ("[hashtable %s (addr:%p)]", name, hashtable);
+    log_printf ("  size . . . . . . . . . : %d", hashtable->size);
+    log_printf ("  htable . . . . . . . . : %p", hashtable->htable);
+    log_printf ("  items_count. . . . . . : %d", hashtable->items_count);
+    log_printf ("  oldest_item. . . . . . : %p", hashtable->oldest_item);
+    log_printf ("  newest_item. . . . . . : %p", hashtable->newest_item);
     log_printf ("  type_keys. . . . . . . : %d (%s)",
                 hashtable->type_keys,
                 hashtable_type_string[hashtable->type_keys]);
     log_printf ("  type_values. . . . . . : %d (%s)",
                 hashtable->type_values,
                 hashtable_type_string[hashtable->type_values]);
-    log_printf ("  callback_hash_key. . . : 0x%lx", hashtable->callback_hash_key);
-    log_printf ("  callback_keycmp. . . . : 0x%lx", hashtable->callback_keycmp);
-    log_printf ("  callback_free_key. . . : 0x%lx", hashtable->callback_free_key);
-    log_printf ("  callback_free_value. . : 0x%lx", hashtable->callback_free_value);
-    log_printf ("  keys_values. . . . . . : '%s'",  hashtable->keys_values);
+    log_printf ("  callback_hash_key. . . : %p", hashtable->callback_hash_key);
+    log_printf ("  callback_keycmp. . . . : %p", hashtable->callback_keycmp);
+    log_printf ("  callback_free_key. . . : %p", hashtable->callback_free_key);
+    log_printf ("  callback_free_value. . : %p", hashtable->callback_free_value);
+    log_printf ("  keys_values. . . . . . : '%s'", hashtable->keys_values);
 
     for (i = 0; i < hashtable->size; i++)
     {
-        log_printf ("  htable[%06d] . . . . : 0x%lx", i, hashtable->htable[i]);
+        log_printf ("  htable[%06d] . . . . : %p", i, hashtable->htable[i]);
         for (ptr_item = hashtable->htable[i]; ptr_item;
              ptr_item = ptr_item->next_item)
         {
-            log_printf ("    [item 0x%lx]", hashtable->htable);
+            log_printf ("    [item %p]", hashtable->htable);
             switch (hashtable->type_keys)
             {
                 case HASHTABLE_INTEGER:
@@ -1336,10 +1335,10 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
                     log_printf ("      key (string) . . . : '%s'", (char *)ptr_item->key);
                     break;
                 case HASHTABLE_POINTER:
-                    log_printf ("      key (pointer). . . : 0x%lx", ptr_item->key);
+                    log_printf ("      key (pointer). . . : %p", ptr_item->key);
                     break;
                 case HASHTABLE_BUFFER:
-                    log_printf ("      key (buffer) . . . : 0x%lx", ptr_item->key);
+                    log_printf ("      key (buffer) . . . : %p", ptr_item->key);
                     break;
                 case HASHTABLE_TIME:
                     log_printf ("      key (time) . . . . : %lld", (long long)(*((time_t *)ptr_item->key)));
@@ -1357,10 +1356,10 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
                     log_printf ("      value (string) . . : '%s'", (char *)ptr_item->value);
                     break;
                 case HASHTABLE_POINTER:
-                    log_printf ("      value (pointer). . : 0x%lx", ptr_item->value);
+                    log_printf ("      value (pointer). . : %p", ptr_item->value);
                     break;
                 case HASHTABLE_BUFFER:
-                    log_printf ("      value (buffer) . . : 0x%lx", ptr_item->value);
+                    log_printf ("      value (buffer) . . : %p", ptr_item->value);
                     break;
                 case HASHTABLE_TIME:
                     log_printf ("      value (time) . . . : %lld", (long long)(*((time_t *)ptr_item->value)));
@@ -1368,11 +1367,11 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
                 case HASHTABLE_NUM_TYPES:
                     break;
             }
-            log_printf ("      value_size . . . . : %d",    ptr_item->value_size);
-            log_printf ("      prev_item. . . . . : 0x%lx", ptr_item->prev_item);
-            log_printf ("      next_item. . . . . : 0x%lx", ptr_item->next_item);
-            log_printf ("      prev_created_item. : 0x%lx", ptr_item->prev_created_item);
-            log_printf ("      next_created_item. : 0x%lx", ptr_item->next_created_item);
+            log_printf ("      value_size . . . . : %d", ptr_item->value_size);
+            log_printf ("      prev_item. . . . . : %p", ptr_item->prev_item);
+            log_printf ("      next_item. . . . . : %p", ptr_item->next_item);
+            log_printf ("      prev_created_item. : %p", ptr_item->prev_created_item);
+            log_printf ("      next_created_item. : %p", ptr_item->next_created_item);
         }
     }
 }

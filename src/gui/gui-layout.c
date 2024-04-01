@@ -1089,19 +1089,19 @@ gui_layout_print_log_window (struct t_gui_layout_window *layout_window,
                              int level)
 {
     log_printf ("");
-    log_printf ("  [layout window (addr:0x%lx) (%s) (level %d)]",
+    log_printf ("  [layout window (addr:%p) (%s) (level %d)]",
                 layout_window,
                 (layout_window->plugin_name) ? "leaf" : "node",
                 level);
 
-    log_printf ("    internal_id. . . . . : %d",    layout_window->internal_id);
-    log_printf ("    parent_node. . . . . : 0x%lx", layout_window->parent_node);
-    log_printf ("    split_pct. . . . . . : %d",    layout_window->split_pct);
-    log_printf ("    split_horiz. . . . . : %d",    layout_window->split_horiz);
-    log_printf ("    child1 . . . . . . . : 0x%lx", layout_window->child1);
-    log_printf ("    child2 . . . . . . . : 0x%lx", layout_window->child2);
-    log_printf ("    plugin_name. . . . . : '%s'",  layout_window->plugin_name);
-    log_printf ("    buffer_name. . . . . : '%s'",  layout_window->buffer_name);
+    log_printf ("    internal_id. . . . . : %d", layout_window->internal_id);
+    log_printf ("    parent_node. . . . . : %p", layout_window->parent_node);
+    log_printf ("    split_pct. . . . . . : %d", layout_window->split_pct);
+    log_printf ("    split_horiz. . . . . : %d", layout_window->split_horiz);
+    log_printf ("    child1 . . . . . . . : %p", layout_window->child1);
+    log_printf ("    child2 . . . . . . . : %p", layout_window->child2);
+    log_printf ("    plugin_name. . . . . : '%s'", layout_window->plugin_name);
+    log_printf ("    buffer_name. . . . . : '%s'", layout_window->buffer_name);
 
     if (layout_window->child1)
         gui_layout_print_log_window (layout_window->child1, level + 1);
@@ -1121,30 +1121,30 @@ gui_layout_print_log ()
     struct t_gui_layout_buffer *ptr_layout_buffer;
 
     log_printf ("");
-    log_printf ("gui_layouts . . . . . . . . . : 0x%lx", gui_layouts);
-    log_printf ("last_gui_layout . . . . . . . : 0x%lx", last_gui_layout);
-    log_printf ("gui_layout_current. . . . . . : 0x%lx", gui_layout_current);
+    log_printf ("gui_layouts . . . . . . . . . : %p", gui_layouts);
+    log_printf ("last_gui_layout . . . . . . . : %p", last_gui_layout);
+    log_printf ("gui_layout_current. . . . . . : %p", gui_layout_current);
 
     for (ptr_layout = gui_layouts; ptr_layout;
          ptr_layout = ptr_layout->next_layout)
     {
         log_printf ("");
-        log_printf ("[layout \"%s\" (addr:0x%lx)]", ptr_layout->name, ptr_layout);
-        log_printf ("  layout_buffers . . . . : 0x%lx", ptr_layout->layout_buffers);
-        log_printf ("  last_layout_buffer . . : 0x%lx", ptr_layout->last_layout_buffer);
-        log_printf ("  layout_windows . . . . : 0x%lx", ptr_layout->layout_windows);
-        log_printf ("  internal_id. . . . . . : %d",    ptr_layout->internal_id);
-        log_printf ("  internal_id_current_win: %d",    ptr_layout->internal_id_current_window);
+        log_printf ("[layout \"%s\" (addr:%p)]", ptr_layout->name, ptr_layout);
+        log_printf ("  layout_buffers . . . . : %p", ptr_layout->layout_buffers);
+        log_printf ("  last_layout_buffer . . : %p", ptr_layout->last_layout_buffer);
+        log_printf ("  layout_windows . . . . : %p", ptr_layout->layout_windows);
+        log_printf ("  internal_id. . . . . . : %d", ptr_layout->internal_id);
+        log_printf ("  internal_id_current_win: %d", ptr_layout->internal_id_current_window);
         for (ptr_layout_buffer = ptr_layout->layout_buffers; ptr_layout_buffer;
              ptr_layout_buffer = ptr_layout_buffer->next_layout)
         {
             log_printf ("");
-            log_printf ("  [layout buffer (addr:0x%lx)]",   ptr_layout_buffer);
-            log_printf ("    plugin_name. . . . . : '%s'",  ptr_layout_buffer->plugin_name);
-            log_printf ("    buffer_name. . . . . : '%s'",  ptr_layout_buffer->buffer_name);
-            log_printf ("    number . . . . . . . : %d",    ptr_layout_buffer->number);
-            log_printf ("    prev_layout. . . . . : 0x%lx", ptr_layout_buffer->prev_layout);
-            log_printf ("    next_layout. . . . . : 0x%lx", ptr_layout_buffer->next_layout);
+            log_printf ("  [layout buffer (addr:%p)]", ptr_layout_buffer);
+            log_printf ("    plugin_name. . . . . : '%s'", ptr_layout_buffer->plugin_name);
+            log_printf ("    buffer_name. . . . . : '%s'", ptr_layout_buffer->buffer_name);
+            log_printf ("    number . . . . . . . : %d", ptr_layout_buffer->number);
+            log_printf ("    prev_layout. . . . . : %p", ptr_layout_buffer->prev_layout);
+            log_printf ("    next_layout. . . . . : %p", ptr_layout_buffer->next_layout);
         }
         if (ptr_layout->layout_windows)
             gui_layout_print_log_window (ptr_layout->layout_windows, 0);

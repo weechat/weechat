@@ -69,8 +69,8 @@ gui_nicklist_send_signal (const char *signal, struct t_gui_buffer *buffer,
         if (str_args)
         {
             snprintf (str_args, length,
-                      "0x%lx,%s",
-                      (unsigned long)(buffer),
+                      "%p,%s",
+                      buffer,
                       (arguments) ? arguments : "");
             (void) hook_signal_send (signal,
                                      WEECHAT_HOOK_SIGNAL_STRING, str_args);
@@ -1270,7 +1270,7 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
     struct t_gui_nick *ptr_nick;
 
     snprintf (format, sizeof (format),
-              "%%-%ds=> group (addr:0x%%lx)",
+              "%%-%ds=> group (addr:%%p)",
               (indent * 2) + 4);
     log_printf (format, " ", group);
     snprintf (format, sizeof (format),
@@ -1286,31 +1286,31 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
               (indent * 2) + 6);
     log_printf (format, " ", group->visible);
     snprintf (format, sizeof (format),
-              "%%-%dsparent. . . : 0x%%lx",
+              "%%-%dsparent. . . : %%p",
               (indent * 2) + 6);
     log_printf (format, " ", group->parent);
     snprintf (format, sizeof (format),
-              "%%-%dschildren. . : 0x%%lx",
+              "%%-%dschildren. . : %%p",
               (indent * 2) + 6);
     log_printf (format, " ", group->children);
     snprintf (format, sizeof (format),
-              "%%-%dslast_child. : 0x%%lx",
+              "%%-%dslast_child. : %%p",
               (indent * 2) + 6);
     log_printf (format, " ", group->last_child);
     snprintf (format, sizeof (format),
-              "%%-%dsnicks . . . : 0x%%lx",
+              "%%-%dsnicks . . . : %%p",
               (indent * 2) + 6);
     log_printf (format, " ", group->nicks);
     snprintf (format, sizeof (format),
-              "%%-%dslast_nick . : 0x%%lx",
+              "%%-%dslast_nick . : %%p",
               (indent * 2) + 6);
     log_printf (format, " ", group->last_nick);
     snprintf (format, sizeof (format),
-              "%%-%dsprev_group. : 0x%%lx",
+              "%%-%dsprev_group. : %%p",
               (indent * 2) + 6);
     log_printf (format, " ", group->prev_group);
     snprintf (format, sizeof (format),
-              "%%-%dsnext_group. : 0x%%lx",
+              "%%-%dsnext_group. : %%p",
               (indent * 2) + 6);
     log_printf (format, " ", group->next_group);
 
@@ -1329,11 +1329,11 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
          ptr_nick = ptr_nick->next_nick)
     {
         snprintf (format, sizeof (format),
-                  "%%-%ds=> nick (addr:0x%%lx)",
+                  "%%-%ds=> nick (addr:%%p)",
                   (indent * 2) + 4);
         log_printf (format, " ", ptr_nick);
         snprintf (format, sizeof (format),
-                  "%%-%dsgroup . . . . . : 0x%%lx",
+                  "%%-%dsgroup . . . . . : %%p",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->group);
         snprintf (format, sizeof (format),
@@ -1357,11 +1357,11 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->visible);
         snprintf (format, sizeof (format),
-                  "%%-%dsprev_nick . . . : 0x%%lx",
+                  "%%-%dsprev_nick . . . : %%p",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->prev_nick);
         snprintf (format, sizeof (format),
-                  "%%-%dsnext_nick . . . : 0x%%lx",
+                  "%%-%dsnext_nick . . . : %%p",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->next_nick);
     }

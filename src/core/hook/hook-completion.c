@@ -219,7 +219,7 @@ hook_completion_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  completion data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_COMPLETION(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_COMPLETION(hook, callback));
     log_printf ("    completion_item . . . : '%s'", HOOK_COMPLETION(hook, completion_item));
     log_printf ("    description . . . . . : '%s'", HOOK_COMPLETION(hook, description));
 }

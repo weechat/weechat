@@ -158,8 +158,7 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
             gui_buffer_undo_add (buffer);
 
         /* send modifier, and change input if needed */
-        snprintf (str_buffer, sizeof (str_buffer),
-                  "0x%lx", (unsigned long)buffer);
+        snprintf (str_buffer, sizeof (str_buffer), "%p", buffer);
         new_input = hook_modifier_exec (NULL,
                                         "input_text_content",
                                         str_buffer,

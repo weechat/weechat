@@ -703,25 +703,24 @@ arraylist_print_log (struct t_arraylist *arraylist, const char *name)
 {
     int i;
 
-    log_printf ("[arraylist %s (addr:0x%lx)]", name, arraylist);
+    log_printf ("[arraylist %s (addr:%p)]", name, arraylist);
     log_printf ("  size . . . . . . . . . : %d", arraylist->size);
     log_printf ("  size_alloc . . . . . . : %d", arraylist->size_alloc);
     log_printf ("  size_alloc_min . . . . : %d", arraylist->size_alloc_min);
     log_printf ("  sorted . . . . . . . . : %d", arraylist->sorted);
     log_printf ("  allow_duplicates . . . : %d", arraylist->allow_duplicates);
-    log_printf ("  data . . . . . . . . . : 0x%lx", arraylist->data);
+    log_printf ("  data . . . . . . . . . : %p", arraylist->data);
     if (arraylist->data)
     {
         for (i = 0; i < arraylist->size_alloc; i++)
         {
-            log_printf ("    data[%08d] . . . : 0x%lx",
-                        i, arraylist->data[i]);
+            log_printf ("    data[%08d] . . . : %p", i, arraylist->data[i]);
         }
     }
-    log_printf ("  callback_cmp . . . . . : 0x%lx", arraylist->callback_cmp);
-    log_printf ("  callback_cmp_data. . . : 0x%lx",
+    log_printf ("  callback_cmp . . . . . : %p", arraylist->callback_cmp);
+    log_printf ("  callback_cmp_data. . . : %p",
                 arraylist->callback_cmp_data);
-    log_printf ("  callback_free. . . . . : 0x%lx", arraylist->callback_free);
-    log_printf ("  callback_free_data . . : 0x%lx",
+    log_printf ("  callback_free. . . . . : %p", arraylist->callback_free);
+    log_printf ("  callback_free_data . . : %p",
                 arraylist->callback_free_data);
 }

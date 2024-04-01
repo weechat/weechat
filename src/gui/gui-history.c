@@ -194,8 +194,7 @@ gui_history_add (struct t_gui_buffer *buffer, const char *string)
 {
     char *string2, str_buffer[128];
 
-    snprintf (str_buffer, sizeof (str_buffer),
-              "0x%lx", (unsigned long)(buffer));
+    snprintf (str_buffer, sizeof (str_buffer), "%p", buffer);
     string2 = hook_modifier_exec (NULL, "history_add", str_buffer, string);
 
     /*

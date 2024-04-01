@@ -221,7 +221,7 @@ void
 hook_info_print_log (struct t_hook *hook)
 {
     log_printf ("  info data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_INFO(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_INFO(hook, callback));
     log_printf ("    info_name . . . . . . : '%s'", HOOK_INFO(hook, info_name));
     log_printf ("    description . . . . . : '%s'", HOOK_INFO(hook, description));
     log_printf ("    args_description. . . : '%s'", HOOK_INFO(hook, args_description));

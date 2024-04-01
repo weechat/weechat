@@ -279,9 +279,9 @@ hook_line_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  line data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_LINE(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_LINE(hook, callback));
     log_printf ("    buffer_type . . . . . : %d", HOOK_LINE(hook, buffer_type));
-    log_printf ("    buffers . . . . . . . : 0x%lx", HOOK_LINE(hook, buffers));
+    log_printf ("    buffers . . . . . . . : %p", HOOK_LINE(hook, buffers));
     log_printf ("    num_buffers . . . . . : %d", HOOK_LINE(hook, num_buffers));
     for (i = 0; i < HOOK_LINE(hook, num_buffers); i++)
     {
@@ -289,7 +289,7 @@ hook_line_print_log (struct t_hook *hook)
                     i, HOOK_LINE(hook, buffers)[i]);
     }
     log_printf ("    tags_count. . . . . . : %d", HOOK_LINE(hook, tags_count));
-    log_printf ("    tags_array. . . . . . : 0x%lx", HOOK_LINE(hook, tags_array));
+    log_printf ("    tags_array. . . . . . : %p", HOOK_LINE(hook, tags_array));
     if (HOOK_LINE(hook, tags_array))
     {
         for (i = 0; i < HOOK_LINE(hook, tags_count); i++)

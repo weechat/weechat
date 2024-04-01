@@ -155,8 +155,7 @@ end:
     }
 
     /* add pointer and plugin name */
-    snprintf (str_value, sizeof (str_value),
-              "0x%lx", (unsigned long)ptr_buffer);
+    snprintf (str_value, sizeof (str_value), "%p", ptr_buffer);
     weechat_hashtable_set (info, "pointer", str_value);
     weechat_hashtable_set (info, "plugin",
                            weechat_buffer_get_string (ptr_buffer, "plugin"));

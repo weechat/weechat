@@ -978,9 +978,9 @@ hook_process_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  process data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_PROCESS(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_PROCESS(hook, callback));
     log_printf ("    command . . . . . . . : '%s'", HOOK_PROCESS(hook, command));
-    log_printf ("    options . . . . . . . : 0x%lx (hashtable: '%s')",
+    log_printf ("    options . . . . . . . : %p (hashtable: '%s')",
                 HOOK_PROCESS(hook, options),
                 hashtable_get_string (HOOK_PROCESS(hook, options),
                                       "keys_values"));
@@ -993,8 +993,8 @@ hook_process_print_log (struct t_hook *hook)
     log_printf ("    child_read[stderr]. . : %d", HOOK_PROCESS(hook, child_read[HOOK_PROCESS_STDERR]));
     log_printf ("    child_write[stderr] . : %d", HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDERR]));
     log_printf ("    child_pid . . . . . . : %d", HOOK_PROCESS(hook, child_pid));
-    log_printf ("    hook_fd[stdin]. . . . : 0x%lx", HOOK_PROCESS(hook, hook_fd[HOOK_PROCESS_STDIN]));
-    log_printf ("    hook_fd[stdout] . . . : 0x%lx", HOOK_PROCESS(hook, hook_fd[HOOK_PROCESS_STDOUT]));
-    log_printf ("    hook_fd[stderr] . . . : 0x%lx", HOOK_PROCESS(hook, hook_fd[HOOK_PROCESS_STDERR]));
-    log_printf ("    hook_timer. . . . . . : 0x%lx", HOOK_PROCESS(hook, hook_timer));
+    log_printf ("    hook_fd[stdin]. . . . : %p", HOOK_PROCESS(hook, hook_fd[HOOK_PROCESS_STDIN]));
+    log_printf ("    hook_fd[stdout] . . . : %p", HOOK_PROCESS(hook, hook_fd[HOOK_PROCESS_STDOUT]));
+    log_printf ("    hook_fd[stderr] . . . : %p", HOOK_PROCESS(hook, hook_fd[HOOK_PROCESS_STDERR]));
+    log_printf ("    hook_timer. . . . . . : %p", HOOK_PROCESS(hook, hook_timer));
 }

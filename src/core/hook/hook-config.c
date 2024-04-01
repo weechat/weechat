@@ -181,6 +181,6 @@ hook_config_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  config data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_CONFIG(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_CONFIG(hook, callback));
     log_printf ("    option. . . . . . . . : '%s'", HOOK_CONFIG(hook, option));
 }

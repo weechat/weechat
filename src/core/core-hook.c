@@ -929,24 +929,24 @@ hook_print_log ()
              ptr_hook = ptr_hook->next_hook)
         {
             log_printf ("");
-            log_printf ("[hook (addr:0x%lx)]", ptr_hook);
-            log_printf ("  plugin. . . . . . . . . : 0x%lx ('%s')",
+            log_printf ("[hook (addr:%p)]", ptr_hook);
+            log_printf ("  plugin. . . . . . . . . : %p ('%s')",
                         ptr_hook->plugin, plugin_get_name (ptr_hook->plugin));
             log_printf ("  subplugin . . . . . . . : '%s'",  ptr_hook->subplugin);
             log_printf ("  type. . . . . . . . . . : %d (%s)",
                         ptr_hook->type, hook_type_string[ptr_hook->type]);
-            log_printf ("  deleted . . . . . . . . : %d",    ptr_hook->deleted);
-            log_printf ("  running . . . . . . . . : %d",    ptr_hook->running);
-            log_printf ("  priority. . . . . . . . : %d",    ptr_hook->priority);
-            log_printf ("  callback_pointer. . . . : 0x%lx", ptr_hook->callback_pointer);
-            log_printf ("  callback_data . . . . . : 0x%lx", ptr_hook->callback_data);
+            log_printf ("  deleted . . . . . . . . : %d", ptr_hook->deleted);
+            log_printf ("  running . . . . . . . . : %d", ptr_hook->running);
+            log_printf ("  priority. . . . . . . . : %d", ptr_hook->priority);
+            log_printf ("  callback_pointer. . . . : %p", ptr_hook->callback_pointer);
+            log_printf ("  callback_data . . . . . : %p", ptr_hook->callback_data);
             if (ptr_hook->deleted)
                 continue;
 
             (hook_callback_print_log[ptr_hook->type]) (ptr_hook);
 
-            log_printf ("  prev_hook . . . . . . . : 0x%lx", ptr_hook->prev_hook);
-            log_printf ("  next_hook . . . . . . . : 0x%lx", ptr_hook->next_hook);
+            log_printf ("  prev_hook . . . . . . . : %p", ptr_hook->prev_hook);
+            log_printf ("  next_hook . . . . . . . : %p", ptr_hook->next_hook);
         }
     }
 }

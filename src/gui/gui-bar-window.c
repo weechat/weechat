@@ -1759,20 +1759,20 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
     int i, j;
 
     log_printf ("");
-    log_printf ("  [window bar (addr:0x%lx)]",     bar_window);
-    log_printf ("    bar. . . . . . . . . . : 0x%lx ('%s')",
+    log_printf ("  [window bar (addr:%p)]", bar_window);
+    log_printf ("    bar. . . . . . . . . . : %p ('%s')",
                 bar_window->bar,
                 (bar_window->bar) ? bar_window->bar->name : "");
-    log_printf ("    x. . . . . . . . . . . : %d",    bar_window->x);
-    log_printf ("    y. . . . . . . . . . . : %d",    bar_window->y);
-    log_printf ("    width. . . . . . . . . : %d",    bar_window->width);
-    log_printf ("    height . . . . . . . . : %d",    bar_window->height);
-    log_printf ("    scroll_x . . . . . . . : %d",    bar_window->scroll_x);
-    log_printf ("    scroll_y . . . . . . . : %d",    bar_window->scroll_y);
-    log_printf ("    cursor_x . . . . . . . : %d",    bar_window->cursor_x);
-    log_printf ("    cursor_y . . . . . . . : %d",    bar_window->cursor_y);
-    log_printf ("    current_size . . . . . : %d",    bar_window->current_size);
-    log_printf ("    items_count. . . . . . : %d",    bar_window->items_count);
+    log_printf ("    x. . . . . . . . . . . : %d", bar_window->x);
+    log_printf ("    y. . . . . . . . . . . : %d", bar_window->y);
+    log_printf ("    width. . . . . . . . . : %d", bar_window->width);
+    log_printf ("    height . . . . . . . . : %d", bar_window->height);
+    log_printf ("    scroll_x . . . . . . . : %d", bar_window->scroll_x);
+    log_printf ("    scroll_y . . . . . . . : %d", bar_window->scroll_y);
+    log_printf ("    cursor_x . . . . . . . : %d", bar_window->cursor_x);
+    log_printf ("    cursor_y . . . . . . . : %d", bar_window->cursor_y);
+    log_printf ("    current_size . . . . . : %d", bar_window->current_size);
+    log_printf ("    items_count. . . . . . : %d", bar_window->items_count);
     for (i = 0; i < bar_window->items_count; i++)
     {
         log_printf ("    items_subcount[%03d]. . : %d",
@@ -1794,7 +1794,7 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
         }
         else
         {
-            log_printf ("    items_content. . . . . . : 0x%lx", bar_window->items_content);
+            log_printf ("    items_content. . . . . . : %p", bar_window->items_content);
         }
     }
     log_printf ("    screen_col_size. . . . : %d", bar_window->screen_col_size);
@@ -1811,8 +1811,8 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
                     bar_window->coords[i]->x,
                     bar_window->coords[i]->y);
     }
-    log_printf ("    gui_objects. . . . . . : 0x%lx", bar_window->gui_objects);
+    log_printf ("    gui_objects. . . . . . : %p", bar_window->gui_objects);
     gui_bar_window_objects_print_log (bar_window);
-    log_printf ("    prev_bar_window. . . . : 0x%lx", bar_window->prev_bar_window);
-    log_printf ("    next_bar_window. . . . : 0x%lx", bar_window->next_bar_window);
+    log_printf ("    prev_bar_window. . . . : %p", bar_window->prev_bar_window);
+    log_printf ("    next_bar_window. . . . : %p", bar_window->next_bar_window);
 }

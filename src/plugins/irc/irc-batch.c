@@ -565,22 +565,22 @@ irc_batch_print_log (struct t_irc_server *server)
          ptr_batch = ptr_batch->next_batch)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("  => batch (addr:0x%lx):", ptr_batch);
-        weechat_log_printf ("       reference . . . . . : '%s'",  ptr_batch->reference);
-        weechat_log_printf ("       parent_ref. . . . . : '%s'",  ptr_batch->parent_ref);
-        weechat_log_printf ("       type. . . . . . . . : '%s'",  ptr_batch->type);
-        weechat_log_printf ("       parameters. . . . . : '%s'",  ptr_batch->parameters);
-        weechat_log_printf ("       tags. . . . . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  => batch (addr:%p):", ptr_batch);
+        weechat_log_printf ("       reference . . . . . : '%s'", ptr_batch->reference);
+        weechat_log_printf ("       parent_ref. . . . . : '%s'", ptr_batch->parent_ref);
+        weechat_log_printf ("       type. . . . . . . . : '%s'", ptr_batch->type);
+        weechat_log_printf ("       parameters. . . . . : '%s'", ptr_batch->parameters);
+        weechat_log_printf ("       tags. . . . . . . . : %p (hashtable: '%s')",
                             ptr_batch->tags,
                             weechat_hashtable_get_string (ptr_batch->tags,
                                                           "keys_values"));
-        weechat_log_printf ("       start_time. . . . . : %lld",  (long long)ptr_batch->start_time);
-        weechat_log_printf ("       message . . . . . . : 0x%lx ('%s')",
+        weechat_log_printf ("       start_time. . . . . : %lld", (long long)ptr_batch->start_time);
+        weechat_log_printf ("       message . . . . . . : %p ('%s')",
                             ptr_batch->messages,
                             (ptr_batch->messages) ? *(ptr_batch->messages) : NULL);
-        weechat_log_printf ("       end_received. . . . : %d",    ptr_batch->end_received);
-        weechat_log_printf ("       messages_processed. : %d",    ptr_batch->messages_processed);
-        weechat_log_printf ("       prev_batch. . . . . : 0x%lx", ptr_batch->prev_batch);
-        weechat_log_printf ("       next_batch. . . . . : 0x%lx", ptr_batch->next_batch);
+        weechat_log_printf ("       end_received. . . . : %d", ptr_batch->end_received);
+        weechat_log_printf ("       messages_processed. : %d", ptr_batch->messages_processed);
+        weechat_log_printf ("       prev_batch. . . . . : %p", ptr_batch->prev_batch);
+        weechat_log_printf ("       next_batch. . . . . : %p", ptr_batch->next_batch);
     }
 }

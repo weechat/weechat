@@ -1504,22 +1504,22 @@ hdata_print_log_map_cb (void *data, struct t_hashtable *hashtable,
     ptr_hdata = (struct t_hdata *)value;
 
     log_printf ("");
-    log_printf ("[hdata (addr:0x%lx)]", ptr_hdata);
-    log_printf ("  name . . . . . . . . . : '%s'",  ptr_hdata->name);
-    log_printf ("  plugin . . . . . . . . : 0x%lx", ptr_hdata->plugin);
-    log_printf ("  var_prev . . . . . . . : '%s'",  ptr_hdata->var_prev);
-    log_printf ("  var_next . . . . . . . : '%s'",  ptr_hdata->var_next);
-    log_printf ("  hash_var . . . . . . . : 0x%lx (hashtable: '%s')",
+    log_printf ("[hdata (addr:%p)]", ptr_hdata);
+    log_printf ("  name . . . . . . . . . : '%s'", ptr_hdata->name);
+    log_printf ("  plugin . . . . . . . . : %p", ptr_hdata->plugin);
+    log_printf ("  var_prev . . . . . . . : '%s'", ptr_hdata->var_prev);
+    log_printf ("  var_next . . . . . . . : '%s'", ptr_hdata->var_next);
+    log_printf ("  hash_var . . . . . . . : %p (hashtable: '%s')",
                 ptr_hdata->hash_var,
                 hashtable_get_string (ptr_hdata->hash_var, "keys_values"));
-    log_printf ("  hash_list. . . . . . . : 0x%lx (hashtable: '%s')",
+    log_printf ("  hash_list. . . . . . . : %p (hashtable: '%s')",
                 ptr_hdata->hash_list,
                 hashtable_get_string (ptr_hdata->hash_list, "keys_values"));
-    log_printf ("  create_allowed . . . . : %d",    (int)ptr_hdata->create_allowed);
-    log_printf ("  delete_allowed . . . . : %d",    (int)ptr_hdata->delete_allowed);
-    log_printf ("  callback_update. . . . : 0x%lx", ptr_hdata->callback_update);
-    log_printf ("  callback_update_data . : 0x%lx", ptr_hdata->callback_update_data);
-    log_printf ("  update_pending . . . . : %d",    (int)ptr_hdata->update_pending);
+    log_printf ("  create_allowed . . . . : %d", (int)ptr_hdata->create_allowed);
+    log_printf ("  delete_allowed . . . . : %d", (int)ptr_hdata->delete_allowed);
+    log_printf ("  callback_update. . . . : %p", ptr_hdata->callback_update);
+    log_printf ("  callback_update_data . : %p", ptr_hdata->callback_update_data);
+    log_printf ("  update_pending . . . . : %d", (int)ptr_hdata->update_pending);
     hashtable_map (ptr_hdata->hash_var, &hdata_print_log_var_map_cb, NULL);
 }
 

@@ -1242,15 +1242,15 @@ irc_notify_print_log (struct t_irc_server *server)
          ptr_notify = ptr_notify->next_notify)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("  => notify (addr:0x%lx):", ptr_notify);
-        weechat_log_printf ("       server. . . . . . . : 0x%lx", ptr_notify->server);
-        weechat_log_printf ("       nick. . . . . . . . : '%s'",  ptr_notify->nick);
-        weechat_log_printf ("       check_away. . . . . : %d",    ptr_notify->check_away);
-        weechat_log_printf ("       is_on_server. . . . : %d",    ptr_notify->is_on_server);
-        weechat_log_printf ("       away_message. . . . : '%s'",  ptr_notify->away_message);
-        weechat_log_printf ("       ison_received . . . : %d",    ptr_notify->ison_received);
-        weechat_log_printf ("       prev_notify . . . . : 0x%lx", ptr_notify->prev_notify);
-        weechat_log_printf ("       next_notify . . . . : 0x%lx", ptr_notify->next_notify);
+        weechat_log_printf ("  => notify (addr:%p):", ptr_notify);
+        weechat_log_printf ("       server. . . . . . . : %p", ptr_notify->server);
+        weechat_log_printf ("       nick. . . . . . . . : '%s'", ptr_notify->nick);
+        weechat_log_printf ("       check_away. . . . . : %d", ptr_notify->check_away);
+        weechat_log_printf ("       is_on_server. . . . : %d", ptr_notify->is_on_server);
+        weechat_log_printf ("       away_message. . . . : '%s'", ptr_notify->away_message);
+        weechat_log_printf ("       ison_received . . . : %d", ptr_notify->ison_received);
+        weechat_log_printf ("       prev_notify . . . . : %p", ptr_notify->prev_notify);
+        weechat_log_printf ("       next_notify . . . . : %p", ptr_notify->next_notify);
     }
 }
 

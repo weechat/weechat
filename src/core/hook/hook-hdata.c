@@ -215,7 +215,7 @@ hook_hdata_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  hdata data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_HDATA(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_HDATA(hook, callback));
     log_printf ("    hdata_name. . . . . . : '%s'", HOOK_HDATA(hook, hdata_name));
     log_printf ("    description . . . . . : '%s'", HOOK_HDATA(hook, description));
 }

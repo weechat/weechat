@@ -229,6 +229,6 @@ hook_command_run_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  command_run data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_COMMAND_RUN(hook, callback));
-    log_printf ("    command . . . . . . . : '%s'",  HOOK_COMMAND_RUN(hook, command));
+    log_printf ("    callback. . . . . . . : %p", HOOK_COMMAND_RUN(hook, callback));
+    log_printf ("    command . . . . . . . : '%s'", HOOK_COMMAND_RUN(hook, command));
 }

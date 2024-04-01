@@ -3191,7 +3191,7 @@ gui_key_print_log_key (struct t_gui_key *key, const char *prefix)
 {
     int area;
 
-    log_printf ("%s[key (addr:0x%lx)]", prefix, key);
+    log_printf ("%s[key (addr:%p)]", prefix, key);
     log_printf ("%s  key. . . . . . . . : '%s'", prefix, key->key);
     for (area = 0; area < 2; area++)
     {
@@ -3201,11 +3201,11 @@ gui_key_print_log_key (struct t_gui_key *key, const char *prefix)
         log_printf ("%s  area_name[%d] . . . : '%s'",
                     prefix, area, key->area_name[area]);
     }
-    log_printf ("%s  area_key . . . . . : '%s'",  prefix, key->area_key);
-    log_printf ("%s  command. . . . . . : '%s'",  prefix, key->command);
-    log_printf ("%s  score. . . . . . . : %d",    prefix, key->score);
-    log_printf ("%s  prev_key . . . . . : 0x%lx", prefix, key->prev_key);
-    log_printf ("%s  next_key . . . . . : 0x%lx", prefix, key->next_key);
+    log_printf ("%s  area_key . . . . . : '%s'", prefix, key->area_key);
+    log_printf ("%s  command. . . . . . : '%s'", prefix, key->command);
+    log_printf ("%s  score. . . . . . . : %d", prefix, key->score);
+    log_printf ("%s  prev_key . . . . . : %p", prefix, key->prev_key);
+    log_printf ("%s  next_key . . . . . : %p", prefix, key->next_key);
 }
 
 /*
@@ -3220,9 +3220,9 @@ gui_key_print_log (struct t_gui_buffer *buffer)
 
     if (buffer)
     {
-        log_printf ("    keys . . . . . . . . : 0x%lx", buffer->keys);
-        log_printf ("    last_key . . . . . . : 0x%lx", buffer->last_key);
-        log_printf ("    keys_count . . . . . : %d",    buffer->keys_count);
+        log_printf ("    keys . . . . . . . . : %p", buffer->keys);
+        log_printf ("    last_key . . . . . . : %p", buffer->last_key);
+        log_printf ("    keys_count . . . . . : %d", buffer->keys_count);
         for (ptr_key = buffer->keys; ptr_key; ptr_key = ptr_key->next_key)
         {
             log_printf ("");
@@ -3235,9 +3235,9 @@ gui_key_print_log (struct t_gui_buffer *buffer)
         {
             log_printf ("");
             log_printf ("[keys for context: %s]", gui_key_context_string[context]);
-            log_printf ("  keys . . . . . . . . : 0x%lx", gui_keys[context]);
-            log_printf ("  last_key . . . . . . : 0x%lx", last_gui_key[context]);
-            log_printf ("  keys_count . . . . . : %d",    gui_keys_count[context]);
+            log_printf ("  keys . . . . . . . . : %p", gui_keys[context]);
+            log_printf ("  last_key . . . . . . : %p", last_gui_key[context]);
+            log_printf ("  keys_count . . . . . : %d", gui_keys_count[context]);
 
             for (ptr_key = gui_keys[context]; ptr_key;
                  ptr_key = ptr_key->next_key)

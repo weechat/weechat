@@ -7044,7 +7044,7 @@ irc_server_print_log ()
          ptr_server = ptr_server->next_server)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[server %s (addr:0x%lx)]", ptr_server->name, ptr_server);
+        weechat_log_printf ("[server %s (addr:%p)]", ptr_server->name, ptr_server);
         /* addresses */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_ADDRESSES]))
             weechat_log_printf ("  addresses . . . . . . . . : null ('%s')",
@@ -7334,139 +7334,139 @@ irc_server_print_log ()
             weechat_log_printf ("  msg_quit. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_MSG_QUIT]));
         /* other server variables */
-        weechat_log_printf ("  temp_server . . . . . . . : %d",    ptr_server->temp_server);
-        weechat_log_printf ("  fake_server . . . . . . . : %d",    ptr_server->fake_server);
-        weechat_log_printf ("  reloading_from_config . . : %d",    ptr_server->reloaded_from_config);
-        weechat_log_printf ("  reloaded_from_config. . . : %d",    ptr_server->reloaded_from_config);
-        weechat_log_printf ("  addresses_eval. . . . . . : '%s'",  ptr_server->addresses_eval);
-        weechat_log_printf ("  addresses_count . . . . . : %d",    ptr_server->addresses_count);
-        weechat_log_printf ("  addresses_array . . . . . : 0x%lx", ptr_server->addresses_array);
-        weechat_log_printf ("  ports_array . . . . . . . : 0x%lx", ptr_server->ports_array);
-        weechat_log_printf ("  retry_array . . . . . . . : 0x%lx", ptr_server->retry_array);
-        weechat_log_printf ("  index_current_address . . : %d",    ptr_server->index_current_address);
-        weechat_log_printf ("  current_address . . . . . : '%s'",  ptr_server->current_address);
-        weechat_log_printf ("  current_ip. . . . . . . . : '%s'",  ptr_server->current_ip);
-        weechat_log_printf ("  current_port. . . . . . . : %d",    ptr_server->current_port);
-        weechat_log_printf ("  current_retry . . . . . . : %d",    ptr_server->current_retry);
-        weechat_log_printf ("  sock. . . . . . . . . . . : %d",    ptr_server->sock);
-        weechat_log_printf ("  hook_connect. . . . . . . : 0x%lx", ptr_server->hook_connect);
-        weechat_log_printf ("  hook_fd . . . . . . . . . : 0x%lx", ptr_server->hook_fd);
-        weechat_log_printf ("  hook_timer_connection . . : 0x%lx", ptr_server->hook_timer_connection);
-        weechat_log_printf ("  hook_timer_sasl . . . . . : 0x%lx", ptr_server->hook_timer_sasl);
-        weechat_log_printf ("  hook_timer_anti_flood . . : 0x%lx", ptr_server->hook_timer_anti_flood);
-        weechat_log_printf ("  sasl_scram_client_first . : '%s'",  ptr_server->sasl_scram_client_first);
+        weechat_log_printf ("  temp_server . . . . . . . : %d", ptr_server->temp_server);
+        weechat_log_printf ("  fake_server . . . . . . . : %d", ptr_server->fake_server);
+        weechat_log_printf ("  reloading_from_config . . : %d", ptr_server->reloaded_from_config);
+        weechat_log_printf ("  reloaded_from_config. . . : %d", ptr_server->reloaded_from_config);
+        weechat_log_printf ("  addresses_eval. . . . . . : '%s'", ptr_server->addresses_eval);
+        weechat_log_printf ("  addresses_count . . . . . : %d", ptr_server->addresses_count);
+        weechat_log_printf ("  addresses_array . . . . . : %p", ptr_server->addresses_array);
+        weechat_log_printf ("  ports_array . . . . . . . : %p", ptr_server->ports_array);
+        weechat_log_printf ("  retry_array . . . . . . . : %p", ptr_server->retry_array);
+        weechat_log_printf ("  index_current_address . . : %d", ptr_server->index_current_address);
+        weechat_log_printf ("  current_address . . . . . : '%s'", ptr_server->current_address);
+        weechat_log_printf ("  current_ip. . . . . . . . : '%s'", ptr_server->current_ip);
+        weechat_log_printf ("  current_port. . . . . . . : %d", ptr_server->current_port);
+        weechat_log_printf ("  current_retry . . . . . . : %d", ptr_server->current_retry);
+        weechat_log_printf ("  sock. . . . . . . . . . . : %d", ptr_server->sock);
+        weechat_log_printf ("  hook_connect. . . . . . . : %p", ptr_server->hook_connect);
+        weechat_log_printf ("  hook_fd . . . . . . . . . : %p", ptr_server->hook_fd);
+        weechat_log_printf ("  hook_timer_connection . . : %p", ptr_server->hook_timer_connection);
+        weechat_log_printf ("  hook_timer_sasl . . . . . : %p", ptr_server->hook_timer_sasl);
+        weechat_log_printf ("  hook_timer_anti_flood . . : %p", ptr_server->hook_timer_anti_flood);
+        weechat_log_printf ("  sasl_scram_client_first . : '%s'", ptr_server->sasl_scram_client_first);
         weechat_log_printf ("  sasl_scram_salted_pwd . . : (hidden)");
-        weechat_log_printf ("  sasl_scram_salted_pwd_size: %d",    ptr_server->sasl_scram_salted_pwd_size);
+        weechat_log_printf ("  sasl_scram_salted_pwd_size: %d", ptr_server->sasl_scram_salted_pwd_size);
         weechat_log_printf ("  sasl_scram_auth_message . : (hidden)");
-        weechat_log_printf ("  sasl_temp_username. . . . : '%s'",  ptr_server->sasl_temp_username);
+        weechat_log_printf ("  sasl_temp_username. . . . : '%s'", ptr_server->sasl_temp_username);
         weechat_log_printf ("  sasl_temp_password. . . . : (hidden)");
-        weechat_log_printf ("  authentication_method . . : %d",    ptr_server->authentication_method);
-        weechat_log_printf ("  sasl_mechanism_used . . . : %d",    ptr_server->sasl_mechanism_used);
-        weechat_log_printf ("  is_connected. . . . . . . : %d",    ptr_server->is_connected);
-        weechat_log_printf ("  tls_connected . . . . . . : %d",    ptr_server->tls_connected);
-        weechat_log_printf ("  disconnected. . . . . . . : %d",    ptr_server->disconnected);
-        weechat_log_printf ("  gnutls_sess . . . . . . . : 0x%lx", ptr_server->gnutls_sess);
-        weechat_log_printf ("  tls_cert. . . . . . . . . : 0x%lx", ptr_server->tls_cert);
-        weechat_log_printf ("  tls_cert_key. . . . . . . : 0x%lx", ptr_server->tls_cert_key);
-        weechat_log_printf ("  unterminated_message. . . : '%s'",  ptr_server->unterminated_message);
-        weechat_log_printf ("  nicks_count . . . . . . . : %d",    ptr_server->nicks_count);
-        weechat_log_printf ("  nicks_array . . . . . . . : 0x%lx", ptr_server->nicks_array);
-        weechat_log_printf ("  nick_first_tried. . . . . : %d",    ptr_server->nick_first_tried);
-        weechat_log_printf ("  nick_alternate_number . . : %d",    ptr_server->nick_alternate_number);
-        weechat_log_printf ("  nick. . . . . . . . . . . : '%s'",  ptr_server->nick);
-        weechat_log_printf ("  nick_modes. . . . . . . . : '%s'",  ptr_server->nick_modes);
-        weechat_log_printf ("  host. . . . . . . . . . . : '%s'",  ptr_server->host);
-        weechat_log_printf ("  checking_cap_ls . . . . . : %d",    ptr_server->checking_cap_ls);
-        weechat_log_printf ("  cap_ls. . . . . . . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  authentication_method . . : %d", ptr_server->authentication_method);
+        weechat_log_printf ("  sasl_mechanism_used . . . : %d", ptr_server->sasl_mechanism_used);
+        weechat_log_printf ("  is_connected. . . . . . . : %d", ptr_server->is_connected);
+        weechat_log_printf ("  tls_connected . . . . . . : %d", ptr_server->tls_connected);
+        weechat_log_printf ("  disconnected. . . . . . . : %d", ptr_server->disconnected);
+        weechat_log_printf ("  gnutls_sess . . . . . . . : %p", ptr_server->gnutls_sess);
+        weechat_log_printf ("  tls_cert. . . . . . . . . : %p", ptr_server->tls_cert);
+        weechat_log_printf ("  tls_cert_key. . . . . . . : %p", ptr_server->tls_cert_key);
+        weechat_log_printf ("  unterminated_message. . . : '%s'", ptr_server->unterminated_message);
+        weechat_log_printf ("  nicks_count . . . . . . . : %d", ptr_server->nicks_count);
+        weechat_log_printf ("  nicks_array . . . . . . . : %p", ptr_server->nicks_array);
+        weechat_log_printf ("  nick_first_tried. . . . . : %d", ptr_server->nick_first_tried);
+        weechat_log_printf ("  nick_alternate_number . . : %d", ptr_server->nick_alternate_number);
+        weechat_log_printf ("  nick. . . . . . . . . . . : '%s'", ptr_server->nick);
+        weechat_log_printf ("  nick_modes. . . . . . . . : '%s'", ptr_server->nick_modes);
+        weechat_log_printf ("  host. . . . . . . . . . . : '%s'", ptr_server->host);
+        weechat_log_printf ("  checking_cap_ls . . . . . : %d", ptr_server->checking_cap_ls);
+        weechat_log_printf ("  cap_ls. . . . . . . . . . : %p (hashtable: '%s')",
                             ptr_server->cap_ls,
                             weechat_hashtable_get_string (ptr_server->cap_ls, "keys_values"));
-        weechat_log_printf ("  checking_cap_list . . . . : %d",    ptr_server->checking_cap_list);
-        weechat_log_printf ("  cap_list. . . . . . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  checking_cap_list . . . . : %d", ptr_server->checking_cap_list);
+        weechat_log_printf ("  cap_list. . . . . . . . . : %p (hashtable: '%s')",
                             ptr_server->cap_list,
                             weechat_hashtable_get_string (ptr_server->cap_list, "keys_values"));
-        weechat_log_printf ("  multiline_max_bytes . . . : %d",    ptr_server->multiline_max_bytes);
-        weechat_log_printf ("  multiline_max_lines . . . : %d",    ptr_server->multiline_max_lines);
-        weechat_log_printf ("  isupport. . . . . . . . . : '%s'",  ptr_server->isupport);
-        weechat_log_printf ("  prefix_modes. . . . . . . : '%s'",  ptr_server->prefix_modes);
-        weechat_log_printf ("  prefix_chars. . . . . . . : '%s'",  ptr_server->prefix_chars);
-        weechat_log_printf ("  msg_max_length. . . . . . : %d",    ptr_server->msg_max_length);
-        weechat_log_printf ("  nick_max_length . . . . . : %d",    ptr_server->nick_max_length);
-        weechat_log_printf ("  user_max_length . . . . . : %d",    ptr_server->user_max_length);
-        weechat_log_printf ("  host_max_length . . . . . : %d",    ptr_server->host_max_length);
+        weechat_log_printf ("  multiline_max_bytes . . . : %d", ptr_server->multiline_max_bytes);
+        weechat_log_printf ("  multiline_max_lines . . . : %d", ptr_server->multiline_max_lines);
+        weechat_log_printf ("  isupport. . . . . . . . . : '%s'", ptr_server->isupport);
+        weechat_log_printf ("  prefix_modes. . . . . . . : '%s'", ptr_server->prefix_modes);
+        weechat_log_printf ("  prefix_chars. . . . . . . : '%s'", ptr_server->prefix_chars);
+        weechat_log_printf ("  msg_max_length. . . . . . : %d", ptr_server->msg_max_length);
+        weechat_log_printf ("  nick_max_length . . . . . : %d", ptr_server->nick_max_length);
+        weechat_log_printf ("  user_max_length . . . . . : %d", ptr_server->user_max_length);
+        weechat_log_printf ("  host_max_length . . . . . : %d", ptr_server->host_max_length);
         weechat_log_printf ("  casemapping . . . . . . . : %d (%s)",
                             ptr_server->casemapping,
                             irc_server_casemapping_string[ptr_server->casemapping]);
         weechat_log_printf ("  utf8mapping . . . . . . . : %d (%s)",
                             ptr_server->utf8mapping,
                             irc_server_utf8mapping_string[ptr_server->utf8mapping]);
-        weechat_log_printf ("  utf8only. . . . . . . . . : %d",    ptr_server->utf8only);
-        weechat_log_printf ("  chantypes . . . . . . . . : '%s'",  ptr_server->chantypes);
-        weechat_log_printf ("  chanmodes . . . . . . . . : '%s'",  ptr_server->chanmodes);
-        weechat_log_printf ("  monitor . . . . . . . . . : %d",    ptr_server->monitor);
-        weechat_log_printf ("  monitor_time. . . . . . . : %lld",  (long long)ptr_server->monitor_time);
-        weechat_log_printf ("  clienttagdeny . . . . . . : '%s'",  ptr_server->clienttagdeny);
-        weechat_log_printf ("  clienttagdeny_count . . . : %d",    ptr_server->clienttagdeny_count);
-        weechat_log_printf ("  clienttagdeny_array . . . : 0x%lx", ptr_server->clienttagdeny_array);
-        weechat_log_printf ("  typing_allowed . .  . . . : %d",    ptr_server->typing_allowed);
-        weechat_log_printf ("  reconnect_delay . . . . . : %d",    ptr_server->reconnect_delay);
-        weechat_log_printf ("  reconnect_start . . . . . : %lld",  (long long)ptr_server->reconnect_start);
-        weechat_log_printf ("  command_time. . . . . . . : %lld",  (long long)ptr_server->command_time);
-        weechat_log_printf ("  autojoin_time . . . . . . : %lld",  (long long)ptr_server->autojoin_time);
-        weechat_log_printf ("  autojoin_done . . . . . . : %d",    ptr_server->autojoin_done);
-        weechat_log_printf ("  disable_autojoin. . . . . : %d",    ptr_server->disable_autojoin);
-        weechat_log_printf ("  is_away . . . . . . . . . : %d",    ptr_server->is_away);
-        weechat_log_printf ("  away_message. . . . . . . : '%s'",  ptr_server->away_message);
-        weechat_log_printf ("  away_time . . . . . . . . : %lld",  (long long)ptr_server->away_time);
-        weechat_log_printf ("  lag . . . . . . . . . . . : %d",    ptr_server->lag);
-        weechat_log_printf ("  lag_displayed . . . . . . : %d",    ptr_server->lag_displayed);
+        weechat_log_printf ("  utf8only. . . . . . . . . : %d", ptr_server->utf8only);
+        weechat_log_printf ("  chantypes . . . . . . . . : '%s'", ptr_server->chantypes);
+        weechat_log_printf ("  chanmodes . . . . . . . . : '%s'", ptr_server->chanmodes);
+        weechat_log_printf ("  monitor . . . . . . . . . : %d", ptr_server->monitor);
+        weechat_log_printf ("  monitor_time. . . . . . . : %lld", (long long)ptr_server->monitor_time);
+        weechat_log_printf ("  clienttagdeny . . . . . . : '%s'", ptr_server->clienttagdeny);
+        weechat_log_printf ("  clienttagdeny_count . . . : %d", ptr_server->clienttagdeny_count);
+        weechat_log_printf ("  clienttagdeny_array . . . : %p", ptr_server->clienttagdeny_array);
+        weechat_log_printf ("  typing_allowed . .  . . . : %d", ptr_server->typing_allowed);
+        weechat_log_printf ("  reconnect_delay . . . . . : %d", ptr_server->reconnect_delay);
+        weechat_log_printf ("  reconnect_start . . . . . : %lld", (long long)ptr_server->reconnect_start);
+        weechat_log_printf ("  command_time. . . . . . . : %lld", (long long)ptr_server->command_time);
+        weechat_log_printf ("  autojoin_time . . . . . . : %lld", (long long)ptr_server->autojoin_time);
+        weechat_log_printf ("  autojoin_done . . . . . . : %d", ptr_server->autojoin_done);
+        weechat_log_printf ("  disable_autojoin. . . . . : %d", ptr_server->disable_autojoin);
+        weechat_log_printf ("  is_away . . . . . . . . . : %d", ptr_server->is_away);
+        weechat_log_printf ("  away_message. . . . . . . : '%s'", ptr_server->away_message);
+        weechat_log_printf ("  away_time . . . . . . . . : %lld", (long long)ptr_server->away_time);
+        weechat_log_printf ("  lag . . . . . . . . . . . : %d", ptr_server->lag);
+        weechat_log_printf ("  lag_displayed . . . . . . : %d", ptr_server->lag_displayed);
         weechat_log_printf ("  lag_check_time. . . . . . : tv_sec:%d, tv_usec:%d",
                             ptr_server->lag_check_time.tv_sec,
                             ptr_server->lag_check_time.tv_usec);
-        weechat_log_printf ("  lag_next_check. . . . . . : %lld",  (long long)ptr_server->lag_next_check);
-        weechat_log_printf ("  lag_last_refresh. . . . . : %lld",  (long long)ptr_server->lag_last_refresh);
-        weechat_log_printf ("  cmd_list_regexp . . . . . : 0x%lx", ptr_server->cmd_list_regexp);
-        weechat_log_printf ("  list. . . . . . . . . . . : 0x%lx", ptr_server->list);
+        weechat_log_printf ("  lag_next_check. . . . . . : %lld", (long long)ptr_server->lag_next_check);
+        weechat_log_printf ("  lag_last_refresh. . . . . : %lld", (long long)ptr_server->lag_last_refresh);
+        weechat_log_printf ("  cmd_list_regexp . . . . . : %p", ptr_server->cmd_list_regexp);
+        weechat_log_printf ("  list. . . . . . . . . . . : %p", ptr_server->list);
         if (ptr_server->list)
         {
-            weechat_log_printf ("    buffer. . . . . . . . . : 0x%lx", ptr_server->list->buffer);
-            weechat_log_printf ("    channels. . . . . . . . : 0x%lx", ptr_server->list->channels);
-            weechat_log_printf ("    filter_channels . . . . : 0x%lx", ptr_server->list->filter_channels);
+            weechat_log_printf ("    buffer. . . . . . . . . : %p", ptr_server->list->buffer);
+            weechat_log_printf ("    channels. . . . . . . . : %p", ptr_server->list->channels);
+            weechat_log_printf ("    filter_channels . . . . : %p", ptr_server->list->filter_channels);
         }
-        weechat_log_printf ("  last_away_check . . . . . : %lld",  (long long)ptr_server->last_away_check);
-        weechat_log_printf ("  last_data_purge . . . . . : %lld",  (long long)ptr_server->last_data_purge);
+        weechat_log_printf ("  last_away_check . . . . . : %lld", (long long)ptr_server->last_away_check);
+        weechat_log_printf ("  last_data_purge . . . . . : %lld", (long long)ptr_server->last_data_purge);
         for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
         {
-            weechat_log_printf ("  outqueue[%02d]. . . . . . . : 0x%lx", i, ptr_server->outqueue[i]);
-            weechat_log_printf ("  last_outqueue[%02d] . . . . : 0x%lx", i, ptr_server->last_outqueue[i]);
+            weechat_log_printf ("  outqueue[%02d]. . . . . . . : %p", i, ptr_server->outqueue[i]);
+            weechat_log_printf ("  last_outqueue[%02d] . . . . : %p", i, ptr_server->last_outqueue[i]);
         }
-        weechat_log_printf ("  redirects . . . . . . . . : 0x%lx", ptr_server->redirects);
-        weechat_log_printf ("  last_redirect . . . . . . : 0x%lx", ptr_server->last_redirect);
-        weechat_log_printf ("  notify_list . . . . . . . : 0x%lx", ptr_server->notify_list);
-        weechat_log_printf ("  last_notify . . . . . . . : 0x%lx", ptr_server->last_notify);
-        weechat_log_printf ("  notify_count. . . . . . . : %d",    ptr_server->notify_count);
-        weechat_log_printf ("  join_manual . . . . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  redirects . . . . . . . . : %p", ptr_server->redirects);
+        weechat_log_printf ("  last_redirect . . . . . . : %p", ptr_server->last_redirect);
+        weechat_log_printf ("  notify_list . . . . . . . : %p", ptr_server->notify_list);
+        weechat_log_printf ("  last_notify . . . . . . . : %p", ptr_server->last_notify);
+        weechat_log_printf ("  notify_count. . . . . . . : %d", ptr_server->notify_count);
+        weechat_log_printf ("  join_manual . . . . . . . : %p (hashtable: '%s')",
                             ptr_server->join_manual,
                             weechat_hashtable_get_string (ptr_server->join_manual, "keys_values"));
-        weechat_log_printf ("  join_channel_key. . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  join_channel_key. . . . . : %p (hashtable: '%s')",
                             ptr_server->join_channel_key,
                             weechat_hashtable_get_string (ptr_server->join_channel_key, "keys_values"));
-        weechat_log_printf ("  join_noswitch . . . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  join_noswitch . . . . . . : %p (hashtable: '%s')",
                             ptr_server->join_noswitch,
                             weechat_hashtable_get_string (ptr_server->join_noswitch, "keys_values"));
-        weechat_log_printf ("  echo_msg_recv . . . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  echo_msg_recv . . . . . . : %p (hashtable: '%s')",
                             ptr_server->echo_msg_recv,
                             weechat_hashtable_get_string (ptr_server->echo_msg_recv, "keys_values"));
-        weechat_log_printf ("  names_channel_filter. . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  names_channel_filter. . . : %p (hashtable: '%s')",
                             ptr_server->names_channel_filter,
                             weechat_hashtable_get_string (ptr_server->names_channel_filter, "keys_values"));
-        weechat_log_printf ("  batches . . . . . . . . . : 0x%lx", ptr_server->batches);
-        weechat_log_printf ("  last_batch. . . . . . . . : 0x%lx", ptr_server->last_batch);
-        weechat_log_printf ("  buffer. . . . . . . . . . : 0x%lx", ptr_server->buffer);
-        weechat_log_printf ("  buffer_as_string. . . . . : 0x%lx", ptr_server->buffer_as_string);
-        weechat_log_printf ("  channels. . . . . . . . . : 0x%lx", ptr_server->channels);
-        weechat_log_printf ("  last_channel. . . . . . . : 0x%lx", ptr_server->last_channel);
-        weechat_log_printf ("  prev_server . . . . . . . : 0x%lx", ptr_server->prev_server);
-        weechat_log_printf ("  next_server . . . . . . . : 0x%lx", ptr_server->next_server);
+        weechat_log_printf ("  batches . . . . . . . . . : %p", ptr_server->batches);
+        weechat_log_printf ("  last_batch. . . . . . . . : %p", ptr_server->last_batch);
+        weechat_log_printf ("  buffer. . . . . . . . . . : %p", ptr_server->buffer);
+        weechat_log_printf ("  buffer_as_string. . . . . : %p", ptr_server->buffer_as_string);
+        weechat_log_printf ("  channels. . . . . . . . . : %p", ptr_server->channels);
+        weechat_log_printf ("  last_channel. . . . . . . : %p", ptr_server->last_channel);
+        weechat_log_printf ("  prev_server . . . . . . . : %p", ptr_server->prev_server);
+        weechat_log_printf ("  next_server . . . . . . . : %p", ptr_server->next_server);
 
         irc_redirect_print_log (ptr_server);
 

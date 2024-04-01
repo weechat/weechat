@@ -384,22 +384,22 @@ relay_weechat_print_log (struct t_relay_client *client)
 {
     if (client->protocol_data)
     {
-        weechat_log_printf ("    handshake_done. . . . . : %d",   RELAY_WEECHAT_DATA(client, handshake_done));
-        weechat_log_printf ("    password_ok . . . . . . : %d",   RELAY_WEECHAT_DATA(client, password_ok));
-        weechat_log_printf ("    totp_ok . . . . . . . . : %d",   RELAY_WEECHAT_DATA(client, totp_ok));
-        weechat_log_printf ("    compression . . . . . . : %d",   RELAY_WEECHAT_DATA(client, compression));
-        weechat_log_printf ("    escape_commands . . . . : %d",   RELAY_WEECHAT_DATA(client, escape_commands));
-        weechat_log_printf ("    buffers_sync. . . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("    handshake_done. . . . . : %d", RELAY_WEECHAT_DATA(client, handshake_done));
+        weechat_log_printf ("    password_ok . . . . . . : %d", RELAY_WEECHAT_DATA(client, password_ok));
+        weechat_log_printf ("    totp_ok . . . . . . . . : %d", RELAY_WEECHAT_DATA(client, totp_ok));
+        weechat_log_printf ("    compression . . . . . . : %d", RELAY_WEECHAT_DATA(client, compression));
+        weechat_log_printf ("    escape_commands . . . . : %d", RELAY_WEECHAT_DATA(client, escape_commands));
+        weechat_log_printf ("    buffers_sync. . . . . . : %p (hashtable: '%s')",
                             RELAY_WEECHAT_DATA(client, buffers_sync),
                             weechat_hashtable_get_string (RELAY_WEECHAT_DATA(client, buffers_sync),
                                                           "keys_values"));
-        weechat_log_printf ("    hook_signal_buffer. . . : 0x%lx", RELAY_WEECHAT_DATA(client, hook_signal_buffer));
-        weechat_log_printf ("    hook_hsignal_nicklist . : 0x%lx", RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist));
-        weechat_log_printf ("    hook_signal_upgrade . . : 0x%lx", RELAY_WEECHAT_DATA(client, hook_signal_upgrade));
-        weechat_log_printf ("    buffers_nicklist. . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("    hook_signal_buffer. . . : %p", RELAY_WEECHAT_DATA(client, hook_signal_buffer));
+        weechat_log_printf ("    hook_hsignal_nicklist . : %p", RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist));
+        weechat_log_printf ("    hook_signal_upgrade . . : %p", RELAY_WEECHAT_DATA(client, hook_signal_upgrade));
+        weechat_log_printf ("    buffers_nicklist. . . . : %p (hashtable: '%s')",
                             RELAY_WEECHAT_DATA(client, buffers_nicklist),
                             weechat_hashtable_get_string (RELAY_WEECHAT_DATA(client, buffers_nicklist),
                                                           "keys_values"));
-        weechat_log_printf ("    hook_timer_nicklist . . : 0x%lx", RELAY_WEECHAT_DATA(client, hook_timer_nicklist));
+        weechat_log_printf ("    hook_timer_nicklist . . : %p", RELAY_WEECHAT_DATA(client, hook_timer_nicklist));
     }
 }

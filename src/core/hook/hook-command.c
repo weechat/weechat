@@ -1108,13 +1108,13 @@ hook_command_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  command data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_COMMAND(hook, callback));
-    log_printf ("    command . . . . . . . : '%s'",  HOOK_COMMAND(hook, command));
-    log_printf ("    description . . . . . : '%s'",  HOOK_COMMAND(hook, description));
-    log_printf ("    args. . . . . . . . . : '%s'",  HOOK_COMMAND(hook, args));
-    log_printf ("    args_description. . . : '%s'",  HOOK_COMMAND(hook, args_description));
-    log_printf ("    completion. . . . . . : '%s'",  HOOK_COMMAND(hook, completion));
-    log_printf ("    cplt_num_templates. . : %d",    HOOK_COMMAND(hook, cplt_num_templates));
+    log_printf ("    callback. . . . . . . : %p", HOOK_COMMAND(hook, callback));
+    log_printf ("    command . . . . . . . : '%s'", HOOK_COMMAND(hook, command));
+    log_printf ("    description . . . . . : '%s'", HOOK_COMMAND(hook, description));
+    log_printf ("    args. . . . . . . . . : '%s'", HOOK_COMMAND(hook, args));
+    log_printf ("    args_description. . . : '%s'", HOOK_COMMAND(hook, args_description));
+    log_printf ("    completion. . . . . . : '%s'", HOOK_COMMAND(hook, completion));
+    log_printf ("    cplt_num_templates. . : %d", HOOK_COMMAND(hook, cplt_num_templates));
     for (i = 0; i < HOOK_COMMAND(hook, cplt_num_templates); i++)
     {
         log_printf ("    cplt_templates[%04d] . . . : '%s'",

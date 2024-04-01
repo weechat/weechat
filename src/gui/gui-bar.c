@@ -438,8 +438,7 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
      */
     snprintf (str_modifier, sizeof (str_modifier),
               "bar_condition_%s", bar->name);
-    snprintf (str_window, sizeof (str_window),
-              "0x%lx", (unsigned long)(window));
+    snprintf (str_window, sizeof (str_window), "%p", window);
     str_displayed = hook_modifier_exec (NULL,
                                         str_modifier,
                                         str_window,
@@ -2425,7 +2424,7 @@ gui_bar_print_log ()
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         log_printf ("");
-        log_printf ("[bar (addr:0x%lx)]", ptr_bar);
+        log_printf ("[bar (addr:%p)]", ptr_bar);
         log_printf ("  name . . . . . . . . . : '%s'",  ptr_bar->name);
         log_printf ("  hidden . . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]));
         log_printf ("  priority . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_PRIORITY]));
@@ -2475,10 +2474,10 @@ gui_bar_print_log ()
                             ptr_bar->items_suffix[i][j]);
             }
         }
-        log_printf ("  bar_window . . . . . . : 0x%lx", ptr_bar->bar_window);
-        log_printf ("  bar_refresh_needed . . : %d",    ptr_bar->bar_refresh_needed);
-        log_printf ("  prev_bar . . . . . . . : 0x%lx", ptr_bar->prev_bar);
-        log_printf ("  next_bar . . . . . . . : 0x%lx", ptr_bar->next_bar);
+        log_printf ("  bar_window . . . . . . : %p", ptr_bar->bar_window);
+        log_printf ("  bar_refresh_needed . . : %d", ptr_bar->bar_refresh_needed);
+        log_printf ("  prev_bar . . . . . . . : %p", ptr_bar->prev_bar);
+        log_printf ("  next_bar . . . . . . . : %p", ptr_bar->next_bar);
 
         if (ptr_bar->bar_window)
             gui_bar_window_print_log (ptr_bar->bar_window);

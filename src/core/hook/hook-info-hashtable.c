@@ -237,7 +237,7 @@ hook_info_hashtable_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  info_hashtable data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_INFO_HASHTABLE(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_INFO_HASHTABLE(hook, callback));
     log_printf ("    info_name . . . . . . : '%s'", HOOK_INFO_HASHTABLE(hook, info_name));
     log_printf ("    description . . . . . : '%s'", HOOK_INFO_HASHTABLE(hook, description));
     log_printf ("    args_description. . . : '%s'", HOOK_INFO_HASHTABLE(hook, args_description));

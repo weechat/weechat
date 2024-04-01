@@ -664,17 +664,17 @@ proxy_print_log ()
          ptr_proxy = ptr_proxy->next_proxy)
     {
         log_printf ("");
-        log_printf ("[proxy (addr:0x%lx)]", ptr_proxy);
-        log_printf ("  name . . . . . . . . . : '%s'",  ptr_proxy->name);
+        log_printf ("[proxy (addr:%p)]", ptr_proxy);
+        log_printf ("  name . . . . . . . . . : '%s'", ptr_proxy->name);
         log_printf ("  type . . . . . . . . . : %d (%s)",
                     CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_TYPE]),
                     proxy_type_string[CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_TYPE])]);
-        log_printf ("  ipv6 . . . . . . . . . : %d",    CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_IPV6]));
-        log_printf ("  address. . . . . . . . : '%s'",  CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]));
-        log_printf ("  port . . . . . . . . . : %d",    CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
-        log_printf ("  username . . . . . . . : '%s'",  CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_USERNAME]));
-        log_printf ("  password . . . . . . . : '%s'",  CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_PASSWORD]));
-        log_printf ("  prev_proxy . . . . . . : 0x%lx", ptr_proxy->prev_proxy);
-        log_printf ("  next_proxy . . . . . . : 0x%lx", ptr_proxy->next_proxy);
+        log_printf ("  ipv6 . . . . . . . . . : %d", CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_IPV6]));
+        log_printf ("  address. . . . . . . . : '%s'", CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]));
+        log_printf ("  port . . . . . . . . . : %d", CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
+        log_printf ("  username . . . . . . . : '%s'", CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_USERNAME]));
+        log_printf ("  password . . . . . . . : '%s'", CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_PASSWORD]));
+        log_printf ("  prev_proxy . . . . . . : %p", ptr_proxy->prev_proxy);
+        log_printf ("  next_proxy . . . . . . : %p", ptr_proxy->next_proxy);
     }
 }

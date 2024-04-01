@@ -211,17 +211,26 @@ debug_windows_tree_display (struct t_gui_window_tree *tree, int indent)
             /* leaf */
             snprintf (format,
                       sizeof (format),
-                      "%%-%dsleaf: 0x%%lx, parent:0x%%lx, child1=0x%%lx, "
-                      "child2=0x%%lx, win=0x%%lx (%%d,%%d %%dx%%d"
-                      " %%d%%%%x%%d%%%%)",
+                      "%%-%dsleaf: "
+                      "%%p, "
+                      "parent:%%p, "
+                      "child1=%%p, "
+                      "child2=%%p, "
+                      "win=%%p "
+                      "(%%d,%%d %%dx%%d %%d%%%%x%%d%%%%)",
                       indent * 2);
             gui_chat_printf (NULL,
                              format,
-                             " ", tree, tree->parent_node,
-                             tree->child1, tree->child2,
+                             " ",
+                             tree,
+                             tree->parent_node,
+                             tree->child1,
+                             tree->child2,
                              tree->window,
-                             tree->window->win_x, tree->window->win_y,
-                             tree->window->win_width, tree->window->win_height,
+                             tree->window->win_x,
+                             tree->window->win_y,
+                             tree->window->win_width,
+                             tree->window->win_height,
                              tree->window->win_width_pct,
                              tree->window->win_height_pct);
         }
@@ -230,14 +239,23 @@ debug_windows_tree_display (struct t_gui_window_tree *tree, int indent)
             /* node */
             snprintf (format,
                       sizeof (format),
-                      "%%-%dsnode: 0x%%lx, parent:0x%%lx, pct:%%d, "
-                      "horizontal:%%d, child1=0x%%lx, child2=0x%%lx",
+                      "%%-%dsnode: "
+                      "0x%%lx, "
+                      "parent:%%p, "
+                      "pct:%%d, "
+                      "horizontal:%%d, "
+                      "child1=%%p, "
+                      "child2=%%p",
                       indent * 2);
             gui_chat_printf (NULL,
                              format,
-                             " ", tree, tree->parent_node, tree->split_pct,
+                             " ",
+                             tree,
+                             tree->parent_node,
+                             tree->split_pct,
                              tree->split_horizontal,
-                             tree->child1, tree->child2);
+                             tree->child1,
+                             tree->child2);
         }
 
         if (tree->child1)
@@ -346,7 +364,7 @@ debug_hdata_hash_list_map_cb (void *data,
     (void) hashtable;
 
     gui_chat_printf (NULL,
-                     "    list: %s -> 0x%lx",
+                     "    list: %s -> %p",
                      (char *)key,
                      *((void **)value));
 }
@@ -372,8 +390,9 @@ debug_hdata_map_cb (void *data,
     ptr_hdata = (struct t_hdata *)value;
 
     gui_chat_printf (NULL,
-                     "  hdata 0x%lx: \"%s\", %d vars, %d lists:",
-                     ptr_hdata, (const char *)key,
+                     "  hdata %p: \"%s\", %d vars, %d lists:",
+                     ptr_hdata,
+                     (const char *)key,
                      ptr_hdata->hash_var->items_count,
                      ptr_hdata->hash_list->items_count);
 
@@ -618,7 +637,7 @@ debug_infolists ()
                 }
             }
             gui_chat_printf (NULL,
-                             "%4d: infolist 0x%lx: %d items, %d vars - "
+                             "%4d: infolist %p: %d items, %d vars - "
                              "structs: %d, data: %d (total: %d bytes)",
                              i + 1, ptr_infolist, count_items, count_vars,
                              size_structs, size_data, size_structs + size_data);

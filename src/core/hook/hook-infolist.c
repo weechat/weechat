@@ -238,7 +238,7 @@ hook_infolist_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  infolist data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_INFOLIST(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_INFOLIST(hook, callback));
     log_printf ("    infolist_name . . . . : '%s'", HOOK_INFOLIST(hook, infolist_name));
     log_printf ("    description . . . . . : '%s'", HOOK_INFOLIST(hook, description));
     log_printf ("    pointer_description . : '%s'", HOOK_INFOLIST(hook, pointer_description));

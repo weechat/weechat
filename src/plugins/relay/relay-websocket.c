@@ -909,6 +909,6 @@ relay_websocket_deflate_print_log (struct t_relay_websocket_deflate *ws_deflate,
     weechat_log_printf ("%s    client_context_takeover : %d", prefix, ws_deflate->client_context_takeover);
     weechat_log_printf ("%s    window_bits_deflate . . : %d", prefix, ws_deflate->window_bits_deflate);
     weechat_log_printf ("%s    window_bits_inflate . . : %d", prefix, ws_deflate->window_bits_inflate);
-    weechat_log_printf ("%s    strm_deflate. . . . . . : 0x%lx", prefix, ws_deflate->strm_deflate);
-    weechat_log_printf ("%s    strm_inflate. . . . . . : 0x%lx", prefix, ws_deflate->strm_inflate);
+    weechat_log_printf ("%s    strm_deflate. . . . . . : %p", prefix, ws_deflate->strm_deflate);
+    weechat_log_printf ("%s    strm_inflate. . . . . . : %p", prefix, ws_deflate->strm_inflate);
 }

@@ -257,10 +257,10 @@ hook_print_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  print data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_PRINT(hook, callback));
-    log_printf ("    buffer. . . . . . . . : 0x%lx", HOOK_PRINT(hook, buffer));
+    log_printf ("    callback. . . . . . . : %p", HOOK_PRINT(hook, callback));
+    log_printf ("    buffer. . . . . . . . : %p", HOOK_PRINT(hook, buffer));
     log_printf ("    tags_count. . . . . . : %d", HOOK_PRINT(hook, tags_count));
-    log_printf ("    tags_array. . . . . . : 0x%lx", HOOK_PRINT(hook, tags_array));
+    log_printf ("    tags_array. . . . . . : %p", HOOK_PRINT(hook, tags_array));
     if (HOOK_PRINT(hook, tags_array))
     {
         for (i = 0; i < HOOK_PRINT(hook, tags_count); i++)

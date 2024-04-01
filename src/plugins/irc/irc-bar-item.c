@@ -806,8 +806,7 @@ irc_bar_item_focus_buffer_nicklist (const void *pointer, void *data,
             ptr_nick = irc_nick_search (ptr_server, ptr_channel, nick);
             if (ptr_nick)
             {
-                snprintf (str_value, sizeof (str_value),
-                          "0x%lx", (unsigned long)ptr_nick);
+                snprintf (str_value, sizeof (str_value), "%p", ptr_nick);
                 weechat_hashtable_set (info, "irc_nick", str_value);
 
                 if (ptr_nick->host)

@@ -347,7 +347,7 @@ hook_fd_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  fd data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_FD(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_FD(hook, callback));
     log_printf ("    fd. . . . . . . . . . : %d", HOOK_FD(hook, fd));
     log_printf ("    flags . . . . . . . . : %d", HOOK_FD(hook, flags));
     log_printf ("    error . . . . . . . . : %d", HOOK_FD(hook, error));

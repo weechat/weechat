@@ -1014,8 +1014,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", "${buffer[unknown_list].full_name}");
     WEE_CHECK_EVAL("", "${unknown_pointer}");
     WEE_CHECK_EVAL("", "${my_null_pointer}");
-    snprintf (str_value, sizeof (str_value),
-              "0x%lx", (long unsigned int)gui_buffers);
+    snprintf (str_value, sizeof (str_value), "%p", gui_buffers);
     WEE_CHECK_EVAL(str_value, "${my_buffer_pointer}");
     WEE_CHECK_EVAL("0x1234abcd", "${my_other_pointer}");
     WEE_CHECK_EVAL("", "${buffer[unknown_pointer].full_name}");
@@ -1024,7 +1023,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", "${buffer[my_other_pointer].full_name}");
     WEE_CHECK_EVAL("core.weechat", "${buffer[gui_buffers].full_name}");
     snprintf (str_value, sizeof (str_value),
-              "${buffer[0x%lx].full_name}", (long unsigned int)gui_buffers);
+              "${buffer[%p].full_name}", gui_buffers);
     WEE_CHECK_EVAL("core.weechat", str_value);
     snprintf (str_value, sizeof (str_value), "%c", 1);
     WEE_CHECK_EVAL(str_value,
@@ -1036,7 +1035,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL(str_value,
                    "${window.buffer.own_lines.first_line.data.date}");
     snprintf (str_value, sizeof (str_value),
-              "0x%lx", (long unsigned int)(gui_buffers->local_variables));
+              "%p", gui_buffers->local_variables);
     WEE_CHECK_EVAL(str_value, "${window.buffer.local_variables}");
     WEE_CHECK_EVAL("core", "${window.buffer.local_variables.plugin}");
     WEE_CHECK_EVAL("weechat", "${window.buffer.local_variables.name}");

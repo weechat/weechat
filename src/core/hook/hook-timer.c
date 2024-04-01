@@ -421,7 +421,7 @@ hook_timer_print_log (struct t_hook *hook)
         return;
 
     log_printf ("  timer data:");
-    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_TIMER(hook, callback));
+    log_printf ("    callback. . . . . . . : %p", HOOK_TIMER(hook, callback));
     log_printf ("    interval. . . . . . . : %ld", HOOK_TIMER(hook, interval));
     log_printf ("    align_second. . . . . : %d", HOOK_TIMER(hook, align_second));
     log_printf ("    remaining_calls . . . : %d", HOOK_TIMER(hook, remaining_calls));

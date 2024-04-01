@@ -737,10 +737,7 @@ trigger_callback_signal_cb (const void *pointer, void *data,
     {
         str_data[0] = '\0';
         if (signal_data)
-        {
-            snprintf (str_data, sizeof (str_data),
-                      "0x%lx", (unsigned long)signal_data);
-        }
+            snprintf (str_data, sizeof (str_data), "%p", signal_data);
         ptr_signal_data = str_data;
     }
     weechat_hashtable_set (ctx.extra_vars, "tg_signal_data", ptr_signal_data);
@@ -817,7 +814,7 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
     char *str_tags, **tags, *prefix, *string_no_color;
     int length, num_tags, rc;
     void *ptr_irc_server, *ptr_irc_channel;
-    unsigned long value;
+    struct t_gui_buffer *ptr_buffer;
 
     TRIGGER_CALLBACK_CB_INIT(NULL);
 
@@ -930,10 +927,10 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
                                               pos - modifier_data);
             if (buffer_pointer)
             {
-                rc = sscanf (buffer_pointer, "0x%lx", &value);
+                rc = sscanf (buffer_pointer, "%p", &ptr_buffer);
                 if ((rc != EOF) && (rc != 0))
                 {
-                    ctx.buffer = (struct t_gui_buffer *)value;
+                    ctx.buffer = ptr_buffer;
                     weechat_hashtable_set (
                         ctx.extra_vars,
                         "tg_plugin",

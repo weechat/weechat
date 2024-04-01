@@ -1387,7 +1387,7 @@ relay_http_print_log (struct t_relay_http_request *request)
     weechat_log_printf ("    status. . . . . . . . . : %d", request->status);
     weechat_log_printf ("    method. . . . . . . . . : '%s'", request->method);
     weechat_log_printf ("    path. . . . . . . . . . : '%s'", request->path);
-    weechat_log_printf ("    path_items. . . . . . . : 0x%lx", request->path_items);
+    weechat_log_printf ("    path_items. . . . . . . : %p", request->path_items);
     if (request->path_items)
     {
         for (i = 0; request->path_items[0]; i++)
@@ -1396,14 +1396,14 @@ relay_http_print_log (struct t_relay_http_request *request)
         }
     }
     weechat_log_printf ("    num_path_items. . . . . : %d", request->num_path_items);
-    weechat_log_printf ("    params. . . . . . . . . : 0x%lx (hashtable: '%s')",
+    weechat_log_printf ("    params. . . . . . . . . : %p (hashtable: '%s')",
                         request->params,
                         weechat_hashtable_get_string (request->params, "keys_values"));
     weechat_log_printf ("    http_version. . . . . . : '%s'", request->http_version);
-    weechat_log_printf ("    headers . . . . . . . . : 0x%lx (hashtable: '%s')",
+    weechat_log_printf ("    headers . . . . . . . . : %p (hashtable: '%s')",
                         request->headers,
                         weechat_hashtable_get_string (request->headers, "keys_values"));
-    weechat_log_printf ("    accept_encoding . . . . : 0x%lx (hashtable: '%s')",
+    weechat_log_printf ("    accept_encoding . . . . : %p (hashtable: '%s')",
                         request->accept_encoding,
                         weechat_hashtable_get_string (request->accept_encoding,
                                                       "keys_values"));
