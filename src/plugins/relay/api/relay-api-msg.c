@@ -455,7 +455,9 @@ relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
     MSG_ADD_HDATA_VAR(Number, "y", integer, "y");
     MSG_ADD_HDATA_TIME_USEC("date", "date", "date_usec");
     MSG_ADD_HDATA_TIME_USEC("date_printed", "date_printed", "date_usec_printed");
+    MSG_ADD_HDATA_VAR(Bool, "displayed", char, "displayed");
     MSG_ADD_HDATA_VAR(Bool, "highlight", char, "highlight");
+    MSG_ADD_HDATA_VAR(Number, "notify_level", char, "notify_level");
     MSG_ADD_HDATA_STR_COLORS("prefix", "prefix");
     MSG_ADD_HDATA_STR_COLORS("message", "message");
 
