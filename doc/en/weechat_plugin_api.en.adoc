@@ -537,6 +537,55 @@ num_files = 2
 str = weechat.ngettext("file", "files", num_files)
 ----
 
+==== asprintf
+
+_WeeChat ≥ 4.3.0._
+
+Format a message in a string allocated by the function.
+
+[NOTE]
+This function is defined for systems where the GNU function `asprintf()`
+is not available. +
+The behavior is almost the same except that `*result` is set to NULL on error.
+
+Prototype:
+
+[source,c]
+----
+int weechat_asprintf (char **result, const char *fmt, ...);
+----
+
+Arguments:
+
+* _result_: pointer to a string pointer
+* _fmt_: format string
+
+Return value:
+
+* number of bytes written in `*result` (excluding the final null byte),
+  a negative value in case of error.
+
+C example:
+
+[source,c]
+----
+char *str;
+
+if (weechat_asprintf (&str, "%s, %d", "test", 42) >= 0)
+{
+    /* *str == "test, 42" */
+    /* ... */
+    free (str);
+}
+else
+{
+    /* error: *str == NULL */
+}
+----
+
+[NOTE]
+This function is not available in scripting API.
+
 ==== strndup
 
 Return duplicated string, with a max number of bytes.

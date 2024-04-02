@@ -547,6 +547,60 @@ num_files = 2
 str = weechat.ngettext("file", "files", num_files)
 ----
 
+==== asprintf
+
+_WeeChat ≥ 4.3.0._
+
+// TRANSLATION MISSING
+Format a message in a string allocated by the function.
+
+// TRANSLATION MISSING
+[NOTE]
+This function is defined for systems where the GNU function `asprintf()`
+is not available. +
+The behavior is almost the same except that `*result` is set to NULL on error.
+
+プロトタイプ:
+
+[source,c]
+----
+int weechat_asprintf (char **result, const char *fmt, ...);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _result_: pointer to a string pointer
+// TRANSLATION MISSING
+* _fmt_: format string
+
+戻り値:
+
+// TRANSLATION MISSING
+* number of bytes written in `*result` (excluding the final null byte),
+  a negative value in case of error.
+
+C 言語での使用例:
+
+[source,c]
+----
+char *str;
+
+if (weechat_asprintf (&str, "%s, %d", "test", 42) >= 0)
+{
+    /* *str == "test, 42" */
+    /* ... */
+    free (str);
+}
+else
+{
+    /* error: *str == NULL */
+}
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 ==== strndup
 
 // TRANSLATION MISSING

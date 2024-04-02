@@ -547,6 +547,56 @@ num_files = 2
 str = weechat.ngettext("file", "files", num_files)
 ----
 
+==== asprintf
+
+_WeeChat ≥ 4.3.0._
+
+Formater un message dans une chaîne allouée par la fonction.
+
+[NOTE]
+Cette fonction est définie pour les systèmes où la fonction GNU `asprintf()`
+n'est pas disponible. +
+Le comportement est quasiment le même à l'exception de `*result` qui est mis à
+NULL en cas d'erreur.
+
+Prototype :
+
+[source,c]
+----
+int weechat_asprintf (char **result, const char *fmt, ...);
+----
+
+Paramètres :
+
+* _result_ : pointeur vers un pointeur de chaîne
+* _fmt_ : chaîne de formatage
+
+Valeur de retour :
+
+* nombre d'octets écrits dans `*result` (en excluant le caractère nul de fin),
+  une valeur négative en cas d'erreur.
+
+Exemple en C :
+
+[source,c]
+----
+char *str;
+
+if (weechat_asprintf (&str, "%s, %d", "test", 42) >= 0)
+{
+    /* *str == "test, 42" */
+    /* ... */
+    free (str);
+}
+else
+{
+    /* erreur : *str == NULL */
+}
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== strndup
 
 Retourner la chaîne dupliquée, avec un nombre maximum d'octets.

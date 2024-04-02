@@ -71,6 +71,61 @@ char **string_concat_buffer[STRING_NUM_CONCAT_BUFFERS];
 
 
 /*
+ * Formats a message in a string allocated by the function.
+ *
+ * This function is defined for systems where the GNU function `asprintf()`
+ * is not available.
+ * The behavior is almost the same except that `*result` is set to NULL on error.
+ *
+ * Returns the number of bytes in the resulting string, negative value in case
+ * of error.
+ *
+ * Value of `*result` is allocated with the result string (NULL if error),
+ * it must be freed after use.
+ */
+
+int
+string_asprintf (char **result, const char *fmt, ...)
+{
+    va_list argptr;
+    int num_bytes;
+    size_t size;
+
+    if (!result)
+        return -1;
+
+    *result = NULL;
+
+    if (!fmt)
+        return -1;
+
+    /* determine required size */
+    va_start (argptr, fmt);
+    num_bytes = vsnprintf (NULL, 0, fmt, argptr);
+    va_end (argptr);
+
+    if (num_bytes < 0)
+        return num_bytes;
+
+    size = (size_t)num_bytes + 1;
+    *result = malloc (size);
+    if (!*result)
+        return -1;
+
+    va_start (argptr, fmt);
+    num_bytes = vsnprintf (*result, size, fmt, argptr);
+    va_end (argptr);
+
+    if (num_bytes < 0)
+    {
+        free (*result);
+        *result = NULL;
+    }
+
+    return num_bytes;
+}
+
+/*
  * Defines a "strndup" function for systems where this function does not exist
  * (FreeBSD and maybe others).
  *

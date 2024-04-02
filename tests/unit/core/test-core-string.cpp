@@ -125,6 +125,43 @@ TEST_GROUP(CoreString)
 
 /*
  * Tests functions:
+ *   string_asprintf
+ */
+
+TEST(CoreString, Asprintf)
+{
+    char *test;
+
+    test = (char *)0x1;
+    LONGS_EQUAL(-1, string_asprintf (NULL, NULL));
+    POINTERS_EQUAL(0x1, test);
+
+    test = (char *)0x1;
+    LONGS_EQUAL(-1, string_asprintf (NULL, ""));
+    POINTERS_EQUAL(0x1, test);
+
+    test = (char *)0x1;
+    LONGS_EQUAL(-1, string_asprintf (&test, NULL));
+    POINTERS_EQUAL(NULL, test);
+
+    test = (char *)0x1;
+    LONGS_EQUAL(0, string_asprintf (&test, ""));
+    STRCMP_EQUAL("", test);
+    free (test);
+
+    test = (char *)0x1;
+    LONGS_EQUAL(4, string_asprintf (&test, "test"));
+    STRCMP_EQUAL("test", test);
+    free (test);
+
+    test = (char *)0x1;
+    LONGS_EQUAL(16, string_asprintf (&test, "test, %s, %d", "string", 42));
+    STRCMP_EQUAL("test, string, 42", test);
+    free (test);
+}
+
+/*
+ * Tests functions:
  *   string_strndup
  */
 

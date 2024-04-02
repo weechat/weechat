@@ -39,6 +39,7 @@ struct t_string_dyn
 
 struct t_hashtable;
 
+extern int string_asprintf (char **result, const char *fmt, ...);
 extern char *string_strndup (const char *string, int bytes);
 extern char *string_cut (const char *string, int length, int count_suffix,
                          int screen, const char *cut_suffix);

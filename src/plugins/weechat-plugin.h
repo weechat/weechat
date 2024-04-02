@@ -73,7 +73,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20240307-01"
+#define WEECHAT_PLUGIN_API_VERSION "20240402-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -316,6 +316,7 @@ struct t_weechat_plugin
     char *(*iconv_from_internal) (const char *charset, const char *string);
     const char *(*gettext) (const char *string);
     const char *(*ngettext) (const char *single, const char *plural, int count);
+    int (*asprintf) (char **result, const char *fmt, ...);
     char *(*strndup) (const char *string, int bytes);
     char *(*string_cut) (const char *string, int length, int count_suffix,
                          int screen, const char *cut_suffix);
@@ -1290,7 +1291,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_gettext(string) (weechat_plugin->gettext)(string)
 #define weechat_ngettext(single,plural,number)                          \
     (weechat_plugin->ngettext)(single, plural, number)
-#define weechat_strndup(__string, __bytes)                              \
+#define weechat_asprintf(__result, __fmt, __argz...)                    \
+    (weechat_plugin->asprintf)(__result, __fmt, ##__argz)
+#define weechat_strndup(__string, __bytes)              \
     (weechat_plugin->strndup)(__string, __bytes)
 #define weechat_string_cut(__string, __length, __count_suffix,          \
                            __screen, __cut_suffix)                      \
