@@ -4796,7 +4796,7 @@ int weechat_util_strftimeval (char *string, int max, const char *format, struct 
 
 Paramètres :
 
-* _string_ : tampon où stocker la chaîne formattée
+* _string_ : tampon où stocker la chaîne formatée
 * _max_ : taille de la chaîne
 * _format_ : format, le même que celui de la fonction _strftime_, avec des
   caractères de conversion supplémentaires :
