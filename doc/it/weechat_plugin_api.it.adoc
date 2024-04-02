@@ -15251,6 +15251,8 @@ Argomenti:
 // TRANSLATION MISSING
 ** _nicklist_nicks_visible_count_: number of nicks displayed
 ** _input_: 1 se l'input è abilitato, altrimenti 0
+// TRANSLATION MISSING
+** _input_get_any_user_data_: 1 if any user data, including commands, are sent to input callback, otherwise 0
 ** _input_get_unknown_commands_: 1 se i comandi sconosciuti vengono inviati alla callback di input, altrimenti 0
 // TRANSLATION MISSING
 ** _input_get_empty_: 1 if empty input is sent to input callback, otherwise 0
@@ -15615,6 +15617,11 @@ Properties:
 
 | input_pos | | posizione
 | Imposta la posizione del cursore per l'input del buffer.
+
+// TRANSLATION MISSING
+| input_get_any_user_data | 4.3.0 | "0" or "1"
+| "0" to get only user messages (default behavior), "1" to get everything,
+  including commands.
 
 | input_get_unknown_commands | | "0" oppure "1"
 | "0" per disabilitare i comandi sconosciuti per questo buffer (comportamento

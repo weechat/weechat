@@ -707,6 +707,7 @@ inl:
         nicklist_visible_count: 0
         title: 'WeeChat 2.9-dev (C) 2003-2020 - https://weechat.org/'
         input: 1
+        input_get_any_user_data: 0
         input_get_unknown_commands: 0
         input_get_empty: 0
         input_multiline: 0

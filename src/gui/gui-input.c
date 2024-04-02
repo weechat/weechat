@@ -333,7 +333,7 @@ gui_input_send_data_to_buffer (struct t_gui_buffer *buffer, char *data)
     gui_input_text_changed_modifier_and_signal (buffer,
                                                 0, /* save undo */
                                                 1); /* stop completion */
-    (void) input_data (buffer, data, NULL, 1);
+    (void) input_data (buffer, data, NULL, 1, 1);
 }
 
 /*

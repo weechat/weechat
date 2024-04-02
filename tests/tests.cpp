@@ -183,7 +183,7 @@ void
 run_cmd (const char *command)
 {
     printf (">>> Running command: %s\n", command);
-    input_data (ptr_core_buffer, command, NULL, 0);
+    input_data (ptr_core_buffer, command, NULL, 0, 0);
 }
 
 /*
@@ -193,7 +193,7 @@ run_cmd (const char *command)
 void
 run_cmd_quiet (const char *command)
 {
-    input_data (ptr_core_buffer, command, NULL, 0);
+    input_data (ptr_core_buffer, command, NULL, 0, 0);
 }
 
 /*

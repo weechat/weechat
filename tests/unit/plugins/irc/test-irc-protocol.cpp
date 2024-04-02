@@ -334,7 +334,7 @@ TEST_GROUP(IrcProtocolWithServer)
 
         ptr_buffer = gui_buffer_search_by_full_name (buffer);
         if (ptr_buffer)
-            input_data (ptr_buffer, data, NULL, 0);
+            input_data (ptr_buffer, data, NULL, 0, 0);
 
         record_stop ();
     }

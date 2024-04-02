@@ -31,7 +31,8 @@ extern int input_exec_command (struct t_gui_buffer *buffer,
                                const char *string,
                                const char *commands_allowed);
 extern int input_data (struct t_gui_buffer *buffer, const char *data,
-                       const char *commands_allowed, int split_newline);
+                       const char *commands_allowed, int split_newline,
+                       int user_data);
 extern int input_data_delayed (struct t_gui_buffer *buffer, const char *data,
                                const char *commands_allowed, int split_newline,
                                long delay);

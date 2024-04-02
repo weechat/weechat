@@ -114,22 +114,22 @@ TEST(GuiKey, GetCurrentContext)
 {
     LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
 
-    input_data (gui_buffers, "/cursor", NULL, 0);
+    input_data (gui_buffers, "/cursor", NULL, 0, 0);
     LONGS_EQUAL(GUI_KEY_CONTEXT_CURSOR, gui_key_get_current_context ());
 
-    input_data (gui_buffers, "/cursor stop", NULL, 0);
+    input_data (gui_buffers, "/cursor stop", NULL, 0, 0);
     LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
 
-    input_data (gui_buffers, "/input search_text_here", NULL, 0);
+    input_data (gui_buffers, "/input search_text_here", NULL, 0, 0);
     LONGS_EQUAL(GUI_KEY_CONTEXT_SEARCH, gui_key_get_current_context ());
 
-    input_data (gui_buffers, "/input search_stop", NULL, 0);
+    input_data (gui_buffers, "/input search_stop", NULL, 0, 0);
     LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
 
-    input_data (gui_buffers, "/input search_history", NULL, 0);
+    input_data (gui_buffers, "/input search_history", NULL, 0, 0);
     LONGS_EQUAL(GUI_KEY_CONTEXT_HISTSEARCH, gui_key_get_current_context ());
 
-    input_data (gui_buffers, "/input search_stop", NULL, 0);
+    input_data (gui_buffers, "/input search_stop", NULL, 0, 0);
     LONGS_EQUAL(GUI_KEY_CONTEXT_DEFAULT, gui_key_get_current_context ());
 
     gui_buffers->text_search_where = 0;

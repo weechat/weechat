@@ -14160,6 +14160,8 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _nicklist_nicks_count_: број надимака у листи надимака
 ** _nicklist_nicks_visible_count_: број приказаних надимака
 ** _input_: 1 ако је укључен унос, у супротном 0
+// TRANSLATION MISSING
+** _input_get_any_user_data_: 1 if any user data, including commands, are sent to input callback, otherwise 0
 ** _input_get_unknown_commands_: 1 ако се непознате команде шаљу функцији повратног позива уноса, у супротном 0
 ** _input_get_empty_: 1 ако се функцији повратног позива уноса шаље празан унос, у супротном 0
 ** _input_multiline_: 1 ако се више линија шаље као једна порука функцији повратног позива уноса, у супротном 0
@@ -14477,6 +14479,11 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 | input_pos | | позиција
 | Поставља позицију курсора у уносу бафера.
+
+// TRANSLATION MISSING
+| input_get_any_user_data | 4.3.0 | "0" or "1"
+| "0" to get only user messages (default behavior), "1" to get everything,
+  including commands.
 
 | input_get_unknown_commands | | "0" или "1"
 | "0" да се за овај бафер искључе непознате команде (подразумевано понашање), "1" да

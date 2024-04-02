@@ -186,6 +186,7 @@ struct t_gui_buffer
     const void *input_callback_pointer; /* pointer for callback             */
     void *input_callback_data;         /* data for callback                 */
                                        /* to this buffer                    */
+    int input_get_any_user_data;       /* get any user data, including cmds */
     int input_get_unknown_commands;    /* 1 if unknown commands are sent to */
                                        /* input_callback                    */
     int input_get_empty;               /* 1 if empty input is sent to       */

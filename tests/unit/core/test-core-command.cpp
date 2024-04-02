@@ -67,7 +67,7 @@ TEST_GROUP(CoreCommand)
             FAIL("Buffer not found");
         }
         record_start ();
-        input_data (buffer, command, NULL, 0);
+        input_data (buffer, command, NULL, 0, 0);
         record_stop ();
     }
 

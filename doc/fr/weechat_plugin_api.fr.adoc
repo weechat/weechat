@@ -14890,6 +14890,7 @@ Paramètres :
 ** _nicklist_nicks_count_ : nombre de pseudos dans la liste de pseudos
 ** _nicklist_nicks_visible_count_ : nombre de pseudos affichés
 ** _input_ : 1 si la zone de saisie est activée, sinon 0
+** _input_get_any_user_data_ : 1 si toutes les données utilisateur, y compris les commandes, sont envoyées à la fonction de rappel "input", sinon 0
 ** _input_get_unknown_commands_ : 1 si les commandes inconnues sont envoyées à la fonction de rappel "input", sinon 0
 ** _input_get_empty_ : 1 si une entrée vide est envoyée à la fonction de rappel "input", sinon 0
 ** _input_multiline_ : 1 si plusieurs lignes sont envoyées comme un seul message à la fonction de rappel "input", sinon 0
@@ -15214,6 +15215,10 @@ Propriétés :
 
 | input_pos | | position
 | Change la position du curseur dans la zone de saisie.
+
+| input_get_any_user_data | 4.3.0 | "0" or "1"
+| "0" pour recevoir seulement les messages utilisateur (comportement par défaut),
+  "1" pour tout recevoir, y compris les commandes.
 
 | input_get_unknown_commands | | "0" ou "1"
 | "0" pour désactiver les commandes inconnues sur ce tampon (comportement par

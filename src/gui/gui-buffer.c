@@ -101,7 +101,7 @@ char *gui_buffer_properties_get_integer[] =
   "nicklist_display_groups", "nicklist_count", "nicklist_visible_count",
   "nicklist_groups_count", "nicklist_groups_visible_count",
   "nicklist_nicks_count", "nicklist_nicks_visible_count",
-  "input", "input_get_unknown_commands",
+  "input", "input_get_any_user_data", "input_get_unknown_commands",
   "input_get_empty", "input_multiline", "input_size", "input_length",
   "input_pos", "input_1st_display", "num_history", "text_search",
   "text_search_direction", "text_search_exact", "text_search_regex",
@@ -128,8 +128,8 @@ char *gui_buffer_properties_set[] =
   "highlight_words_del", "highlight_disable_regex", "highlight_regex",
   "highlight_tags_restrict", "highlight_tags", "hotlist_max_level_nicks",
   "hotlist_max_level_nicks_add", "hotlist_max_level_nicks_del",
-  "input", "input_pos", "input_get_unknown_commands", "input_get_empty",
-  "input_multiline",
+  "input", "input_pos", "input_get_any_user_data", "input_get_unknown_commands",
+  "input_get_empty", "input_multiline",
   NULL
 };
 
@@ -898,6 +898,7 @@ gui_buffer_new_props_with_id (long long id,
     new_buffer->input_callback = input_callback;
     new_buffer->input_callback_pointer = input_callback_pointer;
     new_buffer->input_callback_data = input_callback_data;
+    new_buffer->input_get_any_user_data = 0;
     new_buffer->input_get_unknown_commands = 0;
     new_buffer->input_get_empty = 0;
     new_buffer->input_multiline = 0;
@@ -1470,6 +1471,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
         return buffer->nicklist_nicks_visible_count;
     else if (strcmp (property, "input") == 0)
         return buffer->input;
+    else if (strcmp (property, "input_get_any_user_data") == 0)
+        return buffer->input_get_any_user_data;
     else if (strcmp (property, "input_get_unknown_commands") == 0)
         return buffer->input_get_unknown_commands;
     else if (strcmp (property, "input_get_empty") == 0)
@@ -2247,6 +2250,20 @@ gui_buffer_remove_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
 }
 
 /*
+ * Sets flag "input_get_any_user_data" for a buffer.
+ */
+
+void
+gui_buffer_set_input_get_any_user_data (struct t_gui_buffer *buffer,
+                                        int input_get_any_user_data)
+{
+    if (!buffer)
+        return;
+
+    buffer->input_get_any_user_data = (input_get_any_user_data) ? 1 : 0;
+}
+
+/*
  * Sets flag "input_get_unknown_commands" for a buffer.
  */
 
@@ -2258,8 +2275,8 @@ gui_buffer_set_input_get_unknown_commands (struct t_gui_buffer *buffer,
         return;
 
     buffer->input_get_unknown_commands = (input_get_unknown_commands) ? 1 : 0;
-}
 
+}
 /*
  * Sets flag "input_get_empty" for a buffer.
  */
@@ -2675,6 +2692,13 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_input_set_pos (buffer, number);
+    }
+    else if (strcmp (property, "input_get_any_user_data") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+            gui_buffer_set_input_get_any_user_data (buffer, number);
     }
     else if (strcmp (property, "input_get_unknown_commands") == 0)
     {
@@ -5171,6 +5195,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, input_callback, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_callback_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_callback_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_get_any_user_data, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_get_unknown_commands, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_get_empty, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_multiline, INTEGER, 0, NULL, NULL);
@@ -5385,6 +5410,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_string (ptr_item, "title", buffer->title))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "input", buffer->input))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input_get_any_user_data", buffer->input_get_any_user_data))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "input_get_unknown_commands", buffer->input_get_unknown_commands))
         return 0;
@@ -5623,6 +5650,7 @@ gui_buffer_print_log ()
         log_printf ("  input_callback. . . . . : %p", ptr_buffer->input_callback);
         log_printf ("  input_callback_pointer. : %p", ptr_buffer->input_callback_pointer);
         log_printf ("  input_callback_data . . : %p", ptr_buffer->input_callback_data);
+        log_printf ("  input_get_any_user_data : %d", ptr_buffer->input_get_any_user_data);
         log_printf ("  input_get_unknown_cmd . : %d", ptr_buffer->input_get_unknown_commands);
         log_printf ("  input_get_empty . . . . : %d", ptr_buffer->input_get_empty);
         log_printf ("  input_multiline . . . . : %d", ptr_buffer->input_multiline);

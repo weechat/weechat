@@ -961,7 +961,7 @@ TEST(PluginApiInfo, InfolistHistoryCb)
     infolist_free (infolist);
 
     /* history of core buffer */
-    input_data (gui_buffers, "abc", NULL, 1);
+    input_data (gui_buffers, "abc", NULL, 1, 0);
     infolist = hook_infolist_get (NULL, "history", gui_buffers, NULL);
     CHECK(infolist);
     CHECK(infolist_next (infolist));

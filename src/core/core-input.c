@@ -246,7 +246,7 @@ end:
 
 int
 input_data (struct t_gui_buffer *buffer, const char *data,
-            const char *commands_allowed, int split_newline)
+            const char *commands_allowed, int split_newline, int user_data)
 {
     char *pos, *buf, str_buffer[128], *new_data, *buffer_full_name;
     const char *ptr_data, *ptr_data_for_buffer;
@@ -331,8 +331,20 @@ input_data (struct t_gui_buffer *buffer, const char *data,
         else
         {
             /* input string is a command */
-            rc = input_exec_command (buffer, 1, buffer->plugin, ptr_data,
-                                     commands_allowed);
+            if (user_data && buffer->input_get_any_user_data)
+            {
+                /*
+                 * if data is sent from user and buffer catches any user data:
+                 * send it to callback
+                 */
+                input_exec_data (buffer, ptr_data);
+            }
+            else
+            {
+                /* execute command on buffer */
+                rc = input_exec_command (buffer, 1, buffer->plugin, ptr_data,
+                                         commands_allowed);
+            }
         }
 
         if (pos)
@@ -384,7 +396,8 @@ input_data_timer_cb (const void *pointer, void *data, int remaining_calls)
                 ptr_buffer,
                 timer_args[1],
                 timer_args[2],
-                (string_strcmp (timer_args[3], "1") == 0) ? 1 : 0);
+                (string_strcmp (timer_args[3], "1") == 0) ? 1 : 0,
+                0);  /* user_data */
         }
     }
 
@@ -417,7 +430,7 @@ input_data_delayed (struct t_gui_buffer *buffer, const char *data,
     char **timer_args, *new_commands_allowed;
 
     if (delay < 1)
-        return input_data (buffer, data, commands_allowed, split_newline);
+        return input_data (buffer, data, commands_allowed, split_newline, 0);
 
     timer_args = malloc (4 * sizeof (*timer_args));
     if (!timer_args)

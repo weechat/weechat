@@ -723,7 +723,7 @@ TEST(GuiBuffer, NewUser)
 
         /* test signal "buffer_user_input_test" */
         signal_buffer_user_input[0] = '\0';
-        input_data (buffer, "something", NULL, 0);
+        input_data (buffer, "something", NULL, 0, 0);
         STRCMP_EQUAL("something", signal_buffer_user_input);
 
         /* test signal "buffer_user_closing_test" */
@@ -738,7 +738,7 @@ TEST(GuiBuffer, NewUser)
         /* close the buffer by sending "q" */
         signal_buffer_user_input[0] = '\0';
         signal_buffer_user_closing = 0;
-        input_data (buffer, "q", NULL, 0);
+        input_data (buffer, "q", NULL, 0, 0);
         STRCMP_EQUAL("q", signal_buffer_user_input);
         LONGS_EQUAL(1, signal_buffer_user_closing);
 
@@ -758,7 +758,7 @@ TEST(GuiBuffer, NewUser)
          */
         signal_buffer_user_input[0] = '\0';
         signal_buffer_user_closing = 0;
-        input_data (buffer, "q", NULL, 0);
+        input_data (buffer, "q", NULL, 0, 0);
         STRCMP_EQUAL("q", signal_buffer_user_input);
         LONGS_EQUAL(0, signal_buffer_user_closing);
 

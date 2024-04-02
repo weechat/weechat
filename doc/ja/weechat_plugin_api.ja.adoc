@@ -14787,6 +14787,8 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 // TRANSLATION MISSING
 ** _nicklist_nicks_visible_count_: number of nicks displayed
 ** _input_: 入力可能な場合は 1、そうでない場合は 0
+// TRANSLATION MISSING
+** _input_get_any_user_data_: 1 if any user data, including commands, are sent to input callback, otherwise 0
 ** _input_get_unknown_commands_: 未定義のコマンドを入力コールバックに送信する場合は 1、そうでない場合は 0
 ** _input_get_empty_: 入力コールバックに何も送信されなかった場合は 1、そうでない場合は 0
 // TRANSLATION MISSING
@@ -15122,6 +15124,11 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 | input_pos | | 位置
 | バッファ入力のカーソル位置を設定
+
+// TRANSLATION MISSING
+| input_get_any_user_data | 4.3.0 | "0" or "1"
+| "0" to get only user messages (default behavior), "1" to get everything,
+  including commands.
 
 | input_get_unknown_commands | | "0" または "1"
 | 指定したバッファに対する未定義のコマンドを無効にする場合は "0"

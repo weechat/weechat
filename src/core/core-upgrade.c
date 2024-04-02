@@ -540,6 +540,8 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
 
     /* input */
     ptr_buffer->input = infolist_integer (infolist, "input");
+    ptr_buffer->input_get_any_user_data =
+        infolist_integer (infolist, "input_get_any_user_data");
     ptr_buffer->input_get_unknown_commands =
         infolist_integer (infolist, "input_get_unknown_commands");
     ptr_buffer->input_get_empty =

@@ -228,7 +228,7 @@ signal_exec_command (int signal_index, const char *command)
                 if (signal_upper)
                     free (signal_upper);
                 (void) input_data (gui_buffer_search_main (),
-                                   command_eval, NULL, 0);
+                                   command_eval, NULL, 0, 0);
                 free (command_eval);
             }
         }

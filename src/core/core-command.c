@@ -131,7 +131,13 @@ COMMAND_CALLBACK(allbuf)
     {
         ptr_buffer = (struct t_gui_buffer *)arraylist_get (all_buffers, i);
         if (gui_buffer_valid (ptr_buffer))
-            (void) input_data (ptr_buffer, argv_eol[1], NULL, 0);
+        {
+            (void) input_data (ptr_buffer,
+                               argv_eol[1],
+                               NULL,
+                               0,  /* split_newline */
+                               0);  /* user_data */
+        }
     }
 
     arraylist_free (all_buffers);
@@ -1642,7 +1648,11 @@ COMMAND_CALLBACK(color)
     if (string_strcmp (argv[1], "-o") == 0)
     {
         gui_color_info_term_colors (str_color, sizeof (str_color));
-        (void) input_data (buffer, str_color, NULL, 0);
+        (void) input_data (buffer,
+                           str_color,
+                           NULL,
+                           0,  /* split_newline */
+                           0);  /* user_data */
         return WEECHAT_RC_OK;
     }
 
@@ -1837,7 +1847,11 @@ COMMAND_CALLBACK(command)
         {
             for (i = 0; commands[i]; i++)
             {
-                (void) input_data (buffer, commands[i], NULL, 0);
+                (void) input_data (buffer,
+                                   commands[i],
+                                   NULL,
+                                   0,  /* split_newline */
+                                   0);  /* user_data */
             }
             string_free_split_command (commands);
         }
@@ -2221,7 +2235,11 @@ COMMAND_CALLBACK(debug)
     {
         COMMAND_MIN_ARGS(3, "time");
         gettimeofday (&time_start, NULL);
-        (void) input_data (buffer, argv_eol[2], NULL, 0);
+        (void) input_data (buffer,
+                           argv_eol[2],
+                           NULL,
+                           0,  /* split_newline */
+                           0);  /* user_data */
         gettimeofday (&time_end, NULL);
         debug_display_time_elapsed (&time_start, &time_end, argv_eol[2], 1);
         return WEECHAT_RC_OK;
@@ -2418,7 +2436,11 @@ COMMAND_CALLBACK(eval)
                                                   options);
                         if (result)
                         {
-                            (void) input_data (buffer, result, NULL, 0);
+                            (void) input_data (buffer,
+                                               result,
+                                               NULL,
+                                               0,  /* split_newline */
+                                               0);  /* user_data */
                             free (result);
                         }
                         else
@@ -2441,7 +2463,11 @@ COMMAND_CALLBACK(eval)
                 result = eval_expression (ptr_args, pointers, NULL, options);
                 if (result)
                 {
-                    (void) input_data (buffer, result, NULL, 0);
+                    (void) input_data (buffer,
+                                       result,
+                                       NULL,
+                                       0,  /* split_newline */
+                                       0);  /* user_data */
                     free (result);
                 }
                 else
@@ -3638,7 +3664,13 @@ COMMAND_CALLBACK(input)
             gui_input_insert (buffer, argv_eol[2]);
     }
     else if (string_strcmp (argv[1], "send") == 0)
-        (void) input_data (buffer, argv_eol[2], NULL, 0);
+    {
+        (void) input_data (buffer,
+                           argv_eol[2],
+                           NULL,
+                           0,  /* split_newline */
+                           0);  /* user_data */
+    }
     else if (string_strcmp (argv[1], "undo") == 0)
         gui_input_undo (buffer);
     else if (string_strcmp (argv[1], "redo") == 0)
@@ -3679,10 +3711,22 @@ COMMAND_CALLBACK(input)
             gui_hotlist_restore_all_buffers ();
         /* since WeeChat 3.8: "/buffer set unread" */
         else if (string_strcmp (argv[1], "set_unread_current_buffer") == 0)
-            (void) input_data (buffer, "/buffer set unread", NULL, 0);
+        {
+            (void) input_data (buffer,
+                               "/buffer set unread",
+                               NULL,
+                               0,  /* split_newline */
+                               0);  /* user_data */
+        }
         /* since WeeChat 3.8: "/allbuf /buffer set unread" */
         else if (string_strcmp (argv[1], "set_unread") == 0)
-            (void) input_data (buffer, "/allbuf /buffer set unread", NULL, 0);
+        {
+            (void) input_data (buffer,
+                               "/allbuf /buffer set unread",
+                               NULL,
+                               0,  /* split_newline */
+                               0);  /* user_data */
+        }
         /* since WeeChat 3.8: "/buffer switch" */
         else if (string_strcmp (argv[1], "switch_active_buffer") == 0)
             gui_buffer_switch_active_buffer (buffer);
@@ -5019,7 +5063,11 @@ command_plugin_list_input (struct t_gui_buffer *buffer,
 
     if (send_to_buffer)
     {
-        (void) input_data (buffer, *buf, NULL, 0);
+        (void) input_data (buffer,
+                           *buf,
+                           NULL,
+                           0,  /* split_newline */
+                           0);  /* user_data */
     }
     else
     {
@@ -5775,7 +5823,8 @@ command_repeat_exec (struct t_command_repeat *command_repeat)
         (void) input_data (ptr_buffer,
                            cmd_eval,
                            command_repeat->commands_allowed,
-                           0);  /* split_newline */
+                           0,  /* split_newline */
+                           0);  /* user_data */
         free (cmd_eval);
     }
 
@@ -7078,7 +7127,11 @@ command_upgrade_display (struct t_gui_buffer *buffer,
         }
     }
 
-    (void) input_data (buffer, string, NULL, 0);
+    (void) input_data (buffer,
+                       string,
+                       NULL,
+                       0,  /* split_newline */
+                       0);  /* user_data */
 }
 
 /*
@@ -7327,7 +7380,11 @@ COMMAND_CALLBACK(uptime)
                   minutes,
                   seconds,
                   str_first_start);
-        (void) input_data (buffer, string, NULL, 0);
+        (void) input_data (buffer,
+                           string,
+                           NULL,
+                           0,  /* split_newline */
+                           0);  /* user_data */
     }
     else if ((argc >= 2) && (string_strcmp (argv[1], "-ol") == 0))
     {
@@ -7340,7 +7397,11 @@ COMMAND_CALLBACK(uptime)
                   minutes,
                   seconds,
                   util_get_time_string (&weechat_first_start_time));
-        (void) input_data (buffer, string, NULL, 0);
+        (void) input_data (buffer,
+                           string,
+                           NULL,
+                           0,  /* split_newline */
+                           0);  /* user_data */
     }
     else
     {
@@ -7391,7 +7452,11 @@ command_version_display (struct t_gui_buffer *buffer,
                       _("compiled on"),
                       version_get_compilation_date (),
                       version_get_compilation_time ());
-            (void) input_data (buffer, string, NULL, 0);
+            (void) input_data (buffer,
+                               string,
+                               NULL,
+                               0,  /* split_newline */
+                               0);  /* user_data */
         }
         else
         {
@@ -7401,7 +7466,11 @@ command_version_display (struct t_gui_buffer *buffer,
                       "compiled on",
                       version_get_compilation_date (),
                       version_get_compilation_time ());
-            (void) input_data (buffer, string, NULL, 0);
+            (void) input_data (buffer,
+                               string,
+                               NULL,
+                               0,  /* split_newline */
+                               0);  /* user_data */
         }
     }
     else
@@ -9605,7 +9674,10 @@ command_exec_list (const char *command_list)
             if (command_eval)
             {
                 (void) input_data (gui_buffer_search_main (),
-                                   command_eval, NULL, 0);
+                                   command_eval,
+                                   NULL,
+                                   0,  /* split_newline */
+                                   0);  /* user_data */
                 free (command_eval);
             }
         }
