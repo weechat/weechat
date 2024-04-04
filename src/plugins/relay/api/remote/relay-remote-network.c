@@ -37,6 +37,7 @@
 #include "../../relay-remote.h"
 #include "../../relay-websocket.h"
 #include "../relay-api.h"
+#include "relay-remote-event.h"
 
 
 /*
@@ -101,6 +102,7 @@ relay_remote_network_close_connection (struct t_relay_remote *remote)
     }
     relay_websocket_deflate_free (remote->ws_deflate);
     remote->ws_deflate = NULL;
+    remote->synced = 0;
 }
 
 /*
@@ -235,6 +237,9 @@ int
 relay_remote_network_send_data (struct t_relay_remote *remote,
                                 const char *data, int data_size)
 {
+    if (!remote)
+        return 0;
+
     if (remote->tls)
     {
         return (remote->sock >= 0) ?
@@ -266,6 +271,9 @@ relay_remote_network_send (struct t_relay_remote *remote,
     char *websocket_frame;
     unsigned long long length_frame;
     int opcode, flags, num_sent;
+
+    if (!remote)
+        return 0;
 
     ptr_data = data;
     websocket_frame = NULL;
@@ -318,6 +326,34 @@ relay_remote_network_send (struct t_relay_remote *remote,
 }
 
 /*
+ * Sends JSON data to the remote.
+ *
+ * Returns the number of bytes sent to the remote.
+ */
+
+int
+relay_remote_network_send_json (struct t_relay_remote *remote, cJSON *json)
+{
+    char *string;
+    int num_bytes;
+
+    if (!remote || !json)
+        return 0;
+
+    num_bytes = 0;
+
+    string = cJSON_PrintUnformatted (json);
+    if (string)
+    {
+        num_bytes = relay_remote_network_send (remote, RELAY_MSG_STANDARD,
+                                               string, strlen (string));
+        free (string);
+    }
+
+    return num_bytes;
+}
+
+/*
  * Reads text buffer from a remote.
  */
 
@@ -340,9 +376,17 @@ relay_remote_network_recv_text (struct t_relay_remote *remote,
         }
         relay_remote_set_status (remote, RELAY_STATUS_CONNECTED);
         snprintf (request, sizeof (request),
-                  "{\"request\": \"GET /api/buffers\"}");
+                  "{\"request\": \"GET /api/version\"}");
         relay_remote_network_send (remote, RELAY_MSG_STANDARD,
                                    request, strlen (request));
+        snprintf (request, sizeof (request),
+                  "{\"request\": \"GET /api/buffers?lines=-100&colors=weechat\"}");
+        relay_remote_network_send (remote, RELAY_MSG_STANDARD,
+                                   request, strlen (request));
+    }
+    else
+    {
+        relay_remote_event_recv (remote, buffer);
     }
 }
 

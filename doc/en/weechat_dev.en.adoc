@@ -344,6 +344,7 @@ WeeChat "core" is located in following directories:
 |          relay-api-msg.c           | Send JSON messages to clients.
 |          relay-api-protocol.c      | HTTP REST API protocol.
 |          remote/                   | Relay remote functions, specific to API.
+|             relay-remote-event.c   | Process events received from relay remote.
 |             relay-remote-network.c | Network functions for relay remote.
 |       irc/                         | IRC proxy.
 |          relay-irc.c               | Main IRC proxy functions.

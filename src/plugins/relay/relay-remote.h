@@ -55,6 +55,7 @@ struct t_relay_remote
     struct t_hook *hook_fd;            /* hook for socket                   */
     gnutls_session_t gnutls_sess;      /* gnutls session (only if TLS used) */
     struct t_relay_websocket_deflate *ws_deflate; /* websocket deflate data */
+    int synced;                        /* 1 if synced with remote           */
     struct t_relay_remote *prev_remote;/* link to previous remote           */
     struct t_relay_remote *next_remote;/* link to next remote               */
 };

@@ -374,6 +374,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |          remote/                   | Relay remote functions, specific to API.
 // TRANSLATION MISSING
+|             relay-remote-event.c   | Process events received from relay remote.
+// TRANSLATION MISSING
 |             relay-remote-network.c | Network functions for relay remote.
 |       irc/                         | IRC プロキシ
 |          relay-irc.c               | IRC プロキシの主要関数

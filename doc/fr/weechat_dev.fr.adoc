@@ -346,6 +346,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          relay-api-msg.c           | Envoi de messages JSON aux clients.
 |          relay-api-protocol.c      | Protocole HTTP REST API.
 |          remote/                   | Relai distant.
+|             relay-remote-event.c   | Traitement des évènements reçus du relai distant.
 |             relay-remote-network.c | Fonctions réseau pour le relai distant.
 |       irc/                         | Proxy IRC.
 |          relay-irc.c               | Fonctions principales pour le proxy IRC.

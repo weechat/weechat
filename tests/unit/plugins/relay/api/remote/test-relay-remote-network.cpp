@@ -142,6 +142,16 @@ TEST(RelayRemoteNetwork, Send)
 
 /*
  * Tests functions:
+ *   relay_remote_network_send_json
+ */
+
+TEST(RelayRemoteNetwork, SendJson)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   relay_remote_network_recv_text
  */
 

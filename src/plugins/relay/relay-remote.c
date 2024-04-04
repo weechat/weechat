@@ -326,6 +326,7 @@ relay_remote_alloc (const char *name)
     new_remote->hook_fd = NULL;
     new_remote->gnutls_sess = NULL;
     new_remote->ws_deflate = relay_websocket_deflate_alloc ();
+    new_remote->synced = 0;
     new_remote->prev_remote = NULL;
     new_remote->next_remote = NULL;
 
@@ -545,6 +546,7 @@ relay_remote_new_with_infolist (struct t_infolist *infolist)
             }
         }
     }
+    new_remote->synced = weechat_infolist_integer (infolist, "synced");
     new_remote->prev_remote = NULL;
     new_remote->next_remote = relay_remotes;
     if (relay_remotes)
@@ -846,6 +848,8 @@ relay_remote_add_to_infolist (struct t_infolist *infolist,
             free (dict);
         }
     }
+    if (!weechat_infolist_new_var_integer (ptr_item, "synced", remote->synced))
+        return 0;
 
     return 1;
 }
@@ -889,6 +893,7 @@ relay_remote_print_log ()
         weechat_log_printf ("  hook_fd . . . . . . . . : 0x%lx", ptr_remote->hook_fd);
         weechat_log_printf ("  gnutls_sess . . . . . . : 0x%lx", ptr_remote->gnutls_sess);
         relay_websocket_deflate_print_log (ptr_remote->ws_deflate, "");
+        weechat_log_printf ("  synced. . . . . . . . . : %d", ptr_remote->synced);
         weechat_log_printf ("  prev_remote . . . . . . : 0x%lx", ptr_remote->prev_remote);
         weechat_log_printf ("  next_remote . . . . . . : 0x%lx", ptr_remote->next_remote);
     }

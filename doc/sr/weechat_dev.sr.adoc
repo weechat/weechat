@@ -349,6 +349,8 @@ WeeChat „језгро” се налази у следећим директо�
 // TRANSLATION MISSING
 |          remote/                   | Relay remote functions, specific to API.
 // TRANSLATION MISSING
+|             relay-remote-event.c   | Process events received from relay remote.
+// TRANSLATION MISSING
 |             relay-remote-network.c | Network functions for relay remote.
 |       irc/                         | IRC прокси.
 |          relay-irc.c               | Главне IRC прокси функције.
