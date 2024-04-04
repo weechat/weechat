@@ -47,8 +47,8 @@ int relay_buffer_selected_line = 0;
 int
 relay_buffer_is_relay (struct t_gui_buffer *buffer)
 {
-    return ((relay_raw_buffer && (buffer == relay_raw_buffer))
-            || (relay_buffer && (buffer == relay_buffer))) ? 1 : 0;
+    return (weechat_buffer_get_pointer (buffer, "plugin") == weechat_relay_plugin) ?
+        1 : 0;
 }
 
 /*
