@@ -458,7 +458,10 @@ relay_remote_new (const char *name, const char *url, const char *proxy,
 
     for (i = 0; i < RELAY_REMOTE_NUM_OPTIONS; i++)
     {
-        option[i] = relay_config_create_remote_option (name, i, value[i]);
+        option[i] = relay_config_create_remote_option (
+            name,
+            i,
+            (value[i]) ? value[i] : "");
     }
 
     new_remote = relay_remote_new_with_options (name, option);
