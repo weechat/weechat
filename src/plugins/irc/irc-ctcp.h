@@ -38,8 +38,13 @@ extern char *irc_ctcp_convert_legacy_format (const char *format);
 extern const char *irc_ctcp_get_default_reply (const char *ctcp);
 extern const char *irc_ctcp_get_reply (struct t_irc_server *server,
                                        const char *ctcp);
+extern void irc_ctcp_parse_type_arguments (const char *message,
+                                           char **type, char **arguments);
 extern void irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
                                               const char *arguments);
+extern void irc_ctcp_display_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
+                                            const char *target,
+                                            const char *arguments);
 extern char *irc_ctcp_eval_reply (struct t_irc_server *server,
                                   const char *format);
 extern void irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,

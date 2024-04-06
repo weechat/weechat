@@ -53,6 +53,7 @@ Bug fixes::
   * exec: remove trailing space on buffers with free content when line numbers are not displayed
   * exec: add missing exec tags in lines of buffers with free content (issue #2086)
   * fset: allow filename starting with "~" in command `/fset -export`
+  * irc: fix display of reply for CTCP request received on a channel when capability echo-message is enabled
   * irc: add missing tags on self action messages when capability echo-message is enabled (issue #2074)
   * irc: don't strip monospace color code 0x11 from incoming messages (issue #2073)
   * irc: fix random date displayed when a received message contains tags but no "time" (issue #2064)

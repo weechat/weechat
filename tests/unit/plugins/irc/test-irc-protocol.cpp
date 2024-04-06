@@ -3041,9 +3041,13 @@ TEST(IrcProtocolWithServer, privmsg)
                    "irc_privmsg,irc_ctcp,nick_bob,host_user@host,log1");
         snprintf (message, sizeof (message),
                   "CTCP reply to bob: VERSION %s", info);
-        CHECK_SRV("--", message,
-                  "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
-                  "no_highlight,nick_alice,log1");
+        if (echo_message == 0)
+        {
+            /* reply is displayed only if echo-message is NOT enabled */
+            CHECK_SRV("--", message,
+                      "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                      "no_highlight,nick_alice,log1");
+        }
         snprintf (message, sizeof (message),
                   "NOTICE bob :\01VERSION %s\01", info);
         CHECK_SENT(message);
@@ -3090,9 +3094,13 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_SENT(message);
         snprintf (message, sizeof (message),
                   "CTCP reply to bob: VERSION %s", info);
-        CHECK_SRV("--", message,
-                  "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
-                  "no_highlight,nick_alice,log1");
+        if (echo_message == 0)
+        {
+            /* reply is displayed only if echo-message is NOT enabled */
+            CHECK_SRV("--", message,
+                      "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                      "no_highlight,nick_alice,log1");
+        }
         free (info);
         RECV(":bob!user@host PRIVMSG alice :\01DCC");
         CHECK_SENT(NULL);
@@ -3131,10 +3139,14 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_CHAN("--", "CTCP requested by bob: PING 1703496549 905284",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_ctcp,nick_bob,host_user@host,log1");
-        CHECK_SRV("--", "CTCP reply to bob: PING 1703496549 905284",
-                  "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
-                  "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
-                  "no_highlight,nick_alice,log1");
+        if (echo_message == 0)
+        {
+            /* reply is displayed only if echo-message is NOT enabled */
+            CHECK_SRV("--", "CTCP reply to bob: PING 1703496549 905284",
+                      "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
+                      "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                      "no_highlight,nick_alice,log1");
+        }
         RECV("@time=2023-12-25T10:29:09.456789Z "
              ":bob!user@host PRIVMSG #test :\01UNKNOWN\01");
         CHECK_SENT(NULL);
@@ -3161,10 +3173,14 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_CHAN("--", "CTCP requested by bob: PING 1703496549 905284",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_ctcp,nick_bob,host_user@host,log1");
-        CHECK_SRV("--", "CTCP reply to bob: PING 1703496549 905284",
-                  "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
-                  "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
-                  "no_highlight,nick_alice,log1");
+        if (echo_message == 0)
+        {
+            /* reply is displayed only if echo-message is NOT enabled */
+            CHECK_SRV("--", "CTCP reply to bob: PING 1703496549 905284",
+                      "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
+                      "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                      "no_highlight,nick_alice,log1");
+        }
         RECV("@time=2023-12-25T10:29:09.456789Z "
              ":bob!user@host PRIVMSG @#test :\01UNKNOWN\01");
         CHECK_SENT(NULL);
@@ -3261,10 +3277,14 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_SRV("--", "CTCP requested by bob: PING 1703496549 905284",
                   "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                   "irc_ctcp,nick_bob,host_user@host,log1");
-        CHECK_SRV("--", "CTCP reply to bob: PING 1703496549 905284",
-                  "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
-                  "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
-                  "no_highlight,nick_alice,log1");
+        if (echo_message == 0)
+        {
+            /* reply is displayed only if echo-message is NOT enabled */
+            CHECK_SRV("--", "CTCP reply to bob: PING 1703496549 905284",
+                      "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
+                      "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                      "no_highlight,nick_alice,log1");
+        }
         RECV("@time=2023-12-25T10:29:09.456789Z "
              ":bob!user@host PRIVMSG alice :\01UNKNOWN\01");
         CHECK_SENT(NULL);
@@ -3283,10 +3303,14 @@ TEST(IrcProtocolWithServer, privmsg)
                   "irc_ctcp,nick_bob,host_user@host,log1");
         snprintf (message, sizeof (message),
                   "CTCP reply to bob: VERSION %s", info);
-        CHECK_SRV("--", message,
-                  "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
-                  "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,no_highlight,"
-                  "nick_alice,log1");
+        if (echo_message == 0)
+        {
+            /* reply is displayed only if echo-message is NOT enabled */
+            CHECK_SRV("--", message,
+                      "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
+                      "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,no_highlight,"
+                      "nick_alice,log1");
+        }
         snprintf (message, sizeof (message),
                   "NOTICE bob :\01VERSION %s\01", info);
         CHECK_SENT(message);
@@ -3307,7 +3331,7 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_SENT(NULL);
 
         /*
-         * valid CTCP to channel from self nick
+         * valid CTCP to user from self nick
          * (case of bouncer or if echo-message capability is enabled)
          */
         RECV("@time=2023-12-25T10:29:09.456789Z "
@@ -3332,10 +3356,6 @@ TEST(IrcProtocolWithServer, privmsg)
                       "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                       "irc_ctcp,self_msg,notify_none,no_highlight,nick_alice,"
                       "host_user@host,log1");
-            /*
-             * with echo-message capability, when the same message is received
-             * for the second time, the request and reply are displayed
-             */
             RECV("@time=2023-12-25T10:29:09.456789Z "
                  ":alice!user@host PRIVMSG alice :\01CLIENTINFO\01");
             CHECK_SENT("NOTICE alice :\01CLIENTINFO ACTION CLIENTINFO DCC "
@@ -3343,11 +3363,23 @@ TEST(IrcProtocolWithServer, privmsg)
             CHECK_SRV("--", "CTCP requested by alice: CLIENTINFO",
                       "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                       "irc_ctcp,nick_alice,host_user@host,log1");
-            CHECK_SRV("--", "CTCP reply to alice: CLIENTINFO ACTION CLIENTINFO "
-                      "DCC PING SOURCE TIME VERSION",
-                      "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
+            RECV("@time=2023-12-25T10:29:09.456789Z "
+                 ":alice!user@host NOTICE alice :\01CLIENTINFO DCC PING "
+                 "SOURCE TIME VERSION\01");
+            CHECK_SENT(NULL);
+            CHECK_SRV("--", "CTCP reply to alice: CLIENTINFO DCC PING "
+                      "SOURCE TIME VERSION",
+                      "irc_notice,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                       "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
                       "no_highlight,nick_alice,host_user@host,log1");
+            RECV("@time=2023-12-25T10:29:09.456789Z "
+                 ":alice!user@host NOTICE alice :\01CLIENTINFO DCC PING "
+                 "SOURCE TIME VERSION\01");
+            CHECK_SENT(NULL);
+            CHECK_SRV("--", "CTCP reply from alice: CLIENTINFO DCC PING "
+                      "SOURCE TIME VERSION",
+                      "irc_notice,irc_tag_time=2023-12-25T10:29:09.456789Z,"
+                      "irc_ctcp,nick_alice,host_user@host,log1");
         }
 
         /* close xfer buffer */

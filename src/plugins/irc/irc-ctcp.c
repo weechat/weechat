@@ -170,6 +170,45 @@ irc_ctcp_get_reply (struct t_irc_server *server, const char *ctcp)
 }
 
 /*
+ * Extracts CTCP type and arguments from message, which format is:
+ *   \01TYPE arguments...\01
+ *
+ * Strings *type and *arguments are set with type and arguments parsed,
+ * both are set to NULL in case of error.
+ */
+
+void
+irc_ctcp_parse_type_arguments (const char *message,
+                               char **type, char **arguments)
+{
+    const char *pos_end, *pos_space;
+
+    if (!message || !type || !arguments)
+        return;
+
+    *type = NULL;
+    *arguments = NULL;
+
+    if (message[0] != '\01')
+        return;
+
+    pos_end = strrchr (message + 1, '\01');
+    if (!pos_end)
+        return;
+
+    pos_space = strchr (message + 1, ' ');
+
+    *type = weechat_strndup (
+        message + 1,
+        (pos_space) ? pos_space - message - 1 : pos_end - message - 1);
+    if (!*type)
+        return;
+
+    *arguments = (pos_space) ?
+        weechat_strndup (pos_space + 1, pos_end - pos_space - 1) : NULL;
+}
+
+/*
  * Displays CTCP requested by a nick.
  */
 
@@ -319,7 +358,68 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
 }
 
 /*
- * Displays CTCP replied to a nick.
+ * Displays CTCP reply to a nick (internal function).
+ */
+
+void
+irc_ctcp_display_reply_to_nick_internal (struct t_irc_protocol_ctxt *ctxt,
+                                         const char *target,
+                                         const char *type,
+                                         const char *args)
+{
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (ctxt->server, target, NULL,
+                                         "ctcp", NULL),
+        0,
+        irc_protocol_tags (ctxt,
+                           "irc_ctcp,irc_ctcp_reply,self_msg,"
+                           "notify_none,no_highlight"),
+        _("%sCTCP reply to %s%s%s: %s%s%s%s%s"),
+        weechat_prefix ("network"),
+        irc_nick_color_for_msg (ctxt->server, 0, NULL, target),
+        target,
+        IRC_COLOR_RESET,
+        IRC_COLOR_CHAT_CHANNEL,
+        type,
+        (args && args[0]) ? IRC_COLOR_RESET : "",
+        (args && args[0]) ? " " : "",
+        (args) ? args : "");
+}
+
+/*
+ * Displays CTCP reply to a nick.
+ */
+
+void
+irc_ctcp_display_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
+                                const char *target,
+                                const char *arguments)
+{
+    char *ctcp_type, *ctcp_args, *ctcp_args_no_colors;
+
+    if (!ctxt || !arguments || (arguments[0] != '\01'))
+        return;
+
+    irc_ctcp_parse_type_arguments (arguments, &ctcp_type, &ctcp_args);
+
+    if (ctcp_type)
+    {
+        ctcp_args_no_colors = (ctcp_args) ?
+            irc_color_decode (ctcp_args, 1) : NULL;
+        irc_ctcp_display_reply_to_nick_internal (ctxt, target, ctcp_type,
+                                                 ctcp_args_no_colors);
+        if (ctcp_args_no_colors)
+            free (ctcp_args_no_colors);
+    }
+
+    if (ctcp_type)
+        free (ctcp_type);
+    if (ctcp_args)
+        free (ctcp_args);
+}
+
+/*
+ * Replies to CTCP from a nick and displays reply.
  */
 
 void
@@ -328,8 +428,8 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
                         const char *arguments)
 {
     struct t_arraylist *list_messages;
-    int i, list_size;
-    char *msg_color, *dup_ctcp, *dup_ctcp_upper, *dup_args;
+    int i, list_size, length;
+    char *dup_ctcp, *dup_ctcp_upper, *dup_args, *message;
     const char *ptr_message;
 
     dup_ctcp = NULL;
@@ -373,7 +473,8 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
     if (!list_messages)
         goto end;
 
-    if (weechat_config_boolean (irc_config_look_display_ctcp_reply))
+    if (weechat_config_boolean (irc_config_look_display_ctcp_reply)
+        && !weechat_hashtable_has_key (ctxt->server->cap_list, "echo-message"))
     {
         list_size = weechat_arraylist_size (list_messages);
         for (i = 0; i < list_size; i++)
@@ -381,27 +482,16 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
             ptr_message = (const char *)weechat_arraylist_get (list_messages, i);
             if (!ptr_message)
                 break;
-            msg_color = irc_color_decode (ptr_message, 1);
-            if (!msg_color)
-                break;
-            weechat_printf_date_tags (
-                irc_msgbuffer_get_target_buffer (ctxt->server, ctxt->nick,
-                                                 NULL, "ctcp", NULL),
-                0,
-                irc_protocol_tags (ctxt,
-                                   "irc_ctcp,irc_ctcp_reply,self_msg,"
-                                   "notify_none,no_highlight"),
-                _("%sCTCP reply to %s%s%s: %s%s%s%s%s"),
-                weechat_prefix ("network"),
-                irc_nick_color_for_msg (ctxt->server, 0, NULL, ctxt->nick),
-                ctxt->nick,
-                IRC_COLOR_RESET,
-                IRC_COLOR_CHAT_CHANNEL,
-                dup_ctcp_upper,
-                (msg_color[0]) ? IRC_COLOR_RESET : "",
-                (msg_color[0]) ? " " : "",
-                msg_color);
-            free (msg_color);
+            /* build arguments: '\01' + CTCP + ' ' + message + '\01' */
+            length = 1 + strlen (dup_ctcp_upper) + 1 + strlen (ptr_message) + 1 + 1;
+            message = malloc (length);
+            if (message)
+            {
+                snprintf (message, length,
+                          "\01%s %s\01", dup_ctcp_upper, ptr_message);
+                irc_ctcp_display_reply_to_nick (ctxt, ctxt->nick, message);
+                free (message);
+            }
         }
     }
 

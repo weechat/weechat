@@ -2538,9 +2538,23 @@ IRC_PROTOCOL_CALLBACK(notice)
             weechat_hashtable_set (ctxt->server->echo_msg_recv,
                                    ctxt->irc_message, &time_now);
         }
-        if (!cap_echo_message || !msg_already_received)
+        if (!cap_echo_message || !ctxt->nick_is_me)
         {
             irc_ctcp_display_reply_from_nick (ctxt, pos_args);
+        }
+        else
+        {
+            if (msg_already_received)
+            {
+                irc_ctcp_display_reply_from_nick (ctxt, pos_args);
+            }
+            else
+            {
+                irc_ctcp_display_reply_to_nick (
+                    ctxt,
+                    (ctxt->nick_is_me) ? pos_target : ctxt->nick,
+                    pos_args);
+            }
         }
         if (msg_already_received)
             weechat_hashtable_remove (ctxt->server->echo_msg_recv, ctxt->irc_message);
@@ -3033,36 +3047,27 @@ irc_protocol_privmsg_display_ctcp_send (struct t_irc_protocol_ctxt *ctxt,
                                         const char *target,
                                         const char *arguments)
 {
-    const char *pos_space, *pos_end;
     char *ctcp_type, *ctcp_args;
 
     if (!arguments || !arguments[0])
         return;
 
-    pos_end = strrchr (arguments + 1, '\01');
-    if (!pos_end)
-        return;
+    irc_ctcp_parse_type_arguments (arguments, &ctcp_type, &ctcp_args);
 
-    pos_space = strchr (arguments + 1, ' ');
-
-    ctcp_type = weechat_strndup (
-        arguments + 1,
-        (pos_space) ?
-        pos_space - arguments - 1 : pos_end - arguments - 1);
-    ctcp_args = (pos_space) ?
-        weechat_strndup (pos_space + 1, pos_end - pos_space - 1) : NULL;
-
-    irc_input_user_message_display (
-        ctxt->server,
-        ctxt->date,
-        ctxt->date_usec,
-        ctxt->tags,
-        target,
-        ctxt->address,
-        "privmsg",
-        ctcp_type,
-        ctcp_args,
-        0);  /* decode_colors */
+    if (ctcp_type)
+    {
+        irc_input_user_message_display (
+            ctxt->server,
+            ctxt->date,
+            ctxt->date_usec,
+            ctxt->tags,
+            target,
+            ctxt->address,
+            "privmsg",
+            ctcp_type,
+            ctcp_args,
+            0);  /* decode_colors */
+    }
 
     if (ctcp_type)
         free (ctcp_type);
