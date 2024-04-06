@@ -3041,9 +3041,9 @@ TEST(IrcProtocolWithServer, privmsg)
                    "irc_privmsg,irc_ctcp,nick_bob,host_user@host,log1");
         snprintf (message, sizeof (message),
                   "CTCP reply to bob: VERSION %s", info);
-        CHECK_CHAN("--", message,
-                   "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
-                   "no_highlight,nick_alice,log1");
+        CHECK_SRV("--", message,
+                  "irc_privmsg,irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                  "no_highlight,nick_alice,log1");
         snprintf (message, sizeof (message),
                   "NOTICE bob :\01VERSION %s\01", info);
         CHECK_SENT(message);
@@ -3131,10 +3131,10 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_CHAN("--", "CTCP requested by bob: PING 1703496549 905284",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_ctcp,nick_bob,host_user@host,log1");
-        CHECK_CHAN("--", "CTCP reply to bob: PING 1703496549 905284",
-                   "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
-                   "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
-                   "no_highlight,nick_alice,log1");
+        CHECK_SRV("--", "CTCP reply to bob: PING 1703496549 905284",
+                  "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
+                  "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                  "no_highlight,nick_alice,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
              ":bob!user@host PRIVMSG #test :\01UNKNOWN\01");
         CHECK_SENT(NULL);
@@ -3161,10 +3161,10 @@ TEST(IrcProtocolWithServer, privmsg)
         CHECK_CHAN("--", "CTCP requested by bob: PING 1703496549 905284",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_ctcp,nick_bob,host_user@host,log1");
-        CHECK_CHAN("--", "CTCP reply to bob: PING 1703496549 905284",
-                   "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
-                   "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
-                   "no_highlight,nick_alice,log1");
+        CHECK_SRV("--", "CTCP reply to bob: PING 1703496549 905284",
+                  "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
+                  "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                  "no_highlight,nick_alice,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
              ":bob!user@host PRIVMSG @#test :\01UNKNOWN\01");
         CHECK_SENT(NULL);

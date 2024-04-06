@@ -324,7 +324,6 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
 
 void
 irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
-                        struct t_irc_channel *channel,
                         const char *ctcp,
                         const char *arguments)
 {
@@ -386,11 +385,8 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
             if (!msg_color)
                 break;
             weechat_printf_date_tags (
-                irc_msgbuffer_get_target_buffer (
-                    ctxt->server, ctxt->nick,
-                    NULL,
-                    "ctcp",
-                    (channel) ? channel->buffer : NULL),
+                irc_msgbuffer_get_target_buffer (ctxt->server, ctxt->nick,
+                                                 NULL, "ctcp", NULL),
                 0,
                 irc_protocol_tags (ctxt,
                                    "irc_ctcp,irc_ctcp_reply,self_msg,"
@@ -1498,15 +1494,13 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                     reply_eval = irc_ctcp_eval_reply (ctxt->server, reply);
                     if (reply_eval)
                     {
-                        irc_ctcp_reply_to_nick (ctxt, channel, ptr_args + 1,
-                                                reply_eval);
+                        irc_ctcp_reply_to_nick (ctxt, ptr_args + 1, reply_eval);
                         free (reply_eval);
                     }
                 }
                 else
                 {
-                    irc_ctcp_reply_to_nick (ctxt, channel, ptr_args + 1,
-                                            pos_args);
+                    irc_ctcp_reply_to_nick (ctxt, ptr_args + 1, pos_args);
                 }
             }
         }
@@ -1530,8 +1524,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                     reply_eval = irc_ctcp_eval_reply (ctxt->server, reply);
                     if (reply_eval)
                     {
-                        irc_ctcp_reply_to_nick (ctxt, channel, ptr_args + 1,
-                                                reply_eval);
+                        irc_ctcp_reply_to_nick (ctxt, ptr_args + 1, reply_eval);
                         free (reply_eval);
                     }
                 }
