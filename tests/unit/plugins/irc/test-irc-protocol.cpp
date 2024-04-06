@@ -2493,14 +2493,14 @@ TEST(IrcProtocolWithServer, note)
 
 TEST(IrcProtocolWithServer, notice)
 {
-    int i;
+    int echo_message;
 
     SRV_INIT_JOIN;
 
     /* test without and with capability "echo-message" */
-    for (i = 0; i < 2; i++)
+    for (echo_message = 0; echo_message < 2; echo_message++)
     {
-        if (i == 1)
+        if (echo_message == 1)
         {
             /* assume "echo-message" capability is enabled in server */
             hashtable_set (ptr_server->cap_list, "echo-message", NULL);
@@ -2718,7 +2718,7 @@ TEST(IrcProtocolWithServer, notice)
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
 
-        if (i == 1)
+        if (echo_message == 1)
             hashtable_remove (ptr_server->cap_list, "echo-message");
     }
 }
@@ -2839,14 +2839,14 @@ TEST(IrcProtocolWithServer, pong)
 TEST(IrcProtocolWithServer, privmsg)
 {
     char *info, message[1024];
-    int i;
+    int echo_message;
 
     SRV_INIT_JOIN2;
 
     /* test without and with capability "echo-message" */
-    for (i = 0; i < 2; i++)
+    for (echo_message = 0; echo_message < 2; echo_message++)
     {
-        if (i == 1)
+        if (echo_message == 1)
         {
             /* assume "echo-message" capability is enabled in server */
             hashtable_set (ptr_server->cap_list, "echo-message", NULL);
@@ -2958,7 +2958,7 @@ TEST(IrcProtocolWithServer, privmsg)
          * message from self nick in private
          * (case of bouncer or if echo-message capability is enabled)
          */
-        if (i == 0)
+        if (echo_message == 0)
         {
             /* without echo-message */
             RECV(":alice!user@host PRIVMSG bob :this is the message ");
@@ -2987,7 +2987,7 @@ TEST(IrcProtocolWithServer, privmsg)
          * message from self nick in private, with password hidden (nickserv)
          * (case of bouncer or if echo-message capability is enabled)
          */
-        if (i == 0)
+        if (echo_message == 0)
         {
             /* without echo-message */
             RECV(":alice!user@host PRIVMSG nickserv :identify secret");
@@ -3312,7 +3312,7 @@ TEST(IrcProtocolWithServer, privmsg)
          */
         RECV("@time=2023-12-25T10:29:09.456789Z "
              ":alice!user@host PRIVMSG alice :\01CLIENTINFO\01");
-        if (i == 0)
+        if (echo_message == 0)
         {
             CHECK_SENT("NOTICE alice :\01CLIENTINFO ACTION CLIENTINFO DCC "
                        "PING SOURCE TIME VERSION\01");
@@ -3354,7 +3354,7 @@ TEST(IrcProtocolWithServer, privmsg)
         if (xfer_buffer)
             gui_buffer_close (xfer_buffer);
 
-        if (i == 1)
+        if (echo_message == 1)
             hashtable_remove (ptr_server->cap_list, "echo-message");
     }
 }
