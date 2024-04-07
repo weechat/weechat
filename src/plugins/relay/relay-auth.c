@@ -352,26 +352,26 @@ relay_auth_check_hash_sha (const char *hash_algo,
 
     rc = 0;
 
-    if (salt && (salt_size > 0) && hash_sha)
+    if (!salt || (salt_size <= 0) || !hash_sha)
+        return rc;
+
+    length = salt_size + strlen (relay_password);
+    salt_password = malloc (length);
+    if (salt_password)
     {
-        length = salt_size + strlen (relay_password);
-        salt_password = malloc (length);
-        if (salt_password)
+        memcpy (salt_password, salt, salt_size);
+        memcpy (salt_password + salt_size, relay_password,
+                strlen (relay_password));
+        if (weechat_crypto_hash (salt_password, length,
+                                 hash_algo,
+                                 hash, &hash_size))
         {
-            memcpy (salt_password, salt, salt_size);
-            memcpy (salt_password + salt_size, relay_password,
-                    strlen (relay_password));
-            if (weechat_crypto_hash (salt_password, length,
-                                     hash_algo,
-                                     hash, &hash_size))
-            {
-                weechat_string_base_encode ("16", hash, hash_size,
-                                            hash_hexa);
-                if (weechat_strcasecmp (hash_hexa, hash_sha) == 0)
-                    rc = 1;
-            }
-            free (salt_password);
+            weechat_string_base_encode ("16", hash, hash_size,
+                                        hash_hexa);
+            if (weechat_strcasecmp (hash_hexa, hash_sha) == 0)
+                rc = 1;
         }
+        free (salt_password);
     }
 
     return rc;
