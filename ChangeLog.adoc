@@ -81,6 +81,28 @@ Build::
 
   * tcl: make plugin compatible with Tcl 9.0 (issue #2075)
 
+[[v4.2.2]]
+== Version 4.2.2 (2024-04-07)
+
+Bug fixes::
+
+  * core: fix reset to initial scroll position after search of text in buffer (issue #2093)
+  * core: add missing mouse events "alt-ctrl-button2" and "alt-ctrl-button3"
+  * exec: remove trailing space on buffers with free content when line numbers are not displayed
+  * exec: add missing exec tags in lines of buffers with free content (issue #2086)
+  * irc: add missing tags on self action messages when capability echo-message is enabled (issue #2074)
+  * python: fix truncation of unsigned long long integer returned by function string_parse_size
+  * relay: set the last IRC client disconnection time only after a successful connection (issue #2103)
+  * script: always display list of scripts when searching scripts with `/script search` (issue #2077)
+  * script: fix default mouse keys (issue #2076)
+  * scripts: fix crash on script unload when a hook is created in a buffer close callback (issue #2067)
+  * tcl: fix truncation of long integer returned by function hdata_long
+  * trigger: fix memory leak when adding a new trigger with `/trigger` command
+
+Tests::
+
+  * core: fix tests on function strftimeval on Alpine
+
 [[v4.2.1]]
 == Version 4.2.1 (2024-01-22)
 
