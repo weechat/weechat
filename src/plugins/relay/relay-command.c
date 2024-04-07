@@ -770,6 +770,7 @@ relay_command_init ()
             N_("    - protocol \"irc\": name is the server to share "
                "(optional, if not given, the server name must be sent by client in "
                "command \"PASS\", with format: \"PASS server:password\")"),
+            N_("    - protocol \"api\" (name is not used)"),
             N_("    - protocol \"weechat\" (name is not used)"),
             "",
             N_("The \"irc\" protocol allows any IRC client (including WeeChat "
