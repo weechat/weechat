@@ -993,7 +993,9 @@ relay_config_create_remote_option (const char *remote_name, int index_option,
             ptr_option = weechat_config_new_option (
                 relay_config_file, relay_config_section_remote,
                 option_name, "string",
-                N_("remote URL"),
+                N_("remote relay URL with optional port (default is 9000), "
+                   "examples: https://example.com:9000 or http://example.com:9000 "
+                   "(plain-text connection, not recommended)"),
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             break;
@@ -1001,8 +1003,8 @@ relay_config_create_remote_option (const char *remote_name, int index_option,
             ptr_option = weechat_config_new_option (
                 relay_config_file, relay_config_section_remote,
                 option_name, "string",
-                N_("name of proxy used for this remote (optional, proxy must "
-                   "be defined with command /proxy)"),
+                N_("name of proxy used for this remote relay (optional, proxy "
+                   "must be defined with command /proxy)"),
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             break;
@@ -1010,7 +1012,8 @@ relay_config_create_remote_option (const char *remote_name, int index_option,
             ptr_option = weechat_config_new_option (
                 relay_config_file, relay_config_section_remote,
                 option_name, "string",
-                N_("password"),
+                N_("password for remote relay "
+                   "(note: content is evaluated, see /help eval)"),
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             break;
@@ -1018,7 +1021,8 @@ relay_config_create_remote_option (const char *remote_name, int index_option,
             ptr_option = weechat_config_new_option (
                 relay_config_file, relay_config_section_remote,
                 option_name, "string",
-                N_("TOTP secret"),
+                N_("TOTP secret, encoded in base32 "
+                   "(note: content is evaluated, see /help eval)"),
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             break;

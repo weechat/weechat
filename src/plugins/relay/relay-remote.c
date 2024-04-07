@@ -599,7 +599,7 @@ relay_remote_connect (struct t_relay_remote *remote)
 {
 #ifndef HAVE_CJSON
     weechat_printf (NULL,
-                    _("%s%s: error: unable to connect to remote relay via API "
+                    _("%s%s: error: unable to connect to a remote relay via API "
                       "(cJSON support is not enabled)"),
                     weechat_prefix ("error"), RELAY_PLUGIN_NAME);
     return 0;
