@@ -191,26 +191,14 @@ doc_gen_close_file (const char *path, const char *doc, const char *name,
 }
 
 /*
- * Checks if a command must be documented or not.
- *
- * All commands whose name == plugin name are documented, and all commands for
- * these plugins are documented as well:
- *   - weechat (core)
- *   - irc
- *   - xfer
+ * Checks if a command must be documented or not: all commands are documented
+ * except the default aliases (that create commands).
  */
 
 int
 doc_gen_check_command (const char *plugin, const char *command)
 {
-    /* command name is the same as plugin: to document! */
-    if (strcmp (plugin, command) == 0)
-        return 1;
-
-    /* document other options only for weechat, irc, xfer */
-    return ((strcmp (plugin, "weechat") == 0)
-            || (strcmp (plugin, "irc") == 0)
-            || (strcmp (plugin, "xfer") == 0)) ?
+    return ((strcmp (plugin, "alias") != 0) || (strcmp (plugin, command) == 0)) ?
         1 : 0;
 }
 
