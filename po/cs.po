@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-26 09:18+0100\n"
-"PO-Revision-Date: 2024-03-06 20:32+0100\n"
+"POT-Creation-Date: 2024-04-07 14:44+0200\n"
+"PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -13595,6 +13595,146 @@ msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
 msgstr "%s%s: selhalo parsování příkazu \"%s\" (prosím oznamte to vývojárům):"
 
 #, c-format
+msgid "remote[%s]: WeeChat: %s (%s), API: %s"
+msgstr ""
+
+#, fuzzy
+#| msgid "invalid priorities"
+msgid "invalid response from remote relay"
+msgstr "nekorektní priority"
+
+#, fuzzy
+msgid "authentication failed with remote relay"
+msgstr "%s%s: schopnost klienta, server podporuje: %s"
+
+msgid "invalid websocket response (handshake error)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s    error: %s%s%s%s"
+msgid "%sremote[%s]: error: %s%s%s%s"
+msgstr "%s    chyba: %s%s%s%s"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: error decoding websocket frame"
+msgstr "%s%s: čtu data ze soketu: chyba %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: reading data on socket: error %d %s"
+msgid "%sremote[%s]: reading data on socket: error %d %s"
+msgstr "%s%s: čtu data ze soketu: chyba %d %s"
+
+#, c-format
+msgid "%sremote[%s]: failed to build authentication"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: connected to %s/%d (%s)"
+msgid "remote[%s]: connected to %s/%d (%s)"
+msgstr "%s%s: připojen k %s/%d (%s)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: address \"%s\" not found"
+msgid "%sremote[%s]: address \"%s\" not found"
+msgstr "%s%s: adresa \"%s\" nenalezena"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: %s"
+msgid "%sremote[%s]: error: %s"
+msgstr "%s%s: chyba: %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: IP address not found"
+msgid "%sremote[%s]: IP address not found"
+msgstr "%s%s: IP adresa nenalezena"
+
+#, fuzzy, c-format
+#| msgid "%s%s: connection refused"
+msgid "%sremote[%s]: connection refused"
+msgstr "%s%s: spojení odmítnuto"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: proxy fails to establish connection to server (check username/"
+#| "password if used and if server address/port is allowed by proxy)"
+msgid ""
+"%sremote[%s]: proxy fails to establish connection to server (check username/"
+"password if used and if server address/port is allowed by proxy)"
+msgstr ""
+"%s%s: proxy se nemůže spojit se serverem (zkontrolujte uživatelské jméno a "
+"heslo pokud jsou vyžadovány a jestli je adresa a port serveru povolená na "
+"proxy)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to set local hostname/IP"
+msgid "%sremote[%s]: unable to set local hostname/IP"
+msgstr "%s%s: nemohu nastavit lokální hostname/IP"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS init error"
+msgid "%sremote[%s]: TLS init error"
+msgstr "%s%s: chyba inicializace TLS"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed"
+msgid "%sremote[%s]: TLS handshake failed"
+msgstr "%s%s: TLS handshake selhal"
+
+#, fuzzy, c-format
+#| msgid "%s%s: not enough memory"
+msgid "%sremote[%s]: not enough memory"
+msgstr "%s%s: nedostatek paměti"
+
+#, fuzzy, c-format
+#| msgid "%s%s: timeout"
+msgid "%sremote[%s]: timeout"
+msgstr "%s%s:  časový limit"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket"
+msgid "%sremote[%s]: unable to create socket"
+msgstr "%s%s: nemohu vytvořit soket"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: handshake failed with URL %s, response code: %s"
+msgstr "%s%s: čtu data ze soketu: chyba %d %s"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
+msgstr "%s%s: čtu data ze soketu: chyba %d %s"
+
+#, fuzzy
+#| msgid "%s%s: ignore not found"
+msgid "hash algorithm not found"
+msgstr "%s%s: ignorování nenalezeno"
+
+msgid "unknown number of hash iterations"
+msgstr ""
+
+msgid "unknown TOTP status"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sremote[%s]: successful handshake with URL %s: hash_algo=%s, iterations=%d, "
+"totp=%d"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: already connected to server \"%s\"!"
+msgid "%s%s: already connected to remote relay \"%s\"!"
+msgstr "%s%s: již připojený k serveru \"%s\"!"
+
+#, fuzzy, c-format
+msgid "remote[%s]: connecting to remote relay %s/%d%s..."
+msgstr "%s%s: zrovna připojuji k serveru \"%s\"!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to connect to sender"
+msgid "remote[%s]: failed to connect, not enough memory"
+msgstr "%s%s: nemohu se připojit k odesílateli"
+
+#, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: nedostatek paměti pro rozdělení zprávy"
 
@@ -13627,6 +13767,20 @@ msgstr "Seznam klientů pro přenos"
 msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
 msgstr "Předání dat WeeChatu do vzdálené aplikace (irc/weechat protokoly)"
 
+msgid "connecting"
+msgstr "připojuji"
+
+msgid "authenticating"
+msgstr ""
+
+#, fuzzy
+#| msgid "auth failed"
+msgid "authentication failed"
+msgstr "autorizace selhala"
+
+msgid "disconnected"
+msgstr "odpojen"
+
 #, fuzzy, c-format
 msgid ""
 "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
@@ -13649,18 +13803,6 @@ msgid_plural "clients"
 msgstr[0] "klient"
 msgstr[1] "klienti"
 msgstr[2] "klientu"
-
-msgid "connecting"
-msgstr "připojuji"
-
-msgid "waiting auth"
-msgstr "čekám autorizaci"
-
-msgid "auth failed"
-msgstr "autorizace selhala"
-
-msgid "disconnected"
-msgstr "odpojen"
 
 #, fuzzy, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
@@ -13775,6 +13917,89 @@ msgstr "%s: přesměrování \"%s\" (port %d) odebráno"
 msgid "%s%s: relay \"%s\" not found"
 msgstr "%s%s: přesměrování \"%s\" nenalezeno"
 
+#, c-format
+msgid "Remote: %s"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "Aliases with \"%s\":"
+msgid "Relay remotes with \"%s\":"
+msgstr "Přezdívky s \"%s\":"
+
+#, fuzzy, c-format
+#| msgid "No server found with \"%s\""
+msgid "No relay remote found with \"%s\""
+msgstr "Žádný server s \"%s\" nenalezen"
+
+#, fuzzy
+#| msgid "All aliases:"
+msgid "All relay remotes:"
+msgstr "Všechny aliasy:"
+
+msgid "No relay remote"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+msgstr "%s%s: server \"%s\" pro příkaz \"%s\" již existuje"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid remote relay name: \"%s\""
+msgstr "%s%s: nekorektní znaková sada: \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid charset: \"%s\""
+msgid "%s%s: invalid remote relay URL: \"%s\""
+msgstr "%s%s: nekorektní znaková sada: \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: invalid remote relay option: \"%s\""
+msgstr "%s%s: neplatný návratový kód \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" created"
+msgid "Remote relay \"%s\" created"
+msgstr "Pole \"%s\" vytvořeno"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to create remote relay \"%s\""
+msgstr "%sChyba: selhalo vytvoření pole \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgid "%s%s: remote relay \"%s\" not found for \"%s\" command"
+msgstr "%s%s: server \"%s\" pro příkaz \"%s\" nenalezen"
+
+#, fuzzy, c-format
+#| msgid "%s%s: not connected to server \"%s\"!"
+msgid "%s%s: no connection to remote relay \"%s\""
+msgstr "%s%s: nepřipojen k serveru \"%s\"!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
+msgstr "%s%s: server \"%s\" pro příkaz \"%s\" již existuje"
+
+#, fuzzy, c-format
+#| msgid "Layout \"%s\" has been renamed to \"%s\""
+msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
+msgstr "Rozložení \"%s\" přejmenováno na  %s"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
+#| "\"/disconnect %s\" before."
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s%s: nemůžete odebrat server \"%s\", protože jste k němu připojent. Skuste "
+"nejprve \"/dissconnect %s\"."
+
+#, fuzzy, c-format
+msgid "%s: remote relay \"%s\" has been deleted"
+msgstr "Limit pro zdroj \"%s\" byl nastaven na  %s"
+
 msgid "relay control"
 msgstr "ovládání přesměrování"
 
@@ -13875,8 +14100,17 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The \"weechat\" protocol allows a remote interface to connect on the port, "
-"see the list here: https://weechat.org/about/interfaces/"
+"The \"api\" protocol allows a remote interface (including WeeChat itself) to "
+"connect on the port."
+msgstr ""
+
+msgid ""
+"The \"weechat\" protocol allows a remote interface (but not WeeChat itself) "
+"to connect on the port."
+msgstr ""
+
+msgid ""
+"The list of remote interfaces is here: https://weechat.org/about/interfaces/"
 msgstr ""
 
 #, fuzzy
@@ -13892,6 +14126,75 @@ msgstr ""
 "\n"
 "Spuštění příkazu bez argumentů vypíše seznam xfer."
 
+#, fuzzy
+#| msgid "disconnect from one or all IRC servers"
+msgid "control of remote relay servers"
+msgstr "odpojit z jednoho nebo všech IRC serverů"
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+msgid ""
+"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
+"<name> || send <name> <json> || disconnect <name> || rename <name> "
+"<new_name> || del <name>"
+msgstr ""
+"list|listfull [<server>] || add <server> <hostname>[/<port>] [-temp] [-"
+"<option>[=<value>]] [-no<option>] || copy|rename <server> <new_name> || del|"
+"keep <server> || deloutq|jump|raw"
+
+#, fuzzy
+#| msgid "list of filters"
+msgid ""
+"raw[list]: list remote relay servers (without argument, this list is "
+"displayed)"
+msgstr "seznam filtrů"
+
+msgid "raw[listfull]: list remote relay servers (verbose)"
+msgstr ""
+
+#, fuzzy
+#| msgid "list of bar items"
+msgid "raw[add]: add a remote relay server"
+msgstr "seznam položek polí"
+
+msgid ""
+"name: name of remote relay server, for internal and display use; this name "
+"is used to connect to the remote relay and to set remote relay options: "
+"relay.remote.name.xxx"
+msgstr ""
+
+msgid ""
+"url: URL of the remote relay, format is https://example.com:9000 or http://"
+"example.com:9000 (plain-text connection, not recommended)"
+msgstr ""
+
+msgid "option: set option for remote relay: proxy, password or totp_secret"
+msgstr ""
+
+#, fuzzy
+#| msgid "reconnect to server(s)"
+msgid "raw[connect]: connect to a remote relay server"
+msgstr "znovu připojit k serveru(ům)"
+
+#, fuzzy
+#| msgid "list of bar items"
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "seznam položek polí"
+
+#, fuzzy
+#| msgid "disconnect from one or all IRC servers"
+msgid "raw[disconnect]: disconnect from a remote relay server"
+msgstr "odpojit z jednoho nebo všech IRC serverů"
+
+#, fuzzy
+#| msgid "names of filters"
+msgid "raw[rename]: rename a remote relay server"
+msgstr "jména filtrů"
+
+#, fuzzy
+msgid "raw[del]: delete a remote relay server"
+msgstr "Seznam trigerů:"
+
 msgid "all possible protocol.name for relay plugin"
 msgstr "všechna možná protocol.name pro plugin přesměrování"
 
@@ -13900,6 +14203,11 @@ msgstr "protokol.jméno aktuálních přesměrování pro relay plugin"
 
 msgid "first free port for relay plugin"
 msgstr "první volný port pro plugin přesměrování"
+
+#, fuzzy
+#| msgid "relay control"
+msgid "relay remotes"
+msgstr "ovládání přesměrování"
 
 #, c-format
 msgid ""
@@ -13944,6 +14252,31 @@ msgstr ""
 msgid "port for relay"
 msgstr "Žádný klient pro přesměrování"
 
+msgid ""
+"remote relay URL with optional port (default is 9000), examples: https://"
+"example.com:9000 or http://example.com:9000 (plain-text connection, not "
+"recommended)"
+msgstr ""
+
+msgid ""
+"name of proxy used for this remote relay (optional, proxy must be defined "
+"with command /proxy)"
+msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "password for proxy server (note: content is evaluated, see /help eval)"
+msgid "password for remote relay (note: content is evaluated, see /help eval)"
+msgstr "heslo pro proxy server(pozn.: obsah je vykonán, viz /help eval)"
+
+#, fuzzy
+#| msgid ""
+#| "username for proxy server (note: content is evaluated, see /help eval)"
+msgid ""
+"TOTP secret, encoded in base32 (note: content is evaluated, see /help eval)"
+msgstr ""
+"uživatelské jméno pro proxy server(pozn.: obsah je vykonán, viz /help eval)"
+
 #, c-format
 msgid "Relay option renamed: \"relay.network.%s\" => \"relay.network.%s\""
 msgstr ""
@@ -13980,8 +14313,10 @@ msgstr "barva textu pro status \"připojuji\""
 msgid "text color for \"disconnected\" status"
 msgstr "barva textu pro status \"odpojen\""
 
-msgid "text color for \"waiting authentication\" status"
-msgstr "barva textu pro status \"očekávám autentizaci\""
+#, fuzzy
+#| msgid "text color for \"authentication failed\" status"
+msgid "text color for \"authenticating\" status"
+msgstr "barva textu pro status \"autentizace selhala\""
 
 #, fuzzy
 msgid "text color in relay buffer"
@@ -14232,6 +14567,12 @@ msgstr "%sChyba: nemohu inicializovat plugin \"%s\""
 
 msgid "Relay raw messages"
 msgstr "Přeposílat čisté zprávy"
+
+#, c-format
+msgid ""
+"%s%s: error: unable to connect to a remote relay via API (cJSON support is "
+"not enabled)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: socket closed for %s (%s: %s)"
@@ -16358,8 +16699,3 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
-
-#, fuzzy
-#~| msgid "case sensitive completion for nicks"
-#~ msgid "case sensitive completion by default"
-#~ msgstr "na velikost písma citlivé doplňování přezdívek"

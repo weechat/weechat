@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-26 09:18+0100\n"
-"PO-Revision-Date: 2024-03-06 20:32+0100\n"
+"POT-Creation-Date: 2024-04-07 14:44+0200\n"
+"PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -14346,6 +14346,152 @@ msgstr ""
 "%1$s%2$s: クライアント %4$s%5$s%6$s に対するコマンド \"%3$s\" の実行に失敗"
 
 #, c-format
+msgid "remote[%s]: WeeChat: %s (%s), API: %s"
+msgstr ""
+
+#, fuzzy
+#| msgid "invalid priorities"
+msgid "invalid response from remote relay"
+msgstr "無効なプロパティ"
+
+#, fuzzy
+#| msgid "%s%s: authentication failed with client %s%s%s"
+msgid "authentication failed with remote relay"
+msgstr "%s%s: クライアント %s%s%s との認証に失敗"
+
+msgid "invalid websocket response (handshake error)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s    error: %s%s%s%s"
+msgid "%sremote[%s]: error: %s%s%s%s"
+msgstr "%s    エラー: %s%s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error decoding websocket frame for client %s%s%s"
+msgid "%sremote[%s]: error decoding websocket frame"
+msgstr ""
+"%s%s: クライアント %s%s%s 用のウェブソケットフレームのデコード中にエラー"
+
+#, fuzzy, c-format
+#| msgid "%s%s: reading data on socket: error %d %s"
+msgid "%sremote[%s]: reading data on socket: error %d %s"
+msgstr "%s%s: ソケットからデータを読み取り中: エラー %d %s"
+
+#, c-format
+msgid "%sremote[%s]: failed to build authentication"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: connected to %s/%d (%s)"
+msgid "remote[%s]: connected to %s/%d (%s)"
+msgstr "%s%s: %s/%d (%s) に接続完了"
+
+#, fuzzy, c-format
+#| msgid "%s%s: address \"%s\" not found"
+msgid "%sremote[%s]: address \"%s\" not found"
+msgstr "%s%s: アドレス \"%s\" が見つかりません"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: %s"
+msgid "%sremote[%s]: error: %s"
+msgstr "%s%s: エラー: %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: IP address not found"
+msgid "%sremote[%s]: IP address not found"
+msgstr "%s%s: IP アドレスが見つかりません"
+
+#, fuzzy, c-format
+#| msgid "%s%s: connection refused"
+msgid "%sremote[%s]: connection refused"
+msgstr "%s%s: 接続拒否"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: proxy fails to establish connection to server (check username/"
+#| "password if used and if server address/port is allowed by proxy)"
+msgid ""
+"%sremote[%s]: proxy fails to establish connection to server (check username/"
+"password if used and if server address/port is allowed by proxy)"
+msgstr ""
+"%s%s: プロキシ経由でのサーバへの接続に失敗 (ユーザ名/パスワードが正しいこと、"
+"プロキシがサーバのアドレス/ポートへの接続を許可していることを確認してくださ"
+"い)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to set local hostname/IP"
+msgid "%sremote[%s]: unable to set local hostname/IP"
+msgstr "%s%s: ローカルのホスト名/IP アドレスを設定出来ません"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS init error"
+msgid "%sremote[%s]: TLS init error"
+msgstr "%s%s: TLS 初期化エラー"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed"
+msgid "%sremote[%s]: TLS handshake failed"
+msgstr "%s%s: TLS ハンドシェイクに失敗"
+
+#, fuzzy, c-format
+#| msgid "%s%s: not enough memory"
+msgid "%sremote[%s]: not enough memory"
+msgstr "%s%s: メモリが足りません"
+
+#, fuzzy, c-format
+#| msgid "%s%s: timeout"
+msgid "%sremote[%s]: timeout"
+msgstr "%s%s: タイムアウト"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket"
+msgid "%sremote[%s]: unable to create socket"
+msgstr "%s%s: ソケットの作成に失敗"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
+msgid "%sremote[%s]: handshake failed with URL %s, response code: %s"
+msgstr "%s%s: クライアント %s%s%s との TLS ハンドシェイクが失敗: エラー %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
+msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
+msgstr "%s%s: クライアント %s%s%s との TLS ハンドシェイクが失敗: エラー %d %s"
+
+#, fuzzy
+#| msgid "%s%s: ignore not found"
+msgid "hash algorithm not found"
+msgstr "%s%s: 無視エントリが見つかりません"
+
+msgid "unknown number of hash iterations"
+msgstr ""
+
+msgid "unknown TOTP status"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sremote[%s]: successful handshake with URL %s: hash_algo=%s, iterations=%d, "
+"totp=%d"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: already connected to server \"%s\"!"
+msgid "%s%s: already connected to remote relay \"%s\"!"
+msgstr "%s%s: サーバ \"%s\" には接続済み!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: connecting to server %s/%d%s..."
+msgid "remote[%s]: connecting to remote relay %s/%d%s..."
+msgstr "%s%s: サーバ %s/%d%s に接続中..."
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to connect to sender"
+msgid "remote[%s]: failed to connect, not enough memory"
+msgstr "%s%s: 送信者に接続できません"
+
+#, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: メッセージ解析用のメモリが足りません"
 
@@ -14379,6 +14525,20 @@ msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
 msgstr ""
 "WeeChat データをリモートアプリケーションにリレー (irc/weechat プロトコル)"
 
+msgid "connecting"
+msgstr "接続中"
+
+msgid "authenticating"
+msgstr ""
+
+#, fuzzy
+#| msgid "auth failed"
+msgid "authentication failed"
+msgstr "認証失敗"
+
+msgid "disconnected"
+msgstr "切断されました"
+
 #, fuzzy, c-format
 #| msgid ""
 #| "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
@@ -14402,18 +14562,6 @@ msgstr ""
 msgid "client"
 msgid_plural "clients"
 msgstr[0] "クライアント"
-
-msgid "connecting"
-msgstr "接続中"
-
-msgid "waiting auth"
-msgstr "認証待ち"
-
-msgid "auth failed"
-msgstr "認証失敗"
-
-msgid "disconnected"
-msgstr "切断されました"
 
 #, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
@@ -14528,6 +14676,94 @@ msgstr "%s: リレー \"%s\" (%s: %s) が削除されました"
 msgid "%s%s: relay \"%s\" not found"
 msgstr "%s%s: リレー \"%s\" が見つかりません"
 
+#, c-format
+msgid "Remote: %s"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "Aliases with \"%s\":"
+msgid "Relay remotes with \"%s\":"
+msgstr "\"%s\" を含む別名:"
+
+#, fuzzy, c-format
+#| msgid "No server found with \"%s\""
+msgid "No relay remote found with \"%s\""
+msgstr "\"%s\" にマッチするサーバが見つかりません"
+
+#, fuzzy
+#| msgid "All aliases:"
+msgid "All relay remotes:"
+msgstr "すべての別名:"
+
+msgid "No relay remote"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" already exists, can't add it!"
+msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+msgstr "%s%s: サーバ \"%s\" は既に存在しており、追加できません"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid trigger name: \"%s\""
+msgid "%s%s: invalid remote relay name: \"%s\""
+msgstr "%s%s: トリガ名が間違っています: \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid charset: \"%s\""
+msgid "%s%s: invalid remote relay URL: \"%s\""
+msgstr "%s%s: 不正な文字セット: \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid post action \"%s\""
+msgid "%s%s: invalid remote relay option: \"%s\""
+msgstr "%s%s: トリガ実行後処理の設定値が間違っています: \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" created"
+msgid "Remote relay \"%s\" created"
+msgstr "バー \"%s\" が作成されました"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to create trigger \"%s\""
+msgid "%s%s: failed to create remote relay \"%s\""
+msgstr "%s%s: トリガ \"%s\" の作成に失敗しました"
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgid "%s%s: remote relay \"%s\" not found for \"%s\" command"
+msgstr "%1$s%2$s: \"%4$s\" コマンドのサーバ \"%3$s\" は見つかりません"
+
+#, fuzzy, c-format
+#| msgid "%s%s: not connected to server \"%s\"!"
+msgid "%s%s: no connection to remote relay \"%s\""
+msgstr "%s%s: サーバ \"%s\" に接続されていません!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
+msgstr "%1$s%2$s: \"%4$s\" コマンドのサーバ \"%3$s\" は既に存在しています"
+
+#, fuzzy, c-format
+#| msgid "Layout \"%s\" has been renamed to \"%s\""
+msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
+msgstr "レイアウト \"%s\" を \"%s\" にリネームしました"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
+#| "\"/disconnect %s\" before."
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s%s: サーバ \"%s\" に接続しているためこれを削除できません。まず \"/"
+"disconnect %s\" をしてください。"
+
+#, fuzzy, c-format
+#| msgid "%s: server %s%s%s has been deleted"
+msgid "%s: remote relay \"%s\" has been deleted"
+msgstr "%s: サーバ %s%s%s を削除しました"
+
 msgid "relay control"
 msgstr "リレー管理"
 
@@ -14632,8 +14868,17 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The \"weechat\" protocol allows a remote interface to connect on the port, "
-"see the list here: https://weechat.org/about/interfaces/"
+"The \"api\" protocol allows a remote interface (including WeeChat itself) to "
+"connect on the port."
+msgstr ""
+
+msgid ""
+"The \"weechat\" protocol allows a remote interface (but not WeeChat itself) "
+"to connect on the port."
+msgstr ""
+
+msgid ""
+"The list of remote interfaces is here: https://weechat.org/about/interfaces/"
 msgstr ""
 
 #, fuzzy
@@ -14649,6 +14894,77 @@ msgstr ""
 "\n"
 "引数無しでは、xfer リストを含むバッファを開きます。"
 
+#, fuzzy
+#| msgid "disconnect from one or all IRC servers"
+msgid "control of remote relay servers"
+msgstr "特定のまたは全ての IRC サーバとの接続を切断"
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+msgid ""
+"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
+"<name> || send <name> <json> || disconnect <name> || rename <name> "
+"<new_name> || del <name>"
+msgstr ""
+"list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
+"<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
+"reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
+"<name> || deloutq|jump|raw"
+
+#, fuzzy
+#| msgid "list of filters"
+msgid ""
+"raw[list]: list remote relay servers (without argument, this list is "
+"displayed)"
+msgstr "フィルタのリスト"
+
+msgid "raw[listfull]: list remote relay servers (verbose)"
+msgstr ""
+
+#, fuzzy
+#| msgid "list of bar items"
+msgid "raw[add]: add a remote relay server"
+msgstr "バー要素のリスト"
+
+msgid ""
+"name: name of remote relay server, for internal and display use; this name "
+"is used to connect to the remote relay and to set remote relay options: "
+"relay.remote.name.xxx"
+msgstr ""
+
+msgid ""
+"url: URL of the remote relay, format is https://example.com:9000 or http://"
+"example.com:9000 (plain-text connection, not recommended)"
+msgstr ""
+
+msgid "option: set option for remote relay: proxy, password or totp_secret"
+msgstr ""
+
+#, fuzzy
+#| msgid "reconnect to server(s)"
+msgid "raw[connect]: connect to a remote relay server"
+msgstr "サーバに再接続"
+
+#, fuzzy
+#| msgid "list of bar items"
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "バー要素のリスト"
+
+#, fuzzy
+#| msgid "disconnect from one or all IRC servers"
+msgid "raw[disconnect]: disconnect from a remote relay server"
+msgstr "特定のまたは全ての IRC サーバとの接続を切断"
+
+#, fuzzy
+#| msgid "names of filters"
+msgid "raw[rename]: rename a remote relay server"
+msgstr "フィルタ名"
+
+#, fuzzy
+#| msgid "default triggers"
+msgid "raw[del]: delete a remote relay server"
+msgstr "デフォルトトリガ"
+
 msgid "all possible protocol.name for relay plugin"
 msgstr "リレープラグインで利用可能な全ての protocol.name"
 
@@ -14657,6 +14973,11 @@ msgstr "リレープラグインにおける現在のリレーの protocol.name"
 
 msgid "first free port for relay plugin"
 msgstr "リレープラグイン用の最初の空きポート番号"
+
+#, fuzzy
+#| msgid "relay control"
+msgid "relay remotes"
+msgstr "リレー管理"
 
 #, c-format
 msgid ""
@@ -14703,6 +15024,40 @@ msgstr ""
 msgid "port for relay"
 msgstr "リレーするポート"
 
+msgid ""
+"remote relay URL with optional port (default is 9000), examples: https://"
+"example.com:9000 or http://example.com:9000 (plain-text connection, not "
+"recommended)"
+msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "name of proxy used for this server (optional, proxy must be defined with "
+#| "command /proxy)"
+msgid ""
+"name of proxy used for this remote relay (optional, proxy must be defined "
+"with command /proxy)"
+msgstr ""
+"このサーバで利用するプロキシ名 (任意、プロキシは /proxy コマンドで確認してく"
+"ださい)"
+
+#, fuzzy
+#| msgid ""
+#| "password for proxy server (note: content is evaluated, see /help eval)"
+msgid "password for remote relay (note: content is evaluated, see /help eval)"
+msgstr ""
+"プロキシサーバのパスワード (注意: 値は評価されます、/help eval を参照してくだ"
+"さい)"
+
+#, fuzzy
+#| msgid ""
+#| "username for proxy server (note: content is evaluated, see /help eval)"
+msgid ""
+"TOTP secret, encoded in base32 (note: content is evaluated, see /help eval)"
+msgstr ""
+"プロキシサーバのユーザ名 (注意: 値は評価されます、/help eval を参照してくださ"
+"い)"
+
 #, c-format
 msgid "Relay option renamed: \"relay.network.%s\" => \"relay.network.%s\""
 msgstr ""
@@ -14738,8 +15093,10 @@ msgstr "\"接続中\" 状態のテキスト色"
 msgid "text color for \"disconnected\" status"
 msgstr "\"接続切断\" 状態のテキスト色"
 
-msgid "text color for \"waiting authentication\" status"
-msgstr "\"認証待ち\" 状態のテキスト色"
+#, fuzzy
+#| msgid "text color for \"authentication failed\" status"
+msgid "text color for \"authenticating\" status"
+msgstr "\"認証失敗\" 状態のテキスト色"
 
 msgid "text color in relay buffer"
 msgstr "リレーバッファ内のテキスト色"
@@ -15039,6 +15396,12 @@ msgstr "%s%s: SSL 優先度の初期化に失敗"
 
 msgid "Relay raw messages"
 msgstr "Relay 生メッセージ"
+
+#, c-format
+msgid ""
+"%s%s: error: unable to connect to a remote relay via API (cJSON support is "
+"not enabled)"
+msgstr ""
 
 #, c-format
 msgid "%s: socket closed for %s (%s: %s)"
@@ -17206,19 +17569,3 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
-
-#, fuzzy
-#~| msgid "case sensitive completion for nicks"
-#~ msgid "case sensitive completion by default"
-#~ msgstr "大文字小文字を区別したニックネーム補完"
-
-#~ msgid ""
-#~ "sort of hotlist: group_time_*: group by notify level (highlights first) "
-#~ "then sort by time, group_number_*: group by notify level (highlights "
-#~ "first) then sort by number, number_*: sort by number; asc = ascending "
-#~ "sort, desc = descending sort"
-#~ msgstr ""
-#~ "ホットリストのソート: group_time_*: 通知レベルでグループ化した (ハイライト"
-#~ "を前にした) 後に時間でソート、group_number_*: 通知レベルでグループ化した "
-#~ "(ハイライトを前にした) 後に番号でソート、number_*: 番号でソート; asc = 昇"
-#~ "順、desc = 降順"

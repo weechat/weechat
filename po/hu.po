@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-26 09:18+0100\n"
-"PO-Revision-Date: 2023-11-29 09:59+0100\n"
+"POT-Creation-Date: 2024-04-07 14:44+0200\n"
+"PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -13056,6 +13056,124 @@ msgstr ""
 msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
+#, c-format
+msgid "remote[%s]: WeeChat: %s (%s), API: %s"
+msgstr ""
+
+msgid "invalid response from remote relay"
+msgstr ""
+
+#, fuzzy
+msgid "authentication failed with remote relay"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+msgid "invalid websocket response (handshake error)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: error: %s%s%s%s"
+msgstr "%sSzerver: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: error decoding websocket frame"
+msgstr "%s adatküldési hiba az IRC szerveren\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: reading data on socket: error %d %s"
+msgstr "%s adatküldési hiba az IRC szerveren\n"
+
+#, c-format
+msgid "%sremote[%s]: failed to build authentication"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "remote[%s]: connected to %s/%d (%s)"
+msgstr "%s nincs csatlakozva a \"%s\" szerverhez!\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: address \"%s\" not found"
+msgstr "%s cím \"%s\" nem található\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: error: %s"
+msgstr "%sSzerver: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: IP address not found"
+msgstr "%s IP-cím nem található\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: connection refused"
+msgstr "%s a csatlakozás elutasítva\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sremote[%s]: proxy fails to establish connection to server (check username/"
+"password if used and if server address/port is allowed by proxy)"
+msgstr ""
+"%s a proxy kiszolgálónak nem sikerült a szerverhez csatlakoznia (ellenőrizze "
+"a felhasználónevet/jelszót ha be van állítva)\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: unable to set local hostname/IP"
+msgstr "%s nem sikerült a helyi hosztnevet/IP-t beállítani\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: TLS init error"
+msgstr "%s gnutls inicializációs hiba\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: TLS handshake failed"
+msgstr "%s gnutls kézfogás sikertelen\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: not enough memory"
+msgstr "Nincs elég memória az új sorhoz\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: timeout"
+msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: unable to create socket"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: handshake failed with URL %s, response code: %s"
+msgstr "%s adatküldési hiba az IRC szerveren\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
+msgstr "%s adatküldési hiba az IRC szerveren\n"
+
+#, fuzzy
+msgid "hash algorithm not found"
+msgstr "aláírás nem található"
+
+msgid "unknown number of hash iterations"
+msgstr ""
+
+msgid "unknown TOTP status"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sremote[%s]: successful handshake with URL %s: hash_algo=%s, iterations=%d, "
+"totp=%d"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: already connected to remote relay \"%s\"!"
+msgstr "%s már csatlakozott a \"%s\" szerverhez!\n"
+
+#, fuzzy, c-format
+msgid "remote[%s]: connecting to remote relay %s/%d%s..."
+msgstr "%s: csatlakozás a(z) %s:%d%s%s szerverhez...\n"
+
+#, fuzzy, c-format
+msgid "remote[%s]: failed to connect, not enough memory"
+msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s nincs elegendő memória a fogadott IRC üzenet számára\n"
@@ -13091,6 +13209,21 @@ msgstr ""
 msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
 msgstr ""
 
+#, fuzzy
+msgid "connecting"
+msgstr "Kapcsolódás"
+
+msgid "authenticating"
+msgstr ""
+
+#, fuzzy
+msgid "authentication failed"
+msgstr "Sikertelen"
+
+#, fuzzy
+msgid "disconnected"
+msgstr "csatlakozva"
+
 #, c-format
 msgid ""
 "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
@@ -13107,22 +13240,6 @@ msgid "client"
 msgid_plural "clients"
 msgstr[0] ""
 msgstr[1] ""
-
-#, fuzzy
-msgid "connecting"
-msgstr "Kapcsolódás"
-
-#, fuzzy
-msgid "waiting auth"
-msgstr "Várakozás"
-
-#, fuzzy
-msgid "auth failed"
-msgstr "Sikertelen"
-
-#, fuzzy
-msgid "disconnected"
-msgstr "csatlakozva"
 
 #, fuzzy, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
@@ -13231,6 +13348,77 @@ msgstr "%s a \"%s\" szerver nem található\n"
 msgid "%s%s: relay \"%s\" not found"
 msgstr "%s a \"%s\" szerver nem található\n"
 
+#, c-format
+msgid "Remote: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Relay remotes with \"%s\":"
+msgstr "A(z) '%s' szerverek listája:\n"
+
+#, fuzzy, c-format
+msgid "No relay remote found with \"%s\""
+msgstr "Nem található '%s' szerver.\n"
+
+#, fuzzy
+msgid "All relay remotes:"
+msgstr "Aliaszok listája:\n"
+
+msgid "No relay remote"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid remote relay name: \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid remote relay URL: \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid remote relay option: \"%s\""
+msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
+
+#, fuzzy, c-format
+msgid "Remote relay \"%s\" created"
+msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to create remote relay \"%s\""
+msgstr "%s nem sikerült a modul opciókat elmenteni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: remote relay \"%s\" not found for \"%s\" command"
+msgstr "%s a \"%s\" szerver nem található a \"%s\" parancshoz\n"
+
+#, fuzzy, c-format
+msgid "%s%s: no connection to remote relay \"%s\""
+msgstr "%s nincs csatlakozva a \"%s\" szerverhez!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
+msgstr "%s a \"%s\" szerver már létezik a(z) \"%s\" parancshoz\n"
+
+#, fuzzy, c-format
+msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s nem tudja törölni a \"%s\" szervert, mert csatlakozva van hozzá. Próbálja "
+"a /disconnect %s parancsot előbb.\n"
+
+#, fuzzy, c-format
+msgid "%s: remote relay \"%s\" has been deleted"
+msgstr "A %s%s%s szerver törölve\n"
+
 msgid "relay control"
 msgstr ""
 
@@ -13324,12 +13512,86 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The \"weechat\" protocol allows a remote interface to connect on the port, "
-"see the list here: https://weechat.org/about/interfaces/"
+"The \"api\" protocol allows a remote interface (including WeeChat itself) to "
+"connect on the port."
+msgstr ""
+
+msgid ""
+"The \"weechat\" protocol allows a remote interface (but not WeeChat itself) "
+"to connect on the port."
+msgstr ""
+
+msgid ""
+"The list of remote interfaces is here: https://weechat.org/about/interfaces/"
 msgstr ""
 
 msgid "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
+
+#, fuzzy
+msgid "control of remote relay servers"
+msgstr "kilépés a szerver(ek)ről"
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+msgid ""
+"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
+"<name> || send <name> <json> || disconnect <name> || rename <name> "
+"<new_name> || del <name>"
+msgstr ""
+"[list [szervernév]] | [listfull [szervernév]] | [add szervernév gépnév [-"
+"port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd jelszó] [-nicks "
+"név1 név2 név3] [-username felhasználó] [-realname valódinév] [-command "
+"parancs] [-autojoin szoba[,szoba]] ] | [copy szervernév újszervernév] | "
+"[rename szervernév újszervernév] | [keep szervernév] | [del szervernév]"
+
+#, fuzzy
+msgid ""
+"raw[list]: list remote relay servers (without argument, this list is "
+"displayed)"
+msgstr "Aliaszok listája:\n"
+
+msgid "raw[listfull]: list remote relay servers (verbose)"
+msgstr ""
+
+#, fuzzy
+msgid "raw[add]: add a remote relay server"
+msgstr "Aliaszok listája:\n"
+
+msgid ""
+"name: name of remote relay server, for internal and display use; this name "
+"is used to connect to the remote relay and to set remote relay options: "
+"relay.remote.name.xxx"
+msgstr ""
+
+msgid ""
+"url: URL of the remote relay, format is https://example.com:9000 or http://"
+"example.com:9000 (plain-text connection, not recommended)"
+msgstr ""
+
+msgid "option: set option for remote relay: proxy, password or totp_secret"
+msgstr ""
+
+#, fuzzy
+#| msgid "reconnect to server(s)"
+msgid "raw[connect]: connect to a remote relay server"
+msgstr "újracsatlakozás a szerver(ek)hez"
+
+#, fuzzy
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "raw[disconnect]: disconnect from a remote relay server"
+msgstr "kilépés a szerver(ek)ről"
+
+#, fuzzy
+msgid "raw[rename]: rename a remote relay server"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "raw[del]: delete a remote relay server"
+msgstr "Aliaszok listája:\n"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr ""
@@ -13340,6 +13602,9 @@ msgstr ""
 #, fuzzy
 msgid "first free port for relay plugin"
 msgstr "Aliaszok listája:\n"
+
+msgid "relay remotes"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -13384,6 +13649,26 @@ msgstr ""
 msgid "port for relay"
 msgstr "Nincs szerver.\n"
 
+msgid ""
+"remote relay URL with optional port (default is 9000), examples: https://"
+"example.com:9000 or http://example.com:9000 (plain-text connection, not "
+"recommended)"
+msgstr ""
+
+msgid ""
+"name of proxy used for this remote relay (optional, proxy must be defined "
+"with command /proxy)"
+msgstr ""
+
+#, fuzzy
+msgid "password for remote relay (note: content is evaluated, see /help eval)"
+msgstr "felhasználónév az IRC szerveren"
+
+#, fuzzy
+msgid ""
+"TOTP secret, encoded in base32 (note: content is evaluated, see /help eval)"
+msgstr "felhasználónév az IRC szerveren"
+
 #, c-format
 msgid "Relay option renamed: \"relay.network.%s\" => \"relay.network.%s\""
 msgstr ""
@@ -13425,8 +13710,8 @@ msgid "text color for \"disconnected\" status"
 msgstr "\"connecting\" dcc státusz színe"
 
 #, fuzzy
-msgid "text color for \"waiting authentication\" status"
-msgstr "\"waiting\" dcc státusz színe"
+msgid "text color for \"authenticating\" status"
+msgstr "\"failed\" dcc státusz színe"
 
 #, fuzzy
 msgid "text color in relay buffer"
@@ -13654,6 +13939,12 @@ msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
 #, fuzzy
 msgid "Relay raw messages"
 msgstr "hibakereső üzenetek megjelenítése"
+
+#, c-format
+msgid ""
+"%s%s: error: unable to connect to a remote relay via API (cJSON support is "
+"not enabled)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: socket closed for %s (%s: %s)"

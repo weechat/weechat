@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-26 09:18+0100\n"
-"PO-Revision-Date: 2023-11-29 09:59+0100\n"
+"POT-Creation-Date: 2024-04-07 14:44+0200\n"
+"PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -13108,6 +13108,124 @@ msgstr ""
 msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
+#, c-format
+msgid "remote[%s]: WeeChat: %s (%s), API: %s"
+msgstr ""
+
+msgid "invalid response from remote relay"
+msgstr ""
+
+#, fuzzy
+msgid "authentication failed with remote relay"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+msgid "invalid websocket response (handshake error)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: error: %s%s%s%s"
+msgstr "%sСервер: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: error decoding websocket frame"
+msgstr "%s ошибка при отправке данных IRC серверу\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: reading data on socket: error %d %s"
+msgstr "%s ошибка при отправке данных IRC серверу\n"
+
+#, c-format
+msgid "%sremote[%s]: failed to build authentication"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "remote[%s]: connected to %s/%d (%s)"
+msgstr "%s не подключен к серверу \"%s\"!\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: address \"%s\" not found"
+msgstr "%s адрес \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: error: %s"
+msgstr "%sСервер: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: IP address not found"
+msgstr "%s IP адрес не найден\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: connection refused"
+msgstr "%s в подключении отказано\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sremote[%s]: proxy fails to establish connection to server (check username/"
+"password if used and if server address/port is allowed by proxy)"
+msgstr ""
+"%s proxy-сервер не смог установить соединение с сервером (проверьте имя "
+"пользователя и пароль если они используются)\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: unable to set local hostname/IP"
+msgstr "%s не могу установить локальный хост/IP\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: TLS init error"
+msgstr "%s ошибка инициализации gnutls\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: TLS handshake failed"
+msgstr "%s инициализация gnutls не удалось\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: not enough memory"
+msgstr "Недостаточно памяти для новой строчки\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: timeout"
+msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: unable to create socket"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: handshake failed with URL %s, response code: %s"
+msgstr "%s ошибка при отправке данных IRC серверу\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
+msgstr "%s ошибка при отправке данных IRC серверу\n"
+
+#, fuzzy
+msgid "hash algorithm not found"
+msgstr "подпись не найдена"
+
+msgid "unknown number of hash iterations"
+msgstr ""
+
+msgid "unknown TOTP status"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sremote[%s]: successful handshake with URL %s: hash_algo=%s, iterations=%d, "
+"totp=%d"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: already connected to remote relay \"%s\"!"
+msgstr "%s уже подключен к серверу \"%s\"!\n"
+
+#, fuzzy, c-format
+msgid "remote[%s]: connecting to remote relay %s/%d%s..."
+msgstr "%s: поключаюсь к серверу %s:%d%s%s...\n"
+
+#, fuzzy, c-format
+msgid "remote[%s]: failed to connect, not enough memory"
+msgstr "%s DCC: не могу соединиться с отправителем\n"
+
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s недостаточно памяти для полученного сообщения\n"
@@ -13143,6 +13261,21 @@ msgstr ""
 msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
 msgstr ""
 
+#, fuzzy
+msgid "connecting"
+msgstr "Подключение"
+
+msgid "authenticating"
+msgstr ""
+
+#, fuzzy
+msgid "authentication failed"
+msgstr "Неудача"
+
+#, fuzzy
+msgid "disconnected"
+msgstr "подключен"
+
 #, c-format
 msgid ""
 "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
@@ -13160,22 +13293,6 @@ msgid_plural "clients"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
-
-#, fuzzy
-msgid "connecting"
-msgstr "Подключение"
-
-#, fuzzy
-msgid "waiting auth"
-msgstr "Ожидание"
-
-#, fuzzy
-msgid "auth failed"
-msgstr "Неудача"
-
-#, fuzzy
-msgid "disconnected"
-msgstr "подключен"
 
 #, fuzzy, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
@@ -13284,6 +13401,77 @@ msgstr "%s сервер \"%s\" не найден\n"
 msgid "%s%s: relay \"%s\" not found"
 msgstr "%s сервер \"%s\" не найден\n"
 
+#, c-format
+msgid "Remote: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Relay remotes with \"%s\":"
+msgstr "Серверы с '%s':\n"
+
+#, fuzzy, c-format
+msgid "No relay remote found with \"%s\""
+msgstr "Серверы с '%s' не найдены.\n"
+
+#, fuzzy
+msgid "All relay remotes:"
+msgstr "Список сокращений:\n"
+
+msgid "No relay remote"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid remote relay name: \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid remote relay URL: \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid remote relay option: \"%s\""
+msgstr "%s не могу отвязать клавишу \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Remote relay \"%s\" created"
+msgstr "Сокращение \"%s\" => \"%s\" создано\n"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to create remote relay \"%s\""
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+
+#, fuzzy, c-format
+msgid "%s%s: remote relay \"%s\" not found for \"%s\" command"
+msgstr "%s сервер \"%s\" не найден для команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: no connection to remote relay \"%s\""
+msgstr "%s не подключен к серверу \"%s\"!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
+msgstr "%s сервер \"%s\" уже существует для команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s вы не можете удалить сервер \"%s\" потому, что подключены к нему. "
+"Попробуйте отключиться (/disconnect) %s перед удалением.\n"
+
+#, fuzzy, c-format
+msgid "%s: remote relay \"%s\" has been deleted"
+msgstr "Сервер %s%s%s удалён\n"
+
 msgid "relay control"
 msgstr ""
 
@@ -13377,12 +13565,86 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The \"weechat\" protocol allows a remote interface to connect on the port, "
-"see the list here: https://weechat.org/about/interfaces/"
+"The \"api\" protocol allows a remote interface (including WeeChat itself) to "
+"connect on the port."
+msgstr ""
+
+msgid ""
+"The \"weechat\" protocol allows a remote interface (but not WeeChat itself) "
+"to connect on the port."
+msgstr ""
+
+msgid ""
+"The list of remote interfaces is here: https://weechat.org/about/interfaces/"
 msgstr ""
 
 msgid "Without argument, this command opens buffer with list of relay clients."
 msgstr ""
+
+#, fuzzy
+msgid "control of remote relay servers"
+msgstr "отключиться от сервера(-ов)"
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+msgid ""
+"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
+"<name> || send <name> <json> || disconnect <name> || rename <name> "
+"<new_name> || del <name>"
+msgstr ""
+"[list [сервер]] | [listfull [сервер]] | [add сервер адрес [-port порт] [-"
+"temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd пароль] [-nicks ник1 ник2 ник3] "
+"[-username имя_пользователя] [-realname реальное_имя] [-command команда] [-"
+"autojoin канал[,канал]] ] | [copy сервер новый_сервер] | [rename сервер "
+"новое_имя] | [keep сервер] | [del сервер]"
+
+#, fuzzy
+msgid ""
+"raw[list]: list remote relay servers (without argument, this list is "
+"displayed)"
+msgstr "Список сокращений:\n"
+
+msgid "raw[listfull]: list remote relay servers (verbose)"
+msgstr ""
+
+#, fuzzy
+msgid "raw[add]: add a remote relay server"
+msgstr "Список сокращений:\n"
+
+msgid ""
+"name: name of remote relay server, for internal and display use; this name "
+"is used to connect to the remote relay and to set remote relay options: "
+"relay.remote.name.xxx"
+msgstr ""
+
+msgid ""
+"url: URL of the remote relay, format is https://example.com:9000 or http://"
+"example.com:9000 (plain-text connection, not recommended)"
+msgstr ""
+
+msgid "option: set option for remote relay: proxy, password or totp_secret"
+msgstr ""
+
+#, fuzzy
+#| msgid "reconnect to server(s)"
+msgid "raw[connect]: connect to a remote relay server"
+msgstr "переподключиться к серверу(-ам)"
+
+#, fuzzy
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "raw[disconnect]: disconnect from a remote relay server"
+msgstr "отключиться от сервера(-ов)"
+
+#, fuzzy
+msgid "raw[rename]: rename a remote relay server"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "raw[del]: delete a remote relay server"
+msgstr "Список сокращений:\n"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr ""
@@ -13393,6 +13655,9 @@ msgstr ""
 #, fuzzy
 msgid "first free port for relay plugin"
 msgstr "Список сокращений:\n"
+
+msgid "relay remotes"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -13437,6 +13702,26 @@ msgstr ""
 msgid "port for relay"
 msgstr "Нет сервера.\n"
 
+msgid ""
+"remote relay URL with optional port (default is 9000), examples: https://"
+"example.com:9000 or http://example.com:9000 (plain-text connection, not "
+"recommended)"
+msgstr ""
+
+msgid ""
+"name of proxy used for this remote relay (optional, proxy must be defined "
+"with command /proxy)"
+msgstr ""
+
+#, fuzzy
+msgid "password for remote relay (note: content is evaluated, see /help eval)"
+msgstr "ник, используемый на IRC сервере"
+
+#, fuzzy
+msgid ""
+"TOTP secret, encoded in base32 (note: content is evaluated, see /help eval)"
+msgstr "ник, используемый на IRC сервере"
+
 #, c-format
 msgid "Relay option renamed: \"relay.network.%s\" => \"relay.network.%s\""
 msgstr ""
@@ -13478,8 +13763,8 @@ msgid "text color for \"disconnected\" status"
 msgstr "цвет \"соединения\" в окне DCC"
 
 #, fuzzy
-msgid "text color for \"waiting authentication\" status"
-msgstr "цвет \"ожидания\" в окне DCC"
+msgid "text color for \"authenticating\" status"
+msgstr "цвет \"неудачных\" в окне DCC"
 
 #, fuzzy
 msgid "text color in relay buffer"
@@ -13704,6 +13989,12 @@ msgstr "%s не могу инициализировать plugin \"%s\"\n"
 #, fuzzy
 msgid "Relay raw messages"
 msgstr "выводить отладочные сообщения"
+
+#, c-format
+msgid ""
+"%s%s: error: unable to connect to a remote relay via API (cJSON support is "
+"not enabled)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: socket closed for %s (%s: %s)"

@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-26 09:18+0100\n"
-"PO-Revision-Date: 2024-03-06 20:32+0100\n"
+"POT-Creation-Date: 2024-04-07 14:44+0200\n"
+"PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -14330,6 +14330,155 @@ msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
 msgstr "%s%s: nie udało się wykonać komendy \"%s\" dla klienta %s%s%s"
 
 #, c-format
+msgid "remote[%s]: WeeChat: %s (%s), API: %s"
+msgstr ""
+
+#, fuzzy
+#| msgid "invalid priorities"
+msgid "invalid response from remote relay"
+msgstr "nieprawidłowe priorytety"
+
+#, fuzzy
+#| msgid "%s%s: authentication failed with client %s%s%s"
+msgid "authentication failed with remote relay"
+msgstr "%s%s: uwierzytelnianie nie powiodło się z klientem %s%s%s"
+
+msgid "invalid websocket response (handshake error)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s    error: %s%s%s%s"
+msgid "%sremote[%s]: error: %s%s%s%s"
+msgstr "%s    błąd: %s%s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error decoding websocket frame for client %s%s%s"
+msgid "%sremote[%s]: error decoding websocket frame"
+msgstr "%s%s: błąd dekodowania rami gniazda webowego dla klienta %s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: reading data on socket: error %d %s"
+msgid "%sremote[%s]: reading data on socket: error %d %s"
+msgstr "%s%s: odczyt danych z gniazda: błąd %d %s"
+
+#, c-format
+msgid "%sremote[%s]: failed to build authentication"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: connected to %s/%d (%s)"
+msgid "remote[%s]: connected to %s/%d (%s)"
+msgstr "%s%s: połączono z %s/%d (%s)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: address \"%s\" not found"
+msgid "%sremote[%s]: address \"%s\" not found"
+msgstr "%s%s: nie znaleziono adresu \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: %s"
+msgid "%sremote[%s]: error: %s"
+msgstr "%s%s: błąd: %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: IP address not found"
+msgid "%sremote[%s]: IP address not found"
+msgstr "%s%s: nie znaleziono adresu IP"
+
+#, fuzzy, c-format
+#| msgid "%s%s: connection refused"
+msgid "%sremote[%s]: connection refused"
+msgstr "%s%s: połączenie odrzucone"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: proxy fails to establish connection to server (check username/"
+#| "password if used and if server address/port is allowed by proxy)"
+msgid ""
+"%sremote[%s]: proxy fails to establish connection to server (check username/"
+"password if used and if server address/port is allowed by proxy)"
+msgstr ""
+"%s%s: proxy nie może nawiązać połączenia z serwerem (sprawdź nazwę "
+"użytkownika/hasło jeśli zostały użyte oraz czy adres/port serwera jest "
+"dozwolony przez proxy)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to set local hostname/IP"
+msgid "%sremote[%s]: unable to set local hostname/IP"
+msgstr "%s%s: nie można ustawić lokalnej nazwy hosta/IP"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS init error"
+msgid "%sremote[%s]: TLS init error"
+msgstr "%s%s: błąd inicjacji TLS"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed"
+msgid "%sremote[%s]: TLS handshake failed"
+msgstr "%s%s: nawiązanie połączenia TLS nie powiodło się"
+
+#, fuzzy, c-format
+#| msgid "%s%s: not enough memory"
+msgid "%sremote[%s]: not enough memory"
+msgstr "%s%s: za mało pamięci"
+
+#, fuzzy, c-format
+#| msgid "%s%s: timeout"
+msgid "%sremote[%s]: timeout"
+msgstr "%s%s: timeout"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket"
+msgid "%sremote[%s]: unable to create socket"
+msgstr "%s%s: nie można utworzyć gniazda"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
+msgid "%sremote[%s]: handshake failed with URL %s, response code: %s"
+msgstr ""
+"%s%s: nawiązywanie połączenia TLS nie powiodło się dla klienta %s%s%s: błąd "
+"%d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
+msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
+msgstr ""
+"%s%s: nawiązywanie połączenia TLS nie powiodło się dla klienta %s%s%s: błąd "
+"%d %s"
+
+#, fuzzy
+#| msgid "%s%s: ignore not found"
+msgid "hash algorithm not found"
+msgstr "%s%s: nie znaleziono ignorowania"
+
+msgid "unknown number of hash iterations"
+msgstr ""
+
+msgid "unknown TOTP status"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sremote[%s]: successful handshake with URL %s: hash_algo=%s, iterations=%d, "
+"totp=%d"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: already connected to server \"%s\"!"
+msgid "%s%s: already connected to remote relay \"%s\"!"
+msgstr "%s%s: już połączony z serwerem \"%s\"!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: connecting to server %s/%d%s..."
+msgid "remote[%s]: connecting to remote relay %s/%d%s..."
+msgstr "%s%s: łączę z serwerem %s/%d%s..."
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to connect to sender"
+msgid "remote[%s]: failed to connect, not enough memory"
+msgstr "%s%s: nie można połączyć z nadawcą"
+
+#, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: za mało pamięci na przetworzenie otrzymanych wiadomości"
 
@@ -14363,6 +14512,22 @@ msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
 msgstr ""
 "Przekazywanie danych WeeChat do zdalnych aplikacji (protokoły irc i weechat)"
 
+msgid "connecting"
+msgstr "łączę"
+
+#, fuzzy
+#| msgid "authenticate with SASL"
+msgid "authenticating"
+msgstr "uwuerzytelnienie za pomocą SASL"
+
+#, fuzzy
+#| msgid "auth failed"
+msgid "authentication failed"
+msgstr "autoryzacja nie powiodła się"
+
+msgid "disconnected"
+msgstr "rozłączono"
+
 #, c-format
 msgid ""
 "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
@@ -14383,18 +14548,6 @@ msgid_plural "clients"
 msgstr[0] "klient"
 msgstr[1] "klienty"
 msgstr[2] "klientów"
-
-msgid "connecting"
-msgstr "łączę"
-
-msgid "waiting auth"
-msgstr "oczekuje autoryzacji"
-
-msgid "auth failed"
-msgstr "autoryzacja nie powiodła się"
-
-msgid "disconnected"
-msgstr "rozłączono"
 
 #, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
@@ -14506,6 +14659,94 @@ msgstr "%s: pośrednik \"%s\" (%s: %s) usunięty"
 msgid "%s%s: relay \"%s\" not found"
 msgstr "%s%s: relay \"%s\" nie został znaleziony"
 
+#, c-format
+msgid "Remote: %s"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "Aliases with \"%s\":"
+msgid "Relay remotes with \"%s\":"
+msgstr "Aliasy z \"%s\":"
+
+#, fuzzy, c-format
+#| msgid "No server found with \"%s\""
+msgid "No relay remote found with \"%s\""
+msgstr "Nie znaleziono serwera z  \"%s\""
+
+#, fuzzy
+#| msgid "All aliases:"
+msgid "All relay remotes:"
+msgstr "Wszystkie aliasy:"
+
+msgid "No relay remote"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" already exists, can't add it!"
+msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+msgstr "%s%s: serwer \"%s\" już istnieje, nie mogę go dodać!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid trigger name: \"%s\""
+msgid "%s%s: invalid remote relay name: \"%s\""
+msgstr "%s%s: nieprawidłowe nazwa triggera: \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid charset: \"%s\""
+msgid "%s%s: invalid remote relay URL: \"%s\""
+msgstr "%s%s: nieprawidłowe kodowanie: \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid post action \"%s\""
+msgid "%s%s: invalid remote relay option: \"%s\""
+msgstr "%s%s: nieprawidłowa akcja \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" created"
+msgid "Remote relay \"%s\" created"
+msgstr "Utworzono pasek \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to create trigger \"%s\""
+msgid "%s%s: failed to create remote relay \"%s\""
+msgstr "%s%s: nie udało się utworzyć triggera \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgid "%s%s: remote relay \"%s\" not found for \"%s\" command"
+msgstr "%s%s: serwer \"%s\" nie został znaleziony dla komendy \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: not connected to server \"%s\"!"
+msgid "%s%s: no connection to remote relay \"%s\""
+msgstr "%s%s: nie połączony z serwerem \"%s\"!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
+msgstr "%s%s: serwer \"%s\" już istnieje dla komendy \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Layout \"%s\" has been renamed to \"%s\""
+msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
+msgstr "Zmieniono nazwę układu \"%s\" na \"%s\""
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
+#| "\"/disconnect %s\" before."
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s%s: nie możesz usunąć serwera \"%s\", ponieważ jesteś z nim połączony. "
+"Spróbuj najpierw wpisać \"/disconnect %s\"."
+
+#, fuzzy, c-format
+#| msgid "%s: server %s%s%s has been deleted"
+msgid "%s: remote relay \"%s\" has been deleted"
+msgstr "%s: serwer %s%s%s został usunięty"
+
 msgid "relay control"
 msgstr "zarządzanie przesyłaniem"
 
@@ -14610,15 +14851,127 @@ msgstr ""
 "Protokół „irc” pozwala dowolnemu klientowi IRC (włączając w to samego "
 "WeeChat) połączyć się na porcie."
 
+#, fuzzy
+#| msgid ""
+#| "The \"irc\" protocol allows any IRC client (including WeeChat itself) to "
+#| "connect on the port."
 msgid ""
-"The \"weechat\" protocol allows a remote interface to connect on the port, "
-"see the list here: https://weechat.org/about/interfaces/"
+"The \"api\" protocol allows a remote interface (including WeeChat itself) to "
+"connect on the port."
+msgstr ""
+"Protokół „irc” pozwala dowolnemu klientowi IRC (włączając w to samego "
+"WeeChat) połączyć się na porcie."
+
+#, fuzzy
+#| msgid ""
+#| "The \"irc\" protocol allows any IRC client (including WeeChat itself) to "
+#| "connect on the port."
+msgid ""
+"The \"weechat\" protocol allows a remote interface (but not WeeChat itself) "
+"to connect on the port."
+msgstr ""
+"Protokół „irc” pozwala dowolnemu klientowi IRC (włączając w to samego "
+"WeeChat) połączyć się na porcie."
+
+#, fuzzy
+#| msgid ""
+#| "The \"weechat\" protocol allows a remote interface to connect on the "
+#| "port, see the list here: https://weechat.org/about/interfaces/"
+msgid ""
+"The list of remote interfaces is here: https://weechat.org/about/interfaces/"
 msgstr ""
 "Protokół „weechat” umożliwia podłączenie zdalnych interfejsów na porcie, ich "
 "listę można znaleźć pod adresem: https://weechat.org/about/interfaces/"
 
 msgid "Without argument, this command opens buffer with list of relay clients."
 msgstr "Bez argumentów komenda otworzy bufor z listą klientów pośrednika."
+
+#, fuzzy
+#| msgid "disconnect from one or all IRC servers"
+msgid "control of remote relay servers"
+msgstr "rozłącza się z jednym lub wszystkimi serwerami IRC"
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
+#| "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
+#| "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
+#| "<name> || deloutq|jump || raw [<filter>]"
+msgid ""
+"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
+"<name> || send <name> <json> || disconnect <name> || rename <name> "
+"<new_name> || del <name>"
+msgstr ""
+"list|listfull [<nazwa>] || add <nazwa> <host>[/<port>] [-temp] [-"
+"<opcja>[=<wartość>]] [-no<opcja>] || copy|rename <nazwa> <nowa_nazwa> || "
+"reorder <nazwa> [<nazwa>...] || open <nazwa>|-all [<nazwa>...] || del|keep "
+"<nazwa> || deloutq|jump || raw [<filter>]"
+
+#, fuzzy
+#| msgid "raw[list]: list servers (without argument, this list is displayed)"
+msgid ""
+"raw[list]: list remote relay servers (without argument, this list is "
+"displayed)"
+msgstr ""
+"raw[list]: wyświetl serwery (bez podania argumentu wyświetlana jest ta lista)"
+
+#, fuzzy
+#| msgid "raw[listfull]: list all bars (verbose)"
+msgid "raw[listfull]: list remote relay servers (verbose)"
+msgstr "raw[listfull]: wyświetl wszystkie paski (ze szczegółami)"
+
+#, fuzzy
+#| msgid "raw[add]: add a new server"
+msgid "raw[add]: add a remote relay server"
+msgstr "raw[add]: dodaj nowy serwer"
+
+#, fuzzy
+#| msgid ""
+#| "name: server name, for internal and display use; this name is used to "
+#| "connect to the server (/connect name) and to set server options: irc."
+#| "server.name.xxx"
+msgid ""
+"name: name of remote relay server, for internal and display use; this name "
+"is used to connect to the remote relay and to set remote relay options: "
+"relay.remote.name.xxx"
+msgstr ""
+"nazwa: nazwa serwera, do użytku wewnętrznego i wyświetlania; ta nazwa jest "
+"używana do połączenia z serwerem (/connect nazwa) i do ustawiania opcji "
+"serwera: irc.server.nazwa.xxx"
+
+msgid ""
+"url: URL of the remote relay, format is https://example.com:9000 or http://"
+"example.com:9000 (plain-text connection, not recommended)"
+msgstr ""
+
+msgid "option: set option for remote relay: proxy, password or totp_secret"
+msgstr ""
+
+#, fuzzy
+#| msgid "raw[-all]: reconnect to all servers"
+msgid "raw[connect]: connect to a remote relay server"
+msgstr "raw[-all]: połącz się ponownie ze wszystkimi serwerami"
+
+#, fuzzy
+#| msgid "> raw[send]: send text to the buffer"
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "> raw[send]: wyślij tekst do bufora"
+
+#, fuzzy
+#| msgid "raw[-all]: disconnect from all servers"
+msgid "raw[disconnect]: disconnect from a remote relay server"
+msgstr "raw[-all]: rozłącza ze wszystkimi serwerami"
+
+#, fuzzy
+#| msgid "raw[rename]: rename a server"
+msgid "raw[rename]: rename a remote relay server"
+msgstr "raw[rename]: zmień nazwę sewera"
+
+#, fuzzy
+#| msgid "raw[del]: delete a server"
+msgid "raw[del]: delete a remote relay server"
+msgstr "raw[del]: usuń serwer"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "wszystkie możliwe protokół.nazwa dla wtyczki relay"
@@ -14628,6 +14981,11 @@ msgstr "protokół.nazwa dla obecnych relayów dla wtyczki relay"
 
 msgid "first free port for relay plugin"
 msgstr "pierwszy wolny port dla wtyczki relay"
+
+#, fuzzy
+#| msgid "relay control"
+msgid "relay remotes"
+msgstr "zarządzanie przesyłaniem"
 
 #, c-format
 msgid ""
@@ -14676,6 +15034,39 @@ msgstr ""
 msgid "port for relay"
 msgstr "port dla pośrednika"
 
+msgid ""
+"remote relay URL with optional port (default is 9000), examples: https://"
+"example.com:9000 or http://example.com:9000 (plain-text connection, not "
+"recommended)"
+msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "name of proxy used for this server (optional, proxy must be defined with "
+#| "command /proxy)"
+msgid ""
+"name of proxy used for this remote relay (optional, proxy must be defined "
+"with command /proxy)"
+msgstr ""
+"nazwa pośrednika używanego dla tego serwera (opcjonalne, pośrednik musi być "
+"zdefiniowany za pomocą komendy /proxy)"
+
+#, fuzzy
+#| msgid ""
+#| "password for proxy server (note: content is evaluated, see /help eval)"
+msgid "password for remote relay (note: content is evaluated, see /help eval)"
+msgstr ""
+"hasło do serwera proxy (zawartość jest przetwarzana, zobacz /help eval)"
+
+#, fuzzy
+#| msgid ""
+#| "username for proxy server (note: content is evaluated, see /help eval)"
+msgid ""
+"TOTP secret, encoded in base32 (note: content is evaluated, see /help eval)"
+msgstr ""
+"nazwa użytkownika dla serwera proxy (zawartość jest przetwarzana, zobacz /"
+"help eval)"
+
 #, c-format
 msgid "Relay option renamed: \"relay.network.%s\" => \"relay.network.%s\""
 msgstr ""
@@ -14713,8 +15104,10 @@ msgstr "kolor statusu \"connecting\""
 msgid "text color for \"disconnected\" status"
 msgstr "kolor statusu \"disconnected\""
 
-msgid "text color for \"waiting authentication\" status"
-msgstr "kolor statusu \"waiting authentication\""
+#, fuzzy
+#| msgid "text color for \"authentication failed\" status"
+msgid "text color for \"authenticating\" status"
+msgstr "kolor statusu \"authentication failed\""
 
 msgid "text color in relay buffer"
 msgstr "kolor tekstu w buforze pośrednika"
@@ -15028,6 +15421,12 @@ msgstr "%s%s: nie można zainicjować priorytetu dla TLS"
 
 msgid "Relay raw messages"
 msgstr "Nieprzetworzone wiadomości relay"
+
+#, c-format
+msgid ""
+"%s%s: error: unable to connect to a remote relay via API (cJSON support is "
+"not enabled)"
+msgstr ""
 
 #, c-format
 msgid "%s: socket closed for %s (%s: %s)"
@@ -17246,20 +17645,3 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
-
-#, fuzzy
-#~| msgid "case sensitive completion for nicks"
-#~ msgid "case sensitive completion by default"
-#~ msgstr "dopełnienie dla nicków (rozróżniana jest wielkość liter)"
-
-#~ msgid ""
-#~ "sort of hotlist: group_time_*: group by notify level (highlights first) "
-#~ "then sort by time, group_number_*: group by notify level (highlights "
-#~ "first) then sort by number, number_*: sort by number; asc = ascending "
-#~ "sort, desc = descending sort"
-#~ msgstr ""
-#~ "sortowanie hotlisty: group_time_*: grupuj po poziomie powiadomień "
-#~ "(powiadomienia pierwsze) następnie sortuj po czasie, group_number_*: "
-#~ "grupuj po poziomie powiadomień (powiadomienia pierwsze) następnie sortuj "
-#~ "po numerze, number_*: sortuj po numerze; asc = sortowanie rosnące, desc = "
-#~ "sortowanie malejące"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-26 09:18+0100\n"
-"PO-Revision-Date: 2024-03-06 20:33+0100\n"
+"POT-Creation-Date: 2024-04-07 14:44+0200\n"
+"PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -14503,6 +14503,151 @@ msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
 msgstr "%s%s: \"%s\" komutu yürütülemedi, %s%s%s istemcisi için"
 
 #, c-format
+msgid "remote[%s]: WeeChat: %s (%s), API: %s"
+msgstr ""
+
+#, fuzzy
+#| msgid "invalid priorities"
+msgid "invalid response from remote relay"
+msgstr "geçersiz öncelikler"
+
+#, fuzzy
+#| msgid "%s%s: authentication failed with client %s%s%s"
+msgid "authentication failed with remote relay"
+msgstr "%s%s: %s%s%s istemcisi için kimlik doğrulanamadı"
+
+msgid "invalid websocket response (handshake error)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s    error: %s%s%s%s"
+msgid "%sremote[%s]: error: %s%s%s%s"
+msgstr "%s    hata: %s%s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error decoding websocket frame for client %s%s%s"
+msgid "%sremote[%s]: error decoding websocket frame"
+msgstr "%s%s: %s%s%s istemcisi için web soketi çerçevesi kodu çözülürken hata"
+
+#, fuzzy, c-format
+#| msgid "%s%s: reading data on socket: error %d %s"
+msgid "%sremote[%s]: reading data on socket: error %d %s"
+msgstr "%s%s: Soketteki veri okunuyor: Hata %d %s"
+
+#, c-format
+msgid "%sremote[%s]: failed to build authentication"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: connected to %s/%d (%s)"
+msgid "remote[%s]: connected to %s/%d (%s)"
+msgstr "%s%s: %s/%d (%s) sunucusuna bağlanıldı"
+
+#, fuzzy, c-format
+#| msgid "%s%s: address \"%s\" not found"
+msgid "%sremote[%s]: address \"%s\" not found"
+msgstr "%s%s: \"%s\" adresi bulunamadı"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: %s"
+msgid "%sremote[%s]: error: %s"
+msgstr "%s%s: Hata: %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: IP address not found"
+msgid "%sremote[%s]: IP address not found"
+msgstr "%s%s: IP adresi bulunamadı"
+
+#, fuzzy, c-format
+#| msgid "%s%s: connection refused"
+msgid "%sremote[%s]: connection refused"
+msgstr "%s%s: Bağlantı reddedildi"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: proxy fails to establish connection to server (check username/"
+#| "password if used and if server address/port is allowed by proxy)"
+msgid ""
+"%sremote[%s]: proxy fails to establish connection to server (check username/"
+"password if used and if server address/port is allowed by proxy)"
+msgstr ""
+"%s%s: Vekil, sunucuya bir bağlantı gerçekleştiremiyor (kullanılıyorsa, "
+"kullanıcı adı/parolayı denetleyin ve sunucu adresine/kapısına vekil "
+"tarafından izin verildiğinden emin olun)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to set local hostname/IP"
+msgid "%sremote[%s]: unable to set local hostname/IP"
+msgstr "%s%s: Yerel makine adı/IP ayarlanamıyor"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS init error"
+msgid "%sremote[%s]: TLS init error"
+msgstr "%s%s: TLS başlatma hatası"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed"
+msgid "%sremote[%s]: TLS handshake failed"
+msgstr "%s%s: TLS el sıkışması başarısız"
+
+#, fuzzy, c-format
+#| msgid "%s%s: not enough memory"
+msgid "%sremote[%s]: not enough memory"
+msgstr "%s%s: Yetersiz bellek"
+
+#, fuzzy, c-format
+#| msgid "%s%s: timeout"
+msgid "%sremote[%s]: timeout"
+msgstr "%s%s: Zaman aşımı"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket"
+msgid "%sremote[%s]: unable to create socket"
+msgstr "%s%s: Soket oluşturulamıyor"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
+msgid "%sremote[%s]: handshake failed with URL %s, response code: %s"
+msgstr "%s%s: %s%s%s istemcisi için TLS el sıkışması başarısız: %d %s hatası"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
+msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
+msgstr "%s%s: %s%s%s istemcisi için TLS el sıkışması başarısız: %d %s hatası"
+
+#, fuzzy
+#| msgid "%s%s: ignore not found"
+msgid "hash algorithm not found"
+msgstr "%s%s: Yok sayma bulunamadı"
+
+msgid "unknown number of hash iterations"
+msgstr ""
+
+msgid "unknown TOTP status"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sremote[%s]: successful handshake with URL %s: hash_algo=%s, iterations=%d, "
+"totp=%d"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: already connected to server \"%s\"!"
+msgid "%s%s: already connected to remote relay \"%s\"!"
+msgstr "%s%s: \"%s\" sunucusuna halihazırda bağlı!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: connecting to server %s/%d%s..."
+msgid "remote[%s]: connecting to remote relay %s/%d%s..."
+msgstr "%s%s: %s/%d%s sunucusuna bağlanıyor..."
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to connect to sender"
+msgid "remote[%s]: failed to connect, not enough memory"
+msgstr "%s%s: Göndericiye bağlanılamıyor"
+
+#, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: ayrıştırma iletisi için bellek yetersiz"
 
@@ -14536,6 +14681,22 @@ msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
 msgstr ""
 "WeeChat verisini uzak konum uygulamalarına ilet (irc/weechat protokolleri)"
 
+msgid "connecting"
+msgstr "bağlanıyor"
+
+#, fuzzy
+#| msgid "authenticate with SASL"
+msgid "authenticating"
+msgstr "SASL ile kimlik doğrulaması yap"
+
+#, fuzzy
+#| msgid "auth failed"
+msgid "authentication failed"
+msgstr "kimlik doğrulama başarısız"
+
+msgid "disconnected"
+msgstr "bağlantısı kesildi"
+
 #, fuzzy, c-format
 #| msgid ""
 #| "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
@@ -14560,18 +14721,6 @@ msgid "client"
 msgid_plural "clients"
 msgstr[0] "istemci"
 msgstr[1] "istemci"
-
-msgid "connecting"
-msgstr "bağlanıyor"
-
-msgid "waiting auth"
-msgstr "kimlik doğrulama bekleniyor"
-
-msgid "auth failed"
-msgstr "kimlik doğrulama başarısız"
-
-msgid "disconnected"
-msgstr "bağlantısı kesildi"
 
 #, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
@@ -14685,6 +14834,94 @@ msgstr "%s: \"%s\" ileticisi (%s: %s) kaldırıldı"
 msgid "%s%s: relay \"%s\" not found"
 msgstr "%s%s: \"%s\" ileticisi bulunamadı"
 
+#, c-format
+msgid "Remote: %s"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "Aliases with \"%s\":"
+msgid "Relay remotes with \"%s\":"
+msgstr "\"%s\" içeren armalar:"
+
+#, fuzzy, c-format
+#| msgid "No server found with \"%s\""
+msgid "No relay remote found with \"%s\""
+msgstr "\"%s\" içeren sunucu bulunamadı"
+
+#, fuzzy
+#| msgid "All aliases:"
+msgid "All relay remotes:"
+msgstr "Tüm armalar:"
+
+msgid "No relay remote"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" already exists, can't add it!"
+msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+msgstr "%s%s: \"%s\" sunucusu halihazırda mevcut, eklenemiyor!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid trigger name: \"%s\""
+msgid "%s%s: invalid remote relay name: \"%s\""
+msgstr "%s%s: Geçersiz tetik adı: \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid charset: \"%s\""
+msgid "%s%s: invalid remote relay URL: \"%s\""
+msgstr "%s%s: Geçersiz karakter seti: \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid post action \"%s\""
+msgid "%s%s: invalid remote relay option: \"%s\""
+msgstr "%s%s: Geçersiz gönderme eylemi \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" created"
+msgid "Remote relay \"%s\" created"
+msgstr "\"%s\" çubuğu oluşturuldu"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to create trigger \"%s\""
+msgid "%s%s: failed to create remote relay \"%s\""
+msgstr "%s%s: \"%s\" tetiği oluşturulamadı"
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgid "%s%s: remote relay \"%s\" not found for \"%s\" command"
+msgstr "%s%s: \"%s\" sunucusu \"%s\" komutu için bulunamadı"
+
+#, fuzzy, c-format
+#| msgid "%s%s: not connected to server \"%s\"!"
+msgid "%s%s: no connection to remote relay \"%s\""
+msgstr "%s%s: \"%s\" sunucusuna bağlı değil!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
+msgstr "%s%s: \"%s\" sunucusu \"%s\" komutu için halihazırda mevcut"
+
+#, fuzzy, c-format
+#| msgid "Layout \"%s\" has been renamed to \"%s\""
+msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
+msgstr "\"%s\" diziliminin adı \"%s\" olarak değiştirildi"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
+#| "\"/disconnect %s\" before."
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s%s: \"%s\" sunucusunu silemezsiniz; çünkü ona bağlı değilsiniz. Önce \"/ "
+"disconnect %s\" deneyin."
+
+#, fuzzy, c-format
+#| msgid "%s: server %s%s%s has been deleted"
+msgid "%s: remote relay \"%s\" has been deleted"
+msgstr "%s: %s%s%s sunucusu silindi"
+
 msgid "relay control"
 msgstr "iletim denetimi"
 
@@ -14794,8 +15031,17 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The \"weechat\" protocol allows a remote interface to connect on the port, "
-"see the list here: https://weechat.org/about/interfaces/"
+"The \"api\" protocol allows a remote interface (including WeeChat itself) to "
+"connect on the port."
+msgstr ""
+
+msgid ""
+"The \"weechat\" protocol allows a remote interface (but not WeeChat itself) "
+"to connect on the port."
+msgstr ""
+
+msgid ""
+"The list of remote interfaces is here: https://weechat.org/about/interfaces/"
 msgstr ""
 
 #, fuzzy
@@ -14811,6 +15057,82 @@ msgstr ""
 "\n"
 "Bu komut, argüman olmadan verilirse xfer listeli arabellek açar."
 
+#, fuzzy
+#| msgid "disconnect from one or all IRC servers"
+msgid "control of remote relay servers"
+msgstr "bir veya diğer tüm IRC sunucuları bağlantısını kes"
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
+#| "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
+#| "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
+#| "<name> || deloutq|jump || raw [<filter>]"
+msgid ""
+"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
+"<name> || send <name> <json> || disconnect <name> || rename <name> "
+"<new_name> || del <name>"
+msgstr ""
+"list|listfull [<ad>] || add <ad> <makine>[/<kapı>] [-temp] [-"
+"<seçenek>[=<değer>]] [-no<seçenek>] || copy|rename <ad> <yeni_ad> || reorder "
+"<ad> [<ad>...] || open <ad>|-all [<ad>...] || del|keep <ad> || deloutq|jump "
+"|| raw [<süzgeç>]"
+
+#, fuzzy
+#| msgid "list of filters"
+msgid ""
+"raw[list]: list remote relay servers (without argument, this list is "
+"displayed)"
+msgstr "süzgeçlerin listesi"
+
+msgid "raw[listfull]: list remote relay servers (verbose)"
+msgstr ""
+
+#, fuzzy
+#| msgid "manage custom bar items"
+msgid "raw[add]: add a remote relay server"
+msgstr "özel çubuk ögelerini yönet"
+
+msgid ""
+"name: name of remote relay server, for internal and display use; this name "
+"is used to connect to the remote relay and to set remote relay options: "
+"relay.remote.name.xxx"
+msgstr ""
+
+msgid ""
+"url: URL of the remote relay, format is https://example.com:9000 or http://"
+"example.com:9000 (plain-text connection, not recommended)"
+msgstr ""
+
+msgid "option: set option for remote relay: proxy, password or totp_secret"
+msgstr ""
+
+#, fuzzy
+#| msgid "reconnect to server(s)"
+msgid "raw[connect]: connect to a remote relay server"
+msgstr "sunuculara yeniden bağlan"
+
+#, fuzzy
+#| msgid "manage custom bar items"
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "özel çubuk ögelerini yönet"
+
+#, fuzzy
+#| msgid "disconnect from one or all IRC servers"
+msgid "raw[disconnect]: disconnect from a remote relay server"
+msgstr "bir veya diğer tüm IRC sunucuları bağlantısını kes"
+
+#, fuzzy
+#| msgid "names of filters"
+msgid "raw[rename]: rename a remote relay server"
+msgstr "süzgeçlerin adları"
+
+#, fuzzy
+#| msgid "default triggers"
+msgid "raw[del]: delete a remote relay server"
+msgstr "öntanımlı tetikler"
+
 msgid "all possible protocol.name for relay plugin"
 msgstr "iletim eklentisi için tüm olası protokol.ad"
 
@@ -14819,6 +15141,11 @@ msgstr "iletim eklentisi için geçerli iletimlerin protokol.ad'ı"
 
 msgid "first free port for relay plugin"
 msgstr "iletim eklentisinin ilk boş kapısı"
+
+#, fuzzy
+#| msgid "relay control"
+msgid "relay remotes"
+msgstr "iletim denetimi"
 
 #, c-format
 msgid ""
@@ -14866,6 +15193,37 @@ msgstr ""
 msgid "port for relay"
 msgstr "iletim kapısı"
 
+msgid ""
+"remote relay URL with optional port (default is 9000), examples: https://"
+"example.com:9000 or http://example.com:9000 (plain-text connection, not "
+"recommended)"
+msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "name of proxy used for this server (optional, proxy must be defined with "
+#| "command /proxy)"
+msgid ""
+"name of proxy used for this remote relay (optional, proxy must be defined "
+"with command /proxy)"
+msgstr ""
+"bu sunucu için kullanılan vekil (isteğe bağlı, /proxy komutu ile "
+"tanımlanmalıdır)"
+
+#, fuzzy
+#| msgid ""
+#| "password for proxy server (note: content is evaluated, see /help eval)"
+msgid "password for remote relay (note: content is evaluated, see /help eval)"
+msgstr "vekil sunucu parolası (not: içerik değerlendirilir, bkz. /help eval)"
+
+#, fuzzy
+#| msgid ""
+#| "username for proxy server (note: content is evaluated, see /help eval)"
+msgid ""
+"TOTP secret, encoded in base32 (note: content is evaluated, see /help eval)"
+msgstr ""
+"vekil sunucu kullanıcı adı (not: içerik değerlendirilir, bkz. /help eval)"
+
 #, c-format
 msgid "Relay option renamed: \"relay.network.%s\" => \"relay.network.%s\""
 msgstr ""
@@ -14901,8 +15259,10 @@ msgstr "\"bağlanıyor\" durumu için metin rengi"
 msgid "text color for \"disconnected\" status"
 msgstr "\"bağlantı kesildi\" durumu için metin rengi"
 
-msgid "text color for \"waiting authentication\" status"
-msgstr "\"kimlik doğrulama bekleniyor\" durumu için metin rengi"
+#, fuzzy
+#| msgid "text color for \"authentication failed\" status"
+msgid "text color for \"authenticating\" status"
+msgstr "\"kimlik doğrulama başarısız\" durumu için metin rengi"
 
 msgid "text color in relay buffer"
 msgstr "iletim arabelleğindeki metin rengi"
@@ -15232,6 +15592,12 @@ msgstr "%s%s: SSL için öncelik ilklendirilemiyor"
 
 msgid "Relay raw messages"
 msgstr "Ham iletileri ilet"
+
+#, c-format
+msgid ""
+"%s%s: error: unable to connect to a remote relay via API (cJSON support is "
+"not enabled)"
+msgstr ""
 
 #, c-format
 msgid "%s: socket closed for %s (%s: %s)"
@@ -17443,20 +17809,3 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
-
-#, fuzzy
-#~| msgid "case sensitive completion for nicks"
-#~ msgid "case sensitive completion by default"
-#~ msgstr "takma adlar için BÜYÜK/küçük harf duyarlı tamamlama"
-
-#~ msgid ""
-#~ "sort of hotlist: group_time_*: group by notify level (highlights first) "
-#~ "then sort by time, group_number_*: group by notify level (highlights "
-#~ "first) then sort by number, number_*: sort by number; asc = ascending "
-#~ "sort, desc = descending sort"
-#~ msgstr ""
-#~ "sıcak listeyi sırala: group_time_*: bildirim düzeyine göre grupla (önce "
-#~ "vurgulamalar), sonra zamana göre sırala; group_number_*: bildirim "
-#~ "düzeyine göre grupla (önce vurgulamalar), sonra numaraya göre sırala; "
-#~ "number_*: numaraya göre sırala; asc = artan sıralama, desc = azalan "
-#~ "sıralama"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-03-26 09:18+0100\n"
-"PO-Revision-Date: 2024-03-06 20:32+0100\n"
+"POT-Creation-Date: 2024-04-07 14:44+0200\n"
+"PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -14316,6 +14316,151 @@ msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
 msgstr "%s%s: није успело извршавање руте „%s %s” за клијента %s%s%s"
 
 #, c-format
+msgid "remote[%s]: WeeChat: %s (%s), API: %s"
+msgstr ""
+
+#, fuzzy
+#| msgid "invalid priorities"
+msgid "invalid response from remote relay"
+msgstr "неважећи приоритети"
+
+#, fuzzy
+#| msgid "%s%s: authentication failed with client %s%s%s"
+msgid "authentication failed with remote relay"
+msgstr "%s%s: није успела аутентификација клијента %s%s%s"
+
+msgid "invalid websocket response (handshake error)"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s    error: %s%s%s%s"
+msgid "%sremote[%s]: error: %s%s%s%s"
+msgstr "%s    грешка: %s%s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error decoding websocket frame for client %s%s%s"
+msgid "%sremote[%s]: error decoding websocket frame"
+msgstr "%s%s: грешка код декодирања вебсокет оквира ид клијента %s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: reading data on socket: error %d %s"
+msgid "%sremote[%s]: reading data on socket: error %d %s"
+msgstr "%s%s: читање података са сокета: грешка %d %s"
+
+#, c-format
+msgid "%sremote[%s]: failed to build authentication"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: connected to %s/%d (%s)"
+msgid "remote[%s]: connected to %s/%d (%s)"
+msgstr "%s%s: успостављена је веза са %s/%d (%s)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: address \"%s\" not found"
+msgid "%sremote[%s]: address \"%s\" not found"
+msgstr "%s%s: није пронађена адреса „%s”"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: %s"
+msgid "%sremote[%s]: error: %s"
+msgstr "%s%s: грешка: %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: IP address not found"
+msgid "%sremote[%s]: IP address not found"
+msgstr "%s%s: није пронађена IP адреса"
+
+#, fuzzy, c-format
+#| msgid "%s%s: connection refused"
+msgid "%sremote[%s]: connection refused"
+msgstr "%s%s: веза је одбијена"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: proxy fails to establish connection to server (check username/"
+#| "password if used and if server address/port is allowed by proxy)"
+msgid ""
+"%sremote[%s]: proxy fails to establish connection to server (check username/"
+"password if used and if server address/port is allowed by proxy)"
+msgstr ""
+"%s%s: прокси сервер не успева да успостави везу са сервером (проверите "
+"корисничко име/лозинку ако се користе и да ли прокси дозвољава адресу/порт "
+"сервера)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to set local hostname/IP"
+msgid "%sremote[%s]: unable to set local hostname/IP"
+msgstr "%s%s: није успело постављање локалног имена хоста/IP"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS init error"
+msgid "%sremote[%s]: TLS init error"
+msgstr "%s%s: грешка TLS иницијализације"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed"
+msgid "%sremote[%s]: TLS handshake failed"
+msgstr "%s%s: није успело TLS руковање"
+
+#, fuzzy, c-format
+#| msgid "%s%s: not enough memory"
+msgid "%sremote[%s]: not enough memory"
+msgstr "%s%s: нема довољно слободне меморије"
+
+#, fuzzy, c-format
+#| msgid "%s%s: timeout"
+msgid "%sremote[%s]: timeout"
+msgstr "%s%s: тајмаут"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create socket"
+msgid "%sremote[%s]: unable to create socket"
+msgstr "%s%s: није могао да се креира сокет"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
+msgid "%sremote[%s]: handshake failed with URL %s, response code: %s"
+msgstr "%s%s: TLS руковање са клијентом %s%s%s није успело: грешка %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
+msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
+msgstr "%s%s: TLS руковање са клијентом %s%s%s није успело: грешка %d %s"
+
+#, fuzzy
+#| msgid "%s%s: ignore not found"
+msgid "hash algorithm not found"
+msgstr "%s%s: није пронађено игнорисање"
+
+msgid "unknown number of hash iterations"
+msgstr ""
+
+msgid "unknown TOTP status"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sremote[%s]: successful handshake with URL %s: hash_algo=%s, iterations=%d, "
+"totp=%d"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: already connected to server \"%s\"!"
+msgid "%s%s: already connected to remote relay \"%s\"!"
+msgstr "%s%s: већ постоји веза са сервером „%s”!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: connecting to server %s/%d%s..."
+msgid "remote[%s]: connecting to remote relay %s/%d%s..."
+msgstr "%s%s: успостављање везе са сервером %s/%d%s..."
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to connect to sender"
+msgid "remote[%s]: failed to connect, not enough memory"
+msgstr "%s%s: није успело повезивање са пошиљаоцем"
+
+#, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: нема довољно слободне меморије за парсирање поруке"
 
@@ -14348,6 +14493,22 @@ msgstr "Листа клијената за релеј"
 msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
 msgstr "Релеј WeeChat података удаљеној апликацији (irc/weechat протоколи)"
 
+msgid "connecting"
+msgstr "повезивање"
+
+#, fuzzy
+#| msgid "authenticate with SASL"
+msgid "authenticating"
+msgstr "аутентификација са SASL"
+
+#, fuzzy
+#| msgid "auth failed"
+msgid "authentication failed"
+msgstr "аутент није успела"
+
+msgid "disconnected"
+msgstr "веза је прекинута"
+
 #, c-format
 msgid ""
 "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
@@ -14368,18 +14529,6 @@ msgid_plural "clients"
 msgstr[0] "клијент"
 msgstr[1] "клијента"
 msgstr[2] "клијената"
-
-msgid "connecting"
-msgstr "повезивање"
-
-msgid "waiting auth"
-msgstr "чекање на аутент"
-
-msgid "auth failed"
-msgstr "аутент није успела"
-
-msgid "disconnected"
-msgstr "веза је прекинута"
 
 #, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
@@ -14489,6 +14638,94 @@ msgstr "%s: релеј „%s” (%s: %s) уклоњено"
 msgid "%s%s: relay \"%s\" not found"
 msgstr "%s%s: relay „%s” није пронађено"
 
+#, c-format
+msgid "Remote: %s"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "Aliases with \"%s\":"
+msgid "Relay remotes with \"%s\":"
+msgstr "Алијаси са „%s”:"
+
+#, fuzzy, c-format
+#| msgid "No server found with \"%s\""
+msgid "No relay remote found with \"%s\""
+msgstr "Није пронађен ниједан сервер са „%s”"
+
+#, fuzzy
+#| msgid "All aliases:"
+msgid "All relay remotes:"
+msgstr "Сви алијаси:"
+
+msgid "No relay remote"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" already exists, can't add it!"
+msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+msgstr "%s%s: сервер „%s” већ постоји, не може да се дода!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid trigger name: \"%s\""
+msgid "%s%s: invalid remote relay name: \"%s\""
+msgstr "%s%s: неважеће име окидача: „%s”"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid charset: \"%s\""
+msgid "%s%s: invalid remote relay URL: \"%s\""
+msgstr "%s%s: неважећи скуп карактера: „%s”"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid post action \"%s\""
+msgid "%s%s: invalid remote relay option: \"%s\""
+msgstr "%s%s: неважећа пост акција „%s”"
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" created"
+msgid "Remote relay \"%s\" created"
+msgstr "Креирана је трака „%s”"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to create trigger \"%s\""
+msgid "%s%s: failed to create remote relay \"%s\""
+msgstr "%s%s: није успело креирање окидача „%s”"
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgid "%s%s: remote relay \"%s\" not found for \"%s\" command"
+msgstr "%s%s: није пронађен сервер „%s” за команду „%s”"
+
+#, fuzzy, c-format
+#| msgid "%s%s: not connected to server \"%s\"!"
+msgid "%s%s: no connection to remote relay \"%s\""
+msgstr "%s%s: не постоји веза са сервером „%s”!"
+
+#, fuzzy, c-format
+#| msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
+msgstr "%s%s: сервер „%s” већ постоји за команду „%s”"
+
+#, fuzzy, c-format
+#| msgid "Layout \"%s\" has been renamed to \"%s\""
+msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
+msgstr "Распореду „%s” је промењено име на „%s”"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
+#| "\"/disconnect %s\" before."
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s%s: не можете да обришете сервер „%s” јер сте повеза ни са њим. Покушајте "
+"прво да извршите „/disconnect %s”."
+
+#, fuzzy, c-format
+#| msgid "%s: server %s%s%s has been deleted"
+msgid "%s: remote relay \"%s\" has been deleted"
+msgstr "%s: сервер %s%s%s је обрисан"
+
 msgid "relay control"
 msgstr "контрола релеја"
 
@@ -14593,15 +14830,126 @@ msgstr ""
 "„irc” протокол дозвољава да се било који IRC клијент (укључујући и сам "
 "WeeChat) повеже на порт."
 
+#, fuzzy
+#| msgid ""
+#| "The \"irc\" protocol allows any IRC client (including WeeChat itself) to "
+#| "connect on the port."
 msgid ""
-"The \"weechat\" protocol allows a remote interface to connect on the port, "
-"see the list here: https://weechat.org/about/interfaces/"
+"The \"api\" protocol allows a remote interface (including WeeChat itself) to "
+"connect on the port."
+msgstr ""
+"„irc” протокол дозвољава да се било који IRC клијент (укључујући и сам "
+"WeeChat) повеже на порт."
+
+#, fuzzy
+#| msgid ""
+#| "The \"irc\" protocol allows any IRC client (including WeeChat itself) to "
+#| "connect on the port."
+msgid ""
+"The \"weechat\" protocol allows a remote interface (but not WeeChat itself) "
+"to connect on the port."
+msgstr ""
+"„irc” протокол дозвољава да се било који IRC клијент (укључујући и сам "
+"WeeChat) повеже на порт."
+
+#, fuzzy
+#| msgid ""
+#| "The \"weechat\" protocol allows a remote interface to connect on the "
+#| "port, see the list here: https://weechat.org/about/interfaces/"
+msgid ""
+"The list of remote interfaces is here: https://weechat.org/about/interfaces/"
 msgstr ""
 "„weechat” протокол дозвољава да се на порт повеже удаљени интерфејс, "
 "погледајте листу овде: https://weechat.org/about/interfaces/"
 
 msgid "Without argument, this command opens buffer with list of relay clients."
 msgstr "Без аргумента ова команда отвара бафер са листом релеј клијената."
+
+#, fuzzy
+#| msgid "disconnect from one or all IRC servers"
+msgid "control of remote relay servers"
+msgstr "прекидање везе са једним или са свим IRC серверима"
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
+#| "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
+#| "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
+#| "<name> || deloutq|jump || raw [<filter>]"
+msgid ""
+"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
+"<name> || send <name> <json> || disconnect <name> || rename <name> "
+"<new_name> || del <name>"
+msgstr ""
+"list|listfull [<име>] || add <име> <имехоста>[/<порт>] [-temp] [-"
+"<опција>[=<вредност>]] [-no<опција>] || copy|rename <име> <ново_име> || "
+"reorder <име> [<име>...] || open <име>|-all [<име>...] || del|keep <име> || "
+"deloutq|jump || raw [<филтер>]"
+
+#, fuzzy
+#| msgid "raw[list]: list servers (without argument, this list is displayed)"
+msgid ""
+"raw[list]: list remote relay servers (without argument, this list is "
+"displayed)"
+msgstr "raw[list]: листа сервера (без аргумента се приказује ова листа)"
+
+#, fuzzy
+#| msgid "raw[listfull]: list all bars (verbose)"
+msgid "raw[listfull]: list remote relay servers (verbose)"
+msgstr "raw[listfull]: приказује све траке (детаљно)"
+
+#, fuzzy
+#| msgid "raw[add]: add a new server"
+msgid "raw[add]: add a remote relay server"
+msgstr "raw[add]: додавање новог сервера"
+
+#, fuzzy
+#| msgid ""
+#| "name: server name, for internal and display use; this name is used to "
+#| "connect to the server (/connect name) and to set server options: irc."
+#| "server.name.xxx"
+msgid ""
+"name: name of remote relay server, for internal and display use; this name "
+"is used to connect to the remote relay and to set remote relay options: "
+"relay.remote.name.xxx"
+msgstr ""
+"име: име сервера, за интерну употребу и за приказ; ово име се користи за "
+"повезивање на сервер (/connect име) и за постављање опција сервера: irc."
+"server.име.xxx"
+
+msgid ""
+"url: URL of the remote relay, format is https://example.com:9000 or http://"
+"example.com:9000 (plain-text connection, not recommended)"
+msgstr ""
+
+msgid "option: set option for remote relay: proxy, password or totp_secret"
+msgstr ""
+
+#, fuzzy
+#| msgid "raw[-all]: reconnect to all servers"
+msgid "raw[connect]: connect to a remote relay server"
+msgstr "raw[-all]: поновно повезивање са свим серверима"
+
+#, fuzzy
+#| msgid "> raw[send]: send text to the buffer"
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "> raw[send]: шаље текст баферу"
+
+#, fuzzy
+#| msgid "raw[-all]: disconnect from all servers"
+msgid "raw[disconnect]: disconnect from a remote relay server"
+msgstr "raw[-all]: прекидање везе са свим серверима"
+
+#, fuzzy
+#| msgid "raw[rename]: rename a server"
+msgid "raw[rename]: rename a remote relay server"
+msgstr "raw[rename]: промена имена серверу"
+
+#, fuzzy
+#| msgid "raw[del]: delete a server"
+msgid "raw[del]: delete a remote relay server"
+msgstr "raw[del]: брисање сервера"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "сви могући протокол.име за relay додатак"
@@ -14611,6 +14959,11 @@ msgstr "протокол.име текућих релеја за relay дода�
 
 msgid "first free port for relay plugin"
 msgstr "први слободни порт за relay додатак"
+
+#, fuzzy
+#| msgid "relay control"
+msgid "relay remotes"
+msgstr "контрола релеја"
 
 #, c-format
 msgid ""
@@ -14658,6 +15011,40 @@ msgstr ""
 msgid "port for relay"
 msgstr "порт за релеј"
 
+msgid ""
+"remote relay URL with optional port (default is 9000), examples: https://"
+"example.com:9000 or http://example.com:9000 (plain-text connection, not "
+"recommended)"
+msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "name of proxy used for this server (optional, proxy must be defined with "
+#| "command /proxy)"
+msgid ""
+"name of proxy used for this remote relay (optional, proxy must be defined "
+"with command /proxy)"
+msgstr ""
+"име проксија који се користи за овај сервер (необавезно, прокси мора бити "
+"дефинисан командом /proxy)"
+
+#, fuzzy
+#| msgid ""
+#| "password for proxy server (note: content is evaluated, see /help eval)"
+msgid "password for remote relay (note: content is evaluated, see /help eval)"
+msgstr ""
+"лозинка за прокси сервер (напомена: садржај се израчунава, погледајте /help "
+"eval)"
+
+#, fuzzy
+#| msgid ""
+#| "username for proxy server (note: content is evaluated, see /help eval)"
+msgid ""
+"TOTP secret, encoded in base32 (note: content is evaluated, see /help eval)"
+msgstr ""
+"корисничко име за прокси сервер (напомена: садржај се израчунава, "
+"погледајте /help eval)"
+
 #, c-format
 msgid "Relay option renamed: \"relay.network.%s\" => \"relay.network.%s\""
 msgstr ""
@@ -14700,8 +15087,10 @@ msgstr "боја текста за статус „connecting”"
 msgid "text color for \"disconnected\" status"
 msgstr "боја текста за статус „disconnected”"
 
-msgid "text color for \"waiting authentication\" status"
-msgstr "боја текста за статус „waiting authentication”"
+#, fuzzy
+#| msgid "text color for \"authentication failed\" status"
+msgid "text color for \"authenticating\" status"
+msgstr "боја текста за статус „authentication failed”"
 
 msgid "text color in relay buffer"
 msgstr "боја текста у релеј баферу"
@@ -14995,6 +15384,15 @@ msgstr "%s%s: није успела иницијализација приори�
 
 msgid "Relay raw messages"
 msgstr "Релеј сирових порука"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: error: unable to add relay \"%s\" (cJSON support is not enabled)"
+msgid ""
+"%s%s: error: unable to connect to a remote relay via API (cJSON support is "
+"not enabled)"
+msgstr ""
+"%s%s: грешка: не може да се дода релеј „%s” (није укључена cJSON подршка)"
 
 #, c-format
 msgid "%s: socket closed for %s (%s: %s)"
@@ -17196,20 +17594,3 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
-
-#, fuzzy
-#~| msgid "case sensitive completion for nicks"
-#~ msgid "case sensitive completion by default"
-#~ msgstr "довршавање надимака води рачуна о величини слова"
-
-#~ msgid ""
-#~ "sort of hotlist: group_time_*: group by notify level (highlights first) "
-#~ "then sort by time, group_number_*: group by notify level (highlights "
-#~ "first) then sort by number, number_*: sort by number; asc = ascending "
-#~ "sort, desc = descending sort"
-#~ msgstr ""
-#~ "сортирање вруће листе: group_time_*: груписање по нивоу обавештавања "
-#~ "(прво истицања) па онда сортирање по времену, group_number_*: груписање "
-#~ "по нивоу обавештавања (прво истицања) па онда сортирање по броју, "
-#~ "number_*: сортирање по броју; asc = растући редослед, desc = опадајући "
-#~ "редослед"
