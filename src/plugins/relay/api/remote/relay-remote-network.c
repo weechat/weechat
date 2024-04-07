@@ -612,6 +612,7 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
     char hash[512 / 8], hash_hexa[((512 / 8) * 2) + 1];
     char ws_key[16], ws_key_base64[64];
     int length, hash_size;
+    time_t time_now;
 
     relay_remote_set_status (remote, RELAY_STATUS_AUTHENTICATING);
 
@@ -631,6 +632,8 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
     if (!totp_secret)
         goto end;
 
+    time_now = time (NULL);
+
     switch (remote->password_hash_algo)
     {
         case RELAY_AUTH_PASSWORD_HASH_PLAIN:
@@ -642,10 +645,7 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
             salt_password = malloc (length);
             if (salt_password)
             {
-                snprintf (salt_password, length,
-                          "%ld%s",
-                          time (NULL),
-                          password);
+                snprintf (salt_password, length, "%ld%s", time_now, password);
                 if (weechat_crypto_hash (
                         salt_password, strlen (salt_password),
                         relay_auth_password_hash_algo_name[remote->password_hash_algo],
@@ -653,14 +653,17 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
                 {
                     weechat_string_base_encode ("16", hash, hash_size, hash_hexa);
                     snprintf (str_auth, sizeof (str_auth),
-                              "hash:%s", hash_hexa);
+                              "hash:%s:%ld:%s",
+                              relay_auth_password_hash_algo_name[remote->password_hash_algo],
+                              time_now,
+                              hash_hexa);
                 }
                 free (salt_password);
             }
             break;
         case RELAY_AUTH_PASSWORD_HASH_PBKDF2_SHA256:
         case RELAY_AUTH_PASSWORD_HASH_PBKDF2_SHA512:
-            snprintf (salt, sizeof (salt), "%ld", time (NULL));
+            snprintf (salt, sizeof (salt), "%ld", time_now);
             if (weechat_crypto_hash_pbkdf2 (
                     password,
                     strlen (password),
