@@ -557,6 +557,7 @@ relay_api_msg_nick_to_json (struct t_gui_nick *nick)
 {
     struct t_hdata *hdata;
     struct t_gui_nick *pointer;
+    struct t_gui_nick_group *ptr_group;
     cJSON *json;
     const char *ptr_string;
 
@@ -570,6 +571,13 @@ relay_api_msg_nick_to_json (struct t_gui_nick *nick)
     if (!nick)
         return json;
 
+    MSG_ADD_HDATA_VAR(Number, "id", longlong, "id");
+    ptr_group = weechat_hdata_pointer (relay_hdata_nick, nick, "group");
+    cJSON_AddItemToObject (
+        json, "parent_group_id",
+        cJSON_CreateNumber (
+            (ptr_group) ?
+            weechat_hdata_longlong (relay_hdata_nick_group, ptr_group, "id") : -1));
     MSG_ADD_HDATA_STR("prefix", "prefix");
     MSG_ADD_HDATA_STR("prefix_color", "prefix_color");
     MSG_ADD_HDATA_STR("name", "name");
@@ -587,11 +595,10 @@ cJSON *
 relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group)
 {
     struct t_hdata *hdata;
-    struct t_gui_nick_group *pointer;
+    struct t_gui_nick_group *pointer, *ptr_group;
+    struct t_gui_nick *ptr_nick;
     cJSON *json, *json_groups, *json_nicks;
     const char *ptr_string;
-    struct t_gui_nick_group *ptr_group;
-    struct t_gui_nick *ptr_nick;
 
     hdata = relay_hdata_nick_group;
     pointer = nick_group;
@@ -603,6 +610,13 @@ relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group)
     if (!nick_group)
         return json;
 
+    MSG_ADD_HDATA_VAR(Number, "id", longlong, "id");
+    ptr_group = weechat_hdata_pointer (relay_hdata_nick_group, nick_group, "parent");
+    cJSON_AddItemToObject (
+        json, "parent_group_id",
+        cJSON_CreateNumber (
+            (ptr_group) ?
+            weechat_hdata_longlong (relay_hdata_nick_group, ptr_group, "id") : -1));
     MSG_ADD_HDATA_STR("name", "name");
     MSG_ADD_HDATA_STR("color", "color");
     MSG_ADD_HDATA_VAR(Bool, "visible", integer, "visible");

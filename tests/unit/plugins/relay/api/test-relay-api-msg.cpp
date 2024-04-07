@@ -122,6 +122,7 @@ TEST(RelayApiMsg, BufferToJson)
     cJSON *json_nicks, *json_groups, *json_group, *json_group_nicks, *json_nick;
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *group;
+    long long group_id;
 
     json = relay_api_msg_buffer_to_json (NULL, 0, 0, RELAY_API_COLORS_ANSI);
     CHECK(json);
@@ -179,6 +180,7 @@ TEST(RelayApiMsg, BufferToJson)
     json_nicks = cJSON_GetObjectItem (json, "nicks");
     CHECK(json_nicks);
     CHECK(cJSON_IsObject (json_nicks));
+    WEE_CHECK_OBJ_NUM(0, json_nicks, "id");
     WEE_CHECK_OBJ_STR("root", json_nicks, "name");
     WEE_CHECK_OBJ_STR("", json_nicks, "color");
     json_groups = cJSON_GetObjectItem (json_nicks, "groups");
@@ -188,6 +190,15 @@ TEST(RelayApiMsg, BufferToJson)
     json_group = cJSON_GetArrayItem (json_groups, 0);
     CHECK(json_group);
     CHECK(cJSON_IsObject (json_group));
+    json_obj = cJSON_GetObjectItem (json_group, "id");
+    CHECK(json_obj);
+    CHECK(cJSON_IsNumber (json_obj));
+    group_id = cJSON_GetNumberValue (json_obj);
+    CHECK(group_id > 0);
+    json_obj = cJSON_GetObjectItem (json_group, "parent_group_id");
+    CHECK(json_obj);
+    CHECK(cJSON_IsNumber (json_obj));
+    CHECK(cJSON_GetNumberValue (json_obj) == 0);
     WEE_CHECK_OBJ_STR("group1", json_group, "name");
     WEE_CHECK_OBJ_STR("magenta", json_group, "color");
     json_group_nicks = cJSON_GetObjectItem (json_group, "nicks");
@@ -197,6 +208,11 @@ TEST(RelayApiMsg, BufferToJson)
     json_nick = cJSON_GetArrayItem (json_group_nicks, 0);
     CHECK(json_nick);
     CHECK(cJSON_IsObject (json_nick));
+    json_obj = cJSON_GetObjectItem (json_nick, "id");
+    CHECK(json_obj);
+    CHECK(cJSON_IsNumber (json_obj));
+    CHECK(cJSON_GetNumberValue (json_obj) > 0);
+    WEE_CHECK_OBJ_NUM(group_id, json_nick, "parent_group_id");
     WEE_CHECK_OBJ_STR("@", json_nick, "prefix");
     WEE_CHECK_OBJ_STR("lightred", json_nick, "prefix_color");
     WEE_CHECK_OBJ_STR("nick1", json_nick, "name");
@@ -205,6 +221,11 @@ TEST(RelayApiMsg, BufferToJson)
     json_nick = cJSON_GetArrayItem (json_group_nicks, 1);
     CHECK(json_nick);
     CHECK(cJSON_IsObject (json_nick));
+    json_obj = cJSON_GetObjectItem (json_nick, "id");
+    CHECK(json_obj);
+    CHECK(cJSON_IsNumber (json_obj));
+    CHECK(cJSON_GetNumberValue (json_obj) > 0);
+    WEE_CHECK_OBJ_NUM(group_id, json_nick, "parent_group_id");
     WEE_CHECK_OBJ_STR("", json_nick, "prefix");
     WEE_CHECK_OBJ_STR("", json_nick, "prefix_color");
     WEE_CHECK_OBJ_STR("nick2", json_nick, "name");
@@ -213,6 +234,11 @@ TEST(RelayApiMsg, BufferToJson)
     json_nick = cJSON_GetArrayItem (json_group_nicks, 2);
     CHECK(json_nick);
     CHECK(cJSON_IsObject (json_nick));
+    json_obj = cJSON_GetObjectItem (json_nick, "id");
+    CHECK(json_obj);
+    CHECK(cJSON_IsNumber (json_obj));
+    CHECK(cJSON_GetNumberValue (json_obj) > 0);
+    WEE_CHECK_OBJ_NUM(group_id, json_nick, "parent_group_id");
     WEE_CHECK_OBJ_STR("", json_nick, "prefix");
     WEE_CHECK_OBJ_STR("", json_nick, "prefix_color");
     WEE_CHECK_OBJ_STR("nick3", json_nick, "name");
@@ -225,6 +251,11 @@ TEST(RelayApiMsg, BufferToJson)
     json_nick = cJSON_GetArrayItem (json_nicks, 0);
     CHECK(json_nick);
     CHECK(cJSON_IsObject (json_nick));
+    json_obj = cJSON_GetObjectItem (json_nick, "id");
+    CHECK(json_obj);
+    CHECK(cJSON_IsNumber (json_obj));
+    CHECK(cJSON_GetNumberValue (json_obj) > 0);
+    WEE_CHECK_OBJ_NUM(0, json_nick, "parent_group_id");
     WEE_CHECK_OBJ_STR("+", json_nick, "prefix");
     WEE_CHECK_OBJ_STR("yellow", json_nick, "prefix_color");
     WEE_CHECK_OBJ_STR("root_nick_hidden", json_nick, "name");
