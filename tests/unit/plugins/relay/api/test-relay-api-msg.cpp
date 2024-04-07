@@ -124,6 +124,7 @@ TEST(RelayApiMsg, BufferToJson)
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *group;
     long long group_id;
+    char *color;
 
     json = relay_api_msg_buffer_to_json (NULL, 0, 0, RELAY_API_COLORS_ANSI);
     CHECK(json);
@@ -201,7 +202,9 @@ TEST(RelayApiMsg, BufferToJson)
     CHECK(cJSON_IsNumber (json_obj));
     CHECK(cJSON_GetNumberValue (json_obj) == 0);
     WEE_CHECK_OBJ_STR("group1", json_group, "name");
-    WEE_CHECK_OBJ_STR("magenta", json_group, "color");
+    color = gui_color_encode_ansi (gui_color_get_custom ("magenta"));
+    WEE_CHECK_OBJ_STR(color, json_group, "color");
+    free (color);
     json_group_nicks = cJSON_GetObjectItem (json_group, "nicks");
     CHECK(json_group_nicks);
     CHECK(cJSON_IsArray (json_group_nicks));
@@ -215,9 +218,13 @@ TEST(RelayApiMsg, BufferToJson)
     CHECK(cJSON_GetNumberValue (json_obj) > 0);
     WEE_CHECK_OBJ_NUM(group_id, json_nick, "parent_group_id");
     WEE_CHECK_OBJ_STR("@", json_nick, "prefix");
-    WEE_CHECK_OBJ_STR("lightred", json_nick, "prefix_color");
+    color = gui_color_encode_ansi (gui_color_get_custom ("lightred"));
+    WEE_CHECK_OBJ_STR(color, json_nick, "prefix_color");
+    free (color);
     WEE_CHECK_OBJ_STR("nick1", json_nick, "name");
-    WEE_CHECK_OBJ_STR("blue", json_nick, "color");
+    color = gui_color_encode_ansi (gui_color_get_custom ("blue"));
+    WEE_CHECK_OBJ_STR(color, json_nick, "color");
+    free (color);
     WEE_CHECK_OBJ_BOOL(1, json_nick, "visible");
     json_nick = cJSON_GetArrayItem (json_group_nicks, 1);
     CHECK(json_nick);
@@ -230,7 +237,9 @@ TEST(RelayApiMsg, BufferToJson)
     WEE_CHECK_OBJ_STR("", json_nick, "prefix");
     WEE_CHECK_OBJ_STR("", json_nick, "prefix_color");
     WEE_CHECK_OBJ_STR("nick2", json_nick, "name");
-    WEE_CHECK_OBJ_STR("green", json_nick, "color");
+    color = gui_color_encode_ansi (gui_color_get_custom ("green"));
+    WEE_CHECK_OBJ_STR(color, json_nick, "color");
+    free (color);
     WEE_CHECK_OBJ_BOOL(1, json_nick, "visible");
     json_nick = cJSON_GetArrayItem (json_group_nicks, 2);
     CHECK(json_nick);
@@ -243,7 +252,9 @@ TEST(RelayApiMsg, BufferToJson)
     WEE_CHECK_OBJ_STR("", json_nick, "prefix");
     WEE_CHECK_OBJ_STR("", json_nick, "prefix_color");
     WEE_CHECK_OBJ_STR("nick3", json_nick, "name");
-    WEE_CHECK_OBJ_STR("yellow", json_nick, "color");
+    color = gui_color_encode_ansi (gui_color_get_custom ("yellow"));
+    WEE_CHECK_OBJ_STR(color, json_nick, "color");
+    free (color);
     WEE_CHECK_OBJ_BOOL(1, json_nick, "visible");
     json_nicks = cJSON_GetObjectItem (json_nicklist, "nicks");
     CHECK(json_nicks);
@@ -258,9 +269,13 @@ TEST(RelayApiMsg, BufferToJson)
     CHECK(cJSON_GetNumberValue (json_obj) > 0);
     WEE_CHECK_OBJ_NUM(0, json_nick, "parent_group_id");
     WEE_CHECK_OBJ_STR("+", json_nick, "prefix");
-    WEE_CHECK_OBJ_STR("yellow", json_nick, "prefix_color");
+    color = gui_color_encode_ansi (gui_color_get_custom ("yellow"));
+    WEE_CHECK_OBJ_STR(color, json_nick, "prefix_color");
+    free (color);
     WEE_CHECK_OBJ_STR("root_nick_hidden", json_nick, "name");
-    WEE_CHECK_OBJ_STR("cyan", json_nick, "color");
+    color = gui_color_encode_ansi (gui_color_get_custom ("cyan"));
+    WEE_CHECK_OBJ_STR(color, json_nick, "color");
+    free (color);
     WEE_CHECK_OBJ_BOOL(0, json_nick, "visible");
     cJSON_Delete (json);
 
