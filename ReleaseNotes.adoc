@@ -12,7 +12,7 @@ For a complete list of changes, please look at ChangeLog.
 
 
 [[v4.2.2]]
-== Version 4.2.2 (under dev)
+== Version 4.2.2 (2024-04-07)
 
 [[v4.2.2_script_keys]]
 === Script keys
