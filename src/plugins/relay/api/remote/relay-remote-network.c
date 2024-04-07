@@ -136,7 +136,7 @@ relay_remote_network_check_auth (struct t_relay_remote *remote,
     cJSON *json_body, *json_error;
     const char *msg_error, *msg_resp_error, *ptr_ws_accept;
     char *key, hash[160 / 8], sec_websocket_accept[128];
-    int length, accept_ok, hash_size;
+    int accept_ok, hash_size;
 
     http_resp = NULL;
     msg_error = NULL;
@@ -177,12 +177,9 @@ relay_remote_network_check_auth (struct t_relay_remote *remote,
                                                "sec-websocket-accept");
         if (ptr_ws_accept)
         {
-            length = strlen (remote->websocket_key) + strlen (WEBSOCKET_GUID) + 1;
-            key = malloc (length);
-            if (key)
+            if (weechat_asprintf (&key, "%s%s", remote->websocket_key,
+                                  WEBSOCKET_GUID) >= 0)
             {
-                snprintf (key, length,
-                          "%s%s", remote->websocket_key, WEBSOCKET_GUID);
                 if (weechat_crypto_hash (key, strlen (key), "sha1",
                                          hash, &hash_size))
                 {
