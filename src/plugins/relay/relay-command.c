@@ -790,11 +790,12 @@ relay_command_init ()
             AI("  /relay add irc.libera 8000"),
             AI("  /relay add tls.irc.libera 8001"),
             AI("  /relay add tls.irc 8002"),
-            AI("  /relay add weechat 9000"),
-            AI("  /relay add tls.weechat 9001"),
-            AI("  /relay add ipv4.tls.weechat 9001"),
-            AI("  /relay add ipv6.tls.weechat 9001"),
-            AI("  /relay add ipv4.ipv6.tls.weechat 9001"),
+            AI("  /relay add tls.api 9000"),
+            AI("  /relay add weechat 10000"),
+            AI("  /relay add tls.weechat 10001"),
+            AI("  /relay add ipv4.tls.weechat 10001"),
+            AI("  /relay add ipv6.tls.weechat 10001"),
+            AI("  /relay add ipv4.ipv6.tls.weechat 10001"),
             AI("  /relay add unix.weechat ${weechat_runtime_dir}/relay_socket")),
         "list %(relay_relays)"
         " || listfull %(relay_relays)"
