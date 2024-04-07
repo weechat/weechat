@@ -25,6 +25,7 @@ struct t_infolist;
 
 struct t_gui_nick_group
 {
+    long long id;                      /* unique id for group/nick in buffer*/
     char *name;                        /* group name                        */
     char *color;                       /* color for group in nicklist       */
     int visible;                       /* 1 if group is displayed           */
@@ -40,6 +41,7 @@ struct t_gui_nick_group
 
 struct t_gui_nick
 {
+    long long id;                      /* unique id for group/nick in buffer*/
     struct t_gui_nick_group *group;    /* group which contains nick         */
     char *name;                        /* nick name                         */
     char *color;                       /* color for nick in nicklist        */
@@ -55,6 +57,13 @@ struct t_gui_nick
 extern struct t_gui_nick_group *gui_nicklist_search_group (struct t_gui_buffer *buffer,
                                                            struct t_gui_nick_group *from_group,
                                                            const char *name);
+extern long long gui_nicklist_generate_id (struct t_gui_buffer *buffer);
+extern struct t_gui_nick_group *gui_nicklist_add_group_with_id (struct t_gui_buffer *buffer,
+                                                                long long id,
+                                                                struct t_gui_nick_group *parent_group,
+                                                                const char *name,
+                                                                const char *color,
+                                                                int visible);
 extern struct t_gui_nick_group *gui_nicklist_add_group (struct t_gui_buffer *buffer,
                                                         struct t_gui_nick_group *parent_group,
                                                         const char *name,
@@ -63,6 +72,14 @@ extern struct t_gui_nick_group *gui_nicklist_add_group (struct t_gui_buffer *buf
 extern struct t_gui_nick *gui_nicklist_search_nick (struct t_gui_buffer *buffer,
                                                     struct t_gui_nick_group *from_group,
                                                     const char *name);
+extern struct t_gui_nick *gui_nicklist_add_nick_with_id (struct t_gui_buffer *buffer,
+                                                         long long id,
+                                                         struct t_gui_nick_group *group,
+                                                         const char *name,
+                                                         const char *color,
+                                                         const char *prefix,
+                                                         const char *prefix_color,
+                                                         int visible);
 extern struct t_gui_nick *gui_nicklist_add_nick (struct t_gui_buffer *buffer,
                                                  struct t_gui_nick_group *group,
                                                  const char *name,

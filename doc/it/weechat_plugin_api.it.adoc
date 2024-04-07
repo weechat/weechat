@@ -15398,6 +15398,8 @@ Argomenti:
 // TRANSLATION MISSING
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: titolo del buffer
+// TRANSLATION MISSING
+** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick _(WeeChat ≥ 4.3.0)_
 ** _input_: testo in ingresso
 ** _text_search_input_: input salvato prima della ricerca nel testo
 ** _highlight_words_: elenco di parole da evidenziare
@@ -16620,6 +16622,8 @@ Argomenti:
 * _buffer_: puntatore al buffer
 * _group_: puntatore al gruppo
 * _property_: nome della proprietà:
+// TRANSLATION MISSING
+** _id_: unique identifier _(WeeChat ≥ 4.3.0)_
 ** _name_: nome del gruppo
 ** _color_: colore del gruppo nella lista nick
 
@@ -16826,6 +16830,8 @@ Argomenti:
 * _buffer_: puntatore al buffer
 * _nick_: puntatore al nick
 * _property_: nome della proprietà:
+// TRANSLATION MISSING
+** _id_: unique identifier _(WeeChat ≥ 4.3.0)_
 ** _name_: nome del nick
 ** _color_: colore del nick nella lista nick
 ** _prefix_: prefisso del nick

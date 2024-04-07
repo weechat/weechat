@@ -15016,6 +15016,7 @@ Paramètres :
 ** _short_name_ : nom court du tampon (note : utilisé pour l'affichage seulement et peut être changé par l'utilisateur, il ne doit pas être utilisé pour trouver le nom du tampon, utilisez à la place _name_, _full_name_ ou bien la variable locale _channel_)
 ** _type_ : type de tampon : "formatted" (formaté) ou "free" (contenu libre) _(WeeChat ≥ 4.2.0)_
 ** _title_ : titre du tampon
+** _nicklist_last_id_assigned_ : dernier identifiant unique utilisé dans ce tampon pour un groupe ou un pseudo _(WeeChat ≥ 4.3.0)_
 ** _input_ : texte saisi
 ** _text_search_input_ : texte saisi sauvegardé avant la recherche de texte
 ** _highlight_words_ : liste des mots pour le highlight
@@ -16213,6 +16214,7 @@ Paramètres :
 * _buffer_ : pointeur vers le tampon
 * _group_ : pointeur vers le groupe
 * _property_ : nom de la propriété :
+** _id_ : identifiant unique _(WeeChat ≥ 4.3.0)_
 ** _name_ : nom du groupe
 ** _color_ : couleur du groupe dans la liste des pseudos
 
@@ -16416,6 +16418,7 @@ Paramètres :
 * _buffer_ : pointeur vers le tampon
 * _nick_ : pointeur vers le pseudo
 * _property_ : nom de la propriété :
+** _id_ : identifiant unique _(WeeChat ≥ 4.3.0)_
 ** _name_ : nom du pseudo
 ** _color_ : couleur du pseudo dans la liste des pseudos
 ** _prefix_ : préfixe du pseudo

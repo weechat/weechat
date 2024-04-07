@@ -14699,6 +14699,7 @@ Arguments:
 ** _short_name_: short name of buffer (note: used for display only and can be changed by user, this must not be used to find name of buffer, use instead _name_, _full_name_ or local variable _channel_)
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: title of buffer
+** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick _(WeeChat ≥ 4.3.0)_
 ** _input_: input text
 ** _text_search_input_: input saved before text search
 ** _highlight_words_: list of words to highlight
@@ -15870,6 +15871,7 @@ Arguments:
 * _buffer_: buffer pointer
 * _group_: group pointer
 * _property_: property name:
+** _id_: unique identifier _(WeeChat ≥ 4.3.0)_
 ** _name_: name of group
 ** _color_: group color in nicklist
 
@@ -16072,6 +16074,7 @@ Arguments:
 * _buffer_: buffer pointer
 * _nick_: nick pointer
 * _property_: property name:
+** _id_: unique identifier _(WeeChat ≥ 4.3.0)_
 ** _name_: name of nick
 ** _color_: nick color in nicklist
 ** _prefix_: prefix of nick

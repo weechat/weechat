@@ -33,12 +33,13 @@
 #include "irc-color.h"
 #include "irc-command.h"
 #include "irc-config.h"
+#include "irc-input.h"
 #include "irc-join.h"
 #include "irc-modelist.h"
 #include "irc-nick.h"
 #include "irc-protocol.h"
 #include "irc-server.h"
-#include "irc-input.h"
+#include "irc-upgrade.h"
 
 
 char *irc_channel_typing_state_string[IRC_CHANNEL_NUM_TYPING_STATES] =
@@ -241,7 +242,8 @@ irc_channel_create_buffer (struct t_irc_server *server,
 
     if (ptr_buffer)
     {
-        weechat_nicklist_remove_all (ptr_buffer);
+        if (!irc_upgrading)
+            weechat_nicklist_remove_all (ptr_buffer);
         weechat_hashtable_map (buffer_props, &irc_channel_apply_props, ptr_buffer);
     }
     else

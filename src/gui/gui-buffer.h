@@ -169,6 +169,7 @@ struct t_gui_buffer
     int nicklist_groups_visible_count; /* number of groups displayed        */
     int nicklist_nicks_count;          /* number of nicks                   */
     int nicklist_nicks_visible_count;  /* number of nicks displayed         */
+    long long nicklist_last_id_assigned; /* last id assigned for a grp/nick */
     int (*nickcmp_callback)(const void *pointer, /* called to compare nicks */
                             void *data,          /* (search in nicklist)    */
                             struct t_gui_buffer *buffer,

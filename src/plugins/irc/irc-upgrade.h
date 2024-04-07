@@ -37,6 +37,8 @@ enum t_irc_upgrade_type
     IRC_UPGRADE_TYPE_MODELIST_ITEM,
 };
 
+extern int irc_upgrading;
+
 extern int irc_upgrade_save (int force_disconnected_state);
 extern int irc_upgrade_load ();
 

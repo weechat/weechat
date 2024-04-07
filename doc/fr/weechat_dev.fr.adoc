@@ -450,6 +450,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-gui-key.cpp                  | Tests : touches.
 |          test-gui-line.cpp                 | Tests : lignes.
 |          test-gui-nick.cpp                 | Tests : pseudos.
+|          test-gui-nicklist.cpp             | Tests : fonctions de liste de pseudos.
 |          curses/                           | Racine des tests unitaires pour l'interface Curses.
 |             test-gui-curses-mouse.cpp      | Tests : souris (interface Curses).
 |       plugins/                             | Racine des tests unitaires pour les extensions.

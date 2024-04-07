@@ -42,6 +42,7 @@
 struct t_irc_server *irc_upgrade_current_server = NULL;
 struct t_irc_channel *irc_upgrade_current_channel = NULL;
 struct t_irc_modelist *irc_upgrade_current_modelist = NULL;
+int irc_upgrading = 0;
 
 
 /*
@@ -795,14 +796,15 @@ irc_upgrade_read_cb (const void *pointer, void *data,
             case IRC_UPGRADE_TYPE_NICK:
                 if (irc_upgrade_current_server && irc_upgrade_current_channel)
                 {
-                    ptr_nick = irc_nick_new (irc_upgrade_current_server,
-                                             irc_upgrade_current_channel,
-                                             weechat_infolist_string (infolist, "name"),
-                                             weechat_infolist_string (infolist, "host"),
-                                             weechat_infolist_string (infolist, "prefixes"),
-                                             weechat_infolist_integer (infolist, "away"),
-                                             weechat_infolist_string (infolist, "account"),
-                                             weechat_infolist_string (infolist, "realname"));
+                    ptr_nick = irc_nick_new_in_channel (
+                        irc_upgrade_current_server,
+                        irc_upgrade_current_channel,
+                        weechat_infolist_string (infolist, "name"),
+                        weechat_infolist_string (infolist, "host"),
+                        weechat_infolist_string (infolist, "prefixes"),
+                        weechat_infolist_integer (infolist, "away"),
+                        weechat_infolist_string (infolist, "account"),
+                        weechat_infolist_string (infolist, "realname"));
                     if (ptr_nick)
                     {
                         /*
@@ -1005,7 +1007,9 @@ irc_upgrade_load ()
     if (!upgrade_file)
         return 0;
 
+    irc_upgrading = 1;
     rc = weechat_upgrade_read (upgrade_file);
+    irc_upgrading = 0;
 
     weechat_upgrade_close (upgrade_file);
 

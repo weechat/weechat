@@ -14933,6 +14933,8 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 // TRANSLATION MISSING
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: バッファのタイトル
+// TRANSLATION MISSING
+** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick _(WeeChat ≥ 4.3.0)_
 ** _input_: 入力テキスト
 ** _text_search_input_: テキスト検索前に保存した入力テキスト
 ** _highlight_words_: ハイライトする単語のリスト
@@ -16112,6 +16114,8 @@ const char *weechat_nicklist_group_get_string (struct t_gui_buffer *buffer,
 * _buffer_: バッファへのポインタ
 * _group_: グループへのポインタ
 * _property_: プロパティ名:
+// TRANSLATION MISSING
+** _id_: unique identifier _(WeeChat ≥ 4.3.0)_
 ** _name_: グループの名前
 ** _color_: ニックネームリストのグループ色
 
@@ -16315,6 +16319,8 @@ const char *weechat_nicklist_nick_get_string (struct t_gui_buffer *buffer,
 * _buffer_: バッファへのプロパティ
 * _nick_: ニックネームへのポインタ
 * _property_: プロパティ名:
+// TRANSLATION MISSING
+** _id_: unique identifier _(WeeChat ≥ 4.3.0)_
 ** _name_: ニックネームの名前
 ** _color_: ニックネームリスト内でのニックネームの色
 ** _prefix_: ニックネームのプレフィックス

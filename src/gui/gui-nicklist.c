@@ -252,15 +252,45 @@ gui_nicklist_search_group (struct t_gui_buffer *buffer,
 }
 
 /*
- * Adds a group to nicklist.
+ * Returns a new unique id for a group/nick.
+ *
+ * The id is the current time with microseconds precision.
+ * The same time (including microseconds) can be used only one time, so that
+ * all group/nick ids in a given buffer are guaranteed to be unique.
+ */
+
+long long
+gui_nicklist_generate_id (struct t_gui_buffer *buffer)
+{
+    struct timeval tv;
+    long long id;
+
+    gettimeofday (&tv, NULL);
+
+    id = ((long long)tv.tv_sec * 1000000LL) + (long long)(tv.tv_usec);
+
+    /*
+     * ensure we never use the same id for two groups/nicks in the buffer
+     * and that the returned id is strictly greater than the last assigned one
+     * in the buffer
+     */
+    if (id <= buffer->nicklist_last_id_assigned)
+        id = buffer->nicklist_last_id_assigned + 1;
+
+    return id;
+}
+
+/*
+ * Adds a group to nicklist with identifier (internal use).
  *
  * Returns pointer to new group, NULL if error.
  */
 
 struct t_gui_nick_group *
-gui_nicklist_add_group (struct t_gui_buffer *buffer,
-                        struct t_gui_nick_group *parent_group, const char *name,
-                        const char *color, int visible)
+gui_nicklist_add_group_with_id (struct t_gui_buffer *buffer, long long id,
+                                struct t_gui_nick_group *parent_group,
+                                const char *name, const char *color,
+                                int visible)
 {
     struct t_gui_nick_group *new_group;
 
@@ -271,6 +301,9 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     if (!new_group)
         return NULL;
 
+    new_group->id = id;
+    if (new_group->id > buffer->nicklist_last_id_assigned)
+        buffer->nicklist_last_id_assigned = new_group->id;
     new_group->name = (char *)string_shared_get (name);
     new_group->color = (color) ? (char *)string_shared_get (color) : NULL;
     new_group->visible = visible;
@@ -306,6 +339,29 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     gui_nicklist_send_hsignal ("nicklist_group_added", buffer, new_group, NULL);
 
     return new_group;
+}
+
+/*
+ * Adds a group to nicklist.
+ *
+ * Returns pointer to new group, NULL if error.
+ */
+
+struct t_gui_nick_group *
+gui_nicklist_add_group (struct t_gui_buffer *buffer,
+                        struct t_gui_nick_group *parent_group, const char *name,
+                        const char *color, int visible)
+{
+    if (!buffer)
+        return NULL;
+
+    return gui_nicklist_add_group_with_id (
+        buffer,
+        gui_nicklist_generate_id (buffer),
+        parent_group,
+        name,
+        color,
+        visible);
 }
 
 /*
@@ -430,17 +486,17 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
 }
 
 /*
- * Adds a nick to nicklist.
+ * Adds a nick to nicklist with identifier (internal use).
  *
  * Returns pointer to new nick, NULL if error.
  */
 
 struct t_gui_nick *
-gui_nicklist_add_nick (struct t_gui_buffer *buffer,
-                       struct t_gui_nick_group *group,
-                       const char *name, const char *color,
-                       const char *prefix, const char *prefix_color,
-                       int visible)
+gui_nicklist_add_nick_with_id (struct t_gui_buffer *buffer, long long id,
+                               struct t_gui_nick_group *group,
+                               const char *name, const char *color,
+                               const char *prefix, const char *prefix_color,
+                               int visible)
 {
     struct t_gui_nick *new_nick;
 
@@ -451,6 +507,9 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
     if (!new_nick)
         return NULL;
 
+    new_nick->id = id;
+    if (new_nick->id > buffer->nicklist_last_id_assigned)
+        buffer->nicklist_last_id_assigned = new_nick->id;
     new_nick->group = (group) ? group : buffer->nicklist_root;
     new_nick->name = (char *)string_shared_get (name);
     new_nick->color = (color) ? (char *)string_shared_get (color) : NULL;
@@ -476,6 +535,33 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
     gui_nicklist_send_hsignal ("nicklist_nick_added", buffer, NULL, new_nick);
 
     return new_nick;
+}
+
+/*
+ * Adds a nick to nicklist.
+ *
+ * Returns pointer to new nick, NULL if error.
+ */
+
+struct t_gui_nick *
+gui_nicklist_add_nick (struct t_gui_buffer *buffer,
+                       struct t_gui_nick_group *group,
+                       const char *name, const char *color,
+                       const char *prefix, const char *prefix_color,
+                       int visible)
+{
+    if (!buffer)
+        return NULL;
+
+    return gui_nicklist_add_nick_with_id (
+        buffer,
+        gui_nicklist_generate_id (buffer),
+        group,
+        name,
+        color,
+        prefix,
+        prefix_color,
+        visible);
 }
 
 /*
@@ -1078,6 +1164,7 @@ gui_nicklist_hdata_nick_group_cb (const void *pointer, void *data,
                        0, 0, NULL, NULL);
     if (hdata)
     {
+        HDATA_VAR(struct t_gui_nick_group, id, LONGLONG, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_nick_group, name, SHARED_STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_nick_group, color, SHARED_STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_nick_group, visible, INTEGER, 0, NULL, NULL);
@@ -1111,6 +1198,7 @@ gui_nicklist_hdata_nick_cb (const void *pointer, void *data,
                        0, 0, NULL, NULL);
     if (hdata)
     {
+        HDATA_VAR(struct t_gui_nick, id, LONGLONG, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_nick, group, POINTER, 0, NULL, "nick_group");
         HDATA_VAR(struct t_gui_nick, name, SHARED_STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_nick, color, SHARED_STRING, 0, NULL, NULL);
@@ -1136,6 +1224,7 @@ gui_nicklist_add_group_to_infolist (struct t_infolist *infolist,
                                     struct t_gui_nick_group *group)
 {
     struct t_infolist_item *ptr_item;
+    char str_value[64];
 
     if (!infolist || !group)
         return 0;
@@ -1144,6 +1233,9 @@ gui_nicklist_add_group_to_infolist (struct t_infolist *infolist,
     if (!ptr_item)
         return 0;
 
+    snprintf (str_value, sizeof (str_value), "%lld", group->id);
+    if (!infolist_new_var_string (ptr_item, "id", str_value))
+        return 0;
     if (!infolist_new_var_string (ptr_item, "type", "group"))
         return 0;
     if (group->parent)
@@ -1176,6 +1268,7 @@ gui_nicklist_add_nick_to_infolist (struct t_infolist *infolist,
                                    struct t_gui_nick *nick)
 {
     struct t_infolist_item *ptr_item;
+    char str_value[64];
 
     if (!infolist || !nick)
         return 0;
@@ -1184,6 +1277,9 @@ gui_nicklist_add_nick_to_infolist (struct t_infolist *infolist,
     if (!ptr_item)
         return 0;
 
+    snprintf (str_value, sizeof (str_value), "%lld", nick->id);
+    if (!infolist_new_var_string (ptr_item, "id", str_value))
+        return 0;
     if (!infolist_new_var_string (ptr_item, "type", "nick"))
         return 0;
     if (nick->group)
@@ -1274,6 +1370,10 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
               (indent * 2) + 4);
     log_printf (format, " ", group);
     snprintf (format, sizeof (format),
+              "%%-%dsid. . . . . : %%lld",
+              (indent * 2) + 6);
+    log_printf (format, " ", group->id);
+    snprintf (format, sizeof (format),
               "%%-%dsname. . . . : '%%s'",
               (indent * 2) + 6);
     log_printf (format, " ", group->name);
@@ -1336,6 +1436,10 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
                   "%%-%dsgroup . . . . . : %%p",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->group);
+        snprintf (format, sizeof (format),
+                  "%%-%dsid. . . . . . . : %%lld",
+                  (indent * 2) + 6);
+        log_printf (format, " ", ptr_nick->id);
         snprintf (format, sizeof (format),
                   "%%-%dsname. . . . . . : '%%s'",
                   (indent * 2) + 6);

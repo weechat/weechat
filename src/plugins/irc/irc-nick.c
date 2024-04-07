@@ -521,40 +521,24 @@ irc_nick_nicklist_set_color_all ()
 }
 
 /*
- * Adds a new nick in channel.
+ * Adds a new nick in channel, but do not update the buffer nicklist.
+ * This function is only called by the function `irc_nick_new` (below) and
+ * when restoring nicks after upgrade: in this case we want to just add nick
+ * in channel nicks without changing anything in the buffer nicklist,
+ * to preserve same identifiers).
  *
  * Returns pointer to new nick, NULL if error.
  */
 
 struct t_irc_nick *
-irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
-              const char *nickname, const char *host, const char *prefixes,
-              int away, const char *account, const char *realname)
+irc_nick_new_in_channel (struct t_irc_server *server,
+                         struct t_irc_channel *channel,
+                         const char *nickname, const char *host,
+                         const char *prefixes, int away, const char *account,
+                         const char *realname)
 {
-    struct t_irc_nick *new_nick, *ptr_nick;
+    struct t_irc_nick *new_nick;
     int length;
-
-    if (!nickname || !nickname[0])
-        return NULL;
-
-    if (!channel->nicks)
-        irc_channel_add_nicklist_groups (server, channel);
-
-    /* nick already exists on this channel? */
-    ptr_nick = irc_nick_search (server, channel, nickname);
-    if (ptr_nick)
-    {
-        /* remove old nick from nicklist */
-        irc_nick_nicklist_remove (server, channel, ptr_nick);
-
-        /* update nick prefixes */
-        irc_nick_set_prefixes (server, ptr_nick, prefixes);
-
-        /* add new nick in nicklist */
-        irc_nick_nicklist_add (server, channel, ptr_nick);
-
-        return ptr_nick;
-    }
 
     /* alloc memory for new nick */
     if ((new_nick = malloc (sizeof (*new_nick))) == NULL)
@@ -608,6 +592,49 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     channel->nicks_count++;
 
     channel->nick_completion_reset = 1;
+
+    return new_nick;
+}
+
+/*
+ * Adds a new nick in channel.
+ *
+ * Returns pointer to new nick, NULL if error.
+ */
+
+struct t_irc_nick *
+irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
+              const char *nickname, const char *host, const char *prefixes,
+              int away, const char *account, const char *realname)
+{
+    struct t_irc_nick *new_nick, *ptr_nick;
+
+    if (!nickname || !nickname[0])
+        return NULL;
+
+    if (!channel->nicks)
+        irc_channel_add_nicklist_groups (server, channel);
+
+    /* nick already exists on this channel? */
+    ptr_nick = irc_nick_search (server, channel, nickname);
+    if (ptr_nick)
+    {
+        /* remove old nick from nicklist */
+        irc_nick_nicklist_remove (server, channel, ptr_nick);
+
+        /* update nick prefixes */
+        irc_nick_set_prefixes (server, ptr_nick, prefixes);
+
+        /* add new nick in nicklist */
+        irc_nick_nicklist_add (server, channel, ptr_nick);
+
+        return ptr_nick;
+    }
+
+    new_nick = irc_nick_new_in_channel (server, channel, nickname, host,
+                                        prefixes, away, account, realname);
+    if (!new_nick)
+        return NULL;
 
     /* add nick to buffer nicklist */
     irc_nick_nicklist_add (server, channel, new_nick);

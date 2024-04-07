@@ -711,7 +711,9 @@ void
 upgrade_weechat_read_nicklist (struct t_infolist *infolist)
 {
     struct t_gui_nick_group *ptr_group;
-    const char *type, *name, *group_name;
+    const char *type, *name, *group_name, *ptr_id;
+    char *error;
+    long long id;
 
     if (!upgrade_current_buffer)
         return;
@@ -719,41 +721,62 @@ upgrade_weechat_read_nicklist (struct t_infolist *infolist)
     upgrade_current_buffer->nicklist = 1;
     ptr_group = NULL;
     type = infolist_string (infolist, "type");
-    if (type)
+    if (!type)
+        return;
+
+    /* "id" is new in WeeChat 4.3.0 */
+    id = -1;
+    if (infolist_search_var (infolist, "id"))
     {
-        if (strcmp (type, "group") == 0)
+        ptr_id = infolist_string (infolist, "id");
+        if (ptr_id)
         {
-            name = infolist_string (infolist, "name");
-            if (name && (strcmp (name, "root") != 0))
-            {
-                group_name = infolist_string (infolist, "parent_name");
-                if (group_name)
-                {
-                    ptr_group = gui_nicklist_search_group (
-                        upgrade_current_buffer, NULL, group_name);
-                }
-                gui_nicklist_add_group (upgrade_current_buffer,
-                                        ptr_group,
-                                        name,
-                                        infolist_string (infolist, "color"),
-                                        infolist_integer (infolist, "visible"));
-            }
+            error = NULL;
+            id = strtoll (ptr_id, &error, 10);
+            if (!error || error[0])
+                id = -1;
         }
-        else if (strcmp (type, "nick") == 0)
+    }
+    if (id < 0)
+        id = gui_nicklist_generate_id (upgrade_current_buffer);
+
+    if (strcmp (type, "group") == 0)
+    {
+        name = infolist_string (infolist, "name");
+        if (name && (strcmp (name, "root") != 0))
         {
-            group_name = infolist_string (infolist, "group_name");
+            group_name = infolist_string (infolist, "parent_name");
             if (group_name)
-                ptr_group = gui_nicklist_search_group (upgrade_current_buffer,
-                                                       NULL,
-                                                       group_name);
-            gui_nicklist_add_nick (upgrade_current_buffer,
-                                   ptr_group,
-                                   infolist_string (infolist, "name"),
-                                   infolist_string (infolist, "color"),
-                                   infolist_string (infolist, "prefix"),
-                                   infolist_string (infolist, "prefix_color"),
-                                   infolist_integer (infolist, "visible"));
+            {
+                ptr_group = gui_nicklist_search_group (
+                    upgrade_current_buffer, NULL, group_name);
+            }
+            gui_nicklist_add_group_with_id (
+                upgrade_current_buffer,
+                id,
+                ptr_group,
+                name,
+                infolist_string (infolist, "color"),
+                infolist_integer (infolist, "visible"));
         }
+    }
+    else if (strcmp (type, "nick") == 0)
+    {
+        group_name = infolist_string (infolist, "group_name");
+        if (group_name)
+        {
+            ptr_group = gui_nicklist_search_group (
+                upgrade_current_buffer, NULL, group_name);
+        }
+        gui_nicklist_add_nick_with_id (
+            upgrade_current_buffer,
+            id,
+            ptr_group,
+            infolist_string (infolist, "name"),
+            infolist_string (infolist, "color"),
+            infolist_string (infolist, "prefix"),
+            infolist_string (infolist, "prefix_color"),
+            infolist_integer (infolist, "visible"));
     }
 }
 

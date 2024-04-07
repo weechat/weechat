@@ -110,9 +110,9 @@ char *gui_buffer_properties_get_integer[] =
 };
 char *gui_buffer_properties_get_string[] =
 { "id", "plugin", "name", "full_name", "old_full_name", "short_name", "title",
-  "input", "text_search_input", "highlight_words", "highlight_disable_regex",
-  "highlight_regex", "highlight_tags_restrict", "highlight_tags",
-  "hotlist_max_level_nicks",
+  "nicklist_last_id_assigned", "input", "text_search_input", "highlight_words",
+  "highlight_disable_regex", "highlight_regex", "highlight_tags_restrict",
+  "highlight_tags", "hotlist_max_level_nicks",
   NULL
 };
 char *gui_buffer_properties_get_pointer[] =
@@ -888,10 +888,11 @@ gui_buffer_new_props_with_id (long long id,
     new_buffer->nicklist_groups_visible_count = 0;
     new_buffer->nicklist_nicks_count = 0;
     new_buffer->nicklist_nicks_visible_count = 0;
+    new_buffer->nicklist_last_id_assigned = -1;
     new_buffer->nickcmp_callback = NULL;
     new_buffer->nickcmp_callback_pointer = NULL;
     new_buffer->nickcmp_callback_data = NULL;
-    gui_nicklist_add_group (new_buffer, NULL, "root", NULL, 0);
+    gui_nicklist_add_group_with_id (new_buffer, 0, NULL, "root", NULL, 0);
 
     /* input */
     new_buffer->input = 1;
@@ -1539,6 +1540,12 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
        return gui_buffer_type_string[buffer->type];
     else if (strcmp (property, "title") == 0)
         return buffer->title;
+    else if (strcmp (property, "nicklist_last_id_assigned") == 0)
+    {
+        snprintf (str_value, sizeof (str_value),
+                  "%lld", buffer->nicklist_last_id_assigned);
+        return str_value;
+    }
     else if (strcmp (property, "input") == 0)
         return buffer->input_buffer;
     else if (strcmp (property, "text_search_input") == 0)
@@ -5188,6 +5195,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, nicklist_groups_visible_count, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nicklist_nicks_count, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nicklist_nicks_visible_count, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, nicklist_last_id_assigned, LONGLONG, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nickcmp_callback, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nickcmp_callback_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nickcmp_callback_data, POINTER, 0, NULL, NULL);
@@ -5406,6 +5414,9 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "nicklist_nicks_count", buffer->nicklist_nicks_count))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "nicklist_nicks_visible_count", buffer->nicklist_nicks_visible_count))
+        return 0;
+    snprintf (str_value, sizeof (str_value), "%lld", buffer->nicklist_last_id_assigned);
+    if (!infolist_new_var_string (ptr_item, "nicklist_last_id_assigned", str_value))
         return 0;
     if (!infolist_new_var_string (ptr_item, "title", buffer->title))
         return 0;
@@ -5643,6 +5654,7 @@ gui_buffer_print_log ()
         log_printf ("  nicklist_groups_vis_cnt : %d", ptr_buffer->nicklist_groups_visible_count);
         log_printf ("  nicklist_nicks_count. . : %d", ptr_buffer->nicklist_nicks_count);
         log_printf ("  nicklist_nicks_vis_cnt. : %d", ptr_buffer->nicklist_nicks_visible_count);
+        log_printf ("  nicklist_last_id_assigned: %lld", ptr_buffer->nicklist_last_id_assigned);
         log_printf ("  nickcmp_callback. . . . : %p", ptr_buffer->nickcmp_callback);
         log_printf ("  nickcmp_callback_pointer: %p", ptr_buffer->nickcmp_callback_pointer);
         log_printf ("  nickcmp_callback_data . : %p", ptr_buffer->nickcmp_callback_data);
