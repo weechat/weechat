@@ -370,7 +370,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
 {
     struct t_hdata *hdata;
     struct t_gui_buffer *pointer;
-    cJSON *json, *json_local_vars, *json_lines, *json_nicks;
+    cJSON *json, *json_local_vars, *json_lines, *json_nicklist;
     const char *ptr_string;
     char *string;
 
@@ -414,10 +414,10 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     /* nicks */
     if (nicks)
     {
-        json_nicks = relay_api_msg_nick_group_to_json (
+        json_nicklist = relay_api_msg_nick_group_to_json (
             weechat_hdata_pointer (hdata, buffer, "nicklist_root"));
-        if (json_nicks)
-            cJSON_AddItemToObject (json, "nicks", json_nicks);
+        if (json_nicklist)
+            cJSON_AddItemToObject (json, "nicklist", json_nicklist);
     }
 
     return json;
