@@ -74,14 +74,13 @@
     ptr_string = weechat_hdata_string (hdata, pointer, __var_name);     \
     MSG_ADD_STR_PTR(__json_name, ptr_string);
 
-#define MSG_ADD_HDATA_STR_COLORS(__json_name, __var_name)               \
-    ptr_string = weechat_hdata_string (hdata, pointer, __var_name);     \
+#define MSG_CONVERT_COLORS(__json_name, __string)                       \
     switch (colors)                                                     \
     {                                                                   \
         case RELAY_API_COLORS_ANSI:                                     \
             string = weechat_hook_modifier_exec (                       \
                 "color_encode_ansi", NULL,                              \
-                (ptr_string) ? ptr_string : "");                        \
+                (__string) ? __string : "");                            \
             if (string)                                                 \
             {                                                           \
                 MSG_ADD_STR_PTR(__json_name, string);                   \
@@ -89,11 +88,11 @@
             }                                                           \
             break;                                                      \
         case RELAY_API_COLORS_WEECHAT:                                  \
-            MSG_ADD_STR_PTR(__json_name, ptr_string);                   \
+            MSG_ADD_STR_PTR(__json_name, __string);                     \
             break;                                                      \
         case RELAY_API_COLORS_STRIP:                                    \
             string = weechat_string_remove_color (                      \
-                (ptr_string) ? ptr_string : "", NULL);                  \
+                (__string) ? __string : "", NULL);                      \
             if (string)                                                 \
             {                                                           \
                 MSG_ADD_STR_PTR(__json_name, string);                   \
@@ -102,6 +101,16 @@
         case RELAY_API_NUM_COLORS:                                      \
             break;                                                      \
     }
+
+#define MSG_ADD_HDATA_STR_COLORS(__json_name, __var_name)               \
+    ptr_string = weechat_hdata_string (hdata, pointer, __var_name);     \
+    MSG_CONVERT_COLORS(__json_name, ptr_string);
+
+#define MSG_ADD_HDATA_COLOR(__json_name, __var_name)                    \
+    ptr_string = weechat_hdata_string (hdata, pointer, __var_name);     \
+    ptr_color = (ptr_string && ptr_string[0]) ?                         \
+        weechat_color (ptr_string) : NULL;                              \
+    MSG_CONVERT_COLORS(__json_name, ptr_color);
 
 
 /*
@@ -415,7 +424,8 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     if (nicks)
     {
         json_nicklist = relay_api_msg_nick_group_to_json (
-            weechat_hdata_pointer (hdata, buffer, "nicklist_root"));
+            weechat_hdata_pointer (hdata, buffer, "nicklist_root"),
+            colors);
         if (json_nicklist)
             cJSON_AddItemToObject (json, "nicklist", json_nicklist);
     }
@@ -553,13 +563,15 @@ relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,
  */
 
 cJSON *
-relay_api_msg_nick_to_json (struct t_gui_nick *nick)
+relay_api_msg_nick_to_json (struct t_gui_nick *nick,
+                            enum t_relay_api_colors colors)
 {
     struct t_hdata *hdata;
     struct t_gui_nick *pointer;
     struct t_gui_nick_group *ptr_group;
     cJSON *json;
-    const char *ptr_string;
+    const char *ptr_string, *ptr_color;
+    char *string;
 
     hdata = relay_hdata_nick;
     pointer = nick;
@@ -579,9 +591,9 @@ relay_api_msg_nick_to_json (struct t_gui_nick *nick)
             (ptr_group) ?
             weechat_hdata_longlong (relay_hdata_nick_group, ptr_group, "id") : -1));
     MSG_ADD_HDATA_STR("prefix", "prefix");
-    MSG_ADD_HDATA_STR("prefix_color", "prefix_color");
+    MSG_ADD_HDATA_COLOR("prefix_color", "prefix_color");
     MSG_ADD_HDATA_STR("name", "name");
-    MSG_ADD_HDATA_STR("color", "color");
+    MSG_ADD_HDATA_COLOR("color", "color");
     MSG_ADD_HDATA_VAR(Bool, "visible", integer, "visible");
 
     return json;
@@ -592,13 +604,15 @@ relay_api_msg_nick_to_json (struct t_gui_nick *nick)
  */
 
 cJSON *
-relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group)
+relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group,
+                                  enum t_relay_api_colors colors)
 {
     struct t_hdata *hdata;
     struct t_gui_nick_group *pointer, *ptr_group;
     struct t_gui_nick *ptr_nick;
     cJSON *json, *json_groups, *json_nicks;
-    const char *ptr_string;
+    const char *ptr_string, *ptr_color;
+    char *string;
 
     hdata = relay_hdata_nick_group;
     pointer = nick_group;
@@ -618,7 +632,7 @@ relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group)
             (ptr_group) ?
             weechat_hdata_longlong (relay_hdata_nick_group, ptr_group, "id") : -1));
     MSG_ADD_HDATA_STR("name", "name");
-    MSG_ADD_HDATA_STR("color", "color");
+    MSG_ADD_HDATA_COLOR("color", "color");
     MSG_ADD_HDATA_VAR(Bool, "visible", integer, "visible");
 
     json_groups = cJSON_CreateArray ();
@@ -631,7 +645,7 @@ relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group)
             {
                 cJSON_AddItemToArray (
                     json_groups,
-                    relay_api_msg_nick_group_to_json (ptr_group));
+                    relay_api_msg_nick_group_to_json (ptr_group, colors));
                 ptr_group = weechat_hdata_move (relay_hdata_nick_group, ptr_group, 1);
             }
         }
@@ -648,7 +662,7 @@ relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group)
             {
                 cJSON_AddItemToArray (
                     json_nicks,
-                    relay_api_msg_nick_to_json (ptr_nick));
+                    relay_api_msg_nick_to_json (ptr_nick, colors));
                 ptr_nick = weechat_hdata_move (relay_hdata_nick, ptr_nick, 1);
             }
         }

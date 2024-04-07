@@ -171,7 +171,9 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
         || (strcmp (signal, "nicklist_group_changed") == 0)
         || (strcmp (signal, "nicklist_group_removing") == 0))
     {
-        json = relay_api_msg_nick_group_to_json (ptr_group);
+        json = relay_api_msg_nick_group_to_json (
+            ptr_group,
+            RELAY_API_DATA(ptr_client, sync_colors));
         if (json)
         {
             relay_api_msg_send_event (ptr_client, signal, ptr_buffer,
@@ -183,7 +185,9 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
         || (strcmp (signal, "nicklist_nick_changed") == 0)
         || (strcmp (signal, "nicklist_nick_removing") == 0))
     {
-        json = relay_api_msg_nick_to_json (ptr_nick);
+        json = relay_api_msg_nick_to_json (
+            ptr_nick,
+            RELAY_API_DATA(ptr_client, sync_colors));
         if (json)
         {
             relay_api_msg_send_event (ptr_client, signal, ptr_buffer,
@@ -409,7 +413,8 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         {
             json = relay_api_msg_nick_group_to_json (
                 weechat_hdata_pointer (relay_hdata_buffer,
-                                       ptr_buffer, "nicklist_root"));
+                                       ptr_buffer, "nicklist_root"),
+                colors);
         }
         else
         {
