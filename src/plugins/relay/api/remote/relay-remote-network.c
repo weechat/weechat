@@ -611,7 +611,7 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
     char str_http[8192], str_totp[128];
     char hash[512 / 8], hash_hexa[((512 / 8) * 2) + 1];
     char ws_key[16], ws_key_base64[64];
-    int length, hash_size;
+    int hash_size;
     time_t time_now;
 
     relay_remote_set_status (remote, RELAY_STATUS_AUTHENTICATING);
@@ -641,11 +641,8 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
             break;
         case RELAY_AUTH_PASSWORD_HASH_SHA256:
         case RELAY_AUTH_PASSWORD_HASH_SHA512:
-            length = strlen (password) + 64;
-            salt_password = malloc (length);
-            if (salt_password)
+            if (weechat_asprintf (&salt_password, "%ld%s", time_now, password) >= 0)
             {
-                snprintf (salt_password, length, "%ld%s", time_now, password);
                 if (weechat_crypto_hash (
                         salt_password, strlen (salt_password),
                         relay_auth_password_hash_algo_name[remote->password_hash_algo],
