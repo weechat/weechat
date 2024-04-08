@@ -1564,6 +1564,7 @@ eval_syntax_highlight (const char *text, struct t_eval_context *eval_context)
  *   - ${name}: the variable from hashtable "user_vars" or "extra_vars"
  *   - ${weechat_config_dir}: WeeChat config directory
  *   - ${weechat_data_dir}: WeeChat data directory
+ *   - ${weechat_state_dir}: WeeChat state directory
  *   - ${weechat_cache_dir}: WeeChat cache directory
  *   - ${weechat_runtmie_dir}: WeeChat runtime directory
  *   - ${eval:string}: the evaluated string
@@ -1700,6 +1701,11 @@ eval_replace_vars_cb (void *data,
     if (strcmp (text, "weechat_data_dir") == 0)
     {
         value = strdup (weechat_data_dir);
+        goto end;
+    }
+    if (strcmp (text, "weechat_state_dir") == 0)
+    {
+        value = strdup (weechat_state_dir);
         goto end;
     }
     if (strcmp (text, "weechat_cache_dir") == 0)

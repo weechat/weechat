@@ -240,6 +240,24 @@ plugin_api_info_weechat_data_dir_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns WeeChat info "weechat_state_dir".
+ */
+
+char *
+plugin_api_info_weechat_state_dir_cb (const void *pointer, void *data,
+                                      const char *info_name,
+                                      const char *arguments)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return plugin_api_info_absolute_path (weechat_state_dir);
+}
+
+/*
  * Returns WeeChat info "weechat_cache_dir".
  */
 
@@ -2109,7 +2127,8 @@ plugin_api_info_init ()
                N_("WeeChat directory "
                   "(*deprecated* since version 3.2, replaced by "
                   "\"weechat_config_dir\", \"weechat_data_dir\", "
-                  "\"weechat_cache_dir\" and \"weechat_runtime_dir\")"),
+                  "\"weechat_state_dir\" , \"weechat_cache_dir\" "
+                  "and \"weechat_runtime_dir\")"),
                NULL, &plugin_api_info_weechat_data_dir_cb, NULL, NULL);
     hook_info (NULL, "weechat_config_dir",
                N_("WeeChat config directory"),
@@ -2117,6 +2136,9 @@ plugin_api_info_init ()
     hook_info (NULL, "weechat_data_dir",
                N_("WeeChat data directory"),
                NULL, &plugin_api_info_weechat_data_dir_cb, NULL, NULL);
+    hook_info (NULL, "weechat_state_dir",
+               N_("WeeChat state directory"),
+               NULL, &plugin_api_info_weechat_state_dir_cb, NULL, NULL);
     hook_info (NULL, "weechat_cache_dir",
                N_("WeeChat cache directory"),
                NULL, &plugin_api_info_weechat_cache_dir_cb, NULL, NULL);

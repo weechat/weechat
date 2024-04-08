@@ -115,6 +115,7 @@ extern int weechat_home_temp;
 extern int weechat_home_delete_on_exit;
 extern char *weechat_config_dir;
 extern char *weechat_data_dir;
+extern char *weechat_state_dir;
 extern char *weechat_cache_dir;
 extern char *weechat_runtime_dir;
 extern char *weechat_local_charset;

@@ -3031,12 +3031,15 @@ première étendue à la dernière) :
 
 | `+${weechat_xxx_dir}+` | 3.2
 | Un répertoire WeeChat : `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
-  `+${weechat_cache_dir}+` ou `+${weechat_runtime_dir}+`.
+  `+${weechat_state_dir}+`, `+${weechat_cache_dir}+` ou `+${weechat_runtime_dir}+`.
 | >> `+${weechat_config_dir}+` +
   == `+/home/user/.config/weechat+` +
   +
   >> `+${weechat_data_dir}+` +
   == `+/home/user/.local/share/weechat+` +
+  +
+  >> `+${weechat_state_dir}+` +
+  == `+/home/user/.local/state/weechat+` +
   +
   >> `+${weechat_cache_dir}+` +
   == `+/home/user/.cache/weechat+` +
@@ -4420,6 +4423,7 @@ Paramètres :
   chaînes pour forcer un répertoire spécifique de WeeChat (WeeChat ≥ 3.2) :
 ** `${weechat_config_dir}`
 ** `${weechat_data_dir}` (par défaut)
+** `${weechat_state_dir}`
 ** `${weechat_cache_dir}`
 ** `${weechat_runtime_dir}`
 * _mode_ : mode pour le répertoire

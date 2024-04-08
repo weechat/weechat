@@ -2872,12 +2872,16 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 | `+${weechat_xxx_dir}+` | 3.2
 | WeeChat директоријум: `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
-  `+${weechat_cache_dir}+` или `+${weechat_runtime_dir}+`.
+  `+${weechat_state_dir}+`, `+${weechat_cache_dir}+`
+  или `+${weechat_runtime_dir}+`.
 | >> `+${weechat_config_dir}+` +
   == `+/home/user/.config/weechat+` +
   +
   >> `+${weechat_data_dir}+` +
   == `+/home/user/.local/share/weechat+` +
+  +
+  >> `+${weechat_state_dir}+` +
+  == `+/home/user/.local/state/weechat+` +
   +
   >> `+${weechat_cache_dir}+` +
   == `+/home/user/.cache/weechat+` +
@@ -4211,6 +4215,7 @@ int weechat_mkdir_home (char *directory, int mode);
 * _directory_: име директоријума који трба да се креира; може почети једним од следећих стрингова чиме се форсира одређени WeeChat директоријум (WeeChat ≥ 3.2):
 ** `${weechat_config_dir}`
 ** `${weechat_data_dir}` (подразумевано)
+** `${weechat_state_dir}`
 ** `${weechat_cache_dir}`
 ** `${weechat_runtime_dir}`
 * _mode_: режим за директоријум

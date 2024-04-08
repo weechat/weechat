@@ -79,10 +79,10 @@ log_open (const char *filename, const char *mode)
     }
     else
     {
-        filename_length = strlen (weechat_data_dir) + 64;
+        filename_length = strlen (weechat_state_dir) + 64;
         weechat_log_filename = malloc (filename_length);
         snprintf (weechat_log_filename, filename_length,
-                  "%s/%s", weechat_data_dir, WEECHAT_LOG_NAME);
+                  "%s/%s", weechat_state_dir, WEECHAT_LOG_NAME);
         weechat_log_file = fopen (weechat_log_filename, mode);
     }
 
@@ -273,7 +273,7 @@ log_crash_rename ()
 
     log_close ();
 
-    length = strlen (weechat_data_dir) + 128;
+    length = strlen (weechat_state_dir) + 128;
     new_name = malloc (length);
     if (new_name)
     {
@@ -281,7 +281,7 @@ log_crash_rename ()
         local_time = localtime (&time_now);
         snprintf (new_name, length,
                   "%s/weechat_crash_%04d%02d%02d_%d.log",
-                  weechat_data_dir,
+                  weechat_state_dir,
                   local_time->tm_year + 1900,
                   local_time->tm_mon + 1,
                   local_time->tm_mday,
