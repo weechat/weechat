@@ -164,8 +164,9 @@ TEST(PluginApiInfo, AbsolutePath)
  *   plugin_api_info_absolute_path
  *   plugin_api_info_weechat_config_dir_cb
  *   plugin_api_info_weechat_data_dir_cb
+ *   plugin_api_info_weechat_state_dir_cb
  *   plugin_api_info_weechat_cache_dir_cb
- *   plugin_api_info_weechat_cache_dir_cb
+ *   plugin_api_info_weechat_runtime_dir_cb
  */
 
 TEST(PluginApiInfo, WeechatDir)
@@ -180,6 +181,13 @@ TEST(PluginApiInfo, WeechatDir)
     free (str);
 
     str = hook_info_get (NULL, "weechat_data_dir", NULL);
+    CHECK(str);
+    CHECK(str[0] == '/');
+    CHECK(strlen (str) > 1);
+    CHECK(strstr (str, "/tmp_weechat_test"));
+    free (str);
+
+    str = hook_info_get (NULL, "weechat_state_dir", NULL);
     CHECK(str);
     CHECK(str[0] == '/');
     CHECK(strlen (str) > 1);

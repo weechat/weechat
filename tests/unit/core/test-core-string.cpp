@@ -962,7 +962,8 @@ TEST(CoreString, EvalPathHome)
 {
     char *home, *result;
     int length_home, length_weechat_config_dir, length_weechat_data_dir;
-    int length_weechat_cache_dir, length_weechat_runtime_dir;
+    int length_weechat_state_dir, length_weechat_cache_dir;
+    int length_weechat_runtime_dir;
     struct t_hashtable *extra_vars, *options;
 
     home = getenv ("HOME");
@@ -971,6 +972,7 @@ TEST(CoreString, EvalPathHome)
 
     length_weechat_config_dir = strlen (weechat_config_dir);
     length_weechat_data_dir = strlen (weechat_data_dir);
+    length_weechat_state_dir = strlen (weechat_state_dir);
     length_weechat_cache_dir = strlen (weechat_cache_dir);
     length_weechat_runtime_dir = strlen (weechat_runtime_dir);
 
@@ -1014,6 +1016,14 @@ TEST(CoreString, EvalPathHome)
     STRCMP_EQUAL(result + length_weechat_data_dir, "/test");
     free (result);
 
+    /* "%h" with forced state dir */
+    hashtable_set (options, "directory", "state");
+    result = string_eval_path_home ("%h/test", NULL, NULL, options);
+    CHECK(strncmp (result, weechat_state_dir, length_weechat_state_dir) == 0);
+    LONGS_EQUAL(length_weechat_state_dir + 5, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_state_dir, "/test");
+    free (result);
+
     /* "%h" with forced cache dir */
     hashtable_set (options, "directory", "cache");
     result = string_eval_path_home ("%h/test", NULL, NULL, options);
@@ -1046,6 +1056,14 @@ TEST(CoreString, EvalPathHome)
     CHECK(strncmp (result, weechat_data_dir, length_weechat_data_dir) == 0);
     LONGS_EQUAL(length_weechat_data_dir + 5, strlen (result));
     STRCMP_EQUAL(result + length_weechat_data_dir, "/path");
+    free (result);
+
+    /* state dir */
+    result = string_eval_path_home ("${weechat_state_dir}/path",
+                                    NULL, NULL, NULL);
+    CHECK(strncmp (result, weechat_state_dir, length_weechat_state_dir) == 0);
+    LONGS_EQUAL(length_weechat_state_dir + 5, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_state_dir, "/path");
     free (result);
 
     /* cache dir */
