@@ -2977,12 +2977,16 @@ expanded to last):
 
 | `+${weechat_xxx_dir}+` | 3.2
 | A WeeChat directory: `+${weechat_config_dir}+`, `+${weechat_data_dir}+`,
-  `+${weechat_cache_dir}+` or `+${weechat_runtime_dir}+`.
+  `+${weechat_state_dir}+`, `+${weechat_cache_dir}+`
+  or `+${weechat_runtime_dir}+`.
 | >> `+${weechat_config_dir}+` +
   == `+/home/user/.config/weechat+` +
   +
   >> `+${weechat_data_dir}+` +
   == `+/home/user/.local/share/weechat+` +
+  +
+  >> `+${weechat_state_dir}+` +
+  == `+/home/user/.local/state/weechat+` +
   +
   >> `+${weechat_cache_dir}+` +
   == `+/home/user/.cache/weechat+` +
@@ -4343,6 +4347,7 @@ Arguments:
   strings to force a specific WeeChat directory (WeeChat ≥ 3.2):
 ** `${weechat_config_dir}`
 ** `${weechat_data_dir}` (default)
+** `${weechat_state_dir}`
 ** `${weechat_cache_dir}`
 ** `${weechat_runtime_dir}`
 * _mode_: mode for directory
