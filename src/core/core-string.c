@@ -1153,6 +1153,8 @@ string_eval_path_home (const char *path,
                 ptr_directory = weechat_config_dir;
             else if (strcmp (ptr_option_directory, "data") == 0)
                 ptr_directory = weechat_data_dir;
+            else if (strcmp (ptr_option_directory, "state") == 0)
+                ptr_directory = weechat_state_dir;
             else if (strcmp (ptr_option_directory, "cache") == 0)
                 ptr_directory = weechat_cache_dir;
             else if (strcmp (ptr_option_directory, "runtime") == 0)

@@ -135,7 +135,7 @@ logger_get_file_path ()
         WEECHAT_HASHTABLE_STRING,
         NULL, NULL);
     if (options)
-        weechat_hashtable_set (options, "directory", "data");
+        weechat_hashtable_set (options, "directory", "state");
     path = weechat_string_eval_path_home (
         weechat_config_string (logger_config_file_path), NULL, NULL, options);
     if (options)

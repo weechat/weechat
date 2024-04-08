@@ -115,6 +115,7 @@ int weechat_home_temp = 0;             /* 1 if using a temporary home       */
 int weechat_home_delete_on_exit = 0;   /* 1 if home is deleted on exit      */
 char *weechat_config_dir = NULL;       /* config directory                  */
 char *weechat_data_dir = NULL;         /* data directory                    */
+char *weechat_state_dir = NULL;        /* state directory                   */
 char *weechat_cache_dir = NULL;        /* cache directory                   */
 char *weechat_runtime_dir = NULL;      /* runtime directory                 */
 int weechat_locale_ok = 0;             /* is locale OK?                     */
@@ -178,8 +179,8 @@ weechat_display_usage ()
           "  -c, --colors             display default colors in terminal "
           "and exit\n"
           "  -d, --dir <path>         force a single WeeChat home directory\n"
-          "                           or 4 different directories separated "
-          "by colons (in this order: config, data, cache, runtime)\n"
+          "                           or 5 different directories separated "
+          "by colons (in this order: config, data, state, cache, runtime)\n"
           "                           (environment variable WEECHAT_HOME is "
           "read if this option is not given)\n"
           "  -t, --temp-dir           create a temporary WeeChat home "
@@ -583,6 +584,8 @@ weechat_shutdown (int return_code, int crash)
         free (weechat_config_dir);
     if (weechat_data_dir)
         free (weechat_data_dir);
+    if (weechat_state_dir)
+        free (weechat_state_dir);
     if (weechat_cache_dir)
         free (weechat_cache_dir);
     if (weechat_runtime_dir)

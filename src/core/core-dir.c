@@ -108,7 +108,7 @@ dir_get_temp_dir ()
 int
 dir_mkdir_home (const char *directory, int mode)
 {
-    char *dir, *dir1, *dir2, *dir3, *dir4;
+    char *dir, *dir1, *dir2, *dir3, *dir4, *dir5;
     int rc, dir_length;
 
     rc = 0;
@@ -117,6 +117,7 @@ dir_mkdir_home (const char *directory, int mode)
     dir2 = NULL;
     dir3 = NULL;
     dir4 = NULL;
+    dir5 = NULL;
 
     if (!directory)
         goto end;
@@ -143,16 +144,20 @@ dir_mkdir_home (const char *directory, int mode)
     if (!dir2)
         goto end;
 
-    dir3 = string_replace (dir2, "${weechat_cache_dir}", weechat_cache_dir);
+    dir3 = string_replace (dir2, "${weechat_state_dir}", weechat_state_dir);
     if (!dir3)
         goto end;
 
-    dir4 = string_replace (dir3, "${weechat_runtime_dir}", weechat_runtime_dir);
+    dir4 = string_replace (dir3, "${weechat_cache_dir}", weechat_cache_dir);
     if (!dir4)
         goto end;
 
+    dir5 = string_replace (dir4, "${weechat_runtime_dir}", weechat_runtime_dir);
+    if (!dir5)
+        goto end;
+
     /* build directory, adding WeeChat home */
-    if (mkdir (dir4, mode) < 0)
+    if (mkdir (dir5, mode) < 0)
     {
         if (errno != EEXIST)
             goto end;
@@ -171,6 +176,8 @@ end:
         free (dir3);
     if (dir4)
         free (dir4);
+    if (dir5)
+        free (dir5);
     return rc;
 }
 
@@ -331,21 +338,23 @@ dir_set_home_path (char *path)
     {
         weechat_config_dir = string_expand_home (paths[0]);
         weechat_data_dir = string_expand_home (paths[0]);
+        weechat_state_dir = string_expand_home (paths[0]);
         weechat_cache_dir = string_expand_home (paths[0]);
         weechat_runtime_dir = string_expand_home (paths[0]);
     }
-    else if (num_paths == 4)
+    else if (num_paths == 5)
     {
         weechat_config_dir = string_expand_home (paths[0]);
         weechat_data_dir = string_expand_home (paths[1]);
-        weechat_cache_dir = string_expand_home (paths[2]);
-        weechat_runtime_dir = string_expand_home (paths[3]);
+        weechat_state_dir = string_expand_home (paths[2]);
+        weechat_cache_dir = string_expand_home (paths[3]);
+        weechat_runtime_dir = string_expand_home (paths[4]);
     }
     else
     {
         string_fprintf (stderr,
                         _("Error: wrong number of paths for home directories "
-                          "(expected: 1 or 4, received: %d)\n"),
+                          "(expected: 1 or 5, received: %d)\n"),
                         num_paths);
         goto end;
     }
@@ -402,6 +411,7 @@ dir_create_home_temp_dir ()
 
     weechat_config_dir = strdup (ptr_weechat_home);
     weechat_data_dir = strdup (ptr_weechat_home);
+    weechat_state_dir = strdup (ptr_weechat_home);
     weechat_cache_dir = strdup (ptr_weechat_home);
     weechat_runtime_dir = strdup (ptr_weechat_home);
 
@@ -430,14 +440,16 @@ end:
  */
 
 int
-dir_find_xdg_dirs (char **config_dir, char **data_dir, char **cache_dir,
-                   char **runtime_dir)
+dir_find_xdg_dirs (char **config_dir, char **data_dir, char **state_dir,
+                   char **cache_dir, char **runtime_dir)
 {
     char *ptr_home, path[PATH_MAX];
-    char *xdg_config_home, *xdg_data_home, *xdg_cache_home, *xdg_runtime_dir;
+    char *xdg_config_home, *xdg_data_home, *xdg_state_home, *xdg_cache_home,
+         *xdg_runtime_dir;
 
     *config_dir = NULL;
     *data_dir = NULL;
+    *state_dir = NULL;
     *cache_dir = NULL;
     *runtime_dir = NULL;
 
@@ -447,6 +459,7 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **cache_dir,
 
     xdg_config_home = getenv ("XDG_CONFIG_HOME");
     xdg_data_home = getenv ("XDG_DATA_HOME");
+    xdg_state_home = getenv ("XDG_STATE_HOME");
     xdg_cache_home = getenv ("XDG_CACHE_HOME");
     xdg_runtime_dir = getenv ("XDG_RUNTIME_DIR");
 
@@ -483,6 +496,24 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **cache_dir,
     }
     *data_dir = strdup (path);
     if (!*data_dir)
+        goto error_memory;
+
+    /* set state dir: $XDG_STATE_HOME/weechat or $HOME/.local/state/weechat */
+    if (xdg_state_home && xdg_state_home[0])
+    {
+        snprintf (path, sizeof (path),
+                "%s%s%s",
+                xdg_state_home, DIR_SEPARATOR, "weechat");
+    }
+    else
+    {
+        snprintf (path, sizeof (path),
+                "%s%s%s%s%s%s%s",
+                ptr_home, DIR_SEPARATOR, ".local", DIR_SEPARATOR, "state",
+                DIR_SEPARATOR, "weechat");
+    }
+    *state_dir = strdup (path);
+    if (!*state_dir)
         goto error_memory;
 
     /* set cache dir: $XDG_CACHE_HOME/weechat or $HOME/.cache/weechat */
@@ -539,6 +570,11 @@ error:
         free (*data_dir);
         *data_dir = NULL;
     }
+    if (*state_dir)
+    {
+        free (*state_dir);
+        *state_dir = NULL;
+    }
     if (*cache_dir)
     {
         free (*cache_dir);
@@ -565,7 +601,7 @@ int
 dir_find_home_dirs ()
 {
     char *ptr_home, *ptr_weechat_home, *config_weechat_home;
-    char *config_dir, *data_dir, *cache_dir, *runtime_dir;
+    char *config_dir, *data_dir, *state_dir, *cache_dir, *runtime_dir;
     char path[PATH_MAX];
 
     /* temporary WeeChat home */
@@ -586,7 +622,8 @@ dir_find_home_dirs ()
     if (config_weechat_home[0])
         return dir_set_home_path (config_weechat_home);
 
-    if (!dir_find_xdg_dirs (&config_dir, &data_dir, &cache_dir, &runtime_dir))
+    if (!dir_find_xdg_dirs (&config_dir, &data_dir, &state_dir, &cache_dir,
+                &runtime_dir))
         return 0;
 
     /* check if {weechat_config_dir}/weechat.conf exists */
@@ -611,10 +648,12 @@ dir_find_home_dirs ()
                   ptr_home, DIR_SEPARATOR, ".weechat");
         weechat_config_dir = strdup (path);
         weechat_data_dir = strdup (path);
+        weechat_state_dir = strdup (path);
         weechat_cache_dir = strdup (path);
         weechat_runtime_dir = strdup (path);
         free (config_dir);
         free (data_dir);
+        free (state_dir);
         free (cache_dir);
         free (runtime_dir);
         return 1;
@@ -624,6 +663,7 @@ dir_find_home_dirs ()
 use_xdg:
     weechat_config_dir = config_dir;
     weechat_data_dir = data_dir;
+    weechat_state_dir = state_dir;
     weechat_cache_dir = cache_dir;
     weechat_runtime_dir = runtime_dir;
     return 1;
@@ -706,12 +746,15 @@ dir_create_home_dirs ()
 
     dir_remove_trailing_separators (weechat_config_dir);
     dir_remove_trailing_separators (weechat_data_dir);
+    dir_remove_trailing_separators (weechat_state_dir);
     dir_remove_trailing_separators (weechat_cache_dir);
     dir_remove_trailing_separators (weechat_runtime_dir);
 
     rc = dir_create_home_dir (weechat_config_dir);
     if (rc && (strcmp (weechat_config_dir, weechat_data_dir) != 0))
         rc = dir_create_home_dir (weechat_data_dir);
+    if (rc && (strcmp (weechat_config_dir, weechat_state_dir) != 0))
+        rc = dir_create_home_dir (weechat_state_dir);
     if (rc && (strcmp (weechat_config_dir, weechat_cache_dir) != 0))
         rc = dir_create_home_dir (weechat_cache_dir);
     if (rc && (strcmp (weechat_config_dir, weechat_runtime_dir) != 0))
@@ -733,6 +776,8 @@ dir_remove_home_dirs ()
     dir_rmtree (weechat_config_dir);
     if (strcmp (weechat_config_dir, weechat_data_dir) != 0)
         dir_rmtree (weechat_data_dir);
+    if (strcmp (weechat_config_dir, weechat_state_dir) != 0)
+        dir_rmtree (weechat_state_dir);
     if (strcmp (weechat_config_dir, weechat_cache_dir) != 0)
         dir_rmtree (weechat_cache_dir);
     if (strcmp (weechat_config_dir, weechat_runtime_dir) != 0)
@@ -741,11 +786,12 @@ dir_remove_home_dirs ()
 
 /*
  * Returns a string with home directories separated by colons, in this order:
- * config_dir, data_dir, cache_dir, runtime_dir.
+ * config_dir, data_dir, state_dir, cache_dir, runtime_dir.
  *
  * Example of value returned:
  *   /home/user/.config/weechat:/home/user/.local/share/weechat:
- *     /home/user/.cache/weechat:/run/user/1000/weechat
+ *     /home/user/.local/state/weechat:/home/user/.cache/weechat:
+ *     /run/user/1000/weechat
  *
  * Note: result must be freed after use.
  */
@@ -753,13 +799,14 @@ dir_remove_home_dirs ()
 char *
 dir_get_string_home_dirs ()
 {
-    char *dirs[5];
+    char *dirs[6];
 
     dirs[0] = weechat_config_dir;
     dirs[1] = weechat_data_dir;
-    dirs[2] = weechat_cache_dir;
-    dirs[3] = weechat_runtime_dir;
-    dirs[4] = NULL;
+    dirs[2] = weechat_state_dir;
+    dirs[3] = weechat_cache_dir;
+    dirs[4] = weechat_runtime_dir;
+    dirs[5] = NULL;
 
     return string_rebuild_split_string ((const char **)dirs, ":", 0, -1);
 }

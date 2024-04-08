@@ -657,7 +657,7 @@ logger_config_init ()
                "date specifiers are permitted (see man strftime) "
                "(path is evaluated, see function string_eval_path_home in "
                "plugin API reference)"),
-            NULL, 0, 0, "${weechat_data_dir}/logs", NULL, 0,
+            NULL, 0, 0, "${weechat_state_dir}/logs", NULL, 0,
             NULL, NULL, NULL,
             &logger_config_change_file_option_restart_log, NULL, NULL,
             NULL, NULL, NULL);
