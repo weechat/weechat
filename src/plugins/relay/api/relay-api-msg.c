@@ -176,19 +176,14 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
             }
             else
             {
-                length = ((client->http_req->method) ? strlen (client->http_req->method) : 0)
-                    + 1
-                    + ((client->http_req->path) ? strlen (client->http_req->path) : 0)
-                    + 1;
-                request = malloc (length);
-                if (request)
+                length = weechat_asprintf (
+                    &request,
+                    "%s%s%s",
+                    (client->http_req->method) ? client->http_req->method : "",
+                    (client->http_req->method) ? " " : "",
+                    (client->http_req->path) ? client->http_req->path : "");
+                if (length >= 0)
                 {
-                    snprintf (
-                        request, length,
-                        "%s%s%s",
-                        (client->http_req->method) ? client->http_req->method : "",
-                        (client->http_req->method) ? " " : "",
-                        (client->http_req->path) ? client->http_req->path : "");
                     cJSON_AddItemToObject (json, "request",
                                            cJSON_CreateString (request));
                     cJSON_AddItemToObject (
@@ -266,7 +261,7 @@ relay_api_msg_send_error_json (struct t_relay_client *client,
                                const char *format, ...)
 {
     cJSON *json;
-    int num_bytes, length;
+    int num_bytes;
     char *error_msg, *str_json;
 
     if (!client || !message || !format)
@@ -305,11 +300,8 @@ relay_api_msg_send_error_json (struct t_relay_client *client,
         error_msg = weechat_string_replace (vbuffer, "\"", "\\\"");
         if (error_msg)
         {
-            length = strlen (error_msg) + 64;
-            str_json = malloc (length);
-            if (str_json)
+            if (weechat_asprintf (&str_json, "{\"error\": \"%s\"}", error_msg) >= 0)
             {
-                snprintf (str_json, length, "{\"error\": \"%s\"}", error_msg);
                 num_bytes = relay_http_send_json (client, return_code, message,
                                                   headers, str_json);
                 free (str_json);
