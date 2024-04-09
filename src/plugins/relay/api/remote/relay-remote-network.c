@@ -533,6 +533,9 @@ relay_remote_network_recv_cb (const void *pointer, void *data, int fd)
     if (!remote)
         return WEECHAT_RC_ERROR;
 
+    if (remote->sock < 0)
+        return WEECHAT_RC_OK;
+
     end_recv = 0;
     while (!end_recv)
     {
