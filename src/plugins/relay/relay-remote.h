@@ -56,6 +56,8 @@ struct t_relay_remote
     gnutls_session_t gnutls_sess;      /* gnutls session (only if TLS used) */
     struct t_relay_websocket_deflate *ws_deflate; /* websocket deflate data */
     int synced;                        /* 1 if synced with remote           */
+    char *partial_ws_frame;            /* part. binary websocket frame recv */
+    int partial_ws_frame_size;         /* size of partial websocket frame   */
     struct t_relay_remote *prev_remote;/* link to previous remote           */
     struct t_relay_remote *next_remote;/* link to next remote               */
 };

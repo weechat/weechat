@@ -466,8 +466,8 @@ relay_remote_network_recv_buffer (struct t_relay_remote *remote,
                                   const char *buffer, int buffer_size)
 {
     struct t_relay_websocket_frame *frames;
-    char *partial_ws_frame;
-    int rc, i, num_frames, partial_ws_frame_size;
+    int rc, i, buffer2_size, num_frames;
+    char *buffer2;
 
     /* if authenticating is in progress, check if it was successful */
     if (remote->status == RELAY_STATUS_AUTHENTICATING)
@@ -476,26 +476,51 @@ relay_remote_network_recv_buffer (struct t_relay_remote *remote,
     }
     else if (remote->status == RELAY_STATUS_CONNECTED)
     {
-        partial_ws_frame = NULL;
-        partial_ws_frame_size = 0;
+        buffer2 = NULL;
+        buffer2_size = 0;
+        if (remote->partial_ws_frame)
+        {
+            buffer2_size = buffer_size + remote->partial_ws_frame_size;
+            buffer2 = malloc (buffer2_size);
+            if (!buffer2)
+            {
+                weechat_printf (
+                    NULL,
+                    _("%sremote[%s]: not enough memory"),
+                    weechat_prefix ("error"),
+                    remote->name);
+                return;
+            }
+            memcpy (buffer2, remote->partial_ws_frame,
+                    remote->partial_ws_frame_size);
+            memcpy (buffer2 + remote->partial_ws_frame_size,
+                    buffer, buffer_size);
+        }
+        frames = NULL;
+        num_frames = 0;
         rc = relay_websocket_decode_frame (
-            (const unsigned char *)buffer,
-            buffer_size,
+            (buffer2) ? (unsigned char *)buffer2 : (const unsigned char *)buffer,
+            (buffer2) ? (unsigned long long)buffer2_size : (unsigned long long)buffer_size,
             0,  /* expect_masked_frame */
             remote->ws_deflate,
             &frames,
             &num_frames,
-            &partial_ws_frame,
-            &partial_ws_frame_size);
+            &remote->partial_ws_frame,
+            &remote->partial_ws_frame_size);
+        if (buffer2)
+            free (buffer2);
         if (!rc)
         {
             /* fatal error when decoding frame: close connection */
-            for (i = 0; i < num_frames; i++)
+            if (frames)
             {
-                if (frames[i].payload)
-                    free (frames[i].payload);
+                for (i = 0; i < num_frames; i++)
+                {
+                    if (frames[i].payload)
+                        free (frames[i].payload);
+                }
+                free (frames);
             }
-            free (frames);
             weechat_printf (
                 NULL,
                 _("%sremote[%s]: error decoding websocket frame"),

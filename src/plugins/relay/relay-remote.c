@@ -327,6 +327,8 @@ relay_remote_alloc (const char *name)
     new_remote->gnutls_sess = NULL;
     new_remote->ws_deflate = relay_websocket_deflate_alloc ();
     new_remote->synced = 0;
+    new_remote->partial_ws_frame = NULL;
+    new_remote->partial_ws_frame_size = 0;
     new_remote->prev_remote = NULL;
     new_remote->next_remote = NULL;
 
@@ -487,7 +489,8 @@ relay_remote_new_with_infolist (struct t_infolist *infolist)
 {
     struct t_relay_remote *new_remote;
     Bytef *ptr_dict;
-    int dict_size;
+    int dict_size, ws_frame_size;
+    void *ptr_ws_frame;
 
     new_remote = malloc (sizeof (*new_remote));
     if (!new_remote)
@@ -550,6 +553,16 @@ relay_remote_new_with_infolist (struct t_infolist *infolist)
         }
     }
     new_remote->synced = weechat_infolist_integer (infolist, "synced");
+    ptr_ws_frame = weechat_infolist_buffer (infolist, "partial_ws_frame", &ws_frame_size);
+    if (ptr_ws_frame && (ws_frame_size > 0))
+    {
+        new_remote->partial_ws_frame = malloc (ws_frame_size);
+        if (new_remote->partial_ws_frame)
+        {
+            memcpy (new_remote->partial_ws_frame, ptr_ws_frame, ws_frame_size);
+            new_remote->partial_ws_frame_size = ws_frame_size;
+        }
+    }
     new_remote->prev_remote = NULL;
     new_remote->next_remote = relay_remotes;
     if (relay_remotes)
@@ -766,6 +779,8 @@ relay_remote_free (struct t_relay_remote *remote)
     if (remote->hook_fd)
         weechat_unhook (remote->hook_fd);
     relay_websocket_deflate_free (remote->ws_deflate);
+    if (remote->partial_ws_frame)
+        free (remote->partial_ws_frame);
 
     free (remote);
 
@@ -835,12 +850,16 @@ relay_remote_add_to_infolist (struct t_infolist *infolist,
             return 0;
         if (!weechat_infolist_new_var_integer (ptr_item, "sock", -1))
             return 0;
+        if (!weechat_infolist_new_var_buffer (ptr_item, "partial_ws_frame", NULL, 0))
+            return 0;
     }
     else
     {
         if (!weechat_infolist_new_var_integer (ptr_item, "status", remote->status))
             return 0;
         if (!weechat_infolist_new_var_integer (ptr_item, "sock", remote->sock))
+            return 0;
+        if (!weechat_infolist_new_var_buffer (ptr_item, "partial_ws_frame", remote->partial_ws_frame, remote->partial_ws_frame_size))
             return 0;
     }
     if (remote->ws_deflate->strm_deflate || remote->ws_deflate->strm_inflate)
@@ -916,6 +935,9 @@ relay_remote_print_log ()
         weechat_log_printf ("  gnutls_sess . . . . . . : 0x%lx", ptr_remote->gnutls_sess);
         relay_websocket_deflate_print_log (ptr_remote->ws_deflate, "");
         weechat_log_printf ("  synced. . . . . . . . . : %d", ptr_remote->synced);
+        weechat_log_printf ("  partial_ws_frame. . . . . : %p (%d bytes)",
+                            ptr_remote->partial_ws_frame,
+                            ptr_remote->partial_ws_frame_size);
         weechat_log_printf ("  prev_remote . . . . . . : 0x%lx", ptr_remote->prev_remote);
         weechat_log_printf ("  next_remote . . . . . . : 0x%lx", ptr_remote->next_remote);
     }
