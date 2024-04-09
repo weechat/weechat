@@ -663,12 +663,15 @@ relay_client_recv_buffer (struct t_relay_client *client,
         if (!rc)
         {
             /* fatal error when decoding frame: close connection */
-            for (i = 0; i < num_frames; i++)
+            if (frames)
             {
-                if (frames[i].payload)
-                    free (frames[i].payload);
+                for (i = 0; i < num_frames; i++)
+                {
+                    if (frames[i].payload)
+                        free (frames[i].payload);
+                }
+                free (frames);
             }
-            free (frames);
             weechat_printf_date_tags (
                 NULL, 0, "relay_client",
                 _("%s%s: error decoding websocket frame for client "
