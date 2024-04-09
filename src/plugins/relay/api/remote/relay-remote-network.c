@@ -505,6 +505,12 @@ relay_remote_network_recv_buffer (struct t_relay_remote *remote,
             return;
         }
         relay_remote_network_read_websocket_frames (remote, frames, num_frames);
+        for (i = 0; i < num_frames; i++)
+        {
+            if (frames[i].payload)
+                free (frames[i].payload);
+        }
+        free (frames);
     }
 }
 
