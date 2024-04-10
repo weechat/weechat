@@ -444,8 +444,8 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **state_dir,
                    char **cache_dir, char **runtime_dir)
 {
     char *ptr_home, path[PATH_MAX];
-    char *xdg_config_home, *xdg_data_home, *xdg_state_home, *xdg_cache_home,
-         *xdg_runtime_dir;
+    char *xdg_config_home, *xdg_data_home, *xdg_state_home, *xdg_cache_home;
+    char *xdg_runtime_dir;
 
     *config_dir = NULL;
     *data_dir = NULL;
@@ -502,15 +502,15 @@ dir_find_xdg_dirs (char **config_dir, char **data_dir, char **state_dir,
     if (xdg_state_home && xdg_state_home[0])
     {
         snprintf (path, sizeof (path),
-                "%s%s%s",
-                xdg_state_home, DIR_SEPARATOR, "weechat");
+                  "%s%s%s",
+                  xdg_state_home, DIR_SEPARATOR, "weechat");
     }
     else
     {
         snprintf (path, sizeof (path),
-                "%s%s%s%s%s%s%s",
-                ptr_home, DIR_SEPARATOR, ".local", DIR_SEPARATOR, "state",
-                DIR_SEPARATOR, "weechat");
+                  "%s%s%s%s%s%s%s",
+                  ptr_home, DIR_SEPARATOR, ".local", DIR_SEPARATOR, "state",
+                  DIR_SEPARATOR, "weechat");
     }
     *state_dir = strdup (path);
     if (!*state_dir)
@@ -623,7 +623,7 @@ dir_find_home_dirs ()
         return dir_set_home_path (config_weechat_home);
 
     if (!dir_find_xdg_dirs (&config_dir, &data_dir, &state_dir, &cache_dir,
-                &runtime_dir))
+                            &runtime_dir))
         return 0;
 
     /* check if {weechat_config_dir}/weechat.conf exists */
