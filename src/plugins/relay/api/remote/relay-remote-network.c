@@ -81,15 +81,21 @@ relay_remote_network_close_connection (struct t_relay_remote *remote)
 {
     if (!remote)
         return;
-    if (remote->hook_fd)
+
+    if (remote->hook_url_handshake)
     {
-        weechat_unhook (remote->hook_fd);
-        remote->hook_fd = NULL;
+        weechat_unhook (remote->hook_url_handshake);
+        remote->hook_url_handshake = NULL;
     }
     if (remote->hook_connect)
     {
         weechat_unhook (remote->hook_connect);
         remote->hook_connect = NULL;
+    }
+    if (remote->hook_fd)
+    {
+        weechat_unhook (remote->hook_fd);
+        remote->hook_fd = NULL;
     }
     if (remote->sock != -1)
     {
