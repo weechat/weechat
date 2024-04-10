@@ -129,8 +129,9 @@ relay_remote_event_get_buffer_id (struct t_gui_buffer *buffer)
 
 RELAY_REMOTE_EVENT_CALLBACK(line)
 {
-    cJSON *json_obj;
+    cJSON *json_obj, *json_tags, *json_tag;
     const char *date, *prefix, *message;
+    char **tags;
     struct timeval tv_date;
 
     if (!event->buffer)
@@ -146,15 +147,34 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
         tv_date.tv_usec = 0;
     }
 
+    tags = weechat_string_dyn_alloc (256);
+    if (tags)
+    {
+        json_tags = cJSON_GetObjectItem (event->json, "tags");
+        if (json_tags && cJSON_IsArray (json_tags))
+        {
+            cJSON_ArrayForEach (json_tag, json_tags)
+            {
+                if (*tags[0])
+                    weechat_string_dyn_concat (tags, ",", -1);
+                weechat_string_dyn_concat (
+                    tags, cJSON_GetStringValue (json_tag), -1);
+            }
+        }
+    }
+
     weechat_printf_datetime_tags (
         event->buffer,
         tv_date.tv_sec,
         tv_date.tv_usec,
-        NULL,
+        (tags) ? *tags : NULL,
         "%s%s%s",
         (prefix && prefix[0]) ? prefix : "",
         (prefix && prefix[0]) ? "\t" : "",
         message);
+
+    if (tags)
+        weechat_string_dyn_free (tags, 1);
 
     return WEECHAT_RC_OK;
 }
