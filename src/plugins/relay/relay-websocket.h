@@ -63,6 +63,7 @@ struct t_relay_websocket_frame
 extern struct t_relay_websocket_deflate *relay_websocket_deflate_alloc ();
 extern int relay_websocket_deflate_init_stream_deflate (struct t_relay_websocket_deflate *ws_deflate);
 extern int relay_websocket_deflate_init_stream_inflate (struct t_relay_websocket_deflate *ws_deflate);
+extern void relay_websocket_deflate_reinit (struct t_relay_websocket_deflate *ws_deflate);
 extern void relay_websocket_deflate_free (struct t_relay_websocket_deflate *ws_deflate);
 extern int relay_websocket_is_valid_http_get (enum t_relay_protocol protocol,
                                               const char *message);

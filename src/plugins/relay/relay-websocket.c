@@ -137,6 +137,22 @@ relay_websocket_deflate_free_stream_inflate (struct t_relay_websocket_deflate *w
 }
 
 /*
+ * Reinitializes a t_relay_websocket_deflate structure.
+ */
+
+void
+relay_websocket_deflate_reinit (struct t_relay_websocket_deflate *ws_deflate)
+{
+    ws_deflate->enabled = 0;
+    ws_deflate->server_context_takeover = 0;
+    ws_deflate->server_context_takeover = 0;
+    ws_deflate->window_bits_deflate = 0;
+    ws_deflate->window_bits_inflate = 0;
+    relay_websocket_deflate_free_stream_deflate (ws_deflate);
+    relay_websocket_deflate_free_stream_inflate (ws_deflate);
+}
+
+/*
  * Frees a websocket deflate structure.
  */
 

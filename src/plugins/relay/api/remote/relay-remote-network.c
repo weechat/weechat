@@ -106,9 +106,14 @@ relay_remote_network_close_connection (struct t_relay_remote *remote)
 #endif /* _WIN32 */
         remote->sock = -1;
     }
-    relay_websocket_deflate_free (remote->ws_deflate);
-    remote->ws_deflate = NULL;
+    relay_websocket_deflate_reinit (remote->ws_deflate);
     remote->synced = 0;
+    if (remote->partial_ws_frame)
+    {
+        free (remote->partial_ws_frame);
+        remote->partial_ws_frame = NULL;
+    }
+    remote->partial_ws_frame_size = 0;
 }
 
 /*
