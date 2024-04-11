@@ -554,6 +554,16 @@ TEST(GuiLine, HasOfflineNick)
 
 /*
  * Tests functions:
+ *   gui_line_is_action
+ */
+
+TEST(GuiLine, IsAction)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   gui_line_compute_buffer_max_length
  */
 
