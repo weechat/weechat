@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
+  * core: use nick offline color for nick in action message
   * core: display a specific message when the value of option is unchanged after `/set` command
   * core: add option weechat.completion.case_sensitive
   * core: add option weechat.look.highlight_prefix (issue #2079)

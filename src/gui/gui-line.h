@@ -87,6 +87,7 @@ extern int gui_line_get_align (struct t_gui_buffer *buffer,
                                int with_suffix, int first_line);
 extern char *gui_line_build_string_prefix_message (const char *prefix,
                                                    const char *message);
+extern char *gui_line_build_string_message_nick_offline (const char *message);
 extern char *gui_line_build_string_message_tags (const char *message,
                                                  int tags_count,
                                                  char **tags_array,
@@ -109,6 +110,7 @@ extern const char *gui_line_search_tag_starting_with (struct t_gui_line *line,
 extern const char *gui_line_get_nick_tag (struct t_gui_line *line);
 extern int gui_line_has_highlight (struct t_gui_line *line);
 extern int gui_line_has_offline_nick (struct t_gui_line *line);
+extern int gui_line_is_action (struct t_gui_line *line);
 extern void gui_line_compute_buffer_max_length (struct t_gui_buffer *buffer,
                                                 struct t_gui_lines *lines);
 extern void gui_line_compute_prefix_max_length (struct t_gui_lines *lines);

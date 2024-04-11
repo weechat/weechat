@@ -805,14 +805,15 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                  int num_lines, int count,
                                  int pre_lines_displayed,
                                  int *lines_displayed,
-                                 int simulate)
+                                 int simulate,
+                                 int nick_offline)
 {
     char str_space[] = " ";
     char *prefix_no_color, *prefix_highlighted, *ptr_prefix, *ptr_prefix2;
     char *ptr_prefix_color;
     const char *short_name, *str_color, *ptr_nick_prefix, *ptr_nick_suffix;
     int i, length, length_allowed, num_spaces, prefix_length, extra_spaces;
-    int chars_displayed, nick_offline, prefix_is_nick, length_nick_prefix_suffix;
+    int chars_displayed, prefix_is_nick, length_nick_prefix_suffix;
     int chars_to_display;
     struct t_gui_lines *mixed_lines;
 
@@ -1151,9 +1152,6 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                    simulate, 0, 0);
         }
 
-        nick_offline = CONFIG_BOOLEAN(config_look_color_nick_offline)
-            && gui_line_has_offline_nick (line);
-
         prefix_highlighted = NULL;
         if (line->data->highlight
             && CONFIG_BOOLEAN(config_look_highlight_prefix))
@@ -1396,7 +1394,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     int read_marker_x, read_marker_y;
     int word_start_offset, word_end_offset;
     int word_length_with_spaces, word_length;
-    char *message_with_tags, *message_with_search;
+    int nick_offline, nick_offline_action;
+    char *message_nick_offline, *message_with_tags, *message_with_search;
     const char *ptr_data, *ptr_end_offset, *ptr_style, *next_char;
     struct t_gui_line *ptr_prev_line, *ptr_next_line;
     struct tm local_time, local_time2;
@@ -1425,6 +1424,10 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         window->win_chat_cursor_y = y;
         gui_window_current_emphasis = 0;
     }
+
+    nick_offline = CONFIG_BOOLEAN(config_look_color_nick_offline)
+        && gui_line_has_offline_nick (line);
+    nick_offline_action = nick_offline && gui_line_is_action (line);
 
     pre_lines_displayed = 0;
     lines_displayed = 0;
@@ -1472,7 +1475,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     /* display time and prefix */
     gui_chat_display_time_to_prefix (window, line, num_lines, count,
                                      pre_lines_displayed, &lines_displayed,
-                                     simulate);
+                                     simulate, nick_offline);
     if (!simulate && !gui_chat_display_tags)
     {
         if (window->win_chat_cursor_y < window->coords_size)
@@ -1500,19 +1503,23 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
 
     /* display message */
     ptr_data = NULL;
+    message_nick_offline = NULL;
     message_with_tags = NULL;
     message_with_search = NULL;
 
     if (line->data->message && line->data->message[0])
     {
+        message_nick_offline = (nick_offline_action) ?
+            gui_line_build_string_message_nick_offline (line->data->message) : NULL;
+        ptr_data = (message_nick_offline) ?
+            message_nick_offline : line->data->message;
         message_with_tags = (gui_chat_display_tags) ?
-            gui_line_build_string_message_tags (line->data->message,
+            gui_line_build_string_message_tags (ptr_data,
                                                 line->data->tags_count,
                                                 line->data->tags_array,
                                                 1) : NULL;
-        ptr_data = (message_with_tags) ?
-            message_with_tags : line->data->message;
-        message_with_search = NULL;
+        if (message_with_tags)
+            ptr_data = message_with_tags;
         if ((window->buffer->text_search == GUI_BUFFER_SEARCH_LINES)
             && (window->buffer->text_search_where & GUI_BUFFER_SEARCH_IN_MESSAGE)
             && (!window->buffer->text_search_regex
@@ -1643,6 +1650,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                                    &lines_displayed, simulate);
     }
 
+    if (message_nick_offline)
+        free (message_nick_offline);
     if (message_with_tags)
         free (message_with_tags);
     if (message_with_search)

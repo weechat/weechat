@@ -406,6 +406,37 @@ gui_line_build_string_prefix_message (const char *prefix, const char *message)
 }
 
 /*
+ * Builds a string with action message and nick with nick offline color.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_line_build_string_message_nick_offline (const char *message)
+{
+    const char *ptr_message;
+    char *message2;
+
+    if (!message)
+        return NULL;
+
+    ptr_message = gui_chat_string_next_char (NULL, NULL,
+                                             (unsigned char *)message,
+                                             0, 0, 0);
+    if (!ptr_message)
+        return strdup ("");
+
+    if (string_asprintf (&message2, "%s%s",
+                         GUI_COLOR(GUI_COLOR_CHAT_NICK_OFFLINE),
+                         ptr_message) >= 0)
+    {
+        return message2;
+    }
+
+    return NULL;
+}
+
+/*
  * Builds a string with message and tags.
  *
  * If colors == 1, keep colors in message and use color for delimiters around
@@ -1082,6 +1113,32 @@ gui_line_has_offline_nick (struct t_gui_line *line)
         && !gui_nicklist_search_nick (line->data->buffer, NULL, nick))
     {
         return 1;
+    }
+
+    return 0;
+}
+
+/*
+ * Checks if line is an action (eg: `/me` in irc plugin).
+ *
+ * Returns:
+ *   1: line is an action
+ *   0: line is not an action
+ */
+
+int
+gui_line_is_action (struct t_gui_line *line)
+{
+    int i, length;
+
+    for (i = 0; i < line->data->tags_count; i++)
+    {
+        length = strlen (line->data->tags_array[i]);
+        if ((length >= 7)
+            && (strcmp (line->data->tags_array[i] + length - 7, "_action") == 0))
+        {
+            return 1;
+        }
     }
 
     return 0;

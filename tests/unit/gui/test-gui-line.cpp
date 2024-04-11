@@ -21,6 +21,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <string.h>
@@ -208,6 +210,29 @@ TEST(GuiLine, BuildStringPrefixMessage)
               "%sred message",
               gui_color_get_custom ("red"));
     WEE_BUILD_STR_PREFIX_MSG("blue prefix\tred message", str_prefix, str_message);
+}
+
+/*
+ * Tests functions:
+ *   gui_line_build_string_message_nick_offline
+ */
+
+TEST(GuiLine, BuildStringMessageNickOffline)
+{
+    char *str, str_msg_expected[256], str_msg[256];
+
+    POINTERS_EQUAL(NULL, gui_line_build_string_message_nick_offline (NULL));
+    WEE_TEST_STR("", gui_line_build_string_message_nick_offline (""));
+
+    snprintf (str_msg_expected, sizeof (str_msg_expected),
+              "%stest",
+              GUI_COLOR(GUI_COLOR_CHAT_NICK_OFFLINE));
+    WEE_TEST_STR(str_msg_expected, gui_line_build_string_message_nick_offline ("test"));
+
+    snprintf (str_msg, sizeof (str_msg),
+              "%stest",
+              gui_color_get_custom ("blue"));
+    WEE_TEST_STR(str_msg_expected, gui_line_build_string_message_nick_offline (str_msg));
 }
 
 /*
