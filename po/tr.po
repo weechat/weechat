@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-04-07 15:31+0200\n"
+"POT-Creation-Date: 2024-04-12 22:18+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -118,8 +118,8 @@ msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal and exit\n"
 "  -d, --dir <path>         force a single WeeChat home directory\n"
-"                           or 4 different directories separated by colons "
-"(in this order: config, data, cache, runtime)\n"
+"                           or 5 different directories separated by colons "
+"(in this order: config, data, state, cache, runtime)\n"
 "                           (environment variable WEECHAT_HOME is read if "
 "this option is not given)\n"
 "  -t, --temp-dir           create a temporary WeeChat home directory and "
@@ -1900,13 +1900,18 @@ msgid "  - ${weechat_data_dir}: WeeChat data directory"
 msgstr "WeeChat veri dizini"
 
 #, fuzzy
+#| msgid "WeeChat data directory"
+msgid "  - ${weechat_state_dir}: WeeChat state directory"
+msgstr "WeeChat veri dizini"
+
+#, fuzzy
 #| msgid "WeeChat cache directory"
 msgid "  - ${weechat_cache_dir}: WeeChat cache directory"
 msgstr "WeeChat önbellek dizini"
 
 #, fuzzy
 #| msgid "WeeChat runtime directory"
-msgid "  - ${weechat_runtmie_dir}: WeeChat runtime directory"
+msgid "  - ${weechat_runtime_dir}: WeeChat runtime directory"
 msgstr "WeeChat çalışma zamanı dizini"
 
 msgid "  - ${eval:string}: the evaluated string"
@@ -5899,9 +5904,12 @@ msgstr ""
 msgid "Error: not enough memory\n"
 msgstr "Hata: Yetersiz bellek\n"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Error: wrong number of paths for home directories (expected: 1 or 4, "
+#| "received: %d)\n"
 msgid ""
-"Error: wrong number of paths for home directories (expected: 1 or 4, "
+"Error: wrong number of paths for home directories (expected: 1 or 5, "
 "received: %d)\n"
 msgstr ""
 "Hata: Ev dizinleri için yanlış yol sayısı (1 veya 4 bekleniyordu, %d "
@@ -13843,10 +13851,15 @@ msgstr "WeeChat PID (işlem kimliği)"
 msgid "directory separator"
 msgstr "dizin ayırıcısı"
 
+#, fuzzy
+#| msgid ""
+#| "WeeChat directory (*deprecated* since version 3.2, replaced by "
+#| "\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_cache_dir\" and "
+#| "\"weechat_runtime_dir\")"
 msgid ""
 "WeeChat directory (*deprecated* since version 3.2, replaced by "
-"\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_cache_dir\" and "
-"\"weechat_runtime_dir\")"
+"\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_state_dir\" , "
+"\"weechat_cache_dir\" and \"weechat_runtime_dir\")"
 msgstr ""
 "WeeChat dizini (3.2 sürümünden itibaren *kullanılmıyor*, "
 "\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_cache_dir\" ve "
@@ -13856,6 +13869,11 @@ msgid "WeeChat config directory"
 msgstr "WeeChat yapılandırma dizini"
 
 msgid "WeeChat data directory"
+msgstr "WeeChat veri dizini"
+
+#, fuzzy
+#| msgid "WeeChat data directory"
+msgid "WeeChat state directory"
 msgstr "WeeChat veri dizini"
 
 msgid "WeeChat cache directory"
@@ -14525,6 +14543,11 @@ msgid "%sremote[%s]: error: %s%s%s%s"
 msgstr "%s    hata: %s%s%s%s"
 
 #, fuzzy, c-format
+#| msgid "%s%s: not enough memory"
+msgid "%sremote[%s]: not enough memory"
+msgstr "%s%s: Yetersiz bellek"
+
+#, fuzzy, c-format
 #| msgid "%s%s: error decoding websocket frame for client %s%s%s"
 msgid "%sremote[%s]: error decoding websocket frame"
 msgstr "%s%s: %s%s%s istemcisi için web soketi çerçevesi kodu çözülürken hata"
@@ -14589,11 +14612,6 @@ msgstr "%s%s: TLS başlatma hatası"
 #| msgid "%s%s: TLS handshake failed"
 msgid "%sremote[%s]: TLS handshake failed"
 msgstr "%s%s: TLS el sıkışması başarısız"
-
-#, fuzzy, c-format
-#| msgid "%s%s: not enough memory"
-msgid "%sremote[%s]: not enough memory"
-msgstr "%s%s: Yetersiz bellek"
 
 #, fuzzy, c-format
 #| msgid "%s%s: timeout"

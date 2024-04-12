@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-04-07 15:31+0200\n"
+"POT-Creation-Date: 2024-04-12 22:18+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -120,8 +120,8 @@ msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal and exit\n"
 "  -d, --dir <path>         force a single WeeChat home directory\n"
-"                           or 4 different directories separated by colons "
-"(in this order: config, data, cache, runtime)\n"
+"                           or 5 different directories separated by colons "
+"(in this order: config, data, state, cache, runtime)\n"
 "                           (environment variable WEECHAT_HOME is read if "
 "this option is not given)\n"
 "  -t, --temp-dir           create a temporary WeeChat home directory and "
@@ -1893,11 +1893,15 @@ msgid "  - ${weechat_data_dir}: WeeChat data directory"
 msgstr "directorio de WeeChat"
 
 #, fuzzy
+msgid "  - ${weechat_state_dir}: WeeChat state directory"
+msgstr "directorio de WeeChat"
+
+#, fuzzy
 msgid "  - ${weechat_cache_dir}: WeeChat cache directory"
 msgstr "directorio \"locale\" de WeeChat"
 
 #, fuzzy
-msgid "  - ${weechat_runtmie_dir}: WeeChat runtime directory"
+msgid "  - ${weechat_runtime_dir}: WeeChat runtime directory"
 msgstr "directorio de WeeChat"
 
 msgid "  - ${eval:string}: the evaluated string"
@@ -5741,7 +5745,7 @@ msgstr "%sNo hay suficiente memoria"
 
 #, c-format
 msgid ""
-"Error: wrong number of paths for home directories (expected: 1 or 4, "
+"Error: wrong number of paths for home directories (expected: 1 or 5, "
 "received: %d)\n"
 msgstr ""
 
@@ -13260,8 +13264,8 @@ msgstr "separador de directorios"
 
 msgid ""
 "WeeChat directory (*deprecated* since version 3.2, replaced by "
-"\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_cache_dir\" and "
-"\"weechat_runtime_dir\")"
+"\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_state_dir\" , "
+"\"weechat_cache_dir\" and \"weechat_runtime_dir\")"
 msgstr ""
 
 #, fuzzy
@@ -13270,6 +13274,10 @@ msgstr "directorio de WeeChat"
 
 #, fuzzy
 msgid "WeeChat data directory"
+msgstr "directorio de WeeChat"
+
+#, fuzzy
+msgid "WeeChat state directory"
 msgstr "directorio de WeeChat"
 
 #, fuzzy
@@ -13939,6 +13947,11 @@ msgid "%sremote[%s]: error: %s%s%s%s"
 msgstr "%s    error: %s%s%s%s"
 
 #, fuzzy, c-format
+#| msgid "%s%s: not enough memory"
+msgid "%sremote[%s]: not enough memory"
+msgstr "%s%s: no hay suficiente memoria"
+
+#, fuzzy, c-format
 msgid "%sremote[%s]: error decoding websocket frame"
 msgstr "%s%s: leyendo datos en socket para el cliente %s%s%s: error %d %s"
 
@@ -14002,11 +14015,6 @@ msgstr "%s%s: error de inicialización de TLS"
 #| msgid "%s%s: TLS handshake failed"
 msgid "%sremote[%s]: TLS handshake failed"
 msgstr "%s%s: el saludo TLS ha fallado"
-
-#, fuzzy, c-format
-#| msgid "%s%s: not enough memory"
-msgid "%sremote[%s]: not enough memory"
-msgstr "%s%s: no hay suficiente memoria"
 
 #, fuzzy, c-format
 #| msgid "%s%s: timeout"
