@@ -1151,8 +1151,12 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                                        struct t_hashtable *output)
 {
     struct t_relay_remote *remote;
+    struct t_config_option *proxy_type, *proxy_ipv6, *proxy_address, *proxy_port;
     const char *ptr_output, *ptr_resp_code, *ptr_error;
+    const char *proxy, *str_proxy_type, *str_proxy_address;
+    char *option_name;
     cJSON *json_body, *json_hash_algo, *json_hash_iterations, *json_totp;
+    int length;
 
     /* make C compiler happy */
     (void) data;
@@ -1262,11 +1266,66 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                         remote->totp);
     }
 
+    proxy_type = NULL;
+    proxy_ipv6 = NULL;
+    proxy_address = NULL;
+    proxy_port = NULL;
+    str_proxy_type = NULL;
+    str_proxy_address = NULL;
+
+    proxy = weechat_config_string (remote->options[RELAY_REMOTE_OPTION_PROXY]);
+    if (proxy && proxy[0])
+    {
+        length = 32 + strlen (proxy) + 1;
+        option_name = malloc (length);
+        if (!option_name)
+        {
+            weechat_printf (
+                NULL,
+                _("%sremote[%s]: not enough memory"),
+                weechat_prefix ("error"),
+                remote->name);
+            relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
+            return WEECHAT_RC_OK;
+        }
+        snprintf (option_name, length, "weechat.proxy.%s.type", proxy);
+        proxy_type = weechat_config_get (option_name);
+        snprintf (option_name, length, "weechat.proxy.%s.ipv6", proxy);
+        proxy_ipv6 = weechat_config_get (option_name);
+        snprintf (option_name, length, "weechat.proxy.%s.address", proxy);
+        proxy_address = weechat_config_get (option_name);
+        snprintf (option_name, length, "weechat.proxy.%s.port", proxy);
+        proxy_port = weechat_config_get (option_name);
+        free (option_name);
+        if (!proxy_type || !proxy_address)
+        {
+            weechat_printf (
+                NULL,
+                _("%sremote[%s]: proxy \"%s\" not found, cannot connect"),
+                weechat_prefix ("error"), remote->name, proxy);
+            relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
+            return WEECHAT_RC_OK;
+        }
+        str_proxy_type = weechat_config_string (proxy_type);
+        str_proxy_address = weechat_config_string (proxy_address);
+        if (!str_proxy_type[0] || !proxy_ipv6 || !str_proxy_address[0]
+            || !proxy_port)
+        {
+            weechat_printf (
+                NULL,
+                _("%sremote[%s]: missing proxy settings, check options for "
+                  "proxy \"%s\""),
+                weechat_prefix ("error"), remote->name, proxy);
+            relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
+            return WEECHAT_RC_OK;
+        }
+    }
+
     remote->hook_connect = weechat_hook_connect (
-        NULL,  /* proxy */
+        proxy,
         remote->address,
         remote->port,
-        1,  /* ipv6 */
+        (proxy_type) ? weechat_config_integer (proxy_ipv6) : 1,  /* IPv6 */
         0,  /* retry */
         (remote->tls) ? &remote->gnutls_sess : NULL,
         (remote->tls) ? &relay_remote_network_gnutls_callback : NULL,
