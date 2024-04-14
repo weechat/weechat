@@ -449,10 +449,6 @@ relay_remote_new (const char *name, const char *url, const char *proxy,
     if (!name || !name[0] || !url || !url[0])
         return NULL;
 
-    new_remote = malloc (sizeof (*new_remote));
-    if (!new_remote)
-        return NULL;
-
     value[RELAY_REMOTE_OPTION_URL] = url;
     value[RELAY_REMOTE_OPTION_PROXY] = proxy;
     value[RELAY_REMOTE_OPTION_PASSWORD] = password;
