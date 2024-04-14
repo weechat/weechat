@@ -789,7 +789,6 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                                  const char *ip_address)
 {
     struct t_relay_remote *remote;
-    /*int dhkey_size;*/
 
     /* make C compiler happy */
     (void) data;
